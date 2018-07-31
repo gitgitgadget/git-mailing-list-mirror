@@ -2,323 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA181F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 17:37:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5B3B1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 17:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731210AbeGaTSb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 15:18:31 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:53277 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728052AbeGaTSb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 15:18:31 -0400
-Received: by mail-it0-f73.google.com with SMTP id e5-v6so3300676itf.3
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:37:09 -0700 (PDT)
+        id S1729739AbeGaTWB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 15:22:01 -0400
+Received: from mail-vk0-f68.google.com ([209.85.213.68]:41221 "EHLO
+        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728327AbeGaTWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 15:22:01 -0400
+Received: by mail-vk0-f68.google.com with SMTP id o82-v6so7930929vko.8
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=P2/qSgC2CH521lS1pVd1iXZUD6It7Sl0iqVjPVvUmck=;
-        b=LoQ0OBNXpqrV8Do2gsCxDaDdDlg9dJxsJBYZKgCJRTxWCna7Lu9Fb2B4LwtMCltPbC
-         XfpdcfQ+3dWTV23svKezklBB57wwjYmldemsjdBpeoooiLVlz5NJEqAMZl5A9/HUr5Ns
-         dLCJxBqDfJIwXUvb2ToVBR7TkdRnGsxE3FjcKlDx3dM17040Swdm/CR8hOiLLTQyr8sy
-         TXYnu9Zp8+0ECAXMnJK06HMyiOwYxgjaKQzLX50kRLercgfGqvz+4BQsmbtx/L81OEv2
-         CryGztgGbDVqSSZOumUuanwRzChel6q8vEG7A+Le1kV7Tmu7sldp3m9+wGZ8zf/UQRPn
-         h0rA==
+        bh=7XW1ThGu1vjCaRu4yV4rdIRdoMBurzZS7OBBRxqsB2g=;
+        b=glX9YKzmQMCVPIXgRtDulrzMq9M/tPcgLVAftwCMdfqufU4r1rP8Ofxw07RfWJW9wc
+         HtLyudyBIn4txj8mgO76TfWMXkhtGm8QOAiZcBelQ/N5PIuXEJVg5wBvjV1THkMjmmqN
+         qLimdsrm54iJNl/JeEop19Svtnx4b3cvLEW4ht0TPIJ44yqwlx5w0ZmYHGVSh5PoHHrH
+         RCRh1BR9BymQn2T9bwxBsEXo1ZunCYM63ItMPmoinf/TR9ECkX5eM8EwXVwAGrvUhWRN
+         uafEy1zXKxyy9ri2bcwKuKOfc6nfb0//h+DQco/TJHyv1f1OM8v1nwnLzKXqW2kkr+r1
+         rjSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=P2/qSgC2CH521lS1pVd1iXZUD6It7Sl0iqVjPVvUmck=;
-        b=gW30kfCj5sUBF2CU9JP9P7BRIrzDVTyylC+dahJntTyJptsSzh8NCWrxmy6u0F9p5a
-         CqGuF1CWyAh2WRZiROg63GAXcrwH6yspGU3+oGp9C6BQtCQW2/jEe/3SixLh4jYO7p8k
-         BGG0AFWiNFs28I6NHTa56rBNL3SBN64x+P3NmB1TL0qQRZ8dlVqe5FEcObAXUubW53PZ
-         p1Ij3EM9yezPGPhwxWdq1tk2RH2GW1zb+GR8moZLhcB3uDrZxUvx7BDwNChUXW1mLqy8
-         sd4zkHZyZzl2PgiedYXTrqtMIXYbdI6DHBl86etaEMKQCw1qHGA7ydGszlZqVICbeUJj
-         e08A==
-X-Gm-Message-State: AOUpUlHmbQv9UzHSoMSFP41GImxj/UdH1M42apIhIAkihZGcrSRayA+E
-        kJvLVzo5KeNqkfows9pc9C5HOjIriJE=
-X-Google-Smtp-Source: AAOMgpfy+us6djQ/B8OI7H//HZredEFYUM/4l1O4u4xFj011PvFBZdDKRHL7xwMT5fdBVFAgK1lO+7IUhFs=
-X-Received: by 2002:a6b:6803:: with SMTP id d3-v6mr8419608ioc.7.1533058629187;
- Tue, 31 Jul 2018 10:37:09 -0700 (PDT)
-Date:   Tue, 31 Jul 2018 19:36:51 +0200
-In-Reply-To: <20180731173651.184716-1-hanwen@google.com>
-Message-Id: <20180731173651.184716-3-hanwen@google.com>
-Mime-Version: 1.0
-References: <20180731173651.184716-1-hanwen@google.com>
-X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
-Subject: [PATCH 2/2] Highlight keywords in remote sideband output.
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=7XW1ThGu1vjCaRu4yV4rdIRdoMBurzZS7OBBRxqsB2g=;
+        b=r9P9CWdthW4Rn0dfAeoEw9KhuPay+8p+pqFm0quzHxnHrOXz6fDHlG6jOMD96jjCq4
+         ErsMYTa0pUmMnSAEYzYGFHUtoYf4+MqEyWJo4dJT8Ca+gHOIO/+DNl18EdPtaRvcY6EX
+         6B0OoGxq01gq6H5SyUdZyjto8W3bxszNDKocF56baFMkZafAVyOcYeKfqM7EsuTOj2BK
+         /uZiMzSpU45oBjYzaMu3Jf+9eYiXsSKj8I6kh+bml6G7Ob/iPHEzl3Hgj/c6GFYevDdV
+         bwuIeWh+V/eFzxgmdC9VM/0xk9nYkvxvk2eolVgI3+wBwWGf/2IHfoi23zyZXfclaAuw
+         A8Ow==
+X-Gm-Message-State: AOUpUlHrqmxC5eg79G9e5BYZ0Y6IhZWCKp5j68sqDchdHpBqkrwi5Mtt
+        7rHzB7zoXiqWwM2MIzMMwZeDk8WSNLcWn86hr6ig7Q==
+X-Google-Smtp-Source: AAOMgpfXb9xA9otV7w8gHjyAowFdGnmGMeOqcsEslYmWxSQkVMbXbYPtIia0WreX8Rq51i2DcxuOBnfkcojBUsN0vkc=
+X-Received: by 2002:a1f:f284:: with SMTP id q126-v6mr13902864vkh.38.1533058838448;
+ Tue, 31 Jul 2018 10:40:38 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Tue, 31 Jul 2018 10:40:37
+ -0700 (PDT)
+In-Reply-To: <20180718152244.45513-1-dstolee@microsoft.com>
+References: <pull.11.git.gitgitgadget@gmail.com> <20180718152244.45513-1-dstolee@microsoft.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 31 Jul 2018 10:40:37 -0700
+Message-ID: <CABPp-BHPXG7M682haJgia2RYK5Sc3MYkcQxeBOLaRSbEXoLbUw@mail.gmail.com>
+Subject: Re: [PATCH] DO-NOT-MERGE: write and read commit-graph always
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The highlighting is done on the client-side. Supported keywords are
-"error", "warning", "hint" and "success".
+On Wed, Jul 18, 2018 at 8:22 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
+> The following test fails because the repo has ambiguous merge-bases, and
+> the commit-graph changes the walk order so we select a different one.
+> This alters the resulting merge from the expected result.
+>
+> t6024-recursive-merge.sh, Test 4
+>
+> The tests above are made to pass by deleting the commit-graph file
+> before the necessary steps.
 
-The colorization is controlled with the config setting "color.remote".
+I know you meant for these to not be merged, but perhaps the test in
+t6024 could be made to be less stringent about order of merge bases.
+In particular, instead of expecting a certain sha1 to be at stage 2
+and a different one to be at stage 3, it could just check that both
+shas appear in the `git ls-files --stage` output.
 
-Co-authored-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- Documentation/config.txt            |   9 +++
- help.c                              |   1 +
- help.h                              |   1 +
- sideband.c                          | 113 +++++++++++++++++++++++++---
- t/t5409-colorize-remote-messages.sh |  47 ++++++++++++
- 5 files changed, 162 insertions(+), 9 deletions(-)
- create mode 100644 t/t5409-colorize-remote-messages.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43b2de7b5..0783323be 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1229,6 +1229,15 @@ color.push::
- color.push.error::
- 	Use customized color for push errors.
- 
-+color.remote::
-+	A boolean to enable/disable colored remote output. If unset,
-+	then the value of `color.ui` is used (`auto` by default).
-+
-+color.remote.<slot>::
-+	Use customized color for each remote keywords. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
-+
- color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
-diff --git a/help.c b/help.c
-index 3ebf0568d..b6cafcfc0 100644
---- a/help.c
-+++ b/help.c
-@@ -425,6 +425,7 @@ void list_config_help(int for_human)
- 		{ "color.diff", "<slot>", list_config_color_diff_slots },
- 		{ "color.grep", "<slot>", list_config_color_grep_slots },
- 		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
- 		{ "color.status", "<slot>", list_config_color_status_slots },
- 		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
- 		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-diff --git a/help.h b/help.h
-index f8b15323a..9eab6a3f8 100644
---- a/help.h
-+++ b/help.h
-@@ -83,6 +83,7 @@ void list_config_color_diff_slots(struct string_list *list, const char *prefix);
- void list_config_color_grep_slots(struct string_list *list, const char *prefix);
- void list_config_color_interactive_slots(struct string_list *list, const char *prefix);
- void list_config_color_status_slots(struct string_list *list, const char *prefix);
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix);
- void list_config_fsck_msg_ids(struct string_list *list, const char *prefix);
- 
- #endif /* HELP_H */
-diff --git a/sideband.c b/sideband.c
-index 325bf0e97..0d67583ec 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,6 +1,97 @@
- #include "cache.h"
-+#include "color.h"
-+#include "config.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "help.h"
-+
-+struct kwtable {
-+	/*
-+	 * We use keyword as config key so it can't contain funny chars like
-+	 * spaces. When we do that, we need a separate field for slot name in
-+	 * load_sideband_colors().
-+	 */
-+	const char *keyword;
-+	char color[COLOR_MAXLEN];
-+};
-+
-+static struct kwtable keywords[] = {
-+	{ "hint",	GIT_COLOR_YELLOW },
-+	{ "warning",	GIT_COLOR_BOLD_YELLOW },
-+	{ "success",	GIT_COLOR_BOLD_GREEN },
-+	{ "error",	GIT_COLOR_BOLD_RED },
-+};
-+
-+static int sideband_use_color = -1;
-+
-+static void load_sideband_colors(void)
-+{
-+	const char *key = "color.remote";
-+	struct strbuf sb = STRBUF_INIT;
-+	char *value;
-+	int i;
-+
-+	if (sideband_use_color >= 0)
-+		return;
-+
-+	if (!git_config_get_string(key, &value))
-+		sideband_use_color = git_config_colorbool(key, value);
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
-+		if (git_config_get_string(sb.buf, &value))
-+			continue;
-+		if (color_parse(value, keywords[i].color))
-+			die(_("expecting a color: %s"), value);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++)
-+		list_config_item(list, prefix, keywords[i].keyword);
-+}
-+
-+/*
-+ * Optionally highlight some keywords in remote output if they appear at the
-+ * start of the line.
-+ */
-+void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-+{
-+	int i;
-+
-+	load_sideband_colors();
-+ 	if (!want_color_stderr(sideband_use_color)) {
-+		strbuf_add(dest, src, n);
-+		return;
-+	}
-+
-+	while (isspace(*src)) {
-+		strbuf_addch(dest, *src);
-+		src++;
-+		n--;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		struct kwtable* p = keywords + i;
-+		int len = strlen(p->keyword);
-+		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+			strbuf_addstr(dest, p->color);
-+			strbuf_add(dest, src, len);
-+			strbuf_addstr(dest, GIT_COLOR_RESET);
-+			n -= len;
-+			src += len;
-+			break;
-+		}
-+	}
-+
-+	strbuf_add(dest, src, n);
-+}
-+
- 
- /*
-  * Receive multiplexed output stream over git native protocol.
-@@ -48,8 +139,10 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		len--;
- 		switch (band) {
- 		case 3:
--			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    DISPLAY_PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
-+				    DISPLAY_PREFIX);
-+			maybe_colorize_sideband(&outbuf, buf + 1, len);
-+
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -69,20 +162,22 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				if (!outbuf.len)
- 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
--					strbuf_addf(&outbuf, "%.*s%s%c",
--						    linelen, b, suffix, *brk);
--				} else {
--					strbuf_addch(&outbuf, *brk);
-+					maybe_colorize_sideband(&outbuf, b, linelen);
-+					strbuf_addstr(&outbuf, suffix);
- 				}
-+
-+				strbuf_addch(&outbuf, *brk);
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
- 
- 				b = brk + 1;
- 			}
- 
--			if (*b)
--				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
--					    "" : DISPLAY_PREFIX, b);
-+			if (*b) {
-+				strbuf_addstr(&outbuf, outbuf.len ?
-+					    "" : DISPLAY_PREFIX);
-+				maybe_colorize_sideband(&outbuf, b, strlen(b));
-+			}
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-new file mode 100644
-index 000000000..4e1bd421f
---- /dev/null
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -0,0 +1,47 @@
-+#!/bin/sh
-+
-+test_description='remote messages are colorized on the client'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir .git/hooks &&
-+	cat << EOF > .git/hooks/update &&
-+#!/bin/sh
-+echo error: error
-+echo hint: hint
-+echo success: success
-+echo warning: warning
-+echo prefixerror: error
-+exit 0
-+EOF
-+	chmod +x .git/hooks/update &&
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git clone . child &&
-+	cd child &&
-+	echo 2 > file &&
-+	git commit -a -m 2
-+'
-+
-+test_expect_success 'push' '
-+	git -c color.remote=always push -f origin HEAD:refs/heads/newbranch 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded &&
-+	grep "prefixerror: error" decoded
-+'
-+
-+test_expect_success 'push with customized color' '
-+	git -c color.remote=always -c color.remote.error=white push -f origin HEAD:refs/heads/newbranch2 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<WHITE>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
-+
-+test_done
--- 
-2.18.0.345.g5c9ce644c3-goog
-
+> diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
+> index 3f59e58dfb..cec10983cd 100755
+> --- a/t/t6024-recursive-merge.sh
+> +++ b/t/t6024-recursive-merge.sh
+> @@ -61,6 +61,7 @@ GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
+>  '
+>
+>  test_expect_success "combined merge conflicts" "
+> +       rm -rf .git/objects/info/commit-graph &&
+>         test_must_fail git merge -m final G
+>  "
+>
+> --
+> 2.18.0.118.gd4f65b8d14
