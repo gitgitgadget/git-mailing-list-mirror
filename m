@@ -2,114 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DA341F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 17:31:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BD491F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 17:37:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729622AbeGaTMy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 15:12:54 -0400
-Received: from mail-qt0-f174.google.com ([209.85.216.174]:41951 "EHLO
-        mail-qt0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727495AbeGaTMy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 15:12:54 -0400
-Received: by mail-qt0-f174.google.com with SMTP id e19-v6so16811942qtp.8
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:31:33 -0700 (PDT)
+        id S1729662AbeGaTSU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 15:18:20 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:51264 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728052AbeGaTSU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 15:18:20 -0400
+Received: by mail-ua0-f202.google.com with SMTP id m26-v6so5436165uaq.18
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:36:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=a2QLZaJL8tqKOwCaGhDJyClUIqatHIN1ci6HjD+EM+A=;
-        b=TNmAUYMAkcZtqOTR2fP33jHH0/uWSXywKfLcm3MlKGkIFiXe7FfC4wRKSbmtJ1Wm+E
-         83pHbk3mAfdDZg7i3mSrXOQAPaWWUbwjm292icX2bquU0jltoRjkTA7U+mvDv5WAy/er
-         MbRjwfBbZ1xxWEM9TeShLmH7fMR5AJGAC+E6eliaDEW+Lwq9h1TWlN4ctn1yUynVnLus
-         eri7LQQyh34kyXjW82FRI/Z2xMQ6P2E0B5SXQJMi4Fxq10c8QQTMyTwpgIA39ksOFbma
-         9U6EBGS2gWII6JwckPm8o8O6w4eIHTkmGBjk4dreHTRtvZJY6VZKooGz5VlZ4SZQsWaI
-         YOyA==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=eexrPfoNnRgXtpQVfGsdmfKeP4DdrpGUVh6O0CSyuKA=;
+        b=Cdjq55gzyIC6dijM3QxTcCcyHO/kCoFLqss4vVd7hxcMKaPzWXVXOAZka9z2XRJlkQ
+         FuP7rqSnA5h9CYCeAMl9zSTffS7DQj9XKire6EdQU0BMYfPi9bm2evS6F3Jdy8sEKAic
+         xNiVf++zY2veoG44FG0sAOJsDMpdvVt7jIOFMQmX5ECVs2Q1ZriI6StYeVpvsqcSXOxg
+         rZy0EgkS+weoVP8rBGpvqxXqMkWUIC/ACNsr7UIap91l45/OAt3nwIYL8mrE3VzH0kqr
+         QqfyPD4ggpjk1STMDkSq5rso9sgPpBCmVXm2JifZbHVveErxz0DRHKDdVAIAOYG0+gZx
+         Bk3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=a2QLZaJL8tqKOwCaGhDJyClUIqatHIN1ci6HjD+EM+A=;
-        b=NHtUZ2akV6ToaEfpykLpXQBi1uHscjGWA+m5Qv9uOBkJAyCP7wm6CnsjUz5dPcrAxt
-         T7DCVl/zlkTMUNP2bFyuPI8I7jRWoEeV+eR4XyRzd/3ht9k+iWjmbekSybMzQFrWR5kJ
-         ONJix+rp8gWO7WyBIxBVlQaWBsAWELvNXJLimMNAkFF+c0YIoVw5tvNN5ohb4QdnEQHC
-         thrSIDT+1GM+OVDEz2+eyMgst14q2rKLrK6fPgUIs15Q0HcB3uLfnW+CLTyTAjDRQLBt
-         rD2C5vxpRV/Hb4ksLf2C/cl0UDzqRLlj7ZirNodI8dlPJeumImYG2AcU0QAN+K1Wq4Aq
-         +Z+A==
-X-Gm-Message-State: AOUpUlHfQvbOk6O/k4AP97zwhnhY43JtGND9cVFeF9/44Jsc799KKt9A
-        5UFe8kFPD2ebZtHhyt/HtgU=
-X-Google-Smtp-Source: AAOMgpftWk3kkplq3UVhppOd9y+5FFBewlVaCbBGTwMGd/S76taYTfJuYn44fQd9+f0QZdajaRBJhQ==
-X-Received: by 2002:a0c:96eb:: with SMTP id b40-v6mr20229446qvd.235.1533058293334;
-        Tue, 31 Jul 2018 10:31:33 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id l5-v6sm9409049qte.20.2018.07.31.10.31.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 31 Jul 2018 10:31:32 -0700 (PDT)
-Subject: Re: [PATCH v2 0/4] Speed up unpack_trees()
-From:   Ben Peart <peartben@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <20180727154241.GA21288@duynguyen.home>
- <20180729103306.16403-1-pclouds@gmail.com>
- <9a9a309c-7143-e642-cfd8-6df76e77995a@gmail.com>
- <CACsJy8BUBjPngHz=icHomor-LJOkMLwZ9bQ6YJDxnoXGg++vjg@mail.gmail.com>
- <cc3c4dbb-d545-6a6c-b20e-6a8ca66fc210@gmail.com>
-Message-ID: <57d146a2-9bf8-66c9-9cb4-c05f93b63319@gmail.com>
-Date:   Tue, 31 Jul 2018 13:31:31 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <cc3c4dbb-d545-6a6c-b20e-6a8ca66fc210@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=eexrPfoNnRgXtpQVfGsdmfKeP4DdrpGUVh6O0CSyuKA=;
+        b=KUY/5yW3k6LApgwlVCq1NFmEsbhd+0Scqez64FnbjeGrlqLcJ5Yqqk0jpJ49WD2BUu
+         ZOJ6U4ajISthqVVn4tezPO8rUiBP3RdqSKBQA44Gvea+kyFGOaDuFmMOGno++R/HHaHv
+         G7Zrvkr/Yq9C2m4r/9clG7Uu3Ko6WXSvHcZ9dc87fGWPECXj//Qqlfm5kZocPX/R5+q1
+         OfNxO/gOWAj7jXJrhSxksBmnuBo3uJg1U8awTeg7hJO4vx+BR3Xc4TVTrAwN90KIdAj0
+         lPHTM+moYZX+L02x5Zv/87ys0FzvrXEuHx5ouuJyvsKE+rWnrSu+QvKof/9KB0oKEeVR
+         iN5Q==
+X-Gm-Message-State: AOUpUlHJ/8qrWnzcUEaj43ylSMv17GHbFbAfjWfYxQdzFcUzHod+wb0t
+        o4YdGHPSerkYVur27wGdFU51SsHpEfE=
+X-Google-Smtp-Source: AAOMgpfouwQ0GnmMNMquZFW5NWfYsEFnLj1egMy9ZiYk8UgzqQ0WInfboNKRzJmMQnNWGike422jrKLLPSM=
+X-Received: by 2002:ab0:268b:: with SMTP id t11-v6mr10666117uao.101.1533058618351;
+ Tue, 31 Jul 2018 10:36:58 -0700 (PDT)
+Date:   Tue, 31 Jul 2018 19:36:49 +0200
+Message-Id: <20180731173651.184716-1-hanwen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3-goog
+Subject: [PATCH 0/2 v3] Highlight keywords in remote sideband output.
+From:   Han-Wen Nienhuys <hanwen@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+squash in Duy's patch
 
+Han-Wen Nienhuys (2):
+  Document git config getter return value.
+  Highlight keywords in remote sideband output.
 
-On 7/31/2018 12:50 PM, Ben Peart wrote:
-> 
-> 
-> On 7/31/2018 11:31 AM, Duy Nguyen wrote:
+ Documentation/config.txt            |   9 +++
+ config.h                            |  10 ++-
+ help.c                              |   1 +
+ help.h                              |   1 +
+ sideband.c                          | 113 +++++++++++++++++++++++++---
+ t/t5409-colorize-remote-messages.sh |  47 ++++++++++++
+ 6 files changed, 170 insertions(+), 11 deletions(-)
+ create mode 100644 t/t5409-colorize-remote-messages.sh
 
->>
->>> In the performance game of whack-a-mole, that call to repair cache-tree
->>> is now looking quite expensive...
->>
->> Yeah and I think we can whack that mole too. I did some measurement.
->> Best case possible, we just need to scan through two indexes (one with
->> many good cache-tree, one with no cache-tree), compare and copy
->> cache-tree over. The scanning takes like 1% time of current repair
->> step and I suspect it's the hashing that takes most of the time. Of
->> course real world won't have such nice numbers, but I guess we could
->> maybe half cache-tree update/repair time.
->>
-> 
-> I have some great profiling tools available so will take a look at this 
-> next and see exactly where the time is being spent.
-
-Good instincts.  In cache_tree_update, the heavy hitter is definitely 
-hash_object_file followed by has_object_file.
-
-Name                               	Inc %	     Inc
-+ git!cache_tree_update            	 12.4	   4,935
-|+ git!update_one                  	 11.8	   4,706
-| + git!update_one                 	 11.8	   4,706
-|  + git!hash_object_file          	  6.1	   2,406
-|  + git!has_object_file           	  2.0	     813
-|  + OTHER <<vcruntime140d!strchr>>	  0.5	     203
-|  + git!strbuf_addf               	  0.4	     155
-|  + git!strbuf_release            	  0.4	     143
-|  + git!strbuf_add                	  0.3	     121
-|  + OTHER <<vcruntime140d!memcmp>>	  0.2	      93
-|  + git!strbuf_grow               	  0.1	      25
+--
+2.18.0.345.g5c9ce644c3-goog
