@@ -2,114 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D1A6208E9
-	for <e@80x24.org>; Tue, 31 Jul 2018 23:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDAD91F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 23:33:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732758AbeHABPi (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 21:15:38 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:32936 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732749AbeHABPi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 21:15:38 -0400
-Received: by mail-ed1-f67.google.com with SMTP id x5-v6so5976009edr.0
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 16:32:57 -0700 (PDT)
+        id S1732780AbeHABQR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 21:16:17 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:39650 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732749AbeHABQQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 21:16:16 -0400
+Received: by mail-it0-f74.google.com with SMTP id w196-v6so4317748itb.4
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 16:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=R7hA7S9/l2g5KawWLC6IoFAZEBHFvaWHPJ1WANI+7XY=;
-        b=TNBILL/ehaeGXu6g1kLC7PUP3ntW4Gg1L39IO4MLYaVYFSv0LDAtxQDrHR9u+Dl/nm
-         A9jE1/zpdei6TkzQ5vsFuPPz3e9bvJ0nm/IMzzo47pzz+4KILruX3FkrnGk2x4z581Oq
-         7hRHB1uK0APPmkuMhxTcPup/fIzf8SiE8kJ7Th5v3USkAzGPuTcxYXdQAMucbrtuCy2U
-         Hlzt0kPpl8YI62BTzk2RfiBdNGtvaIdD/h9Jeg7vPjt6o/wBs6SkieX0XLLvLxqWVuB8
-         /f3ABkYAhW8/JPLRlVQAipjPZfYVnAxzf5CVOoFKov4vt3RNFvu7azA/WsVDpC0B5CD5
-         tXOQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=tx1IPawfGVbb90erLnutTbrXF/el+MhXMePub7L29Dw=;
+        b=T+9Pje+gQ4eiZp7HX7S91QFEQUwpakBw0kdaMHYXS5fgnzuJxKeoSOYN5RnGFEhgrp
+         U+Arp8r+NRshzZMqp9oE3gtCFqkyh1J9W7K3ZJ+PwdGMISJ9H2VkKeR5vhli2ENeHHiQ
+         1mf54PAjzVHzzjVeFSVTjp3cnP7D2y0YABZ6MDlNw/4Zs/H0sXA/2f7DZTDiYKWntHMs
+         MqsbkCSA2YbpzOfnpYGT7RiruMReviFRFtq7HsM57X7kdM/+zT71dmXTz7QZ2mpjIcfF
+         uysxOPRYsFzcP4p2rwrvOFmpUxkaNT/sPS0y1fay6Dl2iSK/TNRcnoPA/DeJim8zSxge
+         CFpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=R7hA7S9/l2g5KawWLC6IoFAZEBHFvaWHPJ1WANI+7XY=;
-        b=G7Zho/7+bcZPFCeemCzI3dGyA7k6nRDMnqgEwgCHRJSJDaD+RiCNrNZ7QAAMi3ILJX
-         1YvGBnH1VsGuxVU7kLto0gQx71ywJtAtJGeHaH2SKVVEzmkwIVH8wN3YEbr6jpMY6Kt/
-         oVWt2ElMwABj9d3RoITl65FZeyNfYqU6VKvSrrkdVo7yj8pEyHWTrm99KQA5tzSzdOJu
-         Vz90jz7CijEDyrurmtUAx7bxGgol8rD95mzUbL9lP6f6b0KBGbZ0CQS4j8xjwBsT3Ai4
-         b7tFYoMtPJFPphsMYeID6vj7cF8JYOl+dlTPym1sGAPUFBtgpP2EsLAx0wiUlyYGR4mm
-         UUfA==
-X-Gm-Message-State: AOUpUlHMc2wGzdZ1RYl6lVMXqSm+YxQIm/qTGXy7/w6rqP5BhnyMphoz
-        pcciRwcBfQO01XBv1YaJ6UvaoAL2
-X-Google-Smtp-Source: AAOMgpdADwxGc7Q+qaYKEzFCB6I/ALnJOSwvq3Y8a5LbgKsZJdrjsZv8eihg91zhcZWuH+R5Rer83w==
-X-Received: by 2002:a50:8b25:: with SMTP id l34-v6mr1395083edl.265.1533079976891;
-        Tue, 31 Jul 2018 16:32:56 -0700 (PDT)
-Received: from localhost.localdomain (x590cfeaf.dyn.telefonica.de. [89.12.254.175])
-        by smtp.gmail.com with ESMTPSA id s23-v6sm4014969edm.74.2018.07.31.16.32.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 31 Jul 2018 16:32:56 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t1404: increase core.packedRefsTimeout to avoid occasional test failure
-Date:   Wed,  1 Aug 2018 01:32:48 +0200
-Message-Id: <20180731233248.25482-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.408.g42635c01bc
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=tx1IPawfGVbb90erLnutTbrXF/el+MhXMePub7L29Dw=;
+        b=iqgfP81JBcttodLs1Yva2m9KsqF1M67//flQ0ZF0xPIL1ZFOPz37kPf6BNctNHkbYw
+         tUccCZtu1kF/3S3ESQbwEKk1pTa3BsMlBBfF4sal0uYx9OmSLQu4is7cjumhAkA0CSkI
+         FcRTkkpsZ8t+GiGMosrgBvfiFXXaGLk1Ef0shAoyv+Djpz/tKQix5cgqsJ/raw1MabA+
+         3UbDa+xtZLhLVYkMYdSriLdy1DHVrKqDGRuvNL9cuUWlucvrq1Ki+4Yu3l5V6fX2++cj
+         M4z8ufThD+1owbBLIAw4YO0gP3EwB47ho5eH8uFnPV11VRcB9veCcoI+jZtoAOryOq5N
+         KQog==
+X-Gm-Message-State: AOUpUlHN4HJSglZrZKEDRc27654bElAc6ma3DNbBSsfKL1ckDUb9N/wG
+        gV3IVTHFGAoxmlSaKKFcu5Tqi2nkCX/Xd20m+jPQ
+X-Google-Smtp-Source: AAOMgpctXwGsw/WHBf1hAo/EScLrKbtKXAbVAKJxJgdpRWXPenr6Y1bcuKKYpL0wM49zoiRm9W6+W2Jo+fZ+iM7dSoyl
+X-Received: by 2002:a6b:a20b:: with SMTP id l11-v6mr8552608ioe.58.1533080015836;
+ Tue, 31 Jul 2018 16:33:35 -0700 (PDT)
+Date:   Tue, 31 Jul 2018 16:33:32 -0700
+In-Reply-To: <xmqq1sbj9h08.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20180731233332.187328-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqq1sbj9h08.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.18.0.321.gffc6fa0e3.dirty
+Subject: Re: [PATCH] remote: prefer exact matches when using refspecs
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test 'no bogus intermediate values during delete' in
-'t1404-update-ref-errors.sh', added in 6a2a7736d8 (t1404: demonstrate
-two problems with reference transactions, 2017-09-08), tries to catch
-undesirable side effects of deleting a ref, both loose and packed, in
-a transaction.  To do so it is holding the packed refs file locked
-when it starts 'git update-ref -d' in the background with a 3secs
-'core.packedRefsTimeout' value.  After performing a few checks it is
-then supposed to unlock the packed refs file before the background
-'git update-ref's attempt to acquire the lock times out.
+> That is, something like this, perhaps.  The resulting behaviour
+> should match how "git rev-parse X" would give precedence to tag X
+> over branch X by going this route.  What do you think?
 
-While 3secs timeout seems plenty, and indeed is sufficient in most
-cases, on rare occasions it's just not quite enough: I saw this test
-fail in Travis CI build jobs two, maybe three times because 'git
-update-ref' timed out.
+[snip]
 
-Increase that timeout by an order of magnitude to 30s to make such an
-occasional failure even more improbable.  This won't make the test run
-any longer under normal circumstances, because 'git update-ref' will
-acquire the lock and resume execution as soon as it can.  And if it
-turns out that even this increased timeout is still not enough, then
-there are most likely bigger problems, e.g. the Travis CI build job
-will exceed its time limit anyway, or the lockfile module is broken.
+>  static const struct ref *find_ref_by_name_abbrev(const struct ref *refs, const char *name)
+>  {
+>  	const struct ref *ref;
+> +	const struct ref *best_match = NULL;
+> +	int best_score = -1;
+> +
+>  	for (ref = refs; ref; ref = ref->next) {
+> -		if (refname_match(name, ref->name))
+> -			return ref;
+> +		int score = refname_match(name, ref->name);
+> +
+> +		if ((score && (best_score < 0 || score < best_score))) {
+> +			best_match = ref;
+> +			best_score = score;
+> +		}
+>  	}
+> -	return NULL;
+> +	return best_match;
+>  }
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t1404-update-ref-errors.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+This looks good to me. I've checked that refname_match (and
+branch_merge_matches(), which returns the result of refname_match()
+directly) is only used in "if" contexts, so making it return a value
+other than 1 is fine.
 
-diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
-index 3a887b5113..372f0b1fbb 100755
---- a/t/t1404-update-ref-errors.sh
-+++ b/t/t1404-update-ref-errors.sh
-@@ -559,9 +559,9 @@ test_expect_success 'no bogus intermediate values during delete' '
- 	{
- 		# Note: the following command is intentionally run in the
- 		# background. We increase the timeout so that `update-ref`
--		# attempts to acquire the `packed-refs` lock for longer than
--		# it takes for us to do the check then delete it:
--		git -c core.packedrefstimeout=3000 update-ref -d $prefix/foo &
-+		# attempts to acquire the `packed-refs` lock for much longer
-+		# than it takes for us to do the check then delete it:
-+		git -c core.packedrefstimeout=30000 update-ref -d $prefix/foo &
- 	} &&
- 	pid2=$! &&
- 	# Give update-ref plenty of time to get to the point where it tries
--- 
-2.18.0.408.g42635c01bc
-
+I would initialize best_score to INT_MAX to avoid needing the
+"best_score < 0" comparison, but don't feel strongly about it.
