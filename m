@@ -2,110 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 463791F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 14:09:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 110A21F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 14:25:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732234AbeGaPtz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 11:49:55 -0400
-Received: from mail-ua0-f181.google.com ([209.85.217.181]:42649 "EHLO
-        mail-ua0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732222AbeGaPtz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 11:49:55 -0400
-Received: by mail-ua0-f181.google.com with SMTP id w7-v6so10353026uan.9
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 07:09:25 -0700 (PDT)
+        id S1732277AbeGaQGH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 12:06:07 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33328 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732222AbeGaQGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 12:06:06 -0400
+Received: by mail-ed1-f67.google.com with SMTP id x5-v6so5474858edr.0
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 07:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=eDcAw4P/IYRbRF+7NamQThslLHYp1Pxj1WpKr8y08sE=;
-        b=OtWnyatD7XNqV8d5LgguZrOyDtaCKv4rqmE8ttWoeiUUiHovU8ayzCkXLYpdVeFk3u
-         Lf222XwXt9jnXb1RvbzbjUELzR8L2VXIYRt6KkoMyQcAceSenHkau8tRSTWEOg2u454O
-         8nDdYNSuNH4/nF1ISRMHqTYtlduaKMxD2k23oCvwmLGL+RkdsF91um2MRJsPrZfMT62N
-         7kyzSDA21rZ/pqBjiGRqiKD5TX1btYYnoAf3YAAjz8gDUKcJwapsZ6NSfyMv8thNbexw
-         BZNKpbc33e2LDu46XvxEz6fd7TMiLkaMY1d+Friq4HwrZImQ0wbnQHuxbJIqBuHaxDtF
-         ryRQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=M2jUUvidkYAanjupYDljqIVgRkmhbqvNPB1GG+8lovQ=;
+        b=Djgl9YR8pMvOCloouDL5hwpZODoPxDVmNF8i2+SSScsoPz5VCZxXNQBRkXMQUKyR5u
+         cNhn1Q5gRgU8siFJs/zaR/I+Hl6NJ5rKDZwJR3kt3RTYGadhUHJ1SMrawJAEJY1FP1sb
+         iaYZ7kGftfXBv3Ab5UfLudftuH2maBLr9kMPbddfMQvBiv99SRmHgAgFoymfl1QSMuGJ
+         0xRoCCoNFZgJi53wrndsHOBQe9W9EYrFZ3mlJSEYp2m2/jP/dlqZqa0aIPhLvQKvFlTA
+         Xb7cv8rtQ+5g5Bx7DVqTcr3zag67LKk+XflhkvlpQlaD54U9NwlhFY2GBPsEXkgJya2q
+         Jvfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=eDcAw4P/IYRbRF+7NamQThslLHYp1Pxj1WpKr8y08sE=;
-        b=KFMX3KN3E/DqjW29lZTH+pza7bEvFU3LJ2CGTb92DUyo3yUGTjWh0DHcsNC/Ak2gNb
-         9v8yhY9OqdefiYkAMyKHolBxpPKOfwyiTlTOKMuwiFN9zmQ33691zz7/5ALN2cL67nes
-         XzYQdNR0rFHwhBCZQ34xA3NjNfK3i/FPL4rsD3CIN0rcvteToBnuCETwcJcnJWEETpCz
-         feiFYQWxLIcm2X6II4T/ASm4VFlY/sKOM+E67zLpzfKsgP3hPTZtdO/coh9sUVPOdCHp
-         ZIQaudd0LYY2K06VfWhfIW/ZVRPvGvGHl6OW7FRwS6tTsImAlvyFdqsJKaM941Um5R3I
-         qc2w==
-X-Gm-Message-State: AOUpUlFl/6iCUhog8rnqOsx588muC6bp7uP6Hf3ZmTMOuLx4XPfj+zDm
-        5PZfpq9qtm6BPge2LqZiGErSyLtWbjaxqPRfSwCrIgQQ
-X-Google-Smtp-Source: AAOMgpepn8NP4a+pcuzyHG2JW98GtXpJOmeQKFZeffZQ2J+oxJ6rEfocAn2fKkHwFEK5gvC8j5mj0hnk77hmv1EPQe0=
-X-Received: by 2002:ab0:4dce:: with SMTP id b14-v6mr15586154uah.27.1533046164155;
- Tue, 31 Jul 2018 07:09:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=M2jUUvidkYAanjupYDljqIVgRkmhbqvNPB1GG+8lovQ=;
+        b=QwroJ6rwB66bgvdi8TeTnx6h5txesvLFABT1sYdtwKXJihPH95GcAh2WTtOpsQZ6EZ
+         qPK6v7BaLpapIyv6opRHgeTfwn6xO9Yn79gbESSeHNeI0b0kDF+chzXHzf7Sv3DAAFku
+         1GPQ7bxLVzV9sLKi/VUiFSIpUdffy+yM+tCZapTizEPs4V+sXpEES7pxmOgKiZIicqbM
+         HfJOaOhl6kbz2jqjuc+M1hSKO468lC95cveNYXDASuyA8VrH4cRWaBrzBKcZgnLMJYqz
+         4KtemqybB9qvrdq0wr0DldZ95CWmpQxNJHB2qFSQegLPjjwJ54XIjzuMny2QYOev9732
+         RZVw==
+X-Gm-Message-State: AOUpUlGt/3Lphd2SZD1B5s45Zhsv+EgOSv7+hve+ScJf8L5Mru+pebkT
+        BMUl86e5LbrKF1WU/zaKHAU=
+X-Google-Smtp-Source: AAOMgpd4+UuSGF6P4Om91jJezOaRmhyMeTgGzhGhmF6BlS+m+NM59OIFXiw79+iKcwwjA0UMIK3nrw==
+X-Received: by 2002:a50:9182:: with SMTP id g2-v6mr12633991eda.24.1533047131776;
+        Tue, 31 Jul 2018 07:25:31 -0700 (PDT)
+Received: from evledraar ([5.57.20.50])
+        by smtp.gmail.com with ESMTPSA id r11-v6sm2813833edh.32.2018.07.31.07.25.25
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 07:25:25 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Michael Felt <aixtools@felt.demon.nl>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Dan Shumow <shumow@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: Is detecting endianness at compile-time unworkable?
+References: <fb935882-25b1-db5f-d765-50dab297f733@felt.demon.nl>
+        <20180729181006.GC945730@genre.crustytoothpaste.net>
+        <2309fa7f-c2d8-ee57-aff5-b9e32d2da609@felt.demon.nl>
+        <20180729192753.GD945730@genre.crustytoothpaste.net>
+        <dfe374bf-d9de-8dad-6ec9-4edfa3e9b12b@felt.demon.nl>
+        <20180729200623.GF945730@genre.crustytoothpaste.net>
+        <701d9f4b-efbd-c584-4bec-bddb51b11d96@felt.demon.nl>
+        <87wotdt649.fsf@evledraar.gmail.com>
+        <287cdba8-19c1-2fe8-4aff-d0385b38e92c@felt.demon.nl>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <287cdba8-19c1-2fe8-4aff-d0385b38e92c@felt.demon.nl>
+Date:   Tue, 31 Jul 2018 16:25:24 +0200
+Message-ID: <87sh3ztrcb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   George Shammas <georgyo@gmail.com>
-Date:   Tue, 31 Jul 2018 10:09:12 -0400
-Message-ID: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
-Subject: git merge -s subtree seems to be broken.
-To:     git@vger.kernel.org
-Content-Type: multipart/alternative; boundary="00000000000009f08905724c2047"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---00000000000009f08905724c2047
-Content-Type: text/plain; charset="UTF-8"
 
-At work, we recently updated from a massively old version of git (1.7.10)
-to 2.18. There are a few code bases that use subtrees, and they seem to
-have completely broke when trying to merge in updates.
+On Tue, Jul 31 2018, Michael Felt wrote:
 
-I have confirmed that it works correctly in 1.7.10.  The 2.18 behavior is
-clearly incorrect.
+> I hope a I have a "leap forward"
+>
+>
+> On 7/30/2018 11:39 AM, Ævar Arnfjörð Bjarmason wrote:
+>> Perhaps it's worth taking a step back here and thinking about whether
+>> this whole thing is unworkable. It was hard enough to get this to work
+>> on the combination of Linux, *BSD and Solaris, but I suspect we'll run
+>> into increasingly obscure platforms where this is hard or impossible
+>> (AIX, HP/UX etc.)
+> While I still cannot say for HP/UX it does seem there is a potential
+> solution based on the status for _LITTLE_ENDIAN and _BIG_ENDIAN. At
+> least, gcc on POWER and xlc on POWER provides one or the other - and my
+> hope is that gcc on other platforms also provides them.
 
-git init
-echo init > test
-git add test
-git commit -m init
+Yeah with GCC this is relatively easy, see
+https://github.com/cr-marcstevens/sha1collisiondetection/blame/c3e1304/lib/sha1.c#L29-L115
 
-git remote add tig https://github.com/jonas/tig.git
-git fetch tig
-git merge -s ours --no-commit --allow-unrelated-histories tig-2.3.0
-git read-tree --prefix=src/ -u tig-2.3.0
-git commit -m "Get upstream tig-2.3.0"
-# Notice how the history are merged, and that the source from the upstream
-repo is in src
+> For "other" compilers that do not provide them - a modification to
+> CFLAGS to define one or the other should make "make" work.
+>
+> Details (note - I am not a programmer, so by definition at least one of
+> my "macros" will be wrong :)
+>
+> AIX and xlc
+> root@x066:[/]xlc -qshowmacros -E /dev/null | grep -i endi
+> 1506-297 (S) Unable to open input file null. A file or directory in the
+> path name does not exist..
+> #define __HHW_BIG_ENDIAN__ 1
+> #define __BIG_ENDIAN__ 1
+> #define __THW_BIG_ENDIAN__ 1
+> #define _BIG_ENDIAN 1
+>
+> On SLES12 (le) and xlc
+> suse12test:~/images/littleEndian/sles # xlc -qshowmacros -dM -E x.c |
+> grep -i endi
+> #define _LITTLE_ENDIAN 1
+> #define __BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__
+> #define __FLOAT_WORD_ORDER__ __ORDER_LITTLE_ENDIAN__
+> #define __LITTLE_ENDIAN__ 1
+> #define __ORDER_BIG_ENDIAN__ 4321
+> #define __ORDER_LITTLE_ENDIAN__ 1234
+> #define __ORDER_PDP_ENDIAN__ 3412
+> #define __VEC_ELEMENT_REG_ORDER__ __ORDER_LITTLE_ENDIAN__
+>
+>
+> Based on what I can see on gcc on POWER and xlc on POWER I think an
+> approach (simplified) can be:
+>
+> #if undefined(_BIG_ENDIAN) && undef(_LITTLE_ENDIAN)
+> #error "one of _BIG_ENDIAN or _LITTLE_ENDIAN must be defined. Try adding
+> the correct value to CFLAGS"
+> #else defined(_BIG_ENDIAN) && defined(_LITTLE_ENDIAN)
+> #error "Only one of _BIG_ENDIAN and _LITTLE_ENDIAN may be defined, not both"
+> #endif
+>
+> And then logic based on the value set.
+> This should also make cross-compile possible by unsetting an incorrect
+> default and setting the correct value.
 
-echo update > test
-git commit -a -m "test"
+...the real trick is using these macros outside of GCC / glibc and on
+older GCC versions. See the github link above, you basically end up with
+a whitelist of how it looks on different systems / compilers. Sometimes
+both are defined, sometimes only both etc.
 
-git merge -s subtree tig-2.4.0
-# Boom, in 2.18 instead of merging into the subtree, it just deletes
-everything in the repository, which is clearly the wrong behavior.
+It can be done, but as that code shows it's somewhat complex macro soup
+to get right.
 
---00000000000009f08905724c2047
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> p.s. Is there a setting I need to set somewhere so I receive a copy of
+> the email sent after it is received by the list. I could send myself a
+> copy, but I much prefer it comes from the maillist - as verification it
+> was received.
 
-<div dir=3D"ltr">At work, we recently updated from a massively old version =
-of git (1.7.10) to 2.18. There are a few code bases that use subtrees, and =
-they seem to have completely broke when trying to merge in updates.<div><br=
-></div><div>I have confirmed that it works correctly in 1.7.10.=C2=A0 The 2=
-.18 behavior is clearly incorrect.<br><br></div><div>git init</div><div>ech=
-o init &gt; test</div><div>git add test</div><div>git commit -m init</div><=
-div><br></div><div>git remote add tig <a href=3D"https://github.com/jonas/t=
-ig.git">https://github.com/jonas/tig.git</a><br></div><div>git fetch tig<br=
-></div><div>git merge -s ours --no-commit --allow-unrelated-histories tig-2=
-.3.0<br></div><div>git read-tree --prefix=3Dsrc/ -u tig-2.3.0<br></div><div=
->git commit -m &quot;Get upstream tig-2.3.0&quot;<br></div><div># Notice ho=
-w the history are merged, and that the source from the upstream repo is in =
-src<br></div><div><br></div><div>echo update &gt; test</div><div>git commit=
- -a -m &quot;test&quot;</div><div><br></div><div>git merge -s subtree tig-2=
-.4.0<br></div><div># Boom, in 2.18 instead of merging into the subtree, it =
-just deletes everything in the repository, which is clearly the wrong behav=
-ior.<br></div></div>
-
---00000000000009f08905724c2047--
+You should get that, but maybe your mailer ignores Message-Ids it
+already has, but you can go to https://public-inbox.org/git/ and search
+for the Message-Id or your name to see E-Mails you've sent that made it
+to the list, e.g.:
+https://public-inbox.org/git/?q=aixtools%40felt.demon.nl
