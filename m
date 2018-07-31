@@ -2,102 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A0771F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 14:59:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C90E1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 15:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732394AbeGaQkD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 12:40:03 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:51247 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732369AbeGaQkD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 12:40:03 -0400
-Received: by mail-wm0-f49.google.com with SMTP id y2-v6so3457463wma.1
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 07:59:18 -0700 (PDT)
+        id S1732394AbeGaQnX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 12:43:23 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:37310 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732333AbeGaQnX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 12:43:23 -0400
+Received: by mail-ed1-f65.google.com with SMTP id b10-v6so5509171eds.4
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=sREBjvsG1HJOZCvgF6ZqD9CqRh+xeIqXaHbK1dgSYv4=;
-        b=ZnUGLZ2cXT4/aSDwQGmMM/3AqHD2G+qsvUOPCosNLHc6ffvoilCJFNxYWatIxRPIJB
-         IYglmZcd5QmYNWrPIUQNwng9Kbxzw+z8kaNSkII2lfhbzu6pnoPicjDZshIXkFOGGsUX
-         AjqP4nsTHjYlUzRAZSeQkPgUXTY/Aa6WP61CIDuiCDcaG2mbHQDFzANv6/YsqcQA0wTf
-         mMYpcjuAEmWQp1NVXkYpjaDKcJxRYWtQ7vKoRIqM68w1BUJyYbXj/CNLcWtY7QBsIiO2
-         haZbew64e6eXVUvsQLD+tV+K+wpAHplojvesKwG+x4OE3ygP20nmwx8SGAiKLXpBRh79
-         sDpQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=cCM13QM/N2objTdV0MEiutNQeE9zeVEU12P1qpGbqfQ=;
+        b=hLEj8t0ZrrvbxU4F3Whw/GyRVpXh2BT0k2oOYvq4mQSxrNuD/wlccdl9P9CeW3ACRN
+         PpQfhZVKDk4Dsc3cCQMQEbNV6ZS1Ghq6FtJUtjnyFAlyT7+X/I88m+das/koc3FP4dt9
+         HiQnLog7KE16cxqH4BGfgYdu3yZNg2TCoYP/s3eGeZ8LS9lD96Ig6mAD+40mI5fDCPPk
+         +GGq33/ZtOsgdMhzjR+v7SVHLzC+MGcu6UblTBiTtShCERz6LRBvf8e9JJTPrbSlWziD
+         qA/+MkayopTJ5oBe/hWSqvaSipFUSrne+bCBFVnVBDSGzn2ceKKwd9JdegFTJPfv7bTW
+         ObZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=sREBjvsG1HJOZCvgF6ZqD9CqRh+xeIqXaHbK1dgSYv4=;
-        b=Ik9uq/nWwnHTYZAlVxhbzqrXjfnpUNILfacEgQgdfDGW1KcvzdUMVGSjobIYrgXlu+
-         ZGhG2tpgmTR/b1FByk9Yf637+6c3vdTab7NNq0spBt5o/U0tedQAcevOEprCwTbbJSMQ
-         DPQ/fdqDgRsVQ1RrnX0iRNj5lSYTEMACeyOOd8UPIi84gJdULVQ1xJraFcWBL0rezruo
-         9IRq1IWUuQgqDxrk2vh1AN1GFJWilO0ls/hsDTusbmmPAlQ9egUP+8ErCc618DbzCih/
-         C20UoIea4/A0/mXWdIPcoxCtj7jbIvVln/qI+ph3D01kY8AZjV9bAVWyIxufGcXSCHE2
-         xhDA==
-X-Gm-Message-State: AOUpUlHpqvsnB5M2SSXGDR0xCJsBgpRL1Z0kT4bcxANZ2a31rXR3cke0
-        cDRttqYAQJzgs+cTMM/uquQ=
-X-Google-Smtp-Source: AAOMgpeYALsMFhlhranXPduvnnR4yvREiq8FinzPK4Jd7T3VNn7Wdl4H+Ut4CWiymAYW0BQNTAkajw==
-X-Received: by 2002:a1c:910f:: with SMTP id t15-v6mr30108wmd.51.1533049157936;
-        Tue, 31 Jul 2018 07:59:17 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y14-v6sm27645158wrq.45.2018.07.31.07.59.16
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=cCM13QM/N2objTdV0MEiutNQeE9zeVEU12P1qpGbqfQ=;
+        b=a0K1bWqLmKsZd3rj7rHZS5D6VBhRuOg7jgCkGex3+HmJPY4mX0RSvvI9wwkyNcidRp
+         Afzv27Tn8nxhKK2eTNmBzRxS3+eFfcGYAs9vGugDNaPInPKI7c9UNq5Q4HmYp/8LLJXp
+         SSZTg/r6YTvokakr1IcYT3vYtKM3Phk42TZCzz4tcqZCMCRpwACqEiiUBh6dTJOMS7Ta
+         aWsP0rI+YUPVhWXxriwteUJEmOl78611Z928wl5pznkSgg/h+I93k2rQsnARFKcATw3w
+         1to/5rk4IexkKLE9Z9GPpHDdRR0rsTdeCw3H+R4fKYVQs2dyfgdoVc1Y0bNRXC0e9kvr
+         kmEQ==
+X-Gm-Message-State: AOUpUlEm/AEQy15+Ii5dSjvwIIDI5LqqkULzFFOdmHZDNmVSrpGopU5M
+        mtQXD8Qd6IooBDfG+EPItiQ=
+X-Google-Smtp-Source: AAOMgpdfTD0XnfVNXU1tdpp6xElgmiE7UlpnyAKyoFu9oMPa+ihXTmuMsL/+Af3dBb+8M+PWb2xraQ==
+X-Received: by 2002:a50:ba3b:: with SMTP id g56-v6mr59986edc.85.1533049358156;
+        Tue, 31 Jul 2018 08:02:38 -0700 (PDT)
+Received: from evledraar ([5.57.20.50])
+        by smtp.gmail.com with ESMTPSA id t44-v6sm3570073edh.18.2018.07.31.08.02.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 31 Jul 2018 07:59:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] Highlight keywords in remote sideband output.
-References: <20180730123334.65186-1-hanwen@google.com>
-        <20180730123334.65186-2-hanwen@google.com>
-        <xmqqsh40e72x.fsf@gitster-ct.c.googlers.com>
-        <CAFQ2z_NL+8LVmv+E4osq2+nx+qVE4P80it8vjLUwib=HJ5k4Lg@mail.gmail.com>
-Date:   Tue, 31 Jul 2018 07:59:16 -0700
-In-Reply-To: <CAFQ2z_NL+8LVmv+E4osq2+nx+qVE4P80it8vjLUwib=HJ5k4Lg@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Tue, 31 Jul 2018 13:03:53 +0200")
-Message-ID: <xmqqd0v3e9iz.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Tue, 31 Jul 2018 08:02:37 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] negotiator/skipping: skip commits during fetch
+References: <20180716184401.168576-1-jonathantanmy@google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180716184401.168576-1-jonathantanmy@google.com>
+Date:   Tue, 31 Jul 2018 17:02:36 +0200
+Message-ID: <87r2jjtpmb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> On Mon, Jul 30, 2018 at 11:39 PM Junio C Hamano <gitster@pobox.com> wrote:
->> > + */
->> > +void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
->>
->> I'll make this "static" to this file while queuing.
->
-> Does that mean the patch is in?
+On Mon, Jul 16 2018, Jonathan Tan wrote:
 
-It depends on your definition of "is in".  
+Didn't catch this until this was in next, sorry.
 
-It does not mean there is no need to update it further before it
-graduates to 'master' and becomes part of the next release, if that
-is what you are asking.
+Re-arranged the diff a bit:
 
-I saw others commented on the patch, showing general interest in the
-feature, agreeing to the approach taken and suggesting improvements.
-I am *not* going to respond to these comments and make further
-changes myself (you hopefully will), but expect that these review
-discussions to find a good terminal point that results in your
-sending out the "hopefully the final best version" in some time.  In
-the meantime while I am waiting for that, I'd hold onto the version
-posted here and build it with all topics in flight that are waiting
-for improvements in a similar way by merging it in the 'pu' branch.
-And while doing so, I'll minimally modify this initial version so
-that the whole thing at least compiles, by making small tweaks like
-making a function that should be static static and getting rid of
-decl-after-stmt, etc.
+> -void fetch_negotiator_init(struct fetch_negotiator *negotiator)
+> +void fetch_negotiator_init(struct fetch_negotiator *negotiator,
+> +			   const char *algorithm)
+>  {
+> +	if (algorithm && !strcmp(algorithm, "skipping")) {
+> +		skipping_negotiator_init(negotiator);
+> +		return;
+> +	}
+>  	default_negotiator_init(negotiator);
+>  }
 
-That is what I meant by that line, and nothing more.
+Okey, I understand that's how it works now, but....
 
-Thanks.
+> +fetch.negotiationAlgorithm::
+> +	Control how information about the commits in the local repository is
+> +	sent when negotiating the contents of the packfile to be sent by the
+> +	server. Set to "skipping" to use an algorithm that skips commits in an
+> +	effort to converge faster, but may result in a larger-than-necessary
+> +	packfile; any other value instructs Git to use the default algorithm
+> +	that never skips commits (unless the server has acknowledged it or one
+> +	of its descendants).
+> +
+
+...let's instead document that there's just the values "skipping" and
+"default", and say "default" is provided by default, and perhaps change
+the code to warn about anything that isn't those two.
+
+Then we're not painting ourselves into a corner by needing to break a
+promise in the docs ("any other value instructs Git to use the default")
+if we add a new one of these, and aren't silently falling back on the
+default if we add new-fancy-algo the user's version doesn't know about.
+
+Also, switching gears entirely, I'm very excited about this whole thing
+because it allows me to address something I've been meaning to get to
+for a while.
+
+At work I sometimes want to see what commits I've made to all our git
+repos, for remembering what I was doing last February or whatever (this
+is for filling in quarterly reports).
+
+So I have this script that basically does this:
+
+    for repo in $(get-list-of-all-the-things)
+    do
+        git config "remote.$repo.url" git@git-server.example.com:$repo.git
+        git config "remote.$repo.fetch" "+HEAD:$repo/HEAD"
+        git config "remote.$repo.tagOpt" "--no-tags"
+    done &&
+    git fetch --all
+
+I.e. for every repo like git/git I'll fetch its upstream HEAD as the
+branch git/git/HEAD. Then I can do stuff like:
+
+    git shortlog --author=Ævar --since=2018-02-01 --until=2018-03-01
+
+Now, running that "git fetch --all" takes ages, and I know why. It's
+because the in the negotiation for "git fetch some/small-repo" I'm
+emitting hundreds of thousands of "have" lines for SHA1s found in other
+unrelated repos, only to get a NAK for all of them.
+
+One way to fix that with this facility would be to have some way to pass
+in arguments, similar to what we have for merge drivers, so I can say
+"just emit 'have' lines for stuff found in this branch". The most
+pathological cases are when I'm fetching a remote that has one commit,
+and I'm desperately trying to find something in common by asking if the
+remote has hundreds of K of commits it has no chance of having.
+
+Or there may be some smarter way to do this, what do you think?
