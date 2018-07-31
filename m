@@ -2,109 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CF991F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 15:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 740561F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 15:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732416AbeGaRND (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 13:13:03 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:36865 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732269AbeGaRND (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 13:13:03 -0400
-Received: by mail-it0-f66.google.com with SMTP id h20-v6so4944424itf.2
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:32:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Va6+QPUcACmvykRCKywXzFFWk8CDjWKJYErCs3ys3Eg=;
-        b=ZXR/CIbMcxLq+zIf1OQ2LdAb8BbKp18/Gb9YLuZw6a6IrJzCNrQ8uzhT0aPueGIhYs
-         c/D2kMbSEFhFK0a0uO+SMe4sNx6hkKvJMMEMYS171PY9MTevp7Tm9Wki3LxfDAnDQIE0
-         g57qIaf3fJAjhutucveoUf8wOZbmo1RXYMNQdguNS6b+jTRXasOdsV2WpHkx1ZUKu6/A
-         JYxlW/zQBaR3ptAgrXdQtjQ3kwOpti5IzY5+5XtzxoByHCbAaRewEZ292D3MZPM/EpRE
-         OLGtzN/DbLeb5oghQKaW6i8o7G0EFgz3KkEc9zivky2UtWDFdDU3PHa77nafrpDmfDVl
-         HWRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Va6+QPUcACmvykRCKywXzFFWk8CDjWKJYErCs3ys3Eg=;
-        b=VNKjdnW9gN+yhJD8gVa1XXlhutCi0FjIu5xP1Nx37b4xkmQ294yrVit3a0hQrLM3Vj
-         LHrzkfqFe9ROf9ulvbOX0ajvra5GxNihJ10j03RBFwSI7muLdUAX0hLe+B2y6JTkGgaI
-         nqpsRMMf53rNyuirv9nDNi0LWIL503hhNJTDlLMbRXTfFdw2Lk2p8BBssxL5I2l60c02
-         1qcE6Jjetr+Gg4nN6ASvoweWoCC53a5jGBt6Gll+CZrujQ0EMlsjAhGhxdGAzfldBd1U
-         kw8y1VkYVMViGgQGggB9rtsWTyDVH1YNBDM7MGyA/bksxrrltFyXMS+S8zxhdkjbkOM0
-         QoQg==
-X-Gm-Message-State: AOUpUlHT4/urSM1Zpe7EN0izSw0G1O462qpYovz37V0W5BABQ1ZdPgeY
-        8hjSN1AzJL3TjBhkgwzbMcskz3dHHQNS8QXEt4w=
-X-Google-Smtp-Source: AAOMgpfS50KpCkyb8bGhJW5fjtCVEzP7bR52f3wH0dQnR3QQyI6TsoSE8BRQMSZ8dyaT/O+3YENL+abLwIYZ63Hvtsg=
-X-Received: by 2002:a02:7e45:: with SMTP id h66-v6mr21054843jac.97.1533051131484;
- Tue, 31 Jul 2018 08:32:11 -0700 (PDT)
+        id S1732467AbeGaRbZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 13:31:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:37098 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1732417AbeGaRbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 13:31:25 -0400
+Received: (qmail 26373 invoked by uid 109); 31 Jul 2018 15:50:29 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Jul 2018 15:50:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1408 invoked by uid 111); 31 Jul 2018 15:50:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 31 Jul 2018 11:50:31 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2018 11:50:28 -0400
+Date:   Tue, 31 Jul 2018 11:50:28 -0400
+From:   Jeff King <peff@peff.net>
+To:     George Shammas <georgyo@gmail.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+Subject: Re: git merge -s subtree seems to be broken.
+Message-ID: <20180731155027.GA16910@sigill.intra.peff.net>
+References: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
+ <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
- <9a9a309c-7143-e642-cfd8-6df76e77995a@gmail.com>
-In-Reply-To: <9a9a309c-7143-e642-cfd8-6df76e77995a@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 31 Jul 2018 17:31:45 +0200
-Message-ID: <CACsJy8BUBjPngHz=icHomor-LJOkMLwZ9bQ6YJDxnoXGg++vjg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Speed up unpack_trees()
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 30, 2018 at 8:10 PM Ben Peart <peartben@gmail.com> wrote:
-> I ran "git checkout" on a large repo and averaged the results of 3 runs.
->   This clearly demonstrates the benefit of the optimized unpack_trees()
-> as even the final "diff-index" is essentially a 3rd call to unpack_trees().
->
-> baseline        new
-> ----------------------------------------------------------------------
-> 0.535510167     0.556558733     s: read cache .git/index
-> 0.3057373       0.3147105       s: initialize name hash
-> 0.0184082       0.023558433     s: preload index
-> 0.086910967     0.089085967     s: refresh index
-> 7.889590767     2.191554433     s: unpack trees
-> 0.120760833     0.131941267     s: update worktree after a merge
-> 2.2583504       2.572663167     s: repair cache-tree
-> 0.8916137       0.959495233     s: write index, changed mask = 28
-> 3.405199233     0.2710663       s: unpack trees
-> 0.000999667     0.0021554       s: update worktree after a merge
-> 3.4063306       0.273318333     s: diff-index
-> 16.9524923      9.462943133     s: git command:
-> 'c:\git-sdk-64\usr\src\git\git.exe' checkout
->
-> The first call to unpack_trees() saves 72%
-> The 2nd and 3rd call save 92%
+On Tue, Jul 31, 2018 at 11:03:17AM -0400, George Shammas wrote:
 
-By the 3rd I guess you meant "diff-index" line. I think it's the same
-with the second call. diff-index triggers the second unpack-trees but
-there's no indent here and it's misleading to read this as diff-index
-and unpack-trees execute one after the other.
+> Bisecting around, this might be the commit that introduced the breakage.
+> 
+> https://github.com/git/git/commit/d8febde
+> 
+> I really hope that it hasn't been broken for 5 years and I am just doing
+> something wrong.
 
-> Total time savings for the entire command was 44%
+Unfortunately, I think it has been broken for five years.
 
-Wow.. I guess you have more trees since I could only save 30% on gcc.git.
+The problem introduced in that commit is that each iteration through the
+loop advances the tree pointers. But when we're walking two lists and
+see that one omits an entry the other has, we have to advance _one_ list
+and keep the other where it is. So if we instrument the score_*
+functions to see which ones trigger, your reproduction gives this with
+the original code:
 
-> In the performance game of whack-a-mole, that call to repair cache-tree
-> is now looking quite expensive...
+  warning: scoring trees:
+    8e12d9b6bc57fe6308315914628dd4fd7665ca59
+    aed1d7c5809e53d49b52c43a6103827046d60286
+  warning: score_matches: .bookignore
+  warning: score_matches: .gitignore
+  warning: score_matches: .mailmap
+  warning: score_differs: .travis.yml
+  warning: score_matches: COPYING
+  warning: score_differs: INSTALL.adoc
+  warning: score_differs: Makefile
+  warning: score_differs: NEWS.adoc
+  warning: score_differs: README.adoc
+  warning: score_missing: appveyor.yml
+  warning: score_matches: autogen.sh
+  warning: score_matches: book.json
+  [...]
 
-Yeah and I think we can whack that mole too. I did some measurement.
-Best case possible, we just need to scan through two indexes (one with
-many good cache-tree, one with no cache-tree), compare and copy
-cache-tree over. The scanning takes like 1% time of current repair
-step and I suspect it's the hashing that takes most of the time. Of
-course real world won't have such nice numbers, but I guess we could
-maybe half cache-tree update/repair time.
--- 
-Duy
+and the new one does:
+
+  warning: scoring trees:
+    8e12d9b6bc57fe6308315914628dd4fd7665ca59
+    aed1d7c5809e53d49b52c43a6103827046d60286
+  warning: score_matches: .bookignore
+  warning: score_matches: .gitignore
+  warning: score_matches: .mailmap
+  warning: score_differs: .travis.yml
+  warning: score_matches: COPYING
+  warning: score_differs: INSTALL.adoc
+  warning: score_differs: Makefile
+  warning: score_differs: NEWS.adoc
+  warning: score_differs: README.adoc
+  warning: score_missing: appveyor.yml
+  warning: score_missing: autogen.sh
+  warning: score_missing: book.json
+
+We're fine at first, but as soon as one tree has appveyor.yml and the
+other doesn't, we get out of sync. We compare "autogen" and "appveyor",
+and realize that they do not match. But then we need to increment
+pointer for the tree with "appveyor" only, and leave the other in place,
+at which point we'd realize that they both have "autogen". Instead, we
+increment both, and after that we compare "autogen.sh" to "book.json",
+and so on.
+
+So the assertion in that commit message that "the calls to
+update_tree_entry() are not needed any more" is just wrong. We have
+decide whether to call it based on the "cmp" value.
+
+I quoted your original reproduction below for the benefit of René
+(cc'd).
+
+-Peff
+
+> On Tue, Jul 31, 2018 at 10:09 AM George Shammas <georgyo@gmail.com> wrote:
+> 
+> > At work, we recently updated from a massively old version of git (1.7.10)
+> > to 2.18. There are a few code bases that use subtrees, and they seem to
+> > have completely broke when trying to merge in updates.
+> >
+> > I have confirmed that it works correctly in 1.7.10.  The 2.18 behavior is
+> > clearly incorrect.
+> >
+> > git init
+> > echo init > test
+> > git add test
+> > git commit -m init
+> >
+> > git remote add tig https://github.com/jonas/tig.git
+> > git fetch tig
+> > git merge -s ours --no-commit --allow-unrelated-histories tig-2.3.0
+> > git read-tree --prefix=src/ -u tig-2.3.0
+> > git commit -m "Get upstream tig-2.3.0"
+> > # Notice how the history are merged, and that the source from the upstream
+> > repo is in src
+> >
+> > echo update > test
+> > git commit -a -m "test"
+> >
+> > git merge -s subtree tig-2.4.0
+> > # Boom, in 2.18 instead of merging into the subtree, it just deletes
+> > everything in the repository, which is clearly the wrong behavior.
+> >
