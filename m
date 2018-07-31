@@ -2,95 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDAD91F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 23:33:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A94BC1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 23:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732780AbeHABQR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 21:16:17 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:39650 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732749AbeHABQQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 21:16:16 -0400
-Received: by mail-it0-f74.google.com with SMTP id w196-v6so4317748itb.4
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 16:33:36 -0700 (PDT)
+        id S1732823AbeHABVu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 21:21:50 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:34324 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732817AbeHABVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 21:21:50 -0400
+Received: by mail-pg1-f195.google.com with SMTP id y5-v6so9843079pgv.1
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 16:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=tx1IPawfGVbb90erLnutTbrXF/el+MhXMePub7L29Dw=;
-        b=T+9Pje+gQ4eiZp7HX7S91QFEQUwpakBw0kdaMHYXS5fgnzuJxKeoSOYN5RnGFEhgrp
-         U+Arp8r+NRshzZMqp9oE3gtCFqkyh1J9W7K3ZJ+PwdGMISJ9H2VkKeR5vhli2ENeHHiQ
-         1mf54PAjzVHzzjVeFSVTjp3cnP7D2y0YABZ6MDlNw/4Zs/H0sXA/2f7DZTDiYKWntHMs
-         MqsbkCSA2YbpzOfnpYGT7RiruMReviFRFtq7HsM57X7kdM/+zT71dmXTz7QZ2mpjIcfF
-         uysxOPRYsFzcP4p2rwrvOFmpUxkaNT/sPS0y1fay6Dl2iSK/TNRcnoPA/DeJim8zSxge
-         CFpg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=sSlSveeX2xb1GeFqFVVlIudBZMSNpwzW1XH9i6g3Rb8=;
+        b=Fh/mtjZ69tnrP+Uvf+MGzqX9aZ4cXTLyr+pBEVjuEIe6cY+jRQEPwg4AJz5QfKNWlY
+         r9Q5naK6vgdGO8b9t7LlESqW9F4f6TG0JdxpK9QNTlp6JFJTXa+QaA1hrhaZER/KzFuW
+         ObwDqXhYLNBB2ATIVLnzNJYrmVa6hI+iC5FO6UaxyP+7hNrXlP7SHz/RuGSmCjILqg+u
+         nrIEKnuskLj+8dUZ4RrjDsgknwOtMZIbyjYHxjfaHPh9md7kgJQGZV28BF2sInBMdcwd
+         n+FS2A2ZkyyMiLy7rJklr5uftUabAnrLW6LrCpa7j88FI9BYTVnoosTP65ZMuNX3whXF
+         tH/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=tx1IPawfGVbb90erLnutTbrXF/el+MhXMePub7L29Dw=;
-        b=iqgfP81JBcttodLs1Yva2m9KsqF1M67//flQ0ZF0xPIL1ZFOPz37kPf6BNctNHkbYw
-         tUccCZtu1kF/3S3ESQbwEKk1pTa3BsMlBBfF4sal0uYx9OmSLQu4is7cjumhAkA0CSkI
-         FcRTkkpsZ8t+GiGMosrgBvfiFXXaGLk1Ef0shAoyv+Djpz/tKQix5cgqsJ/raw1MabA+
-         3UbDa+xtZLhLVYkMYdSriLdy1DHVrKqDGRuvNL9cuUWlucvrq1Ki+4Yu3l5V6fX2++cj
-         M4z8ufThD+1owbBLIAw4YO0gP3EwB47ho5eH8uFnPV11VRcB9veCcoI+jZtoAOryOq5N
-         KQog==
-X-Gm-Message-State: AOUpUlHN4HJSglZrZKEDRc27654bElAc6ma3DNbBSsfKL1ckDUb9N/wG
-        gV3IVTHFGAoxmlSaKKFcu5Tqi2nkCX/Xd20m+jPQ
-X-Google-Smtp-Source: AAOMgpctXwGsw/WHBf1hAo/EScLrKbtKXAbVAKJxJgdpRWXPenr6Y1bcuKKYpL0wM49zoiRm9W6+W2Jo+fZ+iM7dSoyl
-X-Received: by 2002:a6b:a20b:: with SMTP id l11-v6mr8552608ioe.58.1533080015836;
- Tue, 31 Jul 2018 16:33:35 -0700 (PDT)
-Date:   Tue, 31 Jul 2018 16:33:32 -0700
-In-Reply-To: <xmqq1sbj9h08.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180731233332.187328-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq1sbj9h08.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.18.0.321.gffc6fa0e3.dirty
-Subject: Re: [PATCH] remote: prefer exact matches when using refspecs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=sSlSveeX2xb1GeFqFVVlIudBZMSNpwzW1XH9i6g3Rb8=;
+        b=AGTgr8wwlPTG5y6V6JirjjVcJTYv/xX5fCrJcwKZf0sVfg7TxfmMRo0ALXwnF27J+q
+         dvqWQW41z0YrBl+WysQaQ0OLkZqUnsKkt9VWIU9tRWEyJeCJCDNBx79bjgYDS8Tm/vim
+         aQ52vDiNwU3KWrcrjitUAG600EV9KCZM9xpyQPx8/s4mpBBU7253DMg4xsYa2A38fw7c
+         RjnIOoyyeJvzPuLXeFor6OYK8LnuOMXryEiDl4FH9zIylzXSRLH9N/PHoxeO+jtPYLFP
+         BiNGh2CFHNUVBYCxXviZYhYO0wvGrVxDoYnXakKV+ZWiMSVkZM5zUCTY9pmq1p01Aouo
+         4mXQ==
+X-Gm-Message-State: AOUpUlGftYvaKq0X0JrHfdp7qrZRR29S9oFl6zhysNSX0dQdDdbjzKVo
+        ib4wezWbl+PNn6HmMliMELs=
+X-Google-Smtp-Source: AAOMgpcuDmyBaPXba5hB8XBQ/mbLvybkgTs6YhJmjG8J8tqjS00RvWJkTJhNUKOpfn4+Jl6j/wz9Mw==
+X-Received: by 2002:a62:6547:: with SMTP id z68-v6mr24442356pfb.20.1533080348161;
+        Tue, 31 Jul 2018 16:39:08 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 84-v6sm37875504pfj.33.2018.07.31.16.39.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 16:39:07 -0700 (PDT)
+Date:   Tue, 31 Jul 2018 16:39:06 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+Subject: Re: [PATCH] t1404: increase core.packedRefsTimeout to avoid
+ occasional test failure
+Message-ID: <20180731233906.GB113554@aiede.svl.corp.google.com>
+References: <20180731233248.25482-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180731233248.25482-1-szeder.dev@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> That is, something like this, perhaps.  The resulting behaviour
-> should match how "git rev-parse X" would give precedence to tag X
-> over branch X by going this route.  What do you think?
+Hi,
 
-[snip]
+SZEDER Gábor wrote:
 
->  static const struct ref *find_ref_by_name_abbrev(const struct ref *refs, const char *name)
->  {
->  	const struct ref *ref;
-> +	const struct ref *best_match = NULL;
-> +	int best_score = -1;
-> +
->  	for (ref = refs; ref; ref = ref->next) {
-> -		if (refname_match(name, ref->name))
-> -			return ref;
-> +		int score = refname_match(name, ref->name);
-> +
-> +		if ((score && (best_score < 0 || score < best_score))) {
-> +			best_match = ref;
-> +			best_score = score;
-> +		}
->  	}
-> -	return NULL;
-> +	return best_match;
->  }
+> While 3secs timeout seems plenty, and indeed is sufficient in most
+> cases, on rare occasions it's just not quite enough: I saw this test
+> fail in Travis CI build jobs two, maybe three times because 'git
+> update-ref' timed out.
 
-This looks good to me. I've checked that refname_match (and
-branch_merge_matches(), which returns the result of refname_match()
-directly) is only used in "if" contexts, so making it return a value
-other than 1 is fine.
+I suspect these tests will fail with valgrind (just because valgrind
+makes things super slow).  Would it be safe to use timeout=-1?
 
-I would initialize best_score to INT_MAX to avoid needing the
-"best_score < 0" comparison, but don't feel strongly about it.
+Thanks,
+Jonathan
