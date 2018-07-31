@@ -2,83 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EFEF1F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 11:04:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C7F51F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 11:15:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731953AbeGaMnx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 08:43:53 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:34469 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731395AbeGaMnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 08:43:52 -0400
-Received: by mail-it0-f68.google.com with SMTP id d70-v6so12057722ith.1
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 04:04:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Qcmloy0ZtEHtUlrgBMZUeKxmMw6O6nGxH2Ki6DrLMvM=;
-        b=Ks2WQUqyEZ2EqYGDJGcglVoQb+GJeY/dUpD0+qpE+CwJbXhuKkcozpnBRicJaZ9pac
-         OsRu5NV+ruWq/bi49HLIp/5pdvfdmlXTu5TcXNncfnJadNGivsiLKFJ/HmJZAAqz/dPb
-         aqjW0co9Z2cxTRMxBtsxzbTMP/QmxPCPnx/KFcMvShHn+PhcQTBqJxhxk8DpaldexJAB
-         xCDwW4/1FXCcZIBkdDmdwMu5JJ+MdtoLZwtvh5lbK2ihtpM836QXJIOJbROgPWvbcqNs
-         CWOgaKFI57/XBy2JTrTAYVysBbe0puZpZlWmX0uRL10NredVPPT3tPIN5XnFkjFTcucB
-         zdgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Qcmloy0ZtEHtUlrgBMZUeKxmMw6O6nGxH2Ki6DrLMvM=;
-        b=k3TooVJYDVBrTbnk7v/hUjHsGDDPHxbCx3XBZEQTB+gPReH47NNtgycnTTGHnNXoMy
-         DczdJlZVxcaVlqxU4DBpwpYpptgouQVaYL6dxQ1dPUaoTToz0ImKH4F2pZ9cUQwY3HNI
-         EuESjbIqDn3OxIch9f5Ze+7HPMz7WT5csoPe80M5rR1i0XyPF7pW0DnmhPy++5d2SpjR
-         3ckol2bQK3gRFc1KPWO1WnJwBXp6ufYJ0dP1yLeuaEik5owSc8Tb3VDIqX7n6Y9DAFQm
-         IYJ9pKMqGUt6HKB7a+EbP7PLHmdASbq8l6uQ5AanbDwKFBIbZQ9k1lRxQBA+FONw6+j2
-         rjkw==
-X-Gm-Message-State: AOUpUlHHGGAvP+h9zz6HhpBspimXPzChBdonFq9OaAN37FqOqSO4fbio
-        26aTNi3RmYJqEr7TfAvHyTBI045b1ykdZEONlKhDGQ==
-X-Google-Smtp-Source: AAOMgpdpk4a6aMRbZrO85hegbrQA96Q7nzu5w2mQjbW9LR2DFN10MHGYqCjqp44JofZrrRnkiAKarx+/xR+PzWtsj/o=
-X-Received: by 2002:a24:282:: with SMTP id 124-v6mr2477736itu.151.1533035045649;
- Tue, 31 Jul 2018 04:04:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180730123334.65186-1-hanwen@google.com> <20180730123334.65186-2-hanwen@google.com>
- <xmqqsh40e72x.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqsh40e72x.fsf@gitster-ct.c.googlers.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Tue, 31 Jul 2018 13:03:53 +0200
-Message-ID: <CAFQ2z_NL+8LVmv+E4osq2+nx+qVE4P80it8vjLUwib=HJ5k4Lg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Highlight keywords in remote sideband output.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1731934AbeGaMzf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 08:55:35 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:30348 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729273AbeGaMzf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 08:55:35 -0400
+Received: from lindisfarne.localdomain ([92.22.0.63])
+        by smtp.talktalk.net with SMTP
+        id kScrfkUhMbZX5kScxf0euy; Tue, 31 Jul 2018 12:15:44 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533035744;
+        bh=8MhL+nj1GZyNdbpPcwpXwyrtsTvRVVkmoQNGMNP4cUA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=UVfYJnDeUkn4b/ZeP14Abp/21vupo6/3OqOla3LsLJVLhxeq76NdPbSP3riWIxzNL
+         vd9uonPlp5bfTAuEMIgcrNIYpnzJ1bcGldexXHvmWiiWKPkeqaagcE785hOdc3Muvy
+         6qGTGAXuZkn2uQ8/Vb5xUcmmrHjRaYVaCKez/4so=
+X-Originating-IP: [92.22.0.63]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=ohMtzhKkgcX7CUCE/LoB2A==:117
+ a=ohMtzhKkgcX7CUCE/LoB2A==:17 a=evINK-nbAAAA:8 a=E_6ASKlpEjd644IWBvMA:9
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 0/2] Fix author script quoting
+Date:   Tue, 31 Jul 2018 12:15:30 +0100
+Message-Id: <20180731111532.9358-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180731073331.40007-1-sunshine@sunshineco.com>
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfGijJ1FDt99tUfjMCSiWQURazLhtuGQ9x90FCdaTjpwO5x2kpRKzkFI5vHS6sKRA1bBjdO/pfLPQgV9Kg8wCQcQhaZhXh1Tz/izgB9MbEweNVH42EggG
+ C+QyvL6WczXbdjg25V5S44qexhFU8hR9q1zy/X0Hb3wrx1Dyfa3ROp2UzLpw0R7eKzgd7TIdSA3wlY+0KnmWiZjvH69IV0QnhPjokBBpTjtti0wcCb4PVQNv
+ Cg8Fq1hDmIxZXgeXJGWCI7DlKdq/vGjAGLIqJ4PjjcyjfDRsRxUrcGan3gCP07w4qBVDMYTXHy/VlQVJBIZMoxE3LvoLeMmGNte0OZrHh5w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 30, 2018 at 11:39 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > + */
-> > +void maybe_colorize_sideband(struct strbuf *dest, const char *src, int=
- n)
->
-> I'll make this "static" to this file while queuing.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Does that mean the patch is in?
+These build on Eric's patches. The first patch would be better if it
+was integrated into Eric's patches. The second is a rebased version of
+my previous patch for fixing quoting in the author script with some
+additions by Johannes and rebased on top of Eric's fixes. The special
+casing for backwards compatibility in the second patch relies on the
+quoting and the missing trailing "'" from GIT_AUTHOR_DATE being fixed
+concurrently.
 
 
+Phillip Wood (2):
+  sequencer: handle errors in read_author_ident()
+  sequencer: fix quoting in write_author_script
 
---
+ sequencer.c                   | 72 +++++++++++++++++++++--------------
+ t/t3404-rebase-interactive.sh | 17 ++++++++-
+ 2 files changed, 59 insertions(+), 30 deletions(-)
 
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+-- 
+2.18.0
 
-Registergericht und -nummer: Hamburg, HRB 86891
-
-Sitz der Gesellschaft: Hamburg
-
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
