@@ -2,69 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 157B41F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 17:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F372C1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 17:25:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728607AbeGaTEY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 15:04:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37266 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727482AbeGaTEX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 15:04:23 -0400
-Received: (qmail 29700 invoked by uid 109); 31 Jul 2018 17:23:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Jul 2018 17:23:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2508 invoked by uid 111); 31 Jul 2018 17:23:08 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 31 Jul 2018 13:23:08 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2018 13:23:04 -0400
-Date:   Tue, 31 Jul 2018 13:23:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        George Shammas <georgyo@gmail.com>, git@vger.kernel.org
-Subject: Re: git merge -s subtree seems to be broken.
-Message-ID: <20180731172304.GA16977@sigill.intra.peff.net>
-References: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
- <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
- <xmqqtvofcsgc.fsf@gitster-ct.c.googlers.com>
- <20180731161559.GB16910@sigill.intra.peff.net>
- <xmqqh8kfcokk.fsf@gitster-ct.c.googlers.com>
+        id S1731350AbeGaTHJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 15:07:09 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:40332 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728750AbeGaTHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 15:07:08 -0400
+Received: by mail-wm0-f67.google.com with SMTP id y9-v6so4017943wma.5
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:25:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cBvNtBkV/Wa5kVS2xj7zNb4wnhsEndG0H8FZUyxF2f4=;
+        b=HcD+81rs26LdyNCi7nnGscy325aTvckfXRG0NDqT2zdx69HpWK02/7vFrDg6I5GBzx
+         lXdPjWa+kz3j0XlAl6f+tQjRIw3rUDbk7JPP0Y5azQDCCrPygSZy69sNJ8dKFAwpWkWv
+         8CYFeGzU9O58CEXy8sHfMOp2+EIAknOJOtFxY5yfH/6ORsV5dpbfm+Z3xWLwjnwdbJey
+         RgvBKujbWeIgVecTn3K+lC+I2k4CUAOGw7pmC2B0YTJGAiaSC/XXwZ263q75NQDdJSNZ
+         p2slz4NzuEOW5K2ql/rWOYQZB6jb4sJ2c2sKj3RUd7ZvY4igaIKm6TEh1YmZGvkl29yu
+         Hyvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cBvNtBkV/Wa5kVS2xj7zNb4wnhsEndG0H8FZUyxF2f4=;
+        b=q3Fs7QG8pO+ettxCOWiIv++QewzSIUftyGA5Y0/N8E3Gvv38yhL5CbqtW08o9ccfto
+         qwR/KPKU8Dpsxx2Ou5L1zIAVfA0kPQVPwZa5iwrqdsu84jFUPdgspTd8Wf7ikmFct4w/
+         xalhUJl7IgaH5KuYYZ7UfLAQLgrZGEhiy8Fl12ZpsbWI0kqtpfibv8y4Vs8X4yCO1A93
+         qPquHiVYYrHAMYHwrQl7PWWkFJ3wyShx7uAiGuQUYSs04CqbbZvTknldjLrg6SjEVYeP
+         sm+LMSDP0oSAV/vIw3X6tc6QDyONtua1xtosdv9xFAlbKwWVPTwHHEl+v4/NCsbysJa3
+         w6mw==
+X-Gm-Message-State: AOUpUlG1bm9JRjeST+VIJ7VZQuWdzTitk5+GNp7Jf3yDfNQwRMCUwPED
+        PRD82GwQm5V5Or1TbyRCin0=
+X-Google-Smtp-Source: AAOMgpd/PCtDN+OSNCM1deZJ86tAS//9huwukB8kZUzRSgSKCIky8OqcjR08ul5KS0uP3gvOoHD8xA==
+X-Received: by 2002:a1c:14c3:: with SMTP id 186-v6mr372410wmu.21.1533057948610;
+        Tue, 31 Jul 2018 10:25:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id f6-v6sm27750579wrw.78.2018.07.31.10.25.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 10:25:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [GSoC][PATCH v4] fixup! rebase -i: rewrite write_basic_state() in C
+References: <20180730182516.32644-1-szeder.dev@gmail.com>
+        <20180731121115.12296-1-alban.gruin@gmail.com>
+        <xmqqy3drctu4.fsf@gitster-ct.c.googlers.com>
+        <ad8fe398-6e7b-b50f-df96-35ac06049020@gmail.com>
+        <xmqqpnz3cry6.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 31 Jul 2018 10:25:47 -0700
+In-Reply-To: <xmqqpnz3cry6.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 31 Jul 2018 09:04:17 -0700")
+Message-ID: <xmqqd0v3co6c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh8kfcokk.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 10:17:15AM -0700, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +...
-> > +		} else if (cmp > 0) {
-> >  			/* path2 does not appear in one */
-> > +			score += score_missing(two.entry.mode, two.entry.path);
-> > +			update_tree_entry(&two);
-> > +			continue;
-> > +		} if (oidcmp(one.entry.oid, two.entry.oid)) {
-> 
-> As the earlier ones do the "continue at the end of the block", this
-> does not affect the correctness, but I think you either meant "else if"
-> or a fresh "if/else" that is disconnected from the previous if/else if/...
-> chain.
+> As the number of his or her own topics each contributor needs to
+> keep track of by definition is the number of all topics I need to
 
-Yes, thanks. I actually started to write it without the "continue" at
-all, and a big "else" that checked the "we have both" case. But I backed
-that out (in favor of a smaller diff), and forgot to add back in the
-"else if".
+s/is the/is smaller than the/;
 
--Peff
+Sorry for the noise X-<.
+
+> take care of, I do not want to have to keep track of things myself
+> more than necessary, which would result in missed fixups and delayed
+> updates.
