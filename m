@@ -2,142 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 740561F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 15:50:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28A491F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 15:53:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732467AbeGaRbZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 13:31:25 -0400
-Received: from cloud.peff.net ([104.130.231.41]:37098 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732417AbeGaRbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 13:31:25 -0400
-Received: (qmail 26373 invoked by uid 109); 31 Jul 2018 15:50:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 31 Jul 2018 15:50:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1408 invoked by uid 111); 31 Jul 2018 15:50:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 31 Jul 2018 11:50:31 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 31 Jul 2018 11:50:28 -0400
-Date:   Tue, 31 Jul 2018 11:50:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     George Shammas <georgyo@gmail.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org
+        id S1732435AbeGaReX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 13:34:23 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37450 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732364AbeGaReW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 13:34:22 -0400
+Received: by mail-wr1-f68.google.com with SMTP id q10-v6so17198583wrd.4
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=qzA+c2SGZNImMTy0HHxodNMQGVf7Y0mhM/p6rj9stvI=;
+        b=aSewrckAcQNzrRqXP/t3p2UpdYBbnjlvR2mvgk4diFTGiWNm63vffXG5LGMOMVY/UG
+         GoQcyXuKrcNu9btoIGoAIyalwZxigxivcNv7hZhbWWtIofzdRbFMkRu9LDQqQLoUXMYr
+         nphqI9OUHoQMon6IL+vV6t+ww/0Ycx/rTGmARkfFxxOMp4hnAFgZQnyn07Ht9vMTOu7g
+         zI9yLdGaoli14W1LJQgQ001kBA38MMLNJqYEpYGPkq2S8nc5DLA9oHcaqGl/uvpPSGMH
+         sIje1V7rVAukqhtbw8aSrXWnpH4aSN7t2mseQsAZzLwiZ3Y5PDZsza0I55mjQdkYiRbd
+         NtXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=qzA+c2SGZNImMTy0HHxodNMQGVf7Y0mhM/p6rj9stvI=;
+        b=bmqxs+yzN3UENYCaxYkJ1jZCmWPyjaCcJ8X8RSiVoJEtdBClu3/zuDtW9mcQ+zc+G4
+         2iwgUpEP4oJyDEC00uVF1QQ8vHb2EN3EN/DteepF7TMK1MMAwsS2x4iEFJefe+32N92B
+         Khs1oQMM8s6icfCjSesC8yvyhGec0ur31eZ+dPrhBuEQpwlobRdJolRahrKU8A84e6Kw
+         tc4g8bMMHEUcAHBXiZiU55oduPmKtL2xDt2qnOc/7LLIw1qfH699ZvHnYT2H5q/bRJdJ
+         z5T2SsvTohiw1LgoiSbiMnIzvWPhEsERP+D44ugkblN4rQzVYG1a0yIp2zwKwLukX0JR
+         yztg==
+X-Gm-Message-State: AOUpUlGEK1jpkACUvaaruTwFfjkTsxL340UWTmDTtULsbwcOCfk0wxmv
+        AX0O/Dr83sTaMQ5jDcdIe+Y=
+X-Google-Smtp-Source: AAOMgpcr+D4XNNxQA+wj3/ooJ+80J7zz+cRh17cZide0GmFhMc951IsXhEP+nIJ47MIUa/ao5VRKLA==
+X-Received: by 2002:adf:ed41:: with SMTP id u1-v6mr20849335wro.262.1533052404888;
+        Tue, 31 Jul 2018 08:53:24 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s5-v6sm18397231wro.33.2018.07.31.08.53.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 08:53:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        George Shammas <georgyo@gmail.com>
+Cc:     git@vger.kernel.org
 Subject: Re: git merge -s subtree seems to be broken.
-Message-ID: <20180731155027.GA16910@sigill.intra.peff.net>
 References: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
- <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+        <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
+Date:   Tue, 31 Jul 2018 08:53:23 -0700
 In-Reply-To: <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
+        (George Shammas's message of "Tue, 31 Jul 2018 11:03:17 -0400")
+Message-ID: <xmqqtvofcsgc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 11:03:17AM -0400, George Shammas wrote:
+George Shammas <georgyo@gmail.com> writes:
 
 > Bisecting around, this might be the commit that introduced the breakage.
-> 
+>
 > https://github.com/git/git/commit/d8febde
-> 
-> I really hope that it hasn't been broken for 5 years and I am just doing
-> something wrong.
 
-Unfortunately, I think it has been broken for five years.
+Interesting.  I've never used the "-s subtree" strategy without
+"-Xsubtree=..." to explicitly tell where the thing should go for a
+long time, so I am not surprised if I did not notice if an update to
+the heuristics made long time ago had affected tree matching.
 
-The problem introduced in that commit is that each iteration through the
-loop advances the tree pointers. But when we're walking two lists and
-see that one omits an entry the other has, we have to advance _one_ list
-and keep the other where it is. So if we instrument the score_*
-functions to see which ones trigger, your reproduction gives this with
-the original code:
+d8febde3 ("match-trees: simplify score_trees() using tree_entry()",
+2013-03-24) does touch the area that may affect the subtree matching
+behaviour.
 
-  warning: scoring trees:
-    8e12d9b6bc57fe6308315914628dd4fd7665ca59
-    aed1d7c5809e53d49b52c43a6103827046d60286
-  warning: score_matches: .bookignore
-  warning: score_matches: .gitignore
-  warning: score_matches: .mailmap
-  warning: score_differs: .travis.yml
-  warning: score_matches: COPYING
-  warning: score_differs: INSTALL.adoc
-  warning: score_differs: Makefile
-  warning: score_differs: NEWS.adoc
-  warning: score_differs: README.adoc
-  warning: score_missing: appveyor.yml
-  warning: score_matches: autogen.sh
-  warning: score_matches: book.json
-  [...]
+Because it is an update to heuristics, and as such, we need to be
+careful when saying it is or is not "broken".  Some heuristics may
+work better with your particular case, and may do worse with other
+cases.
 
-and the new one does:
-
-  warning: scoring trees:
-    8e12d9b6bc57fe6308315914628dd4fd7665ca59
-    aed1d7c5809e53d49b52c43a6103827046d60286
-  warning: score_matches: .bookignore
-  warning: score_matches: .gitignore
-  warning: score_matches: .mailmap
-  warning: score_differs: .travis.yml
-  warning: score_matches: COPYING
-  warning: score_differs: INSTALL.adoc
-  warning: score_differs: Makefile
-  warning: score_differs: NEWS.adoc
-  warning: score_differs: README.adoc
-  warning: score_missing: appveyor.yml
-  warning: score_missing: autogen.sh
-  warning: score_missing: book.json
-
-We're fine at first, but as soon as one tree has appveyor.yml and the
-other doesn't, we get out of sync. We compare "autogen" and "appveyor",
-and realize that they do not match. But then we need to increment
-pointer for the tree with "appveyor" only, and leave the other in place,
-at which point we'd realize that they both have "autogen". Instead, we
-increment both, and after that we compare "autogen.sh" to "book.json",
-and so on.
-
-So the assertion in that commit message that "the calls to
-update_tree_entry() are not needed any more" is just wrong. We have
-decide whether to call it based on the "cmp" value.
-
-I quoted your original reproduction below for the benefit of René
-(cc'd).
-
--Peff
-
-> On Tue, Jul 31, 2018 at 10:09 AM George Shammas <georgyo@gmail.com> wrote:
-> 
-> > At work, we recently updated from a massively old version of git (1.7.10)
-> > to 2.18. There are a few code bases that use subtrees, and they seem to
-> > have completely broke when trying to merge in updates.
-> >
-> > I have confirmed that it works correctly in 1.7.10.  The 2.18 behavior is
-> > clearly incorrect.
-> >
-> > git init
-> > echo init > test
-> > git add test
-> > git commit -m init
-> >
-> > git remote add tig https://github.com/jonas/tig.git
-> > git fetch tig
-> > git merge -s ours --no-commit --allow-unrelated-histories tig-2.3.0
-> > git read-tree --prefix=src/ -u tig-2.3.0
-> > git commit -m "Get upstream tig-2.3.0"
-> > # Notice how the history are merged, and that the source from the upstream
-> > repo is in src
-> >
-> > echo update > test
-> > git commit -a -m "test"
-> >
-> > git merge -s subtree tig-2.4.0
-> > # Boom, in 2.18 instead of merging into the subtree, it just deletes
-> > everything in the repository, which is clearly the wrong behavior.
-> >
+But from the log message description, it looks like it was meant to
+be a no-op simplification rewrite that should not affect the outcome,
+so it is a bit surprising.
