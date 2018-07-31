@@ -2,291 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFAD11F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 15:06:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7AE9208E9
+	for <e@80x24.org>; Tue, 31 Jul 2018 15:16:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729548AbeGaQri (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 12:47:38 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:37346 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727071AbeGaQri (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 12:47:38 -0400
-Received: by mail-lj1-f196.google.com with SMTP id v9-v6so14035190ljk.4
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:06:52 -0700 (PDT)
+        id S1732341AbeGaQ5m (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 12:57:42 -0400
+Received: from mail-wm0-f53.google.com ([74.125.82.53]:52987 "EHLO
+        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732330AbeGaQ5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 12:57:41 -0400
+Received: by mail-wm0-f53.google.com with SMTP id o11-v6so3494161wmh.2
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=GZeY0J+qP2j6MFjx9OjJ0srXFVm6y2exx+jrvxTtZCI=;
-        b=JX6f1eEBBoHJpbBmCZgVmZP0UquJ8DwEbzMXkLLJkPASqVq6HL0aPcA/hCxjWHecdb
-         jNbtJ7G7ALRoEJvWLsxkndWTlrjeHSzAwhJO/M5CYKl+ttw2IK9f2+smSLfKuz5/UCNq
-         JGeHC22ZX+RtxUPPdv/eB/zyYCdiFBfchs+lcCRoabCyCKMQaCAyEExtjdAB6QAZDmeX
-         1sxoBMcV6iMZ3imgQtH4XW1nR8evqVy1Vmt4cHGAoKotVgAsq/GOxO+HiQ6Ktext/dqi
-         /ymC4k82ebwQ7z1SnHlaBJAbEu9CXsKt537Ymoas5+Z7nCCbvkRAXJi4qbBT07r2WC36
-         fTtw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=JULIwk0z+mdtYeRE5/hH+5sJ1zSFZpeYcto8kliZNVE=;
+        b=DR1YjudCOxHS8GMwnL7p/I0wgPftqBhN2lM8Wx2Fd3AOE/8dKpGvk2HrIm3S8vIKzH
+         1BYgFcwOe9N0vSMAlOrzRSLbzkeF40BGt32KO0Vr//TplVe7jvMX199IuVzAr6onLAPE
+         tednnIlInaoGCh4VuSOeZANAuodtLo5kSw/7E+CGqmAfnLXFhTdBDfbf9sdEdzGv3/DE
+         Z5CK3emNG8bOUUTVELBffq7utIX7jEXxlcxxLyQfV27h3pZI8TY52mGVmKnrrNzG7HXJ
+         zDqK9nlbWLB7KYToZjQuVJOZcdS9fnVrMfwC7zIeYZa/yonNC6QRsowmiew2LkcOMs8t
+         wqCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=GZeY0J+qP2j6MFjx9OjJ0srXFVm6y2exx+jrvxTtZCI=;
-        b=mWReHIKxD+B8gzy4FSMpO7+0u9gDy3TIvXCCGlJwWXgyUT+MFLX2HGzd1FaC6hvuiv
-         0bJbfB9xdWmHRa4NEjetdMykuIvNvCnDARP52/gegACv2s7pZ8DGyxmATUJUoHy7lIEH
-         pnTp/HkyfScGwMVy5gQY4/TZBJT/eSFOwI/tqt6mzllSzaeBY2wraWj6+JFHfLz4zVZV
-         KIAtI72dkbeM210EMUYRxIOuX2QuZ+aAV17K0pcbPcikHyzR0/QEiSqAWh96Ko49tloJ
-         UzbhhqUkvQUtdPUS+Xynjr2n4vw2vlKOIvCiMeQMXWYZ0sR0U33vfH8O/kCS0KAws0D+
-         o1YA==
-X-Gm-Message-State: AOUpUlHSSoLUxqMQPCfEn6ImpH5m5rs5X0B6IeAWgqioJlj+11Zqv+Op
-        P3SZVJVezkXdTyxXVH9uUSE=
-X-Google-Smtp-Source: AAOMgpegtnVcfbi0KduRyYweiGCLyT7cYdkzhSjt1EXfsm8RNG7bT6wu/rqqfwSrznVoneNwdGgJPw==
-X-Received: by 2002:a2e:558c:: with SMTP id g12-v6mr16114902lje.4.1533049611336;
-        Tue, 31 Jul 2018 08:06:51 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x11-v6sm1995208lfi.8.2018.07.31.08.06.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 31 Jul 2018 08:06:50 -0700 (PDT)
-Date:   Tue, 31 Jul 2018 17:06:48 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 1/1] Highlight keywords in remote sideband output.
-Message-ID: <20180731150648.GA852@duynguyen.home>
-References: <20180730123334.65186-1-hanwen@google.com>
- <20180730123334.65186-2-hanwen@google.com>
- <87tvofua7k.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=JULIwk0z+mdtYeRE5/hH+5sJ1zSFZpeYcto8kliZNVE=;
+        b=eRycDR8N/4SWMnGdiDZ5PTkZR6cHV4YuT63le6qG6pmpryULUsmplPdqZyXMfiKrtD
+         GFRNw1seGiCmsj3Pebq2pBKf3CCl1R+e4UiJUX1tNlnnxv0tuS5763dEOoRz7E+leHMZ
+         sC82/Y/E939yiM2W6SHeRnpV5nQwlBt1efbIz0JUigBvEBYvYOrNgjddhCZgB6KehiWo
+         K5psGGPBmmXlpBCk/IA25RXT+s7MI38EeFrQHKhVEdjLXk6QuLhd8R7P0vTgEN6IhYDL
+         k0Fe37aWdx5N9x9FGuSvAbDA/+c0jgKmyaLyL+q6fLsxG67gjc/POZav19b7J+JbBVo0
+         3S5g==
+X-Gm-Message-State: AOUpUlGuPoyv3X3Av7xDrjf3KhuC6Sdi2rLmCBvmJBpS9ov4LG+Nbz/S
+        ZC50QKqIsSXUaSvHmDWm5uY=
+X-Google-Smtp-Source: AAOMgpd9ohhzotUhnIBBiU0qiYoAdb+JWgSq/fLIIs34dRGtIgblKW+ebACsv0TCtoIOzEoqkl3D2w==
+X-Received: by 2002:a1c:ee9a:: with SMTP id j26-v6mr89842wmi.116.1533050212826;
+        Tue, 31 Jul 2018 08:16:52 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h83-v6sm2893773wmf.46.2018.07.31.08.16.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 08:16:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     johannes.schindelin@gmx.de, bmwill@google.com, git@vger.kernel.org,
+        peff@google.com
+Subject: Re: [PATCH 0/3] config: fix case sensitive subsection names on writing
+References: <nycvar.QRO.7.76.6.1807301438440.10478@tvgsbejvaqbjf.bet>
+        <20180730230443.74416-1-sbeller@google.com>
+Date:   Tue, 31 Jul 2018 08:16:51 -0700
+In-Reply-To: <20180730230443.74416-1-sbeller@google.com> (Stefan Beller's
+        message of "Mon, 30 Jul 2018 16:04:40 -0700")
+Message-ID: <xmqq7elbe8po.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87tvofua7k.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 09:37:51AM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Jul 30 2018, Han-Wen Nienhuys wrote:
-> 
-> 
-> > +	if (sideband_use_color < 0) {
-> > +		const char *key = "color.remote";
-> > +		char *value = NULL;
-> > +		if (!git_config_get_string(key, &value))
-> > +			sideband_use_color = git_config_colorbool(key, value);
-> > [...]
-> > +	struct kwtable {
-> > +		const char *keyword;
-> > +		const char *color;
-> > +	} keywords[] = {
-> > +		{"hint", GIT_COLOR_YELLOW},
-> > +		{"warning", GIT_COLOR_BOLD_YELLOW},
-> > +		{"success", GIT_COLOR_BOLD_GREEN},
-> > +		{"error", GIT_COLOR_BOLD_RED},
-> 
-> 
-> FWIW I agree with other reviewers that it would be nice if these could
-> be customized, but I also think it can wait for some follow-up patch.
-> 
-> Users who don't like these colors don't have to use them, and then
-> they're no worse off than now, whereas some users will appreciate these
-> and be better off than now.
-> 
-> So great if you want to improve this, but just chiming in on that point
-> because I think we should be respectful of the time of contributors, and
-> not make perfect the enemy of the good.
+Stefan Beller <sbeller@google.com> writes:
 
-Fair enough. I'll scratch my own itch. Can we squash this in then?
+> It turns out it doesn't quite do that;
+> The parsing code takes the old notation into account and translates any
+>   [V.A]
+>     r = ...
+> into a lower cased "v.a." for ease of comparison. That happens in
+> get_base_var, which would call further into get_extended_base_var
+> if the new notation is used.
+>
+> The code in store_aux_event however is written without the consideration
+> of the old code and has no way of knowing the capitalization of the
+> section or subsection (which were forced to lowercase in the old
+> dot notation). 
+>
+> So either we have to do some major surgery, or the old notation gets
+> some regression while fixing the new notation.
 
--- 8< --
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43b2de7b5f..0783323bec 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1229,6 +1229,15 @@ color.push::
- color.push.error::
- 	Use customized color for push errors.
- 
-+color.remote::
-+	A boolean to enable/disable colored remote output. If unset,
-+	then the value of `color.ui` is used (`auto` by default).
-+
-+color.remote.<slot>::
-+	Use customized color for each remote keywords. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
-+
- color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
-diff --git a/help.c b/help.c
-index 3ebf0568db..b6cafcfc0a 100644
---- a/help.c
-+++ b/help.c
-@@ -425,6 +425,7 @@ void list_config_help(int for_human)
- 		{ "color.diff", "<slot>", list_config_color_diff_slots },
- 		{ "color.grep", "<slot>", list_config_color_grep_slots },
- 		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
- 		{ "color.status", "<slot>", list_config_color_status_slots },
- 		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
- 		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-diff --git a/help.h b/help.h
-index f8b15323a6..9eab6a3f89 100644
---- a/help.h
-+++ b/help.h
-@@ -83,6 +83,7 @@ void list_config_color_diff_slots(struct string_list *list, const char *prefix);
- void list_config_color_grep_slots(struct string_list *list, const char *prefix);
- void list_config_color_interactive_slots(struct string_list *list, const char *prefix);
- void list_config_color_status_slots(struct string_list *list, const char *prefix);
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix);
- void list_config_fsck_msg_ids(struct string_list *list, const char *prefix);
- 
- #endif /* HELP_H */
-diff --git a/sideband.c b/sideband.c
-index 74b2fcaf64..61c4376a64 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -3,7 +3,59 @@
- #include "config.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "help.h"
-+
-+struct kwtable {
-+	/*
-+	 * Note, we current use keyword as config key so it can't
-+	 * contain funny chars like spaces. When we do that, we need a
-+	 * separate field for slot name in load_sideband_colors().
-+	 */
-+	const char *keyword;
-+	char color[COLOR_MAXLEN];
-+};
-+
-+static struct kwtable keywords[] = {
-+	{ "hint",	GIT_COLOR_YELLOW },
-+	{ "warning",	GIT_COLOR_BOLD_YELLOW },
-+	{ "success",	GIT_COLOR_BOLD_GREEN },
-+	{ "error",	GIT_COLOR_BOLD_RED },
-+};
-+
-+static int sideband_use_color = -1;
-+
-+static void load_sideband_colors(void)
-+{
-+	const char *key = "color.remote";
-+	struct strbuf sb = STRBUF_INIT;
-+	char *value;
-+	int i;
-+
-+	if (sideband_use_color >= 0)
-+		return;
-+
-+	if (!git_config_get_string(key, &value))
-+		sideband_use_color = git_config_colorbool(key, value);
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
-+		if (git_config_get_string(sb.buf, &value))
-+			continue;
-+
-+		if (color_parse(value, keywords[i].color))
-+			die(_("expecting a color: %s"), value);
-+	}
-+	strbuf_release(&sb);
-+}
-+
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix)
-+{
-+	int i;
- 
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++)
-+		list_config_item(list, prefix, keywords[i].keyword);
-+}
- 
- /*
-  * Optionally highlight some keywords in remote output if they appear at the
-@@ -11,24 +63,9 @@
-  */
- static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
- {
--	static int sideband_use_color = -1;
- 	int i;
--	struct kwtable {
--		const char *keyword;
--		const char *color;
--	} keywords[] = {
--		{"hint", GIT_COLOR_YELLOW},
--		{"warning", GIT_COLOR_BOLD_YELLOW},
--		{"success", GIT_COLOR_BOLD_GREEN},
--		{"error", GIT_COLOR_BOLD_RED},
--	};
--
--	if (sideband_use_color < 0) {
--		const char *key = "color.remote";
--		char *value = NULL;
--		if (!git_config_get_string(key, &value))
--			sideband_use_color = git_config_colorbool(key, value);
--	}
-+
-+	load_sideband_colors();
- 
- 	if (!want_color_stderr(sideband_use_color)) {
- 		strbuf_add(dest, src, n);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index 606386f4fe..69b7cc571d 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -6,7 +6,7 @@ test_description='remote messages are colorized on the client'
- 
- test_expect_success 'setup' '
- 	mkdir .git/hooks &&
--	cat << EOF > .git/hooks/update &&
-+	cat << EOF >.git/hooks/update &&
- #!/bin/sh
- echo error: error
- echo hint: hint
-@@ -20,15 +20,26 @@ EOF
- 	git commit -m 1 &&
- 	git clone . child &&
- 	cd child &&
--	echo 2 > file &&
-+	echo 2 >file &&
- 	git commit -a -m 2
- '
- 
--test_expect_success 'push' 'git -c color.remote=always push origin HEAD:refs/heads/newbranch 2>output &&
--  test_decode_color < output > decoded &&
--  test_i18ngrep "<BOLD;RED>error<RESET>:" decoded &&
--  test_i18ngrep "<YELLOW>hint<RESET>:" decoded &&
--  test_i18ngrep "<BOLD;GREEN>success<RESET>:" decoded &&
--  test_i18ngrep "<BOLD;YELLOW>warning<RESET>:" decoded'
-+test_expect_success 'push' '
-+	git -c color.remote=always push origin HEAD:refs/heads/newbranch 2>output &&
-+	test_decode_color <output >decoded &&
-+	test_i18ngrep "<BOLD;RED>error<RESET>:" decoded &&
-+	test_i18ngrep "<YELLOW>hint<RESET>:" decoded &&
-+	test_i18ngrep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	test_i18ngrep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
-+
-+test_expect_success 'push with customized color' '
-+	git -c color.remote=always -c color.remote.error=white push origin HEAD:refs/heads/newbranch2 2>output &&
-+	test_decode_color <output >decoded &&
-+	test_i18ngrep "<WHITE>error<RESET>:" decoded &&
-+	test_i18ngrep "<YELLOW>hint<RESET>:" decoded &&
-+	test_i18ngrep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	test_i18ngrep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
- 
- test_done
--- 8< --
+As long as
+
+ - the regression is documented clearly (i.e. what unexpected thing
+   happens, just like you have a good description in the log message
+   of PATCH 2/3 for "[foo "Bar"] key = ..."),
+
+ - users are nudged to use the new style instead, and
+
+ - writing with "git config" (or "git init/clone" for that matter)
+   won't produce these old-style sections
+
+I think it is OK to punt.  I would expect, as Git's userbase is a
+lot wider than 10 years ago, there is at least some people who did
+exploit the fact that "[V.A] r = one" and "[v.a] r = two" give a
+single "v.a.r" variable that is multi-valued, and it indeed would be
+a regression to them, to which no good workaround exists.  
+
+But breaking '[V "a"] r = ...' is a more grave sin.  Even though I
+hate to rob Peter to pay Paul (or vice versa), in this case it is
+justified to fix the more basic form sooner and wait for an actual
+complaint before fixing the new and deliberate regression introduced
+while fixing it to the old-style variable.
+
+
