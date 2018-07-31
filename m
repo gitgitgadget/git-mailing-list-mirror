@@ -6,48 +6,48 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86CFA1F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 07:34:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C44E51F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 07:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729643AbeGaJNI (ORCPT <rfc822;e@80x24.org>);
+        id S1729636AbeGaJNI (ORCPT <rfc822;e@80x24.org>);
         Tue, 31 Jul 2018 05:13:08 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:35677 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729628AbeGaJNH (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-io0-f196.google.com ([209.85.223.196]:45459 "EHLO
+        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726789AbeGaJNH (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 31 Jul 2018 05:13:07 -0400
-Received: by mail-io0-f194.google.com with SMTP id w11-v6so12145240iob.2
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 00:34:09 -0700 (PDT)
+Received: by mail-io0-f196.google.com with SMTP id k16-v6so12126343iom.12
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 00:34:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=B48UyS3GIFdJr//J23PUePrSj8tuXyyaWNHVXScWSWU=;
-        b=TJ0bWgHwjf1V1l21OZFcUC+S7W7uiZ8jaCFdoZeaChiGMKUkMX04PywHWpAP9d0L1n
-         w8XLvI49iJgLsJCFZqmyA2HGTTNaEkNIk8jTqSSRMIMX4egDgKAuqKDH1nr19JGDJwTn
-         Z7u0cb8JMRpQ3gK63enZZd3vm7/CFOwPh9xJ06b9KWBLvPUmDcPljUUq5DUpCZaL0tdV
-         eDFTRmPswg7ciGVdWrf9dWnFCel9vDnSIdzjm0TGd+dMOBlF01HePn28rFMbHxj4IeVU
-         0ESYfUoTItiuYdSMuHDGzqdpZczw0qWxUcO9hyIbUnaKchuuJMWdGPGghd3+eCLAvTpR
-         MRYg==
+        bh=5lBr8rW09JXCSuTCWSIEfDnB5LEjBJkbU21dJYHFYzk=;
+        b=QmV/waAsbxKW2GTMQMsovPQpALt3UndznwZRd2j6aLD2tBLlQ6/l4Hj4f1Rh9eK+ao
+         zaw5al17aQy8pN4Q6kQr2+KRH9X1c7Z5vctkIgBeE+Fwi0RGcpXi3kH11gVl3U9cXIZk
+         Suq4zaOP3umJkzAihfnuEV5e+yFVYqgBVpAwOlOy276xhiqvgNGbQm9Z2Y3RUl/rac57
+         /62KpsOGvFWAPpfj8ahiylLASmfcYWy3nwrWJ2Bw3qbiPpL1QHee8k+t8p5Z6lwB7QcA
+         xD56jdeythqt63wxHwvuH9i9LNWRR6hEmq9+1wLTHypuX1RtS3qUYHJbq6F+yNFnRwAZ
+         Q+Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=B48UyS3GIFdJr//J23PUePrSj8tuXyyaWNHVXScWSWU=;
-        b=oag6sQfKEv6BTzf/FitX7cXsVv9ShIBffdoTapzCZztT3x0DjdFeLjvq+cl2eDKfQM
-         RZUc4ox8MUgCDrJd3PtAQrZcOssCqiXEQez3qJ/7MGLquF/77IWbEvoLoa2nHUW9tb0b
-         BcUKMo2JtZVcgj/POlsec6j31Y0ZtMDLQECbu+TjnG2Hf58lm7VlS7HHTqxeulN4LooX
-         c8lHS+ZG3qE0Jn9tuX8xJtbrzBkJymgJiWHyV5aMtOAa3ziS5ojUK4YTIK43JDdpgMDN
-         FFeCw+4A5GEUeq7+AKcITdsAA3QfD/TMFRhhus/GnF0DRx5pJ3SotBuZpfXnQdK/Fq3T
-         wViA==
-X-Gm-Message-State: AOUpUlEErI0YhOCpB0SwIZprA4N5tO1VjZDbZNli4we/Tbchg0uzAYg8
-        bJhTt+TxZ/rFdxtHoqR1o9ZZyev3
-X-Google-Smtp-Source: AAOMgpeIgBUH1E0b35p9xKdVU73OBglZkHVa6ohs4HSgJ6JQN4/HMf6s0m17WCzh8AE2zJbRL+0h4Q==
-X-Received: by 2002:a5e:8515:: with SMTP id i21-v6mr15713776ioj.301.1533022448464;
-        Tue, 31 Jul 2018 00:34:08 -0700 (PDT)
+        bh=5lBr8rW09JXCSuTCWSIEfDnB5LEjBJkbU21dJYHFYzk=;
+        b=SmAiUMJlOimllvT+O/UgQbFXV2eenSc31OAtKRVrQtoB5BPoc9QKU4MbdgkRzx8APW
+         Uq3CPYatLYFyBatZI7Gp5lgJvdVRrCSlEUu71ppIKlVTwqbm3dcPgjfFMc8ov+LLN5U0
+         +g7fnqUuwamjlnyetdVjTK5HKO+SkMK8ziE8eYtp8ohj4ASR0g97G4D0yjY4x5zd5hpF
+         D2G6N50JlbrEPymFedt9KlmvSYsR+fWOdMSswYSg2s1IEN/Af1nkypKuXvzTPCHtRG5T
+         7CC6JJjo+BBi6r38m1yOtr3PlI3jyz7OmdlHx9t0bhD+MeYVNatheVhoWIKnMa3I2FZb
+         e3ew==
+X-Gm-Message-State: AOUpUlE0QuzwGTe5WCEa++i30fDw13LTmXyvs+LIOwGB+rIeOyAGVwJp
+        PYLkQ8zN+kBFidH58z9xy/LybKG/
+X-Google-Smtp-Source: AAOMgpegQj8EY4pL706m/uvJR4xZ26X/+85ktfm6zhGwL0YSNUQXrS6gaN/ZzKwV7lznTZY7HglJNQ==
+X-Received: by 2002:a6b:8851:: with SMTP id k78-v6mr17128258iod.290.1533022447648;
+        Tue, 31 Jul 2018 00:34:07 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
-        by smtp.gmail.com with ESMTPSA id m1-v6sm2371058iok.81.2018.07.31.00.34.07
+        by smtp.gmail.com with ESMTPSA id m1-v6sm2371058iok.81.2018.07.31.00.34.06
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 31 Jul 2018 00:34:08 -0700 (PDT)
+        Tue, 31 Jul 2018 00:34:07 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -55,9 +55,9 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@talktalk.net>,
         Akinori MUSHA <knu@idaemons.org>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/4] sequencer: don't die() on bogus user-edited timestamp
-Date:   Tue, 31 Jul 2018 03:33:31 -0400
-Message-Id: <20180731073331.40007-5-sunshine@sunshineco.com>
+Subject: [PATCH v2 3/4] sequencer: fix "rebase -i --root" corrupting author header timestamp
+Date:   Tue, 31 Jul 2018 03:33:30 -0400
+Message-Id: <20180731073331.40007-4-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad
 In-Reply-To: <20180731073331.40007-1-sunshine@sunshineco.com>
 References: <20180731073331.40007-1-sunshine@sunshineco.com>
@@ -68,48 +68,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-read_author_ident() is careful to handle errors "gently" when parsing
-"rebase-merge/author-script" by printing a suitable warning and
-returning NULL; it never die()'s. One possible reason that parsing might
-fail is that "rebase-merge/author-script" has been hand-edited in such a
-way which corrupts it or the information it contains.
+When "git rebase -i --root" creates a new root commit, it corrupts the
+"author" header's timestamp by prepending a "@":
 
-However, read_author_ident() invokes fmt_ident() which is not so careful
-about failing "gently". It will die() if it encounters a malformed
-timestamp. Since read_author_ident() doesn't want to die() and since
-it's dealing with possibly hand-edited data, take care to avoid passing
-a bogus timestamp to fmt_ident().
+    author A U Thor <author@example.com> @1112912773 -0700
 
-A more "correctly engineered" fix would be to add a "gentle" version of
-fmt_ident(), however, such a change it outside the scope of the bug-fix
-series. If fmt_ident() ever does grow a "gentle" cousin, then the manual
-timestamp check added here can be retired.
+The commit parser is very strict about the format of the "author"
+header, and does not allow a "@" in that position.
+
+The "@" comes from GIT_AUTHOR_DATE in "rebase-merge/author-script",
+signifying a Unix epoch-based timestamp, however, read_author_ident()
+incorrectly allows it to slip into the commit's "author" header, thus
+corrupting it.
+
+One possible fix would be simply to filter out the "@" when constructing
+the "author" header timestamp, however, a more correct fix is to parse
+the GIT_AUTHOR_DATE date (via parse_date()) and format the parsed result
+into the "author" header. Since "rebase-merge/author-script" may be
+edited by the user, this approach has the extra benefit of catching
+other potential timestamp corruption due to hand-editing.
+
+We can do better than calling parse_date() ourselves and constructing
+the "author" header manually, however, by instead taking advantage of
+fmt_ident() which does this work for us.
+
+The benefits of using fmt_ident() are twofold. First, it simplifies the
+logic considerably by allowing us to avoid the complexity of building
+the "author" header in parallel with and in the same buffer from which
+"rebase-merge/author-script" is being parsed. Instead, fmt_ident() is
+invoked to compose the header after parsing is complete.
+
+Second, fmt_ident() is careful to prevent "crud" from polluting the
+composed ident. As with validating GIT_AUTHOR_DATE, this "crud"
+avoidance prevents other (possibly hand-edited) bogus author information
+from "rebase-merge/author-script" from corrupting the commit object.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- sequencer.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ sequencer.c                   | 23 +++++++++--------------
+ t/t3404-rebase-interactive.sh |  2 +-
+ 2 files changed, 10 insertions(+), 15 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 15a66a334c..9b6cdb6ff8 100644
+index 1008f6d71a..15a66a334c 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -742,6 +742,15 @@ static const char *read_author_ident(struct strbuf *buf)
+@@ -709,14 +709,16 @@ static const char *read_author_ident(struct strbuf *buf)
+ 	const char *keys[] = {
+ 		"GIT_AUTHOR_NAME=", "GIT_AUTHOR_EMAIL=", "GIT_AUTHOR_DATE="
+ 	};
+-	char *in, *out, *eol;
+-	int i = 0, len;
++	struct strbuf out = STRBUF_INIT;
++	char *in, *eol;
++	const char *val[3];
++	int i = 0;
+ 
+ 	if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
+ 		return NULL;
+ 
+ 	/* dequote values and construct ident line in-place */
+-	for (in = out = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
++	for (in = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
+ 		if (!skip_prefix(in, keys[i], (const char **)&in)) {
+ 			warning("could not parse '%s' (looking for '%s'",
+ 				rebase_path_author_script(), keys[i]);
+@@ -730,16 +732,7 @@ static const char *read_author_ident(struct strbuf *buf)
+ 				keys[i], rebase_path_author_script());
+ 			return NULL;
+ 		}
+-		len = strlen(in);
+-
+-		if (i > 0) /* separate values by spaces */
+-			*(out++) = ' ';
+-		if (i == 1) /* email needs to be surrounded by <...> */
+-			*(out++) = '<';
+-		memmove(out, in, len);
+-		out += len;
+-		if (i == 1) /* email needs to be surrounded by <...> */
+-			*(out++) = '>';
++		val[i] = in;
+ 		in = eol + 1;
+ 	}
+ 
+@@ -749,7 +742,9 @@ static const char *read_author_ident(struct strbuf *buf)
  		return NULL;
  	}
  
-+	/* validate date since fmt_ident() will die() on bad value */
-+	if (parse_date(val[2], &out)){
-+		warning(_("invalid date format '%s' in '%s'"),
-+			val[2], rebase_path_author_script());
-+		strbuf_release(&out);
-+		return NULL;
-+	}
-+
-+	strbuf_reset(&out);
- 	strbuf_addstr(&out, fmt_ident(val[0], val[1], val[2], 0));
- 	strbuf_swap(buf, &out);
- 	strbuf_release(&out);
+-	strbuf_setlen(buf, out - buf->buf);
++	strbuf_addstr(&out, fmt_ident(val[0], val[1], val[2], 0));
++	strbuf_swap(buf, &out);
++	strbuf_release(&out);
+ 	return buf->buf;
+ }
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index fd3a18154e..d340018781 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1420,7 +1420,7 @@ test_expect_success 'valid author header after --root swap' '
+ 	set_fake_editor &&
+ 	FAKE_LINES="2 1" git rebase -i --root &&
+ 	git cat-file commit HEAD^ >out &&
+-	grep "^author ..*> @[0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$" out
++	grep "^author ..*> [0-9][0-9]* [-+][0-9][0-9][0-9][0-9]$" out
+ '
+ 
+ test_done
 -- 
 2.18.0.267.gbc8be36ecb
 
