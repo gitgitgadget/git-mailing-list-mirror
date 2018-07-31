@@ -2,93 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5B3B1F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 17:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B45F1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 17:40:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729739AbeGaTWB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 15:22:01 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:41221 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728327AbeGaTWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 15:22:01 -0400
-Received: by mail-vk0-f68.google.com with SMTP id o82-v6so7930929vko.8
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:40:39 -0700 (PDT)
+        id S1729830AbeGaTWJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 15:22:09 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38966 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728327AbeGaTWJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 15:22:09 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h10-v6so17515864wre.6
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 10:40:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=7XW1ThGu1vjCaRu4yV4rdIRdoMBurzZS7OBBRxqsB2g=;
-        b=glX9YKzmQMCVPIXgRtDulrzMq9M/tPcgLVAftwCMdfqufU4r1rP8Ofxw07RfWJW9wc
-         HtLyudyBIn4txj8mgO76TfWMXkhtGm8QOAiZcBelQ/N5PIuXEJVg5wBvjV1THkMjmmqN
-         qLimdsrm54iJNl/JeEop19Svtnx4b3cvLEW4ht0TPIJ44yqwlx5w0ZmYHGVSh5PoHHrH
-         RCRh1BR9BymQn2T9bwxBsEXo1ZunCYM63ItMPmoinf/TR9ECkX5eM8EwXVwAGrvUhWRN
-         uafEy1zXKxyy9ri2bcwKuKOfc6nfb0//h+DQco/TJHyv1f1OM8v1nwnLzKXqW2kkr+r1
-         rjSg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=aJmJXZ/cmNT21HMiHWX95EO61m4TJyODLeyZm0TElZE=;
+        b=DLd6h/YkiiPvWLBrN9AgzepgNyywokGTdP6yCGhPrzrQLkh3R9e21GVBiQMbS0jDWe
+         LvXwkhUjrmywUZheZelUhE+1K0P9ggY5xNIR/XQsvSHUwVUhmb0C+qiljFOeialLAWLG
+         04ZswSKSua2XEAh6IyNp5opcLybqsDu3ud3pVYDC77aBV/FuaE9ywE9j8KxCIiMGewJe
+         NDz1it++0nqjbEVaLt5+6kWhP2aGXWGUFeEjBTczpEFOur2LNn2EwEDboCSvnqvVWGBR
+         g7kk7cfj9jIKE3WCWCP+FWnPvSPxq+oEPyBH0dtZcWWcvmViSwNFgqrtd9O8gwUeSGbo
+         VlVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=7XW1ThGu1vjCaRu4yV4rdIRdoMBurzZS7OBBRxqsB2g=;
-        b=r9P9CWdthW4Rn0dfAeoEw9KhuPay+8p+pqFm0quzHxnHrOXz6fDHlG6jOMD96jjCq4
-         ErsMYTa0pUmMnSAEYzYGFHUtoYf4+MqEyWJo4dJT8Ca+gHOIO/+DNl18EdPtaRvcY6EX
-         6B0OoGxq01gq6H5SyUdZyjto8W3bxszNDKocF56baFMkZafAVyOcYeKfqM7EsuTOj2BK
-         /uZiMzSpU45oBjYzaMu3Jf+9eYiXsSKj8I6kh+bml6G7Ob/iPHEzl3Hgj/c6GFYevDdV
-         bwuIeWh+V/eFzxgmdC9VM/0xk9nYkvxvk2eolVgI3+wBwWGf/2IHfoi23zyZXfclaAuw
-         A8Ow==
-X-Gm-Message-State: AOUpUlHrqmxC5eg79G9e5BYZ0Y6IhZWCKp5j68sqDchdHpBqkrwi5Mtt
-        7rHzB7zoXiqWwM2MIzMMwZeDk8WSNLcWn86hr6ig7Q==
-X-Google-Smtp-Source: AAOMgpfXb9xA9otV7w8gHjyAowFdGnmGMeOqcsEslYmWxSQkVMbXbYPtIia0WreX8Rq51i2DcxuOBnfkcojBUsN0vkc=
-X-Received: by 2002:a1f:f284:: with SMTP id q126-v6mr13902864vkh.38.1533058838448;
- Tue, 31 Jul 2018 10:40:38 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=aJmJXZ/cmNT21HMiHWX95EO61m4TJyODLeyZm0TElZE=;
+        b=NyTBzkUft0iVAzVATnZ24hi0fc6Bt3MC4luWT2W+nyHcoTplZcq+l7za+dZxhwpJdW
+         4emt1a3TjMA7/gvrEQyCEnICm4grNm5jL36joP8v5P/diM6/g3pC8mpAojLGmTFRqueQ
+         J4ToJNNpmA9E6ktDT4/uhai6GA78g4C7m172zaqN8i1MG/ULYAtRUrv8DkLzP51R6aUo
+         DdGDw24ZrSP06FhJFfJ4DaFFWSy0Mm+aBIQ7RZxrwtvf6/TMACO8iMh5OZnE27mwJEm0
+         or0ZIFfb2FNb7nFzSvOc24NLVkb9kbFT2IHfxnAPUEP7VaBxSuy6Ct77Mul1prS1lbd1
+         G/8w==
+X-Gm-Message-State: AOUpUlHV+0Ts17C6OZvFrrhDpsBz3p/J6Yh5/pJlg3UXL1j/96KR9lwG
+        YlvdlKlPEXE6Rv1k/OoKe4A=
+X-Google-Smtp-Source: AAOMgpcSH2b0FpNO11BoIOOzY7cVCLcJbJYq7KWbDe0XkuarZeO3baHPIVohUjDWsj9fWYeH+ZMHjg==
+X-Received: by 2002:adf:b519:: with SMTP id a25-v6mr22674747wrd.273.1533058844940;
+        Tue, 31 Jul 2018 10:40:44 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g125-v6sm2888392wmf.16.2018.07.31.10.40.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 10:40:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH v2 06/10] push doc: correct lies about how push refspecs work
+References: <20180429202100.32353-1-avarab@gmail.com>
+        <20180731130718.25222-7-avarab@gmail.com>
+Date:   Tue, 31 Jul 2018 10:40:43 -0700
+In-Reply-To: <20180731130718.25222-7-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 31 Jul 2018 13:07:14 +0000")
+Message-ID: <xmqq8t5rcnhg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Tue, 31 Jul 2018 10:40:37
- -0700 (PDT)
-In-Reply-To: <20180718152244.45513-1-dstolee@microsoft.com>
-References: <pull.11.git.gitgitgadget@gmail.com> <20180718152244.45513-1-dstolee@microsoft.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 31 Jul 2018 10:40:37 -0700
-Message-ID: <CABPp-BHPXG7M682haJgia2RYK5Sc3MYkcQxeBOLaRSbEXoLbUw@mail.gmail.com>
-Subject: Re: [PATCH] DO-NOT-MERGE: write and read commit-graph always
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jul 18, 2018 at 8:22 AM, Derrick Stolee <dstolee@microsoft.com> wrote:
-> The following test fails because the repo has ambiguous merge-bases, and
-> the commit-graph changes the walk order so we select a different one.
-> This alters the resulting merge from the expected result.
->
-> t6024-recursive-merge.sh, Test 4
->
-> The tests above are made to pass by deleting the commit-graph file
-> before the necessary steps.
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-I know you meant for these to not be merged, but perhaps the test in
-t6024 could be made to be less stringent about order of merge bases.
-In particular, instead of expecting a certain sha1 to be at stage 2
-and a different one to be at stage 3, it could just check that both
-shas appear in the `git ls-files --stage` output.
+>  The <src> is often the name of the branch you would want to push, but
+> -it can be any arbitrary "SHA-1 expression", such as `master~4` or
+> -`HEAD` (see linkgit:gitrevisions[7]).
+> +it can be any arbitrary expression to a commit, such as `master~4` or
+> +`HEAD` (see linkgit:gitrevisions[7]). It can also refer to tag
+> +objects, trees or blobs if the <dst> is outside of `refs/heads/*`.
 
-> diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-> index 3f59e58dfb..cec10983cd 100755
-> --- a/t/t6024-recursive-merge.sh
-> +++ b/t/t6024-recursive-merge.sh
-> @@ -61,6 +61,7 @@ GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
->  '
->
->  test_expect_success "combined merge conflicts" "
-> +       rm -rf .git/objects/info/commit-graph &&
->         test_must_fail git merge -m final G
->  "
->
-> --
-> 2.18.0.118.gd4f65b8d14
+"It can also refer to..." is a good addition, but do you really want
+to make it part of this series to change/deprecate "SHA-1 expression"
+(which would certainly involve discussion on "then what to call them
+instead, now we are trying to refrain from saying SHA-1?")?
+
+> +on the remote side. Whether this is allowed depends on where in
+> +`refs/*` the <dst> reference lives. The `refs/heads/*` namespace will
+> +only accept commit objects, and then only they can be
+> +fast-forwarded. The `refs/tags/*` namespace will accept any kind of
+> +object, and any changes to them and others types of objects will be
+> +rejected. Finally, it's possible to push any type of object to any
+> +namespace outside of `refs/{tags,heads}/*`,
+
+All sound correct.
+
+> but these will be treated
+> +as branches for the purposes of whether `--force` is required, even in
+> +the case where a tag object is pushed.
+
+I am not sure what "will be treated as branches" exactly means.
+Does it mean "as if they were in refs/heads/* hierarchy?"  Or
+something else?
+
+> That tag object will be
+> +overwritten by another tag object (or commit!) without `--force` if
+> +the new tag happens to point to a commit that's a fast-forward of the
+> +commit it replaces.
+
+Yup, and that is something we want to fix with a later part of this
+series.
+
+> +By having the optional leading `+` to a refspec (or using `--force`
+> +command line option) you can tell Git to update the <dst> ref even if
+> +it is not allowed by its respective namespace clobbering rules (e.g.,
+> +it is not a fast-forward. in the case of `refs/heads/*` updates).
+
+This gives an impression that with "--force" you can put non-commit
+inside refs/heads/* hierarchy.  Is that correct (if so we probably
+would want to fix that behaviour)?
+
+> +This
+> +does *not* attempt to merge <src> into <dst>.  See EXAMPLES below for
+> +details.
+
+That is not wrong per-se, but would normal people expect a merge to
+happen upon pushing on the other side, I wonder?
+
+Thanks for cleaning up our longstanding mess.
+
