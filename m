@@ -2,140 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7CB01F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 10:39:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F06041F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 10:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731366AbeGaMTc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 08:19:32 -0400
-Received: from felt-1.demon.nl ([80.101.98.107]:33690 "EHLO felt.demon.nl"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727409AbeGaMTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 08:19:32 -0400
-Received: from [192.168.129.6] (x006.home.local [192.168.129.6])
-        by felt.demon.nl (AIX7.1/8.14.4/8.14.4) with ESMTP id w6VAdfLO10289304;
-        Tue, 31 Jul 2018 10:39:41 GMT
-Subject: Re: Is detecting endianness at compile-time unworkable?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Dan Shumow <shumow@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-References: <fb935882-25b1-db5f-d765-50dab297f733@felt.demon.nl>
- <20180729181006.GC945730@genre.crustytoothpaste.net>
- <2309fa7f-c2d8-ee57-aff5-b9e32d2da609@felt.demon.nl>
- <20180729192753.GD945730@genre.crustytoothpaste.net>
- <dfe374bf-d9de-8dad-6ec9-4edfa3e9b12b@felt.demon.nl>
- <20180729200623.GF945730@genre.crustytoothpaste.net>
- <701d9f4b-efbd-c584-4bec-bddb51b11d96@felt.demon.nl>
- <87wotdt649.fsf@evledraar.gmail.com>
-From:   Michael Felt <aixtools@felt.demon.nl>
-Message-ID: <93056823-2740-d072-1ebd-46b440b33d7e@felt.demon.nl>
-Date:   Tue, 31 Jul 2018 12:39:36 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1731512AbeGaM0P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 08:26:15 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:40654 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730422AbeGaM0P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 08:26:15 -0400
+Received: by mail-yb0-f195.google.com with SMTP id y11-v6so5944578ybm.7
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 03:46:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0W3UxtssNUrNXNqAuN/cmoDyW+oZT59jdVYj9+W7iWU=;
+        b=p2UK6FnOSKJtOLghR0gryc6E2of0IPJsRoS7bo99kOAmwcT409OmI0K6+9fqv+ea/r
+         2VcMQQmx2Me9OiDIYfdPVbI33nHlVpfxT5vQ+/MjNpGq6kBunEkX5su/4KqJNOm7ZW2l
+         ClB0EUFhhUBX5mS35QNdIATDEz03o9neV3wRBbAPbJrBrn8dVX6s06eAHM89DVhmFPzv
+         xyvSik29tWmsXHJl0HkjDJOcRwTeGdvB8j87gNXDoUGhehHRWEvnBmXhw7O7jr2hCMZb
+         KpA2S5AFJS7PgJ43aOb9upkrmyQWLJ7QqSeaQTxjk3MAEhA4aiH/acdIYdW1nCW1oWUV
+         fM5w==
+X-Gm-Message-State: AOUpUlHeQUodOKYEpxe5dF2OPRIrnIoa00DNuHdWwsw9fyUgn6zaQL5e
+        ds0eBZMKGP7e1pZ8Qybe95+2xr9NHEF6XwtL4d4=
+X-Google-Smtp-Source: AAOMgpdHZjFhG3dDiJclNnrvtkamVEi6AyvwFXANbSTeqxXlW/JinUikhEzip7mSEg6xc2i4jpB3GNJ7mTnfNb8znas=
+X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr11088355ybl.12.1533033991929;
+ Tue, 31 Jul 2018 03:46:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <87wotdt649.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+References: <20180731073331.40007-1-sunshine@sunshineco.com> <f9a7e77d-3c67-082e-ed8d-701f4d0d1759@talktalk.net>
+In-Reply-To: <f9a7e77d-3c67-082e-ed8d-701f4d0d1759@talktalk.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 31 Jul 2018 06:46:20 -0400
+Message-ID: <CAPig+cRkdAoV7gsEeKMcvhckifRxU32+ec2zxY7MgNGmJp5Sug@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] fix "rebase -i --root" corrupting root commit
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Akinori MUSHA <knu@idaemons.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A small step back...
+On Tue, Jul 31, 2018 at 6:06 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+> On 31/07/18 08:33, Eric Sunshine wrote:
+> > Patch 2/4 of this series conflicts with Akinori MUSHA's
+> > 'am/sequencer-author-script-fix' which takes a stab at fixing one of the
+> > four (or so) bugs fixed by this series (namely, adding a missing closing
+> > quote to GIT_AUTHOR_DATE in "rebase-merge/author-script"). That patch
+> > probably ought to be dropped (without prejudice) in favor of this series
+> > for the following reasons:
+> > [...]
+> > The test added by Akinori MUSHA's patch may still have value, and it may
+> > make sense to re-submit it, however, doing so need not hold up this
+> > (higher priority) series.
+>
+> Yes I think it does, also the patch that Johannes and I have on top of
+> it to fix the quoting of "'" in write_author_script() relies on fixing
+> the missing trailing quote and handling of "'" at the same time,
+> hopefully we can get that rebased on top of these asap.
 
+I'm not sure if "Yes I think it does" means that Akinori's test has
+value or if it means that this series should be held back waiting for
+other changes built atop it.
 
-On 7/30/2018 11:39 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Sun, Jul 29 2018, Michael wrote:
->
->> On 29/07/2018 22:06, brian m. carlson wrote:
->>> On Sun, Jul 29, 2018 at 09:48:43PM +0200, Michael wrote:
->>>> On 29/07/2018 21:27, brian m. carlson wrote:
->>>>> Well, that explains it.  I would recommend submitting a patch to
->>>>> https://github.com/cr-marcstevens/sha1collisiondetection, and the we can
->>>>> pull in the updated submodule with that fix.
->>>> Not sure I am smart enough to do that. I'll have to download, build, and see
->>>> what it says.
->>> The issue is that somewhere in lib/sha1.c, you need to cause
->>> SHA1DC_BIGENDIAN to be set.  That means you need to figure out what
->>> compiler macro might indicate that.
->> I remember - roughly - a few decades back - having an assignment to
->> write code to determine endianness. PDP and VAC were different iirc,
->> and many other micro-processors besides the 8088/8086/z85/68k/etc..
->>
->> If you are looking for a compiler macro as a way to determine this -
->> maybe you have one for gcc, but not for xlc. I do not know it - currently :)
-> I'm not familiar with AIX, but from searching around I found this
-> porting manual from IBM:
-> http://www.redbooks.ibm.com/redbooks/pdfs/sg246034.pdf
-This is from July 2001 - when AIX 5L, for Linux affinity, was new. AIX 
-was (nearly) the #1 posix system, and linux was a minor player in the 
-data center (in or out (now as IAAS)). IMHO, the recommendations made in 
-2001 are probably no longer applicable (64-bit was fairly new, e.g., 
-rather than common).
->
-> There they suggest either defining your own macros, or testing the
-> memory layout at runtime (see section "2.2.2.3 Technique 3: Testing
-> memory layout" and surrounding sections).
->
-> Perhaps it's worth taking a step back here and thinking about whether
-> this whole thing is unworkable. It was hard enough to get this to work
-> on the combination of Linux, *BSD and Solaris, but I suspect we'll run
-> into increasingly obscure platforms where this is hard or impossible
-> (AIX, HP/UX etc.)
->
-> The reason we're in this hole is because we use this
-> sha1collisiondetection library to do SHA-1, and the reason we have
-> issues with it specifically (not OpenSSL et al) is because its only
-> method of detecting endianness is at compile time.
-Cannot speak for the "others", but as I have mentioned before - as AIX 
-in only on POWER it is also only Big Endian - so a compiletime #if 
-testing for _AIX will work fine
-> This didn't use to be the case, it was changed in this commit:
-> https://github.com/cr-marcstevens/sha1collisiondetection/commit/d597672
->
-> Dan Shumow: Since the commit message doesn't say why, can you elaborate
-> a bit on why this was done, i.e. is determining this at runtime harmful
-> for performance? If not, perhaps it would be best to bring this back, at
-> least as an option.
->
-> And, as an aside, the reason we can't easily make it better ourselves is
-> because the build process for git.git doesn't have a facility to run
-> code to detect this type of stuff (the configure script is always
-> optional). So we can't just run this test ourselves.
-On AIX - I am required to run configure, and frankly, I am amazed that 
-not everyone is running it. Among other things I an modifying the prefix 
-(to /opt) and many of the others to different /var/git/* areas as I do 
-not want to "polute" the BOS (base OS) and/or other packages/packagers. 
-Officially, according the Linux FHS-3.0 I sould be using /opt/aixtools 
-as prefix.
-
-FYI: my current build process is:
-wget git-{version}.tar.xz
-xz -dc git-{version}.tar.xz
-cd git-{version}.tar.xz
-mv Makefile Makefile.git #my build scripts only run configure when 
-Makefile does not exist
-./configure ...
-ln Makefile.git Makefile
-make
-
-I am amazed, as it rarely happens (maybe git is my first encounter) - 
-that configure does not create a Makefile. This also complicates 
-building git "out of tree".
->
-> Junio: I've barked up that particular tree before in
-> https://public-inbox.org/git/87a7x3kmh5.fsf@evledraar.gmail.com/ and I
-> won't bore you all by repeating myself, except to say that this is yet
-> another case where I wish we had a hard dependency on some way of doing
-> checks via compiled code in our build system.
-For AIX: again - the determination is simple. If _AIX is set to 1 then 
-use BigEndian, or, use:
-michael@x071:[/home/michael]uname
-AIX
-  i.e., something like:
-$(uname) == "AIX" && BigEndian=1
+Anyhow, thanks for reading over the series. I appreciate it even if
+our "sense of priority" doesn't always align (as evidenced by your
+review comments and my responses).
