@@ -4,136 +4,132 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE29F1F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 15:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D80D7208E9
+	for <e@80x24.org>; Tue, 31 Jul 2018 16:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732457AbeGaRhW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 13:37:22 -0400
-Received: from mail-ua0-f194.google.com ([209.85.217.194]:42476 "EHLO
-        mail-ua0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732333AbeGaRhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 13:37:21 -0400
-Received: by mail-ua0-f194.google.com with SMTP id w7-v6so10612966uan.9
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 08:56:23 -0700 (PDT)
+        id S1727261AbeGaRlG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 13:41:06 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44764 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727020AbeGaRlG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 13:41:06 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r16-v6so17217213wrt.11
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 09:00:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oPiPBqbTbgoHcHbDkqytuHHothNlRGS7gGUe9wk3pMU=;
-        b=WQ+4j0FzD1EvI2mpHIykMU6ftHdOxuEwF5hiLUEW39LsIdjoD1kVBHFPR9YrNOhXdL
-         Cm4ahWn1nwDFmsf+zpg5Ih/q06yi6fv01cvoD+8fN6yX51ebfquwYfcWxK0nIqGxTUa3
-         Z/ldAV9pKiuIRJ0rFvcu0EFN84INGQsD22V1w5zeElw0AsTymk/1zDLniiEnqr4c/7GB
-         xTGQPRhuzw2FSaB6qa24WmkPv2tl/N4hqMCbTKqxmSirRnHwOHniGcgMBOS8+bElhSYZ
-         ZzPrhv7+0ubtV179/SSedXny+549JKv2xhdCM4PYYPQMWij0RdJu6ZuOQ2a3N8CXNT21
-         rY/A==
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HK1jjBtl8m/wgwe2c5UJZTo5UPrVf7y6Bcy9GsTNrbw=;
+        b=HjV0ZEvIHOjC3644D0djknKW3PQKjufGgEuIPEBlFPdwb5X5b+szCbtwrLHTH9b4KS
+         +ATk4tRt/oHYZRNQfmbihHfTMDFFn2wecm2dVKgebmeZIch6NkiqC+ExI2CNy9c4Kb9l
+         NxeQPfjbFYnCdqgs2Xe4dxUL3pS03Fbh09XtC+JCtGl40ngE5fAGl4afORwjPZIF4Ne2
+         81qnVOtawowyuGNjhAsmwp0dlB7soljm6sVHstYER5ljeriDZb8SPjaGBgXwlVpSzV9R
+         QOpRJwtIOnBNfxTIRlEGMOrvnASMHwyhblao194ib2jPQrN7oqj3GKbHiP1i+IOWCjsd
+         UddA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oPiPBqbTbgoHcHbDkqytuHHothNlRGS7gGUe9wk3pMU=;
-        b=Z2xqYs4UAyXaB8r/UhT8sJUiANUEtpNkxSP4KqMCg7Nv/cvfMa4ARPet7G9wVFeYqD
-         WONGqr4KqEmDPGQyClbYe2t6phK2t19hXMy0YbuLgf8CPTQ3ClS7URJon7X+kDl/bD6s
-         NtGPH2mbPJ29uBsC0tAo+NcBssV0b4xMFNcrHUeOFlrJrmu2+53wURJ4TbsspVV1C3VY
-         driQJAf2+1vkEO0j//Zo4mxjpK7aHzkCVHgvMmpm4ukCTZY6VapLFqSpUp+aFxiI23VA
-         6SBMUGXJL87nJdofuckU7LY2klLVz9lWz5BPB9u1EXNmQTRxDM9bnZ1sjJov2qF85c92
-         O+2w==
-X-Gm-Message-State: AOUpUlHtMy1MUuqQy3ypm+yT9feoKa6Ljm9mSLXlLueHMKPYxLGXfRtV
-        gVekzYt605jD4gphpfVuzDTdngUHkkMMRfFWXcej9A==
-X-Google-Smtp-Source: AAOMgpddrkHseo0ZUN/mq6wn6zxxPkWRvKiYtPQGqIViOkzDHD7Tdgt1AWDZ1IRPHYab2gKC2yeZswGDVmzkv9B4Myg=
-X-Received: by 2002:ab0:60ae:: with SMTP id f14-v6mr15651043uam.153.1533052583061;
- Tue, 31 Jul 2018 08:56:23 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HK1jjBtl8m/wgwe2c5UJZTo5UPrVf7y6Bcy9GsTNrbw=;
+        b=Kzu/uYOAupBzUjXx6XoTjqOcjOWU2+lsTYR3tU1kB9PWli2xXZ2Bs7whyg9sWOT+Tn
+         58W16pvA2ua/3JByuRRVJ27nHREHOkhaS3Mcg9UC3Fc67Ot457XGk6CG917CE/p20+Ai
+         LhuBtfzgrtQlcvUiXIjZDAKIHO+Pf3SuJPtaDRT8jumGGlvPg0NcEkRIEhRssuXjuHwz
+         0Nd7GYCky7WBrwiEOP2P4Figg+5dYhvOpYT8O6QQ0K/EFj4hqA/KU5trI5kKoUSYBd9J
+         9TwxCTWJ7baMzheRxvRNy7bspprsrvF5E22AZ+tqEIzDDYHWUulei2i8ZfXDxYpoT9po
+         e1Ew==
+X-Gm-Message-State: AOUpUlGJxXTniEBidUCxfluCG7Ie6wCt5+5Pdngs6dWp05Gj/gqlXAzg
+        +iCp0e9p6Q38gXVfKdn2A7o=
+X-Google-Smtp-Source: AAOMgpfLqfDMPNtIyLjLoQvksZ2mUgNX9vApTHNR8jAykSRizEbohMwcC64D0/S3aYRUxAazIqXb0Q==
+X-Received: by 2002:adf:9d1c:: with SMTP id k28-v6mr11670360wre.29.1533052806774;
+        Tue, 31 Jul 2018 09:00:06 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-67-118.w92-136.abo.wanadoo.fr. [92.136.29.118])
+        by smtp.gmail.com with ESMTPSA id m207-v6sm2876274wma.31.2018.07.31.09.00.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 31 Jul 2018 09:00:05 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v4] fixup! rebase -i: rewrite write_basic_state() in
+ C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20180730182516.32644-1-szeder.dev@gmail.com>
+ <20180731121115.12296-1-alban.gruin@gmail.com>
+ <xmqqy3drctu4.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <ad8fe398-6e7b-b50f-df96-35ac06049020@gmail.com>
+Date:   Tue, 31 Jul 2018 17:59:49 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-References: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
- <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com> <xmqqtvofcsgc.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvofcsgc.fsf@gitster-ct.c.googlers.com>
-From:   George Shammas <georgyo@gmail.com>
-Date:   Tue, 31 Jul 2018 11:56:11 -0400
-Message-ID: <CAF1Ko+HAusyCOaTWT-cT0DW0MoJdDv3RdoW+U25QRqaacCAh5w@mail.gmail.com>
-Subject: Re: git merge -s subtree seems to be broken.
-To:     gitster@pobox.com
-Cc:     l.s.r@web.de, git@vger.kernel.org
-Content-Type: multipart/alternative; boundary="000000000000a2aedb05724d9eb2"
+In-Reply-To: <xmqqy3drctu4.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000a2aedb05724d9eb2
-Content-Type: text/plain; charset="UTF-8"
+Hi Junio,
 
-While debugging this, I did try -X subtree=src/ however the effect was the
-same.
+Le 31/07/2018 à 17:23, Junio C Hamano a écrit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
+> 
+>> As pointed out by SZEDER Gábor, git-rebase.sh wrote to to 'quiet' with
+>> an `echo`:
+>>
+>>     echo "$GIT_QUIET" > "$state_dir/quiet"
+>>
+>> This mean that even if $GIT_QUIET is empty, a newline is written to
+>> quiet.  The rewrite of write_basic_state() changed this behaviour, which
+>> could lead to problems.  This patch changes the rewritten version to
+>> behave like the shell version.
+>>
+>> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+>> ---
+>> Hi Junio, could you apply this patch on top of ag/rebase-i-in-c, please?
+> 
+> Hmph, from reading your other message
+> 
+>   https://public-inbox.org/git/dce8c99b-51e9-4ed1-8ae4-28049cb6e7ec@gmail.com/
+> 
+> I got an impression that a rerolled version is coming anyway.  Is
+> this fix so urgent that it needs tobe squashed in in the meantime
+> and cannot wait?
+> 
 
-On Tue, Jul 31, 2018 at 11:53 AM Junio C Hamano <gitster@pobox.com> wrote:
+I wanted to reroll it first, but the only changes would have been this
+fix and Ramsay’s patch.  I was advised to send a fixup! patch instead.
 
-> George Shammas <georgyo@gmail.com> writes:
->
-> > Bisecting around, this might be the commit that introduced the breakage.
-> >
-> > https://github.com/git/git/commit/d8febde
->
-> Interesting.  I've never used the "-s subtree" strategy without
-> "-Xsubtree=..." to explicitly tell where the thing should go for a
-> long time, so I am not surprised if I did not notice if an update to
-> the heuristics made long time ago had affected tree matching.
->
-> d8febde3 ("match-trees: simplify score_trees() using tree_entry()",
-> 2013-03-24) does touch the area that may affect the subtree matching
-> behaviour.
->
-> Because it is an update to heuristics, and as such, we need to be
-> careful when saying it is or is not "broken".  Some heuristics may
-> work better with your particular case, and may do worse with other
-> cases.
->
-> But from the log message description, it looks like it was meant to
-> be a no-op simplification rewrite that should not affect the outcome,
-> so it is a bit surprising.
->
+I can send a reroll if you want, but it won’t have any more changes.
 
---000000000000a2aedb05724d9eb2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cheers,
+Alban
 
-<div dir=3D"ltr">While debugging this, I did try -X subtree=3Dsrc/ however =
-the effect was the same.</div><br><div class=3D"gmail_quote"><div dir=3D"lt=
-r">On Tue, Jul 31, 2018 at 11:53 AM Junio C Hamano &lt;<a href=3D"mailto:gi=
-tster@pobox.com">gitster@pobox.com</a>&gt; wrote:<br></div><blockquote clas=
-s=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pad=
-ding-left:1ex">George Shammas &lt;<a href=3D"mailto:georgyo@gmail.com" targ=
-et=3D"_blank">georgyo@gmail.com</a>&gt; writes:<br>
-<br>
-&gt; Bisecting around, this might be the commit that introduced the breakag=
-e.<br>
-&gt;<br>
-&gt; <a href=3D"https://github.com/git/git/commit/d8febde" rel=3D"noreferre=
-r" target=3D"_blank">https://github.com/git/git/commit/d8febde</a><br>
-<br>
-Interesting.=C2=A0 I&#39;ve never used the &quot;-s subtree&quot; strategy =
-without<br>
-&quot;-Xsubtree=3D...&quot; to explicitly tell where the thing should go fo=
-r a<br>
-long time, so I am not surprised if I did not notice if an update to<br>
-the heuristics made long time ago had affected tree matching.<br>
-<br>
-d8febde3 (&quot;match-trees: simplify score_trees() using tree_entry()&quot=
-;,<br>
-2013-03-24) does touch the area that may affect the subtree matching<br>
-behaviour.<br>
-<br>
-Because it is an update to heuristics, and as such, we need to be<br>
-careful when saying it is or is not &quot;broken&quot;.=C2=A0 Some heuristi=
-cs may<br>
-work better with your particular case, and may do worse with other<br>
-cases.<br>
-<br>
-But from the log message description, it looks like it was meant to<br>
-be a no-op simplification rewrite that should not affect the outcome,<br>
-so it is a bit surprising.<br>
-</blockquote></div>
 
---000000000000a2aedb05724d9eb2--
+>>
+>>  sequencer.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index d257903db0..0d41e82953 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2332,7 +2332,7 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+>>  	if (quiet)
+>>  		write_file(rebase_path_quiet(), "%s\n", quiet);
+>>  	else
+>> -		write_file(rebase_path_quiet(), "");
+>> +		write_file(rebase_path_quiet(), "\n");
+>>  
+>>  	if (opts->verbose)
+>>  		write_file(rebase_path_verbose(), "");
+
