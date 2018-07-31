@@ -2,89 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,HTML_MESSAGE,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AACA81F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 04:33:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E51E01F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 05:03:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727482AbeGaGLt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 02:11:49 -0400
-Received: from mail-oi0-f51.google.com ([209.85.218.51]:42054 "EHLO
-        mail-oi0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725900AbeGaGLt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 02:11:49 -0400
-Received: by mail-oi0-f51.google.com with SMTP id n84-v6so25465723oib.9
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 21:33:30 -0700 (PDT)
+        id S1727188AbeGaGmT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 02:42:19 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:43174 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726817AbeGaGmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 02:42:19 -0400
+Received: by mail-io0-f195.google.com with SMTP id y10-v6so11860499ioa.10
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 22:03:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=risWXzqWyuHc3I+1H6hAFfi6FNd9ea6RKIXN4qXIhJY=;
-        b=Z29+2Kmm0UIlOhQI4Bqp5TvOewxI84OL64DCZo18iTXXLe6v3m5rkgFO4NeKV0Qfqg
-         JPsr899bQSbG511QsmGtN/uEcQxDgK10yYiJFhVm8MaLD9017kYA0X77lS63wGk6th6k
-         WdVBy8vvhyzJolEAr5sS7+NsawP3wsvuPwuvWsqlL/oZckUOQ0O4yxDIg8HqmqLT+lQY
-         OLaSYDNwExZwaMHRTJ9nzTWfn7WkzWTPHArTGbqEgEAQBZNM/09uRvl56zQgg886mMqt
-         hdNOjkiQZpajPdOGVWr3VpmbDG8qxvx4Wp+fKhO8xPubwy7rV2USOkKUlNJzyIiFoe7i
-         v22A==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=ClgrllaVYUw0KnFXNDWYlgrOqUmbHiZPI1Dn2GETJKI=;
+        b=FRtvK0D8Ws1sAh5p3UBeV8vYhYE9mNJyEc9OyKZrqdXTgUb9iTLr+Qv4oJz8EWZoJj
+         f8XKmBA7w0Ci3Sw8iZeW78LK7mmMl14zzNApM6JpYhxgUC+g7OoORA4m/O/VVePewffc
+         AdGYJr014hZrmJwL+C3GfXk+ToV420HslIEq0n5KJHQo7V6Ern4UpRhR3TZq7TMfzMYC
+         o8tLc1oWBMGnninjY7bjwLxOJfZzCbNkcy7Pr9r/oBptmzRaJQq4hpdfk5mJcR/ossWl
+         T3TVKn/wlH0RfOBpGuahNtoNtaa8+JriUQe0QA8mwOVuD/gEVVT45SiYet6v0xqLCP6M
+         +sTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=risWXzqWyuHc3I+1H6hAFfi6FNd9ea6RKIXN4qXIhJY=;
-        b=jeVflJHexaAiYlkvDbjM6F0Ax9DEl0ZTDJ7Mf2/dQReHWXgCAzskB0D1376ie0mW+6
-         r7l5BiV9TZ6BZk65VTGT5/A/2G7/a0PrmnDxBt7fjQ29bgW2mdLXnIivK5yLP7uh96dV
-         mh5Oqr1vOZFSYisVYa3gMkmGhiM6IPzsHV/blcAvPcHO4Jjuo/KzwTdmupV5Vyg4V6TV
-         AOVm4Rec50qZ6GY1xeK0N1C4vebP31aNJsEQWGQQy/D/OEo3+Qq7+V64agCqvotNEOzs
-         V27N5lYfmy1l/b5DjqvlXzPbXdRyeRxHksx5ktkaGpPNLuP/2vT0iKcnzoSj+lbrqj8g
-         lgiQ==
-X-Gm-Message-State: AOUpUlGRw8G7pbdkbW7UZY92u9I4HXVe/Dgw2ATX4NAZngUyUESnx0hS
-        9PyoLcpJCGj0Bx74LHSWQaUNEYW77PbChcHI6LM1MA==
-X-Google-Smtp-Source: AAOMgpfGp1W3nyKbaSzI1EcoylsI736/tFafg0wFP6eRD7aAzPhDUW4hN1ppW1afWeVo8/Ztq6kq+AcXMWj3HIR07s8=
-X-Received: by 2002:aca:df42:: with SMTP id w63-v6mr19676500oig.295.1533011610302;
- Mon, 30 Jul 2018 21:33:30 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ac9:6718:0:0:0:0:0 with HTTP; Mon, 30 Jul 2018 21:33:30
- -0700 (PDT)
-In-Reply-To: <CADryqKxnj0c7srjLz4dzYymBWG140+g=disDF61duVTYjvCx7g@mail.gmail.com>
-References: <CADryqKxnj0c7srjLz4dzYymBWG140+g=disDF61duVTYjvCx7g@mail.gmail.com>
-From:   Christine Frankel <chrisconnorsfrank@gmail.com>
-Date:   Mon, 30 Jul 2018 21:33:30 -0700
-Message-ID: <CADryqKzps0sc4VXiq+ZEU436qrO6RKR11-aBN2fSvKu6-mZ_Bg@mail.gmail.com>
-Subject: Re: b on my mailing list!
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=ClgrllaVYUw0KnFXNDWYlgrOqUmbHiZPI1Dn2GETJKI=;
+        b=ZgN33kWJFy3UEzbgldvCzZnJjfL7ZzGllzK1MBSqQ66OoYsYTHqxt1bMvjW54q1K80
+         Aw6cu7YV08MYf/MWox9vEbYXuANyVLiMGNcFLvQCiW41d7MwWV1Yd22zk8Y1BwBLF8Y9
+         GdS19bPN13TpTuRkcMRzw4K3huUFuk7QHQAtre/uv401cBykCqw43ebvVYjkwv8pFdR9
+         lbOXNqBfGdirF9aQGCcN5esYaSs3umOl1N4ef762QyLEAxnGLnJ79JNuKwJLsDG3iG80
+         WhFeyg5K2S14L3sCZnHXY4j3nKJ1jymdtX+scUvM5tUK7Nhp4zgort7L01t1RW82vZY8
+         Wc0Q==
+X-Gm-Message-State: AOUpUlGHVoxDBwOzNI+AluNWiJelE08iBtU+7CJT3XHS7LtdEmedwPND
+        73t7I2wTXRcc5A2+deY6Y9X3iIbI
+X-Google-Smtp-Source: AAOMgpfel8agFmam/l2P4T7xa5dAjlbnGZ8NYJDS12lVlbIR9100PsflGhwHuw7diVgFDf4vDB6F+w==
+X-Received: by 2002:a6b:cd8f:: with SMTP id d137-v6mr15606576iog.154.1533013434976;
+        Mon, 30 Jul 2018 22:03:54 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2cs3.cable.mindspring.com. [69.81.51.131])
+        by smtp.gmail.com with ESMTPSA id a79-v6sm844090itc.33.2018.07.30.22.03.53
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Mon, 30 Jul 2018 22:03:54 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
-Content-Type: multipart/alternative; boundary="00000000000077fd000572441479"
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH] t/chainlint.sed: drop extra spaces from regex character class
+Date:   Tue, 31 Jul 2018 01:03:20 -0400
+Message-Id: <20180731050320.29530-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---00000000000077fd000572441479
-Content-Type: text/plain; charset="UTF-8"
+This character class, like many others in this script, matches
+horizontal whitespace consisting of spaces and tabs, however, a few
+extra, entirely harmless, spaces somehow slipped into the expression.
+Removing them is purely a cosmetic fix.
 
-dammit! those threat actors found a way and were on for quite a
-while....should we do something different?  These people need a life.
+While at it, re-indent three lines with a single TAB each which were
+incorrectly indented with six spaces. Also, a purely cosmetic fix.
 
-On Mon, Jul 30, 2018 at 9:29 PM, Christine Frankel <
-chrisconnorsfrank@gmail.com> wrote:
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
 
->
->
+Just something I noticed while examining t/chainlint.sed after reading
+Jonathan's report[1] of a false-positive.
 
---00000000000077fd000572441479
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This is atop 'es/chain-lint-in-subshell' in 'next'.
 
-<div dir=3D"ltr">dammit! those threat actors found a way and were on for qu=
-ite a while....should we do something different?=C2=A0 These people need a =
-life.</div><div class=3D"gmail_extra"><br><div class=3D"gmail_quote">On Mon=
-, Jul 30, 2018 at 9:29 PM, Christine Frankel <span dir=3D"ltr">&lt;<a href=
-=3D"mailto:chrisconnorsfrank@gmail.com" target=3D"_blank">chrisconnorsfrank=
-@gmail.com</a>&gt;</span> wrote:<br><blockquote class=3D"gmail_quote" style=
-=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><div dir=
-=3D"ltr"><br></div>
-</blockquote></div><br></div>
+[1]: https://public-inbox.org/git/20180730181356.GA156463@aiede.svl.corp.google.com/
 
---00000000000077fd000572441479--
+ t/chainlint.sed | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/chainlint.sed b/t/chainlint.sed
+index a0de8a3882..5f0882cb38 100644
+--- a/t/chainlint.sed
++++ b/t/chainlint.sed
+@@ -71,9 +71,9 @@
+ # incomplete line -- slurp up next line
+ :squash
+ /\\$/ {
+-      N
+-      s/\\\n//
+-      bsquash
++	N
++	s/\\\n//
++	bsquash
+ }
+ 
+ # here-doc -- swallow it to avoid false hits within its body (but keep the
+@@ -199,7 +199,7 @@ s/.*\n//
+ # "$(...)" -- command substitution; not closing ")"
+ /\$([^)][^)]*)[^)]*$/bcheckchain
+ # multi-line "$(...\n...)" -- command substitution; treat as nested subshell
+-/\$([ 	     ]*$/bnest
++/\$([ 	]*$/bnest
+ # "=(...)" -- Bash array assignment; not closing ")"
+ /=(/bcheckchain
+ # closing "...) &&"
+-- 
+2.18.0.597.ga71716f1ad
+
