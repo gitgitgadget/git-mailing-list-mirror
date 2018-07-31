@@ -7,176 +7,120 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4105B1F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 00:32:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5719C1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 00:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732205AbeGaCJj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 30 Jul 2018 22:09:39 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:56249 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732009AbeGaCJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 30 Jul 2018 22:09:39 -0400
-Received: by mail-yb0-f202.google.com with SMTP id y16-v6so7701484ybk.22
-        for <git@vger.kernel.org>; Mon, 30 Jul 2018 17:32:07 -0700 (PDT)
+        id S1732099AbeGaCTR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 30 Jul 2018 22:19:17 -0400
+Received: from mail-yw0-f193.google.com ([209.85.161.193]:34684 "EHLO
+        mail-yw0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732058AbeGaCTR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 30 Jul 2018 22:19:17 -0400
+Received: by mail-yw0-f193.google.com with SMTP id j68-v6so5114960ywg.1
+        for <git@vger.kernel.org>; Mon, 30 Jul 2018 17:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=HhqN5tNnD1Woca6up3NDDm85ig0VO9ZsDatqTvtQUig=;
-        b=SfKlPbE9doZIl0gIvkpU5aLhH9V5qeIRqcuMkhWORjJzjqayucD3yipu00F4mssO8c
-         ielHkhBq+SXmotCF49sndZ7Z/TlIDfZAUJwqf+m0j9GA6zBeP8oeChWSnq9F8nJz1Eo7
-         OKjl9GG93nsW0Xt8Aovk/UOU/eiEHj8Rd6aSfVcNtiKKJfdl/NYBPcXIEPuCPCk+l7kv
-         WZtsUOq1XOrMyIXoylIUscvC91y4zuXenK+6jsAs+S/VYMwhamMsxddzEAyVf76V9RTD
-         Lio5k7Sis6BgPytUO6pwOjJKxu/3NAPPdbUAjbgVuEO8I1Puzkh6t5DwGSGm6fWPthAj
-         qKfQ==
+        bh=kwevwDLs2V7u86JD1mSb6N7iZtV8/j5sFEH3ICrREHc=;
+        b=L0o80YlxJrdiaeQ5lTUcSacU1YUVf90ZceCQPJix82bawHbImaJCzwtWCk6O6YKb5P
+         WIac9ggjsEEbqKoXXi73cswpv/SDJswBKUg2kVfdYDEcT4lnBdefgDlmFoCQvHiyZuEV
+         3gj5mDO2u9G4RQtnPL2oSBMCwtQyBKqsgJEQMSecMehLt3QHloPezhp10MWXbUYSrHvT
+         fKnDdrBIAH4rCRKfOmGuscs/3iiE2vhA44BOzdPSJueWn2y+ALKvwzSCmalk9IBj3IXU
+         VYY94P6E3geEnB+Qisonqo6R3F9jQSG5ScGnn19k1uc7fEaDH1AiX+DnInUvGQgWlr7L
+         HnUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=HhqN5tNnD1Woca6up3NDDm85ig0VO9ZsDatqTvtQUig=;
-        b=hhdhmIKhUFbkX5bm2LCSV0YoKqOVlvVfGAslZqTI9gWoktOr4+n7xdhErFlw/A0xVm
-         iKB2mdhUNSWxqe4MHq4WJUwDQzW0F1AApgngxx7BCLyaZYQ6DxEtxtAE9vqc5J6mJmpK
-         2w3KLFCxKpOF0npoCinYOI7jj5tq4gaRs2/eP43Aa2zEENLkO4eeOReLqHuSut3m4LXR
-         jcCh120L3Oy12VfzURuVW/o54KvPP6o6FwmcvCvdIC0TuMb7G9lpozDJMqwkmU7SS7aU
-         tCjEhiw4fdT7B9Q/OH83jgZatQIVnY/8iEKs5Zvfybptwjzt4g4opsnrSzlmmMwvECFu
-         I6mg==
-X-Gm-Message-State: AOUpUlGOmk4EQDnoct8VF/esp3n4IWlFwegSguSj6LHvJ9clotywgGuU
-        BUf2Q9eHt7OyEbraFREwMRAzm3rzeJXZ
-X-Google-Smtp-Source: AAOMgpf833A9WytnQkJ4bDi5KRpWO0FyOJycPllKiJuRy8qV+m/NhKOm/32O9XiNqZpmDwSPkMPjARhqC2RA
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kwevwDLs2V7u86JD1mSb6N7iZtV8/j5sFEH3ICrREHc=;
+        b=BI/tJHRvvUnpC9a+2bi0FqoSes4vzQRCJ0DKBCcTAcgYyTOsMn+EvKYEAHsxy5D99o
+         xgg3t6SxNlgpEexVWjSXsWPQGWLf6QdLzgAqFIqCFEDyigb7BpsmQo+1bugK8JrNpa3k
+         K/OfOh2jriJDnUiZXwvEcmDd15lnEnul02eadMODarvsxGfu/EKp8gcmE+SFekpyuWLQ
+         yfZfD3kET4vAQg6yAMF9aTbSsxn3KWCG6h4paO6j3Tkqc2JZZlJTt3ficwxMPOkssGsV
+         gfE4mXlWyZZ9uKlJoTE0o8jZXpdpu5siB72v8ku6qhFArhyZ3EjnYMaLTFbZTNM0/mGQ
+         4msg==
+X-Gm-Message-State: AOUpUlFc97/pt3VIkXKf16WbYv/8Pc38aaHHaamb0tNB1XMghVSCt1xJ
+        7sshzuRazzq/s9m/Lvlu7LtjEHv4MUB+zBM5j2qiAQ==
+X-Google-Smtp-Source: AAOMgpdatVcapmQX8G0VGiUFOmDB8DIJiHUqvRKrESGMiS+LuiWaQJexdqTF6wuCaubxZIr2hX/lBWyoCrEaaN/d7/w=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr10334374ywd.421.1532997702258;
+ Mon, 30 Jul 2018 17:41:42 -0700 (PDT)
 MIME-Version: 1.0
-X-Received: by 2002:a25:e805:: with SMTP id k5-v6mr5747802ybd.53.1532997126883;
- Mon, 30 Jul 2018 17:32:06 -0700 (PDT)
-Date:   Mon, 30 Jul 2018 17:31:41 -0700
-In-Reply-To: <20180731003141.105192-1-sbeller@google.com>
-Message-Id: <20180731003141.105192-9-sbeller@google.com>
-References: <20180728030448.192177-1-sbeller@google.com> <20180731003141.105192-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.132.g195c49a2227
-Subject: [PATCH 8/8] diff.c: rewrite emit_line_0 more understandably
+References: <20180730194731.220191-3-sbeller@google.com> <20180731001858.122968-1-jonathantanmy@google.com>
+In-Reply-To: <20180731001858.122968-1-jonathantanmy@google.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        sunshine@sunshineco.com
+Date:   Mon, 30 Jul 2018 17:41:31 -0700
+Message-ID: <CAGZ79kbwt2RGo2Z2ARSzfHOZdL_VWF1sR+=EE=QWx1ibLL+KwQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] refs: switch for_each_replace_ref back to use a ref_store
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        git <git@vger.kernel.org>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Derrick Stolee <stolee@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-emit_line_0 has no nested conditions, but puts out all its arguments
-(if set) in order. There is still a slight confusion with set
-and set_sign, but let's defer that to a later patch.
+On Mon, Jul 30, 2018 at 5:19 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+>
+> > So let's go back to the clean API, just requiring a ref_store as an
+> > argument.
+>
+> Here, you say that we want ref_store as an argument...
 
-'first' used be output always no matter if it was 0, but that got lost
-at "diff: add an internal option to dual-color diffs of diffs",
-2018-07-21), as there we broadened the meaning of 'first' to also
-signal an early return.
+I do.
 
-The change in 'emit_line' makes sure that 'first' is never content, but
-always under our control, a sign or special character in the beginning
-of the line (or 0, in which case we ignore it).
+>
+> > -int for_each_replace_ref(struct repository *r, each_ref_fn fn, void *cb_data)
+> > +int for_each_replace_ref(each_ref_fn fn, void *cb_data)
+> >  {
+> > -     return do_for_each_ref(get_main_ref_store(r),
+> > +     return do_for_each_ref(get_main_ref_store(the_repository),
+> >                              git_replace_ref_base, fn,
+> >                              strlen(git_replace_ref_base),
+> >                              DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+>
+> ...but there is no ref_store as an argument here - instead, the
+> repository argument is deleted with no replacement. I presume you meant
+> to replace it with a ref_store instead? (This will also fix the issue
+> that for_each_replace_ref only works on the_repository.)
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- diff.c | 73 +++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 41 insertions(+), 32 deletions(-)
+Yes, I would want to pass in a ref_store and use that as the first argument
+in do_for_each_ref for now.
 
-diff --git a/diff.c b/diff.c
-index f565a2c0c2b..2bd4d3d6839 100644
---- a/diff.c
-+++ b/diff.c
-@@ -580,43 +580,52 @@ static void emit_line_0(struct diff_options *o,
- 			int first, const char *line, int len)
- {
- 	int has_trailing_newline, has_trailing_carriage_return;
--	int nofirst;
- 	int reverse = !!set && !!set_sign;
-+	int needs_reset = 0;
-+
- 	FILE *file = o->file;
- 
- 	fputs(diff_line_prefix(o), file);
- 
--	if (len == 0) {
--		has_trailing_newline = (first == '\n');
--		has_trailing_carriage_return = (!has_trailing_newline &&
--						(first == '\r'));
--		nofirst = has_trailing_newline || has_trailing_carriage_return;
--	} else {
--		has_trailing_newline = (len > 0 && line[len-1] == '\n');
--		if (has_trailing_newline)
--			len--;
--		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
--		if (has_trailing_carriage_return)
--			len--;
--		nofirst = 0;
--	}
--
--	if (len || !nofirst) {
--		if (reverse && want_color(o->use_color))
--			fputs(GIT_COLOR_REVERSE, file);
--		if (set_sign || set)
--			fputs(set_sign ? set_sign : set, file);
--		if (first && !nofirst)
--			fputc(first, file);
--		if (len) {
--			if (set_sign && set && set != set_sign)
--				fputs(reset, file);
--			if (set)
--				fputs(set, file);
--			fwrite(line, len, 1, file);
--		}
--		fputs(reset, file);
-+	has_trailing_newline = (len > 0 && line[len-1] == '\n');
-+	if (has_trailing_newline)
-+		len--;
-+
-+	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-+	if (has_trailing_carriage_return)
-+		len--;
-+
-+	if (!len && !first)
-+		goto end_of_line;
-+
-+	if (reverse && want_color(o->use_color)) {
-+		fputs(GIT_COLOR_REVERSE, file);
-+		needs_reset = 1;
-+	}
-+
-+	if (set_sign || set) {
-+		fputs(set_sign ? set_sign : set, file);
-+		needs_reset = 1;
- 	}
-+
-+	if (first)
-+		fputc(first, file);
-+
-+	if (!len)
-+		goto end_of_line;
-+
-+	if (set) {
-+		if (set_sign && set != set_sign)
-+			fputs(reset, file);
-+		fputs(set, file);
-+		needs_reset = 1;
-+	}
-+	fwrite(line, len, 1, file);
-+	needs_reset |= len > 0;
-+
-+end_of_line:
-+	if (needs_reset)
-+		fputs(reset, file);
- 	if (has_trailing_carriage_return)
- 		fputc('\r', file);
- 	if (has_trailing_newline)
-@@ -626,7 +635,7 @@ static void emit_line_0(struct diff_options *o,
- static void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
- {
--	emit_line_0(o, set, NULL, reset, line[0], line+1, len-1);
-+	emit_line_0(o, set, NULL, reset, 0, line, len);
- }
- 
- enum diff_symbol {
--- 
-2.18.0.132.g195c49a2227
+That would reduce the API uncleanliness to have to pass the repository twice.
 
+> Taking a step back, was there anything that prompted these patches?
+
+I am flailing around on how to approach the ref store and the repository:
+* I dislike having to pass a repository 'r' twice. (current situation after
+  patch 1. That patch itself is part of Stolees larger series to address
+  commit graphs and replace refs, so we will have that one way or another)
+* So I sent out some RFC patches to have the_repository in the ref store
+  and pass the repo through to all the call backs to make it easy for
+  users inside the callback to do basic things like looking up commits.
+* both Duy (on list) and Brandon (privately) expressed their dislike for
+  having the refs API bloated with the repository, as the repository is
+  not needed per se in the ref store.
+* After some reflection I agreed with their concerns, which let me
+  to re-examine the refs API: all but a few select functions take a
+  ref_store as the first argument (or imply to work on the ref store
+  in the_repository, then neither a repo nor a ref store argument is
+  there)
+* I want to bring back the cleanliness of the API, which is to take a
+  ref store when needed instead of the repository, which is rather
+  bloated.
+
+> Maybe at least the 2nd one should wait until we have a situation that
+> warrants it (for example, if we want to for_each_replace_ref(), but we
+> only have a ref_store, not a repository).
+
+okay, then let's drop this series for now and I'll re-examine what is
+needed to have submodule handling in-core.
+
+Thanks,
+Stefan
