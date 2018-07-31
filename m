@@ -2,189 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7DC01F597
-	for <e@80x24.org>; Tue, 31 Jul 2018 18:44:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22B6E1F597
+	for <e@80x24.org>; Tue, 31 Jul 2018 18:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732033AbeGaU0F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 16:26:05 -0400
-Received: from mail-vk0-f68.google.com ([209.85.213.68]:33679 "EHLO
-        mail-vk0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729772AbeGaU0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 16:26:05 -0400
-Received: by mail-vk0-f68.google.com with SMTP id y70-v6so8032632vkc.0
-        for <git@vger.kernel.org>; Tue, 31 Jul 2018 11:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=B8rjV28SFuUi8o6RAMMVEC9RXxAOR/X88NTvCfhO8Hc=;
-        b=JfX7wWXYVgEoMnC8K0oyUuzDPMzLzq1Eebsw+Gp/yP6FRBnRabEmAeQTNFTr6JBTJL
-         aksTqG0D2UE/IupZWr37R6ONugDqrXvHoNGa0JAU5VacWZkNL0J1c5QQnmmHqk0Io9nH
-         v35aTBMgLuPWjKQvWOk6DHl3Wl2KyovWog++ynIVzd/dXr6OiWZA+XMTgbF2Q+nTCGis
-         bDvUvMZ8cZzqOPMJAKamClRWuOfTRHHf+rfZtV6RmjiTNcy2c+bmm0qAmT410gOJo2ic
-         Zc1r3WkNrEcT1MbvSHDR4oP5HriOZwup0yGQIoeL9XBUgFm61YCWbvr17FIzVXes+jvj
-         HFsA==
+        id S1732109AbeGaUhm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 16:37:42 -0400
+Received: from mail-yw0-f195.google.com ([209.85.161.195]:43304 "EHLO
+        mail-yw0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731423AbeGaUhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 16:37:42 -0400
+Received: by mail-yw0-f195.google.com with SMTP id l189-v6so6188698ywb.10
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 11:56:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=B8rjV28SFuUi8o6RAMMVEC9RXxAOR/X88NTvCfhO8Hc=;
-        b=HmOOjrJrlrPe7bX6BPolz0+tMOW2GUuHYjepWXs5VHh5Rrlvm5srJ5fJfuf3yArAMw
-         zHJNCKb+kHWMTp0L7Z3/R+M/cM1yLP9IDy8FZ8gIV95v+r333qWqdhwfM1sssBLFwIxi
-         qwzXkVEGihPK5JD/hEmXUfeJQhSvtrC/ZHtqHONyPq+Zwh2+sRwHWPnNlK49qRFif/nt
-         Ib2SDwuTTpNk336+YEqFZp6ObVh9d7o2cTPXgnNyOYI7vqU6Zl60l2jaRpIZ5CdKiCCC
-         BKhUpQjv1h5XohG73NirdI5J6+ABcECoVg2Xpd/C16IvBxDwB3zWNdFjKwuqSYcpd6Lp
-         FuzA==
-X-Gm-Message-State: AOUpUlEs7xAO2akIqtRgPdKd+LDVHXabHIIIqhsuFXTBEEW2RtWmlGwC
-        BA78D5q4hFOowDoT4jb+WvRha5J2Zv0coJMIBaDuzw==
-X-Google-Smtp-Source: AAOMgpckFIRAo7T8nuQyCJlU+AS67j2grCCSd7rhlzcL0PAKQ5yQg1MlJ+75+dA8kilFMynJs89e2XEkOWgdQtaNUxM=
-X-Received: by 2002:a1f:207:: with SMTP id 7-v6mr14909936vkc.0.1533062668345;
- Tue, 31 Jul 2018 11:44:28 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=V0CKPBfYz2NXz47UvTsIVLM2oPf2lnRl5c3nma5w0Tw=;
+        b=BzXr7AEgvIuG0auU1lfBRAhOGKv5xZITiq2D9Xv5hTtfT7eOrC/BhFCijLnHAynRYR
+         /oC8/yvEFTx8lVFO6pkc7KtwddtzNcm+hfFc0A2xFLkvp9L2yoMYtElr4g2QG4zP1HzA
+         XiLLsPYfF9finQ6Md2O8rZV7+eaNVGpFyZpYmd62Dznh5GxkTKI08CMcVKDxAxn1vr3Q
+         0Wgl+L2VuEhAG5bkUBQeTEb6er1A0i/XPRrwuPOLYZm3D4T7PGK+N8j7A9KP6BvCBoZs
+         +VtyJ9AD2aCPHWuP+Nd8npsKFUXT8tWJUl4DztDySkvwgQXegwpgfig4ZsgjapPaqs1n
+         Fh1w==
+X-Gm-Message-State: AOUpUlHnce11tjdNQdQAuQm4PBHMfuRcYfRDwhiOKYjyIvyY2S5GPpJQ
+        m1vQfX63Qoa+dSRiZKvOI9u1OZpQnK2rP9o9RqA=
+X-Google-Smtp-Source: AAOMgpeT9ue4htjeKSeJOyicrp9tsOQrBQeFib1hGYoseZrXYPMIHgssTfp+YfnKWpSAHrl9xZTOXe+XhWhj/8RFKII=
+X-Received: by 2002:a81:1001:: with SMTP id 1-v6mr11780900ywq.120.1533063362688;
+ Tue, 31 Jul 2018 11:56:02 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:ab0:21c7:0:0:0:0:0 with HTTP; Tue, 31 Jul 2018 11:44:27
- -0700 (PDT)
-In-Reply-To: <20180730152756.15012-1-pclouds@gmail.com>
-References: <20180729092759.GA14484@sigill.intra.peff.net> <20180730152756.15012-1-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 31 Jul 2018 11:44:27 -0700
-Message-ID: <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        pawelparuzel95@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180711064642.6933-1-sunshine@sunshineco.com> <20180711064642.6933-2-sunshine@sunshineco.com>
+ <20180730181356.GA156463@aiede.svl.corp.google.com> <CAPig+cRFMKBQVVYjhS6-Yyy-aQCYXGiqG6XoqucJoedCvAzheQ@mail.gmail.com>
+ <20180730205914.GE156463@aiede.svl.corp.google.com> <CAPig+cRTgh6DStUdmXqvhbL_7sQY6wu21h27rjq_i=kZ_d+LAw@mail.gmail.com>
+ <20180731125026.GA8072@sigill.intra.peff.net>
+In-Reply-To: <20180731125026.GA8072@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 31 Jul 2018 14:55:51 -0400
+Message-ID: <CAPig+cTqod7KY=EKPbFUFK=mpO1T2jUgpozMVN_0R51vgJLsDw@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 30, 2018 at 8:27 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> Paths that only differ in case work fine in a case-sensitive
-> filesystems, but if those repos are cloned in a case-insensitive one,
-> you'll get problems. The first thing to notice is "git status" will
-> never be clean with no indication what's exactly is "dirty".
-
-"what" rather than "what's"?
-
-> This patch helps the situation a bit by pointing out the problem at
-> clone time. I have not suggested any way to work around or fix this
-> problem. But I guess we could probably have a section in
-> Documentation/ dedicated to this problem and point there instead of
-> a long advice in this warning.
+On Tue, Jul 31, 2018 at 8:50 AM Jeff King <peff@peff.net> wrote:
+> On Mon, Jul 30, 2018 at 05:38:06PM -0400, Eric Sunshine wrote:
+> > I considered that, but it doesn't handle nested here-docs, which we
+> > actually have in the test suite. For instance, from t9300-fast-import:
+> > [...]
+> > Nesting could be handled easily enough either by stashing away the
+> > opening tag and matching against it later _or_ by doing recursive
+> > here-doc folding, however, 'sed' isn't a proper programming language
+> > and can't be coerced into doing either of those. (And, it was tricky
+> > enough just getting it to handle the nested case with a limited set of
+> > recognized tag names, without having to explicitly handle every
+> > combination of those names nested inside one another.)
 >
-> Another thing we probably should do is catch in "git checkout" too,
-> not just "git clone" since your linux/unix colleage colleague may
+> I hesitate to make any suggestion here, as I think we may have passed
+> a point of useful cost/benefit in sinking more time into this script.
+> But...is switching to awk or perl an option? Our test suite already
+> depends on having a vanilla perl, so I don't think it would be a new
+> dependency. And it would give you actual data structures.
 
-drop "colleage", keep "colleague"?
+It would, and I did consider it, however, I was very concerned about
+startup cost (launch time) with heavyweight perl considering that it
+would have to be run for _every_ test. With 13000+ tests, that cost
+was a very real concern, especially for Windows users, but even for
+MacOS users (such as myself, for which the full test suite already
+takes probably close to 30 minutes to run, even on a ram drive). So, I
+wanted something very lightweight (and deliberately used that word in
+the commit message), and 'sed' seemed the lightest-weight of the
+bunch.
 
-> accidentally add some files that your mac/windows machine is not very
-> happy with. But then there's another problem, once the problem is
-> known, we probably should stop spamming this warning at every
-> checkout, but how?
-
-Good questions.  I have no answers.
-
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  builtin/clone.c | 41 +++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 41 insertions(+)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 5c439f1394..32738c2737 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -711,6 +711,33 @@ static void update_head(const struct ref *our, const=
- struct ref *remote,
->         }
->  }
->
-> +static void find_duplicate_icase_entries(struct index_state *istate,
-> +                                        struct string_list *dup)
-> +{
-> +       struct string_list list =3D STRING_LIST_INIT_NODUP;
-> +       int i;
-> +
-> +       for (i =3D 0; i < istate->cache_nr; i++)
-> +               string_list_append(&list, istate->cache[i]->name);
-> +
-> +       list.cmp =3D fspathcmp;
-> +       string_list_sort(&list);
-
-So, you sort the list by fspathcmp to get the entries that differ in
-case only next to each other.  Makes sense...
-
-> +
-> +       for (i =3D 1; i < list.nr; i++) {
-> +               const char *cur =3D list.items[i].string;
-> +               const char *prev =3D list.items[i - 1].string;
-> +
-> +               if (dup->nr &&
-> +                   !fspathcmp(cur, dup->items[dup->nr - 1].string)) {
-> +                       string_list_append(dup, cur);
-
-If we have at least one duplicate in dup (and currently we'd have to
-have at least two), and we now hit yet another (i.e. a third or
-fourth...) way of spelling the same path, then we add it.
-
-> +               } else if (!fspathcmp(cur, prev)) {
-> +                       string_list_append(dup, prev);
-> +                       string_list_append(dup, cur);
-> +               }
-
-...otherwise, if we find a duplicate, we add both spellings to the dup list=
-.
-
-> +       }
-> +       string_list_clear(&list, 0);
-> +}
-> +
->  static int checkout(int submodule_progress)
->  {
->         struct object_id oid;
-> @@ -761,6 +788,20 @@ static int checkout(int submodule_progress)
->         if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
->                 die(_("unable to write new index file"));
->
-> +       if (ignore_case) {
-> +               struct string_list dup =3D STRING_LIST_INIT_DUP;
-> +               int i;
-> +
-> +               find_duplicate_icase_entries(&the_index, &dup);
-> +               if (dup.nr) {
-> +                       warning(_("the following paths in this repository=
- only differ in case and will\n"
-
-Perhaps I'm being excessively pedantic, but what if there are multiple
-pairs of paths differing in case?  E.g. if someone has readme.txt,
-README.txt, foo.txt, and FOO.txt, you'll list all four files but
-readme.txt and foo.txt do not only differ in case.
-
-Maybe something like "...only differ in case from another path and
-will... " or is that too verbose and annoying?
-
-> +                                 "cause problems because you have cloned=
- it on an case-insensitive filesytem:\n"));
-> +                       for (i =3D 0; i < dup.nr; i++)
-> +                               fprintf(stderr, "\t%s\n", dup.items[i].st=
-ring);
-> +               }
-> +               string_list_clear(&dup, 0);
-> +       }
-> +
->         err |=3D run_hook_le(NULL, "post-checkout", sha1_to_hex(null_sha1=
-),
->                            oid_to_hex(&oid), "1", NULL);
-
-Is it worth attempting to also warn about paths that only differ in
-UTF-normalization on relevant MacOS systems?
+'awk' might be about as lightweight as 'sed', and it may even be
+possible to coerce it into handling the task (since the linter's job
+is primarily just a bunch of regex matching with very little
+"manipulating"). v1 of the linter was somewhat simpler and didn't deal
+with these more complex cases, such as nested here-docs. v1 also did
+rather more "manipulating" of the script since the result was meant to
+be run by the shell. When it came time to implement v2, which detects
+broken &&-chains itself by textual inspection, most of the
+functionality (coming from v1) was already implemented in 'sed', so
+'awk' never really came up as a candidate since rewriting the script
+from scratch in 'awk' didn't seem like a good idea. (And, at the time
+v2 was started, I didn't know that these more complex cases would
+arise.) So, 'awk' might be a viable alternative, and perhaps I'll take
+a stab at it for fun at some point (or not), but I don't think there's
+a pressing need right now.
