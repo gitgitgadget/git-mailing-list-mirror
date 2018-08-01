@@ -2,107 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4267E1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 18:17:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 662721F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 18:17:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731895AbeHAUD7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 16:03:59 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33144 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725742AbeHAUD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 16:03:58 -0400
-Received: by mail-wr1-f68.google.com with SMTP id g6-v6so21038678wrp.0
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 11:17:00 -0700 (PDT)
+        id S1729782AbeHAUEt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 16:04:49 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:42838 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2403902AbeHATEt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 15:04:49 -0400
+Received: by mail-pl0-f65.google.com with SMTP id z7-v6so9095056plo.9
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 10:18:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=xnqDu73YYv8gxhI6hm3Klkz2Mxxfy2DGAXvFl/n9toA=;
-        b=IgAlA8rPurzjApS8CYg3yNMdl9OEMjx6n8V/6eBK3995TI9CgDIb8OqGBc80gyBOCR
-         CWNWH6Q0hFJcTcNDBPc4dr6qvZcQtFQgoXCVP3nHip1N8zAUOgLA0f+xaXbmJjEOLBmR
-         oSFg8WYUbO2ElMTEEaQ+/rpsAUyccZRFZ2VNA54DX8gVvYt8rUlvNRFkXbhyTIKqEjd4
-         HqXDP3bJxWU8Np0cQqAJwLGLngmW9evBfHcxRTGsmRnuKEoZ2dgOxV6X3MqkMY1MjIi1
-         d+swZDXHcfy3JmFATDQoq8HGwrt+Qam4d6eKFLZZeVhXrEdRRFDH85e0UQrkfXdfN+UM
-         hTLQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=1QhpuLHAQI40Wt/vf5dQ9uDvWtKsslFoG1kCSJf1/UE=;
+        b=tS9otAa0cw+Zlbn1xuzlY5uoMgoJhSd5QaquFmFnvXEj4JQVbbxNT7PcXGsmEfoHaF
+         HR8PXmy9GJsWUAzWtfy+KFBIKRyngI6rj8e2QljKPaKZ6Ok9v4UL034+K6xI5CzCdZlx
+         RBXunVn0SlkAz6XdHqw3YPx7IN5tWAQlyl80OJYWgEeJy7/DMUPSyK2ToDy27fgGmhfl
+         dk+6miX7elyAkTGj6Gbum2RJDB+9/eycJzkYgLE0ic7x2BkgxRKYJBlHYC/2tUv8BJRF
+         8KbBvEEuOijUOynUCLb4Yc90XfMcGpSBjyrcViv/FBF55K8TI+bEacpZU+uVzBAlR+TY
+         QzfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=xnqDu73YYv8gxhI6hm3Klkz2Mxxfy2DGAXvFl/n9toA=;
-        b=HuKDAfK8PM/bit9BHyYyeF6Yp5ckrkAq+Mqmn9Q3UXqFRUx1sxdlIJhnOR47U7sGJu
-         SShz0CpigPisjCUiMWAgjTUfrP+pEbyPVnHbxYrfDhvpYm+SCb4ijOug9uNSlS13LUoK
-         IEUzcQnd28Bub+kS9TVawz6CZ0lpdzdrU+mmRtYrcQdnYmm1d+RAgnvIRa4N0Lc7oA2Y
-         XEFxNo/Jpll9LEOd36RcI6YZGizb2k9PA/L3L5nI76r5EzIvJ1sT+p8GhpwqqxW/k1vf
-         RpMREl7EaQXVqS6yxFia2rUNZQ/5DDqFlNyLx1uRiwSyv8AlxaR4aFGqZcky0DF+6/gl
-         LFJQ==
-X-Gm-Message-State: AOUpUlFAMov+MQrKZ3+VA43U9qRvTeWSBD33uXT7Cm6ephRX/D2wMpw3
-        jjA7yTP8ZqlR1O8H7tzY9FVpapcr
-X-Google-Smtp-Source: AAOMgpcjBpneHBA2csZpiiyEQiddy56iKcnLQGS3gBW+z9lQhYLFAdwuGxn/CLRAF8aVMG8IrIZvdA==
-X-Received: by 2002:adf:94e2:: with SMTP id 89-v6mr24476617wrr.48.1533147419703;
-        Wed, 01 Aug 2018 11:16:59 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm31679531wrr.95.2018.08.01.11.16.58
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=1QhpuLHAQI40Wt/vf5dQ9uDvWtKsslFoG1kCSJf1/UE=;
+        b=HF0cptnIqzKhSo7ug7xgHRLfVj5LP3nj7Z+MhMTS9fAoXocfJfAWKXwQRZleVjPH5G
+         Or5agjqHahl+/iXlxD08itSI7EoM5ZZk78cVYnCGrcV4e+NZtnrfM85uiaSz5GWAyHsK
+         b1WqDt+MhTLD3s8GR5Caz6yJuWxHgMEPZHsWBRislH6c2HRYd72Lmi/xeh8fBIiBbTK1
+         mqrBxXCLXp2OJw3hHz+g7Y3+EVG8eg6XAZzUu5+9By11nox9mPzr4PqTfv+R08BIRGC+
+         gabEYkObQWdmNX+d6mQAU94TpYqmiZqD2YhJd4EgWLLkP43dpNrEgLb8sUNNcRdtEzSz
+         hRNQ==
+X-Gm-Message-State: AOUpUlGIVUtoi32eh96xxb7jJbz3MAC1eZt8og58I6sOSsnn3iRzvv4L
+        WIz3TRmnGMbyTqj6ZopyTkXcKv2hjN8=
+X-Google-Smtp-Source: AAOMgpe4eFPgaqepDr+BUdzAB2vVBoAsoGz6HuzJhxtvciSXgynVFc5PCKgQIClk1hrxJZPkItTKhg==
+X-Received: by 2002:a17:902:904c:: with SMTP id w12-v6mr5881082plz.95.1533143888997;
+        Wed, 01 Aug 2018 10:18:08 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id w13-v6sm19215293pgs.89.2018.08.01.10.18.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Aug 2018 11:16:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     sunshine@sunshineco.com, git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
-References: <20180731173651.184716-1-hanwen@google.com>
-        <20180731173651.184716-3-hanwen@google.com>
-        <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
-        <xmqqeffi856n.fsf@gitster-ct.c.googlers.com>
-        <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
-Date:   Wed, 01 Aug 2018 11:16:58 -0700
-In-Reply-To: <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
-        (Han-Wen Nienhuys's message of "Wed, 1 Aug 2018 19:18:31 +0200")
-Message-ID: <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 01 Aug 2018 10:18:07 -0700 (PDT)
+Date:   Wed, 1 Aug 2018 10:18:06 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     peff@peff.net, git@vger.kernel.org
+Subject: Re: [PATCH] transport: report refs only if transport does
+Message-ID: <20180801171806.GA122458@google.com>
+References: <20180731192415.GC3372@sigill.intra.peff.net>
+ <20180731232343.184463-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180731232343.184463-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+On 07/31, Jonathan Tan wrote:
+> > On Mon, Jul 30, 2018 at 03:56:01PM -0700, Jonathan Tan wrote:
+> > 
+> > > Commit 989b8c4452 ("fetch-pack: put shallow info in output parameter",
+> > > 2018-06-28) allows transports to report the refs that they have fetched
+> > > in a new out-parameter "fetched_refs". If they do so,
+> > > transport_fetch_refs() makes this information available to its caller.
+> > > 
+> > > Because transport_fetch_refs() filters the refs sent to the transport,
+> > > it cannot just report the transport's result directly, but first needs
+> > > to readd the excluded refs, pretending that they are fetched. However,
+> > > this results in a wrong result if the transport did not report the refs
+> > > that they have fetched in "fetched_refs" - the excluded refs would be
+> > > added and reported, presenting an incomplete picture to the caller.
+> > 
+> > This part leaves me confused. If we are not fetching them, then why do
+> > we need to pretend that they are fetched?
+> 
+> The short answer is that we need:
+>  (1) the complete list of refs that was passed to
+>      transport_fetch_refs(),
+>  (2) with shallow information (REF_STATUS_REJECT_SHALLOW set if
+>      relevant), and
+>  (3) with updated OIDs if ref-in-want was used.
+> 
+> The fetched_refs out param already fulfils (2) and (3), and this patch
+> makes it fulfil (1). As for calling them fetched_refs, perhaps that is a
+> misnomer, but they do appear in FETCH_HEAD even though they are not
+> truly fetched.
+> 
+> Which raises the question...if completeness is so important, why not
+> reuse the input list of refs and document that transport_fetch_refs()
+> can mutate the input list? You ask the same question below, so I'll put
+> the answer after quoting your paragraph.
+> 
+> > I think I am showing my lack of understanding about the reason for this
+> > whole "return the fetched refs" scheme from 989b8c4452, and probably
+> > reading the rest of that series would make it more clear. But from the
+> > perspective of somebody digging into history and finding just this
+> > commit, it probably needs to lay out a little more of the reasoning.
+> 
+> I think it's because 989b8c4452 is based on my earlier work [1] which
+> also had a fetched_refs out param. Its main reason is to enable the
+> invoker of transport_fetch_refs() to specify ref patterns (as you can
+> see in a later commit in the same patch set [2]) - and if we specify
+> patterns, the invoker of transport_fetch_refs() needs the resulting refs
+> (which are provided through fetched_refs).
+> 
+> In the version that made it to master, however, there was some debate
+> about whether ref patterns need to be allowed. In the end, ref patterns
+> were not allowed [3], but the fetched_refs out param was still left in.
+> 
+> I think that reverting the API might work, but am on the fence about it.
+> It would reduce the number of questions about the code (and would
+> probably automatically fix the issue that I was fixing in the first
 
-> On Wed, Aug 1, 2018 at 5:41 PM Junio C Hamano <gitster@pobox.com> wrote:
->
->> Hmm, do we actually say things like "Error: blah"?  I am not sure if
->> I like this strncasecmp all that much.
->
-> this is for the remote end, so what we (git-core) says isn't all that
-> relevant.
+If you believe the API is difficult to work with (which given this bug
+it is) then perhaps we go with your suggestion and revert the API back
+to only providing a list of input refs and having the fetch operation
+mutate that input list.
 
-It is very relevant, I would think.  Because the coloring is
-controlled at the client end with this implementation, third-party
-remote implementations have strong incentive to follow what our
-remote end says and not to deviate.  Preventing them from being
-different just to be different does help the users, no?
+> place), but if we were to revert the API and then decide that we do want
+> ref patterns in "want-ref" (or expand transport_fetch_refs in some
+> similar way), we would need to revert our revert, causing code churn.
 
->> > So, despite the explanation in the commit message, this function isn't
->> > _generally_ highlighting keywords in the sideband. Instead, it is
->> > highlighting a keyword only if it finds it at the start of string
->> > (ignoring whitespace). Perhaps the commit message could be more clear
->> > about that.
->>
->> Sounds good.
->>
->> I didn't comment on other parts of your review posed as questions
->> (that require some digging and thinking), but I think they are all
->> worthwhile thing to think about.
->
-> Sorry for being dense, but do you want me to send an updated patch or
-> not based on your and Eric's comments or not?
+I haven't thought too much about what we would need to do in the event
+we add patterns to ref-in-want, but couldn't we possible mutate the
+input list again in this case and just simply add the resulting refs to
+the input list?
 
-It would help to see the comments responded with either "such a
-change is not needed for such and such reasons", "it may make sense
-but let's leave it to a follow-up patch later," etc., or with a
-"here is an updated patch, taking all the comments to the previous
-version into account---note that I rejected that particular comment
-because of such and such reasons".
+> 
+> [1] https://public-inbox.org/git/86a128c5fb710a41791e7183207c4d64889f9307.1485381677.git.jonathantanmy@google.com/
+> [2] https://public-inbox.org/git/eef2b77d88df0db08e4a1505b06e0af2d40143d5.1485381677.git.jonathantanmy@google.com/
+> [3] https://public-inbox.org/git/20180620213235.10952-1-bmwill@google.com/
+
+-- 
+Brandon Williams
