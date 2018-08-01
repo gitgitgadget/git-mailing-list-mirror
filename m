@@ -2,128 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5C5B1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4906A1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389625AbeHAQ4v (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 12:56:51 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54664 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389585AbeHAQ4u (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 12:56:50 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c14-v6so7386476wmb.4
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:10:40 -0700 (PDT)
+        id S2389585AbeHAQ5D (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 12:57:03 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:56062 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389462AbeHAQ5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 12:57:02 -0400
+Received: by mail-it0-f66.google.com with SMTP id p7-v6so10077795itf.5
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:10:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=rbINUhlNtVEF2O1QEDwwFup7Jany4+VIvWKzvFh2qFU=;
-        b=paOYvENI/XEXJYZ87lIawQW8rGJVUzEAAE23CnJ6PaH2onQtJ0sdXbzex0fJV9Qbzn
-         q5AQvWC4AB3GYYOcrg/QpMLMKobOlzSXfFFc2WDVGildbyZ3fJRlcUhafKo8y8VjaKus
-         H+CHH3AFlhCgauDb2zm0+1bLufvKytuUA67PH5q+i+ZPJe1xkxgoQHDNFaEfXkTxijS7
-         AnJRZOrZ2RGSBF9KPuYWUqVxlkf+UKQ79bVHsdS39l+enLDtwyvz51sgGJymGbQlaEIE
-         Xxpykxp98qsY/+Qlj9xp6j3z25JpQ2Py+wosV02OKZTTBL06Qs+/SLOqZ9GiUG2ek1u3
-         LXwA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rdevODqjuqGNAzz2Kk8IUxS3Eic0wlcTVY3zmN04Gjw=;
+        b=JuNH/ojnTLyzU8rdm1izoRtTMNbt1ithfnWSsVb6EfJbrh0wn2bSp3Iv8TBde4uHjB
+         aEIOD4hTYdTes9kkBN0Gk/8wNF58UE0fQ7fyIoRkoI0PYv8FsZlO064c9CowdafQEAS1
+         7SxgHZyZYLltZV4qaQ1J/oIqWo438t/b5FolA6faQErhZbhDhwt18IF1u+JEJEz7SAza
+         aa6fOL0e6zU1NB2mcvNuifrb3dUxRaZxui9k21TfTOzkXv7pqLw14XKU6CvaXGHMwZ7t
+         VEvjDLCebigZKm5VXTR/ApogRCAOaLZGiaT3Hi3HThAc+KYFAmyX5k3J/c7vAZIFPJPv
+         W45g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=rbINUhlNtVEF2O1QEDwwFup7Jany4+VIvWKzvFh2qFU=;
-        b=ANkvoNbvN5BsFghUaY/+HVSwh9GJtLGnwQ5irJsPLXcDnMfDpvgeVKuu5XcWasYjqi
-         74rJ7vc9xOTUpWYZ5KH0N30wB39d8Ud3OC3q61noWmBiqxmBbcRVXjPqolCH9NL1989B
-         DXYxHrA3h5aC7alyGy4sGY2lWbmnUcauAb0p2HFbumestH3XRn5aSDnBTXPV3Lk6QlqM
-         Hn88WKX+wcigOwbzm+A698qXr03SuypE0fWMloF7lfzFfkXui8Y3EwWfcqQzzcbT31to
-         bB9FMPn6h3s6Lk8e3GYYrhaWmpKzjFQm/IfyNmjBbNlsa/vLa86YjGpDQuEqgocTc/LQ
-         ULhw==
-X-Gm-Message-State: AOUpUlEBK6iOEBPlNWSl3/XDt0pQJsdbj4CVxyfMeQBiwLR9tiALl8nr
-        dqnVYPVQyTn0+8NuT6b1//Y=
-X-Google-Smtp-Source: AAOMgpemOSoO1p3hQ/z4JPt4RErrpYC304yfrbY8jAOF5gLeQfoJudbAFgNPAtLKyOQQ4D/q+IpX0A==
-X-Received: by 2002:a1c:1943:: with SMTP id 64-v6mr2938256wmz.89.1533136239587;
-        Wed, 01 Aug 2018 08:10:39 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id i205-v6sm6627785wmf.30.2018.08.01.08.10.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Aug 2018 08:10:38 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     chen bin <chenbin.sh@gmail.com>
-Cc:     Luke Diamand <luke@diamand.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] Add the `p4-pre-submit` hook
-References: <xmqq36w6rlh7.fsf@gitster-ct.c.googlers.com>
-        <20180727112222.19061-1-chenbin.sh@gmail.com>
-        <20180731084638.18793-1-szeder.dev@gmail.com>
-        <CAE5ih7_jh55mLVBhiu12gmc0j3mGkm4s0VU2Stx5iGf1tK6yzA@mail.gmail.com>
-        <xmqqh8kfeae3.fsf@gitster-ct.c.googlers.com>
-        <CAE5ih7-pLAW8xrY_F2z6gDxaMuA4w+nuUQHeLvGdSyn0GXebWA@mail.gmail.com>
-        <CAAE-R+8UA5S3Y4iWw=njtVVn8cu+7s8E7L9fS6UY=Q_a5-JwwQ@mail.gmail.com>
-Date:   Wed, 01 Aug 2018 08:10:38 -0700
-In-Reply-To: <CAAE-R+8UA5S3Y4iWw=njtVVn8cu+7s8E7L9fS6UY=Q_a5-JwwQ@mail.gmail.com>
-        (chen bin's message of "Thu, 2 Aug 2018 00:57:19 +1000")
-Message-ID: <xmqqmuu686mp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rdevODqjuqGNAzz2Kk8IUxS3Eic0wlcTVY3zmN04Gjw=;
+        b=O4SJCC+8x/Zj3fD3sjgTcxSdwjsUCO6E2/xezmCrLkh2iMAcRh+fe9I8hDFE1Dek2t
+         fP1b0aaHlhvv0EkaiulP2aRWyay93AslBgj0mEfmXWzPCEoRSpLnf+dvzv6nnsWGZg/Q
+         GZdZwoOwKKAObbe2VMSoB81eWBYC49wKPjm1Lf4VrZOIayRU6lbqCfpIgVik6x+cKiJB
+         vbbW10gTNE8fAeWQjxAf354cxHdMWArtwwQ+P1PNFJSgoh71nsp87zMEACBOQ/cPf6Xd
+         uCIQdkOUSSplduOCmThuvS1+JLA6531C33wODr50yTL0U7tRGZphye8K1e362oH2qh6D
+         9aqQ==
+X-Gm-Message-State: AOUpUlGb3YoPVYgUss5ZR25xE1NT1uwpVgpEqoZSgSRmxBnhX2f2A2O9
+        7qk2O8x3kq0sHhDwPE2JIBfEaZq/hTmEaF6g4II=
+X-Google-Smtp-Source: AAOMgpdPjB2w6QvlH+vlnY1mKdSoAAFgun3NqX5tT4m/213Iu5Pu1i9GCaUlvD5RIIiE/PYt83E5fouJ+XuWggSPhiE=
+X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr3870254itc.68.1533136252885;
+ Wed, 01 Aug 2018 08:10:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180724180122.29212-1-benpeart@microsoft.com> <20180731163909.19004-1-benpeart@microsoft.com>
+In-Reply-To: <20180731163909.19004-1-benpeart@microsoft.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 1 Aug 2018 17:10:25 +0200
+Message-ID: <CACsJy8DMEMsDnKZc65K-0EJcm2udXZ7OKY=xoFmX4COM0dSH=g@mail.gmail.com>
+Subject: Re: [PATCH v2] checkout: optimize "git checkout -b <new_branch>"
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-chen bin <chenbin.sh@gmail.com> writes:
-
-> I updated the patch. But for some reason the test keep failing at this line,
-> `test_must_fail git p4 submit --dry-run >errs 2>&1 &&`.
+On Tue, Jul 31, 2018 at 7:03 PM Ben Peart <Ben.Peart@microsoft.com> wrote:
 >
-> If I change this line to `test_must_fail git-p4 submit --dry-run >errs
-> 2>&1 &&` the test will pass.
+> From: Ben Peart <Ben.Peart@microsoft.com>
+>
+> Skip merging the commit, updating the index and working directory if and
+> only if we are creating a new branch via "git checkout -b <new_branch>."
+> Any other checkout options will still go through the former code path.
 
-Hmph.  I somehow suspect that the test also will pass if you changed
-it like this:
+I'd like to see this giant list of checks broken down and pushed down
+to smaller areas so that chances of new things being added but checks
+not updated become much smaller. And ideally there should just be no
+behavior change (I think with your change, "checkout -b" will not
+report local changes, but it's not mentioned in the config document;
+more things like that can easily slip).
 
-	test_must_fail false >errs 2>&1 &&
+So. I assume this reason for this patch is because on super large worktrees
 
-IOW, my suspicion is that the shell fails to find "git-p4" [*1*] and
-that is why your `test_must_fail git-p4 whatever` lets your test
-pass, which is different from the way you _want_ your test_must_fail
-succeed, i.e. "git p4 submit" is run with the "--dry-run" option and
-exit with non-zero status.
+ - 2-way merge is too slow
+ - applying spare checkout patterns on a huge worktree is also slow
+ - writing index is, again, slow
+ - show_local_changes() slow
 
-Of course, if the shell cannot find "git-p4", `errs` would not have
-the string "Would apply" in it, so the next test also would pass.
+For 2-way merge, I believe we can detect inside unpack_trees() that
+it's a 2-way merge (fn == twoway_merge), from HEAD to HEAD (simple
+enough check), then from the 2-way merge table we know for sure
+nothing is going to change and we can just skip traverse_trees() call
+in unpack_trees().
 
->>>> On 31 July 2018 at 10:46, SZEDER Gábor <szeder.dev@gmail.com> wrote:
->>>>>> +             test_must_fail git-p4 submit --dry-run >errs 2>&1 &&>
->>>>>> +             ! grep "Would apply" err
+On the sparse checkout application. This only needs to be done when
+there are new files added, or the spare-checkout file has been updated
+since the last time it's been used. We can keep track of these things
+(sparse-checkout file change could be kept track with just stat info
+maybe as an index extension) then we can skip applying sparse checkout
+not for this particular case for but general checkouts as well. Spare
+checkout file rarely changes. Big win overall.
 
+And if all go according to plan, there will be no changes made in the
+index (by either 2-way merge or sparse checkout stuff) we should be
+able to just skip writing down the index, if we haven't done that
+already.
 
+show_local_changes() should be sped up significantly with the new
+cache-tree optimization I'm working on in another thread.
 
-[Footnote]
-
- *1* As I do not use (nor install) p4, I cannot test "'git p4' works
-     but 'git-p4' should not work" myself, but by running t0001 with
-     a trial patch like the following, you can see that we do not
-     find the dashed form `git-init` on $PATH and the test indeed
-     fails.
-
- t/t0001-init.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 0681300707..8c598a0d84 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -31,7 +31,7 @@ check_config () {
- }
- 
- test_expect_success 'plain' '
--	git init plain &&
-+	git-init plain &&
- 	check_config plain/.git false unset
- '
- 
+If I have not made any mistake in my analysis so far, we achieve a big
+speedup without adding a new config knob and can still fall back to
+slower-but-same-behavior when things are not in the right condition. I
+know it will not be the same speedup as this patch because when facing
+thousands of items, even counting them takes time. But I think it's a
+reasonable speedup without making the code base more fragile.
+-- 
+Duy
