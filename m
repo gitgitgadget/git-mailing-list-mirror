@@ -2,145 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A02D208E9
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273BD1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389733AbeHARhE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 13:37:04 -0400
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:26544 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389557AbeHARhD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 13:37:03 -0400
-Received: from [192.168.2.240] ([92.22.30.174])
-        by smtp.talktalk.net with SMTP
-        id ktOafIDWvdJAektOafP6th; Wed, 01 Aug 2018 16:50:41 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533138641;
-        bh=ttHAYuqpHoZWRampivR+rzemtTGHqHn4M19LSkhEkZw=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=abew/cNw8tTBzV+a3g/f7BitfbHjgnNTyaaJaF51ZmEf/YrthBmfLCA4K6wLo4sVJ
-         5+HAn+SgVi6yUbE+s8M5GopXoMxoRsfMj98nGEzCKnbxB5/xucF4T226ubIn9yg8T8
-         9DZ6HOSVWdMKsD3xsslepM63l4qozHaiy9eR3VKI=
-X-Originating-IP: [92.22.30.174]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
- a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=5rxgeBVgAAAA:8 a=BCjA09oAAAAA:8 a=evINK-nbAAAA:8 a=2DLnnMrOBO9anznuW98A:9
- a=clQxp3oRzjrkGuJY:21 a=WJUMhjpDC4c25wPA:21 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22 a=jYKBPJSq9nmHKCndOPe9:22 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] sequencer: fix quoting in write_author_script
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180731111532.9358-1-phillip.wood@talktalk.net>
- <20180731111532.9358-3-phillip.wood@talktalk.net>
- <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1f9a9062-445d-0c37-9b21-941d8fef659b@talktalk.net>
-Date:   Wed, 1 Aug 2018 16:50:40 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfIynKZRWAixhtJNrn/JkePCHccvPEJntCU7UTYSjCZsLHjTVj8DyChgc7DEaPur4IMujv8Or1Jj/8LyOoAZ/2i7QudtdYeIzZOv8xPGctzpLn1e+NseM
- w1ZzZo1Pf9tp3UQ99RpErXhAxM7DpSViTvuZG5ejIoJW1C2UJqtzOUUZWKeTBvNRXr4919MRW9yZJZdA5sixyPYECJxxKvQnnOrxcgFvSNTeumquIyRd+v6Z
- 7nPavs9Vo2GQ+DDtCONBZn7tYcAtkLKSh4HgbkguE3DvMtlro8LZYCr+0S2MnoKGxa48w+89IKqkKV9AvWjQvA==
+        id S2389798AbeHARlJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 13:41:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34069 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389658AbeHARlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 13:41:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id k19-v6so8070272pfi.1
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=Xhfb6R8l8mdmBNE5/Gml2UF29bNcS/Q0yqsPKnHE0EE=;
+        b=dSG9uD9K2GI+HNXfeGcM1LtEPaLfyqEOfqCTofOj4mVZwYNGUbbFdy8/N7b75LADLE
+         X6ivL1QCMxMoE+LQxb9bas4e+GRlCWNAc9Z9bGnLfEQdXxSn54H6nMTCPKWaOkZJsNjG
+         UnC+Kz2aFl4wSnoo+TysNf3Mqx+PRVzVKxbdrRCpyQ0BEXs8qYiB12kNxIeA3uApS5Yf
+         xKpkZ9E8s27dCWKrdmPSzGiRlotnxtx/Jcs7Uy8MgZJp8ULsjsRNK3MYayJDoU8x2cpx
+         ugD+NCfDK+lDR2QaWBc/eW889gGXi3Szr/0OA317fim267N2EWoR87TI3hpwy0iTkAN9
+         QhJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=Xhfb6R8l8mdmBNE5/Gml2UF29bNcS/Q0yqsPKnHE0EE=;
+        b=YCYU41YtKQQbuhPKOleSGJa3AG4bghykRHZWxtflkE76NzgFAO0lzEKoyXugM7Kzj/
+         e54PmlIB2nNv1xrVoLYzTNo0GzUAzhjuc83IQHntLdvUrjOFn96ATkICdzjGji9sz0m6
+         xvv2PPHCY/cBXDAmxNR3upNa5ANFltOx3PKkPoZSXowEQi86Re4OjjgmZ5iifxJxXmBu
+         68xv1qjeRmnOT2iHH3gzjstl3nnNy8sz0znAAIiZSPmJaVUfBFfNrnCLiF1GjSS6Srtp
+         AAt/CDJiONh/ICdroayH+inNeKkuErmEjuNkEyQyuooNd/kb6nw00WJMHolQr8bdoi6S
+         j22g==
+X-Gm-Message-State: AOUpUlET0ysbkSi72rB18TFhLSWyAVYo1NexyBe9tkXqxQER4CP5/QHU
+        fP0+NoJX5HXoPx2lpSxLa8qpy+CY
+X-Google-Smtp-Source: AAOMgpe3qdq9TfZIRQ6vl6yTn5/vFJr56E3RB1GqWCayMZiFeqUdgFgttlft64FAAxzO4bisWC6BrA==
+X-Received: by 2002:a62:3f99:: with SMTP id z25-v6mr27482102pfj.250.1533138886867;
+        Wed, 01 Aug 2018 08:54:46 -0700 (PDT)
+Received: from localhost.localdomain ([110.175.42.185])
+        by smtp.gmail.com with ESMTPSA id 16-v6sm25833104pfp.6.2018.08.01.08.54.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Aug 2018 08:54:45 -0700 (PDT)
+From:   Chen Bin <chenbin.sh@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Chen Bin <chenbin.sh@gmail.com>
+Subject: [PATCH 1/1] Add the `p4-pre-submit` hook
+Date:   Thu,  2 Aug 2018 01:54:32 +1000
+Message-Id: <20180801155432.4041-1-chenbin.sh@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <xmqqmuu686mp.fsf@gitster-ct.c.googlers.com>
+References: <xmqqmuu686mp.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 31/07/18 22:39, Eric Sunshine wrote:
-> On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->> Single quotes should be escaped as \' not \\'. Note that this only
->> affects authors that contain a single quote and then only external
->> scripts that read the author script and users whose git is upgraded from
->> the shell version of rebase -i while rebase was stopped. This is because
->> the parsing in read_env_script() expected the broken version and for
->> some reason sq_dequote() called by read_author_ident() seems to handle
->> the broken quoting correctly.
-> 
-> Is the:
-> 
->      ...for some reason sq_dequote() called by read_author_ident()
->      seems to handle the broken quoting correctly.
-> 
-> bit outdated? We know now from patch 2/4 of my series[1] that
-> read_author_ident() wasn't handling it correctly at all. It was merely
-> ignoring the return value from sq_dequote() and using whatever broken
-> value came back from it.
-> 
-> [1]: https://public-inbox.org/git/20180731073331.40007-3-sunshine@sunshineco.com/
-> 
->> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->> diff --git a/sequencer.c b/sequencer.c
->> @@ -664,14 +664,25 @@ static int write_author_script(const char *message)
->>   static int read_env_script(struct argv_array *env)
->>   {
->>          if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
->>                  return -1;
-> 
-> This is not a problem introduced by this patch, but since
-> strbuf_read_file() doesn't guarantee that memory hasn't been allocated
-> when it returns an error, this is leaking.
-> 
->> +       /*
->> +        * write_author_script() used to fail to terminate the GIT_AUTHOR_DATE
->> +        * line with a "'" and also escaped "'" incorrectly as "'\\\\''" rather
->> +        * than "'\\''". We check for the terminating "'" on the last line to
->> +        * see how "'" has been escaped in case git was upgraded while rebase
->> +        * was stopped.
->> +        */
->> +       sq_bug = script.len && script.buf[script.len - 2] != '\'';
-> 
-> I think you need to be checking 'script.len > 1', not just
-> 'script.len', otherwise you might access memory outside the allocated
-> buffer.
-> 
-> This is a very "delicate" check, assuming that a hand-edited file
-> won't end with, say, an extra newline. I wonder if this level of
-> backward-compatibility is overkill for such an unlikely case.
+The `p4-pre-submit` hook is executed before git-p4 submits code.
+If the hook exits with non-zero value, submit process won't start.
 
-I think I'll get rid of the check and instead use a version number 
-written to .git/rebase-merge/interactive to indicate if we need to fix 
-the quoting (if there's no number then it needs fixing). We can 
-increment the version number in the future if we ever need to implement 
-other fallbacks to handle the case where git got upgraded while rebase 
-was stopped. I'll send a patch tomorrow
+Signed-off-by: Chen Bin <chenbin.sh@gmail.com>
+---
+ Documentation/git-p4.txt   |  8 ++++++++
+ Documentation/githooks.txt |  7 +++++++
+ git-p4.py                  | 16 +++++++++++++++-
+ t/t9800-git-p4-basic.sh    | 29 +++++++++++++++++++++++++++++
+ 4 files changed, 59 insertions(+), 1 deletion(-)
 
-Best Wishes
-
-Phillip
-
-> 
->>          for (p = script.buf; *p; p++)
->> -               if (skip_prefix(p, "'\\\\''", (const char **)&p2))
->> +               if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
->> +                       strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
->> +               else if (skip_prefix(p, "'\\''", &p2))
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> @@ -75,6 +75,22 @@ test_expect_success 'rebase --keep-empty' '
->> +test_expect_success 'rebase -i writes correct author-script' '
->> +       test_when_finished "test_might_fail git rebase --abort" &&
->> +       git checkout -b author-with-sq master &&
->> +       GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
->> +       set_fake_editor &&
->> +       FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
-> 
-> Hmph, -k doesn't seem to be documented in git-rebase.txt. Is it needed here?
-> 
+diff --git a/Documentation/git-p4.txt b/Documentation/git-p4.txt
+index f0de3b891..a7aac1b92 100644
+--- a/Documentation/git-p4.txt
++++ b/Documentation/git-p4.txt
+@@ -374,6 +374,14 @@ These options can be used to modify 'git p4 submit' behavior.
+     been submitted. Implies --disable-rebase. Can also be set with
+     git-p4.disableP4Sync. Sync with origin/master still goes ahead if possible.
+ 
++Hook for submit
++~~~~~~~~~~~~~~~
++The `p4-pre-submit` hook is executed if it exists and is executable.
++The hook takes no parameter and nothing from standard input. Exiting with
++non-zero status from this script prevents `git-p4 submit` from launching.
++
++One usage scenario is to run unit tests in the hook.
++
+ Rebase options
+ ~~~~~~~~~~~~~~
+ These options can be used to modify 'git p4 rebase' behavior.
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index e3c283a17..22fcabbe2 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -485,6 +485,13 @@ The exit status determines whether git will use the data from the
+ hook to limit its search.  On error, it will fall back to verifying
+ all files and folders.
+ 
++p4-pre-submit
++~~~~~~~~~~~~~
++
++This hook is invoked by `git-p4 submit`. It takes no parameter and nothing
++from standard input. Exiting with non-zero status from this script prevent
++`git-p4 submit` from launching. Run `git-p4 submit --help` for details.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/git-p4.py b/git-p4.py
+index b449db1cc..879abfd2b 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1494,7 +1494,13 @@ def __init__(self):
+                 optparse.make_option("--disable-p4sync", dest="disable_p4sync", action="store_true",
+                                      help="Skip Perforce sync of p4/master after submit or shelve"),
+         ]
+-        self.description = "Submit changes from git to the perforce depot."
++        self.description = """Submit changes from git to the perforce depot.\n
++    The `p4-pre-submit` hook is executed if it exists and is executable.
++    The hook takes no parameter and nothing from standard input. Exiting with
++    non-zero status from this script prevents `git-p4 submit` from launching.
++
++    One usage scenario is to run unit tests in the hook."""
++
+         self.usage += " [name of git branch to submit into perforce depot]"
+         self.origin = ""
+         self.detectRenames = False
+@@ -2303,6 +2309,14 @@ def run(self, args):
+             sys.exit("number of commits (%d) must match number of shelved changelist (%d)" %
+                      (len(commits), num_shelves))
+ 
++        hooks_path = gitConfig("core.hooksPath")
++        if len(hooks_path) <= 0:
++            hooks_path = os.path.join(os.environ.get("GIT_DIR", ".git"), "hooks")
++
++        hook_file = os.path.join(hooks_path, "p4-pre-submit")
++        if os.path.isfile(hook_file) and os.access(hook_file, os.X_OK) and subprocess.call([hook_file]) != 0:
++            sys.exit(1)
++
+         #
+         # Apply the commits, one at a time.  On failure, ask if should
+         # continue to try the rest of the patches, or quit.
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 4849edc4e..729cd2577 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -261,6 +261,35 @@ test_expect_success 'unresolvable host in P4PORT should display error' '
+ 	)
+ '
+ 
++# Test following scenarios:
++#   - Without ".git/hooks/p4-pre-submit" , submit should continue
++#   - With the hook returning 0, submit should continue
++#   - With the hook returning 1, submit should abort
++test_expect_success 'run hook p4-pre-submit before submit' '
++	test_when_finished cleanup_git &&
++	git p4 clone --dest="$git" //depot &&
++	(
++		cd "$git" &&
++		echo "hello world" >hello.txt &&
++		git add hello.txt &&
++		git commit -m "add hello.txt" &&
++		git config git-p4.skipSubmitEdit true &&
++		git p4 submit --dry-run >out &&
++		grep "Would apply" out &&
++		mkdir -p .git/hooks &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 0
++		EOF
++		git p4 submit --dry-run >out &&
++		grep "Would apply" out &&
++		write_script .git/hooks/p4-pre-submit <<-\EOF &&
++		exit 1
++		EOF
++		test_must_fail git p4 submit --dry-run >errs 2>&1 &&
++		! grep "Would apply" errs
++	)
++'
++
+ test_expect_success 'submit from detached head' '
+ 	test_when_finished cleanup_git &&
+ 	git p4 clone --dest="$git" //depot &&
+-- 
+2.18.0
 
