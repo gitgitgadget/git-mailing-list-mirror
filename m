@@ -2,137 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E88AB1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 20:44:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 925FF1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 20:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730513AbeHAWcT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 18:32:19 -0400
-Received: from mail-pf1-f179.google.com ([209.85.210.179]:33123 "EHLO
-        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729623AbeHAWcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 18:32:19 -0400
-Received: by mail-pf1-f179.google.com with SMTP id d4-v6so8224082pfn.0
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 13:44:44 -0700 (PDT)
+        id S1732047AbeHAWeJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 18:34:09 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43659 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729639AbeHAWeI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 18:34:08 -0400
+Received: by mail-ed1-f67.google.com with SMTP id b20-v6so133011edt.10
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 13:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=x5pnd1nyEkQQ7jvL27/7TFsxIbF3FyxwmdAp8gI+TfM=;
-        b=BpEk/XgFi+NL2jdHs0QP49wYhUMr8dTVRga8325NNVpHRKWipkWX/O8R4Ot0NEPJYw
-         YN8WZepEacAG6ReZq+N0iA8kRseHY/wepzz7vEdrkRePq5N2/Sywxv40BXpTX9ccPJDF
-         Id7siW/aBgKwTl2StcQfqLod8WGf+r+SiR62AwaBfoZ9KSGLfeTvsHMohXjDFAcxbzAt
-         VAwsUTXKa1d51L1Eo95IPf2ruPIWoyqyOMnPLk7Nu9j3DlxYkqgiMfdQUPKwAl1RR9Zq
-         7oh0Qmd8iqEj4VCMsACTRaSYmxMd94tjdELnN7ZAhnIb+bStcJmbhxdFTtzJZxKpRZyW
-         Zq6A==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=CnHbWbIX6dt5GOZR2zwyIiA3E8wzJytfQFcA9YqSzqY=;
+        b=a0buzUP7e2NCb3ZmtvEPAbjABAiM6oLrSo0DB5EPDyjZmFnMjrsbuCM2B5Jpz2Zyc3
+         L0Q2jTF35vNoKbzVlvJnMpGBYlZM6X1x2lN63vUDI9eAigm7N4FR1c1ZLLtQjEhukykl
+         1WAUxtZnh/6QfUjY34/scDHdPD+giz+ZYEvdh8OBCgMTDddvS3D+uQZAi03o135zdTtL
+         FDxZ5Wv5IiTOiYvDsjpXrzBmPjkrhvDEu8zaEK06E6KwNh8ZCmody3BgZzh1G65zKxwb
+         ymLc0ovFBAEVmCdjYL3ltRTn9pJheVW+fMP/EJXfU6seQWe+UKPj096eOD6A5PJoh9MK
+         R8vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=x5pnd1nyEkQQ7jvL27/7TFsxIbF3FyxwmdAp8gI+TfM=;
-        b=N6enPT1i86evm7U0lLtOYcwz8MS8BBzlqtI9Ze+pxH4caLvQn1aUk2E4D5r1U93rlY
-         PR9HcqQEl3iulS8B8PrgkhKErnJ9tdGHThkBsbeFzMrNoaU3ysdqw7Ukrpl0AvekJvgF
-         BU4hhHBNT1qx66uDtVEn5aKQ8h1wEFHnWiUY7bHb9Q7DxQy4JhSGO2onRTwF0RSHGL7a
-         JQ+e5lv3l2nEkFsgKP7FqD680HWYHvyVIwnjReVhBJ3CiLyCTSg7BRQ778Pq1/CW/vaK
-         SyMnV/NnHd21ZBUQcz0iBI4c+AJlJfNFLYrLK2vmRGYDkjMkRsJdq2W2rO66vT5PEDhP
-         X96w==
-X-Gm-Message-State: AOUpUlGeEIGKeJXlhIMtP2i5yyGoGE16LnoKzlMPqfJLhEAqza9Jpkx2
-        LiWKUL6pSuXjy1/onlORG8WcPE/k
-X-Google-Smtp-Source: AAOMgpdjIFL4389ZqXfAhj218seVTC1N3H6+BnUWbR2KGoiTvwsl12p9aW8V1cF/dewnHKnLTVu/8Q==
-X-Received: by 2002:a65:6086:: with SMTP id t6-v6mr26458662pgu.424.1533156283602;
-        Wed, 01 Aug 2018 13:44:43 -0700 (PDT)
-Received: from [192.168.5.149] (143.120.102.199.static.airbits.net. [199.102.120.143])
-        by smtp.gmail.com with ESMTPSA id p66-v6sm34916289pfd.65.2018.08.01.13.44.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Aug 2018 13:44:42 -0700 (PDT)
-Subject: ds/reachable (was Re: What's cooking in git.git (Jul 2018, #03; Wed,
- 25))
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <24424e55-7fa8-d05b-bc39-e14b4d5abcb6@gmail.com>
-Date:   Wed, 1 Aug 2018 16:44:40 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=CnHbWbIX6dt5GOZR2zwyIiA3E8wzJytfQFcA9YqSzqY=;
+        b=gOmfksQRmGtREwtnVrndf+i1l81VMVGi7Ae0iKT3WpOHH9zuoUPL0WlagJLO8kbe+0
+         JX/tNsgaWXwZrqvIMYX9M0Bskgh9rhv2Y8de9Y1G4TItApPl7HzrzJpbrWiVbsO8V6YI
+         Bx3X8bymrM3ySRqhbTVkVG7JxJAlXOSnMK+BvCw2Z3qTJWyE+Er0YVp5PD9U3YVNuvd9
+         wEBDDEYBgjmYMnKPjZgmAE8q0kki1gfCIAYKUYxXtOyrLCAif0KJVZSWTvhJH+L6MZ/9
+         7GaWU4114PBa02Es1FgIzbxQf9uCYrgYalh2TcQpjrO+sKvVqkWc1XHtCrI3eCFdMVfr
+         E3IQ==
+X-Gm-Message-State: AOUpUlHz61dCKn8wA2bhdhfUFhDkM5aBAqARC6IVQF2l86FiNtlvMkC4
+        pJWBqOcOJU9bfq7jvVIQ694=
+X-Google-Smtp-Source: AAOMgpfx8WZWqcEzU0EqbNGuAyAONSgR/uuRQiTEFvHNhRR+AGPjWEJ8jL2osRKFtPbr9zdPc2Uzog==
+X-Received: by 2002:a50:9356:: with SMTP id n22-v6mr371701eda.206.1533156392772;
+        Wed, 01 Aug 2018 13:46:32 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id 8-v6sm91650edv.77.2018.08.01.13.46.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 01 Aug 2018 13:46:31 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] push: comment on a funny unbalanced option help
+References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 01 Aug 2018 22:46:31 +0200
+Message-ID: <87k1p9u860.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 7/25/2018 6:13 PM, Junio C Hamano wrote:
-> * ds/reachable (2018-07-20) 18 commits
->   - commit-reach: use can_all_from_reach
->   - commit-reach: make can_all_from_reach... linear
->   - commit-reach: replace ref_newer logic
->   - test-reach: test commit_contains
->   - test-reach: test can_all_from_reach_with_flags
->   - test-reach: test reduce_heads
->   - test-reach: test get_merge_bases_many
->   - test-reach: test is_descendant_of
->   - test-reach: test in_merge_bases
->   - test-reach: create new test tool for ref_newer
->   - commit-reach: move can_all_from_reach_with_flags
->   - upload-pack: generalize commit date cutoff
->   - upload-pack: refactor ok_to_give_up()
->   - upload-pack: make reachable() more generic
->   - commit-reach: move commit_contains from ref-filter
->   - commit-reach: move ref_newer from remote.c
->   - commit.h: remove method declarations
->   - commit-reach: move walk methods from commit.c
->   (this branch uses ds/commit-graph-fsck, jt/commit-graph-per-object-store and sb/object-store-lookup; is tangled with ds/commit-graph-with-grafts.)
+
+On Wed, Aug 01 2018, Junio C Hamano wrote:
+
+> The option help text for the force-with-lease option to "git push"
+> reads like this:
 >
->   The code for computing history reachability has been shuffled,
->   obtained a bunch of new tests to cover them, and then being
->   improved.
+>     $ git push -h 2>&1 | grep -e force-with-lease
+>        --force-with-lease[=<refname>:<expect>]
 >
->   Stuck in review?
->   cf. <20180723203500.231932-1-jonathantanmy@google.com>
+> which come from this
+>
+>  		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+>
+> in the source code, with an aparent lack of "<" and ">" at both
+> ends.
+>
+> It turns out that parse-options machinery takes the whole string and
+> encloses it inside a pair of "<>", expecting that it is a single
+> placeholder.  The help string was written in a funnily unbalanced
+> way knowing that the end result would balance out.
+>
+> Add a comment to save future readers from wasting time just like I
+> did ;-)
 
-This comments on the initial values of 'struct ref_filter' (that are not 
-used). All we need is the diff below squashed into "test-reach: test 
-commit_contains".
+There's something worth fixing here for sure...
 
->   cf. <20180723204112.233274-1-jonathantanmy@google.com>
-This comment asks why "parse_commit()" instead of 
-"parse_commit_or_die()" but the _or_die() would create a change in 
-behavior that is not the purpose of the series.
->   cf. <CAGZ79kb7tWV=cmboA+nsChAUaiC+fVVM-GBCuWfsypC+-wyaVg@mail.gmail.com>
+> +		  /* N_() will get "<>" around, resulting in "<refname>:<expect>" */
 
-I just responded to Stefan's comment about sorting. I don't believe any 
-change is needed. Some tests output multiple results and the order is 
-not defined by the method contract, so 'test-tool reach <verb>' will 
-always sort the output (by OID).
+...but this comment isn't accurate at all, N_() doesn't wrap the string
+with <>'s, as can be seen by applying this patch:
 
-(Sorry for the delay. I'm on vacation.)
+    -                 0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+    +                 0, CAS_OPT_NAME, &cas, "refname>:<expect",
 
-Thanks,
--Stolee
+Resulting in the same output:
 
----
+    $ ./git --exec-path=$PWD push -h 2>&1 | grep -e force-with-lease
+        --force-with-lease[=<refname>:<expect>]
 
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index eb21103998..ca30059117 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -117,6 +117,7 @@ int cmd__reach(int ac, const char **av)
-     struct ref_filter filter;
-     struct contains_cache cache;
-     init_contains_cache(&cache);
-+    memset(&filter, 0, sizeof(filter));
+Rather, it's the usage_argh() function in parse-options.c that's doing
+this. Looks like the logic was added in 29f25d493c ("parse-options: add
+PARSE_OPT_LITERAL_ARGHELP for complicated argh's", 2009-05-21).
 
-     if (ac > 2 && !strcmp(av[2], "--tag"))
-         filter.with_commit_tag_algo = 1;
+Also because of this I looked at:
 
+    $ git grep -P 'N_\("<'
 
+Which shows e.g.:
 
+    builtin/difftool.c:706:         OPT_STRING('t', "tool", &difftool_cmd, N_("<tool>"),
+    builtin/difftool.c:714:         OPT_STRING('x', "extcmd", &extcmd, N_("<command>"),
 
+Producing this bug:
+
+    $ git difftool -h 2>&1|grep '<<'
+        -t, --tool <<tool>>   use the specified diff tool
+        -x, --extcmd <<command>>
+
+But these all do the right thing for some reason, just looked briefly
+and didn't see how they're different & manage to avoid this:
+
+    builtin/read-tree.c:134:                { OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+    builtin/show-branch.c:673:              { OPTION_CALLBACK, 'g', "reflog", &reflog_base, N_("<n>[,<base>]"),
+    builtin/update-index.c:969:                     N_("<mode>,<object>,<path>"),
+    builtin/write-tree.c:27:                { OPTION_STRING, 0, "prefix", &prefix, N_("<prefix>/"),
