@@ -2,111 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8FA1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 21:20:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 024521F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 21:38:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729926AbeHAXI2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 19:08:28 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43707 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726031AbeHAXI2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 19:08:28 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b15-v6so16322wrv.10
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 14:20:44 -0700 (PDT)
+        id S2388821AbeHAX0Q (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 19:26:16 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:43269 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388793AbeHAX0Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 19:26:16 -0400
+Received: by mail-pl0-f66.google.com with SMTP id x6-v6so25425plv.10
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 14:38:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Zg+Ibv1MlFDJxoRgOFHJZ8Io9+l5S4sw2GLtbzj6SZw=;
-        b=Zx4ZNtAw+KLNTrOt4gDq+tUCBwQWnoVwVNVMFVgWiZ+wVTtezYpMfHkWu0XCU9Juwd
-         /q/3cDhCCiVqsZQ09hI3a12X8MpdHW8kGHGLnqpbk2HZXZ4gzgWLy7fX3AKzS3vhFxhN
-         iX2CSiXyzqr9TN9xTDzbuIreKQm8SlPHJTsVy+GpBKA232pdXu8cx2RMNxyUS9FUgFol
-         5YCjwSNoWEuzJW5CEPXHkxv/s6CH/buk41gVvUB20wQMfKvRHyA09l7GPsOYWcFG0eSv
-         ILmcFgJ6C4icEMb4Ilky8UTRsiZsw3PncBAPlPyK88JiJpJnSMVdt5kO5RjkLsFsAb9p
-         2TDA==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=B+cgz6HCpN4rOtc9w4SUsO2zkUmuhi6/DsoUGHCPheA=;
+        b=ZjVV2f/ih0h+ty97wARHFw/gIWAe3vV2QbFo7zy4vTBLwtY2LVDS/B7AJ3KfEH6Sqv
+         Gov5RHuajmIETsdH6LTTBZGeizYVLjAxr2gHqO13VIft2+xg99qYYA/amm3J5MVuQ6f9
+         lDQqtpFYDh3L7MuhMQbZ9mEinGncM8Vl3dn26/m+DMIy+GJlLZsgQ5lzH9//AFFAYMrR
+         AxcWSApLCRYzLAv1ZlQUhYnISjpz3KM7yKnDK31YTMl8hlfEPvi9piNgRP6eLPHtQWMO
+         hEHonvl4k217q9TMaM03xWDn1GsY6mSDODsl4GhJxKc0SLeloGZ+8iyrIZGbjH/Zpq7U
+         WvdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Zg+Ibv1MlFDJxoRgOFHJZ8Io9+l5S4sw2GLtbzj6SZw=;
-        b=oFbLcQzmdodcWjnm3XGawjJKdMO3ovJb5evhJrIXuo9r8u/bKbDkXmTbDTmmRCqKNj
-         j56uSq/GPFz1GTkeTx9tVEYbyQrcH4EDVE4EKdLQclolVQAiEQ4rUX1etDz0h8mbRZoi
-         X6K382BAtNCM9TIIp7jdknhZPgSdi1forpYBozuBMZMDd7pWfXd34k1oLNRq7LdpHC+A
-         o7xPtKdxLpeE+cZlGpI2pIDgIEMakWK44q3yxQERWT3+6RVlJUm6K4oWvVvHoKfwfp8a
-         7Vn54q4ErqN1J/MrsA6cBr8j7deM608fl2bSMjU0vZlAatrg3duONJv1gJ6F3X7TA4br
-         gafA==
-X-Gm-Message-State: AOUpUlHQIxwZnkgvJ+y6qK+SSl6rekzFYUUifaFMogOJbNC0C+b2TvV+
-        EHflcElBtlRDPGnbKFI//SU=
-X-Google-Smtp-Source: AAOMgpdUDN4LCZ+6JqZh1Ej/MBb8wVA4p2c2YAlTSrsrcKYO8uaG0kibHJ7DWEwdXgU3QsqCroRjUQ==
-X-Received: by 2002:adf:f850:: with SMTP id d16-v6mr22415wrq.172.1533158443659;
-        Wed, 01 Aug 2018 14:20:43 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g10-v6sm19018wru.43.2018.08.01.14.20.42
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=B+cgz6HCpN4rOtc9w4SUsO2zkUmuhi6/DsoUGHCPheA=;
+        b=BX4b6yv2PAPz9m65lxht04havRv2rJsVLlBz5mb9FHxQBpD9lGcz6uIls08yn4gdr0
+         HRNzJxjji6ZvQkGNRS8EVqn+2CTCBymfhLP2UhsvoFoJFuOym+1SweKSDvzAfJKr3Ce2
+         l/xRx5Nsn76svD9sjBH7KdKuBpP6Q1PXtPL7yjWc/8itN2Rqf9NuVukRERBdB9AD2jib
+         wx74CrSZCVRjgSUzWsIETUDoSeznHFacQrYEEQ57CAgTHDK4EP5xCPjS2lCTMf7XBQdQ
+         g+LMVABv2ckEohFm1w6aO5QS8eFxdJF7fzfjiSk441b9hqXT3DHfwdMefOHIjxRfm/FF
+         IoAw==
+X-Gm-Message-State: AOUpUlG1HgWxMzPmzh3QnZN0IjeZ77T+iZf3SPkRjtt7AMw9IoMGnkPx
+        6eEt+DI+2/EnRKWshCFhPhvgGg==
+X-Google-Smtp-Source: AAOMgpfhOyBegMLpOgNzL1cIB6hWh4ZhNvqFcaPavQSKbBxm+ak7GgKA5gKSAr2yI2xS25es1x/4Lg==
+X-Received: by 2002:a17:902:8482:: with SMTP id c2-v6mr54756plo.45.1533159508734;
+        Wed, 01 Aug 2018 14:38:28 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id q78-v6sm32320pfi.185.2018.08.01.14.38.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Aug 2018 14:20:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?utf-8?B?4buNYw==?= Duy 
-        <pclouds@gmail.com>, Git Mailing List <git@vger.kernel.org>,
-        pawelparuzel95@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
-References: <20180729092759.GA14484@sigill.intra.peff.net>
-        <20180730152756.15012-1-pclouds@gmail.com>
-        <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
-        <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
-        <20180731192931.GD3372@sigill.intra.peff.net>
-        <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
-        <20180731203746.GA9442@sigill.intra.peff.net>
-        <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 01 Aug 2018 14:20:42 -0700
-In-Reply-To: <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 31 Jul 2018 13:57:57 -0700")
-Message-ID: <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 01 Aug 2018 14:38:27 -0700 (PDT)
+Date:   Wed, 1 Aug 2018 14:38:26 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, gitster@pobox.com
+Subject: Re: [PATCH] fetch-pack: unify ref in and out param
+Message-ID: <20180801213826.GA66237@google.com>
+References: <20180729121900.GA16770@sigill.intra.peff.net>
+ <20180801201320.201133-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180801201320.201133-1-jonathantanmy@google.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 08/01, Jonathan Tan wrote:
+> When a user fetches:
+>  - at least one up-to-date ref and at least one non-up-to-date ref,
+>  - using HTTP with protocol v0 (or something else that uses the fetch
+>    command of a remote helper)
+> some refs might not be updated after the fetch.
+> 
+> This bug was introduced in commit 989b8c4452 ("fetch-pack: put shallow
+> info in output parameter", 2018-06-28) which allowed transports to
+> report the refs that they have fetched in a new out-parameter
+> "fetched_refs". If they do so, transport_fetch_refs() makes this
+> information available to its caller.
+> 
+> Users of "fetched_refs" rely on the following 3 properties:
+>  (1) it is the complete list of refs that was passed to
+>      transport_fetch_refs(),
+>  (2) it has shallow information (REF_STATUS_REJECT_SHALLOW set if
+>      relevant), and
+>  (3) it has updated OIDs if ref-in-want was used (introduced after
+>      989b8c4452).
+> 
+> In an effort to satisfy (1), whenever transport_fetch_refs()
+> filters the refs sent to the transport, it re-adds the filtered refs to
+> whatever the transport supplies before returning it to the user.
+> However, the implementation in 989b8c4452 unconditionally re-adds the
+> filtered refs without checking if the transport refrained from reporting
+> anything in "fetched_refs" (which it is allowed to do), resulting in an
+> incomplete list, no longer satisfying (1).
+> 
+> An earlier effort to resolve this [1] solved the issue by readding the
+> filtered refs only if the transport did not refrain from reporting in
+> "fetched_refs", but after further discussion, it seems that the better
+> solution is to revert the API change that introduced "fetched_refs".
+> This API change was first suggested as part of a ref-in-want
+> implementation that allowed for ref patterns and, thus, there could be
+> drastic differences between the input refs and the refs actually fetched
+> [2]; we eventually decided to only allow exact ref names, but this API
+> change remained even though its necessity was decreased.
+> 
+> Therefore, revert this API change by reverting commit 989b8c4452, and
+> make receive_wanted_refs() update the OIDs in the sought array (like how
+> update_shallow() updates shallow information in the sought array)
+> instead. A test is also included to show that the user-visible bug
+> discussed at the beginning of this commit message no longer exists.
+> 
+> [1] https://public-inbox.org/git/20180801171806.GA122458@google.com/
+> [2] https://public-inbox.org/git/86a128c5fb710a41791e7183207c4d64889f9307.1485381677.git.jonathantanmy@google.com/
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> I now think that it's better to revert the API change introducing
+> "fetched_refs" (or as Peff describes it, "this whole 'return the fetched
+> refs' scheme from 989b8c4452"), so here is a patch doing so. I hope to
+> have covered all of Peff's and Junio's questions in the commit message.
+> 
+> As for Brandon's question:
+> 
+> > I haven't thought too much about what we would need to do in the event
+> > we add patterns to ref-in-want, but couldn't we possible mutate the
+> > input list again in this case and just simply add the resulting refs to
+> > the input list?
+> 
+> If we support ref patterns, we would need to support deletion of refs,
+> not just addition (because a ref might have existed in the initial ref
+> advertisement, but not when the packfile is delivered). But it should
+> be possible to add a flag stating "don't use this" to the ref, and
+> document that transport_fetch_refs() can append additional refs to the
+> tail of the input list. Upon hindsight, maybe this should have been the
+> original API change instead of the "fetched_refs" mechanism.
 
-> Jeff King <peff@peff.net> writes:
->
->>> Presumably we are already in an error codepath, so if it is
->>> absolutely necessary, then we can issue a lstat() to grab the inum
->>> for the path we are about to create, iterate over the previously
->>> checked out paths issuing lstat() and see which one yields the same
->>> inum, to find the one who is the culprit.
->>
->> Yes, this is the cleverness I was missing in my earlier response.
->>
->> So it seems do-able, and I like that this incurs no cost in the
->> non-error case.
->
-> Not so fast, unfortunately.  
->
-> I suspect that some filesystems do not give us inum that we can use
-> for that "identity" purpose, and they tend to be the ones with the
-> case smashing characteristics where we need this code in the error
-> path the most X-<.
+Thanks for getting this out, it looks good to me.  If we end up adding
+patterns to ref-in-want then we can explore what changes would need to
+be made then, I expect we may need to do a bit more work on the whole
+fetching stack to get what we'd want in that case (because we would want
+to avoid this issue again).
 
-But even if inum is unreliable, we should be able to use other
-clues, perhaps the same set of fields we use for cached stat
-matching optimization we use for "diff" plumbing commands, to
-implement the error report.  The more important part of the idea is
-that we already need to notice that we need to remove a path that is
-in the working tree while doing the checkout, so the alternative
-approach won't incur any extra cost for normal cases where the
-project being checked out does not have two files whose pathnames
-are only different in case (or checking out such an offending
-project to a case sensitive filesytem, of course).
-
-So I guess it still _is_ workable.  Any takers?
+-- 
+Brandon Williams
