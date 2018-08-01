@@ -2,99 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 779A91F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:25:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 482AC1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:41:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389810AbeHARL5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 13:11:57 -0400
-Received: from mail-io0-f171.google.com ([209.85.223.171]:33446 "EHLO
-        mail-io0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389476AbeHARL4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 13:11:56 -0400
-Received: by mail-io0-f171.google.com with SMTP id z20-v6so16408394iol.0
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:25:43 -0700 (PDT)
+        id S2389765AbeHAR2N (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 13:28:13 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:40674 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389698AbeHAR2N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 13:28:13 -0400
+Received: by mail-wm0-f68.google.com with SMTP id y9-v6so7582122wma.5
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:41:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EY8hnJABIw01gJIpADi5CANgALHsGnT0vMV0OTBnjtU=;
-        b=twlMgAWYQ+8aL8rNF5yTo1yBYPbbAHoWC184IlhipinoQUHlcQ1if0Gh/4GZRMGKR+
-         BNafdob15uqO4TEKCLAyUwLbNMYUZhBCeRRouPTcxmw19wzp78IAm/5HDO5oBPK54yQc
-         u3nCnlaVmaUnLsNWwPL8stY0aV6/iAop2ow7xd19aY55NJYOTz+icvcgPbuaGhHCabSn
-         Jpvm4BNW5ODsEBPfrnzi/ZFS/idX1ixaxZexV5EPaoZ9zEhk3pgInbnBu34Kj/4L+T1V
-         +c2gj33szlSRrsYJuQL6RL9gYtPrykso0fEBf2ZXIrIEfv43zfjMCiDdyaf4Q990KgzY
-         0uvw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=uOord+kfHsh3G2k0acV0n6jUJxNppObvJZgTTMmJf1I=;
+        b=kdBQLgo0IXPciFSMxl3UqRXPAUDXfnJhddUw/FLUq0dE3abIFws8w/P0FfvQhCWIuY
+         OiyeqMs9kyVZ0KXy1UWdVYNvJsTN/payZsFxbc9gmNLIWZHoU4f3hEVPXraMEKQVF6DL
+         ZhJCdhM8Nr7vWQd5XM5PBKnbFQUhtqWa8nuKWqB5EDG5z7t1niLizY9AFm/3kO7+AmXa
+         rD0VXDA3pRDSrrxFkcMynY3GIVuRG17tgTOkmMCLxFCKexa5DUlFCaweaDtcwEaUV7ly
+         YCRcij5P+Cu8LmX8uyig5ExJiJIt7T4YjCXX2T6mWqMQBnlwzm/uCvJ9Rf3zHWAc3qNm
+         Mq7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EY8hnJABIw01gJIpADi5CANgALHsGnT0vMV0OTBnjtU=;
-        b=DAR7NPa2QW2NsFho3kw0T+bioZNirE+AVMkCLUMZ5VFdvll6rfl2+Kvyg/njkTMlmy
-         C2hG5/UKik/PS7B9OgcYSSh++8MB7FbXEGdNRTOlHTYRuQlDcBqlgcbD+CEFf+ceUO5y
-         anoBWO5YB0dcbkhCdeARxDZFVezjZxAggngAbo68rkMJRDL63bQCRSmk3LF0UfmH7/6i
-         E1ppBHBxc1kwEopwOn1TWIlAGXPCNfrrbFQLXyBNzpP3HHai1hKq8/FH463eVGSUYHwJ
-         OzcUj4gAQZmbqoqL9PX3Eo/IcMeTco9N8A1jCGJiLvdRY08zLGror5XVMdWwN38lLM2t
-         42cQ==
-X-Gm-Message-State: AOUpUlETe0Eb+vtQhvi6EEs9p+OO49M93AD50B6UekK3B6ZM35Y2SIqb
-        3t/HRkxRyQt5OzDf3wcUudjvvc8JRX156LZ+6qs=
-X-Google-Smtp-Source: AAOMgpecBGwTUWGYdlpNDV4hujZu9K+z5EOgzFYzCLLbgtOOlygONq33ZiCnv+G010X/ps0oQvHhwx1v607MOIahRIM=
-X-Received: by 2002:a5e:d809:: with SMTP id l9-v6mr3502607iok.236.1533137142952;
- Wed, 01 Aug 2018 08:25:42 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uOord+kfHsh3G2k0acV0n6jUJxNppObvJZgTTMmJf1I=;
+        b=bNrl2PSzlpIIn4zfo/v56OUxLVjnCGRjyKcXXWMBXPfIah9eGQe+pB8ja7SGt8Tz7r
+         Q2eYiGP/iZ2GipbDobJqCXVucK1AdEjH3T8y0d37817jdroT3uveOGnpBJMAWLt7UVz1
+         U5yKPG2o+kheS0563lMFogtwTh2GXKsjHjm/ViSoiIhIyFHZkSRGwI/BgkuQqVaD1K22
+         aQYze3bIa2VvJKqwRKJ3z2zYMVubJI+OcaF2L09HvZGRm82XnSojHRO7MOmMWwNJSeOH
+         /9HDbfnO2dduDMtoy7KRHwCTBdTT1mnZ+2UmNupHmAY12OsVqTV3za4ERhVggBj8AwS+
+         OJuQ==
+X-Gm-Message-State: AOUpUlEdSgd05zcplYbaqS7t3W3GSRLffojoqrjgQY/6vHeANt9CJLco
+        WxKaQwZwTijqtnOAdFurN2PVNUD9
+X-Google-Smtp-Source: AAOMgpd0iCzRemmqgs6Mx+dtg+u06XEGuOL5hzTZ7f1C0rJmGChqff/iz6jTFVUyWe2Gt8h8/oZAJg==
+X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr3285205wmt.94.1533138114122;
+        Wed, 01 Aug 2018 08:41:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n7-v6sm18496025wrr.35.2018.08.01.08.41.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 01 Aug 2018 08:41:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
+References: <20180731173651.184716-1-hanwen@google.com>
+        <20180731173651.184716-3-hanwen@google.com>
+        <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
+Date:   Wed, 01 Aug 2018 08:41:52 -0700
+In-Reply-To: <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 31 Jul 2018 16:21:24 -0400")
+Message-ID: <xmqqeffi856n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180729092759.GA14484@sigill.intra.peff.net> <20180730152756.15012-1-pclouds@gmail.com>
- <20180731182344.GA3286@tor.lan>
-In-Reply-To: <20180731182344.GA3286@tor.lan>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Aug 2018 17:25:16 +0200
-Message-ID: <CACsJy8CBEFkbgoiTrsmsVy8KzU+KUPD+XN3weTrnUJUMAQn9xg@mail.gmail.com>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 8:23 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
-> I wonder if we can tell the users more about the "problems"
-> and how to avoid them, or to live with them.
+Eric Sunshine <sunshine@sunshineco.com> writes:
+
+> On Tue, Jul 31, 2018 at 1:37 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
+>> Highlight keywords in remote sideband output.
 >
-> This is more loud thinking:
+> Prefix with the module you're touching, don't capitalize, and drop the
+> period. Perhaps:
 >
-> "The following paths only differ in case\n"
-> "One a case-insensitive file system only one at a time can be present\n"
-> "You may rename one like this:\n"
-> "git checkout <file> && git mv <file> <file>.1\n"
+>     sideband: highlight keywords in remote sideband output
 
-Jeff gave a couple more options [1] to fix or workaround this. I think
-the problem is there is no single recommended way to deal with it. If
-there is, we can describe in this warning. But listing multiple
-options in this warning may be too much (the wall of text could easily
-take half a screen).
+Yup (I locally did something similar when queued it).
 
-Or if people agree on _one_ suggestion, I will gladly put it in.
-
-[1] https://public-inbox.org/git/CACsJy8A_uZM7nUmyERNHJMya0EyRQYTV7Dp2ikLzn=
-xnbOQU6tw@mail.gmail.com/T/#m60fedd7dc928a4d52eb5919811f84556f391a7b3
-
-> > +                             fprintf(stderr, "\t%s\n", dup.items[i].st=
-ring);
+>> The highlighting is done on the client-side. Supported keywords are
+>> "error", "warning", "hint" and "success".
+>>
+>> The colorization is controlled with the config setting "color.remote".
 >
-> Another question:
-> Do we need any quote_path() here ?
-> (This may be overkill, since typically the repos with conflicting names
-> only use ASCII.)
+> What's the motivation for this change? The commit message should say
+> something about that and give an explanation of why this is done
+> client-side rather than server-side.
 
-Would be good to show trailing spaces in path names, so yes.
---=20
-Duy
+Good suggestion.
+
+>
+>> Co-authored-by: Duy Nguyen <pclouds@gmail.com>
+>
+> Helped-by: is more typical.
+>
+>> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+>> ---
+>> diff --git a/Documentation/config.txt b/Documentation/config.txt
+>> @@ -1229,6 +1229,15 @@ color.push::
+>> +color.remote::
+>> +       A boolean to enable/disable colored remote output. If unset,
+>> +       then the value of `color.ui` is used (`auto` by default).
+>
+> If this is "boolean", what does "auto" mean? Perhaps update the
+> description to better match other color-related options.
+
+Existing `color.branch` is already loose in the same way, but others
+like color.{diff,grep,interactive} read better.  No, past mistakes
+by others is not a good excuse to make things worse, but I'd say it
+also is OK to clean this up, together with `color.branch`, after this
+change on top.
+
+>> +               if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+>
+> So, the strncasecmp() is checking if one of the recognized keywords is
+> at the 'src' position, and the !isalnum() ensures that you won't pick
+> up something of which the keyword is merely a prefix. For instance,
+> you won't mistakenly highlight "successful". It also works correctly
+> when 'len' happens to reference the end-of-string NUL. Okay.
+
+Hmm, do we actually say things like "Error: blah"?  I am not sure if
+I like this strncasecmp all that much.
+
+>> +                       strbuf_addstr(dest, p->color);
+>> +                       strbuf_add(dest, src, len);
+>> +                       strbuf_addstr(dest, GIT_COLOR_RESET);
+>> +                       n -= len;
+>> +                       src += len;
+>> +                       break;
+>> +               }
+>
+> So, despite the explanation in the commit message, this function isn't
+> _generally_ highlighting keywords in the sideband. Instead, it is
+> highlighting a keyword only if it finds it at the start of string
+> (ignoring whitespace). Perhaps the commit message could be more clear
+> about that.
+
+Sounds good.
+
+I didn't comment on other parts of your review posed as questions
+(that require some digging and thinking), but I think they are all
+worthwhile thing to think about.
+
+Thanks.
