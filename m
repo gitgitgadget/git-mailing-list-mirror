@@ -2,112 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 085D31F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 00:19:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF4C21F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 00:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732858AbeHACCk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 22:02:40 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:40758 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732840AbeHACCk (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 31 Jul 2018 22:02:40 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b423:857:b27f:2f08])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 408C16073B;
-        Wed,  1 Aug 2018 00:19:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1533082788;
-        bh=PQFN5ZpWAcUFgfEWA598THtcX/Gmo98fmC1JZzWBt3o=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=N3JR7XxfxYxo2Gi95ttREPS3QAs5AYUIQjmEpH85v5Wg5o+dCzWrIoyuhFFh/BajD
-         rZkmzZDBqRctPXYCSCLH/wjh5k0i1A0UZBBFQ4MQFhtU6VD1tQoDCwEOUjnMNDV7a6
-         BuX9qp8LYaxKhtdu3R4t6xdI6R2Bh7KxuBfnvhJaTD/clyYf5zhTzGo0PP6vgKOS73
-         kyQWrSWce2nxaVYkb/12f++J4uPDRWxOnfZaatNRoBaDF9XFsfDh02tfWc9s+D7gxB
-         91xskz8tqozDZNT5uWo5E5F2CmW3GPUzakZc9C9igozfNVUmsGvQQ4LPGN/Lvm5gn1
-         fRrUsfu3ekDomebncjlw0NMff7Rk+xt06rwlnMs4/Oj2RG2nj0iVNbZDo0KXxLK7mK
-         hSiEqe5NXXY3VMEmBxkg3BsdnWQWM1DUYz6W1lxY3Rl3yVYcl4WNKkb8+fvqSZEx5r
-         JO72JgAd/KRkugXWFpT3M5KX0RyjeoQMDt7XroAb575WUlfLrrR
-Date:   Wed, 1 Aug 2018 00:19:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Vojtech Myslivec <vojtech.myslivec@nic.cz>
-Cc:     git@vger.kernel.org, Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
- when signature is not trusted
-Message-ID: <20180801001942.GC45452@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org,
-        Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>
-References: <09f9803c-3f4b-a97c-2c59-e9d6b924892f@nic.cz>
+        id S1732832AbeHACPd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 22:15:33 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36677 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732804AbeHACPd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 31 Jul 2018 22:15:33 -0400
+Received: by mail-wm0-f65.google.com with SMTP id w24-v6so3547678wmc.1
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 17:32:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=za9/88p8O0EcTR65zdMl/4kHkNTyG2Bh1u5/SJkrFcQ=;
+        b=aAocvOmSTgDVoZ8mLgEwMAn3ncSYxebmFB2CwJWj9txOJ0052qiCojd4zKxAb0iWup
+         APvXE2F3le3sdwfaqAM+sYJeFRk6KHWBzO0b8kmzgDhStrG2Kb5pGoLVsyymIwZp8g17
+         6j7Mkp9jJlQCVgtck73w5FNP3rjOKAzkWxTU44+A7iwdTpbbldzJ4DKhUoWd+hZq2Gd1
+         hjktSRUtILSlyW28IZN9qdHKcvhDY2bqvCUXe+4c9r7y9gl7zoiIKutPERKA7jHNsIZr
+         gP7ZcRZV3s3n+d9PskwtM4+OSqN0bJ0hEjSD2lU2K7c+BMtswp4742i1EODn+qaGb9qC
+         YUwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=za9/88p8O0EcTR65zdMl/4kHkNTyG2Bh1u5/SJkrFcQ=;
+        b=F13Y28JjGa6va9O5RrtLH4fwOyEuzuwiPjHox/XXiDH9Dyhcg7IupUNWua7KFKlTv2
+         lrmeeCRhpghfA0pqAOlqEfa1c7XNCrrQJ7J3SOXONxRzarEnBKRtU3BwSonGnR4UX3Gh
+         s8Q6YlfuyLfW5dhptgtfDTl7ro5SWIpqQurqtuxX0MiQ0Bynj4Pjiop6d2TilTcFdTcq
+         hz+R7KF47y3173njNJmgylNct9k870p+ZP9ydak58Rm8KtKDLy9RpBm/ynrvpvyKXQlC
+         w2vgyrYnfqXYFCV49pxhFQaXIqqHEh8KS49DMFEXxmUKMS2oFxQmqt1kKPqprRbIQQ8W
+         IaWQ==
+X-Gm-Message-State: AOUpUlFmuZ02AEXvdlcHCI1lFWbWwyHwDYDlRflPuPuNVasu2U96iixl
+        sNNtpxusclr151JQ3EUgY2PMYhKC
+X-Google-Smtp-Source: AAOMgpfjo5EzviwwN2gglVnQZBtoFpg3DRJPM8Dq4Sba1PvsaQUEw1zWM8RmW4ErR8OTdtrz7rFOow==
+X-Received: by 2002:a1c:168a:: with SMTP id 132-v6mr1232959wmw.13.1533083560426;
+        Tue, 31 Jul 2018 17:32:40 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v14-v6sm2309587wmh.41.2018.07.31.17.32.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 17:32:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] remote: prefer exact matches when using refspecs
+References: <xmqq1sbj9h08.fsf@gitster-ct.c.googlers.com>
+        <20180731233332.187328-1-jonathantanmy@google.com>
+Date:   Tue, 31 Jul 2018 17:32:39 -0700
+In-Reply-To: <20180731233332.187328-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 31 Jul 2018 16:33:32 -0700")
+Message-ID: <xmqqr2jj7wpk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="ghzN8eJ9Qlbqn3iT"
-Content-Disposition: inline
-In-Reply-To: <09f9803c-3f4b-a97c-2c59-e9d6b924892f@nic.cz>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
---ghzN8eJ9Qlbqn3iT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> This looks good to me. I've checked that refname_match (and
+> branch_merge_matches(), which returns the result of refname_match()
+> directly) is only used in "if" contexts, so making it return a value
+> other than 1 is fine.
 
-On Tue, Jul 31, 2018 at 10:05:22PM +0200, Vojtech Myslivec wrote:
-> Hello,
->=20
-> me and my colleague are struggling with automation of verifying git
-> repositories and we have encountered that git verify-commit and
-> verify-tag accepts untrusted signatures and exit successfully.
+Yes, the log message should say that existing callers only care if
+the returned value is 0 or not (i.e. if we have any match).
 
-I don't have strong feelings on your change one way or the other, but
-for automation it may be useful to use the --raw flag, which gives you
-the raw gpg output and much greater control.  For example, you can
-require that a subkey is or is not used or require certain algorithms.
+> I would initialize best_score to INT_MAX to avoid needing the
+> "best_score < 0" comparison, but don't feel strongly about it.
 
-I will say that most signatures are untrusted in my experience, so
-unless people are using TOFU mode or making local signatures, git will
-exit nonzero for most signatures.  I think the current status is to exit
-on a good signature, even if it isn't necessarily a valid signature.
+If we want to lose that "have we seen any possible result?" check, I
+think defining (ARRAY_SIZE(ref_rev_parse_rules) - p) as the score,
+so that the "full path" gets score 6 (or whatever) and "some remote
+tracking name" (like "origin->refs/remotes/origin/HEAD") gets score
+of 1 (smallest but true) may make more sense.  Then, start the best
+score at 0 and every time we get a score strictly better than the
+best so far, we overwrite the best.  That way, we can even lose the
+"did we get any positive score?" check, too, and making the
+condition in the inner loop quite simple, i.e.
 
-I'm interested to hear others' thoughts on this.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+	int best_score = 0;
+	...
+	for (ref = refs; ref; ref = ref->next) {
+		int score = refname_match(name, ref->name);
 
---ghzN8eJ9Qlbqn3iT
-Content-Type: application/pgp-signature; name="signature.asc"
+		if (best_score < score) {
+			best_match = ref;
+			best_score = score;
+		}
+	}
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
+We need a commit log message (hopefully we can lift most parts from
+your patch in this thread) and a test update to ensure that the same
+precedence order used as ref resolution (i.e. tags get higher prio
+over branches, etc.) in addition to the test you had in your patch.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltg/J4ACgkQv1NdgR9S
-9otRpxAAjPXNaXEUNtnKMRdTuS8H8fHDDDODLX4lIGjtUZSuJVLvm2QegSIdnXXE
-dCapMtrBZ/8wXegjtpuKmcYcCVWuH5PbgZ8NtvcBvvaVKJGxiWT/OzxPi1LKjMJ7
-rt3pH8+ZJOAWkisf8eytgaDEXfAheMuE2sI2Zm2MmLtwNkpHlwqFaDxfcW4ecEWd
-sDy9TPRaIAzwlmfgN1psFVEeqcI46Gy5zbR09+OcKdXSuSEXHNJ5aQ9vHa3L0j1A
-1k+v4dyllKO1vrKieGmdYWcN30SjWwrDtB7eFrvW5ZacewL9rCokpGRlMmZv6ySZ
-GnT3yAoW1iYkXkf5X3a05cKjsyykDvxaoUYvWRsFMS5jzkjBD8iq0LWOzlsnBYXV
-XUREX38atCagZe4laWAOvVFgek+lruMbRibthb+mmH407kRm0h/jedEC77LkIh+X
-hUqyQfEqtZYz9cnQ+sBm5N0lWC6Zg9FEzqKOH+Dg/B4Uj8qQfzItzGdCBF4cXBXs
-RzSKHMXIwU+A0Btl6AasGd+ZEYxYBv4u0Q5QhP7uyyVsMG4+Zl4rq/BpaszoHzaZ
-hxK1qcbg8PnU1jPQNsGh20Dtsf1fA0rVr566WFAVDuV+7rYenQFnn1NHmU5GhsoS
-5RNcM7HL6CwSkBtjXd8kwD18Nrwt5YhjP6g5THe5UaNFhWCDnJ8=
-=cNfA
------END PGP SIGNATURE-----
-
---ghzN8eJ9Qlbqn3iT--
+Thanks.
