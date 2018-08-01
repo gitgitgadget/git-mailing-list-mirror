@@ -2,118 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C36881F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 00:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A199A1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 01:24:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732896AbeHACl4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 31 Jul 2018 22:41:56 -0400
-Received: from mout.web.de ([212.227.15.4]:57059 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732863AbeHACl4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 31 Jul 2018 22:41:56 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MKrC4-1fkfTY2oYC-0003TM; Wed, 01
- Aug 2018 02:58:52 +0200
-Subject: Re: git merge -s subtree seems to be broken.
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     George Shammas <georgyo@gmail.com>, git@vger.kernel.org
-References: <CAF1Ko+FBP5UmETmh071dvn9iv8-N-3YgaP61q-4jQvxFdN0GTA@mail.gmail.com>
- <CAF1Ko+FNfjWMteccfKDBjPEW76rGBLQkGb1icUHmzEZ0fKQJBA@mail.gmail.com>
- <xmqqtvofcsgc.fsf@gitster-ct.c.googlers.com>
- <20180731161559.GB16910@sigill.intra.peff.net>
- <xmqqh8kfcokk.fsf@gitster-ct.c.googlers.com>
- <20180731172304.GA16977@sigill.intra.peff.net>
- <20180731190459.GA3372@sigill.intra.peff.net>
- <xmqqeffj9ku3.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d60fc243-7271-bc49-b687-ade2b6e315ea@web.de>
-Date:   Wed, 1 Aug 2018 02:58:50 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1732924AbeHADHK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 31 Jul 2018 23:07:10 -0400
+Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:58152 "EHLO
+        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1731999AbeHADHK (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 31 Jul 2018 23:07:10 -0400
+X-Greylist: delayed 3509 seconds by postgrey-1.27 at vger.kernel.org; Tue, 31 Jul 2018 23:07:09 EDT
+Received: from pps.filterd (m0142701.ppops.net [127.0.0.1])
+        by mx0b-00256a01.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w710Lv1v118016
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 20:25:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=20180315; bh=FBZ0iGsosL0GKHJOVoTzD/r+02vG1FBAh+Yu+Smtyss=;
+ b=LXjZvtpaERvpRFLGtP3xMDdS3GhZpmpcJX7AfhJ6mJFed1GhdEFFqrVmRnwZLYSB98n+
+ rdiZOZSYkCO2gnh7HgbADc9LUZ0rzUA1tkOXZCAPFSZQntvQSvC3GMOclY/P/DOydmSP
+ 98XqbfIcR7QLnqErWxN3OCrTT+i26GLU8GK+6g/CwlVj+hiGIQwcu1ymImaoHJGDPjvT
+ TjBAoUwYylBuPZ+9EHskX92gg/TQMRkcp2RU8vzTnhbxX88IonHaq76D4ktkZTJVVvQL
+ KNsCTAopuB+yEGUENrHFP79ek7bSVYVPVzjhhTALb9Tev/F+Y5NzkbWSt+Fe1EPGrpd6 Pw== 
+Received: from mail-qk0-f197.google.com (mail-qk0-f197.google.com [209.85.220.197])
+        by mx0b-00256a01.pphosted.com with ESMTP id 2kjugdn8fy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 20:25:50 -0400
+Received: by mail-qk0-f197.google.com with SMTP id o18-v6so15401558qko.21
+        for <git@vger.kernel.org>; Tue, 31 Jul 2018 17:25:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FBZ0iGsosL0GKHJOVoTzD/r+02vG1FBAh+Yu+Smtyss=;
+        b=2LIrYei0OJudYGQLM1qtVU9cLCnI6WdQWiS27umYkInl+oewkSnUVfIc64x/gugMJ7
+         K1GzXdIPkIfgqmzPTXkTUF2goT3o+42LS0gv63VN6fUOInTGDKbWD5NVjRx8O6hkx14W
+         2LdQtqLpUdVOu7VBP6vpcnL7cKR40dOAT38fzmBSq7GfbGkM53zQ80p9UtK5bdoF+7l4
+         y7czqHRzzHU7V6ngfsMSMwVkVp5wzLUiP5ZemJqq4kHyzboWfyv7ZNRtZSoPg7aXN5Af
+         IX4FcmFCchFkV+fHsfSfI9HtDUZdaBamGebq3YNniFIUAWtag/skoalf3bk1Y9JcjW3U
+         w+Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FBZ0iGsosL0GKHJOVoTzD/r+02vG1FBAh+Yu+Smtyss=;
+        b=Cgi1tHvvDCRQHl4EO0tbp93JJ1J4UNEpWaMERcG30IIP7ZMW4qoTE3/QiZZJp5k2vl
+         0wsu/Q+PA2PrN6mZVW+X9U1zrp8r+CPBUCbFpbAwtf+ZAljVOQ7zk3t6D9VnZRp37D7B
+         ZIUapGJXX1SzQwGJY7D9GaiRaf11WAxnEqx7O/U5wzXlbgS1kXiJ1aQP9XPMVWxmEdpM
+         Cv4CnIWAEuHasm6WeJDIysoTn9ZA04AsCsRPW9SETVf849Rez+1JeEP/RlG5tT7fQTyh
+         KC1li5qi3M3dWl6UCY13FvLWjHkTI0upOPO4EaliMes1fEGwqFyZ41mDOBEQmKGanwka
+         6KWg==
+X-Gm-Message-State: AOUpUlHZR4cyMh8IhKlZIa+QQe9z1NqbyZgH9eTeysdUykNVNPmzS7IY
+        VgotMxku7iwk+P/dHLbXl2hq6tf3nIbUbAQrloqQ8h8qt5RsvJUdZhw0kBqdHz6yAlbhPChKLGQ
+        YG223bAfaPK4=
+X-Received: by 2002:a0c:f5d3:: with SMTP id q19-v6mr21604945qvm.213.1533083148693;
+        Tue, 31 Jul 2018 17:25:48 -0700 (PDT)
+X-Google-Smtp-Source: AAOMgpcLy+3Ayv8F1t/i9VtDwpHFg0ihpi7+bt8O20vcBsDgwy8+WyFvBQTj0u1VKS3YPvIGGbAw8Q==
+X-Received: by 2002:a0c:f5d3:: with SMTP id q19-v6mr21604936qvm.213.1533083148541;
+        Tue, 31 Jul 2018 17:25:48 -0700 (PDT)
+Received: from LykOS.localdomain (cpe-68-173-125-182.nyc.res.rr.com. [68.173.125.182])
+        by smtp.gmail.com with ESMTPSA id w13-v6sm11655320qtc.88.2018.07.31.17.25.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 31 Jul 2018 17:25:48 -0700 (PDT)
+Date:   Tue, 31 Jul 2018 20:25:47 -0400
+From:   Santiago Torres <santiago@nyu.edu>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Vojtech Myslivec <vojtech.myslivec@nic.cz>,
+        git@vger.kernel.org, Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>
+Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
+ when signature is not trusted
+Message-ID: <20180801002546.du52zkxjupzcw2p6@LykOS.localdomain>
+References: <09f9803c-3f4b-a97c-2c59-e9d6b924892f@nic.cz>
+ <20180801001942.GC45452@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqeffj9ku3.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:Uso3GKlfOBrBEgmiieCMwNIwvjO1xgKsqvqtqWzYeLuxccGL0Z3
- fy6UPDsYMgErTe400ThHXPvvGCmwMJ6tqpUWJXzeobejeAufWJPZCrLs5I5aDZbEBwQ/ODh
- ICr2OCERXUpWeplLmpmr8v4qmBigzgQBk5LLkB2l9uAi0Q+nH3rApt0yo498Fij4FihisAv
- 7Xwy1kI3MfobxZNt6CMDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fJmY5Cm2DYw=:NoNGMdzWa2pvF0JZ5tk0Vk
- 3cBHTIoJmobpbkKsAMOZzxGaujU6DHK3pPDNNg37yAlGGtnqOloAf5eZOU5wy5PVNF9buuEQB
- 1tJBnwB+rrfjPLrfRbTs250zVr4dwyMQ1YDLX3tylOZH6JY1LAcL+ohahV0YNUJJOONGt8OH6
- 3DnkZsk2Vib2G9ih/Qd6S59KDBTsLeK843UemYdCkIZv3pM6S7CQV28YxvyH0K2KNV+gyO1SX
- 51PRQxyjs9zhy23ORHFPB5YYO2XjY/JbORnujw9bpFFV+xucqH1sUGP6xuvcodWyplk3IYMQe
- JxnIB3ZgFweLnB8W/gbFlbTODAUlH+YYFrZrc6G1TAHB4H2fMdOJMJFQCpZneWRnSbxMCub6d
- lXrX2UJD+ciHGFrFt64H+p88paUgME/ahPAscXuEJ0TPkp5KCy6UrWOyfhjyktpyrc3fx480L
- 3J0a5Kr5643+7uEguk8sJHUDNpKNmPQGcaR0dgz9U6hy3jYa2cSq8/PbfAhnL+lvOBDy8rhTP
- xONUkzbqNcHtPbh6qZrs+Zz7+47ham+Z2haYq0PO7cIE8ulHomSYzcLsPfaZ8PGtaQ+Qi9cDg
- lxxVyHMKEnBUhtu9kJt+tsMgcmjJ2eVx8l90S9JByv8CrRsuP9e4G+r9rz7ORJ1rLZd9PenZw
- TJSii5SyKUvnWbgdBkGFPdm/gOy8EmK0GZZ4HwlXuLrpicuXKi/u+olowXjKvzNNZy/523eQm
- yBBFI/bFDDk3D99HWhiw+0C8F4EsRp/l0ZXGQ44aAEfmAixgl6yYVQo7tTfNl4RljYppV6UZK
- gvMKj32
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="ihl7lqqteeb5fsfs"
+Content-Disposition: inline
+In-Reply-To: <20180801001942.GC45452@genre.crustytoothpaste.net>
+X-Orig-IP: 209.85.220.197
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=6 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1806210000 definitions=main-1808010003
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.07.2018 um 23:06 schrieb Junio C Hamano:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Tue, Jul 31, 2018 at 01:23:04PM -0400, Jeff King wrote:
->> ...
->> So here it is fixed, and with a commit message. I'm not happy to omit a
->> regression test, but I actually couldn't come up with a minimal one that
->> tickled the problem, because we're playing around with heuristics.
-How about something like this? (squashable)
 
----
- t/t6029-merge-subtree.sh | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+--ihl7lqqteeb5fsfs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t6029-merge-subtree.sh b/t/t6029-merge-subtree.sh
-index 3e692454a7..474a850de6 100755
---- a/t/t6029-merge-subtree.sh
-+++ b/t/t6029-merge-subtree.sh
-@@ -29,6 +29,34 @@ test_expect_success 'subtree available and works like recursive' '
- 
- '
- 
-+test_expect_success 'setup branch sub' '
-+	git checkout --orphan sub &&
-+	git rm -rf . &&
-+	test_commit foo
-+'
-+
-+test_expect_success 'setup branch main' '
-+	git checkout -b main master &&
-+	git merge -s ours --no-commit --allow-unrelated-histories sub &&
-+	git read-tree --prefix=dir/ -u sub &&
-+	git commit -m "initial merge of sub into main" &&
-+	test_path_is_file dir/foo.t &&
-+	test_path_is_file hello
-+'
-+
-+test_expect_success 'update branch sub' '
-+	git checkout sub &&
-+	test_commit bar
-+'
-+
-+test_expect_success 'update branch main' '
-+	git checkout main &&
-+	git merge -s subtree sub -m "second merge of sub into main" &&
-+	test_path_is_file dir/bar.t &&
-+	test_path_is_file dir/foo.t &&
-+	test_path_is_file hello
-+'
-+
- test_expect_success 'setup' '
- 	mkdir git-gui &&
- 	cd git-gui &&
--- 
-2.18.0
+On Wed, Aug 01, 2018 at 12:19:42AM +0000, brian m. carlson wrote:
+> On Tue, Jul 31, 2018 at 10:05:22PM +0200, Vojtech Myslivec wrote:
+> > Hello,
+> >=20
+> > me and my colleague are struggling with automation of verifying git
+> > repositories and we have encountered that git verify-commit and
+> > verify-tag accepts untrusted signatures and exit successfully.
+>=20
+> I don't have strong feelings on your change one way or the other, but
+> for automation it may be useful to use the --raw flag, which gives you
+> the raw gpg output and much greater control.  For example, you can
+> require that a subkey is or is not used or require certain algorithms.
+>=20
+> I will say that most signatures are untrusted in my experience, so
+> unless people are using TOFU mode or making local signatures, git will
+> exit nonzero for most signatures.  I think the current status is to exit
+> on a good signature, even if it isn't necessarily a valid signature.
+>=20
+> I'm interested to hear others' thoughts on this.
+
+I'd find it odd that we deviate from the gpg behavior, that returns 0
+when verifyng an untrusted signatures. Tooling around gpg is generally
+difficult for this reason, but using the raw output should be enough to
+discard signatures with untrusted keys.
+
+Another alternative is to use a keyring with trusted keys *only* and
+disable fetching keys from hkp servers. This way signature verification
+should fail.
+
+Thanks,
+-Santiago.
+
+> --=20
+> brian m. carlson: Houston, Texas, US
+> OpenPGP: https://keybase.io/bk2204
+
+
+
+--ihl7lqqteeb5fsfs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAltg/goACgkQRo8SLOgW
+IpUMoxAAzeP0i+RrJ9v9Ax6gBMwrJ44KU6ZEhR6erivlnLBeDWMACK8sXYHkA1Ee
+DG/wJv06iUsRh0+72+TpI8Y52gjIWlMGhG4k4tWHpqSh/Yf8qCX4I9oGys+hbBjF
+a5kBn6NZwnExu6XwQOm8bU64fH1WR8QCPjLGXJnYu2ZAkH2UypO+Vnl5XKZLsp76
+vsMKLa7QBuF/zFAi+aazqk3j6N38sU4Qf+BuetNyolnSdKvDXciZhZee0U1AllK5
+jX3ajJzhZ3mfiHsywXCsWXSnhOFpfkrBfxiCYi60n50bxdCwBK7oziomwWq9UlBL
+bqEJimDQmZ7L6bkFw1qDmkiE6EZhqw2WS7C46+MPBFJn2IyM2RdDO/N/hfHfAzjS
+erdmkdrN0NoLzUGtlmWDdPqOe07mbnDJxWFnFAW35EClPI/xaEhXwg47qttj8vaV
+CjHRqlUEIXXbVg6OoxGQKqNoH9MS7mo1Ag/EjoyzOyAhvuEy9yJuPe6q6NmbnwXW
+choguwRuWZrVv0lsx0BuuKca1/LfyD35TVOrmiCe2D60JteXR5iuZ9b0qVj65uRM
+sB4aWU7nykPqv2X3DYkCojttgrdYtzH8yiSS9JRw0Z/YKaNqFCBmx1wZLVR4/bCX
+o66txLMKfLUTJ8Z/Xp/nFA0zC0Tpun4JC9Jk6gniKwN+Bs2phLU=
+=cu+h
+-----END PGP SIGNATURE-----
+
+--ihl7lqqteeb5fsfs--
