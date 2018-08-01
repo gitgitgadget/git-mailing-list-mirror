@@ -2,167 +2,237 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B7111F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 09:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F4F51F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 10:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388792AbeHALNs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 07:13:48 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:7494 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388742AbeHALNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 07:13:48 -0400
-Received: from [192.168.2.240] ([92.22.30.174])
-        by smtp.talktalk.net with SMTP
-        id knR8ft6QepXFjknR9fWn14; Wed, 01 Aug 2018 10:28:56 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533115736;
-        bh=2JR9L6MMNgr9mYlx5AsWispSoBUJnnlMNlcT3tK48nI=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=f38hCcQvmYT9cUnBCwrzvePjSPEqR+zDm3UQgNEKOOvyCZxx7ds3AKDU4bFyQhpDb
-         RfHr7I1gY9exAGRqS1PHgW6aEUvH+b5M7kCWr63jFVZzD/2KZGMLqOu/mP+pivodkD
-         75YWTuDZXn15g4Yyi/ms712QaYdoG9hECqDiJ6MI=
-X-Originating-IP: [92.22.30.174]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
- a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=5rxgeBVgAAAA:8 a=evINK-nbAAAA:8 a=bMFpRRgnoOGxJF5SetUA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/2] sequencer: handle errors in read_author_ident()
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180731111532.9358-1-phillip.wood@talktalk.net>
- <20180731111532.9358-2-phillip.wood@talktalk.net>
- <CAPig+cT15a-QTTAjC61td4h_YhHz0WSa8iT_3XqUUc6LZHWC=A@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <04f5f533-c971-6adc-9bcd-229e24ab2752@talktalk.net>
-Date:   Wed, 1 Aug 2018 10:28:54 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1733174AbeHAMEP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 08:04:15 -0400
+Received: from mout.web.de ([212.227.17.12]:47621 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1733104AbeHAMEP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 08:04:15 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LlniO-1gJrzR3OgC-00ZRFE for
+ <git@vger.kernel.org>; Wed, 01 Aug 2018 12:19:09 +0200
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] remote: clear string_list after use in mv()
+Message-ID: <553f84f2-7d9d-9a92-d5ca-39bd862ff748@web.de>
+Date:   Wed, 1 Aug 2018 12:19:07 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cT15a-QTTAjC61td4h_YhHz0WSa8iT_3XqUUc6LZHWC=A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLtW6BIwoV9TvNA2rbyyQyaBTzJxV2W2Bp4rt46xcVhlNyKR5L/Asl2sPZXKDhS3q2OXHEfoFoobzefDkhC6ozOpVFTkmTSkO83aw3tUdF5KbOuNuaT2
- 1nF7gFkR4ycUwhdU3tJwKv7CBQXO8jLNTEexAy2wSXB8dYycaOKuNBRgPByMelS2DCH/PzrJgX9DxhA3hqUwrD7AjxjGlQF8ypUSLr7GeS3bC1YPY7zY8+F/
- UKRdqf6kNKIaygDOM7HtFpL0aafmdTpGKg9Ms6XRKjjvxTskv0gK5PA9FzZxY1UDemONQEhWAQX6jl2tj25sYg==
+X-Provags-ID: V03:K1:LaYDu4dyIxAzKLPytDa7I1iwW/MtLUrAGsfgPlKOxZtMIrWAKBZ
+ D/SZhBb0hO08i0aQ9+UmkDmIK1rR2+W5EtU1WIVNejATtgZA0P1uSXfvMhBHZMrqK9O8O3f
+ Tsx/lSA/jRH/2YR4tyGTq5JdDb34KdW0zfcqCmhpZSV6/fxGl8ngGKemvNeg0iNHFPFgAqQ
+ DDmHFA9zqEwWczy2JnrWA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sUn87S7dRh8=:U+csHYOR+6eBUVt0v4TnB5
+ SwIs3RGkOOZO7rdXYKOmjG2GwgN1Pl0rmu3V/Bul1vP++bXfOsm759udKPTE4Hle2cUEWlEKo
+ wrif7ryRFs2hf7y77fN+kRAQC+FQLxpExv/H0rCP8pqJL9ElvvrHxCce5jFmpRisn2fEaEzrw
+ 5SbQQ/SY3rMKz00fqwWPwNbZGaXQTv+DWLF2RFKT53s9Of61auxS/1YNUvMFoHA+tgp7rGFJ/
+ AYnl+8H8lTGisxBrwuYolLSaNPwtGUJPw+lAsbUbYeir49EqinbG8C84eXNG+C6xfx9JNnYjv
+ 8PwBteiHJoUyHUjwHJZvYx3k/QbqPWAPhtVVXkuGMPrXWRGh8HzHdkekD86o/FXwevZWK8X1Y
+ UHJ4h8IhdHQbyIPexUDtpIlLuhmV6MWtyTOj4hNGCBNk3kV56iqGZHBI1j451THQugZ1I7Fb+
+ ga0Bazkfboke2XcmDKQLp3PJR/XxluyFSgoX38BsUoIPrfgVNPXAdYv3x9ibQZTJ1NWAdfs8i
+ Ll6pJIrdnEbcB4QLMzY6IxKBPLTUaNnFDj0Tpb4dbXvL9rtmSp+dGMjR5q020I5IJ2JOM5cha
+ Qw7iF+tT8h1/ZHqmXkrDp3CfwbZYq/B9VSIPLIfnsjwTy6a8O7PFF9hIrxULX1ICB/z5HSThY
+ cr7BeJFlVxsMtlUHO1GtP6bfD970oldknTHitiyFN8aedFR+HtTJMOIjRm4MkmKtV19UsPS83
+ lF0f14p6lTVVsaXV3EQL+FThBdEvCyiuEo6ZhJ97KrdGsfpF41WxpzO5kqDxtQ4j4MukRutj2
+ jphwuxq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric
+Switch to the _DUP variant of string_list for remote_branches to allow
+string_list_clear() to release the allocated memory at the end, and
+actually call that function.  Free the util pointer as well; it is
+allocated in read_remote_branches().
 
-Thanks for taking a look at this
+NB: This string_list is empty until read_remote_branches() is called
+via for_each_ref(), so there is no need to clean it up when returning
+before that point.
 
-On 31/07/18 21:47, Eric Sunshine wrote:
-> On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->> The calling code treated NULL as a valid return value, so fix this by
->> returning and integer and passing in a parameter to receive the author.
-> 
-> It might be difficult for future readers (those who didn't follow the
-> discussion) to understand how/why NULL is not sufficient to signal an
-> error. Perhaps incorporating the explanation from your email[1] which
-> discussed that the author name, email, and/or date might change
-> unexpectedly would be sufficient. This excerpt from [1] might be a
-> good starting point:
-> 
->      ... the caller does not treat NULL as an error, so this will
->      change the date and potentially the author of the commit
->      ... [which] does corrupt the author data compared to its
->      expected value.
-> 
-> [1]: https://public-inbox.org/git/c80cf729-1bbe-10f5-6837-b074d371b91c@talktalk.net/
-> 
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->> diff --git a/sequencer.c b/sequencer.c
->> @@ -701,57 +701,58 @@ static char *get_author(const char *message)
->> -static const char *read_author_ident(struct strbuf *buf)
->> +static int read_author_ident(char **author)
-> 
-> So, the caller is now responsible for freeing the string placed in
-> 'author'. Okay.
-> 
->>   {
->> -       if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
->> -               return NULL;
->> +       if (strbuf_read_file(&buf, rebase_path_author_script(), 256) <= 0)
->> +               return -1;
-> 
-> I think you need to strbuf_release(&buf) in this error path since
-> strbuf_read_file() doesn't guarantee that the strbuf hasn't been
-> partially populated when it returns an error. (That is, this is
-> leaking.)
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+Patch generated with ---function-context for easier review -- that
+makes it look much bigger than it actually is, though.
 
-Good point, I'll fix it
+ builtin/remote.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
->>          /* dequote values and construct ident line in-place */
-> 
-> Ugh, this comment should have been adjusted in my series. A minor
-> matter, though, which can be tweaked later.
-> 
->>          /* validate date since fmt_ident() will die() on bad value */
->>          if (parse_date(val[2], &out)){
->> -               warning(_("invalid date format '%s' in '%s'"),
->> +               error(_("invalid date format '%s' in '%s'"),
->>                          val[2], rebase_path_author_script());
->>                  strbuf_release(&out);
->> -               return NULL;
->> +               strbuf_release(&buf);
->> +               return -1;
-> 
-> You were careful to print the error, which references a value from
-> 'buf', before destroying 'buf'. Good.
-> 
-> (A simplifying alternative would have been to not print the actual
-> value and instead say generally that "the date" was bad. Not a big
-> deal.)
-> 
->>          }
->> -       strbuf_swap(buf, &out);
->> -       strbuf_release(&out);
->> -       return buf->buf;
->> +       *author = strbuf_detach(&out, NULL);
-> 
-> And, 'author' is only assigned when 0 is returned, so the caller only
-> has to free(author) upon success. Fine.
-> 
->> +       strbuf_release(&buf);
->> +       return 0;
->>   }
->>
->>   static const char staged_changes_advice[] =
->> @@ -794,12 +795,14 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
->> -               struct strbuf msg = STRBUF_INIT, script = STRBUF_INIT;
->> -               const char *author = is_rebase_i(opts) ?
->> -                       read_author_ident(&script) : NULL;
->> +               struct strbuf msg = STRBUF_INIT;
->> +               char *author = NULL;
->>                  struct object_id root_commit, *cache_tree_oid;
->>                  int res = 0;
->>
->> +               if (is_rebase_i(opts) && read_author_ident(&author))
->> +                       return -1;
-> 
-> Logic looks correct, and it's nice to see that you went with 'return
-> -1' rather than die(), especially since the caller of run_git_commit()
-> is already able to handle -1.
-
-Yes, it reschedules the pick so the user has a chance to fix the 
-author-script and then run 'git rebase --continue'
-
-Best Wishes
-
-Phillip
-
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c74ee88690..07bd51f8eb 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -558,23 +558,23 @@ struct rename_info {
+ static int read_remote_branches(const char *refname,
+ 	const struct object_id *oid, int flags, void *cb_data)
+ {
+ 	struct rename_info *rename = cb_data;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct string_list_item *item;
+ 	int flag;
+ 	const char *symref;
+ 
+ 	strbuf_addf(&buf, "refs/remotes/%s/", rename->old_name);
+ 	if (starts_with(refname, buf.buf)) {
+-		item = string_list_append(rename->remote_branches, xstrdup(refname));
++		item = string_list_append(rename->remote_branches, refname);
+ 		symref = resolve_ref_unsafe(refname, RESOLVE_REF_READING,
+ 					    NULL, &flag);
+ 		if (symref && (flag & REF_ISSYMREF))
+ 			item->util = xstrdup(symref);
+ 		else
+ 			item->util = NULL;
+ 	}
+ 	strbuf_release(&buf);
+ 
+ 	return 0;
+ }
+@@ -607,133 +607,134 @@ static int migrate_file(struct remote *remote)
+ static int mv(int argc, const char **argv)
+ {
+ 	struct option options[] = {
+ 		OPT_END()
+ 	};
+ 	struct remote *oldremote, *newremote;
+ 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT,
+ 		old_remote_context = STRBUF_INIT;
+-	struct string_list remote_branches = STRING_LIST_INIT_NODUP;
++	struct string_list remote_branches = STRING_LIST_INIT_DUP;
+ 	struct rename_info rename;
+ 	int i, refspec_updated = 0;
+ 
+ 	if (argc != 3)
+ 		usage_with_options(builtin_remote_rename_usage, options);
+ 
+ 	rename.old_name = argv[1];
+ 	rename.new_name = argv[2];
+ 	rename.remote_branches = &remote_branches;
+ 
+ 	oldremote = remote_get(rename.old_name);
+ 	if (!remote_is_configured(oldremote, 1))
+ 		die(_("No such remote: %s"), rename.old_name);
+ 
+ 	if (!strcmp(rename.old_name, rename.new_name) && oldremote->origin != REMOTE_CONFIG)
+ 		return migrate_file(oldremote);
+ 
+ 	newremote = remote_get(rename.new_name);
+ 	if (remote_is_configured(newremote, 1))
+ 		die(_("remote %s already exists."), rename.new_name);
+ 
+ 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new_name);
+ 	if (!valid_fetch_refspec(buf.buf))
+ 		die(_("'%s' is not a valid remote name"), rename.new_name);
+ 
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s", rename.old_name);
+ 	strbuf_addf(&buf2, "remote.%s", rename.new_name);
+ 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
+ 		return error(_("Could not rename config section '%s' to '%s'"),
+ 				buf.buf, buf2.buf);
+ 
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
+ 	git_config_set_multivar(buf.buf, NULL, NULL, 1);
+ 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
+ 	for (i = 0; i < oldremote->fetch.raw_nr; i++) {
+ 		char *ptr;
+ 
+ 		strbuf_reset(&buf2);
+ 		strbuf_addstr(&buf2, oldremote->fetch.raw[i]);
+ 		ptr = strstr(buf2.buf, old_remote_context.buf);
+ 		if (ptr) {
+ 			refspec_updated = 1;
+ 			strbuf_splice(&buf2,
+ 				      ptr-buf2.buf + strlen(":refs/remotes/"),
+ 				      strlen(rename.old_name), rename.new_name,
+ 				      strlen(rename.new_name));
+ 		} else
+ 			warning(_("Not updating non-default fetch refspec\n"
+ 				  "\t%s\n"
+ 				  "\tPlease update the configuration manually if necessary."),
+ 				buf2.buf);
+ 
+ 		git_config_set_multivar(buf.buf, buf2.buf, "^$", 0);
+ 	}
+ 
+ 	read_branches();
+ 	for (i = 0; i < branch_list.nr; i++) {
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+ 		if (info->remote_name && !strcmp(info->remote_name, rename.old_name)) {
+ 			strbuf_reset(&buf);
+ 			strbuf_addf(&buf, "branch.%s.remote", item->string);
+ 			git_config_set(buf.buf, rename.new_name);
+ 		}
+ 	}
+ 
+ 	if (!refspec_updated)
+ 		return 0;
+ 
+ 	/*
+ 	 * First remove symrefs, then rename the rest, finally create
+ 	 * the new symrefs.
+ 	 */
+ 	for_each_ref(read_remote_branches, &rename);
+ 	for (i = 0; i < remote_branches.nr; i++) {
+ 		struct string_list_item *item = remote_branches.items + i;
+ 		int flag = 0;
+ 		struct object_id oid;
+ 
+ 		read_ref_full(item->string, RESOLVE_REF_READING, &oid, &flag);
+ 		if (!(flag & REF_ISSYMREF))
+ 			continue;
+ 		if (delete_ref(NULL, item->string, NULL, REF_NO_DEREF))
+ 			die(_("deleting '%s' failed"), item->string);
+ 	}
+ 	for (i = 0; i < remote_branches.nr; i++) {
+ 		struct string_list_item *item = remote_branches.items + i;
+ 
+ 		if (item->util)
+ 			continue;
+ 		strbuf_reset(&buf);
+ 		strbuf_addstr(&buf, item->string);
+ 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
+ 				rename.new_name, strlen(rename.new_name));
+ 		strbuf_reset(&buf2);
+ 		strbuf_addf(&buf2, "remote: renamed %s to %s",
+ 				item->string, buf.buf);
+ 		if (rename_ref(item->string, buf.buf, buf2.buf))
+ 			die(_("renaming '%s' failed"), item->string);
+ 	}
+ 	for (i = 0; i < remote_branches.nr; i++) {
+ 		struct string_list_item *item = remote_branches.items + i;
+ 
+ 		if (!item->util)
+ 			continue;
+ 		strbuf_reset(&buf);
+ 		strbuf_addstr(&buf, item->string);
+ 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
+ 				rename.new_name, strlen(rename.new_name));
+ 		strbuf_reset(&buf2);
+ 		strbuf_addstr(&buf2, item->util);
+ 		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old_name),
+ 				rename.new_name, strlen(rename.new_name));
+ 		strbuf_reset(&buf3);
+ 		strbuf_addf(&buf3, "remote: renamed %s to %s",
+ 				item->string, buf.buf);
+ 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
+ 			die(_("creating '%s' failed"), buf.buf);
+ 	}
++	string_list_clear(&remote_branches, 1);
+ 	return 0;
+ }
+ 
+-- 
+2.18.0
