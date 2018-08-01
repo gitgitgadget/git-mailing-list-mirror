@@ -3,145 +3,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 482AC1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A02D208E9
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:50:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389765AbeHAR2N (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 13:28:13 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40674 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389698AbeHAR2N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 13:28:13 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y9-v6so7582122wma.5
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:41:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uOord+kfHsh3G2k0acV0n6jUJxNppObvJZgTTMmJf1I=;
-        b=kdBQLgo0IXPciFSMxl3UqRXPAUDXfnJhddUw/FLUq0dE3abIFws8w/P0FfvQhCWIuY
-         OiyeqMs9kyVZ0KXy1UWdVYNvJsTN/payZsFxbc9gmNLIWZHoU4f3hEVPXraMEKQVF6DL
-         ZhJCdhM8Nr7vWQd5XM5PBKnbFQUhtqWa8nuKWqB5EDG5z7t1niLizY9AFm/3kO7+AmXa
-         rD0VXDA3pRDSrrxFkcMynY3GIVuRG17tgTOkmMCLxFCKexa5DUlFCaweaDtcwEaUV7ly
-         YCRcij5P+Cu8LmX8uyig5ExJiJIt7T4YjCXX2T6mWqMQBnlwzm/uCvJ9Rf3zHWAc3qNm
-         Mq7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uOord+kfHsh3G2k0acV0n6jUJxNppObvJZgTTMmJf1I=;
-        b=bNrl2PSzlpIIn4zfo/v56OUxLVjnCGRjyKcXXWMBXPfIah9eGQe+pB8ja7SGt8Tz7r
-         Q2eYiGP/iZ2GipbDobJqCXVucK1AdEjH3T8y0d37817jdroT3uveOGnpBJMAWLt7UVz1
-         U5yKPG2o+kheS0563lMFogtwTh2GXKsjHjm/ViSoiIhIyFHZkSRGwI/BgkuQqVaD1K22
-         aQYze3bIa2VvJKqwRKJ3z2zYMVubJI+OcaF2L09HvZGRm82XnSojHRO7MOmMWwNJSeOH
-         /9HDbfnO2dduDMtoy7KRHwCTBdTT1mnZ+2UmNupHmAY12OsVqTV3za4ERhVggBj8AwS+
-         OJuQ==
-X-Gm-Message-State: AOUpUlEdSgd05zcplYbaqS7t3W3GSRLffojoqrjgQY/6vHeANt9CJLco
-        WxKaQwZwTijqtnOAdFurN2PVNUD9
-X-Google-Smtp-Source: AAOMgpd0iCzRemmqgs6Mx+dtg+u06XEGuOL5hzTZ7f1C0rJmGChqff/iz6jTFVUyWe2Gt8h8/oZAJg==
-X-Received: by 2002:a1c:2dc8:: with SMTP id t191-v6mr3285205wmt.94.1533138114122;
-        Wed, 01 Aug 2018 08:41:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n7-v6sm18496025wrr.35.2018.08.01.08.41.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 01 Aug 2018 08:41:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
-References: <20180731173651.184716-1-hanwen@google.com>
-        <20180731173651.184716-3-hanwen@google.com>
-        <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
-Date:   Wed, 01 Aug 2018 08:41:52 -0700
-In-Reply-To: <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
-        (Eric Sunshine's message of "Tue, 31 Jul 2018 16:21:24 -0400")
-Message-ID: <xmqqeffi856n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2389733AbeHARhE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 13:37:04 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:26544 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389557AbeHARhD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 13:37:03 -0400
+Received: from [192.168.2.240] ([92.22.30.174])
+        by smtp.talktalk.net with SMTP
+        id ktOafIDWvdJAektOafP6th; Wed, 01 Aug 2018 16:50:41 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533138641;
+        bh=ttHAYuqpHoZWRampivR+rzemtTGHqHn4M19LSkhEkZw=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=abew/cNw8tTBzV+a3g/f7BitfbHjgnNTyaaJaF51ZmEf/YrthBmfLCA4K6wLo4sVJ
+         5+HAn+SgVi6yUbE+s8M5GopXoMxoRsfMj98nGEzCKnbxB5/xucF4T226ubIn9yg8T8
+         9DZ6HOSVWdMKsD3xsslepM63l4qozHaiy9eR3VKI=
+X-Originating-IP: [92.22.30.174]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
+ a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=5rxgeBVgAAAA:8 a=BCjA09oAAAAA:8 a=evINK-nbAAAA:8 a=2DLnnMrOBO9anznuW98A:9
+ a=clQxp3oRzjrkGuJY:21 a=WJUMhjpDC4c25wPA:21 a=QEXdDO2ut3YA:10
+ a=PwKx63F5tFurRwaNxrlG:22 a=jYKBPJSq9nmHKCndOPe9:22 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] sequencer: fix quoting in write_author_script
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+ <20180731111532.9358-1-phillip.wood@talktalk.net>
+ <20180731111532.9358-3-phillip.wood@talktalk.net>
+ <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <1f9a9062-445d-0c37-9b21-941d8fef659b@talktalk.net>
+Date:   Wed, 1 Aug 2018 16:50:40 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIynKZRWAixhtJNrn/JkePCHccvPEJntCU7UTYSjCZsLHjTVj8DyChgc7DEaPur4IMujv8Or1Jj/8LyOoAZ/2i7QudtdYeIzZOv8xPGctzpLn1e+NseM
+ w1ZzZo1Pf9tp3UQ99RpErXhAxM7DpSViTvuZG5ejIoJW1C2UJqtzOUUZWKeTBvNRXr4919MRW9yZJZdA5sixyPYECJxxKvQnnOrxcgFvSNTeumquIyRd+v6Z
+ 7nPavs9Vo2GQ+DDtCONBZn7tYcAtkLKSh4HgbkguE3DvMtlro8LZYCr+0S2MnoKGxa48w+89IKqkKV9AvWjQvA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> On Tue, Jul 31, 2018 at 1:37 PM Han-Wen Nienhuys <hanwen@google.com> wrote:
->> Highlight keywords in remote sideband output.
->
-> Prefix with the module you're touching, don't capitalize, and drop the
-> period. Perhaps:
->
->     sideband: highlight keywords in remote sideband output
-
-Yup (I locally did something similar when queued it).
-
->> The highlighting is done on the client-side. Supported keywords are
->> "error", "warning", "hint" and "success".
->>
->> The colorization is controlled with the config setting "color.remote".
->
-> What's the motivation for this change? The commit message should say
-> something about that and give an explanation of why this is done
-> client-side rather than server-side.
-
-Good suggestion.
-
->
->> Co-authored-by: Duy Nguyen <pclouds@gmail.com>
->
-> Helped-by: is more typical.
->
->> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+On 31/07/18 22:39, Eric Sunshine wrote:
+> On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>> Single quotes should be escaped as \' not \\'. Note that this only
+>> affects authors that contain a single quote and then only external
+>> scripts that read the author script and users whose git is upgraded from
+>> the shell version of rebase -i while rebase was stopped. This is because
+>> the parsing in read_env_script() expected the broken version and for
+>> some reason sq_dequote() called by read_author_ident() seems to handle
+>> the broken quoting correctly.
+> 
+> Is the:
+> 
+>      ...for some reason sq_dequote() called by read_author_ident()
+>      seems to handle the broken quoting correctly.
+> 
+> bit outdated? We know now from patch 2/4 of my series[1] that
+> read_author_ident() wasn't handling it correctly at all. It was merely
+> ignoring the return value from sq_dequote() and using whatever broken
+> value came back from it.
+> 
+> [1]: https://public-inbox.org/git/20180731073331.40007-3-sunshine@sunshineco.com/
+> 
+>> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 >> ---
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> @@ -1229,6 +1229,15 @@ color.push::
->> +color.remote::
->> +       A boolean to enable/disable colored remote output. If unset,
->> +       then the value of `color.ui` is used (`auto` by default).
->
-> If this is "boolean", what does "auto" mean? Perhaps update the
-> description to better match other color-related options.
+>> diff --git a/sequencer.c b/sequencer.c
+>> @@ -664,14 +664,25 @@ static int write_author_script(const char *message)
+>>   static int read_env_script(struct argv_array *env)
+>>   {
+>>          if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+>>                  return -1;
+> 
+> This is not a problem introduced by this patch, but since
+> strbuf_read_file() doesn't guarantee that memory hasn't been allocated
+> when it returns an error, this is leaking.
+> 
+>> +       /*
+>> +        * write_author_script() used to fail to terminate the GIT_AUTHOR_DATE
+>> +        * line with a "'" and also escaped "'" incorrectly as "'\\\\''" rather
+>> +        * than "'\\''". We check for the terminating "'" on the last line to
+>> +        * see how "'" has been escaped in case git was upgraded while rebase
+>> +        * was stopped.
+>> +        */
+>> +       sq_bug = script.len && script.buf[script.len - 2] != '\'';
+> 
+> I think you need to be checking 'script.len > 1', not just
+> 'script.len', otherwise you might access memory outside the allocated
+> buffer.
+> 
+> This is a very "delicate" check, assuming that a hand-edited file
+> won't end with, say, an extra newline. I wonder if this level of
+> backward-compatibility is overkill for such an unlikely case.
 
-Existing `color.branch` is already loose in the same way, but others
-like color.{diff,grep,interactive} read better.  No, past mistakes
-by others is not a good excuse to make things worse, but I'd say it
-also is OK to clean this up, together with `color.branch`, after this
-change on top.
+I think I'll get rid of the check and instead use a version number 
+written to .git/rebase-merge/interactive to indicate if we need to fix 
+the quoting (if there's no number then it needs fixing). We can 
+increment the version number in the future if we ever need to implement 
+other fallbacks to handle the case where git got upgraded while rebase 
+was stopped. I'll send a patch tomorrow
 
->> +               if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
->
-> So, the strncasecmp() is checking if one of the recognized keywords is
-> at the 'src' position, and the !isalnum() ensures that you won't pick
-> up something of which the keyword is merely a prefix. For instance,
-> you won't mistakenly highlight "successful". It also works correctly
-> when 'len' happens to reference the end-of-string NUL. Okay.
+Best Wishes
 
-Hmm, do we actually say things like "Error: blah"?  I am not sure if
-I like this strncasecmp all that much.
+Phillip
 
->> +                       strbuf_addstr(dest, p->color);
->> +                       strbuf_add(dest, src, len);
->> +                       strbuf_addstr(dest, GIT_COLOR_RESET);
->> +                       n -= len;
->> +                       src += len;
->> +                       break;
->> +               }
->
-> So, despite the explanation in the commit message, this function isn't
-> _generally_ highlighting keywords in the sideband. Instead, it is
-> highlighting a keyword only if it finds it at the start of string
-> (ignoring whitespace). Perhaps the commit message could be more clear
-> about that.
+> 
+>>          for (p = script.buf; *p; p++)
+>> -               if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+>> +               if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
+>> +                       strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
+>> +               else if (skip_prefix(p, "'\\''", &p2))
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> @@ -75,6 +75,22 @@ test_expect_success 'rebase --keep-empty' '
+>> +test_expect_success 'rebase -i writes correct author-script' '
+>> +       test_when_finished "test_might_fail git rebase --abort" &&
+>> +       git checkout -b author-with-sq master &&
+>> +       GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
+>> +       set_fake_editor &&
+>> +       FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
+> 
+> Hmph, -k doesn't seem to be documented in git-rebase.txt. Is it needed here?
+> 
 
-Sounds good.
-
-I didn't comment on other parts of your review posed as questions
-(that require some digging and thinking), but I think they are all
-worthwhile thing to think about.
-
-Thanks.
