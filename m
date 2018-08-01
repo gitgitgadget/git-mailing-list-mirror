@@ -2,176 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31C741F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 10:24:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B56E11F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 14:57:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387874AbeHAMJY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 08:09:24 -0400
-Received: from smtp-out-6.talktalk.net ([62.24.135.70]:48566 "EHLO
-        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387723AbeHAMJX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 08:09:23 -0400
-Received: from [192.168.2.240] ([92.22.30.174])
-        by smtp.talktalk.net with SMTP
-        id koIhftBFqpXFjkoIhfWoVm; Wed, 01 Aug 2018 11:24:16 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533119056;
-        bh=PuVVdDi3AF5HEif3PtLb4Bic1G24bSHO69bwr3krLwA=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=BRVvNGZVdu0ztwOwwB0rP24CtcBXUMN74XlRpZCzr7w23LXQXKKrcpbP5peN9SRdR
-         XkeD4u8kCl5yeHvei2kBaMUuwOxIkfcbQktvCxEL/vsqhff/9LN1wTdLpI8XtPGc0W
-         y8muikAUuNiDeyuE26VHO9KFnfQ1I5wT6AMmyMu8=
-X-Originating-IP: [92.22.30.174]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
- a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=A1X0JdhQAAAA:8 a=5rxgeBVgAAAA:8 a=BCjA09oAAAAA:8 a=evINK-nbAAAA:8
- a=Z3erzKvndqz3Wo2g1dsA:9 a=ey6Lr-eOs8tbhO5-:21 a=3yhO4u0h5hjlo2bF:21
- a=QEXdDO2ut3YA:10 a=Df3jFdWbhGDLdZNm0fyq:22 a=PwKx63F5tFurRwaNxrlG:22
- a=jYKBPJSq9nmHKCndOPe9:22 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] sequencer: fix quoting in write_author_script
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180731111532.9358-1-phillip.wood@talktalk.net>
- <20180731111532.9358-3-phillip.wood@talktalk.net>
- <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <22f98273-f7f4-adf3-1a8b-b0e4ec6029b3@talktalk.net>
-Date:   Wed, 1 Aug 2018 11:24:14 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S2389616AbeHAQn2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 12:43:28 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:38792 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389547AbeHAQn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 12:43:28 -0400
+Received: by mail-lj1-f196.google.com with SMTP id p6-v6so17126531ljc.5
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 07:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KVRU18hsk34AH5aa70sxJGpzFa3R0hXX5EBzNDlg/P4=;
+        b=K5iCEh8K2u3RU7OdV7icybszS7gdeco1IUcji+bMEz+Haj2MONNKZF0GjKAUMXhudE
+         1UOKKPo2DWijnGunfKTMh18D+qoKNNg95GAfvNyo/JMebGhW21/u8ARcK39w4Y6+0ACA
+         PmNqDngBBVnwf7ZpF67Ty2Ci28Fbl5YmksdEt6kzRaLmMNbEjMCR/Xd07w7KCjPXhPDD
+         McEbbdpPd2NXpvifAZsNakRMdlza133QFqfb3i13kPpYu8FJeFlickeSIyyH9SJCGVwE
+         L84tQEwYw6gTuGe4eJQslKsxBl/6ZkWGCUAvEYuec1QBXhH9jb+Z19yCinxzztItDrz2
+         m2fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KVRU18hsk34AH5aa70sxJGpzFa3R0hXX5EBzNDlg/P4=;
+        b=ZRuE/fJQ40Jdw+CVcYHxncpIy22DzGrVH0gJy96S1iOnH31Z2AxA4fvxn17c/WawL3
+         YOji5C9C99S3O/04eVuZANDgHr/2lfzQl1vH19Ci+VSM46m0g5AzisPmGoFJQRHIBG86
+         ImGYIFYa5bX1Yx2tcXQmIMh5oaZTmtancbtpzDH+nfUEyn75kQTOxxEz7iiQsuv3L/at
+         j2TRM/NVpw7PdILSXAJ0OGor0Hyl41NR1sudERaL1wXsgAjwgcZ8spKn9oo++GK6eIBY
+         5a+3K6tyCyRDH4Q4+MeaBrSlZSCc3KWL7gb/mXC7Jl50WTLyGeRG/sW0BIdR8ydG6jCJ
+         kr1Q==
+X-Gm-Message-State: AOUpUlHBZLtvOjeyJAU2sDFx1wEsta0uTnfDLkzrA8AC2WrLGQxS9OWk
+        SCtAOowrvcI0CwlW6KmrrFhCicuugxR2NEqe1+Q=
+X-Google-Smtp-Source: AAOMgpdlR7ip/v8Mu0H+DtKLMl3zRL98ZJphavEbrSOprIOB6AXsdqXgPmEbmXfgNwjz/aIb7T1xwj9MywpxGNdrulE=
+X-Received: by 2002:a2e:9448:: with SMTP id o8-v6mr658049ljh.34.1533135440202;
+ Wed, 01 Aug 2018 07:57:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKeoEqkZPluWCy73I+pFnCSzlzgx9QSF1ygvfkqmx38jPF2uxLg/0HGN8k5cdrXeGDxzLs4/1w6YKKPrsGNuz1evb1KUfWuTtbk5/YIP9yJ4YDAfWcpp
- IICVjed+bYHITupJOWWxLpNgtTgxpYNuNb3CHEEvBrjYoSWq6+eR7VJ8M5Dc0y5VKuaTWuqzIQZvZ2bt6sNlTfFQJVFbWixMBLdM073+y/jvopTv5oOVWNoA
- KOlsjuUw19PZLdCXIcoiq7wY8mNdW9NjS0aUwi97b+sIWgeOBHxflX8Dm4hT7pZbU4uLsOKtZA6xSjH7Q9bsWQ==
+Received: by 2002:a2e:88d7:0:0:0:0:0 with HTTP; Wed, 1 Aug 2018 07:57:19 -0700 (PDT)
+In-Reply-To: <CAE5ih7-pLAW8xrY_F2z6gDxaMuA4w+nuUQHeLvGdSyn0GXebWA@mail.gmail.com>
+References: <xmqq36w6rlh7.fsf@gitster-ct.c.googlers.com> <20180727112222.19061-1-chenbin.sh@gmail.com>
+ <20180731084638.18793-1-szeder.dev@gmail.com> <CAE5ih7_jh55mLVBhiu12gmc0j3mGkm4s0VU2Stx5iGf1tK6yzA@mail.gmail.com>
+ <xmqqh8kfeae3.fsf@gitster-ct.c.googlers.com> <CAE5ih7-pLAW8xrY_F2z6gDxaMuA4w+nuUQHeLvGdSyn0GXebWA@mail.gmail.com>
+From:   chen bin <chenbin.sh@gmail.com>
+Date:   Thu, 2 Aug 2018 00:57:19 +1000
+Message-ID: <CAAE-R+8UA5S3Y4iWw=njtVVn8cu+7s8E7L9fS6UY=Q_a5-JwwQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] Add the `p4-pre-submit` hook
+To:     Luke Diamand <luke@diamand.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric
+I updated the patch. But for some reason the test keep failing at this line=
+,
+`test_must_fail git p4 submit --dry-run >errs 2>&1 &&`.
 
-On 31/07/18 22:39, Eric Sunshine wrote:
-> On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->> Single quotes should be escaped as \' not \\'. Note that this only
->> affects authors that contain a single quote and then only external
->> scripts that read the author script and users whose git is upgraded from
->> the shell version of rebase -i while rebase was stopped. This is because
->> the parsing in read_env_script() expected the broken version and for
->> some reason sq_dequote() called by read_author_ident() seems to handle
->> the broken quoting correctly.
-> 
-> Is the:
-> 
->      ...for some reason sq_dequote() called by read_author_ident()
->      seems to handle the broken quoting correctly.
-> 
-> bit outdated? We know now from patch 2/4 of my series[1] that
-> read_author_ident() wasn't handling it correctly at all. It was merely
-> ignoring the return value from sq_dequote() and using whatever broken
-> value came back from it.
+If I change this line to `test_must_fail git-p4 submit --dry-run >errs
+2>&1 &&` the test will pass.
 
-Yes you're right, when I tested it before I must of had GIT_AUTHOR_NAME 
-set to the name with the "'" in it when I ran the rebase because it 
-appeared to work, but actually sj_dequote() was returning NULL and so 
-commit_tree() just picked up the default author. I've just changed the 
-test you added to
+Could you help me to resolve this issue? I'm really confused. I've
+already added latest `p4d` and `p4` to $PATH.
 
-test_expect_success 'valid author header after --root swap' '
-	rebase_setup_and_clean author-header no-conflict-branch &&
-	set_fake_editor &&
-	git commit --amend --author="Au ${SQ}thor <author@example.com>" 
---no-edit &&
-	git cat-file commit HEAD | grep ^author >expected &&
-	FAKE_LINES="5 1" git rebase -i --root &&
-	git cat-file commit HEAD^ | grep ^author >actual &&
-	test_cmp expected actual
-'
+The commit is at
+https://github.com/redguardtoo/git/commit/b88c38b9ce6cfb1c1fefef15527adfa92=
+d78daf2
 
-and it fails without the fixes to write_author_script().
 
-> 
-> [1]: https://public-inbox.org/git/20180731073331.40007-3-sunshine@sunshineco.com/
-> 
->> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->> diff --git a/sequencer.c b/sequencer.c
->> @@ -664,14 +664,25 @@ static int write_author_script(const char *message)
->>   static int read_env_script(struct argv_array *env)
->>   {
->>          if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
->>                  return -1;
-> 
-> This is not a problem introduced by this patch, but since
-> strbuf_read_file() doesn't guarantee that memory hasn't been allocated
-> when it returns an error, this is leaking.
+On Wed, Aug 1, 2018 at 5:54 AM, Luke Diamand <luke@diamand.org> wrote:
+> On 31 July 2018 at 16:40, Junio C Hamano <gitster@pobox.com> wrote:
+>> Luke Diamand <luke@diamand.org> writes:
+>>
+>>> I think there is an error in the test harness.
+>>>
+>>> On 31 July 2018 at 10:46, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrot=
+e:
+>>>>> +             test_must_fail git-p4 submit --dry-run >errs 2>&1 &&>
+>>>>> +             ! grep "Would apply" err
+>>>
+>>> It writes to the file "errs" but then looks for the message in "err".
+>>>
+>>> Luke
+>>
+>> Sigh. Thanks for spotting, both of you.
+>>
+>> Here is what I'd locally squash in.  If there is anything else, I'd
+>> rather see a refreshed final one sent by the author.
+>>
+>> Thanks.
+>>
+>>  t/t9800-git-p4-basic.sh | 8 ++++----
+>>  1 file changed, 4 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+>> index 2b7baa95d2..729cd25770 100755
+>> --- a/t/t9800-git-p4-basic.sh
+>> +++ b/t/t9800-git-p4-basic.sh
+>> @@ -274,19 +274,19 @@ test_expect_success 'run hook p4-pre-submit before=
+ submit' '
+>>                 git add hello.txt &&
+>>                 git commit -m "add hello.txt" &&
+>>                 git config git-p4.skipSubmitEdit true &&
+>> -               git-p4 submit --dry-run >out &&
+>> +               git p4 submit --dry-run >out &&
+>>                 grep "Would apply" out &&
+>>                 mkdir -p .git/hooks &&
+>>                 write_script .git/hooks/p4-pre-submit <<-\EOF &&
+>>                 exit 0
+>>                 EOF
+>> -               git-p4 submit --dry-run >out &&
+>> +               git p4 submit --dry-run >out &&
+>>                 grep "Would apply" out &&
+>>                 write_script .git/hooks/p4-pre-submit <<-\EOF &&
+>>                 exit 1
+>>                 EOF
+>> -               test_must_fail git-p4 submit --dry-run >errs 2>&1 &&
+>> -               ! grep "Would apply" err
+>> +               test_must_fail git p4 submit --dry-run >errs 2>&1 &&
+>> +               ! grep "Would apply" errs
+>>         )
+>>  '
+>
+> That set of deltas works for me.
+>
+> Sorry, I should have run the tests myself earlier and I would have
+> picked up on this.
 
-I can fix that
 
->> +       /*
->> +        * write_author_script() used to fail to terminate the GIT_AUTHOR_DATE
->> +        * line with a "'" and also escaped "'" incorrectly as "'\\\\''" rather
->> +        * than "'\\''". We check for the terminating "'" on the last line to
->> +        * see how "'" has been escaped in case git was upgraded while rebase
->> +        * was stopped.
->> +        */
->> +       sq_bug = script.len && script.buf[script.len - 2] != '\'';
-> 
-> I think you need to be checking 'script.len > 1', not just
-> 'script.len', otherwise you might access memory outside the allocated
-> buffer.
 
-Good catch, Johannes's original was checking script.buf[script.len - 1] 
-which I corrected but forget to adjust the previous check.
-
-> This is a very "delicate" check, assuming that a hand-edited file
-> won't end with, say, an extra newline. I wonder if this level of
-> backward-compatibility is overkill for such an unlikely case.
-
-Yes, it is a bit fragile. Originally the patch just unquoted the correct 
-and incorrect quoting but Johannes was worried that might lead to errors 
-and suggested this check. The check is aimed at people whose git gets 
-upgraded while rebase is stopped for a conflict resolution or edit and 
-so have the bad quoting in the author-script from the old version of git 
-which started the rebase. Authors with "'" in the name are uncommon but 
-not unheard of, I think when I checked there were about half a dozen in 
-git's history. I'm not sure what to do for the best.
-
->>          for (p = script.buf; *p; p++)
->> -               if (skip_prefix(p, "'\\\\''", (const char **)&p2))
->> +               if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
->> +                       strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
->> +               else if (skip_prefix(p, "'\\''", &p2))
->> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
->> @@ -75,6 +75,22 @@ test_expect_success 'rebase --keep-empty' '
->> +test_expect_success 'rebase -i writes correct author-script' '
->> +       test_when_finished "test_might_fail git rebase --abort" &&
->> +       git checkout -b author-with-sq master &&
->> +       GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
->> +       set_fake_editor &&
->> +       FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
-> 
-> Hmph, -k doesn't seem to be documented in git-rebase.txt. Is it needed here?
-
--k is short for --keep-empty which is needed as the test creates an 
-empty commit to check the author (I think that is to avoid changing the 
-tree  - Johannes wrote that bit).
-
-Thanks for your comments, I'll do a reroll
-
-Phillip
+--=20
+help me, help you.
