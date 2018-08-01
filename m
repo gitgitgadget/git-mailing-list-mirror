@@ -2,75 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5171D1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:21:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED5A1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:22:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389694AbeHARH4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 13:07:56 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:37904 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389627AbeHARH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 13:07:56 -0400
-Received: by mail-it0-f43.google.com with SMTP id v71-v6so9825760itb.3
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:21:44 -0700 (PDT)
+        id S2389758AbeHARIZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 13:08:25 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45954 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389627AbeHARIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 13:08:24 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f12-v6so10601829wrv.12
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:22:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=B/3OAr3Tzyl6jQasqEXX5/Sn2+WmjkigcrsrDMdvSAI=;
-        b=bKMYRBtLwrN7XtqtS+0P6w9UKHkrHtlX8ET815jfkJtjx1yajYKCphhZLZDUjT3u0M
-         /2t7fvDI2y1mWyzs1ugAXNalG8RnPCCqiVTcANuXLPuuVPWyZ39CiQ4DQzEJoGvwn7Et
-         LIn8YevO1CFVPcsL6UYSgdWHq0R6HATZFNzMMNGaCbtIIJ826ycjU/mfa7z7E8J5XihU
-         kuZkg4DDAaxqHVulsQDKoWl4TfZinTDqxTcNnFXdhzQtaURWZR1Zovs+KajlfHMDHvzJ
-         z5w/9ZdCDLqiY0F2cQaTViPidcPWuplRH3uZ1n5/gv+gotHz1++FhKvgrZPiZTSFN6yB
-         GFWQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Y1HyyUqOgY7ZOImugXQFa6qXilcSyxLmzJoo9ODD2MY=;
+        b=nTL8YCKUY6VDHJ2A8UtlWPkKbfOEGpR/PNX1JrRYdI6F3lDsubSXaSIkQYQsXVZaKP
+         mwHmXVh7XtZUWjjWs7SnsdnDwOm1GYne9B5P9Bh4PxwsYhO1N9+QB6zjqEB7guq68WDx
+         +kcgTY/f8EdwWGNLU4Qd/krKSHVDyfpUds80S8JklP+7CRAFJkcEhxtyggpwSVXfokO/
+         tvHegKJ40004/u2s5Z9XUGpDzFzSXTMQ2/wBse7WBuWWxmQcUmTU55TIKUT+B1EQPIDK
+         ezn2WdRZtX4AmSebRywLzGAOo7EYwFgZqbaEi0bAygqbIAKGDO2CcLcceUBiBPluSzuR
+         ygKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B/3OAr3Tzyl6jQasqEXX5/Sn2+WmjkigcrsrDMdvSAI=;
-        b=QbziapB8QDUkXIYosnUSNie7gGE2zXqyWz9s161vs6o7xTrbqO50a4zMTf5hMZugat
-         Mmhr5J3JDf/dXhAAYaSbj7RCyO0H5o1tzqI1tVpwEUahjmxqXMxzvTTEvtWgpG1J/lbh
-         igMK8qAuUcj/k0NEUKdzHBTIWv8883rEEsKWtLJkSnI2OUdgfgeiCO2Jfz14ALcxy1RP
-         tCsGk6T1HBNp3YJqqddaT82fe37t1KgwmMpjZHmLN9cFPEgoMtkGd50Ilf8gxoZwk8q1
-         tXzLq+V1EywqumZ5Er0y1dszUCaIpDhWJYKYfCXzOvYZuZSHy0+6FD20R0Nc9/Aiw7+X
-         ZjVA==
-X-Gm-Message-State: AOUpUlGh+gXX0DhATf3Vqt0IG/PMHmEqgWjgjM1oeik9IMEmzI7g9WRh
-        vg/vr4DwVAr1slkBOLTuB3dI2+sNQ0RSif3RwUE=
-X-Google-Smtp-Source: AAOMgpcbjTz3nkClJ/oPnRPIDl5i2e4yImEv5nOTN87WEQmRLoblWkorjOcWhdA40GIEhYrCXI9cV39mOrFJYMKA270=
-X-Received: by 2002:a02:59c9:: with SMTP id v70-v6mr23468606jad.94.1533136904344;
- Wed, 01 Aug 2018 08:21:44 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Y1HyyUqOgY7ZOImugXQFa6qXilcSyxLmzJoo9ODD2MY=;
+        b=Xl6BjWVXPhEtPxVsM4elXcDf68mFXWUtUx09DHsDGyWxm+AX5beiPDzzA7maubE3yM
+         NS8bdtd/qy6MkEhbUM7MSZHDh6tMs+UyRA7RwnrPQhU4tfnFA506VVrj7nKGwXKxa8Zo
+         G14gNOB6vMLP2yw7Ag3TSMz8TIVsCgPwsiPspdPT484SRlLJZDd0TGPbC5OWnHPeQLII
+         rqMS2XsQYib4xcWwMKhegImJbyRBBnNt/rIxnS0eCF0J3/wsnNfIpc+zztyNc2B0S0Tc
+         QYEBMkZmyNEacdsEBjmWk+WQv9FM4PED0DrpK262KEf1UBkTV8Sm8PrSx9OSoFCkaW6A
+         sCYA==
+X-Gm-Message-State: AOUpUlGelIyAflnbgaSccaQEk0f9KU+flGgSeOm/10xi6FNXjzHPskP/
+        vZ5sgN3r981IaRcrXeSFEY5DozJy
+X-Google-Smtp-Source: AAOMgpcXPO5xu3eV4B66SmXa1iZ4buZFxf22i7nInr01S4EG0Qqbn3dNXGqagc/UEIobmLJqBSH6dg==
+X-Received: by 2002:adf:9546:: with SMTP id 64-v6mr23848508wrs.257.1533136931604;
+        Wed, 01 Aug 2018 08:22:11 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id u7-v6sm7545555wmd.46.2018.08.01.08.22.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 01 Aug 2018 08:22:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] sequencer: fix quoting in write_author_script
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+        <20180731111532.9358-1-phillip.wood@talktalk.net>
+        <20180731111532.9358-3-phillip.wood@talktalk.net>
+        <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
+        <22f98273-f7f4-adf3-1a8b-b0e4ec6029b3@talktalk.net>
+Date:   Wed, 01 Aug 2018 08:22:10 -0700
+In-Reply-To: <22f98273-f7f4-adf3-1a8b-b0e4ec6029b3@talktalk.net> (Phillip
+        Wood's message of "Wed, 1 Aug 2018 11:24:14 +0100")
+Message-ID: <xmqqin4u863h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180729092759.GA14484@sigill.intra.peff.net> <20180730152756.15012-1-pclouds@gmail.com>
- <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
-In-Reply-To: <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Aug 2018 17:21:17 +0200
-Message-ID: <CACsJy8C4znRAiQMUt_t85EUCad3HJUeeHd0z2g4uKZDfjWs1OA@mail.gmail.com>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 8:44 PM Elijah Newren <newren@gmail.com> wrote:
-> Is it worth attempting to also warn about paths that only differ in
-> UTF-normalization on relevant MacOS systems?
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-Down this thread, Jeff Hostetler drew a scarier picture of "case"
-handling on MacOS and Windows. I think we should start with support
-things like utf normalization... in core.ignore first before doing the
-warning stuff. At that point we know well how to detect and warn, or
-any other pitfalls.
--- 
-Duy
+>> Is the:
+>>
+>>      ...for some reason sq_dequote() called by read_author_ident()
+>>      seems to handle the broken quoting correctly.
+>>
+>> bit outdated? We know now from patch 2/4 of my series[1] that
+>> read_author_ident() wasn't handling it correctly at all. It was merely
+>> ignoring the return value from sq_dequote() and using whatever broken
+>> value came back from it.
+>
+> Yes you're right, when I tested it...
+>
+> Thanks for your comments, I'll do a reroll
+
+Thanks, both.  Sounds like we are quickly converging to the
+resolution ;-)
