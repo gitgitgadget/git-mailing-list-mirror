@@ -7,110 +7,80 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4906A1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 15:10:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFAE51F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 15:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389585AbeHAQ5D (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 12:57:03 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:56062 "EHLO
+        id S2389779AbeHARDf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 13:03:35 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:52407 "EHLO
         mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389462AbeHAQ5C (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 12:57:02 -0400
-Received: by mail-it0-f66.google.com with SMTP id p7-v6so10077795itf.5
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:10:53 -0700 (PDT)
+        with ESMTP id S2389762AbeHARDe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 13:03:34 -0400
+Received: by mail-it0-f66.google.com with SMTP id d9-v6so10133454itf.2
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 08:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rdevODqjuqGNAzz2Kk8IUxS3Eic0wlcTVY3zmN04Gjw=;
-        b=JuNH/ojnTLyzU8rdm1izoRtTMNbt1ithfnWSsVb6EfJbrh0wn2bSp3Iv8TBde4uHjB
-         aEIOD4hTYdTes9kkBN0Gk/8wNF58UE0fQ7fyIoRkoI0PYv8FsZlO064c9CowdafQEAS1
-         7SxgHZyZYLltZV4qaQ1J/oIqWo438t/b5FolA6faQErhZbhDhwt18IF1u+JEJEz7SAza
-         aa6fOL0e6zU1NB2mcvNuifrb3dUxRaZxui9k21TfTOzkXv7pqLw14XKU6CvaXGHMwZ7t
-         VEvjDLCebigZKm5VXTR/ApogRCAOaLZGiaT3Hi3HThAc+KYFAmyX5k3J/c7vAZIFPJPv
-         W45g==
+         :cc:content-transfer-encoding;
+        bh=DMTHhSwErjSw5Auot4RHeAt9AnsAmhg4u6My5bpqOy0=;
+        b=QwJov0Q/b4S7KNM/f3QlzyGr6C+wn9w4ikQgWb2IIW9opi/pDPnWfSgnNEDLu9rtb3
+         FQIqkWqg4nU/wKzKNkVLYj/bhzdj81JDXUG78GHF3kDXb7ONcs9bsb06lu2cXF5oMP18
+         7sl7llRXWiPgcZOFzmbUl3IsiZ+hSJoBIQQTPIDBoGFOi2nepIzJ+xRZyje/OQwW448k
+         F1wAMDPw0Duc7Zxo5W7jr1SRahCCP/BgP4+tYPyLMnsI7kSFG6yHQyP0illahh/w2Gnq
+         O97pPpq0LN1wJmFacksHOon1KS1Ixm63i/Fq7Fkd45t5mKosDabpIDXWBfYTB4TFSM6U
+         5NEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rdevODqjuqGNAzz2Kk8IUxS3Eic0wlcTVY3zmN04Gjw=;
-        b=O4SJCC+8x/Zj3fD3sjgTcxSdwjsUCO6E2/xezmCrLkh2iMAcRh+fe9I8hDFE1Dek2t
-         fP1b0aaHlhvv0EkaiulP2aRWyay93AslBgj0mEfmXWzPCEoRSpLnf+dvzv6nnsWGZg/Q
-         GZdZwoOwKKAObbe2VMSoB81eWBYC49wKPjm1Lf4VrZOIayRU6lbqCfpIgVik6x+cKiJB
-         vbbW10gTNE8fAeWQjxAf354cxHdMWArtwwQ+P1PNFJSgoh71nsp87zMEACBOQ/cPf6Xd
-         uCIQdkOUSSplduOCmThuvS1+JLA6531C33wODr50yTL0U7tRGZphye8K1e362oH2qh6D
-         9aqQ==
-X-Gm-Message-State: AOUpUlGb3YoPVYgUss5ZR25xE1NT1uwpVgpEqoZSgSRmxBnhX2f2A2O9
-        7qk2O8x3kq0sHhDwPE2JIBfEaZq/hTmEaF6g4II=
-X-Google-Smtp-Source: AAOMgpdPjB2w6QvlH+vlnY1mKdSoAAFgun3NqX5tT4m/213Iu5Pu1i9GCaUlvD5RIIiE/PYt83E5fouJ+XuWggSPhiE=
-X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr3870254itc.68.1533136252885;
- Wed, 01 Aug 2018 08:10:52 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DMTHhSwErjSw5Auot4RHeAt9AnsAmhg4u6My5bpqOy0=;
+        b=g9TYA+BsfqI38uivh99VGTLO0dOSihP2e7t/Jx3UZCZiaPW9pc8poY1qdqN2Mpol21
+         DF8PYRPsGQr5+kpdG66hABWQPRSc8w+cNXV0tSojhUoDhfR1Trhaz/f6/03vPX7xrcsz
+         8V11QajKUuRWaGek0o5BKfoKCGii6NZMbgModmWHYUUY/XmTa/69A0LMnq8k9a0jwbuh
+         2zQe5E8yPO+beMaEUbG/D0A+Fm2KBmbxS7y7+4ZL06/Sv36cV1fY0PWjb3BV0fw5bZne
+         5+tfMm/71+c7Pf4l9c5ifaqSpX3GxFCst2NzzEJrPuxiD5K7y9fDoLvE78l++SlVbk0e
+         P1zA==
+X-Gm-Message-State: AOUpUlE6AxhWep0oH2zMjM/vlDDned1dTeMvr6zn8EeVPwlz3c5h3LFL
+        OrLoV2BMoWpAEF2BM2hmtMkwgKoLP020K8kUPLF90Q==
+X-Google-Smtp-Source: AAOMgpdLYtheL27phmyCh63ENwBSnLLPjLdhQQm+dnpVdMqxJGlc+Pib0rqT5mBQ3LYMlEt8MnGXh+Lkf0Tufs/Mkjs=
+X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr4106902itf.78.1533136643294;
+ Wed, 01 Aug 2018 08:17:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180724180122.29212-1-benpeart@microsoft.com> <20180731163909.19004-1-benpeart@microsoft.com>
-In-Reply-To: <20180731163909.19004-1-benpeart@microsoft.com>
+References: <20180729092759.GA14484@sigill.intra.peff.net> <20180730152756.15012-1-pclouds@gmail.com>
+ <xmqqk1pbb4m2.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1pbb4m2.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 1 Aug 2018 17:10:25 +0200
-Message-ID: <CACsJy8DMEMsDnKZc65K-0EJcm2udXZ7OKY=xoFmX4COM0dSH=g@mail.gmail.com>
-Subject: Re: [PATCH v2] checkout: optimize "git checkout -b <new_branch>"
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 1 Aug 2018 17:16:56 +0200
+Message-ID: <CACsJy8A_uZM7nUmyERNHJMya0EyRQYTV7Dp2ikLznxnbOQU6tw@mail.gmail.com>
+Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 31, 2018 at 7:03 PM Ben Peart <Ben.Peart@microsoft.com> wrote:
+On Tue, Jul 31, 2018 at 9:13 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From: Ben Peart <Ben.Peart@microsoft.com>
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
-> Skip merging the commit, updating the index and working directory if and
-> only if we are creating a new branch via "git checkout -b <new_branch>."
-> Any other checkout options will still go through the former code path.
+> > Another thing we probably should do is catch in "git checkout" too,
+> > not just "git clone" since your linux/unix colleage colleague may
+> > accidentally add some files that your mac/windows machine is not very
+> > happy with.
+>
+> Then you would catch it not in checkout but in add, no?
 
-I'd like to see this giant list of checks broken down and pushed down
-to smaller areas so that chances of new things being added but checks
-not updated become much smaller. And ideally there should just be no
-behavior change (I think with your change, "checkout -b" will not
-report local changes, but it's not mentioned in the config document;
-more things like that can easily slip).
-
-So. I assume this reason for this patch is because on super large worktrees
-
- - 2-way merge is too slow
- - applying spare checkout patterns on a huge worktree is also slow
- - writing index is, again, slow
- - show_local_changes() slow
-
-For 2-way merge, I believe we can detect inside unpack_trees() that
-it's a 2-way merge (fn == twoway_merge), from HEAD to HEAD (simple
-enough check), then from the 2-way merge table we know for sure
-nothing is going to change and we can just skip traverse_trees() call
-in unpack_trees().
-
-On the sparse checkout application. This only needs to be done when
-there are new files added, or the spare-checkout file has been updated
-since the last time it's been used. We can keep track of these things
-(sparse-checkout file change could be kept track with just stat info
-maybe as an index extension) then we can skip applying sparse checkout
-not for this particular case for but general checkouts as well. Spare
-checkout file rarely changes. Big win overall.
-
-And if all go according to plan, there will be no changes made in the
-index (by either 2-way merge or sparse checkout stuff) we should be
-able to just skip writing down the index, if we haven't done that
-already.
-
-show_local_changes() should be sped up significantly with the new
-cache-tree optimization I'm working on in another thread.
-
-If I have not made any mistake in my analysis so far, we achieve a big
-speedup without adding a new config knob and can still fall back to
-slower-but-same-behavior when things are not in the right condition. I
-know it will not be the same speedup as this patch because when facing
-thousands of items, even counting them takes time. But I think it's a
-reasonable speedup without making the code base more fragile.
--- 
+No because the guy who added these may have done it on a
+case-sensitive filesystem. Only later when his friend fetches new
+changes on a case-insensitive filesytem, the problem becomes real. If
+in this scenario, core.ignore is enforced on all machines, then yes we
+could catch it at "git add" (and we should already do that or we have
+a bug). At least in open source project setting, I think enforcing
+core.ignore will not work.
+--=20
 Duy
