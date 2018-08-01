@@ -2,100 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90EEC1F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 18:13:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4267E1F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 18:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732255AbeHAUAu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 16:00:50 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:48729 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729653AbeHAUAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 16:00:49 -0400
-Received: by mail-qk0-f202.google.com with SMTP id 17-v6so17740670qkz.15
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 11:13:52 -0700 (PDT)
+        id S1731895AbeHAUD7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 16:03:59 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33144 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725742AbeHAUD6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 16:03:58 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g6-v6so21038678wrp.0
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 11:17:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=HLOZL16k3Miw1tA+hMzQebis2ZYCuof+MXP8eLoObAk=;
-        b=dVdPeoCvWzizsuAyDFKNAY7m/LfzKRNpdmtj6aBiLwKKScRDrGqy1fd75ZCVq9sAqc
-         DaQx6D0VZADbvu6/EF5lr7Gh8lVrM1tYYJqmGtc1nDxxre5elJ8yTtAzhvDcLWjffm4d
-         975peYt/yYMyttrjAHRno5xc81uVI2ai13OrPndKOnAgQSeBQVQmRqF7I34tke6H7VkW
-         c8WMt+HgXpyV3dRBX7kjf4hXx++Y8GwqYqCP6vewaD3dDRiSUroBTgmNzvCJf/DUFCcA
-         FkDL9ddukdKeh0UHqvzXIBnLj3l3ct4Pj2smnJhTZc784uFRl/fGmsyqrUMOhUP+F8Cl
-         48JA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=xnqDu73YYv8gxhI6hm3Klkz2Mxxfy2DGAXvFl/n9toA=;
+        b=IgAlA8rPurzjApS8CYg3yNMdl9OEMjx6n8V/6eBK3995TI9CgDIb8OqGBc80gyBOCR
+         CWNWH6Q0hFJcTcNDBPc4dr6qvZcQtFQgoXCVP3nHip1N8zAUOgLA0f+xaXbmJjEOLBmR
+         oSFg8WYUbO2ElMTEEaQ+/rpsAUyccZRFZ2VNA54DX8gVvYt8rUlvNRFkXbhyTIKqEjd4
+         HqXDP3bJxWU8Np0cQqAJwLGLngmW9evBfHcxRTGsmRnuKEoZ2dgOxV6X3MqkMY1MjIi1
+         d+swZDXHcfy3JmFATDQoq8HGwrt+Qam4d6eKFLZZeVhXrEdRRFDH85e0UQrkfXdfN+UM
+         hTLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=HLOZL16k3Miw1tA+hMzQebis2ZYCuof+MXP8eLoObAk=;
-        b=dcF5oDTLvfNO/lkD2sGm3ljBpOUi2PDDOsvRlzxK1FjMTpW3TbT2cqPSDjuy1UWrfR
-         2DKRgz5XzshCi/9foIaJMUiPqMTZA4pDZSrkflXT9A26C+q/GAFH4QmJG2cqW7c93DvG
-         gg8aZivkWru8SAJkkxjCUSo80h7lmBMD8COl6wUwNRNWhGFUOoeZRp7p1U+vTGQysRiT
-         gPghu/1+VWpF9qXieXkTzartRT3BbUMXklQOnMm/7LF3Q0oBTt+/Q2aSd26lmLuaUgqT
-         mR1v8if0eeGV9L0RobMVeQ8jBlQGVd/QxTHybVEW3j2eLC7HfmI/Z8fUQRUBMnbNg+dG
-         yMIQ==
-X-Gm-Message-State: AOUpUlFO9BgIW3OSjOyvXoGdRThTzgyRrrGwtDrfv2pFQogcyqkhFgCD
-        2TR9RsBL0EH7LYp61vhIhsDMRk9Z1rGjQOtpnvmt
-X-Google-Smtp-Source: AAOMgpcaOud0AQcCFHNO4E9muFuaJnPLMyulvZFuhJAQcTuwLr+J/JAn60yUCni5BkhuHX04lfVIFpZU0PgZftEDyqrV
-X-Received: by 2002:a0c:9b88:: with SMTP id o8-v6mr14539294qve.43.1533147232258;
- Wed, 01 Aug 2018 11:13:52 -0700 (PDT)
-Date:   Wed,  1 Aug 2018 11:13:48 -0700
-In-Reply-To: <xmqq8t5q821c.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180801181348.106679-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqq8t5q821c.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.18.0.321.gffc6fa0e3.dirty
-Subject: Re: [PATCH v2] remote: make refspec follow the same disambiguation
- rule as local refs
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=xnqDu73YYv8gxhI6hm3Klkz2Mxxfy2DGAXvFl/n9toA=;
+        b=HuKDAfK8PM/bit9BHyYyeF6Yp5ckrkAq+Mqmn9Q3UXqFRUx1sxdlIJhnOR47U7sGJu
+         SShz0CpigPisjCUiMWAgjTUfrP+pEbyPVnHbxYrfDhvpYm+SCb4ijOug9uNSlS13LUoK
+         IEUzcQnd28Bub+kS9TVawz6CZ0lpdzdrU+mmRtYrcQdnYmm1d+RAgnvIRa4N0Lc7oA2Y
+         XEFxNo/Jpll9LEOd36RcI6YZGizb2k9PA/L3L5nI76r5EzIvJ1sT+p8GhpwqqxW/k1vf
+         RpMREl7EaQXVqS6yxFia2rUNZQ/5DDqFlNyLx1uRiwSyv8AlxaR4aFGqZcky0DF+6/gl
+         LFJQ==
+X-Gm-Message-State: AOUpUlFAMov+MQrKZ3+VA43U9qRvTeWSBD33uXT7Cm6ephRX/D2wMpw3
+        jjA7yTP8ZqlR1O8H7tzY9FVpapcr
+X-Google-Smtp-Source: AAOMgpcjBpneHBA2csZpiiyEQiddy56iKcnLQGS3gBW+z9lQhYLFAdwuGxn/CLRAF8aVMG8IrIZvdA==
+X-Received: by 2002:adf:94e2:: with SMTP id 89-v6mr24476617wrr.48.1533147419703;
+        Wed, 01 Aug 2018 11:16:59 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x7-v6sm31679531wrr.95.2018.08.01.11.16.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 01 Aug 2018 11:16:58 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     sunshine@sunshineco.com, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
+References: <20180731173651.184716-1-hanwen@google.com>
+        <20180731173651.184716-3-hanwen@google.com>
+        <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
+        <xmqqeffi856n.fsf@gitster-ct.c.googlers.com>
+        <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
+Date:   Wed, 01 Aug 2018 11:16:58 -0700
+In-Reply-To: <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Wed, 1 Aug 2018 19:18:31 +0200")
+Message-ID: <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +test_expect_success 'LHS of refspec follows ref disambiguation rules' '
-> +	mkdir lhs-ambiguous &&
-> +	(
-> +		cd lhs-ambiguous &&
-> +		git init server &&
-> +		test_commit -C server unwanted &&
-> +		test_commit -C server wanted &&
-> +
-> +		git init client &&
-> +
-> +		# Check a name coming after "refs" alphabetically ...
-> +		git -C server update-ref refs/heads/s wanted &&
-> +		git -C server update-ref refs/heads/refs/heads/s unwanted &&
-> +		git -C client fetch ../server +refs/heads/s:refs/heads/checkthis &&
-> +		git -C server rev-parse wanted >expect &&
-> +		git -C client rev-parse checkthis >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		# ... and one before.
-> +		git -C server update-ref refs/heads/q wanted &&
-> +		git -C server update-ref refs/heads/refs/heads/q unwanted &&
-> +		git -C client fetch ../server +refs/heads/q:refs/heads/checkthis &&
-> +		git -C server rev-parse wanted >expect &&
-> +		git -C client rev-parse checkthis >actual &&
-> +		test_cmp expect actual &&
-> +
-> +		# Tags are preferred over branches like refs/{heads,tags}/*
-> +		git -C server update-ref refs/tags/t wanted &&
-> +		git -C server update-ref refs/heads/t unwanted &&
-> +		git -C client fetch ../server +t:refs/heads/checkthis &&
-> +		git -C server rev-parse wanted >expect &&
-> +		git -C client rev-parse checkthis >actual
-> +	)
-> +'
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-Thanks, this looks good to me. Also thanks for adding the "+" in the
-fetch commands in the test.
+> On Wed, Aug 1, 2018 at 5:41 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Hmm, do we actually say things like "Error: blah"?  I am not sure if
+>> I like this strncasecmp all that much.
+>
+> this is for the remote end, so what we (git-core) says isn't all that
+> relevant.
+
+It is very relevant, I would think.  Because the coloring is
+controlled at the client end with this implementation, third-party
+remote implementations have strong incentive to follow what our
+remote end says and not to deviate.  Preventing them from being
+different just to be different does help the users, no?
+
+>> > So, despite the explanation in the commit message, this function isn't
+>> > _generally_ highlighting keywords in the sideband. Instead, it is
+>> > highlighting a keyword only if it finds it at the start of string
+>> > (ignoring whitespace). Perhaps the commit message could be more clear
+>> > about that.
+>>
+>> Sounds good.
+>>
+>> I didn't comment on other parts of your review posed as questions
+>> (that require some digging and thinking), but I think they are all
+>> worthwhile thing to think about.
+>
+> Sorry for being dense, but do you want me to send an updated patch or
+> not based on your and Eric's comments or not?
+
+It would help to see the comments responded with either "such a
+change is not needed for such and such reasons", "it may make sense
+but let's leave it to a follow-up patch later," etc., or with a
+"here is an updated patch, taking all the comments to the previous
+version into account---note that I rejected that particular comment
+because of such and such reasons".
