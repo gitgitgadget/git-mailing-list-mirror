@@ -2,237 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F4F51F597
-	for <e@80x24.org>; Wed,  1 Aug 2018 10:19:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31C741F597
+	for <e@80x24.org>; Wed,  1 Aug 2018 10:24:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733174AbeHAMEP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 1 Aug 2018 08:04:15 -0400
-Received: from mout.web.de ([212.227.17.12]:47621 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1733104AbeHAMEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 1 Aug 2018 08:04:15 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LlniO-1gJrzR3OgC-00ZRFE for
- <git@vger.kernel.org>; Wed, 01 Aug 2018 12:19:09 +0200
-To:     Git List <git@vger.kernel.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] remote: clear string_list after use in mv()
-Message-ID: <553f84f2-7d9d-9a92-d5ca-39bd862ff748@web.de>
-Date:   Wed, 1 Aug 2018 12:19:07 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        id S2387874AbeHAMJY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 1 Aug 2018 08:09:24 -0400
+Received: from smtp-out-6.talktalk.net ([62.24.135.70]:48566 "EHLO
+        smtp-out-6.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387723AbeHAMJX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 1 Aug 2018 08:09:23 -0400
+Received: from [192.168.2.240] ([92.22.30.174])
+        by smtp.talktalk.net with SMTP
+        id koIhftBFqpXFjkoIhfWoVm; Wed, 01 Aug 2018 11:24:16 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533119056;
+        bh=PuVVdDi3AF5HEif3PtLb4Bic1G24bSHO69bwr3krLwA=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=BRVvNGZVdu0ztwOwwB0rP24CtcBXUMN74XlRpZCzr7w23LXQXKKrcpbP5peN9SRdR
+         XkeD4u8kCl5yeHvei2kBaMUuwOxIkfcbQktvCxEL/vsqhff/9LN1wTdLpI8XtPGc0W
+         y8muikAUuNiDeyuE26VHO9KFnfQ1I5wT6AMmyMu8=
+X-Originating-IP: [92.22.30.174]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Ob228CbY c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
+ a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=A1X0JdhQAAAA:8 a=5rxgeBVgAAAA:8 a=BCjA09oAAAAA:8 a=evINK-nbAAAA:8
+ a=Z3erzKvndqz3Wo2g1dsA:9 a=ey6Lr-eOs8tbhO5-:21 a=3yhO4u0h5hjlo2bF:21
+ a=QEXdDO2ut3YA:10 a=Df3jFdWbhGDLdZNm0fyq:22 a=PwKx63F5tFurRwaNxrlG:22
+ a=jYKBPJSq9nmHKCndOPe9:22 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] sequencer: fix quoting in write_author_script
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+ <20180731111532.9358-1-phillip.wood@talktalk.net>
+ <20180731111532.9358-3-phillip.wood@talktalk.net>
+ <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <22f98273-f7f4-adf3-1a8b-b0e4ec6029b3@talktalk.net>
+Date:   Wed, 1 Aug 2018 11:24:14 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <CAPig+cR5VHP8muo5_A_9t7OPZam8O_uPb0nd73B15Ye92n+p7Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:LaYDu4dyIxAzKLPytDa7I1iwW/MtLUrAGsfgPlKOxZtMIrWAKBZ
- D/SZhBb0hO08i0aQ9+UmkDmIK1rR2+W5EtU1WIVNejATtgZA0P1uSXfvMhBHZMrqK9O8O3f
- Tsx/lSA/jRH/2YR4tyGTq5JdDb34KdW0zfcqCmhpZSV6/fxGl8ngGKemvNeg0iNHFPFgAqQ
- DDmHFA9zqEwWczy2JnrWA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sUn87S7dRh8=:U+csHYOR+6eBUVt0v4TnB5
- SwIs3RGkOOZO7rdXYKOmjG2GwgN1Pl0rmu3V/Bul1vP++bXfOsm759udKPTE4Hle2cUEWlEKo
- wrif7ryRFs2hf7y77fN+kRAQC+FQLxpExv/H0rCP8pqJL9ElvvrHxCce5jFmpRisn2fEaEzrw
- 5SbQQ/SY3rMKz00fqwWPwNbZGaXQTv+DWLF2RFKT53s9Of61auxS/1YNUvMFoHA+tgp7rGFJ/
- AYnl+8H8lTGisxBrwuYolLSaNPwtGUJPw+lAsbUbYeir49EqinbG8C84eXNG+C6xfx9JNnYjv
- 8PwBteiHJoUyHUjwHJZvYx3k/QbqPWAPhtVVXkuGMPrXWRGh8HzHdkekD86o/FXwevZWK8X1Y
- UHJ4h8IhdHQbyIPexUDtpIlLuhmV6MWtyTOj4hNGCBNk3kV56iqGZHBI1j451THQugZ1I7Fb+
- ga0Bazkfboke2XcmDKQLp3PJR/XxluyFSgoX38BsUoIPrfgVNPXAdYv3x9ibQZTJ1NWAdfs8i
- Ll6pJIrdnEbcB4QLMzY6IxKBPLTUaNnFDj0Tpb4dbXvL9rtmSp+dGMjR5q020I5IJ2JOM5cha
- Qw7iF+tT8h1/ZHqmXkrDp3CfwbZYq/B9VSIPLIfnsjwTy6a8O7PFF9hIrxULX1ICB/z5HSThY
- cr7BeJFlVxsMtlUHO1GtP6bfD970oldknTHitiyFN8aedFR+HtTJMOIjRm4MkmKtV19UsPS83
- lF0f14p6lTVVsaXV3EQL+FThBdEvCyiuEo6ZhJ97KrdGsfpF41WxpzO5kqDxtQ4j4MukRutj2
- jphwuxq
+X-CMAE-Envelope: MS4wfKeoEqkZPluWCy73I+pFnCSzlzgx9QSF1ygvfkqmx38jPF2uxLg/0HGN8k5cdrXeGDxzLs4/1w6YKKPrsGNuz1evb1KUfWuTtbk5/YIP9yJ4YDAfWcpp
+ IICVjed+bYHITupJOWWxLpNgtTgxpYNuNb3CHEEvBrjYoSWq6+eR7VJ8M5Dc0y5VKuaTWuqzIQZvZ2bt6sNlTfFQJVFbWixMBLdM073+y/jvopTv5oOVWNoA
+ KOlsjuUw19PZLdCXIcoiq7wY8mNdW9NjS0aUwi97b+sIWgeOBHxflX8Dm4hT7pZbU4uLsOKtZA6xSjH7Q9bsWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch to the _DUP variant of string_list for remote_branches to allow
-string_list_clear() to release the allocated memory at the end, and
-actually call that function.  Free the util pointer as well; it is
-allocated in read_remote_branches().
+Hi Eric
 
-NB: This string_list is empty until read_remote_branches() is called
-via for_each_ref(), so there is no need to clean it up when returning
-before that point.
+On 31/07/18 22:39, Eric Sunshine wrote:
+> On Tue, Jul 31, 2018 at 7:15 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>> Single quotes should be escaped as \' not \\'. Note that this only
+>> affects authors that contain a single quote and then only external
+>> scripts that read the author script and users whose git is upgraded from
+>> the shell version of rebase -i while rebase was stopped. This is because
+>> the parsing in read_env_script() expected the broken version and for
+>> some reason sq_dequote() called by read_author_ident() seems to handle
+>> the broken quoting correctly.
+> 
+> Is the:
+> 
+>      ...for some reason sq_dequote() called by read_author_ident()
+>      seems to handle the broken quoting correctly.
+> 
+> bit outdated? We know now from patch 2/4 of my series[1] that
+> read_author_ident() wasn't handling it correctly at all. It was merely
+> ignoring the return value from sq_dequote() and using whatever broken
+> value came back from it.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-Patch generated with ---function-context for easier review -- that
-makes it look much bigger than it actually is, though.
+Yes you're right, when I tested it before I must of had GIT_AUTHOR_NAME 
+set to the name with the "'" in it when I ran the rebase because it 
+appeared to work, but actually sj_dequote() was returning NULL and so 
+commit_tree() just picked up the default author. I've just changed the 
+test you added to
 
- builtin/remote.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+test_expect_success 'valid author header after --root swap' '
+	rebase_setup_and_clean author-header no-conflict-branch &&
+	set_fake_editor &&
+	git commit --amend --author="Au ${SQ}thor <author@example.com>" 
+--no-edit &&
+	git cat-file commit HEAD | grep ^author >expected &&
+	FAKE_LINES="5 1" git rebase -i --root &&
+	git cat-file commit HEAD^ | grep ^author >actual &&
+	test_cmp expected actual
+'
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index c74ee88690..07bd51f8eb 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -558,23 +558,23 @@ struct rename_info {
- static int read_remote_branches(const char *refname,
- 	const struct object_id *oid, int flags, void *cb_data)
- {
- 	struct rename_info *rename = cb_data;
- 	struct strbuf buf = STRBUF_INIT;
- 	struct string_list_item *item;
- 	int flag;
- 	const char *symref;
- 
- 	strbuf_addf(&buf, "refs/remotes/%s/", rename->old_name);
- 	if (starts_with(refname, buf.buf)) {
--		item = string_list_append(rename->remote_branches, xstrdup(refname));
-+		item = string_list_append(rename->remote_branches, refname);
- 		symref = resolve_ref_unsafe(refname, RESOLVE_REF_READING,
- 					    NULL, &flag);
- 		if (symref && (flag & REF_ISSYMREF))
- 			item->util = xstrdup(symref);
- 		else
- 			item->util = NULL;
- 	}
- 	strbuf_release(&buf);
- 
- 	return 0;
- }
-@@ -607,133 +607,134 @@ static int migrate_file(struct remote *remote)
- static int mv(int argc, const char **argv)
- {
- 	struct option options[] = {
- 		OPT_END()
- 	};
- 	struct remote *oldremote, *newremote;
- 	struct strbuf buf = STRBUF_INIT, buf2 = STRBUF_INIT, buf3 = STRBUF_INIT,
- 		old_remote_context = STRBUF_INIT;
--	struct string_list remote_branches = STRING_LIST_INIT_NODUP;
-+	struct string_list remote_branches = STRING_LIST_INIT_DUP;
- 	struct rename_info rename;
- 	int i, refspec_updated = 0;
- 
- 	if (argc != 3)
- 		usage_with_options(builtin_remote_rename_usage, options);
- 
- 	rename.old_name = argv[1];
- 	rename.new_name = argv[2];
- 	rename.remote_branches = &remote_branches;
- 
- 	oldremote = remote_get(rename.old_name);
- 	if (!remote_is_configured(oldremote, 1))
- 		die(_("No such remote: %s"), rename.old_name);
- 
- 	if (!strcmp(rename.old_name, rename.new_name) && oldremote->origin != REMOTE_CONFIG)
- 		return migrate_file(oldremote);
- 
- 	newremote = remote_get(rename.new_name);
- 	if (remote_is_configured(newremote, 1))
- 		die(_("remote %s already exists."), rename.new_name);
- 
- 	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new_name);
- 	if (!valid_fetch_refspec(buf.buf))
- 		die(_("'%s' is not a valid remote name"), rename.new_name);
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s", rename.old_name);
- 	strbuf_addf(&buf2, "remote.%s", rename.new_name);
- 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
- 		return error(_("Could not rename config section '%s' to '%s'"),
- 				buf.buf, buf2.buf);
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
- 	git_config_set_multivar(buf.buf, NULL, NULL, 1);
- 	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
- 	for (i = 0; i < oldremote->fetch.raw_nr; i++) {
- 		char *ptr;
- 
- 		strbuf_reset(&buf2);
- 		strbuf_addstr(&buf2, oldremote->fetch.raw[i]);
- 		ptr = strstr(buf2.buf, old_remote_context.buf);
- 		if (ptr) {
- 			refspec_updated = 1;
- 			strbuf_splice(&buf2,
- 				      ptr-buf2.buf + strlen(":refs/remotes/"),
- 				      strlen(rename.old_name), rename.new_name,
- 				      strlen(rename.new_name));
- 		} else
- 			warning(_("Not updating non-default fetch refspec\n"
- 				  "\t%s\n"
- 				  "\tPlease update the configuration manually if necessary."),
- 				buf2.buf);
- 
- 		git_config_set_multivar(buf.buf, buf2.buf, "^$", 0);
- 	}
- 
- 	read_branches();
- 	for (i = 0; i < branch_list.nr; i++) {
- 		struct string_list_item *item = branch_list.items + i;
- 		struct branch_info *info = item->util;
- 		if (info->remote_name && !strcmp(info->remote_name, rename.old_name)) {
- 			strbuf_reset(&buf);
- 			strbuf_addf(&buf, "branch.%s.remote", item->string);
- 			git_config_set(buf.buf, rename.new_name);
- 		}
- 	}
- 
- 	if (!refspec_updated)
- 		return 0;
- 
- 	/*
- 	 * First remove symrefs, then rename the rest, finally create
- 	 * the new symrefs.
- 	 */
- 	for_each_ref(read_remote_branches, &rename);
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
- 		int flag = 0;
- 		struct object_id oid;
- 
- 		read_ref_full(item->string, RESOLVE_REF_READING, &oid, &flag);
- 		if (!(flag & REF_ISSYMREF))
- 			continue;
- 		if (delete_ref(NULL, item->string, NULL, REF_NO_DEREF))
- 			die(_("deleting '%s' failed"), item->string);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
- 
- 		if (item->util)
- 			continue;
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
- 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
- 				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addf(&buf2, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (rename_ref(item->string, buf.buf, buf2.buf))
- 			die(_("renaming '%s' failed"), item->string);
- 	}
- 	for (i = 0; i < remote_branches.nr; i++) {
- 		struct string_list_item *item = remote_branches.items + i;
- 
- 		if (!item->util)
- 			continue;
- 		strbuf_reset(&buf);
- 		strbuf_addstr(&buf, item->string);
- 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old_name),
- 				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf2);
- 		strbuf_addstr(&buf2, item->util);
- 		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old_name),
- 				rename.new_name, strlen(rename.new_name));
- 		strbuf_reset(&buf3);
- 		strbuf_addf(&buf3, "remote: renamed %s to %s",
- 				item->string, buf.buf);
- 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
- 			die(_("creating '%s' failed"), buf.buf);
- 	}
-+	string_list_clear(&remote_branches, 1);
- 	return 0;
- }
- 
--- 
-2.18.0
+and it fails without the fixes to write_author_script().
+
+> 
+> [1]: https://public-inbox.org/git/20180731073331.40007-3-sunshine@sunshineco.com/
+> 
+>> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>> diff --git a/sequencer.c b/sequencer.c
+>> @@ -664,14 +664,25 @@ static int write_author_script(const char *message)
+>>   static int read_env_script(struct argv_array *env)
+>>   {
+>>          if (strbuf_read_file(&script, rebase_path_author_script(), 256) <= 0)
+>>                  return -1;
+> 
+> This is not a problem introduced by this patch, but since
+> strbuf_read_file() doesn't guarantee that memory hasn't been allocated
+> when it returns an error, this is leaking.
+
+I can fix that
+
+>> +       /*
+>> +        * write_author_script() used to fail to terminate the GIT_AUTHOR_DATE
+>> +        * line with a "'" and also escaped "'" incorrectly as "'\\\\''" rather
+>> +        * than "'\\''". We check for the terminating "'" on the last line to
+>> +        * see how "'" has been escaped in case git was upgraded while rebase
+>> +        * was stopped.
+>> +        */
+>> +       sq_bug = script.len && script.buf[script.len - 2] != '\'';
+> 
+> I think you need to be checking 'script.len > 1', not just
+> 'script.len', otherwise you might access memory outside the allocated
+> buffer.
+
+Good catch, Johannes's original was checking script.buf[script.len - 1] 
+which I corrected but forget to adjust the previous check.
+
+> This is a very "delicate" check, assuming that a hand-edited file
+> won't end with, say, an extra newline. I wonder if this level of
+> backward-compatibility is overkill for such an unlikely case.
+
+Yes, it is a bit fragile. Originally the patch just unquoted the correct 
+and incorrect quoting but Johannes was worried that might lead to errors 
+and suggested this check. The check is aimed at people whose git gets 
+upgraded while rebase is stopped for a conflict resolution or edit and 
+so have the bad quoting in the author-script from the old version of git 
+which started the rebase. Authors with "'" in the name are uncommon but 
+not unheard of, I think when I checked there were about half a dozen in 
+git's history. I'm not sure what to do for the best.
+
+>>          for (p = script.buf; *p; p++)
+>> -               if (skip_prefix(p, "'\\\\''", (const char **)&p2))
+>> +               if (sq_bug && skip_prefix(p, "'\\\\''", &p2))
+>> +                       strbuf_splice(&script, p - script.buf, p2 - p, "'", 1);
+>> +               else if (skip_prefix(p, "'\\''", &p2))
+>> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+>> @@ -75,6 +75,22 @@ test_expect_success 'rebase --keep-empty' '
+>> +test_expect_success 'rebase -i writes correct author-script' '
+>> +       test_when_finished "test_might_fail git rebase --abort" &&
+>> +       git checkout -b author-with-sq master &&
+>> +       GIT_AUTHOR_NAME="Auth O$SQ R" git commit --allow-empty -m with-sq &&
+>> +       set_fake_editor &&
+>> +       FAKE_LINES="edit 1" git rebase -ki HEAD^ &&
+> 
+> Hmph, -k doesn't seem to be documented in git-rebase.txt. Is it needed here?
+
+-k is short for --keep-empty which is needed as the test creates an 
+empty commit to check the author (I think that is to avoid changing the 
+tree  - Johannes wrote that bit).
+
+Thanks for your comments, I'll do a reroll
+
+Phillip
