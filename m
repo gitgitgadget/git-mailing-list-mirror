@@ -2,90 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00A911F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 18:59:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE92C208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 19:06:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726949AbeHBUvp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 16:51:45 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:38457 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726580AbeHBUvp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 16:51:45 -0400
-Received: by mail-yb0-f195.google.com with SMTP id i9-v6so1673626ybo.5
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 11:59:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Cfl828lR3jmcNMQQwp7YA8FQnaPIGoS28w5HSbA5Dts=;
-        b=kmH8p3+su78CPQ4QZ8oQCp3oQsYFlkHqMt3p3zgdd3HZ3DqI5IxpIzx8oHHl4h1MwX
-         fVImPSap30DN/mB6pPeUREhixctO4QWbJGOG5WXVYw8LvbrXe08H3JX/hudiGN+x641n
-         BOYTY8jeBDGmbsLOg9G4x6GBQ4MyQvKfBQ01xbDTgkAmdzEUUI0XGO8zxsAKuTEm0Ut9
-         o/EF16Uf/JipRsa9t+wc0vE6sOTsOydJqYdrVJJHn9pZToqSGtlOi6vYAAuMBMnLYJ7H
-         Z1VdGyRpMiB4XzKtBvpyqMIBsGJiPAEvu5rjII/ICwyhRl0tDX5DHUupPyO3an48dKA4
-         AavA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Cfl828lR3jmcNMQQwp7YA8FQnaPIGoS28w5HSbA5Dts=;
-        b=j+y5CMCUXLHtmvLlpyB4ho4Hwnv4ONppRS6hb1vnHIriogDG2GOn9ryF7+4uE8l2mj
-         UOh/gwE4wdz/dWK3cIF7cdF1nhoOh6IqLDiMyaeRjtMdAwZ07dMX8AQ8SakWtXlXf8zT
-         sbyA/M1Ptx5jBiysCwB7VH3ULNBIkTpvUYkWhc35lZVTMhBuXiJmapuoprQfda+J0h71
-         Eb6odRanVd5NZdEbQe6NpDm8K3gK7zBSy0A8X5Ey0h6EJH74aIHb60NOuYLnC+kgrUw/
-         ftwNCcGnfhr1oLnuBA9iRjmGiN2olHqRfP1iXQ6SKLw6PmS363Su+5yLLCB2IdiQrt3P
-         9sXw==
-X-Gm-Message-State: AOUpUlEccWsKbGmcXpDuaaG2GqG6IXOQeTOWewBg+cLEH6zdDMlqiF1Y
-        0vBnujjf0k7lcBA5YL1S2SG8h4rDeUjsib+tiM3zlQ==
-X-Google-Smtp-Source: AAOMgpe+Kqe77Fx/beNrtJZWI180NWwBcZ6wnQnbM66b48DTEK5i6NauKCXkHO2mayKQS0b4OLrTtnzuORqHHO1tkIU=
-X-Received: by 2002:a25:a263:: with SMTP id b90-v6mr447523ybi.247.1533236360498;
- Thu, 02 Aug 2018 11:59:20 -0700 (PDT)
+        id S1727008AbeHBU7M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 16:59:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40732 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726177AbeHBU7M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 16:59:12 -0400
+Received: (qmail 22965 invoked by uid 109); 2 Aug 2018 19:06:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Aug 2018 19:06:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26929 invoked by uid 111); 2 Aug 2018 19:06:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 02 Aug 2018 15:06:46 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Aug 2018 15:06:44 -0400
+Date:   Thu, 2 Aug 2018 15:06:44 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?UGF3ZcWC?= Paruzel <pawelparuzel95@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive
+ filesystems
+Message-ID: <20180802190644.GE23690@sigill.intra.peff.net>
+References: <20180730152756.15012-1-pclouds@gmail.com>
+ <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
+ <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
+ <20180731192931.GD3372@sigill.intra.peff.net>
+ <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
+ <20180731203746.GA9442@sigill.intra.peff.net>
+ <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
+ <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
+ <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-6-ao2@ao2.it>
-In-Reply-To: <20180802134634.10300-6-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 11:59:09 -0700
-Message-ID: <CAGZ79kbwK1Kf2Oov9W9+UBBJpiOfDgZjZakmGP3iqxPPAhAUPQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 05/12] submodule: use the 'submodule--helper
- config' command
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
->
-> Use the 'submodule--helper config' command in git-submodules.sh to avoid
-> referring explicitly to .gitmodules by the hardcoded file path.
+On Thu, Aug 02, 2018 at 09:27:31AM -0700, Junio C Hamano wrote:
 
-ccol! This is the corner stone to the work of the previous patches. Nicely done!
+> > OK so we're going back to the original way of checking that we check
+> > out the different files on the same place (because fs is icase) and
+> > try to collect all paths for reporting, yes? I can give it another go
+> > (but of course if anybody else steps up, I'd very gladly hand this
+> > over)
+> 
+> Detect and report, definitely yes; I am not sure about collect all
+> (personally I am OK if we stopped at reporting "I tried to check out
+> X but your project tree has something else that is turned to X by
+> your pathname-smashing filesystem" without making it a requirement
+> to report what the other one that conflict with X is.  Of course,
+> reporting the other side _is_ nicer and I'd be happier if we can do
+> so without too much ugly code, but I do not think it is a hard
+> requirement.
 
-> This makes it possible to access the submodules configuration in a more
-> controlled way.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->
-> Note that there are other instances of "git config -f .gitmodules" in test
-> files, but I am not touching those for now.
+Yeah, I think it would be OK to issue the warning for the conflicted
+path, and then if we _can_ produce the secondary list of colliding
+paths, do so. Even on a system with working inodes, we may not come up
+with a match (e.g., if it wasn't us who wrote the file, but rather we
+raced with some other process).
 
-I just checked and this converts all of git-submodule.sh which would
-have been my expectation as that is the real product.
+I also wonder if Windows could return some other file-unique identifier
+that would work in place of an inode here. That would be pretty easy to
+swap in via an #ifdef's helper function. I'd be OK shipping without that
+and letting Windows folks fill it in later (as long as we do not do
+anything too stupid until then, like claim all of the inode==0 files are
+the same).
 
-The tests are fine to use "git config -f .gitmodules" as there we want to
-setup a specific environment to be tested? So I would think even future
-patches in this series will not touch test files for such a conversion
-as in here.
+-Peff
 
-Stefan
+PS It occurs to me that doing this naively (re-scan the entries already
+   checked out when we see a collision) ends up quadratic over the
+   number of entries in the worst case. That may not matter. You'd only
+   have a handful of collisions normally, and anybody malicious can
+   already git-bomb your checkout anyway. If we care, an alternative
+   would be to set a flag for "I saw some collisions", and then follow
+   up with a single pass putting entries into a hashmap of
+   inode->filename.
