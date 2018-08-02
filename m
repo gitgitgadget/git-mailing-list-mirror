@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FCA8208E9
-	for <e@80x24.org>; Thu,  2 Aug 2018 06:15:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ACF60208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 06:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbeHBIFA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 04:05:00 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40434 "EHLO
+        id S1726673AbeHBIFF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 04:05:05 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41737 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbeHBIE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 04:04:59 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h15-v6so862096wrs.7
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 23:15:26 -0700 (PDT)
+        with ESMTP id S1726174AbeHBIFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 04:05:05 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j5-v6so859800wrr.8
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 23:15:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uY7pL4CWZ41sUBzqfwoiCsH00ehOTjsTgwg123I02Dc=;
-        b=KYbdT4zdg7ebKPJIXiyKxlNj0L+sB5iee9Byd7OHdO2iGz9TSkKeSZlO6b0snjSwvn
-         YAHQwitO4xoYsC195qPRApbsPxEJA666qoAq0XUQfRPf5CqOkdgaJC4lQ6bg8ExECLlv
-         9+/QroRarjvTj3jyWYieDOrOsI1A4M3TdFFGOhrY6ZjjUwI392YuaPHlk8yBW5Zzxaq0
-         yX/WPJQMXqjriV59L/y/1uWwdNH2bJb46/L1PvuZKG5bCcbQHXOM/++toWV+yTkhdSkS
-         oYd6yTH/LCKwjIEK9mse2bZoC1iQYRP6aGQQ1wi/vu6+P8zcsjgAdMo95P4o0Ole8X6I
-         R7Aw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Gsg4Zw9AYILSYK+jJhK5Z78q1mpQLd14VNFwaRjEVRQ=;
+        b=ptQ1HB+RZg/uJsiz721Pmai5PGHZfZVfUsv7jlE0aeHpraC4ZDHjejo9If+xUrdzgl
+         c8oUMPQNQXVfFO8SF0Ek/8ET/i2LPQ7z9QhCdTos8tKjs3cjqUvdhdqrfg4g2msNeXpI
+         SnO5tD1ii/+04McaXUMqvQe3+PKsPpTvIwWLUloYHBTlD8Xs5QjAaKjovL5LjXzEUXN6
+         ZR3tnX2Z2rypiwd56TG3+hYnnvovljtarteEOcYBX93Xrr5TQtDXNNHmnimuzb5OfzpP
+         wW/aggoaJ4bOwIFr/2jOr30ypK+Xz9Ym+np11ngau6OarJs02zt+573euMaliiAEzljG
+         hqmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=uY7pL4CWZ41sUBzqfwoiCsH00ehOTjsTgwg123I02Dc=;
-        b=MEbeL4fEb8sEbda+n8O8epI3UtZ2BN2XBEooGYX8v8U4e1tMvm6Hv0C0fsjwBVbRxe
-         gvn3X3Xr6AJnVrmrK0KgFUIQ9+8j5BagIC7EqF7MHOOaw0K6oYm/iBQ0O4XQFgcBLU+X
-         P9AbbTMnjJVO/phzdzJshz37T0ekfKLoJHdGfiGHNjzlsz7/CBgZd5xmq/HlDzQIM2Ks
-         /TWozzsVTxd1P9syDP9DD/5AmxHGSX4s1VbZXVtZ9+0rwAYnJY8H32jRYt+kwdEc6R8b
-         nF+ZH/XZCX9i8cDYVGmcxgWQVlTgeMv7ObaL+DZinfSJKRECUx1+Tcla3Gg5nc172H8E
-         xsAA==
-X-Gm-Message-State: AOUpUlHwuekB39BGp263/HQnWcE4KwYZ9518cgU5ugrLzPh8tujD2lWb
-        O7daoOMy6Z/xK4SWC+19ELjP0/iw
-X-Google-Smtp-Source: AAOMgpdJgsYH+p9Xcf4EhY7UCr6xpnQZcL/GXmyjpg2BYp/oIoX7Hn+9NwbNIiBJglTgpqa9V5lwtg==
-X-Received: by 2002:a5d:694e:: with SMTP id r14-v6mr856182wrw.278.1533190525811;
-        Wed, 01 Aug 2018 23:15:25 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Gsg4Zw9AYILSYK+jJhK5Z78q1mpQLd14VNFwaRjEVRQ=;
+        b=Gmu+k56Jn94ExVztFcFENQQHAsF+Du++++PDSLFbpCI9UILFtZVkAvWPfGNTj8kmZO
+         KvSmiq++Z6BSzpbaq7GYyUfVeydPlTm8ZJBu33OHktu1kGjGLpPQ++RqbqanytnBnScj
+         63nmH6L3SY8UKz8EowkR1LmyrnjI573UL4KcyBDwHwucmwGWb3DRtBF3CM2qZTsG259K
+         9ePyEQqHCpT99K0kjth5TL2RQ3/FIybLmMd6VOZ48cmgpptnWpZjQX91gxAlbA0kF/V/
+         Irf6eXiE4/WpdK6Lta85Nb8/BfjnEC/mzG9jTrKHksS+44hj3jeop8ncsfyViBQ+Wgu6
+         EtQw==
+X-Gm-Message-State: AOUpUlE3NkJFjwMEcm2XWPmvPl9klPgAv7RHuwQQtghAsdW612G7HVtl
+        rQ3R6QCaVyHElxAUSNHtlTEEQGa/
+X-Google-Smtp-Source: AAOMgpduNkEmJHAf+zuVUr03+tSpeug3nNAXwH6biwbwRZdmhoQJo4GwRfgOHEQnb1rhVnf3brcI7A==
+X-Received: by 2002:adf:fc45:: with SMTP id e5-v6mr895997wrs.157.1533190532302;
+        Wed, 01 Aug 2018 23:15:32 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:109f:b149:1092:6e1:496b:fd26])
-        by smtp.gmail.com with ESMTPSA id m200-v6sm1093018wma.32.2018.08.01.23.15.21
+        by smtp.gmail.com with ESMTPSA id m200-v6sm1093018wma.32.2018.08.01.23.15.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Aug 2018 23:15:25 -0700 (PDT)
+        Wed, 01 Aug 2018 23:15:31 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -62,11 +62,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v4 0/9] Introducing remote ODBs
-Date:   Thu,  2 Aug 2018 08:14:56 +0200
-Message-Id: <20180802061505.2983-1-chriscool@tuxfamily.org>
+        Beat Bolli <dev+git@drbeat.li>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v4 1/9] fetch-object: make functions return an error code
+Date:   Thu,  2 Aug 2018 08:14:57 +0200
+Message-Id: <20180802061505.2983-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.330.g17eb9fed90
+In-Reply-To: <20180802061505.2983-1-chriscool@tuxfamily.org>
+References: <20180802061505.2983-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -74,161 +77,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This path series is a follow up from the patch series called "odb
-remote" that I sent earlier this year, which was itself a follow up
-from previous series. See the links section for more information.
+From: Christian Couder <christian.couder@gmail.com>
 
-As with the previous "odb remote" series, this series is only about
-integrating with the promisor/narrow clone work and showing that it
-makes it possible to use more than one promisor remote. Everything
-that is not necessary for that integration has been removed for now
-(though you can still find it in one of my branches on GitHub if you
-want).
+The callers of the fetch_object() and fetch_objects() might
+be interested in knowing if these functions succeeded or not.
 
-There is one test in patch 8/9 that shows that more than one promisor
-remote can now be used, but I still feel that it could be interesting
-to add other such tests, so I am open to ideas in this area.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fetch-object.c | 15 +++++++++------
+ fetch-object.h |  6 +++---
+ sha1-file.c    |  4 ++--
+ 3 files changed, 14 insertions(+), 11 deletions(-)
 
-Changes compared to V3 of this patch series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  - the remote_odb_reinit() function is not "inline" anymore in patch
-    5/9 as suggested by Beat Bolli in:
-
-    https://public-inbox.org/git/20180724215223.27516-3-dev+git@drbeat.li/
-
-High level overview of this patch series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-All the patches except 5/9 are unchanged compared to V3.
-
-  - Patch 1/9:
-
-This makes functions in fetch-object.c return an error code, which is
-necessary to later tell that they failed and try another remote odb
-when there is more than one. This could also just be seen as a fix to
-these functions.
-
-  - Patch 2/9:
-
-This introduces the minimum infrastructure for remote odbs.
-
-  - Patches 3/9 and 4/9:
-
-These patches implement remote_odb_get_direct() and
-remote_odb_get_many_direct() using the functions from fetch-object.c.
-These new functions will be used in following patches to replace the
-functions from fetch-object.c.
-
-  - Patch 5/9:
-
-This implement remote_odb_reinit() which will be needed to reparse the
-remote odb configuration.
-
-  - Patches 6/9 and 7/9:
-
-These patches integrate the remote odb mechanism into the
-promisor/narrow clone code. The "extensions.partialClone" config
-option is replaced by "odb.<name>.promisorRemote" and
-"core.partialCloneFilter" is replaced by
-"odb.<name>.partialCloneFilter".
-
-  - Patch 8/9:
-
-This adds a test case that shows that now more than one promisor
-remote can be used.
-
-  - Patch 9/9:
-
-This starts documenting the remote odb mechanism.
-
-Discussion
-~~~~~~~~~~
-
-I am not sure that it is ok to completely replace the
-"extensions.partialclone" config option. Even if it is fully replaced,
-no "extensions.remoteodb" is implemented in these patches, as maybe
-the "extensions.partialclone" name could be kept even if the
-underlying mechanism is the remote odb mechanism.
-
-Anyway I think that the remote odb mechanism is much more extensible,
-so I think using "extensions.partialclone" to specify a promisor
-remote should be at least deprecated.
-
-Links
-~~~~~
-
-This patch series on GitHub:
-
-V4: https://github.com/chriscool/git/commits/remote-odb
-V3: https://github.com/chriscool/git/commits/remote-odb3
-V2: https://github.com/chriscool/git/commits/remote-odb2
-V1: https://github.com/chriscool/git/commits/remote-odb1
-
-Discussions related to previous versions:
-
-V3: https://public-inbox.org/git/20180713174959.16748-1-chriscool@tuxfamily.org/
-V2: https://public-inbox.org/git/20180630083542.20347-1-chriscool@tuxfamily.org/
-V1: https://public-inbox.org/git/20180623121846.19750-1-chriscool@tuxfamily.org/
-
-Previous "odb remote" series:
-
-https://public-inbox.org/git/20180513103232.17514-1-chriscool@tuxfamily.org/
-https://github.com/chriscool/git/commits/odb-remote
-
-Version 1 and 2 of the "Promisor remotes and external ODB support" series:
-
-https://public-inbox.org/git/20180103163403.11303-1-chriscool@tuxfamily.org/
-https://public-inbox.org/git/20180319133147.15413-1-chriscool@tuxfamily.org/
-
-Version 1 and 2 of the "Promisor remotes and external ODB support" series on GitHub:
-
-https://github.com/chriscool/git/commits/gl-small-promisor-external-odb12
-https://github.com/chriscool/git/commits/gl-small-promisor-external-odb71
-
-Christian Couder (9):
-  fetch-object: make functions return an error code
-  Add initial remote odb support
-  remote-odb: implement remote_odb_get_direct()
-  remote-odb: implement remote_odb_get_many_direct()
-  remote-odb: add remote_odb_reinit()
-  Use remote_odb_get_direct() and has_remote_odb()
-  Use odb.origin.partialclonefilter instead of core.partialclonefilter
-  t0410: test fetching from many promisor remotes
-  Documentation/config: add odb.<name>.promisorRemote
-
- Documentation/config.txt      |   5 ++
- Makefile                      |   2 +
- builtin/cat-file.c            |   5 +-
- builtin/fetch.c               |  13 ++--
- builtin/gc.c                  |   3 +-
- builtin/repack.c              |   3 +-
- cache.h                       |   2 -
- connected.c                   |   3 +-
- environment.c                 |   1 -
- fetch-object.c                |  15 ++--
- fetch-object.h                |   6 +-
- list-objects-filter-options.c |  51 +++++++------
- list-objects-filter-options.h |   3 +-
- odb-helper.c                  |  45 +++++++++++
- odb-helper.h                  |  24 ++++++
- packfile.c                    |   3 +-
- remote-odb.c                  | 137 ++++++++++++++++++++++++++++++++++
- remote-odb.h                  |  10 +++
- setup.c                       |   7 +-
- sha1-file.c                   |  14 ++--
- t/t0410-partial-clone.sh      |  58 +++++++++-----
- t/t5500-fetch-pack.sh         |   4 +-
- t/t5601-clone.sh              |   2 +-
- t/t5616-partial-clone.sh      |   4 +-
- t/t5702-protocol-v2.sh        |   2 +-
- unpack-trees.c                |   6 +-
- 26 files changed, 342 insertions(+), 86 deletions(-)
- create mode 100644 odb-helper.c
- create mode 100644 odb-helper.h
- create mode 100644 remote-odb.c
- create mode 100644 remote-odb.h
-
+diff --git a/fetch-object.c b/fetch-object.c
+index 48fe63dd6c..3c52009266 100644
+--- a/fetch-object.c
++++ b/fetch-object.c
+@@ -5,11 +5,12 @@
+ #include "transport.h"
+ #include "fetch-object.h"
+ 
+-static void fetch_refs(const char *remote_name, struct ref *ref)
++static int fetch_refs(const char *remote_name, struct ref *ref)
+ {
+ 	struct remote *remote;
+ 	struct transport *transport;
+ 	int original_fetch_if_missing = fetch_if_missing;
++	int res;
+ 
+ 	fetch_if_missing = 0;
+ 	remote = remote_get(remote_name);
+@@ -19,18 +20,20 @@ static void fetch_refs(const char *remote_name, struct ref *ref)
+ 
+ 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
+-	transport_fetch_refs(transport, ref, NULL);
++	res = transport_fetch_refs(transport, ref, NULL);
+ 	fetch_if_missing = original_fetch_if_missing;
++
++	return res;
+ }
+ 
+-void fetch_object(const char *remote_name, const unsigned char *sha1)
++int fetch_object(const char *remote_name, const unsigned char *sha1)
+ {
+ 	struct ref *ref = alloc_ref(sha1_to_hex(sha1));
+ 	hashcpy(ref->old_oid.hash, sha1);
+-	fetch_refs(remote_name, ref);
++	return fetch_refs(remote_name, ref);
+ }
+ 
+-void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
++int fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
+ {
+ 	struct ref *ref = NULL;
+ 	int i;
+@@ -41,5 +44,5 @@ void fetch_objects(const char *remote_name, const struct oid_array *to_fetch)
+ 		new_ref->next = ref;
+ 		ref = new_ref;
+ 	}
+-	fetch_refs(remote_name, ref);
++	return fetch_refs(remote_name, ref);
+ }
+diff --git a/fetch-object.h b/fetch-object.h
+index 4b269d07ed..12e1f9ee70 100644
+--- a/fetch-object.h
++++ b/fetch-object.h
+@@ -3,9 +3,9 @@
+ 
+ #include "sha1-array.h"
+ 
+-extern void fetch_object(const char *remote_name, const unsigned char *sha1);
++extern int fetch_object(const char *remote_name, const unsigned char *sha1);
+ 
+-extern void fetch_objects(const char *remote_name,
+-			  const struct oid_array *to_fetch);
++extern int fetch_objects(const char *remote_name,
++			 const struct oid_array *to_fetch);
+ 
+ #endif
+diff --git a/sha1-file.c b/sha1-file.c
+index de4839e634..c099f5584d 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1312,8 +1312,8 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 		if (fetch_if_missing && repository_format_partial_clone &&
+ 		    !already_retried && r == the_repository) {
+ 			/*
+-			 * TODO Investigate having fetch_object() return
+-			 * TODO error/success and stopping the music here.
++			 * TODO Investigate checking fetch_object() return
++			 * TODO value and stopping on error here.
+ 			 * TODO Pass a repository struct through fetch_object,
+ 			 * such that arbitrary repositories work.
+ 			 */
 -- 
 2.18.0.330.g17eb9fed90
 
