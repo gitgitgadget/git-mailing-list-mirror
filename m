@@ -2,356 +2,308 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C076D1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 11:48:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E65E1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 11:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732330AbeHBNix (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 09:38:53 -0400
-Received: from mail-io0-f202.google.com ([209.85.223.202]:46089 "EHLO
-        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728685AbeHBNix (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 09:38:53 -0400
-Received: by mail-io0-f202.google.com with SMTP id c5-v6so1365722ioi.13
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 04:48:04 -0700 (PDT)
+        id S1732087AbeHBNqd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 09:46:33 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:41098 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731447AbeHBNqd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 09:46:33 -0400
+Received: by mail-ed1-f46.google.com with SMTP id s24-v6so838578edr.8
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 04:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=dFSBkC9HJP6PC5wekDeE2+19rOw64GPa/1q6Je87Fq0=;
-        b=sd1EaRaj5CfkYYXLDbR6VqSLXhdK8x+8TWAuDoYi5Td6MIkQQHK+U9VMbg9Pdzqde7
-         ExV09atXE24KANaxmnBE22RQOAXI/rEUQYWr3OeHFu9rFvYGAL5k3fstDncB2OuzWhTr
-         QELP3J6E0fkHycjSuNVFpSVnm6hFPDqdNIcqev2FARbZaq32EzBYB4WGJ7r3Qf8f2M3T
-         nj2p1lQiD5307oWldlFK5/B7vKgLXo0ItP3c3waUJQumC2Vx9hxgqHOau+/5J3tZvqyi
-         034yd47ty1W+dmKBkfwY9ngQR6RfT+ajDktkeqfP/BJwgAVIKacKSuuYb1l5e1PkyNig
-         7huw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zYvk3aLBjZEKIjaw9Y2gLdMEKBCdfZHMiDdjbODImcM=;
+        b=mcHO7cGDnV1NS/tDy1eiBDYMxbsSDjmkUXjtn0FIZCZHbwbGWVO8LzKPCii80VHRUx
+         Ypj3ZEBHj4Z64N7hEfVL6V1KRiB+YpcchyaO44s4VsD4mRPZZcdDaGA6x6qZHP5um6S0
+         JBL9FAVbZquleR6szvS6g9VyOv99ImxXbQWYFEOeex4IQXL4IFv3NYZgZJqs8tITk9GK
+         jIPOptRncZPw/8da7iGBwXN71b8tkkz1KqqGlTBVee3tfvp8i8sZFAUw08+2z9jTPw8w
+         5U+LXyDo7OHFtsGZb4lSxe4B5qz7e2YUc0uaYtrYi/XkfDKv1LtR8HsFgdo/e+pg4Wfk
+         G1ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=dFSBkC9HJP6PC5wekDeE2+19rOw64GPa/1q6Je87Fq0=;
-        b=h5ARINrFy97WP6X/4a9qz8eXSYyTE6hLDdCXXuFeDqkr4FxFXot5K1oZ5zwdzQ2L3/
-         3Dq47KLxrQQ8L15VDO0cu1hEAamOa8/c7wzZnT237xc3gICrYjfeSbMEXoox9AKc/zDK
-         EY4+eedFAguLG4Om9iTZGzhseKTu7PVWv6zDNGeCtGckOGPQYutd2PQBUcQYiyo8T5CO
-         tIpt/In68BJEf3NQZWq9RjtcTf1fA3h2ZZUEx/xaCx6sRzLeQLCt+Wdc+knIbKjeCZ5w
-         sP6XFo5bu8mv5A/Byjh+5Y65JXtrF9Z9nRl1AmkLNZHVFzCEao1LlNsi4NVVk/BlQi0X
-         6Gbg==
-X-Gm-Message-State: AOUpUlGDJLBu7pzZV/i9wy1VGtup6OoFIYP2q6iHM0W10Hd1BuufFXpV
-        BcS6VDmL/aTowFWKUEYA0Nur+yfD6YA=
-X-Google-Smtp-Source: AAOMgpdyw4erRD+S59Ta7DssYzi5M4yB0ethZH32xRBTJQDa3L3A1jbkXoVNnI2QyXk0AAfbQIXyKIzeud8=
-X-Received: by 2002:a6b:3708:: with SMTP id e8-v6mr961744ioa.92.1533210484151;
- Thu, 02 Aug 2018 04:48:04 -0700 (PDT)
-Date:   Thu,  2 Aug 2018 13:47:53 +0200
-In-Reply-To: <20180802114753.9715-1-hanwen@google.com>
-Message-Id: <20180802114753.9715-3-hanwen@google.com>
-Mime-Version: 1.0
-References: <20180802114753.9715-1-hanwen@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 2/2] sideband: highlight keywords in remote sideband output
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zYvk3aLBjZEKIjaw9Y2gLdMEKBCdfZHMiDdjbODImcM=;
+        b=DicQA+prgyAuSz1kJuJmFcCeFWjpRXJBoGZ5q8T4MrfZqxrns49r1+awgT+ABjbUq7
+         aQpHW7UwE3o9JLlN6zh/AyWR+f3BS3+lzeLGaCNJZsMyfzki8jx4VdhAPIT5imvA5hBm
+         Z9JTrcHIadgLIHmzu6673tuG6/tkzQ/I9/7UbcNSPba4vnyaKEaqEbDLWshiyvbwYuc1
+         xbVGXdenvkVoiKAj8H8uLplpCQ+TCpbUqAYEY0PDp3ZwHR9Ke83STk26kWzuBi2THHuu
+         kztJCXAOadFQVHOpO67NYzDONHvCcYmiirm0SgnoAbD/IYyGg9HwMuNGJ8ZHTedv8hzR
+         5Dtw==
+X-Gm-Message-State: AOUpUlHNQ/ziw4eksSEGganf49TxG/lT8mxAwWUTqS75jqlnDIl5luZI
+        9dUc5ZDM43iyk4gnxD/sq9wTNgKq
+X-Google-Smtp-Source: AAOMgpfwUv1DoFf67174Edxz8I7IfdSOt3/zoMTREoUi5uDrTi9viQlU95BgkkKAlNb5vS91D05YAw==
+X-Received: by 2002:a50:c251:: with SMTP id t17-v6mr3032808edf.108.1533210940043;
+        Thu, 02 Aug 2018 04:55:40 -0700 (PDT)
+Received: from localhost.localdomain (x4db11307.dyn.telefonica.de. [77.177.19.7])
+        by smtp.gmail.com with ESMTPSA id u2-v6sm863675eds.43.2018.08.02.04.55.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 02 Aug 2018 04:55:39 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PoC] coccinelle: make Coccinelle-related make targets more fine-grained
+Date:   Thu,  2 Aug 2018 13:55:22 +0200
+Message-Id: <20180802115522.16107-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.408.g42635c01bc
+In-Reply-To: <20180723135100.24288-1-szeder.dev@gmail.com>
+References: <20180723135100.24288-1-szeder.dev@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The colorization is controlled with the config setting "color.remote".
 
-Supported keywords are "error", "warning", "hint" and "success". They
-are highlighted if they appear at the start of the line, which is
-common in error messages, eg.
+So, I have this PoC patch below on top of this patch series for some
+months now; actually this series was all fallout from working on this
+patch.  It makes 'make -j<N> coccicheck' much faster (speedup of over
+99% :) in some scenarios that, in my experience, occur rather
+frequently when working on Coccinelle semantic patches (as opposed to
+occasionally running 'make coccicheck' to see whether there are any
+regressions).
 
-   ERROR: commit is missing Change-Id
+However, it's not ready for inclusion as it is, because,
+unfortunately, the improvements are not without some disadvantages, as
+explained in the second half of the commit message below.
 
-The rationale for this change is that Gerrit does server-side
-processing to create or update code reviews, and actionable error
-messages (eg. missing Change-Id) must be communicated back to the user
-during the push. User research has shown that new users have trouble
-seeing these messages.
+Anyway, I'm sending this out, because I don't see how I could make it
+any better, but other contributors working on semantic patches might
+still find it useful to keep this in their own fork, even in its
+current form.  And perhaps someone will come up with a brilliant idea
+to address those disadvantages...
 
-The Git push process itself prints lots of non-actionable messages
-(eg. bandwidth statistics, object counters for different phases of the
-process), and my hypothesis is that these obscure the actionable error
-messages that our server sends back. Highlighting keywords in the
-draws more attention to actionable messages.
+Also available at:
 
-The highlighting is done on the client rather than server side, so
-servers don't have to grow capabilities to understand terminal escape
-codes and terminal state. It also consistent with the current state
-where Git is control of the local display (eg. prefixing messages with
-"remote: ").
+  https://github.com/szeder/git make-coccicheck-finegrained
 
-Finally, this solution is backwards compatible: many servers already
-prefix their messages with "error", and they will benefit from this
-change without requiring a server update. By contrast, a server-side
-solution would likely require plumbing the TERM variable through the
-git protocol, so it would require changes to both server and client.
 
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+  -- >8 --
+
+Subject: [PATCH] [PoC] coccinelle: make Coccinelle-related make targets more fine-grained
+
+When running 'make coccicheck', each semantic patch is applied to all
+source files in a separate shell for loop.  This approach has the
+following disadvantages:
+
+  1. Even if you only modified a single C source file, that shell loop
+     will still iterate over all source files and apply the semantic
+     patches to all of them, wasting a lot of time.
+
+  2. If you apply only a single semantic patch (either implicitly,
+     after you modified only one of them (and the results of the
+     previous 'make coccicheck' are still there), or explicitly, by
+     running e.g. 'make contrib/coccinelle/array.cocci.patch'), then
+     you won't be able to exploit multiple CPU cores to speed up the
+     operation, because that shell loop will iterate over all source
+     files sequentially.
+
+  3. 'make coccicheck' can only use as many parallel jobs as the
+     number of semantic patches, so even if you have more available
+     CPU cores than that, you can't exploit them all to speed up this
+     operation.
+
+  4. During 'make coccicheck' there is only a single
+
+       SPATCH contrib/coccinelle/<whatever>.cocci
+
+     line (or as many lines as the number of parallel jobs) of output
+     when starting to apply each semantic patch, and then comes a long
+     silence without any indication of progress, because applying some
+     of our semantic patches to all source files can take over a
+     minute.  This can trick developers new to semantic patches into
+     thinking that something went wrong, hung, ended up in an endless
+     loop, etc.  It certainly confused my the first time.
+
+Let's add a bit of Makefile metaprogramming to generate finer-grained
+make targets applying one semantic patch to only a single source file,
+and specify these as dependencies of the targets applying one semantic
+patch to all source files.  This way that shell loop can be avoided,
+semantic patches will only be applied to changed source files, and the
+same semantic patch can be applied in parallel to multiple source
+files.  The only remaining sequential part is aggregating the
+suggested transformations from the individual targets into a single
+patch file, which is comparatively cheap (especially since ideally
+there aren't any suggestions).
+
+This change brings spectacular speedup in the scenario described in
+point (1) above.  When the results of a previous 'make coccicheck' are
+there, the time needed to run
+
+  touch apply.c ; time make -j4 coccicheck
+
+went from 3m42s to 1.848s, which is just over 99% speedup, yay!, and
+'apply.c' is the second longest source file in our codebase.  In the
+scenario in point (2), running
+
+  touch contrib/coccinelle/array.cocci ; time make -j4 coccicheck
+
+went from 56.364s to 35.883s, which is ~36% speedup.
+
+All the above timings are best-of-five on a machine with 2 physical
+and 2 logical cores.  I don't have the hardware to bring any numbers
+for point (3).  The time needed to run 'make -j4 coccicheck' in a
+clean state didn't change, it's ~3m42s both with and without this
+patch.
+
+Unfortunately, this new approach has some disadvantages compared to
+the current situation:
+
+  - [RFC]
+    With this patch 'make coccicheck's output will look like this
+    ('make' apparently doesn't iterate over semantic patches in
+    lexicographical order):
+
+      SPATCH commit.cocci              abspath.c
+      SPATCH commit.cocci              advice.c
+      <... lots of lines ...>
+      SPATCH array.cocci               http-walker.c
+      SPATCH array.cocci               remote-curl.c
+
+    which means that the number of lines in the output grows from
+    "Nr-of-semantic-patches" to "Nr-of-semantic-patches *
+    Nr-of-source-files".
+
+    Now, while this certainly addresses point (4) above, it can be
+    considered too much, and I'm not sure that (4) is that big an
+    issue to justify this much output.
+
+    OTOH, I couldn't yet figure out a way to print a single 'SPATCH
+    contrib/coccinelle/<whatever>.cocci' line at the beginning of
+    applying that semantic patch without triggering unnecessary work,
+    effectively killing most of the runtime benefits.  Or to somehow
+    iterate over source files in the outer loop and over semantic
+    patches in the inner loop, so we could have one output line per
+    file.
+
+  - [RFC]
+    The overhead of applying a semantic patch to all source files
+    became larger.  'make coccicheck' currently runs only one shell
+    process and creates two output files for each semantic patch.
+    With this patch it will run approx.  "Nr-of-semantic-patches *
+    Nr-of-source-files" shell processes and create twice as many
+    output files.
+
+    This overhead can be quantified by measuring the runtime of:
+
+      make -j4 SPATCH=true coccicheck
+
+    and this patch increases it from 0.142s to 1.479s.  While this is
+    indeed an order of magnitude increase, it's still negligible
+    compared to the "real" runtime of 3m42s.
+
+    So the increased overhead doesn't seem to matter on Linux, but I
+    would expect that it's worse on OSX and Windows; though I'm not
+    sure whether Coccinelle (with all its OCaml dependencies) works on
+    those platforms in the first place.
+
+  - [RFC]
+    This approach uses $(eval), which we haven't used in any of our
+    Makefiles yet.  I wonder whether it's portable enough.  And it's
+    ugly and complicated.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- Documentation/config.txt            |   9 +++
- help.c                              |   1 +
- help.h                              |   1 +
- sideband.c                          | 119 +++++++++++++++++++++++++---
- t/t5409-colorize-remote-messages.sh |  47 +++++++++++
- 5 files changed, 168 insertions(+), 9 deletions(-)
- create mode 100644 t/t5409-colorize-remote-messages.sh
+ Makefile                      | 52 ++++++++++++++++++++++++-----------
+ contrib/coccinelle/.gitignore |  3 +-
+ 2 files changed, 38 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43b2de7b5..0783323be 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1229,6 +1229,15 @@ color.push::
- color.push.error::
- 	Use customized color for push errors.
+diff --git a/Makefile b/Makefile
+index d616c04125..f516dd93d1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2674,25 +2674,44 @@ COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+ else
+ COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
+ endif
++COCCI_SEM_PATCHES = $(wildcard contrib/coccinelle/*.cocci)
  
-+color.remote::
-+	A boolean to enable/disable colored remote output. If unset,
-+	then the value of `color.ui` is used (`auto` by default).
+-%.cocci.patch: %.cocci $(COCCI_SOURCES)
+-	@echo '    ' SPATCH $<; \
+-	ret=0; \
+-	for f in $(COCCI_SOURCES); do \
+-		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
+-			{ ret=$$?; break; }; \
+-	done >$@+ 2>$@.log; \
+-	if test $$ret != 0; \
++define cocci_template
++$(cocci_sem_patch)_dirs := $$(addprefix $(cocci_sem_patch).patches/,$$(sort $$(dir $$(COCCI_SOURCES))))
 +
-+color.remote.<slot>::
-+	Use customized color for each remote keywords. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
++$$($(cocci_sem_patch)_dirs):
++	@mkdir -p $$@
 +
- color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
-diff --git a/help.c b/help.c
-index 3ebf0568d..b6cafcfc0 100644
---- a/help.c
-+++ b/help.c
-@@ -425,6 +425,7 @@ void list_config_help(int for_human)
- 		{ "color.diff", "<slot>", list_config_color_diff_slots },
- 		{ "color.grep", "<slot>", list_config_color_grep_slots },
- 		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
- 		{ "color.status", "<slot>", list_config_color_status_slots },
- 		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
- 		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-diff --git a/help.h b/help.h
-index f8b15323a..9eab6a3f8 100644
---- a/help.h
-+++ b/help.h
-@@ -83,6 +83,7 @@ void list_config_color_diff_slots(struct string_list *list, const char *prefix);
- void list_config_color_grep_slots(struct string_list *list, const char *prefix);
- void list_config_color_interactive_slots(struct string_list *list, const char *prefix);
- void list_config_color_status_slots(struct string_list *list, const char *prefix);
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix);
- void list_config_fsck_msg_ids(struct string_list *list, const char *prefix);
++# e.g. 'contrib/coccinelle/strbuf.cocci.patches/builtin/commit.c.patch'
++# Applies one semantic patch to _one_ source file.
++$(cocci_sem_patch).patches/%.patch: % $(cocci_sem_patch)
++	@printf '     SPATCH %-25s %s\n' $$(notdir $(cocci_sem_patch)) $$<; \
++	if ! $$(SPATCH) --sp-file $(cocci_sem_patch) $$< $$(SPATCH_FLAGS) >$$@ 2>$$@.log; \
+ 	then \
+-		cat $@.log; \
++		rm -f $$@; \
++		cat $$@.log; \
+ 		exit 1; \
+-	fi; \
+-	mv $@+ $@; \
+-	if test -s $@; \
+-	then \
+-		echo '    ' SPATCH result: $@; \
+ 	fi
+-coccicheck: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.cocci))
++
++# e.g. 'contrib/coccinelle/strbuf.cocci.patch'
++# Applies one semantic patch to _all_ source files.
++$(cocci_sem_patch).patch: $(cocci_sem_patch) $$($(cocci_sem_patch)_dirs) $$(patsubst %,$(cocci_sem_patch).patches/%.patch,$(COCCI_SOURCES))
++	@>$$@+; \
++	for f in $$(filter %.patch,$$^); do \
++		if test -s $$$$f; \
++		then \
++			cat $$$$f >>$$@+; \
++		fi \
++	done; \
++	mv $$@+ $$@; \
++	if test -s $$@; then \
++		echo '    ' SPATCH result: $$@; \
++	fi
++endef
++
++$(foreach cocci_sem_patch,$(COCCI_SEM_PATCHES),$(eval $(cocci_template)))
++
++coccicheck: $(addsuffix .patch,$(COCCI_SEM_PATCHES))
  
- #endif /* HELP_H */
-diff --git a/sideband.c b/sideband.c
-index 325bf0e97..5c72db83c 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,6 +1,103 @@
- #include "cache.h"
-+#include "color.h"
-+#include "config.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "help.h"
-+
-+struct kwtable {
-+	/*
-+	 * We use keyword as config key so it can't contain funny chars like
-+	 * spaces. When we do that, we need a separate field for slot name in
-+	 * load_sideband_colors().
-+	 */
-+	const char *keyword;
-+	char color[COLOR_MAXLEN];
-+};
-+
-+static struct kwtable keywords[] = {
-+	{ "hint",	GIT_COLOR_YELLOW },
-+	{ "warning",	GIT_COLOR_BOLD_YELLOW },
-+	{ "success",	GIT_COLOR_BOLD_GREEN },
-+	{ "error",	GIT_COLOR_BOLD_RED },
-+};
-+
-+// Returns a color setting (GIT_COLOR_NEVER, etc).
-+static int use_sideband_colors(void)
-+{
-+	static int use_sideband_colors_cached = -1;
-+
-+	const char *key = "color.remote";
-+	struct strbuf sb = STRBUF_INIT;
-+	char *value;
-+	int i;
-+
-+	if (use_sideband_colors_cached >= 0)
-+		return use_sideband_colors_cached;
-+
-+	if (!git_config_get_string(key, &value))
-+		use_sideband_colors_cached = git_config_colorbool(key, value);
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
-+		if (git_config_get_string(sb.buf, &value))
-+			continue;
-+		if (color_parse(value, keywords[i].color))
-+			die(_("expecting a color: %s"), value);
-+	}
-+	strbuf_release(&sb);
-+	return use_sideband_colors_cached;
-+}
-+
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++)
-+		list_config_item(list, prefix, keywords[i].keyword);
-+}
-+
-+/*
-+ * Optionally highlight some keywords in remote output if they appear at the
-+ * start of the line. This should be called for a single line only.
-+ */
-+void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-+{
-+	int i;
-+ 	if (!want_color_stderr(use_sideband_colors())) {
-+		strbuf_add(dest, src, n);
-+		return;
-+	}
-+
-+	while (isspace(*src)) {
-+		strbuf_addch(dest, *src);
-+		src++;
-+		n--;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		struct kwtable* p = keywords + i;
-+		int len = strlen(p->keyword);
-+                /*
-+                 * Match case insensitively, so we colorize output from existing
-+                 * servers regardless of the case that they use for their
-+                 * messages. We only highlight the word precisely, so
-+                 * "successful" stays uncolored.
-+                 */
-+		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+			strbuf_addstr(dest, p->color);
-+			strbuf_add(dest, src, len);
-+			strbuf_addstr(dest, GIT_COLOR_RESET);
-+			n -= len;
-+			src += len;
-+			break;
-+		}
-+	}
-+
-+	strbuf_add(dest, src, n);
-+}
-+
+ .PHONY: coccicheck
  
- /*
-  * Receive multiplexed output stream over git native protocol.
-@@ -48,8 +145,10 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		len--;
- 		switch (band) {
- 		case 3:
--			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    DISPLAY_PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
-+				    DISPLAY_PREFIX);
-+			maybe_colorize_sideband(&outbuf, buf + 1, len);
-+
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -69,20 +168,22 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				if (!outbuf.len)
- 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
--					strbuf_addf(&outbuf, "%.*s%s%c",
--						    linelen, b, suffix, *brk);
--				} else {
--					strbuf_addch(&outbuf, *brk);
-+					maybe_colorize_sideband(&outbuf, b, linelen);
-+					strbuf_addstr(&outbuf, suffix);
- 				}
-+
-+				strbuf_addch(&outbuf, *brk);
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
+@@ -2907,7 +2926,8 @@ profile-clean:
+ 	$(RM) $(addsuffix *.gcno,$(addprefix $(PROFILE_DIR)/, $(object_dirs)))
  
- 				b = brk + 1;
- 			}
+ cocciclean:
+-	$(RM) contrib/coccinelle/*.cocci.patch*
++	$(RM) contrib/coccinelle/*.cocci.patch
++	$(RM) -r contrib/coccinelle/*.cocci.patches/
  
--			if (*b)
--				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
--					    "" : DISPLAY_PREFIX, b);
-+			if (*b) {
-+				strbuf_addstr(&outbuf, outbuf.len ?
-+					    "" : DISPLAY_PREFIX);
-+				maybe_colorize_sideband(&outbuf, b, strlen(b));
-+			}
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-new file mode 100644
-index 000000000..4e1bd421f
---- /dev/null
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -0,0 +1,47 @@
-+#!/bin/sh
-+
-+test_description='remote messages are colorized on the client'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir .git/hooks &&
-+	cat << EOF > .git/hooks/update &&
-+#!/bin/sh
-+echo error: error
-+echo hint: hint
-+echo success: success
-+echo warning: warning
-+echo prefixerror: error
-+exit 0
-+EOF
-+	chmod +x .git/hooks/update &&
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git clone . child &&
-+	cd child &&
-+	echo 2 > file &&
-+	git commit -a -m 2
-+'
-+
-+test_expect_success 'push' '
-+	git -c color.remote=always push -f origin HEAD:refs/heads/newbranch 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded &&
-+	grep "prefixerror: error" decoded
-+'
-+
-+test_expect_success 'push with customized color' '
-+	git -c color.remote=always -c color.remote.error=white push -f origin HEAD:refs/heads/newbranch2 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<WHITE>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
-+
-+test_done
+ clean: profile-clean coverage-clean cocciclean
+ 	$(RM) *.res
+diff --git a/contrib/coccinelle/.gitignore b/contrib/coccinelle/.gitignore
+index d3f29646dc..7ae6ffa983 100644
+--- a/contrib/coccinelle/.gitignore
++++ b/contrib/coccinelle/.gitignore
+@@ -1 +1,2 @@
+-*.patch*
++*.cocci.patch
++*.cocci.patches/
 -- 
-2.18.0.597.ga71716f1ad-goog
+2.18.0.408.g42635c01bc
 
