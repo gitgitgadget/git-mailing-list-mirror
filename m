@@ -6,65 +6,64 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4EFD1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 15:24:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 105471F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 15:32:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732603AbeHBRQF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 13:16:05 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46999 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732569AbeHBRQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 13:16:05 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h14-v6so2511683wrw.13
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 08:24:24 -0700 (PDT)
+        id S2387692AbeHBRXm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 13:23:42 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:54597 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387490AbeHBRXm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 13:23:42 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c14-v6so3000280wmb.4
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 08:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=SDv8++1cSRinWc4br1CqGGppdQZG5vJGu28J63vZ9SI=;
-        b=Iue4+dpiKSCBNDz0+P6ob1Y+hdz5rrlpZugRTY6oY0SpLVyjcs5KodiWElVpeh0TWS
-         5OIF05u7xo7dvXYN9t1zWOpdjoB7FSJlivCclg8TELZ0yJHY+9dncTAl9bhi5KQERhoI
-         8cRbSMrmdLCLbevdWSgUfTC1B42NPDJXw4DpHbiA4+Tygt16Tm7FmkbazmDnmz4TgBTh
-         3whYJ17waP98sYkpsu4bkV7fCoz/Zhf+xY6N7o/1KSmeJACwBhuY5IQiUT9GwnJUiz7U
-         7+BtNd76VhKL5aIBKt3jT6l5FJ9YDsXc3QYT2MhZosaGe5rLc2InsSb9dUTMUptF5UxR
-         4Pig==
+        bh=2RwywM+IjWr4WRSoKibPXRkPZzs4fUHotmlyTQngya0=;
+        b=O8Epygvrkkw3RtE5YJN5d3pOU4T8NP4ByB8GiPZ+U2v+ToETSjj1o8xK9DrTiWbVCa
+         +95PTzTU92fWjqXCOinVnvIxhEchW3IisTTQkEWLuaN83+xxD8g8tmhvLL77RUo81sUv
+         I0KZft2VHKrrTh7ATY69H2uq0zlB9dKlLRH2YNjQ3QGgI24A9zqFUifbLijtADshxLHD
+         G8QT/kVE/e2Tp2gkRrnetQ9jpOV6LLfCTnKK6LqbHnJKHH14uRt0O/vgG2SY0w0Hm9ha
+         BVi5rK0Y9rEgowNs6T+yivL/DK3v5d3+zcMQ0fkis48o5nvAlUkeegC5M9lFdlyrsE18
+         m0yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=SDv8++1cSRinWc4br1CqGGppdQZG5vJGu28J63vZ9SI=;
-        b=imOYZjFpexhKbSY8UaK5n8FpTzXgmkXpfFuIyER53inkfhzJEvQJc8XhY6qRxv1pu/
-         FoeHib4U6I+kjUOtX1y9DDzIJcmvXBmAs1d+kQP2WrVPlp5rvmi6746h/huqxvyO2Ejk
-         e26gND8gr5LyoKM/WRjAXUOG+Fd0TFUo2hSCnZOKODgz0piSgSGYjJCy0FBJO1DS4U0M
-         ipkgDFFEUkjWGepwAxFFZM4BD4qK+mWQ3YCBmoW+Nd0YgelUSu3rIg60S+OwBcqoCSid
-         SHo0gZwfxC0VDitKiJNreHTOPxLhpy1kk7VuwHdEtj2oKDzojmrrAdvNqSWSCpLc3BbH
-         OlKg==
-X-Gm-Message-State: AOUpUlGCKjPEKVl1cV4xeS1vIrTOR/Ji9ZT53fyAlRkhgR5zDDJSpiqa
-        CS7V/ohM/glECbE/VxczFt8=
-X-Google-Smtp-Source: AAOMgpeC79+yaGtLugsvt7L/stcSTMnC84PIuMtGK6zrEHGgIfDaufyDMBI7xL+RTH1mM+PldemNtg==
-X-Received: by 2002:adf:82f0:: with SMTP id 103-v6mr2277141wrc.131.1533223463673;
-        Thu, 02 Aug 2018 08:24:23 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g18-v6sm2301137wmh.21.2018.08.02.08.24.22
+        bh=2RwywM+IjWr4WRSoKibPXRkPZzs4fUHotmlyTQngya0=;
+        b=UjoI8m2WpyseJ4suO+LqhFq69R7TqPtqpi8EDsXY9t05JMnJ7aNlrVoUCi2Ra1LCcs
+         C0EfR+wvH9knm1u/7gcrrUQoV1W/eB9FvVOMUn1PxHBnhbXUlB1bcE+1FhTcCtY1jceZ
+         9P2K6hnGBHJ1UW55NOO9Aw1r+sUDWWLW9BNlnH28427qr1mm2aDNhaOtnJbyczlnj+Yy
+         lrR6QHDb7gcfeuCY3t5zyNBlERnYEFOv2KQ2LvFbisciJfeQi22HZYA2j/NhjueweehV
+         FU7tzmoI2fgSHzFQEDTp0PMa+18vY5SUVz+Uepqy6Hq9mkB8qdsSdBrlFX8FcBjMPOae
+         +gWQ==
+X-Gm-Message-State: AOUpUlHMrSnEL6eoRRLf7l6cPNp7b65AXKaWchATQJ8Z44qlXEE8FEAN
+        g8st1bkOMJ8a25KXH7Csb24=
+X-Google-Smtp-Source: AAOMgpfuFwlk12e5ljIJGUWRKgeEoPOL4nbQa9ZjcjawuZZ1vw7Wwgz8d1yFtEm2+qIBF8gKY8nwfg==
+X-Received: by 2002:a1c:6f06:: with SMTP id k6-v6mr2275304wmc.1.1533223919126;
+        Thu, 02 Aug 2018 08:31:59 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l11-v6sm2095612wru.25.2018.08.02.08.31.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 08:24:22 -0700 (PDT)
+        Thu, 02 Aug 2018 08:31:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
-        Stephen Boyd <bebarino@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
 Subject: Re: [PATCH] push: comment on a funny unbalanced option help
 References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
         <87k1p9u860.fsf@evledraar.gmail.com>
         <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
         <87h8kdu3ay.fsf@evledraar.gmail.com>
         <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
-        <87ftzwu9wg.fsf@evledraar.gmail.com>
-Date:   Thu, 02 Aug 2018 08:24:22 -0700
-In-Reply-To: <87ftzwu9wg.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 02 Aug 2018 16:21:19 +0200")
-Message-ID: <xmqqk1p84wrd.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 02 Aug 2018 08:31:57 -0700
+In-Reply-To: <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 2 Aug 2018 14:16:17 +0200")
+Message-ID: <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,87 +73,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> On Thu, Aug 02 2018, René Scharfe wrote:
+> We could check if argh comes with its own angle brackets already and
+> not add a second pair in that case, making PARSE_OPT_LITERAL_ARGHELP
+> redundant in most cases, including the one above.  Any downsides?
+> Too magical?
+
+Hmph.
+
+> -- >8 --
+> Subject: [PATCH] parse-options: automatically infer PARSE_OPT_LITERAL_ARGHELP
 >
->> Am 02.08.2018 um 00:31 schrieb Ævar Arnfjörð Bjarmason:
->>> But looking at this again it looks like this whole thing should just be
->>> replaced by:
->>>
->>>      diff --git a/builtin/push.c b/builtin/push.c
->>>      index 9cd8e8cd56..b8fa15c101 100644
->>>      --- a/builtin/push.c
->>>      +++ b/builtin/push.c
->>>      @@ -558,9 +558,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
->>>                      OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRANSPORT_PUSH_PORCELAIN),
->>>                      OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
->>>                      { OPTION_CALLBACK,
->>>      -                 0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
->>>      +                 0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
->>>                        N_("require old value of ref to be at this value"),
->>>      -                 PARSE_OPT_OPTARG, parseopt_push_cas_option },
->>>      +                 PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
->>>      +                 parseopt_push_cas_option },
->>>                      { OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
->>>                              N_("control recursive pushing of submodules"),
->>>                              PARSE_OPT_OPTARG, option_parse_recurse_submodules },
->>>
->>> I.e. the reason this is confusing is because the code originally added
->>> in 28f5d17611 ("remote.c: add command line option parser for
->>> "--force-with-lease"", 2013-07-08) didn't use PARSE_OPT_LITERAL_ARGHELP,
->>> which I also see is what read-tree etc. use already to not end up with
->>> these double <>'s, see also 29f25d493c ("parse-options: add
->>> PARSE_OPT_LITERAL_ARGHELP for complicated argh's", 2009-05-21).
-
-Yup.  It shows that I did not know (or remember) about LIT-ARGH when
-I wrote it (the line stayed in the same shape since its introduction
-to the codebase), and I did not know (or remember) when I sent this
-patch.  The above is the best solution to my puzzlement within the
-framework of the current codebase.
-
->> We could check if argh comes with its own angle brackets already and
->> not add a second pair in that case, making PARSE_OPT_LITERAL_ARGHELP
->> redundant in most cases, including the one above.  Any downsides?
->> Too magical?
+> Avoid adding an extra pair of angular brackets if the argh string
+> already contains one.  Remove the flag PARSE_OPT_LITERAL_ARGHELP in the
+> cases where the new automatic handling suffices.  This shortens and
+> simplifies option definitions with special argument help strings a bit.
 >
-> I'm more inclined to say that we should stop using
-> PARSE_OPT_LITERAL_ARGHELP in some of these cases, and change
-> "refname>:<expect" to "<refname>:<expect>" in push.c, so that the help
-> we emit is --force-with-lease[=<<refname>:<expect>>].
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
 
-I fail to see why the outermost <> pair could be a good idea.
-Without them, i.e. in what the current output shows, I can see
-<refname> and <expect> are something that I should supply real
-values (i.e. placeholders) and I should have a colon (literal) in
-between them.  It is an established convention that a token enclosed
-in a <> pair is a placeholder.
+>  		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+>  		{ OPTION_CALLBACK, 'g', "reflog", &reflog_base, N_("<n>[,<base>]"),
+>  			N_("<mode>,<object>,<path>"),
+> +		OPT_STRING(0, "prefix", &prefix, N_("<prefix>/"),
 
-But I am not sure what you mean by <<refname>:<expect>>.
+Hmph.
 
-> As noted in 29f25d493c this facility wasn't added with the intent
-> turning --refspec=<<refspec>> into --refspec=<refspec>, but to do stuff
-> like --option=<val1>[,<val2>] for options that take comma-delimited
-> options.
+> diff --git a/parse-options.c b/parse-options.c
+> index 7db84227ab..fadfc6a833 100644
+> --- a/parse-options.c
+> +++ b/parse-options.c
+> @@ -660,7 +660,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
+>  static int usage_argh(const struct option *opts, FILE *outfile)
+>  {
+>  	const char *s;
+> -	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
+> +	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh ||
+> +		(opts->argh[0] == '<' && strchr(opts->argh, '>'));
 
-There is no --refspec=<<refspec>> to begin with.
+You are greedier than what I thought ;-) I would have limited this
+magic to the case where argh is surrounded by "<>", but you allow
+one closing ">" anywhere, which allows us to grab more complex cases.
 
-A single placeholder can be written in the source as "refspec" and
-shown as "--refspec=<refspec>" because you get the surrounding <>
-pair for free by default.  Nobody would want to write "<refspec>" in
-the arg help, as most of the option arguments are a single value
-placeholder.  But if you want "<val1>[,<val2>]" in the final output,
-you do *not* want surrounding <> pair, so you use the option and
-write everythnig manually in the source without magic.
-
-Or are you saying that we should consistently write surrounding "<>"
-to all placeholders, and stop special casing single-token ones?
-IOW, get rid of literal-arghelp and instead make that the default?
-
-> If we're magically removing <>'s we have no consistent convention to
-> tell apart --opt=<a|b|c> meaning "one of a, b or c", --refspec=<refspec>
-> meaning "the literal string 'refspec'" and --refspec=<<refspec>> meaning
-> add a <refspec> string, i.e. fill in your refspec here.
-
-Ah, this is where you are off-by-one.  "--refspec=<refspec>" means
-"give your refspec as its value".
+The lack of escape hatch to decline this auto-literal magic makes me
+somewhat nervous, but I do not offhand think of a reason why I do
+want an arg-help string that _begins_ with '<' to be enclosed by
+another set of "<>", so perhaps this is a good kind of magic.
