@@ -2,104 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FF39208E9
-	for <e@80x24.org>; Thu,  2 Aug 2018 06:16:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 966D01F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 07:34:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726929AbeHBIFi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 04:05:38 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34981 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726563AbeHBIFi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 04:05:38 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a3-v6so888056wrt.2
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 23:16:06 -0700 (PDT)
+        id S1726260AbeHBJYM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 05:24:12 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:50909 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726192AbeHBJYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 05:24:12 -0400
+Received: by mail-it0-f66.google.com with SMTP id j81-v6so132600ite.0
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 00:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XLs2ekaXa1CVi+NlaWhxPYa+ZRn8v7mto9kKqJDHWR0=;
-        b=mqzUaxFDfIoOVKH6iyUjcHZZK82lUfu+avxvu42Yj5pGM910vvnQGWksl0q1qhcaR/
-         38+xB54R9U4wT8/o2tjAqBjiqBhScLJPKmekfCegdf9rB5jVhoBUst4by3PgBAWSyb9W
-         pa7mnscgFxjM7C6iyriJuJR3C6sl6yV2sgsJuWQvsciKRKdjDU3J8erHNg6/KJT50Yrs
-         fE7H6yO5QyQVbNqwHSp94K6+M926qgd3eiERgM9f08vBsJi3rBt1wAZc5k5X+XtnE4aD
-         Ra/MnqB6TWhpxU3nrDwsGCG+5+eXbYRKqKi+atIwwa0LrOasTldvI0uW52jAopfa8vgC
-         hGHg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jZBH2jvmYv15DhW2w/4Mv5ysafENLnd4hSgXJzb8GqA=;
+        b=Z1rxGmYqoAlaeigvlHksrB3pMMTicydN4jzlIKJC4cKHRNCLHWeHz1LyQ4Xb7mvJRR
+         2p9sIYm52XzOsxzujFyLLm3hWdtMadcHwBgt0Uc71QrrrWjZnW9djXNiFF9qeG9wTWG8
+         ZSr86MlL1gyRRdqNkGMKd62dkxYTlS7+TUMpToxv92+9FqdGalBU3wYDmsLoKI66Q/2J
+         jtzaec0+O0cUmkj7RSeKJsPJ7LWBtcWdByg3rAXV2hlgkzj6rRwG2n8kv+FPgMeZG6jg
+         8GBKpz5dHCT2Izp8hIeXLDV9xkyubH5XbdsKEWvHZKCXAWdyNwvVXYyD/Tb+ApIBj8lw
+         ZRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XLs2ekaXa1CVi+NlaWhxPYa+ZRn8v7mto9kKqJDHWR0=;
-        b=exy2/3dUYU/GlnQA7qEmxpDLkEMJ+QuRKykD1MzsdzPXv4FydBcwGbHFpjwynNnz4E
-         Qzh6Ulrj5J9nvObg0nrX3hQMJbGQD0U2zZMaxbfWZWGDC5F95gfUc9/x9YlEetTVK+7e
-         Fi99twxQxPIkva0Bhs+Slafk7cGpckSqEfbF3yPjEtDafDRM8iClEgWWKmDZIiS/xSYi
-         IarjUYGc9uBen6nur4j0P8fWlU9YiPLRh+HOPPcXxqHR+RLj6UTW/wSG58JB9bGgNSa6
-         AuVzET/wKymCH+d6uEOJLyoxfiqLai6rhmuMOg++Ne8JMp51rDnDAnQiMb+ythnYz+nP
-         3XAg==
-X-Gm-Message-State: AOUpUlGdZ5xs1gmuuxjhvB9Gi3OxxkS6nRyJ8tJgQKnze0KhWYUuNECl
-        nlRE7PsfaSBz1sXzAnkfkLifq5O7
-X-Google-Smtp-Source: AAOMgpd9ofOigAHUFvO7t/rWObYEqVa2veshKFqStKO3YYFfsJjS1r6F1R3qCcEa6o1zr/Q2+G56qQ==
-X-Received: by 2002:a5d:480d:: with SMTP id l13-v6mr974330wrq.234.1533190565211;
-        Wed, 01 Aug 2018 23:16:05 -0700 (PDT)
-Received: from localhost.localdomain ([2a04:cec0:109f:b149:1092:6e1:496b:fd26])
-        by smtp.gmail.com with ESMTPSA id m200-v6sm1093018wma.32.2018.08.01.23.16.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Aug 2018 23:16:04 -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Mike Hommey <mh@glandium.org>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Eric Wong <e@80x24.org>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
-Date:   Thu,  2 Aug 2018 08:15:05 +0200
-Message-Id: <20180802061505.2983-10-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.18.0.330.g17eb9fed90
-In-Reply-To: <20180802061505.2983-1-chriscool@tuxfamily.org>
-References: <20180802061505.2983-1-chriscool@tuxfamily.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jZBH2jvmYv15DhW2w/4Mv5ysafENLnd4hSgXJzb8GqA=;
+        b=LY80VjLGJSrpFsVbZvs64xm6DAwtS4ri9K5vgxQfltiKIvq3xVMtnoAGVqrDAvniN4
+         40bbt207K9rBo9OVsfWKxEyUhDQ8OFYiVsMm8RJN4/tYMNt0o2xc+nU+aK3aw9A4r09I
+         YwhMvICyPEzqPfLigcy4kRis2XUzP0bdzDUox+IbWnneM0/coHwgxZhV9KTpsRw6VQci
+         lVurpwtFQnGT5MDHvElNwrVBknyH5ANkvnfhHWsAstoihgwyMSyEhque0l0GwZIoOAEQ
+         l870xbQRhOMZx5X9Sqy1EA2u9eYGvjJaaGaX758NzdHBnOoithKNMYObRGWyYXhSIhi6
+         lPGw==
+X-Gm-Message-State: AOUpUlFtOmxGxTM3jN5X90lPXPM9TlVKQj1HZtZL7YOODa3PvX73EMUF
+        u/wTh+ggqHF46NhzubZn4kgjxrRe1jwVmpDGNQ/d1JpY
+X-Google-Smtp-Source: AAOMgpcxWV53wZDEO1gYkGH5Mu23mPSfUoTjlWdHLKZ2NLago+8UOiYEdkA44FUCCabksw+yTJ6CL5n0oH8KinytPqw=
+X-Received: by 2002:a24:282:: with SMTP id 124-v6mr1345727itu.151.1533195260322;
+ Thu, 02 Aug 2018 00:34:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20180731173651.184716-1-hanwen@google.com> <20180731173651.184716-3-hanwen@google.com>
+ <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
+ <xmqqeffi856n.fsf@gitster-ct.c.googlers.com> <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
+ <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Thu, 2 Aug 2018 09:34:08 +0200
+Message-ID: <CAFQ2z_Mazv3jQF6+juLRu214Ddem3=TOd4tnVcm13ZThYMNH1g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
+On Wed, Aug 1, 2018 at 8:17 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >> Hmm, do we actually say things like "Error: blah"?  I am not sure if
+> >> I like this strncasecmp all that much.
+> >
+> > this is for the remote end, so what we (git-core) says isn't all that
+> > relevant.
+>
+> It is very relevant, I would think.  Because the coloring is
+> controlled at the client end with this implementation, third-party
+> remote implementations have strong incentive to follow what our
+> remote end says and not to deviate.  Preventing them from being
+> different just to be different does help the users, no?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt | 5 +++++
- 1 file changed, 5 insertions(+)
+But the ship has already sailed: Gerrit has been saying "ERROR"
+instead of "error" for many years. In the case of Gerrit, the upper
+case message is a (poor) way to make the error message stand out from
+the sea of progress messages that "git push" prints on the terminal,
+without requiring a newer version of git-core.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43b2de7b5f..2d048d47f2 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2513,6 +2513,11 @@ This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
- environment variable, which must be a colon separated list of refs or
- globs.
- 
-+odb.<name>.promisorRemote::
-+	The name of a promisor remote. For now promisor remotes are
-+	the only kind of remote object database (odb) that is
-+	supported.
-+
- pack.window::
- 	The size of the window used by linkgit:git-pack-objects[1] when no
- 	window size is given on the command line. Defaults to 10.
--- 
-2.18.0.330.g17eb9fed90
+--
 
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
+
+Registergericht und -nummer: Hamburg, HRB 86891
+
+Sitz der Gesellschaft: Hamburg
+
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
