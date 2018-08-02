@@ -7,20 +7,19 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 262291F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 19:18:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 582B51F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 19:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbeHBVKb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 17:10:31 -0400
-Received: from mout.web.de ([212.227.15.14]:47701 "EHLO mout.web.de"
+        id S1727008AbeHBVKl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 17:10:41 -0400
+Received: from mout.web.de ([212.227.15.4]:42993 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727153AbeHBVKb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 17:10:31 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0M0hsk-1g5io42N26-00umoh; Thu, 02
- Aug 2018 21:17:58 +0200
-Subject: [PATCH 4/6] send-pack: specify --force-with-lease argument help
- explicitly
+        id S1726177AbeHBVKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 17:10:40 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MQO44-1fOAZn28YW-00TnDm; Thu, 02
+ Aug 2018 21:18:07 +0200
+Subject: [PATCH 5/6] shortlog: correct option help for -w
 To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
@@ -33,8 +32,8 @@ References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
  <20180802165457.GC15984@sigill.intra.peff.net>
  <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <d4233136-45de-51ec-e8dd-b4879d42358e@web.de>
-Date:   Thu, 2 Aug 2018 21:17:58 +0200
+Message-ID: <4e96d2a2-dfdc-3f6f-e2c7-2eb954ed633c@web.de>
+Date:   Thu, 2 Aug 2018 21:18:06 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
@@ -42,54 +41,53 @@ In-Reply-To: <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:KN9RLxDYIqPZyqkC+uXQE7qY4dQKhJJqKkLoI19Frp1X60Jo1Xf
- ZHzL+HJxZoinJB/fPgnm/frBKV8zuXt6TOxdknKIwz3IAu1/EzIDF8XZAQZXNBcT2fHlwcU
- DQTmCsQWt8nz2ZpyVTUudWOdlzrT8o3nF43LCc406C6c8ysW0XLCXDgw21X4f4R6IWYVaRr
- G4IMz/ze9Dh3D0FUGKgBQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:8Fo0D6aWBhs=:QILO2ToEvKiZIriFZwNY14
- LPKjaGQqL/wvYf2UwKmQqxHEyhWvu0XKt4apGp5KRBUR6W9lrm8VpfCuG0ZL3+c8qIUfGoJ2s
- zRq5gwOFc2ObOdE4j592B74c5HVoGaNP9UcMDaBPw/UTQyvNtpe1ss28hyYPDvKx1sFpq3t2w
- 0oQ36EK38BV6Y45MWGhk5lLMW1GZLZGBr69omE9QCqwNTqJaxzxCvS6yONjsbqLDSLtaKMIs0
- 5eYGuTiA6UQ5+/VJ2ZWMzFNms5UYqkb+ql/ivEGjUF4yNJl+2koeYcVYjqaQq1eHxHfyigMcu
- ChAO0HzCBajVZ8rudnTXBMUA0QfYmL0NAKwScnCo9wnOqvAufuA1cAUOqVYLjZgFPYNuyF3+7
- 6bNjHj4MRg1UdDyqG3o9coHIk/XkURTtAZ4hjmaE+WFSDXTVywgXB5OWWQuOBshrcBFH7Td7v
- nXH8VWFms4BCjrvywqjoh+uL9mQ1iGpeEfTvI+xrnUGqmh8dkmzgjE53+ckPABFhLA3AK4B4+
- QBJ68ulaVsUVGGQLpx6yzmCMiK8nwWAhohajR9SAaN+EhCmNKyBqf2nteYP5qC+CEWU9J1CIC
- kTix8oELWnuV4AQ4gfprXPhesxT6o3oNgqV3ep8AbafDGPidjka7JNrjsO8XOJUbbQ9FefnxN
- cF+7i+gMKgq9kBq7RFabhoar+xe+Vn1uA/whunonG0fNLYWtFzrN3vDTx9if2vThV40WUmMM0
- uePl7S52pzoTvQeweEo5HgK66jJkmQcXkrqKLEqpwjVRef3Setis6bJILE+YZmzYMtBW9bVDU
- LoA9Xu9
+X-Provags-ID: V03:K1:tlJfqLGkGkDzUkpTHbRopJupus9uPz7frlASLfenaHUI3pvyYAo
+ SFY18yoacIFpmS5mQIa94sACjtvVcHlvml4Fsn8rY4qvqxGD1FgiqrqacQM0BqfUI03ejtw
+ imRLVOs8tZSGgCGQK4/65Z+BrvMOhxo0GlrBv9kKan+wwmGoHEPx49PlC3O3Wnh2oY+EE/T
+ 6uMJMpHEfPlmBMYJWklKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:yqwafz+b2hY=:iKsMWzT3pNoTNlW1+hroi5
+ 1PLbp5QtFJETfZ9M3pxuI9/S/NPf5uTpk0q1kcPH7mU/8doC0/WGK5X65bA+zaiDukQqiE3CI
+ yRDJKI0GGZiCKmTDfJs9IGygzPl8yWnqc1Ufd5bf1J/k4KZ1Yy/JmhkSGoTuE/46PEwuX4gYS
+ +LBt5JbX5KrgFOIdG1FrgHTi0P2UufwCoCrSus6kA9HckqFHUCkV1P3/0jo0M/M+8WUuHNH5m
+ pc/oimPNYYy+tkhjqLH+VWyBViW5QcBeyBAn6zn3eeevCrSaHvPfxUC5fjLX4L2TfZ7SSw8L8
+ 2fqteUmOeSUHF3khKhJcDLzNFNSVNKd2ARVHYKhiDzBW8DXKBoGzi1Y6M70dPl/IATWg+ONK7
+ khDNR38avx19b3u+ix3bOi1ZAnW08m5FbkeEHrKFpf33P4aMoEy4tIiUVSnmEI3gJZUfPumQp
+ oB3FtKkijnEKKIs9EB9m9Jc6hg3Sn5LCrvEQweHC/3Gfy2iKL5RFdOGiFwOsWVgX5Qp047jnJ
+ MHwMXYMrplC46zmMhzW1566j5VRmBN4F9xBOfJnL4vH3Y30FmPE9zFsYb02ndPoDcLVe7+Op3
+ smP4p63KVYtEK8NUiWnLkC4NWjJlJvWkJtM0W7JaRY8Q28HuU7P/4TrFi3KQBe3dpQf8Ugy+W
+ jFfYKGiC/xJC+1tqaTdQme5Nikq8P4kpy9jG8xa9iWSxLDxzyXpdjata13eW+xs4kHORzIUeG
+ gNQJJwujL0cmAS8KRxznkmdmsfvG3mddHpKF6+e7mjcfPNWmWBuF0w1/3sB0aKxklhsudm9lK
+ 8GB5SR6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Wrap each part of the argument help string in angular brackets to show
-that users need to replace them with actual values.  Do that explicitly
-to balance the pairs nicely in the code and avoid confusing casual
-readers.  Add the flag PARSE_OPT_LITERAL_ARGHELP to keep parseopt from
-adding another pair.
+Wrap the placeholders in the option help string for -w in pairs of
+angular brackets to document that users need to replace them with actual
+numbers.  Use the flag PARSE_OPT_LITERAL_ARGHELP to prevent parseopt
+from adding another pair.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/send-pack.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ builtin/shortlog.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 42fd8d1a35..0b517c9368 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -178,9 +178,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "stdin", &from_stdin, N_("read refs from stdin")),
- 		OPT_BOOL(0, "helper-status", &helper_status, N_("print status from remote helper")),
- 		{ OPTION_CALLBACK,
--		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
-+		  0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 		  N_("require old value of ref to be at this value"),
--		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
-+		  PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
-+		  parseopt_push_cas_option },
- 		OPT_END()
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 608d6ba77b..f555cf9e4f 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -268,8 +268,10 @@ int cmd_shortlog(int argc, const char **argv, const char *prefix)
+ 			 N_("Suppress commit descriptions, only provides commit count")),
+ 		OPT_BOOL('e', "email", &log.email,
+ 			 N_("Show the email address of each author")),
+-		{ OPTION_CALLBACK, 'w', NULL, &log, N_("w[,i1[,i2]]"),
+-			N_("Linewrap output"), PARSE_OPT_OPTARG, &parse_wrap_args },
++		{ OPTION_CALLBACK, 'w', NULL, &log, N_("<w>[,<i1>[,<i2>]]"),
++			N_("Linewrap output"),
++			PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
++			&parse_wrap_args },
+ 		OPT_END(),
  	};
  
 -- 
