@@ -6,137 +6,108 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9B21F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 15:44:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1C231F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 15:48:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387700AbeHBRgF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 13:36:05 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54092 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387654AbeHBRgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 13:36:04 -0400
-Received: by mail-wm0-f66.google.com with SMTP id s9-v6so3053330wmh.3
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 08:44:20 -0700 (PDT)
+        id S2387667AbeHBRj4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 13:39:56 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37216 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387649AbeHBRj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 13:39:56 -0400
+Received: by mail-wr1-f67.google.com with SMTP id u12-v6so2619447wrr.4
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 08:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ZAoIec3WDb86CpZunwAcXeq1v75nOEP/OyypNX9y+l8=;
-        b=iJ5cUzsNRZoCzKrgjTaiub0OCKV3wyIa493QTgZfsNduLexx2twom8xGDhYkzGBt8p
-         N5ipfJIAV/VUI8IsJ+wuVuNETdv8JCb/tV25wK2O3G1SkpllY1aWcP9C2ExJYHjwWqug
-         yY+x7hDgQtGmCjHaR3N8oAx978viRmudNBmeDOAkNYq93FKYPzy/2l6zsbxHXuMiKm4b
-         /wq0lTnLVdoEHQmD8mJW63EckuwoeYSZ+hULHL8e1uBtB85s6zYM2EOpJ9t+fnM99cjs
-         geUWerqjPoYtv7pGxfrba/VBY640Qtm9u0JD4Ny9f519UL66lyLJDsYYoyCUNERIQJgs
-         kFig==
+         :user-agent:mime-version;
+        bh=SliPuE2zjXsHAPX9r1lpHh/MM/Zez3TM+ovaD7J4234=;
+        b=fPVdSokPMvfyMDjWGn9JupvHvIwoYadz4PsaTtdsP+4MuH2rTeg4BB1BZVF/Rppd3F
+         9DsHl+vvHVnf3YK5K7pC5BeChABmzaNsqLpRhh3W1EAZ3sSpxl/qdLWn5YPEGvDI8xM4
+         FYblwgNXxHcHQxPIMrvF/QJSd2vLm2+87ipdnb8mgKs6H86cx/YKtC31fQkZ1oPKPcd4
+         ie9XdmOukLQWggEeyuoF7V63GkmpnZ01WPK1553xl+1HFRa0Wm2wc5aWdK4EJlIf1pn0
+         fVmzJTn8msHUfEomrck7rgIYyTnkjT5gcJqv2fevmFoXMhyPd8vs7LSQBI/KK1ZRXrIH
+         7uQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ZAoIec3WDb86CpZunwAcXeq1v75nOEP/OyypNX9y+l8=;
-        b=B3b9FrCTcft6RWwm2svbJrw3j5aS/ndT5F+DqKpQoHJAa2Odnn2ORhua/hUYss8xdh
-         1vE01zay0zQexC4IWz8qZ6lJq4C0PsbwVznn/FcoKRLlQmvdOUrGxgup4VXkHv0peOlb
-         GHAv+abqr7L9Fg+2NH3ZjXY/AJF8kR8vaq0IDeEAiW7cT/3h5nVQnYd3wyE43sfbEa48
-         d9Skxy/LbkWEBv5XjlRad0LL+sfqpg7QGcHSchyJYMIaVMz0egW155baa1R8w7vem86f
-         faqXTQrw0cpwTaJTm0WIuFYvQLAmU6kTdnIaVdU49d8UiMQVq+D6wAscjlRTNGTEQpbN
-         fCLA==
-X-Gm-Message-State: AOUpUlHln6BasZrJubynq6GLehEl4GbnyLBSjedwWvrhS/QcB3uXCP7I
-        f1tzXPnQmo7GYytg0c7+WDnVsipf
-X-Google-Smtp-Source: AAOMgpcWLkrkCYG1cmrZKZvFDh7vWlSpBNFR8StgtwcGt6+BMFu1552DGOwNKuKFXkq7AtGyHgGINQ==
-X-Received: by 2002:a1c:9bc5:: with SMTP id d188-v6mr2494164wme.33.1533224659623;
-        Thu, 02 Aug 2018 08:44:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z5-v6sm2177788wrv.2.2018.08.02.08.44.18
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=SliPuE2zjXsHAPX9r1lpHh/MM/Zez3TM+ovaD7J4234=;
+        b=HLnxbrLYBYAdeaLq//m4GKMwdAUZC2BprqGV6uxroSSnCwTPIODaBixbOMHG1otk1a
+         7arLwRsNAeA8Yl9XvQBmylb3J24S0ifq0u0z9ix9JliMKHDFdyBwlJnpxHGebMtjH7pr
+         VEkUx00aB/ayFiVnPlyse+Euii893ASOZBBeEqd6z5vSVvlqF0j57aCsHbpIcWKRsFWe
+         V4d8mWJdDH1jJyV0FfOu+7Rk89ER7jabvXsJykcJEWZ/ctb5CrEGfruvWdgbSFzGqA1n
+         r63xm/VpVc48ZTPxw8/+VtjLE8AM3xPbN4DNMLDZRViN2GL0tshb6mPXiKDKh83hVOp6
+         6OMQ==
+X-Gm-Message-State: AOUpUlGoTqfJ704hIKdvJfrveHDl/6LEwyLvjC0TpbK0ztUgO1ZC/JmP
+        pNK8V7Qwndsr+mhHCXEmb5M=
+X-Google-Smtp-Source: AAOMgpdeKZ4PM3W4PgcrhwMKQqB1yJS4BLaVxupntAiJkH1OgU1qbdJkPHo7758vK9rmarBmMbYi+w==
+X-Received: by 2002:a5d:6345:: with SMTP id b5-v6mr15940wrw.266.1533224890591;
+        Thu, 02 Aug 2018 08:48:10 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q16-v6sm2589940wmq.25.2018.08.02.08.48.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 08:44:18 -0700 (PDT)
+        Thu, 02 Aug 2018 08:48:09 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re* [PATCH] push: comment on a funny unbalanced option help
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
-        <87k1p9u860.fsf@evledraar.gmail.com>
-        <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 02 Aug 2018 08:44:18 -0700
-In-Reply-To: <xmqqwot969mp.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 01 Aug 2018 14:48:46 -0700")
-Message-ID: <xmqq36vw4vu5.fsf_-_@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCHv2 0/8] Add color test for range-diff, simplify diff.c
+References: <20180728030448.192177-1-sbeller@google.com>
+        <20180731003141.105192-1-sbeller@google.com>
+        <xmqq8t5p7veb.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbkWEa2zchvSo8nr2RFt8NaeU-bnzY7=z=50D+GUZMqKA@mail.gmail.com>
+Date:   Thu, 02 Aug 2018 08:48:09 -0700
+In-Reply-To: <CAGZ79kbkWEa2zchvSo8nr2RFt8NaeU-bnzY7=z=50D+GUZMqKA@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 1 Aug 2018 12:46:04 -0700")
+Message-ID: <xmqqy3do3h3a.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->>> +		  /* N_() will get "<>" around, resulting in "<refname>:<expect>" */
+> On Wed, Aug 1, 2018 at 12:13 PM Junio C Hamano <gitster@pobox.com> wrote:
 >>
->> ...but this comment isn't accurate at all, N_() doesn't wrap the string
->> with <>'s, as can be seen by applying this patch:
+>> Stefan Beller <sbeller@google.com> writes:
+>>
+>> > Stefan Beller (8):
+>> >   test_decode_color: understand FAINT and ITALIC
+>> >   t3206: add color test for range-diff --dual-color
+>> >   diff.c: simplify caller of emit_line_0
+>> >   diff.c: reorder arguments for emit_line_ws_markup
+>> >   diff.c: add set_sign to emit_line_0
+>> >   diff: use emit_line_0 once per line
+>> >   diff.c: compute reverse locally in emit_line_0
+>> >   diff.c: rewrite emit_line_0 more understandably
+>> >
+>> >  diff.c                  | 94 +++++++++++++++++++++++------------------
+>> >  t/t3206-range-diff.sh   | 39 +++++++++++++++++
+>> >  t/test-lib-functions.sh |  2 +
+>> >  3 files changed, 93 insertions(+), 42 deletions(-)
+>>
+>> As I cannot merge this as is to 'pu' and keep going, I'll queue the
+>> following to the tip.  I think it can be squashed to "t3206: add
+>> color test" but for now they will remain separate patches.
+>>
+>> Subject: [PATCH] fixup! t3206: add color test for range-diff --dual-color
 >
-> I know.  It is a short-hand for "what's inside N_() we see here".
-> Try to come up with an equivalent that fits on a 80-char line.
+> Thanks for dealing with my stubbornness here.
 
-OK, let's scrap the comment patch but do this instead.
+I didn't know you were stubborn---I just thought you were busy in
+other things.
 
-If we decide to take René's "auto-literal" change, the update to the
-arg help string in this patch will become a necessary preparatory
-step, even though "auto-literal" will make the addition of the
-PARSE_OPT_LITERAL_ARGHELP bit redundant.
+> I assumed that the contribution would be a one time hassle
+> during git-am, not an ongoing problem during the whole time
+> the patch flows through pu/next/master, which is why I punted
+> on doing this change and resending in a timely manner.
 
--- >8 --
-Subject: [PATCH] push: use PARSE_OPT_LITERAL_ARGHELP instead of unbalanced brackets
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Date: Thu, 02 Aug 2018 00:31:33 +0200
-
-The option help text for the force-with-lease option to "git push"
-reads like this:
-
-    $ git push -h 2>&1 | grep -e force-with-lease
-       --force-with-lease[=<refname>:<expect>]
-
-which comes from having N_("refname>:<expect") as the argument help
-text in the source code, with an aparent lack of "<" and ">" at both
-ends.
-
-It turns out that parse-options machinery takes the whole string and
-encloses it inside a pair of "<>", to make it easier for majority
-cases that uses a single token placeholder.  
-
-The help string was written in a funnily unbalanced way knowing that
-the end result would balance out, by somebody who forgot the
-presence of PARSE_OPT_LITERAL_ARGHELP, which is the escape hatch
-mechanism designed to help such a case.  We just should use the
-official escape hatch instead.
-
-Helped-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/push.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/push.c b/builtin/push.c
-index 1c28427d82..ef4032a9ef 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -542,9 +542,9 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRANSPORT_PUSH_PORCELAIN),
- 		OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
- 		{ OPTION_CALLBACK,
--		  0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
-+		  0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 		  N_("require old value of ref to be at this value"),
--		  PARSE_OPT_OPTARG, parseopt_push_cas_option },
-+		  PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option },
- 		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
- 			N_("control recursive pushing of submodules"),
- 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
--- 
-2.18.0-321-gffc6fa0e39
-
-
-
+It is a bit worse, in that it won't be at pu/next/master boundary
+but each and every time the integration branches are rebuilt, which
+happens a few times a day.  Whitespace breakage after a merge is
+detected and my automation stops to ask for manual inspection.
