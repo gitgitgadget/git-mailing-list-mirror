@@ -2,118 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E009D1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 19:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2BA1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 19:17:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727180AbeHBVDz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 17:03:55 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:36553 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726346AbeHBVDz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 17:03:55 -0400
-Received: by mail-yb0-f195.google.com with SMTP id s1-v6so1698944ybk.3
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 12:11:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZAZYACrp4W0YFhFrzdXQXFrDM49gtdlIRTLGlA2D6As=;
-        b=CSOAbyS5uD1znPrpxEgIZFvgCyYNQgSRWqRZfykaWOtnECUAoAd+/JnPmPJWZY61qu
-         Hu9USpTFv266rH2Yd9JhKod4qkcn2yctn6RJlvATEC6NvXmznBkrveKNLvz1/b0FGRdo
-         gqcyu5qlst7Rz7ngQ8EtCS/T3+8ebo64DXOipjLYANTTr/4RTKp8a9c2kJKXHGe+z9p+
-         Oq6xZRU+0zIcJsXQlQaB5R+iqNTJPWFSiujBH7KHP6MeCqRofcYNUHJggnQGOr6j9e5w
-         xC2iHU/ueGOllS8BwszwgzqI/eWmP+v4+5gJQn6jiKJ4g6CD8QVQOxSV999rYpYUX2JI
-         zfcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZAZYACrp4W0YFhFrzdXQXFrDM49gtdlIRTLGlA2D6As=;
-        b=ILBI1oR9ojvQsAAhrTra7Ovl0Va0a8UG6GGJt39DORxy0ucZgd5ZrRd2TRw3m1w4HW
-         rRE7bOstPjq2xfae2GL8TY+knMp/m28Hl0WQVp8x1+11JYexOoyLoQxc5XlPk6nGJc5F
-         OWCejFcHBYhhDGDIRnN/ztJZ9OM8XhmdmMiUsRRVn+/ZsBjiljL8ZAuCGj7sKM0ZcHJv
-         dubGCe1jNU3O8A/axP/KtkVF9J2p0bJT/FNeZzqJV+GSJseQasrQ+vxrCrNvEn/DSokc
-         XyT++VQqBessI/6tOWSbX9/UX3aD/OglqqNDyf3z//5czjfHPvHD7jd0B8LfHdOFDya7
-         45+Q==
-X-Gm-Message-State: AOUpUlE7RQ3INTcFNUAT8oh3sah8XKwwyHRoi7GNKWMC0HpvnMP4KMCK
-        WETQyWfoYT9rrdenZkl2cCos+q4kXkc3ZwO2518CcQ==
-X-Google-Smtp-Source: AAOMgpdAEUda1MFGFfZW/9dZwVp+FMGM0te1FKJBC6biYYAZts7OB8wmLnVHBuPl8yq+erHAv7LRGLjEHnufY8e6mUU=
-X-Received: by 2002:a25:3624:: with SMTP id d36-v6mr492494yba.292.1533237086827;
- Thu, 02 Aug 2018 12:11:26 -0700 (PDT)
+        id S1726828AbeHBVKR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 17:10:17 -0400
+Received: from mout.web.de ([212.227.15.4]:42707 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726177AbeHBVKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 17:10:17 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MRl2f-1fMn973gSH-00SuhZ; Thu, 02
+ Aug 2018 21:17:36 +0200
+Subject: [PATCH 1/6] add, update-index: fix --chmod argument help
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+ <87k1p9u860.fsf@evledraar.gmail.com>
+ <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
+ <87h8kdu3ay.fsf@evledraar.gmail.com>
+ <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
+ <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
+ <20180802165457.GC15984@sigill.intra.peff.net>
+ <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
+Date:   Thu, 2 Aug 2018 21:17:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-9-ao2@ao2.it>
-In-Reply-To: <20180802134634.10300-9-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 12:11:15 -0700
-Message-ID: <CAGZ79kb=KgSSVXPCpa0wSyohpgywBk8c9P7Lq5BNJcdZ1exUyw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 08/12] t7506: cleanup .gitmodules properly before
- setting up new scenario
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:dcc5lbkNypJLd2h4CrA3VNaLTZBQjJwNYMRfyG/YC6cwRNM21Fc
+ +PMETEQcwC62N8MnCB8662f8XrMmINb51bfKkH48Ko9dIwhwPQ1FxWAuTO/d7w/oD8s6Q/R
+ XOGQ/usmYfGL/2bUN2nNWe68ybZQyFsRBuDPPKJP/DsAuwht5tjHlU4SPiy9ZqwrMGVDdF1
+ bijawAgEhiQEWK3aSW7RA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dRrbAM6AWRU=:06UFoj5zfk9h0Hy6q4ZuqK
+ 83mc03n10vDLGiSlHw0uGwtPKm+gYDaG2IymvNlZS4OvMfIp2G0YLPbjRHH04FNqnihKQVNfr
+ zIkiAke2MNNNZWqur5NgVbuPKiikPs/O6bpYwRIzHnuBlWho0fYPL7ju43umspXLFJ1uFI7Hw
+ m9CcJPxrSP21jzhYszml71dr13z/zkUPHVYTJIEBcV23Z539BfWIcMD98tzft0fbX5JSuSPNh
+ ibM2Vk7+5i0Zjwt4Q4KPibniW6Ag8i69PybjSwHsuQx3T7XVOtBw5e8ml72bIYEivnOX8ls+Z
+ CHI1OvpjW6/eW1yemZ5ACO+9AFA3pOv+Q8+4fZwVSoQW10PpFqwd5zIP4AIIndU2YAGWgEAdT
+ DIlfecf7RwP4FPTmilX0CEydHxTi4FzgmE88SqDoh8HVCzIghjlxeu9pXzKBy6jfAiNu3YvXg
+ vLSrBQyCsjb68f1fi1mG0AJ9JiN7eHudfHmFVROejNgTWJv66ymkcW+E457DjLwu2pz+f8B1S
+ 1eBp5ygEsqlzVSZr5PERyK1JfoFGT7/EPeXhy0evD1CxD3Pn0lUYMy5t/M95IBsRJhBd16U/+
+ +q7uIu0iMi03hCL5leZrtiC8GVMzC3e2hufG7mR4xyKlpGURWuAdU0mzMYriDyR2ECGlC2Z9+
+ x8+uRWdykec/QbUsRDR/Cv7uZ58kkC6s4ULis8Wbf5U0NOx4MUCtNdW368ivLDSuKbVS1gbuf
+ n1WlgUuTh0oORCiU+to1XUO5cABPfIVzBNCUu8Nnr8UVS2TM9oBmRWF6ec4hvNZ4i5CVJu/y7
+ vkGQ5+F
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
->
-> In t/t7506-status-submodule.sh at some point a new scenario is set up to
-> test different things, in particular new submodules are added which are
-> meant to completely replace the previous ones.
->
-> However before calling the "git submodule add" commands for the new
-> layout, the .gitmodules file is removed only from the working tree still
-> leaving the previous content in current branch.
->
-> This can break if, in the future, "git submodule add" starts
-> differentiating between the following two cases:
->
->   - .gitmodules is not in the working tree but it is in the current
->     branch (it may not be safe to add new submodules in this case);
->
->   - .gitmodules is neither in the working tree nor anywhere in the
->     current branch (it is safe to add new submodules).
->
-> Since the test means to get rid of .gitmodules anyways, let's completely
-> remove it from the current branch, to actually start afresh in the new
-> scenario.
->
-> This is more future-proof and does not break current tests.
+Don't translate the argument specification for --chmod; "+x" and "-x"
+are the literal strings that the commands accept.
 
-Makes sense.
+Separate alternatives using a pipe character instead of a slash, for
+consistency.
 
-Thanks,
-Stefan
+Use the flag PARSE_OPT_LITERAL_ARGHELP to prevent parseopt from adding a
+pair of angular brackets around the argument help string, as that would
+wrongly indicate that users need to replace the literal strings with
+some kind of value.
 
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->  t/t7506-status-submodule.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
-> index b4b74dbe29..af91ba92ff 100755
-> --- a/t/t7506-status-submodule.sh
-> +++ b/t/t7506-status-submodule.sh
-> @@ -325,7 +325,8 @@ test_expect_success 'setup superproject with untracked file in nested submodule'
->         (
->                 cd super &&
->                 git clean -dfx &&
-> -               rm .gitmodules &&
-> +               git rm .gitmodules &&
-> +               git commit -m "remove .gitmodules" &&
->                 git submodule add -f ./sub1 &&
->                 git submodule add -f ./sub2 &&
->                 git submodule add -f ./sub1 sub3 &&
-> --
-> 2.18.0
->
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/add.c          | 4 +++-
+ builtin/update-index.c | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/add.c b/builtin/add.c
+index 8a155dd41e..84bfec9b73 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -304,7 +304,9 @@ static struct option builtin_add_options[] = {
+ 	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
+ 	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
+ 	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
+-	OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
++	{ OPTION_STRING, 0, "chmod", &chmod_arg, "(+|-)x",
++	  N_("override the executable bit of the listed files"),
++	  PARSE_OPT_LITERAL_ARGHELP },
+ 	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
+ 			N_("warn when adding an embedded repository")),
+ 	OPT_END(),
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index a8709a26ec..7feda6e271 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -971,7 +971,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
+ 			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+ 			(parse_opt_cb *) cacheinfo_callback},
+-		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, N_("(+/-)x"),
++		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, "(+|-)x",
+ 			N_("override the executable bit of the listed files"),
+ 			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+ 			chmod_callback},
+-- 
+2.18.0
