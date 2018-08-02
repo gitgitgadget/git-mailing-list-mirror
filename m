@@ -2,126 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E95F01F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 10:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B9721F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 11:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727120AbeHBMOp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 08:14:45 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:38397 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726313AbeHBMOp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 08:14:45 -0400
-Received: by mail-yb0-f170.google.com with SMTP id i9-v6so624628ybo.5
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 03:24:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=np75rPFSdV26L3EXQiy42ZWpzjdjP9d7sjSvppum2Nk=;
-        b=Gjdbe2TSeNgNcJ7qG+KX3VeOCHjfHaScXdRGiu7va11I6AUZ3iY4gvLp7WgErmsAy7
-         xCKaOVSLjMQCTRxOKr2K6v/Ho/6FPQCdTG3SrVM/PsUoPM+aaNl7y5Agn519eEKFtx+D
-         8kbUBavbzy9IPPkzaTb50MESGjqGjnTLWn3O7B4UwbWY1/lTwvqHsdGD1b1WD598G3Mh
-         QnhnPSjAwU8ELPDhJ3A5dmcanM6j/OdJHoS7wVO4slb2Or35SZfBUIiKOawqk7zSu/FH
-         QTof2/AyLmx7fKGx2hPczEaziVTpx9T7lFIpjX4cF3BlrNMpF8fJ7ZpthLPVrgrAisrO
-         7hOw==
-X-Gm-Message-State: AOUpUlGGV883l5Hij43U3rhBWU0JRogzVvP/vUCDT0UczKmwPwtM5Y99
-        B7AJI1cdcfYzVRzuQFwo8mgnl6s/E4fDaD4GmAk=
-X-Google-Smtp-Source: AAOMgpcE7PadYPara1lznAbnkm0koaLxgwSxIgN30ylOvLzJnsWPmeGQqwkFEa+sqW2czcPzkgMnZdUYNgtZrdOy8rc=
-X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr991294ybl.12.1533205453146;
- Thu, 02 Aug 2018 03:24:13 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180731173651.184716-1-hanwen@google.com> <20180731173651.184716-3-hanwen@google.com>
- <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
- <xmqqeffi856n.fsf@gitster-ct.c.googlers.com> <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
- <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 2 Aug 2018 06:24:01 -0400
-Message-ID: <CAPig+cR3WdYpZftK72MKMs4BBF2ZiuO-Bm_-edJ4tr1bRQvoGQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S1730028AbeHBNK7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 09:10:59 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:44167 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727027AbeHBNK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 09:10:59 -0400
+Received: from lindisfarne.localdomain ([92.22.30.174])
+        by smtp.talktalk.net with SMTP
+        id lBeMfoYRtbZX5lBeSf1fz3; Thu, 02 Aug 2018 12:20:16 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533208816;
+        bh=2lOF12YscEf5Je5HHXwOap83GBBRhevSSxwPaomHduY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=CmI6Gcrobx1kBycj1rJtvKaskwWdTXdZDXRWiAhJOsLXZqNAMmhYVnU5R8Fg0YI5o
+         iQb13xf/dDfMkQ0iAbiapoKIdD0yqiZ2biM7vAkyuI82MHj/1ifvoTSurwjIs4IPCH
+         3KgJ9P9NjVqyR5U9picDzQSdwPhPP/oCTDxfkETQ=
+X-Originating-IP: [92.22.30.174]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
+ a=2xfjePbNG5I+/HyESt+5YA==:17 a=evINK-nbAAAA:8 a=u-vJNOlgjG8qz3_isVcA:9
+ a=WJVo-1wuODy17d0V:21 a=I4VlqCnzzEYvBj9m:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 1/2] sequencer: handle errors in read_author_ident()
+Date:   Thu,  2 Aug 2018 12:20:01 +0100
+Message-Id: <20180802112002.720-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180802112002.720-1-phillip.wood@talktalk.net>
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+ <20180802112002.720-1-phillip.wood@talktalk.net>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfPCM9MCjf3WR1hhevtuzww289Kt+Z0H/0FvXnsxGPJsasXFZVrEBnJFxk0rikLOajhMsbJxYwD7h/fZs+g/6h0EUTuEWKXpM/10CfCtuLMTUbc5dfz6c
+ b0U5Vzx/WKxxTG2WxAVmjaWHKyx1n6VeJW4xike8kSRwytnQqZfS/fuFDpwhnhAX3S0qTnNHCWpRxMil0KzobPGq082fNSe90YyqV8D8cLkD1oDoB0d0lOWb
+ m1GP8OD3S88jFoEBN/HQeSl7ez6E9YDH2VdlgAGBD29pbnJZ/oVvZ5PCyhDEWa9U1NkIONnQwEaTvvJmtwNy0GvSpljiD/WiFxUZYwV3z3Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 1, 2018 at 2:17 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Han-Wen Nienhuys <hanwen@google.com> writes:
-> > Sorry for being dense, but do you want me to send an updated patch or
-> > not based on your and Eric's comments or not?
->
-> It would help to see the comments responded with either "such a
-> change is not needed for such and such reasons", "it may make sense
-> but let's leave it to a follow-up patch later," etc., or with a
-> "here is an updated patch, taking all the comments to the previous
-> version into account---note that I rejected that particular comment
-> because of such and such reasons".
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Right. The way to know whether or not an updated patch is warranted is
-to respond to review comments, saying that you agree or disagree with
-various points raised (and why), and by answering the (genuine)
-questions raised during review. The outcome of the dialogue with
-reviewers will make it clear if an updated patch is necessary. (It's
-also a courtesy to respond to review comments since reviewing is
-time-consuming business and it's good to let reviewers know that the
-time spent reviewing was not in vain.)
+The calling code did not treat NULL as an error. Instead NULL caused
+it to fallback to using the default author when creating the new
+commit. This changed the date and potentially the author of the
+commit which corrupted the author data compared to its expected
+value. Fix this by returning and integer and passing in a parameter to
+receive the author.
 
-Regarding my question about whether load_sideband_colors() can be
-moved below the '!want_color_stderr(sideband_use_color)' conditional,
-after studying the code further, I see that it can't be, because
-load_sideband_colors() is responsible for setting
-'sideband_use_color'. The fact that this code confused or left
-questions in the mind of a reviewer may indicate that responsibilities
-are not partitioned in the best manner, and that the code could be
-structured to be more clear.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
 
-For instance, it might make sense to rip all the 'sideband_use_color'
-gunk out of load_sideband_colors() and move it to
-maybe_colorize_sideband(), perhaps like this:
+Notes:
+    changes since v2:
+    
+     - Improved commit message
+     - Fixed memory leak
+     - Translated a couple of error messages
 
-    void maybe_colorize_sideband(...)
-    {
-        /* one-time initialization */
-        if (sideband_use_color < 0) {
-            if (!git_config_get_string(key, &value))
-                sideband_use_color = git_config_colorbool(key, value);
-            if (sideband_use_color > 0)
-                load_sideband_colors();
-        }
+ sequencer.c | 52 ++++++++++++++++++++++++++++------------------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-        if (!want_color_stderr(sideband_use_color)) {
-            strbuf_add(dest, src, n);
-            return;
-        }
-        ...as before...
-    }
+diff --git a/sequencer.c b/sequencer.c
+index 944dea6997..1bf8b0c431 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -701,57 +701,59 @@ static char *get_author(const char *message)
+ }
+ 
+ /* Read author-script and return an ident line (author <email> timestamp) */
+-static const char *read_author_ident(struct strbuf *buf)
++static int read_author_ident(char **author)
+ {
+ 	const char *keys[] = {
+ 		"GIT_AUTHOR_NAME=", "GIT_AUTHOR_EMAIL=", "GIT_AUTHOR_DATE="
+ 	};
++	struct strbuf buf = STRBUF_INIT;
+ 	struct strbuf out = STRBUF_INIT;
+ 	char *in, *eol;
+ 	const char *val[3];
+ 	int i = 0;
+ 
+-	if (strbuf_read_file(buf, rebase_path_author_script(), 256) <= 0)
+-		return NULL;
++	if (strbuf_read_file(&buf, rebase_path_author_script(), 256) <= 0) {
++		strbuf_release(&buf);
++		return -1;
++	}
+ 
+-	/* dequote values and construct ident line in-place */
+-	for (in = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
++	for (in = buf.buf; i < 3 && in - buf.buf < buf.len; i++) {
+ 		if (!skip_prefix(in, keys[i], (const char **)&in)) {
+-			warning("could not parse '%s' (looking for '%s'",
+-				rebase_path_author_script(), keys[i]);
+-			return NULL;
++			strbuf_release(&buf);
++			return error(_("could not parse '%s' (looking for '%s')"),
++				       rebase_path_author_script(), keys[i]);
+ 		}
+-
+ 		eol = strchrnul(in, '\n');
+ 		*eol = '\0';
+ 		if (!sq_dequote(in)) {
+-			warning(_("bad quoting on %s value in '%s'"),
+-				keys[i], rebase_path_author_script());
+-			return NULL;
++			strbuf_release(&buf);
++			return error(_("bad quoting on %s value in '%s'"),
++				     keys[i], rebase_path_author_script());
+ 		}
+ 		val[i] = in;
+ 		in = eol + 1;
+ 	}
+ 
+ 	if (i < 3) {
+-		warning("could not parse '%s' (looking for '%s')",
+-			rebase_path_author_script(), keys[i]);
+-		return NULL;
++		strbuf_release(&buf);
++		return error(_("could not parse '%s' (looking for '%s')"),
++			     rebase_path_author_script(), keys[i]);
+ 	}
+ 
+ 	/* validate date since fmt_ident() will die() on bad value */
+ 	if (parse_date(val[2], &out)){
+-		warning(_("invalid date format '%s' in '%s'"),
++		error(_("invalid date format '%s' in '%s'"),
+ 			val[2], rebase_path_author_script());
+ 		strbuf_release(&out);
+-		return NULL;
++		strbuf_release(&buf);
++		return -1;
+ 	}
+ 
+ 	strbuf_reset(&out);
+ 	strbuf_addstr(&out, fmt_ident(val[0], val[1], val[2], 0));
+-	strbuf_swap(buf, &out);
+-	strbuf_release(&out);
+-	return buf->buf;
++	*author = strbuf_detach(&out, NULL);
++	strbuf_release(&buf);
++	return 0;
+ }
+ 
+ static const char staged_changes_advice[] =
+@@ -794,12 +796,14 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 	const char *value;
+ 
+ 	if ((flags & CREATE_ROOT_COMMIT) && !(flags & AMEND_MSG)) {
+-		struct strbuf msg = STRBUF_INIT, script = STRBUF_INIT;
+-		const char *author = is_rebase_i(opts) ?
+-			read_author_ident(&script) : NULL;
++		struct strbuf msg = STRBUF_INIT;
++		char *author = NULL;
+ 		struct object_id root_commit, *cache_tree_oid;
+ 		int res = 0;
+ 
++		if (is_rebase_i(opts) && read_author_ident(&author))
++			return -1;
++
+ 		if (!defmsg)
+ 			BUG("root commit without message");
+ 
+@@ -817,7 +821,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+ 					  opts->gpg_sign);
+ 
+ 		strbuf_release(&msg);
+-		strbuf_release(&script);
++		free(author);
+ 		if (!res) {
+ 			update_ref(NULL, "CHERRY_PICK_HEAD", &root_commit, NULL,
+ 				   REF_NO_DEREF, UPDATE_REFS_MSG_ON_ERR);
+-- 
+2.18.0
 
-You may or may not agree with the above suggestion; it's good to let
-the reviewer know how you feel about it.
-
-Your follow-on comment about how Gerrit has for years used "ERROR" is
-exactly the sort of information which should be in the commit messages
-since it saves reviewers (and future readers, months or years down the
-road) from head-scratching, wondering why the code was written the way
-it was (strcasecmp() vs. strcmp(), for instance).
-
-The more pertinent information you can say up front in the commit
-message, the less likely reviewers will be confused or wonder why you
-made the choices you did. My question about whether
-maybe_colorize_sideband() is fed lines one-by-one or whether its input
-may contain embedded newlines is a good example of how a more complete
-commit message could help. As the author of the patch, you have been
-working in this code and likely know the answer, but reviewers won't
-necessarily have this information at hand. If the commit message says
-up front that this function processes lines one-by-one, then the
-reviewer feels reassured that the patch author understands the
-implications of the change (as opposed to the patch author perhaps not
-having thought of the possibility of embedded newlines). So, it's a
-genuine question (I still don't know the answer.)
