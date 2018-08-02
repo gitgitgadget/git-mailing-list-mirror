@@ -2,135 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D6491F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 20:41:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2741B1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 20:43:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731969AbeHBWeK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 18:34:10 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42575 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726662AbeHBWeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 18:34:10 -0400
-Received: by mail-ed1-f65.google.com with SMTP id r4-v6so1388845edp.9
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 13:41:21 -0700 (PDT)
+        id S1732073AbeHBWgF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 18:36:05 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:36202 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726662AbeHBWgF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 18:36:05 -0400
+Received: by mail-yw1-f66.google.com with SMTP id v197-v6so143765ywg.3
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 13:43:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=zQ6Ct5cYaN6y3y3849okd19zcPhtwDmT53TAUQREnAA=;
-        b=UsRTKznM7K0p3zTnC3fM7uK1FqTsYX5Az/HFzjSBbmtyhT0PPGPa0SQwniPwinQ3Zy
-         gWQKjV4n6fX0z8RlYXeX3ENn7eUw8cQ/Z1LXIk3SsbHVj3B7RWixBZewk7voGf4pF3Ty
-         hVTUO3QLYI3KMABwAn1bK0YDzNqG+e1efD80nvz3LO2kutXOXBA1VQ78sv1oacJIW3Mc
-         /zlsxY18JEySE9CNQBd/KWPf35ALg+mdrYRNYonkDiR1xiUabkqV/gP7WlLw9a9mmpLT
-         yv3rYOP2qS157DEGNmOWiflu5pqxjYGzkfAAmttJN9lsNcaDfbsQJ3mN6KfNXU4/6XKx
-         qVnw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=owo4y7joCe58Km0BvBun/Bcq66vOSO6nLS774wHp4Jc=;
+        b=rIsj6LwuJQNZ/V52pfCp8bKGqW96k4O/2SHFEu4yBR6LLapdKxJ1GNIiI87iLuxFNX
+         QsAPV7FmyTnLAFeHmSWZq2fqFG0uMw0obSFlB46e/o8rlp7LM0eafxlmeLnUigx+aCfa
+         v3N5H8zvMUJ4TZbxS+hXRkebqrtOkmnYQK0KrXx4JypOt71YQ/9Muw8ZrvNZ8fApypxF
+         MPBAedbdbF6aHw7kKjYqpY1OgHqi07lDK3UnUBXYIQn4or6rqG5Jcw5SJbCisZN19fEb
+         GIojBJ851bqtEJVfGKiiW5cZE+/mbF0etJluj9iXLkERysuJKY4WrC7qYOhrD0ZfZfUF
+         WCqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=zQ6Ct5cYaN6y3y3849okd19zcPhtwDmT53TAUQREnAA=;
-        b=Big1fn7jce/WN2jzlsa4wXlg9hrLeH3iRjQftDLsjZbAMSybTyg/h+zElFqc2tesMy
-         Nz1gEBGFKm5HZ7jS3j12sNG1YRcLCieuu4bJY4cGz+a32HGEzBQfP/9JmfcufqrJfXxW
-         +W6pza8x3zCrqg6tM1T66pIAtJJz6UsV1MgTpqY7P2SrYhQ6agEryTTC+kKeS5RQgjW8
-         AM9sZL3j21w+N3aUKdpo9Eh+RReUJc382TbSC+sWDzHEIZAeVUED/03xgny5irhQ7aHW
-         rKYl8bjimRVkZeMDsEgfulEHgas8eDZ82oi8EroWM6iqcpKNUmCA1TMkx1gqSutbIpyw
-         r0Ag==
-X-Gm-Message-State: AOUpUlHrdCFOkgIMh2mwZfwDCA0AUzzgo9olCKa4wytjpP14ZeQ4Mcy9
-        ia0eOXlYIEbycHvST60RdIY=
-X-Google-Smtp-Source: AAOMgpfhpZd3wJ1r8IfkbFgZgWqaX6jxpJCOsTCAz1rqaDIcm6V7XoNWlYK+p1NfErvHsAislBnJCw==
-X-Received: by 2002:a50:b56e:: with SMTP id z43-v6mr4843258edd.223.1533242481301;
-        Thu, 02 Aug 2018 13:41:21 -0700 (PDT)
-Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id n46-v6sm2097649edd.6.2018.08.02.13.41.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 13:41:20 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/6] add, update-index: fix --chmod argument help
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
-        <87k1p9u860.fsf@evledraar.gmail.com>
-        <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
-        <87h8kdu3ay.fsf@evledraar.gmail.com>
-        <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
-        <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
-        <20180802165457.GC15984@sigill.intra.peff.net>
-        <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
-        <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
-Date:   Thu, 02 Aug 2018 22:41:19 +0200
-Message-ID: <87d0v0tsb4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=owo4y7joCe58Km0BvBun/Bcq66vOSO6nLS774wHp4Jc=;
+        b=s8zdUHN0+TAAGiUOniP+Nsu0GaCIYLFmNw4GsD0cf0JyD3t1Q46D5dGQE7QBA7I4fJ
+         cvV0dQ2XtgV69G7rKExeGqqmVkiHTKSocxfbl5JfsKGgo9V2+Uo4OxITNwsVoMeDmUu9
+         0GUHgMH3vm1nAeu2RQfGg81CHC2MBLgH0n9efA1DnV7eOX5/4Jm6NOemMQX6sD37MXau
+         4okAZPBohi2aTh+lpW6OHImwHFqEYTGAJWWbcvp6SDWYjOcclEdNrbE+OJiQHJW8Infg
+         wOJp3NxSpV0IFpFWAC7OVAICDgjV7O/rbzawuZZxyd5Fb03kAA+9GKH0Xpkj14rQhjXC
+         JbmA==
+X-Gm-Message-State: AOUpUlEllC5O/l4T+A/CllOmkLOkjIovhaGbQBQi4k/b36S+AJ/j5xX1
+        YIGqmvhMk4Og5pSXJacsrfjSS2UGoaIwAm0kMtt9Ng==
+X-Google-Smtp-Source: AAOMgpdBf9EelwDz72jsC2sJ5UpgevZxpJWN0Tzzwb1+sR1hhHy6IMLF1Bc7D6piGuYB3Q7adKSkn9diyVpIhy89qh4=
+X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr666653ywa.340.1533242596346;
+ Thu, 02 Aug 2018 13:43:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-11-ao2@ao2.it>
+In-Reply-To: <20180802134634.10300-11-ao2@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 2 Aug 2018 13:43:05 -0700
+Message-ID: <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 10/12] t7416: add new test about HEAD:.gitmodules
+ and not existing .gitmodules
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Thu, Aug 02 2018, René Scharfe wrote:
-
-> Don't translate the argument specification for --chmod; "+x" and "-x"
-> are the literal strings that the commands accept.
+On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
 >
-> Separate alternatives using a pipe character instead of a slash, for
-> consistency.
+> git submodule commands can now access .gitmodules from the current
+> branch even when it's not in the working tree, add some tests for that
+> scenario.
 >
-> Use the flag PARSE_OPT_LITERAL_ARGHELP to prevent parseopt from adding a
-> pair of angular brackets around the argument help string, as that would
-> wrongly indicate that users need to replace the literal strings with
-> some kind of value.
-
-Good change.
-
-Let's mention in the commit message thath we ended up with this because
-of 4a4838b46a ("i18n: update-index: mark parseopt strings for
-translation", 2012-08-20) and 4e55ed32db ("add: add --chmod=+x /
---chmod=-x options", 2016-05-31) , both of which obviously didn't intend
-for this to happen, but were either mass-replacing "..." with N_("..."),
-or blindly copy/pasting an existing option whose argument should have
-been translated.
-
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> Signed-off-by: Antonio Ospite <ao2@ao2.it>
 > ---
->  builtin/add.c          | 4 +++-
->  builtin/update-index.c | 2 +-
->  2 files changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/builtin/add.c b/builtin/add.c
-> index 8a155dd41e..84bfec9b73 100644
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -304,7 +304,9 @@ static struct option builtin_add_options[] = {
->  	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
->  	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
->  	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
-> -	OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
-> +	{ OPTION_STRING, 0, "chmod", &chmod_arg, "(+|-)x",
-> +	  N_("override the executable bit of the listed files"),
-> +	  PARSE_OPT_LITERAL_ARGHELP },
->  	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
->  			N_("warn when adding an embedded repository")),
->  	OPT_END(),
-> diff --git a/builtin/update-index.c b/builtin/update-index.c
-> index a8709a26ec..7feda6e271 100644
-> --- a/builtin/update-index.c
-> +++ b/builtin/update-index.c
-> @@ -971,7 +971,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
->  			PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
->  			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
->  			(parse_opt_cb *) cacheinfo_callback},
-> -		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, N_("(+/-)x"),
-> +		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, "(+|-)x",
->  			N_("override the executable bit of the listed files"),
->  			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
->  			chmod_callback},
+> For the test files I used the most used style in other tests, Stefan suggested
+> to avoid subshells and use "git -C" but subshells make the test look cleaner
+> IMHO.
+
+Oh well. Let's not dive into a style argument, so let me focus on the tests.
+
+IMHO it would be nice if (at least partially) these tests are in the same patch
+that added the reading from HEAD:.gitmodules  (although I like short
+patches, too).
+
+>
+>  t/t7416-submodule-sparse-gitmodules.sh | 112 +++++++++++++++++++++++++
+>  1 file changed, 112 insertions(+)
+>  create mode 100755 t/t7416-submodule-sparse-gitmodules.sh
+>
+> diff --git a/t/t7416-submodule-sparse-gitmodules.sh b/t/t7416-submodule-sparse-gitmodules.sh
+> new file mode 100755
+> index 0000000000..3c7a53316b
+> --- /dev/null
+> +++ b/t/t7416-submodule-sparse-gitmodules.sh
+> @@ -0,0 +1,112 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (C) 2018  Antonio Ospite <ao2@ao2.it>
+> +#
+> +
+> +test_description=' Test reading/writing .gitmodules is not in the working tree
+> +
+> +This test verifies that, when .gitmodules is in the current branch but is not
+> +in the working tree reading from it still works but writing to it does not.
+> +
+> +The test setup uses a sparse checkout, but the same scenario can be set up
+> +also by committing .gitmodules and then just removing it from the filesystem.
+> +
+> +NOTE: "git mv" and "git rm" are still supposed to work even without
+> +a .gitmodules file, as stated in the t3600-rm.sh and t7001-mv.sh tests.
+
+"supposed to work" != "tested that it works" ?
+I am not sure what the NOTE wants to tell me? (Should I review those
+tests to double check them now? or do we just want to tell future readers
+of this test there are other tangent tests to this?)
+
+
+> +test_expect_success 'initialising submodule when the gitmodules config is not checked out' '
+> +       (cd super &&
+> +               git submodule init
+> +       )
+> +'
+> +
+> +test_expect_success 'showing submodule summary when the gitmodules config is not checked out' '
+> +       (cd super &&
+> +               git submodule summary
+> +       )
+> +'
+> +
+> +test_expect_success 'updating submodule when the gitmodules config is not checked out' '
+> +       (cd submodule &&
+> +               echo file2 >file2 &&
+> +               git add file2 &&
+> +               git commit -m "add file2 to submodule"
+> +       ) &&
+> +       (cd super &&
+> +               git submodule update
+> +       )
+> +'
+> +
+> +test_expect_success 'not adding submodules when the gitmodules config is not checked out' '
+> +       (cd super &&
+> +               test_must_fail git submodule add ../new_submodule
+> +       )
+> +'
+> +
+> +# "git add" in the test above fails as expected, however it still leaves the
+> +# cloned tree in there and adds a config entry to .git/config. This is because
+> +# no cleanup is done by cmd_add in git-submodule.sh when "git
+> +# submodule--helper config" fails to add a new config setting.
+> +#
+> +# If we added the following commands to the test above:
+> +#
+> +#   rm -rf .git/modules/new_submodule &&
+> +#   git reset HEAD new_submodule &&
+> +#   rm -rf new_submodule
+
+Alternatively we could check for the existence of .gitmodules
+before starting all these things?
+
+I think it is okay to not clean up if we check all "regular" or rather expected
+things such as a non-writable .gitmodules file before actually doing it.
+(This is similar to 'checkout' that walks the whole tree and checks if the
+checkout is possible given the dirtyness of the tree, to either abort early
+or pull through completely. In catastrophic problems such as a full disk
+we'd still die in the middle of work)
+
+> +#
+> +# then the repository would be in a clean state and the test below would pass.
+> +#
+> +# Maybe cmd_add should do the cleanup from above itself when failing to add
+> +# a submodule.
+> +test_expect_failure 'init submodule after adding failed when the gitmodules config is not checked out' '
+
+So this comment and test is about explaining why we can fail mid way through,
+which we could not before unless we had the catastrophic event.
+
+I think we should check for a "writable" .gitmodules file at the beginning,
+which is if (G || (!G && !H)) [using the notation from the cover letter]?
+
+> +       (cd super &&
+> +               git submodule init
+> +       )
+> +'
+> +
+> +test_done
+> --
+> 2.18.0
+>
