@@ -2,97 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 467061F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 21:04:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1A041F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 21:14:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726485AbeHBW5o (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 18:57:44 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:45750 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726177AbeHBW5o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 18:57:44 -0400
-Received: by mail-lf1-f66.google.com with SMTP id j143-v6so2534128lfj.12
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 14:04:51 -0700 (PDT)
+        id S1727116AbeHBXH2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 19:07:28 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:51155 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726850AbeHBXH1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 19:07:27 -0400
+Received: by mail-wm0-f49.google.com with SMTP id s12-v6so4060290wmc.0
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 14:14:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=pxe2oZFOV3qE+mvkmN66H5Uo4oB0rpqsYq17u8mEZsY=;
-        b=ADmYaL55u2Yn/ILxv7CG4E0rVawBxzGAZLGAitFMIB0DqE5GTf8H5ZPwK1/p//q4JE
-         7FK3xv6SiCW9Tc26RGFN9KVqV1HWcIfx+oNXTCUtFmGTtZhsLEaW2saY8acHEZ+n1RXO
-         5b5+moOkh1lIeVjdSRge46NkBYv2IbwcASdO8D9LbWaUdSGyExJ8tCIyajwyoybadtd4
-         7Kb/KXgXiIijolmqLBBdo+NzvrcOWx/KwuCtaJReMh/ElZiY5E7a32g/IZ79lFWABhJ/
-         5wS8n6KP/uUN2pzS0IPwPIMwxiaC00KIfupEGB3AuflAqMwP2is51vyMlmRcMV8cBaj0
-         yGrA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=trzEbwrCXjAjjXNzl1UEXdIpw26hng/ZffcBZ5VBO3E=;
+        b=EQ/D+7osIkvzRlOw47M03rjd3RZszUvEvRpLUjWuQPC1wooBv2gi+crNaW+2EdGy3W
+         owm2rIiHC/3j8n0JtAwT8zH01OpKHCsxxPY/V9jm0AfivlIhLC7O3ecvAxAx92DRVrU3
+         ymthtKCWGITQE+Ky2EGmKaUYku6JnNH2cKaD961L9ZYNRSRMrWWwTvYScjq98WpTEZGo
+         1MaARSFCb1fR8568fxOY3RyNQeZW70/AeL5ZDSszlF9OaY+eHC2kn9PF2tiBZIjqP44D
+         THgLGKd7qfnyFuas+2ACl6HBI/53oZpABv6uYL+Lelr3o++17EA8CFtCM3vED3zZTuYT
+         oxpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=pxe2oZFOV3qE+mvkmN66H5Uo4oB0rpqsYq17u8mEZsY=;
-        b=Ws5ARTPnBUT0YZdrp3E+bNnq/0ilHX2vYFMo/QQXFTCHJR7WVdO0L0c5ijI0HGLjye
-         PL8i1Jvtrvyxa7LiDREUZyJpgjTA0hDEA+CCooOwe/FBjMjAtSAcDFYMW15cIOG+4tUQ
-         gN9YIAKlJl0Z0VtKrlC7tk6Ww+kXlUQRvCaBF91GONzB75l3RqDmGC51tXrJb9gYAx2i
-         BQZ/9DT/DTiFXyjsU3m7w8mVu+DuRJWFbugbk/yC2vu/brZBHooz/aKm2N41K0nNO7AV
-         IMSq3zlpCMiPWZr+OnhJndpE5xbbNUtUiENwmuHeAuRuz9zemJ17v9KozrlXLZzrTYuA
-         eTWw==
-X-Gm-Message-State: AOUpUlFGF9o2y8C+D7GK/THASiUnsKiejS3pn9LgTI9pUu3tt1c86xy2
-        GqakLIPREm0cA+Tq94oB/SqMJKKtOPo=
-X-Google-Smtp-Source: AAOMgpcv+35a9frOSaQKELSm7ZvMFvlpl68FMyrp4Rqc7rDmYw7Tc2hzfqU1bt6/U+JW+nmuih+1cg==
-X-Received: by 2002:a19:aac8:: with SMTP id t191-v6mr2979924lfe.68.1533243890682;
-        Thu, 02 Aug 2018 14:04:50 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id f3-v6sm463947lfc.30.2018.08.02.14.04.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 02 Aug 2018 14:04:49 -0700 (PDT)
-Subject: Re: [PATCH 1/6] add, update-index: fix --chmod argument help
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
- <87k1p9u860.fsf@evledraar.gmail.com>
- <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
- <87h8kdu3ay.fsf@evledraar.gmail.com>
- <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
- <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
- <20180802165457.GC15984@sigill.intra.peff.net>
- <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
- <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <4a570679-3024-1541-95da-0fa8baef75ba@gmail.com>
-Date:   Thu, 2 Aug 2018 23:04:48 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=trzEbwrCXjAjjXNzl1UEXdIpw26hng/ZffcBZ5VBO3E=;
+        b=CBNZmzdxtDlNbGMfAQi/cyyXmsqrxKwUxMHXsnQ9PYX9ebuoG2W1Ok9A4TG6UB306j
+         rYICD8GJtXufGMU4nfZL3yVGzGAhOfheY6KoookZ5GD6+B/OPgScDdnVhKbsxQrt9gTQ
+         +a5Rn09hbbtsPti/n9TWYIGZ5S0o8n5Qv6KiK/KBqJ9Us6Vr61mtqc3ntc+H9vq0A/b5
+         fs4ADoCHA4JmCJp8Jjd6+3WTDl49rVQ56bVctScFFu87iuJFHYEiwq6sSv/36BKZOf/X
+         o3UGwxtcO3ALyNL4hEN6IHKePF4yHaYK436i1zCx1Xak8oGzWQGFlz1JDLDBnaTwcVJk
+         0OUw==
+X-Gm-Message-State: AOUpUlGpZDGHuw/jdTj6CrgGh+gm15pKHX9zE2Y8/GFQ+yxk/b3886Yr
+        MB4ccVG0zzu8dx5cpjsntzfCqJet
+X-Google-Smtp-Source: AAOMgpfC0biQkEE6OGWCv65LyILWOzaNolOa4Z2lEUnWRHui5ZMYh7TZyoudAoA3OXhGUzrDrzfp/Q==
+X-Received: by 2002:a1c:91c7:: with SMTP id t190-v6mr3233272wmd.2.1533244471778;
+        Thu, 02 Aug 2018 14:14:31 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d8-v6sm2261583wrv.68.2018.08.02.14.14.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 Aug 2018 14:14:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?Q?Pawe=C5=82?= Paruzel <pawelparuzel95@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
+References: <20180730152756.15012-1-pclouds@gmail.com>
+        <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
+        <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
+        <20180731192931.GD3372@sigill.intra.peff.net>
+        <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
+        <20180731203746.GA9442@sigill.intra.peff.net>
+        <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
+        <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
+        <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
+        <20180802190644.GE23690@sigill.intra.peff.net>
+Date:   Thu, 02 Aug 2018 14:14:30 -0700
+In-Reply-To: <20180802190644.GE23690@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 2 Aug 2018 15:06:44 -0400")
+Message-ID: <xmqqmuu4zd1l.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-08-02 21:17, René Scharfe wrote:
-> Don't translate the argument specification for --chmod; "+x" and "-x"
-> are the literal strings that the commands accept.
-> > [...]
-> 
-> -	OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
-> +	{ OPTION_STRING, 0, "chmod", &chmod_arg, "(+|-)x",
-> +	  N_("override the executable bit of the listed files"),
-> +	  PARSE_OPT_LITERAL_ARGHELP },
+Jeff King <peff@peff.net> writes:
 
-Would it make sense to drop the localizations in po/* as well?
-Or should such things be handled with l10n rounds?
+> I also wonder if Windows could return some other file-unique identifier
+> that would work in place of an inode here. That would be pretty easy to
+> swap in via an #ifdef's helper function. I'd be OK shipping without that
+> and letting Windows folks fill it in later (as long as we do not do
+> anything too stupid until then, like claim all of the inode==0 files are
+> the same).
 
-Can be found using:
+Yeah, but such a useful file-unique identifier would probably be
+used in place of inum in their (l)stat emulation already, if exists,
+no?
 
-    grep '(+/-)x' po/*
+> PS It occurs to me that doing this naively (re-scan the entries already
+>    checked out when we see a collision) ends up quadratic over the
+>    number of entries in the worst case. That may not matter. You'd only
+>    have a handful of collisions normally, and anybody malicious can
+>    already git-bomb your checkout anyway. If we care, an alternative
+>    would be to set a flag for "I saw some collisions", and then follow
+>    up with a single pass putting entries into a hashmap of
+>    inode->filename.
+
+Yeah, that makes sense.
