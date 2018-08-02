@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D45F4208E9
-	for <e@80x24.org>; Thu,  2 Aug 2018 06:15:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F7C6208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 06:15:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726791AbeHBIFO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 04:05:14 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44496 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726174AbeHBIFO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 04:05:14 -0400
-Received: by mail-wr1-f67.google.com with SMTP id r16-v6so848615wrt.11
-        for <git@vger.kernel.org>; Wed, 01 Aug 2018 23:15:42 -0700 (PDT)
+        id S1726842AbeHBIFR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 04:05:17 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52442 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726174AbeHBIFR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 04:05:17 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o11-v6so1088038wmh.2
+        for <git@vger.kernel.org>; Wed, 01 Aug 2018 23:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vADtAtfCWSEXsH1OpMO146gzo9GsV3Ul3WFRiVwhEDk=;
-        b=kFDPiT7ypxfZq54p8vmSLTgLTrjNU6GN7PLW5/y0OLufqdAKiZ0n2Wpab778sPXpXi
-         7Vu2xFeu6qWkiYbvgutQPD627SnEkoH5ii5qRSTjitJ6+gL6ELHiAbAbhAyO9wDC7AgE
-         UI8i2N9wbsK/xk1guM/7hgItGavD+1w8HXzFlgH3labpiwL+vxeSopi4V+GwyTemCPJV
-         9nLFJ49F7VRT3WSOus2GOpYj8ZR0xJ0jb8Byk/iGFqcRhEke4RYpwfBf7OmxcFkcSyRb
-         IiNHIG66TM0XRGNyog/19tnf8jcZyjayPOSxo6KTXrlGMjjzcwFAFIXQxlVNRlf5D8Un
-         Cp2Q==
+        bh=vY6+VqQKfE0baxWaq67NOHbT5r7aqBQNKyyclPW3psU=;
+        b=nBboopfBcwwqdpiErnUxgkMxeMPHfGTmf4FgfNFKjizm7mVb/V/vT6WHBl+w04CE2a
+         7j3Du4JSyV5QhwOqCWdj50tdTQMXayMPpFWLNiF7VWAWUvAu/AkaJjbTVFrFIYSe1CZq
+         /4Y3eFYB842nzHcxi2rFmbdjei7Tv7/qHOtMmeNXtitpsk/uB75Z3s3Ft8Y6S2DFHFtJ
+         5sqfFHYKgEZaTLvz38mudjr3OgzNTWuegI1zxwDWX8yOwTLsTKXcEzCJovbTaigecZLD
+         WpQhpHoFyvQBEHn46f/07HAn0l8As8cTxSL2tkp9vmqhNar++lbjH+AsbH/hxcQZlPIA
+         tIHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vADtAtfCWSEXsH1OpMO146gzo9GsV3Ul3WFRiVwhEDk=;
-        b=OVDgPLa4m9BjfQXbAFa7/13SbL9R6/RciWMkdmdcqqqj8tPNWE89g8jN3cMiyfrj0/
-         VHiP78dOyHRpouB4mCtoG1z2C0pBbmPp9pZjtwhOhw8DBDnag881hue6beACXoxEUlJO
-         c3PACJ4MecrKjPEe6bGq8suy67FLSTkPItb/PKwbnSp7Lrh2O6H0C7tFFVUOPTCg6V1w
-         emJZ/Bd0wUhFqHSqVYIuug289doLqbyaA4lwkn5TdlFdciewYfiblSUYBMFOTuxJ3RUN
-         Vvyxq/kKiz3iO551voRzH7lYKqW5dw357Bzkd3GdKQWjW3u8YO/4caLbyPAPmlfiXr/k
-         tAaQ==
-X-Gm-Message-State: AOUpUlGHoMCcPRvbui0X5bKD1yk17p98ecUczZzGel9k5k7/C4FHKwY6
-        I5+ACIAoOuKSE8Z5G/izvOie/vJM
-X-Google-Smtp-Source: AAOMgpdQoiCcF80i5lB5o60oBNXN7Yss3VO1S2EebpfrzfOPOeS6bUB1lJmw42qF95gYr67+MJpsXQ==
-X-Received: by 2002:adf:dfcd:: with SMTP id q13-v6mr875049wrn.113.1533190541258;
-        Wed, 01 Aug 2018 23:15:41 -0700 (PDT)
+        bh=vY6+VqQKfE0baxWaq67NOHbT5r7aqBQNKyyclPW3psU=;
+        b=Jt8pUovdGLXmdwNgkvhx7//hU1P46YihISVlouUn8u8YIRAp7GQjzkZ2MXunptfbXU
+         460S/Ogp/wDxrHyjKfGd+XB7Wl6b465yu8A/FDMLk7efztygXnHlJ89hociEQpe8/lxy
+         21hBN0vGWfJoTh9xy0G+O9C/T0HXVviTQCoNJHY6ULxRatlRU03rwNSzu6/O4zHsyZIF
+         wOchEYJSzecQtDCLHwsOnEnV9JSgOoJSy7e2UogLb1whKuE4VTW3TJuP8l8z20bZUwGQ
+         cC/e0oJZkpJRMlWfuveg8aDn/Qq6afuLQKrektYd+fSCNgf5HCQFGHzyG6n5cy044Q5I
+         Eeiw==
+X-Gm-Message-State: AOUpUlE7ntoK+EtgUq+Rcw44won7zAlHjfEMJgke6HSvt4tTxZQbJIdL
+        vTZMoe7M/7Q/n+BpDfoIOF420GnW
+X-Google-Smtp-Source: AAOMgpcRUvHGLz+MmZpmozH4kVOA/pVB28joVevzl4TYqvFHUrbFyzrzkMkM6QJUs/3Bn0n6+lViUw==
+X-Received: by 2002:a1c:ee94:: with SMTP id j20-v6mr933070wmi.66.1533190544530;
+        Wed, 01 Aug 2018 23:15:44 -0700 (PDT)
 Received: from localhost.localdomain ([2a04:cec0:109f:b149:1092:6e1:496b:fd26])
-        by smtp.gmail.com with ESMTPSA id m200-v6sm1093018wma.32.2018.08.01.23.15.36
+        by smtp.gmail.com with ESMTPSA id m200-v6sm1093018wma.32.2018.08.01.23.15.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Aug 2018 23:15:40 -0700 (PDT)
+        Wed, 01 Aug 2018 23:15:43 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -64,9 +64,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v4 3/9] remote-odb: implement remote_odb_get_direct()
-Date:   Thu,  2 Aug 2018 08:14:59 +0200
-Message-Id: <20180802061505.2983-4-chriscool@tuxfamily.org>
+Subject: [PATCH v4 4/9] remote-odb: implement remote_odb_get_many_direct()
+Date:   Thu,  2 Aug 2018 08:15:00 +0200
+Message-Id: <20180802061505.2983-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.330.g17eb9fed90
 In-Reply-To: <20180802061505.2983-1-chriscool@tuxfamily.org>
 References: <20180802061505.2983-1-chriscool@tuxfamily.org>
@@ -79,78 +79,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-This is implemented only in the promisor remote mode
-for now by calling fetch_object().
+This function will be used to get many objects from a promisor
+remote.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- odb-helper.c | 14 ++++++++++++++
- odb-helper.h |  3 ++-
+ odb-helper.c | 15 +++++++++++++++
+ odb-helper.h |  3 +++
  remote-odb.c | 17 +++++++++++++++++
  remote-odb.h |  1 +
- 4 files changed, 34 insertions(+), 1 deletion(-)
+ 4 files changed, 36 insertions(+)
 
 diff --git a/odb-helper.c b/odb-helper.c
-index b4d403ffa9..99b5a345e8 100644
+index 99b5a345e8..246ebf8f7a 100644
 --- a/odb-helper.c
 +++ b/odb-helper.c
-@@ -4,6 +4,7 @@
- #include "odb-helper.h"
- #include "run-command.h"
- #include "sha1-lookup.h"
-+#include "fetch-object.h"
+@@ -28,3 +28,18 @@ int odb_helper_get_direct(struct odb_helper *o,
  
- struct odb_helper *odb_helper_new(const char *name, int namelen)
- {
-@@ -14,3 +15,16 @@ struct odb_helper *odb_helper_new(const char *name, int namelen)
- 
- 	return o;
+ 	return res;
  }
 +
-+int odb_helper_get_direct(struct odb_helper *o,
-+			  const unsigned char *sha1)
++int odb_helper_get_many_direct(struct odb_helper *o,
++			       const struct oid_array *to_get)
 +{
 +	int res;
-+	uint64_t start = getnanotime();
++	uint64_t start;
 +
-+	res = fetch_object(o->remote, sha1);
++	start = getnanotime();
 +
-+	trace_performance_since(start, "odb_helper_get_direct");
++	res = fetch_objects(o->remote, to_get);
++
++	trace_performance_since(start, "odb_helper_get_many_direct");
 +
 +	return res;
 +}
 diff --git a/odb-helper.h b/odb-helper.h
-index 4b792a3896..4c52e81ce8 100644
+index 4c52e81ce8..154ce4c7e4 100644
 --- a/odb-helper.h
 +++ b/odb-helper.h
-@@ -15,5 +15,6 @@ struct odb_helper {
- };
- 
+@@ -17,4 +17,7 @@ struct odb_helper {
  extern struct odb_helper *odb_helper_new(const char *name, int namelen);
--
-+extern int odb_helper_get_direct(struct odb_helper *o,
-+				 const unsigned char *sha1);
+ extern int odb_helper_get_direct(struct odb_helper *o,
+ 				 const unsigned char *sha1);
++extern int odb_helper_get_many_direct(struct odb_helper *o,
++				      const struct oid_array *to_get);
++
  #endif /* ODB_HELPER_H */
 diff --git a/remote-odb.c b/remote-odb.c
-index 03be54ba2e..7f815c7ebb 100644
+index 7f815c7ebb..09dfc2e16f 100644
 --- a/remote-odb.c
 +++ b/remote-odb.c
-@@ -89,3 +89,20 @@ int has_remote_odb(void)
- {
- 	return !!find_odb_helper(NULL);
+@@ -106,3 +106,20 @@ int remote_odb_get_direct(const unsigned char *sha1)
+ 
+ 	return -1;
  }
 +
-+int remote_odb_get_direct(const unsigned char *sha1)
++int remote_odb_get_many_direct(const struct oid_array *to_get)
 +{
 +	struct odb_helper *o;
 +
-+	trace_printf("trace: remote_odb_get_direct: %s", sha1_to_hex(sha1));
++	trace_printf("trace: remote_odb_get_many_direct: nr: %d", to_get->nr);
 +
 +	remote_odb_init();
 +
 +	for (o = helpers; o; o = o->next) {
-+		if (odb_helper_get_direct(o, sha1) < 0)
++		if (odb_helper_get_many_direct(o, to_get) < 0)
 +			continue;
 +		return 0;
 +	}
@@ -158,14 +152,14 @@ index 03be54ba2e..7f815c7ebb 100644
 +	return -1;
 +}
 diff --git a/remote-odb.h b/remote-odb.h
-index 4c7b13695f..c5384c922d 100644
+index c5384c922d..e10a8bf855 100644
 --- a/remote-odb.h
 +++ b/remote-odb.h
-@@ -3,5 +3,6 @@
- 
+@@ -4,5 +4,6 @@
  extern struct odb_helper *find_odb_helper(const char *remote);
  extern int has_remote_odb(void);
-+extern int remote_odb_get_direct(const unsigned char *sha1);
+ extern int remote_odb_get_direct(const unsigned char *sha1);
++extern int remote_odb_get_many_direct(const struct oid_array *to_get);
  
  #endif /* REMOTE_ODB_H */
 -- 
