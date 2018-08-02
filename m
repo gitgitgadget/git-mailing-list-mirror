@@ -2,80 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA7D81F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 21:29:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 744061F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 21:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731507AbeHBXWj convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 2 Aug 2018 19:22:39 -0400
-Received: from felt-1.demon.nl ([80.101.98.107]:34236 "EHLO felt.demon.nl"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727002AbeHBXWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 19:22:39 -0400
-Received: from [192.168.129.15] (x015.home.local [192.168.129.15])
-        by felt.demon.nl (AIX7.1/8.14.4/8.14.4) with ESMTP id w72LTPLX13828208;
-        Thu, 2 Aug 2018 21:29:26 GMT
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] sha1dc: update from upstream
-From:   "Michael Felt (aixtools)" <aixtools@felt.demon.nl>
-X-Mailer: iPhone Mail (15E216)
-In-Reply-To: <20180802205044.23631-1-avarab@gmail.com>
-Date:   Thu, 2 Aug 2018 23:29:25 +0200
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Dan Shumow <shumow@gmail.com>, Jeff King <peff@peff.net>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <496FCCBF-078F-404C-869C-720D2100CC45@felt.demon.nl>
+        id S1731192AbeHBXZT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 19:25:19 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:44289 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727193AbeHBXZT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 19:25:19 -0400
+Received: by mail-yb0-f195.google.com with SMTP id l16-v6so1876840ybk.11
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 14:32:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=NWJ9c3we+rP90lkIDfI0o/DBiulqFixUiGyYKZ4CXGo=;
+        b=Y/m4LngUWC/ruX4CDMJB+ttK+5ArQI/9+0Sz00aV/rsFp9XgfL3gTt5QX5tAJmihsf
+         kRxletECnA0LTX4JOBRkWdd5dTuTdnf0jMBQF0zWTcym0A/OkQWmi28zFWzzNbNVxjDA
+         DZ4QoKQRQMGupS7x6F4+/mIbq3H1lP8EPhnd2Q+X+ssa7SlXCW8Z3e9m1oT2MdSMQ2qt
+         QPMUXZC/ZR503b4U9J4OjxwlUJgLzmYIt6DiQelRS80Vd6Dw2fFnnDxQQhlqwOFbfZEM
+         hLLr55gqPQPE4JiGYgD30Ons7+pAZ1HlxT61Hf4x3badjO+lpSZ0+m3p22HGVIXizwrx
+         NXeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=NWJ9c3we+rP90lkIDfI0o/DBiulqFixUiGyYKZ4CXGo=;
+        b=PYH0ACpMGm2732SBTj+MUaqY0U/I/4YxTbCNjBx4GgRTKDENkDFhahBSUx5LEFJA6X
+         ziaYF2ag3VcioSkhtfXAqsb3rQK86etd/zp37COfGGWrxlRJoGXmKMrehbJn6JIhSUKt
+         1Rzm0rYI0UQz5uC4dD0K9Kf4ER05N7ybsqS6X1/RFptEY2K9MylM3A2f/I5Pl5x9rYtR
+         /IurWObJeWISmjxKDo6SLuyUWzouD17XsutVJyT6E5aT3XTgNe80DBpPkgBBo4X+AlSW
+         r+BEDpN2DWg6izr0oiHZRlFl1M+F68J0oEduZ5F6KXR6mnpfYGs8lMWlPm96Tk35prjz
+         4nAg==
+X-Gm-Message-State: AOUpUlFVbsdudaEBKYyxczaMVYt+Z9TbbSJD2GBuNA2Mra4zL1RVSiyb
+        cCUQkAaBzJFI0/heI3/tRojFWT9QuH+UyyjzGtcbENHHAcCZjg==
+X-Google-Smtp-Source: AAOMgpcamJLY8OA18dhK3tPlF0Xr6Dx9ZPYAzuG6vAWEsMG5P0GQuWvOy6vvY9yd/brRl7Tp3AWOQ64fOGS9FmkYcCw=
+X-Received: by 2002:a25:3624:: with SMTP id d36-v6mr719068yba.292.1533245540597;
+ Thu, 02 Aug 2018 14:32:20 -0700 (PDT)
+MIME-Version: 1.0
 References: <87o9emtuf6.fsf@evledraar.gmail.com> <20180802205044.23631-1-avarab@gmail.com>
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
+In-Reply-To: <20180802205044.23631-1-avarab@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 2 Aug 2018 14:32:08 -0700
+Message-ID: <CAGZ79kaS_YazchNG+N=gpwnewe+oSdwbdYusFMWpWygbrSqUQQ@mail.gmail.com>
+Subject: Re: [PATCH] sha1dc: update from upstream
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        aixtools@felt.demon.nl,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Daniel Shumow <shumow@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Aug 2, 2018 at 1:51 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
 
-
-Sent from my iPhone
-
-> On 2 Aug 2018, at 22:50, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> 
-> Update sha1dc from the latest version by the upstream
-> maintainer[1]. See 2db87328ef ("Merge branch 'ab/sha1dc'", 2017-07-10)
-> for the last update.
-> 
-> This fixes an issue where AIX was wrongly detected as a Little-endian
-> instead of a Big-endian system. See [2][3][4].
-> 
-> 1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/232357eb2ea0397388254a4b188333a227bf5b10
-> 2. https://github.com/cr-marcstevens/sha1collisiondetection/pull/45
-> 3. https://github.com/cr-marcstevens/sha1collisiondetection/pull/42
-> 4. https://public-inbox.org/git/20180729200623.GF945730@genre.crustytoothpaste.net/
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
->> On Wed, Aug 01 2018, Ævar Arnfjörð Bjarmason wrote:
->> https://github.com/cr-marcstevens/sha1collisiondetection/pull/45
->> [...]
->> It should work, but as noted in the MR please test it so we can make
->> sure, and then (if you have a GitHub account) comment on the MR saying
->> it works for you.
-> 
-> This got merged upstream, and as noted in that upstream PR I've
-> personally tested this on AIX under both GCC and IBM's xlc on the GCC
-> compile farm, it works.
-> 
-Thanks. I already have git 2.18 in use with the manual patch. 
-> sha1collisiondetection |  2 +-
-> sha1dc/sha1.c          | 12 +++++++++++-
-> 2 files changed, 12 insertions(+), 2 deletions(-)
-> 
 > diff --git a/sha1collisiondetection b/sha1collisiondetection
 > index 19d97bf5af..232357eb2e 160000
 > --- a/sha1collisiondetection
@@ -83,36 +74,13 @@ Thanks. I already have git 2.18 in use with the manual patch.
 > @@ -1 +1 @@
 > -Subproject commit 19d97bf5af05312267c2e874ee6bcf584d9e9681
 > +Subproject commit 232357eb2ea0397388254a4b188333a227bf5b10
-> diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
-> index 25eded1399..df0630bc6d 100644
-> --- a/sha1dc/sha1.c
-> +++ b/sha1dc/sha1.c
-> @@ -93,13 +93,23 @@
-> #define SHA1DC_BIGENDIAN
-> 
-> /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> */
-> +#elif (defined(_AIX))
-> +
-> +/*
-> + * Defines Big Endian on a whitelist of OSs that are known to be Big
-> + * Endian-only. See
-> + * https://public-inbox.org/git/93056823-2740-d072-1ebd-46b440b33d7e@felt.demon.nl/
-> + */
-> +#define SHA1DC_BIGENDIAN
-> +
-> +/* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> or <os whitelist> */
-> #elif defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
-> /*
->  * As a last resort before we do anything else we're not 100% sure
->  * about below, we blacklist specific processors here. We could add
->  * more, see e.g. https://wiki.debian.org/ArchitectureSpecificsMemo
->  */
-> -#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist>  or <processor blacklist> */
-> +#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> or <os whitelist> or <processor blacklist> */
-> 
-> /* We do nothing more here for now */
-> /*#error "Uncomment this to see if you fall through all the detection"*/
-> -- 
-> 2.18.0.345.g5c9ce644c3
-> 
 
+Offtopic:
+I wonder if we want to extend diffs a little here and similar to a diffstat
+that is not technically needed, but rather aiding the reviewers eyes.
+So maybe we could add a concise shortlog, e.g. after this line:
+
+19d97bf5..232357eb (2 dots indicating it is a fast forward instead of 3 dot=
+s)
+3 commits from "Merge pull request #37 from avar/fixup-pull-request-34"
+to "Merge pull request #45 from avar/aix-big-endian-detection"
