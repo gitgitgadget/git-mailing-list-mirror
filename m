@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3791F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83C1C1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387570AbeHBQTH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 12:19:07 -0400
-Received: from ao2.it ([92.243.12.208]:54926 "EHLO ao2.it"
+        id S2387578AbeHBQTJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 12:19:09 -0400
+Received: from ao2.it ([92.243.12.208]:54927 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387454AbeHBQTH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 12:19:07 -0400
+        id S2387454AbeHBQTI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 12:19:08 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1flDv9-0006iD-5m; Thu, 02 Aug 2018 15:45:39 +0200
+        id 1flDv8-0006hv-K8; Thu, 02 Aug 2018 15:45:38 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1flDwR-0002hZ-I4; Thu, 02 Aug 2018 15:46:59 +0200
+        id 1flDwQ-0002hB-Rh; Thu, 02 Aug 2018 15:46:58 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [RFC PATCH v2 11/12] dir: move is_empty_file() from builtin/am.c to dir.c and make it public
-Date:   Thu,  2 Aug 2018 15:46:33 +0200
-Message-Id: <20180802134634.10300-12-ao2@ao2.it>
+Subject: [RFC PATCH v2 03/12] t7411: be nicer to future tests and really clean things up
+Date:   Thu,  2 Aug 2018 15:46:25 +0200
+Message-Id: <20180802134634.10300-4-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180802134634.10300-1-ao2@ao2.it>
 References: <20180802134634.10300-1-ao2@ao2.it>
@@ -42,80 +42,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The is_empty_file() function can be generally useful, move it to dir.c
-and make it public.
+Tests 5 and 8 in t/t7411-submodule-config.sh add two commits with
+invalid lines in .gitmodules but then only the second commit is removed.
+
+This may affect future subsequent tests if they assume that the
+.gitmodules file has no errors.
+
+Since those commits are not needed anymore remove both of them.
+
+The modified line is in the last test of the file, so this does not
+change the current behavior, it only affects future tests.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- builtin/am.c | 15 ---------------
- dir.c        | 16 ++++++++++++++++
- dir.h        |  1 +
- 3 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 6273ea5195..0c04312a50 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -33,21 +33,6 @@
- #include "string-list.h"
- #include "packfile.h"
- 
--/**
-- * Returns 1 if the file is empty or does not exist, 0 otherwise.
-- */
--static int is_empty_file(const char *filename)
--{
--	struct stat st;
--
--	if (stat(filename, &st) < 0) {
--		if (errno == ENOENT)
--			return 1;
--		die_errno(_("could not stat %s"), filename);
--	}
--
--	return !st.st_size;
--}
- 
- /**
-  * Returns the length of the first line of msg.
-diff --git a/dir.c b/dir.c
-index 21e6f2520a..c1f7b90256 100644
---- a/dir.c
-+++ b/dir.c
-@@ -2412,6 +2412,22 @@ int is_empty_dir(const char *path)
- 	return ret;
- }
- 
-+/**
-+ * Returns 1 if the file is empty or does not exist, 0 otherwise.
-+ */
-+int is_empty_file(const char *filename)
-+{
-+	struct stat st;
-+
-+	if (stat(filename, &st) < 0) {
-+		if (errno == ENOENT)
-+			return 1;
-+		die_errno(_("could not stat %s"), filename);
-+	}
-+
-+	return !st.st_size;
-+}
-+
- static int remove_dir_recurse(struct strbuf *path, int flag, int *kept_up)
- {
- 	DIR *dir;
-diff --git a/dir.h b/dir.h
-index f5fdedbab2..e45aa3f459 100644
---- a/dir.h
-+++ b/dir.h
-@@ -281,6 +281,7 @@ static inline int is_dot_or_dotdot(const char *name)
- }
- 
- extern int is_empty_dir(const char *dir);
-+extern int is_empty_file(const char *filename);
- 
- extern void setup_standard_excludes(struct dir_struct *dir);
+Note that test_when_finished is not used here, both to keep the current style
+and also because it does not work in sub-shells.
+
+ t/t7411-submodule-config.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index 0bde5850ac..248da0bc4f 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -135,7 +135,9 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 			HEAD submodule \
+ 				>actual &&
+ 		test_cmp expect_error actual  &&
+-		git reset --hard HEAD^
++		# Remove both the commits which add errors to .gitmodules,
++		# the one from this test and the one from a previous test.
++		git reset --hard HEAD~2
+ 	)
+ '
  
 -- 
 2.18.0
