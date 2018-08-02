@@ -2,116 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A41E81F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 12:41:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE883208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 13:24:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732219AbeHBOcn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 10:32:43 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:53715 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732110AbeHBOcn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 10:32:43 -0400
-Received: by mail-it0-f54.google.com with SMTP id 72-v6so2981424itw.3
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 05:41:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=qvT5ddwvCcj/3nuQQQx1XzjJfO7jFTHdT6N9CZRY0uI=;
-        b=Oh3Q6T8nVZGTYolu29x59CdXGbEeX4oGUncocAL6c6MFtQvVeBQAWZODVMh5OUdSZ+
-         tBQMeq0M8Ycs+336RirCfYJaERoYHqnmC5Qp7OdEEkyj//Z6FaIeKy4+o+1WNGRRBY2A
-         kmpmsZ6gKaf2+bkwXY3IjzGHcI7IKx9QY16027AGqEwTsjHx02tcytsP6p4Fn/vsg3kw
-         pqdXqncV0j6uh7x5o9Uqgp85gLo+jebH66ZCjZh2t+LoCsyfl9TZPMZZclx1QaSKpJO3
-         fBYraSZgThnaThdTgQIkYMnBy1mPW7TjEA9xVQewSNn8ODudpurvGw0xjo27BG5MM5pY
-         7lBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qvT5ddwvCcj/3nuQQQx1XzjJfO7jFTHdT6N9CZRY0uI=;
-        b=XjLS9YCeyhI+B2K0PgVQJh8YkaBbKNG0mmRK8CSpfsvtQY4mhAxjXiP42kVlICpr4+
-         PyigPNNCiQy7MAw71h/06unNUtrwOFV461BQI7yprlCjz4+ILRbb99xNA6Ba0VR1ditB
-         KuK20nFMb/ZV/rWKI3a5cy0EPZVR6/bQbRbDDbHyVpjT3MSn+XiEXGJsBm7Ug6OkiDxj
-         2SNPKLMWhUv7Csl9tiWZBLFtkjcqiyW0UZMMys7o0he6ECUIEJpJmf417BvNIheTG/FK
-         YVCI4InYSLh4DOXNHXvN76i9Zz3eBgQNl89q7ZgYEiwniM1UmLBXbmBSMMq7X+fZ0Jpv
-         52NQ==
-X-Gm-Message-State: AOUpUlFLrAf3Pe54Xl+UMaAQoVMe8OJ3AIJ2/CX4ETVTTEQd+q0jSxJm
-        in8EplxemD6Ecv/j6WkSVBq3WPMF1BHf/ompLKM=
-X-Google-Smtp-Source: AAOMgpflv/ljjjD2eAXixpLe182ImCvxKSAjlrhpYMeoLzA4VH3szHB/TenhhBpfI81A3vGv9Ik/Evw0DeCLdMDNc5g=
-X-Received: by 2002:a24:54d:: with SMTP id 74-v6mr2179805itl.96.1533213701832;
- Thu, 02 Aug 2018 05:41:41 -0700 (PDT)
+        id S2387522AbeHBPPw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 11:15:52 -0400
+Received: from mout.web.de ([212.227.15.14]:34223 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387516AbeHBPPw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 11:15:52 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MN47k-1frqMX3pMG-006e1r; Thu, 02
+ Aug 2018 15:24:37 +0200
+Subject: Re: [PoC] coccinelle: make Coccinelle-related make targets more
+ fine-grained
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>
+References: <20180723135100.24288-1-szeder.dev@gmail.com>
+ <20180802115522.16107-1-szeder.dev@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <edd896c5-9d73-7771-984e-f7443b74d01f@web.de>
+Date:   Thu, 2 Aug 2018 15:24:32 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Received: by 2002:a4f:2293:0:0:0:0:0 with HTTP; Thu, 2 Aug 2018 05:41:40 -0700 (PDT)
-In-Reply-To: <xmqqpnzaq6jf.fsf@gitster-ct.c.googlers.com>
-References: <xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com> <CAL21BmkmxmjVmi3JUaW7vK5yGyzzZDxeMGNSSYV0nzEzWKcs+A@mail.gmail.com>
- <xmqqpnzaq6jf.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 2 Aug 2018 14:41:40 +0200
-Message-ID: <CAP8UFD0yWYvrbgtKjUs8oVks36Rp4qpfGAj3tambixSeC+-_1w@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2018, #03; Wed, 25)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20180802115522.16107-1-szeder.dev@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:4o1AWzcRviLy0UMAKFnDLanNxnQDGiBx3zxdguALthlE6dqVgz1
+ gI0D/Kl8GzxFs2vf/IFXj9tgdWaTakXDHAExV/oJo2fVKW7xRAUDY+D9vAePBN+ENlx7FMu
+ 7Hb4CQQMC20Mp6aXyiGWhtKPWtSO5Xt41gG6MzVuC6WrAIPa1+cjZ9d0t9fP85gENzuhBDO
+ zqCjyFJ2aJrLb6VdVvDUg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DvR5mK2lEmI=:1Lk1KmqAWua6COTdxL9b0o
+ HPkl0p7izmXYDiqxxaMrKPSRPrTp4yOB7bnFXy8+e2NlWc1h0IGtRY0yfSEA6wunWrkOJFaEL
+ pHUNihVAB11PVkG02s8rk4uuQMNpZQIABoEoliSOssFS6h8CjHjGz8gCoESs4v+7+SmsJVqER
+ aw6AxwDOUsdoNnlgrMutpPDfDIpU1ooJBGks+F3YeKDUWWVcQkQwp1ySTas5WMfw9UgP9F17M
+ KxzbaaZ1+7nxW9TmzIjTE09XgBDgrDT8YJJ4JSHcGlEpFBUVjx5ugl153YFbevODEjPKuJUYM
+ /KVtWXXUxNgwCPzdHUoVeGfr7NP0MEhw0mFLlxnLckDlXKk22aBemEUQcQjsm2ksHlJGu/u9K
+ oxJ3xseO/4z1GmPdGPK58FjUnRvtEWvdgZ55i4EHw2DlB8730fbCrU0l/xZJJ55ys7g7HTb0q
+ QF78UAUvmcrdbBsqvPSVhMtDYdWz80e4ujBP7Di+8tSI6IojHjxVUeihXkbtZiSp+CL2tGBnH
+ dpBZRuu1r14fZRDcKIluCum8Y+42Z7LebZs6DAK2iku8rT4selWKXkooOmWlkYBn9hin0zm9i
+ eEryvHYlW6+6MKrVMuS2wylPMcCikaNrxXFbjL41fPTVwbcmlwa54uCfn9NS8PqG5C+B6Kviw
+ OghnRdYbGb2/gptcnLJOmm0oiektzNORksbZv6uAIU01KPcKYXkvC1cuUQo/SrTVM8Qs07NQf
+ mMkgvOKO8pTlYJYVztcIjeB6sylxVQsZncO4xjU78Sl+UxjeDVR1t+LgvsNhV42FG8XFP4ofi
+ MM2lK4G
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jul 26, 2018 at 6:57 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> =D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F  <oly=
-atelezhnaya@gmail.com> writes:
->
->> 2018-07-26 1:13 GMT+03:00 Junio C Hamano <gitster@pobox.com>:
->>>
->>> * ot/ref-filter-object-info (2018-07-17) 5 commits
->>>  - ref-filter: use oid_object_info() to get object
->>>  - ref-filter: merge get_obj and get_object
->>>  - ref-filter: initialize eaten variable
->>>  - ref-filter: fill empty fields with empty values
->>>  - ref-filter: add info_source to valid_atom
->>>
->>>  A few atoms like %(objecttype) and %(objectsize) in the format
->>>  specifier of "for-each-ref --format=3D<format>" can be filled without
->>>  getting the full contents of the object, but just with the object
->>>  header.  These cases have been optimzied by calling
->>>  oid_object_info() API.
->>>
->>>  What's the doneness of this one?
->>
->> It is ready. Thanks.
->
-> Thanks, the question was meant more to the reviewers and mentors
-> than the original author, though ;-)
+Am 02.08.2018 um 13:55 schrieb SZEDER Gábor:
+> Let's add a bit of Makefile metaprogramming to generate finer-grained
+> make targets applying one semantic patch to only a single source file,
+> and specify these as dependencies of the targets applying one semantic
+> patch to all source files.  This way that shell loop can be avoided,
+> semantic patches will only be applied to changed source files, and the
+> same semantic patch can be applied in parallel to multiple source
+> files.  The only remaining sequential part is aggregating the
+> suggested transformations from the individual targets into a single
+> patch file, which is comparatively cheap (especially since ideally
+> there aren't any suggestions).
+> 
+> This change brings spectacular speedup in the scenario described in
+> point (1) above.  When the results of a previous 'make coccicheck' are
+> there, the time needed to run
+> 
+>    touch apply.c ; time make -j4 coccicheck
+> 
+> went from 3m42s to 1.848s, which is just over 99% speedup, yay!, and
+> 'apply.c' is the second longest source file in our codebase.  In the
+> scenario in point (2), running
+> 
+>    touch contrib/coccinelle/array.cocci ; time make -j4 coccicheck
+> 
+> went from 56.364s to 35.883s, which is ~36% speedup.
 
-I just tested this patch series on git.git on my laptop with the following:
+Awesome!
 
-$ time git for-each-ref --format=3D'%(objecttype)' >/dev/null
+> Unfortunately, this new approach has some disadvantages compared to
+> the current situation:
+> 
+>    - [RFC]
+>      With this patch 'make coccicheck's output will look like this
+>      ('make' apparently doesn't iterate over semantic patches in
+>      lexicographical order):
+> 
+>        SPATCH commit.cocci              abspath.c
+>        SPATCH commit.cocci              advice.c
+>        <... lots of lines ...>
+>        SPATCH array.cocci               http-walker.c
+>        SPATCH array.cocci               remote-curl.c
+> 
+>      which means that the number of lines in the output grows from
+>      "Nr-of-semantic-patches" to "Nr-of-semantic-patches *
+>      Nr-of-source-files".
 
-and the best I can get without it is:
+The output is mostly interesting to see if something is happening, to
+see if some semantic patch generated a non-empty diff and to get
+error details.  We have ca. 400 .c files and 8 .cocci files -- that
+means the lines would fill up my scroll-back buffer.  Hmm.
 
-real    0m0,038s
-user    0m0,034s
-sys     0m0,004s
+Would it be possible to have a phony target (or directory) per source
+file that just prints a line and depends on the individual file+cocci
+targets?  (I don't know much make, you probably thought about it
+already.)
 
-while with it I can get:
+Or to select one random .cocci file (let's say the first one) and
+only print SPATCH lines for this one (without mentioning its name)?
+(A dirty hack..)
 
-real    0m0,017s
-user    0m0,016s
-sys     0m0,000s
+> ---
+>   Makefile                      | 52 ++++++++++++++++++++++++-----------
+>   contrib/coccinelle/.gitignore |  3 +-
+>   2 files changed, 38 insertions(+), 17 deletions(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index d616c04125..f516dd93d1 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2674,25 +2674,44 @@ COCCI_SOURCES = $(filter-out sha1collisiondetection/%,$(C_SOURCES))
+>   else
+>   COCCI_SOURCES = $(filter-out sha1dc/%,$(C_SOURCES))
+>   endif
+> +COCCI_SEM_PATCHES = $(wildcard contrib/coccinelle/*.cocci)
+>   
+> -%.cocci.patch: %.cocci $(COCCI_SOURCES)
+> -	@echo '    ' SPATCH $<; \
+> -	ret=0; \
+> -	for f in $(COCCI_SOURCES); do \
+> -		$(SPATCH) --sp-file $< $$f $(SPATCH_FLAGS) || \
+> -			{ ret=$$?; break; }; \
+> -	done >$@+ 2>$@.log; \
+> -	if test $$ret != 0; \
+> +define cocci_template
+> +$(cocci_sem_patch)_dirs := $$(addprefix $(cocci_sem_patch).patches/,$$(sort $$(dir $$(COCCI_SOURCES))))
+> +
+> +$$($(cocci_sem_patch)_dirs):
+> +	@mkdir -p $$@
+> +
+> +# e.g. 'contrib/coccinelle/strbuf.cocci.patches/builtin/commit.c.patch'
+> +# Applies one semantic patch to _one_ source file.
+> +$(cocci_sem_patch).patches/%.patch: % $(cocci_sem_patch)
+> +	@printf '     SPATCH %-25s %s\n' $$(notdir $(cocci_sem_patch)) $$<; \
+> +	if ! $$(SPATCH) --sp-file $(cocci_sem_patch) $$< $$(SPATCH_FLAGS) >$$@ 2>$$@.log; \
+>   	then \
+> -		cat $@.log; \
+> +		rm -f $$@; \
+> +		cat $$@.log; \
+>   		exit 1; \
+> -	fi; \
+> -	mv $@+ $@; \
+> -	if test -s $@; \
+> -	then \
+> -		echo '    ' SPATCH result: $@; \
+>   	fi
+> -coccicheck: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.cocci))
+> +
+> +# e.g. 'contrib/coccinelle/strbuf.cocci.patch'
+> +# Applies one semantic patch to _all_ source files.
+> +$(cocci_sem_patch).patch: $(cocci_sem_patch) $$($(cocci_sem_patch)_dirs) $$(patsubst %,$(cocci_sem_patch).patches/%.patch,$(COCCI_SOURCES))
 
-The results are similar with --format=3D'%(objectsize)'.
+Are the dependencies correct (before and after the patch)?  E.g. are all
+semantic patches reapplied after cache.h was changed?  I think we ignore
+header files currently, and that becomes more of a problem if the check
+becomes more fine-grained.
 
-So I think it is a nice improvement.
-
-Looking at the code of the patches again, I can't see any simple way
-to improve on the way it is done.
-
-Thanks,
-Christian.
+René
