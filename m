@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DE941F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD9EC1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732552AbeHBQS7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 12:18:59 -0400
-Received: from ao2.it ([92.243.12.208]:54923 "EHLO ao2.it"
+        id S2387426AbeHBQTB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 12:19:01 -0400
+Received: from ao2.it ([92.243.12.208]:54924 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732272AbeHBQS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 12:18:59 -0400
+        id S1732272AbeHBQTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 12:19:01 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1flDv8-0006i0-R6; Thu, 02 Aug 2018 15:45:39 +0200
+        id 1flDv8-0006i2-Sp; Thu, 02 Aug 2018 15:45:39 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1flDwR-0002hJ-5T; Thu, 02 Aug 2018 15:46:59 +0200
+        id 1flDwR-0002hN-99; Thu, 02 Aug 2018 15:46:59 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [RFC PATCH v2 07/12] submodule: use 'submodule--helper config --stage' to stage .gitmodules
-Date:   Thu,  2 Aug 2018 15:46:29 +0200
-Message-Id: <20180802134634.10300-8-ao2@ao2.it>
+Subject: [RFC PATCH v2 08/12] t7506: cleanup .gitmodules properly before setting up new scenario
+Date:   Thu,  2 Aug 2018 15:46:30 +0200
+Message-Id: <20180802134634.10300-9-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180802134634.10300-1-ao2@ao2.it>
 References: <20180802134634.10300-1-ao2@ao2.it>
@@ -42,28 +42,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use 'git submodule--helper config --stage' in git-submodule.sh to remove
-the last place where the .gitmodules file is mentioned explicitly by its
-file path.
+In t/t7506-status-submodule.sh at some point a new scenario is set up to
+test different things, in particular new submodules are added which are
+meant to completely replace the previous ones.
+
+However before calling the "git submodule add" commands for the new
+layout, the .gitmodules file is removed only from the working tree still
+leaving the previous content in current branch.
+
+This can break if, in the future, "git submodule add" starts
+differentiating between the following two cases:
+
+  - .gitmodules is not in the working tree but it is in the current
+    branch (it may not be safe to add new submodules in this case);
+
+  - .gitmodules is neither in the working tree nor anywhere in the
+    current branch (it is safe to add new submodules).
+
+Since the test means to get rid of .gitmodules anyways, let's completely
+remove it from the current branch, to actually start afresh in the new
+scenario.
+
+This is more future-proof and does not break current tests.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- git-submodule.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t7506-status-submodule.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ff258e2e8c..f20c37d92d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -289,7 +289,7 @@ or you are unsure what this means choose another name with the '--name' option."
- 	then
- 		git submodule--helper config submodule."$sm_name".branch "$branch"
- 	fi &&
--	git add --force .gitmodules ||
-+	git submodule--helper config --stage ||
- 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
- 
- 	# NEEDSWORK: In a multi-working-tree world, this needs to be
+diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+index b4b74dbe29..af91ba92ff 100755
+--- a/t/t7506-status-submodule.sh
++++ b/t/t7506-status-submodule.sh
+@@ -325,7 +325,8 @@ test_expect_success 'setup superproject with untracked file in nested submodule'
+ 	(
+ 		cd super &&
+ 		git clean -dfx &&
+-		rm .gitmodules &&
++		git rm .gitmodules &&
++		git commit -m "remove .gitmodules" &&
+ 		git submodule add -f ./sub1 &&
+ 		git submodule add -f ./sub2 &&
+ 		git submodule add -f ./sub1 sub3 &&
 -- 
 2.18.0
 
