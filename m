@@ -2,118 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A7891F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 22:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F46D208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 22:56:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726924AbeHCAcW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 20:32:22 -0400
-Received: from mout.web.de ([212.227.15.4]:33243 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726221AbeHCAcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 20:32:22 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lv7eE-1ftZOB1ojy-010I70; Fri, 03
- Aug 2018 00:38:53 +0200
-Subject: Re: [PATCH] push: comment on a funny unbalanced option help
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Alexander Shopov <ash@kambanaria.org>
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
- <87k1p9u860.fsf@evledraar.gmail.com>
- <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
- <87h8kdu3ay.fsf@evledraar.gmail.com>
- <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
- <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
- <20180802165457.GC15984@sigill.intra.peff.net>
- <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
- <xmqqzhy4zgfv.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ea253620-ed28-54a4-0e52-16cbf4ec8451@web.de>
-Date:   Fri, 3 Aug 2018 00:38:51 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726933AbeHCAtZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 20:49:25 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:37021 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726791AbeHCAtZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 20:49:25 -0400
+Received: by mail-yw1-f67.google.com with SMTP id w76-v6so269776ywg.4
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 15:56:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LatFHNsSdcNWd9WUkcP0gHCAABmPhmq4yPn9E1NhfmU=;
+        b=jXubqJXhY6VSlAJ72aswy+NBj8S5fFKRqHAaJlVSk2AmXWDkq2xU4PFya1DpIeVlgR
+         wgs1E5lG/N84DfFUlKWov3cF0auo+pnxF31OcjZ+3tkk0WO/o+78lKFn7pI2FAs/CaRZ
+         TMNrIo3/a9dSpjeyWK6G0dgOSIyjgHFXR+OaM+3GXzvkoPCprUBI4yCgSJzNf8+Syg93
+         tPhjNmewhbK6ymNG93zqUfqZhjeEx20/uBxa3e9NtyL1zbrCQsexR+GCAh5myDvmUn/n
+         CU8TJfykWKvdTi0K7MpjFCYfhIaBp96oRnqwuPBKLN4rwcF7kKh9bn/658SfkR2oAIrn
+         FKog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LatFHNsSdcNWd9WUkcP0gHCAABmPhmq4yPn9E1NhfmU=;
+        b=ixG6+VupTLXCkYY9E4Xd+ch1Vn1qvYRnToCZMZ+vNs6KvVp6OIlFlR2gqOQLgd3y3M
+         vbkeJ/anOReXOLAH9hfx/1A7aDvNizs2/rQaiROIDpM/9RYLNe4YCYmIx2h45okn5WGc
+         qg/j3WE1JQ+6bsuWjtPlgXGoqB5pRA/aXqoOdtF8yVlbFoJg/9tDrQj82vHn+B6GHMPg
+         pBDgdK6en2J4z5SaO9pm0dPj8dtHl+LKI9c8LSKi7qeVa2tP5cIFALeUKXQMP4OaFGx0
+         MrV9LncPgbJQaw9He37u4Gm0nNh/KTQWBETZoPpKLX2fta8VyzaKQRsKSSDdR4EBGodh
+         QJwA==
+X-Gm-Message-State: AOUpUlFYh8QSbLPNbN3xgxsY+YiM/ZEygedJ9SXqZTLwJvoz0Yt5fRlI
+        79BIdfPBeppnoC3iZ4F9dQJsm6JAgtGCu6EF9yMCGuh//7JpXw==
+X-Google-Smtp-Source: AAOMgpdYUOJ/e78EkyOrGqwK2i9aJKng87ONkcUgc5CFazLGlR9f+bAcsiMF0APNBvRFlHsGwkxGropHhOJCV4NhHts=
+X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr829821ywk.345.1533250567001;
+ Thu, 02 Aug 2018 15:56:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhy4zgfv.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:4AJdV+4JHi9ocgZNOV/EsYM7jxm58In5XjeQxnu6U9Yws+YbUA4
- U1T7tUjXComLZTcz485xWeflJvyMgkRt0oJF7ycdFdZ+l3yPm2hX/cZNzdNepCUVb7Db9Ku
- UqHu2Y41iByHZrhdI8EfzdkY32zR5awF20gqqn+xsQLpLb1h338iSTM+IWzoULzZe/puXM9
- 3/eNpcfLcPBxAtM01qh3A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:XH5OGkZ4ReA=:SAD3fNya8f8wVXF6FO1TF4
- OaCrPu3spyR/GL1Y1LcCegVX6M+IVH3y0jw0hMPNnAfKuFVdCtHJWdoR8x4Xme5/MiTAYjEJK
- nHmcEJ65cxcox2EMylgiwU8WBbn8CrVL1AWr+AOylmfURz/LvcX2EUBLQSnVAengHgVq7V2Ql
- KoSb3FpCZhuFu/dg8Yf6zROsdrnNjAEZ3jEMBmF81693tkvu+7tfX7bMh+y1FTK5T2/xjx62r
- ZLbmvVmoAsj4dLST4opJZToLNptr6YnzM1o0CrFLFCVofN9UpnVAgcjGCx8lrOcmq29AX7qu+
- steu8Ql34nXUiizBcob76v2Np8Py1TiiCfH8F8y7744glBr6zk6MDuAH/z4Mgj8Os2yDk3sSj
- RQFbcuveYbR1tOlIhotlFwExsUH9IMr5wE+bYJtoU1wkS48vYoS9yDkOSReSUav7Gu7NLAkrs
- EAgshSQXxdHnEdkgY+167Ia20y/eOLCFgx+nBxTk+f4FXrFET+J6EhllzE6y7rmIWNBx5jGW/
- KEMvQOfXn/b1LqK3tuh9RNn2NzuzwHx56w0G+UE8drmEaaZhDYHcQqgXV4UJ6+IUQEFgU9bZh
- qEp2zt27hwnXZXXdLWZBgp5FVf0HoIhcAXYhXx9OTkTDu66zG/M+bCAWWesEkcQO3PyT1+bx0
- viqQ2nIDvawqQzYn3IRu3aL0WRjKSGufZdWeNp6cyKzWIjREHIhZ/WtrmvBVbGrIV/Pm4CgMO
- Z8z7AS9nEeQMFEDrM0B3wKyP/zbuZdk/ma3IGB2MY3K7WRn3/SZAnwIgOUMN3/YqgZrvBZqxy
- rGAqRM0
+References: <20180802061505.2983-1-chriscool@tuxfamily.org> <20180802061505.2983-10-chriscool@tuxfamily.org>
+In-Reply-To: <20180802061505.2983-10-chriscool@tuxfamily.org>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 2 Aug 2018 15:55:56 -0700
+Message-ID: <CAGZ79kYPik87zvLUPPKFzcATFUdBFcXrAkTYxpxvAQy6w1CcUw@mail.gmail.com>
+Subject: Re: [PATCH v4 9/9] Documentation/config: add odb.<name>.promisorRemote
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Duy Nguyen <pclouds@gmail.com>, Mike Hommey <mh@glandium.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Eric Wong <e@80x24.org>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Beat Bolli <dev+git@drbeat.li>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.08.2018 um 22:01 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> Am 02.08.2018 um 18:54 schrieb Jeff King:
->>> PS I actually would have made the rule simply "does it begin with a
->>>      '<'", which seems simpler still. If people accidentally write "<foo",
->>>      forgetting to close their brackets, that is a bug under both the
->>>      old and new behavior (just with slightly different outcomes).
->>
->> Good point.
-> 
-> Straying sideways into a tangent, but do we know if any locale wants
-> to use something other than "<>" as an enclosing braket around a
-> placeholder?
+On Wed, Aug 1, 2018 at 11:16 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> From: Christian Couder <christian.couder@gmail.com>
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/config.txt | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 43b2de7b5f..2d048d47f2 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2513,6 +2513,11 @@ This setting can be overridden with the `GIT_NOTES_REWRITE_REF`
+>  environment variable, which must be a colon separated list of refs or
+>  globs.
+>
+> +odb.<name>.promisorRemote::
+> +       The name of a promisor remote. For now promisor remotes are
+> +       the only kind of remote object database (odb) that is
+> +       supported.
+> +
 
-Bulgarian seems to use capitals instead; here are some examples found
-with git grep -A1 'msgid "<' po/:
+Can you explain the end goal for this? (I did not find it in the cover letter,
+nor do I make sense of this documentation)
 
-po/bg.po:msgid "<remote>"
-po/bg.po-msgstr "ОТДАЛЕЧЕНО_ХРАНИЛИЩЕ"
---
-po/bg.po:msgid "<branch>"
-po/bg.po-msgstr "КЛОН"
---
-po/bg.po:msgid "<subdirectory>/"
-po/bg.po-msgstr "ПОДДИРЕКТОРИЯ/"
---
-po/bg.po:msgid "<n>[,<base>]"
-po/bg.po-msgstr "БРОЙ[,БАЗА]"
+So from what I understand, this series relates to partialClone, which
+has the remote name of the "promisor" in extensions.partialclone.
+That is the remote to contact for any needs w.r.t. partial clone and
+fetching on demand.
 
->  This arg-help text, for example,
-> 
-> 	N_("refspec")			without LIT-ARG-HELP
-> 
-> would be irritating for such a locale's translator, who cannot
-> defeat the "<>" that is hardcoded and not inside _()
-> 
-> 	s = literal ? "%s" : "<%s>";
->                          
-> that appear in parse-options.c::usage_argh().
-> 
-> Perhaps we should do _("<%s>") here?  That way, the result would
-> hopefully be made consistent with
-> 
-> 	N_("<refspec>[:<expect>]")	with LIT-ARG-HELP
-> 
-> which allows translator to use the bracket of the locale's choice.
+This key "odb.<name1>.promisorRemote = <name2>" introduces
+2 new names, where do each of these two names hook in?
+name2 is a remote, such as "origin" from what I can tell, but
+which naming scheme does name1 follow here?
 
-@Alexander: Would that help you?
+What makes the odb key different, in that the partial clone
+feature only handles objects as well?
 
-René
+>  pack.window::
+>         The size of the window used by linkgit:git-pack-objects[1] when no
+>         window size is given on the command line. Defaults to 10.
+> --
+> 2.18.0.330.g17eb9fed90
+>
