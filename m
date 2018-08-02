@@ -2,91 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDDD1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 16:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CF8F1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 16:55:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731865AbeHBSnC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 14:43:02 -0400
-Received: from mout.web.de ([212.227.15.4]:47763 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726938AbeHBSnB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 14:43:01 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MDgTO-1fjZRi0KnG-00H45T; Thu, 02
- Aug 2018 18:51:00 +0200
-Subject: Re: [PATCH] push: comment on a funny unbalanced option help
+        id S1731868AbeHBSq5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 14:46:57 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40500 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726636AbeHBSq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 14:46:57 -0400
+Received: (qmail 17401 invoked by uid 109); 2 Aug 2018 16:55:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Aug 2018 16:55:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25501 invoked by uid 111); 2 Aug 2018 16:54:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 02 Aug 2018 12:54:59 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Aug 2018 12:54:58 -0400
+Date:   Thu, 2 Aug 2018 12:54:58 -0400
+From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org
+Subject: Re: [PATCH] push: comment on a funny unbalanced option help
+Message-ID: <20180802165457.GC15984@sigill.intra.peff.net>
 References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
  <87k1p9u860.fsf@evledraar.gmail.com>
  <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
  <87h8kdu3ay.fsf@evledraar.gmail.com>
  <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
  <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <e18e9ebb-a78c-150c-9e63-e9249eb2e96d@web.de>
-Date:   Thu, 2 Aug 2018 18:50:58 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:UjhI2Lc71aIphR+24Fcz6H/zJfDYMORtikltDopvjo0kNAhLoim
- OopDbDXWbcpKhHxPn4oMUfyPyXpaE6ZSgqwdaT2tntgxmvAJboc7wsOSLRB9kA+kRc2OD0J
- FAxVbXxxEljvTbxa37wCnfgjA3QfQtoRMK0+Z8PQpguz+/TdSMrYwnLzQE6rG4e/MYr3JcS
- GkKE1cdFTVSdSOQ/t4cTg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hY7H9pZ/OwY=:DpdrhWF5gDI5mpXqvk0/+c
- iaRW3p2QoeSziOy1nS+OdurO83zocyQ1+5mZ+p6pP04NaoehjrBaA7POFeR/IQBNTZtlxpD9O
- JkWKN9ziZaekzMTKtJfYM919XD7+J0knsxqT927NLNsh/foke6aHtj2XfnzshSsen4zFb/61A
- O9ycsI8SlyJ5uGm7SDhdM6bC/++EQ+D47b4CDklIh1lIbmO6LIzy9O846nph/kiWpfqZiTdrg
- 45YYbOA/oS38B81fAsnsfOpz+TYGWtLG5BKqoey6DU+SHOYpP81D9D2j9sKQpc9n984b/3S0I
- DHX4RZZodHwHzJjRYoi+2lOXmmGRr9LBh9IgzUF7BzwNR727cDywGujip9d1TIpDdKAyXwegQ
- uCVWaMjx/+kj+GCwlsP0JUb+BB+AgVinCDdUsQQzL08Lh0o+3tAbbLjCeIFlgcbLJdzdVZ39+
- ZK1accvz/f5y3LreatKo2f8GQ5qfD2PLHD1p7pt9CgiPJzhxQtRbLior65oBE8VeT9mSFldZl
- ZUlLyO88lSBQr5zaZXq/gNZQxao2UXEAjIyD0/iBQzuG9T1UNSV/tB0TS3ziMJPi2+xuKXxGT
- CiR/tX2uJZKjHuDFz0bV58Ra+vI8fx9eMp94ovvYZGlhbVE58Nfn379t8AjrJyKASyKrZfGDC
- gDnL+Zj7me+DMdrCdIj6PHtw0JEgW0kjXQdyvJll969oAAFUQNL0Ojh014IwyP8jJOeaZBpix
- Cm4y9KoQ224P/xcrNeCDt+JnkvDTZ/+5T9rCwQ9Tm7iKcV0ksaIGBYcA/hIwhI/ZmdWCo45R0
- hDgGQ9g
+Content-Disposition: inline
+In-Reply-To: <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.08.2018 um 17:31 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
->> diff --git a/parse-options.c b/parse-options.c
->> index 7db84227ab..fadfc6a833 100644
->> --- a/parse-options.c
->> +++ b/parse-options.c
->> @@ -660,7 +660,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
->>   static int usage_argh(const struct option *opts, FILE *outfile)
->>   {
->>   	const char *s;
->> -	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
->> +	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh ||
->> +		(opts->argh[0] == '<' && strchr(opts->argh, '>'));
+On Thu, Aug 02, 2018 at 08:31:57AM -0700, Junio C Hamano wrote:
+
+> > diff --git a/parse-options.c b/parse-options.c
+> > index 7db84227ab..fadfc6a833 100644
+> > --- a/parse-options.c
+> > +++ b/parse-options.c
+> > @@ -660,7 +660,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
+> >  static int usage_argh(const struct option *opts, FILE *outfile)
+> >  {
+> >  	const char *s;
+> > -	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
+> > +	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh ||
+> > +		(opts->argh[0] == '<' && strchr(opts->argh, '>'));
 > 
 > You are greedier than what I thought ;-) I would have limited this
 > magic to the case where argh is surrounded by "<>", but you allow
 > one closing ">" anywhere, which allows us to grab more complex cases.
-
-That's what I had initially, but only one of the current cases would
-have benefited from that strict behavior, so it's not useful enough.
-
+> 
 > The lack of escape hatch to decline this auto-literal magic makes me
 > somewhat nervous, but I do not offhand think of a reason why I do
 > want an arg-help string that _begins_ with '<' to be enclosed by
 > another set of "<>", so perhaps this is a good kind of magic.
 
-The escape hatch is to add the extra pair manually to the argh string.
+I think that case is actually easy; once the caller provides a "<>",
+they are in "literal" mode, so they are free to add extra brackets if
+you want. I.e., any "<foo>bar" that you do want enclosed could be
+spelled "<<foo>bar>". It's the opposite that becomes impossible: you do
+not have an opening bracket and nor do you want one.  But as long as we
+retain LITERAL_ARGHELP for that case, we have an escape hatch.
 
-René
+I was going to suggest that this conversion has the downside of being
+somewhat one-way. That is, it is easy for us to find affected sites now
+since they contain the string LITERAL_ARGHELP. Whereas if we wanted to
+back it out in the future, it is hard to know which sites are depending
+on this new behavior.
+
+But I am having trouble thinking of a reason we would want to back it
+out. This makes most cases easier, and has a good escape hatch.
+
+-Peff
+
+PS I actually would have made the rule simply "does it begin with a
+   '<'", which seems simpler still. If people accidentally write "<foo",
+   forgetting to close their brackets, that is a bug under both the
+   old and new behavior (just with slightly different outcomes).
