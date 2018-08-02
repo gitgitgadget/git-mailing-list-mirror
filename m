@@ -2,88 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A26731F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 20:51:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2D521F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 20:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731982AbeHBWn4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 18:43:56 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:39333 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730957AbeHBWn4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 18:43:56 -0400
-Received: by mail-yb0-f195.google.com with SMTP id c4-v6so1845095ybl.6
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 13:51:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qEy7pOyUTZz9Bg4/1tpjv8z5fMKurZxzD0y8X3uEUZ8=;
-        b=PWGK1l4hjg+OjbuMESrVNEL/a77UO6/JoLGisug5ImTfb6LpLb28JA6D/mg/CgA8Ic
-         1vcnD4mpv1mTirR3BZXxoDg5MFdk3oTQAuqF9+B+pHjHpnJEqL0zxGs2e07JBhK6GaUk
-         zaR3UBJ/TlWzpvYAD1EcORwcL4gZ03rT0xuJy84vSvDLLrMq29wFdccfjjzU1a1G/7Kg
-         whZNMcnPbBanK51hCWVwQQVOeOQcVLfokXnHPF6GSEm2UQ/+7dVpuT5zvLaxj+YuCH66
-         tI4Q6WByjiBRXja0ISw5F56+njH3XiDWzyrhKVVURxyif7FGGtS288HEMBB9pCeXr6Wi
-         tzeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qEy7pOyUTZz9Bg4/1tpjv8z5fMKurZxzD0y8X3uEUZ8=;
-        b=Mcj4JLRkqfg3EaGpzQKNYoNaBA7wW6yRnWfOWJr4V5j0IQ55L8uRH9NPc6Stx1rjyu
-         C/NGgxVq1tnLp3bCOT0OPwQtH/zUW97m6CSC8NnnE+IQTPLcyzJxE4SYSc3mqHBZFy8u
-         cdMkgyvV5JLvXgfal7gw9xBcT4d4vhQcg6V+p5izLT3h4hHJGcHX3s7Ahj46YtTvT6Pf
-         MFTXTId4FYjTO14B6ctgUswGJddVNWJvYjT0bdO4nva1EWBOlifeEutwZlqCZbzOmkok
-         U/7+rqZgEdkav3rSYW1Xol80QgdOpBfWfVEOdcOkbHJmleYpSv7tG97iBImN5uK3SAC0
-         i6sA==
-X-Gm-Message-State: AOUpUlEo/2CiseYA+shgTdZrzSHcdJgFZHBTj1baoKdEl14gexGyk08A
-        QRgDn9RPBLQDC3oHMKygeeOi4cxbBgqlNdRwB08nYQ==
-X-Google-Smtp-Source: AAOMgpd7DvklULLm5l8c6Sw0F8im3NNQGqL05+bdCAPZxM429K4kJAEuPzfN8SbU6KekdVS2h/hT9fPpxGatD/uy7Cw=
-X-Received: by 2002:a25:a263:: with SMTP id b90-v6mr646605ybi.247.1533243066356;
- Thu, 02 Aug 2018 13:51:06 -0700 (PDT)
+        id S1732222AbeHBWwk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 18:52:40 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:43789 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732156AbeHBWwj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 18:52:39 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id lKhEf108XjlDzlKhFfeDJE; Thu, 02 Aug 2018 21:59:46 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=Xv5iQGVRkRqp_QMkjjUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/6] add, update-index: fix --chmod argument help
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+ <87k1p9u860.fsf@evledraar.gmail.com>
+ <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
+ <87h8kdu3ay.fsf@evledraar.gmail.com>
+ <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
+ <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
+ <20180802165457.GC15984@sigill.intra.peff.net>
+ <ad2d8f99-07a3-0191-88a2-c43081657988@web.de>
+ <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <4b6fa9ca-97ad-74e8-f252-cc62470f5946@ramsayjones.plus.com>
+Date:   Thu, 2 Aug 2018 21:59:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-12-ao2@ao2.it>
-In-Reply-To: <20180802134634.10300-12-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 13:50:55 -0700
-Message-ID: <CAGZ79kYpsYbg8nkE+8hTPM=Bg_3-p3EzoRfJ1y7f+Dz-3hT-HA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 11/12] dir: move is_empty_file() from builtin/am.c
- to dir.c and make it public
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <2bc31a96-1d1a-3b71-59cc-47a3a2e29e16@web.de>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfAGkGI36XH9Ngp5AireHnonwpxW8g2pLfwlaz0EL8cuUiChAmB6Sq5ddkipg6k4uHZnnGfkjxu0URrvN5HkXebtElK8J6Xlw38J57IeiU4QdnCxQO0iI
+ DErjjeDzpOcqmtYKztRZ56qdRsL/XvIAUPuQIemCKLeTDz7K3zCQBUHN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
->
-> The is_empty_file() function can be generally useful, move it to dir.c
-> and make it public.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
 
-Makes sense,
 
-Thanks,
-Stefan
+On 02/08/18 20:17, René Scharfe wrote:
+> Don't translate the argument specification for --chmod; "+x" and "-x"
+> are the literal strings that the commands accept.
+> 
+> Separate alternatives using a pipe character instead of a slash, for
+> consistency.
+> 
+> Use the flag PARSE_OPT_LITERAL_ARGHELP to prevent parseopt from adding a
+> pair of angular brackets around the argument help string, as that would
+> wrongly indicate that users need to replace the literal strings with
+> some kind of value.
+> 
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+>  builtin/add.c          | 4 +++-
+>  builtin/update-index.c | 2 +-
+>  2 files changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 8a155dd41e..84bfec9b73 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -304,7 +304,9 @@ static struct option builtin_add_options[] = {
+>  	OPT_BOOL( 0 , "refresh", &refresh_only, N_("don't add, only refresh the index")),
+>  	OPT_BOOL( 0 , "ignore-errors", &ignore_add_errors, N_("just skip files which cannot be added because of errors")),
+>  	OPT_BOOL( 0 , "ignore-missing", &ignore_missing, N_("check if - even missing - files are ignored in dry run")),
+> -	OPT_STRING( 0 , "chmod", &chmod_arg, N_("(+/-)x"), N_("override the executable bit of the listed files")),
+> +	{ OPTION_STRING, 0, "chmod", &chmod_arg, "(+|-)x",
 
-> +++ b/dir.c
-> @@ -2412,6 +2412,22 @@ int is_empty_dir(const char *path)
->         return ret;
->  }
->
-> +/**
-> + * Returns 1 if the file is empty or does not exist, 0 otherwise.
-> + */
+Am I alone in thinking that "(+x|-x)" is more readable?
 
-Please move the comment to the header instead.
-/* possibly as a oneliner ? */
+ATB,
+Ramsay Jones
+
+> +	  N_("override the executable bit of the listed files"),
+> +	  PARSE_OPT_LITERAL_ARGHELP },
+>  	OPT_HIDDEN_BOOL(0, "warn-embedded-repo", &warn_on_embedded_repo,
+>  			N_("warn when adding an embedded repository")),
+>  	OPT_END(),
+> diff --git a/builtin/update-index.c b/builtin/update-index.c
+> index a8709a26ec..7feda6e271 100644
+> --- a/builtin/update-index.c
+> +++ b/builtin/update-index.c
+> @@ -971,7 +971,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+>  			PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
+>  			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+>  			(parse_opt_cb *) cacheinfo_callback},
+> -		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, N_("(+/-)x"),
+> +		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, "(+|-)x",
+>  			N_("override the executable bit of the listed files"),
+>  			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+>  			chmod_callback},
+> 
