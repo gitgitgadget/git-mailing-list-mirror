@@ -2,112 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4271F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 14:44:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A7C1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 15:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387651AbeHBQfu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 12:35:50 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:53201 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387503AbeHBQfu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 12:35:50 -0400
-Received: by mail-it0-f41.google.com with SMTP id d9-v6so3646022itf.2
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 07:44:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=z/MZxL0VpIsvtrADUc+/DDhuS0SuDhISJpYmDe5Inig=;
-        b=gqUdyjGPSIuA/vG96zvvRMpEUky3Vn/Qh547Cj2uq038Sy+laDpfPDMhQelivxcVc8
-         SvIRZos/U61OG7gVxXIJ4UM0GW01QLdyZWcFv49PV4e4qhsLq9+IXZtW2uJB5LPvG528
-         kdX2XC8yb8+v3wlbAHLJwU4JPOMxi9eFSI/+0OfkqQtwVqoXWpMjmqjPInMBzo1B+UjH
-         DbDUW8ju6fn/btQydUXc+zT2Qn12ZXtLuPnx6qVWkawd98lVv+fv+I3w7E0Lf/irW9UA
-         CpVFgnORd1qilWsj4x+Cpp54hbFWzvy39K4sX0xL5MsV9IE6IKTifhNW56Y2/DCQjH8i
-         0n0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=z/MZxL0VpIsvtrADUc+/DDhuS0SuDhISJpYmDe5Inig=;
-        b=gXvYSTJ9+9Fpo8v8x4C/VwmeN8nBcYUDoix/Q1cMNd7srC6ecTJxVTX4mBt7r9O7Kb
-         kuwQnuiH/B7KxmR0acopw6gRFIlPbo1QESUQZGlBV6YXXXNMi6DDsJbk9ZEG6+vNENTg
-         gi/vkzuOjNwytuCWRi9770SCR77C4J8bqUtMr4lGqKLAu7KeCliLlTTj+aG4N5y5XVST
-         sC7n+rKIJ+g6pDCRWfOEJXd0l1kMK7pzKLVtyIDuVEGRWIm5pTttZSs+X2fPsPHLrxjN
-         zqbaJlnzk6PWuQJOnouARl1dCDfXpYSRX7mD/TfQyX6LiNGGrFTPi4/YDT0zhQYZCNMO
-         +NqQ==
-X-Gm-Message-State: AOUpUlEDdXOxlcpfs85JTO0RgpndX+MBd2anOAuHMQF2OF3nhqKyEEaR
-        rviGwlGFQKNvHcLg5fsZtnsQHZx0S6Xr2VeUepc=
-X-Google-Smtp-Source: AAOMgpdjnwS3DzrtPw1RdHXYeMSSn4LQ4ujL073i42Wz6yr8lY2k4V0iG7b1tvz3bhzlCA8BEJTMu5atDYeNlwqb3bc=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr2661360itf.121.1533221060209;
- Thu, 02 Aug 2018 07:44:20 -0700 (PDT)
+        id S1732646AbeHBQ5q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 12:57:46 -0400
+Received: from mout.web.de ([212.227.15.4]:47099 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732488AbeHBQ5q (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 12:57:46 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lu5BO-1fupa73qXm-011THL; Thu, 02
+ Aug 2018 17:06:05 +0200
+Subject: Re: [PATCH] push: comment on a funny unbalanced option help
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Stephen Boyd <bebarino@gmail.com>
+References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+ <87k1p9u860.fsf@evledraar.gmail.com>
+ <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
+ <87h8kdu3ay.fsf@evledraar.gmail.com>
+ <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
+ <87ftzwu9wg.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <e7e5f54d-04b6-4d0f-0bcb-692801f0719c@web.de>
+Date:   Thu, 2 Aug 2018 17:06:05 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180729092759.GA14484@sigill.intra.peff.net> <20180730152756.15012-1-pclouds@gmail.com>
- <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
- <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com> <20180731192931.GD3372@sigill.intra.peff.net>
- <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com> <20180731203746.GA9442@sigill.intra.peff.net>
- <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com> <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 2 Aug 2018 16:43:53 +0200
-Message-ID: <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive filesystems
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87ftzwu9wg.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:rMxnDG2w8eRkYkZRQ9zIKSwTeorHVLQplgFhfbNNAGrX/v/vI5z
+ KelnDX1DKISqKmh6ThrJ1T9QJztX+0GSL5uAhJ8BurRgFGtrFeR5eOhW7jzBzqyO8RPDyVy
+ OyadnRGngE6jkyl7nqo7rxPXN9LfZhVurMBg0pgTcZufTWpPBDj/MB1sOxxWZzShBIx+93z
+ Hrn4TTQD3HtyCU2FYkNVg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KYMdWYCB6dc=:pqoBKLZVxhUaeok+xdjaxG
+ X+euIfyPObRYIOaJl1S2sW4mA6OfVDUh4wq7JZ5YIHwJebujD67h6KvxBjjz0XJ0ET4UnP20S
+ VpAMBhuXsek0qZ1oeY3cgq+WRUKL3aOph2e21QDEp/W1zLjafTkO9DjAhPRctyRrTR7CLyblM
+ JsxPBEKlije1SDkWilyQ/aWK9NHCPQjopanXif8aYNP2qPaWHD2kJQblD22elky1uo5BOCC/C
+ +ihF6FX2XkRUzDGNnQArOMUFpsvQlGWuqvzVQANzibVaH4LU3rKppxGf/2LZhI6sm7g7fpLI9
+ I1SfGazSHDAVt60RdeArWpiTRtTOFMxErCkMEBk5FevMH+jNJ0gBRjr+FObq62KV06H6oxQib
+ uhAHqRwapelZXb6o9EU1bEXPrromVhHjU5t+U8aXY1nxQW80DHP1toPC+2zLHyfYicWXRrnGP
+ P/o7/VsMtpFPM7i9avmaj/kB2yz8P9g2yCjZ8Cg3uYnp6bYUMZwFjJD2Jy4hvUahwDwIn2DoX
+ el0lBppWqnlo8a6LV4gKBcbSTIhDTrrK/cZslDJKB6CFq3RD2i23gj1TynJWoM0fWadERY497
+ Ch7xan8AqGLPjuQasrKN862kvxk1Uh8IFJNJDkEZ+CitkUsNuKUxwydoscdMeCExLMct8GHxe
+ lS+48IE/YpkB0J0B9isiRDdC3pQ7gWZwHjf8HnH1/c4/7cwtPyHeWtdsqhiL61c3CQzBKiR5e
+ 4jPhK0+y2EsZWzQk1xJnj8rqLQhEOW6wUvVeKWhknvEzcH/bsk53j01DQi7tm8n7soIQAbCVz
+ mau/w3f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 1, 2018 at 11:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Jeff King <peff@peff.net> writes:
-> >
-> >>> Presumably we are already in an error codepath, so if it is
-> >>> absolutely necessary, then we can issue a lstat() to grab the inum
-> >>> for the path we are about to create, iterate over the previously
-> >>> checked out paths issuing lstat() and see which one yields the same
-> >>> inum, to find the one who is the culprit.
-> >>
-> >> Yes, this is the cleverness I was missing in my earlier response.
-> >>
-> >> So it seems do-able, and I like that this incurs no cost in the
-> >> non-error case.
-> >
-> > Not so fast, unfortunately.
-> >
-> > I suspect that some filesystems do not give us inum that we can use
-> > for that "identity" purpose, and they tend to be the ones with the
-> > case smashing characteristics where we need this code in the error
-> > path the most X-<.
->
-> But even if inum is unreliable, we should be able to use other
-> clues, perhaps the same set of fields we use for cached stat
-> matching optimization we use for "diff" plumbing commands, to
-> implement the error report.  The more important part of the idea is
-> that we already need to notice that we need to remove a path that is
-> in the working tree while doing the checkout, so the alternative
-> approach won't incur any extra cost for normal cases where the
-> project being checked out does not have two files whose pathnames
-> are only different in case (or checking out such an offending
-> project to a case sensitive filesytem, of course).
->
-> So I guess it still _is_ workable.  Any takers?
+Am 02.08.2018 um 16:21 schrieb Ævar Arnfjörð Bjarmason:
+> 
+> On Thu, Aug 02 2018, René Scharfe wrote:
+> 
+>> Am 02.08.2018 um 00:31 schrieb Ævar Arnfjörð Bjarmason:
+>>> But looking at this again it looks like this whole thing should just be
+>>> replaced by:
+>>>
+>>>       diff --git a/builtin/push.c b/builtin/push.c
+>>>       index 9cd8e8cd56..b8fa15c101 100644
+>>>       --- a/builtin/push.c
+>>>       +++ b/builtin/push.c
+>>>       @@ -558,9 +558,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>>>                       OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRANSPORT_PUSH_PORCELAIN),
+>>>                       OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
+>>>                       { OPTION_CALLBACK,
+>>>       -                 0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+>>>       +                 0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+>>>                         N_("require old value of ref to be at this value"),
+>>>       -                 PARSE_OPT_OPTARG, parseopt_push_cas_option },
+>>>       +                 PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
+>>>       +                 parseopt_push_cas_option },
+>>>                       { OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
+>>>                               N_("control recursive pushing of submodules"),
+>>>                               PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+>>>
+>>> I.e. the reason this is confusing is because the code originally added
+>>> in 28f5d17611 ("remote.c: add command line option parser for
+>>> "--force-with-lease"", 2013-07-08) didn't use PARSE_OPT_LITERAL_ARGHELP,
+>>> which I also see is what read-tree etc. use already to not end up with
+>>> these double <>'s, see also 29f25d493c ("parse-options: add
+>>> PARSE_OPT_LITERAL_ARGHELP for complicated argh's", 2009-05-21).
+>>
+>> We could check if argh comes with its own angle brackets already and
+>> not add a second pair in that case, making PARSE_OPT_LITERAL_ARGHELP
+>> redundant in most cases, including the one above.  Any downsides?
+>> Too magical?
+> 
+> I'm more inclined to say that we should stop using
+> PARSE_OPT_LITERAL_ARGHELP in some of these cases, and change
+> "refname>:<expect" to "<refname>:<expect>" in push.c, so that the help
+> we emit is --force-with-lease[=<<refname>:<expect>>].
+> 
+> As noted in 29f25d493c this facility wasn't added with the intent
+> turning --refspec=<<refspec>> into --refspec=<refspec>, but to do stuff
+> like --option=<val1>[,<val2>] for options that take comma-delimited
+> options.
+> 
+> If we're magically removing <>'s we have no consistent convention to
+> tell apart --opt=<a|b|c> meaning "one of a, b or c", --refspec=<refspec>
+> meaning "the literal string 'refspec'" and --refspec=<<refspec>> meaning
+> add a <refspec> string, i.e. fill in your refspec here.
 
-OK so we're going back to the original way of checking that we check
-out the different files on the same place (because fs is icase) and
-try to collect all paths for reporting, yes? I can give it another go
-(but of course if anybody else steps up, I'd very gladly hand this
-over)
--- 
-Duy
+The notation for requiring a literal string is to use no special markers:
+
+	--option=literal_string
+
+Alternatives can be grouped with parentheses:
+
+	--option=(either|or)
+
+In both cases you'd need PARSE_OPT_LITERAL_ARGHELP.
+
+I haven't seen double angle brackets before in command line help strings.
+The commit message of 29f25d493c doesn't mention them either.  A single
+pair is used to indicate that users need to fill in a value of a certain
+type:
+
+	--refspec=<refspec>
+
+Multi-part options aren't special in this syntax:
+
+	--force-with-lease=<refname>:<expect>
+
+NB: The "--refspec=" in the example before that is a literal string, so
+this is also already a multi-part option if you will.
+
+According to its manpage the option should rather be shown like this:
+
+	--force-with-lease[=<refname>[:<expect>]]
+
+... to indicate that all three forms are valid:
+
+	--force-with-lease
+	--force-with-lease=some_ref
+	--force-with-lease=some_ref:but_not_this
+
+The current code doesn't allow that to be expressed, while it's possible
+with my patch.  And nothing is removed -- you can specify as many angle
+brackets as you like, if that turns out to be useful; parseopt just won't
+add any more on top automatically anymore if you do that.
+
+Side note: The remaining user of PARSE_OPT_LITERAL_ARGHELP in
+builtin/update-index.c uses a slash for alternatives; we should probably
+use pipe instead:
+
+	{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, N_("(+/-)x"),
+		N_("override the executable bit of the listed files"),
+		PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
+		chmod_callback},
+
+René
