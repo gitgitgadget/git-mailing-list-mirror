@@ -2,94 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE92C208E9
-	for <e@80x24.org>; Thu,  2 Aug 2018 19:06:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E009D1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 19:11:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727008AbeHBU7M (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 16:59:12 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40732 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726177AbeHBU7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 16:59:12 -0400
-Received: (qmail 22965 invoked by uid 109); 2 Aug 2018 19:06:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Aug 2018 19:06:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26929 invoked by uid 111); 2 Aug 2018 19:06:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 02 Aug 2018 15:06:46 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Aug 2018 15:06:44 -0400
-Date:   Thu, 2 Aug 2018 15:06:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?UGF3ZcWC?= Paruzel <pawelparuzel95@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive
- filesystems
-Message-ID: <20180802190644.GE23690@sigill.intra.peff.net>
-References: <20180730152756.15012-1-pclouds@gmail.com>
- <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
- <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
- <20180731192931.GD3372@sigill.intra.peff.net>
- <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
- <20180731203746.GA9442@sigill.intra.peff.net>
- <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
- <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
- <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
- <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
+        id S1727180AbeHBVDz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 17:03:55 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:36553 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbeHBVDz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 17:03:55 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s1-v6so1698944ybk.3
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 12:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZAZYACrp4W0YFhFrzdXQXFrDM49gtdlIRTLGlA2D6As=;
+        b=CSOAbyS5uD1znPrpxEgIZFvgCyYNQgSRWqRZfykaWOtnECUAoAd+/JnPmPJWZY61qu
+         Hu9USpTFv266rH2Yd9JhKod4qkcn2yctn6RJlvATEC6NvXmznBkrveKNLvz1/b0FGRdo
+         gqcyu5qlst7Rz7ngQ8EtCS/T3+8ebo64DXOipjLYANTTr/4RTKp8a9c2kJKXHGe+z9p+
+         Oq6xZRU+0zIcJsXQlQaB5R+iqNTJPWFSiujBH7KHP6MeCqRofcYNUHJggnQGOr6j9e5w
+         xC2iHU/ueGOllS8BwszwgzqI/eWmP+v4+5gJQn6jiKJ4g6CD8QVQOxSV999rYpYUX2JI
+         zfcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZAZYACrp4W0YFhFrzdXQXFrDM49gtdlIRTLGlA2D6As=;
+        b=ILBI1oR9ojvQsAAhrTra7Ovl0Va0a8UG6GGJt39DORxy0ucZgd5ZrRd2TRw3m1w4HW
+         rRE7bOstPjq2xfae2GL8TY+knMp/m28Hl0WQVp8x1+11JYexOoyLoQxc5XlPk6nGJc5F
+         OWCejFcHBYhhDGDIRnN/ztJZ9OM8XhmdmMiUsRRVn+/ZsBjiljL8ZAuCGj7sKM0ZcHJv
+         dubGCe1jNU3O8A/axP/KtkVF9J2p0bJT/FNeZzqJV+GSJseQasrQ+vxrCrNvEn/DSokc
+         XyT++VQqBessI/6tOWSbX9/UX3aD/OglqqNDyf3z//5czjfHPvHD7jd0B8LfHdOFDya7
+         45+Q==
+X-Gm-Message-State: AOUpUlE7RQ3INTcFNUAT8oh3sah8XKwwyHRoi7GNKWMC0HpvnMP4KMCK
+        WETQyWfoYT9rrdenZkl2cCos+q4kXkc3ZwO2518CcQ==
+X-Google-Smtp-Source: AAOMgpdAEUda1MFGFfZW/9dZwVp+FMGM0te1FKJBC6biYYAZts7OB8wmLnVHBuPl8yq+erHAv7LRGLjEHnufY8e6mUU=
+X-Received: by 2002:a25:3624:: with SMTP id d36-v6mr492494yba.292.1533237086827;
+ Thu, 02 Aug 2018 12:11:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
+References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-9-ao2@ao2.it>
+In-Reply-To: <20180802134634.10300-9-ao2@ao2.it>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 2 Aug 2018 12:11:15 -0700
+Message-ID: <CAGZ79kb=KgSSVXPCpa0wSyohpgywBk8c9P7Lq5BNJcdZ1exUyw@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 08/12] t7506: cleanup .gitmodules properly before
+ setting up new scenario
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 02, 2018 at 09:27:31AM -0700, Junio C Hamano wrote:
+On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
+>
+> In t/t7506-status-submodule.sh at some point a new scenario is set up to
+> test different things, in particular new submodules are added which are
+> meant to completely replace the previous ones.
+>
+> However before calling the "git submodule add" commands for the new
+> layout, the .gitmodules file is removed only from the working tree still
+> leaving the previous content in current branch.
+>
+> This can break if, in the future, "git submodule add" starts
+> differentiating between the following two cases:
+>
+>   - .gitmodules is not in the working tree but it is in the current
+>     branch (it may not be safe to add new submodules in this case);
+>
+>   - .gitmodules is neither in the working tree nor anywhere in the
+>     current branch (it is safe to add new submodules).
+>
+> Since the test means to get rid of .gitmodules anyways, let's completely
+> remove it from the current branch, to actually start afresh in the new
+> scenario.
+>
+> This is more future-proof and does not break current tests.
 
-> > OK so we're going back to the original way of checking that we check
-> > out the different files on the same place (because fs is icase) and
-> > try to collect all paths for reporting, yes? I can give it another go
-> > (but of course if anybody else steps up, I'd very gladly hand this
-> > over)
-> 
-> Detect and report, definitely yes; I am not sure about collect all
-> (personally I am OK if we stopped at reporting "I tried to check out
-> X but your project tree has something else that is turned to X by
-> your pathname-smashing filesystem" without making it a requirement
-> to report what the other one that conflict with X is.  Of course,
-> reporting the other side _is_ nicer and I'd be happier if we can do
-> so without too much ugly code, but I do not think it is a hard
-> requirement.
+Makes sense.
 
-Yeah, I think it would be OK to issue the warning for the conflicted
-path, and then if we _can_ produce the secondary list of colliding
-paths, do so. Even on a system with working inodes, we may not come up
-with a match (e.g., if it wasn't us who wrote the file, but rather we
-raced with some other process).
+Thanks,
+Stefan
 
-I also wonder if Windows could return some other file-unique identifier
-that would work in place of an inode here. That would be pretty easy to
-swap in via an #ifdef's helper function. I'd be OK shipping without that
-and letting Windows folks fill it in later (as long as we do not do
-anything too stupid until then, like claim all of the inode==0 files are
-the same).
-
--Peff
-
-PS It occurs to me that doing this naively (re-scan the entries already
-   checked out when we see a collision) ends up quadratic over the
-   number of entries in the worst case. That may not matter. You'd only
-   have a handful of collisions normally, and anybody malicious can
-   already git-bomb your checkout anyway. If we care, an alternative
-   would be to set a flag for "I saw some collisions", and then follow
-   up with a single pass putting entries into a hashmap of
-   inode->filename.
+>
+> Signed-off-by: Antonio Ospite <ao2@ao2.it>
+> ---
+>  t/t7506-status-submodule.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/t7506-status-submodule.sh b/t/t7506-status-submodule.sh
+> index b4b74dbe29..af91ba92ff 100755
+> --- a/t/t7506-status-submodule.sh
+> +++ b/t/t7506-status-submodule.sh
+> @@ -325,7 +325,8 @@ test_expect_success 'setup superproject with untracked file in nested submodule'
+>         (
+>                 cd super &&
+>                 git clean -dfx &&
+> -               rm .gitmodules &&
+> +               git rm .gitmodules &&
+> +               git commit -m "remove .gitmodules" &&
+>                 git submodule add -f ./sub1 &&
+>                 git submodule add -f ./sub2 &&
+>                 git submodule add -f ./sub1 sub3 &&
+> --
+> 2.18.0
+>
