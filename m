@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FE2A1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43E001F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 14:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387586AbeHBQTK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 12:19:10 -0400
-Received: from ao2.it ([92.243.12.208]:54928 "EHLO ao2.it"
+        id S2387593AbeHBQTO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 12:19:14 -0400
+Received: from ao2.it ([92.243.12.208]:54929 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2387576AbeHBQTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 12:19:10 -0400
+        id S2387576AbeHBQTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 12:19:11 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1flDv9-0006i5-0G; Thu, 02 Aug 2018 15:45:39 +0200
+        id 1flDv8-0006hx-KW; Thu, 02 Aug 2018 15:45:38 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1flDwR-0002hR-C1; Thu, 02 Aug 2018 15:46:59 +0200
+        id 1flDwQ-0002h9-P8; Thu, 02 Aug 2018 15:46:58 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [RFC PATCH v2 09/12] submodule: support reading .gitmodules even when it's not checked out
-Date:   Thu,  2 Aug 2018 15:46:31 +0200
-Message-Id: <20180802134634.10300-10-ao2@ao2.it>
+Subject: [RFC PATCH v2 02/12] submodule: factor out a config_set_in_gitmodules_file_gently function
+Date:   Thu,  2 Aug 2018 15:46:24 +0200
+Message-Id: <20180802134634.10300-3-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180802134634.10300-1-ao2@ao2.it>
 References: <20180802134634.10300-1-ao2@ao2.it>
@@ -42,98 +42,90 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the .gitmodules file is not available in the working tree, try
-using HEAD:.gitmodules from the current branch. This covers the case
-when the file is part of the repository but for some reason it is not
-checked out, for example because of a sparse checkout.
+Introduce a new config_set_in_gitmodules_file_gently() function to write
+config values to the .gitmodules file.
 
-This makes it possible to use at least the 'git submodule' commands
-which *read* the gitmodules configuration file without fully populating
-the working tree.
+This is in preparation for a future change which will use the function
+to write to the .gitmodules file in a more controlled way instead of
+using "git config -f .gitmodules".
 
-Writing to .gitmodules will still require that the file is checked out,
-so check for that before calling config_set_in_gitmodules_file_gently.
+The purpose of the change is mainly to centralize the code that writes
+to the .gitmodules file to avoid some duplication.
+
+The naming follows git_config_set_in_file_gently() but the git_ prefix
+is removed to communicate that this is not a generic git-config API.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- builtin/submodule--helper.c | 17 ++++++++++++++++-
- cache.h                     |  1 +
- submodule-config.c          | 16 ++++++++++++++--
- 3 files changed, 31 insertions(+), 3 deletions(-)
+ submodule-config.c | 12 ++++++++++++
+ submodule-config.h |  1 +
+ submodule.c        | 10 +++-------
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c388f4ee6f..616d5de0a9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2089,8 +2089,23 @@ static int module_config(int argc, const char **argv, const char *prefix)
- 		return print_config_from_gitmodules(argv[1]);
- 
- 	/* Equivalent to ACTION_SET in builtin/config.c */
--	if (argc == 3)
-+	if (argc == 3) {
-+		struct object_id oid;
-+
-+		/*
-+		 * If the .gitmodules file is not in the working tree but it
-+		 * is in the current branch, stop, as writing new values and
-+		 * staging them would blindly overwrite ALL the old content.
-+		 *
-+		 * This still makes it possible to create a brand new
-+		 * .gitmodules when neither GITMODULES_FILE nor
-+		 * GITMODULES_HEAD exist.
-+		 */
-+		if (!file_exists(GITMODULES_FILE) && get_oid(GITMODULES_HEAD, &oid) >= 0)
-+			die(_("please make sure that the .gitmodules file in the current branch is checked out"));
-+
- 		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
-+	}
- 
- 	return 0;
- }
-diff --git a/cache.h b/cache.h
-index 8b447652a7..8f75cafbb6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -424,6 +424,7 @@ static inline enum object_type object_type(unsigned int mode)
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
- #define GITMODULES_FILE ".gitmodules"
-+#define GITMODULES_HEAD "HEAD:.gitmodules"
- #define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
- #define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
- #define GIT_NOTES_DISPLAY_REF_ENVIRONMENT "GIT_NOTES_DISPLAY_REF"
 diff --git a/submodule-config.c b/submodule-config.c
-index 702d40dd6b..cf08264220 100644
+index 6f6f5f9960..702d40dd6b 100644
 --- a/submodule-config.c
 +++ b/submodule-config.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "dir.h"
- #include "repository.h"
- #include "config.h"
- #include "submodule-config.h"
-@@ -603,8 +604,19 @@ static void submodule_cache_check_init(struct repository *repo)
- static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
- {
- 	if (repo->worktree) {
--		char *file = repo_worktree_path(repo, GITMODULES_FILE);
--		git_config_from_file(fn, file, data);
-+		struct git_config_source config_source = { 0 };
-+		const struct config_options opts = { 0 };
-+		struct object_id oid;
-+		char *file;
-+
-+		file = repo_worktree_path(repo, GITMODULES_FILE);
-+		if (file_exists(file))
-+			config_source.file = file;
-+		else if (get_oid(GITMODULES_HEAD, &oid) >= 0)
-+			config_source.blob = GITMODULES_HEAD;
-+
-+		config_with_options(fn, data, &config_source, &opts);
-+
- 		free(file);
- 	}
+@@ -707,6 +707,18 @@ int print_config_from_gitmodules(const char *key)
+ 	return 0;
  }
+ 
++int config_set_in_gitmodules_file_gently(const char *key, const char *value)
++{
++	int ret;
++
++	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, value);
++	if (ret < 0)
++		/* Maybe the user already did that, don't error out here */
++		warning(_("Could not update .gitmodules entry %s"), key);
++
++	return ret;
++}
++
+ struct fetch_config {
+ 	int *max_children;
+ 	int *recurse_submodules;
+diff --git a/submodule-config.h b/submodule-config.h
+index 6fec3caadd..074e74a01c 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -57,6 +57,7 @@ void submodule_free(struct repository *r);
+ int check_submodule_name(const char *name);
+ 
+ extern int print_config_from_gitmodules(const char *key);
++extern int config_set_in_gitmodules_file_gently(const char *key, const char *value);
+ 
+ /*
+  * Note: these helper functions exist solely to maintain backward
+diff --git a/submodule.c b/submodule.c
+index 2a6381864e..2af09068d7 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -89,6 +89,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ {
+ 	struct strbuf entry = STRBUF_INIT;
+ 	const struct submodule *submodule;
++	int ret;
+ 
+ 	if (!file_exists(GITMODULES_FILE)) /* Do nothing without .gitmodules */
+ 		return -1;
+@@ -104,14 +105,9 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
+ 	strbuf_addstr(&entry, "submodule.");
+ 	strbuf_addstr(&entry, submodule->name);
+ 	strbuf_addstr(&entry, ".path");
+-	if (git_config_set_in_file_gently(GITMODULES_FILE, entry.buf, newpath) < 0) {
+-		/* Maybe the user already did that, don't error out here */
+-		warning(_("Could not update .gitmodules entry %s"), entry.buf);
+-		strbuf_release(&entry);
+-		return -1;
+-	}
++	ret = config_set_in_gitmodules_file_gently(entry.buf, newpath);
+ 	strbuf_release(&entry);
+-	return 0;
++	return ret;
+ }
+ 
+ /*
 -- 
 2.18.0
 
