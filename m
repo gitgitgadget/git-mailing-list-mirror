@@ -2,123 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6D861F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 18:47:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03B491F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 18:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732223AbeHBUkE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 16:40:04 -0400
-Received: from mail-yb0-f193.google.com ([209.85.213.193]:46215 "EHLO
-        mail-yb0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729733AbeHBUkD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 16:40:03 -0400
-Received: by mail-yb0-f193.google.com with SMTP id c3-v6so1632228ybi.13
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 11:47:42 -0700 (PDT)
+        id S1726971AbeHBUtm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 16:49:42 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52006 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726580AbeHBUtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 16:49:42 -0400
+Received: by mail-wm0-f66.google.com with SMTP id y2-v6so3673824wma.1
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 11:57:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vUb3ggGjYMc9oBvVFZT22RujwWuibpsnpugDiACeH2I=;
-        b=fCGV/pIkWxxPPkPC/vI0Kcfd7SNr+Q0lMwJQqb9WnqiBg7Wqztm49MS39uJTj6ooTX
-         hC4wqUVwNZtBH/7tj42eebLkI/nXqMMx5+PTpUpJT2uW/fVltZJCcL1nfaLFAFMxQwDJ
-         rTsDffPvZTcRlpuSMWkO9qBuwlA1m4EeduqSK1ItHsemiLVSnMYZeYfygZ72G1QqOihv
-         PiG/skgwrPLEDVbLzJjdLXFcQc63/rJPKukexl1nsNMu3hfid0iqonNuIvzny2kORlLF
-         aY2TZM2FMefPT704m6tqysjOHL2b6oOKGYawZdU2LpTNIitD0EQOREKnQyFXITaoUAXe
-         rmqw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2Uo0ZYucZ0QehtWFgwmQzqRr3ZSfG30OIGS1EWZWFN8=;
+        b=c9mz7jTzbnHQBcR3+fFZ2KJKbgffeJT5zcE7yBCNhSvvleiVb60z/9i81zAeZ4Apo/
+         yuoHbBknIT2l/ItchBP/Vq7es5RtOZlBn7eB6ZqUvrxLeXQF+YCWfn6jM7EC6xPDO2v6
+         TbhNEG7NS3zb0Q2ummNGdSDv720s/HqZ4PYzU9e+WHf5d8ZXl2HCvR3lgnoPDg5pSMXm
+         EAhkg+5cJWspfxbwQKGRIWKA+4L4rW72XB/8io3jvlc+t1DEqFnqGoiqtontt5NsMk/Q
+         lCSF0uecq8fypqZ8dZ9GSeXD2ryq39fxHJ5JR1mr6UCgv2hpVug8qe4oxyOc9w2u+Ah2
+         7OgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vUb3ggGjYMc9oBvVFZT22RujwWuibpsnpugDiACeH2I=;
-        b=lKzHuyhoQB/yEOk69r/Ftcm4SzFaX6gW6oI4XSfmUptYeGNlGv6N+L++w36sTTgK8x
-         gyXsiEuEAEA0JQjn8OB/QssYeD1/PilXUf/XdUOcQERSkvqvr3u1Mbf+IdRXFqCqnjXG
-         aK62Bdq4dxMQGSmSf0+s/nOkxTOLYlROMMqrPqJyoMMaz4nrMjonNOtGRyVxXmO4i8dl
-         Hh8Sbwd1qzYk/R+12nMubcQWjj0xs5f/7RHYP+sTdGRYWbHPw2wE9+yST/zuJAHfTny4
-         kES8lxPFNzyjl5fcSTIxx1LC9PgDrnixR9D0rH8kcbYpyVRfWQAyUW84kgfmteWablKC
-         vFqg==
-X-Gm-Message-State: AOUpUlH335YqZIhVAuWQGKm4HhLJncDgy56OLSegWSP7POwYpZakdyZg
-        58nH46W3+/+qAIv0EYbjDg6u98zgpv6qFfEWNt8JAA==
-X-Google-Smtp-Source: AAOMgpdksLPpjHuMxezTTVcTBbtW6UbCDQiqneCnxEhFBmiBiJDCj+WY+l3dGFZsmiSLXS+3ZqyoG5V5VaN0NY+q52I=
-X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr451650ywa.340.1533235661443;
- Thu, 02 Aug 2018 11:47:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-5-ao2@ao2.it>
-In-Reply-To: <20180802134634.10300-5-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 11:47:30 -0700
-Message-ID: <CAGZ79kY78rgb8VpRn-A2moucy16z1TsDGdz2cjJzVOxsiKiiYw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 04/12] submodule--helper: add a new 'config' subcommand
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2Uo0ZYucZ0QehtWFgwmQzqRr3ZSfG30OIGS1EWZWFN8=;
+        b=EA6LnlbVtKEagl4p2jCR8ZptZttw4iW+0Dh74GdnE0aJmk9GMWNBNb2+fiuBKiD5zW
+         kZdZNZdHtV07OESsVO+eB/pmF+cw4CEiFZ5W7OBM/+cpRUc1ucycHR5cLl7YA4q3W4jV
+         gcSEN0UDYu4c0VcybiFajwlHf/nLQEpR3RuJq3HWJtUk8YdX5T1ACsTHPLFTr1gob1no
+         zdFNAeO6lBXS+jhWQf908SoCjxfxyo45kftPkEgljNVBNEayjpXuYlVbFI5wGETmD0I8
+         TTqyEblJriaU5dexDppVgAfEyMEn5vvuOC5zcngNCRmMvOiziYOpVDJ17dZbqG8npjYZ
+         nOxw==
+X-Gm-Message-State: AOUpUlFQpkX9105xVacZK1tpF+0P4QJQhSX2G2MvD5ByS/EDdoG9iLSR
+        DPUkJjBl+eNs5S3o1oeA6HA=
+X-Google-Smtp-Source: AAOMgpcy15hrwnRaDvgxKAUQGl/wVPpQCnqjzmqhBxq96gtC7YxIz7rF8R+bS+eZXGCmmg2oWsv1rA==
+X-Received: by 2002:a1c:dc1:: with SMTP id 184-v6mr2728067wmn.145.1533236236001;
+        Thu, 02 Aug 2018 11:57:16 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 200-v6sm222410wmv.6.2018.08.02.11.57.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 Aug 2018 11:57:15 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH v2 06/12] submodule--helper: add a '--stage' option to the 'config' sub command
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-7-ao2@ao2.it>
+Date:   Thu, 02 Aug 2018 11:57:14 -0700
+In-Reply-To: <20180802134634.10300-7-ao2@ao2.it> (Antonio Ospite's message of
+        "Thu, 2 Aug 2018 15:46:28 +0200")
+Message-ID: <xmqqd0v01trp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
->
-> Add a new 'config' subcommand to 'submodule--helper', this extra level
-> of indirection makes it possible to add some flexibility to how the
-> submodules configuration is handled.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->
-> Note that the tests follow the predominant style in the file: subshell and cd
-> right at the start of the sub-shell opening.
->
->  builtin/submodule--helper.c | 17 +++++++++++++++++
->  t/t7411-submodule-config.sh | 26 ++++++++++++++++++++++++++
->  2 files changed, 43 insertions(+)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index a3c4564c6c..14f0845d30 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -2029,6 +2029,22 @@ static int connect_gitdir_workingtree(int argc, const char **argv, const char *p
->         return 0;
->  }
->
-> +static int module_config(int argc, const char **argv, const char *prefix)
-> +{
-> +       if (argc < 2 || argc > 3)
-> +               die("submodule--helper config takes 1 or 2 arguments: name [value]");
-> +
-> +       /* Equivalent to ACTION_GET in builtin/config.c */
-> +       if (argc == 2)
-> +               return print_config_from_gitmodules(argv[1]);
-> +
-> +       /* Equivalent to ACTION_SET in builtin/config.c */
-> +       if (argc == 3)
-> +               return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
-> +
-> +       return 0;
+Antonio Ospite <ao2@ao2.it> writes:
 
-Technically we cannot reach this point here?
-Maybe it would be more defensive to
+> Add a --stage option to the 'submodule--helper config' command so that
+> the .gitmodules file can be staged without referring to it explicitly by
+> its file path.
 
-    BUG("How did we get here?");
+Sorry, but I have no clue what the above is trying to say.
 
-or at least return something !=0 ?
+The original 's--h config <name> [<value>]' is quite understandable.  It
+is like "git config <name> [<value>]", i.e. either get the current value
+for the name, or  set a new value to the name.
 
->
-> +test_expect_success 'reading submodules config with "submodule--helper config"' '
+What does this 's--h config --stage' that does not take any option
+do?  "git add .gitmodules"?  Something else?  In what meaning is the
+word "stage" used?  Is it used as a verb "to stage"?
 
-I shortly wondered if it would make sense to put these tests at the
-beginning of either
-this or a new file, as the functionality is rather fundamental. (I
-never thought about
-it, but actually it is better to go from common basic to more exotic
-tests as you scroll
-down the file), but this place is ok, if you choose to do so.
+In a series that lets us use the data in the .gitmodules file without
+materializing the file in the working tree, I would have expected
+that you would want an option to specify which .gitmodules among
+(1) the one in the working tree (i.e. the only option we currently
+have), (2) the one in the index, and (3) the one in the HEAD, and
+when I saw the title, I would have expected that
 
-Thanks,
-Stefan
+	git submodule--helper config --stage name
+
+may be a way to read from the .gitmodules in the index to find the
+value for name (however, we we follow the option naming convention
+in gitcli.txt, it should be called --cached, I would think).
+
+> In practice the config will still be written to .gitmodules, there are
+> no plans to change the file path, but having this level of indirection
+> makes it possible to perform additional checks before staging the file.
+
+Again, a claim without explanation or justification.
+
+If you are planning to something like
+
+ - prepare trial contents in .gitmodules.new file
+ - do whatever "additional checks" on .gitmodules.new
+ - add the contents to it to the index as a new .gitmodules blob
+
+Then you do not need such an option.  "submodule--helper" is purely
+a helper for scripts, and not for human consumption, so scripts can
+just hash-object the blob contents out and update-index --cacheinfo
+to register the blob at any location of choice.
+
+But as I said, this step is way under-explained, so my guess above
+may not match what you really wanted to do.
