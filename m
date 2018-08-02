@@ -2,189 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2741B1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 20:43:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8059B1F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 20:51:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732073AbeHBWgF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 18:36:05 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:36202 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726662AbeHBWgF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 18:36:05 -0400
-Received: by mail-yw1-f66.google.com with SMTP id v197-v6so143765ywg.3
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 13:43:17 -0700 (PDT)
+        id S1731542AbeHBWnv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 18:43:51 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37497 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730957AbeHBWnv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 18:43:51 -0400
+Received: by mail-wm0-f68.google.com with SMTP id n11-v6so4037281wmc.2
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 13:51:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=owo4y7joCe58Km0BvBun/Bcq66vOSO6nLS774wHp4Jc=;
-        b=rIsj6LwuJQNZ/V52pfCp8bKGqW96k4O/2SHFEu4yBR6LLapdKxJ1GNIiI87iLuxFNX
-         QsAPV7FmyTnLAFeHmSWZq2fqFG0uMw0obSFlB46e/o8rlp7LM0eafxlmeLnUigx+aCfa
-         v3N5H8zvMUJ4TZbxS+hXRkebqrtOkmnYQK0KrXx4JypOt71YQ/9Muw8ZrvNZ8fApypxF
-         MPBAedbdbF6aHw7kKjYqpY1OgHqi07lDK3UnUBXYIQn4or6rqG5Jcw5SJbCisZN19fEb
-         GIojBJ851bqtEJVfGKiiW5cZE+/mbF0etJluj9iXLkERysuJKY4WrC7qYOhrD0ZfZfUF
-         WCqw==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=dhaUacQ7XGMY8GpwHRuPJwzcC+UvLlKVKg3drN/yP6Q=;
+        b=oW0pB163pKB54uHkymO2t9k+8g3lHzM0UFEXfOiDjwqlB7yNreqnmC9MMh6/JaphfK
+         9NBzNBd3AdMcKLLUeYnHLCVfj3WCpNatOgUGKseqHIcQ6jz9BkkY2z75MBsNZ3pEdvUh
+         +hGkztB2H70ckyQfBaFE/y6936m6LAzN9J8GLslSitatRoKIhZBbmTFGLGKhwr2hAI/R
+         HJ8f8Mf6sUfvGKAo8Bd1PxmNxkdHslqw2AHddSlcMDMRWwyZsYX4kn05LEPLa6bYPcCs
+         HoZ+ONXPdN6p0ZcYwS4EB1enTYyTbqK1vVxqIayZ9TDYbK+Nuka0epW6ifClpBWZ61M6
+         5cwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=owo4y7joCe58Km0BvBun/Bcq66vOSO6nLS774wHp4Jc=;
-        b=s8zdUHN0+TAAGiUOniP+Nsu0GaCIYLFmNw4GsD0cf0JyD3t1Q46D5dGQE7QBA7I4fJ
-         cvV0dQ2XtgV69G7rKExeGqqmVkiHTKSocxfbl5JfsKGgo9V2+Uo4OxITNwsVoMeDmUu9
-         0GUHgMH3vm1nAeu2RQfGg81CHC2MBLgH0n9efA1DnV7eOX5/4Jm6NOemMQX6sD37MXau
-         4okAZPBohi2aTh+lpW6OHImwHFqEYTGAJWWbcvp6SDWYjOcclEdNrbE+OJiQHJW8Infg
-         wOJp3NxSpV0IFpFWAC7OVAICDgjV7O/rbzawuZZxyd5Fb03kAA+9GKH0Xpkj14rQhjXC
-         JbmA==
-X-Gm-Message-State: AOUpUlEllC5O/l4T+A/CllOmkLOkjIovhaGbQBQi4k/b36S+AJ/j5xX1
-        YIGqmvhMk4Og5pSXJacsrfjSS2UGoaIwAm0kMtt9Ng==
-X-Google-Smtp-Source: AAOMgpdBf9EelwDz72jsC2sJ5UpgevZxpJWN0Tzzwb1+sR1hhHy6IMLF1Bc7D6piGuYB3Q7adKSkn9diyVpIhy89qh4=
-X-Received: by 2002:a81:3758:: with SMTP id e85-v6mr666653ywa.340.1533242596346;
- Thu, 02 Aug 2018 13:43:16 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=dhaUacQ7XGMY8GpwHRuPJwzcC+UvLlKVKg3drN/yP6Q=;
+        b=lQWwPOAeZeHhyJK+8nHEY9oFyIDB3ENcEPU30uREBIXzlny5zdcBHMtWgpvMBY3Mi6
+         hHRkvY3hgrsXX+3MjJD2auSWAgo1/N8S/AqnV42X9i2VJQ/MDR//8zJpe7Whe2RYlABm
+         svFqZwPk+d28Bds7KZn8Nlfvpd3LhPezEqFyXELBY8ri3dnbylJnxT814cb+gM/IvAgu
+         eONVC4MgXc1s1zQmQjoH0Zh2VhCnboprteKAodjuNO5k7DdKwsdIL5ea3hA3o+KPAGDP
+         xPD0cBQNeViS6c3meDIqWIjMGnrwBhHGlZQwRjuVCoC8NAIr0mvhtcYEyrWXOoqExjd7
+         4PQQ==
+X-Gm-Message-State: AOUpUlHiG4kgAqnLrJZOGj0P456VK7XD8G2IA/AhK64OjsuS2jn/wkiU
+        TThYUA5HvrykNgXp7x908hlfEE4d
+X-Google-Smtp-Source: AAOMgpeg8h61qnUsFc1y05fgGP1iOc3nEyyqzEVr4KGCGY3Yl3qcFEG86mAE8+BoiJ9bRGU9Pr58ew==
+X-Received: by 2002:a1c:ec86:: with SMTP id h6-v6mr3019055wmi.53.1533243060625;
+        Thu, 02 Aug 2018 13:51:00 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id s16-v6sm1883705wrq.20.2018.08.02.13.50.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 02 Aug 2018 13:50:59 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Michael Felt <aixtools@felt.demon.nl>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Dan Shumow <shumow@gmail.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] sha1dc: update from upstream
+Date:   Thu,  2 Aug 2018 20:50:44 +0000
+Message-Id: <20180802205044.23631-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.18.0.345.g5c9ce644c3
+In-Reply-To: <87o9emtuf6.fsf@evledraar.gmail.com>
+References: <87o9emtuf6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20180802134634.10300-1-ao2@ao2.it> <20180802134634.10300-11-ao2@ao2.it>
-In-Reply-To: <20180802134634.10300-11-ao2@ao2.it>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 13:43:05 -0700
-Message-ID: <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 10/12] t7416: add new test about HEAD:.gitmodules
- and not existing .gitmodules
-To:     Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?Q?Daniel_Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
->
-> git submodule commands can now access .gitmodules from the current
-> branch even when it's not in the working tree, add some tests for that
-> scenario.
->
-> Signed-off-by: Antonio Ospite <ao2@ao2.it>
-> ---
->
-> For the test files I used the most used style in other tests, Stefan suggested
-> to avoid subshells and use "git -C" but subshells make the test look cleaner
-> IMHO.
+Update sha1dc from the latest version by the upstream
+maintainer[1]. See 2db87328ef ("Merge branch 'ab/sha1dc'", 2017-07-10)
+for the last update.
 
-Oh well. Let's not dive into a style argument, so let me focus on the tests.
+This fixes an issue where AIX was wrongly detected as a Little-endian
+instead of a Big-endian system. See [2][3][4].
 
-IMHO it would be nice if (at least partially) these tests are in the same patch
-that added the reading from HEAD:.gitmodules  (although I like short
-patches, too).
+1. https://github.com/cr-marcstevens/sha1collisiondetection/commit/232357eb2ea0397388254a4b188333a227bf5b10
+2. https://github.com/cr-marcstevens/sha1collisiondetection/pull/45
+3. https://github.com/cr-marcstevens/sha1collisiondetection/pull/42
+4. https://public-inbox.org/git/20180729200623.GF945730@genre.crustytoothpaste.net/
 
->
->  t/t7416-submodule-sparse-gitmodules.sh | 112 +++++++++++++++++++++++++
->  1 file changed, 112 insertions(+)
->  create mode 100755 t/t7416-submodule-sparse-gitmodules.sh
->
-> diff --git a/t/t7416-submodule-sparse-gitmodules.sh b/t/t7416-submodule-sparse-gitmodules.sh
-> new file mode 100755
-> index 0000000000..3c7a53316b
-> --- /dev/null
-> +++ b/t/t7416-submodule-sparse-gitmodules.sh
-> @@ -0,0 +1,112 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (C) 2018  Antonio Ospite <ao2@ao2.it>
-> +#
-> +
-> +test_description=' Test reading/writing .gitmodules is not in the working tree
-> +
-> +This test verifies that, when .gitmodules is in the current branch but is not
-> +in the working tree reading from it still works but writing to it does not.
-> +
-> +The test setup uses a sparse checkout, but the same scenario can be set up
-> +also by committing .gitmodules and then just removing it from the filesystem.
-> +
-> +NOTE: "git mv" and "git rm" are still supposed to work even without
-> +a .gitmodules file, as stated in the t3600-rm.sh and t7001-mv.sh tests.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-"supposed to work" != "tested that it works" ?
-I am not sure what the NOTE wants to tell me? (Should I review those
-tests to double check them now? or do we just want to tell future readers
-of this test there are other tangent tests to this?)
+On Wed, Aug 01 2018, Ævar Arnfjörð Bjarmason wrote:
+> https://github.com/cr-marcstevens/sha1collisiondetection/pull/45
+>[...]
+> It should work, but as noted in the MR please test it so we can make
+> sure, and then (if you have a GitHub account) comment on the MR saying
+> it works for you.
 
+This got merged upstream, and as noted in that upstream PR I've
+personally tested this on AIX under both GCC and IBM's xlc on the GCC
+compile farm, it works.
 
-> +test_expect_success 'initialising submodule when the gitmodules config is not checked out' '
-> +       (cd super &&
-> +               git submodule init
-> +       )
-> +'
-> +
-> +test_expect_success 'showing submodule summary when the gitmodules config is not checked out' '
-> +       (cd super &&
-> +               git submodule summary
-> +       )
-> +'
-> +
-> +test_expect_success 'updating submodule when the gitmodules config is not checked out' '
-> +       (cd submodule &&
-> +               echo file2 >file2 &&
-> +               git add file2 &&
-> +               git commit -m "add file2 to submodule"
-> +       ) &&
-> +       (cd super &&
-> +               git submodule update
-> +       )
-> +'
-> +
-> +test_expect_success 'not adding submodules when the gitmodules config is not checked out' '
-> +       (cd super &&
-> +               test_must_fail git submodule add ../new_submodule
-> +       )
-> +'
-> +
-> +# "git add" in the test above fails as expected, however it still leaves the
-> +# cloned tree in there and adds a config entry to .git/config. This is because
-> +# no cleanup is done by cmd_add in git-submodule.sh when "git
-> +# submodule--helper config" fails to add a new config setting.
-> +#
-> +# If we added the following commands to the test above:
-> +#
-> +#   rm -rf .git/modules/new_submodule &&
-> +#   git reset HEAD new_submodule &&
-> +#   rm -rf new_submodule
+ sha1collisiondetection |  2 +-
+ sha1dc/sha1.c          | 12 +++++++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-Alternatively we could check for the existence of .gitmodules
-before starting all these things?
+diff --git a/sha1collisiondetection b/sha1collisiondetection
+index 19d97bf5af..232357eb2e 160000
+--- a/sha1collisiondetection
++++ b/sha1collisiondetection
+@@ -1 +1 @@
+-Subproject commit 19d97bf5af05312267c2e874ee6bcf584d9e9681
++Subproject commit 232357eb2ea0397388254a4b188333a227bf5b10
+diff --git a/sha1dc/sha1.c b/sha1dc/sha1.c
+index 25eded1399..df0630bc6d 100644
+--- a/sha1dc/sha1.c
++++ b/sha1dc/sha1.c
+@@ -93,13 +93,23 @@
+ #define SHA1DC_BIGENDIAN
+ 
+ /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> */
++#elif (defined(_AIX))
++
++/*
++ * Defines Big Endian on a whitelist of OSs that are known to be Big
++ * Endian-only. See
++ * https://public-inbox.org/git/93056823-2740-d072-1ebd-46b440b33d7e@felt.demon.nl/
++ */
++#define SHA1DC_BIGENDIAN
++
++/* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> or <os whitelist> */
+ #elif defined(SHA1DC_ON_INTEL_LIKE_PROCESSOR)
+ /*
+  * As a last resort before we do anything else we're not 100% sure
+  * about below, we blacklist specific processors here. We could add
+  * more, see e.g. https://wiki.debian.org/ArchitectureSpecificsMemo
+  */
+-#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist>  or <processor blacklist> */
++#else /* Not under GCC-alike or glibc or *BSD or newlib or <processor whitelist> or <os whitelist> or <processor blacklist> */
+ 
+ /* We do nothing more here for now */
+ /*#error "Uncomment this to see if you fall through all the detection"*/
+-- 
+2.18.0.345.g5c9ce644c3
 
-I think it is okay to not clean up if we check all "regular" or rather expected
-things such as a non-writable .gitmodules file before actually doing it.
-(This is similar to 'checkout' that walks the whole tree and checks if the
-checkout is possible given the dirtyness of the tree, to either abort early
-or pull through completely. In catastrophic problems such as a full disk
-we'd still die in the middle of work)
-
-> +#
-> +# then the repository would be in a clean state and the test below would pass.
-> +#
-> +# Maybe cmd_add should do the cleanup from above itself when failing to add
-> +# a submodule.
-> +test_expect_failure 'init submodule after adding failed when the gitmodules config is not checked out' '
-
-So this comment and test is about explaining why we can fail mid way through,
-which we could not before unless we had the catastrophic event.
-
-I think we should check for a "writable" .gitmodules file at the beginning,
-which is if (G || (!G && !H)) [using the notation from the cover letter]?
-
-> +       (cd super &&
-> +               git submodule init
-> +       )
-> +'
-> +
-> +test_done
-> --
-> 2.18.0
->
