@@ -2,356 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B5B31F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 12:13:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F606208E9
+	for <e@80x24.org>; Thu,  2 Aug 2018 12:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732207AbeHBOEO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 10:04:14 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:42214 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732141AbeHBOEO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 10:04:14 -0400
-Received: by mail-it0-f74.google.com with SMTP id l138-v6so2015547itb.7
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 05:13:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=dFSBkC9HJP6PC5wekDeE2+19rOw64GPa/1q6Je87Fq0=;
-        b=GUAmTWHFRHrTocTN47QBByqEkBsDngRK+uCNSPXxXhPFPZheaxkXMOa0ME3+A51Udz
-         jV34FafAQbTVcuQiWrTfckiqHoVU3Wsl08uU15e5Gf3nSo3w/RJ1kH02S+Sa4VdXD2av
-         1xIDbcVgAoLU149aNgQBtU66BmC7CbhV2J3PUs9alNbBIJAXxc4xf5pBJHcrLa/ERWg4
-         cORHe9KJLDa3yvZxaTykdbneCiQ2cgznpeNhD6WcW6gaEI/2PnSacpNBmn9dLPpEOV54
-         5ud7k7fAmZePqWcVhUbS2Hy/lhWbsQw6Hzo8lQyl30y9QdPqgAUEW4ZECheSVUwqnikV
-         OEKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=dFSBkC9HJP6PC5wekDeE2+19rOw64GPa/1q6Je87Fq0=;
-        b=h2GUGm5MYhwMlcGY1RTw1nJohqeuSOkRX7fqQ1k2fib/MP6Q0Uqxm+S3zWK0cj5KJI
-         EM6wG82Ux4lAlYY9/teNVEjUbV5tyFC0gMbpWjPmJEhLN9tudu+tQvHDXIB6CkiIVxa5
-         IKRdnxVRjjxmxMAJ3SDjcQo1h5oSXI+PnLKBwSNhWDvaplmFggQICPFJCRnd5DMnconG
-         9PIK/XRcDNwjUOzzRldgZAkyVe3l61yxOGq2juO7X8KU6zifWQgk+7VdR2xBLWeb8Heq
-         pNt0v/Euxfi6Kv72j3coV34X1pHKSr1ht+YirmtGhDTaHuUyRUMJA3RY/F+Y5adwO3Nh
-         kNQA==
-X-Gm-Message-State: AOUpUlE3/UNQyLfg24sepqQt6NLMO9g4daayzteJGJZ//Ul1E91mC6we
-        TW4r+U8bcXgEuvj8zpRWDxsg/pdrGlA=
-X-Google-Smtp-Source: AA+uWPzT6wdvkgJ79uNHrArfZJiClia1a2XMtYKLEWU2aX9MV2REHF1A1BgyTSBUBIdtMlPIHW/w4+lJuCE=
-X-Received: by 2002:a6b:c648:: with SMTP id w69-v6mr999827iof.108.1533211999157;
- Thu, 02 Aug 2018 05:13:19 -0700 (PDT)
-Date:   Thu,  2 Aug 2018 14:13:08 +0200
-In-Reply-To: <20180802121308.17371-1-hanwen@google.com>
-Message-Id: <20180802121308.17371-3-hanwen@google.com>
-Mime-Version: 1.0
-References: <20180802121308.17371-1-hanwen@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 2/2] sideband: highlight keywords in remote sideband output
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     gitster@pobox.com, sunshine@sunshineco.com
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1732047AbeHBOHY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 10:07:24 -0400
+Received: from mout.web.de ([212.227.15.3]:49159 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728797AbeHBOHY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 10:07:24 -0400
+Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LxJVq-1fzndk2mok-016u3Y; Thu, 02
+ Aug 2018 14:16:22 +0200
+Subject: Re: [PATCH] push: comment on a funny unbalanced option help
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
+ <87k1p9u860.fsf@evledraar.gmail.com>
+ <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
+ <87h8kdu3ay.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
+Date:   Thu, 2 Aug 2018 14:16:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <87h8kdu3ay.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:5nmS5jWBD7l8Dcz9xcZaYfQpEO7K8nCI9ito6NGhTFrYJhV1F6O
+ I53ThY2R+ceziyjRJEO03q8JyUbeqWKVCyjRBDmPTHlRgrR4vfMhDn8wkqlKGkNlIEj4ZDt
+ 5/buLuJ5Qv2IIEIvnIg4UygpAdRutxSAWKG1VSf0UPgX5xyR4bA9BUvIr7esjzshC8Iwln/
+ bj+/xnotDm863DtACEs8g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MHSmEZ23h3Q=:RFIwckKpFoZq9szoDwKZda
+ CfqCWFxjReu5RT2+uPjDNGINPHLLIubpsQiMkNRm2o032lbjuh52I3PBhYhYfiIMeEXM5bCbH
+ CQZJq8ocgwjBhekv8qOB8CVEjGDaVXh/1KRY80v12PyPxn3EceRUny2LpmQBKt0mQydXd67m5
+ df9s9yW87GLUK6PnkETp+DpItOCYaRyafYC5aFh/+z/HKg8d7arFMX8jPAGWqb6t5EjQNRGFt
+ 3iyrkbjhel/ycM1/hl6C8NMAPkehNFCsdy6tfoM29tzp85If57mH5yAum/TsKu4B5PMiffEcx
+ AVwRxozS7OUId2mcUoNrCSOnl8IvveECLEwr8W4X1E1p/rS8Nwv/2ug68gx/IqANj0+3PKq0w
+ gO07FMozN5YYrWNk71PZodwHTGZxlTekmxBhlQmgfzsC801IFhj8IMKtGgT+2aXGfv903KqUz
+ dxE6t7PCXCcAALZ7Hx4iggqbM91lbvYR8sPBzupdpzRiP+Iygn09E+wRjHEgeA0ZyF85T/RjH
+ xfHEwoAsPyACH4zLaX11MFY7RkvJ1OhQ7dwi75Tcw7gxqQIeFfLfrA8hBiloZcHsGcqDN8FGn
+ SzoWr8z6lIWV2r7ji+Mef0rCuEte8tIvreicmWhXDVH6PAXT/REEmzCTeOLbTqSF0ISlUcIjI
+ DlPqK/pnf3UhdPdP5peXFQ8sYPBM41kw7OmQRWBAOMnnFwNHJ31EC7DarKJ8NlHWAU8UtnG2N
+ DiVYADYVuCnOY8FG1p5ZVsvmMVSPBhB3N8ZUKBPBRBMJdbYUhkhA/8JhrmqTIl8Di169XFCf8
+ ndXgDTx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The colorization is controlled with the config setting "color.remote".
+Am 02.08.2018 um 00:31 schrieb Ævar Arnfjörð Bjarmason:
+> But looking at this again it looks like this whole thing should just be
+> replaced by:
+> 
+>      diff --git a/builtin/push.c b/builtin/push.c
+>      index 9cd8e8cd56..b8fa15c101 100644
+>      --- a/builtin/push.c
+>      +++ b/builtin/push.c
+>      @@ -558,9 +558,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+>                      OPT_BIT( 0,  "porcelain", &flags, N_("machine-readable output"), TRANSPORT_PUSH_PORCELAIN),
+>                      OPT_BIT('f', "force", &flags, N_("force updates"), TRANSPORT_PUSH_FORCE),
+>                      { OPTION_CALLBACK,
+>      -                 0, CAS_OPT_NAME, &cas, N_("refname>:<expect"),
+>      +                 0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+>                        N_("require old value of ref to be at this value"),
+>      -                 PARSE_OPT_OPTARG, parseopt_push_cas_option },
+>      +                 PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
+>      +                 parseopt_push_cas_option },
+>                      { OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
+>                              N_("control recursive pushing of submodules"),
+>                              PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+> 
+> I.e. the reason this is confusing is because the code originally added
+> in 28f5d17611 ("remote.c: add command line option parser for
+> "--force-with-lease"", 2013-07-08) didn't use PARSE_OPT_LITERAL_ARGHELP,
+> which I also see is what read-tree etc. use already to not end up with
+> these double <>'s, see also 29f25d493c ("parse-options: add
+> PARSE_OPT_LITERAL_ARGHELP for complicated argh's", 2009-05-21).
 
-Supported keywords are "error", "warning", "hint" and "success". They
-are highlighted if they appear at the start of the line, which is
-common in error messages, eg.
+We could check if argh comes with its own angle brackets already and
+not add a second pair in that case, making PARSE_OPT_LITERAL_ARGHELP
+redundant in most cases, including the one above.  Any downsides?
+Too magical?
 
-   ERROR: commit is missing Change-Id
+-- >8 --
+Subject: [PATCH] parse-options: automatically infer PARSE_OPT_LITERAL_ARGHELP
 
-The rationale for this change is that Gerrit does server-side
-processing to create or update code reviews, and actionable error
-messages (eg. missing Change-Id) must be communicated back to the user
-during the push. User research has shown that new users have trouble
-seeing these messages.
+Avoid adding an extra pair of angular brackets if the argh string
+already contains one.  Remove the flag PARSE_OPT_LITERAL_ARGHELP in the
+cases where the new automatic handling suffices.  This shortens and
+simplifies option definitions with special argument help strings a bit.
 
-The Git push process itself prints lots of non-actionable messages
-(eg. bandwidth statistics, object counters for different phases of the
-process), and my hypothesis is that these obscure the actionable error
-messages that our server sends back. Highlighting keywords in the
-draws more attention to actionable messages.
-
-The highlighting is done on the client rather than server side, so
-servers don't have to grow capabilities to understand terminal escape
-codes and terminal state. It also consistent with the current state
-where Git is control of the local display (eg. prefixing messages with
-"remote: ").
-
-Finally, this solution is backwards compatible: many servers already
-prefix their messages with "error", and they will benefit from this
-change without requiring a server update. By contrast, a server-side
-solution would likely require plumbing the TERM variable through the
-git protocol, so it would require changes to both server and client.
-
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- Documentation/config.txt            |   9 +++
- help.c                              |   1 +
- help.h                              |   1 +
- sideband.c                          | 119 +++++++++++++++++++++++++---
- t/t5409-colorize-remote-messages.sh |  47 +++++++++++
- 5 files changed, 168 insertions(+), 9 deletions(-)
- create mode 100644 t/t5409-colorize-remote-messages.sh
+ builtin/read-tree.c    | 2 +-
+ builtin/show-branch.c  | 2 +-
+ builtin/update-index.c | 2 +-
+ builtin/write-tree.c   | 5 ++---
+ parse-options.c        | 3 ++-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 43b2de7b5..0783323be 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1229,6 +1229,15 @@ color.push::
- color.push.error::
- 	Use customized color for push errors.
- 
-+color.remote::
-+	A boolean to enable/disable colored remote output. If unset,
-+	then the value of `color.ui` is used (`auto` by default).
-+
-+color.remote.<slot>::
-+	Use customized color for each remote keywords. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
-+
- color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
-diff --git a/help.c b/help.c
-index 3ebf0568d..b6cafcfc0 100644
---- a/help.c
-+++ b/help.c
-@@ -425,6 +425,7 @@ void list_config_help(int for_human)
- 		{ "color.diff", "<slot>", list_config_color_diff_slots },
- 		{ "color.grep", "<slot>", list_config_color_grep_slots },
- 		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
- 		{ "color.status", "<slot>", list_config_color_status_slots },
- 		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
- 		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-diff --git a/help.h b/help.h
-index f8b15323a..9eab6a3f8 100644
---- a/help.h
-+++ b/help.h
-@@ -83,6 +83,7 @@ void list_config_color_diff_slots(struct string_list *list, const char *prefix);
- void list_config_color_grep_slots(struct string_list *list, const char *prefix);
- void list_config_color_interactive_slots(struct string_list *list, const char *prefix);
- void list_config_color_status_slots(struct string_list *list, const char *prefix);
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix);
- void list_config_fsck_msg_ids(struct string_list *list, const char *prefix);
- 
- #endif /* HELP_H */
-diff --git a/sideband.c b/sideband.c
-index 325bf0e97..5c72db83c 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,6 +1,103 @@
- #include "cache.h"
-+#include "color.h"
-+#include "config.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "help.h"
-+
-+struct kwtable {
-+	/*
-+	 * We use keyword as config key so it can't contain funny chars like
-+	 * spaces. When we do that, we need a separate field for slot name in
-+	 * load_sideband_colors().
-+	 */
-+	const char *keyword;
-+	char color[COLOR_MAXLEN];
-+};
-+
-+static struct kwtable keywords[] = {
-+	{ "hint",	GIT_COLOR_YELLOW },
-+	{ "warning",	GIT_COLOR_BOLD_YELLOW },
-+	{ "success",	GIT_COLOR_BOLD_GREEN },
-+	{ "error",	GIT_COLOR_BOLD_RED },
-+};
-+
-+// Returns a color setting (GIT_COLOR_NEVER, etc).
-+static int use_sideband_colors(void)
-+{
-+	static int use_sideband_colors_cached = -1;
-+
-+	const char *key = "color.remote";
-+	struct strbuf sb = STRBUF_INIT;
-+	char *value;
-+	int i;
-+
-+	if (use_sideband_colors_cached >= 0)
-+		return use_sideband_colors_cached;
-+
-+	if (!git_config_get_string(key, &value))
-+		use_sideband_colors_cached = git_config_colorbool(key, value);
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
-+		if (git_config_get_string(sb.buf, &value))
-+			continue;
-+		if (color_parse(value, keywords[i].color))
-+			die(_("expecting a color: %s"), value);
-+	}
-+	strbuf_release(&sb);
-+	return use_sideband_colors_cached;
-+}
-+
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++)
-+		list_config_item(list, prefix, keywords[i].keyword);
-+}
-+
-+/*
-+ * Optionally highlight some keywords in remote output if they appear at the
-+ * start of the line. This should be called for a single line only.
-+ */
-+void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-+{
-+	int i;
-+ 	if (!want_color_stderr(use_sideband_colors())) {
-+		strbuf_add(dest, src, n);
-+		return;
-+	}
-+
-+	while (isspace(*src)) {
-+		strbuf_addch(dest, *src);
-+		src++;
-+		n--;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		struct kwtable* p = keywords + i;
-+		int len = strlen(p->keyword);
-+                /*
-+                 * Match case insensitively, so we colorize output from existing
-+                 * servers regardless of the case that they use for their
-+                 * messages. We only highlight the word precisely, so
-+                 * "successful" stays uncolored.
-+                 */
-+		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+			strbuf_addstr(dest, p->color);
-+			strbuf_add(dest, src, len);
-+			strbuf_addstr(dest, GIT_COLOR_RESET);
-+			n -= len;
-+			src += len;
-+			break;
-+		}
-+	}
-+
-+	strbuf_add(dest, src, n);
-+}
-+
- 
- /*
-  * Receive multiplexed output stream over git native protocol.
-@@ -48,8 +145,10 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		len--;
- 		switch (band) {
- 		case 3:
--			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    DISPLAY_PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
-+				    DISPLAY_PREFIX);
-+			maybe_colorize_sideband(&outbuf, buf + 1, len);
-+
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -69,20 +168,22 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				if (!outbuf.len)
- 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
--					strbuf_addf(&outbuf, "%.*s%s%c",
--						    linelen, b, suffix, *brk);
--				} else {
--					strbuf_addch(&outbuf, *brk);
-+					maybe_colorize_sideband(&outbuf, b, linelen);
-+					strbuf_addstr(&outbuf, suffix);
- 				}
-+
-+				strbuf_addch(&outbuf, *brk);
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
- 
- 				b = brk + 1;
- 			}
- 
--			if (*b)
--				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
--					    "" : DISPLAY_PREFIX, b);
-+			if (*b) {
-+				strbuf_addstr(&outbuf, outbuf.len ?
-+					    "" : DISPLAY_PREFIX);
-+				maybe_colorize_sideband(&outbuf, b, strlen(b));
-+			}
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-new file mode 100644
-index 000000000..4e1bd421f
---- /dev/null
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -0,0 +1,47 @@
-+#!/bin/sh
-+
-+test_description='remote messages are colorized on the client'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir .git/hooks &&
-+	cat << EOF > .git/hooks/update &&
-+#!/bin/sh
-+echo error: error
-+echo hint: hint
-+echo success: success
-+echo warning: warning
-+echo prefixerror: error
-+exit 0
-+EOF
-+	chmod +x .git/hooks/update &&
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git clone . child &&
-+	cd child &&
-+	echo 2 > file &&
-+	git commit -a -m 2
-+'
-+
-+test_expect_success 'push' '
-+	git -c color.remote=always push -f origin HEAD:refs/heads/newbranch 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded &&
-+	grep "prefixerror: error" decoded
-+'
-+
-+test_expect_success 'push with customized color' '
-+	git -c color.remote=always -c color.remote.error=white push -f origin HEAD:refs/heads/newbranch2 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<WHITE>error<RESET>:" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
-+
-+test_done
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index ebc43eb805..fbbc98e516 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -133,7 +133,7 @@ int cmd_read_tree(int argc, const char **argv, const char *unused_prefix)
+ 			 N_("same as -m, but discard unmerged entries")),
+ 		{ OPTION_STRING, 0, "prefix", &opts.prefix, N_("<subdirectory>/"),
+ 		  N_("read the tree into the index under <subdirectory>/"),
+-		  PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP },
++		  PARSE_OPT_NONEG },
+ 		OPT_BOOL('u', NULL, &opts.update,
+ 			 N_("update working tree with merge result")),
+ 		{ OPTION_CALLBACK, 0, "exclude-per-directory", &opts,
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index f2e985c00a..9106da1985 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -673,7 +673,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		{ OPTION_CALLBACK, 'g', "reflog", &reflog_base, N_("<n>[,<base>]"),
+ 			    N_("show <n> most recent ref-log entries starting at "
+ 			       "base"),
+-			    PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP,
++			    PARSE_OPT_OPTARG,
+ 			    parse_reflog_param },
+ 		OPT_END()
+ 	};
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index a8709a26ec..22749fc2c7 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -969,7 +969,7 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
+ 			N_("<mode>,<object>,<path>"),
+ 			N_("add the specified entry to the index"),
+ 			PARSE_OPT_NOARG | /* disallow --cacheinfo=<mode> form */
+-			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
++			PARSE_OPT_NONEG,
+ 			(parse_opt_cb *) cacheinfo_callback},
+ 		{OPTION_CALLBACK, 0, "chmod", &set_executable_bit, N_("(+/-)x"),
+ 			N_("override the executable bit of the listed files"),
+diff --git a/builtin/write-tree.c b/builtin/write-tree.c
+index c9d3c544e7..cdcbf8264e 100644
+--- a/builtin/write-tree.c
++++ b/builtin/write-tree.c
+@@ -24,9 +24,8 @@ int cmd_write_tree(int argc, const char **argv, const char *unused_prefix)
+ 	struct option write_tree_options[] = {
+ 		OPT_BIT(0, "missing-ok", &flags, N_("allow missing objects"),
+ 			WRITE_TREE_MISSING_OK),
+-		{ OPTION_STRING, 0, "prefix", &prefix, N_("<prefix>/"),
+-		  N_("write tree object for a subdirectory <prefix>") ,
+-		  PARSE_OPT_LITERAL_ARGHELP },
++		OPT_STRING(0, "prefix", &prefix, N_("<prefix>/"),
++			   N_("write tree object for a subdirectory <prefix>")),
+ 		{ OPTION_BIT, 0, "ignore-cache-tree", &flags, NULL,
+ 		  N_("only useful for debugging"),
+ 		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, NULL,
+diff --git a/parse-options.c b/parse-options.c
+index 7db84227ab..fadfc6a833 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -660,7 +660,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ static int usage_argh(const struct option *opts, FILE *outfile)
+ {
+ 	const char *s;
+-	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
++	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh ||
++		(opts->argh[0] == '<' && strchr(opts->argh, '>'));
+ 	if (opts->flags & PARSE_OPT_OPTARG)
+ 		if (opts->long_name)
+ 			s = literal ? "[=%s]" : "[=<%s>]";
 -- 
-2.18.0.597.ga71716f1ad-goog
-
+2.18.0
