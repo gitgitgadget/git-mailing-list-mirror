@@ -2,93 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CF8F1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 16:55:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8D8421F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 17:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731868AbeHBSq5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 14:46:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:40500 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726636AbeHBSq5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 14:46:57 -0400
-Received: (qmail 17401 invoked by uid 109); 2 Aug 2018 16:55:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 02 Aug 2018 16:55:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25501 invoked by uid 111); 2 Aug 2018 16:54:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 02 Aug 2018 12:54:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Aug 2018 12:54:58 -0400
-Date:   Thu, 2 Aug 2018 12:54:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] push: comment on a funny unbalanced option help
-Message-ID: <20180802165457.GC15984@sigill.intra.peff.net>
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
- <87k1p9u860.fsf@evledraar.gmail.com>
- <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
- <87h8kdu3ay.fsf@evledraar.gmail.com>
- <30a6105c-4cb7-b52f-0b0a-c4504b90a5b1@web.de>
- <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
+        id S1732129AbeHBTLQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 15:11:16 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:37217 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726938AbeHBTLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 15:11:15 -0400
+Received: by mail-yb0-f195.google.com with SMTP id r3-v6so1463848ybo.4
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 10:19:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1l2awbi69+BDXtgCJlbPHsQMhw3dKTA5EVVlWpKbLJI=;
+        b=aenANsoP9QfmcoHE6HsOa2lUl4pF1kDNr+ciqquPCvCsmo/JFAxEMKowa4NQIZG2iq
+         s3WLvYsKWpyAUXBurYioeSjEZp1Nq+15hr1JsiVq26k8cpy0hd9bDjOfqIKTenoeMgrr
+         cKOYtqmTv8XqiaAtppM0i3kY082v1wsI8uzZBiHUbtBV0NI2yd89x3O+in+GUtWZZjU7
+         I4tttgiW8EW5c0MeTtYPCsAp5W1SH9Sl/D5sLYzIQn5oP1xXFe17VGrpL9L8ecKykIYl
+         M+leaMwmbq2QvpLc+bGCqHPit6l2pPopOh52uvvqcU+cEclPhHdLbZrB2lCVyO1AxufQ
+         uq6Q==
+X-Gm-Message-State: AOUpUlGilgj6Gv6y+Y6LkVwFsOjw1SnA+0okdtf2VPWQERHzKcAfWTj7
+        CcFqB2LVag8dZH6Zhy0tn44UJ1cX8ukrlJJDX3w=
+X-Google-Smtp-Source: AAOMgpcP901dWTHySOLrz4Mx26pC7OauGOct41EM3CxOk5TJpYiFFpiyXV/CFJxUVXrbk/eYpOCd6YBAtYn0XdTCRXY=
+X-Received: by 2002:a81:110e:: with SMTP id 14-v6mr269502ywr.16.1533230352328;
+ Thu, 02 Aug 2018 10:19:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqftzw4weq.fsf@gitster-ct.c.googlers.com>
+References: <20180802121308.17371-1-hanwen@google.com> <20180802121308.17371-2-hanwen@google.com>
+In-Reply-To: <20180802121308.17371-2-hanwen@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 2 Aug 2018 13:19:00 -0400
+Message-ID: <CAPig+cTFmNsxa4bSdUN199Q8YcJz74jn4Ytc3=JezaE-J595Og@mail.gmail.com>
+Subject: Re: [PATCH 1/2] config: document git config getter return value.
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 02, 2018 at 08:31:57AM -0700, Junio C Hamano wrote:
+On Thu, Aug 2, 2018 at 8:13 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+> diff --git a/config.h b/config.h
+> @@ -178,10 +178,16 @@ struct config_set {
+>  extern void git_configset_init(struct config_set *cs);
+> -extern int git_configset_add_file(struct config_set *cs, const char *filename);
+> -extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
+> +/*
+> + * These functions return 1 if not found, and 0 if found, leaving the found
+> + * value in the 'dest' pointer.
+> + */
+> +extern int git_configset_add_file(struct config_set *cs, const char *filename);
+> +extern int git_configset_get_value(struct config_set *cs, const char *key, const char **dest);
+>  extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
+>  extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
+>  extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
 
-> > diff --git a/parse-options.c b/parse-options.c
-> > index 7db84227ab..fadfc6a833 100644
-> > --- a/parse-options.c
-> > +++ b/parse-options.c
-> > @@ -660,7 +660,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
-> >  static int usage_argh(const struct option *opts, FILE *outfile)
-> >  {
-> >  	const char *s;
-> > -	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh;
-> > +	int literal = (opts->flags & PARSE_OPT_LITERAL_ARGHELP) || !opts->argh ||
-> > +		(opts->argh[0] == '<' && strchr(opts->argh, '>'));
-> 
-> You are greedier than what I thought ;-) I would have limited this
-> magic to the case where argh is surrounded by "<>", but you allow
-> one closing ">" anywhere, which allows us to grab more complex cases.
-> 
-> The lack of escape hatch to decline this auto-literal magic makes me
-> somewhat nervous, but I do not offhand think of a reason why I do
-> want an arg-help string that _begins_ with '<' to be enclosed by
-> another set of "<>", so perhaps this is a good kind of magic.
-
-I think that case is actually easy; once the caller provides a "<>",
-they are in "literal" mode, so they are free to add extra brackets if
-you want. I.e., any "<foo>bar" that you do want enclosed could be
-spelled "<<foo>bar>". It's the opposite that becomes impossible: you do
-not have an opening bracket and nor do you want one.  But as long as we
-retain LITERAL_ARGHELP for that case, we have an escape hatch.
-
-I was going to suggest that this conversion has the downside of being
-somewhat one-way. That is, it is easy for us to find affected sites now
-since they contain the string LITERAL_ARGHELP. Whereas if we wanted to
-back it out in the future, it is hard to know which sites are depending
-on this new behavior.
-
-But I am having trouble thinking of a reason we would want to back it
-out. This makes most cases easier, and has a good escape hatch.
-
--Peff
-
-PS I actually would have made the rule simply "does it begin with a
-   '<'", which seems simpler still. If people accidentally write "<foo",
-   forgetting to close their brackets, that is a bug under both the
-   old and new behavior (just with slightly different outcomes).
+It doesn't seem like git_configset_add_file() fits in this group. It's
+neither searching for something (thus won't return "found" / "not
+found"), nor is it returning 0 or 1. (It returns 0 on success and -1
+on failure.)
