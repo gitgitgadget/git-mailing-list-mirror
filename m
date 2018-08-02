@@ -2,99 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9353F1F597
-	for <e@80x24.org>; Thu,  2 Aug 2018 17:37:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF7A01F597
+	for <e@80x24.org>; Thu,  2 Aug 2018 17:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387422AbeHBT3l (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 15:29:41 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:56207 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731202AbeHBT3l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 15:29:41 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f21-v6so3437236wmc.5
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 10:37:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=BpoNnlD80gcmZUt7pkIBbeMk8gyK0MVLj8hfrLVdal8=;
-        b=XTUMt4k2o2RscxknXh+CdCdiWzo6rpmeMLLggXL9F9t/tTSs11y5eUsRIcV7KnDByi
-         0voiEMnpc1/OBTcVWjX4cMJAIqYZaB25OhKpr8BRe08FMxnNKEZhcNjIAS0xSLbGdI+T
-         Iri/WVtJpg/B6xrsYyb/6oSMoLlIY4Tnog2umhKxI5Chum1KMRe8IvRYxbwyehaB7al/
-         WgSc4Gl1ET+FdPvW1ld7e8Oq0952FUirdDZtizd0lTXreOLvjl7t6tDr1u78bo6s9x8u
-         Z+z5+KFXL7cTvNxBRmnKYU5AJ0mkNBIuD61S0lqlrdcY0eNAsNSnNX6te0laEO0zhx/p
-         wZHQ==
+        id S2387544AbeHBT3z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 15:29:55 -0400
+Received: from mail-yb0-f180.google.com ([209.85.213.180]:41523 "EHLO
+        mail-yb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387423AbeHBT3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 15:29:55 -0400
+Received: by mail-yb0-f180.google.com with SMTP id s8-v6so1492301ybe.8
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 10:37:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=BpoNnlD80gcmZUt7pkIBbeMk8gyK0MVLj8hfrLVdal8=;
-        b=YwYH2tiaW4MV4hRRyw+df9Ieo7WwTnQY1duGuoG4V3Vz8Gg4yIrhWTSmQsLHoqLGei
-         ZfmeZcaia3bpP0zr2coFt02hjXVC2cm5Om4GufT2RAWd47g1wrYTT1T4Mh3ww0Rwk6qv
-         iWx2QrBRTFvYW3K4Y2l2H3/MuU4MF3MV01aIFZahOTU/uw1GNoK+t3yBfo4i1nEOtgzz
-         mZLTcP6FsXxqN7/Lsbtty3q+UZsrgA0QTmiVU/Jo34nWEIudnCxp2dbOieVGIsJ3qSXs
-         vv8CvyrOs3WkAlZUUKI4x1TegcXlg/QR7F90sAomquNpASyYrFvVh2KzJLtYsVROeYlg
-         NrSg==
-X-Gm-Message-State: AOUpUlEpkAy+KC1+CpToVKov0TTzEs7CoGLnUswnTnXuEr4m0Ul0XtaX
-        7DL/VJDOZJSImM1/fbbqBXs=
-X-Google-Smtp-Source: AAOMgpd/OYCzejcg3OkhijTXQOQujHGjU5ISfB2DvnZ/EfshfRPUX20WJIsOxj93+YsNLOm47/78Hg==
-X-Received: by 2002:a1c:e041:: with SMTP id x62-v6mr2456999wmg.155.1533231451914;
-        Thu, 02 Aug 2018 10:37:31 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r140-v6sm5549895wmd.7.2018.08.02.10.37.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 10:37:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] config: document git config getter return value.
-References: <20180802114753.9715-1-hanwen@google.com>
-        <20180802114753.9715-2-hanwen@google.com>
-Date:   Thu, 02 Aug 2018 10:37:30 -0700
-In-Reply-To: <20180802114753.9715-2-hanwen@google.com> (Han-Wen Nienhuys's
-        message of "Thu, 2 Aug 2018 13:47:52 +0200")
-Message-ID: <xmqqbmak3c11.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=US31a/0T/+CDRGDg7vRG/He+RRcx5nyVNYZz5v7CuX8=;
+        b=NqMq2d68XyulyUUbwXdmCz9TXmazu9WPDuJLpdcI2fNDrrR5/+KgxD8y7HSjO9UGTm
+         /FMqOuQcw4jRxrCm2UnA3vX7iqV5ldLipKdvlYVfhjcNHnYtpO7CUZG2cok9RM1kNY4o
+         VmDJN1GKNIo70KysUJdFV4js/fbRrRFnGW3J7vp6dSnxfrlARLGxMV58sKsoFGFulw+m
+         yfXyXj4NRpKImHw7of53GCL67CRuHsuv55+LAIMlWdytpkodxLVC5KzguH4vIZqMzDbS
+         Ny8aKg/LSdR/XxxkjsH83Y/CoYwWHxwf+pIi7JD0ht3Bhxg9qd0FxyarbPQ+OY/2rM7U
+         TsRg==
+X-Gm-Message-State: AOUpUlETS0OG7q10Xh85/PrnAS0OCrjdWz0RmegdXai/JsDpwoti6JIj
+        6vFa8xhAi7lHc7/Kf1WRaZKbOUlb/jy5hRC+Ylg=
+X-Google-Smtp-Source: AAOMgpdPcxTtPHL08jnZFBMd/1j6fUewOb1PbaWFHMKlwSVmUdhUi9RD3QluxAnrZEjz5trQveIWrwgWuWmIaqWbRd8=
+X-Received: by 2002:a25:9d81:: with SMTP id v1-v6mr315690ybp.76.1533231467348;
+ Thu, 02 Aug 2018 10:37:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180731173651.184716-1-hanwen@google.com> <20180731173651.184716-3-hanwen@google.com>
+ <CAPig+cSbibJ7i8LwJqPe06xJObnq6dJdMUnJoC1uAg4zUQq3KA@mail.gmail.com>
+ <xmqqeffi856n.fsf@gitster-ct.c.googlers.com> <CAFQ2z_PXfp60C-aiizUURjcqr-A+VJQDjMJ+fU_5DOo10x+rcQ@mail.gmail.com>
+ <xmqqsh3y6jfp.fsf@gitster-ct.c.googlers.com> <CAPig+cR3WdYpZftK72MKMs4BBF2ZiuO-Bm_-edJ4tr1bRQvoGQ@mail.gmail.com>
+ <CAFQ2z_NOxB4E13hoUPwoP+kZ0rVofCf3mb+bdopyTLnzWu1kPA@mail.gmail.com>
+In-Reply-To: <CAFQ2z_NOxB4E13hoUPwoP+kZ0rVofCf3mb+bdopyTLnzWu1kPA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 2 Aug 2018 13:37:36 -0400
+Message-ID: <CAPig+cS5Nwnau36t_G-PBgY_8aoQQT6b_TfQPeyLt0tFXSppeQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Highlight keywords in remote sideband output.
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+On Thu, Aug 2, 2018 at 7:46 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+> Sure. My doubt is that it's hard to tell what the state of my patch is
+> at any given time.
 
-> ---
->  config.h | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+Understandable. Junio sends out a periodic "What's cooking" email
+summarizing the state of patches sent to the list. The most recent one
+is here [1].
 
-Should I forge your sign-off on this patch?
+A patch series may be annotated with "will merge to next" (meaning he
+thinks it's stable and probably ready to expose to a wider audience),
+"waiting for review" (meaning not enough people have shown interest to
+look it over), "waiting for a re-roll" (meaning he expects a new
+version). Other annotations are possible. If a patch series isn't
+annotated, it means he hasn't made any decision about it yet.
 
->
-> diff --git a/config.h b/config.h
-> index b95bb7649..41700f40b 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -178,10 +178,16 @@ struct config_set {
->  };
->  
->  extern void git_configset_init(struct config_set *cs);
-> -extern int git_configset_add_file(struct config_set *cs, const char *filename);
-> -extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
-> +
->  extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
->  extern void git_configset_clear(struct config_set *cs);
-> +
-> +/*
-> + * These functions return 1 if not found, and 0 if found, leaving the found
-> + * value in the 'dest' pointer.
-> + */
-> +extern int git_configset_add_file(struct config_set *cs, const char *filename);
-> +extern int git_configset_get_value(struct config_set *cs, const char *key, const char **dest);
->  extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
->  extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
->  extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
+Also, if your patch series is not in "What's cooking", it may mean
+that Junio just hasn't gotten around to your submission yet, and there
+is a good chance it will be in the following "What's cooking". If,
+however, a couple weeks or more elapse and your submission doesn't
+show up, then it may have gotten lost in the noise, in which case it's
+a good idea to send a "ping" as a reminder.
+
+[1]: https://public-inbox.org/git/xmqqd0vbt14e.fsf@gitster-ct.c.googlers.com/
