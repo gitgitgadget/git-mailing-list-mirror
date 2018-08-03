@@ -2,119 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A62941F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 17:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B72EB1F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 17:13:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727616AbeHCS7R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 14:59:17 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:53994 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727171AbeHCS7R (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 14:59:17 -0400
-Received: by mail-it0-f67.google.com with SMTP id 72-v6so9208603itw.3
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:02:08 -0700 (PDT)
+        id S1729842AbeHCTLH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 15:11:07 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:43125 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727792AbeHCTLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 15:11:07 -0400
+Received: by mail-wr1-f53.google.com with SMTP id b15-v6so6039666wrv.10
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:13:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9vX3RpYiI71SEnnt+89P9rC6ruEzAujr0yB2a7WMOTM=;
-        b=d5QsYX84MIlqnxWrrqrMwvcdfCnPlHaqnjg8RO95rVBp4HEhVp/HlzM703jPxkCrNH
-         3apQUwJ/ucoA4TAm1HLFYPY906SlgM8Lgo8sGRG4h+fOnO0U1G7D29/DyzqopJWlGbXX
-         BcVNge3hyNhSTRY4SvjsyWN6C6K6MYlATirEs=
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nTwOiw/rXaqo7vIdV1qa23pXg2IgMIZF50AChJml9F4=;
+        b=tculIcqMKmYpoSnDgbUG3XH6c4Ua4dGt7y0AI4luqfh1Zi8PdZhy9YGalegfnoNSux
+         AXsXAsChxk9OU+c6Ehh0E1U2xddFpBT3IjLU0lBYR7oNJPYUqxDZHJZyBtOC4MNVBUsk
+         wqGY7iMOnZXf+Ijmk2r5imlYx0MU/hf9Ed/5x94+5sFR7oaMzGvVYpPQVb4V6fKeY75k
+         enHziikhRJySvBxdsTHB5DK6IcAoKaOqA1PqOAIfkrcYY1kwW8BS/y0kvCjpow1jluQj
+         bGztLXfLQUaFf3aR5/TQy5Uf4oQH9A2J1jKujz0UkYbbckIY/ffBz9Tc/Bnt1gSrueCX
+         qZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9vX3RpYiI71SEnnt+89P9rC6ruEzAujr0yB2a7WMOTM=;
-        b=LnfTu49dU3jX9XvtV7B9CCXklnCPN+UrwRzqnpce52mojzQ6PVSjeBtiZHQojzoFKs
-         WIhGxiuPQqZuFuGIKA3aBGfpfol7JHsDZcgD4PASpRBrNCYNXVwyV92qnUkIV7obDHfa
-         qgBbLYt6vHgI6UhSKs4ltb1pLx6O1qI8TW6Z3oLSKiOHP4ViD/3tfNHiQ30rxBLYG2ll
-         TIgCwyYRC1uzVkfn0NOoFziIs5cwx2mZeap6RC+tomVnoMRfIFFqSWAh1aG86YpQCjqE
-         Ek6hNCemgrsXYkQCJJ8IPdc91n2Z/8YO4qKrdl4rZjDsZv6BGFCz/5n7JK/mQDOSiq6+
-         ROBA==
-X-Gm-Message-State: AOUpUlGmJ2ibQnPVi1hrQadGYZimlfPyc62yFTibudUwWl4JiqOIgNUh
-        rVo1ugSfxTkUT/Q/yH69VdcHndOy+z1km4tqPpQ=
-X-Google-Smtp-Source: AAOMgpdC9JWbsC6HYPM2OtWQhibDSodIaAxCak6xpMIbXQOHPCJsfSrPQ0m8ymb3H3jqpoOhXxvmQ+dkN/UU3ittYLE=
-X-Received: by 2002:a24:b211:: with SMTP id u17-v6mr6913880ite.1.1533315727690;
- Fri, 03 Aug 2018 10:02:07 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nTwOiw/rXaqo7vIdV1qa23pXg2IgMIZF50AChJml9F4=;
+        b=jflo1tgap2at2jI+rEC3tAoBFN3Hih+zDrqCNS9KKKiou9F8VA21cH1pnh1dneFiPI
+         Dwb0CxKiWEXHPXkXidZZNdS+aJ65rqIjdoC4qHdL4RSkWybtbPPHEOigVSArHCwNNuoi
+         oZUYuVSHPt7QPwKpwoJ9oS1N0bbg6e4rZ/x8g4DGFzuabMFR9C/Yg2+xCDtYzRIT/xJ1
+         /YCeERE5Ar2rm8Zkn9SXL9V+bNcVLxZNjCWzi0WVLF/9LebLRZnY/y67oG2Q0pFPGSyk
+         0WNJGdpRS0q9IvxscWEPru0RnptxwWp3MA87+UfKIKn6wrIsgig1k31bN4jg+tQYWQod
+         lU1A==
+X-Gm-Message-State: AOUpUlHlONEMpYGD52XsA2uw6lL1sFuWlr8bG5rgWuN1R/In67ZAMwkE
+        O94KM+toFK8IGgpxf/dZQok=
+X-Google-Smtp-Source: AAOMgpf1nF3wsM1Sn7RBh4nL8c1BVacNVWCr1Agus6CncieEuJXVQV+nBjwXn3xBO8T6pNtoQQ2BDw==
+X-Received: by 2002:adf:f342:: with SMTP id e2-v6mr3138484wrp.161.1533316434223;
+        Fri, 03 Aug 2018 10:13:54 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x23-v6sm3348482wmh.26.2018.08.03.10.13.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 Aug 2018 10:13:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH 00/12] Kill the_index part2, header file cleanup
+References: <20180630092031.29910-1-pclouds@gmail.com>
+        <CACsJy8Am4bWKziBV6-J+c+Kz4u-rkotgZiorhvHOfy2K5cMBvg@mail.gmail.com>
+        <CACsJy8DnsTw6_Ohu+rZyqiBGV127dJ1Y4xGRbkRTaBchHtaQxQ@mail.gmail.com>
+Date:   Fri, 03 Aug 2018 10:13:53 -0700
+In-Reply-To: <CACsJy8DnsTw6_Ohu+rZyqiBGV127dJ1Y4xGRbkRTaBchHtaQxQ@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 3 Aug 2018 18:16:36 +0200")
+Message-ID: <xmqqtvobxtim.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqin53t30d.fsf@gitster-ct.c.googlers.com> <20180726134111.17623-1-avarab@gmail.com>
- <20180803072014.GA256410@aiede.svl.corp.google.com> <xmqq600rz9my.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq600rz9my.fsf@gitster-ct.c.googlers.com>
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Fri, 3 Aug 2018 10:01:56 -0700
-Message-ID: <CA+55aFwc7UQ61EbNJ36pFU_aBCXGya4JuT-TvpPJ21hKhRengQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] doc hash-function-transition: pick SHA-256 as NewHash
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        keccak@noekeon.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 3, 2018 at 9:40 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> > [...]
-> >> -  - 20-byte NewHash checksum of all of the above.
-> >> +  - 20-byte SHA-256 checksum of all of the above.
-> >
-> > Likewise.
->
-> Hmph, I've always assumed since NewHash plan was written that this
-> part was not about tamper resistance but was about bit-flipping
-> detection and it was deliberate to stick to 20-byte sum, truncating
-> as necessary.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Yeah, in fact, since this was one area where people actually had
-performance issues with the hash, it might be worth considering
-_weakening_ the hash.
+> Another friendly ping. I really need to know if I need to update (or
+> drop) this part before moving on to part 3.
 
-Things like the pack index files (and just the regular file index) are
-entirely local, and the SHA1 in those is really just a fancy CRC. It's
-really just "good protection against disk corruption" (it happens),
-and in fact you cannot use it as protection against active tampering,
-since there's no secret there and any active attacker that has access
-to your local filesystem could just recompute the hash anyway.
+Easier is to resend and see if it sticks this time (that is how I
+landed format-patch back when I was just an individual contributor
+;-)
 
-And because they are local anyway and aren't really transported
-(modulo "shared repositories" where you use them across users or
-legacy rsync-like synchronization), they can be handled separately
-from any hashing changes. The pack and index file formats have in fact
-been changed before.
+I will see if I can locate them in the archive (I actually do not
+have strong preference either way myself, so the inaction was not a
+form of objection but was merely showing a "Meh").
 
-It might make sense to either keep it as SHA1 (just to minimize any
-changes) or if there are still issues with index file performance it
-could even be made to use something fast-but-not-cryptographic like
-just making it use crc32().
-
-Remember: one of the original core git design requirements was
-"corruption detection".
-
-For normal hashed objects, that came naturally, and the normal object
-store additionally has active tamper protection thanks to the
-interconnected nature of the hashes and the distribution of the
-objects.
-
-But for things like packfiles and the file index, it is just a
-separate checksum. There is no tamper protection anyway, since anybody
-who can modify them directly can just recompute the hash checksum.
-
-The fact that both of these things used SHA1 was more of a convenience
-issue than anything else, and the pack/index file checksum is
-fundamentally not cryptographic (but a cryptographic hash is obviously
-by definition also a very good corruption detector).
-
-               Linus
+Thanks for prodding.
