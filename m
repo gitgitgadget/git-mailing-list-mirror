@@ -2,198 +2,308 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEC491F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 17:42:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D87371F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 17:43:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728025AbeHCTj1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 15:39:27 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:36153 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727362AbeHCTj1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 15:39:27 -0400
-Received: by mail-pg1-f194.google.com with SMTP id h12-v6so3165980pgs.3
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:42:10 -0700 (PDT)
+        id S1727532AbeHCTkz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 15:40:55 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:51276 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbeHCTkz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 15:40:55 -0400
+Received: by mail-wm0-f66.google.com with SMTP id y2-v6so7106675wma.1
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:43:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3k7QON1us3lVQbF4D2SdOZ57GkIBzMF+bsVpylmAsPU=;
-        b=G/bd3cqFyi59dNd3k7+1iPOCzffEUytL9CYr/vyNDhJkr9xBHW9jmMXwt+94dSZAh+
-         whvhVcqWb9IO27UQCFktQafRWY3dyUWZhT/gsC/9mjbTUiyPVabW27TkSgJXx0yh8GEA
-         Kai+flK0jPjYTMvO7jcIIdF/5q65XxOYh+bxxFhY57GUW1ssRkmz63LStMWpzdHaJCuN
-         YdHvqI3/ldJ9idMKmOVaF1MZSXngIEAY/2rEVUddcJVr7QEa2d55vOj5zJgUc9qju54K
-         XN2JNvP0/iTIrnypvstbFVvmrsRb08cFHfQmXRXIM9geC7Fxjqd3ZFXc+9p3BeZh6btv
-         YIYQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=9jt/4MIzUzVJ2JLgOkkRC8Cm3OfZsnM4ATqv35BR6VA=;
+        b=kTJt16VHvJwIe5tMeZSvJWi1KzDWvN2s+q4xfZoRFYS2IE9xrtk6qL+DoMJq4qjZ6b
+         63RIzwI5uHGDYCPQlAxOPuEKoi5TLNPy/WwCPqUMi//CPDR53OpQPU1YzVWkl9+7R0M1
+         pCr1F4gsVeTw/0Y8Ammf+3Vpwu3sUwoCqb6RJn+uohgbaJNBd7dayKKECJTlSz0oyHHr
+         UbyHI55aAAIrbq1dc1JX3glZza3kDJoa8UcCbKiD8Qu2YAtnZORuzBiPPMLxruRP3Of3
+         gS827OJkrkl69FeJyCxElPKxNkbiFW5//c1bOATnqvgVdnHip88V5mbrrOtP8EhYrP3C
+         Rxmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3k7QON1us3lVQbF4D2SdOZ57GkIBzMF+bsVpylmAsPU=;
-        b=RZN55SclGnLigIe1tGc8QcjnVxmj5RPeYQp4C8dtKHVPN3YKzOo6Xy63+aXfP5koty
-         aXVDA2WP2JBsi44qeQwiU4nDqqajpf5DCB4q4NO7Wmds3ukr7xPdyUIioDcHSyzufze4
-         uZe/5Q2rUUaKkYyMNf0Occahou+xecG0oBSCn219SkqKnHikq5AfEMWE/BrjkfRvQJNG
-         kJY4GqjC0h76N9F/12vpwMevxqO7YJkodoqV/6yAlN8paEU0YszV+M5rf/0/yYgSrsBA
-         em5T1EJfvJIkmepFnQlioyNjiQCORlV3Awe0vRVBu1ssiccD7/FVCOO7wBNy5BXhdKvq
-         JA5A==
-X-Gm-Message-State: AOUpUlFkdb7sFl5xV1Nw72kk4hUBcD2RXg/u8DquGsPVLUgA08yI+dB8
-        RucbOF9pQzwivS4vp9rcVjT3wHSu
-X-Google-Smtp-Source: AAOMgpfSpXQhgVlB+pNSrTHvJG3RRDSL7CxhHh8qGx/k+FtBnzb+HlxppebbpyfcdYnGiC9tehXZqA==
-X-Received: by 2002:a63:b91a:: with SMTP id z26-v6mr4768844pge.22.1533318129606;
-        Fri, 03 Aug 2018 10:42:09 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id j71-v6sm9821275pgd.23.2018.08.03.10.42.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
-Date:   Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
-X-Google-Original-Date: Fri, 03 Aug 2018 17:42:03 GMT
-Message-Id: <b29c4d979f147f38bc0a4765a953a748eec0cd6d.1533318123.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.13.git.gitgitgadget@gmail.com>
-References: <pull.13.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] rebase --exec: make it work with --rebase-merges
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=9jt/4MIzUzVJ2JLgOkkRC8Cm3OfZsnM4ATqv35BR6VA=;
+        b=pyycyFpkaGzm/UfZXkWboqhCbLqr3GGPco/+Pcmm5xCjFQ/sWEXesfajJ6nI+U5hin
+         P7R0FlkrWr+dg0nEotzIIWlEoNxbAZo7SkrsLbXy7LCjiHsADoycc1MXwrX7IXbnx+8v
+         KfsAdOKX3LrJvMtddgxDs48esk3913qGoTC9T4WkxxDRyKmyQEOgOJ2JYFDKWy9aFZpT
+         DXdM8ZQHzC95GROdhYyw59HXV0L9QJGn4rSnvHXrueM3Od0Uk2FFBtgwbVwgRziZF6ki
+         X4Poi9GW1IPrQqeZp71se6mdwMrbIzKuBmog8B8JyTMf2KEr27N+2WiCv6nzOH7aB4Y/
+         7ZVA==
+X-Gm-Message-State: AOUpUlFr119/fDrxTCgGSRFT3TuWpskqEPOzukueeDYITlCFLmmGgh26
+        hMuyDZnihRnsQx7M/x+J9LaNZA8uisc=
+X-Google-Smtp-Source: AAOMgpcPSbdSJhLVuVAqBx7hVbXozRmuBUAINJDWEBzHuNeZSQeMLTkOeIaQVVx97fYmdqFXGi5tDA==
+X-Received: by 2002:a1c:3411:: with SMTP id b17-v6mr5380076wma.85.1533318215443;
+        Fri, 03 Aug 2018 10:43:35 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id j11-v6sm4098407wrr.37.2018.08.03.10.43.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 Aug 2018 10:43:34 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
+        keccak@noekeon.org
+Subject: Re: [PATCH v2 2/2] doc hash-function-transition: pick SHA-256 as NewHash
+References: <xmqqin53t30d.fsf@gitster-ct.c.googlers.com> <20180726134111.17623-1-avarab@gmail.com> <20180803072014.GA256410@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180803072014.GA256410@aiede.svl.corp.google.com>
+Date:   Fri, 03 Aug 2018 19:43:33 +0200
+Message-ID: <87600rtkfu.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The idea of `--exec` is to append an `exec` call after each `pick`.
+On Fri, Aug 03 2018, Jonathan Nieder wrote:
 
-Since the introduction of fixup!/squash! commits, this idea was extended
-to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
-exec would not be inserted between a `pick` and any of its corresponding
-`fixup` or `squash` lines.
+> Hi again,
+>
+> Sorry for the slow review.  I finally got a chance to look this over
+> again.
+>
+> My main nits are about the commit message: I think it still focuses
+> too much on the process instead of the usual "knowing what I know now,
+> here's the clearest explanation for why we need this patch" approach.
+> I can send a patch illustrating what I mean tomorrow morning.
 
-The current implementation uses a dirty trick to achieve that: it
-assumes that there are only pick/fixup/squash commands, and then
-*inserts* the `exec` lines before any `pick` but the first, and appends
-a final one.
+I think it makes if you just take over 2/2 of this series (or even the
+whole thing), since the meat of it is already something I copy/pasted
+from you, and you've got more of an opinion / idea about how to proceed
+(which is good!); it's more efficient than me trying to fix various
+stuff you're pointing out at this point, I also think it makes sense
+that you change the "Author" line for that, since the rest of the
+changes will mainly be search-replace by me.
 
-With the todo lists generated by `git rebase --rebase-merges`, this
-simple implementation shows its problems: it produces the exact wrong
-thing when there are `label`, `reset` and `merge` commands.
+Perhaps it's better for readability if those search-replace changes go
+into their own change, i.e. make it a three-part where 2/3 does the
+search-replace, and promises that 3/3 has the full rationale etc.
 
-Let's change the implementation to do exactly what we want: look for
-`pick` lines, skip any fixup/squash chains, and then insert the `exec`
-line. Lather, rinse, repeat.
-
-While at it, also add `exec` lines after `merge` commands, because they
-are similar in spirit to `pick` commands: they add new commits.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- sequencer.c              | 59 ++++++++++++++++++++++++++++++++--------
- t/t3430-rebase-merges.sh |  2 +-
- 2 files changed, 49 insertions(+), 12 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index 31038472f..dda5cdbba 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char *commands)
- {
- 	const char *todo_file = rebase_path_todo();
- 	struct todo_list todo_list = TODO_LIST_INIT;
--	struct todo_item *item;
- 	struct strbuf *buf = &todo_list.buf;
- 	size_t offset = 0, commands_len = strlen(commands);
--	int i, first;
-+	int i, insert_final_commands;
- 
- 	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
- 		return error(_("could not read '%s'."), todo_file);
-@@ -4257,19 +4256,57 @@ int sequencer_add_exec_commands(const char *commands)
- 		return error(_("unusable todo list: '%s'"), todo_file);
- 	}
- 
--	first = 1;
--	/* insert <commands> before every pick except the first one */
--	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
--		if (item->command == TODO_PICK && !first) {
--			strbuf_insert(buf, item->offset_in_buf + offset,
--				      commands, commands_len);
--			offset += commands_len;
-+	/*
-+	 * Insert <commands> after every pick. Here, fixup/squash chains
-+	 * are considered part of the pick, so we insert the commands *after*
-+	 * those chains if there are any.
-+	 */
-+	insert_final_commands = 1;
-+	for (i = 0; i < todo_list.nr; ) {
-+		enum todo_command command = todo_list.items[i].command;
-+		int j = 0;
-+
-+		if (command != TODO_PICK && command != TODO_MERGE) {
-+			i++;
-+			continue;
-+		}
-+
-+		/* skip fixup/squash chain, if any */
-+		for (i++; i < todo_list.nr; i++, j = 0) {
-+			command = todo_list.items[i].command;
-+
-+			if (is_fixup(command))
-+				continue;
-+
-+			if (command != TODO_COMMENT)
-+				break;
-+
-+			/* skip comment if followed by any fixup/squash */
-+			for (j = i + 1; j < todo_list.nr; j++)
-+				if (todo_list.items[j].command != TODO_COMMENT)
-+					break;
-+			if (j < todo_list.nr &&
-+			    is_fixup(todo_list.items[j].command)) {
-+				i = j;
-+				continue;
-+			}
-+			break;
- 		}
--		first = 0;
-+
-+		if (i >= todo_list.nr) {
-+			insert_final_commands = 1;
-+			break;
-+		}
-+
-+		strbuf_insert(buf, todo_list.items[i].offset_in_buf + offset,
-+			      commands, commands_len);
-+		offset += commands_len;
-+		insert_final_commands = 0;
- 	}
- 
- 	/* append final <commands> */
--	strbuf_add(buf, commands, commands_len);
-+	if (insert_final_commands)
-+		strbuf_add(buf, commands, commands_len);
- 
- 	i = write_message(buf->buf, buf->len, todo_file, 0);
- 	todo_list_release(&todo_list);
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 0bf5eaa37..90ae613e2 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -363,7 +363,7 @@ test_expect_success 'octopus merges' '
- 	EOF
- '
- 
--test_expect_failure 'with --autosquash and --exec' '
-+test_expect_success 'with --autosquash and --exec' '
- 	git checkout -b with-exec H &&
- 	echo Booh >B.t &&
- 	test_tick &&
--- 
-gitgitgadget
+> Ævar Arnfjörð Bjarmason wrote:
+>
+>> From a security perspective, it seems that SHA-256, BLAKE2, SHA3-256,
+>> K12, and so on are all believed to have similar security properties.
+>> All are good options from a security point of view.
+>>
+>> SHA-256 has a number of advantages:
+>>
+>> * It has been around for a while, is widely used, and is supported by
+>>   just about every single crypto library (OpenSSL, mbedTLS, CryptoNG,
+>>   SecureTransport, etc).
+>>
+>> * When you compare against SHA1DC, most vectorized SHA-256
+>>   implementations are indeed faster, even without acceleration.
+>>
+>> * If we're doing signatures with OpenPGP (or even, I suppose, CMS),
+>>   we're going to be using SHA-2, so it doesn't make sense to have our
+>>   security depend on two separate algorithms when either one of them
+>>   alone could break the security when we could just depend on one.
+>>
+>> So SHA-256 it is.
+>
+> The above is what I wrote, so of course I'd like it. ;-)
+>
+>>                    See the "Hash algorithm analysis" thread as of
+>> [1]. Linus has come around to this choice and suggested Junio make the
+>> final pick, and he's endorsed SHA-256 [3].
+>
+> The above paragraph has the same problem as before of (1) not being
+> self-contained and (2) focusing on the process that led to this patch
+> instead of the benefit of the patch itself.  I think we should omit it.
+>
+>> This follow-up change changes occurrences of "NewHash" to
+>> "SHA-256" (or "sha256", depending on the context). The "Selection of a
+>> New Hash" section has also been changed to note that historically we
+>> used the the "NewHash" name while we didn't know what the new hash
+>> function would be.
+>
+> nit: Commit messages are usually in the imperative tense.  This is in
+> the past tense, I think because it is a continuation of that
+> discussion about process.
+>
+> For this part, I think we can let the patch speak for itself.
+>
+>> This leaves no use of "NewHash" anywhere in git.git except in the
+>> aforementioned section (and as a variable name in t/t9700/test.pl, but
+>> that use from 2008 has nothing to do with this transition plan).
+>
+> This part is helpful --- good.
+>
+>> 1. https://public-inbox.org/git/20180720215220.GB18502@genre.crustytoothpaste.net/
+>> 2. https://public-inbox.org/git/CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com/
+>> 3. https://public-inbox.org/git/xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com/
+>
+> Footnotes to the historical part --- I'd recommend removing these.
+>
+>> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Helped-by: Junio C Hamano <gitster@pobox.com>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>
+> Here I'd want to put a pile of acks, e.g.:
+>
+>  Acked-by: Linus Torvalds <torvalds@linux-foundation.org>
+>  Acked-by: brian m. carlson <sandals@crustytoothpaste.net>
+>  Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>  Acked-by: Dan Shumow <danshu@microsoft.com>
+>  Acked-by: Junio C Hamano <gitster@pobox.com>
+>
+> [...]
+>> --- a/Documentation/technical/hash-function-transition.txt
+>> +++ b/Documentation/technical/hash-function-transition.txt
+>> @@ -59,14 +59,11 @@ that are believed to be cryptographically secure.
+>>
+>>  Goals
+>>  -----
+>> -Where NewHash is a strong 256-bit hash function to replace SHA-1 (see
+>> -"Selection of a New Hash", below):
+>> -
+>> -1. The transition to NewHash can be done one local repository at a time.
+>> +1. The transition to SHA-256 can be done one local repository at a time.
+>
+> Yay!
+>
+> [...]
+>>  	[extensions]
+>> -		objectFormat = newhash
+>> +		objectFormat = sha256
+>>  		compatObjectFormat = sha1
+>
+> Yes, makes sense.
+>
+> [...]
+>> @@ -155,36 +152,36 @@ repository extensions.
+>>  Object names
+>>  ~~~~~~~~~~~~
+>>  Objects can be named by their 40 hexadecimal digit sha1-name or 64
+>> -hexadecimal digit newhash-name, plus names derived from those (see
+>> +hexadecimal digit sha256-name, plus names derived from those (see
+>>  gitrevisions(7)).
+>>
+>>  The sha1-name of an object is the SHA-1 of the concatenation of its
+>>  type, length, a nul byte, and the object's sha1-content. This is the
+>>  traditional <sha1> used in Git to name objects.
+>>
+>> -The newhash-name of an object is the NewHash of the concatenation of its
+>> -type, length, a nul byte, and the object's newhash-content.
+>> +The sha256-name of an object is the SHA-256 of the concatenation of its
+>> +type, length, a nul byte, and the object's sha256-content.
+>
+> Sensible.
+>
+> [...]
+>>
+>>  Object format
+>>  ~~~~~~~~~~~~~
+>>  The content as a byte sequence of a tag, commit, or tree object named
+>> -by sha1 and newhash differ because an object named by newhash-name refers to
+>> +by sha1 and sha256 differ because an object named by sha256-name refers to
+>
+> Not about this patch: this should say SHA-1 and SHA-256, I think.
+> Leaving it as is in this patch as you did is the right thing.
+>
+> [...]
+>> @@ -255,10 +252,10 @@ network byte order):
+>>    up to and not including the table of CRC32 values.
+>>  - Zero or more NUL bytes.
+>>  - The trailer consists of the following:
+>> -  - A copy of the 20-byte NewHash checksum at the end of the
+>> +  - A copy of the 20-byte SHA-256 checksum at the end of the
+>
+> Not about this patch: a SHA-256 is 32 bytes.  Leaving that for a
+> separate patch as you did is the right thing, though.
+>
+> [...]
+>> -  - 20-byte NewHash checksum of all of the above.
+>> +  - 20-byte SHA-256 checksum of all of the above.
+>
+> Likewise.
+>
+> [...]
+>> @@ -351,12 +348,12 @@ the following steps:
+>>     (This list only contains objects reachable from the "wants". If the
+>>     pack from the server contained additional extraneous objects, then
+>>     they will be discarded.)
+>> -3. convert to newhash: open a new (newhash) packfile. Read the topologically
+>> +3. convert to sha256: open a new (sha256) packfile. Read the topologically
+>
+> Not about this patch: this one's more murky, since it's talking about
+> the object names instead of the hash function.  I guess "sha256"
+> instead of "SHA-256" for this could be right, but I worry it's going
+> to take time for me to figure out the exact distinction.  That seems
+> like a reason to just call it SHA-256 (but in a separate patch).
+>
+> [...]
+>> -   sha1-content, convert to newhash-content, and write it to the newhash
+>> -   pack. Record the new sha1<->newhash mapping entry for use in the idx.
+>> +   sha1-content, convert to sha256-content, and write it to the sha256
+>> +   pack. Record the new sha1<->sha256 mapping entry for use in the idx.
+>>  4. sort: reorder entries in the new pack to match the order of objects
+>> -   in the pack the server generated and include blobs. Write a newhash idx
+>> +   in the pack the server generated and include blobs. Write a sha256 idx
+>>     file
+>
+> Likewise.
+>
+> [...]
+>> @@ -388,16 +385,16 @@ send-pack.
+>>
+>>  Signed Commits
+>>  ~~~~~~~~~~~~~~
+>> -We add a new field "gpgsig-newhash" to the commit object format to allow
+>> +We add a new field "gpgsig-sha256" to the commit object format to allow
+>>  signing commits without relying on SHA-1. It is similar to the
+>> -existing "gpgsig" field. Its signed payload is the newhash-content of the
+>> -commit object with any "gpgsig" and "gpgsig-newhash" fields removed.
+>> +existing "gpgsig" field. Its signed payload is the sha256-content of the
+>> +commit object with any "gpgsig" and "gpgsig-sha256" fields removed.
+>
+> That reminds me --- we need to add support for stripping these out.
+>
+> [...]
+>> @@ -601,18 +598,22 @@ The user can also explicitly specify which format to use for a
+>>  particular revision specifier and for output, overriding the mode. For
+>>  example:
+>>
+>> -git --output-format=sha1 log abac87a^{sha1}..f787cac^{newhash}
+>> +git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
+>>
+>> -Selection of a New Hash
+>> ------------------------
+>> +Choice of Hash
+>> +--------------
+>
+> Yay!
+>
+> [...]
+>> -Some hashes under consideration are SHA-256, SHA-512/256, SHA-256x16,
+>> -K12, and BLAKE2bp-256.
+>> +We choose SHA-256. See the thread starting at
+>> +<20180609224913.GC38834@genre.crustytoothpaste.net> for the discussion
+>> +(https://public-inbox.org/git/20180609224913.GC38834@genre.crustytoothpaste.net/)
+>
+> Can this reference be moved to a footnote?  It's not part of the
+> design, but it's a good reference.
+>
+> Thanks again for getting this documented.
+>
+> Sincerely,
+> Jonathan
