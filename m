@@ -2,147 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D61D71F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 15:43:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0A601F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 15:51:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727953AbeHCRkk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 13:40:40 -0400
-Received: from mx0a-00256a01.pphosted.com ([148.163.150.240]:44958 "EHLO
-        mx0b-00256a01.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727171AbeHCRkj (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 3 Aug 2018 13:40:39 -0400
-Received: from pps.filterd (m0142700.ppops.net [127.0.0.1])
-        by mx0b-00256a01.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w73FgbZ2193723
-        for <git@vger.kernel.org>; Fri, 3 Aug 2018 11:43:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyu.edu; h=date : from : to : cc :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=20180315; bh=t05+0v3qG3ujHIWbwLU31PiGUwuU7PLKrPMQAaeiLrg=;
- b=nu+I7SCU1nJ659lUpwGRCs9iEFztCjquVDrZwhWEn6KTtkjaDrQ/TaDF1FF4eAKsAjFA
- 4SYz947uJYiWzZAIziosBqhBXYI5JBZHm5wKLUVOY0JgFbRLLGh+jCLGaBxERBUofNoN
- xp7nej3rw3+drdI4sFz/Rqggg4s2mGcheo0JQ3rEPhqG46O1/U2BT6LAzL9XmtZiE/an
- Rk5ymdFNW/kwkYq+/leR/hfKQvzdyEoc3qtLIngwA31iUUJISqoB+cCun+4QZhzx04e+
- MBDWGUmKOYhHbG6sV4ymkCIBIvNKdG2IroaVLwLmU9wuWUDLE2OHCMO0wEq9Qod8Chcc Gw== 
-Received: from mail-qt0-f197.google.com (mail-qt0-f197.google.com [209.85.216.197])
-        by mx0b-00256a01.pphosted.com with ESMTP id 2km6hgkh4k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 11:43:46 -0400
-Received: by mail-qt0-f197.google.com with SMTP id b7-v6so4581262qtp.14
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 08:43:46 -0700 (PDT)
+        id S1727479AbeHCRr4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 13:47:56 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:40988 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727431AbeHCRr4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 13:47:56 -0400
+Received: by mail-wr1-f50.google.com with SMTP id j5-v6so5830852wrr.8
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 08:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nyu-edu.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=t05+0v3qG3ujHIWbwLU31PiGUwuU7PLKrPMQAaeiLrg=;
-        b=JUFOiYQjyya+4XERT2QwGt5Net0VlXSX3wJ5MxOIBJusF69Qt4a5RezPG/9wQLz9Tu
-         pUhleO3yye8xS0KVXmj/JaFXOPogxXu0NTl9t2KgwfzrF3ttmN9ecm9vZHF2Lz8CbcAk
-         V0LMfyzCgi8A7LDBM+H/EHqCJymA0bAMBAQ1yBJx4CJYGT/skio1YvPlG7mH2oxhdzMo
-         2klh37xo04hfj2j6QCQy3645YjwgSD67X5lNB05s20orJn2wEjlkXJE27QeSz2H4ww7r
-         U7zFU8TejNxUYr9VD92jpxZ0THBDFA8D7H29xDf2PPSNgKn4+0JGZIs0JXvknZMpvtUS
-         a/Kw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=t5KLup7RelqPN+HTKteVTQDnsbwz0JivSmSsu3+PTWM=;
+        b=hckJFBYJcIPNa2u1zW7Lnx1ImORcQV/0hcqf4AjRRkYrK22ht2VW5nBjQdAQW4ytgh
+         WvdlEkOKYiyPdsG74ePEW87ZQ8V4RYt2a/m5WhovBEEQYj3jJJoYgulRzbGQdvHfub/Y
+         Qmbr2jczEwnGFX9n569n62iIHD9uUCfe3E+KDNaXCfkHaAkTQpzrOKlpKAZx0rNqYpxW
+         KznD8vr3GzsK6RTMI6uFjCoksyThHF8mueYNsAy5d8GPxMV6vIdMzJeq3SDDDjGHU715
+         cVGmwoVsUabydpFiM1dwFQJxG/vbItU1c6cObOEp8sUSABRz8kpGPujoMikRT/ECgg3X
+         0M7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=t05+0v3qG3ujHIWbwLU31PiGUwuU7PLKrPMQAaeiLrg=;
-        b=W01Xlf/g+Uk6XijCDypFBaFeGPhLLnQKYnePILCN5caKJ7C7vzxFFNSueUSgR72qde
-         49buJyKsS35HcoqDPwrUofuE594zYJ00RpLjFVRtFu4tyhSE8B6GjdZq7CcsG5RU8ScM
-         UkoWehRw5m8sgA6sGg8zva7zxZrL+h6Wk0zGT0BYyzc5Tkyel49QmQIWdZpmuEe6ewX5
-         zyYuB7L6FR86wYzx+6io1Uf7NOksp3YWQJxNfnR3ged60K1DTDRz+OYzpHpvYhT6ajY6
-         jxOL27/l0Nt8ZSjE7bbsuYM+/Rkb8OGjM+vin3WwxybLIxCLZEhwbQ2P0QcKMMGXw/Kl
-         ZusA==
-X-Gm-Message-State: AOUpUlFLaQQOSS3xCqvCbQKNIUTAzOP1z0JwfXnWEdgS8mvYF8PnkApx
-        ehhOAj4hcw7DK5GZyrOKBPxGF0REhZ9TYHWFv3tVKcTvhnC4P+G3Am29ARW5fyu6t0yqY9STpPg
-        Z5N301JVp++c=
-X-Received: by 2002:ac8:2672:: with SMTP id v47-v6mr4411753qtv.287.1533311025444;
-        Fri, 03 Aug 2018 08:43:45 -0700 (PDT)
-X-Google-Smtp-Source: AAOMgpdEl956gcOEYMGvEnlTq9hbWTfoKGWeF3aUczZi5dIIIX2tEie9zXWkhvcGk9SgLKurU9xmEQ==
-X-Received: by 2002:ac8:2672:: with SMTP id v47-v6mr4411739qtv.287.1533311025275;
-        Fri, 03 Aug 2018 08:43:45 -0700 (PDT)
-Received: from LykOS.localdomain (216-165-95-134.NATPOOL.NYU.EDU. [216.165.95.134])
-        by smtp.gmail.com with ESMTPSA id d71-v6sm3631173qke.57.2018.08.03.08.43.44
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=t5KLup7RelqPN+HTKteVTQDnsbwz0JivSmSsu3+PTWM=;
+        b=k8zOPF3OIRDZVFB/An0Mn02Rzdw3OuibT/RH2YVKc/mABjHsfrj2+l6ZG4QzRhT4Tk
+         p5r54CEPa6P87snEhEkvDsTXFQ2YbszHTB8BZZha7NcNEercVB/mPDi6TOCCs22F4bT3
+         oHjro7OBBj5DqBxPbi5YpXB+h04Ur5xr7Gau/H6nbY/0QdDe2ufZVOLqsHPtGFeNCg9I
+         bG5wf4r7aPokoGFzaNSDM7b35RUWI9te1tK6OOrjmi3wZZKm5hF6rp9dUA8N+RKRzorX
+         VIKLI1r5zXhzXMv49eqYKrlreDUaGWyFBAB9j1krgJSktb8iiEzxOVhEQX5+23WUsVGA
+         kUuA==
+X-Gm-Message-State: AOUpUlGfUojecMy4AOrquJ597bFpgDWlinHXHEt+I/m6405bVeUFPy3P
+        IC70VkCygO8YEbkfxEwR2M0=
+X-Google-Smtp-Source: AAOMgpeWfC2KMQa09HtPyaI5DTe2vpwwHVahe+UdLLZTP38mCda9oPrnt2N4zRidm99P8DPdTK20CQ==
+X-Received: by 2002:adf:8895:: with SMTP id f21-v6mr2993712wrf.250.1533311461904;
+        Fri, 03 Aug 2018 08:51:01 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g17-v6sm5514981wmh.19.2018.08.03.08.51.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 Aug 2018 08:43:44 -0700 (PDT)
-Date:   Fri, 3 Aug 2018 11:43:44 -0400
-From:   Santiago Torres <santiago@nyu.edu>
-To:     Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
- when signature is not trusted
-Message-ID: <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
-References: <09f9803c-3f4b-a97c-2c59-e9d6b924892f@nic.cz>
- <20180801001942.GC45452@genre.crustytoothpaste.net>
- <20180801002546.du52zkxjupzcw2p6@LykOS.localdomain>
- <20180803133630.32oxubwttealvhxk@work-pc>
+        Fri, 03 Aug 2018 08:51:01 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        peff <peff@google.com>
+Subject: Re: [PATCH 2/3] config: fix case sensitive subsection names on writing
+References: <xmqq7elbe8po.fsf@gitster-ct.c.googlers.com>
+        <20180801193413.146994-1-sbeller@google.com>
+        <20180801193413.146994-3-sbeller@google.com>
+        <xmqqva8t4s63.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbeUHVQmfTFkoGEM617iVa_3mCsLjpYGoEebqxNKAM_xA@mail.gmail.com>
+Date:   Fri, 03 Aug 2018 08:51:00 -0700
+In-Reply-To: <CAGZ79kbeUHVQmfTFkoGEM617iVa_3mCsLjpYGoEebqxNKAM_xA@mail.gmail.com>
+        (Stefan Beller's message of "Thu, 2 Aug 2018 17:30:10 -0700")
+Message-ID: <xmqqy3dnzbx7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="3fjiwdp6jkwfk6ez"
-Content-Disposition: inline
-In-Reply-To: <20180803133630.32oxubwttealvhxk@work-pc>
-X-Orig-IP: 209.85.216.197
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=7 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1015 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=565 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1808030174
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stefan Beller <sbeller@google.com> writes:
 
---3fjiwdp6jkwfk6ez
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> And *technically* the two level is old style, so I figured it's ok.
 
-> > disable fetching keys from hkp servers. This way signature verification
-> > should fail.
-> >=20
-> > Thanks,
-> > -Santiago.
->=20
-> This is not a deviation. GPG correctly recognizes difference between trus=
-ted,
-> untrusted and unknown levels. git on the other hand does not. Well it did=
- until
-> the commit a4cc18f29. That one removed GPG exit code propagation.
+If we call the bit not after the recentness of the style but after
+what it is about, e.g. "is the section name as a whole (including
+its possible subsection part) case insensitive?", then yes, a
+two-level name can be treated exactly the same way as the old style
+names with a subsection.  Perhaps we should do that rename to save
+us from future confusion.
 
-Oh wow. Sorry my assumption parted from looking at the code back in the
-day where this happens. I assumed git was quietly propagating the gpg
-error code and took it from there.=20
+>> > -                     !strncasecmp(cf->var.buf, store->key, store->baselen);
+>> > +                     !cmpfn(cf->var.buf, store->key, store->baselen);
+>>
+>> OK.  Section names should still be case insensitive (only the case
+>> sensitivity of subsection names is special), but presumably that's
+>> already normalized by the caller so we do not have to worry when we
+>> use strncmp()?  Can we add a test to demonstrate that it works
+>> correctly?
+>
+> That was already demonstrated (but not tested) in
+> https://public-inbox.org/git/20180730230443.74416-4-sbeller@google.com/
 
-Now that I think about it though, verify tag can verify more than one
-tag. I assume that this would make it difficult to propagate individual
-errors in trusting. I honestly don't know what's the best way to modify
-this behavior then.
+Yeah, I also manually tried when I was playing with the old-style
+names to see how well it works.  We would want to make sure this
+won't get broken in the future, still.
 
-Thanks,
--Santiago
-
---3fjiwdp6jkwfk6ez
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAEBCAAdFiEEkDurc2QOttZVM+/zRo8SLOgWIpUFAltkeC4ACgkQRo8SLOgW
-IpWzHBAA2PkBgikvrCgCCvB2uPCnPMn0+qCpwPDH/+XFSSQjod2XRzFXRdw1wicK
-mrUiGgFF5TEjFK+/LmtSoW7z67asYe9NMFvWQcineQvJoU3hWMxdjz43QHpU3qyb
-KOwQJwcdsw6wBV+WVAC/FPRy9H6ShyJ0Zk20te0s+pmYHpwClUR9McUgNHVvoCFT
-hQKC+JMXKv9ay7v/YtdtnHtKgWHxEbIP90pNt77V7RVFvlnNAuHmuzjyUzvQm2km
-6fhu0Dz3AnLfQCA9bki1Gq7qXsDHWNAXH43d52XHB5U8kpN2lUxZhOB5FNlZ8b8i
-Csf4AIHObT9rVgt+Sy7ysZegRdoyBPiMrWLMauMMweXhcVYNxJUEAMtVf8dBWOKt
-S5y6FpH7lv+Xmx0rYGvksQN447eMCndzx1UJp8ngVEOENminjTkHDl6iCXtmsrfN
-kfpVY82X4YK7dXJdZ72bB9aM3aa4YYPgBxdv4mKth3h9eP4Iw25FUJexsWfko/FL
-AgaMWsbHUhcY1UDtSeEUfQjKWWcmJI9WLaEUFxgZnrWncyi/BIqOuBrCu1OgSYI6
-be1wwklNLP7oEu4566Yw3ykYoC/+Io4bLgswPuqS3mBQLTz9whJ4c+MFFCs6w7NE
-kmZrCs199kWCYKJLZr5kZIyrq6kVi2kMH5vBlHPiKwMcnC32CMY=
-=uIax
------END PGP SIGNATURE-----
-
---3fjiwdp6jkwfk6ez--
+Thanks.
