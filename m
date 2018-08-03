@@ -7,48 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E8C31F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 22:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F29191F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 22:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731741AbeHDAWP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 20:22:15 -0400
-Received: from mail-qk0-f202.google.com ([209.85.220.202]:33213 "EHLO
-        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731311AbeHDAWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 20:22:14 -0400
-Received: by mail-qk0-f202.google.com with SMTP id l11-v6so6721428qkk.0
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 15:24:01 -0700 (PDT)
+        id S1732087AbeHDAWU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 20:22:20 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:39898 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731946AbeHDAWU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 20:22:20 -0400
+Received: by mail-io0-f202.google.com with SMTP id x5-v6so5094513ioa.6
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 15:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:date:message-id:subject:from:to:cc;
-        bh=9bQZPkaWbSriHjtKIa70XjyDuUrLe7iRdl4fCmcdDe8=;
-        b=jxfG54WFCZ1ZqiIlwdl65XlrprGRsiZVbKPIfjJctrS+Zm91mdeM92z7HBckpN/2wS
-         2UHc4BPag0NOeflksPXWU9kB4tvEVwhF63QPB/p3nQ6yeZUtkr3cAk5HebpiX1wz+omG
-         HTwxSCkQ19EyxciJJbE7y8cJVClE+uqYADVrQ14f4E1J6CkTInVxlnArEhxvyWgzJqo8
-         6FTlpa8IwmHQkqioy1PJmfpXzRrcefmipTmuGFscYFvXhXSFf1JrPQWA+4JvWivnAnEy
-         smZ3aVZ6c+GPDY/VFq+zalsS6iPqTeOoTmDeCLd+HM+QKbrfgEFRpHM8mQFPq9cMR50Q
-         V3kQ==
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=Vn8r6wT3eBr/cWkxh3bf+vp0ZWlrwCflvnaXPgMpRUE=;
+        b=Czk43f84rjbc3L3dU5UbZU00pV1a+NiH8ws2VT5l+ZXa1T+YxZxJMDkKYKwXqm4e8M
+         ynUstudJFddokgfp5WDDivLNW9GLdrWsDFEe056uY1/QS2fQw6vcW8RORnuT1DeriF1E
+         Di0KSlC1jqPQpNnWrNNJ+HVPKmkpRTwnMMp9GxCv8Wjj4nAORio/E10UQpwOvjnhOv+J
+         17jZQBNhDDLI1gi0dYrJaSFz1LiwQ09n/SfIwLqXSqEZReZvOGSaL68ubmYd+XBv9FvV
+         liKPEDN5ovB2IMRZl0jUendsJIqQlQAcNZmFJsNio4Ngsl4OASKmOY0We1xZvkGRKgLl
+         jpnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
-        bh=9bQZPkaWbSriHjtKIa70XjyDuUrLe7iRdl4fCmcdDe8=;
-        b=XOoUFE0qh745z7VG/3QAWFBeSk4nPBiwc21EWNjoMhr1ljELCQ3STIYNi9ksOw6A5d
-         O37m/zFu2MN6+qPWUhkdzkN7s2sjirVZlln3uErLNl87Yc35I/8Mk30oWPASZQsKe5Mf
-         8CdeuaXWbYYbHtqhIGxi+DhE93fXrRRkKChPO3ZFTP+EUDoipwrA1IXWr5o+ywebAmWX
-         ruSIn3wScqWgN5bDtJrD2U9FG1qGruyS9190VRP8Dc9PzSMaCjaPKTQcB2I6l42cMvMY
-         svvJOs4v4mKa1FkTKFPqWtEvL7WI6nzvF/zdh7w56GxAzO3WMQoi9w6z4Y0qhpyuXKAN
-         dMNA==
-X-Gm-Message-State: AOUpUlHjoYyCGcT/v5uYdSNaPWXs3XrWG0N3XLdVVnOe6j6Kwtzdvfxj
-        1PGC4/X9OKFyQArJLLwYw47bOEO4Jd+k3s5nROOHl4sRZNDfIpXlpS12aPDe/E9X1diurOKW/ga
-        bbC/kyz8G8cYBNRP91AP3dwO12jwcxzW6pou821lkwcY6RyyWv6hq4vwMuUdq
-X-Google-Smtp-Source: AAOMgpc5Anm42CPP4rouyi9Vw7cBSyouBb0YlaZV8JHMHISjHjGVzd+pOUHMvcm+rm1IocsbuOV2wbcitkf1
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=Vn8r6wT3eBr/cWkxh3bf+vp0ZWlrwCflvnaXPgMpRUE=;
+        b=l7Yc1Peg4VRx/NxTGiavK1Wmw2hXWZ1vE1ISlY0qzzHpemakiGW+CJ4LFXUzUejxEx
+         uHSibu422LNENahoXtlKKCsE9r7usHpq5mVGYgptNAC4HoLl46kZbYGmm24+1H6KuD3H
+         lDF+Sg4T7ydp9f+aVI4sQZUyOji38bPsuvJyfXxPRFRhXTzDIr7vYABSYxsMKFI3/GSF
+         wmOuTosSxNRDsH+cV54jyeuvQCICaeUcIp5+7tErqcRmVXHlBsTekJjb9Q6+lhEFvtE5
+         IsbouISp4ViOEGEmtoFHpOKOPDfYfWVaxwFZf8vRX2WBTQ15mzHf/Enf6jpMT5aekbtr
+         OogQ==
+X-Gm-Message-State: AOUpUlGrjrrKSlCO30YR3hdiqwNqqpUJHI8X5lnVqIJW5Ksh7n5/Hi9l
+        szcxhFgEqgdb2RyDcU1Iz0tE9kEe0G/nw8/slCIMD0raz3pmWhMmpHXZkDjHEXR3AMEc6/oB5Gh
+        0oQ4vFBtxFGDeTbwKlvspht39iefbNcXLE8EczoSna6TEUHnY+0looCztH8OL
+X-Google-Smtp-Source: AA+uWPwyECDouHvqcX8o7wZlwWtSBkOt+DwvRBPaUs20TOcITExrcNID6lqf4gxVEFEoa2rMzpTimR1RvQzA
 MIME-Version: 1.0
-X-Received: by 2002:a0c:9dc1:: with SMTP id p1-v6mr4651484qvf.27.1533335041271;
- Fri, 03 Aug 2018 15:24:01 -0700 (PDT)
-Date:   Fri,  3 Aug 2018 15:23:15 -0700
-Message-Id: <20180803222322.261813-1-sbeller@google.com>
+X-Received: by 2002:a24:a85:: with SMTP id 127-v6mr409563itw.9.1533335046421;
+ Fri, 03 Aug 2018 15:24:06 -0700 (PDT)
+Date:   Fri,  3 Aug 2018 15:23:17 -0700
+In-Reply-To: <20180803222322.261813-1-sbeller@google.com>
+Message-Id: <20180803222322.261813-3-sbeller@google.com>
+References: <20180803222322.261813-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.132.g195c49a2227
-Subject: [PATCH 0/7] Resend of sb/submodule-update-in-c
+Subject: [PATCH 2/7] git-submodule.sh: rename unused variables
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, Stefan Beller <sbeller@google.com>
@@ -58,72 +62,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-* Introduce new patch
-  "submodule--helper: replace connect-gitdir-workingtree by ensure-core-worktree"
-  that resolves the conflict with earlier versions of this series with
-  sb/submodule-core-worktree
-* This series is based on master, which already contains 
-  sb/submodule-core-worktree
-  
-Thanks,
-Stefan
+The 'mode' variable is not used in cmd_update for its original purpose,
+rename it to 'dummy' as it only serves the purpose to abort quickly
+documenting this knowledge.
 
-Stefan Beller (7):
-  git-submodule.sh: align error reporting for update mode to use path
-  git-submodule.sh: rename unused variables
-  builtin/submodule--helper: factor out submodule updating
-  builtin/submodule--helper: store update_clone information in a struct
-  builtin/submodule--helper: factor out method to update a single
-    submodule
-  submodule--helper: replace connect-gitdir-workingtree by
-    ensure-core-worktree
-  submodule--helper: introduce new update-module-mode helper
+The variable 'stage' is also not used any more in cmd_update, so remove it.
 
- builtin/submodule--helper.c | 216 ++++++++++++++++++++++++++----------
- git-submodule.sh            |  29 +----
- 2 files changed, 164 insertions(+), 81 deletions(-)
+This went unnoticed as first each function used the commonly used
+submodule listing, which was converted in 74703a1e4df (submodule: rewrite
+`module_list` shell function in C, 2015-09-02). When cmd_update was
+using its own function starting in 48308681b07 (git submodule update:
+have a dedicated helper for cloning, 2016-02-29), its removal was missed.
 
-  ./git-range-diff origin/sb/submodule-update-in-c...HEAD
-      [...]
-  -:  ----------- > 338:  1d89318c48d Fifth batch for 2.19 cycle
-  1:  c1cb423b249 = 339:  3090cbcb46e git-submodule.sh: align error reporting for update mode to use path
-  2:  f188b30a9b9 = 340:  850a16e9085 git-submodule.sh: rename unused variables
-  3:  70d84fa6a09 ! 341:  88af0cdcba6 builtin/submodule--helper: factor out submodule updating
-    @@ -73,10 +73,10 @@
-      	};
-      	suc.prefix = prefix;
-      
-    --	config_from_gitmodules(gitmodules_update_clone_config, &max_jobs);
-    --	git_config(gitmodules_update_clone_config, &max_jobs);
-    -+	config_from_gitmodules(gitmodules_update_clone_config, &suc.max_jobs);
-    -+	git_config(gitmodules_update_clone_config, &suc.max_jobs);
-    +-	update_clone_config_from_gitmodules(&max_jobs);
-    +-	git_config(git_update_clone_config, &max_jobs);
-    ++	update_clone_config_from_gitmodules(&suc.max_jobs);
-    ++	git_config(git_update_clone_config, &suc.max_jobs);
-      
-      	argc = parse_options(argc, argv, prefix, module_update_clone_options,
-      			     git_submodule_helper_usage, 0);
-  4:  511e8a139c9 = 342:  2fdd479a6d5 builtin/submodule--helper: store update_clone information in a struct
-  5:  65b2a720b90 = 343:  34589e724b3 builtin/submodule--helper: factor out method to update a single submodule
-  -:  ----------- > 344:  ee2bb4f23d8 submodule--helper: replace connect-gitdir-workingtree by ensure-core-worktree
-  6:  e5803d07f9b ! 345:  03300626ba7 submodule--helper: introduce new update-module-mode helper
-    @@ -88,15 +88,15 @@
-      	{"clone", module_clone, 0},
-     +	{"update-module-mode", module_update_module_mode, 0},
-      	{"update-clone", update_clone, 0},
-    + 	{"ensure-core-worktree", ensure_core_worktree, 0},
-      	{"relative-path", resolve_relative_path, 0},
-    - 	{"resolve-relative-url", resolve_relative_url, 0},
-     
-     diff --git a/git-submodule.sh b/git-submodule.sh
-     --- a/git-submodule.sh
-     +++ b/git-submodule.sh
-     @@
-    - 	do
-    - 		die_if_unmatched "$quickabort" "$sha1"
-    + 
-    + 		git submodule--helper ensure-core-worktree "$sm_path"
-      
-     -		name=$(git submodule--helper name "$sm_path") || exit
-     -		if ! test -z "$update"
+A later patch in this series also touches the communication between
+the submodule helper and git-submodule.sh, but let's have this as
+a preparatory patch, as it eases the next patch, which stores the
+raw data instead of the line printed for this communication.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/submodule--helper.c | 5 ++---
+ git-submodule.sh            | 4 ++--
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index a3c4564c6c8..da700c88963 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1573,9 +1573,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	needs_cloning = !file_exists(sb.buf);
+ 
+ 	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "%06o %s %d %d\t%s\n", ce->ce_mode,
+-			oid_to_hex(&ce->oid), ce_stage(ce),
+-			needs_cloning, ce->name);
++	strbuf_addf(&sb, "dummy %s %d\t%s\n",
++		    oid_to_hex(&ce->oid), needs_cloning, ce->name);
+ 	string_list_append(&suc->projectlines, sb.buf);
+ 
+ 	if (!needs_cloning)
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 5a58812645d..8caaf274e25 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -531,9 +531,9 @@ cmd_update()
+ 		"$@" || echo "#unmatched" $?
+ 	} | {
+ 	err=
+-	while read -r mode sha1 stage just_cloned sm_path
++	while read -r quickabort sha1 just_cloned sm_path
+ 	do
+-		die_if_unmatched "$mode" "$sha1"
++		die_if_unmatched "$quickabort" "$sha1"
+ 
+ 		name=$(git submodule--helper name "$sm_path") || exit
+ 		if ! test -z "$update"
+-- 
+2.18.0.132.g195c49a2227
+
