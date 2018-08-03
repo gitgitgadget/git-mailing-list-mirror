@@ -2,113 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF131F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 23:41:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6AE1E1F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 23:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732034AbeHDBkK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 21:40:10 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44262 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731912AbeHDBkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 21:40:10 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r16-v6so6802469wrt.11
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 16:41:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1eQj1FO4aw/fdxiC+2TXDRHvw09QeobstC8j+6cSRhg=;
-        b=cDkdV4kq5/TqmCm3v+vv3AYaOWraTQaF/0XO0WupFWQuKgxsmfuw3/PUpaHtp/WDOK
-         jfTTxPYghQCG/nqFhVvwB24xdVr8uouc4zIRbsW7daJHpzaXvckupyrwQFMsx9KTKZLk
-         IVTZHaPppxrLDaRfY4kGR3qbd5UWwSfKqNOMopvv5ZOkLsZxgU8OVuwmfJ9KVKhYdogU
-         Cula4QpWvvSb/FvQ2/1U72G0KB8N2VDrStsr/7A+WlI/Sv4CUwRstzqj7g1l+MGwVMFr
-         F8R72exIpxnwRKWUc/yklpIG4Vo6DgDN4QNZmLBgkKhILbHo/Xh7lYrqZfwAt+AG6vSs
-         bCIg==
+        id S1732072AbeHDBkn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 21:40:43 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:34362 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731925AbeHDBkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 21:40:43 -0400
+Received: by mail-yw1-f67.google.com with SMTP id j68-v6so1599443ywg.1
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 16:42:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1eQj1FO4aw/fdxiC+2TXDRHvw09QeobstC8j+6cSRhg=;
-        b=GM3UmUMNnhAe9lgjLrjYqkpWEISKAOycvnN/7MZl3OFEyM+jjYJy1yH4p5eKzJ6Dra
-         3dVvgbwUNraeEW2SO00n9zwz3LvfmjeUr/dAP3Qs+PS8t2GpmkHuJ9trdDbNfygbxG1C
-         ZawxeZ1L0RNZ7lQ3sQT5qvFpVqSqMA675AAjsj7HyScklm7NHKegdJ5qnCHPQxDsE9vg
-         vMezOkOCnbvaUSaBeQscq76yq11Rx3XcCJvPMDX39h8Ti8QbO6iqiNfAboOUKzrg9IUh
-         Z8IisgSpFmWAStd6He11uHygmdTyK8QIaa0DfaMdR1Tptkv6M89TSuZP5nouT/nIFr52
-         5G7g==
-X-Gm-Message-State: AOUpUlHnyhO80oGBgARj7ut4YwltUvwoRz/vcYvPbmd+xOnIxxlyDOVT
-        2IjSPkowVL0EU3eebN+GPdU=
-X-Google-Smtp-Source: AAOMgpc0BcrJojnUMeDdzcUzGbHkOR7d/TSqIYQcbrPcETEfkxyFVPc7kkbfbqbfYzqQPJ8c+64fNQ==
-X-Received: by 2002:adf:8877:: with SMTP id e52-v6mr4061139wre.30.1533339703269;
-        Fri, 03 Aug 2018 16:41:43 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u71-v6sm814094wmd.12.2018.08.03.16.41.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 Aug 2018 16:41:42 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] t7406: Make a test_must_fail call fail for the right reason
-References: <20180803231407.10662-1-newren@gmail.com>
-Date:   Fri, 03 Aug 2018 16:41:42 -0700
-In-Reply-To: <20180803231407.10662-1-newren@gmail.com> (Elijah Newren's
-        message of "Fri, 3 Aug 2018 16:14:07 -0700")
-Message-ID: <xmqqd0uzuifd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=q2WTX20tuw6lCSSMKBMmuuT0QRa/xcqjjUVhgldAZfA=;
+        b=ZOYqbz5j/T1FMNgRFURz5eeEvmk0zjmBZ9GhZmkTe3zqz4eitt1YDrMS4WswXPhtpK
+         I9x2yTeV8W9aO/hhusjwvmNwKUY205HQ0tCUCt/1XJFP4NV4OYUJT457WtBDmNeje2d1
+         ZYYaqUSHBBz9YlVdPi+9mnJhn3MMwUGJHp77x3HSqQz8wPCJfJysOvt5hkc1L+TGZKuP
+         oNv8tW15CrvxE3J9U1R+LCgZZxMitsi8kbtwPvj1zVWXJ71jnIEGQqE4k4D6segtsdjN
+         cZZMCjQQUECRJphs82DPTlKkW+Er7gvXpSkebh/vvsRInV57kanCuy5zi3qAS+x2J2jT
+         xECw==
+X-Gm-Message-State: AOUpUlFIU9HionVpT//Q+aBGQbwBMuwJ90jQ3gpvgTY2M7+NPqB+mMfQ
+        2LKyMCSZQXqhOCWncAAopFQxewxsUTgd1lKt2zNrILesHcg=
+X-Google-Smtp-Source: AAOMgpdSKU53m58zl/4dadqcZIkC+4+u9kxR02fe5SQ8CrzFzLLePj5iQ0Gb8gXdSKKOikczKG+TlujIoldtODJ9P68=
+X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr3344528ywk.418.1533339737183;
+ Fri, 03 Aug 2018 16:42:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180803231407.10662-1-newren@gmail.com> <CAPig+cR75Q7HDipttU9dqtNjf23SYNJ98o=0-=JFtPgMMjFxHA@mail.gmail.com>
+In-Reply-To: <CAPig+cR75Q7HDipttU9dqtNjf23SYNJ98o=0-=JFtPgMMjFxHA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 3 Aug 2018 19:42:05 -0400
+Message-ID: <CAPig+cRWxns2t60G5gnQwMGuWyN8BLHq_CLwHznDy=g9haVAMg@mail.gmail.com>
+Subject: Re: [PATCH] t7406: Make a test_must_fail call fail for the right reason
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Aug 3, 2018 at 7:40 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>     git diff --raw >out &&
+>     ! grep "<literal-tab>" out &&
 
-> A test making use of test_must_fail was failing like this:
->   fatal: ambiguous argument '|': unknown revision or path not in the working tree.
-> when the intent was to verify that a specific string was not found
-> in the output of the git diff command, i.e. that grep returned
-> non-zero.  Fix the test to do that.
-> ---
->  t/t7406-submodule-update.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+
+> (where <literal-tab> is a literal TAB)
 >
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index f604ef7a72..7be8b59569 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -599,7 +599,7 @@ test_expect_success 'submodule update - update=none in .git/config but --checkou
->  	 ) &&
->  	 git diff --raw | grep "	submodule" &&
->  	 git submodule update --checkout &&
-> -	 test_must_fail git diff --raw \| grep "	submodule" &&
-> +	 git diff --raw | test_must_fail grep "	submodule" &&
+> Since this script has a number of instances of Git commands upstream
+> pipes, it may not make sense to fix just this one. So, either a
+> preparatory cleanup patch could fix them all at once, and then this
+> patch could come on top or, if you don't want to fix all the pipe
+> cases, you could do this instead:
+>
+>     ! git diff --raw | grep "<literal-tab>" &&
 
-Good spotting, but a few comments.
-
- * I've seen "do not have 'git' upstream on a pipee (it would hide
-   the exit status from an unexpected failure of 'git') recently.
-   We probably want to do the same.
-
- * We do not use test_must_fail for non-git things, as we are not in
-   the business of protecting us from unexpected segfault of system
-   binaries like grep.
-
-So an immediate improvement for this line would be
-
-	! git diff --raw | grep " submodule" &&
-
-and longer-term clean-up would aim for
-
-	git diff --raw >differs &&
-	! grep " submodule" &&
-
-or something like that.  I suspect that --raw may want to be updated
-to --name-only or something, as I do not see the tests using the
-object names hence no strong need for using --raw format.
-
-
-
+Of course, I mean "<literal-tab>submodule".
