@@ -2,169 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED6441F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 20:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A5941F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 20:52:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731865AbeHCWlM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 18:41:12 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:38861 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729034AbeHCWlM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 18:41:12 -0400
-Received: by mail-yw1-f66.google.com with SMTP id r3-v6so1457674ywc.5
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 13:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mx4oO2TVF1M8yPWjpBeRHZQOAjEfwicvMDaXJpDLmkk=;
-        b=vYzKl7Z9mqxbhZ8lS4Q/ThP1a3VIwOSLl0MsraQaFJUMnPY9p2vMSfEx7l4yQT+fLX
-         jJ7j9pZk335GNXKvdbjlVLxqZICtBNUFMwfTFWXE6L4GHPzijGs43os9gJTaQlKzVMrw
-         FRBzFMSiSC1XqvDLHNCrCOJSf7vMcIOeqai/QFc0M1QeDbSVUY6g3juRNGY9MYbxHIhg
-         gsbOP3GGi2WGuek1ox4uyQGZILYqObxU8S2xABq8har+Ocx18nIQq3Rw48+3vNzt/+jS
-         ZUaG64ON3sXbyVisBk5d0MvYIdLESVr8xFFhTSEtznrJxrlQZ3x3gIew7PpeGRJ+VN37
-         3pWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mx4oO2TVF1M8yPWjpBeRHZQOAjEfwicvMDaXJpDLmkk=;
-        b=pHpGtkhL9bi8ESJDc7dSN4Nbszp4dqXtvdKENbh9+mZr6qFFVGX6zO4sENkJlHYYB3
-         JXn5ypB1/jLWtYSjVtecqVgE1aApONLYMOuG/RsoxVOppJvRG9lUUEGZ+A+ZQW2FtGic
-         SyKzsWH4arPKG+pukU+r37zt7WLmumamPMKW0i8j5o1BwO7n0TaQgaMjdPGD9yMONaXN
-         oPVhretmV7f/WKSpxStJz2I+/qQLI1jCWoiLGXjaS5DedidZfszB/8WtUmW1f8C8ZmqP
-         NW+9ZBId0e9khkZ6NMnQ2Bla0QVXrpuO7oz8rVt+ZcXQ4d6bzpR/VgDinVl9rOm6VjrZ
-         e5Tg==
-X-Gm-Message-State: AOUpUlGH/4RmU5jqRXmHN6wEQGv9I+1fZ85GxIU55JzSD05y70A7T9wP
-        AjQF9PdJapLhlilrPabyCfwN1WpwBJW0rinhqR+3jg==
-X-Google-Smtp-Source: AAOMgpcEMqt0FvXPUhEaxyR3Olt10aqirziro5Fr6rT48fFwV0Z2p9Vxukti4SG+B7XIwCbIVUt2hk6AU1of94J1JGc=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr2943174ywk.345.1533328998397;
- Fri, 03 Aug 2018 13:43:18 -0700 (PDT)
+        id S1729828AbeHCWuB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 18:50:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42288 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728139AbeHCWuB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 18:50:01 -0400
+Received: (qmail 21941 invoked by uid 109); 3 Aug 2018 20:52:08 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Aug 2018 20:52:08 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8319 invoked by uid 111); 3 Aug 2018 20:52:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 03 Aug 2018 16:52:06 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Aug 2018 16:52:05 -0400
+Date:   Fri, 3 Aug 2018 16:52:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] add a script to diff rendered documentation
+Message-ID: <20180803205204.GA3790@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com> <20180803180912.GD106068@genre.crustytoothpaste.net>
- <xmqqwot7wayf.fsf@gitster-ct.c.googlers.com> <20180803184508.GE106068@genre.crustytoothpaste.net>
- <xmqqo9ejwag9.fsf@gitster-ct.c.googlers.com> <xmqqk1p7wa7t.fsf@gitster-ct.c.googlers.com>
- <20180803193256.GA164578@google.com> <xmqqftzvw6xi.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftzvw6xi.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 3 Aug 2018 13:43:07 -0700
-Message-ID: <CAGZ79kZdPP+q9iuQioUU+2JkfH4n1mkkHrXaJzxGVwhxvbKZ1Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 3, 2018 at 1:07 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Brandon Williams <bmwill@google.com> writes:
->
-> > [1] https://public-inbox.org/git/CAGZ79kYGS4DvoetyGX01ciNrxxLCqgXoVSpLhmgYZ8B51LzhSg@mail.gmail.com/
-> > This mail seems to counter that indicating that the "What's Cooking"
-> > emails should not be used as a status update.
->
-> You are the second one who were negatively affected by Stefan's
-> "summary" that reads a lot more in what I said than what actually
-> was said by me.  Stop paying attention to that message, but do go to
-> the original if you want to hear what I actually said.
+After making a change to the documentation, it's easy to
+forget to check the rendered version to make sure it was
+formatted as you intended. And simply doing a diff between
+the two built versions is less trivial than you might hope:
 
-Please note that I put that one out to "in a deliberatly
-outrageous way"[1] so that I get more arguments on why
-this workflow is the best we have.
+  - diffing the roff or html output isn't particularly
+    readable; what we really care about is what the end user
+    will see
 
-Personally I think the mailing list workflow could be improved
-by having less manual work on your side.
+  - you have to tweak a few build variables to avoid
+    spurious differences (e.g., version numbers, build
+    times)
 
-That would (a) make the whole process from one end (of writing
-the patch) to the other (of seeing its effect in a shipped binary
-by a distribution) more transparent, as then DScho could build
-his amlog consumer more easily for example.
-And (b) it would be less work for you, though different work.
-(i.e. instead of resolving conflicts yourself, you'd tell 2 people
-to resolve conflicts between their series and you'd then fetch
-from them; c.f. Linus lieutenants).
+Let's provide a script that builds and installs the manpages
+for two commits, renders the results using "man", and diffs
+the result. Since this is time-consuming, we'll also do our
+best to avoid repeated work, keeping intermediate results
+between runs.
 
-[1] https://public-inbox.org/git/xmqqo9ejwag9.fsf@gitster-ct.c.googlers.com/
+Some of this could probably be made a little less ugly if we
+built support into Documentation/Makefile. But by relying
+only on "make install-man" working, this script should work
+for generating a diff between any two versions, whether they
+include this script or not.
 
-I did miss the first person who was negatively affected?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I wrote this up for my own use after our discussion in [1]. I'm not sure
+if it's too ugly for inclusion, or if it might be helpful to others.
+I've only just written it, but my plan is to try to run it on anything I
+submit to check the formatting. So it _seems_ useful and appears to
+work, but only after a few minutes of playing with it. :)
 
-> The mention of "discussion thread on the list is the authoritative"
-> was said in the context where somebody refuted these "cf. <msg>" on
-> a topic and I got an impression that it was done in the belief that
-> doing so for each and every "cf. <msg>" would be enough to exonerate
-> the topic of all the issues.  I was explaining that they were not
-> meant to be exhaustive list, but rather are my personal reminder so
-> that I can go back to the thread to recall why I said things like
-> "Waiting for review to conclude", "expecting a reroll", etc.; as I
-> do not need to point at all the review comments that matter for them
-> to serve that purpose, these "cf. <msg>" must not be taken as the
-> "clear these and you are home free" list.  To cover all the issues
-> pointed out in the review process, you must go to the original.
->
-> "What's cooking" primarily serves two purposes.
->
->  - After list of patches in a topic, I try to summarize what the
->    topic is about.  This is to become merge commit message for the
->    topic when it is merged to various integration branches, and also
->    to become an entry in the release notes.
->
->  - Then an immediate plan like "Will merge to 'next'", etc. for the
->    topic is announced, optionally with comments like "cf. <msg>" to
->    remind me why I chose to label the topic as such.
->
-> The former is outside the topic of this thread, but both are *not*
-> obviously written by everybody; the former is my attempt to
-> summarize, and people are welcome to improve them.  If my attempted
-> summary is way incorrect, that might be an indication that the
-> topic, especially its log messages, is not clearly done.
->
-> If my immediate plan contradicts the list concensus, it likely is an
-> indication that I missed the discussion, and it is very much
-> appreciated for those involved in the discussion to correct me.
-> That may result in my dropping a "cf. <msg>" when an issue I thought
-> to be blocking (or to require the topic to be fast-tracked) turns
-> out to have been resolved already, or adding another one when it is
-> pointed out to me that I missed an important issue to block (or
-> fast-track) the topic.
+[1] https://public-inbox.org/git/20180720223608.GE18502@genre.crustytoothpaste.net/
 
-Thanks for explaining the thoughts behind the cooking emails.
+ Documentation/.gitignore |   1 +
+ Documentation/doc-diff   | 100 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+)
+ create mode 100755 Documentation/doc-diff
 
-- The first part is very nice to have on the mailing list, but it is
-  not strictly needed as you could just write the release notes
-  and then people could send patches to the release notes as
-  usual.
-
-- The second part of having an immediate plan is *very* nice
-  to see, though I would argue that it could be improved
-  by having these updates in the thread instead of summarized
-  unrelated to that thread.
-
-  We do not do this for now due to tooling issues, I suppose.
-
-  But I would think it makes the threads more discoverable if
-  we'd have the status updates in each thread as then people
-  would keep the discussion there and not jump on the cooking
-  email to continue discussion there.
-
-> Hope this clarifies a bit of the confusion caused by that summary.
-
-I am sorry that this seems as if I would stir up the community
-and cause troubles intentionally, but all I really want is a better
-workflow process. And as I do not know what is better, I think out
-loud trying to get a discussion going that point out things that are
-good or bad.
-
-Is there a better way to start a workflow discussion?
-
-Thanks,
-Stefan
+diff --git a/Documentation/.gitignore b/Documentation/.gitignore
+index c7096f11f1..3ef54e0adb 100644
+--- a/Documentation/.gitignore
++++ b/Documentation/.gitignore
+@@ -12,3 +12,4 @@ cmds-*.txt
+ mergetools-*.txt
+ manpage-base-url.xsl
+ SubmittingPatches.txt
++tmp-doc-diff/
+diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+new file mode 100755
+index 0000000000..61deb2579e
+--- /dev/null
++++ b/Documentation/doc-diff
+@@ -0,0 +1,100 @@
++#!/bin/sh
++
++OPTIONS_SPEC="\
++doc-diff <from> <to> [-- diff options]
++--
++j	parallel argument to pass to make
++f	force rebuild; do not rely on cached results
++"
++SUBDIRECTORY_OK=1
++. "$(git --exec-path)/git-sh-setup"
++
++parallel=8
++force=
++while test $# -gt 0
++do
++	case "$1" in
++	-j)
++		parallel=${1#-j} ;;
++	-f)
++		force=t ;;
++	--)
++		shift; break ;;
++	*)
++		usage ;;
++	esac
++	shift
++done
++
++test $# -gt 1 || usage
++from=$1; shift
++to=$1; shift
++
++from_oid=$(git rev-parse --verify "$from") || exit 1
++to_oid=$(git rev-parse --verify "$to") || exit 1
++
++cd_to_toplevel
++tmp=Documentation/tmp-doc-diff
++
++if test -n "$force"
++then
++	rm -rf "$tmp"
++fi
++
++# We'll do both builds in a single worktree, which lets make reuse
++# results that don't differ between the two trees.
++if ! test -d "$tmp/worktree"
++then
++	git worktree add --detach "$tmp/worktree" "$from" &&
++	dots=$(echo "$tmp/worktree" | sed 's#[^/]*#..#g') &&
++	ln -s "$dots/config.mak" "$tmp/worktree/config.mak"
++fi
++
++# generate_render_makefile <srcdir> <dstdir>
++generate_render_makefile () {
++	find "$1" -type f |
++	while read src
++	do
++		dst=$2/${src#$1/}
++		printf 'all:: %s\n' "$dst"
++		printf '%s: %s\n' "$dst" "$src"
++		printf '\t@echo >&2 "  RENDER $(notdir $@)" && \\\n'
++		printf '\tmkdir -p $(dir $@) && \\\n'
++		printf '\tMANWIDTH=80 man -l $< >$@+ && \\\n'
++		printf '\tmv $@+ $@\n'
++	done
++}
++
++# render_tree <dirname> <committish>
++render_tree () {
++	# Skip install-man entirely if we already have an installed directory.
++	# We can't rely on make here, since "install-man" unconditionally
++	# copies the files (spending effort, but also updating timestamps that
++	# we then can't rely on during the render step). We use "mv" to make
++	# sure we don't get confused by a previous run that failed partway
++	# through.
++	if ! test -d "$tmp/installed/$1"
++	then
++		git -C "$tmp/worktree" checkout "$2" &&
++		make -j$parallel -C "$tmp/worktree" \
++			GIT_VERSION=omitted \
++			SOURCE_DATE_EPOCH=0 \
++			DESTDIR="$PWD/$tmp/installed/$1+" \
++			install-man &&
++		mv "$tmp/installed/$1+" "$tmp/installed/$1"
++	fi &&
++
++	# As with "installed" above, we skip the render if it's already been
++	# done.  So using make here is primarily just about running in
++	# parallel.
++	if ! test -d "$tmp/rendered/$1"
++	then
++		generate_render_makefile "$tmp/installed/$1" "$tmp/rendered/$1+" |
++		make -j$parallel -f - &&
++		mv "$tmp/rendered/$1+" "$tmp/rendered/$1"
++	fi
++}
++
++render_tree $from_oid "$from" &&
++render_tree $to_oid "$to" &&
++git -C $tmp/rendered diff --no-index "$@" $from_oid $to_oid
+-- 
+2.18.0.912.g3ccaa4d859
