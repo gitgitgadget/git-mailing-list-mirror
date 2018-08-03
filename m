@@ -2,115 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C57231F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 14:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62B3C208E9
+	for <e@80x24.org>; Fri,  3 Aug 2018 14:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732156AbeHCQJZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 12:09:25 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:32016 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731781AbeHCQJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 12:09:25 -0400
-Received: from [192.168.2.240] ([92.22.30.174])
-        by smtp.talktalk.net with SMTP
-        id lap0fqyIIbZX5lap0f2JpM; Fri, 03 Aug 2018 15:12:51 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533305571;
-        bh=latwl3g1vRTHZlLii0EtKR9K8oV7ibavHOlIzK4kq2g=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=JKLfEvmWCJZlQlKVzCSydEJBr28JVDc8GTuRf5tKCP3j389hhbHHhU67mVhSfkcAZ
-         6NJwwes0KQ2kMhyI8cKeUr/5SVwnocI+Uue+4IT/dX68qb9+A9lpWox2P6mdTiFy+8
-         27ygVOunYJULph05HYEOItpT42UGt3XVAfoSJe0Q=
-X-Originating-IP: [92.22.30.174]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=2xfjePbNG5I+/HyESt+5YA==:117
- a=2xfjePbNG5I+/HyESt+5YA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=5rxgeBVgAAAA:8 a=pGLkceISAAAA:8 a=ALIegXmXl326kq6TJXgA:9 a=QEXdDO2ut3YA:10
- a=PwKx63F5tFurRwaNxrlG:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] sequencer: fix quoting in write_author_script
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180802112002.720-1-phillip.wood@talktalk.net>
- <20180802112002.720-3-phillip.wood@talktalk.net>
- <xmqqk1p83cig.fsf@gitster-ct.c.googlers.com>
- <CAPig+cQaaHfkR8jrXb-+PB4bSZbKLQzRkZNo+DNfz92hKO=04Q@mail.gmail.com>
- <c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net>
- <CAPig+cTyTHxwFvk3ZtOq3L7KEtEjKLKu6-RnLC-_NuL1Xzhqzw@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <455fafb5-3c92-4348-0c2c-0a4ab62cf2ce@talktalk.net>
-Date:   Fri, 3 Aug 2018 15:12:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1732236AbeHCQZm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 12:25:42 -0400
+Received: from mout.web.de ([212.227.15.3]:48227 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732090AbeHCQZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 12:25:42 -0400
+Received: from macce.local ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MGiLB-1fhSKn3ycb-00DTmw; Fri, 03
+ Aug 2018 16:28:49 +0200
+Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive
+ filesystems
+To:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Pawe=c5=82_Paruzel?= <pawelparuzel95@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20180729092759.GA14484@sigill.intra.peff.net>
+ <20180730152756.15012-1-pclouds@gmail.com>
+ <CABPp-BG+nB+ifRbCdMpXnnxQ+rzhM8W-=sfQf8TYmXvuPy5WXg@mail.gmail.com>
+ <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
+ <20180731192931.GD3372@sigill.intra.peff.net>
+ <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
+ <20180731203746.GA9442@sigill.intra.peff.net>
+ <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
+ <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <c4ce4d55-ad10-55b0-0cb0-89025102210c@web.de>
+Date:   Fri, 3 Aug 2018 15:28:38 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cTyTHxwFvk3ZtOq3L7KEtEjKLKu6-RnLC-_NuL1Xzhqzw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+In-Reply-To: <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfEf1D2PpugakSo112swJT5xxEJwJJ4jP1A97Jp3qGlfEq6pMcPwcc1gJylunhNXwhy5x8N83e5jzvQxSrCZ8QQ4cSIuK+R/Y/0aaVK/4ahoe7O1//+Pe
- mx8uiIkAVLL5yntfAWCD9VhaP1CZETyQtNF+b3yOWebXlG8eso8IG9TT7PvjEiY7T8hC1KuPEQX7vW0z/DXjBkh9ltJ90PlppBRdMvWxmegIskX+aD8D0R+/
- yUAv0UoCQv8/5xqzBa3J9kEfwMkCrk/F7OHd4H5RMRDstnPStsb+DCDa3peEa1V8UsZnBj+ibT4QlqPSTnLhc034jlR9iPkM+LaVnnVLajctd8ti7dSDMAFw
- EMpm0wun
+X-Provags-ID: V03:K1:GweqBmx/Mt5DpfV50x6WXEr6APrNS34bIRCdts2xuJz21klxTR2
+ 0oR6QeAV55kvmIz8GwwZ91wex734nQlaVOcWbvFJ5JYQzGnFhO4X+t1gNmF1uCi/kszndws
+ eyr7VMOJ4ObhVpLBtq/uQ/CoPL548+QJqNYFdQVtE/ntJ6ygvT/64i+AjLE8uaGjYOj4/TS
+ aT+U3/MV6nCavbbrfUJrA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:dm+mDMQ+Ou0=:zfZmDKAZEZF7tvEIZXdMZk
+ Ld4ZE7hKSyntgIFnQJsG5+bDc29Lj8n3fsQ4B7QHyMNorsEpijZ8TmBXKTW9UfVuY3EUvb5nh
+ elN63cyM8e/Nseya5HDsGegHjdjq2elE+jxiJzfss9GX+I3Nnl7yiZZF+W1Oz5gjyFyI72HIn
+ aAI7IpcNOubkitvSpwj9eCDBTPMoQZq5vnycib89go63jfDhwvxlfCB2Pb6oSRa47rO0D1EX3
+ 9v8cnQoeqLTEPghpA926RIjhAwcaECO4t+sjiri8Xn0+i+YIl+TNGB1gBEuN39cN8b2gjnVH1
+ 4RrhmqHeP/0aXVT1EjxsoLrcd/3uJspkD7lC6rlz1yT1wNOb8iZNZkO2bUL15Eikph46L/wNt
+ LNvDYlc3V9l8t6W3UhxRG//RlhqxBoEr0qCMEui0041VfDhi1zgbNZyGJ1IFUfXIpbg/XEwCX
+ KluCZmRxZ7mVsItGTW+Tzevpz6F4vAFyL3xo1fyGI92/LUKwltMrz3rbxtwCgH7cY/Ajdg+a2
+ YgF1sas/9cG/tCa8uPfPAJchXoChe7mXrLdFZk9v8N9hcdYAweL8ggi0vX3IeJDovPgG1Irnk
+ qIwlSBw5hsqnmjucrDZs1NynowllryNDMI4MMpV1S4ouoYgNgDjnY/A3bLntK7+KFJC9BNDVL
+ toELcrPhVxgarvn9nc8FkXXgRLnpc+un1nO2N1krFlAKbppxYynpzhxicfY4dc7p542lrIO//
+ eid1zwFaAS2SEbM6zAn2HdUNfHxwnfCG+ikOMUVcKNPnKyuoRGtQVYtbHmlLpxhsL+xvhat/S
+ BK4EbYZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric
-On 03/08/18 11:02, Eric Sunshine wrote:
-> On Fri, Aug 3, 2018 at 5:33 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->> If there isn't some backward compatibility then if git gets upgraded
->> while rebase is stopped then the author data will be silently corrupted
->> if it contains "'". read_author_ident() will error out but that is only
->> used for the root commit. read_env_script() which is used for normal
->> picks will not dequote the badly quoted value correctly and will not
->> return an error. It is unlikely but possible, I'll leave it to Junio to
->> decide if it is worth it
+On 2018-08-02 15:43, Duy Nguyen wrote:
+> On Wed, Aug 1, 2018 at 11:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>>>> Presumably we are already in an error codepath, so if it is
+>>>>> absolutely necessary, then we can issue a lstat() to grab the inum
+>>>>> for the path we are about to create, iterate over the previously
+>>>>> checked out paths issuing lstat() and see which one yields the same
+>>>>> inum, to find the one who is the culprit.
+>>>>
+>>>> Yes, this is the cleverness I was missing in my earlier response.
+>>>>
+>>>> So it seems do-able, and I like that this incurs no cost in the
+>>>> non-error case.
+>>>
+>>> Not so fast, unfortunately.
+>>>
+>>> I suspect that some filesystems do not give us inum that we can use
+>>> for that "identity" purpose, and they tend to be the ones with the
+>>> case smashing characteristics where we need this code in the error
+>>> path the most X-<.
+>>
+>> But even if inum is unreliable, we should be able to use other
+>> clues, perhaps the same set of fields we use for cached stat
+>> matching optimization we use for "diff" plumbing commands, to
+>> implement the error report.  The more important part of the idea is
+>> that we already need to notice that we need to remove a path that is
+>> in the working tree while doing the checkout, so the alternative
+>> approach won't incur any extra cost for normal cases where the
+>> project being checked out does not have two files whose pathnames
+>> are only different in case (or checking out such an offending
+>> project to a case sensitive filesytem, of course).
+>>
+>> So I guess it still _is_ workable.  Any takers?
 > 
-> If I understand correctly, the approach you implemented earlier[1]
-> (perhaps coupled with the more robust detection suggested here[2])
-> would be sufficient to handle this backward compatibility concern.
-> While it may not be as pretty or generalized as the current patch, it
-> involves far less machinery, thus is less likely to harbor its own
-> bugs. The earlier version is also much more self-contained, which
-> makes it easier to drop at some point when backward compatibility is
-> no longer a concern (if ever).
+> OK so we're going back to the original way of checking that we check
+> out the different files on the same place (because fs is icase) and
+> try to collect all paths for reporting, yes?
 
-Yes I think the earlier approach with the more robust detection you 
-suggested is probably a good compromise. Junio does that sound good to you?
+I would say: Yes.
 
-Best Wishes
+> I can give it another go
+> (but of course if anybody else steps up, I'd very gladly hand this
+> over)
+> 
 
-Phillip
+Not at the moment.
 
->> There is a precedent for adding backwards compatibility 84df4560ed
->> ("rebase: extract code for writing basic state", 2011-02-06) though it
->> is much simpler.
-> 
-> Indeed, it is much simpler, adding a one-liner 'else' case to an
-> 'if-then' for backward compatibility. Your earlier implementation[1]
-> was pretty much the equivalent, just adding an extra one-liner arm to
-> an 'if-then' statement.
-> 
-> The bug fix itself is important, and, while I do favor the cleaner
-> approach of not worrying about backward compatibility for this fairly
-> unlikely case, your earlier version seems a better compromise between
-> having no backward compatibility and the much more heavyweight version
-> implemented here.
-> 
-> Anyhow, I'm fine with whatever Junio decides.
-> 
-> [1]: https://public-inbox.org/git/20180731111532.9358-3-phillip.wood@talktalk.net/
-> [2]: https://public-inbox.org/git/CAPig+cTttbV2FjnoS_SZtwh2J4wwzsbK+48BAbt1cV0utynYzw@mail.gmail.com/
-> 
 
