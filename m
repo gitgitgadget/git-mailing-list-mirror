@@ -7,134 +7,87 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E1CB1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 00:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADB181F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 00:34:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729830AbeHCCYA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 22:24:00 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:33240 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726989AbeHCCYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 22:24:00 -0400
-Received: by mail-yw1-f65.google.com with SMTP id c135-v6so342873ywa.0
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 17:30:22 -0700 (PDT)
+        id S1729681AbeHCC2H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 22:28:07 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:41490 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbeHCC2H (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 22:28:07 -0400
+Received: by mail-vk0-f74.google.com with SMTP id d189-v6so1543369vka.8
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 17:34:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=JKsXNF/4fIWnPnAgE7Lh7sRpVqjyYYKcMIAy7N1RnuU=;
-        b=DkzXLxNKGejej58kVpH7WmCKbAHHOhNrZusjgH7slzLuzl6RG8/yJt4fGBAfrzzhsg
-         34UO4y6xw2LxmDnGpCeAdXHmJJIQ9hh7PLiR/6XMD5DhtAxutdowoAogdQOEePNcrJnt
-         9UCJXmip7msv5mGbosHowBHRsA30bYxSYXKvqdlA4vVw21G76u0ETjJI/I4VIT/Jikn7
-         hDEN3ye4+Imp7ookysG1nFjnFKFG7DGwPfGciatoWOTNHIHTfG7piVBGcFtR0+ZUFzu4
-         yYTlOjZuko+mHomE8K59jQ3pmUjiHeRUVWnJ/cu3j3vWeN4mdkYvf3YJSSKIJnnv8nGA
-         dIuw==
+        bh=eUwTpYKraUbi2FJP8AH1UbRuqE2dllUr5XpHtVIXjMM=;
+        b=dAwFHQ3ktm8NX7Z+7KC7FRDJfBaR8WuWdWH9Yf7p4I/bXhZz+6xhKRMIE9QX1QwW7+
+         GOv8PdKcx6u3DT3N+xQdQfLTstV9t7a0Kdx0dAtAX2sKckLsHwcAs0vjYCT2stzNTkrl
+         67kMU17hXqtl16iujoGWFrrMVGnx1asUzM5zWdQ6cip96jCI8LvOEm3lsBoYmAb4ByEP
+         cwFv5qDjmttLiyxzXH882YKsuORA/Rl3rL9Hx4CadPfkxEHBeaBc2s0p+6pL5HtZPzWO
+         PFH188xz4YKo+aBRDaHCBgVr9sa3DIDw0YWrjYPE0m30+TBmXSFcZxhy3dJMW948Sb9e
+         KgQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=JKsXNF/4fIWnPnAgE7Lh7sRpVqjyYYKcMIAy7N1RnuU=;
-        b=IA5kahFzu22lZoJVnttMtXypMRPtdNXzRyFxA2+Mucu//AfQGW4AA8LQghJB78bTXF
-         7RUW80zAPqP9/sKWh3FlTG3I8W5/zYo7HuzIQ12uBpf0DQLSRpz0VGdprqREFs8263dI
-         +NLG0gE/70by0djZt9aWH16iYo3OWE+RweKeXL52PJf195ghm7H/f8IIlFeO2jqTcKqV
-         isxTT1jheUch/gDYStNYvOskeR76Ff5KB86nc5yk+7jOJ/Eid1PECUVtXsKOlPTItOMy
-         3W2WWtytzCPdXCvhrf/2dXMApw0dm7u7JuK2161ORY2rtofI9NAR1tuzeYaN6UZYTbj2
-         /AVg==
-X-Gm-Message-State: AOUpUlGBWX+EsG8BbgSGq4bf100WsYrT2Tz2pmRsYo3YmJvUt4MGOZg3
-        BbRsqjypF3a42hPRuzPmQZwB3YQjPr1zzK2TvryOww==
-X-Google-Smtp-Source: AAOMgpfiOOGoAqnccPHuBmUDeSmw3E5NvdgaWN9VFAnFbWz8qlvyTVaHy06zPplJFrnRPZjG3AL8DaOKl4bh/3OGPFQ=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr952949ywk.345.1533256221834;
- Thu, 02 Aug 2018 17:30:21 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=eUwTpYKraUbi2FJP8AH1UbRuqE2dllUr5XpHtVIXjMM=;
+        b=i8DKJkE2Vr5pX8r59kb7Yy1OkK9JmFbGfGFKunGNIgtkPejEphlWwvbGcW4aSyAJho
+         822CeR3+kmxVerCRMeqznh37Y6v+JQKA1rDh49dJQoXZOXcurW24Fvx0Qldhs2nbQ8go
+         2zT/18qIJXKu2KCpo7r3G+RUAt9kNvzkvvAnavyYA1BPNVhGfH67nCeM8YDu1NkbyRYI
+         b1WFTVSiDmhHe67bSMqMT3m2pYQH/YGODBiHyC4IOuY34J+lhkB7S0UFYzDg5fO5DFKx
+         Iy6i60GB2ic4l43/bJD80Vo41hPdK3CegAqvcN36urv0Wq321igjWNEpvKk40bbghKUH
+         lpfg==
+X-Gm-Message-State: AOUpUlHWcy1aX3onFrX0h2N37k0NFwDtZU8tYsmtN8yed94RRBGjvGEk
+        gExqH/7BBQy43/tQU05mOSRklBu7efb0
+X-Google-Smtp-Source: AAOMgpdriByQGt53c5M4eTe70Xo6NjNPYgl9hVo/JNYCkFdm1jtBs47FfRY6aOE3o3YehMO5YaKY2+KR9dz/
 MIME-Version: 1.0
-References: <xmqq7elbe8po.fsf@gitster-ct.c.googlers.com> <20180801193413.146994-1-sbeller@google.com>
- <20180801193413.146994-3-sbeller@google.com> <xmqqva8t4s63.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqva8t4s63.fsf@gitster-ct.c.googlers.com>
+X-Received: by 2002:ab0:53cc:: with SMTP id l12-v6mr2366972uaa.82.1533256468400;
+ Thu, 02 Aug 2018 17:34:28 -0700 (PDT)
+Date:   Thu,  2 Aug 2018 17:34:14 -0700
+In-Reply-To: <20180801193413.146994-1-sbeller@google.com>
+Message-Id: <20180803003417.76153-1-sbeller@google.com>
+References: <20180801193413.146994-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0.132.g195c49a2227
+Subject: [PATCH 0/3] Reroll of sb/config-write-fix
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 2 Aug 2018 17:30:10 -0700
-Message-ID: <CAGZ79kbeUHVQmfTFkoGEM617iVa_3mCsLjpYGoEebqxNKAM_xA@mail.gmail.com>
-Subject: Re: [PATCH 2/3] config: fix case sensitive subsection names on writing
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        peff <peff@google.com>
+To:     sbeller@google.com
+Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
+        johannes.schindelin@gmx.de, peff@peff.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 1, 2018 at 3:51 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> > A use reported a submodule issue regarding strange case indentation
-> > issues, but it could be boiled down to the following test case:
->
-> Perhaps
->
-> s/use/user/
-> s/case indentation issues/section mix-up/
+Only fix was in the commit message of the second patch:
 
-will be fixed in a reroll
+2:  c667e555066 ! 1749:  38e5f6f335d config: fix case sensitive subsection names on writing
+    @@ -2,8 +2,8 @@
+     
+         config: fix case sensitive subsection names on writing
+     
+    -    A use reported a submodule issue regarding strange case indentation
+    -    issues, but it could be boiled down to the following test case:
+    +    A user reported a submodule issue regarding a section mix-up,
+    +    but it could be boiled down to the following test case:
 
->
-> > ... However we do not have a test for writing out config correctly with
-> > case sensitive subsection names, which is why this went unnoticed in
-> > 6ae996f2acf (git_config_set: make use of the config parser's event
-> > stream, 2018-04-09)
->
-> s/unnoticed in \(.*04-09)\)/unnoticed when \1 broke it./
->
-> This is why I asked if the patch is a "FIX" for an issue introduced
-> by the cited commit.
+previous version at
+https://public-inbox.org/git/20180801193413.146994-1-sbeller@google.com/
 
-I did not check further down the history if it was a recent brakage.
+Stefan Beller (3):
+  t1300: document current behavior of setting options
+  config: fix case sensitive subsection names on writing
+  git-config: document accidental multi-line setting in deprecated
+    syntax
 
-> >  static int get_base_var(struct strbuf *name)
-> >  {
-> > +     cf->section_name_old_dot_style = 1;
-> >       for (;;) {
-> >               int c = get_next_char();
-> >               if (cf->eof)
->
-> OK, let me rephrase.  The basic parse structure is that
->
->  * upon seeing '[', we call get_base_var(), which stuffs the
->    "section" (including subsection, if exists) in the strbuf.
->
->  * get_base_var() upon seeing a space after "[section ", calls
->    get_extended_base_var().  This space can never exist in an
->    old-style three-level names, where it is spelled as
->    "[section.subsection]".  This space cannot exist in two-level
->    names, either.  The closing ']' is eaten by this function before
->    it returns.
->
->  * get_extended_base_var() grabs the "double quoted" subsection name
->    and eats the closing ']' before it returns.
->
-> So you set the new bit (section_name_old_dot_style) at the beginning
-> of get_base_var(), i.e. declare that you assume we are reading old
-> style, but upon entering get_extended_base_var(), unset it, because
-> now you know we are parsing a modern style three-level name(s).
->
-> Feels quite sensible way to keep track of old/new styles.
->
-> When parsing two-level names, old-style bit is set, which we may
-> need to be careful, thoguh.
+ Documentation/git-config.txt | 21 +++++++++
+ config.c                     | 12 ++++-
+ t/t1300-config.sh            | 87 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 119 insertions(+), 1 deletion(-)
 
-I considered setting it only when seeing the dot, but then we'd have
-to make sure it is properly initialized.
+-- 
+2.18.0.132.g195c49a2227
 
-And *technically* the two level is old style, so I figured it's ok.
-
-> > -                     !strncasecmp(cf->var.buf, store->key, store->baselen);
-> > +                     !cmpfn(cf->var.buf, store->key, store->baselen);
->
-> OK.  Section names should still be case insensitive (only the case
-> sensitivity of subsection names is special), but presumably that's
-> already normalized by the caller so we do not have to worry when we
-> use strncmp()?  Can we add a test to demonstrate that it works
-> correctly?
-
-That was already demonstrated (but not tested) in
-https://public-inbox.org/git/20180730230443.74416-4-sbeller@google.com/
