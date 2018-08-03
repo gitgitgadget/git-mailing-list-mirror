@@ -6,106 +6,91 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE7CF1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 13:26:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E88B41F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 13:30:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732156AbeHCPWd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 11:22:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:41726 "HELO cloud.peff.net"
+        id S1729985AbeHCP0X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 11:26:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41744 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731364AbeHCPWc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 11:22:32 -0400
-Received: (qmail 2955 invoked by uid 109); 3 Aug 2018 13:26:13 -0000
+        id S1729796AbeHCP0W (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 11:26:22 -0400
+Received: (qmail 3116 invoked by uid 109); 3 Aug 2018 13:30:02 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Aug 2018 13:26:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 03 Aug 2018 13:30:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1561 invoked by uid 111); 3 Aug 2018 13:26:12 -0000
+Received: (qmail 1589 invoked by uid 111); 3 Aug 2018 13:30:01 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 03 Aug 2018 09:26:12 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 03 Aug 2018 09:30:01 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Aug 2018 09:26:10 -0400
-Date:   Fri, 3 Aug 2018 09:26:10 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Aug 2018 09:29:59 -0400
+Date:   Fri, 3 Aug 2018 09:29:59 -0400
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, gitster@pobox.com
-Subject: Re: [GSoC][PATCH v4 15/20] rebase -i: rewrite write_basic_state() in
- C
-Message-ID: <20180803132610.GA28939@sigill.intra.peff.net>
-References: <20180710121557.6698-1-alban.gruin@gmail.com>
- <20180724163221.15201-1-alban.gruin@gmail.com>
- <20180724163221.15201-16-alban.gruin@gmail.com>
- <20180730182516.32644-1-szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Liam Decker <ldecker@indeed.com>, git@vger.kernel.org
+Subject: Re: Question regarding quarantine environments
+Message-ID: <20180803132959.GB28939@sigill.intra.peff.net>
+References: <CALcD6sYfcaftciYU+2AHpzabyOS9ohRcZoE6LDuMyht+dxktHw@mail.gmail.com>
+ <20180802183924.GB23690@sigill.intra.peff.net>
+ <878t5ntxqs.fsf@evledraar.gmail.com>
+ <20180803130058.GA4671@sigill.intra.peff.net>
+ <877el7twej.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180730182516.32644-1-szeder.dev@gmail.com>
+In-Reply-To: <877el7twej.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jul 30, 2018 at 08:25:16PM +0200, SZEDER Gábor wrote:
+On Fri, Aug 03, 2018 at 03:25:08PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 1c035ceec7..d257903db0 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
+> > I'd be a bit careful with that, though, as the definition of "new" is
+> > vague there.
+> >
+> > For example, completing a thin pack may mean that the receiver creates a
+> > copy of a base object found in the main repo. That object isn't new as
+> > part of the push, nor was it even sent on the wire, but it will appear
+> > in the quarantine directory. But only sometimes, depending on whether we
+> > kept the sender's pack or exploded it to loose objects.
 > 
-> > +int write_basic_state(struct replay_opts *opts, const char *head_name,
-> > +		      const char *onto, const char *orig_head)
-> > +{
-> > +	const char *quiet = getenv("GIT_QUIET");
-> > +
-> > +	if (head_name)
-> > +		write_file(rebase_path_head_name(), "%s\n", head_name);
-> > +	if (onto)
-> > +		write_file(rebase_path_onto(), "%s\n", onto);
-> > +	if (orig_head)
-> > +		write_file(rebase_path_orig_head(), "%s\n", orig_head);
-> > +
-> > +	if (quiet)
-> > +		write_file(rebase_path_quiet(), "%s\n", quiet);
-> > +	else
-> > +		write_file(rebase_path_quiet(), "");
+> Right, I mean:
 > 
-> This is not a faithful conversion of the original.  git-rebase.sh writes
-> this 'quiet' file with:
+>     is_new = !in_quarantine() && in_main()
 > 
->   echo "$GIT_QUIET" > "$state_dir"/quiet
+> Or:
 > 
-> which means that a single newline character was written even when
-> $GIT_QUIET was unset/empty.
+>     is_new = !in_main()
+> 
+> Should work, in the latter case if the object really is missing from the
+> quarnatine too, other fsck bits will stop the push.
 
-write_file() will call strbuf_complete_line(), so even passing "" will
-result in a file with a newline in it (I didn't dig, but this comes from
-e7ffa38c in 2015, so it may well have been a response to the breakage
-you were thinking of).
+Ah, OK. Yes, I agree that should work to cover new objects (including
+ones that the other side but aren't actually needed to update the refs,
+though hopefully that is rare).
 
-So actually all of the "%s\n" here can be just "%s".
+There may also be other object stores, if the main repository used
+alternates (or if somebody set GIT_ALTERNATE_OBJECT_DIRECTORIES). You
+can probably disregard that, though, as:
 
-But there _is_ a reason not to use "", which is that it triggers
--Wformat-zero-length (which is part of -Wall unless you explicitly turn
-it off, which our DEVELOPER=1 setup does). For a long time you _had_ to
-do that, but these days we're actually clean with respect to that
-warning.
+  1. If you ignore the main repo, presumably you ignore its
+     recursive info/alternates, too.
 
-So using "\n" here is better, and likewise here:
+  2. The easy mechanism for ignoring the main repo is to ignore
+     GIT_ALTERNATE_OBJECT_DIRECTORIES, so you'd already be handling
+     that.
 
-> > +	if (opts->verbose)
-> > +		write_file(rebase_path_verbose(), "");
+> But as you point out:
+> 
+>     is_new = in_quarantine()
+> 
+> Cannot be relied upon, although it'll be true most of the time.
+> 
+> Perhaps I'm missing some edge case above, but I wanted to reword it to
+> make sure I understood it correctly (and perhaps you have a correction).
 
-Unless we really do want a zero-length file, in which case:
-
-  write_file_buf(path, "", 0);
-
-is the right option. That matches the shell version, but I'd be
-surprised if it mattered, since it's clearly meant to be "if this file
-exists, we're verbose".
+Nope, I just didn't think through what you were saying carefully enough. ;)
 
 -Peff
