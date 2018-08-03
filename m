@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 252081F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 00:34:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B69F11F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 00:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731429AbeHCC2J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 2 Aug 2018 22:28:09 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:58358 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727053AbeHCC2J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 2 Aug 2018 22:28:09 -0400
-Received: by mail-it0-f74.google.com with SMTP id h7-v6so3749471itj.7
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 17:34:31 -0700 (PDT)
+        id S1731600AbeHCC2M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 2 Aug 2018 22:28:12 -0400
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:54671 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbeHCC2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 2 Aug 2018 22:28:12 -0400
+Received: by mail-qt0-f201.google.com with SMTP id d1-v6so3001167qth.21
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 17:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=lY87fMeV8UANogmvWv0LoV3NxolpW29+c6aCPhQSO+s=;
-        b=WwWXGxB5BXSxOcZWUbjog21dASI79E66YqD0DSj/zJzislpjEkVff3OOD/uSFKLZKe
-         iaPdK4HB/YBOy/XnK+IFtvWlfeQkZPucdW0yfc/7RsbQB/7tFMYH7Qi+CKekjGEkgKVN
-         eYo8fef2DvEPOCTrufLhlr+cN/Kj2OYe58TO3m7qSlLTgi3P0waj/IUvxPHKd+8E9bk2
-         G7zhibLIrFHRK3rmRj7WbMfipTnBYPyOOaF5oYmIbX+FyViqQQl+t5rCm5J6O3O6xCyc
-         zgh/VizMNZD+INeWNGmERpYf11RJ+F33+riU/M8gsFatcYVxsR8FzTPKnOOEXTL1yqi0
-         L8KA==
+        bh=Sfxio9JAipbjOLULrwUnRr7CQr9xzvsrz6OaQ89iTYg=;
+        b=NP+aGmY9KsznQMx1jphUOAaqygzN2gZPz+FShee1TNM8QITyyavyWc3cLVwNpK9A+w
+         WDdUiDh+7F/ZM5r3IxEoU5NoB/2ayOnLqppDzUxgDTZE0J11cbXdztTULUFSIzN4qvB5
+         qXDPnjuO+CV0TmbLmwNsfdwTG5chhFgp+HAHHt57OggwPk8lnbnde9zUupexSONM7VM+
+         /iDJ9GbSsxVb/xmW3acdXh5EDUbUGxKZJJyUDiJrhtroRKS608ZZRJVVoszp1PV23tBf
+         Ynchci6vkXBM0RqvF61YnmFEJK/cGpiR+c0ERAVM6hfxqayLkpuQsJfWBbFAxynQxo7Z
+         7kgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=lY87fMeV8UANogmvWv0LoV3NxolpW29+c6aCPhQSO+s=;
-        b=UVg1HG8/r6NXID+rYrqIEx6y49Aszgt8aLw/JcIFxpGdQgAybcM1yvwX5Sg8143LJv
-         oOsb5JGLiiHbeExhUjEMc2Bro/uMv8S2RjYgQcpk75bbP3Ehgauz6Dd5xHSe+zKV4gEP
-         kcVw72uTMue0q3+Q8axhK90fbrmIQuUpiexDk3LURtB308pzBPy1z9jpEyHikok2uyUP
-         C6VR6qPajCdkt/aCcSq5s8EXffNNwkOHZAKbyhWZ4mF6k3rkLZ2lCl2eE+rNtF8XdUun
-         Le9J1rnO6ihaR2CURcNRnjvk8nwKhSMynPkJC6W0qRLQzSbtvGT84WdH+AQOApKa2oGK
-         Ezbg==
-X-Gm-Message-State: AOUpUlEmUP68GKEqk5nxEIObNNmSBPz+RJMNE2qQW8oBI7eou6lMjZfE
-        dlmZrsoxRLunQ8Ytgr0e23ag847xucHz
-X-Google-Smtp-Source: AAOMgpc8T0zI/uKvMF5Doe+I1h7dQlCla7yZxUBdR1H4K3q2KWAUee/5z2n8aBGF7ZrNFsWlYADnKAHa1dEm
+        bh=Sfxio9JAipbjOLULrwUnRr7CQr9xzvsrz6OaQ89iTYg=;
+        b=puevegaAyQiSx3Sm2J+FiQNsBywLngOBSRluJQHILrUXHR3hT9JmmbrD4J3mlU+sus
+         Nj2KPNgMnQq9q+tJVs8g6FdVMsP0cGMr9lApdoTkeICX5HlNLMWi6cjj0gVs04SQ9VhF
+         KgKHdif6ASEprHdEfrXrHSmXIB3XJWYmOMUTOxvHwjzylvcRJoRdmbFl7l05egatWmx0
+         mvD5xW5pPeWLdqeKn1k6sm+hMCdty+EheJJrOyNcWRBN0mIkTZIUzwEBjn/E0moOCVC5
+         fzwWbhF1qQJlaF/oQd+UmV4ryAnA0mVW4lzWukHb1PsoY5jhgGMxWng9S/CopgcvwtiL
+         FASg==
+X-Gm-Message-State: AOUpUlFDaD3oImnh5D02XTA7NMTZlZL2qPKCSLkH4KfV+HQha5RIszpT
+        ilYPxB3XCXx6vdq690SvAlElyKtnwt7M
+X-Google-Smtp-Source: AAOMgpf02gVWB6ftsIpvEBAAPdrxg6HnKcUnRLjl4LHeiFdi2w1XS4YyJShej/69XSWWlBQNAi0eTJBcNn7z
 MIME-Version: 1.0
-X-Received: by 2002:a24:76c9:: with SMTP id z192-v6mr2313066itb.29.1533256470592;
- Thu, 02 Aug 2018 17:34:30 -0700 (PDT)
-Date:   Thu,  2 Aug 2018 17:34:15 -0700
+X-Received: by 2002:aed:3553:: with SMTP id b19-v6mr2709428qte.31.1533256473168;
+ Thu, 02 Aug 2018 17:34:33 -0700 (PDT)
+Date:   Thu,  2 Aug 2018 17:34:16 -0700
 In-Reply-To: <20180803003417.76153-1-sbeller@google.com>
-Message-Id: <20180803003417.76153-2-sbeller@google.com>
+Message-Id: <20180803003417.76153-3-sbeller@google.com>
 References: <20180801193413.146994-1-sbeller@google.com> <20180803003417.76153-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.132.g195c49a2227
-Subject: [PATCH 1/3] t1300: document current behavior of setting options
+Subject: [PATCH 2/3] config: fix case sensitive subsection names on writing
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     bmwill@google.com, git@vger.kernel.org, gitster@pobox.com,
@@ -62,112 +62,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This documents current behavior of the config machinery, when changing
-the value of some settings. This patch just serves to provide a baseline
-for the follow up that will fix some issues with the current behavior.
+A user reported a submodule issue regarding a section mix-up,
+but it could be boiled down to the following test case:
 
+  $ git init test  && cd test
+  $ git config foo."Bar".key test
+  $ git config foo."bar".key test
+  $ tail -n 3 .git/config
+  [foo "Bar"]
+        key = test
+        key = test
+
+Sub sections are case sensitive and we have a test for correctly reading
+them. However we do not have a test for writing out config correctly with
+case sensitive subsection names, which is why this went unnoticed in
+6ae996f2acf (git_config_set: make use of the config parser's event
+stream, 2018-04-09)
+
+Unfortunately we have to make a distinction between old style configuration
+that looks like
+
+  [foo.Bar]
+        key = test
+
+and the new quoted style as seen above. The old style is documented as
+case-agnostic, hence we need to keep 'strncasecmp'; although the
+resulting setting for the old style config differs from the configuration.
+That will be fixed in a follow up patch.
+
+Reported-by: JP Sugarbroad <jpsugar@google.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t1300-config.sh | 86 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 86 insertions(+)
+ config.c          | 12 +++++++++++-
+ t/t1300-config.sh |  1 +
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
+diff --git a/config.c b/config.c
+index 66645047eb3..ffc2ffeafeb 100644
+--- a/config.c
++++ b/config.c
+@@ -37,6 +37,7 @@ struct config_source {
+ 	int eof;
+ 	struct strbuf value;
+ 	struct strbuf var;
++	unsigned section_name_old_dot_style : 1;
+ 
+ 	int (*do_fgetc)(struct config_source *c);
+ 	int (*do_ungetc)(int c, struct config_source *conf);
+@@ -605,6 +606,7 @@ static int get_value(config_fn_t fn, void *data, struct strbuf *name)
+ 
+ static int get_extended_base_var(struct strbuf *name, int c)
+ {
++	cf->section_name_old_dot_style = 0;
+ 	do {
+ 		if (c == '\n')
+ 			goto error_incomplete_line;
+@@ -641,6 +643,7 @@ static int get_extended_base_var(struct strbuf *name, int c)
+ 
+ static int get_base_var(struct strbuf *name)
+ {
++	cf->section_name_old_dot_style = 1;
+ 	for (;;) {
+ 		int c = get_next_char();
+ 		if (cf->eof)
+@@ -2364,14 +2367,21 @@ static int store_aux_event(enum config_event_t type,
+ 	store->parsed[store->parsed_nr].type = type;
+ 
+ 	if (type == CONFIG_EVENT_SECTION) {
++		int (*cmpfn)(const char *, const char *, size_t);
++
+ 		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
+ 			return error("invalid section name '%s'", cf->var.buf);
+ 
++		if (cf->section_name_old_dot_style)
++			cmpfn = strncasecmp;
++		else
++			cmpfn = strncmp;
++
+ 		/* Is this the section we were looking for? */
+ 		store->is_keys_section =
+ 			store->parsed[store->parsed_nr].is_keys_section =
+ 			cf->var.len - 1 == store->baselen &&
+-			!strncasecmp(cf->var.buf, store->key, store->baselen);
++			!cmpfn(cf->var.buf, store->key, store->baselen);
+ 		if (store->is_keys_section) {
+ 			store->section_seen = 1;
+ 			ALLOC_GROW(store->seen, store->seen_nr + 1,
 diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 24706ba4125..e87cfc1804f 100755
+index e87cfc1804f..4976e2fcd3f 100755
 --- a/t/t1300-config.sh
 +++ b/t/t1300-config.sh
-@@ -1218,6 +1218,92 @@ test_expect_success 'last one wins: three level vars' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'old-fashioned settings are case insensitive' '
-+	test_when_finished "rm -f testConfig testConfig_expect testConfig_actual" &&
-+
-+	cat >testConfig_actual <<-EOF &&
-+		[V.A]
-+		r = value1
-+	EOF
-+	q_to_tab >testConfig_expect <<-EOF &&
-+		[V.A]
-+		Qr = value2
-+	EOF
-+	git config -f testConfig_actual "v.a.r" value2 &&
-+	test_cmp testConfig_expect testConfig_actual &&
-+
-+	cat >testConfig_actual <<-EOF &&
-+		[V.A]
-+		r = value1
-+	EOF
-+	q_to_tab >testConfig_expect <<-EOF &&
-+		[V.A]
-+		QR = value2
-+	EOF
-+	git config -f testConfig_actual "V.a.R" value2 &&
-+	test_cmp testConfig_expect testConfig_actual &&
-+
-+	cat >testConfig_actual <<-EOF &&
-+		[V.A]
-+		r = value1
-+	EOF
-+	q_to_tab >testConfig_expect <<-EOF &&
-+		[V.A]
-+		r = value1
-+		Qr = value2
-+	EOF
-+	git config -f testConfig_actual "V.A.r" value2 &&
-+	test_cmp testConfig_expect testConfig_actual &&
-+
-+	cat >testConfig_actual <<-EOF &&
-+		[V.A]
-+		r = value1
-+	EOF
-+	q_to_tab >testConfig_expect <<-EOF &&
-+		[V.A]
-+		r = value1
-+		Qr = value2
-+	EOF
-+	git config -f testConfig_actual "v.A.r" value2 &&
-+	test_cmp testConfig_expect testConfig_actual
-+'
-+
-+test_expect_success 'setting different case sensitive subsections ' '
-+	test_when_finished "rm -f testConfig testConfig_expect testConfig_actual" &&
-+
-+	cat >testConfig_actual <<-EOF &&
-+		[V "A"]
-+		R = v1
-+		[K "E"]
-+		Y = v1
-+		[a "b"]
-+		c = v1
-+		[d "e"]
-+		f = v1
-+	EOF
-+	q_to_tab >testConfig_expect <<-EOF &&
-+		[V "A"]
-+		Qr = v2
-+		[K "E"]
-+		Qy = v2
-+		[a "b"]
-+		Qc = v2
-+		[d "e"]
-+		f = v1
-+		Qf = v2
-+	EOF
-+	# exact match
-+	git config -f testConfig_actual a.b.c v2 &&
-+	# match section and subsection, key is cased differently.
-+	git config -f testConfig_actual K.E.y v2 &&
-+	# section and key are matched case insensitive, but subsection needs
-+	# to match; When writing out new values only the key is adjusted
-+	git config -f testConfig_actual v.A.r v2 &&
-+	# subsection is not matched:
-+	git config -f testConfig_actual d.E.f v2 &&
-+	test_cmp testConfig_expect testConfig_actual
-+'
-+
- for VAR in a .a a. a.0b a."b c". a."b c".0d
- do
- 	test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
+@@ -1290,6 +1290,7 @@ test_expect_success 'setting different case sensitive subsections ' '
+ 		Qc = v2
+ 		[d "e"]
+ 		f = v1
++		[d "E"]
+ 		Qf = v2
+ 	EOF
+ 	# exact match
 -- 
 2.18.0.132.g195c49a2227
 
