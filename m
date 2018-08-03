@@ -2,100 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CC081F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 18:09:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C2E41F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 18:23:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730588AbeHCUGl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 16:06:41 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:42472 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727356AbeHCUGk (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 3 Aug 2018 16:06:40 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b423:857:b27f:2f08])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728477AbeHCUUq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 16:20:46 -0400
+Received: from siwi.pair.com ([209.68.5.199]:35504 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728079AbeHCUUq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 16:20:46 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id CFB833F40F4;
+        Fri,  3 Aug 2018 14:23:20 -0400 (EDT)
+Received: from [192.168.1.6] (211.sub-174-231-169.myvzw.com [174.231.169.211])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C30B56046D;
-        Fri,  3 Aug 2018 18:09:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1533319757;
-        bh=kJ0VhlPNxMY0+BRqsKeqiUTvw4VpZHrKNcOsLccGmq0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YcM3EHAVDe4pxJNvssjkPkI00V396n+QLkGPiKBNdqR57+EUwiWWF7GObn9+zFTkx
-         vRj++klWaYnp7PcdqmpRxD0v1nHHfP2w0+UL97yo0ILu6Ybym2Je5NK5WM+DmdiVVH
-         4coNcXVnsgigTGHh14eWwvIF8MBzfqCKC0sml7j3Px/gYKicwhkmi0utISUFSI0LFS
-         xaTH4I9QRus47JMMKuQq5Iz4eMLBH0VtzDkvVDBwCyLeDZGad8u1QPUS93uWDLecF0
-         Z4NAWaGvMTgPVS+Pan4y554WsE9pVsW5TsFUsgL2+MlWYU0AEgvLgcRg6xRHjlXsFj
-         dsirRwHSEzsq8mI/QDBRsSrdnZlZlFro5NBHs0fQm5dBy51yZtLFlGuc/jX8Urj0wU
-         Pnfe/0M9qEFXwUon8dxurEAXVW318BAk9B8XMtNBGaKQZumq6HEoIgRISHpZSi3KB/
-         aqdQmf8jiNZ7vEo3kGuVsVCAwxjqUUgsUYWKOR78iInMEXhBFgF
-Date:   Fri, 3 Aug 2018 18:09:12 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-Message-ID: <20180803180912.GD106068@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
+        by siwi.pair.com (Postfix) with ESMTPSA id 8DA1E3F409D;
+        Fri,  3 Aug 2018 14:23:19 -0400 (EDT)
+Subject: Re: [PATCH/RFC] clone: report duplicate entries on case-insensitive
+ filesystems
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?Q?Pawe=c5=82_Paruzel?= <pawelparuzel95@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <xmqqo9enb4n9.fsf@gitster-ct.c.googlers.com>
+ <20180731192931.GD3372@sigill.intra.peff.net>
+ <xmqqva8v9nc1.fsf@gitster-ct.c.googlers.com>
+ <20180731203746.GA9442@sigill.intra.peff.net>
+ <xmqqin4v9l7u.fsf@gitster-ct.c.googlers.com>
+ <xmqq1sbh7phx.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8DFX2=CaTomc33uuHQ-nBvgfutVbaQ2DxT_p8-hzj6PsA@mail.gmail.com>
+ <xmqqpnz03f9o.fsf@gitster-ct.c.googlers.com>
+ <20180802190644.GE23690@sigill.intra.peff.net>
+ <xmqqmuu4zd1l.fsf@gitster-ct.c.googlers.com>
+ <20180802212819.GA32538@sigill.intra.peff.net>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <5b17454b-7fa7-7a9c-92d9-214e6e697785@jeffhostetler.com>
+Date:   Fri, 3 Aug 2018 14:23:17 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hoZxPH4CaxYzWscb"
-Content-Disposition: inline
-In-Reply-To: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20180802212819.GA32538@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---hoZxPH4CaxYzWscb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 02, 2018 at 04:02:36PM -0700, Junio C Hamano wrote:
-> --------------------------------------------------
-> [New Topics]
+On 8/2/2018 5:28 PM, Jeff King wrote:
+> On Thu, Aug 02, 2018 at 02:14:30PM -0700, Junio C Hamano wrote:
+> 
+>> Jeff King <peff@peff.net> writes:
+>>
+>>> I also wonder if Windows could return some other file-unique identifier
+>>> that would work in place of an inode here. That would be pretty easy to
+>>> swap in via an #ifdef's helper function. I'd be OK shipping without that
+>>> and letting Windows folks fill it in later (as long as we do not do
+>>> anything too stupid until then, like claim all of the inode==0 files are
+>>> the same).
+>>
+>> Yeah, but such a useful file-unique identifier would probably be
+>> used in place of inum in their (l)stat emulation already, if exists,
+>> no?
+> 
+> Maybe. It might not work as ino_t. Or it might be expensive to get.  Or
+> maybe it's simply impossible. I don't know much about Windows. Some
+> searching implies that NTFS does have a "file index" concept which is
+> supposed to be unique.
 
-I had expected to see
-<20180729192803.1047050-1-sandals@crustytoothpaste.net> (the refspec @
-handling) in this list, but I don't.  Were you expecting changes or
-additional feedback before picking it up?
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+This is hard and/or expensive on Windows.  Yes, you can get the
+"file index" values for an open file handle with a cost similar to
+an fstat().  Unfortunately, the FindFirst/FindNext routines (equivalent
+to the opendir/readdir routines), don't give you that data.  So we'd
+have to scan the directory and then open and stat each file.  This is
+terribly expensive on Windows -- and the reason we have the fscache
+layer (in the GfW version) to intercept the lstat() calls whenever
+possible.
 
---hoZxPH4CaxYzWscb
-Content-Type: application/pgp-signature; name="signature.asc"
+It might be possible to use the NTFS Master File Table to discover
+this (very big handwave), but I would need to do a little digging.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
+This would all be NTFS specific.  FAT and other volume types would not
+be covered.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltkmkgACgkQv1NdgR9S
-9otVNw//c3qV0EnS3wjPKsolODXXTR89xmM7zwnzLdlMKNJ7GVvdadw9Crd2zPdw
-DVIC8GUu0jH97fohyUoUpV7rfOjrUiX5aQHjVG1muyPaBOf2WwgMBeXxZc/+eCwQ
-4BKr9hUYBoF6/5U04pZiQCMRtfIpa17DE6kZe4P77bq10GY0CGanb/ZQIQfyuv/f
-EY5oo8L+IbBhCMPc1zng1ZudzhqCoBdIE0zjjPe69DZuZIPsgEbos30ill8cOysi
-ubgG+Y39I4aYju6hgRrLqa2cp69VO79UeCj9UInHDl/Xf/YfwSecEubasCVVQnog
-CMMUKBx1h1MpnoV5H1vncOsV4O9+/bRfUsUVrBW+x+qbcLlxQvH6stzspsx4+xqJ
-HrOweFlsK1uol9a7bHKcPv1uRtaMH8rK5I9vs0JZpayWFo2WWn+ZL66VFB29VEFv
-CRcqH48ApdaQ2a71q6KFNM6vtCfT4umpzO5GBoFP1Pg6HUYQZIqf5ckx1kD4znqR
-Qq3CMRLWCnpG1n4utzuMkGphNr7TRy33hxoq4+/svMSyvXDfNtnQcOfactaVQ+Lr
-5j91nly2GWS+ZhzrVddhvB9vgVOELoorkUUKPC1V9ZOZhjzS3QyAuajcz5vshgnO
-uV7PH4vHkjHIjBGtrApwGVva02ejkKjBrCcNf4ZmKP78vAq1vXg=
-=RTxX
------END PGP SIGNATURE-----
+Another thing to keep in mind is that the collision could be because
+of case folding (or other such nonsense) on a directory in the path.
+I mean, if someone on Linux builds a commit containing:
 
---hoZxPH4CaxYzWscb--
+     a/b/c/D/e/foo.txt
+     a/b/c/d/e/foo.txt
+
+we'll get a similar collision as if one of them were spelled "FOO.txt".
+
+Also, do we need to worry about hard-links or symlinks here?
+If checkout populates symlinks, then you might have another collision
+opportunity.  For example:
+
+     a/b/c/D/e/foo.txt
+     a/link -> ./b/c/d
+     a/link/e/foo.txt
+
+Also, some platforms (like the Mac) allow directory hard-links.
+Granted, Git doesn't create hard-links during checkout, but the
+user might.
+
+I'm sure there are other edge cases here that make reporting
+difficult; these are just a few I thought of.  I guess what I'm
+trying to say is that as a first step just report that you found
+a collision -- without trying to identify the set existing objects
+that it collided with.
+
+> 
+> At any rate, until we have an actual plan for Windows, I think it would
+> make sense only to split the cases into "has working inodes" and
+> "other", and make sure "other" does something sensible in the meantime
+> (like mention the conflict, but skip trying to list duplicates).
+
+Yes, this should be split.  Do the "easy" Linux version first.
+Keep in mind that there may also be a different solution for the Mac.
+
+> When somebody wants to work on Windows support, then we can figure out
+> if it just needs to wrap the "get unique identifier" operation, or if it
+> would use a totally different algorithm.
+> 
+> -Peff
+> 
+
+Jeff
