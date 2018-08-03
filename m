@@ -2,92 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AB2D1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 10:02:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1F6D1F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 10:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732466AbeHCL56 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 07:57:58 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:33043 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732233AbeHCL56 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 07:57:58 -0400
-Received: by mail-yw1-f66.google.com with SMTP id c135-v6so749831ywa.0
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 03:02:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zmxruKyZFPWiKgQn90lyapTL0HuiHok7ekRS5dlkAS0=;
-        b=Fu4qRTPGON7aUB8vXRGbVXqzUVXMF8DdAtJ0y5hpySuu/FmK3/rkniEFqFSNAD0uOT
-         M5tgZJiCwbC55helcpMOOH+zUsfZ0ZS1PCn+b7t0qiznJgPT0QLZGPTwyPZQj0lCIfMT
-         oAtFWNFVU5A1hHEwbUCvbnOxf/lsk4yYlAzVI6MYdLUjaqMJngRU9bOHN+JWYCBx7fBm
-         dG0vfnOPt5Hf024pYZl5v9+JVV18fXJSa2iPoMF1AVqyIHdCS/aXLRaERZfz0RQgyzSU
-         EhEyU9IAi0m2Zhr6ZkZ/BujL2EwJE5F4o2mZZ80fUDuLpfvpS1YZa8kdaqAdBEWn3zEb
-         ZNKg==
-X-Gm-Message-State: AOUpUlFRADYe5eTeCO/cVmNVCLmGxGXZ5Mzg4tT6G2V09IIdTMJUStq+
-        y+jt97AaRl3FTHwa1Wggb8RvI0kYaATmYtjqtz4=
-X-Google-Smtp-Source: AAOMgpchK7UstvIp/nQg+XPqP4/isSIKL6vRwSAb2p6U5xW2LzGUKUlZYQ5eDOFYvD9Y9BSgHZbpBF+S7EI4NZC4YtY=
-X-Received: by 2002:a0d:f3c7:: with SMTP id c190-v6mr1621440ywf.98.1533290543199;
- Fri, 03 Aug 2018 03:02:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <20180802112002.720-1-phillip.wood@talktalk.net> <20180802112002.720-3-phillip.wood@talktalk.net>
- <xmqqk1p83cig.fsf@gitster-ct.c.googlers.com> <CAPig+cQaaHfkR8jrXb-+PB4bSZbKLQzRkZNo+DNfz92hKO=04Q@mail.gmail.com>
- <c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net>
-In-Reply-To: <c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 3 Aug 2018 06:02:11 -0400
-Message-ID: <CAPig+cTyTHxwFvk3ZtOq3L7KEtEjKLKu6-RnLC-_NuL1Xzhqzw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] sequencer: fix quoting in write_author_script
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        id S1732563AbeHCMRU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 08:17:20 -0400
+Received: from ao2.it ([92.243.12.208]:56214 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728122AbeHCMRU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 08:17:20 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1flXBx-000845-FK; Fri, 03 Aug 2018 12:20:17 +0200
+Date:   Fri, 3 Aug 2018 12:21:38 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC PATCH v2 04/12] submodule--helper: add a new 'config'
+ subcommand
+Message-Id: <20180803122138.ca4be250bf1ad3b3730866e3@ao2.it>
+In-Reply-To: <20180802192032.GA28962@sigill.intra.peff.net>
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-5-ao2@ao2.it>
+        <CAGZ79kY78rgb8VpRn-A2moucy16z1TsDGdz2cjJzVOxsiKiiYw@mail.gmail.com>
+        <20180802192032.GA28962@sigill.intra.peff.net>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 3, 2018 at 5:33 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
-> If there isn't some backward compatibility then if git gets upgraded
-> while rebase is stopped then the author data will be silently corrupted
-> if it contains "'". read_author_ident() will error out but that is only
-> used for the root commit. read_env_script() which is used for normal
-> picks will not dequote the badly quoted value correctly and will not
-> return an error. It is unlikely but possible, I'll leave it to Junio to
-> decide if it is worth it
+On Thu, 2 Aug 2018 15:20:33 -0400
+Jeff King <peff@peff.net> wrote:
 
-If I understand correctly, the approach you implemented earlier[1]
-(perhaps coupled with the more robust detection suggested here[2])
-would be sufficient to handle this backward compatibility concern.
-While it may not be as pretty or generalized as the current patch, it
-involves far less machinery, thus is less likely to harbor its own
-bugs. The earlier version is also much more self-contained, which
-makes it easier to drop at some point when backward compatibility is
-no longer a concern (if ever).
+> On Thu, Aug 02, 2018 at 11:47:30AM -0700, Stefan Beller wrote:
+> 
+> > > +static int module_config(int argc, const char **argv, const char *prefix)
+> > > +{
+> > > +       if (argc < 2 || argc > 3)
+> > > +               die("submodule--helper config takes 1 or 2 arguments: name [value]");
+> > > +
+> > > +       /* Equivalent to ACTION_GET in builtin/config.c */
+> > > +       if (argc == 2)
+> > > +               return print_config_from_gitmodules(argv[1]);
+> > > +
+> > > +       /* Equivalent to ACTION_SET in builtin/config.c */
+> > > +       if (argc == 3)
+> > > +               return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
+> > > +
+> > > +       return 0;
+> > 
+> > Technically we cannot reach this point here?
+> > Maybe it would be more defensive to
+> > 
+> >     BUG("How did we get here?");
+> > 
+> > or at least return something !=0 ?
+> 
+> When I find myself reaching for a BUG(), it is often a good time to see
+> if we can restructure the code so that the logic more naturally falls
+> out.  Here the issue is that the first if conditional repeats the "else"
+> for the other two. So I think we could just write:
+> 
+>   if (argc == 2)
+> 	return ...
+>   if (argc == 3)
+> 	return ...
+> 
+>   die("need 1 or 2 arguments");
+> 
 
-> There is a precedent for adding backwards compatibility 84df4560ed
-> ("rebase: extract code for writing basic state", 2011-02-06) though it
-> is much simpler.
+Hi Jeff,
 
-Indeed, it is much simpler, adding a one-liner 'else' case to an
-'if-then' for backward compatibility. Your earlier implementation[1]
-was pretty much the equivalent, just adding an extra one-liner arm to
-an 'if-then' statement.
+I like that, I'll see how this plays out after patch 06 which adds
+another option, and decide whether to use this style; validating
+arguments beforehand may still look a little cleaner.
 
-The bug fix itself is important, and, while I do favor the cleaner
-approach of not worrying about backward compatibility for this fairly
-unlikely case, your earlier version seems a better compromise between
-having no backward compatibility and the much more heavyweight version
-implemented here.
+Thanks for the comment.
 
-Anyhow, I'm fine with whatever Junio decides.
+Ciao,
+   Antonio
 
-[1]: https://public-inbox.org/git/20180731111532.9358-3-phillip.wood@talktalk.net/
-[2]: https://public-inbox.org/git/CAPig+cTttbV2FjnoS_SZtwh2J4wwzsbK+48BAbt1cV0utynYzw@mail.gmail.com/
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
