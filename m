@@ -2,105 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E735B1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 21:45:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DB571F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 21:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731952AbeHCXng (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 19:43:36 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:36843 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729876AbeHCXnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 19:43:35 -0400
-Received: by mail-wm0-f46.google.com with SMTP id w24-v6so7831028wmc.1
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 14:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/SXOpcXjY3O+f/4VlingW6IMqfIBvi/C0xpgeszNn08=;
-        b=fWWw9UwkA/iWKNyHADCc9tx0bXWjhz3ovM7aGClYSouf0y864FK+aZ5HHkMlRCeOLY
-         7wX1DPZm8lOxElbUNziGBxZmSNjMelFcAAGrJRoxCtRc24xKpTFjGIN4ZYB/4kxzOwz+
-         rVmYmyXWyYGGLKF6PgQ5QK+lFjEHCn4ipT5bV3BumTLgg0WpsMWN4N8ya6E4/ssC7jRP
-         WjBYbG1v0FHZxaNv7wpGP9FqDniZoJUvvJqZGO95O/1eegzgywTN0OfkzDkPlNZCDfyn
-         MsRukI/CtRgJsyY8AmceXvf4aJ6zWiRkzeyALZCxTV+RQj3cyYkJCBDtFWXk7OSSf5PI
-         re7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/SXOpcXjY3O+f/4VlingW6IMqfIBvi/C0xpgeszNn08=;
-        b=k6hZwbZLyJgSccmMARlDO32NpiBwKJQhxDCs2M/xSPZfvGhWageavdxik+VXVjf54A
-         8j6e8VemiqJZwnLvN21GYoWSgQCwztHfbn1WuxWoPUKwHR+pXjbGx84iHQ670nvOUhHz
-         MQiFCcLe1zp+1Y9imRolpMshVoCGeyd23hHptj0+TEiYTxwqUqqVLo/GH4YStpNBKYV9
-         dYi9LyNiAAeOMtt/i5dB4XB0TJv7YaJ/xBrYljo/sfKQN17AW1/mOJ8Zm//5tYeWc8m6
-         ogwYkw6ultmy5JH9MdEuUcd3Ai5htNK+k8Z+1Rx1heQj46kNHyahffs4v5uCp4Xu0Zlw
-         Cz1Q==
-X-Gm-Message-State: AOUpUlEmQIUmuRfIBXNODGqr0QKA3eQSvihM7TdUXCk5kJ+ySVK+ool4
-        qwf/wVXSVo/SIMFXeNqDrGg=
-X-Google-Smtp-Source: AAOMgpdN8IjHvqm7KXDltvvmRmSVtvhqEe4103GvxoJmbw26Vh6HBHcPO6lZWbMg3k759B4vHI1sDQ==
-X-Received: by 2002:a1c:2b43:: with SMTP id r64-v6mr5525713wmr.96.1533332729666;
-        Fri, 03 Aug 2018 14:45:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id i23-v6sm502394wmf.24.2018.08.03.14.45.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 Aug 2018 14:45:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
-        <20180803180912.GD106068@genre.crustytoothpaste.net>
-        <xmqqwot7wayf.fsf@gitster-ct.c.googlers.com>
-        <20180803184508.GE106068@genre.crustytoothpaste.net>
-        <xmqqo9ejwag9.fsf@gitster-ct.c.googlers.com>
-        <xmqqk1p7wa7t.fsf@gitster-ct.c.googlers.com>
-        <20180803193256.GA164578@google.com>
-        <xmqqftzvw6xi.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZdPP+q9iuQioUU+2JkfH4n1mkkHrXaJzxGVwhxvbKZ1Q@mail.gmail.com>
-Date:   Fri, 03 Aug 2018 14:45:28 -0700
-In-Reply-To: <CAGZ79kZdPP+q9iuQioUU+2JkfH4n1mkkHrXaJzxGVwhxvbKZ1Q@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 3 Aug 2018 13:43:07 -0700")
-Message-ID: <xmqq600rw2dj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732049AbeHCXot (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 19:44:49 -0400
+Received: from mx.sdf.org ([205.166.94.20]:65215 "EHLO mx.sdf.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729828AbeHCXot (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 19:44:49 -0400
+X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Aug 2018 19:44:49 EDT
+Received: from sdf.org (IDENT:aedifex@sdf.lonestar.org [205.166.94.16])
+        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id w73LcZ8H015907
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits) verified NO)
+        for <git@vger.kernel.org>; Fri, 3 Aug 2018 21:38:35 GMT
+Received: (from aedifex@localhost)
+        by sdf.org (8.15.2/8.12.8/Submit) id w73LcY7d021101
+        for git@vger.kernel.org; Fri, 3 Aug 2018 21:38:34 GMT
+Date:   Fri, 3 Aug 2018 21:38:34 +0000
+From:   Tacitus Aedifex <aedifex@SDF.ORG>
+To:     git@vger.kernel.org
+Subject: abstracting commit signing/verify to support other signing schemes
+Message-ID: <20180803213834.GB7619@SDF.ORG>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=unknown-8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+I'm looking at the existing commit signing and verification
+integration and it is all GPG specific. I'm interested in refactoring
+the code to have a generic signing/verifying interface so that "drivers"
+for other signing tools can be created and other signing tools can be
+used (e.g. OpenBSD signify).
 
-> - The second part of having an immediate plan is *very* nice
->   to see, though I would argue that it could be improved
->   by having these updates in the thread instead of summarized
->   unrelated to that thread.
->
->   We do not do this for now due to tooling issues, I suppose.
+The existing interface defined in gpg-interface.h is already fairly
+generic. It looks like the only things that would need to be fixed
+are the names of some members in the signature_check struct and the GPG
+specific constants.
 
-I need the current draft of "What's cooking" message that I haven't
-sent out (and the committed copy on 'todo' branch, which is a copy
-of what was already sent out) to be the single place I go that
-drives my day-to-day integration work anyway.  I don't have time to
-jump around 30-70 discussion threads (assuming there only is one
-active one per each topic in flight) to see what the last tentative
-verdict I gave to each one of them before deciding which ones to
-merge to 'next' in day's integration run.
+I propose to rename the gpg-interface.h file to signature-interface.h.
+There are several different ways to do the "polymorphism" needed to have
+a base signature_check struct with a tool-specific part for storing the
+tool-specific data (e.g. gpg_output, gpg_status, result). I'm looking
+for suggestions on the way this has been done in other places in the Git
+code so I can do it the same way. My initial impulse it to have a union
+of tool-specific structs inside of the signature_check struct.
 
-You are welcome to split these pieces out of the "What's cooking"
-report and spray them into the original message, or write a bot to
-do so.
+The plan for changing the signing behavior is to change the code looking
+for commit.gpgsign in sequencer.c to instead look for commit.signtool.
+The string value will define which signing tool to use. The default will
+be null which is the equivilent to gpgsign=false. To get GPG
+signing the user would set it to "gpg". To maintain backwards
+compatibility, the code will continue to check for commit.gpgsign and
+translate that to commit.signtool=gpg and output a warning.
 
-> Is there a better way to start a workflow discussion?
+I also think that it makes sense to move the user.signingkey to be
+gpg.signingkey since that only makes sense in the context of GPG.
 
-My take on it is not to discuss ways to add more to other's workload
-to worsen the bottleneck in the first place, and instead try to do
-things you would think you can do to help, see if it actually helps,
-and then after that encourage discussit as a way for others to do to
-help the project, perhaps?
+The real trick here is how to handle signatures from different tools in
+a given project. I think the answer is to store the value of
+commit.signtool along with the signature blob associted with each signed
+commit. That way the signature verification code can know which tool to
+use to verify the signature. If a commit has a signture but no tool
+selector, the default will be to assume GPG to preserve backwards
+compatibility.
+
+Any other thoughts and/or suggestions?
+
+//tæ
