@@ -2,124 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0AF61F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 03:29:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBCD51F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 03:48:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726182AbeHCFYE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 01:24:04 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:42172 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725972AbeHCFYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 01:24:04 -0400
-Received: by mail-pl0-f66.google.com with SMTP id z7-v6so1932868plo.9
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 20:29:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+x5wIL/XHaDjnY78cZzmc0GPohUCOsOcklDyOGH69YM=;
-        b=Qgvt/lggKN3ctmUu3QumXI9q7ITQbrHYxUHeC3DxhfeduP+Nph4RNB1zTyexFiYNXf
-         +9owTsnNYYoQS+RoDuDJrOXPeImcx37HbWDgeV8xcuDhdf4St3Wl3Tc3UM8pJZnv6WxX
-         wxVHiFICHPeqDSqXMrnXh1jcapDjjkFMT9M1w0knn3uPNDEWk2Of/eSwChOx12cPZUxg
-         /vGfLuBs9w2FqjDTjtQwXLrlosRP5tti5pDxYySCGS83XV3s5FO8FEusjTx6IUmyzAlz
-         +TfuRd6d7QIJk5ORJd/h5tb6t6ZNqnn7pAg37nzHUlSqOs4w1OveijIEHMpMaWAUfks1
-         HmOA==
+        id S1726291AbeHCFnG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 01:43:06 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:42991 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726012AbeHCFnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 01:43:06 -0400
+Received: by mail-yw1-f67.google.com with SMTP id y203-v6so484713ywd.9
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 20:48:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+x5wIL/XHaDjnY78cZzmc0GPohUCOsOcklDyOGH69YM=;
-        b=gqfK9uM99tD85QLxGzp989ff6n86uqMzQbniGM3aACH25XfUtwbVgSGvpNWvW2O1K/
-         Llh2qbJEXovsxJSHAv3xrkjuBPS2WLkjzHEVUhEFyags/kf8FAyaPHFnhztnUCchJP3+
-         SpxjiSx+lEsn2PycOdVe2B8QU4fRCtBX4+flFyEQNxdqNBT5CFZ0+9hDf4nWKAuqtlGU
-         I4ywBkKIiPlPt+PUB1hKBrIggFbQUdLUyE19tzarGriQJUESm21ZdalbKlao6xLtmhG0
-         w9HdPvht5qj3ioWJemaiEls5h8jj0kNUKfg4czlkawVtEOIqgjpi5rqQekz9VYjEs/S/
-         iuhg==
-X-Gm-Message-State: AOUpUlFvfri77C1ToaK2rJ7k/9Fb7EHmexiwBdpwXDXg96n0nAEgb4uz
-        9hZ0j8gMcGRdo/Pw1Da7Rpi/JlcN
-X-Google-Smtp-Source: AAOMgpeeRqzCcXwUdvhpug7g3yYf1mh0dC1Zc0OpIP+AG27IbCIwHGE+9CuZHPA0hXsvvetqG8JuJw==
-X-Received: by 2002:a17:902:8541:: with SMTP id d1-v6mr1898067plo.81.1533266990567;
-        Thu, 02 Aug 2018 20:29:50 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i26-v6sm4597512pfo.107.2018.08.02.20.29.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 20:29:49 -0700 (PDT)
-Date:   Thu, 2 Aug 2018 20:29:48 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     gitster@pobox.com, sunshine@sunshineco.com, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] config: document git config getter return value.
-Message-ID: <20180803032948.GG197924@aiede.svl.corp.google.com>
-References: <20180802121308.17371-1-hanwen@google.com>
- <20180802121308.17371-2-hanwen@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sdA1A83otfBw5OefZk9cxCWKvpXH93V+NeIYCsZiJOk=;
+        b=HDhpbBBJToSN5svsfdjHdGBcNGE3sp9aezcy+QU3Le2pl3mqRlaNzNL6X1FRNiGqas
+         tYTx9v1iKjDW4WBTfwcOP3Eh8D4Eya73k+eQBn26n3lGpYuJVBS9soa25zMDelpdgqs5
+         ZlDFrmjpgKhIr5DQ+/vpQNdofM79/vXChOJN9bueQwi8zfbeE0tz38MqGEeM/LV3hJyD
+         iqaD4uEYz2w4zezEnk6BtGfq0MVaJcPKuK/mgDEGgtC2s4ZoKaHEcY/wK1ODEgQ1FHrM
+         CN3JzdklGnVrAR0Fg9JMwcaP1okH8APeAU7w3ETr+mX7RdZlaOWI5dFBwaS3PUTR0I6V
+         95DA==
+X-Gm-Message-State: AOUpUlGWLCCO2vA5yOims5ceGiIEUev2Y1mf5ID7XlOnm/nbc5qar5KB
+        3tLBuNwa0Lx+bPdkZMx83g7SGCmz4K8yHdc1V+Nt7ubr
+X-Google-Smtp-Source: AAOMgpdn6LCcYD2wIb8wz/yPL0LoVZGDYhlUZBFBGFoE81r/LZ91lSW3yer+Qh4oSL74oy4sMCpuWAapreJFtL5sVAQ=
+X-Received: by 2002:a0d:e253:: with SMTP id l80-v6mr1197792ywe.131.1533268129020;
+ Thu, 02 Aug 2018 20:48:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180802121308.17371-2-hanwen@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180802121308.17371-1-hanwen@google.com> <20180802121308.17371-3-hanwen@google.com>
+In-Reply-To: <20180802121308.17371-3-hanwen@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 2 Aug 2018 23:48:37 -0400
+Message-ID: <CAPig+cQcLfN7TjUR6hzFT9h-VhE1o7VGkGkQdznDNxjTLNfzSA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] sideband: highlight keywords in remote sideband output
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(cc-ing peff, config whiz)
-Hi,
+On Thu, Aug 2, 2018 at 8:13 AM Han-Wen Nienhuys <hanwen@google.com> wrote:
+> [PATCH 2/2] sideband: highlight keywords in remote sideband output
 
-Han-Wen Nienhuys wrote:
+The -v option of git-format-patch makes it easy to let reviewers know
+that this is a new version of a previously-submitted patch series.
+This (I think) is the second attempt; if you need to send again, you
+could use "git format-patch -v3 ...", which would result in "[PATCH v3
+2/2] ...".
 
-> Subject: config: document git config getter return value.
+> The colorization is controlled with the config setting "color.remote".
+>
+> Supported keywords are "error", "warning", "hint" and "success". They
+> are highlighted if they appear at the start of the line, which is
+> common in error messages, eg.
+>
+>    ERROR: commit is missing Change-Id
+>
+> The rationale for this change is that Gerrit does server-side
+> processing to create or update code reviews, and actionable error
+> messages (eg. missing Change-Id) must be communicated back to the user
+> during the push. User research has shown that new users have trouble
+> seeing these messages.
+> [...snip...]
 
-micronit: no period at the end of subject line
+Thanks, this commit message is much more helpful than the previous one.
 
+If you end up re-rolling, you might consider swapping the order of
+these paragraphs around a bit to first explain the problem the patch
+is solving (i.e. the justification), then the solution and relevant
+details. Documentation/SubmittingPatches has good advice about this.
+
+Using Gerrit as the sole rationale is underselling this otherwise
+general improvement. Instead, the commit message could sell the change
+on its own merits and can then use Gerrit as an example.
+
+> The Git push process itself prints lots of non-actionable messages
+> (eg. bandwidth statistics, object counters for different phases of the
+> process), and my hypothesis is that these obscure the actionable error
+> messages that our server sends back. Highlighting keywords in the
+> draws more attention to actionable messages.
+
+So, for instance, you might want to use a rewrite of this paragraph to
+open the commit message. Something like this, perhaps:
+
+    A remote Git operation can print many non-actionable messages
+    (e.g. bandwidth statistics, object counters for different phases
+    of the process, etc.) and such noise can obscure genuine
+    actionable messages, such as warnings and outright errors.
+
+    As an example, Gerrit does server-side processing to create or
+    update code reviews, and actionable error messages (such as
+    "ERROR: commit is missing Change-Id") must be communicated back to
+    the user during a push operation, but new users often have trouble
+    spotting these error messages amid the noise.
+
+    Address this problem by upgrading 'sideband' to draw attention to
+    these messages by highlighting them with color.
+
+    [...and so forth...]
+
+> Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
 > ---
->  config.h | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+> diff --git a/sideband.c b/sideband.c
+> @@ -1,6 +1,103 @@
+> +struct kwtable {
+> +       /*
+> +        * We use keyword as config key so it can't contain funny chars like
+> +        * spaces. When we do that, we need a separate field for slot name in
+> +        * load_sideband_colors().
+> +        */
 
-May we forge your sign-off?  See Documentation/SubmittingPatches section
-[[sign-off]] for what this means.
+This comment is outdated; load_sideband_colors() does not exist in this patch.
 
-> 
-> diff --git a/config.h b/config.h
-> index b95bb7649..41700f40b 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -178,10 +178,16 @@ struct config_set {
->  };
->  
->  extern void git_configset_init(struct config_set *cs);
-> -extern int git_configset_add_file(struct config_set *cs, const char *filename);
-> -extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
+I get what the first sentence of this comment is saying, but I'm
+having trouble understanding what the second sentence is all about.
+
+> +       const char *keyword;
+> +       char color[COLOR_MAXLEN];
+> +};
 > +
-
-nit: this blank line feels out of place (though I don't particularly
-mind it and wouldn't reroll just for that)
-
->  extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
->  extern void git_configset_clear(struct config_set *cs);
+> +static struct kwtable keywords[] = {
+> +       { "hint",       GIT_COLOR_YELLOW },
+> +       { "warning",    GIT_COLOR_BOLD_YELLOW },
+> +       { "success",    GIT_COLOR_BOLD_GREEN },
+> +       { "error",      GIT_COLOR_BOLD_RED },
+> +};
 > +
-> +/*
-> + * These functions return 1 if not found, and 0 if found, leaving the found
-> + * value in the 'dest' pointer.
-> + */
-> +extern int git_configset_add_file(struct config_set *cs, const char *filename);
+> +// Returns a color setting (GIT_COLOR_NEVER, etc).
 
-This function doesn't take a 'dest' argument.  Is the comment meant to
-apply to it?  If not, can the comment go below it?
+Use /* old-style C comments */ in this codebase, not // C++ or new-style C.
 
-> +extern int git_configset_get_value(struct config_set *cs, const char *key, const char **dest);
->  extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
->  extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
->  extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
+> +static int use_sideband_colors(void)
+> +{
+> +       static int use_sideband_colors_cached = -1;
+> +       const char *key = "color.remote";
+> +
+> +       if (use_sideband_colors_cached >= 0)
+> +               return use_sideband_colors_cached;
+> +
+> +       if (!git_config_get_string(key, &value))
+> +               use_sideband_colors_cached = git_config_colorbool(key, value);
 
-With a sign-off and whatever subset of the above suggestions makes sense
-to you,
+So, if "color.remote" exists, then 'use_sideband_colors_cached' is
+assigned. However, if "color.remote" does not exist, then it's never
+assigned. Is this intended behavior? It seems like you'd want to fall
+back to some other value rather than leaving it unassigned.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Which leads to the next question: The documentation says that this
+falls back to "color.ui" if "color.remote" does not exist, however,
+where is this fallback happening? Am I overlooking something obvious?
 
-Thanks.
+> +       for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+> +               strbuf_reset(&sb);
+> +               strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
+> +               if (git_config_get_string(sb.buf, &value))
+> +                       continue;
+> +               if (color_parse(value, keywords[i].color))
+> +                       die(_("expecting a color: %s"), value);
+
+This error message would be much more helpful if it also told the user
+the name of the config key from which 'value' came.
+
+> +       }
+
+Do you need to be doing the work in the above for-loop if, after
+computing 'use_sideband_colors_cached', it is determined that you
+won't be using color?
+
+> +       strbuf_release(&sb);
+> +       return use_sideband_colors_cached;
+> +}
+> diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+> @@ -0,0 +1,47 @@
+> +test_expect_success 'setup' '
+> +       mkdir .git/hooks &&
+> +       cat << EOF > .git/hooks/update &&
+> +#!/bin/sh
+> +echo error: error
+> +echo hint: hint
+> +echo success: success
+> +echo warning: warning
+> +echo prefixerror: error
+
+I addition to checking other cases, such as "ERROR", as Junio
+suggested, I'd think you'd also want to test:
+
+    hinting: hint
+
+to verify that it doesn't get colored.
+
+> +exit 0
+> +EOF
