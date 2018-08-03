@@ -2,89 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4FBF1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 16:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5014C1F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 16:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbeHCSGf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 14:06:35 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:39323 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727128AbeHCSGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 14:06:35 -0400
-Received: by mail-wm0-f48.google.com with SMTP id q8-v6so7003517wmq.4
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 09:09:38 -0700 (PDT)
+        id S1728160AbeHCSOB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 14:14:01 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:39009 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727144AbeHCSOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 14:14:01 -0400
+Received: by mail-it0-f52.google.com with SMTP id g141-v6so9100933ita.4
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 09:17:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MoRNkOOhiQ4ljBRyb2jpoUaXf+NfP46dH3Rr9kFB+Bk=;
-        b=DLBSsMoQ9GGUXOo6YhTjfN9lzQaecPgq0ldbTVHlO5u4dVj10MIE4IP9wxGyTvXWlx
-         YIFfhj4SEb/3uF/mIYjPeoXQ19mQILNZOW+DWlkHl/Nv97FfGAUPb/cLCctFIRDbgXz6
-         y7mogV2cZQtcIrFdhXMHSgBMkiGNUNP+QcdgdYqnSVmtwyghw8Q8jFy5OTDYxgU8BDmU
-         PDUBwO14efXx22qrtPYe8lJtqM69wWVykh7wdZCNKCTx4jkAjsTyc4RZCp8VLmnTDzKM
-         ewyM2lxvpY6tx5Oa5maCkRzMOtJmpRHPdUkcnsHyNd2i6S43p5zf0ipjkftMh18gIZKz
-         iZdg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=EWbyAZl+kylyx7No+mBdI83gCkAmin7JdjCn1g9z2lc=;
+        b=ZFxJYvjrZgXducDd0ynC4sLAaX+y936vHhh9g/jsDNLe0eTC2Vc0l+hC6fbg2WbTyF
+         Hm9zcoZpwo/sX8h2MbSYsCBPxxjbM/GQ6Yt4XsiWii5qUBPxiM+LzUfYc3edRyl5Qkc9
+         J+Uk3DGMlOKLjF3l2kDkhFdsgNWWwbg4raJQNAvNvv2CUoGGCBj6Rx4NyRi0N8VHQ4Yc
+         qN9DEBSc/TCtsdZ+QRhStLpptju+LQtbT/7X0arVU6T8fE75/vzWXbNtkboLMq6IjQ74
+         B5oqa3sDtDi9wvEzFx1PIXSYB6gagvFt1wVUB9eDxOwhvMJ9lKAI7+iELTE0pDOEIOK5
+         8cJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MoRNkOOhiQ4ljBRyb2jpoUaXf+NfP46dH3Rr9kFB+Bk=;
-        b=DxVMuZU6tqtCKYpVqDZt2Q2lO72gsAttUt5prbNsGOStIXuH8qTewkIhvuJTfs3mQK
-         WBNPVcY7nrMmfRgL9m/q8xVxlRhjDuanpF4GL5/3FkunNt+eGVVr+Ms3o59xH77844Q8
-         Z5thpaJhN0VbjP56Jem1/8D1SEZ9cyqjq54GHQiw6SD+OquRUO41O4cvNb+3tPlTXXaI
-         JA5H1kFXmLoQdzL0+SWk5ZE1sZSpyEiLGy7IzyREa2fLQTw2c3RErIDHv35kozeI4YVX
-         Iv+5OV3Pu/kJE3sbsJed3uE+yfDFNwqXGh454T6BkeaCYc0I+9rEN8GQegPieIoiFVfN
-         gLVQ==
-X-Gm-Message-State: AOUpUlHizanDXoqXBjbm/XjoTonguo2T9eTxQhU8yi6MdjeOE9iuICs+
-        H6aOR8mCEpOmjEzj16tniLf4CbJv
-X-Google-Smtp-Source: AAOMgpcSTVVnG0R/0veQtUbttnDggkqpdsNYg/bpVFPdCkGjtZegiykK737aa74auf5lUazMJ6Njcw==
-X-Received: by 2002:a1c:7908:: with SMTP id l8-v6mr5150330wme.80.1533312577105;
-        Fri, 03 Aug 2018 09:09:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm4990526wrm.14.2018.08.03.09.09.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 Aug 2018 09:09:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
-        <CAOZc8M-AqmcbM=Z47SoPpQNaGwFWEbQ=BctXHaYBVeUf9V+j=Q@mail.gmail.com>
-Date:   Fri, 03 Aug 2018 09:09:35 -0700
-In-Reply-To: <CAOZc8M-AqmcbM=Z47SoPpQNaGwFWEbQ=BctXHaYBVeUf9V+j=Q@mail.gmail.com>
-        (Pratik Karki's message of "Fri, 3 Aug 2018 08:45:51 +0545")
-Message-ID: <xmqqftzvzb28.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=EWbyAZl+kylyx7No+mBdI83gCkAmin7JdjCn1g9z2lc=;
+        b=Wl1yM0k/4RAmDlyrOM0jeu1kf4vyyN7RKNnremZwX3dZ2CXt3hQp58O0l9qFCAtPO2
+         /u7ksAJumeZKbQDMWeqM/FtxjxOTcbMwzus0Kt906SPYIBgPif2y9Hqas6v1tDk+42zW
+         8vjxcoEjzfX/DCPypaKUoVNVvhip7xCXgZ4/UKOdhVqrxS4MWMGAdyDD37KmXT8UO/4D
+         O8wfbZ8/JF85XPgvC/YkDPbVDOgzhgwwkmkf16uBUcft1xu+Rks1OaQayW89mprlWIQs
+         bPQr7Gz/ANfo8CondKYlURGSbIPuzonCBUaHM3mcmrkUjopV2c3r9X/xNt635STljR1l
+         XYDg==
+X-Gm-Message-State: AOUpUlEbYxW6lg+xiC4rS4E28i17r5tYo5Pbwxd+NRlikRtCQD/eezTd
+        y/XnMnLAeWWhnDoVyMZSYrJ9jvibT2FYTBX5eP3ONg==
+X-Google-Smtp-Source: AAOMgpc2iNuSasMhMF1xv5g86nK8nA2dMi8Y+ADjBa4W6q354y9zx6cWHcgK1j+H2+gZsg0zHj7u+IZ/BDoa1aGUpRg=
+X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr7433269itf.78.1533313022544;
+ Fri, 03 Aug 2018 09:17:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180630092031.29910-1-pclouds@gmail.com> <CACsJy8Am4bWKziBV6-J+c+Kz4u-rkotgZiorhvHOfy2K5cMBvg@mail.gmail.com>
+In-Reply-To: <CACsJy8Am4bWKziBV6-J+c+Kz4u-rkotgZiorhvHOfy2K5cMBvg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 3 Aug 2018 18:16:36 +0200
+Message-ID: <CACsJy8DnsTw6_Ohu+rZyqiBGV127dJ1Y4xGRbkRTaBchHtaQxQ@mail.gmail.com>
+Subject: Re: [PATCH 00/12] Kill the_index part2, header file cleanup
+To:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratik Karki <predatoramigo@gmail.com> writes:
+Another friendly ping. I really need to know if I need to update (or
+drop) this part before moving on to part 3.
 
-> Hi Junio,
+On Sat, Jul 21, 2018 at 11:06 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> On Fri, Aug 3, 2018 at 4:47 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> * pk/rebase-in-c (2018-07-30) 3 commits
->>  - builtin/rebase: support running "git rebase <upstream>"
->>  - rebase: refactor common shell functions into their own file
->>  - rebase: start implementing it as a builtin
->>
->>  Rewrite of the "rebase" machinery in C.
->>
->>  Will merge to 'next'.
+> On Sat, Jun 30, 2018 at 11:20 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
+y <pclouds@gmail.com> wrote:
+> >
+> > Like part 1 this is also boring. I wanted to drop these 'extern'
+> > everywhere actually, so before I touched any header file in this
+> > series, I did a clean up first. This is the result (and to reduce diff
+> > noise later)
 >
-> On a recent mail[1], I had suggested stalling this iteration in `pu`
-> and wait for another iteration to merge in `next`.
+> Junio, part1 of the "kill the_index" series is dropped, but what about
+> this one? I think it's still a good cleanup and it only slightly
+> conflicts with 'pu'.
 >
-> [1]: https://public-inbox.org/git/CAOZc8M_FJmMCEB1MkJrBRpLiFjy8OTEg_MxoNQTh5-brHxR-=A@mail.gmail.com/
+> >
+> > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (12):
+> >   apply.h: drop extern on func declaration
+> >   attr.h: drop extern from function declaration
+> >   blame.h: drop extern on func declaration
+> >   cache-tree.h: drop extern from function declaration
+> >   convert.h: drop 'extern' from function declaration
+> >   diffcore.h: drop extern from function declaration
+> >   diff.h: remove extern from function declaration
+> >   line-range.h: drop extern from function declaration
+> >   rerere.h: drop extern from function declaration
+> >   repository.h: drop extern from function declaration
+> >   revision.h: drop extern from function declaration
+> >   submodule.h: drop extern from function declaration
+> >
+> >  apply.h      |  23 +++++-----
+> >  attr.h       |  24 +++++------
+> >  blame.h      |  28 ++++++------
+> >  cache-tree.h |   2 +-
+> >  convert.h    |  56 ++++++++++++------------
+> >  diff.h       | 120 +++++++++++++++++++++++++--------------------------
+> >  diffcore.h   |  50 ++++++++++-----------
+> >  line-range.h |  12 +++---
+> >  repository.h |  25 +++++------
+> >  rerere.h     |  14 +++---
+> >  revision.h   |  69 ++++++++++++++---------------
+> >  submodule.h  | 112 +++++++++++++++++++++++------------------------
+> >  12 files changed, 269 insertions(+), 266 deletions(-)
+> >
+> > --
+> > 2.18.0.rc2.476.g39500d3211
+> >
+>
+>
+> --
+> Duy
 
-Thanks for a prompt response and correction.  Very much appreciated.
 
+
+--=20
+Duy
