@@ -2,111 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0290A1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 02:57:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 554B91F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 03:01:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727403AbeHCEvS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 00:51:18 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:43260 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726256AbeHCEvR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 00:51:17 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d17-v6so2124170pgv.10
-        for <git@vger.kernel.org>; Thu, 02 Aug 2018 19:57:12 -0700 (PDT)
+        id S1727022AbeHCEzJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 00:55:09 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:50614 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725736AbeHCEzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 00:55:09 -0400
+Received: by mail-wm0-f46.google.com with SMTP id s12-v6so4677678wmc.0
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 20:01:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=JJE6+NgvcOI/OyFHfEuTQ7PNX5hWS/Jl0yHIhOUxl6Q=;
-        b=YXYD395uQH7Grw51XV5jrkLf0KoM/SQwfxopcmU22soA2L8/pKLxjfMzTegJGs58b6
-         /KBKk2EW24nu+kQFU7oSmpUxRAB74LZhM/CmOF5TeEAO3Vgff4NLJUA79Ay1ynAo/dnU
-         8McSI94nsUqvc4EmrvT9EKCNhHIlNBpoSqYwW0yhAzMrqp0Zuqd60EcSc5agckp3WVS+
-         ZJIbMC00tpwxS8xl5spE5ciehj5NdOWf7MotMq4wdbrQBTxU7DI6uWng948xdXcVtSuK
-         EQwJIzvOULHOBWIN9qZREwecUHaemEsdk3dllSCmAuzmEdQ7NPzr70hU7Ujd5skWAsp9
-         ebMA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CJGs7dE5s4eOc7Ii6O8+NjhzXktR3PcgVzmYWlbdQis=;
+        b=r4yAMRspNKpKimbhtt3VSAg9tzDWg7lHeYhlms1cWDQ48iw+KaNPKmMNrokJ951bG7
+         1gnZK2G62IMqDFHs5TV4UGdxGC5ZHIQsC9hZBAAJR+oX8fGq0DGd+DmxdsEDI9w4z9ln
+         0A4B5CY8KkBy/sTerltx8ektjdT4acM15NmXqbBo/EWQ15bqM7M+G+3NJS7KKnflf6oC
+         0BhjaKZ1Zd7fu9SOMWZ2olYRRI0j9Dl6H+whg4UuYM4mUxO8OD4KtT+5zpa3bSartBz0
+         mvsI5am/rSV/1S9+tqHCydCTSOdgMEIVx4SZr8CFF4/iO61yVk+kdNtEwWKX8/abUYoS
+         w42w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=JJE6+NgvcOI/OyFHfEuTQ7PNX5hWS/Jl0yHIhOUxl6Q=;
-        b=N3fnOavpnoiNZWTh7t1J/U+SKeOj7Gu462znqyYedDWFzp+VCP37RCm5uD4M+YkDLd
-         sO3BB4XmcFXdRFN1ONpVQGLlNs59BYud4ea/gx9irjDDhkNx2amghNc1GVI4CeAYQ4Bw
-         ejsmGICwCxLc3uDBvkIiw08uSg/pjp4wTvOSSTTo4Vb6L7gfn7KPlkHC/Jwjc6cbHLuT
-         UyC+6Kj6NVHMteAzy9CHR+bkbxhns5aJsqJARZfChJah7dEWFHKzkmAncGab7LAr1ylT
-         hrj1KRU0iDy3Nb5vLGoOE8xmT37NyWfW/zoBHge5gcpAWl/irCl13jc7B5bsfnAruwq+
-         3c8w==
-X-Gm-Message-State: AOUpUlGTMNjI5ScUMrlynVsX0Iix4Sta7CnEBZIbM7BpCnpbZflQnjAD
-        49lZP+hi9L86VA7ytPpCVZADlSCu
-X-Google-Smtp-Source: AAOMgpevc+NLXopDZWkKLpOfry3zeg6V/5p3KvCA/7Z2LvajNEMvrPGzcd2fkxPfkYcWNSOeKPeYfg==
-X-Received: by 2002:a63:e206:: with SMTP id q6-v6mr1866244pgh.223.1533265032159;
-        Thu, 02 Aug 2018 19:57:12 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 1-v6sm5888348pfm.145.2018.08.02.19.57.11
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 02 Aug 2018 19:57:11 -0700 (PDT)
-Date:   Thu, 2 Aug 2018 19:57:09 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Dan Shumow <danshu@microsoft.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>,
-        "keccak@noekeon.org" <keccak@noekeon.org>
-Subject: Re: Hash algorithm analysis
-Message-ID: <20180803025709.GD197924@aiede.svl.corp.google.com>
-References: <20180609205628.GB38834@genre.crustytoothpaste.net>
- <20180609224913.GC38834@genre.crustytoothpaste.net>
- <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net>
- <20180724190136.GA5@0f3cdde9c159>
- <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
- <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
- <20180724221008.GI18502@genre.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1807301058560.10478@tvgsbejvaqbjf.bet>
- <MWHPR21MB01738A46E37527E45E950937C42F0@MWHPR21MB0173.namprd21.prod.outlook.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CJGs7dE5s4eOc7Ii6O8+NjhzXktR3PcgVzmYWlbdQis=;
+        b=WItDSM8dlNCpaTx7d+3NdTwt2q6OgBjAlGXdGduI/9f2YBiqBHZi3ZzVH8dXbxTdbS
+         pd6Jvu6EYwA/Xvz3Xzt+wo9Wll/pqQLL0VnrY48vDzIcUeVXy7S80HBwpOkfpQjcBIDT
+         h2Ln/MXoH2f04UZtFdYnXJsWX71K/xMQJpWn16eVx5wUpQv/ubzztRnRU2Q0mvrUND/F
+         PG6AGRSuJusSzqC45crafkFtDDyyAlhSjDzIR18X7sWV2336Cky44R9j5IIIqYEsTNgP
+         babqsrj6eIvHEKf4MNXrLu5VkWP2E4ngDLG0BBISbgExkRwRDQcoYUr7/hpNCiQ/a6ZE
+         x9CQ==
+X-Gm-Message-State: AOUpUlF1TiG5S8MFzCg5r/01KsGPvLKC6I8refHZOXzv3afwVNQm/0n5
+        8FGNbCZgM+h/l+7hAV1ec4dsdSiaJ6TNF8Vn3RibmAj4
+X-Google-Smtp-Source: AAOMgpfFEm6Tf7VmIkck+PR91ghVoWuvG0rxb5TkuICO5s4MCzRP4unLPF+ySIM9RfNPTINgMLafdc3Nnbe21UOgrsU=
+X-Received: by 2002:a1c:5e48:: with SMTP id s69-v6mr3444875wmb.19.1533265261992;
+ Thu, 02 Aug 2018 20:01:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <MWHPR21MB01738A46E37527E45E950937C42F0@MWHPR21MB0173.namprd21.prod.outlook.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
+From:   Pratik Karki <predatoramigo@gmail.com>
+Date:   Fri, 3 Aug 2018 08:45:51 +0545
+Message-ID: <CAOZc8M-AqmcbM=Z47SoPpQNaGwFWEbQ=BctXHaYBVeUf9V+j=Q@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dan,
+Hi Junio,
 
-Dan Shumow wrote:
-
-[replying out of order for convenience]
-> However, I agree with Adam Langley that basically all of the
-> finalists for a hash function replacement are about the same for the
-> security needs of Git.  I think that, for this community, other
-> software engineering considerations should be more important to the
-> selection process.
-
-Thanks for this clarification, which provides some useful context to
-your opinion that was previously relayed by Dscho.
-
-[...]
-> So, as one of the coauthors of the SHA-1 collision detection code, I
-> just wanted to chime in and say I'm glad to see the move to a longer
-> hash function.  Though, as a cryptographer, I have a few thoughts on
-> the matter that I thought I would share.
+On Fri, Aug 3, 2018 at 4:47 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I think that moving to SHA256 is a fine change, and I support it.
+> * pk/rebase-in-c (2018-07-30) 3 commits
+>  - builtin/rebase: support running "git rebase <upstream>"
+>  - rebase: refactor common shell functions into their own file
+>  - rebase: start implementing it as a builtin
+>
+>  Rewrite of the "rebase" machinery in C.
+>
+>  Will merge to 'next'.
 
-More generally, thanks for weighing in and for explaining your
-rationale.  Even (especially) having already made the decision, it's
-comforting to hear a qualified person endorsing that choice.
+On a recent mail[1], I had suggested stalling this iteration in `pu`
+and wait for another iteration to merge in `next`.
 
-Sincerely,
-Jonathan
+[1]: https://public-inbox.org/git/CAOZc8M_FJmMCEB1MkJrBRpLiFjy8OTEg_MxoNQTh5-brHxR-=A@mail.gmail.com/
+
+Cheers,
+Pratik
