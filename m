@@ -2,79 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85D2D1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 04:42:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52F511F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 06:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726841AbeHCGhF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 02:37:05 -0400
-Received: from mout.web.de ([217.72.192.78]:49583 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726413AbeHCGhE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 02:37:04 -0400
-Received: from [192.168.178.36] ([79.237.249.67]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MQedF-1fO1m13kWD-00U2Wr; Fri, 03
- Aug 2018 06:42:32 +0200
-Subject: Re: Re* [PATCH] push: comment on a funny unbalanced option help
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-References: <xmqqh8ke6i7w.fsf@gitster-ct.c.googlers.com>
- <87k1p9u860.fsf@evledraar.gmail.com>
- <xmqqwot969mp.fsf@gitster-ct.c.googlers.com>
- <xmqq36vw4vu5.fsf_-_@gitster-ct.c.googlers.com>
- <b72e5848-a51d-a62d-2a3c-36ea6b8582d0@web.de>
- <xmqqtvoc3fgl.fsf@gitster-ct.c.googlers.com>
- <87effgtsnm.fsf@evledraar.gmail.com>
- <xmqqr2jgzess.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <3120e9b3-f3e7-465c-63c3-084d3f010e1e@web.de>
-Date:   Fri, 3 Aug 2018 06:42:30 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727044AbeHCICk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 04:02:40 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:36885 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726799AbeHCICk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 04:02:40 -0400
+Received: by mail-pl0-f67.google.com with SMTP id d5-v6so2105489pll.4
+        for <git@vger.kernel.org>; Thu, 02 Aug 2018 23:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=jOVbw9Zk0iQC67zOHBnZVFvjyX1EQX5jpgK/f9ITNN8=;
+        b=DdjQsX+ubVmCpxzq1vQI6J/7mdtikLuIdPpLD5IQ2FuWOwSRHCIK71qLEo5lo4gW9c
+         noyKEufZndcyqdnRql/N3WNB46mi+VGQq2BkAIu9PJgRyd7NPILCRzucsirPaZeb1KHb
+         uusP4ngOIPRZwMQhrop3eK15IGoDJ3KgoBes+JISZqO2tGha/BPyuMuB1kUyKRtkKm/y
+         iAWTqZ2h7fvpHrR4mByg4K80xnT6k9S0OixORr6IjThXeYlKMQLwJPibcMEHCeCrf5Up
+         Q/OcsVH7FBxjvUaZaaNqssAZ9rphg3sa/a3x0r3ibHNMfYwtLU6VLi0jJV6OzEB2MMLp
+         wfOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=jOVbw9Zk0iQC67zOHBnZVFvjyX1EQX5jpgK/f9ITNN8=;
+        b=ir6EuKysSLjJ+YMhadKEvtbcRS9ak7wm+B8KcbL+08GTbIDOnrm8UT4jBu9Is4aUfS
+         6SDtd+j9ljzH+cXX5FyIPBEZu0B6IsuU23LTuwHyfVRkUwv8tLXUE/64JWCU2FbDW7KQ
+         Wc7IN5QQBmRq0sipdsyYqb3E/3rtRkmlt6nZ0iZuxOFmfLpvrPzcXteehyR+XnPUmOA/
+         odqjkUkgBBIlinbEm8pSAJvGN4zFtnViEDtite3HlhAzFvXr1WKbNYHdGEehyr+NClyz
+         CeUOGbtmtO1IhwN9Jb8Er9wPDt1RhPrXdQci60wtl1rVNVpiggZLbNSqOaUUETW1Vava
+         8qRw==
+X-Gm-Message-State: AOUpUlFV8S3emvUlXnQiJEyJu5i31raSVhSJZLIKCJOLFHWBU0wv9KFn
+        sR5EzdIPbWtVCcog7IVbb7puXjV6
+X-Google-Smtp-Source: AAOMgpf9qHxMJOnt1SAmT0P+hJqqo0pltzEp8DeYM4BxT1wM5SsYmMkB5UHnF4Ok6OOii3Jvkko41Q==
+X-Received: by 2002:a17:902:7592:: with SMTP id j18-v6mr2228454pll.72.1533276478102;
+        Thu, 02 Aug 2018 23:07:58 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id j15-v6sm5320951pfn.52.2018.08.02.23.07.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 02 Aug 2018 23:07:57 -0700 (PDT)
+Date:   Thu, 2 Aug 2018 23:07:49 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] color: protect against out-of-bounds array
+ access/assignment
+Message-ID: <20180803060749.GA237521@aiede.svl.corp.google.com>
+References: <20180802093208.27420-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqr2jgzess.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:tuwQaF2UohmWfE/DPcmspzBMEbToayBxwMDmSoq0vhKDWomnCek
- Mti33A/VizuTVM9wAeD6U86/gd7imMkWEZqm3fKXDbCtC6rmQpiSjPDU7G+bTVqNj6+C7kI
- 56cvOmYlecaUatmJCkmaA6JTSk3STBsbICD0ieypizTL9BJvAr5EAlp93E18iRL3HiDSRp7
- S/a3pj5ngWTDYfnGZC0Zg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+qViBeBREx4=:Nimc24z57ZFe4BwWUE5VDL
- YAsrx0pthXbCN9DRil44F8FwPomWUr+a/R6nzQaAw/miadFRnFnHxmSGHegWtPJ0OfvFlwvsw
- QdGLzrYY4LGIZX0+G00lI+RNk582IyUmAPZihaRR/nA1Yzn9Y8m4MHchaNniZaK5PWzgmbfv0
- E+oSHW9wTRMaAcGbCbl1gREcpG7gSAQDgNXqp149eLuJREqeBoQtSJCHR41jW81XGmDZt2G16
- xpVs0fy3CjGIBqPR3hVaZ5eef0ICCbX+hLvtlkXkyRdn1RBzy7Kou+SAtfC/8thQxppSp/ZU8
- MYxk7fm40m/cNxYsAPoWy4ILME9t58MUtebLkm8Y8wqadxb8LvrYvOkYdrz1qQoUeuhnj+CEF
- EZIr6gsY2oDG7fbz9tZolUwYw15saGj3zxh+K9R/ws9GsdVqR/jV03WVBu7cfMuNsCxWCAG2k
- fJgRS8NbUhjAqSxF/7vqeDnRS6S/g9rmc6rBVAi1v5unboGOmdm+AjBjNzOEJVyAr3wWGaUN5
- A2xiBT0YE8X2FBttvEoZHWgPrQAimvf+eN/GBbj88SGi2Zavkh12y8/oUKzfRqpm3VZNKO2hm
- jyNKhbXHEeSxNLUfYpfEEnMleNXl2aR1DXMhMl6K3jlyPh3rGsuW8MzCcj5lKRxrVYj9WZN7c
- KGiSg6z7KSE1Y2WtlsEBe7oz0UO+ct16x8f3kLucqQEXd3rKS3fJLd67bcU96a1lm9amvrQ2W
- mYyo64sOaw/wMIfsSC6aYJfX1AavzXK1tv0LMuKfOeJgM7yPtNj5Wh63Sqxm0hk6QHXXR1iPy
- r0zFnE5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180802093208.27420-1-sunshine@sunshineco.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.08.2018 um 22:36 schrieb Junio C Hamano:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
->> Thanks, FWIW that's fine by me, and also if you want to drop this "fake"
->> patch of mine and replace it with something René came up with (I have
->> not yet read his 1-6 patches submitted on this topic, so maybe they're
->> not mutually exclusive).
-> 
-> I think the 6-patch series supersedes this one.  Thanks anyway.
+Hi,
 
-Actually no, I specifically avoided touching builtin/push.c because this
-patch already handled it; it should still be applied before patch 6 from
-my series.
+Eric Sunshine wrote:
 
-René
+> want_color_fd() is designed to work only with standard input, output,
+> and error file descriptors, and stores information about each descriptor
+> in an array. However, it doesn't verify that the passed-in descriptor
+> lives within that set, which, with a buggy caller, could lead to
+> access/assignment outside the array bounds.
+>
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  color.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/color.c b/color.c
+> index b1c24c69de..b0be9ce505 100644
+> --- a/color.c
+> +++ b/color.c
+> @@ -343,6 +343,9 @@ int want_color_fd(int fd, int var)
+>  
+>  	static int want_auto[3] = { -1, -1, -1 };
+>  
+> +	if (fd < 0 || fd >= ARRAY_SIZE(want_auto))
+> +	    BUG("file descriptor out of range: %d", fd);
+
+The indentation looks wrong here.
+
+Combining that with the other suggestions from this thread, I end up
+with this v2:
+
+-- >8 --
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: color: protect against out-of-bounds reads and writes
+
+want_color_fd() is designed to work only with standard output and
+error file descriptors and stores information about each descriptor in
+an array. However, it doesn't verify that the passed-in descriptor
+lives within that set, which, with a buggy caller, could lead to
+access or assignment outside the array bounds.
+
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ color.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/color.c b/color.c
+index b1c24c69de..ebb222ec33 100644
+--- a/color.c
++++ b/color.c
+@@ -343,6 +343,9 @@ int want_color_fd(int fd, int var)
+ 
+ 	static int want_auto[3] = { -1, -1, -1 };
+ 
++	if (fd < 1 || fd >= ARRAY_SIZE(want_auto))
++		BUG("file descriptor out of range: %d", fd);
++
+ 	if (var < 0)
+ 		var = git_use_color_default;
+ 
+-- 
+2.18.0.597.ga71716f1ad
+
