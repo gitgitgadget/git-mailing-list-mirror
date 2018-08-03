@@ -2,120 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5014C1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 16:17:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17FA01F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 16:24:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728160AbeHCSOB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 14:14:01 -0400
-Received: from mail-it0-f52.google.com ([209.85.214.52]:39009 "EHLO
-        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727144AbeHCSOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 14:14:01 -0400
-Received: by mail-it0-f52.google.com with SMTP id g141-v6so9100933ita.4
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 09:17:03 -0700 (PDT)
+        id S1727473AbeHCSVR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 14:21:17 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41183 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727374AbeHCSVR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 14:21:17 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j5-v6so5923155wrr.8
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 09:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=EWbyAZl+kylyx7No+mBdI83gCkAmin7JdjCn1g9z2lc=;
-        b=ZFxJYvjrZgXducDd0ynC4sLAaX+y936vHhh9g/jsDNLe0eTC2Vc0l+hC6fbg2WbTyF
-         Hm9zcoZpwo/sX8h2MbSYsCBPxxjbM/GQ6Yt4XsiWii5qUBPxiM+LzUfYc3edRyl5Qkc9
-         J+Uk3DGMlOKLjF3l2kDkhFdsgNWWwbg4raJQNAvNvv2CUoGGCBj6Rx4NyRi0N8VHQ4Yc
-         qN9DEBSc/TCtsdZ+QRhStLpptju+LQtbT/7X0arVU6T8fE75/vzWXbNtkboLMq6IjQ74
-         B5oqa3sDtDi9wvEzFx1PIXSYB6gagvFt1wVUB9eDxOwhvMJ9lKAI7+iELTE0pDOEIOK5
-         8cJA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=U0II+I+oc+GlhZID393EPbeII2UNi8S83eTS5+ux4cY=;
+        b=BW+R/WgJ05lHnpquFRKkKQ01XNBICL2LpsMypXlOA0IKNrJr3TQQouRmlsa41n8vvQ
+         +fNgU3Kpyl8bToY0Za83lmXyDwcU90fVaQb4RsMDg1s2eqzAz/k6KUH7fjbXRleQ0ke6
+         oRWdS4hEc8cnRnQ0VGleVaoDqAo0zXO3hbsZZnAHY/XVYYfcMqwQLWKGkbUNOgY+kRg7
+         BnZqgmpLlHWb5cyABSCU4RdXnOte5FS5G+jx80zOiDm4H4qF5CCTN4PGfAMQPHmmGNaX
+         aa9I9kOdEB3+BaxbiMyl8NH2XlAnGxF0hLhkBTbebOf103vH6AoNdBzY82+CW1T6dO1J
+         MthQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=EWbyAZl+kylyx7No+mBdI83gCkAmin7JdjCn1g9z2lc=;
-        b=Wl1yM0k/4RAmDlyrOM0jeu1kf4vyyN7RKNnremZwX3dZ2CXt3hQp58O0l9qFCAtPO2
-         /u7ksAJumeZKbQDMWeqM/FtxjxOTcbMwzus0Kt906SPYIBgPif2y9Hqas6v1tDk+42zW
-         8vjxcoEjzfX/DCPypaKUoVNVvhip7xCXgZ4/UKOdhVqrxS4MWMGAdyDD37KmXT8UO/4D
-         O8wfbZ8/JF85XPgvC/YkDPbVDOgzhgwwkmkf16uBUcft1xu+Rks1OaQayW89mprlWIQs
-         bPQr7Gz/ANfo8CondKYlURGSbIPuzonCBUaHM3mcmrkUjopV2c3r9X/xNt635STljR1l
-         XYDg==
-X-Gm-Message-State: AOUpUlEbYxW6lg+xiC4rS4E28i17r5tYo5Pbwxd+NRlikRtCQD/eezTd
-        y/XnMnLAeWWhnDoVyMZSYrJ9jvibT2FYTBX5eP3ONg==
-X-Google-Smtp-Source: AAOMgpc2iNuSasMhMF1xv5g86nK8nA2dMi8Y+ADjBa4W6q354y9zx6cWHcgK1j+H2+gZsg0zHj7u+IZ/BDoa1aGUpRg=
-X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr7433269itf.78.1533313022544;
- Fri, 03 Aug 2018 09:17:02 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=U0II+I+oc+GlhZID393EPbeII2UNi8S83eTS5+ux4cY=;
+        b=ciMd5Q35rcl0cXEiVIawlKQM0Nf9f9tTFsxMk2wT2yt+vF3JDb9LGCxFA5Bl2xicFK
+         QR+NoVajdCS3IUzt8y7YERUi021vCU78AQ/J1xJeutWF+jog2Ya/ZU9mZfMWoopeBH+o
+         AnzVNPOD/SspJ7tzJOYRgi5ZNoJYmQ7A3dcYbehAkdN/QXshu36mAOpvoI7Ih3uoShde
+         HCbx96yPHpB3xytndxUsTdA1AwlHF431qeOzzo9sWl1xUx+xKPmMJb77rsW7iMroaU/O
+         XrQGFNcMX262vanwXX5SPsExZJz1Fh3la2TjdKZx8KPegW6ifqgKEP7rndPF6a+Z2tSj
+         qSLg==
+X-Gm-Message-State: AOUpUlFntR7QzWFS0/DmqLML5mkSPpPR2oKRN/nkuA4U+OxjCppK6iVL
+        ZajDeLJIxcS0lmBtgDBVjHs=
+X-Google-Smtp-Source: AAOMgpcKogbhT/MC+7K3jOJxd31GWLCpt0LzyeSFakMaZvYAnLxXdzrHieeXX99WrFNAxpTpE3xJJw==
+X-Received: by 2002:adf:e542:: with SMTP id z2-v6mr3095300wrm.40.1533313455116;
+        Fri, 03 Aug 2018 09:24:15 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u7-v6sm2670021wrq.13.2018.08.03.09.24.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 Aug 2018 09:24:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH v2 06/12] submodule--helper: add a '--stage' option to the 'config' sub command
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-7-ao2@ao2.it>
+        <xmqqd0v01trp.fsf@gitster-ct.c.googlers.com>
+        <20180803130334.3979eedb0733c609815e9fd5@ao2.it>
+Date:   Fri, 03 Aug 2018 09:24:14 -0700
+In-Reply-To: <20180803130334.3979eedb0733c609815e9fd5@ao2.it> (Antonio
+        Ospite's message of "Fri, 3 Aug 2018 13:03:34 +0200")
+Message-ID: <xmqqbmajzadt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180630092031.29910-1-pclouds@gmail.com> <CACsJy8Am4bWKziBV6-J+c+Kz4u-rkotgZiorhvHOfy2K5cMBvg@mail.gmail.com>
-In-Reply-To: <CACsJy8Am4bWKziBV6-J+c+Kz4u-rkotgZiorhvHOfy2K5cMBvg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 3 Aug 2018 18:16:36 +0200
-Message-ID: <CACsJy8DnsTw6_Ohu+rZyqiBGV127dJ1Y4xGRbkRTaBchHtaQxQ@mail.gmail.com>
-Subject: Re: [PATCH 00/12] Kill the_index part2, header file cleanup
-To:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Another friendly ping. I really need to know if I need to update (or
-drop) this part before moving on to part 3.
+Antonio Ospite <ao2@ao2.it> writes:
 
-On Sat, Jul 21, 2018 at 11:06 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Sat, Jun 30, 2018 at 11:20 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
-> >
-> > Like part 1 this is also boring. I wanted to drop these 'extern'
-> > everywhere actually, so before I touched any header file in this
-> > series, I did a clean up first. This is the result (and to reduce diff
-> > noise later)
->
-> Junio, part1 of the "kill the_index" series is dropped, but what about
-> this one? I think it's still a good cleanup and it only slightly
-> conflicts with 'pu'.
->
-> >
-> > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (12):
-> >   apply.h: drop extern on func declaration
-> >   attr.h: drop extern from function declaration
-> >   blame.h: drop extern on func declaration
-> >   cache-tree.h: drop extern from function declaration
-> >   convert.h: drop 'extern' from function declaration
-> >   diffcore.h: drop extern from function declaration
-> >   diff.h: remove extern from function declaration
-> >   line-range.h: drop extern from function declaration
-> >   rerere.h: drop extern from function declaration
-> >   repository.h: drop extern from function declaration
-> >   revision.h: drop extern from function declaration
-> >   submodule.h: drop extern from function declaration
-> >
-> >  apply.h      |  23 +++++-----
-> >  attr.h       |  24 +++++------
-> >  blame.h      |  28 ++++++------
-> >  cache-tree.h |   2 +-
-> >  convert.h    |  56 ++++++++++++------------
-> >  diff.h       | 120 +++++++++++++++++++++++++--------------------------
-> >  diffcore.h   |  50 ++++++++++-----------
-> >  line-range.h |  12 +++---
-> >  repository.h |  25 +++++------
-> >  rerere.h     |  14 +++---
-> >  revision.h   |  69 ++++++++++++++---------------
-> >  submodule.h  | 112 +++++++++++++++++++++++------------------------
-> >  12 files changed, 269 insertions(+), 266 deletions(-)
-> >
-> > --
-> > 2.18.0.rc2.476.g39500d3211
-> >
->
->
-> --
-> Duy
+> The rationale behind the change is to close the circle started with 04
+> and 05 and stop referring to .gitmodules explicitly by file path in git
+> commands. The change is not strictly needed for the series, it's for
+> consistency sake.
 
+Sorry, but I am still not quite sure what consistency you are
+referring to.
 
-
---=20
-Duy
+I also do not see a reason why we want to stop referring to
+.gitmodules explicitly by name.  We do not hide the fact that
+in-tree .gitignore and .gitattributes files are used to hold the
+metainformation about the project tree, saying that it is an
+implementation detail.  Is there a good reason why .gitmodules
+should be different from these other two?
