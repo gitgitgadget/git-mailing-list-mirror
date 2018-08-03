@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 933171F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 17:42:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEC491F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 17:42:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727850AbeHCTj0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 15:39:26 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:42570 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727362AbeHCTjZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 15:39:25 -0400
-Received: by mail-pl0-f68.google.com with SMTP id z7-v6so2853320plo.9
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
+        id S1728025AbeHCTj1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 15:39:27 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36153 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbeHCTj1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 15:39:27 -0400
+Received: by mail-pg1-f194.google.com with SMTP id h12-v6so3165980pgs.3
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jTTvzwVdH9r+sX8kHvpDgV9GDztZ2ZvJi/0rPxOjMKY=;
-        b=aCEXiEI2Y5IaMPW04b1Zeq6m9zNBV0gKb0/mzYP8AisQwsIksqhBmky9BDnOyiHaUe
-         bIEqP+8WSQHFalcFxOOFVt01YXjXMeB7v9Z5TLMhwNKNs1rmsQfjwTtlYsCHadJwDvOK
-         ti6tIoJmx29cmw2TTJhkM79et9/hzfU153Nl4lu1Ud6SoUYcsFVnWO/lET8YMRsoXLNz
-         Vpf2m87a4Z7n/vcJoHQNbzNVHMfajqc08plsHJvTa9hlBufhZn5cKQNlJkUBJcPwkRdV
-         Z85bUbwUrCFzMNkO1EKNahN7M6K+UPnBOzZ1aTHPdS6sBd1DtSsgdYRrHCx1wOYpYKD/
-         1caA==
+        bh=3k7QON1us3lVQbF4D2SdOZ57GkIBzMF+bsVpylmAsPU=;
+        b=G/bd3cqFyi59dNd3k7+1iPOCzffEUytL9CYr/vyNDhJkr9xBHW9jmMXwt+94dSZAh+
+         whvhVcqWb9IO27UQCFktQafRWY3dyUWZhT/gsC/9mjbTUiyPVabW27TkSgJXx0yh8GEA
+         Kai+flK0jPjYTMvO7jcIIdF/5q65XxOYh+bxxFhY57GUW1ssRkmz63LStMWpzdHaJCuN
+         YdHvqI3/ldJ9idMKmOVaF1MZSXngIEAY/2rEVUddcJVr7QEa2d55vOj5zJgUc9qju54K
+         XN2JNvP0/iTIrnypvstbFVvmrsRb08cFHfQmXRXIM9geC7Fxjqd3ZFXc+9p3BeZh6btv
+         YIYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jTTvzwVdH9r+sX8kHvpDgV9GDztZ2ZvJi/0rPxOjMKY=;
-        b=Jf4OW5qM/xGE1T1Q2thMA7jjqLF6hufR/QxLkLWD55khrXiPEC16Lcf6540AVGd1A3
-         /cv2u7Z7hotxBOQCcgxUt2qx+IWQUrMKxP/tC8naQIFc/rpwKUyDVTzo6PSAvK878ukS
-         js7/MUPASBRV3vGRN/7r7npq+vqbCghO8SXseaIxK/jcsTouL1PR+nEScowNI3U/viAR
-         G+7TplhYDD8CxtQr6Js6XkLx8k8qeEuk0N1fMdTK2lvIYXuNjWqpsClK+/zzyPRVmpyL
-         vOCKzEJVerpCEnnZbSHtit0aaz66EMkrNaB/UOTeDow2+xJU9nrk6/c7xA3oTbkhOi1Q
-         GcwA==
-X-Gm-Message-State: AOUpUlF4tRpCsFyP2y4it4TBq0dMzSZYEddE5ap1oefB72ytFzlIOYYP
-        UadySTJOMZJliS9GEiYVvDJomIC5
-X-Google-Smtp-Source: AAOMgpffUVJ9bh/77BKDejWhcg5GsXEmazYhRLSmSIKAshKTKNh7ZUtrjKKFHs/yODOoENczwTtWXg==
-X-Received: by 2002:a17:902:7c0a:: with SMTP id x10-v6mr4423291pll.77.1533318128097;
-        Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
+        bh=3k7QON1us3lVQbF4D2SdOZ57GkIBzMF+bsVpylmAsPU=;
+        b=RZN55SclGnLigIe1tGc8QcjnVxmj5RPeYQp4C8dtKHVPN3YKzOo6Xy63+aXfP5koty
+         aXVDA2WP2JBsi44qeQwiU4nDqqajpf5DCB4q4NO7Wmds3ukr7xPdyUIioDcHSyzufze4
+         uZe/5Q2rUUaKkYyMNf0Occahou+xecG0oBSCn219SkqKnHikq5AfEMWE/BrjkfRvQJNG
+         kJY4GqjC0h76N9F/12vpwMevxqO7YJkodoqV/6yAlN8paEU0YszV+M5rf/0/yYgSrsBA
+         em5T1EJfvJIkmepFnQlioyNjiQCORlV3Awe0vRVBu1ssiccD7/FVCOO7wBNy5BXhdKvq
+         JA5A==
+X-Gm-Message-State: AOUpUlFkdb7sFl5xV1Nw72kk4hUBcD2RXg/u8DquGsPVLUgA08yI+dB8
+        RucbOF9pQzwivS4vp9rcVjT3wHSu
+X-Google-Smtp-Source: AAOMgpfSpXQhgVlB+pNSrTHvJG3RRDSL7CxhHh8qGx/k+FtBnzb+HlxppebbpyfcdYnGiC9tehXZqA==
+X-Received: by 2002:a63:b91a:: with SMTP id z26-v6mr4768844pge.22.1533318129606;
+        Fri, 03 Aug 2018 10:42:09 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id r23-v6sm14069906pfd.144.2018.08.03.10.42.06
+        by smtp.gmail.com with ESMTPSA id j71-v6sm9821275pgd.23.2018.08.03.10.42.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Aug 2018 10:42:07 -0700 (PDT)
-Date:   Fri, 03 Aug 2018 10:42:07 -0700 (PDT)
-X-Google-Original-Date: Fri, 03 Aug 2018 17:42:02 GMT
-Message-Id: <1d82eb450378c5d9ebdadb2f785df1782cf3a1d4.1533318123.git.gitgitgadget@gmail.com>
+        Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
+Date:   Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
+X-Google-Original-Date: Fri, 03 Aug 2018 17:42:03 GMT
+Message-Id: <b29c4d979f147f38bc0a4765a953a748eec0cd6d.1533318123.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.13.git.gitgitgadget@gmail.com>
 References: <pull.13.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] t3430: demonstrate what -r, --autosquash & --exec should
- do
+Subject: [PATCH 2/2] rebase --exec: make it work with --rebase-merges
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,40 +70,130 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The --exec option's implementation is not really well-prepared for
---rebase-merges. Demonstrate this.
+The idea of `--exec` is to append an `exec` call after each `pick`.
+
+Since the introduction of fixup!/squash! commits, this idea was extended
+to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
+exec would not be inserted between a `pick` and any of its corresponding
+`fixup` or `squash` lines.
+
+The current implementation uses a dirty trick to achieve that: it
+assumes that there are only pick/fixup/squash commands, and then
+*inserts* the `exec` lines before any `pick` but the first, and appends
+a final one.
+
+With the todo lists generated by `git rebase --rebase-merges`, this
+simple implementation shows its problems: it produces the exact wrong
+thing when there are `label`, `reset` and `merge` commands.
+
+Let's change the implementation to do exactly what we want: look for
+`pick` lines, skip any fixup/squash chains, and then insert the `exec`
+line. Lather, rinse, repeat.
+
+While at it, also add `exec` lines after `merge` commands, because they
+are similar in spirit to `pick` commands: they add new commits.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3430-rebase-merges.sh | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ sequencer.c              | 59 ++++++++++++++++++++++++++++++++--------
+ t/t3430-rebase-merges.sh |  2 +-
+ 2 files changed, 49 insertions(+), 12 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index 31038472f..dda5cdbba 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char *commands)
+ {
+ 	const char *todo_file = rebase_path_todo();
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+-	struct todo_item *item;
+ 	struct strbuf *buf = &todo_list.buf;
+ 	size_t offset = 0, commands_len = strlen(commands);
+-	int i, first;
++	int i, insert_final_commands;
+ 
+ 	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+ 		return error(_("could not read '%s'."), todo_file);
+@@ -4257,19 +4256,57 @@ int sequencer_add_exec_commands(const char *commands)
+ 		return error(_("unusable todo list: '%s'"), todo_file);
+ 	}
+ 
+-	first = 1;
+-	/* insert <commands> before every pick except the first one */
+-	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
+-		if (item->command == TODO_PICK && !first) {
+-			strbuf_insert(buf, item->offset_in_buf + offset,
+-				      commands, commands_len);
+-			offset += commands_len;
++	/*
++	 * Insert <commands> after every pick. Here, fixup/squash chains
++	 * are considered part of the pick, so we insert the commands *after*
++	 * those chains if there are any.
++	 */
++	insert_final_commands = 1;
++	for (i = 0; i < todo_list.nr; ) {
++		enum todo_command command = todo_list.items[i].command;
++		int j = 0;
++
++		if (command != TODO_PICK && command != TODO_MERGE) {
++			i++;
++			continue;
++		}
++
++		/* skip fixup/squash chain, if any */
++		for (i++; i < todo_list.nr; i++, j = 0) {
++			command = todo_list.items[i].command;
++
++			if (is_fixup(command))
++				continue;
++
++			if (command != TODO_COMMENT)
++				break;
++
++			/* skip comment if followed by any fixup/squash */
++			for (j = i + 1; j < todo_list.nr; j++)
++				if (todo_list.items[j].command != TODO_COMMENT)
++					break;
++			if (j < todo_list.nr &&
++			    is_fixup(todo_list.items[j].command)) {
++				i = j;
++				continue;
++			}
++			break;
+ 		}
+-		first = 0;
++
++		if (i >= todo_list.nr) {
++			insert_final_commands = 1;
++			break;
++		}
++
++		strbuf_insert(buf, todo_list.items[i].offset_in_buf + offset,
++			      commands, commands_len);
++		offset += commands_len;
++		insert_final_commands = 0;
+ 	}
+ 
+ 	/* append final <commands> */
+-	strbuf_add(buf, commands, commands_len);
++	if (insert_final_commands)
++		strbuf_add(buf, commands, commands_len);
+ 
+ 	i = write_message(buf->buf, buf->len, todo_file, 0);
+ 	todo_list_release(&todo_list);
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 9e6229727..0bf5eaa37 100755
+index 0bf5eaa37..90ae613e2 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -363,4 +363,21 @@ test_expect_success 'octopus merges' '
+@@ -363,7 +363,7 @@ test_expect_success 'octopus merges' '
  	EOF
  '
  
-+test_expect_failure 'with --autosquash and --exec' '
-+	git checkout -b with-exec H &&
-+	echo Booh >B.t &&
-+	test_tick &&
-+	git commit --fixup B B.t &&
-+	write_script show.sh <<-\EOF &&
-+	subject="$(git show -s --format=%s HEAD)"
-+	content="$(git diff HEAD^! | tail -n 1)"
-+	echo "$subject: $content"
-+	EOF
-+	test_tick &&
-+	git rebase -ir --autosquash --exec ./show.sh A >actual &&
-+	grep "B: +Booh" actual &&
-+	grep "E: +Booh" actual &&
-+	grep "G: +G" actual
-+'
-+
- test_done
+-test_expect_failure 'with --autosquash and --exec' '
++test_expect_success 'with --autosquash and --exec' '
+ 	git checkout -b with-exec H &&
+ 	echo Booh >B.t &&
+ 	test_tick &&
 -- 
 gitgitgadget
-
