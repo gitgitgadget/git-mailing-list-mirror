@@ -7,86 +7,104 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E018F1F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 17:42:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 933171F597
+	for <e@80x24.org>; Fri,  3 Aug 2018 17:42:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727613AbeHCTjY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 15:39:24 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:39652 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727362AbeHCTjY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 15:39:24 -0400
-Received: by mail-pl0-f66.google.com with SMTP id m1-v6so2862008plt.6
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:42:07 -0700 (PDT)
+        id S1727850AbeHCTj0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 15:39:26 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:42570 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbeHCTjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 15:39:25 -0400
+Received: by mail-pl0-f68.google.com with SMTP id z7-v6so2853320plo.9
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=mZjYmKv6CXjHAVgLz7YhaxakhHyNR/X/vXuePF4VJLo=;
-        b=OE1LUCiISK/xipRmWIb3zEWO62sutt1kQwOwZsq0E8ifh9L4/S23u+ORG/r+JcSp1G
-         18uut/nTAhUYJvvfjtP3Ts2m2aYH19lQNMGV4dycq3JDDg4JOzuoHo97BpW0jMjwj2jW
-         jcnjJgdLWU8qZPW3fF3mo92NP0CdcEwPvIEtsJQ/XrmcGe12+h2Uhf8Re4pLIGLMNytq
-         J3heolFr0P02wcawm1anB5pM5CmsYhZ8v/KbQhGgA/K8TmVa8GpnZ/jvtypXMNXNaDSb
-         dOWyAiGJf5DLPtPHzo08UT5vy/gO0xejvhaMU1SbQ1cnyUvnEPbLnJykT2EVyd4I4uYV
-         51yg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=jTTvzwVdH9r+sX8kHvpDgV9GDztZ2ZvJi/0rPxOjMKY=;
+        b=aCEXiEI2Y5IaMPW04b1Zeq6m9zNBV0gKb0/mzYP8AisQwsIksqhBmky9BDnOyiHaUe
+         bIEqP+8WSQHFalcFxOOFVt01YXjXMeB7v9Z5TLMhwNKNs1rmsQfjwTtlYsCHadJwDvOK
+         ti6tIoJmx29cmw2TTJhkM79et9/hzfU153Nl4lu1Ud6SoUYcsFVnWO/lET8YMRsoXLNz
+         Vpf2m87a4Z7n/vcJoHQNbzNVHMfajqc08plsHJvTa9hlBufhZn5cKQNlJkUBJcPwkRdV
+         Z85bUbwUrCFzMNkO1EKNahN7M6K+UPnBOzZ1aTHPdS6sBd1DtSsgdYRrHCx1wOYpYKD/
+         1caA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=mZjYmKv6CXjHAVgLz7YhaxakhHyNR/X/vXuePF4VJLo=;
-        b=IRTZvZIamF6MmUMP2rt0kBJK3jFveJkhxbX5J1rVqJY5zU9q96krg1BXulP4eS/Vvy
-         aIwivUtWRBk18Q2pw6xm6YT1vflgjzrgdNlJfHCGE8ydllR10DNBMKeTW36MvlPsI30I
-         299am3+2Ikx2+Uz6utHmBhNwRQFUodeb2fUYpXeBkkCd1vxQ5RqSDxXR5pA2xfYdZwYL
-         VYmj1zxTkMS+8svzsvC3SpHv1ETTTa82shZZv6L2qZu3LcR0Fn19PcbzhhGm15XReBhh
-         Ov1IUFi1fEw3RL1fItWjaTpmjxW8IueNEo1CgxK0XUiSHdTP1rCdK2akN5vrc+f2zFq3
-         pRGg==
-X-Gm-Message-State: AOUpUlGaD6AERjhhiNCAHSSOetTln4vTDM1+SceaWJoQE1vJNcYVIg7T
-        g1NIaT5+fHTUsFtRr8KZIcQxTCPC
-X-Google-Smtp-Source: AAOMgpem0KWY/iSitu/OZwtg2zCClN7SrofafRzuiKRem49TKx6hjZOO9D6tyJb/AvP4Vis24jAsYw==
-X-Received: by 2002:a17:902:bf44:: with SMTP id u4-v6mr4561934pls.84.1533318126555;
-        Fri, 03 Aug 2018 10:42:06 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=jTTvzwVdH9r+sX8kHvpDgV9GDztZ2ZvJi/0rPxOjMKY=;
+        b=Jf4OW5qM/xGE1T1Q2thMA7jjqLF6hufR/QxLkLWD55khrXiPEC16Lcf6540AVGd1A3
+         /cv2u7Z7hotxBOQCcgxUt2qx+IWQUrMKxP/tC8naQIFc/rpwKUyDVTzo6PSAvK878ukS
+         js7/MUPASBRV3vGRN/7r7npq+vqbCghO8SXseaIxK/jcsTouL1PR+nEScowNI3U/viAR
+         G+7TplhYDD8CxtQr6Js6XkLx8k8qeEuk0N1fMdTK2lvIYXuNjWqpsClK+/zzyPRVmpyL
+         vOCKzEJVerpCEnnZbSHtit0aaz66EMkrNaB/UOTeDow2+xJU9nrk6/c7xA3oTbkhOi1Q
+         GcwA==
+X-Gm-Message-State: AOUpUlF4tRpCsFyP2y4it4TBq0dMzSZYEddE5ap1oefB72ytFzlIOYYP
+        UadySTJOMZJliS9GEiYVvDJomIC5
+X-Google-Smtp-Source: AAOMgpffUVJ9bh/77BKDejWhcg5GsXEmazYhRLSmSIKAshKTKNh7ZUtrjKKFHs/yODOoENczwTtWXg==
+X-Received: by 2002:a17:902:7c0a:: with SMTP id x10-v6mr4423291pll.77.1533318128097;
+        Fri, 03 Aug 2018 10:42:08 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm12387109pfk.96.2018.08.03.10.42.05
+        by smtp.gmail.com with ESMTPSA id r23-v6sm14069906pfd.144.2018.08.03.10.42.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 03 Aug 2018 10:42:05 -0700 (PDT)
-Date:   Fri, 03 Aug 2018 10:42:05 -0700 (PDT)
-X-Google-Original-Date: Fri, 03 Aug 2018 17:42:01 GMT
-Message-Id: <pull.13.git.gitgitgadget@gmail.com>
+        Fri, 03 Aug 2018 10:42:07 -0700 (PDT)
+Date:   Fri, 03 Aug 2018 10:42:07 -0700 (PDT)
+X-Google-Original-Date: Fri, 03 Aug 2018 17:42:02 GMT
+Message-Id: <1d82eb450378c5d9ebdadb2f785df1782cf3a1d4.1533318123.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.13.git.gitgitgadget@gmail.com>
+References: <pull.13.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/2] Make git rebase work with --rebase-merges and --exec
+Subject: [PATCH 1/2] t3430: demonstrate what -r, --autosquash & --exec should
+ do
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was reported via IRC that the exec lines are inserted in the wrong spots
-when using --rebase-merges.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The reason is that we used a simple, incorrect implementation that happened
-to work as long as the generated todo list only contains pick, fixup and 
-squash commands. Which is not the case with--rebase-merges.
+The --exec option's implementation is not really well-prepared for
+--rebase-merges. Demonstrate this.
 
-Fix this issue by using a correct, if longer and slightly more complex
-implementation instead.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ t/t3430-rebase-merges.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Johannes Schindelin (2):
-  t3430: demonstrate what -r, --autosquash & --exec should do
-  rebase --exec: make it work with --rebase-merges
-
- sequencer.c              | 59 ++++++++++++++++++++++++++++++++--------
- t/t3430-rebase-merges.sh | 17 ++++++++++++
- 2 files changed, 65 insertions(+), 11 deletions(-)
-
-
-base-commit: 1d89318c48d233d52f1db230cf622935ac3c69fa
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-13%2Fdscho%2Frebase-merges-and-exec-commands-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-13/dscho/rebase-merges-and-exec-commands-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/13
+diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+index 9e6229727..0bf5eaa37 100755
+--- a/t/t3430-rebase-merges.sh
++++ b/t/t3430-rebase-merges.sh
+@@ -363,4 +363,21 @@ test_expect_success 'octopus merges' '
+ 	EOF
+ '
+ 
++test_expect_failure 'with --autosquash and --exec' '
++	git checkout -b with-exec H &&
++	echo Booh >B.t &&
++	test_tick &&
++	git commit --fixup B B.t &&
++	write_script show.sh <<-\EOF &&
++	subject="$(git show -s --format=%s HEAD)"
++	content="$(git diff HEAD^! | tail -n 1)"
++	echo "$subject: $content"
++	EOF
++	test_tick &&
++	git rebase -ir --autosquash --exec ./show.sh A >actual &&
++	grep "B: +Booh" actual &&
++	grep "E: +Booh" actual &&
++	grep "G: +G" actual
++'
++
+ test_done
 -- 
 gitgitgadget
+
