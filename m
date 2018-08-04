@@ -2,121 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBE411F597
-	for <e@80x24.org>; Sat,  4 Aug 2018 06:09:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 287831F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 06:31:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbeHDIJA (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 04:09:00 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:36892 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726396AbeHDIJA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 04:09:00 -0400
-Received: by mail-pf1-f194.google.com with SMTP id a26-v6so4334596pfo.4
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 23:09:31 -0700 (PDT)
+        id S1726550AbeHDIYv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 04:24:51 -0400
+Received: from mail-lf1-f46.google.com ([209.85.167.46]:42313 "EHLO
+        mail-lf1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726186AbeHDIYv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 04:24:51 -0400
+Received: by mail-lf1-f46.google.com with SMTP id u202-v6so5564547lff.9
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 23:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+Mi8GuSuWdYsGNyOL5xFlVTILQK60f93an3fWvnDebk=;
-        b=mCSUmtMTR3tDhB5gUS4IUqQWaLtee5jMYmihAXGekoZU+z0k5ak7N6T26erNtnE8M/
-         fGbUTUpbDutri4kn0jC/jw7OyqHpnK/NTPYDknZWTLHLZmlkfX6GaWaT2OxfZRiGot/G
-         xVbode3UJxD5NgJ4GgXPPS3QAFMgaMP0A1o+jr0XplX4x1C86tJ9nWsae0tvE4V48RQX
-         N3fR24Brzhb/lMye+1C/gLO0Bc4yUKTXnZ5GyyrxqqY5rmt2Uh6awbj7JQYI6Y/GoHrL
-         C8sNSTnQ/40ie0fQWaUbn9Juho5mXf6HP7VtE9tl1vWx1OZknVAHrczmwMY9gXDLunnJ
-         Tfzw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I2a6Zd0EJ+3fPmpVjZljvFbL5fWrPBVJ39ObXjlhSMw=;
+        b=vO85D6rTEI4/u6rt9U7kJN9bv9n/f9SVolY+brVe3PKBFNG0c3afbnu5HDkIMlYhNz
+         3Jl/jjqwB+eUnC9cLgo6cxq/hSW4YWGUiJz250vY+hJm8BGvXlnYQXF0a8ntXjUql2gN
+         sJmJ08Hodqu698HtDr0oUM4baEgYWcYgcmPaEoBMma0kGM6p6G8UfMHuMX9W72Tmvg7n
+         KWJ5PUOnbhoDPLqPLP4bKoCLkzDaHDrYd/Hl1THJ0wEgWYrujyBJlSKYXHfzKDtKvgRN
+         DqmEwYPSzbSXatrYHXaqPxqeU39Am6EFSjDpTWTVWPNc3Sp48CoPxmgqSE9pN1pfAKEQ
+         HKZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+Mi8GuSuWdYsGNyOL5xFlVTILQK60f93an3fWvnDebk=;
-        b=rOysMLTrwS/uaGa+sKODaJN6qroZXkprQRsE5AgQogVI7QD8dqDZDlGoGa27z+IQ51
-         0Nm5HogFFpHlXTRpRPL2COGqKG17Thgad5C+BoJEaVMQKss/ptLBewe04KuKJ9gncR3F
-         LT7DXIDcUIV+6V/ofSU5hKfnGVSlp/dDBYc+dpOY1VxM/8VKjhotNncuW72PmeRDVv4e
-         NgN3QRm6xvyq9lL1hZjFFpli8eiNLXYjUhwpeNv2xpz7KVKjOG82NydRsZM05X7fkTv5
-         SqOFpqlOOKHd5kKpyqpU8sfwHVjPkM6XcsvZOiqj434qXmmn5TmsmTsXZ7SbmZKULp//
-         j23Q==
-X-Gm-Message-State: AOUpUlGc1G2Wa4Qz2W9TuWBCFDACSj0fA84vHa6BeCfZvalSeoS/bqfm
-        s5Lw39WQLf+t2jw/hzU5NQk=
-X-Google-Smtp-Source: AAOMgpfJI98apl4qMWI97OqxlBDwFz0hGH5o15vktzfIgpSRlZw0S2TqsBq5WqGXL/C3YKSLmOXKGQ==
-X-Received: by 2002:a62:ea05:: with SMTP id t5-v6mr7689675pfh.228.1533362970818;
-        Fri, 03 Aug 2018 23:09:30 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id c1-v6sm14283847pfg.25.2018.08.03.23.09.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 03 Aug 2018 23:09:30 -0700 (PDT)
-Date:   Fri, 3 Aug 2018 23:09:28 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com, hanwen@google.com
-Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
-Message-ID: <20180804060928.GB55869@aiede.svl.corp.google.com>
-References: <20180804020009.224582-1-sbeller@google.com>
- <20180804020255.225573-1-sbeller@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=I2a6Zd0EJ+3fPmpVjZljvFbL5fWrPBVJ39ObXjlhSMw=;
+        b=qdCNceBDpe6/hNji/LcL+1a5aRAfRBPc0ZssGVf2NLKrCB0b21TsAQDamfA67kk3cw
+         ctPSWr2xuoHqrgT6gipkK0EH6B9ozwEnvbvgGR5q9depbaubsYnAAmmOU/PUxZFIaSbS
+         5eeNuuyi9DLi2SEDftnQEyJO9sp7hsng0QRzEvXq9j+1dA/gGxXingCMSTg9P8J2QBLA
+         Xy0vxmEVuyHRq+nDXQUXnjhYbrWBdS3G/XNc2YTCWfJ2sXiKFZzicTKeO4ZEp5FTLe7U
+         i50xib12J0Y2gmUpmN3duWi99knKyjYNIeEPIJCYPAJGo6bnPCAwINCn29sF6AhAdkSR
+         4U+w==
+X-Gm-Message-State: AOUpUlEG3Ze9rgKlluEG3nj1p65kBk5z9xjCiMUPPNhFyL3XksErG0+j
+        TDYLXE4hNKpWl+EwmEg9iOV3EDMw
+X-Google-Smtp-Source: AAOMgpeTuhIq/iyqEEAmnOTxH8r0Q2TKjJ6/ToRCyUUMejWNnZoVQKtqhiFnqMLny/A8ihKeU2plbg==
+X-Received: by 2002:a19:7403:: with SMTP id v3-v6mr6136401lfe.97.1533363917087;
+        Fri, 03 Aug 2018 23:25:17 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id k65-v6sm1190595lje.3.2018.08.03.23.25.15
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Aug 2018 23:25:16 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] config.txt: reorder blame stuff to keep config keys sorted
+Date:   Sat,  4 Aug 2018 08:25:00 +0200
+Message-Id: <20180804062500.20188-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.759.gbd3bccdecd
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180804020255.225573-1-sbeller@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The color group in config.txt is actually sorted but changes in
+sb/blame-color broke this. Reorder color.blame.* and move
+blame.coloring back to the rest of blame.* (and reorder that group too
+while we're there)
 
-Stefan Beller wrote:
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/config.txt | 68 ++++++++++++++++++++--------------------
+ 1 file changed, 34 insertions(+), 34 deletions(-)
 
-> Reviewer bandwidth is limited, so let's have the machine of the
-> (potentially new) contributor warn about issues with the code by default.
->
-> As setting DEVELOPER, the compiler is stricter and we may run into problems
-> on some architectures. But packagers of said platforms are knowledgeable
-> enough to turn off this flag. (Also they are fewer than the number of new
-> contributors)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index fd8d27e761..d97455057c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -995,23 +995,28 @@ apply.whitespace::
+ 	Tells 'git apply' how to handle whitespaces, in the same way
+ 	as the `--whitespace` option. See linkgit:git-apply[1].
+ 
+-blame.showRoot::
+-	Do not treat root commits as boundaries in linkgit:git-blame[1].
+-	This option defaults to false.
+-
+ blame.blankBoundary::
+ 	Show blank commit object name for boundary commits in
+ 	linkgit:git-blame[1]. This option defaults to false.
+ 
+-blame.showEmail::
+-	Show the author email instead of author name in linkgit:git-blame[1].
+-	This option defaults to false.
++blame.coloring::
++	This determines the coloring scheme to be applied to blame
++	output. It can be 'repeatedLines', 'highlightRecent',
++	or 'none' which is the default.
+ 
+ blame.date::
+ 	Specifies the format used to output dates in linkgit:git-blame[1].
+ 	If unset the iso format is used. For supported values,
+ 	see the discussion of the `--date` option at linkgit:git-log[1].
+ 
++blame.showEmail::
++	Show the author email instead of author name in linkgit:git-blame[1].
++	This option defaults to false.
++
++blame.showRoot::
++	Do not treat root commits as boundaries in linkgit:git-blame[1].
++	This option defaults to false.
++
+ branch.autoSetupMerge::
+ 	Tells 'git branch' and 'git checkout' to set up new branches
+ 	so that linkgit:git-pull[1] will appropriately merge from the
+@@ -1149,6 +1154,28 @@ color.advice::
+ color.advice.hint::
+ 	Use customized color for hints.
+ 
++color.blame.highlightRecent::
++	This can be used to color the metadata of a blame line depending
++	on age of the line.
+++
++This setting should be set to a comma-separated list of color and date settings,
++starting and ending with a color, the dates should be set from oldest to newest.
++The metadata will be colored given the colors if the the line was introduced
++before the given timestamp, overwriting older timestamped colors.
+++
++Instead of an absolute timestamp relative timestamps work as well, e.g.
++2.weeks.ago is valid to address anything older than 2 weeks.
+++
++It defaults to 'blue,12 month ago,white,1 month ago,red', which colors
++everything older than one year blue, recent changes between one month and
++one year old are kept white, and lines introduced within the last month are
++colored red.
++
++color.blame.repeatedLines::
++	Use the customized color for the part of git-blame output that
++	is repeated meta information per line (such as commit id,
++	author name, date and timezone). Defaults to cyan.
++
+ color.branch::
+ 	A boolean to enable/disable color in the output of
+ 	linkgit:git-branch[1]. May be set to `always`,
+@@ -1296,33 +1323,6 @@ color.status.<slot>::
+ 	status short-format), or
+ 	`unmerged` (files which have unmerged changes).
+ 
+-color.blame.repeatedLines::
+-	Use the customized color for the part of git-blame output that
+-	is repeated meta information per line (such as commit id,
+-	author name, date and timezone). Defaults to cyan.
+-
+-color.blame.highlightRecent::
+-	This can be used to color the metadata of a blame line depending
+-	on age of the line.
+-+
+-This setting should be set to a comma-separated list of color and date settings,
+-starting and ending with a color, the dates should be set from oldest to newest.
+-The metadata will be colored given the colors if the the line was introduced
+-before the given timestamp, overwriting older timestamped colors.
+-+
+-Instead of an absolute timestamp relative timestamps work as well, e.g.
+-2.weeks.ago is valid to address anything older than 2 weeks.
+-+
+-It defaults to 'blue,12 month ago,white,1 month ago,red', which colors
+-everything older than one year blue, recent changes between one month and
+-one year old are kept white, and lines introduced within the last month are
+-colored red.
+-
+-blame.coloring::
+-	This determines the coloring scheme to be applied to blame
+-	output. It can be 'repeatedLines', 'highlightRecent',
+-	or 'none' which is the default.
+-
+ color.transport::
+ 	A boolean to enable/disable color when pushes are rejected. May be
+ 	set to `always`, `false` (or `never`) or `auto` (or `true`), in which
+-- 
+2.18.0.759.gbd3bccdecd
 
-Which architectures would we run into problems on?  Aren't those bugs
-that should themselves be fixed?
-
-I think you are right that the packagers will cope with whatever
-setting we choose.  My main concern is not about them but about other
-people building from source in order to run (instead of to develop)
-Git, and by extension, the people they go to for help when it doesn't
-work.  I have lots of bitter experience of -Werror being a support
-headache and leading to bad workarounds when someone upgrades their
-compiler and the build starts failing due to a new warning it has
-introduced.
-
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  Makefile | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index 41b93689add..95aa3ff3185 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -497,6 +497,8 @@ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
->  ALL_LDFLAGS = $(LDFLAGS)
->  STRIP ?= strip
->  
-> +DEVELOPER=1
-
-I like the idea of making this more discoverable to new contributors.
-It seems that Documentation/SubmittingPatches doesn't mention this
-setting.  Should it?
-
-Should a non-DEVELOPER build print a note encouraging enabling this
-setting in case you're developing patches meant for submission to the
-project?
-
-Should we have a CONTRIBUTING.md file suggesting this setting?  Other
-ideas for ensuring it's enabled for those who need it?
-
-Thanks and hope that helps,
-Jonathan
