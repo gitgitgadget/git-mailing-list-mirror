@@ -7,51 +7,55 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5FCD208E9
-	for <e@80x24.org>; Sat,  4 Aug 2018 02:00:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C386D208E9
+	for <e@80x24.org>; Sat,  4 Aug 2018 02:03:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732087AbeHDD7E (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 23:59:04 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:51694 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731986AbeHDD7E (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 23:59:04 -0400
-Received: by mail-it0-f74.google.com with SMTP id q5-v6so6939843ith.1
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 19:00:14 -0700 (PDT)
+        id S1726055AbeHDEBy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 00:01:54 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:46855 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725722AbeHDEBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 00:01:53 -0400
+Received: by mail-io0-f202.google.com with SMTP id c5-v6so5424797ioi.13
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 19:03:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=FcrWYE3s13T1wxeo6BbHWddLhKPReF3KhWeA8cs7VR0=;
-        b=rPyRJOKe1LDZ4rjgKhT+6mmwaE/UBrTNnm/zFY3/rLtfMaVkgpw58drSjWQYoscTVC
-         642NsHfaFWJbBdCdrnxVZn9YJuLecWeE5F6bTnw65Ic8LtrYn9t/WybnrXoaQ418x8U/
-         Wo34Jxj+aYIvpVHJUqFlVPfm13hoeu01Zz4cxSXFkn0eWKPNfyh/ZBwyKN0TiW+LhAH6
-         BhQh8CmH6/NdVkcSNrNkwVd1m9ehedk+a8nbtAjM8BcHYk7YDpDUPNc7dBiRdTxDQmbx
-         RLzlv6uGga8DcsLiDmGM1EsvVT8aBRrCVPzue1GUBdVgj0s+J7j5sBKTv3+hZny7CXPE
-         iIlQ==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=kL7/WlhKo9FIrH8goikjIVUsN+qELC/t4o72iPh1RmM=;
+        b=ogukJA8+qJ7+j0mdRK5/u/QHnjs3YWGlDN8a72H4+lWPbwrok5NUfRkC7lPbHPTLi+
+         AWq0RlYLoNor56WMTduYHVwdA6BWRCXbae8eNM+AUTIGE/qec1TudYV1Lnz6yrhFcJht
+         8Oblq7wHdpBkTBnbdnp9+Xm0rilly8SIGvnTK4BFkAc0YrQfBaL32lJpz5cY4vRLmejD
+         7NAGZEXC9X2aoxPlhSyvxSVD58a1hH4TdF9PBakhObScuQaNMTntWh8QdolusTRqfjh5
+         aYumsnqFAP1Qpj318dXsmL4oy1HpHinJrgNXnNs7+U4CN7PDTYd29K+OjUJSBCUTiJv8
+         OK9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=FcrWYE3s13T1wxeo6BbHWddLhKPReF3KhWeA8cs7VR0=;
-        b=uSrRfchp9Z2DPcw+L4AvWrAei4yy2xoExRFuuFc+uKu1mpbar5Z11iAGHWZnCa6g1l
-         rIrHLjtczFeVBOGFIgcObVCBTqBA8n53FR5QyjbF1zFnbiMNmqLm/3x7ehQnnQOQsx7g
-         VqgvqcJU18jBo6v4F01FEV8E7D1Lub71MjucCO6Yf0VIQz4BQblyI3EDNWtMbLpA9qz9
-         gNK0D2nLu9YdoKkKMpz2p+vFFkbRPNOLuVrwusaZPFstDWvylFTJ0Zt94+hRjbYcpk/g
-         BmrKHZ57NM0Sx/wjH9pr7faGTOE60A3m5EjPwbg2Wrkp7WnKboNndMWQT3yMAqXmKYKy
-         xD0w==
-X-Gm-Message-State: AOUpUlGLlQvpG0yKYLNGR3qu6prQagySjsDR+PHwxYT3qIIO9D9yRnQD
-        20O47CQLVS5FC3MI0uGmr3ZGcNMbWJ4MyhRnCSW8lZsCoDIE3PxmlW7Ff0hxZh5Qt57BCM0SDKT
-        yq/xHw5Q9fpW8NkTLxi7Q8f/BfxAgklePvZY5VSrUZ/xZJsrJYO22nQ7HetH5
-X-Google-Smtp-Source: AAOMgpfeJX07LgXOyZHMjzQ4ZMZHNBjgWhcFxiYgO/KZcsETItXm+UWYOfo/zUeotqfrpXFO0nK3yMxnVYlZ
-X-Received: by 2002:a24:5d15:: with SMTP id w21-v6mr633368ita.45.1533348014359;
- Fri, 03 Aug 2018 19:00:14 -0700 (PDT)
-Date:   Fri,  3 Aug 2018 19:00:09 -0700
-Message-Id: <20180804020009.224582-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=kL7/WlhKo9FIrH8goikjIVUsN+qELC/t4o72iPh1RmM=;
+        b=bFlq2IPzMvx5oI5CkcG4cKFEJPcvYayv/do78e1KNbHDpAiCppXBcETuRh9g0z8P3x
+         tyWKWT1+syFm88JKvOVY+X6kPcp1HpZizJ4SfuttJZmBbrblI3cvb8bdepoTu0Tq7aib
+         FLpBaINleIgUFVtuyl5MMth+21QAVrRt5WHVSl1FtWN/f4DLnmivxi3+wVsW4CyRjxvT
+         B7nx/oWIWxG7NMn918Mx43Tf2vTXrzTUMHx5BJYWqdlUTx4RkWloqjiwUuX6u/ccL4mg
+         bAbEtDqW15W1cF+AWnQ+DhabcjEIxzrrAiZowMu9cD6U0tFxgqz3LUdMvkYH91v+CDAO
+         iG9g==
+X-Gm-Message-State: AOUpUlH7L9yYJQumg8zhGH2i3ev+nJfZ2Ux6heDccZpNe3iv+DGVe/f/
+        CdLRy9lf67RjB7XHs31/MhX9XJeLkSbl
+X-Google-Smtp-Source: AAOMgpfwHzYrihWtzRbdMop72qYRz5qhGegFmjCeI7tGTepTOP2F9CnCBbQXOMdfH5D5af7VcQkkSKLtwMnC
+X-Received: by 2002:a6b:f719:: with SMTP id k25-v6mr3730005iog.133.1533348183448;
+ Fri, 03 Aug 2018 19:03:03 -0700 (PDT)
+Date:   Fri,  3 Aug 2018 19:02:55 -0700
+In-Reply-To: <20180804020009.224582-1-sbeller@google.com>
+Message-Id: <20180804020255.225573-1-sbeller@google.com>
 Mime-Version: 1.0
+References: <20180804020009.224582-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
 Subject: [PATCH] Makefile: enable DEVELOPER by default
 From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     avarab@gmail.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,6 +72,9 @@ contributors)
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+
+Resending with <git-packagers@googlegroups.com> cc'd.
+
  Makefile | 2 ++
  1 file changed, 2 insertions(+)
 
