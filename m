@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95015208E9
-	for <e@80x24.org>; Sat,  4 Aug 2018 01:53:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17E92208E9
+	for <e@80x24.org>; Sat,  4 Aug 2018 01:53:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732136AbeHDDwP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 23:52:15 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:50384 "EHLO
+        id S1732163AbeHDDwR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 23:52:17 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:53933 "EHLO
         mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731986AbeHDDwO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 23:52:14 -0400
-Received: by mail-qt0-f202.google.com with SMTP id e14-v6so5671240qtp.17
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 18:53:26 -0700 (PDT)
+        with ESMTP id S1731986AbeHDDwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 23:52:17 -0400
+Received: by mail-qt0-f202.google.com with SMTP id d18-v6so5751063qtj.20
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 18:53:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=C28dA414HElwXP/g+aSVB6BOoC4DoMdt/nNw9PD1xu4=;
-        b=C9+STNiTo+H3dGFn88sU+E+q5drop/fIy/6HS7dPzE3O01yPvdNlwftJo5vJK8BhjO
-         2442obQKvVKVUkSooXR65XYUciLGzxattmbp19W3iAynVtmeWwJ6dJiL4qzhSjObwhQ8
-         WPB9A2zpPVbQj0cqVD5cP6r3//HuZEAarXLQXmCq8oXVLR1tCkAP/6Uxk/DazP5JKdEo
-         bi3/zS3D16PxeuEGFd6FpFdH4fozYWtmEdBImqjAZQyzRHVJgMKKgT0Ih8zUrAs4v87n
-         wigqkf34bcJeVQ0tgssrtsKLLctC53jumpaT3ZVi3bauuZygeBfIlZL//x2TnJJwAt/6
-         7/6A==
+        bh=hq3gCUDEbFtpvaJgOKzgSkVQZziiHy6wtu2X4xaCaW0=;
+        b=pczelfQZqk4vNSWi63ZgJsZnUot5cSW6Q587HmiWY3R7JU46WufQeIXCBG1AVwnssx
+         oCPhp+vD7cWWFTeWxjDZ+nlZZJTK84COtPmntSh6sQErMNb4VgkT8rH/wX8ZT1XyyJUK
+         StnlLnITcmohsHrVtdQjgySa0CYSf3Ocpnzxk6qIW1po9gs2GyJhfYMJ9jJLXyUONZLk
+         EWdOiV6v/ZbvaM7raXECpcEH2kCMs3nxMvIY/3AqcmHRmHJaQy9xw8UGA+k+CFbj4MYH
+         L2nQkhUWHaPHYUn62mknaO4yL4m9wvvNZPQpG8WoOk8jai6GdXVfrt6aGmnCReZjSWMB
+         BoEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=C28dA414HElwXP/g+aSVB6BOoC4DoMdt/nNw9PD1xu4=;
-        b=apT/v1DogMzEZZhJO/6FFtuKu0ueqytTeqLme8HQTf5DumS39du8Mbub5zu3ENg6Ch
-         tWNUmvzupN8DAb1LLI84j5uY/0+G6x7y8fKSwaKCc7wU/Z8qZPBHdyu075Q+li+15F1e
-         4GKtrlc2C351Bpd61Np+dzYrMg+kNt46siwR0DO50KHrgU4nmTsEHRhXrM0OQgtEGP5Y
-         ijKQID47tMH4jmz1g1qKnzHhnqvUK2qmI8oydIpto/zn1aCTVT0LI5Og17v1Ayi89tTz
-         H+5mMfYakBd0PnLL3Xh1ZDDgGjt8M66x4lyScKifDyozzj2j+2+3ZRp3cKLfdTJCrRDw
-         v4FA==
-X-Gm-Message-State: AOUpUlELGKzX6ociBOULKPcQ5zaBcgt0lMQIh9uxaimoBK6PdrXf7flo
-        Guci/PvHZcAwgAgLpHajfFaDYJcDkJhxXjtyM+HgXX0o46s36cCEgEHWUAaY6/d16ed3pyeXFQS
-        UaJfyo9ErCpYdqRYwISD1ouBqXoOdk2ZtvcPDblDQ4pVZwXihSvsNEWhd+GO7
-X-Google-Smtp-Source: AAOMgpc4vTSvmXqQdtHS/c9u8gUQlluLagtxgxt6xg5BMadf/8GvEUpKsQEY5mwR94ylf33/ImVsSnJvl/P5
-X-Received: by 2002:aed:3e10:: with SMTP id l16-v6mr5364502qtf.4.1533347606131;
- Fri, 03 Aug 2018 18:53:26 -0700 (PDT)
-Date:   Fri,  3 Aug 2018 18:53:12 -0700
+        bh=hq3gCUDEbFtpvaJgOKzgSkVQZziiHy6wtu2X4xaCaW0=;
+        b=sP6yNKETXC8QZAFfVcqam0RFsostZdjPqZAf0odQ/jbUYrcidR0ZeF4Ntm5zx+y3fa
+         gIXz7w9ZIdN7MRYtdOrJmcpX6609Nrr9UEBtCMpPd0KAjR33jDnDJfEGHsVABQ8KwtkD
+         dnWPkU+cRXqPXnm1TL0AZrXXsDW6tq5aQRp6ghsQw5Tinzxeh18kJMAC+CkhEpTSTJP8
+         eCRoGPosmY9zMRm1fS8qmWlHDlmBJWcIZrybUmYbJEu/5wA9+ajiY/rL94Qax8kwJxbp
+         moQ2DLKxdYV61rv48SNIyIs9jK6IrSozMVGyhMyyLSBMU3L2H4nl/pDvkIna1RS8aDvf
+         WiZg==
+X-Gm-Message-State: AOUpUlGyLf4eQ1rknReIHLCReyUU2fGi2qxJ2v/jahCI2hDbUx5I0YHm
+        M0Ma/Ev+N7Vv4F7QCEUY1c0svL6TUeoPNN55akpDtCPyDSqMMplJ934gBAOpufvt2H9L9eAwXzf
+        uNmvFdXFsK3kcdBkDL+zzNgL2F85NBnPk+ARkln52AU4cBYrT/360NtVMxcok
+X-Google-Smtp-Source: AAOMgpdc4+h5icDGOCD5dq0lg/GAfwi0BhMGZKbOEB43GSSX5n1F0lHTCpY5eYIgtCWrDQMEKB79W5L+Oe8J
+X-Received: by 2002:a0c:d78c:: with SMTP id z12-v6mr4842767qvi.60.1533347608680;
+ Fri, 03 Aug 2018 18:53:28 -0700 (PDT)
+Date:   Fri,  3 Aug 2018 18:53:13 -0700
 In-Reply-To: <20180804015317.182683-1-sbeller@google.com>
-Message-Id: <20180804015317.182683-3-sbeller@google.com>
+Message-Id: <20180804015317.182683-4-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180804015317.182683-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 2/7] diff.c: add --output-indicator-{new, old, context}
+Subject: [PATCH 3/7] range-diff: make use of different output indicators
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,95 +62,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will prove useful in range-diff in a later patch as we will be able to
-differentiate between adding a new file (that line is starting with +++
-and then the file name) and regular new lines.
-
-It could also be useful for experimentation in new patch formats, i.e.
-we could teach git to emit moved lines with lines other than +/-.
+This change itself only changes the internal communication and should
+have no visible effect to the user. We instruct the diff code that produces
+the inner diffs to use X, Y, Z instead of the usual markers for new, old
+and context lines
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- diff.c | 21 +++++++++++++++++----
- diff.h |  5 +++++
- 2 files changed, 22 insertions(+), 4 deletions(-)
+ range-diff.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/diff.c b/diff.c
-index 57a8a38755e..2e711809700 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1032,7 +1032,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 					 struct emitted_diff_symbol *eds)
- {
- 	static const char *nneof = " No newline at end of file\n";
--	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
-+	const char *context, *reset, *set, *set_sign, *meta, *fraginfo, *first;
- 	struct strbuf sb = STRBUF_INIT;
+diff --git a/range-diff.c b/range-diff.c
+index 347b4a79f25..a4ff945427e 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -38,6 +38,9 @@ static int read_patches(const char *range, struct string_list *list)
  
- 	enum diff_symbol s = eds->s;
-@@ -1083,7 +1083,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 			else if (c == '-')
- 				set = diff_get_color_opt(o, DIFF_FILE_OLD);
- 		}
--		emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
-+		first = o->output_indicators[OI_CONTEXT] ?
-+			o->output_indicators[OI_CONTEXT] : " ";
-+		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
- 				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
- 		break;
- 	case DIFF_SYMBOL_PLUS:
-@@ -1126,7 +1128,10 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
- 			flags |= WS_IGNORE_FIRST_SPACE;
- 		}
--		emit_line_ws_markup(o, set_sign, set, reset, "+", line, len,
-+
-+		first = o->output_indicators[OI_NEW] ?
-+			o->output_indicators[OI_NEW] : "+";
-+		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
- 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
- 				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
- 		break;
-@@ -1169,7 +1174,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 			else
- 				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
- 		}
--		emit_line_ws_markup(o, set_sign, set, reset, "-", line, len,
-+		first = o->output_indicators[OI_OLD] ?
-+			o->output_indicators[OI_OLD] : "-";
-+		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
- 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
- 		break;
- 	case DIFF_SYMBOL_WORDS_PORCELAIN:
-@@ -4670,6 +4677,12 @@ int diff_opt_parse(struct diff_options *options,
- 		 options->output_format |= DIFF_FORMAT_DIFFSTAT;
- 	} else if (!strcmp(arg, "--no-compact-summary"))
- 		 options->flags.stat_with_summary = 0;
-+	else if (skip_prefix(arg, "--output-indicator-new=", &arg))
-+		options->output_indicators[OI_NEW] = arg;
-+	else if (skip_prefix(arg, "--output-indicator-old=", &arg))
-+		options->output_indicators[OI_OLD] = arg;
-+	else if (skip_prefix(arg, "--output-indicator-context=", &arg))
-+		options->output_indicators[OI_CONTEXT] = arg;
+ 	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+ 			"--reverse", "--date-order", "--decorate=no",
++			"--output-indicator-new=X",
++			"--output-indicator-old=Y",
++			"--output-indicator-context=Z",
+ 			"--no-abbrev-commit", range,
+ 			NULL);
+ 	cp.out = -1;
+@@ -108,8 +111,18 @@ static int read_patches(const char *range, struct string_list *list)
+ 			 * we are not interested.
+ 			 */
+ 			continue;
+-		else
++		else if (line.buf[0] == 'X') {
++			strbuf_addch(&buf, '+');
++			strbuf_add(&buf, line.buf + 1, line.len - 1);
++		} else if (line.buf[0] == 'Y') {
++			strbuf_addch(&buf, '-');
++			strbuf_add(&buf, line.buf + 1, line.len - 1);
++		} else if (line.buf[0] == 'Z') {
++			strbuf_addch(&buf, ' ');
++			strbuf_add(&buf, line.buf + 1, line.len - 1);
++		} else {
+ 			strbuf_addbuf(&buf, &line);
++		}
  
- 	/* renames options */
- 	else if (starts_with(arg, "-B") ||
-diff --git a/diff.h b/diff.h
-index a08a3b2a293..b8bbe7baeb8 100644
---- a/diff.h
-+++ b/diff.h
-@@ -194,6 +194,11 @@ struct diff_options {
- 	FILE *file;
- 	int close_file;
- 
-+#define OI_NEW 0
-+#define OI_OLD 1
-+#define OI_CONTEXT 2
-+	const char *output_indicators[3];
-+
- 	struct pathspec pathspec;
- 	pathchange_fn_t pathchange;
- 	change_fn_t change;
+ 		strbuf_addch(&buf, '\n');
+ 		util->diffsize++;
 -- 
 2.18.0.597.ga71716f1ad-goog
 
