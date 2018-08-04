@@ -6,173 +6,391 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7FA1F597
-	for <e@80x24.org>; Sat,  4 Aug 2018 14:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A62EB1F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 14:24:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727351AbeHDQXt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 12:23:49 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39484 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726983AbeHDQXt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 12:23:49 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h10-v6so8046460wre.6
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 07:22:57 -0700 (PDT)
+        id S1727788AbeHDQZS (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 12:25:18 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:40977 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726983AbeHDQZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 12:25:18 -0400
+Received: by mail-wr1-f45.google.com with SMTP id j5-v6so8043440wrr.8
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 07:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=xvZMp2I51ddOJZgVmJZ4A1C4z4QaeIo7/Tl2XrMvFM8=;
-        b=mwAI4k9XBsaFOM2kJ0hHFAipJKV2FWGN6UpZrHNI4horFGcHN0lwl7oWS/JbABJFHW
-         bhQUMCp2pX21t7LqBp7Dc4RcfIWOvqcr6uGpsyO/I315A/OjocZO4S3RTXPQrTp4xcTw
-         AvJvF2zu8YiiVF/diM0iUSEj2+iysg9q4GrSbwCbRRdAjXmx/JHInHZ7aFOLalj9oK25
-         rPBdt5EWpFCw4cbIWexqFRnhoelpptKzLH7uDA/8Yn75oepfCJetnTq8fW8cgraDyTXJ
-         3evaq7UjjNQcnLvx31BK6PngmOS7jGpESzDgJV7bJ+17WA8GMXqrleB/PY4hFuvy3OMw
-         VZvw==
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=fEb+10JBjx5GZPc8N81QLZcCUmJWe2NnlrTOveq/P+8=;
+        b=2POIuvBilWsHPNZnXawREzltP3mQf0F46BGfWO6L/33Bl7daZnEL/kFzJqJZ53WoBk
+         pxne8Pv8L7xXwjKOuSgIjlkqQNsOBj2BH5b8FM00o4mkFncXFHrMJRCDTTn8iYg90TIH
+         xV3oaIQJWEMmRzjZ2rH+Ge/2sMUnVMRp6nxCaa6F601bIg+j96v+DV9QU8QWRBqx0D26
+         RT66ql14uCHZC+q7iK0pB6kGq79JeAFvkxTeGDjoZugyRMULRAqyDoWVlpQxU1MwGdhl
+         UiOB9FcG2VfVJnrljJZxZEOCEb4ACNcz66NgZrLpLb959uewMROSamT4czAXdjn1rLHE
+         lKGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=xvZMp2I51ddOJZgVmJZ4A1C4z4QaeIo7/Tl2XrMvFM8=;
-        b=X7ayP5G8scE62Z1GWMyA5o4XVN7HgV5s0Dy6OgXqZaBMxFBv7rhvs6Jos2+Vya7LUH
-         2aL2zfzk8d1aymMvR0m0tMgLdFXaf2bU2utHaOksLmqGr2zqwwtAQL2IG53Cept369NV
-         eVhuPubeWWwhGuNBF/pLRFPsWT4HC6uMvbJBeKL8q3YF3Rytydvd7izveOBw6FxE12Nl
-         SFnvTKjaQrS6xiE8NwVE7Q6fu1zRYzp5or8gOFXfpunwrXqOV6S3VBh+tUf/j4Rb7yfy
-         JlxVzyA/Wd7Ay4C3X1bxrE8Gfq7hpJWq6ClKrOOWWCMdL8nOI2uO54A8yI55BNjg1FQY
-         kMKw==
-X-Gm-Message-State: AOUpUlF582hBth1hxwwStxvlqWPO3NwPnE/kXaWJ8MLo0UWqV+GOYc2u
-        n/BKF0/0hgEUrKCa8RfSBgjDKnx62wNLGg==
-X-Google-Smtp-Source: AAOMgpd1pS9jjuzDhaad+0w2MB5WRlEAT3+gWBtkq/G2t0yB68M/qrejuJTaNH0qPOPGJp9uyr7eSw==
-X-Received: by 2002:adf:ec41:: with SMTP id w1-v6mr5127220wrn.128.1533392576034;
-        Sat, 04 Aug 2018 07:22:56 -0700 (PDT)
-Received: from e3c0ce5ceb57 (global-5-182.nat-2.net.cam.ac.uk. [131.111.5.182])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm3130932wmd.35.2018.08.04.07.22.54
+        h=x-gm-message-state:date:from:to:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fEb+10JBjx5GZPc8N81QLZcCUmJWe2NnlrTOveq/P+8=;
+        b=fli5/F2CtpK14benbJKOIl/C1lFxth7gw/WlBbqRKKYlwYfGcfL8ay0jYxLz0NDCPo
+         qfWaveaLI9sZIwgPBJRvBwrWBN980HOD08pViFtLlzNpvlYZS87ffkrIgUq8ewRlKp9H
+         Za3iSCi1Cdmyr6IkoMS+OEEDFuNA0VEMi6dR3A9hbLNYrW19RKlMO1sZ7rjU+layTylO
+         /NTVQ2rYiC9YWwBiMoj2zCW7RYnEbvd0yzvrNcP5E3K7KIL3E14PPJiv2FjDaqNqdIi8
+         dCKuaOgEYOjbhwdAGBfWGp3B0RqxH9JWAWroo+2p72xA9id/u557cE/Dj3cFXFojPnbg
+         6lqw==
+X-Gm-Message-State: AOUpUlGP/WSRg7arIEFAeuxLCC/yQ78dw3N9vJ3B40KhWeWCEnMPuoOU
+        dFcBF/RqIaITs/Ay2XdbnzjveWy2+SCcaw==
+X-Google-Smtp-Source: AAOMgpcw6J/uFPhRMyayM5yAW5d2ByeJt75Q9KOFX3Ppypxc6AxUIZ5AAzVFF3stpSUkbLd0EZaeog==
+X-Received: by 2002:a5d:4a07:: with SMTP id m7-v6mr5547988wrq.8.1533392664817;
+        Sat, 04 Aug 2018 07:24:24 -0700 (PDT)
+Received: from 5f28dc333bbd (global-5-182.nat-2.net.cam.ac.uk. [131.111.5.182])
+        by smtp.gmail.com with ESMTPSA id w4-v6sm9832089wrl.46.2018.08.04.07.24.23
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 04 Aug 2018 07:22:55 -0700 (PDT)
-Date:   Sat, 4 Aug 2018 14:22:47 +0000
+        Sat, 04 Aug 2018 07:24:23 -0700 (PDT)
+Date:   Sat, 4 Aug 2018 14:24:16 +0000
 From:   Edward Thomson <ethomson@edwardthomson.com>
 To:     git@vger.kernel.org
-Subject: [RFC PATCH 0/1] Introduce git-recover
-Message-ID: <20180804142247.GA7@e3c0ce5ceb57>
+Subject: [RFC PATCH 1/1] recover: restoration of deleted worktree files
+Message-ID: <20180804142416.GA6@5f28dc333bbd>
+References: <20180804142247.GA7@e3c0ce5ceb57>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20180804142247.GA7@e3c0ce5ceb57>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello-
-
-I created a simple shell script a while back to help people recover
-files that they deleted from their working directory (but had been added
-to the repository), which looks for unreachable blobs in the object
-database and places them in the working directory (either en masse,
-interactively, or via command-line arguments).
-
-This has been available at https://github.com/ethomson/git-recover for
-about a year, and in that time, someone has suggested that I propose
-this as part of git itself.  So I thought I'd see if there's any
-interest in this.
-
-If there is, I'd like to get a sense of the amount of work required to
-make this suitable for inclusion.  There are some larger pieces of work
-required -- at a minimum, I think this requires:
-
-- Tests -- there are none, which is fine with me but probably less fine
-  for inclusion here.
-- Documentation -- the current README is below but it will need proper
-  documentation that can be rendered into manpages, etc, by the tools.
-- Remove bashisms -- there are many.
-
-Again, this may not be particularly interesting, but I thought I'd send
-it along in case it is.
-
-Cheers-
--ed
-
------------------------------------------------------------------------
-
-git-recover allows you to recover some files that you've accidentally
-deleted from your working directory.  It helps you find files that exist
-in the repository's object database - because you ran git add - but were
-never committed.
-
-Getting Started
----------------
-The simplest way to use git-recover is in interactive mode - simply run
-`git-recover -i` and it will show you all the files that you can recover
-and prompt you to act.
-
-Using git-recover
------------------
-Running git-recover without any arguments will list all the files (git
-"blobs") that were recently orphaned, by their ID.  (Their filename is not 
-known.)
-
-You can examine these blobs by running `git show <objectid>`.  If you
-find one that you want to recover, you can provide the ID as the argument
-to git-recover.  You can specify the `--filename` option to write the
-file out and apply any filters that are set up in the repository.  For
-example:
-
-    git-recover 38762cf7f55934b34d179ae6a4c80cadccbb7f0a \
-        --filename shattered.pdf
-
-You can also specify multiple files to recover, each with an optional
-output filename:
-
-    git-recover 38762c --filename one.txt cafebae --filename bae.txt
-
-If you want to recover _all_ the orphaned blobs in your repository, run
-`git-recover --all`.  This will write all the orphaned files to the
-current working directory, so it's best to run this inside a temporary
-directory beneath your working directory.  For example:
-
-    mkdir _tmp && cd _tmp && git-recover --all
-
-By default, git-recover limits itself to recently created orphaned blobs.
-If you want to see _all_ orphaned files that have been created in your
-repository (but haven't yet been garbage collected), you can run:
-
-    git-recover --full
-
-Options
--------
-    git-recover [-a] [-i] [--full] [<id> [-f <filename>] ...]
-
--a, --all
-Write all orphaned blobs to the current working directory.  Each file will
-be named using its 40 character object ID.
-
--i, --interactive
-Display information about each orphaned blob and prompt to recover it.
-
---full
-List or recover all orphaned blobs, even those that are in packfiles.  By 
-default, `git-recover` will only look at loose object files, which limits
-it to the most recently created files.  Examining packfiles may be slow,
-especially in large repositories.
-
-<id>
-The object ID (or its abbreviation) to recover.  The file will be written to
-the current working directory and named using its 40 character object ID,
-unless the `-f` option is specified.
-
--f <filename>, --filename <filename>
-When specified after an object ID, the file written will use this filename.
-In addition, any filters (for example: CRLF conversion or Git-LFS) will be
-run according to the `gitattributes` configuration.
-
-
-Edward Thomson (1):
-  recover: restoration of deleted worktree files
-
+Introduce git-recover, a simple script to aide in restoration of deleted
+worktree files.  This will look for unreachable blobs in the object
+database and prompt users to restore them to disk, either interactively
+or on the command-line.
+---
  git-recover.sh | 311 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 311 insertions(+)
  create mode 100755 git-recover.sh
 
+diff --git a/git-recover.sh b/git-recover.sh
+new file mode 100755
+index 000000000..651d4116f
+--- /dev/null
++++ b/git-recover.sh
+@@ -0,0 +1,311 @@
++#!/usr/bin/env bash
++#
++# This program helps recover files in your repository that were deleted
++# from the working tree.
++#
++# Copyright (c) 2017-2018 Edward Thomson.
++
++set -e
++
++IFS=$'\n'
++
++PROGNAME=$(echo "$0" | sed -e 's/.*\///')
++GIT_DIR=$(git rev-parse --git-dir)
++
++DO_RECOVER=0
++DO_FULL=0
++DO_INTERACTIVE=0
++BLOBS=()
++FILENAMES=()
++
++function die_usage {
++	echo "usage: $PROGNAME [-a] [-i] [--full] [<id> [-f <filename>] ...]" >&2
++	exit 1
++}
++
++while [[ $# -gt 0 ]]; do
++	case "$1" in
++	-a|--all)
++		DO_RECOVER=1
++		;;
++	-i|--interactive)
++		DO_INTERACTIVE=1
++		;;
++	--full)
++		DO_FULL=1
++		;;
++	*)
++		if [ "${1:0:1}" == "-" ]; then
++			echo "$PROGNAME: unknown argument: $1" >&2
++			die_usage
++		fi
++		BLOBS+=("$1")
++
++		shift
++		if [ "$1" == "-f" ] || [ "$1" == "--filename" ]; then
++			shift
++			if [ $# == 0 ]; then
++				die_usage
++			fi
++			FILENAMES+=("$1")
++			shift
++		else
++			FILENAMES+=("")
++		fi
++		continue
++	;;
++	esac
++	shift
++done
++
++if [ ${#BLOBS[@]} != 0 ] && [ $DO_RECOVER == 1 ]; then
++	die_usage
++elif [ ${#BLOBS[@]} != 0 ]; then
++	DO_RECOVER=1
++fi
++
++case "$OSTYPE" in
++	darwin*|freebsd*) IS_BSD=1 ;;
++	*) IS_BSD=0 ;;
++esac
++
++function expand_given_blobs() {
++	for i in "${!BLOBS[@]}"; do
++		ID=$(git rev-parse --verify "${BLOBS[$i]}" 2>/dev/null || true)
++
++		if [ -z "$ID" ]; then
++			echo "$PROGNAME: ${BLOBS[$i]} is not a valid object." 1>&2
++			exit 1
++		fi
++
++		TYPE=$(git cat-file -t "${ID}" 2>/dev/null || true)
++
++		if [ "$TYPE" != "blob" ]; then
++			echo "$PROGNAME: ${BLOBS[$i]} is not a blob." 1>&2
++			exit
++		fi
++
++		BLOBS[$i]=$ID
++	done
++}
++
++# find all the unreachable blobs
++function find_unreachable() {
++	FULLNESS="--no-full"
++
++	if [ $DO_FULL == 1 ]; then FULLNESS="--full"; fi
++
++	BLOBS=($(git fsck --unreachable --no-reflogs \
++		"${FULLNESS}" --no-progress | sed -ne 's/^unreachable blob //p'))
++}
++
++function read_one_file {
++	BLOB=$1
++	FILTER_NAME=$2
++	ARGS=()
++
++	if [ -z "$FILTER_NAME" ]; then
++		ARGS+=("blob")
++	else
++		ARGS+=("--filters" "--path=$FILTER_NAME")
++	fi
++
++	git cat-file "${ARGS[@]}" "$BLOB"
++}
++
++function write_one_file {
++	BLOB=$1
++	FILTER_NAME=$2
++	OUTPUT_NAME=$3
++
++	ABBREV=$(git rev-parse --short "${BLOB}")
++
++	echo -n "Writing $ABBREV: "
++	read_one_file "$BLOB" "$FILTER_NAME" > "$OUTPUT_NAME"
++	echo "$OUTPUT_NAME."
++}
++
++function unique_filename {
++	if [ ! -f "${BLOB}" ]; then
++		echo "$BLOB"
++	else
++		cnt=1
++		while true
++		do
++			fn="${BLOB}~${cnt}"
++			if [ ! -f "${fn}" ]; then
++				echo "${fn}"
++				break
++			fi
++			cnt=$((cnt+1))
++		done
++	fi
++}
++
++function write_recoverable {
++	for i in "${!BLOBS[@]}"; do
++		BLOB=${BLOBS[$i]}
++		FILTER_NAME=${FILENAMES[$i]}
++		OUTPUT_NAME=${FILENAMES[$i]:-$(unique_filename)}
++
++		write_one_file "$BLOB" "$FILTER_NAME" "$OUTPUT_NAME"
++	done
++}
++
++function file_time {
++	if [ $IS_BSD == 1 ]; then
++		stat -f %c "$1"
++	else
++		stat -c %Y "$1"
++	fi
++}
++
++function timestamp_to_s {
++	if [ $IS_BSD == 1 ]; then
++		date -r "$1"
++	else
++		date -d @"$1"
++	fi
++}
++
++function sort_by_timestamp {
++	# sort blobs in loose objects by their timestamp (packed blobs last)
++	BLOB_AND_TIMESTAMPS=($(for BLOB in "${BLOBS[@]}"; do
++		LOOSE="${BLOB::2}/${BLOB:2}"
++		TIME=$(file_time "$GIT_DIR/objects/$LOOSE" 2>/dev/null || true)
++		echo "$BLOB $TIME"
++	done | sort -k2 -r))
++}
++
++function print_recoverable {
++	echo "Recoverable orphaned git blobs:"
++	echo ""
++
++	sort_by_timestamp
++	for BLOB_AND_TIMESTAMP in "${BLOB_AND_TIMESTAMPS[@]}"; do
++		BLOB=${BLOB_AND_TIMESTAMP::40}
++		TIME=${BLOB_AND_TIMESTAMP:41}
++		DATE=$([ ! -z "$TIME" ] && timestamp_to_s "$TIME" || echo "(Unknown)") 
++
++		echo "$BLOB  $DATE"
++	done
++}
++
++function prompt_for_filename {
++	while true
++	do
++		echo -n "Filename (return to skip): "
++		read -r FILENAME
++
++		if [ -f "$FILENAME" ]; then
++			echo -n "File exists, overwrite? [y,N]: "
++			read -r overwrite
++
++			case "$overwrite" in
++			[yY]*)
++				return 0
++				;;
++			esac
++
++			echo
++		else
++			return 0
++		fi
++	done
++}
++
++function view_file {
++	read_one_file "${BLOB}" | ${PAGER:-less}
++}
++
++function show_summary {
++	FILETYPE=$(read_one_file "${BLOB}" | file -b -)
++	IS_TEXT=$(echo "${FILETYPE}" | grep -c ' text$' 2>/dev/null || true)
++
++	if [ "$IS_TEXT" == "1" ]; then
++		read_one_file "${BLOB}"
++	else
++		read_one_file "${BLOB}" | hexdump -C
++	fi
++}
++
++function interactive {
++	echo "Recoverable orphaned git blobs:"
++
++	sort_by_timestamp
++	for BLOB_AND_TIMESTAMP in "${BLOB_AND_TIMESTAMPS[@]}"; do
++		echo
++
++		BLOB=${BLOB_AND_TIMESTAMP::40}
++		TIME=${BLOB_AND_TIMESTAMP:41}
++		DATE=$([ ! -z "$TIME" ] && timestamp_to_s "$TIME" || echo "(Unknown)") 
++
++		echo "$BLOB  ($DATE)"
++		show_summary "${BLOB}" | head -4 | sed -e 's/^/> /'
++		echo
++
++		while true
++		do
++			echo -n "Recover this file? [y,n,v,f,q,?]: "
++			read -r ans || return 1
++
++			case "$ans" in
++			[yY]*)
++				write_one_file "${BLOB}" "" "$(unique_filename)"
++				break
++				;;
++			[nN]*)
++				break
++				;;
++			[vV]*)
++				view_file "${BLOB}"
++				echo
++				;;
++			[fF]*)
++				prompt_for_filename
++
++				if [ "$FILENAME" == "" ]; then
++					break
++				fi
++
++				write_one_file "${BLOB}" "${FILENAME}" "${FILENAME}"
++				break
++				;;
++			\?*)
++				echo
++				echo "Do you want to recover this file?"
++				echo " y: yes, write the file to ${BLOB}"
++				echo " n: no, skip this file and see the next orphaned file"
++				echo " v: view the file"
++				echo " f: prompt for a filename to use for recovery"
++				echo " q: quit"
++				echo
++				;;
++			[qQ]*)
++				return 0
++				;;
++			esac
++		done
++	done
++}
++
++
++if [ ${#BLOBS[@]} != 0 ]; then
++	expand_given_blobs
++else
++	find_unreachable
++fi
++
++if [ ${#BLOBS[@]} == 0 ]; then
++	echo "$PROGNAME: no recoverable orphaned blobs."
++	exit
++fi
++
++if [ $DO_INTERACTIVE == 1 ]; then
++	interactive
++elif [ $DO_RECOVER == 1 ]; then
++	write_recoverable
++else
++	print_recoverable
++fi
++
 -- 
 2.0.0 (libgit2)
 
