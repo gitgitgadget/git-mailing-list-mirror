@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05D1F1F597
-	for <e@80x24.org>; Sat,  4 Aug 2018 22:18:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 596971F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 22:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729678AbeHEAUh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 20:20:37 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:34395 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729035AbeHEAUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 20:20:36 -0400
-Received: by mail-pl0-f65.google.com with SMTP id f6-v6so4057083plo.1
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 15:18:26 -0700 (PDT)
+        id S1729687AbeHEAUi (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 20:20:38 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35303 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729035AbeHEAUi (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 20:20:38 -0400
+Received: by mail-pf1-f195.google.com with SMTP id p12-v6so5021759pfh.2
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 15:18:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6O/HW5QGflCusTdrDFRrbYSo+Rk8+yBhgC1wIwOsYZE=;
-        b=f1CK6fVdfo/srl4nTdlEYGDspKgCHbSEPKPOzUGNyR7FBKhjfvt5mLiT2NdCbIZ23w
-         LrokcTGCWCwlTf14ue2kpH+II5m/ZKu3X617xNOLxG+lBE607DMRbxybv9l9a/p//fOs
-         v18qzU82UAio66zHpKvuWjdEccrl8OqifwpiHJya93vA80ZXZJCBr96oD5g5/0FMZmxo
-         E+WiFFnVGaENz2BYCdbpaE0mzHcvoFK+z7pFjtkBvvozIVaAdBQrZbyjELHQZ5M/eyhd
-         LhV6S7/IeQguE/aZvXJujqfpUTJP/v2aME+EX5GytUTh2iDcwM/7GqWflqj7+RUznJjI
-         ALrQ==
+        bh=9EimhKscsXnr0MC02mDoBMXk/upbLgPCxmseVWEUOd4=;
+        b=n/ox82wUdS1PqWX+qu6lul5qipUTKtGP/AHvf9fv3gjxiNtiLuDnUBFM6l7+LwegLd
+         LAeM/nsz1eEPU7fjYdh2sd/cCfraI8QdPUWa3IULgo5AVQcUfkNMWIcD+4qcMk8lR21y
+         mn9xBgFVuF8MeoSesSJ5IwC9I9ykbDgOu/xnZLvASfvX2B+kPeFmLRmVMbjeFAjtw1DH
+         r2MC0vtcOijBzQWD2Ocwb3dbb7HykBUJWPhB0xoM04QZPWPa2CjlvaaZxHHwTgu8vSo8
+         sfohQP3gxtBAx8E44Kt8bFDt0PaFlBBR16Pt77aH3Bxu0PSF9SfUqEQI5fMjHHY7aRKj
+         PBIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6O/HW5QGflCusTdrDFRrbYSo+Rk8+yBhgC1wIwOsYZE=;
-        b=Uu0tx+f3pfk6ejamTdn5fbPqGSn2bD4gBPiyRwBu+QbHRjtQWuh/M1UHeoycPVmWWd
-         GAMc+7gcDTozd/v439tyeeH8DNcKeRYC058KoVshapPUdUfmkn7wiCzV1Ex+Cvt2ECyW
-         j100UVR11Fr6K6jrgmURQRSLu1m0Bv8drZneVVbbvaTzP2+Md1eB8jWGdcEW/ofj3d0k
-         +GKAak/n3a6I5fCV5BpKz4sNCtHgTDjwyAyIEt5G84ge9ay0VD6lLI8f9R6d2NcirbvQ
-         O9AYx9fuTjpKPuzjWHp0V60oO++0gwUl7/td7ThU5lnP2uv6yF1iSVO1C5h025O3qqcO
-         vZpQ==
-X-Gm-Message-State: AOUpUlEDsLaWWqy8a9Q0mFJrki1DDUbT4RKvBr7Wt9vfcVUke/BMvpza
-        P72j655WY6ElycBDj9vaiL+pJIdd
-X-Google-Smtp-Source: AAOMgpfEX6iUBX5eBKxD+sJbljzD1UH+vukCLWN/IeT+Y17ArBx2kOiX2tYCAA0K0aecL+ChjetSsA==
-X-Received: by 2002:a17:902:5a82:: with SMTP id r2-v6mr8415996pli.315.1533421106110;
-        Sat, 04 Aug 2018 15:18:26 -0700 (PDT)
+        bh=9EimhKscsXnr0MC02mDoBMXk/upbLgPCxmseVWEUOd4=;
+        b=Cwm0TgsPTdxZoAThy5t9yXK+kymEu9w+spnI76JQjapSLaykEBzE94bicuCHpBMTMr
+         WmNYiHgqNUzNc9rbVVREBIsmDQUCk+cWIyOjUg1HHXUSNWLS6gDYTcNBiv4uNJ/WCq/p
+         +pp3mLqqANmf11j4JKQSU2GfPBuH+WjmM9PrQaiowTIi3sY3APG1yjMfuNG0fgPJubbi
+         +DMdJFWSFIxNas0PvhY+wTF7mdpk2P6sd8B6/AHyDKkUSNvMRn1SRPla9iniVUX7PiHX
+         MOQgANNt6Lxd5I6hes+xShyA1cBTVtJoZRTRFy3w4LqS9lCKEakx9SVILmeoONdSM3Vp
+         aJBg==
+X-Gm-Message-State: AOUpUlE+GVMd3/4eGkRK9vt3L0BxfCeUJWH+Vv2cYaY0tSj3arRrjBpa
+        urCMi0aUTnQJ+u9xVvaR5mhgwQ1q
+X-Google-Smtp-Source: AAOMgpffTRkvjwhJLDfE5dt5BIFlUMWY93EwFwKb0zRuC78zyp8jXoMYNqHfYj6nclmwpa26GQ3HnA==
+X-Received: by 2002:a63:5204:: with SMTP id g4-v6mr9111086pgb.274.1533421107520;
+        Sat, 04 Aug 2018 15:18:27 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id f20-v6sm8091113pgv.27.2018.08.04.15.18.25
+        by smtp.gmail.com with ESMTPSA id j72-v6sm13868344pge.19.2018.08.04.15.18.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Aug 2018 15:18:25 -0700 (PDT)
-Date:   Sat, 04 Aug 2018 15:18:25 -0700 (PDT)
-X-Google-Original-Date: Sat, 04 Aug 2018 22:18:18 GMT
-Message-Id: <7f92d92154143127734a638e41e064adce46a2e2.1533421100.git.gitgitgadget@gmail.com>
+        Sat, 04 Aug 2018 15:18:26 -0700 (PDT)
+Date:   Sat, 04 Aug 2018 15:18:26 -0700 (PDT)
+X-Google-Original-Date: Sat, 04 Aug 2018 22:18:19 GMT
+Message-Id: <d5d9db3c1124d29e26864596a8c36f0dc4de8a7e.1533421100.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.15.git.gitgitgadget@gmail.com>
 References: <pull.15.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/4] line-log: adjust start/end of ranges individually
+Subject: [PATCH 3/4] line-log: optimize ranges by joining them when possible
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,54 +70,52 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When traversing commits and adjusting the ranges, things can get really
-tricky. For example, when the line range of interest encloses several
-hunks of a commit, the line range can actually shrink.
+Technically, it is okay to have line ranges that touch (i.e. the end of
+the first range ends just before the next range begins). However, it is
+inefficient, and when the user provides such touching ranges via
+multiple `-L` options, we already join them.
 
-Currently, range_set_shift_diff() does not anticipate that scenario and
-blindly adjusts start and end by the same offset ("shift" the range).
+When we traverse the history, though, we never join ranges, even they
+become "touchy-feely" due to added lines (which are "removed" from
+line-log's point of view because it traverses the commit history into
+the past).
 
-This can lead to a couple of surprising issues, such as assertions in
-range_set_append() (when the end of a given range is not adjusted
-properly, it can point after the start of the next range) or even
-segmentation faults (when t_end in the loop of dump_diff_hacky_one()
-points outside the valid line range).
-
-Let's fix this by adjusting the start and the end offsets individually.
+Let's optimize also this case.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- line-log.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ line-log.c          | 4 ++++
+ t/t4211-line-log.sh | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/line-log.c b/line-log.c
-index 72a5fed66..d8d09b5ee 100644
+index d8d09b5ee..bc7ef69d6 100644
 --- a/line-log.c
 +++ b/line-log.c
-@@ -427,7 +427,7 @@ static void range_set_shift_diff(struct range_set *out,
- 				 struct diff_ranges *diff)
+@@ -68,6 +68,10 @@ void range_set_append_unsafe(struct range_set *rs, long a, long b)
+ 
+ void range_set_append(struct range_set *rs, long a, long b)
  {
- 	unsigned int i, j = 0;
--	long offset = 0;
-+	long offset = 0, start_offset;
- 	struct range *src = rs->ranges;
- 	struct range *target = diff->target.ranges;
- 	struct range *parent = diff->parent.ranges;
-@@ -438,7 +438,13 @@ static void range_set_shift_diff(struct range_set *out,
- 				- (target[j].end-target[j].start);
- 			j++;
- 		}
--		range_set_append(out, src[i].start+offset, src[i].end+offset);
-+		start_offset = offset;
-+		while (j < diff->target.nr && src[i].end > target[j].end) {
-+			offset += (parent[j].end-parent[j].start)
-+				- (target[j].end-target[j].start);
-+			j++;
-+		}
-+		range_set_append(out, src[i].start+start_offset, src[i].end+offset);
- 	}
++	if (rs->nr > 0 && rs->ranges[rs->nr-1].end + 1 == a) {
++		rs->ranges[rs->nr-1].end = b;
++		return;
++	}
+ 	assert(rs->nr == 0 || rs->ranges[rs->nr-1].end <= a);
+ 	range_set_append_unsafe(rs, a, b);
+ }
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index 61ff37430..ebaf5ea86 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -119,7 +119,7 @@ q_to_lf () {
+ 	tr Q '\012'
  }
  
+-test_expect_failure 'close to overlapping ranges' '
++test_expect_success 'close to overlapping ranges' '
+ 	test_seq 5 >a1.c &&
+ 	git add a1.c &&
+ 	git commit -m "5 lines" a1.c &&
 -- 
 gitgitgadget
 
