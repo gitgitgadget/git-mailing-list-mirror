@@ -2,104 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE73B1F597
-	for <e@80x24.org>; Sat,  4 Aug 2018 16:46:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D85C1F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 16:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729461AbeHDSrQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 14:47:16 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:46714 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728054AbeHDSrQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 14:47:16 -0400
-X-Greylist: delayed 1657 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 Aug 2018 14:47:15 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=M5toULKnJ54HGb1V6vZJNLfBEU8rYSaRKX9wSjjhoAI=; b=uYbixyQm2ENxqiCSro4RAxyvQ
-        Iv0NE3gSCVTRL4lNREc4ueZFbo6dCrTGHezAEpXMDRpC9gbbSoy0vl6RmpHG+lc/BfUHHVOmoTCXR
-        qGiGNQ2I/HoYGfmMSZsE7rowvurfT1LT6DJrt5lAHTcP9A5CbkmNw+w9eU9q9EmQ+/SQFFyoY3GvO
-        DP5108kzXcL1UTouUtLpeN4b7nA6QYuqA2Cylb69NU+/RPLdp1Kos23WUgB1rGUCQI8zEnlG0Etol
-        GLjoR1orrQTfPDedIdV7NsyLnAyuzhGZq8c0DyT1gRQEjGb4J4wy+9dIgRmu30XkkhxbX3udcDnJo
-        k15NHlz7w==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:44100 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1flzG6-00H7Mj-Cp; Sat, 04 Aug 2018 12:18:27 -0400
-Date:   Sat, 4 Aug 2018 12:17:03 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Edward Thomson <ethomson@edwardthomson.com>, git@vger.kernel.org
+        id S1728695AbeHDSth (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 14:49:37 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43486 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728054AbeHDStg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 14:49:36 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b15-v6so8262341wrv.10
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 09:48:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Pu4rso+5h1RHrivjhFPneFscBeyWx/ALKQjewNsnHXs=;
+        b=mRIfwc1h4ZdiCFSkXJIKwE6ypLw+dUGmww4355ep5ImvIDeeqCEHQh4ZF3tKg2iM75
+         h0m0FmCL8TsqAElb+MZTmMY/yZkV/0REHOdp+QoLySAHDz5uxoB9mpdM/mRxdwyaLv5K
+         bkUX7azxbyBWW1RtxJzBRzjPFcVOuAP8Rf+ydd8nedN20xiQ3J3We3zyhL59J66K4nI4
+         AzZd8/siHy/WIf8YlkzjJR3h9UtM5oIFeAjAnIKFT6FgtymixiBSbnOFkSP6toDfw6xB
+         xECkjsDYObMVUAkNfZ7M2ik+ktylZseIvag6FmjTWLxhH80mzoqsFX451c5eqieM8+bI
+         2Zrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Pu4rso+5h1RHrivjhFPneFscBeyWx/ALKQjewNsnHXs=;
+        b=mta1LdGgWtdGOZt2xLSJs1mRDb8kdxNooTuZUJpTwDxmLVGflidlrr0rk4WbxyBQAn
+         QDhQKA8UIa/o+opPqCQbM3f9nUov8uDeyfadySTqsvcpVhAffofYu7cVnAuq5nsbF9Kz
+         g3AOmS/p1xqQVVYD6uP0MWEvzkDXsOl0rnEvZkPdnckC44dwZJ4v66nXPr/Pn6E3Mnu+
+         5XZ2iI2+0nPTv0J3HEiZQpu6Pr2bgBYa4gXReF66MtlGJqZYj1Yh7x2stJIH7kZ5HSO0
+         FKcpa7LlXbQoQMYOMA+cwVFm4ChhaWi9D+i6UWg3RhXUlxxPypj3/+NJmBXtSx2Z8s1J
+         nhgw==
+X-Gm-Message-State: AOUpUlF/ILmZ6IA925os0O8AoEuOraX/w6i8TNaCUsy+6gPnXupLYvcm
+        DhRostXakiB3OwVFp97d4Kezpt6J
+X-Google-Smtp-Source: AAOMgpe5p6A1xsrZ6zruvSlODqZpUoCB0OyvBvUP0/5rOnMTn3s1R0QRs/RNS8fugrK0YKPaBnEKVQ==
+X-Received: by 2002:adf:8103:: with SMTP id 3-v6mr5342175wrm.213.1533401299951;
+        Sat, 04 Aug 2018 09:48:19 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f18-v6sm5159935wrt.64.2018.08.04.09.48.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 04 Aug 2018 09:48:19 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edward Thomson <ethomson@edwardthomson.com>
+Cc:     git@vger.kernel.org
 Subject: Re: [RFC PATCH 1/1] recover: restoration of deleted worktree files
-In-Reply-To: <xmqqpnyyt9di.fsf@gitster-ct.c.googlers.com>
-Message-ID: <alpine.LFD.2.21.1808041214550.28242@localhost.localdomain>
-References: <20180804142247.GA7@e3c0ce5ceb57>        <20180804142416.GA6@5f28dc333bbd> <xmqqpnyyt9di.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+References: <20180804142247.GA7@e3c0ce5ceb57>
+        <20180804142416.GA6@5f28dc333bbd>
+        <xmqqpnyyt9di.fsf@gitster-ct.c.googlers.com>
+        <20180804161956.GA6@1032a7a09014>
+Date:   Sat, 04 Aug 2018 09:48:18 -0700
+In-Reply-To: <20180804161956.GA6@1032a7a09014> (Edward Thomson's message of
+        "Sat, 4 Aug 2018 16:19:56 +0000")
+Message-ID: <xmqqh8kat6wd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, 4 Aug 2018, Junio C Hamano wrote:
+Edward Thomson <ethomson@edwardthomson.com> writes:
 
-> Edward Thomson <ethomson@edwardthomson.com> writes:
->
-> > Introduce git-recover, a simple script to aide in restoration of
-> > deleted worktree files.  This will look for unreachable blobs in
-> > the object database and prompt users to restore them to disk,
-> > either interactively or on the command-line.
+> In any case, it sounds like you're not particularly interested in
+> this, although I certainly appreciate you taking the time to suggest
+> improvements despite that.  There's some good feedback there.
 
-> >  git-recover.sh | 311 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 311 insertions(+)
-> >  create mode 100755 git-recover.sh
->
-> My first reaction was to say that I am not going to take a new
-> command written only for bash with full bashism, even if it came
-> with docs, tests nor Makefile integration, for Git itself.  Then I
-> reconsidered, as not everything related to Git is git-core, and all
-> of the above traits are sign of this patch _not_ meant for git-core.
->
-> In other words, I think this patch can be a fine addition to
-> somebody else's project (i.e. random collection of scripts that may
-> help Git users), so let's see how I can offer comments/inputs to
-> help you improve it.  So I won't comment on lang, log message, or
-> shell scripting style---these are project convention and the
-> git-core convention won't be relevant to this patch.
+Not in its current shape.  But do not take this in a wrong way.  It
+may be useful in a third-party script collection in its current
+shape already.
 
-  not sure how relevant this is, but fedora bundles a bunch of neat
-utilities into two packages: git-tools and git-extras. i have no idea
-what relationship those packages have to official git, or who decides
-what goes into them.
+More importantly, I am not opposed to have a "resurrect" utility in
+the core distribution.  It just has to be a lot better than what
+"grep -e 'I think I wrote this string' .git/lost-found/other/*"
+gives us.
 
-rday
+Filename discovery (perhaps from lost trees, which was the idea I
+wrote in the message I am responding to, but others may come up with
+better alternatibve approaches) is a must, but not primarily because
+such a grep won't find the path to which the contents should go.
+When a user says "I think I wrote this string in the file I am
+looking for", s/he already knows what s/he wants to recover (i.e. it
+was a README file at the top-level).  Filename discovery is a must
+because grepping in the raw blob contents without smudge filter
+chain applied may not find what we want in the first place, and for
+that to happen, we need to have a filename.
 
--- 
+	Side note.  That may mean that even working in the
+	do-recover mode, the script may want to take a filename,
+	letting the user to say "pretend all lost blobs are of this
+	type, as that is the type of the blob I just lost and am
+	interested in, and a filename will help you find an
+	appropriate smudge and/or textconv filter to help me"
 
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
+That makes me realize that I did not mention one more thing, other
+than the "interactibve loop", I did like in the script over what
+lost-found gives us: smudge filter support.  I do not very often
+work with contents that needs clean/smudge other than in one project
+(obviously not "git.git"), and I can see how it is essential in
+helping the user to find the contents the user is looking for.
 
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
+Thanks.
