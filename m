@@ -2,109 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BBB7208E9
-	for <e@80x24.org>; Sat,  4 Aug 2018 05:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBE411F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 06:09:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbeHDH4C (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 03:56:02 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:37541 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726186AbeHDH4C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 03:56:02 -0400
-Received: by mail-it0-f65.google.com with SMTP id h20-v6so11444304itf.2
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 22:56:36 -0700 (PDT)
+        id S1726819AbeHDIJA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 04:09:00 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:36892 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726396AbeHDIJA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 04:09:00 -0400
+Received: by mail-pf1-f194.google.com with SMTP id a26-v6so4334596pfo.4
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 23:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=QTW37It23G48Z/tne5E0xn8lwo2ndecN6IS2BjHM5x0=;
-        b=Dya2/NGQ1cNO3F7vny/CewYhL0jYGeVsuR2Ptqab6gzBTz5v6W+bAK/CrNBzOsWoSb
-         vXFEWwhukU0LuZYR4gzTldW2ERQ0Z/oMN+Esju5/T7fDPe0qFPppy1BEMpz3QsszeRdQ
-         zxdSqdYv8zGMs+py8Bzr/tTOsSIKuxuJOrq7l7FFGKEudUEns2AvvjgXiBAwbAAWwN8g
-         M7O8EOHRCS/9ooyNXqi64I45g0zF1pLQJ0khAKFAZXZ/ie1peGL+7uq0XjCnfXyHiLrG
-         ZyqY/U688F8cdF0gDnCWt54xElaDIlALRIQykgf3Nuz8F55t7jp10VmdE/4Q1iHy/XP8
-         njXg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+Mi8GuSuWdYsGNyOL5xFlVTILQK60f93an3fWvnDebk=;
+        b=mCSUmtMTR3tDhB5gUS4IUqQWaLtee5jMYmihAXGekoZU+z0k5ak7N6T26erNtnE8M/
+         fGbUTUpbDutri4kn0jC/jw7OyqHpnK/NTPYDknZWTLHLZmlkfX6GaWaT2OxfZRiGot/G
+         xVbode3UJxD5NgJ4GgXPPS3QAFMgaMP0A1o+jr0XplX4x1C86tJ9nWsae0tvE4V48RQX
+         N3fR24Brzhb/lMye+1C/gLO0Bc4yUKTXnZ5GyyrxqqY5rmt2Uh6awbj7JQYI6Y/GoHrL
+         C8sNSTnQ/40ie0fQWaUbn9Juho5mXf6HP7VtE9tl1vWx1OZknVAHrczmwMY9gXDLunnJ
+         Tfzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QTW37It23G48Z/tne5E0xn8lwo2ndecN6IS2BjHM5x0=;
-        b=QrBXh0L7VTf6HnHzQuea2axiYtRPKG8CMtz3WZ2yBKcGqzr3q1EJQ2YxVbmgylm1uQ
-         F5hOhOEO7VlJ8ie6lXvhOmZ9SliF3vYHsQcv2b5ANF0bHdhdt/kWSGmyM9y4FajLj4Lt
-         U46gXcEQ8dtfzU2XZvGgru/ndpH++KEYPE7eXccVrRZYiy758vpX3nFvW5tGTSQkFPLw
-         GnBACRuuo93+2RBqqGPKmPD69NAQxFXhMVCWo6rsxe6s7uFMzfP5xojpfWj8QNU5MNAn
-         dZBnrbxq1TyDXAQ80bKBNvP9/MoWyfTpxRlTrxb8tMTWMcRNFwncyJ81AlJOmpXlvf9f
-         b4gQ==
-X-Gm-Message-State: AOUpUlHunxOk2qadXTucWLKQjkJgy/O8wSLS6KpMNa4EDSSYEqfa0R+f
-        0yTHtcu25Mc6p6JAAkmHuc8/4hQgOy+rP7EoftE=
-X-Google-Smtp-Source: AAOMgpeLSJbk4Oy9W1iE8IVkBfqYWLhQA/02nCPpcz0R2Ziqwy8Ajcj/wuTvqmYgwmwj3ts8BJr4NdUgEgcEtdUOch4=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr8418836itf.121.1533362195754;
- Fri, 03 Aug 2018 22:56:35 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+Mi8GuSuWdYsGNyOL5xFlVTILQK60f93an3fWvnDebk=;
+        b=rOysMLTrwS/uaGa+sKODaJN6qroZXkprQRsE5AgQogVI7QD8dqDZDlGoGa27z+IQ51
+         0Nm5HogFFpHlXTRpRPL2COGqKG17Thgad5C+BoJEaVMQKss/ptLBewe04KuKJ9gncR3F
+         LT7DXIDcUIV+6V/ofSU5hKfnGVSlp/dDBYc+dpOY1VxM/8VKjhotNncuW72PmeRDVv4e
+         NgN3QRm6xvyq9lL1hZjFFpli8eiNLXYjUhwpeNv2xpz7KVKjOG82NydRsZM05X7fkTv5
+         SqOFpqlOOKHd5kKpyqpU8sfwHVjPkM6XcsvZOiqj434qXmmn5TmsmTsXZ7SbmZKULp//
+         j23Q==
+X-Gm-Message-State: AOUpUlGc1G2Wa4Qz2W9TuWBCFDACSj0fA84vHa6BeCfZvalSeoS/bqfm
+        s5Lw39WQLf+t2jw/hzU5NQk=
+X-Google-Smtp-Source: AAOMgpfJI98apl4qMWI97OqxlBDwFz0hGH5o15vktzfIgpSRlZw0S2TqsBq5WqGXL/C3YKSLmOXKGQ==
+X-Received: by 2002:a62:ea05:: with SMTP id t5-v6mr7689675pfh.228.1533362970818;
+        Fri, 03 Aug 2018 23:09:30 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id c1-v6sm14283847pfg.25.2018.08.03.23.09.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 03 Aug 2018 23:09:30 -0700 (PDT)
+Date:   Fri, 3 Aug 2018 23:09:28 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com, hanwen@google.com
+Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
+Message-ID: <20180804060928.GB55869@aiede.svl.corp.google.com>
+References: <20180804020009.224582-1-sbeller@google.com>
+ <20180804020255.225573-1-sbeller@google.com>
 MIME-Version: 1.0
-References: <20180729153605.27298-1-pclouds@gmail.com> <CACsJy8AKHo4g5607GdiuLVBy1746gEEFbsYjB2RLwvQvE24Sgg@mail.gmail.com>
- <20180802193912.GB29084@sigill.intra.peff.net>
-In-Reply-To: <20180802193912.GB29084@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 4 Aug 2018 07:56:09 +0200
-Message-ID: <CACsJy8DRQqTTV_vqxxV5dG_+UnONWNit76VMqb0=MdXsvH+2-Q@mail.gmail.com>
-Subject: Re: [PATCH] pack-objects: document about thread synchronization
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180804020255.225573-1-sbeller@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 2, 2018 at 9:39 PM Jeff King <peff@peff.net> wrote:
->
-> On Sun, Jul 29, 2018 at 05:46:17PM +0200, Duy Nguyen wrote:
->
-> > tOn Sun, Jul 29, 2018 at 5:36 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> > >
-> > > These extra comments should be make it easier to understand how to us=
-e
-> > > locks in pack-objects delta search code. For reference, see
-> >
-> > Side note. I wonder if we could take progress_lock() less often in
-> > find_deltas() to reduce contention. Right now we take the lock every
-> > time we check out one object_entry but we could pull like 16 items out
-> > of the list per lock. I don't know how much actual contention on this
-> > lock though so maybe not worth doing.
->
-> I doubt it really matters that much, since we hold it for such a small
-> amount of time (basically just a few pointer/integer tweaks). Compared
-> to the heavy lifting of actually loading objects, you're not likely to
-> see a huge amount of contention, since at any given moment most threads
-> will be doing that work (or actually computing deltas).
+Hi,
 
-That was also my assumption when I added the lock to that
-oe_get_delta_size() but it seemed to slow lots-of-core system
-significantly. My theory is when we do small deltas, turnaround time
-could be very quick so if you have lots of threads we'll end up racing
-to hold the lock.
+Stefan Beller wrote:
 
-What I missed here though, is that we do try_delta() on the whole
-window in a thread before we would need progress_lock again, so it's a
-lot more work than a single try_delta() and likely less contention.
+> Reviewer bandwidth is limited, so let's have the machine of the
+> (potentially new) contributor warn about issues with the code by default.
+>
+> As setting DEVELOPER, the compiler is stricter and we may run into problems
+> on some architectures. But packagers of said platforms are knowledgeable
+> enough to turn off this flag. (Also they are fewer than the number of new
+> contributors)
 
+Which architectures would we run into problems on?  Aren't those bugs
+that should themselves be fixed?
+
+I think you are right that the packagers will cope with whatever
+setting we choose.  My main concern is not about them but about other
+people building from source in order to run (instead of to develop)
+Git, and by extension, the people they go to for help when it doesn't
+work.  I have lots of bitter experience of -Werror being a support
+headache and leading to bad workarounds when someone upgrades their
+compiler and the build starts failing due to a new warning it has
+introduced.
+
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  Makefile | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> Of course I could be wrong. If you hit a point where many threads are
-> skipping work (e.g., because they are considering deltas from objects in
-> the same pack, and skip forward without actually doing any work), then
-> they'd be ripping through the find_deltas() loop pretty quickly.
->
-> OTOH, in cases like that (and the ultimate case would just be running
-> "git repack -ad" twice in a row), the compression phase seems to go
-> quite quickly, implying we're not spending a lot of time there.
->
-> -Peff
---=20
-Duy
+> diff --git a/Makefile b/Makefile
+> index 41b93689add..95aa3ff3185 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -497,6 +497,8 @@ ALL_CFLAGS = $(CPPFLAGS) $(CFLAGS)
+>  ALL_LDFLAGS = $(LDFLAGS)
+>  STRIP ?= strip
+>  
+> +DEVELOPER=1
+
+I like the idea of making this more discoverable to new contributors.
+It seems that Documentation/SubmittingPatches doesn't mention this
+setting.  Should it?
+
+Should a non-DEVELOPER build print a note encouraging enabling this
+setting in case you're developing patches meant for submission to the
+project?
+
+Should we have a CONTRIBUTING.md file suggesting this setting?  Other
+ideas for ensuring it's enabled for those who need it?
+
+Thanks and hope that helps,
+Jonathan
