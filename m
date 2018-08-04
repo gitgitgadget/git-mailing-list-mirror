@@ -2,142 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2618C1F597
-	for <e@80x24.org>; Sat,  4 Aug 2018 19:23:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 662961F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 21:47:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728889AbeHDVYv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 4 Aug 2018 17:24:51 -0400
-Received: from mail-pf1-f177.google.com ([209.85.210.177]:37825 "EHLO
-        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728067AbeHDVYv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 4 Aug 2018 17:24:51 -0400
-Received: by mail-pf1-f177.google.com with SMTP id a26-v6so4913059pfo.4
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 12:23:11 -0700 (PDT)
+        id S1729602AbeHDXtt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 4 Aug 2018 19:49:49 -0400
+Received: from mail-lj1-f173.google.com ([209.85.208.173]:41132 "EHLO
+        mail-lj1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728889AbeHDXtt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 4 Aug 2018 19:49:49 -0400
+Received: by mail-lj1-f173.google.com with SMTP id y17-v6so7643428ljy.8
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 14:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XlSbdgT4lKXU11kxM4dynBE0z4jI6Ti1YUW6j6JqY6U=;
-        b=SjTJfOHvgDyJVgIRko+Sm+MIjpT5yldL/BYcPkGFPdrnOCtZi0+l7+YyHeRIAIGdaw
-         Mw/TbyNTphMR3mHZXBLKtUltxlfrwqVkuV4emTZG8YMbDIQn/PvcDvnZuDezhWaCFXhu
-         p5Os/34/JlqjgFOrp4AqB1Wpg7mJDWTzp0pFPem/wGYAVHT3YnM6Z2TG0wwDDxfoLqsY
-         fmL72UDb+5zWuiGLDHBhCFGwv46dEilq0sWWdEQtTa2vqsyjUrBw0Uo65qNAryo7p+zv
-         nKRoHtKJrfCKhckC9S9pOaGFZUJQKSkpMyzIAl9XqXpITDD3Hes56eF+6/hinIXButNS
-         nDVg==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=KlTxHj5yGK8v7i7OSBGIzS2UyZ792EKmudxrnQ7Z0M4=;
+        b=j7lYCu69uWCfcRofIef+y5DUfNWhQu/IvN8hSLK867MsBQ6FtSvT+5h+JSZJL2q/3C
+         N+e+0Z7K5WWKxK5aOHgURCNKKPut1APQUonDlMwdXUKX7VvzVObYNST9tQvUnoRz3rpb
+         7VYrGrFTzC2Ta5kXWB8IQ3qvJwVc0H2BNn/+LMlFlVisn1RWUQol9zE8//CBGjcflw0l
+         9jC/zX18fdc82PRfwbYPAKc3b6wgu0xKyfwYrwTWmlazFch9l3/eITJvd9mgqrXyjyvQ
+         nnqoLdEPDyzSPmy5qeRNTHpEPuv1zG3rafSdDKu+ZhZ17SMEYI0OqFQNAn18jnuk+SKA
+         lECw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XlSbdgT4lKXU11kxM4dynBE0z4jI6Ti1YUW6j6JqY6U=;
-        b=Y2DnjJI0WIN/DGiIYdagABMvFNtJjbjorrQ5Lt+vnr0K+N6Dx0ArW37y54vosyPSNd
-         xY4InRZrFkwMcu6PG/oTVsg92VKvDlsy7/VpBMtNJpgRB8E/0LESiTWdy0M+tsAQoi+9
-         omjMtmt23muxId7QfJIykAKyd59XIfu4xO/htBAzaZrURhWRsNSYU/z8IRMYTdwdWVbU
-         b752laDhnlJ//GXQuzzI7SglE39deXw5KSEm0nqmm44sSmviebD3CiqNciUF13bS2gsH
-         u+BodmbMeXXHfAPC8g4a8G1/dWAlo/XEZas5Ug8XJVjC1u7/PbtmQnctbqQs7SfCAsf/
-         w3Uw==
-X-Gm-Message-State: AOUpUlFN3MaRFtCblV9a5Ib3W4b6xuYyCZmU74X0gaksNvqOyBvTGt5E
-        nfDlxTBGaMqpQDJGVOx278SoQub7
-X-Google-Smtp-Source: AAOMgpeT1rURwTqsGI1JSOnKs+RL+jE0+em8T1mwhMia2WEQ7cYWLSTXY7k326MUE2V2UWZmD1n8fA==
-X-Received: by 2002:a65:5a49:: with SMTP id z9-v6mr8660279pgs.244.1533410590408;
-        Sat, 04 Aug 2018 12:23:10 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id o84-v6sm13596236pfi.165.2018.08.04.12.23.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 04 Aug 2018 12:23:09 -0700 (PDT)
-Date:   Sat, 04 Aug 2018 12:23:09 -0700 (PDT)
-X-Google-Original-Date: Sat, 04 Aug 2018 19:23:05 GMT
-Message-Id: <d2ba1e6bef9d6d4eabc8eaa60435dcae1105fd07.1533410586.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.14.git.gitgitgadget@gmail.com>
-References: <pull.14.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] pull --rebase=<type>: allow single-letter abbreviations
- for the type
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=KlTxHj5yGK8v7i7OSBGIzS2UyZ792EKmudxrnQ7Z0M4=;
+        b=c6iM7Cq/zCl9ExF28ZS1ZwTz6oMIk3bebQzLbJPgI4VUR1OXvsrQPat1p2VQ32Pol8
+         fpfVEShcfzxLE+eBlLqQYfjyGlWVPxB7eSr+Vn/fpFfaz1++NGNUa5PVPlSYH5XV+2xP
+         fPx/9cg7srMDXkpRH7dHoCBLxzzPAq8Q/93DXdtP0ngx+RYHjV/sv/D6Gai1m1hjofDP
+         j+xahqMD7SVIkFqAp7GyUYCefyKNt0/8Ev50Imw2d5BTBWFhJSKZuQ313HblraBeT/bO
+         nI4CYY0buMewalzWuoIsW7YSN8QsRelWgnIj9SdcdEIQc5l7+mNA/RiWU7vEnNSFb7lf
+         DjoA==
+X-Gm-Message-State: AOUpUlHs/cpJnvIXZOQ1umj1a3iPOYFn44/EFMCOVe4yplKfKRhhUDDX
+        Mvc/Ezk86jKbmmILwzrMkNBz8n0VCFCrG8hnCVnLVZXt
+X-Google-Smtp-Source: AAOMgpeJHT/GIrWMcKcSIDnu/tBelJYFmFIh4rflZ0kqUqFjW/fC7vKmAku/c7ONR7a9OQj9R5KfGUZMBAPuJ6myvPk=
+X-Received: by 2002:a2e:3313:: with SMTP id d19-v6mr8389156ljc.25.1533419263113;
+ Sat, 04 Aug 2018 14:47:43 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 2002:a2e:4057:0:0:0:0:0 with HTTP; Sat, 4 Aug 2018 14:47:42 -0700 (PDT)
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Sat, 4 Aug 2018 14:47:42 -0700
+Message-ID: <CA+KyZp4fxRfnPNozEtwgLPuFAnEsXCBPPubzNjv0wUMnBV_eww@mail.gmail.com>
+Subject: concurrent access to multiple local git repos is error prone
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+If I have multiple local git repos, and I run `git status -v` on them,
+sometimes I don't get any stdout for the command. This is highly
+reproducible.
 
-Git for Windows' original 4aa8b8c8283 (Teach 'git pull' to handle
---rebase=interactive, 2011-10-21) had support for the very convenient
-abbreviation
+I assume that access more than 1 git repo concurrently on a local
+machine is not without errors. However this seems like a huge
+limitation or design flaw.
 
-	git pull --rebase=i
+Is my observation correct? Are there any plans to remove this limitation?
 
-which was later lost when it was ported to the builtin `git pull`, and
-it was not introduced before the patch eventually made it into Git as
-f5eb87b98dd (pull: allow interactive rebase with --rebase=interactive,
-2016-01-13).
+My use case - I create a lot of developer tools and more than once I
+have hit this limitation...I have to create a queue with concurrency
+of 1 to run commands on git repos. It's very strange and
+counterintuitive to have to do this.
 
-However, it is *really* a useful short hand for the occasional rebasing
-pull on branches that do not usually want to be rebased.
 
-So let's reintroduce this convenience, at long last.
+--=20
+Alexander D. Mills
+=C2=A1=C2=A1=C2=A1 New cell phone number: (415)730-1805 !!!
+alexander.d.mills@gmail.com
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/pull.c  |  6 +++---
- t/t5520-pull.sh | 12 ++++++++++++
- 2 files changed, 15 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 4e7893539..53bc5facf 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -48,11 +48,11 @@ static enum rebase_type parse_config_rebase(const char *key, const char *value,
- 		return REBASE_FALSE;
- 	else if (v > 0)
- 		return REBASE_TRUE;
--	else if (!strcmp(value, "preserve"))
-+	else if (!strcmp(value, "preserve") || !strcmp(value, "p"))
- 		return REBASE_PRESERVE;
--	else if (!strcmp(value, "merges"))
-+	else if (!strcmp(value, "merges") || !strcmp(value, "m"))
- 		return REBASE_MERGES;
--	else if (!strcmp(value, "interactive"))
-+	else if (!strcmp(value, "interactive") || !strcmp(value, "i"))
- 		return REBASE_INTERACTIVE;
- 
- 	if (fatal)
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 68aa5f034..5e501c8b0 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -475,10 +475,22 @@ test_expect_success 'pull.rebase=interactive' '
- 	false
- 	EOF
- 	test_set_editor "$TRASH_DIRECTORY/fake-editor" &&
-+	test_when_finished "test_might_fail git rebase --abort" &&
- 	test_must_fail git pull --rebase=interactive . copy &&
- 	test "I was here" = "$(cat fake.out)"
- '
- 
-+test_expect_success 'pull --rebase=i' '
-+	write_script "$TRASH_DIRECTORY/fake-editor" <<-\EOF &&
-+	echo I was here, too >fake.out &&
-+	false
-+	EOF
-+	test_set_editor "$TRASH_DIRECTORY/fake-editor" &&
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	test_must_fail git pull --rebase=i . copy &&
-+	test "I was here, too" = "$(cat fake.out)"
-+'
-+
- test_expect_success 'pull.rebase=invalid fails' '
- 	git reset --hard before-preserve-rebase &&
- 	test_config pull.rebase invalid &&
--- 
-gitgitgadget
+www.linkedin.com/pub/alexander-mills/b/7a5/418/
