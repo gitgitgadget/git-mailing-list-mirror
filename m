@@ -2,85 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F2E01F597
-	for <e@80x24.org>; Fri,  3 Aug 2018 23:46:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E05C1F597
+	for <e@80x24.org>; Sat,  4 Aug 2018 00:39:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731959AbeHDBoq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 3 Aug 2018 21:44:46 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:44816 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731925AbeHDBoq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 3 Aug 2018 21:44:46 -0400
-Received: by mail-yw1-f66.google.com with SMTP id l9-v6so1600234ywc.11
-        for <git@vger.kernel.org>; Fri, 03 Aug 2018 16:46:19 -0700 (PDT)
+        id S1732073AbeHDChw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 3 Aug 2018 22:37:52 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:38213 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732001AbeHDChw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 3 Aug 2018 22:37:52 -0400
+Received: by mail-lf1-f68.google.com with SMTP id a4-v6so5281393lff.5
+        for <git@vger.kernel.org>; Fri, 03 Aug 2018 17:39:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=XEzx14HrMWFUulSszw9dZz+9jtZDgVdYpJ1NTX7bExs=;
+        b=f2XRuzKH7LvRuv+QXw630Z/wIvA21CnJ7l4VKP+NADABj/rOMGU0DONWMYN+eT4Szy
+         dfIwXIFU/4VdI/0iPhl7yKCNGzsHGgJ8GIFdHwnu/6wIjAdMNizAYKTMDgzDNlha3Zx+
+         s2bmviNvLxN/ZVHg/sY4c+PRXJWk6B8tnyGj3P/6SKJviCArZumSE+1hYrRU0U+Chlgc
+         Lm89C7RVeEKj4qQurINa1D0W+cmvoMN505C5BnssLeFw2LeOAV6+0Q3KnwqmV8jmrDvs
+         0wBY+TtxLYkC8BBFTaxiaD0OWHTxG7CT1PB0tPsD07lbiUP/d2EEaO2vHzJaHr8zcwkX
+         CaTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QHbAZnZzfG7u1e/qa2x31zIDMoA9HNNh4EBVP/EnhjI=;
-        b=Ic2Fa/fTKA8O4cwpC0PHyPHFzs3LuYcAUdCmJInXzmLTeCry8EuAy0o/b0TiZKvKbz
-         p3Lioi6iGCqHDDkuEpq/bBG/7/2nL1Ee5E7ti7hDhA4lkpKx+bFeYnUwT7+hOkQ6Rjah
-         0IAp1JLudXcizGjIzpqf8TPWLa8yt5Fnt1gdRTH5WHTOe9VN2UiGGEg4G8ggAsbzoJhZ
-         6H5+U4HMisTfhlv0o8Jg2Z5FDVvvuhBqZ4omgbC9JZA4YXS4JwWHPEDnbCXGgu1X8cyy
-         +u4rPUFYNxjp9jrOFCpZ2+fNQA+95wa1tjpaz/rUHxIYCPbw9J0Lo7n5D5hUln5et2qW
-         0tTQ==
-X-Gm-Message-State: AOUpUlEknv7yU0kQLa8Zp2Un/fjbCtx4zCjo9uqUFkigRKClux3dS8wV
-        v3hdFhSm5divWLK70IztPS5govp907snUUPCnBo=
-X-Google-Smtp-Source: AAOMgpeB0P1nUsEs6Eb5wWW7GImSQJ53Vk6fpCn5np4OanwDznA77UgYB+I3GX/yFNhciA1x2E6exfeUdUOC/4KGbPA=
-X-Received: by 2002:a81:7bd4:: with SMTP id w203-v6mr3273637ywc.70.1533339634415;
- Fri, 03 Aug 2018 16:40:34 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=XEzx14HrMWFUulSszw9dZz+9jtZDgVdYpJ1NTX7bExs=;
+        b=Qf5ekU8fzjjTL4x2R7WaXvYKA1H07mGYrCLx7m/9jwQk+4gCssKlo4dG06gmvpFJy4
+         qugXzw4+SbWohT10WL+ppGXO9m+Lmdz1FE89SvWrToPLnax3USluHRWK1blU9wx7mtW9
+         YR/AneF34Kfv26nvBHNlheqZ/dH+VEyFtQ07fJC+3QQ6qn9d8TCTlG2ay7MFiSE9xQIE
+         kcFkNu4jFmjrfnw2NcKIrASpLGy7Hzq4RyFtWAKadr6yWyJ5tiMtyWVqZOR7fxUymBfE
+         MXndI94PRtRv6zTpaRwS6lrO6NdObXw4VdhLQ7bBJ6pjWZyB3c/uJw61YXd2GCELHOhZ
+         admg==
+X-Gm-Message-State: AOUpUlFSFiLbufVHQV2ZX2Hq4wHukrNzFg2+l8dd2VQxz5L4IC7N4BrR
+        YzDPQ7I3HiuGIVg9pSaN+Pk=
+X-Google-Smtp-Source: AAOMgpfmla3YLD5g+ZdOMyahWfuzzt9xi0buA5pffj0CFZvl1JBS5jgF/QIyWgTomakDufWJMdbeQw==
+X-Received: by 2002:a19:cc0f:: with SMTP id c15-v6mr5638545lfg.145.1533343155558;
+        Fri, 03 Aug 2018 17:39:15 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id h90-v6sm1105207lji.66.2018.08.03.17.39.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 03 Aug 2018 17:39:14 -0700 (PDT)
+Subject: Re: [PATCH] t4150: fix broken test for am --scissors
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Paul Tan <pyokagan@gmail.com>
+References: <f91c7393-4f1b-1cf5-b870-f42e9bd18d64@gmail.com>
+ <8f69d82b-0f35-754f-0096-853d6b463db7@gmail.com>
+ <xmqqh8kbuk4t.fsf@gitster-ct.c.googlers.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <80465ead-3bf5-ffc7-59d1-7ab3770430b6@gmail.com>
+Date:   Sat, 4 Aug 2018 02:39:13 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180803231407.10662-1-newren@gmail.com>
-In-Reply-To: <20180803231407.10662-1-newren@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 3 Aug 2018 19:40:22 -0400
-Message-ID: <CAPig+cR75Q7HDipttU9dqtNjf23SYNJ98o=0-=JFtPgMMjFxHA@mail.gmail.com>
-Subject: Re: [PATCH] t7406: Make a test_must_fail call fail for the right reason
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqh8kbuk4t.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 3, 2018 at 7:14 PM Elijah Newren <newren@gmail.com> wrote:
-> A test making use of test_must_fail was failing like this:
->   fatal: ambiguous argument '|': unknown revision or path not in the working tree.
-> when the intent was to verify that a specific string was not found
-> in the output of the git diff command, i.e. that grep returned
-> non-zero.  Fix the test to do that.
-> ---
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> @@ -599,7 +599,7 @@ test_expect_success 'submodule update - update=none in .git/config but --checkou
->          git diff --raw | grep "        submodule" &&
->          git submodule update --checkout &&
-> -        test_must_fail git diff --raw \| grep "        submodule" &&
-> +        git diff --raw | test_must_fail grep " submodule" &&
+On 2018-08-04 01:04, Junio C Hamano wrote:
+> Hmph, I am not quite sure what is going on.  Is the only bug in the
+> original that scissors-patch.eml and no-scissors-patch.eml files were
+> incorrectly named?  IOW, if we fed no-scissors-patch.eml (which has
+> a scissors line in it) with --scissors option to am, would it have
+> worked just fine without other changes in this patch?
 
-Unfortunately, this is a mis-use of test_must_fail() which is intended
-only for Git commands; it does extra checking to ensure that the Git
-command failed in a sane way (say, by returning a failing exit status)
-rather than by crashing. It's not intended for use with system
-commands which are assumed to be bug-free.
+Just swapping eml files wouldn't be enough, because in old tests the
+prepared commits touch different files: scissors-file and
+no-scissors-file. And since tests are about cutting/keeping commit
+message, it doesn't make much sense to keep two eml files which differ
+only in contents of their diffs. I'll try to reword the commit message
+to also include this bit.
+ 
+> I am not saying that we shouldn't make other changes or renaming the
+> confusing .eml files.  I am just trying to understand what the
+> nature of the breakage was.  For example, it is not immediately
+> obvious why the new test needs to prepare the message _with_
+> "Subject:" in front of the first line when it prepares the commit
+> to be used for testing.
+> 
+> 	... goes back and thinks a bit ...
+> 
+> OK, the Subject: thing that appears after the scissors line serves
+> as an in-body header to override the subject line of the e-mail
+> itself.  That change is necessary to _drop_ the subject from the
+> outer e-mail and replace it with the subject we do want to use.
+> 
+> So I can explain why "Subject:" thing needed to be added.
 
-Having a Git command upstream of a pipe is also discouraged since the
-pipe swallows its exit status, which means we won't know if the Git
-command actually crashed. So, what you really want is this:
+Yes, the adding of "Subject: " prefix is completely overlooked in the
+commit message. I'll add explanation in re-send.
 
-    git diff --raw >out &&
-    ! grep "<literal-tab>" out &&
+> I cannot still explain why a blank line needs to be removed after
+> the scissors line, though.  We should be able to have blank lines
+> before the in-body header, IIRC.
 
-(where <literal-tab> is a literal TAB)
+I'll double check this and restore the blank line in v2, if the
+removal is not needed. IIRC, I removed it by accident and didn't
+think too much of it.
 
-Since this script has a number of instances of Git commands upstream
-pipes, it may not make sense to fix just this one. So, either a
-preparatory cleanup patch could fix them all at once, and then this
-patch could come on top or, if you don't want to fix all the pipe
-cases, you could do this instead:
-
-    ! git diff --raw | grep "<literal-tab>" &&
+Thank you for review.
