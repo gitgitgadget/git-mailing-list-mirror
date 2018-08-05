@@ -2,140 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3C71F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 04:20:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A90041F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 04:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726181AbeHEGXH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 02:23:07 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42662 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbeHEGXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 02:23:07 -0400
-Received: by mail-pg1-f196.google.com with SMTP id y4-v6so4670702pgp.9
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 21:19:58 -0700 (PDT)
+        id S1726240AbeHEGXq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 02:23:46 -0400
+Received: from mail-pl0-f66.google.com ([209.85.160.66]:37309 "EHLO
+        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbeHEGXq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 02:23:46 -0400
+Received: by mail-pl0-f66.google.com with SMTP id d5-v6so4237745pll.4
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 21:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=U4zgiEhiHAYeKMdUt14as5atyiKUak6WhPTUjpjWhaU=;
-        b=ZnUc7+btzjE98vzsPMNOerxC5Lreq8gOQANBiSZVCgyZCJ6KZ45fsI+wwiorkAm4R7
-         po+y6Q6LoUB0Y04uTkAuMK/jKHZ/2dGkm/Ka4I78/IDpU1s/eboD+Z1E/O5S/T2/tFpC
-         9O689YTtohTs7FpfsO864MwWCa1O2ZhHqzBgRusT9E0F+feAklFMPUTOQgXNpeDfBsRp
-         xvHImaM+ThmoNRZpPKS5gDAYz/fFN0292AeXQV5OztbwS++PI5Bso4hQID0Ts2Io0Mdj
-         FHafNuP/PQpNz3tB5HnS+SYtOd8t7mOqa5fJoJtiptb31WQ0yawKswK2u4HsgkOovP3F
-         3s+g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=al5D2/NMnY9G+thso6nWecgqPA7eZZODUUeFTa+5VO8=;
+        b=Qh+u9G5cJOL/o0OSQPmg+xjwMWBK1napPO7bFdrQ1vdSGy1biEDaM35kdRmsZjmXn/
+         te2qe3ixHmLCDsr0GVToZ46kjRNFlofMtiGBmDiCTO9+/xwMBk8RVB441tJa0F8VZP2k
+         0WgA2FatUWQBtv+3fH+ZdsTnnA/eznkIqbfXEZTk779cqukHZZYRuVe9fTGWRfdWWKc4
+         Ok9P7775zx7GVSKjE/hGzMOJ0lo7PyA5VWm37WAqJujmkjCvMY1UBaaDLEAoW5w1X2Fd
+         hmNxvtkhqUMZo/r8M3D4u5OY/DUuHW1YyLeYOyIcUpv0ViNMQ/J//j9J26rxZSfFizFW
+         3ycg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=U4zgiEhiHAYeKMdUt14as5atyiKUak6WhPTUjpjWhaU=;
-        b=rmb+fFaEMSsyKCetFLKURRxVff9xIw4xZGLxlqKyMravTqamdOhOpx0M4FefzBRIr5
-         zb4wO+3YxtLhp6YFPnqppDGqQj1UEEQWqe2EoD956+Jx/dVpvKmqj15S5zoXF34no3ps
-         ndc47MoigPadXsrW0wRneJgKdEn2SSEIAr0eEHRpzh+xyikmqVjDiZu13wAU0wUKqnOJ
-         4BnoGy7Rl7+wMVmUCKGiCZENN/VmbLa7dymtxVrh59iaielyqagbU8rcZdZdDXZvsiFL
-         rl1tyZDCPh8qab9iFZYQ1Rgkpp6CARv7wrOM9O7KMA96W7O2RW/1WRIKOeke/xw3p0Z8
-         aUzQ==
-X-Gm-Message-State: AOUpUlEFJxNNpnLlDBAihVguFuoMjjGaWNGqbcW1NaXD32Bf3POy9v9i
-        wuLWoUBoMtnA0OAfa6BR4xs=
-X-Google-Smtp-Source: AAOMgpf8vEjgb+CHwKz5IkvrQdSz5C6iDBn0o9bHz9bgwIMdb/wxRY/BywVoDP/GT4ccpkeTjK4Twg==
-X-Received: by 2002:a63:e318:: with SMTP id f24-v6mr9501580pgh.175.1533442798009;
-        Sat, 04 Aug 2018 21:19:58 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id v89-v6sm8570066pfj.22.2018.08.04.21.19.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 04 Aug 2018 21:19:57 -0700 (PDT)
-Date:   Sat, 4 Aug 2018 21:19:56 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     William Chargin <wchargin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] t/test-lib: make `test_dir_is_empty` more robust
-Message-ID: <20180805041956.GI258270@aiede.svl.corp.google.com>
-References: <20180805022002.28907-1-wchargin@gmail.com>
- <20180805022002.28907-2-wchargin@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=al5D2/NMnY9G+thso6nWecgqPA7eZZODUUeFTa+5VO8=;
+        b=A/ZGQufyT4U+psD8WfbO9iYNcFLyo8Qkib6n8966PGr25RxllgHUaU+6WMlTH1R9Av
+         1iVNuObcODauehUiokks31sUwVW4yE26xaYjHHo2Jp2euY2hsMwivs/pnhdXBlPgAuXx
+         Wfh9XQaTxoaqi/dH1RKo67YqUuHi6C+iv+66fazyHG5jJkPMjosBmtE4Fs0DBnHCI/YS
+         RzLXSYniq0HOZ9vzcmqQHzPWzuFKxmsOhWscfre7QhThUcjofqEsg+k8zMdRNyLbZOg9
+         Fbovo/uAMfXwn+jjFlKyrBB3w2dh/nsIW6XgKrfVi2uitZeA/dHSGI4Jrh+DpLEuKXx2
+         hDGQ==
+X-Gm-Message-State: AOUpUlFr/b2xO/pRbMpZPOrcF6RU1bF58JPHNOoFyRO2e1cHQMnYrWKZ
+        ww1jaajoT45I4xZlv3Im47I=
+X-Google-Smtp-Source: AAOMgpd1Vah0OrXqdVMsoKoZN3kh+4RKsfwzkfbMXwU7Y8uK9ht/mVxsuh8obkdgViVrDN+3DAPVfQ==
+X-Received: by 2002:a17:902:bd93:: with SMTP id q19-v6mr9166938pls.238.1533442837419;
+        Sat, 04 Aug 2018 21:20:37 -0700 (PDT)
+Received: from wchargin-t440s.attlocal.net (99-4-123-58.lightspeed.sntcca.sbcglobal.net. [99.4.123.58])
+        by smtp.gmail.com with ESMTPSA id 87-v6sm18209914pfn.103.2018.08.04.21.20.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 04 Aug 2018 21:20:36 -0700 (PDT)
+From:   William Chargin <wchargin@gmail.com>
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, wchargin@gmail.com
+Subject: [PATCH v2] t/test-lib: make `test_dir_is_empty` more robust
+Date:   Sat,  4 Aug 2018 21:20:31 -0700
+Message-Id: <20180805042031.20447-1-wchargin@gmail.com>
+X-Mailer: git-send-email 2.18.0.548.geb6c14151
+In-Reply-To: <20180805033629.GH258270@aiede.svl.corp.google.com>
+References: <20180805033629.GH258270@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180805022002.28907-2-wchargin@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+While the `test_dir_is_empty` function appears correct in most normal
+use cases, it can fail when filenames contain newlines. This patch
+changes the implementation to use `ls -A`, which is specified by POSIX.
+The output should be empty exactly if the directory is empty.
 
-William Chargin wrote:
+The newly added unit test fails before this change and passes after it.
 
-> Subject: t/test-lib: make `test_dir_is_empty` more robust
+Signed-off-by: William Chargin <wchargin@gmail.com>
+---
 
-This subject line will appear out of context in "git shortlog" output,
-so it's useful to pack in enough information to briefly summarize what
-the change does.  How about something like
+I originally wrote this patch for the standalone Sharness library, but
+that library advises that such patches be sent to the Git mailing list
+first.
 
-	test_dir_is_empty: avoid being confused by $'.\n.' file
+ t/t0000-basic.sh        | 29 +++++++++++++++++++++++++++++
+ t/test-lib-functions.sh |  2 +-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-or
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 34859fe4a..3885b26f9 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -821,6 +821,35 @@ test_expect_success 'tests clean up even on failures' "
+ 	EOF
+ "
+ 
++test_expect_success 'test_dir_is_empty behaves even in pathological cases' "
++	run_sub_test_lib_test \
++		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
++	test_expect_success 'should pass with actually empty directory' '
++		mkdir empty_dir &&
++		test_dir_is_empty empty_dir
++	'
++	test_expect_success 'should fail with a normal filename' '
++		mkdir nonempty_dir &&
++		touch nonempty_dir/some_file &&
++		test_must_fail test_dir_is_empty nonempty_dir
++	'
++	test_expect_success 'should fail with dot-newline-dot filename' '
++		mkdir pathological_dir &&
++		printf \"pathological_dir/.\\\\n.\\\\0\" | xargs -0 touch &&
++		test_must_fail test_dir_is_empty pathological_dir
++	'
++	test_done
++	EOF
++	check_sub_test_lib_test dir-empty <<-\\EOF
++	> ok 1 - should pass with actually empty directory
++	> ok 2 - should fail with a normal filename
++	> ok 3 - should fail with dot-newline-dot filename
++	> # passed all 3 test(s)
++	> 1..3
++	EOF
++"
++
++
+ ################################################################
+ # Basics of the basics
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 2b2181dca..f7ff28ef6 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -568,7 +568,7 @@ test_path_is_dir () {
+ # Check if the directory exists and is empty as expected, barf otherwise.
+ test_dir_is_empty () {
+ 	test_path_is_dir "$1" &&
+-	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
++	if test "$(ls -A1 "$1" | wc -c)" != 0
+ 	then
+ 		echo "Directory '$1' is not empty, it contains:"
+ 		ls -la "$1"
+-- 
+2.18.0.548.geb6c14151
 
-	test_dir_is_empty: simplify by using "ls --almost-all"
-
-?
-
-[...]
-> +	test_expect_success 'should fail with dot-newline-dot filename' '
-> +		mkdir pathological_dir &&
-> +		printf \"pathological_dir/.\\\\n.\\\\0\" | xargs -0 touch &&
-
-I don't think "xargs -0" is present on all supported platforms.  I'd
-be tempted to use
-
-		>pathological_dir/$'.\n.'
-
-but $'' is too recent of a shell feature to count on (e.g., dash doesn't
-support it).  See t/t3600-rm.sh for an example of a portable way to do
-this.
-
-Not all filesystems support newlines in filenames.  I think we'd want
-to factor out the FUNNYNAMES prereq from there into a test_lazy_prereq
-so this test can be skipped on such filenames.
-
-[...]
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -568,7 +568,7 @@ test_path_is_dir () {
->  # Check if the directory exists and is empty as expected, barf otherwise.
->  test_dir_is_empty () {
->  	test_path_is_dir "$1" &&
-> -	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-> +	if test "$(ls -A1 "$1" | wc -c)" != 0
-
-Another portability gotcha: wc output includes a space on Mac so this
-test would always return true there.  How about
-
-	if test -n "$(ls -A1 "$1")"
-
-?
-
-"ls -A" was added in POSIX.1-2017.  Its rationale section explains
-
-	Earlier versions of this standard did not describe the BSD -A
-	option (like -a, but dot and dot-dot are not written out). It
-	has been added due to widespread implementation.
-
-That's very recent, but the widespread implementation it mentions is
-less so.  This would be our first use of "ls -A", so I'd be interested
-to hear from people on more obscure platforms.  It does seem to be
-widespread.
-
-Can you say a little more about where you ran into this?  Did you
-discover it by code inspection?
-
-I do think the resulting implementation using -A is simpler.  Thanks
-for writing it.
-
-Thanks and hope that helps,
-Jonathan
