@@ -6,42 +6,44 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7761F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 10:14:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEC271F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 10:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726191AbeHEMSQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 08:18:16 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:37313 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726130AbeHEMSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 08:18:16 -0400
-Received: by mail-yb0-f194.google.com with SMTP id r3-v6so4256526ybo.4
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:14:13 -0700 (PDT)
+        id S1726120AbeHEMfT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 08:35:19 -0400
+Received: from mail-yb0-f195.google.com ([209.85.213.195]:36736 "EHLO
+        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726100AbeHEMfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 08:35:19 -0400
+Received: by mail-yb0-f195.google.com with SMTP id s1-v6so4268575ybk.3
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:31:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=87t+PaoGZFQ9Pl0DZ38/wFBuEyBxU9Xw0pktY+q1ph8=;
-        b=jlANbyEz6bzI/vpMONYg9nUQLWsqEdGjNKKN8ddCI4D1BuCEoykn5IFwu/Ln+n9TTV
-         EAwvWQynXzupVaZIeDdGswI7CdWCl0+xwiGFYSBQAb6oQ8G5Z97RxkfDsPJYvwwDTUyo
-         i7U+y0zOVfMmHqXISLPVbi/edicINT9nGDEeywIj8OaFZusNg2q/Jwqp1bCyGIYx8vQS
-         MLJYMGJ/ww4vvq+S2yk7vzaRG13JZTo8fK/FkTwX8pUxMZ9mHdc6n2iUU5rfX855C6QC
-         AZWZX7WhmubWZbMRgreec1L4jX04YuDxkVbvY65ZAAxNOyUjVYyjMs3rDG7qfU1ZPZa4
-         G+zg==
-X-Gm-Message-State: AOUpUlGKv3PAxY5X5kkOfKjELZfCuqvgnuluZ+tgOqLEAwsW/y4wORxk
-        cw940a4tRyGYSfiVT3c0dZf8lfvp1hzqELAflo0=
-X-Google-Smtp-Source: AAOMgpe6Q0Toj8miHk+4t94tM0VWx2frVJNw1U2hXkVx8kT5Vw4yqAxDVt8OO6K8LvSu6pJbDhmvaaYfwQrNFiunM/0=
-X-Received: by 2002:a25:488a:: with SMTP id v132-v6mr5504077yba.263.1533464052721;
- Sun, 05 Aug 2018 03:14:12 -0700 (PDT)
+        bh=yJ9Ul8xqqYDXLnzPJWzRCWDL3HLzTiqAsJeBxDYbe0A=;
+        b=axBMq5KUjDu2VJgb5j1LIyXxRbPYukISTXEqCywhAbdJoZKCUQmBRFYH48KNvtlpfF
+         Cs8CZwtTc9qKQanH8dSTobsaWYgr7Lifa/xyuxgnUBgZpG087s8BtGagSsgIpS9YN8p5
+         35sZ6rHUqV9aeWwGk7kBVfJu6YKP7Aoj5etCrfmUAg8XiD3Nm9YJRMx5IZ5kniRzEPTY
+         /UedNXr2/bj0AG9Ym5AiXBEGWdX0qFtGLNNwZB+foA7OL77a8wIrbnGQmycCx4l0NItR
+         fyajK8paKrfvVGg8GN1cnelIS8sexBoFUSwXToFZ/JFHBs4WYzfZsx+bxrQa7LiOQ/LH
+         wQMQ==
+X-Gm-Message-State: AOUpUlEB2gjuNQ/JyLfDXzxoisznizk5f1Yo9AHXRmuPU1UFbS0p/Pdk
+        4mvIgWKgU8+Mu6WLRaUnBIndO43qZafpwoQOUKA=
+X-Google-Smtp-Source: AAOMgpeCxN93IfhLJyhqdf8Wmy2gHrdhYm6fRglK6b52YqIdW8BQTNMRZRC9v7lc33WvcH1jzCwqwtgS9X+3qEPWDjA=
+X-Received: by 2002:a25:2d28:: with SMTP id t40-v6mr4439848ybt.497.1533465073335;
+ Sun, 05 Aug 2018 03:31:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.15.git.gitgitgadget@gmail.com> <7f92d92154143127734a638e41e064adce46a2e2.1533421100.git.gitgitgadget@gmail.com>
-In-Reply-To: <7f92d92154143127734a638e41e064adce46a2e2.1533421100.git.gitgitgadget@gmail.com>
+References: <pull.15.git.gitgitgadget@gmail.com> <d5d9db3c1124d29e26864596a8c36f0dc4de8a7e.1533421100.git.gitgitgadget@gmail.com>
+ <9776862d-18b2-43ec-cfeb-829418d4d967@gmail.com>
+In-Reply-To: <9776862d-18b2-43ec-cfeb-829418d4d967@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 5 Aug 2018 06:14:01 -0400
-Message-ID: <CAPig+cRWcFVbA76_HT2iVD16bsUmbWdCgk_07rmiGneM5czdOQ@mail.gmail.com>
-Subject: Re: [PATCH 2/4] line-log: adjust start/end of ranges individually
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+Date:   Sun, 5 Aug 2018 06:31:02 -0400
+Message-ID: <CAPig+cRoQB6Az=sYB_tjhOLewJyMzYAwqNxPh99a3aZFhzDcYg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] line-log: optimize ranges by joining them when possible
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Thomas Rast <tr@thomasrast.ch>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
@@ -50,55 +52,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 4, 2018 at 6:18 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> When traversing commits and adjusting the ranges, things can get really
-> tricky. For example, when the line range of interest encloses several
-> hunks of a commit, the line range can actually shrink.
+> On 2018-08-05 00:18, Johannes Schindelin via GitGitGadget wrote:
+> > Technically, it is okay to have line ranges that touch (i.e. the end of
+> > the first range ends just before the next range begins). However, it is
+> > inefficient, and when the user provides such touching ranges via
+> > multiple `-L` options, we already join them.
+> >
+> >  void range_set_append(struct range_set *rs, long a, long b)
+> >  {
+> > +     if (rs->nr > 0 && rs->ranges[rs->nr-1].end + 1 == a) {
+> > +             rs->ranges[rs->nr-1].end = b;
+> > +             return;
+> > +     }
 >
-> Currently, range_set_shift_diff() does not anticipate that scenario and
-> blindly adjusts start and end by the same offset ("shift" the range).
-> [...]
-> Let's fix this by adjusting the start and the end offsets individually.
+> As I understand it, this patch attempts to make range_set_append extend
+> the last range in the range set to include [a,b), if [a,b) "touches" the
+> last range in rs.
+> It seems that the first condition in range_set_append should be:
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/line-log.c b/line-log.c
-> @@ -438,7 +438,13 @@ static void range_set_shift_diff(struct range_set *out,
->                                 - (target[j].end-target[j].start);
->                         j++;
->                 }
-> -               range_set_append(out, src[i].start+offset, src[i].end+offset);
-> +               start_offset = offset;
-> +               while (j < diff->target.nr && src[i].end > target[j].end) {
-> +                       offset += (parent[j].end-parent[j].start)
-> +                               - (target[j].end-target[j].start);
-> +                       j++;
-> +               }
-> +               range_set_append(out, src[i].start+start_offset, src[i].end+offset);
+>         if (rs->nr > 0 && rs->ranges[rs->nr-1].end == a) {
 
-I'm still trying to wrap my head around the original code, so I'm not
-even at the point of being able to say if this fix is correct. What
-happens if the "start_offset" loop consumes all of 'j' before it even
-gets to the new loop? Why does the new loop use '>' whereas the
-existing uses '>='?
+I agree that this patch has an off-by-1 bug. 'end' is not included in
+the previous range, so it should not be adding 1 to end before
+checking against 'a'.
 
-Having said that, a much easier fix is to use
-range_set_append_unsafe() here, and then at the bottom of the loop,
-invoke 'sort_and_merge_range_set(out)' to restore range-set invariants
-and ensure that neighboring ranges are coalesced. Not only does that
-resolve the crash and other weird behavior, but it means you don't
-have to add a special-case to range_set_append(), thus the fix becomes
-simpler overall.
+*However*, as mentioned in my review[1] of 2/4, the special-case added
+by this patch is unnecessary, so this patch should be scrapped.
 
-Aside from simplicity, I think the suggested use of
-range_set_append_unsafe() and sort_and_merge_range_set() _is_ the
-correct fix anyhow because this code isn't taking care to ensure that
-the range, after applying 'offset', doesn't abut or overlap with an
-earlier range, and sort_and_merge_range_set() is meant to be used
-exactly in cases like this when invariants may be broken.
+> With these consideration in mind the assert should become
+>
+>         assert(rs->nr == 0 || rs->ranges[rs->nr-1].end < a);
 
-So, while the suggested fix is simpler and "better" and fixes the
-crash, that doesn't necessarily mean that the values computed here are
-actually correct. As noted, I'm still trying to grok the computation
-of these values, but that's a separate issue from the crash itself.
+Agreed. The existing assertion() has an off-by-1 error.
+range_set_append() is supposed to add a range _without_ breaking the
+invariant that no two ranges can abut, and the assertion() was
+supposed to protect against that. The existing "<= a" incorrectly
+allows the new range to abut an existing one, whereas the proposed "<
+a" doesn't.
+
+(For adding abutting or overlapping ranges, range_set_append_unsafe()
+followed, at some point, by sort_and_merge_range_set() is the
+recommended alternative to the more strict range_set_append().)
+
+[1]: https://public-inbox.org/git/CAPig+cRWcFVbA76_HT2iVD16bsUmbWdCgk_07rmiGneM5czdOQ@mail.gmail.com/
