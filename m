@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2505A1F597
+	by dcvr.yhbt.net (Postfix) with ESMTP id D61AB1F597
 	for <e@80x24.org>; Sun,  5 Aug 2018 17:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726947AbeHET0T (ORCPT <rfc822;e@80x24.org>);
+        id S1726955AbeHET0U (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 15:26:20 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:50788 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726921AbeHET0T (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 5 Aug 2018 15:26:19 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:55021 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726691AbeHET0S (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 15:26:18 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c14-v6so11444520wmb.4
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:21:01 -0700 (PDT)
+Received: by mail-wm0-f68.google.com with SMTP id s12-v6so11469782wmc.0
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=S9+Sawdlpv6gxkouYu4961ziHw/8RtZewc7WEvh2qTU=;
-        b=ARxQp6RUss2oYigk+x9bEJbPDpZQANxFFtUpcsfF7VV7qhwTMvWQ9402XFB0ePSFe1
-         LfGM5m993nEA0m7wCwJdgAM6EPxBg26f+GONgRvtDMP8sEvcoPqDKzXRuBkPpTemy00S
-         Fcfew2ityzWoVGhIPb+QOUidVlferej5et2808umSS82rGA1M9iXwR7HC+QaXjEeJ2JQ
-         NEN6Uf1wOqagOxxv/tdJYFdorcTguIsAPOHPahYpxRs496g8uZt9U1/pgl63h5OQPTdR
-         rrwc+I3ZfuGqQN4AWXJVveVMnQuh0qB1aPykQhiX20I5ZkJ+COqOx8yTyL/x7WCpI9dc
-         amag==
+        bh=qi0DgXlwCkyL/2Vw54moKCBMeu7ldyNzWmc12UmiHNw=;
+        b=EW8hIq2A6pq1eYb5hNCDnVnjkIhD5mkCrtNlg5Y7FsEt48I8k8kudEldr8DNF7jgxd
+         83Pv8/9W6m4aFvEy+jWtGcuTrmXFEHXz0tnttFCKToY3kY22Vxy4Qc2YFMpeJdNTlERS
+         jKDIG+pDT1ijzZ8hnzkCpapeyYhSZc4zVSoco9bxppowyAxD357ME00KRvvXdr4KVNRk
+         2Zs7mleCm+uqlSZ1ahgj5WkaKU8Jg95ch6KHd3HudVKRX8tD4larknklLz7/Z8L738/Q
+         wzypazS4r3JuQK8dGkcamPTW224YjMYqW+mffYCYwamWwNA1JFAEvQmG6GSH7cwxS0C9
+         AiJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=S9+Sawdlpv6gxkouYu4961ziHw/8RtZewc7WEvh2qTU=;
-        b=FcIk4iQM5jyj5dFstBAytkmaKyOSplGdORwc0QApOdQBL+DhiCxxyJFTbTBkg15XYX
-         8tOJuIclXe8kieFRfzwh6RgtZweM8PDgpZbpkYWov05fMl/FP5ZiMIKOCo/iARc03DE5
-         lgoJMeElR/ejKfpQ5iV3cnOTz2DhcA/5aa36bP4/X68B0+bhHBVlaqRmrajyeKbYTdWt
-         zIQX4TEr0Z/2nDVaYR4R+h8h0LtK8s5gUUrdNrs/Sv9SMfHNXL7W4CbHWgU9cIynns4r
-         QIzjs0qJjcBWu/DdKX6yggRBZ19EvGAth4yvOBaBdHcLfNniuo/x5jfW/v5TsWKPqK2Z
-         jJNw==
-X-Gm-Message-State: AOUpUlG94fRIQN5Y55y+T5lB7XTqWfnQsHxqeTb5agT6j9KJm8GEQB7s
-        9lnYcApIudhjJSPuKLSuXMzgVpl3
-X-Google-Smtp-Source: AAOMgpfedGkee32NCvkh6YfHrCeS7u8qF/vPeePr/9QgaBS74PfW3cY+/hOLx4NdAZpY3SnIhmMt1A==
-X-Received: by 2002:a1c:1745:: with SMTP id 66-v6mr9397103wmx.38.1533489660138;
-        Sun, 05 Aug 2018 10:21:00 -0700 (PDT)
+        bh=qi0DgXlwCkyL/2Vw54moKCBMeu7ldyNzWmc12UmiHNw=;
+        b=oUEZHjYtElS42oCM6cwLmKdZXXTPl0yHlKDhpBwYTGtSBQUm/4qCq8MNjQ+DS1HgZp
+         Rd8evxM1758u6iUOpPC0238KrnP/DWHOBH6EliBF+txBi8i1ewF8hFpdjx5v2p053U3U
+         d3Ssi0OIJl+ZgZApcoJMzx3G+Mf9YXosDOJWlwdnLbJCrkgi/K9ejzJTFlwvqQFc/20X
+         uMwTKPadaYf3SBeeyldveY5fv7hVvReEBjtnswkj/C+UHINwrxd+dYSaNd71ya6PV1JN
+         +4BXHJ16P9bR9zKgHdSVlJmzsit+JrsU71FvK3e0g40vO0bf8y7rOVTS1aP6IeuJjduu
+         515w==
+X-Gm-Message-State: AOUpUlFad4XKBxp854yf4KQpmBTZOTVGycdl5DyDvWiIobHjS2Lh9QoM
+        gexiCg53sGodpwn4jgnsppZysKvF
+X-Google-Smtp-Source: AAOMgpfzug9K7BEYQdKvLe0jbYnISoda9IO5G72uPUnamqRg1oJE5HCOHIMJaRS4iNpmWPYj3iXfpQ==
+X-Received: by 2002:a1c:4887:: with SMTP id v129-v6mr9246423wma.129.1533489661618;
+        Sun, 05 Aug 2018 10:21:01 -0700 (PDT)
 Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id i14-v6sm10236115wmd.13.2018.08.05.10.20.58
+        by smtp.gmail.com with ESMTPSA id w4-v6sm13292667wrl.46.2018.08.05.10.21.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 05 Aug 2018 10:20:59 -0700 (PDT)
+        Sun, 05 Aug 2018 10:21:00 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 10/11] rerere: teach rerere to handle nested conflicts
-Date:   Sun,  5 Aug 2018 18:20:36 +0100
-Message-Id: <20180805172037.12530-11-t.gummerer@gmail.com>
+Subject: [PATCH v4 11/11] rerere: recalculate conflict ID when unresolved conflict is committed
+Date:   Sun,  5 Aug 2018 18:20:37 +0100
+Message-Id: <20180805172037.12530-12-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.18.0.720.gf7a957e2e7
 In-Reply-To: <20180805172037.12530-1-t.gummerer@gmail.com>
 References: <20180714214443.7184-1-t.gummerer@gmail.com>
@@ -67,187 +67,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently rerere can't handle nested conflicts and will error out when
-it encounters such conflicts.  Do that by recursively calling the
-'handle_conflict' function to normalize the conflict.
+Currently when a user doesn't resolve a conflict, commits the results,
+and does an operation which creates another conflict, rerere will use
+the ID of the previously unresolved conflict for the new conflict.
+This is because the conflict is kept in the MERGE_RR file, which
+'rerere' reads every time it is invoked.
 
-Note that a conflict like this would only be produced if a user
-commits a file with conflict markers, and gets a conflict including
-that in a susbsequent operation.
+After the new conflict is solved, rerere will record the resolution
+with the ID of the old conflict.  So in order to replay the conflict,
+both merges would have to be re-done, instead of just the last one, in
+order for rerere to be able to automatically resolve the conflict.
 
-The conflict ID calculation here deserves some explanation:
+Instead of that, assign a new conflict ID if there are still conflicts
+in a file and the file had conflicts at a previous step.  This ID
+matches the conflict we actually resolved at the corresponding step.
 
-As we are using the same handle_conflict function, the nested conflict
-is normalized the same way as for non-nested conflicts, which means
-the ancestor in the diff3 case is stripped out, and the parts of the
-conflict are ordered alphabetically.
-
-The conflict ID is however is only calculated in the top level
-handle_conflict call, so it will include the markers that 'rerere'
-adds to the output.  e.g. say there's the following conflict:
-
-    <<<<<<< HEAD
-    1
-    =======
-    <<<<<<< HEAD
-    3
-    =======
-    2
-    >>>>>>> branch-2
-    >>>>>>> branch-3~
-
-it would be recorde as follows in the preimage:
-
-    <<<<<<<
-    1
-    =======
-    <<<<<<<
-    2
-    =======
-    3
-    >>>>>>>
-    >>>>>>>
-
-and the conflict ID would be calculated as
-
-    sha1(1<NUL><<<<<<<
-    2
-    =======
-    3
-    >>>>>>><NUL>)
-
-Stripping out vs. leaving the conflict markers in place in the inner
-conflict should have no practical impact, but it simplifies the
-implementation.
+Note that there are no backwards compatibility worries here, as rerere
+would have failed to even normalize the conflict before this patch
+series.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- Documentation/technical/rerere.txt | 42 ++++++++++++++++++++++++++++++
- rerere.c                           | 10 +++++--
- t/t4200-rerere.sh                  | 37 ++++++++++++++++++++++++++
- 3 files changed, 87 insertions(+), 2 deletions(-)
+ rerere.c          | 7 +++----
+ t/t4200-rerere.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
-index 3d10dbfa67..e65ba9b0c6 100644
---- a/Documentation/technical/rerere.txt
-+++ b/Documentation/technical/rerere.txt
-@@ -138,3 +138,45 @@ SHA1('B<NUL>C<NUL>').
- If there are multiple conflicts in one file, the sha1 is calculated
- the same way with all hunks appended to each other, in the order in
- which they appear in the file, separated by a <NUL> character.
-+
-+Nested conflicts
-+~~~~~~~~~~~~~~~~
-+
-+Nested conflicts are handled very similarly to "simple" conflicts.
-+Similar to simple conflicts, the conflict is first normalized by
-+stripping the labels from conflict markers, stripping the common ancestor
-+version, and the sorting the conflict hunks, both for the outer and the
-+inner conflict.  This is done recursively, so any number of nested
-+conflicts can be handled.
-+
-+The only difference is in how the conflict ID is calculated.  For the
-+inner conflict, the conflict markers themselves are not stripped out
-+before calculating the sha1.
-+
-+Say we have the following conflict for example:
-+
-+    <<<<<<< HEAD
-+    1
-+    =======
-+    <<<<<<< HEAD
-+    3
-+    =======
-+    2
-+    >>>>>>> branch-2
-+    >>>>>>> branch-3~
-+
-+After stripping out the labels of the conflict markers, and sorting
-+the hunks, the conflict would look as follows:
-+
-+    <<<<<<<
-+    1
-+    =======
-+    <<<<<<<
-+    2
-+    =======
-+    3
-+    >>>>>>>
-+    >>>>>>>
-+
-+and finally the conflict ID would be calculated as:
-+`sha1('1<NUL><<<<<<<\n3\n=======\n2\n>>>>>>><NUL>')`
 diff --git a/rerere.c b/rerere.c
-index a35b88916c..f78bef80b1 100644
+index f78bef80b1..dd81d09e19 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -365,12 +365,18 @@ static int handle_conflict(struct strbuf *out, struct rerere_io *io,
- 		RR_SIDE_1 = 0, RR_SIDE_2, RR_ORIGINAL
- 	} hunk = RR_SIDE_1;
- 	struct strbuf one = STRBUF_INIT, two = STRBUF_INIT;
--	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf buf = STRBUF_INIT, conflict = STRBUF_INIT;
- 	int has_conflicts = -1;
+@@ -815,7 +815,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 		struct rerere_id *id;
+ 		unsigned char sha1[20];
+ 		const char *path = conflict.items[i].string;
+-		int ret, has_string;
++		int ret;
  
- 	while (!io->getline(&buf, io)) {
- 		if (is_cmarker(buf.buf, '<', marker_size)) {
--			break;
-+			if (handle_conflict(&conflict, io, marker_size, NULL) < 0)
-+				break;
-+			if (hunk == RR_SIDE_1)
-+				strbuf_addbuf(&one, &conflict);
-+			else
-+				strbuf_addbuf(&two, &conflict);
-+			strbuf_release(&conflict);
- 		} else if (is_cmarker(buf.buf, '|', marker_size)) {
- 			if (hunk != RR_SIDE_1)
- 				break;
+ 		/*
+ 		 * Ask handle_file() to scan and assign a
+@@ -823,12 +823,11 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 		 * yet.
+ 		 */
+ 		ret = handle_file(path, sha1, NULL);
+-		has_string = string_list_has_string(rr, path);
+-		if (ret < 0 && has_string) {
++		if (ret != 0 && string_list_has_string(rr, path)) {
+ 			remove_variant(string_list_lookup(rr, path)->util);
+ 			string_list_remove(rr, path, 1);
+ 		}
+-		if (ret < 1 || has_string)
++		if (ret < 1)
+ 			continue;
+ 
+ 		id = new_rerere_id(sha1);
 diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 23f9c0ca45..afaf085e42 100755
+index afaf085e42..819f6dd672 100755
 --- a/t/t4200-rerere.sh
 +++ b/t/t4200-rerere.sh
-@@ -601,4 +601,41 @@ test_expect_success 'rerere with unexpected conflict markers does not crash' '
- 	git rerere clear
- '
- 
-+test_expect_success 'rerere with inner conflict markers' '
-+	git reset --hard &&
+@@ -635,6 +635,13 @@ test_expect_success 'rerere with inner conflict markers' '
+ 	git commit -q -m "will solve conflicts later" &&
+ 	test_must_fail git merge A &&
+ 	cat test >actual &&
++	test_cmp expect actual &&
 +
-+	git checkout -b A master &&
-+	echo "bar" >test &&
 +	git add test &&
-+	git commit -q -m two &&
-+	echo "baz" >test &&
-+	git add test &&
-+	git commit -q -m three &&
-+
-+	git reset --hard &&
-+	git checkout -b B master &&
-+	echo "foo" >test &&
-+	git add test &&
-+	git commit -q -a -m one &&
-+
-+	test_must_fail git merge A~ &&
-+	git add test &&
-+	git commit -q -m "will solve conflicts later" &&
-+	test_must_fail git merge A &&
-+
-+	echo "resolved" >test &&
-+	git add test &&
-+	git commit -q -m "solved conflict" &&
-+
-+	echo "resolved" >expect &&
-+
-+	git reset --hard HEAD~~ &&
-+	test_must_fail git merge A~ &&
-+	git add test &&
-+	git commit -q -m "will solve conflicts later" &&
++	git commit -m "rerere solved conflict" &&
++	git reset --hard HEAD~ &&
 +	test_must_fail git merge A &&
 +	cat test >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
+ 	test_cmp expect actual
+ '
+ 
 -- 
 2.18.0.720.gf7a957e2e7
 
