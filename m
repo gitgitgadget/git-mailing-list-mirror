@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 361DE1F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 17:20:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 700A41F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 17:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbeHET0M (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 15:26:12 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55549 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726747AbeHET0L (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 15:26:11 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f21-v6so11431017wmc.5
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:20:55 -0700 (PDT)
+        id S1726869AbeHET0N (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 15:26:13 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:44995 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726691AbeHET0N (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 15:26:13 -0400
+Received: by mail-wr1-f65.google.com with SMTP id r16-v6so10108907wrt.11
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:20:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QfudNmjYu9QKSbTsPBg2Voe+0TGoRtWGuHexP9o/2DI=;
-        b=Vb+auXoffr2NMpn33xy8L0FUE0Dn+h901NsjXO1UKpWpNZmxZvbTZr82X1x4Enpaog
-         vAyBao5/QbArZM6RkyRCG2JUqTwNYKMX78CsdXQKb27Jc/jPv1ChrfNU6x8r6QG0qvxw
-         GPiXw/oRJ8x0FmIaT6i+Yvsk+b8O06TG9fgiysvx8lbp+REWINYFf/tm4IDsgbqfEUYr
-         nbTMZ6MINVbggOlEoV/tgHfQC250bc3Mksdc7/X3698HvyD/DUAiNTyJrdPM9VlgXQ6a
-         443rEYzadxJjLOTcd6CAFOysVHmxD/VMjiRQbltQ0+HQXqbPD22ez4TLKqkIILEzodBy
-         dJ/A==
+        bh=r8gXygDHmwDFvhaeD8e/XjghfegNIFhSYbVlWBcf1vU=;
+        b=Cr7pFzq9F/9vKXpA6M6VLKUKtwACZ7kq29SJDkZlimeA+4HaJgP9o+l7yCpFujY+C2
+         UdREJ7sDvNJJe9Wl1tLyLqyAOpWpIK3Dx50Fy8JHIyf7oz5I4tRHnaTO4rd7WNj/3NVE
+         yp2fBb5OG5zERKyW+eQQ9uvo2dxocetwWSxSD/bmTZIdi8hm4NgcvOtOkB4GUiPrHJ2z
+         Ro3hucRJPaChM4vcXCvbpUlptfKcasJfJkQGlWCEjo+jPCQgktvp283Cl+D2/buCMpY6
+         FePr2zbXnSxbmI6ywKQ8AcKyKs6Y7lUzLJz+qtU0IvBD60eJmuDDQaFoM7ysuWrJmM4o
+         iwFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QfudNmjYu9QKSbTsPBg2Voe+0TGoRtWGuHexP9o/2DI=;
-        b=IgBoN6sF7uE0Cdx6DVx8Fp2stTTN35mQ46nlT1pMIBfTnZD7KjXzzoS+6yUF1P9KxY
-         DcR4asKgW4FQbPWyVupU3WY7p1a6gHdofXwDwtbAw4iPgdwdG+ATSkX5ewngg8RxmbeU
-         7OEvjifQ6A0ojPcC8y6SgMm0j+XcGAiBEIEmLRUTPBtNaHSGmzWtmSCGJoMBv/cc+Jir
-         Nfw5HZVla5BT2DoKJrpUhSlIBw/UZ6Zb1/wtvoFyQhz7YHWhyUc8ca/Cw4ZtzR6XtLtS
-         QC6EwTSVXNhI3cTvYNH+C36W8eaGEjThxeRhG5uJaxuq/1Z55pwNwimn/aoep487KW22
-         ATzQ==
-X-Gm-Message-State: AOUpUlEP1qLLwOrdKR9hvBjtrIrmeNBeeVA7llz11cDLu9YmpOOAmClL
-        ThwmSBv4DBhX6ibpWj/AfGFKqWng
-X-Google-Smtp-Source: AAOMgpd6/wU0+ffhbzt7UvQnRONkfx72AUqfUiEJKKS9xkoQVQ8zvoEjjuoM/GQjVf9O3L5YQy7Htg==
-X-Received: by 2002:a1c:93d2:: with SMTP id v201-v6mr9516663wmd.77.1533489654302;
-        Sun, 05 Aug 2018 10:20:54 -0700 (PDT)
+        bh=r8gXygDHmwDFvhaeD8e/XjghfegNIFhSYbVlWBcf1vU=;
+        b=nwb4U8BR21cgFfhylzm00xDFQLyoM7k1/pj1l6Ep3FqfIHHC4/+OGus7gklpqdP15c
+         ti/E95o49edZNQA3fcaWfyadaKpR/mPmE0lvNRCHHyhX52rQJHrceW4VzLd9lHijQ5RW
+         WYYN5sBZcm+Ef4vwSJNeUPOTDJl5bA75iqLDyjkhdinYsW0MB959tt6Q866qdz0v3nhN
+         X4YnwegKHbjBKG520UGMHfx4l85H99i5eleteI/C2L8ZrPumv4oqcnBK4dhBkxD6GxfS
+         tGQwW5IxX9bpgu2w6PY80SEylosIV5I/pg7aHl3LVCnX4n/TuLrEtB9guWNUJroX08Bo
+         QOlA==
+X-Gm-Message-State: AOUpUlH5L5ElmXp+qsRpUw8x14JMicG0we3l3ZAspJez+tTZpWyDkjEC
+        fOCnqjSgIs26nJzWAmZJjfnE8isW
+X-Google-Smtp-Source: AAOMgpdEpAJnZop4P2ME9cVwLClVkKdTYQdCptgwSmwSzTjFSKuJjceEdHpszLwK5IwA1oUay5ru0Q==
+X-Received: by 2002:adf:b2f4:: with SMTP id g107-v6mr7868757wrd.53.1533489655673;
+        Sun, 05 Aug 2018 10:20:55 -0700 (PDT)
 Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id u7-v6sm7630800wmd.46.2018.08.05.10.20.53
+        by smtp.gmail.com with ESMTPSA id n7-v6sm8805064wmc.2.2018.08.05.10.20.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 05 Aug 2018 10:20:53 -0700 (PDT)
+        Sun, 05 Aug 2018 10:20:54 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v4 06/11] rerere: fix crash with files rerere can't handle
-Date:   Sun,  5 Aug 2018 18:20:32 +0100
-Message-Id: <20180805172037.12530-7-t.gummerer@gmail.com>
+Subject: [PATCH v4 07/11] rerere: only return whether a path has conflicts or not
+Date:   Sun,  5 Aug 2018 18:20:33 +0100
+Message-Id: <20180805172037.12530-8-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.18.0.720.gf7a957e2e7
 In-Reply-To: <20180805172037.12530-1-t.gummerer@gmail.com>
 References: <20180714214443.7184-1-t.gummerer@gmail.com>
@@ -67,111 +67,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently when a user does a conflict resolution and ends it (in any
-way that calls 'git rerere' again) with a file 'rerere' can't handle,
-subsequent rerere operations that are interested in that path, such as
-'rerere clear' or 'rerere forget <path>' will fail, or even worse in
-the case of 'rerere clear' segfault.
-
-Such states include nested conflicts, or a conflict marker that
-doesn't have any match.
-
-This is because 'git rerere' calculates a conflict file and writes it
-to the MERGE_RR file.  When the user then changes the file in any way
-rerere can't handle, and then calls 'git rerere' on it again to record
-the conflict resolution, the handle_file function fails, and removes
-the 'preimage' file in the rr-cache in the process, while leaving the
-ID in the MERGE_RR file.
-
-Now when 'rerere clear' is run, it reads the ID from the MERGE_RR
-file, however the 'fit_variant' function for the ID is never called as
-the 'preimage' file does not exist anymore.  This means
-'collection->status' in 'has_rerere_resolution' is NULL, and the
-command will crash.
-
-To fix this, remove the rerere ID from the MERGE_RR file in the case
-when we can't handle it, just after the 'preimage' file was removed
-and remove the corresponding variant from .git/rr-cache/.  Removing it
-unconditionally is fine here, because if the user would have resolved
-the conflict and ran rerere, the entry would no longer be in the
-MERGE_RR file, so we wouldn't have this problem in the first place,
-while if the conflict was not resolved.
-
-Currently there is nothing left in this folder, as the 'preimage'
-was already deleted by the 'handle_file' function, so 'remove_variant'
-is a no-op.  Still call the function, to make sure we clean everything
-up, in case we add some other files corresponding to a variant in the
-future.
-
-Note that other variants that have the same conflict ID will not be
-touched.
+We currently return the exact number of conflict hunks a certain path
+has from the 'handle_paths' function.  However all of its callers only
+care whether there are conflicts or not or if there is an error.
+Return only that information, and document that only that information
+is returned.  This will simplify the code in the subsequent steps.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- rerere.c          | 12 +++++++-----
- t/t4200-rerere.sh | 21 +++++++++++++++++++++
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ rerere.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/rerere.c b/rerere.c
-index da1ab54027..895ad80c0c 100644
+index 895ad80c0c..bf803043e2 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -823,10 +823,7 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		struct rerere_id *id;
- 		unsigned char sha1[20];
- 		const char *path = conflict.items[i].string;
--		int ret;
--
--		if (string_list_has_string(rr, path))
--			continue;
-+		int ret, has_string;
+@@ -393,12 +393,13 @@ static int is_cmarker(char *buf, int marker_char, int marker_size)
+  * one side of the conflict, NUL, the other side of the conflict,
+  * and NUL concatenated together.
+  *
+- * Return the number of conflict hunks found.
++ * Return 1 if conflict hunks are found, 0 if there are no conflict
++ * hunks and -1 if an error occured.
+  */
+ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_size)
+ {
+ 	git_SHA_CTX ctx;
+-	int hunk_no = 0;
++	int has_conflicts = 0;
+ 	enum {
+ 		RR_CONTEXT = 0, RR_SIDE_1, RR_SIDE_2, RR_ORIGINAL
+ 	} hunk = RR_CONTEXT;
+@@ -426,7 +427,7 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
+ 				goto bad;
+ 			if (strbuf_cmp(&one, &two) > 0)
+ 				strbuf_swap(&one, &two);
+-			hunk_no++;
++			has_conflicts = 1;
+ 			hunk = RR_CONTEXT;
+ 			rerere_io_putconflict('<', marker_size, io);
+ 			rerere_io_putmem(one.buf, one.len, io);
+@@ -462,7 +463,7 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
+ 		git_SHA1_Final(sha1, &ctx);
+ 	if (hunk != RR_CONTEXT)
+ 		return -1;
+-	return hunk_no;
++	return has_conflicts;
+ }
  
- 		/*
- 		 * Ask handle_file() to scan and assign a
-@@ -834,7 +831,12 @@ static int do_plain_rerere(struct string_list *rr, int fd)
- 		 * yet.
- 		 */
- 		ret = handle_file(path, sha1, NULL);
--		if (ret < 1)
-+		has_string = string_list_has_string(rr, path);
-+		if (ret < 0 && has_string) {
-+			remove_variant(string_list_lookup(rr, path)->util);
-+			string_list_remove(rr, path, 1);
-+		}
-+		if (ret < 1 || has_string)
- 			continue;
+ /*
+@@ -471,7 +472,7 @@ static int handle_path(unsigned char *sha1, struct rerere_io *io, int marker_siz
+  */
+ static int handle_file(const char *path, unsigned char *sha1, const char *output)
+ {
+-	int hunk_no = 0;
++	int has_conflicts = 0;
+ 	struct rerere_io_file io;
+ 	int marker_size = ll_merge_marker_size(path);
  
- 		id = new_rerere_id(sha1);
-diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-index 8417e5a4b1..23f9c0ca45 100755
---- a/t/t4200-rerere.sh
-+++ b/t/t4200-rerere.sh
-@@ -580,4 +580,25 @@ test_expect_success 'multiple identical conflicts' '
- 	count_pre_post 0 0
- '
+@@ -491,7 +492,7 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
+ 		}
+ 	}
  
-+test_expect_success 'rerere with unexpected conflict markers does not crash' '
-+	git reset --hard &&
-+
-+	git checkout -b branch-1 master &&
-+	echo "bar" >test &&
-+	git add test &&
-+	git commit -q -m two &&
-+
-+	git reset --hard &&
-+	git checkout -b branch-2 master &&
-+	echo "foo" >test &&
-+	git add test &&
-+	git commit -q -a -m one &&
-+
-+	test_must_fail git merge branch-1 &&
-+	echo "<<<<<<< a" >test &&
-+	git rerere &&
-+
-+	git rerere clear
-+'
-+
- test_done
+-	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
++	has_conflicts = handle_path(sha1, (struct rerere_io *)&io, marker_size);
+ 
+ 	fclose(io.input);
+ 	if (io.io.wrerror)
+@@ -500,14 +501,14 @@ static int handle_file(const char *path, unsigned char *sha1, const char *output
+ 	if (io.io.output && fclose(io.io.output))
+ 		io.io.wrerror = error_errno(_("failed to flush '%s'"), path);
+ 
+-	if (hunk_no < 0) {
++	if (has_conflicts < 0) {
+ 		if (output)
+ 			unlink_or_warn(output);
+ 		return error(_("could not parse conflict hunks in '%s'"), path);
+ 	}
+ 	if (io.io.wrerror)
+ 		return -1;
+-	return hunk_no;
++	return has_conflicts;
+ }
+ 
+ /*
+@@ -954,7 +955,7 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 	mmfile_t mmfile[3] = {{NULL}};
+ 	mmbuffer_t result = {NULL, 0};
+ 	const struct cache_entry *ce;
+-	int pos, len, i, hunk_no;
++	int pos, len, i, has_conflicts;
+ 	struct rerere_io_mem io;
+ 	int marker_size = ll_merge_marker_size(path);
+ 
+@@ -1008,11 +1009,11 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 	 * Grab the conflict ID and optionally write the original
+ 	 * contents with conflict markers out.
+ 	 */
+-	hunk_no = handle_path(sha1, (struct rerere_io *)&io, marker_size);
++	has_conflicts = handle_path(sha1, (struct rerere_io *)&io, marker_size);
+ 	strbuf_release(&io.input);
+ 	if (io.io.output)
+ 		fclose(io.io.output);
+-	return hunk_no;
++	return has_conflicts;
+ }
+ 
+ static int rerere_forget_one_path(const char *path, struct string_list *rr)
 -- 
 2.18.0.720.gf7a957e2e7
 
