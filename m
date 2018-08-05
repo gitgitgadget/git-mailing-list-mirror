@@ -6,92 +6,70 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEC271F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 10:31:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A52941F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 10:39:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbeHEMfT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 08:35:19 -0400
-Received: from mail-yb0-f195.google.com ([209.85.213.195]:36736 "EHLO
-        mail-yb0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726100AbeHEMfT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 08:35:19 -0400
-Received: by mail-yb0-f195.google.com with SMTP id s1-v6so4268575ybk.3
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:31:13 -0700 (PDT)
+        id S1726282AbeHEMnc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 08:43:32 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:46539 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726264AbeHEMnc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 08:43:32 -0400
+Received: by mail-yb0-f196.google.com with SMTP id f10-v6so693598ybk.13
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:39:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=yJ9Ul8xqqYDXLnzPJWzRCWDL3HLzTiqAsJeBxDYbe0A=;
-        b=axBMq5KUjDu2VJgb5j1LIyXxRbPYukISTXEqCywhAbdJoZKCUQmBRFYH48KNvtlpfF
-         Cs8CZwtTc9qKQanH8dSTobsaWYgr7Lifa/xyuxgnUBgZpG087s8BtGagSsgIpS9YN8p5
-         35sZ6rHUqV9aeWwGk7kBVfJu6YKP7Aoj5etCrfmUAg8XiD3Nm9YJRMx5IZ5kniRzEPTY
-         /UedNXr2/bj0AG9Ym5AiXBEGWdX0qFtGLNNwZB+foA7OL77a8wIrbnGQmycCx4l0NItR
-         fyajK8paKrfvVGg8GN1cnelIS8sexBoFUSwXToFZ/JFHBs4WYzfZsx+bxrQa7LiOQ/LH
-         wQMQ==
-X-Gm-Message-State: AOUpUlEB2gjuNQ/JyLfDXzxoisznizk5f1Yo9AHXRmuPU1UFbS0p/Pdk
-        4mvIgWKgU8+Mu6WLRaUnBIndO43qZafpwoQOUKA=
-X-Google-Smtp-Source: AAOMgpeCxN93IfhLJyhqdf8Wmy2gHrdhYm6fRglK6b52YqIdW8BQTNMRZRC9v7lc33WvcH1jzCwqwtgS9X+3qEPWDjA=
-X-Received: by 2002:a25:2d28:: with SMTP id t40-v6mr4439848ybt.497.1533465073335;
- Sun, 05 Aug 2018 03:31:13 -0700 (PDT)
+        bh=Ji/A81ulXvCTTMqoq2lrj0xQDwILKiq2Yi1/v6TJyio=;
+        b=RQiem2aMoRgWjaVig0r4BcIKFX0+3sp7Z3IFQzP7SN0VE+KT8UnxtFOPB+5794gcZU
+         erPu35Uiiul3lb1g3Dza3olYcDAjjyDfrKIe8kVTXSqbpdO35Is2ul+Y3P34jJ+REozw
+         kHlV/c0pfnAQ/YfbI+MMhu2oYe8Up35xQtw/MLyVLc6mRg8D2B0kyG84ajybNAV0enGt
+         NTFhUs/F5E1KA2049FemAlqbWv2wWx/QJ9+wn+Tfj9tNYVRbRE3t4XGlJwP6lUHNqUfL
+         25qh3b/WtSr2BkxIlLhP4M1Zent8MlXC+TcOavNiR7gTPwnCBy3Hg6WyRNYSCQVUjxic
+         9l4Q==
+X-Gm-Message-State: AOUpUlEWy57DuXIuZAwjjLZ4ec7WAjXl1tDDWbLVTGGMdJytI87S/V4L
+        YY4450re7wrNcShKrZ2qlKPV3GGJOJgeba9nq3g=
+X-Google-Smtp-Source: AAOMgpfa9BZOPFagu+GmPtLTYoyjUZcOtV+kok67BbTcrrVRgjaHAzxYiEgwvbVeTATuhDGZBT/XTZFN8J4IhoCY8e8=
+X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr5482122ybl.12.1533465564454;
+ Sun, 05 Aug 2018 03:39:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.15.git.gitgitgadget@gmail.com> <d5d9db3c1124d29e26864596a8c36f0dc4de8a7e.1533421100.git.gitgitgadget@gmail.com>
- <9776862d-18b2-43ec-cfeb-829418d4d967@gmail.com>
-In-Reply-To: <9776862d-18b2-43ec-cfeb-829418d4d967@gmail.com>
+References: <pull.15.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.15.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 5 Aug 2018 06:31:02 -0400
-Message-ID: <CAPig+cRoQB6Az=sYB_tjhOLewJyMzYAwqNxPh99a3aZFhzDcYg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] line-log: optimize ranges by joining them when possible
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Sun, 5 Aug 2018 06:39:13 -0400
+Message-ID: <CAPig+cS-b973NzRvvcKyx6t5ChO_VDf=Bs8zoE-B_iPa3HWv5g@mail.gmail.com>
+Subject: Re: [PATCH 0/4] line-log: be more careful when adjusting multiple
+ line ranges
+To:     gitgitgadget@gmail.com
+Cc:     Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On 2018-08-05 00:18, Johannes Schindelin via GitGitGadget wrote:
-> > Technically, it is okay to have line ranges that touch (i.e. the end of
-> > the first range ends just before the next range begins). However, it is
-> > inefficient, and when the user provides such touching ranges via
-> > multiple `-L` options, we already join them.
-> >
-> >  void range_set_append(struct range_set *rs, long a, long b)
-> >  {
-> > +     if (rs->nr > 0 && rs->ranges[rs->nr-1].end + 1 == a) {
-> > +             rs->ranges[rs->nr-1].end = b;
-> > +             return;
-> > +     }
->
-> As I understand it, this patch attempts to make range_set_append extend
-> the last range in the range set to include [a,b), if [a,b) "touches" the
-> last range in rs.
-> It seems that the first condition in range_set_append should be:
->
->         if (rs->nr > 0 && rs->ranges[rs->nr-1].end == a) {
+On Sat, Aug 4, 2018 at 6:18 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> Now, I am fairly certain that the changes are correct, but given my track
+> record with off-by-one bugs (and once even an off-by-two bug), I would
+> really appreciate some thorough review of this code, in particular the
+> second one that is the actual bug fix. I am specifically interested in
+> reviews from people who know line-log.c pretty well and can tell me whether
+> the src[i].end > target[j].end is correct, or whether it should actually
+> have been a >= (I tried to wrap my head around this, but I would feel more
+> comfortable if a domain expert would analyze this, whistling, and looking
+> Eric's way).
 
-I agree that this patch has an off-by-1 bug. 'end' is not included in
-the previous range, so it should not be adding 1 to end before
-checking against 'a'.
+Although I fixed a number of bugs in basic range-set manipulation code
+(5 years ago), I have no experience with or knowledge of the code
+actually dealing with range-set manipulation in relation to diffs, so
+I'm not a domain expert by any means, and I'm _still_ trying to wrap
+my head around that code.
 
-*However*, as mentioned in my review[1] of 2/4, the special-case added
-by this patch is unnecessary, so this patch should be scrapped.
-
-> With these consideration in mind the assert should become
->
->         assert(rs->nr == 0 || rs->ranges[rs->nr-1].end < a);
-
-Agreed. The existing assertion() has an off-by-1 error.
-range_set_append() is supposed to add a range _without_ breaking the
-invariant that no two ranges can abut, and the assertion() was
-supposed to protect against that. The existing "<= a" incorrectly
-allows the new range to abut an existing one, whereas the proposed "<
-a" doesn't.
-
-(For adding abutting or overlapping ranges, range_set_append_unsafe()
-followed, at some point, by sort_and_merge_range_set() is the
-recommended alternative to the more strict range_set_append().)
-
-[1]: https://public-inbox.org/git/CAPig+cRWcFVbA76_HT2iVD16bsUmbWdCgk_07rmiGneM5czdOQ@mail.gmail.com/
+That said, I left some comments on the individual patches suggesting a
+simpler and more correct fix for the crash. (Despite that suggestion
+for fixing the crash, I still can't say whether the actual
+computations performed by the existing code are correct, since I still
+don't understand that aspect of it.)
