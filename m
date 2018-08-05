@@ -2,35 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E5F01F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 08:34:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78A5C1F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 08:45:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbeHEKib (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 06:38:31 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:64052 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726121AbeHEKib (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 06:38:31 -0400
-Received: from [192.168.1.181] (unknown [185.39.175.185])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41jvGT6vxWz5tlK;
-        Sun,  5 Aug 2018 10:34:41 +0200 (CEST)
-Subject: Re: [PATCH v2] t/test-lib: make `test_dir_is_empty` more robust
-To:     William Chargin <wchargin@gmail.com>
-Cc:     jrnieder@gmail.com, git@vger.kernel.org
-References: <20180805033629.GH258270@aiede.svl.corp.google.com>
- <20180805042031.20447-1-wchargin@gmail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <ae85fef4-19f6-39a8-e680-3d08e74ecd5e@kdbg.org>
-Date:   Sun, 5 Aug 2018 10:34:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+        id S1726118AbeHEKti (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 06:49:38 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:44215 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbeHEKti (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 06:49:38 -0400
+Received: by mail-lf1-f66.google.com with SMTP id g6-v6so6919373lfb.11
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 01:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=OcfGgw2tnjWLSDkfcCA1pX7xAv2YMTZ5Vf1vurZkZT0=;
+        b=fSR6hPy/wJvY5xlflKD+jCG1wdpfER8ERCFjV+Um5/rp3OG5droFmwGHcDqsseZhl0
+         9v72azluS330SPiMnH7IyeVea/+YSkyNFvHY/F28s8lu4y6duHtjx+9exCcjcLaCCGmG
+         YROg/szcxacSt8ygHPED+f78CxSdU6HB0Atehug/2y/f8v1sBZRbWcppvBH7sPbtz+Mf
+         6xAhySpGyoETioHthlXklukUR3ddI55V1L6gYpTs8tXiEHX30sUwN3b0hSHLBHaInqmb
+         Tsbg5/HEnnrryM38m09k2dPYbvJACC2CjityK8hMN2OyFksZuwXlto+WT4y6dv+nWV27
+         FVZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=OcfGgw2tnjWLSDkfcCA1pX7xAv2YMTZ5Vf1vurZkZT0=;
+        b=FYVYvlYuFz+IXXlZlUTfNvVtiMoCFzfKKU1p4pcz+QolN32iLI4mWDzwSQN+SI20+H
+         omYQovw41z+lzaB59lpBMH1W+J10OWSY+h49mINwIBnV2cHxnrrkujjof17gLfbqDRbJ
+         OxOZD6OQ+o1v1+OxOMIZWdNaC2KR6PQrb979d+8eTuyg3KSR0LV7WtH2AdWTDlciLvho
+         pRtyHsNwJwHSAcqeSSltPY1htJsWU/namcRQ9vw/xZARTxuxVswLUJmEl+sF0BQAMLDP
+         z04CASoD1L20F0G3pTs0sH52kai59y6O78y//0fnHyWePIbkXDjenPczEoc9uMbtjLC4
+         ergA==
+X-Gm-Message-State: AOUpUlE9t0mqpSFdqjmh0miZXk6KHPTYkuJ1f11joUXfxHTrM6o8kgSL
+        ysX4Fc1qjvXQ1DNQukCoj+c=
+X-Google-Smtp-Source: AAOMgpe+k5Rypg/jWeeEB1EH2nCgIf1I2u+OMnPno/amGOFDhX8wnqJZEF6pDJA4ILNZCmk3qAYfWw==
+X-Received: by 2002:a19:e546:: with SMTP id c67-v6mr8440526lfh.135.1533458747717;
+        Sun, 05 Aug 2018 01:45:47 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id t24-v6sm1688047ljb.89.2018.08.05.01.45.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 05 Aug 2018 01:45:46 -0700 (PDT)
+Subject: Re: [PATCH 3/4] line-log: optimize ranges by joining them when
+ possible
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Thomas Rast <tr@thomasrast.ch>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.15.git.gitgitgadget@gmail.com>
+ <d5d9db3c1124d29e26864596a8c36f0dc4de8a7e.1533421100.git.gitgitgadget@gmail.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <9776862d-18b2-43ec-cfeb-829418d4d967@gmail.com>
+Date:   Sun, 5 Aug 2018 10:45:45 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <20180805042031.20447-1-wchargin@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <d5d9db3c1124d29e26864596a8c36f0dc4de8a7e.1533421100.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
@@ -38,81 +73,82 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.08.2018 um 06:20 schrieb William Chargin:
-> While the `test_dir_is_empty` function appears correct in most normal
-> use cases, it can fail when filenames contain newlines. This patch
-> changes the implementation to use `ls -A`, which is specified by POSIX.
-> The output should be empty exactly if the directory is empty.
+On 2018-08-05 00:18, Johannes Schindelin via GitGitGadget wrote:
 > 
-> The newly added unit test fails before this change and passes after it.
-> 
-> Signed-off-by: William Chargin <wchargin@gmail.com>
-> ---
-> 
-> I originally wrote this patch for the standalone Sharness library, but
-> that library advises that such patches be sent to the Git mailing list
-> first.
-> 
->   t/t0000-basic.sh        | 29 +++++++++++++++++++++++++++++
->   t/test-lib-functions.sh |  2 +-
->   2 files changed, 30 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index 34859fe4a..3885b26f9 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -821,6 +821,35 @@ test_expect_success 'tests clean up even on failures' "
->   	EOF
->   "
->   
-> +test_expect_success 'test_dir_is_empty behaves even in pathological cases' "
-> +	run_sub_test_lib_test \
-> +		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
-> +	test_expect_success 'should pass with actually empty directory' '
-> +		mkdir empty_dir &&
-> +		test_dir_is_empty empty_dir
-> +	'
-> +	test_expect_success 'should fail with a normal filename' '
-> +		mkdir nonempty_dir &&
-> +		touch nonempty_dir/some_file &&
-> +		test_must_fail test_dir_is_empty nonempty_dir
-> +	'
-> +	test_expect_success 'should fail with dot-newline-dot filename' '
-> +		mkdir pathological_dir &&
-> +		printf \"pathological_dir/.\\\\n.\\\\0\" | xargs -0 touch &&
-> +		test_must_fail test_dir_is_empty pathological_dir
-> +	'
-> +	test_done
-> +	EOF
-> +	check_sub_test_lib_test dir-empty <<-\\EOF
-> +	> ok 1 - should pass with actually empty directory
-> +	> ok 2 - should fail with a normal filename
-> +	> ok 3 - should fail with dot-newline-dot filename
-> +	> # passed all 3 test(s)
-> +	> 1..3
-> +	EOF
-> +"
-> +
-> +
->   ################################################################
->   # Basics of the basics
->   
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 2b2181dca..f7ff28ef6 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -568,7 +568,7 @@ test_path_is_dir () {
->   # Check if the directory exists and is empty as expected, barf otherwise.
->   test_dir_is_empty () {
->   	test_path_is_dir "$1" &&
-> -	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-> +	if test "$(ls -A1 "$1" | wc -c)" != 0
->   	then
->   		echo "Directory '$1' is not empty, it contains:"
->   		ls -la "$1"
-> 
+> Now, I am fairly certain that the changes are correct, but given my track
+> record with off-by-one bugs (and once even an off-by-two bug), I would
+> really appreciate some thorough review of this code, in particular the
+> second one that is the actual bug fix. I am specifically interested in
+> reviews from people who know line-log.c pretty well and can tell me whether
+> the src[i].end > target[j].end is correct, or whether it should actually
+> have been a >= (I tried to wrap my head around this, but I would feel more
+> comfortable if a domain expert would analyze this, whistling, and looking
+> Eric's way).
 
-Did you accidentally resend the same patch in this v2? I can't spot the 
-difference to v1.
+I don't know line-log.c at all, but here are my comments on the more
+abstract range and range_set changes:
 
--- Hannes
+On 2018-08-05 00:18, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> Technically, it is okay to have line ranges that touch (i.e. the end of
+> the first range ends just before the next range begins). However, it is
+> inefficient, and when the user provides such touching ranges via
+> multiple `-L` options, we already join them.
+>
+> ...
+>
+>  void range_set_append(struct range_set *rs, long a, long b)
+>  {
+> +	if (rs->nr > 0 && rs->ranges[rs->nr-1].end + 1 == a) {
+> +		rs->ranges[rs->nr-1].end = b;
+> +		return;
+> +	}
+
+As I understand it, this patch attempts to make range_set_append extend
+the last range in the range set to include [a,b), if [a,b) "touches" the
+last range in rs.
+
+Definition of range from line-log.h reads:
+
+  /* A range [start,end].  Lines are numbered starting at 0, and the
+   * ranges include start but exclude end. */
+  struct range {
+          long start, end;
+  };
+
+So the optimization described in commit message should take care of
+following case, with zero lines between last range in rs and [a,b):
+
+  rs before : [---) ... [---)
+  [a,b)     :               [---)
+  rs after  : [---) ... [-------)
+  
+It seems that the first condition in range_set_append should be:
+
+	if (rs->nr > 0 && rs->ranges[rs->nr-1].end == a) {
+		// extend the last range to include [a, b)
+	}
+
+I think that the comments around struct range could be improved by
+switching from using "[]", as in the comment from line-log.h quoted
+above, and "|---|" as in various comments in line-log.c to "left-closed,
+right-open" interval notation like "[start,end)" and "[---)".
+
+>  	assert(rs->nr == 0 || rs->ranges[rs->nr-1].end <= a);
+>  	range_set_append_unsafe(rs, a, b);
+>  }
+
+With these consideration in mind the assert should become
+
+	assert(rs->nr == 0 || rs->ranges[rs->nr-1].end < a);
+  
+to cover cases starting from one line between last range in rs and [a,b)
+
+  rs before : [---) ... [---)
+  [a,b)     :                [---)
+  rs after  : [---) ... [---)[---)
+                            ^
+                            |
+		this line still not part of the range set.
+  
