@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 15AE8208E9
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEE95208E9
 	for <e@80x24.org>; Sun,  5 Aug 2018 17:25:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbeHETbI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 15:31:08 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:37817 "EHLO
+        id S1726699AbeHETbK (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 15:31:10 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34017 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726445AbeHETbH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 15:31:07 -0400
-Received: by mail-wm0-f66.google.com with SMTP id n11-v6so11775628wmc.2
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:25:49 -0700 (PDT)
+        with ESMTP id S1726569AbeHETbJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 15:31:09 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l2-v6so9519619wme.1
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QZau/M0R+BLIRKXinvIbFQ8zgfzwOSW/V4VFlwji630=;
-        b=fiUQXtsetWlsYFgGOhnDxS82/0jNfu3y0YIkjc8gJRj/j8NNExE/tWWsR+Wc4lzhq8
-         ckS1aPgEVQR1Bwy1WMrqssyNMyZAZrprim+pRTAr4Rf+qF9tp1XTVL8tdqu5UW6XANfj
-         0IuvfShvAOlJzGOhm01uVlYee34lx6zMHVxXzB62Li0Xyg7khti/SnJ8P+5PVHpVnxQj
-         xWgi3jCoJ975J2ZzCPwUW+IX/m6mv6WBdC/FeDEbJ46xw+SstfyRp/o8IVLWAKq1CDNd
-         loYEjmtzYIzbFOMy1Ai+92S9ni2kn+2m5v+l2nqMqO4zykQ3UGnEknwqx93G+zlIk2tQ
-         iv0A==
+        bh=9NQ5Cbdib5sNQQWUX3W7VOoviHgF1lkXhJg1VFadJNU=;
+        b=n6Lj14a2m8XKEF9/HLnGfkvaZ8T4rnmpTXewZMdieVsKyaUFYADQEG8dRrqo77gCsG
+         rmhppsOZpOidmKgRhJ/802LFeqKMZwkjwcCg3P1HAzS6Li0BFKF3krpIpOy04K3fJiT/
+         SI9cDb7iZyNGh2pFqfjAA4WOtu8I1craGOIgUqcx5SudLgPqcCQxNg3ywRo/2xgTbTrP
+         FzktsWPDamlldKeguECstA9uZ3TSQBy/dTXOreLipSovmEvwqwlozqxgJZEIJmvTZ0zN
+         0fTEARQc0UoB42pq2DMohu6kwJ7AwDu3fPifYUtC7NbX49R/YD/r0MJ/+2pmVp6Dw8Pk
+         +GJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QZau/M0R+BLIRKXinvIbFQ8zgfzwOSW/V4VFlwji630=;
-        b=pi9zyq4ybMFq0Vns/lJ2izC4miHH5vboJPcqoy/FDEg3EDveNaAPGAm+7uyea52ZR+
-         09xt8ElfzAJNgxewFiEQ52nxBNcDisiNFYlNK43cIbK+zkjOKBbZo/4w9j3EuNzRTkS3
-         +2a1UqPuf/LtzCdrrmvAhbZAjxFeAEvAcoJGVMASutXgm0Tp3Qoc67zDC9wyJ9YNRGjK
-         9zg+SggdHeuG34at3z33i42F/TKmmMibhbj1xxX17NES8l0kKdYj3qvTiQDHiobbeJqO
-         OirOzjBLpn1SSnD0zR+zDz746SD/JiUiDMSOUuns7KrdOv6gjIXfMQ3wD9yhydjnPpdS
-         TQhQ==
-X-Gm-Message-State: AOUpUlFD4Yz8HW7sz0LlIltCBa9hWSmD5nBqNk2kiguLDHjZpbM8/EVX
-        0uirnhuUaG7c+STjAKpk+7euji96
-X-Google-Smtp-Source: AAOMgpdnV37P6F1EwikBKp0omNqYrukvjb5/5GRDXeu/hjGTxa8gTXZAiL5Mar8zR+CooALwtxh7lw==
-X-Received: by 2002:a1c:ec9d:: with SMTP id h29-v6mr10169789wmi.94.1533489948835;
-        Sun, 05 Aug 2018 10:25:48 -0700 (PDT)
+        bh=9NQ5Cbdib5sNQQWUX3W7VOoviHgF1lkXhJg1VFadJNU=;
+        b=NYMMozMEJuPgrGbEWNHArf3Pmp04rSlA78a/ymXew6BnqZglDUmPZN/ZFNakK6QEqe
+         Gw7WxxVK7outdHPFf1iwktSC6ooXlKpcflkjgwZfVxMlg0f6YhC4XwpVodMQ+AHyANLu
+         eXLCJt+FUIZSlWXDM7hTpQ5EpUH+BpkjNrrgAGPr6CsFI6KzsDM/WBW0Li4Aoo8wqb7+
+         a3VCs/2batO+sy4TmVsx7eHzp3QHUKfnjUb8K6R9uHOHsVMW192S+HxCgKx3Nqe965rz
+         SiWeOoPqbe3gPGqyRbJk+mUD5G9/s4Mp7PPbx0sZeGSsEPySmEKnduoD/SSAnEzTnEtA
+         +gBw==
+X-Gm-Message-State: AOUpUlFKtj7Q7ghvKaeYJSrBBm315LSeSKlD7YFz8kiJeeeltpk2fwfL
+        xaeWWPYFNMb0WbpkEzsxoriKmmPg
+X-Google-Smtp-Source: AAOMgpfUS407nntD5+ouHugBJcC8eecSjYZcNmcGZ8qmm7PZFMz5g+MqMLI1PrKg1nSZDN2BVkd0/w==
+X-Received: by 2002:a1c:b541:: with SMTP id e62-v6mr10043421wmf.153.1533489950340;
+        Sun, 05 Aug 2018 10:25:50 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id x62-v6sm7523228wmg.1.2018.08.05.10.25.47
+        by smtp.gmail.com with ESMTPSA id x62-v6sm7523228wmg.1.2018.08.05.10.25.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 05 Aug 2018 10:25:48 -0700 (PDT)
+        Sun, 05 Aug 2018 10:25:49 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 4/6] repack: add delta-islands support
-Date:   Sun,  5 Aug 2018 19:25:23 +0200
-Message-Id: <20180805172525.15278-5-chriscool@tuxfamily.org>
+Subject: [PATCH v2 5/6] t: add t5319-delta-islands.sh
+Date:   Sun,  5 Aug 2018 19:25:24 +0200
+Message-Id: <20180805172525.15278-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.327.ga7d188ab43
 In-Reply-To: <20180805172525.15278-1-chriscool@tuxfamily.org>
 References: <20180805172525.15278-1-chriscool@tuxfamily.org>
@@ -72,93 +72,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-Implement simple support for --delta-islands option and
-repack.useDeltaIslands config variable in git repack.
-
-This allows users to setup delta islands in their config and
-get the benefit of less disk usage while cloning and fetching
-is still quite fast and not much more CPU intensive.
-
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config.txt     | 4 ++++
- Documentation/git-repack.txt | 5 +++++
- builtin/repack.c             | 9 +++++++++
- 3 files changed, 18 insertions(+)
+ t/t5319-delta-islands.sh | 143 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100755 t/t5319-delta-islands.sh
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index b74a1f60f4..c41febc373 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -3102,6 +3102,10 @@ repack.packKeptObjects::
- 	index is being written (either via `--write-bitmap-index` or
- 	`repack.writeBitmaps`).
- 
-+repack.useDeltaIslands::
-+	If set to true, makes `git repack` act as if `--delta-islands`
-+	was passed. Defaults to `false`.
+diff --git a/t/t5319-delta-islands.sh b/t/t5319-delta-islands.sh
+new file mode 100755
+index 0000000000..fea92a5777
+--- /dev/null
++++ b/t/t5319-delta-islands.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
 +
- repack.writeBitmaps::
- 	When true, git will write a bitmap index when packing all
- 	objects to disk (e.g., when `git repack -a` is run).  This
-diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
-index d90e7907f4..a8b2d4722f 100644
---- a/Documentation/git-repack.txt
-+++ b/Documentation/git-repack.txt
-@@ -155,6 +155,11 @@ depth is 4095.
- 	being removed. In addition, any unreachable loose objects will
- 	be packed (and their loose counterparts removed).
- 
-+-i::
-+--delta-islands::
-+	Pass the `--delta-islands` option to `git-pack-objects`, see
-+	linkgit:git-pack-objects[1].
++test_description='exercise delta islands'
++. ./test-lib.sh
 +
- Configuration
- -------------
- 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 6c636e159e..5ab9ee69e4 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -12,6 +12,7 @@
- static int delta_base_offset = 1;
- static int pack_kept_objects = -1;
- static int write_bitmaps;
-+static int use_delta_islands;
- static char *packdir, *packtmp;
- 
- static const char *const git_repack_usage[] = {
-@@ -40,6 +41,10 @@ static int repack_config(const char *var, const char *value, void *cb)
- 		write_bitmaps = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "repack.usedeltaislands")) {
-+		use_delta_islands = git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_default_config(var, value, cb);
- }
- 
-@@ -194,6 +199,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 				N_("pass --local to git-pack-objects")),
- 		OPT_BOOL('b', "write-bitmap-index", &write_bitmaps,
- 				N_("write bitmap index")),
-+		OPT_BOOL('i', "delta-islands", &use_delta_islands,
-+				N_("pass --delta-islands to git-pack-objects")),
- 		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
- 				N_("with -A, do not loosen objects older than this")),
- 		OPT_BOOL('k', "keep-unreachable", &keep_unreachable,
-@@ -267,6 +274,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		argv_array_pushf(&cmd.args, "--no-reuse-object");
- 	if (write_bitmaps)
- 		argv_array_push(&cmd.args, "--write-bitmap-index");
-+	if (use_delta_islands)
-+		argv_array_push(&cmd.args, "--delta-islands");
- 
- 	if (pack_everything & ALL_INTO_ONE) {
- 		get_non_kept_pack_filenames(&existing_packs, &keep_pack_list);
++# returns true iff $1 is a delta based on $2
++is_delta_base () {
++	delta_base=$(echo "$1" | git cat-file --batch-check='%(deltabase)') &&
++	echo >&2 "$1 has base $delta_base" &&
++	test "$delta_base" = "$2"
++}
++
++# generate a commit on branch $1 with a single file, "file", whose
++# content is mostly based on the seed $2, but with a unique bit
++# of content $3 appended. This should allow us to see whether
++# blobs of different refs delta against each other.
++commit() {
++	blob=$({ test-tool genrandom "$2" 10240 && echo "$3"; } |
++	       git hash-object -w --stdin) &&
++	tree=$(printf '100644 blob %s\tfile\n' "$blob" | git mktree) &&
++	commit=$(echo "$2-$3" | git commit-tree "$tree" ${4:+-p "$4"}) &&
++	git update-ref "refs/heads/$1" "$commit" &&
++	eval "$1"'=$(git rev-parse $1:file)' &&
++	eval "echo >&2 $1=\$$1"
++}
++
++test_expect_success 'setup commits' '
++	commit one seed 1 &&
++	commit two seed 12
++'
++
++# Note: This is heavily dependent on the "prefer larger objects as base"
++# heuristic.
++test_expect_success 'vanilla repack deltas one against two' '
++	git repack -adf &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island repack with no island definition is vanilla' '
++	git repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island repack with no matches is vanilla' '
++	git -c "pack.island=refs/foo" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'separate islands disallows delta' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
++
++test_expect_success 'same island allows delta' '
++	git -c "pack.island=refs/heads" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'coalesce same-named islands' '
++	git \
++		-c "pack.island=refs/(.*)/one" \
++		-c "pack.island=refs/(.*)/two" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island restrictions drop reused deltas' '
++	git repack -adfi &&
++	is_delta_base $one $two &&
++	git -c "pack.island=refs/heads/(.*)" repack -adi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
++
++test_expect_success 'island regexes are left-anchored' '
++	git -c "pack.island=heads/(.*)" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island regexes follow last-one-wins scheme' '
++	git \
++		-c "pack.island=refs/heads/(.*)" \
++		-c "pack.island=refs/heads/" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'setup shared history' '
++	commit root shared root &&
++	commit one shared 1 root &&
++	commit two shared 12-long root
++'
++
++# We know that $two will be preferred as a base from $one,
++# because we can transform it with a pure deletion.
++#
++# We also expect $root as a delta against $two by the "longest is base" rule.
++test_expect_success 'vanilla delta goes between branches' '
++	git repack -adf &&
++	is_delta_base $one $two &&
++	is_delta_base $root $two
++'
++
++# Here we should allow $one to base itself on $root; even though
++# they are in different islands, the objects in $root are in a superset
++# of islands compared to those in $one.
++#
++# Similarly, $two can delta against $root by our rules. And unlike $one,
++# in which we are just allowing it, the island rules actually put $root
++# as a possible base for $two, which it would not otherwise be (due to the size
++# sorting).
++test_expect_success 'deltas allowed against superset islands' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	is_delta_base $one $root &&
++	is_delta_base $two $root
++'
++
++# We are going to test the packfile order here, so we again have to make some
++# assumptions. We assume that "$root", as part of our core "one", must come
++# before "$two". This should be guaranteed by the island code. However, for
++# this test to fail without islands, we are also assuming that it would not
++# otherwise do so. This is true by the current write order, which will put
++# commits (and their contents) before their parents.
++test_expect_success 'island core places core objects first' '
++	cat >expect <<-EOF &&
++	$root
++	$two
++	EOF
++	git -c "pack.island=refs/heads/(.*)" \
++	    -c "pack.islandcore=one" \
++	    repack -adfi &&
++	git verify-pack -v .git/objects/pack/*.pack |
++	cut -d" " -f1 |
++	egrep "$root|$two" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'unmatched island core is not fatal' '
++	git -c "pack.islandcore=one" repack -adfi
++'
++
++test_done
 -- 
 2.18.0.327.ga7d188ab43
 
