@@ -2,116 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 170141F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 19:34:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB7501F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 20:49:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726746AbeHEVjr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 17:39:47 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:33929 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726465AbeHEVjr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 17:39:47 -0400
-Received: by mail-wr1-f48.google.com with SMTP id c13-v6so10339257wrt.1
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 12:34:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AAH9g1mMFAmLEPkz0iLfGo2PfttkHj7ooo6SpDd4DK8=;
-        b=eXUJgRLOvqlrn2rYy4WF7RnWhaJP/dlSjNRE8N4RbPuc/wbLIFZjquA+aTm0I0i23T
-         PXGwPvaSBbs1yn6uurQolDicT8JBwi5QT1z2ZKuPDowOCwuOj5CkP/NN3VpIlZGOUivu
-         ICFqwoy9WnbWGQrJSoigkkHOJX2xFqio5A8IRK9FHRsx5Tl4aI/Ci1UkezBKXl9wXuX7
-         35hVVuygsv80Qt1ap7oVQsDLC6VuzG1D2p24OP8l3dEYhLHUMFD42ykPIs32Q7O0fT3K
-         Ez0ol5/dirxQZj4XLSLjIxzg/Oa0hJLHEJoE1907VnuNXcTM8FL7dDZ7OSJva+L1RUY3
-         ZlkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AAH9g1mMFAmLEPkz0iLfGo2PfttkHj7ooo6SpDd4DK8=;
-        b=uC9NxTG+duShVdaarIyMTFssberXtfttzjal1lShcNli8D7fI6y7GNlLv29/V5h+Sl
-         MSVPNZzfjaFHmR/4VP4KZUZWPrM3NW6SnwgLbQmzfRVMtXNAOlkADI53AI16tbfJtPWi
-         GAOadhUye1C9PpBX3NkAz+zisK55T46+/ipazAhL3s9+lwDCXd4wkgFhJBHV9+JxhCE9
-         mONNS3nTRznH+uDYXynT5Cub4DwQldipbEIbUf+NZUk5F5PDuBMaRz+0REhXWLR3fsg+
-         9VyLirrv3LPuR6gw2oWyQq+Kmjv023YLr7bT+8E1s2GxsXLFE62RtaIh72b5s3JSy9vk
-         QJLQ==
-X-Gm-Message-State: AOUpUlHgbhT50rzXN+iH3arGkAu0TBfXdwxjUMpUAesaXnbkvlBAWfbG
-        ikOS8nVxwiKRI3lscgq7X3wQXZrL
-X-Google-Smtp-Source: AAOMgpd/7HhYzaCwE4dqhLpqvLF6sKgRqnTEyz6Cg7tVbd8jnpLqYbNGc8v0mJg80uPPpFA0RggnuA==
-X-Received: by 2002:a5d:4147:: with SMTP id c7-v6mr8027914wrq.61.1533497648155;
-        Sun, 05 Aug 2018 12:34:08 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id m207-v6sm4392576wma.31.2018.08.05.12.34.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 05 Aug 2018 12:34:07 -0700 (PDT)
-Date:   Sun, 5 Aug 2018 20:34:06 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Alexander Mills <alexander.d.mills@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: exit code in git diff-index [was: Re: concurrent access to multiple
- local git repos is error prone]
-Message-ID: <20180805193406.GH2734@hank.intra.tgummerer.com>
-References: <CA+KyZp4fxRfnPNozEtwgLPuFAnEsXCBPPubzNjv0wUMnBV_eww@mail.gmail.com>
- <CA+KyZp43YGf1qLDHOtrfjJxREcaVQNN12iMLDL5qX=RXhmMCYQ@mail.gmail.com>
- <20180805014631.GD258270@aiede.svl.corp.google.com>
- <CA+KyZp5i0EXPJ10v+SXmHWCYvZ7=XT8K8gcka0qxCBYXq=OevA@mail.gmail.com>
- <20180805061312.GA44140@aiede.svl.corp.google.com>
- <CA+KyZp4Yc4_Xaw3v+BPwxi_PW75=GXmj=Re7EpsurXi2_hMc9w@mail.gmail.com>
- <20180805081116.GG44140@aiede.svl.corp.google.com>
- <CA+KyZp6KXFfEKNho7njg=0tDxAk-mSMP9r9hZFFH+gZcJ8KptQ@mail.gmail.com>
+        id S1726939AbeHEWza (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 18:55:30 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43750 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726794AbeHEWza (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 5 Aug 2018 18:55:30 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:6d31:4d41:ad10:173d])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 010326046C;
+        Sun,  5 Aug 2018 20:49:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1533502176;
+        bh=5nFWoWefUxiwUQ09PxDUrO+N/19I0uuUbq5pmD1qSnY=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=MT+GxScJXDNCt1rhNPO+aDQerY0qdDY5KcVZqAUpmLMqPYesYKQ+VD0xl6RWcHL87
+         Sc29IEBQqzntunVrurEOeiY2ITXvAv8uxf0GfMfz43W/WVPkY/ZbZaZ98/Hc91i9Li
+         GPLXhWObKFh6L/kbper92oaM7SkJDJ6pOevYuco2ItIKfuZjWZWasmbMT+s4ryA8H4
+         YBFoLjc3coF7zEBPQ9txEagqlw2Q+vcRxdRUYqxTjRSLx2Op6FxrMe0Vpvn2Y1W9pv
+         k+OA5FjWq2ix++b/ZsvQ3QoLM9GgWSe6U3SAwFvZ3/Hlm1L6pdzuOrvXYbnjk81E3+
+         tezrQtfH8HYYCZ5G+KJlB0/XH4nkv2r/XaPWktIl9bQ+UOPEdw8jHBswIBySAIO7xs
+         q1HXNejiJge/jm89GiJc5RQ0wGigI7v0VUxVYBIuSpXFhwmdGdnrmaRw8zkY+kPntf
+         dlJ7xmOYTbS1ETHf3G0OdiR/5bK07Rx8PvcLeiwHlhxWC9yoYqv
+Date:   Sun, 5 Aug 2018 20:49:31 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add a script to diff rendered documentation
+Message-ID: <20180805204930.GA202464@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180803205204.GA3790@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="8t9RHnE3ZwKMSgU+"
 Content-Disposition: inline
-In-Reply-To: <CA+KyZp6KXFfEKNho7njg=0tDxAk-mSMP9r9hZFFH+gZcJ8KptQ@mail.gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+In-Reply-To: <20180803205204.GA3790@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/05, Alexander Mills wrote:
-> Also, as an aside, this seems to be a bug, but probably a known bug:
-> 
-> $ git diff-index  HEAD; echo $?
-> 
-> :100755 100755 60e5d683c1eb3e61381b1a8ec2db822b94b9faec
-> 0000000000000000000000000000000000000000 M      cli/npp_check_merge.sh
-> :100644 100644 35a453544de41e2227ab0afab31a396d299139e9
-> 0000000000000000000000000000000000000000 M      src/find-projects.ts
-> :100644 100644 c1ee7bc18e6604cbf0d16653e9366109d6ac2ec9
-> 0000000000000000000000000000000000000000 M      src/tables.ts
-> :100644 100644 29d9674fbb48f223f3434179d666b2aa991ad05a
-> 0000000000000000000000000000000000000000 M
-> src/vcs-helpers/git-helpers.ts
-> 0
-> 
-> $ git diff-index --quiet HEAD; echo $?
-> 1
-> 
-> different exit codes depending on whether --quiet was used. In this
-> case, the exit code should be consistent.
-> The bug is with the `git diff-index` command, as you can see.
 
-This is not a bug. 'git diff-index' (and 'git diff') only give an exit
-code other than 0 in the default case if something actually goes wrong
-with generating the diff, which in the usual case it shouldn't.
+--8t9RHnE3ZwKMSgU+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-To get an exit code from 'git diff-index' if there are differences,
-you'd have to pass the '--exit-code' flag.  The '--quite' flag implies
-'--exit-code', as there's not much use in 'git diff --quiet' if
-there's not even an exit code showing whether there are differences or
-not.
+On Fri, Aug 03, 2018 at 04:52:05PM -0400, Jeff King wrote:
+> I wrote this up for my own use after our discussion in [1]. I'm not sure
+> if it's too ugly for inclusion, or if it might be helpful to others.
+> I've only just written it, but my plan is to try to run it on anything I
+> submit to check the formatting. So it _seems_ useful and appears to
+> work, but only after a few minutes of playing with it. :)
 
-The original patch (and more importantly the reasoning why
-'--exit-code' is not the default behaviour for 'git diff') can be
-found at [1].
+I think this would indeed be valuable.  Junio seemed to indicate that he
+would use it, and I would certainly use it as well.
 
-[1]: https://public-inbox.org/git/81b0412b0703131717k7106ee1cg964628f0bda2c83e@mail.gmail.com/
+> diff --git a/Documentation/doc-diff b/Documentation/doc-diff
+> new file mode 100755
+> index 0000000000..61deb2579e
+> --- /dev/null
+> +++ b/Documentation/doc-diff
+> @@ -0,0 +1,100 @@
+> +#!/bin/sh
+> +
+> +OPTIONS_SPEC=3D"\
+> +doc-diff <from> <to> [-- diff options]
+> +--
+> +j	parallel argument to pass to make
+> +f	force rebuild; do not rely on cached results
+> +"
+> +SUBDIRECTORY_OK=3D1
+> +. "$(git --exec-path)/git-sh-setup"
+> +
+> +parallel=3D8
 
-> -alex
+I'm not sure -j8 is a great default.  There are still a lot of
+two-core/four-thread machines out there, such as my laptop (from 2016).
+Maybe we should default this to 1 unless -j is provided, like make does.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
+--8t9RHnE3ZwKMSgU+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltnYtoACgkQv1NdgR9S
+9ovZ7xAAtzICM9NuqKf6aSvFk3AzDE+ZQheDzBJMCkpOuFk7Bh6qZj0TlaHkIDJ3
+zH5zph03bx+n99WgW0tc28qYrTjiPXpMcD/om5b12T6UEIBbfjvGQadTv9a+rEL+
+vCjNmV7ZOCNmXj8xdVqO3XYO6YELnM2FKjnWoO5Kiz6nfHSAUxPhA2uMh5HBGlun
+UpaQnDk4umkVcG/NR1aGwFM/nZADwxxmlEvB6cNCamDpzi0IGCpn/IL/Yw3G2/NB
+VFkmXTtSse1zYWi7eULN2AgLwRghQ/0NqUHdg/JSEZiMYqvazq3ONLgnuNX9CEfT
+hhW8hbnu/zGcimuv8u5LBWMLriAUQoPTwWXFSzLi1Tsaar/xG/ebz9AdaHlDrhYg
+CppEBPLZ28QYqqZIr2aPdZm66ekC4jA4pmzgZ99OV2KRaja9eKyQWton4COUbRDS
+uDGu07gTAh2AJtKZM4+okMWrdfJNQRUs2h68fn9R7fhoAjk2OiApFkotjm99DkAx
+2FwAgk9td220oy5S6RChdcpZFk+8ID1goqi4G7KHAPz16+Cm/4yxSGKR0Fn968/T
+UzQxEm+2ONalO8llavCc68wG51tq7xS4fz8ILplwtYHtMpuEqk7vX5+Aj5kB5oxb
+JPxqvIZ8MCMJ6hdfB69auhLqaDp/1LZHkm1tvjRqnZeMYuDGx/8=
+=H0Gp
+-----END PGP SIGNATURE-----
+
+--8t9RHnE3ZwKMSgU+--
