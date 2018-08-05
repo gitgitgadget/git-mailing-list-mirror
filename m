@@ -2,93 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C4631F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 06:15:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14EB01F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 06:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726118AbeHEISl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 04:18:41 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35400 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725729AbeHEISl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 04:18:41 -0400
-Received: by mail-wm0-f65.google.com with SMTP id o18-v6so10826474wmc.0
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 23:15:14 -0700 (PDT)
+        id S1726082AbeHEI0q (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 04:26:46 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:45377 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725974AbeHEI0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 04:26:45 -0400
+Received: by mail-pg1-f194.google.com with SMTP id f1-v6so4724532pgq.12
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 23:23:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+BGE9FZ3deewvIy/UmF4KxAWQzriZULzjsikSAwv6nQ=;
-        b=kpfd1+1Mwe5ewINdeYx/aao4qprQdK8D7ENs24LKiLj7HUIPoW2hozsa5dtZTI2JsS
-         MKB2vpsxRo1rvsVY8hSmUhust4lVOu4rd8mYTlh5tcNC86sngRIpBafTGi5aY5Covrni
-         ljoillcRJZKUsxn9Y+qRbaPgxp8SCzDX++FYzdhqilqZqLKXC19/luVPqKZ8MNX65Wx4
-         uliAqngNJ/lEkMlICQKh9dKI3NMNFofM+yQtX8GNurSjmge9/e+aYZ53XWR+KpXVYtpL
-         wG6pXN+WXvDEpuHJm37cjEUo3WHxhhCq4EeoV7Nm258Zs17cAvNppi7FnUyi6SrPsM46
-         R+fA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xXKtV1ROBXFGwTQCFpC2rm/ZXWgoYvivhKO54Q7CFtg=;
+        b=V5WDHLCMN1zHDKEs16qC1Mq+0hEQiZQbJhEn2MBqVDEzs1OMgJcpMETQ6r8t38+RXD
+         JL2L1Su1BWIPSGy5XZWOz1lf0I2E+44oAqvHFJmT5wt3/I794TARvu2MWpKKxS+2vtbs
+         AFK0VzKKZWxl3i7QzpMSWzrQ9/teZmlBaSZplpNmWbFqgFW6P8GIckZsh/smeIDSmWRV
+         Yp90kHDTqYgqTVC4Tjvug8JpTh/6uiwVR8VCL5FV6qrABCZVUJAsUdB1u0QCI2DZpH5f
+         9Vy/Mhsc2KGO2nwML3rZ8NhmGJr1Xj0jb/lKTeOVUPcs7vNwEgWGGPc+eQQnarOrTj/q
+         zeFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+BGE9FZ3deewvIy/UmF4KxAWQzriZULzjsikSAwv6nQ=;
-        b=Al9qsI9OyA8FW90RMWIYecccQCydpA/kDtH/LZ2EGBzaQsJqBqb+MhtUX6o160wMDj
-         5vTu3JNgFDtfjoZLyqa7aQSoYm+07kHQFOwesZFnpg6KIKmis1NuyWTmsptYPSYitglH
-         V16d0BCOTt+ni0VqOSdMsgR6gTDdA8rqkHfgAC8pWsY+0Pwemo5JZeRAf7Quza7VEcLK
-         WlF0ov4Z1YUL+acoCoM8u5kJaTRTRfqgEwYIgoXekDJnrhJBCQw5nut/cmf+c019+jZQ
-         tXHWenmPDDOQX6YrwYKH3CJYF7Changlvnt319gQFM+Ear5ASlJRyPH1X5/N8zt9OGNg
-         s6WA==
-X-Gm-Message-State: AOUpUlF3McVLh2riPlhfnV24z52QNKgtqYv+MFHokLqptEAofOG8jTla
-        Q9mLI1vj0E/1SwkbYi/k+mI=
-X-Google-Smtp-Source: AAOMgpfh+LB7/TdCagk+RwjLkE2Bl45mKcK0omDbBQvxOW4XOash+cwiqK8Id5bPiXJ11Yfg1/awZg==
-X-Received: by 2002:a1c:9acf:: with SMTP id c198-v6mr8880235wme.131.1533449713517;
-        Sat, 04 Aug 2018 23:15:13 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t25-v6sm2698008wmh.15.2018.08.04.23.15.12
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xXKtV1ROBXFGwTQCFpC2rm/ZXWgoYvivhKO54Q7CFtg=;
+        b=lEr8m+GFiPiT1qDjrQNDPe8PmuaLV46Gy6qAzJxuUYOndTcBGuoNSbXitAji4pkvsI
+         g23xSPSL++b1vt1VkzYuOJ4ospw4ztPXhf+0pfyfQRYMcqWXKgb+G/iUhPdsaIAlb+Wo
+         U4ghGk6qwU0vyPixV5HKYlTGMV+fu4B8DQ2lWZSlqfxE9D44+6M8uqK4O2aGi6AQKvqH
+         hIBOcn1UB7VcQRX0uN9IBWBtditGWZEw0ec6d50oyzoxDIgU7nUjIJwd55OKrgW/URZ8
+         uV6jB4ddpEmH4DJVy4tJ6j0H34SWCFw+nQhLVcRfhxSeGt0i7sP6CS1v1HRIEjnzi6Xh
+         jVDg==
+X-Gm-Message-State: AOUpUlF8cdUFC476tngkeMwbFRE7i6qQ6gppOwjj8+0ULtH92lGP76c3
+        aCz8VmoU/+snRBtdHaMjdA4=
+X-Google-Smtp-Source: AAOMgpfdpld131MmnQNOJKBiJg+UI/zI7uLRORLcn7iN/66YvAP1ufC62NHBiCxKGFegaMh+KHMEfA==
+X-Received: by 2002:a65:5205:: with SMTP id o5-v6mr9916084pgp.108.1533450198322;
+        Sat, 04 Aug 2018 23:23:18 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id u83-v6sm31766643pfj.37.2018.08.04.23.23.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 04 Aug 2018 23:15:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
-        <20180803180912.GD106068@genre.crustytoothpaste.net>
-        <xmqqwot7wayf.fsf@gitster-ct.c.googlers.com>
-        <20180803184508.GE106068@genre.crustytoothpaste.net>
-        <xmqqo9ejwag9.fsf@gitster-ct.c.googlers.com>
-        <xmqqk1p7wa7t.fsf@gitster-ct.c.googlers.com>
-        <20180803193256.GA164578@google.com>
-        <xmqqftzvw6xi.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZdPP+q9iuQioUU+2JkfH4n1mkkHrXaJzxGVwhxvbKZ1Q@mail.gmail.com>
-Date:   Sat, 04 Aug 2018 23:15:12 -0700
-In-Reply-To: <CAGZ79kZdPP+q9iuQioUU+2JkfH4n1mkkHrXaJzxGVwhxvbKZ1Q@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 3 Aug 2018 13:43:07 -0700")
-Message-ID: <xmqq36vts5jj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Sat, 04 Aug 2018 23:23:17 -0700 (PDT)
+Date:   Sat, 4 Aug 2018 23:23:16 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     William Chargin <wchargin@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] t/test-lib: make `test_dir_is_empty` more robust
+Message-ID: <20180805062316.GB44140@aiede.svl.corp.google.com>
+References: <20180805022002.28907-1-wchargin@gmail.com>
+ <20180805022002.28907-2-wchargin@gmail.com>
+ <20180805041956.GI258270@aiede.svl.corp.google.com>
+ <xmqqftzts63d.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqftzts63d.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi,
 
->> You are the second one who were negatively affected by Stefan's
->> "summary" that reads a lot more in what I said than what actually
->> was said by me.  Stop paying attention to that message, but do go to
->> the original if you want to hear what I actually said.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>> but $'' is too recent of a shell feature to count on (e.g., dash doesn't
+>> support it).  See t/t3600-rm.sh for an example of a portable way to do
 >
-> Please note that I put that one out to "in a deliberatly
-> outrageous way"[1] so that I get more arguments on why
-> this workflow is the best we have.
+> Is that "too recent"?  I thought it was bashism, not even in POSIX,
+> but I may be mistaken.
 
-There is a big difference between appearing deliberately outrageous
-oneself under one's own responsibility, and cowardily making other
-people appear outrageous by twisting other's words.  Don't be the
-latter and pretend to be trying to be similar to the former.
+You're right.  I got a little ahead of myself: it's not part of POSIX
+yet but is likely to be so once the details get ironed out:
+http://austingroupbugs.net/view.php?id=249
 
-I am quite disgusted.
+> Quite honestly, our tests are still run inside a sort-of controlled
+> environment, so if it _requires_ use of things we have avoided so
+> far, like "ls -A" and "xargs -0", in order to be resistant to
+> funnyly-named files like dot-LF-dot, I would say it is not worth
+> worrying about them--instead we can simply refrain from using such a
+> pathological name, can't we?
+
+The "xargs -0" is a bit of a red herring.  That construct is
+definitely not needed for the test it was used in.
+
+For "ls -A", I agree with you that the benefit is not very high, so
+the cost would have to be pretty low for this to be worth it.  But
+given the lineage of "ls -A", I feel there's a chance that it's
+widespread enough that it would meet that bar.
+
+> "ls -A" may be in POSIX, but our attitude generally is to avoid
+> saying things like "it is in POSIX so it's your platform's fault
+> that it is not yet supported".  We instead say "even it may be in
+> POSIX, in real life many people don't have it, so let's avoid it".
+> And "xargs -0" I do not think is.
+
+Indeed.
+
+Thanks,
+Jonathan
