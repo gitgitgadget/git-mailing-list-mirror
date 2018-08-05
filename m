@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEE95208E9
-	for <e@80x24.org>; Sun,  5 Aug 2018 17:25:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27442208E9
+	for <e@80x24.org>; Sun,  5 Aug 2018 17:25:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726699AbeHETbK (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 15:31:10 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34017 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726569AbeHETbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 15:31:09 -0400
-Received: by mail-wm0-f66.google.com with SMTP id l2-v6so9519619wme.1
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:25:51 -0700 (PDT)
+        id S1726745AbeHETbM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 15:31:12 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53519 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726540AbeHETbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 15:31:11 -0400
+Received: by mail-wm0-f68.google.com with SMTP id s9-v6so11457394wmh.3
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:25:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9NQ5Cbdib5sNQQWUX3W7VOoviHgF1lkXhJg1VFadJNU=;
-        b=n6Lj14a2m8XKEF9/HLnGfkvaZ8T4rnmpTXewZMdieVsKyaUFYADQEG8dRrqo77gCsG
-         rmhppsOZpOidmKgRhJ/802LFeqKMZwkjwcCg3P1HAzS6Li0BFKF3krpIpOy04K3fJiT/
-         SI9cDb7iZyNGh2pFqfjAA4WOtu8I1craGOIgUqcx5SudLgPqcCQxNg3ywRo/2xgTbTrP
-         FzktsWPDamlldKeguECstA9uZ3TSQBy/dTXOreLipSovmEvwqwlozqxgJZEIJmvTZ0zN
-         0fTEARQc0UoB42pq2DMohu6kwJ7AwDu3fPifYUtC7NbX49R/YD/r0MJ/+2pmVp6Dw8Pk
-         +GJw==
+        bh=SVpRjZ1MqFouUmiFLZok4GXWA5xnpfy0yotiMJpXPxo=;
+        b=VemzwkE39uxQCagt4wOncAM2trLjFlJ9I9U7SUoLkKChY+dFhTHaOJMTa+8nZyykzE
+         BDbQSmUZta6uXdWHmwy8fAmLEKRKsu2amZoFnV2Fsonzwkvs8acy/iQvL0izLOe6tFr9
+         SDJuWsPcu65Z5eaRTQxApn2gvy7EJqwy77wG3XKY3ckg9eGO38LwXUu8DHuGTHwLviQH
+         T+gFfiEvvpCi8+jBKgUCpgOw6ubugyxZve+OPQceLQ41NaOdPIhWVcSXh+fOrPkuD3Hy
+         2ZQSAz8iPuwElLGEakECUinv5dYZO1e4mLsvXqnEyi53hbbErAIeqDwT5VsS3O3blioz
+         Bing==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9NQ5Cbdib5sNQQWUX3W7VOoviHgF1lkXhJg1VFadJNU=;
-        b=NYMMozMEJuPgrGbEWNHArf3Pmp04rSlA78a/ymXew6BnqZglDUmPZN/ZFNakK6QEqe
-         Gw7WxxVK7outdHPFf1iwktSC6ooXlKpcflkjgwZfVxMlg0f6YhC4XwpVodMQ+AHyANLu
-         eXLCJt+FUIZSlWXDM7hTpQ5EpUH+BpkjNrrgAGPr6CsFI6KzsDM/WBW0Li4Aoo8wqb7+
-         a3VCs/2batO+sy4TmVsx7eHzp3QHUKfnjUb8K6R9uHOHsVMW192S+HxCgKx3Nqe965rz
-         SiWeOoPqbe3gPGqyRbJk+mUD5G9/s4Mp7PPbx0sZeGSsEPySmEKnduoD/SSAnEzTnEtA
-         +gBw==
-X-Gm-Message-State: AOUpUlFKtj7Q7ghvKaeYJSrBBm315LSeSKlD7YFz8kiJeeeltpk2fwfL
-        xaeWWPYFNMb0WbpkEzsxoriKmmPg
-X-Google-Smtp-Source: AAOMgpfUS407nntD5+ouHugBJcC8eecSjYZcNmcGZ8qmm7PZFMz5g+MqMLI1PrKg1nSZDN2BVkd0/w==
-X-Received: by 2002:a1c:b541:: with SMTP id e62-v6mr10043421wmf.153.1533489950340;
-        Sun, 05 Aug 2018 10:25:50 -0700 (PDT)
+        bh=SVpRjZ1MqFouUmiFLZok4GXWA5xnpfy0yotiMJpXPxo=;
+        b=Al4FEJaHYVp2NDRQFDWUY1WdydrhPYyCukv+M3Q+OqWnM5afQIncx4P1LRNByQSLX6
+         Wg28fsy+gsnQyNWOOL0ta8eXE+R9wjMpuEiYOpF5edQzACael1UB+40+e9BQfV0WA3Z0
+         s+0xuiuyCR5oNoH4yxvE9NDNkezoQ7/8DCJCh8AtLZo73nzWHIMWO1kEOUZc3WvFp76Y
+         dy9XPeYmBvBJj197cOyev+SE5mJIbBMH/XkSWU2SGVkQwwe4cc5Hy2IX+SVTN9iVKRix
+         7EGFsXaZSWH5kZ4SJyNGOyf8QCVlawQ0d2NNYU0fd+nP5pJCGTg5DSzFv4IsE++yKc7o
+         I/uQ==
+X-Gm-Message-State: AOUpUlHsvqQSk6CRtelThCeejqjUD1YMb8oykYTxmXy1zxSXbe18+TCo
+        FLZrdsO5vCoQIUSSOzzNDa0z8fXQ
+X-Google-Smtp-Source: AAOMgpeWvzDz9nPMxFfMD/CTaQQW0RVmATPCXsRejjAcPMsKUmT0xvXcv9LWW7MHmLBCD7giYriI9Q==
+X-Received: by 2002:a1c:3413:: with SMTP id b19-v6mr10276543wma.21.1533489952194;
+        Sun, 05 Aug 2018 10:25:52 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id x62-v6sm7523228wmg.1.2018.08.05.10.25.48
+        by smtp.gmail.com with ESMTPSA id x62-v6sm7523228wmg.1.2018.08.05.10.25.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 05 Aug 2018 10:25:49 -0700 (PDT)
+        Sun, 05 Aug 2018 10:25:51 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 5/6] t: add t5319-delta-islands.sh
-Date:   Sun,  5 Aug 2018 19:25:24 +0200
-Message-Id: <20180805172525.15278-6-chriscool@tuxfamily.org>
+Subject: [PATCH v2 6/6] pack-objects: move tree_depth into 'struct packing_data'
+Date:   Sun,  5 Aug 2018 19:25:25 +0200
+Message-Id: <20180805172525.15278-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.327.ga7d188ab43
 In-Reply-To: <20180805172525.15278-1-chriscool@tuxfamily.org>
 References: <20180805172525.15278-1-chriscool@tuxfamily.org>
@@ -70,164 +70,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+This reduces the size of 'struct object_entry' and therefore
+makes packing objects more efficient.
 
-Signed-off-by: Jeff King <peff@peff.net>
+This also renames cmp_tree_depth() into tree_depth_compare(),
+as it is more modern to have the name of the compare functions
+end with "compare".
+
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t5319-delta-islands.sh | 143 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 143 insertions(+)
- create mode 100755 t/t5319-delta-islands.sh
+ builtin/pack-objects.c | 20 ++++++++++++++++----
+ delta-islands.c        | 27 ++++++++++++++++++---------
+ pack-objects.h         |  4 +++-
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/t/t5319-delta-islands.sh b/t/t5319-delta-islands.sh
-new file mode 100755
-index 0000000000..fea92a5777
---- /dev/null
-+++ b/t/t5319-delta-islands.sh
-@@ -0,0 +1,143 @@
-+#!/bin/sh
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3d09742d91..da6dbb22d2 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2707,14 +2707,26 @@ static void show_object(struct object *obj, const char *name, void *data)
+ 	if (use_delta_islands) {
+ 		const char *p;
+ 		unsigned depth = 0;
+-		struct object_entry *ent;
++		uint32_t index_pos;
+ 
+ 		for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
+ 			depth++;
+ 
+-		ent = packlist_find(&to_pack, obj->oid.hash, NULL);
+-		if (ent && depth > ent->tree_depth)
+-			ent->tree_depth = depth;
++		if (!to_pack.tree_depth) {
++			to_pack.tree_depth = xcalloc(to_pack.nr_alloc, sizeof(*to_pack.tree_depth));
++			to_pack.tree_depth_size = to_pack.nr_alloc;
++		} else if (to_pack.nr_objects > to_pack.tree_depth_size) {
++			REALLOC_ARRAY(to_pack.tree_depth, to_pack.nr_alloc);
++			memset(to_pack.tree_depth + to_pack.tree_depth_size, 0,
++			       (to_pack.nr_alloc - to_pack.tree_depth_size) * sizeof(*to_pack.tree_depth));
++			to_pack.tree_depth_size = to_pack.nr_alloc;
++		}
 +
-+test_description='exercise delta islands'
-+. ./test-lib.sh
++		if (packlist_find(&to_pack, obj->oid.hash, &index_pos)) {
++			uint32_t i = to_pack.index[index_pos] - 1;
++			if (depth > to_pack.tree_depth[i])
++				to_pack.tree_depth[i] = depth;
++		}
+ 	}
+ }
+ 
+diff --git a/delta-islands.c b/delta-islands.c
+index f7902a64ad..e8e6ce3dc4 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -224,17 +224,23 @@ static void mark_remote_island_1(struct remote_island *rl, int is_core_island)
+ 	island_counter++;
+ }
+ 
+-static int cmp_tree_depth(const void *va, const void *vb)
++struct tree_islands_todo {
++	struct object_entry *entry;
++	unsigned int depth;
++};
 +
-+# returns true iff $1 is a delta based on $2
-+is_delta_base () {
-+	delta_base=$(echo "$1" | git cat-file --batch-check='%(deltabase)') &&
-+	echo >&2 "$1 has base $delta_base" &&
-+	test "$delta_base" = "$2"
-+}
++static int tree_depth_compare(const void *a, const void *b)
+ {
+-	struct object_entry *a = *(struct object_entry **)va;
+-	struct object_entry *b = *(struct object_entry **)vb;
+-	return a->tree_depth - b->tree_depth;
++	const struct tree_islands_todo *todo_a = a;
++	const struct tree_islands_todo *todo_b = b;
 +
-+# generate a commit on branch $1 with a single file, "file", whose
-+# content is mostly based on the seed $2, but with a unique bit
-+# of content $3 appended. This should allow us to see whether
-+# blobs of different refs delta against each other.
-+commit() {
-+	blob=$({ test-tool genrandom "$2" 10240 && echo "$3"; } |
-+	       git hash-object -w --stdin) &&
-+	tree=$(printf '100644 blob %s\tfile\n' "$blob" | git mktree) &&
-+	commit=$(echo "$2-$3" | git commit-tree "$tree" ${4:+-p "$4"}) &&
-+	git update-ref "refs/heads/$1" "$commit" &&
-+	eval "$1"'=$(git rev-parse $1:file)' &&
-+	eval "echo >&2 $1=\$$1"
-+}
++	return todo_a->depth - todo_b->depth;
+ }
+ 
+ void resolve_tree_islands(int progress, struct packing_data *to_pack)
+ {
+ 	struct progress *progress_state = NULL;
+-	struct object_entry **todo;
++	struct tree_islands_todo *todo;
+ 	int nr = 0;
+ 	int i;
+ 
+@@ -250,16 +256,19 @@ void resolve_tree_islands(int progress, struct packing_data *to_pack)
+ 	 */
+ 	ALLOC_ARRAY(todo, to_pack->nr_objects);
+ 	for (i = 0; i < to_pack->nr_objects; i++) {
+-		if (oe_type(&to_pack->objects[i]) == OBJ_TREE)
+-			todo[nr++] = &to_pack->objects[i];
++		if (oe_type(&to_pack->objects[i]) == OBJ_TREE) {
++			todo[nr].entry = &to_pack->objects[i];
++			todo[nr].depth = to_pack->tree_depth[i];
++			nr++;
++		}
+ 	}
+-	QSORT(todo, nr, cmp_tree_depth);
++	QSORT(todo, nr, tree_depth_compare);
+ 
+ 	if (progress)
+ 		progress_state = start_progress(_("Propagating island marks"), nr);
+ 
+ 	for (i = 0; i < nr; i++) {
+-		struct object_entry *ent = todo[i];
++		struct object_entry *ent = todo[i].entry;
+ 		struct island_bitmap *root_marks;
+ 		struct tree *tree;
+ 		struct tree_desc desc;
+diff --git a/pack-objects.h b/pack-objects.h
+index 8eecd67991..522b09a31e 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -101,7 +101,6 @@ struct object_entry {
+ 	unsigned no_try_delta:1;
+ 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
+ 
+-	unsigned int tree_depth; /* should be repositioned for packing? */
+ 	unsigned char layer;
+ 
+ 	unsigned preferred_base:1; /*
+@@ -145,6 +144,9 @@ struct packing_data {
+ 	struct packed_git **in_pack;
+ 
+ 	uintmax_t oe_size_limit;
 +
-+test_expect_success 'setup commits' '
-+	commit one seed 1 &&
-+	commit two seed 12
-+'
-+
-+# Note: This is heavily dependent on the "prefer larger objects as base"
-+# heuristic.
-+test_expect_success 'vanilla repack deltas one against two' '
-+	git repack -adf &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'island repack with no island definition is vanilla' '
-+	git repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'island repack with no matches is vanilla' '
-+	git -c "pack.island=refs/foo" repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'separate islands disallows delta' '
-+	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
-+	! is_delta_base $one $two &&
-+	! is_delta_base $two $one
-+'
-+
-+test_expect_success 'same island allows delta' '
-+	git -c "pack.island=refs/heads" repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'coalesce same-named islands' '
-+	git \
-+		-c "pack.island=refs/(.*)/one" \
-+		-c "pack.island=refs/(.*)/two" \
-+		repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'island restrictions drop reused deltas' '
-+	git repack -adfi &&
-+	is_delta_base $one $two &&
-+	git -c "pack.island=refs/heads/(.*)" repack -adi &&
-+	! is_delta_base $one $two &&
-+	! is_delta_base $two $one
-+'
-+
-+test_expect_success 'island regexes are left-anchored' '
-+	git -c "pack.island=heads/(.*)" repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'island regexes follow last-one-wins scheme' '
-+	git \
-+		-c "pack.island=refs/heads/(.*)" \
-+		-c "pack.island=refs/heads/" \
-+		repack -adfi &&
-+	is_delta_base $one $two
-+'
-+
-+test_expect_success 'setup shared history' '
-+	commit root shared root &&
-+	commit one shared 1 root &&
-+	commit two shared 12-long root
-+'
-+
-+# We know that $two will be preferred as a base from $one,
-+# because we can transform it with a pure deletion.
-+#
-+# We also expect $root as a delta against $two by the "longest is base" rule.
-+test_expect_success 'vanilla delta goes between branches' '
-+	git repack -adf &&
-+	is_delta_base $one $two &&
-+	is_delta_base $root $two
-+'
-+
-+# Here we should allow $one to base itself on $root; even though
-+# they are in different islands, the objects in $root are in a superset
-+# of islands compared to those in $one.
-+#
-+# Similarly, $two can delta against $root by our rules. And unlike $one,
-+# in which we are just allowing it, the island rules actually put $root
-+# as a possible base for $two, which it would not otherwise be (due to the size
-+# sorting).
-+test_expect_success 'deltas allowed against superset islands' '
-+	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
-+	is_delta_base $one $root &&
-+	is_delta_base $two $root
-+'
-+
-+# We are going to test the packfile order here, so we again have to make some
-+# assumptions. We assume that "$root", as part of our core "one", must come
-+# before "$two". This should be guaranteed by the island code. However, for
-+# this test to fail without islands, we are also assuming that it would not
-+# otherwise do so. This is true by the current write order, which will put
-+# commits (and their contents) before their parents.
-+test_expect_success 'island core places core objects first' '
-+	cat >expect <<-EOF &&
-+	$root
-+	$two
-+	EOF
-+	git -c "pack.island=refs/heads/(.*)" \
-+	    -c "pack.islandcore=one" \
-+	    repack -adfi &&
-+	git verify-pack -v .git/objects/pack/*.pack |
-+	cut -d" " -f1 |
-+	egrep "$root|$two" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'unmatched island core is not fatal' '
-+	git -c "pack.islandcore=one" repack -adfi
-+'
-+
-+test_done
++	unsigned int *tree_depth;
++	uint32_t tree_depth_size;
+ };
+ 
+ void prepare_packing_data(struct packing_data *pdata);
 -- 
 2.18.0.327.ga7d188ab43
 
