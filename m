@@ -6,27 +6,26 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F14C41F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 13:01:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B1D91F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 13:03:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726271AbeHEPFr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 11:05:47 -0400
-Received: from codesynthesis.com ([142.44.161.217]:43658 "EHLO
+        id S1726240AbeHEPH7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 11:07:59 -0400
+Received: from codesynthesis.com ([142.44.161.217]:43682 "EHLO
         codesynthesis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726159AbeHEPFr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 11:05:47 -0400
-X-Greylist: delayed 359 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Aug 2018 11:05:47 EDT
+        with ESMTP id S1726130AbeHEPH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 11:07:58 -0400
 Received: from [10.5.0.1] (unknown [178.219.147.201])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        by codesynthesis.com (Postfix) with ESMTPSA id 7E78C5E6F2;
-        Sun,  5 Aug 2018 13:01:15 +0000 (UTC)
-To:     git@vger.kernel.org
+        by codesynthesis.com (Postfix) with ESMTPSA id C0C885E6F1;
+        Sun,  5 Aug 2018 12:55:17 +0000 (UTC)
 From:   Karen Arutyunov <karen@codesynthesis.com>
-Subject: git worktree add prints to stdout
+Subject: git worktree add verbosity
 Organization: Code Synthesis
-Message-ID: <631ae70d-9b5f-613d-5b6f-5064d548a894@codesynthesis.com>
-Date:   Sun, 5 Aug 2018 16:01:12 +0300
+To:     git@vger.kernel.org
+Message-ID: <02659385-334f-2b77-c9a8-ffea8e461b0b@codesynthesis.com>
+Date:   Sun, 5 Aug 2018 15:55:13 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
@@ -40,16 +39,14 @@ X-Mailing-List: git@vger.kernel.org
 
 Hello,
 
-The 'git worktree add' command prints to both standard streams. So in 
-the following example the first line is printed to stderr and the second 
-to stdout.
+We are using git for automation in our build2 project.
 
-$ git worktree add ../pub build2-control
-Preparing ../pub (identifier pub)
-HEAD is now at b03ea86 Update
+What's quite inconvenient is that the 'git worktree add' command prints 
+some output by default and there is no way to suppress it, as it 
+normally can be achieved with the --quiet option for the most of git 
+commands.
 
-This looks like a bug, as, for example, the checkout command prints 
-'HEAD is now at...' message to stderr.
+Could you add support for the --quiet option for the worktree command?
 
 Best regards,
 Karen
