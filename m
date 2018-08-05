@@ -2,88 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86A461F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 03:33:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAA71F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 03:36:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726091AbeHEFgz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 01:36:55 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:33576 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726058AbeHEFgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 01:36:55 -0400
-Received: by mail-yw1-f67.google.com with SMTP id c135-v6so2444104ywa.0
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 20:33:53 -0700 (PDT)
+        id S1726092AbeHEFje (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 01:39:34 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:46110 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726058AbeHEFjd (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 01:39:33 -0400
+Received: by mail-pl0-f65.google.com with SMTP id t17-v6so4192100ply.13
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 20:36:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=WUDNZOLZKR4Ukv5y6RJr8z+ChB2KwICSLiIx10/4kOE=;
+        b=WbgUJjTGR6CQmMCwq9bEz8CHd+DdlGEoMhV1Jj5l7IcdlrhNgQdIZ07mo7lJKk01Oz
+         wutbxr70DglFzMwseeTDBG0WKDqTnyswV52by8YSUnNDSx676yj9qc3ugT8cRYKT6xbD
+         YzcH8RCjEvVLzS7aMx/CUIWW504S0kqhaUK8IvQV68sWsPitPZTAcK7kLHzSohT4VusO
+         kwrM4BaWHGg9O2h0MPdJWQdyJLcr8cCMZsUXFx6HNtIC7taWFZe65/V6bf7dmF0rJ+uN
+         kNiip3ZI0aqJ/KUXayg3TrkGnVpYLyo/rfsionWo22sobIdxPM2kFy0rxuR91uCmS3mh
+         qGow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=uS4bwKLd4F+3XNRyY1k4/0O0y7NAWayJzczxt7mUxiY=;
-        b=NsEH3uYqk93W87Yo3UnxQjCvlxspZnNEPDeg5FD/FVg2sBH44PPrJqhwI4h2xdwbQc
-         MySyiOghIP4KZYMMtqUhBW1PGuxKYRzZLCo7V7lgL+g580+Fe9FREonb9rycWVmlK6NG
-         ihwkCxAKqk8Pm+NH4T2XGi9F70n2S3ZAsPcVXhZ/RO0he9s+xIOXdkvi9rhjvaBfvBv1
-         pSzL5L08lc+7XeaabhQj2z5XAE+eyL42W6BUOK49uwk+1xZSDZTxv4wBZvIVWG2GQGw9
-         vpiqsv6PLVBecsfzi7IKmCk33aytd2eec/waFdrVlDmsNSbpVjhvX0M3s3gzp/gsvvQ5
-         NyNQ==
-X-Gm-Message-State: AOUpUlEBdrug7MeBxtqQ2GGYXV71fO9Z1S/LOTBLHPuVODl/UzBrCtre
-        kNLSMW1gde9uw9ASPKopRd9SSq5TybRbqN/sCn8FZw==
-X-Google-Smtp-Source: AAOMgpcwq/pIEIGRULA05kYLaOGunScPmMIGponAk93a2rC0L522HcHUAl0YYInoK8u773TgkNyzzqtNLBsxDIxnzUk=
-X-Received: by 2002:a81:ae66:: with SMTP id g38-v6mr5334352ywk.74.1533440032899;
- Sat, 04 Aug 2018 20:33:52 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=WUDNZOLZKR4Ukv5y6RJr8z+ChB2KwICSLiIx10/4kOE=;
+        b=amK2cGDeKvZDO06KlEgQN6wvlYL8ZqlJCG9ZDPpynTNxe/IRzPBzqb1zW3S68xoWBa
+         wYU+bfpTV+8d56dP1PccqaAZWqfLMxNWHJiphjH7Eazof7K3xr19+wkr1IsSxXjjPI/m
+         HLYMNSHSC4JkNU47eNQxKTwglRXH47j8JnMEJk7tjW20qN2Ken6eLMUiMBroALqixXDZ
+         cDydhnpHoV8cE6uXOVU+PtGyRCWkazsYKtlL2B7KpuvXN0Np+a6rk3NWF8rQwIqgRlap
+         nRZqdw/Nq2vvQ77PkHp8DW03JnZKF3zQWJWGBFVHwN4XbExqNuPnFH5zJapv1/XtUbFo
+         okVw==
+X-Gm-Message-State: AOUpUlHv6kQ5mKTBN0REOx1ZX4NSKc1CrfqJcPhdUYIlguX+sDkFLJYZ
+        Jg0YIQOAu+BL1I3bipvaR7I=
+X-Google-Smtp-Source: AAOMgpdjwg113asv73e705L2mi8klQHZ/VgfTne5cjEjlus7/MkooPYsjXUJxH6gynZ1Pt1/mG6Bqw==
+X-Received: by 2002:a17:902:bd97:: with SMTP id q23-v6mr9198939pls.311.1533440191779;
+        Sat, 04 Aug 2018 20:36:31 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id n80-v6sm16202986pfb.95.2018.08.04.20.36.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 04 Aug 2018 20:36:31 -0700 (PDT)
+Date:   Sat, 4 Aug 2018 20:36:29 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     William Chargin <wchargin@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] t/test-lib: make `test_dir_is_empty` more robust
+Message-ID: <20180805033629.GH258270@aiede.svl.corp.google.com>
+References: <20180805022002.28907-1-wchargin@gmail.com>
 MIME-Version: 1.0
-References: <20180804020009.224582-1-sbeller@google.com> <20180804020255.225573-1-sbeller@google.com>
- <20180804060928.GB55869@aiede.svl.corp.google.com> <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>
- <CAPig+cRA87UZsynme-by+s2ZmQW2Aus9KQscCU9mXmALCBKkKQ@mail.gmail.com> <20180805031709.GF258270@aiede.svl.corp.google.com>
-In-Reply-To: <20180805031709.GF258270@aiede.svl.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 4 Aug 2018 23:33:42 -0400
-Message-ID: <CAPig+cRjxLgGZbROZAuH-VF3xLVUxQTRj7gKPFurypbwz2zzjg@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>, git-packagers@googlegroups.com,
-        Han-Wen Nienhuys <hanwen@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180805022002.28907-1-wchargin@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 4, 2018 at 11:17 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > utf8.c:486:28: warning: passing 'iconv_ibp *' (aka 'const char **') to parameter
-> >       of type 'char **' discards qualifiers in nested pointer types
-> >       [-Wincompatible-pointer-types-discards-qualifiers]
->
-> Oh, good catch!  POSIX documents iconv has having signature
->
->         size_t iconv(iconv_t cd, char **restrict inbuf,
->                size_t *restrict inbytesleft, char **restrict outbuf,
->                size_t *restrict outbytesleft);
->
-> config.mak.uname contains
->
->         ifeq ($(uname_S),FreeBSD)
->                 NEEDS_LIBICONV = YesPlease
->                 OLD_ICONV = YesPlease
->
-> So it looks like FreeBSD has modernized and we need to make that
-> conditional in config.mak.uname on $(uname_R).  Do you know which
-> version of FreeBSD changed the signature?  Care to write a patch?
+Hi,
 
-Unfortunately, I don't know in which version of FreeBSD that changed.
-I rarely fire up that virtual machine (only in rare cases when I want
-to verify some change to Git also builds/runs/whatever on FreeBSD), so
-I haven't really been paying attention to it. I know that this warning
-was present in 11.1 (and I'm guessing all of 11.x), but I don't recall
-if it manifested in 10.x. I guess it shouldn't be too hard to install
-various versions of FreeBSD to determine this, but it would be quite
-time-consuming. I'm not very familiar with FreeBSD-land, but I would
-hope there would be an easier way to determine when it changed than by
-installing old versions. Does FreeBSD have historic package
-repositories (containing headers, for instance) which one could
-consult instead?
+William Chargin wrote:
+
+> While the `test_dir_is_empty` function appears correct in most normal
+> use cases, it can fail when filenames contain newlines.
+
+This information belongs in the commit message, since it's useful
+context for understanding the motivation behind the patch when
+encountering it with e.g. "git log".  That's part of why I recommend
+never sending a separate cover-letter email for a single-patch series.
+
+See [1] from Documentation/SubmittingPatches for more on this subject.
+
+>                                                         I originally
+> wrote this patch for the standalone Sharness library, but that library
+> advises that such patches be sent to the Git mailing list first.
+
+Thanks for writing it!  Continuing the note about administrivia, this
+kind of cover letter material that you want to not be part of the
+commit message can go below the three-dashes delimiter when you send a
+patch.  There's more about this at [2].
+
+Thanks again,
+Jonathan
+
+[1] https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html#describe-changes
+[2] https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html#send-patches
