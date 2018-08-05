@@ -2,140 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A90041F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 04:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CB53208E9
+	for <e@80x24.org>; Sun,  5 Aug 2018 04:58:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbeHEGXq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 02:23:46 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:37309 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725975AbeHEGXq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 02:23:46 -0400
-Received: by mail-pl0-f66.google.com with SMTP id d5-v6so4237745pll.4
-        for <git@vger.kernel.org>; Sat, 04 Aug 2018 21:20:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=al5D2/NMnY9G+thso6nWecgqPA7eZZODUUeFTa+5VO8=;
-        b=Qh+u9G5cJOL/o0OSQPmg+xjwMWBK1napPO7bFdrQ1vdSGy1biEDaM35kdRmsZjmXn/
-         te2qe3ixHmLCDsr0GVToZ46kjRNFlofMtiGBmDiCTO9+/xwMBk8RVB441tJa0F8VZP2k
-         0WgA2FatUWQBtv+3fH+ZdsTnnA/eznkIqbfXEZTk779cqukHZZYRuVe9fTGWRfdWWKc4
-         Ok9P7775zx7GVSKjE/hGzMOJ0lo7PyA5VWm37WAqJujmkjCvMY1UBaaDLEAoW5w1X2Fd
-         hmNxvtkhqUMZo/r8M3D4u5OY/DUuHW1YyLeYOyIcUpv0ViNMQ/J//j9J26rxZSfFizFW
-         3ycg==
+        id S1726138AbeHEHB7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 03:01:59 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:34334 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725975AbeHEHB7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 03:01:59 -0400
+Received: by mail-yb0-f194.google.com with SMTP id e9-v6so4150658ybq.1
+        for <git@vger.kernel.org>; Sat, 04 Aug 2018 21:58:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=al5D2/NMnY9G+thso6nWecgqPA7eZZODUUeFTa+5VO8=;
-        b=A/ZGQufyT4U+psD8WfbO9iYNcFLyo8Qkib6n8966PGr25RxllgHUaU+6WMlTH1R9Av
-         1iVNuObcODauehUiokks31sUwVW4yE26xaYjHHo2Jp2euY2hsMwivs/pnhdXBlPgAuXx
-         Wfh9XQaTxoaqi/dH1RKo67YqUuHi6C+iv+66fazyHG5jJkPMjosBmtE4Fs0DBnHCI/YS
-         RzLXSYniq0HOZ9vzcmqQHzPWzuFKxmsOhWscfre7QhThUcjofqEsg+k8zMdRNyLbZOg9
-         Fbovo/uAMfXwn+jjFlKyrBB3w2dh/nsIW6XgKrfVi2uitZeA/dHSGI4Jrh+DpLEuKXx2
-         hDGQ==
-X-Gm-Message-State: AOUpUlFr/b2xO/pRbMpZPOrcF6RU1bF58JPHNOoFyRO2e1cHQMnYrWKZ
-        ww1jaajoT45I4xZlv3Im47I=
-X-Google-Smtp-Source: AAOMgpd1Vah0OrXqdVMsoKoZN3kh+4RKsfwzkfbMXwU7Y8uK9ht/mVxsuh8obkdgViVrDN+3DAPVfQ==
-X-Received: by 2002:a17:902:bd93:: with SMTP id q19-v6mr9166938pls.238.1533442837419;
-        Sat, 04 Aug 2018 21:20:37 -0700 (PDT)
-Received: from wchargin-t440s.attlocal.net (99-4-123-58.lightspeed.sntcca.sbcglobal.net. [99.4.123.58])
-        by smtp.gmail.com with ESMTPSA id 87-v6sm18209914pfn.103.2018.08.04.21.20.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 04 Aug 2018 21:20:36 -0700 (PDT)
-From:   William Chargin <wchargin@gmail.com>
-To:     jrnieder@gmail.com
-Cc:     git@vger.kernel.org, wchargin@gmail.com
-Subject: [PATCH v2] t/test-lib: make `test_dir_is_empty` more robust
-Date:   Sat,  4 Aug 2018 21:20:31 -0700
-Message-Id: <20180805042031.20447-1-wchargin@gmail.com>
-X-Mailer: git-send-email 2.18.0.548.geb6c14151
-In-Reply-To: <20180805033629.GH258270@aiede.svl.corp.google.com>
-References: <20180805033629.GH258270@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3S4Urs2mQSo/mk8YSRvVD3bCihacsmT1/A5jCN+m/zA=;
+        b=GgkEzzGOsBG193byPmUsAKpAtMzWGWYJ+O4tLaWVXzXaERAKZwGTV+T1sKfgSHmKEd
+         LJwGpNrPU+mXspC4uHHKj3Wm4D4NgCdT2z2wTq0LuxmPWniRYYRKiuBBXUKKZEnzRGNk
+         yqV7kGheq95dzFKsW2sXNfrBr/NMJ+6YWY7mM+fmdQZsBeD2kXe8A0PaXCEYGBCtbgR5
+         wlzwpjsLV/7hFNA0dUuVeaHOWa9Wztv6NYV2r/3ex54XlfiO3YANyrm71iRExfz9PeUf
+         phJQoFH5IyOk7k2MGaHRel1C1zYumTnaSCxowdli8RKa4uG5ziPSu6IMg2MzXkWOhxWX
+         FNnA==
+X-Gm-Message-State: AOUpUlGwF6tHJ9ip3rGkjVAVySDwUDCPDjDUJOUYQg2AWVOFtHKyDczS
+        r0p5jepkwJIevfq+nPwrL1igZ0di36ZPI2kmYvY=
+X-Google-Smtp-Source: AAOMgpeJjv4o/t4v6bBUrgmt2qK2erdvLWgAXdoAtGxK0WDU7v4W957/ESLrQ0Q37ap4r356lOGxGgEgSZYG8IuI7ww=
+X-Received: by 2002:a25:9d81:: with SMTP id v1-v6mr5182511ybp.76.1533445124686;
+ Sat, 04 Aug 2018 21:58:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20180804020009.224582-1-sbeller@google.com> <20180804020255.225573-1-sbeller@google.com>
+ <20180804060928.GB55869@aiede.svl.corp.google.com> <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>
+ <CAPig+cRA87UZsynme-by+s2ZmQW2Aus9KQscCU9mXmALCBKkKQ@mail.gmail.com>
+ <20180805031709.GF258270@aiede.svl.corp.google.com> <CAPig+cRjxLgGZbROZAuH-VF3xLVUxQTRj7gKPFurypbwz2zzjg@mail.gmail.com>
+In-Reply-To: <CAPig+cRjxLgGZbROZAuH-VF3xLVUxQTRj7gKPFurypbwz2zzjg@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 5 Aug 2018 00:58:32 -0400
+Message-ID: <CAPig+cTEGtsmUyoYsKEx+erMsXKm5=c6TJuNAgeky2pcgw18JQ@mail.gmail.com>
+Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>, git-packagers@googlegroups.com,
+        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the `test_dir_is_empty` function appears correct in most normal
-use cases, it can fail when filenames contain newlines. This patch
-changes the implementation to use `ls -A`, which is specified by POSIX.
-The output should be empty exactly if the directory is empty.
+On Sat, Aug 4, 2018 at 11:33 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Sat, Aug 4, 2018 at 11:17 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > So it looks like FreeBSD has modernized and we need to make that
+> > conditional in config.mak.uname on $(uname_R).  Do you know which
+> > version of FreeBSD changed the signature?  Care to write a patch?
+>
+> I'm not very familiar with FreeBSD-land, but I would
+> hope there would be an easier way to determine when it changed than by
+> installing old versions. Does FreeBSD have historic package
+> repositories (containing headers, for instance) which one could
+> consult instead?
 
-The newly added unit test fails before this change and passes after it.
+I thought perhaps we could figure out the timeframe by looking at the
+Git package[1] in the FreeBSD ports tree to see when they added,
+removed, or changed a patch file for config.mak.uname, but that didn't
+pan out since they invoke the Git 'configure' script which determines
+OLD_ICONV automatically.
 
-Signed-off-by: William Chargin <wchargin@gmail.com>
----
-
-I originally wrote this patch for the standalone Sharness library, but
-that library advises that such patches be sent to the Git mailing list
-first.
-
- t/t0000-basic.sh        | 29 +++++++++++++++++++++++++++++
- t/test-lib-functions.sh |  2 +-
- 2 files changed, 30 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 34859fe4a..3885b26f9 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -821,6 +821,35 @@ test_expect_success 'tests clean up even on failures' "
- 	EOF
- "
- 
-+test_expect_success 'test_dir_is_empty behaves even in pathological cases' "
-+	run_sub_test_lib_test \
-+		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
-+	test_expect_success 'should pass with actually empty directory' '
-+		mkdir empty_dir &&
-+		test_dir_is_empty empty_dir
-+	'
-+	test_expect_success 'should fail with a normal filename' '
-+		mkdir nonempty_dir &&
-+		touch nonempty_dir/some_file &&
-+		test_must_fail test_dir_is_empty nonempty_dir
-+	'
-+	test_expect_success 'should fail with dot-newline-dot filename' '
-+		mkdir pathological_dir &&
-+		printf \"pathological_dir/.\\\\n.\\\\0\" | xargs -0 touch &&
-+		test_must_fail test_dir_is_empty pathological_dir
-+	'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test dir-empty <<-\\EOF
-+	> ok 1 - should pass with actually empty directory
-+	> ok 2 - should fail with a normal filename
-+	> ok 3 - should fail with dot-newline-dot filename
-+	> # passed all 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+
- ################################################################
- # Basics of the basics
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2b2181dca..f7ff28ef6 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -568,7 +568,7 @@ test_path_is_dir () {
- # Check if the directory exists and is empty as expected, barf otherwise.
- test_dir_is_empty () {
- 	test_path_is_dir "$1" &&
--	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-+	if test "$(ls -A1 "$1" | wc -c)" != 0
- 	then
- 		echo "Directory '$1' is not empty, it contains:"
- 		ls -la "$1"
--- 
-2.18.0.548.geb6c14151
-
+[1]: https://github.com/freebsd/freebsd-ports/tree/master/devel/git
