@@ -2,105 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 385FC1F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 17:40:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9ABB1F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 18:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726382AbeHETpk (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 15:45:40 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:40412 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726297AbeHETpj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 15:45:39 -0400
-Received: by mail-io0-f195.google.com with SMTP id l14-v6so9095317iob.7
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 10:40:20 -0700 (PDT)
+        id S1726745AbeHEUhk (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 16:37:40 -0400
+Received: from mail-yb0-f173.google.com ([209.85.213.173]:38702 "EHLO
+        mail-yb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726484AbeHEUhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 16:37:40 -0400
+Received: by mail-yb0-f173.google.com with SMTP id d18-v6so567961ybq.5
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 11:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=c0k0lR6w/8KwIZonbGv0RhbWho3gxKlXE/GwF6rIQ+U=;
-        b=RY1QJh8a92nHk5NcmwgND6qvTWWW69gjhHCKPp/raHQjsGI0zIkY975U6Zrz3GyoIY
-         Nw2ZRVU2XyKUG7eXiwclBF/KyQUzopDvJjMD6N3BTNgUTYkylA0tZoH7N4O4Kf+UcCqw
-         vlAiJ4LL6Csu+o7x59eolIUudefGa9JJ6GgDeyZvxr/vpLuX4DbJ1/kKalAw6PpincSC
-         eYm7hMLjDrZu1FcGX81wQtD6eiS0LYXPjAMKcOeQwVdA3CK04P4zfQ1CJqJb+AqF/L+5
-         noCCVUo5Cikitxav7R03MO6Q+GWODmAD+7BQagWyP70iZCHIeid9/wqtithxW5fTsFXL
-         XdLQ==
+        h=content-transfer-encoding:from:mime-version:date:subject:message-id
+         :to;
+        bh=jn/6F1bj5j5xD5ad5vA3rJVW7R6iFSr6cU07YE91NjQ=;
+        b=tiB/5ubGr0HDBpPNipEl7fWoOvp3baLQuP8ZzpdrzFnAJ6m84jEwATNFF5F5FYqXGv
+         GM620LBRpwynsvrBiGvvGXv2bKfjUEXXnM7OnpKIq2Bc+PXclWQQmym6AMYfM8ima3l1
+         AE1qipzVMTaV9RbfFlYlef2QbhJ3/A8VIuKRHEpyT24IQ0hRonVOlYog1nwoPSnVQkV+
+         gc22+D6zWlMgJWQIobGIF46UYJ/06x8vIVir3o34KJjE8O33mzY3/bC/fcZwWjl6OaCg
+         pwLD5AbmeFsVoEqUNnVFHMoaPr7Yr5x58CAweUYKsNvY01BrCv/2JNBL0azTzh1IVotC
+         cQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=c0k0lR6w/8KwIZonbGv0RhbWho3gxKlXE/GwF6rIQ+U=;
-        b=n/+N375U5/Tp9H3woKojH7bHCIHeNu5aMAC3g5AWZLz5KS/PEhnVNCg76/U8vDD3Ss
-         OyWyJKLbUP0OHeDypVfg3RaTgq+TngHgDG1BwVopS5+jly3CCrWunmKHUUZer4Hll74B
-         Oot68rKIWRLVBsrOo1lRapj0OyPRAApQjruINJIG8vr9kJUelr87eCeIMLoxofnoNDsV
-         nrdLn4FfmbuXu7qlfEWjJRsVvogMNer2nlP2VC3BmcTVzewOC5KBe4iCg9f5cHm1Id2D
-         6cMq70wJxrnKpif+i428f6Z3hAiM7F03STR5A839SbVE38OgflRYZThL5mOHG5HpSkD2
-         UV1w==
-X-Gm-Message-State: AOUpUlEUFmlsvT2ppMFcUjKwHrR693rmiOLY67w6xyMY1jzKk7R8Kip1
-        1lnYl/G85WSEjG6n74HuNvmBAkphYPw/6YqFHHQ=
-X-Google-Smtp-Source: AA+uWPyFT0ajSmEwm+IjRyD95wJRa2sBodpLPFmjY9IfV5l353ZSTZaYy8xh8IZCpkaRrEjnytIkPpO4hNQR5NnQNp4=
-X-Received: by 2002:a6b:5a08:: with SMTP id o8-v6mr12741161iob.5.1533490819614;
- Sun, 05 Aug 2018 10:40:19 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Sun, 5 Aug 2018 10:40:19 -0700 (PDT)
-In-Reply-To: <xmqqfu08zhh7.fsf@gitster-ct.c.googlers.com>
-References: <20180722054836.28935-1-chriscool@tuxfamily.org>
- <20180722054836.28935-4-chriscool@tuxfamily.org> <xmqqk1pkzhuo.fsf@gitster-ct.c.googlers.com>
- <xmqqfu08zhh7.fsf@gitster-ct.c.googlers.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 5 Aug 2018 19:40:19 +0200
-Message-ID: <CAP8UFD2Ri6N33UhZSHOvxtxiCBC13-1rpa_ZByY9dsyPjmaC8A@mail.gmail.com>
-Subject: Re: [RFC PATCH 3/5] pack-objects: add delta-islands support
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:content-transfer-encoding:from:mime-version:date
+         :subject:message-id:to;
+        bh=jn/6F1bj5j5xD5ad5vA3rJVW7R6iFSr6cU07YE91NjQ=;
+        b=CYvKnkYxW5rRMmvUd4BtRgjbkn1KU79oy70z7RFzLVm6eHMM3EQ+aIO8gsPj6G0xWE
+         MFMJVRrYZeAKm7cohJ0Akz0yL6AQL4IiiGJy1S2TvTQvcA3HrZbA60BTxUgWsr2uRWrQ
+         2Z8vbI2uBoXbYzllIqXFCzbP8DG2qYxv70sSDMMqWE4QpwsI7FwHvqGxFIUrB93pJfB/
+         jCWx/Fz8PXiCTqO3QVmEB2BguCwl8ZZdRkcz/jMEiIlom6jhASmrBybIU8Sz2rtyP2l6
+         L06v20Y58CuIvn/ujLqn0UF6qSBFsa3Uccj/ie93kCl1Ls4ydW5QDeWKj23kXdK6wtC+
+         l51g==
+X-Gm-Message-State: AOUpUlGw38JtH73OnaOruC1CJ9/p4ygfSSmC5QShLxc/7gbrHR21lRdq
+        yl/AGzEO3xQYxlaGAThi2mjIKr16
+X-Google-Smtp-Source: AAOMgpdko9d3Z+Egd5Knsn/7K5hHoR+juYNUtOdxea//rmSzsWw9NKn1q6xBH1W3LK3ce7IPSL2jGg==
+X-Received: by 2002:a25:ea4d:: with SMTP id o13-v6mr5640813ybe.114.1533493932573;
+        Sun, 05 Aug 2018 11:32:12 -0700 (PDT)
+Received: from ?IPv6:2607:fb90:c4e:f7ac:c9dd:be20:d9b6:1d20? ([2607:fb90:c4e:f7ac:c9dd:be20:d9b6:1d20])
+        by smtp.gmail.com with ESMTPSA id z190-v6sm5224197ywd.97.2018.08.05.11.32.12
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 05 Aug 2018 11:32:12 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From:   Psy Ker <sideduck666@gmail.com>
+Mime-Version: 1.0 (1.0)
+Date:   Sun, 5 Aug 2018 14:32:11 -0400
+Subject: Jeff
+Message-Id: <A5D7088B-2F87-4942-AF67-7C188AB38EE3@gmail.com>
+To:     git@vger.kernel.org
+X-Mailer: iPhone Mail (15G77)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jul 24, 2018 at 7:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Another thing I noticed from 2/5 is that you can have up to 7 such
-> capture groups.  I do not have any opinion if 7 is too few or too
-> many, but we would want the number to be documented, and end-user
-> input diagnosed when it requires more captures than we support (if
-> we are not already checking, that is).
 
-This is the new documentation:
 
--> Refs are grouped into islands based on their "names", and two regexes
--> that produce the same name are considered to be in the same
--> island. The names are computed from the regexes by concatenating any
--> capture groups from the regex, with a '-' dash in between. (And if
--> there are no capture groups, then the name is the empty string, as in
--> the above example.) This allows you to create arbitrary numbers of
--> islands. Only up to 7 such capture groups are supported though.
-
-I added the last sentence above, but I wonder if it is 7 or 8. The
-code is the following:
-
--> static int find_island_for_ref(const char *refname, const struct
-object_id *oid,
-->                    int flags, void *data)
--> {
-->     int i, m;
-->     regmatch_t matches[8];
-->     struct strbuf island_name = STRBUF_INIT;
-->
-->     /* walk backwards to get last-one-wins ordering */
-->     for (i = island_regexes_nr - 1; i >= 0; i--) {
-->         if (!regexec(&island_regexes[i], refname,
-->                  ARRAY_SIZE(matches), matches, 0))
-->             break;
-->     }
-
-I also wonder if the above is enough to diagnose end-user input when
-it requires more captures than we support. A quick look at the man
-page of the regex functions wasn't enough to enlighten me. Any input
-on these issues is very welcome!
+Sent from my iPhone
+Git rm =E2=80=94 cached jeff
+Git rm - jeff
+Git ls jeff ingnored=
