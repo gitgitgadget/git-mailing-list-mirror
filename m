@@ -6,44 +6,44 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52941F597
-	for <e@80x24.org>; Sun,  5 Aug 2018 10:39:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 337CC1F597
+	for <e@80x24.org>; Sun,  5 Aug 2018 10:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726282AbeHEMnc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 5 Aug 2018 08:43:32 -0400
-Received: from mail-yb0-f196.google.com ([209.85.213.196]:46539 "EHLO
-        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726264AbeHEMnc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 5 Aug 2018 08:43:32 -0400
-Received: by mail-yb0-f196.google.com with SMTP id f10-v6so693598ybk.13
-        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:39:24 -0700 (PDT)
+        id S1726204AbeHEMrD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 5 Aug 2018 08:47:03 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:39967 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726117AbeHEMrD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 5 Aug 2018 08:47:03 -0400
+Received: by mail-yw1-f68.google.com with SMTP id z143-v6so2592000ywa.7
+        for <git@vger.kernel.org>; Sun, 05 Aug 2018 03:42:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Ji/A81ulXvCTTMqoq2lrj0xQDwILKiq2Yi1/v6TJyio=;
-        b=RQiem2aMoRgWjaVig0r4BcIKFX0+3sp7Z3IFQzP7SN0VE+KT8UnxtFOPB+5794gcZU
-         erPu35Uiiul3lb1g3Dza3olYcDAjjyDfrKIe8kVTXSqbpdO35Is2ul+Y3P34jJ+REozw
-         kHlV/c0pfnAQ/YfbI+MMhu2oYe8Up35xQtw/MLyVLc6mRg8D2B0kyG84ajybNAV0enGt
-         NTFhUs/F5E1KA2049FemAlqbWv2wWx/QJ9+wn+Tfj9tNYVRbRE3t4XGlJwP6lUHNqUfL
-         25qh3b/WtSr2BkxIlLhP4M1Zent8MlXC+TcOavNiR7gTPwnCBy3Hg6WyRNYSCQVUjxic
-         9l4Q==
-X-Gm-Message-State: AOUpUlEWy57DuXIuZAwjjLZ4ec7WAjXl1tDDWbLVTGGMdJytI87S/V4L
-        YY4450re7wrNcShKrZ2qlKPV3GGJOJgeba9nq3g=
-X-Google-Smtp-Source: AAOMgpfa9BZOPFagu+GmPtLTYoyjUZcOtV+kok67BbTcrrVRgjaHAzxYiEgwvbVeTATuhDGZBT/XTZFN8J4IhoCY8e8=
-X-Received: by 2002:a25:8b04:: with SMTP id i4-v6mr5482122ybl.12.1533465564454;
- Sun, 05 Aug 2018 03:39:24 -0700 (PDT)
+        bh=eJewKSb1K5uvm1xfGmXoYCWNFBgj6R8gLq6LdMrInqI=;
+        b=poEdvLmWZjPykfLiVhboWptzngF6EvWwWwyQLXKSRiiE4GdpKwqh2ZWb0o+ZSWN15N
+         sne8MSReGI4SyDZx6cATD0sDwCsxcK88HnyEgpyNDMksLNzz5CB8T6DfR4z/q3p6jsn+
+         cTQ7OO6H1KrcDRQrO2L+3DSolWYaD31xuIl+5sKs11ZU99EGATB/esNVgtifFuBubqei
+         NuqzhFOg7V48+ex2YRqxMU6RPmt9pH5g6zf9tMhY6Dir4jzlbxObfFepPWyUnsV7gVEu
+         WnX1nKRrgarDLmKqjO9+kHztXnQR2xKfx+4LSjFF9f4ZzwUGt8h9YawpnDwciUEkSXT/
+         C0LQ==
+X-Gm-Message-State: AOUpUlGk934nipu974ORmsyaQ2BGWAQIS7cql/ZHXl48H4R60QeLgoGe
+        vN48lJiLBUjr/yalrz1K9NyID7UnZjo/DpKhUaw=
+X-Google-Smtp-Source: AAOMgpcWos9rAgDBCkkXoylOQHedyApzkTIhXZLhc6Y4aBKHoOw8AYVJ0EUOdhwumvhFH/DJuVK+bWDzasTKlBlRy5Y=
+X-Received: by 2002:a81:4153:: with SMTP id f19-v6mr5799460ywk.418.1533465775177;
+ Sun, 05 Aug 2018 03:42:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.15.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.15.git.gitgitgadget@gmail.com>
+References: <pull.15.git.gitgitgadget@gmail.com> <faf35214f0f339b792a30a3bd013056217d9a2c1.1533421101.git.gitgitgadget@gmail.com>
+In-Reply-To: <faf35214f0f339b792a30a3bd013056217d9a2c1.1533421101.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 5 Aug 2018 06:39:13 -0400
-Message-ID: <CAPig+cS-b973NzRvvcKyx6t5ChO_VDf=Bs8zoE-B_iPa3HWv5g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] line-log: be more careful when adjusting multiple
- line ranges
+Date:   Sun, 5 Aug 2018 06:42:44 -0400
+Message-ID: <CAPig+cRrC2mf1uuQ1C4Ue4OMZQbgcxXbJ9AXs0y6RSnUrcm7Dg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] line-log: convert an assertion to a full BUG() call
 To:     gitgitgadget@gmail.com
 Cc:     Git List <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -52,24 +52,24 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sat, Aug 4, 2018 at 6:18 PM Johannes Schindelin via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-> Now, I am fairly certain that the changes are correct, but given my track
-> record with off-by-one bugs (and once even an off-by-two bug), I would
-> really appreciate some thorough review of this code, in particular the
-> second one that is the actual bug fix. I am specifically interested in
-> reviews from people who know line-log.c pretty well and can tell me whether
-> the src[i].end > target[j].end is correct, or whether it should actually
-> have been a >= (I tried to wrap my head around this, but I would feel more
-> comfortable if a domain expert would analyze this, whistling, and looking
-> Eric's way).
+> The assertion in question really indicates a bug, when triggered, so we
+> might just as well use the sanctioned method to report it.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/line-log.c b/line-log.c
+> @@ -72,7 +72,9 @@ void range_set_append(struct range_set *rs, long a, long b)
+> -       assert(rs->nr == 0 || rs->ranges[rs->nr-1].end <= a);
+> +       if (rs->nr > 0 && rs->ranges[rs->nr-1].end > a)
+> +               BUG("append %ld-%ld, after %ld-%ld?!?", a, b,
+> +                   rs->ranges[rs->nr-1].start, rs->ranges[rs->nr-1].end);
 
-Although I fixed a number of bugs in basic range-set manipulation code
-(5 years ago), I have no experience with or knowledge of the code
-actually dealing with range-set manipulation in relation to diffs, so
-I'm not a domain expert by any means, and I'm _still_ trying to wrap
-my head around that code.
+Although this appears to be a faithful translation of the assert() to
+BUG(), as mentioned by Andrei in his review of 3/4, the existing
+assert() seems to have an off-by-1 error, which means that the "> a"
+here really ought to be ">= a".
 
-That said, I left some comments on the individual patches suggesting a
-simpler and more correct fix for the crash. (Despite that suggestion
-for fixing the crash, I still can't say whether the actual
-computations performed by the existing code are correct, since I still
-don't understand that aspect of it.)
+Given that this file is full of assert()'s, it doesn't necessarily
+make sense to convert only this one, so perhaps the patch should be
+dropped (since I'm guessing you don't want to convert the rest of
+them).
