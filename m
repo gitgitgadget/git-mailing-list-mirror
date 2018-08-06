@@ -2,90 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DB50208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 20:19:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73483208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 20:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387711AbeHFW3n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 18:29:43 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38066 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732391AbeHFW3n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 18:29:43 -0400
-Received: by mail-wm0-f67.google.com with SMTP id t25-v6so15578214wmi.3
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 13:19:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tG3QnMiddHPm6i3MkA2pC97F+qDZvkz8bzU6HAtTYeI=;
-        b=QouNZco/c5mG8/trCvHfUN2PcwteDVvskvQKbHW62T5wLmmwugIxnXAbx69PybzgtI
-         bJACWshQmiJvkBt9PYC6WZ2vgFZ7BW1ALfgyTvCzqWQQRNTL1x+DIwqtnBD+580/1VN8
-         YywQ09RKhtoj2AJuAgWfJeWYUo09Hd46GnJtL/GsDzVum8bVmbZKfuvVppehTSMMyZ1J
-         /ddUWmJUpTglCW/mI1OuilDV8vW9VhIXTlQXM+IkWzGvRn9k+OuVPDpJj3js7Oem9p+F
-         64odIR8Ziq2la0fTdFLiuWV+8yG+1jPLXk6Zj6A6/9KGqY844Iuf+Tt93dlkt312FVTi
-         Bh6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tG3QnMiddHPm6i3MkA2pC97F+qDZvkz8bzU6HAtTYeI=;
-        b=O+6TThvJl8tAvWKiXgEG5So/Y3udjGpGeAVnppMmXIVu1N/vYme0+QZwuIl96jBkqq
-         dCDSx7r4doB5oRIzHbsac3ltraXGYBF3Zq1Ld1R1K/JCAVU9ZoY/FwrnS3ugtCiwYo8E
-         goaJh1m8Ip+06aiEPzrs7zoR7GtGcndYGQACJ6wTJ2BzbORYlXR40hVnSg32yzsASdlL
-         qhhBTtj+ouo4OdZSNU7UszMnXxp8CJmNlYzq7d6r2DiGmct0ge6zQ2lebSYO/dJQeB2e
-         4DJYl1vYMiE4h/GWl1Wg+A0XmfbxJoSWl5dWMlQ8YfDUK40VCm5HdBxHeZRTf4h9yQtR
-         a/Dw==
-X-Gm-Message-State: AOUpUlEP8Rjmp0Y5fov7ZGKm6GpwAUejANDd3bwFfqJD/RTRitdYI5j7
-        +k2ZXSEq6Rw9LApLIW/z7F0=
-X-Google-Smtp-Source: AAOMgpfVeuU0g1aMoftr8s5Xey4tAp1yRT4KXvAvNLWtpwUOuvzlKC2kWgMzmVIPaXCFG4L4H4LaPg==
-X-Received: by 2002:a1c:e70b:: with SMTP id e11-v6mr12043091wmh.22.1533586739131;
-        Mon, 06 Aug 2018 13:18:59 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y102-v6sm10199635wmh.9.2018.08.06.13.18.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 Aug 2018 13:18:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 0/7] improve range-diffs coloring and [RFC] move detection
-References: <20180804015317.182683-1-sbeller@google.com>
-        <xmqqd0uyt6hj.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZnVEsvpicNu7LXkRcHuRqGvESfvG3DL5O_2kPVYrW-Gg@mail.gmail.com>
-Date:   Mon, 06 Aug 2018 13:18:58 -0700
-In-Reply-To: <CAGZ79kZnVEsvpicNu7LXkRcHuRqGvESfvG3DL5O_2kPVYrW-Gg@mail.gmail.com>
-        (Stefan Beller's message of "Sun, 5 Aug 2018 23:01:31 -0700")
-Message-ID: <xmqq36vrnt8t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1733071AbeHFWfW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 18:35:22 -0400
+Received: from mx.sdf.org ([205.166.94.20]:51343 "EHLO mx.sdf.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731300AbeHFWfW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 18:35:22 -0400
+Received: from sdf.org (IDENT:aedifex@sdf.lonestar.org [205.166.94.16])
+        by mx.sdf.org (8.15.2/8.14.5) with ESMTPS id w76KOQAX025356
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256 bits) verified NO);
+        Mon, 6 Aug 2018 20:24:26 GMT
+Received: (from aedifex@localhost)
+        by sdf.org (8.15.2/8.12.8/Submit) id w76KOPN1012361;
+        Mon, 6 Aug 2018 20:24:25 GMT
+Date:   Mon, 6 Aug 2018 20:24:25 +0000
+From:   Tacitus Aedifex <aedifex@SDF.ORG>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, henning.schild@siemens.com,
+        mastahyeti@gmail.com
+Subject: Re: abstracting commit signing/verify to support other signing
+ schemes
+Message-ID: <20180806202424.GA2315@SDF.ORG>
+References: <20180803213834.GB7619@SDF.ORG>
+ <20180803220746.GA5404@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=unknown-8bit; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180803220746.GA5404@sigill.intra.peff.net>
+User-Agent: Mutt/1.9.1 (2017-09-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> On Sat, Aug 4, 2018 at 9:57 AM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Stefan Beller <sbeller@google.com> writes:
->>
->> > This builds on top of sb/range-diff-colors, which builds on js/range-diff.
->>
->> As another round of js/range-diff is expected, according to
->>
->> <nycvar.QRO.7.76.6.1808011800570.71@tvgsbejvaqbjf.bet>
+On Fri, Aug 03, 2018 at 06:07:46PM -0400, Jeff King wrote:
+>There's been some work on this lately. See this patch and the response
+>thread:
 >
-> Oh right. I forgot to mention that in this cover letter, but Johannes
-> has had work issues last week and people threw lots of stuff at him,
-> so I concluded the resend might take a while. Hence I just put it out there
-> in case we're happy with the status quo of that series.
-> ...
+>  https://public-inbox.org/git/20180409204129.43537-9-mastahyeti@gmail.com/
 >
-> Thanks! I'll resend when appropriate.
+>The more recent work focused on just doing the minimum to provide
+>gpg/gpgsm variants:
+>
+>  https://public-inbox.org/git/cover.1531831244.git.henning.schild@siemens.com/
+>
+>That replaces the earlier patch series, and is currently merged to the
+>'next' branch and is on track to get merged to 'master' before Git 2.19
+>is released.
 
-Thanks; that way I have one less thing I have to remember ;-)
+thank you for setting the context. it looks like both patch sets are going in 
+the same direction that i suggested, at least with the config variables.  
+personally, i prefer the 'signingtool.<tool>' approach in the older patch set 
+over the 'gpg.<tool>' approach in the newer patch set since my goal is to get 
+away from assuming gpg.
 
+the older patch set suggested the idea of using PEM strings to match up the 
+signature payload with a certain signing tool.  i can't tell if they mean the 
+'pre-ecapsulation boundary' (e.g. '-----BEGIN FOO-----') or if they mean the 
+encapsulated headers; both as defined in RFC 1421 [0].
+
+the newer patch set looks specifically at the pre-encapsulation boundary to 
+switch behaviors. that works assuming that the signing tools all understand 
+PEM. in the case of signify, it doesn't, so the driver code in git will have to 
+translate to/from PEM.
+
+i suggest that we switch to a standard format for all signatures that is 
+similar to the commit message format with colon ':' separated fields followed 
+by a payload.  the colon separated fields would specify the signing tool used 
+to generate the signature and the tool specific data followed by the signature 
+blob like so:
+
+  signing-tool: gpg
+  gpg-keyid: 0123456789ABCDEF
+  
+  -----BEGIN PGP SIGNATURE-----
+  <base64 encoded signature>
+  -----END PGP SIGNATURE-----
+
+by adopting this format, git will be fully abstracted from the underlying 
+signing tool and the user can specify multiple signing tools in their config 
+and git will be able to map the signature to the tool when verifying (e.g. git 
+log --show-signature).
+
+a signify signature would look something like this:
+
+  signing-tool: signify
+  signify-public-key: <base64 encoded public key>
+  
+  <base64 encoded signature>
+
+i hope we adopt a more generic approach like this.
+
+>One of the downsides there is that if we eventually move to a generic
+>signing-tool config, we'd have to support two layers of historical
+>abstraction (the original "gpg.program" config, and the new
+>"gpg.<tool>.*" config).
+
+i like the idea of aliasing all of the old config variables to their equivilent 
+and outputting a deprecation warning when we get plan on removing the aliases 
+altogether in the future.
+
+>So _if_ we knew what it would take to support signify, we could
+>potentially adjust what's going into 2.19 in order to skip straight to
+>the more generic interface. But on the OTOH, it may not be worth
+>rushing, and there is already a vague plan of how the gpg.<tool>.*
+>config would interact with a more generic config.
+
+there's no rush, but i would prefer that the newer patch set get changed to use 
+the more generic 'signingtool.<tool>.*' instead of 'gpg.<tool>.*'. if you all 
+agree, i'll follow up with a patch to change that part of what is going into 
+2.19.
+
+then round two will be to experiment with a new, standard signature format that 
+doesn't assume anything about the underlying signing tool.
+
+//tæ
+
+[0] https://tools.ietf.org/html/rfc1421
