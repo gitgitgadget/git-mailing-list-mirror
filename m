@@ -2,105 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 222FC208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 18:58:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 606F3208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 18:59:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732519AbeHFVJW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 17:09:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44444 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729861AbeHFVJW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 17:09:22 -0400
-Received: (qmail 20573 invoked by uid 109); 6 Aug 2018 18:58:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Aug 2018 18:58:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30353 invoked by uid 111); 6 Aug 2018 18:58:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 Aug 2018 14:58:56 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2018 14:58:54 -0400
-Date:   Mon, 6 Aug 2018 14:58:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] add a script to diff rendered documentation
-Message-ID: <20180806185853.GA18119@sigill.intra.peff.net>
-References: <20180803205204.GA3790@sigill.intra.peff.net>
- <20180806173720.GA5508@sigill.intra.peff.net>
- <xmqqy3djnyik.fsf@gitster-ct.c.googlers.com>
+        id S1732682AbeHFVJb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 17:09:31 -0400
+Received: from mail-wr1-f43.google.com ([209.85.221.43]:42334 "EHLO
+        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729861AbeHFVJb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 17:09:31 -0400
+Received: by mail-wr1-f43.google.com with SMTP id e7-v6so13334801wrs.9
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 11:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EZLKmzZ5R3a3kdRSOfKE0wgPUWBEGr8YY3t1t13zp3M=;
+        b=Vq4Aef129A7g6EfY8TkXoarhQ9aVIBQxCEYnx7Ertevdej3lSp9sAfa5RftqtpjBeN
+         IgdtcxtV7x6gH9NmlqeveAJunDxIBv/8u/yZGGTyxwFvmV7ax1ZRePNpP3QX2HhFCzoX
+         8e4FpcRAPFp9iO61+1XSedpJW5aAq0/7h09waJUkWeELVd7p5kpYzAfi433lTKnLtHU+
+         zcRpQhgqOngfGZDQEG53m/gjCI2V/8TVwp+PqlRsofqrLMJPn8f2haXFO8cTKt49yZ7D
+         jMD9Bwy9pDGXO7F86wLTh8r+dJptbsFDBq9i4jiTZCu5XlbJf0FXD2xlv7YOGBmumzZp
+         Y6cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EZLKmzZ5R3a3kdRSOfKE0wgPUWBEGr8YY3t1t13zp3M=;
+        b=CtKVAdHnVNDkPM9Lhke0IAbuTNeJY+zsgE2Yh7VlPaAwBQ6VQLTk4sE1RO+I3qBWwE
+         ylNyVinL1Cd4Q/li/1CPJT4r1X5ajpPN2Kn8YBcCy0tFkjMQCuiaHWdkZA/Q7XfEcFA/
+         /K3H/AiVCvBOiRv3VFeIvVFe3KIa0/wkObzDasAJBE8M6HqF1MgFLjZw+V351FM9grYM
+         L6n9eVXelcgZnwLKv7clZ6s150HvmtbOfKiF+B/ystvvgz0vfXFQWFSCPGuMHALU9psH
+         WnIIXJuJcl16YsoSPdIG18Jy/iXF9tervt2yQaYh4/WNXflgyPaNgzlANs//baz30jyE
+         cBeQ==
+X-Gm-Message-State: AOUpUlFEZ82QrXfGuwzF/h4KD+EbpI/8phh8vmiuBxeOVYoKEWAQlxQm
+        XhOWGtU3sCFWKz/5kIPIQiw=
+X-Google-Smtp-Source: AAOMgpdsKZGOEfQHrQO410jj6bkYQ9978R+zW5O2VxhzSdzzr2tlncn3yafJ9z2GkmlbJkoVJ0Blwg==
+X-Received: by 2002:adf:94e2:: with SMTP id 89-v6mr10215379wrr.48.1533581943064;
+        Mon, 06 Aug 2018 11:59:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 8-v6sm16279797wmw.34.2018.08.06.11.59.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 11:59:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/4] Speed up unpack_trees()
+References: <20180729103306.16403-1-pclouds@gmail.com>
+        <20180804053723.4695-1-pclouds@gmail.com>
+        <xmqq7el3qywq.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
+Date:   Mon, 06 Aug 2018 11:59:01 -0700
+In-Reply-To: <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 6 Aug 2018 17:59:28 +0200")
+Message-ID: <xmqqr2jbnwy2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqy3djnyik.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 06, 2018 at 11:25:07AM -0700, Junio C Hamano wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > +while test $# -gt 0
-> > +do
-> > +	case "$1" in
-> > +	-j)
-> > +		parallel=${1#-j} ;;
-> 
-> This is curious.  Did you mean "-j*)" on the line above this one?
+> We require the unpacked entry from all input trees to be a tree
+> objects (the dirmask thing), so if one tree has 't' as a file,
 
-Hmph, yes, I think this was broken even in the original. And after going
-through "rev-parse --parseopt", we should have a separate argument
-anyway, even for the "stuck" form. Worse, the OPTIONS_SPEC doesn't
-mention the argument, so it barfs on "-j4".
+Ah, OK, this is still part of that "all the trees match cache tree
+so we walk the index instead" optimization.  I forgot about that.
 
-I think we need to squash this in:
-
-diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-index 5d5b243384..f483fe427c 100755
---- a/Documentation/doc-diff
-+++ b/Documentation/doc-diff
-@@ -3,7 +3,7 @@
- OPTIONS_SPEC="\
- doc-diff [options] <from> <to> [-- <diff-options>]
- --
--j	parallel argument to pass to make
-+j=n	parallel argument to pass to make
- f	force rebuild; do not rely on cached results
- "
- SUBDIRECTORY_OK=1
-@@ -15,7 +15,7 @@ while test $# -gt 0
- do
- 	case "$1" in
- 	-j)
--		parallel=${1#-j} ;;
-+		parallel=$2; shift ;;
- 	-f)
- 		force=t ;;
- 	--)
-
-> Then "script -j" (no explicit number) would get here and autodetect.
-> Running the script without any "-j" would also get an empty parallel
-> and come here.
-
-Yeah, I think that is the wrong thing. If anything "-j" should behave
-like "make -j". However, it looks like "rev-parse --parseopt" doesn't
-play well with optional arguments for short-only options. You get "-j",
-but then you have no idea whether the next argument is an optional value
-for it, or another option entirely. Arguably it should give a blank
-string or something (if you have long options, then it uses the
-long-stock form, which is fine).
-
-> So "script -j1" would be how a user would say "I want to use exactly
-> one process, not any parallelism", which makes sense.
-
-Right, that was the thing I actually wanted to have happen. :)
-
--Peff
