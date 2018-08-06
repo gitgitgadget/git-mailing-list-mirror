@@ -2,101 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93197208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 13:15:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0A94208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 13:39:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732400AbeHFPYD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 11:24:03 -0400
-Received: from mout.gmx.net ([212.227.15.19]:46771 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730262AbeHFPYD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 11:24:03 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MI5Ve-1fm7721ed4-003xEO; Mon, 06
- Aug 2018 15:14:54 +0200
-Date:   Mon, 6 Aug 2018 15:14:53 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] line-log: convert an assertion to a full BUG()
- call
-In-Reply-To: <CAPig+cRrC2mf1uuQ1C4Ue4OMZQbgcxXbJ9AXs0y6RSnUrcm7Dg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808061510260.71@tvgsbejvaqbjf.bet>
-References: <pull.15.git.gitgitgadget@gmail.com> <faf35214f0f339b792a30a3bd013056217d9a2c1.1533421101.git.gitgitgadget@gmail.com> <CAPig+cRrC2mf1uuQ1C4Ue4OMZQbgcxXbJ9AXs0y6RSnUrcm7Dg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727743AbeHFPtG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 11:49:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43728 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727541AbeHFPtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 11:49:06 -0400
+Received: (qmail 8932 invoked by uid 109); 6 Aug 2018 13:39:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Aug 2018 13:39:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25311 invoked by uid 111); 6 Aug 2018 13:39:57 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 Aug 2018 09:39:57 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2018 09:39:55 -0400
+Date:   Mon, 6 Aug 2018 09:39:55 -0400
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add a script to diff rendered documentation
+Message-ID: <20180806133954.GA31282@sigill.intra.peff.net>
+References: <20180803205204.GA3790@sigill.intra.peff.net>
+ <20180805204930.GA202464@genre.crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sNyTiiS7ul7BkAvS6laS5YgjVOLGB0tyOeGadM0HwSqOd5v0Wd9
- oGlvwXaZZtrDoTl2QZR1PFHEcq7S7qTPz4CnKFSYmEXCrrFXZh/1nQaKMrXk4NPEx0NfWeE
- J/7OQuokUj957qe0wOhNNuL7trdX5h60WI6fga0yimEP3URNoX8WCrCubSGPeftUS4sGowP
- 9OJEAfiVpB37Wc6Y4VwDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KTh5oVdOjmU=:drGGeeBqNQ9lV/dHAK25jE
- IL7K+vd1zgY0AwTf8Z1jKS4/NwEMk5Y1QsDpt5SGZrsabUJJebYttlZYM9JKRlaVkcIXGOoL/
- 28ne40I+M89RTHb+kE18TPedUhxffIPu1Y5x4ZHnpFdqYLOKpkFq0gbQCkYDLiuc9MvLhsIup
- O16k9JCrnRpi3LenB+WCVgSzHufnVIATsYjLdPsz6J4cidPouGPnieRWR/WoQS+OClQrkxttL
- bFAd6BmPfSAh2McByu8wE7cJfkMgPbvVm5ewmWvsOxOwVjPiJqeDeI+Al/AjDGPx2xMFA2MxX
- rCkArWuEV7Ss9LJbiY7abaVMmUn+hEBdXgHLaHx+ou0A1AMkKSDUFPb5TgIiV8Lc7H98YueHW
- IAyrD/jJMJrsGiFEEkR1Jc46el+w5l8XdbMaqHVHNx8hR00IWsGhNVz1kPxGuQcD/Rf/18yGC
- 8x2FNi6Q5zvOVTZD/dqF2DBM195fAesUXjloTd6k6lnly7E/MoS1mYj9sEfXwTe1TOJxNYIqI
- DbbglRl0aAtuNuqy1BLeCJK0UZL9X6eh4hNYn69q81vJHp5vmlA76mwiEH1+TBm+TK8YDhcsv
- Ufrm7F8pUSHfttaob/4+qXs748GcM7TejwLwu3oklb1qNC9sfYEuCoALJ6R9VtdEoCNasckOz
- jkjaGtQaqvatJVisSM933mB/+mDmHZnGvaq4E3evu9lR5qBPztYwE5qcuH4pJHLF1mYMgZEbm
- bfPKPjlHqFXL7xfi2qGRZGVssdxtIjiHd+NUiCXAlDtMERityyJeijcdwboLwmzftCUExcY5D
- wu1di2l
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180805204930.GA202464@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Sun, Aug 05, 2018 at 08:49:31PM +0000, brian m. carlson wrote:
 
-On Sun, 5 Aug 2018, Eric Sunshine wrote:
-
-> On Sat, Aug 4, 2018 at 6:18 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > The assertion in question really indicates a bug, when triggered, so we
-> > might just as well use the sanctioned method to report it.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/line-log.c b/line-log.c
-> > @@ -72,7 +72,9 @@ void range_set_append(struct range_set *rs, long a, long b)
-> > -       assert(rs->nr == 0 || rs->ranges[rs->nr-1].end <= a);
-> > +       if (rs->nr > 0 && rs->ranges[rs->nr-1].end > a)
-> > +               BUG("append %ld-%ld, after %ld-%ld?!?", a, b,
-> > +                   rs->ranges[rs->nr-1].start, rs->ranges[rs->nr-1].end);
+> > +parallel=8
 > 
-> Although this appears to be a faithful translation of the assert() to
-> BUG(), as mentioned by Andrei in his review of 3/4, the existing
-> assert() seems to have an off-by-1 error, which means that the "> a"
-> here really ought to be ">= a".
+> I'm not sure -j8 is a great default.  There are still a lot of
+> two-core/four-thread machines out there, such as my laptop (from 2016).
+> Maybe we should default this to 1 unless -j is provided, like make does.
 
-I think Andrei's assessment is wrong. The code could not test for that
-earlier, as it did allow ranges to become "abutting" in the process, by
-failing to merge them. So the invariant you talked about is more of an
-invariant for the initial state.
+I agree that "8" is arbitrary and probably not universally applicable. I
+was just hoping to not have to say "-j8" every time I ran it (I already
+"alias make='make -j8'" in my shell, but obviously it doesn't kick in
+inside a script).
 
-My 3/4 would make that invariant heeded throughout the process.
+I guess some other options are:
 
-I am still keen on keeping the invariants straight *without* resorting to
-dirty tricks like calling sort_and_merge. Calling that function would just
-make it easier for bugs to hide in this code.
+  1. Respect a config variable. Which seems funny, since this isn't a
+     git command.
 
-> Given that this file is full of assert()'s, it doesn't necessarily
-> make sense to convert only this one, so perhaps the patch should be
-> dropped (since I'm guessing you don't want to convert the rest of
-> them).
+  2. Respect an environment variable (we already do a similar thing with
+     GIT_PERF_MAKE_OPTS, though it feels pretty clumsy).
 
-Sure, there are 18 of them, and you're right, I lack the time to convert
-them.
+     I've also considered just setting MAKEFLAGS=-j8 in my environment,
+     but it always seemed like an abuse of a variable intended for
+     communicating between makes.
 
-Ciao,
-Dscho
+  3. Default to number of CPUs, which is what a lot of other threading
+     in Git does. Unfortunately getting that from the shell is
+     non-trivial. I'm OK with $(grep -c ^processor /proc/cpuinfo), but
+     people on non-Linux platforms would have to fill in their own
+     implementation.
+
+-Peff
