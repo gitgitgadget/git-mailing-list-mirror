@@ -2,200 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29B43208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 17:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14B25208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 17:51:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733089AbeHFT7w (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 15:59:52 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:37354 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732994AbeHFT7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 15:59:51 -0400
-Received: by mail-lf1-f65.google.com with SMTP id j8-v6so9689427lfb.4
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 10:49:41 -0700 (PDT)
+        id S1733073AbeHFUBu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 16:01:50 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:40814 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732511AbeHFUBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 16:01:50 -0400
+Received: by mail-wr1-f54.google.com with SMTP id h15-v6so13181572wrs.7
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 10:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Fa1DvOGIYI74cm5n8sNTmducLdeNCPsZIMiS5UeeiqM=;
-        b=t7myDjnmfLBuQVJZcjCP+zLyj24KqKCMIoAAgynEIuF+kHPgrg0X9Dw1bnZx/G823V
-         UEnk4dq2mBsv3Tp5aaMaq4LpTjCUOHHcbHBVEO0BoyMZ+mt3X1CG3pAIDgpdPvZytH0i
-         iMhKiIVVafCpSmK8rbeZsrNBPI+larM4jkn9Il8j+EKzOf6l0HQspeVez9CuTJM7TRvG
-         kfldVDKrE3gQZ6uSfCrh3zUdZwCuLr7rQl/u2LxklZOiSDCVwF+NfyLNbzlgNDb+H3pe
-         Ig1XwFM/ZTryfJUoWeWQSb/7Q/LhV3piJnU9s5Manr4Ni3LgBg4qqIhMExDrAUBV4X5h
-         M1Tw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=jJAbbxvIrS2nIQLZGIbWGdaDFDw1TNfQ/u22KDTdU68=;
+        b=FGjxDsr4TQoVkxFH4K4WgSlVO3eTIgCCta8oUPhdQ6zVvgRlWPjfFCfR2GvtG086ZF
+         UEUfbdtg0hZtlD923zidPzNHgz2eD0KAZ6/Hf8JMINUPFvWXae5uSDkbsubHtxk5WaVd
+         ubO8uoeNqmIjHANzuP1oCA93Ow/CgXgKdI9TnN16FMPQ3J0D+Sju7aa+S52hm2f4n+Hm
+         amLU5eaPAj1qkmmLv6Li//aPcwiu9DA9bONjjcE+4w+4q6NoyDNrwk95OILx0LV5jZGq
+         iqNvPtWyKrzSFKYDIlmnIqCDD1Dj/bYxz0zBlUHuIOI+QxqChG4BFcq9GbmrdC/jcd7U
+         ZYBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Fa1DvOGIYI74cm5n8sNTmducLdeNCPsZIMiS5UeeiqM=;
-        b=ToPvBhmbGpSo92JLNRWAnR/8c+PO5D84byoqh9wxjwzgxLkZp4ERaMnt+fpTqVaC9Y
-         CXOWPTrgOpcgk0ybtAY7Psm/2XG8vAb69d8nqUmqFn9Rlrmx1VI56qrUUvY22mmrJxUm
-         FjmOi3IxcaLFsxzzetNxbtweKo9ir3Y4Lo071ixB+5B6Lf1gM2FIASVqynacaXlLEZI8
-         Uqz4aLcJM2QsrAQlXKqkeelm0yohMpBFzP7YCguyGCCaEOlahGN6J4AqJdkSTx3H+ZJV
-         PZX0ggcR7P4A2Kp8wQbQmrjZ596qgNQKFIqQLIgZOnu6PTmKV2yCLWtAMeR4T2/n+OCf
-         oBuQ==
-X-Gm-Message-State: AOUpUlHuK1SWYK372GxL0xDVZ/Cc2jSFhZT2UFKbbDXDL7cXMOijnxvs
-        QSW8K1S60piq12H1PnRdmdc=
-X-Google-Smtp-Source: AAOMgpfPUWjV1qr6mM+ZaryEhWwqZnsxi3cCKREkPByrPG+z0XPylxjBvN3bxZgh571BbpZfbxo7oA==
-X-Received: by 2002:a19:cb44:: with SMTP id b65-v6mr12410390lfg.12.1533577780453;
-        Mon, 06 Aug 2018 10:49:40 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id z7-v6sm2249930lfg.89.2018.08.06.10.49.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 06 Aug 2018 10:49:39 -0700 (PDT)
-Subject: [PATCH v3] t4150: fix broken test for am --scissors
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Paul Tan <pyokagan@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <f91c7393-4f1b-1cf5-b870-f42e9bd18d64@gmail.com>
- <8f69d82b-0f35-754f-0096-853d6b463db7@gmail.com>
- <bea0e5d0-d944-ddd8-c3ab-a95355352b47@gmail.com>
-Message-ID: <27bb8e3b-5b1d-dcc2-b002-df6941c62ee6@gmail.com>
-Date:   Mon, 6 Aug 2018 19:49:38 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jJAbbxvIrS2nIQLZGIbWGdaDFDw1TNfQ/u22KDTdU68=;
+        b=h6xcHJqn/alkUyyO6niyfaL0VwPughvrK0zg/a7zV9pnbVS3ynWMJeYbMgXRdQcQAb
+         3ouXpywUtzQZHtXvHEP2F6tW4rYWbrhSsij2HAfBHAlJu0EZoidbA8xvg7J2B/VUB2Yp
+         iP60bGZ5qQ0QSu7+WCxkThHTuDUdjGWulqw/eCu/qv+7yjQs/ToCTWx27q7ZLtvOJTkG
+         uqUcGidTVTqCESyZneonmzQuovn1ciber8SiYESuMdZJlQyZxszjI3JolgDst7mTF1wU
+         uSWK/JPuZOu1YYcQZ+UfBwLy5zQjBqVr/MuTzToPfTOvSC0od79Uz7/Qq4y9p231BdgX
+         QfwA==
+X-Gm-Message-State: AOUpUlEAsrW54V4/HZpDnAzawMgqHszildBbbyjE0QJTSSnb/y6mrElN
+        ni+dwd8uRL8bDoHA7PFpCpId+jvO
+X-Google-Smtp-Source: AAOMgpfnjhJvZGOlBmvzd2Cz9UmKz4732BxvXwc2BJ3BvNbL0ghellYNhgp5ohQbB3GVkbfemwdyNQ==
+X-Received: by 2002:a5d:5349:: with SMTP id t9-v6mr10010132wrv.186.1533577898686;
+        Mon, 06 Aug 2018 10:51:38 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 200-v6sm14956896wmv.6.2018.08.06.10.51.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 10:51:38 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrn@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH v5 2/2] sideband: highlight keywords in remote sideband output
+References: <20180806143313.104495-1-hanwen@google.com>
+        <20180806143313.104495-3-hanwen@google.com>
+        <xmqqbmafpg14.fsf@gitster-ct.c.googlers.com>
+        <CAFQ2z_Nrj5WhzYsxr6P5qLJ3pDVFzB4UDb9g4P-5U99wrAuB0w@mail.gmail.com>
+Date:   Mon, 06 Aug 2018 10:51:37 -0700
+In-Reply-To: <CAFQ2z_Nrj5WhzYsxr6P5qLJ3pDVFzB4UDb9g4P-5U99wrAuB0w@mail.gmail.com>
+        (Han-Wen Nienhuys's message of "Mon, 6 Aug 2018 19:42:05 +0200")
+Message-ID: <xmqq36vrpemu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <bea0e5d0-d944-ddd8-c3ab-a95355352b47@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests for "git am --[no-]scissors" [1] work in the following way:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
- 1. Create files with commit messages
- 2. Use these files to create expected commits
- 3. Generate eml file with patch from expected commits
- 4. Create commits using git am with these eml files
- 5. Compare these commits with expected
+>> I think the code is OK without any assert() or BUG(), and that is
+>> because the design is "we just paint the keyword at the beginning of
+>> what the other side of the sideband wants us to show as a single
+>> unit".  If the other side sends a payload with an embedded LF in a
+>> single packet, that's their choice and we are free not to paint the
+>> beginning of the second line after that LF.  So from that point of
+>> view, perhaps we shouldn't even talk about "a single line only".
+>
+> I don't understand this remark. Isn't the call to strpbrk() meant to
+> split the input on line endings?
 
-The test for "git am --scissors" is supposed to take an e-mail with a
-scissors line and in-body "Subject:" header and demonstrate that the
-subject line from the e-mail itself is overridden by the in-body header
-and that only text below the scissors line is included in the commit
-message of the commit created by the invocation of "git am --scissors".
-However, the setup of the test incorrectly uses a commit without the
-scissors line and without the in-body header in the commit message,
-producing eml file not suitable for testing of "git am --scissors".
+Yes, but that happens only for band #2 and not band #3, to which
+this coloring also applies if I am reading your changes correctly.
 
-This can be checked by intentionally breaking is_scissors_line function
-in mailinfo.c, for example, by changing string ">8", which is used by
-the test. With such change the test should fail, but does not.
+And I still think not splitting band #3 packet into lines and
+painting only the beginning of the first line is perfectly OK.
 
-Fix broken test by generating eml file with scissors line and in-body
-header "Subject:". Since the two tests for --scissors and --no-scissors
-options are there to test cutting or keeping the commit message, update
-both tests to change the test file in the same way, which allows us to
-generate only one eml file to be passed to git am. To clarify the
-intention of the test, give files and tags more explicit names.
+>> >  #define ANSI_SUFFIX "\033[K"
+>> > -#define DUMB_SUFFIX "        "
+>> > +#define DUMB_SUFFIX "             "
+>> >
+>>
+>> Was this change intended and if so for what purpose?  I can drop
+>> this hunk if this is a mere finger-slip without proofreading, but I
+>> do not want to do so without making sure I am not missing anything
+>> and not discarding a meaningful change.
+>
+> This was my poor use of the tabify function.
 
-[1]: introduced in bf72ac17d (t4150: tests for am --[no-]scissors,
-     2015-07-19)
+OK, so I can drop this hunk---eh, perhaps v6 won't have it so I
+won't have to worry about it ;-)
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
-
-Applies on top of 980a3d3dd (Merge branch 'pt/am-tests', 2015-08-03).
-This patch is also available at
-
-  https://github.com/rybak/git fix-am-scissors-test-v3
-
-Only changes since v2 are more clear tag names.
-
- t/t4150-am.sh | 39 ++++++++++++++++++++-------------------
- 1 file changed, 20 insertions(+), 19 deletions(-)
-
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index e9b6f8158..a821dfda5 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -67,13 +67,15 @@ test_expect_success 'setup: messages' '
- 
- 	EOF
- 
--	cat >scissors-msg <<-\EOF &&
--	Test git-am with scissors line
-+	cat >msg-without-scissors-line <<-\EOF &&
-+	Test that git-am --scissors cuts at the scissors line
- 
- 	This line should be included in the commit message.
- 	EOF
- 
--	cat - scissors-msg >no-scissors-msg <<-\EOF &&
-+	printf "Subject: " >subject-prefix &&
-+
-+	cat - subject-prefix msg-without-scissors-line >msg-with-scissors-line <<-\EOF &&
- 	This line should not be included in the commit message with --scissors enabled.
- 
- 	 - - >8 - - remove everything above this line - - >8 - -
-@@ -150,18 +152,17 @@ test_expect_success setup '
- 	} >patch1-hg.eml &&
- 
- 
--	echo scissors-file >scissors-file &&
--	git add scissors-file &&
--	git commit -F scissors-msg &&
--	git tag scissors &&
--	git format-patch --stdout scissors^ >scissors-patch.eml &&
-+	echo file >file &&
-+	git add file &&
-+	git commit -F msg-without-scissors-line &&
-+	git tag expected-for-scissors &&
- 	git reset --hard HEAD^ &&
- 
--	echo no-scissors-file >no-scissors-file &&
--	git add no-scissors-file &&
--	git commit -F no-scissors-msg &&
--	git tag no-scissors &&
--	git format-patch --stdout no-scissors^ >no-scissors-patch.eml &&
-+	echo file >file &&
-+	git add file &&
-+	git commit -F msg-with-scissors-line &&
-+	git tag expected-for-no-scissors &&
-+	git format-patch --stdout expected-for-no-scissors^ >patch-with-scissors-line.eml &&
- 	git reset --hard HEAD^ &&
- 
- 	sed -n -e "3,\$p" msg >file &&
-@@ -418,10 +419,10 @@ test_expect_success 'am --scissors cuts the message at the scissors line' '
- 	rm -fr .git/rebase-apply &&
- 	git reset --hard &&
- 	git checkout second &&
--	git am --scissors scissors-patch.eml &&
-+	git am --scissors patch-with-scissors-line.eml &&
- 	test_path_is_missing .git/rebase-apply &&
--	git diff --exit-code scissors &&
--	test_cmp_rev scissors HEAD
-+	git diff --exit-code expected-for-scissors &&
-+	test_cmp_rev expected-for-scissors HEAD
- '
- 
- test_expect_success 'am --no-scissors overrides mailinfo.scissors' '
-@@ -429,10 +430,10 @@ test_expect_success 'am --no-scissors overrides mailinfo.scissors' '
- 	git reset --hard &&
- 	git checkout second &&
- 	test_config mailinfo.scissors true &&
--	git am --no-scissors no-scissors-patch.eml &&
-+	git am --no-scissors patch-with-scissors-line.eml &&
- 	test_path_is_missing .git/rebase-apply &&
--	git diff --exit-code no-scissors &&
--	test_cmp_rev no-scissors HEAD
-+	git diff --exit-code expected-for-no-scissors &&
-+	test_cmp_rev expected-for-no-scissors HEAD
- '
- 
- test_expect_success 'setup: new author and committer' '
--- 
-2.18.0
+Thanks.
