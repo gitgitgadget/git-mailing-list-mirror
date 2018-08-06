@@ -2,81 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD7A208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 18:59:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B96208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 19:20:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732705AbeHFVKH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 17:10:07 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44474 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729861AbeHFVKH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 17:10:07 -0400
-Received: (qmail 20602 invoked by uid 109); 6 Aug 2018 18:59:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Aug 2018 18:59:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30402 invoked by uid 111); 6 Aug 2018 18:59:41 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 Aug 2018 14:59:41 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2018 14:59:39 -0400
-Date:   Mon, 6 Aug 2018 14:59:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        git-packagers@googlegroups.com,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
-Message-ID: <20180806185938.GB18119@sigill.intra.peff.net>
-References: <20180804020009.224582-1-sbeller@google.com>
- <20180804020255.225573-1-sbeller@google.com>
- <20180804060928.GB55869@aiede.svl.corp.google.com>
- <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>
- <xmqqo9eirqwp.fsf@gitster-ct.c.googlers.com>
- <87zhxzsb2p.fsf@evledraar.gmail.com>
- <20180806170211.GD19053@sigill.intra.peff.net>
- <20180806171119.GC120433@aiede.svl.corp.google.com>
+        id S1733064AbeHFVbI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 6 Aug 2018 17:31:08 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:39121 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732294AbeHFVbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 17:31:07 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w76JKYDK057207
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 6 Aug 2018 15:20:35 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Duy Nguyen'" <pclouds@gmail.com>,
+        "'Jonathan Nieder'" <jrnieder@gmail.com>,
+        "'Stefan Beller'" <sbeller@google.com>,
+        "'Git Mailing List'" <git@vger.kernel.org>,
+        <git-packagers@googlegroups.com>,
+        "'Han-Wen Nienhuys'" <hanwen@google.com>
+References: <20180804020009.224582-1-sbeller@google.com>        <20180804020255.225573-1-sbeller@google.com>    <20180804060928.GB55869@aiede.svl.corp.google.com>      <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>    <xmqqo9eirqwp.fsf@gitster-ct.c.googlers.com>    <87zhxzsb2p.fsf@evledraar.gmail.com>    <001001d42da7$4a9e6570$dfdb3050$@nexbridge.com> <87wot3s87t.fsf@evledraar.gmail.com>
+In-Reply-To: <87wot3s87t.fsf@evledraar.gmail.com>
+Subject: RE: [PATCH] Makefile: enable DEVELOPER by default
+Date:   Mon, 6 Aug 2018 15:20:29 -0400
+Message-ID: <001b01d42dba$8cd1e580$a675b080$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180806171119.GC120433@aiede.svl.corp.google.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQHcHQgNlToVxohtCSKuj/FaLNrO4gKynkmJAzrMNb8BurMUxgJD1Su/Afe4naYCcXc3+wJ18eWnpBzh/mA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 06, 2018 at 10:11:19AM -0700, Jonathan Nieder wrote:
-
-> > We're developers ourselves, and we interact with new developers that we
-> > want to help.  But there are masses of people[1] building Git who are
-> > _not_ developers, and want the default to be as robust as possible.
-> > They're probably not going to show up in this thread.
-> >
-> > -Peff
-> >
-> > [1] I actually wonder how large that mass is. Clearly there are many
-> >     orders of magnitude more users than there are developers. But I have
-> >     no idea what percentage of them build from source versus using
-> >     somebody else's binary package.
+On August 6, 2018 1:42 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Mon, Aug 06 2018, Randall S. Becker wrote:
 > 
-> Relatedly, we need to think about the incentives these defaults
-> create.  Personally, I want *more* naive users to be building from
-> source, because then they are better able to test recent versions,
-> bisect, test my patches, etc.
+> > On August 6, 2018 12:40 PM, Ævar Arnfjörð Bjarmason wrote:
+> >> On Sat, Aug 04 2018, Junio C Hamano wrote:
+> >>
+> >> > Duy Nguyen <pclouds@gmail.com> writes:
+> >> >
+> >> >> On Sat, Aug 4, 2018 at 8:11 AM Jonathan Nieder
+> >> >> <jrnieder@gmail.com>
+> >> wrote:
+> >> >>> My main concern is not about them but about other people building
+> >> >>> from source in order to run (instead of to develop) Git, and by
+> >> >>> extension, the people they go to for help when it doesn't work.
+> >> >>> I have lots of bitter experience of -Werror being a support
+> >> >>> headache and leading to bad workarounds when someone upgrades
+> >> >>> their compiler and the build starts failing due to a new warning it has
+> introduced.
+> >> >>
+> >> >> Even old compilers can also throw some silly, false positive
+> >> >> warnings (which now turn into errors) because they are not as
+> >> >> smart as new ones.
+> >> >
+> >> > I agree with both of the above.  I do not think the pros-and-cons
+> >> > are in favor of forcing the developer bit to everybody, even though
+> >> > I am sympathetic to the desire to see people throw fewer bad
+> >> > changes that waste review bandwidth by not compiling or passing its
+> >> > own tests at us.
+> >>
+> >> I agree.
+> >>
+> >> Responding to the thread in general, perhaps people would like this
+> >> more if we turned DEVELOPER=1 DEVOPTS=no-error on by default?
+> >>
+> >> That's basically why I added it in 99f763baf5 ("Makefile: add a
+> >> DEVOPTS to suppress -Werror under DEVELOPER", 2018-04-14), because I
+> >> wanted the abilty to have verbose informative output without the
+> >> build dying on some older systems / compilers.
+> >>
+> >> It's fine and understandable if you're someone who's just building a
+> >> package on some older system if you get a bunch of compiler warnings,
+> >> but more annoying if you have to dig into how to disable a default -
+> Werror.
+> >
+> > I am the platform maintainer for HPE NonStop and need to make sure I'm
+> > not packaging DEV builds to anyone
 > 
-> As I hinted in my earlier reply, I think it would be best to try some
-> basic things to make DEVELOPER more visible first.  If that fails,
-> then we can revisit how to make this more drastic change in a way that
-> minimizes the harm (and I am not sure yet that that is possible).
+> Perhaps confusingly, the DEVELOPER=1 flag in git is not like the developer
+> flag in some other projects. It's purely there to turn on extra compiler
+> warnings (by default, fatal), it doesn't e.g. turn on extra asserts, tracing, or
+> suppress stripping of the binaries.
+> 
+> So if we enabled some variant of it by default it would be fine to ship the
+> result of that to your users, e.g. I ship DEVELOPER=1 builds to users.
 
-Yes, I agree very much with both of those paragraphs.
+That works for me. I generally consider warnings to be errors in my builds anyway, by policy (except when I have no choice in the matter and the warning is explainable).
 
--Peff
+Cheers,
+Randall
+
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
+
+
+
