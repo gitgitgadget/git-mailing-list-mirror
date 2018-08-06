@@ -7,47 +7,51 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2366208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 14:33:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C11D2208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 14:33:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731953AbeHFQml (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 12:42:41 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:48981 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729679AbeHFQml (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 12:42:41 -0400
-Received: by mail-qt0-f202.google.com with SMTP id a15-v6so1447735qtj.15
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 07:33:18 -0700 (PDT)
+        id S1732009AbeHFQmo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 12:42:44 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:38534 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729679AbeHFQmn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 12:42:43 -0400
+Received: by mail-it0-f74.google.com with SMTP id h5-v6so13096255itb.3
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 07:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=Ei8f1iU5+lqUelJcJo6m1GYSZF6Zef38pCDgbRb6J7M=;
-        b=ZXXkDLnedAu7o1m4ViR95sTIzIg7URy88k6pUh9/7GENHwWW61qptzg5C8Dc/c+g2M
-         KG3ojWNcyxuZGW/6gcVxB1KSjBFS6Oxn9W21oWibLPE7+OLRg25sK+aKqBddqtbPbPX3
-         nuVZ95Vs2NIjUdbtlP9Ari6Wco/tUJrjfhqSCMfp3a0wSQBxxeVwFAR54U8oKFB2pS+x
-         FlnBijLRHpee/89yf90GpRQGrgpimgg8PLHkX7Hkh8ku3KoVun2gH8fMSiLofATO3jq8
-         xR3SFFeqFjsn2joPsovXPUJ6mIuTXYuX1wCRh9UoeprkMwLjKyzp08nP6pVIVaRQX34B
-         sLgA==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Wwply1zK1EqeTZIbXKDl5Bv7S7ckbJ79KiHfXs/i9iY=;
+        b=tSaOKzsldiYae/g0mv4YkMAsBZQ8Re31HGkrhdRTd3SGViyq8y1si99RI7SLCMixDK
+         KT0pdw1iAKA6t6lvyUyoRAc8+qTgW/LW/y5/w5lV2A0rXP4FcsPVfklE7bRgGC3w5C7M
+         nHNxL94g1vBIhwmett6gZM94Ygp0qk395b0YshU7vN66nF7n+HjoQXqooEAadh0l5dLu
+         LNq3VBDbnaGG418UM4ll0hyLVGKm6hZMXeLC9zv5jwxEUMhn+9jVBMiEh2Lx+KgJ0xIO
+         0deJJvz6z6cnVu5bRyC7Qs3gOp6MlD90LurILpgvwzSGddKk/LMILw5N3cLywBVxClSN
+         CTKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=Ei8f1iU5+lqUelJcJo6m1GYSZF6Zef38pCDgbRb6J7M=;
-        b=YfWle47pxqAx5+sS2wguAghTOjWCLopwtXxQnld3f20U6OglbNRcHK1nuZE49vQ1Ba
-         iYmNLvIgg/WdTyLP++gLOSVdMv/eRSwDZBB0ugQTf3h01fNhjGuM4WegEh4Lto6pwhOW
-         1iOzTgENW/VUKKzF/zPqEV9xZdQbt4W4NcYrS9UcyjXzu2pe04P1kzeZkxjwtchWxWd8
-         lP1i55Ejfgk/OsyzTDDDiB2GBxMMkCMxB7fZ4uko1DutQSy7fba9fJx44ZBZU5tnSyYS
-         rp5X62wCQfkCZTRZ3+dbsMpnAT4zeMLsGQGwWzW6z47Ac6TmELUP5GahIY2rlsSl0ms+
-         MaSg==
-X-Gm-Message-State: AOUpUlFe8olH5OHA34GlWDTdHjyWz6qJJnq/JAfOoTPj286sBXsLfpM4
-        iTMcDfTrcfxdnvtD11SPfgYGJiVKu2A=
-X-Google-Smtp-Source: AAOMgpc80fU/xOg5the+PMB1izZstMhWDThkuJeaJLB2mf1fMHptOKongarM0kyiiRX7V54y2ZmJHesUt04=
-X-Received: by 2002:ac8:3fe8:: with SMTP id v37-v6mr10242491qtk.59.1533565997696;
- Mon, 06 Aug 2018 07:33:17 -0700 (PDT)
-Date:   Mon,  6 Aug 2018 16:33:11 +0200
-Message-Id: <20180806143313.104495-1-hanwen@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Wwply1zK1EqeTZIbXKDl5Bv7S7ckbJ79KiHfXs/i9iY=;
+        b=imi/HMseQjX7iZ3DLliukB8hpskqV8DUzM4is55PEKFUGzY7KvezdX1UhW1GtwSM3S
+         uJ2yVe0S14sV/NwDIO8joOCwR8kj65OSKQbiTMNBBFwFjHp/kfqkHlGxPjfKsO7nfX8t
+         jCirDvxfhjmkVsgW4cdK5rRvrJf8usCgGIKzuqlunfsW0TGGUSGVThqWmqn/wDDA+am9
+         D7IJz58ZUH62nFBnKdfmfp/2IXnqAo+UK7NyaFapsLDh+TBT13usFSYAZnSawcsJ/6or
+         +jfiVM/N3ce1KqRkNxHoqjI4BZ1BUDrWAIcyPx2xT39XD7yetovJ28CrL3oQ7HEouOa3
+         KZTg==
+X-Gm-Message-State: AOUpUlEOTdnVnwD/RPLijqtsVmzJIkWXyFNTdobCOHxCkvKiftux5Kxj
+        c/XuwZ1Q0m1xA3m0swfUkZ0DJVjJDGM=
+X-Google-Smtp-Source: AA+uWPymqErKn+s77WIsCwYJLH8vH7hJME+IKiHinPXvSy7dIobdl4MdHLyTKDsXnpp4rdjHQ/qlRcBs80k=
+X-Received: by 2002:a6b:88a0:: with SMTP id s32-v6mr7634395ioi.45.1533566000657;
+ Mon, 06 Aug 2018 07:33:20 -0700 (PDT)
+Date:   Mon,  6 Aug 2018 16:33:12 +0200
+In-Reply-To: <20180806143313.104495-1-hanwen@google.com>
+Message-Id: <20180806143313.104495-2-hanwen@google.com>
 Mime-Version: 1.0
+References: <20180806143313.104495-1-hanwen@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH v5 0/2] sideband: highlight keywords in remote sideband output
+Subject: [PATCH v5 1/2] config: document git config getter return value
 From:   Han-Wen Nienhuys <hanwen@google.com>
 To:     gitster@pobox.com, sunshine@sunshineco.com, jrn@google.com
 Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
@@ -57,20 +61,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Address Jun's & Jrn's comments.
+Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
+---
+ config.h | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-Han-Wen Nienhuys (2):
-  config: document git config getter return value
-  sideband: highlight keywords in remote sideband output
-
- Documentation/config.txt            |  12 +++
- config.h                            |   7 +-
- help.c                              |   1 +
- help.h                              |   1 +
- sideband.c                          | 126 +++++++++++++++++++++++++---
- t/t5409-colorize-remote-messages.sh |  80 ++++++++++++++++++
- 6 files changed, 216 insertions(+), 11 deletions(-)
- create mode 100755 t/t5409-colorize-remote-messages.sh
-
---
+diff --git a/config.h b/config.h
+index bb2f506b27..183b31ebf4 100644
+--- a/config.h
++++ b/config.h
+@@ -188,9 +188,14 @@ struct config_set {
+ 
+ extern void git_configset_init(struct config_set *cs);
+ extern int git_configset_add_file(struct config_set *cs, const char *filename);
+-extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
+ extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
+ extern void git_configset_clear(struct config_set *cs);
++
++/*
++ * These functions return 1 if not found, and 0 if found, leaving the found
++ * value in the 'dest' pointer.
++ */
++extern int git_configset_get_value(struct config_set *cs, const char *key, const char **dest);
+ extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
+ extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
+ extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
+-- 
 2.18.0.597.ga71716f1ad-goog
+
