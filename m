@@ -2,233 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0417208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 17:37:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5A08208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 17:38:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732007AbeHFTr3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 15:47:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44218 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728936AbeHFTr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 15:47:29 -0400
-Received: (qmail 17558 invoked by uid 109); 6 Aug 2018 17:37:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Aug 2018 17:37:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28471 invoked by uid 111); 6 Aug 2018 17:37:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 Aug 2018 13:37:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2018 13:37:20 -0400
-Date:   Mon, 6 Aug 2018 13:37:20 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        id S1732393AbeHFTsa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 15:48:30 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:45393 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732442AbeHFTsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 15:48:30 -0400
+Received: by mail-wr1-f53.google.com with SMTP id f12-v6so13116477wrv.12
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 10:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=T3XeiKRmuyB4/OdTh6SuGmfpGPEjujYJoDJ451ZqpdU=;
+        b=qlVlh2p7rkruamKQHaeXOqzjNkx6Gu0TyNo4XCpRKDTumlPjaieZzQNRHnjk8s7mIq
+         P7YTPakj4XxpiM+oy73s2yBzS9bkaGD4dEDiMKHoqflEf0eyZ/wzPjAnwSdvNF7ZBq/A
+         In4ZgDPiLje85k50EE0mnvvsYKbFa6ZhWWgH1PnQos6JBa7df1JgHa5BLPe5Ct+/j3Mn
+         5trABcSDAALjbCFAVFPnPwL+Ud9NZUE0GgQEachRqXAFa3Vc6s+fFNTrStv/ciSt9Yud
+         g1O0R0apaY+yaQ5WnIR5lLWgNU2yGsJjjTvV6OCBLjk1x0Eju1JfjXMxpV3MCmq7W6Rv
+         fBQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=T3XeiKRmuyB4/OdTh6SuGmfpGPEjujYJoDJ451ZqpdU=;
+        b=rIIssqnlbl1TEUfILkY1nrZFRE5v5BJXvdEJZ/mJ5wL7kKVSlPJWnykRiISWax9OgL
+         p3fHpmOXpKvWMYIoPi+BIHCf5N2bsUvcAjjcxgD15Dsu6IE4ii6FnxYd1jFpj+aNnHqV
+         jg7u2SJKOFyG+T8ZIHNXk068k6Jp34Co3O2AbW+Zy44XUW4xcdq7BHU6DTLHJwHyN1Aw
+         4Su73KuMrCsPSllayaLV3TDbkD/YP+86tJXKTDOIZHwsOFEKRa+d7UIDgNKLTcgAqxtN
+         4hZxQgf7a1tKtJrcNJtn7TRHuVqkzcCeJviz/uDp4BTC8qOIjuiVbNQaMQ8wZxDwtUj1
+         +/7Q==
+X-Gm-Message-State: AOUpUlEe/6TidAan9kPaLeJ0LkOJ1ktGxmEWTNl9/+dMC1v/uGvQfngq
+        5Y1QRDp2aogPYmrXmdHkavCkYiSs
+X-Google-Smtp-Source: AAOMgpdinCV3cO3YBsw/N11JAdqIQ5cKwfxvLXUvd1zCvsJTbJ2zosOe3epZB9q3DFo9SGSDX/2fJQ==
+X-Received: by 2002:adf:ffc7:: with SMTP id x7-v6mr10656283wrs.137.1533577101234;
+        Mon, 06 Aug 2018 10:38:21 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q21-v6sm1836788wmq.3.2018.08.06.10.38.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 10:38:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] add a script to diff rendered documentation
-Message-ID: <20180806173720.GA5508@sigill.intra.peff.net>
-References: <20180803205204.GA3790@sigill.intra.peff.net>
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH v2 06/12] submodule--helper: add a '--stage' option to the 'config' sub command
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-7-ao2@ao2.it>
+        <xmqqd0v01trp.fsf@gitster-ct.c.googlers.com>
+        <20180803130334.3979eedb0733c609815e9fd5@ao2.it>
+        <xmqqbmajzadt.fsf@gitster-ct.c.googlers.com>
+        <20180806125828.66fc99ef0b118e26e0b3e60d@ao2.it>
+Date:   Mon, 06 Aug 2018 10:38:20 -0700
+In-Reply-To: <20180806125828.66fc99ef0b118e26e0b3e60d@ao2.it> (Antonio
+        Ospite's message of "Mon, 6 Aug 2018 12:58:28 +0200")
+Message-ID: <xmqq7el3pf8z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180803205204.GA3790@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 03, 2018 at 04:52:05PM -0400, Jeff King wrote:
+Antonio Ospite <ao2@ao2.it> writes:
 
-> I wrote this up for my own use after our discussion in [1]. I'm not sure
-> if it's too ugly for inclusion, or if it might be helpful to others.
-> I've only just written it, but my plan is to try to run it on anything I
-> submit to check the formatting. So it _seems_ useful and appears to
-> work, but only after a few minutes of playing with it. :)
-> 
-> [1] https://public-inbox.org/git/20180720223608.GE18502@genre.crustytoothpaste.net/
+>> I also do not see a reason why we want to stop referring to
+>> .gitmodules explicitly by name.  We do not hide the fact that
+>> in-tree .gitignore and .gitattributes files are used to hold the
+>> metainformation about the project tree, saying that it is an
+>> implementation detail.  Is there a good reason why .gitmodules
+>> should be different from these other two?
+>
+> Not sure about that, but one difference I can see
+> between .gitignore/.gitattributes and .gitmodules is that I got the
+> impression that editing the latter by hand is strongly discouraged, if
+> that is indeed the case a layer of indirection can make sense IMHO to
+> make the actual file path less relevant.
 
-OK, people seem to think this is possibly useful, so here it is with a
-little bit of polish based on earlier reviews:
+I do not think we discourage hand editing of .gitmodules more than
+others, say .gitignore; and I do not see a sane reason to do so.
 
- - we now default to $(getconf _NPROCESSORS_ONLN) parallelism, or 1 if
-   that doesn't work (thanks for the getconf suggestion, Jonathan)
+"If you commit broken .gitmodules and let another person clone it,
+submodules will not be checked out correctly" is *not* a sane
+reason, as exactly the same thing can be said for incorrect checkout
+of files with broken .gitattributes.
 
- - fixed formatting of usage message, per Eric's suggestion
-
- - put "make" as a noun in quotes ;)
-
-I suspect the rendering step could be done a little more efficiently. In
-addition to `man`, we run a shell, a `mkdir`, and a `mv` for each file.
-Probably the whole thing could be done via a single perl script,
-exec-ing man as appropriate. But we'd lose the parallelism, unless we do
-something clever with threads. So I've left it for now, but if anybody
-is interested in poking at it, go for it.
-
--- >8 --
-Subject: [PATCH] add a script to diff rendered documentation
-
-After making a change to the documentation, it's easy to
-forget to check the rendered version to make sure it was
-formatted as you intended. And simply doing a diff between
-the two built versions is less trivial than you might hope:
-
-  - diffing the roff or html output isn't particularly
-    readable; what we really care about is what the end user
-    will see
-
-  - you have to tweak a few build variables to avoid
-    spurious differences (e.g., version numbers, build
-    times)
-
-Let's provide a script that builds and installs the manpages
-for two commits, renders the results using "man", and diffs
-the result. Since this is time-consuming, we'll also do our
-best to avoid repeated work, keeping intermediate results
-between runs.
-
-Some of this could probably be made a little less ugly if we
-built support into Documentation/Makefile. But by relying
-only on "make install-man" working, this script should work
-for generating a diff between any two versions, whether they
-include this script or not.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/.gitignore |   1 +
- Documentation/doc-diff   | 109 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 110 insertions(+)
- create mode 100755 Documentation/doc-diff
-
-diff --git a/Documentation/.gitignore b/Documentation/.gitignore
-index c7096f11f1..3ef54e0adb 100644
---- a/Documentation/.gitignore
-+++ b/Documentation/.gitignore
-@@ -12,3 +12,4 @@ cmds-*.txt
- mergetools-*.txt
- manpage-base-url.xsl
- SubmittingPatches.txt
-+tmp-doc-diff/
-diff --git a/Documentation/doc-diff b/Documentation/doc-diff
-new file mode 100755
-index 0000000000..5d5b243384
---- /dev/null
-+++ b/Documentation/doc-diff
-@@ -0,0 +1,109 @@
-+#!/bin/sh
-+
-+OPTIONS_SPEC="\
-+doc-diff [options] <from> <to> [-- <diff-options>]
-+--
-+j	parallel argument to pass to make
-+f	force rebuild; do not rely on cached results
-+"
-+SUBDIRECTORY_OK=1
-+. "$(git --exec-path)/git-sh-setup"
-+
-+parallel=
-+force=
-+while test $# -gt 0
-+do
-+	case "$1" in
-+	-j)
-+		parallel=${1#-j} ;;
-+	-f)
-+		force=t ;;
-+	--)
-+		shift; break ;;
-+	*)
-+		usage ;;
-+	esac
-+	shift
-+done
-+
-+if test -z "$parallel"
-+then
-+	parallel=$(getconf _NPROCESSORS_ONLN 2>/dev/null)
-+	if test $? != 0 || test -z "$parallel"
-+	then
-+		parallel=1
-+	fi
-+fi
-+
-+test $# -gt 1 || usage
-+from=$1; shift
-+to=$1; shift
-+
-+from_oid=$(git rev-parse --verify "$from") || exit 1
-+to_oid=$(git rev-parse --verify "$to") || exit 1
-+
-+cd_to_toplevel
-+tmp=Documentation/tmp-doc-diff
-+
-+if test -n "$force"
-+then
-+	rm -rf "$tmp"
-+fi
-+
-+# We'll do both builds in a single worktree, which lets "make" reuse
-+# results that don't differ between the two trees.
-+if ! test -d "$tmp/worktree"
-+then
-+	git worktree add --detach "$tmp/worktree" "$from" &&
-+	dots=$(echo "$tmp/worktree" | sed 's#[^/]*#..#g') &&
-+	ln -s "$dots/config.mak" "$tmp/worktree/config.mak"
-+fi
-+
-+# generate_render_makefile <srcdir> <dstdir>
-+generate_render_makefile () {
-+	find "$1" -type f |
-+	while read src
-+	do
-+		dst=$2/${src#$1/}
-+		printf 'all:: %s\n' "$dst"
-+		printf '%s: %s\n' "$dst" "$src"
-+		printf '\t@echo >&2 "  RENDER $(notdir $@)" && \\\n'
-+		printf '\tmkdir -p $(dir $@) && \\\n'
-+		printf '\tMANWIDTH=80 man -l $< >$@+ && \\\n'
-+		printf '\tmv $@+ $@\n'
-+	done
-+}
-+
-+# render_tree <dirname> <committish>
-+render_tree () {
-+	# Skip install-man entirely if we already have an installed directory.
-+	# We can't rely on make here, since "install-man" unconditionally
-+	# copies the files (spending effort, but also updating timestamps that
-+	# we then can't rely on during the render step). We use "mv" to make
-+	# sure we don't get confused by a previous run that failed partway
-+	# through.
-+	if ! test -d "$tmp/installed/$1"
-+	then
-+		git -C "$tmp/worktree" checkout "$2" &&
-+		make -j$parallel -C "$tmp/worktree" \
-+			GIT_VERSION=omitted \
-+			SOURCE_DATE_EPOCH=0 \
-+			DESTDIR="$PWD/$tmp/installed/$1+" \
-+			install-man &&
-+		mv "$tmp/installed/$1+" "$tmp/installed/$1"
-+	fi &&
-+
-+	# As with "installed" above, we skip the render if it's already been
-+	# done.  So using make here is primarily just about running in
-+	# parallel.
-+	if ! test -d "$tmp/rendered/$1"
-+	then
-+		generate_render_makefile "$tmp/installed/$1" "$tmp/rendered/$1+" |
-+		make -j$parallel -f - &&
-+		mv "$tmp/rendered/$1+" "$tmp/rendered/$1"
-+	fi
-+}
-+
-+render_tree $from_oid "$from" &&
-+render_tree $to_oid "$to" &&
-+git -C $tmp/rendered diff --no-index "$@" $from_oid $to_oid
--- 
-2.18.0.912.g3ccaa4d859
-
+Quite honestly, I just want to get over with this minor detail that
+won't help any scripts (after all submodule--helper is not meant to
+be used by humans) and focus on other parts of the patch series.
