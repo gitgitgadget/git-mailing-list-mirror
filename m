@@ -2,199 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF10208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 16:00:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D037E208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 16:07:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733083AbeHFSK0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 14:10:26 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:29112 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733014AbeHFSKZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 14:10:25 -0400
-Received: from [192.168.2.240] ([92.22.26.195])
-        by smtp.talktalk.net with SMTP
-        id mhvxfx5dFbZX5mhvyf3czr; Mon, 06 Aug 2018 17:00:39 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533571239;
-        bh=C4tFKNa6IhOe488xTC0Gv0TGGLeaPB/TT4x5OOH3F2Q=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=klRFZnSbd7or6A0VBgV+bwiPgCyREG6AActXRFpVq+zVX8esQvWH2EHxbXLKv02Dm
-         +PRLBq1ZBc5W38GG9gMBaYd6QZDGyyt/cP5TeovkPjlfz2twxdUKrpP2L+JsiPc4D0
-         OLxShq2ii22KuraBaJncnHkllvkOQ/hmthAfPiG0=
-X-Originating-IP: [92.22.26.195]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=8bf3kEuDtVJeVZALKX4IsA==:117
- a=8bf3kEuDtVJeVZALKX4IsA==:17 a=IkcTkHD0fZMA:10 a=JH1RQgXvmmTTeN5BlnUA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with --rebase-merges
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.13.git.gitgitgadget@gmail.com>
- <pull.13.v2.git.gitgitgadget@gmail.com>
- <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com>
- <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
-Message-ID: <f5378e50-bdd6-cca5-f535-1f07da7c19ba@talktalk.net>
-Date:   Mon, 6 Aug 2018 17:00:37 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1733205AbeHFSRH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 14:17:07 -0400
+Received: from mail-lj1-f171.google.com ([209.85.208.171]:35293 "EHLO
+        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733178AbeHFSRH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 14:17:07 -0400
+Received: by mail-lj1-f171.google.com with SMTP id p10-v6so11071111ljg.2
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 09:07:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=r7FeSa84LDsFAnSpkBevV5LnqGwuwobclPIMX2CYAik=;
+        b=rK5tXlzK+Ro+lZl/o1ygvPfe541JyunUiD2UAbxdHiqNEWoUknC3CM/ASHFMqnBbir
+         uKqm2WLd8BYljJwIv2e/y8wUdq+o6eSeGLbgi6TS9PnGdMOAwk1YmEKiQSfHuGI7zQQo
+         e1c0NaH4zJlfVHmx3hNdJ6R7pKCsyFXKXjDNRH1FnzFYTkwjGthhcm7T4dXoxMqtcSMv
+         g+51LV3+N0fTYa9K0/9m/8MJf5zeIEYeOHE7h6mXmpZcqwj+Pg64Ds1M8mVPCkmqLfSz
+         Kmvs8WLy6M7FzXabz3lDIpIsNoHqy+1Q6UE+M0YYDbGxE4ayT/YEhw45EgP0oxEs4QR6
+         g6rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=r7FeSa84LDsFAnSpkBevV5LnqGwuwobclPIMX2CYAik=;
+        b=EdFKyohiN/feDXld1zX26SheB+/jlyaeI1qt+kbi5mcKPFhq2yI+bsQ0hj0VozO08L
+         OzTLtUJtTr6MUzGyaGC7jLpmKbBTbUYkj2MOgi+DEUMNh8BdWYU+8ViWb3VJhgCwYIrR
+         6wLuQ16XbDTlVdpDPxS8cWa4ZVggOGiVi5Azf6jWB0gptXFHeYUln7MPlZf9ZeGGJvBh
+         PCuPZv3vHznXvsDbn3oGX+pl+CMzeT+pgJEHi9L+w/6re+0KUpk+Qo9/WcNigRV39jUg
+         oGWHZbc8ux6ZKrpcShGB+Cf1l3tDi95q80H7VjfS5cGFFHKj5V80S8IAOgmHjmeMPtwz
+         aZ0Q==
+X-Gm-Message-State: AOUpUlGl3SNkaZ20V93RniK4sMnnnjx8zU0n0hDH85I16m12e/pxuhlc
+        Uev9ODuKmJM2y1bFPDOuK7lhIJgko8skL0saPzO65V01
+X-Google-Smtp-Source: AAOMgpcXPbb17S/hrsIIrTXnr2XJ/We55K1wKekV9f/Qsg/sh2D1cGwE4EeKfA7AHu+JXFj/LZ5pnw0mplCYygesnmw=
+X-Received: by 2002:a2e:2c09:: with SMTP id s9-v6mr5447511ljs.88.1533571638128;
+ Mon, 06 Aug 2018 09:07:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfDANNnGn8Kh59OunZADsonOhGEiZVcqPJcVQBFWT0x8jg7ucVaSqpJ+tSQ5njDEYjJzuKYMI46vJ1HLkpV4od+ZOYu+a+QxMr0yCmgF0L9iiUyRGJuGa
- VXfukuTmS+2kGSsAv8OGFn0Z+XLfpLK4+3jLe4RMXY1cFPo8ZAs4MBDyxfmbHJOrocYtfvahwzBKDc+QTdBoGnbf0TvlFA5EsI5eGpFUqU400KXuABZIxgit
- lttzx+QKy047YG0tDXng6FvhKkoMUDsIHucdmAWFJjI=
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Mon, 6 Aug 2018 18:07:06 +0200
+Message-ID: <CAM0VKj=DDOPDxo_xDvhk2-HUPHfkUcLQTimqmY31yjq5eZiM2Q@mail.gmail.com>
+Subject: [BUG] 'git ls-files --no-exclude' segfault & co
+To:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/08/18 16:23, Phillip Wood wrote:
-> 
-> Hi Johannes
-> On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
->>
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>
->> The idea of `--exec` is to append an `exec` call after each `pick`.
->>
->> Since the introduction of fixup!/squash! commits, this idea was extended
->> to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
->> exec would not be inserted between a `pick` and any of its corresponding
->> `fixup` or `squash` lines.
->>
->> The current implementation uses a dirty trick to achieve that: it
->> assumes that there are only pick/fixup/squash commands, and then
->> *inserts* the `exec` lines before any `pick` but the first, and appends
->> a final one.
->>
->> With the todo lists generated by `git rebase --rebase-merges`, this
->> simple implementation shows its problems: it produces the exact wrong
->> thing when there are `label`, `reset` and `merge` commands.
->>
->> Let's change the implementation to do exactly what we want: look for
->> `pick` lines, skip any fixup/squash chains, and then insert the `exec`
->> line. Lather, rinse, repeat.
->>
->> While at it, also add `exec` lines after `merge` commands, because they
->> are similar in spirit to `pick` commands: they add new commits.
->>
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> ---
->>   sequencer.c              | 37 +++++++++++++++++++++++++++----------
->>   t/t3430-rebase-merges.sh |  2 +-
->>   2 files changed, 28 insertions(+), 11 deletions(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index 31038472f..ed2e694ff 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char 
->> *commands)
->>   {
->>       const char *todo_file = rebase_path_todo();
->>       struct todo_list todo_list = TODO_LIST_INIT;
->> -    struct todo_item *item;
->>       struct strbuf *buf = &todo_list.buf;
->>       size_t offset = 0, commands_len = strlen(commands);
->> -    int i, first;
->> +    int i, insert;
->>       if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->>           return error(_("could not read '%s'."), todo_file);
->> @@ -4257,19 +4256,37 @@ int sequencer_add_exec_commands(const char 
->> *commands)
->>           return error(_("unusable todo list: '%s'"), todo_file);
->>       }
->> -    first = 1;
->> -    /* insert <commands> before every pick except the first one */
->> -    for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
->> -        if (item->command == TODO_PICK && !first) {
->> -            strbuf_insert(buf, item->offset_in_buf + offset,
->> -                      commands, commands_len);
->> +    /*
->> +     * Insert <commands> after every pick. Here, fixup/squash chains
->> +     * are considered part of the pick, so we insert the commands 
->> *after*
->> +     * those chains if there are any.
->> +     */
->> +    insert = -1;
->> +    for (i = 0; i < todo_list.nr; i++) {
->> +        enum todo_command command = todo_list.items[i].command;
->> +
->> +        if (insert >= 0) {
->> +            /* skip fixup/squash chains */
->> +            if (command == TODO_COMMENT)
->> +                continue;
-> 
-> insert is not updated so if the next command is not a fixup the exec 
-> line will be inserted before the comment.
-> 
->> +            else if (is_fixup(command)) {
->> +                insert = i + 1;
->> +                continue;
->> +            }
->> +            strbuf_insert(buf,
->> +                      todo_list.items[insert].offset_in_buf +
->> +                      offset, commands, commands_len);
->>               offset += commands_len;
->> +            insert = -1;
->>           }
->> -        first = 0;
->> +
->> +        if (command == TODO_PICK || command == TODO_MERGE)
->> +            insert = i + 1;
->>       }
->>       /* append final <commands> */
->> -    strbuf_add(buf, commands, commands_len);
->> +    if (insert >= 0 || !offset)
->> +        strbuf_add(buf, commands, commands_len);
-> 
-> Having read your other message about this patch I think if you wanted to 
-> fix the position of the final exec in the case where the todo list ends 
-> with a comment you could do something like
-> 
->      if (insert >= 0)
->          strbuf_insert(buf,
->                    todo_list.items[insert].offset_in_buf +
->                    offset, commands, commands_len);
->      else
+'git ls-files' has the options '--exclude', '--exclude-from',
+'--exclude-per-directory', and '--exclude-standard', which all work
+fine.  However, it also allows the negated version of all these four
+options, and they definitely don't work very well:
 
-Oops that should be 'else if (!offset)'
+  $ git ls-files --no-exclude
+  Segmentation fault
+  $ git ls-files --no-exclude-from
+  warning: unable to access '(null)': Bad address
+  fatal: cannot use (null) as an exclude file
 
->          strbuf_add(buf, commands, commands_len);
-> 
-> I'm not sure it matters that much though
-> 
-> The rest of this patch looks fine to me
-> 
-> Best Wishes
-> 
-> Phillip
-> 
->>       i = write_message(buf->buf, buf->len, todo_file, 0);
->>       todo_list_release(&todo_list);
->> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
->> index 0bf5eaa37..90ae613e2 100755
->> --- a/t/t3430-rebase-merges.sh
->> +++ b/t/t3430-rebase-merges.sh
->> @@ -363,7 +363,7 @@ test_expect_success 'octopus merges' '
->>       EOF
->>   '
->> -test_expect_failure 'with --autosquash and --exec' '
->> +test_expect_success 'with --autosquash and --exec' '
->>       git checkout -b with-exec H &&
->>       echo Booh >B.t &&
->>       test_tick &&
->>
-> 
-
+And '--no-exclude-standard' has the same effect as
+'--exclude-standard', because its parseopt callback function
+option_parse_exclude_standard() doesn't bother to look at its 'unset'
+parameter.
