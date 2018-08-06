@@ -2,145 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1640208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 15:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB916208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 15:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731068AbeHFRU6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 13:20:58 -0400
-Received: from mail-lj1-f180.google.com ([209.85.208.180]:38726 "EHLO
-        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727541AbeHFRU6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 13:20:58 -0400
-Received: by mail-lj1-f180.google.com with SMTP id p6-v6so10928380ljc.5
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:11:25 -0700 (PDT)
+        id S1731722AbeHFRVh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 13:21:37 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40560 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727541AbeHFRVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 13:21:37 -0400
+Received: by mail-wr1-f67.google.com with SMTP id h15-v6so12722324wrs.7
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=wlClsdf97RF4nTh30I6TeDNYV8IBVMQ31KzRAxacAfk=;
-        b=DI1jZXNGCYw9WBHpxZFroVWlLzwziQVN1gPdAvhPaKrPExfHmE/4cm59J7Wx+yD5Gy
-         RK/3zHTyjRYdCdhjwb5nuiqKs1D0QN1pSNIHV7Qn7mk4sp7YenlkccAqhOkHYZ206TcD
-         A7o+NivOrMCb6fhqGsJF9JCsbnSA0c6ezgKyu4dxsbrc9fKwDLN+Ql1EjMQ6ShgsBdSH
-         Q/NIBoknn5IAUdUk0creUc4zKL/PXrTBRTXPbj0szaBUwfpTI6O4EG5WYFGQfku/zB3w
-         wt8KR19fQE/BjhCbr27rtpjfrrCdt4LpFIFoeZFIdJ1IDEqP8vk3LsLrgrbx9s405Cpd
-         ML2g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=E3SRk83F+YFj82FfT+8EGcMxTqa9kuWWDXEztzE0Aic=;
+        b=Gaeq9KEfd9HvaShPLGLgWDNCGG666vCH15V10/+I3z3ovsaDvdq9JUVLx6kdAsXYra
+         OCGMfbUziRp7CQpSYlx54+qCThUqNry0T6ubzViiUQFyKDGpLIpHV/K5YRexdj396OjR
+         qU7RCcOHu+z3Tw50t4asYCmNP5DMz0wTrL05alFk0uKMfH6ZYn8+Hau3UR10SKUI70XD
+         /PVM/7iUXW9/eM1hQj9WAzfT4Z0V/aOg2vC9nAEr9vOtCUfecTOXHlfyZqNueDI5Mz+8
+         WO4m7Wr8FuQqWYzr0Mj5PbAwBJNtcfRgqml88F8BNSArTtQz+N1EkAC51Jq0AGmw9wRY
+         qUNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=wlClsdf97RF4nTh30I6TeDNYV8IBVMQ31KzRAxacAfk=;
-        b=jdbiuZ1sRz4F1CARPWhMr7Al+v/Xn3MSqNrPuInQWvjmUYCgb3FrO6Ff2g3Nty1Ush
-         Ol/l1EZQcVQBAwuIoTEwxKQYiumYU3Nhe+lv0RIpqtmBZB4pOs7dj8VrqBcWFLb9iom/
-         9jveCAS4/8TXBh7In5dAu+LttbTCpml2Bto9/EsXd+al9IaFQOQC+736SWp3jae/a8cm
-         jRO0IFo59/WV5XsmgfA9uv1CrdGCyAJR7x2s+SqDZIQyFa8ZZQcG5JajL1pEeZKOVOBX
-         GI7GPKKVhlAql17ryXQFPZzvZlII0ZKzKtBrwa5kalzVnU67W0Un9cf3hILkesRDIY1K
-         8rCQ==
-X-Gm-Message-State: AOUpUlHSzjPkv4yyVqq672j03BXm3B8GRdBF5n/PHtFumQIfX47g6WS/
-        lIr63zle8s1ucHTkH/0GcDFXv372aI1PQ1bcjLfbmttq
-X-Google-Smtp-Source: AAOMgpcwW0m1DuqEb84GFRB26gIISX/e+89ruGHc0P6wEs30+2GKlAQJrQbImPeO1ID3URxfkvRySBK7cO63VYx9LWM=
-X-Received: by 2002:a2e:8617:: with SMTP id a23-v6mr13780830lji.43.1533568284758;
- Mon, 06 Aug 2018 08:11:24 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=E3SRk83F+YFj82FfT+8EGcMxTqa9kuWWDXEztzE0Aic=;
+        b=Of6xxXor729sHP/v5rPzL+JxlZAmwJl9fIbvVCyN+N8R726AO9RgBrRYtQoWE+VbW7
+         jFPSayrIesc7zrZ5nCB3tnC5I/cBrzZHgVriB1FSPcxxRgBAeoJFHAKycKKbVqG13yC+
+         9tX+Fa+qyJgYL0n6qsTLYlj66ZAXhfnPs7hXfORP2VS2/x7OUTd1RXDfZPDEzYLNILZa
+         rHNlK3TafCBUdqWVmJWYr8+VakioUzPf/SZReZAM6JfYSJtBOF0e2xTOzkf+EIZbSgTE
+         q6PGiI1sq/3D/WlAY+nfY3LijLYYELveXzB7d/+2+HTiv7K/LpdpzwSXzCU7FE5gsBME
+         2+Ew==
+X-Gm-Message-State: AOUpUlHV8kPrFj8EMbxyrfDiwg8gv4o9mePNf3cV8SP6MgBCyk4pv8kI
+        /nG8bvSEVpMhJbq23kEck1E=
+X-Google-Smtp-Source: AAOMgpfXAQaRdH6ZKlZI4/VNUe9rZsaqCyVZUTsuSSc/iBtiAvtSVMmvCznlhlbvCce4pVzgjjLe2w==
+X-Received: by 2002:a5d:438d:: with SMTP id i13-v6mr10338463wrq.156.1533568323033;
+        Mon, 06 Aug 2018 08:12:03 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t186-v6sm11976382wmf.14.2018.08.06.08.12.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 08:12:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] rebase --exec: make it work with --rebase-merges
+References: <pull.13.git.gitgitgadget@gmail.com>
+        <b29c4d979f147f38bc0a4765a953a748eec0cd6d.1533318123.git.gitgitgadget@gmail.com>
+        <xmqq1sbfxq1x.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1808061136180.71@tvgsbejvaqbjf.bet>
+Date:   Mon, 06 Aug 2018 08:12:01 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1808061136180.71@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 6 Aug 2018 11:50:51 +0200 (DST)")
+Message-ID: <xmqqlg9jr0la.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 6 Aug 2018 17:11:13 +0200
-Message-ID: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
-Subject: t5570-git-daemon fails with SIGPIPE on OSX
-To:     Git mailing list <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Clemens Buchacher <drizzd@aon.at>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Travis CI changed its default OSX image to use XCode 9.4 on 2018-07-31
-[1].  Since then OSX build jobs fail rather frequently because of a
-SIGPIPE in the tests 'fetch notices corrupt pack' or 'fetch notices
-corrupt idx' in 't5570-git-daemon.sh' [2].  I think this is a symptom
-a real bug in Git affecting other platforms as well, but these tests
-are too lax to catch it.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-What it boils down to is this sequence:
+>> If we ever see a todo-list without any pick/merge, then insert_final
+>> is still 1 when we leave the loop and we will add one single exec at
+>> the end.  Which may or may not make sense---I dunno, as I do not
+>> offhand think of a reason why the user would give us such a sequence
+>> in the first place, so it probably may not matter in practice.
+>
+> Think of the `noop` command. It was introduced specifically to allow
+> rebasing patches interactively to an upstream that already applied the
+> local patches. In that case, an `--exec` should still run at least once,
+> to avoid negative surprises.
 
-  - The test first prepares a repository containing a corrupt pack,
-    ready to be server via 'git daemon'.
+Ah, yes, it probably makes sense when you have `noop`; even if there
+is no picks and merges that change the history from previous state
+(which presumably matches the state the user started running the
+current "rebase -i" session), after the whole sequence you would
+want run it one iteration.
 
-  - Then the test runs 'test_must_fail git fetch ....', which connects
-    to 'git daemon', which forks 'git upload-pack', which then
-    advertises refs (only HEAD) and capabilities.  So far so good.
-
-  - 'git fetch' eventually calls fetch-pack.c:find_common().  The
-    first half of this function assembles a request consisting of a
-    want and a flush pkt-line, and sends it via a send_request() call.
-
-    At this point the scheduling becomes important: let's suppose that
-    fetch is slow and upload-pack is fast.
-
-  - 'git upload-pack' receives the request, parses the want line,
-    notices the corrupt pack, responds with an 'ERR upload-pack: not
-    our ref' pkt-line, and die()s right away.
-
-  - 'git fetch' finally approaches the end of the function, where it
-    attempts to send a done pkt-line via another send_request() call
-    through the now closing TCP socket.
-
-  - What happens now seems to depend on the platform:
-
-    - On Linux, both on my machine and on Travis CI, it shows textbook
-      example behaviour: write() returns with error and sets errno to
-      ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
-      die()s with 'fatal: write error: Connection reset by peer', and
-      doesn't show the error send by 'git upload-pack'; how could it,
-      it doesn't even get as far to receive upload-pack's ERR
-      pkt-line.
-
-      The test only checks that 'git fetch' fails, but it doesn't
-      check whether it failed with the right error message, so the
-      test still succeeds.  Had it checked the error message as well,
-      we most likely had noticed this issue already, it doesn't happen
-      all that rarely.
-
-    - On the new OSX images with XCode 9.4 on Travis CI the write()
-      triggers SIGPIPE right away, and 'test_must_fail' notices it and
-      fails the test.  I couldn't see any sign of an ECONNRESET or any
-      other error that we could act upon to avoid the SIGPIPE.
-
-    - On OSX with XCode 9.2 on Travis CI there is neither SIGPIPE, nor
-      ECONNRESET, but sending the request actually succeeds even
-      though there is no process on the other end of the socket
-      anymore.  'git fetch' then simply continues execution, reads and
-      parses the ERR pkt-line, and then dies()s with 'fatal: remote
-      error: upload-pack: not our ref'.  So, on the face of it, it
-      shows the desired behaviour, but I have no idea how that write()
-      could succeed instead of returning error.
-
-I don't know what happens on a real Mac as I don't have access to one;
-I figured out all the above by enabling packet tracing, adding a
-couple of well placed tracing printf() and sleep() calls, running a
-bunch of builds on Travis CI, and looking through their logs.  But
-without access to a debugger and netstat and what not I can't really
-go any further.  So I would now happily pass the baton to those who
-have a Mac and know a thing or two about its porting issues to first
-check whether OSX on a real Mac shows the same behaviour as it does in
-Travis CI's virtualized(?) environment.  And then they can pass the
-baton to those who know all the intricacies of the pack protocol and
-its implementation to decide what to do with this issue.
-
-For a mostly reliable reproduction recipe you might want to fetch this
-branch:
-
-  https://github.com/szeder/git t5570-git-daemon-sigpipe
-
-and then run 'make && cd t && ./t5570-git-daemon.sh -v -x'
-
-
-Have fun! ;)
-
-
-1 - https://blog.travis-ci.com/2018-07-19-xcode9-4-default-announce
-
-2 - On git.git's master:
-    https://travis-ci.org/git/git/jobs/411517552#L2717
+In any case, if the current code without this change works like so,
+there is no point in redesigning that part of the semantics at all.
