@@ -2,97 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F9BE208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 15:59:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CF10208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 16:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733078AbeHFSJj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 14:09:39 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:55513 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733013AbeHFSJj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 14:09:39 -0400
-Received: by mail-it0-f67.google.com with SMTP id d10-v6so18086243itj.5
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:59:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ouIzZD44LeYS59sXAxwlAwZ4YpebsqeKGxbxcBWtE2E=;
-        b=XajMBX19UVmKgJNKPGARYaPvkvGv1BTAuoeY7KthBX1RmtVi+221hRTK3tNtNXFnrv
-         h+1cvTpH3gHGwb41EpIkaNyOjeifwSCH4Xg2qfW1mektcLHXffwcyRoJOy0gFVs7Ns7z
-         sBb97zAHVwJWJnMlhDrtjg+Q+T1FAbqSpISNU6s2nODsuwpEGQ3Q1P3CC7SWiBr11c5N
-         hRxNmOuM4d2pCjASK+RMeUzKm66kQVGL/m46bB2SMvRFlK0/8ON3OK4CvrsCCOPosnq9
-         Ittt0e5f2/Gc9lMpSu26Wp8idyhvKPotfzX0uD4kRpUIlq+BlP+7nb0DGZd2cHhTr8MW
-         HQCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ouIzZD44LeYS59sXAxwlAwZ4YpebsqeKGxbxcBWtE2E=;
-        b=GdxGESwHgu8FpIfkz/43mJtvzN2+glk8QhPF5s96z8+ZYarurOwdxAzPa2MXM4fcs1
-         4c3dzfmO7JTMClhMuzYqPc3jKXyPUU0M3hnkJkCfLCohVUyP6+d82RVlgW+vVrnJq5tg
-         qFWua024Tn9CiJT+IT7Ds2kQymQLf3zuJBVN4n7Z8bF/Nqx2/blI5YZgFD7P+5Uj/+oL
-         VPZ87OIjI8vngnbIcUo1nXybm3fRWb9yQW4CqFz+tc9B4nrrimG+dLsaAfgQZCwZfVAa
-         0anWppYt7o/6RJVYzoD2Ixv91nHdTgHmfY7Ny4fh2DMtSEJfviO34zNIDCXyS/h5UmyO
-         fwpw==
-X-Gm-Message-State: AOUpUlFpIbtVtra6FhQFMS3cv+Pf1K8x/vwpxYTprv6kR/m8eyjLSa9y
-        OGO+Fyae8K8cAIxsiPaT1OwM0fqgLYn/2WytYHc=
-X-Google-Smtp-Source: AAOMgpfN8hQTM88zuUnGH8QDjg5PVPVotqYlFkTyyHMMNRQySN6qRPDfbJ6xVo6sk9Kq7m+lEBhQn/cadu0otvHIDjc=
-X-Received: by 2002:a02:59c9:: with SMTP id v70-v6mr12694665jad.94.1533571194634;
- Mon, 06 Aug 2018 08:59:54 -0700 (PDT)
+        id S1733083AbeHFSK0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 14:10:26 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:29112 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733014AbeHFSKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 14:10:25 -0400
+Received: from [192.168.2.240] ([92.22.26.195])
+        by smtp.talktalk.net with SMTP
+        id mhvxfx5dFbZX5mhvyf3czr; Mon, 06 Aug 2018 17:00:39 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533571239;
+        bh=C4tFKNa6IhOe488xTC0Gv0TGGLeaPB/TT4x5OOH3F2Q=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=klRFZnSbd7or6A0VBgV+bwiPgCyREG6AActXRFpVq+zVX8esQvWH2EHxbXLKv02Dm
+         +PRLBq1ZBc5W38GG9gMBaYd6QZDGyyt/cP5TeovkPjlfz2twxdUKrpP2L+JsiPc4D0
+         OLxShq2ii22KuraBaJncnHkllvkOQ/hmthAfPiG0=
+X-Originating-IP: [92.22.26.195]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=8bf3kEuDtVJeVZALKX4IsA==:117
+ a=8bf3kEuDtVJeVZALKX4IsA==:17 a=IkcTkHD0fZMA:10 a=JH1RQgXvmmTTeN5BlnUA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with --rebase-merges
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.13.git.gitgitgadget@gmail.com>
+ <pull.13.v2.git.gitgitgadget@gmail.com>
+ <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com>
+ <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
+Message-ID: <f5378e50-bdd6-cca5-f535-1f07da7c19ba@talktalk.net>
+Date:   Mon, 6 Aug 2018 17:00:37 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180729103306.16403-1-pclouds@gmail.com> <20180804053723.4695-1-pclouds@gmail.com>
- <xmqq7el3qywq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7el3qywq.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 6 Aug 2018 17:59:28 +0200
-Message-ID: <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Speed up unpack_trees()
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfDANNnGn8Kh59OunZADsonOhGEiZVcqPJcVQBFWT0x8jg7ucVaSqpJ+tSQ5njDEYjJzuKYMI46vJ1HLkpV4od+ZOYu+a+QxMr0yCmgF0L9iiUyRGJuGa
+ VXfukuTmS+2kGSsAv8OGFn0Z+XLfpLK4+3jLe4RMXY1cFPo8ZAs4MBDyxfmbHJOrocYtfvahwzBKDc+QTdBoGnbf0TvlFA5EsI5eGpFUqU400KXuABZIxgit
+ lttzx+QKy047YG0tDXng6FvhKkoMUDsIHucdmAWFJjI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 6, 2018 at 5:48 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > I've also checked about the lookahead thing in unpack_trees() to see
-> > if we accidentally break something there, which is my biggest worry.
-> > See [1] and [2] for context, but I believe since we can't have D/F
-> > conflicts, the situation where lookahead is needed will not occur. So
-> > we should be safe.
->
-> Isn't this about branch switching, where the currently checked out
-> branch may have a regular file 't' and checking out another branch
-> that has directory 't' in it (or vice versa, possibly with the index
-> having either a regular file 't' or requiring 't' to be a diretory
-> by having a blob 't/1' in it)?
+On 06/08/18 16:23, Phillip Wood wrote:
+> 
+> Hi Johannes
+> On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
+>>
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>
+>> The idea of `--exec` is to append an `exec` call after each `pick`.
+>>
+>> Since the introduction of fixup!/squash! commits, this idea was extended
+>> to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
+>> exec would not be inserted between a `pick` and any of its corresponding
+>> `fixup` or `squash` lines.
+>>
+>> The current implementation uses a dirty trick to achieve that: it
+>> assumes that there are only pick/fixup/squash commands, and then
+>> *inserts* the `exec` lines before any `pick` but the first, and appends
+>> a final one.
+>>
+>> With the todo lists generated by `git rebase --rebase-merges`, this
+>> simple implementation shows its problems: it produces the exact wrong
+>> thing when there are `label`, `reset` and `merge` commands.
+>>
+>> Let's change the implementation to do exactly what we want: look for
+>> `pick` lines, skip any fixup/squash chains, and then insert the `exec`
+>> line. Lather, rinse, repeat.
+>>
+>> While at it, also add `exec` lines after `merge` commands, because they
+>> are similar in spirit to `pick` commands: they add new commits.
+>>
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> ---
+>>   sequencer.c              | 37 +++++++++++++++++++++++++++----------
+>>   t/t3430-rebase-merges.sh |  2 +-
+>>   2 files changed, 28 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/sequencer.c b/sequencer.c
+>> index 31038472f..ed2e694ff 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char 
+>> *commands)
+>>   {
+>>       const char *todo_file = rebase_path_todo();
+>>       struct todo_list todo_list = TODO_LIST_INIT;
+>> -    struct todo_item *item;
+>>       struct strbuf *buf = &todo_list.buf;
+>>       size_t offset = 0, commands_len = strlen(commands);
+>> -    int i, first;
+>> +    int i, insert;
+>>       if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>>           return error(_("could not read '%s'."), todo_file);
+>> @@ -4257,19 +4256,37 @@ int sequencer_add_exec_commands(const char 
+>> *commands)
+>>           return error(_("unusable todo list: '%s'"), todo_file);
+>>       }
+>> -    first = 1;
+>> -    /* insert <commands> before every pick except the first one */
+>> -    for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
+>> -        if (item->command == TODO_PICK && !first) {
+>> -            strbuf_insert(buf, item->offset_in_buf + offset,
+>> -                      commands, commands_len);
+>> +    /*
+>> +     * Insert <commands> after every pick. Here, fixup/squash chains
+>> +     * are considered part of the pick, so we insert the commands 
+>> *after*
+>> +     * those chains if there are any.
+>> +     */
+>> +    insert = -1;
+>> +    for (i = 0; i < todo_list.nr; i++) {
+>> +        enum todo_command command = todo_list.items[i].command;
+>> +
+>> +        if (insert >= 0) {
+>> +            /* skip fixup/squash chains */
+>> +            if (command == TODO_COMMENT)
+>> +                continue;
+> 
+> insert is not updated so if the next command is not a fixup the exec 
+> line will be inserted before the comment.
+> 
+>> +            else if (is_fixup(command)) {
+>> +                insert = i + 1;
+>> +                continue;
+>> +            }
+>> +            strbuf_insert(buf,
+>> +                      todo_list.items[insert].offset_in_buf +
+>> +                      offset, commands, commands_len);
+>>               offset += commands_len;
+>> +            insert = -1;
+>>           }
+>> -        first = 0;
+>> +
+>> +        if (command == TODO_PICK || command == TODO_MERGE)
+>> +            insert = i + 1;
+>>       }
+>>       /* append final <commands> */
+>> -    strbuf_add(buf, commands, commands_len);
+>> +    if (insert >= 0 || !offset)
+>> +        strbuf_add(buf, commands, commands_len);
+> 
+> Having read your other message about this patch I think if you wanted to 
+> fix the position of the final exec in the case where the todo list ends 
+> with a comment you could do something like
+> 
+>      if (insert >= 0)
+>          strbuf_insert(buf,
+>                    todo_list.items[insert].offset_in_buf +
+>                    offset, commands, commands_len);
+>      else
 
-We require the unpacked entry from all input trees to be a tree
-objects (the dirmask thing), so if one tree has 't' as a file,
-all_trees_same_as_cache_tree() should return false and not trigger
-this optimization. Same thing for the index, if it has the file 't',
-then we should not have the cache-tree at path 't' and the
-optimization is skipped as well.
+Oops that should be 'else if (!offset)'
 
-So yes branch switching definitely can have d/f conflicts, but we
-should never ever accidentally run this new optimization when that
-happens.
+>          strbuf_add(buf, commands, commands_len);
+> 
+> I'm not sure it matters that much though
+> 
+> The rest of this patch looks fine to me
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>>       i = write_message(buf->buf, buf->len, todo_file, 0);
+>>       todo_list_release(&todo_list);
+>> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+>> index 0bf5eaa37..90ae613e2 100755
+>> --- a/t/t3430-rebase-merges.sh
+>> +++ b/t/t3430-rebase-merges.sh
+>> @@ -363,7 +363,7 @@ test_expect_success 'octopus merges' '
+>>       EOF
+>>   '
+>> -test_expect_failure 'with --autosquash and --exec' '
+>> +test_expect_success 'with --autosquash and --exec' '
+>>       git checkout -b with-exec H &&
+>>       echo Booh >B.t &&
+>>       test_tick &&
+>>
+> 
 
-> The log messge of [1] talks about
-> walking three trees together with the index, but even if we limit us
-> to two-tree walk, I do not think that the picture fundamentally
-> changes.  So I am not sure how we can confidently say "we can't have
-> D/F".  I'd need to block a solid time to take a look at the patches.
-
-Yes please :)
--- 
-Duy
