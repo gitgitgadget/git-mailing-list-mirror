@@ -2,116 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EF44208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 16:36:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD20B208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 16:40:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729230AbeHFSqb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 14:46:31 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44096 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728071AbeHFSqb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 14:46:31 -0400
-Received: (qmail 15373 invoked by uid 109); 6 Aug 2018 16:36:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 06 Aug 2018 16:36:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27648 invoked by uid 111); 6 Aug 2018 16:36:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 06 Aug 2018 12:36:39 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 06 Aug 2018 12:36:36 -0400
-Date:   Mon, 6 Aug 2018 12:36:36 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: [BUG] 'git ls-files --no-exclude' segfault & co
-Message-ID: <20180806163636.GA19053@sigill.intra.peff.net>
-References: <CAM0VKj=DDOPDxo_xDvhk2-HUPHfkUcLQTimqmY31yjq5eZiM2Q@mail.gmail.com>
+        id S1731524AbeHFSuK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 14:50:10 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33980 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727561AbeHFSuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 14:50:10 -0400
+Received: by mail-ed1-f67.google.com with SMTP id h1-v6so5471250eds.1
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 09:40:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=JyCUE1DZdcEuePhVvdNjF8RsLV979Gcf92yLT0FwwXI=;
+        b=S/Zg+0ol/jSPATdWzfm9ZldMMSz8ssh38apOOBA72pzKWRd7KezyssDcwjd4D8ABtR
+         ryC4Ovu/CZn+Qu1QL8SEwVG0D5uhIMkQIZ8n7+qPjvJ0Yljek/YFycf8y2IrnrXL7lKN
+         XuBgb9YgDoJ1sW1AUdEBP8FXdOmmkXbTaz6TALaHT7xQP9fYu06C4+WmGCTEqN3kVGGv
+         cbKBgUYXH0h+rqgPif81AmR2Ou6eIksRFXZh9MOFlet+bbOMLMXT/n97g8dTZQGnseyB
+         ppRRlt+qANdYZyxLmxwRYgNW9lTN7+vwuU5a58kJbckNNzNOK628YJmy6mlT5LCSPR/X
+         Qx0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=JyCUE1DZdcEuePhVvdNjF8RsLV979Gcf92yLT0FwwXI=;
+        b=luz50qnh34CAb4vymjtLDe7QF/ayAFJ4/B6tdzfzDuxJwLJ3a9T8HElGmq1MpSGvdU
+         /K16kcbDaXv/RzLek5eVH+MsLfg5U07Hy+NNq7V28bKix3RCTDGFZll7eACf8BgoNwXg
+         NoGowBReO9r3YABKBLEPxcRWHA4ivhhRfI4Xg1GTQkiURp65bJxzQ8768GNo/OS02UxQ
+         HLDqICqNF/2kamfBCEeR7vwb4xGEb6M0bgc8DRbvBl5evXR+/4wRP8mTodCw/7sdNiUm
+         sX9UdOWwWPhu3RIDtT7x/WGtipcoygAlRJ/HPZVNo9hYDVDm9Cu+GwUrZ5ngoEeS6N8f
+         O5Gw==
+X-Gm-Message-State: AOUpUlHLge7Rv3wJOVneTCxxpsJjylK397HNqDllEHo1HfvK4AADf8xY
+        zmji1f8E/xs1as/L/ZMPvms=
+X-Google-Smtp-Source: AAOMgpexROosgS8pDaHFdyb7Ub5fY9rwMQjyxYsQE6Wo+qRGUPZX1v5je3ycBjuM0GK3M7Lg1nkx2Q==
+X-Received: by 2002:a50:8103:: with SMTP id 3-v6mr18870374edc.131.1533573615746;
+        Mon, 06 Aug 2018 09:40:15 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id f42-v6sm7118597edf.19.2018.08.06.09.40.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 09:40:14 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        git-packagers@googlegroups.com,
+        Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
+References: <20180804020009.224582-1-sbeller@google.com>
+        <20180804020255.225573-1-sbeller@google.com>
+        <20180804060928.GB55869@aiede.svl.corp.google.com>
+        <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>
+        <xmqqo9eirqwp.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqo9eirqwp.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 06 Aug 2018 18:40:14 +0200
+Message-ID: <87zhxzsb2p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAM0VKj=DDOPDxo_xDvhk2-HUPHfkUcLQTimqmY31yjq5eZiM2Q@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 06, 2018 at 06:07:06PM +0200, SZEDER Gábor wrote:
 
-> 'git ls-files' has the options '--exclude', '--exclude-from',
-> '--exclude-per-directory', and '--exclude-standard', which all work
-> fine.  However, it also allows the negated version of all these four
-> options, and they definitely don't work very well:
-> 
->   $ git ls-files --no-exclude
->   Segmentation fault
->   $ git ls-files --no-exclude-from
->   warning: unable to access '(null)': Bad address
->   fatal: cannot use (null) as an exclude file
-> 
-> And '--no-exclude-standard' has the same effect as
-> '--exclude-standard', because its parseopt callback function
-> option_parse_exclude_standard() doesn't bother to look at its 'unset'
-> parameter.
+On Sat, Aug 04 2018, Junio C Hamano wrote:
 
-I think --exclude-per-directory is fine, since it uses OPT_STRING().
-Using "--no-exclude-per-directory" just means we'll cancel any
-previously found option.
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+>> On Sat, Aug 4, 2018 at 8:11 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>>> My main concern is not about them but about other
+>>> people building from source in order to run (instead of to develop)
+>>> Git, and by extension, the people they go to for help when it doesn't
+>>> work.  I have lots of bitter experience of -Werror being a support
+>>> headache and leading to bad workarounds when someone upgrades their
+>>> compiler and the build starts failing due to a new warning it has
+>>> introduced.
+>>
+>> Even old compilers can also throw some silly, false positive warnings
+>> (which now turn into errors) because they are not as smart as new
+>> ones.
+>
+> I agree with both of the above.  I do not think the pros-and-cons
+> are in favor of forcing the developer bit to everybody, even though
+> I am sympathetic to the desire to see people throw fewer bad changes
+> that waste review bandwidth by not compiling or passing its own
+> tests at us.
 
-In an ideal world we'd perhaps do something useful with the negated
-forms for the others, but I don't think the underlying code is set up to
-do that (i.e., how do you undo "setup_standard_excludes()"). Possibly we
-could switch to setting a flag (which could then be cleared), and
-resolve the flags after parsing the whole command line. But often
-options with callbacks list this have subtle user-visible timing effects
-(e.g., that the command line options need to take effect in the order
-they were found).
+I agree.
 
-So unless somebody actually wants these negated forms to do something
-useful, it's probably not worth the trouble and risk of regression.  But
-we obviously should at least disallow them explicitly rather than
-segfaulting.
+Responding to the thread in general, perhaps people would like this more
+if we turned DEVELOPER=1 DEVOPTS=no-error on by default?
 
-I thought adding PARSE_OPT_NONEG like this would work:
+That's basically why I added it in 99f763baf5 ("Makefile: add a DEVOPTS
+to suppress -Werror under DEVELOPER", 2018-04-14), because I wanted the
+abilty to have verbose informative output without the build dying on
+some older systems / compilers.
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 88bb2019ad..9adee62358 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -547,15 +547,16 @@ int cmd_ls_files(int argc, const char **argv, const char *cmd_prefix)
- 			    N_("show resolve-undo information")),
- 		{ OPTION_CALLBACK, 'x', "exclude", &exclude_list, N_("pattern"),
- 			N_("skip files matching pattern"),
--			0, option_parse_exclude },
-+			PARSE_OPT_NONEG, option_parse_exclude },
- 		{ OPTION_CALLBACK, 'X', "exclude-from", &dir, N_("file"),
- 			N_("exclude patterns are read from <file>"),
--			0, option_parse_exclude_from },
-+			PARSE_OPT_NONEG, option_parse_exclude_from },
- 		OPT_STRING(0, "exclude-per-directory", &dir.exclude_per_dir, N_("file"),
- 			N_("read additional per-directory exclude patterns in <file>")),
- 		{ OPTION_CALLBACK, 0, "exclude-standard", &dir, NULL,
- 			N_("add the standard git exclusions"),
--			PARSE_OPT_NOARG, option_parse_exclude_standard },
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			option_parse_exclude_standard },
- 		OPT_SET_INT_F(0, "full-name", &prefix_len,
- 			      N_("make the output relative to the project top directory"),
- 			      0, PARSE_OPT_NONEG),
-
-But it actually does something quite interesting. Because of the NONEG
-flag, we know that the user cannot mean "--no-exclude" itself. So our
-liberal prefix-matching kicks in, and we treat it as
---no-exclude-per-directory. I.e., it becomes a silent noop and the user
-gets no warning.
-
-I think parse_options() may be overly liberal here, and we might want to
-change that. But in the interim, it probably makes sense to just detect
-the "unset" case in the callbacks, report an error, and return -1.
-
--Peff
+It's fine and understandable if you're someone who's just building a
+package on some older system if you get a bunch of compiler warnings,
+but more annoying if you have to dig into how to disable a default
+-Werror.
