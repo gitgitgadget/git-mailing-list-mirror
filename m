@@ -2,159 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7CFC208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 10:27:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9D6F208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 10:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728912AbeHFMgJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 08:36:09 -0400
-Received: from mout.gmx.net ([212.227.15.18]:37405 "EHLO mout.gmx.net"
+        id S1729250AbeHFNHG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 09:07:06 -0400
+Received: from ao2.it ([92.243.12.208]:59670 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727517AbeHFMgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 08:36:09 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNHqL-1fp7pt4Anp-006uLl; Mon, 06
- Aug 2018 12:27:41 +0200
-Date:   Mon, 6 Aug 2018 12:27:40 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] line-log: demonstrate a bug with nearly-overlapping
- ranges
-In-Reply-To: <20180805015908.GE258270@aiede.svl.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808061216060.71@tvgsbejvaqbjf.bet>
-References: <pull.15.git.gitgitgadget@gmail.com> <cab7bb36eb85dbe38ad95ee02b083f11f0820e24.1533421100.git.gitgitgadget@gmail.com> <20180805015908.GE258270@aiede.svl.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
+        id S1728515AbeHFNHG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 09:07:06 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fmdCC-0006bp-J8; Mon, 06 Aug 2018 12:57:04 +0200
+Date:   Mon, 6 Aug 2018 12:58:28 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH v2 06/12] submodule--helper: add a '--stage' option
+ to the 'config' sub command
+Message-Id: <20180806125828.66fc99ef0b118e26e0b3e60d@ao2.it>
+In-Reply-To: <xmqqbmajzadt.fsf@gitster-ct.c.googlers.com>
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-7-ao2@ao2.it>
+        <xmqqd0v01trp.fsf@gitster-ct.c.googlers.com>
+        <20180803130334.3979eedb0733c609815e9fd5@ao2.it>
+        <xmqqbmajzadt.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wkIZM3YVg7HjHK+US5r6hIvcEBjAG6xNwKhkqlrOj04VKMLBziB
- VxSMfN5O+VUao+WpqNe3ziJz/LFVqG75laBriHDgfP7F4zGpZ016JwrxReq5JgxTEK/8Kw2
- JcvLSEb4yqfEIqAK+zp+oRiy3r5nFJ81SM34zDmhdjNEB6yXe3jAXV34OM0j/wdxU96KQa3
- aVT86s0jhtYnSGhpF/25g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I0jdllLYEFo=:653pRDHetNzn3U88uNK3wA
- xtmiqH0uTuIuS6qYzNu8MIYt4/PcVtVBpCn1Ub5pXYFjpbGe+igGT4G4lyOh3ulBgapuwyHMS
- pkCViaRB7BbdrJUMdID6YIBNnXCVtBktA2IQ6f2FteU7v+qnO7tSw6QpX6F/TjXIyQmdF/1G6
- s0eUQF/YLYFrpzaC85rG/5FKzO1RoykMLLPYTrjp+4fI04mkznNF+a79Ocv9bpi/+mCjjWJz/
- wMlmsmDUcvmEpSr0CyKSEVtv8uIbe7ufDCJloUTzpWES0F8eYrqYked46fpy0sUjrbFnl4BsK
- LyHNGv1Vuyx5s/rM9Iet8we4yR3l+BqZ2nVhdP+GO4M9KM6hfFGHFWV2ten88l996G+iNBbq0
- rqzvmc2qkMisNz6IYLb0KDiil+y5uWZxylo5QuUL2/ioFJRThBSlqESjj/kDwfkI7ISlX7kAQ
- N7e85G20AdWKKm3vCTe3itHxktD04TQEElidt4aFsqzPsofltfSeCfmZNXmQMvbdhT/ukSbwe
- LltvOZsghBf70L5KwpZYLu4RzUWSfy00/bSxiflr1fktzVREEdGjvoKVMdFHmma1wz+NugBus
- rjF6jCxeSP0C/seBTFInST7wCZjkWsyI7ztooZo401dXRCFgcJq8sX0G5lQ7Y+3B3413x95rZ
- x2yIknmCHvbhjUF47XdXs/wtKvmQ6c7NwRTQPJA/KBIhFFTHxXF0xbaxCq7FcoFNP7mFb8uhN
- rIPGJ7McjGM5DqHpj6yl7uXIoObTMT+8J2JwrxgQut6qnT/AT5GoM08wYUvpYs6dZDmkQ17PR
- vSrJm7T
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+On Fri, 03 Aug 2018 09:24:14 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
-On Sat, 4 Aug 2018, Jonathan Nieder wrote:
-
-> Johannes Schindelin wrote:
+> Antonio Ospite <ao2@ao2.it> writes:
 > 
-> > Currently, this test case throws an assertion:
-> >
-> > 	Assertion failed!
-> >
-> > 	Program: git.exe
-> > 	File: line-log.c, Line 71
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  t/t4211-line-log.sh | 17 +++++++++++++++++
-> >  1 file changed, 17 insertions(+)
+> > The rationale behind the change is to close the circle started with 04
+> > and 05 and stop referring to .gitmodules explicitly by file path in git
+> > commands. The change is not strictly needed for the series, it's for
+> > consistency sake.
 > 
-> Thanks for finding and demonstrating it.
+> Sorry, but I am still not quite sure what consistency you are
+> referring to.
+>
 
-You're welcome.
+Hi Junio,
 
-> Can you say more about what is going on in the test case?
+to recap: in previous patches we removed all instances of "git config
+-f .gitmodules" (read/write operations), because in that case
+encapsulating access to .gitmodules would directly enable us to add
+new functionality (i.e.: read from HEAD:.gitmodules).
 
-Certainly. I considered writing more into the commit message, but all my
-attempts were really repeating what the test case does, and were therefore
-poor commit message material.
+So, to me, it looked more organic to remove also the last explicit
+reference to .gitmodules in git-submodule.sh ("git add -f .gitmodules",
+the "stage" operation), even if in this case no new behavior about
+staging is going to be added for the time being. that is: the change is
+not strictly necessary.
 
-Under certain circumstances, multiple ranges specified for the line-log
-were adjusted incorrectly, leading to violation of assumptions as well as
-to segmentation faults. This test case demonstrates this.
+The consistency I was referring to is merely in the mechanism used to
+deal with .gitmodules: by always using "submodule--helper config".
 
-> Alternatively, could it be squashed in with the patch that fixes it?
+As a side argument: in some previous discussion Stefan mentioned the
+possibility that, in the future, he may be interested to explore
+different locations for submodules configuration, like a special ref,
+to prevent .gitmodules from being in the working tree at all, not even
+for writing submodule configuration.
 
-There is this really awful trend on this mailing list to suggest
-conflating the demonstration of a bug with the bug fix.
+Having an opaque "stage submodule configuration" operation would
+prepare for that too, but as I said this is not my immediate goal.
 
-It is really, really important to realize how valuable it is to have the
-regression test as an individual patch that can be used to verify that
-there is a bug, to pinpoint where it was introduced, to test alternative
-fixes, to keep records separate, and I could go on and on and on. Please
-do not ignore these very good reasons, and please refrain from
-recommending such conflation in the future.
+> I also do not see a reason why we want to stop referring to
+> .gitmodules explicitly by name.  We do not hide the fact that
+> in-tree .gitignore and .gitattributes files are used to hold the
+> metainformation about the project tree, saying that it is an
+> implementation detail.  Is there a good reason why .gitmodules
+> should be different from these other two?
 
-> The below will be more nitpicky:
-> 
-> [...]
-> > --- a/t/t4211-line-log.sh
-> > +++ b/t/t4211-line-log.sh
-> > @@ -115,4 +115,21 @@ test_expect_success 'range_set_union' '
-> >  	git log $(for x in $(test_seq 200); do echo -L $((2*x)),+1:c.c; done)
-> >  '
-> >  
-> > +q_to_lf () {
-> > +	tr Q '\012'
-> > +}
-> > +
-> > +test_expect_failure 'close to overlapping ranges' '
-> > +	test_seq 5 >a1.c &&
-> > +	git add a1.c &&
-> > +	git commit -m "5 lines" a1.c &&
-> 
-> It would be nice to use test_tick or test_commit for a more realistic
-> history (with time marching forward).
+Not sure about that, but one difference I can see
+between .gitignore/.gitattributes and .gitmodules is that I got the
+impression that editing the latter by hand is strongly discouraged, if
+that is indeed the case a layer of indirection can make sense IMHO to
+make the actual file path less relevant.
 
-As far as this test is concerned, that realism is not necessary, and comes
-at the cost of readability.
+Having said that I can drop patches 06/07 if this can help moving things
+forward; or if I had some success in convincing you I can improve the
+user interface (any advice?) and the commit message.
 
-> > +	sed s/3/3QaQb/ <a1.c | q_to_lf >tmp &&
-> > +	mv tmp a1.c &&
-> > +	git commit -m "2 more lines" a1.c &&
-> 
-> It's probably just me, but the bit with Q makes it hard for me to
-> follow.  Maybe there's a simpler way?
+Thank you,
+   Antonio
 
-Maybe. I did not find it, else I would have used it.
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
-> "sed -e '3aa' -e '3ab'" works here, but I don't know how portable it
-> is.
-
-My experience with BSD sed and the `a` command made me highly suspicious,
-that's why I did not go down that route.
-
-Besides, that `sed` invocation does not really look intuitive either.
-
-> I'd be more tempted to do
-> 
-> 	test_write_lines 1 2 3 4 5 >a1.c &&
-> 	...
-> 
-> 	test_write_lines 1 2 3 a b 4 5 >a1.c &&
-> 	...
-> 
-> 	test_write_lines 1 2 3 a b c 4 5 >a1.c &&
-> 	...
-> 
-> which is concise and has obvious behavior.
-
-That works for me!
-
-Ciao,
-Dscho
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
