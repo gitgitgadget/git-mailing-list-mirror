@@ -2,105 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 220D8208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 15:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0242208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 15:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732848AbeHFR0X (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 13:26:23 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38633 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730598AbeHFR0X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 13:26:23 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v14-v6so12747638wro.5
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:16:49 -0700 (PDT)
+        id S1732800AbeHFRct (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 13:32:49 -0400
+Received: from mail-it0-f42.google.com ([209.85.214.42]:54550 "EHLO
+        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732624AbeHFRct (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 13:32:49 -0400
+Received: by mail-it0-f42.google.com with SMTP id s7-v6so17920615itb.4
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7TvTEPgF60GeSuq9E3WULyHcLFauNRWg7OjBs0WZq3U=;
-        b=DF6KrbVwAoxATgrTwUQ+Ia5WmJieflHbVN9wmyq+QPcvTvM0x+XBE89bwFDKd8ip7H
-         JlVXp/jCOUCKPEQFW3oJhtsxbxy55N4L6hKhIZshaHDeeQFdWGrR1zO1Aa7zTVZfV4ys
-         9DCSfmJ0Zvwns6BlYfZFdZlJTzgvFR/bEGav81RCgBcH7thBQplPILVqafRT0jof/9v7
-         3c+WgmJlBouRr1n/Ew2Hxnr+HPLlqi92DfplRhPMEIzYD3q8yzYSO9OgBYVdKRFmWn29
-         IktvuaWi7BoudXglE8pI7Ibo54Rj6yYqdzYrhT47k4flTMRM1Ou/wXIbhRilgXwNQJ3J
-         2qqA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8sTWufGDdQq6cqLzqUANePW5R52L72XsDQqDoblYa4M=;
+        b=jBRt+RhMoqfKzBNffFmusp3rem3dizg74DVEoI4/yFN90TqHSv5NM/ljYXUEJj4Z0E
+         4Idj/pMXEGnbtBDw9CdeCVplaIf4hTWUHchI026fF0glhDYbPyX17NhNXWJ98RMdBSiX
+         ElyUAgKkJ2KeXZD4AI9nRbZQRNN6oPrSgzipKIHPa5bjTnKTzcPwFn4wnLLEcMUmRAlH
+         NRm3H9knI9C73BwwyLz0wdHl63B0NCDIswcwypAw37OXR+ysNDrFUZADYIasznwEzvw6
+         K6oUE172ccBEs+qfIuKEaxzNlAvHFS2WOjITbB9zbmi01WxGeXcZ099cZrCqSSAAtDcA
+         Y4uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7TvTEPgF60GeSuq9E3WULyHcLFauNRWg7OjBs0WZq3U=;
-        b=c/DX6niyxXHRnz947D7ZGmgt9i1ZfpbWHVWY4VWa8Ixqsn1QkH4AGJ3ZFW7BG2gKGl
-         Teh6IAq0NUnzOrqWJXOloZjgZuTOKosWQcgHvMNn92yVIj75SGCBAxaqk7B7/7WvXp31
-         MzClLHxaSjGrg5I5zQiRbFOz8lKw79pqe2zdsLeYCBSS6/ZJllPQxdzIii66CN8IcLYB
-         mhmXGMfySGpKLfcHhDNgi+T812DQr9GdBGNnBP+/nu1rtgfv+RnEtbm1HHspXRDbUWTm
-         ePluncDtw8AQhsI4xe1wb+kqkfYm+Ur3OS3lxtuNIGQVfREf9M1NHpE0GA1zngr322uz
-         Wm2A==
-X-Gm-Message-State: AOUpUlFmr+f9Gp5NktSmNLZVI+TN42qpcljqaNuRQGzF/infIwu4PgGJ
-        5xjUYYYMc5pw9iHMic1jt+up+v7j
-X-Google-Smtp-Source: AAOMgpdxVvK8jQ3ao6vb6N4orO4w1fKyDRSVUXw0Pf14j44i4j1VM1GI/6ax7pwsWUeR1ZxOKTJNjg==
-X-Received: by 2002:a5d:51cf:: with SMTP id n15-v6mr9883384wrv.107.1533568608330;
-        Mon, 06 Aug 2018 08:16:48 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y11-v6sm12847582wrt.4.2018.08.06.08.16.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 06 Aug 2018 08:16:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] add a script to diff rendered documentation
-References: <20180803205204.GA3790@sigill.intra.peff.net>
-        <20180805204930.GA202464@genre.crustytoothpaste.net>
-        <20180806133954.GA31282@sigill.intra.peff.net>
-        <20180806134237.GB31282@sigill.intra.peff.net>
-Date:   Mon, 06 Aug 2018 08:16:47 -0700
-In-Reply-To: <20180806134237.GB31282@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 6 Aug 2018 09:42:38 -0400")
-Message-ID: <xmqqd0uvr0dc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8sTWufGDdQq6cqLzqUANePW5R52L72XsDQqDoblYa4M=;
+        b=V3Npi2Y2NAt13PHKi2ZSZ8KvD4Qx/QvB9goB/cTvETuaQPDAWBD+OqYRn+21uNYEDD
+         YTWzm7lFnrgq417j9xnJwbaycKQc8wX7qV2NlAdMbznq6K4LzyH2w4Oj8d0FXmxu5Zg/
+         yHWY/yf9J6zX2oxyH2b2AdsqVDIuZ5EnHJ9jGMThv4Twhdc5d+8s6KI8Wsd/xWZa2TVI
+         Nliocpy1Fr6UfF+3KnN3V/thg9YgCeK0r31Sn8KP7W2FI52Fo/SzApc9j/uM17C0a4My
+         b0VbR4XhStYx0QVQ5MHj3Do6KAgqb+Hw0g9fk0c/CxW6LWwGDcmdo/PtDgF7TMQfdwcX
+         AMxQ==
+X-Gm-Message-State: AOUpUlF3zvJffbyuTMboTCr+r+d4D1RjCpvr4QC1Gi0yoPw6Qtb994fN
+        NpZ4JFpCcaKq5k2ZsnTRGYit4KJV59iAdULCAJc=
+X-Google-Smtp-Source: AAOMgpexmi22SFH085CclfEVtRtA0RWChQ9cnWgy1LdG4QxhGjFJDO/YvcHNqyg6MUvqIdiE1/sKpH7pxAsNEJ0sjqY=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr14952011itf.121.1533568993703;
+ Mon, 06 Aug 2018 08:23:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+KyZp4fxRfnPNozEtwgLPuFAnEsXCBPPubzNjv0wUMnBV_eww@mail.gmail.com>
+ <CA+KyZp43YGf1qLDHOtrfjJxREcaVQNN12iMLDL5qX=RXhmMCYQ@mail.gmail.com>
+ <20180805014631.GD258270@aiede.svl.corp.google.com> <CA+KyZp5i0EXPJ10v+SXmHWCYvZ7=XT8K8gcka0qxCBYXq=OevA@mail.gmail.com>
+ <20180805061312.GA44140@aiede.svl.corp.google.com> <CA+KyZp4Yc4_Xaw3v+BPwxi_PW75=GXmj=Re7EpsurXi2_hMc9w@mail.gmail.com>
+ <20180805081116.GG44140@aiede.svl.corp.google.com> <CA+KyZp760a3yTF6ghiNh=c5FoU36MN3cdQU5J8NF2Ss+nwRqyQ@mail.gmail.com>
+In-Reply-To: <CA+KyZp760a3yTF6ghiNh=c5FoU36MN3cdQU5J8NF2Ss+nwRqyQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 6 Aug 2018 17:22:47 +0200
+Message-ID: <CACsJy8Dh_u+8VkyCW60PBvieH-L5EMA+DvUDqYMHfbC1=q=S+A@mail.gmail.com>
+Subject: Re: concurrent access to multiple local git repos is error prone
+To:     alexander.d.mills@gmail.com
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Aug 6, 2018 at 9:38 AM Alexander Mills
+<alexander.d.mills@gmail.com> wrote:
+> Yeah this concurrency problem is real. Not only does it happen with
+> `git status` the same thing happens with `git rev-parse
+> --show-toplevel`.
 
-> On Mon, Aug 06, 2018 at 09:39:55AM -0400, Jeff King wrote:
->
->>   3. Default to number of CPUs, which is what a lot of other threading
->>      in Git does. Unfortunately getting that from the shell is
->>      non-trivial. I'm OK with $(grep -c ^processor /proc/cpuinfo), but
->>      people on non-Linux platforms would have to fill in their own
->>      implementation.
->
-> Is this too horrible to contemplate?
+"git rev-parse --show-toplevel" having this same problem helps. This
+command should never make any update in the repository, not even
+taking any lock and very basic access to the repository (I think it
+just needs to resolve HEAD, it does not even access object database).
+It's so "simple" [1] that makes me think this problem is something not
+really related to git. Perhaps the process is terminated abnormally
+because it hits some system limits?
 
-Chickens, eggs and a kitchen sink.  Sounds like a title of a movie.
+[1] well the repo discovery steps are a bit messy  but I think it's
+unlikely we have any racing issues there.
 
-It's a bit dissapointing that we cannot express personal preference
-in config.mak ;-)
-
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index 0f09bbbf65..fa8caeec0c 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -635,6 +635,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
->  			continue;
->  		}
->  
-> +		if (!strcmp(arg, "--online-cpus")) {
-> +			printf("%d", online_cpus());
-> +			continue;
-> +		}
-> +
->  		/* The rest of the options require a git repository. */
->  		if (!did_repo_setup) {
->  			prefix = setup_git_directory();
->
-> -Peff
+> What happens is that I get no stdout when repos are accessed
+> concurrently (and no stderr).
+-- 
+Duy
