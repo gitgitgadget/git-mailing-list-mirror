@@ -7,35 +7,35 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DFCE208EB
+	by dcvr.yhbt.net (Postfix) with ESMTP id 850FC208EB
 	for <e@80x24.org>; Mon,  6 Aug 2018 22:47:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732966AbeHGA7E (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 20:59:04 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37042 "EHLO
+        id S1733016AbeHGA7H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 20:59:07 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:44016 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1732832AbeHGA7E (ORCPT
+        by vger.kernel.org with ESMTP id S1732824AbeHGA7E (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 6 Aug 2018 20:59:04 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w76Mi4EC027609;
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w76MggkE031788;
         Mon, 6 Aug 2018 15:47:48 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2kna0jbwsm-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2kn91kc2e2-1;
         Mon, 06 Aug 2018 15:47:47 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id BC940228A032;
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id B32FB228A031;
         Mon,  6 Aug 2018 15:47:47 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id B38292CDE73;
+        by smtp.yojoe.local (Postfix) with ESMTP id AB13B2CDEA7;
         Mon,  6 Aug 2018 15:47:47 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [RFC/WIP PATCH 2/3] merge-recursive: fix handling of submodules in modify/delete conflicts
-Date:   Mon,  6 Aug 2018 15:47:44 -0700
-Message-Id: <20180806224745.8681-3-newren@gmail.com>
+Subject: [RFC/WIP PATCH 1/3] rerere: avoid buffer overrun
+Date:   Mon,  6 Aug 2018 15:47:43 -0700
+Message-Id: <20180806224745.8681-2-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.550.g44d6daf40a.dirty
 In-Reply-To: <20180806224745.8681-1-newren@gmail.com>
 References: <CABPp-BHxJyWsAQ3FkfdC-5Vqe3d7wWZm-hVYd0-afNY9dEgMeQ@mail.gmail.com>
@@ -49,51 +49,37 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=820 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1807170000 definitions=main-1808060237
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to commit c641ca670729 ("merge-recursive: handle addition of
-submodule on our side of history", 2017-11-14) a submodule can be
-confused for a D/F conflict for modify/delete and rename/delete
-conflicts.  (To the code, it appears there is a directory in the way of
-us writing our expected path to the working tree, because our path is a
-submodule; i.e. the submodule is itself the directory and any directory
-is assumed to be a D/F conflict that is in the way.)  So, when we are
-dealing with a submodule, avoid checking the working copy for a
-directory being in the way.
+check_one_conflict() compares `i` to `active_nr` in two places to avoid
+buffer overruns, but left out an important third location.  This has
+not previously been a problem, because existing merge strategies have
+tended to not create entries at stage #1 that do not have a
+corresponding entry at either stage #2 or stage #3.  However, this is
+not guaranteed, so add a check to avoid segfaults.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
-
-It might be better to first check that the submodule existed on the HEAD
-side of the merge, because there could be a directory in the way of the
-submodule.  But that's starting to get ugly quick, and the real fix to
-make this cleaner is the rewrite of merge-recursive that does an index-on=
-ly
-merge first, then updates the working copy later...
-
- merge-recursive.c | 2 +-
+ rerere.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 1446e92bea..4832234073 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1466,7 +1466,7 @@ static int handle_change_delete(struct merge_option=
-s *o,
- 	const char *update_path =3D path;
- 	int ret =3D 0;
-=20
--	if (dir_in_way(path, !o->call_depth, 0) ||
-+	if (dir_in_way(path, !o->call_depth && !S_ISGITLINK(changed_mode), 0) |=
-|
- 	    (!o->call_depth && would_lose_untracked(path))) {
- 		update_path =3D alt_path =3D unique_path(o, path, change_branch);
+diff --git a/rerere.c b/rerere.c
+index 16c8aac621..7d22fb08c7 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -533,7 +533,7 @@ static int check_one_conflict(int i, int *type)
  	}
+=20
+ 	*type =3D PUNTED;
+-	while (ce_stage(active_cache[i]) =3D=3D 1)
++	while (i < active_nr && ce_stage(active_cache[i]) =3D=3D 1)
+ 		i++;
+=20
+ 	/* Only handle regular files with both stages #2 and #3 */
 --=20
 2.18.0.550.g44d6daf40a.dirty
-
