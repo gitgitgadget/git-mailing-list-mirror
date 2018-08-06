@@ -2,406 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 271E2208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 14:33:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7E3C5208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 14:45:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732073AbeHFQmr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 12:42:47 -0400
-Received: from mail-yb0-f202.google.com ([209.85.213.202]:49363 "EHLO
-        mail-yb0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729679AbeHFQmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 12:42:47 -0400
-Received: by mail-yb0-f202.google.com with SMTP id c2-v6so13503968ybl.16
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 07:33:24 -0700 (PDT)
+        id S1731553AbeHFQyb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 12:54:31 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:42605 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728948AbeHFQyb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 12:54:31 -0400
+Received: by mail-lj1-f193.google.com with SMTP id f1-v6so10797474ljc.9
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 07:45:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=7Nio9u4+UWg/Xc0EikNTu3WY/k8yYYh5B1wuxT3qkcA=;
-        b=Bps/NYkpbSoDfwHc9axHXCUuPWv/IQMCm+cx8NWjEpoe/5ThmzeQbpITP1b5ESLzqn
-         WwHGxOXzNdx63sHwbVlkTzqsfbNWk00QwmgDXAU0Hj4tkNifOUevRDpEu2GhQenfgw6R
-         2cd1PGjWsNWn9sNLUUh0Dgp26y+SI4NeZBXJHl1p0C4gjeW5HwkzYKX8GRUGw/1bP6j4
-         foqss5hoZHiXFVGEcFy72BGpxKWOgm1ST/f2uD9wtnfK1/Xmh+q7Mje0eb8js/IIAvOu
-         MZtouVutPpBdMmijSW4qAfEeeONzqTtlOoKwPRXbw4qnEiQ+pYqn35N2/XK6YRdGYlVt
-         Q0HA==
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=q1LqQ25+PE+KV7ghhumHKMcE+AETHhbHXdnEoBJ8VWs=;
+        b=Ik6S61vHDzfr7oO0AhQUTAE4hOVpokhp6psil/YLPQRcIBH5pHQQntWr3s3S2xq9im
+         AUxwObWDmuNZc8yTNMSWMttpYkJ2cboPU1ppj+x43FAThzzsrx0bxub7W4KBsWiOgJO3
+         X4FQwRhN6J+Jzrb9DkjkN4CvSbyKl6D2fDq0gMg/gHRGDjE2qM364SvAFb0dYBLq5byI
+         wOMWAak5Q7s40at6KuXTReIP8cCLjyJBogDOAj4a3m+LqMR+cNs08z6p8BYUNDG1oVJO
+         7q5euV0O8/6YiRh89qMrATDL8sbWzKv5pZGYDVrxUIKXI5iMT00KcrLGiHtCDE5BWuq3
+         wA1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=7Nio9u4+UWg/Xc0EikNTu3WY/k8yYYh5B1wuxT3qkcA=;
-        b=IBwzdZEtXE2ZGdwGO4P//LvQbCWWlJ65yzarShonPQlCnT7z9zcErQX96w6ujp9B4W
-         DcSi5dJs95WMKoTLvwcUHlkaXjk3CHEW0Gcfv09rUYocI0rxzoH36R2zjdw3UDzNeCaS
-         bW+B9d4xq73fv2lLC9on82oWQWnYmbHiI8xiqAN7LBr8XDC8VmXHbhW254BAqOW2f785
-         dfcp+6SfNLJdXg098+0nJeBwf6gc/3VLt5GP19v2UtW7RX+WX6v5HjWwRq2wed3f1tN8
-         xMTHTdWVOCUuNDWZaxmDpozowcwL3zYqydRQ4ZJC0P3O4KDuhMHSQ3R0yWynFhw9MJf6
-         6egA==
-X-Gm-Message-State: AOUpUlGpEwbA0kSG6pdh+KZzX5ajLOqWTtLq2MPsyed78G18AUo7rF8T
-        JDj/tuWBYHt/7XQ6Upm56l0I+dnbHpQ=
-X-Google-Smtp-Source: AAOMgpcYRY5N6ZCkkXKvPJC3GGrwZFJbqH7wfo0IwXUkOtsftAC082yurTA6a8uoosTei5dEYBTD/xM6OKU=
-X-Received: by 2002:a81:a093:: with SMTP id x141-v6mr5949188ywg.52.1533566003518;
- Mon, 06 Aug 2018 07:33:23 -0700 (PDT)
-Date:   Mon,  6 Aug 2018 16:33:13 +0200
-In-Reply-To: <20180806143313.104495-1-hanwen@google.com>
-Message-Id: <20180806143313.104495-3-hanwen@google.com>
-Mime-Version: 1.0
-References: <20180806143313.104495-1-hanwen@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH v5 2/2] sideband: highlight keywords in remote sideband output
-From:   Han-Wen Nienhuys <hanwen@google.com>
-To:     gitster@pobox.com, sunshine@sunshineco.com, jrn@google.com
-Cc:     git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=q1LqQ25+PE+KV7ghhumHKMcE+AETHhbHXdnEoBJ8VWs=;
+        b=ZN2RGdWkhS7Q4R78X5ZQkeX2g5B9IxZUdxRQp+01lxheJuqNxjENmsS9MdPH5t4lr3
+         oOfFmOYR6ii+LT9CxpsvSK2TfoHigtLU+XMtvDat/7B2VXBplvnUkykRPw7BaOKD+U/X
+         RhJaka1ZjMAns2yoSJ9aTutG5BuSOS3n85RKdKEFN+dgvwX4n7F+bqzK5YLgGbbRvu3h
+         fDHhQ1rwwFe0QFixBOmkatakdPjzB2sSvifH4lsftJcCpJczwWgER7iD4icox2td8fL4
+         DhdluYbc5OHdvmh1KEuCBhlPWIvPBiFVUNxJzxg+Y2/DQPfUkfHY1il0mlCe1tgA5LpE
+         yT9A==
+X-Gm-Message-State: AOUpUlGHEd63tpIWSDZBbRy6YiIi0adToD3c4vekaPLPGBrxJOG8szaE
+        iIPEt+cMPHuirq2c2/LitgJJv+Te1v7qrolIlxY=
+X-Google-Smtp-Source: AAOMgpe1Rk9dc9ZGYLcRKgbMTt/JkGACVVaU9qc3wjk2+fHxWHMqoKAZ14Ev18uJkmzVlmiF9bh0MhqUw6FPplYxSgg=
+X-Received: by 2002:a2e:8457:: with SMTP id u23-v6mr3560410ljh.95.1533566701710;
+ Mon, 06 Aug 2018 07:45:01 -0700 (PDT)
+MIME-Version: 1.0
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 2002:a2e:5ce:0:0:0:0:0 with HTTP; Mon, 6 Aug 2018 07:45:01 -0700 (PDT)
+In-Reply-To: <20180802060842.GB10757@aiede.svl.corp.google.com>
+References: <CAHd499B2VingKU-+7idv9FROYgCmOAzZ7YAQgWdwY1YUeTUVHA@mail.gmail.com>
+ <20180802060842.GB10757@aiede.svl.corp.google.com>
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 6 Aug 2018 09:45:01 -0500
+X-Google-Sender-Auth: aEZCZbDtXCNQpU_6pDarjetcGDY
+Message-ID: <CAHd499CFHUwpNdYp2sMjChi_WWzSihi5VRzLMQbKsGrKf_Ktcg@mail.gmail.com>
+Subject: Re: Fetch on submodule update
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The colorization is controlled with the config setting "color.remote".
+On Thu, Aug 2, 2018 at 1:08 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> I think I misread this the first time.  I got distracted by your
+> mention of the --remote option, but you mentioned you want to use the
+> SHA-1 of the submodule listed, so that was silly of me.
+>
+> I think you'll find that "git fetch --no-recurse-submodules" and "git
+> submodule update" do exactly what you want.  "git submodule update"
+> does perform a fetch (unless you pass --no-fetch).
+>
+> Let me know how it goes. :)
+>
+> I'd still be interested in hearing more about the nature of the
+> submodules involved --- maybe `submodule.fetchJobs` would help, or
+> maybe this is a workflow where a tool that transparently fetches
+> submodules on demand like
+> https://gerrit.googlesource.com/gitfs/+/master/docs/design.md would be
+> useful (I'm not recommending using slothfs for this today, since it's
+> read-only, but it illustrates the idea).
 
-Supported keywords are "error", "warning", "hint" and "success". They
-are highlighted if they appear at the start of the line, which is
-common in error messages, eg.
+Hi thanks for your response, sorry I am a bit late getting back with you.
 
-   ERROR: commit is missing Change-Id
+Maybe my workflow is dated, because I'm still used to treating
+submodules as distinctly separated and independent things. I realize
+submodule recursion is becoming more inherent in many high level git
+commands, but outside of git there are separation issues that make
+this workflow doomed to be non-seamless. For example, pull requests
+will never offer the same uniformity: You will still have 1 pull
+request per submodule. There's also the issue of log audits: You
+cannot use blame, log, bisect, or other "diagnostic" commands to
+introspect into submodules "as if" they were subtree or something of
+the like (i.e. truly part of the DAG). A more realistic example of one
+of the common questions I still can't answer easily is: "How do you
+determine which commit in a submodule made it into which release of
+the software?" In the case where the parent repository has the
+annotated tags (representing software release milestones), and the
+submodule is just a common library (which does not have those tags and
+has no release cycle). Anyway, none of these issues are particularly
+related but they do contribute to the answer to your question
+regarding my workflow and use cases. The list goes on but I hope you
+get the idea.
 
-The Git push process itself prints lots of non-actionable messages
-(eg. bandwidth statistics, object counters for different phases of the
-process), which obscures actionable error messages that servers may
-send back. Highlighting keywords in the sideband draws more attention
-to those messages.
+Some of the more functional issues are performance related: I am aware
+enough, at times, that I can save time (in both local operations and
+network overhead) by skipping submodules. For example, if I know that
+I'm merging mainline branches, I do not need to mess with the
+submodules (I can fetch, merge, commit, push from the parent repo
+without messing with the submodules. This saves me time). If
+`fetchJobs` was also `updateJobs`, i.e. you could update submodules in
+parallel too, that might make this less of an issue. Think of
+repositories [like boost][1] that have (I think) over a hundred
+sibling submodules: Fetching 8 in parallel *and* doing `submodule
+update` in parallel 8 times might also speed things up. There's also
+`git status`, that if it recurses into submodules, is also
+significantly slow in the boost case (I'm not sure if it is
+parallelized).
 
-The background for this change is that Gerrit does server-side
-processing to create or update code reviews, and actionable error
-messages (eg. missing Change-Id) must be communicated back to the user
-during the push. User research has shown that new users have trouble
-seeing these messages.
+Again, none of this is particularly related, but just to give you more
+context on the "why" for my ask. Sorry if I'm dragging this out too
+far.
 
-The highlighting is done on the client rather than server side, so
-servers don't have to grow capabilities to understand terminal escape
-codes and terminal state. It also consistent with the current state
-where Git is control of the local display (eg. prefixing messages with
-"remote: ").
+The TLDR is that I do prefer the manual control. Automatic would be
+great if submodules were treated as integrated in a similar manner to
+subtree, but it's not there. I wasn't aware that `submodule update`
+did a fetch, because sometimes if I do that, I get errors saying SHA1
+is not present (because the submodule did not get fetched). Granted I
+haven't seen this in a while, so maybe the fetch on submodule update
+is a newer feature. Do you know what triggers the fetch on update
+without --remote? Is it the missing SHA1 that triggers it, or is it
+fetching unconditionally?
 
-Finally, this solution is backwards compatible: many servers already
-prefix their messages with "error", and they will benefit from this
-change without requiring a server update. By contrast, a server-side
-solution would likely require plumbing the TERM variable through the
-git protocol, so it would require changes to both server and client.
+Thanks for confirming it behaves as I already wanted. And as you can
+tell, I'm also happy to further discuss motivation / use cases /
+details related to overall usage of submodules if you'd like. I'm
+happy to help however I can!
 
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Han-Wen Nienhuys <hanwen@google.com>
----
- Documentation/config.txt            |  12 +++
- help.c                              |   1 +
- help.h                              |   1 +
- sideband.c                          | 126 +++++++++++++++++++++++++---
- t/t5409-colorize-remote-messages.sh |  80 ++++++++++++++++++
- 5 files changed, 210 insertions(+), 10 deletions(-)
- create mode 100755 t/t5409-colorize-remote-messages.sh
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 63365dcf3d..33bc1a3def 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1263,6 +1263,18 @@ color.push::
- color.push.error::
- 	Use customized color for push errors.
- 
-+color.remote::
-+	If set, keywords at the start of the line are highlighted. The
-+	keywords are "error", "warning", "hint" and "success", and are
-+	matched case-insensitively. Maybe set to `always`, `false` (or
-+	`never`) or `auto` (or `true`). If unset, then the value of
-+	`color.ui` is used (`auto` by default).
-+
-+color.remote.<slot>::
-+	Use customized color for each remote keyword. `<slot>` may be
-+	`hint`, `warning`, `success` or `error` which match the
-+	corresponding keyword.
-+
- color.showBranch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-show-branch[1]. May be set to `always`,
-diff --git a/help.c b/help.c
-index 3ebf0568db..b6cafcfc0a 100644
---- a/help.c
-+++ b/help.c
-@@ -425,6 +425,7 @@ void list_config_help(int for_human)
- 		{ "color.diff", "<slot>", list_config_color_diff_slots },
- 		{ "color.grep", "<slot>", list_config_color_grep_slots },
- 		{ "color.interactive", "<slot>", list_config_color_interactive_slots },
-+		{ "color.remote", "<slot>", list_config_color_sideband_slots },
- 		{ "color.status", "<slot>", list_config_color_status_slots },
- 		{ "fsck", "<msg-id>", list_config_fsck_msg_ids },
- 		{ "receive.fsck", "<msg-id>", list_config_fsck_msg_ids },
-diff --git a/help.h b/help.h
-index f8b15323a6..9eab6a3f89 100644
---- a/help.h
-+++ b/help.h
-@@ -83,6 +83,7 @@ void list_config_color_diff_slots(struct string_list *list, const char *prefix);
- void list_config_color_grep_slots(struct string_list *list, const char *prefix);
- void list_config_color_interactive_slots(struct string_list *list, const char *prefix);
- void list_config_color_status_slots(struct string_list *list, const char *prefix);
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix);
- void list_config_fsck_msg_ids(struct string_list *list, const char *prefix);
- 
- #endif /* HELP_H */
-diff --git a/sideband.c b/sideband.c
-index 325bf0e974..239be2ec85 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -1,6 +1,108 @@
- #include "cache.h"
-+#include "color.h"
-+#include "config.h"
- #include "pkt-line.h"
- #include "sideband.h"
-+#include "help.h"
-+
-+struct keyword_entry {
-+	/*
-+	 * We use keyword as config key so it should be a single alphanumeric word.
-+	 */
-+	const char *keyword;
-+	char color[COLOR_MAXLEN];
-+};
-+
-+static struct keyword_entry keywords[] = {
-+	{ "hint",	GIT_COLOR_YELLOW },
-+	{ "warning",	GIT_COLOR_BOLD_YELLOW },
-+	{ "success",	GIT_COLOR_BOLD_GREEN },
-+	{ "error",	GIT_COLOR_BOLD_RED },
-+};
-+
-+/* Returns a color setting (GIT_COLOR_NEVER, etc). */
-+static int use_sideband_colors(void)
-+{
-+	static int use_sideband_colors_cached = -1;
-+
-+	const char *key = "color.remote";
-+	struct strbuf sb = STRBUF_INIT;
-+	char *value;
-+	int i;
-+
-+	if (use_sideband_colors_cached >= 0)
-+		return use_sideband_colors_cached;
-+
-+	if (!git_config_get_string(key, &value)) {
-+		use_sideband_colors_cached = git_config_colorbool(key, value);
-+	} else if (!git_config_get_string("color.ui", &value)) {
-+		use_sideband_colors_cached = git_config_colorbool("color.ui", value);
-+	} else {
-+		use_sideband_colors_cached = GIT_COLOR_AUTO;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		strbuf_reset(&sb);
-+		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
-+		if (git_config_get_string(sb.buf, &value))
-+			continue;
-+		if (color_parse(value, keywords[i].color))
-+			die(_("config value %s is not a color: %s"), sb.buf, value);
-+	}
-+	strbuf_release(&sb);
-+	return use_sideband_colors_cached;
-+}
-+
-+void list_config_color_sideband_slots(struct string_list *list, const char *prefix)
-+{
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++)
-+		list_config_item(list, prefix, keywords[i].keyword);
-+}
-+
-+/*
-+ * Optionally highlight one keyword in remote output if it appears at the start
-+ * of the line. This should be called for a single line only, which must be
-+ * passed as the first N characters of the SRC array.
-+ */
-+static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-+{
-+	int i;
-+
-+	if (!want_color_stderr(use_sideband_colors())) {
-+		strbuf_add(dest, src, n);
-+		return;
-+	}
-+
-+	while (isspace(*src)) {
-+		strbuf_addch(dest, *src);
-+		src++;
-+		n--;
-+	}
-+
-+	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-+		struct keyword_entry *p = keywords + i;
-+		int len = strlen(p->keyword);
-+		/*
-+		 * Match case insensitively, so we colorize output from existing
-+		 * servers regardless of the case that they use for their
-+		 * messages. We only highlight the word precisely, so
-+		 * "successful" stays uncolored.
-+		 */
-+		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+			strbuf_addstr(dest, p->color);
-+			strbuf_add(dest, src, len);
-+			strbuf_addstr(dest, GIT_COLOR_RESET);
-+			n -= len;
-+			src += len;
-+			break;
-+		}
-+	}
-+
-+	strbuf_add(dest, src, n);
-+}
-+
- 
- /*
-  * Receive multiplexed output stream over git native protocol.
-@@ -16,7 +118,7 @@
- #define DISPLAY_PREFIX "remote: "
- 
- #define ANSI_SUFFIX "\033[K"
--#define DUMB_SUFFIX "        "
-+#define DUMB_SUFFIX "	     "
- 
- int recv_sideband(const char *me, int in_stream, int out)
- {
-@@ -48,8 +150,10 @@ int recv_sideband(const char *me, int in_stream, int out)
- 		len--;
- 		switch (band) {
- 		case 3:
--			strbuf_addf(&outbuf, "%s%s%s", outbuf.len ? "\n" : "",
--				    DISPLAY_PREFIX, buf + 1);
-+			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
-+				    DISPLAY_PREFIX);
-+			maybe_colorize_sideband(&outbuf, buf + 1, len);
-+
- 			retval = SIDEBAND_REMOTE_ERROR;
- 			break;
- 		case 2:
-@@ -69,20 +173,22 @@ int recv_sideband(const char *me, int in_stream, int out)
- 				if (!outbuf.len)
- 					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
- 				if (linelen > 0) {
--					strbuf_addf(&outbuf, "%.*s%s%c",
--						    linelen, b, suffix, *brk);
--				} else {
--					strbuf_addch(&outbuf, *brk);
-+					maybe_colorize_sideband(&outbuf, b, linelen);
-+					strbuf_addstr(&outbuf, suffix);
- 				}
-+
-+				strbuf_addch(&outbuf, *brk);
- 				xwrite(2, outbuf.buf, outbuf.len);
- 				strbuf_reset(&outbuf);
- 
- 				b = brk + 1;
- 			}
- 
--			if (*b)
--				strbuf_addf(&outbuf, "%s%s", outbuf.len ?
--					    "" : DISPLAY_PREFIX, b);
-+			if (*b) {
-+				strbuf_addstr(&outbuf, outbuf.len ?
-+					    "" : DISPLAY_PREFIX);
-+				maybe_colorize_sideband(&outbuf, b, strlen(b));
-+			}
- 			break;
- 		case 1:
- 			write_or_die(out, buf + 1, len);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-new file mode 100755
-index 0000000000..a9afb55ef1
---- /dev/null
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+
-+test_description='remote messages are colorized on the client'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir .git/hooks &&
-+	write_script .git/hooks/update <<-\EOF &&
-+echo error: error
-+echo ERROR: also highlighted
-+echo hint: hint
-+echo hinting: not highlighted
-+echo success: success
-+echo warning: warning
-+echo prefixerror: error
-+echo "  error: leading space"
-+exit 0
-+EOF
-+	chmod +x .git/hooks/update &&
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git clone . child &&
-+	(
-+		cd child &&
-+		test_commit message2 file content2
-+	)
-+'
-+
-+test_expect_success 'keywords' '
-+	git --git-dir child/.git -c color.remote=always push -f origin HEAD:refs/heads/keywords 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>: error" decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;YELLOW>warning<RESET>:" decoded
-+'
-+
-+test_expect_success 'whole words at line start' '
-+	git --git-dir child/.git -c color.remote=always push -f origin HEAD:refs/heads/whole-words 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<YELLOW>hint<RESET>:" decoded &&
-+	grep "hinting: not highlighted" decoded &&
-+	grep "prefixerror: error" decoded
-+'
-+
-+test_expect_success 'case-insensitive' '
-+	git --git-dir child/.git -c color.remote=always push -f origin HEAD:refs/heads/case-insensitive 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>: error" decoded &&
-+	grep "<BOLD;RED>ERROR<RESET>: also highlighted" decoded
-+'
-+
-+test_expect_success 'leading space' '
-+	git --git-dir child/.git -c color.remote=always push -f origin HEAD:refs/heads/leading-space 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "  <BOLD;RED>error<RESET>: leading space" decoded
-+'
-+
-+test_expect_success 'no coloring for redirected output' '
-+	git --git-dir child/.git push -f origin HEAD:refs/heads/redirected-output 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "error: error" decoded
-+'
-+
-+test_expect_success 'push with customized color' '
-+	git --git-dir child/.git -c color.remote=always -c color.remote.error=blue push -f origin HEAD:refs/heads/customized-color 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BLUE>error<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>success<RESET>:" decoded
-+'
-+
-+test_expect_success 'fallback to color.ui' '
-+	git --git-dir child/.git -c color.ui=always push -f origin HEAD:refs/heads/fallback-color-ui 2>output &&
-+	test_decode_color <output >decoded &&
-+	grep "<BOLD;RED>error<RESET>: error" decoded
-+'
-+
-+test_done
--- 
-2.18.0.597.ga71716f1ad-goog
-
+[1]: https://github.com/boostorg/boost
