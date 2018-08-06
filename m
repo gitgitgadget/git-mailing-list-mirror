@@ -2,87 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0242208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 15:23:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F28B208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 15:23:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732800AbeHFRct (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 13:32:49 -0400
-Received: from mail-it0-f42.google.com ([209.85.214.42]:54550 "EHLO
-        mail-it0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732624AbeHFRct (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 13:32:49 -0400
-Received: by mail-it0-f42.google.com with SMTP id s7-v6so17920615itb.4
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8sTWufGDdQq6cqLzqUANePW5R52L72XsDQqDoblYa4M=;
-        b=jBRt+RhMoqfKzBNffFmusp3rem3dizg74DVEoI4/yFN90TqHSv5NM/ljYXUEJj4Z0E
-         4Idj/pMXEGnbtBDw9CdeCVplaIf4hTWUHchI026fF0glhDYbPyX17NhNXWJ98RMdBSiX
-         ElyUAgKkJ2KeXZD4AI9nRbZQRNN6oPrSgzipKIHPa5bjTnKTzcPwFn4wnLLEcMUmRAlH
-         NRm3H9knI9C73BwwyLz0wdHl63B0NCDIswcwypAw37OXR+ysNDrFUZADYIasznwEzvw6
-         K6oUE172ccBEs+qfIuKEaxzNlAvHFS2WOjITbB9zbmi01WxGeXcZ099cZrCqSSAAtDcA
-         Y4uw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8sTWufGDdQq6cqLzqUANePW5R52L72XsDQqDoblYa4M=;
-        b=V3Npi2Y2NAt13PHKi2ZSZ8KvD4Qx/QvB9goB/cTvETuaQPDAWBD+OqYRn+21uNYEDD
-         YTWzm7lFnrgq417j9xnJwbaycKQc8wX7qV2NlAdMbznq6K4LzyH2w4Oj8d0FXmxu5Zg/
-         yHWY/yf9J6zX2oxyH2b2AdsqVDIuZ5EnHJ9jGMThv4Twhdc5d+8s6KI8Wsd/xWZa2TVI
-         Nliocpy1Fr6UfF+3KnN3V/thg9YgCeK0r31Sn8KP7W2FI52Fo/SzApc9j/uM17C0a4My
-         b0VbR4XhStYx0QVQ5MHj3Do6KAgqb+Hw0g9fk0c/CxW6LWwGDcmdo/PtDgF7TMQfdwcX
-         AMxQ==
-X-Gm-Message-State: AOUpUlF3zvJffbyuTMboTCr+r+d4D1RjCpvr4QC1Gi0yoPw6Qtb994fN
-        NpZ4JFpCcaKq5k2ZsnTRGYit4KJV59iAdULCAJc=
-X-Google-Smtp-Source: AAOMgpexmi22SFH085CclfEVtRtA0RWChQ9cnWgy1LdG4QxhGjFJDO/YvcHNqyg6MUvqIdiE1/sKpH7pxAsNEJ0sjqY=
-X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr14952011itf.121.1533568993703;
- Mon, 06 Aug 2018 08:23:13 -0700 (PDT)
+        id S1732715AbeHFRdU (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 13:33:20 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:43271 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732430AbeHFRdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 13:33:20 -0400
+Received: from [192.168.2.240] ([92.22.26.195])
+        by smtp.talktalk.net with SMTP
+        id mhMDfx1cGbZX5mhMDf3bxm; Mon, 06 Aug 2018 16:23:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533569022;
+        bh=FEXkrtw2zUejxljLRWa8hpOH+o5YwrQNKpQ+ZCLvhPA=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=JazL1+1lHvk++ot4TOY4KrnZTmn/EU0T2l8CCzvQ0uYy/iWN8S29moAK6GFwClMzH
+         dY+jLUCxasTEs93Xa1XJJAkpMoFWwZl7yM5Zl8bNR8qnecaJ2WHsKe6cchxGutQqx7
+         ZgKr8xOxpfUHf8bBVYoLYbsExao0iccMsrqbYn80=
+X-Originating-IP: [92.22.26.195]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=8bf3kEuDtVJeVZALKX4IsA==:117
+ a=8bf3kEuDtVJeVZALKX4IsA==:17 a=IkcTkHD0fZMA:10 a=RslZw344RIqlFeLviDgA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with --rebase-merges
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.13.git.gitgitgadget@gmail.com>
+ <pull.13.v2.git.gitgitgadget@gmail.com>
+ <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
+Date:   Mon, 6 Aug 2018 16:23:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <CA+KyZp4fxRfnPNozEtwgLPuFAnEsXCBPPubzNjv0wUMnBV_eww@mail.gmail.com>
- <CA+KyZp43YGf1qLDHOtrfjJxREcaVQNN12iMLDL5qX=RXhmMCYQ@mail.gmail.com>
- <20180805014631.GD258270@aiede.svl.corp.google.com> <CA+KyZp5i0EXPJ10v+SXmHWCYvZ7=XT8K8gcka0qxCBYXq=OevA@mail.gmail.com>
- <20180805061312.GA44140@aiede.svl.corp.google.com> <CA+KyZp4Yc4_Xaw3v+BPwxi_PW75=GXmj=Re7EpsurXi2_hMc9w@mail.gmail.com>
- <20180805081116.GG44140@aiede.svl.corp.google.com> <CA+KyZp760a3yTF6ghiNh=c5FoU36MN3cdQU5J8NF2Ss+nwRqyQ@mail.gmail.com>
-In-Reply-To: <CA+KyZp760a3yTF6ghiNh=c5FoU36MN3cdQU5J8NF2Ss+nwRqyQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 6 Aug 2018 17:22:47 +0200
-Message-ID: <CACsJy8Dh_u+8VkyCW60PBvieH-L5EMA+DvUDqYMHfbC1=q=S+A@mail.gmail.com>
-Subject: Re: concurrent access to multiple local git repos is error prone
-To:     alexander.d.mills@gmail.com
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfPHHAHWPSkhEaEjR+ELymLRlxuuRh6SjZ5oVq2WSw8NE2ogCVHX4AvT/XAX/vfnu8MEuTpUGw4wBv+rBnpskhZ9cTgtFjsrUo07Mv1rwlnwUlJRBKAsJ
+ pvvRqwgCqAb3rbbeAKWM4SnR1hx2As0QqbN+vqsqRYSW/9r1IXiZ/nPXLgXex7/dZyntUgEt6TY+OZ6eJFbQpJvlmh2aadgN33QzQOJ2En2K7ZiPOpuNM1q5
+ pRE3Ub5hmYAhoomCedpxnDSvSGUSS5/BLXgUBb9kSbk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 6, 2018 at 9:38 AM Alexander Mills
-<alexander.d.mills@gmail.com> wrote:
-> Yeah this concurrency problem is real. Not only does it happen with
-> `git status` the same thing happens with `git rev-parse
-> --show-toplevel`.
+Hi Johannes
+On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
+> 
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The idea of `--exec` is to append an `exec` call after each `pick`.
+> 
+> Since the introduction of fixup!/squash! commits, this idea was extended
+> to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
+> exec would not be inserted between a `pick` and any of its corresponding
+> `fixup` or `squash` lines.
+> 
+> The current implementation uses a dirty trick to achieve that: it
+> assumes that there are only pick/fixup/squash commands, and then
+> *inserts* the `exec` lines before any `pick` but the first, and appends
+> a final one.
+> 
+> With the todo lists generated by `git rebase --rebase-merges`, this
+> simple implementation shows its problems: it produces the exact wrong
+> thing when there are `label`, `reset` and `merge` commands.
+> 
+> Let's change the implementation to do exactly what we want: look for
+> `pick` lines, skip any fixup/squash chains, and then insert the `exec`
+> line. Lather, rinse, repeat.
+> 
+> While at it, also add `exec` lines after `merge` commands, because they
+> are similar in spirit to `pick` commands: they add new commits.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   sequencer.c              | 37 +++++++++++++++++++++++++++----------
+>   t/t3430-rebase-merges.sh |  2 +-
+>   2 files changed, 28 insertions(+), 11 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 31038472f..ed2e694ff 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char *commands)
+>   {
+>   	const char *todo_file = rebase_path_todo();
+>   	struct todo_list todo_list = TODO_LIST_INIT;
+> -	struct todo_item *item;
+>   	struct strbuf *buf = &todo_list.buf;
+>   	size_t offset = 0, commands_len = strlen(commands);
+> -	int i, first;
+> +	int i, insert;
+>   
+>   	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>   		return error(_("could not read '%s'."), todo_file);
+> @@ -4257,19 +4256,37 @@ int sequencer_add_exec_commands(const char *commands)
+>   		return error(_("unusable todo list: '%s'"), todo_file);
+>   	}
+>   
+> -	first = 1;
+> -	/* insert <commands> before every pick except the first one */
+> -	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
+> -		if (item->command == TODO_PICK && !first) {
+> -			strbuf_insert(buf, item->offset_in_buf + offset,
+> -				      commands, commands_len);
+> +	/*
+> +	 * Insert <commands> after every pick. Here, fixup/squash chains
+> +	 * are considered part of the pick, so we insert the commands *after*
+> +	 * those chains if there are any.
+> +	 */
+> +	insert = -1;
+> +	for (i = 0; i < todo_list.nr; i++) {
+> +		enum todo_command command = todo_list.items[i].command;
+> +
+> +		if (insert >= 0) {
+> +			/* skip fixup/squash chains */
+> +			if (command == TODO_COMMENT)
+> +				continue;
 
-"git rev-parse --show-toplevel" having this same problem helps. This
-command should never make any update in the repository, not even
-taking any lock and very basic access to the repository (I think it
-just needs to resolve HEAD, it does not even access object database).
-It's so "simple" [1] that makes me think this problem is something not
-really related to git. Perhaps the process is terminated abnormally
-because it hits some system limits?
+insert is not updated so if the next command is not a fixup the exec 
+line will be inserted before the comment.
 
-[1] well the repo discovery steps are a bit messy  but I think it's
-unlikely we have any racing issues there.
+> +			else if (is_fixup(command)) {
+> +				insert = i + 1;
+> +				continue;
+> +			}
+> +			strbuf_insert(buf,
+> +				      todo_list.items[insert].offset_in_buf +
+> +				      offset, commands, commands_len);
+>   			offset += commands_len;
+> +			insert = -1;
+>   		}
+> -		first = 0;
+> +
+> +		if (command == TODO_PICK || command == TODO_MERGE)
+> +			insert = i + 1;
+>   	}
+>   
+>   	/* append final <commands> */
+> -	strbuf_add(buf, commands, commands_len);
+> +	if (insert >= 0 || !offset)
+> +		strbuf_add(buf, commands, commands_len);
 
-> What happens is that I get no stdout when repos are accessed
-> concurrently (and no stderr).
--- 
-Duy
+Having read your other message about this patch I think if you wanted to 
+fix the position of the final exec in the case where the todo list ends 
+with a comment you could do something like
+
+	if (insert >= 0)
+		strbuf_insert(buf,
+			      todo_list.items[insert].offset_in_buf +
+			      offset, commands, commands_len);
+	else
+		strbuf_add(buf, commands, commands_len);
+
+I'm not sure it matters that much though
+
+The rest of this patch looks fine to me
+
+Best Wishes
+
+Phillip
+
+>   
+>   	i = write_message(buf->buf, buf->len, todo_file, 0);
+>   	todo_list_release(&todo_list);
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index 0bf5eaa37..90ae613e2 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -363,7 +363,7 @@ test_expect_success 'octopus merges' '
+>   	EOF
+>   '
+>   
+> -test_expect_failure 'with --autosquash and --exec' '
+> +test_expect_success 'with --autosquash and --exec' '
+>   	git checkout -b with-exec H &&
+>   	echo Booh >B.t &&
+>   	test_tick &&
+> 
+
