@@ -2,71 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D037E208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 16:07:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E816208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 16:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733205AbeHFSRH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 14:17:07 -0400
-Received: from mail-lj1-f171.google.com ([209.85.208.171]:35293 "EHLO
-        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733178AbeHFSRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 14:17:07 -0400
-Received: by mail-lj1-f171.google.com with SMTP id p10-v6so11071111ljg.2
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 09:07:20 -0700 (PDT)
+        id S1733198AbeHFSTz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 14:19:55 -0400
+Received: from mail-ua0-f196.google.com ([209.85.217.196]:44953 "EHLO
+        mail-ua0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733074AbeHFSTz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 14:19:55 -0400
+Received: by mail-ua0-f196.google.com with SMTP id k25-v6so12756837uao.11
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 09:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=r7FeSa84LDsFAnSpkBevV5LnqGwuwobclPIMX2CYAik=;
-        b=rK5tXlzK+Ro+lZl/o1ygvPfe541JyunUiD2UAbxdHiqNEWoUknC3CM/ASHFMqnBbir
-         uKqm2WLd8BYljJwIv2e/y8wUdq+o6eSeGLbgi6TS9PnGdMOAwk1YmEKiQSfHuGI7zQQo
-         e1c0NaH4zJlfVHmx3hNdJ6R7pKCsyFXKXjDNRH1FnzFYTkwjGthhcm7T4dXoxMqtcSMv
-         g+51LV3+N0fTYa9K0/9m/8MJf5zeIEYeOHE7h6mXmpZcqwj+Pg64Ds1M8mVPCkmqLfSz
-         Kmvs8WLy6M7FzXabz3lDIpIsNoHqy+1Q6UE+M0YYDbGxE4ayT/YEhw45EgP0oxEs4QR6
-         g6rw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=F3ru0RYkoYbljKiv/YNjsrYIKt12QOCvilGl4nTrBtk=;
+        b=UIqhsQMo3KbmFN6UVp65hn7Hu6csyuIE7Jy8y+TLblBToIZuKhYWpXTe2nU+lU7ZfG
+         sGkrdF1TlM2zL1bYMIL/az8lv716Ys16HWiyC0tZe7AKxFEVhum9CLvuKiJ0Qi6u/gUT
+         zuILdBZDbFFPc1evTpVmr+1Yp4PLjGG9nwt3FtS/uIHyN7AsbctC29Y1WoN0hTZXgoT9
+         qyCZioNLnLLwd8PZ97IwoRT8pLjIgSYn1vH2MwLBdeOmRL4nhG0QozYoJqHy/Gx/YeBc
+         iKHowjJIqhNYmev70vMKcI4kE5WbI+AxW1gYNZ17VRKh/kjAaW7R/uVZAzhYQ/cMWau4
+         mdGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=r7FeSa84LDsFAnSpkBevV5LnqGwuwobclPIMX2CYAik=;
-        b=EdFKyohiN/feDXld1zX26SheB+/jlyaeI1qt+kbi5mcKPFhq2yI+bsQ0hj0VozO08L
-         OzTLtUJtTr6MUzGyaGC7jLpmKbBTbUYkj2MOgi+DEUMNh8BdWYU+8ViWb3VJhgCwYIrR
-         6wLuQ16XbDTlVdpDPxS8cWa4ZVggOGiVi5Azf6jWB0gptXFHeYUln7MPlZf9ZeGGJvBh
-         PCuPZv3vHznXvsDbn3oGX+pl+CMzeT+pgJEHi9L+w/6re+0KUpk+Qo9/WcNigRV39jUg
-         oGWHZbc8ux6ZKrpcShGB+Cf1l3tDi95q80H7VjfS5cGFFHKj5V80S8IAOgmHjmeMPtwz
-         aZ0Q==
-X-Gm-Message-State: AOUpUlGl3SNkaZ20V93RniK4sMnnnjx8zU0n0hDH85I16m12e/pxuhlc
-        Uev9ODuKmJM2y1bFPDOuK7lhIJgko8skL0saPzO65V01
-X-Google-Smtp-Source: AAOMgpcXPbb17S/hrsIIrTXnr2XJ/We55K1wKekV9f/Qsg/sh2D1cGwE4EeKfA7AHu+JXFj/LZ5pnw0mplCYygesnmw=
-X-Received: by 2002:a2e:2c09:: with SMTP id s9-v6mr5447511ljs.88.1533571638128;
- Mon, 06 Aug 2018 09:07:18 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=F3ru0RYkoYbljKiv/YNjsrYIKt12QOCvilGl4nTrBtk=;
+        b=VLLWPTXXo67WFTJ+a+tVg5DpxjnipbaAeL0lA6esWTSL/Db8QVKTJOy7pF+7PTvfp9
+         9SRNGJE0vItaz8OE7Xdsw36woYS6ZIC4oskbVt+GGZQToRjEustQrcjofk4YBPid4B9k
+         1i6/LweDoZYJK5Lrk+R0cx4Ao8S9rT06sNWNTlTpKR7IC82KPSf+fTuExVPqYKztLIf5
+         9kr1MSIkbtNzuv0fkhEooNDHfsvZRKvLN6KmNkCvSkw7bskiiwt9BnPvlv+6v9Q+Qvfr
+         rIitlE/hstAlVsO9xSG2SGa0PemZb1GdAop8B3IuupqAAf8XjEQlgr0OB7XjBh/QbTAr
+         uD6Q==
+X-Gm-Message-State: AOUpUlE0+ISJBOGgOHOjThvHbsGdZDEYmTw4DMoj/DwngXd5t3btpOCk
+        lo4rj8heMR0lIIb1tZpxtpl94D0IvNkJ1v/9Ia8=
+X-Google-Smtp-Source: AAOMgpfV5wrc6xOtVDhMHfzs989KfmhjrScHJBiCMvRlSP6+N9sHyQbawyikvfmqAl0RUu4IFpKI62/2zorZnH4+S6Q=
+X-Received: by 2002:a9f:3d1a:: with SMTP id l26-v6mr10749166uai.29.1533571808111;
+ Mon, 06 Aug 2018 09:10:08 -0700 (PDT)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 6 Aug 2018 18:07:06 +0200
-Message-ID: <CAM0VKj=DDOPDxo_xDvhk2-HUPHfkUcLQTimqmY31yjq5eZiM2Q@mail.gmail.com>
-Subject: [BUG] 'git ls-files --no-exclude' segfault & co
-To:     Git mailing list <git@vger.kernel.org>
+References: <20180803231407.10662-1-newren@gmail.com> <20180806152524.27516-1-newren@gmail.com>
+ <20180806152524.27516-3-newren@gmail.com> <20180806154814.24585-1-szeder.dev@gmail.com>
+In-Reply-To: <20180806154814.24585-1-szeder.dev@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 6 Aug 2018 09:09:56 -0700
+Message-ID: <CABPp-BEJn3fj8y_K27MOX48t9W9DRS-OOGuJGhq+zuHsMz3SrA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t7406: avoid having git commands upstream of a pipe
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'git ls-files' has the options '--exclude', '--exclude-from',
-'--exclude-per-directory', and '--exclude-standard', which all work
-fine.  However, it also allows the negated version of all these four
-options, and they definitely don't work very well:
+On Mon, Aug 6, 2018 at 8:48 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
+te:
+> > @@ -922,7 +928,7 @@ test_expect_success 'submodule update clone shallow=
+ submodule' '
+> >               sed -e "s#url =3D ../#url =3D file://$pwd/#" <.gitmodules=
+ >.gitmodules.tmp &&
+> >               mv -f .gitmodules.tmp .gitmodules &&
+> >               git submodule update --init --depth=3D$commit_count &&
+> > -             test 1 =3D $(git -C submodule log --oneline | wc -l)
+> > +             test 1 =3D $(git -C submodule rev-list --count HEAD)
+> >       )
+> >  '
+> >
+> > @@ -938,7 +944,7 @@ test_expect_success 'submodule update clone shallow=
+ submodule outside of depth'
+> >               test_i18ngrep "Direct fetching of that commit failed." ac=
+tual &&
+> >               git -C ../submodule config uploadpack.allowReachableSHA1I=
+nWant true &&
+> >               git submodule update --init --depth=3D1 >actual &&
+> > -             test 1 =3D $(git -C submodule log --oneline | wc -l)
+> > +             test 1 =3D $(git -C submodule rev-list --count HEAD)
+> >       )
+> >  '
+>
+> These two hunks don't have the desired effect, because command
+> substitutions used like this will hide the exit code anyway.  I'd
+> suggest
+>
+>   git -C submodule log --oneline >out &&
+>   test_line_count =3D 1 out
+>
+> instead, with the additional benefit of a nice error message on
+> failure.
 
-  $ git ls-files --no-exclude
-  Segmentation fault
-  $ git ls-files --no-exclude-from
-  warning: unable to access '(null)': Bad address
-  fatal: cannot use (null) as an exclude file
-
-And '--no-exclude-standard' has the same effect as
-'--exclude-standard', because its parseopt callback function
-option_parse_exclude_standard() doesn't bother to look at its 'unset'
-parameter.
+Ah, good point...and good suggestion.  I'll wait for further feedback
+then resend with this change.
