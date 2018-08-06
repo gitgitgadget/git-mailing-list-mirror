@@ -2,157 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C161A208EB
-	for <e@80x24.org>; Mon,  6 Aug 2018 15:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7E4F208EB
+	for <e@80x24.org>; Mon,  6 Aug 2018 15:33:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732546AbeHFRlP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 6 Aug 2018 13:41:15 -0400
-Received: from mail-lf1-f45.google.com ([209.85.167.45]:35333 "EHLO
-        mail-lf1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728081AbeHFRlP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 6 Aug 2018 13:41:15 -0400
-Received: by mail-lf1-f45.google.com with SMTP id f18-v6so9402120lfc.2
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:31:36 -0700 (PDT)
+        id S1732935AbeHFRmq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 6 Aug 2018 13:42:46 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:33332 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732930AbeHFRmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 6 Aug 2018 13:42:46 -0400
+Received: by mail-pf1-f194.google.com with SMTP id d4-v6so7058433pfn.0
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 08:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=KtkGUR99EPBxz/FzR1kwXaF8r4fV59oS96lkxJW9oeQ=;
-        b=QjcPZ2v8mF9qce/vJjRNogvDs7MlRqaPLc6KnPN12CHDUaWti1Cq8hz8JsSTFfCPro
-         VNRjusdRj+IbiKb8rWSDpi5NPnI9n87DcWkgmBHhAPboqTCA2rnBoBR2LrQInma6IB9h
-         6JyUj3rNrpbLWCM2ERNUV5pf5Klkfso70gPIWvf15IS4F25u1tqW8jJasgV/YtrNKWre
-         gwKz+yOL/FuABdXm9tXME0rhDBWFK6prk+EPHJPR1eS/RdIRdjTaX9x9di5C/7eMfZoc
-         Dzo+4QXcXzYOV5OqHBumdluWYnEGEvGWBXPTJGu0efKfGn35rrJKAD2KG7S/DN4lQmgO
-         qESg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=3jr+S6m3ZUjaIm20iszt8CzAKyOgQNmSC2rB3KzI1vw=;
+        b=cRDWbNuCFCjGOYgoYOtX8GHhei3xbhMuDbyMdchLGcsBOYi0hAwbV50TzDy+odHaQo
+         CfgtlwmZJmj3LDAfjHIn0zlLAU6U1YcMtp7arMxn9drUJ1D9xO/++pea8OAw3AkBuXkh
+         PehyFgkUumQMAYxtfe7ptQeiPk/s0fS9ZCSnhcSe4N6LdnCkHFFJVjAc84Ly8KMbGZ11
+         FpBgixCXaSKMdchyZG0uDVp2BuMAOgkmnV+oftvhlE3bdM9uvoaetEStePxMQWBAYoRF
+         XHB6x7v+bU96XOgtPJO96u5AmHW5oUlEgcx/ouj+GT0pZiDtffIp+97hm5AytSyegQu5
+         kT9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=KtkGUR99EPBxz/FzR1kwXaF8r4fV59oS96lkxJW9oeQ=;
-        b=Lr417MJ+e3jVju2DzWe99QrEPtBolO0WRGF1QqHosbLfV40CfVzdXWEWzgyo2I/+Vu
-         LItTuUljpqGsP/tV5vN3QMVeCZZIwTnlO6OZALjiFg2KVoC5K1Twkx0TbQtT7cnyc2gF
-         gLDEaKWr6IhAYdGhECdqyqSuYXFmLmA1svZhaDDiLGIWlJvVrnBobW6NV518xOg9M/DU
-         9tHJyPU5uv+kXmrj6eyUwkcsL4p5AHT1QNlmxftbD1REnetIOYZSPLQA+hJykoYdsQDx
-         jFaXSW6oGCRmc+gs0t4AKUa+AAwH5i2yCr3ohmwQHFxOANaWNmd+ENEtXDrpMCr9Lp6a
-         thZg==
-X-Gm-Message-State: AOUpUlEJhjiULaMwus0PN7iPMa5i53EsmCJ3Mn1Jh4IXzqMylwVUNnFL
-        KSIeT9CbAtWA118fXJm//yWZUK1b7R539tjaRdZ76g==
-X-Google-Smtp-Source: AAOMgpdjC8OfrUojvv+dvBdo+0O2jQXQXFzJ0NyOcJ0K6swk57f67GKo9afugu7T3ci1D1m+2ZOHID7UmZDD38fLw1o=
-X-Received: by 2002:a19:501e:: with SMTP id e30-v6mr11214130lfb.71.1533569495389;
- Mon, 06 Aug 2018 08:31:35 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3jr+S6m3ZUjaIm20iszt8CzAKyOgQNmSC2rB3KzI1vw=;
+        b=tjtwbKHc7v+MeTUOTOSMtxwrbGJLcILBm8BACGyb8u6SjRZXdlWlqUo2oYmlbRh7i3
+         +ICnr6R43poPlb1ubcoJNmyswOTjquy+I11miAasngV1QNeQGH+mqSAPsktYCELqVnKq
+         bCW85xLkr/WB3uX48LDhiWyHB+AA+CyvFs6U9tliSxNXoPTkl2hSz43ACwlmyiuKpjzW
+         DmdLzSPwVQyz6+GgpWvszDqq5Crd6z361n3hLyFpa2yd60TiXDTXq5RstbMNsyjUw6f1
+         fmJSlYYQtks0GO2Pf35JpvfkZ4AvZ98/Ax0S/8aP5EJkxP+26izqTMTRTVb7y/HGJcUm
+         ocJw==
+X-Gm-Message-State: AOUpUlEyuKcuncxlYlOID+G5w1z3zPLEBWB2L5lvLr6tx5kqLxWtwJPd
+        xaPj25p4m2+DjpNANl9Kiag=
+X-Google-Smtp-Source: AAOMgpcyrM3dQVYwd5SGJ8BCEYJTGxRpOqWRTTMj05XKXwPbuwotmqrCz0tvEEMQtpwUhZVGVJm5nA==
+X-Received: by 2002:a65:560a:: with SMTP id l10-v6mr15263880pgs.130.1533569587546;
+        Mon, 06 Aug 2018 08:33:07 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id t19-v6sm25667272pfk.182.2018.08.06.08.33.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 06 Aug 2018 08:33:06 -0700 (PDT)
+Date:   Mon, 6 Aug 2018 08:33:05 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Thomas Rast <tr@thomasrast.ch>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] line-log: demonstrate a bug with nearly-overlapping
+ ranges
+Message-ID: <20180806153305.GA105466@aiede.svl.corp.google.com>
+References: <pull.15.git.gitgitgadget@gmail.com>
+ <cab7bb36eb85dbe38ad95ee02b083f11f0820e24.1533421100.git.gitgitgadget@gmail.com>
+ <20180805015908.GE258270@aiede.svl.corp.google.com>
+ <nycvar.QRO.7.76.6.1808061216060.71@tvgsbejvaqbjf.bet>
+ <20180806144726.GB97564@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
-In-Reply-To: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Mon, 6 Aug 2018 17:31:23 +0200
-Message-ID: <CAM0VKjkM-THZALy20VrZ-JSMyZjUXUqp1CAoCPrezXRsBfRJ2A@mail.gmail.com>
-Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
-To:     Git mailing list <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>, Clemens Buchacher <drizzd@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180806144726.GB97564@aiede.svl.corp.google.com>
+User-Agent: Mutt/+ (31e72e18) (2018-08-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Resending with Clemens' last used email address.
-Clemens, please consider sending a patch to update our .mailmap file.]
+Jonathan Nieder wrote:
+> Johannes Schindelin wrote:
 
+>> It is really, really important to realize how valuable it is to have the
+>> regression test as an individual patch that can be used to verify that
+>> there is a bug, to pinpoint where it was introduced, to test alternative
+>> fixes, to keep records separate, and I could go on and on and on. Please
+>> do not ignore these very good reasons, and please refrain from
+>> recommending such conflation in the future.
+>
+> If you want to propose changing the project's style to always separate
+> tests from the patch that fixes a bug, that's a discussion we can have,
+> in a separate thread.
 
-On Mon, Aug 6, 2018 at 5:11 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wro=
-te:
->
-> Travis CI changed its default OSX image to use XCode 9.4 on 2018-07-31
-> [1].  Since then OSX build jobs fail rather frequently because of a
-> SIGPIPE in the tests 'fetch notices corrupt pack' or 'fetch notices
-> corrupt idx' in 't5570-git-daemon.sh' [2].  I think this is a symptom
-> a real bug in Git affecting other platforms as well, but these tests
-> are too lax to catch it.
->
-> What it boils down to is this sequence:
->
->   - The test first prepares a repository containing a corrupt pack,
->     ready to be server via 'git daemon'.
->
->   - Then the test runs 'test_must_fail git fetch ....', which connects
->     to 'git daemon', which forks 'git upload-pack', which then
->     advertises refs (only HEAD) and capabilities.  So far so good.
->
->   - 'git fetch' eventually calls fetch-pack.c:find_common().  The
->     first half of this function assembles a request consisting of a
->     want and a flush pkt-line, and sends it via a send_request() call.
->
->     At this point the scheduling becomes important: let's suppose that
->     fetch is slow and upload-pack is fast.
->
->   - 'git upload-pack' receives the request, parses the want line,
->     notices the corrupt pack, responds with an 'ERR upload-pack: not
->     our ref' pkt-line, and die()s right away.
->
->   - 'git fetch' finally approaches the end of the function, where it
->     attempts to send a done pkt-line via another send_request() call
->     through the now closing TCP socket.
->
->   - What happens now seems to depend on the platform:
->
->     - On Linux, both on my machine and on Travis CI, it shows textbook
->       example behaviour: write() returns with error and sets errno to
->       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
->       die()s with 'fatal: write error: Connection reset by peer', and
->       doesn't show the error send by 'git upload-pack'; how could it,
->       it doesn't even get as far to receive upload-pack's ERR
->       pkt-line.
->
->       The test only checks that 'git fetch' fails, but it doesn't
->       check whether it failed with the right error message, so the
->       test still succeeds.  Had it checked the error message as well,
->       we most likely had noticed this issue already, it doesn't happen
->       all that rarely.
->
->     - On the new OSX images with XCode 9.4 on Travis CI the write()
->       triggers SIGPIPE right away, and 'test_must_fail' notices it and
->       fails the test.  I couldn't see any sign of an ECONNRESET or any
->       other error that we could act upon to avoid the SIGPIPE.
->
->     - On OSX with XCode 9.2 on Travis CI there is neither SIGPIPE, nor
->       ECONNRESET, but sending the request actually succeeds even
->       though there is no process on the other end of the socket
->       anymore.  'git fetch' then simply continues execution, reads and
->       parses the ERR pkt-line, and then dies()s with 'fatal: remote
->       error: upload-pack: not our ref'.  So, on the face of it, it
->       shows the desired behaviour, but I have no idea how that write()
->       could succeed instead of returning error.
->
-> I don't know what happens on a real Mac as I don't have access to one;
-> I figured out all the above by enabling packet tracing, adding a
-> couple of well placed tracing printf() and sleep() calls, running a
-> bunch of builds on Travis CI, and looking through their logs.  But
-> without access to a debugger and netstat and what not I can't really
-> go any further.  So I would now happily pass the baton to those who
-> have a Mac and know a thing or two about its porting issues to first
-> check whether OSX on a real Mac shows the same behaviour as it does in
-> Travis CI's virtualized(?) environment.  And then they can pass the
-> baton to those who know all the intricacies of the pack protocol and
-> its implementation to decide what to do with this issue.
->
-> For a mostly reliable reproduction recipe you might want to fetch this
-> branch:
->
->   https://github.com/szeder/git t5570-git-daemon-sigpipe
->
-> and then run 'make && cd t && ./t5570-git-daemon.sh -v -x'
->
->
-> Have fun! ;)
->
->
-> 1 - https://blog.travis-ci.com/2018-07-19-xcode9-4-default-announce
->
-> 2 - On git.git's master:
->     https://travis-ci.org/git/git/jobs/411517552#L2717
+By the way, don't get me wrong: I am sympathetic to the motivation for
+such a change.
+
+I have worked on projects where tests were in a separate repository
+from the application.  There are costs and benefits.  To support the
+kind of use cases you're describing, the tests would include
+conditionals to allow running on old versions of the application (the
+test expectations were based on the latest version, but setup code
+sometimes had to accomodate differences between versions).  It worked
+okay and was probably worth it for that project, despite the added
+friction.  It's not clear it would be worth it for Git.
+
+Jonathan
