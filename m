@@ -2,92 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBE25208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 09:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD869208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 09:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727669AbeHGLXb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 07:23:31 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:42850 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726414AbeHGLXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 07:23:30 -0400
-Received: by mail-yw1-f67.google.com with SMTP id y203-v6so4660131ywd.9
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 02:10:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c03QTh4pfxd0Q/afKZ7je8xgJNO2tmxpK5VEXdhAFs0=;
-        b=fdATrqhlIeov1BFRg2P2Go0pLfyK8ws0yoMXYHT4w1yYG2PfDL4PVY4pG+T38VCTTY
-         WZVskiA8dUbn9p0GSI7F1l4aVGzHkNPtFOzQiJVPPHjsMfdyXoFH6CdVtoSFiNLxeRbA
-         FwomnQhSdzKB3VOxomvbW4lVTCbVHwPWye6YYd4sBm+Z3PX7h+KhYI5tA5d4I4qZoyXC
-         x/0pkGHBIPRJ1Y6mTR71ThSHJEKuV0z2WsUJUuYxl5MN6jSpFrDJJt3JGXfMvweebaWx
-         kt9Me0oj//IkywVXUutiEj4Y0abtIT28LqC7jGI6XJykTElBkLorDgdeBV38Y+7kiO/4
-         FaAQ==
-X-Gm-Message-State: AOUpUlE88I2PApS593al+w535IV8hlLl97Uq33zz3j8aQDn23bwdfYP3
-        gEDmkB4g5QAiWLVMxVoDCBHGCEcWUApwvzC59Ag=
-X-Google-Smtp-Source: AAOMgpcZbfiPwNt9xytvlu/tA257Rj7dQLWk5Srqm/wiTI1z1xofTTesG6qLMiVjkKdiVL8YmmqR81CJvF85VirYZgg=
-X-Received: by 2002:a81:110e:: with SMTP id 14-v6mr9168679ywr.16.1533633008696;
- Tue, 07 Aug 2018 02:10:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.15.git.gitgitgadget@gmail.com> <faf35214f0f339b792a30a3bd013056217d9a2c1.1533421101.git.gitgitgadget@gmail.com>
- <CAPig+cRrC2mf1uuQ1C4Ue4OMZQbgcxXbJ9AXs0y6RSnUrcm7Dg@mail.gmail.com> <nycvar.QRO.7.76.6.1808061510260.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808061510260.71@tvgsbejvaqbjf.bet>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 7 Aug 2018 05:09:57 -0400
-Message-ID: <CAPig+cQU-mcUBJGHeZjKeta0_ve8WMr_KL1ToO9j-d=-hS1a=w@mail.gmail.com>
-Subject: Re: [PATCH 4/4] line-log: convert an assertion to a full BUG() call
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1731485AbeHGLd2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 07:33:28 -0400
+Received: from ao2.it ([92.243.12.208]:60834 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727011AbeHGLd2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 07:33:28 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fmy8O-0006eJ-Jt; Tue, 07 Aug 2018 11:18:32 +0200
+Date:   Tue, 7 Aug 2018 11:19:58 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [RFC PATCH v2 06/12] submodule--helper: add a '--stage' option
+ to the 'config' sub command
+Message-Id: <20180807111958.1494e8cc1e376a19b54bb788@ao2.it>
+In-Reply-To: <xmqq7el3pf8z.fsf@gitster-ct.c.googlers.com>
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-7-ao2@ao2.it>
+        <xmqqd0v01trp.fsf@gitster-ct.c.googlers.com>
+        <20180803130334.3979eedb0733c609815e9fd5@ao2.it>
+        <xmqqbmajzadt.fsf@gitster-ct.c.googlers.com>
+        <20180806125828.66fc99ef0b118e26e0b3e60d@ao2.it>
+        <xmqq7el3pf8z.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 6, 2018 at 9:15 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 5 Aug 2018, Eric Sunshine wrote:
-> > Although this appears to be a faithful translation of the assert() to
-> > BUG(), as mentioned by Andrei in his review of 3/4, the existing
-> > assert() seems to have an off-by-1 error, which means that the "> a"
-> > here really ought to be ">= a".
+On Mon, 06 Aug 2018 10:38:20 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
+
+> Antonio Ospite <ao2@ao2.it> writes:
+> 
+> >> I also do not see a reason why we want to stop referring to
+> >> .gitmodules explicitly by name.  We do not hide the fact that
+> >> in-tree .gitignore and .gitattributes files are used to hold the
+> >> metainformation about the project tree, saying that it is an
+> >> implementation detail.  Is there a good reason why .gitmodules
+> >> should be different from these other two?
+> >
+> > Not sure about that, but one difference I can see
+> > between .gitignore/.gitattributes and .gitmodules is that I got the
+> > impression that editing the latter by hand is strongly discouraged, if
+> > that is indeed the case a layer of indirection can make sense IMHO to
+> > make the actual file path less relevant.
+> 
+> I do not think we discourage hand editing of .gitmodules more than
+> others, say .gitignore; and I do not see a sane reason to do so.
+> 
+> "If you commit broken .gitmodules and let another person clone it,
+> submodules will not be checked out correctly" is *not* a sane
+> reason, as exactly the same thing can be said for incorrect checkout
+> of files with broken .gitattributes.
 >
-> I think Andrei's assessment is wrong. The code could not test for that
-> earlier, as it did allow ranges to become "abutting" in the process, by
-> failing to merge them. So the invariant you talked about is more of an
-> invariant for the initial state.
 
-I'm having trouble interpreting your response.
+OK, I see, maybe I got the wrong impression because
+while .gitignore/.gitattributes are expected to be hand edited, in my
+limited usage of submodules I never had to edit .gitmodules manually
+since git did it for me; I guess that does not necessarily mean it's
+discouraged and it may even be necessary for more advanced usages.
 
-My understanding is that range_set_append() is intended to be strict
-by not allowing addition of a range which abuts an existing range
-(although, of course, the assert() checks only the last range, so it's
-not full-proof). Assuming that to be correct, then the assertion
-contains a one-off-error (according to my reasoning).
+> Quite honestly, I just want to get over with this minor detail that
+> won't help any scripts (after all submodule--helper is not meant to
+> be used by humans) and focus on other parts of the patch series.
 
-I'm sensing from your reply that you seem to have a different idea
-about range_set_append()'s intended use.
+Agreed, let's drop 06 and 07 then.
 
-> My 3/4 would make that invariant heeded throughout the process.
->
-> I am still keen on keeping the invariants straight *without* resorting to
-> dirty tricks like calling sort_and_merge. Calling that function would just
-> make it easier for bugs to hide in this code.
+Thanks,
+   Antonio
 
-Indeed, avoiding the "dirty trick" would be ideal, although, I still
-haven't wrapped my head around it enough to be able to say whether the
-computed offset, when applied to the range in question, could cause
-that range to abut or overlap an existing range.
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
-(There are, of course, valid uses for range_set_append_unsafe() /
-sort_and_merge(), such as allowing -L options to overlap and be
-specified in any order. Batch-adding them to the range-set via
-range_set_append_unsafe() and letting sort_and_merge() sort them all
-out is plenty sensible.)
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
