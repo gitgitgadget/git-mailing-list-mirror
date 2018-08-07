@@ -2,25 +2,25 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=BAYES_00,DATE_IN_PAST_12_24,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.8 required=3.0 tests=AWL,BAYES_05,
+	DATE_IN_PAST_12_24,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4C2B208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 02:47:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 226DC208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 02:16:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728094AbeHGE7L (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 00:59:11 -0400
-Received: from 161640.com ([78.128.99.25]:41792 "EHLO dealsofamerica.com"
+        id S1726779AbeHGE14 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 00:27:56 -0400
+Received: from 161640.com ([78.128.99.25]:47827 "EHLO dealsofamerica.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726579AbeHGE7L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 00:59:11 -0400
-X-Greylist: delayed 2770 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Aug 2018 00:59:10 EDT
+        id S1726439AbeHGE14 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 00:27:56 -0400
 To:     git@vger.kernel.org
-Subject: do the editing
-Message-ID: <86570588b5699b2fbd7d933f356e257c@whitecapsmarine.com>
-Date:   Mon, 06 Aug 2018 14:08:49 +0200
-From:   "Jason James" <coekansi@hexaresearch.com>
+Subject: check with you
+Message-ID: <98e77d19a60fe6d4e7147d761e0e2348@whitecapsmarine.com>
+Date:   Mon, 06 Aug 2018 15:21:42 +0200
+From:   "Jason James" <askchati@montaguecompany.com>
 Reply-To: gaosintans@aliyun.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
