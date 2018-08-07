@@ -2,88 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DBD8208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 10:53:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0812E208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 11:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727693AbeHGNH3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 09:07:29 -0400
-Received: from mail-oi0-f46.google.com ([209.85.218.46]:38272 "EHLO
-        mail-oi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726073AbeHGNH3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 09:07:29 -0400
-Received: by mail-oi0-f46.google.com with SMTP id v8-v6so27616219oie.5
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 03:53:44 -0700 (PDT)
+        id S2388457AbeHGNi3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 09:38:29 -0400
+Received: from mail-lj1-f181.google.com ([209.85.208.181]:33671 "EHLO
+        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727286AbeHGNi2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 09:38:28 -0400
+Received: by mail-lj1-f181.google.com with SMTP id s12-v6so13136627ljj.0
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 04:24:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=ZiT/XHJ2QuTqecxVVZOWp+NNJ2lRnyTwU7Xkz2+7EzA=;
-        b=sxivDOQPg6eL8Rx2gRxaJ18zonTeUdIWto5n/4PT+hFnnRf/Am3P+KK+ZCyBTw7VVe
-         s6kH1kb0EPT6/dqm3iUkDWoBti/xCJHYkoDSHVMwVz1uZorxxNRfAYoIZoBesQm55EOk
-         jgU/Kw++QO57050zW1VNd0D/uZdo517eNd+eYwpIVLsaqf1PNnAPSOyqx+8v55H6OFHY
-         gw/iH7MIDOOa9+0WCOPsTAuDr2FLivTp2QQXmmdWHWP8pnCv5/waoW65W7cLojQtmtmX
-         ypEeFMkMQ33nDJJZRAlrzujK/8ZGq2Z7MnAhzpu3kroYAzP+Xbr5RORxMfZd+gQRiqT0
-         Qcaw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=D5cCA8+OKy6+d55uhpCOPJzQM+S/ggdHssRETXn6K6c=;
+        b=rlbPgtm7XEs/EW9UQjlYIdC0yR5xopv+NeCY7rkDJDSCOtFvST5k1mvs9ZBN98eVzS
+         VXIEGkxdaOGgPY1nYRKQkmXmjN6n+vHZB0HzP3mzSDw1UdQvBQoCTdcwJlKBqJFxwXBR
+         iQaRZnyXMKOy38Z2iBSm1c/dZlLh2WkrM9Pj+pc+JBXkxRku7Rn+1IMYmLxdITW02P8+
+         flOeCU9G31+pDPxaoX4qEKR/AS0AY7mdMwTngfOEZmSisBrc4eTwbx15r09lS/R0l0rv
+         MttC7ajgha92v+Rl9rLpCxB5hB0twp3hGyDgpqOyNmLdDXC5kQLEhVV+xElE0olLwkLP
+         Jc+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=ZiT/XHJ2QuTqecxVVZOWp+NNJ2lRnyTwU7Xkz2+7EzA=;
-        b=lOM2RQCvqEGlRMpBXY4QGRc3mV/47QaKgXozDm03xOWparuG2ELN7NE4TawT+qqmVA
-         L826866/rhdtBQEqVCdTDfLUI0TFQRVknDiHQ8J/GtoguBAPXWiZ1V1pEo2Yv0n3QwYT
-         kSWPztqSd9Jnb/qKRivNi5aK3h7+nuDyMZgLRyRxuIOHn5tEl3Sf0hhQRD7Kx4SL/fDi
-         qTw4GJ1llgDUh8U4fXUKFTtoPltxi6uFvk9UcdhTOskxmom/w2I08i/Mh3U2d96qPnE2
-         G0DE55IphJr9NwJrWF50bumLKToFhg0JED+xH36LXzdXPcWFovm1i3KU4sj9fx7lR+5i
-         9fDw==
-X-Gm-Message-State: AOUpUlFvx82t5UpFxM2sNwQdI4Fplh1uJXG901JLQd7S3hDpS6gAAw4s
-        KzoMH23x6UlZIH2p+NpozcJJILobz4FKvSF1Jac=
-X-Google-Smtp-Source: AAOMgpcQD51x8S3HpiEnTOAhkoaddTNczFs+Q1KeT0jApeU7SLKLZLz4SDadSSHGIduf7kaycXD5TO7bx33ctAKoq7E=
-X-Received: by 2002:aca:42:: with SMTP id 63-v6mr16900114oia.154.1533639224627;
- Tue, 07 Aug 2018 03:53:44 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a9d:12f6:0:0:0:0:0 with HTTP; Tue, 7 Aug 2018 03:53:44 -0700 (PDT)
-In-Reply-To: <a50da318-1f15-3dc8-53e0-c40365a053f7@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=D5cCA8+OKy6+d55uhpCOPJzQM+S/ggdHssRETXn6K6c=;
+        b=IzDmNVDdT414fq9kCdio0NiCvIcu1jXriyBV+/C7aqyld+YULajHy+iT7+Z4Z1hALm
+         7fTYwSsy7+9H8VLdKtU8nbKMpjvlTcVGrYOgRhqiDXsPKhuaAMKWW6NfnOCT6H6/7KNN
+         QOYfF9/Q7OG8KekC6HO/edWQ8TRXXg+si36rDMKj+eYDHMRyM9NwFsgxaNQNkkb8RIlQ
+         80JezEZZTzvTb4+sJXLATLiMM1kVREzUxijgoela0HT//UBNVjuKrYjQr18xNqXvO8Yh
+         NO1QDc6pZxgWlPclve604CD6yiG8ovTkdtUAdoUOn2ffQWNWFMOZ5kqjydVbcgyG22xx
+         lgzQ==
+X-Gm-Message-State: AOUpUlGgv9kNc+Pk59Pbk8FEwEx5GANF2nCYJbqiDCcJqyUZ8UE9AzAB
+        mLcc3Un0+OoVBSWmIOw7pTo=
+X-Google-Smtp-Source: AAOMgpdnD9TujnaWNuOOr4bluwFtN8KJuW46EB43QuPlSokQu/e7vfarHZgMX0yTvbTsbZz6cZwT3g==
+X-Received: by 2002:a2e:5810:: with SMTP id m16-v6mr16283940ljb.134.1533641075787;
+        Tue, 07 Aug 2018 04:24:35 -0700 (PDT)
+Received: from [192.168.221.164] ([185.79.217.61])
+        by smtp.gmail.com with ESMTPSA id p88-v6sm203065ljp.90.2018.08.07.04.24.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Aug 2018 04:24:34 -0700 (PDT)
+Subject: Re: [PATCH v3] t4150: fix broken test for am --scissors
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>, Paul Tan <pyokagan@gmail.com>
 References: <f91c7393-4f1b-1cf5-b870-f42e9bd18d64@gmail.com>
- <8f69d82b-0f35-754f-0096-853d6b463db7@gmail.com> <bea0e5d0-d944-ddd8-c3ab-a95355352b47@gmail.com>
- <CACRoPnTWxYvGfqgGt2r5ETOhfJZnqr1fTO9Fzwp-u25XbMGPPQ@mail.gmail.com> <a50da318-1f15-3dc8-53e0-c40365a053f7@gmail.com>
-From:   Paul Tan <pyokagan@gmail.com>
-Date:   Tue, 7 Aug 2018 18:53:44 +0800
-Message-ID: <CACRoPnSJm4bwRs-k5kkz4VDMCQ_r00JhQxpXUTrFUvRVODMWHg@mail.gmail.com>
-Subject: Re: [PATCH v2] t4150: fix broken test for am --scissors
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+ <8f69d82b-0f35-754f-0096-853d6b463db7@gmail.com>
+ <bea0e5d0-d944-ddd8-c3ab-a95355352b47@gmail.com>
+ <27bb8e3b-5b1d-dcc2-b002-df6941c62ee6@gmail.com>
+ <xmqqd0uvntgg.fsf@gitster-ct.c.googlers.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <2757a1be-408c-27a5-f30c-1606a3a558db@gmail.com>
+Date:   Tue, 7 Aug 2018 13:24:33 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
+MIME-Version: 1.0
+In-Reply-To: <xmqqd0uvntgg.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 7, 2018 at 1:42 AM, Andrei Rybak <rybak.a.v@gmail.com> wrote:
-> On 2018-08-06 10:58, Paul Tan wrote:
->>> +       git commit -F msg-without-scissors-line &&
->>> +       git tag scissors-used &&
+On 2018-08-06 22:14, Junio C Hamano wrote:
+> Andrei Rybak <rybak.a.v@gmail.com> writes:
 >>
->> Nit: I'm not quite sure about naming the tag "scissors-used" though,
->> since this commit was not created from the output of "git am
->> --scissors". Maybe it should be named `commit-without-scissors-line`
->> or something?
->>
->>> +       git commit -F msg-with-scissors-line &&
->>> +       git tag scissors-not-used &&
->>
->> Nit: Likewise, perhaps this tag could be named `commit-with-scissors-line`?
->
-> How about "expected-for-scissors" and "expected-for-no-scissors"?
+>> Only changes since v2 are more clear tag names.
+> 
+> ... and updated log message, which I think makes it worthwhile to
+> replace the previous one plus the squash/fixup with this version.
 
-Yep that's fine.
-
-Thanks,
-Paul
+My bad, totally forgot that I had been tweaking it after I sent out v2.
