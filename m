@@ -2,87 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDC5208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 07:25:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAB5B208EC
+	for <e@80x24.org>; Tue,  7 Aug 2018 07:50:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388866AbeHGJiy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 05:38:54 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:52563 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388730AbeHGJix (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 05:38:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id o11-v6so16156864wmh.2
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 00:25:52 -0700 (PDT)
+        id S2388919AbeHGKDh (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 06:03:37 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:33390 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727360AbeHGKDh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 06:03:37 -0400
+Received: by mail-pg1-f194.google.com with SMTP id r5-v6so7459710pgv.0
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 00:50:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=g0wNlGGibkmpS/5727uoCtvwgaLmdnjcaIGtyZNbmL8=;
+        b=trg9W0mv17XsyycDJMKUTysgtaq7gEqWo/q5SIfJz6eiWiXvFkOXHpTXcYnGUgk9i9
+         eI6Fpd2GqdNP+v5yXkIXHJ7mfTbqd6XztolyFKqkqPI4g0ESQDcYxoKiSLZ8/yY5+JJc
+         9cvYm5dkoZ8TJNf67Wa80LBY2VPOHA0Hszp9xHGgytp6Z1IWgzkyjtPldshJz79mAAth
+         z7MG9SUOaDbP7BQ7hbWYEe8msZCtzAPU4ddVsr4Z0j7b52xooEzKI5o32li7Kjb8CNbi
+         yzZpZSirrFgKtg3pkBNq8yJuXakHv7cHBfqqUpsVrDmvsVAdnaT5y7VphRQjPIPgmWYp
+         nAnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=kuLK32Oa0F93oV5zGFI9SH+JtBVRCPcN00tum+2lcRg=;
-        b=rgST8Gx4/rRvbDfZtHvTtMtUyTwcDTw0l4p8CIyghNeVtHkUAv2tEdfFc5EYsfhLLe
-         lAgF+pWTpXTvFxtmznOCXUaoJdmWMzNMwJxo9/F5YDDiF4OAqFHwOQBOdMqZBxiUlqB7
-         u500x4ZyJ+tepUwHrbIFx5WgKjm0rOYoPvhxFo3QHUIjljjgI+BUV4NZo2FwS0TxD0QH
-         Kwp9Gm8WweknTR4oUnQCfFfwRC49iUdUlCLieJEpZrovZhympJkP7T371HjBPCKmxlub
-         3tkS20WHadBlgltH6lgJBbvOSVJ7oLLR+ORgj5jV3H29Qz5HLdqmu/Q6ZKBB8sjSJpRJ
-         ff6Q==
-X-Gm-Message-State: AOUpUlGIvRSous1EaLY+hwAa43U6N4gxqG4EsAtVRlTMh3ilUJqDfdw8
-        e3R1JjR4nt8NakD6Iv7c15CfDEv9kSyTyA==
-X-Google-Smtp-Source: AA+uWPz9EEMCNNphM4wwkem0RpI60cXg3CXEsbMj+ms7wXORuhDl4tyqNKZUaVjY4fUfblmfknpMkw==
-X-Received: by 2002:a1c:d0ce:: with SMTP id h197-v6mr794523wmg.97.1533626751933;
-        Tue, 07 Aug 2018 00:25:51 -0700 (PDT)
-Received: from skisela-redhat.brq.redhat.com (nat-pool-brq-t.redhat.com. [213.175.37.10])
-        by smtp.gmail.com with ESMTPSA id q70-v6sm1055255wmd.39.2018.08.07.00.25.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Aug 2018 00:25:51 -0700 (PDT)
-From:   Sebastian Kisela <skisela@redhat.com>
-To:     git@vger.kernel.org
-Cc:     skisela@redhat.com
-Subject: [PATCH 2/2] git-instaweb: fix apache2 config with apache >= 2.4
-Date:   Tue,  7 Aug 2018 09:25:48 +0200
-Message-Id: <20180807072548.12764-2-skisela@redhat.com>
-X-Mailer: git-send-email 2.14.4
-In-Reply-To: <20180807072548.12764-1-skisela@redhat.com>
-References: <20180807072548.12764-1-skisela@redhat.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=g0wNlGGibkmpS/5727uoCtvwgaLmdnjcaIGtyZNbmL8=;
+        b=Jw2FwXsV3waCbUov/mz5vQS0QFSnegyQS8F+0yse5Tc67RREliTFxQ/4wazptWwsWC
+         YmAl8t7qK3vhkoea/ncpf9jSToBO4W559q74pzr88vmF44uw4CwzGBK3Cf9jRP+L7Rt/
+         qxRt3P7lMKCoG7V20mVC/nUDvv25VAx3fY0dxvBSBwOsuwc+GFsX/7Vx2UpDcoTvoX4j
+         lbMQE8T6PpJ5hsP/uzY9EGU4KHP5tSBEl/BxC4jikR+koFgc0FclqOE8Si2CxFsEoNr6
+         ScbyMshjKCN7WZEp0gfUVgGjWeVWRhiHAUh9Ha+XLnZtl9oXfXKX95eQkRF3T/y2X3lU
+         VB+Q==
+X-Gm-Message-State: AOUpUlGgVq79Ab1prldcXDYtEQLL5o2sZIxoE8JBhY7RrcCphCFlMI5V
+        vtP+EYIgoiycwK7NSO1HLDjL2996oZcwphmWtHE=
+X-Google-Smtp-Source: AAOMgpcpZq4q0LBBXRM8taHsIcAT9JbQgWDYPIClfmuV/d2xKaIvd1kNp9VvHys/cq9cRIF/TSQL+5MKN2JrXXCNSOE=
+X-Received: by 2002:a62:43c8:: with SMTP id l69-v6mr20797801pfi.196.1533628231280;
+ Tue, 07 Aug 2018 00:50:31 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a17:90a:3541:0:0:0:0 with HTTP; Tue, 7 Aug 2018 00:50:30
+ -0700 (PDT)
+In-Reply-To: <20180806152524.27516-1-newren@gmail.com>
+References: <20180803231407.10662-1-newren@gmail.com> <20180806152524.27516-1-newren@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 7 Aug 2018 09:50:30 +0200
+Message-ID: <CAN0heSqNFJm7cJ8SpTXLVi_0CFR5fphAT0D34a1k5i8d5T9E_g@mail.gmail.com>
+Subject: Re: [PATCH 0/2] Simple fixes to t7406
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The generated apache2 config fails with apache >= 2.4.  The error log
-states:
+On 6 August 2018 at 17:25, Elijah Newren <newren@gmail.com> wrote:
+> Changes since v1:
+>   - Simplify multiple tests using diff --name-only instead of diff --raw;
+>     these tests are only interested in which file was modified anyway.
+>     (Suggested by Junio)
+>   - Avoid putting git commands upstream of a pipe, since we don't run under
+>     set -o pipefail (Suggested by Eric)
+>   - Avoid using test_must_fail for system binaries (Pointed out by
+>     both Eric and Junio)
+>
+> Elijah Newren (2):
 
-    AH00136: Server MUST relinquish startup privileges before accepting
-    connections.  Please ensure mod_unixd or other system security
-    module is loaded.
-    AH00016: Configuration Failed
+I'm not sure what's up with the count of 2 vs 3.
 
-Fix this by loading the unixd module.  This works with older httpd as
-well, so no IfVersion conditional is needed.  (Tested with httpd-2.2.15
-on CentOS-6.)
+>   t7406: simplify by using diff --name-only instead of diff --raw
+>   t7406: avoid having git commands upstream of a pipe
+>   t7406: make a test_must_fail call fail for the right reason
 
-Written with assistance of Todd Zullinger <tmz@pobox.com>
+The subject of the final patch doesn't quite match its content anymore.
+The problematic test_must_fail is dropped, so it can no longer fail.
+Maybe something like "t7406: fix call that was failing for the wrong
+reason", or just s/test_must_fail// in what you have.
 
-Signed-off-by: Sebastian Kisela <skisela@redhat.com>
----
- git-instaweb.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index e42e58528..b1da2c374 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -358,7 +358,7 @@ EOF
- 			break
- 		fi
- 	done
--	for mod in mime dir env log_config authz_core
-+	for mod in mime dir env log_config authz_core unixd
- 	do
- 		if test -e $module_path/mod_${mod}.so
- 		then
--- 
-2.18.0.99.gd2ee41e0e
-
+Martin
