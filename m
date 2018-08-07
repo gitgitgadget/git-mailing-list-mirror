@@ -6,62 +6,70 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36501208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 03:31:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18A22208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 03:47:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727815AbeHGFoI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 01:44:08 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:41702 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726951AbeHGFoI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 01:44:08 -0400
-Received: by mail-yw1-f66.google.com with SMTP id q129-v6so4425647ywg.8
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 20:31:54 -0700 (PDT)
+        id S1731923AbeHGF7n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 01:59:43 -0400
+Received: from mail-yw1-f47.google.com ([209.85.161.47]:40887 "EHLO
+        mail-yw1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726958AbeHGF7n (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 01:59:43 -0400
+Received: by mail-yw1-f47.google.com with SMTP id z143-v6so4435803ywa.7
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 20:47:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=gixDEyHirDbq1hC4DBgJ5mhXohJ8+IRcRUO7ksyhUcs=;
-        b=JpdKfzuRaq//aAveljsBGxlwJORYLpRamJJ5+nElUWqmD2XTd35b8I6WLY0KU7l3gS
-         HopR9cmoSWMcceK+ixDeM7/1sTrq6BXeLRifeM+A8w0203swTh/zzLiV/ZemPysYoFLz
-         +F+LwzH6gvewif/Ub+zxnQ5pkoA5GlbugZ3HwpfxN5e1kEUUocIwJb3GHVegbv4eMSXo
-         zz7Prv1geDuNkVjqsVRkR61k4NBLHuZKoN5RafBOuwLySQI0lW/ny2wlXVqs6UiIZVZA
-         7Ykl0mtMU2QasyECufHMnrJQXetB5fIvF/E2jn5sX8OqZIMj/fkQeDbzLRLE2q33Nt8K
-         Xk9A==
-X-Gm-Message-State: AOUpUlH+e1xDb+5f+DwXOucgA6bucx58Eke8fU9lDTMlknJaViIxQNuQ
-        cYyxlL5tdbHa9iYT+BCTHZ6w9AMFQujnkrDTptE=
-X-Google-Smtp-Source: AAOMgpeUjJ/2wNmILgh0XA7jszsmxdqsX7eBIsnVoPyJO81Lx2OJ2lhy9y4kv3Raz2VIKfaK5uNhRt3lAU3GmrIZlN4=
-X-Received: by 2002:a81:110e:: with SMTP id 14-v6mr8787919ywr.16.1533612713769;
- Mon, 06 Aug 2018 20:31:53 -0700 (PDT)
+        bh=7akjCVVkaZ3k4W5UuTe1LFzSaVUM+285g6DlN3DJ4UU=;
+        b=iCQbSZ7zNiOcI+C3KW6pGPluG099BK5x80vsWGYpZsowFoNAlA16SK7ydUzhJO0agd
+         ApBkdOCPXgxXxXHAPetgkwJUisv+MEKY9VQdaUCjvGwrGgsQA2ZLjzTNGAClz5DXOidN
+         Yy1uX/cbKLhOJ7D4MOv1nnacOAjslgzh/0RtQR7azVlaxHaTzjwKlryLYtA6qHdrt0TD
+         LOC971smU2FlrJ7C1j4uskWqYPqsOnfRBYE4mKK30qSV3oIOHLqrDLzWAkU1wvC+Olt0
+         LMOh7Gtef56v18IhWJCy979RFxF55LXgFDN1ytl0nSrP5j4BmyXe73LaX+eU3JRJ/Pv2
+         FN/A==
+X-Gm-Message-State: AOUpUlHHuUy0O6DfgJ/UJmFvl2wNdAQhaKRVX+W/MU9tewYN//4TYXWY
+        oEm5CIbCMtLzH+nuZjdfbKBWI2zj/2cTGmymNrc=
+X-Google-Smtp-Source: AAOMgpeWLo2jSvtgqPwOI9IeXVRmjWAER3yJZXGQ00pyV4xuCGOLGBSvRH5TtIfcOj/yjB3/PvCpk2UbrSLNA3pOkG4=
+X-Received: by 2002:a81:7bd4:: with SMTP id w203-v6mr9213433ywc.70.1533613645420;
+ Mon, 06 Aug 2018 20:47:25 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
- <CAE1pOi3oeBEyD8skwfLAd7JviGYOUZaZwj3u9pznM4eLAR7fDQ@mail.gmail.com>
- <CAPig+cRe1R1YWpLaXVtTmwhaJiz2dONU83qtn_+XhaRevjn2fQ@mail.gmail.com> <CAE1pOi3+FW8itk4AHhG+r02TGyGTeoZpq7S6HKXkQtOVqigWGQ@mail.gmail.com>
-In-Reply-To: <CAE1pOi3+FW8itk4AHhG+r02TGyGTeoZpq7S6HKXkQtOVqigWGQ@mail.gmail.com>
+References: <xmqqtvo7m8c0.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvo7m8c0.fsf@gitster-ct.c.googlers.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 6 Aug 2018 23:31:41 -0400
-Message-ID: <CAPig+cT0ATgRMY-mhttViaburFW37G352BX=mj-Cnr2_wZruaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] fix "rebase -i --root" corrupting root commit
-To:     Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@talktalk.net>,
-        Akinori MUSHA <knu@idaemons.org>
+Date:   Mon, 6 Aug 2018 23:47:14 -0400
+Message-ID: <CAPig+cRoxiPUhXFA2vdZWh0iLfitFeN5CbUDduJuRZ0JGw=fvA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2018, #02; Mon, 6)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 6, 2018 at 9:20 PM Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
-> But your suggestion did make me think about what behaviour I would
-> like to see, exactly. I like that Git removes commits that no longer
-> serve any purpose (because I've included their changes in earlier
-> commits). So I would not want to keep commits that become empty during
-> the rebase. What I would like to see is that commits that _start out_
-> as empty, are retained. Would such behaviour make sense? Or would that
-> be considered surprising behaviour?
+On Mon, Aug 6, 2018 at 6:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> * pw/rebase-i-author-script-fix (2018-08-02) 2 commits
+>  - sequencer: fix quoting in write_author_script
+>  - sequencer: handle errors in read_author_ident()
+>  (this branch uses es/rebase-i-author-script-fix.)
+>
+>  Recent "git rebase -i" update started to write bogusly formatted
+>  author-script, with a matching broken reading code.  These are
+>  being fixed.
+>
+>  Undecided.
+>  Is it the list consensus to favor this "with extra code, read the
+>  script written by bad writer" approach?
 
-I, personally, have no opinion since I don't use empty commits.
-Perhaps someone more experienced and more long-sighted will chime in.
+Phillip's original "effectively one-liner" backward compatibility[1]
+seemed a reasonable compromise[2] between the choices of no backward
+compatibility and heavyweight backward compatibility of his
+re-roll[3]. His reference[4] to an earlier "one-liner" backward
+compatibility solution given similar circumstances bolstered the case
+for his original approach.
+
+[1]: https://public-inbox.org/git/20180731111532.9358-3-phillip.wood@talktalk.net/
+[2]: https://public-inbox.org/git/455fafb5-3c92-4348-0c2c-0a4ab62cf2ce@talktalk.net/
+[3]: https://public-inbox.org/git/20180802112002.720-3-phillip.wood@talktalk.net/
+[4]: https://public-inbox.org/git/c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net/
