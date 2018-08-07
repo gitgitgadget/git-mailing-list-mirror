@@ -2,93 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A47D3208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 15:25:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 396E3208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 15:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389917AbeHGRjx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 13:39:53 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:40884 "EHLO
+        id S2389798AbeHGRpY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 13:45:24 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34729 "EHLO
         mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732639AbeHGRjx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 13:39:53 -0400
-Received: by mail-io0-f195.google.com with SMTP id l14-v6so14306605iob.7
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 08:25:04 -0700 (PDT)
+        with ESMTP id S2389066AbeHGRpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 13:45:24 -0400
+Received: by mail-io0-f195.google.com with SMTP id l7-v6so14346128ioj.1
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 08:30:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4A+24kp8WqeSf1Zg8T3OqVkOQ79U5CEvs/rHI8ngoxc=;
-        b=fbict1O7n7YHNhAt5n2NuXIJtrSvcIM7MS2tc/91DpJN/vR1Uj2HJWihckqj8qtcGX
-         YcYwQ9tvxabGv+dMetY7h8MMfkg/ILkeWo3QKU9e+KkCO51RoRjKnpJpc1L+qECkFOqa
-         YT68HE9P82UXBlJbwsJlIlbaggGRMR2d2qTZAhuXtyNrilQc+wg4G7gFITd+P22hRpzw
-         3Q3YIulbuOhYDEGDAdO3OFn3bGjHv52WqI8VdcE+599xXiRmQGIPmZuRni0gery2N6YH
-         S0cGgK8P37Kbebgn/frZPPTdHYsNYrTSaZ3d+IeCzWHqIopiM3lqGtj4rdU43HGjxKU5
-         a3dw==
+        bh=3e23H3dDUshW6smhDAG/a7mR1qtzyv9KRNmsOAzztO4=;
+        b=ghwYmZfnbVIXQ/fv7Qcf38lmDpP3ztmRZqvyDIehmuuS3cJ8W8qtT/LKm6vF2VIL7L
+         MEVdxGBPjOapRpI2uepWnI76QWWZRirLO0K/oyCjAzxbusz7khsFfZc6kF5BR+MendI8
+         t6gbWIDoimiOJ2onFbgO14ZC50kA8toyYO5HSGsTESXAMS8py9kyIX6W5HpD6zvqvkmk
+         XZXbCQHouj7kVI8OyANOTCD/mZN46Euglc2WjnUpFUoMiFMYXfb4qFpbbYf7rNYNffcm
+         lLLCrzAIsvLREGaDIHHL9xOt7Cikn2tODCfC8GWPApdZrpFKvJkANjkph9t7LUL6jPcU
+         gZWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4A+24kp8WqeSf1Zg8T3OqVkOQ79U5CEvs/rHI8ngoxc=;
-        b=DC2t1A6j+pLINi5CW+szCP3D+mfw49lrgpmnS1sPyCubs+fvG5YGj2F0uO6hK6feI0
-         R2Uur0cHANMPQnEBgmVEwV59DvzKxCCSaRyt9xlnFh5cbI9CiQ9sUsmi1jVdM+HmMgJs
-         HJLfi02f1RnsmLOCpNi2SVy25qE9Jmud8J4bdfRRFIoECSDF8KJYZHYcOvcjzI63JERW
-         2Wf0aZPWOs+mc7c+sbrA1WhPFqfIMcMqPR3Ku6d2c5ZAnSv0aJybfvIWbm9BmRYFi5Cd
-         pAxIKkzcfkkfHsixbRCW8f7gP8vzkvGpWR8/HICq0yQapJuePWXjNUXojow3IDqn/DMg
-         3uew==
-X-Gm-Message-State: AOUpUlGkjTM9zDeq1X0KeKdcT7HcWnBBWCBylgDHRuaXNvLuKgrYCpvR
-        +XAi9hWqJ97rmmOQHlx3in9jGDCwRBEIbWJKk2I=
-X-Google-Smtp-Source: AA+uWPwkVEVjx2lA4Ng2ydVTOgwtkjZNz0yVKaCXWwoNvWw1zrVtlQzy6qVjNi2liKb4Kkh+4LXwwcrGZRLiU/5ThgA=
-X-Received: by 2002:a5e:960b:: with SMTP id a11-v6mr18707670ioq.53.1533655503482;
- Tue, 07 Aug 2018 08:25:03 -0700 (PDT)
+        bh=3e23H3dDUshW6smhDAG/a7mR1qtzyv9KRNmsOAzztO4=;
+        b=COxl6LCFznWTAqRz2tw/RvtF8KHtwghhRpewTTziQ4AP+64YbeFzzV2DWVH3lR6/EL
+         MgfoOvwtc/cAmG/BzXKgv/TRN/gWYlIiT3l9POgjz9pJl4Kkrxnwp5KKCwgcnkq/ThMq
+         DlbS0MPMwlTozcNHQNfQsKjLOiSMiRbXuYH72xQqFDKmSEC5UjNXLF+ymI22tNNHtmyM
+         i01CVZsOoYSxMQCFWewfNntxWcyIvIItcGgGFbMoiIOW77QeYUVzu3o5b8MCGssQHKxU
+         dzrYigXywDK9W5c9AZYsste6aCq1ZseVdU+J2jzfXJZbH2K8idvBMd9lBK2DGG4H19BX
+         jgUQ==
+X-Gm-Message-State: AOUpUlFKppoIgV7GI2+/45Al1TaX/HZXl3OjWXiNEI/4eNPRpeFyb6MS
+        18WQiJlJPn9GOQywlsdHIBksx/E7TRTTR/GoWzsSog==
+X-Google-Smtp-Source: AA+uWPy4ajFzbUj0g3pVpHyXrF90e8AEV5rhZwJ9c5JkkXnE7feH8HzTCo4wRLDd2o2nZTyIsFtE8UjxHP12VU9pbmg=
+X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr4701988iod.118.1533655832566;
+ Tue, 07 Aug 2018 08:30:32 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Tue, 7 Aug 2018 08:25:02 -0700 (PDT)
-In-Reply-To: <d83efc2e-3538-9547-244f-ca7653498c22@talktalk.net>
-References: <20180724163221.15201-1-alban.gruin@gmail.com> <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180731180003.5421-3-alban.gruin@gmail.com> <d83efc2e-3538-9547-244f-ca7653498c22@talktalk.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 7 Aug 2018 17:25:02 +0200
-Message-ID: <CAP8UFD3KbDrvU3zj24F7FF9ui2X75Vih4CoYE=cCZEWMsKP9Fw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v5 02/20] rebase -i: rewrite append_todo_help() in C
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
+References: <20180807132113.118297-1-gitter.spiros@gmail.com>
+In-Reply-To: <20180807132113.118297-1-gitter.spiros@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 7 Aug 2018 17:30:04 +0200
+Message-ID: <CACsJy8A=zp7nFBuWyfeP4UFf3KSsiaor3m0mtgVnhcEYHSw4HA@mail.gmail.com>
+Subject: Re: [PATCH] worktree: add --quiet option
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Tue, Aug 7, 2018 at 3:27 PM Elia Pinto <gitter.spiros@gmail.com> wrote:
+>
+> Add the '--quiet' option to git worktree add,
+> as for the other git commands.
+>
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+>  Documentation/git-worktree.txt |  4 +++-
+>  builtin/worktree.c             | 11 +++++++++--
+>  2 files changed, 12 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> index 9c26be40f..508cde55c 100644
+> --- a/Documentation/git-worktree.txt
+> +++ b/Documentation/git-worktree.txt
+> @@ -115,7 +115,9 @@ Unlock a working tree, allowing it to be pruned, moved or deleted.
+>
+>  OPTIONS
+>  -------
+> -
+> +-q::
+> +--quiet::
+> +       With 'add', suppress feedback messages.
 
-On Tue, Aug 7, 2018 at 3:57 PM, Phillip Wood <phillip.wood@talktalk.net> wrote:
->
-> On 31/07/18 18:59, Alban Gruin wrote:
->>
->> +
->> +     ret = fputs(buf.buf, todo);
->
-> It is not worth changing the patch just for this but strbuf_write()
-> might be clearer (you use it in a later patch)
->
->> +     if (ret < 0)
->> +             error_errno(_("could not append help text to '%s'"), rebase_path_todo());
->> +
->> +     fclose(todo);
->
-> You should definitely check the return value and return an error if
-> appropriate as fputs() might not actually write any data until you try
-> and close the file.
+Should we update the synopsis as well?
 
-I agree about checking the return value from fputs(), but it seems to
-me that we don't usually check the value of fclose().
+> @@ -315,6 +316,9 @@ static int add_worktree(const char *path, const char *refname,
 
-Thanks,
-Christian.
+Before here we run either update-ref or symbolic-ref. update-ref does
+not have --quiet so it's fine, no need to add another option there
+(until it shows something when used with "worktree add --quiet") but
+symbolic-ref seems to support -q. Should we pass -q to it?
+
+>                 cp.argv = NULL;
+>                 argv_array_clear(&cp.args);
+>                 argv_array_pushl(&cp.args, "reset", "--hard", NULL);
+> +               if (opts->quiet)
+> +                       argv_array_push(&cp.args, "--quiet");
+> +               printf("%s\n","soo qia");
+>                 cp.env = child_env.argv;
+>                 ret = run_command(&cp);
+>                 if (ret)
+> @@ -437,6 +441,7 @@ static int add(int ac, const char **av, const char *prefix)
+>                 OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
+>                 OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
+>                 OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
+> +               OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+
+git grep OPT__QUIET shows that we have plenty different messages to
+describe --quiet. But yeah "support progress reporting" seems close
+enough in this context.
+
+>                 OPT_PASSTHRU(0, "track", &opt_track, NULL,
+>                              N_("set up tracking mode (see git-branch(1))"),
+>                              PARSE_OPT_NOARG | PARSE_OPT_OPTARG),
+
+The rest looks good.
+-- 
+Duy
