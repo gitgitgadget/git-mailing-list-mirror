@@ -6,58 +6,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F296208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 20:57:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A437208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 21:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726531AbeHGXNt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 19:13:49 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39358 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726027AbeHGXNs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 19:13:48 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h10-v6so29935wre.6
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 13:57:33 -0700 (PDT)
+        id S1726502AbeHGXSC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 19:18:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35571 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726027AbeHGXSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 19:18:02 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so511623wmc.0
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 14:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=rcHtCHHYPo/HVs/FNS3rJaTA9fEB/IorQOLEM9q2T6U=;
-        b=WYxgrI2PLYe6l50rK4phbrWT7n6hD/r81KBpHQC/Z7kIzmwTFDLNMbU59gQaGBclX0
-         nt/QpsFH98KRRa47QRowEHoV8jJkiF19oflR3hYf1QBclzykVLrxQSPaERvLCfzeE2Ro
-         zvJwe/NEgeQHIJTrr5b1l5YWu1n0beQZz7SeAAs+nRfr5b3Yl038wAesTkF2IaF99w5A
-         PBM4xjszqQeSVkxdpL+rnAGqoOWYT017u93hWBpyPG6Bh7SCfiGYnYC2KyQefo/Mq+93
-         rFyFSddLkcGAP/yKbM2CKz3f9m5YRGx7ssrBdt/Jqj7jhTW/EDGHAVlOOjorQcOOd+yu
-         sgNQ==
+        bh=wVx0gWQ/+m8mKOC4TmdNpdc7f9EFx14NajPRM4tyU1E=;
+        b=LFj3cIhzOK/DAgVXjTC2H9VyteD8LDhoDqzfpqxc9sFOS8LrYLihaxcj8rtXdW4xES
+         YfVy1hF7Jx1Zxf3tSVvQpEgvQKQW78dVdgIE/8V/5DysrWod3KmqUnd5ax5mejkwrtHx
+         JblWrJA4NTRqcUd4xl3jsaV/b/N6B4dfvByPomtNvbBKZkMcZgFzuyPz2q0IKljgaMJO
+         QmKFFQyoZpKZxwJGhk4mN5p2Wurv7IhtJ3JuZdlfFMh/T/FbQeCFwY/pWxuvb8brSr3M
+         drspxAPt20P+c7ffkFXhA0faaR2wvl9XEXL6aez9z8VltoASqqa8YXMiXNInfuqInpR8
+         6OJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=rcHtCHHYPo/HVs/FNS3rJaTA9fEB/IorQOLEM9q2T6U=;
-        b=sBDspo7nZdbh1+PcYn6pCvK8wk73raqfvif2Rs0DzQz+3cUcNyLZfVBG/YQOtosuCM
-         kaGT278reCOTQ2TbXJaYc8eM+mL725uaTV37XDl5ENaY0XEhqQgp9pEM4IBTqoHxx2uw
-         tIcZildUoWz5qSXCg0D+96JuHz4ed3Mytin99csCMV8z8G3Y0Bu3ngrIva69wxCJDa/g
-         Z95A3qswDoYkwXgluFRItBPn34uzjO4D1qAdf7kGjDfPe1ME88sP7RC6nsTaG9xjjOXI
-         1uWF64jdqF4JEgBZD+IYLVZDRsLK8V/WQi+q6//JWqbjrt9v+RmJLmrh7oSkygAbLWhT
-         5MIQ==
-X-Gm-Message-State: AOUpUlFFT4yTQtmCoBjvWgFF5MurLQ13G6odxRFhd6JzRfl1IJLp+q1K
-        FMGfZWevXb2jwtAVuONUsl0=
-X-Google-Smtp-Source: AA+uWPyHSg8ab20v6cH5FvQE86OBr4wXaNO5qEV1gIXZaLcE6SDzP40anyWISrPkjMNJNA9UqhKkrw==
-X-Received: by 2002:a5d:694e:: with SMTP id r14-v6mr20606wrw.278.1533675452247;
-        Tue, 07 Aug 2018 13:57:32 -0700 (PDT)
+        bh=wVx0gWQ/+m8mKOC4TmdNpdc7f9EFx14NajPRM4tyU1E=;
+        b=IG2nSi7slrqxIz7a7hDXb7w7OFbuM+oRKLHvUr/6UIjj4f9D2T1god/ZB5L5GuT3fz
+         K+3u67ykxXAx7l0ykOrgeQJsFBCCD2d0pnNpc4YveDFwT9rw2JslHEL6hwKfW/LiZcBP
+         /RfxygIQR2RfApnbDJ+TQNIF7rw/tYUr0Xd0GaBM2pkdHmuIA45dmrSm1nENrszS6CdQ
+         N36ok2sYy7G0olHDeJt6PqJkDyYbEu35Sbt4dSGrP44Ko1HHaEKXVOoMw0B8graQo+EF
+         ZRH1KoPpteOkrZgF804jld8TbGmqvVeINO+t51Fxwl8WX2qsL2ZCuiHBH/eKh2N2CG0o
+         MO3Q==
+X-Gm-Message-State: AOUpUlH1SODGaSMvO8C8L3q4a3ys74KA/5CnuF/mF43G+zKoFhHPnWzl
+        /lawpannngA5aThnyMn3hhc=
+X-Google-Smtp-Source: AA+uWPxtBoLDySNlDqNNMJDsjZmIvVN52oO7t3LYpDfZ9BX7ST9q6X5tFzyo5SjQdzJfXIU9fD2JSg==
+X-Received: by 2002:a1c:3a8f:: with SMTP id h137-v6mr36772wma.72.1533675704726;
+        Tue, 07 Aug 2018 14:01:44 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e141-v6sm4491112wmd.32.2018.08.07.13.57.31
+        by smtp.gmail.com with ESMTPSA id a9-v6sm2435980wrp.55.2018.08.07.14.01.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Aug 2018 13:57:31 -0700 (PDT)
+        Tue, 07 Aug 2018 14:01:43 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] repack: repack promisor objects if -a or -A is set
-References: <cover.1533672584.git.jonathantanmy@google.com>
-        <61396b2a73a801f62818ad3b691f75170d2e3919.1533672584.git.jonathantanmy@google.com>
-Date:   Tue, 07 Aug 2018 13:57:31 -0700
-In-Reply-To: <61396b2a73a801f62818ad3b691f75170d2e3919.1533672584.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Tue, 7 Aug 2018 13:12:32 -0700")
-Message-ID: <xmqqzhxxki84.fsf@gitster-ct.c.googlers.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     sunshine@sunshineco.com, jrn@google.com, git@vger.kernel.org
+Subject: Re: [PATCH v7 0/1]   sideband: highlight keywords in remote sideband output
+References: <20180807125108.104293-1-hanwen@google.com>
+Date:   Tue, 07 Aug 2018 14:01:43 -0700
+In-Reply-To: <20180807125108.104293-1-hanwen@google.com> (Han-Wen Nienhuys's
+        message of "Tue, 7 Aug 2018 14:51:07 +0200")
+Message-ID: <xmqqva8lki14.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,59 +65,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-> +static int write_oid(const struct object_id *oid, struct packed_git *pack,
-> +		     uint32_t pos, void *data)
-> +{
-> +	int fd = *(int *)data;
-> +
-> +	xwrite(fd, oid_to_hex(oid), GIT_SHA1_HEXSZ);
-> +	xwrite(fd, "\n", 1);
-> +	return 0;
-> +}
-> +
-> +static void repack_promisor_objects(const struct packed_objects_args *args,
-> +				    struct string_list *names)
-> +{
-> +	struct child_process cmd = CHILD_PROCESS_INIT;
-> +	FILE *out;
-> +	struct strbuf line = STRBUF_INIT;
-> +
-> +	prepare_packed_objects(&cmd, args);
-> +	cmd.in = -1;
-> +
-> +	if (start_command(&cmd))
-> +		die("Could not start pack-objects to repack promisor objects");
-> +
-> +	for_each_packed_object(write_oid, &cmd.in,
-> +			       FOR_EACH_OBJECT_PROMISOR_ONLY);
-> +	close(cmd.in);
+> Fix nits; remove debug printf.
+>
+> Han-Wen Nienhuys (1):
+>   sideband: highlight keywords in remote sideband output
+>
+>  Documentation/config.txt            |  12 +++
+>  help.c                              |   1 +
+>  help.h                              |   1 +
+>  sideband.c                          | 125 ++++++++++++++++++++++++++--
+>  t/t5409-colorize-remote-messages.sh |  87 +++++++++++++++++++
+>  5 files changed, 217 insertions(+), 9 deletions(-)
+>  create mode 100755 t/t5409-colorize-remote-messages.sh
+>
+> --
+> 2.18.0.597.ga71716f1ad-goog
 
-for_each_object_in_pack() is a fine way to make sure that you list
-everythning in a pack, but I suspect it is a horrible way to feed a
-list of objects to pack-objects, as it goes by the .idx order, which
-is by definition a way to enumerate objects in a randomly useless
-order.
+I'll squash in the following while queuing for
 
-Do we already have an access to the in-core reverse index for the
-pack at this point in the code?  If so, we can enumerate the objects
-in the offset order without incurring a lot of cost (building the
-in-core revindex is the more expensive part).  When writing a pack,
-we try to make sure that related objects are written out close to
-each other [*1*], so listing them in the offset order (with made-up
-pathname information to _force_ that objects that live close
-together in the original pack are grouped together by getting
-similar names) might give us a better than horrible deltification.
-I dunno.
+    <CAPig+cScb_7s4a_ZSVCsr+nBxAHGHZVMZOtnrOgbhZUi96-VFA@mail.gmail.com>
 
-	Side note *1*: "related" has two axis, and one is relevant
-	for better deltification, while the other is not useful.
-	The one I have in mind here is that we write set of blobs
-	that belong to the same "delta family" together.
+Thanks for sticking to the topic.  
 
-I do not think such a "make it a bit better than horrible" is necessary
-in an initial version, but it deserves an in-code NEEDSWORK comment
-to remind us that we need to measure and experiment.
-
-Thanks.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 33bc1a3def..9a38dd2cbb 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1266,7 +1266,7 @@ color.push.error::
+ color.remote::
+ 	If set, keywords at the start of the line are highlighted. The
+ 	keywords are "error", "warning", "hint" and "success", and are
+-	matched case-insensitively. Maybe set to `always`, `false` (or
++	matched case-insensitively. May be set to `always`, `false` (or
+ 	`never`) or `auto` (or `true`). If unset, then the value of
+ 	`color.ui` is used (`auto` by default).
+ 
