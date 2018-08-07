@@ -3,117 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6AD208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 17:29:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEEA208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 17:31:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390242AbeHGTor (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 15:44:47 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34022 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390234AbeHGTor (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 15:44:47 -0400
-Received: by mail-wm0-f66.google.com with SMTP id l2-v6so15007212wme.1
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 10:29:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=gS84pi/CTqqy37wwT1PRPN3X2qKE4DlaFQn1YzREGf0=;
-        b=aYlhPAjCYaWMcO/++G7agSWVRlGffuQ4fYMgVAhXRWQskerUeELC5UVC7KSTn3NCbt
-         oD+ZOHRPt/TlP7/KK9Y1RW17N1PtLnjOK/6PQCeIuAfDoL8f/zaJq9sZbeO/11wYFxwc
-         bByL4r2e9T5Ye+cMNDAIYdsRoiyJAxGWfy67HcGegLul10u5FBJMufA1a9FOw88HleTS
-         ZUXAvZEBOw8pmAZlGfkCr8kYkp7qaGMSFWp5bSJmN5TIw7PVAgLDO6Ht5AguxvWzKvmK
-         FO/YrDyWd3i7J40xf6LWT5NvTJpLytX596zaVeHvdoAxpK6AOagmLj2GMNjJ0+aPx10y
-         wZxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=gS84pi/CTqqy37wwT1PRPN3X2qKE4DlaFQn1YzREGf0=;
-        b=S1xqN0fHH+7P7XpOzwdSIZ0EJ5S1YSMu6jL1kgga3f8Ko71U2LF7GCVRl93LP+H3pM
-         wYCKz7tDDi0qhHPKPKjDW3hIGDM5VohWoK74GarQfVVSs2MBQPn0Khh8fd/4SFTieANX
-         IFh1OTdbjcaJGuj6dS25j77+Yf08DwNwJMZ8StaIulz85Mce6GtEZ5kDeMQ2ByG0ggkP
-         vuuwWkUlSWoUwLA/QGZnfpoy2+Hgnme6H0cAXfnR3cZo/5xN25gdIY54IHd5It8/bFsZ
-         G0fp8wOA4DWFRRKknXn/0sQBCIT8nlnhIqpnjVftlENhFYFD445szyLM7n9VmuWo/r67
-         Ksrw==
-X-Gm-Message-State: AOUpUlHEFr9p2wtIKoufEKaxUGgHlA7GZyjxlUWikiSGsZ9zdzSyKBbm
-        xp3YOOPzMgwBpkqDLzBZu3hmAyjK
-X-Google-Smtp-Source: AA+uWPzYIA8IRta5qUOuLB3sUUGQTfhifW/+XkgtZ+TkLQuFBnDNHbsz0WTDp9aEl+wtmCApAZvWuQ==
-X-Received: by 2002:a1c:87c9:: with SMTP id j192-v6mr2145808wmd.71.1533662964488;
-        Tue, 07 Aug 2018 10:29:24 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h7-v6sm2369682wrs.8.2018.08.07.10.29.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Aug 2018 10:29:23 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
-        martin.agren@gmail.com, szeder.dev@gmail.com
-Subject: Re: [PATCHv3 1/5] t7406: simplify by using diff --name-only instead of diff --raw
-References: <20180806152524.27516-1-newren@gmail.com>
-        <20180807164905.3859-1-newren@gmail.com>
-        <20180807164905.3859-2-newren@gmail.com>
-Date:   Tue, 07 Aug 2018 10:29:23 -0700
-In-Reply-To: <20180807164905.3859-2-newren@gmail.com> (Elijah Newren's message
-        of "Tue, 7 Aug 2018 09:49:01 -0700")
-Message-ID: <xmqqo9eekrv0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S2389358AbeHGTqs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 15:46:48 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:62054 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388865AbeHGTqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 15:46:48 -0400
+Received: from [192.168.2.201] ([92.22.26.195])
+        by smtp.talktalk.net with SMTP
+        id n5pLfmfWYwhzSn5pLfFahW; Tue, 07 Aug 2018 18:31:24 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533663084;
+        bh=BXPg8ImiijhPh4YU4Jeh+EtUpDd4rtlA4NeT3NqrJXE=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=oMxHa1H21DR2VmKyKjO20E2DdUAw5g5XDWkrf0lFbwVEmEmwqzHqRaQwpOhUJa/nJ
+         X4vTEUGpf7t4Lm9BlwnUMZyUkUlnz/bVYbbdMayZpNhOa2NQp+MuMTTq/KO1BmEtIR
+         jDXjwie4F1/kyxMKovJsFQSkPhiySm4Sc7dJFevo=
+X-Originating-IP: [92.22.26.195]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=8bf3kEuDtVJeVZALKX4IsA==:117
+ a=8bf3kEuDtVJeVZALKX4IsA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=qqZBpEShL-AGZSkJ2sEA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v5 02/20] rebase -i: rewrite append_todo_help() in C
+To:     Christian Couder <christian.couder@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180724163221.15201-1-alban.gruin@gmail.com>
+ <20180731180003.5421-1-alban.gruin@gmail.com>
+ <20180731180003.5421-3-alban.gruin@gmail.com>
+ <d83efc2e-3538-9547-244f-ca7653498c22@talktalk.net>
+ <CAP8UFD3KbDrvU3zj24F7FF9ui2X75Vih4CoYE=cCZEWMsKP9Fw@mail.gmail.com>
+ <6832700d-d7be-1df1-8b24-6e0290de63ed@talktalk.net>
+ <CAP8UFD2_oxn=auXb1tYCb5xED5YmKU3W=fCrpMsyxdZBfs2qcw@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <1424a96b-26e8-aaa8-8e3c-ed84d58c26af@talktalk.net>
+Date:   Tue, 7 Aug 2018 18:31:23 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAP8UFD2_oxn=auXb1tYCb5xED5YmKU3W=fCrpMsyxdZBfs2qcw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIHGEo6lRJk1IYiEPAHWfUY6pLc6HTwTlq77/DqKeQ5aqEF6p7FolRSv2+1kD/7G79e6RAazBJhLNsmKfJHkwyevpVBvm0sG1rGQCWjsX3ZRgfWi1SOe
+ +H2pKeKnS6t9LQ7CPDGz4se5VDBixGt07zF69svrby02LMYdLhMZMdf1UkkF4FSz6hhwg4GxUEXcYdapCOd+S8ScfTQoxK8MkgR7Rio/7mh3SP8ZJWceaOnP
+ +9xhgjcU6+uzLIbJOULraGF6ac52e1C5YbY6NasXbEZMzIQMR82QGf6gHaRrFm2OqDdqczi8y3rS80aykQs5q1Si4Ck/oEYkgYFQdBzO1Mcn/I6oWZ5zksET
+ 5bcbzlRcOBNhI17ELvTg1nsiqGr00eDWQoJL2tMyoCMz/ETeJbAd8E/l6ZNbgZMadqSBkwDY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Christian
+On 07/08/18 17:28, Christian Couder wrote:
+> On Tue, Aug 7, 2018 at 6:15 PM, Phillip Wood <phillip.wood@talktalk.net> wrote:
+>> On 07/08/18 16:25, Christian Couder wrote:
+>>>
+>>> I agree about checking the return value from fputs(), but it seems to
+>>> me that we don't usually check the value of fclose().
+>>
+>> A quick grep shows you're right, there are only a handful of places where
+>> the return value of fclose() is checked (there aren't many checks for the
+>> return value of close() either), I'm don't think that is safe though given
+>> that write errors may only show up when the file gets flushed by closing it.
+> 
+> I vaguely remember we tried to check those return values but it didn't
+> work well sometimes.
+> 
 
-> We can get rid of some quoted tabs and make a few tests slightly easier
-> to read and edit by just asking for the names of the files modified,
-> since that's all these tests were interested in anyway.
+I think there's no point in checking the return value after a successful
+read, or when writing and the file is being closed (and then possibly
+removed) in some clean-up in an error path, but if the code cares about
+ensuring the data is written then I think it should be checking the
+return value, close_tempfile_gently() does for example.
 
-Technically the quoted tab was making sure that we do not mistake
-"subsubmodule" (if existed) as "submodule" we seek, so a faithful
-replacement would be to find "^submodule", and "^submodule$" would
-be an improvement.  But we do not have paths with confusing names in
-these tests, so we can leave it as-is, I guess.
+In the sequencer code there are some examples where it probably should
+be checking the return value, and places such as rewrite_file() and
+write_message() (which uses the lockfile api) where the return code is
+checked (there are a couple of recently added callers of write_message()
+in the code to recreate octopus merges that don't check its return value
+but all the other callers do).
 
-I think 0/5 should fix the real bug you are deliberately keeping in
-this patch, from the point of view of organization.
+Best Wishes
 
-
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t7406-submodule-update.sh | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-> index f604ef7a72..e2405c96b5 100755
-> --- a/t/t7406-submodule-update.sh
-> +++ b/t/t7406-submodule-update.sh
-> @@ -579,9 +579,9 @@ test_expect_success 'submodule update - update=none in .git/config' '
->  	  git checkout master &&
->  	  compare_head
->  	 ) &&
-> -	 git diff --raw | grep "	submodule" &&
-> +	 git diff --name-only | grep submodule &&
->  	 git submodule update &&
-> -	 git diff --raw | grep "	submodule" &&
-> +	 git diff --name-only | grep submodule &&
->  	 (cd submodule &&
->  	  compare_head
->  	 ) &&
-> @@ -597,9 +597,9 @@ test_expect_success 'submodule update - update=none in .git/config but --checkou
->  	  git checkout master &&
->  	  compare_head
->  	 ) &&
-> -	 git diff --raw | grep "	submodule" &&
-> +	 git diff --name-only | grep submodule &&
->  	 git submodule update --checkout &&
-> -	 test_must_fail git diff --raw \| grep "	submodule" &&
-> +	 test_must_fail git diff --name-only \| grep submodule &&
->  	 (cd submodule &&
->  	  test_must_fail compare_head
->  	 ) &&
+Phillip
