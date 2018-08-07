@@ -2,74 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18A22208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 03:47:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 721A8208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 04:58:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731923AbeHGF7n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 01:59:43 -0400
-Received: from mail-yw1-f47.google.com ([209.85.161.47]:40887 "EHLO
-        mail-yw1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbeHGF7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 01:59:43 -0400
-Received: by mail-yw1-f47.google.com with SMTP id z143-v6so4435803ywa.7
-        for <git@vger.kernel.org>; Mon, 06 Aug 2018 20:47:26 -0700 (PDT)
+        id S1731305AbeHGHHC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 03:07:02 -0400
+Received: from mail-lj1-f180.google.com ([209.85.208.180]:41093 "EHLO
+        mail-lj1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726918AbeHGHHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 03:07:02 -0400
+Received: by mail-lj1-f180.google.com with SMTP id y17-v6so12338419ljy.8
+        for <git@vger.kernel.org>; Mon, 06 Aug 2018 21:54:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=jyC/x6JJ5pXFnRx5Ovvvl6trPELM88XsbILffSTr9Jo=;
+        b=mZzxzgwENjtPmKxyjLgiWr2inrizEhtCtVeD3trjIxYhTKy0ics0BUNtvkdzvIqX6l
+         vHuN8n/cO1Nhzdcx6Bs9QZMP8ypRhAd8IkopQt3/3J/7Co1jJv8wQVUXbVuRa4UL6vOB
+         Id/+Qo6j+j0WrBEXNqzM+KvzsFufek3QOK+voFxquuhSKA8UN4AMl6NtjnbEB1Ow+flx
+         aIi41WrOGXgxRDfhR6RMvPZjxTfupZ9xL7TgvptR40yDKs9Bhy85IAQbI0Ow7qY1aBUy
+         sIm5+qBWLaLKfySvTA3wPKmzxib6pybuYTTxAU8sY+MZ6nzsgMXgY+zdxc4anZfyWd8L
+         ZLTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7akjCVVkaZ3k4W5UuTe1LFzSaVUM+285g6DlN3DJ4UU=;
-        b=iCQbSZ7zNiOcI+C3KW6pGPluG099BK5x80vsWGYpZsowFoNAlA16SK7ydUzhJO0agd
-         ApBkdOCPXgxXxXHAPetgkwJUisv+MEKY9VQdaUCjvGwrGgsQA2ZLjzTNGAClz5DXOidN
-         Yy1uX/cbKLhOJ7D4MOv1nnacOAjslgzh/0RtQR7azVlaxHaTzjwKlryLYtA6qHdrt0TD
-         LOC971smU2FlrJ7C1j4uskWqYPqsOnfRBYE4mKK30qSV3oIOHLqrDLzWAkU1wvC+Olt0
-         LMOh7Gtef56v18IhWJCy979RFxF55LXgFDN1ytl0nSrP5j4BmyXe73LaX+eU3JRJ/Pv2
-         FN/A==
-X-Gm-Message-State: AOUpUlHHuUy0O6DfgJ/UJmFvl2wNdAQhaKRVX+W/MU9tewYN//4TYXWY
-        oEm5CIbCMtLzH+nuZjdfbKBWI2zj/2cTGmymNrc=
-X-Google-Smtp-Source: AAOMgpeWLo2jSvtgqPwOI9IeXVRmjWAER3yJZXGQ00pyV4xuCGOLGBSvRH5TtIfcOj/yjB3/PvCpk2UbrSLNA3pOkG4=
-X-Received: by 2002:a81:7bd4:: with SMTP id w203-v6mr9213433ywc.70.1533613645420;
- Mon, 06 Aug 2018 20:47:25 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=jyC/x6JJ5pXFnRx5Ovvvl6trPELM88XsbILffSTr9Jo=;
+        b=rlbSdlRcNS3plC+BWcvnsDHE8Ata52FvO0MTLex3oM2dDdnB8aJT/VCD9itmKR0fOH
+         yjIEBgGjeL+PxeQw8z57g8dcD5lKDMule1+iesbsgcMQ6a6vlrNq8o7X3WZc5kPPeTfW
+         3jW3/m4NfcTPphoQhGDO0L2VIhyi1WjY8hkdR72/jubpc197vbzZ25NLKHY0SRUGqqBR
+         xAhKrc97ndLVNki0bN8F233VxIE2IemAvbXsPz+N5Xc8sGEYnY4oo075m/s3v0BPYuuf
+         Re/8cD5Jt3qNpHPr0dWBsRhq0M1WVNmkn3Oe5nPAgcLiNP887Oq43aELDUh9QZagWn52
+         vUbg==
+X-Gm-Message-State: AOUpUlGPNMThIj7jycNsRsRBjLcqEZcOniiWf6LZMv3TNWCHUHsn78lh
+        TFJLDPpdUVpgc0dRr5eqE/3DJj8r+04HJypipcsldkA2
+X-Google-Smtp-Source: AAOMgpdyC+3euc/LuM2vOnUMdrDlUgGVs0lzLeYCwaP3BT5GuIWY/DGeqSfn9bqyp1+TJl1lyMVYDFXfFl65qjezyZI=
+X-Received: by 2002:a2e:7014:: with SMTP id l20-v6mr15176836ljc.141.1533617671614;
+ Mon, 06 Aug 2018 21:54:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqtvo7m8c0.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvo7m8c0.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 6 Aug 2018 23:47:14 -0400
-Message-ID: <CAPig+cRoxiPUhXFA2vdZWh0iLfitFeN5CbUDduJuRZ0JGw=fvA@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #02; Mon, 6)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
+Received: by 2002:a2e:4057:0:0:0:0:0 with HTTP; Mon, 6 Aug 2018 21:54:31 -0700 (PDT)
+From:   Alexander Mills <alexander.d.mills@gmail.com>
+Date:   Mon, 6 Aug 2018 21:54:31 -0700
+Message-ID: <CA+KyZp5i8KzaAnet1eQovkxS2wLHUfnhZT04GCm2eXSFBqO+Fg@mail.gmail.com>
+Subject: Support JSON with --json flag and provide header files
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 6, 2018 at 6:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> * pw/rebase-i-author-script-fix (2018-08-02) 2 commits
->  - sequencer: fix quoting in write_author_script
->  - sequencer: handle errors in read_author_ident()
->  (this branch uses es/rebase-i-author-script-fix.)
->
->  Recent "git rebase -i" update started to write bogusly formatted
->  author-script, with a matching broken reading code.  These are
->  being fixed.
->
->  Undecided.
->  Is it the list consensus to favor this "with extra code, read the
->  script written by bad writer" approach?
+@git
 
-Phillip's original "effectively one-liner" backward compatibility[1]
-seemed a reasonable compromise[2] between the choices of no backward
-compatibility and heavyweight backward compatibility of his
-re-roll[3]. His reference[4] to an earlier "one-liner" backward
-compatibility solution given similar circumstances bolstered the case
-for his original approach.
+I hear there is a movement underway to have git support JSON for the
+purposes of machine readable stdio.
 
-[1]: https://public-inbox.org/git/20180731111532.9358-3-phillip.wood@talktalk.net/
-[2]: https://public-inbox.org/git/455fafb5-3c92-4348-0c2c-0a4ab62cf2ce@talktalk.net/
-[3]: https://public-inbox.org/git/20180802112002.720-3-phillip.wood@talktalk.net/
-[4]: https://public-inbox.org/git/c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net/
+That is all good and well. I want to add to that request. Imagine a
+software world were serialized data could be typed. So JSON produced
+by C/C++ could be described and the receiving process could have type
+information about how the JSON would be deserialized.
+
+How would that work? For every typed language, Git would provide
+header files for that language that include type information for each
+JSON string that would be produced by git commands.
+
+How could that be accomplished? Someone needs to create a system to
+generate type information (header files) for each language based off a
+single central format. So we create a JSON format that describes the
+JSON data. And from that single format we generate header files for
+each typed language.
+
+I hope you see the value in that. There could be a git command that
+generates the header files for a given language, given the git
+version:
+
+$ git --generate-header-files --language=3Djava > $dir
+
+the above command would generate the right header files for Java given
+the git version. Or the headers could be stored on the www and could
+be downloadable for each git version. Perhaps Git authors wouldn't do
+all this work - perhaps they just author a JSON format that describes
+JSON. And the OSS community can write tools that convert the JSON
+format into header files for each language. But I would like something
+OFFICIAL to take place here.
+
+Hope this makes sense. I am looking forward to a software future where
+parsing stdio is easier by using machine readable JSON. Want human
+readable output? Use the regular command. Want machine readable
+output? use the --json flag.
+
+-alex
+
+--=20
+Alexander D. Mills
+=C2=A1=C2=A1=C2=A1 New cell phone number: (415)730-1805 !!!
+alexander.d.mills@gmail.com
+
+www.linkedin.com/pub/alexander-mills/b/7a5/418/
