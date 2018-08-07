@@ -6,100 +6,84 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C223208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 14:36:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F32C9208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 14:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389608AbeHGQvH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 12:51:07 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:55569 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389073AbeHGQvH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 12:51:07 -0400
-Received: by mail-wm0-f65.google.com with SMTP id f21-v6so17675658wmc.5
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 07:36:29 -0700 (PDT)
+        id S2389545AbeHGQve (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 12:51:34 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36447 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389073AbeHGQve (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 12:51:34 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h9-v6so16038683wro.3
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 07:36:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Q3vQIJLwTcewifUnOJAznYKUm7eyOAsduHlIsTgN1GE=;
-        b=VAj5hTguB9qBXlQnyKvhnvwr4xlBnHsGTtctb1PUZgxABUGeD8MrI7UK4m5/VhQbhc
-         L3SMk2p7UoK9ZBhwbLHkQBvhsTBE76I2dB/wfAzCFBTVjsa+X46bJYtQeG6xXUCic5/Q
-         eI9pFyCuAQfy9lXHH6bJFqF+iM1XZWGm5y0VG1FpnCYUZnsme78sHZjX6OtrRwhLqup2
-         dXor40A+Ulz5sDXABSSoZOtPscN25wq6DmbcgIZGC5BwcZnij3hkP5g72R1stsKtGP9Q
-         vqsoGLwJ0Y/njU+c3r/p+7ncpzITAKvjK1UTPFXdmvbDmcoZktP/ollFdpCpBQPE5NLc
-         CTIA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=QKcYBAv7Mme0jzruzvb9SQrcxJPrbUHSEDXZLTGNaFw=;
+        b=UBvB3aq+P3cbMr3iZ7cwD7qQ5pNu5r7gq9c2j6/81hmBF63mRhy+LgPeZCyUiTpo0N
+         VTsZWINBhSIcLlMZHKSTsnRaqZX8YdINbnukkQefiFrhhwo7J2KE8OaC70UXzDUlkHKh
+         yyAZlqJGksQKgx97e8hKuCQJ9YNQECzcSq13nHgydvv5DSSNoRIqwY6257ocwl8tRX2j
+         xNa2GTZAa0Pj9w49V2ou7dPWmTrvR8jXdJaQyBIm57HanjHddReGObHtFnrvt3KHCXTv
+         yh+LcqGbUDloWWV4gvIdXbgrZQj72Afms5vD/kEv30Ol+aEObS8duJgzrpPZRU9+rnjG
+         1egQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Q3vQIJLwTcewifUnOJAznYKUm7eyOAsduHlIsTgN1GE=;
-        b=uDephlde4kRBW2ByPmAxh7QfZNELwLImjck0gV5rVRKpwbtjXAYlsneDE4TMATMUFs
-         WPWUts9A7IwvHjP07Gzjc1TUdjIBSJQzf2puSURJBC/bjDQHm0MlkovS3tsFxoKKCjoF
-         IbEZyRZGHk3BgUr7AwUT3Hrk25c2DvaO0/SL/QFP1v9LVlKA3kNHpSf94GZxKEt5V9LK
-         tfRJED7swQafi+NeybnWPX5p8XjL1FA2bR0JEu12O/S++ZUhHjcNu/gSL3GUREGWAorR
-         mAGcuMMEOHyc9AYWWzbenxv7QgLukWL/5nxwrxprVPhBZChT9viGGPCFDt/njnqxxftn
-         SNvg==
-X-Gm-Message-State: AOUpUlGYQ/EZzbFD4/pwI4Yt69xdlcWEnkjUbzjZ+bS6HysIUk43Clfv
-        5cQc0BBaNXIe3xDnj821aTY=
-X-Google-Smtp-Source: AA+uWPwiHO/QioxNwgrirBtB5oebIl2cMg6/JHPUwBWRq3XDjcM9gNOM97i9U3zn1gcLN8C1DXO3wA==
-X-Received: by 2002:a1c:b58e:: with SMTP id e136-v6mr1790538wmf.141.1533652588015;
-        Tue, 07 Aug 2018 07:36:28 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 8-v6sm3585740wmw.34.2018.08.07.07.36.26
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=QKcYBAv7Mme0jzruzvb9SQrcxJPrbUHSEDXZLTGNaFw=;
+        b=InjUAibXH/0mLkRigXjIqnIoRup5aUUBsrbpSnD2c9avD7AhBi2p4lP1DDye2Q4QbC
+         RcNF8YF76/89zlyyEJD2xSxvwX150DvBM6HreGdbVJpkO+sVGvjlVrnS0J9MQ1ggGCcn
+         nKZ8DNts4MqVk7Q+YFrgJHG8NvwEvoCnlXQ+euTxDofnGQRMlPbH1RW+ZV5P5DAtyjOB
+         TywH55AplVPIubWK4cI+tN0lN1TTNl9u6kphBGNnMIhtTKMsxg/IkCl/Ga9Qp/+z5m2T
+         iMrn9PkzLdgMHjXffvlvai/6uIKfvwFNQZi7e2pGAjuX+uutzKLp+03TQ+W9igVPnzlD
+         bhNw==
+X-Gm-Message-State: AOUpUlH78v6pb4chEWfy11jt7oGWZ2vR/g+r4zFVQM9spSNj7ltdlXbx
+        fqse0W95x3oS46S+odI2w/M=
+X-Google-Smtp-Source: AAOMgpco+YmHGtyZYKlNSdtl6Ohwsgx6mZdBe+ine2dC+CPfQRslXpxjHjbH1FyL2anbdQGSVf8DwQ==
+X-Received: by 2002:adf:ee4e:: with SMTP id w14-v6mr13393828wro.63.1533652615565;
+        Tue, 07 Aug 2018 07:36:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f132-v6sm3458465wme.24.2018.08.07.07.36.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Aug 2018 07:36:27 -0700 (PDT)
+        Tue, 07 Aug 2018 07:36:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jakub Narebski <jnareb@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
-References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com>
-        <86effapi1t.fsf@gmail.com>
-Date:   Tue, 07 Aug 2018 07:36:26 -0700
-In-Reply-To: <86effapi1t.fsf@gmail.com> (Jakub Narebski's message of "Tue, 07
-        Aug 2018 12:50:06 +0200")
-Message-ID: <xmqqk1p2mefp.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2018, #02; Mon, 6)
+References: <xmqqtvo7m8c0.fsf@gitster-ct.c.googlers.com>
+        <87tvo6snll.fsf@evledraar.gmail.com>
+Date:   Tue, 07 Aug 2018 07:36:54 -0700
+In-Reply-To: <87tvo6snll.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 07 Aug 2018 08:21:58 +0200")
+Message-ID: <xmqqftzqmeex.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> On Mon, Aug 06 2018, Junio C Hamano wrote:
 >
->> * ds/commit-graph-with-grafts (2018-07-19) 8 commits
->>   (merged to 'next' on 2018-08-02 at 0ee624e329)
->> ...
->>  Will merge to 'master'.
->
-> Derrick wrote that he will be sending v2 of this patch series in a few
-> weeks, among others to make it use commit-graph feature if replace
-> objects are present but not used (as some git hosting services do, see
-> core.useReplaceRefs below).
-
-Ah, thanks for stopping me (albeit a bit too late-ish, but reverting
-that merge is easy enough).  Do you have a handy reference to stop
-me from making the same mistake on this topic later?
-
->
-> Also, the test for interaction of commit-graph with the grafts file
-> feature does not actually test grafts, but replace objects.
->
->> * jk/core-use-replace-refs (2018-07-18) 3 commits
->>   (merged to 'next' on 2018-08-02 at 90fb6b1056)
->>  + add core.usereplacerefs config option
->>  + check_replace_refs: rename to read_replace_refs
->>  + check_replace_refs: fix outdated comment
+>> * ab/newhash-is-sha256 (2018-08-06) 2 commits
+>>  - doc hash-function-transition: pick SHA-256 as NewHash
+>>  - doc hash-function-transition: note the lack of a changelog
 >>
->>  A new configuration variable core.usereplacerefs has been added,
->>  primarily to help server installations that want to ignore the
->>  replace mechanism altogether.
+>>  Documentation update.
 >>
->>  Will merge to 'master'.
+>>  Will Merge to 'next'.
 >
-> Nice to have features used in the wild merged into core git.
+> The tip of gitster/ab/newhash-is-sha256 has a unicode-corrupted
+> signed-off-by line from me. See
+> https://github.com/git/git/commit/f855a19d45 not sure how that got
+> there...
 
-Yes, indeed.
+Thanks for noticing and reporting.  Will correct.
