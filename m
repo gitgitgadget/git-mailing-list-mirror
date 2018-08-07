@@ -6,68 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88B07208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 17:20:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C6AD208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 17:29:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390230AbeHGTf5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 15:35:57 -0400
-Received: from mail-wm0-f49.google.com ([74.125.82.49]:53075 "EHLO
-        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389148AbeHGTf4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 15:35:56 -0400
-Received: by mail-wm0-f49.google.com with SMTP id o11-v6so18094264wmh.2
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 10:20:37 -0700 (PDT)
+        id S2390242AbeHGTor (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 15:44:47 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34022 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390234AbeHGTor (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 15:44:47 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l2-v6so15007212wme.1
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 10:29:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=5TOPHnY4Y38KcUF8fUmsX8qh8X58FFbCU1nW1PFDVCk=;
-        b=LeLaoBLSScBMcoQ/xggzWQmvFDUQl5dPDbhtVR2ADGmX4uJ34Bry7A91E57g5b14GV
-         XzNa/I9oSRTG+QN6402lH5j1Gq2logdrTSADwYn4JvKH+U9JGAWjTiaTcwS1fSbpTzKp
-         RmZwPaVkcinz6SqgWPfrG3EocRKCdTnEK6OV4t0gSKV8G+rnoq7eajZEDgJcYkDFQrDr
-         UnVpN1tZxqR96txswFS+gRDHP4pKNfCrd1yfvwp0aXJ8OxQz81nxopmfn0XDI/eHVF5H
-         SS0Ac8dDHNtsdnZ3J1rEP7mrwcF+8vqwuoGwxqfXJ1svGB5iv1hD0m16JkvSx+pbTNxk
-         L6rQ==
+        bh=gS84pi/CTqqy37wwT1PRPN3X2qKE4DlaFQn1YzREGf0=;
+        b=aYlhPAjCYaWMcO/++G7agSWVRlGffuQ4fYMgVAhXRWQskerUeELC5UVC7KSTn3NCbt
+         oD+ZOHRPt/TlP7/KK9Y1RW17N1PtLnjOK/6PQCeIuAfDoL8f/zaJq9sZbeO/11wYFxwc
+         bByL4r2e9T5Ye+cMNDAIYdsRoiyJAxGWfy67HcGegLul10u5FBJMufA1a9FOw88HleTS
+         ZUXAvZEBOw8pmAZlGfkCr8kYkp7qaGMSFWp5bSJmN5TIw7PVAgLDO6Ht5AguxvWzKvmK
+         FO/YrDyWd3i7J40xf6LWT5NvTJpLytX596zaVeHvdoAxpK6AOagmLj2GMNjJ0+aPx10y
+         wZxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=5TOPHnY4Y38KcUF8fUmsX8qh8X58FFbCU1nW1PFDVCk=;
-        b=ds0CaNCN+bHVmoQoQ5MkSJz3dNzjAz2C31AbMr3tFGXK5DDS6eE++IUY6BLf+r+cHS
-         jYHBPYDSJKZReYRNSiJlOE0WKtqYMe8eOo0hxivHJA57Dfe9bNdGQrLm1c73JqG2FhFl
-         tRnG0Kup4gpbJyQqR/UasKFL/bazBGAMo6a+KPU2HoWjBoA1u/llXv2AQYjzh9KbDxeE
-         5t1xuF8llopDbRzNxDP9eiX8MXeyZhtJ96Eivw51jhpyfG88I0OD+wkVS7Uwbva3t6y6
-         Je3dQSx7MRKhpPi+nuSPKvIPVcdgsr1x0pWpDShfvPNM8sbabCZQZokongwMgkL6DiZT
-         CZ8g==
-X-Gm-Message-State: AOUpUlESahtNJnb7Lofz7g59FTm4cMkriIx6e7M9PTw3AqaQnn0r83ut
-        5GyAun42yXbzZIXlGiHOtFp5/CBI
-X-Google-Smtp-Source: AA+uWPzwVns2YsFqm3ZRLkOC/ikp+Igzvth2KN2HDpbbJmWGMGACN63PjlxUAPeRTM6WG0h/POYlxQ==
-X-Received: by 2002:a1c:1f10:: with SMTP id f16-v6mr2404734wmf.112.1533662436128;
-        Tue, 07 Aug 2018 10:20:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm1973572wrr.95.2018.08.07.10.20.35
+        bh=gS84pi/CTqqy37wwT1PRPN3X2qKE4DlaFQn1YzREGf0=;
+        b=S1xqN0fHH+7P7XpOzwdSIZ0EJ5S1YSMu6jL1kgga3f8Ko71U2LF7GCVRl93LP+H3pM
+         wYCKz7tDDi0qhHPKPKjDW3hIGDM5VohWoK74GarQfVVSs2MBQPn0Khh8fd/4SFTieANX
+         IFh1OTdbjcaJGuj6dS25j77+Yf08DwNwJMZ8StaIulz85Mce6GtEZ5kDeMQ2ByG0ggkP
+         vuuwWkUlSWoUwLA/QGZnfpoy2+Hgnme6H0cAXfnR3cZo/5xN25gdIY54IHd5It8/bFsZ
+         G0fp8wOA4DWFRRKknXn/0sQBCIT8nlnhIqpnjVftlENhFYFD445szyLM7n9VmuWo/r67
+         Ksrw==
+X-Gm-Message-State: AOUpUlHEFr9p2wtIKoufEKaxUGgHlA7GZyjxlUWikiSGsZ9zdzSyKBbm
+        xp3YOOPzMgwBpkqDLzBZu3hmAyjK
+X-Google-Smtp-Source: AA+uWPzYIA8IRta5qUOuLB3sUUGQTfhifW/+XkgtZ+TkLQuFBnDNHbsz0WTDp9aEl+wtmCApAZvWuQ==
+X-Received: by 2002:a1c:87c9:: with SMTP id j192-v6mr2145808wmd.71.1533662964488;
+        Tue, 07 Aug 2018 10:29:24 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h7-v6sm2369682wrs.8.2018.08.07.10.29.23
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 07 Aug 2018 10:20:35 -0700 (PDT)
+        Tue, 07 Aug 2018 10:29:23 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood@talktalk.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] sequencer: fix quoting in write_author_script
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
-        <20180802112002.720-1-phillip.wood@talktalk.net>
-        <20180802112002.720-3-phillip.wood@talktalk.net>
-        <xmqqk1p83cig.fsf@gitster-ct.c.googlers.com>
-        <CAPig+cQaaHfkR8jrXb-+PB4bSZbKLQzRkZNo+DNfz92hKO=04Q@mail.gmail.com>
-        <c7b8629d-7b93-2fbf-6793-0d566e86a229@talktalk.net>
-        <CAPig+cTyTHxwFvk3ZtOq3L7KEtEjKLKu6-RnLC-_NuL1Xzhqzw@mail.gmail.com>
-        <455fafb5-3c92-4348-0c2c-0a4ab62cf2ce@talktalk.net>
-Date:   Tue, 07 Aug 2018 10:20:35 -0700
-In-Reply-To: <455fafb5-3c92-4348-0c2c-0a4ab62cf2ce@talktalk.net> (Phillip
-        Wood's message of "Fri, 3 Aug 2018 15:12:49 +0100")
-Message-ID: <xmqqsh3qks9o.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
+        martin.agren@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCHv3 1/5] t7406: simplify by using diff --name-only instead of diff --raw
+References: <20180806152524.27516-1-newren@gmail.com>
+        <20180807164905.3859-1-newren@gmail.com>
+        <20180807164905.3859-2-newren@gmail.com>
+Date:   Tue, 07 Aug 2018 10:29:23 -0700
+In-Reply-To: <20180807164905.3859-2-newren@gmail.com> (Elijah Newren's message
+        of "Tue, 7 Aug 2018 09:49:01 -0700")
+Message-ID: <xmqqo9eekrv0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -76,10 +68,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood@talktalk.net> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Yes I think the earlier approach with the more robust detection you
-> suggested is probably a good compromise. Junio does that sound good to
-> you?
+> We can get rid of some quoted tabs and make a few tests slightly easier
+> to read and edit by just asking for the names of the files modified,
+> since that's all these tests were interested in anyway.
 
-Surely, and thanks.
+Technically the quoted tab was making sure that we do not mistake
+"subsubmodule" (if existed) as "submodule" we seek, so a faithful
+replacement would be to find "^submodule", and "^submodule$" would
+be an improvement.  But we do not have paths with confusing names in
+these tests, so we can leave it as-is, I guess.
+
+I think 0/5 should fix the real bug you are deliberately keeping in
+this patch, from the point of view of organization.
+
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t7406-submodule-update.sh | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index f604ef7a72..e2405c96b5 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -579,9 +579,9 @@ test_expect_success 'submodule update - update=none in .git/config' '
+>  	  git checkout master &&
+>  	  compare_head
+>  	 ) &&
+> -	 git diff --raw | grep "	submodule" &&
+> +	 git diff --name-only | grep submodule &&
+>  	 git submodule update &&
+> -	 git diff --raw | grep "	submodule" &&
+> +	 git diff --name-only | grep submodule &&
+>  	 (cd submodule &&
+>  	  compare_head
+>  	 ) &&
+> @@ -597,9 +597,9 @@ test_expect_success 'submodule update - update=none in .git/config but --checkou
+>  	  git checkout master &&
+>  	  compare_head
+>  	 ) &&
+> -	 git diff --raw | grep "	submodule" &&
+> +	 git diff --name-only | grep submodule &&
+>  	 git submodule update --checkout &&
+> -	 test_must_fail git diff --raw \| grep "	submodule" &&
+> +	 test_must_fail git diff --name-only \| grep submodule &&
+>  	 (cd submodule &&
+>  	  test_must_fail compare_head
+>  	 ) &&
