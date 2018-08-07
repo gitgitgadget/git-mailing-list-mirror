@@ -7,115 +7,106 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 396E3208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 15:30:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A39C208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 15:43:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389798AbeHGRpY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 13:45:24 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34729 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389066AbeHGRpY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 13:45:24 -0400
-Received: by mail-io0-f195.google.com with SMTP id l7-v6so14346128ioj.1
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 08:30:32 -0700 (PDT)
+        id S2403825AbeHGR6b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 13:58:31 -0400
+Received: from mail-lj1-f181.google.com ([209.85.208.181]:36424 "EHLO
+        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389387AbeHGR6b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 13:58:31 -0400
+Received: by mail-lj1-f181.google.com with SMTP id u7-v6so13814439lji.3
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 08:43:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3e23H3dDUshW6smhDAG/a7mR1qtzyv9KRNmsOAzztO4=;
-        b=ghwYmZfnbVIXQ/fv7Qcf38lmDpP3ztmRZqvyDIehmuuS3cJ8W8qtT/LKm6vF2VIL7L
-         MEVdxGBPjOapRpI2uepWnI76QWWZRirLO0K/oyCjAzxbusz7khsFfZc6kF5BR+MendI8
-         t6gbWIDoimiOJ2onFbgO14ZC50kA8toyYO5HSGsTESXAMS8py9kyIX6W5HpD6zvqvkmk
-         XZXbCQHouj7kVI8OyANOTCD/mZN46Euglc2WjnUpFUoMiFMYXfb4qFpbbYf7rNYNffcm
-         lLLCrzAIsvLREGaDIHHL9xOt7Cikn2tODCfC8GWPApdZrpFKvJkANjkph9t7LUL6jPcU
-         gZWw==
+         :cc:content-transfer-encoding;
+        bh=j4fwXUd6rN1ehaNIxuPVh4txIV6lBHy8v7WEV1pqRS4=;
+        b=aKG8RsMyWrvWJULRbm/ogLBz69Coj2yRJ8VXJqctUsLrESeHXeqN3cHk3rNDMMAOwv
+         sjUiar0zj4wg2hNH1jkBbzRdjyC8TzdGi3IV8jM358oWS8G+alqYRYVQkvq2Ow3bjCAB
+         1t3nITZI9oipIAnVUiu+ra56Xm5LvTCkmtYbW05oWeD6qrjFhuZ9X5pMXwu1Fudd3yPa
+         X+9G6gL9OS/Wmao03sczyQ+z5ScSeojiTnQ6gwOhFYg0oMzuuWQOGfpwTutnq1MElBRD
+         JrT9sF+IsYBjI0lPyOu7erHKIkuIRlcgUgYccfZ/SjuYLV74OsW8s91ajsQnysJQD+2v
+         LO9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3e23H3dDUshW6smhDAG/a7mR1qtzyv9KRNmsOAzztO4=;
-        b=COxl6LCFznWTAqRz2tw/RvtF8KHtwghhRpewTTziQ4AP+64YbeFzzV2DWVH3lR6/EL
-         MgfoOvwtc/cAmG/BzXKgv/TRN/gWYlIiT3l9POgjz9pJl4Kkrxnwp5KKCwgcnkq/ThMq
-         DlbS0MPMwlTozcNHQNfQsKjLOiSMiRbXuYH72xQqFDKmSEC5UjNXLF+ymI22tNNHtmyM
-         i01CVZsOoYSxMQCFWewfNntxWcyIvIItcGgGFbMoiIOW77QeYUVzu3o5b8MCGssQHKxU
-         dzrYigXywDK9W5c9AZYsste6aCq1ZseVdU+J2jzfXJZbH2K8idvBMd9lBK2DGG4H19BX
-         jgUQ==
-X-Gm-Message-State: AOUpUlFKppoIgV7GI2+/45Al1TaX/HZXl3OjWXiNEI/4eNPRpeFyb6MS
-        18WQiJlJPn9GOQywlsdHIBksx/E7TRTTR/GoWzsSog==
-X-Google-Smtp-Source: AA+uWPy4ajFzbUj0g3pVpHyXrF90e8AEV5rhZwJ9c5JkkXnE7feH8HzTCo4wRLDd2o2nZTyIsFtE8UjxHP12VU9pbmg=
-X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr4701988iod.118.1533655832566;
- Tue, 07 Aug 2018 08:30:32 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=j4fwXUd6rN1ehaNIxuPVh4txIV6lBHy8v7WEV1pqRS4=;
+        b=t9jrHAj8/Ay8hYiVOy6beLu/Rbq2pJJnNXsQ6P3iaDXSf4EIKjH1312v4CYsJhXJcE
+         SwiHQ9JRtqti0jJ4SPqBqoSA7MSUYKslxz8HTArH/IkvQI7j5LXYbuA5hrTVCJIto6zE
+         C4pOX66NMpkVpydfMOTyA8tWzupSqFHLbI1IDdNsrTNLQuVODP73Q3Chd2T5LMlessYc
+         lkMZBdGEsTgqLwb5zm/OP6WMlWFIhzbybrZNZPCI5Kp4Xzc8zom1Rs7AiE+J6q4XXKd9
+         Jgzl6FMNEphs9s7Cu1eezC+YOUPbSUYFxn6dDhHJ+dA/h+0GqZBpTkI8FV1qqP2ZA1r0
+         wgFA==
+X-Gm-Message-State: AOUpUlGVcu88m+LqiQxrpeMSRlbK+NeOrz8jj9/eczVvjRuYLqWutx/C
+        vtzV/D73J+6rS4llBpEdDG+961+H4DoseF5LV40=
+X-Google-Smtp-Source: AAOMgpfc/DPVAZTQXNcMF6bkUYZ9/GS6OyhrdTC9X1XvWnWGrUEAFsKM/RZlJRF1oanxG5VqHJUx4G5p4KKJeRlZfrQ=
+X-Received: by 2002:a2e:259:: with SMTP id 86-v6mr17109736ljc.107.1533656615071;
+ Tue, 07 Aug 2018 08:43:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180807132113.118297-1-gitter.spiros@gmail.com>
-In-Reply-To: <20180807132113.118297-1-gitter.spiros@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 7 Aug 2018 17:30:04 +0200
-Message-ID: <CACsJy8A=zp7nFBuWyfeP4UFf3KSsiaor3m0mtgVnhcEYHSw4HA@mail.gmail.com>
-Subject: Re: [PATCH] worktree: add --quiet option
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com> <86effapi1t.fsf@gmail.com>
+ <xmqqk1p2mefp.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1p2mefp.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Tue, 7 Aug 2018 17:42:56 +0200
+Message-ID: <CANQwDwe_2wjkW7nmxztGK7QWUs3ubUDJTbPRdqfGFXkREpExLg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2018, #01; Thu, 2)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 7, 2018 at 3:27 PM Elia Pinto <gitter.spiros@gmail.com> wrote:
+On Tue, 7 Aug 2018 at 16:36, Junio C Hamano <gitster@pobox.com> wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> * ds/commit-graph-with-grafts (2018-07-19) 8 commits
+>>>   (merged to 'next' on 2018-08-02 at 0ee624e329)
+>>> ...
+>>>  Will merge to 'master'.
+>>
+>> Derrick wrote that he will be sending v2 of this patch series in a few
+>> weeks, among others to make it use commit-graph feature if replace
+>> objects are present but not used (as some git hosting services do, see
+>> core.useReplaceRefs below).
 >
-> Add the '--quiet' option to git worktree add,
-> as for the other git commands.
->
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->  Documentation/git-worktree.txt |  4 +++-
->  builtin/worktree.c             | 11 +++++++++--
->  2 files changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-> index 9c26be40f..508cde55c 100644
-> --- a/Documentation/git-worktree.txt
-> +++ b/Documentation/git-worktree.txt
-> @@ -115,7 +115,9 @@ Unlock a working tree, allowing it to be pruned, moved or deleted.
->
->  OPTIONS
->  -------
-> -
-> +-q::
-> +--quiet::
-> +       With 'add', suppress feedback messages.
+> Ah, thanks for stopping me (albeit a bit too late-ish, but reverting
+> that merge is easy enough).  Do you have a handy reference to stop
+> me from making the same mistake on this topic later?
 
-Should we update the synopsis as well?
+https://public-inbox.org/git/a3640919-95cf-cca4-d552-4715a031dd7f@gmail.com=
+/
 
-> @@ -315,6 +316,9 @@ static int add_worktree(const char *path, const char *refname,
+DS> Since this series now has two dependencies (including Stefan's ref-stor=
+e
+DS> fix that I had included in my v1), I'll let those topics settle
+DS> before I send a new v2.
+DS>
+DS> If there are more comments about how I'm handling these cases, then
+DS> please jump in and tell me. I'll revisit this topic in a few weeks.
 
-Before here we run either update-ref or symbolic-ref. update-ref does
-not have --quiet so it's fine, no need to add another option there
-(until it shows something when used with "worktree add --quiet") but
-symbolic-ref seems to support -q. Should we pass -q to it?
+>> Also, the test for interaction of commit-graph with the grafts file
+>> feature does not actually test grafts, but replace objects.
 
->                 cp.argv = NULL;
->                 argv_array_clear(&cp.args);
->                 argv_array_pushl(&cp.args, "reset", "--hard", NULL);
-> +               if (opts->quiet)
-> +                       argv_array_push(&cp.args, "--quiet");
-> +               printf("%s\n","soo qia");
->                 cp.env = child_env.argv;
->                 ret = run_command(&cp);
->                 if (ret)
-> @@ -437,6 +441,7 @@ static int add(int ac, const char **av, const char *prefix)
->                 OPT_BOOL(0, "detach", &opts.detach, N_("detach HEAD at named commit")),
->                 OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new working tree")),
->                 OPT_BOOL(0, "lock", &opts.keep_locked, N_("keep the new working tree locked")),
-> +               OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+https://public-inbox.org/git/86bmap7l7a.fsf@gmail.com/
 
-git grep OPT__QUIET shows that we have plenty different messages to
-describe --quiet. But yeah "support progress reporting" seems close
-enough in this context.
-
->                 OPT_PASSTHRU(0, "track", &opt_track, NULL,
->                              N_("set up tracking mode (see git-branch(1))"),
->                              PARSE_OPT_NOARG | PARSE_OPT_OPTARG),
-
-The rest looks good.
--- 
-Duy
+>>> * jk/core-use-replace-refs (2018-07-18) 3 commits
+>>>   (merged to 'next' on 2018-08-02 at 90fb6b1056)
+>>>  + add core.usereplacerefs config option
+>>>  + check_replace_refs: rename to read_replace_refs
+>>>  + check_replace_refs: fix outdated comment
+>>>
+>>>  A new configuration variable core.usereplacerefs has been added,
+>>>  primarily to help server installations that want to ignore the
+>>>  replace mechanism altogether.
+>>>
+>>>  Will merge to 'master'.
+[...]
+--=20
+Jakub Nar=C4=99bski
