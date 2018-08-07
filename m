@@ -3,99 +3,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FEEA208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 17:31:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD322208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 17:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389358AbeHGTqs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 15:46:48 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:62054 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388865AbeHGTqs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 15:46:48 -0400
-Received: from [192.168.2.201] ([92.22.26.195])
-        by smtp.talktalk.net with SMTP
-        id n5pLfmfWYwhzSn5pLfFahW; Tue, 07 Aug 2018 18:31:24 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533663084;
-        bh=BXPg8ImiijhPh4YU4Jeh+EtUpDd4rtlA4NeT3NqrJXE=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=oMxHa1H21DR2VmKyKjO20E2DdUAw5g5XDWkrf0lFbwVEmEmwqzHqRaQwpOhUJa/nJ
-         X4vTEUGpf7t4Lm9BlwnUMZyUkUlnz/bVYbbdMayZpNhOa2NQp+MuMTTq/KO1BmEtIR
-         jDXjwie4F1/kyxMKovJsFQSkPhiySm4Sc7dJFevo=
-X-Originating-IP: [92.22.26.195]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=8bf3kEuDtVJeVZALKX4IsA==:117
- a=8bf3kEuDtVJeVZALKX4IsA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=qqZBpEShL-AGZSkJ2sEA:9 a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v5 02/20] rebase -i: rewrite append_todo_help() in C
-To:     Christian Couder <christian.couder@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <20180724163221.15201-1-alban.gruin@gmail.com>
- <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180731180003.5421-3-alban.gruin@gmail.com>
- <d83efc2e-3538-9547-244f-ca7653498c22@talktalk.net>
- <CAP8UFD3KbDrvU3zj24F7FF9ui2X75Vih4CoYE=cCZEWMsKP9Fw@mail.gmail.com>
- <6832700d-d7be-1df1-8b24-6e0290de63ed@talktalk.net>
- <CAP8UFD2_oxn=auXb1tYCb5xED5YmKU3W=fCrpMsyxdZBfs2qcw@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1424a96b-26e8-aaa8-8e3c-ed84d58c26af@talktalk.net>
-Date:   Tue, 7 Aug 2018 18:31:23 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S2389430AbeHGTuO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 15:50:14 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:51457 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387513AbeHGTuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 15:50:14 -0400
+Received: by mail-wm0-f67.google.com with SMTP id y2-v6so18271501wma.1
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 10:34:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=h6Jk1hXoaUErHjEvLUJuVcGHIFvs4Izsuk5WhJqoGpM=;
+        b=AUpX0bNEbLgeEg/euzcSsrd3UAbNV6q04QLXduO4FqJd+hW8O3ADQqQL8YgBHHITHb
+         s6uUOadB6ZaUYoXT/Jmof9isWi2LkBb3XE5sa3yRJSjTGl1XDqaHIAl8Jw3JvQW1eMON
+         OYJANdPLLBzmDunXHpkiXDALtwe0nEHv+n+TXcEUPY7A8lvTmzmMAdrKxXE+HVV7z1dK
+         k6Ap0yJNko2vAf8dK5ieQEJ6bHpAaayioN+N4xOUIsB5kXX2N3I4car4kWgzsXQhEwXk
+         bqrOp9Q1r1JSuPRVkrxOmWW0wapG6SCpA30yZqtMtrGENUhRJ85hyHQE35mzC8BJh3zP
+         R2Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=h6Jk1hXoaUErHjEvLUJuVcGHIFvs4Izsuk5WhJqoGpM=;
+        b=dhxX81L9+q8ZGrX+x4De6gCtKSfLdyYnw+ZGmdUCtFX6UZs3HbBqelUYQ4h+e6v95X
+         ln7h9/H7tCtHX27t5K8ygBizqNj3FNk7WUc5nHh9gc3RMxq1vgJob5YpBbsBUQGSJYkr
+         Qcx9tgGjlh15caCC5YX22f4V6V9mDlI0RTRFjomhDBc8YFFVpHDDs2YWuP+uTCm/m3sS
+         D8M0ua0cjhfpF+DkvHFWQZJqKMgyXMnfRgWKVe6fMfSJw8qXPfEUtLhsnZCkLwXHoX1V
+         SFmi+MV7j0s0m3ixiDVuQdENmzlsavhjG0try4aj2gpMNFIdJUAzBV6mC3T7yENKCXlC
+         ppew==
+X-Gm-Message-State: AOUpUlEEOzJQo2D4H1MCi4gASjbMrQD1fwrrlKT2pgt+V3h31Wp+muK5
+        KVAHR79YGoYImAG2bkkBGPo=
+X-Google-Smtp-Source: AA+uWPzmTsAYG28wMsIUt2e9D7lywhxFjiqUAzrDoqtORz21Udllzz8EdfWLjxSc8jps7P7DDoVFyQ==
+X-Received: by 2002:a1c:b609:: with SMTP id g9-v6mr2148889wmf.73.1533663289685;
+        Tue, 07 Aug 2018 10:34:49 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 1-v6sm4211814wmf.47.2018.08.07.10.34.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Aug 2018 10:34:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, sunshine@sunshineco.com,
+        martin.agren@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCHv3 3/5] t7406: prefer test_* helper functions to test -[feds]
+References: <20180806152524.27516-1-newren@gmail.com>
+        <20180807164905.3859-1-newren@gmail.com>
+        <20180807164905.3859-4-newren@gmail.com>
+Date:   Tue, 07 Aug 2018 10:34:48 -0700
+In-Reply-To: <20180807164905.3859-4-newren@gmail.com> (Elijah Newren's message
+        of "Tue, 7 Aug 2018 09:49:03 -0700")
+Message-ID: <xmqqk1p2krlz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD2_oxn=auXb1tYCb5xED5YmKU3W=fCrpMsyxdZBfs2qcw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfIHGEo6lRJk1IYiEPAHWfUY6pLc6HTwTlq77/DqKeQ5aqEF6p7FolRSv2+1kD/7G79e6RAazBJhLNsmKfJHkwyevpVBvm0sG1rGQCWjsX3ZRgfWi1SOe
- +H2pKeKnS6t9LQ7CPDGz4se5VDBixGt07zF69svrby02LMYdLhMZMdf1UkkF4FSz6hhwg4GxUEXcYdapCOd+S8ScfTQoxK8MkgR7Rio/7mh3SP8ZJWceaOnP
- +9xhgjcU6+uzLIbJOULraGF6ac52e1C5YbY6NasXbEZMzIQMR82QGf6gHaRrFm2OqDdqczi8y3rS80aykQs5q1Si4Ck/oEYkgYFQdBzO1Mcn/I6oWZ5zksET
- 5bcbzlRcOBNhI17ELvTg1nsiqGr00eDWQoJL2tMyoCMz/ETeJbAd8E/l6ZNbgZMadqSBkwDY
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian
-On 07/08/18 17:28, Christian Couder wrote:
-> On Tue, Aug 7, 2018 at 6:15 PM, Phillip Wood <phillip.wood@talktalk.net> wrote:
->> On 07/08/18 16:25, Christian Couder wrote:
->>>
->>> I agree about checking the return value from fputs(), but it seems to
->>> me that we don't usually check the value of fclose().
->>
->> A quick grep shows you're right, there are only a handful of places where
->> the return value of fclose() is checked (there aren't many checks for the
->> return value of close() either), I'm don't think that is safe though given
->> that write errors may only show up when the file gets flushed by closing it.
-> 
-> I vaguely remember we tried to check those return values but it didn't
-> work well sometimes.
-> 
+Elijah Newren <newren@gmail.com> writes:
 
-I think there's no point in checking the return value after a successful
-read, or when writing and the file is being closed (and then possibly
-removed) in some clean-up in an error path, but if the code cares about
-ensuring the data is written then I think it should be checking the
-return value, close_tempfile_gently() does for example.
+> test -e, test -s, etc. do not provide nice error messages when we hit
+> test failures, so use the test_* helper functions from
+> test-lib-functions.sh.
 
-In the sequencer code there are some examples where it probably should
-be checking the return value, and places such as rewrite_file() and
-write_message() (which uses the lockfile api) where the return code is
-checked (there are a couple of recently added callers of write_message()
-in the code to recreate octopus merges that don't check its return value
-but all the other callers do).
+Good explanation.
 
-Best Wishes
+> Note: The use of 'test_path_is_file submodule/.git' may look odd, but
+> it is a file which is populated with a
+>    gitdir: ../.git/modules/submodule
+> directive.  If, in the future, handling of the submodule is changed and
+> submodule/.git becomes a directory we can change this to
+> test_path_is_dir (or perhaps write a test_path_exists helper function
+> that doesn't care whether the path is a file or a directory).
 
-Phillip
+Yup, path_exists would be a good direction going forward.  If we
+already have "missing" and use it in this rewrite, it may make sense
+to introduce "exists" and use it at the same time here.
+
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  t/t7406-submodule-update.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index c6b7b59350..ab67e373c5 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -174,7 +174,7 @@ test_expect_success 'submodule update does not fetch already present commits' '
+>  	  git submodule update > ../actual 2> ../actual.err
+>  	) &&
+>  	test_i18ncmp expected actual &&
+> -	! test -s actual.err
+> +	test_must_be_empty actual.err
+>  '
+>  
+>  test_expect_success 'submodule update should fail due to local changes' '
+> @@ -619,8 +619,8 @@ test_expect_success 'submodule update --init skips submodule with update=none' '
+>  	git clone super cloned &&
+>  	(cd cloned &&
+>  	 git submodule update --init &&
+> -	 test -e submodule/.git &&
+> -	 test_must_fail test -e none/.git
+> +	 test_path_is_file submodule/.git &&
+> +	 test_path_is_missing none/.git
+>  	)
+>  '
