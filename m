@@ -2,88 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C588208EB
-	for <e@80x24.org>; Tue,  7 Aug 2018 22:01:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4082208EB
+	for <e@80x24.org>; Tue,  7 Aug 2018 22:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727324AbeHHAR2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 7 Aug 2018 20:17:28 -0400
-Received: from mail-yw1-f65.google.com ([209.85.161.65]:42754 "EHLO
-        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726805AbeHHAR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 7 Aug 2018 20:17:27 -0400
-Received: by mail-yw1-f65.google.com with SMTP id y203-v6so88251ywd.9
-        for <git@vger.kernel.org>; Tue, 07 Aug 2018 15:01:00 -0700 (PDT)
+        id S1726927AbeHHA2U (ORCPT <rfc822;e@80x24.org>);
+        Tue, 7 Aug 2018 20:28:20 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38224 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726697AbeHHA2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 7 Aug 2018 20:28:20 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v14-v6so184037wro.5
+        for <git@vger.kernel.org>; Tue, 07 Aug 2018 15:11:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=PMUJS7QDcJKRD3egl7GLqA5NZSNU4g0jvzgDAzEBLrc=;
+        b=fLZZreym7XzgtX9aLOfiArig6W5PsS5rH1/9pHsZw69ouK1ZhmofCKpKnCfFJCLWWM
+         ilp5vAKxFgmpoyclAyMzf2MQEjYt/Jb9fCSWnqP+MDQ8cI3E9cbjvpJNccGhsq6V3FcD
+         YGoF/c6k5kxI6hV22bgejMxm/e9WvNvgzxr8LkSEkfCQkhyTUyDxYSMdHwtz1LbhPUf4
+         P7080k9i5Wfd8sOmix4qunPIWfsQVoxkOzHKbzC6PU3l/0oCUdtgR4c7WWhFO7k+ghIF
+         DREaE0So8VRBuYY92Hj0zG3nb3DqmmSgvQ6bMAfVrSRvouMR5GItwV7mEEu28FwoFujr
+         WbzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=OoG8APu3TobAdijtIO3PW4/jNghJZ2wOahJ+nZRxFGQ=;
-        b=Iw8pxl1L4Vx7iOUqYmkHIiLcco6TTITcY9FpTal3lSnCuKaxTAN1VtuA8VoElejxN8
-         j5g3ivIxWfeecoHwNBHtthl1WeGs8yeBMPWaBKh0ns9C/fbqwXJmg7Uh5ZlfUs7p/vHI
-         9yMvTo9+tvbRxZMhPF8QxCQCWprMYKNQsK5w5Don9hwAbYBwS7ehKLN1/hFUPC9UnxWO
-         084tZ9gh9kec/sX1HI9TZdK7/5nef72vdtfqYsqRLPa2Xh5ygHCMXk1vm7TjYOGiSRZG
-         3W/dKHYlUTyhSSkfMKqy6jnoN85Ac4mVjEn2htI1RsaRYMiMF2sxlJiSo4azNStVhBAj
-         CCOw==
-X-Gm-Message-State: AOUpUlHnke5K96cqWEedETfuT59ex7A0/hGG6RCncZD6v3VxyV4SVMa3
-        erHDSys2aXwOJFHYW+8xWT9AFnM2PkZ0Dpso8ys=
-X-Google-Smtp-Source: AA+uWPwbnuDCv6wH8FXYE9/Ac3t9DiEgg8purmHGplfy/uYVq63yoidOPlSALhaIUqXI0+pq/9fQe26sxEmK4LubFM4=
-X-Received: by 2002:a25:5bd7:: with SMTP id p206-v6mr4615ybb.287.1533679258278;
- Tue, 07 Aug 2018 15:00:58 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=PMUJS7QDcJKRD3egl7GLqA5NZSNU4g0jvzgDAzEBLrc=;
+        b=lM9pR6tF2smqmAW9QzCctDfkK8ZocJNGF3Mt6a5Dqrioq40hhuQU0wc1KGf0BFka2k
+         ESUohzpPtUGDh6ZmwFseaKw6Ex7u/bADt4udyhDxiUlzvK/J3q9LuFJ/2Y+texCKBoWX
+         ZPp6d5euxjB84esIvAhVY6SSzcIR20uaYr/FUmJKqMnn55mF0I71W1ooKluSiW27/gGf
+         GrUtQRORKnXhpBqmM+jkgg7E4BI0IXeDAeOMqpf/eBjMi1PXZe8Dpr1o+WPeloC7z71q
+         28m2Sf8XJZjxbKSz5jnBPLool/50O6t6dC0U/GmUSOjc7bwwcoHLtRrx2Rk1Y8h41o++
+         S29A==
+X-Gm-Message-State: AOUpUlHhQk3nVbhaurHYAfm4W++KWAdWi4piP7N3wNudJQ027sFDaYvF
+        S+U9JEXCg0gnkoFHGDVR75E=
+X-Google-Smtp-Source: AA+uWPzUOS7LjUvm1sXAuD9YIboHUveIp5TFOQWaE7cSYkb4HmCkta4Fa96oVt3izVa4gE0pqoT0MA==
+X-Received: by 2002:adf:83c6:: with SMTP id 64-v6mr142540wre.5.1533679909523;
+        Tue, 07 Aug 2018 15:11:49 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l15-v6sm2165229wrt.67.2018.08.07.15.11.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 07 Aug 2018 15:11:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sebastian Kisela <skisela@redhat.com>
+Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH 1/2] git-instaweb: support Fedora/Red Hat apache module path
+References: <20180807072548.12764-1-skisela@redhat.com>
+        <xmqqk1p1kgwq.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 07 Aug 2018 15:11:48 -0700
+In-Reply-To: <xmqqk1p1kgwq.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 07 Aug 2018 14:25:57 -0700")
+Message-ID: <xmqqftzpkesb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.15.git.gitgitgadget@gmail.com> <faf35214f0f339b792a30a3bd013056217d9a2c1.1533421101.git.gitgitgadget@gmail.com>
- <CAPig+cRrC2mf1uuQ1C4Ue4OMZQbgcxXbJ9AXs0y6RSnUrcm7Dg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1808061510260.71@tvgsbejvaqbjf.bet> <CAPig+cQU-mcUBJGHeZjKeta0_ve8WMr_KL1ToO9j-d=-hS1a=w@mail.gmail.com>
-In-Reply-To: <CAPig+cQU-mcUBJGHeZjKeta0_ve8WMr_KL1ToO9j-d=-hS1a=w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 7 Aug 2018 18:00:47 -0400
-Message-ID: <CAPig+cTBUCytuqMZAZshPNzJ28s_vhWNKawamt1=EtNZVcYJsg@mail.gmail.com>
-Subject: Re: [PATCH 4/4] line-log: convert an assertion to a full BUG() call
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 7, 2018 at 5:09 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Aug 6, 2018 at 9:15 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > I think Andrei's assessment is wrong. The code could not test for that
-> > earlier, as it did allow ranges to become "abutting" in the process, by
-> > failing to merge them. So the invariant you talked about is more of an
-> > invariant for the initial state.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> 	if test -z "$module_path"
+> 	then
+> 		for candidate in \
+> 			/etc/httpd \
+> 			/usr/lib/apache2 \
+> 			/usr/lib/httpd \
+
+I obviously missed semicolon here...
+
+> 		do
+> 			if test -d "$candidate/modules"
+> 			then
+> 				module_path="$candidate/modules"
+> 				break
+> 			fi
+
+One more thing to note is that the fourth candidate might not end
+with "/modules" and force us to update these existing three to have
+"/modules" at the end and lose appending "/modules" from these two
+lines to compensate.  That is sort of deliberate (i.e. as long as we
+can share "/modules" as a common substring at the end, it is OK to
+take advantage of that).
+
+> 		done
+> 	fi
 >
-> My understanding is that range_set_append() is intended to be strict
-> by not allowing addition of a range which abuts an existing range
-> (although, of course, the assert() checks only the last range, so it's
-> not full-proof).
-
-Ignore my parenthetical comment. It is clearly wrong.
-
-Looking at this again, I see that there is some confusion. The comment
-in line-log.h says:
-
-    /* New range must begin at or after end of last added range */
-   void range_set_append(struct range_set *, long start, long end);
-
-However, that comment was added by me in c0babbe695 (range-set:
-publish API for re-use by git-blame -L, 2013-08-06) -- five years and
-one day ago -- and it appears to be based upon a direct interpretation
-of the condition in the assert(), including its off-by-one error.
-
-*But*, one of the invariants of range-set is that the ranges must
-_not_ abut one another, so the "at or after" is wrong; it should say
-instead something like "after, and not touching, the end of the last
-added range".
-
-That invariant about having a gap between ranges is enforced
-deliberately by range_set_check_invariants(). It's also signaled
-implicitly by the fact that no callers of range_set_append() ever
-invoke sort_and_merge_range_set() after calling range_set_append().
+> is when you go from 2 to 3.  Two points to note are:
+>
+>  - It would be easier to add the fourth one this way
+>
+>  - The explicit "break" makes it clear that the paths are listed in
+>    decreasing order of precedence (i.e. /etc/httpd if exists makes
+>    /usr/lib/httpd ignored even if the latter exists); the original
+>    "test -d X && M=X ; test -d Y && M=Y" gives higher precedence to
+>    the later items but readers need to wonder if it is intended or
+>    the code is simply being sloppy.
+>
+> Hope this helps.
