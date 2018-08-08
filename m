@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FAE0208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A08C8208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727274AbeHHQLA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 12:11:00 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:47050 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727251AbeHHQLA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 12:11:00 -0400
-Received: by mail-ed1-f67.google.com with SMTP id o8-v6so1274047edt.13
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:13 -0700 (PDT)
+        id S1727330AbeHHQLE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 12:11:04 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44316 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727251AbeHHQLD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 12:11:03 -0400
+Received: by mail-ed1-f65.google.com with SMTP id f23-v6so1278051edr.11
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=NRwUxYF0OT/c+4KUQieDDAx3+4pbyqoI43a7cReqxYU=;
-        b=OGEdeNm63L0btwXrzuz/LBkYmlI4JQChMUJHALpUKzD+dc2uV0aTZOuHOXY4gMpoNn
-         KnuyoBI9sqpbr1btLAeblIRanyTuMJTXb7Y+bfx/Inb5QwJBMLqU2MlXiJkIbyv4IyM/
-         b82kkr9aO9q1nJM4pfG+NuUA66CJgj4/6go5zQr1RM6x+fIyO+020aETYb0p1Quhoc1V
-         s0daAE1E2CVNQ20fp77D/14rPTZPbeprLbvL5tbhKHwKnRXD8rR/fC9u/6bpFFc+w1MA
-         Tnn5ICUJqjWtBqPSZWAHR4966vbscZBnvorcozlT452EXwbjZvZP0DNl0CLfqAx9uxKB
-         2lYA==
+        bh=sdGIkFhKgQ7CW3+0cianDC0ePmyMRxEpcRzI+AnUidQ=;
+        b=Kwmxv/YxsQJxBS/5Os6XjOiNx7TDTwXDQMM8ue8g7Z4Wj1vZdSlOcaJMgzqu/8me7i
+         wCN6nTeDmTDTETZk1IAOXd1k5qegg7kYwXdZAeHR/h3C8cVYukrqUE2VbuSeYvBQGKbm
+         bBjlYHJiw4b9gsGHozBzybGFP08qRN6mi7jDW3F/wArGt74lyOgwBz9CEnkg4Tokcvmm
+         Oja5oBrDDVQ1Xjl07/XnoBRiHnXVA4mSdr0bj43Vy7smXbhmJM2dWnqmzBDdYRawUPe7
+         BtMK76gqrjvnCIqzxa0mhHeN6fBc72LCRhYfBlIC5xmJS88bXH3K2rUj/XVZo7HUvM6o
+         VmgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=NRwUxYF0OT/c+4KUQieDDAx3+4pbyqoI43a7cReqxYU=;
-        b=QepEoa8f8O8eNowy1bq3+Q0CDCvxg1Q3EQDdB7HSZsfsDFa8oWsxTNUM6PYQEIOOcr
-         VWX6lhtOeyqcUZO19l8AsOL5JVqYNTgjXvTp1zK14QU2u/m4hP3oUKGVPzwl02QdJhsD
-         DpboveBzZaNmuzgsftbbOarfWY2d/fc5pxGmNIKLmthrYR28utLOg6WGYAKy0d/XbPkP
-         tNaJ9rzMtyebbYXKwyx31ryl2QqY4HlY4phc8KmJ8AysQW6vaM2qUpgAzAWhD4E1insI
-         LHcPNmoMsMCZ6lOl06J+FkPaMe8FPOxbdQeBfh0Dkw9FTXKXaD4NoQwh/CzNVMOX/MXC
-         H8HA==
-X-Gm-Message-State: AOUpUlHnlvZb3Nl4vD+7leNmRSS37FU0ac4tGSqLDTDcZEr/AvafkDH7
-        7gECGaS8Ofka5Xu4Kd2Q/gJarszb
-X-Google-Smtp-Source: AA+uWPzH9fVy9D0bUPlSCS9gAvGRZ6nU/kw7fcBEFbLv0Myyk1L+xIAz+i4Y/lQVXiZgrTkoXUvejw==
-X-Received: by 2002:a50:b642:: with SMTP id c2-v6mr3357672ede.288.1533736272986;
-        Wed, 08 Aug 2018 06:51:12 -0700 (PDT)
+        bh=sdGIkFhKgQ7CW3+0cianDC0ePmyMRxEpcRzI+AnUidQ=;
+        b=VpTbhmeg3r6mZd6wm6I62pb/7GCPovuNaQKiJmAl86k+Kjx5iqmPaD7UPEt5E6uo0l
+         a0mSH2tXZvF4TPx3cdqbIgOpLRFngmPShoLivP2krT4F1F+aDyp4/T2t556SvKR0rkz+
+         uaXroVdQrXIHEjg13QXkJWEwA2cL/LEtDxPJg5AIyXOMpcVSi9JHyiF3K7ErIYslIpSL
+         3YZgduS7R81OXPrdqjNMfvlZ0PGXIfRjQuf0fzgnQIWY3Gh3Kv1Lc/Xwf6SwsO1EmOup
+         XxnTuSm6MuDbuSeNMqocVvxQXLnn2qYkM7SjhtZgtvx+RL4PYNemrl7jCGkOw/KFznt1
+         WHuQ==
+X-Gm-Message-State: AOUpUlHuCjZwpK0BpGf7FCKrZahCHJuEh4Zzv4ZIEb7BfAx8JVlzfgWh
+        JPa46U1D14FF+DdaMUrLFM8QPI6g
+X-Google-Smtp-Source: AA+uWPyisLB8FGm5xSL+ZFwVsr6AuRqE40pdBkEqiDV7mZ35wz4qQjXk6o2ZPKeOXMr3eL8O/RxaLQ==
+X-Received: by 2002:a50:b822:: with SMTP id j31-v6mr3319146ede.76.1533736276648;
+        Wed, 08 Aug 2018 06:51:16 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.09
+        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.13
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 06:51:12 -0700 (PDT)
+        Wed, 08 Aug 2018 06:51:15 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 01/11] builtin rebase: support --onto
-Date:   Wed,  8 Aug 2018 19:33:20 +0545
-Message-Id: <20180808134830.19949-2-predatoramigo@gmail.com>
+Subject: [PATCH 02/11] builtin rebase: support `git rebase --onto A...B`
+Date:   Wed,  8 Aug 2018 19:33:21 +0545
+Message-Id: <20180808134830.19949-3-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808134830.19949-1-predatoramigo@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
@@ -64,104 +64,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `--onto` option is important, as it allows to rebase a range of
-commits onto a different base commit (which gave the command its odd
-name: "rebase").
+This commit implements support for an --onto argument that is actually a
+"symmetric range" i.e. `<rev1>...<rev2>`.
 
-This commit introduces options parsing so that different options can
-be added in future commits.
-
-Note: As this commit introduces to the parse_options() call (which
-"eats" argv[0]), the argc is now expected to be lower by one after this
-patch, compared to before this patch: argv[0] no longer refers to the
-command name, but to the first (non-option) command-line parameter.
+The equivalent shell script version of the code offers two different
+error messages for the cases where there is no merge base vs more than
+one merge base. Though following the similar approach would be nice,
+this would create more complexity than it is of current. Currently, for
+simple convenience, the `get_oid_mb()` function is used whose return
+value does not discern between those two error conditions.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 35 ++++++++++++++++++++++++++++++-----
- 1 file changed, 30 insertions(+), 5 deletions(-)
+ builtin/rebase.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index e695d8a430..742ed31498 100644
+index 742ed31498..38c496dd10 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -16,6 +16,16 @@
- #include "cache-tree.h"
+@@ -17,6 +17,7 @@
  #include "unpack-trees.h"
  #include "lockfile.h"
-+#include "parse-options.h"
-+
-+static char const * const builtin_rebase_usage[] = {
-+	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-+		"[<upstream>] [<branch>]"),
-+	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-+		"--root [<branch>]"),
-+	N_("git rebase --continue | --abort | --skip | --edit-todo"),
-+	NULL
-+};
+ #include "parse-options.h"
++#include "commit.h"
  
- static GIT_PATH_FUNC(apply_dir, "rebase-apply")
- static GIT_PATH_FUNC(merge_dir, "rebase-merge")
-@@ -301,6 +311,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ static char const * const builtin_rebase_usage[] = {
+ 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+@@ -311,6 +312,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  	int ret, flags;
  	struct strbuf msg = STRBUF_INIT;
  	struct strbuf revisions = STRBUF_INIT;
-+	struct option builtin_rebase_options[] = {
-+		OPT_STRING(0, "onto", &options.onto_name,
-+			   N_("revision"),
-+			   N_("rebase onto given branch instead of upstream")),
-+		OPT_END(),
-+	};
- 
- 	/*
- 	 * NEEDSWORK: Once the builtin rebase has been tested enough
-@@ -318,13 +334,22 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			BUG("sane_execvp() returned???");
- 	}
- 
--	if (argc != 2)
--		die(_("Usage: %s <base>"), argv[0]);
-+	if (argc == 2 && !strcmp(argv[1], "-h"))
-+		usage_with_options(builtin_rebase_usage,
-+				   builtin_rebase_options);
-+
- 	prefix = setup_git_directory();
- 	trace_repo_setup(prefix);
- 	setup_work_tree();
- 
- 	git_config(git_default_config, NULL);
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_rebase_options,
-+			     builtin_rebase_usage, 0);
-+
-+	if (argc > 2)
-+		usage_with_options(builtin_rebase_usage,
-+				   builtin_rebase_options);
- 
- 	switch (options.type) {
- 	case REBASE_MERGE:
-@@ -343,10 +368,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (!options.root) {
--		if (argc < 2)
-+		if (argc < 1)
- 			die("TODO: handle @{upstream}");
- 		else {
--			options.upstream_name = argv[1];
-+			options.upstream_name = argv[0];
- 			argc--;
- 			argv++;
- 			if (!strcmp(options.upstream_name, "-"))
-@@ -377,7 +402,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	 * orig_head -- commit object name of tip of the branch before rebasing
- 	 * head_name -- refs/heads/<that-branch> or "detached HEAD"
- 	 */
--	if (argc > 1)
-+	if (argc > 0)
- 		 die("TODO: handle switch_to");
- 	else {
- 		/* Do not need to switch branches, we are already on it. */
++	struct object_id merge_base;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -387,7 +389,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (!options.onto_name)
+ 		options.onto_name = options.upstream_name;
+ 	if (strstr(options.onto_name, "...")) {
+-		die("TODO");
++		if (get_oid_mb(options.onto_name, &merge_base) < 0)
++			die(_("'%s': need exactly one merge base"),
++			    options.onto_name);
++		options.onto = lookup_commit_or_die(&merge_base,
++						    options.onto_name);
+ 	} else {
+ 		options.onto = peel_committish(options.onto_name);
+ 		if (!options.onto)
 -- 
 2.18.0
 
