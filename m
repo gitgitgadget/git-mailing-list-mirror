@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A08C8208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52421208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbeHHQLE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 12:11:04 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44316 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727251AbeHHQLD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 12:11:03 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f23-v6so1278051edr.11
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:17 -0700 (PDT)
+        id S1727335AbeHHQLH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 12:11:07 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37746 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727251AbeHHQLH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 12:11:07 -0400
+Received: by mail-ed1-f67.google.com with SMTP id b10-v6so1306364eds.4
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=sdGIkFhKgQ7CW3+0cianDC0ePmyMRxEpcRzI+AnUidQ=;
-        b=Kwmxv/YxsQJxBS/5Os6XjOiNx7TDTwXDQMM8ue8g7Z4Wj1vZdSlOcaJMgzqu/8me7i
-         wCN6nTeDmTDTETZk1IAOXd1k5qegg7kYwXdZAeHR/h3C8cVYukrqUE2VbuSeYvBQGKbm
-         bBjlYHJiw4b9gsGHozBzybGFP08qRN6mi7jDW3F/wArGt74lyOgwBz9CEnkg4Tokcvmm
-         Oja5oBrDDVQ1Xjl07/XnoBRiHnXVA4mSdr0bj43Vy7smXbhmJM2dWnqmzBDdYRawUPe7
-         BtMK76gqrjvnCIqzxa0mhHeN6fBc72LCRhYfBlIC5xmJS88bXH3K2rUj/XVZo7HUvM6o
-         VmgA==
+        bh=1wa5vq/PaNnWj+S1jofJ/Vs1rg8E3NrlYrMIdE/K4IA=;
+        b=hfIKroB7u0PK1QZsNlnTS8sWTWeT9STaI+Hkr35FUVSpFjaCUOxOc33+Bsa0aW2OZ7
+         s8eXH/QJLyjayQHvIc9nsQHh9ZWzS2MQg+izCVIwOOsR/K0XPxjiFVKtyGfUbjreOXbt
+         S1t6sEeYlOS7WcjvQtReyc55vzldN8yVeEnypOLiTqrq0p4M76XP9/rWOJkkF7kBGh82
+         o5PdVldKMoaeWGYxPWaHiQS3lqB0wgRmufVFvVlQqyyoph3CvgVye4V9EFp8Vv9YBG96
+         ZuUc1lXMd4AnXb/Z7YM3lgwUkaDwC5UISvoSrjv1OuqoMgFPabpxlWZlr8TYrS0tlLjb
+         R1sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=sdGIkFhKgQ7CW3+0cianDC0ePmyMRxEpcRzI+AnUidQ=;
-        b=VpTbhmeg3r6mZd6wm6I62pb/7GCPovuNaQKiJmAl86k+Kjx5iqmPaD7UPEt5E6uo0l
-         a0mSH2tXZvF4TPx3cdqbIgOpLRFngmPShoLivP2krT4F1F+aDyp4/T2t556SvKR0rkz+
-         uaXroVdQrXIHEjg13QXkJWEwA2cL/LEtDxPJg5AIyXOMpcVSi9JHyiF3K7ErIYslIpSL
-         3YZgduS7R81OXPrdqjNMfvlZ0PGXIfRjQuf0fzgnQIWY3Gh3Kv1Lc/Xwf6SwsO1EmOup
-         XxnTuSm6MuDbuSeNMqocVvxQXLnn2qYkM7SjhtZgtvx+RL4PYNemrl7jCGkOw/KFznt1
-         WHuQ==
-X-Gm-Message-State: AOUpUlHuCjZwpK0BpGf7FCKrZahCHJuEh4Zzv4ZIEb7BfAx8JVlzfgWh
-        JPa46U1D14FF+DdaMUrLFM8QPI6g
-X-Google-Smtp-Source: AA+uWPyisLB8FGm5xSL+ZFwVsr6AuRqE40pdBkEqiDV7mZ35wz4qQjXk6o2ZPKeOXMr3eL8O/RxaLQ==
-X-Received: by 2002:a50:b822:: with SMTP id j31-v6mr3319146ede.76.1533736276648;
-        Wed, 08 Aug 2018 06:51:16 -0700 (PDT)
+        bh=1wa5vq/PaNnWj+S1jofJ/Vs1rg8E3NrlYrMIdE/K4IA=;
+        b=Fewbriwu0ttvCDoAl9+v3ziFEx5tpjFtUW0WgZzmwKe/NB5YQuIJM890dutSXK+pgw
+         VJgJkhQdlk8wXMlQdd20aJ5nQzq4Fi584ehT9A1w0dKt4cVwCUoxJgCb2nmNL28p1Yl4
+         XPFFENpHnlkU1m80zleeaSATKQYPcWRfsi5x+gOzBbhIbi2QKUhz2SZwad7L1lWLZdo9
+         CvYLxrQwJgxHQlCgbleFJjYEz3I7Xgq7sr9n+0S4EPFC9jp4uM9TCrt7XWkHBUuqh9jD
+         yYAF370NJkc94cdNtzP1w1hmFsu1hPfMIZxWnq4Kft7CF1P6QDGrYfa9ddIlqpIW/2Fr
+         8q6Q==
+X-Gm-Message-State: AOUpUlHoHvzBDGkDEI4ymQaudgmQuiIpcIZidxUqHpXcKRj4Xx6yLvVI
+        /Cc0u88btvUv1pmpHWWtUimOoMi7
+X-Google-Smtp-Source: AA+uWPzThRhFyU+o13uCpop36qbyjLMgMKblxxzuEdySWI9WzudcWsDyMFHfR+9k+ZGtlYPIGMyZzA==
+X-Received: by 2002:a50:8921:: with SMTP id e30-v6mr3390957ede.213.1533736280282;
+        Wed, 08 Aug 2018 06:51:20 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.13
+        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 06:51:15 -0700 (PDT)
+        Wed, 08 Aug 2018 06:51:19 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 02/11] builtin rebase: support `git rebase --onto A...B`
-Date:   Wed,  8 Aug 2018 19:33:21 +0545
-Message-Id: <20180808134830.19949-3-predatoramigo@gmail.com>
+Subject: [PATCH 03/11] builtin rebase: handle the pre-rebase hook (and add --no-verify)
+Date:   Wed,  8 Aug 2018 19:33:22 +0545
+Message-Id: <20180808134830.19949-4-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808134830.19949-1-predatoramigo@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
@@ -64,54 +64,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit implements support for an --onto argument that is actually a
-"symmetric range" i.e. `<rev1>...<rev2>`.
-
-The equivalent shell script version of the code offers two different
-error messages for the cases where there is no merge base vs more than
-one merge base. Though following the similar approach would be nice,
-this would create more complexity than it is of current. Currently, for
-simple convenience, the `get_oid_mb()` function is used whose return
-value does not discern between those two error conditions.
+This commit converts the equivalent part of the shell script
+`git-legacy-rebase.sh` to run the pre-rebase hook (unless disabled), and
+to interrupt the rebase with error if the hook fails.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ builtin/rebase.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 742ed31498..38c496dd10 100644
+index 38c496dd10..b79f9b0a9f 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -17,6 +17,7 @@
- #include "unpack-trees.h"
- #include "lockfile.h"
- #include "parse-options.h"
-+#include "commit.h"
- 
- static char const * const builtin_rebase_usage[] = {
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-@@ -311,6 +312,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+@@ -70,6 +70,7 @@ struct rebase_options {
+ 	const char *state_dir;
+ 	struct commit *upstream;
+ 	const char *upstream_name;
++	const char *upstream_arg;
+ 	char *head_name;
+ 	struct object_id orig_head;
+ 	struct commit *onto;
+@@ -310,6 +311,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	};
+ 	const char *branch_name;
  	int ret, flags;
++	int ok_to_skip_pre_rebase = 0;
  	struct strbuf msg = STRBUF_INIT;
  	struct strbuf revisions = STRBUF_INIT;
-+	struct object_id merge_base;
- 	struct option builtin_rebase_options[] = {
+ 	struct object_id merge_base;
+@@ -317,6 +319,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  		OPT_STRING(0, "onto", &options.onto_name,
  			   N_("revision"),
-@@ -387,7 +389,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (!options.onto_name)
- 		options.onto_name = options.upstream_name;
- 	if (strstr(options.onto_name, "...")) {
--		die("TODO");
-+		if (get_oid_mb(options.onto_name, &merge_base) < 0)
-+			die(_("'%s': need exactly one merge base"),
-+			    options.onto_name);
-+		options.onto = lookup_commit_or_die(&merge_base,
-+						    options.onto_name);
- 	} else {
- 		options.onto = peel_committish(options.onto_name);
- 		if (!options.onto)
+ 			   N_("rebase onto given branch instead of upstream")),
++		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
++			 N_("allow pre-rebase hook to run")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -382,6 +386,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.upstream = peel_committish(options.upstream_name);
+ 		if (!options.upstream)
+ 			die(_("invalid upstream '%s'"), options.upstream_name);
++		options.upstream_arg = options.upstream_name;
+ 	} else
+ 		die("TODO: upstream for --root");
+ 
+@@ -430,6 +435,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			die(_("Could not resolve HEAD to a revision"));
+ 	}
+ 
++	/* If a hook exists, give it a chance to interrupt*/
++	if (!ok_to_skip_pre_rebase &&
++	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
++			argc ? argv[0] : NULL, NULL))
++		die(_("The pre-rebase hook refused to rebase."));
++
+ 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
+ 	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1))
+ 		die(_("Could not detach HEAD"));
 -- 
 2.18.0
 
