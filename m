@@ -2,73 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBA10208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 07:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A451208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 08:32:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726921AbeHHJ6z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 05:58:55 -0400
-Received: from mail-yw1-f43.google.com ([209.85.161.43]:38877 "EHLO
-        mail-yw1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726721AbeHHJ6y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 05:58:54 -0400
-Received: by mail-yw1-f43.google.com with SMTP id r3-v6so892712ywc.5
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 00:40:29 -0700 (PDT)
+        id S1727218AbeHHKva (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 06:51:30 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35844 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbeHHKva (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 06:51:30 -0400
+Received: by mail-wm0-f67.google.com with SMTP id w24-v6so1861949wmc.1
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 01:32:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X+kZ5UjM24bQ9q8NZHn8q9jxXHr2BaRnhhHBPMujfMI=;
-        b=fiZVyAa0Otb4H/sNHyRTL5LHE3daASb754xNQtEBLuKNZ3up0rO1LIVrWj5KndP7jL
-         94LwLtqUWVYGyQN4KrnjJqF9pmvjQQHyZaJYg5SEZStt77FEGj/plAvvEFNF+RHRgOzS
-         ofRfy6MANbJKechPge5zs5AF4XHC9KA0VVQz+im0YxkHj4ZiIJK5gVbD6trwVguGA7hG
-         VFwE9FgFnAfW207dsxvz6Hov4xGYCnfWJ5GYK4bwkVwMtP/Ii8XfBE+ZU6ouxOYjlrPD
-         lXEzTf9AJ4hxjPHMgyo2MjOaF0pAYVmPDtPhaqcUQnHoqc3RCHr6ZNVTvFEQEpwC8ksH
-         HIig==
-X-Gm-Message-State: AOUpUlFmkvwVw65vugKZgzNe+az/soyt4zkG/ntGnmW6EC5ORH2pxiCo
-        g2hdVtIWAhAMAvpTjtYSExj2mpSGGpMPseFHcCGIsQrU
-X-Google-Smtp-Source: AA+uWPyvCT2gzNdUubNIkM2LxJkqOrNNi0e0q96wzUYbIj7oYl70by5pvItpEsUWK9ga6CScw4yKHsS47On2FzMsN7o=
-X-Received: by 2002:a25:9d81:: with SMTP id v1-v6mr818250ybp.76.1533714028477;
- Wed, 08 Aug 2018 00:40:28 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180808035854.49D69E450E@mailuser.nyi.internal>
-In-Reply-To: <20180808035854.49D69E450E@mailuser.nyi.internal>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 8 Aug 2018 03:40:16 -0400
-Message-ID: <CAPig+cRP-t+4nDd2ei7PNPupcWSbcNAQaqmiEMVLGh3Nwuc2FA@mail.gmail.com>
-Subject: Re: Page content is wider than view window
-To:     mail@bradyt.com
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=BjgTWc9JR/cLxb+1S2y32goZIcFBcMnlNygRq7uTODA=;
+        b=pksOd+G+r8gJgc6HRPWeKYrtQcXNkEfJM8H1ulDv1ihtKGnimRP2HbjpLrAat8ZVaZ
+         QkxU1PmXwPiagL2hEjMMNFooPT9v41E9hj8cf7rCgFQ0DmfacGKogIoLq6WfJHsxvnp8
+         yf8LZYpNO9XWRbz+k0DMapM7wHXH2rUAvMuGNwFhD+XGpfcTjeeTHS4UR/yPOk08VMQg
+         kwP3DX1LAs5KLTWbkDBJfW4+k/Hf7WtDrL1P07eJINWYv22AaTM45W29KakkyS49ftCX
+         Ot4T2+a6kkgKHi3bGA9w8z27lnVjPBj78+bXYYCfQjOOtNWJtTnCuA8GDGdRmQqd3sri
+         ehjA==
+X-Gm-Message-State: AOUpUlEWcaBqjPvCmaGfHK5ocmud9qC8hPJilxARpyChZL8d/SR8HUfT
+        a3daVJEpkUxwG/yrVFUHkMP3+L6MCXLDtg==
+X-Google-Smtp-Source: AA+uWPx6Sjgya4niyQVOYO0L8j3hWLrptVxDaex+e0FqoX9oYYiHz3fYkg8quV4Nl4Fd7wNlj4146w==
+X-Received: by 2002:a1c:8414:: with SMTP id g20-v6mr1295155wmd.90.1533717170528;
+        Wed, 08 Aug 2018 01:32:50 -0700 (PDT)
+Received: from skisela-redhat.brq.redhat.com (nat-pool-brq-t.redhat.com. [213.175.37.10])
+        by smtp.gmail.com with ESMTPSA id 198-v6sm7009818wmm.0.2018.08.08.01.32.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Aug 2018 01:32:49 -0700 (PDT)
+From:   Sebastian Kisela <skisela@redhat.com>
+To:     git@vger.kernel.org
+Cc:     skisela@redhat.com
+Subject: [PATCH] git-instaweb.sh: Generate unixd module loading
+Date:   Wed,  8 Aug 2018 10:32:48 +0200
+Message-Id: <20180808083248.2424-1-skisela@redhat.com>
+X-Mailer: git-send-email 2.14.4
+In-Reply-To: <1651347126dc2039>
+References: <1651347126dc2039>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 7, 2018 at 11:59 PM Brady Trainor <mail@bradyt.com> wrote:
-> If I am reading the git book or manual (https://git-scm.com/), and zoom
-> in, and/or have browser sized to a fraction of the screen, I cannot see
-> all the text, and have to horizontally scroll back and forth to read at
-> that zoom.
->
-> Can site designer consider this in layout?
+AH00136: Server MUST relinquish startup privileges before accepting connections.
+Please ensure mod_unixd or other system security module is loaded.
 
-The git-scm.com website is maintained as a distinct project[1] at
-Github; it is not directly related to the Git project itself (to which
-you sent this email). A good way to voice a concern or make a
-suggestion about the website is either to open an issue[2] or submit a
-pull request[3] if you have a specific change in mind.
+Signed-off-by: Sebastian Kisela <skisela@redhat.com>
+---
+ git-instaweb.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The Pro Git book (if that's what you're reading) is also a distinct
-project[4], not directly related to the Git project. You can likewise
-open an issue[5] or submit a pull request[6] if needed.
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 47e38f34c..dd67fbe38 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -356,7 +356,7 @@ EOF
+ 			break
+ 		fi
+ 	done
+-	for mod in mime dir env log_config authz_core
++	for mod in mime dir env log_config authz_core unixd
+ 	do
+ 		if test -e $module_path/mod_${mod}.so
+ 		then
+-- 
+2.14.4
 
-[1]: https://github.com/git/git-scm.com
-[2]: https://github.com/git/git-scm.com/issues
-[3]: https://github.com/git/git-scm.com/pulls
-[4]: https://github.com/progit/progit2
-[5]: https://github.com/progit/progit2/issues
-[6]: https://github.com/progit/progit2/pulls
