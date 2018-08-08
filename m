@@ -2,117 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F393F1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 22:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FF461F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 22:33:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730397AbeHIAxY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 20:53:24 -0400
-Received: from cloud.peff.net ([104.130.231.41]:47594 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727706AbeHIAxY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 20:53:24 -0400
-Received: (qmail 16834 invoked by uid 109); 8 Aug 2018 22:31:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Aug 2018 22:31:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3722 invoked by uid 111); 8 Aug 2018 22:31:43 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 08 Aug 2018 18:31:43 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2018 18:31:39 -0400
-Date:   Wed, 8 Aug 2018 18:31:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, pawelparuzel95@gmail.com,
-        sandals@crustytoothpaste.net, Elijah Newren <newren@gmail.com>,
-        tboegi@web.de
-Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive
- filesystems
-Message-ID: <20180808223139.GA3902@sigill.intra.peff.net>
-References: <20180730152756.15012-1-pclouds@gmail.com>
- <20180807190110.16216-1-pclouds@gmail.com>
- <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
- <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
+        id S1730930AbeHIAzL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 20:55:11 -0400
+Received: from mail-io0-f201.google.com ([209.85.223.201]:51970 "EHLO
+        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730262AbeHIAzL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 20:55:11 -0400
+Received: by mail-io0-f201.google.com with SMTP id w23-v6so2805380iob.18
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 15:33:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=OpE47SeUyDtgCvBbnTNyUzr5pUikWpV98dIUhcFaE68=;
+        b=ZugAdK6DDxzr9vcVjs1MsrcEZnLq0FXAmnN3MpDVHNwJb2TJWw/yv8OJKMx2QPOEUX
+         eAe36oQ+uzIt5k+B2xl2HGEjo+T5Gr4ntXDDcoYP2Dha1QIT3UhGKbmtLlaQvMfJkNCU
+         CwMd+W/AOnPjC9NqqS6y1Q6/rKfc/sNerADPS2Im0mE9cu0qUzlLR8WKpm65CgR5puB9
+         OFwm4ZF4aNKaac7E5e+t23UMXc19yWFr0aH3YZure1dy0NLlOU11xzy2/WYwUck6QQYH
+         qe/IwmQFeTpXmAnnEXXMhXWw8M8//b9Ni46k2hSkqg36I2/XNx/5LFrjGhfnlxKV5lUT
+         eyfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=OpE47SeUyDtgCvBbnTNyUzr5pUikWpV98dIUhcFaE68=;
+        b=CzP0myBEaJJvahx+5fJJ8oWE3k0uws/y7bkcFDnsY9y8Tn1sT6k8PxiQC4YUN7WglH
+         NHN0DlDWrulsToA+bmpbeVK3A/aIV+g6I2nIGpgXxzHl2qPI1F7siFsnbPfiboNQGdnJ
+         7lGdpDSWNOkHH1u4xXn+EerSqppDqpOFpjaJEiARysxf720gvXEKslWL2TANLLBmmpfu
+         qXy3Q2szi1zXSITu8yaAenFIwZHLl5BJaJdpNC0kTTBv2aJPtB98kkqoU9u7/ulLaw1/
+         u+SqrxW2H0hJOXvErCoVwuokIZvSneu/4GdioKfGuAMO+LvYBYCwJzJmG/oYrJV7LvTD
+         GFbA==
+X-Gm-Message-State: AOUpUlHV5hkyuQBSGUnrRzQxyZoaAXSeHYIhtDNYfHv78Yj88/ppcTDG
+        nHFfEuFNUO7C3zmrX0xp5jeG1L4H/Uy2RsCE/s8lHorV5KLhFZ/BjlVWZ7BlOWrORq/w7eWoSc6
+        dxsV5DBaiMa3Iy5ZkLWZi4ZuEAcMqkYSnDlZxhnKSeVJCUuI67XDOFV08PQ==
+X-Google-Smtp-Source: AA+uWPxE6iXUJsfZNfRZ+VzcxbJGPyItRawZG1mggAf7qV5ILHLPa2VqIXHlye9/sssfuiVioL5idhZlPcw=
+X-Received: by 2002:a24:700a:: with SMTP id f10-v6mr10329itc.40.1533767606843;
+ Wed, 08 Aug 2018 15:33:26 -0700 (PDT)
+Date:   Wed,  8 Aug 2018 15:33:21 -0700
+In-Reply-To: <20180807230637.247200-1-bmwill@google.com>
+Message-Id: <20180808223323.79989-1-bmwill@google.com>
+Mime-Version: 1.0
+References: <20180807230637.247200-1-bmwill@google.com>
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
+Subject: [PATCH 0/2] munge submodule names
+From:   Brandon Williams <bmwill@google.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Williams <bmwill@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 08, 2018 at 03:48:04PM -0400, Jeff Hostetler wrote:
+Here's a more polished series taking into account some of the feedback
+on the RFC.  As Junio pointed out URL encoding makes the directories
+much more human readable, but I'm open to other ideas if we don't think
+URL encoding is the right thing to do.
 
-> > ce_match_stat() may not be a very good measure to see if two paths
-> > refer to the same file, though.  After a fresh checkout, I would not
-> > be surprised if two completely unrelated paths have the same size
-> > and have same mtime/ctime.  In its original use case, i.e. "I have
-> > one specific path in mind and took a snapshot of its metadata
-> > earlier.  Is it still the same, or has it been touched?", that may
-> > be sufficient to detect that the path has been _modified_, but
-> > without reliable inum, it may be a poor measure to say two paths
-> > refer to the same.
-> 
-> I agree with Junio on this one.  The mtime values are sloppy at best.
-> On FAT file systems, they have 2 second resolution.  Even NTFS IIRC
-> has only 100ns resolution, so we might get a lot of false matches
-> using this technique, right?
+Brandon Williams (2):
+  submodule: create helper to build paths to submodule gitdirs
+  submodule: munge paths to submodule git directories
 
-Yeah, I think anything less than inode (or some system equivalent) is
-going to be too flaky.
+ builtin/submodule--helper.c      | 28 +++++++++++--
+ dir.c                            |  2 +-
+ git-submodule.sh                 |  7 ++--
+ repository.c                     |  3 +-
+ submodule.c                      | 67 ++++++++++++++++++++++----------
+ submodule.h                      |  7 ++++
+ t/t7400-submodule-basic.sh       | 32 ++++++++++++++-
+ t/t7406-submodule-update.sh      | 21 +++-------
+ t/t7410-submodule-checkout-to.sh |  6 ++-
+ 9 files changed, 126 insertions(+), 47 deletions(-)
 
-> It might be better to build an equivalence-class hash-map for the
-> colliding entries.  Compute a "normalized" version of the pathname
-> (such as convert to lowercase, strip final-dots/spaces, strip the
-> digits following tilda of a shortname, and etc for the MAC's UTF-isms).
-> Then when you rescan the index entries to find the matches, apply the
-> equivalence operator on the pathname and do the hashmap lookup.
-> When you find a match, you have a "potential" collider pair (I say
-> potential only because of the ambiguity of shortnames).  Then we
-> can use inum/file-index/whatever to see if they actually collide.
+-- 
+2.18.0.597.ga71716f1ad-goog
 
-I think we really want to avoid doing that normalization ourselves if we
-can. There are just too many filesystem-specific rules.
-
-If we have an equivalence-class hashmap and feed it inodes (or again,
-some system equivalent) as the keys, we should get buckets of
-collisions. I started to write a "something like this..." earlier, but
-got bogged down in boilerplate around the C hashmap.
-
-But here it is in perl. ;)
-
--- >8 --
-# pretend we have these paths in our index
-paths='foo FOO and some other paths'
-
-# create them; this will make a single path on a case-insensitive system
-for i in $paths; do
-  echo $i >$i
-done
-
-# now find the duplicates
-perl -le '
-  for my $path (@ARGV) {
-    # this would be an ntfs unique-id on Windows
-    my $inode = (lstat($path))[1];
-    push @{$h{$inode}}, $path;
-  }
-
-  for my $group (grep { @$_ > 1 } values(%h)) {
-    print "group:";
-    print "  ", $_ for (@$group);
-  }
-' $paths
--- >8 --
-
-which should show the obvious pair (it does for me on vfat-on-linux,
-though where it gets those inodes from, I have no idea ;) ).
-
--Peff
