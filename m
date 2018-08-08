@@ -2,75 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6FE01F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 20:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9347A1F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 20:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730123AbeHHWtW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 18:49:22 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:32915 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729625AbeHHWtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 18:49:22 -0400
-Received: by mail-wm0-f50.google.com with SMTP id r24-v6so485532wmh.0
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 13:28:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XpQN4aUZKeyxFcfc+RCcjWA0NL0Ti7Z3u1fCZg58Mf8=;
-        b=CUw06406ZDrR34aM4vlDgV0Hbdoox1apsCkalaxGsvDpfmUkUg2fiACX9M7JVzqbN7
-         r3r7VpT0KP71c/AJMAPyl7n5WX1SxQzIFSGrwUScj0Yr0r1Ws3hor32T+Qy6soLpiHkq
-         XjvIF9q7VBaYGvDtBfe0GlNlgjMX1WaXKQXfkIlGYfrxmvGIu2Olb+SO7sYEW9UsOWMb
-         V2A5aAQF4BiGmtuG0O+7txygNa95ewdrqpaB9zovuf/aH1DGaJhHUrUXwrxQgxc7BUZd
-         Wz1kpdGzB/8DUb3mhiyaO4cCbwLYb0a4WwAFq6d1z306fnh2LZCb4pR+LtgiEkHbtG5B
-         8uxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XpQN4aUZKeyxFcfc+RCcjWA0NL0Ti7Z3u1fCZg58Mf8=;
-        b=TT15hJId4ytWPTk2eZx5nQN4iiyoO6NT8QMwVfvq0iXUmHClPn1xtb2O3c7ZRcUy3V
-         Ue3GWx2Z/VLw1lWpIC8a1gXt7ikrO71r4hdTTdae5QMuzgtV4eNPiGnNQ6p+rJXxPjKz
-         TkgvQI/j95RuHbXlrrHRK+PUcXuCy5Fj5J5wz4AiPzj+qK82VA4unuDrRWcU0xVsF7UI
-         y7OGbLxrKGwTrbdffFbKdx4u5RMPO24b2ZDo0MiZcJeuPKYqUVJVQX2jS3KcNehi5pQc
-         CIQKqf1dr++X2ez3E2MF77ehZnSOOyrakcuSxCZXfuUp48dGMTb9hq7ugCUZFRY3zcFi
-         c3tw==
-X-Gm-Message-State: AOUpUlGVPsVHROQzWONHxO0sUaP6qMfjvAl2OkZLDVLcDZ6t2XAT+ptW
-        l+ALmLeqWDmEvD0pGyDm9pU=
-X-Google-Smtp-Source: AA+uWPyQrXcU30yMxGD6qxoJ6Z+Q5hxQ2mJx1HcIYuTJYDimkyWJ7fvFc4xOhF4UTt/NrwlJjB+mqw==
-X-Received: by 2002:a1c:d702:: with SMTP id o2-v6mr2760581wmg.115.1533760082259;
-        Wed, 08 Aug 2018 13:28:02 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w9-v6sm5815029wrk.28.2018.08.08.13.28.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 13:28:01 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Resending sb/config-write-fix
-References: <20180808195020.37374-1-sbeller@google.com>
-Date:   Wed, 08 Aug 2018 13:28:01 -0700
-In-Reply-To: <20180808195020.37374-1-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 8 Aug 2018 12:50:17 -0700")
-Message-ID: <xmqq600kfvse.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730213AbeHHWt3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 18:49:29 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36024 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1729625AbeHHWt3 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 18:49:29 -0400
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w78KS0wE026900;
+        Wed, 8 Aug 2018 13:28:09 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2kr3478dfc-1;
+        Wed, 08 Aug 2018 13:28:09 -0700
+Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 4D46A228A02B;
+        Wed,  8 Aug 2018 13:28:09 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 47A162CDE5F;
+        Wed,  8 Aug 2018 13:28:09 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>
+Subject: [PATCH] git-update-index.txt: reword possibly confusing example
+Date:   Wed,  8 Aug 2018 13:28:07 -0700
+Message-Id: <20180808202807.15350-1-newren@gmail.com>
+X-Mailer: git-send-email 2.18.0.556.g1604670984
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-08-08_07:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=43 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1808080206
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+The following phrase could be interpreted multiple ways:
+  "To pretend you have a file with mode and sha1 at path"
 
-> This is a resend of sb/config-write-fix, with a slightly
-> better commit message and a renamed variable.
->
-> Thanks,
-> Stefan
+In particular, I can think of two:
+  1. Pretend we have some new file, which happens to have a given mode
+     and sha1
+  2. Pretend one of the files we are already tracking has a different
+     mode and sha1 than what it really does
 
-Thanks.  Let's declare victory and mark it to be merged to 'next'.
+I think people could easily assume either case while reading, but the
+example command provided doesn't actually handle the first case, which
+caused some minor frustration to at least one user.  Modify the example
+command so that it correctly handles both cases, and re-order the
+wording in a way that makes it more likely folks will assume the first
+interpretation.  I believe the new example shouldn't pose any obstacles
+to those wanting the second interpretation (at worst, they pass an
+unnecessary extra flag).
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ Documentation/git-update-index.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-update-index.txt b/Documentation/git-updat=
+e-index.txt
+index 4e8e762e68..a9753e6557 100644
+--- a/Documentation/git-update-index.txt
++++ b/Documentation/git-update-index.txt
+@@ -245,10 +245,10 @@ USING --CACHEINFO OR --INFO-ONLY
+ current working directory.  This is useful for minimum-checkout
+ merging.
+=20
+-To pretend you have a file with mode and sha1 at path, say:
++To pretend you have a file at path with mode and sha1, say:
+=20
+ ----------------
+-$ git update-index --cacheinfo <mode>,<sha1>,<path>
++$ git update-index --add --cacheinfo <mode>,<sha1>,<path>
+ ----------------
+=20
+ `--info-only` is used to register files without placing them in the obje=
+ct
+--=20
+2.18.0.556.g1604670984
+
