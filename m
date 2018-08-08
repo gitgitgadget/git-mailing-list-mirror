@@ -2,195 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F7A51F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C76A31F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730875AbeHHVUo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 17:20:44 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:55287 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729997AbeHHVUn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 17:20:43 -0400
-Received: by mail-wm0-f53.google.com with SMTP id c14-v6so3805971wmb.4
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:59:41 -0700 (PDT)
+        id S1730912AbeHHVUs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:20:48 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:37156 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730552AbeHHVUs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 17:20:48 -0400
+Received: by mail-yw1-f68.google.com with SMTP id w76-v6so2349929ywg.4
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=a8nTfEF4ISXp5D/SagQ54g5EkvIEc6thnJm2iKnvKYo=;
-        b=rdjhWdQupqVXcd1ZarQXpnZiyex2XbR0D5NlbUciX4lOvz46ssy/cJgOMp1MhN1CE5
-         CU2upuzFM3TA5qcHY8h4k8gK8P6MFS0I2KZrS4ndyUzMiwbrSQ61rtFLq77YYeZCR3+o
-         xzqlVJ8U1uU2swW8Vpf8HjprRvUTclcsePVJJYzmrKJRh92PRFyBo+Rf1sJne2x/9+Bg
-         G4uRJO4UW3GkFpXMLbukeQM8W+XtmT2qQS2pAVZQeeL+gBrUl8X9XaKgfdKTOa2Rb43U
-         fghDNnlQqh9ZB0TCp0E9nKm0eeV/wdSmolIxjNbyMOLIdTCYAhLY4zOLsUFcTbnpi8ZP
-         dteQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iUsx7oqX/uWdB1DE9vjjs6g/r3MSpfC/74niGVyA5S0=;
+        b=Gfy89ongTfI77v33DohT3ZokC2j8RDICtxN8CFSCfjMFni752XnFVDxaLYsVXLbMPx
+         IgkRL/Yp2U20eqzo3jBu68taGFgCQXKiblhCElt3hsamJAVrhZI/60H6SkuPJ/neWQTO
+         FPZ2dFI4/gTdUHSbf8ElyRogqR5L9239MdzOTuhh4w0pf9FV/idmjVP4dSMgk8TFK/pq
+         RRhWU/FyEiQfWO10MI7hk/Fiakxj73/bslVBkYWxjutXNANum6jnaOKLGm5Odb56iUop
+         lf8jSyaQalXgQPY7ph/PqE/ELuAEn3wzBNABUDTyiCiC82snzt1TfTzqNYcs+EVQqz7f
+         1f9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=a8nTfEF4ISXp5D/SagQ54g5EkvIEc6thnJm2iKnvKYo=;
-        b=guAOOuhcm8nngWbaqxD2PzPaNOoAYNq40jtuoLwyDoL+s4DHkQo7Z8RyoLymlk0beG
-         nVmYdIT27mB2VGIvlMF8kOkrVIvPaadKK/pzIqnMnIIEJWYoy2YPv3ncpI0MEkLC+3CM
-         FmlUfdsJqveJXjUQFZh4zCOch2PMJ3Xfy/XORJ4/6xRasKYQ6NUFWV8OGTzDd8pfpkv7
-         HgEOakoZdBCnpQEm4JFnwN/EAu043vD+ALR9rwNTi0TIljqd+EKIRSWT1Lxt9h6PNiVz
-         aDa32TOFHRwwE97VXgDiTLb/7srTQgMoyijAweRzBAnghTd5fMwLpFEUCmx8PFkbgBPd
-         bqPQ==
-X-Gm-Message-State: AOUpUlGQEMFbtDK9d6FQ9QvqQGzLuVOE1VGsOYCljOB6vtU/j0SLkckR
-        /rYpdotRSJiiCbZNViOejzeosMLX
-X-Google-Smtp-Source: AA+uWPznfr2HNIBZ1vcqcdl9fV6nvN5iJlaPH5O3tx5RjHVpQsJEUuJ2zTc7+fZsLtP6u99oHzFEzQ==
-X-Received: by 2002:a1c:4489:: with SMTP id r131-v6mr2546280wma.128.1533754781160;
-        Wed, 08 Aug 2018 11:59:41 -0700 (PDT)
-Received: from sebi-laptop.tendawifi.com ([86.127.74.86])
-        by smtp.gmail.com with ESMTPSA id p5-v6sm4238879wre.32.2018.08.08.11.59.40
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 11:59:40 -0700 (PDT)
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-To:     git@vger.kernel.org
-Subject: [GSoC][PATCH v7 26/26] stash: replace all "git apply" child processes with API calls
-Date:   Wed,  8 Aug 2018 21:59:05 +0300
-Message-Id: <56500d98f9d5daaa5f21a43767885baede86e3a0.1533753605.git.ungureanupaulsebastian@gmail.com>
-X-Mailer: git-send-email 2.18.0.573.g56500d98f
-In-Reply-To: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iUsx7oqX/uWdB1DE9vjjs6g/r3MSpfC/74niGVyA5S0=;
+        b=uZ5r/5aH57aG78A7t8AO3fnuNpYY89XMfk0weuby5QJ7iAt255uZodFGJPKAimRmS7
+         JWiqqJ9bc9fRj9rZL9E9q8LqV2PRyzpSMgpUzdsBVqQmZ07i5i+H6AYAa61qRdSSuaPb
+         Da3var8xw/804tfkuCyTLdIwg8bwckQ4VvqLgzovYsSdbXCUpDOkV1EAh2zQD/h0kp4s
+         NJpJB5/kCi+t9Xig3qaTf+h7SX8gFHXZrmGM9zRRXC7E+jpn9f0VEkk2TNNOUdEx3dsu
+         4hah/APHmSWfdwQqlFgBHW91RP2ccRq6SUgPnakcYArnfZoanO9QlNRKlKJSyHNrWT+C
+         QUDg==
+X-Gm-Message-State: AOUpUlHOKpf5q/TmGEqpdei5Cyivkz3b8r7jbYl4+R70VAkh+NHwdvgn
+        ODvXjolSrKgIdY9Ziq6zKHD2ty+4YsPDyTtjaJHhsQ==
+X-Google-Smtp-Source: AA+uWPx+UJ4LxpPsavF8C+/nOenbYszoihhe5V5u4hyjqWNsJTQjUlKdrie13KbQGbNazpaP2M9e5NSI6H2wav7hknE=
+X-Received: by 2002:a25:84d0:: with SMTP id x16-v6mr2161723ybm.307.1533754786608;
+ Wed, 08 Aug 2018 11:59:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-10-predatoramigo@gmail.com>
+In-Reply-To: <20180808134830.19949-10-predatoramigo@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 8 Aug 2018 11:59:35 -0700
+Message-ID: <CAGZ79kafP=dVrwWopXW0WCWf199sU6uFSphjxtMTXDSix4Y81Q@mail.gmail.com>
+Subject: Re: [PATCH 09/11] builtin rebase: start a new rebase only if none is
+ in progress
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-`apply_all_patches()` does not provide a method to apply patches
-from strbuf. Because of this, this commit introduces a new
-function `apply_patch_from_buf()` which applies a patch from buf.
-It works by saving the strbuf as a file. This way we can call
-`apply_all_patches()`. Before returning, the created file is
-removed.
----
- builtin/stash.c | 61 +++++++++++++++++++++++++++----------------------
- 1 file changed, 34 insertions(+), 27 deletions(-)
+On Wed, Aug 8, 2018 at 6:51 AM Pratik Karki <predatoramigo@gmail.com> wrote:
+>
+> To run a new rebase, there needs to be a check to assure that no other
+> rebase is in progress. New rebase operation cannot start until an
+> ongoing rebase operation completes or is terminated.
+>
+> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> ---
+>  builtin/rebase.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 47 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 8a7bf3d468..a261f552f1 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -87,6 +87,7 @@ struct rebase_options {
+>                 REBASE_VERBOSE = 1<<1,
+>                 REBASE_DIFFSTAT = 1<<2,
+>                 REBASE_FORCE = 1<<3,
+> +               REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+>         } flags;
+>         struct strbuf git_am_opt;
+>  };
+> @@ -392,10 +393,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 .git_am_opt = STRBUF_INIT,
+>         };
+>         const char *branch_name;
+> -       int ret, flags;
+> +       int ret, flags, in_progress = 0;
+>         int ok_to_skip_pre_rebase = 0;
+>         struct strbuf msg = STRBUF_INIT;
+>         struct strbuf revisions = STRBUF_INIT;
+> +       struct strbuf buf = STRBUF_INIT;
+>         struct object_id merge_base;
+>         struct option builtin_rebase_options[] = {
+>                 OPT_STRING(0, "onto", &options.onto_name,
+> @@ -447,6 +449,30 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>
+>         git_config(rebase_config, &options);
+>
+> +       if (is_directory(apply_dir())) {
+> +               options.type = REBASE_AM;
+> +               options.state_dir = apply_dir();
+> +       } else if (is_directory(merge_dir())) {
+> +               strbuf_reset(&buf);
+> +               strbuf_addf(&buf, "%s/rewritten", merge_dir());
+> +               if (is_directory(buf.buf)) {
+> +                       options.type = REBASE_PRESERVE_MERGES;
+> +                       options.flags |= REBASE_INTERACTIVE_EXPLICIT;
+> +               } else {
+> +                       strbuf_reset(&buf);
+> +                       strbuf_addf(&buf, "%s/interactive", merge_dir());
+> +                       if(file_exists(buf.buf)) {
+> +                               options.type = REBASE_INTERACTIVE;
+> +                               options.flags |= REBASE_INTERACTIVE_EXPLICIT;
+> +                       } else
+> +                               options.type = REBASE_MERGE;
+> +               }
+> +               options.state_dir = merge_dir();
+> +       }
+> +
+> +       if (options.type != REBASE_UNSPECIFIED)
+> +               in_progress = 1;
+> +
+>         argc = parse_options(argc, argv, prefix,
+>                              builtin_rebase_options,
+>                              builtin_rebase_usage, 0);
+> @@ -455,6 +481,26 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 usage_with_options(builtin_rebase_usage,
+>                                    builtin_rebase_options);
+>
+> +       /* Make sure no rebase is in progress */
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 46e76a34e..74eda822c 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -13,6 +13,7 @@
- #include "revision.h"
- #include "log-tree.h"
- #include "diffcore.h"
-+#include "apply.h"
- 
- static const char * const git_stash_usage[] = {
- 	N_("git stash list [<options>]"),
-@@ -277,10 +278,6 @@ static int diff_tree_binary(struct strbuf *out, struct object_id *w_commit)
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	const char *w_commit_hex = oid_to_hex(w_commit);
- 
--	/*
--	 * Diff-tree would not be very hard to replace with a native function,
--	 * however it should be done together with apply_cached.
--	 */
- 	cp.git_cmd = 1;
- 	argv_array_pushl(&cp.args, "diff-tree", "--binary", NULL);
- 	argv_array_pushf(&cp.args, "%s^2^..%s^2", w_commit_hex, w_commit_hex);
-@@ -288,18 +285,36 @@ static int diff_tree_binary(struct strbuf *out, struct object_id *w_commit)
- 	return pipe_command(&cp, NULL, 0, out, 0, NULL, 0);
- }
- 
--static int apply_cached(struct strbuf *out)
-+static int apply_patch_from_buf(struct strbuf *patch, int cached, int reverse,
-+				int check_index)
- {
--	struct child_process cp = CHILD_PROCESS_INIT;
-+	int ret = 0;
-+	struct apply_state state;
-+	struct argv_array args = ARGV_ARRAY_INIT;
-+	const char *patch_path = ".git/stash_patch.patch";
-+	FILE *patch_file;
- 
--	/*
--	 * Apply currently only reads either from stdin or a file, thus
--	 * apply_all_patches would have to be updated to optionally take a
--	 * buffer.
--	 */
--	cp.git_cmd = 1;
--	argv_array_pushl(&cp.args, "apply", "--cached", NULL);
--	return pipe_command(&cp, out->buf, out->len, NULL, 0, NULL, 0);
-+	if (init_apply_state(&state, NULL))
-+		return -1;
-+
-+	state.cached = cached;
-+	state.apply_in_reverse = reverse;
-+	state.check_index = check_index;
-+	if (state.cached)
-+		state.check_index = 1;
-+	if (state.check_index)
-+		state.unsafe_paths = 0;
-+
-+	patch_file = fopen(patch_path, "w");
-+	strbuf_write(patch, patch_file);
-+	fclose(patch_file);
-+
-+	argv_array_push(&args, patch_path);
-+	ret = apply_all_patches(&state, args.argc, args.argv, 0);
-+
-+	remove_path(patch_path);
-+	clear_apply_state(&state);
-+	return ret;
- }
- 
- static int reset_head(const char *prefix)
-@@ -418,7 +433,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
- 				return -1;
- 			}
- 
--			ret = apply_cached(&out);
-+			ret = apply_patch_from_buf(&out, 1, 0, 0);
- 			strbuf_release(&out);
- 			if (ret)
- 				return -1;
-@@ -1341,7 +1356,6 @@ static int do_push_stash(int argc, const char **argv, const char *prefix,
- 			int i;
- 			struct child_process cp1 = CHILD_PROCESS_INIT;
- 			struct child_process cp2 = CHILD_PROCESS_INIT;
--			struct child_process cp3 = CHILD_PROCESS_INIT;
- 			struct strbuf out = STRBUF_INIT;
- 
- 			cp1.git_cmd = 1;
-@@ -1365,11 +1379,9 @@ static int do_push_stash(int argc, const char **argv, const char *prefix,
- 			if (pipe_command(&cp2, NULL, 0, &out, 0, NULL, 0))
- 				return -1;
- 
--			cp3.git_cmd = 1;
--			argv_array_pushl(&cp3.args, "apply", "--index", "-R",
--					 NULL);
--			if (pipe_command(&cp3, out.buf, out.len, NULL, 0, NULL,
--					 0))
-+			discard_cache();
-+			read_cache();
-+			if (apply_patch_from_buf(&out, 0, 1, 1))
- 				return -1;
- 		} else {
- 			struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1405,12 +1417,7 @@ static int do_push_stash(int argc, const char **argv, const char *prefix,
- 				return -1;
- 		}
- 	} else {
--		struct child_process cp = CHILD_PROCESS_INIT;
--
--		cp.git_cmd = 1;
--		argv_array_pushl(&cp.args, "apply", "-R", NULL);
--
--		if (pipe_command(&cp, patch.buf, patch.len, NULL, 0, NULL, 0)) {
-+		if (apply_patch_from_buf(&patch, 0, 1, 0)) {
- 			if (!quiet)
- 				fprintf_ln(stderr, "Cannot remove worktree changes");
- 			return -1;
--- 
-2.18.0.573.g56500d98f
+The faithful conversion doesn't even stop at the comments. ;-)
+I shortly wondered if this is the best place for this comment,
+but let's just keep it here to have the 1:1 rewrite.
 
+
+> +       if (in_progress) {
+[...]
+> +                   state_dir_base, cmd_live_rebase,buf.buf);
+
+In case a resend is needed, add a whitespace after the
+comma and buf.buf, please.
+
+So far I have not seen anything major that would warrant a resend.
+
+Thanks,
+Stefan
