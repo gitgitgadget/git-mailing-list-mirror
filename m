@@ -2,139 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E3579208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 15:38:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D9DC208ED
+	for <e@80x24.org>; Wed,  8 Aug 2018 15:50:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729122AbeHHR6w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 13:58:52 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33156 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728947AbeHHR6v (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 13:58:51 -0400
-Received: by mail-ed1-f66.google.com with SMTP id x5-v6so1495281edr.0
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 08:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BlUrgJOdF2qW2jB/4L+vblM3SxrGm24aP6z2MImjrqs=;
-        b=B+TqIc1bOH+ijijmshBZQaSAcEe+zHrAaaWwrl+EpQhKXrb9pdRvLYdy1migtVu/yb
-         +n4zof5m9d+NxHV2n8ctqLEDco9dPF8T5ImHMwYLudEZQ+niceQLEs01Bs5lkM0eNIOW
-         LAYKgSWTdVUrDYPJoQxzsPLQZnGxkkFLe6HwiG+vvBu4Pxi9WV+rPsbcg5Y26ZLVjdEq
-         3bgtxXbn5ani8GsZC8IY6491plaUk8retIu4lnqRBpAld6pVNEsKjOIgdHMs24sq1qfg
-         gB096CZshHUetOnSBAXpCASvkQGtoyu8hRkctpbutNUTq1ZGHah7Afv6tY9xWzggMYAH
-         j3gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BlUrgJOdF2qW2jB/4L+vblM3SxrGm24aP6z2MImjrqs=;
-        b=MK4Ngn7yuZoZoXZDLxExeAUYv1CHi7nJ44RFhwbrwzJpLsk63uLrHLAXv+jpctpjgN
-         ANbC2KnJQ7WCTAnLghwJxFxJ2J27rdwhEveRq6hhAhGjfCXSAV8ybRxpvWY0+j69n6jT
-         9zCGTvHamIHF+KkrYyvhZIr41Po5ZpLFjDjXu17+/Y/D209/0LPyWNimzDRzOW1VDNNT
-         LZroztMu2QEV3pDlzLdYLmhfN27pmFYt9Gdmyj7ZMbUvy0PTFgYcVvxJafvqTZc0UzlZ
-         2ScV8BE4xZI1IaylHFuCDsHZf8yXNV1Wpp4xM9O8g4hYmMAFs6RCLrk722sxJ+/bgU4x
-         DB5g==
-X-Gm-Message-State: AOUpUlFaEgUCcEvNI88RPtDLnpAtpBdH02prHNE4MJ6o1axdb4cOyqs6
-        3ThCLiSPw/HmvpetG1+kJl/IM7zV
-X-Google-Smtp-Source: AA+uWPwjGYOCIc2qXvPdKqkg/QM8CvJzRmO/MFGJEoHn8oUE1mWkEwWy+fxFqoHRiCcph5dXguE4ZQ==
-X-Received: by 2002:a50:aa3b:: with SMTP id o56-v6mr3798618edc.23.1533742718460;
-        Wed, 08 Aug 2018 08:38:38 -0700 (PDT)
-Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id d11-v6sm1904876edo.39.2018.08.08.08.38.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 08:38:37 -0700 (PDT)
-From:   Pratik Karki <predatoramigo@gmail.com>
-To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
-        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 6/6] builtin rebase: error out on incompatible option/mode combinations
-Date:   Wed,  8 Aug 2018 21:21:35 +0545
-Message-Id: <20180808153635.19944-7-predatoramigo@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180808153635.19944-1-predatoramigo@gmail.com>
-References: <20180808153635.19944-1-predatoramigo@gmail.com>
+        id S1727363AbeHHSLE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 14:11:04 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46748 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727069AbeHHSLE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 14:11:04 -0400
+Received: (qmail 32032 invoked by uid 109); 8 Aug 2018 15:50:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Aug 2018 15:50:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26593 invoked by uid 111); 8 Aug 2018 15:50:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 08 Aug 2018 11:50:50 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2018 11:50:46 -0400
+Date:   Wed, 8 Aug 2018 11:50:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] repack: repack promisor objects if -a or -A is set
+Message-ID: <20180808155045.GB1607@sigill.intra.peff.net>
+References: <xmqqzhxxki84.fsf@gitster-ct.c.googlers.com>
+ <20180807232304.181764-1-jonathantanmy@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180807232304.181764-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While working on the GSoC project to convert the rebase command to a
-builtin, the rebase command learned to error out on certain command-line
-option combinations that cannot work, such as --whitespace=fix with
---interactive.
+On Tue, Aug 07, 2018 at 04:23:04PM -0700, Jonathan Tan wrote:
 
-This commit converts that code.
+> > Do we already have an access to the in-core reverse index for the
+> > pack at this point in the code?
+> 
+> As far as I can tell, no. These patches construct the list of promisor
+> objects in repack.c (which does not use the revindex at all), to be
+> processed by pack-objects in a different process (which does use the
+> revindex in reuse-delta mode, which is the default). I guess that we
+> could have access to the revindex if we were to libify pack-objects and
+> run it in the same process as repack.c or if we were to add a special
+> mode to pack-objects that reads for itself the list of all the promisor
+> objects.
 
-Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
----
- builtin/rebase.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+It's not the end of the world to access the revindex here. It requires
+effort proportional to the size of the packfile, which makes it a bad
+choice for operations that want to touch only a few objects. But here
+you're iterating over the whole packfile anyway.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index fb8ab5a177..4e69458161 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1098,6 +1098,28 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		break;
- 	}
+I think that the for_each_packed_object() interface should visit items
+in pack order. Something like this (I'd probably change the name of the
+inner "i" variable for clarity, but I didn't here to minimize the diff):
+
+diff --git a/packfile.c b/packfile.c
+index 04d387f312..334f47e4cd 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1887,10 +1887,13 @@ int has_pack_index(const unsigned char *sha1)
  
-+	if (options.git_am_opt.len) {
-+		const char *p;
-+
-+		/* all am options except -q are compatible only with --am */
-+		strbuf_reset(&buf);
-+		strbuf_addbuf(&buf, &options.git_am_opt);
-+		strbuf_addch(&buf, ' ');
-+		while ((p = strstr(buf.buf, " -q ")))
-+			strbuf_splice(&buf, p - buf.buf, 4, " ", 1);
-+		strbuf_trim(&buf);
-+
-+		if (is_interactive(&options) && buf.len)
-+			die(_("error: cannot combine interactive options "
-+			      "(--interactive, --exec, --rebase-merges, "
-+			      "--preserve-merges, --keep-empty, --root + "
-+			      "--onto) with am options (%s)"), buf.buf);
-+		if (options.type == REBASE_MERGE && buf.len)
-+			die(_("error: cannot combine merge options (--merge, "
-+			      "--strategy, --strategy-option) with am options "
-+			      "(%s)"), buf.buf);
-+	}
-+
- 	if (options.signoff) {
- 		if (options.type == REBASE_PRESERVE_MERGES)
- 			die("cannot combine '--signoff' with "
-@@ -1106,6 +1128,25 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.flags |= REBASE_FORCE;
- 	}
+ int for_each_object_in_pack(struct packed_git *p, each_packed_object_fn cb, void *data)
+ {
+-	uint32_t i;
++	uint32_t in_pack;
+ 	int r = 0;
  
-+	if (options.type == REBASE_PRESERVE_MERGES)
-+		/*
-+		 * Note: incompatibility with --signoff handled in signoff block above
-+		 * Note: incompatibility with --interactive is just a strong warning;
-+		 *       git-rebase.txt caveats with "unless you know what you are doing"
-+		 */
-+		if (options.rebase_merges)
-+			die(_("error: cannot combine '--preserve_merges' with "
-+			      "'--rebase-merges'"));
+-	for (i = 0; i < p->num_objects; i++) {
++	load_pack_revindex(p);
 +
-+	if (options.rebase_merges) {
-+		if (strategy_options.nr)
-+			die(_("error: cannot combine '--rebase_merges' with "
-+			      "'--strategy-option'"));
-+		if (options.strategy)
-+			die(_("error: cannot combine '--rebase_merges' with "
-+			      "'--strategy'"));
-+	}
-+
- 	if (!options.root) {
- 		if (argc < 1) {
- 			struct branch *branch;
--- 
-2.18.0
++	for (in_pack = 0; in_pack < p->num_objects; in_pack++) {
++		uint32_t i = p->revindex[in_pack].nr;
+ 		struct object_id oid;
+ 
+ 		if (!nth_packed_object_oid(&oid, p, i))
 
+Possibly it should be an optional flag, in case the caller is going to
+eventually sort by sha1 anyway. But the major caller that sorts by sha1
+is cat-file's --batch-all-objects option.  And IMHO that is actually a
+bad default. Try timing this in a fully-packed repository:
+
+  time git cat-file --batch-all-objects --buffer --batch | wc -c
+
+versus this:
+
+  time git show-index <.git/objects/pack/*.idx |
+  sort -n |
+  awk '{print $2}' |
+  git cat-file --buffer --batch | wc -c
+
+On my git.git repo, it's literally 7x faster to do the latter, because
+of locality in resolving deltas.
+
+So I think we should consider at least making it an option for cat-file
+to do the iteration in pack-ish order (it can't be perfect, of course,
+because there may be multiple packs, loose objects, etc, but
+approximating it is a good idea).
+
+I guess it has to be an option, since we advertise in the manpage that
+the output is sorted by hash.
+
+> > If so, we can enumerate the objects
+> > in the offset order without incurring a lot of cost (building the
+> > in-core revindex is the more expensive part).  When writing a pack,
+> > we try to make sure that related objects are written out close to
+> > each other [*1*], so listing them in the offset order (with made-up
+> > pathname information to _force_ that objects that live close
+> > together in the original pack are grouped together by getting
+> > similar names) might give us a better than horrible deltification.
+> > I dunno.
+> 
+> Before I write the NEEDSWORK comment, just to clarify - do you mean
+> better than horrible object locality? I think deltification still occurs
+> because pack-objects sorts the input when doing the windowed
+> deltification, for example:
+> 
+>   git rev-parse HEAD:fetch-pack.c HEAD HEAD^ HEAD^^ \
+> 	HEAD^^^ v2.17.0:fetch-pack.c | git pack-objects --window=2 abc
+> 
+> produces a packfile with a delta, as checked by `verify-pack -v`.
+
+You're going to get a lot of reused deltas from the old pack, but you'll
+probably miss opportunities to delta objects between packs. And
+pack-object's compute_write_order() will fix some of the issues:
+
+ - it will group objects of each type together
+
+ - it will group delta "families" together
+
+So the resulting packfile may not actually be _too_ bad with respect to
+delta locality. Where it will fail is:
+
+ - there's no locality with respect to history, so a traversal will have
+   bad I/O patterns as it skips all over the packfile
+
+ - the delta heuristics do use the incoming order (which usually is from
+   a traversal) as a hint. But IMHO that is way less important than
+   lacking the names. Even if you have an actual traversal, two versions
+   of the same file may be separated by hundreds of other blob changes
+   in the middle. Traversal order doesn't help you; putting things with
+   similar names next to each other does.
+
+   For traversals using bitmaps, we have a "name hash cache" in the
+   .bitmap file, which stores the 32-bit hash of the name. That lets us
+   put similar names next to each other without actually knowing the
+   names. If we absolutely can't traverse as part of the strategy for
+   repacking a promisor pack, then it may be worth trying to figure out
+   how to carry that hash around.
+
+-Peff
