@@ -6,60 +6,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1339E1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 19:32:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFDDA1F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 19:37:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728330AbeHHVxO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 17:53:14 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46392 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727295AbeHHVxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 17:53:14 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h14-v6so2979388wrw.13
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:32:05 -0700 (PDT)
+        id S1729679AbeHHV6t (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:58:49 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45513 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728242AbeHHV6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 17:58:49 -0400
+Received: by mail-wr1-f67.google.com with SMTP id f12-v6so2992503wrv.12
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:37:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=EqpMREtmeVj1Hr6APoYalN+fjQYSnK5d80XMTERjMpM=;
-        b=W0CO0lkpxwZj16egkbz4o/oXflBbBaPrtKBNnCBwD/ksADWGSi3mxbEXF6VrQH9tTR
-         7r+weDLDmpXcZw2fgYr7PFZNqM0huOqcRE+lixoG5/LSoqzX8CFEpo5MlGDdlDS+z3AK
-         3lr4WrVBnWdh1Jk89evf7a8QrJWhY25LWFx13iJweAqRBTZRH0+rGOHQ+LD+IMwwQq7F
-         j8syu4hKuTyK76fCxaxsBljnleO8qps1hQnaJfZKjQa24j0fUmllgfTUJCxEVi7pDv6F
-         Zl02RojFEpO7q6H7Mda+k49uC7jnSa0hTaku+IRUevLP2J1oyrQTyswzvjEnVy6tHpN6
-         D3bw==
+        bh=RzhbL9R0tyCMgM+Y/vac2poRpMX+ECDLVag79COVEWs=;
+        b=gaQz/vaV4lo8ilDUbGl+M6Ku8A4nfmgaQtkj80uirEjiFJ2WaAnkUtbDhIgmu7KcUI
+         EmOhSDHRvvytpa5kmnNaHQjUlkDiCkJM+SyLs5Mw3j6kWDHl4k1NxKqCZ1OkqED8g+L/
+         YW6iHy8+xvUFQIHFTjVc6VP+U3icsOSymcV11+PoNM26FNcp5nAj0YDBB93BEBvyx8Vn
+         s0xA8SpyQd8q7MMPwotqZ8Mg3Pd79k6Oeld6EvaME22xS2fIYUPKbfxANaCVG+My/JV4
+         TKOvNnUgWcti6x5NingJJDHeyLd5FpT+Jk+lTGHI1/wPc3pMs3motJKRZdF/fRiFz2eT
+         3NRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=EqpMREtmeVj1Hr6APoYalN+fjQYSnK5d80XMTERjMpM=;
-        b=k6H0XZ7yLLQ9TvPxSW8lH5tucca+qoLw/AP9/Usc13lafqb/iDFBikLz5MAkYcBD0p
-         fveSMjt0MW/YLW2TcrsQCx2zZxiIiElG0garw+TiAjaMXa+vm48gwXR+TG/Liq4UfnnQ
-         KGwzGlvo44GLZUiW0LwQGneJJBVD/XisE6LKHjRXo4y24evdz/J5g0kkKmMU3b3xSgLI
-         a0WXIv4ZiSIWceyfEiXWhc+ythU8n9OEBADMsxJvXxDeR+x4OpR3QYN2SxBpMApdmbJB
-         CVjdJQdEWPpAOSTdakRy7XO+ckGDu6lTus4g3o25iSiiN3Ze2JWvO0WF+07zexXGV61R
-         ELFQ==
-X-Gm-Message-State: AOUpUlFn6rqTngdUgpbyKZYWayUDpM0krbtcIgoiPhSKs65176VvyMij
-        giz1y4PtmnquBoOKtdNQ0mU=
-X-Google-Smtp-Source: AA+uWPySnxU+hsfuy/i71x0o8wIwoIDM28oaIHdLu4TpO6eMFJ3x6wtTO8NXTlJA9tpiGU5zubnvFg==
-X-Received: by 2002:adf:a557:: with SMTP id j23-v6mr2656203wrb.220.1533756724211;
-        Wed, 08 Aug 2018 12:32:04 -0700 (PDT)
+        bh=RzhbL9R0tyCMgM+Y/vac2poRpMX+ECDLVag79COVEWs=;
+        b=p5hdtTUKpRO3B3fIGgrY6k1O8vdopv8AYxt3z9GED60w0oBCa/I1G9MjZag91AK3oh
+         wQeXnHevwGOCTG3UCs1EcfV66PD8djnOyc2KZbbe4ZRM/o4X5iqknczTOkaVAL7pl857
+         M+EsKRX4JveLKWrv4CB8hnvPzksOyQaRSMQ+ivLxg4ZqYRweZqF+QpOngQhnYyJmvJfJ
+         EP0hd6DQX3SWFRi2rd82yqiV7EMLWqfKLODgZhesNe77xeoTiIVVuI21N3S/AoFuBm9k
+         fyjal5Ea8ipVfkL6cMpeYFBxvvvg8mJ59JGWOWUYfe+B/nvbGUpmD3ItyRPnPsQE2E4z
+         BxCg==
+X-Gm-Message-State: AOUpUlF4foyicuOaQTpJNWmt8gKCQq54u2fBA65IBy8HPRLWTHTOUXS6
+        vSCv5wpw6/CxBu8iXk8yrZ33hibk
+X-Google-Smtp-Source: AA+uWPzP5cuzmt9OiiS9A/fc78VPQbbATdwuxaQ/QEMbPSXPM2Akk794M2IuKS6Vo0+Ai1+JFl/dKw==
+X-Received: by 2002:adf:9051:: with SMTP id h75-v6mr2873155wrh.65.1533757058059;
+        Wed, 08 Aug 2018 12:37:38 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g125-v6sm6272448wmf.16.2018.08.08.12.32.02
+        by smtp.gmail.com with ESMTPSA id u7-v6sm8103313wmd.46.2018.08.08.12.37.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 12:32:02 -0700 (PDT)
+        Wed, 08 Aug 2018 12:37:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratik Karki <predatoramigo@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        alban.gruin@gmail.com
-Subject: Re: [PATCH 03/11] builtin rebase: handle the pre-rebase hook (and add --no-verify)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Pratik Karki <predatoramigo@gmail.com>, git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: Re: [PATCH 04/11] builtin rebase: support --quiet
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
-        <20180808134830.19949-4-predatoramigo@gmail.com>
-Date:   Wed, 08 Aug 2018 12:32:02 -0700
-In-Reply-To: <20180808134830.19949-4-predatoramigo@gmail.com> (Pratik Karki's
-        message of "Wed, 8 Aug 2018 19:33:22 +0545")
-Message-ID: <xmqqwot0fydp.fsf@gitster-ct.c.googlers.com>
+        <20180808134830.19949-5-predatoramigo@gmail.com>
+        <CAGZ79kah=sGgzJS1rL6Bx1Vkd6RVFLUNEk_o4iqKsjDx5_arJw@mail.gmail.com>
+Date:   Wed, 08 Aug 2018 12:37:36 -0700
+In-Reply-To: <CAGZ79kah=sGgzJS1rL6Bx1Vkd6RVFLUNEk_o4iqKsjDx5_arJw@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 8 Aug 2018 11:31:59 -0700")
+Message-ID: <xmqqsh3ofy4f.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,77 +70,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Pratik Karki <predatoramigo@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> This commit converts the equivalent part of the shell script
-> `git-legacy-rebase.sh` to run the pre-rebase hook (unless disabled), and
-> to interrupt the rebase with error if the hook fails.
+> On Wed, Aug 8, 2018 at 6:51 AM Pratik Karki <predatoramigo@gmail.com> wrote:
+>>
+>> This commit introduces a rebase option `--quiet`. While `--quiet` is
+>> commonly perceived as opposite to `--verbose`, this is not the case for
+>> the rebase command: both `--quiet` and `--verbose` default to `false` if
+>> neither `--quiet` nor `--verbose` is present.
+>>
+>> This commit goes further and introduces `--no-quiet` which is the
+>> contrary of `--quiet` and it's introduction doesn't modify any
+>> behaviour.
+
+Why?  Is it for completeness (i.e. does the scripted version take
+such an option and addition of --no-quiet makes the C rewrite behave
+the same)?
+
+>> Note: The `flags` field in `rebase_options` will accumulate more bits in
+>> subsequent commits, in particular a verbose and a diffstat flag. And as
+>> --quoet inthe shell scripted version of the rebase command switches off
 >
-> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
-> ---
-
-Introduction of upstream_arg in this step looked a bit
-surprising, but the hook invocation is the only thing that uses it,
-so it is understandable.
-
-"rebase: handle the re-rebase hook and --no-verify" would have been
-sufficient, without "add" or parentheses.
-
->  builtin/rebase.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>   --quote in the
 >
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 38c496dd10..b79f9b0a9f 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -70,6 +70,7 @@ struct rebase_options {
->  	const char *state_dir;
->  	struct commit *upstream;
->  	const char *upstream_name;
-> +	const char *upstream_arg;
->  	char *head_name;
->  	struct object_id orig_head;
->  	struct commit *onto;
-> @@ -310,6 +311,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  	};
->  	const char *branch_name;
->  	int ret, flags;
-> +	int ok_to_skip_pre_rebase = 0;
->  	struct strbuf msg = STRBUF_INIT;
->  	struct strbuf revisions = STRBUF_INIT;
->  	struct object_id merge_base;
-> @@ -317,6 +319,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		OPT_STRING(0, "onto", &options.onto_name,
->  			   N_("revision"),
->  			   N_("rebase onto given branch instead of upstream")),
-> +		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
-> +			 N_("allow pre-rebase hook to run")),
+> (in case a resend is needed)
 
-Do we need to catch "--no-no-verify" ourselves with NONEG bit, or is
-this sufficient to tell parse_options() machinery to take care of
-it?
+Meaning --quiet?
 
->  		OPT_END(),
->  	};
->  
-> @@ -382,6 +386,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		options.upstream = peel_committish(options.upstream_name);
->  		if (!options.upstream)
->  			die(_("invalid upstream '%s'"), options.upstream_name);
-> +		options.upstream_arg = options.upstream_name;
->  	} else
->  		die("TODO: upstream for --root");
->  
-> @@ -430,6 +435,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			die(_("Could not resolve HEAD to a revision"));
->  	}
->  
-> +	/* If a hook exists, give it a chance to interrupt*/
-> +	if (!ok_to_skip_pre_rebase &&
-> +	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
-> +			argc ? argv[0] : NULL, NULL))
-> +		die(_("The pre-rebase hook refused to rebase."));
-> +
->  	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
->  	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1))
->  		die(_("Could not detach HEAD"));
