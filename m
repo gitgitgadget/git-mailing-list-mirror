@@ -2,89 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55159208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 16:01:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4481208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 16:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbeHHSWE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 14:22:04 -0400
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:45884 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727480AbeHHSWE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 14:22:04 -0400
-Received: by mail-wr1-f48.google.com with SMTP id f12-v6so2456986wrv.12
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 09:01:45 -0700 (PDT)
+        id S1727533AbeHHSX6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 14:23:58 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:35995 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727081AbeHHSX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 14:23:58 -0400
+Received: by mail-io0-f193.google.com with SMTP id m4-v6so1197885iop.3
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 09:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=lYkZ+aHbZYcrgniAcS47QmnZKZmtSu2O1CX/WF67kXM=;
-        b=Q5382elG8tt9jcqyd1XWvoTT22uJK4cMqFqnxuWBW/BGx5SvXkCEqq5o2p/pUu4t4e
-         9Lip+OtkigyblDBLN1MyTFYQl7lAR18BvYsyJC6sSCB4UJNKKqelUYWM2ayaAzcSITxH
-         gDJQL2G/pwGeIfsJQji19h1Uqas3jhE72vDuHe9sd5LGhVDZ1+R96T/a9ON/4Y5K7laQ
-         jamoHgT5CwMM0Z6js823Cwe01n9AiU6A/dQBbm1ODMPUTO+tmHbo33yssVmdioLSm+UY
-         AMPm8ahlJAKBfP3sLS48dnbHYz9y2cRzwhbA+/3Fv6W4hF0nrSrvHp21S+5d6xoFuf+4
-         gJLQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NT6eP4IEZ+vj4wxM5VZ2w/JwEkmH7lu3c/jCaxyNjLs=;
+        b=kOljOhv1DDedIQAbH2/qGl3hePHjgFBTh7t7MurFxvlXwQfTnFNpEjAyF3T5Zcu/z2
+         EnvwE1ZRLNEYg1r3I+MnjrEW+Rl3w0DMNEHta+cicL06Y8IQlBhdJF5Fh+yavN25Bu8v
+         tKIO/oZzXpJlsKG1Q6Or5mrnO5G8OMiufwftV7qYEbJWi9x6pfJThH9pXCJ4sCW2cVmw
+         bQUWjex+R/XQvgVgfx8DiPjGPX7/mh2kkv+PbDVmcvsP9Fng7nN7KLYOjWvvq723LqJc
+         eW3BFRsKIjAe0XoOi/fGBdsaejt0ehj92GEHOU8Rl/3WRt/0x304+/oAaIlJLKjBo/DI
+         7w6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=lYkZ+aHbZYcrgniAcS47QmnZKZmtSu2O1CX/WF67kXM=;
-        b=B1qDJ3oxbXLqaUeiU4mqWc9nApizqhxtsSRkTwcdz+P1trr9CLQnOi9/FiYu+VZW4z
-         +zqeevDJz2z9C0h4vlHiH7MpYJmUv+PwhcrMd2l8/XybeVR/CjKTOL0ze/8QJjCRt3zt
-         3TT+4k5bUnszMVE9qk4cf7AaR67VCauAt9A26UM611ensaRznYM+bBPam8VsqhOh5SRf
-         8OGJSPwkQLxjEh90uMv+6/EHeA46Tug0b6ZBsl0hFUbMPmhOcrOSXm6n82d2bY9jBIZy
-         /p6pmyXRmgNTwMm3nK+0cgYEYnhtKrQPmr2AP6vhgFLUikqlU+OtKKUbtJRMWzRXQUXG
-         5LIg==
-X-Gm-Message-State: AOUpUlFCmXkGB01H/4G6VTX55AwbcSjzsAm0WHEeGcwn27lGo/kA1oze
-        Ik5zlbypCWJM7DmR819JqKk=
-X-Google-Smtp-Source: AA+uWPzSvG+iICSOW0vkc3fwGLNX+8DKsnBoCgCMtuJHA5Zd5Lq/Kh/M58iKicLIlR2rJxM6daaQ/g==
-X-Received: by 2002:adf:82f0:: with SMTP id 103-v6mr2243132wrc.131.1533744104234;
-        Wed, 08 Aug 2018 09:01:44 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id m207-v6sm7284044wma.31.2018.08.08.09.01.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 09:01:43 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v4 2/2] sequencer: fix quoting in write_author_script
-References: <20180731073331.40007-1-sunshine@sunshineco.com>
-        <20180807093452.22524-1-phillip.wood@talktalk.net>
-        <20180807093452.22524-3-phillip.wood@talktalk.net>
-        <CAPig+cQkY1_qDu=fdbA0gVPH88B47bM5BpgbYY8ivsj1Y0QHTw@mail.gmail.com>
-        <753b860e-c922-fd70-9d2d-0581976a6f37@talktalk.net>
-        <CAPig+cQdH+Xiunej1E6EnA6btFzZJTPo27cFY_UdaFZF7J7t-w@mail.gmail.com>
-Date:   Wed, 08 Aug 2018 09:01:43 -0700
-In-Reply-To: <CAPig+cQdH+Xiunej1E6EnA6btFzZJTPo27cFY_UdaFZF7J7t-w@mail.gmail.com>
-        (Eric Sunshine's message of "Wed, 8 Aug 2018 04:43:43 -0400")
-Message-ID: <xmqqr2j8j194.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NT6eP4IEZ+vj4wxM5VZ2w/JwEkmH7lu3c/jCaxyNjLs=;
+        b=b5EKA0zOlmQl1o6jF4TPOtq0s2aVT7WaKsNQ2mcIw2yPFW211pTlEAvhwyaKtNrsBY
+         l7F+N60FViDgpDnO6MniwnESDxaD2N5vkG23dB39wjDdIIkXqu20Cex8lw7UBzeRD5ou
+         6XiNQgzweOowj9RBkvqU04oQ+qNj4jXan9IV42aZ8atWZxn6Z7mKbZGDhPBcnqjlmG+3
+         CYKf7ikHJQJMSJVdGNanCUI3rG42501Ru7+WTtSQ0FQxvDGFK3tTHP3ORQfD2CxYqQpN
+         P+WVezBF/FS6Hyvf91PCOe7khvOHIr52KJ2JiPqaRLnKkbJEhlUgpDwG27enMzJl/+4B
+         qe8Q==
+X-Gm-Message-State: AOUpUlFfBOuU6ga6H05uULtzs752S7IJqM1/w7SxGV2JWO3FOC/Ym2lE
+        7uzH4he/tmga2RZBqnuFoVNA7ioem+Nb9Zawa0Y=
+X-Google-Smtp-Source: AA+uWPya7otmPwdsf6b5x0LBU9sEmMH2KrIaYo/mHtGOZCQZB6DNC5qAfRPBQPxvvwEALX4mPTX+TGASI3OUIE91XJE=
+X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr2845600iod.118.1533744218887;
+ Wed, 08 Aug 2018 09:03:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-12-predatoramigo@gmail.com>
+In-Reply-To: <20180808134830.19949-12-predatoramigo@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 8 Aug 2018 18:03:12 +0200
+Message-ID: <CACsJy8BDLvGhRvNQgSgvkR-RMAvVxPpT=i9ayi=awQYOqd2Crg@mail.gmail.com>
+Subject: Re: [PATCH 11/11] builtin rebase: support `git rebase <upstream> <switch-to>`
+To:     Pratik Karki <predatoramigo@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>, alban.gruin@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+(not really a review, this patch just happens to catch my eyes)
 
-> What does concern me is that read_env_script() doesn't seem to care
-> about such a malformed file; it doesn't do any validation at all.
-> Contrast that with read_author_ident() which is pretty strict about
-> the content it expects to find in the file. So, it might make sense to
-> upgrade read_env_script() to do some sort of validation on each line
-> (though that shouldn't be in this patch, and doesn't even need to be
-> in this series).
+On Wed, Aug 8, 2018 at 3:55 PM Pratik Karki <predatoramigo@gmail.com> wrote:
+>
+> This commit adds support for `switch-to` which is used to switch to the
+> target branch if needed. The equivalent codes found in shell script
+> `git-legacy-rebase.sh` is converted to builtin `rebase.c`.
+>
+> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> ---
+>  builtin/rebase.c | 48 ++++++++++++++++++++++++++++++++++++++++++++----
+>  1 file changed, 44 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 63634210c0..b2ddfa8dbf 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -79,6 +79,7 @@ struct rebase_options {
+>         struct commit *onto;
+>         const char *onto_name;
+>         const char *revisions;
+> +       const char *switch_to;
+>         int root;
+>         struct commit *restrict_revision;
+>         int dont_finish_rebase;
+> @@ -186,6 +187,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+>                 opts->flags & REBASE_DIFFSTAT ? "t" : "");
+>         add_var(&script_snippet, "force_rebase",
+>                 opts->flags & REBASE_FORCE ? "t" : "");
+> +       if (opts->switch_to)
+> +               add_var(&script_snippet, "switch_to", opts->switch_to);
+>
+>         switch (opts->type) {
+>         case REBASE_AM:
+> @@ -564,9 +567,23 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>          * orig_head -- commit object name of tip of the branch before rebasing
+>          * head_name -- refs/heads/<that-branch> or NULL (detached HEAD)
+>          */
+> -       if (argc > 0)
+> -                die("TODO: handle switch_to");
+> -       else {
+> +       if (argc == 1) {
+> +               /* Is it "rebase other branchname" or "rebase other commit"? */
+> +               branch_name = argv[0];
+> +               options.switch_to = argv[0];
+> +
+> +               /* Is it a local branch? */
+> +               strbuf_reset(&buf);
+> +               strbuf_addf(&buf, "refs/heads/%s", branch_name);
+> +               if (!read_ref(buf.buf, &options.orig_head))
+> +                       options.head_name = xstrdup(buf.buf);
+> +               /* If not is it a valid ref (branch or commit)? */
+> +               else if (!get_oid(branch_name, &options.orig_head))
+> +                       options.head_name = NULL;
+> +               else
+> +                       die(_("fatal: no such branch/commit '%s'"),
 
-I do not think it is within the scope of these bugfix patches, but I
-tend to agree that in the longer term it would be a good idea to
-unify these two helpers that read exactly the same file stored at
-rebase_path_author_script(), and make the result stricter, rather
-than tightening two helpers independently.
+die() automatically adds "fatal:" so you should not add it yourself here
 
+> +                           branch_name);
+> +       } else if (argc == 0) {
+>                 /* Do not need to switch branches, we are already on it. */
+>                 options.head_name =
+>                         xstrdup_or_null(resolve_ref_unsafe("HEAD", 0, NULL,
+> @@ -585,7 +602,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>                 }
+>                 if (get_oid("HEAD", &options.orig_head))
+>                         die(_("Could not resolve HEAD to a revision"));
+> -       }
+> +       } else
+> +               BUG("unexpected number of arguments left to parse");
+
+Does this mean "git base one two three" triggers this BUG? If so, this
+should be a die() instead. I did not real the full source code, so
+maybe this case is already caught higher up.
+-- 
+Duy
