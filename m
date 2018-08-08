@@ -2,140 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8894C1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 23:12:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48CBA1F46C
+	for <e@80x24.org>; Wed,  8 Aug 2018 23:14:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730972AbeHIBe1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 21:34:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:45638 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727530AbeHIBe1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 21:34:27 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1154:872:78d7:2211])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CF97460745;
-        Wed,  8 Aug 2018 23:12:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1533769952;
-        bh=O+RgD4GrDm1/DMpKqwAatbfIH8oFTME3MpJ8r3iHBd4=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=1FZtqBAH6U0ZvqcoAQ9mlbgV3RK7KmICnAX4t9NSnZIrMrUejuW4X40yC93c/DtjQ
-         QaGMhwiyzMh83j9MuJNOMo+XegdaZTqCnmF5d4bGKjb9/Vc2+x/UBMW4H2kA1cp8d4
-         gTF1c6KdOvTWQz5mSi4ge0+sw4wfrt8eyybIRmo/cTHgrsf0Nryc9PYtVunuGpyK7F
-         yeKQ23J5wqrL0RnoZzaMd4CbEOWElfBbVXKSDk+HzilZlpq+qBP1Vm0hWthdSW0sh+
-         SEUxGkCRokPTpsr1m6gz0vXaiSUdOywxH1TO3XQ2GzZGG6hgfhnShC2umIUdiHwIrZ
-         ks2lmifOdgqNyWV6q+l92FQFHxdcF/H0nWTq9BM5vU3Tg54PbZi+Xuet4kIfhJ3Wah
-         LeumF2/DSbdYe1JHi2DB0nwNmgSsScyZG7AY9tdiB+UJkc4Lc5GYOyhf02E9lZyKuU
-         /UcrveEnfrtxxc/lwHCcwD5Dy28ZqMm1HRS2E9q/dgWSQQSo84Z
-Date:   Wed, 8 Aug 2018 23:12:27 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>,
-        Santiago Torres <santiago@nyu.edu>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
- when signature is not trusted
-Message-ID: <20180808231226.GA34639@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>,
-        Santiago Torres <santiago@nyu.edu>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
-References: <09f9803c-3f4b-a97c-2c59-e9d6b924892f@nic.cz>
- <20180801001942.GC45452@genre.crustytoothpaste.net>
- <20180801002546.du52zkxjupzcw2p6@LykOS.localdomain>
- <20180803133630.32oxubwttealvhxk@work-pc>
- <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
- <20180803160634.GA19944@sigill.intra.peff.net>
- <20180804084346.fhte5wusbfb5baem@cynerd-laptop>
- <20180808230456.GA21882@sigill.intra.peff.net>
+        id S1731308AbeHIBgf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 21:36:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47754 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727530AbeHIBgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 21:36:35 -0400
+Received: (qmail 18458 invoked by uid 109); 8 Aug 2018 23:14:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Aug 2018 23:14:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4359 invoked by uid 111); 8 Aug 2018 23:14:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 08 Aug 2018 19:14:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2018 19:14:41 -0400
+Date:   Wed, 8 Aug 2018 19:14:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Tacitus Aedifex <aedifex@SDF.ORG>
+Cc:     git@vger.kernel.org, henning.schild@siemens.com,
+        mastahyeti@gmail.com
+Subject: Re: abstracting commit signing/verify to support other signing
+ schemes
+Message-ID: <20180808231440.GB21882@sigill.intra.peff.net>
+References: <20180803213834.GB7619@SDF.ORG>
+ <20180803220746.GA5404@sigill.intra.peff.net>
+ <20180806202424.GA2315@SDF.ORG>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180808230456.GA21882@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20180806202424.GA2315@SDF.ORG>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Aug 06, 2018 at 08:24:25PM +0000, Tacitus Aedifex wrote:
 
---nFreZHaLTZJo0R7j
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> the older patch set suggested the idea of using PEM strings to match up the
+> signature payload with a certain signing tool.  i can't tell if they mean
+> the 'pre-ecapsulation boundary' (e.g. '-----BEGIN FOO-----') or if they mean
+> the encapsulated headers; both as defined in RFC 1421 [0].
 
-On Wed, Aug 08, 2018 at 07:04:56PM -0400, Jeff King wrote:
-> On Sat, Aug 04, 2018 at 10:43:46AM +0200, Karel Ko=C4=8D=C3=AD wrote:
-> > I have a solution for my problem (calling git verify-* twice and grep).=
- That is
-> > not the point of this email nor this contribution. The point is that al=
-though
-> > GPG's behavior of exiting with 0 code when trust level is unknown is un=
-expected
-> > but in the end understandable, git's behavior of exiting with 0 code ev=
-en if key
-> > is explicitly untrusted is just counterintuitive. I think that few peop=
-le are
-> > still going to get nasty surprise when I consider that this change was =
-introduced
-> > mid 2014 just after v2.4.0 and Ubuntu 14.04 lts (running even on part o=
-f our
-> > infrastructure) still contains version 1.9.1 and in that release it was
-> > acknowledging GPG exit code.
->=20
-> FWIW, I'm on board with returning non-zero in any case where gpg would.
+It was the pre-encapsulation boundary (we didn't use that word, but it
+was definitely the "-----BEGIN" line ;) ).
 
-I think that's probably the best solution overall.  There's a bug report
-in Debian (https://bugs.debian.org/895048) that requests that behavior
-instead of the status quo, and also it's the behavior that's documented:
+And that was the sticking point: there was an open question of what
+support for something like signify would look like exactly, and what the
+matching rules would need to be. My thought was to allow multiple
+matching types, and "PEM type" (by which I meant that pre-encapsulation
+boundary) would be the first such type.
 
-       gpg.program
-           Use this custom program instead of "gpg" found on $PATH when
-           making or verifying a PGP signature. The program must support
-           the same command-line interface as GPG, namely, to verify a
-           detached signature, "gpg --verify $file - <$signature" is
-           run, and the program is expected to signal a good signature
-           by exiting with code 0, and to generate an ASCII-armored
-           detached signature, the standard input of "gpg -bsau $key" is
-           fed with the contents to be signed, and the program is
-           expected to send the result to its standard output.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+But that got punted on, since we didn't have a real-world example to
+look at, and we really only cared about gpgsm in the near-term anyway.
+And that obviously does PEM. So the gpg.* tools all require PEM, but if
+we add a generic signingtool config, it doesn't have to.
 
---nFreZHaLTZJo0R7j
-Content-Type: application/pgp-signature; name="signature.asc"
+> the newer patch set looks specifically at the pre-encapsulation boundary to
+> switch behaviors. that works assuming that the signing tools all understand
+> PEM. in the case of signify, it doesn't, so the driver code in git will have
+> to translate to/from PEM.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
+Right. It might be fine to encapsulate it, though I prefer not inventing
+new micro-formats if we can avoid it.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAltreNoACgkQv1NdgR9S
-9ov9zQ/8DGsp5MshrcSujMRWWNNCduBWVve1f8RGLakWprBwUEGUjCDu763c847h
-r5BxDmz/+bOLDBUd4jUsRTM1GM3nBgddDvj12wQlMrsUms/mT3H4x/DojWCJ7wU3
-gifw5KOruwLGHbEKs9dUtoEH+uOwrcE892DB+NRqdfO/vpqAPnnmQAc0NexPbyeS
-ORerS/td/0INN3Bu8G5fvtxlMtA+9pbU+0YuM22rYTvb7r97Rb+/XwcAVd7m3sJf
-WoIYIEs6c0TVFz+KAaU7RX6tfZOr1acvQaMHzMqbkzrsXCztR3tw7j9YmUBtVA5n
-n6Zss1U518XkzjtaKm6Yo6xGszKdZF+dzIYeMsB8W+365zxvKkmR6e2cSoxQo8EN
-YgKrT5bv6tv83zN1gqCqAQQlz6VfVF0pQBD89dDQslbqagQ4XyDn+KoNg+spmYmK
-kV8EHObWSTua1dCuqYQxxgDKOL9099GjCT7txizx1YdA1QEqlUJ6KCgVTRjN3NoA
-PAv5eO5qoA4v0TxeKPUfbRfKdLcp3nYMOtHCe8uTsy1Lo0ZZEd0r9H3sCQKZZZaQ
-ZO6ba7FS5tAFXlfCM4vDhUWnhtjEAOY2VaYCw8bV8BzpS9uP/C0K1Gr1GOAotq7x
-c0Dv6i/4wbVl9GR9TlSXDeIdcGVhYdStZUIe1s3/m8LWTR6P/HI=
-=lBIK
------END PGP SIGNATURE-----
+There actually _is_ an interesting micro-format already in Git, which is
+that commit signatures (not tags) are held in the "gpgsig" header of the
+commit. Which would be an awkward name for storing a non-gpg tool. We
+may want to live with that for historical reasons, or we could switch to
+a more generic name.
 
---nFreZHaLTZJo0R7j--
+The actual PEM detection is for tags, where the signature is in the tag
+body itself.
+
+In either case, we could use some object header to indicate the
+signature type (on the other hand, it could be possible to have multiple
+signatures of different types).
+
+> i suggest that we switch to a standard format for all signatures that is
+> similar to the commit message format with colon ':' separated fields
+> followed by a payload.  the colon separated fields would specify the signing
+> tool used to generate the signature and the tool specific data followed by
+> the signature blob like so:
+> 
+>  signing-tool: gpg
+>  gpg-keyid: 0123456789ABCDEF
+>  -----BEGIN PGP SIGNATURE-----
+>  <base64 encoded signature>
+>  -----END PGP SIGNATURE-----
+> 
+> by adopting this format, git will be fully abstracted from the underlying
+> signing tool and the user can specify multiple signing tools in their config
+> and git will be able to map the signature to the tool when verifying (e.g.
+> git log --show-signature).
+
+One problem with that for the signatures in tag bodies is that
+"signing-tool: gpg" looks like something a human might right (as opposed
+to the PEM boundary, which is a bit more obvious).
+
+If we're going to make up a micro-format, it may be simpler to just have
+something PEM-like in the first place, and shove signify into that.
+
+> > So _if_ we knew what it would take to support signify, we could
+> > potentially adjust what's going into 2.19 in order to skip straight to
+> > the more generic interface. But on the OTOH, it may not be worth
+> > rushing, and there is already a vague plan of how the gpg.<tool>.*
+> > config would interact with a more generic config.
+> 
+> there's no rush, but i would prefer that the newer patch set get changed to
+> use the more generic 'signingtool.<tool>.*' instead of 'gpg.<tool>.*'. if
+> you all agree, i'll follow up with a patch to change that part of what is
+> going into 2.19.
+
+I'm on the fence for that myself. The best way to get people to comment
+would be to make a patch, and cc people involved in the earlier
+discussions.
+
+-Peff
