@@ -2,98 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF94208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 16:34:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4946208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 16:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727534AbeHHSzV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 14:55:21 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36562 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727412AbeHHSzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 14:55:20 -0400
-Received: by mail-wr1-f67.google.com with SMTP id h9-v6so2589408wro.3
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 09:34:52 -0700 (PDT)
+        id S1727493AbeHHS7l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 14:59:41 -0400
+Received: from mail-ua0-f193.google.com ([209.85.217.193]:38283 "EHLO
+        mail-ua0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727062AbeHHS7l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 14:59:41 -0400
+Received: by mail-ua0-f193.google.com with SMTP id o11-v6so3079333uak.5
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 09:39:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=uYMEpADKGNp0ZzcssTCEfN6ASio+iAWTkK2DnT5ZlD0=;
-        b=F+vVKcxF2w/t8pQD07s0j3Wl9tAc9DXHlw9adb98k7nlWGLiLaQMfzUJcXxEamLjo9
-         3xE/1J89lsmgjrRoKBBHLMDK6/GzLyOdbBl8C1DActekrxbsoaKeFSr013WQSV/eu7hA
-         SqeRo8VKTbWL0sO1APoxye7SuRAq3ig/vWYaJqAlOvYmqoN8UN6XB82RsUcrZJrOQ3xm
-         YeWg10XYy6/VyTXEDyNWJCmr5Rngd/yRXOoJ96nIXQ2OZPsKHPHH3TlahDsrsXHjdsJd
-         DAvoFiLPzZefg4Q7v1n+iyk2cJ8/5XugG+1d+Czds/8PAIkEg8D1+YS9SDlQjCm3iU9q
-         xXvg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8pQekOUaxm1v79t23LGpg9buMIllPOKvI0tl/kPZgSc=;
+        b=LxoG2THCxQfeb8RixjevI2nGnFHZ+hCAlbAsIHkXDU7dgA5gcpaLyWu75Ish0kS95h
+         uU7cM+c5dbfPpUFXvjmgwKNU6x5JdXdF5lqhgtoay6fJkw9r/PIts1GlhaIwso8GCxsb
+         /91nAcaDhv2uDMg8i01/OBfedHTulNQbzXD01c4P92qQ8d7jZ4M5VTI8gfjp4mlniCst
+         UB0si4wq0EBl+CrJhfnX6oOKvAsnl47YAAxdPEq4aIuOHMOoh1cTMOPwj0XJL7rQU7UK
+         9ydfv/EP15KgB1TtUVungVnaF7BPrjQcT/cxno8luSdstzFT9UMcLnLu7woWSKPk0R9s
+         cvEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=uYMEpADKGNp0ZzcssTCEfN6ASio+iAWTkK2DnT5ZlD0=;
-        b=ijl8xyR+ud5KCH+XHzYzU4tKzORXLTNppLx5vd48FAwCIqMOoiZlL6Ugy5UeG0eXDG
-         6Roxprfv6sgZhXjb4EL158ViCMPOETlswWMSqe214kKen6dC5icJBlSxpjYucxnoCOzW
-         qxSfJGZ1RM15SWT979JtPy7VdVSVk8PZ399fzk8igdA4hV1KsG/5RYKs6m+FnB0aQl+2
-         QUcfrG+MkncI53fpTHztR2/iIKCW5uLxStLwymVj0ibCWjm5SkKh5Wk1Ewc3mBnj7smZ
-         lZdrBJ9LcGt4iX1p4+6TL0FMHshGvRJii4X234lYagXz9FMoUgC/N3r3y3gST8scpa7S
-         pnVQ==
-X-Gm-Message-State: AOUpUlEblPzsA/Et8rSOV/2MDWL6a/6ehckXhJDUQs1ggvSb11/UoLkw
-        OCwOrU4t1RyieMhBQdjRFfgzQSNO
-X-Google-Smtp-Source: AA+uWPwyV/EQXrdRoveFWLsNdIsRsuPTpapKU7GsB1WWJ3dHVyTdr7TZlnJNPgSmYgYfkzxZ2iTndw==
-X-Received: by 2002:adf:8004:: with SMTP id 4-v6mr2494524wrk.130.1533746091290;
-        Wed, 08 Aug 2018 09:34:51 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x62-v6sm17758772wmg.1.2018.08.08.09.34.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 09:34:50 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH 2/2] repack: repack promisor objects if -a or -A is set
-References: <xmqq7el1kdlt.fsf@gitster-ct.c.googlers.com>
-        <20180807232528.182492-1-jonathantanmy@google.com>
-Date:   Wed, 08 Aug 2018 09:34:50 -0700
-In-Reply-To: <20180807232528.182492-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Tue, 7 Aug 2018 16:25:28 -0700")
-Message-ID: <xmqqd0usizpx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8pQekOUaxm1v79t23LGpg9buMIllPOKvI0tl/kPZgSc=;
+        b=Qqg9+TcWJt4HL4dhOBZmg8Xt7iGkXWHedqHxH/6XY59dcyEq9MbpvoBtJF8RFf+V97
+         GZBdjU1mpjHj5FRLVNToUcOAow3IHh9V/AosNCgtE82DqYF7LKdJeFCkYxnYmm3IoTow
+         hr/9HYJQOV54BoSPLcIuuzRKXHIHEsgHzBGrU4otKlCq715p7JLz4tmVtKNnDhl8+aGV
+         OEt7vCtkB7PqFEbk5F060pVpsrhKCxIpOJR7MPsFA6b/HqQuCJ0sxGos2tALQJR/KjUT
+         mZfTQJde7vKCv0Un2UQWXtU3XqbUGPKgerjjR5tR96obG+KYNvpzY0IvULmNb+mC5qnY
+         JJ5w==
+X-Gm-Message-State: AOUpUlGDk1IijbJ1yMnE1Vlx87ffVTBVojB2CHH543Zw8zkEzCw2lvlB
+        ExzsYc7QoVzJNMyUF+2jyLBWidMx/GYKFEsD5D9lew==
+X-Google-Smtp-Source: AA+uWPy1+JxqyfehuD1r/7yxxPocJkLu88Tl6GUXiodk3ShVwrEgg5vNPYPtwysalDMcnCQIfCZ70zbmL/60PLjlhQc=
+X-Received: by 2002:ab0:4eef:: with SMTP id x47-v6mr2504838uah.23.1533746352046;
+ Wed, 08 Aug 2018 09:39:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.16.git.gitgitgadget@gmail.com> <d9fa5b855ba2805d5afced4795c7d6e87f7e41b7.1533728995.git.gitgitgadget@gmail.com>
+In-Reply-To: <d9fa5b855ba2805d5afced4795c7d6e87f7e41b7.1533728995.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 8 Aug 2018 09:39:00 -0700
+Message-ID: <CABPp-BGnGeJ-9y5gM-_E90hUJPQvJTngy4DhPZ=6ZaCb+RMtpg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] remote-curl: remove spurious period
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, Aug 8, 2018 at 4:52 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> We should not interrupt. sentences in the middle.
 
->> Just a note (and a request-for-sanity-check) and not meant to be a
->> request to update the code, but with a still-in-pu 4b757a40 ("Use
->> remote_odb_get_direct() and has_remote_odb()", 2018-08-02) in
->> flight, repository_format_partial_clone is now gone.
->> ...
-> Thanks for the heads-up. This makes me realize that even the current
-> precondition (repository_format_partial_clone) is not an exact one - I
-> should only be doing this if I know that there is at least one promisor
-> object (if not, in the rare case that a repo is configured to be partial
-> but does not have any promisor objects, repack will generate an empty
-> packfile). In the next reroll, I'll take care of this, which should
-> avoid this merge issue too.
+I love this. commit message.  :-)
 
-I think that it is a good change, regardless of the semantic
-conflict with any other topic, to look at the .promisor packs and
-not look at the partial clone extension for this "do we want to
-coalesce .promisor packs into one?" application.  You only want to
-do so when you have two or more such packs; being in partial clone
-might be a preconditon for having such packs, but it is overly loose.
-
-In any case, remote-odb topic is turning out to be more trouble than
-I originally thought; in the same change that removes the variable,
-it actually removes the support for a repository configured with a
-partial clone extension, and causes a hard error in t0410, breaking
-test of 'pu'.  I do not know how many people actually use partial
-clone right now, but their repositories would be broken the same way
-when they update Git, if we merge that topic in its current shape.
-
-I am dropping it from 'pu' for today's integration cycle.
+...
+>                 /* The client backend isn't giving us compressed data so
+> -                * we can try to deflate it ourselves, this may save on.
+> +                * we can try to deflate it ourselves, this may save on
+>                  * the transfer time.
