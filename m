@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB78C1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC571F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730628AbeHHVUc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 17:20:32 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:38169 "EHLO
+        id S1730688AbeHHVUe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:20:34 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:39875 "EHLO
         mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729997AbeHHVUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 17:20:31 -0400
-Received: by mail-wm0-f41.google.com with SMTP id t25-v6so3812771wmi.3
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:59:29 -0700 (PDT)
+        with ESMTP id S1729997AbeHHVUe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 17:20:34 -0400
+Received: by mail-wm0-f41.google.com with SMTP id q8-v6so3839041wmq.4
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=ckFbpUwpTmufPE4gauAPRMqTFysc6KlSpcFBwRB53RY=;
-        b=ZAHsLtzzFh9lmZh/8iTHSCDHm7PM6QLARS3VFC/jbvACD4tpgatR6buKm7SckQLsdQ
-         UVJtbL8+UOWXAMDHYth1lNHFiS1AfeAJ7yu5KDVV/U8ritPhFuR8OEQ/B7N2U00IJmQZ
-         NY9scnZ2A8aGxgQ/x09LSf/cZ4seTfgyBjldzpbEru2FYN3McUHN4gIm+iRGddqrRLN2
-         pOtHryTmwRIdOxe3FEVhfuMmlPS0G+2alyRGen4mphNgSBsef0j550fCKYKrjwz0a3eS
-         vvxNCEudZL7CMODUTroNJMl27ilcM6LoCcl3rQ5uKgFP7gDfuXrzIRBlVz7bhzV6HuNz
-         WU2A==
+        bh=fdrp9J1jeM/WCfG8cEcsIfaFaO5nHWggwJ5AWvkNma0=;
+        b=smfry7iPxMJXDBnbQkNCTtSRX+GKLSmxEFOV6HkrL+perpExUd37i37oVdQ8+fjFVA
+         pp+McmsJHwGfwdVUTINv0lYJxqlCILM78gCwicwFuVWrqaisY+r8M7vt3NvvIHeZj2m2
+         YbR5ZbN1fNuDh1Q+dL860oc2vKEQlpZQx6ahhwZW4/4pv4scXQLXcQzp/NUqOixhj5Gq
+         KaFLxhn+k5CaBFM3G0wDQAa+XpyxdKNJ6OKZoX814PC8FYC2Nk5OMODJ4QscLKMA8tw/
+         lXmfl8JuY44/m6KyIXK2UvKSEPMIsffFd0wl70B+/stEIGKcE50c+dcebjL+EkJDeHFP
+         ex9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ckFbpUwpTmufPE4gauAPRMqTFysc6KlSpcFBwRB53RY=;
-        b=LXj+fx6T/3VIemrSqF6viTraH2Xlqg8zc0wTkx1IZWzYaek42SS2nOgvSa9dily/eN
-         45KGAnDg7dROTKZdmukVOt0Y5Vb5nI3Em8TddSEnT4al556uKjlwOJwfKvyVZTjnOtxX
-         VZkli9ysB+ac3PXOaJ+Y6+61UVnILOJ6wIehZkPBlqLXvE/O/7qW4qge+mHlRMk95qgY
-         N3qM4O89iFUeTPidABw60Gdma1q2i+UxdaQwWe9q7Lmx7OUXRehMAYbJQrkPOJMLSgze
-         /Meybk+lLUn1WEimDCnRvAdGXLJf0b2Een3MXgCubw8Ki9cuUBvCpBjLn20YbxAlsV/E
-         YgQQ==
-X-Gm-Message-State: AOUpUlEk6Qqn+tJnh23DgDp8JvnN1KfibERmX6e/DN78SKfuFFoax0rV
-        CCLD5M7RGB9BmssgS+F/jCW1C1gA
-X-Google-Smtp-Source: AA+uWPw4gj4y94ahyYPt+DI/EoXZTtn0w0G5D/BYFBVQkfBTxf+EZ9Ibcx7I9infrizjG0PgXTSvAQ==
-X-Received: by 2002:a1c:415:: with SMTP id 21-v6mr2836975wme.128.1533754769195;
-        Wed, 08 Aug 2018 11:59:29 -0700 (PDT)
+        bh=fdrp9J1jeM/WCfG8cEcsIfaFaO5nHWggwJ5AWvkNma0=;
+        b=FwBGSSVbLLExn+d14+iCi91E1HXmdATkYXiDTzJabv2fn3YPkMZC6CrtJl6/aTQDyP
+         EsT5FrGsbYT22zlR1BORtOiNx9gVlU2J6sx8aPVFCAV9QCQWmNgDby4H6UkoCXqpzG2A
+         3GNj+BEOW6BwNnBBkOpeTfuyIk2woNk4GfzEyeSw9u85bi3RdMl7hFSQwPMr3JPtT+6Z
+         ASF1Dqvt1pdXMq6aZEd2EuGfEfPYKgWTxOF3yjzcFxCzRk/Ro5NtwSaqOrnWNh3CkKnD
+         Q0IEFNh3faYMkEB4EuBX+OXdpubCmBYToLss9B3rDY76ivj3MTDEvwjtSyoLpbp/iZ2P
+         4hfw==
+X-Gm-Message-State: AOUpUlEmD+jKch7Yam8m52Tds5xQyHBLq3kgdp3hB6ZtMz1jcXk5U8q7
+        o8cylzD+m1LjplBTWpLWNhqQpBwU
+X-Google-Smtp-Source: AA+uWPyy7fTqTVOs4BM2pQ387RP5+5aC0peylrjuZQ4OTK0hJs5GRTqHas3IJOdA9VtM4w5Lpb3DFg==
+X-Received: by 2002:a1c:5c4:: with SMTP id 187-v6mr2684057wmf.10.1533754772107;
+        Wed, 08 Aug 2018 11:59:32 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com ([86.127.74.86])
-        by smtp.gmail.com with ESMTPSA id p5-v6sm4238879wre.32.2018.08.08.11.59.28
+        by smtp.gmail.com with ESMTPSA id p5-v6sm4238879wre.32.2018.08.08.11.59.31
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 11:59:28 -0700 (PDT)
+        Wed, 08 Aug 2018 11:59:31 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [GSoC][PATCH v7 14/26] stash: convert store to builtin
-Date:   Wed,  8 Aug 2018 21:58:53 +0300
-Message-Id: <84b0086287c683d33bd456957700199b22fd1c49.1533753605.git.ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v7 17/26] stash: avoid spawning a "diff-index" process
+Date:   Wed,  8 Aug 2018 21:58:56 +0300
+Message-Id: <ec5b2c9ac9e0e58710bdc385e03a01e2a7fd10bd.1533753605.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.18.0.573.g56500d98f
 In-Reply-To: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
@@ -65,169 +65,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add stash store to the helper and delete the store_stash function
-from the shell script.
-
-Add the usage string which was forgotten in the shell script.
-
-Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+This commits replaces spawning `diff-index` child process by using
+the already existing `diff` API
 ---
- builtin/stash--helper.c | 52 +++++++++++++++++++++++++++++++++++++++++
- git-stash.sh            | 43 ++--------------------------------
- 2 files changed, 54 insertions(+), 41 deletions(-)
+ builtin/stash--helper.c | 56 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 42 insertions(+), 14 deletions(-)
 
 diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index ec8c38c6f..5ff810f8c 100644
+index 887b78d05..f905d3908 100644
 --- a/builtin/stash--helper.c
 +++ b/builtin/stash--helper.c
-@@ -20,6 +20,7 @@ static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
- 	N_("git stash--helper branch <branchname> [<stash>]"),
- 	N_("git stash--helper clear"),
-+	N_("git stash--helper store [-m|--message <message>] [-q|--quiet] <commit>"),
- 	NULL
- };
+@@ -12,6 +12,7 @@
+ #include "rerere.h"
+ #include "revision.h"
+ #include "log-tree.h"
++#include "diffcore.h"
  
-@@ -58,6 +59,11 @@ static const char * const git_stash_helper_clear_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_helper_store_usage[] = {
-+	N_("git stash--helper store [-m|--message <message>] [-q|--quiet] <commit>"),
-+	NULL
-+};
-+
- static const char *ref_stash = "refs/stash";
- static int quiet;
- static struct strbuf stash_index_path = STRBUF_INIT;
-@@ -731,6 +737,50 @@ static int show_stash(int argc, const char **argv, const char *prefix)
- 	return 0;
+ static const char * const git_stash_helper_usage[] = {
+ 	N_("git stash--helper list [<options>]"),
+@@ -297,6 +298,18 @@ static int reset_head(const char *prefix)
+ 	return run_command(&cp);
  }
  
-+static int do_store_stash(const char *w_commit, const char *stash_msg,
-+			  int quiet)
++static void add_diff_to_buf(struct diff_queue_struct *q,
++			    struct diff_options *options,
++			    void *data)
 +{
-+	int ret = 0;
-+	struct object_id obj;
-+
-+	if (!stash_msg)
-+		stash_msg  = xstrdup("Created via \"git stash--helper store\".");
-+
-+	ret = get_oid(w_commit, &obj);
-+	if (!ret) {
-+		ret = update_ref(stash_msg, ref_stash, &obj, NULL,
-+				 REF_FORCE_CREATE_REFLOG,
-+				 quiet ? UPDATE_REFS_QUIET_ON_ERR :
-+				 UPDATE_REFS_MSG_ON_ERR);
++	int i;
++	for (i = 0; i < q->nr; i++) {
++		struct diff_filepair *p = q->queue[i];
++		strbuf_addstr(data, p->one->path);
++		strbuf_addch(data, '\n');
 +	}
-+	if (ret && !quiet)
-+		fprintf_ln(stderr, _("Cannot update %s with %s"),
-+			   ref_stash, w_commit);
-+
-+	return ret;
 +}
 +
-+static int store_stash(int argc, const char **argv, const char *prefix)
-+{
-+	const char *stash_msg = NULL;
-+	struct option options[] = {
-+		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
-+		OPT_STRING('m', "message", &stash_msg, "message", N_("stash message")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_store_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN);
-+
-+	if (argc != 1) {
-+		fprintf(stderr, _("\"git stash--helper store\" requires one <commit> argument\n"));
-+		return -1;
-+	}
-+
-+	return do_store_stash(argv[0], stash_msg, quiet);
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ static int get_newly_staged(struct strbuf *out, struct object_id *c_tree)
  {
- 	pid_t pid = getpid();
-@@ -765,6 +815,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!list_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "show"))
- 		return !!show_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "store"))
-+		return !!store_stash(argc, argv, prefix);
- 
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
-diff --git a/git-stash.sh b/git-stash.sh
-index 0d05cbc1e..5739c5152 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -191,45 +191,6 @@ create_stash () {
- 	die "$(gettext "Cannot record working tree state")"
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+@@ -981,14 +994,16 @@ static int stash_patch(struct stash_info *info, const char **argv)
+ 	return ret;
  }
  
--store_stash () {
--	while test $# != 0
--	do
--		case "$1" in
--		-m|--message)
--			shift
--			stash_msg="$1"
--			;;
--		-m*)
--			stash_msg=${1#-m}
--			;;
--		--message=*)
--			stash_msg=${1#--message=}
--			;;
--		-q|--quiet)
--			quiet=t
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--	test $# = 1 ||
--	die "$(eval_gettext "\"$dashless store\" requires one <commit> argument")"
--
--	w_commit="$1"
--	if test -z "$stash_msg"
--	then
--		stash_msg="Created via \"git stash store\"."
--	fi
--
--	git update-ref --create-reflog -m "$stash_msg" $ref_stash $w_commit
--	ret=$?
--	test $ret != 0 && test -z "$quiet" &&
--	die "$(eval_gettext "Cannot update \$ref_stash with \$w_commit")"
--	return $ret
--}
--
- push_stash () {
- 	keep_index=
- 	patch_mode=
-@@ -308,7 +269,7 @@ push_stash () {
- 		clear_stash || die "$(gettext "Cannot initialize stash")"
+-static int stash_working_tree(struct stash_info *info, const char **argv)
++static int stash_working_tree(struct stash_info *info,
++			      const char **argv, const char *prefix)
+ {
+ 	int ret = 0;
+-	struct child_process cp1 = CHILD_PROCESS_INIT;
+ 	struct child_process cp2 = CHILD_PROCESS_INIT;
+ 	struct child_process cp3 = CHILD_PROCESS_INIT;
+-	struct strbuf out1 = STRBUF_INIT;
+ 	struct strbuf out3 = STRBUF_INIT;
++	struct argv_array args = ARGV_ARRAY_INIT;
++	struct strbuf diff_output = STRBUF_INIT;
++	struct rev_info rev;
  
- 	create_stash -m "$stash_msg" -u "$untracked" -- "$@"
--	store_stash -m "$stash_msg" -q $w_commit ||
-+	git stash--helper store -m "$stash_msg" -q $w_commit ||
- 	die "$(gettext "Cannot save the current status")"
- 	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
+ 	set_alternate_index_output(stash_index_path.buf);
+ 	if (reset_tree(&info->i_tree, 0, 0)) {
+@@ -997,26 +1012,36 @@ static int stash_working_tree(struct stash_info *info, const char **argv)
+ 	}
+ 	set_alternate_index_output(".git/index");
  
-@@ -468,7 +429,7 @@ create)
- 	;;
- store)
- 	shift
--	store_stash "$@"
-+	git stash--helper store "$@"
- 	;;
- drop)
- 	shift
+-	cp1.git_cmd = 1;
+-	argv_array_pushl(&cp1.args, "diff-index", "--name-only", "-z",
+-			"HEAD", "--", NULL);
++	argv_array_push(&args, "dummy");
+ 	if (argv)
+-		argv_array_pushv(&cp1.args, argv);
+-	argv_array_pushf(&cp1.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
++		argv_array_pushv(&args, argv);
++	git_config(git_diff_basic_config, NULL);
++	init_revisions(&rev, prefix);
++	args.argc = setup_revisions(args.argc, args.argv, &rev, NULL);
++
++	rev.diffopt.output_format |= DIFF_FORMAT_CALLBACK;
++	rev.diffopt.format_callback = add_diff_to_buf;
++	rev.diffopt.format_callback_data = &diff_output;
++
++	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
++		ret = -1;
++		goto done;
++	}
+ 
+-	if (pipe_command(&cp1, NULL, 0, &out1, 0, NULL, 0)) {
++	add_pending_object(&rev, parse_object(the_repository, &info->b_commit), "");
++	if (run_diff_index(&rev, 0)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+ 	cp2.git_cmd = 1;
+-	argv_array_pushl(&cp2.args, "update-index", "-z", "--add",
++	argv_array_pushl(&cp2.args, "update-index", "--add",
+ 			 "--remove", "--stdin", NULL);
+ 	argv_array_pushf(&cp2.env_array, "GIT_INDEX_FILE=%s",
+ 			 stash_index_path.buf);
+ 
+-	if (pipe_command(&cp2, out1.buf, out1.len, NULL, 0, NULL, 0)) {
++	if (pipe_command(&cp2, diff_output.buf, diff_output.len,
++			 NULL, 0, NULL, 0)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+@@ -1033,8 +1058,11 @@ static int stash_working_tree(struct stash_info *info, const char **argv)
+ 	get_oid_hex(out3.buf, &info->w_tree);
+ 
+ done:
+-	strbuf_release(&out1);
++	UNLEAK(rev);
+ 	strbuf_release(&out3);
++	argv_array_clear(&args);
++	object_array_clear(&rev.pending);
++	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+ }
+@@ -1112,7 +1140,7 @@ static int do_create_stash(int argc, const char **argv, const char *prefix,
+ 			goto done;
+ 		}
+ 	} else {
+-		if (stash_working_tree(info, argv)) {
++		if (stash_working_tree(info, argv, prefix)) {
+ 			printf_ln("Cannot save the current worktree state");
+ 			ret = -1;
+ 			goto done;
 -- 
 2.18.0.573.g56500d98f
 
