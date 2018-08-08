@@ -2,127 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BADEF208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 15:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46EEF208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 15:22:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727692AbeHHRmx (ORCPT <rfc822;e@80x24.org>);
+        id S1727694AbeHHRmx (ORCPT <rfc822;e@80x24.org>);
         Wed, 8 Aug 2018 13:42:53 -0400
-Received: from gproxy3-pub.mail.unifiedlayer.com ([69.89.30.42]:40610 "EHLO
-        gproxy3-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727412AbeHHRmv (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 13:42:51 -0400
-X-Greylist: delayed 2412 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2018 13:42:50 EDT
-Received: from cmgw10.unifiedlayer.com (unknown [10.9.0.10])
-        by gproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id B127F42DA8
-        for <git@vger.kernel.org>; Wed,  8 Aug 2018 08:30:21 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmsmtp with ESMTP
-        id nPTcfuKLHuL2QnPTffJuv7; Wed, 08 Aug 2018 08:30:20 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=CAnAavYUMFCxUlmzjweY7xGYtaBOjQvL6/k093k4AwY=; b=Wryal5YWbi8Tdr/Iowf8UVcEZg
-        wOhK2oJjIYIKZlDTTpSH9HqeudCxdnviUf90ZimElc3YdedIWB3wb4g/p+2hsOT1pPCWLE9p3m344
-        pnsW2ao9McbX/rgL8iE3kONwB;
-Received: from [50.226.24.42] (port=47118 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1fnPTY-0046K6-QT
-        for git@vger.kernel.org; Wed, 08 Aug 2018 08:30:12 -0600
-Message-ID: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
-Subject: Help with "fatal: unable to read ...." error during GC?
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:42109 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727069AbeHHRmx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 13:42:53 -0400
+Received: by mail-ed1-f65.google.com with SMTP id r4-v6so1434832edp.9
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 08:22:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=8u0Z3uXBkylsEDR6oPHyAt9L69/MYvx4mZotTb4B800=;
+        b=LmdY/KZe6JlvWMvwMZwrWbScYYeMGbLmM5A9yGT+mIYSsBZg1hYWDF7gIYDl8LFikm
+         pmhTFL4km3clpCSiu7+rCqca062hVxqNmEUUE2GZRt2xagxsHoV31TtLUPqXkbFszKhS
+         O5lMQun7Y1Z5VWUuXno1QBV/RNcajvb14kC3gAWqEeR+XzdZNmXgR5D9jKZ8Ij4UFNUy
+         Wz7rwy3Yl/O4PQUwGaUbWRYDtiJmRHet6hrqOXwL0dbq9Pknqy10Z/9ExkSg6FVY1CYD
+         9d3I8ROOZaQKOBHfp0fESqlg6U1qMj2emqF6znP0ePh+hwHCCAkwUTFDn8AGMqZUXZ4g
+         8UIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=8u0Z3uXBkylsEDR6oPHyAt9L69/MYvx4mZotTb4B800=;
+        b=gwYHPHSEbSIlR12izXy3GGZpBUUrWG88smK3MQPK3dMWs1iT8xV0XPj3+dbHthOzqV
+         kD7ry9o7na1+gvKi65utGN1/DL0kPYnxXQa/x52h7TPRbQdPvxeelZAUBkL2oqHDGbvp
+         e2U8Ou3C+2esIXu6dbC4cniZd6sCyqIwLATgmA9jgh8tFg3UCZkmV+KlPSxjP/JfQ8AI
+         T9a7ML4XOycetLC4V1M2FfAtQB2Vt1EN+jtv+utSyldP1ODuvNxYYmF/wN3kTSixOVtV
+         zQ4UzQZDfAV0r29RaOf75t6uZ6JoOJpwErXUo/Uk1QDbBD2a1evw05IvMMjcsB1mQIbd
+         N4tQ==
+X-Gm-Message-State: AOUpUlFHScA3i2Ug19MLSw9EpKkl6o0s7uHKt+jJlDQ6BjbiQNlESGZn
+        UpTsUZCH9V7IULSbnDT6zDMj4xT2
+X-Google-Smtp-Source: AA+uWPxtYCqqJup2yQ6pm6y5rnT3CNgm5Hb8QtPgMxUVEUvUYJi8vkxQ8E8D3zP1EFdGLwbr0TFFbQ==
+X-Received: by 2002:a50:bec2:: with SMTP id e2-v6mr3867763edk.283.1533741764764;
+        Wed, 08 Aug 2018 08:22:44 -0700 (PDT)
+Received: from localhost.localdomain ([27.34.16.181])
+        by smtp.gmail.com with ESMTPSA id v56-v6sm6058572edm.97.2018.08.08.08.22.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 08 Aug 2018 08:22:44 -0700 (PDT)
+From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
-Date:   Wed, 08 Aug 2018 10:30:11 -0400
-Organization: I may be mad, but I'm a professional!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.1-2 
-Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Source-L: No
-X-Exim-ID: 1fnPTY-0046K6-QT
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:47118
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Org:  HG=bhcustomer;ORG=bluehost;
-X-Local-Domain: yes
+Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
+        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
+        Pratik Karki <predatoramigo@gmail.com>
+Subject: [PATCH 02/18] builtin rebase: support --signoff
+Date:   Wed,  8 Aug 2018 21:06:24 +0545
+Message-Id: <20180808152140.14585-3-predatoramigo@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180808152140.14585-1-predatoramigo@gmail.com>
+References: <20180808152140.14585-1-predatoramigo@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I recently upgraded from Git 2.9.2 to 2.18.0 (note, I have no
-particular reason to believe this is related just passing info).  I'm
-running on Linux (64bit Ubuntu 18.04.1 but I've compiled Git myself
-from source, I'm not using the distro version).
+This commit adds support for `--signoff` which is used to add a
+`Signed-off-by` trailer to all the rebased commits. The actual
+handling is left to the rebase backends.
 
-I have a local repository I've been using for about two years (the
-.git/description file, which I don't use, has a TLM of July 31, 2016),
-with lots of worktrees being created/pruned/etc. during that time.
+Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+---
+ builtin/rebase.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Note I'm doing all these operations in the 'main' repository, not in
-any of the worktrees.
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index fc9b5a8a60..a491481120 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -93,6 +93,7 @@ struct rebase_options {
+ 	} flags;
+ 	struct strbuf git_am_opt;
+ 	const char *action;
++	int signoff;
+ };
+ 
+ static int is_interactive(struct rebase_options *opts)
+@@ -168,6 +169,11 @@ static int read_basic_state(struct rebase_options *opts)
+ 	if (file_exists(state_dir_path("verbose", opts)))
+ 		opts->flags |= REBASE_VERBOSE;
+ 
++	if (file_exists(state_dir_path("signoff", opts))) {
++		opts->signoff = 1;
++		opts->flags |= REBASE_FORCE;
++	}
++
+ 	strbuf_release(&buf);
+ 
+ 	return 0;
+@@ -249,6 +255,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	if (opts->switch_to)
+ 		add_var(&script_snippet, "switch_to", opts->switch_to);
+ 	add_var(&script_snippet, "action", opts->action ? opts->action : "");
++	add_var(&script_snippet, "signoff", opts->signoff ? "--signoff" : "");
+ 
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -513,6 +520,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
+ 			N_("do not show diffstat of what changed upstream"),
+ 			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
++		OPT_BOOL(0, "signoff", &options.signoff,
++			 N_("add a Signed-off-by: line to each commit")),
+ 		OPT_BIT('f', "force-rebase", &options.flags,
+ 			N_("cherry-pick all commits, even if unchanged"),
+ 			REBASE_FORCE),
+@@ -745,6 +754,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		break;
+ 	}
+ 
++	if (options.signoff) {
++		if (options.type == REBASE_PRESERVE_MERGES)
++			die("cannot combine '--signoff' with "
++			    "'--preserve-merges'");
++		strbuf_addstr(&options.git_am_opt, " --signoff");
++		options.flags |= REBASE_FORCE;
++	}
++
+ 	if (!options.root) {
+ 		if (argc < 1)
+ 			die("TODO: handle @{upstream}");
+-- 
+2.18.0
 
-Yesterday, when I tried to fetch from my upstream I got a notification
-about GC needed.  Then GC failed with these errors (HEAD is set to
-master which is the same as origin/master):
-
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  warning: reflog of 'HEAD' references pruned commits
-  fatal: unable to read c104b8fb3631b5c54695206b2f73310c023c9963
-  error: failed to run repack
-
-I ran a git fsck --full which showed me a lot of dangling commits and
-blobs, but no errors, no broken link messages, etc.
-
-I ran git reflog expire --all --stale-fix but no change.
-
-I can't find that SHA anywhere: I looked in .git/objects, etc.  I also
-can't find any problems with my repo; obviously I haven't checked
-everything but I can show the git log back to the initial commit, all
-my stashes look fine, all my worktrees seem to be OK (git status etc.
-work fine in all of them).
-
-But whenever I pull etc. Git wants to run gc and I get this set of
-errors again.  FWIW other repos created from the same remote don't show
-any issues so it appears to be just this local copy of the repo.
-
-I've seen many SO and blog posts about issues like this but all were
-concentrating on recovering things and I don't even know if I've lost
-anything... and anyway the operations they suggest don't work for me
-because nothing can access that SHA; I just get "bad object".
-
-Any ideas on what to look at next?
-
-I would hate to have to throw this setup away since it has 23 stashes
-and 25 worktrees in various states that would be annoying to have to
-recreate... 
