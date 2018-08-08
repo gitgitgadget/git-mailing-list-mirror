@@ -2,108 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 36BB11F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 22:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F393F1F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 22:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729754AbeHIAks (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 20:40:48 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33489 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727337AbeHIAks (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 20:40:48 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g6-v6so3378960wrp.0
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 15:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=XtAWHIPDfi7524cjwjsUdG1PNbh/SkCx9FtBeN58Khk=;
-        b=fTOCLGdlCNqF3x5l6IPP1hFJXNEC5ayLhmTlDdqcA1BkAjPzfSiRKV/92Nkb6/khex
-         /ExQ1RJqbR1K7/Mr/TnyZBVoQviDRmOILfPxoEZYmyuqxRdE/MU/w70SdSvaW4SWelMC
-         Lqt4vMMp7Ma/fOc/xwAQeb2Ozl7vEEDFiwfXroOHB55grm6HJf4bOaEJSbGTPEnj47vm
-         cg9Tssd1jzQZZajOQSrt8VeIw/Ufu464nFLbt4ainbAg9N6Q+40L4DIx2g4j4jvZ6zjQ
-         NmCJSA2alYVW9VeTQW3+iX9jd1UDp4/Rvt+atPha+mWcKH4pHdfEv652kkMwvhixJkKz
-         53Xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=XtAWHIPDfi7524cjwjsUdG1PNbh/SkCx9FtBeN58Khk=;
-        b=a/YLWwr44lFiok1t8QDAA/8JK4Ev1PbtwOyRbH9NKUuGJ1ZFmXKPtZrBpgn6XRjBOx
-         0+gLw7VEuKxnkUQ5C2qEhDfxeDkebiRAueiPPbs7PfTED/yugpUHNb29TgiDSQ5TsLRC
-         whX2RTVyZ/2bff4lt+PqySrs/9hBpdI8z1e4OoXQhOvGWtfU7nzPs7BYR1f7u7qypjOS
-         NPZ0HJNjhdil9ZXUOlgF3gfNkPmnlPK/GIqnC2h1RKTKzF54mt6pwOWsTdqhaOacXZWt
-         8L/3cYS+bSl2jxmL9uctXmHQHekt3lJJJlR7wREYwLI6wbr4KTQOZfK3e+t1sUdAKaHu
-         5KVQ==
-X-Gm-Message-State: AOUpUlF5cmjhavEP61wgrow5vxGW0aQP47tCm5Qc788lDjYA+Ok8OLug
-        mkrQymr193do6rQlkY41RmM=
-X-Google-Smtp-Source: AA+uWPyJ9RnXzpeTKzocscgX0XPIyJLOd/LMvjrEpFaMB6fBLshdaIhNw0Q43LXdPlmeoOS6wcdzfw==
-X-Received: by 2002:adf:b786:: with SMTP id s6-v6mr2914095wre.247.1533766745763;
-        Wed, 08 Aug 2018 15:19:05 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s2-v6sm4759543wrn.83.2018.08.08.15.19.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 15:19:04 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] pull --rebase=<type>: allow single-letter abbreviations for the type
-References: <pull.14.git.gitgitgadget@gmail.com>
-        <d2ba1e6bef9d6d4eabc8eaa60435dcae1105fd07.1533410586.git.gitgitgadget@gmail.com>
-        <87sh3qrn6d.fsf@evledraar.gmail.com>
-        <xmqqmutwfxh0.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 08 Aug 2018 15:19:04 -0700
-In-Reply-To: <xmqqmutwfxh0.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 08 Aug 2018 12:51:39 -0700")
-Message-ID: <xmqqk1p0ec2v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730397AbeHIAxY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 20:53:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47594 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727706AbeHIAxY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 20:53:24 -0400
+Received: (qmail 16834 invoked by uid 109); 8 Aug 2018 22:31:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Aug 2018 22:31:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3722 invoked by uid 111); 8 Aug 2018 22:31:43 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 08 Aug 2018 18:31:43 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2018 18:31:39 -0400
+Date:   Wed, 8 Aug 2018 18:31:39 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@vger.kernel.org, pawelparuzel95@gmail.com,
+        sandals@crustytoothpaste.net, Elijah Newren <newren@gmail.com>,
+        tboegi@web.de
+Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive
+ filesystems
+Message-ID: <20180808223139.GA3902@sigill.intra.peff.net>
+References: <20180730152756.15012-1-pclouds@gmail.com>
+ <20180807190110.16216-1-pclouds@gmail.com>
+ <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
+ <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 08, 2018 at 03:48:04PM -0400, Jeff Hostetler wrote:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->>> -	else if (!strcmp(value, "preserve"))
->>> +	else if (!strcmp(value, "preserve") || !strcmp(value, "p"))
->>>  		return REBASE_PRESERVE;
->>> -	else if (!strcmp(value, "merges"))
->>> +	else if (!strcmp(value, "merges") || !strcmp(value, "m"))
->>>  		return REBASE_MERGES;
->>> -	else if (!strcmp(value, "interactive"))
->>> +	else if (!strcmp(value, "interactive") || !strcmp(value, "i"))
->>>  		return REBASE_INTERACTIVE;
->>
->> Here 3 special cases are added...
->> ...
->>> +test_expect_success 'pull --rebase=i' '
->>> ...
->>> +'
->>> +
->>>  test_expect_success 'pull.rebase=invalid fails' '
->>>  	git reset --hard before-preserve-rebase &&
->>>  	test_config pull.rebase invalid &&
->>
->> ...but this test is only for 1/3. I haven't run this, but it looks like
->> the tests will still pass if we remove --rebase=p and --rebase=m.
->
-> Good eyes.  It's not like that parsing these three is implemented
-> with one thing; in other words, it is not hard to break one without
-> breaking the other two.
+> > ce_match_stat() may not be a very good measure to see if two paths
+> > refer to the same file, though.  After a fresh checkout, I would not
+> > be surprised if two completely unrelated paths have the same size
+> > and have same mtime/ctime.  In its original use case, i.e. "I have
+> > one specific path in mind and took a snapshot of its metadata
+> > earlier.  Is it still the same, or has it been touched?", that may
+> > be sufficient to detect that the path has been _modified_, but
+> > without reliable inum, it may be a poor measure to say two paths
+> > refer to the same.
+> 
+> I agree with Junio on this one.  The mtime values are sloppy at best.
+> On FAT file systems, they have 2 second resolution.  Even NTFS IIRC
+> has only 100ns resolution, so we might get a lot of false matches
+> using this technique, right?
 
-Having said that, that can be done as a follow-up "oops, the
-original was sloppy" patch.  It's not as bad compared to "oops, the
-original was totally borked and here is a fix", so I am OK with that
-;-)
+Yeah, I think anything less than inode (or some system equivalent) is
+going to be too flaky.
+
+> It might be better to build an equivalence-class hash-map for the
+> colliding entries.  Compute a "normalized" version of the pathname
+> (such as convert to lowercase, strip final-dots/spaces, strip the
+> digits following tilda of a shortname, and etc for the MAC's UTF-isms).
+> Then when you rescan the index entries to find the matches, apply the
+> equivalence operator on the pathname and do the hashmap lookup.
+> When you find a match, you have a "potential" collider pair (I say
+> potential only because of the ambiguity of shortnames).  Then we
+> can use inum/file-index/whatever to see if they actually collide.
+
+I think we really want to avoid doing that normalization ourselves if we
+can. There are just too many filesystem-specific rules.
+
+If we have an equivalence-class hashmap and feed it inodes (or again,
+some system equivalent) as the keys, we should get buckets of
+collisions. I started to write a "something like this..." earlier, but
+got bogged down in boilerplate around the C hashmap.
+
+But here it is in perl. ;)
+
+-- >8 --
+# pretend we have these paths in our index
+paths='foo FOO and some other paths'
+
+# create them; this will make a single path on a case-insensitive system
+for i in $paths; do
+  echo $i >$i
+done
+
+# now find the duplicates
+perl -le '
+  for my $path (@ARGV) {
+    # this would be an ntfs unique-id on Windows
+    my $inode = (lstat($path))[1];
+    push @{$h{$inode}}, $path;
+  }
+
+  for my $group (grep { @$_ > 1 } values(%h)) {
+    print "group:";
+    print "  ", $_ for (@$group);
+  }
+' $paths
+-- >8 --
+
+which should show the obvious pair (it does for me on vfat-on-linux,
+though where it gets those inodes from, I have no idea ;) ).
+
+-Peff
