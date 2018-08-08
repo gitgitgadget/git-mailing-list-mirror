@@ -2,160 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00FC5208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 17:33:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 947C6208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 17:46:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729644AbeHHTyR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 15:54:17 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:43158 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727062AbeHHTyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 15:54:16 -0400
-Received: by mail-yw1-f67.google.com with SMTP id l189-v6so2133957ywb.10
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 10:33:35 -0700 (PDT)
+        id S1728110AbeHHUH0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 16:07:26 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:44147 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727706AbeHHUHZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 16:07:25 -0400
+Received: by mail-wr1-f66.google.com with SMTP id r16-v6so2732752wrt.11
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 10:46:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=X6CXh0dQl0AjBdwSTUf3L9PZAq4WDlB1NPedVdk3avM=;
-        b=L29mAf1pYZRO71ocEy+0c2jhQjuw9Cw1EB6EYRsjBVdGUkTayFcoiCKcXkOIXr41OZ
-         LdWAd1YsFtUGLrT4JkHIxOMye+AmRKgi8oxtBeuOJAP2a0eXmxXOEm26ZTxP9KSM+y9p
-         DOA5uPh9IqzAzjWxzNV432QyAFqUSfp/ip0dJHIkYO69vxwj0tjVYZzlBePHp+Tg8tQV
-         /9KKR69cWxGYJGwXU7CP0PB/ArQuAOZ7Dom7pZVTk/sTnpo1ZsQ+whHSfh8+R1GQ2Nzs
-         Yjl5E4O2xwQxxjgujl4XUocC5pY5oxjQFaZoluogDWfN4qIEcQaqvK8uYP14M3IBzK6b
-         SPSw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Qu4XskFlIY9pLTyto6WENC5PEctb4FAutBc0bxiwtzo=;
+        b=LCosUbeVb7XpmzkRnE6qEYlZ/yO4VGL05NQv3Zfn6ieLMxvobrGNlvSu2LSTrE40Z9
+         LC6vpUMo+w0pw68eurunXihwuxTU7ch8nguvoBNqGbXBnTAzRtUORmcAEILBb66daMpL
+         oZjthK/KFpPTbZ/HFT/TN9JyEW2zqP+dbk9zHwecrDORHECkHjBqbkgWEgfcaR2AEjP6
+         QuPQCIW1NEzijuFVG9xCDGZqO1MxvaaY9xKE3DVmfaee4TY20hJALeumKVBRUgFy4bh6
+         qgLLgMlCNljnUygsdXKxGQ1g/3QlzpiNtSugj5S36BsF/h8M6cJ3+ErhRolDUeZl1pXm
+         tBFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=X6CXh0dQl0AjBdwSTUf3L9PZAq4WDlB1NPedVdk3avM=;
-        b=qEHQNkl5Gi43U7/wCB99rpnBCwhn1BbRLd5nvwi08s9TKlQxSFYiP6cpIXgyKIixZN
-         2jelePcYRSNYqMNfcBrQXyci2TyY7fAGsg9FL9NJmzcPoMbEPod7OpML+dO9FGmd7NJ7
-         RQ1IWyF4FQJs0wjT+E898dNqeXUBC1CGoAu7GKjt03GDj4blJiSixdEd8LzktzkTO8ox
-         7JCtmG8yam+2H0dE6q3Hqwox0uz4jIEkM8IgeX/Gwc17yCtBggVlERnqOqOcEoYVJn97
-         JYIRB6SV+0kJW9C+fx8ZGSV6RH29jpeY7UZEq2lRDcRxQlJIvqKyWD5V3yZzgnN1LHZu
-         cHhA==
-X-Gm-Message-State: AOUpUlEG+GE7zHzTRhn74HGStQFw2fQDVaY9ytT1u0d+k/StK4fByIyX
-        0XaGO6LfpWAj3vOc5vvHE/1sgOKkQSuUnO62hWI44yMufmiANA==
-X-Google-Smtp-Source: AA+uWPyQhrvtEue7w1s82FovTbIdKYbzzIOXul/BY50lhvKuZRp9+BcrXKpPgByDwjKzOvlVU5H/gFXsOMxgiMERIZw=
-X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr1993262ywh.238.1533749614350;
- Wed, 08 Aug 2018 10:33:34 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Qu4XskFlIY9pLTyto6WENC5PEctb4FAutBc0bxiwtzo=;
+        b=jiP98vUYiES+IgLJ6cfcoB7zM6YAfyR2sjjPnkD6vv0/OR3MEK+PRPwaZm/DfonhvA
+         7DLO/9F5bFnbPXdO/xoQ1hgHO8+HnqBP1ivOWMck7XaUPwv4ZULm/w+LFLV9zD43Kja2
+         J3VmQ6hcXivK7rQ3WH3dDlfYPi4Z9Z2sUllQPfU2IwJC6uQJvyUxe6u4PQgisFIcOukW
+         x7Xe3PhSPsRRXdlZMMGVmMM02uUcgbAUD+F6E+aie1PQfCaiFzpCAr5LBXNLTE4JOb8v
+         mzwgzDA35uzlPEpt8vKeuX7EV76OVrtJ8uedEqy5RtNpSs/KFDECzivfyWFBMn0924kY
+         9y2g==
+X-Gm-Message-State: AOUpUlGzq4mrKQfV7vbMS4Q27NEgziyiXC8/NGxH9f893FWYc337MhLx
+        eAWsorUVxD63oEIg80p1jWY=
+X-Google-Smtp-Source: AA+uWPy2nF84g5sreTZbo24tjEtKEbLwY66bYq3tIqc0djLOhspuhKyK+k9aoydZ7Kth24BAyAgCzQ==
+X-Received: by 2002:adf:aa09:: with SMTP id p9-v6mr2646869wrd.92.1533750400043;
+        Wed, 08 Aug 2018 10:46:40 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x82-v6sm14291481wmd.11.2018.08.08.10.46.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 08 Aug 2018 10:46:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 0/4] Speed up unpack_trees()
+References: <20180729103306.16403-1-pclouds@gmail.com>
+        <20180804053723.4695-1-pclouds@gmail.com>
+        <xmqq7el3qywq.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
+Date:   Wed, 08 Aug 2018 10:46:38 -0700
+In-Reply-To: <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 6 Aug 2018 17:59:28 +0200")
+Message-ID: <xmqqpnyshhtt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com>
- <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com> <nycvar.QRO.7.76.6.1808081422160.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808081422160.71@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Aug 2018 10:33:23 -0700
-Message-ID: <CAGZ79kbj2sgKOmouvLDuXic3vq9RG1LZ_retOqMwX_YZtMP+1Q@mail.gmail.com>
-Subject: Re: [PATCH v4 00/21] Add `range-diff`, a `tbdiff` lookalike
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 8, 2018 at 6:05 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> > [...]
-> > >       diff --git a/Makefile b/Makefile
-> > >       --- a/Makefile
-> > >       +++ b/Makefile
-> >
-> > The line starting with --- is red (default removed color) and the line
-> > with +++ is green (default add color).
-> >
-> > Ideally these two lines and the third line above starting with "diff --git"
-> > would render in GIT_COLOR_BOLD ("METAINFO").
->
-> I agree that is not the best coloring here, but as you remarked elsewhere,
-> it would require content-aware dual coloring, and I am loathe to try to
-> implement that for two reasons: 1) it would take most likely a long time
-> to design and implement that, and 2) I don't have that time.
->
-> So I would like to declare that good enough is good enough in this case.
+> On Mon, Aug 6, 2018 at 5:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+>> > I've also checked about the lookahead thing in unpack_trees() to see
+>> > if we accidentally break something there, which is my biggest worry.
+>> > See [1] and [2] for context, but I believe since we can't have D/F
+>> > conflicts, the situation where lookahead is needed will not occur. So
+>> > we should be safe.
 
-I anticipated this answer, so I wrote some patches myself, starting at
-https://public-inbox.org/git/20180804015317.182683-1-sbeller@google.com/
-specifically
-https://public-inbox.org/git/20180804015317.182683-5-sbeller@google.com/
+I think you would want the same "switch cache-bottom before
+descending into a subdirectory, and then restore cache-bottom after
+traversal comes back" dance that is done for the normal tree
+traversal case to happen.
 
-I plan on resending these on top of your resend (if any) at a later convenient
-time for both you and Junio, as noted in
-https://public-inbox.org/git/CAGZ79kZnVEsvpicNu7LXkRcHuRqGvESfvG3DL5O_2kPVYrW-Gg@mail.gmail.com/
+	bottom = switch_cache_bottom(&newinfo);
+	ret = traverse_trees(n, t, &newinfo);
+	restore_cache_bottom(&newinfo, bottom);
 
+During your walk of the index and the trees that are known to be in
+sync, there is little reason to worry about the cache_bottom, which
+is advanced by calling mark_ce_used() in traverse_by_cache_tree().
+Where it matters is what happens after the traversal comes back out
+of the subtree.  find_cache_pos() uses the bottom pointer so that it
+does not have to go back to far to find an index entry that has not
+been used to match with the entries from the trees (which are not
+sorted exactly the same way as the index, unfortunately), so
+forgetting to advance the bottom pointer while correctly marking a
+ce as "used" is OK (i.e. hurts performance but not correctness), but
+advancing the bottom pointer too much and leaving entries that are
+not used behind is *not* OK.  And lack of restoring the bottom in
+the new codepath makes me suspect exactly such a bug _after_ the
+traversal exits the subtree we are using this new optimization in
+and moves on.
 
->
-> > >   3:  076e1192d !  3:  4e3fb47a1 range-diff: first rudimentary implementation
-> > >      @@ -4,7 +4,7 @@
-> > >
-> > >           At this stage, `git range-diff` can determine corresponding commits
-> > >           of two related commit ranges. This makes use of the recently introduced
-> > >      -    implementation of the Hungarian algorithm.
-> > >      +    implementation of the linear assignment algorithm.
-> > >
-> > >           The core of this patch is a straight port of the ideas of tbdiff, the
-> > >           apparently dormant project at https://github.com/trast/tbdiff.
-> > >      @@ -51,19 +51,17 @@
-> > >       + int res = 0;
-> > >       + struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
-> > >
-> > >      -- argc = parse_options(argc, argv, NULL, options,
-> > >      --                      builtin_range_diff_usage, 0);
-> > >      -+ argc = parse_options(argc, argv, NULL, options, builtin_range_diff_usage,
-> > >      -+                      0);
-> > >      +  argc = parse_options(argc, argv, NULL, options,
-> > >      +                       builtin_range_diff_usage, 0);
-> >
-> > This is really nice in colors when viewed locally.
-> >
-> > >  16:  dfa7b1e71 <  -:  --------- range-diff --dual-color: work around bogus white-space warning
-> > >   -:  --------- > 16:  f4252f2b2 range-diff --dual-color: fix bogus white-space warning
-> >
-> > Ah; here my initial assumption of only reviewing the range-diff breaks down now.
-> > I'll dig into patch 16 separately.
->
-> Right. This was an almost complete rewrite, and then next iteration will
-> hopefully bring another complete rewrite: disabling whitespace warnings in
-> dual color mode.
->
-> > Maybe it is worth having an option to expand all "new" patches.
->
-> Sure.
->
-> And I also have a use case for --left-only/--right-only.
->
-> And I also have a strong use case (and so does Junio, it seems, or for
-> that matter, anybody contributing to Git due to Junio's insistence on
-> signing off on each patch, rather than on the merge commit) for something
-> like --ignore-lines=<regex>.
->
-> And you probably guess what I will say next: these features will make for
-> really fantastic patch series *on top* of mine. There really is no good
-> reason to delay the current patch series just to cram more features into
-> it that had not been planned in the first place.
+Imagine we are iterating over the top-level of the trees, and found
+a subtree in them.  There may be some index entries before the first
+path in this subtree that are not yet marked as "used", the earliest
+of which is pointed at by the cache_bottom pointer.
 
-Yes, I agree. I am unsure about the current state of your series, though;
-
-Junio thinks (expects?) a resend, whereas you seem to call it good enough
-but also said (some time back) that you want to resend due to Thomas
-feedback.
-
-I do have 2 series on top of the current range-diff.
-* The first (queued by Junio as origin/sb/range-diff-colors)
-   adds a basic test for colors and improves diff.c readability
-* The second (linked above) changes colors for some lines.
-
-I do not want to build more on top as long as I do not know if
-you resend (and how much it'll change)
-
-Thanks,
-Stefan
+Before descending into the subtree (and start consuming the entry
+with the first in this subtree from the index), we stash away the
+current cache_bottom, and then start walking the subtree.  While we
+are in that subtree, the cache_bottom starts from the first name in
+the subtree and increments, as we _know_ the entry at the old
+cache_bottom is outside this subtree and will not match any entry
+form the subtree.  Then when the traversal returns, all index
+entries within the "subtree/" path will be marked "used".  At that
+point, when we continue to scan the top-level of the trees, we need
+to restore the cache_bottom, so that we do not forget entries that
+we knew we needed to scan eventually, if there was any.
