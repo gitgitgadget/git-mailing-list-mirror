@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FD7C1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 021B21F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 18:59:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730822AbeHHVUm (ORCPT <rfc822;e@80x24.org>);
+        id S1730845AbeHHVUn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:20:43 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:56111 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730783AbeHHVUm (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 8 Aug 2018 17:20:42 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:53605 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730780AbeHHVUl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 17:20:41 -0400
-Received: by mail-wm0-f66.google.com with SMTP id s9-v6so3807711wmh.3
+Received: by mail-wm0-f42.google.com with SMTP id f21-v6so3794483wmc.5
         for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=1JZl71ecLEfIvScHvXiCtsXTRjc2ihH1I4b8qZQY4X0=;
-        b=P/8Y1rgB33MNMm0MOtveuVz+kBnHJJpgkuR4XSNuP98v9UYx89eu9rLkfQmPA4S1kY
-         fW1jnJMpHyM8i8++LnZ76QKHunbNUfJ0ixOTdrH6uwmZ2l8y3Dj8Y9/4asIlpK9i5XKP
-         ejEhSq4DeOiER+834xtifwIQ6ky5RvyxgkDdxoQ9LwR8KrY+EZEJ132Z5SSAqMu/Fo3h
-         r+HSsosiN/HeojbWhKkglOl4+pLGG5MS3UO0QK7e+YZ3X6Fe/hWSNoLVaAAkYRRXZQy7
-         6eKeljAkIQUW2EDGNoTEwVaMmzJ6aHBg585VH2kns4BwlFuiPVAHTSrBfw/STTTPapV3
-         EhdA==
+        bh=gT9k3Oj+S5Mcdk4DxEOwk2ZA5VUbOgkkVweVP52o02I=;
+        b=CPK8049qZ3wf6BQ3u8KH3YzzjqXZSgMPNLdbOPaU/fjyKgr9BrqpSJ5InxYCyhi0K3
+         F030vkIFLcNbpQlamjEKA5PScJed2G4RnL8cs5BtFTkkGFZ0OJ0Hzcq+7fyiHpAW7GPF
+         +PJT0zNOQTwm636KcvHQyAmtM6cNIEe1m8nN9RAlynIFquz8B1EumwrDGpERcsiOL5SN
+         2nrhZgc2jmWqhuO/vxAdJcaXUlPlSZOvMA+zhf/qAv0o8Er1RxILMNfdAH5eFrJPwd0R
+         w1P0kZo3VxX0uQkIWRHpSVQjudAVezA22yfqzUXgxsbotlCOoFvyWzyE1A3dNk+Q14BG
+         AilA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1JZl71ecLEfIvScHvXiCtsXTRjc2ihH1I4b8qZQY4X0=;
-        b=TqFHWj00OrTEs5FFiqt10/vgI+qB4GOl29qS85g0/jwzI4BkRk1njRc8xJKIsxFo/z
-         JUarW0uCFXCVDLRg2j0t39Njv9vmo5J7ypillJpFk80CMPj1NY3YpSbj1kGmMziQISpF
-         sbaqIUXqk3N3sFXnEvgWn5oxuncjpGRuzPWyBncvc1AMHGiOGIIuB81WFFq4KcWgAMW5
-         t1ijgpuKiAn49epFnMX6y3MasxGePv7t0M8DlMT3UU4VCjOhr//9KZ1Rt4dRcnrVQZRB
-         Vf5S+VIYuVZMMwWVg+uhzHS342THUmQFZDiowYGmK4EteA3x1rwk1QhhvnjvSTVc36BY
-         OVsA==
-X-Gm-Message-State: AOUpUlHFR63yV9TUfNjS6ojueORMJRNkruWq4IDYVZjlVnjFv4s2PBmY
-        K6EzYR7UxEXV1Kgkw+m2SsmSS57V
-X-Google-Smtp-Source: AA+uWPxcbSxHRE3nTmvhDPqAiYC3iJpM3D6gYC3lumxD+rZNhLy3k1xWhjBAANL373z0c9eUwBhmyA==
-X-Received: by 2002:a1c:8f0e:: with SMTP id r14-v6mr2824300wmd.79.1533754779316;
-        Wed, 08 Aug 2018 11:59:39 -0700 (PDT)
+        bh=gT9k3Oj+S5Mcdk4DxEOwk2ZA5VUbOgkkVweVP52o02I=;
+        b=M4rZtnQQzctK/OxKI71zm+r6FoAjhjLPd8/VSouF7+GaKnvPAXLFz7NNIY4I00uMnR
+         a5FDbEgmbgonPUdNfCWk5Z625GF0h6Gl1hI8ItBDrRgiMbE/SCD5YteNOvJ//Sf2Ie1W
+         2ARCbPZya3fbeQCjMu6eCTbI5L61gPZcj01rbYaor8p/PeQniXf2DwsOw+VCk8LikxKF
+         1YQL9aXcARoHV1bxADGvqZLsAWlCU3mCnfB5v66Rlxl9hNzGDtHL2ZFoaJmx0SZ0kY0Y
+         3BrKAZ0/jESMPTS0RKRmnXdCARoSnXmoYgHK3cTSdSrOkEZu1LqgkWr6VLFmFmdkTHjW
+         lfdw==
+X-Gm-Message-State: AOUpUlHjFhK4OdcZXKSZiaOXfnRI0knzzGqWRWvQEWxIb+awj2vhxISh
+        yUWedwXesxkK9IkqTiAjZOabBVRq
+X-Google-Smtp-Source: AA+uWPxq9qxZbR4KmWMGPXYcyNNRnzd1/Jbtl2mjb+k2/yoDgoVmRF7KMnVJLRW47ekXQU/RCIfPvA==
+X-Received: by 2002:a1c:ea9c:: with SMTP id g28-v6mr2682073wmi.65.1533754780221;
+        Wed, 08 Aug 2018 11:59:40 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com ([86.127.74.86])
-        by smtp.gmail.com with ESMTPSA id p5-v6sm4238879wre.32.2018.08.08.11.59.38
+        by smtp.gmail.com with ESMTPSA id p5-v6sm4238879wre.32.2018.08.08.11.59.39
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 11:59:38 -0700 (PDT)
+        Wed, 08 Aug 2018 11:59:39 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [GSoC][PATCH v7 24/26] stash: optimize `get_untracked_files()` and `check_changes()`
-Date:   Wed,  8 Aug 2018 21:59:03 +0300
-Message-Id: <9bde85eacb94db54763aab35efe287c5af7c8316.1533753605.git.ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v7 25/26] stash: replace all `write-tree` child processes with API calls
+Date:   Wed,  8 Aug 2018 21:59:04 +0300
+Message-Id: <3b4a3b766598589df30e16cddf175f039eb4e290.1533753605.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.18.0.573.g56500d98f
 In-Reply-To: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
@@ -65,169 +65,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commits introduces a optimization by avoiding calling the
-same functions again. For example, `git stash push -u`
-would call at some points the following functions:
-
- * `check_changes()`
- * `do_create_stash()`, which calls: `check_changes()` and
-`get_untracked_files()`
-
-Note that `check_changes()` also calls `get_untracked_files()`.
-So, `check_changes()` is called 2 times and `get_untracked_files()`
-3 times. By checking at the beginning of the function if we already
-performed a check, we can avoid making useless calls.
+This commit replaces spawning `git write-tree` with API calls.
 ---
- builtin/stash.c | 50 +++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 36 insertions(+), 14 deletions(-)
+ builtin/stash.c | 40 ++++++++++++----------------------------
+ 1 file changed, 12 insertions(+), 28 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index 0ef88408a..4d5c0d16e 100644
+index 4d5c0d16e..46e76a34e 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -819,13 +819,23 @@ static int store_stash(int argc, const char **argv, const char *prefix)
- }
- 
- /*
-- * `out` will be filled with the names of untracked files. The return value is:
-+ * `has_untracked_files` is:
-+ * -2 if `get_untracked_files()` hasn't been called
-+ * -1 if there were errors
-+ *  0 if there are no untracked files
-+ *  1 if there are untracked files
-+ *
-+ * `untracked_files` will be filled with the names of untracked files.
-+ * The return value is:
-  *
-  * = 0 if there are not any untracked files
-  * > 0 if there are untracked files
-  */
-+static struct strbuf untracked_files = STRBUF_INIT;
-+static int has_untracked_files = -2;
-+
- static int get_untracked_files(const char **argv, const char *prefix,
--			       int include_untracked, struct strbuf *out)
-+			       int include_untracked)
- {
- 	int max_len;
- 	int i;
-@@ -833,6 +843,9 @@ static int get_untracked_files(const char **argv, const char *prefix,
- 	struct dir_struct dir;
- 	struct pathspec pathspec;
- 
-+	if (has_untracked_files != -2)
-+		return has_untracked_files;
-+
- 	memset(&dir, 0, sizeof(dir));
- 	if (include_untracked != 2)
- 		setup_standard_excludes(&dir);
-@@ -849,7 +862,7 @@ static int get_untracked_files(const char **argv, const char *prefix,
- 			free(ent);
- 			continue;
- 		}
--		strbuf_addf(out, "%s\n", ent->name);
-+		strbuf_addf(&untracked_files, "%s\n", ent->name);
- 		free(ent);
- 	}
- 
-@@ -857,16 +870,25 @@ static int get_untracked_files(const char **argv, const char *prefix,
- 	free(dir.ignored);
- 	clear_directory(&dir);
- 	free(seen);
--	return out->len;
-+	has_untracked_files = untracked_files.len;
-+	return untracked_files.len;
- }
- 
- /*
-+ * `changes` is:
-+ * -2 if `check_changes()` hasn't been called
-+ * -1 if there were any errors
-+ *  0 if there are no changes
-+ *  1 if there are changes
-+ *
-  * The return value of `check_changes()` can be:
-  *
-  * < 0 if there was an error
-  * = 0 if there are no changes.
-  * > 0 if there are changes.
-  */
-+static int changes = -2;
-+
- static int check_changes(const char **argv, int include_untracked,
- 			 const char *prefix)
- {
-@@ -874,9 +896,11 @@ static int check_changes(const char **argv, int include_untracked,
- 	int ret = 0;
- 	struct rev_info rev;
- 	struct object_id dummy;
--	struct strbuf out = STRBUF_INIT;
- 	struct argv_array args = ARGV_ARRAY_INIT;
- 
-+	if (changes != -2)
-+		return changes;
-+
- 	init_revisions(&rev, prefix);
- 	parse_pathspec(&rev.prune_data, 0, PATHSPEC_PREFER_FULL,
- 		       prefix, argv);
-@@ -912,17 +936,16 @@ static int check_changes(const char **argv, int include_untracked,
- 	}
- 
- 	if (include_untracked && get_untracked_files(argv, prefix,
--						     include_untracked, &out))
-+						     include_untracked))
- 		ret = 1;
- 
- done:
--	strbuf_release(&out);
-+	changes = ret;
- 	argv_array_clear(&args);
- 	return ret;
- }
- 
--static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
--				struct strbuf *out)
-+static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+@@ -949,9 +949,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
  {
  	int ret = 0;
  	struct strbuf untracked_msg = STRBUF_INIT;
-@@ -937,7 +960,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
- 			 stash_index_path.buf);
+-	struct strbuf out2 = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+-	struct child_process cp2 = CHILD_PROCESS_INIT;
++	struct index_state state = { NULL };
  
- 	strbuf_addf(&untracked_msg, "untracked files on %s\n", msg->buf);
--	if (pipe_command(&cp, out->buf, out->len, NULL, 0, NULL, 0)) {
-+	if (pipe_command(&cp, untracked_files.buf, untracked_files.len,
-+			 NULL, 0, NULL, 0)) {
+ 	cp.git_cmd = 1;
+ 	argv_array_pushl(&cp.args, "update-index", "--add",
+@@ -966,15 +965,11 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+ 		goto done;
+ 	}
+ 
+-	cp2.git_cmd = 1;
+-	argv_array_push(&cp2.args, "write-tree");
+-	argv_array_pushf(&cp2.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp2, NULL, 0, &out2, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->u_tree, &state, stash_index_path.buf, 0,
++				NULL)) {
  		ret = -1;
  		goto done;
  	}
-@@ -1116,7 +1140,6 @@ static int do_create_stash(int argc, const char **argv, const char *prefix,
- 	struct commit_list *parents = NULL;
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf commit_tree_label = STRBUF_INIT;
--	struct strbuf out = STRBUF_INIT;
- 	struct strbuf final_stash_msg = STRBUF_INIT;
+-	get_oid_hex(out2.buf, &info->u_tree);
  
- 	read_cache_preload(NULL);
-@@ -1158,8 +1181,8 @@ static int do_create_stash(int argc, const char **argv, const char *prefix,
- 	}
+ 	if (commit_tree(untracked_msg.buf, untracked_msg.len,
+ 			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
+@@ -984,7 +979,6 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
  
- 	if (include_untracked && get_untracked_files(argv, prefix,
--						     include_untracked, &out)) {
--		if (save_untracked_files(info, &msg, &out)) {
-+						     include_untracked)) {
-+		if (save_untracked_files(info, &msg)) {
- 			if (!quiet)
- 				printf_ln("Cannot save the untracked files");
- 			ret = -1;
-@@ -1213,7 +1236,6 @@ static int do_create_stash(int argc, const char **argv, const char *prefix,
  done:
- 	strbuf_release(&commit_tree_label);
- 	strbuf_release(&msg);
--	strbuf_release(&out);
- 	strbuf_release(&final_stash_msg);
+ 	strbuf_release(&untracked_msg);
+-	strbuf_release(&out2);
+ 	remove_path(stash_index_path.buf);
  	return ret;
  }
+@@ -994,11 +988,10 @@ static struct strbuf patch = STRBUF_INIT;
+ static int stash_patch(struct stash_info *info, const char **argv)
+ {
+ 	int ret = 0;
+-	struct strbuf out2 = STRBUF_INIT;
+ 	struct child_process cp0 = CHILD_PROCESS_INIT;
+ 	struct child_process cp1 = CHILD_PROCESS_INIT;
+-	struct child_process cp2 = CHILD_PROCESS_INIT;
+ 	struct child_process cp3 = CHILD_PROCESS_INIT;
++	struct index_state state = { NULL };
+ 
+ 	remove_path(stash_index_path.buf);
+ 
+@@ -1023,17 +1016,12 @@ static int stash_patch(struct stash_info *info, const char **argv)
+ 		goto done;
+ 	}
+ 
+-	cp2.git_cmd = 1;
+-	argv_array_push(&cp2.args, "write-tree");
+-	argv_array_pushf(&cp2.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp2, NULL, 0, &out2, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &state, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out2.buf, &info->w_tree);
+-
+ 	cp3.git_cmd = 1;
+ 	argv_array_pushl(&cp3.args, "diff-tree", "-p", "HEAD",
+ 			 oid_to_hex(&info->w_tree), "--", NULL);
+@@ -1046,7 +1034,6 @@ static int stash_patch(struct stash_info *info, const char **argv)
+ 	}
+ 
+ done:
+-	strbuf_release(&out2);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+ }
+@@ -1056,11 +1043,10 @@ static int stash_working_tree(struct stash_info *info,
+ {
+ 	int ret = 0;
+ 	struct child_process cp2 = CHILD_PROCESS_INIT;
+-	struct child_process cp3 = CHILD_PROCESS_INIT;
+-	struct strbuf out3 = STRBUF_INIT;
+ 	struct argv_array args = ARGV_ARRAY_INIT;
+ 	struct strbuf diff_output = STRBUF_INIT;
+ 	struct rev_info rev;
++	struct index_state state = { NULL };
+ 
+ 	set_alternate_index_output(stash_index_path.buf);
+ 	if (reset_tree(&info->i_tree, 0, 0)) {
+@@ -1103,20 +1089,18 @@ static int stash_working_tree(struct stash_info *info,
+ 		goto done;
+ 	}
+ 
+-	cp3.git_cmd = 1;
+-	argv_array_push(&cp3.args, "write-tree");
+-	argv_array_pushf(&cp3.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp3, NULL, 0, &out3, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &state, stash_index_path.buf, 0,
++				NULL)) {
++
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out3.buf, &info->w_tree);
++	discard_cache();
++	read_cache();
+ 
+ done:
+ 	UNLEAK(rev);
+-	strbuf_release(&out3);
+ 	argv_array_clear(&args);
+ 	object_array_clear(&rev.pending);
+ 	strbuf_release(&diff_output);
 -- 
 2.18.0.573.g56500d98f
 
