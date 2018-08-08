@@ -7,47 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 187451F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 19:50:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCE1B1F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 19:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730063AbeHHWLn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 18:11:43 -0400
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:33871 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729686AbeHHWLm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 18:11:42 -0400
-Received: by mail-yw1-f73.google.com with SMTP id p127-v6so3870920ywg.1
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:50:30 -0700 (PDT)
+        id S1730431AbeHHWLp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 18:11:45 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:40435 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729686AbeHHWLp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 18:11:45 -0400
+Received: by mail-ua0-f202.google.com with SMTP id y3-v6so2630548uao.7
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=LqPDRAWNqjmFLtaE7hsAjLpc+yojn05FfUpGyo0fT+Q=;
-        b=tsyMtJZwrgWIVE0c9xCi5/e9AuuUkHkXUhJovGi7LUmsah6QsO/UOqpOze4pFdA8Dh
-         z3CE6nCJLgi0HNRqURbuUhUV6rKtFHxiqNe4ArB1D4GsK7jlIxVn5PjXDLJCoT3gViNP
-         +XYPmdf3U1j2A4jsXq8vCRB1WGNoZpLT9oOiPeJuGCKF3evwJY6WFot26KKA7CIVGYCM
-         O5aEy5khivNdG16z4+CPMGOgCWMDr/RX4gj4XCa2lxKUpp8T5aJ/zhZ9MRmw9QgiPWt5
-         wHwVziZ9q6e462seHuW60zAX6i5hVd7DOHiZI7lXDx9s/YauYtlwlFgwQ8misiqhM0Oe
-         365g==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=scEofI9uYMrFW/NT5iCWhHldpBV9VEnEJnAZewc6QBI=;
+        b=F6PIJciefsfRWljNm+qUjUoK+kPJRbUwat41P4CTC9ucjxmldBcdC3cMwlNnAmmq+y
+         wVcoXI03M6oe67o6giFcXhE+37LMRmNGLFe34tCMyXpwrkjvop75fmrsFntANHYnA7pP
+         wGoNQ1399+/VmIIUgdJ3282/ZxazKQuI48fbFnrPI6vuRn9bnvRiw/V5SxsmSVG7NXVH
+         zaU89SVd1umZW6keMo6DCkUbUIAWZyPoCfr+SlQfkqaGTzLdCvjh7bXXIx9JVZxLi93A
+         cBrIMozB+ldVYhz399vLXjdCy3BIUmz1hr0sKj+TskFtu5j8/2pLDH/jTbD5NP5KZQXd
+         lUlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=LqPDRAWNqjmFLtaE7hsAjLpc+yojn05FfUpGyo0fT+Q=;
-        b=hSFq3DJysBNwW/76b6iyd0iMrzw+fzDk905OKK3BEI2ubby5E6ePlhVfjmxVA/DCoU
-         IOXNsrVja/uITv5nAMFeLV7KRIi+qXykcxVKDXgCXWfmgykHjyNLPS7FkGaU23tGbOxF
-         nvggikhOeGDvVEWBWkAcSu7iNqJMP/2f8VCZpk0xZoc7LxbiWx0bzHePKjwLOJi2Faw8
-         Fxe3NRYiFfG6JE9sBr1rFI82bwFRqjHOD0d5n64rRkHG5FPvPu4xTOLfh+HI6OWfuDi/
-         axK8HrTc/urpvWknF+IMPUmAmc7p6B9Oq+eOwSFSjhSaEwiX0DhZoaCj4hJ4s+XIJgr0
-         vQhg==
-X-Gm-Message-State: AOUpUlHTT4gcj16tl/ZqG3QnZKJlVVWiSOivDHZu/PAwJHlyfZTO62Ul
-        GvZdS+uOd1tSkx18TmWw7b9ip3akhJmA
-X-Google-Smtp-Source: AA+uWPzqoW1aYP+1OJhRKppxIacIRBGit7zJ/aDQjTGv7ugh1aaYuaEt2vgR5X9bLQv58JViFsG9eVG94Q2/
-X-Received: by 2002:a25:8489:: with SMTP id v9-v6mr1101327ybk.60.1533757830387;
- Wed, 08 Aug 2018 12:50:30 -0700 (PDT)
-Date:   Wed,  8 Aug 2018 12:50:17 -0700
-Message-Id: <20180808195020.37374-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=scEofI9uYMrFW/NT5iCWhHldpBV9VEnEJnAZewc6QBI=;
+        b=Ka7uaqEsxNuPvGmpCU/8JFIyKAXh6ACRxLUuZnxfRz9ll05m6vMTQbIO/XFMP7V5V2
+         TVxRTdeG5Hid5X2jXd1+lFxRKhFKSko8VN4A2VncdSv1NIT1gOqxkEWZmKZvy491d996
+         D4dGqWX2M774g4QFJxIWvGoKCPxcz5ut13ZS0ar601u4l66j1DUsjv9PANPnc0AIcVLU
+         2R1/888OcROCppwcHBt/OsZMlweg6lm5V6zykSZ0unsUlIJ0IjinGu3XZnGbPtZvtqce
+         9UnFBX5gn99TLAcjWQNryJodmPbMGzR8a2Wbo7583kFeviK90kq249E6AJ01nKuA32YJ
+         nfkQ==
+X-Gm-Message-State: AOUpUlFA/QTkdnakeJSY7NufbOcKr2kWPnSBleeLDJoBfut9LCcai55J
+        W9C+7QJKg7ioQzw0HLc+qwv4M1i+oy2E
+X-Google-Smtp-Source: AA+uWPw/7ObCziznsupwQKjWb1vfiUyKoHzOJujVhoNbrrTni/WSFeI4wbeWBfdxr0PcrnaaDr91dNjOGuoI
+X-Received: by 2002:a1f:2413:: with SMTP id k19-v6mr2295261vkk.4.1533757832921;
+ Wed, 08 Aug 2018 12:50:32 -0700 (PDT)
+Date:   Wed,  8 Aug 2018 12:50:18 -0700
+In-Reply-To: <20180808195020.37374-1-sbeller@google.com>
+Message-Id: <20180808195020.37374-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20180808195020.37374-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 0/3] Resending sb/config-write-fix
+Subject: [PATCH 1/3] t1300: document current behavior of setting options
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
@@ -57,98 +61,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a resend of sb/config-write-fix, with a slightly
-better commit message and a renamed variable.
+This documents current behavior of the config machinery, when changing
+the value of some settings. This patch just serves to provide a baseline
+for the follow up that will fix some issues with the current behavior.
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t1300-config.sh | 86 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 86 insertions(+)
 
-
-Stefan Beller (3):
-  t1300: document current behavior of setting options
-  config: fix case sensitive subsection names on writing
-  git-config: document accidental multi-line setting in deprecated
-    syntax
-
- Documentation/git-config.txt | 21 +++++++++
- config.c                     | 12 ++++-
- t/t1300-config.sh            | 87 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 119 insertions(+), 1 deletion(-)
-
-./git-range-diff origin/sb/config-write-fix...HEAD >>0000-cover-letter.patch 
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index e43982a9c1f..c15c19bf78d 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -1188,6 +1188,92 @@ test_expect_success 'last one wins: three level vars' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'old-fashioned settings are case insensitive' '
++	test_when_finished "rm -f testConfig testConfig_expect testConfig_actual" &&
++
++	cat >testConfig_actual <<-EOF &&
++		[V.A]
++		r = value1
++	EOF
++	q_to_tab >testConfig_expect <<-EOF &&
++		[V.A]
++		Qr = value2
++	EOF
++	git config -f testConfig_actual "v.a.r" value2 &&
++	test_cmp testConfig_expect testConfig_actual &&
++
++	cat >testConfig_actual <<-EOF &&
++		[V.A]
++		r = value1
++	EOF
++	q_to_tab >testConfig_expect <<-EOF &&
++		[V.A]
++		QR = value2
++	EOF
++	git config -f testConfig_actual "V.a.R" value2 &&
++	test_cmp testConfig_expect testConfig_actual &&
++
++	cat >testConfig_actual <<-EOF &&
++		[V.A]
++		r = value1
++	EOF
++	q_to_tab >testConfig_expect <<-EOF &&
++		[V.A]
++		r = value1
++		Qr = value2
++	EOF
++	git config -f testConfig_actual "V.A.r" value2 &&
++	test_cmp testConfig_expect testConfig_actual &&
++
++	cat >testConfig_actual <<-EOF &&
++		[V.A]
++		r = value1
++	EOF
++	q_to_tab >testConfig_expect <<-EOF &&
++		[V.A]
++		r = value1
++		Qr = value2
++	EOF
++	git config -f testConfig_actual "v.A.r" value2 &&
++	test_cmp testConfig_expect testConfig_actual
++'
++
++test_expect_success 'setting different case sensitive subsections ' '
++	test_when_finished "rm -f testConfig testConfig_expect testConfig_actual" &&
++
++	cat >testConfig_actual <<-EOF &&
++		[V "A"]
++		R = v1
++		[K "E"]
++		Y = v1
++		[a "b"]
++		c = v1
++		[d "e"]
++		f = v1
++	EOF
++	q_to_tab >testConfig_expect <<-EOF &&
++		[V "A"]
++		Qr = v2
++		[K "E"]
++		Qy = v2
++		[a "b"]
++		Qc = v2
++		[d "e"]
++		f = v1
++		Qf = v2
++	EOF
++	# exact match
++	git config -f testConfig_actual a.b.c v2 &&
++	# match section and subsection, key is cased differently.
++	git config -f testConfig_actual K.E.y v2 &&
++	# section and key are matched case insensitive, but subsection needs
++	# to match; When writing out new values only the key is adjusted
++	git config -f testConfig_actual v.A.r v2 &&
++	# subsection is not matched:
++	git config -f testConfig_actual d.E.f v2 &&
++	test_cmp testConfig_expect testConfig_actual
++'
++
+ for VAR in a .a a. a.0b a."b c". a."b c".0d
+ do
+ 	test_expect_success "git -c $VAR=VAL rejects invalid '$VAR'" '
+-- 
 2.18.0.597.ga71716f1ad-goog
 
-1:  999d9026272 ! 1:  e40f57f3da1 t1300: document current behavior of setting options
-    @@ -7,7 +7,6 @@
-         for the follow up that will fix some issues with the current behavior.
-     
-         Signed-off-by: Stefan Beller <sbeller@google.com>
-    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-      --- a/t/t1300-config.sh
-2:  c667e555066 ! 2:  f01cb1d9dae config: fix case sensitive subsection names on writing
-    @@ -2,8 +2,8 @@
-     
-         config: fix case sensitive subsection names on writing
-     
-    -    A use reported a submodule issue regarding strange case indentation
-    -    issues, but it could be boiled down to the following test case:
-    +    A user reported a submodule issue regarding a section mix-up,
-    +    but it could be boiled down to the following test case:
-     
-           $ git init test  && cd test
-           $ git config foo."Bar".key test
-    @@ -32,7 +32,6 @@
-     
-         Reported-by: JP Sugarbroad <jpsugar@google.com>
-         Signed-off-by: Stefan Beller <sbeller@google.com>
-    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      diff --git a/config.c b/config.c
-      --- a/config.c
-    @@ -41,7 +40,7 @@
-      	int eof;
-      	struct strbuf value;
-      	struct strbuf var;
-    -+	unsigned section_name_old_dot_style : 1;
-    ++	unsigned subsection_case_sensitive : 1;
-      
-      	int (*do_fgetc)(struct config_source *c);
-      	int (*do_ungetc)(int c, struct config_source *conf);
-    @@ -49,7 +48,7 @@
-      
-      static int get_extended_base_var(struct strbuf *name, int c)
-      {
-    -+	cf->section_name_old_dot_style = 0;
-    ++	cf->subsection_case_sensitive = 0;
-      	do {
-      		if (c == '\n')
-      			goto error_incomplete_line;
-    @@ -57,7 +56,7 @@
-      
-      static int get_base_var(struct strbuf *name)
-      {
-    -+	cf->section_name_old_dot_style = 1;
-    ++	cf->subsection_case_sensitive = 1;
-      	for (;;) {
-      		int c = get_next_char();
-      		if (cf->eof)
-    @@ -70,7 +69,7 @@
-      		if (cf->var.len < 2 || cf->var.buf[cf->var.len - 1] != '.')
-      			return error("invalid section name '%s'", cf->var.buf);
-      
-    -+		if (cf->section_name_old_dot_style)
-    ++		if (cf->subsection_case_sensitive)
-     +			cmpfn = strncasecmp;
-     +		else
-     +			cmpfn = strncmp;
-3:  6749bb283a8 ! 3:  6b5ad773490 git-config: document accidental multi-line setting in deprecated syntax
-    @@ -29,7 +29,6 @@
-         spend time on fixing the behavior and just document it instead.
-     
-         Signed-off-by: Stefan Beller <sbeller@google.com>
-    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-      --- a/Documentation/git-config.txt
