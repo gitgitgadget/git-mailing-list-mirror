@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD35C208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F74B208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727360AbeHHQL0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 12:11:26 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35451 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727048AbeHHQL0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 12:11:26 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e6-v6so1309056edr.2
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:39 -0700 (PDT)
+        id S1727364AbeHHQLa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 12:11:30 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35454 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727048AbeHHQLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 12:11:30 -0400
+Received: by mail-ed1-f65.google.com with SMTP id e6-v6so1309154edr.2
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FvfuVWeQcgCkBbCN3zCkvoa/l7e+1Ge/PFXHGlg0TCM=;
-        b=XIF4SJSPNW6wodL4R2FLZNKVALJuogfYJthizCIKQkpU1LBcckSHkrhGD3iYh+1rkr
-         J274rMb7N3PeuetdEWxhol+F4uwpocrloKQXhL+lJklGw+qCblc9QYNIWkrKQ1Q6949c
-         7xb2p4kHjfmKArWKwtn/xH1duMSBE0ybsJ4m69UTdPR4wNlxgLwqtJChsWuKvyH/JSj+
-         jDpS+0eRTVdoYpVuDs97BGj4mcJWUN6L5Y9/KC8T6d231PBP5dLWR74fX9juXxIg0ZIL
-         vKDWQUP2rz4aUXXHnTO9iilrwzgIet2Ek/SafBSIyEX3q2H9rxDNIqBZVC44wrYmoaN+
-         r3gg==
+        bh=o5FHiG1/DMx/Q+OKRW9D9GjYSop/vkQA/qvKY4NJoAk=;
+        b=PjmtS6P0PqcnOZEJUXrTzW84nmfIuTMKEmiOqScq+dKNQr6z3Hx4Q8obKgRACr/H4s
+         oOGAeHj0wk+k/bYQu8M9VPaQ4fv8TEbL8YB/5KftF17Ny//IrJO1PMJ165G27qSdPAeO
+         QpC4JTaPIEgS0+6xXT7pVZ36xM40L2+fECBdXlkw5T+S66f8hwv26AO6R+dLNvXgmzDJ
+         abC8oxV4UVDVdpLZVTQ8YVn6P1srKIQW9x93Ow5okyilZAKYiCzfGdTF8wZPIM/pMyfL
+         4Tima/3VB0cGPygx2C89njJgTPVjHX81Vho+WQGKctVP3RQnzgRESSDZfDMywVYf2mbS
+         1a1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FvfuVWeQcgCkBbCN3zCkvoa/l7e+1Ge/PFXHGlg0TCM=;
-        b=MDrH9uafYr2ceDfBgpp3UFHIcYbcvNejGBE1ww8BIgRLRYdEOEmQi7BYqUWOIkm/aw
-         JaKZQzX6sbgCVeNfaHoKthM23+PajTB/jisPUhaV6xBWub06x1lyvRvgUD8yLCgvIQ/K
-         +GXMDDaq/xzFy3tQcCXXgApvg+fnhi1HuH0W7BroU/QDrrW+tBlVG8tgVDHBHGIvI1XD
-         otNiC/tgCIpEUvYca4OljZr7fO9omKiZ+ybkZBdjTxrtTw3r/0vF1ZJ6/ShlV+Vox5xn
-         teiNaYVM7+94qQPaFpA+sFKrjPQR8V0pX13nttKrnGIlGYKq81DZ2UCHFB6vMDgNjWXw
-         VWfw==
-X-Gm-Message-State: AOUpUlGt8wasznTZlcvMZI8yqMNSgcw8SExVwHZsB9hj2GqTFSD07eAN
-        s2smYhX7y0kCuAIgWtisF/92T1u4
-X-Google-Smtp-Source: AA+uWPwp4ah5YHk5Aq12I2kakz7bTvlcENzyzpeHXA0jCiPjkB7UC6yRQFLqfNCJIp9xsbCSJZcgfQ==
-X-Received: by 2002:a50:ac65:: with SMTP id w34-v6mr3398066edc.211.1533736298810;
-        Wed, 08 Aug 2018 06:51:38 -0700 (PDT)
+        bh=o5FHiG1/DMx/Q+OKRW9D9GjYSop/vkQA/qvKY4NJoAk=;
+        b=FMWZqC4nSCnRk+fT+LPY1yPM0Y5G/IHyFm9IVduqNy3WAIZ7yLzCspwzseEL+nPKgS
+         3ohh4S81uFJqK5qXQVKwtQMRZIo3zx75G4ad4NZVoereasEPlE/RwUc2WkJ1Lpvi5cuB
+         0pDnXo+Mew9SJ37Qss497oc645vp9wXxXAXM8LvG03q2huOwTdUgBqg4qxHvOGfoVrKH
+         hKmSUF8P/Q22XK4Tdvp//I7R06NrI+foOK0tEJiCTTGUhv3sZGU/ydmZNTn3ldQPg/cj
+         fBasKSCfZlJNLFQI1GiiLkp32RLUIHGKNVMrLR/K/v3BlOt/kYsajUqZrfZEmNopLEZY
+         yC1A==
+X-Gm-Message-State: AOUpUlHPP+l3/G1GBcldY2+CL1uHEmH4YwMbM3FwK5NkydfLE5aBAK8d
+        Frh5YS50Yug4gmKmHgWAz5QbRxJY
+X-Google-Smtp-Source: AA+uWPx4z0h65w6bNz1oroqIx2JTS5axDAV4ix9bINPtIjmDGFqWFLrJTUC/TQW3PXPEQz7ctPW9sw==
+X-Received: by 2002:a50:a402:: with SMTP id u2-v6mr3268733edb.237.1533736302487;
+        Wed, 08 Aug 2018 06:51:42 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.35
+        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 06:51:38 -0700 (PDT)
+        Wed, 08 Aug 2018 06:51:41 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 08/11] builtin rebase: support --force-rebase
-Date:   Wed,  8 Aug 2018 19:33:27 +0545
-Message-Id: <20180808134830.19949-9-predatoramigo@gmail.com>
+Subject: [PATCH 09/11] builtin rebase: start a new rebase only if none is in progress
+Date:   Wed,  8 Aug 2018 19:33:28 +0545
+Message-Id: <20180808134830.19949-10-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808134830.19949-1-predatoramigo@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
@@ -64,76 +64,98 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this commit, we add support to `--force-rebase` option. The
-equivalent part of the shell script found in `git-legacy-rebase.sh` is
-converted as faithfully as possible to C.
-
-The --force-rebase option ensures that the rebase does not simply
-fast-forward even if it could.
+To run a new rebase, there needs to be a check to assure that no other
+rebase is in progress. New rebase operation cannot start until an
+ongoing rebase operation completes or is terminated.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ builtin/rebase.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 47 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 52a218cd18..8a7bf3d468 100644
+index 8a7bf3d468..a261f552f1 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -86,6 +86,7 @@ struct rebase_options {
- 		REBASE_NO_QUIET = 1<<0,
+@@ -87,6 +87,7 @@ struct rebase_options {
  		REBASE_VERBOSE = 1<<1,
  		REBASE_DIFFSTAT = 1<<2,
-+		REBASE_FORCE = 1<<3,
+ 		REBASE_FORCE = 1<<3,
++		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
  	} flags;
  	struct strbuf git_am_opt;
  };
-@@ -181,6 +182,8 @@ static int run_specific_rebase(struct rebase_options *opts)
- 		opts->flags & REBASE_VERBOSE ? "t" : "");
- 	add_var(&script_snippet, "diffstat",
- 		opts->flags & REBASE_DIFFSTAT ? "t" : "");
-+	add_var(&script_snippet, "force_rebase",
-+		opts->flags & REBASE_FORCE ? "t" : "");
- 
- 	switch (opts->type) {
- 	case REBASE_AM:
-@@ -409,6 +412,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
- 			N_("do not show diffstat of what changed upstream"),
- 			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
-+		OPT_BIT('f', "force-rebase", &options.flags,
-+			N_("cherry-pick all commits, even if unchanged"),
-+			REBASE_FORCE),
-+		OPT_BIT(0, "no-ff", &options.flags,
-+			N_("cherry-pick all commits, even if unchanged"),
-+			REBASE_FORCE),
- 		OPT_END(),
+@@ -392,10 +393,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		.git_am_opt = STRBUF_INIT,
  	};
+ 	const char *branch_name;
+-	int ret, flags;
++	int ret, flags, in_progress = 0;
+ 	int ok_to_skip_pre_rebase = 0;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	struct strbuf revisions = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
+ 	struct object_id merge_base;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+@@ -447,6 +449,30 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  
-@@ -551,10 +560,21 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
- 		int flag;
+ 	git_config(rebase_config, &options);
  
--		if (!(options.flags & REBASE_NO_QUIET))
-+		if (!(options.flags & REBASE_FORCE)) {
-+			if (!(options.flags & REBASE_NO_QUIET))
-+				; /* be quiet */
-+			else if (!strcmp(branch_name, "HEAD") &&
-+				 resolve_ref_unsafe("HEAD", 0, NULL, &flag))
-+				puts(_("HEAD is up to date."));
-+			else
-+				printf(_("Current branch %s is up to date.\n"),
-+				       branch_name);
-+			ret = !!finish_rebase(&options);
-+			goto cleanup;
-+		} else if (!(options.flags & REBASE_NO_QUIET))
- 			; /* be quiet */
- 		else if (!strcmp(branch_name, "HEAD") &&
--			resolve_ref_unsafe("HEAD", 0, NULL, &flag))
-+			 resolve_ref_unsafe("HEAD", 0, NULL, &flag))
- 			puts(_("HEAD is up to date, rebase forced."));
- 		else
- 			printf(_("Current branch %s is up to date, rebase "
++	if (is_directory(apply_dir())) {
++		options.type = REBASE_AM;
++		options.state_dir = apply_dir();
++	} else if (is_directory(merge_dir())) {
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "%s/rewritten", merge_dir());
++		if (is_directory(buf.buf)) {
++			options.type = REBASE_PRESERVE_MERGES;
++			options.flags |= REBASE_INTERACTIVE_EXPLICIT;
++		} else {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "%s/interactive", merge_dir());
++			if(file_exists(buf.buf)) {
++				options.type = REBASE_INTERACTIVE;
++				options.flags |= REBASE_INTERACTIVE_EXPLICIT;
++			} else
++				options.type = REBASE_MERGE;
++		}
++		options.state_dir = merge_dir();
++	}
++
++	if (options.type != REBASE_UNSPECIFIED)
++		in_progress = 1;
++
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_rebase_options,
+ 			     builtin_rebase_usage, 0);
+@@ -455,6 +481,26 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_rebase_usage,
+ 				   builtin_rebase_options);
+ 
++	/* Make sure no rebase is in progress */
++	if (in_progress) {
++		const char *last_slash = strrchr(options.state_dir, '/');
++		const char *state_dir_base =
++			last_slash ? last_slash + 1 : options.state_dir;
++		const char *cmd_live_rebase =
++			"git rebase (--continue | --abort | --skip)";
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "rm -fr \"%s\"", options.state_dir);
++		die(_("It seems that there is already a %s directory, and\n"
++		      "I wonder if you are in the middle of another rebase.  "
++		      "If that is the\n"
++		      "case, please try\n\t%s\n"
++		      "If that is not the case, please\n\t%s\n"
++		      "and run me again.  I am stopping in case you still "
++		      "have something\n"
++		      "valuable there.\n"),
++		    state_dir_base, cmd_live_rebase,buf.buf);
++	}
++
+ 	if (!(options.flags & REBASE_NO_QUIET))
+ 		strbuf_addstr(&options.git_am_opt, " -q");
+ 
 -- 
 2.18.0
 
