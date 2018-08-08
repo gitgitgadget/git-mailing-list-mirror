@@ -2,121 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 947C6208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 17:46:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891E1208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 17:56:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728110AbeHHUH0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 16:07:26 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44147 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727706AbeHHUHZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 16:07:25 -0400
-Received: by mail-wr1-f66.google.com with SMTP id r16-v6so2732752wrt.11
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 10:46:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Qu4XskFlIY9pLTyto6WENC5PEctb4FAutBc0bxiwtzo=;
-        b=LCosUbeVb7XpmzkRnE6qEYlZ/yO4VGL05NQv3Zfn6ieLMxvobrGNlvSu2LSTrE40Z9
-         LC6vpUMo+w0pw68eurunXihwuxTU7ch8nguvoBNqGbXBnTAzRtUORmcAEILBb66daMpL
-         oZjthK/KFpPTbZ/HFT/TN9JyEW2zqP+dbk9zHwecrDORHECkHjBqbkgWEgfcaR2AEjP6
-         QuPQCIW1NEzijuFVG9xCDGZqO1MxvaaY9xKE3DVmfaee4TY20hJALeumKVBRUgFy4bh6
-         qgLLgMlCNljnUygsdXKxGQ1g/3QlzpiNtSugj5S36BsF/h8M6cJ3+ErhRolDUeZl1pXm
-         tBFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Qu4XskFlIY9pLTyto6WENC5PEctb4FAutBc0bxiwtzo=;
-        b=jiP98vUYiES+IgLJ6cfcoB7zM6YAfyR2sjjPnkD6vv0/OR3MEK+PRPwaZm/DfonhvA
-         7DLO/9F5bFnbPXdO/xoQ1hgHO8+HnqBP1ivOWMck7XaUPwv4ZULm/w+LFLV9zD43Kja2
-         J3VmQ6hcXivK7rQ3WH3dDlfYPi4Z9Z2sUllQPfU2IwJC6uQJvyUxe6u4PQgisFIcOukW
-         x7Xe3PhSPsRRXdlZMMGVmMM02uUcgbAUD+F6E+aie1PQfCaiFzpCAr5LBXNLTE4JOb8v
-         mzwgzDA35uzlPEpt8vKeuX7EV76OVrtJ8uedEqy5RtNpSs/KFDECzivfyWFBMn0924kY
-         9y2g==
-X-Gm-Message-State: AOUpUlGzq4mrKQfV7vbMS4Q27NEgziyiXC8/NGxH9f893FWYc337MhLx
-        eAWsorUVxD63oEIg80p1jWY=
-X-Google-Smtp-Source: AA+uWPy2nF84g5sreTZbo24tjEtKEbLwY66bYq3tIqc0djLOhspuhKyK+k9aoydZ7Kth24BAyAgCzQ==
-X-Received: by 2002:adf:aa09:: with SMTP id p9-v6mr2646869wrd.92.1533750400043;
-        Wed, 08 Aug 2018 10:46:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x82-v6sm14291481wmd.11.2018.08.08.10.46.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 10:46:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/4] Speed up unpack_trees()
-References: <20180729103306.16403-1-pclouds@gmail.com>
-        <20180804053723.4695-1-pclouds@gmail.com>
-        <xmqq7el3qywq.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
-Date:   Wed, 08 Aug 2018 10:46:38 -0700
-In-Reply-To: <CACsJy8CzuxjjLyf637dtTHc1wK-UFVnNjwa0O300kYOWehz1vA@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 6 Aug 2018 17:59:28 +0200")
-Message-ID: <xmqqpnyshhtt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1729824AbeHHUQt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 16:16:49 -0400
+Received: from gproxy5-pub.mail.unifiedlayer.com ([67.222.38.55]:35628 "EHLO
+        gproxy5-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727062AbeHHUQt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 16:16:49 -0400
+X-Greylist: delayed 1232 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2018 16:16:48 EDT
+Received: from cmgw12.unifiedlayer.com (unknown [10.9.0.12])
+        by gproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 71E6F1408B5
+        for <git@vger.kernel.org>; Wed,  8 Aug 2018 11:35:33 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id nSMvfv7oiak7tnSMvflxfY; Wed, 08 Aug 2018 11:35:33 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=F+7i9npFLtxxVRbfD7FlkWD82wm3B7OZU44Rh9tPMPg=; b=Qgck05qADVu56ACKpOUPTncpue
+        JBBdiAqmLo4HTaZe+dhzmTxfIx4P0V9MYg+efQ8oZ2VjXCLXgjfpBQeKctLg2Ve9Bu8fGtlU5SUSf
+        //Qed7Z81rbb6oKYoLZ7UOUcO;
+Received: from [50.226.24.42] (port=53870 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fnSMu-0010Lc-OM; Wed, 08 Aug 2018 11:35:32 -0600
+Message-ID: <b247434b62ccd30f32adbebb83fa6ea12b51b6ff.camel@mad-scientist.net>
+Subject: Re: Help with "fatal: unable to read ...." error during GC?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Wed, 08 Aug 2018 13:35:30 -0400
+In-Reply-To: <20180808160612.GC1607@sigill.intra.peff.net>
+References: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
+         <20180808160612.GC1607@sigill.intra.peff.net>
+Organization: I may be mad, but I'm a professional!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 50.226.24.42
+X-Source-L: No
+X-Exim-ID: 1fnSMu-0010Lc-OM
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [50.226.24.42]:53870
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Wed, 2018-08-08 at 12:06 -0400, Jeff King wrote:
+> I'd have expected fsck to find it, too. However, looking at the code,
+> I'm not convinced that fsck is actually considering detached worktree
+> heads properly, either. Try:
+> 
+>   git rev-list --all --reflog --objects >/dev/null
+> 
+> which I know checks worktrees correctly. I'd expect that to fail.
+> 
+> If it does, then we need to narrow down which worktree is corrupt.
+> Perhaps something like:
+> 
+>   git worktree list |
+>   while read worktree head junk; do
+>         git rev-list --objects $head >/dev/null ||
+>         echo "$worktree seems corrupt"
+>   done
 
-> On Mon, Aug 6, 2018 at 5:48 PM Junio C Hamano <gitster@pobox.com> wrote:
->> > I've also checked about the lookahead thing in unpack_trees() to see
->> > if we accidentally break something there, which is my biggest worry.
->> > See [1] and [2] for context, but I believe since we can't have D/F
->> > conflicts, the situation where lookahead is needed will not occur. So
->> > we should be safe.
+Thanks for the note!  Unhappily for me none of these operations seem to
+find any actionable problems...
 
-I think you would want the same "switch cache-bottom before
-descending into a subdirectory, and then restore cache-bottom after
-traversal comes back" dance that is done for the normal tree
-traversal case to happen.
+$ git rev-list --all --reflog --objects >/dev/null
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+warning: reflog of 'HEAD' references pruned commits
+$ echo $?
+0
 
-	bottom = switch_cache_bottom(&newinfo);
-	ret = traverse_trees(n, t, &newinfo);
-	restore_cache_bottom(&newinfo, bottom);
+$ git worktree list | while read wt head junk; do \
+  git rev-list --objects $head >/dev/null || echo "$wt seems corrupt"; \
+  done
+$
 
-During your walk of the index and the trees that are known to be in
-sync, there is little reason to worry about the cache_bottom, which
-is advanced by calling mark_ce_used() in traverse_by_cache_tree().
-Where it matters is what happens after the traversal comes back out
-of the subtree.  find_cache_pos() uses the bottom pointer so that it
-does not have to go back to far to find an index entry that has not
-been used to match with the entries from the trees (which are not
-sorted exactly the same way as the index, unfortunately), so
-forgetting to advance the bottom pointer while correctly marking a
-ce as "used" is OK (i.e. hurts performance but not correctness), but
-advancing the bottom pointer too much and leaving entries that are
-not used behind is *not* OK.  And lack of restoring the bottom in
-the new codepath makes me suspect exactly such a bug _after_ the
-traversal exits the subtree we are using this new optimization in
-and moves on.
-
-Imagine we are iterating over the top-level of the trees, and found
-a subtree in them.  There may be some index entries before the first
-path in this subtree that are not yet marked as "used", the earliest
-of which is pointed at by the cache_bottom pointer.
-
-Before descending into the subtree (and start consuming the entry
-with the first in this subtree from the index), we stash away the
-current cache_bottom, and then start walking the subtree.  While we
-are in that subtree, the cache_bottom starts from the first name in
-the subtree and increments, as we _know_ the entry at the old
-cache_bottom is outside this subtree and will not match any entry
-form the subtree.  Then when the traversal returns, all index
-entries within the "subtree/" path will be marked "used".  At that
-point, when we continue to scan the top-level of the trees, we need
-to restore the cache_bottom, so that we do not forget entries that
-we knew we needed to scan eventually, if there was any.
+Just to be sure I updated the loop above to echo $wt and $head and they
+were correct.  I also re-ran git gc after the above and still got the
+original error output so it didn't magically fix itself :).
