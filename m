@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5314A1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 19:02:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA4A51F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 19:12:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729958AbeHHVXm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 17:23:42 -0400
-Received: from mail-wm0-f44.google.com ([74.125.82.44]:55377 "EHLO
-        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728330AbeHHVXl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 17:23:41 -0400
-Received: by mail-wm0-f44.google.com with SMTP id f21-v6so3803351wmc.5
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:02:38 -0700 (PDT)
+        id S1729721AbeHHVdM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:33:12 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:53164 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727337AbeHHVdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 17:33:12 -0400
+Received: by mail-wm0-f46.google.com with SMTP id o11-v6so3816418wmh.2
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 12:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=iQwKYQyhJcHqVFnTRtFEjQAZrHXlvjgiygp4PHene+U=;
-        b=mmu6xXdLpEvkFCMlvw72IjA9rRUFWzny6xQocVO0XhyJp/o/0abnrkEMF36rXKQHm1
-         O8SsBiWwyPmwdPZe3huH6zdfoMzc/zwm/E0qZSTNjxWWXojbKVea4glpIe70Qqvb/eOG
-         HF7/7VIn5tbVYfjtXSaSQgMkCy7mqoISdZhftzvOhSjMOl/vHWlIEnZsJx4HpEtsDqfs
-         f2Ls9/NbqmKinSN67QmTihw7gWPAGulo5/kfUlg+q3d0QdTevcIWDNiVjlYB+IF2DU0I
-         zEWtrC2DZJbgeDzEb8mNA5UR8nMBSoG0fYV+OUxm0y+FJn+YYPWZ02OlZocSGTqhkGQN
-         tiVA==
+        bh=e1VD1zsoy39SXZXv7shKAZUS0teNWiXy+/TU2jDJPiI=;
+        b=AgE4mNZYKziBlA83/VRYoBifyLzWeXsxh4FImvg/724IDm5HQd8WXHAIi1L25FWqe7
+         tV2cWXMjEvR4dtyX//OZIWesQXWHoYU/64Ow4UqRmR8eYV7KfVgXSMJgEDxHR8NBRQ4W
+         kf/viu3aKFyc6Suk6BF2zgLC/OR/Csqi8d+QOBjqr2mK0+FWjuc2exfWuZA+PaF0ZAtp
+         +htgpxalYkEQ0u4W55IFKHp8PmI7NWRE2xrR+qO3fPiJ+oss3HrivNwGwSYSWzuriI2k
+         WSgyW3l9O2waUgy/Jo3PZmRNSGqjHL26SP1MNrcuBBLsDNnA52fTYpFk1bHb5FwK9/Y+
+         gF8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=iQwKYQyhJcHqVFnTRtFEjQAZrHXlvjgiygp4PHene+U=;
-        b=qQpYQVBBszKTH3cDSfW8QPMBCt9ajqULyPW8XTFBLh88ZhxEHBJyMsd7ZMAMb/YZhn
-         F9N17/d8deZ+toLfnxHCBgHHp19BI5zwOqnsZe1Snojl19Bp1SJWj5FFnGHOuHiypBoB
-         fpA1UQD/6fYe/+fP6lK8XNo/E+2psBxx/GF9meIvApUp/gNvzONsFMXd/RTP0Ju5YFkK
-         87VISllp8gXqzdZl5NmspXc7F7AKCynvL0COsHJPHTI/MHQyk/6mfKFNlwOZexmQTIKK
-         qRxFkiSwSIX9WYbUHwq1NPQBrbobgpcwG+39kEmk8BTZ9n3EVKqWCdgHP3biTRYAVESD
-         YFTQ==
-X-Gm-Message-State: AOUpUlE/pZG0u/HSufRAIb4nf4h4jHcnA2jH/kNj6nhBoOspY8OsISTZ
-        NbubQ0c3XDDM9u5ZaWdgFZg=
-X-Google-Smtp-Source: AA+uWPyVXsJQMyATK/wHMaBhRMKvdu2kvoPsIox8O3MDe4IV9G8cvCBvJoN3T1lEpOn7idGm0PxXyA==
-X-Received: by 2002:a1c:b213:: with SMTP id b19-v6mr2558937wmf.141.1533754957727;
-        Wed, 08 Aug 2018 12:02:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y14-v6sm3896154wrq.45.2018.08.08.12.02.36
+        bh=e1VD1zsoy39SXZXv7shKAZUS0teNWiXy+/TU2jDJPiI=;
+        b=KK0hpVN727aPzFzhMdN/6KjoL629SDWiVixhpPayCm4DxV1UnjLJ/IzvcTeITBy8wX
+         1Co3i+M6nKZw9Dp8pbNjgm84jqssEUzmesnp9Z6G5kp1ouqKiQ4zsJ6BjSyFDrtv4xZu
+         pH2dB1UNrNFTV33E55SLclfXBhWoFM7Ent+M8S0AFcBuiqybG8yf01knWepfKMbDk6CK
+         92V/tdlomX41z4R0YkYMkQFJiuZq/cGRPIWoglYykCqKZL8ingGut+XOIqDaffG2NvI3
+         tfb4QwmCKYJBbIjaQ5siOdS+6OOC/yYvUyBTtD/Orhkyj/YSV6yctaEMDGu7bsnwSVVK
+         VVIg==
+X-Gm-Message-State: AOUpUlF2jFUfOkccLyyAIlwOpZfdspk5HUdw5ZEsrGE4VtMwELwp8ppD
+        fr+BJK1alf1mMEypJfgWxt0=
+X-Google-Smtp-Source: AA+uWPwonTYVNWEqXHtVT3n2Z6jF2jRRIhZA5yv7R+78bfw82gqqyXZKqzmO/5xsUf1f70hCeprEjw==
+X-Received: by 2002:a1c:1fc6:: with SMTP id f189-v6mr2555571wmf.12.1533755527200;
+        Wed, 08 Aug 2018 12:12:07 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k12-v6sm4965541wru.38.2018.08.08.12.12.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 12:02:37 -0700 (PDT)
+        Wed, 08 Aug 2018 12:12:06 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Pratik Karki <predatoramigo@gmail.com>
 Cc:     git@vger.kernel.org, christian.couder@gmail.com,
         Johannes.Schindelin@gmx.de, sbeller@google.com,
         alban.gruin@gmail.com
-Subject: Re: [PATCH 01/11] builtin rebase: support --onto
+Subject: Re: [PATCH 02/11] builtin rebase: support `git rebase --onto A...B`
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
-        <20180808134830.19949-2-predatoramigo@gmail.com>
-Date:   Wed, 08 Aug 2018 12:02:36 -0700
-In-Reply-To: <20180808134830.19949-2-predatoramigo@gmail.com> (Pratik Karki's
-        message of "Wed, 8 Aug 2018 19:33:20 +0545")
-Message-ID: <xmqq600kheb7.fsf@gitster-ct.c.googlers.com>
+        <20180808134830.19949-3-predatoramigo@gmail.com>
+Date:   Wed, 08 Aug 2018 12:12:06 -0700
+In-Reply-To: <20180808134830.19949-3-predatoramigo@gmail.com> (Pratik Karki's
+        message of "Wed, 8 Aug 2018 19:33:21 +0545")
+Message-ID: <xmqq1sb8hdvd.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,77 +70,45 @@ X-Mailing-List: git@vger.kernel.org
 
 Pratik Karki <predatoramigo@gmail.com> writes:
 
-> The `--onto` option is important, as it allows to rebase a range of
-> commits onto a different base commit (which gave the command its odd
-> name: "rebase").
-
-Is there anything unimportant?  A rhetorical question, of course.
-
-The quite casual and natural use of "to rebase" as a verb in the
-first sentence contradicts with what the parenthetical "its odd
-name" comment says.  Perhaps drop everything after "(which..."?
-
-i.e.
-
-	The `--onto` option allows to rebase a range of commits onto
-	a different base commit.  Port the support for the option to
-	the C re-implementation.
-
-> This commit introduces options parsing so that different options can
-> be added in future commits.
-
-We usually do not say "This commit does X", or (worse) "I do X in
-this commit".  Instead, order the codebase to be like so, e.g.
-"Support command line options by adding a call to parse_options();
-later commits will add more options by building on top." or
-something like that.
-
-> @@ -318,13 +334,22 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			BUG("sane_execvp() returned???");
->  	}
->  
-> -	if (argc != 2)
-> -		die(_("Usage: %s <base>"), argv[0]);
-> +	if (argc == 2 && !strcmp(argv[1], "-h"))
-> +		usage_with_options(builtin_rebase_usage,
-> +				   builtin_rebase_options);
-> +
->  	prefix = setup_git_directory();
->  	trace_repo_setup(prefix);
->  	setup_work_tree();
+> This commit implements support for an --onto argument that is actually a
+> "symmetric range" i.e. `<rev1>...<rev2>`.
 >
->  	git_config(git_default_config, NULL);
-> +	argc = parse_options(argc, argv, prefix,
-> +			     builtin_rebase_options,
-> +			     builtin_rebase_usage, 0);
-> +
-> +	if (argc > 2)
-> +		usage_with_options(builtin_rebase_usage,
-> +				   builtin_rebase_options);
+> The equivalent shell script version of the code offers two different
+> error messages for the cases where there is no merge base vs more than
+> one merge base. Though following the similar approach would be nice,
+> this would create more complexity than it is of current. Currently, for
 
-OK.  This correctly calls the parser after repository setup.
+Sorry, but it is unclear what you mean by "than it is of current."
+Do you mean we leave it broken at this step in the series for now
+for expediency, with the intention to later revisit and fix it, or
+do you mean something else?
 
->  	switch (options.type) {
->  	case REBASE_MERGE:
-> @@ -343,10 +368,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	if (!options.root) {
-> -		if (argc < 2)
-> +		if (argc < 1)
->  			die("TODO: handle @{upstream}");
->  		else {
-> -			options.upstream_name = argv[1];
-> +			options.upstream_name = argv[0];
->  			argc--;
->  			argv++;
->  			if (!strcmp(options.upstream_name, "-"))
-> @@ -377,7 +402,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  	 * orig_head -- commit object name of tip of the branch before rebasing
->  	 * head_name -- refs/heads/<that-branch> or "detached HEAD"
->  	 */
-> -	if (argc > 1)
-> +	if (argc > 0)
->  		 die("TODO: handle switch_to");
->  	else {
->  		/* Do not need to switch branches, we are already on it. */
+> simple convenience, the `get_oid_mb()` function is used whose return
+> value does not discern between those two error conditions.
+>
+> Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> ...
+> @@ -387,7 +389,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	if (!options.onto_name)
+>  		options.onto_name = options.upstream_name;
+>  	if (strstr(options.onto_name, "...")) {
+> -		die("TODO");
+> +		if (get_oid_mb(options.onto_name, &merge_base) < 0)
+> +			die(_("'%s': need exactly one merge base"),
+> +			    options.onto_name);
+> +		options.onto = lookup_commit_or_die(&merge_base,
+> +						    options.onto_name);
+
+The original is slightly sloppy in that it will misparse
+
+	rebase --onto 'master^{/log ... message}'
+
+and this shares the same, which I think is probably OK.  When this
+actually becomes problematic, the original can easily be salvaged by
+making it to fall back to the same peel_committish in its else
+clause; I am not sure if this C rewrite is as easily be fixed the
+same way, though.
+
+>  	} else {
+>  		options.onto = peel_committish(options.onto_name);
+>  		if (!options.onto)
