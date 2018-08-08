@@ -2,99 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE7F71F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 23:21:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 954761F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 23:25:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730281AbeHIBn0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 21:43:26 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:42127 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727530AbeHIBn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 21:43:26 -0400
-Received: by mail-yw1-f68.google.com with SMTP id y203-v6so2887265ywd.9
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 16:21:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zfGIqgYkGohynu9v41Pi9FfvQDGErzMy1Ni5gMIW0C0=;
-        b=cMWbAE3pI6f7mCz4DdbNN5t9VCxqli/tMvN94osY6jNYLQv9+uKJYAsdU7oj62K+nc
-         +orNgplV6sx4XZOxxqAC+D4e+tiwM5H9DTJcmxxPI3+NY2tPLszUoIwNDeuiVGkpRWnM
-         nLhCa7x16gUa9T3KwWCId3cTWf3LPc9sfsZuwGwDuEc/JOJc/Ww7Xd5KegpkiTBMuqp3
-         JpE6RDOM6rGuNOboFp1wfWSiFfI8VglGCQMUr+/kkk0Gph6Z3GkoHHvJhgrClpiUUmIf
-         apjL6CwiQZk0qZp7LRgytKZeaQQtRw9KvS9hlyID6qif8GAIn3CS1Ca4bzBZ2GRaQkFK
-         NndQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zfGIqgYkGohynu9v41Pi9FfvQDGErzMy1Ni5gMIW0C0=;
-        b=EM+yf+ayvnaqkz8QKnt1cn/F1MZZCMftGUT02A/XxfXQY9hwRCu3DgynwI/+OMRsxN
-         RB0exzkFi/C5mfzML96YgLwHhdvoF6n8eAebJSVxMe8epSwbhN+WcbsX6uTa3AzIyBgE
-         saCreSeSvofqdKkai2WSXbpno3VJAwhSs3aDBoVz7SVvj7CWgc0ae3ZqSlu0j8hfYdJn
-         0pk9sT1yCvxa3AXuT350nlqckYQmQSpO8ql/1MpBYXSntYAcVLhpuCm/BdHRSheozydC
-         noPdpMccUQUQ/PCwNEvWVwTfj+a9vz9etHQF6ASOp0kpnXdEQ31yZm02DFaqOmrr+oEb
-         s2UQ==
-X-Gm-Message-State: AOUpUlFDvbW4H401nY3MdnW7OFUXZ5YlS5rhQjMS6uQgB6wp198zCTl8
-        fr+NzkxMYlFOe7uKKF3TGreXiFtfEIHfPQRVkHXGQg==
-X-Google-Smtp-Source: AA+uWPymtGxEFwqQaj/gSCJyr9dwBlWdOgUlwZWwXhP6ETqBk+EXPYjMnecplyZmsGoDkvnD4kM755UZDKDkpjH+BuQ=
-X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr2569298ywj.33.1533770491579;
- Wed, 08 Aug 2018 16:21:31 -0700 (PDT)
+        id S1730169AbeHIBrM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 21:47:12 -0400
+Received: from cloud.peff.net ([104.130.231.41]:47784 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729661AbeHIBrM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 21:47:12 -0400
+Received: (qmail 18828 invoked by uid 109); 8 Aug 2018 23:25:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 08 Aug 2018 23:25:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4472 invoked by uid 111); 8 Aug 2018 23:25:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 08 Aug 2018 19:25:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 08 Aug 2018 19:25:16 -0400
+Date:   Wed, 8 Aug 2018 19:25:16 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] packfile: iterate packed objects in pack order
+Message-ID: <20180808232515.GC21882@sigill.intra.peff.net>
+References: <20180808231210.242120-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-References: <20180807230637.247200-1-bmwill@google.com> <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-2-bmwill@google.com>
-In-Reply-To: <20180808223323.79989-2-bmwill@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 8 Aug 2018 16:21:20 -0700
-Message-ID: <CAGZ79kYvM5hxbe9ZCuFt=Cgv9W0mmdwdFGJz6+DdhPv4UbEXjQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] submodule: create helper to build paths to submodule gitdirs
-To:     Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180808231210.242120-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 8, 2018 at 3:33 PM Brandon Williams <bmwill@google.com> wrote:
->
-> Introduce a helper function "submodule_name_to_gitdir()" (and the
-> submodule--helper subcommand "gitdir") which constructs a path to a
-> submodule's gitdir, located in the provided repository's "modules"
-> directory.
+On Wed, Aug 08, 2018 at 04:12:10PM -0700, Jonathan Tan wrote:
 
-Makes sense.
+> Many invocations of for_each_object_in_pack() and
+> for_each_packed_object() (which invokes the former) subsequently check
+> at least the type of the packed object, necessitating accessing the
+> packfile itself. For locality reasons, it is thus better to iterate in
+> pack order, instead of index order. Teach for_each_object_in_pack() to
+> iterate in pack order by first creating a reverse index.
+> 
+> This is based off work by Jeff King.
+> 
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> After writing this patch and looking at it further, I'm not sure if this
+> is a clear benefit, but here's the patch anyway. In particular,
+> builtin/fsck.c and builtin/cat-file.c just deal with the OID directly
+> and does not access the packfile at all (at least at the time of
+> invoking for_each_packed_object). And revision.c, if we are excluding
+> promisor objects, parses each packed promisor object, but it seems
+> possible to avoid doing that (replacing the parse_object() by
+> lookup_unknown_object() still passes tests).
 
->
-> This consolidates the logic needed to build up a path into a
-> repository's "modules" directory, abstracting away the fact that
-> submodule git directories are stored in a repository's common gitdir.
-> This makes it easier to adjust how submodules gitdir are stored in the
-> "modules" directory in a future patch.
+Even if you just use the oid to do a separate lookup in the object
+database, there's still a benefit in accessing the objects in pack
+order. The case in cat-file needs more than this, though, since it
+separately sorts the output (it has to, because it has to merge and
+de-dup the output from several packs plus loose objects).
 
-and yet, all places that we touch were and still are broken for old-style
-submodules that have their git directory inside the working tree?
-Do we need to pay attention to those, too?
+With the patch below on top of yours, I get:
 
+  $ time git.v2.18.0 cat-file --batch-all-objects --buffer --batch | wc -c
+  6938365964
 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 8b5ad59bde..053747d290 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
+  real	0m44.686s
+  user	0m42.932s
+  sys	0m5.283s
 
-> @@ -577,7 +578,7 @@ cmd_update()
->                         die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
->                 fi
->
-> -               if ! $(git config -f "$(git rev-parse --git-common-dir)/modules/$name/config" core.worktree) 2>/dev/null
-> +               if ! $(git config -f "$(git submodule--helper gitdir "$name")/config" core.worktree) 2>/dev/null
+  $ time git.compile cat-file --batch-all-objects --buffer --batch | wc -c
+  8289859070
 
-This will collide with origin/sb/submodule-update-in-c specifically
-1c866b9831d (submodule--helper: replace connect-gitdir-workingtree
-by ensure-core-worktree, 2018-08-03), but as that removes these lines,
-it should be easy to resolve the conflict.
+  real	0m7.007s
+  user	0m5.542s
+  sys	0m4.005s
+
+But:
+
+  - it needs to de-duplicate using a hashmap (which is why the output is
+    so much bigger in the second case)
+
+  - it probably needs to be enabled explicitly by the user, since
+    cat-file is plumbing and callers may be relying on the existing sort
+    order
+
+I can try to pick this up and carry the cat-file bits to completion if
+you want, but probably not until tomorrow or Friday.
+
+-Peff
