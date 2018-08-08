@@ -2,151 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20041208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 15:22:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BADEF208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 15:22:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727668AbeHHRmu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 13:42:50 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44110 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727069AbeHHRmu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 13:42:50 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f23-v6so1431363edr.11
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 08:22:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=t0+u3bZ5nec45tcCEHp8C9CoqRPxG5SifuqsIVVAUrY=;
-        b=tIL4h1cmSyIIUzPYGoEt+2Q2M1UkEuhLgLGfWydW19Bll/58YInNrGFQCQMIw9G1Np
-         7B90MFd9JEwpfbDzgJ7ZvfgA2e8FkdBX0SPTZAgWwJpQZbfZa8rV2cg/KDw+FKgsYjFp
-         aklRUrvl2nsUt/U9rqYNu/bNsMizmV0487wOk/HQz8f0wHnCb+NLaJgNzOzkExLXPxt+
-         IP0v7TbVmhtGVSKAZQ9PPDs7y++AWHK8YWKxUmn4UIrrSKQghalRpaAtv/zzgKpAmUsY
-         FZyLrZ69K4S1FO3dugmM1NvPGDrlhdrBcgBzJ68g/pU9AlbHt3MxpctJLq1e+q92D2Ip
-         EDCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=t0+u3bZ5nec45tcCEHp8C9CoqRPxG5SifuqsIVVAUrY=;
-        b=DwJHMoERafvCx675bLNcEev4TW47Dk6h9xyr5FPxaWowPAeWX7RmLFuKiiJjW5oJIK
-         2LdccwmiBtrRoEvcljstqx8c8TgG4Gtn8IAieDtiQYSYrDVqe/+zktDCDUZRG+1OA+jb
-         44EA7ti4uA86/jemUx7sRs8/st9L73SN77OMUyn4AjDtfiPTMVQHkcw7ZeXdXl/ca08J
-         X7s6RrBQI5MwQZk85C217ltj1Alt5LItu6GmAweoHKUzsk3elZSxwtfiN4/2S5VKox9Z
-         3ltgIitHznMFX4yNbJ17MgKomYlOLcsMa6hU+5Q82FvnmE50/3AXPv5ue2IpnK7O/Rdw
-         415g==
-X-Gm-Message-State: AOUpUlFbiia0rjtqxQVP2ml/SjWYOCdZAKMoWnkN4Irbu96vYHvFvKzK
-        4CtV+jz7vov6tvcaXMX8EHjdBJnM
-X-Google-Smtp-Source: AA+uWPyY6lE9vSgKnmMWPdpXVjOCEKcRqUGct8OAI2G0cVXqJKMbBu/ftIgmbAEIReLGVrK8d7KdFQ==
-X-Received: by 2002:a50:b8a6:: with SMTP id l35-v6mr3933478ede.273.1533741760911;
-        Wed, 08 Aug 2018 08:22:40 -0700 (PDT)
-Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id v56-v6sm6058572edm.97.2018.08.08.08.22.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 08:22:39 -0700 (PDT)
-From:   Pratik Karki <predatoramigo@gmail.com>
+        id S1727692AbeHHRmx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 13:42:53 -0400
+Received: from gproxy3-pub.mail.unifiedlayer.com ([69.89.30.42]:40610 "EHLO
+        gproxy3-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727412AbeHHRmv (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 13:42:51 -0400
+X-Greylist: delayed 2412 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2018 13:42:50 EDT
+Received: from cmgw10.unifiedlayer.com (unknown [10.9.0.10])
+        by gproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id B127F42DA8
+        for <git@vger.kernel.org>; Wed,  8 Aug 2018 08:30:21 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id nPTcfuKLHuL2QnPTffJuv7; Wed, 08 Aug 2018 08:30:20 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:Date:To:Reply-To:From:Subject:Message-ID:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=CAnAavYUMFCxUlmzjweY7xGYtaBOjQvL6/k093k4AwY=; b=Wryal5YWbi8Tdr/Iowf8UVcEZg
+        wOhK2oJjIYIKZlDTTpSH9HqeudCxdnviUf90ZimElc3YdedIWB3wb4g/p+2hsOT1pPCWLE9p3m344
+        pnsW2ao9McbX/rgL8iE3kONwB;
+Received: from [50.226.24.42] (port=47118 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fnPTY-0046K6-QT
+        for git@vger.kernel.org; Wed, 08 Aug 2018 08:30:12 -0600
+Message-ID: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
+Subject: Help with "fatal: unable to read ...." error during GC?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
 To:     git@vger.kernel.org
-Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
-        sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
-        Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 01/18] builtin rebase: allow selecting the rebase "backend"
-Date:   Wed,  8 Aug 2018 21:06:23 +0545
-Message-Id: <20180808152140.14585-2-predatoramigo@gmail.com>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180808152140.14585-1-predatoramigo@gmail.com>
-References: <20180808152140.14585-1-predatoramigo@gmail.com>
+Date:   Wed, 08 Aug 2018 10:30:11 -0400
+Organization: I may be mad, but I'm a professional!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 50.226.24.42
+X-Source-L: No
+X-Exim-ID: 1fnPTY-0046K6-QT
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [50.226.24.42]:47118
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Org:  HG=bhcustomer;ORG=bluehost;
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With this commit the builtin rebase supports selecting the "rebase
-backends" (or "type") `interactive`, `preserve-merges`, and `merge`.
+I recently upgraded from Git 2.9.2 to 2.18.0 (note, I have no
+particular reason to believe this is related just passing info).  I'm
+running on Linux (64bit Ubuntu 18.04.1 but I've compiled Git myself
+from source, I'm not using the distro version).
 
-The `state_dir` was already handled according to the rebase type in a
-previous commit.
+I have a local repository I've been using for about two years (the
+.git/description file, which I don't use, has a TLM of July 31, 2016),
+with lots of worktrees being created/pruned/etc. during that time.
 
-Note that there is one quirk in the shell script: `--interactive`
-followed by `--merge` won't reset the type to "merge" but keeps the type
-as "interactive". And as t3418 tests this explicitly, we have to support
-it in the builtin rebase, too.
+Note I'm doing all these operations in the 'main' repository, not in
+any of the worktrees.
 
-Likewise, `--interactive` followed by `--preserve-merges` makes it an
-"explicitly interactive" rebase, i.e. a rebase that should show the todo
-list, while `--preserve-merges` alone is not interactive (and t5520
-tests for this via `git pull --rebase=preserve`).
+Yesterday, when I tried to fetch from my upstream I got a notification
+about GC needed.  Then GC failed with these errors (HEAD is set to
+master which is the same as origin/master):
 
-Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
----
- builtin/rebase.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  warning: reflog of 'HEAD' references pruned commits
+  fatal: unable to read c104b8fb3631b5c54695206b2f73310c023c9963
+  error: failed to run repack
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 75c4ac66e0..fc9b5a8a60 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -452,6 +452,29 @@ static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
- 	return res && is_linear_history(onto, head);
- }
- 
-+/* -i followed by -m is still -i */
-+static int parse_opt_merge(const struct option *opt, const char *arg, int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	if (!is_interactive(opts))
-+		opts->type = REBASE_MERGE;
-+
-+	return 0;
-+}
-+
-+/* -i followed by -p is still explicitly interactive, but -p alone is not */
-+static int parse_opt_interactive(const struct option *opt, const char *arg,
-+				 int unset)
-+{
-+	struct rebase_options *opts = opt->value;
-+
-+	opts->type = REBASE_INTERACTIVE;
-+	opts->flags |= REBASE_INTERACTIVE_EXPLICIT;
-+
-+	return 0;
-+}
-+
- int cmd_rebase(int argc, const char **argv, const char *prefix)
- {
- 	struct rebase_options options = {
-@@ -510,6 +533,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_CMDMODE(0, "show-current-patch", &action,
- 			    N_("show the patch file being applied or merged"),
- 			    ACTION_SHOW_CURRENT_PATCH),
-+		{ OPTION_CALLBACK, 'm', "merge", &options, NULL,
-+			N_("use merging strategies to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_merge },
-+		{ OPTION_CALLBACK, 'i', "interactive", &options, NULL,
-+			N_("let the user edit the list of commits to rebase"),
-+			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-+			parse_opt_interactive },
-+		OPT_SET_INT('p', "preserve-merges", &options.type,
-+			    N_("try to recreate merges instead of ignoring "
-+			       "them"), REBASE_PRESERVE_MERGES),
- 		OPT_END(),
- 	};
- 
-@@ -884,6 +918,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		diff_flush(&opts);
- 	}
- 
-+	if (is_interactive(&options))
-+		goto run_rebase;
-+
- 	/* Detach HEAD and reset the tree */
- 	if (options.flags & REBASE_NO_QUIET)
- 		printf(_("First, rewinding head to replay your work on top of "
--- 
-2.18.0
+I ran a git fsck --full which showed me a lot of dangling commits and
+blobs, but no errors, no broken link messages, etc.
 
+I ran git reflog expire --all --stale-fix but no change.
+
+I can't find that SHA anywhere: I looked in .git/objects, etc.  I also
+can't find any problems with my repo; obviously I haven't checked
+everything but I can show the git log back to the initial commit, all
+my stashes look fine, all my worktrees seem to be OK (git status etc.
+work fine in all of them).
+
+But whenever I pull etc. Git wants to run gc and I get this set of
+errors again.  FWIW other repos created from the same remote don't show
+any issues so it appears to be just this local copy of the repo.
+
+I've seen many SO and blog posts about issues like this but all were
+concentrating on recovering things and I don't even know if I've lost
+anything... and anyway the operations they suggest don't work for me
+because nothing can access that SHA; I just get "bad object".
+
+Any ideas on what to look at next?
+
+I would hate to have to throw this setup away since it has 23 stashes
+and 25 worktrees in various states that would be annoying to have to
+recreate... 
