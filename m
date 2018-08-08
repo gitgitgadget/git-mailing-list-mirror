@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 304DA208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 15:23:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22592208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 15:23:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727546AbeHHRnq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 13:43:46 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:37514 "EHLO
+        id S1727800AbeHHRnu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 13:43:50 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41474 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727141AbeHHRnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 13:43:46 -0400
-Received: by mail-ed1-f67.google.com with SMTP id b10-v6so1459908eds.4
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 08:23:37 -0700 (PDT)
+        with ESMTP id S1727141AbeHHRnu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 13:43:50 -0400
+Received: by mail-ed1-f67.google.com with SMTP id s24-v6so1443340edr.8
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 08:23:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=G83GlZ8T7pGkL4IwWhZqihUUFNEwvtEPcRcdq+J37SI=;
-        b=m5F/Zd9733DmhRfEjtmUZqDhEhSav5qmEceIh/BgVhtcCt4DGWHrqqNqOVqe5AMGSP
-         tLXhCweLZZUbz04zlR+ApYK95W6wSYoIpX2X4g8jt1d73U9c8md0oB2xKxtJLZoh/Wt/
-         JECAhgoMrwkg+nODei6HjAXDYOruTL32RekRJuhoDGPFdhBpqFJGN7URC8vCo5gxAdbW
-         UDC327HeidozCDH0m3MSluxurlLEUCL+vinNchVZwqaH7Mo3cYG9FVkZ2z0zaHGBJzMS
-         lo5aAFyZs1eZx4Ywh1wfKVU4L9YNLxPV/QIjyhdtBONdnH5kmyg0MQLwF32szLaxrejq
-         PvMw==
+        bh=mDNc2+aZIRPN5DkV3QVNB7HcC9eywuQyZ7GdHF1zeiY=;
+        b=mJ8iqeIkoWyt/XoBnjrw2AwWSdIpDrchWmqLrTJmD0cWjfuk40V0C5eLDioz4+uDzg
+         Du1u5aEKaBp6tOw79ZBnU5rvjeA1hsV345U+olXJ3MJ+3V4sPOATiUjNyRXC7KZOgLnF
+         un0YcB6XuYiI4ER2/pmhjXHpAEsTXSMGDOe1Y7vYjTLYW9SUG5zMjmz/igiBg2bSFWgj
+         wdGRkMwZkAbCJc/hCTLV+KS/7XCEoo4RxO5baUNzfrxgn8Cg4AGkHQj9v39/INmyF3ef
+         fn4nfgho3V+Abj1mGT9MXeScVGPVyBw+Njw3EmEhtQfqMMp7CrnK/Ux3mv7wzDCNHIAZ
+         4tpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=G83GlZ8T7pGkL4IwWhZqihUUFNEwvtEPcRcdq+J37SI=;
-        b=BkRh1dN41ZfH8Gemglp6t9Zm9CcSvwSFZcSISYDIiwWuq3ds/Tf1eLFtO3wZNAgttR
-         +PYKtanOUcO6vMqzdV0ahwcqeGf8rPa6hDujcS5FyfSizNJGbcWklWBrXqjj+Q2vv0Gr
-         ky5ebZJOvxLdst9i0mlu3TnpQVQUDqj77v2HrPtJVJEDz6y5d9sma6r+mZFGwvKEvQOP
-         3zvFZE/24DvBY6CL87tFL4X/T9ce+MLNbF2e7zB7hYdkTue1qhg+c1hHC80ScRIryI9j
-         MBsyG6RTt9zE/vKVnguqUHOyS4nayGoiEinRCPucJdim49PLrBIsZgDr/OT3nSZs6B7S
-         P3ww==
-X-Gm-Message-State: AOUpUlGQDf7+Fp8tuPgHhqc7py4ovdFgqeNuotU1rtZhV3dXi6f5GXo0
-        1j8AI6nKlHi9Ge0ZIjoSmjael38K
-X-Google-Smtp-Source: AA+uWPzya5ZZ44c59mcm6yz8vmWEC//LMXCpKj65pbaUu8jtX9M4LF/tFPzTd6MDy9id1iXH8ExRTA==
-X-Received: by 2002:a50:9182:: with SMTP id g2-v6mr3808309eda.24.1533741816729;
-        Wed, 08 Aug 2018 08:23:36 -0700 (PDT)
+        bh=mDNc2+aZIRPN5DkV3QVNB7HcC9eywuQyZ7GdHF1zeiY=;
+        b=AF+IiyggAaL5SZFSmmFPWOW5ZFmhFhonpCGDpHPzVKKBHjxaLpI89l0QofdheVEk6L
+         Wg/naAVTDwJAQguocYuFud2aV/0n31Ydx5OP7kJs9xEynp5vqgq6YgspsSAe9YYmHZ3g
+         bPfNHBHAwUK1ISSwgGnztjM8gOzPzpQ/cmn7JrhMQ1xDF4I4Ggwljk+h4In9AKqi807g
+         Zt4+s5y4gn+oaPTOcbJjJj0lrissqjRJVQxzFfaryP+lCM8c4b7b5Vr+Y1kSbOcSjZrC
+         IZi6D3lXqSZQ1OQU/Slb/sOyHVIh7vBwHg25YRDdgk3DZoOKcAf9dIz7sXuBv8ktvE0L
+         cn5Q==
+X-Gm-Message-State: AOUpUlGIXe9PyrWvt4Dj9w3Co1bpiPITHsSsWEJ2TdvpABuuNqp4kqaK
+        mIY8yHkobHMoVS1YTeokmeCv5cxg
+X-Google-Smtp-Source: AA+uWPwucIDS69ww5wU5ncxy9gzkcj9KhOSGFUCSmh+vsZRHBB9R6ZnML/N92Hkq0ggHSz2lI8W6zQ==
+X-Received: by 2002:a50:b8a6:: with SMTP id l35-v6mr3938358ede.273.1533741820631;
+        Wed, 08 Aug 2018 08:23:40 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id v56-v6sm6058572edm.97.2018.08.08.08.23.33
+        by smtp.gmail.com with ESMTPSA id v56-v6sm6058572edm.97.2018.08.08.08.23.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 08:23:36 -0700 (PDT)
+        Wed, 08 Aug 2018 08:23:39 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 16/18] builtin rebase: support `fork-point` option
-Date:   Wed,  8 Aug 2018 21:06:38 +0545
-Message-Id: <20180808152140.14585-17-predatoramigo@gmail.com>
+Subject: [PATCH 17/18] builtin rebase: add support for custom merge strategies
+Date:   Wed,  8 Aug 2018 21:06:39 +0545
+Message-Id: <20180808152140.14585-18-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808152140.14585-1-predatoramigo@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
@@ -64,50 +64,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit adds support for `--fork-point` and `--no-fork-point`.
-This is converted as-is from `git-legacy-rebase.sh`.
+When running a rebase in non-am mode, it uses the recursive merge to
+cherry-pick the commits, and the rebase command allows to configure
+the merge strategy to be used in this operation.
+
+This commit adds that support to the builtin rebase.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ builtin/rebase.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0b94d2daaa..72e64868b2 100644
+index 72e64868b2..65e7be1c48 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -632,6 +632,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct string_list whitespace = STRING_LIST_INIT_NODUP;
+@@ -96,6 +96,7 @@ struct rebase_options {
+ 	char *cmd;
+ 	int allow_empty_message;
+ 	int rebase_merges, rebase_cousins;
++	char *strategy, *strategy_opts;
+ };
+ 
+ static int is_interactive(struct rebase_options *opts)
+@@ -217,6 +218,22 @@ static int read_basic_state(struct rebase_options *opts)
+ 		opts->gpg_sign_opt = xstrdup(buf.buf);
+ 	}
+ 
++	if (file_exists(state_dir_path("strategy", opts))) {
++		strbuf_reset(&buf);
++		if (read_one(state_dir_path("strategy", opts), &buf))
++			return -1;
++		free(opts->strategy);
++		opts->strategy = xstrdup(buf.buf);
++	}
++
++	if (file_exists(state_dir_path("strategy_opts", opts))) {
++		strbuf_reset(&buf);
++		if (read_one(state_dir_path("strategy_opts", opts), &buf))
++			return -1;
++		free(opts->strategy_opts);
++		opts->strategy_opts = xstrdup(buf.buf);
++	}
++
+ 	strbuf_release(&buf);
+ 
+ 	return 0;
+@@ -356,6 +373,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		opts->rebase_merges ? "t" : "");
+ 	add_var(&script_snippet, "rebase_cousins",
+ 		opts->rebase_cousins ? "t" : "");
++	add_var(&script_snippet, "strategy", opts->strategy);
++	add_var(&script_snippet, "strategy_opts", opts->strategy_opts);
+ 
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -633,6 +652,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  	struct string_list exec = STRING_LIST_INIT_NODUP;
  	const char *rebase_merges = NULL;
-+	int fork_point = -1;
+ 	int fork_point = -1;
++	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
  	struct option builtin_rebase_options[] = {
  		OPT_STRING(0, "onto", &options.onto_name,
  			   N_("revision"),
-@@ -714,6 +715,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
+@@ -717,6 +737,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
-+		OPT_BOOL(0, "fork-point", &fork_point,
-+			 N_("use 'merge-base --fork-point' to refine upstream")),
+ 		OPT_BOOL(0, "fork-point", &fork_point,
+ 			 N_("use 'merge-base --fork-point' to refine upstream")),
++		OPT_STRING('s', "strategy", &options.strategy,
++			   N_("strategy"), N_("use the given merge strategy")),
++		OPT_STRING_LIST('X', "strategy-option", &strategy_options,
++				N_("option"),
++				N_("pass the argument through to the merge "
++				   "strategy")),
  		OPT_END(),
  	};
  
-@@ -1062,6 +1065,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
+@@ -963,6 +989,37 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		imply_interactive(&options, "--rebase-merges");
+ 	}
  
-+	if (fork_point > 0) {
-+		struct commit *head =
-+			lookup_commit_reference(the_repository,
-+						&options.orig_head);
-+		options.restrict_revision =
-+			get_fork_point(options.upstream_name, head);
++	if (strategy_options.nr) {
++		int i;
++
++		if (!options.strategy)
++			options.strategy = "recursive";
++
++		strbuf_reset(&buf);
++		for (i = 0; i < strategy_options.nr; i++)
++			strbuf_addf(&buf, " --%s",
++				    strategy_options.items[i].string);
++		options.strategy_opts = xstrdup(buf.buf);
 +	}
 +
- 	if (read_index(the_repository->index) < 0)
- 		die(_("could not read index"));
- 
++	if (options.strategy) {
++		options.strategy = xstrdup(options.strategy);
++		switch (options.type) {
++		case REBASE_AM:
++			die(_("--strategy requires --merge or --interactive"));
++		case REBASE_MERGE:
++		case REBASE_INTERACTIVE:
++		case REBASE_PRESERVE_MERGES:
++			/* compatible */
++			break;
++		case REBASE_UNSPECIFIED:
++			options.type = REBASE_MERGE;
++			break;
++		default:
++			BUG("unhandled rebase type (%d)", options.type);
++		}
++	}
++
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
 -- 
 2.18.0
 
