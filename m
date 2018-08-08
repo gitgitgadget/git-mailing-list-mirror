@@ -2,73 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8958C1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 18:40:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 80E861F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 18:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729864AbeHHVBQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 17:01:16 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:33855 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727295AbeHHVBQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 17:01:16 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id E0778220C7;
-        Wed,  8 Aug 2018 14:40:18 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 08 Aug 2018 14:40:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm3; bh=y0pcfZAKUR9vlvD/lvYosC2eGdMSz
-        5HlZTkuoqvlxL8=; b=sAJ7Sv+YvRyakGlp8uehymnw9xNIyhjm+Ta/PM1iJid7z
-        gMqCWdu4bg/3euPDiGdoOtIIHr9CqIphs43CPmvFLQkenow2t8DSdMlg5GKnppqU
-        5y9M5rJLR2AZ8NGMAMt4CmFqLcpR4EKoWsemj1KLtBmt6BKW3vfFJHfOsorr0iYq
-        zGrAut5S6gnIArIb6OuVZM4omdfgb+DLQ4/XoG6JTHVaLtmdHZl0cGQ51r0ilJtO
-        TTpZQ3RkeZMss63hc+X60+j6HSjULT56TaSZwPrlyARxgHSwDwV4aA0aiSHg/18V
-        L75ILHAEGRoz4AYqaLoiqDnMH3GGxMxGdqPL78Bpg==
-X-ME-Proxy: <xmx:EjlrW1tvVGo_QBQHOZlAfJrgcgKXdXxEzls5z-T6Xv8rR7R0TbRIww>
-    <xmx:EjlrW-ohLOhvyhf8WY7FjycEi45jyZ-zWTwWezBcrIdBeU8eG9DUfg>
-    <xmx:EjlrW6n11NjWLeRpdyJO1lxwIDx0C1CN9RJsFwlPFSp1QeE0AyZFfA>
-    <xmx:EjlrW6zs9JabVcdu06dhc2rA7kjwGsZS12rQkorQjjtQo23aBGJeEQ>
-    <xmx:EjlrW6k4E0f8DSP1fvpEKIJNlQrQpKCb_0ihoaAUMZEs4jHvomX4lQ>
-    <xmx:EjlrW7jS11vYHTG8WtMJ8Ggbvg3ZcDHcMGOL9f2SXm2kHLoaTw3wIw>
-X-ME-Sender: <xms:EjlrWxauytaHaVg9uF9zsIyGGVTOdNjvobGtucaTbPjzp791RhLUMQ>
-References: <20180808035854.49D69E450E@mailuser.nyi.internal> <CAPig+cRP-t+4nDd2ei7PNPupcWSbcNAQaqmiEMVLGh3Nwuc2FA@mail.gmail.com>
-From:   Brady Trainor <mail@bradyt.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Page content is wider than view window
-In-reply-to: <CAPig+cRP-t+4nDd2ei7PNPupcWSbcNAQaqmiEMVLGh3Nwuc2FA@mail.gmail.com>
-Date:   Wed, 08 Aug 2018 11:40:16 -0700
-MIME-Version: 1.0
-Content-Type: text/plain
-Message-Id: <20180808184017.DC28C10268@mailuser.nyi.internal>
+        id S1728362AbeHHVGq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 17:06:46 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:51491 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727609AbeHHVGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 17:06:46 -0400
+Received: by mail-qt0-f202.google.com with SMTP id x9-v6so2457082qto.18
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 11:45:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=P+q1BVwtBkBjzz3kAIFv7o0mJLfDekPTdA72yzQzy4U=;
+        b=TNdjvp35eDjB0E9MqM5MrzkwAeDJ8UAPur51iS5SNmaiN8v/Pkx3c4hqZOvU17Ta8G
+         L77fyCrgbIGJIrDDaR6BdDabga5lspXojJg7dR/IXrWUeywBCL4p1Mq+EhyRO4HYZfrh
+         7aqu/Vq/NrQGm5anK44iE4RXIjVCnhXxS6RyszR8hUf7zSd7YLhtrz64VLX23Wf5ZzmQ
+         vwLTk0fIF679EWLn9eEshFfVJZ0TlUs6O8uSMmq58TSU78QkkhElTMvN4oJ6SF5zxU9u
+         uZHAKT2jtN3eltDnekOVzQza8WDGhnHJgD04xuRW4HUBuUuWQNRZCWtVSNLVoUU8DBls
+         UVuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=P+q1BVwtBkBjzz3kAIFv7o0mJLfDekPTdA72yzQzy4U=;
+        b=TLKiBZFLcHDFeSRSurNxg7wTpXm8Ha+7VtLpqMahpp9wnOHHOcC8MM2jrJs7P7Ow/Q
+         hfV/f89b0OC8cRpR/kry3OqItrpQrevgEYOdIEnLI5JUFAAALK45wDXduNmSv/6imFym
+         8gCUBonLQZYgyPr8be3G5ry+EnwgEbfb6Fcabn37E4Z5SWQdfCNHxmpk/bj4m3bsizMs
+         UR5JslUXwiCiJmX0iypg5w5AoZwrro36gZk/2c+sv4mHuUOESDOnnPLR2aAB5EVBv7aw
+         nSwVLhvViEBkjIRsHBTIxX2wxTnCD0PRoVHfBBFu61KNBkEU/tmo1EbsGwTEXhbh3p0q
+         8M9A==
+X-Gm-Message-State: AOUpUlH0xWcXWFjJYzopL9JvtiHtX4mbHY+QVPxOfNfxCaSdtmVEkpxs
+        unYYJMkpjGiZC4ibKqxHkaV84Jh20m4J2FXSkc2R
+X-Google-Smtp-Source: AA+uWPxJV7sYmatqLL8yzvHEkmicP/puGYVyjgsWk1e+VYhvHvN0i7ZY9LFGjT1+0kOI2xM/xtXI6ElTokRtWvqOtOzt
+X-Received: by 2002:a0c:f648:: with SMTP id s8-v6mr1970082qvm.40.1533753948059;
+ Wed, 08 Aug 2018 11:45:48 -0700 (PDT)
+Date:   Wed,  8 Aug 2018 11:45:44 -0700
+In-Reply-To: <xmqqy3dhiu08.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20180808184544.120498-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqy3dhiu08.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.18.0.321.gffc6fa0e3.dirty
+Subject: Re: [PATCH 2/2] repack: repack promisor objects if -a or -A is set
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+> But what to delta against what else is determined by the pathname
+> info, which is now lost by enumerating objects without tree/history
+> walking.  By giving phoney pathnames to objects while enumerating
+> them in offset order and giving similar pathnames to objects closer
+> to each other, I was hoping that better bases will likely to be in
+> the same window.  The order in which objects are prepared and fed to
+> try_delta() is "group by type, and then sort by path-hash (major
+> key) and size (descending order, used as minor key)", so that
+> the largest among similarly named blobs is stored as base and other
+> blobs with similar name try to become delta against that one.
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Thanks for the patient explanation - I think I see it now. If we
+enumerate in pack order and pass "<sha-1> <fake-name>" instead of
+"<sha-1>" to pack-objects in such a way that we make pack-objects sort
+by {type -> pack-order -> size} instead of {type -> size}, we can
+hopefully get better deltas. I'll write a NEEDSWORK similar to this.
 
-> The git-scm.com website is maintained as a distinct project[1] at
-> Github; it is not directly related to the Git project itself (to which
-> you sent this email). A good way to voice a concern or make a
-> suggestion about the website is either to open an issue[2] or submit a
-> pull request[3] if you have a specific change in mind.
->
-> The Pro Git book (if that's what you're reading) is also a distinct
-> project[4], not directly related to the Git project. You can likewise
-> open an issue[5] or submit a pull request[6] if needed.
->
-> [...]
-
-Ah, that was completely discoverable through the website. My mistake,
-thank you for redirect.
-
--- 
-Brady
+I'll send a reroll later today.
