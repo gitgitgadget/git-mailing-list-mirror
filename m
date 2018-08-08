@@ -2,107 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73CFB1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 21:35:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E90B1F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 21:42:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729625AbeHHX4x (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 19:56:53 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:34729 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729221AbeHHX4x (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 19:56:53 -0400
-Received: by mail-wm0-f67.google.com with SMTP id l2-v6so609410wme.1
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 14:35:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:subject:date:message-id:user-agent:mime-version;
-        bh=LBhG0dH0gTyOyG2MRSDZJRirpCsVhCovL5ZEnLXj6pg=;
-        b=n1HJnKrI4Rm3vxVJBrouUZH9OsuiY+lcTopsAZ5qWmVifMU/aQwy1Xs8xX3Sqm3Gmn
-         sQavnwGFu2T0Y1EwmeeBkDbzlYhxlYTxybUUJnDHw4fH9Cppn5GmJvmC67n5sw+X1bVL
-         I3g9EVg8pJy4DNeUPGyjIG6ZJLQOJqf7YzMhR84XSqhh9RfQURXNWgIZtF2LabGPhpdl
-         vP+UdDdkOEfyRzc3uvdaEyXpU+B80Dah8pz/qfZ9eDNqGuIpuwDdgEyWNfNkckgzoS5m
-         We9kuKq69qZJqws3Irr69GkO6qx3S/8y6KLiErplC9Zec2w9ddIuEFm52ufxrE/4opiP
-         5CKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :user-agent:mime-version;
-        bh=LBhG0dH0gTyOyG2MRSDZJRirpCsVhCovL5ZEnLXj6pg=;
-        b=VG/qfVl4cMRrrr7xy84lp2wNpq7X9i0TeGRBwXwnkTgSJPhKW0di/Lwkk+pGeXlha0
-         MwbwGjZ2lTx0zzvUKMEfCR5D1OyJELASW88g3+fja4HgdV/6oo0NQ2an+5qmmdHbiM+r
-         U1zvmlWJS2FRfC5Pwc3LT3xOQIuZ0ohhbhpR5d858YqDX/jSqDiFoiKccbMF9kEX5Hgn
-         ixPeMPpjiRNvJF9rrO82YKVtQBqMKM4h7w0aNIyMBo5YGf5MtxsUcIgtCCGrN3iGe6M7
-         z9ZRaKJGOKrqwjWbLInroAbbUtks2srhw4yZ9GU5y/Z0Bm+/+3RQGudZrA0zaTLQGhup
-         /Ynw==
-X-Gm-Message-State: AOUpUlGo7mLoh27pCNmWMfqvkA3d3/1IhknWUcqO0JZSY0WHGi+/JPVD
-        EChF/MTB48kOXWvRr//WA1Szto4v
-X-Google-Smtp-Source: AA+uWPyqKAEzloY0yE/GH35yowtPLluHpFulTaECNjgNuoC8Bkg8fFnbjzt9TdXK6dlHjPrneAzhxw==
-X-Received: by 2002:a1c:b709:: with SMTP id h9-v6mr3056013wmf.104.1533764119406;
-        Wed, 08 Aug 2018 14:35:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j11-v6sm3404709wrr.37.2018.08.08.14.35.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 08 Aug 2018 14:35:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] update-index: there no longer is `apply --index-info`
-Date:   Wed, 08 Aug 2018 14:35:18 -0700
-Message-ID: <xmqqva8kee3t.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1731098AbeHIAEJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 20:04:09 -0400
+Received: from gproxy10-pub.mail.unifiedlayer.com ([69.89.20.226]:55815 "EHLO
+        gproxy10-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727530AbeHIAEJ (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 20:04:09 -0400
+X-Greylist: delayed 1919 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2018 20:04:08 EDT
+Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
+        by gproxy10.mail.unifiedlayer.com (Postfix) with ESMTP id D6C0D140508
+        for <git@vger.kernel.org>; Wed,  8 Aug 2018 15:10:41 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id nVj7frwbPvdTunVj7feVPF; Wed, 08 Aug 2018 15:10:41 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
+        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=nHW15e9R02ff1Ky/Q+qb6Wfibk0W4olf8giZNCJ7Bpk=; b=acUsAf7DO+Fy+ZujPjp+/FxG8o
+        rOTnUN85Je2OBxyrfhnv0ZUKl5jsavsKwL1TUFrXWBj1AbwjtjBO/BuhPab+LxWrUBeCtnuMu5oy0
+        vc+1iFyqflzauFybxA5EwTho7;
+Received: from [50.226.24.42] (port=33196 helo=pdsdesk)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fnVj7-002Rd1-7D; Wed, 08 Aug 2018 15:10:41 -0600
+Message-ID: <d5f07990ed810b62c3a7be54dbd5ba7febb4f2e7.camel@mad-scientist.net>
+Subject: Re: Help with "fatal: unable to read ...." error during GC?
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Date:   Wed, 08 Aug 2018 17:10:38 -0400
+In-Reply-To: <20180808182436.GA19096@sigill.intra.peff.net>
+References: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
+         <20180808160612.GC1607@sigill.intra.peff.net>
+         <b247434b62ccd30f32adbebb83fa6ea12b51b6ff.camel@mad-scientist.net>
+         <20180808182436.GA19096@sigill.intra.peff.net>
+Organization: I may be mad, but I'm a professional!
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 50.226.24.42
+X-Source-L: No
+X-Exim-ID: 1fnVj7-002Rd1-7D
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: (pdsdesk) [50.226.24.42]:33196
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Back when we removed `git apply --index-info` in 2007, we forgot to
-adjust the documentation for update-index that reads its output.
+On Wed, 2018-08-08 at 14:24 -0400, Jeff King wrote:
+> Let's narrow it down first and make sure we're dying where I expect.
+> Can
+> you try:
+> 
+>   GIT_TRACE=1 git gc
+> 
+> and confirm the program running when the fatal error is produced?
+> 
+> From what you've shown it's going to be git-repack, but what I'm not
+> clear on is whether it is repack itself that is complaining, or the
+> pack-objects process it spawns. I'd guess the latter.
 
-Let's reorder the description of three formats to present the other
-two formats that are still generated by git commands before this
-format, and stop mentioning `git apply --index-info`.
+You are correct:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-update-index.txt | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+15:27:24.264161 git.c:415               trace: built-in: git pack-
+objects --keep-true-parents --honor-pack-keep --non-empty --all --
+reflog --indexed-objects --unpack-unreachable=2.weeks.ago --local --
+delta-base-offset .git/objects/pack/.tmp-17617-pack
 
-diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-index 4e8e762e68..c62a683648 100644
---- a/Documentation/git-update-index.txt
-+++ b/Documentation/git-update-index.txt
-@@ -268,23 +268,20 @@ USING --INDEX-INFO
- multiple entry definitions from the standard input, and designed
- specifically for scripts.  It can take inputs of three formats:
- 
--    . mode         SP sha1          TAB path
--+
--The first format is what "git-apply --index-info"
--reports, and used to reconstruct a partial tree
--that is used for phony merge base tree when falling
--back on 3-way merge.
--
-     . mode SP type SP sha1          TAB path
- +
--The second format is to stuff 'git ls-tree' output
--into the index file.
-+This format is to stuff `git ls-tree` output into the index.
- 
-     . mode         SP sha1 SP stage TAB path
- +
- This format is to put higher order stages into the
- index file and matches 'git ls-files --stage' output.
- 
-+    . mode         SP sha1          TAB path
-++
-+This format is no longer produced by any Git command, but is
-+and will continue to be supported by `update-index --index-info`.
-+
- To place a higher stage entry to the index, the path should
- first be removed by feeding a mode=0 entry for the path, and
- then feeding necessary input lines in the third format.
+> If so, can you try running it under gdb and getting a stack trace?
+
+I would... but I discovered all my Git binaries are stripped to the max
+and no symbols available.
+
+I'll do a quick rebuild with some debug info and get back to you.
+
+Thanks for the pointers!
