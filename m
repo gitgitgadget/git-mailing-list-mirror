@@ -2,170 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80911208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:05:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B194B208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:12:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727066AbeHHPZM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 11:25:12 -0400
-Received: from mout.gmx.net ([212.227.17.21]:52733 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727050AbeHHPZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 11:25:11 -0400
-Received: from CN-A-YUPLIU-X1C.fareast.corp.microsoft.com ([37.201.193.145])
- by mail.gmx.com (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0MfVzj-1fXeaD40EN-00P2av; Wed, 08 Aug 2018 15:05:27 +0200
-Date:   Wed, 8 Aug 2018 15:05:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 00/21] Add `range-diff`, a `tbdiff` lookalike
-In-Reply-To: <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808081422160.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726997AbeHHPcd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 11:32:33 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:51133 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726745AbeHHPcd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 11:32:33 -0400
+Received: by mail-it0-f68.google.com with SMTP id j81-v6so3357152ite.0
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:12:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=OZXMojfCCRMbtsStRPMz8W6KE8sPPpZ04kzz6l3o5bY=;
+        b=oKgRuhrOf6ANytI4IDsqDw/loHzjyUv5jZBw6GFLZXwjK27ViU1pmzoV3+PHN1lE9G
+         qTpNdL3aQj6IwOL16lfilg+bF2iykkJdyvdUjFC+j2V50tcDRmO2c2ydTCOTvT5YQlie
+         gtjF5dWMvlBzcn7ALB7g/wAWULH0mufQyLoWtqur5vFCQyZwQdMYfinNzMyRRFisOlq0
+         mswI1N7F/wSL5H+nAjPDjTTVvQ4/WDHJ7XIhZwkc8yz+zbCHVgiHX9mOx/ustJ+p0Vj8
+         PQtj6trC3vkN7t8sATTsK65LH46IGTRNXWo/3JHEF+HXt7L8vuizWzUSL0tpj0UyhVdZ
+         8X1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=OZXMojfCCRMbtsStRPMz8W6KE8sPPpZ04kzz6l3o5bY=;
+        b=LCDMHeSUI+2RJkW11jfQK8VrTfxp4MccgjyMia3Gka/M+H1Z4ncr79B7Ok19JOKKEX
+         ym2nUQyiEYizqooRJPoL9eeOWmL1WBnme90XGDwM1BbhkHSRw7zOcGTCgcI93qvy8fWO
+         tjeyWMG0VuehKw4QKQ982b4Sf912udo9JebGqNQd965pcuUBMD9rdarlDJtHBFUv4Vgm
+         4+WNIN2Kwu3xX2obLEfXoEYhwEDG5aHMMe71eF2JLvJdCYPk1ZA07fKYbigyHTccWAg8
+         4M2uMbk7E7F/7Gyx66cl/wzAKawri5c4buly2p8ciMI+LGA1WD0Jil6+9Lzq0C5XZP5M
+         GKog==
+X-Gm-Message-State: AOUpUlEhFrUp/ZODcuBL8MsXt+dKFYAHUPpfQG/LZmvl7PoOJcR/a+nE
+        rAXn9+aCFm2HX7tC4mfG1KhtLB9lhqGYAA1v8GfUrA==
+X-Google-Smtp-Source: AA+uWPwiSEBoSCHHv+k800Thg2nNjbtb1bLH0VeyQqX7FxTfkgQLRA83p2U1uL/7AwvGWyUNugXLaaulKu0DyUvTga4=
+X-Received: by 2002:a02:238f:: with SMTP id u137-v6mr2434349jau.0.1533733975200;
+ Wed, 08 Aug 2018 06:12:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CoI7T7e0fLDHy9VjTd6Bkvarhw/d+f0+lLXureRI/DUGIAtYi1j
- Ms2HJBypJGbevT//B+Ej5EY/nJNeZAp51R7esWvlc/fsMxJAABHPS9nqoac1dwhATH329Nw
- +DlfYFvsssY28YjJJum3bYQD+gMCZX61YXNpYPVF1dcWGhXX2zw7+XylkcDJ1/pa/Hc/Fu2
- RDAq2gNHWS05c2y5uINRg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:T8ZrtZHutlo=:dD/vBh446BSL8Zg07MqW74
- 4YXHfynOzQQZMWadh2GppPPS1yCfAhLaOS9jNyqI5mY3S030tEYk1WraRv3Yk0CmA1MkQa1UR
- 5pVIoVh6cWCXVGLkp9iy62euHu/ujjcezqzZpa7ChNsMbqt4sRXU19ZTyPr2d2Ca3bh7qNsOD
- qpttEakxYjSy3Ph1cQEaP1MIQRKj91ibNK8gPggFVruFTImWGYhWlAzjOkT8mUMRfGPiN5VjP
- +HfmquhXFAhXoe8Pwv6paPyf07TA7ti5dclGYs2SrByN93YWeOhmuovL4SvrF7inqcGDZftQ8
- aeZNHq660U0m/F4u9YE4teYQJdynGWPXeQi6kykt/nWopFumEkfHO3agKydmSv9NPfKHrm+f+
- 0Xnk0llAiS9nkbNjPafrI2AXCUU/8QXWtwz2MtOQ7wsY6xzs6dZbzKiBfJbCxeSVQTkOZbvg0
- etBSZmX90xxpt36ifPMpnbH+399EleXnkzpWi33ZJ3uVusbQ1erOfJAi7QIBOvK/GK2bYHMiU
- zAqNCrHf0PJvgKJrF0npWou97PreCQ8VTS15WPvaRe9Lpm4gicLi4KZRChPG0yXHWlp4tVRbC
- AhjVa8H2pl3jHORUF1Z/ijM+zaFbdKG7fiQvaYco79M1+17qMDl/E5GDvXw8P6qPGUgqEC/FG
- JcyhoqMnhPVgbVo56bHWThF0cq/apr140Smip28KKMl15P2a9U4wWIn21ZGA/OPUMYX21syDG
- lVp4BHP2YIEpuxWdhWxwa+OW/u2WYuwRr7AQqg+8yqNcBwXA/A6NCVEXHdoCcg7/EaWUUf0si
- AFSolaJ
+References: <20180807125108.104293-1-hanwen@google.com> <xmqqva8lki14.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva8lki14.fsf@gitster-ct.c.googlers.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Wed, 8 Aug 2018 15:12:43 +0200
+Message-ID: <CAFQ2z_OiwVqxawfuVWurqCwpA8beC7Vn89tkhZkLkYcrApacEQ@mail.gmail.com>
+Subject: Re: [PATCH v7 0/1] sideband: highlight keywords in remote sideband output
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Jonathan Nieder <jrn@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
-
-On Mon, 23 Jul 2018, Stefan Beller wrote:
-
-> On Sat, Jul 21, 2018 at 3:04 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> 
-> >   1:  39272eefc !  1:  f7e70689e linear-assignment: a function to solve least-cost assignment problems
-> >      @@ -223,9 +223,7 @@
-> >       +                         BUG("negative j: %d", j);
-> >       +                 i = pred[j];
-> >       +                 column2row[j] = i;
-> >      -+                 k = j;
-> >      -+                 j = row2column[i];
-> >      -+                 row2column[i] = k;
-> >      ++                 SWAP(j, row2column[i]);
-> 
-> The dual color option (as a default) really helps here. Thanks for that!
-> Does it have to be renamed though? (It's more than two colors; originally
-> it was inverting the beginning signs)
-> 
-> Maybe --color=emphasize-later
-> assuming there will be other modes for coloring, such as "diff-only",
-> which would correspond with --no-dual-color, or "none" that will correspond
-> would be --no-color. I imagine there could be more fancy things, hence I would
-> propose a mode rather than a switch.
-> (Feel free to push back if discussing naming here feels like bike shedding)
-
-I do feel free to push back on that.
-
-> 2:  7f15b26d4ea !  82:  88134121d2a Introduce `range-diff` to compare
-> iterations of a topic branch
-> [...]
-> >       diff --git a/Makefile b/Makefile
-> >       --- a/Makefile
-> >       +++ b/Makefile
-> 
-> The line starting with --- is red (default removed color) and the line
-> with +++ is green (default add color).
-> 
-> Ideally these two lines and the third line above starting with "diff --git"
-> would render in GIT_COLOR_BOLD ("METAINFO").
-
-I agree that is not the best coloring here, but as you remarked elsewhere,
-it would require content-aware dual coloring, and I am loathe to try to
-implement that for two reasons: 1) it would take most likely a long time
-to design and implement that, and 2) I don't have that time.
-
-So I would like to declare that good enough is good enough in this case.
-
-> >   3:  076e1192d !  3:  4e3fb47a1 range-diff: first rudimentary implementation
-> >      @@ -4,7 +4,7 @@
+On Tue, Aug 7, 2018 at 11:01 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Han-Wen Nienhuys <hanwen@google.com> writes:
+>
+> > Fix nits; remove debug printf.
 > >
-> >           At this stage, `git range-diff` can determine corresponding commits
-> >           of two related commit ranges. This makes use of the recently introduced
-> >      -    implementation of the Hungarian algorithm.
-> >      +    implementation of the linear assignment algorithm.
+> > Han-Wen Nienhuys (1):
+> >   sideband: highlight keywords in remote sideband output
 > >
-> >           The core of this patch is a straight port of the ideas of tbdiff, the
-> >           apparently dormant project at https://github.com/trast/tbdiff.
-> >      @@ -51,19 +51,17 @@
-> >       + int res = 0;
-> >       + struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
+> >  Documentation/config.txt            |  12 +++
+> >  help.c                              |   1 +
+> >  help.h                              |   1 +
+> >  sideband.c                          | 125 ++++++++++++++++++++++++++--
+> >  t/t5409-colorize-remote-messages.sh |  87 +++++++++++++++++++
+> >  5 files changed, 217 insertions(+), 9 deletions(-)
+> >  create mode 100755 t/t5409-colorize-remote-messages.sh
 > >
-> >      -- argc = parse_options(argc, argv, NULL, options,
-> >      --                      builtin_range_diff_usage, 0);
-> >      -+ argc = parse_options(argc, argv, NULL, options, builtin_range_diff_usage,
-> >      -+                      0);
-> >      +  argc = parse_options(argc, argv, NULL, options,
-> >      +                       builtin_range_diff_usage, 0);
-> 
-> This is really nice in colors when viewed locally.
-> 
-> >  16:  dfa7b1e71 <  -:  --------- range-diff --dual-color: work around bogus white-space warning
-> >   -:  --------- > 16:  f4252f2b2 range-diff --dual-color: fix bogus white-space warning
-> 
-> Ah; here my initial assumption of only reviewing the range-diff breaks down now.
-> I'll dig into patch 16 separately.
+> > --
+> > 2.18.0.597.ga71716f1ad-goog
+>
+> I'll squash in the following while queuing for
+>
+>     <CAPig+cScb_7s4a_ZSVCsr+nBxAHGHZVMZOtnrOgbhZUi96-VFA@mail.gmail.com>
+>
+> Thanks for sticking to the topic.
 
-Right. This was an almost complete rewrite, and then next iteration will
-hopefully bring another complete rewrite: disabling whitespace warnings in
-dual color mode.
+Thanks, LGTM.
 
-> Maybe it is worth having an option to expand all "new" patches.
+--
 
-Sure.
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-And I also have a use case for --left-only/--right-only.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-And I also have a strong use case (and so does Junio, it seems, or for
-that matter, anybody contributing to Git due to Junio's insistence on
-signing off on each patch, rather than on the merge commit) for something
-like --ignore-lines=<regex>.
+Sitz der Gesellschaft: Hamburg
 
-And you probably guess what I will say next: these features will make for
-really fantastic patch series *on top* of mine. There really is no good
-reason to delay the current patch series just to cram more features into
-it that had not been planned in the first place.
-
-> (Given that the range-diff
-> pr-1/dscho/branch-diff-v3...pr-1/dscho/branch-diff-v4 told me you used a
-> different base, this is a hard problem, as I certainly would want to
-> skip over all new base commits, but this one is interesting to look at.
-> An easy way out: Maybe an option to expand any new commits/patches after
-> the first expansion? Asking for opinions rather than implementing it)
-> 
-> >  19:  144363006 <  -:  --------- range-diff: left-pad patch numbers
-> >   -:  --------- > 19:  07ec215e8 range-diff: left-pad patch numbers
-> 
-> >   -:  --------- > 21:  d8498fb32 range-diff: use dim/bold cues to improve dual color mode
-> 
-> Those are interesting, I'll look at them separately, too.
-
-Thanks,
-Dscho
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
