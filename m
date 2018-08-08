@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67B71208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31A91208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727340AbeHHQLL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 12:11:11 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35425 "EHLO
+        id S1727345AbeHHQLP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 12:11:15 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:47070 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727048AbeHHQLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 12:11:11 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e6-v6so1308567edr.2
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:24 -0700 (PDT)
+        with ESMTP id S1727048AbeHHQLP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 12:11:15 -0400
+Received: by mail-ed1-f67.google.com with SMTP id o8-v6so1274452edt.13
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=SdR1olAKZNZ981DWOat9jkNz15uGDpdIBtJyZe5D3AY=;
-        b=KuZmIdE1yGWmGUkQKKdDkHuvI38jzxzyOctY0dJZ3uar0Lo+mwNk7r6KeRMMzfMDCg
-         BoDG3vS7FUPVyoatSOpS8LJnTMAgu6hWcC1wp98uvDEh3vqQ5OQqpiHpETRMY7Go9Nwp
-         m4OiXt5QWzgCq+8z3RImE9kXeHoI5VnWdpxFwlz61O0/Q9ki9Fo4IhpiMH+iwIku922B
-         AJukeZxffUQiDnZ8+iG3C/DBRJGm8DzYuxnLTHbWiBbSAoiYVXkZTJzCrXodScuXk0DT
-         kdNzlQdcvjwC+pdYIfq7x/tKCODTD2IQybwDMCcHV8RcVsy0hU1LYCdfv7Xk+DtEP8QM
-         JMJg==
+        bh=ltj4Ypxht+lzTgXCZEcrwAcbNsmKqqInH8vDQEwAfMs=;
+        b=sYNlHC4+Xs4ykr1nvUxA2qDa2hxb8hfSZ7CwGpC93GL7UkNSFab4G5H6c2UTefEi4j
+         IO/e1gcWFlTNjJndEvRPmx4dWB+9fsnsnpI2BgbJp2tcyhJ+VXRaShHPd+jd5Y+Go7Bm
+         3N9zFVtBvklQtiTnH/ealwP0+nWshVMXhVlm4WQOvUEluUcAIYPNkgR6nBLslkkZISRH
+         UuQR+GFeatofN0mRMVoMlTfPveSL24ItZNhAbsQc8yRjT1MJ0KhjEdU8fdMVIL4YUkXI
+         VP5SVMrn6Hf0kj9VG1Qy7QT5JcAmB9j1l+mO2X9cupS3VCTxgmDudcr4Mju7CCcZsS+U
+         YtJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=SdR1olAKZNZ981DWOat9jkNz15uGDpdIBtJyZe5D3AY=;
-        b=XDAztttaGcViL57OK/PSFNTDhkCuF7TdtU9En3l3Bl+n7PDcKYRZavypCCUIa0vcrk
-         YVG8gyPl7BHmj9TB0/3IZP13P0MdT5bLZp3C831DHid+GjuirhYjg8xqZbfEaqvzvKJx
-         oze+AipoXPZQFOlg+334/0pDbrA7zaLF4kjI2DkHxT0GT+5AJscVa4iFAkE9Szjks5h7
-         30bmWnulbJA+Jgt7itwnKgeiy7LwqchMLXihsvqBLi/Hicg3sbYC1Zu2C8qgpDfYNKZv
-         B4rfwbU3M2M+pI4sfSbK6dLd0i9Epq3+wwsNuzs+/FBrbdt1x6AthBxWkeMr4obdWGTw
-         Clxw==
-X-Gm-Message-State: AOUpUlEIRrhM1w2H/R3sg/IIfeb6XNJ4Oba3aNQ5pAl49ipcTjhsXbW4
-        41PULm0Yv0RYsMa/ShwMqbJAoJKS
-X-Google-Smtp-Source: AA+uWPyIfoZ51lOIQIkCVL0f9iZHwztOfcPiRvvapRLzsnQDMbM8Kql1S7aiSxrMWbpvM9ZcGirCRg==
-X-Received: by 2002:a50:af03:: with SMTP id g3-v6mr3307979edd.220.1533736283919;
-        Wed, 08 Aug 2018 06:51:23 -0700 (PDT)
+        bh=ltj4Ypxht+lzTgXCZEcrwAcbNsmKqqInH8vDQEwAfMs=;
+        b=cMi4ibNaZ48WTyzDkHsDFXcMTXNAVkJ7w3sbDAIl3WVTWjXitlY901PzG/l2QMplCZ
+         r4qNQuHxQLNQHJHB3ObA0P9dA7XMguht1VbUaeWYs4ExhZBE9X9CfUketyA2VAGWsFnh
+         MJXQCEQF0FlJar/zJPAo8jz+dHp/nKDWPxQIvcF1jOzV6dQfzlzxw6b5tjhWOMCdSAqB
+         HHVbEaKxgwrqCz4VlTwRzQvlJxOUNFfsOJTAAYKcBBJRUVe5iq5O9V4r/YH43oTCUOdl
+         pNKSn/RYCXj9Wxq7c5OJ9OL8D4y0D3/LBWcWlYCuwSYYNMQxjjnE5tIxij9vSnvOUJtI
+         IuVg==
+X-Gm-Message-State: AOUpUlF7RgWLFNMzKnreub4WMmt7FEiiKNd96ChvNaJ0C3sEIc3H6/XW
+        3lscYwHbjHy5JP9HxmG4hwGukxJc
+X-Google-Smtp-Source: AA+uWPyGdfMSww4Ee1rzbnYJK5AvJqHb/E3WwAFcEUT3eRiByS0/+jjZdRjHb+DLBl2ZFOxt7iTehQ==
+X-Received: by 2002:a50:f098:: with SMTP id v24-v6mr3392072edl.90.1533736287583;
+        Wed, 08 Aug 2018 06:51:27 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.20
+        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 06:51:23 -0700 (PDT)
+        Wed, 08 Aug 2018 06:51:26 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 04/11] builtin rebase: support --quiet
-Date:   Wed,  8 Aug 2018 19:33:23 +0545
-Message-Id: <20180808134830.19949-5-predatoramigo@gmail.com>
+Subject: [PATCH 05/11] builtin rebase: support the `verbose` and `diffstat` options
+Date:   Wed,  8 Aug 2018 19:33:24 +0545
+Message-Id: <20180808134830.19949-6-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808134830.19949-1-predatoramigo@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
@@ -64,82 +64,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit introduces a rebase option `--quiet`. While `--quiet` is
-commonly perceived as opposite to `--verbose`, this is not the case for
-the rebase command: both `--quiet` and `--verbose` default to `false` if
-neither `--quiet` nor `--verbose` is present.
+This commit introduces support for the `-v` and `--stat` options of
+rebase.
 
-This commit goes further and introduces `--no-quiet` which is the
-contrary of `--quiet` and it's introduction doesn't modify any
-behaviour.
-
-Note: The `flags` field in `rebase_options` will accumulate more bits in
-subsequent commits, in particular a verbose and a diffstat flag. And as
---quoet inthe shell scripted version of the rebase command switches off
---verbose and --stat, and as --verbose switches off --quiet, we use the
-(negated) REBASE_NO_QUIET instead of REBASE_QUIET: this allows us to
-turn off the quiet mode and turn on the verbose and diffstat mode in a
-single OPT_BIT(), and the opposite in a single OPT_NEGBIT().
+The --stat option can also be configured via the Git config setting
+rebase.stat. To support this, we also add a custom rebase_config()
+function in this commit that will be used instead of (and falls back to
+calling) git_default_config().
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ builtin/rebase.c | 60 ++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 58 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b79f9b0a9f..19fa4d3fc4 100644
+index 19fa4d3fc4..2d3f1d65fb 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -79,6 +79,10 @@ struct rebase_options {
- 	int root;
- 	struct commit *restrict_revision;
- 	int dont_finish_rebase;
-+	enum {
-+		REBASE_NO_QUIET = 1<<0,
-+	} flags;
-+	struct strbuf git_am_opt;
- };
+@@ -18,6 +18,7 @@
+ #include "lockfile.h"
+ #include "parse-options.h"
+ #include "commit.h"
++#include "diff.h"
  
- /* Returns the filename prefixed by the state_dir */
-@@ -159,6 +163,9 @@ static int run_specific_rebase(struct rebase_options *opts)
- 	add_var(&script_snippet, "revisions", opts->revisions);
- 	add_var(&script_snippet, "restrict_revision", opts->restrict_revision ?
- 		oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
-+	add_var(&script_snippet, "GIT_QUIET",
-+		opts->flags & REBASE_NO_QUIET ? "" : "t");
-+	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
+ static char const * const builtin_rebase_usage[] = {
+ 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+@@ -81,6 +82,8 @@ struct rebase_options {
+ 	int dont_finish_rebase;
+ 	enum {
+ 		REBASE_NO_QUIET = 1<<0,
++		REBASE_VERBOSE = 1<<1,
++		REBASE_DIFFSTAT = 1<<2,
+ 	} flags;
+ 	struct strbuf git_am_opt;
+ };
+@@ -166,6 +169,10 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	add_var(&script_snippet, "GIT_QUIET",
+ 		opts->flags & REBASE_NO_QUIET ? "" : "t");
+ 	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
++	add_var(&script_snippet, "verbose",
++		opts->flags & REBASE_VERBOSE ? "t" : "");
++	add_var(&script_snippet, "diffstat",
++		opts->flags & REBASE_DIFFSTAT ? "t" : "");
  
  	switch (opts->type) {
  	case REBASE_AM:
-@@ -308,6 +315,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+@@ -311,6 +318,21 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	return ret;
+ }
+ 
++static int rebase_config(const char *var, const char *value, void *data)
++{
++	struct rebase_options *opts = data;
++
++	if (!strcmp(var, "rebase.stat")) {
++		if (git_config_bool(var, value))
++			opts->flags |= REBASE_DIFFSTAT;
++		else
++			opts->flags &= !REBASE_DIFFSTAT;
++		return 0;
++	}
++
++	return git_default_config(var, value, data);
++}
++
+ int cmd_rebase(int argc, const char **argv, const char *prefix)
  {
  	struct rebase_options options = {
- 		.type = REBASE_UNSPECIFIED,
-+		.flags = REBASE_NO_QUIET,
-+		.git_am_opt = STRBUF_INIT,
- 	};
- 	const char *branch_name;
- 	int ret, flags;
-@@ -321,6 +330,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			   N_("rebase onto given branch instead of upstream")),
- 		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+@@ -332,7 +354,13 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  			 N_("allow pre-rebase hook to run")),
-+		OPT_NEGBIT('q', "quiet", &options.flags,
-+			   N_("be quiet. implies --no-stat"),
-+			   REBASE_NO_QUIET),
+ 		OPT_NEGBIT('q', "quiet", &options.flags,
+ 			   N_("be quiet. implies --no-stat"),
+-			   REBASE_NO_QUIET),
++			   REBASE_NO_QUIET| REBASE_VERBOSE | REBASE_DIFFSTAT),
++		OPT_BIT('v', "verbose", &options.flags,
++			N_("display a diffstat of what changed upstream"),
++			REBASE_NO_QUIET | REBASE_VERBOSE | REBASE_DIFFSTAT),
++		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
++			N_("do not show diffstat of what changed upstream"),
++			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
  		OPT_END(),
  	};
  
-@@ -357,6 +369,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		usage_with_options(builtin_rebase_usage,
- 				   builtin_rebase_options);
+@@ -360,7 +388,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	trace_repo_setup(prefix);
+ 	setup_work_tree();
  
-+	if (!(options.flags & REBASE_NO_QUIET))
-+		strbuf_addstr(&options.git_am_opt, " -q");
+-	git_config(git_default_config, NULL);
++	git_config(rebase_config, &options);
 +
- 	switch (options.type) {
- 	case REBASE_MERGE:
- 	case REBASE_INTERACTIVE:
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_rebase_options,
+ 			     builtin_rebase_usage, 0);
+@@ -456,6 +485,33 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			argc ? argv[0] : NULL, NULL))
+ 		die(_("The pre-rebase hook refused to rebase."));
+ 
++	if (options.flags & REBASE_DIFFSTAT) {
++		struct diff_options opts;
++
++		if (options.flags & REBASE_VERBOSE)
++			printf(_("Changes from %s to %s:\n"),
++				oid_to_hex(&merge_base),
++				oid_to_hex(&options.onto->object.oid));
++
++		/* We want color (if set), but no pager */
++		diff_setup(&opts);
++		opts.stat_width = -1; /* use full terminal width */
++		opts.stat_graph_width = -1; /* respect statGraphWidth config */
++		opts.output_format |=
++			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
++		opts.detect_rename = DIFF_DETECT_RENAME;
++		diff_setup_done(&opts);
++		diff_tree_oid(&merge_base, &options.onto->object.oid,
++			      "", &opts);
++		diffcore_std(&opts);
++		diff_flush(&opts);
++	}
++
++	/* Detach HEAD and reset the tree */
++	if (options.flags & REBASE_NO_QUIET)
++		printf(_("First, rewinding head to replay your work on top of "
++			 "it...\n"));
++
+ 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
+ 	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1))
+ 		die(_("Could not detach HEAD"));
 -- 
 2.18.0
 
