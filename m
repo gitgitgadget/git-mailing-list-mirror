@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71FA5208EB
-	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD35C208EB
+	for <e@80x24.org>; Wed,  8 Aug 2018 13:51:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727352AbeHHQLX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 12:11:23 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35444 "EHLO
+        id S1727360AbeHHQL0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 12:11:26 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35451 "EHLO
         mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727048AbeHHQLW (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 8 Aug 2018 12:11:22 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e6-v6so1308944edr.2
-        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:35 -0700 (PDT)
+        with ESMTP id S1727048AbeHHQL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 12:11:26 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e6-v6so1309056edr.2
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 06:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fx4hkZfH1JQQr9jOoRq9vfyP06SdNCsK3DoGdzNS7Tg=;
-        b=mJAEopyLvFN5Hj1RqF8yWBfJ46wBrPmFhDVGUadNGGEvD/8ncGWGABTjMQg5YTsgU/
-         MvPIx34OZNxV2SJwuALrm7AyjSKNTAP4eymgOHB4U1R7iZ15iKcdwG4CM5FitXBsP8i7
-         J8Hg9PpB+/UshxY4z7WKgSQDDimidQzusJ9nnm0R5a6lwzkr9z9nQT4UbAUzLLS7uISq
-         XG/lqHFnkr5IkRRVA2JhrS5PM1ZNuniSAhaYg15/eGVE1/wBpYWElIGDCoNYai9r6tth
-         d5uET6DiYNXU5QZR5NkxiMAKf2hCek+hO6ThPQyc2o2h75QgeJnNNJYL28wj4DW7DEY/
-         Ex2g==
+        bh=FvfuVWeQcgCkBbCN3zCkvoa/l7e+1Ge/PFXHGlg0TCM=;
+        b=XIF4SJSPNW6wodL4R2FLZNKVALJuogfYJthizCIKQkpU1LBcckSHkrhGD3iYh+1rkr
+         J274rMb7N3PeuetdEWxhol+F4uwpocrloKQXhL+lJklGw+qCblc9QYNIWkrKQ1Q6949c
+         7xb2p4kHjfmKArWKwtn/xH1duMSBE0ybsJ4m69UTdPR4wNlxgLwqtJChsWuKvyH/JSj+
+         jDpS+0eRTVdoYpVuDs97BGj4mcJWUN6L5Y9/KC8T6d231PBP5dLWR74fX9juXxIg0ZIL
+         vKDWQUP2rz4aUXXHnTO9iilrwzgIet2Ek/SafBSIyEX3q2H9rxDNIqBZVC44wrYmoaN+
+         r3gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fx4hkZfH1JQQr9jOoRq9vfyP06SdNCsK3DoGdzNS7Tg=;
-        b=hkO0h1+/bJCGi585ijT1L1r+QAzFhaW+lY6YeVX42Hdwa+CULlnI7BwkmUkqLS8Wge
-         5Ok0F/KCTuddsklGFDLo9viJonb7lR9iPgfn/P2KfmpjMXW0FSsbM5Nsjp6a0ohnwJEY
-         jwmjwsP2I7C3mUffHFEQj5AF3rGDNLjTSDsfep1d4yQEx3dasje7INjUgfvLjyOqZrPw
-         ZT1Np8HScfH6R/z6FvzAxiWxurtx/IiVOemCeqxF8WRj2ClsJ3iWg95JC5+38bVA48hH
-         rpGF+jnZyaKkKYCgPIaVWGKAg/TgMDr44RLHyjt4FgSeNJwwozWNVSyLzrhwQnVdT+05
-         rLSg==
-X-Gm-Message-State: AOUpUlGolFD6uj33ftaoA2GyVZLoPR69qVBc9usY4bdtw+tGWwuLhF7z
-        hg8LpQ4u9XwQoTceNrDAqPmBhb9n
-X-Google-Smtp-Source: AA+uWPx5aZZWartAhJy0BGJMZcE0Qa7ssekAWueo4+mcBtFQ18RYXVFVelwVVltoGb8LiYlwBYeJBQ==
-X-Received: by 2002:a50:8345:: with SMTP id 63-v6mr3271280edh.5.1533736295033;
-        Wed, 08 Aug 2018 06:51:35 -0700 (PDT)
+        bh=FvfuVWeQcgCkBbCN3zCkvoa/l7e+1Ge/PFXHGlg0TCM=;
+        b=MDrH9uafYr2ceDfBgpp3UFHIcYbcvNejGBE1ww8BIgRLRYdEOEmQi7BYqUWOIkm/aw
+         JaKZQzX6sbgCVeNfaHoKthM23+PajTB/jisPUhaV6xBWub06x1lyvRvgUD8yLCgvIQ/K
+         +GXMDDaq/xzFy3tQcCXXgApvg+fnhi1HuH0W7BroU/QDrrW+tBlVG8tgVDHBHGIvI1XD
+         otNiC/tgCIpEUvYca4OljZr7fO9omKiZ+ybkZBdjTxrtTw3r/0vF1ZJ6/ShlV+Vox5xn
+         teiNaYVM7+94qQPaFpA+sFKrjPQR8V0pX13nttKrnGIlGYKq81DZ2UCHFB6vMDgNjWXw
+         VWfw==
+X-Gm-Message-State: AOUpUlGt8wasznTZlcvMZI8yqMNSgcw8SExVwHZsB9hj2GqTFSD07eAN
+        s2smYhX7y0kCuAIgWtisF/92T1u4
+X-Google-Smtp-Source: AA+uWPwp4ah5YHk5Aq12I2kakz7bTvlcENzyzpeHXA0jCiPjkB7UC6yRQFLqfNCJIp9xsbCSJZcgfQ==
+X-Received: by 2002:a50:ac65:: with SMTP id w34-v6mr3398066edc.211.1533736298810;
+        Wed, 08 Aug 2018 06:51:38 -0700 (PDT)
 Received: from localhost.localdomain ([27.34.16.181])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.31
+        by smtp.gmail.com with ESMTPSA id u3-v6sm1619420edo.44.2018.08.08.06.51.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 08 Aug 2018 06:51:34 -0700 (PDT)
+        Wed, 08 Aug 2018 06:51:38 -0700 (PDT)
 From:   Pratik Karki <predatoramigo@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, Johannes.Schindelin@gmx.de,
         sbeller@google.com, alban.gruin@gmail.com, gitster@pobox.com,
         Pratik Karki <predatoramigo@gmail.com>
-Subject: [PATCH 07/11] builtin rebase: try to fast forward when possible
-Date:   Wed,  8 Aug 2018 19:33:26 +0545
-Message-Id: <20180808134830.19949-8-predatoramigo@gmail.com>
+Subject: [PATCH 08/11] builtin rebase: support --force-rebase
+Date:   Wed,  8 Aug 2018 19:33:27 +0545
+Message-Id: <20180808134830.19949-9-predatoramigo@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180808134830.19949-1-predatoramigo@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
@@ -64,123 +64,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In this commit, we add support to fast forward.
+In this commit, we add support to `--force-rebase` option. The
+equivalent part of the shell script found in `git-legacy-rebase.sh` is
+converted as faithfully as possible to C.
 
-Note: we will need the merge base later, therefore the call to
-can_fast_forward() really needs to be the first one when testing whether
-we can skip the rebase entirely (otherwise, it would make more sense to
-skip the possibly expensive operation if, say, running an interactive
-rebase).
+The --force-rebase option ensures that the rebase does not simply
+fast-forward even if it could.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 ---
- builtin/rebase.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ builtin/rebase.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index afef0b0046..52a218cd18 100644
+index 52a218cd18..8a7bf3d468 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -20,6 +20,7 @@
- #include "commit.h"
- #include "diff.h"
- #include "wt-status.h"
-+#include "revision.h"
- 
- static char const * const builtin_rebase_usage[] = {
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-@@ -89,6 +90,12 @@ struct rebase_options {
+@@ -86,6 +86,7 @@ struct rebase_options {
+ 		REBASE_NO_QUIET = 1<<0,
+ 		REBASE_VERBOSE = 1<<1,
+ 		REBASE_DIFFSTAT = 1<<2,
++		REBASE_FORCE = 1<<3,
+ 	} flags;
  	struct strbuf git_am_opt;
  };
+@@ -181,6 +182,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		opts->flags & REBASE_VERBOSE ? "t" : "");
+ 	add_var(&script_snippet, "diffstat",
+ 		opts->flags & REBASE_DIFFSTAT ? "t" : "");
++	add_var(&script_snippet, "force_rebase",
++		opts->flags & REBASE_FORCE ? "t" : "");
  
-+static int is_interactive(struct rebase_options *opts)
-+{
-+	return opts->type == REBASE_INTERACTIVE ||
-+		opts->type == REBASE_PRESERVE_MERGES;
-+}
-+
- /* Returns the filename prefixed by the state_dir */
- static const char *state_dir_path(const char *filename, struct rebase_options *opts)
- {
-@@ -334,6 +341,46 @@ static int rebase_config(const char *var, const char *value, void *data)
- 	return git_default_config(var, value, data);
- }
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -409,6 +412,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
+ 			N_("do not show diffstat of what changed upstream"),
+ 			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
++		OPT_BIT('f', "force-rebase", &options.flags,
++			N_("cherry-pick all commits, even if unchanged"),
++			REBASE_FORCE),
++		OPT_BIT(0, "no-ff", &options.flags,
++			N_("cherry-pick all commits, even if unchanged"),
++			REBASE_FORCE),
+ 		OPT_END(),
+ 	};
  
-+/*
-+ * Determines whether the commits in from..to are linear, i.e. contain
-+ * no merge commits. This function *expects* `from` to be an ancestor of
-+ * `to`.
-+ */
-+static int is_linear_history(struct commit *from, struct commit *to)
-+{
-+	while (to && to != from) {
-+		parse_commit(to);
-+		if (!to->parents)
-+			return 1;
-+		if (to->parents->next)
-+			return 0;
-+		to = to->parents->item;
-+	}
-+	return 1;
-+}
-+
-+static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
-+			    struct object_id *merge_base)
-+{
-+	struct commit *head = lookup_commit(the_repository, head_oid);
-+	struct commit_list *merge_bases;
-+	int res;
-+
-+	if (!head)
-+		return 0;
-+
-+	merge_bases = get_merge_bases(onto, head);
-+	if (merge_bases && !merge_bases->next) {
-+		oidcpy(merge_base, &merge_bases->item->object.oid);
-+		res = !oidcmp(merge_base, &onto->object.oid);
-+	} else {
-+		oidcpy(merge_base, &null_oid);
-+		res = 0;
-+	}
-+	free_commit_list(merge_bases);
-+	return res && is_linear_history(onto, head);
-+}
-+
- int cmd_rebase(int argc, const char **argv, const char *prefix)
- {
- 	struct rebase_options options = {
-@@ -489,6 +536,31 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
+@@ -551,10 +560,21 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
+ 		int flag;
  
-+	/*
-+	 * Now we are rebasing commits upstream..orig_head (or with --root,
-+	 * everything leading up to orig_head) on top of onto.
-+	 */
-+
-+	/*
-+	 * Check if we are already based on onto with linear history,
-+	 * but this should be done only when upstream and onto are the same
-+	 * and if this is not an interactive rebase.
-+	 */
-+	if (can_fast_forward(options.onto, &options.orig_head, &merge_base) &&
-+	    !is_interactive(&options) && !options.restrict_revision &&
-+	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
-+		int flag;
-+
-+		if (!(options.flags & REBASE_NO_QUIET))
-+			; /* be quiet */
-+		else if (!strcmp(branch_name, "HEAD") &&
-+			resolve_ref_unsafe("HEAD", 0, NULL, &flag))
-+			puts(_("HEAD is up to date, rebase forced."));
-+		else
-+			printf(_("Current branch %s is up to date, rebase "
-+				 "forced.\n"), branch_name);
-+	}
-+
- 	/* If a hook exists, give it a chance to interrupt*/
- 	if (!ok_to_skip_pre_rebase &&
- 	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
+-		if (!(options.flags & REBASE_NO_QUIET))
++		if (!(options.flags & REBASE_FORCE)) {
++			if (!(options.flags & REBASE_NO_QUIET))
++				; /* be quiet */
++			else if (!strcmp(branch_name, "HEAD") &&
++				 resolve_ref_unsafe("HEAD", 0, NULL, &flag))
++				puts(_("HEAD is up to date."));
++			else
++				printf(_("Current branch %s is up to date.\n"),
++				       branch_name);
++			ret = !!finish_rebase(&options);
++			goto cleanup;
++		} else if (!(options.flags & REBASE_NO_QUIET))
+ 			; /* be quiet */
+ 		else if (!strcmp(branch_name, "HEAD") &&
+-			resolve_ref_unsafe("HEAD", 0, NULL, &flag))
++			 resolve_ref_unsafe("HEAD", 0, NULL, &flag))
+ 			puts(_("HEAD is up to date, rebase forced."));
+ 		else
+ 			printf(_("Current branch %s is up to date, rebase "
 -- 
 2.18.0
 
