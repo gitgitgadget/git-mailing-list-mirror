@@ -2,105 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E90B1F405
-	for <e@80x24.org>; Wed,  8 Aug 2018 21:42:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 261981F405
+	for <e@80x24.org>; Wed,  8 Aug 2018 22:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731098AbeHIAEJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 8 Aug 2018 20:04:09 -0400
-Received: from gproxy10-pub.mail.unifiedlayer.com ([69.89.20.226]:55815 "EHLO
-        gproxy10-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727530AbeHIAEJ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 8 Aug 2018 20:04:09 -0400
-X-Greylist: delayed 1919 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Aug 2018 20:04:08 EDT
-Received: from cmgw14.unifiedlayer.com (unknown [10.9.0.14])
-        by gproxy10.mail.unifiedlayer.com (Postfix) with ESMTP id D6C0D140508
-        for <git@vger.kernel.org>; Wed,  8 Aug 2018 15:10:41 -0600 (MDT)
-Received: from box5008.bluehost.com ([50.116.64.19])
-        by cmsmtp with ESMTP
-        id nVj7frwbPvdTunVj7feVPF; Wed, 08 Aug 2018 15:10:41 -0600
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
-        Content-Type:References:In-Reply-To:Date:Cc:To:Reply-To:From:Subject:
-        Message-ID:Sender:Content-ID:Content-Description:Resent-Date:Resent-From:
-        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=nHW15e9R02ff1Ky/Q+qb6Wfibk0W4olf8giZNCJ7Bpk=; b=acUsAf7DO+Fy+ZujPjp+/FxG8o
-        rOTnUN85Je2OBxyrfhnv0ZUKl5jsavsKwL1TUFrXWBj1AbwjtjBO/BuhPab+LxWrUBeCtnuMu5oy0
-        vc+1iFyqflzauFybxA5EwTho7;
-Received: from [50.226.24.42] (port=33196 helo=pdsdesk)
-        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <paul@mad-scientist.net>)
-        id 1fnVj7-002Rd1-7D; Wed, 08 Aug 2018 15:10:41 -0600
-Message-ID: <d5f07990ed810b62c3a7be54dbd5ba7febb4f2e7.camel@mad-scientist.net>
-Subject: Re: Help with "fatal: unable to read ...." error during GC?
-From:   Paul Smith <paul@mad-scientist.net>
-Reply-To: paul@mad-scientist.net
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Date:   Wed, 08 Aug 2018 17:10:38 -0400
-In-Reply-To: <20180808182436.GA19096@sigill.intra.peff.net>
-References: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
-         <20180808160612.GC1607@sigill.intra.peff.net>
-         <b247434b62ccd30f32adbebb83fa6ea12b51b6ff.camel@mad-scientist.net>
-         <20180808182436.GA19096@sigill.intra.peff.net>
-Organization: I may be mad, but I'm a professional!
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.1-2 
+        id S1729714AbeHIAjp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 8 Aug 2018 20:39:45 -0400
+Received: from mail-ua0-f202.google.com ([209.85.217.202]:38741 "EHLO
+        mail-ua0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727337AbeHIAjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 8 Aug 2018 20:39:45 -0400
+Received: by mail-ua0-f202.google.com with SMTP id z17-v6so3003363uap.5
+        for <git@vger.kernel.org>; Wed, 08 Aug 2018 15:18:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=XAXOu9QBJMro9FXMFfPs/8S4UJP8VoNwgy1HxuLihI8=;
+        b=nKDfTIhmC/cGG5+hT18OHddUlYwpqkSz+lNmI6Rlci3Nc4me0UonMU07/19uX58YKA
+         O0kNtja67pmXJvjCW6NsqLKjXhWKUSV/KgchV1ufRKGPJVsEAi3cJQOf6LFGTCu9gSbw
+         Lg23vq0ka+nOE8ppBLRB0X109SU6/0iLUadJzvGfSLSY8hcJtfXt6fZf0LPxWNtmW+HZ
+         S1Fgp6AIy2ZWwpcqEswq4d6ARGXFwjyQE9Z1qExcIr1imClcyCHFdsWHCXLctJAFUwf9
+         wGwZL+GJC5Az/4bdjNgEsxOyXiSxzGa3RdMge5Hly0BnLHRgQTSxg64aUDKMnBdhYtOD
+         xyhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=XAXOu9QBJMro9FXMFfPs/8S4UJP8VoNwgy1HxuLihI8=;
+        b=tsXcTgSpkOA3E+lpmsxfvgdSbC0K/ldNYbGwrMa5zFk8O37jfeNtUzE4YuC8Jfv9co
+         gb5Cr3IQgxktiy/pcAUARK3TXrj6lyY1eqRu7ZJPeX8izhanTmR/RB6ekbP3zWllq0is
+         BBiiNuRQtKqbqJQ7dV0hBmiYilLmnD5VnXxmug+5zFua9VYBE2P0ftaI9iA4tJhskPmS
+         g3JaK/mnUPVKgD0wo8SFq7yL/3XwIW/26evHrF8KH/YgUKgs7gXffiqTmMURwDjrjMxw
+         82MYPJKtzwFNLj2vrOP8TdgFlR5bqgTFFgCoYe4IpsGrUesi2OG6tPbUOExBAHsWhjq3
+         xVGw==
+X-Gm-Message-State: AOUpUlFhbRdnqLGed+hAUiOSeB3GFeRBu6Z88fgQNMZqlTl/Cr5uSmwg
+        x6BheyFiMkg1BqwBgxYAb7ob5Yxdy8scTmh566sMHSonM05AQGUiBwHLMiP4SlXgd/7oO0PXvMz
+        dVGZ5qVbKFf9brETGP4FsTeN/mIltlrAMKl+V8OCQqGVQkPtlhtovr8tkHCT1
+X-Google-Smtp-Source: AA+uWPyJpJwJwZt/gqPpar/TXNL+on26ptGZtkrQaSQw+F+pTa/DpvJbbcL+/j5++MV8KYFLIr/1g0pd+07A
+X-Received: by 2002:a1f:b10c:: with SMTP id a12-v6mr2378192vkf.112.1533766684282;
+ Wed, 08 Aug 2018 15:18:04 -0700 (PDT)
+Date:   Wed,  8 Aug 2018 15:17:42 -0700
+Message-Id: <20180808221752.195419-1-sbeller@google.com>
 Mime-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5008.bluehost.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - mad-scientist.net
-X-BWhitelist: no
-X-Source-IP: 50.226.24.42
-X-Source-L: No
-X-Exim-ID: 1fnVj7-002Rd1-7D
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: (pdsdesk) [50.226.24.42]:33196
-X-Source-Auth: paul@mad-scientist.us
-X-Email-Count: 1
-X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
+Subject: [RFC PATCH 00/10] fetch: make sure submodule oids are fetched
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     hvoigt@hvoigt.net, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 2018-08-08 at 14:24 -0400, Jeff King wrote:
-> Let's narrow it down first and make sure we're dying where I expect.
-> Can
-> you try:
-> 
->   GIT_TRACE=1 git gc
-> 
-> and confirm the program running when the fatal error is produced?
-> 
-> From what you've shown it's going to be git-repack, but what I'm not
-> clear on is whether it is repack itself that is complaining, or the
-> pack-objects process it spawns. I'd guess the latter.
+Currently when git-fetch is asked to recurse into submodules, it dispatches
+a plain "git-fetch -C <submodule-dir>" (and some submodule related options
+such as prefix and recusing strategy, but) without any information of the
+remote or the tip that should be fetched.
 
-You are correct:
+This works surprisingly well in some workflows, not so well in others,
+which this series aims to fix.
 
-15:27:24.264161 git.c:415               trace: built-in: git pack-
-objects --keep-true-parents --honor-pack-keep --non-empty --all --
-reflog --indexed-objects --unpack-unreachable=2.weeks.ago --local --
-delta-base-offset .git/objects/pack/.tmp-17617-pack
+The first patches provide new basic functionality and do some refactoring;
+the interesting part is in the two last patches.
 
-> If so, can you try running it under gdb and getting a stack trace?
+Thanks,
+Stefan
 
-I would... but I discovered all my Git binaries are stripped to the max
-and no symbols available.
+Stefan Beller (10):
+  string_list: print_string_list to use trace_printf
+  string-list.h: add string_list_pop function.
+  sha1-array: provide oid_array_remove_if
+  submodule.c: convert submodule_move_head new argument to object id
+  submodule.c: fix indentation
+  submodule.c: sort changed_submodule_names before searching it
+  submodule: move global changed_submodule_names into fetch submodule
+    struct
+  submodule.c: do not copy around submodule list
+  submodule: fetch in submodules git directory instead of in worktree
+  fetch: retry fetching submodules if sha1 were not fetched
 
-I'll do a quick rebuild with some debug info and get back to you.
+ builtin/fetch.c             |   9 +-
+ entry.c                     |   6 +-
+ sha1-array.c                |  39 ++++++++
+ sha1-array.h                |   3 +
+ string-list.c               |  12 ++-
+ string-list.h               |   6 ++
+ submodule.c                 | 194 +++++++++++++++++++++++++++---------
+ submodule.h                 |   2 +-
+ t/t5526-fetch-submodules.sh |  23 ++++-
+ unpack-trees.c              |  13 +--
+ 10 files changed, 241 insertions(+), 66 deletions(-)
 
-Thanks for the pointers!
+-- 
+2.18.0.597.ga71716f1ad-goog
+
