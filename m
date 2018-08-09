@@ -1,118 +1,187 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.0 required=3.0 tests=BAYES_50,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E6951F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 09:01:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE171F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 09:14:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728376AbeHILZV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 07:25:21 -0400
-Received: from bmmpf2702.jpx1.mp.cheetahdigital.com ([106.185.82.116]:39754
-        "EHLO bmmpf2702.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727371AbeHILZU (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Aug 2018 07:25:20 -0400
-X-Greylist: delayed 1206 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2018 07:25:20 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1533805288;
-        s=spex.201608; d=spex.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=Y9IaSYPKrsFVxteLZcuO1kH31qu4RY+la04CUNIUAk4=;
-        b=XLobuFgxEDo6WXBpHmAtnnwQ2XdNeHHXHodte9fS1jBTg9VZaIXpasHW48o/dsS8
-        ICPJ+rDF6fJeqDyGFa/bZcjfCNiTqQjYm+jj96s+hB3k/F+vwjXB4RaqJ3O8zqqrNF2
-        W0KnEQ/EAH1Dk3g2gpB84sbwSbhexomnyThw0/hg=
-Date:   Thu, 9 Aug 2018 17:41:06 +0900 (JST)
-From:   Qu Jun MARKETING & SALES PROMOTION EXPO Show
-         Management <spex-en@spex.jp>
-Reply-To: spworld@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1533804066855.2018100410.rxjp006.0.15296.00000000@ad145se.mpse.jp>
-Subject: =?utf-8?B?5bGV5ZCO5oql5ZGK5Ye654KJIC0g5pel5pys5Zu96ZmF5L+D6ZSA?=
- =?utf-8?B?56S85ZOBJuiQpemUgOWxlU1BUktFVElORw==?=
- =?utf-8?B?ICYgU0FMRVMgUFJPTU9USU9OIEVYUE8gW0p1bHld?=
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        id S1730111AbeHILiI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 07:38:08 -0400
+Received: from ao2.it ([92.243.12.208]:35500 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730060AbeHILiI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 07:38:08 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fngzo-0005xp-3Z; Thu, 09 Aug 2018 11:12:40 +0200
+Date:   Thu, 9 Aug 2018 11:14:08 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC PATCH v2 10/12] t7416: add new test about HEAD:.gitmodules
+ and not existing .gitmodules
+Message-Id: <20180809111408.3ee7296a8aefd38ea1208547@ao2.it>
+In-Reply-To: <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-11-ao2@ao2.it>
+        <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-尊敬的 市场经理
-Zhejiang Wuchuan Industrial Co., Ltd,
+On Thu, 2 Aug 2018 13:43:05 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-您好！
-这里是日本国际促销礼品&营销展MARKETING & SALES PROMOTION EXPO展会主办方。
+> On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
+> >
+> > git submodule commands can now access .gitmodules from the current
+> > branch even when it's not in the working tree, add some tests for that
+> > scenario.
+> >
+> > Signed-off-by: Antonio Ospite <ao2@ao2.it>
+> > ---
 
-日本国际促销礼品&营销展是日本最大的针对促销及营销的专业BtoB展会。
-展品范围包括：促销礼品、包装、印刷、广告牌、标识、销售/在库管理、客户情报管理、互联网广告等。
+[...]
+> > +NOTE: "git mv" and "git rm" are still supposed to work even without
+> > +a .gitmodules file, as stated in the t3600-rm.sh and t7001-mv.sh tests.
+> 
+> "supposed to work" != "tested that it works" ?
 
-2018年7月展在广大展商和买家的支持下获得了圆满成功并获得了一致好评。
-本届的展后报告将帮助您更好地了解本展。
+"git mv submod new_submod" and "git rm submod" are actually expected to
+work without the .gitmodules file, and there are tests about that in
+t3600-rm.sh and t7001-mv.sh:
 
-展后报告内容包括：
+t3600-rm.sh:
+  'rm does not complain when no .gitmodules file is found'
 
- - 2018年展会相关数据 
- - 展商感言
- - 2018年研讨会信息
+t7001-mv.sh:
+  'git mv moves a submodule with a .git directory and no .gitmodules'  
+  'mv does not complain when no .gitmodules file is found'
 
-请确认展后报告并作为贵司参展的参考资料。
+> I am not sure what the NOTE wants to tell me? (Should I review those
+> tests to double check them now? or do we just want to tell future readers
+> of this test there are other tangent tests to this?)
+>
 
->> https://www.sp-world.jp/en/summer/doc/postshow2018/ <<
+Admittedly the NOTE is not useful without any context: during the
+development of "submodule--helper config --stage" I initially assumed
+that "git mv" and "git rm" should fail if .gitmodules was not available,
+because these commands modify .gitmodules and I added code for that in
+stage_updated_gitmodules().
 
-如需更多信息如价格/可选展位等，请简单回复以下内容。
--------------------------------------
-mailto: spworld@reedexpo.co.jp
-公司名:
-联系人:
-Email:
-电话:
--------------------------------------
+But then later I found out that my assumption was wrong and that git has
+tests to verify that these operations on submodules succeed even when
+.gitmodules does not exist, which was a little of a surprise to me.
 
-期待您的回复
+So I removed all my code that was conflicting with git assumptions, and
+added the NOTE. However I guess that was primarily a note to myself, and
+it should have not slipped in the public patches.
 
-敬祝商祺,
+I think I will remove the note, it can be confusing and does not really
+add anything, and even less considering that "submodule--helper config
+--stage" is going to be dropped.
 
-Qu Jun (Mr.)
-MARKETING & SALES PROMOTION EXPO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-mailto:spworld@reedexpo.co.jp
+[...]
+> > +test_expect_success 'not adding submodules when the gitmodules config is not checked out' '
+> > +       (cd super &&
+> > +               test_must_fail git submodule add ../new_submodule
+> > +       )
+> > +'
+> > +
+> > +# "git add" in the test above fails as expected, however it still leaves the
+> > +# cloned tree in there and adds a config entry to .git/config. This is because
+> > +# no cleanup is done by cmd_add in git-submodule.sh when "git
+> > +# submodule--helper config" fails to add a new config setting.
+> > +#
+> > +# If we added the following commands to the test above:
+> > +#
+> > +#   rm -rf .git/modules/new_submodule &&
+> > +#   git reset HEAD new_submodule &&
+> > +#   rm -rf new_submodule
+> 
+> Alternatively we could check for the existence of .gitmodules
+> before starting all these things?
+>
 
-----------------------
-MARKETING & SALES PROMOTION EXPO [6月展]
-日期: 2019年6月19日（周三）-6月21日（周五）
-地点: 日本东京有明国际展览中心
-WEB: https://www.sp-world.jp/en/Home_summer/
-----------------------
-----------------------
-MARKETING & SALES PROMOTION EXPO [1月展]
-日期: 2019年1月30日（周三）-2019年2月1日（周五）
-地点: 日本幕张国际展览中心
-WEB: https://www.sp-world.jp/en/
-----------------------
+You mean in cmd_add(), before doing anything?
 
+The following would anticipates the same check which makes "git submodule
+add" fail:
 
+diff --git a/git-submodule.sh b/git-submodule.sh
+index ff258e2e8c..b261175143 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -159,6 +159,11 @@ cmd_add()
+                shift
+        done
 
++       if test ! -e .gitmodules && git cat-file -e HEAD:.gitmodules
++       then
++                die "$(eval_gettext "please make sure that the .gitmodules file in the current branch is checked out")"
++       fi
++
+        if test -n "$reference_path"
+        then
+                is_absolute_path "$reference_path" ||
 
+This refers to .gitmodules explicitly but we said that we do not care
+about that for now, if opaque access was ever needed in the future,
+something like "submodule--helper config --is-writeable" could be added.
 
-ID:E36-G1402-0075
+> I think it is okay to not clean up if we check all "regular" or rather expected
+> things such as a non-writable .gitmodules file before actually doing it.
+> (This is similar to 'checkout' that walks the whole tree and checks if the
+> checkout is possible given the dirtyness of the tree, to either abort early
+> or pull through completely. In catastrophic problems such as a full disk
+> we'd still die in the middle of work)
+> 
+> > +#
+> > +# then the repository would be in a clean state and the test below would pass.
+> > +#
+> > +# Maybe cmd_add should do the cleanup from above itself when failing to add
+> > +# a submodule.
+> > +test_expect_failure 'init submodule after adding failed when the gitmodules config is not checked out' '
+> 
+> So this comment and test is about explaining why we can fail mid way through,
+> which we could not before unless we had the catastrophic event.
+> 
+> I think we should check for a "writable" .gitmodules file at the beginning,
+> which is if (G || (!G && !H)) [using the notation from the cover letter]?
+> 
+> > +       (cd super &&
+> > +               git submodule init
 
+With the change from above this last test passes.
 
+BTW the check I am using here and in the code of submodule--helper,
+corresponds indeed to the boolean expression you mentioned, but
+simplified and negated.
 
+Thanks,
+   Antonio
 
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
-
-This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "REMOVE FROM LIST".
-You will not receive any further information on this exhibition/conference.
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
