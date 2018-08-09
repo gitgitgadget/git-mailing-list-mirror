@@ -2,94 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85B61F46C
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67AC51F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:46:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727326AbeHJALQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:11:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49168 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727290AbeHJALQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:11:16 -0400
-Received: (qmail 5737 invoked by uid 109); 9 Aug 2018 21:44:32 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 21:44:32 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14035 invoked by uid 111); 9 Aug 2018 21:44:34 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 17:44:34 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 17:44:30 -0400
-Date:   Thu, 9 Aug 2018 17:44:30 -0400
-From:   Jeff King <peff@peff.net>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        pawelparuzel95@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive
- filesystems
-Message-ID: <20180809214430.GE11342@sigill.intra.peff.net>
-References: <20180730152756.15012-1-pclouds@gmail.com>
- <20180807190110.16216-1-pclouds@gmail.com>
- <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
- <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
- <20180808223139.GA3902@sigill.intra.peff.net>
- <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com>
- <20180809142333.GB1439@sigill.intra.peff.net>
- <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
- <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
+        id S1727548AbeHJANX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:13:23 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:38595 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727285AbeHJANW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:13:22 -0400
+Received: by mail-wr1-f49.google.com with SMTP id v14-v6so6431469wro.5
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=15kLjVXT0cHLEwILFMm/1UJR4RygQC2YC+rMgw1mngc=;
+        b=dBbMA6APOq0G+y8brOdBB4RzL4MmuaW1gHVJn4/2tvD1tZD3p7VYsOy3L8mC0mTplt
+         rLE6hOhxYXfrObZQDl3hJ1eP8rOpDK6GvU/jH+LD7aqjqXlg6yfU/ePbC7Swyh3ywXAJ
+         Sw2yE9tsC1lPyNeSJDFGXzVyIxKxbrW4qcrkGn6mNGXQbWtxxzRFDThiS1E1ApMOCt0t
+         HZBeG1Rkw6OycvAoJHrQ3Er+/iaS2tIZXFCDGoVY9nvdml4s47WfK0/giz4Zq3xXnTGl
+         ZPl0YoT5urkNy4SKERJlWcWHtVkTFKr71qNPgo6PFKZAuSSM4vBQyTUfDwOJVjQRvDFM
+         NgEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=15kLjVXT0cHLEwILFMm/1UJR4RygQC2YC+rMgw1mngc=;
+        b=ZA9mX6aGHrn3hR7vti/vWlE283q0nOz8hmQkJNbaVczgkwipXdzv05z1r473L1Qywe
+         JEht374JAGy15kpjZOjgjl82xnS5pyBEp+txPXoEbfUCr1B9PnD0s0OCxcC0QVyVTvpS
+         j3LDg+5HL8lg/monCanfJ4cJcn4Zco5Q11GXQf2/gzTRBVmIBs8x3hwoORUrwYzJbWrp
+         JY1eoiXZ068Qw8MQTy4DnrArXofWHiS8/DqjnZZuoHJ0dF08fMDhY6LzBlnzuPYDGxKS
+         C8xZ2wpRAbjvZ03SAGVu/NBKbGVjldQ5kDVQBvp8E00SpiQAuuwCn6+kG1ovkY/0UGkr
+         wLlw==
+X-Gm-Message-State: AOUpUlHIlxWuPBVNzpK4G+BD/XH5zum7uj3kOPCjR6v2+cY021DKEBiO
+        hs7IuHGTxD8TzdIZOTyi7fM=
+X-Google-Smtp-Source: AA+uWPz1aowrmKoHG3tpq14ZLv/nxKhiuNx3U2yalrprkRLA88O3J0K+90yvTGn3DP1BTIRaGc67aA==
+X-Received: by 2002:adf:f850:: with SMTP id d16-v6mr2369444wrq.172.1533851195254;
+        Thu, 09 Aug 2018 14:46:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h5-v6sm9084697wrr.19.2018.08.09.14.46.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 14:46:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH 03/10] sha1-array: provide oid_array_remove_if
+References: <20180808221752.195419-1-sbeller@google.com>
+        <20180808221752.195419-4-sbeller@google.com>
+        <CAN0heSqwGoFwn34nRp3i09ExnjDPSY8WD=81M9jN5OW-ccpiTg@mail.gmail.com>
+        <CAGZ79kYtKZJ0Dm0ejxrotnoaNERtR0J6=DMCgweCObdJr0K6-w@mail.gmail.com>
+        <20180809192454.GB32376@sigill.intra.peff.net>
+Date:   Thu, 09 Aug 2018 14:46:34 -0700
+In-Reply-To: <20180809192454.GB32376@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 9 Aug 2018 15:24:54 -0400")
+Message-ID: <xmqqo9eb9ps5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 09, 2018 at 02:40:58PM -0700, Elijah Newren wrote:
+Jeff King <peff@peff.net> writes:
 
-> > I worry that the false positives make this a non-starter.  I mean, if
-> > clone creates files 'A' and 'B' (both equal) and then tries to create
-> > 'b', would the collision code reports that 'b' collided with 'A' because
-> > that was the first OID match?  Ideally with this scheme we'd have to
-> > search the entire index prior to 'b' and then report that 'b' collided
-> > with either 'A' or 'B'.  Neither message instills confidence.  And
-> > there's no way to prefer answer 'B' over 'A' without using knowledge
-> > of the FS name mangling/aliasing rules -- unless we want to just assume
-> > ignore-case for this iteration.
-> 
-> A possibly crazy idea: Don't bother reporting the other filename; just
-> report the OID instead.
-> 
-> "Error: Foo.txt cannot be checked out because another file with hash
-> <whatever> is in the way."  Maybe even add a hint for the user: "Run
-> `git ls-files -s` to see see all files and their hash".
-> 
-> Whatever the exact wording for the error message, just create a nice
-> post on stackoverflow.com explaining the various weird filesystems out
-> there (VFAT, NTFS, HFS, APFS, etc) and how they cause differing
-> filenames to be written to the same location.  Have a bunch of folks
-> vote it up so it has some nice search-engine juice.
+> Even with keeping the order this can be done in a single linear pass.
+> See filter_string_list() for an example.
 
-Actually, I kind of like the simplicity of that. It puts the human brain
-in the loop.
-
-> The error message isn't quite as good, but does the user really need
-> all the names of the file?  If so, we gave them enough information to
-> figure it out, and this is a really unusual case anyway, right?
-> Besides, now we're back to linear performance....
-
-Well, it's still quadratic when they run O(n) iterations of "git
-ls-files -s | grep $colliding_oid". You've just pushed the second linear
-search onto the user. ;)
-
--Peff
+Heh, I just wasted a few minutes saying the same; I should have
+pointed him at these two lines ;-)
