@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52B061F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C16AC1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:35:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732368AbeHIUBU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 16:01:20 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:42516 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731115AbeHIUBU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 16:01:20 -0400
-Received: by mail-pl0-f65.google.com with SMTP id g6-v6so2836025plq.9
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:35:27 -0700 (PDT)
+        id S1732455AbeHIUBV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 16:01:21 -0400
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:45684 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731115AbeHIUBV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 16:01:21 -0400
+Received: by mail-pg1-f175.google.com with SMTP id f1-v6so3056206pgq.12
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:35:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uQVZYKpQVYtjzHCBco0ng1VLyXfp+HeUTldyGl7pdoI=;
-        b=oEe+fDCDOVevGFzeoioujy0cLDyFLMXzbd7Y7CKD3YPt3rYPViutUS3aBo61H2N/qH
-         +TOpW0cPY4TItnjT1Pg1jHEmBJ5w1KJR56Cu9kEz4nALIAEm4Zm4VyQ97PuCco3W6dGc
-         QEY5eJUk1cIPWnHva0dNrYjI2lcYvMGzaPsP6Q4/9EbfUccXlg3aTgwHVbE/v75fcsSL
-         zVxHZpNgk4hOjyWt1FUVTsS64JET8iOZfASD/q2rnBQIWMU25W71B31zpGXM34mthKW8
-         iCThfg3ck3uc0iDtXpKwcvdxLMe8mVWQFDEzP8bdzQouSGwgSC8vPNLl4ncyzVNHAXZp
-         q57g==
+        bh=Jvj6Drfa2IxuzhoybmZszgLpFX9SMLU8PVp5tostdEA=;
+        b=sObjmMULQDWdL08c3R3E0NkJ+apiqceVi2s5E/u80ApJeblQIMBTfluoL+kLUgD2pC
+         11ggSSWTDcs2hUmMV7AfENEtrAT6f/Fgj7jo6gyAlSBhzkHlees+pnivgKxgtmaWxXto
+         gbuS6RxzggUBwEXibSyIpAOIcMAoKvH07IwwwiuIuJPD6v4E5ARzZv+NpLvi28emzREn
+         hB0yY8J8VcWPoms3wpKEsIc0N3YGrfxUbK1zEoIKAkkevfGKht95GwtTcGhVZg2eLwOC
+         OeOf24z7dPA727HvhbJR8nRihNGh1KckcUAkP3DAsMGxbODSnPJM7LsicWLvXSGyt2nM
+         tjmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uQVZYKpQVYtjzHCBco0ng1VLyXfp+HeUTldyGl7pdoI=;
-        b=eKNgRJhN116vFavOyTWDbDEFRAx4z4Qjk+xHyvXPd4oxr6WBMLPm+7+zt/N1uBbiEG
-         AJBBat8sVbbKGp0jPesHJkXgRQfTRhtG0Z2bXqhJrOFuFD5NCC10E7/36ZY8d7jpJBi5
-         xoijCX4lxh3Y/TJMxQFgSHLnDoUNF37KvN50tBztYg84rqXUOVNKDpbEZLPGtg6ZUibY
-         1j0PgNElM0i95kqcb41dKFmXqm8y/YboJZK4xa+biP9zapR3k9Hwzio0RmOtJO7su9u8
-         zhZtCZZJcObQODjolQuHRaDXe/NRms2UuqdHyuG+4IKYtkx9FyzUr8N4CQhw/AnwChYE
-         KVsA==
-X-Gm-Message-State: AOUpUlEmcG1IzC/ivEojXng9B+uGjHfDnhIKS8JKhF2WgMpfFEofATOo
-        6N7dMBAWor/BAj6cINZgai1wzNJE
-X-Google-Smtp-Source: AA+uWPzp7bmnQrLhmOz+QMyNMf7Q9MfORQvvT9nui+fGFNcjW4cQMT4f2ovUTA8dzGTWAg2pI/+xfg==
-X-Received: by 2002:a17:902:8ec8:: with SMTP id x8-v6mr2068710plo.308.1533836126538;
-        Thu, 09 Aug 2018 10:35:26 -0700 (PDT)
+        bh=Jvj6Drfa2IxuzhoybmZszgLpFX9SMLU8PVp5tostdEA=;
+        b=CfaYM9W/Uubjr8y45/4/zKXUV5MMzxqvv/GETC+7ybsp30CRnE4oFm979bG+PWivUz
+         KK+WVlHQ5BqEabO+1IcgyH3phnre2MSjl/e+owEuiSeBSWfSII2G59UqvbIcEfC7nwlw
+         Br33gpaFsRVV6pIN64BoZSAaAWgmK0lz8W9oq+opbq0TWnXP1/x3DtBcL8KhPlem6VFR
+         Y3HvPWwjCdGaNZK1/u1gu1k3zf9duuiPHoMXorq/ySQDrTxtxj6dc/CsTapMHVAABs+i
+         cYruA/2ZvFlaKdI7sUa1BALfgQoQYjVh0fCgd62dxVBa2H6lKfhGwdzPDahcMA9QanOh
+         aR0w==
+X-Gm-Message-State: AOUpUlFhjeSG6oigABtKLSDAC8FwPMAF8AP00EQzSmcKIgeWI9XRz7/1
+        /TV7cxOBUkAnJ0Z4LDH9Rz8fmrBg
+X-Google-Smtp-Source: AA+uWPxkB9qHnhkVocJd8IO2AkNQGRH4BIuZlryhI4W0aE9wXoa5vMU84YBZnpZ27I9BqF3HR8GUhw==
+X-Received: by 2002:a62:198e:: with SMTP id 136-v6mr3366069pfz.103.1533836127961;
+        Thu, 09 Aug 2018 10:35:27 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id p64-v6sm13777179pfa.47.2018.08.09.10.35.25
+        by smtp.gmail.com with ESMTPSA id v22-v6sm19816171pfi.60.2018.08.09.10.35.26
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
-Date:   Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
-X-Google-Original-Date: Thu, 09 Aug 2018 17:35:18 GMT
-Message-Id: <e449ed75fe3705692175017f98438815aeccf0fb.1533836122.git.gitgitgadget@gmail.com>
+        Thu, 09 Aug 2018 10:35:27 -0700 (PDT)
+Date:   Thu, 09 Aug 2018 10:35:27 -0700 (PDT)
+X-Google-Original-Date: Thu, 09 Aug 2018 17:35:19 GMT
+Message-Id: <8dda2d5303952306520bc90c2cf2b25b83fdd31a.1533836122.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.17.git.gitgitgadget@gmail.com>
 References: <pull.17.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/4] Introduce a function to lock/unlock file descriptors when
- appending
+Subject: [PATCH 2/4] mingw: implement lock_or_unlock_fd_for_appending()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,102 +70,85 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This function will be used to make write accesses in trace_write() a bit
-safer.
+For some reason, t/t5552-skipping-fetch-negotiator.sh fails particularly
+often on Windows due to racy tracing where the `git upload-pack` and the
+`git fetch` processes compete for the same file.
 
-Note: this patch takes a very different approach for cross-platform
-support than Git is historically taking: the original approach is to
-first implement everything on Linux, using the functions available on
-Linux, and then trying to emulate these functions on platforms that do
-not have those functions such as Windows.
-
-This leads to all kinds of undesirable quirks in Git's source code (and
-performance characteristics) because of the lack of a proper abstraction
-layer: instead of declaring functions for the functionality we
-*actually* need, we abuse POSIX functions to say what we need, even if
-those functions serve much broader purposes (and do not make at all
-clear what the caller wants of them).
-
-For example, when Git wants to determine whether a path refers to a
-symbolic link, it calls lstat(). That POSIX function has to be emulated
-on Windows, painstakingly filling all the information lstat() would,
-only for the caller to throw away everything except that one bit of
-information, and all of the time figuring out the mtime/atime/ctime and
-file size and whatnot was spent in vain.
-
-If we were to follow that approach, we would extend the fcntl()
-emulation in compat/mingw.c after this commit, to support the function
-added in this commit.
-
-But fcntl() allows a lot more versatile file region locking that we
-actually need, to by necessity the fcntl() emulation would be quite
-complex: To support the `l_whence = SEEK_CUR` (which we would use, if it
-did not require so much book-keeping due to our writing between locking
-and unlocking the file), we would have to call `SetFilePointerEx()`
-(after obtaining the `HANDLE` on which all Win32 API functions work
-instead of the integer file descriptors used by all POSIX functions).
-Multiplying the number of Win32 API round-trips. Of course, we could
-implement an incomplete emulation of fcntl()'s F_WRLCK, but that would
-be unsatisfying.
-
-An alternative approach would be to use the `flock()` function, whose
-semantics are much closer to existing Win32 API. But `flock()` is not
-even a POSIX standard, so we would have to implement emulation of
-`flock()` for *other* platforms. And it would again be the wrong thing
-to do, as we would once again fail to have an abstraction that clearly
-says what *exact*functionality we want to use.
-
-To set a precedent for a better approach, let's introduce a proper
-abstraction: a function that says in its name precisely what Git
-wants it to do (as opposed to *how* it does it on Linux):
-lock_or_unlock_fd_for_appending().
-
-The next commit will provide a Windows-specific implementation of this
-function/functionality.
+We just introduced a remedy that uses fcntl(), but Windows does not have
+fcntl(). So let's implement an alternative.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
-squash! Introduce a function to lock/unlock file descriptors when appending
 ---
- git-compat-util.h |  2 ++
- wrapper.c         | 14 ++++++++++++++
- 2 files changed, 16 insertions(+)
+ compat/mingw.c   | 19 +++++++++++++++++++
+ compat/mingw.h   |  3 +++
+ config.mak.uname |  3 +++
+ 3 files changed, 25 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 9a64998b2..13b83bade 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1202,6 +1202,8 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
- #define getc_unlocked(fh) getc(fh)
- #endif
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 6ded1c859..6da9ce861 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -514,6 +514,25 @@ int mingw_chmod(const char *filename, int mode)
+ 	return _wchmod(wfilename, mode);
+ }
  
-+extern int lock_or_unlock_fd_for_appending(int fd, int lock_it);
++int mingw_lock_or_unlock_fd_for_appending(int fd, int lock_it)
++{
++	HANDLE handle = (HANDLE)_get_osfhandle(fd);
++	OVERLAPPED overlapped = { 0 };
++	DWORD err;
++
++	if (!lock_it && UnlockFileEx(handle, 0, -1, 0, &overlapped))
++		return 0;
++	if (lock_it &&
++	    LockFileEx(handle, LOCKFILE_EXCLUSIVE_LOCK, 0, -1, 0, &overlapped))
++		return 0;
++
++	err = GetLastError();
++	/* LockFileEx() cannot lock pipes */
++	errno = err == ERROR_INVALID_FUNCTION ?
++		EBADF : err_win_to_posix(GetLastError());
++	return -1;
++}
 +
  /*
-  * Our code often opens a path to an optional file, to work on its
-  * contents when we can successfully open it.  We can ignore a failure
-diff --git a/wrapper.c b/wrapper.c
-index e4fa9d84c..6c2116272 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -690,3 +690,17 @@ int xgethostname(char *buf, size_t len)
- 		buf[len - 1] = 0;
- 	return ret;
- }
+  * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
+  * Returns the 100-nanoseconds ("hekto nanoseconds") since the epoch.
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 571019d0b..0f76d89a9 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -397,6 +397,9 @@ HANDLE winansi_get_osfhandle(int fd);
+  * git specific compatibility
+  */
+ 
++int mingw_lock_or_unlock_fd_for_appending(int fd, int lock_it);
++#define lock_or_unlock_fd_for_appending mingw_lock_or_unlock_fd_for_appending
 +
-+#ifndef GIT_WINDOWS_NATIVE
-+int lock_or_unlock_fd_for_appending(int fd, int lock_it)
-+{
-+	struct flock flock;
+ #define has_dos_drive_prefix(path) \
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+ int mingw_skip_dos_drive_prefix(char **path);
+diff --git a/config.mak.uname b/config.mak.uname
+index 684fc5bf0..159b7da81 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -376,6 +376,7 @@ ifeq ($(uname_S),Windows)
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	NATIVE_CRLF = YesPlease
+ 	DEFAULT_HELP_FORMAT = html
++	HAVE_FLOCK = YesWeEmulate
+ 
+ 	CC = compat/vcbuild/scripts/clink.pl
+ 	AR = compat/vcbuild/scripts/lib.pl
+@@ -523,6 +524,8 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_INET_NTOP = YesPlease
+ 	NO_POSIX_GOODIES = UnfortunatelyYes
+ 	DEFAULT_HELP_FORMAT = html
++	HAVE_FLOCK = YesWeEmulate
 +
-+	flock.l_type = lock_it ? F_WRLCK : F_UNLCK;
-+	flock.l_whence = SEEK_SET;
-+	flock.l_start = 0;
-+	flock.l_len = 0xffffffff; /* arbitrary number of bytes */
-+
-+	return fcntl(fd, F_SETLKW, &flock);
-+}
-+#endif
+ 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
 -- 
 gitgitgadget
 
