@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75FE31F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 22:45:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B7D81F46C
+	for <e@80x24.org>; Thu,  9 Aug 2018 22:45:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727448AbeHJBMe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 21:12:34 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:43891 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727390AbeHJBMe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 21:12:34 -0400
-Received: by mail-it0-f74.google.com with SMTP id d9-v6so136655itf.8
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:45:34 -0700 (PDT)
+        id S1727488AbeHJBMi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 21:12:38 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:41893 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727390AbeHJBMi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 21:12:38 -0400
+Received: by mail-qt0-f202.google.com with SMTP id l13-v6so5808373qth.8
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Toy6ksCxaToT0+gVtye5bDm5+lFeCi8aNIqODvLDWVU=;
-        b=TQ1T9aDSY0Tt/Hner3KpRrIDPdZyxjDmIqrQ3y5MHV+7qxacELN9ouRzLOyzjWPUpk
-         +zFzAtqA6/mjl+hyN2iekEgRy62WDKtqt0dNPERuh42405NgldABer/xP/lz7gu3vkzy
-         o4lIghzoidTOdSYMRFDtdFfbEPedX0Zu/tQKKibBre+Ry5jR11DGVJ+Pf6VhUYN/EU7D
-         cTyMuTS1o7brJAif1cL5k9U+Q0DFSCuLQMHzIFCG8ue5vtMav3JywiS7kbpRb5OcIDAl
-         AkWYIXslwLKWhy4UYvl9aHAKcad/s6aCttKNsJn5Ir0lL6rnTMeSNq83CJA1grVXa/2r
-         2J9Q==
+        bh=bln7s7dR4MzrtK4sqs3MmHCzXOU6rrf03hrgg7n+P1Q=;
+        b=FM/wqr7jXVyEFHgt5iM39yEcr0fFmdtzH6+2daZcRNPG0MkNg34/jWrCmZ6VzB39mQ
+         gFR/qb86JkNBMWTVmlJ2kCy+Y8s27PGZSEFDjnmnOHNkF3gCFCaTGBfrAX109F/68LAe
+         IKF0c7JSiOnMo/c57iwcd4EDU/msReMlReLcUalD6RO4SD8qgYnAMI9xD7vfRW2inEyM
+         4XYoUzNnuCqqqQyJ6cjdzqP9THE/Q/QXJGU4XBJU5kst8n0fBv5yjzaFdLSSbJ3utsx5
+         KuTuxD8KnwmboDr1GzhvkY1TkRKORUcZRD8HJ6jSvy4E0j8FP2V/sdagA29cA9Gv7iL4
+         HdYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Toy6ksCxaToT0+gVtye5bDm5+lFeCi8aNIqODvLDWVU=;
-        b=j7BfQh7PpcA+L1TCaxEDMW0ThBTzhuiZYDyUc1RMRErxjmF0D7rC1qMuLYA04IZfM6
-         yx7H8ljOR54pGgoBoyEDBgK2LCOPvxeVik5+zpEEDL4OulBf6jZq4+UHD4F8A5woTA1Q
-         UtlqXcCGqknB3kV94D8gaq8YBCs0Kgpg2b3aOeSAGJq8+Ievxy8YgFgZiT916RD8rGZj
-         M4rAvmyn+0OLjvVg0HD0Z3sjsWPSknzWBXWS+iWZzdnihvk7VUMnYHoYV/FIkU/aMlV/
-         J7XmUfG1FoB94CZZGFEYdYBATE5Gvz+pK4YK2pgQeE1SOxODSXIaLp6IYE3gs7L//UXM
-         W0og==
-X-Gm-Message-State: AOUpUlE3Iojo10xDmePH1zeBKtutO85njKWnOTfEuoYidXP/Kw7syIt2
-        DeDSmPbjN1m9dSKsqHdQMBhwVXnkMitlLmZ/wK6yX2s7W7FMV7oJ355tCRc1ss/cyc2DmYXelQ6
-        bLdxKZ+ZVQousA3vkGL3/qVPAUcnvrG1PhmsfZZdxJKCQXapmabUSBV8woPM=
-X-Google-Smtp-Source: AA+uWPzjLAzVTgS4C3qSRgGLckdH4fxq/qo/ZIKl0QFUECGoA40qM4krv5C8WM+4qmRbJwThA6lU61odMJVf
-X-Received: by 2002:a24:74cd:: with SMTP id o196-v6mr101758itc.46.1533854734020;
- Thu, 09 Aug 2018 15:45:34 -0700 (PDT)
-Date:   Thu,  9 Aug 2018 15:45:00 -0700
+        bh=bln7s7dR4MzrtK4sqs3MmHCzXOU6rrf03hrgg7n+P1Q=;
+        b=jJci3qhafUq2V1tqfF3njSZL2Zf1EYaB9FebyC0qF4mDrNyymiIUi1sfrYK3b3+8eZ
+         AGzjFVn3FEM9LuCB6ZcmxxVTiuQsvLfcRB6JmwiEtQZvjGBlBOu++ylcUlMbMXYDS27c
+         s+dEnwHMOPRKuZt8ENXnKFxIThYAKfkxfzWATqU7fe9KtkLg0iB66FKBplu76RfVUuAv
+         3jXKcuT7FJDxAUiKtrrMwzTh1L5rbfnbP10lQKOvJQqDncQjUDX0ctbMzcyHIN54vhFv
+         FIYyqElk439YUdxneLAVqSegkGjTsWkatlhxe0sCfYfXY7KwGodglj8cZbozNHXrIa91
+         lEzQ==
+X-Gm-Message-State: AOUpUlFSPg6cBSOinFS7kWTeFV/mlmfGTZ9fWEypJjBzXse5+0WzsSgw
+        W3Xt13+4hRdReED/jFyJJ3GRSqpA/svJi1jinb8104NrIpu66DXk0cnzc5t23NEPQkNxUiO3O/v
+        /7Vacb/uHsy8yeIg+3RcGfcrnA26ztQR3M14OovkpA5v+VpTRwKtcXKJmCjE=
+X-Google-Smtp-Source: AA+uWPzMHDEGhHlCH87yA4x0MM4SUy35z+1bMjCSAWEWnX/miirGsejUDfK6HPki8Nv4orivCXjbYFYLz7BT
+X-Received: by 2002:a37:1206:: with SMTP id c6-v6mr2172149qkh.20.1533854737498;
+ Thu, 09 Aug 2018 15:45:37 -0700 (PDT)
+Date:   Thu,  9 Aug 2018 15:45:01 -0700
 In-Reply-To: <cover.1533854545.git.matvore@google.com>
-Message-Id: <87799036f82793b691e899bda4fb882a4b231c3a.1533854545.git.matvore@google.com>
+Message-Id: <71619cbd1004d7acf991011fc0c941d4a5716079.1533854545.git.matvore@google.com>
 Mime-Version: 1.0
 References: <cover.1533854545.git.matvore@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 1/5] revision: invert meaning of the USER_GIVEN flag
+Subject: [PATCH 2/5] list-objects-filter: implement filter only:commits
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, jeffhost@microsoft.com,
@@ -63,134 +63,227 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abandon the previous approach of mutating all new objects implicitly in
-add_pending_object by inverting the meaning of the bit (it is now
-NOT_USER_GIVEN) and only setting the flag when we need to.
+Teach list-objects the "only:commits" filter which allows for filtering
+out all non-commit and non-annotated tag objects (unless other objects
+are explicitly specified by the user). The purpose of this patch is to
+allow smaller partial clones.
 
-This more accurately tracks if a tree was provided directly by the user.
-Without this patch, the root tree of all commits were erroneously
-considered to be USER_GIVEN, which meant they cannot be filtered. This
-distinction is important in the next patch.
+The name of this filter - only:commits - is a bit inaccurate because it
+still allows annotated tags to pass through. I chose it because it was
+the only concise name I could think of that was pretty descriptive. I
+considered and decided against "tree:none" because the code and
+documentation for filters seems to lack the concept of "you're filtering
+this, so we'll implicitly filter all referents of this." So "tree:none"
+is vague, since some may think it filters blobs too, while some may not.
+"only:commits" is specific and makes it easier to match it to a
+potential use case.
 
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- list-objects.c | 31 ++++++++++++++++++-------------
- revision.c     |  1 -
- revision.h     | 10 +++++++---
- 3 files changed, 25 insertions(+), 17 deletions(-)
+ Documentation/rev-list-options.txt     |  2 ++
+ list-objects-filter-options.c          |  4 +++
+ list-objects-filter-options.h          |  1 +
+ list-objects-filter.c                  | 43 ++++++++++++++++++--------
+ t/t5317-pack-objects-filter-objects.sh | 30 ++++++++++++++++++
+ t/t6112-rev-list-filters-objects.sh    | 13 ++++++++
+ 6 files changed, 80 insertions(+), 13 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index c99c47ac1..482044bda 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -48,7 +48,7 @@ static void process_blob(struct rev_info *revs,
- 
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
--	if (!(obj->flags & USER_GIVEN) && filter_fn)
-+	if ((obj->flags & NOT_USER_GIVEN) && filter_fn)
- 		r = filter_fn(LOFS_BLOB, obj,
- 			      path->buf, &path->buf[pathlen],
- 			      filter_data);
-@@ -133,7 +133,7 @@ static void process_tree(struct rev_info *revs,
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 7b273635d..3a60a490a 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -743,6 +743,8 @@ specification contained in <path>.
+ 	A debug option to help with future "partial clone" development.
+ 	This option specifies how missing objects are handled.
+ +
++The form '--filter=only:commits' omits all blobs and trees.
+++
+ The form '--missing=error' requests that rev-list stop with an error if
+ a missing object is encountered.  This is the default action.
+ +
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index c0e2bd6a0..aaaaae508 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -69,6 +69,10 @@ static int gently_parse_list_objects_filter(
+ 		filter_options->choice = LOFC_SPARSE_PATH;
+ 		filter_options->sparse_path_value = strdup(v0);
+ 		return 0;
++
++	} else if (!strcmp(arg, "only:commits")) {
++		filter_options->choice = LOFC_ONLY_COMMITS;
++		return 0;
  	}
  
- 	strbuf_addstr(base, name);
--	if (!(obj->flags & USER_GIVEN) && filter_fn)
-+	if ((obj->flags & NOT_USER_GIVEN) && filter_fn)
- 		r = filter_fn(LOFS_BEGIN_TREE, obj,
- 			      base->buf, &base->buf[baselen],
- 			      filter_data);
-@@ -156,23 +156,25 @@ static void process_tree(struct rev_info *revs,
- 				continue;
- 		}
+ 	if (errbuf) {
+diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
+index 0000a61f8..a68df42c8 100644
+--- a/list-objects-filter-options.h
++++ b/list-objects-filter-options.h
+@@ -12,6 +12,7 @@ enum list_objects_filter_choice {
+ 	LOFC_BLOB_LIMIT,
+ 	LOFC_SPARSE_OID,
+ 	LOFC_SPARSE_PATH,
++	LOFC_ONLY_COMMITS,
+ 	LOFC__COUNT /* must be last */
+ };
  
--		if (S_ISDIR(entry.mode))
--			process_tree(revs,
--				     lookup_tree(the_repository, entry.oid),
--				     show, base, entry.path,
-+		if (S_ISDIR(entry.mode)) {
-+			struct tree *t = lookup_tree(the_repository, entry.oid);
-+			t->object.flags |= NOT_USER_GIVEN;
-+			process_tree(revs, t, show, base, entry.path,
- 				     cb_data, filter_fn, filter_data);
-+		}
- 		else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(revs, entry.oid->hash,
- 					show, base, entry.path,
- 					cb_data);
--		else
--			process_blob(revs,
--				     lookup_blob(the_repository, entry.oid),
--				     show, base, entry.path,
-+		else {
-+			struct blob *b = lookup_blob(the_repository, entry.oid);
-+			b->object.flags |= NOT_USER_GIVEN;
-+			process_blob(revs, b, show, base, entry.path,
- 				     cb_data, filter_fn, filter_data);
-+		}
- 	}
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index a0ba78b20..f0a064b4b 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -26,38 +26,39 @@
+ #define FILTER_SHOWN_BUT_REVISIT (1<<21)
  
--	if (!(obj->flags & USER_GIVEN) && filter_fn) {
-+	if ((obj->flags & NOT_USER_GIVEN) && filter_fn) {
- 		r = filter_fn(LOFS_END_TREE, obj,
- 			      base->buf, &base->buf[baselen],
- 			      filter_data);
-@@ -301,8 +303,11 @@ static void do_traverse(struct rev_info *revs,
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
- 		 */
--		if (get_commit_tree(commit))
--			add_pending_tree(revs, get_commit_tree(commit));
-+		if (get_commit_tree(commit)) {
-+			struct tree *tree = get_commit_tree(commit);
-+			tree->object.flags |= NOT_USER_GIVEN;
-+			add_pending_tree(revs, tree);
-+		}
- 		show_commit(commit, show_data);
+ /*
+- * A filter for list-objects to omit ALL blobs from the traversal.
+- * And to OPTIONALLY collect a list of the omitted OIDs.
++ * A filter for list-objects to omit ALL blobs from the traversal, and possibly
++ * trees as well.
++ * Can OPTIONALLY collect a list of the omitted OIDs.
+  */
+-struct filter_blobs_none_data {
++struct filter_none_of_type_data {
++	unsigned omit_trees : 1;
+ 	struct oidset *omits;
+ };
  
- 		if (revs->tree_blobs_in_commit_order)
-diff --git a/revision.c b/revision.c
-index 062749437..6d355b43c 100644
---- a/revision.c
-+++ b/revision.c
-@@ -175,7 +175,6 @@ static void add_pending_object_with_path(struct rev_info *revs,
- 		strbuf_release(&buf);
- 		return; /* do not add the commit itself */
- 	}
--	obj->flags |= USER_GIVEN;
- 	add_object_array_with_path(obj, name, &revs->pending, mode, path);
+-static enum list_objects_filter_result filter_blobs_none(
++static enum list_objects_filter_result filter_none_of_type(
+ 	enum list_objects_filter_situation filter_situation,
+ 	struct object *obj,
+ 	const char *pathname,
+ 	const char *filename,
+ 	void *filter_data_)
+ {
+-	struct filter_blobs_none_data *filter_data = filter_data_;
++	struct filter_none_of_type_data *filter_data = filter_data_;
+ 
+ 	switch (filter_situation) {
+ 	default:
+ 		die("unknown filter_situation");
+ 		return LOFR_ZERO;
+ 
+-	case LOFS_BEGIN_TREE:
+-		assert(obj->type == OBJ_TREE);
+-		/* always include all tree objects */
+-		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
+-
+ 	case LOFS_END_TREE:
+ 		assert(obj->type == OBJ_TREE);
+ 		return LOFR_ZERO;
+ 
++	case LOFS_BEGIN_TREE:
++		assert(obj->type == OBJ_TREE);
++		if (!filter_data->omit_trees)
++			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
++
+ 	case LOFS_BLOB:
+-		assert(obj->type == OBJ_BLOB);
+ 		assert((obj->flags & SEEN) == 0);
+ 
+ 		if (filter_data->omits)
+@@ -72,10 +73,25 @@ static void *filter_blobs_none__init(
+ 	filter_object_fn *filter_fn,
+ 	filter_free_fn *filter_free_fn)
+ {
+-	struct filter_blobs_none_data *d = xcalloc(1, sizeof(*d));
++	struct filter_none_of_type_data *d = xcalloc(1, sizeof(*d));
++	d->omits = omitted;
++
++	*filter_fn = filter_none_of_type;
++	*filter_free_fn = free;
++	return d;
++}
++
++static void* filter_only_commits__init(
++	struct oidset *omitted,
++	struct list_objects_filter_options *filter_options,
++	filter_object_fn *filter_fn,
++	filter_free_fn *filter_free_fn)
++{
++	struct filter_none_of_type_data *d = xcalloc(1, sizeof(*d));
++	d->omit_trees = 1;
+ 	d->omits = omitted;
+ 
+-	*filter_fn = filter_blobs_none;
++	*filter_fn = filter_none_of_type;
+ 	*filter_free_fn = free;
+ 	return d;
  }
+@@ -376,6 +392,7 @@ static filter_init_fn s_filters[] = {
+ 	filter_blobs_limit__init,
+ 	filter_sparse_oid__init,
+ 	filter_sparse_path__init,
++	filter_only_commits__init,
+ };
  
-diff --git a/revision.h b/revision.h
-index c599c34da..cd6b62313 100644
---- a/revision.h
-+++ b/revision.h
-@@ -8,7 +8,11 @@
- #include "diff.h"
- #include "commit-slab-decl.h"
+ void *list_objects_filter__init(
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
+index 6710c8bc8..600d153f9 100755
+--- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -59,6 +59,36 @@ test_expect_success 'verify normal and blob:none packfiles have same commits/tre
+ 	test_cmp observed expected
+ '
  
--/* Remember to update object flag allocation in object.h */
-+/* Remember to update object flag allocation in object.h
-+ * NEEDSWORK: NOT_USER_GIVEN doesn't apply to commits because we only support
-+ * filtering trees and blobs, but it may be useful to support filtering commits
-+ * in the future.
-+ */
- #define SEEN		(1u<<0)
- #define UNINTERESTING   (1u<<1)
- #define TREESAME	(1u<<2)
-@@ -20,9 +24,9 @@
- #define SYMMETRIC_LEFT	(1u<<8)
- #define PATCHSAME	(1u<<9)
- #define BOTTOM		(1u<<10)
--#define USER_GIVEN	(1u<<25) /* given directly by the user */
-+#define NOT_USER_GIVEN	(1u<<25) /* tree or blob not given directly by user */
- #define TRACK_LINEAR	(1u<<26)
--#define ALL_REV_FLAGS	(((1u<<11)-1) | USER_GIVEN | TRACK_LINEAR)
-+#define ALL_REV_FLAGS	(((1u<<11)-1) | NOT_USER_GIVEN | TRACK_LINEAR)
++test_expect_success 'setup for tests of only:commits' '
++	mkdir r1/subtree &&
++	echo "This is a file in a subtree" > r1/subtree/file &&
++	git -C r1 add subtree/file &&
++	git -C r1 commit -m subtree
++'
++
++test_expect_success 'verify only:commits packfile has no blobs or trees' '
++	git -C r1 pack-objects --rev --stdout --filter=only:commits >commitsonly.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C r1 index-pack ../commitsonly.pack &&
++	git -C r1 verify-pack -v ../commitsonly.pack \
++		| grep -E "tree|blob" \
++		| sort >observed &&
++	test_line_count = 0 observed
++'
++
++test_expect_success 'grab tree directly when using only:commits' '
++	# We should get the tree specified directly but not its blobs or subtrees.
++	git -C r1 pack-objects --rev --stdout --filter=only:commits >commitsonly.pack <<-EOF &&
++	HEAD:
++	EOF
++	git -C r1 index-pack ../commitsonly.pack &&
++	git -C r1 verify-pack -v ../commitsonly.pack \
++		| grep -E "tree|blob" \
++		| sort >observed &&
++	test_line_count = 1 observed
++'
++
+ # Test blob:limit=<n>[kmg] filter.
+ # We boundary test around the size parameter.  The filter is strictly less than
+ # the value, so size 500 and 1000 should have the same results, but 1001 should
+diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
+index 0a37dd5f9..6dbd9477c 100755
+--- a/t/t6112-rev-list-filters-objects.sh
++++ b/t/t6112-rev-list-filters-objects.sh
+@@ -196,6 +196,19 @@ test_expect_success 'verify sparse:oid=oid-ish omits top-level files' '
+ 	test_cmp observed expected
+ '
  
- #define DECORATE_SHORT_REFS	1
- #define DECORATE_FULL_REFS	2
++# Test only:commits filter.
++
++test_expect_success 'verify only:commits includes trees in "filtered" output' '
++	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=only:commits \
++		| awk -f print_1.awk \
++		| sed s/~// \
++		| xargs -n1 git -C r3 cat-file -t \
++		| sort -u >filtered_types &&
++	printf "blob\ntree\n" > expected &&
++	test_cmp filtered_types expected
++'
++
++
+ # Delete some loose objects and use rev-list, but WITHOUT any filtering.
+ # This models previously omitted objects that we did not receive.
+ 
 -- 
 2.18.0.597.ga71716f1ad-goog
 
