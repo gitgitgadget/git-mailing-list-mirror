@@ -2,41 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80DF81F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 16:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 484131F46C
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731957AbeHISfX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 14:35:23 -0400
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:61242 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730634AbeHISfW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 14:35:22 -0400
-Received: from [192.168.2.240] ([92.22.29.155])
-        by smtp.talktalk.net with SMTP
-        id nnVSfpuSmwhzSnnVTfGMcF; Thu, 09 Aug 2018 17:09:48 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533830988;
-        bh=DSm9aKLFchxie78DBj7CMzhRKsNpr7v9yN927ObKUbA=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=P5039xMX+YgjyyiZyNV0U391cECP0rRJK2zfz0+F5+nJLB51B56Sd+8leGGbNzzm+
-         CQ1ulUNHbnI9emMWPTJHX/IzScJgcLrSCFJFsEqnC/eC+jhF1/MrFS4vMaD0oqB5xW
-         XUnjpqmpqU9opsaJbPJisGlX2ov8vBSp844IESKw=
-X-Originating-IP: [92.22.29.155]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=yeAZMs3+wWQh+Rh+YWy7CA==:117
- a=yeAZMs3+wWQh+Rh+YWy7CA==:17 a=IkcTkHD0fZMA:10 a=PvrGUNYB_FTU1SulNSUA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v5 04/20] rebase -i: rewrite the edit-todo
- functionality in C
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
-        git@vger.kernel.org
+        id S1732435AbeHIT0R (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 15:26:17 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33805 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730419AbeHIT0R (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 15:26:17 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l2-v6so2839660wme.1
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:00:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=gbj/9lXoS4zH7xZF5X0hpi6xBe+SnlTnyjIFGw6gqww=;
+        b=T0fIYerjD8lzXi4tFa2qC42J2UZ6RI6W0bKFaZ4isWyp+wYVbGwdvsbYqaFRSjgZoW
+         VOqNBV83J8YW/PJjlDr5GZZ7QjgJbd2j+beqC+YW/88joBEWx9YudTjvJNjI6cimD5YL
+         P7KyC2Kdex2u8vhTiT7Tnw0yNIWC+4QExhiPd4r3CisdX0RyU+tTr0xC0ICP8kokavr0
+         EI1huEfDyAvOFustTCLmzCD19x9dFIzB7fZfMyFQTJavCxH1j6Ir4Q5hXP9zt2shCihM
+         dd+DTDc8bM8wjeojxr6Almug3RCiwZ28bHg3yvjeVMv1e9P6YhUauhH+F4xsZjKodsaK
+         gdgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=gbj/9lXoS4zH7xZF5X0hpi6xBe+SnlTnyjIFGw6gqww=;
+        b=ZgzGL/hwO56ecY5uFSIjH8UJz6dbot7HVpkhsCgbbPa8GtIIVtq1nKDGoXg9aDMU9x
+         6LrZ5hV+fYl4GlzrjyINQmFXF2AES1cK5QlR5BN4XnD+y9oTalgTuNlMarn+DdMqU9T9
+         T1fostdfuIM/K3Va6JI06rjlJVPe8pofWjXtLLl2xz2F+iqTgFdc56F+GfQlUrs78nbZ
+         u7YvOKDNR5zZPhYUcam2f2mkDmwoZOrQ45+JtJJSk5837ZmoBDObtOBkflFy5+WjvaIk
+         2YIPTVws5yG3zJ7eiMr6cRe959t4ffn5raOQUBt701Qr0Fe5sK9hS5EaTCvpZigY5e/n
+         8ChA==
+X-Gm-Message-State: AOUpUlFJvLJXsEWobwbCDDltjplsl+iJPVib+FH88wNhEq0hAxPdYLsl
+        7MEfbRxb49RUDKG/wH60x7u2w4SR
+X-Google-Smtp-Source: AA+uWPzFtBD6SnsXB0WjId4maY6ZhBWDgTHyYqsWLZwQA+jqO4nwV4Dt2ozIK6j7DqacDFAjsDv71w==
+X-Received: by 2002:a1c:ea53:: with SMTP id i80-v6mr2326083wmh.113.1533834029835;
+        Thu, 09 Aug 2018 10:00:29 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-30-228.w86-222.abo.wanadoo.fr. [86.222.29.228])
+        by smtp.gmail.com with ESMTPSA id k4-v6sm11217519wrl.12.2018.08.09.10.00.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Aug 2018 10:00:28 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v5 11/20] rebase -i: rewrite complete_action() in C
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
         Christian Couder <christian.couder@gmail.com>,
         Pratik Karki <predatoramigo@gmail.com>,
@@ -44,110 +59,135 @@ Cc:     Stefan Beller <sbeller@google.com>,
         gitster@pobox.com
 References: <20180724163221.15201-1-alban.gruin@gmail.com>
  <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180731180003.5421-5-alban.gruin@gmail.com>
- <325fd5d2-2a93-2270-7d1e-394c265f42d4@talktalk.net>
- <6826d318-b0ab-4e8e-e2ba-5425e3bf6f5f@gmail.com>
- <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
- <bc07317b-ba44-7a3c-7cb4-504b7dbc7c34@gmail.com>
- <329d89f1-5ade-aeec-40bc-cd7168822d3e@talktalk.net>
-Message-ID: <d8b203b6-6fbe-1751-3c85-a8e7991bd765@talktalk.net>
-Date:   Thu, 9 Aug 2018 17:09:35 +0100
+ <20180731180003.5421-12-alban.gruin@gmail.com>
+ <f2698204-c376-0b0c-b151-22b45d482b7c@talktalk.net>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <df96eadb-8c97-2c21-3ab9-6ffbaa61160c@gmail.com>
+Date:   Thu, 9 Aug 2018 19:00:27 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-In-Reply-To: <329d89f1-5ade-aeec-40bc-cd7168822d3e@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+In-Reply-To: <f2698204-c376-0b0c-b151-22b45d482b7c@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfLnyHOuXWE3YQNDXTLtZKPbs87Mf9yRXnAv4MxuSlN52vKjY001ZUG/hhW2VF/zx4654IseB0Axh7n0/hZMiKxMjwrKx12vgmn6V722a23XXm52F+huk
- VfWhIHZjPZ/KDRMhwswkeYyDXOjoLN1xhJlfjZurHxNIHrwiqWwacJw/7v8PmCX1QLYyuunogoEiMbUecEBb2m7ixtfvvXUTXdHOY8OWp2gkA7N6w284XddU
- ysR69bj4f0D7B4KAa3t+OoSx130JJcz6Idw9pPdi2HcYCNlIchziEJkrhkovpp48u7z0PKS7lvREbbuhx9XtWIJ5cLUY5Du9i26kt4LQpjWucZ0qDKF2YRmf
- KhbVWJDFy5xszSjGkkK0HAK7qrbfR6Iro5ubm60AueTNO7J7igt0/G00lDVVEylcj9n6yeFF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Alban
+Le 09/08/2018 à 16:22, Phillip Wood a écrit :
+>>   +int complete_action(struct replay_opts *opts, unsigned flags,
+>> +            const char *shortrevisions, const char *onto_name,
+>> +            const char *onto, const char *orig_head, const char *cmd,
+>> +            unsigned autosquash)
+>> +{
+>> +    const char *shortonto, *todo_file = rebase_path_todo();
+>> +    struct todo_list todo_list = TODO_LIST_INIT;
+>> +    struct strbuf *buf = &(todo_list.buf);
+>> +    struct object_id oid;
+>> +    struct stat st;
+>> +
+>> +    get_oid(onto, &oid);
+> 
+> Is onto guaranteed to exist? If not the return value of get_oid() needs
+> to be checked. Otherwise a comment or an assertion might be useful here.
+> 
 
-On 09/08/18 16:35, Phillip Wood wrote:
-> Hi Alban
-> 
-> On 09/08/18 14:30, Alban Gruin wrote:
->> Hi Phillip,
->>
->> Le 08/08/2018 à 18:04, Phillip Wood a écrit :
->>>>>> +int edit_todo_list(unsigned flags)
->>>>>> +{
->>>>>> +    struct strbuf buf = STRBUF_INIT;
->>>>>> +    const char *todo_file = rebase_path_todo();
->>>>>> +    FILE *todo;
->>>>>> +
->>>>>> +    if (strbuf_read_file(&buf, todo_file, 0) < 0)
->>>>>> +        return error_errno(_("could not read '%s'."), todo_file);
->>>>>> +
->>>>>> +    strbuf_stripspace(&buf, 1);
->>>>>> +    todo = fopen_or_warn(todo_file, "w");
->>>>>
->>>>> This truncates the existing file, if there are any errors writing the
->>>>> new one then the user has lost the old one. write_message() in
->>>>> sequencer.c avoids this problem by writing a new file and then 
->>>>> renaming
->>>>> it if the write is successful, maybe it is worth exporting it so it 
->>>>> can
->>>>> be used elsewhere.
->>>>>
->>>>>> +    if (!todo) {
->>>>>> +        strbuf_release(&buf);
->>>>>> +        return 1;
->>>>>> +    }
->>>>>> +
->>>>>> +    strbuf_write(&buf, todo);
->>>>>> +    fclose(todo);
->>>>>
->>>>> There needs to be some error checking after the write and the close
->>>>> (using write_message() would mean you only have to check for errors in
->>>>> one place)
->>>>>
->>>>
->>>> Right.  Should I find a new nawe for write_message()?
->>>
->>> That might be a good idea, I'm not sure what it should be though, maybe
->>> write_file()?, perhaps someone else might have a better suggestion.
->>>
->>
->> write_file() already exists in wrapper.c.  I wondered, as this make use
->> of the lockfile API, perhaps it could be moved to lockfile.{c,h}, and
->> renamed to something like write_file_with_lock().
-> 
-> Hmm, I'm not sure about that, to me the use of the lockfile api is just 
-> a way to get the semantics of an atomic update to the file. Looking in 
-> wrapper.c there is write_file_buf() which could maybe be changed to to 
-> an atomic update. Looking at the current callers to that function they 
-> look like they would work with such a change (sadly none of them bother 
-> to check the return value to see if the write was successful). I don't 
-> think we need to worry about them being broken by having a stale 
-> lockfile left over if there's an error as I think the lockfile api 
-> automatically cleans them up but I'm not an expert on that api so it 
-> would be worth checking with someone like Johannes or Jeff King (I seem 
-> to remember him working in that area relatively recently).
+Yes, either the user defines it manually (with --onto=), or it is
+automatically determinated by git-rebase.sh.
 
-On second thoughts the current function dies rather than returning an 
-error so it would be a bit of work to do the conversion properly. For 
-now you could just make write_message() available outside sequencer.c 
-and see if anyone comes up with a better name when v6 is reviewed.
+>> +    shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
+>> +
+>> +    if (!lstat(todo_file, &st) && st.st_size == 0 &&
+>> +        write_message("noop\n", 5, todo_file, 0))
+>> +        return error_errno(_("could not write '%s'"), todo_file);
+>> +
+>> +    if (autosquash && rearrange_squash())
+>> +        return 1;
+> 
+> git functions normally return -1 for an error as the 'return error(...)'
+> does above, is there a reason for a different return value here?
+> 
 
-Best Wishes
+No, I will fix this.
 
-Phillip
+>> +
+>> +    if (cmd && *cmd)
+>> +        sequencer_add_exec_commands(cmd); > +
+>> +    if (strbuf_read_file(buf, todo_file, 0) < 0)
+>> +        return error_errno(_("could not read '%s'."), todo_file);
+>> +
+>> +    if (parse_insn_buffer(buf->buf, &todo_list)) {
+> 
+> I was worried when I saw this because buf is an alias of todo_list.buf
+> and I thought passing the same buffer in twice would end badly. However
+> parse_insn_buffer() has a confusing signature, it expects the caller to
+> have filled todo_list.buf with the buffer to be parsed and to pass a
+> pointer to the same buffer. I think this should be cleaned up at some
+> point but it is outside the scope of this series.
+> 
+>> +        todo_list_release(&todo_list);
+>> +        return error(_("unusable todo list: '%s'"), todo_file);
+>> +    }
+>> +
+>> +    if (count_commands(&todo_list) == 0) {
+>> +        apply_autostash(opts);
+>> +        sequencer_remove_state(opts);
+>> +        todo_list_release(&todo_list);
+>> +
+>> +        fputs("Nothing to do\n", stderr);
+> 
+> The capital 'N' is a faithful copy of the current message in rebase.sh.
+> However it might be worth changing it to 'n' to match the normal style
+> of git error messages starting with a lowercase letter.
+> 
+>> +        return 1;
+> 
+> It might be better to do 'return error(...)' instead
+> 
 
-> Best Wishes
+This will require a test change – not a big deal, of course.  It’s
+perhaps a good idea to mark this string for translation, too.
+
+>> +    }
+>> +
+>> +    strbuf_addch(buf, '\n');
+>> +    strbuf_commented_addf(buf, Q_("Rebase %s onto %s (%d command)",
+>> +                      "Rebase %s onto %s (%d commands)",
+>> +                      count_commands(&todo_list)),
+>> +                  shortrevisions, shortonto,
+>> count_commands(&todo_list));
+>> +    append_todo_help(0, flags & TODO_LIST_KEEP_EMPTY, buf);
+>> +
+>> +    if (write_message(buf->buf, buf->len, todo_file, 0)) {
+>> +        todo_list_release(&todo_list);
+>> +        return error_errno(_("could not write '%s'"), todo_file);
+>> +    }
+>> +
+>> +    copy_file(rebase_path_todo_backup(), todo_file, 0666);
+>> +    transform_todos(flags | TODO_LIST_SHORTEN_IDS);
 > 
-> Phillip
+> Both of the above lines can fail, so the return values need checking I
+> think.
 > 
+>> +
+>> +    strbuf_reset(buf);
+>> +
+>> +    if (launch_sequence_editor(todo_file, buf, NULL)) {
+>> +        apply_autostash(opts);
+>> +        sequencer_remove_state(opts);
+>> +        todo_list_release(&todo_list);
+>> +
+>> +        return error(_("could not execute editor"));
 > 
->> Cheers,
->> Alban
->>
+> I think  launch_sequence_editor() will have printed an error message
+> already, so this is unnecessary.
 > 
+
+And the error would be more specific, true.
+
+Thanks!
+Alban
 
