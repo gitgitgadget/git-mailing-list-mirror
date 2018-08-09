@@ -2,192 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 484131F46C
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:00:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5496F1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732435AbeHIT0R (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 15:26:17 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33805 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730419AbeHIT0R (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 15:26:17 -0400
-Received: by mail-wm0-f66.google.com with SMTP id l2-v6so2839660wme.1
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:00:30 -0700 (PDT)
+        id S1732527AbeHITbG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 15:31:06 -0400
+Received: from mail-wm0-f41.google.com ([74.125.82.41]:51708 "EHLO
+        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732411AbeHITbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 15:31:06 -0400
+Received: by mail-wm0-f41.google.com with SMTP id y2-v6so925871wma.1
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:05:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gbj/9lXoS4zH7xZF5X0hpi6xBe+SnlTnyjIFGw6gqww=;
-        b=T0fIYerjD8lzXi4tFa2qC42J2UZ6RI6W0bKFaZ4isWyp+wYVbGwdvsbYqaFRSjgZoW
-         VOqNBV83J8YW/PJjlDr5GZZ7QjgJbd2j+beqC+YW/88joBEWx9YudTjvJNjI6cimD5YL
-         P7KyC2Kdex2u8vhTiT7Tnw0yNIWC+4QExhiPd4r3CisdX0RyU+tTr0xC0ICP8kokavr0
-         EI1huEfDyAvOFustTCLmzCD19x9dFIzB7fZfMyFQTJavCxH1j6Ir4Q5hXP9zt2shCihM
-         dd+DTDc8bM8wjeojxr6Almug3RCiwZ28bHg3yvjeVMv1e9P6YhUauhH+F4xsZjKodsaK
-         gdgw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=6WiVZssB0+HjvW5dO4MSS+sqbhV4gWi0HyzVF1TGKWU=;
+        b=F6GMFXnwiHSIVcPsfMnn6GaahAZEjpX1dSfby/etOc3SjpWU56wak1EYkpNR6U4RaP
+         Qrpma6fuXXKikyEXdf3w3WmtGKpgxQElkVM5dopoL5LUQC/c7A3mI6n45Lm6Cs63dPm/
+         yUio7QkoCUyOb1ckYjonYvTAGB42497rTfXwOJBVPoLaLs5pw+7xa6pvkG0Q8+JVL+aP
+         iZ3fJPkBtTfEGlGKhY77cVBXGbJKL9g8t0AO2DVSvXLsn1O5lLkwIY08jgVkxq+w0eP5
+         GRJFkqzLgk6NLHRp66RR3vSwWF6qUDRHuzpUmXNA+X/VmAZfg+meXe7HwVRgeIjQ3R7O
+         WYCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=gbj/9lXoS4zH7xZF5X0hpi6xBe+SnlTnyjIFGw6gqww=;
-        b=ZgzGL/hwO56ecY5uFSIjH8UJz6dbot7HVpkhsCgbbPa8GtIIVtq1nKDGoXg9aDMU9x
-         6LrZ5hV+fYl4GlzrjyINQmFXF2AES1cK5QlR5BN4XnD+y9oTalgTuNlMarn+DdMqU9T9
-         T1fostdfuIM/K3Va6JI06rjlJVPe8pofWjXtLLl2xz2F+iqTgFdc56F+GfQlUrs78nbZ
-         u7YvOKDNR5zZPhYUcam2f2mkDmwoZOrQ45+JtJJSk5837ZmoBDObtOBkflFy5+WjvaIk
-         2YIPTVws5yG3zJ7eiMr6cRe959t4ffn5raOQUBt701Qr0Fe5sK9hS5EaTCvpZigY5e/n
-         8ChA==
-X-Gm-Message-State: AOUpUlFJvLJXsEWobwbCDDltjplsl+iJPVib+FH88wNhEq0hAxPdYLsl
-        7MEfbRxb49RUDKG/wH60x7u2w4SR
-X-Google-Smtp-Source: AA+uWPzFtBD6SnsXB0WjId4maY6ZhBWDgTHyYqsWLZwQA+jqO4nwV4Dt2ozIK6j7DqacDFAjsDv71w==
-X-Received: by 2002:a1c:ea53:: with SMTP id i80-v6mr2326083wmh.113.1533834029835;
-        Thu, 09 Aug 2018 10:00:29 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-30-228.w86-222.abo.wanadoo.fr. [86.222.29.228])
-        by smtp.gmail.com with ESMTPSA id k4-v6sm11217519wrl.12.2018.08.09.10.00.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 10:00:28 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v5 11/20] rebase -i: rewrite complete_action() in C
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        gitster@pobox.com
-References: <20180724163221.15201-1-alban.gruin@gmail.com>
- <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180731180003.5421-12-alban.gruin@gmail.com>
- <f2698204-c376-0b0c-b151-22b45d482b7c@talktalk.net>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <df96eadb-8c97-2c21-3ab9-6ffbaa61160c@gmail.com>
-Date:   Thu, 9 Aug 2018 19:00:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=6WiVZssB0+HjvW5dO4MSS+sqbhV4gWi0HyzVF1TGKWU=;
+        b=Hz5e76YIo+qNxIIjknJx8Lg1gNZGywzZcvqrQZr6BMuvcFwa9pMKQ+YyDTfABj34s9
+         /vkFy5z8kA4jT3tVMgsUgqjdutJTWDmrgQ5EPncwePcy/LX7dtuVmnSir87TWuujdURL
+         ZXu4RHHBMOkH94GRy2BgoTaOZmhToT6FkrlvOfSnxX44TXW5yFOFy08XCanz5e9IIbZu
+         z5YZukA/EJpQGWdNvD9jrEE48mov5NetOaznPHG+HeWXd5Qre5aLlMauAK7RS7yaXv2s
+         pxlfGoRx/5m94RZgpUbZT3dbTip6QjGA+SNAmG57PZeYn6dzoOsvyTPULAb3AlM1EwLa
+         Mk6w==
+X-Gm-Message-State: AOUpUlHfS7nSEnXHVUd9EATvPOsT8PjTKa5z4mLh7lmFh0GJohyft6s9
+        4EseBQNioJV+OLpTMjajbBY=
+X-Google-Smtp-Source: AA+uWPx/noetQO9xTql+yac+5oLKl+4aqCfuWJy9Se3wBCu1e6SzA+ZAZVWgl7w9OgwNV1/BmIyKBQ==
+X-Received: by 2002:a1c:b213:: with SMTP id b19-v6mr2076446wmf.141.1533834317740;
+        Thu, 09 Aug 2018 10:05:17 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s2-v6sm6475582wrn.83.2018.08.09.10.05.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 10:05:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 2/2] repack: repack promisor objects if -a or -A is set
+References: <cover.1533672584.git.jonathantanmy@google.com>
+        <cover.1533767314.git.jonathantanmy@google.com>
+        <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
+Date:   Thu, 09 Aug 2018 10:05:16 -0700
+In-Reply-To: <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Wed, 8 Aug 2018 15:34:06 -0700")
+Message-ID: <xmqqftzncvxv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <f2698204-c376-0b0c-b151-22b45d482b7c@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Le 09/08/2018 à 16:22, Phillip Wood a écrit :
->>   +int complete_action(struct replay_opts *opts, unsigned flags,
->> +            const char *shortrevisions, const char *onto_name,
->> +            const char *onto, const char *orig_head, const char *cmd,
->> +            unsigned autosquash)
->> +{
->> +    const char *shortonto, *todo_file = rebase_path_todo();
->> +    struct todo_list todo_list = TODO_LIST_INIT;
->> +    struct strbuf *buf = &(todo_list.buf);
->> +    struct object_id oid;
->> +    struct stat st;
->> +
->> +    get_oid(onto, &oid);
-> 
-> Is onto guaranteed to exist? If not the return value of get_oid() needs
-> to be checked. Otherwise a comment or an assertion might be useful here.
-> 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Yes, either the user defines it manually (with --onto=), or it is
-automatically determinated by git-rebase.sh.
+> +/*
+> + * Write oid to the given struct child_process's stdin, starting it first if
+> + * necessary.
+> + */
+> +static int write_oid(const struct object_id *oid, struct packed_git *pack,
+> +		     uint32_t pos, void *data)
+> +{
+> +	struct child_process *cmd = data;
+> +
+> +	if (cmd->in == -1) {
+> +		if (start_command(cmd))
+> +			die("Could not start pack-objects to repack promisor objects");
+> +	}
+> +
+> +	xwrite(cmd->in, oid_to_hex(oid), GIT_SHA1_HEXSZ);
+> +	xwrite(cmd->in, "\n", 1);
+> +	return 0;
+> +}
+> +
+> +static void repack_promisor_objects(const struct pack_objects_args *args,
+> +				    struct string_list *names)
+> +{
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	FILE *out;
+> +	struct strbuf line = STRBUF_INIT;
+> +
+> +	prepare_pack_objects(&cmd, args);
+> +	cmd.in = -1;
+> +
+> +	/*
+> +	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
+> +	 * hints may result in suboptimal deltas in the resulting pack. See if
+> +	 * the OIDs can be sent with fake paths such that pack-objects can use a
+> +	 * {type -> existing pack order} ordering when computing deltas instead
+> +	 * of a {type -> size} ordering, which may produce better deltas.
+> +	 */
+> +	for_each_packed_object(write_oid, &cmd,
+> +			       FOR_EACH_OBJECT_PROMISOR_ONLY);
+> +
+> +	if (cmd.in == -1)
+> +		/* No packed objects; cmd was never started */
+> +		return;
+> +	close(cmd.in);
+> +
+> +	out = xfdopen(cmd.out, "r");
 
->> +    shortonto = find_unique_abbrev(&oid, DEFAULT_ABBREV);
->> +
->> +    if (!lstat(todo_file, &st) && st.st_size == 0 &&
->> +        write_message("noop\n", 5, todo_file, 0))
->> +        return error_errno(_("could not write '%s'"), todo_file);
->> +
->> +    if (autosquash && rearrange_squash())
->> +        return 1;
-> 
-> git functions normally return -1 for an error as the 'return error(...)'
-> does above, is there a reason for a different return value here?
-> 
+Hmm, it is clever to auto-start the pack-objects (and notice there
+wasn't anything needing to pack).  Two things that are worth noting
+are:
 
-No, I will fix this.
+ - The code takes advantage of the fact that cmd.in being left as -1
+   is a sign that start_command() was never called (well, it could
+   be that it was called but failed to open pipe---but then we would
+   have died inside write_oid(), so we can ignore taht case).  This
+   is not relying on its implementation detail---cmd.in would be
+   replaced by a real fd to the pipe if start_command() was called.
 
->> +
->> +    if (cmd && *cmd)
->> +        sequencer_add_exec_commands(cmd); > +
->> +    if (strbuf_read_file(buf, todo_file, 0) < 0)
->> +        return error_errno(_("could not read '%s'."), todo_file);
->> +
->> +    if (parse_insn_buffer(buf->buf, &todo_list)) {
-> 
-> I was worried when I saw this because buf is an alias of todo_list.buf
-> and I thought passing the same buffer in twice would end badly. However
-> parse_insn_buffer() has a confusing signature, it expects the caller to
-> have filled todo_list.buf with the buffer to be parsed and to pass a
-> pointer to the same buffer. I think this should be cleaned up at some
-> point but it is outside the scope of this series.
-> 
->> +        todo_list_release(&todo_list);
->> +        return error(_("unusable todo list: '%s'"), todo_file);
->> +    }
->> +
->> +    if (count_commands(&todo_list) == 0) {
->> +        apply_autostash(opts);
->> +        sequencer_remove_state(opts);
->> +        todo_list_release(&todo_list);
->> +
->> +        fputs("Nothing to do\n", stderr);
-> 
-> The capital 'N' is a faithful copy of the current message in rebase.sh.
-> However it might be worth changing it to 'n' to match the normal style
-> of git error messages starting with a lowercase letter.
-> 
->> +        return 1;
-> 
-> It might be better to do 'return error(...)' instead
-> 
+ - We know that pack-objects reads all its standard input through to
+   the EOF before emitting a single byte to its standard output, and
+   that is why we can use bidi pipe and not worry about deadlocking
+   caused by not reading from cmd.out at all (before closing cmd.in,
+   that is).
 
-This will require a test change – not a big deal, of course.  It’s
-perhaps a good idea to mark this string for translation, too.
+So I kind of like the cleverness of the design of this code.
 
->> +    }
->> +
->> +    strbuf_addch(buf, '\n');
->> +    strbuf_commented_addf(buf, Q_("Rebase %s onto %s (%d command)",
->> +                      "Rebase %s onto %s (%d commands)",
->> +                      count_commands(&todo_list)),
->> +                  shortrevisions, shortonto,
->> count_commands(&todo_list));
->> +    append_todo_help(0, flags & TODO_LIST_KEEP_EMPTY, buf);
->> +
->> +    if (write_message(buf->buf, buf->len, todo_file, 0)) {
->> +        todo_list_release(&todo_list);
->> +        return error_errno(_("could not write '%s'"), todo_file);
->> +    }
->> +
->> +    copy_file(rebase_path_todo_backup(), todo_file, 0666);
->> +    transform_todos(flags | TODO_LIST_SHORTEN_IDS);
-> 
-> Both of the above lines can fail, so the return values need checking I
-> think.
-> 
->> +
->> +    strbuf_reset(buf);
->> +
->> +    if (launch_sequence_editor(todo_file, buf, NULL)) {
->> +        apply_autostash(opts);
->> +        sequencer_remove_state(opts);
->> +        todo_list_release(&todo_list);
->> +
->> +        return error(_("could not execute editor"));
-> 
-> I think  launch_sequence_editor() will have printed an error message
-> already, so this is unnecessary.
-> 
+> +	while (strbuf_getline_lf(&line, out) != EOF) {
+> +		char *promisor_name;
+> +		int fd;
+> +		if (line.len != 40)
+> +			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
+> +		string_list_append(names, line.buf);
+> +
+> +		/*
+> +		 * pack-objects creates the .pack and .idx files, but not the
+> +		 * .promisor file. Create the .promisor file, which is empty.
+> +		 */
+> +		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
+> +					  line.buf);
+> +		fd = open(promisor_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+> +		if (fd < 0)
+> +			die_errno("unable to create '%s'", promisor_name);
+> +		close(fd);
+> +		free(promisor_name);
 
-And the error would be more specific, true.
+For now, as we do not know what is the appropriate thing to leave in
+the file, empty is fine, but perhaps in the future we may want to
+carry forward the info from the existing .promisor file?  What does
+it initially contain?  Transport invoked with from_promisor bit
+seems to call index-pack with "--promisor" option with no argument,
+so this is probably in line with that.  Do we in the future need to
+teach "--promisor" option to pack-objects we invoke here, which will
+be passed to the index-pack it internally performs, so that we do
+not have to do this by hand here?
 
-Thanks!
-Alban
+In any case, don't we need to update the doc for the "--promisor"
+option of "index-pack"?  The same comment for the new options added
+in the same topic, e.g. "--from-promisor" and "--no-dependents"
+options added to "fetch-pack".  It seems that the topic that ended
+at 0c16cd499d was done rather hastily and under-documented?
 
+> @@ -440,6 +513,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  
+>  	/* End of pack replacement. */
+>  
+> +	reprepare_packed_git(the_repository);
+> +
+
+I do not think this call hurts, but why does this become suddenly
+necessary with _this_ patch?  Is it an unrelated bugfix?
+
+>  	if (delete_redundant) {
+>  		int opts = 0;
+>  		string_list_sort(&names);
+
+Thanks.
