@@ -2,80 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 771091F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 22:03:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFECA1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 22:07:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727115AbeHJAaQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:30:16 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41259 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726764AbeHJAaQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:30:16 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j5-v6so6456238wrr.8
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:03:26 -0700 (PDT)
+        id S1727139AbeHJAe3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:34:29 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:33458 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726890AbeHJAe3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:34:29 -0400
+Received: by mail-wm0-f66.google.com with SMTP id r24-v6so3448206wmh.0
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WHlYnE4kZv/2kCU859NIYfHGYfBeTnoMWBXk70iQ9wQ=;
-        b=Exg848XcYbSGqjBoVsvZkTAEyzx8CsU3gZD2oW33G0hnp012niQNiWKfilV4GqBAsw
-         1NCQaO36MwDUQmwUMleXaj6p85obJH5xFCp7pN7X7PKiQdHTSGVZPUJMU+nM6TQB64le
-         aLK97Or3MyXwqnRPNxBCRRr6W+Mi77PVi5QxHoUJFIsJv4VfipFf0aucZYmbUeJw5x5+
-         pVIFh1u4VHIAfzlfccn22Ar8qPZTDnEsJaCvDw+ckNFVfQBGnmnFZrVuM64lQL3UANSC
-         I5AGSMglZ9czOl8FNFO1sj0vpE8UakQ7SSeqRw0EfpY7wJbnOmgyD3NcZD2U6DtORz9T
-         NeoQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=db0CWG9EpG/2NPbkHGWmHLlVsOivB3VekppxqL3Lge8=;
+        b=YHig66dgnvFtzVkLL0wFfDS8vlPTtNl+qlcm9nMlRZeP5sKOY3NVml4ShVI3HVe4KC
+         UWkcJJhP1u/r2QQOIMYYi5QRzxz9QmLRWOAGx3jcKo3WC0OaYVvJubFjWGhSJX6Fdywg
+         Fz9gA5LuBKzVl5PZTacdhPMXCKt33QryWJ+bKnQ6ZlCzgO3RXk61a7o9brK0jt++zHmi
+         YKzqhsIFHqu+O/94Itpj+jWiU55a6+b/Pg7M3IJJ8v4OsyhqicngrIu4klg2wnGDYIEn
+         uzkbd0237iXQnE8GkEhl/QCuOAIaDEzjYCz0KLh66IoxKpPEJSoP+jPQyq2rnxYfTpvB
+         H6Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WHlYnE4kZv/2kCU859NIYfHGYfBeTnoMWBXk70iQ9wQ=;
-        b=MjpMI1E78UKC5YiJqyw3FRCz6ZYZ8o5ws+L3ZBPPiuS8AJGixvanOCKRp4r/sQfyih
-         rkcNzSj2MUegUVv0xw752BqTBIr/wls0mJ79C8VEApHrQeQ6VcP4ZyVlvnmmLq5PFKM5
-         111AXR31BQfCd5XGu0GKJSIp9Z0C1cnEWWusRhhxFQYZ07Waa3JpFEBp5oCZbDKnTfYD
-         Gj/bwp6fSU0IxdCOcg8gy7vGhKjXkqEDyebzf82CB9JJhJ4dJ1gmv86RoP1OKvVmRmrm
-         laIrSo1HSQAfI5vov3yYq/P33I2tqwY/m/BbTMkST2+q5Y9RyzxrsDYr4pjOXq8kEF1c
-         ZtDg==
-X-Gm-Message-State: AOUpUlFWsx2NdAgIgTBU27d8RXs5JwnT0lwHByHbtId1ZVdlRJUKheYz
-        AVPRED6YYQGQCfqRPrKXsAIWGLcn5qZ9g+9U60yX3L29Ysg=
-X-Google-Smtp-Source: AA+uWPwXrHPqcc0K0d33OuhTAQa94pjZnBkP2wQrh3HP91F9P6QLReNrUj1JKp3dQDL6+6mlRjfe7GEuH5O2QpCr5NY=
-X-Received: by 2002:adf:f689:: with SMTP id v9-v6mr2466096wrp.201.1533852205188;
- Thu, 09 Aug 2018 15:03:25 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=db0CWG9EpG/2NPbkHGWmHLlVsOivB3VekppxqL3Lge8=;
+        b=Z96IsVnLxDzGjTjba/z1/rU0VjbUjU03HW3F6PrY+G3OK4aUglxA8LaU5Y6ZZskqoM
+         OG42wGOMj3GIkFXNrmeKtG2CAVb13sYGXfnq9BOy53SiFmacDF7cpQ08MJNbDkZCIUcx
+         bj/nC4A6bhG5zZ33K93uWb9VXgboPcaXESk/z381W8qU+R6sPP7X8RgyPIarECcZtsje
+         cPazD6rHTe5jF20uB8gOvr5uwThPoXrotyjy77sV3rts8jtrRR3i0HdAqMWql5hams3B
+         iXFgDD8K0W2bTGEb4FudUp4aXqDqvH7MwqWLuz8JRPHdFELCR4Ov/Jz8ufKh6HlqowzR
+         CTNw==
+X-Gm-Message-State: AOUpUlGd54vCgklAVrw06iF3oEfqe+RfxRe263Dhcaf14eaaAHh8E8y2
+        efO8Co97exVmQnL/k7TqLV0=
+X-Google-Smtp-Source: AA+uWPzI5piFpf3BNo0gZzRgG1mbg8uaHtoqUamAp68tV8MNrqr2FVPZYfmqTPFoW0fYjiYo2chYPQ==
+X-Received: by 2002:a1c:910f:: with SMTP id t15-v6mr60283wmd.51.1533852457132;
+        Thu, 09 Aug 2018 15:07:37 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id i125-v6sm15097254wmd.23.2018.08.09.15.07.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 15:07:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        pawelparuzel95@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive filesystems
+References: <20180730152756.15012-1-pclouds@gmail.com>
+        <20180807190110.16216-1-pclouds@gmail.com>
+        <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
+        <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
+        <20180808223139.GA3902@sigill.intra.peff.net>
+        <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com>
+        <20180809142333.GB1439@sigill.intra.peff.net>
+        <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+        <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
+Date:   Thu, 09 Aug 2018 15:07:35 -0700
+In-Reply-To: <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
+        (Elijah Newren's message of "Thu, 9 Aug 2018 14:40:58 -0700")
+Message-ID: <xmqqftzn9ot4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:a1c:f00c:0:0:0:0:0 with HTTP; Thu, 9 Aug 2018 15:03:24 -0700 (PDT)
-In-Reply-To: <20180808232515.GC21882@sigill.intra.peff.net>
-References: <20180808231210.242120-1-jonathantanmy@google.com> <20180808232515.GC21882@sigill.intra.peff.net>
-From:   Jonathan Tan <jonathantanmy@google.com>
-Date:   Thu, 9 Aug 2018 15:03:24 -0700
-Message-ID: <CAGf8dgK_yMEtyh+_chQ+9i2d1Uc9oAXr7Q_8ES5OPF8qF87EHw@mail.gmail.com>
-Subject: Re: [RFC PATCH] packfile: iterate packed objects in pack order
-To:     Jeff King <peff@peff.net>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 8, 2018 at 4:25 PM, Jeff King <peff@peff.net> wrote:
-> Even if you just use the oid to do a separate lookup in the object
-> database, there's still a benefit in accessing the objects in pack
-> order.
+Elijah Newren <newren@gmail.com> writes:
 
-You're probably right, but I don't immediately see what the benefit is.
+> A possibly crazy idea: Don't bother reporting the other filename; just
+> report the OID instead.
+>
+> "Error: Foo.txt cannot be checked out because another file with hash
+> <whatever> is in the way."  Maybe even add a hint for the user: "Run
+> `git ls-files -s` to see see all files and their hash".
 
-On a not completely unrelated note, I just realized that in my patch,
-i should be pack_nr (ordinal in pack order) and pack_nr should be
-index_nr (ordinal in index order, i.e. alphabetical order). If you run
-with this, feel free to write your own patch and maybe I'll learn how
-accessing objects in pack order benefits looking up the object
-database through the commit message.
+Once we start using OID to talk to humans, we are already lost.  At
+that point, it would be 1000% better to
 
-> I can try to pick this up and carry the cat-file bits to completion if
-> you want, but probably not until tomorrow or Friday.
+ - not check out Foo.txt to unlink and overwrite; instead leave the
+   content that is already in the working tree as-is; and
 
-Thanks - feel free to do this.
+ - report that Foo.txt was not checked out as something else that
+   also claims to deserve that path was checked out already.
+
+Then the user can inspect Foo.txt and realize it is actually the
+contents that should be in foo.txt or whatever.
+
+
