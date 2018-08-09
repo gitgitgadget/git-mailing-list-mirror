@@ -2,55 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2659E1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 13:30:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 94B221F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 13:30:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731090AbeHIPzL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 11:55:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:46217 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730090AbeHIPzL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 11:55:11 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lx5hl-1fz9tQ0MuH-016byb; Thu, 09
- Aug 2018 15:30:09 +0200
-Date:   Thu, 9 Aug 2018 15:30:11 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with
- --rebase-merges
-In-Reply-To: <3ccf2fcf-5d58-5d24-7e0b-d1d0e511feaa@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1808091529210.71@tvgsbejvaqbjf.bet>
-References: <pull.13.git.gitgitgadget@gmail.com> <pull.13.v2.git.gitgitgadget@gmail.com> <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com> <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net> <nycvar.QRO.7.76.6.1808091039080.71@tvgsbejvaqbjf.bet>
- <3ccf2fcf-5d58-5d24-7e0b-d1d0e511feaa@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732073AbeHIPzn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 11:55:43 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39946 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730090AbeHIPzm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 11:55:42 -0400
+Received: by mail-wr1-f66.google.com with SMTP id h15-v6so5159573wrs.7
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 06:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=zuaWWAHXFc91xn1ChxcBMaZYDmFFyyYdOke6K0PsH1U=;
+        b=OZJWQ2Ge1Oa1UwL5Afw8EmvE9vYABDdxUmLYTJSEGsRSaVeJq0A64y1OaQH6vIKpXk
+         JDGATy97EvpLk5hGmMGUQulmo9ZtjSATA0g3nmYvL8Je93gyaqMykXKbKGjC/kXWZ/xe
+         NQRcCWqjrlwlgh0xVrrZAgVuQw03pG4775UiCbT/UlljC3tqQgaVVC8G330WJiRD+cBf
+         CHxsACeUWidEUHp2QiGvijiUfIV8KVssOuRty9EOOve5ouSMO/GzA7y0S8pzsLrpZS5C
+         Yqg1+vfrIIGbZGfhosF62Kuwy+dLsz1HfTCY1W8J+5VGxfDujzcvcZ6namhyDtz0uxd8
+         VWmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=zuaWWAHXFc91xn1ChxcBMaZYDmFFyyYdOke6K0PsH1U=;
+        b=UWDqSm4ZbrmwGNofkfsrY2NSF+Qo+OLKn6yMuuJ/+ZAp24cRTrK4Hd62FTiW0i8R1N
+         bulnTkfI8kax74QtolI0+f1ndcJ8EoWZb6N/TqdzQ5rMgEAdGGCW1yhbj6uDF2IEhw9J
+         HszK/qhE635jPg4DxYyIr4hcRedQs234Vy47V88ggTskj1WvK2Wr+kFpZeg5GveEivHP
+         F56rBuc+YN+H2qBdlZ2TF4povl+B084krV+sopJQwg9UcI8oxjZmt8lzQ11fI7j6R43S
+         Tl2jR4+jXrsCIQsmLKUjwxIXtjusuTLDvgvfDouO8f0hWzwaEcjmt4+VA6batm1JK2UJ
+         OVig==
+X-Gm-Message-State: AOUpUlFcbR7hZDpe1agyIkhYDoLPYeOCIHqCtTz0EuI0yAmA0qs19rDq
+        ObO20KBlJsCSAsibSVWPo7g=
+X-Google-Smtp-Source: AA+uWPy5HwI7To7V+ghn0l1eS1UuVSPjsSqaSYQiZruh5YN/JiOybzkRZvc1p1+ihIZTm+gzHJDR3Q==
+X-Received: by 2002:adf:a211:: with SMTP id p17-v6mr1502455wra.196.1533821446258;
+        Thu, 09 Aug 2018 06:30:46 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-30-228.w86-222.abo.wanadoo.fr. [86.222.29.228])
+        by smtp.gmail.com with ESMTPSA id m13-v6sm7778440wru.93.2018.08.09.06.30.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 09 Aug 2018 06:30:45 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v5 04/20] rebase -i: rewrite the edit-todo
+ functionality in C
+To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        gitster@pobox.com
+References: <20180724163221.15201-1-alban.gruin@gmail.com>
+ <20180731180003.5421-1-alban.gruin@gmail.com>
+ <20180731180003.5421-5-alban.gruin@gmail.com>
+ <325fd5d2-2a93-2270-7d1e-394c265f42d4@talktalk.net>
+ <6826d318-b0ab-4e8e-e2ba-5425e3bf6f5f@gmail.com>
+ <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <bc07317b-ba44-7a3c-7cb4-504b7dbc7c34@gmail.com>
+Date:   Thu, 9 Aug 2018 15:30:35 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pYYoMMa+mfzBkpWLV9gpXVkX97mfVYIr2Vt0buSK6CFeiq3OJ6h
- Q1TT3laCunWE7H4Rps9xrWa6FBGLa1RRZ8mdgectI4MeUxJLxNw05/haNdBKyiXyqSpbEmi
- Wjs+WT+BHsghiaYXjDTCVOVYqC6HDBN3nB2e802J2pDCj2VB3qkoaXAsVi51GAKriby4xv3
- DjHXG1fbNfF5MJskH5L5g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9H2ImAyDH9w=:wuz8E5utTUPCQW0jQBw1XA
- 3tKy/eHvNy0v6OLf5ka0A4OazfuxKH4eqk53i0swXSTh1dt1AL1tEDn0fpaD+rVUp7VS/SdvW
- HHD5WXtVFSKoyszAb1DGAGVhp2HatMouV5h69+NdzwBqT8X65SlUuKa3V2A094jgcjsfYvVK5
- fiF+pCdIDAKM9FXr6oyWGn6/rFfgZRcsK7GqDjTfyqF1SJlFyDE4DSuVWBDGFoGbUitlb9iz0
- CTYNA25auZ8b/PWRTo+PV8aLjKRNnsY1FaglJCFsNboU0YN/Uc89E1rUXaeyCV0Rb1X+RgLYJ
- i4XsJTQiI8P/WJJMkqQjEvVcp4/E2cu9S8SwUIBSzLSOrpeJbXs+ZTHZtFE+uC/Pt0p9R6Lh6
- PDaH4yCURUDsazoVCJgRhs497cpXjYUS4juAJ+SQ2T62B6DriMyRQd3OZBVNAWQ7F3f7YuypG
- d2Z9aBCCQb1sPoVAr04a+8CdDbAw2CdUo5Nlq9UL67VLUBk9U2pCLXE9tY+bZaHp26T9u+CdF
- sUp+RXcq+iVYhsqtRiPpBLBXp6LVBGHneSrBN4MbUJFAH+6Uc7K1mjjb3TMxwPRFKfe3fRQQy
- WZtQ0Rg9U9SF/bWvsGvKp3UUBkj/zORRud1bDkqvPwGLsJIHQHSCU/jaO0tRWqngnCWBJL1k3
- ZNEYhSZ7rO9iDH4AInJ9D3hbGuHpOB7lk8k40fLcXxCLr9bhBD2iaDvbp3e6l6ox6cRD2J50D
- KzDL5jR4HqltBWrzkgSB6sstUTb+szd32s5ZP3pgi6CODsJdevhYU69pFzC+mKN0iG8kIJRSZ
- Lk/mRvH
+In-Reply-To: <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,55 +82,48 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Phillip,
 
-On Thu, 9 Aug 2018, Phillip Wood wrote:
-
-> On 09/08/18 10:22, Johannes Schindelin wrote:
-> > 
-> > On Mon, 6 Aug 2018, Phillip Wood wrote:
-> > 
-> >> On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
-> >>>
-> >>> +			else if (is_fixup(command)) {
-> >>> +				insert = i + 1;
-> >>> +				continue;
-> >>> +			}
-> >>> +			strbuf_insert(buf,
-> >>> +				      todo_list.items[insert].offset_in_buf +
-> >>> +				      offset, commands, commands_len);
-> >>>   			offset += commands_len;
-> >>> +			insert = -1;
-> >>>   		}
-> >>> -		first = 0;
-> >>> +
-> >>> +		if (command == TODO_PICK || command == TODO_MERGE)
-> >>> +			insert = i + 1;
-> >>>    }
-> >>>   
-> >>>   	/* append final <commands> */
-> >>> -	strbuf_add(buf, commands, commands_len);
-> >>> +	if (insert >= 0 || !offset)
-> >>> +		strbuf_add(buf, commands, commands_len);
-> >>
-> >> Having read your other message about this patch I think if you wanted to fix
-> >> the position of the final exec in the case where the todo list ends with a
-> >> comment you could do something like
-> >>
-> >> 	if (insert >= 0)
-> >> 		strbuf_insert(buf,
-> >> 			      todo_list.items[insert].offset_in_buf +
-> >> 			      offset, commands, commands_len);
-> >> 	else
-> >> 		strbuf_add(buf, commands, commands_len);
-> > 
-> > That does not really work, as `insert` can point *after* the last line, in
-> > which case `todo_list.items[insert]` is undefined (and in the worst case,
-> > causes a segmentation fault).
+Le 08/08/2018 à 18:04, Phillip Wood a écrit :
+>>>> +int edit_todo_list(unsigned flags)
+>>>> +{
+>>>> +    struct strbuf buf = STRBUF_INIT;
+>>>> +    const char *todo_file = rebase_path_todo();
+>>>> +    FILE *todo;
+>>>> +
+>>>> +    if (strbuf_read_file(&buf, todo_file, 0) < 0)
+>>>> +        return error_errno(_("could not read '%s'."), todo_file);
+>>>> +
+>>>> +    strbuf_stripspace(&buf, 1);
+>>>> +    todo = fopen_or_warn(todo_file, "w");
+>>>
+>>> This truncates the existing file, if there are any errors writing the
+>>> new one then the user has lost the old one. write_message() in
+>>> sequencer.c avoids this problem by writing a new file and then renaming
+>>> it if the write is successful, maybe it is worth exporting it so it can
+>>> be used elsewhere.
+>>>
+>>>> +    if (!todo) {
+>>>> +        strbuf_release(&buf);
+>>>> +        return 1;
+>>>> +    }
+>>>> +
+>>>> +    strbuf_write(&buf, todo);
+>>>> +    fclose(todo);
+>>>
+>>> There needs to be some error checking after the write and the close
+>>> (using write_message() would mean you only have to check for errors in
+>>> one place)
+>>>
+>>
+>> Right.  Should I find a new nawe for write_message()?
 > 
-> Ah, I'd missed that, does changing the conditions to
-> if (insert >= 0 && insert < todo.list_nr) and
-> else if (insert >=0 || !offset) work?
+> That might be a good idea, I'm not sure what it should be though, maybe
+> write_file()?, perhaps someone else might have a better suggestion.
+> 
 
-That's pretty exactly what I did ;-)
+write_file() already exists in wrapper.c.  I wondered, as this make use
+of the lockfile API, perhaps it could be moved to lockfile.{c,h}, and
+renamed to something like write_file_with_lock().
 
-Ciao,
-Dscho
+Cheers,
+Alban
+
