@@ -2,79 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67AC51F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:46:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92A3D1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:52:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727548AbeHJANX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:13:23 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:38595 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727285AbeHJANW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:13:22 -0400
-Received: by mail-wr1-f49.google.com with SMTP id v14-v6so6431469wro.5
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:46:36 -0700 (PDT)
+        id S1727312AbeHJAT3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:19:29 -0400
+Received: from mail-yw1-f50.google.com ([209.85.161.50]:34541 "EHLO
+        mail-yw1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727268AbeHJAT3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:19:29 -0400
+Received: by mail-yw1-f50.google.com with SMTP id j68-v6so6819495ywg.1
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:52:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=15kLjVXT0cHLEwILFMm/1UJR4RygQC2YC+rMgw1mngc=;
-        b=dBbMA6APOq0G+y8brOdBB4RzL4MmuaW1gHVJn4/2tvD1tZD3p7VYsOy3L8mC0mTplt
-         rLE6hOhxYXfrObZQDl3hJ1eP8rOpDK6GvU/jH+LD7aqjqXlg6yfU/ePbC7Swyh3ywXAJ
-         Sw2yE9tsC1lPyNeSJDFGXzVyIxKxbrW4qcrkGn6mNGXQbWtxxzRFDThiS1E1ApMOCt0t
-         HZBeG1Rkw6OycvAoJHrQ3Er+/iaS2tIZXFCDGoVY9nvdml4s47WfK0/giz4Zq3xXnTGl
-         ZPl0YoT5urkNy4SKERJlWcWHtVkTFKr71qNPgo6PFKZAuSSM4vBQyTUfDwOJVjQRvDFM
-         NgEQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=79qOwjzrpqIxErircqUtz8eFQZvjS5nk/xr6/2qdCQs=;
+        b=R5CqsNoPeZQxE7uFgNnGEh94YUTW8ciBS62PwYjcgHkLyl6vSp2XZ+SXWqRym+4BH6
+         yrYdF2V+NDdxOISFzvL5ZBEYf/ew3C7rt4maOp+hGH8VQu8xp8vJTssD4LfBMUwp/i6e
+         E9q4JtG8Q8rHlKdbLF04O9qSUALKyqXlGSev6mJpFqcvZ9RZAqpXqUU0qysKaPjxTHcG
+         wHUhME6/9s6yNLpeCbKhJoZbjUo1X0YeEgJtIwR2X2/2mvc9Pn1q9+V1DQxFi4dTqm1o
+         MCS4fv+SPsogC5LDA5pMJLK7X8i5PXLxe63qMzLfYxpycUSs9G34ej20KPwewsm4xPfh
+         v8eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=15kLjVXT0cHLEwILFMm/1UJR4RygQC2YC+rMgw1mngc=;
-        b=ZA9mX6aGHrn3hR7vti/vWlE283q0nOz8hmQkJNbaVczgkwipXdzv05z1r473L1Qywe
-         JEht374JAGy15kpjZOjgjl82xnS5pyBEp+txPXoEbfUCr1B9PnD0s0OCxcC0QVyVTvpS
-         j3LDg+5HL8lg/monCanfJ4cJcn4Zco5Q11GXQf2/gzTRBVmIBs8x3hwoORUrwYzJbWrp
-         JY1eoiXZ068Qw8MQTy4DnrArXofWHiS8/DqjnZZuoHJ0dF08fMDhY6LzBlnzuPYDGxKS
-         C8xZ2wpRAbjvZ03SAGVu/NBKbGVjldQ5kDVQBvp8E00SpiQAuuwCn6+kG1ovkY/0UGkr
-         wLlw==
-X-Gm-Message-State: AOUpUlHIlxWuPBVNzpK4G+BD/XH5zum7uj3kOPCjR6v2+cY021DKEBiO
-        hs7IuHGTxD8TzdIZOTyi7fM=
-X-Google-Smtp-Source: AA+uWPz1aowrmKoHG3tpq14ZLv/nxKhiuNx3U2yalrprkRLA88O3J0K+90yvTGn3DP1BTIRaGc67aA==
-X-Received: by 2002:adf:f850:: with SMTP id d16-v6mr2369444wrq.172.1533851195254;
-        Thu, 09 Aug 2018 14:46:35 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h5-v6sm9084697wrr.19.2018.08.09.14.46.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 14:46:34 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH 03/10] sha1-array: provide oid_array_remove_if
-References: <20180808221752.195419-1-sbeller@google.com>
-        <20180808221752.195419-4-sbeller@google.com>
-        <CAN0heSqwGoFwn34nRp3i09ExnjDPSY8WD=81M9jN5OW-ccpiTg@mail.gmail.com>
-        <CAGZ79kYtKZJ0Dm0ejxrotnoaNERtR0J6=DMCgweCObdJr0K6-w@mail.gmail.com>
-        <20180809192454.GB32376@sigill.intra.peff.net>
-Date:   Thu, 09 Aug 2018 14:46:34 -0700
-In-Reply-To: <20180809192454.GB32376@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 9 Aug 2018 15:24:54 -0400")
-Message-ID: <xmqqo9eb9ps5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=79qOwjzrpqIxErircqUtz8eFQZvjS5nk/xr6/2qdCQs=;
+        b=i5UZPybdK4TX/itlyZKYAzvBKmTWuYVH7J4HkWP80Dt9ctpuUe4YOeon0pROzeYwoK
+         AoKaOWcbfPt2jJe0FJ8+5TpjKoTHPgtTeA1aG6BbweDzXh+84Xyrs4J9qBCaQJZYS8m2
+         a9XGNLhb4qoZVwLNeco4lGUHTjR69hH3/Z7O2ugVsm78r20iMNow90RX5V/5eMS0ECNb
+         Ieabjc0nbDe/o0o+llwzzhLzROeG52D8Lw9mBbqNDbx3tEyyZLZp9HOjXGIEwKhlVfLA
+         twQIaNrAdTEhnZG+UUOAjE8GRnb4wT+7YKvZoMvS6NbiYg6Vu8RwOBVmincq40YSbDa+
+         AtsA==
+X-Gm-Message-State: AOUpUlHJUjLSl34jCx+uB9EoDvHC9WHmYp7QF2MJP8XKyIEYCDGxNgSr
+        yC7zyOpAZCmPewB4O1jC/VXC243DkNh8ksQUdm6M/A==
+X-Google-Smtp-Source: AA+uWPyvy3bwGuUcEt/bz/0E3x0+iqjCXb6KKCvDoaR1HWXKECbDbgrI7Wmic4rbBQnV75P5EvZAzwLqBrMRrNTxFR8=
+X-Received: by 2002:a81:37c5:: with SMTP id e188-v6mr2237299ywa.340.1533851560882;
+ Thu, 09 Aug 2018 14:52:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-3-sbeller@google.com>
+ <CAN0heSqjazimYu4de=xCQ9epSxezVyKPQQ16amZZvoaBh_SKdQ@mail.gmail.com>
+ <xmqqzhxv9qkj.fsf@gitster-ct.c.googlers.com> <20180809214148.GD11342@sigill.intra.peff.net>
+In-Reply-To: <20180809214148.GD11342@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Aug 2018 14:52:29 -0700
+Message-ID: <CAGZ79kZK=5gftetj3XLTbu-n3WKwRUQQDj12yxDBV0WEN8gg9Q@mail.gmail.com>
+Subject: Re: [PATCH 02/10] string-list.h: add string_list_pop function.
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 9, 2018 at 2:41 PM Jeff King <peff@peff.net> wrote:
 
-> Even with keeping the order this can be done in a single linear pass.
-> See filter_string_list() for an example.
+> >
+> >       while (list->nr)
+> >               work_on(list_pop(list));
+> >
+> > which is not so bad.
+>
+> In many cases you can just do:
+>
+>   while (list->nr) {
+>         work_on(list->items[list->nr - 1]);
+>         list_remove(list, list->nr - 1);
+>   }
+>
+> and then all of those memory ownership issues like:
 
-Heh, I just wasted a few minutes saying the same; I should have
-pointed him at these two lines ;-)
+[...]
+>
+> just go away. :)
+
+The only complication here is the lack of list_remove(index),
+we do have list_remove(string), which internally searches the
+item and removes it. Hence I did not want to use it.
+
+Another idea I had was to keep the list immutable (except amending,
+just like a constitution ;-) and store an index of how far we got in that
+list already. That wastes memory for keeping entries around, but is safe
+for memory due to its nature.
+
+> Where that falls down is if you really need work_on() to put more items
+> on the stack, but only after you've removed the current top. But then
+> writing it out may still be nicer, because it makes it clear you have to
+> do:
+>
+>   const char *cur_string = xstrdup(list->items[list->nr-1].string);
+
+Another way would be to use
+
+  string_list_pop(&list, &string_dst, &util_dst);
+i.e.
+  /* Returns 0 if the dst was filled */
+  int (struct string_list *, char **, void**)
+
+as then we do not expose the internals and would not have issues
+with reallocs.
+
+> if you want the data to live past the removal.
+
+In the code proposed there are no additions (hence no reallocs)
+and the need for the data is short lived.
+
+But I can see how the design was just fitting my purpose and
+we could come up with some better API.
+
+Thanks,
+Stefan
