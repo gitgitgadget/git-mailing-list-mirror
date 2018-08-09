@@ -2,165 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9371F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:42:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BA5F1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732628AbeHIUIk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 16:08:40 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:37135 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731115AbeHIUIk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 16:08:40 -0400
-Received: by mail-yw1-f68.google.com with SMTP id w76-v6so5549791ywg.4
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:42:46 -0700 (PDT)
+        id S1728350AbeHIUSe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 16:18:34 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34929 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727676AbeHIUSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 16:18:34 -0400
+Received: by mail-wr1-f67.google.com with SMTP id g1-v6so5901769wru.2
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:52:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=yoGjIUiziMUO4z9cKrGQa+dPz6TKZuDeqWC+ZqUlQWg=;
-        b=ZqAvdkJ8TN2igTQOMsXY2CDECotdyPfiS4aEcUuN3AUbWgjN4H1azAWBxVstY3ER4j
-         h1riTuGr93Yrq4nHV58tG88nQBSs/scRBcr+fVQA2F3u0R1aFwSRXpBFiRYDl7CsiLi6
-         QkeBXUNv4zZI6XlAJXFr21t+59VaWmQnhpRloNYBniSuD7ykDhvL4PTqRdLI8C7Smzn9
-         YIu5jDzTSL853qn6IxEuUwarWfulpfFt+HR7ANB/MNj8NMLaSS4hgBRB4kZXbpzH3YUO
-         ZX3RucrK8Auq/Zlo7PDr+kgtzRFCjHDvV2qw+qI6i1LFfSDpl4MzdVX+9Gio9lrlJocj
-         l0GQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=pPt/IE97ibymATQMnuek3VQLugXA17lAswiCVv5XapQ=;
+        b=L/vzovM9O0e9hid6J6ENBlFMZulRNBIiaJpeDQY2IITQPDK1C5LsbOa/g8xATTYFev
+         mUdxPN1Jl1z/xMXQeupX337BH9m6Z4tig37uSfeUTd6NJEhudsQd5BLbcq1crXan2r8/
+         xTqoNmXU0dSbp5qWICgFVfjmsq3cU59yQaLODuzScFEPnrQ0AUCZ+7K820gtqbD0EcgV
+         KMgEIrCDeBglRExnOl40KWz9WZV5PPUlme+fBg57KvEgVV0KEj8IUV88CVkCxl3dHIEM
+         nv7t38rHyfMMuFrBSSicuqCWztGpVT+VodEXt7a1lBUgZllEwhaQeHG3xpwRPIfW/VuF
+         BNVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=yoGjIUiziMUO4z9cKrGQa+dPz6TKZuDeqWC+ZqUlQWg=;
-        b=X6pIJvfMB9R0xjJJoH0FOz8xoMJoLBiCwYaaPejUlG2eIFD32oRUkxSlLhNWQLill0
-         hLLipakSOvcnI09A2m5Q04a0XgFt2oMq2ArUuhGsxvKs77V6GaJsYqBOoG9f9v9pVXOx
-         OhAV0yJJqVMfTTyY3Vtf3q42q//fCGVZEDgwFTdJPi98m5+HwA7Smo9lxi94SFEo78sh
-         0+dzvbTnGHtz2kkTZCEvSEA3BqZggHDn+TiqXwmGypnYTDKSXfLmt95q/WCHuo12Sq5t
-         eaO627NfE5PfvHUPeUDIpH9VOoIkIQARUH3S5W66+sNNa/P9ZF9+n8LuoH6Ww20xN4Jw
-         f6yw==
-X-Gm-Message-State: AOUpUlH3PUYfujZxlrNgfKFmu0WP0j30vkRZsWkJtFhb8NvZmrOe/B9W
-        zgC3rcvke9s/eX+H3TTHdYaJvFPEI3JRCdpZNbbp8A==
-X-Google-Smtp-Source: AA+uWPyTsVzzez1mY4MtdY1jfxPYoTAu1O4L3RTWkdvTK3AjJCnuuG046IDfpfY3jiHFfLsBQR7ksOlbIR3QnjeWuXY=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr1642870ywk.345.1533836565281;
- Thu, 09 Aug 2018 10:42:45 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=pPt/IE97ibymATQMnuek3VQLugXA17lAswiCVv5XapQ=;
+        b=W96GNFao/pMH1JBNfAWbp9xmL7F3v+lOE/2+kEOHUsonXKc/H+cl83f+WnI2JFMw1M
+         bLED81K6LSnByUjXCGO5HuH7dNOVGQsoCEd5WORR/RUM42E6sKl3vW9y9pf6L9eC0K+l
+         VCJ3LLC2dYk0HDk+9U2y808e+hkOVOwh/S5Dv8Yh8sNYXgqzcak2fCoXgBY9smKeneXg
+         3kfWAKiTZ3//L5yNmq5Zeodo+QQRjfG+Q6gNoY7K6qCbBnGxaGt62aVsP3+Hg02yX3uw
+         u6p4O1kzLTp++P3QJj33lwbm5rCe0jdg0JIxyvnYmtotLsQPP/3No4+8Zk1UBMMZXwOJ
+         AExw==
+X-Gm-Message-State: AOUpUlGHEhacd8/Z7Y3fQeUbuzpOrtwx2D2+AtR44ip6DYbG6tqg9hIv
+        VbLRo/HJV5udDST5gCJzsKc=
+X-Google-Smtp-Source: AA+uWPyGFzUWamPGnpeuCHrQWaZTZUCRfKMH/0M87EXhRcUpPaZNjVzBDaVzhjoxUfDfMfStuRdCfA==
+X-Received: by 2002:adf:9ac7:: with SMTP id a65-v6mr2043838wrc.125.1533837155638;
+        Thu, 09 Aug 2018 10:52:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a184-v6sm8604191wmh.41.2018.08.09.10.52.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 10:52:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/WIP PATCH 0/3] Modifications to handling of non-textual file merge conflicts
+References: <CABPp-BHxJyWsAQ3FkfdC-5Vqe3d7wWZm-hVYd0-afNY9dEgMeQ@mail.gmail.com>
+        <20180806224745.8681-1-newren@gmail.com>
+Date:   Thu, 09 Aug 2018 10:52:34 -0700
+In-Reply-To: <20180806224745.8681-1-newren@gmail.com> (Elijah Newren's message
+        of "Mon, 6 Aug 2018 15:47:42 -0700")
+Message-ID: <xmqq600jctr1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-11-sbeller@google.com>
- <CAN0heSpsbYWzujzyteWuhto9DTXzvAkP+vt++d7ar3ob6Zx=Gg@mail.gmail.com>
-In-Reply-To: <CAN0heSpsbYWzujzyteWuhto9DTXzvAkP+vt++d7ar3ob6Zx=Gg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Aug 2018 10:42:34 -0700
-Message-ID: <CAGZ79kbkLDhiqYrd6epPVP7dLLR7AFApyas=_mgeCucngJONMg@mail.gmail.com>
-Subject: Re: [PATCH 10/10] fetch: retry fetching submodules if sha1 were not fetched
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 12:50 AM Martin =C3=85gren <martin.agren@gmail.com> =
-wrote:
->
-> On 9 August 2018 at 00:17, Stefan Beller <sbeller@google.com> wrote:
-> > Currently when git-fetch is asked to recurse into submodules, it dispat=
-ches
-> > a plain "git-fetch -C <submodule-dir>" (and some submodule related opti=
-ons
-> > such as prefix and recusing strategy, but) without any information of t=
-he
-> > remote or the tip that should be fetched.
-> >
-> > This works surprisingly well in some workflows (such as using submodule=
-s
-> > as a third party library), while not so well in other scenarios, such
-> > as in a Gerrit topic-based workflow, that can tie together changes
-> > (potentially across repositories) on the server side. One of the parts
-> > of such a Gerrit workflow is to download a change when wanting to exami=
-ne
-> > it, and you'd want to have its submodule changes that are in the same
-> > topic downloaded as well. However these submodule changes reside in the=
-ir
-> > own repository in their on ref (refs/changes/<int>).
->
-> s/on/own/
->
-> > Retry fetching a submodule if the object id that the superproject point=
-s
-> > to, cannot be found.
-> >
-> > Note: This is an RFC and doesn't support fetching to FETCH_HEAD yet, bu=
-t
-> > only into a local branch. To make fetching into FETCH_HEAD work, we nee=
-d
-> > some refactoring in builtin/fetch.c to adjust the calls to
-> > 'check_for_new_submodule_commits'.
-> >
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
->
-> > diff --git a/submodule.c b/submodule.c
-> > index ec7ea6f8c2d..6cbd0b1a470 100644
-> > --- a/submodule.c
-> > +++ b/submodule.c
-> > @@ -1127,6 +1127,7 @@ struct submodule_parallel_fetch {
-> >         int result;
-> >
-> >         struct string_list changed_submodule_names;
-> > +       struct string_list retry;
-> >  };
-> >  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, STRING_L=
-IST_INIT_DUP }
->
-> `retry` will effectively be `STRING_LIST_INIT_NODUP`, but making that
-> explicit would be better and the next addition to the struct would be
-> easier to get right.
->
-> > +retry_next:
-> > +       retry_it =3D string_list_pop(&spf->retry);
-> > +       if (retry_it) {
-> > +               struct strbuf submodule_prefix =3D STRBUF_INIT;
-> > +               const struct submodule *sub =3D
-> > +                               submodule_from_name(spf->r,
-> > +                                                   &null_oid,
-> > +                                                   retry_it->string);
-> > +
-> > +               child_process_init(cp);
-> > +               cp->dir =3D get_submodule_git_dir(spf->r, sub->path);
-> > +               if (!cp->dir)
-> > +                       goto retry_next;
->
-> So here you just drop the string list item. Since it's NODUP, and since
-> the `util` pointers are owned elsewhere(?), this seems fine. Other uses
-> of `string_list_pop()` might not be so straightforward.
->
-> Just a thought, but rather than pop+if+goto, maybe
->
-> while ((retry_it =3D )) {
->         ...
->         if (!cp->dir) continue;
->         ...
->         return 1;
-> }
+Elijah Newren <newren@gmail.com> writes:
 
-I really want to keep the retry list short and pruned, as this
-function is called O(n) times with n the number of submodules
-and the retry list will also be up to n.
-And with that we'd run O(n^2) times into "if (!..) continue;".
+> 1) Representative example: A modify/delete conflict; the path in question
+> in the working tree would have conflict information at the top of the file
+> followed by the normal file contents; thus it could be of the form:
+>
+>     <<<<<<<< HEAD
+>     Conflict hint: This block of text was not part of the original
+>     branch; it serves instead to hint about non-textual conflicts:
+>       MODIFY/DELETE: path foo modified in HEAD and deleted in BRANCH
+>     ========
+>     Conflict hint: This block of text was not part of the original
+>     branch; it serves instead to hint about non-textual conflicts:
+>       MODIFY/DELETE: path foo modified in HEAD and deleted in BRANCH
+>     >>>>>>>> BRANCH
+>     Lorem ipsum dolor sit amet, consectetuer sadipscing elitr,
+>     sed diam nonumy eirmod tempor invidunt ut labore et dolore
+>     magna aliquyam erat, sed diam voluptua. At vero eos et
+>     accusam et justo duo dolores et ea rebum. Stet clita kasd
+>     gubergren, no sea takimata sanctus est Lorem ipsum dolor
+>     sit amet.
+>
+> Alternative ideas for handling the explanatory text here are welcome.
 
-When we use the 'pop-no-work items' logic, then we're still in O(n).
+In a modify/delete conflict, we currently do not leave any in-file
+clue, so smudging the modified side like this might be a change that
+helps those who "grep e '<<<<<<<'" to find the set of paths that
+need to be examined.  I personally do not feel it would be all that
+useful, as "ls-files -u" is how I'd learn about these paths.
 
-> I haven't commented on any of the submodule stuff, which is probably
-> where you'd be most interested in comments. I don't use submodules, nor
-> do I know the code that runs them.. I guess my comments are more "if
-> those who know something about submodules find this series worthwhile,
-> you might want to consider my comments as well".
+What I would want to see when faced to a modify/delete conflict is
+how the modification side changed the contents, as the change, or
+its moral equivalent, would need to be ported to other locations in
+the context of the deleting side.  But I am not sure if it makes
+sense to attempt to somehow include "diff HEAD...MERGE_HEAD" (or the
+other way around) in the file to show the contents change on the
+modification side.
 
-Thanks for your comments! I'll try to think of another way to
-represent this more easily in code.
+> 2) Representative example: A binary edit/edit conflict.  In this case,
+> it would be inappropriate to put the conflict markers inside the
+> binary file.  Instead, we create another file (e.g. path~CONFLICTS)
+> and put conflict markers in it:
+>
+>     <<<<<<<< HEAD
+>     Conflict hint: This block of text was not part of the original
+>     branch; it serves instead to hint about non-textual conflicts:
+>       BINARY conflict: path foo modified in both branches
+>     ========
+>     Conflict hint: This block of text was not part of the original
+>     branch; it serves instead to hint about non-textual conflicts:
+>       BINARY conflict: path foo modified in both branches
+>     >>>>>>>> BRANCH
+>
+> This file would also be added to the index at stage 1 (so that 'git merge
+> --abort' would clean this file out instead of leaving it around untracked,
+> and also because 'git status' would report "deleted in both" which seems
+> reasonable).
+>
+> This type of example could apply for each of the following types of
+> conflicts:
+>   * binary edit/edit
+>   * any of the conflicts from type 1 when binary files are involved
+>   * symlink edit/edit (or add/add)
+>   * symlink/submodule
+>   * symlink/directory
+>   * directory/submodule
+>   * submodule/submodule
+>
+> It could also apply to the following new corner case conflict types from
+> directory rename detection:
+>   * N-way colliding paths (N>=2) due to directory renames
+>   * directory rename split; half renamed to one directory and half to another
 
-Thanks,
-Stefan
+Hmph, I am starting to wonder if it may be easier to access if
+instead you did not touch any working tree file to do any of the
+above, and instead write a single file in $GIT_DIR/ to explain what
+kind of conflicts these paths are involved in.  That would probably
+give a better and easier-to-read summary than "ls-files -u" output.
+
+Or do we have _enough_ information in the "ls-files -u" already to
+infer "Ah, we are in symlink edit/edit conflict.", etc.?  If so,
+perhaps "git status" can be extended to show what kind of conflict
+these paths are in by reading the higher-stage index entries (and
+lack of stages thereof, when dealing with a conflict with deletion
+involved)?
