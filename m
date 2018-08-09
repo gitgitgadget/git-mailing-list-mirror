@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA97D1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 15:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CF851F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 15:56:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732501AbeHISVf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 14:21:35 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36831 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732433AbeHISVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 14:21:34 -0400
-Received: by mail-wm0-f67.google.com with SMTP id w24-v6so798401wmc.1
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 08:56:02 -0700 (PDT)
+        id S1732531AbeHISVi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 14:21:38 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:44685 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732503AbeHISVh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 14:21:37 -0400
+Received: by mail-wr1-f68.google.com with SMTP id r16-v6so5553671wrt.11
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 08:56:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3lfAtywDprLwkA5KSR/4YJxV5b+lUQQ7aOixWJ/WfvA=;
-        b=VYMtp0vYN2ig9a8yPQVla/AGlz0olCU2dYxxnsX1h6YZM72SjmIf43opkYBy5LoVdI
-         DCKmzhFt6rIb5DwBlnGJIlyz1QgWJsWbJoH4yIuh28IrhwL+pqSOtPIIyxs+pAea2QVP
-         a18DVJNq9eaqCUIW4K8YyEnDwivjuUy7ggHLqwh3hmxLgQlkAhuKimn0Y5AkXNAN7s1a
-         DVekkkasoXPnY0NFSB33VgZQqIwWSLFvQ96wMlUj6zwq1IpQteIc/naUqQOEeB4956h5
-         3FM8DvIVHLZRSEL53euH87WLKQqpB//C5UTNingUkgwp08q62QrHaTfBdBCAtWYb0srT
-         tC1w==
+        bh=Uv92MbcxCHxIuO/VdFsUH9zDgQqRzH8TBq/JEDTvCPM=;
+        b=Y3+VhadU4xzKBbCysZrZAyfinqfnhRHgKtWu04Dt1DVMTm+Szvpy+YBRK7j9C0TlOP
+         zEkOZqp76zHhGNdAfwVCxy/6Ie6FgT8di5lkYR1BsNNpAG2/KYDW6s1Qg/W/V4/2Bshw
+         goxawiGeG89FC7UYLCjl5bnQtDsZRq0XYDqzeV3q/xXnQhsOkE/H9NMqonpDYkvd8geA
+         CTmSBObYUEbmDwQROkcRk3QKxyEPlJ58/JaS63DhzYFkbIvm4mJo16BYpCrireBMxnaz
+         2v7alAJlPBZPWyaPUnxQeb+Cy2uwFGUOoMw7G91Bu0hByL/rdd71cZCqke/jwvYOJ2He
+         Ndng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3lfAtywDprLwkA5KSR/4YJxV5b+lUQQ7aOixWJ/WfvA=;
-        b=BfczcMT+LUFz1WyKx63nA1bw6A/7hHlUv9O6B9ii7w65f+Q35g0lWM/lCqA0k2MhQa
-         akSEDnRdC7h3QjczHbPxmuiGxhrAzqTpm/CxRRgMEj6pd8ui+cl63IUmflwpJGO1Em9U
-         3Nfl2J4LGDAPFzXXvFgquJ28+KeNiX4wdvyJ/VSnK3bhLN3F0X3Zuc8tFTBTnNCbTQJv
-         zRRVr8fK+pnCbQaeiZUd362fevPtXRM9XkrGbFy23Nr+9icunGalPNV0kijt7l6Nx9QC
-         yBI0G1GpLd94pnAxH/yxkFex/q8/qn/YSLLuwKFxWcaWX8d2K3aeZN1MnUlCMnaXsi4i
-         TtwA==
-X-Gm-Message-State: AOUpUlGC9hpRbseMhHMACVpTlUcZTGl6xCpc9xBjj3cJphSEzAJQSLHO
-        TC7jGjKw1A/2vN8xr9Ei0JjU+W0v
-X-Google-Smtp-Source: AA+uWPyJH85xsBBgVc/2G7go6LtUYZ3kuCowMAzLKcmeI2DtqgHbNhApQebxTdWUv7MgvsrQZzbmnw==
-X-Received: by 2002:a1c:f703:: with SMTP id v3-v6mr1927597wmh.48.1533830161114;
-        Thu, 09 Aug 2018 08:56:01 -0700 (PDT)
+        bh=Uv92MbcxCHxIuO/VdFsUH9zDgQqRzH8TBq/JEDTvCPM=;
+        b=IbADpwnmaYv1eC0vlnEW8+3LmJ6IokGXqDsno6wg9DZZujWDz3HB8PVHLaOvm+JArh
+         IVGs7wglMI+QWIRuLBgbk6wD+aEighaoQx6op3/+Mk/NECAS/mc8ODYKHNs6cPKgpsVD
+         HHY5I7SnpmIzzyL+kX/h6e0W5wHUxeiSCrZ0c7fo32lapjz59XjCQMz+aHLtpTS+EnON
+         wYHkLHC2hE8D35I/c3DTwYq9grv+tJnDsDCJkonJFdsRjc2G2fWrN5udgaDuSkjD4p3g
+         IHnoZugQlGlQpE1xHHMdnjgu8DuEDxD7Qb684vO+EX0glK+Hl48NYstbHxqqWXd7qwmZ
+         WDSg==
+X-Gm-Message-State: AOUpUlFsyA6XltEmh26pRA0G3LA7y7M00vWXRzPJ9Zzx3uCKRWQ5EdTf
+        3vqB7iAhKBYdMeU43uxYLupyvxje
+X-Google-Smtp-Source: AA+uWPw2o7KLTi2heKpO5wf9YA+CY5SNpTtEKDk5bQHO77Qtfb0vLz5Bkkj5kUtCV2h4/E+3Vszbkg==
+X-Received: by 2002:a5d:67c6:: with SMTP id n6-v6mr1795306wrw.39.1533830165192;
+        Thu, 09 Aug 2018 08:56:05 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id t69-v6sm10913762wmt.40.2018.08.09.08.55.59
+        by smtp.gmail.com with ESMTPSA id t69-v6sm10913762wmt.40.2018.08.09.08.56.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 08:56:00 -0700 (PDT)
+        Thu, 09 Aug 2018 08:56:04 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 3/8] pack-objects: refactor code into compute_layer_order()
-Date:   Thu,  9 Aug 2018 17:55:27 +0200
-Message-Id: <20180809155532.26151-4-chriscool@tuxfamily.org>
+Subject: [PATCH v3 6/8] t: add t5319-delta-islands.sh
+Date:   Thu,  9 Aug 2018 17:55:30 +0200
+Message-Id: <20180809155532.26151-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.555.g17f9c4abba
 In-Reply-To: <20180809155532.26151-1-chriscool@tuxfamily.org>
 References: <20180809155532.26151-1-chriscool@tuxfamily.org>
@@ -70,159 +70,164 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a following commit, as we will use delta islands, we will
-have to compute the write order for different layers, not just
-for one.
+From: Jeff King <peff@peff.net>
 
-Let's prepare for that by refactoring the code that will be
-used to compute the write order for a given layer into a new
-compute_layer_order() function.
-
-This will make it easier to see and understand what the
-following changes are doing.
-
-Helped-by: Duy Nguyen <pclouds@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/pack-objects.c | 90 +++++++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 40 deletions(-)
+ t/t5319-delta-islands.sh | 143 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100755 t/t5319-delta-islands.sh
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 4391504a91..99b6329399 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -667,48 +667,15 @@ static void add_family_to_write_order(struct object_entry **wo,
- 	add_descendants_to_write_order(wo, endp, root);
- }
- 
--static struct object_entry **compute_write_order(void)
-+static void compute_layer_order(struct object_entry **wo, unsigned int *wo_end)
- {
--	unsigned int i, wo_end, last_untagged;
--
--	struct object_entry **wo;
-+	unsigned int i, last_untagged;
- 	struct object_entry *objects = to_pack.objects;
- 
- 	for (i = 0; i < to_pack.nr_objects; i++) {
--		objects[i].tagged = 0;
--		objects[i].filled = 0;
--		SET_DELTA_CHILD(&objects[i], NULL);
--		SET_DELTA_SIBLING(&objects[i], NULL);
--	}
--
--	/*
--	 * Fully connect delta_child/delta_sibling network.
--	 * Make sure delta_sibling is sorted in the original
--	 * recency order.
--	 */
--	for (i = to_pack.nr_objects; i > 0;) {
--		struct object_entry *e = &objects[--i];
--		if (!DELTA(e))
--			continue;
--		/* Mark me as the first child */
--		e->delta_sibling_idx = DELTA(e)->delta_child_idx;
--		SET_DELTA_CHILD(DELTA(e), e);
--	}
--
--	/*
--	 * Mark objects that are at the tip of tags.
--	 */
--	for_each_tag_ref(mark_tagged, NULL);
--
--	/*
--	 * Give the objects in the original recency order until
--	 * we see a tagged tip.
--	 */
--	ALLOC_ARRAY(wo, to_pack.nr_objects);
--	for (i = wo_end = 0; i < to_pack.nr_objects; i++) {
- 		if (objects[i].tagged)
- 			break;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 	last_untagged = i;
- 
-@@ -717,7 +684,7 @@ static struct object_entry **compute_write_order(void)
- 	 */
- 	for (; i < to_pack.nr_objects; i++) {
- 		if (objects[i].tagged)
--			add_to_write_order(wo, &wo_end, &objects[i]);
-+			add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -727,7 +694,7 @@ static struct object_entry **compute_write_order(void)
- 		if (oe_type(&objects[i]) != OBJ_COMMIT &&
- 		    oe_type(&objects[i]) != OBJ_TAG)
- 			continue;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -736,7 +703,7 @@ static struct object_entry **compute_write_order(void)
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
- 		if (oe_type(&objects[i]) != OBJ_TREE)
- 			continue;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -744,8 +711,51 @@ static struct object_entry **compute_write_order(void)
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
- 		if (!objects[i].filled)
--			add_family_to_write_order(wo, &wo_end, &objects[i]);
-+			add_family_to_write_order(wo, wo_end, &objects[i]);
- 	}
+diff --git a/t/t5319-delta-islands.sh b/t/t5319-delta-islands.sh
+new file mode 100755
+index 0000000000..fea92a5777
+--- /dev/null
++++ b/t/t5319-delta-islands.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
++
++test_description='exercise delta islands'
++. ./test-lib.sh
++
++# returns true iff $1 is a delta based on $2
++is_delta_base () {
++	delta_base=$(echo "$1" | git cat-file --batch-check='%(deltabase)') &&
++	echo >&2 "$1 has base $delta_base" &&
++	test "$delta_base" = "$2"
 +}
 +
-+static struct object_entry **compute_write_order(void)
-+{
-+	unsigned int i, wo_end;
++# generate a commit on branch $1 with a single file, "file", whose
++# content is mostly based on the seed $2, but with a unique bit
++# of content $3 appended. This should allow us to see whether
++# blobs of different refs delta against each other.
++commit() {
++	blob=$({ test-tool genrandom "$2" 10240 && echo "$3"; } |
++	       git hash-object -w --stdin) &&
++	tree=$(printf '100644 blob %s\tfile\n' "$blob" | git mktree) &&
++	commit=$(echo "$2-$3" | git commit-tree "$tree" ${4:+-p "$4"}) &&
++	git update-ref "refs/heads/$1" "$commit" &&
++	eval "$1"'=$(git rev-parse $1:file)' &&
++	eval "echo >&2 $1=\$$1"
++}
 +
-+	struct object_entry **wo;
-+	struct object_entry *objects = to_pack.objects;
++test_expect_success 'setup commits' '
++	commit one seed 1 &&
++	commit two seed 12
++'
 +
-+	for (i = 0; i < to_pack.nr_objects; i++) {
-+		objects[i].tagged = 0;
-+		objects[i].filled = 0;
-+		SET_DELTA_CHILD(&objects[i], NULL);
-+		SET_DELTA_SIBLING(&objects[i], NULL);
-+	}
++# Note: This is heavily dependent on the "prefer larger objects as base"
++# heuristic.
++test_expect_success 'vanilla repack deltas one against two' '
++	git repack -adf &&
++	is_delta_base $one $two
++'
 +
-+	/*
-+	 * Fully connect delta_child/delta_sibling network.
-+	 * Make sure delta_sibling is sorted in the original
-+	 * recency order.
-+	 */
-+	for (i = to_pack.nr_objects; i > 0;) {
-+		struct object_entry *e = &objects[--i];
-+		if (!DELTA(e))
-+			continue;
-+		/* Mark me as the first child */
-+		e->delta_sibling_idx = DELTA(e)->delta_child_idx;
-+		SET_DELTA_CHILD(DELTA(e), e);
-+	}
++test_expect_success 'island repack with no island definition is vanilla' '
++	git repack -adfi &&
++	is_delta_base $one $two
++'
 +
-+	/*
-+	 * Mark objects that are at the tip of tags.
-+	 */
-+	for_each_tag_ref(mark_tagged, NULL);
++test_expect_success 'island repack with no matches is vanilla' '
++	git -c "pack.island=refs/foo" repack -adfi &&
++	is_delta_base $one $two
++'
 +
-+	/*
-+	 * Give the objects in the original recency order until
-+	 * we see a tagged tip.
-+	 */
-+	ALLOC_ARRAY(wo, to_pack.nr_objects);
-+	wo_end = 0;
++test_expect_success 'separate islands disallows delta' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
 +
-+	compute_layer_order(wo, &wo_end);
- 
- 	if (wo_end != to_pack.nr_objects)
- 		die("ordered %u objects, expected %"PRIu32, wo_end, to_pack.nr_objects);
++test_expect_success 'same island allows delta' '
++	git -c "pack.island=refs/heads" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'coalesce same-named islands' '
++	git \
++		-c "pack.island=refs/(.*)/one" \
++		-c "pack.island=refs/(.*)/two" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island restrictions drop reused deltas' '
++	git repack -adfi &&
++	is_delta_base $one $two &&
++	git -c "pack.island=refs/heads/(.*)" repack -adi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
++
++test_expect_success 'island regexes are left-anchored' '
++	git -c "pack.island=heads/(.*)" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island regexes follow last-one-wins scheme' '
++	git \
++		-c "pack.island=refs/heads/(.*)" \
++		-c "pack.island=refs/heads/" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'setup shared history' '
++	commit root shared root &&
++	commit one shared 1 root &&
++	commit two shared 12-long root
++'
++
++# We know that $two will be preferred as a base from $one,
++# because we can transform it with a pure deletion.
++#
++# We also expect $root as a delta against $two by the "longest is base" rule.
++test_expect_success 'vanilla delta goes between branches' '
++	git repack -adf &&
++	is_delta_base $one $two &&
++	is_delta_base $root $two
++'
++
++# Here we should allow $one to base itself on $root; even though
++# they are in different islands, the objects in $root are in a superset
++# of islands compared to those in $one.
++#
++# Similarly, $two can delta against $root by our rules. And unlike $one,
++# in which we are just allowing it, the island rules actually put $root
++# as a possible base for $two, which it would not otherwise be (due to the size
++# sorting).
++test_expect_success 'deltas allowed against superset islands' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	is_delta_base $one $root &&
++	is_delta_base $two $root
++'
++
++# We are going to test the packfile order here, so we again have to make some
++# assumptions. We assume that "$root", as part of our core "one", must come
++# before "$two". This should be guaranteed by the island code. However, for
++# this test to fail without islands, we are also assuming that it would not
++# otherwise do so. This is true by the current write order, which will put
++# commits (and their contents) before their parents.
++test_expect_success 'island core places core objects first' '
++	cat >expect <<-EOF &&
++	$root
++	$two
++	EOF
++	git -c "pack.island=refs/heads/(.*)" \
++	    -c "pack.islandcore=one" \
++	    repack -adfi &&
++	git verify-pack -v .git/objects/pack/*.pack |
++	cut -d" " -f1 |
++	egrep "$root|$two" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'unmatched island core is not fatal' '
++	git -c "pack.islandcore=one" repack -adfi
++'
++
++test_done
 -- 
 2.18.0.555.g17f9c4abba
 
