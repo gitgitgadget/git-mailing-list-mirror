@@ -2,111 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEE181F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EA701F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727289AbeHJAHm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:07:42 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:41417 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727268AbeHJAHl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:07:41 -0400
-Received: by mail-yw1-f68.google.com with SMTP id q129-v6so6757200ywg.8
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:40:57 -0700 (PDT)
+        id S1727304AbeHJAHy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:07:54 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:39792 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727268AbeHJAHy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:07:54 -0400
+Received: by mail-yw1-f65.google.com with SMTP id r184-v6so6765153ywg.6
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=D6nEWn4jkFtt7XyJEmnqgBP1JFK4oLKv5Gg7kwynmNo=;
-        b=LSE+vEE5c/LhZc27q4kiWcPUTQV7xgHzCbvqixiWt6sPhnqe4gDsmb+e4rhuehetos
-         5VW4waJGEg7VgkIHl7WGRporoaDsSmSJyHXSmIvITXJ+BNRT0icUIeXayGaP/uyOHedU
-         TJcls/FHRsHPhjbD3gN4MGWRNoxZjHO3gMcpWDiHxjWgv+ker+GK6qC4qn9qAYPzCs6p
-         8g87VBHcEA+EyUAaqYMVxEroZqilvqq3OlHjJ7JWOLOwk6VYdaizaQsz5dyePbUgdR5m
-         f1tfN1tucijYnWpuKdpvuq6q9p17APg49Tt2cGNORikVQO4UL5TUhI+sOvP9pcMiD3rN
-         57QQ==
+        bh=6gmLTPVbADS0EUPOef7wdR20jfBvhceOv6LC0BSIwWQ=;
+        b=BBU9kaaV2VFQRM7tlKcIPtfJBeblg0m9vvtNdRf1WrTYJK+8HXQmdVUXJp+SGOgW85
+         pX00pmb6CrSS2xAudhNqK2mDQabcxvsYpSyYAU+O2x0iGC9B5vhAkMqxvYwhk2o29qSF
+         9EKK5RtvC/LG1MmhCuH8+t3zeKtwsjxSh30q2sVOchp7DLimjoWUopi0YK7zStTMg+OK
+         6YINwonmarSergzdZ7iDAbszAgNpnH2DH/XM8Q1X5+D0yGswIaRAXpS5F4CyjE7RDjWs
+         3cTKhqzhiK12yeN4Z6/4iG1ZZyfzy+VX2PSWhGopSRVttkxMEplIVrwbWC6fJqJS1LzZ
+         lvLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=D6nEWn4jkFtt7XyJEmnqgBP1JFK4oLKv5Gg7kwynmNo=;
-        b=of6i2Copjl3E4J+52fqHqnUj1ImtzsZjhv0JAYLKkfT9lzPZGOtFj+cyICYK5NE0wq
-         zBe7CmH9EmGxID2P0u1vIodaiweT16Zz/C9EEcrQraI1Jn0Ya/uJmWUepZsNal7tTVXh
-         lZYntfgknPZdN/M6IcZv0StZcukK2U/JA4Ah2wVqXp6wBHfAIoo/uIj4us4NENf+ofxH
-         jlhnTnQgcbWzZCa9uZDoArkWe/s9YYslKtjU80iu0F1DKJrjOJ22FUQmi8cq6h/aMzSM
-         s+lmNMExa2Quky+iP9LUBj1zuUfImkD6No09XiuaEO9qexPEfCO0vuTDdwamlqBNQV0m
-         w/Rg==
-X-Gm-Message-State: AOUpUlGfouflT/fzeKL1OL6OPDNTbMjAU96ac2IemEDQRPQivnr91gzu
-        AOaRKFR2NchLMANmljF0PVv1VUp9ZVuFbMKyV9Y7Gw==
-X-Google-Smtp-Source: AA+uWPwctYr604Ol0Dkbx0LIlGLWLWja35AlrR/hI0DX2tv97Z59WYAb1vA102CSamelR6vaqspc0PykbJWtwUDtJYs=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr2097775ywk.345.1533850856676;
- Thu, 09 Aug 2018 14:40:56 -0700 (PDT)
+        bh=6gmLTPVbADS0EUPOef7wdR20jfBvhceOv6LC0BSIwWQ=;
+        b=s3MU7LGTpqKF+51qoWp00lyhD0HcxHrrPYSZdxxFBMNcoLGqcpVQdu6i7AfWm3FfxH
+         azz/HT1N6CV3n0YsHGVgHWAM/CpItSKtzOyMyS9Wc+H2XbS2nceX4RaaIllV7gr8N1IX
+         lyL6Jmqoj7y8TJwpRS2zm3TZEk995h7GwaFot82BZSTzxsikB1zeyMERgTZwawONrgmm
+         1ZnV0lWZRRJnJAlg+t3K8IY7FA5lXKlRb9oXNs7rtOEqS+vQgiwSMt3nECH0XM8SwHFe
+         HmLjiv2a+gCvCQnxd7/IiK7LHEY35VL6Ks7ah5DSVKPayq0PTm/Gw4nQPu6OP09oJ0ob
+         36Cg==
+X-Gm-Message-State: AOUpUlHJFl0JKt0lnoadncsL1r0rvNjibTCGBk5+bR7v0BKoXjAgwd2D
+        TM4LC2ilkGsSdhj3Nw1abT6uo2rvTbptyiuOdCk=
+X-Google-Smtp-Source: AA+uWPwhC08pwz6Mtb47Kbx0PmSoGNWZGbL1XO3CtTq8xyRmHFR0wIMA6O5102wCNPjUyIyCw6AbqjYSoe8GLOEsBsg=
+X-Received: by 2002:a1f:8c2:: with SMTP id 185-v6mr2512638vki.51.1533850869790;
+ Thu, 09 Aug 2018 14:41:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-2-sbeller@google.com>
- <xmqq7ekzb5qj.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7ekzb5qj.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Aug 2018 14:40:45 -0700
-Message-ID: <CAGZ79kZ-0R4qnZ7LMhncenOeoec3z+kNmt2_VqBKRiDXxKm6fQ@mail.gmail.com>
-Subject: Re: [PATCH 01/10] string_list: print_string_list to use trace_printf
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+References: <20180730152756.15012-1-pclouds@gmail.com> <20180807190110.16216-1-pclouds@gmail.com>
+ <xmqq7el2km82.fsf@gitster-ct.c.googlers.com> <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
+ <20180808223139.GA3902@sigill.intra.peff.net> <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com>
+ <20180809142333.GB1439@sigill.intra.peff.net> <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+In-Reply-To: <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 9 Aug 2018 14:40:58 -0700
+Message-ID: <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
+Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive filesystems
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        pawelparuzel95@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 2:16 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Aug 9, 2018 at 2:14 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+> On 8/9/2018 10:23 AM, Jeff King wrote:
+> > On Wed, Aug 08, 2018 at 05:41:10PM -0700, Junio C Hamano wrote:
+> >> If we found that there is something when we tried to write out
+> >> "Foo.txt", if we open "Foo.txt" on the working tree and hash-object
+> >> it, we should find the matching blob somewhere in the index _before_
+> >> "Foo.txt".  On a case-insensitive filesytem, it may well be
+> >> "foo.txt", but we do not even have to know "foo.txt" and "Foo.txt"
+> >> only differ in case.
+> >
+> > Clever. You might still run into false positives when there is
+> > duplicated content in the repository (especially, say, zero-length
+> > files).  But the fact that you only do the hashing on known duplicates
+> > helps with that.
 >
-> Stefan Beller <sbeller@google.com> writes:
->
-> > It is a debugging aid, so it should print to the debugging channel.
->
-> Who says?
+> I worry that the false positives make this a non-starter.  I mean, if
+> clone creates files 'A' and 'B' (both equal) and then tries to create
+> 'b', would the collision code reports that 'b' collided with 'A' because
+> that was the first OID match?  Ideally with this scheme we'd have to
+> search the entire index prior to 'b' and then report that 'b' collided
+> with either 'A' or 'B'.  Neither message instills confidence.  And
+> there's no way to prefer answer 'B' over 'A' without using knowledge
+> of the FS name mangling/aliasing rules -- unless we want to just assume
+> ignore-case for this iteration.
 
-The comment in the header file?
+A possibly crazy idea: Don't bother reporting the other filename; just
+report the OID instead.
 
-  /**
-   * Dump a string_list to stdout, useful mainly for debugging
-   * purposes. It can take an optional header argument and it writes out
-   * the string-pointer pairs of the string_list, each one in its own
-   * line.
-   */
+"Error: Foo.txt cannot be checked out because another file with hash
+<whatever> is in the way."  Maybe even add a hint for the user: "Run
+`git ls-files -s` to see see all files and their hash".
 
->  In-tree code may say so, and I do not think any in-flight
-> topic up to 'pu' uses this to produce non-debugging output, but I do
-> not think it is healthy attitude to assume that you can take over an
-> existing function and change what it does unilaterally.
+Whatever the exact wording for the error message, just create a nice
+post on stackoverflow.com explaining the various weird filesystems out
+there (VFAT, NTFS, HFS, APFS, etc) and how they cause differing
+filenames to be written to the same location.  Have a bunch of folks
+vote it up so it has some nice search-engine juice.
 
-That is reasonable, as usual, and given the recent fallout of the
-object store refactoring I have these concerns on my mind, too.
 
-But for this instance, I do not see any risk of accidental collisions with
-other series in flight:
-
-$ git log -S print_string_list origin/pu --oneline
-4f665f2cf33 string-list.h: move documentation from Documentation/api/
-into header
-d10cb3dfab9 help.c: rename function "pretty_print_string_list"
-c455c87c5cd Rename path_list to string_list
-1eb056905a2 include $PATH in generating list of commands for "help -a"
-70827b15bfb Split up builtin commands into separate files from git.c
-27dedf0c3b7 (tag: v1.0rc3, tag: v0.99.9j) GIT 0.99.9j aka 1.0rc3
-8e49d503882 C implementation of the 'git' program, take two.
-
-> As there is no in-tree or in-flight user, I think it makes sense if
-> the proposed change were to rename it to trace_string_list().  If
-> there weren't any print_string_list() and we were adding a debugging
-> aid to use trace_printf() to dump these, that would be the name we
-> would use anyway.
-
-Good call. I'll rename and send separately (or might even drop this
-patch completely; this patch is not used in the patches to follow;
-it is more a "FYI: here is a thing that I found helpful for debugging,
-unlike the existing function, which I found unhelpful and actively
-harmful")
+The error message isn't quite as good, but does the user really need
+all the names of the file?  If so, we gave them enough information to
+figure it out, and this is a really unusual case anyway, right?
+Besides, now we're back to linear performance....
