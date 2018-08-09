@@ -2,98 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8168C1F46C
-	for <e@80x24.org>; Thu,  9 Aug 2018 19:26:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A55371F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 19:34:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbeHIVxN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 17:53:13 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:39885 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726927AbeHIVxN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 17:53:13 -0400
-Received: by mail-yw1-f67.google.com with SMTP id r184-v6so6116666ywg.6
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 12:26:57 -0700 (PDT)
+        id S1727162AbeHIWA1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 18:00:27 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:53692 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727048AbeHIWA1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 18:00:27 -0400
+Received: by mail-it0-f65.google.com with SMTP id 72-v6so1810946itw.3
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 12:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=O8Dx15MOomzOimcUuZw40syaptqA9Emgl9IjhnI5rhs=;
-        b=mRZ9rLXqnrwpj5qwvq+669ihpSAOwmPromiemLDcc+iazs1Li3BS90+Ff6ZLpFb+qU
-         KotvE9sV554nOcxhJcGJ69GcOM539+Jd44HJ/eE0uKGS1gNkq+Okukn5k/cs/NeRSQXf
-         pqQn+sLuDRUo2IpNqVEcYfxp+Xdi1G2olFAq/Z5DKbFx4NcDelrKUJRoHFyQsHVIMrUp
-         G+VeZ8ZYdKHs215l3BMzD5HZMnLmykajybwDT2GeHgzWnCfZAReZZwwY5ReZ+YUuXdKp
-         CU1/1Yg0gJ5FAOJ+Pf2ipl36fNho48KCgHz7VlNor9N0oTuSySXGqkBGcfP6/X58vJi6
-         yHiw==
+        bh=LuFSw/Gc6gXDhFMtnt1vVkxzKSJbSken+8oM1pq7zMU=;
+        b=GZAb15J3mJCkx9HfLr3P1PcDa+AWCt8ujofArqjGq6UZ0EcbzUXDkM0jfsiD6+QlZt
+         ITsH57AAOo6kjV2dGWTTFhp584LPHXJD7DfTP9UQkXW3ic6P0mak3FxUhjgTtR0DB4L8
+         eWFU37BiimEM5o92CMNeFVRQHJVrI1OeaYIz936RCRQaXHkk9au3a+A3LhsB/YPejDTP
+         FZpsTSjjB9x3eEG/ll5rvQkSRztpM/11R3ZoIo8oEt5iob9hne0KthuBGhWTJp1uDPCr
+         ayLlxKIA3mzs9MR3/Lq5m/gxTpPI1RbAQriHJ5q4fTnHbi4hn8FyC81gbggHcnQgBhf9
+         BLnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=O8Dx15MOomzOimcUuZw40syaptqA9Emgl9IjhnI5rhs=;
-        b=VX3Ygky1fN8Gl+lSsTG2VAUk+rcB0ElGQjBVfVsTBx6pRCWDcd94G4bZ8CqH6BYXI7
-         hX7PXkC4Sv5OEtVYJ2dbF0GZ1/gIDLSlXezmsqOHFrcbrXqWEajhRZtxzviW9fKHoZwT
-         P4o3iE4eZ73jd6DleCbQhf1aDeekEJx2tSm99G5eNBNJnRrtAxhFhbn+TC6Tu5MvgPIy
-         kegSkfTJAEfgMLzuju4YuIkWi8sPGqWsIam4PSRi0v5SWEXDoBTx2doE+fzmRPp3qdgC
-         0KaQDK3VbJVhE1gTA1tL9IwR2LFYCJyB5KO1jx4caZx+qF+uD+w6UEx3q4my2igamRBA
-         L7IQ==
-X-Gm-Message-State: AOUpUlE8gLwoDYBLEi1zYqJtf2CkEF9jUwmtK4ZxQCjkRsgN0tmXIcXv
-        sQ4NlYiVq56Dv9ajg17o6VQasqYIkHX7LTkpfjc=
-X-Google-Smtp-Source: AA+uWPwSoF5ViKHnpL/pQ8tvcsLL95n0STu0N0+njoin5LS95didF0GS9B084ucurfL4QlWlIFlhiqRKx12ScOHNmjM=
-X-Received: by 2002:a1f:a0d6:: with SMTP id j205-v6mr2219442vke.23.1533842816944;
- Thu, 09 Aug 2018 12:26:56 -0700 (PDT)
+        bh=LuFSw/Gc6gXDhFMtnt1vVkxzKSJbSken+8oM1pq7zMU=;
+        b=XBY/csw+mybksMapu9svDc40wa8XcrLr3p+Uqw7Me9sgMY7VHHrVKQt7mw5rWfbcSP
+         XDRhLdw/DQZcCwidFbAI/gpT9TimkUF8cJ1oFh98AJPeMzPqhxOWnxhef4/ypP/zUUGd
+         ZbMTG/ikZjaHKPnCudXVEYld2Lt/5M63HrCIoRMdyPITjFzVbHVnuIKkdfLyXp757+hG
+         WhnhmmULuPLiUjoEg8R3t7HSmRvxGIWzqZy9Xnw85EMykn5HsgIs1rkW7w6DzrTL2Pri
+         xmaIP8/H3mlzwTMl4Yn0clsFXhonyh7UX4iZEKNKPNW+qjFJBaDKDFKeajrvYNle/J6j
+         MGrQ==
+X-Gm-Message-State: AOUpUlFT2DHaF1nQDBnPDdREvr8MSuL6PXAhe1c4nV3o3lfUAwKz2Kuu
+        Azdyv5/8d/CroTLNExNUylcBX67/K+pbXTa/i77RJtkb
+X-Google-Smtp-Source: AA+uWPxNaTqMZ/O1dy5XzmJo4nKHRJFEPCarD6Qvh8YPGuf5j/9xOq2US1KKu7+lGPqOf59Jc7bkHBuNx6q6D22siy0=
+X-Received: by 2002:a24:dd88:: with SMTP id t130-v6mr2929772itf.129.1533843250149;
+ Thu, 09 Aug 2018 12:34:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <CABPp-BHxJyWsAQ3FkfdC-5Vqe3d7wWZm-hVYd0-afNY9dEgMeQ@mail.gmail.com>
- <20180806224547.8619-1-newren@gmail.com> <20180806224547.8619-2-newren@gmail.com>
- <xmqqbmabcuhf.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqbmabcuhf.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Aug 2018 12:26:44 -0700
-Message-ID: <CABPp-BH8oiJ17K6OHCikAxk8Jy9M7mSA=WCVX9KosTC+p4rE4w@mail.gmail.com>
-Subject: Re: [RFC/WIP PATCH 1/1] merge-recursive: make file/directory
- conflicts easier to resolve
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Thu, 9 Aug 2018 12:34:09 -0700 (PDT)
+In-Reply-To: <20180809155532.26151-1-chriscool@tuxfamily.org>
+References: <20180809155532.26151-1-chriscool@tuxfamily.org>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 9 Aug 2018 21:34:09 +0200
+Message-ID: <CAP8UFD27LbAiperQTbm_unZvkoThv2JjfM4wa2n5Ay=E=ZM1+Q@mail.gmail.com>
+Subject: Re: [PATCH v3 0/8] Add delta islands support
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 10:36 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
+On Thu, Aug 9, 2018 at 5:55 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+
+> The following changes have been made since the previous iteration:
 >
-> > File/directory conflicts are somewhat difficult to resolve; by way of
-> > contrast, renames are much easier to handle.  For file/directory
-> > conflicts, we already have to record the file under a different name in
-> > the working copy due to the directory being in the way; if we also record
-> > the file under a different name in the index then it simplifies matters
-> > for the user, and ensures that 'git reset --hard' and 'git merge --abort'
-> > will clean up files created by the merge operation.
+> * suggested by Duy: move the code computing the write order for a
+>   layer to a new separate function called compute_layer_order() in
+>   builtin/pack-objects.c in new patch 3/8
 >
-> Yeah, and then our file "path" renamed to "path~2" to make room for
-> directory "path" they introduced, can be relocated to its final
-> place in the merge resolution, e.g. "git mv path~2 path/ours" or
-> "git mv path path.theirs && git mv path~2 path".
+>   I think that indeed this makes the following patch (4/8) shorter and
+>   easier to understand as well as the overall result nicer.
+>
+> * suggested by Duy and Peff: rework the way the 'tree_depth' field is
+>   moved from 'struct object_entry' to 'struct packing_data' in
+>   pack-object.h in patch 7/8
+>
+> * suggested by Duy and Peff: move field 'layer' from
+>   'struct object_entry' to 'struct packing_data' in pack-object.h in
+>   new patch 8/8
 
-Yes.  :-)
+I forgot to tell about the following change that is also part of the v3:
 
-> Of course, "git rm" and "git mv" must work sensibly, if we want this
-> change to be truly helpful--but if not, they need to be fixed ;-)
-
-That actually brings up an interesting question.  Right now, if given
-a path that appears in the index but at a stage greater than 0, git mv
-will fail with "not under version control".  Obviously, that error
-message is a lie in such a case, but what should it do?  Print a more
-accurate error message ("Refusing to rename file until you remove
-conflicts and git add it"?)  Or, what I'd prefer, rename the entry (or
-entries) and keep the higher stage number(s) -- is there an unseen
-danger with doing this?
-
-(Alternatively, if there is only one entry with stage greater than 0
-and it has no other conflicts, one could envision git mv doing the
-rename and dropping to stage 0 at the same time, but that sounds a bit
-dangerous to me.)
+* suggested by Junio and Peff: increase the 'regmatch_t matches[]'
+array from 8 to 16, advertise 14 group captures max, and add a warning
+if the final element gets filled in in delta-islands.c in patch 2/8
