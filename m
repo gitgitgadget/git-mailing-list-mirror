@@ -2,201 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DDDE51F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 20:01:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48BFB1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 20:49:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727088AbeHIW1g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 18:27:36 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51079 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726931AbeHIW1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 18:27:36 -0400
-Received: by mail-wm0-f65.google.com with SMTP id s12-v6so1422937wmc.0
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 13:01:12 -0700 (PDT)
+        id S1727107AbeHIXQ3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 19:16:29 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:34224 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726744AbeHIXQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 19:16:29 -0400
+Received: by mail-wr1-f68.google.com with SMTP id c13-v6so6329483wrt.1
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 13:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=S/nJJNdvvgtBI7kRbb5sRmfW6WZpke1idmlzixUJRmE=;
-        b=N8Da4oiFtGz+K2dT0KK4AEy+RyzmJ4Hzf31bVGOEIIsLnvQenFcs2KCS6K2BiChfVV
-         noIkWMRun83LS59b+8ZkGH1ZWn8GAQ7BvDn4aXk/19lzVHpacdH6FeGUbzgnW8eqhZh3
-         mTh/H65W8lFu33zUV+C26Xv1O5IylTHPW5jdfWFzqW750Qqlp6O3Ajx76r2GKuI/Sxeq
-         5IKUseLJnyPomkWYE/9LeW+OnPsQ3MOpPNWkjMJQ4u7+ecwuVOZyj7dezm21x7xX08g3
-         ve+5piEmicSymW8YSs4Eg04LSWNKkc/58YBv7sYADgyr0X4xxo7y1YpH4vOUk1Dk40RG
-         JLBQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=/eY+0rJkdFIN/K85QmuNLsECPLdWXd0q9CvZ21uCZjM=;
+        b=KzmFkXBKvSvrW6DAF4baFFvSQ0LX3tAjecT+eb60i5lQx/OWds8wNCtZB7KHKM1gAc
+         sFtpoo5Mn00rJ2O4aUQ790NiGqo0+1rSiKeQnSBwJagHKqwqXB3C/4Q6nmwI8xvCd1w1
+         2Mq9/WnXEd9quBdPbKX8AkuWOy1dYhSUTRMZtinhSMaVaohpghIWwPg7eXGzKLh/exw0
+         F6hO2eOKoDxzeFa4j93woB1f9Zu9P8UjThq6MB1Nf4IOel2KModT+n59bMy4Mdlkb04A
+         DcSvvXEpiAxO1wSjo1bB59VB/VuGLSiuCY+09kPsuOpkm3Gwx040JezqnH3Uh7nCgAQn
+         cv/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=S/nJJNdvvgtBI7kRbb5sRmfW6WZpke1idmlzixUJRmE=;
-        b=RdKkY5WPpJog8PObg2NG7yh19rHZrkrF5N9tpA8CAgf0aCpPSVCFFrB6Zvl2lmhV/d
-         b1R645xWns7aUljDsjXgBnzcKPovzx6NBmZNOCZdxKFnwbEPEx3QuoB2+znSpIzwcrye
-         EYYRmms3kA76oBryURWaxmC5+SdaJp0FedUVSlQf4uDYWR0vajWbn6CNMI+gaAk9vKE3
-         jnwri9OwgC5J7TDuWfO6qfOaNU4hw7dGVfxtm1+Bm3+q+/kb8DRJO3o3ijcbo74rLpHH
-         4+zYa+aSFjzijtIvCULcVW+W0CcXYeM78Ft8jx6K0nGae+82lfKgdEKkOaP4EVxZbDrR
-         M41g==
-X-Gm-Message-State: AOUpUlE5BqyYYesbRylbeHPCPI+HPfX5dsQ4oiYQOmlWXqyLPFGLliVc
-        Dguta21G8qUSQ7/xB6FxUE2fVRwL
-X-Google-Smtp-Source: AA+uWPwBuHETM7bFNfM0jazJWmeY9irj1WFibAmbecXnjapjItjKqjQsGIM2pELCV9fFIph413M+1g==
-X-Received: by 2002:a1c:1dcd:: with SMTP id d196-v6mr2612190wmd.114.1533844871133;
-        Thu, 09 Aug 2018 13:01:11 -0700 (PDT)
-Received: from [192.168.0.137] (5-13-191-27.residential.rdsnet.ro. [5.13.191.27])
-        by smtp.gmail.com with ESMTPSA id c13-v6sm6538540wrt.24.2018.08.09.13.01.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 13:01:10 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v7 05/26] stash: convert apply to builtin
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
- <7ba9a8515d445d10af36a8a79071af51b90f5aef.1533753605.git.ungureanupaulsebastian@gmail.com>
- <xmqqa7pwfw84.fsf@gitster-ct.c.googlers.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <1ba17df0-e6da-3358-622b-c19092c20eb0@gmail.com>
-Date:   Thu, 9 Aug 2018 23:01:09 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=/eY+0rJkdFIN/K85QmuNLsECPLdWXd0q9CvZ21uCZjM=;
+        b=s0n/OgqqMBsg2rerCf0xpuotYIoYD3kstCt6T/AptSEWm14+byjGGy5kST3OKPGrVA
+         XHSgypPtJv+MErLUkb+5tfkwOiDK/U6FC6Ju2hPYrFN7itVDfROfx82XZh/zjFcUEFwz
+         zgPZhseYN1w4OZ3Xe8Wvr/fxnGeEP40NkMAIz/qE2hBjKzFj/Ku10eOyFYq0HWo8R4MU
+         ZBXbEjWlw3QBQ/vaSQNk2luAMfeaXGrAB2fpII2KzkwkctARRbeUuykKQycEwpXdGSMF
+         sICtPW7K28OdCvUNXuKnkWq8hnEqGwQ1K1Q8Xvm7isL5piWnFYoN8c2GW+R960KlEwOz
+         AKnw==
+X-Gm-Message-State: AOUpUlHFdcKzoKOR7ws4o4e9y79U7vKaaeNx24abI4l0tW5rYOV6pVeT
+        B1QeTZKkHDgLOqNwQ02786G3KAT0
+X-Google-Smtp-Source: AA+uWPwuBrhWQ6IvCVTt857hh9A5Yr7rF9WyRFOPP9J759tStcH0iKoCXmutD9K1TksOdHEpqA8Afw==
+X-Received: by 2002:adf:c08c:: with SMTP id d12-v6mr2296321wrf.268.1533847794618;
+        Thu, 09 Aug 2018 13:49:54 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y18-v6sm6648864wrh.85.2018.08.09.13.49.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 13:49:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking for GIT_TRACE
+References: <pull.17.git.gitgitgadget@gmail.com>
+        <20180809194712.GC32376@sigill.intra.peff.net>
+Date:   Thu, 09 Aug 2018 13:49:52 -0700
+In-Reply-To: <20180809194712.GC32376@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 9 Aug 2018 15:47:12 -0400")
+Message-ID: <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqa7pwfw84.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-On 08.08.2018 23:18, Junio C Hamano wrote:
-> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
-> 
->> From: Joel Teichroeb <joel@teichroeb.net>
->>
->> Add a builtin helper for performing stash commands. Converting
->> all at once proved hard to review, so starting with just apply
->> lets conversion get started without the other commands being
->> finished.
->>
->> The helper is being implemented as a drop in replacement for
->> stash so that when it is complete it can simply be renamed and
->> the shell script deleted.
->>
->> Delete the contents of the apply_stash shell function and replace
->> it with a call to stash--helper apply until pop is also
->> converted.
->>
->> Signed-off-by: Joel Teichroeb <joel@teichroeb.net>
->> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> 
-> Good to see that the right way to forward a patch from another
-> person is used, but is this a GSoC project?
+> Are you sure that it's not well-defined? We open the path with O_APPEND,
+> which means every write() will be atomically positioned at the end of
+> file. So we would never lose or overwrite data.
+>
+> We do our own buffering in a strbuf, writing the result out in a single
+> write() call (modulo the OS returning a short write, but that should not
+> generally happen when writing short strings to a file). So we should get
+> individual trace lines as atomic units.
+>
+> The order of lines from the two processes is undefined, of course.
 
-Yes, it is. I forgot to add the [GSoC] tag in the last series of patches.
+Correct.  But I am more worried about the "mixed/overwriting"
+breakage, if there is one; it means we may need to be prepared for
+systems that lack O_APPEND that works correctly.  I initially just
+assumed that it was what Dscho was seeing, but after re-reading his
+message, I am not sure anymore.
 
->> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
->> new file mode 100644
->> index 000000000..ef6a9d30d
->> --- /dev/null
->> +++ b/builtin/stash--helper.c
->> @@ -0,0 +1,452 @@
->> +#include "builtin.h"
->> +#include "config.h"
->> +#include "parse-options.h"
->> +#include "refs.h"
->> +#include "lockfile.h"
->> +#include "cache-tree.h"
->> +#include "unpack-trees.h"
->> +#include "merge-recursive.h"
->> +#include "argv-array.h"
->> +#include "run-command.h"
->> +#include "dir.h"
->> +#include "rerere.h"
-> 
-> Wow, "apply" is a biggie, as you'd pretty much have to do
-> everything, like merging and updating the index and asking rerere to
-> auto-resolve.  Quite a many include files.
-> 
->> +static const char * const git_stash_helper_usage[] = {
->> +	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
->> +	NULL
->> +};
->> +
->> +static const char * const git_stash_helper_apply_usage[] = {
->> +	N_("git stash--helper apply [--index] [-q|--quiet] [<stash>]"),
->> +	NULL
->> +};
->> + ...
->> +static void assert_stash_like(struct stash_info *info, const char * revision)
-> 
-> This inherits an unfortunate name from the scripted version (it does
-> more than asserting), but it is OK to keep the original name,
-> especially in this early step in the series.
-> 
-> Lose the SP in "* revision"; the asterisk sticks to the variable/parameter name.
+I think the "do not trace the other side" approach you suggest for
+these tests that only care about one side is more appropriate
+solution for this particular case.  We then do not have to worry
+about overwriting or output from both sides mixed randomly.
 
-Will do so.
-
->> +{
->> +	if (get_oidf(&info->b_commit, "%s^1", revision) ||
->> +	    get_oidf(&info->w_tree, "%s:", revision) ||
->> +	    get_oidf(&info->b_tree, "%s^1:", revision) ||
->> +	    get_oidf(&info->i_tree, "%s^2:", revision)) {
->> +		free_stash_info(info);
->> +		error(_("'%s' is not a stash-like commit"), revision);
->> +		exit(128);
->> +	}
->> +}
-> 
->> +static int reset_tree(struct object_id *i_tree, int update, int reset)
->> +{
->> ...
->> +}
-> 
-> Kind-a surprising that there is no helper function to do this
-> already.  The implementation looked OK, though.
-> 
->> +static int apply_cached(struct strbuf *out)
->> +{
->> +	struct child_process cp = CHILD_PROCESS_INIT;
->> +
->> +	/*
->> +	 * Apply currently only reads either from stdin or a file, thus
->> +	 * apply_all_patches would have to be updated to optionally take a
->> +	 * buffer.
->> +	 */
->> +	cp.git_cmd = 1;
->> +	argv_array_pushl(&cp.args, "apply", "--cached", NULL);
->> +	return pipe_command(&cp, out->buf, out->len, NULL, 0, NULL, 0);
->> +}
-> 
-> Applying and updating the index is more resource intensive than
-> spawning a process, and not having to worry about the process dying
-> is a benefit, so overall, making this into an internal call would be
-> a lot lower priority, I would guess.
-
-Indeed. In the last but one patch [1], I tried to convert all of the 
-"apply" processes. At the moment, `apply_all_patches()` cannot take a 
-buffer. A solution for this was to write the buffer into a file and pass 
-the name of that file to the function. Of course, this might not be a 
-bright idea and for this reason I am not sure if that patch is worth.
-
-[1]
-https://public-inbox.org/git/56500d98f9d5daaa5f21a43767885baede86e3a0.1533753605.git.ungureanupaulsebastian@gmail.com/
-
->> +static int reset_head(const char *prefix)
->> +{
-> 
-> This is resetting the index to the HEAD, right?  reset_head sounds
-> as if it takes a commit-ish and moves HEAD there.
-> 
-
-Yes, it resets the index to the HEAD.
-
-Best,
-Paul
+> diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
+> index 3b60bd44e0..5ad5bece55 100755
+> --- a/t/t5552-skipping-fetch-negotiator.sh
+> +++ b/t/t5552-skipping-fetch-negotiator.sh
+> @@ -28,6 +28,19 @@ have_not_sent () {
+>  	done
+>  }
+>  
+> +# trace_fetch <client_dir> <server_dir> [args]
+> +#
+> +# Trace the packet output of fetch, but make sure we disable the variable
+> +# in the child upload-pack, so we don't combine the results in the same file.
+> +trace_fetch () {
+> +	client=$1; shift
+> +	server=$1; shift
+> +	GIT_TRACE_PACKET="$(pwd)/trace" \
+> +	git -C "$client" fetch \
+> +	  --upload-pack 'unset GIT_TRACE_PACKET; git-upload-pack' \
+> +	  "$server" "$@"
+> +}
+> +
+>  test_expect_success 'commits with no parents are sent regardless of skip distance' '
+>  	git init server &&
+>  	test_commit -C server to_fetch &&
+> @@ -42,7 +55,7 @@ test_expect_success 'commits with no parents are sent regardless of skip distanc
+>  	# "c1" has no parent, it is still sent as "have" even though it would
+>  	# normally be skipped.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c7 c5 c2 c1 &&
+>  	have_not_sent c6 c4 c3
+>  '
+> @@ -88,7 +101,7 @@ test_expect_success 'when two skips collide, favor the larger one' '
+>  	# the next "have" sent will be "c1" (from "c6" skip 4) and not "c4"
+>  	# (from "c5side" skip 1).
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c5side c11 c9 c6 c1 &&
+>  	have_not_sent c10 c8 c7 c5 c4 c3 c2
+>  '
+> @@ -114,7 +127,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
+>  	# not need to send any ancestors of "c3", but we still need to send "c3"
+>  	# itself.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch origin to_fetch &&
+> +	trace_fetch client origin to_fetch &&
+>  	have_sent c5 c4^ c2side &&
+>  	have_not_sent c4 c4^^ c4^^^
+>  '
+> @@ -144,7 +157,7 @@ test_expect_success 'handle clock skew' '
+>  	# and sent, because (due to clock skew) its only parent has already been
+>  	# popped off the priority queue.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c2 c1 old4 old2 old1 &&
+>  	have_not_sent old3
+>  '
+> @@ -176,7 +189,7 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
+>  	test_commit -C server commit-on-b1 &&
+>  
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" to_fetch &&
+> +	trace_fetch client "$(pwd)/server" to_fetch &&
+>  	grep "  fetch" trace &&
+>  
+>  	# fetch-pack sends 2 requests each containing 16 "have" lines before
