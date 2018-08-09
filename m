@@ -2,76 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8DA11F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 11:04:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04EDA1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 12:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730191AbeHIN3H (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 09:29:07 -0400
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:34267 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727768AbeHIN3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 09:29:07 -0400
-Received: by mail-lj1-f178.google.com with SMTP id f8-v6so4168326ljk.1
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 04:04:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=tEN2bgGTVVcxoDkTaQS57i0uARlvO23ptL3MaJwBB3g=;
-        b=TTZjtmmVYZ3aUb2bpcsfifpOA/Blznqb2RyweSBrXJxTfeuaga0eYaJuvg1zsVeWtS
-         DXu1OnU8iYtJRLY39UUlKHaOx+ZGBtnzy4iJjgX809jFJgSop4xwAkaXFi+2PPUaj2y6
-         b6J5rcjwTOp12+xm1f7zqggOnWydmIG87ySUCMsKIH/C05A1WzIK+/xGLOW8SNCz9Ok5
-         acljxgpA0/G/tHfCEuCoQMSW87PwmcqjBg0DB0gj9XmEDI/VQNQbQby6m7C7/fuHvthU
-         jqTq7Po1o7EZDHwS7u8EK6PPZr++MlreQlOn3sk3kRshopf26c+up4u4SYKaIyAliMy/
-         U/ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=tEN2bgGTVVcxoDkTaQS57i0uARlvO23ptL3MaJwBB3g=;
-        b=oa3jR7YxYxeNxJ1T3pw0eTPXu+Q2D74MpHSxJO9PsTDJqlW8R/clGThBhhroInCyYk
-         oxPPEivgF64YvlMXazLafaTDLkSSfpIuyHCky7jI/UxKpH+NObNvBCWTzOplY4zGx2w9
-         rxyT74HM6ftVSHGArmx6t4CHGF+JzdYsCHKycBK0GVN3QWPg0ekAueud2ZG5yBP8/Qak
-         W1qyLQYbbvPMxhaxPFHZrYxd7+oc8itAjwf+TESv20nJUQ9mi26UYB6YZ38BASrXTWI9
-         tzgIa3Xv4Jetx81c9Ytwro9rRxIb13bV1Giey9igCKOUAoZGDaCkQ6Gs46iG8actGdRK
-         ixIg==
-X-Gm-Message-State: AOUpUlGHoufUookkw/pJYtiUiOoLNNcWGhjf1YIhwWB8MRO7WHiqkrz5
-        LRkojpNZUlRtNsPenxwjKCdebrzAt3CT6m+c8nu8lXKq
-X-Google-Smtp-Source: AA+uWPzTgo+DMjtFwQAJhze0rebsD/6pFyOVaTG4OTJItctCb8z+d0VIT9F/twRx5hQ/8bpK16kDCBnoTysTHSuxFA0=
-X-Received: by 2002:a2e:712:: with SMTP id 18-v6mr1406855ljh.101.1533812684451;
- Thu, 09 Aug 2018 04:04:44 -0700 (PDT)
+        id S1731153AbeHIPPK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 11:15:10 -0400
+Received: from mout.gmx.net ([212.227.15.19]:44951 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727786AbeHIPPK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 11:15:10 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1fumnJ3lDV-012LA4; Thu, 09
+ Aug 2018 14:50:17 +0200
+Date:   Thu, 9 Aug 2018 14:50:18 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Andrei Rybak <rybak.a.v@gmail.com>, Git List <git@vger.kernel.org>,
+        Thomas Rast <tr@thomasrast.ch>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] line-log: clarify [a,b) notation for ranges
+In-Reply-To: <CAPig+cTVEq1AGvtxxonbU4PgqeG0fOy9CSDO7ThjVpfGoJaAJA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808091448260.71@tvgsbejvaqbjf.bet>
+References: <be1dd423-f9de-a436-6127-02cce4ab1977@gmail.com> <CAPig+cTVEq1AGvtxxonbU4PgqeG0fOy9CSDO7ThjVpfGoJaAJA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Received: by 2002:a19:3bd2:0:0:0:0:0 with HTTP; Thu, 9 Aug 2018 04:04:43 -0700 (PDT)
-From:   Bartosz Konikiewicz <izdwuut@gmail.com>
-Date:   Thu, 9 Aug 2018 13:04:43 +0200
-Message-ID: <CAAdU=LuNn7qdXf81C3-3=0uh7NOSihm3U3dfDcXPiKxfaZMaFQ@mail.gmail.com>
-Subject: What's the use case for committing both the freshly created file and
- it's exclusion in .gitignore?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:XoIeAaKS7AwXhuagYfPsilnlepJxn78M0XchPpU6KELwz6HhZUj
+ EkYq2OXRkXue5VQXI/ZbwstkbST9/IgtmVdNteWNRGtZFkLZNFoEjANfOm8P0Nd4WTDIL7u
+ 5VotF5huGcZXdblJpLTX0k63WZYRz+vczS4GCs0ur399MMR9BjMPTX+Myg5j3lylHDWp5m8
+ 9HcwWRo/hUpMts2aaRORQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nY9si6dpkds=:rOiCpoWYaKGHIwLaX2HK+8
+ D8IzvDyz6iO0JbUOr1gmhM1ZaC74RNrMhSCvc50LWufyXf8k3ZiyedG/XaZ73iObvGwpNOeIG
+ Ohxr6t8E/4udQ4cTAiWkM1cOnFOgjkEsAUCVWPz7zj6n2OT3mOOLGddaZBOkikBDrjMv4uRFi
+ IeS28ltFJHlfCJwZmmFH7eVfF4OZcUDz9k7rtwDsBeYwCdLC8j+EsKOYLSpmzhZL2swJerHJZ
+ fIKkIhctC5Ccxie60ryMISNF6iU9Akl00WbMtUSHQ6jfqoLMuo91B+jRcEKPngDdmNQPu3ung
+ oEesMPmLl7mHD+oaNyAqHzyQ9AMHdMWoOdQxJcS9M8La+w3xvXJb4euoJDN+G4RWrpq7DEoSR
+ ziN5ctZBhg5lduHuUP23ELkwTkAMAouHRO4sjOXua7BBAaWZQmY/+wKFWb0AQhvsqA/rLlgdy
+ SYO/MhlbMIspU/qQRmWbY6SaTrydE6SEd4+Q8Ud5DSFgwxRpjfb9HMxhirG22xzWMZnbd6Bqj
+ t5InZav88SthcoZ9Fm6/5KIfm5moClNhsJbYOeBaEXnyUc+J4OyaEq6LHCbzr+9BlwmuVytXk
+ mw5QGYL5YX1XCiueR+hNUDutzcrHy6ickhuOKMgoWkxLk2EweFpbOf2EIbflp55x99VXalmhc
+ nMiMBoephZvFYEXi9J16rp3QetySwSGnGWUbylplLMHur4i93ZEOzjkFR2aVJhFRCSlYJy20C
+ XBy+eDV8lpZ8dFaQsnOn4zdr2/X2MKIUKrndtGcnZS5cxrYLnYeelPPy4UU8K3zZd7S5iunpJ
+ r/XUxj/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi there!
+Hi Eric,
 
-I hope that the subject of my message (i.e. the question) is
-exhaustive enough, so I'll just stick to reproducing my issue.
+On Tue, 7 Aug 2018, Eric Sunshine wrote:
 
-Steps to reproduce:
+> On Tue, Aug 7, 2018 at 9:54 AM Andrei Rybak <rybak.a.v@gmail.com> wrote:
+> > line-log.[ch] use left-closed, right-open interval logic. Change comment
+> > and debug output to square brackets+parentheses notation to help
+> > developers avoid off-by-one errors.
+> > ---
+> 
+> This seems sensible. There might be some reviewers who suggest
+> different notation since "[...)" is not universal (see [1]), but I
+> think this is fine.
 
-1. Create a new file.
-2. Stage the file.
-3. Add the file to .gitignore.
-4. Stage the .gitignore.
-5. Commit changes.
+Indeed. When I started out studying mathematics, I learned the notation
+[...[ (which makes a lot more sense, if you think about it).
 
-I imagined that the file would now be removed from the stage (because
-it's ignored now and not yet committed) but it isn't. Where this
-behavior would be desirable? I know that a 'git add' command can be
-invoked with an '-f' flag, which would yield the same result, but I
-can't come up with an explanation where can it be applied.
+Besides, it's not like we start from a fresh slate. Git is already over a
+decade old. Our commit ranges are "half open", i.e. the exact thing that
+is described here. There's gotta be some precedent in the documentation,
+and introducing something willfully inconsistent is probably a pretty bad
+idea.
+
+Ciao,
+Dscho
