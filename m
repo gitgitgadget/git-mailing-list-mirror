@@ -7,111 +7,166 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC94C1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:35:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 52B061F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:35:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732317AbeHIUBS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 16:01:18 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:33024 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731115AbeHIUBS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 16:01:18 -0400
-Received: by mail-pg1-f196.google.com with SMTP id r5-v6so3082100pgv.0
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
+        id S1732368AbeHIUBU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 16:01:20 -0400
+Received: from mail-pl0-f65.google.com ([209.85.160.65]:42516 "EHLO
+        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731115AbeHIUBU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 16:01:20 -0400
+Received: by mail-pl0-f65.google.com with SMTP id g6-v6so2836025plq.9
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:35:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=6ciZuG+waAQrmckijopIfdzypWpvHM7WEwM5fMyuMnk=;
-        b=VGasAH5gnJFpRGSoy7L1uIcubD+KyG1yCIO7W4kdl1KUj80M52MlitzKqJy4NqR9F+
-         xG3e183UOFS208RcDaBky4e30ZuA+bWAfS+QVGZ1gRhDtG7dJxijg8xNrd5BuAXQ1Btv
-         YfxQ1dV7WG3uKrsZ9zbo5VNYHtO/kbuoPWM56o0Ba7Cv8JPWOdilh0SblJFP4NRZwQop
-         5KgT2DWekrFGQlMEvXdGfjI9B1NuaWKLfxroeINaxYRhW8AmPs1uNm4bC5Eqh1+4E9a1
-         L+KMEZ9252TS4k2UZSuCAlToZtJA4II40Zi8wwopSArPBW5FZkSyfauj9d93m/FhRvQI
-         oarg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=uQVZYKpQVYtjzHCBco0ng1VLyXfp+HeUTldyGl7pdoI=;
+        b=oEe+fDCDOVevGFzeoioujy0cLDyFLMXzbd7Y7CKD3YPt3rYPViutUS3aBo61H2N/qH
+         +TOpW0cPY4TItnjT1Pg1jHEmBJ5w1KJR56Cu9kEz4nALIAEm4Zm4VyQ97PuCco3W6dGc
+         QEY5eJUk1cIPWnHva0dNrYjI2lcYvMGzaPsP6Q4/9EbfUccXlg3aTgwHVbE/v75fcsSL
+         zVxHZpNgk4hOjyWt1FUVTsS64JET8iOZfASD/q2rnBQIWMU25W71B31zpGXM34mthKW8
+         iCThfg3ck3uc0iDtXpKwcvdxLMe8mVWQFDEzP8bdzQouSGwgSC8vPNLl4ncyzVNHAXZp
+         q57g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=6ciZuG+waAQrmckijopIfdzypWpvHM7WEwM5fMyuMnk=;
-        b=uXdIKFemrd4wJRBIUEgZsD/5ffNSrR4V3gsI8dAbQEZONMdhjqkip6+j+u5O0p0wIN
-         XZ3ZypVpWg3xHvPsOwNZpHVX5XbB42UXnoNEExwi+OWUEmPVYrwAvsojnauAd+xrt4tW
-         DalWkacMmtU/vlyTvlvb0JOfc0spkdOrsBipGC50eRyEnPKeQ+sp8Gv9HldHI4e9qcz/
-         uZ9DeIEXGOWsiNshcFgG0KfitxHO9icumhImjgCaP6qriYRwIw3d50Pdt6Ukqt/IoQ6f
-         XoFWrPXzWttQ4SKHiYE4+XdumGcMsyrZGHjkVr92rcxdxUmSZLS6nhdnvH+AQf+O9Kmq
-         KNXg==
-X-Gm-Message-State: AOUpUlE9tAC5TJ0hGw/BC9zcPmWV7eIjP8lYW7/A4qT+TnOoos6p7toC
-        W4WaKIc3bLyCO6sG5RaNmsOnDar6
-X-Google-Smtp-Source: AA+uWPyYvDy60p36pPr/pKgC3MAL2+TER9yB22+pqCZoTD0Uj+emeGTDj+Xzkp/1ENAwkNb+IY8zrw==
-X-Received: by 2002:a63:ef54:: with SMTP id c20-v6mr2995983pgk.368.1533836125110;
-        Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=uQVZYKpQVYtjzHCBco0ng1VLyXfp+HeUTldyGl7pdoI=;
+        b=eKNgRJhN116vFavOyTWDbDEFRAx4z4Qjk+xHyvXPd4oxr6WBMLPm+7+zt/N1uBbiEG
+         AJBBat8sVbbKGp0jPesHJkXgRQfTRhtG0Z2bXqhJrOFuFD5NCC10E7/36ZY8d7jpJBi5
+         xoijCX4lxh3Y/TJMxQFgSHLnDoUNF37KvN50tBztYg84rqXUOVNKDpbEZLPGtg6ZUibY
+         1j0PgNElM0i95kqcb41dKFmXqm8y/YboJZK4xa+biP9zapR3k9Hwzio0RmOtJO7su9u8
+         zhZtCZZJcObQODjolQuHRaDXe/NRms2UuqdHyuG+4IKYtkx9FyzUr8N4CQhw/AnwChYE
+         KVsA==
+X-Gm-Message-State: AOUpUlEmcG1IzC/ivEojXng9B+uGjHfDnhIKS8JKhF2WgMpfFEofATOo
+        6N7dMBAWor/BAj6cINZgai1wzNJE
+X-Google-Smtp-Source: AA+uWPzp7bmnQrLhmOz+QMyNMf7Q9MfORQvvT9nui+fGFNcjW4cQMT4f2ovUTA8dzGTWAg2pI/+xfg==
+X-Received: by 2002:a17:902:8ec8:: with SMTP id x8-v6mr2068710plo.308.1533836126538;
+        Thu, 09 Aug 2018 10:35:26 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id j5-v6sm9164940pff.139.2018.08.09.10.35.23
+        by smtp.gmail.com with ESMTPSA id p64-v6sm13777179pfa.47.2018.08.09.10.35.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 10:35:24 -0700 (PDT)
-Date:   Thu, 09 Aug 2018 10:35:24 -0700 (PDT)
-X-Google-Original-Date: Thu, 09 Aug 2018 17:35:17 GMT
-Message-Id: <pull.17.git.gitgitgadget@gmail.com>
+        Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
+Date:   Thu, 09 Aug 2018 10:35:25 -0700 (PDT)
+X-Google-Original-Date: Thu, 09 Aug 2018 17:35:18 GMT
+Message-Id: <e449ed75fe3705692175017f98438815aeccf0fb.1533836122.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.17.git.gitgitgadget@gmail.com>
+References: <pull.17.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/4] t5552: fix flakiness by introducing proper locking for GIT_TRACE
+Subject: [PATCH 1/4] Introduce a function to lock/unlock file descriptors when
+ appending
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I reported a couple of times that t5552 is not passing reliably. It has now
-reached next, and will no doubt infect master soon.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Turns out that it is not a Windows-specific issue, even if it occurs a lot 
-more often on Windows than elsewhere.
+This function will be used to make write accesses in trace_write() a bit
+safer.
 
-The culprit is that two processes try simultaneously to write to the same
-file specified via GIT_TRACE_PACKET, and it is not well defined how that
-should work, even on Linux.
+Note: this patch takes a very different approach for cross-platform
+support than Git is historically taking: the original approach is to
+first implement everything on Linux, using the functions available on
+Linux, and then trying to emulate these functions on platforms that do
+not have those functions such as Windows.
 
-This patch series addresses that by locking the trace fd. I chose to use 
-flock() instead of fcntl() because the Win32 API LockFileEx()
-[https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-lockfileex] 
-(which does exactly what I want in this context) has much more similar
-semantics to the former than the latter.
+This leads to all kinds of undesirable quirks in Git's source code (and
+performance characteristics) because of the lack of a proper abstraction
+layer: instead of declaring functions for the functionality we
+*actually* need, we abuse POSIX functions to say what we need, even if
+those functions serve much broader purposes (and do not make at all
+clear what the caller wants of them).
 
-Of course, I have to admit that I am not super solid on flock() semantics,
-and I also do not know which conditional blocks in config.mak.uname should
-grow a HAVE_FLOCK = YesWeDo line, still. Reviewers knowledgeable in flock() 
-semantics: I would be much indebted if you helped me there. Also: is it safe
-to call flock() on file descriptors referring not to files, but, say, pipes
-or an interactive terminal?
+For example, when Git wants to determine whether a path refers to a
+symbolic link, it calls lstat(). That POSIX function has to be emulated
+on Windows, painstakingly filling all the information lstat() would,
+only for the caller to throw away everything except that one bit of
+information, and all of the time figuring out the mtime/atime/ctime and
+file size and whatnot was spent in vain.
 
-Johannes Schindelin (4):
-  Introduce a function to lock/unlock file descriptors when appending
-  mingw: implement lock_or_unlock_fd_for_appending()
-  trace: lock the trace file to avoid racy trace_write() calls
-  trace: verify that locking works
+If we were to follow that approach, we would extend the fcntl()
+emulation in compat/mingw.c after this commit, to support the function
+added in this commit.
 
- Makefile               |   1 +
- compat/mingw.c         |  19 ++++++
- compat/mingw.h         |   3 +
- config.mak.uname       |   3 +
- git-compat-util.h      |   2 +
- t/helper/test-tool.c   |   1 +
- t/helper/test-tool.h   |   1 +
- t/helper/test-trace.c  | 130 +++++++++++++++++++++++++++++++++++++++++
- t/t0070-fundamental.sh |   6 ++
- trace.c                |  11 +++-
- wrapper.c              |  14 +++++
- 11 files changed, 190 insertions(+), 1 deletion(-)
- create mode 100644 t/helper/test-trace.c
+But fcntl() allows a lot more versatile file region locking that we
+actually need, to by necessity the fcntl() emulation would be quite
+complex: To support the `l_whence = SEEK_CUR` (which we would use, if it
+did not require so much book-keeping due to our writing between locking
+and unlocking the file), we would have to call `SetFilePointerEx()`
+(after obtaining the `HANDLE` on which all Win32 API functions work
+instead of the integer file descriptors used by all POSIX functions).
+Multiplying the number of Win32 API round-trips. Of course, we could
+implement an incomplete emulation of fcntl()'s F_WRLCK, but that would
+be unsatisfying.
 
+An alternative approach would be to use the `flock()` function, whose
+semantics are much closer to existing Win32 API. But `flock()` is not
+even a POSIX standard, so we would have to implement emulation of
+`flock()` for *other* platforms. And it would again be the wrong thing
+to do, as we would once again fail to have an abstraction that clearly
+says what *exact*functionality we want to use.
 
-base-commit: 42cc7485a2ec49ecc440c921d2eb0cae4da80549
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-17%2Fdscho%2Ffetch-negotiator-skipping-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-17/dscho/fetch-negotiator-skipping-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/17
+To set a precedent for a better approach, let's introduce a proper
+abstraction: a function that says in its name precisely what Git
+wants it to do (as opposed to *how* it does it on Linux):
+lock_or_unlock_fd_for_appending().
+
+The next commit will provide a Windows-specific implementation of this
+function/functionality.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+squash! Introduce a function to lock/unlock file descriptors when appending
+---
+ git-compat-util.h |  2 ++
+ wrapper.c         | 14 ++++++++++++++
+ 2 files changed, 16 insertions(+)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9a64998b2..13b83bade 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1202,6 +1202,8 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
+ #define getc_unlocked(fh) getc(fh)
+ #endif
+ 
++extern int lock_or_unlock_fd_for_appending(int fd, int lock_it);
++
+ /*
+  * Our code often opens a path to an optional file, to work on its
+  * contents when we can successfully open it.  We can ignore a failure
+diff --git a/wrapper.c b/wrapper.c
+index e4fa9d84c..6c2116272 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -690,3 +690,17 @@ int xgethostname(char *buf, size_t len)
+ 		buf[len - 1] = 0;
+ 	return ret;
+ }
++
++#ifndef GIT_WINDOWS_NATIVE
++int lock_or_unlock_fd_for_appending(int fd, int lock_it)
++{
++	struct flock flock;
++
++	flock.l_type = lock_it ? F_WRLCK : F_UNLCK;
++	flock.l_whence = SEEK_SET;
++	flock.l_start = 0;
++	flock.l_len = 0xffffffff; /* arbitrary number of bytes */
++
++	return fcntl(fd, F_SETLKW, &flock);
++}
++#endif
 -- 
 gitgitgadget
+
