@@ -6,84 +6,81 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 327FC1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 14:26:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4550E1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 14:30:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731162AbeHIQvq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 12:51:46 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48400 "HELO cloud.peff.net"
+        id S1731176AbeHIQzV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 12:55:21 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48416 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730453AbeHIQvq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 12:51:46 -0400
-Received: (qmail 21219 invoked by uid 109); 9 Aug 2018 14:26:38 -0000
+        id S1730634AbeHIQzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 12:55:21 -0400
+Received: (qmail 21377 invoked by uid 109); 9 Aug 2018 14:30:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 14:26:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 14:30:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9467 invoked by uid 111); 9 Aug 2018 14:26:40 -0000
+Received: (qmail 9559 invoked by uid 111); 9 Aug 2018 14:30:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 10:26:40 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 10:30:14 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 10:26:36 -0400
-Date:   Thu, 9 Aug 2018 10:26:36 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 10:30:10 -0400
+Date:   Thu, 9 Aug 2018 10:30:10 -0400
 From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/5] chainlint: match arbitrary here-docs tags rather
- than hard-coded names
-Message-ID: <20180809142636.GC1439@sigill.intra.peff.net>
-References: <20180711064642.6933-1-sunshine@sunshineco.com>
- <20180807082135.60913-1-sunshine@sunshineco.com>
- <20180807082135.60913-2-sunshine@sunshineco.com>
- <20180808225011.GC3902@sigill.intra.peff.net>
- <CAPig+cR6=HjSo4HW8jPCDBQ0SsVqCw8o=cekVEPnSZZzsh2Tkw@mail.gmail.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>,
+        Santiago Torres <santiago@nyu.edu>,
+        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
+ when signature is not trusted
+Message-ID: <20180809143010.GD1439@sigill.intra.peff.net>
+References: <20180801001942.GC45452@genre.crustytoothpaste.net>
+ <20180801002546.du52zkxjupzcw2p6@LykOS.localdomain>
+ <20180803133630.32oxubwttealvhxk@work-pc>
+ <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
+ <20180803160634.GA19944@sigill.intra.peff.net>
+ <20180804084346.fhte5wusbfb5baem@cynerd-laptop>
+ <20180808230456.GA21882@sigill.intra.peff.net>
+ <20180808231226.GA34639@genre.crustytoothpaste.net>
+ <xmqqzhxwcq2o.fsf@gitster-ct.c.googlers.com>
+ <20180809014302.GB34639@genre.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cR6=HjSo4HW8jPCDBQ0SsVqCw8o=cekVEPnSZZzsh2Tkw@mail.gmail.com>
+In-Reply-To: <20180809014302.GB34639@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 09, 2018 at 01:58:05AM -0400, Eric Sunshine wrote:
+On Thu, Aug 09, 2018 at 01:43:02AM +0000, brian m. carlson wrote:
 
-> On Wed, Aug 8, 2018 at 6:50 PM Jeff King <peff@peff.net> wrote:
-> > On Tue, Aug 07, 2018 at 04:21:31AM -0400, Eric Sunshine wrote:
-> > > +# Swallowing here-docs with arbitrary tags requires a bit of finesse. When a
-> > > +# line such as "cat <<EOF >out" is seen, the here-doc tag is moved to the front
-> > > +# of the line enclosed in angle brackets as a sentinel, giving "<EOF>cat >out".
-> >
-> > Gross, but OK, as long as we would not get confused by a line that
-> > actually started with <EOF> at the start.
+> On Wed, Aug 08, 2018 at 05:59:43PM -0700, Junio C Hamano wrote:
+> > "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > 
+> > >> FWIW, I'm on board with returning non-zero in any case where gpg would.
+> > >
+> > > I think that's probably the best solution overall.
+> > 
+> > FWIW, I am not married to the current behaviour.  I would not be
+> > surprised if it mostly came by accident and not designed.
 > 
-> It can't get confused by such a line. There here-doc swallower
-> prepends that when it starts the swallowing process and removes it add
-> the end. Even if a line actually started with that, it would become
-> "<EOF><EOF>cmd" while swallowing the here-doc, and be restored to
-> "<EOF>cmd" at the end. Stripping the "<EOF>" is done non-greedily, so
-> it wouldn't remove both of them. Likewise, non-greedy matching is used
-> for pulling the "EOF" out of the "<...>" when trying to match against
-> the terminating "EOF" line, so there can be no confusion.
+> Since apparently I was the author of the commit that changed the
+> behavior originally, let me simply say that I was not aware that gpg
+> signalled the correctness of a signature by its exit status when I wrote
+> that patch.  If I had known that, I would have deferred to gpg in my
+> change.  My goal was consistency between verify-tag and verify-commit,
+> and in retrospect I probably made the wrong decision.
 
-Thanks. I figured you probably had thought of that, but it seemed easier
-to ask than to wade through the sed code (I do feel like a bad person to
-give that answer, because IMHO one of the key things that makes open
-source work is a willingness to dig in yourself rather than asking; but
-I am making an exception for this sed code).
+OK, so it seems like we're all in agreement now.
 
-> Yeah, I was going with the tighter uppercase-only which Jonathan
-> suggested[1], but I guess it wouldn't hurt to re-roll to allow
-> lowercase too.
->
-> [...]
->
-> No. I've gotten so used to \EOF in this codebase that it didn't occur
-> to me to even think about 'EOF', but a re-roll could add that, as
-> well.
+What next?
 
-Thanks. I could take or leave such fixes, since I think our style
-discourages both, so I'll leave it up to you whether you want to pursue
-them.
+There was a patch at the start of this thread, but it specifically
+checks for "sigc->result == U".  That's probably OK, since I think it
+restores the behavior in earlier versions of Git. But I wonder if we
+should simply be storing the fact that gpg exited non-zero and relaying
+that. That would fix this problem and truly make the rule "if gpg
+reported an error, we propagate that".
 
 -Peff
