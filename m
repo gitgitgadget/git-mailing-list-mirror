@@ -2,96 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 065D11F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 22:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 771091F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 22:03:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727420AbeHJA1A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:27:00 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:38264 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727327AbeHJA07 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:26:59 -0400
-Received: by mail-wm0-f66.google.com with SMTP id t25-v6so76982wmi.3
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:00:10 -0700 (PDT)
+        id S1727115AbeHJAaQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:30:16 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41259 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726764AbeHJAaQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:30:16 -0400
+Received: by mail-wr1-f66.google.com with SMTP id j5-v6so6456238wrr.8
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 15:03:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mZ5XghToA7UrYtXnCSExLoCHJWIRDSMPnrUHFGCI4Yk=;
-        b=kFb9ZQHXqherpxOVfoERTMKiEscQ5jyRBcYOBnK9jB6/JgRFPSjV16Sh/dJai1W/01
-         ofQvKFYMnhC7B0Cfs9ovIViBlFy9hULrEVgvO0DY7snqOU5S1AAFtugweiq80q3zgZCS
-         D3NqGhhL5oyOg+tB8RwilDhxxzFsWbGV+HlBx3UOz5crW+xwN9S/zMXkrZvlxHsiX0Ha
-         F+j/w0G2tJF4WDeQ1TCiZyadtftLEnynjGTWLm4xykOIjWPmgWaiOuzw7nTBINaGK3zQ
-         zSZO0PdHXYsZ+mGHVr1TfZOaXIgywHLjnJRXIJFEAYPU0Lw8w1Q077iVxM5k1NHPJRNA
-         684w==
+        d=google.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=WHlYnE4kZv/2kCU859NIYfHGYfBeTnoMWBXk70iQ9wQ=;
+        b=Exg848XcYbSGqjBoVsvZkTAEyzx8CsU3gZD2oW33G0hnp012niQNiWKfilV4GqBAsw
+         1NCQaO36MwDUQmwUMleXaj6p85obJH5xFCp7pN7X7PKiQdHTSGVZPUJMU+nM6TQB64le
+         aLK97Or3MyXwqnRPNxBCRRr6W+Mi77PVi5QxHoUJFIsJv4VfipFf0aucZYmbUeJw5x5+
+         pVIFh1u4VHIAfzlfccn22Ar8qPZTDnEsJaCvDw+ckNFVfQBGnmnFZrVuM64lQL3UANSC
+         I5AGSMglZ9czOl8FNFO1sj0vpE8UakQ7SSeqRw0EfpY7wJbnOmgyD3NcZD2U6DtORz9T
+         NeoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mZ5XghToA7UrYtXnCSExLoCHJWIRDSMPnrUHFGCI4Yk=;
-        b=DKZydD4vpbOpAfz0nV1QDRoOXvObjN70/7SikTLDSXX0h0IY4mNSd21FQEAPEqBiEc
-         4dRsgiYZm7nr9UOkrw+aqtOZoHGbtUwE9OuQ9Q3bTGZdjfsLVqjbEMydkEWEg9QU81EH
-         CESJ/Y9G2xJHZbrneFJvB6awC5xXL2GvEKVuZFN5h6czgrlBfCgDKW0GUdcIHkXLiH+Z
-         CwzA9H2gPmVAiA7Fjl2Pe7HqDfQj9evaod/UwoVFOL4cG/c9DGIeC1V1u9d96Cvy+rjU
-         Qej7HsC+MA7zMM4dJ7SEpe7PenU4ZTfNbpfBTA1PEvRPftSM0wwhnRRwOW+d+7Ohfd7p
-         0QgA==
-X-Gm-Message-State: AOUpUlH6PmNZ2/aiPTdhm9N9N0FWtYWrCZAx/FtdqkLgz5J+RQ4q6zBj
-        zcVSCJH6uUMrQgZUwGxH1Es=
-X-Google-Smtp-Source: AA+uWPzyIESOMx7dTG2yblBe5uUvgJBqxnVo7SHsA3C/7JYN3N9FKRPHIKefTQs+C1D35PL7lRYjeg==
-X-Received: by 2002:a1c:385:: with SMTP id 127-v6mr59790wmd.92.1533852009432;
-        Thu, 09 Aug 2018 15:00:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a20-v6sm5216935wmg.23.2018.08.09.15.00.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 15:00:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, hvoigt@hvoigt.net
-Subject: Re: [PATCH 04/10] submodule.c: convert submodule_move_head new argument to object id
-References: <20180808221752.195419-1-sbeller@google.com>
-        <20180808221752.195419-5-sbeller@google.com>
-Date:   Thu, 09 Aug 2018 15:00:08 -0700
-In-Reply-To: <20180808221752.195419-5-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 8 Aug 2018 15:17:46 -0700")
-Message-ID: <xmqqk1oz9p5j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=WHlYnE4kZv/2kCU859NIYfHGYfBeTnoMWBXk70iQ9wQ=;
+        b=MjpMI1E78UKC5YiJqyw3FRCz6ZYZ8o5ws+L3ZBPPiuS8AJGixvanOCKRp4r/sQfyih
+         rkcNzSj2MUegUVv0xw752BqTBIr/wls0mJ79C8VEApHrQeQ6VcP4ZyVlvnmmLq5PFKM5
+         111AXR31BQfCd5XGu0GKJSIp9Z0C1cnEWWusRhhxFQYZ07Waa3JpFEBp5oCZbDKnTfYD
+         Gj/bwp6fSU0IxdCOcg8gy7vGhKjXkqEDyebzf82CB9JJhJ4dJ1gmv86RoP1OKvVmRmrm
+         laIrSo1HSQAfI5vov3yYq/P33I2tqwY/m/BbTMkST2+q5Y9RyzxrsDYr4pjOXq8kEF1c
+         ZtDg==
+X-Gm-Message-State: AOUpUlFWsx2NdAgIgTBU27d8RXs5JwnT0lwHByHbtId1ZVdlRJUKheYz
+        AVPRED6YYQGQCfqRPrKXsAIWGLcn5qZ9g+9U60yX3L29Ysg=
+X-Google-Smtp-Source: AA+uWPwXrHPqcc0K0d33OuhTAQa94pjZnBkP2wQrh3HP91F9P6QLReNrUj1JKp3dQDL6+6mlRjfe7GEuH5O2QpCr5NY=
+X-Received: by 2002:adf:f689:: with SMTP id v9-v6mr2466096wrp.201.1533852205188;
+ Thu, 09 Aug 2018 15:03:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a1c:f00c:0:0:0:0:0 with HTTP; Thu, 9 Aug 2018 15:03:24 -0700 (PDT)
+In-Reply-To: <20180808232515.GC21882@sigill.intra.peff.net>
+References: <20180808231210.242120-1-jonathantanmy@google.com> <20180808232515.GC21882@sigill.intra.peff.net>
+From:   Jonathan Tan <jonathantanmy@google.com>
+Date:   Thu, 9 Aug 2018 15:03:24 -0700
+Message-ID: <CAGf8dgK_yMEtyh+_chQ+9i2d1Uc9oAXr7Q_8ES5OPF8qF87EHw@mail.gmail.com>
+Subject: Re: [RFC PATCH] packfile: iterate packed objects in pack order
+To:     Jeff King <peff@peff.net>
+Cc:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Aug 8, 2018 at 4:25 PM, Jeff King <peff@peff.net> wrote:
+> Even if you just use the oid to do a separate lookup in the object
+> database, there's still a benefit in accessing the objects in pack
+> order.
 
-> All callers use oid_to_hex to convert the desired oid to a string before
-> calling submodule_move_head. Defer the conversion to the
-> submodule_move_head as it will turn out to be useful in a bit.
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  entry.c        |  6 +++---
->  submodule.c    | 12 ++++++------
->  submodule.h    |  2 +-
->  unpack-trees.c | 13 +++++--------
->  4 files changed, 15 insertions(+), 18 deletions(-)
->
-> diff --git a/entry.c b/entry.c
-> index b5d1d3cf231..4b34dfd30df 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -358,7 +358,7 @@ static int write_entry(struct cache_entry *ce,
->  		sub = submodule_from_ce(ce);
->  		if (sub)
->  			return submodule_move_head(ce->name,
-> -				NULL, oid_to_hex(&ce->oid),
-> +				NULL, &ce->oid,
->  				state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
->  		break;
+You're probably right, but I don't immediately see what the benefit is.
 
-Nice.
+On a not completely unrelated note, I just realized that in my patch,
+i should be pack_nr (ordinal in pack order) and pack_nr should be
+index_nr (ordinal in index order, i.e. alphabetical order). If you run
+with this, feel free to write your own patch and maybe I'll learn how
+accessing objects in pack order benefits looking up the object
+database through the commit message.
 
+> I can try to pick this up and carry the cat-file bits to completion if
+> you want, but probably not until tomorrow or Friday.
+
+Thanks - feel free to do this.
