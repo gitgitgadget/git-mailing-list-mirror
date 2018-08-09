@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1EFBD1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 15:56:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86A741F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 15:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732426AbeHISVb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 14:21:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44674 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732127AbeHISVa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 14:21:30 -0400
-Received: by mail-wr1-f65.google.com with SMTP id r16-v6so5553405wrt.11
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 08:55:59 -0700 (PDT)
+        id S1732517AbeHISVg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 14:21:36 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44683 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732433AbeHISVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 14:21:36 -0400
+Received: by mail-wr1-f67.google.com with SMTP id r16-v6so5553633wrt.11
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 08:56:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ves5Xj1yLmQVoogLlRyZBKVEzNjPRBastKnGzPJvjLc=;
-        b=cxph+1GtiHjW38lGse5aKPWPWGL8RA8r9vtcCDzrnJei8ZUNVEvsVKih8UuHEsHnMl
-         GUsT3Ay16Kh8SoXAGc+Esc7gdE5ebUlNbdy7Wifgcq1PkDqZxe0HZ07n0wa4oA5Qf0Qy
-         np6S7N1xqJqxUNa5jzCGYT/q6CUNrNp/u/vIOFHTqtKmddejdFXabjl0IhPcNtw4YuXc
-         HnNK9ijrqEbfizrcSyx7NEPeQ3iX9HtJdVPGjtDptsVHhbjjcZGai2PoZf0sK2VLG5Zc
-         uk8hf0bbGLdx9dTkO3h3HDilx6AcJh6M0ZuEgMFx1VYZVAmrD6/kv+ho3Aj0uptliVM7
-         ezbA==
+        bh=OfHQxCHCu2abG8yMBIA+jrcC95vHzyucLWTD2A3MBY4=;
+        b=MMxU6NCYpHOqBZQ786zIerNCx1aaMUQojUa0MIYamRIRsDmKzNOtjet0RKhOgmiOaB
+         PmNMbD8o+WBywqzZTS5WPCntHfZmOaxPAlnz/as5FBoiLfMoaMnfYU1HjBTCnCRvNcPz
+         9EsQmV0mDvokcQR/wVmprPdwJlthH7SBAB6QQSyV0wJtdojtqNfKuNk7RDOm/I7NoAxw
+         lblShSp+IiabEZI78Htr/1GMAvbhR6IeQrAolSn8BqUaBni4+wYcDKHUBIL0I94f3pzq
+         ibR9qLEQM3K0eEy731I4i0ZVyZqD8HsbXER/vvxB9W3uk1Klzr61NbZ6m07ii8pdqBnT
+         +/8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ves5Xj1yLmQVoogLlRyZBKVEzNjPRBastKnGzPJvjLc=;
-        b=QhymPDb0ID6e8cUyCbfG3G1lgvf4cAH2HQHUJZmsfoDcWtHC9WIGMPVEi21cXY0MWx
-         XY7Jyk+AfoebiH6t6OneSTqyfjJ8gkAGsd9lLLylGGDXfwUE6ia6OXXwrG1nyH73ebJm
-         5XeNCS+2H+EQKzyvvqtMBEBGTDO0cKcB52o/C2udv9MpihTi0HJizNMTiZ9obtrzxaD1
-         lC6TqP5e1XsKBkj52XW38JLWQsSdC1Jo2wasS2z2+qzq1qdo46joR0edrkqSr6H5iFqa
-         YRicJNYUnpFmjq1vWAfer0B8Ws2nqqen/rEkwpsea650wgyO91BeFyqy13ZBEhOwIjq4
-         ohuA==
-X-Gm-Message-State: AOUpUlEGx6Mm7nuTaBvJpAsnbCbTsgspKnQoCWbCIFI7atbFj18LF5rp
-        vstyG/w4C6lrpf3o7GjTEHmPIGvO
-X-Google-Smtp-Source: AA+uWPw6PeeGG0T4iDol3vr+SNa105NYpXvnrPSeQVFctYW+RbkUxftkk5l7NHgFXSYyManTWb1Tlg==
-X-Received: by 2002:a5d:6103:: with SMTP id v3-v6mr1899035wrt.265.1533830158088;
-        Thu, 09 Aug 2018 08:55:58 -0700 (PDT)
+        bh=OfHQxCHCu2abG8yMBIA+jrcC95vHzyucLWTD2A3MBY4=;
+        b=FD5ZywiwVi+02XGumk3QM6WnuJzWRLwc4/gxJ2+4pzSTejBU/QnMKh4alCFvTBR7Ut
+         fLlVKwFin4Ck+0G7xBMPtCrdQx0bZPiHA/T1bWppUNS7ojv/54mcSReDnRwa7Xa860vi
+         ccyvZWWp1AxH+KocTwu/Zkvg2GA49jwt2EAxYrlQVe2vMXdi6Fqqo2zPCxuO0tT49NuD
+         iXhyrrbPzCSILQvuK8jwW0ixpgzJsAKNjp70gQczAZQNmbidzwFjWwSnUBo9r7KXcD5y
+         6lXpqRI9DCiZ0w2fKVHAHPC9ZniKuZ97viezXCppxQsMdJC1dgx1vNegKaUy7s3Jlu9B
+         VyfQ==
+X-Gm-Message-State: AOUpUlEJAyQSLxcQu2BLWsqytDu2Wp29WsKQ+e7OtMoWhwGIOxz2NnjV
+        cV8VKglBwsYGH0QXyikk8NMRCAtG
+X-Google-Smtp-Source: AA+uWPyh7gAmsaX7yNdxotCGjH3arcnysBGfcwCuI57DCra7YpxEuOH13JJ6x+W95q7uzX9KNCY41Q==
+X-Received: by 2002:a5d:48c7:: with SMTP id p7-v6mr1975462wrs.0.1533830163882;
+        Thu, 09 Aug 2018 08:56:03 -0700 (PDT)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id t69-v6sm10913762wmt.40.2018.08.09.08.55.56
+        by smtp.gmail.com with ESMTPSA id t69-v6sm10913762wmt.40.2018.08.09.08.56.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 08:55:57 -0700 (PDT)
+        Thu, 09 Aug 2018 08:56:03 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3 1/8] packfile: make get_delta_base() non static
-Date:   Thu,  9 Aug 2018 17:55:25 +0200
-Message-Id: <20180809155532.26151-2-chriscool@tuxfamily.org>
+Subject: [PATCH v3 5/8] repack: add delta-islands support
+Date:   Thu,  9 Aug 2018 17:55:29 +0200
+Message-Id: <20180809155532.26151-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.555.g17f9c4abba
 In-Reply-To: <20180809155532.26151-1-chriscool@tuxfamily.org>
 References: <20180809155532.26151-1-chriscool@tuxfamily.org>
@@ -72,56 +72,93 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-As get_delta_base() will be used outside 'packfile.c' in
-a following commit, let's make it non static and let's
-declare it in 'packfile.h'.
+Implement simple support for --delta-islands option and
+repack.useDeltaIslands config variable in git repack.
+
+This allows users to setup delta islands in their config and
+get the benefit of less disk usage while cloning and fetching
+is still quite fast and not much more CPU intensive.
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- packfile.c | 10 +++++-----
- packfile.h |  7 +++++++
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ Documentation/config.txt     | 4 ++++
+ Documentation/git-repack.txt | 5 +++++
+ builtin/repack.c             | 9 +++++++++
+ 3 files changed, 18 insertions(+)
 
-diff --git a/packfile.c b/packfile.c
-index 6974903e58..04d387f312 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -1037,11 +1037,11 @@ const struct packed_git *has_packed_and_bad(const unsigned char *sha1)
- 	return NULL;
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 27bb77f9e7..2bd31078b2 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3145,6 +3145,10 @@ repack.packKeptObjects::
+ 	index is being written (either via `--write-bitmap-index` or
+ 	`repack.writeBitmaps`).
+ 
++repack.useDeltaIslands::
++	If set to true, makes `git repack` act as if `--delta-islands`
++	was passed. Defaults to `false`.
++
+ repack.writeBitmaps::
+ 	When true, git will write a bitmap index when packing all
+ 	objects to disk (e.g., when `git repack -a` is run).  This
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index d90e7907f4..a8b2d4722f 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -155,6 +155,11 @@ depth is 4095.
+ 	being removed. In addition, any unreachable loose objects will
+ 	be packed (and their loose counterparts removed).
+ 
++-i::
++--delta-islands::
++	Pass the `--delta-islands` option to `git-pack-objects`, see
++	linkgit:git-pack-objects[1].
++
+ Configuration
+ -------------
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 6c636e159e..5ab9ee69e4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -12,6 +12,7 @@
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+ static int write_bitmaps;
++static int use_delta_islands;
+ static char *packdir, *packtmp;
+ 
+ static const char *const git_repack_usage[] = {
+@@ -40,6 +41,10 @@ static int repack_config(const char *var, const char *value, void *cb)
+ 		write_bitmaps = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "repack.usedeltaislands")) {
++		use_delta_islands = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
  }
  
--static off_t get_delta_base(struct packed_git *p,
--				    struct pack_window **w_curs,
--				    off_t *curpos,
--				    enum object_type type,
--				    off_t delta_obj_offset)
-+off_t get_delta_base(struct packed_git *p,
-+		     struct pack_window **w_curs,
-+		     off_t *curpos,
-+		     enum object_type type,
-+		     off_t delta_obj_offset)
- {
- 	unsigned char *base_info = use_pack(p, w_curs, *curpos, NULL);
- 	off_t base_offset;
-diff --git a/packfile.h b/packfile.h
-index cc7eaffe1b..1265fd9b06 100644
---- a/packfile.h
-+++ b/packfile.h
-@@ -126,6 +126,13 @@ extern unsigned long unpack_object_header_buffer(const unsigned char *buf, unsig
- extern unsigned long get_size_from_delta(struct packed_git *, struct pack_window **, off_t);
- extern int unpack_object_header(struct packed_git *, struct pack_window **, off_t *, unsigned long *);
+@@ -194,6 +199,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("pass --local to git-pack-objects")),
+ 		OPT_BOOL('b', "write-bitmap-index", &write_bitmaps,
+ 				N_("write bitmap index")),
++		OPT_BOOL('i', "delta-islands", &use_delta_islands,
++				N_("pass --delta-islands to git-pack-objects")),
+ 		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
+ 				N_("with -A, do not loosen objects older than this")),
+ 		OPT_BOOL('k', "keep-unreachable", &keep_unreachable,
+@@ -267,6 +274,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushf(&cmd.args, "--no-reuse-object");
+ 	if (write_bitmaps)
+ 		argv_array_push(&cmd.args, "--write-bitmap-index");
++	if (use_delta_islands)
++		argv_array_push(&cmd.args, "--delta-islands");
  
-+/*
-+ * Return the offset of the object that is the delta base of the object at curpos.
-+ */
-+extern off_t get_delta_base(struct packed_git *p, struct pack_window **w_curs,
-+			    off_t *curpos, enum object_type type,
-+			    off_t delta_obj_offset);
-+
- extern void release_pack_memory(size_t);
- 
- /* global flag to enable extra checks when accessing packed objects */
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		get_non_kept_pack_filenames(&existing_packs, &keep_pack_list);
 -- 
 2.18.0.555.g17f9c4abba
 
