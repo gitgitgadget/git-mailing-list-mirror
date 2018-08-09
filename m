@@ -2,86 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 119A91F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D9371F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732564AbeHIUCk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 16:02:40 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:37162 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731115AbeHIUCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 16:02:40 -0400
-Received: by mail-wm0-f46.google.com with SMTP id n11-v6so1102237wmc.2
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:36:46 -0700 (PDT)
+        id S1732628AbeHIUIk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 16:08:40 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:37135 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731115AbeHIUIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 16:08:40 -0400
+Received: by mail-yw1-f68.google.com with SMTP id w76-v6so5549791ywg.4
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rn75AwWR6q2NsRGLnL0P0cNxDYisxP2A5R+UtAJdrDM=;
-        b=b7eeZS45fRd9t57bfqkC03l3eZumib+E9aGKv0AsRtGqg5k3m5WoKLvFiJO18Dbjlj
-         G0XRGn900020PTb6orKfP/IeRXXKMJbIJ03srIg1GOfhtyniOHJ6gZI7AWUadp8wQ4nJ
-         q/NGG80T+VyozJKEd8ej74vymLEMpAQyyw/wYX3YI++pWHX2VLP6GdRrRNdG/th2a4mY
-         SeJHLhHuM14ubud1nDbnhqOfp7/UePiQJ4nzqZPL5q6epUY7iiMqLkj0OCaL+O3eo0tU
-         63Lg8poP3rCHkmwoGMdBx2vSIdN8E3J1NmtE4iundFW3uk3dcKE2sqRCWI00s72GuhSG
-         5TUA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yoGjIUiziMUO4z9cKrGQa+dPz6TKZuDeqWC+ZqUlQWg=;
+        b=ZqAvdkJ8TN2igTQOMsXY2CDECotdyPfiS4aEcUuN3AUbWgjN4H1azAWBxVstY3ER4j
+         h1riTuGr93Yrq4nHV58tG88nQBSs/scRBcr+fVQA2F3u0R1aFwSRXpBFiRYDl7CsiLi6
+         QkeBXUNv4zZI6XlAJXFr21t+59VaWmQnhpRloNYBniSuD7ykDhvL4PTqRdLI8C7Smzn9
+         YIu5jDzTSL853qn6IxEuUwarWfulpfFt+HR7ANB/MNj8NMLaSS4hgBRB4kZXbpzH3YUO
+         ZX3RucrK8Auq/Zlo7PDr+kgtzRFCjHDvV2qw+qI6i1LFfSDpl4MzdVX+9Gio9lrlJocj
+         l0GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rn75AwWR6q2NsRGLnL0P0cNxDYisxP2A5R+UtAJdrDM=;
-        b=JyuPB9b5teRzTrGxUUu8WNryAylRJ4xZ9DJ79lMWQxCsF+IKDr23Y5vyNyWZ8k2j5l
-         SfIfnXrmaoX1m9MNmjn+ZtgR3sp90+B8FB+mty0t1aEMYd4yugKSw51G9Bdt+A7TT6cz
-         iLnEVLM/AZh582IJ9uIubUBwQjG/kuBUB8o1M7OICXyQP8mQvnxyInqCVLg7eCL8eb2I
-         Mg3YNxX0Nk2NkKtNwPQCZ67FElBjYIf+xl9Y4OEpl8V89YyQ4RqOENKCUIPic7wRAYNI
-         ly2+ZYJ9Jk3eF/9Tb4jez0GjnqfsaH80Wi7ADYBJG57YJ259Ylv2YWbt4PCSj6i00XLq
-         O22A==
-X-Gm-Message-State: AOUpUlEuk2zMv5mTXdg1VEx42CqCA231725cEfVJSOfOwwHpl6tSU7vG
-        uZ80uY8mVJ7LubR2KIqU0Dg=
-X-Google-Smtp-Source: AA+uWPyT5+5SWstoE211BwOX+pKUZGPINGk9oW2VxgUXZRh6e9RFTF/XpPZX5arWDCkmbxqQoICOIw==
-X-Received: by 2002:a1c:20cb:: with SMTP id g194-v6mr2334982wmg.102.1533836205778;
-        Thu, 09 Aug 2018 10:36:45 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y184-v6sm7819504wmg.17.2018.08.09.10.36.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 10:36:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/WIP PATCH 1/1] merge-recursive: make file/directory conflicts easier to resolve
-References: <CABPp-BHxJyWsAQ3FkfdC-5Vqe3d7wWZm-hVYd0-afNY9dEgMeQ@mail.gmail.com>
-        <20180806224547.8619-1-newren@gmail.com>
-        <20180806224547.8619-2-newren@gmail.com>
-Date:   Thu, 09 Aug 2018 10:36:44 -0700
-In-Reply-To: <20180806224547.8619-2-newren@gmail.com> (Elijah Newren's message
-        of "Mon, 6 Aug 2018 15:45:47 -0700")
-Message-ID: <xmqqbmabcuhf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yoGjIUiziMUO4z9cKrGQa+dPz6TKZuDeqWC+ZqUlQWg=;
+        b=X6pIJvfMB9R0xjJJoH0FOz8xoMJoLBiCwYaaPejUlG2eIFD32oRUkxSlLhNWQLill0
+         hLLipakSOvcnI09A2m5Q04a0XgFt2oMq2ArUuhGsxvKs77V6GaJsYqBOoG9f9v9pVXOx
+         OhAV0yJJqVMfTTyY3Vtf3q42q//fCGVZEDgwFTdJPi98m5+HwA7Smo9lxi94SFEo78sh
+         0+dzvbTnGHtz2kkTZCEvSEA3BqZggHDn+TiqXwmGypnYTDKSXfLmt95q/WCHuo12Sq5t
+         eaO627NfE5PfvHUPeUDIpH9VOoIkIQARUH3S5W66+sNNa/P9ZF9+n8LuoH6Ww20xN4Jw
+         f6yw==
+X-Gm-Message-State: AOUpUlH3PUYfujZxlrNgfKFmu0WP0j30vkRZsWkJtFhb8NvZmrOe/B9W
+        zgC3rcvke9s/eX+H3TTHdYaJvFPEI3JRCdpZNbbp8A==
+X-Google-Smtp-Source: AA+uWPyTsVzzez1mY4MtdY1jfxPYoTAu1O4L3RTWkdvTK3AjJCnuuG046IDfpfY3jiHFfLsBQR7ksOlbIR3QnjeWuXY=
+X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr1642870ywk.345.1533836565281;
+ Thu, 09 Aug 2018 10:42:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-11-sbeller@google.com>
+ <CAN0heSpsbYWzujzyteWuhto9DTXzvAkP+vt++d7ar3ob6Zx=Gg@mail.gmail.com>
+In-Reply-To: <CAN0heSpsbYWzujzyteWuhto9DTXzvAkP+vt++d7ar3ob6Zx=Gg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Aug 2018 10:42:34 -0700
+Message-ID: <CAGZ79kbkLDhiqYrd6epPVP7dLLR7AFApyas=_mgeCucngJONMg@mail.gmail.com>
+Subject: Re: [PATCH 10/10] fetch: retry fetching submodules if sha1 were not fetched
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+On Thu, Aug 9, 2018 at 12:50 AM Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+>
+> On 9 August 2018 at 00:17, Stefan Beller <sbeller@google.com> wrote:
+> > Currently when git-fetch is asked to recurse into submodules, it dispat=
+ches
+> > a plain "git-fetch -C <submodule-dir>" (and some submodule related opti=
+ons
+> > such as prefix and recusing strategy, but) without any information of t=
+he
+> > remote or the tip that should be fetched.
+> >
+> > This works surprisingly well in some workflows (such as using submodule=
+s
+> > as a third party library), while not so well in other scenarios, such
+> > as in a Gerrit topic-based workflow, that can tie together changes
+> > (potentially across repositories) on the server side. One of the parts
+> > of such a Gerrit workflow is to download a change when wanting to exami=
+ne
+> > it, and you'd want to have its submodule changes that are in the same
+> > topic downloaded as well. However these submodule changes reside in the=
+ir
+> > own repository in their on ref (refs/changes/<int>).
+>
+> s/on/own/
+>
+> > Retry fetching a submodule if the object id that the superproject point=
+s
+> > to, cannot be found.
+> >
+> > Note: This is an RFC and doesn't support fetching to FETCH_HEAD yet, bu=
+t
+> > only into a local branch. To make fetching into FETCH_HEAD work, we nee=
+d
+> > some refactoring in builtin/fetch.c to adjust the calls to
+> > 'check_for_new_submodule_commits'.
+> >
+> > Signed-off-by: Stefan Beller <sbeller@google.com>
+> > ---
+>
+> > diff --git a/submodule.c b/submodule.c
+> > index ec7ea6f8c2d..6cbd0b1a470 100644
+> > --- a/submodule.c
+> > +++ b/submodule.c
+> > @@ -1127,6 +1127,7 @@ struct submodule_parallel_fetch {
+> >         int result;
+> >
+> >         struct string_list changed_submodule_names;
+> > +       struct string_list retry;
+> >  };
+> >  #define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, STRING_L=
+IST_INIT_DUP }
+>
+> `retry` will effectively be `STRING_LIST_INIT_NODUP`, but making that
+> explicit would be better and the next addition to the struct would be
+> easier to get right.
+>
+> > +retry_next:
+> > +       retry_it =3D string_list_pop(&spf->retry);
+> > +       if (retry_it) {
+> > +               struct strbuf submodule_prefix =3D STRBUF_INIT;
+> > +               const struct submodule *sub =3D
+> > +                               submodule_from_name(spf->r,
+> > +                                                   &null_oid,
+> > +                                                   retry_it->string);
+> > +
+> > +               child_process_init(cp);
+> > +               cp->dir =3D get_submodule_git_dir(spf->r, sub->path);
+> > +               if (!cp->dir)
+> > +                       goto retry_next;
+>
+> So here you just drop the string list item. Since it's NODUP, and since
+> the `util` pointers are owned elsewhere(?), this seems fine. Other uses
+> of `string_list_pop()` might not be so straightforward.
+>
+> Just a thought, but rather than pop+if+goto, maybe
+>
+> while ((retry_it =3D )) {
+>         ...
+>         if (!cp->dir) continue;
+>         ...
+>         return 1;
+> }
 
-> File/directory conflicts are somewhat difficult to resolve; by way of
-> contrast, renames are much easier to handle.  For file/directory
-> conflicts, we already have to record the file under a different name in
-> the working copy due to the directory being in the way; if we also record
-> the file under a different name in the index then it simplifies matters
-> for the user, and ensures that 'git reset --hard' and 'git merge --abort'
-> will clean up files created by the merge operation.
+I really want to keep the retry list short and pruned, as this
+function is called O(n) times with n the number of submodules
+and the retry list will also be up to n.
+And with that we'd run O(n^2) times into "if (!..) continue;".
 
-Yeah, and then our file "path" renamed to "path~2" to make room for
-directory "path" they introduced, can be relocated to its final
-place in the merge resolution, e.g. "git mv path~2 path/ours" or
-"git mv path path.theirs && git mv path~2 path".
+When we use the 'pop-no-work items' logic, then we're still in O(n).
 
-Of course, "git rm" and "git mv" must work sensibly, if we want this
-change to be truly helpful--but if not, they need to be fixed ;-)
+> I haven't commented on any of the submodule stuff, which is probably
+> where you'd be most interested in comments. I don't use submodules, nor
+> do I know the code that runs them.. I guess my comments are more "if
+> those who know something about submodules find this series worthwhile,
+> you might want to consider my comments as well".
 
+Thanks for your comments! I'll try to think of another way to
+represent this more easily in code.
+
+Thanks,
+Stefan
