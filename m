@@ -7,76 +7,82 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04EDA1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 12:50:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F7141F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 13:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731153AbeHIPPK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 11:15:10 -0400
-Received: from mout.gmx.net ([212.227.15.19]:44951 "EHLO mout.gmx.net"
+        id S1731095AbeHIPtC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 11:49:02 -0400
+Received: from mout.gmx.net ([212.227.17.22]:45377 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727786AbeHIPPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 11:15:10 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LskfZ-1fumnJ3lDV-012LA4; Thu, 09
- Aug 2018 14:50:17 +0200
-Date:   Thu, 9 Aug 2018 14:50:18 +0200 (DST)
+        id S1730419AbeHIPtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 11:49:02 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lp3Qu-1gQPeZ2w7A-00ew4F; Thu, 09
+ Aug 2018 15:24:03 +0200
+Date:   Thu, 9 Aug 2018 15:24:05 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Andrei Rybak <rybak.a.v@gmail.com>, Git List <git@vger.kernel.org>,
-        Thomas Rast <tr@thomasrast.ch>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] line-log: clarify [a,b) notation for ranges
-In-Reply-To: <CAPig+cTVEq1AGvtxxonbU4PgqeG0fOy9CSDO7ThjVpfGoJaAJA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808091448260.71@tvgsbejvaqbjf.bet>
-References: <be1dd423-f9de-a436-6127-02cce4ab1977@gmail.com> <CAPig+cTVEq1AGvtxxonbU4PgqeG0fOy9CSDO7ThjVpfGoJaAJA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: Re: pk/rebase-in-c, was Re: What's cooking in git.git (Aug 2018,
+ #01; Thu, 2)
+In-Reply-To: <xmqqbmahs5vh.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808091522440.71@tvgsbejvaqbjf.bet>
+References: <xmqq4lgcz81f.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808050229210.71@tvgsbejvaqbjf.bet> <xmqqbmahs5vh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XoIeAaKS7AwXhuagYfPsilnlepJxn78M0XchPpU6KELwz6HhZUj
- EkYq2OXRkXue5VQXI/ZbwstkbST9/IgtmVdNteWNRGtZFkLZNFoEjANfOm8P0Nd4WTDIL7u
- 5VotF5huGcZXdblJpLTX0k63WZYRz+vczS4GCs0ur399MMR9BjMPTX+Myg5j3lylHDWp5m8
- 9HcwWRo/hUpMts2aaRORQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nY9si6dpkds=:rOiCpoWYaKGHIwLaX2HK+8
- D8IzvDyz6iO0JbUOr1gmhM1ZaC74RNrMhSCvc50LWufyXf8k3ZiyedG/XaZ73iObvGwpNOeIG
- Ohxr6t8E/4udQ4cTAiWkM1cOnFOgjkEsAUCVWPz7zj6n2OT3mOOLGddaZBOkikBDrjMv4uRFi
- IeS28ltFJHlfCJwZmmFH7eVfF4OZcUDz9k7rtwDsBeYwCdLC8j+EsKOYLSpmzhZL2swJerHJZ
- fIKkIhctC5Ccxie60ryMISNF6iU9Akl00WbMtUSHQ6jfqoLMuo91B+jRcEKPngDdmNQPu3ung
- oEesMPmLl7mHD+oaNyAqHzyQ9AMHdMWoOdQxJcS9M8La+w3xvXJb4euoJDN+G4RWrpq7DEoSR
- ziN5ctZBhg5lduHuUP23ELkwTkAMAouHRO4sjOXua7BBAaWZQmY/+wKFWb0AQhvsqA/rLlgdy
- SYO/MhlbMIspU/qQRmWbY6SaTrydE6SEd4+Q8Ud5DSFgwxRpjfb9HMxhirG22xzWMZnbd6Bqj
- t5InZav88SthcoZ9Fm6/5KIfm5moClNhsJbYOeBaEXnyUc+J4OyaEq6LHCbzr+9BlwmuVytXk
- mw5QGYL5YX1XCiueR+hNUDutzcrHy6ickhuOKMgoWkxLk2EweFpbOf2EIbflp55x99VXalmhc
- nMiMBoephZvFYEXi9J16rp3QetySwSGnGWUbylplLMHur4i93ZEOzjkFR2aVJhFRCSlYJy20C
- XBy+eDV8lpZ8dFaQsnOn4zdr2/X2MKIUKrndtGcnZS5cxrYLnYeelPPy4UU8K3zZd7S5iunpJ
- r/XUxj/
+X-Provags-ID: V03:K1:Pt0j+/+uKKxJItITYo1bfMOXGuM+oMU8J9Nds62SfkeiTsMt110
+ FCuuBKX2K3OOjsDvgQx8e9WXFXDuZHTCkgqCOHaeSpRKay5C0YrmD0I8hP8LRRprA/YBEWX
+ jXQufGdZ7f50dg+uj4/BUQos7OmaYL0PQ2lrOECEDYWJ7vflXmcj2+cqSgw7dizNblClkMN
+ eZpXetj924oAHas0qRJqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YoWC50FHPes=:5eUUlQCuB3dipyq5Ythhw+
+ kVVShhZ39QlgNMqlvczRlRqTh5n9fzOfMm9NxkTOcfWWJKfKfD2Hsofnx41vSNDpu6YET+oEx
+ EBww+zO7Pn+r3s8s++sfJPQ9H+dq6eFMs1zjw1EzRFxqWHHxMZkfRPpJYhblQpy9I2C4B1M3O
+ IX5aL8cd8Z3I6cMpLmBgffmaoZUmsaFFCkvLmkPM2jzcxxC9Uz8vM1v1BSEgS6LehsJQWmCTQ
+ iJpXx/ZJySPN27To+9DjNgOYhWApcHF1Jb8PELrTfqF1ofZfinXKSQaDW+fTCRvOkepqWzVhR
+ EpZblHQUchpm/8+c5sTPWPw93l2rxaMisprW//CMMCmpUgNXauAQVg+t4t16Rw6mR0K7XEnSQ
+ aUFHmH+UuYogIQJbecYSRc3EH6kMN6+s0qFeh7dTpQnkblCmGUOMi3PHLGcPaHTo++KoMNayy
+ 68xC5FtaDnDORuneu9+/aZSQIcWzniO7hPcyTj47KMyWBKnksvO3TFlEnT+rywbc12dRFK3SI
+ G+lSWJgPXSPIw50wkHbX6zR1IYINWpCvOLESO1Li0l8EXu7nXPlRQqHvKUeyrba1h9Emwopa/
+ yfYsWJtsmKQQur4LptQ7u4s2ALC/rMdry24fMjUz+xbjo1iBEHaaqTGPj4+0xiav9pka9RsBL
+ dSXKqCW8mFheL3Iq4pSQmZmC40FqvghIzTAYkGVAlFTabRLrdFKEZpuHyOgX0N1aLZT/vQYUE
+ C/Yzl0GcDvcmDAexJaWb/A7kLoAflDicDJ2sssUmMaDisognsdM2WvSAPM/4BGIHyU29Pv9DU
+ 5dBHSBx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi Junio,
 
-On Tue, 7 Aug 2018, Eric Sunshine wrote:
+On Sat, 4 Aug 2018, Junio C Hamano wrote:
 
-> On Tue, Aug 7, 2018 at 9:54 AM Andrei Rybak <rybak.a.v@gmail.com> wrote:
-> > line-log.[ch] use left-closed, right-open interval logic. Change comment
-> > and debug output to square brackets+parentheses notation to help
-> > developers avoid off-by-one errors.
-> > ---
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> This seems sensible. There might be some reviewers who suggest
-> different notation since "[...)" is not universal (see [1]), but I
-> think this is fine.
+> > On Thu, 2 Aug 2018, Junio C Hamano wrote:
+> >
+> >> * pk/rebase-in-c (2018-07-30) 3 commits
+> >>  - builtin/rebase: support running "git rebase <upstream>"
+> >>  - rebase: refactor common shell functions into their own file
+> >>  - rebase: start implementing it as a builtin
+> >> 
+> >>  Rewrite of the "rebase" machinery in C.
+> >> 
+> >>  Will merge to 'next'.
+> >
+> > Please hold. I found several bugs in the third patch, and it will need to
+> > be fixed before sending another iteration.
+> 
+> Thanks.  I think the author already corrected/stopped me on this one
+> and it is now marked as "hold" in my working draft.
 
-Indeed. When I started out studying mathematics, I learned the notation
-[...[ (which makes a lot more sense, if you think about it).
+Indeed, looking at public-inbox, I even see it. The strange thing is that
+I never received this email in my inbox. Apparently GMX is letting me
+down, as I have identified at least a dozen mails that made it to the Git
+mailing list but not into my inbox, some even with me in the Cc: line.
 
-Besides, it's not like we start from a fresh slate. Git is already over a
-decade old. Our commit ranges are "half open", i.e. the exact thing that
-is described here. There's gotta be some precedent in the documentation,
-and introducing something willfully inconsistent is probably a pretty bad
-idea.
+Troublesome.
 
 Ciao,
 Dscho
