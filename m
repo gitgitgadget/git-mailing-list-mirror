@@ -2,117 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_05,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_LOTTO,LOTS_OF_MONEY,
+	MAILING_LIST_MULTI,MONEY_FORM,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99C971F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 23:06:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C5EB1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 23:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727418AbeHJBdG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 21:33:06 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:46500 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbeHJBdG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 21:33:06 -0400
-Received: by mail-ua1-f68.google.com with SMTP id u11-v6so160737uan.13
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 16:06:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=px+ZKfTtQgVd40wjcOVyoKC+98KcL2k+9xxLhMK/B+Q=;
-        b=n2NrB30xhEhKDP0YfoNcsLmFiT4o9G2I8vRcuaEwtV5PiDAOqPwWbROGx0qFTetIeT
-         tR95YG6pM9x3WQJLqy8N5I91VMyvw4SrQ50t+qRh6Kp9eAaMhoNucuZNgBI0dobNMpf+
-         ZbfQl1Y3mtM8Y1k9VixYS11bMgB4lekuXV3EPCCMYTyVQWsztRsj7yxpkKvcMQwON+Ub
-         TgcG/8LqTgDEFYYDX4DA9hAbUssLo07RlLXA9uKVxZTcvJpfWsvjzefxXtivDwTFMv8R
-         nwokXRiYXxUzXyyrhHsutD1BpnQP7peS9ubaLMrUap9O/ZUyk19zjaId6F6/vJTRumBC
-         Ce/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=px+ZKfTtQgVd40wjcOVyoKC+98KcL2k+9xxLhMK/B+Q=;
-        b=ppUFi7GvxdIt6Q5pTgZ5uJYlRZ+usdHAetAllTbYQVOIxcXAU5MI418C89w3HGfcrH
-         CQlo5EVCET71LEzEBIdFIq4c5AzRsRQys92DkMwa/EQivt/5+fnk6+L+CMQWKbAlui5B
-         7aS4+YEsLD1t4ILjjQ1kXePLtxNcuFpT3HRalf6+Mft2HUPoucSM0ux1o2wJOquUHC6l
-         jpBjCraCwtJTw+Z5YBgnlVggqh/C0JOy5YKAjre1+CLck1D9lTbHWUDj+udSQhI6eDD6
-         4hyDZY8j5jGpFqXcEGq3elQmnGz8a+7HeXDPcZhgfjJlq00wJxHp9CZoBWBiGtdmj53m
-         8XqQ==
-X-Gm-Message-State: AOUpUlFMDoGCSBlQq4yE7LlGZewHxUbKvfdREHlbRw5JQuVMu4L0U0BA
-        DWbiCicVCTgQ0+3FNKwBPBIqPQliWBM0QfNs7lM=
-X-Google-Smtp-Source: AA+uWPyGFZQ7xLXylxyBO+dOde6qemp5GY2vlNHdV3t+kERl3XU/qoCERG9uOFkpzb4YTYBLqdJcO4qg6/auZeoW09w=
-X-Received: by 2002:ab0:4c24:: with SMTP id l36-v6mr2782998uaf.199.1533855961672;
- Thu, 09 Aug 2018 16:06:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180807190110.16216-1-pclouds@gmail.com> <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
- <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com> <20180808223139.GA3902@sigill.intra.peff.net>
- <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com> <20180809142333.GB1439@sigill.intra.peff.net>
- <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com> <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com>
- <20180809214430.GE11342@sigill.intra.peff.net> <CABPp-BEAybfJ8sojRwDbDjhcwk4VyQ26F1LnKyNLsg1fYS1fNA@mail.gmail.com>
- <20180809215913.GB12441@sigill.intra.peff.net>
-In-Reply-To: <20180809215913.GB12441@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 9 Aug 2018 16:05:49 -0700
-Message-ID: <CABPp-BE+QRpxq1-r_ORhLi3KqaX3EjfpzswzmyP2BUV7uYPiuQ@mail.gmail.com>
-Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive filesystems
-To:     Jeff King <peff@peff.net>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        pawelparuzel95@gmail.com,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727661AbeHJCPY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 22:15:24 -0400
+Received: from o1.em1.managebuilding.com ([167.89.63.196]:31433 "EHLO
+        o1.em1.managebuilding.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727391AbeHJCPY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 22:15:24 -0400
+X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2018 22:15:23 EDT
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; 
+        d=managebuilding.com; 
+        h=content-type:from:mime-version:reply-to:to:subject; s=s1; 
+        bh=Dzxhf1eBmzdHg674LpkFfIjRkfQ=; b=Bkc3dP/Vc6XIc68mpmEysq5mGli7O
+        bnd8qmnPm82xwwSiPWqkCEv4RYDywYD5X+VlJie3xUoEvMNm34fLT+VJcrS40iRf
+        1EfDhdTNOg/3YHz3zr/K8RjXjmLzn+za0mKeUBHVDbYTEBqigyKNuanZ+ycCu5fL
+        GS8gfFIv7listQ=
+Received: by filter0138p1iad2.sendgrid.net with SMTP id filter0138p1iad2-27616-5B6CD092-16
+        2018-08-09 23:38:58.949359431 +0000 UTC m=+176514.589185099
+Received: from MzI4OTc5MA (ec2-34-224-158-88.compute-1.amazonaws.com [34.224.158.88])
+        by ismtpd0024p1mdw1.sendgrid.net (SG) with HTTP id _AVIDKxiQ66zPJbqPqw0xg
+        Thu, 09 Aug 2018 23:38:58.933 +0000 (UTC)
+Content-Type: multipart/mixed; boundary=4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
+Date:   Thu, 09 Aug 2018 23:38:58 +0000 (UTC)
+From:   "BMC&QCONS" <mail@managebuilding.com>
+Mime-Version: 1.0
+Reply-To: sdlvin@yandex.com
+To:     git@vger.kernel.org
+Message-ID: <_AVIDKxiQ66zPJbqPqw0xg@ismtpd0024p1mdw1.sendgrid.net>
+Subject: Bank transactions report
+X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA91HL1gMbnh6ROidtIyNC+88faQwXoX7EphFp8
+ QIWdym1tU09cjFNdgFiCMbUjfnwJrWlRqULDYX41GoJOoHHkanEdppBsyq/hL7LRMsLKusu7B/r8q1
+ nLaSTd6kFBPtsskDppT/9kdmMT++ZDvAC0cy5Xvt4ap1hwiR/KCU8+0Zi4KGZHZgIcvPk1EdLdiAKb
+ E=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 2:59 PM Jeff King <peff@peff.net> wrote:
-> On Thu, Aug 09, 2018 at 02:53:42PM -0700, Elijah Newren wrote:
->
-> > On Thu, Aug 9, 2018 at 2:44 PM Jeff King <peff@peff.net> wrote:
-> > > > The error message isn't quite as good, but does the user really need
-> > > > all the names of the file?  If so, we gave them enough information to
-> > > > figure it out, and this is a really unusual case anyway, right?
-> > > > Besides, now we're back to linear performance....
-> > >
-> > > Well, it's still quadratic when they run O(n) iterations of "git
-> > > ls-files -s | grep $colliding_oid". You've just pushed the second linear
-> > > search onto the user. ;)
-> >
-> > Wouldn't that be their own fault for not running
-> >   git ls-files -s | grep -e $colliding_oid_1 ... -e $colliding_oid_n | sort -k 2
-> > ?   ;-)
->
-> Man, this thread is the gift that keeps on giving. :)
->
-> That's still quadratic, isn't it? You've just hidden the second
-> dimension in the single grep call.
+--4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Mime-Version: 1.0
 
-It may depend on the implementation within grep.  If I had remembered
-to pass -F, and if wikipedia's claims[1] about the Aho-Corasick
-algotihrm being the basis of the original Unix command fgrep, and it's
-claims that this algorithm is "linear in the length of the strings
-plus the length of the searched text plus the number of output
-matches", and I didn't just misunderstand something there, then it
-looks like it could be linear.
+CONGRATULATIONS 2018 BMC Q-DRAFT CONSULT AWARDEES
 
-[1] https://en.wikipedia.org/wiki/Aho%E2%80%93Corasick_algorithm
+THE NASSCOM SERVICE BMC Q-DRAFT CONSULT PROGRAM RECOGNIZES THE TOP INDIVIDU=
+AL CONTRIBUTORS IN  SURVEY SERVICE ONLINE COMMUNITY. THE NASSCOM BMC Q-DRAF=
+T CONSULT ARE WELL KNOWN BY THE WORLDS COLLECTIVE COMMUNITY FOR THEIR PRODU=
+CT EXPERTISE AND CONSISTENT CONTRIBUTIONS. SERVICENOW BMC Q-DRAFT CONSULT D=
+EMONSTRATE A COMMITMENT TO ENGAGE, GUIDE, AND SHARE EXPERTISE WITH THE WORL=
+D. THEY ARE INDEPENDENT OF SERVICENOW AND REPRESENT THE VOICE OF THE WORLD =
+COMMUNITY. THE SERVICENOW BMC Q-DRAFT CONSULT AWARD IS OUR APPRECIATION FOR=
+ THE THE SIZABLE INFLUENCE AND TECHNICAL CREDIBILITY ONLINE MEMBERS DEMONST=
+RATED IN 2016 AND 2017.
+THE BMC Q-DRAFT CONSULT PROGRAM IS OUR BI-YEARLY RECOGNITION OF TOP RANKED =
+WINNERS CONTRIBUTORS.
+WE HAPPILY ANNOUNCE TO YOU THE DRAW OF #WINNING NUMBERS#: 1,5,24,34,41 BONU=
+S 10. WINNING RESULT: (#10313155) MALAYSIA/INDIA/UK BMC Q-DRAFT CONSULT PRO=
+GRAM ONLINE SWEEPSTAKES INTERNATIONAL PROGRAM HELD FOR MIDDLE OF THE YEAR 2=
+018. YOU HAVE WON $900.860.00 (NINE HUNDRED THOUSAND, EIGHT SIXTY UNITED ST=
+ATES US DOLLARS ONLY) FROM SERVICENOW'S BMC Q-DRAFT CONSULT DRAW 2018.
+IN ORDER TO PROCESS YOUR WINNING FOR E-WALLET ELECTRONIC TRANSFER, YOU ARE =
+ADVISED TO CONTACT YOUR FIDUCIARY AGENT WITH THE DETAILS BELOW FOR YOUR PAY=
+MENT.
+CLAIMS FACILITATOR`S NAME: MR. KELLY ARMSTRONG
+EMAIL: KELLY.ARMSTRONG@REPRESENTATIVE.COM
+YOU ARE ADVISED TO SEND THE FOLLOWING INFORMATION LISTED BELOW TO YOUR CLAI=
+M`S AGENT TO FACILITATE THE RELEASE OF YOUR FUND TO YOU.
+=20
+1.FULL NAMES:
+2.COUNTRY OF ORIGIN:
+3.ADDRESS:
+4.TELEPHONE NUMBER:
+5.OCCUPATION:
+6.ID:
+=20
+YOURS SINCERELY,
+SIR. KELLY ARMSTRONG
+SERVICENOW'S BMC  Q-DRAFT CONSULT
+CONGRATULATIONS 2018 BMC Q-DRAFT CONSULT` AWARDEES=
 
-Of course, the grep implementation could also do something stupid and
-provide dramatically worse behavior than running the command N times
-specifying one pattern each time.[2]
+--4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
+Content-Disposition: attachment; filename="BankTransactions_August 09, 2018 19:38 PM.csv"
+Content-Transfer-Encoding: base64
+Content-Type: text/csv; charset=utf-8; name="BankTransactions_August 09, 2018 19:38 PM.csv"
 
-[2] http://savannah.gnu.org/bugs/?16305
+Z2xBY2NvdW50SWQsaWQsam91cm5hbEdyb3VwSWQsU29ydERhdGUsYnVpbGRpbmdJZCxidWlsZGlu
+Z05hbWUsYnVpbGRpbmdTdGF0dXNJZCxqb3VybmFsQ29kZUlkLHBheWVlTmFtZSxjaGVja051bWJl
+cixKb3VybmFsTWVtbyxwb3N0aW5nTWVtbyxyZWZlcmVuY2VOdW1iZXIsYW1vdW50LGlzUmV0YWls
+Q2FzaFJlY29uY2lsZWQsYWxsSm91cm5hbElkcyxhY2NvdW50aW5nQm9va0lkLGJhbmtBY2NvdW50
+TmFtZSxydW5uaW5nQmFsYW5jZSx0b3RhbEJlZ2lubmluZ0JhbGFuY2UsdG90YWxFbmRpbmdCYWxh
+bmNlDQosLCwiMS8xLzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNv
+bSwsLCwsQmVnaW5uaW5nIGJhbGFuY2UsLCwsLCwxMTEwNCwsMCwwLDE0NTcwLjM1DQo1NTU3ODks
+NDg5MTA4NSw0ODkxMDg1LCI4LzEvMjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFuYWdlYnVp
+bGRpbmcuY29tLCw5LCAsLCwsLDkwMC44NiwsNDg5MTA4NSwxMTEwNCxDb21wYW55IGNoZWNraW5n
+LDkwMC44NiwsDQo1NTU3ODksNDg5MTA3NSw0ODkxMDc1LCI4LzUvMjAxOCAxMjowMDowMCBBTSIs
+LHNkbHZpbjIubWFuYWdlYnVpbGRpbmcuY29tLCw5LCAsLE9wZW5pbmcgYmFsYW5jZXMgZW50cnks
+T3BlbmluZyBiYWxhbmNlcyBlbnRyeSwsMzQ0MC42MiwsNDg5MTA3NSwxMTEwNCxDb21wYW55IGNo
+ZWNraW5nLDQzNDEuNDgsLA0KNTU1Nzg5LDQ4OTEwNzMsNDg5MTA3MywiOC82LzIwMTggMTI6MDA6
+MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSwsMixIYW5rIHRoZSBIYW5keW1hbixQ
+UklOVCwsLEhILTQ0NSwtMzUuNDUsLDQ4OTEwNzMsMTExMDQsQ29tcGFueSBjaGVja2luZyw0MzA2
+LjAzLCwNCjU1NTc4OSw0ODkxMDc5LDQ4OTEwNzksIjgvNi8yMDE4IDEyOjAwOjAwIEFNIiwsc2Rs
+dmluMi5tYW5hZ2VidWlsZGluZy5jb20sLDksICwsLCwsMTIwMDAuMDAsLDQ4OTEwNzksMTExMDQs
+Q29tcGFueSBjaGVja2luZywxNjMwNi4wMywsDQo1NTU3ODksNDg5MTA2Niw0ODkxMDY2LCI4Lzcv
+MjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFuYWdlYnVpbGRpbmcuY29tLCwyLCJNb3JyaXMg
+JiBIYXllcywgTExDIixQUklOVCxMZWdhbCBmZWVzLCwiTW9ycmlzICYgSGF5ZXMsIExMQyIsLTEw
+MC4wMCwsNDg5MTA2NiwxMTEwNCxDb21wYW55IGNoZWNraW5nLDE2MjA2LjAzLCwNCjU1NTc4OSw0
+ODkxMDY3LDQ4OTEwNjcsIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWls
+ZGluZy5jb20sLDIsTXVuaWNpcGFsIFRlbGVjb20sUFJJTlQsLCxNVC00NDQsLTM0NS45OCwsNDg5
+MTA2NywxMTEwNCxDb21wYW55IGNoZWNraW5nLDE1ODYwLjA1LCwNCjU1NTc4OSw0ODkxMDY4LDQ4
+OTEwNjgsIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20s
+LDIsUCAmIFAgUGFpbnRpbmcgQ29udHJhY3RvcnMsUFJJTlQsQ2xlYW5pbmcsLEExMjMsLTUwMC4w
+MCwsNDg5MTA2OCwxMTEwNCxDb21wYW55IGNoZWNraW5nLDE1MzYwLjA1LCwNCjU1NTc4OSw0ODkx
+MDY5LDQ4OTEwNjksIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGlu
+Zy5jb20sLDIsIkpvbiBCZW5zb24sIFJFQUxUT1IiLFBSSU5ULCwsLC0xODc0LjMzLCw0ODkxMDY5
+LDExMTA0LENvbXBhbnkgY2hlY2tpbmcsMTM0ODUuNzIsLA0KNTU1Nzg5LDQ4OTEwODAsNDg5MTA4
+MCwiOC83LzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSwsOSwg
+LCwsLCw3NDYuMDAsLDQ4OTEwODAsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDIzMS43MiwsDQo1
+NTU3ODksNDg5MTA4MSw0ODkxMDgxLCI4LzgvMjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFu
+YWdlYnVpbGRpbmcuY29tLCw5LCAsLCwsLDI2My4wMCwsNDg5MTA4MSwxMTEwNCxDb21wYW55IGNo
+ZWNraW5nLDE0NDk0LjcyLCwNCjU1NTc4OSw0ODkxMDgyLDQ4OTEwODIsIjgvOS8yMDE4IDEyOjAw
+OjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20sLDksICwsLCwsMzE0Ljc0LCw0ODkx
+MDgyLDExMTA0LENvbXBhbnkgY2hlY2tpbmcsMTQ4MDkuNDYsLA0KNTU1Nzg5LDQ4OTEwNzAsNDg5
+MTA3MCwiOC8xMC8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20s
+LDIsUmljYXJkbydzIFJvb2ZpbmcgU3VwcGx5LFBSSU5ULCwsWlgtNzgxLC0zNTUuOTksLDQ4OTEw
+NzAsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDQ1My40NywsDQo1NTU3ODksNDg5MTA4Myw0ODkx
+MDgzLCI4LzEwLzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSws
+OSwgLCwsLCwxMTYuODgsLDQ4OTEwODMsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDU3MC4zNSws
+DQo=
 
-> Now since these are all going to be constant strings, in theory an
-> intelligent grep could stick them all in a search trie, and match each
-> line with complexity k, the length of the matched strings. And since
-> k=40, that's technically still linear overall.
-
-Looks like Aho-Corasick uses "a finite-state machine that resembles a
-trie", so definitely along those lines.
+--4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e--
