@@ -2,85 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 288BD1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEE181F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727325AbeHJAAy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:00:54 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49112 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727240AbeHJAAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:00:54 -0400
-Received: (qmail 5330 invoked by uid 109); 9 Aug 2018 21:34:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 21:34:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13887 invoked by uid 111); 9 Aug 2018 21:34:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 17:34:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 17:34:09 -0400
-Date:   Thu, 9 Aug 2018 17:34:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, pawelparuzel95@gmail.com,
-        sandals@crustytoothpaste.net, Elijah Newren <newren@gmail.com>,
-        tboegi@web.de
-Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive
- filesystems
-Message-ID: <20180809213409.GC11342@sigill.intra.peff.net>
-References: <20180730152756.15012-1-pclouds@gmail.com>
- <20180807190110.16216-1-pclouds@gmail.com>
- <xmqq7el2km82.fsf@gitster-ct.c.googlers.com>
- <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
- <20180808223139.GA3902@sigill.intra.peff.net>
- <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com>
- <20180809142333.GB1439@sigill.intra.peff.net>
- <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+        id S1727289AbeHJAHm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:07:42 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:41417 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727268AbeHJAHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:07:41 -0400
+Received: by mail-yw1-f68.google.com with SMTP id q129-v6so6757200ywg.8
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:40:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=D6nEWn4jkFtt7XyJEmnqgBP1JFK4oLKv5Gg7kwynmNo=;
+        b=LSE+vEE5c/LhZc27q4kiWcPUTQV7xgHzCbvqixiWt6sPhnqe4gDsmb+e4rhuehetos
+         5VW4waJGEg7VgkIHl7WGRporoaDsSmSJyHXSmIvITXJ+BNRT0icUIeXayGaP/uyOHedU
+         TJcls/FHRsHPhjbD3gN4MGWRNoxZjHO3gMcpWDiHxjWgv+ker+GK6qC4qn9qAYPzCs6p
+         8g87VBHcEA+EyUAaqYMVxEroZqilvqq3OlHjJ7JWOLOwk6VYdaizaQsz5dyePbUgdR5m
+         f1tfN1tucijYnWpuKdpvuq6q9p17APg49Tt2cGNORikVQO4UL5TUhI+sOvP9pcMiD3rN
+         57QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D6nEWn4jkFtt7XyJEmnqgBP1JFK4oLKv5Gg7kwynmNo=;
+        b=of6i2Copjl3E4J+52fqHqnUj1ImtzsZjhv0JAYLKkfT9lzPZGOtFj+cyICYK5NE0wq
+         zBe7CmH9EmGxID2P0u1vIodaiweT16Zz/C9EEcrQraI1Jn0Ya/uJmWUepZsNal7tTVXh
+         lZYntfgknPZdN/M6IcZv0StZcukK2U/JA4Ah2wVqXp6wBHfAIoo/uIj4us4NENf+ofxH
+         jlhnTnQgcbWzZCa9uZDoArkWe/s9YYslKtjU80iu0F1DKJrjOJ22FUQmi8cq6h/aMzSM
+         s+lmNMExa2Quky+iP9LUBj1zuUfImkD6No09XiuaEO9qexPEfCO0vuTDdwamlqBNQV0m
+         w/Rg==
+X-Gm-Message-State: AOUpUlGfouflT/fzeKL1OL6OPDNTbMjAU96ac2IemEDQRPQivnr91gzu
+        AOaRKFR2NchLMANmljF0PVv1VUp9ZVuFbMKyV9Y7Gw==
+X-Google-Smtp-Source: AA+uWPwctYr604Ol0Dkbx0LIlGLWLWja35AlrR/hI0DX2tv97Z59WYAb1vA102CSamelR6vaqspc0PykbJWtwUDtJYs=
+X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr2097775ywk.345.1533850856676;
+ Thu, 09 Aug 2018 14:40:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-2-sbeller@google.com>
+ <xmqq7ekzb5qj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7ekzb5qj.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Aug 2018 14:40:45 -0700
+Message-ID: <CAGZ79kZ-0R4qnZ7LMhncenOeoec3z+kNmt2_VqBKRiDXxKm6fQ@mail.gmail.com>
+Subject: Re: [PATCH 01/10] string_list: print_string_list to use trace_printf
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 09, 2018 at 05:14:16PM -0400, Jeff Hostetler wrote:
+On Thu, Aug 9, 2018 at 2:16 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > It is a debugging aid, so it should print to the debugging channel.
+>
+> Who says?
 
-> > Clever. You might still run into false positives when there is
-> > duplicated content in the repository (especially, say, zero-length
-> > files).  But the fact that you only do the hashing on known duplicates
-> > helps with that.
-> > 
-> 
-> I worry that the false positives make this a non-starter.  I mean, if
-> clone creates files 'A' and 'B' (both equal) and then tries to create
-> 'b', would the collision code reports that 'b' collided with 'A' because
-> that was the first OID match?  Ideally with this scheme we'd have to
-> search the entire index prior to 'b' and then report that 'b' collided
-> with either 'A' or 'B'.  Neither message instills confidence.  And
-> there's no way to prefer answer 'B' over 'A' without using knowledge
-> of the FS name mangling/aliasing rules -- unless we want to just assume
-> ignore-case for this iteration.
+The comment in the header file?
 
-Yeah. If we can get usable unique ids (inode or otherwise) of some form
-on each system, I think I prefer that. It's much easier to reason about.
+  /**
+   * Dump a string_list to stdout, useful mainly for debugging
+   * purposes. It can take an optional header argument and it writes out
+   * the string-pointer pairs of the string_list, each one in its own
+   * line.
+   */
 
-> Sorry to be paranoid, but I have an index with 3.5M entries, the word
-> "quadratic" rings all kinds of alarm bells for me.  :-)
-> 
-> Granted, we expect the number of collisions to be small, but searching
-> back for each collision over the already-populated portion of the index
-> could be expensive.
+>  In-tree code may say so, and I do not think any in-flight
+> topic up to 'pu' uses this to produce non-debugging output, but I do
+> not think it is healthy attitude to assume that you can take over an
+> existing function and change what it does unilaterally.
 
-Heh. Yeah, it's really O(n*m), and we expect a small "m". But of course
-the two are equal in the worst case.
+That is reasonable, as usual, and given the recent fallout of the
+object store refactoring I have these concerns on my mind, too.
 
--Peff
+But for this instance, I do not see any risk of accidental collisions with
+other series in flight:
+
+$ git log -S print_string_list origin/pu --oneline
+4f665f2cf33 string-list.h: move documentation from Documentation/api/
+into header
+d10cb3dfab9 help.c: rename function "pretty_print_string_list"
+c455c87c5cd Rename path_list to string_list
+1eb056905a2 include $PATH in generating list of commands for "help -a"
+70827b15bfb Split up builtin commands into separate files from git.c
+27dedf0c3b7 (tag: v1.0rc3, tag: v0.99.9j) GIT 0.99.9j aka 1.0rc3
+8e49d503882 C implementation of the 'git' program, take two.
+
+> As there is no in-tree or in-flight user, I think it makes sense if
+> the proposed change were to rename it to trace_string_list().  If
+> there weren't any print_string_list() and we were adding a debugging
+> aid to use trace_printf() to dump these, that would be the name we
+> would use anyway.
+
+Good call. I'll rename and send separately (or might even drop this
+patch completely; this patch is not used in the patches to follow;
+it is more a "FYI: here is a thing that I found helpful for debugging,
+unlike the existing function, which I found unhelpful and actively
+harmful")
