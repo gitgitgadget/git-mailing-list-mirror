@@ -7,205 +7,82 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7F811F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 10:04:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E5BD1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 10:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729597AbeHIM2w (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 08:28:52 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:48742 "EHLO
+        id S1729880AbeHIMa0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 08:30:26 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:5883 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727371AbeHIM2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 08:28:52 -0400
+        with ESMTP id S1727371AbeHIMa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 08:30:26 -0400
 Received: from [192.168.2.201] ([92.22.29.155])
         by smtp.talktalk.net with SMTP
-        id nho8fl4sHoI6Lnho9f1mvZ; Thu, 09 Aug 2018 11:04:42 +0100
+        id nhpffl53koI6Lnhpgf1mxj; Thu, 09 Aug 2018 11:06:17 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1533809082;
-        bh=GYpDy/4T1WIwpfdSE77qRsWAk/egc8A6r81MaqyZssM=;
+        s=cmr1711; t=1533809177;
+        bh=wR5duzEuSkh/QdTLGCb07jVSsHsarTW+feptifZft/0=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=B9toKWTQQV63SYbDvtHQvaG9bPcgrTzH3eI8gZJowW/fyiRUYfdka4AZ16V6ZPp7F
-         Alr2Zo3ir+MJUi6QJfJwQ3THlcSxFN506HQlHXYK485cpugXQcc2gEpHu8Mytv/xUR
-         2btaOwleu7IuHsYu6tIbayxfG/rD8FF26i/iO9Is=
+        b=CtJVmJk7fz/dZ90tFeS+3IWHdx4VwCHtYamLdxWVIBHovmGR8fVTuWYkLgF41HKdX
+         /VVHJfvVor4KReoenglWp5V74KYSxjw6pkTZus1zIiqVfnQtcKb9RNZYAZAw4tqYWz
+         lirdbSJ+6yVoVL5KCqvUL1hbVwgkB4PpO6hz02mo=
 X-Originating-IP: [92.22.29.155]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=yeAZMs3+wWQh+Rh+YWy7CA==:117
- a=yeAZMs3+wWQh+Rh+YWy7CA==:17 a=IkcTkHD0fZMA:10 a=FRKkwv86LYU3TSYyGg8A:9
- a=QEXdDO2ut3YA:10
+ a=yeAZMs3+wWQh+Rh+YWy7CA==:17 a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8
+ a=CoZVvUGnYQpkJ-dY8nQA:9 a=QEXdDO2ut3YA:10 a=jYKBPJSq9nmHKCndOPe9:22
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with --rebase-merges
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.13.git.gitgitgadget@gmail.com>
- <pull.13.v2.git.gitgitgadget@gmail.com>
- <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com>
- <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
- <nycvar.QRO.7.76.6.1808091039080.71@tvgsbejvaqbjf.bet>
+Subject: Re: [PATCH v4 2/2] sequencer: fix quoting in write_author_script
+To:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <20180731073331.40007-1-sunshine@sunshineco.com>
+ <20180807093452.22524-1-phillip.wood@talktalk.net>
+ <20180807093452.22524-3-phillip.wood@talktalk.net>
+ <CAPig+cQkY1_qDu=fdbA0gVPH88B47bM5BpgbYY8ivsj1Y0QHTw@mail.gmail.com>
+ <753b860e-c922-fd70-9d2d-0581976a6f37@talktalk.net>
+ <CAPig+cQdH+Xiunej1E6EnA6btFzZJTPo27cFY_UdaFZF7J7t-w@mail.gmail.com>
+ <xmqqr2j8j194.fsf@gitster-ct.c.googlers.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <3ccf2fcf-5d58-5d24-7e0b-d1d0e511feaa@talktalk.net>
-Date:   Thu, 9 Aug 2018 11:04:40 +0100
+Message-ID: <8d2da302-cf48-cc03-6300-a80bd3d67bab@talktalk.net>
+Date:   Thu, 9 Aug 2018 11:06:15 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1808091039080.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <xmqqr2j8j194.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDkXmXKuGnAGBnUT2ERD6+h6m9GB5ypgMdg5lrjIfMd44Ud254xy5HPMGKsF7XkQy88FwPGSODtmj1hb5oaY4A1qd+raFU+cy9wyVF1lb7u1LYij/Q9I
- jPdF1IJObaOkLOZaxHAE6upxpiF3+0GxbbXTO1A1YPxCiRWhGJHWAhp/gcKivDGBW0j9VZR/H8LiK6GY63yukkMe4MynnEDhYpWPGGU7t0j2997fAvC8QrQB
- fPHaI9AzlJK42PgRc4V8OwxvY/Vf5+4w6mI1w6YNYG1Q59yK3jOyHvr2dIe4A7HPLM6fxp6OBkSJC3juMv4njg==
+X-CMAE-Envelope: MS4wfJ8RhZKzlSF/R0l3z/rAByoX2StWwew+dMBWjenUSSr+iTA7RJiXogwo2r8PXuf/4N+m4xpICCrVE8+asK02EBJIxWamXR0lwnqesV7gDXBoxPXhBdRe
+ psSzAAuBM2D1ErfosSAIwVJVC0Zwdn6xY0DwAiQ9AsVGzdMOoVgTEdfL8XI/k5NyfdjjKURKGnYJynkgGOM1BKG2YWgIXXPrYk+AHGYHbiRiL6wkotUhzrKZ
+ PO+dErrHDeu3UHFNdfLrvLNaD4YWSkNru94aTjo2Ulu5fz0XbzaKPn4I9CcFaEBrafvpT/MlzMX14RYBOO3Apw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 09/08/18 10:22, Johannes Schindelin wrote:
-> Hi Phillip,
+Hi Junio
+On 08/08/18 17:01, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 > 
-> On Mon, 6 Aug 2018, Phillip Wood wrote:
+>> What does concern me is that read_env_script() doesn't seem to care
+>> about such a malformed file; it doesn't do any validation at all.
+>> Contrast that with read_author_ident() which is pretty strict about
+>> the content it expects to find in the file. So, it might make sense to
+>> upgrade read_env_script() to do some sort of validation on each line
+>> (though that shouldn't be in this patch, and doesn't even need to be
+>> in this series).
 > 
->> On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
->>>
->>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>>
->>> The idea of `--exec` is to append an `exec` call after each `pick`.
->>>
->>> Since the introduction of fixup!/squash! commits, this idea was extended
->>> to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
->>> exec would not be inserted between a `pick` and any of its corresponding
->>> `fixup` or `squash` lines.
->>>
->>> The current implementation uses a dirty trick to achieve that: it
->>> assumes that there are only pick/fixup/squash commands, and then
->>> *inserts* the `exec` lines before any `pick` but the first, and appends
->>> a final one.
->>>
->>> With the todo lists generated by `git rebase --rebase-merges`, this
->>> simple implementation shows its problems: it produces the exact wrong
->>> thing when there are `label`, `reset` and `merge` commands.
->>>
->>> Let's change the implementation to do exactly what we want: look for
->>> `pick` lines, skip any fixup/squash chains, and then insert the `exec`
->>> line. Lather, rinse, repeat.
->>>
->>> While at it, also add `exec` lines after `merge` commands, because they
->>> are similar in spirit to `pick` commands: they add new commits.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>   sequencer.c              | 37 +++++++++++++++++++++++++++----------
->>>   t/t3430-rebase-merges.sh |  2 +-
->>>   2 files changed, 28 insertions(+), 11 deletions(-)
->>>
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 31038472f..ed2e694ff 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char *commands)
->>>   {
->>>    const char *todo_file = rebase_path_todo();
->>>    struct todo_list todo_list = TODO_LIST_INIT;
->>> -	struct todo_item *item;
->>>    struct strbuf *buf = &todo_list.buf;
->>>    size_t offset = 0, commands_len = strlen(commands);
->>> -	int i, first;
->>> +	int i, insert;
->>>   
->>>    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->>>   		return error(_("could not read '%s'."), todo_file);
->>> @@ -4257,19 +4256,37 @@ int sequencer_add_exec_commands(const char
->>> *commands)
->>>    	return error(_("unusable todo list: '%s'"), todo_file);
->>>    }
->>>   -	first = 1;
->>> -	/* insert <commands> before every pick except the first one */
->>> -	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
->>> -		if (item->command == TODO_PICK && !first) {
->>> -			strbuf_insert(buf, item->offset_in_buf + offset,
->>> -				      commands, commands_len);
->>> +	/*
->>> +	 * Insert <commands> after every pick. Here, fixup/squash chains
->>> +	 * are considered part of the pick, so we insert the commands *after*
->>> +	 * those chains if there are any.
->>> +	 */
->>> +	insert = -1;
->>> +	for (i = 0; i < todo_list.nr; i++) {
->>> +		enum todo_command command = todo_list.items[i].command;
->>> +
->>> +		if (insert >= 0) {
->>> +			/* skip fixup/squash chains */
->>> +			if (command == TODO_COMMENT)
->>> +				continue;
->>
->> insert is not updated so if the next command is not a fixup the exec
->> line will be inserted before the comment.
-> 
-> Yes, this is very much on purpose. Take this todo list, for example:
-> 
-> 	pick 123456 this patch
-> 	# pick 987654 this was an empty commit
-> 
-> You definitely do not want the `exec` to appear after that commented-out
-> empty commit.
+> I do not think it is within the scope of these bugfix patches, but I
+> tend to agree that in the longer term it would be a good idea to
+> unify these two helpers that read exactly the same file stored at
+> rebase_path_author_script(), and make the result stricter, rather
+> than tightening two helpers independently.
 
-Yes, I like it, I was just thinking out loud.
-
->>> +			else if (is_fixup(command)) {
->>> +				insert = i + 1;
->>> +				continue;
->>> +			}
->>> +			strbuf_insert(buf,
->>> +				      todo_list.items[insert].offset_in_buf +
->>> +				      offset, commands, commands_len);
->>>   			offset += commands_len;
->>> +			insert = -1;
->>>   		}
->>> -		first = 0;
->>> +
->>> +		if (command == TODO_PICK || command == TODO_MERGE)
->>> +			insert = i + 1;
->>>    }
->>>   
->>>   	/* append final <commands> */
->>> -	strbuf_add(buf, commands, commands_len);
->>> +	if (insert >= 0 || !offset)
->>> +		strbuf_add(buf, commands, commands_len);
->>
->> Having read your other message about this patch I think if you wanted to fix
->> the position of the final exec in the case where the todo list ends with a
->> comment you could do something like
->>
->> 	if (insert >= 0)
->> 		strbuf_insert(buf,
->> 			      todo_list.items[insert].offset_in_buf +
->> 			      offset, commands, commands_len);
->> 	else
->> 		strbuf_add(buf, commands, commands_len);
-> 
-> That does not really work, as `insert` can point *after* the last line, in
-> which case `todo_list.items[insert]` is undefined (and in the worst case,
-> causes a segmentation fault).
-
-Ah, I'd missed that, does changing the conditions to
-if (insert >= 0 && insert < todo.list_nr) and
-else if (insert >=0 || !offset) work?
-
->> I'm not sure it matters that much though
-> 
-> Well, it does matter to me. After having this in the back of my head, and
-> after your comment, I think it *is* worth the additional complexity after
-> all.
-
-It would definitely be nice to have.
+That's my longer term goal, ideally sharing code with am.
 
 Best Wishes
 
 Phillip
-
-> Will come up with a new iteration.
-> 
-> Ciao,
-> Dscho
-> 
-
