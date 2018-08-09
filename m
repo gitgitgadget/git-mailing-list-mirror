@@ -2,95 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7C11F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 06:33:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C9DC1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 07:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727670AbeHII5L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 04:57:11 -0400
-Received: from forward100o.mail.yandex.net ([37.140.190.180]:60823 "EHLO
-        forward100o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727563AbeHII5L (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 9 Aug 2018 04:57:11 -0400
-X-Greylist: delayed 642 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2018 04:57:09 EDT
-Received: from mxback7g.mail.yandex.net (mxback7g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:168])
-        by forward100o.mail.yandex.net (Yandex) with ESMTP id 495832A20825;
-        Thu,  9 Aug 2018 09:23:08 +0300 (MSK)
-Received: from smtp2o.mail.yandex.net (smtp2o.mail.yandex.net [2a02:6b8:0:1a2d::26])
-        by mxback7g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id tlezCnSiti-N1dSMhuw;
-        Thu, 09 Aug 2018 09:23:02 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1533795782;
-        bh=bqW6vhEuyIaIqjaWu5aoomHcyVy24koi+ndCLLBPTQw=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        b=pcmQ8ZaBYLPCGP+CnZKKXBQjskR9ENBjobUrUjZleNANEFLgodsA9hQMRZbzleyf+
-         vDRDcd6eRtYPpqB3x8+Z++P3comzH4C7U348qaaF4/xKhKwSVjH7GK32sOHaO1qExz
-         gHJn0vtCkLkB2V7HEsceY5pEajcFzOD6ijowzXZ0=
-Received: by smtp2o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id ZN5nw3gID7-N1B4cO3H;
-        Thu, 09 Aug 2018 09:23:01 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ya.ru; s=mail; t=1533795781;
-        bh=bqW6vhEuyIaIqjaWu5aoomHcyVy24koi+ndCLLBPTQw=;
-        h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References;
-        b=avULnM0deqnz5CxXv1P926Eyt5lOxscFaRD11iRjmSWYLuJRflf7RyUvuaCD4yCC9
-         4yo1XRFx9QwCAZ4Z8ODa/3viltkhV4l+zbxZeRSsJZXfMKv9CF2yJFTKLIAJoWMsTL
-         bbHx9NuDpoWvyYTi6/D1CzK+f9kg7vivdwv+VeiQ=
-Authentication-Results: smtp2o.mail.yandex.net; dkim=pass header.i=@ya.ru
-From:   Nicholas Guriev <guriev-ns@ya.ru>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Nicholas Guriev <guriev-ns@ya.ru>, Git List <git@vger.kernel.org>
-Subject: [PATCH v2] status: -i shorthand for --ignored command line option
-Date:   Thu,  9 Aug 2018 09:21:42 +0300
-Message-Id: <20180809062142.15638-1-guriev-ns@ya.ru>
-X-Mailer: git-send-email 2.18.0.548.gee56419
-In-Reply-To: <CAPig+cTD7XYbaPBzj36Eudrud80r-cz1CPLDsLA9CHJC6Yc-Qw@mail.gmail.com>
-References: <CAPig+cTD7XYbaPBzj36Eudrud80r-cz1CPLDsLA9CHJC6Yc-Qw@mail.gmail.com>
+        id S1727716AbeHIJ7Z (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 05:59:25 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40502 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727601AbeHIJ7Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 05:59:25 -0400
+Received: by mail-pf1-f193.google.com with SMTP id e13-v6so2424818pff.7
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 00:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=oA/1tBQ6vh336WptPdyqTb6V366Vf3y5OnSIoTu6nAY=;
+        b=RX28z9OHXqHf6HsgF0S2ZeKeiTxCkarxWqHLohQBJSALIBy+T+m+yYUCp4ecS0olOX
+         NvbbMkAFaYlvjMiHESA/HLpg8SPXJfrdY6B82gp8Y/t/8zhVAHKKlRrrf6ZE6MWO36PO
+         W+293h0SW4s52xkHkWuJc7P6tX846So0pPzM/HxhGFp1BUE7gpexTOfE5LoB0WU1uFup
+         X9U/o7OTYihcBlXX2kPoQFa7JaUkOKgu7tOnKbAv0UN6+uIWQr2i3/LrLorYOQgDZnpA
+         9bCLVRaH32K3mN+zwOOlPJYz9SVl+H2PEoPWHVzaRteI1d0bFlFdwzhpgmoyK48+FhaG
+         XXSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=oA/1tBQ6vh336WptPdyqTb6V366Vf3y5OnSIoTu6nAY=;
+        b=Ugvk/45JfbMki5bJ5eAxHm2U2l2ZG0WqlCv4bW6g/I/aW5awsj1Zp2v/gezSyBxGqk
+         kQcXdSH8bTPDHYqAwMBqE4ivUqAhUXUXZ+BS+bS3Rtsuj9wU5omFpkSGP/rclBo9rmmp
+         Sb5Jj3kVdgVuYlNTPUNuqgvk9N5ykUWlBFrsozpZnMxXHZbLY6chETFbAYYJ0D0K0Ehw
+         NcQFk6elgf7rJRqix+6OvXkayWV392zUfz5aHxWpWcYKI0HmHBmDrvR2XgONe6JZqaxd
+         q/J9+2lNASHUI0ZqW8EEbC6GkMGjiXkaszv4ukvn2tGp9e2kZ7xA+wga7gVR0DOMouM6
+         JsNA==
+X-Gm-Message-State: AOUpUlGTfQfSVs6RzzMwzEBqAd6cliVGwAKIeK22lXfzfrQU94Xk4KzQ
+        1CR9PPgoTyVjh7eiVs56dVn30QeHlDIXmX1UtqPq3g==
+X-Google-Smtp-Source: AA+uWPxvJHQq5vsEmrB+Tle2BMBSRnLKG1mgWGY+69ejt6b011tnu3wDEmM21e00OBLU9euwny0FQkQM3lJuQb0fiS4=
+X-Received: by 2002:a62:43c8:: with SMTP id l69-v6mr1182259pfi.196.1533800151567;
+ Thu, 09 Aug 2018 00:35:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a17:90a:3541:0:0:0:0 with HTTP; Thu, 9 Aug 2018 00:35:51
+ -0700 (PDT)
+In-Reply-To: <20180808221752.195419-3-sbeller@google.com>
+References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-3-sbeller@google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 9 Aug 2018 09:35:51 +0200
+Message-ID: <CAN0heSqjazimYu4de=xCQ9epSxezVyKPQQ16amZZvoaBh_SKdQ@mail.gmail.com>
+Subject: Re: [PATCH 02/10] string-list.h: add string_list_pop function.
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, hvoigt@hvoigt.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It allows for uniformity with the --untracked-files option. Also
-the new short flag saves the number of keys to press for the
-typically git-status command.
+On 9 August 2018 at 00:17, Stefan Beller <sbeller@google.com> wrote:
+> A string list can be used as a stack, but should we? A later patch shows
+> how useful this will be.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  string-list.c | 8 ++++++++
+>  string-list.h | 6 ++++++
+>  2 files changed, 14 insertions(+)
+>
+> diff --git a/string-list.c b/string-list.c
+> index 9f651bb4294..ea80afc8a0c 100644
+> --- a/string-list.c
+> +++ b/string-list.c
+> @@ -80,6 +80,14 @@ void string_list_remove(struct string_list *list, const char *string,
+>         }
+>  }
+>
+> +struct string_list_item *string_list_pop(struct string_list *list)
+> +{
+> +       if (list->nr == 0)
+> +               return 0;
 
-Signed-off-by: Nicholas Guriev <guriev-ns@ya.ru>
----
- Documentation/git-status.txt | 1 +
- builtin/commit.c             | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+return NULL, not 0.
 
-diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
-index d9f422d..cce352a 100644
---- a/Documentation/git-status.txt
-+++ b/Documentation/git-status.txt
-@@ -97,6 +97,7 @@ configuration variable documented in linkgit:git-config[1].
- 	(and suppresses the output of submodule summaries when the config option
- 	`status.submoduleSummary` is set).
- 
-+-i[<mode>]::
- --ignored[=<mode>]::
- 	Show ignored files as well.
- +
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 158e3f8..44829b9 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1319,7 +1319,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 		  N_("mode"),
- 		  N_("show untracked files, optional modes: all, normal, no. (Default: all)"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
--		{ OPTION_STRING, 0, "ignored", &ignored_arg,
-+		{ OPTION_STRING, 'i', "ignored", &ignored_arg,
- 		  N_("mode"),
- 		  N_("show ignored files, optional modes: traditional, matching, no. (Default: traditional)"),
- 		  PARSE_OPT_OPTARG, NULL, (intptr_t)"traditional" },
--- 
-2.7.4
+> +
+> +       return &list->items[--list->nr];
+> +}
+> +
 
+> +/**
+> + * Returns the last item inserted and removes it from the list.
+> + * If the list is empty, return NULL.
+> + */
+> +struct string_list_item *string_list_pop(struct string_list *list);
+> +
+
+The memory ownership is now with the caller. That is, the caller needs
+to check/know `list->strdup_strings` and know `free_util` to be able to
+properly free all memory.
+
+OTOH, the pointer returned by this function is only guaranteed to be
+valid until you start inserting into the list (well, you can do one
+insertion per pop without worrying, but that's quite detailed
+implementation knowledge).
+
+Maybe these caveats should be documented, or is a hint that this
+`_pop()` is not so nice to have after all, but let's see what happens in
+the later patches...
+
+Martin
