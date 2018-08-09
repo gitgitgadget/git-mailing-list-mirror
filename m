@@ -2,122 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A3D1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:52:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E2641F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbeHJAT3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 20:19:29 -0400
-Received: from mail-yw1-f50.google.com ([209.85.161.50]:34541 "EHLO
-        mail-yw1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727268AbeHJAT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 20:19:29 -0400
-Received: by mail-yw1-f50.google.com with SMTP id j68-v6so6819495ywg.1
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:52:41 -0700 (PDT)
+        id S1727321AbeHJAUm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 20:20:42 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:34973 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727310AbeHJAUm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 20:20:42 -0400
+Received: by mail-yw1-f68.google.com with SMTP id s68-v6so6812358ywg.2
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=79qOwjzrpqIxErircqUtz8eFQZvjS5nk/xr6/2qdCQs=;
-        b=R5CqsNoPeZQxE7uFgNnGEh94YUTW8ciBS62PwYjcgHkLyl6vSp2XZ+SXWqRym+4BH6
-         yrYdF2V+NDdxOISFzvL5ZBEYf/ew3C7rt4maOp+hGH8VQu8xp8vJTssD4LfBMUwp/i6e
-         E9q4JtG8Q8rHlKdbLF04O9qSUALKyqXlGSev6mJpFqcvZ9RZAqpXqUU0qysKaPjxTHcG
-         wHUhME6/9s6yNLpeCbKhJoZbjUo1X0YeEgJtIwR2X2/2mvc9Pn1q9+V1DQxFi4dTqm1o
-         MCS4fv+SPsogC5LDA5pMJLK7X8i5PXLxe63qMzLfYxpycUSs9G34ej20KPwewsm4xPfh
-         v8eg==
+        bh=PYqZfw6Ai76qfmUW0V9nbxdGWK1kAy5dGxPpSG+0ewE=;
+        b=k0WfQJvc2tmIMj8/pCDWB1wu5OM84J846puABnFByVXzNxYI13IRZkN0lKZLYMqnrp
+         vUt+SompNwWNMDyUE0VzSkauCyDLK7YNjIThL5aqgtjj2Cy9dOo28geWxpTlmFVH881Y
+         AWFeNqKqRYr7Ll79vIFjQ09KvvYBTdO2vqMYSa5ni8NQVmALUGKRsmqXQvsZN2ASQiM8
+         hi3jr5ODcwKEFBGGBWZwu8DwzAvIBWlKJYW/ygn4ohrgYupl3SafsNf7G4wFbjExuvgx
+         wbh34137FvXJs/M7GHYO5oiXUgMojsTXbNzWpApgR9Papk0NpEuH6Ww+iAzPxI70uIzE
+         rUoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=79qOwjzrpqIxErircqUtz8eFQZvjS5nk/xr6/2qdCQs=;
-        b=i5UZPybdK4TX/itlyZKYAzvBKmTWuYVH7J4HkWP80Dt9ctpuUe4YOeon0pROzeYwoK
-         AoKaOWcbfPt2jJe0FJ8+5TpjKoTHPgtTeA1aG6BbweDzXh+84Xyrs4J9qBCaQJZYS8m2
-         a9XGNLhb4qoZVwLNeco4lGUHTjR69hH3/Z7O2ugVsm78r20iMNow90RX5V/5eMS0ECNb
-         Ieabjc0nbDe/o0o+llwzzhLzROeG52D8Lw9mBbqNDbx3tEyyZLZp9HOjXGIEwKhlVfLA
-         twQIaNrAdTEhnZG+UUOAjE8GRnb4wT+7YKvZoMvS6NbiYg6Vu8RwOBVmincq40YSbDa+
-         AtsA==
-X-Gm-Message-State: AOUpUlHJUjLSl34jCx+uB9EoDvHC9WHmYp7QF2MJP8XKyIEYCDGxNgSr
-        yC7zyOpAZCmPewB4O1jC/VXC243DkNh8ksQUdm6M/A==
-X-Google-Smtp-Source: AA+uWPyvy3bwGuUcEt/bz/0E3x0+iqjCXb6KKCvDoaR1HWXKECbDbgrI7Wmic4rbBQnV75P5EvZAzwLqBrMRrNTxFR8=
-X-Received: by 2002:a81:37c5:: with SMTP id e188-v6mr2237299ywa.340.1533851560882;
- Thu, 09 Aug 2018 14:52:40 -0700 (PDT)
+        bh=PYqZfw6Ai76qfmUW0V9nbxdGWK1kAy5dGxPpSG+0ewE=;
+        b=AXOWZiN9aToIRUOVjb5xZ+GfnfUhQWc7eDyBI4w8lfMXMEgnAbwNbYpvknJBazBXZ6
+         k1IKHogjq9gUBtX7eCVW/TmcvrMbc2VzxT1JTwNxXR7wqcfgy9XLNJoShijqb1ShZie0
+         6l2Z6jLAr3BSbPiq1xLcdK2iEzXvV9fCz68WRM3KcxMIVVDpuqJS2vo2uZPGYt4JFuMH
+         Eh7yngrHZ0x9xd6x13JJfAON9K6p5PtCRUSDWU5zwzIdcnyawRj1K4oZydwBOe23vdQ5
+         jAZG8knIFcoYb1k4IPTspBhMFcHh/Kr6PlJhk8ChruMkEMQkfAX+EsL2PSFdP8gzXqZm
+         zKvQ==
+X-Gm-Message-State: AOUpUlHhxxiQw1HR6hLnwtAjnIccxbTyGdycR1d1cSXsv+B9Txt18Ywo
+        ETueFgexDN3sSuKld19CgQrkp/CBguuwBzq58cg=
+X-Google-Smtp-Source: AA+uWPzs3A8fKGv/BdfowglaJa00btFInJJ/B+YtpsY+ufmRyDCe0Uj6Ykmz4vUwFRDe1V5S4XfTOhjhkU8gs/mpZ+g=
+X-Received: by 2002:ab0:12e2:: with SMTP id o34-v6mr2719392uac.154.1533851634342;
+ Thu, 09 Aug 2018 14:53:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-3-sbeller@google.com>
- <CAN0heSqjazimYu4de=xCQ9epSxezVyKPQQ16amZZvoaBh_SKdQ@mail.gmail.com>
- <xmqqzhxv9qkj.fsf@gitster-ct.c.googlers.com> <20180809214148.GD11342@sigill.intra.peff.net>
-In-Reply-To: <20180809214148.GD11342@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 9 Aug 2018 14:52:29 -0700
-Message-ID: <CAGZ79kZK=5gftetj3XLTbu-n3WKwRUQQDj12yxDBV0WEN8gg9Q@mail.gmail.com>
-Subject: Re: [PATCH 02/10] string-list.h: add string_list_pop function.
+References: <20180730152756.15012-1-pclouds@gmail.com> <20180807190110.16216-1-pclouds@gmail.com>
+ <xmqq7el2km82.fsf@gitster-ct.c.googlers.com> <fc56d572-e333-2e05-2130-71b53e251a13@jeffhostetler.com>
+ <20180808223139.GA3902@sigill.intra.peff.net> <xmqqbmace5i1.fsf@gitster-ct.c.googlers.com>
+ <20180809142333.GB1439@sigill.intra.peff.net> <34b22185-a0bc-f712-b5e5-fc5e2697dcc2@jeffhostetler.com>
+ <CABPp-BHiB_gR-dQbpJtSBYPJ5Om4Mv0ymnZFNocyTfbUotyBgw@mail.gmail.com> <20180809214430.GE11342@sigill.intra.peff.net>
+In-Reply-To: <20180809214430.GE11342@sigill.intra.peff.net>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Thu, 9 Aug 2018 14:53:42 -0700
+Message-ID: <CABPp-BEAybfJ8sojRwDbDjhcwk4VyQ26F1LnKyNLsg1fYS1fNA@mail.gmail.com>
+Subject: Re: [PATCH v2] clone: report duplicate entries on case-insensitive filesystems
 To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        pawelparuzel95@gmail.com,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 2:41 PM Jeff King <peff@peff.net> wrote:
-
-> >
-> >       while (list->nr)
-> >               work_on(list_pop(list));
-> >
-> > which is not so bad.
+On Thu, Aug 9, 2018 at 2:44 PM Jeff King <peff@peff.net> wrote:
+> > The error message isn't quite as good, but does the user really need
+> > all the names of the file?  If so, we gave them enough information to
+> > figure it out, and this is a really unusual case anyway, right?
+> > Besides, now we're back to linear performance....
 >
-> In many cases you can just do:
->
->   while (list->nr) {
->         work_on(list->items[list->nr - 1]);
->         list_remove(list, list->nr - 1);
->   }
->
-> and then all of those memory ownership issues like:
+> Well, it's still quadratic when they run O(n) iterations of "git
+> ls-files -s | grep $colliding_oid". You've just pushed the second linear
+> search onto the user. ;)
 
-[...]
->
-> just go away. :)
-
-The only complication here is the lack of list_remove(index),
-we do have list_remove(string), which internally searches the
-item and removes it. Hence I did not want to use it.
-
-Another idea I had was to keep the list immutable (except amending,
-just like a constitution ;-) and store an index of how far we got in that
-list already. That wastes memory for keeping entries around, but is safe
-for memory due to its nature.
-
-> Where that falls down is if you really need work_on() to put more items
-> on the stack, but only after you've removed the current top. But then
-> writing it out may still be nicer, because it makes it clear you have to
-> do:
->
->   const char *cur_string = xstrdup(list->items[list->nr-1].string);
-
-Another way would be to use
-
-  string_list_pop(&list, &string_dst, &util_dst);
-i.e.
-  /* Returns 0 if the dst was filled */
-  int (struct string_list *, char **, void**)
-
-as then we do not expose the internals and would not have issues
-with reallocs.
-
-> if you want the data to live past the removal.
-
-In the code proposed there are no additions (hence no reallocs)
-and the need for the data is short lived.
-
-But I can see how the design was just fitting my purpose and
-we could come up with some better API.
-
-Thanks,
-Stefan
+Wouldn't that be their own fault for not running
+  git ls-files -s | grep -e $colliding_oid_1 ... -e $colliding_oid_n | sort -k 2
+?   ;-)
