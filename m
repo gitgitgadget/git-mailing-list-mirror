@@ -2,103 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 020911F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 21:16:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 335691F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 21:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727232AbeHIXnS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 19:43:18 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:56160 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727156AbeHIXnS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 19:43:18 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f21-v6so1580686wmc.5
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 14:16:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/ew/Ac+4mRfm8OFUuqLXFGscEvx43l66ZscQvXIDCQc=;
-        b=psojQBCIQVO3DeZkLheXS+4aZqCzfEESxLdE6JS47LQq2VA+z/Lx48a9kOGSUlTfFO
-         jHwrkiSlxJ3jV+cF9cswkR2tRXikvQBGADmRzFSiSm43LNYNCnxRTnv1jQlZzq5Tb5Cu
-         tg5uDGhGZDlaJhmSFeDxEL9QnAJoLXbf2AJAX802y9cUZnujWSEad7Jxj2cdQODYnKpz
-         MbrnBdqbxBmQriadnwggMr8Bm5R9OeAjCrclAnqZ6G6+7rPiq9bgl1s7R0zcBdgrcGQc
-         aaM5dLS+8meNPfAftbXL/tI4t1WlGZXU0A3kO8Sz4XjmoKFPa79aBRORhIL8jYWxOz9P
-         4vtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/ew/Ac+4mRfm8OFUuqLXFGscEvx43l66ZscQvXIDCQc=;
-        b=RjeWBXcHX5xBNPSKnjbFZ6rRIci8/U9+/KswZSjcgrHsgLnO2j97A5rEFWksaf3lRl
-         zkKHzzgsxr+Ve7C4/AmtT+tzJghhk/8t2nCeHUYErdNIY8xQXtGBFWLS29aC376tp3k/
-         RD9VRmkCazYv1J7j4ZbajRwb7zh/OnI1Ah+Z9GEbPqGZEw5lMpCMin5dTAOlh1lV/MxF
-         7NS810wyT6eFbFTRc1u61pmSKo0D9ne9APY8+3bAmT0VBy9Iycm6hzEsiGiazCxc51LS
-         8Yveom1mzKW9MlLn3xG1RalKJcHfZrM7T7heku7ovq2m5BES5g9ldt5kxJKJBSEQyIhy
-         miCA==
-X-Gm-Message-State: AOUpUlEkrrchaINqS0j4sIhT2A/A1R2HL23k751OyRt8oRRDQTnXpng+
-        1mUdVzmfALbl/ipCERD6YdM=
-X-Google-Smtp-Source: AA+uWPwV91jvDHeBaD9QUCqOkSYzCpBlDkszsT+EZu2Nkv9sbwTMJ1IWNL3fQvRE+Bv+0GrgLiGWPg==
-X-Received: by 2002:a1c:6444:: with SMTP id y65-v6mr2429588wmb.98.1533849397091;
-        Thu, 09 Aug 2018 14:16:37 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id u127-v6sm2300735wmf.48.2018.08.09.14.16.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 14:16:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, hvoigt@hvoigt.net
-Subject: Re: [PATCH 01/10] string_list: print_string_list to use trace_printf
-References: <20180808221752.195419-1-sbeller@google.com>
-        <20180808221752.195419-2-sbeller@google.com>
-Date:   Thu, 09 Aug 2018 14:16:36 -0700
-In-Reply-To: <20180808221752.195419-2-sbeller@google.com> (Stefan Beller's
-        message of "Wed, 8 Aug 2018 15:17:43 -0700")
-Message-ID: <xmqq7ekzb5qj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727251AbeHIXwq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 19:52:46 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49082 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727206AbeHIXwq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 19:52:46 -0400
+Received: (qmail 5016 invoked by uid 109); 9 Aug 2018 21:26:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 21:26:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13814 invoked by uid 111); 9 Aug 2018 21:26:06 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 17:26:06 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 17:26:02 -0400
+Date:   Thu, 9 Aug 2018 17:26:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Brandon Williams <bmwill@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180809212602.GA11342@sigill.intra.peff.net>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180808223323.79989-3-bmwill@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Aug 08, 2018 at 03:33:23PM -0700, Brandon Williams wrote:
 
-> It is a debugging aid, so it should print to the debugging channel.
+> Commit 0383bbb901 (submodule-config: verify submodule names as paths,
+> 2018-04-30) introduced some checks to ensure that submodule names don't
+> include directory traversal components (e.g. "../").
+> 
+> This addresses the vulnerability identified in 0383bbb901 but the root
+> cause is that we use submodule names to construct paths to the
+> submodule's git directory.  What we really should do is munge the
+> submodule name before using it to construct a path.
+> 
+> Teach "submodule_name_to_gitdir()" to munge a submodule's name (by url
+> encoding it) before using it to build a path to the submodule's gitdir.
 
-Who says?  In-tree code may say so, and I do not think any in-flight
-topic up to 'pu' uses this to produce non-debugging output, but I do
-not think it is healthy attitude to assume that you can take over an
-existing function and change what it does unilaterally.
+I like this approach very much, and I think using url encoding is much
+better than an opaque hash (purely because it makes debugging and
+inspection saner).
 
-As there is no in-tree or in-flight user, I think it makes sense if
-the proposed change were to rename it to trace_string_list().  If
-there weren't any print_string_list() and we were adding a debugging
-aid to use trace_printf() to dump these, that would be the name we
-would use anyway.
+Two thoughts, though:
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  string-list.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/string-list.c b/string-list.c
-> index 771c4550980..9f651bb4294 100644
-> --- a/string-list.c
-> +++ b/string-list.c
-> @@ -200,9 +200,9 @@ void print_string_list(const struct string_list *p, const char *text)
->  {
->  	int i;
->  	if ( text )
-> -		printf("%s\n", text);
-> +		trace_printf("%s\n", text);
->  	for (i = 0; i < p->nr; i++)
-> -		printf("%s:%p\n", p->items[i].string, p->items[i].util);
-> +		trace_printf("%s:%p\n", p->items[i].string, p->items[i].util);
->  }
->  
->  struct string_list_item *string_list_append_nodup(struct string_list *list,
+> +	modules_len = buf->len;
+>  	strbuf_addstr(buf, submodule_name);
+> +
+> +	/*
+> +	 * If the submodule gitdir already exists using the old-fashioned
+> +	 * location (which uses the submodule name as-is, without munging it)
+> +	 * then return that.
+> +	 */
+> +	if (!access(buf->buf, F_OK))
+> +		return;
+
+I think this backwards-compatibility is necessary to avoid pain. But
+until it goes away, I don't think this is helping the vulnerability from
+0383bbb901. Because there the issue was that the submodule name pointed
+back into the working tree, so this access() would find the untrusted
+working tree code and say "ah, an old-fashioned name!".
+
+In theory a fresh clone could set a config option for "I only speak
+use new-style modules". And there could even be a conversion program
+that moves the modules as appropriate, fixes up the .git files in the
+working tree, and then sets that config.
+
+In fact, I think that config option _could_ be done by bumping
+core.repositoryformatversion and then setting extensions.submodulenames
+to "url" or something. Then you could never run into the confusing case
+where you have a clone done by a new version of git (using new-style
+names), but using an old-style version gets confused because it can't
+find the module directories (instead, it would barf and say "I don't
+know about that extension").
+
+I don't know if any of that is worth it, though. We already fixed the
+problem from 0383bbb901. There may be a _different_ "break out of the
+modules directory" vulnerability, but since we disallow ".." it's hard
+to see what it would be (the best I could come up with is maybe pointing
+one module into the interior of another module, but I think you'd have
+to trouble overwriting anything useful).
+
+And while an old-style version of Git being confused might be annoying,
+I suspect that bumping the repository version would be even _more_
+annoying, because it would hit every command, not just ones that try to
+touch those submodules.
+
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 2c2c97e144..963693332c 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -933,7 +933,7 @@ test_expect_success 'recursive relative submodules stay relative' '
+>  		cd clone2 &&
+>  		git submodule update --init --recursive &&
+>  		echo "gitdir: ../.git/modules/sub3" >./sub3/.git_expect &&
+> -		echo "gitdir: ../../../.git/modules/sub3/modules/dirdir/subsub" >./sub3/dirdir/subsub/.git_expect
+> +		echo "gitdir: ../../../.git/modules/sub3/modules/dirdir%2fsubsub" >./sub3/dirdir/subsub/.git_expect
+
+One interesting thing about url-encoding is that it's not one-to-one.
+This case could also be %2F, which is a different file (on a
+case-sensitive filesystem). I think "%20" and "+" are similarly
+interchangeable.
+
+If we were decoding the filenames, that's fine. The round-trip is
+lossless.
+
+But that's not quite how the new code behaves. We encode the input and
+then check to see if it matches an encoding we previously performed. So
+if our urlencode routines ever change, this will subtly break.
+
+I don't know how much it's worth caring about. We're not that likely to
+change the routines ourself (though certainly a third-party
+implementation would need to know our exact url-encoding decisions).
+
+Some possible actions:
+
+ 0. Do nothing, and cross our fingers. ;)
+
+ 1. Don't use strbuf_addstr_urlencode(), but rather our own munging
+    function which we know will remain stable (or alternatively, a flag
+    to strbuf_addstr_urlencode to get the consistent behavior).
+
+ 2. Make sure we have tests which cover this, so at least somebody
+    changing the urlencode decisions will see a breakage. Your test here
+    covers the upper/lowercase one, but we might want one that covers
+    "+". (There may be more ambiguous cases, but those are the ones I
+    know about).
+
+ 3. Rather than check for the existence of names, decode what's actually
+    in the modules/ directory to create an in-memory index of names.
+
+    I hesitate to suggest that, because it's obviously way more
+    complicated, and may perform worse if you have a lot of modules
+    (since you have to readdir() and decode the whole directory just to
+    look up one module).
+
+    But I think it also gives a more elegant solution to the
+    backwards-compatibility problem, since we could recognize both new
+    and old-style names. There's some ambiguity (e.g., is "foo%2fbar"
+    "foo/bar", or did somebody really have a name with a percent in
+    it?),. but in theory you could respect either name (giving
+    preference to new-style in case of a conflict).
+
+    And I think the result would be immune to any directory-escape
+    vulnerabilities, because we'd always start with what actually exists
+    in $GIT_DIR/modules/, which we know _we_ will have written.
+
+    Again, I'm not sure if it's worth the effort, but I thought I'd
+    throw it out there.
+
+-Peff
