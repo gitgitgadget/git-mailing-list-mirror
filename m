@@ -2,128 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94B221F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 13:30:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01BEA1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 13:59:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732073AbeHIPzn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 11:55:43 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39946 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730090AbeHIPzm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 11:55:42 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h15-v6so5159573wrs.7
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 06:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zuaWWAHXFc91xn1ChxcBMaZYDmFFyyYdOke6K0PsH1U=;
-        b=OZJWQ2Ge1Oa1UwL5Afw8EmvE9vYABDdxUmLYTJSEGsRSaVeJq0A64y1OaQH6vIKpXk
-         JDGATy97EvpLk5hGmMGUQulmo9ZtjSATA0g3nmYvL8Je93gyaqMykXKbKGjC/kXWZ/xe
-         NQRcCWqjrlwlgh0xVrrZAgVuQw03pG4775UiCbT/UlljC3tqQgaVVC8G330WJiRD+cBf
-         CHxsACeUWidEUHp2QiGvijiUfIV8KVssOuRty9EOOve5ouSMO/GzA7y0S8pzsLrpZS5C
-         Yqg1+vfrIIGbZGfhosF62Kuwy+dLsz1HfTCY1W8J+5VGxfDujzcvcZ6namhyDtz0uxd8
-         VWmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zuaWWAHXFc91xn1ChxcBMaZYDmFFyyYdOke6K0PsH1U=;
-        b=UWDqSm4ZbrmwGNofkfsrY2NSF+Qo+OLKn6yMuuJ/+ZAp24cRTrK4Hd62FTiW0i8R1N
-         bulnTkfI8kax74QtolI0+f1ndcJ8EoWZb6N/TqdzQ5rMgEAdGGCW1yhbj6uDF2IEhw9J
-         HszK/qhE635jPg4DxYyIr4hcRedQs234Vy47V88ggTskj1WvK2Wr+kFpZeg5GveEivHP
-         F56rBuc+YN+H2qBdlZ2TF4povl+B084krV+sopJQwg9UcI8oxjZmt8lzQ11fI7j6R43S
-         Tl2jR4+jXrsCIQsmLKUjwxIXtjusuTLDvgvfDouO8f0hWzwaEcjmt4+VA6batm1JK2UJ
-         OVig==
-X-Gm-Message-State: AOUpUlFcbR7hZDpe1agyIkhYDoLPYeOCIHqCtTz0EuI0yAmA0qs19rDq
-        ObO20KBlJsCSAsibSVWPo7g=
-X-Google-Smtp-Source: AA+uWPy5HwI7To7V+ghn0l1eS1UuVSPjsSqaSYQiZruh5YN/JiOybzkRZvc1p1+ihIZTm+gzHJDR3Q==
-X-Received: by 2002:adf:a211:: with SMTP id p17-v6mr1502455wra.196.1533821446258;
-        Thu, 09 Aug 2018 06:30:46 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-30-228.w86-222.abo.wanadoo.fr. [86.222.29.228])
-        by smtp.gmail.com with ESMTPSA id m13-v6sm7778440wru.93.2018.08.09.06.30.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 09 Aug 2018 06:30:45 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v5 04/20] rebase -i: rewrite the edit-todo
- functionality in C
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        gitster@pobox.com
-References: <20180724163221.15201-1-alban.gruin@gmail.com>
- <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180731180003.5421-5-alban.gruin@gmail.com>
- <325fd5d2-2a93-2270-7d1e-394c265f42d4@talktalk.net>
- <6826d318-b0ab-4e8e-e2ba-5425e3bf6f5f@gmail.com>
- <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <bc07317b-ba44-7a3c-7cb4-504b7dbc7c34@gmail.com>
-Date:   Thu, 9 Aug 2018 15:30:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
-MIME-Version: 1.0
-In-Reply-To: <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+        id S1732269AbeHIQYp convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 9 Aug 2018 12:24:45 -0400
+Received: from ao2.it ([92.243.12.208]:35795 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731227AbeHIQYp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 12:24:45 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fnlS8-0005CL-4R; Thu, 09 Aug 2018 15:58:12 +0200
+Date:   Thu, 9 Aug 2018 15:59:40 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     SZEDER =?ISO-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>
+Subject: Re: [RFC PATCH v2 03/12] t7411: be nicer to future tests and really
+ clean things up
+Message-Id: <20180809155940.0505e6d6525d39068a5a6925@ao2.it>
+In-Reply-To: <CAGZ79kYn8hCV3z7wLhG+-nOooie-PwHN7n1SrEJdka8bSHc+3w@mail.gmail.com>
+References: <20180802134634.10300-1-ao2@ao2.it>
+        <20180802134634.10300-4-ao2@ao2.it>
+        <20180802164042.28026-1-szeder.dev@gmail.com>
+        <CAGZ79kYn8hCV3z7wLhG+-nOooie-PwHN7n1SrEJdka8bSHc+3w@mail.gmail.com>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Thu, 2 Aug 2018 11:15:03 -0700
+Stefan Beller <sbeller@google.com> wrote:
 
-Le 08/08/2018 à 18:04, Phillip Wood a écrit :
->>>> +int edit_todo_list(unsigned flags)
->>>> +{
->>>> +    struct strbuf buf = STRBUF_INIT;
->>>> +    const char *todo_file = rebase_path_todo();
->>>> +    FILE *todo;
->>>> +
->>>> +    if (strbuf_read_file(&buf, todo_file, 0) < 0)
->>>> +        return error_errno(_("could not read '%s'."), todo_file);
->>>> +
->>>> +    strbuf_stripspace(&buf, 1);
->>>> +    todo = fopen_or_warn(todo_file, "w");
->>>
->>> This truncates the existing file, if there are any errors writing the
->>> new one then the user has lost the old one. write_message() in
->>> sequencer.c avoids this problem by writing a new file and then renaming
->>> it if the write is successful, maybe it is worth exporting it so it can
->>> be used elsewhere.
->>>
->>>> +    if (!todo) {
->>>> +        strbuf_release(&buf);
->>>> +        return 1;
->>>> +    }
->>>> +
->>>> +    strbuf_write(&buf, todo);
->>>> +    fclose(todo);
->>>
->>> There needs to be some error checking after the write and the close
->>> (using write_message() would mean you only have to check for errors in
->>> one place)
->>>
->>
->> Right.  Should I find a new nawe for write_message()?
+> On Thu, Aug 2, 2018 at 9:41 AM SZEDER G�bor <szeder.dev@gmail.com> wrote:
+> >
+[...]
+> > >
+> > > Note that test_when_finished is not used here, both to keep the current style
+> > > and also because it does not work in sub-shells.
+> >
+> > That's true, but I think that this:
+> >
+> >   test_when_finished git -C super reset --hard HEAD~2
+> >
+> > at the very beginning of the test should work.
 > 
-> That might be a good idea, I'm not sure what it should be though, maybe
-> write_file()?, perhaps someone else might have a better suggestion.
+> Yeah that is a better way to do it.
+> Even better would be to have 2 of these for both tests 5 and 8,
+> such that each of them could be skipped individually and any following
+> tests still work fine.
+>
+
+Test 6 also relies on the error introduced in test 5.
+
+So the options would be either to remove one commit at the time in
+test 6 and 8 (with a comment in test 6 to note that the commit is from
+the previous test), or to remove both the commits in test 8. I am going
+to go with the former, using test_when_finished.
+
+> > >  t/t7411-submodule-config.sh | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+> > > index 0bde5850ac..248da0bc4f 100755
+> > > --- a/t/t7411-submodule-config.sh
+> > > +++ b/t/t7411-submodule-config.sh
+> > > @@ -135,7 +135,9 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+> > >                       HEAD submodule \
+> > >                               >actual &&
+> > >               test_cmp expect_error actual  &&
+> > > -             git reset --hard HEAD^
+> > > +             # Remove both the commits which add errors to .gitmodules,
+> > > +             # the one from this test and the one from a previous test.
+> > > +             git reset --hard HEAD~2
 > 
+> I am a bit hesitant to removing the commits though, as it is expected to have
+> potentially broken history and submodules still working.
+>
 
-write_file() already exists in wrapper.c.  I wondered, as this make use
-of the lockfile API, perhaps it could be moved to lockfile.{c,h}, and
-renamed to something like write_file_with_lock().
+The commits which are removed only affected .gitmoudles, no "submodule
+init" nor "submoudle update" is ever called after they are added, so I
+don't know what problems there could be.
 
-Cheers,
-Alban
+Would a revert be any different?
 
+> The config --unset already fixes the gitmodules file,
+> so I think we can rather do
+> 
+>     git commit -a -m 'now the .gitmodules file is fixed at HEAD \
+>         but has a messy history'
+> 
+> But as I have only read up to here, not knowing what the future tests will
+> bring this is all speculation at this point.
+
+IIUC the "config --unset" is used to cause the error, not to fix it, I
+am not sure I understand this point.
+
+Thanks,
+   Antonio
+
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
