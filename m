@@ -2,185 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5496F1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:05:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05C7C1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:06:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732527AbeHITbG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 15:31:06 -0400
-Received: from mail-wm0-f41.google.com ([74.125.82.41]:51708 "EHLO
-        mail-wm0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732411AbeHITbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 15:31:06 -0400
-Received: by mail-wm0-f41.google.com with SMTP id y2-v6so925871wma.1
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:05:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6WiVZssB0+HjvW5dO4MSS+sqbhV4gWi0HyzVF1TGKWU=;
-        b=F6GMFXnwiHSIVcPsfMnn6GaahAZEjpX1dSfby/etOc3SjpWU56wak1EYkpNR6U4RaP
-         Qrpma6fuXXKikyEXdf3w3WmtGKpgxQElkVM5dopoL5LUQC/c7A3mI6n45Lm6Cs63dPm/
-         yUio7QkoCUyOb1ckYjonYvTAGB42497rTfXwOJBVPoLaLs5pw+7xa6pvkG0Q8+JVL+aP
-         iZ3fJPkBtTfEGlGKhY77cVBXGbJKL9g8t0AO2DVSvXLsn1O5lLkwIY08jgVkxq+w0eP5
-         GRJFkqzLgk6NLHRp66RR3vSwWF6qUDRHuzpUmXNA+X/VmAZfg+meXe7HwVRgeIjQ3R7O
-         WYCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6WiVZssB0+HjvW5dO4MSS+sqbhV4gWi0HyzVF1TGKWU=;
-        b=Hz5e76YIo+qNxIIjknJx8Lg1gNZGywzZcvqrQZr6BMuvcFwa9pMKQ+YyDTfABj34s9
-         /vkFy5z8kA4jT3tVMgsUgqjdutJTWDmrgQ5EPncwePcy/LX7dtuVmnSir87TWuujdURL
-         ZXu4RHHBMOkH94GRy2BgoTaOZmhToT6FkrlvOfSnxX44TXW5yFOFy08XCanz5e9IIbZu
-         z5YZukA/EJpQGWdNvD9jrEE48mov5NetOaznPHG+HeWXd5Qre5aLlMauAK7RS7yaXv2s
-         pxlfGoRx/5m94RZgpUbZT3dbTip6QjGA+SNAmG57PZeYn6dzoOsvyTPULAb3AlM1EwLa
-         Mk6w==
-X-Gm-Message-State: AOUpUlHfS7nSEnXHVUd9EATvPOsT8PjTKa5z4mLh7lmFh0GJohyft6s9
-        4EseBQNioJV+OLpTMjajbBY=
-X-Google-Smtp-Source: AA+uWPx/noetQO9xTql+yac+5oLKl+4aqCfuWJy9Se3wBCu1e6SzA+ZAZVWgl7w9OgwNV1/BmIyKBQ==
-X-Received: by 2002:a1c:b213:: with SMTP id b19-v6mr2076446wmf.141.1533834317740;
-        Thu, 09 Aug 2018 10:05:17 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s2-v6sm6475582wrn.83.2018.08.09.10.05.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 10:05:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v2 2/2] repack: repack promisor objects if -a or -A is set
-References: <cover.1533672584.git.jonathantanmy@google.com>
-        <cover.1533767314.git.jonathantanmy@google.com>
-        <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
-Date:   Thu, 09 Aug 2018 10:05:16 -0700
-In-Reply-To: <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Wed, 8 Aug 2018 15:34:06 -0700")
-Message-ID: <xmqqftzncvxv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732384AbeHITb6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 15:31:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:48690 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730634AbeHITb5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 15:31:57 -0400
+Received: (qmail 26912 invoked by uid 109); 9 Aug 2018 17:06:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 17:06:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11332 invoked by uid 111); 9 Aug 2018 17:06:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 13:06:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 13:06:10 -0400
+Date:   Thu, 9 Aug 2018 13:06:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Paul Smith <paul@mad-scientist.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Help with "fatal: unable to read ...." error during GC?
+Message-ID: <20180809170609.GE1439@sigill.intra.peff.net>
+References: <1b2f649f0ece2ff46801c7bbd971c736e257af83.camel@mad-scientist.net>
+ <20180808160612.GC1607@sigill.intra.peff.net>
+ <b247434b62ccd30f32adbebb83fa6ea12b51b6ff.camel@mad-scientist.net>
+ <20180808182436.GA19096@sigill.intra.peff.net>
+ <249be5d3dada9a4b1b5282896a9a11e12c1ffd2a.camel@mad-scientist.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <249be5d3dada9a4b1b5282896a9a11e12c1ffd2a.camel@mad-scientist.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Wed, Aug 08, 2018 at 10:45:49PM -0400, Paul Smith wrote:
 
-> +/*
-> + * Write oid to the given struct child_process's stdin, starting it first if
-> + * necessary.
-> + */
-> +static int write_oid(const struct object_id *oid, struct packed_git *pack,
-> +		     uint32_t pos, void *data)
-> +{
-> +	struct child_process *cmd = data;
-> +
-> +	if (cmd->in == -1) {
-> +		if (start_command(cmd))
-> +			die("Could not start pack-objects to repack promisor objects");
-> +	}
-> +
-> +	xwrite(cmd->in, oid_to_hex(oid), GIT_SHA1_HEXSZ);
-> +	xwrite(cmd->in, "\n", 1);
-> +	return 0;
-> +}
-> +
-> +static void repack_promisor_objects(const struct pack_objects_args *args,
-> +				    struct string_list *names)
-> +{
-> +	struct child_process cmd = CHILD_PROCESS_INIT;
-> +	FILE *out;
-> +	struct strbuf line = STRBUF_INIT;
-> +
-> +	prepare_pack_objects(&cmd, args);
-> +	cmd.in = -1;
-> +
-> +	/*
-> +	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
-> +	 * hints may result in suboptimal deltas in the resulting pack. See if
-> +	 * the OIDs can be sent with fake paths such that pack-objects can use a
-> +	 * {type -> existing pack order} ordering when computing deltas instead
-> +	 * of a {type -> size} ordering, which may produce better deltas.
-> +	 */
-> +	for_each_packed_object(write_oid, &cmd,
-> +			       FOR_EACH_OBJECT_PROMISOR_ONLY);
-> +
-> +	if (cmd.in == -1)
-> +		/* No packed objects; cmd was never started */
-> +		return;
-> +	close(cmd.in);
-> +
-> +	out = xfdopen(cmd.out, "r");
+> On Wed, 2018-08-08 at 14:24 -0400, Jeff King wrote:
+> > If so, can you try running it under gdb and getting a stack trace?
+> > Something like:
+> > 
+> >   gdb git
+> >   [and then inside gdb...]
+> >   set args pack-objects --all --reflog --indexed-objects foo </dev/null
+> >   break die
+> >   run
+> >   bt
+> > 
+> > That might give us a clue where the broken object reference is coming
+> 
+> Here we go.  I can rebuild with -Og or -O0 if more detailed debugging
+> is needed; most everything appears to be optimized out:
 
-Hmm, it is clever to auto-start the pack-objects (and notice there
-wasn't anything needing to pack).  Two things that are worth noting
-are:
+No, I think this is enough to give a general sense of the problem
+location.
 
- - The code takes advantage of the fact that cmd.in being left as -1
-   is a sign that start_command() was never called (well, it could
-   be that it was called but failed to open pipe---but then we would
-   have died inside write_oid(), so we can ignore taht case).  This
-   is not relying on its implementation detail---cmd.in would be
-   replaced by a real fd to the pipe if start_command() was called.
+> Compressing objects: 100% (107777/107777), done.
+> Writing objects:  54% (274416/508176)   
+> Thread 1 "git" hit Breakpoint 1, die (err=err@entry=0x5a373a "unable to read %s") at usage.c:119
+> 119     {
+> (gdb) bt
+> #0  die (err=err@entry=0x5a373a "unable to read %s") at usage.c:119
+> #1  0x00000000004563f3 in get_delta (entry=<optimized out>) at builtin/pack-objects.c:143
+> #2  write_no_reuse_object () at builtin/pack-objects.c:308
+> #3  0x0000000000456592 in write_reuse_object (usable_delta=<optimized out>, limit=<optimized out>, entry=<optimized out>, f=<optimized out>) at builtin/pack-objects.c:516
+> #4  write_object (write_offset=<optimized out>, entry=0x7fffc9a8d940, f=0x198fb70) at builtin/pack-objects.c:518
+> #5  write_one () at builtin/pack-objects.c:576
+> #6  0x00000000004592f0 in write_pack_file () at builtin/pack-objects.c:849
+> #7  cmd_pack_objects (argc=<optimized out>, argv=<optimized out>, prefix=<optimized out>) at builtin/pack-objects.c:3354
+> #8  0x0000000000404f06 in run_builtin (argv=<optimized out>, argc=<optimized out>, p=<optimized out>) at git.c:417
+> #9  handle_builtin (argc=<optimized out>, argv=<optimized out>) at git.c:632
+> #10 0x0000000000405f21 in run_argv (argv=0x7fffffffe210, argcp=0x7fffffffe21c) at git.c:761
+> #11 cmd_main (argc=<optimized out>, argc@entry=6, argv=<optimized out>, argv@entry=0x7fffffffe448) at git.c:761
+> #12 0x0000000000404b15 in main (argc=6, argv=0x7fffffffe448) at common-main.c:45
 
- - We know that pack-objects reads all its standard input through to
-   the EOF before emitting a single byte to its standard output, and
-   that is why we can use bidi pipe and not worry about deadlocking
-   caused by not reading from cmd.out at all (before closing cmd.in,
-   that is).
+So that's quite unexpected. I assumed we'd have hit this problem while
+deciding _which_ objects to write. But we get all the way to the point
+of writing out the result before we notice it's missing.
 
-So I kind of like the cleverness of the design of this code.
+I don't think I've run such a case before, but I wonder if "pack-objects
+--all" is too lax about adding missing blobs during its object traversal
+(especially during the "unreachable but recent" part of the traversal
+that I mentioned, which should silently omit missing objects). I played
+around with recreating this situation, though, and I don't think it's
+possible to cause the results you're seeing. We come up with a list of
+recent objects, but we only use it as a look-up index for discarding
+too-old objects. So:
 
-> +	while (strbuf_getline_lf(&line, out) != EOF) {
-> +		char *promisor_name;
-> +		int fd;
-> +		if (line.len != 40)
-> +			die("repack: Expecting 40 character sha1 lines only from pack-objects.");
-> +		string_list_append(names, line.buf);
-> +
-> +		/*
-> +		 * pack-objects creates the .pack and .idx files, but not the
-> +		 * .promisor file. Create the .promisor file, which is empty.
-> +		 */
-> +		promisor_name = mkpathdup("%s-%s.promisor", packtmp,
-> +					  line.buf);
-> +		fd = open(promisor_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
-> +		if (fd < 0)
-> +			die_errno("unable to create '%s'", promisor_name);
-> +		close(fd);
-> +		free(promisor_name);
+  - it wouldn't ever cause us to choose to write an object into a pack,
+    which is what you're seeing
 
-For now, as we do not know what is the appropriate thing to leave in
-the file, empty is fine, but perhaps in the future we may want to
-carry forward the info from the existing .promisor file?  What does
-it initially contain?  Transport invoked with from_promisor bit
-seems to call index-pack with "--promisor" option with no argument,
-so this is probably in line with that.  Do we in the future need to
-teach "--promisor" option to pack-objects we invoke here, which will
-be passed to the index-pack it internally performs, so that we do
-not have to do this by hand here?
+  - we'd never consider a missing object; it's a pure lookup table, and
+    the actual list of objects we consider is found by walking the set
+    of packs
 
-In any case, don't we need to update the doc for the "--promisor"
-option of "index-pack"?  The same comment for the new options added
-in the same topic, e.g. "--from-promisor" and "--no-dependents"
-options added to "fetch-pack".  It seems that the topic that ended
-at 0c16cd499d was done rather hastily and under-documented?
+So that's probably a dead end.
 
-> @@ -440,6 +513,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  
->  	/* End of pack replacement. */
->  
-> +	reprepare_packed_git(the_repository);
-> +
+What I really wonder is where we found out about that object name in the
+first place. Can you instrument your Git build like this:
 
-I do not think this call hurts, but why does this become suddenly
-necessary with _this_ patch?  Is it an unrelated bugfix?
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 71056d8294..5ff6de5ddf 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1112,6 +1112,13 @@ static int add_object_entry(const struct object_id *oid, enum object_type type,
+ 	struct packed_git *found_pack = NULL;
+ 	off_t found_offset = 0;
+ 	uint32_t index_pos;
++	static const struct object_id funny_oid = {
++		"\xc1\x04\xb8\xfb\x36\x31\xb5\xc5\x46\x95"
++		"\x20\x6b\x2f\x73\x31\x0c\x02\x3c\x99\x63"
++	};
++
++	if (!oidcmp(oid, &funny_oid))
++		warning("found funny oid");
+ 
+ 	display_progress(progress_state, ++nr_seen);
+ 
 
->  	if (delete_redundant) {
->  		int opts = 0;
->  		string_list_sort(&names);
+and similarly get a backtrace when we hit that warning()? (Or if you're
+a gdb expert, you could probably use a conditional breakpoint, but I
+find just modifying the source easier).
 
-Thanks.
+-Peff
