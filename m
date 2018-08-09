@@ -2,106 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA5451F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 17:12:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6862F1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 17:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732513AbeHITiI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 15:38:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:48702 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730634AbeHITiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 15:38:08 -0400
-Received: (qmail 27143 invoked by uid 109); 9 Aug 2018 17:12:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 09 Aug 2018 17:12:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11382 invoked by uid 111); 9 Aug 2018 17:12:23 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 09 Aug 2018 13:12:23 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Aug 2018 13:12:19 -0400
-Date:   Thu, 9 Aug 2018 13:12:19 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>,
-        Santiago Torres <santiago@nyu.edu>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
- when signature is not trusted
-Message-ID: <20180809171219.GF1439@sigill.intra.peff.net>
-References: <20180803133630.32oxubwttealvhxk@work-pc>
- <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
- <20180803160634.GA19944@sigill.intra.peff.net>
- <20180804084346.fhte5wusbfb5baem@cynerd-laptop>
- <20180808230456.GA21882@sigill.intra.peff.net>
- <20180808231226.GA34639@genre.crustytoothpaste.net>
- <xmqqzhxwcq2o.fsf@gitster-ct.c.googlers.com>
- <20180809014302.GB34639@genre.crustytoothpaste.net>
- <20180809143010.GD1439@sigill.intra.peff.net>
- <xmqqtvo3d0by.fsf@gitster-ct.c.googlers.com>
+        id S1732530AbeHITvz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 15:51:55 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:37907 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732411AbeHITvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 15:51:55 -0400
+Received: by mail-yw1-f65.google.com with SMTP id r3-v6so5455226ywc.5
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 10:26:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=MOHkxJtSc8zEox/yi8MT+l2BJ2b5th8ObL7uw4p9MkM=;
+        b=Ve90+aPbVKLhqdRiMgClstlEqLiORfMILwi3474uogSChK5Z2rJVtLiijg/V5Vr25W
+         MDmiFweAVJXAfWK0AffXRKCxC1jVjyLhyLks3o1Z9/CQOi/GsCQZM03O28YDQoailXPx
+         YJT/l4S6OejYEZ1OtWuB7n8kizPdtXyQugbILJyrmOz4kEOupsmLEcObnCs5Bni7S5fA
+         MNKOqlLlMuJo8y0P59AD5vmfGNW8foBQwPIK4UPfXx7CJzbkiyIU5UJ5w8KSsZGAa8C2
+         AhN6W6Xut3fLv9+jh9gtc5LRmmCTBbiLklz4BQ+LhDLmFWe8XRqtZuooDNhe0W9N745c
+         8i5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MOHkxJtSc8zEox/yi8MT+l2BJ2b5th8ObL7uw4p9MkM=;
+        b=bMzZIWXA9JYMMoURk9qUaQFXZbue9R/Jtt1QsWeWA405r7NAIOk3lCmyAuOIejrkUO
+         tE0rQKkU4XlSpmdSa2dz7JlCsEB3I6tofyS90GPPU6bLPHgIPEMkBw/nlghpYr30lgci
+         EeqqMiImw3/wn/vP0978X/z0058EcocStV/x2VUFMVRu8qxAUi1IUEVbjz6bBeLoxf+h
+         6w5ZFXqe464nLbzWWlX07rq+wDE52hGLRTZDATkAfhOpSe3pTnhZdmfzkvNMKBT5B/Pv
+         JxlCcHD+cWWp/BNCISuNt1RMWP6TrY5nOT16aXtIMxZWNl/ejlxW0SC9cD40d0lDJQyQ
+         i+DA==
+X-Gm-Message-State: AOUpUlExrckm+k7H3oR5/Dps0Ct04IwIeQ27nnbZDNu0OIoBceqO/EeO
+        t1EgYQo3IEIg9y8Duk/IzMcK5xj5WDTvi2hhxrEoNfZfYZcMdA==
+X-Google-Smtp-Source: AA+uWPwz/XsrJH/B+KAFBz9Uky+nttz8uDnipPI6mtMb5ZlbhfpV7BFF+p37hbKMduOcYbWMAMbgJ7w9AA1yBKmqvIk=
+X-Received: by 2002:a25:84d0:: with SMTP id x16-v6mr1689740ybm.307.1533835563372;
+ Thu, 09 Aug 2018 10:26:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqtvo3d0by.fsf@gitster-ct.c.googlers.com>
+References: <20180808221752.195419-1-sbeller@google.com> <20180808221752.195419-4-sbeller@google.com>
+ <CAN0heSqwGoFwn34nRp3i09ExnjDPSY8WD=81M9jN5OW-ccpiTg@mail.gmail.com>
+In-Reply-To: <CAN0heSqwGoFwn34nRp3i09ExnjDPSY8WD=81M9jN5OW-ccpiTg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 9 Aug 2018 10:25:52 -0700
+Message-ID: <CAGZ79kYtKZJ0Dm0ejxrotnoaNERtR0J6=DMCgweCObdJr0K6-w@mail.gmail.com>
+Subject: Re: [PATCH 03/10] sha1-array: provide oid_array_remove_if
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     git <git@vger.kernel.org>, Heiko Voigt <hvoigt@hvoigt.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 09, 2018 at 08:30:25AM -0700, Junio C Hamano wrote:
+On Thu, Aug 9, 2018 at 12:39 AM Martin =C3=85gren <martin.agren@gmail.com> =
+wrote:
+>
+> On 9 August 2018 at 00:17, Stefan Beller <sbeller@google.com> wrote:
+> > +int oid_array_remove_if(struct oid_array *array,
+> > +                       for_each_oid_fn fn,
+> > +                       void *data)
+> > +{
+> > +       int i, j;
+> > +       char *to_remove =3D xcalloc(array->nr, sizeof(char));
+>
+> Do you really need this scratch space?
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > There was a patch at the start of this thread, but it specifically
-> > checks for "sigc->result == U".  That's probably OK, since I think it
-> > restores the behavior in earlier versions of Git. But I wonder if we
-> > should simply be storing the fact that gpg exited non-zero and relaying
-> > that. That would fix this problem and truly make the rule "if gpg
-> > reported an error, we propagate that".
-> 
-> Yeah, I like that.  Something like this, perhaps?  Points to note:
-> 
->  * status gets the return value from verify_signed_buffer(), which
->    essentially is what wait_or_whine() gives us for the "gpg
->    --verify" process.
-> 
->  * Even if status says "failed", we still need to parse the output
->    to set sigc->result.  We used to use sigc->result as the sole
->    source of our return value, but now we turn 'status' into 'bad'
->    (i.e. non-zero) after parsing and finding it is not mechanically
->    good (which is the same criteria as we have always used before).
->    An already bad status is left as bad.
-> 
->  * And we return 'status'.
+I don't think so, when we reorder the items while iterating over them.
 
-Yeah, this is exactly what I had in mind. And the size of the code
-change is much smaller than I feared. The case that I thought might be
-complicated is still reading the output after we've seen the non-zero
-status, but the existing "if (status && !gpg_output.len)" covers that.
+I though reordering them later would be easier, but I am not sure anymore.
 
-> If we choose to blindly trust the exit status of "gpg --verify" and
-> not interpret the result ourselves, we can lose the "smudge status
-> to be bad if not G/U" bit, which I offhand do not think makes much
-> difference either way.  I just left it there because showing what
-> can be removed and saying it can be dropped is easier than showing
-> the result of removal and saying it can be added--simply because I
-> need to describe "it" if I go the latter route.
+>
+> > +       /* No oid_array_sort() here! See the api-oid-array.txt docs! */
+> > +
+> > +       for (i =3D 0; i < array->nr; i++) {
+> > +               int ret =3D fn(array->oid + i, data);
+> > +               if (ret)
+> > +                       to_remove[i] =3D 1;
+> > +       }
+> > +
+> > +       i =3D 0, j =3D 0;
+> > +       while (i < array->nr && j < array->nr) {
+> > +               while (i < array->nr && !to_remove[i])
+> > +                       i++;
+> > +               /* i at first marked for deletion or out */
+> > +               if (j < i)
+> > +                       j =3D i;
+> > +               while (j < array->nr && to_remove[j])
+> > +                       j++;
+> > +               /* j > i; j at first valid after first deletion range o=
+r out */
+> > +               if (i < array->nr && j < array->nr)
+> > +                       oidcpy(&array->oid[i], &array->oid[j]);
+> > +               else if (i >=3D array->nr)
+> > +                       assert(j >=3D array->nr);
+> > +                       /* no pruning happened, keep original array->nr=
+ */
+> > +               else if (j >=3D array->nr)
+> > +                       array->nr =3D i;
+> > +       }
+> > +
+> > +       free(to_remove);
+> > +
+> > +       return 0;
+> > +}
+>
+> I can't entirely follow this index-fiddling, but then I haven't had my
+> morning coffee yet, so please forgive me if this is nonsense. Would it
+> suffice to let i point out where to place items (starting at the first
+> item not to keep) and j where to take them from (i.e., the items to
+> keep, after the initial run)?
 
-I guess leaving it serves as a sort of cross-check if gpg would return a
-zero exit code but indicate in the status result that the signature was
-not good. Sort of a belt-and-suspenders, I guess (which might not be
-that implausible if we think about somebody wrapping gpg with a sloppy
-bit of shell code that loses the exit code -- it's their fault, but it
-might be nice for us to err on the conservative side).
+I thought this is what happens, just after the actual loop of calls.
 
-Probably it should go back to just "result != G" then, though (thus
-bringing the whole conversation full circle :) ).
+> > +int oid_array_remove_if(struct oid_array *array,
+> > +                       for_each_oid_fn fn,
+> > +                       void *data);
+>
+> Maybe some documentation here, but this seems to be following suit. ;-)
 
-I could live with or without it, though.
+Worth mentioning: the order is kept stable. (c.f. shrink_potential_moved_bl=
+ocks
+in diff.c which also "compacts an array", but without stable order).
 
--Peff
+Thanks for the review. I'll try to rewrite this to be more legible.
+
+Thanks,
+Stefan
