@@ -2,147 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4858D1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 15:30:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E1C1F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 15:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732328AbeHIRzy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 13:55:54 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43806 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730803AbeHIRzy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 13:55:54 -0400
-Received: by mail-wr1-f66.google.com with SMTP id b15-v6so5494352wrv.10
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 08:30:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=GoZ/p7o9myeCVGhiX0tCiDC8sooY2XJkviC8MVZAvPY=;
-        b=SN7JvzL0NiQl+dGpw46KIH7k2VWnx6XgqsTZ33X/0NcVC5t1yDizplc2BnlQQjbA/u
-         t58RuPhW6Erdj0JH4n+BNqG+QBXo17Sz6uTUQzJnBGrG+lGf32gSbbO6GO5bQYf0sBmm
-         Im+o8JZ1y4AdoVSCDrbuxIASKUM2oG4zCVh1mPdiP+g1/inua8k1PnJbbfpLbhwGW99Z
-         WY71GznrDbFmnWOW3LX8TQQNAfUiTGKFUAa4qmzeL4L7CVlZer3bqt/lQpdMnRQ+cnYg
-         n/FECdDK71W87zsIkwI2GKfA2OjS6Wbqdd5PsI+Ttkqvc2q7dEwaSgDOSF4opFRDjcRd
-         IzRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=GoZ/p7o9myeCVGhiX0tCiDC8sooY2XJkviC8MVZAvPY=;
-        b=VBlhNvL7PsK5xd/N8ZMOGCQ25THLRVGJc0ECxlkRJvSO6b4qRfyW/p9jE5rKiurTXT
-         KBn3YDxWEUgVkBeI3c9cZJEpfTrGY4YmqvitxYj6N1KHYTg6lH4sTqJ9UVOB02iTkX/7
-         8ykGOJQIvw4qLkywWjwp5Hmp/QjShMFZ2SDa/rhdWwjUwsl+axDtoehVy7M8STnmO4yy
-         s8sw/6wpaqHDx4D5zhGlv8AbzWG7XU+9ExjkgJ3Te6eQVX5MfMPxmCt7o2XY77/1wNtT
-         zmB3CabT/oXz7lQQBfKrKxTUcO9Fgz2GwPviBN4fo0tOxt0sN7AzbYf3CgCjvk8qQ30o
-         AvKA==
-X-Gm-Message-State: AOUpUlFj5TEhWtBpD+CVsMtFolDSDvZR/2Wu15v43SkqWenIKEAr1IaE
-        JyD9bxclBvlqFlbBpIoEENAi280x
-X-Google-Smtp-Source: AA+uWPxHS9c99EQ4fTEjB0jMCZV/rGJ9P1ao+nTnY4lVg7aW3f15fHw+eKKHDxqJvRn1iVxcxxKt4g==
-X-Received: by 2002:adf:d1cf:: with SMTP id m15-v6mr1917389wri.138.1533828627739;
-        Thu, 09 Aug 2018 08:30:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b10-v6sm5285341wrr.88.2018.08.09.08.30.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 08:30:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Karel =?utf-8?B?S2/EjcOt?= <karel.koci@nic.cz>,
-        Santiago Torres <santiago@nyu.edu>,
-        Vojtech Myslivec <vojtech.myslivec@nic.cz>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully when signature is not trusted
-References: <20180801001942.GC45452@genre.crustytoothpaste.net>
-        <20180801002546.du52zkxjupzcw2p6@LykOS.localdomain>
-        <20180803133630.32oxubwttealvhxk@work-pc>
-        <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
-        <20180803160634.GA19944@sigill.intra.peff.net>
-        <20180804084346.fhte5wusbfb5baem@cynerd-laptop>
-        <20180808230456.GA21882@sigill.intra.peff.net>
-        <20180808231226.GA34639@genre.crustytoothpaste.net>
-        <xmqqzhxwcq2o.fsf@gitster-ct.c.googlers.com>
-        <20180809014302.GB34639@genre.crustytoothpaste.net>
-        <20180809143010.GD1439@sigill.intra.peff.net>
-Date:   Thu, 09 Aug 2018 08:30:25 -0700
-In-Reply-To: <20180809143010.GD1439@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 9 Aug 2018 10:30:10 -0400")
-Message-ID: <xmqqtvo3d0by.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1732308AbeHISBY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 14:01:24 -0400
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:60693 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731065AbeHISBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 14:01:24 -0400
+Received: from [192.168.2.240] ([92.22.29.155])
+        by smtp.talktalk.net with SMTP
+        id nmygfprjYwhzSnmyhfGLmt; Thu, 09 Aug 2018 16:35:56 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1533828956;
+        bh=bzOPKZBlkUjkpGdaRXPMiQahGE3E0+Ix3QjVurNJUHc=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=SLn01Hqboqgpc9mlkrqYd2E/KDj9yMoyqrqJc0bXAR16XqbEsVP4CHDwAbUk03XLH
+         KQnm0DgBqyLeb1QZl0TBstWJ4ZGVe4F/YBx+EKLKkMjIiUY9gRyOFOWIilaxiTcUNT
+         QvR/PoiVmJcZ9MFmZy1d4mP0OCTPPgZ31pkNEGrc=
+X-Originating-IP: [92.22.29.155]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=yeAZMs3+wWQh+Rh+YWy7CA==:117
+ a=yeAZMs3+wWQh+Rh+YWy7CA==:17 a=IkcTkHD0fZMA:10 a=qY6QqRxxyA4Y1lgzZjoA:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC][PATCH v5 04/20] rebase -i: rewrite the edit-todo
+ functionality in C
+To:     Alban Gruin <alban.gruin@gmail.com>, phillip.wood@dunelm.org.uk,
+        git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        gitster@pobox.com
+References: <20180724163221.15201-1-alban.gruin@gmail.com>
+ <20180731180003.5421-1-alban.gruin@gmail.com>
+ <20180731180003.5421-5-alban.gruin@gmail.com>
+ <325fd5d2-2a93-2270-7d1e-394c265f42d4@talktalk.net>
+ <6826d318-b0ab-4e8e-e2ba-5425e3bf6f5f@gmail.com>
+ <75549397-9080-3b5a-8655-cea04065b2eb@talktalk.net>
+ <bc07317b-ba44-7a3c-7cb4-504b7dbc7c34@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <329d89f1-5ade-aeec-40bc-cd7168822d3e@talktalk.net>
+Date:   Thu, 9 Aug 2018 16:35:45 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <bc07317b-ba44-7a3c-7cb4-504b7dbc7c34@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfN2I0A5nuJsF1Mi0k9RQdZSlRPbMIWzWk7qd4pWQLqjV/YJY7xr0I+es7KdDSJBO8Clb/zYFDUgFFnPeNpHME6j74nzVVVV21C6qC8jZC2CdlQ6TSis2
+ 3T4pExvzP4zXz1HYbrzoJLqf8+tlQPXfmlUBAK7ToPIzPaGjYa5BbN83L62k4hlAZuGn80Ifb3X36/VXks5r+3PmJqxi/HCFObD/CsqGY9d1gfWcxjuOEmBO
+ kGira+j9TewoEKGvkSPOdfyrvlTqofIE7eiU5aAjnpzISDJMOFJYbXTy9W/qfPpIO8E8DbJNNPgsfdhAio9gknJlBiMyXO+78E3rTgm4OBE7GkoHLtuDgFmi
+ wnVEXeqMmsFANd9/P3v7hfuoeVt+Yx4zuaDrZHBeIi5GSjFIhEC+MAyxzSPCt8I4enoqGEGX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Hi Alban
 
-> There was a patch at the start of this thread, but it specifically
-> checks for "sigc->result == U".  That's probably OK, since I think it
-> restores the behavior in earlier versions of Git. But I wonder if we
-> should simply be storing the fact that gpg exited non-zero and relaying
-> that. That would fix this problem and truly make the rule "if gpg
-> reported an error, we propagate that".
+On 09/08/18 14:30, Alban Gruin wrote:
+> Hi Phillip,
+> 
+> Le 08/08/2018 à 18:04, Phillip Wood a écrit :
+>>>>> +int edit_todo_list(unsigned flags)
+>>>>> +{
+>>>>> +    struct strbuf buf = STRBUF_INIT;
+>>>>> +    const char *todo_file = rebase_path_todo();
+>>>>> +    FILE *todo;
+>>>>> +
+>>>>> +    if (strbuf_read_file(&buf, todo_file, 0) < 0)
+>>>>> +        return error_errno(_("could not read '%s'."), todo_file);
+>>>>> +
+>>>>> +    strbuf_stripspace(&buf, 1);
+>>>>> +    todo = fopen_or_warn(todo_file, "w");
+>>>>
+>>>> This truncates the existing file, if there are any errors writing the
+>>>> new one then the user has lost the old one. write_message() in
+>>>> sequencer.c avoids this problem by writing a new file and then renaming
+>>>> it if the write is successful, maybe it is worth exporting it so it can
+>>>> be used elsewhere.
+>>>>
+>>>>> +    if (!todo) {
+>>>>> +        strbuf_release(&buf);
+>>>>> +        return 1;
+>>>>> +    }
+>>>>> +
+>>>>> +    strbuf_write(&buf, todo);
+>>>>> +    fclose(todo);
+>>>>
+>>>> There needs to be some error checking after the write and the close
+>>>> (using write_message() would mean you only have to check for errors in
+>>>> one place)
+>>>>
+>>>
+>>> Right.  Should I find a new nawe for write_message()?
+>>
+>> That might be a good idea, I'm not sure what it should be though, maybe
+>> write_file()?, perhaps someone else might have a better suggestion.
+>>
+> 
+> write_file() already exists in wrapper.c.  I wondered, as this make use
+> of the lockfile API, perhaps it could be moved to lockfile.{c,h}, and
+> renamed to something like write_file_with_lock().
 
-Yeah, I like that.  Something like this, perhaps?  Points to note:
+Hmm, I'm not sure about that, to me the use of the lockfile api is just 
+a way to get the semantics of an atomic update to the file. Looking in 
+wrapper.c there is write_file_buf() which could maybe be changed to to 
+an atomic update. Looking at the current callers to that function they 
+look like they would work with such a change (sadly none of them bother 
+to check the return value to see if the write was successful). I don't 
+think we need to worry about them being broken by having a stale 
+lockfile left over if there's an error as I think the lockfile api 
+automatically cleans them up but I'm not an expert on that api so it 
+would be worth checking with someone like Johannes or Jeff King (I seem 
+to remember him working in that area relatively recently).
 
- * status gets the return value from verify_signed_buffer(), which
-   essentially is what wait_or_whine() gives us for the "gpg
-   --verify" process.
+Best Wishes
 
- * Even if status says "failed", we still need to parse the output
-   to set sigc->result.  We used to use sigc->result as the sole
-   source of our return value, but now we turn 'status' into 'bad'
-   (i.e. non-zero) after parsing and finding it is not mechanically
-   good (which is the same criteria as we have always used before).
-   An already bad status is left as bad.
+Phillip
 
- * And we return 'status'.
 
-If we choose to blindly trust the exit status of "gpg --verify" and
-not interpret the result ourselves, we can lose the "smudge status
-to be bad if not G/U" bit, which I offhand do not think makes much
-difference either way.  I just left it there because showing what
-can be removed and saying it can be dropped is easier than showing
-the result of removal and saying it can be added--simply because I
-need to describe "it" if I go the latter route.
+> Cheers,
+> Alban
+> 
 
- gpg-interface.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 09ddfbc267..2e0885c511 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -67,26 +67,27 @@ static void parse_gpg_output(struct signature_check *sigc)
- int check_signature(const char *payload, size_t plen, const char *signature,
- 	size_t slen, struct signature_check *sigc)
- {
- 	struct strbuf gpg_output = STRBUF_INIT;
- 	struct strbuf gpg_status = STRBUF_INIT;
- 	int status;
- 
- 	sigc->result = 'N';
- 
- 	status = verify_signed_buffer(payload, plen, signature, slen,
- 				      &gpg_output, &gpg_status);
- 	if (status && !gpg_output.len)
- 		goto out;
- 	sigc->payload = xmemdupz(payload, plen);
- 	sigc->gpg_output = strbuf_detach(&gpg_output, NULL);
- 	sigc->gpg_status = strbuf_detach(&gpg_status, NULL);
- 	parse_gpg_output(sigc);
-+	status |= sigc->result != 'G' && sigc->result != 'U';
- 
-  out:
- 	strbuf_release(&gpg_status);
- 	strbuf_release(&gpg_output);
- 
--	return sigc->result != 'G' && sigc->result != 'U';
-+	return !!status;
- }
- 
- void print_signature_buffer(const struct signature_check *sigc, unsigned flags)
