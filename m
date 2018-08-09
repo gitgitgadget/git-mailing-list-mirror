@@ -2,186 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE171F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 09:14:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208D51F405
+	for <e@80x24.org>; Thu,  9 Aug 2018 09:22:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730111AbeHILiI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 07:38:08 -0400
-Received: from ao2.it ([92.243.12.208]:35500 "EHLO ao2.it"
+        id S1730202AbeHILqv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 07:46:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:48279 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730060AbeHILiI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 07:38:08 -0400
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fngzo-0005xp-3Z; Thu, 09 Aug 2018 11:12:40 +0200
-Date:   Thu, 9 Aug 2018 11:14:08 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Brandon Williams <bmwill@google.com>,
-        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>
-Subject: Re: [RFC PATCH v2 10/12] t7416: add new test about HEAD:.gitmodules
- and not existing .gitmodules
-Message-Id: <20180809111408.3ee7296a8aefd38ea1208547@ao2.it>
-In-Reply-To: <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
-References: <20180802134634.10300-1-ao2@ao2.it>
-        <20180802134634.10300-11-ao2@ao2.it>
-        <CAGZ79kbQ0DsAXZrvpp3_2CrMU6Jburf6UdjTxNSd72JqQCczWQ@mail.gmail.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
+        id S1727579AbeHILqv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 07:46:51 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2XkX-1g4fXa2Iy5-00sLFx; Thu, 09
+ Aug 2018 11:22:43 +0200
+Date:   Thu, 9 Aug 2018 11:22:44 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] rebase --exec: make it work with
+ --rebase-merges
+In-Reply-To: <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1808091039080.71@tvgsbejvaqbjf.bet>
+References: <pull.13.git.gitgitgadget@gmail.com> <pull.13.v2.git.gitgitgadget@gmail.com> <7ca441a89674ee77cbbb3ec17f931aecba7bfa0d.1533549169.git.gitgitgadget@gmail.com> <f7da64c2-0477-07dd-35ef-7cfd16447bd5@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:gIrKHVXkPGtqe/dczYNDx9lXdLKkvXnXvk6FsD+luZQCudp53v0
+ bOIUByhN5fTYmH/sTwi04yHwQNt7QbwmIZswvGFYmvCzjiIcSYqAVMSpqHZ3+0JGPGD0hxk
+ EN45fF+uzIXxZV9AlzGNnIH/dOyjMx438DQj8MP0qEIc2yYGMSF6VyaXO2XuYqqXn7TgnFm
+ hOHrui8V9b2hNszXDRTZA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:6/n+YCDHc0g=:p53q0QAxUhEWx9cODdUQUF
+ Zyl6mQSX5FT+85k4n3kkTu5VQsKUXBwYmTOXgBR4maM2l69lTaBLXRLIx558qK3zZ1G5qa+uc
+ 3kEvItjeRVIhtclWfxDbFuZDZzoH2fg6GkJTth3aq49/njjtwjaU0jAVeU8WnHOqNNRzzn6dM
+ 1LQt+AJKj90cT55DkAESu/0IeFPHwS+g122MEiCEzqo6ZFhB3PmctbDsfwbsmOW44vxjCcp7F
+ OW4TJf2iyPXS1deiVtxx2HThyEsom1EKLW3xny1nFESqWPGWb/qt3Wbp3cv8uQhMBne4E3ybu
+ pNHdDQ+Ad4hfNzOd5/D+a9HTMe9cj7NljeKBAOIRuZxV86FjgANcYHsoxHnI9qOvxNq/26NRf
+ OqglGF0kfEEnFtHoWA11kPQGacZfjKMXlWreN6p3UvCMB8yGD5tfwd8jYAFsRalUkilZczpNy
+ uGhHEUIgT+0+hjiusNjFHjWdVxgAAIpWwcPlR6avmKQgwm26AodPqGwMvxcJdQP3gMWrL5A+C
+ 7HSZiJfYSyJsEbDr7DFX1JDKhE0cblwcRJ+IrCKaQn0YYm9F86NLxKSGMxEIZIPwiOSlIx//N
+ fTYDhxxsTjQs3DC9QDLzv5/BxXa42saWdbVUAJh2l/d6g6NR15/fmj3hw1HZIV+jeMgWJ+BQI
+ 0guOH2z/C0KJxcPW/KVeu8nkJgCG2kfBcJ+9oyCCQ2FoePnlezn7wni7L/DQmpclMT0YgjNKU
+ /QC+qF82DCOmfORFsIs1HaREDJYGj3mC/7RUxLB7fdYXcRP9JHwI0YmRjkt+SwuCVUkyssXcX
+ h2s8oHg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 2 Aug 2018 13:43:05 -0700
-Stefan Beller <sbeller@google.com> wrote:
+Hi Phillip,
 
-> On Thu, Aug 2, 2018 at 6:47 AM Antonio Ospite <ao2@ao2.it> wrote:
-> >
-> > git submodule commands can now access .gitmodules from the current
-> > branch even when it's not in the working tree, add some tests for that
-> > scenario.
-> >
-> > Signed-off-by: Antonio Ospite <ao2@ao2.it>
+On Mon, 6 Aug 2018, Phillip Wood wrote:
+
+> On 06/08/18 10:52, Johannes Schindelin via GitGitGadget wrote:
+> > 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > The idea of `--exec` is to append an `exec` call after each `pick`.
+> > 
+> > Since the introduction of fixup!/squash! commits, this idea was extended
+> > to apply to "pick, possibly followed by a fixup/squash chain", i.e. an
+> > exec would not be inserted between a `pick` and any of its corresponding
+> > `fixup` or `squash` lines.
+> > 
+> > The current implementation uses a dirty trick to achieve that: it
+> > assumes that there are only pick/fixup/squash commands, and then
+> > *inserts* the `exec` lines before any `pick` but the first, and appends
+> > a final one.
+> > 
+> > With the todo lists generated by `git rebase --rebase-merges`, this
+> > simple implementation shows its problems: it produces the exact wrong
+> > thing when there are `label`, `reset` and `merge` commands.
+> > 
+> > Let's change the implementation to do exactly what we want: look for
+> > `pick` lines, skip any fixup/squash chains, and then insert the `exec`
+> > line. Lather, rinse, repeat.
+> > 
+> > While at it, also add `exec` lines after `merge` commands, because they
+> > are similar in spirit to `pick` commands: they add new commits.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-
-[...]
-> > +NOTE: "git mv" and "git rm" are still supposed to work even without
-> > +a .gitmodules file, as stated in the t3600-rm.sh and t7001-mv.sh tests.
-> 
-> "supposed to work" != "tested that it works" ?
-
-"git mv submod new_submod" and "git rm submod" are actually expected to
-work without the .gitmodules file, and there are tests about that in
-t3600-rm.sh and t7001-mv.sh:
-
-t3600-rm.sh:
-  'rm does not complain when no .gitmodules file is found'
-
-t7001-mv.sh:
-  'git mv moves a submodule with a .git directory and no .gitmodules'  
-  'mv does not complain when no .gitmodules file is found'
-
-> I am not sure what the NOTE wants to tell me? (Should I review those
-> tests to double check them now? or do we just want to tell future readers
-> of this test there are other tangent tests to this?)
->
-
-Admittedly the NOTE is not useful without any context: during the
-development of "submodule--helper config --stage" I initially assumed
-that "git mv" and "git rm" should fail if .gitmodules was not available,
-because these commands modify .gitmodules and I added code for that in
-stage_updated_gitmodules().
-
-But then later I found out that my assumption was wrong and that git has
-tests to verify that these operations on submodules succeed even when
-.gitmodules does not exist, which was a little of a surprise to me.
-
-So I removed all my code that was conflicting with git assumptions, and
-added the NOTE. However I guess that was primarily a note to myself, and
-it should have not slipped in the public patches.
-
-I think I will remove the note, it can be confusing and does not really
-add anything, and even less considering that "submodule--helper config
---stage" is going to be dropped.
-
-[...]
-> > +test_expect_success 'not adding submodules when the gitmodules config is not checked out' '
-> > +       (cd super &&
-> > +               test_must_fail git submodule add ../new_submodule
-> > +       )
-> > +'
+> >   sequencer.c              | 37 +++++++++++++++++++++++++++----------
+> >   t/t3430-rebase-merges.sh |  2 +-
+> >   2 files changed, 28 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/sequencer.c b/sequencer.c
+> > index 31038472f..ed2e694ff 100644
+> > --- a/sequencer.c
+> > +++ b/sequencer.c
+> > @@ -4244,10 +4244,9 @@ int sequencer_add_exec_commands(const char *commands)
+> >   {
+> >    const char *todo_file = rebase_path_todo();
+> >    struct todo_list todo_list = TODO_LIST_INIT;
+> > -	struct todo_item *item;
+> >    struct strbuf *buf = &todo_list.buf;
+> >    size_t offset = 0, commands_len = strlen(commands);
+> > -	int i, first;
+> > +	int i, insert;
+> >   
+> >    if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+> >   		return error(_("could not read '%s'."), todo_file);
+> > @@ -4257,19 +4256,37 @@ int sequencer_add_exec_commands(const char
+> > *commands)
+> >    	return error(_("unusable todo list: '%s'"), todo_file);
+> >    }
+> >   -	first = 1;
+> > -	/* insert <commands> before every pick except the first one */
+> > -	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
+> > -		if (item->command == TODO_PICK && !first) {
+> > -			strbuf_insert(buf, item->offset_in_buf + offset,
+> > -				      commands, commands_len);
+> > +	/*
+> > +	 * Insert <commands> after every pick. Here, fixup/squash chains
+> > +	 * are considered part of the pick, so we insert the commands *after*
+> > +	 * those chains if there are any.
+> > +	 */
+> > +	insert = -1;
+> > +	for (i = 0; i < todo_list.nr; i++) {
+> > +		enum todo_command command = todo_list.items[i].command;
 > > +
-> > +# "git add" in the test above fails as expected, however it still leaves the
-> > +# cloned tree in there and adds a config entry to .git/config. This is because
-> > +# no cleanup is done by cmd_add in git-submodule.sh when "git
-> > +# submodule--helper config" fails to add a new config setting.
-> > +#
-> > +# If we added the following commands to the test above:
-> > +#
-> > +#   rm -rf .git/modules/new_submodule &&
-> > +#   git reset HEAD new_submodule &&
-> > +#   rm -rf new_submodule
+> > +		if (insert >= 0) {
+> > +			/* skip fixup/squash chains */
+> > +			if (command == TODO_COMMENT)
+> > +				continue;
 > 
-> Alternatively we could check for the existence of .gitmodules
-> before starting all these things?
->
+> insert is not updated so if the next command is not a fixup the exec
+> line will be inserted before the comment.
 
-You mean in cmd_add(), before doing anything?
+Yes, this is very much on purpose. Take this todo list, for example:
 
-The following would anticipates the same check which makes "git submodule
-add" fail:
+	pick 123456 this patch
+	# pick 987654 this was an empty commit
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index ff258e2e8c..b261175143 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -159,6 +159,11 @@ cmd_add()
-                shift
-        done
+You definitely do not want the `exec` to appear after that commented-out
+empty commit.
 
-+       if test ! -e .gitmodules && git cat-file -e HEAD:.gitmodules
-+       then
-+                die "$(eval_gettext "please make sure that the .gitmodules file in the current branch is checked out")"
-+       fi
-+
-        if test -n "$reference_path"
-        then
-                is_absolute_path "$reference_path" ||
-
-This refers to .gitmodules explicitly but we said that we do not care
-about that for now, if opaque access was ever needed in the future,
-something like "submodule--helper config --is-writeable" could be added.
-
-> I think it is okay to not clean up if we check all "regular" or rather expected
-> things such as a non-writable .gitmodules file before actually doing it.
-> (This is similar to 'checkout' that walks the whole tree and checks if the
-> checkout is possible given the dirtyness of the tree, to either abort early
-> or pull through completely. In catastrophic problems such as a full disk
-> we'd still die in the middle of work)
+> > +			else if (is_fixup(command)) {
+> > +				insert = i + 1;
+> > +				continue;
+> > +			}
+> > +			strbuf_insert(buf,
+> > +				      todo_list.items[insert].offset_in_buf +
+> > +				      offset, commands, commands_len);
+> >   			offset += commands_len;
+> > +			insert = -1;
+> >   		}
+> > -		first = 0;
+> > +
+> > +		if (command == TODO_PICK || command == TODO_MERGE)
+> > +			insert = i + 1;
+> >    }
+> >   
+> >   	/* append final <commands> */
+> > -	strbuf_add(buf, commands, commands_len);
+> > +	if (insert >= 0 || !offset)
+> > +		strbuf_add(buf, commands, commands_len);
 > 
-> > +#
-> > +# then the repository would be in a clean state and the test below would pass.
-> > +#
-> > +# Maybe cmd_add should do the cleanup from above itself when failing to add
-> > +# a submodule.
-> > +test_expect_failure 'init submodule after adding failed when the gitmodules config is not checked out' '
+> Having read your other message about this patch I think if you wanted to fix
+> the position of the final exec in the case where the todo list ends with a
+> comment you could do something like
 > 
-> So this comment and test is about explaining why we can fail mid way through,
-> which we could not before unless we had the catastrophic event.
-> 
-> I think we should check for a "writable" .gitmodules file at the beginning,
-> which is if (G || (!G && !H)) [using the notation from the cover letter]?
-> 
-> > +       (cd super &&
-> > +               git submodule init
+> 	if (insert >= 0)
+> 		strbuf_insert(buf,
+> 			      todo_list.items[insert].offset_in_buf +
+> 			      offset, commands, commands_len);
+> 	else
+> 		strbuf_add(buf, commands, commands_len);
 
-With the change from above this last test passes.
+That does not really work, as `insert` can point *after* the last line, in
+which case `todo_list.items[insert]` is undefined (and in the worst case,
+causes a segmentation fault).
 
-BTW the check I am using here and in the code of submodule--helper,
-corresponds indeed to the boolean expression you mentioned, but
-simplified and negated.
+> I'm not sure it matters that much though
 
-Thanks,
-   Antonio
+Well, it does matter to me. After having this in the back of my head, and
+after your comment, I think it *is* worth the additional complexity after
+all.
 
--- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
+Will come up with a new iteration.
 
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
+Ciao,
+Dscho
