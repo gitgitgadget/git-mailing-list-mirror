@@ -7,176 +7,82 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC8B21F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:35:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1BF61F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727263AbeHKBGz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 21:06:55 -0400
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:34805 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727033AbeHKBGy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 21:06:54 -0400
-Received: by mail-oi0-f74.google.com with SMTP id 13-v6so10716712oiq.1
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:35:05 -0700 (PDT)
+        id S1727043AbeHKBV1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 21:21:27 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:33475 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbeHKBV1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 21:21:27 -0400
+Received: by mail-yw1-f73.google.com with SMTP id c11-v6so14925754ywb.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=JXSw4mTcyxitvv2jhmr9b9NWceQXpsHpMSIhAWleG2s=;
-        b=e55HLEi+rgDSY5MIC4CAwxPejypm3pCsEkv7sUSJHB4ZtHAbt9nxQclzgWZAymCjUF
-         zLTO13qkm5qDwFUPseNPGpu6s/SdXGn5eyUfCana7HhXDEXcNeaL8OzJoXiXkwCLQ+25
-         pv/fPGxa7w/ZK8ucP8wVYnyn0q1D8rY2na3GPJWoApb6QtB93scM6aKnKcSsQzVyaOTL
-         22Y0YR0atjRCUeAp/7nrTnn5HriEnn+l/no7DEG/8pp5hnkTCKbwscUq37kQleBKe/gl
-         OiBVH+uAgblnGnBKr1jsq0HzPXL7NcM8DwtDW0BFomwLu6uCzg0M+qkkNPfQjJ/5KUxr
-         XmxQ==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=z5LapM6WjuO26m7GaPXe9B0EsNoqj8Snq9X+KsVSW58=;
+        b=lhqnuosHVlJP0Sx8PXPYXR+gQBhAz9/lPz6Owhh0JNELN6F3VMdmzAep6N18B1EyWE
+         ++qC+4ItHkSEHNOJ56gPc3yuwyy1YgDvb6XcmFdETF91xGTQl2CYyDA7SkVNRuapB+nt
+         +heeR3eliVdjoUZX15RDlzlFFiVoziXn42tUnRlOjgfgomIGGbea7g8SAPiIOfgJd6tT
+         eYfZFlZ5N08RhK4nopE6/tvB6bdFXHM6dec4hQwjvGVB0rnw1YZV0KrZYGy3zBUgcCxi
+         Rb78/INxcxq/CeDEFKlkt/v3E2c3i4zSJj5bzLYNPCJ0L4W4UJj9u4laz/OU7N+GqtmS
+         PbQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=JXSw4mTcyxitvv2jhmr9b9NWceQXpsHpMSIhAWleG2s=;
-        b=KeDdDkpggH2E73WdZUZzzzQpkvl6g1IEUXy36z0FwbcqLPfeAjrNdMtVjmu5hMaRSa
-         IDSNKR6GhVh30bcQZ1W+qrmbbN57qtG0ug8TwOOGG3oXc3y2xHJP2+TuSiUoq2wEOrme
-         99XN0E2pNxjVG6aIlDnwfM+INhxA1m48dgWAW1Ld3CSVxTPRskc+ysk4Q20lEFa9ejbR
-         /A2GAsThsSFYuBSyF7FqlVDCgmaV6VyBnld2CZhDelAY9xkMiRZjmY6kZdL138JQ7mnT
-         nJuER4ojD1LikfKzU+uY3ItJK7QV8VIYe1ln6YvUZsQ37yU9IRL2o2hUCHrLt6Nv0yIx
-         G2QQ==
-X-Gm-Message-State: AOUpUlHclkhCm+kLpBka+1m8UMd741yeQvCImFBZQEb+shYS+A4Jyrle
-        P37Dw54fSvjBP09FumCNdrzNQd9j9OdM
-X-Google-Smtp-Source: AA+uWPwOAMMfMIdMK4bU3YWhC9G+QifHsELemJakNYjWT17+aQ64RH3xxT8VHW83D+7zsJ3D420ytjwrR9J3
-X-Received: by 2002:aca:5a89:: with SMTP id o131-v6mr4700091oib.65.1533940504979;
- Fri, 10 Aug 2018 15:35:04 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 15:34:41 -0700
-In-Reply-To: <20180810223441.30428-1-sbeller@google.com>
-Message-Id: <20180810223441.30428-9-sbeller@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=z5LapM6WjuO26m7GaPXe9B0EsNoqj8Snq9X+KsVSW58=;
+        b=eEl5ndDSdcLFmgv72EEyHfP35VE5DWAMU2DGz7pTJsY7Scl72JWkjlw9UaJzQqAksN
+         58/viEMjgxmC4K+gzpvw1jp5ZB4smWAcRTjhqa25KhyTkYZ9x6JB329tUYYbes66ozK/
+         UTl4LeUsw9G4rJ1kSw87UmI60LbmUTyflWgWZwEcLHdG+ZwPXTVilQHQdDtQ0dAboLxb
+         83Wr/f6+tFB4QuD7sPG8j/lI9qUIYn5TWi4gxIvRDxh55m+l5SlsGf1R21MJGF1t3Y3y
+         iciCz3bPC8Pa527geNH/LzM6dr91v2RoqUHumzo0CSBJu3t6rJG5GUAU0jYtISvilbZ3
+         ChEw==
+X-Gm-Message-State: AOUpUlE7eBY8EcndpUkfLnV9mhO5A4IWxsWf20laOuf8c1aeKxs6KbEV
+        V1Yk1FlVWufxYxoEOoGVLWFBFbHicQZq
+X-Google-Smtp-Source: AA+uWPy+5+ZvlEwjrTwHYaTtG5QZbOuU+BZXgkP7SpgGbo7GkxJtcUYuQrYNODHimV1x2WaiZlvCKmJRw9jc
+X-Received: by 2002:a25:f206:: with SMTP id i6-v6mr2299136ybe.39.1533941374733;
+ Fri, 10 Aug 2018 15:49:34 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:49:19 -0700
+Message-Id: <20180810224923.143625-1-sbeller@google.com>
 Mime-Version: 1.0
-References: <20180810223441.30428-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 8/8] diff.c: rewrite emit_line_0 more understandably
+Subject: [PATCH 0/4] Better colors in range-diff!
 From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, Johannes.Schindelin@gmx.de
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+To:     gitster@pobox.com
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-emit_line_0 has no nested conditions, but puts out all its arguments
-(if set) in order. There is still a slight confusion with set
-and set_sign, but let's defer that to a later patch.
+This improves colors of the range-diff, see last patch for details.
 
-'first' used be output always no matter if it was 0, but that got lost
-at "diff: add an internal option to dual-color diffs of diffs",
-2018-07-21), as there we broadened the meaning of 'first' to also
-signal an early return.
+This is a partial resend of
+https://public-inbox.org/git/20180804015317.182683-1-sbeller@google.com/
+and is also available via
 
-The change in 'emit_line' makes sure that 'first' is never content, but
-always under our control, a sign or special character in the beginning
-of the line (or 0, in which case we ignore it).
+  git fetch https://github.com/stefanbeller/git sb/range-diff-better-colors
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diff.c | 73 +++++++++++++++++++++++++++++++++-------------------------
- 1 file changed, 41 insertions(+), 32 deletions(-)
+It applies on the (just reset) series of sb/range-diff-colors.
 
-diff --git a/diff.c b/diff.c
-index e50cd312755..af9316c8f91 100644
---- a/diff.c
-+++ b/diff.c
-@@ -626,43 +626,52 @@ static void emit_line_0(struct diff_options *o,
- 			int first, const char *line, int len)
- {
- 	int has_trailing_newline, has_trailing_carriage_return;
--	int nofirst;
- 	int reverse = !!set && !!set_sign;
-+	int needs_reset = 0;
-+
- 	FILE *file = o->file;
- 
- 	fputs(diff_line_prefix(o), file);
- 
--	if (len == 0) {
--		has_trailing_newline = (first == '\n');
--		has_trailing_carriage_return = (!has_trailing_newline &&
--						(first == '\r'));
--		nofirst = has_trailing_newline || has_trailing_carriage_return;
--	} else {
--		has_trailing_newline = (len > 0 && line[len-1] == '\n');
--		if (has_trailing_newline)
--			len--;
--		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
--		if (has_trailing_carriage_return)
--			len--;
--		nofirst = 0;
--	}
--
--	if (len || !nofirst) {
--		if (reverse && want_color(o->use_color))
--			fputs(GIT_COLOR_REVERSE, file);
--		if (set_sign || set)
--			fputs(set_sign ? set_sign : set, file);
--		if (first && !nofirst)
--			fputc(first, file);
--		if (len) {
--			if (set_sign && set && set != set_sign)
--				fputs(reset, file);
--			if (set)
--				fputs(set, file);
--			fwrite(line, len, 1, file);
--		}
--		fputs(reset, file);
-+	has_trailing_newline = (len > 0 && line[len-1] == '\n');
-+	if (has_trailing_newline)
-+		len--;
-+
-+	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-+	if (has_trailing_carriage_return)
-+		len--;
-+
-+	if (!len && !first)
-+		goto end_of_line;
-+
-+	if (reverse && want_color(o->use_color)) {
-+		fputs(GIT_COLOR_REVERSE, file);
-+		needs_reset = 1;
-+	}
-+
-+	if (set_sign || set) {
-+		fputs(set_sign ? set_sign : set, file);
-+		needs_reset = 1;
- 	}
-+
-+	if (first)
-+		fputc(first, file);
-+
-+	if (!len)
-+		goto end_of_line;
-+
-+	if (set) {
-+		if (set_sign && set != set_sign)
-+			fputs(reset, file);
-+		fputs(set, file);
-+		needs_reset = 1;
-+	}
-+	fwrite(line, len, 1, file);
-+	needs_reset |= len > 0;
-+
-+end_of_line:
-+	if (needs_reset)
-+		fputs(reset, file);
- 	if (has_trailing_carriage_return)
- 		fputc('\r', file);
- 	if (has_trailing_newline)
-@@ -672,7 +681,7 @@ static void emit_line_0(struct diff_options *o,
- static void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
- {
--	emit_line_0(o, set, NULL, reset, line[0], line+1, len-1);
-+	emit_line_0(o, set, NULL, reset, 0, line, len);
- }
- 
- enum diff_symbol {
+Thanks,
+Stefan
+
+Stefan Beller (4):
+  diff.c: emit_line_0 to take string instead of first sign
+  diff.c: add --output-indicator-{new, old, context}
+  range-diff: make use of different output indicators
+  range-diff: indent special lines as context
+
+ diff.c                | 43 +++++++++++++++++++++++++++++++------------
+ diff.h                |  5 +++++
+ range-diff.c          | 17 ++++++++++++++++-
+ t/t3206-range-diff.sh | 12 ++++++------
+ 4 files changed, 58 insertions(+), 19 deletions(-)
+
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
