@@ -2,141 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED7601F405
-	for <e@80x24.org>; Fri, 10 Aug 2018 19:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB54F1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 19:34:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727058AbeHJWBq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 18:01:46 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:39252 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbeHJWBp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 18:01:45 -0400
-Received: by mail-io0-f196.google.com with SMTP id l7-v6so4751534iok.6
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 12:30:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=HUUNINvLhV60G7XjkVZG+rR6aHdDpCsWuUMaZ8Si8xQ=;
-        b=esqja767poL5NCV8rU+5SIO5JTU25mFhTDdafh3P5rLm/J8TSuXWOUJuq+DqzOdxUr
-         LYBOof9i4X2fjL87YdefkfOTU+MRzt4APG3kkuSftQ6w+PIhOAVlQABQF8df/a7IRfVV
-         vv80xbO6xZ/Ja8iABi12BtxhlxD0bOaWdiuU3Z/G+2aG29IvbfOFU/vY/1awv4SE+OhY
-         O/bCtIuCTRwv49NY7ULDT1usaA76j5xZAGHqhut2vbD7uCSrVIgqY9dZ8MvKVuJADMU4
-         ZLKFGP+kE3OsDhT+LnfNeb4loap8KC19UNcdxxYjShNwJbl3jIO0LIPI9gtk7ZkJ3qMY
-         lIng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=HUUNINvLhV60G7XjkVZG+rR6aHdDpCsWuUMaZ8Si8xQ=;
-        b=nKnD6B1zyvvV+XWbdmNfkzup1oevYM06zqmuSrkxQI3z2haDovQVIm1Mdx5IC3Q0Y7
-         mrxCFJFiFT+RtGgRnRH/GOTKk8cId3ZVmL8IwwUyg1kqm8t2pGMkFNKskFrKNUzY3CMq
-         1UL8NyRVFYcIyLUPDxpmxeSoOfJL6oEYE1Zic2gjt+ltvJiIEU03RRa2gWL3xj7Ld7Gn
-         5rjLnO1PkGbpss7GNijtNAiSwiDa2r6SA2vrWPyRhrPl3HImDBUcf/N66aC61kdKHxt/
-         p2D0qIyDmEZtNmcW4e1h1YWgFNcSpg0HMnhQ5RCJsvBB4GgWzeeAtAHeBZSMmaAuwk/Z
-         1bjA==
-X-Gm-Message-State: AOUpUlGD9HEK1zeFkZ3XTeRZ13NyDaVzRmI4ViKA75Dp2TleOz2S9oJ8
-        OpYRmFPRXQqJpqJCNhp1IXV0c5UBoxKyqBZrmTo=
-X-Google-Smtp-Source: AA+uWPyG/xabUj1isAcJV6c4DONRJepVFLQawk6nGdvjbvFpDqKOm8Uet2183QV1uwSZ/Q6lDVt7NZ4rQ++OWNkVslg=
-X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr6531719iod.118.1533929432196;
- Fri, 10 Aug 2018 12:30:32 -0700 (PDT)
+        id S1726669AbeHJWGF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 18:06:05 -0400
+Received: from mout.gmx.net ([212.227.17.22]:32961 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726432AbeHJWGF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 18:06:05 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDV5t-1fgDVS1aiD-00GsfD; Fri, 10
+ Aug 2018 21:34:39 +0200
+Date:   Fri, 10 Aug 2018 21:34:41 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
+ for GIT_TRACE
+In-Reply-To: <20180810171546.GA32713@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1808102129570.71@tvgsbejvaqbjf.bet>
+References: <pull.17.git.gitgitgadget@gmail.com> <20180809194712.GC32376@sigill.intra.peff.net> <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com> <20180810140908.GA23507@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1808101833330.71@tvgsbejvaqbjf.bet>
+ <20180810171546.GA32713@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
- <20180729103306.16403-5-pclouds@gmail.com> <CABPp-BGF+GZjm-DiveLjFOESKwPz2F0Y7X4_kXyem2xFo2odUw@mail.gmail.com>
- <CACsJy8DF5XLf-RF3SwTpRynYALJUPO_VTK=fpx1oabwB80ZpPw@mail.gmail.com> <CABPp-BGU6QnUwQgkhwx6vLBc3ozoEScQ4DaZd-9ZZfQhXfxPww@mail.gmail.com>
-In-Reply-To: <CABPp-BGU6QnUwQgkhwx6vLBc3ozoEScQ4DaZd-9ZZfQhXfxPww@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 10 Aug 2018 21:30:05 +0200
-Message-ID: <CACsJy8AeptcqwRC+DOrdhvk69kEQT6+S6M=0OGWBFOE5gihGzA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] unpack-trees: cheaper index update when walking by cache-tree
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ygDda6u3oA9LfLpdip0qzoGfZldDIGrQaVdIyc5f213YEt6ohCp
+ OPZL30tZCSkBRHOllfZFlHr3/i82kWwc53HyI4eclBZh4SAEsXbYlexCAvrK58YKFPpe2UT
+ nzloAKJdanjpPR+ck5knOF1NPIeY8eK0x9hAmLatmkaLVnP/FTWjiAm11rb5MftzMz1+ZOw
+ WiLI9+UTm78ebZh/vJBuQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rfoNUdMfpj0=:aC3eYaeikHM0gvwE7lf97l
+ 4L+gI8uWNbQFdgkyk1ouwcDnbpaiZ/19LsI+4mq9pA9HOtze6Mcy2gE1aEd5aX+rTDR/iALy3
+ ctArVLvI/Ap/Vz7sMkfeyAXSN81dm5JsXkyg9skcQE+3otiGhsfSgU3Pi0dfrmk6mtLjxs7On
+ yjlf+7zJYq7yUAS1mRcz5X9DURP+TdaTRW3tt8eVSjcJGEXSsO6PSs/XonxgyAOSZ6Ow+pOYc
+ +AXdwgceTQOeus2RebfLT057nQOSzCpzcX2GL8L25NFOstFc8uzQ21hvkGJs0Zw1XM4HYE7XO
+ 2chSjvFG/MO7ngtkVJ68WBhe83THT2AeKYdbwmizS8C9s//UN9dwqh6eGi28854QmKPnv92Uu
+ Gg94E9QHmLN5X1n+vr4Rpbvd/umuQIpotN/xoy91vGbEX6PhcbSW1loWPWLtNYmhMS/jZII8S
+ UCPnltBR6A2UxjUyqKqSCMHdNGQheJsGD8SToWKE34ygvN1JGUr3pKVKrjsrOIgTuOVV/Zzni
+ BhJ6+BhB0NuL9totq79+Am9HCFRDHa1HelRt0EnnqoPMspwxl2t8mJyuAE/E7ZQXMWkdmloJg
+ tPxOYPpvYJB4rYtjYKlfOlJZtGQorsAw1QpMKyDDqF+BkhRkcBDc8wSEvzWfQ6ROXAv4gNpru
+ j2F94hteOEMJV9CEQt78GqtgYn6J+ubFk8iYKYPgKG69+1RnGWxQ+SyKLsNV8Zg2tKv4oKVlm
+ wC8sM5aF+YSUdcPJ77IMc975Vo8wcY2PnyKmzUAMXjBTE3/FbdnDLChzTNmCSwEAjcmW5LnvE
+ yRkJJ6q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 10, 2018 at 8:39 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Fri, Aug 10, 2018 at 9:39 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Wed, Aug 8, 2018 at 8:46 PM Elijah Newren <newren@gmail.com> wrote:
-> > > > @@ -701,6 +702,24 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
->
-> > > If we're going to go this route, I think we should first check that
-> > > o->fn is one of those known safe functions.  And if we're going that
-> > > route, the comments I bring up on patch 2 about possibly avoiding
-> > > call_unpack_fn() altogether might even obviate this patch while
-> > > speeding things up more.
-> >
-> > Yes I do need to check o->fn. I might have to think more about
-> > avoiding call_unpack_fn(). Even if we avoid it though, we still go
-> > through add_index_entry() and suffer the same checks every time unless
-> > we do somethine like this (but then of course it's safer because
-> > you're doing it in a specific x-way merge, not generic code like
-> > this).
->
-> Why do we still need to go through add_index_entry()?  I thought that
-> the whole point was that you already checked that at the current path,
-> the trees being unpacked were all equal and matched both the index and
-> the cache_tree.  If so, why is there any need for an update at all?
-> (Did I read your all_trees_same_as_cache_tree() function wrong, and
-> you don't actually know these all match in some important way?)
+Hi Peff,
 
-Unless fn is oneway_diff, we have to create a new index (in o->result)
-based on o->src_index and some other trees. So we have to add entries
-to o->result and add_index_entry() is the way to do that (granted if
-we feel confident we could add ADD_CACHE_JUST_APPEND which makes it
-super cheap). This is the outcome of n-way merge,
+On Fri, 10 Aug 2018, Jeff King wrote:
 
-all_trees_same_as_cache_tree() only gurantees the input condition (all
-trees the same, index also the same) but it can't affect what fn does.
-I don't think we can just simply skip and not update anything (like
-o->diff_index_cached case) because o->result would be empty in the
-end. And we need to create (temporary) o->result before we can swap it
-to o->dst_index as the result of a merge operation.
+> On Fri, Aug 10, 2018 at 06:43:07PM +0200, Johannes Schindelin wrote:
+> 
+> > So unless you are willing to ignore, to willfully keep this breakage,
+> > I would suggest not to introduce the ugliness of an overridden
+> > upload-pack for the sole purpose of disabling the tracing on one side,
+> > but instead to get this here bug fixed, by helping me with this here
+> > patch series.
+> 
+> I'm OK if you want to live with the broken test in the interim.
 
-> > > > @@ -1561,6 +1581,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
-> > > >                 if (!ret) {
-> > > >                         if (!o->result.cache_tree)
-> > > >                                 o->result.cache_tree = cache_tree();
-> > > > +                       /*
-> > > > +                        * TODO: Walk o.src_index->cache_tree, quickly check
-> > > > +                        * if o->result.cache has the exact same content for
-> > > > +                        * any valid cache-tree in o.src_index, then we can
-> > > > +                        * just copy the cache-tree over instead of hashing a
-> > > > +                        * new tree object.
-> > > > +                        */
-> > >
-> > > Interesting.  I really don't know how cache_tree works...but if we
-> > > avoided calling call_unpack_fn, and thus left the original index entry
-> > > in place instead of replacing it with an equal one, would that as a
-> > > side effect speed up the cache_tree_valid/cache_tree_update calls for
-> > > us?  Or is there still work here?
-> >
-> > Naah. Notice that we don't care at all about the source's cache-tree
-> > when we update o->result one (and we never ever do anything about
-> > o->result's cache-tree during the merge). Whether you invalidate or
-> > not, o->result's cache-tree is always empty and you still have to
-> > recreate all cache-tree in o->result. You essentially play full cost
-> > of "git write-tree" here if I'm not mistaken.
->
-> Oh...perhaps that answers my question above.  So we have to call
-> add_index_entry() for the side effect of populating the new
-> cache_tree?
+I realize that I failed to tell you that I basically spent 2.5 days worth
+of worktime to figure this out and come up with three iterations of the
+patch series (you only saw the latest).
 
-I have a feeling that you're thinking we can swap o->src_index to
-o->dst_index at the end? That might explain your confusion about
-o->result (or I misread your replies horribly) and the original
-index...
--- 
-Duy
+I want this patch series in git.git, maybe not in the current form, but in
+one form or another. I don't want to spend any more minute on trying to
+figure out the same problem with any other regression test (which might
+not even be as easily worked around as with a semi-simple --upload-pack
+option).
+
+Thank you for wanting to help. Please accept my apologies for expressing
+in a poor way that I appreciate your eagerness to provide a patch, but
+that I think nevertheless that it would be better to work on the GIT_TRACE
+concurrency problem and its resolution via file locks. It would solve that
+class of problems, instead of that single regression test being flakey.
+
+Sorry,
+Dscho
