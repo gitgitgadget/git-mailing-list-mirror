@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 185631F405
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E9CD1F46C
 	for <e@80x24.org>; Fri, 10 Aug 2018 00:12:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbeHJChj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 22:37:39 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:37189 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726961AbeHJChj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 22:37:39 -0400
-Received: by mail-ua1-f73.google.com with SMTP id w15-v6so100234uao.4
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:10:23 -0700 (PDT)
+        id S1727066AbeHJChl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 22:37:41 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:42212 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbeHJChl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 22:37:41 -0400
+Received: by mail-yw1-f73.google.com with SMTP id r144-v6so10494966ywg.9
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=hvHzoAfBekcVBq1XRLvlnUmAdU5AaLPKB093IlJMhD0=;
-        b=UtOW175AkCNSZ1Sgq8GC7k6Q23SxIxW296mm0Zn88fGObYjj1zHqZwUQlk4WPZ3OJ5
-         Zc5unhMiS/3jaSTLO0atFb3uEXFDyIe403OgB1i7rEsNCTRDzivQa23FIA2hCbxEV4zM
-         2n10JDi6xYPGm29TmC2TS+BQEYrEXvzhU6Twr+9BWFbZfqUHoITdqM6uCo3kMcosDmJ9
-         FaY9eREW41O/Q9qMRHMNAu+ZRQo4CioKVbJJxpcMxF9lTX1+Tdc9oCySLA+hlgalaVYy
-         0YRDeK1Prl9gxfWU2M9IXvYVRlEHtqMTVx/xq6eEgzZn4SGI5DNWvhUjrezPBxMhhNVa
-         FfkA==
+        bh=obGFnMFAdF2LhD3FGthBH441p8+KKR0au3QlgT0zPLE=;
+        b=YUieMUliz7wNMYjDP/tlu7Mxr9GTHO6SioIpp4154bXm4FLpgTAGMQeOf+bL8wpRZ4
+         45jJJAp92hHcmna8EUGvT0spl9z0/WNgZ7O7ent+rScuoFtOF3cEiaA0vfx6Kx4GWrlV
+         iSaVq26+0S4SUkDp0BLFo2l0v3Mo5k9D1xB0GJJYnf1EOBYRiVYM+PfcIcZv3YxmfRR9
+         7Q7UnPssoPqqI3KyEP3rEtzC+wP7TIudrQIAb+ZcezDuCUlsVFpf/+HT0+cqQ69P3J82
+         OwKWjQ3t3M0JRFZVNOWcZat5iF0sIRBV9TzuPX53eddFlTMbGO5L79ORQM7FViYSj/rR
+         /ygQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=hvHzoAfBekcVBq1XRLvlnUmAdU5AaLPKB093IlJMhD0=;
-        b=SPqu0IXR1X+dTlzMB8561EJrzlGek4FBxApUsQcjT08dJDN4Dj+7lIu429gZRZs5Oz
-         MOoDowXjzDNLmeJlC2kWeNR2h1W7DoDFPDaGhx/JDeOGMKgmNoGhow55ZoMKiYHKXfxK
-         m2aKjB4i9Uz7/eh1jSe1rgZ6AfxZ5N9Bsbje9mLxr2z/bc2Fw63c0Lr3kR7lXwrDvzXu
-         6YcJ5PEnlUICs16+CacVdrEW6L5to83AyaSwusKtgBZY9E6iZsCKHAqj8n1IUXV4QNaK
-         sr5KGdFFzYakmTC7uQHqFVSN+CmCS5evxWV7Db4HNNhmF4H17Uk48p2XrIjZs9mqxbdL
-         5+6A==
-X-Gm-Message-State: AOUpUlHjqtu+P8srqzEy89kjuLXmcaGqt6gp9+81/4/oS5/IwgfxSrj5
-        POVTNWCxdIqHTuigxWtWvKEtyNepL3Wt
-X-Google-Smtp-Source: AA+uWPw+Sqf1GNUkWKMTnNDpfK//kDsJF+tCSsc0btSO5JXC9lGGgLkm7hKx8BZRMwCV8rSygdXR8h+KStGC
-X-Received: by 2002:a9f:3766:: with SMTP id a35-v6mr1989703uae.19.1533859822493;
- Thu, 09 Aug 2018 17:10:22 -0700 (PDT)
-Date:   Thu,  9 Aug 2018 17:10:09 -0700
+        bh=obGFnMFAdF2LhD3FGthBH441p8+KKR0au3QlgT0zPLE=;
+        b=CYDYDufXpKQRjZWG7u/3IEkT8ZcOTkMHjx/icCRaGDr3x9DvhTvc8ECyg+R/ERZB9p
+         vVs8PgikjNvX9KKCPnpqmggQU8hZ/YReczILmjH2AaogTiIvzrLG1ESG99JMQVgD7BIT
+         NythrjikIGYWqwJj39+2xFWc2gcAA6Z06jZJ5/3WyQhPDRq/Y/pnSd5y2uvszuCE8v9/
+         H+D04kwFRGExbDvVJvt7s1HFAf/DT44G3hX49rb5pUZv4lA2Kq4welF0spoUs+sj+sPq
+         YzGxDXVE5qlarwU4261mQuN9++1u/cishVQs/PmkMqeBBxWOvZJT4wNKH7SunWkGfQHo
+         N2bg==
+X-Gm-Message-State: AOUpUlE9Tt/rfaPVSIFPZsim8x3OJYxwnghvSPNK/HLPC5pe6Ju7FR3D
+        R9kSneXnOvM6x5jljahu6FIkkJKf9dWh
+X-Google-Smtp-Source: AA+uWPxL5FQkAAyUbePbg4hUu212LLuBJChR4hW7Lg8+lfHC0RfNTqowKAZbKz37myp2X12ioju/7lbpwbcN
+X-Received: by 2002:a25:8592:: with SMTP id x18-v6mr612473ybk.14.1533859824924;
+ Thu, 09 Aug 2018 17:10:24 -0700 (PDT)
+Date:   Thu,  9 Aug 2018 17:10:10 -0700
 In-Reply-To: <20180810001010.58870-1-sbeller@google.com>
-Message-Id: <20180810001010.58870-2-sbeller@google.com>
+Message-Id: <20180810001010.58870-3-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180724003619.185290-1-sbeller@google.com> <20180810001010.58870-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: [PATCH 1/2] WIP: range-diff: take extra arguments for different diffs.
+Subject: [PATCH 2/2] WIP range-diff: print some statistics about the range
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org
@@ -61,65 +61,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We can use the range-diff on the same range to examine differences in the
-diff algorithm.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- range-diff.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ range-diff.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/range-diff.c b/range-diff.c
-index 347b4a79f25..a977289b7dc 100644
+index a977289b7dc..fbabce5f91f 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -28,7 +28,8 @@ struct patch_util {
-  * Reads the patches into a string list, with the `util` field being populated
-  * as struct object_id (will need to be free()d).
-  */
--static int read_patches(const char *range, struct string_list *list)
-+static int read_patches(const char *range, struct string_list *list,
-+			struct argv_array *extra_log_args)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	FILE *in;
-@@ -36,7 +37,12 @@ static int read_patches(const char *range, struct string_list *list)
- 	struct patch_util *util = NULL;
- 	int in_header = 1;
+@@ -264,6 +264,8 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+ 	free(b2a);
+ }
  
--	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
-+	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges", NULL);
++int completely_different, slightly_different, same;
 +
-+	if (extra_log_args)
-+		argv_array_pushv(&cp.args, extra_log_args->argv);
-+
-+	argv_array_pushl(&cp.args,
- 			"--reverse", "--date-order", "--decorate=no",
- 			"--no-abbrev-commit", range,
- 			NULL);
-@@ -419,14 +425,20 @@ int show_range_diff(const char *range1, const char *range2,
- {
- 	int res = 0;
+ static void output_pair_header(struct diff_options *diffopt,
+ 			       int patch_no_width,
+ 			       struct strbuf *buf,
+@@ -288,15 +290,19 @@ static void output_pair_header(struct diff_options *diffopt,
+ 	if (!b_util) {
+ 		color = color_old;
+ 		status = '<';
++		slightly_different++;
+ 	} else if (!a_util) {
+ 		color = color_new;
+ 		status = '>';
++		completely_different++;
+ 	} else if (strcmp(a_util->patch, b_util->patch)) {
+ 		color = color_commit;
+ 		status = '!';
++		slightly_different++;
+ 	} else {
+ 		color = color_commit;
+ 		status = '=';
++		same++;
+ 	}
  
-+	struct argv_array extra = ARGV_ARRAY_INIT;
-+
- 	struct string_list branch1 = STRING_LIST_INIT_DUP;
- 	struct string_list branch2 = STRING_LIST_INIT_DUP;
- 
--	if (read_patches(range1, &branch1))
-+	argv_array_push(&extra, "--diff-algorithm=patience");
-+	argv_array_push(&extra, "--indent-heuristic");
-+
-+	if (read_patches(range1, &branch1, NULL))
- 		res = error(_("could not parse log for '%s'"), range1);
--	if (!res && read_patches(range2, &branch2))
-+	if (!res && read_patches(range2, &branch2, &extra))
+ 	strbuf_reset(buf);
+@@ -439,12 +445,15 @@ int show_range_diff(const char *range1, const char *range2,
  		res = error(_("could not parse log for '%s'"), range2);
  
-+	diffopt->color_moved = COLOR_MOVED_DEFAULT;
+ 	diffopt->color_moved = COLOR_MOVED_DEFAULT;
++
  	if (!res) {
  		find_exact_matches(&branch1, &branch2);
  		get_correspondences(&branch1, &branch2, creation_factor);
+ 		output(&branch1, &branch2, diffopt);
+ 	}
+ 
++	printf("patch ranges are %d same, %d slightly different and %d completely different\n", same, slightly_different, completely_different);
++
+ 	string_list_clear(&branch1, 1);
+ 	string_list_clear(&branch2, 1);
+ 
 -- 
 2.18.0.597.ga71716f1ad-goog
 
