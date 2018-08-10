@@ -2,113 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3166A1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 15:35:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBEE31F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 15:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbeHJSGO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 14:06:14 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35576 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727381AbeHJSGO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 14:06:14 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o18-v6so2379809wmc.0
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 08:35:52 -0700 (PDT)
+        id S1728152AbeHJSHl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 14:07:41 -0400
+Received: from mail-lj1-f179.google.com ([209.85.208.179]:41781 "EHLO
+        mail-lj1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727381AbeHJSHl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 14:07:41 -0400
+Received: by mail-lj1-f179.google.com with SMTP id y17-v6so7491908ljy.8
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 08:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=8855nIX2k1Up7c9tQBRg10TXoD0miORn5Z4FBfJa/BQ=;
-        b=PbIOgxa9vSHdieAOBbwSRmJPTv/ehEvNs0ZHM7N/BY61enTAhg/nRGGtQuEMLUCmEt
-         IV+x2+ZuBdS8nSsjKfyUxh070AbGV09PnrXQBzO9SsWLKjFgbibamKGUs10AnR5BhX1I
-         pVgIDl2nOeEmT04ht5Y8SabDwREqSNgPhmBhBRIHgq15aR8N1DpRZ/xKdEMuAxIUTmqc
-         xhVBCi8jpPffc3ajQ26FF1fmTz3GML1fBdt4DfzykU2hIz8iJ742GaGstT634dfY6z/z
-         m1+QecIAW14aPiALj91S+T7xk6AVNLdVpfnyDfgXy4aAP+vaEvIQPZCOwkKis/8DnG8w
-         qKrw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=TysihhBhCujnSmGCumAWvbZAXZjEyKIxQjiMC4/hCCc=;
+        b=IR3MCEkA3mpCoNp7FzladqSush5pMVHKfJhzS4NczZuXoVmCAucATYTFRRiuTjZwQ7
+         hcN4kfFJm84kbwqBOLZZako1XAstJKVtLfyhSGS66xieqLxKCYrUKcX6qBHx1VyGnmLX
+         InE9pL3WJjSOhN9AzERqWi4mGDuKIQLHH09zl4Ydi+bsihW+r0Fc5tTf5Gb2pvypXkro
+         Jt3/I4Of7iJWKDUvHGgp01ptp6taa9adZdAVnsMqUcitAcP4e10NW3zFKCgnSgh+x2iM
+         OkuS81M8HxwRa8ChoInu0lsA2Gt+WzNEabIEW73r6bx+8uAhjKK7EFeMqt2/jwOCGpKJ
+         teBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=8855nIX2k1Up7c9tQBRg10TXoD0miORn5Z4FBfJa/BQ=;
-        b=aFIuS82UMIyvDbX088SCdGGI5CWpa81ifr6nG7VcV8bbp+MyM2JcK/N42yhtAwrlvh
-         fiGpprY6Gj8V6Y+HpiYulJJDrTlzlbrnuyE0kcKa6sm67FPyi9Gd/fDA/4+85G+ggKau
-         gpwHY5qzyEYtipcPs0gEEtOp0yp1uY6DUtaO2SmuBr6x61UMQl7kZcAdYuwvT57T/MEu
-         fP9gcuUBo3PmsEQof73gyoAHz5nMhgE1X5bt840cyW3emTSlxAJhuwJeXq0iiSDXccqc
-         Y+BLSVn6J+0dzuSPPNHsJF5SVhQOshNJ6r7/6CTrpurEzy/ZewQvLzI9rRGZ3Zq/jDq4
-         fRWA==
-X-Gm-Message-State: AOUpUlEnETMXgfSfhGJdiB91mrtGZQ64yPDTNzCmVZC/9MXWVK7+ngzV
-        rqFFqH1xOfJ20IxT+FqrZxf626v4
-X-Google-Smtp-Source: AA+uWPxdKczhi7L/uEHL3p5+kGO0dgBHOQauKMZzA3m87GIc9MCMCKxbj45KTkx5tBd+3uCN+MY1ig==
-X-Received: by 2002:a1c:5d55:: with SMTP id r82-v6mr1816308wmb.152.1533915351149;
-        Fri, 10 Aug 2018 08:35:51 -0700 (PDT)
-Received: from [192.168.0.137] (5-13-198-10.residential.rdsnet.ro. [5.13.198.10])
-        by smtp.gmail.com with ESMTPSA id h2-v6sm2543812wmf.28.2018.08.10.08.35.50
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=TysihhBhCujnSmGCumAWvbZAXZjEyKIxQjiMC4/hCCc=;
+        b=CoZ1RJJINF+lbErKUwBsMQprFG9N/DkpFo8w6EMx3r8ij9BUGqjX+tcgwS0ARapxbJ
+         UnI3/Jx6IvdgQsoFWLdT50x+/mVVYE1ScSBYUAs9fi4f/V6N4ZNE/WJjYlKvkeqqa9d6
+         qiJ1VsqeUfTSiq6ZZuL6mQjhkGh4i8puGO8IaM+pCsf2ZJDaTLrENt1DMdFM75aS7ode
+         xBOYrClxlTqSPYjhJrARgdnHFMlXBrUm2yL1JhOwxhyEXPu9Vg0WCMRL368AaJSkP1No
+         +AtpH48QLCc/G2LtPNgoTwkz4IP0eh0XNymdz3G5n+EN4iFM6WXNtvVwGNOgWMV6N/f5
+         TOlg==
+X-Gm-Message-State: AOUpUlFAy0qyGRp6SGPONfkXwJy4RQCsQa2TPzsHxCCTH6SeEYGiMDfu
+        ylqStJZPYZ491MTarwJ9Fvo=
+X-Google-Smtp-Source: AA+uWPw7EDVXIBxlx3op6Xm9U2OnZnjeAiHzf9udFJ7DhmpOlV3kv+WT0cKDAM+RqBP3Q5jplXpWQg==
+X-Received: by 2002:a2e:4557:: with SMTP id s84-v6mr5021911lja.47.1533915438136;
+        Fri, 10 Aug 2018 08:37:18 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id f18-v6sm1664680lja.85.2018.08.10.08.37.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Aug 2018 08:35:50 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v7 05/26] stash: convert apply to builtin
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
- <7ba9a8515d445d10af36a8a79071af51b90f5aef.1533753605.git.ungureanupaulsebastian@gmail.com>
- <xmqqa7pwfw84.fsf@gitster-ct.c.googlers.com>
- <1ba17df0-e6da-3358-622b-c19092c20eb0@gmail.com>
- <xmqqftznb6hc.fsf@gitster-ct.c.googlers.com>
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Message-ID: <60b38370-b8ac-fe13-abf7-db3166a04dee@gmail.com>
-Date:   Fri, 10 Aug 2018 18:35:47 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Fri, 10 Aug 2018 08:37:17 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, tboegi@web.de
+Subject: [PATCH v3 0/1] clone: warn on colidding entries on checkout
+Date:   Fri, 10 Aug 2018 17:36:07 +0200
+Message-Id: <20180810153608.30051-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.915.gd571298aae
+In-Reply-To: <20180807190110.16216-1-pclouds@gmail.com>
+References: <20180807190110.16216-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqftznb6hc.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hellom
+There are lots of suggestions on optimizing this stuff, but since this
+problem does not affect me to begin with,  I'm reluctant to make more
+changes and going to stay simple, stupid and slow. I could continue to
+do small updates if needed. But for bigger changes, consider this
+patch dropped by me.
 
-On 10.08.2018 00:00, Junio C Hamano wrote:
-> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
-> 
->>> Good to see that the right way to forward a patch from another
->>> person is used, but is this a GSoC project?
->>
->> Yes, it is. I forgot to add the [GSoC] tag in the last series of patches.
-> 
-> The reason I asked was because IIRC GSoC was not supposed to be team
-> effort but "summer job" by individual students.
-> 
+v3 now uses inode on UNIXy platforms for checking colliding items. I
+still don't try to separate colliding groups because it should be
+quite obvious once you look at the colliding list (and most of the
+time I suspect we only have one or two groups).
 
-Before starting working on this, I discussed with Joel and ask
-him whether I could take custody of this patches. He was open
-to the idea, so I continued to build on top of them. Since then,
-I have made some changes to his code and also added a lot more of
-my own.
+Since on Windows we can't really have colliding groups (no inode to
+check) so the warning message is to me a bit misleading. But I frankly
+don't want to put more effort in this.
 
-What I did was to completely convert git stash and apply some
-more optimizations on top of that, like reducing the number of
-spawned processes. Due to this kind of improvements I was able
-to significantly reduce the execution time and this has visible
-effects, running about 3 times faster.
+Nguyễn Thái Ngọc Duy (1):
+  clone: report duplicate entries on case-insensitive filesystems
 
-Please do not get me wrong, I do not want to bash Joel or his work.
-I just wanted to make it clear that I did not copy his work or made
-it look like it was mine. After Joel agreed to hand the patches off
-to me [1], every line of code that I wrote was written by myself, 
-without his (or anyone else) assistance. I really did my best to finish 
-this project and I believe that my mentor, dscho, can also confirm this. 
-I am really sorry for the confusion.
+ builtin/clone.c |  1 +
+ cache.h         |  2 ++
+ entry.c         | 32 ++++++++++++++++++++++++++++++++
+ unpack-trees.c  | 22 ++++++++++++++++++++++
+ unpack-trees.h  |  1 +
+ 5 files changed, 58 insertions(+)
 
-[1]
-https://public-inbox.org/git/CA+CzEk_qwHs5qUstyFeepzwvCBR=9SvH90+__f-gfxFySETZzQ@mail.gmail.com/
+-- 
+2.18.0.915.gd571298aae
 
-Best regards,
-Paul Ungureanu
