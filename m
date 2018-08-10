@@ -2,101 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C3251F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 16:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A5F5B1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 16:12:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727771AbeHJSjv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 14:39:51 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:53108 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727542AbeHJSjv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 14:39:51 -0400
-Received: by mail-it0-f65.google.com with SMTP id d9-v6so3297203itf.2
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:09:22 -0700 (PDT)
+        id S1728024AbeHJSnW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 14:43:22 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34314 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727462AbeHJSnW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 14:43:22 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l2-v6so1876955wme.1
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:12:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Vu1lYymQYd7aXbFYsXBza/uiKRrQbqYCkOO0Gxrwyhk=;
-        b=tFh9QpZ+ZKCN+fKK8cDgQ37SxCJP1D2KqSXWDljDo15i2Cl9KzsQNS6uw2d8C1Hr/1
-         fEQTMys9eRnhElujQX1sDUMisVSnMqcrUCXuBhiOsJZCD+5YiZwj6biVcmZP8mvLH8Co
-         Wr65s75svV1V+EusYdo/nIMYBKhpgjATSXtfMtb888m4GqGJfxlEO1kzF+qHhjWwpQG+
-         KYrJSlw5G3/7jrVuY2W34Z103TtutihrN3Kql7lLp/URECMvKWNcGsyLHGwRjXXrepds
-         3Y4quNaWyCKDIQlMLUWulkulvqEARSQC/PnqoEti6PqenDFTfSDQSUMYrYDapyyKoCmj
-         VFdw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=RyfnGggIRSOXRDTOs8A+fnqmWcJlKHPL6w1sUZL+10U=;
+        b=t2Tgv+6UTGVYIjKeLrlYG2mAWobrDu8KqU0iJgVAiYQKhgQcSZGE9hfiFdt6my9mbp
+         YdaqN7W7Ydz/s/GP1PwfC4gjLyu7VWLyf7BnkVLHySV7FJUdddR9NQvm7QpgNa03XQES
+         qSQWzDUAXTsNwjBlbea/7/WaOCBY8CojYE6nkUctNDkcpGFmHP5eQRgiuWGL6xgZHzMA
+         lsQbpg34VDdiX8ZGiLZMLURmSDjXhYxC+FMCSv6cWtrUFBRe+UEjmlpeoa+4kH/2QqId
+         iSCnrR/4bpMzj7p4aPcGfiNlDuyeP2yPtfpifPn6NmANydWerQPlGMgzCVQDpMJfjq4d
+         BlJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Vu1lYymQYd7aXbFYsXBza/uiKRrQbqYCkOO0Gxrwyhk=;
-        b=uBWVZmpz7W7bkyH6vblrYNMtvMwRvw83ojEgvMemoiu/kIjM/VshqWTUkJLXVwgvo4
-         VgRUU0at8b3IgqWlQ//C/MHS7t5Zqnh0rA1PBtq2H/YcYPj9KGNiyEqA4hhw3VoBFfV+
-         V3NR4K36QijjYqoN8h6bmHYtH/cVZtGhtzMo3hLZ0mf6Munrntbte+IG5rJeGEfrl1AZ
-         sI6kz9EKSXudhB2eBHMZS4gHaG0xlBnOfV3igK7cKdqYPOlQ5PZ2bJMe3ZvdW8gZmpz9
-         h//20ZbvFy8x90PSYHOnXuhFDwFYuYOHwcBUNuP6f00XvkOdcZgjHb+zcyD47RjWQVnC
-         HJnQ==
-X-Gm-Message-State: AOUpUlH6I1E0XVjEpjOQaAQm0/6Lq6T3UK1iaAKAId/xytjH3Hs9XDbW
-        SCkS7+c7fcL/WgIEmYMYCQ5dxYxtyEJMseFD+/0=
-X-Google-Smtp-Source: AA+uWPyA3dOkBzMwzi+hMjoR38bxUZSIxJRvCNxhnKyQysho2reQigDThSY4prs19yWMR/pHAb7UIPUUfTm9McW+BiI=
-X-Received: by 2002:a02:59c9:: with SMTP id v70-v6mr6023098jad.94.1533917361856;
- Fri, 10 Aug 2018 09:09:21 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=RyfnGggIRSOXRDTOs8A+fnqmWcJlKHPL6w1sUZL+10U=;
+        b=O72RCYYJF8IxKx5sQe8rXc2FodnJr3TedIubf2dB70A+AjWzkIUuY+V0w+Ls6VBfYw
+         qAqjpBkmxFhEE3LhwM/3h1EsMeb5AdQI9PDQ1DNhw/eX8p+zx+5gWO9JvLCVVoF150Nk
+         IMcg6LuXFWh4tJWuMepDYjpnA7gmGkjWbUG2bDnNsrG/CbhfIlBRPEclbR07TTX18pWS
+         dykC2SVG4hNBsLPpocqm1buUk2mV0Oy4pMI+YRFUJwbBthmDM2Fg5tCDi3kKlYmS7lsn
+         eX1wK0nqOYFyNiifCAN99ezdBbkDKVPHj/Ohaiyv2Q3yzzJ19Es26Qv0vd8P9kRqUZ40
+         Fkrw==
+X-Gm-Message-State: AOUpUlEJOQsHYPEv7FWVpIYo08/PxwVwMlcdShX33NK/yTPhyhHEWw7v
+        /85Qw9BcYw839S0oi6AQXOP4FyLM
+X-Google-Smtp-Source: AA+uWPy2F9X9glwiDdAN9L09a1A8XrCMdOtJri7R/3rolDShmWEVvllfBWcq7V/XEJg3KMsU2+ZxqA==
+X-Received: by 2002:a1c:f516:: with SMTP id t22-v6mr1847874wmh.103.1533917570732;
+        Fri, 10 Aug 2018 09:12:50 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a184-v6sm3020410wmh.41.2018.08.10.09.12.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 10 Aug 2018 09:12:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
+        pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, tboegi@web.de
+Subject: Re: [PATCH v3 0/1] clone: warn on colidding entries on checkout
+References: <20180807190110.16216-1-pclouds@gmail.com>
+        <20180810153608.30051-1-pclouds@gmail.com>
+Date:   Fri, 10 Aug 2018 09:12:49 -0700
+In-Reply-To: <20180810153608.30051-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Fri, 10 Aug 2018 17:36:07 +0200")
+Message-ID: <xmqqr2j68ake.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
- <9a9a309c-7143-e642-cfd8-6df76e77995a@gmail.com> <CACsJy8BUBjPngHz=icHomor-LJOkMLwZ9bQ6YJDxnoXGg++vjg@mail.gmail.com>
- <cc3c4dbb-d545-6a6c-b20e-6a8ca66fc210@gmail.com> <57d146a2-9bf8-66c9-9cb4-c05f93b63319@gmail.com>
- <20180801163830.GA31968@duynguyen.home> <ccec34c9-b81a-bcb4-7d05-48dccc059cc8@gmail.com>
- <eb39eecf-81b0-e937-d686-47b7565d6511@gmail.com>
-In-Reply-To: <eb39eecf-81b0-e937-d686-47b7565d6511@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 10 Aug 2018 18:08:55 +0200
-Message-ID: <CACsJy8AOV+73RLx2GyWTvcoKxop2t_9x0mFjN9raOsGjDdQ2bg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] Speed up unpack_trees()
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 9, 2018 at 10:16 AM Ben Peart <peartben@gmail.com> wrote:
-> In fact, in the other [1] patch series, we're detecting the number of
-> cache entries that are the same as the cache tree and using that to
-> traverse_by_cache_tree().  At that point, couldn't we copy the
-> corresponding cache tree entries over to the destination so that those
-> don't have to get recreated in the later call to cache_tree_update()?
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-We could. But as I stated in another mail, I saw this cache-tree
-optimization as a separate problem and didn't want to mix them up.
-That way cache_tree_copy() could be used elsewhere if the opportunity
-shows up.
+> There are lots of suggestions on optimizing this stuff, but since this
+> problem does not affect me to begin with,  I'm reluctant to make more
+> changes and going to stay simple, stupid and slow. I could continue to
+> do small updates if needed. But for bigger changes, consider this
+> patch dropped by me.
+>
+> v3 now uses inode on UNIXy platforms for checking colliding items. I
+> still don't try to separate colliding groups because it should be
+> quite obvious once you look at the colliding list (and most of the
+> time I suspect we only have one or two groups).
 
-Mixing them up could also complicate the problem. You you merge stuff,
-you add new cache-entries to o->result with add_index_entry() which
-tries to invalidate those paths in o->result's cache-tree. Right now
-the cache-tree is empty so it's really no-op. But if you copy
-cache-tree over while merging, that invalidation might either
-invalidate your newly copied cache-tree, or get slowed down because
-non-empty o->result's cache-tree means you start to need to walk it to
-find if there's any path to invalidate.
+I think that design decision is fine.  We can extend it later if
+needed, but I would not be surprised if what you have here is
+sufficient.
 
-PS. This code keeps messing me up. invalidate_ce_path() may also
-invalidate cache-tree in the _source_ index. For this optimization to
-really shine, you better keep the the original cache-tree intact (so
-that you can reuse as much as possible).
+Another possible follow-up in the future may be to encapsulate the
+"I have a cache-entry 'dup', and stat data 'st' taken for a path
+in the working tree.  Does it look likely that the latter is the
+result of checking out the former?" logic, which you currently has a
+hard-coded if() statement condition, into a helper function and
+make its implementation platform dependent.
 
-I don't see the purpose of this source cache tree invalidation at all.
-My guess at this point is Linus actually made a mistake in 34110cd4e3
-(Make 'unpack_trees()' have a separate source and destination index -
-2008-03-06) and he should have invalidated _destination_ index instead
-of the source one. I'm going to dig in some more and probably will
-send a patch to remove this invalidation.
--- 
-Duy
