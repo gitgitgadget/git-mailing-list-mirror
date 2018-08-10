@@ -2,99 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1161F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 18:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A9511F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 18:40:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726979AbeHJVGE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 17:06:04 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46385 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726096AbeHJVGE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 17:06:04 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h14-v6so9071694wrw.13
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:35:01 -0700 (PDT)
+        id S1726439AbeHJVLB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 17:11:01 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:35379 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726162AbeHJVLB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 17:11:01 -0400
+Received: by mail-ua1-f67.google.com with SMTP id q12-v6so2897758ual.2
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ZAkYLvDUsARzlNF+rN4YXoKBcx+J2xX1yTwRosweqZQ=;
-        b=iYd8KdLDaklEPjXWIuHiQXS/p83VVpDAJluageL80Eg60BbIVhZvpDiZJOYfrSHgD/
-         GYHkiP2oAKkzBpDH+I66ZV+9S/f+iHP8r21uJbSnNIS86BkDZqKBVk72O6u71NtW71Yc
-         Q7jsu4hXO7HPpFDmmcM21ilWjCOSA+BKvfulAcs+E8BuNR50yKb0dPdgTiaRiq49Q+6p
-         vufS/MuGWrWwZwsArg0TlGnPhx/LayQpMrdWDOCUixA4KK37LlQDKDZwLhbwFi5FGiId
-         wPBT9/SogP8RM2SYYt4/TXO+jhqDxksv8f2nPntBJnR15d/705fvCWFsAsQFfSSxCmDR
-         emRQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yl6U9tHaW3zBIlG5xU40NiUO+fL662lxt7wtySEf33U=;
+        b=VKMaJ1K4MwhoXfLdBsv1CUfT6zAlirngcYIiHBE2cFIt7RPsiC0hBvv8wHl5CY3oSZ
+         E+vGKaesmWjwEgXzdxbUFHJCFdh2+OfhKnSmqYiCPX8OJVjl98PdWcpPwMXOywQJnJGI
+         Cv/6n3id2YzYKjs3sXDhViYjy5wShM2nAv4X9NrWcybIUHvY5vhQRS0X+9wIZc/AYvxd
+         4UEIl8Pz2R95P/xjsNSai0YbfvUphrqgIs+m0P+8FOway1XFwX2DrNtW3xQVj4+5nv+B
+         CTGBevAFE4LYUmQjD+cIqgZGUi+ugtaDGREGaGIfBTUUBgL1ercpNViD4vXvlbbD8LgM
+         /67Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZAkYLvDUsARzlNF+rN4YXoKBcx+J2xX1yTwRosweqZQ=;
-        b=kQuO/AQG2QooOUKAtXdd/TI8QvdziggqmAraoLfMiOdpzHuZciEa+O+hHE3XaIeSSk
-         gJnbclfMzSsKyiNEKjg7BCc3UKPYg5iLKV7XrFpwfzJzfvpCVYOz+lHiZMoLP3HaCK/Y
-         IIdf7d+X7QlA/MoQK4qFD4LjvdWJWmL3iHrxVyzLjRdCO63zoKzXr7TLf/VaL96Q7zGw
-         SdB1aMg6gqG6YsJ27UrOoW6utiYH6x3gIwrwEN0FmFpj3S8C1W0njRt4JSbZZIIvVBZG
-         kj8eHZ1Fji+DpYXGrgrJF0WWH2TGNjPRkHV3KFbHtUaXDC6akiqeen0VMY0jSo27blDm
-         qBew==
-X-Gm-Message-State: AOUpUlH382v3uuYCRrQKz2kMs1a6lopU0frjVjChC7/ae1vpRllJlbS/
-        WU+uNrvzEt8o8lDegHLIkzaHbAsO
-X-Google-Smtp-Source: AA+uWPx5rESd+brK90YstfqnY/wb3eBJUQAW2LTAN3zNID+jY8znUzNYi7ukoewFKek6ygQ51upAOg==
-X-Received: by 2002:a5d:6401:: with SMTP id z1-v6mr4815737wru.64.1533926100590;
-        Fri, 10 Aug 2018 11:35:00 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l11-v6sm14037845wru.25.2018.08.10.11.34.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 10 Aug 2018 11:34:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking for GIT_TRACE
-References: <pull.17.git.gitgitgadget@gmail.com>
-        <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
-Date:   Fri, 10 Aug 2018 11:34:59 -0700
-In-Reply-To: <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org> (Johannes Sixt's
-        message of "Fri, 10 Aug 2018 18:15:36 +0200")
-Message-ID: <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yl6U9tHaW3zBIlG5xU40NiUO+fL662lxt7wtySEf33U=;
+        b=WO3ao0o+xsiYPNTVQdQSZN+4zwXo6xeLoK7dDw28gTEpeMbEZileoV/9C1N76f1LBO
+         /PmlWZ6Dn+iUyFmuIK/5uwnnkSsCwmQ1jt3GEoUC2HGVkYH6pfPYgKhOwcuPqgxw2zde
+         YgZA4FOz3/qLAIHi0alxseO5qdCq3DCAySu+xlkkK/rEeJmiqO0Q0ZikVN66ijsMAAa8
+         QXauV8jNUt2boyXWU+s0Mh+ytWt/6tt/pz3wgHjENooJpTOrqrAypusgPD53XkL88QEb
+         1HyPTVnt8Ga2oRzOsVAErXAnD5aQadMDOuhj/Eo4qz7p3UU6qItxY6Koh+EGk6Po/1cC
+         1bNw==
+X-Gm-Message-State: AOUpUlEv/CHF0Ct82lr6xr/LLIZAhB3OyVC8XdhWpuKtH8LGLSi3JDqy
+        aPVvYyU11hKOQdawc/NJoKrNO/dpmrvpcVk1Rh1et1Oe
+X-Google-Smtp-Source: AA+uWPy1RerG28Gq7EwG3bS1b1DqEOXgEA1qePpq5cLQSCeS4urXbx9cUFTdmTImd+LICGJYx+McvArHSUuMClscZB0=
+X-Received: by 2002:a1f:f284:: with SMTP id q126-v6mr4806636vkh.38.1533926397232;
+ Fri, 10 Aug 2018 11:39:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
+ <20180729103306.16403-5-pclouds@gmail.com> <CABPp-BGF+GZjm-DiveLjFOESKwPz2F0Y7X4_kXyem2xFo2odUw@mail.gmail.com>
+ <CACsJy8DF5XLf-RF3SwTpRynYALJUPO_VTK=fpx1oabwB80ZpPw@mail.gmail.com>
+In-Reply-To: <CACsJy8DF5XLf-RF3SwTpRynYALJUPO_VTK=fpx1oabwB80ZpPw@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Aug 2018 11:39:45 -0700
+Message-ID: <CABPp-BGU6QnUwQgkhwx6vLBc3ozoEScQ4DaZd-9ZZfQhXfxPww@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] unpack-trees: cheaper index update when walking by cache-tree
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri, Aug 10, 2018 at 9:39 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Wed, Aug 8, 2018 at 8:46 PM Elijah Newren <newren@gmail.com> wrote:
+> > > @@ -701,6 +702,24 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
 
-> As this buglet looks like a recurring theme, and a proper fix is
-> preferable over repeated work-arounds. To me it looks like we need
-> some sort of locking on Windows. Unless your friends at Microsoft have
-> an ace in their sleeves that lets us have atomic O_APPEND the POSIX
-> way...
+> > If we're going to go this route, I think we should first check that
+> > o->fn is one of those known safe functions.  And if we're going that
+> > route, the comments I bring up on patch 2 about possibly avoiding
+> > call_unpack_fn() altogether might even obviate this patch while
+> > speeding things up more.
+>
+> Yes I do need to check o->fn. I might have to think more about
+> avoiding call_unpack_fn(). Even if we avoid it though, we still go
+> through add_index_entry() and suffer the same checks every time unless
+> we do somethine like this (but then of course it's safer because
+> you're doing it in a specific x-way merge, not generic code like
+> this).
 
-Just to put the severity of the issue in context, we use O_APPEND in
-a few codepaths, and the trace thing for debugging is the only thing
-that could have multiple writers.  Other users of O_APPEND are:
-
- * refs/files-backend.c uses it so that a reflog entry can be
-   appended at the end, but because update to each ref is protected
-   from racing at a lot higher layer with a lock, no two people
-   would try to append to the same reflog file, so atomicity of
-   O_APPEND does not matter here.
-
- * sequencer.c wants to use it when moving one insn from the todo
-   list to the 'done' list when it finishes one operation.  If you
-   are running two sequences in a single repository, intermixed
-   'done' list would be the least of your problem, so presumably we
-   are fine here.
-
-It may make sense to allow GIT_TRACE to have a placeholder
-(e.g. "/tmp/traceout.$$") to help debuggers arrange to give
-different processes their own trace output file, which perhaps may
-be a simpler and less impactful to the performance solution than
-having to make locks at an application layer.
+Why do we still need to go through add_index_entry()?  I thought that
+the whole point was that you already checked that at the current path,
+the trees being unpacked were all equal and matched both the index and
+the cache_tree.  If so, why is there any need for an update at all?
+(Did I read your all_trees_same_as_cache_tree() function wrong, and
+you don't actually know these all match in some important way?)
 
 
+> > > @@ -1561,6 +1581,13 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+> > >                 if (!ret) {
+> > >                         if (!o->result.cache_tree)
+> > >                                 o->result.cache_tree = cache_tree();
+> > > +                       /*
+> > > +                        * TODO: Walk o.src_index->cache_tree, quickly check
+> > > +                        * if o->result.cache has the exact same content for
+> > > +                        * any valid cache-tree in o.src_index, then we can
+> > > +                        * just copy the cache-tree over instead of hashing a
+> > > +                        * new tree object.
+> > > +                        */
+> >
+> > Interesting.  I really don't know how cache_tree works...but if we
+> > avoided calling call_unpack_fn, and thus left the original index entry
+> > in place instead of replacing it with an equal one, would that as a
+> > side effect speed up the cache_tree_valid/cache_tree_update calls for
+> > us?  Or is there still work here?
+>
+> Naah. Notice that we don't care at all about the source's cache-tree
+> when we update o->result one (and we never ever do anything about
+> o->result's cache-tree during the merge). Whether you invalidate or
+> not, o->result's cache-tree is always empty and you still have to
+> recreate all cache-tree in o->result. You essentially play full cost
+> of "git write-tree" here if I'm not mistaken.
+
+Oh...perhaps that answers my question above.  So we have to call
+add_index_entry() for the side effect of populating the new
+cache_tree?
