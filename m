@@ -2,190 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A84061F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 14:09:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3166A1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 15:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727437AbeHJQjO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 12:39:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49640 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727270AbeHJQjO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 12:39:14 -0400
-Received: (qmail 8362 invoked by uid 109); 10 Aug 2018 14:09:10 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Aug 2018 14:09:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18505 invoked by uid 111); 10 Aug 2018 14:09:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 10 Aug 2018 10:09:12 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2018 10:09:08 -0400
-Date:   Fri, 10 Aug 2018 10:09:08 -0400
-From:   Jeff King <peff@peff.net>
+        id S1727944AbeHJSGO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 14:06:14 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:35576 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727381AbeHJSGO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 14:06:14 -0400
+Received: by mail-wm0-f66.google.com with SMTP id o18-v6so2379809wmc.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 08:35:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=8855nIX2k1Up7c9tQBRg10TXoD0miORn5Z4FBfJa/BQ=;
+        b=PbIOgxa9vSHdieAOBbwSRmJPTv/ehEvNs0ZHM7N/BY61enTAhg/nRGGtQuEMLUCmEt
+         IV+x2+ZuBdS8nSsjKfyUxh070AbGV09PnrXQBzO9SsWLKjFgbibamKGUs10AnR5BhX1I
+         pVgIDl2nOeEmT04ht5Y8SabDwREqSNgPhmBhBRIHgq15aR8N1DpRZ/xKdEMuAxIUTmqc
+         xhVBCi8jpPffc3ajQ26FF1fmTz3GML1fBdt4DfzykU2hIz8iJ742GaGstT634dfY6z/z
+         m1+QecIAW14aPiALj91S+T7xk6AVNLdVpfnyDfgXy4aAP+vaEvIQPZCOwkKis/8DnG8w
+         qKrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=8855nIX2k1Up7c9tQBRg10TXoD0miORn5Z4FBfJa/BQ=;
+        b=aFIuS82UMIyvDbX088SCdGGI5CWpa81ifr6nG7VcV8bbp+MyM2JcK/N42yhtAwrlvh
+         fiGpprY6Gj8V6Y+HpiYulJJDrTlzlbrnuyE0kcKa6sm67FPyi9Gd/fDA/4+85G+ggKau
+         gpwHY5qzyEYtipcPs0gEEtOp0yp1uY6DUtaO2SmuBr6x61UMQl7kZcAdYuwvT57T/MEu
+         fP9gcuUBo3PmsEQof73gyoAHz5nMhgE1X5bt840cyW3emTSlxAJhuwJeXq0iiSDXccqc
+         Y+BLSVn6J+0dzuSPPNHsJF5SVhQOshNJ6r7/6CTrpurEzy/ZewQvLzI9rRGZ3Zq/jDq4
+         fRWA==
+X-Gm-Message-State: AOUpUlEnETMXgfSfhGJdiB91mrtGZQ64yPDTNzCmVZC/9MXWVK7+ngzV
+        rqFFqH1xOfJ20IxT+FqrZxf626v4
+X-Google-Smtp-Source: AA+uWPxdKczhi7L/uEHL3p5+kGO0dgBHOQauKMZzA3m87GIc9MCMCKxbj45KTkx5tBd+3uCN+MY1ig==
+X-Received: by 2002:a1c:5d55:: with SMTP id r82-v6mr1816308wmb.152.1533915351149;
+        Fri, 10 Aug 2018 08:35:51 -0700 (PDT)
+Received: from [192.168.0.137] (5-13-198-10.residential.rdsnet.ro. [5.13.198.10])
+        by smtp.gmail.com with ESMTPSA id h2-v6sm2543812wmf.28.2018.08.10.08.35.50
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Aug 2018 08:35:50 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v7 05/26] stash: convert apply to builtin
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
- for GIT_TRACE
-Message-ID: <20180810140908.GA23507@sigill.intra.peff.net>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <20180809194712.GC32376@sigill.intra.peff.net>
- <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org
+References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <7ba9a8515d445d10af36a8a79071af51b90f5aef.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <xmqqa7pwfw84.fsf@gitster-ct.c.googlers.com>
+ <1ba17df0-e6da-3358-622b-c19092c20eb0@gmail.com>
+ <xmqqftznb6hc.fsf@gitster-ct.c.googlers.com>
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Message-ID: <60b38370-b8ac-fe13-abf7-db3166a04dee@gmail.com>
+Date:   Fri, 10 Aug 2018 18:35:47 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftznb6hc.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 09, 2018 at 01:49:52PM -0700, Junio C Hamano wrote:
+Hellom
 
-> Jeff King <peff@peff.net> writes:
+On 10.08.2018 00:00, Junio C Hamano wrote:
+> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 > 
-> > Are you sure that it's not well-defined? We open the path with O_APPEND,
-> > which means every write() will be atomically positioned at the end of
-> > file. So we would never lose or overwrite data.
-> >
-> > We do our own buffering in a strbuf, writing the result out in a single
-> > write() call (modulo the OS returning a short write, but that should not
-> > generally happen when writing short strings to a file). So we should get
-> > individual trace lines as atomic units.
-> >
-> > The order of lines from the two processes is undefined, of course.
+>>> Good to see that the right way to forward a patch from another
+>>> person is used, but is this a GSoC project?
+>>
+>> Yes, it is. I forgot to add the [GSoC] tag in the last series of patches.
 > 
-> Correct.  But I am more worried about the "mixed/overwriting"
-> breakage, if there is one; it means we may need to be prepared for
-> systems that lack O_APPEND that works correctly.  I initially just
-> assumed that it was what Dscho was seeing, but after re-reading his
-> message, I am not sure anymore.
+> The reason I asked was because IIRC GSoC was not supposed to be team
+> effort but "summer job" by individual students.
 > 
-> I think the "do not trace the other side" approach you suggest for
-> these tests that only care about one side is more appropriate
-> solution for this particular case.  We then do not have to worry
-> about overwriting or output from both sides mixed randomly.
 
-Here it is as a patch on top of jt/fetch-negotiator-skipping, which lets
-us pursue any fix for interleaved trace output on Windows without the
-pressure of an impending flaky test.
+Before starting working on this, I discussed with Joel and ask
+him whether I could take custody of this patches. He was open
+to the idea, so I continued to build on top of them. Since then,
+I have made some changes to his code and also added a lot more of
+my own.
 
-My gut says that looking into making O_APPEND work there is going to be
-the nicest solution, but my gut is not very well versed in Windows
-subtleties. ;)
+What I did was to completely convert git stash and apply some
+more optimizations on top of that, like reducing the number of
+spawned processes. Due to this kind of improvements I was able
+to significantly reduce the execution time and this has visible
+effects, running about 3 times faster.
 
--- >8 --
-Subject: [PATCH] t5552: suppress upload-pack trace output
+Please do not get me wrong, I do not want to bash Joel or his work.
+I just wanted to make it clear that I did not copy his work or made
+it look like it was mine. After Joel agreed to hand the patches off
+to me [1], every line of code that I wrote was written by myself, 
+without his (or anyone else) assistance. I really did my best to finish 
+this project and I believe that my mentor, dscho, can also confirm this. 
+I am really sorry for the confusion.
 
-The t5552 test script uses GIT_TRACE_PACKET to monitor what
-git-fetch sends and receives. However, because we're
-accessing a local repository, the child upload-pack also
-sends trace output to the same file.
+[1]
+https://public-inbox.org/git/CA+CzEk_qwHs5qUstyFeepzwvCBR=9SvH90+__f-gfxFySETZzQ@mail.gmail.com/
 
-On Linux, this works out OK. We open the trace file with
-O_APPEND, so all writes are atomically positioned at the end
-of the file. No data can be overwritten or omitted. And
-since we prepare our small writes in a strbuf and write them
-with a single write(), we should see each line as an atomic
-unit. The order of lines between the two processes is
-undefined, but the test script greps only for "fetch>" or
-"fetch<" lines. So under Linux, the test results are
-deterministic.
-
-The test fails intermittently on Windows, however,
-reportedly even overwriting bits of the output file (i.e.,
-O_APPEND does not seem to give us an atomic position+write).
-
-Since the test only cares about the trace output from fetch,
-we can just disable the output from upload-pack. That
-doesn't solve the greater question of O_APPEND/trace issues
-under Windows, but it easily fixes the flakiness from this
-test.
-
-Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm assuming that this really isn't triggerable on Linux. I tried and
-couldn't manage to get it to fail, and the reasoning above explains why.
-But I wasn't 100% clear that Dscho hadn't seen it fail on non-Windows.
-
- t/t5552-skipping-fetch-negotiator.sh | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
-
-diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-index 0a8e0e42ed..0ad50dd839 100755
---- a/t/t5552-skipping-fetch-negotiator.sh
-+++ b/t/t5552-skipping-fetch-negotiator.sh
-@@ -28,6 +28,19 @@ have_not_sent () {
- 	done
- }
- 
-+# trace_fetch <client_dir> <server_dir> [args]
-+#
-+# Trace the packet output of fetch, but make sure we disable the variable
-+# in the child upload-pack, so we don't combine the results in the same file.
-+trace_fetch () {
-+	client=$1; shift
-+	server=$1; shift
-+	GIT_TRACE_PACKET="$(pwd)/trace" \
-+	git -C "$client" fetch \
-+	  --upload-pack 'unset GIT_TRACE_PACKET; git-upload-pack' \
-+	  "$server" "$@"
-+}
-+
- test_expect_success 'commits with no parents are sent regardless of skip distance' '
- 	git init server &&
- 	test_commit -C server to_fetch &&
-@@ -42,7 +55,7 @@ test_expect_success 'commits with no parents are sent regardless of skip distanc
- 	# "c1" has no parent, it is still sent as "have" even though it would
- 	# normally be skipped.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
-+	trace_fetch client "$(pwd)/server" &&
- 	have_sent c7 c5 c2 c1 &&
- 	have_not_sent c6 c4 c3
- '
-@@ -65,7 +78,7 @@ test_expect_success 'when two skips collide, favor the larger one' '
- 	# the next "have" sent will be "c1" (from "c6" skip 4) and not "c4"
- 	# (from "c5side" skip 1).
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
-+	trace_fetch client "$(pwd)/server" &&
- 	have_sent c5side c11 c9 c6 c1 &&
- 	have_not_sent c10 c8 c7 c5 c4 c3 c2
- '
-@@ -91,7 +104,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
- 	# not need to send any ancestors of "c3", but we still need to send "c3"
- 	# itself.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch origin to_fetch &&
-+	trace_fetch client origin to_fetch &&
- 	have_sent c5 c4^ c2side &&
- 	have_not_sent c4 c4^^ c4^^^
- '
-@@ -121,7 +134,7 @@ test_expect_success 'handle clock skew' '
- 	# and sent, because (due to clock skew) its only parent has already been
- 	# popped off the priority queue.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
-+	trace_fetch client "$(pwd)/server" &&
- 	have_sent c2 c1 old4 old2 old1 &&
- 	have_not_sent old3
- '
-@@ -153,7 +166,7 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
- 	test_commit -C server commit-on-b1 &&
- 
- 	test_config -C client fetch.negotiationalgorithm skipping &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" to_fetch &&
-+	trace_fetch client "$(pwd)/server" to_fetch &&
- 	grep "  fetch" trace &&
- 
- 	# fetch-pack sends 2 requests each containing 16 "have" lines before
--- 
-2.18.0.1058.g0926f0b71f
-
+Best regards,
+Paul Ungureanu
