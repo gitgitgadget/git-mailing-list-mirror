@@ -2,128 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB0A41F405
-	for <e@80x24.org>; Fri, 10 Aug 2018 00:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 406571F405
+	for <e@80x24.org>; Fri, 10 Aug 2018 01:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbeHJCve (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 22:51:34 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:56366 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727185AbeHJCve (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 22:51:34 -0400
-Received: by mail-it0-f73.google.com with SMTP id g4-v6so366190itf.6
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:24:15 -0700 (PDT)
+        id S1727149AbeHJDkV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 23:40:21 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:37770 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726894AbeHJDkV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 23:40:21 -0400
+Received: by mail-pl0-f45.google.com with SMTP id d5-v6so3304624pll.4
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 18:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=S0qqKzjpV9vDcbiGw9zAwGYAGtP7XG4WWxQ0edBS9IY=;
-        b=sZfDF3u2BEG0VjjV6YDz1SzkA3cU75q7+Er0APCXLfeZ90yYCReSXaaYbQXrBBcnDX
-         6IfFvyGi8v3X1HEYZIclo3d843yshm3zFf6USDCO7/7zYKJ6gJ8BO30iXSmjCTLLvcA1
-         nlYNIO2koe0yH56VCabIdozMDQIfjv/N+Y1X6X+K3G3uw5W8bHXxR9DVRmZ63tItXCK/
-         cCDNzsBNxEx0FW8KCM8a1Vi9V6Z7EF+43hUwy+/pTH5/Ru3o630dePmjlphnKTyTf8wz
-         yyK34lGcoLwV3xV8xRbsVvBxmvI5CkLsCmIteEvM1BeoB0X5FssDkG7RclqWvG3wWyS9
-         foOg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RSDyJfDWLRLjEDVXhZ6AYqEqB4G/4Rhv8ACo65KrAW4=;
+        b=BY8xM0rtKmagQuodCLbs2ZWKAAE2KhsARKjnst5QgNQloNDT8KzNuuUSWCFZJtmPDJ
+         oml5+XO+YM2+9eBaNGRDCBZ4E+AFkHbK5fiMXMT22j2CJXEqsKL9r5WDULY34w3lCGw8
+         yzG8VYf8tWwP3avkghbrJ/A7mJxEVXQtRWCtxlwg1RZ5DQYp0ZV+n+bnyKE8RScAU0KO
+         h9ynn/Cujr/vI4sq8ADuYp+opdiEnfdUt0v5yo/m5EgekGyGL6Z0SFaJvT0OthxYJosO
+         t2RJkMeXzzphQy5Z1fguuYnHErGli3/BRqRDyR56Wl3yPNO5luG2eIck6hqo/470Q6ns
+         Kjww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=S0qqKzjpV9vDcbiGw9zAwGYAGtP7XG4WWxQ0edBS9IY=;
-        b=nPpPtAWu4YWGAhiWNP/MUAAuo1RI663kvbQ/NW3C0sopG98SY19WfYajPlmPROCBaL
-         WSQginxX7joOo5+ztKgrMb+bMFkA/Eppq2WOar2B/B43TxqPXnnQZ0sZLzHMTS54mvha
-         Qj+aiAgMRM+pCC/lb+zdOI/DvpOSTkomxAiuPvzOiU1fA96XJVshb/kz58g23P7lwR2p
-         K7jRPmCk199EDgVB2mu4LdKegH8Si9tCuorCNR3TJueBhuDqFJ0H67fO1IyGzTDew0Fj
-         JRcWoXgRn4hX47ZFahzD5r6FF2KT9xZ0cBYHEdtERIp6+wSr6Hc/KPVBTd7IcfuZMSzD
-         UN4Q==
-X-Gm-Message-State: AOUpUlFhPaRnGpm0NDYhZu2LGdwnY5Cxd4Nyd+8+KXtxXMEYdGavJdef
-        jck0H6/j3lxYLjJanyaL6ofezzdaCFUcUYg8+8tt
-X-Google-Smtp-Source: AA+uWPzF69I0f2/0GuciW5f9shueVAcBqG8BGQ5sPjj0TA2JyBHrYpeZ3GEdgiynokJHpvlWQ116Uu4uayLQ61xrAnRL
-X-Received: by 2002:a6b:ee0e:: with SMTP id i14-v6mr1800601ioh.112.1533860654602;
- Thu, 09 Aug 2018 17:24:14 -0700 (PDT)
-Date:   Thu,  9 Aug 2018 17:24:11 -0700
-In-Reply-To: <54d827e7c0dc757451fa10f5bd0752e1e3356281.1533854545.git.matvore@google.com>
-Message-Id: <20180810002411.13447-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <54d827e7c0dc757451fa10f5bd0752e1e3356281.1533854545.git.matvore@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: Re: [PATCH 5/5] rev-list: handle missing tree objects properly
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com, peff@peff.net,
-        stefanbeller@gmail.com, jonathantanmy@google.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RSDyJfDWLRLjEDVXhZ6AYqEqB4G/4Rhv8ACo65KrAW4=;
+        b=izOuPacuwUKlKaX982Zyakw9g+H7X3prxTLuUXzAG1mzViFreEgwu/3uDJQLtFX7Bo
+         /MYD0gWuHBsMWx+hlmYCSO5I7LEeKdKMBsyfSueQQNtbBW2GKyauQiq//tWYA7t88ajm
+         tOT7K5FRoH13bdONjRCJsxXnsGjbL6f4+6Q4mdxmVoninpVYELNc3c1ZlG71JhfRQZAs
+         kZp8Sxb/oqfzO73s4vSOLEmEDN/QgB8kAEDgAF1JeMpyOSFTZ1U9OkAHTI4xiYqvnfS8
+         7YKrXiC5ZUkfTYrUAfC7MgQrN8NW+Ail3zpmPX/lCQMXdr93aqusYJGIA2EBkFYw/QHA
+         BRQA==
+X-Gm-Message-State: AOUpUlF6lUPPSWGglS0FMqBlaFlGrbJc2oaJhuvRRLqJE/oKNgmjUuBe
+        bbPLBamLxFBqcR8+E+n+0u6JLIuO
+X-Google-Smtp-Source: AA+uWPyhvRadOtD2w8angfus+rGk9n5ggrTSGeOALEy0P8exqvzxWqOSEM4NHZ4JbcOqDTgJDKOIOQ==
+X-Received: by 2002:a17:902:42e2:: with SMTP id h89-v6mr4063394pld.69.1533863572436;
+        Thu, 09 Aug 2018 18:12:52 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id p19-v6sm18051158pgk.28.2018.08.09.18.12.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 09 Aug 2018 18:12:51 -0700 (PDT)
+Date:   Thu, 9 Aug 2018 18:12:49 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bartosz Konikiewicz <izdwuut@gmail.com>, git@vger.kernel.org
+Subject: Re: What's the use case for committing both the freshly created file
+ and it's exclusion in .gitignore?
+Message-ID: <20180810011249.GA82458@aiede.svl.corp.google.com>
+References: <CAAdU=LuNn7qdXf81C3-3=0uh7NOSihm3U3dfDcXPiKxfaZMaFQ@mail.gmail.com>
+ <20180809195845.GE32376@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180809195845.GE32376@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> @@ -209,7 +210,8 @@ static inline void finish_object__ma(struct object *obj)
->  	 */
->  	switch (arg_missing_action) {
->  	case MA_ERROR:
-> -		die("missing blob object '%s'", oid_to_hex(&obj->oid));
-> +		die("missing %s object '%s'",
-> +		    type_name(obj->type), oid_to_hex(&obj->oid));
->  		return;
->  
->  	case MA_ALLOW_ANY:
-> @@ -222,8 +224,8 @@ static inline void finish_object__ma(struct object *obj)
->  	case MA_ALLOW_PROMISOR:
->  		if (is_promisor_object(&obj->oid))
->  			return;
-> -		die("unexpected missing blob object '%s'",
-> -		    oid_to_hex(&obj->oid));
-> +		die("unexpected missing %s object '%s'",
-> +		    type_name(obj->type), oid_to_hex(&obj->oid));
->  		return;
+Hi,
 
-Once again, I'll do a fuller review tomorrow.
+Jeff King wrote:
+> Bartosz Konikiewicz wrote:
 
-These are fine (obj->type is populated), because the types of objects
-are known during traversal.
+>> Steps to reproduce:
+>>
+>> 1. Create a new file.
+>> 2. Stage the file.
+>> 3. Add the file to .gitignore.
+>> 4. Stage the .gitignore.
+>> 5. Commit changes.
+[...]
+> As far as I know, that is not an intentionally supported workflow. It is
+> merely the result that .gitignore is only considered when adding new
+> files to the index, not when committing nor when updating the entry for
+> an existing file.
 
-> -	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid)) {
-> +	if (!has_object_file(&obj->oid)) {
->  		finish_object__ma(obj);
->  		return 1;
+I am not sure I agree with "not intentionally supported".  It's a
+little closer to "logical consequence of some intentionally features",
+because:
 
-And this is also fine, because finish_object__ma can now handle any
-object type.
+> If you are asking as a more general case: why do we not complain about
+> .gitignore for files the index already knows about, then I think that is
+> useful. It lets you override the .gitignore _once_ when adding the file
+> initially, and then you don't have to deal with it again (and keep in
+> mind that the pattern excluding it may be broad, like "*.o", or even
+> just "*", so simply deleting it from the .gitignore is not an option).
 
-> +	revs.show_missing_trees = 1;
+This workflow is very common.
 
-(and elsewhere)
+> You could probably accomplish this these days by using a negative
+> pattern in your .gitignore file. But I think the behavior in question
+> may predate negative patterns (but I didn't dig). It's also a bit
+> simpler to use in practice, IMHO.
 
-Could we just show missing trees all the time? We do that for blobs and
-already rely on the caller (eventually, show_object() in
-builtin/rev-list.c) to determine whether the object actually exists or
-not; we could do the same for trees. This allows us to not include this
-extra knob.
+Agreed about simpler, even though it's not part of any of my own
+habits.
 
-> -	if (parse_tree_gently(tree, gently) < 0) {
-> +	parse_result = parse_tree_gently(tree, gently);
-> +	if (parse_result < 0 && !revs->show_missing_trees) {
->  		if (revs->ignore_missing_links)
->  			return;
->  
-> @@ -182,7 +185,8 @@ static void process_tree(struct traversal_context *ctx,
->  	if (base->len)
->  		strbuf_addch(base, '/');
->  
-> -	process_tree_contents(ctx, tree, base);
-> +	if (parse_result >= 0)
-> +		process_tree_contents(ctx, tree, base);
->  
->  	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn) {
->  		r = ctx->filter_fn(LOFS_END_TREE, obj,
+In retrospect, despite the precedent of cvsignore, calling the file
+.gitignore may not have been a great idea.  Some other name that
+conveys .git-prevent-me-from-accidentally-adding-these-files would
+make the behavior less surprising to new users.
 
-Is it possible to call the appropriate callbacks and then return
-immediately, instead of going through the whole function checking
-parse_result when necessary? When doing the latter, the reader needs to
-keep on checking if each function still works if the tree is
-unparseable.
+"git help gitignore" has some notes about this.  If you have ideas
+about moments in interactive use where we could print some messages to
+make the behavior less surprising, that would be very welcome.
+
+Thanks,
+Jonathan
