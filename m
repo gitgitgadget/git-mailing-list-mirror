@@ -2,121 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A48181F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 19:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B6A51F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 19:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726830AbeHJWIG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 18:08:06 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:33715 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726432AbeHJWIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 18:08:05 -0400
-Received: by mail-wm0-f46.google.com with SMTP id r24-v6so2277196wmh.0
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 12:36:51 -0700 (PDT)
+        id S1727043AbeHJWLq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 18:11:46 -0400
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:36208 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726432AbeHJWLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 18:11:46 -0400
+Received: by mail-ua1-f67.google.com with SMTP id c12-v6so3081103uan.3
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 12:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=b/3NdrJAU5x9R0DEKiTEUtWlb1P2yP8Rfu5nvnTvanM=;
-        b=t7w0j43mZ0Gm5tuEKRbEiIIKSz3H9UsUEDDvgMyxv0w25vnLOpdeJU50uORFnV+4Qk
-         dk2wrgTxtOeS7xlChbkRjYcikaVaVw3tEikDcXcQ0oVXnOctcHTo50WOefD+i+2GeTju
-         n+EafpejnCvKDRgzUTKLduesRgygOzjZ00QgdCfnZIIO1cdxmRt3BHAuvmE+6vekvls2
-         8o/tEwNfF1hH4lwhGyBkhDZfvagSXkyjdAh38BWhfzH2WqYrSoUyLH1oqeeT/TfrRO1j
-         BG8qMMD1QDyQxHt6++AAajygtUeU2Hq6oX4Vf5X2UeQxXinHBis2J0QxiHHer85u918A
-         KMeA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yuaobfxvRx52QllmNvhg9aXj4VXULPzBNntWnV5nxNw=;
+        b=sVZ/ot6nU/4xZXnNp4lgIkuKPQxtelUd/AFPK+8MqpE6RcTeDRFyDEo8+4VbqD2qnM
+         962RmjJk8O+nut1hy+c1otDbHQ6tJYt/HWlQxVNPTbNUO0f2ByvSnjD14WgjDPMpcmOi
+         mThs8I/5dA2cXiwKi6MR8JrN8Imi9CzD7syBi8bH5GCPT7e8ykwrfFRwJQ0F5EQ5UrXD
+         d1zfQadcKuGHNzujeensxrROFL8wu8DVBthttLVSyvB0xMPpfEf8mPqSm8lqo9ZYRo+1
+         kViRUIppNeRz/9QuWqO+rHI5U6LW7ZU8ns7NkeYE1xF6sgPDpc8wmQBaAQUxT+xVppH6
+         PKcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
-         :date:user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=b/3NdrJAU5x9R0DEKiTEUtWlb1P2yP8Rfu5nvnTvanM=;
-        b=NjoKiAqcicg2mTKEBk1uuChfSN/z2kXoHPQbxirpBGSGBlvIdxUdujSibbDQ6ekeiM
-         Wk6hYA8pPEmCRu9Ngzq4q8Q66MVNiF1MmUi2k2Mw4nNv2p1i7gssT3qxNydSic9wnv+Q
-         oZfOzsBy9BEmlTkKzFwsAoBpzZo34QiYENFvkaYf0DEctxqc/THhYCTHws8zbIxWGkzg
-         0j19m3vOYnq5MoG4Rfjw650ShoBOd0cMEvdKclZ8Gi2V0MRcixvW/wCvHxK0tp6/aM0Q
-         t3rg2vp+DbC84rKgCJnqYgvi8Q+HGQjvdAOFTvV8wBUvI9ieCmv1x4nsoRBjtSJh8Oc2
-         AEiA==
-X-Gm-Message-State: AOUpUlHEshFythFp0TJpHUb4dS1DbK7qnh8gMBpeHaYBJ+nHsmlyKfTG
-        x8ap1c/rblC1Q75wLxGv9u8=
-X-Google-Smtp-Source: AA+uWPw8gQnwspGwkwMMaqtfgErURqDm6HKpvZ/skTW19NbB5l8OLekksnNWyTdc41EnErMiganahg==
-X-Received: by 2002:a1c:dc89:: with SMTP id t131-v6mr2494480wmg.50.1533929810649;
-        Fri, 10 Aug 2018 12:36:50 -0700 (PDT)
-Received: from [192.168.0.104] (AToulouse-658-1-25-156.w86-222.abo.wanadoo.fr. [86.222.24.156])
-        by smtp.gmail.com with ESMTPSA id u7-v6sm9129427wrq.13.2018.08.10.12.36.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Aug 2018 12:36:49 -0700 (PDT)
-Subject: Re: [GSoC][PATCH v6 11/20] rebase -i: rewrite complete_action() in C
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-References: <20180731180003.5421-1-alban.gruin@gmail.com>
- <20180810165147.4779-1-alban.gruin@gmail.com>
- <20180810165147.4779-12-alban.gruin@gmail.com>
- <xmqq4lg281ms.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Message-ID: <453e3f0c-6c68-71e1-0338-185f129bb778@gmail.com>
-Date:   Fri, 10 Aug 2018 21:36:48 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.8.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yuaobfxvRx52QllmNvhg9aXj4VXULPzBNntWnV5nxNw=;
+        b=V5NjAgcsUMlPVeO5B4sWiEmllAycbogpQ3L59ftUYMfqy8Hd9ebLLqNFBNhFJPphYT
+         Ef7nDr3+A+MJ0qi6tef2UaEKT46OEdWU72PXSW325KI4GEWj8lqMctxiSlkD2PPcky1n
+         RZPr/ZrJCWSNUJEPVTgAuZ3strTbtCJOPi62Na8rQPvbVbHuL61/Q0fUJSgQorJWBqJF
+         SFVoHaKLObYjekqVYhc8CM8/EvTHqwGb8cdl9qeSo4t2x1I73WfRr1thZALuN6gbKzi9
+         bVoRZFrZsHNC4QNAjLed6TVcxj7lWqZTgDfH3YIUOXX3QBcVptaWr41QFV6mo4zrYZSI
+         XBcA==
+X-Gm-Message-State: AOUpUlFG2lWVPb7+tgMB9BkuKqTeSHGBXuqOogspBmo8/WItsAwXEutl
+        gRQERkCkwvcMyHsvxwY8Xgdxm/ousNBmGCkXyXE=
+X-Google-Smtp-Source: AA+uWPwNPwwXHQNCjfzX3d/UycSFkgYSySeMCIhCeJtNXFLzUOnRZPmlfghvOPc1EJ/nbjK7mzqhKNiTxtg4XY3qXEw=
+X-Received: by 2002:a1f:8c2:: with SMTP id 185-v6mr4954387vki.51.1533930030643;
+ Fri, 10 Aug 2018 12:40:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lg281ms.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
+ <20180729103306.16403-5-pclouds@gmail.com> <CABPp-BGF+GZjm-DiveLjFOESKwPz2F0Y7X4_kXyem2xFo2odUw@mail.gmail.com>
+ <CACsJy8DF5XLf-RF3SwTpRynYALJUPO_VTK=fpx1oabwB80ZpPw@mail.gmail.com>
+ <CABPp-BGU6QnUwQgkhwx6vLBc3ozoEScQ4DaZd-9ZZfQhXfxPww@mail.gmail.com> <CACsJy8AeptcqwRC+DOrdhvk69kEQT6+S6M=0OGWBFOE5gihGzA@mail.gmail.com>
+In-Reply-To: <CACsJy8AeptcqwRC+DOrdhvk69kEQT6+S6M=0OGWBFOE5gihGzA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Aug 2018 12:40:19 -0700
+Message-ID: <CABPp-BHMC8k3t2_9KzdJvg80e-nqwsbLUceTLNjQ=ST=9XthEA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] unpack-trees: cheaper index update when walking by cache-tree
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Aug 10, 2018 at 12:30 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> On Fri, Aug 10, 2018 at 8:39 PM Elijah Newren <newren@gmail.com> wrote:
+...
+> > Why do we still need to go through add_index_entry()?  I thought that
+> > the whole point was that you already checked that at the current path,
+> > the trees being unpacked were all equal and matched both the index and
+> > the cache_tree.  If so, why is there any need for an update at all?
+> > (Did I read your all_trees_same_as_cache_tree() function wrong, and
+> > you don't actually know these all match in some important way?)
+>
+> Unless fn is oneway_diff, we have to create a new index (in o->result)
+> based on o->src_index and some other trees. So we have to add entries
 
-Le 10/08/2018 à 21:25, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
-> 
->> This rewrites complete_action() from shell to C.
->>
->> A new mode is added to rebase--helper (`--complete-action`), as well as
->> a new flag (`--autosquash`).
->>
->> Finally, complete_action() is stripped from git-rebase--interactive.sh.
->>
->> The original complete_action() would return the code 2 when the todo
->> list contained no actions.  This was a special case for rebase -i and
->> -p; git-rebase.sh would then apply the autostash, delete the state
->> directory, and die with the message "Nothing to do".  This cleanup is
->> rewritten in C instead of returning 2.  As rebase -i no longer returns
->> 2, the comment describing this behaviour in git-rebase.sh is updated to
->> reflect this change.
-> 
-> Hmph.  It is easy enough to do the clean-up ourselves in this code,
-> instead of asking the caller to do so.  On the other hand, stashing
-> of local changes is done by the caller, so it feels a bit strange
-> way to divide the labor between the two parts.
-> 
-> Other than that design choice, the patch itself looks reasonable and
-> a fairly faithful reimplementation of what the scripted one did.
-> 
+Oh, right, o->src_index may not equal o->dst_index (because of people
+like me who call it that way from merge-recursive.c) and even if it
+does, we still have the temporary o->result in the mean time.  I
+should have remembered that; just didn't.
 
-This was the behaviour of the old complete_action().  The new one cleans
-up by itself; this is the
-apply_autostash()/sequencer_remove_state()/todo_list_release() dance
-done at three places inside complete_action(), and has not changed since
-v3[0].
+> to o->result and add_index_entry() is the way to do that (granted if
+> we feel confident we could add ADD_CACHE_JUST_APPEND which makes it
+> super cheap). This is the outcome of n-way merge,
+>
+> all_trees_same_as_cache_tree() only gurantees the input condition (all
+> trees the same, index also the same) but it can't affect what fn does.
+> I don't think we can just simply skip and not update anything (like
+> o->diff_index_cached case) because o->result would be empty in the
+> end. And we need to create (temporary) o->result before we can swap it
+> to o->dst_index as the result of a merge operation.
+>
 
-Maybe I misunderstood what you said?
+...
 
-[0]
-https://public-inbox.org/git/20180710121557.6698-11-alban.gruin@gmail.com/
+> I have a feeling that you're thinking we can swap o->src_index to
+> o->dst_index at the end? That might explain your confusion about
+> o->result (or I misread your replies horribly) and the original
+> index...
 
-Cheers,
-Alban
-
+Yeah, thanks for figuring out my confusion and jogging my memory.
