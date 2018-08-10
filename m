@@ -2,90 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB54F1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 19:34:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A48181F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 19:36:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726669AbeHJWGF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 18:06:05 -0400
-Received: from mout.gmx.net ([212.227.17.22]:32961 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726432AbeHJWGF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 18:06:05 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDV5t-1fgDVS1aiD-00GsfD; Fri, 10
- Aug 2018 21:34:39 +0200
-Date:   Fri, 10 Aug 2018 21:34:41 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
- for GIT_TRACE
-In-Reply-To: <20180810171546.GA32713@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1808102129570.71@tvgsbejvaqbjf.bet>
-References: <pull.17.git.gitgitgadget@gmail.com> <20180809194712.GC32376@sigill.intra.peff.net> <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com> <20180810140908.GA23507@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1808101833330.71@tvgsbejvaqbjf.bet>
- <20180810171546.GA32713@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726830AbeHJWIG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 18:08:06 -0400
+Received: from mail-wm0-f46.google.com ([74.125.82.46]:33715 "EHLO
+        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726432AbeHJWIF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 18:08:05 -0400
+Received: by mail-wm0-f46.google.com with SMTP id r24-v6so2277196wmh.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 12:36:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:openpgp:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=b/3NdrJAU5x9R0DEKiTEUtWlb1P2yP8Rfu5nvnTvanM=;
+        b=t7w0j43mZ0Gm5tuEKRbEiIIKSz3H9UsUEDDvgMyxv0w25vnLOpdeJU50uORFnV+4Qk
+         dk2wrgTxtOeS7xlChbkRjYcikaVaVw3tEikDcXcQ0oVXnOctcHTo50WOefD+i+2GeTju
+         n+EafpejnCvKDRgzUTKLduesRgygOzjZ00QgdCfnZIIO1cdxmRt3BHAuvmE+6vekvls2
+         8o/tEwNfF1hH4lwhGyBkhDZfvagSXkyjdAh38BWhfzH2WqYrSoUyLH1oqeeT/TfrRO1j
+         BG8qMMD1QDyQxHt6++AAajygtUeU2Hq6oX4Vf5X2UeQxXinHBis2J0QxiHHer85u918A
+         KMeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:openpgp:message-id
+         :date:user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=b/3NdrJAU5x9R0DEKiTEUtWlb1P2yP8Rfu5nvnTvanM=;
+        b=NjoKiAqcicg2mTKEBk1uuChfSN/z2kXoHPQbxirpBGSGBlvIdxUdujSibbDQ6ekeiM
+         Wk6hYA8pPEmCRu9Ngzq4q8Q66MVNiF1MmUi2k2Mw4nNv2p1i7gssT3qxNydSic9wnv+Q
+         oZfOzsBy9BEmlTkKzFwsAoBpzZo34QiYENFvkaYf0DEctxqc/THhYCTHws8zbIxWGkzg
+         0j19m3vOYnq5MoG4Rfjw650ShoBOd0cMEvdKclZ8Gi2V0MRcixvW/wCvHxK0tp6/aM0Q
+         t3rg2vp+DbC84rKgCJnqYgvi8Q+HGQjvdAOFTvV8wBUvI9ieCmv1x4nsoRBjtSJh8Oc2
+         AEiA==
+X-Gm-Message-State: AOUpUlHEshFythFp0TJpHUb4dS1DbK7qnh8gMBpeHaYBJ+nHsmlyKfTG
+        x8ap1c/rblC1Q75wLxGv9u8=
+X-Google-Smtp-Source: AA+uWPw8gQnwspGwkwMMaqtfgErURqDm6HKpvZ/skTW19NbB5l8OLekksnNWyTdc41EnErMiganahg==
+X-Received: by 2002:a1c:dc89:: with SMTP id t131-v6mr2494480wmg.50.1533929810649;
+        Fri, 10 Aug 2018 12:36:50 -0700 (PDT)
+Received: from [192.168.0.104] (AToulouse-658-1-25-156.w86-222.abo.wanadoo.fr. [86.222.24.156])
+        by smtp.gmail.com with ESMTPSA id u7-v6sm9129427wrq.13.2018.08.10.12.36.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Aug 2018 12:36:49 -0700 (PDT)
+Subject: Re: [GSoC][PATCH v6 11/20] rebase -i: rewrite complete_action() in C
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+References: <20180731180003.5421-1-alban.gruin@gmail.com>
+ <20180810165147.4779-1-alban.gruin@gmail.com>
+ <20180810165147.4779-12-alban.gruin@gmail.com>
+ <xmqq4lg281ms.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Message-ID: <453e3f0c-6c68-71e1-0338-185f129bb778@gmail.com>
+Date:   Fri, 10 Aug 2018 21:36:48 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ygDda6u3oA9LfLpdip0qzoGfZldDIGrQaVdIyc5f213YEt6ohCp
- OPZL30tZCSkBRHOllfZFlHr3/i82kWwc53HyI4eclBZh4SAEsXbYlexCAvrK58YKFPpe2UT
- nzloAKJdanjpPR+ck5knOF1NPIeY8eK0x9hAmLatmkaLVnP/FTWjiAm11rb5MftzMz1+ZOw
- WiLI9+UTm78ebZh/vJBuQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rfoNUdMfpj0=:aC3eYaeikHM0gvwE7lf97l
- 4L+gI8uWNbQFdgkyk1ouwcDnbpaiZ/19LsI+4mq9pA9HOtze6Mcy2gE1aEd5aX+rTDR/iALy3
- ctArVLvI/Ap/Vz7sMkfeyAXSN81dm5JsXkyg9skcQE+3otiGhsfSgU3Pi0dfrmk6mtLjxs7On
- yjlf+7zJYq7yUAS1mRcz5X9DURP+TdaTRW3tt8eVSjcJGEXSsO6PSs/XonxgyAOSZ6Ow+pOYc
- +AXdwgceTQOeus2RebfLT057nQOSzCpzcX2GL8L25NFOstFc8uzQ21hvkGJs0Zw1XM4HYE7XO
- 2chSjvFG/MO7ngtkVJ68WBhe83THT2AeKYdbwmizS8C9s//UN9dwqh6eGi28854QmKPnv92Uu
- Gg94E9QHmLN5X1n+vr4Rpbvd/umuQIpotN/xoy91vGbEX6PhcbSW1loWPWLtNYmhMS/jZII8S
- UCPnltBR6A2UxjUyqKqSCMHdNGQheJsGD8SToWKE34ygvN1JGUr3pKVKrjsrOIgTuOVV/Zzni
- BhJ6+BhB0NuL9totq79+Am9HCFRDHa1HelRt0EnnqoPMspwxl2t8mJyuAE/E7ZQXMWkdmloJg
- tPxOYPpvYJB4rYtjYKlfOlJZtGQorsAw1QpMKyDDqF+BkhRkcBDc8wSEvzWfQ6ROXAv4gNpru
- j2F94hteOEMJV9CEQt78GqtgYn6J+ubFk8iYKYPgKG69+1RnGWxQ+SyKLsNV8Zg2tKv4oKVlm
- wC8sM5aF+YSUdcPJ77IMc975Vo8wcY2PnyKmzUAMXjBTE3/FbdnDLChzTNmCSwEAjcmW5LnvE
- yRkJJ6q
+In-Reply-To: <xmqq4lg281ms.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio,
 
-On Fri, 10 Aug 2018, Jeff King wrote:
-
-> On Fri, Aug 10, 2018 at 06:43:07PM +0200, Johannes Schindelin wrote:
+Le 10/08/2018 à 21:25, Junio C Hamano a écrit :
+> Alban Gruin <alban.gruin@gmail.com> writes:
 > 
-> > So unless you are willing to ignore, to willfully keep this breakage,
-> > I would suggest not to introduce the ugliness of an overridden
-> > upload-pack for the sole purpose of disabling the tracing on one side,
-> > but instead to get this here bug fixed, by helping me with this here
-> > patch series.
+>> This rewrites complete_action() from shell to C.
+>>
+>> A new mode is added to rebase--helper (`--complete-action`), as well as
+>> a new flag (`--autosquash`).
+>>
+>> Finally, complete_action() is stripped from git-rebase--interactive.sh.
+>>
+>> The original complete_action() would return the code 2 when the todo
+>> list contained no actions.  This was a special case for rebase -i and
+>> -p; git-rebase.sh would then apply the autostash, delete the state
+>> directory, and die with the message "Nothing to do".  This cleanup is
+>> rewritten in C instead of returning 2.  As rebase -i no longer returns
+>> 2, the comment describing this behaviour in git-rebase.sh is updated to
+>> reflect this change.
 > 
-> I'm OK if you want to live with the broken test in the interim.
+> Hmph.  It is easy enough to do the clean-up ourselves in this code,
+> instead of asking the caller to do so.  On the other hand, stashing
+> of local changes is done by the caller, so it feels a bit strange
+> way to divide the labor between the two parts.
+> 
+> Other than that design choice, the patch itself looks reasonable and
+> a fairly faithful reimplementation of what the scripted one did.
+> 
 
-I realize that I failed to tell you that I basically spent 2.5 days worth
-of worktime to figure this out and come up with three iterations of the
-patch series (you only saw the latest).
+This was the behaviour of the old complete_action().  The new one cleans
+up by itself; this is the
+apply_autostash()/sequencer_remove_state()/todo_list_release() dance
+done at three places inside complete_action(), and has not changed since
+v3[0].
 
-I want this patch series in git.git, maybe not in the current form, but in
-one form or another. I don't want to spend any more minute on trying to
-figure out the same problem with any other regression test (which might
-not even be as easily worked around as with a semi-simple --upload-pack
-option).
+Maybe I misunderstood what you said?
 
-Thank you for wanting to help. Please accept my apologies for expressing
-in a poor way that I appreciate your eagerness to provide a patch, but
-that I think nevertheless that it would be better to work on the GIT_TRACE
-concurrency problem and its resolution via file locks. It would solve that
-class of problems, instead of that single regression test being flakey.
+[0]
+https://public-inbox.org/git/20180710121557.6698-11-alban.gruin@gmail.com/
 
-Sorry,
-Dscho
+Cheers,
+Alban
+
