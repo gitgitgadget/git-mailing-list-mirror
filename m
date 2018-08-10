@@ -2,128 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D882C1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 16:57:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D58811F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 17:03:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727956AbeHJT2Q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 15:28:16 -0400
-Received: from siwi.pair.com ([209.68.5.199]:16653 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727522AbeHJT2P (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 15:28:15 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 6E4143F40F4;
-        Fri, 10 Aug 2018 12:57:35 -0400 (EDT)
-Received: from [10.160.98.162] (unknown [167.220.148.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 2EBB23F40F1;
-        Fri, 10 Aug 2018 12:57:35 -0400 (EDT)
-Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
- for GIT_TRACE
-From:   Jeff Hostetler <git@jeffhostetler.com>
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
- <70b25098-bf96-d362-56cd-2bb17cadf162@jeffhostetler.com>
-Message-ID: <5773077b-8912-c6be-9017-1fc1f3e13b02@jeffhostetler.com>
-Date:   Fri, 10 Aug 2018 12:57:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727969AbeHJTd5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 15:33:57 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:55431 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727381AbeHJTd4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 15:33:56 -0400
+Received: by mail-it0-f52.google.com with SMTP id d10-v6so3503713itj.5
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 10:03:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oba2nLlPV+1gsUkxCkRfvWp94R3pLfbD585Spu2tjnw=;
+        b=jj1RtdGG4OWQV+HLRYm7xQukJnVxA2Bbvr/f+BysQIaA72eDepGQGEvhkE3XAiPwr4
+         Cluuwcoyi8L5B46D8dhry+jSQwbKMom0u3FaU3MxR9TAv7gAAAivMqQa3MKfdOwxvagI
+         DFwUE3ERwllNwDm4f5l0oQQgvP2YRIseceTs1gdSW/KGn+n5zlaqNrCP8Aop8YYNbpUO
+         SAZ0otge6jjwCVdqfELLFTMefuHjTbk5QOJmXljnaW1H7v+3n0ja3cjGeVfM0nZvo75V
+         zcd2IO0IMcLRxZ5PfGlBu9mR2pnskQJjANuOAaktZauqTeV0xEIhX/QhWiSpVdBoI553
+         rQyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oba2nLlPV+1gsUkxCkRfvWp94R3pLfbD585Spu2tjnw=;
+        b=JFMjpPM3/ssB3NYHANgs1qVqeewiXO8bnjbj1XsSozxTxfvA8DEOqCmaKdMHqxZ1MA
+         iHZJBG9TrQxRiV6A4zMQsBNym+fE6HmlE5hXD5fdoqnQ1Lql0VSQHHMGfRWmPkHSIZCY
+         JeAFK5uZO3h7PG9/pCqmLItScmNSoeIxZeQLX4e8FOGFJTKasiqym+3FHreTiRmkF/JU
+         10LBhOMyYh9NGCC4BctAcYBtZwpYUtVhgIvng7N++VluYSuvloyoXZ4HR4vuUIWPDKpj
+         om0QrOH540nnpA1D596dVejXz8SrW+RZLwONTUQHNSCsKM6i0uD4C1jM+lgVSYTFk6Z5
+         kdNw==
+X-Gm-Message-State: AOUpUlFEyecMKV8Fw5dkIONg/FKtUUX5XvRWMx203OZ8doBFywm4L9Ey
+        bf9GGe8yNt5q8KWtQCq/xFlIjtvOHH2AGSByxCI=
+X-Google-Smtp-Source: AA+uWPyl2+4Mnr1YiEx2gGVGZZVULZ5Zxt+Xf0hDo8ezdiH1DejamQhhNTIFExyPAybwx/Qzhg0IoT9CNzfsukFGQmg=
+X-Received: by 2002:a24:33c1:: with SMTP id k184-v6mr2933731itk.76.1533920594946;
+ Fri, 10 Aug 2018 10:03:14 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <70b25098-bf96-d362-56cd-2bb17cadf162@jeffhostetler.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <CAPFHKzepqebXX7mrbeoc=+SHzWZ5N+6eOaLiC26tVGKogZoLGg@mail.gmail.com>
+ <20180810030624.GA101965@aiede.svl.corp.google.com>
+In-Reply-To: <20180810030624.GA101965@aiede.svl.corp.google.com>
+From:   Jonathon Reinhart <jonathon.reinhart@gmail.com>
+Date:   Fri, 10 Aug 2018 13:02:47 -0400
+Message-ID: <CAPFHKze39tDyVVMg=op9RKty7OgWnscww7JvXAByNU7JxJJfLQ@mail.gmail.com>
+Subject: Re: 'git submodule update' ignores [http] config
+To:     jrnieder@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks Jonathan.
 
+The confirmation that the super-project config does not apply to the
+submodules is what I was really looking for. We'll go from here.
 
-On 8/10/2018 12:51 PM, Jeff Hostetler wrote:
-> 
-> 
-> On 8/10/2018 12:15 PM, Johannes Sixt wrote:
->> Am 09.08.2018 um 19:35 schrieb Johannes Schindelin via GitGitGadget:
->>> I reported a couple of times that t5552 is not passing reliably. It 
->>> has now
->>> reached next, and will no doubt infect master soon.
->>>
->>> Turns out that it is not a Windows-specific issue, even if it occurs 
->>> a lot
->>> more often on Windows than elsewhere.
->>>
->>> The culprit is that two processes try simultaneously to write to the 
->>> same
->>> file specified via GIT_TRACE_PACKET, and it is not well defined how that
->>> should work, even on Linux.
->>
->> Thanks for digging down to the root cause. As has been said, the 
->> behavior of O_APPEND is well-defined under POSIX, but last time I 
->> looked for equivalent feature on Windows, I did not find any.
->>
->> Last time was when I worked around the same failure in 
->> t5503-tagfollow.sh in my private builds:
->>
->> https://github.com/j6t/git/commit/9a447a6844b50b43746d9765b3ac809e2793d742 
->>
->>
->> It is basically the same as Peff suggests: log only one side of the 
->> fetch.
->>
->> As this buglet looks like a recurring theme, and a proper fix is 
->> preferable over repeated work-arounds. To me it looks like we need 
->> some sort of locking on Windows. Unless your friends at Microsoft have 
->> an ace in their sleeves that lets us have atomic O_APPEND the POSIX 
->> way...
-> 
-> The official Windows CRT for open() does document an O_APPEND, but after
-> looking at the distributed source, I'm not sure I trust it.
-> 
-> I have not looked at the MSYS version of the CRT yet so I cannot comment
-> on it.
-> 
-> I did find that the following code does what we want.  Notice the use of
-> FILE_APPEND_DATA in place of the usual GENERIC_READ.  (And yes, the docs
-> are very vague here.)
+This is a bit complicated, because this config is all generated
+dynamically by the GitLab CI Runner when it is setting up a build job.
+(See the linked issue in my first email for the gory details).
 
-d'oh
-
-s/GENERIC_READ/GENERIC_WRITE/
-
-> 
-> Before we try a locking solution, perhaps we should tweak mingw_open()
-> to use something like this to get a proper HANDLE directly and then use
-> _open_osfhandle() to get a "fd" for it.
-> 
-> Jeff
-> 
-> ---------------------------------------------------------------------
-> 
-> #include <Windows.h>
-> 
-> int main()
-> {
->      HANDLE h = CreateFileW(L"foo.txt",
->          FILE_APPEND_DATA,
->          FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
->          NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-> 
->      const char * buf = "this is a test\n";
->      DWORD len = strlen(buf);
->      DWORD nbw;
-> 
->      WriteFile(h, buf, len, &nbw, NULL);
->      CloseHandle(h);
-> 
->      return 0;
-> }
+Thank you,
+Jonathon
+>
+> +cc: Stefan, who has been looking at fetch --recurse-submodules recently
+> Hi,
+>
+> Jonathon Reinhart wrote:
+>
+> > I've narrowed it down to an observation that the [http] config seems
+> > to be ignored by 'git submodule update'. Shouldn't those options be
+> > respected by submodules?
+> >
+> > Given a .git/config file like this:
+> >
+> > ------------------------------------------------------------------------
+> > [fetch]
+> >     recurseSubmodules = false
+> > [http "https://gitlab.exmaple.com"]
+> >     sslCAInfo = C:\\Users\\gitlab-runner\\builds\\deadbeef\\0\\somegroup\\someproj.git\\CA_SERVER_TLS_CA_FILE
+> [...]
+> > C:\Users\jreinhart\testrepo>set GIT_CURL_VERBOSE=1
+> > C:\Users\jreinhart\testrepo>git fetch
+> [...]
+> > *   CAfile: C:\Users\gitlab-runner\builds\deadbeef\0\somegroup\someproj.git\CA_SERVER_TLS_CA_FILE
+> [...]
+> > C:\Users\jreinhart\testrepo>git checkout master
+> > C:\Users\jreinhart\testrepo>git submodule update --init
+> [...]
+> > *   CAfile: C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+> [...]
+> > Note that the CAfile reverted to its default instead of using the same
+> > one from the `git fetch`.
+>
+> Interesting.
+>
+> The context is that "git submodule update" is simply running commands
+> like "git fetch" inside the submodules, and the repository-local
+> config of the superproject does not apply there.
+>
+> In the long run, commands like "git fetch --recurse-submodules" may
+> chaange to use a single process.  It's possible that some of the
+> repository-local configuration of the superproject would apply at that
+> point, though the inconsistency would be confusing, so probably not
+> these particular settings.  Anyway, that's a faraway future; today,
+> "git fetch --recurse-submodules" is also running "git fetch" commands
+> inside the submodules, and the repository-local config of the
+> superproject does not apply there.
+>
+> Would it work for you to put this configuration in the global config
+> file ("git config --global --edit")?  That way, it would be used by
+> all repositories.  If you want it only to apply within the testrepo
+> directory, you can use conditional includes --- something like:
+>
+>   in $HOME/.git/config/testrepo-ca:
+>
+>   [http "https://gitlab.example.com"]
+>         sslCAInfo = ...
+>
+>   in $HOME/.git/config/git:
+>
+>   [includeIf "gitdir/i:~/testrepo/**"]
+>         path = testrepo-ca
+>
+> Thanks and hope that helps,
+> Jonathan
