@@ -7,73 +7,88 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F2FD1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:01:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D03EC1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726998AbeHKAcq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 20:32:46 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38345 "EHLO mout.gmx.net"
+        id S1727026AbeHKAeh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 20:34:37 -0400
+Received: from mout.gmx.net ([212.227.15.15]:36113 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726708AbeHKAcq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 20:32:46 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M8MyE-1g9v2o3DVq-00vuoK; Sat, 11
- Aug 2018 00:00:56 +0200
-Date:   Sat, 11 Aug 2018 00:00:58 +0200 (DST)
+        id S1726708AbeHKAeg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 20:34:36 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbujs-1gDit92JtM-00jI5E; Sat, 11
+ Aug 2018 00:02:47 +0200
+Date:   Sat, 11 Aug 2018 00:02:49 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH v4 00/21] Add `range-diff`, a `tbdiff` lookalike
-In-Reply-To: <xmqqlg9d7vsy.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808110000260.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <CAGZ79kb4ki0cXLnJHeqzRvWaGWki1_epWOdCy49s_v9cy_tJ2A@mail.gmail.com> <nycvar.QRO.7.76.6.1808081422160.71@tvgsbejvaqbjf.bet> <CAGZ79kbj2sgKOmouvLDuXic3vq9RG1LZ_retOqMwX_YZtMP+1Q@mail.gmail.com>
- <nycvar.QRO.7.76.6.1808102313070.71@tvgsbejvaqbjf.bet> <xmqqlg9d7vsy.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/21] range-diff: also show the diff between
+ patches
+In-Reply-To: <CAPig+cQ9DcFPosPcjo6MbF_sF9DXuZQ_gZe5jxyx0vbH932sdA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808110001150.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <94afaeaf224563effda7b3c0b8939567302d2ba1.1532210683.git.gitgitgadget@gmail.com> <20180729190359.GD2734@hank.intra.tgummerer.com> <CAPig+cTuD0+8etdMLu8FkFVxnXUM218taxU9in-fe3QXhDj5WQ@mail.gmail.com>
+ <20180729214543.GD9955@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1807301826480.10478@tvgsbejvaqbjf.bet> <20180730212606.GL9955@hank.intra.tgummerer.com> <CAPig+cSeAUWFCBEbk0m7_gmATAaVDg-fi42kq49DuGm3g0L4=Q@mail.gmail.com> <nycvar.QRO.7.76.6.1808102308140.71@tvgsbejvaqbjf.bet>
+ <CAPig+cQ9DcFPosPcjo6MbF_sF9DXuZQ_gZe5jxyx0vbH932sdA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zS44vdQ9r/Dz9dR8U6FoHqzAwPk5d+wQDh2oxPKeenF950Jm9Rm
- HNQiDdY/BJyxWONrhvyatq+LGDe3KGUzaeBOu/+D9+AnVhd4YDHT/FA0vONIfI0Zq7vnnMg
- z0iqhHUI/fUJbYThUlLLzavDE97Xh35kxes5zC1KG7ifykbXVd5e4TU57PtX6DaMuzc7od9
- bMK4Qlm9UhH7yYMHf4WqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:urEBHdx0qe8=:AOwYalFP/eWo2ntMnaFWPk
- XnojkLkzI5bnOAkUlVx6MjLC2hId1C2OKv6FovMOTwgZcYOPzcySarq3usTudat5fVOvIPnXe
- lgPM4oO2SSgnFuAmAmTl4SaGmU77X1t2oYYKkcscSs7cILjiMIwKOMLn1eTfV3a7sDRlrF5gP
- Oam5ngeRm1QFHy/8cT95uuYoRxApmNLNDD9Bq9M0UMygl34Ukdj2jCciJCuQXa2Xz6vdHA9c4
- ohzyHxcq/QLkJy8IEar2bttvIN5X39zmIfZkEqa2+5aS5Q3WJwPBbJo4kMaEX1R4VImP8p0sx
- TCZ60mQweq6Asm9gdnhVJh4EwABMPzS2VWZ0R7Y30Aa7l/ZEOnvomK5+t4wdgkh08Aoo0Uufi
- EH+TOVGQoPHlHyoGsE0exyNdpwN8qdb9VeR6/QFYJlCkHA6z0X//cFrbISN3EhRBoo/XktSxW
- gQtoQYnRk8rQzFG96bET6Cxm+7A8Tn4Gdhf0X7tdlM6JmVhZE9ZLw9b2cV4CRA63JMAhkeaJM
- G1VecE9IKGVFxWxES39sLWcIX1oQ6OpK/94b56IP+kyCF4BzhA1r6EUhUQYZm36OpNFN9BjiF
- 1eA8r+HIK3cjXGqmCJUQufr+Gc1qm9FwgVK7EIDpP3LQD0XUBTjev3Wy2bXTfx9MjCZZ8uk/C
- 4XXhFOxTP8qJhjJCOFoK8chTlOQc6hrNPFkKQWH7VYZRPtzVUKifRksMVpk9XZz5pH1kO/iP6
- ARTq8+1seGSa54uVv76gS4LFqmBqGFZSQnE3Sfpijo7WKtywxiQHVv3E1ZaFHTl/MGvrXiwOc
- upihDFZ
+X-Provags-ID: V03:K1:wvDe8x7+CbZlzJz9C7MjjHPfIu0tvo24G5HLpRbk9CW9wzwMhgr
+ lRf8RBWtxE/QTPUEHP/KD3O0fblrm+UKixd3RYXeX65hTFQ/yZwFcpDCWE7YzZ6q0pH18dz
+ UGCKvlashhmPB8KjZb4NehwCtNHz6mY4TNDfUg8Sl0hCBOU6sREGpeLXxi7ni0o/JoX9HjM
+ f9Sf4a3IfUUo4H78rmnpg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UFa1DS5dEHg=:ZEG0dD/9DmzlL2AWmiOfzQ
+ 0hER9orcAm3d2by8L/3onjRPnLpSBNM+VOBjcd3I9bA/+c59Pc2xYwHy4bfHcKWWM4VAF4loz
+ r34hTvGu/7OOXL/B2yiW20p+t6A5Eu+gBS1GxTnyZj9O/sm5UNUZf/Ow1ebOFrso8Pw8IwTpx
+ ajASOsPI0UuVplOgZH/lgfxEAE7jLj2r1RdMXBqjynmcfx5SefJqFBDzAiM4gbgcIbGQiPY87
+ LY+J8YdNtLsdmbn8+dzkc88bdGvnR5v9ZODRTIJbb0qiP9xZqtoWaV0VXOH2qBdOa+ykuvXNI
+ L5n77S0VxZSevvj3KsD4SYs/i7zhliEjK6b7KQ3A8BuWurgco8PAJd/guQGyG435KeuJXAQth
+ hepAiZRSuyHDphiXyn61dQ5aTQ3xWZTv4EJMfbbrwy6SEa7o4qIzcW8NlaibBrzPLAqxW0dYY
+ XkQUDnMjDgmJQfHbFLk/9GfEkQy5wfhTqa/EDfRKK8OFtNYpwBI7Zdo1GMJIpK6+l7s8wcu1O
+ mevVN7W1d34M6g/z0xnd++cXEHWx35sr+vdQsJiHRyKMz9Fz5WZhbnsV37OJtNhFCEqC8JRvq
+ umbYxVDV4Pr7ttNUo4L9SNuSsbvxsTAvkeggp6kHZTR5UifKgKHVuxiravNR4Qt7QFqN7IeiQ
+ RoPqkD6LbKLBZMwe3NRyvCSq9m/Bufapth6Ir0I2KwNT1eWzgLhZdaUvdSiIaRsNJZe0pXHQS
+ Rr8+YXRzbDc/ZayxKMYTH33NkWCeEOCXn26spppsPfW7w3ElE3IlH04g2nkFu0V7Eyt4E06eF
+ sH9UyXS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Eric,
 
-On Fri, 10 Aug 2018, Junio C Hamano wrote:
+On Fri, 10 Aug 2018, Eric Sunshine wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On Fri, Aug 10, 2018 at 5:12 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > On Mon, 30 Jul 2018, Eric Sunshine wrote:
+> > > I think you can attain the desired behavior by making a final
+> > > parse_options() call with empty 'options' list after the call to
+> > > diff_setup_done(). It's pretty much a one-line fix, but can probably
+> > > be done as an incremental change rather than rerolling.
+> >
+> > But then we would have to keep `--` in the first, and not in the second
+> > parse_options() call, right? We would also have to handle that `--`
+> > properly in the loop that calls diff_opt_parse(), I think.
+> > A bit more involved than just a one-line fix, but I guess I'll give it a
+> > try.
 > 
-> > I'll just try to get that option parsing change in that Eric suggested,
-> > force-push, then wait for macOS and Linux builds to pass (trusting that
-> > Windows will follow suite) and hit /submit.
+> It's something that could easily wait until after this series lands.
+> After all, it's just a slightly confusing error message, not some
+> fundamental problem.
 > 
-> OK.  Obviously receiving, applying and inspecting that result will
-> not be done in time for today's integration cycle, but having a
-> version that limits its cope and is suitable for 'next' is a good
-> thing to have at this point during the cycle.  Correct whitespace
-> error colouring, etc., can be done on top after the basics settle,
-> and the basics were good in a few versions ago already IIRC.
+> As for '--', I'll have to go back and look at the code. I thought I
+> had thought it all through at the time I made the suggestion, but my
+> brain needs a refresh by now.
 
-No, a couple of issues were identified, still, that merited several dozen
-rebases on my side.
+Your suggestion might have started out by trying to fix the error message,
+but after staring at the code for a couple of minutes, I think the issue
+would have left all kinds of opportunities for bad user experience.
+
+So I fixed it ;-)
 
 Ciao,
 Dscho
