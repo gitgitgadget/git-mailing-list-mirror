@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76E051F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CD061F404
 	for <e@80x24.org>; Fri, 10 Aug 2018 22:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727155AbeHKBGk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 21:06:40 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:47936 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727033AbeHKBGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 21:06:40 -0400
-Received: by mail-qt0-f202.google.com with SMTP id b7-v6so8563845qtp.14
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:34:50 -0700 (PDT)
+        id S1727173AbeHKBGn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 21:06:43 -0400
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:47709 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbeHKBGn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 21:06:43 -0400
+Received: by mail-qk0-f201.google.com with SMTP id 99-v6so10842005qkr.14
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=4sFPQRkuXWTQRhdr/8R8CbJQpLxLrw/y8NEQr2Oq0No=;
-        b=tQGqdU0MhepfYWmW1MdumIXpq9HM4Yb98+fJOL7hsS7XaLFLknROvOE5QcoDHfftVY
-         5N34OEcUorTK37cJCDcp7TLmW55VT6eiyJ4gJO8G9x81UXhe5CDIU7l/JbUYsG4PhNSL
-         Vyc5tj6SMh4QB/OPtOEkrjQIolz/auRAoFTTrZQ1BLVAhC+XmMgxO2HZISFWlcxe1M5C
-         uXce5iACKyw3E3syWsH7Za+yFL5rhhBSCfo8J2P7NpLrypviHUPlAHSNNVuPglZ/Hi1X
-         WWhYRB7QhrOtYo/gDt0Anc4rRdcM6TQ8fEKKEbqyjmkuYzPgghiEPLv2Egg6zzXsn0df
-         eHQA==
+        bh=Pi8Py/+Ryx0h5DauzM8bcd/r7qDgDhl8V0ff3ZVQX1I=;
+        b=bcZlFOi3bEdhO63gDMzmvkUd3Rfzj4yv7jeI4Gl5rqJ0eGDkzOVIt2abl10I5ivh/t
+         xHM7PqESyCpaxmL9VBE0Os7TnS9F+UgU/WOJC20PwKtGYBCCJssED7vtw8DzK7m2t2fe
+         YmMEvnyVJuhht04sDKm8UE953QcEveeEfI/PL5TqLL8FYvSN/GM9SdwIAAVSgKitbiL9
+         JWqz+Z5bx1Hf+dNjI3FEyRkRNgW6+7c7/XzcBzUwYkPtGEURZicuWz8LYR6kLcvmuzuw
+         mSAEEDfouLSyMliE3PMEa7/TiMLOrgDWzJn2Eb4nMAGSRh6CgY3FxOAjb0PorjivEGC9
+         rY0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=4sFPQRkuXWTQRhdr/8R8CbJQpLxLrw/y8NEQr2Oq0No=;
-        b=HqdK32BP9L7PcRQTIGK3QraXVU1RxPYGvnJh6D0drLq8k/OUV2v/duUIiqjs+5D7EO
-         7nPOGWUklOoVcXCAh3VF7BHg+iPryyKEn29lpHUdLps6bD9PV4MGlSUArOIRdvSuhZGB
-         A5t+ttVDRLtDjqt08QiCJvegX+EjWKsrnbroHpUjYZ38AtOxzthAQxwIdYhBf1X+4uev
-         Tk4hXFVLUbbSSZii8TonBJ49XEWhFxYx652Nw1wEKVrlvQuFxfz1Kl0n/y5Q2T1qdBTE
-         sqq7z6Kr+wof1NAsFPiVoniX9bFFaJftfB6h62vtsC1CqIcVWOgvzRId0/y2QXMfcAKP
-         4iTQ==
-X-Gm-Message-State: AOUpUlHqZ87tYbnG+kJek3Ydu1z2tBwnrQ/ShFsh+pPvq4eM+6FmKBNn
-        iUE74HNqLGPLyDCFJBHOue+54IWXjnzl
-X-Google-Smtp-Source: AA+uWPwpIpjrpO0VvIqeMnCFHNYnFv/TfP4u2jU9TCkPCtj4W+SIQdeaIlaFLdVQL3MiYBGIJRDbB0nQTOEz
-X-Received: by 2002:a37:c858:: with SMTP id c85-v6mr4920006qkj.48.1533940490368;
- Fri, 10 Aug 2018 15:34:50 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 15:34:35 -0700
+        bh=Pi8Py/+Ryx0h5DauzM8bcd/r7qDgDhl8V0ff3ZVQX1I=;
+        b=QAAxAoR4a0rKG/pou8DntWaeTDEHu41yPSjdBL+kTKLM1H8w7UZpP2aDKNOxKDIISV
+         rMSkmvwwdELp+d8lm+SpCv8XOIbJ11GyhXnW4uruv4cS7W1tf8SUV2NIwcvOe+CSTglw
+         d5VPAwvMIABYiOTMqt9zFCDs+KaKqQsIsyDVZgb06xfKwAtp/BK9nDn/i4WOP0ZSPBZf
+         WUJWZN9P/h+QhH9wqLFFDfEfOkTxpzuZnb4OTFh4mAZNYW4SoftfXq1v+G1KvNto4jwn
+         kr4qnTOPXqXnoZ3PUgzCjggISXmjFGgB5dSqnrrngoGMdN+yo2mDnXBs/b4IdzW4iVhT
+         gX/g==
+X-Gm-Message-State: AOUpUlG+VbazmCqvWazUqq6ChpVxTjw4F+hoi3xV1yyELwhp4VumVha8
+        OVf3Gk4RLrz00zXBAqDCiJDyv0m8sOWK
+X-Google-Smtp-Source: AA+uWPyiAY/X+qP6i+TBLoUb2inGryU8NBDUcGB0SB0+7BT2AUutjouhrP14to4Z578HClX+AV0B0qLwedno
+X-Received: by 2002:a0c:e801:: with SMTP id y1-v6mr4334898qvn.55.1533940492975;
+ Fri, 10 Aug 2018 15:34:52 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:34:36 -0700
 In-Reply-To: <20180810223441.30428-1-sbeller@google.com>
-Message-Id: <20180810223441.30428-3-sbeller@google.com>
+Message-Id: <20180810223441.30428-4-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180810223441.30428-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 2/8] t3206: add color test for range-diff --dual-color
+Subject: [PATCH 3/8] diff.c: simplify caller of emit_line_0
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, Johannes.Schindelin@gmx.de
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
@@ -61,62 +61,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'expect'ed outcome has been taken by running the 'range-diff | decode'.
+Due to the previous condition we know "set_sign != NULL" at that point.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t3206-range-diff.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ diff.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 2237c7f4af9..7dc7c80a1de 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -142,4 +142,43 @@ test_expect_success 'changed message' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'dual-coloring' '
-+	sed -e "s|^:||" >expect <<-\EOF &&
-+	:<YELLOW>1:  a4b3333 = 1:  f686024 s/5/A/<RESET>
-+	:<RED>2:  f51d370 <RESET><YELLOW>!<RESET><GREEN> 2:  4ab067d<RESET><YELLOW> s/4/A/<RESET>
-+	:    <REVERSE><CYAN>@@ -2,6 +2,8 @@<RESET>
-+	:     <RESET>
-+	:         s/4/A/<RESET>
-+	:     <RESET>
-+	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
-+	:    <REVERSE><GREEN>+<RESET>
-+	:     diff --git a/file b/file<RESET>
-+	:    <RED> --- a/file<RESET>
-+	:    <GREEN> +++ b/file<RESET>
-+	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
-+	:    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
-+	:      9<RESET>
-+	:      10<RESET>
-+	:    <RED> -11<RESET>
-+	:    <REVERSE><RED>-<RESET><FAINT;GREEN>+BB<RESET>
-+	:    <REVERSE><GREEN>+<RESET><BOLD;GREEN>+B<RESET>
-+	:      12<RESET>
-+	:      13<RESET>
-+	:      14<RESET>
-+	:<RED>4:  d966c5c <RESET><YELLOW>!<RESET><GREEN> 4:  8add5f1<RESET><YELLOW> s/12/B/<RESET>
-+	:    <REVERSE><CYAN>@@ -8,7 +8,7 @@<RESET>
-+	:    <CYAN> @@<RESET>
-+	:      9<RESET>
-+	:      10<RESET>
-+	:    <REVERSE><RED>-<RESET><FAINT> BB<RESET>
-+	:    <REVERSE><GREEN>+<RESET><BOLD> B<RESET>
-+	:    <RED> -12<RESET>
-+	:    <GREEN> +B<RESET>
-+	:      13<RESET>
-+	EOF
-+	git range-diff changed...changed-message --color --dual-color >actual.raw &&
-+	test_decode_color >actual <actual.raw &&
-+	test_cmp expect actual
-+'
-+
- test_done
+diff --git a/diff.c b/diff.c
+index ae131495216..f6df18af913 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1202,8 +1202,7 @@ static void emit_line_ws_markup(struct diff_options *o,
+ 		emit_line_0(o, set, 0, reset, sign, line, len);
+ 	else if (!ws) {
+ 		/* Emit just the prefix, then the rest. */
+-		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
+-			    sign, "", 0);
++		emit_line_0(o, set_sign, !!set_sign, reset, sign, "", 0);
+ 		emit_line_0(o, set, 0, reset, 0, line, len);
+ 	} else if (blank_at_eof)
+ 		/* Blank line at EOF - paint '+' as well */
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
