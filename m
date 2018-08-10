@@ -2,222 +2,251 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C35761F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 16:42:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78F0D1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 16:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbeHJTNU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 15:13:20 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:33299 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727687AbeHJTNU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 15:13:20 -0400
-Received: by mail-wm0-f66.google.com with SMTP id r24-v6so1935899wmh.0
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=KzOyzmf8l3IOF8TUdSWUw/7Jw538iK43+4rTyYGJ5pU=;
-        b=WT2hi9SgM4kC/exDJnL+QnCDCTNhDkACJDnSotwtj8W5HmHkEX04MT+/MpBbWl6lyv
-         JwiBJZm0Pw95DmwCYve+F9lKdoennoY73O27dwLWENbGvmquf6WD90gonsB57ldvNtLl
-         crOr48vgyjPtJtAN1/OPFDAoYX5lnMl3ENJCncX5elkgSl7xkzMzPfpN2BiG5B9A5igU
-         XElckASybNRpkiC+mstB/canAB/zAr89HDFrSiCUIUcbmgjVplioWxs/yGLsEvun8Okb
-         jUB/ScndEPFZE3tmfXTuxtB2ZvLnHHwWqUAu9/vMJ0lx+TvOU51gDrz1YPiwwjXA72Aq
-         BMgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=KzOyzmf8l3IOF8TUdSWUw/7Jw538iK43+4rTyYGJ5pU=;
-        b=t59gMTPHMXvx3olxVlaLnxtlD+qMFCJ2kYg5NYyfbHusKdF3vj4Gi0vNKrX4CRvbb9
-         1JKBU65cRj+dPjWzzN8kVpPhHrauBQqIIB5aYMVBP1nqwzG/5295FKZcLA6RTDSJ2ApH
-         j6YjO7amZnkH141dSUl72hiMxi82gga9YvnBoZ2GRZsuo1kh6bh6H4Ao6y4QHRTTyAPv
-         sRARcvN0doVqJtKGCIqiJQuFO1HTRxy5vLAMNytZjhVfLIU5GYgKPwmuduZTxRLjwJNz
-         75/G9oX04qeZKNicwMw/d7aS/GHFApJcdc8hW21TTS2sECFe/o6VPALi6c0or2UPKhkX
-         2dQA==
-X-Gm-Message-State: AOUpUlEfZnXqQlINeMMaXxnuSjkrFI6jDrpbRkZjWrsZMHtRwteJtTDw
-        /bmCitVyIa3aLGXiU28GarI=
-X-Google-Smtp-Source: AA+uWPyv9pYGIVRbTLsIXjv1fXw+TJmsWTzKDBCLto1AcFD091UndhYoQW992e+PNVqoqGnGwCm33g==
-X-Received: by 2002:a1c:ec86:: with SMTP id h6-v6mr2047255wmi.53.1533919361998;
-        Fri, 10 Aug 2018 09:42:41 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g2-v6sm2564049wme.20.2018.08.10.09.42.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 10 Aug 2018 09:42:40 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
-        pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net, tboegi@web.de
-Subject: Re: [PATCH v3 1/1] clone: report duplicate entries on case-insensitive filesystems
-References: <20180807190110.16216-1-pclouds@gmail.com>
-        <20180810153608.30051-1-pclouds@gmail.com>
-        <20180810153608.30051-2-pclouds@gmail.com>
-Date:   Fri, 10 Aug 2018 09:42:40 -0700
-In-Reply-To: <20180810153608.30051-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Fri, 10 Aug 2018 17:36:08 +0200")
-Message-ID: <xmqqmutu896n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728174AbeHJTNv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 15:13:51 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55871 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727687AbeHJTNv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 15:13:51 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbfnB-1fV8DX0Kaz-00J1Ui; Fri, 10
+ Aug 2018 18:43:06 +0200
+Date:   Fri, 10 Aug 2018 18:43:07 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
+ for GIT_TRACE
+In-Reply-To: <20180810140908.GA23507@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1808101833330.71@tvgsbejvaqbjf.bet>
+References: <pull.17.git.gitgitgadget@gmail.com> <20180809194712.GC32376@sigill.intra.peff.net> <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com> <20180810140908.GA23507@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WcHADHE2NIiE9/Jj2ejTmylfauUDReh9eH1brCH9NZMtvu6htLQ
+ rEADkwLq7ttIUhP9LVmI5v54/WiSJO2XbNkzh5gX9UHNTcXHTqPRjAATHa3A2Hq/kphWOk1
+ YVUJeWY4tobdtlLwrtS+47PwRvWnreRaPCfUFaWtsjmB4/GmET9BVlyUvC/e5uL1tcuQ+mu
+ +vqTQ0MSYg65bT/D4zkew==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Yh8ocVVr0S8=:/TkmWVbCDRzYkTCZAbLd9g
+ nhdBzvrPf20m5aUS5WTTwwIRd8PEuij0S89gYn9ZFkqsyCs3kKaku6cAF0V6n2XkQcWQBhbyl
+ u2WK8RSPen98qzRgMgzCymi6slXu8DjKZN2WZRT4LNtbuU4TjR7jLtXsdoLkR2wW6FFUCRNCf
+ veF1g8rQrFxWRobQgdzVF5jFlNO7rdw2tMZsXVqdsXW9lddSB7mZ5a9ASFMLw6yn1pphtxOWJ
+ LHre14+iuSlyqFEsRZXIHGX7K94wnxFjt//WxYdoq0sxhIN8B86k69gubACn5x2vrZcQY2KLI
+ RLsC3H9XvmG2IKX7Ly+nGae6BFPs6E/eOFyTFXl7oYGvk56aNTSWrrxSnFhjNnM32zb5hQ7P6
+ T6mik9J0hMzUnT0e2ksf3DWA3OXJDJIUAXQc6wFjFuSCFc+CHlf4WururzNDdhLzDcdow9R6S
+ ZxSAMXlfXfD8NoRDMyr6KDF2jOxjNYkO9SaCpdiEforc9E4p6i4Altjenls+El7T85kqES5Hx
+ n/7p+xD1GG0Yw2P4fs1vVBKdT/5tCB0RiXUtc/g+HX3ah3cXdBkeHKT4bYmR/exXtfL5Tnfxp
+ Qxbi3WO3n5CCeMENn048Ft6a44GOpH/JXjzgwyGg/zmFJC9g+bqAWrHPkVP2Nrr6fkVfYUiCJ
+ YQHGJlnyFGS3Ago7YuiVWWgUn30mRQZLM+k6F7U13m97TkDMCBrsgJ59FhMefKVS5iwxULNWe
+ Jl0sQJcM1S4jbJbpiph5XM/TPe41pGS+BrLjAKEb7tnU/FdYUYpOnd4prmV7dd9zOx357NpuI
+ nszla48
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+Hi,
 
-> +static void mark_duplicate_entries(const struct checkout *state,
-> +				   struct cache_entry *ce, struct stat *st)
-> +{
-> +	int i;
-> +	int *count = state->nr_duplicates;
-> +
-> +	if (!count)
-> +		BUG("state->nr_duplicates must not be NULL");
-> +
-> +	ce->ce_flags |= CE_MATCHED;
-> +	(*count)++;
+On Fri, 10 Aug 2018, Jeff King wrote:
 
-We tried to check out ce and found out that the path is already
-occupied, whose stat data is in st.  We increment (*count)++ to
-signal the fact that ce itself had trouble.
+> On Thu, Aug 09, 2018 at 01:49:52PM -0700, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > Are you sure that it's not well-defined? We open the path with O_APPEND,
+> > > which means every write() will be atomically positioned at the end of
+> > > file. So we would never lose or overwrite data.
+> > >
+> > > We do our own buffering in a strbuf, writing the result out in a single
+> > > write() call (modulo the OS returning a short write, but that should not
+> > > generally happen when writing short strings to a file). So we should get
+> > > individual trace lines as atomic units.
+> > >
+> > > The order of lines from the two processes is undefined, of course.
+> > 
+> > Correct.  But I am more worried about the "mixed/overwriting"
+> > breakage, if there is one; it means we may need to be prepared for
+> > systems that lack O_APPEND that works correctly.  I initially just
+> > assumed that it was what Dscho was seeing, but after re-reading his
+> > message, I am not sure anymore.
+> > 
+> > I think the "do not trace the other side" approach you suggest for
+> > these tests that only care about one side is more appropriate
+> > solution for this particular case.  We then do not have to worry
+> > about overwriting or output from both sides mixed randomly.
 
-> +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
-> +	for (i = 0; i < state->istate->cache_nr; i++) {
+Just so everybody knows: I never received the above two mails. Something
+is seriously rotten in GMX. This seems to have started a week or two ago.
 
-Do we want to count up all the way?  IOW, don't we want to stop when
-we see the ce itself?
+> Here it is as a patch on top of jt/fetch-negotiator-skipping, which lets
+> us pursue any fix for interleaved trace output on Windows without the
+> pressure of an impending flaky test.
+> 
+> My gut says that looking into making O_APPEND work there is going to be
+> the nicest solution, but my gut is not very well versed in Windows
+> subtleties. ;)
 
-> +		struct cache_entry *dup = state->istate->cache[i];
-> +
-> +		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
-> +			continue;
-> +
-> +		if (ce_uptodate(dup) &&
-> +		    dup->ce_stat_data.sd_ino == st->st_ino) {
-> +			dup->ce_flags |= CE_MATCHED;
+Your patch seems to be a patch in the original sense of the word: it is
+not a solution.
 
-Is checking ce_uptodate(dup) done to check that the 'dup' is a
-freshly checked out entry?  I'd like to understand why it is
-necessary, especially beause you know you only call this function in
-the o->clone codepath, so everything ought to be fresh.
+And let me spell it out very clearly (as I have mentioned to Jonathan a
+couple times, without any response): t5552 fails regularly, way more than
+rarely, see for yourself:
 
-I agree that the check you have above is sufficient on inum capable
-systems.  I also suspect that Windows folks, if they really wish to
-report which other path(s) are colliding with ce, would want to
-replace this whole loop with a platform specific helper function,
-not just the condition in the above "if" statement [*1*], so what we
-see here should be sufficient for now.
+https://git-for-windows.visualstudio.com/git/_build/index?definitionId=1&_a=history
 
-	Side note #1.  It is sufficient for inum capable systems to
-	look at 'dup' and 'st' to cheaply identify collision, but it
-	may be more efficient for other systems to look at ce and
-	the previous entries of the index, which allows them to use
-	platform specific API that knows case-folding and other
-	pathname munging specifics.  Going that way lets them
-	minimally emulate 'struct stat', which may be expensive to
-	fill.
+And the reason it fails was analyzed by me and described in the commit
+message (I am sorry that the cover letter was still stale and talked
+about flock(), which I had decided was not the right approach after
+fighting with Linux over it).
 
-> +			(*count)++;
+What you cannot see easily, unless you go the route that I offered
+Jonathan (open a PR on gitgitgadget/git which will automatically run the
+test suite on Windows, macOS and Linux, and of course you can do anything
+in a PR, including narrowing down what tests are run) is that sometimes
+those lines in the `trace` file were clearly *incomplete*. That is, even
+if both processes tried to write atomically, one managed to overwrite the
+other's buffer in flight.
 
-And then we increment (*count)++ for this _other_ one that
-collided with ce.
+This is a pretty serious thing, even worse than the failing test suite,
+and I don't think that your patch acknowledges how serious this is.
 
-> +			break;
+And please don't give me that "but it works on Linux" response. Seriously.
+Sheesh.
 
-And we leave the loop.  There may be somebody else that collided
-when 'dup' was checked out, making this triple collision, but in
-such a case, we won't be coming this far in this loop (i.e.  we
-would have continued on this 'dup' as it is marked as CE_MATCHED),
-so there is no reason to continue looking for further collision with
-'ce' here.  So nr_duplicates kept track by these (*count)++ will
-indicate number of paths involved in any collision correctly, I
-think.
+Even if you have not managed to trigger it, the POSIX standard seems not
+to define clearly what the behavior is of two competing write() calls,
+unless you lock the files appropriately, as my patch series does.
 
-Makes sense.
+So unless you are willing to ignore, to willfully keep this breakage, I
+would suggest not to introduce the ugliness of an overridden upload-pack
+for the sole purpose of disabling the tracing on one side, but instead to
+get this here bug fixed, by helping me with this here patch series.
 
-> +		}
-> +	}
-> +#endif
+We don't have to rush this, you know? We have to fix it, though.
+
+Thank you,
+Dscho
+
+> -- >8 --
+> Subject: [PATCH] t5552: suppress upload-pack trace output
+> 
+> The t5552 test script uses GIT_TRACE_PACKET to monitor what
+> git-fetch sends and receives. However, because we're
+> accessing a local repository, the child upload-pack also
+> sends trace output to the same file.
+> 
+> On Linux, this works out OK. We open the trace file with
+> O_APPEND, so all writes are atomically positioned at the end
+> of the file. No data can be overwritten or omitted. And
+> since we prepare our small writes in a strbuf and write them
+> with a single write(), we should see each line as an atomic
+> unit. The order of lines between the two processes is
+> undefined, but the test script greps only for "fetch>" or
+> "fetch<" lines. So under Linux, the test results are
+> deterministic.
+> 
+> The test fails intermittently on Windows, however,
+> reportedly even overwriting bits of the output file (i.e.,
+> O_APPEND does not seem to give us an atomic position+write).
+> 
+> Since the test only cares about the trace output from fetch,
+> we can just disable the output from upload-pack. That
+> doesn't solve the greater question of O_APPEND/trace issues
+> under Windows, but it easily fixes the flakiness from this
+> test.
+> 
+> Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I'm assuming that this really isn't triggerable on Linux. I tried and
+> couldn't manage to get it to fail, and the reasoning above explains why.
+> But I wasn't 100% clear that Dscho hadn't seen it fail on non-Windows.
+> 
+>  t/t5552-skipping-fetch-negotiator.sh | 23 ++++++++++++++++++-----
+>  1 file changed, 18 insertions(+), 5 deletions(-)
+> 
+> diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
+> index 0a8e0e42ed..0ad50dd839 100755
+> --- a/t/t5552-skipping-fetch-negotiator.sh
+> +++ b/t/t5552-skipping-fetch-negotiator.sh
+> @@ -28,6 +28,19 @@ have_not_sent () {
+>  	done
+>  }
+>  
+> +# trace_fetch <client_dir> <server_dir> [args]
+> +#
+> +# Trace the packet output of fetch, but make sure we disable the variable
+> +# in the child upload-pack, so we don't combine the results in the same file.
+> +trace_fetch () {
+> +	client=$1; shift
+> +	server=$1; shift
+> +	GIT_TRACE_PACKET="$(pwd)/trace" \
+> +	git -C "$client" fetch \
+> +	  --upload-pack 'unset GIT_TRACE_PACKET; git-upload-pack' \
+> +	  "$server" "$@"
 > +}
 > +
->  /*
->   * Write the contents from ce out to the working tree.
->   *
-> @@ -455,6 +484,9 @@ int checkout_entry(struct cache_entry *ce,
->  			return -1;
->  		}
+>  test_expect_success 'commits with no parents are sent regardless of skip distance' '
+>  	git init server &&
+>  	test_commit -C server to_fetch &&
+> @@ -42,7 +55,7 @@ test_expect_success 'commits with no parents are sent regardless of skip distanc
+>  	# "c1" has no parent, it is still sent as "have" even though it would
+>  	# normally be skipped.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c7 c5 c2 c1 &&
+>  	have_not_sent c6 c4 c3
+>  '
+> @@ -65,7 +78,7 @@ test_expect_success 'when two skips collide, favor the larger one' '
+>  	# the next "have" sent will be "c1" (from "c6" skip 4) and not "c4"
+>  	# (from "c5side" skip 1).
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c5side c11 c9 c6 c1 &&
+>  	have_not_sent c10 c8 c7 c5 c4 c3 c2
+>  '
+> @@ -91,7 +104,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
+>  	# not need to send any ancestors of "c3", but we still need to send "c3"
+>  	# itself.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch origin to_fetch &&
+> +	trace_fetch client origin to_fetch &&
+>  	have_sent c5 c4^ c2side &&
+>  	have_not_sent c4 c4^^ c4^^^
+>  '
+> @@ -121,7 +134,7 @@ test_expect_success 'handle clock skew' '
+>  	# and sent, because (due to clock skew) its only parent has already been
+>  	# popped off the priority queue.
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" &&
+> +	trace_fetch client "$(pwd)/server" &&
+>  	have_sent c2 c1 old4 old2 old1 &&
+>  	have_not_sent old3
+>  '
+> @@ -153,7 +166,7 @@ test_expect_success 'do not send "have" with ancestors of commits that server AC
+>  	test_commit -C server commit-on-b1 &&
 >  
-> +		if (state->clone)
-> +			mark_duplicate_entries(state, ce, &st);
-> +
->  		/*
->  		 * We unlink the old file, to get the new one with the
->  		 * right permissions (including umask, which is nasty
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f9efee0836..d4fece913c 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -344,12 +344,20 @@ static int check_updates(struct unpack_trees_options *o)
->  	struct index_state *index = &o->result;
->  	struct checkout state = CHECKOUT_INIT;
->  	int i;
-> +	int nr_duplicates = 0;
+>  	test_config -C client fetch.negotiationalgorithm skipping &&
+> -	GIT_TRACE_PACKET="$(pwd)/trace" git -C client fetch "$(pwd)/server" to_fetch &&
+> +	trace_fetch client "$(pwd)/server" to_fetch &&
+>  	grep "  fetch" trace &&
 >  
->  	state.force = 1;
->  	state.quiet = 1;
->  	state.refresh_cache = 1;
->  	state.istate = index;
->  
-> +	if (o->clone) {
-> +		state.clone = 1;
-> +		state.nr_duplicates = &nr_duplicates;
-> +		for (i = 0; i < index->cache_nr; i++)
-> +			index->cache[i]->ce_flags &= ~CE_MATCHED;
-> +	}
-> +
->  	progress = get_progress(o);
->  
->  	if (o->update)
-> @@ -414,6 +422,20 @@ static int check_updates(struct unpack_trees_options *o)
->  	errs |= finish_delayed_checkout(&state);
->  	if (o->update)
->  		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
-> +
-> +	if (o->clone && state.nr_duplicates) {
-
-Does state.nr_duplicates have to be a pointer to int?  I am
-wondering if state.clone bit is sufficient to protect codepaths that
-needs to spend cycles to keep track of that number, in which case we
-can do without local variable nr_duplicates here, and the set-up
-code in the previous hunk not to store the pointer to it in
-state.nr_duplicates (instead, that field itself can become an int).
-
-> +		warning(_("the following paths have collided and only one from the same\n"
-> +			  "colliding group is in the working tree:\n"));
-
-As we are not grouping (and do not particularly see the need to
-group), perhaps we can do without mentioning group in the warning?
-e.g.
-
-	some of the following may have been checked out incorrectly
-	due to limitation of the filesystem like case insensitivity.
-
-
-> +		for (i = 0; i < index->cache_nr; i++) {
-> +			struct cache_entry *ce = index->cache[i];
-> +
-> +			if (!(ce->ce_flags & CE_MATCHED))
-> +				continue;
-> +			fprintf(stderr, "  '%s'\n", ce->name);
-> +			ce->ce_flags &= ~CE_MATCHED;
-> +		}
-> +	}
+>  	# fetch-pack sends 2 requests each containing 16 "have" lines before
+> -- 
+> 2.18.0.1058.g0926f0b71f
+> 
+> 
