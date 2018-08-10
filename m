@@ -2,96 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90A131F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 18:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9219B1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 18:48:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727242AbeHJVOu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 17:14:50 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:50836 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbeHJVOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 17:14:49 -0400
-Received: by mail-qt0-f202.google.com with SMTP id e14-v6so7913986qtp.17
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:43:46 -0700 (PDT)
+        id S1727106AbeHJVTu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 17:19:50 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:32827 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726420AbeHJVTu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 17:19:50 -0400
+Received: by mail-ua1-f66.google.com with SMTP id i4-v6so2924907uak.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=O9A1zsdmRGCLSCWEMYnwA0A8lEMY9G6IhIVViLn33Ig=;
-        b=NYfZDZLTivVsL9cVEf/K6k/3lWdy849Su7QWjTQcVPmT4sXxw7f2xLMV4xdPKhMRih
-         YSBk8+TnXXhBAZJAVsEU/qEiHgy/p104FcP4BGsMgFVOr8QszZzhBUZPKjvr1tZdDbAo
-         yJCIgVuUaMosd2DWkDKd/l5eOcG4b78DLEiX4waTLONcUrOstt/wWDSQazze1yDaCi2V
-         QqtfXj+UCbpRkOiOy/zxslwU4OiBw5sYNoa09nmZIuesrlouVeiPW3Qm7CnaZljccVei
-         +KmRnbZ9k6aTCQwaxbmTShL/vGYSKQsyWhq4oOZxw/7FSuakIVN7/ph9S+/1bnFYJJI6
-         gzaw==
+        bh=8YRYmWwtR7rPjj5F604HZyNfPHtNJIS+2VGeSBukcTk=;
+        b=EtajTh1132YZU8BQlZ/FEtYP4t5gdx4W9Wsh/GOtt+0xl81ywQUohyyjE1tWv4416K
+         GDh4R9oJ5V1wR0EVCgdzQ7il254qdZwq2tass6yNu3XawcpRgEvPwu84+oebwWPzVIb+
+         rp1BZX1ha3xqbPKBpYv+f85eaAc+BufDPBYT0nTryYtxN8gLa7K80g1RKOVZiAgv5pOK
+         t3o3zBFW4S7+RyQzDIqD7Kahod75QXp8/LpEiGxoC77sZuyWLH5G2wbu/28YpHLf3Z6o
+         R5JC/xRDXk8RSgSJ7Xo+iJ3zVu21D+2L29/9VF5KLaYEVEr/EYnzZ5n8C807wSBJ6DQs
+         AoxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=O9A1zsdmRGCLSCWEMYnwA0A8lEMY9G6IhIVViLn33Ig=;
-        b=KMBmDXALOpRShduECAae52yNUowsHAhdAKZ1uDNRxtEqOvbB98gJNI7uHhb+yl1AD0
-         cvxeBEj2/aEc/Sx7cWLfX1aZgW1enXu7BJu3zF1v8M5zs+F6Z4Q7/LHyuetZCPs8QlPu
-         /QcwYqp2PudMSOP9HZqNqTP2H5yvQ4lcQyfNltxcpCWB2y6L3/uhjeLYoaOS60mA9C+r
-         QKEhBJzc7ZrLJM7XYb3H9Qqg1GFOwQ+1mvyI84Zy76BNnnt1+HMWm2zaw9FAMhC+8m0o
-         Qvbk9kt+LiJCoa9ALZZNd6jVyfSpYjArthMEEMzNjaOwpBirIB+DUV2HA7flC4+NlRbm
-         IedQ==
-X-Gm-Message-State: AOUpUlHX8Ct2mABX1TqbuBEN+8/sojBH3CHbG19G173zpYCNOKSxkbbC
-        R7lprP2dLvJ2c0IWonAy44Sr2yIF+kzCT7S1E6lE
-X-Google-Smtp-Source: AA+uWPwSS23ndGAY3ApaNdXHBWnhd510x8/qR/cXY//XGVLCLSSB1O1iJic8FC5h6TeJ1O1DIMVAEzHAjSbCvXnpr133
-X-Received: by 2002:a0c:9e55:: with SMTP id z21-v6mr3792904qve.16.1533926625690;
- Fri, 10 Aug 2018 11:43:45 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 11:43:41 -0700
-In-Reply-To: <87799036f82793b691e899bda4fb882a4b231c3a.1533854545.git.matvore@google.com>
-Message-Id: <20180810184341.208183-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <87799036f82793b691e899bda4fb882a4b231c3a.1533854545.git.matvore@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: Re: [PATCH 1/5] revision: invert meaning of the USER_GIVEN flag
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com, peff@peff.net,
-        stefanbeller@gmail.com, jonathantanmy@google.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8YRYmWwtR7rPjj5F604HZyNfPHtNJIS+2VGeSBukcTk=;
+        b=uh+SdLEB36sonqScn7gsU0T7GIFcz3xL9m7G3FyrxGQCpdi/6YXqF3rIdmcxRDHJSe
+         ejURtbmndBz7cEIyovgWEeKt9+AYj9oXQV5g245RQkE2//LJuY1UT9AavgOSJaudvUQy
+         1c93sM1Llxz3HnFksEgV5AHxiJ5e/pzHbwJ4zUSlZh1pczEJazXtzUN7cOArJkDV1Qmg
+         ngOrr7nv6iZ6EBlAelpw9QKUebikKxhiuMggyZPMxm9bct84ysPZP6PYp4th4fm9zEB4
+         qGS3SoW6lRCX/gc2zAJKL4roMovU2fNZOuYV3Nqbq9tUMvZqfAVV47sg8Lifxd57gnJq
+         g8/g==
+X-Gm-Message-State: AOUpUlHgM8Kw7GRW6eGVDEcsXc7g3Y2GLKPHkTMsrNySD3At+24x4ArO
+        wYNj66gxYjlmFFawDMqjGZdpmyZJCJaHzsMta6o=
+X-Google-Smtp-Source: AA+uWPxGWP+csQ4fWN2kBM/QuCMCFm3Ad0KQTpC1tZrBvML/shP0VEyoyAY0kF4LzBPmnQE30jCUkjE6f3Ujh7tVhOc=
+X-Received: by 2002:a9f:3d1a:: with SMTP id l26-v6mr5169398uai.29.1533926924908;
+ Fri, 10 Aug 2018 11:48:44 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180729103306.16403-1-pclouds@gmail.com> <20180804053723.4695-1-pclouds@gmail.com>
+ <20180804053723.4695-3-pclouds@gmail.com> <CABPp-BGcPV0RA624_1UOXYkvaNhW4yR2ifhV_MVFZQOgBb_Ydg@mail.gmail.com>
+ <CACsJy8BtgMSYqkD1EaFQ=S49BA-veyTO1qU0FaPMkHY-KeggfA@mail.gmail.com>
+In-Reply-To: <CACsJy8BtgMSYqkD1EaFQ=S49BA-veyTO1qU0FaPMkHY-KeggfA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 10 Aug 2018 11:48:33 -0700
+Message-ID: <CABPp-BEOFSU2k+DKuTQZtz+c6eboiUo3RDzBZHkB6=V3SFAigQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] unpack-trees: optimize walking same trees with cache-tree
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Abandon the previous approach of mutating all new objects implicitly in
-> add_pending_object by inverting the meaning of the bit (it is now
-> NOT_USER_GIVEN) and only setting the flag when we need to.
-> 
-> This more accurately tracks if a tree was provided directly by the user.
-> Without this patch, the root tree of all commits were erroneously
-> considered to be USER_GIVEN, which meant they cannot be filtered. This
-> distinction is important in the next patch.
+On Fri, Aug 10, 2018 at 9:29 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> On Wed, Aug 8, 2018 at 8:23 PM Elijah Newren <newren@gmail.com> wrote:
 
-After rereading this patch, I think the thought process is:
+> > > +        * cache-tree would be invalidated and we would never get here
+> > > +        * in the first place.
+> > > +        */
+> > > +       for (i = 0; i < nr_entries; i++) {
+> > > +               struct cache_entry *tree_ce;
+> > > +               int len, rc;
+> > > +
+> > > +               src[0] = o->src_index->cache[pos + i];
+> > > +
+> > > +               len = ce_namelen(src[0]);
+> > > +               tree_ce = xcalloc(1, cache_entry_size(len));
+> > > +
+> > > +               tree_ce->ce_mode = src[0]->ce_mode;
+> > > +               tree_ce->ce_flags = create_ce_flags(0);
+> > > +               tree_ce->ce_namelen = len;
+> > > +               oidcpy(&tree_ce->oid, &src[0]->oid);
+> > > +               memcpy(tree_ce->name, src[0]->name, len + 1);
+> >
+> > We do a bunch of work to setup tree_ce...
+> >
+> > > +               for (d = 1; d <= nr_names; d++)
+> > > +                       src[d] = tree_ce;
+> >
+> > ...then we make nr_names copies of tree_ce (so that *way_merge or
+> > bind_merge or oneway_diff or whatever will have the expected number of
+> > entries).
+> >
+> > > +               rc = call_unpack_fn((const struct cache_entry * const *)src, o);
+> >
+> > ...then we call o->fn (via call_unpack_fn) to do various complicated
+> > logic to figure out which tree_ce to use??  Isn't that just an
+> > expensive way to recompute that what we currently have in the index is
+> > what we want to keep there?
+> >
+> > Granted, a caller of this may have set o->fn to something other than
+> > {one,two,three}way_merge (or bind_merge), and that function might have
+> > important side effects...but it just seems annoying to have to do so
+> > much work when for most uses we already know the entry in the index is
+> > the one we already want.
+>
+> I'm not so sure about that. Which is why I keep it generic.
+>
+> > In fact, the only other thing in the
+> > codebase that o->fn is now set to is oneway_diff, which I think is a
+> > no-op when the two trees match.
+> >
+> > Would be nice if we could avoid all this, at least in the common cases
+> > where o->fn is a function known to not have side effects.  Or did I
+> > not read those functions closely enough and they do have important
+> > side effects?
+>
+> In one of my earlier "how about this" attempts, I introduced fn_same
+> [1] that can help achieve this without carving "known not to have side
+> effects" in common code. Which I think is still a good direction to go
+> if we want to optimize more aggressively. We could have something like
+> this
+>
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 1f11991a51..01b80389e0 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -699,6 +699,9 @@ static int traverse_by_cache_tree(int pos, int
+> nr_entries, int nr_names,
+>         int ce_len = 0;
+>         int i, d;
+>
+> +       if (o->fn_cache_tree)
+> +               return o->fn_cache_tree(pos, nr_entries, nr_names, names, info);
+> +
+>         if (!o->merge)
+>                 BUG("We need cache-tree to do this optimization");
+>
+> then you can add, say threeway_cache_tree_merge(), that does what
+> traverse_by_cache_tree() does but more efficient. This involves a lot
+> more work (mostly staring and those n-merge functions and making sure
+> you don't set the right conditions before going the fast path).
+>
+> I didn't do it because.. well.. it's more work and also riskier. I
+> think we can leave that for later, unless you think we should do it
+> now.
+>
+> [1] https://public-inbox.org/git/20180726163049.GA15572@duynguyen.home/
 
- - the existing code inaccurately makes root trees of commits USER_GIVEN
- - instead of trying to fix that, it is easier to invert the meaning of this
-   flag, and since we only need to track trees and blobs, let's do so in this
-   patch
-
-So a better commit message might be:
-
-  revision: mark non-user-given objects instead
-
-  Currently, list-objects.c incorrectly treats all root trees of commits
-  as USER_GIVEN. Also, it would be easier to mark objects that are
-  non-user-given instead of user-given, since the places in the code
-  where we access an object through a reference are more obvious than
-  the places where we access an object that was given by the user.
-
-  Resolve these two problems by introducing a flag NOT_USER_GIVEN that
-  marks blobs and trees that are non-user-given, replacing USER_GIVEN.
-  (Only blobs and trees are marked because this mark is only used when
-  filtering objects, and filtering of other types of objects are not
-  supported yet.)
-
-The patch itself looks good to me.
+Yeah, from your other thread, I think I was missing some of the
+intracacies of how the cache-tree works and the extra work that'd be
+needed to bring it along. Deferring until later makes sense.
