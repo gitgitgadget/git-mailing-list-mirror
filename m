@@ -2,115 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 738611F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 16:51:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19DA71F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 16:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728039AbeHJTWD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 15:22:03 -0400
-Received: from siwi.pair.com ([209.68.5.199]:16206 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727462AbeHJTWD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 15:22:03 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 5D9BE3F40AB;
-        Fri, 10 Aug 2018 12:51:24 -0400 (EDT)
-Received: from [10.160.98.162] (unknown [167.220.148.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1DA113F404C;
-        Fri, 10 Aug 2018 12:51:24 -0400 (EDT)
-Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
- for GIT_TRACE
-To:     Johannes Sixt <j6t@kdbg.org>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <70b25098-bf96-d362-56cd-2bb17cadf162@jeffhostetler.com>
-Date:   Fri, 10 Aug 2018 12:51:23 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728701AbeHJTWw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 15:22:52 -0400
+Received: from mail-wm0-f48.google.com ([74.125.82.48]:38629 "EHLO
+        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727462AbeHJTWw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 15:22:52 -0400
+Received: by mail-wm0-f48.google.com with SMTP id t25-v6so2562644wmi.3
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:52:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ZCTgMmtTit0RKo4rfT6BJqvMvBlCfZ4u/zhkDNXDwDc=;
+        b=naduToHeGHe6V9t5kHuS3R3hHQRCKUSdMOPn6yh8habClOMz1zv3cTo8FSjGlMOGVR
+         e98ALf5swUFAn0252scCVrxZm0TX1s7xbS4Is0oG2PEePv3wK3xWubAgENyGf+Eh28D3
+         q3PBXWbkkS5uefVgZBSxR1V9QTb3MLOQ32/4FxZFXv2kCSdeVCa2+ISSm+Rh2Ym9RCxT
+         1mlwKtDl+DwfVK9MAzzlpCeAaD552vGlsbcuI6LCMznlQ/OYk+roPwbeTv1/3MCr4IZu
+         rnV1/k5OL3JS7SKtEL6BWWENnD5y7uj/aMrwqYZew+b5r4hwYdnKsRpZNK6DM4mubEOq
+         M0FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ZCTgMmtTit0RKo4rfT6BJqvMvBlCfZ4u/zhkDNXDwDc=;
+        b=uV1S822M9W8DngxTy+A8CmaroqzbmcsSv4PulLTb6kSOuCvaJtoKXcn4Cyd6UBC//G
+         XUB94H3JzSEH6sMwsoGtQ95MOCHPHelSAHeuhQ8ERRCLTkUsr44E8gmcCDO0iTQ+mN7r
+         azRRreCPnVW7MJeKkc+W5ZAICQZ1Vvl915NbPQ2DUs+ccDqS+ynjWs57iqJtALquU1iS
+         3kTw1I38/ouTikSypVT1ctkOvqV86vl2dFBaarPhpq0AEjg1d3C8gZo4e/bU7RNyXwYP
+         JRR0WKnE+8nuce91kEbVUTTX/GI2So8MRe1lxUUYJiuIb0JC1BUZUoFYKAGCqi+6YyOW
+         +a8g==
+X-Gm-Message-State: AOUpUlF65AbXYBs+eFqvHSGaQ1fFHAlCgX7YdCvaBC7uWX6ci8FwWpqT
+        d4VugMCbkYAoHI+nZhWawBoGwlbU
+X-Google-Smtp-Source: AA+uWPxXIAoSN0Q0RHYAaCNTbx8sN7kDAjoxCOzeqMZ5sNasRWAclNeadfCGgjCbRk0dujWCcTJWZw==
+X-Received: by 2002:a1c:96c8:: with SMTP id y191-v6mr1935323wmd.37.1533919932594;
+        Fri, 10 Aug 2018 09:52:12 -0700 (PDT)
+Received: from localhost.localdomain (AToulouse-658-1-25-156.w86-222.abo.wanadoo.fr. [86.222.24.156])
+        by smtp.googlemail.com with ESMTPSA id i125-v6sm3108302wmd.23.2018.08.10.09.52.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 10 Aug 2018 09:52:11 -0700 (PDT)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, gitster@pobox.com,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v6 00/20] rebase -i: rewrite in C
+Date:   Fri, 10 Aug 2018 18:51:27 +0200
+Message-Id: <20180810165147.4779-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180731180003.5421-1-alban.gruin@gmail.com>
+References: <20180731180003.5421-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This patch series rewrite the interactive rebase from shell to C.
 
+It is based on ffc6fa0e39 ("Fourth batch for 2.19 cycle", 2018-07-24).
+This apply cleanly to 1d89318c48 ("Fifth batch for 2.19 cycle"), and
+does not break tests.
 
-On 8/10/2018 12:15 PM, Johannes Sixt wrote:
-> Am 09.08.2018 um 19:35 schrieb Johannes Schindelin via GitGitGadget:
->> I reported a couple of times that t5552 is not passing reliably. It 
->> has now
->> reached next, and will no doubt infect master soon.
->>
->> Turns out that it is not a Windows-specific issue, even if it occurs a 
->> lot
->> more often on Windows than elsewhere.
->>
->> The culprit is that two processes try simultaneously to write to the same
->> file specified via GIT_TRACE_PACKET, and it is not well defined how that
->> should work, even on Linux.
-> 
-> Thanks for digging down to the root cause. As has been said, the 
-> behavior of O_APPEND is well-defined under POSIX, but last time I looked 
-> for equivalent feature on Windows, I did not find any.
-> 
-> Last time was when I worked around the same failure in 
-> t5503-tagfollow.sh in my private builds:
-> 
-> https://github.com/j6t/git/commit/9a447a6844b50b43746d9765b3ac809e2793d742
-> 
-> It is basically the same as Peff suggests: log only one side of the fetch.
-> 
-> As this buglet looks like a recurring theme, and a proper fix is 
-> preferable over repeated work-arounds. To me it looks like we need some 
-> sort of locking on Windows. Unless your friends at Microsoft have an ace 
-> in their sleeves that lets us have atomic O_APPEND the POSIX way...
+Changes since v5:
 
-The official Windows CRT for open() does document an O_APPEND, but after
-looking at the distributed source, I'm not sure I trust it.
+ - [01/20] Make write_message() public.
 
-I have not looked at the MSYS version of the CRT yet so I cannot comment
-on it.
+ - [04/20] Use write_message() inside of edit_todo_list().
 
-I did find that the following code does what we want.  Notice the use of
-FILE_APPEND_DATA in place of the usual GENERIC_READ.  (And yes, the docs
-are very vague here.)
+ - [08/20, 11/20 & 17/20] Return -1 instead of 1 in case of error inside
+   of complete_action(), edit_todo_list(), append_todo_help_to_file(),
+   and do_interactive_rebase().
 
-Before we try a locking solution, perhaps we should tweak mingw_open()
-to use something like this to get a proper HANDLE directly and then use
-_open_osfhandle() to get a "fd" for it.
+ - [11/20] Better error management in complete_action().
 
-Jeff
+ - [11/20] Use error() to show the message "Nothing to do".
 
----------------------------------------------------------------------
+ - [11/20] Typofix.
 
-#include <Windows.h>
+Alban Gruin (20):
+  sequencer: make three functions and an enum from sequencer.c public
+  rebase -i: rewrite append_todo_help() in C
+  editor: add a function to launch the sequence editor
+  rebase -i: rewrite the edit-todo functionality in C
+  sequencer: add a new function to silence a command, except if it fails
+  rebase -i: rewrite setup_reflog_action() in C
+  rebase -i: rewrite checkout_onto() in C
+  sequencer: refactor append_todo_help() to write its message to a
+    buffer
+  sequencer: change the way skip_unnecessary_picks() returns its result
+  t3404: todo list with commented-out commands only aborts
+  rebase -i: rewrite complete_action() in C
+  rebase -i: remove unused modes and functions
+  rebase -i: implement the logic to initialize $revisions in C
+  rebase -i: rewrite the rest of init_revisions_and_shortrevisions() in
+    C
+  rebase -i: rewrite write_basic_state() in C
+  rebase -i: rewrite init_basic_state() in C
+  rebase -i: implement the main part of interactive rebase as a builtin
+  rebase--interactive2: rewrite the submodes of interactive rebase in C
+  rebase -i: remove git-rebase--interactive.sh
+  rebase -i: move rebase--helper modes to rebase--interactive
 
-int main()
-{
-	HANDLE h = CreateFileW(L"foo.txt",
-		FILE_APPEND_DATA,
-		FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
-		NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+ .gitignore                     |   1 -
+ Makefile                       |   5 +-
+ builtin.h                      |   2 +-
+ builtin/rebase--helper.c       |  88 ---------
+ builtin/rebase--interactive.c  | 264 +++++++++++++++++++++++++++
+ cache.h                        |   1 +
+ editor.c                       |  27 ++-
+ git-rebase--interactive.sh     | 283 -----------------------------
+ git-rebase--preserve-merges.sh |  10 +-
+ git-rebase.sh                  |  47 ++++-
+ git.c                          |   2 +-
+ rebase-interactive.c           |  90 ++++++++++
+ rebase-interactive.h           |   8 +
+ sequencer.c                    | 318 +++++++++++++++++++++++++++------
+ sequencer.h                    |  22 ++-
+ strbuf.h                       |   2 +
+ t/t3404-rebase-interactive.sh  |  10 ++
+ 17 files changed, 731 insertions(+), 449 deletions(-)
+ delete mode 100644 builtin/rebase--helper.c
+ create mode 100644 builtin/rebase--interactive.c
+ delete mode 100644 git-rebase--interactive.sh
+ create mode 100644 rebase-interactive.c
+ create mode 100644 rebase-interactive.h
 
-	const char * buf = "this is a test\n";
-	DWORD len = strlen(buf);
-	DWORD nbw;
+-- 
+2.18.0
 
-	WriteFile(h, buf, len, &nbw, NULL);
-	CloseHandle(h);
-
-	return 0;
-}
