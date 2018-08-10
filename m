@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34C691F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:14:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DB311F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727266AbeHKAqe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 20:46:34 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:44866 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727026AbeHKAqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 20:46:34 -0400
-Received: by mail-pf1-f195.google.com with SMTP id k21-v6so5113005pff.11
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:14:49 -0700 (PDT)
+        id S1727267AbeHKAqg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 20:46:36 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:35976 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727026AbeHKAqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 20:46:35 -0400
+Received: by mail-pf1-f193.google.com with SMTP id b11-v6so5128811pfo.3
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ygTNx1JHniJf/DLFA6pbGdP74Vosb/+ARNkIfQ3eKk8=;
-        b=thxF+txbmqTskaeo7uFu3Yoti6rSKR1bW/t/sndncyg4gKM/7Qp0O6epGjEWxRgna2
-         5u5s0k76QrbNZTyl4qC8Gw+lyQXsxbuzAPJwJEHHKs2DTTUpnbzwVS1ovltLb/g1G5Tg
-         vJtOdvUFbEMReDJICXWuiVYmB0ZppFXqsMAQPbhWM6SyAKv5f4C7hr+5Dib27VfaTivu
-         IEegQsWYVPLWu5z0rHqDxo6NwOW3X9M1Tj4n1PwIDhj7kWFjk5HR/5mIlf8Wgq+D7F5h
-         hL0F/R+XVI6/ZLSGDCtkDREd4RMZYP79IlSMZ7Fkk+J0OS6v4kMrKHxBXp+esIOXT/kq
-         tKeg==
+        bh=mNPuVOLfAv83qJ58LyUwgbNxGqHRWthH+tV7Ychlzyk=;
+        b=WPaq2UeEtK4at4XRwMbL2kuzKR2WCt0muq1wLkwVvuPdOyanSvhpF4M62ZKN+eyRkd
+         nZeaYkX1gMir7X1lC7rEqDV6djesp5K3blvy4PvuiVPmQ3EVVrJR7340yHj6lnBF4Yte
+         sgMX9zgq/FOwJToJHqKqNxd9wjlsvthbnK9AMtf05rwhwZM81sQMs8WwB+Iq8eCXwHE8
+         J34jmrKDUg3vcounGvpJ7M6v4E5bNURhPX2EseNrMEWpHmvam7q93V1sC1Es1irym/pi
+         /Jw3DSkObWUegeeELY+MaLP77oQkNJ9H3YlQYLhhwqb0r+l3YCgVURsOiYQ/MNaS1RJT
+         QD/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ygTNx1JHniJf/DLFA6pbGdP74Vosb/+ARNkIfQ3eKk8=;
-        b=g3yhzQyeLaWhbDShyo90uIFdjbmKk7Cdp/PHkG5iBhQ3E6rwRjzZPuewVX6maAVGdB
-         NJRLZn6Ea4ZHdE+lgHmS6m57bakqLXqljfxJI1aYBa0oB1b1BJuRozz1Q0h9DXpOSOEm
-         GxiadqBRFHSQMbGkf1vjGHu4CnHv96i2R4tMEn4OVovjs1BmeWIpYot7ndkkk0D7lNQg
-         cOIqaeCnluHJNlXVOMn665rpfiyW/jxG5zu276ioo4Mi4NlcgphqhEsypR9gVMxfgG7J
-         sIkP+IxNcom1RgQA2mh3xRovmGCdCDDODGTJZhwIxo2Bikc2Stt3/8ZSVeeKHbwhnR+U
-         CR/w==
-X-Gm-Message-State: AOUpUlGaSbDaQi2qH1gfx42SsCh0RntwxVChgBreCvj6oMZUUiTZczYU
-        d1LXS6cowSTp2KWUxHImad0qcxOk
-X-Google-Smtp-Source: AA+uWPyiwUIE6f6r8AuLmLhwj8LsI8ItCW2qwUQSpFXohmpIDEtVN5PU8XQq5I2TVGMZNzaK7j3k8Q==
-X-Received: by 2002:a63:416:: with SMTP id 22-v6mr8100627pge.229.1533939288438;
-        Fri, 10 Aug 2018 15:14:48 -0700 (PDT)
+        bh=mNPuVOLfAv83qJ58LyUwgbNxGqHRWthH+tV7Ychlzyk=;
+        b=sF/G26VOO9MolvIPrmreeoTcOglHCOQER8owf7BexRANECPQFaWgOuBWblj1KTXyvB
+         5tecpELzvwC8p6YBVK4k1drTuGskBBd5Zq8gtiqLW7SK/6j7Gr1by9JjH5uqC6nPjboJ
+         mpmn0oUPwoRXchbwMcPFSdieyrhPNMz9iEhtWc0EOp9nxviZTUzM+9LbU5CMfjWKe/L3
+         ZWVs+Mbn0DgiqIDqE56JxRe/SIdQFeib9FZqsbQclW/bvnIyT5dlwmkaZQXgK8CvUZQW
+         pn0XMXU66H4RlOEAoD55pQW/PEfFBBk9LUgOKSprzXyajyfo+vyii0Uwka8VzkSYcdhN
+         NXbA==
+X-Gm-Message-State: AOUpUlHPc8fpH87z9GMRTz8cfHbc5DgfnZS8n3jbHdJr2MykX3bHuA+j
+        /HgjfK33uQ6vD3J+HZ9AE0iHMd0L
+X-Google-Smtp-Source: AA+uWPzDQxd3U6l6O5XtKR21F4liCLT5eNMf05SpLqn8TtsEN6Yexc+NyaIWYncfTIQj5oyjo0Oy4A==
+X-Received: by 2002:a63:b349:: with SMTP id x9-v6mr8039675pgt.337.1533939289884;
+        Fri, 10 Aug 2018 15:14:49 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm18792401pgk.9.2018.08.10.15.14.47
+        by smtp.gmail.com with ESMTPSA id v71-v6sm13836324pgd.56.2018.08.10.15.14.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Aug 2018 15:14:47 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 15:14:47 -0700 (PDT)
-X-Google-Original-Date: Fri, 10 Aug 2018 22:14:17 GMT
-Message-Id: <c32a24f6aa12950dbed6079160a3aa8b9e62dc4c.1533939264.git.gitgitgadget@gmail.com>
+        Fri, 10 Aug 2018 15:14:49 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:14:49 -0700 (PDT)
+X-Google-Original-Date: Fri, 10 Aug 2018 22:14:18 GMT
+Message-Id: <05947781f94a351b84dd189905b665d41df7b442.1533939264.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v5.git.gitgitgadget@gmail.com>
 References: <pull.1.v4.git.gitgitgadget@gmail.com>
         <pull.1.v5.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 15/21] range-diff: offer to dual-color the diffs
+Subject: [PATCH v5 16/21] range-diff --dual-color: skip white-space warnings
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,49 +71,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When showing what changed between old and new commits, we show a diff of
-the patches. This diff is a diff between diffs, therefore there are
-nested +/- signs, and it can be relatively hard to understand what is
-going on.
+When displaying a diff of diffs, it is possible that there is an outer
+`+` before a context line. That happens when the context changed between
+old and new commit. When that context line starts with a tab (after the
+space that marks it as context line), our diff machinery spits out a
+white-space error (space before tab), but in this case, that is
+incorrect.
 
-With the --dual-color option, the preimage and the postimage are colored
-like the diffs they are, and the *outer* +/- sign is inverted for
-clarity.
+Rather than adding a specific whitespace flag that specifically ignores
+the first space in the output (and might miss other problems with the
+white-space warnings), let's just skip handling white-space errors in
+dual color mode to begin with.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/range-diff.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ diff.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index bc7a2fb76..da3ad3eba 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -20,9 +20,12 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- {
- 	int creation_factor = 60;
- 	struct diff_options diffopt = { NULL };
-+	int dual_color = 0;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("Percentage by which creation is weighted")),
-+		OPT_BOOL(0, "dual-color", &dual_color,
-+			    N_("color both diff and diff-between-diffs")),
- 		OPT_END()
- 	};
- 	int i, j, res = 0;
-@@ -58,6 +61,11 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 			     options + ARRAY_SIZE(options) - 1, /* OPT_END */
- 			     builtin_range_diff_usage, 0);
- 
-+	if (dual_color) {
-+		diffopt.use_color = 1;
-+		diffopt.flags.dual_color_diffed_diffs = 1;
-+	}
-+
- 	if (argc == 2) {
- 		if (!strstr(argv[0], ".."))
- 			die(_("no .. in range: '%s'"), argv[0]);
+diff --git a/diff.c b/diff.c
+index e6c857abf..ea8ecae04 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1299,6 +1299,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 				set = diff_get_color_opt(o, DIFF_FRAGINFO);
+ 			else if (c != '+')
+ 				set = diff_get_color_opt(o, DIFF_CONTEXT);
++			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+ 		}
+ 		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
 -- 
 gitgitgadget
 
