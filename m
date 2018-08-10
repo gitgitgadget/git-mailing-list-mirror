@@ -2,129 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA41F1F405
-	for <e@80x24.org>; Fri, 10 Aug 2018 03:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3FB71F405
+	for <e@80x24.org>; Fri, 10 Aug 2018 03:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726707AbeHJFeR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 01:34:17 -0400
-Received: from mail-pl0-f47.google.com ([209.85.160.47]:42569 "EHLO
-        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725753AbeHJFeR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 01:34:17 -0400
-Received: by mail-pl0-f47.google.com with SMTP id g6-v6so3405851plq.9
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 20:06:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ZfA+gl/3g+anwCsl0mz6jajBX7wl/mdRPRvFtyuWKd8=;
-        b=ANUKHDfAqqTtBIWbHebOgVXgE4ynGQmc2K6lO6SkmQ150fRaGH2HI6gHmCKFo+GD8S
-         kn0vpeDIEj8tdCCJKCo9P8RQmUVIp/ByvpuJDai/lsrY1D6o/nAWsMwwnwc88VTewxPn
-         BcY48TGVtnR5f6XNeTUI+3KlJXXms3jIypE0otiNsLGl4wxVRKEg7JZL0WgDTPgG0FoY
-         bK1XKZ0Xgmaa5wkuXyej3lDiD21O7BpifRRvg40udu4iOwWJE0+jmXim3WaLzQWr5trA
-         2ku6uBIjFOi23cPZV/vgHqj2VvCL71H/CgPn8fjMGAcmGFPS7Lyy64JBQd8q19L7rFk0
-         qAQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ZfA+gl/3g+anwCsl0mz6jajBX7wl/mdRPRvFtyuWKd8=;
-        b=GBO0XT3m8q8eORTA41zvGBImy21s0K+bU92HiXxB3wHKkuo8ejvCkMX82pug96zBc2
-         KCqqt+637ixwUDMzAfDVSMNkrxR6eR7GHgJ+PuZKdPaEbSX+cHGcMpHUE/Ih+ZEdXK7c
-         I+xQUVnKRrHlKHlBu+asPdKoFYngYcb/tMiHsY25JI5vV5UNqjecI+YZ31M07gzPY/Ib
-         TQN3Yjo+YGScl/lmpvR7WqmSrPZL6qagshRe+DrN45AqlfAD/gDsi+Eqnah7NVgeq8SJ
-         kBr+hF0vqUtV6vT2lzDDtjCDzU/QLPOgsE/9oKRweuO8m0k82V7+415sKd2Q0WE5tdeq
-         oPUQ==
-X-Gm-Message-State: AOUpUlGhv4AJdLw7zJQzChQqXQipyw1jzni4MN7sSd68/LsBd3lwImy0
-        QVh4yrrm2kOIPhex4n+dk+M=
-X-Google-Smtp-Source: AA+uWPyZF+DLuo+g+qu24AI78P2uUf+QO1zfKmnatuHZ1mIxzjDc+3Xq0Jo8c5mHt2jWPW+cRz6AaA==
-X-Received: by 2002:a17:902:8494:: with SMTP id c20-v6mr4345173plo.336.1533870386951;
-        Thu, 09 Aug 2018 20:06:26 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 14-v6sm18861773pft.93.2018.08.09.20.06.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 09 Aug 2018 20:06:25 -0700 (PDT)
-Date:   Thu, 9 Aug 2018 20:06:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jonathon Reinhart <jonathon.reinhart@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: 'git submodule update' ignores [http] config
-Message-ID: <20180810030624.GA101965@aiede.svl.corp.google.com>
-References: <CAPFHKzepqebXX7mrbeoc=+SHzWZ5N+6eOaLiC26tVGKogZoLGg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAPFHKzepqebXX7mrbeoc=+SHzWZ5N+6eOaLiC26tVGKogZoLGg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S1727266AbeHJFpa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 01:45:30 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41961 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725725AbeHJFpa (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 10 Aug 2018 01:45:30 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.nyi.internal (Postfix) with ESMTP id 8F25F21AEC
+        for <git@vger.kernel.org>; Thu,  9 Aug 2018 23:17:37 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 09 Aug 2018 23:17:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailworks.org;
+         h=content-transfer-encoding:content-type:date:from:message-id
+        :mime-version:subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; bh=B+mEwYR1I+FRvuUXHm+8FkFVzmiB+JzBU9BUPlEB97s=; b=hnfoIBXh
+        xtGRAfzVxYHE4w9kx/5DqFqqH1Tl+E4VDELS7Qk/zOUUgGHafojBqmFshE48H83B
+        LvNdf0alzfyvJLnKL8RuwQl0At8AkAgC3hk1kMmrq6DWA/nIhx6YHI9ebNAY3Ft7
+        j+eIkLv2MaCHZj0lpVIWV0JKvLtZp2JnwtexrICPdW3kCns5sq7wYaB2fqbXGnef
+        tzvqlsTI7u+6Sp214Ba1JnzTWOuTLyeew4pkWGBBt0Qn0mXxwj285L0/ooYqLQM8
+        1hIJmYedsR4bADcjuibB3TPTdW+1sD9Ce6upkxN03otozUr/mvtaxowNsURuuAhF
+        978iw6pcJo5ing==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm3; bh=B+mEwYR1I+FRvuUXHm+8FkFVzmiB+
+        JzBU9BUPlEB97s=; b=Dlcg3HYCYPYEGd9Zzw6XmRINdNAMYdJU+WOO/sN+WrWe/
+        bAEuczcQsB7BXhFh8aRhEw1xlodW+3TUrhkakV8g54F8XS/l5XhAFqaUS70eYajT
+        qJS3DDA/IZ5Nubk/6rosacNl1+W7qXaS/hHmpJktl1YUGQ4wDTIxwPr9rhX8eBDT
+        x4pKXj9eFhsv6sco/XPLEigOM+GIlinBxXJ5uBLRo7hceLeDPf3AWI5uQAUiHIYW
+        HZn3eYGGWTam2reQ5wnscGLdJDVhCk6CWLNcR82wbfrEWXDhzGWn6CSB5VgQWWUi
+        Xi9J0xVo8UJmF4UkSIrf6jhr5qSiL8tx/spNv+PIw==
+X-ME-Proxy: <xmx:0QNtW3cgQ1KAp290EcWZHAejkmd0C8E2SA2Hhe2P2-Y_fCUcmLgTPg>
+    <xmx:0QNtW9ayvKkt3uiDHB2_PR87HLZSX4OmuB1MG6wdA2JU0p-KkOL9PA>
+    <xmx:0QNtWyWyJmefX3NO2JnJfWPoHkcesdzaQ-xbtDHa4WRZGNWSIGeOow>
+    <xmx:0QNtW3iVaemr4CGIb_FfiMn4Ekf3zdN3BFVscpOFwR2hQwP7k0AVkQ>
+    <xmx:0QNtW4Vfdrb50Gl1ygy4t8rW8eezppdBhOu_CPjWa0T6Rc25xJCgGQ>
+    <xmx:0QNtWwYf71ypiyBAdCDPLWt1_DzwFK9ttQ8FFb2ECLB-s0EjjE34Mg>
+X-ME-Sender: <xms:0QNtW3LFHDsmTsvfutFo43gRXLbZu_eARzc0lIzMlb3otDVvN91oUw>
+Received: from freeip.amazon.com (54-240-196-191.amazon.com [54.240.196.191])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 114CA10261
+        for <git@vger.kernel.org>; Thu,  9 Aug 2018 23:17:36 -0400 (EDT)
+From:   Philip White <philip@mailworks.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 10.3 \(3273\))
+Subject: Bug? Git won't apply a split hunk that went through a text editor
+Message-Id: <43C90F94-C9B8-49E4-A9E9-C1D652B52E2F@mailworks.org>
+Date:   Thu, 9 Aug 2018 20:17:36 -0700
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3273)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc: Stefan, who has been looking at fetch --recurse-submodules recently
-Hi,
+Hello, git enthusiasts,
 
-Jonathon Reinhart wrote:
+I=E2=80=99d like to report what I suspect is a bug in Git, tested in =
+2.18 and 2.14. (I=E2=80=99d be delighted to be corrected if it is my own =
+misunderstanding.) I=E2=80=99m reporting it here based on guidance from =
+https://git-scm.com/community.
 
-> I've narrowed it down to an observation that the [http] config seems
-> to be ignored by 'git submodule update'. Shouldn't those options be
-> respected by submodules?
->
-> Given a .git/config file like this:
->
-> ------------------------------------------------------------------------
-> [fetch]
->     recurseSubmodules = false
-> [http "https://gitlab.exmaple.com"]
->     sslCAInfo = C:\\Users\\gitlab-runner\\builds\\deadbeef\\0\\somegroup\\someproj.git\\CA_SERVER_TLS_CA_FILE
-[...]
-> C:\Users\jreinhart\testrepo>set GIT_CURL_VERBOSE=1
-> C:\Users\jreinhart\testrepo>git fetch
-[...]
-> *   CAfile: C:\Users\gitlab-runner\builds\deadbeef\0\somegroup\someproj.git\CA_SERVER_TLS_CA_FILE
-[...]
-> C:\Users\jreinhart\testrepo>git checkout master
-> C:\Users\jreinhart\testrepo>git submodule update --init
-[...]
-> *   CAfile: C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
-[...]
-> Note that the CAfile reverted to its default instead of using the same
-> one from the `git fetch`.
+I created a minimal testcase with a detailed README here: =
+https://github.com/philipmw/git-bugreport-2018-hunk-fail
 
-Interesting.
+Overview of the bug:
 
-The context is that "git submodule update" is simply running commands
-like "git fetch" inside the submodules, and the repository-local
-config of the superproject does not apply there.
+When interactively selecting hunks to apply, using `git checkout -p =
+<tree> <file>`, git will correctly apply an unmodified hunk, but will =
+refuse to apply a hunk that went through a text editor ("e" command), =
+even when I made no changes in the text editor.
 
-In the long run, commands like "git fetch --recurse-submodules" may
-chaange to use a single process.  It's possible that some of the
-repository-local configuration of the superproject would apply at that
-point, though the inconsistency would be confusing, so probably not
-these particular settings.  Anyway, that's a faraway future; today,
-"git fetch --recurse-submodules" is also running "git fetch" commands
-inside the submodules, and the repository-local config of the
-superproject does not apply there.
+Thanks for any advice or attention you can give to this matter.
 
-Would it work for you to put this configuration in the global config
-file ("git config --global --edit")?  That way, it would be used by
-all repositories.  If you want it only to apply within the testrepo
-directory, you can use conditional includes --- something like:
-
-  in $HOME/.git/config/testrepo-ca:
-
-  [http "https://gitlab.example.com"]
-  	sslCAInfo = ...
-
-  in $HOME/.git/config/git:
-
-  [includeIf "gitdir/i:~/testrepo/**"]
-  	path = testrepo-ca
-
-Thanks and hope that helps,
-Jonathan
+=E2=80=94=20
+Philip=
