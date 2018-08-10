@@ -7,98 +7,79 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BC651F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 21:05:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 895AD1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 21:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727160AbeHJXhA (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 19:37:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:58713 "EHLO mout.gmx.net"
+        id S1727196AbeHJXiK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 19:38:10 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41451 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727140AbeHJXhA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 19:37:00 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M08ia-1g2Jbi1yzU-00uJS8; Fri, 10
- Aug 2018 23:05:22 +0200
-Date:   Fri, 10 Aug 2018 23:05:24 +0200 (DST)
+        id S1727140AbeHJXiK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 19:38:10 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEKZg-1fhZiM2Riq-00FVAj; Fri, 10
+ Aug 2018 23:06:34 +0200
+Date:   Fri, 10 Aug 2018 23:06:37 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 16/21] range-diff --dual-color: fix bogus white-space
- warning
-In-Reply-To: <CAGZ79kZRoN6DmKYPyvQ33yXqxz8ukfuXVROw9pzZBvob-vjHAQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808102303270.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <f4252f2b2198cf13d5b0a21c54098e2a1d8158dd.1532210683.git.gitgitgadget@gmail.com> <CAGZ79kZRoN6DmKYPyvQ33yXqxz8ukfuXVROw9pzZBvob-vjHAQ@mail.gmail.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 17/21] range-diff: populate the man page
+In-Reply-To: <20180729212354.GB9955@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1808102306080.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <9e09c6be66e960db496b1c9a30eb5040242ab764.1532210683.git.gitgitgadget@gmail.com> <20180729212354.GB9955@hank.intra.tgummerer.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ash7Y/PwyZy6tf3VMZyuTXDvmWHLd7u3G1kAzMsNHJ1IGGbA4xq
- dZkw/RRc6994XtHi5xd8xpI0vygGC5lO7K6ZO14YBZ1MTaRDvj1E9Hp2DoslQFqLJNLzb9/
- bjc0DRpO8AMDnhd5gKLz3InFnLpec1OGZAGB1Tq7Vlvv6E6CGh9tOQqDIDy92PcZjdmWpyK
- Fvic/pzPA5XrbMNcM/lLg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Ea5Mw4irtz4=:ZodegMBN9h02jPHy4Su0ni
- 8NCF8zDUjz09LPDkrQLPvY4upPfFWPHfZIK6a6kApnqIdd2q/F6kKJwk73YoxcTDFOHgKf3tA
- m5oyXnmkjpE7cUws85BaXmqCVTwcV+JHMl3YE4UNGgH0pbif782x7TP1z6rU3gkjAWZrapJTl
- bC1YMf5WM9dIamvYhnzGIjZR4/XcZ+7aMaVh5jxn0MDTVBoKnjmVJAI0OWn6nO3oRoW5sDpJJ
- 2bovQXGKRBY66G6oiX2xGKtwvYu3sIS/YYEnCEM0zqbVySqzwvysamVHRrj/3PVBldzHptx8R
- NvJNs92BHYx/e68DFXtT93f/3XtXxWeCGtViand3O7W2apl1cB0rqxVsNGb+2onoToa/aZlHp
- rLhNUSlU8TN8b4PSJzkWj4JyoCAi24WvxcMzPR9bI6lCYZZ/ZdV1nfRVEIh2omoY7WMulx58z
- i6ZmVI4USxTv11qSEFnOALQQB18fgV8j5v8rX4QhLkuxK7FcFtT6x2+1pZ9RnQcVrmIqzJmkt
- wc1AJakzF57U6sBrQeFROMLMOAYc7AoKB6xrbEck3OVaNGYp4xh3jdcVbLMSLX6HuhODyGBhP
- IIeO9CYm+1wsUvfrcKDfAgfR0p+Eqq1oro3Tw99J8DUV+HWMMYbVUAF4wa6h+SORb54V2Vh3G
- 6ysnGebwirW/Ksa28ubGOVkG4A9PD0HgzBz1SuMNgr4JvY7OYlBGZ5GOERcgTwBK8VwQOtuuj
- Nfo2YK9ssGxmglwiKIvJHdE36onS+6DVEniAyZbCKSAvRYVVHgiMitOsg4alpun2aatmPoCX/
- cBAemT5
+X-Provags-ID: V03:K1:gBjoCFWcZQy+E1+YoPu1m89zG2guF6/GQIfwx6GW5U0m7j9se4X
+ RB+pxSziqqXUxni8jAjR4myBowyQAY7CnLbc3MpG/3Q+mj0/UmUKQr2aCmCXKJYs4rieRJn
+ GtFvcVbqyvC0LXq9qU+XEVELwlBjDBzuSONaGz1N65zrbNRpGHCPJFY9Gdmgpy4cFQv34S6
+ DJP3HFRwMTlX2+3yffkmw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:MW8TkjzTXNs=:h9JN8iA43lq8ga98lZzrV4
+ NLHQjKazz7sYWIUC1YKOhTa1gGvGTdnMwHm+Elxsj1LFxLt5PJHtac8OFyewrhSktnxA6EJFX
+ UYEsH/VnM80c7T31UHdh+kibEMHoh4V6d673ATMPuJyHQJ6yGSECc10+LjU+LQFF2gw5ZSMFO
+ 1xd+kviOFZWZy5nHcYWSzi2DpEJnKA8JV+RgAbpB9O4w9dwvYJ2k9jFAKnYsl2fzYkdi7r6go
+ Zhe/5ocBUWQSYcw77dsSBKWO41twXb9tfVjwdrnLmo5cv74KjTkBslQhZUkBLQRT0P0y3yEEd
+ cWWys2tTzlaTlY/ZlKubap8Moyq2QB1u2j8On0X6vQYCALCOpIOzYv6RgWW+jZWfqD2SOhh88
+ Gjfic880Eil8jMHrlswDbnR3fg1HAWIl9+Xyj76l86QEouFK21qC+BVGyxmu62MhyhQFwdXAD
+ sDzPptFjlmB0x/xrAEvjKi/HdfIrk2Y21XRRNL4n6fid1nR+AAuSxDiNdPVRB2d6X3knHE5TA
+ SoJ1dqNyPMMuGsnaWtl/ClJnu/NgaWtH2oGSFLemvaoXwrc6P8HiSmc5yFexE5uz7gtwsJ+sB
+ cj9Ml2kqLNgnThMCkxJVy5gJXEV+lJwlh+TdYOM9eA4PF9qCL+wO5BPlXJpRZfXaNDPC07cT8
+ HU46JDKAbde87+YD+FRPtjqoNO0qSY7SIHD7RxY6cruY1TQizxBXFgcXqEvBgPVTwoHMMLil+
+ xrWmwIUMjv1ngidz5aaTFDtD7zGLLK0T+odLnZxqWdYwX7Mt5EjMZtOUEO54QPgc6lNZrkQOi
+ c+K0+7y
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Thomas,
 
-On Mon, 23 Jul 2018, Stefan Beller wrote:
+On Sun, 29 Jul 2018, Thomas Gummerer wrote:
 
-> On Sat, Jul 21, 2018 at 3:05 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
+> On 07/21, Johannes Schindelin via GitGitGadget wrote:
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> >  Documentation/git-range-diff.txt | 229 +++++++++++++++++++++++++++++++
+> >  1 file changed, 229 insertions(+)
+> > 
+> > [...]
 > >
-> > When displaying a diff of diffs, it is possible that there is an outer
-> > `+` before a context line. That happens when the context changed between
-> > old and new commit. When that context line starts with a tab (after the
-> > space that marks it as context line), our diff machinery spits out a
-> > white-space error (space before tab), but in this case, that is
-> > incorrect.
-> >
-> > Fix this by adding a specific whitespace flag that simply ignores the
-> > first space in the output.
+> > +CONFIGURATION
+> > +-------------
+> > +This command uses the `diff.color.*` and `pager.range-diff` settings
+> > +(the latter is on by default).
+> > +See linkgit:git-config[1].
 > 
-> That sounds like a simple (not easy) solution, which sounds acceptable
-> to me here.
+> Would it be worth implementing a `rangeDiff.dualColor` configuration
+> at some point?  Dual color mode seems like something I would like to
+> have on by default, even if we are not making it the default for the
+> command itself.
 > 
-> I guess you dropped all ideas that I originally proposed for the cleanup
-> regarding ws. that is fine, I can roll the cleanup on top of your patches
-> here.
+> (Again this is something that can be a future enhancement).
 
-Yes, sorry, I got the impression after our chat on IRC that you tried to
-address something different from what I needed, anyway?
-
-> > Note: as the original code did not leave any space in the bit mask
-> > before the WSEH_* bits, the diff of this commit looks unnecessarily
-> > involved: the diff is dominated by making room for one more bit to be
-> > used by the whitespace rules.
-> 
-> It took me some minutes, but I am reasonably convinced this patch
-> is correct (and doesn't collide with other series in flight, sb/diff-color-more
-> adds another flag to move detection in another bit field at (1<<23))
-> 
-> Thanks for writing this patch instead of the other, though I'll leave
-> it to Junio to weigh in if this approach is the best design.
-
-I am sorry that your time was wasted in addition to mine: I will go with a
-simple one-line patch in v5 instead, a single line that simply disables
-white-space errors altogether in dual color mode.
+Sure, go wild!
 
 Ciao,
 Dscho
