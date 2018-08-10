@@ -7,72 +7,90 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA8351F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 21:07:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 321951F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 21:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727202AbeHJXiv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 19:38:51 -0400
-Received: from mout.gmx.net ([212.227.15.18]:39339 "EHLO mout.gmx.net"
+        id S1727235AbeHJXni (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 19:43:38 -0400
+Received: from mout.gmx.net ([212.227.17.22]:49507 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727143AbeHJXiv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 19:38:51 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LwaMR-1fy8aJ2Dmx-018O09; Fri, 10
- Aug 2018 23:07:16 +0200
-Date:   Fri, 10 Aug 2018 23:07:19 +0200 (DST)
+        id S1727173AbeHJXni (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 19:43:38 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MQ7sF-1fstGs2G7n-005LLG; Fri, 10
+ Aug 2018 23:12:01 +0200
+Date:   Fri, 10 Aug 2018 23:12:03 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 20/21] range-diff: make --dual-color the default
- mode
-In-Reply-To: <20180729213325.GC9955@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1808102307010.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <b370468e71af2b8c7ffa0e31f3a3910d15897ab4.1532210683.git.gitgitgadget@gmail.com> <20180729213325.GC9955@hank.intra.tgummerer.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Thomas Gummerer <t.gummerer@gmail.com>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 05/21] range-diff: also show the diff between
+ patches
+In-Reply-To: <CAPig+cSeAUWFCBEbk0m7_gmATAaVDg-fi42kq49DuGm3g0L4=Q@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808102308140.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <94afaeaf224563effda7b3c0b8939567302d2ba1.1532210683.git.gitgitgadget@gmail.com> <20180729190359.GD2734@hank.intra.tgummerer.com> <CAPig+cTuD0+8etdMLu8FkFVxnXUM218taxU9in-fe3QXhDj5WQ@mail.gmail.com>
+ <20180729214543.GD9955@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1807301826480.10478@tvgsbejvaqbjf.bet> <20180730212606.GL9955@hank.intra.tgummerer.com> <CAPig+cSeAUWFCBEbk0m7_gmATAaVDg-fi42kq49DuGm3g0L4=Q@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TO1lyGCqWllSScdKlSb7zGfmH0ec20WnMb8DzJCNXrds7xQWP56
- hi++YagKSk18v3nF0bBBgHkj+CYepHoac+nWW/OG2om8JPaMh3sI9EE8etrtzrzU1yxFRTN
- x9mavIMR6xzvGZelYRMdZ8mFqu3itLIOIG9QXO65t6N7z3V7udxscr9TgYkBvN2EYuR7otr
- lIYzSpJyFhadDEjPNfzjw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sDUsuoFZ07A=:5bnlf5W6ABWMNbD+1yyY9G
- NwxexMfv7vvK1ThNxuXluzIqSXBOv1z7WzemC+aDt/gLL2zG6FIbwZun+IdElYkjDEiJjKm36
- qo3ME+Rlke68om/u+Q3FpQTO5iaM31jtof14E6jTAADc0SXUNK5EhuW64inOUwy6h5lOhlNWG
- KhY/Z4hInc3acp8iui0ygdbTWAUzStWfO/+G4yfXszXz7UFRS8Q+IJwQJqG06zRZmK3AoNTkm
- IXqWor36RejGFGyy4QGFOq543/QUApUa5Xr4xxJX2xjqNu5qDzQIzXFT4ZNEGe3+9vQ8GdW5f
- Ovd2D3SzxPsy+QiIy4i60jSAADLwcslB0MlBgwU8Sur/rubs1YAZTaV2tEmmwPFrlue4AYxqD
- qK3przV1BNFqvoRVpxzsrWTOxv2ISJ1hndI56RwJ69x+Z7QDKHyI8LiGLcknG/yK2xuSo8YoE
- +Q/kwM26lH4ub19QpHft1yYVYxlNyNovEhwPNE69VLcHwyYL+XZZU7ZGvDfLqbeFb8J6e1/CZ
- eTN1xqJvsr/Sn6QAUouBWE4LQlaBEWoEMx5xNZLothLrZ3GFYUGYtlAfzJwhRPRl8PQaZxHgz
- RBRPr2N3yj3ojsolWWJqALIgy1uwsHa8pVrkRIYSCbgUgBX/6wGhjEnV8BKDloRSZqTkC/acV
- Thpcvj2zh4HyZF6ND86wzgGVXN1zQYnJc83x68vacZioAV9RqnjBuUKYAr2HCkaL7v7R6pNsY
- Ud/Ejl0Swcg1noB3NEAcFAosDreYrukGKMKxmupF9lDxKHpL7SHBVV9ldkZRgb7BmBPF6eizB
- VwPueh+
+X-Provags-ID: V03:K1:UB8EwvtW7DutpPjV8aDZgfCiw1DgHyp6CQVfME3RXU2CZw07/I3
+ Pmw4k046wOogd+t7Ogp3yN2E0twHzxNejr7XxfpW+e6fRa8+4WFzuIW4o/Ivd20mykFrSUk
+ ywEwardktRY77Ve1jZi6k5hs8KFpDcpoREuY6gB0xcwaUqs1+SEZ1u1jHP+avnuQQI3Gcbh
+ yrW4bp1YKVGAQOtq3buYg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:B8oxtJY/M58=:7prstC5Ng0/pe/MzGkxDYv
+ w8kWy+mQZa0rufdyum7MuhDqSoLbN+A0Ciw2sUMzutc2QA+BN7HMNGSrKok2BNVcyjYHbh4sM
+ lXrstqr9TP4MD3GYWToAFeV1esMmSOLXH4IjZ9atpRDkW1VIC8koyZkK3ZqwdBRAzkeeq+BU9
+ l+8iEZSLO++3ERwingo0KRXwCkiL/cx4Jobyujvxo8U8yNuNawfgiAnYSJQNMWJ7uOyxvPpW/
+ 4DRhsC5hSIzlBUzy/EU19JvfDaPSeharpFEs2zOCZE7CsdR8fEwIjfY5OHhkzlt3AuZuhBU9n
+ eZ6ZLpnWePFC71YjJJrOUS+zEXtEOYHfOO2s/U0QZJhhsiK98nXvRqRKWjlfd+z+yFHEe+6pq
+ pEpw4xTBa3npl+KpZW4L7O2xUTWiXdPZYT+hGEL/HlWxPwNCVstJrpPNJZrot+Uz6p1uIVVrd
+ Bw1M25uQgcTJKexyCWfjL0BgNtVwILucB8MCBnRsv4myequm7yaIW+KXbth5VEGo9FpBjaYy/
+ JixmqAo7eKwnHr7qIEUPPB70EPuFvzmHWyg+n10JPEz/AyUHFrgsgFYOVwHKLCkqaVff6+5Oe
+ QRVDpDxVg2BQooK+b+8uO7FJs0YFx9gJjwoJWXoKAAJ6dK1WMbn+FkkSuQj1pvZLNJVNrK/f8
+ JONcJg088PAcoxBYwZV/tMlh1vv2OXhE3sqxhO1UlQfof97xS0l1ZcBWG92Zz/smDolPQA59k
+ ZiKT3feZBpQ5wochIhY0RR9e4kx7blM9hdKy3gdGNyXNfpSZmIbzgTwEQMySItMWz7b1/ht0A
+ N3jgatq
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Thomas,
+Hi Eric,
 
-On Sun, 29 Jul 2018, Thomas Gummerer wrote:
+On Mon, 30 Jul 2018, Eric Sunshine wrote:
 
-> On 07/21, Johannes Schindelin via GitGitGadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > 
-> > After using this command extensively for the last two months, this
-> > developer came to the conclusion that even if the dual color mode still
-> > leaves a lot of room for confusion about what was actually changed, the
-> > non-dual color mode is substantially worse in that regard.
-> > 
-> > Therefore, we really want to make the dual color mode the default.
+> On Mon, Jul 30, 2018 at 5:26 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > On 07/30, Johannes Schindelin wrote:
+> > > On Sun, 29 Jul 2018, Thomas Gummerer wrote:
+> > > > There's one more thing that I noticed here:
+> > > >
+> > > >     git range-diff --no-patches
+> > > >     fatal: single arg format requires a symmetric range
+> > > >
+> > > I immediately thought of testing for a leading `-` of the remaining
+> > > argument, but I could imagine that somebody enterprisey uses
+> > >
+> > >       git range-diff -- -my-first-attempt...-my-second-attempt
+> > >
+> > > and I do not really want to complexify the code... Ideas?
+> >
+> > Good point.  I can't really come up with a good option right now
+> > either.  It's not too bad, as users just typed the command, so it
+> > should be easy enough to see from the previous line what went wrong.
 > 
-> Ah and here we're making it default, so I wouldn't need a
-> `rangeDiff.dualColor` config variable anymore.  Even better!
+> I think you can attain the desired behavior by making a final
+> parse_options() call with empty 'options' list after the call to
+> diff_setup_done(). It's pretty much a one-line fix, but can probably
+> be done as an incremental change rather than rerolling.
 
-... except if you want to switch it off ;-)
+But then we would have to keep `--` in the first, and not in the second
+parse_options() call, right? We would also have to handle that `--`
+properly in the loop that calls diff_opt_parse(), I think.
+
+A bit more involved than just a one-line fix, but I guess I'll give it a
+try.
 
 Ciao,
 Dscho
