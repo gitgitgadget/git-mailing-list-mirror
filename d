@@ -1,24 +1,25 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.7 required=3.0 tests=BAYES_40,DATE_IN_PAST_06_12,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=2.1 required=3.0 tests=AWL,BAYES_50,
+	DATE_IN_PAST_06_12,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6BE1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 18:11:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B572A1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 19:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730056AbeHJUmm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 16:42:42 -0400
-Received: from 107-172-5-14-host.colocrossing.com ([107.172.5.14]:57913 "EHLO
+        id S1727290AbeHJVmq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 17:42:46 -0400
+Received: from 107-172-5-14-host.colocrossing.com ([107.172.5.14]:36330 "EHLO
         azcleanequip.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1729172AbeHJUmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 16:42:42 -0400
+        with ESMTP id S1727273AbeHJVmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 17:42:46 -0400
 To:     git@vger.kernel.org
-Subject: we the editing
-Message-ID: <48fade58762c6d6d3b22fc4b41748bf9@saxstonecarving.com>
-Date:   Fri, 10 Aug 2018 12:32:12 +0200
+Subject: support editing
+Message-ID: <62c3fb838546aee85cb653ada17fd281@saxstonecarving.com>
+Date:   Fri, 10 Aug 2018 12:49:01 +0200
 From:   "Kelly" <pencefighko@buyindiankitchen.com>
 Reply-To: qilanzhan@aliyun.com
 MIME-Version: 1.0
