@@ -2,178 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08DCF1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 18:32:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C1161F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 18:35:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727155AbeHJVDL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 17:03:11 -0400
-Received: from mout.gmx.net ([212.227.15.15]:36189 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726096AbeHJVDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 17:03:11 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjZhg-1gL33F0bzk-00bYst; Fri, 10
- Aug 2018 20:32:05 +0200
-Date:   Fri, 10 Aug 2018 20:32:07 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/4] Introduce a function to lock/unlock file descriptors
- when appending
-In-Reply-To: <xmqqtvo3bc0g.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808101843520.71@tvgsbejvaqbjf.bet>
-References: <pull.17.git.gitgitgadget@gmail.com> <e449ed75fe3705692175017f98438815aeccf0fb.1533836122.git.gitgitgadget@gmail.com> <xmqqtvo3bc0g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726979AbeHJVGE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 17:06:04 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46385 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726096AbeHJVGE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 17:06:04 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h14-v6so9071694wrw.13
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ZAkYLvDUsARzlNF+rN4YXoKBcx+J2xX1yTwRosweqZQ=;
+        b=iYd8KdLDaklEPjXWIuHiQXS/p83VVpDAJluageL80Eg60BbIVhZvpDiZJOYfrSHgD/
+         GYHkiP2oAKkzBpDH+I66ZV+9S/f+iHP8r21uJbSnNIS86BkDZqKBVk72O6u71NtW71Yc
+         Q7jsu4hXO7HPpFDmmcM21ilWjCOSA+BKvfulAcs+E8BuNR50yKb0dPdgTiaRiq49Q+6p
+         vufS/MuGWrWwZwsArg0TlGnPhx/LayQpMrdWDOCUixA4KK37LlQDKDZwLhbwFi5FGiId
+         wPBT9/SogP8RM2SYYt4/TXO+jhqDxksv8f2nPntBJnR15d/705fvCWFsAsQFfSSxCmDR
+         emRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ZAkYLvDUsARzlNF+rN4YXoKBcx+J2xX1yTwRosweqZQ=;
+        b=kQuO/AQG2QooOUKAtXdd/TI8QvdziggqmAraoLfMiOdpzHuZciEa+O+hHE3XaIeSSk
+         gJnbclfMzSsKyiNEKjg7BCc3UKPYg5iLKV7XrFpwfzJzfvpCVYOz+lHiZMoLP3HaCK/Y
+         IIdf7d+X7QlA/MoQK4qFD4LjvdWJWmL3iHrxVyzLjRdCO63zoKzXr7TLf/VaL96Q7zGw
+         SdB1aMg6gqG6YsJ27UrOoW6utiYH6x3gIwrwEN0FmFpj3S8C1W0njRt4JSbZZIIvVBZG
+         kj8eHZ1Fji+DpYXGrgrJF0WWH2TGNjPRkHV3KFbHtUaXDC6akiqeen0VMY0jSo27blDm
+         qBew==
+X-Gm-Message-State: AOUpUlH382v3uuYCRrQKz2kMs1a6lopU0frjVjChC7/ae1vpRllJlbS/
+        WU+uNrvzEt8o8lDegHLIkzaHbAsO
+X-Google-Smtp-Source: AA+uWPx5rESd+brK90YstfqnY/wb3eBJUQAW2LTAN3zNID+jY8znUzNYi7ukoewFKek6ygQ51upAOg==
+X-Received: by 2002:a5d:6401:: with SMTP id z1-v6mr4815737wru.64.1533926100590;
+        Fri, 10 Aug 2018 11:35:00 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l11-v6sm14037845wru.25.2018.08.10.11.34.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 10 Aug 2018 11:34:59 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking for GIT_TRACE
+References: <pull.17.git.gitgitgadget@gmail.com>
+        <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
+Date:   Fri, 10 Aug 2018 11:34:59 -0700
+In-Reply-To: <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org> (Johannes Sixt's
+        message of "Fri, 10 Aug 2018 18:15:36 +0200")
+Message-ID: <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:zYUP6Yc7U1PfmTPV0ShHE2F5olwLiKPXkdWfr4EEQ3OX1YVrhwt
- R7V+Deh2/4jBB3nUg+4Unc3Uqee482kb1IrrH5i7D/MFzXz7PTX95Qg9BT+Y3c3ZajaL2J5
- YTkMHkheC7UZSpd2Jn1AD24yRLtUR9dfqsJn0VA94LlTKcsZP2imQEd4jdyKTwJFQ4hFBvH
- orqq+RkleGZIr5IE5G9ZA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:3iHvPkpx+M0=:3F3J/gD+SC1o5KKhEqQcup
- /4vpePh7rq/Pr/dym/CJMOW2EzFchnpAVk+LO4Ragj1Hog8UqNrbwRulGUvzE3GgWkUHYWXUL
- 0Z3INsyAHDUhkk9QV+E4cRBl4CJdNCfCgzGOK4lxBS4xeF7F4PPyGqiKueIY7+J8Tzc9vH/S3
- LrIFyPqftsJmqBtSgn+U4b4kr9674IMTj+njMzUjuJgOkGSGrexnuNtfs0p+EBFoFIYg3Ewit
- Aaj5SzBdiFo4KKZtyZuCqbSqCxLoTf4sy72ZniVq+5Ij5g1LXvE1AxNkI8W2c6WsTYwU8LWNH
- a8VNBiRpy6WSCKxYWw+r5qLZ2jDO2ZVcSt8p5v3LIAmQTzOhXvfExNwi8lGiJARsZ6nSv2tov
- xRjvldWnWLAJTl5LJsEYgNMWUUwoXod6u2poEwjEr3xwwOjiScWX6JAjg7CbySoHzP8hIvCQs
- 2C5oNSx5xdbyo2qhpm3LYw56bhFYPFwMOj+ddYD0VBYC0hK8RG++lSNvLTzZ/MYHrkMBRirL5
- 3LDSGNaMRRnlaWmXXpnMvTXSTN4nTdPWK96cuO9z+405C+bBu1fsh1CdU5a/taTDMgL7WP5X1
- Kn8xe0XzhIxDfd5b+kpWMZMDyvTR/hSG7rie99/5glinqj1ZhUk/6i7lyyqVPNcIjZmWUU1Mo
- 4aohc4YHmTYYS4zMen/l/2ikUPPBfBH47NGD12ZDySFwpKknFZJpP2pDzcuVPxKc7PNrHsiwI
- e1VwOFSNX7FaZVXq8qFZetYPCbp6fWvfdEbwfTzCyJDEu2wUVADva61TkU11s7hrRzRYcPIwb
- Pq4Gocb
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-On Thu, 9 Aug 2018, Junio C Hamano wrote:
+> As this buglet looks like a recurring theme, and a proper fix is
+> preferable over repeated work-arounds. To me it looks like we need
+> some sort of locking on Windows. Unless your friends at Microsoft have
+> an ace in their sleeves that lets us have atomic O_APPEND the POSIX
+> way...
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > This function will be used to make write accesses in trace_write() a bit
-> > safer.
-> > ...
-> > To set a precedent for a better approach, let's introduce a proper
-> > abstraction: a function that says in its name precisely what Git
-> > wants it to do (as opposed to *how* it does it on Linux):
-> > lock_or_unlock_fd_for_appending().
-> >
-> > The next commit will provide a Windows-specific implementation of this
-> > function/functionality.
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > squash! Introduce a function to lock/unlock file descriptors when appending
-> 
-> If we can keep the custom, narrow and easy-to-port API (like this
-> patch introduces) focused and resist feature creep over time, then
-> it would be worth spending effort to come up with such a custom
-> helper that is easy to port.  So I agree with the approach in
-> general but I tend to think "set a precedent for a better approach"
-> is a way-too-early and wishful verdict.  We do not know if we can
-> really keep that custom API easy-to-port-and-maintain yet.
-> 
-> In short, even though I agree with the approach, most of the
-> verbiage above is unnecessary and mere distraction.
+Just to put the severity of the issue in context, we use O_APPEND in
+a few codepaths, and the trace thing for debugging is the only thing
+that could have multiple writers.  Other users of O_APPEND are:
 
-I disagree that it is a distraction, because the commit messages are the
-very location where I am supposed to detail my rationale, motivation, and
-considerations that are not obvious from the diff alone.
+ * refs/files-backend.c uses it so that a reflog entry can be
+   appended at the end, but because update to each ref is protected
+   from racing at a lot higher layer with a lock, no two people
+   would try to append to the same reflog file, so atomicity of
+   O_APPEND does not matter here.
 
-Of course, I cannot force you to take this commit message, you can
-overrule me and edit it. But you would do this against my express wish.
+ * sequencer.c wants to use it when moving one insn from the todo
+   list to the 'done' list when it finishes one operation.  If you
+   are running two sequences in a single repository, intermixed
+   'done' list would be the least of your problem, so presumably we
+   are fine here.
 
-> > ---
-> >  git-compat-util.h |  2 ++
-> >  wrapper.c         | 14 ++++++++++++++
-> >  2 files changed, 16 insertions(+)
-> >
-> > diff --git a/git-compat-util.h b/git-compat-util.h
-> > index 9a64998b2..13b83bade 100644
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -1202,6 +1202,8 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
-> >  #define getc_unlocked(fh) getc(fh)
-> >  #endif
-> >  
-> > +extern int lock_or_unlock_fd_for_appending(int fd, int lock_it);
-> > +
-> >  /*
-> >   * Our code often opens a path to an optional file, to work on its
-> >   * contents when we can successfully open it.  We can ignore a failure
-> > diff --git a/wrapper.c b/wrapper.c
-> > index e4fa9d84c..6c2116272 100644
-> > --- a/wrapper.c
-> > +++ b/wrapper.c
-> > @@ -690,3 +690,17 @@ int xgethostname(char *buf, size_t len)
-> >  		buf[len - 1] = 0;
-> >  	return ret;
-> >  }
-> > +
-> > +#ifndef GIT_WINDOWS_NATIVE
-> > +int lock_or_unlock_fd_for_appending(int fd, int lock_it)
-> > +{
-> > +	struct flock flock;
-> > +
-> > +	flock.l_type = lock_it ? F_WRLCK : F_UNLCK;
-> > +	flock.l_whence = SEEK_SET;
-> > +	flock.l_start = 0;
-> > +	flock.l_len = 0xffffffff; /* arbitrary number of bytes */
-> 
-> If this can be an arbitrary range, do we need to cover this many (or
-> only this few, depending on your point of view) bytes?
+It may make sense to allow GIT_TRACE to have a placeholder
+(e.g. "/tmp/traceout.$$") to help debuggers arrange to give
+different processes their own trace output file, which perhaps may
+be a simpler and less impactful to the performance solution than
+having to make locks at an application layer.
 
-It can be an arbitrary range, but it does not matter at this point because
-we expect only appending callers. Therefore any range will do, as long as
-it covers the range of bytes to be written by the trace functions. And
-with 0-0xffffffff, I am fairly certain we got it.
 
-Technically, we could even lock the range 0-1, as all of our callers would
-agree on that, and block each other. Other Git implementations might not,
-though. So 0-0xffffffff is my best bet and cheap.
-
-> Would it be sufficient to cover just the first one byte instead?
-
-As I said, this would depend on no other software trying to append to the
-trace file, including alternative Git implementations.
-
-In other words: it would be "too clever". Clever, but asking for problems.
-
-> Or perhaps give l_len==0 to cover all no matter how large the file
-> grows, which sounds like a better range specification.
-
-I must have overlooked that option in the documentation.
-
-*clicketyclick*
-
-Indeed,
-http://pubs.opengroup.org/onlinepubs/9699919799/functions/fcntl.html
-spells it out pretty clearly:
-
-> A lock shall be set to extend to the largest possible value of the file
-> offset for that file by setting l_len to 0. If such a lock also has
-> l_start set to 0 and l_whence is set to SEEK_SET, the whole file shall
-> be locked.
-
-Sorry about missing this. I will change the implementation to this.
-
-> > +	return fcntl(fd, F_SETLKW, &flock);
-> > +}
-> > +#endif
-
-Thanks for helping me improve the patch,
-Dscho
