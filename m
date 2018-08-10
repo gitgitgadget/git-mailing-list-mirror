@@ -2,155 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9219B1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 18:48:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 087851F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 18:56:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727106AbeHJVTu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 17:19:50 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:32827 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726420AbeHJVTu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 17:19:50 -0400
-Received: by mail-ua1-f66.google.com with SMTP id i4-v6so2924907uak.0
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 11:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8YRYmWwtR7rPjj5F604HZyNfPHtNJIS+2VGeSBukcTk=;
-        b=EtajTh1132YZU8BQlZ/FEtYP4t5gdx4W9Wsh/GOtt+0xl81ywQUohyyjE1tWv4416K
-         GDh4R9oJ5V1wR0EVCgdzQ7il254qdZwq2tass6yNu3XawcpRgEvPwu84+oebwWPzVIb+
-         rp1BZX1ha3xqbPKBpYv+f85eaAc+BufDPBYT0nTryYtxN8gLa7K80g1RKOVZiAgv5pOK
-         t3o3zBFW4S7+RyQzDIqD7Kahod75QXp8/LpEiGxoC77sZuyWLH5G2wbu/28YpHLf3Z6o
-         R5JC/xRDXk8RSgSJ7Xo+iJ3zVu21D+2L29/9VF5KLaYEVEr/EYnzZ5n8C807wSBJ6DQs
-         AoxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8YRYmWwtR7rPjj5F604HZyNfPHtNJIS+2VGeSBukcTk=;
-        b=uh+SdLEB36sonqScn7gsU0T7GIFcz3xL9m7G3FyrxGQCpdi/6YXqF3rIdmcxRDHJSe
-         ejURtbmndBz7cEIyovgWEeKt9+AYj9oXQV5g245RQkE2//LJuY1UT9AavgOSJaudvUQy
-         1c93sM1Llxz3HnFksEgV5AHxiJ5e/pzHbwJ4zUSlZh1pczEJazXtzUN7cOArJkDV1Qmg
-         ngOrr7nv6iZ6EBlAelpw9QKUebikKxhiuMggyZPMxm9bct84ysPZP6PYp4th4fm9zEB4
-         qGS3SoW6lRCX/gc2zAJKL4roMovU2fNZOuYV3Nqbq9tUMvZqfAVV47sg8Lifxd57gnJq
-         g8/g==
-X-Gm-Message-State: AOUpUlHgM8Kw7GRW6eGVDEcsXc7g3Y2GLKPHkTMsrNySD3At+24x4ArO
-        wYNj66gxYjlmFFawDMqjGZdpmyZJCJaHzsMta6o=
-X-Google-Smtp-Source: AA+uWPxGWP+csQ4fWN2kBM/QuCMCFm3Ad0KQTpC1tZrBvML/shP0VEyoyAY0kF4LzBPmnQE30jCUkjE6f3Ujh7tVhOc=
-X-Received: by 2002:a9f:3d1a:: with SMTP id l26-v6mr5169398uai.29.1533926924908;
- Fri, 10 Aug 2018 11:48:44 -0700 (PDT)
+        id S1726747AbeHJV10 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 17:27:26 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50212 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726162AbeHJV1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 17:27:25 -0400
+Received: (qmail 18889 invoked by uid 109); 10 Aug 2018 18:56:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 10 Aug 2018 18:56:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22453 invoked by uid 111); 10 Aug 2018 18:56:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 10 Aug 2018 14:56:22 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Aug 2018 14:56:18 -0400
+Date:   Fri, 10 Aug 2018 14:56:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking
+ for GIT_TRACE
+Message-ID: <20180810185618.GA9749@sigill.intra.peff.net>
+References: <pull.17.git.gitgitgadget@gmail.com>
+ <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
+ <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180729103306.16403-1-pclouds@gmail.com> <20180804053723.4695-1-pclouds@gmail.com>
- <20180804053723.4695-3-pclouds@gmail.com> <CABPp-BGcPV0RA624_1UOXYkvaNhW4yR2ifhV_MVFZQOgBb_Ydg@mail.gmail.com>
- <CACsJy8BtgMSYqkD1EaFQ=S49BA-veyTO1qU0FaPMkHY-KeggfA@mail.gmail.com>
-In-Reply-To: <CACsJy8BtgMSYqkD1EaFQ=S49BA-veyTO1qU0FaPMkHY-KeggfA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 10 Aug 2018 11:48:33 -0700
-Message-ID: <CABPp-BEOFSU2k+DKuTQZtz+c6eboiUo3RDzBZHkB6=V3SFAigQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] unpack-trees: optimize walking same trees with cache-tree
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 10, 2018 at 9:29 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Aug 8, 2018 at 8:23 PM Elijah Newren <newren@gmail.com> wrote:
+On Fri, Aug 10, 2018 at 11:34:59AM -0700, Junio C Hamano wrote:
 
-> > > +        * cache-tree would be invalidated and we would never get here
-> > > +        * in the first place.
-> > > +        */
-> > > +       for (i = 0; i < nr_entries; i++) {
-> > > +               struct cache_entry *tree_ce;
-> > > +               int len, rc;
-> > > +
-> > > +               src[0] = o->src_index->cache[pos + i];
-> > > +
-> > > +               len = ce_namelen(src[0]);
-> > > +               tree_ce = xcalloc(1, cache_entry_size(len));
-> > > +
-> > > +               tree_ce->ce_mode = src[0]->ce_mode;
-> > > +               tree_ce->ce_flags = create_ce_flags(0);
-> > > +               tree_ce->ce_namelen = len;
-> > > +               oidcpy(&tree_ce->oid, &src[0]->oid);
-> > > +               memcpy(tree_ce->name, src[0]->name, len + 1);
-> >
-> > We do a bunch of work to setup tree_ce...
-> >
-> > > +               for (d = 1; d <= nr_names; d++)
-> > > +                       src[d] = tree_ce;
-> >
-> > ...then we make nr_names copies of tree_ce (so that *way_merge or
-> > bind_merge or oneway_diff or whatever will have the expected number of
-> > entries).
-> >
-> > > +               rc = call_unpack_fn((const struct cache_entry * const *)src, o);
-> >
-> > ...then we call o->fn (via call_unpack_fn) to do various complicated
-> > logic to figure out which tree_ce to use??  Isn't that just an
-> > expensive way to recompute that what we currently have in the index is
-> > what we want to keep there?
-> >
-> > Granted, a caller of this may have set o->fn to something other than
-> > {one,two,three}way_merge (or bind_merge), and that function might have
-> > important side effects...but it just seems annoying to have to do so
-> > much work when for most uses we already know the entry in the index is
-> > the one we already want.
->
-> I'm not so sure about that. Which is why I keep it generic.
->
-> > In fact, the only other thing in the
-> > codebase that o->fn is now set to is oneway_diff, which I think is a
-> > no-op when the two trees match.
-> >
-> > Would be nice if we could avoid all this, at least in the common cases
-> > where o->fn is a function known to not have side effects.  Or did I
-> > not read those functions closely enough and they do have important
-> > side effects?
->
-> In one of my earlier "how about this" attempts, I introduced fn_same
-> [1] that can help achieve this without carving "known not to have side
-> effects" in common code. Which I think is still a good direction to go
-> if we want to optimize more aggressively. We could have something like
-> this
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 1f11991a51..01b80389e0 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -699,6 +699,9 @@ static int traverse_by_cache_tree(int pos, int
-> nr_entries, int nr_names,
->         int ce_len = 0;
->         int i, d;
->
-> +       if (o->fn_cache_tree)
-> +               return o->fn_cache_tree(pos, nr_entries, nr_names, names, info);
-> +
->         if (!o->merge)
->                 BUG("We need cache-tree to do this optimization");
->
-> then you can add, say threeway_cache_tree_merge(), that does what
-> traverse_by_cache_tree() does but more efficient. This involves a lot
-> more work (mostly staring and those n-merge functions and making sure
-> you don't set the right conditions before going the fast path).
->
-> I didn't do it because.. well.. it's more work and also riskier. I
-> think we can leave that for later, unless you think we should do it
-> now.
->
-> [1] https://public-inbox.org/git/20180726163049.GA15572@duynguyen.home/
+> Johannes Sixt <j6t@kdbg.org> writes:
+> 
+> > As this buglet looks like a recurring theme, and a proper fix is
+> > preferable over repeated work-arounds. To me it looks like we need
+> > some sort of locking on Windows. Unless your friends at Microsoft have
+> > an ace in their sleeves that lets us have atomic O_APPEND the POSIX
+> > way...
+> 
+> Just to put the severity of the issue in context, we use O_APPEND in
+> a few codepaths, and the trace thing for debugging is the only thing
+> that could have multiple writers.  Other users of O_APPEND are:
+> 
+>  * refs/files-backend.c uses it so that a reflog entry can be
+>    appended at the end, but because update to each ref is protected
+>    from racing at a lot higher layer with a lock, no two people
+>    would try to append to the same reflog file, so atomicity of
+>    O_APPEND does not matter here.
 
-Yeah, from your other thread, I think I was missing some of the
-intracacies of how the cache-tree works and the extra work that'd be
-needed to bring it along. Deferring until later makes sense.
+Just an interesting side note, but I think one of the reasons we use
+dot-locks and not flock() is that the former generally works on network
+filesystems. I think O_APPEND also is not reliable for non-local files,
+though, so short of actually dot-locking trace files (yuck) I don't
+think there's a great solution there.
+
+> It may make sense to allow GIT_TRACE to have a placeholder
+> (e.g. "/tmp/traceout.$$") to help debuggers arrange to give
+> different processes their own trace output file, which perhaps may
+> be a simpler and less impactful to the performance solution than
+> having to make locks at an application layer.
+
+Heh, I actually wrote that patch several years ago, as part of an
+abandoned effort to have config-triggered tracing (e.g., on the server
+side where you're getting hundreds of requests and you want to enable
+tracing on a repo for a slice of time).
+
+One annoying thing for a case like the test in question is that you
+don't actually know the pid of the process you're interested in. So we'd
+generate two trace files, and then you'd have to figure out which one is
+which. In my earlier work, I coupled it with some magic to allow
+per-command config, like:
+
+  [trace "fetch"]
+  packet = /tmp/trace.%p
+
+but you could also imagine a "%n" which uses the command name.
+
+I don't remember why I abandoned it, but I think a lot had to do with
+violating the "don't look at config" rules for our repo startup code. A
+lot of that has been fixed since then, but I haven't really needed it.
+If anybody is really interested, the patches are at:
+
+  https://github.com/peff/git jk/trace-stdin
+
+(my ultimate goal was to record stdin for pack-objects to replay slow
+fetches, but I ended up hacking together a patch to pack-objects
+instead).
+
+-Peff
