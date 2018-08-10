@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B8FC1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 16:52:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 359101F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 16:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729702AbeHJTW7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 15:22:59 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:36305 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729651AbeHJTW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 15:22:58 -0400
-Received: by mail-wm0-f65.google.com with SMTP id w24-v6so2568271wmc.1
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:52:19 -0700 (PDT)
+        id S1729715AbeHJTXA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 15:23:00 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34326 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729651AbeHJTXA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 15:23:00 -0400
+Received: by mail-wm0-f67.google.com with SMTP id l2-v6so1961158wme.1
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 09:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q1zbET0JXclKOUteu53UmZ7Lm1Lxq0mzvtOHkV7IFqk=;
-        b=Y9efIPl8k5My0ije+wipwPefa7c/Pd8w6TtJNzyf5DUoyIJnLhC4nCVJGBKToBJm2f
-         URSLJ+f7YABB5jyeKnh0x4Mha8TEwgdY3gsPSA8KUzeiKF8AeQrcFRBJKVmO+ea+slm9
-         49C5hj+fS5pS0zkONy+VUGzHBj52pvgsynKdX2orx3Ofmie46ZXJWfpZH5IYtn501svW
-         c3joxFSNFf7ZtPtTuha5/jIUfH1TEajU3AMS6M9N2eus9LtBmvivBzxCYtIoWCjKrKcx
-         ASHxFHptL6o3m7FtiS3weMFlDfiMCe0w23lKCQvpUBnZtneQfpRJzixPLnQ4yPgrhi81
-         YGsQ==
+        bh=Gc8UIJBuE2/XJdfEv2TVIkwWFgueJ/4d2+4xpvrYUPU=;
+        b=MV3O64KOrScbCYlq04ty6W2WfUMtefQkximEU0tUS6nQp7Fef+uPp8BCzV0ZcC0YXi
+         cZS1QvyKLR+5X7XcBZDEtbvZiQG6RqxxDNhQ6KTgKZwagE5aowEQ2bc1PCqCG8dxJ2Wa
+         aLxhH/kZByT0Vsk3849/LLvwxVNV/lnIpnW8zWtrYj5M3D0gRb9WmKYAmwqp7zMHKzbk
+         +kwVIWXczgGPY85LDAzLzGllDpwxK8ri1veG3er3f6vgs5EsAJ944FyFjfaI6Qw/IB9q
+         Scks9UiOYY8zlxkepOl+a01JmEoRtP3xWCmlbo9s97bQE/D/dIMAAXv2hp+bW5kL/L7m
+         t76Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Q1zbET0JXclKOUteu53UmZ7Lm1Lxq0mzvtOHkV7IFqk=;
-        b=p0BHvb03rYq9JHjX084y/5KIqGkNzePi4TSVVTLgizL37ffOxTiLkHcSI4T3ypCmLM
-         ZbjzfIPvWtTGynaT5BSg6WcEJcW5KRBhh3O9yfKgZTiQwdMY6YX+W+TsL6QXgJvk9mjU
-         EoNrK01kkbUGxVL6FjKCfB8wSFe44J027afP4HB9NMtMohLNxof10vP7WnruP/R2QXhG
-         6pbo1ZASvJMC7gP3F1sc+r9pzPPAdD1nOoAbUM2G5yIsS12HPIHY9RtcM7sFffBAaF+E
-         5AreLMxlLpprpwVbNBmeu83jojXgBeIgmFcuf9CzJUhbbUN+xJncf4teL58EErvKpVkN
-         Fe/w==
-X-Gm-Message-State: AOUpUlFcrav7UnrQ+f3WhSYXL8xl1irvRSAziN8PPwcRArwWpS1JxVrt
-        bkdUdRzkbZt30wOA7/l3U059nuE+
-X-Google-Smtp-Source: AA+uWPx2RyYc6mhIK/wrzUpYlSqxid6TE3yqAfFRnhjep9obGElFh8bQ5tpocmT0Ic+AVzUgUlbbsQ==
-X-Received: by 2002:a1c:55c8:: with SMTP id j191-v6mr2003167wmb.67.1533919938857;
-        Fri, 10 Aug 2018 09:52:18 -0700 (PDT)
+        bh=Gc8UIJBuE2/XJdfEv2TVIkwWFgueJ/4d2+4xpvrYUPU=;
+        b=V4gKbzTLtOxPDZaQ74b19f2rJlG6XtK7taLAGzSXVd8J306E7rqkFv1f+Ma5gbKbBJ
+         Itta5QNiA41uCxPFCzV47yyjheN52HoI0/mdrxLRkkwHX0Z0pBmCFIBpNnzYMvRHDyQ/
+         ILjD3FQz36UsuPcwT8WV6+8+QPke128r8LiLUJD9qEoIiN6QOmmFd2qIOj0gQUFaGIGu
+         ClKx9kBoo0pAlp61ZTde1GWgxkYYE4ihA6r+aMR8xLicLFfzkVN82qCGZObh/NGPIeyl
+         a8mydLfJ3JnOXHuoRvL3MUR0sCIKOLRQ75J4dN2qDo9sTlY13t8Bz3LSU/Xnpy29OsTb
+         AuxQ==
+X-Gm-Message-State: AOUpUlEYNR9SZ/+IA8Xtp+UveglKeJXKJVnmhI7uhD2Cq9N+dElPZOBu
+        MYwfhUZdFPk9lhzhNau6IxBpRpsP
+X-Google-Smtp-Source: AA+uWPw/7qHQlm/JSM6KYuYuBTnhkNN4z1MHqlL1Q1mSEnMJo10Ptatrlr8kMKzcgW+Ge+dlv8S/ZQ==
+X-Received: by 2002:a1c:5dd4:: with SMTP id r203-v6mr2082929wmb.29.1533919940600;
+        Fri, 10 Aug 2018 09:52:20 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-25-156.w86-222.abo.wanadoo.fr. [86.222.24.156])
-        by smtp.googlemail.com with ESMTPSA id i125-v6sm3108302wmd.23.2018.08.10.09.52.17
+        by smtp.googlemail.com with ESMTPSA id i125-v6sm3108302wmd.23.2018.08.10.09.52.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Aug 2018 09:52:17 -0700 (PDT)
+        Fri, 10 Aug 2018 09:52:19 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,9 +56,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v6 03/20] editor: add a function to launch the sequence editor
-Date:   Fri, 10 Aug 2018 18:51:30 +0200
-Message-Id: <20180810165147.4779-4-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v6 04/20] rebase -i: rewrite the edit-todo functionality in C
+Date:   Fri, 10 Aug 2018 18:51:31 +0200
+Message-Id: <20180810165147.4779-5-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180810165147.4779-1-alban.gruin@gmail.com>
 References: <20180731180003.5421-1-alban.gruin@gmail.com>
@@ -68,97 +68,138 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of the rewrite of interactive rebase, the sequencer will need to
-open the sequence editor to allow the user to edit the todo list.
-Instead of duplicating the existing launch_editor() function, this
-refactors it to a new function, launch_specified_editor(), which takes
-the editor as a parameter, in addition to the path, the buffer and the
-environment variables.  launch_sequence_editor() is then added to launch
-the sequence editor.
+This rewrites the edit-todo functionality from shell to C.
+
+To achieve that, a new command mode, `edit-todo`, is added, and the
+`write-edit-todo` flag is removed, as the shell script does not need to
+write the edit todo help message to the todo list anymore.
+
+The shell version is then stripped in favour of a call to the helper.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-No changes since v5.
+ builtin/rebase--helper.c   | 13 ++++++++-----
+ git-rebase--interactive.sh | 11 +----------
+ rebase-interactive.c       | 27 +++++++++++++++++++++++++++
+ rebase-interactive.h       |  1 +
+ 4 files changed, 37 insertions(+), 15 deletions(-)
 
- cache.h  |  1 +
- editor.c | 27 +++++++++++++++++++++++++--
- strbuf.h |  2 ++
- 3 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 8b447652a7..d70ae49ca2 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1409,6 +1409,7 @@ extern const char *fmt_name(const char *name, const char *email);
- extern const char *ident_default_name(void);
- extern const char *ident_default_email(void);
- extern const char *git_editor(void);
-+extern const char *git_sequence_editor(void);
- extern const char *git_pager(int stdout_is_tty);
- extern int is_terminal_dumb(void);
- extern int git_ident_config(const char *, const char *, void *);
-diff --git a/editor.c b/editor.c
-index 9a9b4e12d1..c985eee1f9 100644
---- a/editor.c
-+++ b/editor.c
-@@ -1,4 +1,5 @@
- #include "cache.h"
-+#include "config.h"
- #include "strbuf.h"
- #include "run-command.h"
- #include "sigchain.h"
-@@ -34,10 +35,21 @@ const char *git_editor(void)
- 	return editor;
- }
- 
--int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
-+const char *git_sequence_editor(void)
+diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
+index 05e73e71d4..731a64971d 100644
+--- a/builtin/rebase--helper.c
++++ b/builtin/rebase--helper.c
+@@ -13,12 +13,12 @@ static const char * const builtin_rebase_helper_usage[] = {
+ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
  {
--	const char *editor = git_editor();
-+	const char *editor = getenv("GIT_SEQUENCE_EDITOR");
-+
-+	if (!editor)
-+		git_config_get_string_const("sequence.editor", &editor);
-+	if (!editor)
-+		editor = git_editor();
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
+-	unsigned flags = 0, keep_empty = 0, rebase_merges = 0, write_edit_todo = 0;
++	unsigned flags = 0, keep_empty = 0, rebase_merges = 0;
+ 	int abbreviate_commands = 0, rebase_cousins = -1;
+ 	enum {
+ 		CONTINUE = 1, ABORT, MAKE_SCRIPT, SHORTEN_OIDS, EXPAND_OIDS,
+ 		CHECK_TODO_LIST, SKIP_UNNECESSARY_PICKS, REARRANGE_SQUASH,
+-		ADD_EXEC, APPEND_TODO_HELP
++		ADD_EXEC, APPEND_TODO_HELP, EDIT_TODO
+ 	} command = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL(0, "ff", &opts.allow_ff, N_("allow fast-forward")),
+@@ -28,8 +28,6 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "rebase-merges", &rebase_merges, N_("rebase merge commits")),
+ 		OPT_BOOL(0, "rebase-cousins", &rebase_cousins,
+ 			 N_("keep original branch points of cousins")),
+-		OPT_BOOL(0, "write-edit-todo", &write_edit_todo,
+-			 N_("append the edit-todo message to the todo-list")),
+ 		OPT_CMDMODE(0, "continue", &command, N_("continue rebase"),
+ 				CONTINUE),
+ 		OPT_CMDMODE(0, "abort", &command, N_("abort rebase"),
+@@ -50,6 +48,9 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 			N_("insert exec commands in todo list"), ADD_EXEC),
+ 		OPT_CMDMODE(0, "append-todo-help", &command,
+ 			    N_("insert the help in the todo list"), APPEND_TODO_HELP),
++		OPT_CMDMODE(0, "edit-todo", &command,
++			    N_("edit the todo list during an interactive rebase"),
++			    EDIT_TODO),
+ 		OPT_END()
+ 	};
  
-+	return editor;
-+}
-+
-+static int launch_specified_editor(const char *editor, const char *path,
-+				   struct strbuf *buffer, const char *const *env)
-+{
- 	if (!editor)
- 		return error("Terminal is dumb, but EDITOR unset");
+@@ -90,6 +91,8 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
+ 	if (command == ADD_EXEC && argc == 2)
+ 		return !!sequencer_add_exec_commands(argv[1]);
+ 	if (command == APPEND_TODO_HELP && argc == 1)
+-		return !!append_todo_help(write_edit_todo, keep_empty);
++		return !!append_todo_help(0, keep_empty);
++	if (command == EDIT_TODO && argc == 1)
++		return !!edit_todo_list(flags);
+ 	usage_with_options(builtin_rebase_helper_usage, options);
+ }
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 94c23a7af2..2defe607f4 100644
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -108,16 +108,7 @@ initiate_action () {
+ 		     --continue
+ 		;;
+ 	edit-todo)
+-		git stripspace --strip-comments <"$todo" >"$todo".new
+-		mv -f "$todo".new "$todo"
+-		collapse_todo_ids
+-		git rebase--helper --append-todo-help --write-edit-todo
+-
+-		git_sequence_editor "$todo" ||
+-			die "$(gettext "Could not execute editor")"
+-		expand_todo_ids
+-
+-		exit
++		exec git rebase--helper --edit-todo
+ 		;;
+ 	show-current-patch)
+ 		exec git show REBASE_HEAD --
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index d7996bc8d9..3f9468fc69 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -66,3 +66,30 @@ int append_todo_help(unsigned edit_todo, unsigned keep_empty)
  
-@@ -95,3 +107,14 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		return error_errno("could not read file '%s'", path);
- 	return 0;
+ 	return ret;
  }
 +
-+int launch_editor(const char *path, struct strbuf *buffer, const char *const *env)
++int edit_todo_list(unsigned flags)
 +{
-+	return launch_specified_editor(git_editor(), path, buffer, env);
-+}
++	struct strbuf buf = STRBUF_INIT;
++	const char *todo_file = rebase_path_todo();
 +
-+int launch_sequence_editor(const char *path, struct strbuf *buffer,
-+			   const char *const *env)
-+{
-+	return launch_specified_editor(git_sequence_editor(), path, buffer, env);
++	if (strbuf_read_file(&buf, todo_file, 0) < 0)
++		return error_errno(_("could not read '%s'."), todo_file);
++
++	strbuf_stripspace(&buf, 1);
++	if (write_message(buf.buf, buf.len, todo_file, 0)) {
++		strbuf_release(&buf);
++		return -1;
++	}
++
++	strbuf_release(&buf);
++
++	transform_todos(flags | TODO_LIST_SHORTEN_IDS);
++	append_todo_help(1, 0);
++
++	if (launch_sequence_editor(todo_file, NULL, NULL))
++		return -1;
++
++	transform_todos(flags & ~(TODO_LIST_SHORTEN_IDS));
++
++	return 0;
 +}
-diff --git a/strbuf.h b/strbuf.h
-index 60a35aef16..66da9822fd 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -575,6 +575,8 @@ extern void strbuf_add_unique_abbrev(struct strbuf *sb,
-  * file's contents are not read into the buffer upon completion.
-  */
- extern int launch_editor(const char *path, struct strbuf *buffer, const char *const *env);
-+extern int launch_sequence_editor(const char *path, struct strbuf *buffer,
-+				  const char *const *env);
+diff --git a/rebase-interactive.h b/rebase-interactive.h
+index 47372624e0..155219e742 100644
+--- a/rebase-interactive.h
++++ b/rebase-interactive.h
+@@ -2,5 +2,6 @@
+ #define REBASE_INTERACTIVE_H
  
- extern void strbuf_add_lines(struct strbuf *sb, const char *prefix, const char *buf, size_t size);
+ int append_todo_help(unsigned edit_todo, unsigned keep_empty);
++int edit_todo_list(unsigned flags);
  
+ #endif
 -- 
 2.18.0
 
