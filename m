@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5927F1F405
-	for <e@80x24.org>; Fri, 10 Aug 2018 00:14:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB0A41F405
+	for <e@80x24.org>; Fri, 10 Aug 2018 00:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727009AbeHJCmJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 22:42:09 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:48842 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726894AbeHJCmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 22:42:09 -0400
-Received: by mail-qk0-f201.google.com with SMTP id 17-v6so7602880qkz.15
-        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:14:51 -0700 (PDT)
+        id S1727198AbeHJCve (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 22:51:34 -0400
+Received: from mail-it0-f73.google.com ([209.85.214.73]:56366 "EHLO
+        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727185AbeHJCve (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 22:51:34 -0400
+Received: by mail-it0-f73.google.com with SMTP id g4-v6so366190itf.6
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=NyNxz7ZonNUksDF55xroJFip0YDdg7dWFxLEf+OOYrw=;
-        b=uoyEUjmIijDY8/oUaIRQ68REn6anEv/6eEmcIWi0hxka4BuJTf/YlkMAgX/hBj/dDX
-         DJyMy+0qQvaAH/TSvCNR8f1Bjpac6ggv9/uDWvqSjFWo1yytRE7LgqAXFTAJXhi2nqom
-         z1hHYCILaAkWp+dkYNzss0+m7Vwf4qEoWhTzKYwViaoslnwtNYyCi0SvJpyvjZNAcpo3
-         wF8J5PkqQ+RF8jiv29/vHVXIyIsxVSI1T7Q9E2LxLByWis1BWRGFlev+Lb0potlRKR3p
-         hSUtc86OkUvayS0EsDwugyqh4bJ4SoOA4jlf3BcJYQkrDBMCr2eMeoHES0sOcwLiTiYF
-         DC3Q==
+        bh=S0qqKzjpV9vDcbiGw9zAwGYAGtP7XG4WWxQ0edBS9IY=;
+        b=sZfDF3u2BEG0VjjV6YDz1SzkA3cU75q7+Er0APCXLfeZ90yYCReSXaaYbQXrBBcnDX
+         6IfFvyGi8v3X1HEYZIclo3d843yshm3zFf6USDCO7/7zYKJ6gJ8BO30iXSmjCTLLvcA1
+         nlYNIO2koe0yH56VCabIdozMDQIfjv/N+Y1X6X+K3G3uw5W8bHXxR9DVRmZ63tItXCK/
+         cCDNzsBNxEx0FW8KCM8a1Vi9V6Z7EF+43hUwy+/pTH5/Ru3o630dePmjlphnKTyTf8wz
+         yyK34lGcoLwV3xV8xRbsVvBxmvI5CkLsCmIteEvM1BeoB0X5FssDkG7RclqWvG3wWyS9
+         foOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=NyNxz7ZonNUksDF55xroJFip0YDdg7dWFxLEf+OOYrw=;
-        b=Kd9D0l1k+eMOGTGzzCJC+Aii8hg2uF3R1sqfVdtDEDxJFm5G+nMFNn9PFwmNWLHfnc
-         Pov7rKuOFs1dyYxf+JzxfkGeNiVhbasKBF3qw2WDyA3Ha/DyrZ5hlW0eWBhbXtO51E1L
-         KHGavJOh/kUpMAMy3ydl74bCLMyBfikDpAVhDu/81SFbjUcaO55rlCIuGaw5j4fQgqCL
-         pyIXPpC9KGDTy3GrCTpfvGwymbrsVbwV0fWz5ukIiNaTAhTHhOR0OTuo6s1rvNRMvluD
-         NV7+U2z3W1iSpnyXzfoTUxkkDZkzgqXiJGPD/u+OMM0EOfUCCg7A4YOT3RI6VjaTx4mL
-         fA3w==
-X-Gm-Message-State: AOUpUlGBNEAtT1Ar01Nm4UdQcwUwr+qR0AIlBa8J/fo1J9LeUiq2EEcy
-        26lr7S34MUQu7RQADdaVYb+MlIZLYN8P5enDbxxH
-X-Google-Smtp-Source: AA+uWPw+uIJMhyV3gcoCWKVzsfrbhLIQLXiJVkrsRMylURVtrGg+B86nbW7TsNYclCUv2ooapAR8Rw6zoIhQIZ4tL00N
-X-Received: by 2002:ae9:e116:: with SMTP id g22-v6mr2414213qkm.31.1533860091192;
- Thu, 09 Aug 2018 17:14:51 -0700 (PDT)
-Date:   Thu,  9 Aug 2018 17:14:47 -0700
-In-Reply-To: <71619cbd1004d7acf991011fc0c941d4a5716079.1533854545.git.matvore@google.com>
-Message-Id: <20180810001447.11257-1-jonathantanmy@google.com>
+        bh=S0qqKzjpV9vDcbiGw9zAwGYAGtP7XG4WWxQ0edBS9IY=;
+        b=nPpPtAWu4YWGAhiWNP/MUAAuo1RI663kvbQ/NW3C0sopG98SY19WfYajPlmPROCBaL
+         WSQginxX7joOo5+ztKgrMb+bMFkA/Eppq2WOar2B/B43TxqPXnnQZ0sZLzHMTS54mvha
+         Qj+aiAgMRM+pCC/lb+zdOI/DvpOSTkomxAiuPvzOiU1fA96XJVshb/kz58g23P7lwR2p
+         K7jRPmCk199EDgVB2mu4LdKegH8Si9tCuorCNR3TJueBhuDqFJ0H67fO1IyGzTDew0Fj
+         JRcWoXgRn4hX47ZFahzD5r6FF2KT9xZ0cBYHEdtERIp6+wSr6Hc/KPVBTd7IcfuZMSzD
+         UN4Q==
+X-Gm-Message-State: AOUpUlFhPaRnGpm0NDYhZu2LGdwnY5Cxd4Nyd+8+KXtxXMEYdGavJdef
+        jck0H6/j3lxYLjJanyaL6ofezzdaCFUcUYg8+8tt
+X-Google-Smtp-Source: AA+uWPzF69I0f2/0GuciW5f9shueVAcBqG8BGQ5sPjj0TA2JyBHrYpeZ3GEdgiynokJHpvlWQ116Uu4uayLQ61xrAnRL
+X-Received: by 2002:a6b:ee0e:: with SMTP id i14-v6mr1800601ioh.112.1533860654602;
+ Thu, 09 Aug 2018 17:24:14 -0700 (PDT)
+Date:   Thu,  9 Aug 2018 17:24:11 -0700
+In-Reply-To: <54d827e7c0dc757451fa10f5bd0752e1e3356281.1533854545.git.matvore@google.com>
+Message-Id: <20180810002411.13447-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <71619cbd1004d7acf991011fc0c941d4a5716079.1533854545.git.matvore@google.com>
+References: <54d827e7c0dc757451fa10f5bd0752e1e3356281.1533854545.git.matvore@google.com>
 X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: Re: [PATCH 2/5] list-objects-filter: implement filter only:commits
+Subject: Re: [PATCH 5/5] rev-list: handle missing tree objects properly
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     matvore@google.com
 Cc:     git@vger.kernel.org, jeffhost@microsoft.com, peff@peff.net,
@@ -62,95 +62,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Teach list-objects the "only:commits" filter which allows for filtering
-> out all non-commit and non-annotated tag objects (unless other objects
-> are explicitly specified by the user). The purpose of this patch is to
-> allow smaller partial clones.
-> 
-> The name of this filter - only:commits - is a bit inaccurate because it
-> still allows annotated tags to pass through. I chose it because it was
-> the only concise name I could think of that was pretty descriptive. I
-> considered and decided against "tree:none" because the code and
-> documentation for filters seems to lack the concept of "you're filtering
-> this, so we'll implicitly filter all referents of this." So "tree:none"
-> is vague, since some may think it filters blobs too, while some may not.
-> "only:commits" is specific and makes it easier to match it to a
-> potential use case.
-
-I'll do a fuller review tomorrow, but here are my initial thoughts.
-
-I'm undecided about whether "only:commits" or "tree:none" is better -
-one argument in favor of the latter is that blobs are not of much use
-without any trees referring to them, so it makes sense that omitting
-trees means omitting blobs. But that requires some thought and is not
-immediately obvious.
-
->  /*
-> - * A filter for list-objects to omit ALL blobs from the traversal.
-> - * And to OPTIONALLY collect a list of the omitted OIDs.
-> + * A filter for list-objects to omit ALL blobs from the traversal, and possibly
-> + * trees as well.
-> + * Can OPTIONALLY collect a list of the omitted OIDs.
->   */
-> -struct filter_blobs_none_data {
-> +struct filter_none_of_type_data {
-> +	unsigned omit_trees : 1;
->  	struct oidset *omits;
->  };
-
-I know that it's documented above that blobs are always omitted, but
-maybe it's worth it to add a comment /* blobs are always omitted */.
-
-> -	case LOFS_BEGIN_TREE:
-> -		assert(obj->type == OBJ_TREE);
-> -		/* always include all tree objects */
-> -		return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-> -
->  	case LOFS_END_TREE:
->  		assert(obj->type == OBJ_TREE);
->  		return LOFR_ZERO;
+> @@ -209,7 +210,8 @@ static inline void finish_object__ma(struct object *obj)
+>  	 */
+>  	switch (arg_missing_action) {
+>  	case MA_ERROR:
+> -		die("missing blob object '%s'", oid_to_hex(&obj->oid));
+> +		die("missing %s object '%s'",
+> +		    type_name(obj->type), oid_to_hex(&obj->oid));
+>  		return;
 >  
-> +	case LOFS_BEGIN_TREE:
-> +		assert(obj->type == OBJ_TREE);
-> +		if (!filter_data->omit_trees)
-> +			return LOFR_MARK_SEEN | LOFR_DO_SHOW;
-> +
->  	case LOFS_BLOB:
-> -		assert(obj->type == OBJ_BLOB);
->  		assert((obj->flags & SEEN) == 0);
+>  	case MA_ALLOW_ANY:
+> @@ -222,8 +224,8 @@ static inline void finish_object__ma(struct object *obj)
+>  	case MA_ALLOW_PROMISOR:
+>  		if (is_promisor_object(&obj->oid))
+>  			return;
+> -		die("unexpected missing blob object '%s'",
+> -		    oid_to_hex(&obj->oid));
+> +		die("unexpected missing %s object '%s'",
+> +		    type_name(obj->type), oid_to_hex(&obj->oid));
+>  		return;
 
-Moving the case LOFS_BEGIN_TREE and removing the assert is unnecessary,
-I think.
+Once again, I'll do a fuller review tomorrow.
 
-Also, there's fallthrough. If that's on purpose, add /* fallthrough */,
-although I think that it complicates the code unnecessarily here.
+These are fine (obj->type is populated), because the types of objects
+are known during traversal.
 
-> +test_expect_success 'verify only:commits packfile has no blobs or trees' '
-> +	git -C r1 pack-objects --rev --stdout --filter=only:commits >commitsonly.pack <<-EOF &&
-> +	HEAD
-> +	EOF
-> +	git -C r1 index-pack ../commitsonly.pack &&
-> +	git -C r1 verify-pack -v ../commitsonly.pack \
-> +		| grep -E "tree|blob" \
-> +		| sort >observed &&
-> +	test_line_count = 0 observed
-> +'
+> -	if (obj->type == OBJ_BLOB && !has_object_file(&obj->oid)) {
+> +	if (!has_object_file(&obj->oid)) {
+>  		finish_object__ma(obj);
+>  		return 1;
 
-Bash pipes conceal return codes. Here it's OK, but it might be better to
-write the verify-pack on its own line and then '! grep -E "tree|blob"' -
-you don't need to sort or test_line_count.
+And this is also fine, because finish_object__ma can now handle any
+object type.
 
-> +test_expect_success 'grab tree directly when using only:commits' '
-> +	# We should get the tree specified directly but not its blobs or subtrees.
-> +	git -C r1 pack-objects --rev --stdout --filter=only:commits >commitsonly.pack <<-EOF &&
-> +	HEAD:
-> +	EOF
-> +	git -C r1 index-pack ../commitsonly.pack &&
-> +	git -C r1 verify-pack -v ../commitsonly.pack \
-> +		| grep -E "tree|blob" \
-> +		| sort >observed &&
-> +	test_line_count = 1 observed
-> +'
+> +	revs.show_missing_trees = 1;
 
-Similar comment as above, except you can redirect the output of grep to
-a file, then test_line_count on that file. No need for sort.
+(and elsewhere)
+
+Could we just show missing trees all the time? We do that for blobs and
+already rely on the caller (eventually, show_object() in
+builtin/rev-list.c) to determine whether the object actually exists or
+not; we could do the same for trees. This allows us to not include this
+extra knob.
+
+> -	if (parse_tree_gently(tree, gently) < 0) {
+> +	parse_result = parse_tree_gently(tree, gently);
+> +	if (parse_result < 0 && !revs->show_missing_trees) {
+>  		if (revs->ignore_missing_links)
+>  			return;
+>  
+> @@ -182,7 +185,8 @@ static void process_tree(struct traversal_context *ctx,
+>  	if (base->len)
+>  		strbuf_addch(base, '/');
+>  
+> -	process_tree_contents(ctx, tree, base);
+> +	if (parse_result >= 0)
+> +		process_tree_contents(ctx, tree, base);
+>  
+>  	if ((obj->flags & NOT_USER_GIVEN) && ctx->filter_fn) {
+>  		r = ctx->filter_fn(LOFS_END_TREE, obj,
+
+Is it possible to call the appropriate callbacks and then return
+immediately, instead of going through the whole function checking
+parse_result when necessary? When doing the latter, the reader needs to
+keep on checking if each function still works if the tree is
+unparseable.
