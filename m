@@ -2,140 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.6 required=3.0 tests=BAYES_05,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,HK_LOTTO,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,MONEY_FORM,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C5EB1F405
-	for <e@80x24.org>; Thu,  9 Aug 2018 23:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EF191F405
+	for <e@80x24.org>; Fri, 10 Aug 2018 00:10:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727661AbeHJCPY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 9 Aug 2018 22:15:24 -0400
-Received: from o1.em1.managebuilding.com ([167.89.63.196]:31433 "EHLO
-        o1.em1.managebuilding.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727391AbeHJCPY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 9 Aug 2018 22:15:24 -0400
-X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Aug 2018 22:15:23 EDT
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; 
-        d=managebuilding.com; 
-        h=content-type:from:mime-version:reply-to:to:subject; s=s1; 
-        bh=Dzxhf1eBmzdHg674LpkFfIjRkfQ=; b=Bkc3dP/Vc6XIc68mpmEysq5mGli7O
-        bnd8qmnPm82xwwSiPWqkCEv4RYDywYD5X+VlJie3xUoEvMNm34fLT+VJcrS40iRf
-        1EfDhdTNOg/3YHz3zr/K8RjXjmLzn+za0mKeUBHVDbYTEBqigyKNuanZ+ycCu5fL
-        GS8gfFIv7listQ=
-Received: by filter0138p1iad2.sendgrid.net with SMTP id filter0138p1iad2-27616-5B6CD092-16
-        2018-08-09 23:38:58.949359431 +0000 UTC m=+176514.589185099
-Received: from MzI4OTc5MA (ec2-34-224-158-88.compute-1.amazonaws.com [34.224.158.88])
-        by ismtpd0024p1mdw1.sendgrid.net (SG) with HTTP id _AVIDKxiQ66zPJbqPqw0xg
-        Thu, 09 Aug 2018 23:38:58.933 +0000 (UTC)
-Content-Type: multipart/mixed; boundary=4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
-Date:   Thu, 09 Aug 2018 23:38:58 +0000 (UTC)
-From:   "BMC&QCONS" <mail@managebuilding.com>
+        id S1727000AbeHJChh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 9 Aug 2018 22:37:37 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:43919 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726961AbeHJChg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 9 Aug 2018 22:37:36 -0400
+Received: by mail-yw1-f73.google.com with SMTP id v6-v6so10461466ywg.10
+        for <git@vger.kernel.org>; Thu, 09 Aug 2018 17:10:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=8dXG0HD1f4EiQ1Y3p2vr8evFNR8dcWvIPXFCKdjJtgg=;
+        b=cgwEqGQ5P8HwEgBlB9lUyBT4/RDG/OAx6N7rIe1XOfV7Lvj2yGIj5qKqRgXvpv0Fe3
+         F7dxeqcT+GWQ1XBtIOClD0+Iughn8m+TjYHc40wTfjcmh6vMGlAb1qeJet28PnJ8Oj4Z
+         EVbqyhZUQvqz9/uT+WbLZBhjh6alAHYLT2bCtjhklSRAsLhZIP571zxvsud1u0eo8/MY
+         3kIOnJ8V4VSe+oMqAFntHGbDjW6RbuXpBsFF+s5QWRCBq8uzY7BHvNzrSD/9k10qGOsU
+         0OgsVcoRbGz/4fWuCDjBlGcddcVwt9N91JkOiLO7QwzLBLpAnrEeRtHSD7vQEBGvDSj+
+         Hyag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=8dXG0HD1f4EiQ1Y3p2vr8evFNR8dcWvIPXFCKdjJtgg=;
+        b=B/tlzbXN0WQ84ViUyyWTF/1WBAhcHRFhZiCZLohZuhYCv2UewHnJwmHcVrI+pzk0NY
+         QvXcMMRPK1ZiN8UBxObh1ijGWCgAkm1HpGZduqpKz5nPw1QtLpfJZBFkjSYk8ek9S91U
+         Tocm3RfoSw8blETCOzeRiRZlZ5LkOEgKWmli0EBx5TGhJQyG03k0icdRp/81B3t1t+Ji
+         O3lAcjTDTxuSS6Czwna8YvafC2VCd27t2Pddwy7npHWNdVmajU7yQ6UFte4ZhPUqf2QC
+         C/djKlwh4xhOfkdW/6S0G3HkKoU/wOg7+96jekTjnfaMQA2vQejqQZijjqZV5MZ+oRBy
+         R0hw==
+X-Gm-Message-State: AOUpUlFjEgnmFbqXyNwdyfO8o+oWE9k9nlhUiGmtVpwhbU/s8sxXJp3N
+        kBbH6nzhnFgmsFQrhIigYgOCygwgHuwI
+X-Google-Smtp-Source: AA+uWPwLAVZdp2k0HsGqUWlxBLCUyBrJPmr3Uogow4cI+qFEq7ButdKpd7COr9qHi1Nef7SgXwKYsZjooBGD
+X-Received: by 2002:a25:da04:: with SMTP id n4-v6mr1178373ybf.16.1533859820062;
+ Thu, 09 Aug 2018 17:10:20 -0700 (PDT)
+Date:   Thu,  9 Aug 2018 17:10:08 -0700
+In-Reply-To: <20180724003619.185290-1-sbeller@google.com>
+Message-Id: <20180810001010.58870-1-sbeller@google.com>
 Mime-Version: 1.0
-Reply-To: sdlvin@yandex.com
-To:     git@vger.kernel.org
-Message-ID: <_AVIDKxiQ66zPJbqPqw0xg@ismtpd0024p1mdw1.sendgrid.net>
-Subject: Bank transactions report
-X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA91HL1gMbnh6ROidtIyNC+88faQwXoX7EphFp8
- QIWdym1tU09cjFNdgFiCMbUjfnwJrWlRqULDYX41GoJOoHHkanEdppBsyq/hL7LRMsLKusu7B/r8q1
- nLaSTd6kFBPtsskDppT/9kdmMT++ZDvAC0cy5Xvt4ap1hwiR/KCU8+0Zi4KGZHZgIcvPk1EdLdiAKb
- E=
+References: <20180724003619.185290-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
+Subject: [PATCH 0/2] Getting data on different diff algorithms WAS:
+ Documentation/diff-options: explain different diff algorithms
+From:   Stefan Beller <sbeller@google.com>
+To:     sbeller@google.com
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Mime-Version: 1.0
+I instrumented range-diff to use different diff algorithms for the patches,
+(I chose default-myers and patience) and then run on the same range,
+via ./git-range-diff v2.10.0..HEAD v2.10.0..HEAD
+and I found 5245 same, 304 slightly different and 4 completely different
+patches in that range.
 
-CONGRATULATIONS 2018 BMC Q-DRAFT CONSULT AWARDEES
+Looking at the interdiff is not very pleasing even when reading it with
+coloring and move detection.
 
-THE NASSCOM SERVICE BMC Q-DRAFT CONSULT PROGRAM RECOGNIZES THE TOP INDIVIDU=
-AL CONTRIBUTORS IN  SURVEY SERVICE ONLINE COMMUNITY. THE NASSCOM BMC Q-DRAF=
-T CONSULT ARE WELL KNOWN BY THE WORLDS COLLECTIVE COMMUNITY FOR THEIR PRODU=
-CT EXPERTISE AND CONSISTENT CONTRIBUTIONS. SERVICENOW BMC Q-DRAFT CONSULT D=
-EMONSTRATE A COMMITMENT TO ENGAGE, GUIDE, AND SHARE EXPERTISE WITH THE WORL=
-D. THEY ARE INDEPENDENT OF SERVICENOW AND REPRESENT THE VOICE OF THE WORLD =
-COMMUNITY. THE SERVICENOW BMC Q-DRAFT CONSULT AWARD IS OUR APPRECIATION FOR=
- THE THE SIZABLE INFLUENCE AND TECHNICAL CREDIBILITY ONLINE MEMBERS DEMONST=
-RATED IN 2016 AND 2017.
-THE BMC Q-DRAFT CONSULT PROGRAM IS OUR BI-YEARLY RECOGNITION OF TOP RANKED =
-WINNERS CONTRIBUTORS.
-WE HAPPILY ANNOUNCE TO YOU THE DRAW OF #WINNING NUMBERS#: 1,5,24,34,41 BONU=
-S 10. WINNING RESULT: (#10313155) MALAYSIA/INDIA/UK BMC Q-DRAFT CONSULT PRO=
-GRAM ONLINE SWEEPSTAKES INTERNATIONAL PROGRAM HELD FOR MIDDLE OF THE YEAR 2=
-018. YOU HAVE WON $900.860.00 (NINE HUNDRED THOUSAND, EIGHT SIXTY UNITED ST=
-ATES US DOLLARS ONLY) FROM SERVICENOW'S BMC Q-DRAFT CONSULT DRAW 2018.
-IN ORDER TO PROCESS YOUR WINNING FOR E-WALLET ELECTRONIC TRANSFER, YOU ARE =
-ADVISED TO CONTACT YOUR FIDUCIARY AGENT WITH THE DETAILS BELOW FOR YOUR PAY=
-MENT.
-CLAIMS FACILITATOR`S NAME: MR. KELLY ARMSTRONG
-EMAIL: KELLY.ARMSTRONG@REPRESENTATIVE.COM
-YOU ARE ADVISED TO SEND THE FOLLOWING INFORMATION LISTED BELOW TO YOUR CLAI=
-M`S AGENT TO FACILITATE THE RELEASE OF YOUR FUND TO YOU.
-=20
-1.FULL NAMES:
-2.COUNTRY OF ORIGIN:
-3.ADDRESS:
-4.TELEPHONE NUMBER:
-5.OCCUPATION:
-6.ID:
-=20
-YOURS SINCERELY,
-SIR. KELLY ARMSTRONG
-SERVICENOW'S BMC  Q-DRAFT CONSULT
-CONGRATULATIONS 2018 BMC Q-DRAFT CONSULT` AWARDEES=
+Manually looking at them, I found the patience diff easier to review.
 
---4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e
-Content-Disposition: attachment; filename="BankTransactions_August 09, 2018 19:38 PM.csv"
-Content-Transfer-Encoding: base64
-Content-Type: text/csv; charset=utf-8; name="BankTransactions_August 09, 2018 19:38 PM.csv"
+Comparing the 'default' diff algorithm to 'minimal', I'll see 
+ 5491 same, 58 slightly different and 0 completely different patches.
+ 
+Comparing 'default' to 'histogram', I'll see
+ 5255 same, 294 slightly different and 8 completely different patches.
+ 
+Comparing 'histogram' to 'patience', I'll see 
+ 5337 same, 212 slightly different and 10 completely different patches.
 
-Z2xBY2NvdW50SWQsaWQsam91cm5hbEdyb3VwSWQsU29ydERhdGUsYnVpbGRpbmdJZCxidWlsZGlu
-Z05hbWUsYnVpbGRpbmdTdGF0dXNJZCxqb3VybmFsQ29kZUlkLHBheWVlTmFtZSxjaGVja051bWJl
-cixKb3VybmFsTWVtbyxwb3N0aW5nTWVtbyxyZWZlcmVuY2VOdW1iZXIsYW1vdW50LGlzUmV0YWls
-Q2FzaFJlY29uY2lsZWQsYWxsSm91cm5hbElkcyxhY2NvdW50aW5nQm9va0lkLGJhbmtBY2NvdW50
-TmFtZSxydW5uaW5nQmFsYW5jZSx0b3RhbEJlZ2lubmluZ0JhbGFuY2UsdG90YWxFbmRpbmdCYWxh
-bmNlDQosLCwiMS8xLzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNv
-bSwsLCwsQmVnaW5uaW5nIGJhbGFuY2UsLCwsLCwxMTEwNCwsMCwwLDE0NTcwLjM1DQo1NTU3ODks
-NDg5MTA4NSw0ODkxMDg1LCI4LzEvMjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFuYWdlYnVp
-bGRpbmcuY29tLCw5LCAsLCwsLDkwMC44NiwsNDg5MTA4NSwxMTEwNCxDb21wYW55IGNoZWNraW5n
-LDkwMC44NiwsDQo1NTU3ODksNDg5MTA3NSw0ODkxMDc1LCI4LzUvMjAxOCAxMjowMDowMCBBTSIs
-LHNkbHZpbjIubWFuYWdlYnVpbGRpbmcuY29tLCw5LCAsLE9wZW5pbmcgYmFsYW5jZXMgZW50cnks
-T3BlbmluZyBiYWxhbmNlcyBlbnRyeSwsMzQ0MC42MiwsNDg5MTA3NSwxMTEwNCxDb21wYW55IGNo
-ZWNraW5nLDQzNDEuNDgsLA0KNTU1Nzg5LDQ4OTEwNzMsNDg5MTA3MywiOC82LzIwMTggMTI6MDA6
-MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSwsMixIYW5rIHRoZSBIYW5keW1hbixQ
-UklOVCwsLEhILTQ0NSwtMzUuNDUsLDQ4OTEwNzMsMTExMDQsQ29tcGFueSBjaGVja2luZyw0MzA2
-LjAzLCwNCjU1NTc4OSw0ODkxMDc5LDQ4OTEwNzksIjgvNi8yMDE4IDEyOjAwOjAwIEFNIiwsc2Rs
-dmluMi5tYW5hZ2VidWlsZGluZy5jb20sLDksICwsLCwsMTIwMDAuMDAsLDQ4OTEwNzksMTExMDQs
-Q29tcGFueSBjaGVja2luZywxNjMwNi4wMywsDQo1NTU3ODksNDg5MTA2Niw0ODkxMDY2LCI4Lzcv
-MjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFuYWdlYnVpbGRpbmcuY29tLCwyLCJNb3JyaXMg
-JiBIYXllcywgTExDIixQUklOVCxMZWdhbCBmZWVzLCwiTW9ycmlzICYgSGF5ZXMsIExMQyIsLTEw
-MC4wMCwsNDg5MTA2NiwxMTEwNCxDb21wYW55IGNoZWNraW5nLDE2MjA2LjAzLCwNCjU1NTc4OSw0
-ODkxMDY3LDQ4OTEwNjcsIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWls
-ZGluZy5jb20sLDIsTXVuaWNpcGFsIFRlbGVjb20sUFJJTlQsLCxNVC00NDQsLTM0NS45OCwsNDg5
-MTA2NywxMTEwNCxDb21wYW55IGNoZWNraW5nLDE1ODYwLjA1LCwNCjU1NTc4OSw0ODkxMDY4LDQ4
-OTEwNjgsIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20s
-LDIsUCAmIFAgUGFpbnRpbmcgQ29udHJhY3RvcnMsUFJJTlQsQ2xlYW5pbmcsLEExMjMsLTUwMC4w
-MCwsNDg5MTA2OCwxMTEwNCxDb21wYW55IGNoZWNraW5nLDE1MzYwLjA1LCwNCjU1NTc4OSw0ODkx
-MDY5LDQ4OTEwNjksIjgvNy8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGlu
-Zy5jb20sLDIsIkpvbiBCZW5zb24sIFJFQUxUT1IiLFBSSU5ULCwsLC0xODc0LjMzLCw0ODkxMDY5
-LDExMTA0LENvbXBhbnkgY2hlY2tpbmcsMTM0ODUuNzIsLA0KNTU1Nzg5LDQ4OTEwODAsNDg5MTA4
-MCwiOC83LzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSwsOSwg
-LCwsLCw3NDYuMDAsLDQ4OTEwODAsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDIzMS43MiwsDQo1
-NTU3ODksNDg5MTA4MSw0ODkxMDgxLCI4LzgvMjAxOCAxMjowMDowMCBBTSIsLHNkbHZpbjIubWFu
-YWdlYnVpbGRpbmcuY29tLCw5LCAsLCwsLDI2My4wMCwsNDg5MTA4MSwxMTEwNCxDb21wYW55IGNo
-ZWNraW5nLDE0NDk0LjcyLCwNCjU1NTc4OSw0ODkxMDgyLDQ4OTEwODIsIjgvOS8yMDE4IDEyOjAw
-OjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20sLDksICwsLCwsMzE0Ljc0LCw0ODkx
-MDgyLDExMTA0LENvbXBhbnkgY2hlY2tpbmcsMTQ4MDkuNDYsLA0KNTU1Nzg5LDQ4OTEwNzAsNDg5
-MTA3MCwiOC8xMC8yMDE4IDEyOjAwOjAwIEFNIiwsc2RsdmluMi5tYW5hZ2VidWlsZGluZy5jb20s
-LDIsUmljYXJkbydzIFJvb2ZpbmcgU3VwcGx5LFBSSU5ULCwsWlgtNzgxLC0zNTUuOTksLDQ4OTEw
-NzAsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDQ1My40NywsDQo1NTU3ODksNDg5MTA4Myw0ODkx
-MDgzLCI4LzEwLzIwMTggMTI6MDA6MDAgQU0iLCxzZGx2aW4yLm1hbmFnZWJ1aWxkaW5nLmNvbSws
-OSwgLCwsLCwxMTYuODgsLDQ4OTEwODMsMTExMDQsQ29tcGFueSBjaGVja2luZywxNDU3MC4zNSws
-DQo=
+This is all to just put data out there, on how much difference to expect from
+the diff algorithms. I have not yet dug into the quality of the diffs.
 
---4ca2cc438fc310f2c2e33ffa4855de55f268ea96367d40667397a6dbc59e--
+Stefan
+
+
+Stefan Beller (2):
+  WIP: range-diff: take extra arguments for different diffs.
+  WIP range-diff: print some statistics about the range
+
+ range-diff.c | 29 +++++++++++++++++++++++++----
+ 1 file changed, 25 insertions(+), 4 deletions(-)
+
+-- 
+2.18.0.597.ga71716f1ad-goog
+
