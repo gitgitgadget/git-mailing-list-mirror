@@ -7,51 +7,49 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35FF31F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 20:37:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD311F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 20:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727391AbeHJXIZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 19:08:25 -0400
-Received: from mout.gmx.net ([212.227.17.20]:37011 "EHLO mout.gmx.net"
+        id S1727121AbeHJXWE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 19:22:04 -0400
+Received: from mout.gmx.net ([212.227.15.19]:38967 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726834AbeHJXIZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 19:08:25 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1fprWC3auM-008L63; Fri, 10
- Aug 2018 22:36:55 +0200
-Date:   Fri, 10 Aug 2018 22:36:55 +0200 (DST)
+        id S1726834AbeHJXWE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 19:22:04 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4WRI-1g6hYH3PZM-00yjAd; Fri, 10
+ Aug 2018 22:50:30 +0200
+Date:   Fri, 10 Aug 2018 22:50:31 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Thomas Gummerer <t.gummerer@gmail.com>
-cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 05/21] range-diff: also show the diff between
- patches
-In-Reply-To: <20180730212606.GL9955@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1808102233490.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <94afaeaf224563effda7b3c0b8939567302d2ba1.1532210683.git.gitgitgadget@gmail.com> <20180729190359.GD2734@hank.intra.tgummerer.com> <CAPig+cTuD0+8etdMLu8FkFVxnXUM218taxU9in-fe3QXhDj5WQ@mail.gmail.com>
- <20180729214543.GD9955@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1807301826480.10478@tvgsbejvaqbjf.bet> <20180730212606.GL9955@hank.intra.tgummerer.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 03/21] range-diff: first rudimentary implementation
+In-Reply-To: <20180730211636.GK9955@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1808102237540.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <4e3fb47a1dcef96780bd536032b81dd99387f2db.1532210683.git.gitgitgadget@gmail.com> <20180729183629.GC2734@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1807301759340.10478@tvgsbejvaqbjf.bet>
+ <20180730211636.GK9955@hank.intra.tgummerer.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ywzZiXXkk5xFYgN30IwMG8pumtm2JpSEY2gi3FK8/tM02LzgnKM
- KGjRij37f93K4n+hyiggcF2lQoVSIoJW2EAB3hRujskYxpSmFpAMF0RTqnCaIDW5a9T3KOW
- jdXwvFkdWFFrSsgjXMawb6WNgib5xxO87mAKzP/rf78NHZkZZRSW/onzmXYRrN/PFRPGeyM
- Wtg3NINitu/7pEj9OiQtw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hMKQfhhpZdo=:tADql/l01xqSizRP8vjnfF
- PISPGKY1Npqp+r0shUEToGvaF8UzmVUPa1CSGRTGTx5+ngbubuJMceB4fzGPUfVJ4aAUzqUJw
- Le2PfuoEkn8lri+kc1idLO8Cv7x9GL8/2xYDO6cPQ3stREK8kuFvTC2ahDZu8a6BlXY2j5CqH
- fzc4PUS+TYGklrpxDk+6267UXsSSg5t0bJbcxYHpzMnjXjqJ/aJdMFCTLmFN1+cbbm63Yv1ah
- /PgHOCKcVUOVcAuYut/M2fzS89IIj9P8pnCko1oJvRR95uGc1sqURxjfxj7+z5U/LJEbFde/B
- ShlilX4Os2MhrO+3HP6hEKLFncjIj4N5WpeQX8J/qc6mRCJiyIbmNPVKgln/K88QC/Eatqz0Y
- k5fFm9wWZ9ZlGkJL/pE/o0zUqZtkN7fZVvKiyDJcVEcBmTQMfMc944IRgw83Wn4frzuDQCdqr
- aFbOPN4kgOc9ZgPE4u3BCxuQkFOG6U8/B2/4sub9O6wt35zCPmx2pAk+kBa0NQbEFI2J/OYBm
- gWdzdzWdwhb6mbYk/MIaWLfyQcrWsmt5AwNiZ0XwUh+pQUjMTN9j0Qan4p5kHwByymNWGcbUL
- XF6To+SO2fPofXKW5pXuE3sspj+VMZq1CEFb10rXwy85bfhXjzBKOjYzYnz2v6jqMJg1rqxVT
- j50jmUMKHyPzE3bqzo6OLSg0gDdUnFty6CY47IDa23KLFgsro5jyXycPUdrAQkFaRgKjkepqn
- oSj/D//ifrmiYBASTxlALDadlvEu71mTNSndBcDOcetqoBQLhAaRMYMwEi2hUhCzpHOcZUPa0
- WTnYBvV
+X-Provags-ID: V03:K1:dM+VrqIm06LgIZNFY24Id0NdoNK7Yv/gHYS4zrXNb5RiXNK8hdB
+ ydNbw1HmLm4zpNiM2kod6Bm4I2bjCvHmKnRPanCxjLInjT2pvDI/KEoi5R/SvZt/PDXfXSR
+ Yp1EFXOls/h5hHwyFnzZgsz27HsjtReeKkpWu/ptv8yKvjteDZ8jHdIxkMerotxiFz1Vus0
+ zoka+A0ldJmmdju//A7FA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4yFFMVr+64A=:MRvOcsxBW6Ks4SJWYvfN6k
+ rcNjNQbhQUy1usRMjy42U1dNNkBAHZrnF/F9dGiRtmTZ/0g4TwxIQjQBQZw0U83QEWwkAezsH
+ jIQ1cH+g+aM2G+s/kFuPScRP/Hpu6LkleZ9TizXxG4ty0GDBkRGDJHHdD6k8eCh0sd2v4noYF
+ EUyLuMG9/Ejl4lZz8fgfVR3Nl31Cr6ay/kKAdvtJbVfLnIigtumpANZYufIF4cjrfyKbUscCm
+ K+T2b9RspzygwO+rK92GDvV44mNldoac5ncMYK2ncc/8EFwcM0GuYS+Rc8YzXzeTQWwOI1CIG
+ hfMQf15IG+0I4072F9ELAy6WdicUlcmaTcBdGiSnm/yBgq20kzdpRY67IwjvsCRha9le7hgD8
+ 82gm3MDCAXCGIC33QbKaxnnLkFlKgnFgumHGr5aJgvLfbReGnDWCdLaQL0S1EGkbn82VNKtKt
+ Hn+J+1u8EwXN8QC9cZhzuip2m23xlkaDqNGSvfrOJWSjqF1AeojPl70nYgYOBMb/3KBDz9RN4
+ mL4+3FlAeq5aHxzF14nqRnVuSwchViz/UXGvtznMgZ0w9oHt77JaS9qd3z0Jh+DzwiwkQAzzu
+ XbAR0/oSTqxfo7jN0YVyVANdi7GGBoTrLV/tYwKNvgAm19p/YvsRqbeN0Y1N0NFfqX23TX5Ah
+ DWDL2GlQxkIDaE4+rosqPNMjo0a2anmZGWHaq+FnBuhqSigwoFuFKD2EIxzKAgRH6UqUlfWxN
+ SAV4zJiFwGkUqFPaCaAWhjS5B8Tr5cQ/Io6zm3gx2Lhwhhfxw2qMkn8pB2uJWv+hayogjlKfG
+ 2ZmbXAI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,100 +63,220 @@ On Mon, 30 Jul 2018, Thomas Gummerer wrote:
 > > 
 > > On Sun, 29 Jul 2018, Thomas Gummerer wrote:
 > > 
-> > > On 07/29, Eric Sunshine wrote:
-> > > > On Sun, Jul 29, 2018 at 3:04 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
-> > > > > On 07/21, Johannes Schindelin via GitGitGadget wrote:
-> > > > > > Just like tbdiff, we now show the diff between matching patches. This is
-> > > > > > a "diff of two diffs", so it can be a bit daunting to read for the
-> > > > > > beginner.
-> > > > > > [...]
-> > > > > > Note also: while tbdiff accepts the `--no-patches` option to suppress
-> > > > > > these diffs between patches, we prefer the `-s` option that is
-> > > > > > automatically supported via our use of diff_opt_parse().
-> > > > >
-> > > > > One slightly unfortunate thing here is that we don't show these
-> > > > > options in 'git range-diff -h', which would be nice to have.  I don't
-> > > > > know if that's possible in git right now, if it's not easily possible,
-> > > > > I definitely wouldn't want to delay this series for that, and we could
-> > > > > just add it to the list of possible future enhancements that other
-> > > > > people mentioned.
+> > > On 07/21, Johannes Schindelin via GitGitGadget wrote:
 > > > > 
-> > > > This issue is not specific to git-range-diff; it's shared by other
-> > > > commands which inherit diff options via diff_opt_parse(). For
-> > > > instance, "git log -h" doesn't show diff-related options either, yet
-> > > > it accepts them.
+> > > > [...]
+> > > > 
+> > > > +static void find_exact_matches(struct string_list *a, struct string_list *b)
+> > > > +{
+> > > > +	struct hashmap map;
+> > > > +	int i;
+> > > > +
+> > > > +	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
+> > > > +
+> > > > +	/* First, add the patches of a to a hash map */
+> > > > +	for (i = 0; i < a->nr; i++) {
+> > > > +		struct patch_util *util = a->items[i].util;
+> > > > +
+> > > > +		util->i = i;
+> > > > +		util->patch = a->items[i].string;
+> > > > +		util->diff = util->patch + util->diff_offset;
+> > > > +		hashmap_entry_init(util, strhash(util->diff));
+> > > > +		hashmap_add(&map, util);
+> > > > +	}
+> > > > +
+> > > > +	/* Now try to find exact matches in b */
+> > > > +	for (i = 0; i < b->nr; i++) {
+> > > > +		struct patch_util *util = b->items[i].util, *other;
+> > > > +
+> > > > +		util->i = i;
+> > > > +		util->patch = b->items[i].string;
+> > > > +		util->diff = util->patch + util->diff_offset;
+> > > > +		hashmap_entry_init(util, strhash(util->diff));
+> > > > +		other = hashmap_remove(&map, util, NULL);
+> > > > +		if (other) {
+> > > > +			if (other->matching >= 0)
+> > > > +				BUG("already assigned!");
+> > > > +
+> > > > +			other->matching = i;
+> > > > +			util->matching = other->i;
+> > > > +		}
+> > > > +	}
 > > > 
-> > > Fair enough, that makes sense.  Thanks for the pointer!
+> > > One possibly interesting corner case here is what happens when there
+> > > are two patches that have the exact same diff, for example in the
+> > > pathological case of commit A doing something, commit B reverting
+> > > commit A, and then commit C reverting commit B, so it ends up with the
+> > > same diff.
 > > > 
-> > > There's one more thing that I noticed here:
+> > > Having those same commits unchanged in both ranges (e.g. if a commit
+> > > earlier in the range has been changed, and range B has been rebased on
+> > > top of that), we'd get the following mapping from range A to range B
+> > > for the commits in question:
 > > > 
-> > >     git range-diff --no-patches
-> > >     fatal: single arg format requires a symmetric range
+> > > A -> C
+> > > B -> B
+> > > C -> A
 > > > 
-> > > Which is a slightly confusing error message.  In contrast git log does
-> > > the following on an unrecognized argument:
-> > > 
-> > >     git log --no-patches
-> > >     fatal: unrecognized argument: --no-patches
-> > > 
-> > > which is a little better I think.  I do however also thing the "fatal:
-> > > single arg format requires a symmetric range" is useful when someone
-> > > genuinely tries to use the single argument version of the command.  So
-> > > I don't know what a good solution for this would be.
+> > > Which is not quite what I would expect as the user (even though it is
+> > > a valid mapping, and it probably doesn't matter too much for the end
+> > > result of the range diff, as nothing has changed between the commits
+> > > anyway).  So I'm not sure it's worth fixing this, as it is a
+> > > pathological case, and nothing really breaks.
 > > 
-> > I immediately thought of testing for a leading `-` of the remaining
-> > argument, but I could imagine that somebody enterprisey uses
-> > 
-> > 	git range-diff -- -my-first-attempt...-my-second-attempt
-> > 
-> > and I do not really want to complexify the code... Ideas?
+> > Indeed. As far as I am concerned, this falls squarely into the "let's
+> > cross that bridge when, or if, we reach it" category.
 > 
-> Good point.  I can't really come up with a good option right now
-> either.  It's not too bad, as users just typed the command, so it
-> should be easy enough to see from the previous line what went wrong.
+> Makes sense, this can definitely be addressed later.
 > 
-> One potential option may be to turn "die(_("single arg format requires
-> a symmetric range"));" into an 'error()', and show the usage?  I think
-> that may be nice anyway, as "symmetric range" may not be immediately
-> obvious to everyone, but together with the usage it may be clearer?
+> > > > +
+> > > > +	hashmap_free(&map, 0);
+> > > > +}
+> > > > +
+> > > > +static void diffsize_consume(void *data, char *line, unsigned long len)
+> > > > +{
+> > > > +	(*(int *)data)++;
+> > > > +}
+> > > > +
+> > > > +static int diffsize(const char *a, const char *b)
+> > > > +{
+> > > > +	xpparam_t pp = { 0 };
+> > > > +	xdemitconf_t cfg = { 0 };
+> > > > +	mmfile_t mf1, mf2;
+> > > > +	int count = 0;
+> > > > +
+> > > > +	mf1.ptr = (char *)a;
+> > > > +	mf1.size = strlen(a);
+> > > > +	mf2.ptr = (char *)b;
+> > > > +	mf2.size = strlen(b);
+> > > > +
+> > > > +	cfg.ctxlen = 3;
+> > > > +	if (!xdi_diff_outf(&mf1, &mf2, diffsize_consume, &count, &pp, &cfg))
+> > > > +		return count;
+> > > > +
+> > > > +	error(_("failed to generate diff"));
+> > > > +	return COST_MAX;
+> > > > +}
+> > > > +
+> > > > +static void get_correspondences(struct string_list *a, struct string_list *b,
+> > > > +				int creation_factor)
+> > > > +{
+> > > > +	int n = a->nr + b->nr;
+> > > > +	int *cost, c, *a2b, *b2a;
+> > > > +	int i, j;
+> > > > +
+> > > > +	ALLOC_ARRAY(cost, st_mult(n, n));
+> > > > +	ALLOC_ARRAY(a2b, n);
+> > > > +	ALLOC_ARRAY(b2a, n);
+> > > > +
+> > > > +	for (i = 0; i < a->nr; i++) {
+> > > > +		struct patch_util *a_util = a->items[i].util;
+> > > > +
+> > > > +		for (j = 0; j < b->nr; j++) {
+> > > > +			struct patch_util *b_util = b->items[j].util;
+> > > > +
+> > > > +			if (a_util->matching == j)
+> > > > +				c = 0;
+> > > > +			else if (a_util->matching < 0 && b_util->matching < 0)
+> > > > +				c = diffsize(a_util->diff, b_util->diff);
+> > > > +			else
+> > > > +				c = COST_MAX;
+> > > > +			cost[i + n * j] = c;
+> > > > +		}
+> > > > +
+> > > > +		c = a_util->matching < 0 ?
+> > > > +			a_util->diffsize * creation_factor / 100 : COST_MAX;
+> > > > +		for (j = b->nr; j < n; j++)
+> > > > +			cost[i + n * j] = c;
+> > > > +	}
+> > > > +
+> > > > +	for (j = 0; j < b->nr; j++) {
+> > > > +		struct patch_util *util = b->items[j].util;
+> > > > +
+> > > > +		c = util->matching < 0 ?
+> > > > +			util->diffsize * creation_factor / 100 : COST_MAX;
+> > > > +		for (i = a->nr; i < n; i++)
+> > > > +			cost[i + n * j] = c;
+> > > > +	}
+> > > > +
+> > > > +	for (i = a->nr; i < n; i++)
+> > > > +		for (j = b->nr; j < n; j++)
+> > > > +			cost[i + n * j] = 0;
+> > > > +
+> > > > +	compute_assignment(n, n, cost, a2b, b2a);
+> > > > +
+> > > > +	for (i = 0; i < a->nr; i++)
+> > > > +		if (a2b[i] >= 0 && a2b[i] < b->nr) {
+> > > > +			struct patch_util *a_util = a->items[i].util;
+> > > > +			struct patch_util *b_util = b->items[a2b[i]].util;
+> > > > +
+> > > > +			a_util->matching = a2b[i];
+> > > > +			b_util->matching = i;
+> > > 
+> > > So here we re-assign 'matching' in the struct regardless of whether it
+> > > was assigned before while searching for exact matches or not.
+> > 
+> > If `matching` were assigned here, it would indicate a bug in the code, I
+> > think. Before this loop, all of the `matching` fields should be `NULL`,
+> > and the `compute_assignment()` function is expected to populate `a2b` and
+> > `b2a` appropriately, i.e. no "double booking".
+> 
+> Hmm we are using the 'matching' fields in the loops above, e.g.:
+> 
+> 	if (a_util->matching == j)
+> 		c = 0;
+> 
+> They're also ints, so they can't be `NULL`, right?
 
-Agreed. Will be made so.
+Right, I was confused, they are not pointers. They are initialized to
+`-1`, though.
 
-Ciao,
+> So what I was thinking is that we could do
+> 
+> 	 if (a_util->matching < 0) {
+> 		a_util->matching = a2b[i];
+> 		b_util->matching = i;
+> 	}
+
+Yes, we could have that safeguard. But then, we should actually rather say
+
+	if (a_util->matching >= 0)
+		BUG("a[%d] already assigned to %d, cannot assign to %d",
+		    i, a_util->matching, a2b[i]);
+
+The reason this is a bug is that we really just calculated a linear
+assignment, and a2b was initialized accordingly: it contains a 1:1 mapping
+between a->items and b->items.
+
+Side note: technically, the linear assignment is able to handle two
+differently-sized sets. However, due to implementation details, we do not
+use this, as a->nr and b->nr are both set to `n`. The reason is that we
+want to avoid forcing matches where there are none, i.e. we add specific
+entries to the cost matrix to allow for the "creation" or "destruction" if
+that is cheaper than to match two completely unrelated commits. It just
+so happens that these filler entries result in identical set sizes.
+
+So practically, that `if()` guard is not necessary, and honestly, I would
+stumble over it every time ("Why is this needed? Should `a2b` and `b2a`
+not have a complete assignment already?")), so I'd rather not have it.
+
+> Anyway, I don't think it really matters, as there is no "double
+> booking", so we should essentially get the same results.
+
+Exactly.
+
+If you were worried about it, I would introduce that guarded BUG(), but it
+is not an off-by-one error, so I probably did not introduce a bug here.
+
+> Glad I could help.  Can I have more hours in a day? ;) I wish I had
+> more time for reviewing code, but sadly the time I have is limited.
+> Which is why I only got to review this now as well.  I did enjoy the
+> read!
+
+Thank you so much! I appreciate your help, and it was a very pleasant and
+useful review that really made the patch series better. There were three
+distinct issues that would have otherwise been missed before this hit
+`next`.
+
+Thanks!
 Dscho
-
-> 
-> > > > > > diff --git a/range-diff.c b/range-diff.c
-> > > > > > @@ -300,6 +325,9 @@ static void output(struct string_list *a, struct string_list *b)
-> > > > > >                       printf("%d: %s ! %d: %s\n",
-> > > > > >                              b_util->matching + 1, short_oid(a_util),
-> > > > > >                              j + 1, short_oid(b_util));
-> > > > > > +                     if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
-> > > > >
-> > > > > Looking at this line, it looks like it would be easy to support
-> > > > > '--no-patches' as well, which may be slightly easier to understand that
-> > > > > '-s' to someone new to the command.  But again that can be added later
-> > > > > if someone actually cares about it.
-> > > > 
-> > > > What wasn't mentioned (but was implied) by the commit message is that
-> > > > "-s" is short for "--no-patch", which also comes for free via
-> > > > diff_opt_parse(). True, "--no-patch" isn't spelled exactly the same as
-> > > > "--no-patches", but git-range-diff isn't exactly a perfect tbdiff
-> > > > clone, so hopefully not a git problem. Moreover, "--no-patch" is
-> > > > internally consistent within the Git builtin commands.
-> > > 
-> > > Makes sense, thanks!  "--no-patch" does make sense to me.  There's
-> > > still a lot of command line flags in git to learn for me, even after
-> > > all this time using it ;)  Might be nice to spell it out in the commit
-> > > message for someone like me, especially as "--no-patches" is already
-> > > mentioned.  Though I guess most regulars here would know about
-> > > "--no-patch", so maybe it's not worth it.  Anyway that is definitely
-> > > not worth another round here.
-> > 
-> > Sure, but not many users learn from reading the commit history...
-> > 
-> > :-)
-> > 
-> > Ciao,
-> > Dscho
-> 
