@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D629F1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:49:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C024A1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727182AbeHKBVf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 21:21:35 -0400
-Received: from mail-oi0-f74.google.com ([209.85.218.74]:52268 "EHLO
-        mail-oi0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727032AbeHKBVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 21:21:35 -0400
-Received: by mail-oi0-f74.google.com with SMTP id w185-v6so10701556oig.19
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:49:43 -0700 (PDT)
+        id S1727204AbeHKBVi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 21:21:38 -0400
+Received: from mail-ua1-f74.google.com ([209.85.222.74]:39001 "EHLO
+        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbeHKBVi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 21:21:38 -0400
+Received: by mail-ua1-f74.google.com with SMTP id t14-v6so2352637uao.6
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=s3Okxem6fjDx4kaZ8GYR7ng3jdK7gRs5jdlMxkB3Nkg=;
-        b=TOJ+8Z6UqNkNXUHe85uf2TY/P114Pgkhvxp6vcqtae5qA26cHtqOXy+yX/fereNJau
-         t9KIBYjPASAQf/ekk+ZETcQfUlWPvCHP2eLLd2Y7IroFvLRWTkguCD6BQmZviKMxDbPF
-         IzT6dg7AveFwuDTMgaGqKpAyYAbcNhREODKQ3NZ0vQVnQKmJS9LDFJZx7TkM5xvjWjFg
-         cPQOsUxc73pqy9JIER8SOej34IvgdaWSmrC36a5XeSDZkHoQ7FN3y5LOH91mb+4Ms8Wj
-         8LSsoE1xiM0UsqYMVbkxghNhYx8tEDdTeCzocxkdNKkD5Fgjp2HSbUfGqxg2irfKDB5k
-         YPHg==
+        bh=37pQQhcGYFIQlWr+w8JlX5r+BGYvPrPFxMIqRJuqJ2o=;
+        b=jkpq0O2wKM9JMYLk4mtqmhjdQ1PoyV/r4MPb2Do3vQ79sp4BVotirxVWWM/YmCBk4X
+         L3/VJEQIM9CLwTMyKnOIQz8ZXzXOJV/jOaRhac0G4av6GxcF05iHy+8zNcUTauAw0AuB
+         xdrgKCnO6r3IDQ2PA2hXBBuq9g7cOa6mwyoF8lp1SfS+YEp6TjNcOuommQ8zqvCwhYKc
+         4UWCJfjJfLbI19MfqdzgA5M6qQbMn3x63hywoRlMzNlUwB13Kk7zDBEu1aavxXbA/4FD
+         yfqFQbEO50ldkOStvxLSWq2aW/T19VoIdNvTBpHEDc8GCvXnolfX8Ho1Z8cgthf/eMao
+         FRpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=s3Okxem6fjDx4kaZ8GYR7ng3jdK7gRs5jdlMxkB3Nkg=;
-        b=nOjXzR4WF+zSOWTzXGNk1Hq/KWe+Ybm8CZ0UIg4l7KFC5DAdZEWV1vcUnNPCFYxuHD
-         bF7OJX2BhXN7zUDMlC54vLofeUvTwiyOq0Bf7bioMBhj3otKiw5Fd5NJOt30Ha1blUjn
-         xp+XUyYlgwg2yy7cx0fPmvNUw4GD4D1oAxzny4CyYlnu2t+q+Ub9w4sz9IBq7DfkwdU4
-         GlJuNRZi3x7ZYz68IzjEnEYDZHQCvwJ/wWcOvrVQ3/Ss10HbxQpMvUqqPlZljzeEYEAN
-         AMBp99bpuQCtKn4XbbZ0kZYsBL4m3oEWCIfr4hxwQ0UlL0yjpbkOuQNHsgFBdfP+b9MT
-         MQUg==
-X-Gm-Message-State: AOUpUlHVccb1Zl+Z0rm2pd3ls21VkQIpgcL1I5m5Sg/5aeuWprYTXsIA
-        ENz5SoibsAovjQIFQd0dSrY3DY9R8r6z
-X-Google-Smtp-Source: AA+uWPw0jLU5+Vfpjw/aEwMwVY/Y+7b/7/vI7qYk9i3xoTo4txNYaYwQExf2JVikiNpdi1Yi4UZqVbqDh88f
-X-Received: by 2002:aca:f346:: with SMTP id r67-v6mr5084907oih.34.1533941382865;
- Fri, 10 Aug 2018 15:49:42 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 15:49:22 -0700
+        bh=37pQQhcGYFIQlWr+w8JlX5r+BGYvPrPFxMIqRJuqJ2o=;
+        b=cUluaa9nHTLMGYH64ZnlXrzkxGwX4fFIRt6aKu/yTeMKgLBlsUOpSPfjrfmYK/kLmj
+         BUOWppgS38/HXWzWrSVnViQeYfQYPMIdkHgYPMbMVdDJ9GvVQtUlhOPtvK1ka6zT8cBQ
+         kRSvzEBwx11rXUHJIcOPolYh4Y46ULgRqE7kzbCcQQS/hYSs9TrNLiYSDd2QXCCBWvH7
+         BdcEN9p4STmkYlK46KxqjdS+MhWl1T3JsP5tAD9aRe+fkL9l2w+49qkO3RSQcwi+wYQJ
+         LurT/AXl1dSQ8WqMNTr5HezA6apGjzxLom/ZGR0WV0p7IqiUIGcOQV1x15tfABz9hQ68
+         tUDg==
+X-Gm-Message-State: AOUpUlFsxYT6J7Il2itMAVPJKDDaDQg2LiODcWQAoXK3/396jL3bH26I
+        3wzEsQl667EFcPLuA+P3KsQM+z/wksm0
+X-Google-Smtp-Source: AA+uWPxM9+77xCZozwCLIYC2cn+/rTHnvbDyJjyHwVBOnH6tY9qB7zNSG6ITcf+C9+9akQ4jPNgTkl1r5mV2
+X-Received: by 2002:ab0:59c1:: with SMTP id k1-v6mr3790849uad.70.1533941385535;
+ Fri, 10 Aug 2018 15:49:45 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:49:23 -0700
 In-Reply-To: <20180810224923.143625-1-sbeller@google.com>
-Message-Id: <20180810224923.143625-4-sbeller@google.com>
+Message-Id: <20180810224923.143625-5-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180810224923.143625-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 3/4] range-diff: make use of different output indicators
+Subject: [PATCH 4/4] range-diff: indent special lines as context
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de,
@@ -62,50 +62,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change itself only changes the internal communication and should
-have no visible effect to the user. We instruct the diff code that produces
-the inner diffs to use X, Y, Z instead of the usual markers for new, old
-and context lines
+The range-diff coloring is a bit fuzzy when it comes to special lines of
+a diff, such as indicating new and old files with +++ and ---, as it
+would pickup the first character and interpret it for its coloring, which
+seems annoying as in regular diffs, these lines are colored bold via
+DIFF_METAINFO.
+
+By indenting these lines by a white space, they will be treated as context
+which is much more useful, an example [1] on the range diff series itself:
+
+[...]
+    + diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+    + new file mode 100644
+    + --- /dev/null
+    + +++ b/Documentation/git-range-diff.txt
+    +@@
+    ++git-range-diff(1)
+[...]
+    +
+      diff --git a/Makefile b/Makefile
+      --- a/Makefile
+      +++ b/Makefile
+[...]
+
+The first lines that introduce the new file for the man page will have the
+'+' sign colored and the rest of the line will be bold.
+
+The later lines that indicate a change to the Makefile will be treated as
+context both in the outer and inner diff, such that those lines stay
+regular color.
+
+[1] ./git-range-diff pr-1/dscho/branch-diff-v3...pr-1/dscho/branch-diff-v4
+    These tags are found at https://github.com/gitgitgadget/git
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- range-diff.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ range-diff.c          |  2 ++
+ t/t3206-range-diff.sh | 12 ++++++------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/range-diff.c b/range-diff.c
-index b6b9abac266..6e4192c8e79 100644
+index 6e4192c8e79..a8db7c4f8d3 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -38,6 +38,9 @@ static int read_patches(const char *range, struct string_list *list)
- 
- 	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
- 			"--reverse", "--date-order", "--decorate=no",
-+			"--output-indicator-new=X",
-+			"--output-indicator-old=Y",
-+			"--output-indicator-context=Z",
- 			"--no-abbrev-commit", range,
- 			NULL);
- 	cp.out = -1;
-@@ -108,8 +111,18 @@ static int read_patches(const char *range, struct string_list *list)
- 			 * we are not interested.
- 			 */
- 			continue;
--		else
-+		else if (line.buf[0] == 'X') {
-+			strbuf_addch(&buf, '+');
-+			strbuf_add(&buf, line.buf + 1, line.len - 1);
-+		} else if (line.buf[0] == 'Y') {
-+			strbuf_addch(&buf, '-');
-+			strbuf_add(&buf, line.buf + 1, line.len - 1);
-+		} else if (line.buf[0] == 'Z') {
+@@ -85,6 +85,7 @@ static int read_patches(const char *range, struct string_list *list)
+ 			strbuf_addch(&buf, '\n');
+ 			if (!util->diff_offset)
+ 				util->diff_offset = buf.len;
 +			strbuf_addch(&buf, ' ');
-+			strbuf_add(&buf, line.buf + 1, line.len - 1);
-+		} else {
  			strbuf_addbuf(&buf, &line);
-+		}
+ 		} else if (in_header) {
+ 			if (starts_with(line.buf, "Author: ")) {
+@@ -121,6 +122,7 @@ static int read_patches(const char *range, struct string_list *list)
+ 			strbuf_addch(&buf, ' ');
+ 			strbuf_add(&buf, line.buf + 1, line.len - 1);
+ 		} else {
++			strbuf_addch(&buf, ' ');
+ 			strbuf_addbuf(&buf, &line);
+ 		}
  
- 		strbuf_addch(&buf, '\n');
- 		util->diffsize++;
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 7dc7c80a1de..c94f9bf5ee1 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -133,9 +133,9 @@ test_expect_success 'changed message' '
+ 	    Z
+ 	    +    Also a silly comment here!
+ 	    +
+-	    Zdiff --git a/file b/file
+-	    Z--- a/file
+-	    Z+++ b/file
++	    Z diff --git a/file b/file
++	    Z --- a/file
++	    Z +++ b/file
+ 	3:  147e64e = 3:  b9cb956 s/11/B/
+ 	4:  a63e992 = 4:  8add5f1 s/12/B/
+ 	EOF
+@@ -152,9 +152,9 @@ test_expect_success 'dual-coloring' '
+ 	:     <RESET>
+ 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
+ 	:    <REVERSE><GREEN>+<RESET>
+-	:     diff --git a/file b/file<RESET>
+-	:    <RED> --- a/file<RESET>
+-	:    <GREEN> +++ b/file<RESET>
++	:      diff --git a/file b/file<RESET>
++	:      --- a/file<RESET>
++	:      +++ b/file<RESET>
+ 	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
+ 	:    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
+ 	:      9<RESET>
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
