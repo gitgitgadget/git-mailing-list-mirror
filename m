@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D5A01F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:14:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57BE81F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:15:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727290AbeHKAqm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 20:46:42 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39954 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727026AbeHKAqm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 20:46:42 -0400
-Received: by mail-pg1-f194.google.com with SMTP id x5-v6so4984027pgp.7
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:14:56 -0700 (PDT)
+        id S1727303AbeHKAqo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 20:46:44 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41936 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727296AbeHKAqn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 20:46:43 -0400
+Received: by mail-pg1-f196.google.com with SMTP id z8-v6so4983653pgu.8
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=s/w2jsmL4A8OH2kffT73N+lMKO90xikyiBoq5VhvP4E=;
-        b=JKzawSYPm/N1orRR0V5hFqUbrajgJCyoHaSeTU51my6Y0gqmvMTZFhjrKU2ZJlZimA
-         +9sbtGdUqgWNEBjeDgCfhChLBShdDtLihM2GNeTEo1IE6XatuYXM2dIg5Iz6HXKZJx0c
-         aCUWKY77oeoyX48b8/bbKf4Uz66Gh3ElhAsji2TZ0hezoo9PWct4XxBOtxOLJ5vVMHEv
-         jcSUaShOWC4fYenEFn3gJt0yI4KPoog0z6c9kbTUjia8zVzIOn19lhrAb955nmKOk2CJ
-         swds9UWh/EuZ3zQIi7Gvv7g6HpsbcAuq34dU+tNcjzZeLMF82cvo08g0EibU/8T8fwtw
-         qQ5w==
+        bh=MKju9e4l1X++IXWH4UPatMfOTU0Fe+qKzB5qoZgdA/o=;
+        b=mJQXcGUkXGJi3zauMygJaMBdLO7OfMHsD4OGW0UjVlUgxqg+jXqiwQn9lL9wr21rs1
+         xYIuZcIwD7d0jDz44rd0EnQlHtYhGwkyXzupGTFfavzyPYCDbGP0J37pnVyTrzvYlv23
+         tUSbDM6XMPKQ+flZe/1sWtbWCxgR+NjUrpnUqZJQNW5f6yS7JaO7gJ2SY56UTWH3a621
+         bxKSOHK4GZ4V6bf7ZJdgDgKYJ9hfqqtO/smydY7p6AOGvgHAohujJu4jygOAiVNlz4AZ
+         NYyIPxPBxLLPDluwmT65DuPCsGyZ4ziAPZzUqlTJjc4xXoXi7WhbTMc9N+oNHVa/sVqd
+         Y6Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=s/w2jsmL4A8OH2kffT73N+lMKO90xikyiBoq5VhvP4E=;
-        b=Xlmd8GAxuBGdw/lTNdMxxQRZrgL2EiB4FKzlbg4G3cTOXdpUB/tVhYSk3hrLKVlp49
-         2bi08g7Py9YLgqDT0bGZUjzqGE/CeXSiM1qoVJ7o8Gh+Y3bHDXTa2skbjW/2LRmyacYd
-         lyB/zqnwUkGvkNsINZiW0MCuRD6QYb4cFJjhX5ppvkWp4R4dgF6sNn/JqAuhnnTboer6
-         PK52RdeF5bZLaSnYgxGt7VyhYjquswKPcSto3GDUjqKa15noejffMpVgtfLx/2IMpNjw
-         R8qkoQfE+PpF0EdOcIWP6J8GW46Umi7b56Lmku0GUevghN7l28BZM+IOgBIabzTG1VCq
-         TWLA==
-X-Gm-Message-State: AOUpUlE7PIsXYvvJcDHAc49tNmOtYxV7bsHb1c7ZRPYPohNyvB9q9KrZ
-        QnH7beVySoS2AJfnk7xdtHzCe1Iw
-X-Google-Smtp-Source: AA+uWPxOgZH2NxEpqjjgkTsuUpqbynpZq+CX/bEk9va3/W+r923t8kq61nTooGPznC9uEDVwst3ijQ==
-X-Received: by 2002:a63:4283:: with SMTP id p125-v6mr8211611pga.142.1533939295957;
-        Fri, 10 Aug 2018 15:14:55 -0700 (PDT)
+        bh=MKju9e4l1X++IXWH4UPatMfOTU0Fe+qKzB5qoZgdA/o=;
+        b=IQ9O2dxpROW3jEO28oghLx7AqPuF7x3F7oBbnZL8BpesjOrv2ntxU7xH2mAFlMUm2h
+         BWTyCZIEmdKdu+OJ3uBi9WRIZix6AXKtTE0EwU8Cc1F387qbOCeduovHa5um78e/jb7L
+         i2AtLklyeE0KgKe/qUSd4ZmxXLz+b427WAK3xBU571Z+r7rinS6M5yr/Ev3/J60aePg0
+         29CReSJc55+UvPBArSAf7g//C2sMEc0AsTe9/W9O9DRu8g6wvX3kd0B5UTITtkLtWcCT
+         PMM683UZiBvsg9iyysI1p10O+2LCzw37GqOiS8N401CV297NGRUzHfQ3yXZ1KjDPOMEC
+         NFZA==
+X-Gm-Message-State: AOUpUlHiVNmQkg0an+Vcb7llsU55BwFACA7Dw1Z+weTOI1kIKN4fWnmT
+        BK3IQRS/gyqUN5xBvWOVNYBB2uPS
+X-Google-Smtp-Source: AA+uWPzZ3O5IfP1nslJA7F8XEGcJAqamI7OdhC9+zD5CdOvovugzgWJ5J19Bu+jgQ3xpGPPUGzgSoQ==
+X-Received: by 2002:a63:c312:: with SMTP id c18-v6mr8075122pgd.449.1533939297398;
+        Fri, 10 Aug 2018 15:14:57 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id q25-v6sm23883791pfk.96.2018.08.10.15.14.54
+        by smtp.gmail.com with ESMTPSA id f5-v6sm11467345pga.58.2018.08.10.15.14.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Aug 2018 15:14:55 -0700 (PDT)
-Date:   Fri, 10 Aug 2018 15:14:55 -0700 (PDT)
-X-Google-Original-Date: Fri, 10 Aug 2018 22:14:22 GMT
-Message-Id: <6b3552386fc86dbfe3eeb7fc34155854191e7648.1533939264.git.gitgitgadget@gmail.com>
+        Fri, 10 Aug 2018 15:14:56 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:14:56 -0700 (PDT)
+X-Google-Original-Date: Fri, 10 Aug 2018 22:14:23 GMT
+Message-Id: <ccf8c1bb2459d33c7dc97098c08c47ca7d77ed3e.1533939264.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v5.git.gitgitgadget@gmail.com>
 References: <pull.1.v4.git.gitgitgadget@gmail.com>
         <pull.1.v5.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v5 20/21] range-diff: make --dual-color the default mode
+Subject: [PATCH v5 21/21] range-diff: use dim/bold cues to improve dual color
+ mode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,122 +72,194 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-After using this command extensively for the last two months, this
-developer came to the conclusion that even if the dual color mode still
-leaves a lot of room for confusion about what was actually changed, the
-non-dual color mode is substantially worse in that regard.
+It *is* a confusing thing to look at a diff of diffs. All too easy is it
+to mix up whether the -/+ markers refer to the "inner" or the "outer"
+diff, i.e. whether a `+` indicates that a line was added by either the
+old or the new diff (or both), or whether the new diff does something
+different than the old diff.
 
-Therefore, we really want to make the dual color mode the default.
+To make things easier to process for normal developers, we introduced
+the dual color mode which colors the lines according to the commit diff,
+i.e. lines that are added by a commit (whether old, new, or both) are
+colored in green. In non-dual color mode, the lines would be colored
+according to the outer diff: if the old commit added a line, it would be
+colored red (because that line addition is only present in the first
+commit range that was specified on the command-line, i.e. the "old"
+commit, but not in the second commit range, i.e. the "new" commit).
+
+However, this dual color mode is still not making things clear enough,
+as we are looking at two levels of diffs, and we still only pick a color
+according to *one* of them (the outer diff marker is colored
+differently, of course, but in particular with deep indentation, it is
+easy to lose track of that outer diff marker's background color).
+
+Therefore, let's add another dimension to the mix. Still use
+green/red/normal according to the commit diffs, but now also dim the
+lines that were only in the old commit, and use bold face for the lines
+that are only in the new commit.
+
+That way, it is much easier not to lose track of, say, when we are
+looking at a line that was added in the previous iteration of a patch
+series but the new iteration adds a slightly different version: the
+obsolete change will be dimmed, the current version of the patch will be
+bold.
+
+At least this developer has a much easier time reading the range-diffs
+that way.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-range-diff.txt       | 32 +++++++++++++++-----------
- builtin/range-diff.c                   | 10 ++++----
- contrib/completion/git-completion.bash |  2 +-
- 3 files changed, 25 insertions(+), 19 deletions(-)
+ Documentation/config.txt         |  6 ++++--
+ Documentation/git-range-diff.txt | 17 +++++++++++++----
+ color.h                          |  6 ++++++
+ diff.c                           | 28 ++++++++++++++++++++++------
+ diff.h                           |  8 +++++++-
+ 5 files changed, 52 insertions(+), 13 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 63365dcf3..90241ed77 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1193,8 +1193,10 @@ color.diff.<slot>::
+ 	(highlighting whitespace errors), `oldMoved` (deleted lines),
+ 	`newMoved` (added lines), `oldMovedDimmed`, `oldMovedAlternative`,
+ 	`oldMovedAlternativeDimmed`, `newMovedDimmed`, `newMovedAlternative`
+-	and `newMovedAlternativeDimmed` (See the '<mode>'
+-	setting of '--color-moved' in linkgit:git-diff[1] for details).
++	`newMovedAlternativeDimmed` (See the '<mode>'
++	setting of '--color-moved' in linkgit:git-diff[1] for details),
++	`contextDimmed`, `oldDimmed`, `newDimmed`, `contextBold`,
++	`oldBold`, and `newBold` (see linkgit:git-range-diff[1] for details).
+ 
+ color.decorate.<slot>::
+ 	Use customized color for 'git log --decorate' output.  `<slot>` is one
 diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
-index bebb47d42..82c71c682 100644
+index 82c71c682..f693930fd 100644
 --- a/Documentation/git-range-diff.txt
 +++ b/Documentation/git-range-diff.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git range-diff' [--color=[<when>]] [--no-color] [<diff-options>]
--	[--dual-color] [--creation-factor=<factor>]
-+	[--no-dual-color] [--creation-factor=<factor>]
- 	( <range1> <range2> | <rev1>...<rev2> | <base> <rev1> <rev2> )
- 
- DESCRIPTION
-@@ -31,11 +31,14 @@ all of their ancestors have been shown.
- 
- OPTIONS
- -------
----dual-color::
--	When the commit diffs differ, recreate the original diffs'
--	coloring, and add outer -/+ diff markers with the *background*
--	being red/green to make it easier to see e.g. when there was a
--	change in what exact lines were added.
-+--no-dual-color::
-+	When the commit diffs differ, `git range-diff` recreates the
-+	original diffs' coloring, and adds outer -/+ diff markers with
-+	the *background* being red/green to make it easier to see e.g.
-+	when there was a change in what exact lines were added. This is
-+	known to `range-diff` as "dual coloring". Use `--no-dual-color`
-+	to revert to color all lines according to the outer diff markers
-+	(and completely ignore the inner diff when it comes to color).
+@@ -35,10 +35,19 @@ OPTIONS
+ 	When the commit diffs differ, `git range-diff` recreates the
+ 	original diffs' coloring, and adds outer -/+ diff markers with
+ 	the *background* being red/green to make it easier to see e.g.
+-	when there was a change in what exact lines were added. This is
+-	known to `range-diff` as "dual coloring". Use `--no-dual-color`
+-	to revert to color all lines according to the outer diff markers
+-	(and completely ignore the inner diff when it comes to color).
++	when there was a change in what exact lines were added.
+++
++Additionally, the commit diff lines that are only present in the first commit
++range are shown "dimmed" (this can be overridden using the `color.diff.<slot>`
++config setting where `<slot>` is one of `contextDimmed`, `oldDimmed` and
++`newDimmed`), and the commit diff lines that are only present in the second
++commit range are shown in bold (which can be overridden using the config
++settings `color.diff.<slot>` with `<slot>` being one of `contextBold`,
++`oldBold` or `newBold`).
+++
++This is known to `range-diff` as "dual coloring". Use `--no-dual-color`
++to revert to color all lines according to the outer diff markers
++(and completely ignore the inner diff when it comes to color).
  
  --creation-factor=<percent>::
  	Set the creation/deletion cost fudge factor to `<percent>`.
-@@ -118,15 +121,16 @@ line (with a perfect match) is yellow like the commit header of `git
- show`'s output, and the third line colors the old commit red, the new
- one green and the rest like `git show`'s commit header.
+diff --git a/color.h b/color.h
+index 33e786342..98894d6a1 100644
+--- a/color.h
++++ b/color.h
+@@ -36,6 +36,12 @@ struct strbuf;
+ #define GIT_COLOR_BOLD_BLUE	"\033[1;34m"
+ #define GIT_COLOR_BOLD_MAGENTA	"\033[1;35m"
+ #define GIT_COLOR_BOLD_CYAN	"\033[1;36m"
++#define GIT_COLOR_FAINT_RED	"\033[2;31m"
++#define GIT_COLOR_FAINT_GREEN	"\033[2;32m"
++#define GIT_COLOR_FAINT_YELLOW	"\033[2;33m"
++#define GIT_COLOR_FAINT_BLUE	"\033[2;34m"
++#define GIT_COLOR_FAINT_MAGENTA	"\033[2;35m"
++#define GIT_COLOR_FAINT_CYAN	"\033[2;36m"
+ #define GIT_COLOR_BG_RED	"\033[41m"
+ #define GIT_COLOR_BG_GREEN	"\033[42m"
+ #define GIT_COLOR_BG_YELLOW	"\033[43m"
+diff --git a/diff.c b/diff.c
+index ea8ecae04..ae1314952 100644
+--- a/diff.c
++++ b/diff.c
+@@ -70,6 +70,12 @@ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_BOLD_YELLOW,	/* NEW_MOVED ALTERNATIVE */
+ 	GIT_COLOR_FAINT,	/* NEW_MOVED_DIM */
+ 	GIT_COLOR_FAINT_ITALIC,	/* NEW_MOVED_ALTERNATIVE_DIM */
++	GIT_COLOR_FAINT,	/* CONTEXT_DIM */
++	GIT_COLOR_FAINT_RED,	/* OLD_DIM */
++	GIT_COLOR_FAINT_GREEN,	/* NEW_DIM */
++	GIT_COLOR_BOLD,		/* CONTEXT_BOLD */
++	GIT_COLOR_BOLD_RED,	/* OLD_BOLD */
++	GIT_COLOR_BOLD_GREEN,	/* NEW_BOLD */
+ };
  
--The color-coded diff is actually a bit hard to read, though, as it
--colors the entire lines red or green. The line that added "What is
--unexpected" in the old commit, for example, is completely red, even if
--the intent of the old commit was to add something.
-+A naive color-coded diff of diffs is actually a bit hard to read,
-+though, as it colors the entire lines red or green. The line that added
-+"What is unexpected" in the old commit, for example, is completely red,
-+even if the intent of the old commit was to add something.
+ static const char *color_diff_slots[] = {
+@@ -89,6 +95,12 @@ static const char *color_diff_slots[] = {
+ 	[DIFF_FILE_NEW_MOVED_ALT]     = "newMovedAlternative",
+ 	[DIFF_FILE_NEW_MOVED_DIM]     = "newMovedDimmed",
+ 	[DIFF_FILE_NEW_MOVED_ALT_DIM] = "newMovedAlternativeDimmed",
++	[DIFF_CONTEXT_DIM]	      = "contextDimmed",
++	[DIFF_FILE_OLD_DIM]	      = "oldDimmed",
++	[DIFF_FILE_NEW_DIM]	      = "newDimmed",
++	[DIFF_CONTEXT_BOLD]	      = "contextBold",
++	[DIFF_FILE_OLD_BOLD]	      = "oldBold",
++	[DIFF_FILE_NEW_BOLD]	      = "newBold",
+ };
  
--To help with that, use the `--dual-color` mode. In this mode, the diff
--of diffs will retain the original diff colors, and prefix the lines with
---/+ markers that have their *background* red or green, to make it more
--obvious that they describe how the diff itself changed.
-+To help with that, `range` uses the `--dual-color` mode by default. In
-+this mode, the diff of diffs will retain the original diff colors, and
-+prefix the lines with -/+ markers that have their *background* red or
-+green, to make it more obvious that they describe how the diff itself
-+changed.
+ static NORETURN void die_want_option(const char *option_name)
+@@ -1294,11 +1306,13 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
  
+ 			set_sign = set;
+ 			if (c == '-')
+-				set = diff_get_color_opt(o, DIFF_FILE_OLD);
++				set = diff_get_color_opt(o, DIFF_FILE_OLD_BOLD);
+ 			else if (c == '@')
+ 				set = diff_get_color_opt(o, DIFF_FRAGINFO);
+-			else if (c != '+')
+-				set = diff_get_color_opt(o, DIFF_CONTEXT);
++			else if (c == '+')
++				set = diff_get_color_opt(o, DIFF_FILE_NEW_BOLD);
++			else
++				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
+ 			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+ 		}
+ 		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
+@@ -1336,11 +1350,13 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
  
- Algorithm
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index da3ad3eba..ef3ba22e2 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -20,11 +20,11 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- {
- 	int creation_factor = 60;
- 	struct diff_options diffopt = { NULL };
--	int dual_color = 0;
-+	int simple_color = -1;
- 	struct option options[] = {
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("Percentage by which creation is weighted")),
--		OPT_BOOL(0, "dual-color", &dual_color,
-+		OPT_BOOL(0, "no-dual-color", &simple_color,
- 			    N_("color both diff and diff-between-diffs")),
- 		OPT_END()
- 	};
-@@ -61,8 +61,10 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 			     options + ARRAY_SIZE(options) - 1, /* OPT_END */
- 			     builtin_range_diff_usage, 0);
- 
--	if (dual_color) {
--		diffopt.use_color = 1;
-+	if (simple_color < 1) {
-+		if (!simple_color)
-+			/* force color when --dual-color was used */
-+			diffopt.use_color = 1;
- 		diffopt.flags.dual_color_diffed_diffs = 1;
- 	}
- 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 3d4ec3432..d63d2dffd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1981,7 +1981,7 @@ _git_range_diff ()
- 	case "$cur" in
- 	--*)
- 		__gitcomp "
--			--creation-factor= --dual-color
-+			--creation-factor= --no-dual-color
- 			$__git_diff_common_options
- 		"
- 		return
+ 			set_sign = set;
+ 			if (c == '+')
+-				set = diff_get_color_opt(o, DIFF_FILE_NEW);
++				set = diff_get_color_opt(o, DIFF_FILE_NEW_DIM);
+ 			else if (c == '@')
+ 				set = diff_get_color_opt(o, DIFF_FRAGINFO);
+-			else if (c != '-')
+-				set = diff_get_color_opt(o, DIFF_CONTEXT);
++			else if (c == '-')
++				set = diff_get_color_opt(o, DIFF_FILE_OLD_DIM);
++			else
++				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+ 		}
+ 		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+diff --git a/diff.h b/diff.h
+index cca4f9d6c..e1e54256c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -248,7 +248,13 @@ enum color_diff {
+ 	DIFF_FILE_NEW_MOVED = 13,
+ 	DIFF_FILE_NEW_MOVED_ALT = 14,
+ 	DIFF_FILE_NEW_MOVED_DIM = 15,
+-	DIFF_FILE_NEW_MOVED_ALT_DIM = 16
++	DIFF_FILE_NEW_MOVED_ALT_DIM = 16,
++	DIFF_CONTEXT_DIM = 17,
++	DIFF_FILE_OLD_DIM = 18,
++	DIFF_FILE_NEW_DIM = 19,
++	DIFF_CONTEXT_BOLD = 20,
++	DIFF_FILE_OLD_BOLD = 21,
++	DIFF_FILE_NEW_BOLD = 22,
+ };
+ const char *diff_get_color(int diff_use_color, enum color_diff ix);
+ #define diff_get_color_opt(o, ix) \
 -- 
 gitgitgadget
-
