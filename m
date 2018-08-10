@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79C2C1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 15:58:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEDCB1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 15:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727973AbeHJS2z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 14:28:55 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38389 "EHLO
+        id S1728043AbeHJS27 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 14:28:59 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32854 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727542AbeHJS2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 14:28:55 -0400
-Received: by mail-wr1-f66.google.com with SMTP id v14-v6so8733225wro.5
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 08:58:28 -0700 (PDT)
+        with ESMTP id S1727542AbeHJS27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 14:28:59 -0400
+Received: by mail-wr1-f66.google.com with SMTP id g6-v6so8759388wrp.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 08:58:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=lVDEhfnNK4YyIThh6/XR0baQRX1rBZJEs6E9k33XXIw=;
-        b=Rt+XYdL3nYuf9UxWin4X7Jw2JGtNcjObaogawFxV3Dlty8D3AGPAT5raEYYhW2w2vz
-         2o35WIs7S81Wm1uN7EbW0k2APFy5EAuYbA8lxY7X077Ygk54ig/RY4J5L1mdF0rxAHoL
-         c3ZhR3oZFgewGp7oScz/cOQFeKlagefRfgIq7MVoejUjeFkhVKy59gRfg4Y2eA6S+MKT
-         UTrfROm6Qz//8rZRtBAxfZARuTs4le/2c53x49VBUVjPNLDKZLmZ02wD+ekcSJRiSBLV
-         qdg9Bs2TqvlbN3h4DeCOMOIxXdWODSExYz0mv/dAkX2k72jGnEt+fjANBatOCKe2SHrL
-         koaw==
+        h=sender:from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version;
+        bh=FUgon6ewfPgAlQPckkrDvIh13fbvA+dJ9pPbPVdTGMk=;
+        b=Gk3p5rLmseUHTItpvmXuZTMKnDaIzbgaGZKWwkGOAJTB2b3+d574Q7xNj2oChZDiOM
+         Mu4LQFnK7B44ynmw4qcW18U9ucMIEUdgBkmA6L8oJNwgu3rTttnyGRju+hyXM5SajWeT
+         IvoZ1dNOOmlqzDJnsuZk6lLdMkoB2fJpBnha1SYjuqoUcSifv241WqMFpKOKncgydtlr
+         7vKzlptAy1eYRy7P4ikffwQvRulVztlsCFxEoSU0wg+OSWrDxgEp+OHBVd1MVIYwgquY
+         UBsDv1xp/kMxAQZ+BW+jNo+6qweg7fk74WAdPQuYmVhL1yggP92VLzNt0pTAiVIPlYru
+         Hxrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=lVDEhfnNK4YyIThh6/XR0baQRX1rBZJEs6E9k33XXIw=;
-        b=r+5hySZ098Po9gZ24mRrhNsd15OnC7iStQvH05vIyLR9+VpTkJipfR7dpsRn0WAEAA
-         5aY9skY120x0yDVRDpPpBAn1Nh6lpmvuqLgOqGJB5LkdprkIo31DTswi22pqavRyxN6G
-         NwyTJpYRQiHQ5LkATVf9UrAJ5FFvKmxL9dNrlFa01KcnyaS6V7Frl9N5sa0P+UZlAb0l
-         Seo+tc0TEgy63xN5mhsu7nX9yS7hibIWmkNl+WE+xv/UrTn4I33dIZIvevxEa4Vy+a+8
-         IBnnsfOkrQ1mnWB2LsV4l2Ylt/xB6Ht9/Z54aJf3GdtQcRZ2SlIMose8+KGH97yGCbu3
-         DMoQ==
-X-Gm-Message-State: AOUpUlFVxxBV1vr7GYAwRvTTPSv3y0CzuAdwmcQ6HBrCduFjingsCC6n
-        PzIkftfh9jJNlzu3H6Hdb19CGuJg
-X-Google-Smtp-Source: AA+uWPy88o1l+FBqVepoNNvLOGsnwHVBULxrGqcT9vsyZmQT/p8AJQKBg+wq9vQ/BA3mRN0PLDkfNA==
-X-Received: by 2002:adf:d842:: with SMTP id k2-v6mr4538548wrl.26.1533916707396;
-        Fri, 10 Aug 2018 08:58:27 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:references
+         :user-agent:date:message-id:mime-version;
+        bh=FUgon6ewfPgAlQPckkrDvIh13fbvA+dJ9pPbPVdTGMk=;
+        b=NZ9ISWTOZTKETQwg+4REBAK1ty2B+AoJzVsjvfmmPNo0Hcq5LzqxiboaSRhDDrxXtA
+         4E7IJ2iuFdHG+bqAv/0CbK2+G9eFD4tHJnvuM0VkWNQH1mrfgnAMmsRPKpfiG/EDSKE/
+         RMOHpPhuHyrRQPZ4EEYj09AnXVSxkVbb4VzCLzYKi9JLGAy/GzmlVaVkQMxUq5JKerbB
+         J6Qo6EBpha6XbXy9J+VqmE9aFUbrVnk1osncK5CDfv8LSYhEJQ5pvZrzXZ8wnygVvq0y
+         HJIJIiLK0+N3rSxc0qvs1OB+jk9kHVA6C+2JpxrCDloalfTu/FMtg6VUlgs6G4KzSwEU
+         WDBg==
+X-Gm-Message-State: AOUpUlEcfrFZMyacCYMCxqPmQknRz8qcWNG4I8QgxLoMG1FHAUs+Q4rY
+        vxUILS/lRuHFJlyDxq2b8uE=
+X-Google-Smtp-Source: AA+uWPwuLaa8KUqkiFud/NE0kxV33aWurcREyx6KYfWnRS2xw9RoZl2xF3sTWTo/YvWaNoNbeBB+mQ==
+X-Received: by 2002:adf:cd82:: with SMTP id q2-v6mr4799903wrj.118.1533916711488;
+        Fri, 10 Aug 2018 08:58:31 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 66-v6sm3262825wmw.34.2018.08.10.08.58.26
+        by smtp.gmail.com with ESMTPSA id b8-v6sm12658705wrw.22.2018.08.10.08.58.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 10 Aug 2018 08:58:26 -0700 (PDT)
+        Fri, 10 Aug 2018 08:58:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
         Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH 0/4] t5552: fix flakiness by introducing proper locking for GIT_TRACE
+In-Reply-To: <20180810140908.GA23507@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 10 Aug 2018 10:09:08 -0400")
 References: <pull.17.git.gitgitgadget@gmail.com>
         <20180809194712.GC32376@sigill.intra.peff.net>
         <xmqqo9ebb6z3.fsf@gitster-ct.c.googlers.com>
         <20180810140908.GA23507@sigill.intra.peff.net>
-Date:   Fri, 10 Aug 2018 08:58:25 -0700
-In-Reply-To: <20180810140908.GA23507@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 10 Aug 2018 10:09:08 -0400")
-Message-ID: <xmqq36vm9psu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Date:   Fri, 10 Aug 2018 08:58:30 -0700
+Message-ID: <xmqq1sb69psp.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -89,7 +89,7 @@ also a good clean-up to give an got_acked helper that sits next to
 have_sent and have_not_sent helpers for readability.  That is of
 course outside the scope of this change.
 
-Will queue.  Thansk.
+Will queue.  Thanks.
 
 > -- >8 --
 > Subject: [PATCH] t5552: suppress upload-pack trace output
