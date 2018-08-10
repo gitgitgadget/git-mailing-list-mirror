@@ -2,102 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BA311F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 19:48:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 042E41F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 20:05:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727102AbeHJWUO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 18:20:14 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:37690 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726666AbeHJWUO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 18:20:14 -0400
-Received: by mail-it0-f67.google.com with SMTP id h20-v6so4252818itf.2
-        for <git@vger.kernel.org>; Fri, 10 Aug 2018 12:48:57 -0700 (PDT)
+        id S1727075AbeHJWg5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 18:36:57 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:35404 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726446AbeHJWg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 18:36:57 -0400
+Received: by mail-wm0-f67.google.com with SMTP id o18-v6so3068856wmc.0
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 13:05:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iIWT7xQaoKg1obiTPIqwv3hU/J67kYYsMNJycDUZ+kg=;
-        b=K2c1UBX0Df0hlIOLRtUWCFxoqisE0M53exD1suCqBCiXG5z/ofjhMVQ4+xtN5U/gMR
-         jpaMqH4z/mGgCAp9fbbzd24VObQVJnELlBpU5x2TAINJa9O+Z28nED6bdxkPHoTB+sv7
-         Ay8NCM+B25eeWhBhSIEXEdErfpOvBVNkagS/+g2Ytu1gRClffIPLljmt3lzltdrtF8I1
-         b6ckM26jcP+8WlaC0bhfOIxj+ZJDcThQDKpsZhYcHDNDB4zfg6kOzcibZ2//FzS6ZcS3
-         JBKRTdd6EwJfTiUuZQHWrsbTnkz/bNC0vePXiqVX/9PdFXYlX12bnkNpwTXCUakxHbnO
-         GgdA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ebtWP/iE4WUIWDSpujbxiU+npSbMoVtbmrBWZFXeeGQ=;
+        b=jAXBkoePKn0LbrLSdWMDqIQKo4UX71Lz+0eKWjQop5qPFcfxtXg8t+GW3427LpVQEF
+         0nL5iPVdRhcnUVkiwazhjQjNCUye8Lxhqmh1PIjfpkuwILWeo7pDG26iezXBsCbdFMQB
+         UzFxsD0mxD1yG8qtIRmaIGj9nsWmfd00cSGXnWUdcWFr2zHY2qX0s6sfBHKpxrwYitLq
+         oA0/pOC2KnUFBg5H7YviOMU1aI7EOeDf/pLBGkRtZEk99j8Obb0mGPKyV8aM5aChZNjb
+         5uv4yhZoSjEktB3Hze4i8Acfegf3ZJ9HoSgUStIYrrMeYvS9+rYfoI6m+2Ve3hjYYlc7
+         UGxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iIWT7xQaoKg1obiTPIqwv3hU/J67kYYsMNJycDUZ+kg=;
-        b=M4lmsYkEfqJcpyQyhWSUDh/dw/mC4NA53e6rTXhBrailiHq2Teebyq4pi7FCKgCHn3
-         vfUTITY/MWMjn6CmAlsYCa2uCZj8Gciv3pYIFKxeQvDi6dKtb4MFqlWpYY5lk6nb0iPa
-         1QCoybrXMBjpxfmTZFeg2wOamx20Z7gjPo+9C8igcBRMM+rjGaaFtXrvRO14c81KFnbD
-         OQwOgW0M+c6rDRL/JMqlqbGzp3367afeMRpDsKwmff8JImNn4+EgoniOH9nyaQSaRdYS
-         u44SorADVTzFqjm4HKbhDgh9dTxs43xjJWzMGb6LSVOKD2YNEJsLRtpgVz7qUsyTjE91
-         h4DQ==
-X-Gm-Message-State: AOUpUlEhN0MSZT5BOE+EjJVbUp9Yi7bMARtE2Qsewq1OxHvPZ2kVAoIB
-        RrYjS5H9e3aBuQrkTFDcopIC+oALkDVGPM6UAKI=
-X-Google-Smtp-Source: AA+uWPwoUcThOCRtM1xc0/TttwXrF+YuHLB+IfnhA56YBxEYfm/kBrWj2QoCa1pTGCTCNN7C2fAAKJ9z4zcnQcUrj8k=
-X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr3458217itc.68.1533930537078;
- Fri, 10 Aug 2018 12:48:57 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ebtWP/iE4WUIWDSpujbxiU+npSbMoVtbmrBWZFXeeGQ=;
+        b=UoZEghx26y5X6EdLvjj0oWu8a30y1B4sP5iMdLazqSqIuJ5Cmn2yFFqbMc5UN1HH4e
+         QyNPuCTME4su1jpfgm3lkJXkt0RwsD378wNzHABFLPkzhMb+AaxpT9K1qsGBGBRsqJn1
+         G8PSh+BHS0d9xkCurgYZKm1URhbDjIbDcndLcxvBPggH4fgk+wJVd7ZjJg2ZgvUoIXSC
+         Nj7ljL50NQsrjzdC4NDQuqhx8n/Vaqmo+tWK0st+HyNqTay90I5Fu3i55IChYS0T1cN1
+         phz/uPgUZFWuSmCSTrmDkftrJh7ilZoIAQsxkvU5lMA7MjmKa4DeW3B22gIAfZKcfcsJ
+         fdnA==
+X-Gm-Message-State: AOUpUlGsM6esmTjKl2d41k1cdd6MwY65aA6FDuM0xWJtq56567X9THhA
+        meUh+YP9zIJ146wD+5ktApmAVrti
+X-Google-Smtp-Source: AA+uWPwn2ijgCnSS3BqIvI06fip+ishpH6w3ZALfpi5ivYSrNh00QDWbTDsVjAAyNWRgehxO3AjkhQ==
+X-Received: by 2002:a1c:3f45:: with SMTP id m66-v6mr2274451wma.37.1533931536008;
+        Fri, 10 Aug 2018 13:05:36 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r16-v6sm14943408wru.59.2018.08.10.13.05.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 10 Aug 2018 13:05:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/4] Introduce a function to lock/unlock file descriptors when appending
+References: <pull.17.git.gitgitgadget@gmail.com>
+        <pull.17.v2.git.gitgitgadget@gmail.com>
+        <a19904682f6984de21fbf77240ff5fb6eed1b744.1533930437.git.gitgitgadget@gmail.com>
+Date:   Fri, 10 Aug 2018 13:05:34 -0700
+In-Reply-To: <a19904682f6984de21fbf77240ff5fb6eed1b744.1533930437.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 10 Aug 2018
+        12:47:20 -0700 (PDT)")
+Message-ID: <xmqqzhxu6l81.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180727154241.GA21288@duynguyen.home> <20180729103306.16403-1-pclouds@gmail.com>
- <20180729103306.16403-5-pclouds@gmail.com> <CABPp-BGF+GZjm-DiveLjFOESKwPz2F0Y7X4_kXyem2xFo2odUw@mail.gmail.com>
- <CACsJy8DF5XLf-RF3SwTpRynYALJUPO_VTK=fpx1oabwB80ZpPw@mail.gmail.com>
- <CABPp-BGU6QnUwQgkhwx6vLBc3ozoEScQ4DaZd-9ZZfQhXfxPww@mail.gmail.com>
- <CACsJy8AeptcqwRC+DOrdhvk69kEQT6+S6M=0OGWBFOE5gihGzA@mail.gmail.com> <CABPp-BHMC8k3t2_9KzdJvg80e-nqwsbLUceTLNjQ=ST=9XthEA@mail.gmail.com>
-In-Reply-To: <CABPp-BHMC8k3t2_9KzdJvg80e-nqwsbLUceTLNjQ=ST=9XthEA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 10 Aug 2018 21:48:30 +0200
-Message-ID: <CACsJy8D+UcmokEVn-=PRp7cZMK9fY0H+epKJpR8ytLSJdjWHcg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] unpack-trees: cheaper index update when walking by cache-tree
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 10, 2018 at 9:40 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Fri, Aug 10, 2018 at 12:30 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Fri, Aug 10, 2018 at 8:39 PM Elijah Newren <newren@gmail.com> wrote:
-> ...
-> > > Why do we still need to go through add_index_entry()?  I thought that
-> > > the whole point was that you already checked that at the current path,
-> > > the trees being unpacked were all equal and matched both the index and
-> > > the cache_tree.  If so, why is there any need for an update at all?
-> > > (Did I read your all_trees_same_as_cache_tree() function wrong, and
-> > > you don't actually know these all match in some important way?)
-> >
-> > Unless fn is oneway_diff, we have to create a new index (in o->result)
-> > based on o->src_index and some other trees. So we have to add entries
->
-> Oh, right, o->src_index may not equal o->dst_index (because of people
-> like me who call it that way from merge-recursive.c) and even if it
-> does, we still have the temporary o->result in the mean time.  I
-> should have remembered that; just didn't.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Your forgetting about this actually helps. I think the idea of
-avoiding add_index_entry() may be worth considering.
+> +
+> +#ifndef GIT_WINDOWS_NATIVE
+> +int lock_or_unlock_fd_for_appending(int fd, int lock_it)
+> +{
+> +	struct flock flock;
+> +
+> +	flock.l_type = lock_it ? F_WRLCK : F_UNLCK;
+> +
+> +	/* (un-)lock the whole file */
+> +	flock.l_whence = SEEK_SET;
+> +	flock.l_start = 0;
+> +	flock.l_len = 0;
+> +
+> +	return fcntl(fd, F_SETLKW, &flock);
+> +}
+> +#endif
 
-We know that 90% of cases of unpack_trees() is from the_index to
-the_index. So if instead of creating a full temporary index, where 90%
-of it might be the same as source index, if we just mark in the source
-index (e.g. in ce_flags) the entries that should be copied to
-o->result and _not_ create them in o->result. When it's time to create
-o->dst_index (which is the_index) from o->result, we could just do
-little manipulation to delete stuff that the_index has but o->result
-does not and add a bit more things. It is something that at least
-sounds nice in my head, but I'm not sure if it works out...
--- 
-Duy
+I think people already told you that this is not needed on systems
+with properly working O_APPEND [*1*]
+
+	Side note #1: and with network filesystems where O_APPEND
+        may not work reliably, fcntl based range locking would not
+        work either, so having this would not help.
+
+I saw other Johannes and other Jeff peeking into fixing O_APPEND;
+I do not know how well that effort goes, but it would be preferrable
+if we can successfully go that route.  
+
+As I said in my review of the first patch in v1 series, I am not
+fundamentally opposed to a few "lock here to work around lack of
+O_APPEND" and "unlock here for the same reason" calls to limited
+codepaths as a workaround, as the damage is limited (that is why I
+earlier looked at our use of O_APPEND), but that would be the last
+resort if O_APPEND cannot be made to work reliably on Windows.
+
+But even if we end up doing so, on systems with POSIX O_APPEND
+working, I think that function should be
+
+    #define lock_or_unlock_for_appending(fd, lock) 0 /* nothing to do */
+
+
+
