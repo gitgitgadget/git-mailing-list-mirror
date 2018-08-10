@@ -2,93 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D03EC1F404
-	for <e@80x24.org>; Fri, 10 Aug 2018 22:02:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48FEF1F404
+	for <e@80x24.org>; Fri, 10 Aug 2018 22:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727026AbeHKAeh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 10 Aug 2018 20:34:37 -0400
-Received: from mout.gmx.net ([212.227.15.15]:36113 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726708AbeHKAeg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 10 Aug 2018 20:34:36 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lbujs-1gDit92JtM-00jI5E; Sat, 11
- Aug 2018 00:02:47 +0200
-Date:   Sat, 11 Aug 2018 00:02:49 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Thomas Gummerer <t.gummerer@gmail.com>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 05/21] range-diff: also show the diff between
- patches
-In-Reply-To: <CAPig+cQ9DcFPosPcjo6MbF_sF9DXuZQ_gZe5jxyx0vbH932sdA@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808110001150.71@tvgsbejvaqbjf.bet>
-References: <pull.1.v3.git.gitgitgadget@gmail.com> <pull.1.v4.git.gitgitgadget@gmail.com> <94afaeaf224563effda7b3c0b8939567302d2ba1.1532210683.git.gitgitgadget@gmail.com> <20180729190359.GD2734@hank.intra.tgummerer.com> <CAPig+cTuD0+8etdMLu8FkFVxnXUM218taxU9in-fe3QXhDj5WQ@mail.gmail.com>
- <20180729214543.GD9955@hank.intra.tgummerer.com> <nycvar.QRO.7.76.6.1807301826480.10478@tvgsbejvaqbjf.bet> <20180730212606.GL9955@hank.intra.tgummerer.com> <CAPig+cSeAUWFCBEbk0m7_gmATAaVDg-fi42kq49DuGm3g0L4=Q@mail.gmail.com> <nycvar.QRO.7.76.6.1808102308140.71@tvgsbejvaqbjf.bet>
- <CAPig+cQ9DcFPosPcjo6MbF_sF9DXuZQ_gZe5jxyx0vbH932sdA@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727058AbeHKAei (ORCPT <rfc822;e@80x24.org>);
+        Fri, 10 Aug 2018 20:34:38 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:36209 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbeHKAei (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 10 Aug 2018 20:34:38 -0400
+Received: by mail-pg1-f193.google.com with SMTP id h12-v6so4986119pgs.3
+        for <git@vger.kernel.org>; Fri, 10 Aug 2018 15:02:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zr68NBYbieAROlYw56GgAH2bMlzozFuAyQe/APSTqrA=;
+        b=AMWEFF3VKgKs3CadT+FHwpLvG/KlghG2W/yI6UV62GMToQh82t4JMjlPa4QwE1yUhp
+         p6py+WvaShFGGy/YJLke95bsQAf2e0BAeKEtxSno+a4YpE+cT4IlZy4B+CXfrpqO8A8Y
+         4D7V7Khv7NheQRj3ZtysUWHWpfxVHO/9W7QR6Uwjk/dK4F5AqlEjxkw0TGIDwkAvrevc
+         S2aHWi3SrBUd7ou15E3s4tnH6sGi0OVVUcOXJFAQDDxE/rrzhHISt8HZe6BUPUVqRmad
+         WYoEVeAE7O8kr7Wgw2yJHxIyLnCKIjNVaThhdDILs8G6kYU6vr7MJhm83n2ynEJAJdkN
+         fehQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zr68NBYbieAROlYw56GgAH2bMlzozFuAyQe/APSTqrA=;
+        b=SJp9Qrs+JKHfkt4Rmdk2TpIELZ+aAuBOFQQPSOUTb6xC5S+Fghw0lITTzzi85kAUOO
+         ltWEEig1W5oug6vhU3VA0m2HOcfovydUkABTjUP9H1ZEd04iorAfv5djEHbIcuEaNi9u
+         w9i4NSTNs2xq//fe22hBiGbBex39XID6gy1JyNAI7VK2Z4tqT9TXgAjUj0Dg+ruoKjnP
+         yP1B0Ov/uZgjd/japbw4IWGaOTaMbVS48CfV6P45W+Y2ybT6agq1iajfxanagK8+4gRv
+         VXN5IVr8SoPZV8hDtUpB9xGLXoThP2i+9PADEacDRryNGq0vaczm89zf6sOJvdrxPVuj
+         Nrzw==
+X-Gm-Message-State: AOUpUlGK2xuhZ0W1pDy/eVumRCZS/m0i2t4f4EqFyBNS6GevKHo7JFDa
+        eRXbZgtIGpEE3MfXPVrzwVV+mzvPkII=
+X-Google-Smtp-Source: AA+uWPxAZecq75rmQg8m8kZSrlEeprI5bLJc26k4pJVHUmaB3ruR/dMhizlYPsGz4p8Y+e0Hs6nE8A==
+X-Received: by 2002:a63:ef10:: with SMTP id u16-v6mr8162353pgh.269.1533938573260;
+        Fri, 10 Aug 2018 15:02:53 -0700 (PDT)
+Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
+        by smtp.gmail.com with ESMTPSA id t15-v6sm18876577pfa.158.2018.08.10.15.02.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 10 Aug 2018 15:02:52 -0700 (PDT)
+Date:   Fri, 10 Aug 2018 15:02:51 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/7] submodule--helper: replace
+ connect-gitdir-workingtree by ensure-core-worktree
+Message-ID: <20180810220251.GC211322@google.com>
+References: <20180803222322.261813-1-sbeller@google.com>
+ <20180803222322.261813-7-sbeller@google.com>
+ <20180810214703.GB211322@google.com>
+ <CAGZ79kb+QyCuBw+e8ShU3Ts9GL+bhzb=i2F+5B0jb9eWk5Sj1w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wvDe8x7+CbZlzJz9C7MjjHPfIu0tvo24G5HLpRbk9CW9wzwMhgr
- lRf8RBWtxE/QTPUEHP/KD3O0fblrm+UKixd3RYXeX65hTFQ/yZwFcpDCWE7YzZ6q0pH18dz
- UGCKvlashhmPB8KjZb4NehwCtNHz6mY4TNDfUg8Sl0hCBOU6sREGpeLXxi7ni0o/JoX9HjM
- f9Sf4a3IfUUo4H78rmnpg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UFa1DS5dEHg=:ZEG0dD/9DmzlL2AWmiOfzQ
- 0hER9orcAm3d2by8L/3onjRPnLpSBNM+VOBjcd3I9bA/+c59Pc2xYwHy4bfHcKWWM4VAF4loz
- r34hTvGu/7OOXL/B2yiW20p+t6A5Eu+gBS1GxTnyZj9O/sm5UNUZf/Ow1ebOFrso8Pw8IwTpx
- ajASOsPI0UuVplOgZH/lgfxEAE7jLj2r1RdMXBqjynmcfx5SefJqFBDzAiM4gbgcIbGQiPY87
- LY+J8YdNtLsdmbn8+dzkc88bdGvnR5v9ZODRTIJbb0qiP9xZqtoWaV0VXOH2qBdOa+ykuvXNI
- L5n77S0VxZSevvj3KsD4SYs/i7zhliEjK6b7KQ3A8BuWurgco8PAJd/guQGyG435KeuJXAQth
- hepAiZRSuyHDphiXyn61dQ5aTQ3xWZTv4EJMfbbrwy6SEa7o4qIzcW8NlaibBrzPLAqxW0dYY
- XkQUDnMjDgmJQfHbFLk/9GfEkQy5wfhTqa/EDfRKK8OFtNYpwBI7Zdo1GMJIpK6+l7s8wcu1O
- mevVN7W1d34M6g/z0xnd++cXEHWx35sr+vdQsJiHRyKMz9Fz5WZhbnsV37OJtNhFCEqC8JRvq
- umbYxVDV4Pr7ttNUo4L9SNuSsbvxsTAvkeggp6kHZTR5UifKgKHVuxiravNR4Qt7QFqN7IeiQ
- RoPqkD6LbKLBZMwe3NRyvCSq9m/Bufapth6Ir0I2KwNT1eWzgLhZdaUvdSiIaRsNJZe0pXHQS
- Rr8+YXRzbDc/ZayxKMYTH33NkWCeEOCXn26spppsPfW7w3ElE3IlH04g2nkFu0V7Eyt4E06eF
- sH9UyXS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kb+QyCuBw+e8ShU3Ts9GL+bhzb=i2F+5B0jb9eWk5Sj1w@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
-
-On Fri, 10 Aug 2018, Eric Sunshine wrote:
-
-> On Fri, Aug 10, 2018 at 5:12 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > On Mon, 30 Jul 2018, Eric Sunshine wrote:
-> > > I think you can attain the desired behavior by making a final
-> > > parse_options() call with empty 'options' list after the call to
-> > > diff_setup_done(). It's pretty much a one-line fix, but can probably
-> > > be done as an incremental change rather than rerolling.
+On 08/10, Stefan Beller wrote:
+> > > +             cfg_file = xstrfmt("%s/config", subrepo.gitdir);
 > >
-> > But then we would have to keep `--` in the first, and not in the second
-> > parse_options() call, right? We would also have to handle that `--`
-> > properly in the loop that calls diff_opt_parse(), I think.
-> > A bit more involved than just a one-line fix, but I guess I'll give it a
-> > try.
+> > As I mentioned here:
+> > https://public-inbox.org/git/20180807230637.247200-1-bmwill@google.com/T/#t
+> >
+> > This lines should probably be more like:
+> >
+> >   cfg_file = repo_git_path(&subrepo, "config");
+> >
 > 
-> It's something that could easily wait until after this series lands.
-> After all, it's just a slightly confusing error message, not some
-> fundamental problem.
-> 
-> As for '--', I'll have to go back and look at the code. I thought I
-> had thought it all through at the time I made the suggestion, but my
-> brain needs a refresh by now.
+> Why? You did not mention the benefits for writing it this way
+> here or on the reference. Care to elaborate?
 
-Your suggestion might have started out by trying to fix the error message,
-but after staring at the code for a couple of minutes, I think the issue
-would have left all kinds of opportunities for bad user experience.
+Its more future proof especially because we have the difference bettwen
+commondir and gitdir for worktrees.  Using the "repo_git_path" function
+handles path rewritting when using worktrees.  Here (when working with
+worktrees) "subrepo.gitdir" refers to the worktree specific gitdir while
+"subrepo.commondir" refers to the global common gitdir where the
+repository config actually lives.
 
-So I fixed it ;-)
-
-Ciao,
-Dscho
+-- 
+Brandon Williams
