@@ -2,136 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C27131F404
-	for <e@80x24.org>; Sat, 11 Aug 2018 10:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFA021F404
+	for <e@80x24.org>; Sat, 11 Aug 2018 10:32:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727267AbeHKMm6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Aug 2018 08:42:58 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40714 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727205AbeHKMm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Aug 2018 08:42:58 -0400
-Received: by mail-ed1-f68.google.com with SMTP id e19-v6so5944983edq.7
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 03:09:14 -0700 (PDT)
+        id S1727286AbeHKNGV (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Aug 2018 09:06:21 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:46087 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727239AbeHKNGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Aug 2018 09:06:21 -0400
+Received: by mail-io0-f193.google.com with SMTP id i18-v6so9899036ioj.13
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 03:32:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=eJZZQnclaEfEv9OQavyHneBM8QcAwf3AsFudX/5lsFU=;
-        b=WWl2QXukUPrIJ49Dy4ggP8B0Py37dEd6D0eee2oYqU6PFdHusRYoerRbuKkf9jmeV5
-         MJEgkpgTSeeEqNEsbi3yseDrY/DO5d0c4bOgKoXDNuemPv8NCRGETGdvqpGLdyrA48Ef
-         mdk+20mP+42exDCrs2dykQmKiOxKp3O7jWYNXD49S8ZVfOMRKCJ3RzE2Z7O/5wLI2iHS
-         3RSstlqOvg99lvVABDnOPnDCQoFsVs2D324hibfmugY76dYjLzyGnCkZUOZ0RC1QyPUl
-         gV7gfpfIJEJcrsnqhXYaTf3UpuSUPyGQipS0aMS/TE4EKnBl82FJQvZRNmQCJ8j2AtjK
-         r4Zw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uH2tFhqGZ57ZMdBs42tfBZsLuvSeCBFf30f+TGGgb64=;
+        b=FsPVNOK/Ylmwb9G7oikC3pGI4GAsQOXntTO1xXTykbNysGl8pGJsbPbhnoXhXS9YxV
+         v9itjmxyOlUZ1bK+WCFybKJAJsnD+eRK0vzrYK2fZzEMpSdlteZz+6mbOy6RMkSHSz8n
+         iYNFSkFXhK+d6ebCNARsLQG4w74L7ZVXTsJWbaGIuLbe1sigBeRlmPwIv7W095NIZTWk
+         GUeEFsJUUzDot1qnDccRE4Pkoipd3R0lsC93w1OlLKnuhT/0vUS0xcl/7wkRi8Vqvu37
+         8eT8U2exho/NztQoRAAb6jwDuy21hQ/Tf9pG+pIsw6FieVntGyHaRE9D0zxxehXAW7gX
+         XZ1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=eJZZQnclaEfEv9OQavyHneBM8QcAwf3AsFudX/5lsFU=;
-        b=CXGyyFcvcYNj/gqq13igXraySEuQD2CitekQ2FAxBhnfIfCYPUI9KA1cnTHzxIrFLe
-         +3nrW7Or6skS7RMrJT1+0/tqzprxUEWR0fTWXD57KB/PTaJi8qjo+nh0V2atrvo2nB90
-         QOiWvft4kSFliCXP3Cq7oS5Z7nE5TiZY3FsgE4FtJd+U1Th06Rzyub2JO7FggnrTdf8g
-         PyDAECLdHaMray6fOZuWVbx5xexvTdlh61LqDd8clfEYOmuISaPRhYMmDyvQ/4QFZOhJ
-         wr+06bwEUjLTtIwWwJ/3eGoslFxcwu+Pfwgc7hy25CNxnRN96pa2cFayzX4lZKaAz7LB
-         ftqQ==
-X-Gm-Message-State: AOUpUlGbAcEbfcEsNCav2tQWSGrF54VX3mgQiuC7SRcfZvU+fHstg3m7
-        /XXrX85gFTfYk5+J4HlayBQ=
-X-Google-Smtp-Source: AA+uWPzPAxJJRWjFwH+oio4hDgrtDHAomfEmGaR1EOEcbM221hMwZs1HIDEFcnTqpBuPlvUYrVy8ww==
-X-Received: by 2002:a50:ec89:: with SMTP id e9-v6mr12721721edr.258.1533982153640;
-        Sat, 11 Aug 2018 03:09:13 -0700 (PDT)
-Received: from localhost.localdomain (x4db10f1c.dyn.telefonica.de. [77.177.15.28])
-        by smtp.gmail.com with ESMTPSA id t44-v6sm6200417edh.18.2018.08.11.03.09.12
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 11 Aug 2018 03:09:12 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net, tboegi@web.de
-Subject: Re: [PATCH v3 1/1] clone: report duplicate entries on case-insensitive filesystems
-Date:   Sat, 11 Aug 2018 12:09:05 +0200
-Message-Id: <20180811100905.1511-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.408.g42635c01bc
-In-Reply-To: <20180810153608.30051-2-pclouds@gmail.com>
-References: <20180807190110.16216-1-pclouds@gmail.com> <20180810153608.30051-1-pclouds@gmail.com> <20180810153608.30051-2-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uH2tFhqGZ57ZMdBs42tfBZsLuvSeCBFf30f+TGGgb64=;
+        b=LvlKZIDDZxepklXk3T5pXPf4Ledfo4Qa6hFY83jLinT1bgZT+7vp7WnBmsRvwdcQ0J
+         YFBQqvNI+n86jR2nKZsiUAW31ElllKunR48cB2bo/LOzNF0Eb09CIUlKF/pUGiMDHuB+
+         zbddIIlP/cOAWUbUX7piVhBuqAoYpY62tX5LqsXCemnE8yRG8o2kuW2xkjOWVg5cEPw8
+         BcULCVP3JAfo5VHJ3bT//oNHKfjI+UQdyDDTOUlrT74SC4HVF/UChY54piDmbprCIdNB
+         QothruZJ4UdlUJ4fMPPd7SsxDamp3ZEoDroeigyfJ0zl93dMCH5L70nl2WorMGIje37N
+         8Ltw==
+X-Gm-Message-State: AOUpUlFn+DYLrUd/yQ1DolmWNB+bz1JyElM9Zr3ISZeLTgkXWq+3xgRH
+        XIfj2C3rGLlzcAh0UlFSPmaTBSvAu3IDQ/EmaCQ=
+X-Google-Smtp-Source: AA+uWPw2OydiR8vZEZsa4FOqDJi8OHUeOG8BA96kaLUlLTNUj2cMKXzU8XPVu1rBtCemz2QTG9LAE6PfqHHHJJMr9oY=
+X-Received: by 2002:a6b:5a08:: with SMTP id o8-v6mr8404505iob.5.1533983553118;
+ Sat, 11 Aug 2018 03:32:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Sat, 11 Aug 2018 03:32:32
+ -0700 (PDT)
+In-Reply-To: <20180811090418.26674-1-szeder.dev@gmail.com>
+References: <20180809155532.26151-1-chriscool@tuxfamily.org>
+ <20180809155532.26151-3-chriscool@tuxfamily.org> <20180811090418.26674-1-szeder.dev@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 11 Aug 2018 12:32:32 +0200
+Message-ID: <CAP8UFD0uoOKyUkNDrQgzcf6rGtnd9-Jk26swtzdyNDeCHefYJA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] Add delta-islands.{c,h}
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Aug 11, 2018 at 11:04 AM, SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+>> diff --git a/delta-islands.c b/delta-islands.c
+>> new file mode 100644
+>> index 0000000000..448ddcbbe4
+>> --- /dev/null
+>> +++ b/delta-islands.c
+>
+>> +static void deduplicate_islands(void)
+>> +{
+>> +     struct remote_island *island, *core =3D NULL, **list;
+>> +     unsigned int island_count, dst, src, ref, i =3D 0;
+>> +
+>> +     island_count =3D kh_size(remote_islands);
+>> +     list =3D xmalloc(island_count * sizeof(struct remote_island *));
+>
+> Please use ALLOC_ARRAY here.
 
-> Paths that only differ in case work fine in a case-sensitive
-> filesystems, but if those repos are cloned in a case-insensitive one,
-> you'll get problems. The first thing to notice is "git status" will
-> never be clean with no indication what exactly is "dirty".
-> 
-> This patch helps the situation a bit by pointing out the problem at
-> clone time. Even though this patch talks about case sensitivity, the
-> patch makes no assumption about folding rules by the filesystem. It
-> simply observes that if an entry has been already checked out at clone
-> time when we're about to write a new path, some folding rules are
-> behind this.
-> 
-> This patch is tested with vim-colorschemes repository on a JFS partition
-> with case insensitive support on Linux. This repository has two files
-> darkBlue.vim and darkblue.vim.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Ok, I have made the following changes in the branch I will send next.
 
-This patch makes 'clone http repository' in
-'t5551-http-fetch-smart.sh' fail with:
+diff --git a/delta-islands.c b/delta-islands.c
+index 92137f2eca..22e4360810 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -322,8 +322,7 @@ static int island_config_callback(const char *k,
+const char *v, void *cb)
 
-  --- exp 2018-08-11 02:29:45.216641851 +0000
-  +++ actual.smudged      2018-08-11 02:29:45.264642318 +0000
-  @@ -15,3 +15,5 @@
-   < Pragma: no-cache
-   < Cache-Control: no-cache, max-age=0, must-revalidate
-   < Content-Type: application/x-git-upload-pack-result
-  +> warning: the following paths have collided and only one from the same
-  +> colliding group is in the working tree:
+                if (island_regexes_nr >=3D island_regexes_alloc) {
+                        island_regexes_alloc =3D (island_regexes_alloc + 8)=
+ * 2;
+-                       island_regexes =3D xrealloc(island_regexes,
+-                                       island_regexes_alloc * sizeof(regex=
+_t));
++                       REALLOC_ARRAY(island_regexes, island_regexes_alloc)=
+;
+                }
 
+                if (*v !=3D '^')
+@@ -425,7 +424,7 @@ static void deduplicate_islands(void)
+        unsigned int island_count, dst, src, ref, i =3D 0;
 
-This highlights a few issues:
+        island_count =3D kh_size(remote_islands);
+-       list =3D xmalloc(island_count * sizeof(struct remote_island *));
++       ALLOC_ARRAY(list, island_count);
 
-  - This test runs
+        kh_foreach_value(remote_islands, island, {
+                list[i++] =3D island;
 
-      GIT_TRACE_CURL=true git clone --quiet <URL> 2>err
-
-    i.e. the curl trace and any errors or warnings from 'git clone'
-    end up in the same file.  This test then removes a lot of
-    uninteresting headers before the comparison with 'test_cmp', but
-    the warning remains and then triggers the test failure.
-
-    Several other tests run a command like this, but those don't use
-    'test_cmp', but only grep the output to verify the presence or
-    absence of certain headers.
-
-    I'm inclined to think that it would be prudent to change all these
-    tests to send the curl trace to a dedicated file (and then
-    '--quiet' can be removed as well).  Though, arguably, had that
-    been already the case, this test wouldn't have failed, and we
-    probably wouldn't have noticed that something is wrong.
-
-  - But what triggered this warning in the first place?  'git clone'
-    didn't print anything after the that warning, even when I re-run
-    the test with that '--quiet' option removed.  Furthermore, the
-    cloned repository contains a single file, so there could be no
-    case/folding collision among multiple files.
-
-    I also notice that this patch doesn't add any tests... :)
-
-  - I didn't understand this warning, I had to read the corresponding
-    commit message to figure out what it's all about.
-
-
+Thanks!
