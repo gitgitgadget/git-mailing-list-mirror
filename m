@@ -2,147 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 268F71F428
-	for <e@80x24.org>; Sat, 11 Aug 2018 20:50:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26BF11F404
+	for <e@80x24.org>; Sat, 11 Aug 2018 21:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727664AbeHKXZy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Aug 2018 19:25:54 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:36352 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727638AbeHKXZy (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 11 Aug 2018 19:25:54 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w7BKmsrb008586;
-        Sat, 11 Aug 2018 13:50:27 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2kswngrew2-1;
-        Sat, 11 Aug 2018 13:50:27 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 46A0D2230FD5;
-        Sat, 11 Aug 2018 13:50:27 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 3C4172CDE5F;
-        Sat, 11 Aug 2018 13:50:27 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCHv2 0/6] Add missing includes and forward declares
-Date:   Sat, 11 Aug 2018 13:50:18 -0700
-Message-Id: <20180811205024.11291-1-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.549.gd4454f3f9b
-In-Reply-To: <20180811043218.31456-1-newren@gmail.com>
-References: <20180811043218.31456-1-newren@gmail.com>
+        id S1727543AbeHKXfl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Aug 2018 19:35:41 -0400
+Received: from mout.web.de ([212.227.17.12]:42137 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727333AbeHKXfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Aug 2018 19:35:41 -0400
+Received: from [192.168.178.36] ([79.237.241.252]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MbQGO-1fVp7L3VWW-00Iinl; Sat, 11
+ Aug 2018 22:59:59 +0200
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
+ <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+ <20180811170248.GC27393@sigill.intra.peff.net>
+ <20180811172350.GA2689@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <f69e08d7-b29d-a9b7-b6d4-5294c4379133@web.de>
+Date:   Sat, 11 Aug 2018 22:59:57 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-08-11_10:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1808110232
+In-Reply-To: <20180811172350.GA2689@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:pz4nUZLU/RC+iDoKxXyPJZ6AaHXLmQ+HAgTbUFDZ76douDhipht
+ ibXSnvPfMFpomvJja5J0h12aWJG8NEIh0Nv4lAnEcoYRzNc0TkbGv7gWE77mdh522+gnJ/I
+ D/9GKv5QgRGkhZz8fUptnAuOFlKGUg0pjsLX/7q1I8YOSmtC1yfrf+UF2nbnF+wb/VNyA0W
+ +hHxHt6LGesX6hI/hvOJg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:84uYJ5rLLPg=:paTRdpNywEnkC1gJUzquoj
+ evx4v5I0G3oZDdVIegwIsVi4mECaO0zOJYU36lo6z9grcndPWU6BlynH/624rZ1HFXNfnbu7u
+ jzZdkf4hWJJuYA35MiqL2+bR1IQXlcUx8RqNykMoMiu8+KKdahtSe8MxMbvUvC9yxk8tsud9v
+ rm3EPj5h09s4EAN9wztSoRPhE4DbjtEcyzwNBsQ8WPkFkKJ9Uq5ktAnfiwHeCl+/Qh6pziwlf
+ XXh364bbm8Uz9soJzylyTGcq69c0gFh6QxIqIrBtfKFXdt2R/xjAzDzZxyroZkJTalHiMKB9D
+ EgKCJVJtn4VIKAB22JdZyJyq51ugLoVOzBP1Donryh26MvaCM1Wl6JE+iQS3VVWr+ycGvPpMs
+ t/TEVoOj4IESExuWZhAktLi9859uF6+8RqWsjpJKQzEkVqzWNZigPyAu+P/WDa5AiQ4NMvvch
+ 89aM2YSqyDb35egXH9lbyMwMyAJR+x28wOT+kkF5SHrmMAlzjSWV0RByNy7smMdTnfQPbsJhA
+ h7933qUQLSquMCdiwx5lIhPxHL6a+R+T2JOznkrB0j4EB145JMZPqzqGX7ZqZ2qAUkD3vgIff
+ bZI+8uwjN9xKP9rFj9prXuwvPxmOevoqNi8ifb1812micmKjH0LThFaCT6BqrqMfDZUC7PR0h
+ kWYHD9jFwcn0s/61UPZgnqcLhKlktNU6s5kK53uR0/YkuGfpJPnpnr0swo16OfN6wqpibnwQf
+ ZSpW4Z3sEkoM/D2WCN/uKhI9t6MlH9nvkbkL2oKchLhWwJjcia0YaFnXvKpcMnoHUMrlW/cj+
+ jz3y0GD
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes compilation errors when using a simple test.c file that
-includes git-compat-util.h and then exactly one other header (and repeati=
-ng
-this for different headers of git).
+Am 11.08.2018 um 19:23 schrieb Jeff King:
+> On Sat, Aug 11, 2018 at 01:02:48PM -0400, Jeff King wrote:
+> 
+>>    - we could probably improve the speed of oidset. Two things I notice
+>>      about its implementation:
 
-Changes since v1:
-  - Followed Peff's suggestion to make my simple test .c file first
-    #include git-compat-util.h; removes the need for inclusions of this
-    header or stdlib.h or stdio.h throughout my series.  (Patches 6-8 of
-    v1 no longer necessary at all.)
-  - Removed the explanatory comments about why various #include's were
-    needed from v1.
+> Before any optimizations, my best-of-five timing for:
+> 
+>    git cat-file --batch-all-objects --unordered --buffer \
+>                 --batch-check='%(objectname)' >/dev/null
+> 
+> in git.git was:
+> 
+>    real	0m0.434s
+>    user	0m0.414s
+>    sys	0m0.020s
+> 
+> That's enumerating every object in the repo but not doing much more than
+> de-duping the names and printing them.
 
-Note: the final patch has minor conflicts with topics in flight in
-next and pu; it can just be dropped and I can resubmit it later if
-that is easier.
+> So a single hash lookup per
+> object does not seem to be measurable. And thus teaching oidset_insert()
+> to do a single hash lookup for check-and-insert is unlikely to help us.
 
-Elijah Newren (6):
-  Add missing includes and forward declares
-  alloc: make allocate_alloc_state and clear_alloc_state more consistent
-  Move definition of enum branch_track from cache.h to branch.h
-  urlmatch.h: fix include guard
-  compat/precompose_utf8.h: use more common include guard style
-  Add missing includes and forward declares
+> On top of that, I tried using a pool to store the set entries:
 
- alloc.c                  |  2 +-
- alloc.h                  |  4 +++-
- apply.h                  |  3 +++
- archive.h                |  3 +++
- attr.h                   |  1 +
- bisect.h                 |  2 ++
- branch.h                 | 13 +++++++++++++
- bulk-checkin.h           |  2 ++
- cache.h                  | 10 ----------
- column.h                 |  1 +
- commit-graph.h           |  1 +
- compat/precompose_utf8.h |  3 ++-
- config.c                 |  1 +
- config.h                 |  5 +++++
- connected.h              |  1 +
- convert.h                |  2 ++
- csum-file.h              |  2 ++
- diffcore.h               |  4 ++++
- dir-iterator.h           |  2 ++
- environment.c            |  1 +
- fsck.h                   |  1 +
- fsmonitor.h              |  7 +++++++
- gpg-interface.h          |  2 ++
- khash.h                  |  3 +++
- list-objects-filter.h    |  4 ++++
- list-objects.h           |  4 ++++
- ll-merge.h               |  2 ++
- mailinfo.h               |  2 ++
- mailmap.h                |  2 ++
- merge-recursive.h        |  4 +++-
- notes-merge.h            |  4 ++++
- notes-utils.h            |  3 +++
- notes.h                  |  3 +++
- object-store.h           |  1 +
- object.h                 |  2 ++
- oidmap.h                 |  1 +
- pack-bitmap.h            |  3 +++
- pack-objects.h           |  1 +
- patch-ids.h              |  6 ++++++
- path.h                   |  1 +
- pathspec.h               |  5 +++++
- pretty.h                 |  4 ++++
- reachable.h              |  2 ++
- reflog-walk.h            |  1 +
- refs.h                   |  2 ++
- remote.h                 |  1 +
- repository.h             |  2 ++
- resolve-undo.h           |  2 ++
- revision.h               |  1 +
- send-pack.h              |  4 ++++
- sequencer.h              |  5 +++++
- shortlog.h               |  2 ++
- submodule.h              | 10 ++++++++--
- tempfile.h               |  1 +
- trailer.h                |  2 ++
- tree-walk.h              |  2 ++
- unpack-trees.h           |  5 ++++-
- url.h                    |  2 ++
- urlmatch.h               |  2 ++
- utf8.h                   |  2 ++
- worktree.h               |  1 +
- 61 files changed, 160 insertions(+), 17 deletions(-)
+> That drops my best-of-five to:
+> 
+>    real	0m0.300s
+>    user	0m0.288s
+>    sys	0m0.012s
+> 
+> which is over a 25% speedup. So that does seem worth pursuing.
 
---=20
-2.18.0.549.gd4454f3f9b
+> For reference, the oid_array code path for cat-file is still:
+> 
+>    real	0m0.161s
+>    user	0m0.157s
+>    sys	0m0.004s
+> 
+> but that's not completely apples to apples. The oidset code is also
+> iterating the packfiles in a different order and generating a revidx
+> (which I know is about 25ms in this repo). So a better test would
+> actually swap one data structure out for the other with no other changes
+> (I just happened to have this test handy, and really wanted to know
+> whether the mem_pool stuff would help).
 
+If the current oidset implementation is so bad, why not replace it with
+one based on oid_array? ;-)
+
+Intuitively I'd try a hashmap with no payload and open addressing via
+sha1hash(), which should reduce memory allocations quite a bit -- no
+need to store hash codes and next pointers, only an array of object IDs
+with a fill rate of 50% or so.  Deletions are a bit awkward with that
+scheme, though; they could perhaps be implemented as insertions into a
+second hashmap.
+
+Balancing might become a problem.  Your cat-file example should be fine,
+but someone could decide to add only hashes with a certain prefix to
+their skiplist, and lookups would lopsided.
+
+But first we'd need something like test-sha1-array for oidset and
+some kind of performance tests based on these helpers, right?
+
+René
