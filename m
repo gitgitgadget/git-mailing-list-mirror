@@ -7,38 +7,36 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94EEE1F404
-	for <e@80x24.org>; Sat, 11 Aug 2018 04:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 002E01F404
+	for <e@80x24.org>; Sat, 11 Aug 2018 04:32:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727239AbeHKHFJ (ORCPT <rfc822;e@80x24.org>);
+        id S1727229AbeHKHFJ (ORCPT <rfc822;e@80x24.org>);
         Sat, 11 Aug 2018 03:05:09 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:54292 "EHLO
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:37922 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727155AbeHKHFJ (ORCPT
+        by vger.kernel.org with ESMTP id S1727154AbeHKHFJ (ORCPT
         <rfc822;git@vger.kernel.org>); Sat, 11 Aug 2018 03:05:09 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w7B4SAWv027346;
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w7B4NhlV005723;
         Fri, 10 Aug 2018 21:32:20 -0700
 Authentication-Results: palantir.com;
         spf=softfail smtp.mailfrom=newren@gmail.com
 Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2kr347cmx7-1;
+        by mx0a-00153501.pphosted.com with ESMTP id 2kr1kwmmur-1;
         Fri, 10 Aug 2018 21:32:20 -0700
 Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 9F6FD22506C3;
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 78EDE2230ED5;
         Fri, 10 Aug 2018 21:32:20 -0700 (PDT)
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 96A9D2CDE5F;
+        by smtp.yojoe.local (Postfix) with ESMTP id 703112CDE5F;
         Fri, 10 Aug 2018 21:32:20 -0700 (PDT)
 From:   Elijah Newren <newren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH 3/9] Move definition of enum branch_track from cache.h to branch.h
-Date:   Fri, 10 Aug 2018 21:32:12 -0700
-Message-Id: <20180811043218.31456-4-newren@gmail.com>
+Subject: [PATCH 0/9] Add missing includes and forward declares
+Date:   Fri, 10 Aug 2018 21:32:09 -0700
+Message-Id: <20180811043218.31456-1-newren@gmail.com>
 X-Mailer: git-send-email 2.18.0.549.gd4454f3f9b
-In-Reply-To: <20180811043218.31456-1-newren@gmail.com>
-References: <20180811043218.31456-1-newren@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 X-Proofpoint-SPF-Result: softfail
@@ -55,93 +53,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'branch_track' feels more closely related to branching, and it is
-needed later in branch.h; rather than #include'ing cache.h in branch.h
-for this small enum, just move the enum and the external declaration
-for git_branch_track to branch.h.
+I was bit yet again by compilation errors when adding a #include of
+some header file to some new place, and decided to determine which
+header files were missing their own necessary #include's and forward
+declarations.  This patch series is the result.  A few notes:
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- branch.h      | 11 +++++++++++
- cache.h       | 10 ----------
- config.c      |  1 +
- environment.c |  1 +
- 4 files changed, 13 insertions(+), 10 deletions(-)
+  * Patch 1: This patch is the bulk of the work; I included everything
+    here except for special cases that need extra attention and the
+    unrelated change in patch 2.
 
-diff --git a/branch.h b/branch.h
-index 7d9b330eba..5cace4581f 100644
---- a/branch.h
-+++ b/branch.h
-@@ -3,6 +3,17 @@
-=20
- struct strbuf;
-=20
-+enum branch_track {
-+	BRANCH_TRACK_UNSPECIFIED =3D -1,
-+	BRANCH_TRACK_NEVER =3D 0,
-+	BRANCH_TRACK_REMOTE,
-+	BRANCH_TRACK_ALWAYS,
-+	BRANCH_TRACK_EXPLICIT,
-+	BRANCH_TRACK_OVERRIDE
-+};
-+
-+extern enum branch_track git_branch_track;
-+
- /* Functions for acting on the information about branches. */
-=20
- /*
-diff --git a/cache.h b/cache.h
-index 8dc7134f00..a1c0c594fb 100644
---- a/cache.h
-+++ b/cache.h
-@@ -919,15 +919,6 @@ enum log_refs_config {
- };
- extern enum log_refs_config log_all_ref_updates;
-=20
--enum branch_track {
--	BRANCH_TRACK_UNSPECIFIED =3D -1,
--	BRANCH_TRACK_NEVER =3D 0,
--	BRANCH_TRACK_REMOTE,
--	BRANCH_TRACK_ALWAYS,
--	BRANCH_TRACK_EXPLICIT,
--	BRANCH_TRACK_OVERRIDE
--};
--
- enum rebase_setup_type {
- 	AUTOREBASE_NEVER =3D 0,
- 	AUTOREBASE_LOCAL,
-@@ -944,7 +935,6 @@ enum push_default_type {
- 	PUSH_DEFAULT_UNSPECIFIED
- };
-=20
--extern enum branch_track git_branch_track;
- extern enum rebase_setup_type autorebase;
- extern enum push_default_type push_default;
-=20
-diff --git a/config.c b/config.c
-index 66645047eb..b60d7c0308 100644
---- a/config.c
-+++ b/config.c
-@@ -5,6 +5,7 @@
-  * Copyright (C) Johannes Schindelin, 2005
-  *
-  */
-+#include "branch.h"
- #include "cache.h"
- #include "config.h"
- #include "repository.h"
-diff --git a/environment.c b/environment.c
-index 6cf0079389..920362900c 100644
---- a/environment.c
-+++ b/environment.c
-@@ -7,6 +7,7 @@
-  * even if you might want to know where the git directory etc
-  * are.
-  */
-+#include "branch.h"
- #include "cache.h"
- #include "repository.h"
- #include "config.h"
+  * Patch 2: This patch is more of a while-at-it independent header
+    fixup; it only changes two lines so I lumped it into the series.
+
+  * Patch 3: I could have just added a #include of cache.h in branch.h
+    instead, but opted to move things around slightly.  I'm unsure
+    which is better.
+
+  * Patches 4-5: Fix include guard issues
+
+  * Patches 6-8: These patches might need to be submitted to separate
+    projects elsewhere.  Let me know if so.
+
+  * Patch 9: This patch includes the changes that conflict with other
+    topics in next and pu.  I included these changes for completeness,
+    but kept it separate because I wanted to make it easy to drop the
+    stuff that conflicted with other things in flight (since I can
+    just resubmit it later).
+
+Elijah Newren (9):
+  Add missing includes and forward declares
+  alloc: make allocate_alloc_state and clear_alloc_state more consistent
+  Move definition of enum branch_track from cache.h to branch.h
+  urlmatch.h: fix include guard
+  compat/precompose_utf8.h: use more common include guard style
+  ewah/ewok.h: add missing include
+  sha1dc/sha1.h: add missing include
+  xdiff/xdiff.h: add missing include
+  Add missing includes and forward declares
+
+ alloc.c                  |  2 +-
+ alloc.h                  |  4 +++-
+ apply.h                  |  3 +++
+ archive.h                |  4 ++++
+ argv-array.h             |  2 ++
+ attr.h                   |  1 +
+ bisect.h                 |  2 ++
+ branch.h                 | 13 +++++++++++++
+ bulk-checkin.h           |  2 ++
+ cache.h                  | 10 ----------
+ color.h                  |  2 ++
+ column.h                 |  1 +
+ commit-graph.h           |  1 +
+ compat/precompose_utf8.h |  3 ++-
+ config.c                 |  1 +
+ config.h                 |  6 ++++++
+ connected.h              |  1 +
+ convert.h                |  3 +++
+ credential.h             |  1 +
+ csum-file.h              |  2 ++
+ delta.h                  |  2 ++
+ diffcore.h               |  4 ++++
+ dir-iterator.h           |  2 ++
+ environment.c            |  1 +
+ ewah/ewok.h              |  2 ++
+ exec-cmd.h               |  2 ++
+ fsck.h                   |  1 +
+ fsmonitor.h              |  7 +++++++
+ gpg-interface.h          |  4 ++++
+ grep.h                   |  1 +
+ hashmap.h                |  2 ++
+ khash.h                  |  4 ++++
+ kwset.h                  |  2 ++
+ list-objects-filter.h    |  4 ++++
+ list-objects.h           |  4 ++++
+ ll-merge.h               |  2 ++
+ mailinfo.h               |  2 ++
+ mailmap.h                |  4 ++++
+ mem-pool.h               |  2 ++
+ merge-recursive.h        |  4 +++-
+ notes-cache.h            |  1 +
+ notes-merge.h            |  4 ++++
+ notes-utils.h            |  4 ++++
+ notes.h                  |  3 +++
+ object-store.h           |  1 +
+ object.h                 |  2 ++
+ oidmap.h                 |  1 +
+ pack-bitmap.h            |  3 +++
+ pack-objects.h           |  1 +
+ pack-revindex.h          |  2 ++
+ parse-options.h          |  2 ++
+ patch-ids.h              |  6 ++++++
+ path.h                   |  3 +++
+ pathspec.h               |  5 +++++
+ pretty.h                 |  4 ++++
+ progress.h               |  2 ++
+ quote.h                  |  2 ++
+ reachable.h              |  4 ++++
+ reflog-walk.h            |  1 +
+ refs.h                   |  4 ++++
+ remote.h                 |  1 +
+ repository.h             |  2 ++
+ resolve-undo.h           |  2 ++
+ revision.h               |  1 +
+ send-pack.h              |  4 ++++
+ sequencer.h              |  5 +++++
+ sha1-lookup.h            |  2 ++
+ sha1dc/sha1.h            |  1 +
+ shortlog.h               |  3 +++
+ sideband.h               |  2 ++
+ strbuf.h                 |  2 ++
+ submodule.h              | 10 ++++++++--
+ tempfile.h               |  1 +
+ trailer.h                |  3 +++
+ tree-walk.h              |  2 ++
+ unpack-trees.h           |  5 ++++-
+ url.h                    |  2 ++
+ urlmatch.h               |  3 +++
+ utf8.h                   |  4 ++++
+ varint.h                 |  2 ++
+ worktree.h               |  1 +
+ xdiff/xdiff.h            |  2 ++
+ 82 files changed, 218 insertions(+), 17 deletions(-)
+
 --=20
 2.18.0.549.gd4454f3f9b
 
