@@ -2,109 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 875DF1F404
-	for <e@80x24.org>; Sat, 11 Aug 2018 19:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4C91F404
+	for <e@80x24.org>; Sat, 11 Aug 2018 19:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727574AbeHKWYm (ORCPT <rfc822;e@80x24.org>);
-        Sat, 11 Aug 2018 18:24:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51276 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727485AbeHKWYm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 11 Aug 2018 18:24:42 -0400
-Received: (qmail 1592 invoked by uid 109); 11 Aug 2018 17:02:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 11 Aug 2018 17:02:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28621 invoked by uid 111); 11 Aug 2018 17:02:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 11 Aug 2018 13:02:53 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 11 Aug 2018 13:02:48 -0400
-Date:   Sat, 11 Aug 2018 13:02:48 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+        id S1727446AbeHKW3a (ORCPT <rfc822;e@80x24.org>);
+        Sat, 11 Aug 2018 18:29:30 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:45825 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727178AbeHKW3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 11 Aug 2018 18:29:30 -0400
+Received: by mail-ed1-f52.google.com with SMTP id s16-v6so6348389edq.12
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 12:54:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=DtR98XblXqoJx8G7hU4Tri+hHjGR1QXySVDz5bN3tGo=;
+        b=tPiWRb5U2ccisGDgKY/BQ5TA2+CfLlFpsjbq3hSBh/eRZ/U2kox0LGdW4+63pnkb+/
+         31wV75YBcUUOsJT5Wrne2gm0f6Mi6A7Ky91aKDSKmKR6ZGclnxyUGva51EutnuszWbr7
+         iZOtNMdCC11ebESxM4VaWtIuExPYvkgELN35XGVG7ylgZldS7KBjXdeHBsMA6k6BXhWe
+         OA9+m7ryWVqjJpS5cC52ENcUWtUmmEKsyuKegTdAUFfOQSQlQu0riWUWYXWnw5SD58ms
+         yp3KYY6Th/HbdpmleIVm0kg8v7z5KjzCxMdRe36QAzNiewaSlJSHQWqdpyySpqscpg2X
+         i16w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=DtR98XblXqoJx8G7hU4Tri+hHjGR1QXySVDz5bN3tGo=;
+        b=XXCLvtLdZ2J8tPaanpIqomrLiVil25FtD7I+VtCHM2zncmdmQHWQ0g2cnct+/ywXHR
+         URCFHPxGauipqL+QKQpXWbay0EHtoZ/s19uJfLUY9LmckGaXiTdfHGSZvm6Wg84Lc84u
+         uqSN4XgT9wJ6u05wb4I8vCE89pxiwH0S13yaX0eTC7MpkbTrLMOX4x1Dyz7qRxy4Kiq1
+         VUEpyM8aSyDQPSW12yz1j4r0G34D89GC3+oUul0T8+LuqwwdW/Pcs2VUolOPD49+ji6k
+         Oszzs3hpNaGQjywhmeP2E5TgIDHM64zNY1KKoHHOCF0g+ovC77rFtTf2DRxB+hMlH9Cx
+         YlhA==
+X-Gm-Message-State: AOUpUlEHfMG3cVAN7VKBBUMx/J53ynE98KdebAwKoRF5zhImQ7DFg+KT
+        ZY7jtwl9HztoNKcRTNUImFQuVZzG
+X-Google-Smtp-Source: AA+uWPyE5H27taROo8Zkwi6D8IIKPJtF/8x+ALSJcWaqjDaM5pL3qV6F8JvANegMPi8tJ18h/2PFBA==
+X-Received: by 2002:a50:8327:: with SMTP id 36-v6mr13849147edh.305.1534006443725;
+        Sat, 11 Aug 2018 09:54:03 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id f42-v6sm6252474edf.19.2018.08.11.09.54.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 11 Aug 2018 09:54:02 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
-Message-ID: <20180811170248.GC27393@sigill.intra.peff.net>
-References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
- <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de> <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+Date:   Sat, 11 Aug 2018 18:54:01 +0200
+Message-ID: <87lg9csv2u.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 11, 2018 at 05:47:56PM +0200, René Scharfe wrote:
+
+On Sat, Aug 11 2018, René Scharfe wrote:
 
 > Object IDs to skip are stored in a shared static oid_array.  Lookups do
 > a binary search on the sorted array.  The code checks if the object IDs
 > are already in the correct order while loading and skips sorting in that
 > case.
-> 
-> Simplify the code by using an oidset instead.  Memory usage is a bit
-> higher, but lookups are done in constant time and there is no need to
-> worry about any sort order.
-> 
-> Embed the oidset into struct fsck_options to make its ownership clear
-> (no hidden sharing) and avoid unnecessary pointer indirection.
 
-I actually had a case[1] yesterday where it seems like oidset is a fair
-bit slower than oid_array for a large set.
+I think this change makes sense, but it's missing an update to the
+relevant documentation in Documentation/config.txt:
 
-But:
+    fsck.skipList::
+    	The path to a sorted list of object names (i.e. one SHA-1 per
+    	line) that are known to be broken in a non-fatal way and should
+    	be ignored. This feature is useful when an established project
+    	should be accepted despite early commits containing errors that
+    	can be safely ignored such as invalid committer email addresses.
+    	Note: corrupt objects cannot be skipped with this setting.
 
-  - loading the skiplist into memory has pretty lousy performance
-    anyway. If we really care about performance of large lists, we
-    should define a sorted on-disk format that can be mmap'd and
-    searched directly.  Or if people are willing to tolerate false
-    positives, even a bloom filter.
+Also, while I use the skipList feature it's for something on the order
+of 10-100 objects, so whatever algorithm the lookup uses isn't going to
+matter, but I think it's interesting to describe the trade-off in the
+commit message.
 
-    I've never really used a big skiplist myself, so I haven't done any
-    work towards those things.
+I.e. what if I have 100K objects listed in the skipList, is it only
+going to be read lazily during fsck if there's an issue, or on every
+object etc? What's the difference in performance?
 
-  - we could probably improve the speed of oidset. Two things I notice
-    about its implementation:
-
-      - it has to malloc for each entry, which I suspect is the main
-	bottleneck. We could probably pool-allocate blocks, and when
-	entries get removed just leave the allocations in place until we
-	clear(). Most callers tend to build up a set and then query it a
-	lot, or possibly remove items from the set until it's empty. But
-	my guess is that few or none want a long-lived set that they add
-	and remove from randomly.
-
-      - insertion lets you do check-and-insert as a single operation
-	(something I failed to notice in [1]). But it's not implemented
-	as efficiently as it could be, since the "contains" and "put"
-	operations do separate lookups. This doesn't matter for a set
-	that's queried a lot more, but for something like de-duping
-	(like I was doing in [1]) most operations are check-and-insert.
-
-Most of that is just food for thought, but it possibly argues that we
-should not care about performance characteristics for swapping out
-oid_array and oidset here (i.e., that your patch is fine, and the
-simplicity benefit is the most important thing).
-
-[1] https://public-inbox.org/git/20180810232457.GG19875@sigill.intra.peff.net/
-    but note that it's buried pretty deep.
-
-> ---
->  fsck.c | 23 ++---------------------
->  fsck.h |  8 +++++---
->  2 files changed, 7 insertions(+), 24 deletions(-)
-
-Again, I didn't see anything wrong with the patch itself.
-
--Peff
+Before this change, I wanted to follow-up my ab/fsck-transfer-updates
+with something where we'd die if we found the skipList wasn't ordered as
+we read it, but from a UI POV this is even better.
