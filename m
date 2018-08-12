@@ -2,147 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD5A11F404
-	for <e@80x24.org>; Sun, 12 Aug 2018 04:07:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7481F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 04:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726950AbeHLGnw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 02:43:52 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:39692 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbeHLGnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 02:43:52 -0400
-Received: by mail-pl0-f66.google.com with SMTP id w14-v6so5580652plp.6
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 21:07:22 -0700 (PDT)
+        id S1727012AbeHLHJH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 03:09:07 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:39903 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbeHLHJH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 03:09:07 -0400
+Received: by mail-io0-f193.google.com with SMTP id l7-v6so7509226iok.6
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 21:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=p/BEFFztf2W83n6Qs+GWa0mUjDJ5rLGjr9aEbuPBNuo=;
-        b=Fofx3raw/SFd/1YIxGHvQxkxExWfaNLAXbi8BWJjHzCBw7SRFvAX+7yIj4/wHARiv/
-         vDaeIlt8wkS92hEt/hcL4qK80bkOyyDM5bZp5ycdnOOGYpaqSxSyJOX8rrmzSe9Hci0g
-         ZB2CY8xlh/yVBGdyx+S1avCutlFpj2JVCIsxWc47IWxcUzA5Oxg4AOJs6sOMuOkWNPwG
-         htCFaLgaHE+pOinMMifV3S+WGHGG5Rxx2tp3n1dkB3Fy5XdxBt5EZmNMKmaguAxKxlv5
-         Un5eR0obtqcqfoG/1CnqCI8tXvSPTIcoOy6vXDSbjDSt5o3L+tUrh26BtAMNEUWLkrSt
-         0vvg==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=tVpnbTGttqzm85muZaceCxbAjMS4WPbcYhPIz4jDU1Y=;
+        b=nMLpn9fV9j5hA2u+b6NG0L6ekGCLGvoHZLYy4UERYjpzrzIX+d/+oIYk1jU01oI16l
+         432qdtHzFnNIy3nGOGpcEzfCJ0qOFsesludyM5dPefwpVS93fdTq+7iKpGTumjipdTsn
+         aB018vamcFy1X5oh4BUIqPQV8UW8rYrbxbGKhen8xwRpx9KJ3y2VjnU5AHxDU8eKwNE0
+         1vCAKR8kQRgUkzPw7iWLWn39vyVbQ2X4fevlFbOB9yAWjd/tFaOHEeOk1lXIsFG6Ixr5
+         lhvyasjOLjpUwLGuJZS+xGmbnLjsKuKd24OAew82X1b1tkyrKgQjwKztWInJTYZSQSH1
+         H+DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=p/BEFFztf2W83n6Qs+GWa0mUjDJ5rLGjr9aEbuPBNuo=;
-        b=ljSzxA3gFSAKG8d4Mo71UbewA0708eD65LJtm7gTdM8jZm3rgEkEnSpZdwe8bqSbjK
-         4czbpKFIPtPebGdH5O/j9Cv4tu1/QHOby550DjAQX52AJPFUhGvElnCuAP1OmFzmrOtK
-         4tKojoxidXenEnI1A9FB/3teXdQqOMZSHofLo2MnjO2LzTQAbLDe3i6vhwTGUJCh5aco
-         Xxe3uAyCtQ8yPfLDYO/PulSV6O3BooDTupjrnQhM32xVzrrZNXxgL0ti5w8uatDfOtdU
-         eNUi/oJT9vHmLTeu+A9cmIRgH+Wvv8+fPimcLCSj40vYz9LkFWechYPJCwB+5gCfYmBe
-         rHGA==
-X-Gm-Message-State: AOUpUlGQopT3hYOk2fis2Z6Nk3A2VBOvJjcMnJsDYJwGg4+qc8xwnl8d
-        L7MNyjZCmt8mVmZWV3COpL3GBqgG
-X-Google-Smtp-Source: AA+uWPwlQ7BE+sep3QZ9H8pnUL8YC24J2OrDgnpq3XQdAE5GZFkza/VcK7b/QlyY5yqWox5u68qjgw==
-X-Received: by 2002:a17:902:bf06:: with SMTP id bi6-v6mr11975748plb.76.1534046841893;
-        Sat, 11 Aug 2018 21:07:21 -0700 (PDT)
-Received: from wchargin-t440s.attlocal.net (99-4-123-58.lightspeed.sntcca.sbcglobal.net. [99.4.123.58])
-        by smtp.gmail.com with ESMTPSA id p19-v6sm23261723pgh.60.2018.08.11.21.07.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 11 Aug 2018 21:07:21 -0700 (PDT)
-From:   William Chargin <wchargin@gmail.com>
-To:     git@vger.kernel.org, jrnieder@gmail.com
-Cc:     William Chargin <wchargin@gmail.com>, sunshine@sunshineco.com,
-        peff@peff.net
-Subject: [PATCH v3] test_dir_is_empty: properly detect files with newline in name
-Date:   Sat, 11 Aug 2018 21:06:20 -0700
-Message-Id: <20180812040620.15298-1-wchargin@gmail.com>
-X-Mailer: git-send-email 2.18.0.549.gdbffb67bf
-In-Reply-To: <CAPig+cQK7JSosa0hNhgw7xoSui2f0m6yfRLWytsg_Zow3bN5bg@mail.gmail.com>
-References: <CAPig+cQK7JSosa0hNhgw7xoSui2f0m6yfRLWytsg_Zow3bN5bg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=tVpnbTGttqzm85muZaceCxbAjMS4WPbcYhPIz4jDU1Y=;
+        b=PmvE4PIYcw2MvAJT/FXJcPrbU3Lv2KG8Vkm6uLpVDJD8IzeC9uCwEueBQpJRnK51G5
+         2KElr9OaVg88Dn8b4JJpHJ29K6WBa3ee1WagDkZ7G1KE78dvkU5yKUspmIwddYP8P1SI
+         MopNGoyJorM/xbblXIT6LY8+MX/yV5+SM5B3e8EV7Zjx1i2JueOCNaowKXRO4JKo0pE9
+         JTDyTIivPwCiByYP055uaY4m4XSdZJ/YExFxITOUWc4K8W6UAA5aSiUWJSIoT23wxaXc
+         XizTRiyCKBDEKIk6kOqO3R+cFZiKXaxItQjv/FUcCO8YjGRRvEo1WqUC1KC/wV11G7Cl
+         YXHg==
+X-Gm-Message-State: AOUpUlHLYqmbBKN3RP+GPP23pRTj+J5/mUC9aHtV2kLroZB65dxLqoxk
+        NhZ3jD4pMeaYs/2qimPdhE6I2jyd889mc0GrPh0=
+X-Google-Smtp-Source: AA+uWPyrDOeRMo+B+pmZQ0VCsrYM9sui2UXfGS90emvj5hlJ3l0azeIiQDTSPBGGk66+eVU3dpPG7DevRMBnbLcy4Mc=
+X-Received: by 2002:a6b:5a08:: with SMTP id o8-v6mr10573956iob.5.1534048352059;
+ Sat, 11 Aug 2018 21:32:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Sat, 11 Aug 2018 21:32:31
+ -0700 (PDT)
+In-Reply-To: <20180811141251.GA17649@sigill.intra.peff.net>
+References: <20180809155532.26151-1-chriscool@tuxfamily.org>
+ <20180809155532.26151-3-chriscool@tuxfamily.org> <20180811090418.26674-1-szeder.dev@gmail.com>
+ <CAP8UFD0uoOKyUkNDrQgzcf6rGtnd9-Jk26swtzdyNDeCHefYJA@mail.gmail.com> <20180811141251.GA17649@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 12 Aug 2018 06:32:31 +0200
+Message-ID: <CAP8UFD34ycq-De_ZDYYZRgz6s0q0fBaAQhoYfJYxyF71=NYf9g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/8] Add delta-islands.{c,h}
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the `test_dir_is_empty` function appears correct in most normal
-use cases, it can fail when filenames contain newlines. This patch
-changes the implementation to check that the output of `ls -a` has at
-most two lines (for `.` and `..`), which should be better behaved.
+On Sat, Aug 11, 2018 at 4:12 PM, Jeff King <peff@peff.net> wrote:
+> On Sat, Aug 11, 2018 at 12:32:32PM +0200, Christian Couder wrote:
+>
+>> Ok, I have made the following changes in the branch I will send next.
+>>
+>> diff --git a/delta-islands.c b/delta-islands.c
+>> index 92137f2eca..22e4360810 100644
+>> --- a/delta-islands.c
+>> +++ b/delta-islands.c
+>> @@ -322,8 +322,7 @@ static int island_config_callback(const char *k,
+>> const char *v, void *cb)
+>>
+>>                 if (island_regexes_nr >= island_regexes_alloc) {
+>>                         island_regexes_alloc = (island_regexes_alloc + 8) * 2;
+>> -                       island_regexes = xrealloc(island_regexes,
+>> -                                       island_regexes_alloc * sizeof(regex_t));
+>> +                       REALLOC_ARRAY(island_regexes, island_regexes_alloc);
+>>                 }
+>
+> I think this whole block could actually be ALLOC_GROW().
 
-The newly added unit test fails before this change and passes after it.
+Yeah, thanks! The whole block will be replaced with the following in
+the next reroll:
 
-Signed-off-by: William Chargin <wchargin@gmail.com>
----
-This patch depends on "t: factor out FUNNYNAMES as shared lazy prereq"
-(2018-08-06), available from `wc/make-funnynames-shared-lazy-prereq`.
-The code will work on master, but the test will not run due to a missing
-prereq.
-
-I originally wrote this patch for the standalone Sharness library, but
-that library advises that such patches be sent to the Git mailing list
-first.
-
- t/t0000-basic.sh        | 31 +++++++++++++++++++++++++++++++
- t/test-lib-functions.sh |  2 +-
- 2 files changed, 32 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 34859fe4a..60134d7ab 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -821,6 +821,37 @@ test_expect_success 'tests clean up even on failures' "
- 	EOF
- "
- 
-+test_expect_success FUNNYNAMES \
-+	'test_dir_is_empty behaves even in pathological cases' "
-+	run_sub_test_lib_test \
-+		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
-+	test_expect_success 'should pass with actually empty directory' '
-+		mkdir empty_dir &&
-+		test_dir_is_empty empty_dir
-+	'
-+	test_expect_success 'should fail with a normal filename' '
-+		mkdir nonempty_dir &&
-+		touch nonempty_dir/some_file &&
-+		test_must_fail test_dir_is_empty nonempty_dir
-+	'
-+	test_expect_success 'should fail with dot-newline-dot filename' '
-+		mkdir pathological_dir &&
-+		touch \"pathological_dir/.
-+	.\" &&
-+		test_must_fail test_dir_is_empty pathological_dir
-+	'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test dir-empty <<-\\EOF
-+	> ok 1 - should pass with actually empty directory
-+	> ok 2 - should fail with a normal filename
-+	> ok 3 - should fail with dot-newline-dot filename
-+	> # passed all 3 test(s)
-+	> 1..3
-+	EOF
-+"
-+
-+
- ################################################################
- # Basics of the basics
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 2b2181dca..f0241992b 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -568,7 +568,7 @@ test_path_is_dir () {
- # Check if the directory exists and is empty as expected, barf otherwise.
- test_dir_is_empty () {
- 	test_path_is_dir "$1" &&
--	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-+	if test "$(ls -a1 "$1" | wc -l)" -gt 2
- 	then
- 		echo "Directory '$1' is not empty, it contains:"
- 		ls -la "$1"
--- 
-2.18.0.548.g101af7bd4
-
+ALLOC_GROW(island_regexes, island_regexes_nr + 1, island_regexes_alloc);
