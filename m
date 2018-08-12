@@ -2,47 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B12C21F404
-	for <e@80x24.org>; Sun, 12 Aug 2018 06:18:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C54C1F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 06:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726883AbeHLIy4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 04:54:56 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:43198 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725883AbeHLIy4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 04:54:56 -0400
-Received: by mail-yw1-f68.google.com with SMTP id l189-v6so11477984ywb.10
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 23:18:04 -0700 (PDT)
+        id S1726883AbeHLJJw (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 05:09:52 -0400
+Received: from mail-oi0-f49.google.com ([209.85.218.49]:33606 "EHLO
+        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725883AbeHLJJw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 05:09:52 -0400
+Received: by mail-oi0-f49.google.com with SMTP id 8-v6so22387677oip.0
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 23:32:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=w9V2yGruo7SS/USOBbhIu/1g9jFO8cuK3SadE/HKLeE=;
+        b=sASwd5s16xCuHsn/FzQe4XUYOY8DyQBUWq0Dc6HyqjRV860A0Qe549Gew3eeWUIJ84
+         VAJnb/4bt0BkkpogrsxZQE2fo6DgaFgD1udWGhq9MxvvfFI2FqLYgAaB2qhUeaM2BczJ
+         BtMe+EPImjxurMYAhr3uNunKlUKwSfs4MG9ybxFetg5vtCeQaMBCpX4mR4BQU9/+A2G/
+         sQGcLb0npIHkBYtfh747mQtTLU4FP4qIP92BKYqYjgbqHWrHGfYE/Y9tNTaxZPUrkdHK
+         ZXpqz+B0ObHD4XmEBxfvXhmDuexq1He4gTu+YPFzv5y3UKl5IBHn514QCmMqG8+k9AAC
+         Y/Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=RAJKicUXSnatblrPtZJrB93c8sPac3Mx9ELEubnTg0s=;
-        b=ROtxwCyw/lVmqRnNUocQ8T5rj4hGGrlvv8/Cw97ufmZ7bdiNHpvs54pjyYL0GP5O27
-         UfhfbFnAUDnNrC9yAX/AtBkeir3qTZZ0AP/p1tHVJHmwbmHr/XUMS/g/1qBniab8uW/7
-         cKSlUuHYOM21BbRthBDkWakrVqxKD+DIC1NJD5ezvm0X5WcS8J8p1wUZVJoaUT/urzjq
-         IJGtcWWsalXwxU1doFzHfcRInv2rNGmdn3ZjRCVo5o6EqdKJrE1larEFEJbFLSQyT8Uv
-         oswMGJvszQ6tEamVm/erXCnQeAZJwj0H45c9ivfPWId2CTyH3Dvfd3b+lIXdnERiOXrS
-         rZ3w==
-X-Gm-Message-State: AOUpUlFiUpQ/qhMFC34IIpDdpUTKk1PkCtT7DBBDO/HtwhmRKRgj6pWr
-        8RJDHb5rdJuPzAz43FgGPsHkBWaPicCpLzm+538=
-X-Google-Smtp-Source: AA+uWPwixXUtjsdHLv7yx6GL6PylOC4AsojhOXkfpfncFH2ETyE4kB8PyLLOxB2OV23sgihldVXEECVeiERlL32HgYo=
-X-Received: by 2002:a25:5bd7:: with SMTP id p206-v6mr6529254ybb.287.1534054683954;
- Sat, 11 Aug 2018 23:18:03 -0700 (PDT)
+        bh=w9V2yGruo7SS/USOBbhIu/1g9jFO8cuK3SadE/HKLeE=;
+        b=HDGJ+TMw4PCgd9r8psnATtqX2Bpvx4HOqAeNjDc4d+6jnAUIjma29V+XGcwBGpDu1Q
+         D56ihVMzqMLHh+kWaIMw6HLp01roC5GnQiJSY35i/OTEY54JTyLkky0egxHmEzxUP+F8
+         apoPoh4rUEbu1SwSHR+f6q4kJW+WxPUobm4BgkUJ6cUeQ234HA1K+cHeRkNczkT6cqVF
+         zYeg6+AtQGchgh98i31FArOzM6uHX3kLGPusjp+m9yfnegjD/JKKqK5lLJKS6beox3jq
+         0lQHhMmIWykihRaD/V43m96DhCGN9vREAqh4eHqwxz5VjQw/c+HZPPC0NFjolUECoUkK
+         GLgQ==
+X-Gm-Message-State: AOUpUlGqEnfvWLAPLYBmW/fyq8la+C7pnYukIoo6EVpylCxoGAlMhh1K
+        gSorljWmpQhFKlLfPNpXjTfeZMmsZt7kbvEe44g=
+X-Google-Smtp-Source: AA+uWPy/XZ/7tz+NtT7/BAPByccTRu4yJqELeU1fHQbcPhctjEiY/D05mmBDtvYW+FXCX9iGAAL5zhqFJ33FQAzsoBQ=
+X-Received: by 2002:aca:f305:: with SMTP id r5-v6mr14057635oih.230.1534055578050;
+ Sat, 11 Aug 2018 23:32:58 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 2002:ac9:70d9:0:0:0:0:0 with HTTP; Sat, 11 Aug 2018 23:32:37
+ -0700 (PDT)
+In-Reply-To: <CAPig+cTca5YsXeXYbEEuq8Y_GraUYWwzdKO7r+PR9=JRTR_xFA@mail.gmail.com>
 References: <CAPig+cQK7JSosa0hNhgw7xoSui2f0m6yfRLWytsg_Zow3bN5bg@mail.gmail.com>
- <20180812040620.15298-1-wchargin@gmail.com>
-In-Reply-To: <20180812040620.15298-1-wchargin@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 12 Aug 2018 02:17:52 -0400
-Message-ID: <CAPig+cTca5YsXeXYbEEuq8Y_GraUYWwzdKO7r+PR9=JRTR_xFA@mail.gmail.com>
+ <20180812040620.15298-1-wchargin@gmail.com> <CAPig+cTca5YsXeXYbEEuq8Y_GraUYWwzdKO7r+PR9=JRTR_xFA@mail.gmail.com>
+From:   William Chargin <wchargin@gmail.com>
+Date:   Sat, 11 Aug 2018 23:32:37 -0700
+Message-ID: <CAFW+GMDu-FVFXZeB=fV5a+HyGXea-UoMpZS90T9b2G_=xd3iLw@mail.gmail.com>
 Subject: Re: [PATCH v3] test_dir_is_empty: properly detect files with newline
  in name
-To:     William Chargin <wchargin@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     Git List <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
@@ -51,43 +65,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 12, 2018 at 12:07 AM William Chargin <wchargin@gmail.com> wrote:
-> While the `test_dir_is_empty` function appears correct in most normal
-> use cases, it can fail when filenames contain newlines. This patch
-> changes the implementation to check that the output of `ls -a` has at
-> most two lines (for `.` and `..`), which should be better behaved.
->
-> The newly added unit test fails before this change and passes after it.
->
-> Signed-off-by: William Chargin <wchargin@gmail.com>
-> ---
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> @@ -821,6 +821,37 @@ test_expect_success 'tests clean up even on failures' "
-> +test_expect_success FUNNYNAMES \
-> +       'test_dir_is_empty behaves even in pathological cases' "
-> +       test_expect_success 'should fail with a normal filename' '
-> +               mkdir nonempty_dir &&
-> +               touch nonempty_dir/some_file &&
+Thanks for the review.
 
-We usually avoid "touch" unless the timestamp of the file is
-significant. In this case, it isn't, so it would be more idiomatic to
-say simply:
+> We usually avoid "touch" unless the timestamp of the file is
+> significant.
 
-    >nonempty_dir/some_file &&
+Makes sense. Will change as you suggest.
 
-> +               test_must_fail test_dir_is_empty nonempty_dir
+> This is an abuse of test_must_fail() which is intended strictly for
+> testing 'git' invocations which might fail for reasons other than the
+> expected one (for instance, git might crash).
 
-This is an abuse of test_must_fail() which is intended strictly for
-testing 'git' invocations which might fail for reasons other than the
-expected one (for instance, git might crash). Instead, you should just
-use '!', like this:
+Interesting. I didn't infer this from the docs on `test_must_fail` in
+`t/test-lib-functions.sh`. Sharness, which is supposed to be independent
+of Git, explicitly says to use `test_must_fail` instead of `!`.
+(Admittedly, the implementations are different, but only slightly:
+within Git, a Valgrind error 126 is a failure, not success.)
 
-    ! test_dir_is_empty nonempty_dir
+I also see other uses of `test_must_fail` throughout the codebase: e.g.,
+with `kill`, `test`, `test_cmp`, `run_sub_test_lib_test`, etc. as the
+target command. Are these invocations in error?
 
-> +       test_expect_success 'should fail with dot-newline-dot filename' '
-> +               mkdir pathological_dir &&
-> +               touch \"pathological_dir/.
-> +       .\" &&
-> +               test_must_fail test_dir_is_empty pathological_dir
+(I'm nevertheless happy to change this as you suggest.)
 
-Same comments as above.
+I'll make these changes locally and hold on to the patch, waiting for
+others' input.
+
+Best,
+WC
