@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB9411F404
-	for <e@80x24.org>; Sun, 12 Aug 2018 05:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 635651F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 05:12:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727089AbeHLHs4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 03:48:56 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34515 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726883AbeHLHs4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 03:48:56 -0400
-Received: by mail-wr1-f68.google.com with SMTP id c13-v6so11489957wrt.1
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 22:12:13 -0700 (PDT)
+        id S1727699AbeHLHtB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 03:49:01 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:55531 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727503AbeHLHtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 03:49:01 -0400
+Received: by mail-wm0-f65.google.com with SMTP id f21-v6so5595615wmc.5
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 22:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=QEWAn/+Llp2V98a0g9QPKLUiSr3tFQN7j9FBbvUMYUE=;
-        b=W9UnabL0EBSO4aHiZo5zQmp/YjKHPaMAbCP65tC4yJOTEKKxISJK1hYBb15QuXapB9
-         gex2reSLSc9apuYWkq25dG0aRv+tlfhORoUfUPfYWxjVqHeT7CtdyA4ZG7IheIJKMFLq
-         KfZPnFm0zm3djTG7n/qIu3/Lcn/0DRsfpEc53YLDyeG6OV1odZjRUr6nRxbqfe3Qv3uW
-         GHfGHKZgwAxslPAzAnKaprsnK7BaGn5Mnv8zIKu2ABUXdoA4pHpEAdfD5vk2AF4IdTNw
-         FkuhbqZwr33eT/fbcaIDEYEkPxOt2HIO8A02IJyT8kEYaR+AxBww5pfG700dHJ8RWJZz
-         bn1A==
+        bh=fE8kd2x0lPTeUvSPZCTbaK2zYzKMTUanUe+E8PXesk8=;
+        b=qnY7SE+r/6aWJ7H+qKLgFj0kK9ojohtcgg8TAyh59j4JPoOYT3CI3fZowFLtaz5gbn
+         Vr/ygT5EOYIKmyXUiU4bd1SjwEFSIxMRQ8lpsvmEDKs/xcE4sUicR9beID3yrL/Eag6J
+         Y3AMHuVy0I6ieLxmTeIGhM2jiU8hlntwyPuW43sYCa5HUzWcURDLZkjtVodNGTY7P7qm
+         1V2DViXMljpGZdYupGz0lr6O0CrDgftv6LrEod3TcKnb5O/do6Fgq+9sjWrj8M+awOIc
+         0IOBgf/DUFCh74nhQ2qK6pga0MzGi+dWb6nl5O7IWTh7uH0s2tuZBDUJ6qYh6yvcNdrt
+         UhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=QEWAn/+Llp2V98a0g9QPKLUiSr3tFQN7j9FBbvUMYUE=;
-        b=nAs9YblOK2blgFRTkdTL6/dFEkkNV1JWhojBEoIZbnozVBmWSMIRVuitUN/nlBU1ZL
-         j9XeEeFJ8b0CHWv1rpwklFK6w6OYPFkSSVuytf810SehgDUr5IDuxtrrgf4G3xdsPElv
-         SJTKgZAP0yLSt4JuCo+gGkMDhdOmueFbuqyO+qSVlnrxDzU7rwHbApoVGer9e4Vci4Qf
-         9fQXEhoktT6siwSpkRvnBaw+JznbjU7EEdqGZi93NID4gBg/iRZeRcKWyRPFvpg0yuzJ
-         c+hVViA62XUgHlH5WJOzE5PgnxRJfKvx3Y+w782rYKqzExaTsDMGbYGmwlUura4xSouD
-         e0Ag==
-X-Gm-Message-State: AOUpUlEnTC+G+yZ/bEWHOR123+FDt7eZ7tX519dp6KsFIwS6pFC8aAp0
-        uQ5zjCfoKd8cIJ88P+SQVX+axE19
-X-Google-Smtp-Source: AA+uWPz/XR4oGxjWBN66EWQT/hloaOgeURVpkU2/dDUCdnJ8xIaEwrczzbTSdjgB0JiG7EGQal7wnw==
-X-Received: by 2002:adf:9d81:: with SMTP id p1-v6mr7582850wre.12.1534050732019;
-        Sat, 11 Aug 2018 22:12:12 -0700 (PDT)
+        bh=fE8kd2x0lPTeUvSPZCTbaK2zYzKMTUanUe+E8PXesk8=;
+        b=GQ6zE5sAjAV60k92/xm11psr3obvQ0/Qv+EAKexldwq7Jk7tLstgJ3b3isck4R0XGz
+         AKJEdeFXvqSFjQgxp3fim2u7uiL7E4acgIP2oKnoieXlEN9neJW0+q2NxuNaJ6SuVQz6
+         A7HulIK7VetAOvAPeFBUxGVRihejzFompDXmg1AVXxnElWUuqS+bxpkVYzq4hRIjynVK
+         gz8DU//KSOGus0ZBsJ7RnS7vwLkBHxG/RxM3+crYSSBWZZWocquEuNtzuM8eIyT9aZaK
+         JLFNtn467ODxPFds0ICelaOrfjGV53r10zgyQ2XCaoZZF+PeK7UVJAOrpAccah1C2OXy
+         Ho6g==
+X-Gm-Message-State: AOUpUlHoGc71M4CFF+PnZet1svWw1BjoFDb1Ccvg8QWwo2rSwQmEPcyf
+        5kIPGqy3yHzLUbXiWolDhjm09wes
+X-Google-Smtp-Source: AA+uWPyXXFEzXBWVqnZpnHYQwg3N8s+ctmFB5+OeQn7CDiLhbLfr01g8TvtIOzEQ5MZ2VF9knzM14A==
+X-Received: by 2002:a1c:e904:: with SMTP id q4-v6mr5185764wmc.154.1534050737710;
+        Sat, 11 Aug 2018 22:12:17 -0700 (PDT)
 Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
-        by smtp.gmail.com with ESMTPSA id g10-v6sm13281205wrv.90.2018.08.11.22.12.10
+        by smtp.gmail.com with ESMTPSA id g10-v6sm13281205wrv.90.2018.08.11.22.12.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 Aug 2018 22:12:11 -0700 (PDT)
+        Sat, 11 Aug 2018 22:12:17 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER Gabor <szeder.dev@gmail.com>
-Subject: [PATCH v4 1/7] Add delta-islands.{c,h}
-Date:   Sun, 12 Aug 2018 07:11:45 +0200
-Message-Id: <20180812051151.6425-2-chriscool@tuxfamily.org>
+Subject: [PATCH v4 5/7] t: add t5319-delta-islands.sh
+Date:   Sun, 12 Aug 2018 07:11:49 +0200
+Message-Id: <20180812051151.6425-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.554.gdb07901040.dirty
 In-Reply-To: <20180812051151.6425-1-chriscool@tuxfamily.org>
 References: <20180812051151.6425-1-chriscool@tuxfamily.org>
@@ -74,596 +74,162 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-Hosting providers that allow users to "fork" existing
-repos want those forks to share as much disk space as
-possible.
-
-Alternates are an existing solution to keep all the
-objects from all the forks into a unique central repo,
-but this can have some drawbacks. Especially when
-packing the central repo, deltas will be created
-between objects from different forks.
-
-This can make cloning or fetching a fork much slower
-and much more CPU intensive as Git might have to
-compute new deltas for many objects to avoid sending
-objects from a different fork.
-
-Because the inefficiency primarily arises when an
-object is delitified against another object that does
-not exist in the same fork, we partition objects into
-sets that appear in the same fork, and define
-"delta islands". When finding delta base, we do not
-allow an object outside the same island to be
-considered as its base.
-
-So "delta islands" is a way to store objects from
-different forks in the same repo and packfile without
-having deltas between objects from different forks.
-
-This patch implements the delta islands mechanism in
-"delta-islands.{c,h}", but does not yet make use of it.
-
-A few new fields are added in 'struct object_entry'
-in "pack-objects.h" though.
-
-The documentation will follow in a patch that actually
-uses delta islands in "builtin/pack-objects.c".
-
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile        |   1 +
- delta-islands.c | 493 ++++++++++++++++++++++++++++++++++++++++++++++++
- delta-islands.h |  11 ++
- pack-objects.h  |   4 +
- 4 files changed, 509 insertions(+)
- create mode 100644 delta-islands.c
- create mode 100644 delta-islands.h
+ t/t5319-delta-islands.sh | 143 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 143 insertions(+)
+ create mode 100755 t/t5319-delta-islands.sh
 
-diff --git a/Makefile b/Makefile
-index bc4fc8eeab..e7994888e8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -841,6 +841,7 @@ LIB_OBJS += csum-file.o
- LIB_OBJS += ctype.o
- LIB_OBJS += date.o
- LIB_OBJS += decorate.o
-+LIB_OBJS += delta-islands.o
- LIB_OBJS += diffcore-break.o
- LIB_OBJS += diffcore-delta.o
- LIB_OBJS += diffcore-order.o
-diff --git a/delta-islands.c b/delta-islands.c
-new file mode 100644
-index 0000000000..c0b0da6837
+diff --git a/t/t5319-delta-islands.sh b/t/t5319-delta-islands.sh
+new file mode 100755
+index 0000000000..fea92a5777
 --- /dev/null
-+++ b/delta-islands.c
-@@ -0,0 +1,493 @@
-+#include "cache.h"
-+#include "attr.h"
-+#include "object.h"
-+#include "blob.h"
-+#include "commit.h"
-+#include "tag.h"
-+#include "tree.h"
-+#include "delta.h"
-+#include "pack.h"
-+#include "tree-walk.h"
-+#include "diff.h"
-+#include "revision.h"
-+#include "list-objects.h"
-+#include "progress.h"
-+#include "refs.h"
-+#include "khash.h"
-+#include "pack-bitmap.h"
-+#include "pack-objects.h"
-+#include "delta-islands.h"
-+#include "sha1-array.h"
-+#include "config.h"
++++ b/t/t5319-delta-islands.sh
+@@ -0,0 +1,143 @@
++#!/bin/sh
 +
-+KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)
++test_description='exercise delta islands'
++. ./test-lib.sh
 +
-+static khash_sha1 *island_marks;
-+static unsigned island_counter;
-+static unsigned island_counter_core;
-+
-+static kh_str_t *remote_islands;
-+
-+struct remote_island {
-+	uint64_t hash;
-+	struct oid_array oids;
-+};
-+
-+struct island_bitmap {
-+	uint32_t refcount;
-+	uint32_t bits[];
-+};
-+
-+static uint32_t island_bitmap_size;
-+
-+/*
-+ * Allocate a new bitmap; if "old" is not NULL, the new bitmap will be a copy
-+ * of "old". Otherwise, the new bitmap is empty.
-+ */
-+static struct island_bitmap *island_bitmap_new(const struct island_bitmap *old)
-+{
-+	size_t size = sizeof(struct island_bitmap) + (island_bitmap_size * 4);
-+	struct island_bitmap *b = xcalloc(1, size);
-+
-+	if (old)
-+		memcpy(b, old, size);
-+
-+	b->refcount = 1;
-+	return b;
++# returns true iff $1 is a delta based on $2
++is_delta_base () {
++	delta_base=$(echo "$1" | git cat-file --batch-check='%(deltabase)') &&
++	echo >&2 "$1 has base $delta_base" &&
++	test "$delta_base" = "$2"
 +}
 +
-+static void island_bitmap_or(struct island_bitmap *a, const struct island_bitmap *b)
-+{
-+	uint32_t i;
-+
-+	for (i = 0; i < island_bitmap_size; ++i)
-+		a->bits[i] |= b->bits[i];
++# generate a commit on branch $1 with a single file, "file", whose
++# content is mostly based on the seed $2, but with a unique bit
++# of content $3 appended. This should allow us to see whether
++# blobs of different refs delta against each other.
++commit() {
++	blob=$({ test-tool genrandom "$2" 10240 && echo "$3"; } |
++	       git hash-object -w --stdin) &&
++	tree=$(printf '100644 blob %s\tfile\n' "$blob" | git mktree) &&
++	commit=$(echo "$2-$3" | git commit-tree "$tree" ${4:+-p "$4"}) &&
++	git update-ref "refs/heads/$1" "$commit" &&
++	eval "$1"'=$(git rev-parse $1:file)' &&
++	eval "echo >&2 $1=\$$1"
 +}
 +
-+static int island_bitmap_is_subset(struct island_bitmap *self,
-+		struct island_bitmap *super)
-+{
-+	uint32_t i;
-+
-+	if (self == super)
-+		return 1;
-+
-+	for (i = 0; i < island_bitmap_size; ++i) {
-+		if ((self->bits[i] & super->bits[i]) != self->bits[i])
-+			return 0;
-+	}
-+
-+	return 1;
-+}
-+
-+#define ISLAND_BITMAP_BLOCK(x) (x / 32)
-+#define ISLAND_BITMAP_MASK(x) (1 << (x % 32))
-+
-+static void island_bitmap_set(struct island_bitmap *self, uint32_t i)
-+{
-+	self->bits[ISLAND_BITMAP_BLOCK(i)] |= ISLAND_BITMAP_MASK(i);
-+}
-+
-+static int island_bitmap_get(struct island_bitmap *self, uint32_t i)
-+{
-+	return (self->bits[ISLAND_BITMAP_BLOCK(i)] & ISLAND_BITMAP_MASK(i)) != 0;
-+}
-+
-+int in_same_island(const struct object_id *trg_oid, const struct object_id *src_oid)
-+{
-+	khiter_t trg_pos, src_pos;
-+
-+	/* If we aren't using islands, assume everything goes together. */
-+	if (!island_marks)
-+		return 1;
-+
-+	/*
-+	 * If we don't have a bitmap for the target, we can delta it
-+	 * against anything -- it's not an important object
-+	 */
-+	trg_pos = kh_get_sha1(island_marks, trg_oid->hash);
-+	if (trg_pos >= kh_end(island_marks))
-+		return 1;
-+
-+	/*
-+	 * if the source (our delta base) doesn't have a bitmap,
-+	 * we don't want to base any deltas on it!
-+	 */
-+	src_pos = kh_get_sha1(island_marks, src_oid->hash);
-+	if (src_pos >= kh_end(island_marks))
-+		return 0;
-+
-+	return island_bitmap_is_subset(kh_value(island_marks, trg_pos),
-+				kh_value(island_marks, src_pos));
-+}
-+
-+int island_delta_cmp(const struct object_id *a, const struct object_id *b)
-+{
-+	khiter_t a_pos, b_pos;
-+	struct island_bitmap *a_bitmap = NULL, *b_bitmap = NULL;
-+
-+	if (!island_marks)
-+		return 0;
-+
-+	a_pos = kh_get_sha1(island_marks, a->hash);
-+	if (a_pos < kh_end(island_marks))
-+		a_bitmap = kh_value(island_marks, a_pos);
-+
-+	b_pos = kh_get_sha1(island_marks, b->hash);
-+	if (b_pos < kh_end(island_marks))
-+		b_bitmap = kh_value(island_marks, b_pos);
-+
-+	if (a_bitmap) {
-+		if (!b_bitmap || !island_bitmap_is_subset(a_bitmap, b_bitmap))
-+			return -1;
-+	}
-+	if (b_bitmap) {
-+		if (!a_bitmap || !island_bitmap_is_subset(b_bitmap, a_bitmap))
-+			return 1;
-+	}
-+
-+	return 0;
-+}
-+
-+static struct island_bitmap *create_or_get_island_marks(struct object *obj)
-+{
-+	khiter_t pos;
-+	int hash_ret;
-+
-+	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
-+	if (hash_ret)
-+		kh_value(island_marks, pos) = island_bitmap_new(NULL);
-+
-+	return kh_value(island_marks, pos);
-+}
-+
-+static void set_island_marks(struct object *obj, struct island_bitmap *marks)
-+{
-+	struct island_bitmap *b;
-+	khiter_t pos;
-+	int hash_ret;
-+
-+	pos = kh_put_sha1(island_marks, obj->oid.hash, &hash_ret);
-+	if (hash_ret) {
-+		/*
-+		 * We don't have one yet; make a copy-on-write of the
-+		 * parent.
-+		 */
-+		marks->refcount++;
-+		kh_value(island_marks, pos) = marks;
-+		return;
-+	}
-+
-+	/*
-+	 * We do have it. Make sure we split any copy-on-write before
-+	 * updating.
-+	 */
-+	b = kh_value(island_marks, pos);
-+	if (b->refcount > 1) {
-+		b->refcount--;
-+		b = kh_value(island_marks, pos) = island_bitmap_new(b);
-+	}
-+	island_bitmap_or(b, marks);
-+}
-+
-+static void mark_remote_island_1(struct remote_island *rl, int is_core_island)
-+{
-+	uint32_t i;
-+
-+	for (i = 0; i < rl->oids.nr; ++i) {
-+		struct island_bitmap *marks;
-+		struct object *obj = parse_object(the_repository, &rl->oids.oid[i]);
-+
-+		if (!obj)
-+			continue;
-+
-+		marks = create_or_get_island_marks(obj);
-+		island_bitmap_set(marks, island_counter);
-+
-+		if (is_core_island && obj->type == OBJ_COMMIT)
-+			obj->flags |= NEEDS_BITMAP;
-+
-+		/* If it was a tag, also make sure we hit the underlying object. */
-+		while (obj && obj->type == OBJ_TAG) {
-+			obj = ((struct tag *)obj)->tagged;
-+			if (obj) {
-+				parse_object(the_repository, &obj->oid);
-+				marks = create_or_get_island_marks(obj);
-+				island_bitmap_set(marks, island_counter);
-+			}
-+		}
-+	}
-+
-+	if (is_core_island)
-+		island_counter_core = island_counter;
-+
-+	island_counter++;
-+}
-+
-+static int cmp_tree_depth(const void *va, const void *vb)
-+{
-+	struct object_entry *a = *(struct object_entry **)va;
-+	struct object_entry *b = *(struct object_entry **)vb;
-+	return a->tree_depth - b->tree_depth;
-+}
-+
-+void resolve_tree_islands(int progress, struct packing_data *to_pack)
-+{
-+	struct progress *progress_state = NULL;
-+	struct object_entry **todo;
-+	int nr = 0;
-+	int i;
-+
-+	if (!island_marks)
-+		return;
-+
-+	/*
-+	 * We process only trees, as commits and tags have already been handled
-+	 * (and passed their marks on to root trees, as well. We must make sure
-+	 * to process them in descending tree-depth order so that marks
-+	 * propagate down the tree properly, even if a sub-tree is found in
-+	 * multiple parent trees.
-+	 */
-+	ALLOC_ARRAY(todo, to_pack->nr_objects);
-+	for (i = 0; i < to_pack->nr_objects; i++) {
-+		if (oe_type(&to_pack->objects[i]) == OBJ_TREE)
-+			todo[nr++] = &to_pack->objects[i];
-+	}
-+	QSORT(todo, nr, cmp_tree_depth);
-+
-+	if (progress)
-+		progress_state = start_progress(_("Propagating island marks"), nr);
-+
-+	for (i = 0; i < nr; i++) {
-+		struct object_entry *ent = todo[i];
-+		struct island_bitmap *root_marks;
-+		struct tree *tree;
-+		struct tree_desc desc;
-+		struct name_entry entry;
-+		khiter_t pos;
-+
-+		pos = kh_get_sha1(island_marks, ent->idx.oid.hash);
-+		if (pos >= kh_end(island_marks))
-+			continue;
-+
-+		root_marks = kh_value(island_marks, pos);
-+
-+		tree = lookup_tree(the_repository, &ent->idx.oid);
-+		if (!tree || parse_tree(tree) < 0)
-+			die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
-+
-+		init_tree_desc(&desc, tree->buffer, tree->size);
-+		while (tree_entry(&desc, &entry)) {
-+			struct object *obj;
-+
-+			if (S_ISGITLINK(entry.mode))
-+				continue;
-+
-+			obj = lookup_object(the_repository, entry.oid->hash);
-+			if (!obj)
-+				continue;
-+
-+			set_island_marks(obj, root_marks);
-+		}
-+
-+		free_tree_buffer(tree);
-+
-+		display_progress(progress_state, i+1);
-+	}
-+
-+	stop_progress(&progress_state);
-+	free(todo);
-+}
-+
-+static regex_t *island_regexes;
-+static unsigned int island_regexes_alloc, island_regexes_nr;
-+static const char *core_island_name;
-+
-+static int island_config_callback(const char *k, const char *v, void *cb)
-+{
-+	if (!strcmp(k, "pack.island")) {
-+		struct strbuf re = STRBUF_INIT;
-+
-+		if (!v)
-+			return config_error_nonbool(k);
-+
-+		ALLOC_GROW(island_regexes, island_regexes_nr + 1, island_regexes_alloc);
-+
-+		if (*v != '^')
-+			strbuf_addch(&re, '^');
-+		strbuf_addstr(&re, v);
-+
-+		if (regcomp(&island_regexes[island_regexes_nr], re.buf, REG_EXTENDED))
-+			die(_("failed to load island regex for '%s': %s"), k, re.buf);
-+
-+		strbuf_release(&re);
-+		island_regexes_nr++;
-+		return 0;
-+	}
-+
-+	if (!strcmp(k, "pack.islandcore"))
-+		return git_config_string(&core_island_name, k, v);
-+
-+	return 0;
-+}
-+
-+static void add_ref_to_island(const char *island_name, const struct object_id *oid)
-+{
-+	uint64_t sha_core;
-+	struct remote_island *rl = NULL;
-+
-+	int hash_ret;
-+	khiter_t pos = kh_put_str(remote_islands, island_name, &hash_ret);
-+
-+	if (hash_ret) {
-+		kh_key(remote_islands, pos) = xstrdup(island_name);
-+		kh_value(remote_islands, pos) = xcalloc(1, sizeof(struct remote_island));
-+	}
-+
-+	rl = kh_value(remote_islands, pos);
-+	oid_array_append(&rl->oids, oid);
-+
-+	memcpy(&sha_core, oid->hash, sizeof(uint64_t));
-+	rl->hash += sha_core;
-+}
-+
-+static int find_island_for_ref(const char *refname, const struct object_id *oid,
-+			       int flags, void *data)
-+{
-+	/*
-+	 * We should advertise 'ARRAY_SIZE(matches) - 2' as the max,
-+	 * so we can diagnose below a config with more capture groups
-+	 * than we support.
-+	 */
-+	regmatch_t matches[16];
-+	int i, m;
-+	struct strbuf island_name = STRBUF_INIT;
-+
-+	/* walk backwards to get last-one-wins ordering */
-+	for (i = island_regexes_nr - 1; i >= 0; i--) {
-+		if (!regexec(&island_regexes[i], refname,
-+			     ARRAY_SIZE(matches), matches, 0))
-+			break;
-+	}
-+
-+	if (i < 0)
-+		return 0;
-+
-+	if (matches[ARRAY_SIZE(matches) - 1].rm_so != -1)
-+		warning(_("island regex from config has "
-+			  "too many capture groups (max=%d)"),
-+			(int)ARRAY_SIZE(matches) - 2);
-+
-+	for (m = 1; m < ARRAY_SIZE(matches); m++) {
-+		regmatch_t *match = &matches[m];
-+
-+		if (match->rm_so == -1)
-+			continue;
-+
-+		if (island_name.len)
-+			strbuf_addch(&island_name, '-');
-+
-+		strbuf_add(&island_name, refname + match->rm_so, match->rm_eo - match->rm_so);
-+	}
-+
-+	add_ref_to_island(island_name.buf, oid);
-+	strbuf_release(&island_name);
-+	return 0;
-+}
-+
-+static struct remote_island *get_core_island(void)
-+{
-+	if (core_island_name) {
-+		khiter_t pos = kh_get_str(remote_islands, core_island_name);
-+		if (pos < kh_end(remote_islands))
-+			return kh_value(remote_islands, pos);
-+	}
-+
-+	return NULL;
-+}
-+
-+static void deduplicate_islands(void)
-+{
-+	struct remote_island *island, *core = NULL, **list;
-+	unsigned int island_count, dst, src, ref, i = 0;
-+
-+	island_count = kh_size(remote_islands);
-+	ALLOC_ARRAY(list, island_count);
-+
-+	kh_foreach_value(remote_islands, island, {
-+		list[i++] = island;
-+	});
-+
-+	for (ref = 0; ref + 1 < island_count; ref++) {
-+		for (src = ref + 1, dst = src; src < island_count; src++) {
-+			if (list[ref]->hash == list[src]->hash)
-+				continue;
-+
-+			if (src != dst)
-+				list[dst] = list[src];
-+
-+			dst++;
-+		}
-+		island_count = dst;
-+	}
-+
-+	island_bitmap_size = (island_count / 32) + 1;
-+	core = get_core_island();
-+
-+	for (i = 0; i < island_count; ++i) {
-+		mark_remote_island_1(list[i], core && list[i]->hash == core->hash);
-+	}
-+
-+	free(list);
-+}
-+
-+void load_delta_islands(void)
-+{
-+	island_marks = kh_init_sha1();
-+	remote_islands = kh_init_str();
-+
-+	git_config(island_config_callback, NULL);
-+	for_each_ref(find_island_for_ref, NULL);
-+	deduplicate_islands();
-+
-+	fprintf(stderr, _("Marked %d islands, done.\n"), island_counter);
-+}
-+
-+void propagate_island_marks(struct commit *commit)
-+{
-+	khiter_t pos = kh_get_sha1(island_marks, commit->object.oid.hash);
-+
-+	if (pos < kh_end(island_marks)) {
-+		struct commit_list *p;
-+		struct island_bitmap *root_marks = kh_value(island_marks, pos);
-+
-+		parse_commit(commit);
-+		set_island_marks(&get_commit_tree(commit)->object, root_marks);
-+		for (p = commit->parents; p; p = p->next)
-+			set_island_marks(&p->item->object, root_marks);
-+	}
-+}
-+
-+int compute_pack_layers(struct packing_data *to_pack)
-+{
-+	uint32_t i;
-+
-+	if (!core_island_name || !island_marks)
-+		return 1;
-+
-+	for (i = 0; i < to_pack->nr_objects; ++i) {
-+		struct object_entry *entry = &to_pack->objects[i];
-+		khiter_t pos = kh_get_sha1(island_marks, entry->idx.oid.hash);
-+
-+		entry->layer = 1;
-+
-+		if (pos < kh_end(island_marks)) {
-+			struct island_bitmap *bitmap = kh_value(island_marks, pos);
-+
-+			if (island_bitmap_get(bitmap, island_counter_core))
-+				entry->layer = 0;
-+		}
-+	}
-+
-+	return 2;
-+}
-diff --git a/delta-islands.h b/delta-islands.h
-new file mode 100644
-index 0000000000..f9725730f4
---- /dev/null
-+++ b/delta-islands.h
-@@ -0,0 +1,11 @@
-+#ifndef DELTA_ISLANDS_H
-+#define DELTA_ISLANDS_H
-+
-+int island_delta_cmp(const struct object_id *a, const struct object_id *b);
-+int in_same_island(const struct object_id *, const struct object_id *);
-+void resolve_tree_islands(int progress, struct packing_data *to_pack);
-+void load_delta_islands(void);
-+void propagate_island_marks(struct commit *commit);
-+int compute_pack_layers(struct packing_data *to_pack);
-+
-+#endif /* DELTA_ISLANDS_H */
-diff --git a/pack-objects.h b/pack-objects.h
-index edf74dabdd..8eecd67991 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -100,6 +100,10 @@ struct object_entry {
- 	unsigned type_:TYPE_BITS;
- 	unsigned no_try_delta:1;
- 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
-+
-+	unsigned int tree_depth; /* should be repositioned for packing? */
-+	unsigned char layer;
-+
- 	unsigned preferred_base:1; /*
- 				    * we do not pack this, but is available
- 				    * to be used as the base object to delta
++test_expect_success 'setup commits' '
++	commit one seed 1 &&
++	commit two seed 12
++'
++
++# Note: This is heavily dependent on the "prefer larger objects as base"
++# heuristic.
++test_expect_success 'vanilla repack deltas one against two' '
++	git repack -adf &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island repack with no island definition is vanilla' '
++	git repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island repack with no matches is vanilla' '
++	git -c "pack.island=refs/foo" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'separate islands disallows delta' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
++
++test_expect_success 'same island allows delta' '
++	git -c "pack.island=refs/heads" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'coalesce same-named islands' '
++	git \
++		-c "pack.island=refs/(.*)/one" \
++		-c "pack.island=refs/(.*)/two" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island restrictions drop reused deltas' '
++	git repack -adfi &&
++	is_delta_base $one $two &&
++	git -c "pack.island=refs/heads/(.*)" repack -adi &&
++	! is_delta_base $one $two &&
++	! is_delta_base $two $one
++'
++
++test_expect_success 'island regexes are left-anchored' '
++	git -c "pack.island=heads/(.*)" repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'island regexes follow last-one-wins scheme' '
++	git \
++		-c "pack.island=refs/heads/(.*)" \
++		-c "pack.island=refs/heads/" \
++		repack -adfi &&
++	is_delta_base $one $two
++'
++
++test_expect_success 'setup shared history' '
++	commit root shared root &&
++	commit one shared 1 root &&
++	commit two shared 12-long root
++'
++
++# We know that $two will be preferred as a base from $one,
++# because we can transform it with a pure deletion.
++#
++# We also expect $root as a delta against $two by the "longest is base" rule.
++test_expect_success 'vanilla delta goes between branches' '
++	git repack -adf &&
++	is_delta_base $one $two &&
++	is_delta_base $root $two
++'
++
++# Here we should allow $one to base itself on $root; even though
++# they are in different islands, the objects in $root are in a superset
++# of islands compared to those in $one.
++#
++# Similarly, $two can delta against $root by our rules. And unlike $one,
++# in which we are just allowing it, the island rules actually put $root
++# as a possible base for $two, which it would not otherwise be (due to the size
++# sorting).
++test_expect_success 'deltas allowed against superset islands' '
++	git -c "pack.island=refs/heads/(.*)" repack -adfi &&
++	is_delta_base $one $root &&
++	is_delta_base $two $root
++'
++
++# We are going to test the packfile order here, so we again have to make some
++# assumptions. We assume that "$root", as part of our core "one", must come
++# before "$two". This should be guaranteed by the island code. However, for
++# this test to fail without islands, we are also assuming that it would not
++# otherwise do so. This is true by the current write order, which will put
++# commits (and their contents) before their parents.
++test_expect_success 'island core places core objects first' '
++	cat >expect <<-EOF &&
++	$root
++	$two
++	EOF
++	git -c "pack.island=refs/heads/(.*)" \
++	    -c "pack.islandcore=one" \
++	    repack -adfi &&
++	git verify-pack -v .git/objects/pack/*.pack |
++	cut -d" " -f1 |
++	egrep "$root|$two" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'unmatched island core is not fatal' '
++	git -c "pack.islandcore=one" repack -adfi
++'
++
++test_done
 -- 
 2.18.0.554.gdb07901040.dirty
 
