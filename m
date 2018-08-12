@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F00A41F404
-	for <e@80x24.org>; Sun, 12 Aug 2018 08:16:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23EA81F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 09:07:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727733AbeHLKxO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 06:53:14 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:37304 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727036AbeHLKxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 06:53:14 -0400
-Received: by mail-lf1-f65.google.com with SMTP id j8-v6so9258096lfb.4
-        for <git@vger.kernel.org>; Sun, 12 Aug 2018 01:16:01 -0700 (PDT)
+        id S1727550AbeHLLox (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 07:44:53 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42378 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727073AbeHLLox (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 07:44:53 -0400
+Received: by mail-lj1-f195.google.com with SMTP id f1-v6so10275573ljc.9
+        for <git@vger.kernel.org>; Sun, 12 Aug 2018 02:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5kN8TpKvldwLnYC87k8BVp/J6SYQ2n/wMWnjwkNygp0=;
-        b=JMpIZInUa1+FkCVLLyfJgjyCUNamrdX67us0/vXle6pIhpFn15cjbX8bFq+2DBPFET
-         HFFageew9+Jhlizjm63SCesiEvUzWPoEVZn1c92spX8iroYq49PTQpKOSqYmd5WKTnxs
-         /bf9s3fzBwa14+d87I9VJ/XPS4nbzO3AA8CjF+7BX01wtqdncpi3v1BJ/FJcDp5+BerN
-         WIVWkKDb43+yz7yb/zVVNKuQxBMfj2cyJJdEX5P5McoXIkpM4U5vdfXgQhFQRW8HOTc1
-         t2cqajT2y46aIEXWo9IFg7ewFLdwUyASihy1aPRw9o79SY9Hit6riFKRowjF3KwCcEdy
-         B7xQ==
+        bh=0ZPSW+X3R/1EjweWTRb2nZGc4l5E3AS8vBCcEiptLZE=;
+        b=nSWttc7PQKjU7r0qcmsVq1MA0ieSCVRPT2Jdsn3VpaWLhbCRV4GZSeaNa8GgCA/kdp
+         x4pjzxcCd6et5upTssujTQg4rrfGVBcrLB8NIUpQPiw4gn15HQYyZBd9RChQBxCunKFW
+         XbmoJxJ4Bs+XyATq2SOtDNvENKOBavb7lEckNa853ecYPJbbbV//Rwfz8lWBe5jn40Yy
+         J65MHv4fBvJcw+AN69RmhAR93kc9HTHjWxyrL7xemh5y0od8JcBuDR7d8VDytZ6T/ua9
+         2OAkQ9OJxbu6fOR2LmAR5yoSnEdGXq+s3IiKyWOdRbCpsUWqxzcwb3zTOXWCUH8V1iss
+         yXOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5kN8TpKvldwLnYC87k8BVp/J6SYQ2n/wMWnjwkNygp0=;
-        b=iubhAnQ86G9bxRevXtu8igPTi2t2uZ7RsRZ7e7lRhxixb1teErnOFy9BFDvgiPqCyu
-         pfvYALWtvlldLaO2CW2WlVStk5eG7+S7dZUCrWAVLPW9e8X8cnFX9HtZHxNcFsoCkrfR
-         CFD1lIzq7gdOJ3dZlg2/zDArP/S8Aq7MAQh4cXiBgRs7i/QRi0/AO84cj1RjYssnKG6V
-         f8hR6KfLOK/Re2FqjQBdx+LCKAf7sWd0SnntV83GdLtFfw6l4grS3IVog4xtq7Hu8/aw
-         aswHxAx/64+SeZMNYbCaqJNs/0lKaWsh7Ap967J7zL+wRZ33rwm1FVEY3mH4WA8eXNxC
-         x1xg==
-X-Gm-Message-State: AOUpUlGOKuf2XM48h/lL9hm17UBb/G9R8JYCe4MbhMCk6GDjntBX1mKl
-        6BPPaRR9x14fsTPV/qn9YaM=
-X-Google-Smtp-Source: AA+uWPzLVRC8XnvQRS+/MRk4tWffprMBYF8oFvuuTgQ4aalT8QCJsuaNUPKF4ef1IX4HzWKG3H9iUQ==
-X-Received: by 2002:a19:dd81:: with SMTP id w1-v6mr8067196lfi.114.1534061761217;
-        Sun, 12 Aug 2018 01:16:01 -0700 (PDT)
+        bh=0ZPSW+X3R/1EjweWTRb2nZGc4l5E3AS8vBCcEiptLZE=;
+        b=J9L6lOACcXB/X3TRB83JsdxKSfLbGM8PH5+5S+Ms6JTw/m0hYC3zdWXGEMuvvAPebX
+         wNHOcj8imSCfgijOfj/etJCo/FS0haHDpDikky82jU4AxjSv0jExzwmks5X8H1sA/FBp
+         0hN0Qk+tM3IbVSrM/3kb1tMWWRsM+OuLoqgcUNsD21aeVRUXqep/cUhT4F/6HO4jsxkB
+         R2Kl35yIEKglMsQMAG8MthrdC4LpGDceyLG2wIVyOlylaxhPG4+GkQSgWdptfUJtro80
+         UnmofY0QOTOPWsndrgzx+/d9VJqHqYlW/3x2Jf63OmZJxO6fG/LandVtLjlnlYb/NYk/
+         mSwA==
+X-Gm-Message-State: AOUpUlG8Jyd/y8+XwGUHTCa2SYwkzmI+9JyWrNhIVDGQk7m/wFFjGC7P
+        9bGCgq2xvIdoxVKOOIqHFDo=
+X-Google-Smtp-Source: AA+uWPxMUJDJ95nPYeidvL2attH6dhe7jWXSEWIwuli1Xlf29QrbUK8yB03+XF5ZIItZVqxtJn4ApA==
+X-Received: by 2002:a2e:5c07:: with SMTP id q7-v6mr8831597ljb.119.1534064850806;
+        Sun, 12 Aug 2018 02:07:30 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id w73-v6sm2769576lfd.57.2018.08.12.01.16.00
+        by smtp.gmail.com with ESMTPSA id o203-v6sm2793181lff.28.2018.08.12.02.07.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 12 Aug 2018 01:16:00 -0700 (PDT)
+        Sun, 12 Aug 2018 02:07:29 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
-Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        peartben@gmail.com, peff@peff.net, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 5/5] unpack-trees: reuse (still valid) cache-tree from src_index
-Date:   Sun, 12 Aug 2018 10:15:51 +0200
-Message-Id: <20180812081551.27927-6-pclouds@gmail.com>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, tboegi@web.de,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v4] clone: report duplicate entries on case-insensitive filesystems
+Date:   Sun, 12 Aug 2018 11:07:14 +0200
+Message-Id: <20180812090714.19060-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
-In-Reply-To: <20180812081551.27927-1-pclouds@gmail.com>
-References: <20180804053723.4695-1-pclouds@gmail.com>
- <20180812081551.27927-1-pclouds@gmail.com>
+In-Reply-To: <20180810153608.30051-1-pclouds@gmail.com>
+References: <20180810153608.30051-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,89 +70,186 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We do n-way merge by walking the source index and n trees at the same
-time and add merge results to a new temporary index called o->result.
-The merge result for any given path could be either
+Paths that only differ in case work fine in a case-sensitive
+filesystems, but if those repos are cloned in a case-insensitive one,
+you'll get problems. The first thing to notice is "git status" will
+never be clean with no indication what exactly is "dirty".
 
-- keep_entry(): same old index entry in o->src_index is reused
-- merged_entry(): either a new entry is added, or an existing one updated
-- deleted_entry(): one entry from o->src_index is removed
+This patch helps the situation a bit by pointing out the problem at
+clone time. Even though this patch talks about case sensitivity, the
+patch makes no assumption about folding rules by the filesystem. It
+simply observes that if an entry has been already checked out at clone
+time when we're about to write a new path, some folding rules are
+behind this.
 
-For some reason [1] we keep making sure that the source index's
-cache-tree is still valid if used by o->result: for all those
-merged/deleted entries, we invalidate the same path in o->src_index,
-so only cache-trees covering the "keep_entry" parts remain good.
-
-Because of this, the cache-tree from o->src_index can be perfectly
-reused in o->result. And in fact we already rely on this logic to
-reuse untracked cache in edf3b90553 (unpack-trees: preserve index
-extensions - 2017-05-08). Move the cache-tree to o->result before
-doing cache_tree_update() to reduce hashing cost.
-
-Since cache_tree_update() has risen up as one of the most expensive
-parts in unpack_trees() after the last few patches. This does help
-reduce unpack_trees() time significantly (on webkit.git):
-
-    before       after
-  --------------------------------------------------------------------
-    0.080394752  0.051258167 s:  read cache .git/index
-    0.216010838  0.212106298 s:  preload index
-    0.008534301  0.280521764 s:  refresh index
-    0.251992198  0.218160442 s:   traverse_trees
-    0.377031383  0.374948191 s:   check_updates
-    0.372768105  0.037040114 s:   cache_tree_update
-    1.045887251  0.672031609 s:  unpack_trees
-    0.314983512  0.317456290 s:  write index, changed mask = 2e
-    0.062572653  0.038382654 s:    traverse_trees
-    0.000022544  0.000042731 s:    check_updates
-    0.073795585  0.050930053 s:   unpack_trees
-    0.073807557  0.051099735 s:  diff-index
-    1.938191592  1.614241153 s: git command: git checkout -
-
-[1] I'm pretty sure the reason is an oversight in 34110cd4e3 (Make
-    'unpack_trees()' have a separate source and destination index -
-    2008-03-06). That patch aims to _not_ update the source index at
-    all. The invalidation should have been done on o->result in that
-    patch. But then there was no cache-tree on o->result even then so
-    it's pointless to do so.
+This patch is tested with vim-colorschemes repository on a JFS partition
+with case insensitive support on Linux. This repository has two files
+darkBlue.vim and darkblue.vim.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c   | 2 ++
- unpack-trees.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ v4 removes nr_duplicates (and fixes that false warning Szeder
+ reported). It also hints about case insensitivity as a cause of
+ problem because it's most likely the case when this warning shows up.
 
-diff --git a/read-cache.c b/read-cache.c
-index 4fd35f4f37..2b5646ef26 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2763,4 +2763,6 @@ void move_index_extensions(struct index_state *dst, struct index_state *src)
- {
- 	dst->untracked = src->untracked;
- 	src->untracked = NULL;
-+	dst->cache_tree = src->cache_tree;
-+	src->cache_tree = NULL;
+ builtin/clone.c  |  1 +
+ cache.h          |  1 +
+ entry.c          | 28 ++++++++++++++++++++++++++++
+ t/t5601-clone.sh |  8 +++++++-
+ unpack-trees.c   | 28 ++++++++++++++++++++++++++++
+ unpack-trees.h   |  1 +
+ 6 files changed, 66 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 5c439f1394..0702b0e9d0 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -747,6 +747,7 @@ static int checkout(int submodule_progress)
+ 	memset(&opts, 0, sizeof opts);
+ 	opts.update = 1;
+ 	opts.merge = 1;
++	opts.clone = 1;
+ 	opts.fn = oneway_merge;
+ 	opts.verbose_update = (option_verbosity >= 0);
+ 	opts.src_index = &the_index;
+diff --git a/cache.h b/cache.h
+index 8b447652a7..6d6138f4f1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1455,6 +1455,7 @@ struct checkout {
+ 	unsigned force:1,
+ 		 quiet:1,
+ 		 not_new:1,
++		 clone:1,
+ 		 refresh_cache:1;
+ };
+ #define CHECKOUT_INIT { NULL, "" }
+diff --git a/entry.c b/entry.c
+index b5d1d3cf23..c70340df8e 100644
+--- a/entry.c
++++ b/entry.c
+@@ -399,6 +399,31 @@ static int check_path(const char *path, int len, struct stat *st, int skiplen)
+ 	return lstat(path, st);
  }
+ 
++static void mark_colliding_entries(const struct checkout *state,
++				   struct cache_entry *ce, struct stat *st)
++{
++	int i;
++
++	ce->ce_flags |= CE_MATCHED;
++
++#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
++	for (i = 0; i < state->istate->cache_nr; i++) {
++		struct cache_entry *dup = state->istate->cache[i];
++
++		if (dup == ce)
++			break;
++
++		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
++			continue;
++
++		if (dup->ce_stat_data.sd_ino == st->st_ino) {
++			dup->ce_flags |= CE_MATCHED;
++			break;
++		}
++	}
++#endif
++}
++
+ /*
+  * Write the contents from ce out to the working tree.
+  *
+@@ -455,6 +480,9 @@ int checkout_entry(struct cache_entry *ce,
+ 			return -1;
+ 		}
+ 
++		if (state->clone)
++			mark_colliding_entries(state, ce, &st);
++
+ 		/*
+ 		 * We unlink the old file, to get the new one with the
+ 		 * right permissions (including umask, which is nasty
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 0b62037744..f2eb73bc74 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -624,10 +624,16 @@ test_expect_success 'clone on case-insensitive fs' '
+ 			git hash-object -w -t tree --stdin) &&
+ 		c=$(git commit-tree -m bogus $t) &&
+ 		git update-ref refs/heads/bogus $c &&
+-		git clone -b bogus . bogus
++		git clone -b bogus . bogus 2>warning
+ 	)
+ '
+ 
++test_expect_success !MINGW,!CYGWIN,CASE_INSENSITIVE_FS 'colliding file detection' '
++	grep X icasefs/warning &&
++	grep x icasefs/warning &&
++	test_i18ngrep "the following paths have collided" icasefs/warning
++'
++
+ partial_clone () {
+ 	       SERVER="$1" &&
+ 	       URL="$2" &&
 diff --git a/unpack-trees.c b/unpack-trees.c
-index 6deb04c163..d822662c75 100644
+index cd0680f11e..443df048ef 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1570,6 +1570,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+@@ -359,6 +359,12 @@ static int check_updates(struct unpack_trees_options *o)
+ 	state.refresh_cache = 1;
+ 	state.istate = index;
  
- 	ret = check_updates(o) ? (-2) : 0;
- 	if (o->dst_index) {
-+		move_index_extensions(&o->result, o->src_index);
- 		if (!ret) {
- 			if (!o->result.cache_tree)
- 				o->result.cache_tree = cache_tree();
-@@ -1578,7 +1579,6 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 						  WRITE_TREE_SILENT |
- 						  WRITE_TREE_REPAIR);
- 		}
--		move_index_extensions(&o->result, o->src_index);
- 		discard_index(o->dst_index);
- 		*o->dst_index = o->result;
- 	} else {
++	if (o->clone) {
++		state.clone = 1;
++		for (i = 0; i < index->cache_nr; i++)
++			index->cache[i]->ce_flags &= ~CE_MATCHED;
++	}
++
+ 	progress = get_progress(o);
+ 
+ 	if (o->update)
+@@ -423,6 +429,28 @@ static int check_updates(struct unpack_trees_options *o)
+ 	errs |= finish_delayed_checkout(&state);
+ 	if (o->update)
+ 		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
++
++	if (o->clone) {
++		int printed_warning = 0;
++
++		for (i = 0; i < index->cache_nr; i++) {
++			struct cache_entry *ce = index->cache[i];
++
++			if (!(ce->ce_flags & CE_MATCHED))
++				continue;
++
++			if (!printed_warning) {
++				warning(_("the following paths have collided (e.g. case-sensitive paths\n"
++					  "on a case-insensitive filesystem) and only one from the same\n"
++					  "colliding group is in the working tree:\n"));
++				printed_warning = 1;
++			}
++
++			fprintf(stderr, "  '%s'\n", ce->name);
++			ce->ce_flags &= ~CE_MATCHED;
++		}
++	}
++
+ 	return errs != 0;
+ }
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index c2b434c606..d940f1c5c2 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -42,6 +42,7 @@ struct unpack_trees_options {
+ 	unsigned int reset,
+ 		     merge,
+ 		     update,
++		     clone,
+ 		     index_only,
+ 		     nontrivial_merge,
+ 		     trivial_merges_only,
 -- 
 2.18.0.1004.g6639190530
 
