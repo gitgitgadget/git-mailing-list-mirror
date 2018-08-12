@@ -2,95 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7481F404
-	for <e@80x24.org>; Sun, 12 Aug 2018 04:32:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C4FA1F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 05:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727012AbeHLHJH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 03:09:07 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:39903 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725844AbeHLHJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 03:09:07 -0400
-Received: by mail-io0-f193.google.com with SMTP id l7-v6so7509226iok.6
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 21:32:32 -0700 (PDT)
+        id S1726959AbeHLHsx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 03:48:53 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39319 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726883AbeHLHsx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 03:48:53 -0400
+Received: by mail-wr1-f66.google.com with SMTP id h10-v6so11456862wre.6
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 22:12:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=tVpnbTGttqzm85muZaceCxbAjMS4WPbcYhPIz4jDU1Y=;
-        b=nMLpn9fV9j5hA2u+b6NG0L6ekGCLGvoHZLYy4UERYjpzrzIX+d/+oIYk1jU01oI16l
-         432qdtHzFnNIy3nGOGpcEzfCJ0qOFsesludyM5dPefwpVS93fdTq+7iKpGTumjipdTsn
-         aB018vamcFy1X5oh4BUIqPQV8UW8rYrbxbGKhen8xwRpx9KJ3y2VjnU5AHxDU8eKwNE0
-         1vCAKR8kQRgUkzPw7iWLWn39vyVbQ2X4fevlFbOB9yAWjd/tFaOHEeOk1lXIsFG6Ixr5
-         lhvyasjOLjpUwLGuJZS+xGmbnLjsKuKd24OAew82X1b1tkyrKgQjwKztWInJTYZSQSH1
-         H+DA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QBjpG5KlsEV5/ZVzaP0fiSUCTRw+e44hTazfV2nHllE=;
+        b=RiGpAjfbvJrdl3gbyNTZ4NY/j+IGC7HYTmNVC1zopQIJdzCuCGsRlIjwjTzZZmp69B
+         yOFyfhXIMX7qWhF3ES9dgqU/ow8nEC5YCuwIRQgaF1JqNfvH2OvsLJICyRhzFZtee60l
+         h0EFdxGnBFaR1qTvMoE9NnCD3XywOKRRx0NIVOR7hvPrKtfLgpq0ek5cTgRpoO0y825G
+         mV0z1h0X7kYEpzMAFWiPOzjo8tKzW9AFdv74rRZfILT3y0bP8tdZYBeXxxSez+4Tzb2q
+         oYT0iM0Ivq3J4NEnztdZIHY6STT7bcnQBuNAC52dUe5SSJMlqvK5dBsdRDUys+axJny7
+         mDzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=tVpnbTGttqzm85muZaceCxbAjMS4WPbcYhPIz4jDU1Y=;
-        b=PmvE4PIYcw2MvAJT/FXJcPrbU3Lv2KG8Vkm6uLpVDJD8IzeC9uCwEueBQpJRnK51G5
-         2KElr9OaVg88Dn8b4JJpHJ29K6WBa3ee1WagDkZ7G1KE78dvkU5yKUspmIwddYP8P1SI
-         MopNGoyJorM/xbblXIT6LY8+MX/yV5+SM5B3e8EV7Zjx1i2JueOCNaowKXRO4JKo0pE9
-         JTDyTIivPwCiByYP055uaY4m4XSdZJ/YExFxITOUWc4K8W6UAA5aSiUWJSIoT23wxaXc
-         XizTRiyCKBDEKIk6kOqO3R+cFZiKXaxItQjv/FUcCO8YjGRRvEo1WqUC1KC/wV11G7Cl
-         YXHg==
-X-Gm-Message-State: AOUpUlHLYqmbBKN3RP+GPP23pRTj+J5/mUC9aHtV2kLroZB65dxLqoxk
-        NhZ3jD4pMeaYs/2qimPdhE6I2jyd889mc0GrPh0=
-X-Google-Smtp-Source: AA+uWPyrDOeRMo+B+pmZQ0VCsrYM9sui2UXfGS90emvj5hlJ3l0azeIiQDTSPBGGk66+eVU3dpPG7DevRMBnbLcy4Mc=
-X-Received: by 2002:a6b:5a08:: with SMTP id o8-v6mr10573956iob.5.1534048352059;
- Sat, 11 Aug 2018 21:32:32 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Sat, 11 Aug 2018 21:32:31
- -0700 (PDT)
-In-Reply-To: <20180811141251.GA17649@sigill.intra.peff.net>
-References: <20180809155532.26151-1-chriscool@tuxfamily.org>
- <20180809155532.26151-3-chriscool@tuxfamily.org> <20180811090418.26674-1-szeder.dev@gmail.com>
- <CAP8UFD0uoOKyUkNDrQgzcf6rGtnd9-Jk26swtzdyNDeCHefYJA@mail.gmail.com> <20180811141251.GA17649@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QBjpG5KlsEV5/ZVzaP0fiSUCTRw+e44hTazfV2nHllE=;
+        b=m0QT980KOFYNUGKWW97wLsYQEUcj2BrXUB3cjC96AFHaWNoUOqBuxGFjvnOBqMFrv9
+         ytQChAKYTSuhNkwzj08017SGHjS/Zqr/tvr/Wn74JEPGMsXjQhQ4Jc8otFKzETimlWkS
+         E5jPSYxfSqWfrNZ9VhuIU/ZSzTOkgSkaArK79CRVzWWy3C6r7OICCSuhiS2vDpsEy/P7
+         elmyWSAGhuydDQhHIOJlysFPF+gkMVxiQ8zSPAsKGG8nvhnNhKbX/3y9rVtzKNBkdbFu
+         GMFcYRt+3m7P1K89BIPQuIlhuWFFHceWuftJbf899VVVJAzsvLL1LPYp+FlC8UCi2ryE
+         QDyg==
+X-Gm-Message-State: AOUpUlEvD6DJ8+z40zMCU7SMUJMiWB5jyo///Nz5lClG9amsb3iYQnTt
+        sxSayqIfUgiXZbAS1VBDiqK0X8Uk
+X-Google-Smtp-Source: AA+uWPyLtZPJR8+0FMCKPdcQ3ugjXPOw/bpns+s6xjLbwMCTExxPz1WR13rpn9KK88xSyb8MD2lnRQ==
+X-Received: by 2002:a5d:51cf:: with SMTP id n15-v6mr7915394wrv.107.1534050730212;
+        Sat, 11 Aug 2018 22:12:10 -0700 (PDT)
+Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
+        by smtp.gmail.com with ESMTPSA id g10-v6sm13281205wrv.90.2018.08.11.22.12.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 11 Aug 2018 22:12:09 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sun, 12 Aug 2018 06:32:31 +0200
-Message-ID: <CAP8UFD34ycq-De_ZDYYZRgz6s0q0fBaAQhoYfJYxyF71=NYf9g@mail.gmail.com>
-Subject: Re: [PATCH v3 2/8] Add delta-islands.{c,h}
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+        Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        SZEDER Gabor <szeder.dev@gmail.com>
+Subject: [PATCH v4 0/7] Add delta islands support
+Date:   Sun, 12 Aug 2018 07:11:44 +0200
+Message-Id: <20180812051151.6425-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.18.0.554.gdb07901040.dirty
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 11, 2018 at 4:12 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 11, 2018 at 12:32:32PM +0200, Christian Couder wrote:
->
->> Ok, I have made the following changes in the branch I will send next.
->>
->> diff --git a/delta-islands.c b/delta-islands.c
->> index 92137f2eca..22e4360810 100644
->> --- a/delta-islands.c
->> +++ b/delta-islands.c
->> @@ -322,8 +322,7 @@ static int island_config_callback(const char *k,
->> const char *v, void *cb)
->>
->>                 if (island_regexes_nr >= island_regexes_alloc) {
->>                         island_regexes_alloc = (island_regexes_alloc + 8) * 2;
->> -                       island_regexes = xrealloc(island_regexes,
->> -                                       island_regexes_alloc * sizeof(regex_t));
->> +                       REALLOC_ARRAY(island_regexes, island_regexes_alloc);
->>                 }
->
-> I think this whole block could actually be ALLOC_GROW().
+This patch series is upstreaming work made by GitHub and available in:
 
-Yeah, thanks! The whole block will be replaced with the following in
-the next reroll:
+https://github.com/peff/git/commits/jk/delta-islands
 
-ALLOC_GROW(island_regexes, island_regexes_nr + 1, island_regexes_alloc);
+The above work has been already described in the following article:
+
+https://githubengineering.com/counting-objects/
+
+The above branch contains only one patch. In this patch series the
+patch has been split into 4 patches (1/7, 3/7, 4/7 and 5/7) with their
+own commit message, and on top of that 3 new patches (2/7, 6/7 and
+7/7) have been added. The new patches implement things that have been
+requested on the mailing list.
+
+I kept Peff as the author of the original 4 patches and took the
+liberty to add his Signed-off-by to them.
+
+As explained in details in the "Counting Objects" article referenced
+above, the goal of the delta island mechanism is for a hosting
+provider to make it possible to have the "forks" of a repository share
+as much storage as possible while preventing object packs to contain
+deltas between different forks.
+
+If deltas between different forks are not prevented, when users clone
+or fetch a fork, preparing the pack that should be sent to them can be
+very costly CPU wise, as objects from a different fork should not be
+sent, which means that a lot of deltas might need to be computed
+again (instead of reusing existing deltas).
+
+
+The following changes have been made since the previous iteration:
+
+* suggested by Ramsay: remove the first patch that made
+  get_delta_base() in packfile.c non static as it is not necessary
+
+* suggested by Peff: use ALLOC_GROW() in island_config_callback() in
+  delta-islands.c in patch 1/7
+
+* suggested by SZEDER Gabor: use ALLOC_ARRAY() in
+  deduplicate_islands() in delta-islands.c in patch 1/7
+
+
+This patch series is also available on GitHub in:
+
+https://github.com/chriscool/git/commits/delta-islands
+
+The previous versions are available there:
+
+V3: https://github.com/chriscool/git/commits/delta-islands29
+V2: https://github.com/chriscool/git/commits/delta-islands19
+V1: https://github.com/chriscool/git/commits/delta-islands6
+
+V3: https://public-inbox.org/git/20180809155532.26151-1-chriscool@tuxfamily.org/
+V2: https://public-inbox.org/git/20180805172525.15278-1-chriscool@tuxfamily.org/
+V1: https://public-inbox.org/git/20180722054836.28935-1-chriscool@tuxfamily.org/
+
+
+Christian Couder (3):
+  pack-objects: refactor code into compute_layer_order()
+  pack-objects: move tree_depth into 'struct packing_data'
+  pack-objects: move 'layer' into 'struct packing_data'
+
+Jeff King (4):
+  Add delta-islands.{c,h}
+  pack-objects: add delta-islands support
+  repack: add delta-islands support
+  t: add t5319-delta-islands.sh
+
+ Documentation/config.txt           |  19 ++
+ Documentation/git-pack-objects.txt |  97 ++++++
+ Documentation/git-repack.txt       |   5 +
+ Makefile                           |   1 +
+ builtin/pack-objects.c             | 137 +++++---
+ builtin/repack.c                   |   9 +
+ delta-islands.c                    | 502 +++++++++++++++++++++++++++++
+ delta-islands.h                    |  11 +
+ pack-objects.c                     |  12 +
+ pack-objects.h                     |  39 +++
+ t/t5319-delta-islands.sh           | 143 ++++++++
+ 11 files changed, 932 insertions(+), 43 deletions(-)
+ create mode 100644 delta-islands.c
+ create mode 100644 delta-islands.h
+ create mode 100755 t/t5319-delta-islands.sh
+
+-- 
+2.18.0.554.gdb07901040.dirty
+
