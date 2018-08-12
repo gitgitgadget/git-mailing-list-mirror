@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 474201F428
-	for <e@80x24.org>; Sun, 12 Aug 2018 05:12:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B3AF1F404
+	for <e@80x24.org>; Sun, 12 Aug 2018 05:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727650AbeHLHtA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 12 Aug 2018 03:49:00 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:39182 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727012AbeHLHs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 12 Aug 2018 03:48:59 -0400
-Received: by mail-wm0-f54.google.com with SMTP id q8-v6so5604361wmq.4
-        for <git@vger.kernel.org>; Sat, 11 Aug 2018 22:12:16 -0700 (PDT)
+        id S1727713AbeHLHtC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 12 Aug 2018 03:49:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35534 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727531AbeHLHtC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 12 Aug 2018 03:49:02 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so5622347wmc.0
+        for <git@vger.kernel.org>; Sat, 11 Aug 2018 22:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MJxqLaPXf4jn4Kw77cGc5qFaQyL0+/fqhnHpkvfOdxA=;
-        b=kjpvuW8n9ZrN6/5ui0CHq0nspfJjrLwRi7a4VS2cr5Ni7qqfhIT3pqF818A+BwXYVW
-         nTAO2gEnZLKYk2KJ67zPVbcsz0c8Jyei+Wim+4V4flOF6mXALZ4l7mV5q2abTou3fdQD
-         rpdWAbyYe1Y3Yb9+Y3MMfOUvoHsEtSIN2xYJwqhoyN1rQ23LmFrJOxX2gfTHnl7vsWKR
-         kpet4TIiC2P98gCTjSUA1L+joihltVSzGVnfGWQIdoekgE4vmn17invi+Wr/ndF5rEE+
-         uA7umJU9pRbwBj9zdV3BFxNKoJfCHaMPSLkq4fC8i4YStC3Ce+WpREIlMcmvIMfhPDF+
-         lJQA==
+        bh=Eubhzx8TzN3Yd21MOthL8IM1RZK5wYyK9ZrY9JEOxCk=;
+        b=krrOoanqVKw57ZBEdVVComy6+O0JoXKPhwKPmq3wnd2/NZ+PL5K/owAJ5bIVgwVZa5
+         ol6LIwwhh8er/svhzlKBK1I+bLM5olJv28Ig87HPe/ydS8Nyav0f+F5/9qKBgaHQ0Exe
+         AAIDSE/qZAvCaIUkOfrKPkk+x1KLRz7fw/hOMswJAWvcPje2Ldqk+ED9cktZDSMvtPVp
+         hZskYZTZoU9kELRtgR+wxIJEsPi57o0xtX2N08ILMDIgeFic1/YKdL7sdKtXEAiP54zc
+         vABTNfC8bEHRulF2SeTfo8qamcFTQImiLSpJR7UIgIYAqn0cem90FURqBOLUkt+S4/8X
+         h4qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MJxqLaPXf4jn4Kw77cGc5qFaQyL0+/fqhnHpkvfOdxA=;
-        b=RrEu705zj0hnnAb4guS+2pXRBnSpE7FExWH3LLIxcTnTdHJWjTswdgzVwLhcflBgl/
-         0EzTgTv7Tw+5I2QqecKmUp7dOVyZMFY5bfyIbxShusA+Yj5XbI0+EyahYCrh8zg0NelH
-         X7BGJj9TfYQn4SX7S6HHByFpt3G8t5ohCAbioy/om5l8iY/o4PrWdXh0DCp7qZoyNnyh
-         wJjziCnbc9SnY1ObB/cmqohWFGwX2o00XtSpdyGzOtzM1LTBr1gmLgBGYE08F9F93vlc
-         HBR/vBaSsQeCafdCwsJZ9l6NvG/D+kSTbydhefXvpSn+lTlZwYMc94rBjxcOVT7Ydvq7
-         p37A==
-X-Gm-Message-State: AOUpUlF/KH/XNKerw6Jc1ZEtdTRktENtMy3EhNjFXE7CnFvPIaqTPjEd
-        /8vq8/fskQa6DSVoqIT3R8UtYkEA
-X-Google-Smtp-Source: AA+uWPwhh3WlOJjgaip9T+uxlbzeTo7PPQ6Mf1PI48ZHc9Q8+Nyk+WB7Wa9zz1uTAQ9NKOwatXYlXA==
-X-Received: by 2002:a1c:6d1c:: with SMTP id i28-v6mr5428198wmc.97.1534050735241;
-        Sat, 11 Aug 2018 22:12:15 -0700 (PDT)
+        bh=Eubhzx8TzN3Yd21MOthL8IM1RZK5wYyK9ZrY9JEOxCk=;
+        b=Im5ZTMKyxXuDk5D1kSfDqqkBIjbAjC1zeuU3nJUJbsHZ+6Jehp7ZAn0R2AHRAADhjx
+         AgA1rq5QEFHCTMcBu7XNKWmFENGSXkN5Mzy60TuLpHpxF3cGOkLNna8KxC7V1djroW5d
+         tb+RWciWf6qKB4R4XpZKwtCgIGaoAA+i1fZNHsEftpoNtLjm3KQH4ryxTqivDbflQt2w
+         Olb8R7LR0lm+QPDpWATctGy6XIMKMa4zzeRV/hqspDBqxTB8jDlI4XtSNqYd1SrPbyjn
+         bYeRU7DN/Fopc3mDXziRBcKDwHKcK2R9Isp9sdyPy+J+WNYloFgptdqzjLrm2wBXPbYT
+         i8Dg==
+X-Gm-Message-State: AOUpUlF8rZkCW6T5Ywdnd0R8Yh9HRvSSGA4kC8qUzb0VvG6vPoI8GbxN
+        D2woaPC0DHrLZ6PfLSzBT329OsYb
+X-Google-Smtp-Source: AA+uWPx9u3xQr9+sK+QufG0TjPoYNR2/NwFXwIFSIetGuEvWnJ8zJ6FvqSgaE2+io2grVMXE1OmUiQ==
+X-Received: by 2002:a1c:5bc7:: with SMTP id p190-v6mr5057005wmb.101.1534050739088;
+        Sat, 11 Aug 2018 22:12:19 -0700 (PDT)
 Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
-        by smtp.gmail.com with ESMTPSA id g10-v6sm13281205wrv.90.2018.08.11.22.12.13
+        by smtp.gmail.com with ESMTPSA id g10-v6sm13281205wrv.90.2018.08.11.22.12.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 11 Aug 2018 22:12:14 -0700 (PDT)
+        Sat, 11 Aug 2018 22:12:18 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER Gabor <szeder.dev@gmail.com>
-Subject: [PATCH v4 3/7] pack-objects: add delta-islands support
-Date:   Sun, 12 Aug 2018 07:11:47 +0200
-Message-Id: <20180812051151.6425-4-chriscool@tuxfamily.org>
+Subject: [PATCH v4 6/7] pack-objects: move tree_depth into 'struct packing_data'
+Date:   Sun, 12 Aug 2018 07:11:50 +0200
+Message-Id: <20180812051151.6425-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.554.gdb07901040.dirty
 In-Reply-To: <20180812051151.6425-1-chriscool@tuxfamily.org>
 References: <20180812051151.6425-1-chriscool@tuxfamily.org>
@@ -72,333 +72,162 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+This reduces the size of 'struct object_entry' and therefore
+makes packing objects more efficient.
 
-Implement support for delta islands in git pack-objects
-and document how delta islands work in
-"Documentation/git-pack-objects.txt" and Documentation/config.txt.
+This also renames cmp_tree_depth() into tree_depth_compare(),
+as it is more modern to have the name of the compare functions
+end with "compare".
 
-This allows users to setup delta islands in their config and
-get the benefit of less disk usage while cloning and fetching
-is still quite fast and not much more CPU intensive.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config.txt           | 15 +++++
- Documentation/git-pack-objects.txt | 97 ++++++++++++++++++++++++++++++
- builtin/pack-objects.c             | 57 +++++++++++++++---
- 3 files changed, 161 insertions(+), 8 deletions(-)
+ builtin/pack-objects.c |  4 ++--
+ delta-islands.c        | 27 ++++++++++++++++++---------
+ pack-objects.c         |  6 ++++++
+ pack-objects.h         | 21 ++++++++++++++++++++-
+ 4 files changed, 46 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 63365dcf3d..27bb77f9e7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2585,6 +2585,21 @@ Note that changing the compression level will not automatically recompress
- all existing objects. You can force recompression by passing the -F option
- to linkgit:git-repack[1].
- 
-+pack.island::
-+	An extended regular expression configuring a set of delta
-+	islands. See "DELTA ISLANDS" in linkgit:git-pack-objects[1]
-+	for details.
-+
-+pack.islandCore::
-+	Specify an island name which gets to have its objects be
-+	packed first. This creates a kind of pseudo-pack at the front
-+	of one pack, so that the objects from the specified island are
-+	hopefully faster to copy into any pack that should be served
-+	to a user requesting these objects. In practice this means
-+	that the island specified should likely correspond to what is
-+	the most commonly cloned in the repo. See also "DELTA ISLANDS"
-+	in linkgit:git-pack-objects[1].
-+
- pack.deltaCacheSize::
- 	The maximum memory in bytes used for caching deltas in
- 	linkgit:git-pack-objects[1] before writing them out to a pack.
-diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
-index d95b472d16..40c825c381 100644
---- a/Documentation/git-pack-objects.txt
-+++ b/Documentation/git-pack-objects.txt
-@@ -289,6 +289,103 @@ Unexpected missing object will raise an error.
- --unpack-unreachable::
- 	Keep unreachable objects in loose form. This implies `--revs`.
- 
-+--delta-islands::
-+	Restrict delta matches based on "islands". See DELTA ISLANDS
-+	below.
-+
-+
-+DELTA ISLANDS
-+-------------
-+
-+When possible, `pack-objects` tries to reuse existing on-disk deltas to
-+avoid having to search for new ones on the fly. This is an important
-+optimization for serving fetches, because it means the server can avoid
-+inflating most objects at all and just send the bytes directly from
-+disk. This optimization can't work when an object is stored as a delta
-+against a base which the receiver does not have (and which we are not
-+already sending). In that case the server "breaks" the delta and has to
-+find a new one, which has a high CPU cost. Therefore it's important for
-+performance that the set of objects in on-disk delta relationships match
-+what a client would fetch.
-+
-+In a normal repository, this tends to work automatically. The objects
-+are mostly reachable from the branches and tags, and that's what clients
-+fetch. Any deltas we find on the server are likely to be between objects
-+the client has or will have.
-+
-+But in some repository setups, you may have several related but separate
-+groups of ref tips, with clients tending to fetch those groups
-+independently. For example, imagine that you are hosting several "forks"
-+of a repository in a single shared object store, and letting clients
-+view them as separate repositories through `GIT_NAMESPACE` or separate
-+repos using the alternates mechanism. A naive repack may find that the
-+optimal delta for an object is against a base that is only found in
-+another fork. But when a client fetches, they will not have the base
-+object, and we'll have to find a new delta on the fly.
-+
-+A similar situation may exist if you have many refs outside of
-+`refs/heads/` and `refs/tags/` that point to related objects (e.g.,
-+`refs/pull` or `refs/changes` used by some hosting providers). By
-+default, clients fetch only heads and tags, and deltas against objects
-+found only in those other groups cannot be sent as-is.
-+
-+Delta islands solve this problem by allowing you to group your refs into
-+distinct "islands". Pack-objects computes which objects are reachable
-+from which islands, and refuses to make a delta from an object `A`
-+against a base which is not present in all of `A`'s islands. This
-+results in slightly larger packs (because we miss some delta
-+opportunities), but guarantees that a fetch of one island will not have
-+to recompute deltas on the fly due to crossing island boundaries.
-+
-+When repacking with delta islands the delta window tends to get
-+clogged with candidates that are forbidden by the config. Repacking
-+with a big --window helps (and doesn't take as long as it otherwise
-+might because we can reject some object pairs based on islands before
-+doing any computation on the content).
-+
-+Islands are configured via the `pack.island` option, which can be
-+specified multiple times. Each value is a left-anchored regular
-+expressions matching refnames. For example:
-+
-+-------------------------------------------
-+[pack]
-+island = refs/heads/
-+island = refs/tags/
-+-------------------------------------------
-+
-+puts heads and tags into an island (whose name is the empty string; see
-+below for more on naming). Any refs which do not match those regular
-+expressions (e.g., `refs/pull/123`) is not in any island. Any object
-+which is reachable only from `refs/pull/` (but not heads or tags) is
-+therefore not a candidate to be used as a base for `refs/heads/`.
-+
-+Refs are grouped into islands based on their "names", and two regexes
-+that produce the same name are considered to be in the same
-+island. The names are computed from the regexes by concatenating any
-+capture groups from the regex, with a '-' dash in between. (And if
-+there are no capture groups, then the name is the empty string, as in
-+the above example.) This allows you to create arbitrary numbers of
-+islands. Only up to 14 such capture groups are supported though.
-+
-+For example, imagine you store the refs for each fork in
-+`refs/virtual/ID`, where `ID` is a numeric identifier. You might then
-+configure:
-+
-+-------------------------------------------
-+[pack]
-+island = refs/virtual/([0-9]+)/heads/
-+island = refs/virtual/([0-9]+)/tags/
-+island = refs/virtual/([0-9]+)/(pull)/
-+-------------------------------------------
-+
-+That puts the heads and tags for each fork in their own island (named
-+"1234" or similar), and the pull refs for each go into their own
-+"1234-pull".
-+
-+Note that we pick a single island for each regex to go into, using "last
-+one wins" ordering (which allows repo-specific config to take precedence
-+over user-wide config, and so forth).
-+
- SEE ALSO
- --------
- linkgit:git-rev-list[1]
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 99b6329399..30ef48dc43 100644
+index 30ef48dc43..fd3e514b31 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -24,6 +24,7 @@
- #include "streaming.h"
- #include "thread-utils.h"
- #include "pack-bitmap.h"
-+#include "delta-islands.h"
- #include "reachable.h"
- #include "sha1-array.h"
- #include "argv-array.h"
-@@ -59,6 +60,7 @@ static struct packing_data to_pack;
+@@ -2716,8 +2716,8 @@ static void show_object(struct object *obj, const char *name, void *data)
+ 			depth++;
  
- static struct pack_idx_entry **written_list;
- static uint32_t nr_result, nr_written, nr_seen;
-+static uint32_t write_layer;
- 
- static int non_empty;
- static int reuse_delta = 1, reuse_object = 1;
-@@ -93,6 +95,8 @@ static uint16_t write_bitmap_options;
- 
- static int exclude_promisor_objects;
- 
-+static int use_delta_islands;
-+
- static unsigned long delta_cache_size = 0;
- static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- static unsigned long cache_max_small_delta_size = 1000;
-@@ -607,7 +611,7 @@ static inline void add_to_write_order(struct object_entry **wo,
- 			       unsigned int *endp,
- 			       struct object_entry *e)
- {
--	if (e->filled)
-+	if (e->filled || e->layer != write_layer)
- 		return;
- 	wo[(*endp)++] = e;
- 	e->filled = 1;
-@@ -710,13 +714,14 @@ static void compute_layer_order(struct object_entry **wo, unsigned int *wo_end)
- 	 * Finally all the rest in really tight order
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
--		if (!objects[i].filled)
-+		if (!objects[i].filled && objects[i].layer == write_layer)
- 			add_family_to_write_order(wo, wo_end, &objects[i]);
+ 		ent = packlist_find(&to_pack, obj->oid.hash, NULL);
+-		if (ent && depth > ent->tree_depth)
+-			ent->tree_depth = depth;
++		if (ent && depth > oe_tree_depth(&to_pack, ent))
++			oe_set_tree_depth(&to_pack, ent, depth);
  	}
  }
  
- static struct object_entry **compute_write_order(void)
+diff --git a/delta-islands.c b/delta-islands.c
+index c0b0da6837..14d34e16cb 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -224,17 +224,23 @@ static void mark_remote_island_1(struct remote_island *rl, int is_core_island)
+ 	island_counter++;
+ }
+ 
+-static int cmp_tree_depth(const void *va, const void *vb)
++struct tree_islands_todo {
++	struct object_entry *entry;
++	unsigned int depth;
++};
++
++static int tree_depth_compare(const void *a, const void *b)
  {
-+	uint32_t max_layers = 1;
- 	unsigned int i, wo_end;
+-	struct object_entry *a = *(struct object_entry **)va;
+-	struct object_entry *b = *(struct object_entry **)vb;
+-	return a->tree_depth - b->tree_depth;
++	const struct tree_islands_todo *todo_a = a;
++	const struct tree_islands_todo *todo_b = b;
++
++	return todo_a->depth - todo_b->depth;
+ }
  
- 	struct object_entry **wo;
-@@ -748,14 +753,14 @@ static struct object_entry **compute_write_order(void)
+ void resolve_tree_islands(int progress, struct packing_data *to_pack)
+ {
+ 	struct progress *progress_state = NULL;
+-	struct object_entry **todo;
++	struct tree_islands_todo *todo;
+ 	int nr = 0;
+ 	int i;
+ 
+@@ -250,16 +256,19 @@ void resolve_tree_islands(int progress, struct packing_data *to_pack)
  	 */
- 	for_each_tag_ref(mark_tagged, NULL);
+ 	ALLOC_ARRAY(todo, to_pack->nr_objects);
+ 	for (i = 0; i < to_pack->nr_objects; i++) {
+-		if (oe_type(&to_pack->objects[i]) == OBJ_TREE)
+-			todo[nr++] = &to_pack->objects[i];
++		if (oe_type(&to_pack->objects[i]) == OBJ_TREE) {
++			todo[nr].entry = &to_pack->objects[i];
++			todo[nr].depth = oe_tree_depth(to_pack, &to_pack->objects[i]);
++			nr++;
++		}
+ 	}
+-	QSORT(todo, nr, cmp_tree_depth);
++	QSORT(todo, nr, tree_depth_compare);
  
--	/*
--	 * Give the objects in the original recency order until
--	 * we see a tagged tip.
--	 */
-+	if (use_delta_islands)
-+		max_layers = compute_pack_layers(&to_pack);
+ 	if (progress)
+ 		progress_state = start_progress(_("Propagating island marks"), nr);
+ 
+ 	for (i = 0; i < nr; i++) {
+-		struct object_entry *ent = todo[i];
++		struct object_entry *ent = todo[i].entry;
+ 		struct island_bitmap *root_marks;
+ 		struct tree *tree;
+ 		struct tree_desc desc;
+diff --git a/pack-objects.c b/pack-objects.c
+index 92708522e7..30314572e6 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -160,6 +160,9 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 
+ 		if (!pdata->in_pack_by_idx)
+ 			REALLOC_ARRAY(pdata->in_pack, pdata->nr_alloc);
 +
- 	ALLOC_ARRAY(wo, to_pack.nr_objects);
- 	wo_end = 0;
++		if (pdata->tree_depth)
++			REALLOC_ARRAY(pdata->tree_depth, pdata->nr_alloc);
+ 	}
  
--	compute_layer_order(wo, &wo_end);
-+	for (; write_layer < max_layers; ++write_layer)
-+		compute_layer_order(wo, &wo_end);
+ 	new_entry = pdata->objects + pdata->nr_objects++;
+@@ -175,5 +178,8 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 	if (pdata->in_pack)
+ 		pdata->in_pack[pdata->nr_objects - 1] = NULL;
  
- 	if (wo_end != to_pack.nr_objects)
- 		die("ordered %u objects, expected %"PRIu32, wo_end, to_pack.nr_objects);
-@@ -1514,7 +1519,8 @@ static void check_object(struct object_entry *entry)
- 			break;
- 		}
++	if (pdata->tree_depth)
++		pdata->tree_depth[pdata->nr_objects - 1] = 0;
++
+ 	return new_entry;
+ }
+diff --git a/pack-objects.h b/pack-objects.h
+index 8eecd67991..3cb5527eeb 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -101,7 +101,6 @@ struct object_entry {
+ 	unsigned no_try_delta:1;
+ 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
  
--		if (base_ref && (base_entry = packlist_find(&to_pack, base_ref, NULL))) {
-+		if (base_ref && (base_entry = packlist_find(&to_pack, base_ref, NULL)) &&
-+		    in_same_island(&entry->idx.oid, &base_entry->idx.oid)) {
- 			/*
- 			 * If base_ref was set above that means we wish to
- 			 * reuse delta data, and we even found that base
-@@ -1830,6 +1836,11 @@ static int type_size_sort(const void *_a, const void *_b)
- 		return -1;
- 	if (a->preferred_base < b->preferred_base)
- 		return 1;
-+	if (use_delta_islands) {
-+		int island_cmp = island_delta_cmp(&a->idx.oid, &b->idx.oid);
-+		if (island_cmp)
-+			return island_cmp;
-+	}
- 	if (a_size > b_size)
- 		return -1;
- 	if (a_size < b_size)
-@@ -1978,6 +1989,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	if (trg_size < src_size / 32)
- 		return 0;
+-	unsigned int tree_depth; /* should be repositioned for packing? */
+ 	unsigned char layer;
  
-+	if (!in_same_island(&trg->entry->idx.oid, &src->entry->idx.oid))
+ 	unsigned preferred_base:1; /*
+@@ -145,6 +144,9 @@ struct packing_data {
+ 	struct packed_git **in_pack;
+ 
+ 	uintmax_t oe_size_limit;
++
++	/* delta islands */
++	unsigned int *tree_depth;
+ };
+ 
+ void prepare_packing_data(struct packing_data *pdata);
+@@ -350,4 +352,21 @@ static inline void oe_set_delta_size(struct packing_data *pack,
+ 		    "where delta size is the same as entry size");
+ }
+ 
++static inline unsigned int oe_tree_depth(struct packing_data *pack,
++					 struct object_entry *e)
++{
++	if (!pack->tree_depth)
 +		return 0;
++	return pack->tree_depth[e - pack->objects];
++}
 +
- 	/* Load data if not already done */
- 	if (!trg->data) {
- 		read_lock();
-@@ -2516,6 +2530,9 @@ static void prepare_pack(int window, int depth)
- 	uint32_t i, nr_deltas;
- 	unsigned n;
- 
-+	if (use_delta_islands)
-+		resolve_tree_islands(progress, &to_pack);
++static inline void oe_set_tree_depth(struct packing_data *pack,
++				     struct object_entry *e,
++				     unsigned int tree_depth)
++{
++	if (!pack->tree_depth)
++		ALLOC_ARRAY(pack->tree_depth, pack->nr_objects);
++	pack->tree_depth[e - pack->objects] = tree_depth;
++}
 +
- 	get_object_details();
- 
- 	/*
-@@ -2679,6 +2696,9 @@ static void show_commit(struct commit *commit, void *data)
- 
- 	if (write_bitmap_index)
- 		index_commit_for_bitmap(commit);
-+
-+	if (use_delta_islands)
-+		propagate_island_marks(commit);
- }
- 
- static void show_object(struct object *obj, const char *name, void *data)
-@@ -2686,6 +2706,19 @@ static void show_object(struct object *obj, const char *name, void *data)
- 	add_preferred_base_object(name);
- 	add_object_entry(&obj->oid, obj->type, name, 0);
- 	obj->flags |= OBJECT_ADDED;
-+
-+	if (use_delta_islands) {
-+		const char *p;
-+		unsigned depth = 0;
-+		struct object_entry *ent;
-+
-+		for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
-+			depth++;
-+
-+		ent = packlist_find(&to_pack, obj->oid.hash, NULL);
-+		if (ent && depth > ent->tree_depth)
-+			ent->tree_depth = depth;
-+	}
- }
- 
- static void show_object__ma_allow_any(struct object *obj, const char *name, void *data)
-@@ -3013,6 +3046,9 @@ static void get_object_list(int ac, const char **av)
- 	if (use_bitmap_index && !get_object_list_from_bitmap(&revs))
- 		return;
- 
-+	if (use_delta_islands)
-+		load_delta_islands();
-+
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	mark_edges_uninteresting(&revs, show_edge);
-@@ -3192,6 +3228,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		  option_parse_missing_action },
- 		OPT_BOOL(0, "exclude-promisor-objects", &exclude_promisor_objects,
- 			 N_("do not pack objects in promisor packfiles")),
-+		OPT_BOOL(0, "delta-islands", &use_delta_islands,
-+			 N_("respect islands during delta compression")),
- 		OPT_END(),
- 	};
- 
-@@ -3318,6 +3356,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (pack_to_stdout || !rev_list_all)
- 		write_bitmap_index = 0;
- 
-+	if (use_delta_islands)
-+		argv_array_push(&rp, "--topo-order");
-+
- 	if (progress && all_progress_implied)
- 		progress = 2;
- 
+ #endif
 -- 
 2.18.0.554.gdb07901040.dirty
 
