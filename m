@@ -2,191 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DD101F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 22:43:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 487EE1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 23:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731871AbeHNB1S (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 21:27:18 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:46669 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730213AbeHNB1R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 21:27:17 -0400
-Received: by mail-qt0-f202.google.com with SMTP id o18-v6so14472929qtp.13
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=JIzaKKaR9rzksMX96zy+VHy4WMmWl76ft/OdnFSCi5c=;
-        b=Htlh0AW48ON89zJ7lzTmDGjxUyCNI5fJKrtHDEcn6f8BC/pOKejXHKz6/Fx+9cTPY/
-         SsgyFNfnPVpfYxaGzvgoROC112BIawTcXMGKBkspoJE40cydtC1B2XEvGh9RYKXWmqNG
-         841FcWr27QOEijdYVRp1bkC5OOVdE55C8v0SKe5cI0Mtm2fhLSLVzpvnOhyuohdmGn3/
-         oPXmj2GQrkeM7ZZLZY8gQyX5TX3C+iZmb2AG/uZwGfz/m+TiV5zaNVCIRba6ouHct3a0
-         f5kADg65L6ywZGRkWV3AntMPgmGKSk69/3h2nVnUQdPDxzzeaLQNewV8D833bVj1z8WV
-         tpFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=JIzaKKaR9rzksMX96zy+VHy4WMmWl76ft/OdnFSCi5c=;
-        b=Ap0AHI/qHUJ+aNHD6cZnDjl+O5wEYD6ZTNItosgbp+IkzvOyPfP/8nmskXSyX4W9vi
-         MDSGydzDWMCDY2Dzc/KBJDH5IShKgPUzQTKftI/zf95MImF1BHg1PGMSRJ0f9h5Z3VS3
-         UiwIjK8+nlu9dRml6AHWU/TH3n/KFbrWzxoOC59ODoxButt2HSmwbb9eKQaEDUkT71MT
-         ukBmthYk+UcZyt44A0qtOeWGXUtl0L6rpt3jQEVgEax4Z4WCTEafzVqQQKxsbL2tkIAW
-         XAAINYEx7GyG9H5XBW2YL5/LEfdiUCOxWAAtYUPS1CcNx4Vh2Bb7RdpglVRMqi02J0fA
-         ZcJg==
-X-Gm-Message-State: AOUpUlGqNntuxF2Nzei1tMFcJ6rgrGdw7882r6zq1xfHxWE4pHqFb2Pj
-        FPWAminrI1AnCxHh6Tg/J1F2StSxDyZz
-X-Google-Smtp-Source: AA+uWPyznPygQLpZOGQobXasAKhGbntFU0vrLMPCfe9P/M4wy6MCCnvePO3CHie8r/7J5baXME2M31fepzSk
-X-Received: by 2002:a37:29c1:: with SMTP id p62-v6mr11905520qkp.56.1534200181084;
- Mon, 13 Aug 2018 15:43:01 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 15:42:35 -0700
-In-Reply-To: <20180813224235.154580-1-sbeller@google.com>
-Message-Id: <20180813224235.154580-8-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180803222322.261813-1-sbeller@google.com> <20180813224235.154580-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 7/7] submodule--helper: introduce new update-module-mode helper
-From:   Stefan Beller <sbeller@google.com>
-To:     gitster@pobox.com, bmwill@google.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1732463AbeHNBxs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 21:53:48 -0400
+Received: from mout.web.de ([212.227.17.12]:53311 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730203AbeHNBxs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 21:53:48 -0400
+Received: from [192.168.178.36] ([91.20.56.63]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpJ4-1gC5GK1Ixi-00oCJW; Tue, 14
+ Aug 2018 01:09:18 +0200
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
+ <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+ <xmqqmutq5cpo.fsf@gitster-ct.c.googlers.com>
+ <49564417-fac3-ede2-7fd1-e3a5a03e4cfe@web.de>
+ <xmqqd0um3rhx.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <fc24f963-1bca-a638-e292-71044057dabb@web.de>
+Date:   Tue, 14 Aug 2018 01:09:17 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqd0um3rhx.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:us0ktLHLTlGAQq0riNVvj7J96RHWjVLw1a34jEBzffPWwllvNq9
+ jNmISAYQA/BDY5USEbMSEQAxTeDH1QN+fsr16TlzcSdzEOOM2JS39Jc0jkqwb0uv4r4er5Q
+ k+BgYJxAjf5ddGXPXgpI6AtdsEpUk6wZBzUTIRLFXJ9rMmgNJ5Xd/LWoNMz8hsyDs1tnLUp
+ v1zVv1o4QpYpORj83dbTA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qqmFRTZDRaY=:Fx0iG81Xx4w4G+Q68Xrjv1
+ /mvYZXXDPkiIzx2SuXIL+bpGIvQh0z9PBonwFM078E7DOEIFt2jzTRYC7pYRakIBXdvVxdDAe
+ zcyAXT1q10qNa18yVIez//mIrQaQucJCK0LPzkb3N+/5lh0W/toNAC7Mtw81WMZYYc2cVr2jT
+ obNVhvZq7/SQM6V90xZ+0LZmHob5BPHdKOugpreEuA+2BcqfWanZf8ryOPuabTH5ahWvRZBQ9
+ vlpKXKiE7dahpQ4k+ZJ45VIZBCmV6dp+8AJeOwVLRG/7lkv42dwtdRzFx/xTRPjGB8tTbQGCh
+ sUgWuPXkshm94d7WQV4bxus6UpNH8YCvO+TXklJeBlS6Jyzi0r4hyU2aTKIXL8ena7wkDdce6
+ 8zp6f23nqnmIbvjlyMqJGc9nRHooGJdMIN/BNL8PvmJaxs5tmSvMjBsIiyhKMApSw8xp6QJ8c
+ g300ybM+AxU5OtJqfAWJ3+/7CT+QYKVAURhS6n8cgue82T+Dm4eTt3WNVbVsRU9dgipkI3cZr
+ T2atnWlGRTNIKcCpIv7J1BT4IBgG4bTdd1/ZU0YSGkxJRvOxvAC5AuOZDQOF1IVvyiGO/PMBl
+ S6hc70F7hwRZ2TR5OCTv6oKN86UG5AjRu6uwz5wDAFchLrFK1H7UFi868kIU18IYabKL4AfBO
+ AtPLanIzVUao4VsariE2lMQ/32+oM4dlSFK5GMqRsjPpA2SDpBmJTFjkcVvqRhZKhOe+X/n/9
+ +PWQZZ5W2Hz+W10AsBdkdVdGX7qq530JADYV2zaLHk1uVKy2pGXEMJIWq8oRZtZ/Y4lQzlwK5
+ d8Uu2or
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This chews off a bit of the shell part of the update command in
-git-submodule.sh. When writing the C code, keep in mind that the
-submodule--helper part will go away eventually and we want to have
-a C function that is able to determine the submodule update strategy,
-it as a nicety, make determine_submodule_update_strategy accessible
-for arbitrary repositories.
+Am 13.08.2018 um 23:07 schrieb Junio C Hamano:
+> René Scharfe <l.s.r@web.de> writes:
+> 
+>> the mailing list [1], nor on the web interface [2].  The latter shows
+>> extra spaces on the context lines of the first hunk, though, which I
+>> can't see anywhere else.  All the lines look fine in the citation of
+>> Ramsay's reply [3].  So I don't know where these extra spaces are
+>> coming from. :-/
+> 
+> Hmph, interesting.
+> 
+> https://public-inbox.org/git/54a5367f-f832-402c-f51b-3225c92b41ad@web.de/raw
+> 
+> has "Content-Type: text/plain; charset=utf-8; format=flowed".  That
+> page's rendition is more faithful to the bare text.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/submodule--helper.c | 61 +++++++++++++++++++++++++++++++++++++
- git-submodule.sh            | 16 +---------
- 2 files changed, 62 insertions(+), 15 deletions(-)
+That explains it: Thunderbird 60 disables most older Add-ons, among them
+Toggle Word Wrap, which used to turn off format=flowed for me.  I did
+that now using the config settings mailnews.send_plaintext_flowed and
+mailnews.display.disable_format_flowed_support.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 648e1330c15..5c9d1fb496d 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1446,6 +1446,66 @@ static int module_clone(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static void determine_submodule_update_strategy(struct repository *r,
-+						int just_cloned,
-+						const char *path,
-+						const char *update,
-+						struct submodule_update_strategy *out)
-+{
-+	const struct submodule *sub = submodule_from_path(r, &null_oid, path);
-+	char *key;
-+	const char *val;
-+
-+	key = xstrfmt("submodule.%s.update", sub->name);
-+
-+	if (update) {
-+		trace_printf("parsing update");
-+		if (parse_submodule_update_strategy(update, out) < 0)
-+			die(_("Invalid update mode '%s' for submodule path '%s'"),
-+				update, path);
-+	} else if (!repo_config_get_string_const(r, key, &val)) {
-+		if (parse_submodule_update_strategy(val, out) < 0)
-+			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
-+				val, path);
-+	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
-+		trace_printf("loaded thing");
-+		out->type = sub->update_strategy.type;
-+		out->command = sub->update_strategy.command;
-+	} else
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	if (just_cloned &&
-+	    (out->type == SM_UPDATE_MERGE ||
-+	     out->type == SM_UPDATE_REBASE ||
-+	     out->type == SM_UPDATE_NONE))
-+		out->type = SM_UPDATE_CHECKOUT;
-+
-+	free(key);
-+}
-+
-+static int module_update_module_mode(int argc, const char **argv, const char *prefix)
-+{
-+	const char *path, *update = NULL;
-+	int just_cloned;
-+	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
-+
-+	if (argc < 3 || argc > 4)
-+		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
-+
-+	just_cloned = git_config_int("just_cloned", argv[1]);
-+	path = argv[2];
-+
-+	if (argc == 4)
-+		update = argv[3];
-+
-+	determine_submodule_update_strategy(the_repository,
-+					    just_cloned, path, update,
-+					    &update_strategy);
-+	fputs(submodule_strategy_to_string(&update_strategy), stdout);
-+
-+	return 0;
-+}
-+
- struct update_clone_data {
- 	const struct submodule *sub;
- 	struct object_id oid;
-@@ -2080,6 +2140,7 @@ static struct cmd_struct commands[] = {
- 	{"list", module_list, 0},
- 	{"name", module_name, 0},
- 	{"clone", module_clone, 0},
-+	{"update-module-mode", module_update_module_mode, 0},
- 	{"update-clone", update_clone, 0},
- 	{"ensure-core-worktree", ensure_core_worktree, 0},
- 	{"relative-path", resolve_relative_path, 0},
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 19d010eac06..19c9f1215e1 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -537,27 +537,13 @@ cmd_update()
- 
- 		git submodule--helper ensure-core-worktree "$sm_path"
- 
--		name=$(git submodule--helper name "$sm_path") || exit
--		if ! test -z "$update"
--		then
--			update_module=$update
--		else
--			update_module=$(git config submodule."$name".update)
--			if test -z "$update_module"
--			then
--				update_module="checkout"
--			fi
--		fi
-+		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
- 
- 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
- 
- 		if test $just_cloned -eq 1
- 		then
- 			subsha1=
--			case "$update_module" in
--			merge | rebase | none)
--				update_module=checkout ;;
--			esac
- 		else
- 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
- 				git rev-parse --verify HEAD) ||
--- 
-2.18.0.865.gffc8e1a3cd6-goog
+> The funky " -" one I showed was what Gnus/Emacs came up with as the
+> result of its best effort to make the format=flawed into something
+> closer to "text", I think X-<.  
 
+Sorry. :(
+
+> In any case, I do not think format=flowed can be reverted reliably
+> (or can it be?  If so we should teach mailinfo to repair them).
+
+RFC3676 gives me a headache, perhaps I should go to bed.  If we can
+assume that lines don't have trailing spaces originally then we should
+be able to reconstruct their contents, no?  "A generating agent SHOULD:
+[...] Trim spaces before user-inserted hard line breaks.", i.e. lines
+with trailing spaces are doomed to truncation without hope for repair.
+
+René
