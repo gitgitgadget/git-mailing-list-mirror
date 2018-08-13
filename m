@@ -2,80 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F6771F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 21:18:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C6D31F428
+	for <e@80x24.org>; Mon, 13 Aug 2018 21:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730213AbeHNACR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 20:02:17 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:35527 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729815AbeHNACR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 20:02:17 -0400
-Received: by mail-wm0-f50.google.com with SMTP id o18-v6so10241448wmc.0
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 14:18:19 -0700 (PDT)
+        id S1730253AbeHNADR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 20:03:17 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:46340 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729815AbeHNADQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 20:03:16 -0400
+Received: by mail-yw1-f67.google.com with SMTP id e23-v6so14669677ywe.13
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 14:19:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=s7JQSv8ZdLNt8EdZpCiGYqY+VMDzmelZp3gOIUYvMUc=;
-        b=sAduX9RWIbPHtxmXcd0m+jhqQHcWyUrzJVfk04ziKADncPQdcoJMaP4DTeP2m707af
-         ZXhee19ABQrOHm2is5IKp7N74UaP10aNagqU3Q/s0SbVxjf+1pFwRGMyFIB6PVCmOegm
-         zMzn9xZpinrrGX2+8v6eKBb6bl0St9MUo4u6NvDvIwAU5bCMRZglyaHlJTNfomTD3qhT
-         ncgN1qT25Ujn+wNct5lZo+GhCBvlfprnRmXK4Lg5EsxW/AbUyDpsFN69LJaqbW1RVrwA
-         nQrEXEw2azi8agqm0IN//uMTgCoSoq9Elbv+Bu97ez3agI9aKEjbQSM/LfQrGKNdDaUR
-         idbw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Hw7lNreotNZ9KBvuiFIQlhVo+uCCbmXOnNd/nnlzMv8=;
+        b=Dj7+w8UeSCbkuR0G+azBpnUAdhSE1erVxllmxKqBQaie/HmPDRq3CMTy6Bl+ZsLXH9
+         g5NLtu/e6A6RkZfTsPPXpUndAqF3Dc8hNKEkjIp1V0dmcYeDat8vtjpxdaqlHl9UdYtg
+         uikbD9MPixoywnCGvrH8v+Z7UWPxWTZ3lvGaswHa1SPG+otEEn6lEYOTSrJ4ZUruZcDv
+         aIx82uxxjonW4Bx5bDl+HBKmPEyIGP2D8xj8qazo3U90F5q0diMRAGQMApXK0ZCrPjOd
+         gDi6D4i4V8zW0PWuZzO/TuXItNbK4/qCMuQeArLk1V7i2CgAJG9LnepWJFBiXbWcZd6H
+         Eu9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=s7JQSv8ZdLNt8EdZpCiGYqY+VMDzmelZp3gOIUYvMUc=;
-        b=TKuWSh9/5QwEMnz3dylIOlY9VRomp6CC9xFT5AO5WsACvoCjLeCF9igA5r6EF3IJjc
-         ZHXV0VZj3hNQgOyhR4tQa5ccHHSLV16vchlP+DcJVOAqLnGT7JosQ+RVuahHbtAHHMmP
-         u8r+T1YWwJjXizcKgmZQ+dYzUgnm6hWLTnML1wgGB+MoNQAOKqHK4G3B+9A3DA5E0R2O
-         caP+naVLk2X9++293v+t5tZ5XGQLRY3AGoVsqSX6ibnAav3x1qSqzTFlaHh0JHJ1Qp6P
-         pr6lcRW5MRkH8OjaEB9amCePekiR5FxkqP0DxX4r//aMoL5g3GFq0hROcTosX9SMF7kY
-         0wdg==
-X-Gm-Message-State: AOUpUlFwSPAy+FwESI7gDwOqo58RNh4XvqQ09FgqD2N0WzuWuhVbEF/Y
-        yoBiRj6h9qBkhzc9PS/DCEM=
-X-Google-Smtp-Source: AA+uWPyu/F6jmHAZssPs+b/A4e5cJwxT4Beu8i2zEOkBazAj3Oq1d+m+wDp5h8FDqBJnqotGgvkzWg==
-X-Received: by 2002:a1c:1f10:: with SMTP id f16-v6mr9647574wmf.112.1534195098385;
-        Mon, 13 Aug 2018 14:18:18 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x7-v6sm14017654wrr.95.2018.08.13.14.18.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Aug 2018 14:18:17 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 02/24] cache-tree: wrap the_index based wrappers with #ifdef
-References: <20180813161441.16824-1-pclouds@gmail.com>
-        <20180813161441.16824-3-pclouds@gmail.com>
-Date:   Mon, 13 Aug 2018 14:18:16 -0700
-In-Reply-To: <20180813161441.16824-3-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Mon, 13 Aug 2018 18:14:19 +0200")
-Message-ID: <xmqq8t5a3qzr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Hw7lNreotNZ9KBvuiFIQlhVo+uCCbmXOnNd/nnlzMv8=;
+        b=aZRRfm2bBxxQLpyUYiTmLOFGmfslhYRd1qpea5q+6eb0eA2jtgWOSOp9qnybAJRZ2s
+         mWy0U8LiEx7TI6ETf4ynbCfdFhrZLywxCuqJY3EcHDesl+rVyD0D8qPjUBF7lh+4z0ZN
+         AwTFgvHuzArjBY1Xt8UGN91SDXWJWBC9gbEH/CzaiH2GCSiCumjraD3FPZdHIZFGKYqH
+         b6l9z551IQBlT+uAQYi417+nBxzttrVEPl+q83MXzDoAZ97gbTN0mA8s/W4xSAmpkWuG
+         PgmApJxdSNuyCz3u4tEQPyBjDUaaz8N+MLBqWkL+05DnCoCn8p1ZZuQSHL+QiV3A4+wZ
+         SykA==
+X-Gm-Message-State: AOUpUlGfoMGHf7ThPmUdFze0vU2SEBuM7GXnGSgmde6lUswSy7foEGGQ
+        m/3Eg+p/LXlpDhoj/B604z6W1TZK2C7299kEHdWmDw==
+X-Google-Smtp-Source: AA+uWPwo0bBhMtRkAAfRO2A01H7Og3uou+jCtVAAM3CeZLpWKB4cebwXYSLdDGzafOStjahEOgCxCW7vxAsJZcdaeEk=
+X-Received: by 2002:a25:cc03:: with SMTP id l3-v6mr10051225ybf.334.1534195158562;
+ Mon, 13 Aug 2018 14:19:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180813163108.GA6731@sigill.intra.peff.net> <87h8jyrtj6.fsf@evledraar.gmail.com>
+ <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com> <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
+ <20180813210617.GA19738@sigill.intra.peff.net>
+In-Reply-To: <20180813210617.GA19738@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Aug 2018 14:19:07 -0700
+Message-ID: <CAGZ79kaNa2bo31rQexs4rAH6bAz1rMzpxS3-fSFE6Cj87E8saw@mail.gmail.com>
+Subject: Re: Contributor Summit planning
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-
-> This puts update_main_cache_tree() and write_cache_as_tree() in the
-> same group of "index compat" functions that assume the_index
-> implicitly, which should only be used within builtin/ or t/helper.
+On Mon, Aug 13, 2018 at 2:06 PM Jeff King <peff@peff.net> wrote:
 >
-> sequencer.c is also updated to not use these functions. As of now, no
-> files outside builtin/ use these functions anymore.
+> On Mon, Aug 13, 2018 at 01:41:51PM -0700, Stefan Beller wrote:
+>
+> > > Oh, using "git shortlog" might be also simpler ;-)
+> >
+> > I guess you'd need to memorize a different set of flags for that
+> > as without -s it would be harder to parse than the oneliner above.
+>
+> I frequently using "git shortlog -ns" to see who is active (especially
+> coupled with "--since=".
+>
+> I also use "--no-merges", because it makes me look a lot better when
+> compared relatively to Junio. :) I agree with you that "--no-merges"
+> means we don't capture all the work that goes into integrating. But
+> there's a lot of work that isn't reflected in commit count (reviewing,
+> bug triage, the fact that some commits are much bigger than others,
+> etc). So at best it's a starting point for figuring out who
+> participates.
 
-Makes sense.
+Heh. I tried finding that out, by looking at the public inbox repository
+that contains the mailing list. (Recently I was looking at that repo to
+learn about our workflow for different reasons, too)
+
+However the mailing list participation numbers there doesn't really
+help me:
+
+~/git-ml$ git shortlog --since 2017 -sne
+  3721  Junio C Hamano <gitster@pobox.com>
+  2166  Stefan Beller <stefanbeller@gmail.com>
+  2071  Jeff King <peff@peff.net>
+
+and I certainly do not provide as much value as Junio or you do;
+I am just good at resending long patch series to drive up the email
+count. But I think that data would be also interesting to look at if
+we were to find out what drives the community.
+
+Maybe some derived metrics posts on mailing list divided by
+commits appearing in origin/next can guide if one is a effective
+contributor; but then as you said there are other ways to contribute
+effectively as well.
+
+Reviewing and bug triage do show up in the mailing
+list but not as commits in git.git, but the numbers alone would
+not hint at the quality. In fact the opposite is the case: if you only
+need one email to diagnose a bug, suggest a workaround and
+include a proper patch, it is more helpful to the community than
+having more emails, potentially going back and forth.
