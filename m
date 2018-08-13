@@ -2,131 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DE191F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 18:24:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18B621F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 18:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730022AbeHMVH2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 17:07:28 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:32768 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729025AbeHMVH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 17:07:28 -0400
-Received: by mail-yw1-f68.google.com with SMTP id c135-v6so14297646ywa.0
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:24:06 -0700 (PDT)
+        id S1729748AbeHMVIB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 17:08:01 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38151 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729708AbeHMVIB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 17:08:01 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v14-v6so15082372wro.5
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w7O91r8/QUSl7tbK0HETC4GE4xonErfKdInW7bxh0Wo=;
-        b=iHlJ6RxmzE7S0SBLFB8wS3S/u+pjE0J3OW7jZkpfjb7WqipGxd5nUFnRGv9jtX+VIY
-         fM0t6EyuHLl9yRbQTbV3qJbBQufR50URL8+hCKwM7mC42GnLgVEvKmU656edFANYWZXp
-         VkSpJVJGnRiMUK71dD6/rwq+WMYvsg2Xul3L6Bjo/XlIJBbzC7da/v+DMvA7rD5clxT2
-         EwcI/wLoI7bs97wUgZo6BgdD8+RPnZwt46Pfbrwi8g8HwyWqxCM+tFUTLVY4Neku/K2M
-         Z+B0AvqZtRrTayR3EjPZVdQVVXDIcZAu35+/MWmdqeGJj6MzcrWdPW83Mfcm1xHusrGR
-         vXlA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=kz9r40oEY1fFPHfyKK396wZOVSQAC0fsoa1ZW7LIMbY=;
+        b=eWyeaRtOIszvqCi74NLS+/KiF1qbHgOaAt/9iSr5Dw/9R38FKpz7txhOXcAHyKLShx
+         vrX3hIZs3cqho4pR63kxOoJA6lj7JWuBb2Ss4P1TFJwpfLsVq8QhdUvVX2Yc6BUkp5t8
+         7D7NzwhczsntUofs8S09lCmEnEz4Q6kvCttPmY7Nzi3agl2n18zjT1oml6dTxyWscVeF
+         vBwqo+lfnJNn4vt3DHflWxLgcXsn7uSm+xt+FrMppSnGFnUtrglqnfsiG/2F5E45qVcm
+         y7vQGjTO+QZ6sMX1lkC43aZ3EEbWA1ET7ttzsFdRh5r4uJU2ejkFXk2ZetL6BHWpot6X
+         5LSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w7O91r8/QUSl7tbK0HETC4GE4xonErfKdInW7bxh0Wo=;
-        b=WCi3L/KGsU6qdMj0GaKvi9hlfdq1OZvkvMtTfSyVqwIs5iqIpjmWXJQ2GYhYDfhSSC
-         0koJKZmPCioLR0qPL0J1V3m6PVfsSlEcGluQ//60MeLFOkFAC9qBFTqORD7utfAUc2ay
-         zupCNSERqnac9qdML6RI7dJ03CpPgFCMyG0jVDHiwUwfwxW0sH/ION0QOC98Dmq0csNL
-         bWit3SMva6SunWWVTdWI5ExnV9LiHpbvv5qIlsr+cEjq2PCt8G7Rw3KHh3rl4HrsU33+
-         BIVYod+22PvNYCRjmuRSlGYLXkpxk2aaPosCZOkTxtiijPbunx1gqHc4+H6YBwWtcJIO
-         mC8Q==
-X-Gm-Message-State: AOUpUlHdysFoUdG5QMr5ZB+En5ROEKgHBqFPf+IhwPfbFv25ENvdsE34
-        EXE6jcDKIx3y1bDulr2sWBP+aDFIn4aUDRrxlYTPCg==
-X-Google-Smtp-Source: AA+uWPy0IhwH94jQkqWO2tWdIiT2aOLj7ZHE7XNeJeNJAhIvZ02WbR2k7RtAE1G1UWXVLQ6J8RdrKNEyLxEcwQ7Hevg=
-X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr9842771ywh.238.1534184645958;
- Mon, 13 Aug 2018 11:24:05 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=kz9r40oEY1fFPHfyKK396wZOVSQAC0fsoa1ZW7LIMbY=;
+        b=X3GuCqNjDtb9kFIAukqcJ0YpRzu+QmP7JBL2waX7QYlPj1jkjJQ2VJjBLci490WxZH
+         7+2odLcrZIQeltmMKfa6cGloLbYSnNutrYEM8IEYTHnRNeRfcNxc0I9eYS1bbF67ZJfO
+         ufdX809Y9vbW3L+pgzxmbtUOb5h8Bj9J48u0QwONCpsBGbEOqhYiwrm9eaICM8PdyCJD
+         USpMnKqVT+BKyWHdxYym3lqO9glqRQugprqOlmBcqWIJPyzCrJYrCRORC4YSfXSILhg6
+         28690eGBp5DUShj+1+84TVSm7d34XzgZlPHELnVJtBbGE4jj+7QXsHAddX15A450pGhS
+         +tsw==
+X-Gm-Message-State: AOUpUlF+Wbq2zuGteh2u57TaWuND10muBMK9ZRnec1VkoAjlZgkm0QjE
+        pURebgCV+AnyBCgW/2JNMqQcqDs9
+X-Google-Smtp-Source: AA+uWPwZUfv7dZujgN3BVnlOq2pXr/Mk1RIurg9oUKdSubQlkupXcds+pCa5s83jJxIUKbnXiiAgxA==
+X-Received: by 2002:adf:f64c:: with SMTP id x12-v6mr10951425wrp.97.1534184678749;
+        Mon, 13 Aug 2018 11:24:38 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l72-v6sm34586767wma.17.2018.08.13.11.24.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Aug 2018 11:24:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
+        marc@marc-stevens.nl
+Subject: Re: [PATCH 0/9] Add missing includes and forward declares
+References: <20180811043218.31456-1-newren@gmail.com>
+        <87mutts3sz.fsf@evledraar.gmail.com>
+        <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
+        <20180811173406.GA9119@sigill.intra.peff.net>
+Date:   Mon, 13 Aug 2018 11:24:37 -0700
+In-Reply-To: <20180811173406.GA9119@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 11 Aug 2018 13:34:06 -0400")
+Message-ID: <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-3-sbeller@google.com>
- <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Aug 2018 11:23:55 -0700
-Message-ID: <CAGZ79kbUKoVPXq_fz7YZMOcAWEe0uiZ04Fj9KD-J4eMmwjUXTw@mail.gmail.com>
-Subject: Re: [PATCH 2/4] diff.c: add --output-indicator-{new, old, context}
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 4:47 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Steafn,
->
-> On Fri, 10 Aug 2018, Stefan Beller wrote:
->
-> > This will prove useful in range-diff in a later patch as we will be able to
-> > differentiate between adding a new file (that line is starting with +++
-> > and then the file name) and regular new lines.
->
-> Very good!
->
-> > It could also be useful for experimentation in new patch formats, i.e.
-> > we could teach git to emit moved lines with lines other than +/-.
-> >
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
-> >  diff.c | 21 +++++++++++++++++----
-> >  diff.h |  5 +++++
-> >  2 files changed, 22 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/diff.c b/diff.c
-> > index b3cb73eb69a..b75eb085cb3 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -1237,7 +1237,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
-> >                                        struct emitted_diff_symbol *eds)
-> >  {
-> >       static const char *nneof = " No newline at end of file\n";
-> > -     const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
-> > +     const char *context, *reset, *set, *set_sign, *meta, *fraginfo, *first;
-> >       struct strbuf sb = STRBUF_INIT;
-> >
-> >       enum diff_symbol s = eds->s;
-> > @@ -1288,7 +1288,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
-> >                       else if (c == '-')
-> >                               set = diff_get_color_opt(o, DIFF_FILE_OLD);
-> >               }
-> > -             emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
-> > +             first = o->output_indicators[OI_CONTEXT] ?
-> > +                     o->output_indicators[OI_CONTEXT] : " ";
-> > +             emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
->
-> Instead of doing this over and over again, how about
->
-> 1) setting o->output_indicators to " " in diff_setup()?
+Jeff King <peff@peff.net> writes:
 
-... and when parsing the command line options we could already overwrite it
-  in place.
+> The rule in Git has always been that your very first include must
+> always be "git-compat-util.h" or an equivalent header that includes it
+> first (like "cache.h"). This is mentioned in CodingGuidelines.
 
-> 2) passing OI_CONTEXT to emit_line_ws_markup() instead of `first`? I.e.
->    change it to the index in the output_indicators, with -1 indicating
->    "none"?
+Glad to see that you already have written the above so I don't have
+to ;-)
 
-That sounds like an elegant design, as then it is super clear that 'first'
-can only ever be a sign (or character that we chose), but
-giving -1 for "none" sounds cumbersome. I'll take a look into that.
+As things are slowly moving out of the so-far kitchen-sink "cache.h"
+into more specific subsystem headers (like object-store.h), we may
+actually want to tighten the "header that includes it first" part a
+bit in the future, so that 'git grep cache.h' would give us a more
+explicit and a better picture of what really depends on knowing what
+the lowest level plumbing API are built around.
 
-> > +#define OI_NEW 0
-> > +#define OI_OLD 1
-> > +#define OI_CONTEXT 2
+> So I think the better test is a two-line .c file with:
 >
-> I could imagine that OI_* is too generic a prefix, and that we would want
-> to have a prefix that is less prone to collide with other global
-> constants, such as OUTPUT_INDICATOR_*.
+>   #include "git-compat-util.h"
+>   #include $header_to_check
 
-I agree on that; will take the suggestion of
-OUTPUT_INDICATOR_*.
+But until that tightening happens, I do not actually mind the
+two-line .c file started with inclusion of cache.h instead of
+git-compat-util.h.  That would limit the scope of this series
+further.
+
+> I wonder if there's an easy way to check. I guess adding '-Dint=foo' to
+> the command line, and then putting '#undef int' at the top of
+> git-compat-util would catch just about any code the compiler sees that
+> doesn't have git-compat-util included. :)
+
+;-).
