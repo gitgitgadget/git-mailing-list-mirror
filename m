@@ -7,157 +7,126 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18F7C1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 18:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DE191F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 18:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730131AbeHMVDu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 17:03:50 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:46837 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728821AbeHMVDu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 17:03:50 -0400
-Received: by mail-ua1-f73.google.com with SMTP id g12-v6so7924262ual.13
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:20:29 -0700 (PDT)
+        id S1730022AbeHMVH2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 17:07:28 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:32768 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729025AbeHMVH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 17:07:28 -0400
+Received: by mail-yw1-f68.google.com with SMTP id c135-v6so14297646ywa.0
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=VON/VZOEiytRYaAEJtOQIIz4SbS7KtNg5z1BS7o4osQ=;
-        b=jmasB74Q8hY6tXl7nUp+lY9zWyrSr8ayDpIF3kalBhSPFD4G6WoMNqTMJNeAuMxS78
-         i+Kx6la9EYHyF6zg2VYABKCGhnoaXYSBwc6DP2D5GeuFYsEH9lVk1f3SZUHs/bZXtP0K
-         AJHALq83kgjiFmod6Xr67At7IGth4k26Iivv5gW2oRDeNDS3qwmr/f6beSqH+diKCC94
-         lvwmpRL8DjhPrCecHA730fXsoWEhMEuJoReDCtZ6mUtRL6KMJwAkBViYJukbq5245vpZ
-         fL3wUh8kc77eeqPM/Ax5aCGkZYufmMyHfZqHxs8FYAIoGMKoP2zUqIjK4pL4+gIwxreU
-         rADQ==
+        bh=w7O91r8/QUSl7tbK0HETC4GE4xonErfKdInW7bxh0Wo=;
+        b=iHlJ6RxmzE7S0SBLFB8wS3S/u+pjE0J3OW7jZkpfjb7WqipGxd5nUFnRGv9jtX+VIY
+         fM0t6EyuHLl9yRbQTbV3qJbBQufR50URL8+hCKwM7mC42GnLgVEvKmU656edFANYWZXp
+         VkSpJVJGnRiMUK71dD6/rwq+WMYvsg2Xul3L6Bjo/XlIJBbzC7da/v+DMvA7rD5clxT2
+         EwcI/wLoI7bs97wUgZo6BgdD8+RPnZwt46Pfbrwi8g8HwyWqxCM+tFUTLVY4Neku/K2M
+         Z+B0AvqZtRrTayR3EjPZVdQVVXDIcZAu35+/MWmdqeGJj6MzcrWdPW83Mfcm1xHusrGR
+         vXlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=VON/VZOEiytRYaAEJtOQIIz4SbS7KtNg5z1BS7o4osQ=;
-        b=PmU/EEguXBRuRfqhc8W5SSHMBinFjRhNceaV7PMPQ4ZqL/OA9+DkqEAsAT2+iZrTF2
-         uNRIl9+d3FpKo6ZjOShdvXibxS1PjoF0a5IRhKPXyyf1IMr9RhX6rZ00Bih0ujVSVLSV
-         RoGuHcPf22hniiuJYigpdzbUgOm6YX7ZdAj7ozw5rsVzl/JB0Pm+677vYqoOA0dPWB2B
-         UkWkD2fJ2wevYwn2fF51WFflsbDELSuddVhYvQVbdgfQayYLDVTRzaU0wcCS9hl6H/T1
-         Ty/PS+JEDIW+cPFHeEOHikHIf7topY9zWcG37jI8gb2clKvnmzKzqztoKf/q/1o8qa1h
-         i00g==
-X-Gm-Message-State: AOUpUlEwa4xDLJORn43TDY35muPQlfmTqrWi4YDk5D4pLKHdF5+V+YVg
-        R5d53cAT5Qgu3vFEbmVDe4UZTfz8GedYIgdN6bTE
-X-Google-Smtp-Source: AA+uWPwZMz9adrsh5oiJA9Gq9nh2mobDhvKdYg6IB5r4pttFXuhXsNEcWVNuMEQ9jTpt1movrL2yMbn0uZ5/Ob/EY8QH
-X-Received: by 2002:a1f:2a86:: with SMTP id q128-v6mr10509548vkq.62.1534184429055;
- Mon, 13 Aug 2018 11:20:29 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 11:20:25 -0700
-In-Reply-To: <6d6b06e870b5d6dbe9bb88bd80fcce34ba4dcccf.1533941986.git.matvore@google.com>
-Message-Id: <20180813182025.14229-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <6d6b06e870b5d6dbe9bb88bd80fcce34ba4dcccf.1533941986.git.matvore@google.com>
-X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
-Subject: Re: [PATCH v2 3/5] rev-list: handle missing tree objects properly
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com, peff@peff.net,
-        stefanbeller@gmail.com, jonathantanmy@google.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w7O91r8/QUSl7tbK0HETC4GE4xonErfKdInW7bxh0Wo=;
+        b=WCi3L/KGsU6qdMj0GaKvi9hlfdq1OZvkvMtTfSyVqwIs5iqIpjmWXJQ2GYhYDfhSSC
+         0koJKZmPCioLR0qPL0J1V3m6PVfsSlEcGluQ//60MeLFOkFAC9qBFTqORD7utfAUc2ay
+         zupCNSERqnac9qdML6RI7dJ03CpPgFCMyG0jVDHiwUwfwxW0sH/ION0QOC98Dmq0csNL
+         bWit3SMva6SunWWVTdWI5ExnV9LiHpbvv5qIlsr+cEjq2PCt8G7Rw3KHh3rl4HrsU33+
+         BIVYod+22PvNYCRjmuRSlGYLXkpxk2aaPosCZOkTxtiijPbunx1gqHc4+H6YBwWtcJIO
+         mC8Q==
+X-Gm-Message-State: AOUpUlHdysFoUdG5QMr5ZB+En5ROEKgHBqFPf+IhwPfbFv25ENvdsE34
+        EXE6jcDKIx3y1bDulr2sWBP+aDFIn4aUDRrxlYTPCg==
+X-Google-Smtp-Source: AA+uWPy0IhwH94jQkqWO2tWdIiT2aOLj7ZHE7XNeJeNJAhIvZ02WbR2k7RtAE1G1UWXVLQ6J8RdrKNEyLxEcwQ7Hevg=
+X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr9842771ywh.238.1534184645958;
+ Mon, 13 Aug 2018 11:24:05 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-3-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Aug 2018 11:23:55 -0700
+Message-ID: <CAGZ79kbUKoVPXq_fz7YZMOcAWEe0uiZ04Fj9KD-J4eMmwjUXTw@mail.gmail.com>
+Subject: Re: [PATCH 2/4] diff.c: add --output-indicator-{new, old, context}
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> In list-objects.c we no longer print a message to stderr if a tree
-> object is missing (quiet_on_missing is always true). I couldn't find
-> any place where this would matter, or where the caller of
-> traverse_commit_list would need to be fixed to show the error. However,
-> in the future it would be trivial to make the caller show the message if
-> we needed to.
+On Mon, Aug 13, 2018 at 4:47 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Steafn,
+>
+> On Fri, 10 Aug 2018, Stefan Beller wrote:
+>
+> > This will prove useful in range-diff in a later patch as we will be able to
+> > differentiate between adding a new file (that line is starting with +++
+> > and then the file name) and regular new lines.
+>
+> Very good!
+>
+> > It could also be useful for experimentation in new patch formats, i.e.
+> > we could teach git to emit moved lines with lines other than +/-.
+> >
+> > Signed-off-by: Stefan Beller <sbeller@google.com>
+> > ---
+> >  diff.c | 21 +++++++++++++++++----
+> >  diff.h |  5 +++++
+> >  2 files changed, 22 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/diff.c b/diff.c
+> > index b3cb73eb69a..b75eb085cb3 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -1237,7 +1237,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+> >                                        struct emitted_diff_symbol *eds)
+> >  {
+> >       static const char *nneof = " No newline at end of file\n";
+> > -     const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
+> > +     const char *context, *reset, *set, *set_sign, *meta, *fraginfo, *first;
+> >       struct strbuf sb = STRBUF_INIT;
+> >
+> >       enum diff_symbol s = eds->s;
+> > @@ -1288,7 +1288,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+> >                       else if (c == '-')
+> >                               set = diff_get_color_opt(o, DIFF_FILE_OLD);
+> >               }
+> > -             emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
+> > +             first = o->output_indicators[OI_CONTEXT] ?
+> > +                     o->output_indicators[OI_CONTEXT] : " ";
+> > +             emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
+>
+> Instead of doing this over and over again, how about
+>
+> 1) setting o->output_indicators to " " in diff_setup()?
 
-Indeed, and I'm not sure why the message was there in the first place -
-if parsing fails when revs->ignore_missing_links and
-revs->exclude_promisor_objects are both false, we print the OID anyway
-in the "die" call, so any message printed by parse_tree_gently() seems
-superfluous.
+... and when parsing the command line options we could already overwrite it
+  in place.
 
-It might be better to add an additional commit that removes the "gently"
-condition (in other words, always parsing gently), with a message
-explaining the above. Also, in that commit, I prefer not to add the
-"/*quiet_on_missing*/" explanation (we don't seem to do that in Git
-code); I also know that the ">= 0" is a holdover from the existing "< 0"
-code, but we don't need to do that either.
+> 2) passing OI_CONTEXT to emit_line_ws_markup() instead of `first`? I.e.
+>    change it to the index in the output_indicators, with -1 indicating
+>    "none"?
 
-> This is not tested very thoroughly, since we cannot create promisor
-> objects in tests without using an actual partial clone. t0410 has a
-> promise_and_delete utility function, but the is_promisor_object function
-> does not return 1 for objects deleted in this way. More tests will will
-> come in a patch that implements a filter that can be used with git
-> clone.
+That sounds like an elegant design, as then it is super clear that 'first'
+can only ever be a sign (or character that we chose), but
+giving -1 for "none" sounds cumbersome. I'll take a look into that.
 
-is_promisor_object() should. If you still have the code you used to
-verify that, can you share it? In particular, pay attention to the path
-of the repo - promise_and_delete is hardcoded to use one particular
-path.
+> > +#define OI_NEW 0
+> > +#define OI_OLD 1
+> > +#define OI_CONTEXT 2
+>
+> I could imagine that OI_* is too generic a prefix, and that we would want
+> to have a prefix that is less prone to collide with other global
+> constants, such as OUTPUT_INDICATOR_*.
 
-Whether you test in this patch or in the last patch, make sure that the
-following are tested:
- git rev-list --missing=error, allow-any, allow-promisor, print
- git rev-list --exclude-promisor-objects
-
-Also, test when a tree pointed to by a commit is missing, and when a
-tree pointed to by a tree is missing.
-
-> @@ -152,20 +151,21 @@ static void process_tree(struct traversal_context *ctx,
->  		die("bad tree object");
->  	if (obj->flags & (UNINTERESTING | SEEN))
->  		return;
-> -	if (parse_tree_gently(tree, gently) < 0) {
-> +	parsed = parse_tree_gently(tree, /*quiet_on_missing=*/1) >= 0;
-> +	if (!parsed) {
->  		if (revs->ignore_missing_links)
->  			return;
->  
-> +		if (!is_promisor_object(&obj->oid))
-> +			die("bad tree object %s", oid_to_hex(&obj->oid));
-> +
->  		/*
->  		 * Pre-filter known-missing tree objects when explicitly
->  		 * requested.  This may cause the actual filter to report
->  		 * an incomplete list of missing objects.
->  		 */
-> -		if (revs->exclude_promisor_objects &&
-> -		    is_promisor_object(&obj->oid))
-> +		if (revs->exclude_promisor_objects)
->  			return;
-> -
-> -		die("bad tree object %s", oid_to_hex(&obj->oid));
->  	}
-
-The missing mechanism (for error, allow-any, print) should work without
-needing to consult whether an object is a promisor object or not - it
-should just print whatever is missing, so the "if
-(!is_promisor_object..." line looks out of place.
-
-In my original review [1], I suggested that we always show a tree if we
-have its hash - if we don't have the object, we just recurse into it.
-This would be the same as your patch, except that the 'die("bad tree
-object...' is totally removed instead of merely moved. I still think
-this solution has some merit - all the tests still pass (except that we
-need to check for "unable to read" instead of "bad tree object" in error
-messages), but I just realized that it might still be backwards
-incompatible in that a basic "rev-list --objects" would now succeed
-instead of fail if a tree was missing (I haven't tested this though).
-
-We might need a flag called "do_not_die_on_missing_tree" (much like your
-original idea of "show_missing_trees") so that callers that are prepared
-to deal with missing trees can set this. Sorry for the churn. You can
-document it as such:
-
- Blobs are shown without regard for their existence. But not so for
- trees: unless exclude_promisor_objects is set and the tree in question
- is a promisor object, or ignore_missing_links is set (and in this case,
- the tree in question may or may not be a promisor object), the revision
- walker dies with a "bad tree object" message when encountering a
- missing tree.
-
- For callers that can handle missing trees and want them to be
- filterable and showable, set this to true. The revision walker will
- filter and show such a missing tree as usual, but will not attempt to
- recurse into this tree object.
-
-[1] https://public-inbox.org/git/20180810002411.13447-1-jonathantanmy@google.com/
+I agree on that; will take the suggestion of
+OUTPUT_INDICATOR_*.
