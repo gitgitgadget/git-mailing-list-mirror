@@ -2,134 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 958B61F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 20:47:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 703001F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 20:47:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730130AbeHMXbJ (ORCPT <rfc822;e@80x24.org>);
+        id S1730054AbeHMXbJ (ORCPT <rfc822;e@80x24.org>);
         Mon, 13 Aug 2018 19:31:09 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36161 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729835AbeHMXbJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 19:31:09 -0400
-Received: by mail-wr1-f66.google.com with SMTP id h9-v6so15411452wro.3
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 13:47:17 -0700 (PDT)
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:50547 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729126AbeHMXbI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 19:31:08 -0400
+Received: by mail-wm0-f65.google.com with SMTP id s12-v6so10192302wmc.0
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 13:47:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TqoTNSXkKw53PfNQs8cCy/7nLKvBMFFWqNp9oQOUc1s=;
-        b=K/CnRRST6fGlULQT8NzyO1FGZypySOHvwODI2GPGwIB6MsMdwcogTlM9jhuoyC+VYd
-         FiW1iPGVoator4ug2faQCA0UjwBGQ0s5+dBTUUf8e2f88zAYXv0Mhi2OdKdK+Gn5jvik
-         juyiU1WnMDn5KYJW+c6sPBvjK/8NkuX58e633POUEv2vPBCIKQWJhdgfsHSLYP3Zh7IB
-         Jkis3Do/ftUrYTFUSHkgry2m1or+K14cIYp/WkFaCmyhS+BoHrvx/AeMRrxq2ecP0fTC
-         t265qY0+PyKMHGqspf3KXhY5nE3yQ/1LcFISKaAWtCvBP3k8wnMVrdybsBpoeEdTKXHL
-         m/lg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=lMHQKe+If5LlRugcIHKHhE2LN+cl8Qgb7AjE3JCj+Wk=;
+        b=QvX9lGU96KWxSk/Uc5Au2Rk2lA5qjaKRIl6Xmj7nSpQ3yQzfuTOhsci6gaWBgBXhsH
+         05dd+sDr+a3gBce4RH1KX1okOUcz58BCr6hPbQuq2CFginZ0NRnaXFa8T3nQnXoPNOFJ
+         rLyY3/DZIxyNA4Tvbe/JbtXGOUWdGIy8/ZTfkwvv7TJVn9FqIaGQoh4FVIQ2G2nO1gMr
+         xzfexP3tuWMp1oms6bx8Oyeur1VpBLmOgVREBTdNVy/FMThn4MiRqvBDn0eYLio7JD+o
+         b47wyoepadNQlGrZic+bp1myxzSdtMI5Cqz8GPeH+woAdbx8opQQYgX1Zv0t2ubB8sV4
+         voOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TqoTNSXkKw53PfNQs8cCy/7nLKvBMFFWqNp9oQOUc1s=;
-        b=E8cU0xDWC32uA1x5Bo8eVRMpgx6MDQF46DftjCX+EOGA7asuE8Cqt7YIg7/6XGWG0l
-         cbXTaAwW09p3JzPpeSJhqz+NmcjmQYlS0qveFiRCiON7qrrgi4Q3qeddS1BqcAaA5ytb
-         +SKNP9hEU7pza7gTp3kjwOVXeR1IFE5YTOcZtWm/KWMb5rkYlJbSIuU3lQ7TjeYw7V39
-         BWzKyB5kC7UMfJO8gH6zkEm51SrmfG8bDmPpZUqR+s2/dvrBF2nCeQCJLJtgpb8Xkhba
-         uwaFTv90C4WwuVmH/02Gzu9az/a81ueiCYDdToeKo8LD4+IQCLFlgClGXaHCtQrO3aof
-         t1oA==
-X-Gm-Message-State: AOUpUlHGfDkPwprjZYJQvIq/1mMOUSF2SI/TixC50xn3E79dq5GPd1L9
-        dP1WfAUYoTIhlMQBa/AyS48=
-X-Google-Smtp-Source: AA+uWPwYqNMOGuH38BFTkyLGjjOW2tt+YfHzB0lq0axdrOCpULms+d6sX1Jq3jTeUBxvGrU1/17MXQ==
-X-Received: by 2002:adf:be03:: with SMTP id n3-v6mr11672664wrh.267.1534193236383;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=lMHQKe+If5LlRugcIHKHhE2LN+cl8Qgb7AjE3JCj+Wk=;
+        b=gLugRTQS4P/26ZndP/vn3Ghw+DXl5uauGo34ZLV7hNMj09yTlpIPJib9rqJ4J7GEPD
+         +tidRfTj1eD8CGIFz6l3P1WSCX3D17IKs8ypoPC0hZeQ0V1p2kt0vyYXNrQYn6oazZ8m
+         EHX9G05rbYND8XsbYgVoDwkFWsIod8BrDZAA6nx127lc5j2aWkOR03LEZ68NU3lg/V5w
+         FS0ohjeBcAfFOc5G7CIq1KU0WbHXs7mwGgnor4M4tVekl/RWP+qkDwmznt/l7fXJ65RW
+         mkLdii+Ts46R01QtacWxRgvl7U2r5WaktvfqO3Voht465A/l4Z8uX8R+RHN+HsZNf0k9
+         npOQ==
+X-Gm-Message-State: AOUpUlG3s6NXBhu3n9oH3Am6iaYlw5LpR1BYJ25j49p4k5D3fqhX4CQA
+        GnzyP8uyNJVj5tQODbAwhoq0nXT7
+X-Google-Smtp-Source: AA+uWPxd4doBz2Z8upQFkJYZuVFEeyw8BqElm9hZCACqvjnBaWg0IBv4iizBPBuDRyTe8VbzTmYjiA==
+X-Received: by 2002:a1c:dc89:: with SMTP id t131-v6mr9718707wmg.50.1534193236323;
         Mon, 13 Aug 2018 13:47:16 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id f132-v6sm12854044wme.24.2018.08.13.13.47.15
+Received: from andromeda.localnet (185.86.136.77.rev.sfr.net. [77.136.86.185])
+        by smtp.gmail.com with ESMTPSA id e141-v6sm17481914wmd.32.2018.08.13.13.47.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
         Mon, 13 Aug 2018 13:47:15 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 21:47:14 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 00/21] Add range-diff, a tbdiff lookalike
-Message-ID: <20180813204714.GI2734@hank.intra.tgummerer.com>
-References: <pull.1.v5.git.gitgitgadget@gmail.com>
- <pull.1.v6.git.gitgitgadget@gmail.com>
- <nycvar.QRO.7.76.6.1808131337360.71@tvgsbejvaqbjf.bet>
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [GSoC][PATCH v6 00/20] rebase -i: rewrite in C
+Date:   Mon, 13 Aug 2018 22:47:07 +0200
+Message-ID: <2126644.CIUTlRnjVv@andromeda>
+In-Reply-To: <CACsJy8B=4kKa5ZjQ6dL2H9LToOGdu2OzmexwpWkS+Tayphv1XA@mail.gmail.com>
+References: <20180731180003.5421-1-alban.gruin@gmail.com> <20180810165147.4779-1-alban.gruin@gmail.com> <CACsJy8B=4kKa5ZjQ6dL2H9LToOGdu2OzmexwpWkS+Tayphv1XA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1808131337360.71@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/13, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 13 Aug 2018, Johannes Schindelin via GitGitGadget wrote:
-> 
-> > The incredibly useful git-tbdiff [https://github.com/trast/tbdiff] tool to
-> > compare patch series (say, to see what changed between two iterations sent
-> > to the Git mailing list) is slightly less useful for this developer due to
-> > the fact that it requires the hungarian and numpy Python packages which are
-> > for some reason really hard to build in MSYS2. So hard that I even had to
-> > give up, because it was simply easier to re-implement the whole shebang as a
-> > builtin command.
-> > 
-> > The project at https://github.com/trast/tbdiff seems to be dormant, anyway.
-> > Funny (and true) story: I looked at the open Pull Requests to see how active
-> > that project is, only to find to my surprise that I had submitted one in
-> > August 2015, and that it was still unanswered let alone merged.
-> > 
-> > While at it, I forward-ported AEvar's patch to force --decorate=no because 
-> > git -p tbdiff would fail otherwise.
-> > 
-> > Side note: I work on implementing range-diff not only to make life easier
-> > for reviewers who have to suffer through v2, v3, ... of my patch series, but
-> > also to verify my changes before submitting a new iteration. And also, maybe
-> > even more importantly, I plan to use it to verify my merging-rebases of Git
-> > for Windows (for which I previously used to redirect the
-> > pre-rebase/post-rebase diffs vs upstream and then compare them using git
-> > diff --no-index). And of course any interested person can see what changes
-> > were necessary e.g. in the merging-rebase of Git for Windows onto v2.17.0 by
-> > running a command like:
-> > 
-> >         base=^{/Start.the.merging-rebase}
-> >         tag=v2.17.0.windows.1
-> >         pre=$tag$base^2
-> >         git range-diff $pre$base..$pre $tag$base..$tag
-> > 
-> > The command uses what it calls the "dual color mode" (can be disabled via 
-> > --no-dual-color) which helps identifying what actually changed: it prefixes
-> > lines with a - (and red background) that correspond to the first commit
-> > range, and with a + (and green background) that correspond to the second
-> > range. The rest of the lines will be colored according to the original
-> > diffs.
-> 
-> Changes since v5:
-> 
-> - Fixed the bug (introduced in v5) where a dashdash would not be handled
->   appropriately.
+Hi Duy,
 
-Thanks!  I've read through all the patches (and the range-diff :))
-again and played around a bit with the newest version, and I think
-this is ready for 'next'.
+Le 13/08/2018 =C3=A0 18:06, Duy Nguyen a =C3=A9crit :
+> On Fri, Aug 10, 2018 at 6:54 PM Alban Gruin <alban.gruin@gmail.com> wrote:
+> > This patch series rewrite the interactive rebase from shell to C.
+>=20
+> I was running some tests on 'pu' and ran git-rebase--interactive
+> without arguments because a test failed and I was wondering if it was
+> me. It showed this
+>=20
+> > ~/w/ztemp $ ./git-rebase--interactive
+>=20
+> fatal: ambiguous argument
+> '(null)...97004f10c7e6d1e784eb8a62bebdf529cd3b81f5': unknown revision
+> or path not in the working tree.
+> fatal: Use '--' to separate paths from revisions, like this:
+> fatal: 'git <command> [<revision>...] -- [<file>...]'
+>=20
+> The "(null)" should not be printed out because it could actually
+> segfault on some other platforms. Just wanted to let you know.
+> Apologies if it's already reported and fixed, I didn't really read
+> this series.
 
-While playing around with it I did find one error message that reads
-slightly odd, but it's still understandable, so I'm not sure it's
-worth worrying about now (we can always improve it on top):
+Thanks for the heads up, I will send a fix soon.
 
-     $ ./git range-diff -- js/range-diff-v4...HEADt
-    fatal: ambiguous argument 'HEADt..js/range-diff-v4': unknown revision or path not in the working tree.
-    Use '--' to separate paths from revisions, like this:
-    'git <command> [<revision>...] -- [<file>...]'
-    error: could not parse log for 'HEADt..js/range-diff-v4'
+I don=E2=80=99t know what you were trying to do with git-rebase--interactiv=
+e, but it=20
+should not be called directly.  Instead, you should call git-rebase -i.
+
+Cheers,
+Alban
 
 
-> [...]
+
+
