@@ -2,104 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18B621F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 18:24:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95CAB1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 18:25:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729748AbeHMVIB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 17:08:01 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38151 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729708AbeHMVIB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 17:08:01 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v14-v6so15082372wro.5
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:24:39 -0700 (PDT)
+        id S1730043AbeHMVIZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 17:08:25 -0400
+Received: from mail-yw1-f43.google.com ([209.85.161.43]:45161 "EHLO
+        mail-yw1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729708AbeHMVIZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 17:08:25 -0400
+Received: by mail-yw1-f43.google.com with SMTP id 139-v6so14266603ywg.12
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=kz9r40oEY1fFPHfyKK396wZOVSQAC0fsoa1ZW7LIMbY=;
-        b=eWyeaRtOIszvqCi74NLS+/KiF1qbHgOaAt/9iSr5Dw/9R38FKpz7txhOXcAHyKLShx
-         vrX3hIZs3cqho4pR63kxOoJA6lj7JWuBb2Ss4P1TFJwpfLsVq8QhdUvVX2Yc6BUkp5t8
-         7D7NzwhczsntUofs8S09lCmEnEz4Q6kvCttPmY7Nzi3agl2n18zjT1oml6dTxyWscVeF
-         vBwqo+lfnJNn4vt3DHflWxLgcXsn7uSm+xt+FrMppSnGFnUtrglqnfsiG/2F5E45qVcm
-         y7vQGjTO+QZ6sMX1lkC43aZ3EEbWA1ET7ttzsFdRh5r4uJU2ejkFXk2ZetL6BHWpot6X
-         5LSw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rrDWmJwka36RVBNEtf/J8XjoAKgGJbdISZk1vjCOCf8=;
+        b=IBbytelh0U7Rg8EMQVfCW5ZSk8Sw2vS56MunxbSV7t+5+3Iyxav9bj/NHipt+i5CNJ
+         s6hmUhROn2CYtencVvVJudhIIRHpRFFIwtMVUpdP+lTTFbrwdJF5XLCS/ZWwJEmW0r0C
+         ZrVYi/ZJQiuP+g1ZcEswE4gNVjPruqkC+oxi38rLPW9QcANtWF2q37kNZbAkrRxK5BHc
+         gTtWn+mNSQbgyvjTGpuuYXPWwXbqycEknMYWsIo5M3lLEYfHGtf/OyJDHp97941pTSr4
+         Iu3dZJIucKbdcKbJoiWaeiFJhNInavjLC/oHA9KCIwJ92qBJIQYzUDkybmZX949QfWzP
+         2+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=kz9r40oEY1fFPHfyKK396wZOVSQAC0fsoa1ZW7LIMbY=;
-        b=X3GuCqNjDtb9kFIAukqcJ0YpRzu+QmP7JBL2waX7QYlPj1jkjJQ2VJjBLci490WxZH
-         7+2odLcrZIQeltmMKfa6cGloLbYSnNutrYEM8IEYTHnRNeRfcNxc0I9eYS1bbF67ZJfO
-         ufdX809Y9vbW3L+pgzxmbtUOb5h8Bj9J48u0QwONCpsBGbEOqhYiwrm9eaICM8PdyCJD
-         USpMnKqVT+BKyWHdxYym3lqO9glqRQugprqOlmBcqWIJPyzCrJYrCRORC4YSfXSILhg6
-         28690eGBp5DUShj+1+84TVSm7d34XzgZlPHELnVJtBbGE4jj+7QXsHAddX15A450pGhS
-         +tsw==
-X-Gm-Message-State: AOUpUlF+Wbq2zuGteh2u57TaWuND10muBMK9ZRnec1VkoAjlZgkm0QjE
-        pURebgCV+AnyBCgW/2JNMqQcqDs9
-X-Google-Smtp-Source: AA+uWPwZUfv7dZujgN3BVnlOq2pXr/Mk1RIurg9oUKdSubQlkupXcds+pCa5s83jJxIUKbnXiiAgxA==
-X-Received: by 2002:adf:f64c:: with SMTP id x12-v6mr10951425wrp.97.1534184678749;
-        Mon, 13 Aug 2018 11:24:38 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l72-v6sm34586767wma.17.2018.08.13.11.24.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Aug 2018 11:24:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
-        marc@marc-stevens.nl
-Subject: Re: [PATCH 0/9] Add missing includes and forward declares
-References: <20180811043218.31456-1-newren@gmail.com>
-        <87mutts3sz.fsf@evledraar.gmail.com>
-        <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
-        <20180811173406.GA9119@sigill.intra.peff.net>
-Date:   Mon, 13 Aug 2018 11:24:37 -0700
-In-Reply-To: <20180811173406.GA9119@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 11 Aug 2018 13:34:06 -0400")
-Message-ID: <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rrDWmJwka36RVBNEtf/J8XjoAKgGJbdISZk1vjCOCf8=;
+        b=FPErdKc5N+X96gFm+lPsl8CKPz/7kuW7gC2YDnoRYp9szLbQg8zoVGJVyjS+rfHvpG
+         1kf6OPvFuSfDIeXWYyK1H2YC3WaS7hma2ccrkZwrO2Q/JAcphz8yhBNEiBCFk/P1hRhu
+         G6dtdfV5SKEj1zCItmFCrgwlFjv0ogI+IBciJoh0H0sz6W26YHHyKBTEWZdE2R4t37PY
+         QCMpqoaWLWXEf4vHTRDY65B/dLEWEXcrMQh08zW0gMBWCxvg1O3OgemOt+ZfIi8rB22a
+         Mg1CIGkY21qXfnb9Xhtk7ieuOO6iW2FYTWFwuY1Nj4Dl4K84ibF8pS+i3nyCBi5LX2mF
+         jp1g==
+X-Gm-Message-State: AOUpUlFytKT+99S7i/9e9iMJnRZFzR1KWTSrRMfYFbiFsZ83X7og/ojq
+        vOVrN6C3ZXFx5I/9ga+A3BYxA/qr5ot9GtdYwfi7Jg==
+X-Google-Smtp-Source: AA+uWPxRZ5OToMzuY5TgKKcs0OOAC5JuvfUSlYQhBwKybguwM79gxYJ9t7SMfQFmjNRRPkJ3EuJCt822Mf6NJ2Z/vRM=
+X-Received: by 2002:a25:874d:: with SMTP id e13-v6mr6936237ybn.515.1534184703191;
+ Mon, 13 Aug 2018 11:25:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-4-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1808131348120.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808131348120.71@tvgsbejvaqbjf.bet>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Aug 2018 11:24:52 -0700
+Message-ID: <CAGZ79kainPmtHWT+11+34f4F2pGD3+too5SrG547z6HRFYjK-A@mail.gmail.com>
+Subject: Re: [PATCH 3/4] range-diff: make use of different output indicators
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> The rule in Git has always been that your very first include must
-> always be "git-compat-util.h" or an equivalent header that includes it
-> first (like "cache.h"). This is mentioned in CodingGuidelines.
-
-Glad to see that you already have written the above so I don't have
-to ;-)
-
-As things are slowly moving out of the so-far kitchen-sink "cache.h"
-into more specific subsystem headers (like object-store.h), we may
-actually want to tighten the "header that includes it first" part a
-bit in the future, so that 'git grep cache.h' would give us a more
-explicit and a better picture of what really depends on knowing what
-the lowest level plumbing API are built around.
-
-> So I think the better test is a two-line .c file with:
+> >                       strbuf_addbuf(&buf, &line);
+> > +             }
 >
->   #include "git-compat-util.h"
->   #include $header_to_check
+> My preliminary reading (I sadly lack the time to pull your branch and play
+> with it) suggests that this works, although I have to admit that X/Y/Z
+> would confuse me in 6 months from now, as they do not really read like
+> diff markers but like plain text. I could imagine that '>', '<' and '#'
+> would not impart that confusion on me.
 
-But until that tightening happens, I do not actually mind the
-two-line .c file started with inclusion of cache.h instead of
-git-compat-util.h.  That would limit the scope of this series
-further.
-
-> I wonder if there's an easy way to check. I guess adding '-Dint=foo' to
-> the command line, and then putting '#undef int' at the top of
-> git-compat-util would catch just about any code the compiler sees that
-> doesn't have git-compat-util included. :)
-
-;-).
+Thanks for that suggestion! (I'll change it and add a comment)
