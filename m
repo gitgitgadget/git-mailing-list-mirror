@@ -2,84 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0AEE1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 19:00:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5931F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 19:01:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730362AbeHMVnt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 17:43:49 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:45410 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730043AbeHMVns (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 17:43:48 -0400
-Received: by mail-yw1-f66.google.com with SMTP id 139-v6so14350026ywg.12
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 12:00:19 -0700 (PDT)
+        id S1730206AbeHMVo4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 17:44:56 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45139 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729719AbeHMVo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 17:44:56 -0400
+Received: by mail-wr1-f68.google.com with SMTP id f12-v6so15121494wrv.12
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 12:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=k3gz6pF8EU15od02SKNnBdbeaDv1JC43P7lr7fGTWnY=;
-        b=mK9C9Rn/K19NP9ter5Hmwi1kwGjWQwFlSgVVv3C5HcoKaI3lTazkfbkcgLKYU2s2oY
-         G8aFAyOWCf0XCE0pl6k5PpoBl6CdAx41aFXyQ/9qbsiEd1huVq0YA5spRZFxXqaOXTF0
-         ehSUaSy6RmJECEMJ1kEJ7qbjaOvsDHjhgbHdBLTXmFtJhI0jlTNET+J9uMRlEyW3/N4G
-         32a3UEoGeX6UhIbXeUyEW68PeCjTxU2ZsJtoALesgEBMh7zm7jNh5a4uyIx18ovRuteV
-         n3Q8LUJMbknq6ruRrtItfC//f0uFkLswwQo/aMDPUReOYPCZryobECP67tG5tNmzAL7N
-         VTUw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=lfX2ChDmWFcW4+v7sYw+bS9HXPUgT/7xtVKJ8UeHsW0=;
+        b=qAJf5oZY0q6OCUQwb6tX9dwx6XXVPR+YhuWseffofSf7IW47DKXC9eTAu++oF64Sgk
+         gAXy9cPj7hrYCJ5qpOXk5/DbaE6zV4M/8qYUGXKvGoCHp9dFwKI5sKq55+oz9rmKsyZP
+         jfmuFLyfaNg4BPavkzGZt1Vt6PvVXK1IZAJqx8G+gZN1qz1Zr3TALGBng/jjKFhJldUG
+         zoyKzoLSGb+adGWbSarHrHfmZBos9ll5umuN/6FkUm75DKVjKZMcgZex7D28oC7oTO/V
+         8bGTA7B9VuIz9tA7bKkj5i5ZojdlGra+/JimPwlDuFRX3irO20b2xR13jovvjtZTl/sT
+         FVhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=k3gz6pF8EU15od02SKNnBdbeaDv1JC43P7lr7fGTWnY=;
-        b=osxARRRWfLhgDRsyM0ZS2Owi2PZPEnjA1BfRYK9j8jCRm4ER1lAX9tx3l3g25NaYcG
-         5ENXCG0Zdc51sqdbc5xvVgFXNKfXuJ/l6/4YamOQl+CibzT6jFdhoZJyCwg5RcqegJGN
-         vOcLZbeOaLM38NfBxfaz0fQWAUCEqnbwj97RHXJ/dVBzZ2e8E6Nq/eiK2jTI5iSaiglz
-         mlZ2KuQdxExg+MqYwyDVxhmQcatp84GUhKLoU/1BKNzhnEgoemDYIdahXAAaTr2HlSRB
-         G2hCOpy/DwfEd373nfYWveUGLgaOxKAJ10nAzukQZnnnKjexfag+NcIBBGADncaj6kZt
-         fuHg==
-X-Gm-Message-State: AOUpUlFt3A9VGNffCJE4aj8/68XQ025oiKbKCECHn+srwVjp2zjgT+/2
-        GgPwlaCc0RmDIgBAlhHbiM/H44nniFBBckHpMkDb/jRV
-X-Google-Smtp-Source: AA+uWPwkjUQ9P/ABigO8ELXwJ5GK6aepVbihUgXI32WjK/4KOttdtJcvPHd2MHHI2mCeRdL4UOewmQVsCg/vVq5cnK0=
-X-Received: by 2002:a25:af08:: with SMTP id a8-v6mr7338511ybh.167.1534186819157;
- Mon, 13 Aug 2018 12:00:19 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=lfX2ChDmWFcW4+v7sYw+bS9HXPUgT/7xtVKJ8UeHsW0=;
+        b=NPi9Yccxg41kby0cyWO83GmxdQUCBp7DQ2Q++yWPVP4SnYdOz6HQtNHBHh9TDyVEbH
+         Y5ivsVz12vIDi4QiL2l/HJ1MCTy8i2P7qaItmTSIEWq7t/WgWC58C87aiWq7PZXn+SX8
+         MEQ9X9TqRVxqp3KJ7+d5Q7sPCKzsUDHJP3K4ZokfFsH9ddiP8xNMEM5rDF27MFug9Vr5
+         LHreYPj8xPVUAHanzKD2AGrBMVrNeoz7HWepwDIUQEmSSwcSPmy9pd4gCzekFcpNE+G5
+         5a79LJwRvcXUBNLkOxF6Njc1WNS3nbqh2kIx+Hqic0MBsK1nnM3WFj/HwM3sdfD4pFRA
+         wnWw==
+X-Gm-Message-State: AOUpUlFYokQpAjpn+kzthTgkdC2Wv35OPzfxzokuruHSC7wiWb9GaVX3
+        iW4GDDH1CYanjTsazdavWTQ=
+X-Google-Smtp-Source: AA+uWPy3mfgRaHQkTJyjWdU+ZHPyYARjhu+Wx8hhzTrGHxSDvPV8p9qtOB+M2ccvQE+Ptby/cJKmCA==
+X-Received: by 2002:a5d:41c1:: with SMTP id e1-v6mr11298965wrq.25.1534186885534;
+        Mon, 13 Aug 2018 12:01:25 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t198-v6sm18306079wmd.16.2018.08.13.12.01.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Aug 2018 12:01:24 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, peartben@gmail.com,
+        peff@peff.net, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 0/5] Speed up unpack_trees()
+References: <20180804053723.4695-1-pclouds@gmail.com>
+        <20180812081551.27927-1-pclouds@gmail.com>
+Date:   Mon, 13 Aug 2018 12:01:24 -0700
+In-Reply-To: <20180812081551.27927-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 12 Aug 2018 10:15:46 +0200")
+Message-ID: <xmqqeff25bwb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-8-sbeller@google.com>
- <nycvar.QRO.7.76.6.1808131422580.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808131422580.71@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Aug 2018 12:00:08 -0700
-Message-ID: <CAGZ79kYFkYqNADUVu-QCQBr5F5wFsFd8sUPfRsL5CqjnE4fDVw@mail.gmail.com>
-Subject: Re: [PATCH 7/8] diff.c: compute reverse locally in emit_line_0
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 5:26 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
->
-> On Fri, 10 Aug 2018, Stefan Beller wrote:
->
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
-> Well, my rationale for having the explicit `reverse` parameter is: this
-> code is complex enough, introducing some magic "this and that implies
-> this" makes it much harder to understand.
->
-> So I am not at all sure that this is a good thing.
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-Yeah I am unsure, too. On the other hand the higher level functions
-look so much nicer a the complexity is shoved downwards,
-such that each function is solving problems in their own domain.
+> v4 has a bunch of changes
+>
+> - 1/5 is a new one to show indented tracing. This way it's less
+>   misleading to read nested time measurements
+> - 3/5 now has the switch/restore cache_bottom logic. Junio suggested a
+>   check instead in his final note, but I think this is safer (yeah I'm
+>   scared too)
+> - the old 4/4 is dropped because
+>   - it assumes n-way logic
+>   - the visible time saving is not worth the tradeoff
+>   - Elijah gave me an idea to avoid add_index_entry() that I think
+>     does not have n-way logic assumptions and gives better saving.
+>     But it requires some more changes so I'm going to do it later
+> - 5/5 is also new and should help reduce cache_tree_update() cost.
+>   I wrote somewhere I was not going to work on this part, but it turns
+>   out just a couple lines, might as well do it now.
 
-I'll think of an alternative.
+The last step feels a bit scary, but other than that I did not spot
+anything iffy in the series.  Nicely done.
+
+Thanks.
