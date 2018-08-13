@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 965581F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6DA81F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730049AbeHMS6g (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 14:58:36 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:33133 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730010AbeHMS6f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 14:58:35 -0400
-Received: by mail-lj1-f196.google.com with SMTP id s12-v6so13044452ljj.0
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:40 -0700 (PDT)
+        id S1730078AbeHMS6m (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 14:58:42 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:42643 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730021AbeHMS6l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 14:58:41 -0400
+Received: by mail-lj1-f193.google.com with SMTP id f1-v6so13014049ljc.9
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TJcqbkpdCLbfMFg8kGyG7Rz7c4JI+6MybeMbnGeNXyM=;
-        b=Bv/CyM2IQomfUeualUBSy772NO0VR19xk2ee10Psr4k008nSkozkrtq5vmsYkVKnBh
-         w6j/ay0L/oR1mYKGxnCu1Wj3noeGClrc2/aW2f9c54CgprU5lTNFMueq/PNKIwoMBXSo
-         CB4NWUdZ2Z8F1zO/pBb048AaWX1zlH01VkR4HtCIky4stPhBmsUxYhqBK8qeQXG6DiUz
-         bVDD8EsgPe9qe4zTHn9d3Ra5vYDk7fRX/wGr2SYispVvQGJ+2UahaJfAale9/37TwY2i
-         bKUgN9ZYnC3Kb+xZ/G7vTeT1Kls6rWIjePpfGW/5By2ArFE8qbGCxiaAVgYFuousI2mB
-         kBpw==
+        bh=7dpbDNd97HPa+O8wkl96cUElC6hzW8DlQWxGmTbV+U4=;
+        b=KWagEd0zKslQCdPZCFZgl6POl4Q+jvNyRmehk2Q8mTMA8g0Mgf1F++GS718W21h0aE
+         erbDvliaXvPvDaPnPYCwk3mjnCPrn88JHSAWVpRdSfWZ21wVHyhSmoUF3LD8MWdU9mAS
+         QaqzTQ5TwdamTZ+F7haNWvnNhPmkArzIfDoWNHX3E9xjN4k/0CRcJ1Sz79mRQZA3l9DV
+         MLI557Ujom1xyS2x8TwMSOCsIDLyWjpImoLlB+tmaGfjywr7U/84e8jUHuePpr3Yzvzs
+         11l8NV8inr+lF1c9EAMEEvuVkVDgnkppUkj0RDI3WpGaODxFXoHhUINqMBMBOEYzc6/T
+         XGpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=TJcqbkpdCLbfMFg8kGyG7Rz7c4JI+6MybeMbnGeNXyM=;
-        b=qTw3ZOZVUHPKT3na93U2xxbM6Ntuz2JdC8+dqEgxB8fnnjoMxWCWT/qw9x4LUfI0Ru
-         y2gFQkLgahtoczdN9FLMkbjWvYgrrIwjE7nNputSp7f5wOkCJ8xFMvo649X8+ESmr3jB
-         AMBkXLJw87oBW0nWMg0qF07VzyDWvB7BYP7Egvw61Ouk4825Jx1aHkc9y2iew3bMX9YG
-         CJBzrtUr1dxWhtaAlFJLrLFbbLgdSIFVo1OoxBhXDw3Th08elZRJfsuDjIFZxnzak153
-         9+9y+OmeHccgZUN68wKMxCPC4/NsBEml9+5iV5mJ1fvxEwH/ogkvAsHF0YqU5JvoxweH
-         SMng==
-X-Gm-Message-State: AOUpUlGyMG06Q3OorFCld1J03O/7l3WDNGp+2jPq9a5HaGnYPwa6wANu
-        oc1Uc1xy24CpDJsZTHaFn1TOvIvS
-X-Google-Smtp-Source: AA+uWPx/4kDI5sTkmuu0oMGXd1qPiS7sXycQg37w1BhH8tsfsrHEnPcN0lPhU4QB+Kk0VnU2O40dlg==
-X-Received: by 2002:a2e:5687:: with SMTP id k7-v6mr13258738lje.105.1534176939671;
-        Mon, 13 Aug 2018 09:15:39 -0700 (PDT)
+        bh=7dpbDNd97HPa+O8wkl96cUElC6hzW8DlQWxGmTbV+U4=;
+        b=jritc3x/iKjTTmlrTeEU1VI6FdZbxE/j2XXN5mTLvm8/OGem7lDVXaAzPVyvoOkAJf
+         th6JXq0RwqPDO6u8IMbL3Vi51y+qc7g/cS+IRE3Nw5OOTCB/UOxYCWGIy0K8jbBKgvoX
+         U23kFdNKh/S50YfoHZvSeaUUusNljzMk1fzI+XAtC81yBAeLgoK2kJbhqmdKVpWd70v5
+         1hx//itdDr1Lw3ddUQMvJmKbv06j+gu7JVqG1FzrybQsEeScf/3RChf/SrfTyXFnyugU
+         iq7kSUHBF3SUmOiAeTgTi9JiS+xxme0+AJwtPmST54mPMvYXPZ+/4C7MrshrddP9vwJk
+         zl8w==
+X-Gm-Message-State: AOUpUlFTRMlLugUmC3ljxFF9OpHnx3UUy+dvvCdtTnZbOI0lLaWBsvK1
+        cZIF+qOLu2ZqJ2x2GiOT1Mw1n/2I
+X-Google-Smtp-Source: AA+uWPxOAg93fr1ZW94mME23xEEdZeJc3kibCwQJS1xzCW7AGywjjiOWZXsKIYpTByxq5sE9/nsw6A==
+X-Received: by 2002:a2e:1101:: with SMTP id f1-v6mr12464460lje.75.1534176945487;
+        Mon, 13 Aug 2018 09:15:45 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.38
+        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:38 -0700 (PDT)
+        Mon, 13 Aug 2018 09:15:44 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 18/24] archive.c: avoid access to the_index
-Date:   Mon, 13 Aug 2018 18:14:35 +0200
-Message-Id: <20180813161441.16824-19-pclouds@gmail.com>
+Subject: [PATCH 23/24] apply.c: remove implicit dependency on the_index
+Date:   Mon, 13 Aug 2018 18:14:40 +0200
+Message-Id: <20180813161441.16824-24-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
 In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
 References: <20180813161441.16824-1-pclouds@gmail.com>
@@ -68,216 +68,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Use apply_state->repo->index instead of the_index (in most cases,
+unless we need to use a temporary index in some functions). Let the
+callers (am and apply) tell us what to use, instead of always assuming
+to operate on the_index.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive.c                | 45 ++++++++++++++++++++++++++--------------
- archive.h                | 16 +++++++++++---
- builtin/archive.c        |  2 +-
- builtin/upload-archive.c |  3 ++-
- 4 files changed, 45 insertions(+), 21 deletions(-)
+ apply.c | 46 +++++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index aca9179d03..0a07b140fe 100644
---- a/archive.c
-+++ b/archive.c
-@@ -79,7 +79,7 @@ void *object_file_to_archive(const struct archiver_args *args,
- 		size_t size = 0;
- 
- 		strbuf_attach(&buf, buffer, *sizep, *sizep + 1);
--		convert_to_working_tree(&the_index, path, buf.buf, buf.len, &buf);
-+		convert_to_working_tree(args->repo->index, path, buf.buf, buf.len, &buf);
- 		if (commit)
- 			format_subst(commit, buf.buf, buf.len, &buf);
- 		buffer = strbuf_detach(&buf, &size);
-@@ -104,12 +104,13 @@ struct archiver_context {
- 	struct directory *bottom;
- };
- 
--static const struct attr_check *get_archive_attrs(const char *path)
-+static const struct attr_check *get_archive_attrs(struct index_state *istate,
-+						  const char *path)
- {
- 	static struct attr_check *check;
- 	if (!check)
- 		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	return git_check_attr(&the_index, path, check) ? NULL : check;
-+	return git_check_attr(istate, path, check) ? NULL : check;
- }
- 
- static int check_attr_export_ignore(const struct attr_check *check)
-@@ -145,7 +146,7 @@ static int write_archive_entry(const struct object_id *oid, const char *base,
- 
- 	if (!S_ISDIR(mode)) {
- 		const struct attr_check *check;
--		check = get_archive_attrs(path_without_prefix);
-+		check = get_archive_attrs(args->repo->index, path_without_prefix);
- 		if (check_attr_export_ignore(check))
- 			return 0;
- 		args->convert = check_attr_export_subst(check);
-@@ -220,7 +221,7 @@ static int queue_or_write_archive_entry(const struct object_id *oid,
- 		/* Borrow base, but restore its original value when done. */
- 		strbuf_addstr(base, filename);
- 		strbuf_addch(base, '/');
--		check = get_archive_attrs(base->buf);
-+		check = get_archive_attrs(c->args->repo->index, base->buf);
- 		strbuf_setlen(base, baselen);
- 
- 		if (check_attr_export_ignore(check))
-@@ -268,8 +269,8 @@ int write_archive_entries(struct archiver_args *args,
- 		memset(&opts, 0, sizeof(opts));
- 		opts.index_only = 1;
- 		opts.head_idx = -1;
--		opts.src_index = &the_index;
--		opts.dst_index = &the_index;
-+		opts.src_index = args->repo->index;
-+		opts.dst_index = args->repo->index;
- 		opts.fn = oneway_merge;
- 		init_tree_desc(&t, args->tree->buffer, args->tree->size);
- 		if (unpack_trees(1, &t, &opts))
-@@ -304,33 +305,43 @@ static const struct archiver *lookup_archiver(const char *name)
- 	return NULL;
- }
- 
-+struct path_exists_context {
-+	struct pathspec pathspec;
-+	struct archiver_args *args;
-+};
-+
- static int reject_entry(const struct object_id *oid, struct strbuf *base,
- 			const char *filename, unsigned mode,
- 			int stage, void *context)
- {
- 	int ret = -1;
-+	struct path_exists_context *ctx = context;
-+
- 	if (S_ISDIR(mode)) {
- 		struct strbuf sb = STRBUF_INIT;
- 		strbuf_addbuf(&sb, base);
- 		strbuf_addstr(&sb, filename);
--		if (!match_pathspec(&the_index, context, sb.buf, sb.len, 0, NULL, 1))
-+		if (!match_pathspec(ctx->args->repo->index,
-+				    &ctx->pathspec,
-+				    sb.buf, sb.len, 0, NULL, 1))
- 			ret = READ_TREE_RECURSIVE;
- 		strbuf_release(&sb);
+diff --git a/apply.c b/apply.c
+index 3704850ef2..e485fbc6bc 100644
+--- a/apply.c
++++ b/apply.c
+@@ -3385,7 +3385,8 @@ static int verify_index_match(struct apply_state *state,
+ 			return -1;
+ 		return 0;
  	}
- 	return ret;
+-	return ce_match_stat(ce, st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
++	return ie_match_stat(state->repo->index, ce, st,
++			     CE_MATCH_IGNORE_VALID | CE_MATCH_IGNORE_SKIP_WORKTREE);
  }
  
--static int path_exists(struct tree *tree, const char *path)
-+static int path_exists(struct archiver_args *args, const char *path)
- {
- 	const char *paths[] = { path, NULL };
--	struct pathspec pathspec;
-+	struct path_exists_context ctx;
- 	int ret;
+ #define SUBMODULE_PATCH_WITHOUT_INDEX 1
+@@ -3518,14 +3519,14 @@ static int load_current(struct apply_state *state,
+ 	if (!patch->is_new)
+ 		BUG("patch to %s is not a creation", patch->old_name);
  
--	parse_pathspec(&pathspec, 0, 0, "", paths);
--	pathspec.recursive = 1;
--	ret = read_tree_recursive(tree, "", 0, 0, &pathspec,
--				  reject_entry, &pathspec);
--	clear_pathspec(&pathspec);
-+	ctx.args = args;
-+	parse_pathspec(&ctx.pathspec, 0, 0, "", paths);
-+	ctx.pathspec.recursive = 1;
-+	ret = read_tree_recursive(args->tree, "", 0, 0, &ctx.pathspec,
-+				  reject_entry, &ctx);
-+	clear_pathspec(&ctx.pathspec);
- 	return ret != 0;
- }
+-	pos = cache_name_pos(name, strlen(name));
++	pos = index_name_pos(state->repo->index, name, strlen(name));
+ 	if (pos < 0)
+ 		return error(_("%s: does not exist in index"), name);
+-	ce = active_cache[pos];
++	ce = state->repo->index->cache[pos];
+ 	if (lstat(name, &st)) {
+ 		if (errno != ENOENT)
+ 			return error_errno("%s", name);
+-		if (checkout_target(&the_index, ce, &st))
++		if (checkout_target(state->repo->index, ce, &st))
+ 			return -1;
+ 	}
+ 	if (verify_index_match(state, ce, &st))
+@@ -3687,15 +3688,16 @@ static int check_preimage(struct apply_state *state,
+ 	}
  
-@@ -348,7 +359,7 @@ static void parse_pathspec_arg(const char **pathspec,
- 	ar_args->pathspec.recursive = 1;
- 	if (pathspec) {
- 		while (*pathspec) {
--			if (**pathspec && !path_exists(ar_args->tree, *pathspec))
-+			if (**pathspec && !path_exists(ar_args, *pathspec))
- 				die(_("pathspec '%s' did not match any files"), *pathspec);
- 			pathspec++;
+ 	if (state->check_index && !previous) {
+-		int pos = cache_name_pos(old_name, strlen(old_name));
++		int pos = index_name_pos(state->repo->index, old_name,
++					 strlen(old_name));
+ 		if (pos < 0) {
+ 			if (patch->is_new < 0)
+ 				goto is_new;
+ 			return error(_("%s: does not exist in index"), old_name);
  		}
-@@ -510,6 +521,7 @@ static int parse_archive_args(int argc, const char **argv,
- }
+-		*ce = active_cache[pos];
++		*ce = state->repo->index->cache[pos];
+ 		if (stat_ret < 0) {
+-			if (checkout_target(&the_index, *ce, st))
++			if (checkout_target(state->repo->index, *ce, st))
+ 				return -1;
+ 		}
+ 		if (!state->cached && verify_index_match(state, *ce, st))
+@@ -3742,7 +3744,7 @@ static int check_to_create(struct apply_state *state,
+ 	struct stat nst;
  
- int write_archive(int argc, const char **argv, const char *prefix,
-+		  struct repository *repo,
- 		  const char *name_hint, int remote)
+ 	if (state->check_index &&
+-	    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
++	    index_name_pos(state->repo->index, new_name, strlen(new_name)) >= 0 &&
+ 	    !ok_if_exists)
+ 		return EXISTS_IN_INDEX;
+ 	if (state->cached)
+@@ -3831,7 +3833,8 @@ static int path_is_beyond_symlink_1(struct apply_state *state, struct strbuf *na
+ 		if (state->check_index) {
+ 			struct cache_entry *ce;
+ 
+-			ce = cache_file_exists(name->buf, name->len, ignore_case);
++			ce = index_file_exists(state->repo->index, name->buf,
++					       name->len, ignore_case);
+ 			if (ce && S_ISLNK(ce->ce_mode))
+ 				return 1;
+ 		} else {
+@@ -4006,9 +4009,10 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
+ static int read_apply_cache(struct apply_state *state)
  {
- 	const struct archiver *ar = NULL;
-@@ -521,6 +533,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
- 	init_tar_archiver();
- 	init_zip_archiver();
- 
-+	args.repo = repo;
- 	argc = parse_archive_args(argc, argv, &ar, &args, name_hint, remote);
- 	if (!startup_info->have_repository) {
- 		/*
-diff --git a/archive.h b/archive.h
-index 1f9954f7cd..75b9a86066 100644
---- a/archive.h
-+++ b/archive.h
-@@ -3,7 +3,10 @@
- 
- #include "pathspec.h"
- 
-+struct repository;
-+
- struct archiver_args {
-+	struct repository *repo;
- 	const char *base;
- 	size_t baselen;
- 	struct tree *tree;
-@@ -17,6 +20,16 @@ struct archiver_args {
- 	int compression_level;
- };
- 
-+/* main api */
-+
-+extern int write_archive(int argc, const char **argv, const char *prefix,
-+			 struct repository *repo,
-+			 const char *name_hint, int remote);
-+
-+const char *archive_format_from_filename(const char *filename);
-+
-+/* archive backend stuff */
-+
- #define ARCHIVER_WANT_COMPRESSION_LEVELS 1
- #define ARCHIVER_REMOTE 2
- struct archiver {
-@@ -36,9 +49,6 @@ typedef int (*write_archive_entry_fn_t)(struct archiver_args *args,
- 					unsigned int mode);
- 
- extern int write_archive_entries(struct archiver_args *args, write_archive_entry_fn_t write_entry);
--extern int write_archive(int argc, const char **argv, const char *prefix, const char *name_hint, int remote);
--
--const char *archive_format_from_filename(const char *filename);
- extern void *object_file_to_archive(const struct archiver_args *args,
- 				    const char *path, const struct object_id *oid,
- 				    unsigned int mode, enum object_type *type,
-diff --git a/builtin/archive.c b/builtin/archive.c
-index 73971d0dd2..e74f675390 100644
---- a/builtin/archive.c
-+++ b/builtin/archive.c
-@@ -105,5 +105,5 @@ int cmd_archive(int argc, const char **argv, const char *prefix)
- 
- 	setvbuf(stderr, NULL, _IOLBF, BUFSIZ);
- 
--	return write_archive(argc, argv, prefix, output, 0);
-+	return write_archive(argc, argv, prefix, the_repository, output, 0);
+ 	if (state->index_file)
+-		return read_cache_from(state->index_file);
++		return read_index_from(state->repo->index, state->index_file,
++				       get_git_dir());
+ 	else
+-		return read_cache();
++		return read_index(state->repo->index);
  }
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 84532ae9a9..25d9116356 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -43,7 +43,8 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
+ 
+ /* This function tries to read the object name from the current index */
+@@ -4019,10 +4023,10 @@ static int get_current_oid(struct apply_state *state, const char *path,
+ 
+ 	if (read_apply_cache(state) < 0)
+ 		return -1;
+-	pos = cache_name_pos(path, strlen(path));
++	pos = index_name_pos(state->repo->index, path, strlen(path));
+ 	if (pos < 0)
+ 		return -1;
+-	oidcpy(oid, &active_cache[pos]->oid);
++	oidcpy(oid, &state->repo->index->cache[pos]->oid);
+ 	return 0;
+ }
+ 
+@@ -4250,7 +4254,7 @@ static void patch_stats(struct apply_state *state, struct patch *patch)
+ static int remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
+ {
+ 	if (state->update_index && !state->ita_only) {
+-		if (remove_file_from_cache(patch->old_name) < 0)
++		if (remove_file_from_index(state->repo->index, patch->old_name) < 0)
+ 			return error(_("unable to remove %s from index"), patch->old_name);
+ 	}
+ 	if (!state->cached) {
+@@ -4271,7 +4275,7 @@ static int add_index_file(struct apply_state *state,
+ 	struct cache_entry *ce;
+ 	int namelen = strlen(path);
+ 
+-	ce = make_empty_cache_entry(&the_index, namelen);
++	ce = make_empty_cache_entry(state->repo->index, namelen);
+ 	memcpy(ce->name, path, namelen);
+ 	ce->ce_mode = create_ce_mode(mode);
+ 	ce->ce_flags = create_ce_flags(0);
+@@ -4303,7 +4307,7 @@ static int add_index_file(struct apply_state *state,
+ 				       "for newly created file %s"), path);
+ 		}
+ 	}
+-	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
++	if (add_index_entry(state->repo->index, ce, ADD_CACHE_OK_TO_ADD) < 0) {
+ 		discard_cache_entry(ce);
+ 		return error(_("unable to add cache entry for %s"), path);
+ 	}
+@@ -4341,7 +4345,7 @@ static int try_create_file(struct apply_state *state, const char *path,
+ 	if (fd < 0)
+ 		return 1;
+ 
+-	if (convert_to_working_tree(&the_index, path, buf, size, &nbuf)) {
++	if (convert_to_working_tree(state->repo->index, path, buf, size, &nbuf)) {
+ 		size = nbuf.len;
+ 		buf  = nbuf.buf;
+ 	}
+@@ -4438,17 +4442,17 @@ static int add_conflicted_stages_file(struct apply_state *state,
+ 	namelen = strlen(patch->new_name);
+ 	mode = patch->new_mode ? patch->new_mode : (S_IFREG | 0644);
+ 
+-	remove_file_from_cache(patch->new_name);
++	remove_file_from_index(state->repo->index, patch->new_name);
+ 	for (stage = 1; stage < 4; stage++) {
+ 		if (is_null_oid(&patch->threeway_stage[stage - 1]))
+ 			continue;
+-		ce = make_empty_cache_entry(&the_index, namelen);
++		ce = make_empty_cache_entry(state->repo->index, namelen);
+ 		memcpy(ce->name, patch->new_name, namelen);
+ 		ce->ce_mode = create_ce_mode(mode);
+ 		ce->ce_flags = create_ce_flags(stage);
+ 		ce->ce_namelen = namelen;
+ 		oidcpy(&ce->oid, &patch->threeway_stage[stage - 1]);
+-		if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
++		if (add_index_entry(state->repo->index, ce, ADD_CACHE_OK_TO_ADD) < 0) {
+ 			discard_cache_entry(ce);
+ 			return error(_("unable to add cache entry for %s"),
+ 				     patch->new_name);
+@@ -4897,7 +4901,7 @@ int apply_all_patches(struct apply_state *state,
  	}
  
- 	/* parse all options sent by the client */
--	return write_archive(sent_argv.argc, sent_argv.argv, prefix, NULL, 1);
-+	return write_archive(sent_argv.argc, sent_argv.argv, prefix,
-+			     the_repository, NULL, 1);
- }
- 
- __attribute__((format (printf, 1, 2)))
+ 	if (state->update_index) {
+-		res = write_locked_index(&the_index, &state->lock_file, COMMIT_LOCK);
++		res = write_locked_index(state->repo->index, &state->lock_file, COMMIT_LOCK);
+ 		if (res) {
+ 			error(_("Unable to write new index file"));
+ 			res = -128;
 -- 
 2.18.0.1004.g6639190530
 
