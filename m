@@ -7,164 +7,111 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A86CF1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:47:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44D7E1F428
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:51:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729138AbeHMO27 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:28:59 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50045 "EHLO mout.gmx.net"
+        id S1729335AbeHMOdb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:33:31 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44717 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729110AbeHMO27 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:28:59 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfEsY-1fVs2T0idu-00OlaU; Mon, 13
- Aug 2018 13:46:59 +0200
-Date:   Mon, 13 Aug 2018 13:47:05 +0200 (DST)
+        id S1728055AbeHMOdb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:33:31 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjrDd-1gQS4m2U0X-00bue1; Mon, 13
+ Aug 2018 13:51:29 +0200
+Date:   Mon, 13 Aug 2018 13:51:35 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
 cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 2/4] diff.c: add --output-indicator-{new, old, context}
-In-Reply-To: <20180810224923.143625-3-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
-References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-3-sbeller@google.com>
+Subject: Re: [PATCH 3/4] range-diff: make use of different output
+ indicators
+In-Reply-To: <20180810224923.143625-4-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131348120.71@tvgsbejvaqbjf.bet>
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-4-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gLciR76VPvPvsK09H+fDcPjH5b3CKsi3yOHneDBjMgA1o2xMaBp
- tOK/Z4XWN2HkY0aDOj7xdGsW6QiMAyV7oV/CaklvBHFhVSyV2eCOhuC6J5tzR0B17TEWuID
- rJgLzfjej7xqSQhrRxQokPBoLv2Ta4Fk+LMCHYQ7qQv4jRgHDnJehGdUAnZpopyBGCET21y
- 6L5xYJuBvreymNLnngbqQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:pMFhgH318Jo=:W+C4TKKiluYUglAhORa+7U
- 6RRcQqmaJHkZAuy7mteS3kitUbvxs6HPoI+cxAGjNaDGKhl718+wMXm7htHuyEojWttd3CIfL
- H98QXhF5Gp9xxBA5ECtxscKAzuctNVOLrisk8wNIqjHKU39WusmWp3BzyV1dVFEuEgoy/9ffR
- L4TEvYqGh5gLbYxTanVOeDZJwwd465JUEdXMrDAtJhoTmfmfgg0un7eV0RmAkvBGBnR/5Bgxa
- OVdMHkKnNLWVgwIIND2/Nl61gnEqrrTKa2AghpM8G4OqOYh7eNNwgE3FWEVxHa2h6Lq7K/dpK
- R/ITp6AVOuHQI8nT7vQCYTAsYm8a71ZesjpB+15+HYSJ1S9sqqiBtCK8wRvTTLtDvKgaijHpt
- 9EPfiYmaZE+yQffQ4fw4Qj3bzXu7wcoeKO1/vuG4gfFAwF/zsNG14kTkvuCOR/Es0lBK7g8BD
- d8UQ6mvLa2mZ8St6MxcFM+Nxm/DJFqCYQ5HDkI7nZPKaf4odBG3CZi+V4OSD/TMokn+2IouAh
- rF+ohyh7v6QDNiO/4bWaQ0FyN8c6J3kM6ERjBR7Y+8q8K7CrH+WIsd6V1QFauQc7oRRJSUHzy
- fmWWjeaMPk3ZMu2gGbvh25EC57FP+vPU287bmWiGTzcndv3xw3n8UkFRUsTqPIZzpIHfPyBJX
- v0xkQw+sBgjD/zOCFaPKSQKVl6g8eCxpCLNiPkN6BbFvNniiH1xjPUxx3nwfCIpNrZ9doimTd
- xLkTm/Yfedv8ADOXnBNyEHbdah9b+5/PpY8PmeDFNiEC8JmgYHFRNXT0Kkd7OzFnshzMo15Kk
- gqRvTwQ
+X-Provags-ID: V03:K1:EaASESb13Pa5C1BV7wBsupr8eb79q18ZzTsAZ18vEdyNj9y1Ehc
+ LaerOVXr6U4WWfO+aKz881QHUBLA3EOsWfTBMqqHL1Q/yClq1lrFPErjhRs1JfGL/van8Um
+ lPBCE+WdBzVTyXy4GoY0zkDMvnwlI5cIaUGjkoViJJe72346vt7XpIcCA8LWnd4ERjJs+p1
+ Xx047SS8h5EBIfpoKK2YQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fUw5JFP+hUc=:ArDG7SjpNqXEW8CVO4V4N6
+ G0NXeJv5ipKz7xymHNaHK3Ko3WapXGrypVVTILHS9mNb+Q8UxSr1KSUnROLB6QgwI9/5d4vwt
+ Q9PXMsyG72NfdR8P3QqL1xbZxk12tu1GqZ01sczF7TmzFOH0k6o9A250R2yB73/7uh+uEnH+J
+ 9ZOpHNHcl+tFQEehVmsQHA2y4ZdFwyuYhDDPK/G2TmkFl22B/zc3ptvtrreTtQIAurYBs1YQJ
+ 8veI4wvNSuFzpHetHfmA5046X1aKxW59rWhaYSAe/Xr6QwFH2pNTEQ7AEpJ4mJajWd2+j6TwJ
+ SwFD+Z91Kzx583Q/MTAxyXUgzZFWpfkhaWhuOLlmMoeFz81z4ur9mPz/MU7oPyNjY0PFdo52w
+ VXswzoNy4WIYNR18wEfCAv1AxBgj1P0RyUxlKh/ZjVqy/oL2SBi6pZfKXCQfMfnUt9vFkLQFE
+ TdXoy1Kri5plzny3zUT6RCRsCc1zxs/R0tTcUK035g9TfHZMRcCN1FGChqTuVeqlqtekINbIJ
+ o6wGszdZOFgLMattBs8ZEzJuBz1rxNLAR+lMKJN4RIba9ZVqhYyES2+Dy0ITBAm5iTS+bSP73
+ GtIYWhal3qvoe5v1vSB8Y4YHJnwi9KB8qmEWfGadBoWaWvjtEh/cSo0yBsqtV4iF3PYr9RIQP
+ y59DA2paeYTUPKXuitnCWjQ6P5JRvMTKZUVTBhef5sCehKFqDihpNqins71jHJH+JaY9CJcG9
+ Hxx5G2nv2ddo1suBM86t3XfVYRfE+bTHw0zvChGg5k8gyM1hobf0VFC8JQBY4FYBrpUULIWz3
+ HNBoqgV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Steafn,
+Hi Stefan,
 
 On Fri, 10 Aug 2018, Stefan Beller wrote:
 
-> This will prove useful in range-diff in a later patch as we will be able to
-> differentiate between adding a new file (that line is starting with +++
-> and then the file name) and regular new lines.
-
-Very good!
-
-> It could also be useful for experimentation in new patch formats, i.e.
-> we could teach git to emit moved lines with lines other than +/-.
+> This change itself only changes the internal communication and should
+> have no visible effect to the user. We instruct the diff code that produces
+> the inner diffs to use X, Y, Z instead of the usual markers for new, old
+> and context lines
 > 
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  diff.c | 21 +++++++++++++++++----
->  diff.h |  5 +++++
->  2 files changed, 22 insertions(+), 4 deletions(-)
+>  range-diff.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
 > 
-> diff --git a/diff.c b/diff.c
-> index b3cb73eb69a..b75eb085cb3 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1237,7 +1237,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  					 struct emitted_diff_symbol *eds)
->  {
->  	static const char *nneof = " No newline at end of file\n";
-> -	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
-> +	const char *context, *reset, *set, *set_sign, *meta, *fraginfo, *first;
->  	struct strbuf sb = STRBUF_INIT;
+> diff --git a/range-diff.c b/range-diff.c
+> index b6b9abac266..6e4192c8e79 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -38,6 +38,9 @@ static int read_patches(const char *range, struct string_list *list)
 >  
->  	enum diff_symbol s = eds->s;
-> @@ -1288,7 +1288,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  			else if (c == '-')
->  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
->  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
-> +		first = o->output_indicators[OI_CONTEXT] ?
-> +			o->output_indicators[OI_CONTEXT] : " ";
-> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
+>  	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+>  			"--reverse", "--date-order", "--decorate=no",
+> +			"--output-indicator-new=X",
+> +			"--output-indicator-old=Y",
+> +			"--output-indicator-context=Z",
+>  			"--no-abbrev-commit", range,
+>  			NULL);
+>  	cp.out = -1;
+> @@ -108,8 +111,18 @@ static int read_patches(const char *range, struct string_list *list)
+>  			 * we are not interested.
+>  			 */
+>  			continue;
+> -		else
+> +		else if (line.buf[0] == 'X') {
+> +			strbuf_addch(&buf, '+');
+> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> +		} else if (line.buf[0] == 'Y') {
+> +			strbuf_addch(&buf, '-');
+> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> +		} else if (line.buf[0] == 'Z') {
+> +			strbuf_addch(&buf, ' ');
+> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
+> +		} else {
+>  			strbuf_addbuf(&buf, &line);
+> +		}
 
-Instead of doing this over and over again, how about
-
-1) setting o->output_indicators to " " in diff_setup()?
-
-2) passing OI_CONTEXT to emit_line_ws_markup() instead of `first`? I.e.
-   change it to the index in the output_indicators, with -1 indicating
-   "none"?
-
->  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
->  		break;
->  	case DIFF_SYMBOL_PLUS:
-> @@ -1331,7 +1333,10 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
->  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
->  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, "+", line, len,
-> +
-> +		first = o->output_indicators[OI_NEW] ?
-> +			o->output_indicators[OI_NEW] : "+";
-> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
->  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
->  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
->  		break;
-> @@ -1374,7 +1379,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  			else
->  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
->  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, "-", line, len,
-> +		first = o->output_indicators[OI_OLD] ?
-> +			o->output_indicators[OI_OLD] : "-";
-> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
->  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
->  		break;
->  	case DIFF_SYMBOL_WORDS_PORCELAIN:
-> @@ -4876,6 +4883,12 @@ int diff_opt_parse(struct diff_options *options,
->  		 options->output_format |= DIFF_FORMAT_DIFFSTAT;
->  	} else if (!strcmp(arg, "--no-compact-summary"))
->  		 options->flags.stat_with_summary = 0;
-> +	else if (skip_prefix(arg, "--output-indicator-new=", &arg))
-> +		options->output_indicators[OI_NEW] = arg;
-> +	else if (skip_prefix(arg, "--output-indicator-old=", &arg))
-> +		options->output_indicators[OI_OLD] = arg;
-> +	else if (skip_prefix(arg, "--output-indicator-context=", &arg))
-> +		options->output_indicators[OI_CONTEXT] = arg;
->  
->  	/* renames options */
->  	else if (starts_with(arg, "-B") ||
-> diff --git a/diff.h b/diff.h
-> index e1e54256c18..2d4097df1c7 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -194,6 +194,11 @@ struct diff_options {
->  	FILE *file;
->  	int close_file;
->  
-> +#define OI_NEW 0
-> +#define OI_OLD 1
-> +#define OI_CONTEXT 2
-
-I could imagine that OI_* is too generic a prefix, and that we would want
-to have a prefix that is less prone to collide with other global
-constants, such as OUTPUT_INDICATOR_*.
+My preliminary reading (I sadly lack the time to pull your branch and play
+with it) suggests that this works, although I have to admit that X/Y/Z
+would confuse me in 6 months from now, as they do not really read like
+diff markers but like plain text. I could imagine that '>', '<' and '#'
+would not impart that confusion on me.
 
 Ciao,
 Dscho
 
-> +	const char *output_indicators[3];
-> +
->  	struct pathspec pathspec;
->  	pathchange_fn_t pathchange;
->  	change_fn_t change;
+>  
+>  		strbuf_addch(&buf, '\n');
+>  		util->diffsize++;
 > -- 
 > 2.18.0.865.gffc8e1a3cd6-goog
 > 
