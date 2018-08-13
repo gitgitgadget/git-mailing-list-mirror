@@ -2,290 +2,312 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 560C51F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:33:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4086B1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:38:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729300AbeHMOPQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:15:16 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:46375 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729286AbeHMOPO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:15:14 -0400
-Received: by mail-pg1-f194.google.com with SMTP id f14-v6so7368871pgv.13
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=QskaeRksTPD0DWmgRnd+x3euVP2fFo2wA4NsQhYbCbQ=;
-        b=Py2Nyh8ZfYSj52PE2TIR121jBhcYUCUxzx7Guoh5pHaCDGcreZ8kzGdcqlrUkdaCRi
-         mQ0v3ZkWNEzXtSrZAgWU3JaloFB4wK0xARR4yhrT2d/pPDf0xOP+HOHOp6bni9Iz3V23
-         sBQz5o76I7pWFpkDM7bJsHg252WttP8IY2FksbpTCM8qoSL362NXew5r+nO6n+5SxQGF
-         nyRIdJSucGaKBGQezsDaD2ockPbSr4qm68KRuuO6pu0qBYvCI6nB4GHFFIa6xILSSVhq
-         kWj3FruaQADa76S1TXVpCTNxHEJ7PaYAoIytNWwl/rcq4Koy+7iKeZqpRgyKNzDGF+jK
-         xJ9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=QskaeRksTPD0DWmgRnd+x3euVP2fFo2wA4NsQhYbCbQ=;
-        b=h5D4+cTE51xTOEGtYYA8bNdCv6m0K+dy4g+TS6Wa+0vHUzmPEe4lEMuqlRxJSTTz6W
-         xRecgTuf8ISi1qhVFcEo7R8s8XboTKCuTwdd0x7LSQzPi7BAH4yVMAucxgVxHJ+MmjQr
-         EaDwPtrl1LNuj8eWxMa/48uGUellW+ZsBQkKH/XsfpEsfAhtJngA6yudDMT+hVuAZQs/
-         ZEv1pTiBxku9Jae3u/DAe83gJTv43/LN/kgmH1YeaCd9kdcMmH2/dmAH6cpTh0cKOz+o
-         ZE2c1p5Een1AQSlklcLgg4GP2F9+UqIcU17cxT4Tax9p/GDfbPMCQP6T9uahku97Fe8J
-         gYHw==
-X-Gm-Message-State: AOUpUlHRqEdm/mj32IAcHECWt1J7Acaq5eNnbktr5iXHtj7tmHNwIzoC
-        +ZAUb1RfzbSo1G2DR1+pM4bTya5q
-X-Google-Smtp-Source: AA+uWPxcy/vvKyqbPYArj8xLIOL/yFVJTQvaHVNbpf/KtitQVcNOjvnVdbKo+COWnIfgBjvtZV+V5Q==
-X-Received: by 2002:a62:5302:: with SMTP id h2-v6mr18785394pfb.183.1534160001920;
-        Mon, 13 Aug 2018 04:33:21 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id p66-v6sm37965085pfd.65.2018.08.13.04.33.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 04:33:20 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 04:33:20 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 Aug 2018 11:32:49 GMT
-Message-Id: <f1c86f606e018c34230dc016ffdc25a3c70bf840.1534159977.git.gitgitgadget@gmail.com>
+        id S1728737AbeHMOUZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:20:25 -0400
+Received: from mout.gmx.net ([212.227.15.18]:34459 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728461AbeHMOUZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:20:25 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1W5x-1g8lIE2DyT-00tVII; Mon, 13
+ Aug 2018 13:38:23 +0200
+Date:   Mon, 13 Aug 2018 13:38:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 00/21] Add range-diff, a tbdiff lookalike
 In-Reply-To: <pull.1.v6.git.gitgitgadget@gmail.com>
-References: <pull.1.v5.git.gitgitgadget@gmail.com>
-        <pull.1.v6.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 14/21] diff: add an internal option to dual-color diffs of
- diffs
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Message-ID: <nycvar.QRO.7.76.6.1808131337360.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v5.git.gitgitgadget@gmail.com> <pull.1.v6.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:qUizvWxMQhTxa9W57lVToQ8WfJmOfa1vgphUtM5UNXvO+p6PWRC
+ rMSce+sV3F6Dq5YJsZGtTDZ00DWQvwNoynSARqhCWNLsNtrNmIWuub83L9xD2AaLzAd0Yb7
+ OWPmox0ngbmgvKDO0KhwFMVUOM6oQfubT6vghfNw9xqzLDEwmdDnDkw4udM5BbqiV1nd040
+ ZuXSD3OhpU68A8IQbxArg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XHwjt0pLtko=:hL32B69gHqy8dl8UXmc4a+
+ TALfEGPhD7rivl4QxJPe0EV3fEVmEL+/TD0MbtvpyGOAW6IW76MWa2vAbxKSA2Dk8Hs5NVaeg
+ yfOXkp5nOIoD6b37c61/xMhpQXqtCI3aG5o6EYEgi7dDc5Bijfxp/cIgUuoJauAamBiXQVVTK
+ bsKiVWOnYoQ2gJdo7RfzmUBB6vHFw9LsTpK01pqLWTKeV3OUOWnSEile36G6jEjOh8Qkts9Z2
+ cZyyqCHlfIpXFVrLvoZQBNbnmWeW5lqNuS4vPI4k6TEBW5/5JF4IR9yUDrAJcNPpPS4vstkmG
+ E7LzGY4x/++OaujvrRTFRWJCmJAn8KefuwJk3lLUdabT78MWkiY23Ing+tTiQOlwOzs2SRb4w
+ rGoeqoFzlsn/hN30IR8gLoxL8bP0h/92hKFr+QH08WLhZJ/MOXHv4mDCs7lbEjuSOqDs2LjpF
+ QxxFayQ82GMUY67nKBAV+UclXBctHOxym/aJqWw1YBZr3IMhTCmxJQWJ6NI1MQcBFUAlVU6V8
+ io4V7VyxGBsIWNyW6+6YuUosjxZKVnXpdTfkXMMdDNHvyGg5lwzKKkm1aeuYDOF2ukG34iyje
+ x41/kB0Sxuo4Rh6uYkcVhql3c/bkXVuPN5A3RO3Wh77/RQXm87r/5PhJEZNFyM1TdYloAC5bc
+ H+Il7LeKwNSxcHql9QUGh+zVHUda1+zkpaSc1Sxee9UlmjvmEWtjzK8oMORT7ovru1MdDRqKi
+ TXhCILLK0CUl85mEMEqJPp0AzvA31TLLUDBRmVGC+fQj6157WZsnZLty3W7AgXeakNaz9ihxE
+ MF8XfST
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi,
 
-When diffing diffs, it can be quite daunting to figure out what the heck
-is going on, as there are nested +/- signs.
+On Mon, 13 Aug 2018, Johannes Schindelin via GitGitGadget wrote:
 
-Let's make this easier by adding a flag in diff_options that allows
-color-coding the outer diff sign with inverted colors, so that the
-preimage and postimage is colored like the diff it is.
+> The incredibly useful git-tbdiff [https://github.com/trast/tbdiff] tool to
+> compare patch series (say, to see what changed between two iterations sent
+> to the Git mailing list) is slightly less useful for this developer due to
+> the fact that it requires the hungarian and numpy Python packages which are
+> for some reason really hard to build in MSYS2. So hard that I even had to
+> give up, because it was simply easier to re-implement the whole shebang as a
+> builtin command.
+> 
+> The project at https://github.com/trast/tbdiff seems to be dormant, anyway.
+> Funny (and true) story: I looked at the open Pull Requests to see how active
+> that project is, only to find to my surprise that I had submitted one in
+> August 2015, and that it was still unanswered let alone merged.
+> 
+> While at it, I forward-ported AEvar's patch to force --decorate=no because 
+> git -p tbdiff would fail otherwise.
+> 
+> Side note: I work on implementing range-diff not only to make life easier
+> for reviewers who have to suffer through v2, v3, ... of my patch series, but
+> also to verify my changes before submitting a new iteration. And also, maybe
+> even more importantly, I plan to use it to verify my merging-rebases of Git
+> for Windows (for which I previously used to redirect the
+> pre-rebase/post-rebase diffs vs upstream and then compare them using git
+> diff --no-index). And of course any interested person can see what changes
+> were necessary e.g. in the merging-rebase of Git for Windows onto v2.17.0 by
+> running a command like:
+> 
+>         base=^{/Start.the.merging-rebase}
+>         tag=v2.17.0.windows.1
+>         pre=$tag$base^2
+>         git range-diff $pre$base..$pre $tag$base..$tag
+> 
+> The command uses what it calls the "dual color mode" (can be disabled via 
+> --no-dual-color) which helps identifying what actually changed: it prefixes
+> lines with a - (and red background) that correspond to the first commit
+> range, and with a + (and green background) that correspond to the second
+> range. The rest of the lines will be colored according to the original
+> diffs.
 
-Of course, this really only makes sense when the preimage and postimage
-*are* diffs. So let's not expose this flag via a command-line option for
-now.
+Changes since v5:
 
-This is a feature that was invented by git-tbdiff, and it will be used
-by `git range-diff` in the next commit, by offering it via a new option:
-`--dual-color`.
+- Fixed the bug (introduced in v5) where a dashdash would not be handled
+  appropriately.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- diff.c | 83 +++++++++++++++++++++++++++++++++++++++++++++++-----------
- diff.h |  1 +
- 2 files changed, 69 insertions(+), 15 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 9c4bd9fa1..e6c857abf 100644
---- a/diff.c
-+++ b/diff.c
-@@ -609,14 +609,18 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
- 	ecbdata->blank_at_eof_in_postimage = (at - l2) + 1;
- }
- 
--static void emit_line_0(struct diff_options *o, const char *set, const char *reset,
-+static void emit_line_0(struct diff_options *o,
-+			const char *set, unsigned reverse, const char *reset,
- 			int first, const char *line, int len)
- {
- 	int has_trailing_newline, has_trailing_carriage_return;
- 	int nofirst;
- 	FILE *file = o->file;
- 
--	fputs(diff_line_prefix(o), file);
-+	if (first)
-+		fputs(diff_line_prefix(o), file);
-+	else if (!len)
-+		return;
- 
- 	if (len == 0) {
- 		has_trailing_newline = (first == '\n');
-@@ -634,8 +638,10 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
- 	}
- 
- 	if (len || !nofirst) {
-+		if (reverse && want_color(o->use_color))
-+			fputs(GIT_COLOR_REVERSE, file);
- 		fputs(set, file);
--		if (!nofirst)
-+		if (first && !nofirst)
- 			fputc(first, file);
- 		fwrite(line, len, 1, file);
- 		fputs(reset, file);
-@@ -649,7 +655,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
- static void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
- {
--	emit_line_0(o, set, reset, line[0], line+1, len-1);
-+	emit_line_0(o, set, 0, reset, line[0], line+1, len-1);
- }
- 
- enum diff_symbol {
-@@ -1168,7 +1174,8 @@ static void dim_moved_lines(struct diff_options *o)
- 
- static void emit_line_ws_markup(struct diff_options *o,
- 				const char *set, const char *reset,
--				const char *line, int len, char sign,
-+				const char *line, int len,
-+				const char *set_sign, char sign,
- 				unsigned ws_rule, int blank_at_eof)
- {
- 	const char *ws = NULL;
-@@ -1179,14 +1186,20 @@ static void emit_line_ws_markup(struct diff_options *o,
- 			ws = NULL;
- 	}
- 
--	if (!ws)
--		emit_line_0(o, set, reset, sign, line, len);
--	else if (blank_at_eof)
-+	if (!ws && !set_sign)
-+		emit_line_0(o, set, 0, reset, sign, line, len);
-+	else if (!ws) {
-+		/* Emit just the prefix, then the rest. */
-+		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
-+			    sign, "", 0);
-+		emit_line_0(o, set, 0, reset, 0, line, len);
-+	} else if (blank_at_eof)
- 		/* Blank line at EOF - paint '+' as well */
--		emit_line_0(o, ws, reset, sign, line, len);
-+		emit_line_0(o, ws, 0, reset, sign, line, len);
- 	else {
- 		/* Emit just the prefix, then the rest. */
--		emit_line_0(o, set, reset, sign, "", 0);
-+		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
-+			    sign, "", 0);
- 		ws_check_emit(line, len, ws_rule,
- 			      o->file, set, reset, ws);
- 	}
-@@ -1196,7 +1209,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 					 struct emitted_diff_symbol *eds)
- {
- 	static const char *nneof = " No newline at end of file\n";
--	const char *context, *reset, *set, *meta, *fraginfo;
-+	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	enum diff_symbol s = eds->s;
-@@ -1209,7 +1222,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 		context = diff_get_color_opt(o, DIFF_CONTEXT);
- 		reset = diff_get_color_opt(o, DIFF_RESET);
- 		putc('\n', o->file);
--		emit_line_0(o, context, reset, '\\',
-+		emit_line_0(o, context, 0, reset, '\\',
- 			    nneof, strlen(nneof));
- 		break;
- 	case DIFF_SYMBOL_SUBMODULE_HEADER:
-@@ -1236,7 +1249,18 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 	case DIFF_SYMBOL_CONTEXT:
- 		set = diff_get_color_opt(o, DIFF_CONTEXT);
- 		reset = diff_get_color_opt(o, DIFF_RESET);
--		emit_line_ws_markup(o, set, reset, line, len, ' ',
-+		set_sign = NULL;
-+		if (o->flags.dual_color_diffed_diffs) {
-+			char c = !len ? 0 : line[0];
-+
-+			if (c == '+')
-+				set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+			else if (c == '@')
-+				set = diff_get_color_opt(o, DIFF_FRAGINFO);
-+			else if (c == '-')
-+				set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+		}
-+		emit_line_ws_markup(o, set, reset, line, len, set_sign, ' ',
- 				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
- 		break;
- 	case DIFF_SYMBOL_PLUS:
-@@ -1263,7 +1287,20 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 			set = diff_get_color_opt(o, DIFF_FILE_NEW);
- 		}
- 		reset = diff_get_color_opt(o, DIFF_RESET);
--		emit_line_ws_markup(o, set, reset, line, len, '+',
-+		if (!o->flags.dual_color_diffed_diffs)
-+			set_sign = NULL;
-+		else {
-+			char c = !len ? 0 : line[0];
-+
-+			set_sign = set;
-+			if (c == '-')
-+				set = diff_get_color_opt(o, DIFF_FILE_OLD);
-+			else if (c == '@')
-+				set = diff_get_color_opt(o, DIFF_FRAGINFO);
-+			else if (c != '+')
-+				set = diff_get_color_opt(o, DIFF_CONTEXT);
-+		}
-+		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
- 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
- 				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
- 		break;
-@@ -1291,7 +1328,20 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
- 			set = diff_get_color_opt(o, DIFF_FILE_OLD);
- 		}
- 		reset = diff_get_color_opt(o, DIFF_RESET);
--		emit_line_ws_markup(o, set, reset, line, len, '-',
-+		if (!o->flags.dual_color_diffed_diffs)
-+			set_sign = NULL;
-+		else {
-+			char c = !len ? 0 : line[0];
-+
-+			set_sign = set;
-+			if (c == '+')
-+				set = diff_get_color_opt(o, DIFF_FILE_NEW);
-+			else if (c == '@')
-+				set = diff_get_color_opt(o, DIFF_FRAGINFO);
-+			else if (c != '-')
-+				set = diff_get_color_opt(o, DIFF_CONTEXT);
-+		}
-+		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
- 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
- 		break;
- 	case DIFF_SYMBOL_WORDS_PORCELAIN:
-@@ -1482,6 +1532,7 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	const char *frag = diff_get_color(ecbdata->color_diff, DIFF_FRAGINFO);
- 	const char *func = diff_get_color(ecbdata->color_diff, DIFF_FUNCINFO);
- 	const char *reset = diff_get_color(ecbdata->color_diff, DIFF_RESET);
-+	const char *reverse = ecbdata->color_diff ? GIT_COLOR_REVERSE : "";
- 	static const char atat[2] = { '@', '@' };
- 	const char *cp, *ep;
- 	struct strbuf msgbuf = STRBUF_INIT;
-@@ -1502,6 +1553,8 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
- 	ep += 2; /* skip over @@ */
- 
- 	/* The hunk header in fraginfo color */
-+	if (ecbdata->opt->flags.dual_color_diffed_diffs)
-+		strbuf_addstr(&msgbuf, reverse);
- 	strbuf_addstr(&msgbuf, frag);
- 	strbuf_add(&msgbuf, line, ep - line);
- 	strbuf_addstr(&msgbuf, reset);
-diff --git a/diff.h b/diff.h
-index d88ceb357..cca4f9d6c 100644
---- a/diff.h
-+++ b/diff.h
-@@ -95,6 +95,7 @@ struct diff_flags {
- 	unsigned default_follow_renames:1;
- 	unsigned stat_with_summary:1;
- 	unsigned suppress_diff_headers:1;
-+	unsigned dual_color_diffed_diffs:1;
- };
- 
- static inline void diff_flags_or(struct diff_flags *a,
--- 
-gitgitgadget
-
+> Changes since v4:
+> 
+>  * Fixed a typo in the commit message of "range-diff: add tests" that was
+>    introduced in v4.
+>  * White-space fixes.
+>  * Fixed the length of the first header underline in the man page.
+>  * Changed the preprocessor guard in linear-assignment.h to reflect the new
+>    name (instead of the old name, which was hungarian.h).
+>  * Likewise, changed the preprocessor guards in range-diff.h to hide the
+>    history of the thrice-renamed command.
+>  * Fixed indentation in the completion.
+>  * Instead of trying to paper over white-space error handling that does not
+>    apply to "diffs of diffs", dual color mode now simply disables all
+>    white-space warnings.
+>  * When showing the "single arg must be symmetric range" error message, git
+>    range-diff now also shows the usage.
+>  * Adjusted the commit message of "range-diff: adjust the output of the
+>    commit pairs" to avoid the surprise of the reviewer when onelines are
+>    printed all of a sudden, too.
+>  * "range-diff: adjust the output of the commit pairs" is now using a
+>    simpler way to print onelines.
+>  * We are now sandwiching the diff_opt_parse() loop between two 
+>    parse_options(), to make sure that we caught all options, and that the -- 
+>    separator is handled.
+>  * Adjusted the lookup_commit_reference() call to the newest master (it now
+>    takes a the_repository parameter).
+> 
+> Changes since v3:
+> 
+>  * The cover letter was adjusted to reflect the new reality (the command is
+>    called range-diff now, not branch-diff, and --dual-color is the default).
+>  * The documentation was adjusted a bit more in the patch that makes 
+>    --dual-color the default.
+>  * Clarified the calculation of the cost matrix, as per Stefan Beller's
+>    request.
+>  * The man page now spells out that merge commits are ignored in the commit
+>    ranges (not merges per se).
+>  * The code in linear-assignment.c was adjusted to use the SWAP() macro.
+>  * The commit message of the patch introducing the first rudimentary
+>    implementation no longer talks about the "Hungarian" algorithm, but about
+>    the "linear assignment algorithm" instead.
+>  * A bogus indentation change was backed out from the patch introducing the
+>    first rudimentary implementation.
+>  * Instead of merely warning about missing .. in the 2-parameter invocation,
+>    we now exit with the error message.
+>  * The diff_opt_parse() function is allowed to return a value larger than 1,
+>    indicating that more than just one command-line parameter was parsed. We
+>    now advance by the indicated value instead of always advancing exactly 1
+>    (which is still correct much of the time).
+>  * A lengthy if...else if...else if...else was simplified (from a logical
+>    point of view) by reordering it.
+>  * The unnecessarily static variable dashes was turned into a local variable
+>    of the caller.
+>  * The commit message talking about the new man page still referred to git
+>    branch --diff, which has been fixed.
+>  * A forgotten t7910 reference was changed to t3206.
+>  * An unbalanced double-tick was fixed in the man page.
+>  * Fixed grammar both of the commit message and the description of the 
+>    --no-dual-color option.
+>  * To fix the build, a blank man page is now introduced together with the
+>    new range-diff command, even if it is populated for real only at a later
+>    patch (i.e. at the same time as before).
+>  * The headaches Junio fears would be incurred by that simple workaround to
+>    avoid bogus white-space error reporting are fended off: a more complex
+>    patch is now in place that adds (and uses) a new white-space flag. Sadly,
+>    as is all too common when Junio "encourages" me to replace a simple
+>    workaround by something "proper", it caused all kinds of headaches to get
+>    this right, so I am rather less certain that the "proper" fix will cause
+>    us less headaches than the simple workaround would have done. But
+>    whatever.
+>  * The dual color mode now also dims the changes that are exclusively in the
+>    first specified commit range, and uses bold face on the changes
+>    exclusively in the second one. This matches the intuition when using 
+>    range-diff to compare an older iteration of a patch series to a newer
+>    one: the changes from the previous iteration that were replaced by new
+>    ones "fade", while the changes that replace them are "shiny new".
+> 
+> Changes since v2:
+> 
+>  * Right-aligned the patch numbers in the commit pairs.
+>  * Used ALLOC_ARRAY() in hungarian.c instead of xmalloc(sizeof()*size).
+>  * Changed compute_assignment()s return type from int to void, as it always
+>    succeeds.
+>  * Changed the Hungarian Algorithm to use an integer cost matrix.
+>  * Changed the --creation-weight option to --creation-factor where is an
+>    integer.
+>  * Retitled 1/19 and 2/19 to better conform with the current conventions, as
+>    pointed out (and suggested) by Junio.
+>  * Shut up Coverity, and at the same time avoided passing the unnecessary i 
+>    and j parameters to output_pair_header().
+>  * Removed support for the --no-patches option: we inherit diff_options'
+>    support for -s already (and much more).
+>  * Removed the ugly _INV enum values, and introduced a beautiful
+>    GIT_COLOR_REVERSE instead. This way, whatever the user configured as
+>    color.diff.new (or .old) will be used in reverse in the dual color mode.
+>  * Instead of overriding the fragment header color, the dual color mode will
+>    now reverse the "outer" fragment headers, too.
+>  * Turned the stand-alone branch-diff command into the --diff option of git
+>    branch. Adjusted pretty much all commit messages to account for this.
+>    This change should no longer be visible: see below.
+>  * Pretty much re-wrote the completion, to support the new --diff mode of
+>    git-branch. See below: it was reverted for range-diff.
+>  * Renamed t7910 to t3206, to be closer to the git-branch tests.
+>  * Ensured that git_diff_ui_config() gets called, and therefore color.diff.*
+>    respected.
+>  * Avoided leaking four_spaces.
+>  * Fixed a declaration in a for (;;) statement (which Junio had as a fixup!
+>    that I almost missed).
+>  * Renamed branch --diff, which had been renamed from branch-diff (which was
+>    picked to avoid re-using tbdiff) to range-diff.
+>  * Renamed hungarian.c and its header to linear-assignment.c
+>  * Made --dual-color the default, and changed it to still auto-detect
+>    whether color should be used rather than forcing it
+> 
+> Johannes Schindelin (20):
+>   linear-assignment: a function to solve least-cost assignment problems
+>   Introduce `range-diff` to compare iterations of a topic branch
+>   range-diff: first rudimentary implementation
+>   range-diff: improve the order of the shown commits
+>   range-diff: also show the diff between patches
+>   range-diff: right-trim commit messages
+>   range-diff: indent the diffs just like tbdiff
+>   range-diff: suppress the diff headers
+>   range-diff: adjust the output of the commit pairs
+>   range-diff: do not show "function names" in hunk headers
+>   range-diff: use color for the commit pairs
+>   color: add the meta color GIT_COLOR_REVERSE
+>   diff: add an internal option to dual-color diffs of diffs
+>   range-diff: offer to dual-color the diffs
+>   range-diff --dual-color: skip white-space warnings
+>   range-diff: populate the man page
+>   completion: support `git range-diff`
+>   range-diff: left-pad patch numbers
+>   range-diff: make --dual-color the default mode
+>   range-diff: use dim/bold cues to improve dual color mode
+> 
+> Thomas Rast (1):
+>   range-diff: add tests
+> 
+>  .gitignore                             |   1 +
+>  Documentation/config.txt               |   6 +-
+>  Documentation/git-range-diff.txt       | 252 +++++++++++
+>  Makefile                               |   3 +
+>  builtin.h                              |   1 +
+>  builtin/range-diff.c                   | 116 +++++
+>  color.h                                |   7 +
+>  command-list.txt                       |   1 +
+>  contrib/completion/git-completion.bash |  14 +
+>  diff.c                                 | 105 ++++-
+>  diff.h                                 |  10 +-
+>  git.c                                  |   1 +
+>  linear-assignment.c                    | 201 ++++++++
+>  linear-assignment.h                    |  22 +
+>  range-diff.c                           | 435 ++++++++++++++++++
+>  range-diff.h                           |   9 +
+>  t/.gitattributes                       |   1 +
+>  t/t3206-range-diff.sh                  | 145 ++++++
+>  t/t3206/history.export                 | 604 +++++++++++++++++++++++++
+>  19 files changed, 1915 insertions(+), 19 deletions(-)
+>  create mode 100644 Documentation/git-range-diff.txt
+>  create mode 100644 builtin/range-diff.c
+>  create mode 100644 linear-assignment.c
+>  create mode 100644 linear-assignment.h
+>  create mode 100644 range-diff.c
+>  create mode 100644 range-diff.h
+>  create mode 100755 t/t3206-range-diff.sh
+>  create mode 100644 t/t3206/history.export
+> 
+> 
+> base-commit: 1d89318c48d233d52f1db230cf622935ac3c69fa
+> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-1%2Fdscho%2Fbranch-diff-v6
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1/dscho/branch-diff-v6
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1
+> 
+> Range-diff vs v5:
+> 
+>   1:  f168da3a3 =  1:  f168da3a3 linear-assignment: a function to solve least-cost assignment problems
+>   2:  33758f361 =  2:  33758f361 Introduce `range-diff` to compare iterations of a topic branch
+>   3:  08b8c3fc4 =  3:  08b8c3fc4 range-diff: first rudimentary implementation
+>   4:  7b9091968 =  4:  7b9091968 range-diff: improve the order of the shown commits
+>   5:  9e1e66007 !  5:  8515d2f75 range-diff: also show the diff between patches
+>      @@ -80,6 +80,8 @@
+>       +		else
+>       +			i += c;
+>       +	}
+>      ++	while (i < argc)
+>      ++		argv[j++] = argv[i++];
+>       +	argc = j;
+>       +	diff_setup_done(&diffopt);
+>       +
+>   6:  167ca02a3 =  6:  a10ca0163 range-diff: right-trim commit messages
+>   7:  ca8de8c75 =  7:  f81cbef2c range-diff: indent the diffs just like tbdiff
+>   8:  eb94d1982 =  8:  458090ffd range-diff: suppress the diff headers
+>   9:  6330afad9 =  9:  d3be03a44 range-diff: adjust the output of the commit pairs
+>  10:  c296675eb = 10:  94b44dfe6 range-diff: do not show "function names" in hunk headers
+>  11:  85e0ab82f = 11:  1477c58e4 range-diff: add tests
+>  12:  f48b62644 = 12:  32492c159 range-diff: use color for the commit pairs
+>  13:  1ad74f939 = 13:  969a196f4 color: add the meta color GIT_COLOR_REVERSE
+>  14:  39a0ecd28 = 14:  f1c86f606 diff: add an internal option to dual-color diffs of diffs
+>  15:  c32a24f6a = 15:  3c7b9f339 range-diff: offer to dual-color the diffs
+>  16:  05947781f = 16:  c56c51c8b range-diff --dual-color: skip white-space warnings
+>  17:  3147c4440 = 17:  8c5543a06 range-diff: populate the man page
+>  18:  b08e6d937 = 18:  16e3cf27b completion: support `git range-diff`
+>  19:  19406283e = 19:  d9b09abcf range-diff: left-pad patch numbers
+>  20:  6b3552386 = 20:  f6fd3955e range-diff: make --dual-color the default mode
+>  21:  ccf8c1bb2 = 21:  699cd712e range-diff: use dim/bold cues to improve dual color mode
+> 
+> -- 
+> gitgitgadget
+> 
+> 
