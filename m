@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6DA81F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3EF1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730078AbeHMS6m (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 14:58:42 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:42643 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730021AbeHMS6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 14:58:41 -0400
-Received: by mail-lj1-f193.google.com with SMTP id f1-v6so13014049ljc.9
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:46 -0700 (PDT)
+        id S1730080AbeHMS6o (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 14:58:44 -0400
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:42646 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729943AbeHMS6n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 14:58:43 -0400
+Received: by mail-lj1-f196.google.com with SMTP id f1-v6so13014118ljc.9
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7dpbDNd97HPa+O8wkl96cUElC6hzW8DlQWxGmTbV+U4=;
-        b=KWagEd0zKslQCdPZCFZgl6POl4Q+jvNyRmehk2Q8mTMA8g0Mgf1F++GS718W21h0aE
-         erbDvliaXvPvDaPnPYCwk3mjnCPrn88JHSAWVpRdSfWZ21wVHyhSmoUF3LD8MWdU9mAS
-         QaqzTQ5TwdamTZ+F7haNWvnNhPmkArzIfDoWNHX3E9xjN4k/0CRcJ1Sz79mRQZA3l9DV
-         MLI557Ujom1xyS2x8TwMSOCsIDLyWjpImoLlB+tmaGfjywr7U/84e8jUHuePpr3Yzvzs
-         11l8NV8inr+lF1c9EAMEEvuVkVDgnkppUkj0RDI3WpGaODxFXoHhUINqMBMBOEYzc6/T
-         XGpg==
+        bh=hNIP9ivZu6bMEZaC9ijJJrqbUzBtLqhogu9qd5mVAX8=;
+        b=DW5R/YPx6fwtmND5Ohchcq7lzM1WogZquogP+YzLNFlnL/JeZApAdeHn4eAy0NFvUf
+         8UPDM6Ey569M8ypak1JC8b7zxw4yX+onljY/AskNS0IbdNP099Q5R4LxnbdPaEQTbfh6
+         h5GMvV4dRJeyNKqEyfowZAOkAXrnTFE9NOrnQUnciy8W1CEIFm60nl67AI2MNCb6toZ5
+         2237v8ws6h6KvsxhfdGTVp0OOCWwYeujZL2mxrtzeRGQFBhWVZH8X7/XszDxPsHVozSx
+         HvTq6c6oi0LKC7VQemk+/C+IViN2nLyr/FXD20CTnqTjUPSEt8Hc1ObyVbO9BrT1RPxj
+         Gm7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7dpbDNd97HPa+O8wkl96cUElC6hzW8DlQWxGmTbV+U4=;
-        b=jritc3x/iKjTTmlrTeEU1VI6FdZbxE/j2XXN5mTLvm8/OGem7lDVXaAzPVyvoOkAJf
-         th6JXq0RwqPDO6u8IMbL3Vi51y+qc7g/cS+IRE3Nw5OOTCB/UOxYCWGIy0K8jbBKgvoX
-         U23kFdNKh/S50YfoHZvSeaUUusNljzMk1fzI+XAtC81yBAeLgoK2kJbhqmdKVpWd70v5
-         1hx//itdDr1Lw3ddUQMvJmKbv06j+gu7JVqG1FzrybQsEeScf/3RChf/SrfTyXFnyugU
-         iq7kSUHBF3SUmOiAeTgTi9JiS+xxme0+AJwtPmST54mPMvYXPZ+/4C7MrshrddP9vwJk
-         zl8w==
-X-Gm-Message-State: AOUpUlFTRMlLugUmC3ljxFF9OpHnx3UUy+dvvCdtTnZbOI0lLaWBsvK1
-        cZIF+qOLu2ZqJ2x2GiOT1Mw1n/2I
-X-Google-Smtp-Source: AA+uWPxOAg93fr1ZW94mME23xEEdZeJc3kibCwQJS1xzCW7AGywjjiOWZXsKIYpTByxq5sE9/nsw6A==
-X-Received: by 2002:a2e:1101:: with SMTP id f1-v6mr12464460lje.75.1534176945487;
-        Mon, 13 Aug 2018 09:15:45 -0700 (PDT)
+        bh=hNIP9ivZu6bMEZaC9ijJJrqbUzBtLqhogu9qd5mVAX8=;
+        b=A/ALsfNGkFDqL6Zgazas0agAr36nCpXVSp4fBO9VWbReuNlnZBYD5WxjotAQfIGr+z
+         HQ5jSYevGBrDI5HMev98SCMULSysCCsB3sfY7dsAbrSHuRZNEuD37G2QZb7vZeti0snP
+         gKiss41UZzn8rmJUk0sOBWhPpg76R+c+uNKKX2D5LUrvmYZ+S/i/FxGsiPAHgag0G6mZ
+         yi1ubr5icIFd/Z/vXG3SzBP7dIZBzCghpuyZ/tYMBMHis6T6s4FTMpGie0xf/q+j4KPB
+         iublyh2qF0GQlJP5340Fz0hSjPFd7Xs+eByTiLwDMWqv2ew6DlSEgBKv41TdY+KnhXyB
+         kBfQ==
+X-Gm-Message-State: AOUpUlFrAwuDjg6JXZXKuz0kUhDcG37mKXuBZDQ3pLrfqrmq2S9NjEuO
+        hd6vvzaGiu2EQl7/uPmpJo52/HAJ
+X-Google-Smtp-Source: AA+uWPzEmKZ192AoYMjYxF32PZublJLJ5Gi4j8oted0k2Mbmux4SEqqVZTGB/BJHdIapTN68cTpVeg==
+X-Received: by 2002:a2e:9e55:: with SMTP id g21-v6mr13327740ljk.116.1534176947077;
+        Mon, 13 Aug 2018 09:15:47 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.44
+        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:44 -0700 (PDT)
+        Mon, 13 Aug 2018 09:15:45 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 23/24] apply.c: remove implicit dependency on the_index
-Date:   Mon, 13 Aug 2018 18:14:40 +0200
-Message-Id: <20180813161441.16824-24-pclouds@gmail.com>
+Subject: [PATCH 24/24] blame.c: remove implicit dependency on the_index
+Date:   Mon, 13 Aug 2018 18:14:41 +0200
+Message-Id: <20180813161441.16824-25-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
 In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
 References: <20180813161441.16824-1-pclouds@gmail.com>
@@ -68,179 +68,204 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Use apply_state->repo->index instead of the_index (in most cases,
-unless we need to use a temporary index in some functions). Let the
-callers (am and apply) tell us what to use, instead of always assuming
-to operate on the_index.
+Side note, since we gain access to the right repository, we can stop
+rely on the_repository in this code as well.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- apply.c | 46 +++++++++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 21 deletions(-)
+ blame.c         | 52 +++++++++++++++++++++++++++++--------------------
+ blame.h         |  1 +
+ builtin/blame.c |  1 +
+ 3 files changed, 33 insertions(+), 21 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 3704850ef2..e485fbc6bc 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3385,7 +3385,8 @@ static int verify_index_match(struct apply_state *state,
- 			return -1;
- 		return 0;
- 	}
--	return ce_match_stat(ce, st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
-+	return ie_match_stat(state->repo->index, ce, st,
-+			     CE_MATCH_IGNORE_VALID | CE_MATCH_IGNORE_SKIP_WORKTREE);
- }
+diff --git a/blame.c b/blame.c
+index 58a7036847..08c0c6cf73 100644
+--- a/blame.c
++++ b/blame.c
+@@ -90,7 +90,8 @@ static struct blame_origin *get_origin(struct commit *commit, const char *path)
  
- #define SUBMODULE_PATCH_WITHOUT_INDEX 1
-@@ -3518,14 +3519,14 @@ static int load_current(struct apply_state *state,
- 	if (!patch->is_new)
- 		BUG("patch to %s is not a creation", patch->old_name);
  
--	pos = cache_name_pos(name, strlen(name));
-+	pos = index_name_pos(state->repo->index, name, strlen(name));
- 	if (pos < 0)
- 		return error(_("%s: does not exist in index"), name);
--	ce = active_cache[pos];
-+	ce = state->repo->index->cache[pos];
- 	if (lstat(name, &st)) {
- 		if (errno != ENOENT)
- 			return error_errno("%s", name);
--		if (checkout_target(&the_index, ce, &st))
-+		if (checkout_target(state->repo->index, ce, &st))
- 			return -1;
- 	}
- 	if (verify_index_match(state, ce, &st))
-@@ -3687,15 +3688,16 @@ static int check_preimage(struct apply_state *state,
- 	}
  
- 	if (state->check_index && !previous) {
--		int pos = cache_name_pos(old_name, strlen(old_name));
-+		int pos = index_name_pos(state->repo->index, old_name,
-+					 strlen(old_name));
- 		if (pos < 0) {
- 			if (patch->is_new < 0)
- 				goto is_new;
- 			return error(_("%s: does not exist in index"), old_name);
- 		}
--		*ce = active_cache[pos];
-+		*ce = state->repo->index->cache[pos];
- 		if (stat_ret < 0) {
--			if (checkout_target(&the_index, *ce, st))
-+			if (checkout_target(state->repo->index, *ce, st))
- 				return -1;
- 		}
- 		if (!state->cached && verify_index_match(state, *ce, st))
-@@ -3742,7 +3744,7 @@ static int check_to_create(struct apply_state *state,
- 	struct stat nst;
- 
- 	if (state->check_index &&
--	    cache_name_pos(new_name, strlen(new_name)) >= 0 &&
-+	    index_name_pos(state->repo->index, new_name, strlen(new_name)) >= 0 &&
- 	    !ok_if_exists)
- 		return EXISTS_IN_INDEX;
- 	if (state->cached)
-@@ -3831,7 +3833,8 @@ static int path_is_beyond_symlink_1(struct apply_state *state, struct strbuf *na
- 		if (state->check_index) {
- 			struct cache_entry *ce;
- 
--			ce = cache_file_exists(name->buf, name->len, ignore_case);
-+			ce = index_file_exists(state->repo->index, name->buf,
-+					       name->len, ignore_case);
- 			if (ce && S_ISLNK(ce->ce_mode))
- 				return 1;
- 		} else {
-@@ -4006,9 +4009,10 @@ static int check_patch_list(struct apply_state *state, struct patch *patch)
- static int read_apply_cache(struct apply_state *state)
+-static void verify_working_tree_path(struct commit *work_tree, const char *path)
++static void verify_working_tree_path(struct repository *repo,
++				     struct commit *work_tree, const char *path)
  {
- 	if (state->index_file)
--		return read_cache_from(state->index_file);
-+		return read_index_from(state->repo->index, state->index_file,
-+				       get_git_dir());
- 	else
--		return read_cache();
-+		return read_index(state->repo->index);
- }
+ 	struct commit_list *parents;
+ 	int pos;
+@@ -101,15 +102,15 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
+ 		unsigned mode;
  
- /* This function tries to read the object name from the current index */
-@@ -4019,10 +4023,10 @@ static int get_current_oid(struct apply_state *state, const char *path,
+ 		if (!get_tree_entry(commit_oid, path, &blob_oid, &mode) &&
+-		    oid_object_info(the_repository, &blob_oid, NULL) == OBJ_BLOB)
++		    oid_object_info(repo, &blob_oid, NULL) == OBJ_BLOB)
+ 			return;
+ 	}
  
- 	if (read_apply_cache(state) < 0)
- 		return -1;
 -	pos = cache_name_pos(path, strlen(path));
-+	pos = index_name_pos(state->repo->index, path, strlen(path));
- 	if (pos < 0)
- 		return -1;
--	oidcpy(oid, &active_cache[pos]->oid);
-+	oidcpy(oid, &state->repo->index->cache[pos]->oid);
++	pos = index_name_pos(repo->index, path, strlen(path));
+ 	if (pos >= 0)
+ 		; /* path is in the index */
+-	else if (-1 - pos < active_nr &&
+-		 !strcmp(active_cache[-1 - pos]->name, path))
++	else if (-1 - pos < repo->index->cache_nr &&
++		 !strcmp(repo->index->cache[-1 - pos]->name, path))
+ 		; /* path is in the index, unmerged */
+ 	else
+ 		die("no such path '%s' in HEAD", path);
+@@ -165,7 +166,8 @@ static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
+  * Prepare a dummy commit that represents the work tree (or staged) item.
+  * Note that annotating work tree item never works in the reverse.
+  */
+-static struct commit *fake_working_tree_commit(struct diff_options *opt,
++static struct commit *fake_working_tree_commit(struct repository *repo,
++					       struct diff_options *opt,
+ 					       const char *path,
+ 					       const char *contents_from)
+ {
+@@ -181,7 +183,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 	unsigned mode;
+ 	struct strbuf msg = STRBUF_INIT;
+ 
+-	read_cache();
++	read_index(repo->index);
+ 	time(&now);
+ 	commit = alloc_commit_node(the_repository);
+ 	commit->object.parsed = 1;
+@@ -193,7 +195,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 
+ 	parent_tail = append_parent(parent_tail, &head_oid);
+ 	append_merge_parents(parent_tail);
+-	verify_working_tree_path(commit, path);
++	verify_working_tree_path(repo, commit, path);
+ 
+ 	origin = make_origin(commit, path);
+ 
+@@ -251,7 +253,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
+ 	}
+-	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
++	convert_to_git(repo->index, path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr = buf.buf;
+ 	origin->file.size = buf.len;
+ 	pretend_object_file(buf.buf, buf.len, OBJ_BLOB, &origin->blob_oid);
+@@ -262,27 +264,28 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 	 * bits; we are not going to write this index out -- we just
+ 	 * want to run "diff-index --cached".
+ 	 */
+-	discard_cache();
+-	read_cache();
++	discard_index(repo->index);
++	read_index(repo->index);
+ 
+ 	len = strlen(path);
+ 	if (!mode) {
+-		int pos = cache_name_pos(path, len);
++		int pos = index_name_pos(repo->index, path, len);
+ 		if (0 <= pos)
+-			mode = active_cache[pos]->ce_mode;
++			mode = repo->index->cache[pos]->ce_mode;
+ 		else
+ 			/* Let's not bother reading from HEAD tree */
+ 			mode = S_IFREG | 0644;
+ 	}
+-	ce = make_empty_cache_entry(&the_index, len);
++	ce = make_empty_cache_entry(repo->index, len);
+ 	oidcpy(&ce->oid, &origin->blob_oid);
+ 	memcpy(ce->name, path, len);
+ 	ce->ce_flags = create_ce_flags(0);
+ 	ce->ce_namelen = len;
+ 	ce->ce_mode = create_ce_mode(mode);
+-	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
++	add_index_entry(repo->index, ce,
++			ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
+ 
+-	cache_tree_invalidate_path(&the_index, path);
++	cache_tree_invalidate_path(repo->index, path);
+ 
+ 	return commit;
+ }
+@@ -519,13 +522,14 @@ static void queue_blames(struct blame_scoreboard *sb, struct blame_origin *porig
+  *
+  * This also fills origin->mode for corresponding tree path.
+  */
+-static int fill_blob_sha1_and_mode(struct blame_origin *origin)
++static int fill_blob_sha1_and_mode(struct repository *repo,
++				   struct blame_origin *origin)
+ {
+ 	if (!is_null_oid(&origin->blob_oid))
+ 		return 0;
+ 	if (get_tree_entry(&origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
+ 		goto error_out;
+-	if (oid_object_info(the_repository, &origin->blob_oid, NULL) != OBJ_BLOB)
++	if (oid_object_info(repo, &origin->blob_oid, NULL) != OBJ_BLOB)
+ 		goto error_out;
  	return 0;
+  error_out:
+@@ -1767,7 +1771,9 @@ void init_scoreboard(struct blame_scoreboard *sb)
+ 	sb->copy_score = BLAME_DEFAULT_COPY_SCORE;
  }
  
-@@ -4250,7 +4254,7 @@ static void patch_stats(struct apply_state *state, struct patch *patch)
- static int remove_file(struct apply_state *state, struct patch *patch, int rmdir_empty)
+-void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blame_origin **orig)
++void setup_scoreboard(struct blame_scoreboard *sb,
++		      const char *path,
++		      struct blame_origin **orig)
  {
- 	if (state->update_index && !state->ita_only) {
--		if (remove_file_from_cache(patch->old_name) < 0)
-+		if (remove_file_from_index(state->repo->index, patch->old_name) < 0)
- 			return error(_("unable to remove %s from index"), patch->old_name);
- 	}
- 	if (!state->cached) {
-@@ -4271,7 +4275,7 @@ static int add_index_file(struct apply_state *state,
- 	struct cache_entry *ce;
- 	int namelen = strlen(path);
+ 	const char *final_commit_name = NULL;
+ 	struct blame_origin *o;
+@@ -1779,6 +1785,9 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
+ 	if (sb->reverse && sb->contents_from)
+ 		die(_("--contents and --reverse do not blend well."));
  
--	ce = make_empty_cache_entry(&the_index, namelen);
-+	ce = make_empty_cache_entry(state->repo->index, namelen);
- 	memcpy(ce->name, path, namelen);
- 	ce->ce_mode = create_ce_mode(mode);
- 	ce->ce_flags = create_ce_flags(0);
-@@ -4303,7 +4307,7 @@ static int add_index_file(struct apply_state *state,
- 				       "for newly created file %s"), path);
- 		}
++	if (!sb->repo)
++		BUG("repo is NULL");
++
+ 	if (!sb->reverse) {
+ 		sb->final = find_single_final(sb->revs, &final_commit_name);
+ 		sb->commits.compare = compare_commits_by_commit_date;
+@@ -1800,7 +1809,8 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
+ 		 * or "--contents".
+ 		 */
+ 		setup_work_tree();
+-		sb->final = fake_working_tree_commit(&sb->revs->diffopt,
++		sb->final = fake_working_tree_commit(sb->repo,
++						     &sb->revs->diffopt,
+ 						     path, sb->contents_from);
+ 		add_pending_object(sb->revs, &(sb->final->object), ":");
  	}
--	if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
-+	if (add_index_entry(state->repo->index, ce, ADD_CACHE_OK_TO_ADD) < 0) {
- 		discard_cache_entry(ce);
- 		return error(_("unable to add cache entry for %s"), path);
+@@ -1845,7 +1855,7 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
  	}
-@@ -4341,7 +4345,7 @@ static int try_create_file(struct apply_state *state, const char *path,
- 	if (fd < 0)
- 		return 1;
+ 	else {
+ 		o = get_origin(sb->final, path);
+-		if (fill_blob_sha1_and_mode(o))
++		if (fill_blob_sha1_and_mode(sb->repo, o))
+ 			die(_("no such path %s in %s"), path, final_commit_name);
  
--	if (convert_to_working_tree(&the_index, path, buf, size, &nbuf)) {
-+	if (convert_to_working_tree(state->repo->index, path, buf, size, &nbuf)) {
- 		size = nbuf.len;
- 		buf  = nbuf.buf;
- 	}
-@@ -4438,17 +4442,17 @@ static int add_conflicted_stages_file(struct apply_state *state,
- 	namelen = strlen(patch->new_name);
- 	mode = patch->new_mode ? patch->new_mode : (S_IFREG | 0644);
+ 		if (sb->revs->diffopt.flags.allow_textconv &&
+diff --git a/blame.h b/blame.h
+index 9b5240fb6d..be3a895043 100644
+--- a/blame.h
++++ b/blame.h
+@@ -102,6 +102,7 @@ struct blame_scoreboard {
+ 	struct commit *final;
+ 	/* Priority queue for commits with unassigned blame records */
+ 	struct prio_queue commits;
++	struct repository *repo;
+ 	struct rev_info *revs;
+ 	const char *path;
  
--	remove_file_from_cache(patch->new_name);
-+	remove_file_from_index(state->repo->index, patch->new_name);
- 	for (stage = 1; stage < 4; stage++) {
- 		if (is_null_oid(&patch->threeway_stage[stage - 1]))
- 			continue;
--		ce = make_empty_cache_entry(&the_index, namelen);
-+		ce = make_empty_cache_entry(state->repo->index, namelen);
- 		memcpy(ce->name, patch->new_name, namelen);
- 		ce->ce_mode = create_ce_mode(mode);
- 		ce->ce_flags = create_ce_flags(stage);
- 		ce->ce_namelen = namelen;
- 		oidcpy(&ce->oid, &patch->threeway_stage[stage - 1]);
--		if (add_cache_entry(ce, ADD_CACHE_OK_TO_ADD) < 0) {
-+		if (add_index_entry(state->repo->index, ce, ADD_CACHE_OK_TO_ADD) < 0) {
- 			discard_cache_entry(ce);
- 			return error(_("unable to add cache entry for %s"),
- 				     patch->new_name);
-@@ -4897,7 +4901,7 @@ int apply_all_patches(struct apply_state *state,
- 	}
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 5c93d169dd..cbbcb26f89 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -988,6 +988,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	sb.revs = &revs;
+ 	sb.contents_from = contents_from;
+ 	sb.reverse = reverse;
++	sb.repo = the_repository;
+ 	setup_scoreboard(&sb, path, &o);
+ 	lno = sb.num_lines;
  
- 	if (state->update_index) {
--		res = write_locked_index(&the_index, &state->lock_file, COMMIT_LOCK);
-+		res = write_locked_index(state->repo->index, &state->lock_file, COMMIT_LOCK);
- 		if (res) {
- 			error(_("Unable to write new index file"));
- 			res = -128;
 -- 
 2.18.0.1004.g6639190530
 
