@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F1AE1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4AEA1F404
 	for <e@80x24.org>; Mon, 13 Aug 2018 11:33:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728752AbeHMOO6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:14:58 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:42603 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728661AbeHMOO6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:14:58 -0400
-Received: by mail-pg1-f174.google.com with SMTP id y4-v6so7374421pgp.9
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:05 -0700 (PDT)
+        id S1728822AbeHMOO7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:14:59 -0400
+Received: from mail-pg1-f175.google.com ([209.85.215.175]:42605 "EHLO
+        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728661AbeHMOO7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:14:59 -0400
+Received: by mail-pg1-f175.google.com with SMTP id y4-v6so7374460pgp.9
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=MsiHElqo548hiUyk466A29eRKqCmW66NbvSF0V/NyHo=;
-        b=Xm09eMNyvpBlpuxoygqpW5uNxqZE7LaUPB48El/oMvYGL2U/hLLPcXDgW78cD0p7Y4
-         t+G34xw5+sy+EDwvgobmqnfQ90xjgwWC1B7crPwjAzdAkqtcBIMQ3IVGoH3NZ/qlFt42
-         /Ip011lHlOSukB2sWJ9o5unYfH+ZXn23/C51eTrta6dnAb4vIM64trcOzAAtmVw8okfV
-         SC4Uq98te4AT//lP/i4zqOIBNjuDIGSZr3n1UsCVUe+3FFDOc4WNByJzRkExywTCv+Uw
-         3unLecSBXlaAHOG1NW4ElmZoIuM88FqIQqqqaZUbA7WEboNsuJiZaRjQwWXI2lrhjAaB
-         rjKQ==
+        bh=3yesZiepIhDgS4qQ8TNj8T2R0GFtJc8zzq8qZmhewCM=;
+        b=ofOl0Vo9y+jc+WaIhrcpqT5vaoXbyFC8tJ3H8biNv0iI03f8hoJuNZjQf6g77PC+E4
+         y2l20DlUh7nLmuVd7cFQIZSmscFXGXVpw89Q5TzN0QBdL9YhsVdR+gRE1EoAjl0JQqJZ
+         ywR+n+OTizJPyfgwZqQNFw+DLZSA+50PliFTErdXQ9ML63sz4Cyaw4J8VJ+590dna/qI
+         6tjhSfj4DnnoU1QccQ1cIqGoxjnUWk1gd4iSMv5NgFMWop06rtaZXCSoZMIbmungrm06
+         XDWJw7kkeRlTo7EKSwwbxSa+KxOhf+xfaLJ7djx0xpJiLF3bYe/G4zspqWAqJ7Qo49ql
+         70Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=MsiHElqo548hiUyk466A29eRKqCmW66NbvSF0V/NyHo=;
-        b=Zoa/3zCRUHhP/xcqqQrhO6Uw5SdCQS2B6etuKyZi0TGniHmBz6Hh1GIykDB4b4F+D5
-         Olgk6DpRuDTadDCOf0hUfLPb52ndI2n3IahcrQdnYtlNOP4VowjQdkNGX83o0mPtH1O+
-         1y0kE5rIgiQu7wjTDnG7P1g+jbvf4s16n3tA7gh17RYrl+5iDYXE8jnymc2qBaB739lj
-         JZCYaak/zhNezraKNyKG9FyXqAWKi17gofTvO14DSWVVVvIpJIbbjmDm4284LQQTtfne
-         vRIT8mFTwnh/0+b6xsnnTDmEYFRDc0GCOYtzKTqjHQXW0RItXdyW5Z0M4zRKKfhOX5jN
-         N51g==
-X-Gm-Message-State: AOUpUlG2xy2l/VSpwN9v4CaJdo6hk9kAQLXFe6+BA5YYkMTIy3PVrOJT
-        eUSSRFI26aT6zWNCrHyGd/nGGHNS
-X-Google-Smtp-Source: AA+uWPwMWH7xdtMFhbCyiUinDMj5Q3cG0zlWooXNiQmlepTFa7C3LClb3bvpfRrnvvY6K55TG+T4CQ==
-X-Received: by 2002:a63:f849:: with SMTP id v9-v6mr16429669pgj.71.1534159985037;
-        Mon, 13 Aug 2018 04:33:05 -0700 (PDT)
+        bh=3yesZiepIhDgS4qQ8TNj8T2R0GFtJc8zzq8qZmhewCM=;
+        b=miHnFcG9OaZt5WGI78LDYK4lbdZ5zlqZUooYIjKOcX/+CrQ5+Ch+9JN/TTf4az0UHm
+         z0yGYtrerdO69tkQ4a/j4jFbIVgbZhJRw1pfF1bTTCQdaG0XTFCBfDF4UkF9Iooqdopq
+         E8n7A4HDH/DQnxi+45cCglOKhe4eIq9gK9t2fr4PU8wmB031T97Kd/9GyI0g2rkVCROd
+         Rcr31Cu+BZFRok/gUP+KBv5Ba66LA6c7e49LDFyfjCGVJ0HRMEntd2bHnhaMCpsdgrlB
+         YnPdHUL5FBjuBILj5dwWABeDI9vkKoItpfmJ3tNhnI1dPNWI5O+1HoiH4niU8Wrs/F2X
+         nVCQ==
+X-Gm-Message-State: AOUpUlF26ak0ZCTExivq2j+dLu4r3sHHzWJwXainkTw4Cwj3xdGOQipx
+        wT/1dcZUSQQm8xZDHr8TKQFACG4T
+X-Google-Smtp-Source: AA+uWPxzzCz5tfO1vLqPChmwq2Gnj8TrK1Lx4RKyrs5PyPwtUixPmyG+sxfmXBt/lVZ2Hxia63+Alw==
+X-Received: by 2002:a62:83ca:: with SMTP id h193-v6mr18543632pfe.79.1534159986538;
+        Mon, 13 Aug 2018 04:33:06 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id o21-v6sm29194368pfa.54.2018.08.13.04.33.03
+        by smtp.gmail.com with ESMTPSA id y4-v6sm20338006pfm.137.2018.08.13.04.33.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 04:33:04 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 04:33:04 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 Aug 2018 11:32:38 GMT
-Message-Id: <08b8c3fc45253737ef6ca860e6cbe3ee6211d7a6.1534159977.git.gitgitgadget@gmail.com>
+        Mon, 13 Aug 2018 04:33:05 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 04:33:05 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 Aug 2018 11:32:39 GMT
+Message-Id: <7b90919685d1e94b50f5278ec1b57a59cba1f8e5.1534159977.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v6.git.gitgitgadget@gmail.com>
 References: <pull.1.v5.git.gitgitgadget@gmail.com>
         <pull.1.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 03/21] range-diff: first rudimentary implementation
+Subject: [PATCH v6 04/21] range-diff: improve the order of the shown commits
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,440 +71,104 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-At this stage, `git range-diff` can determine corresponding commits
-of two related commit ranges. This makes use of the recently introduced
-implementation of the linear assignment algorithm.
+This patch lets `git range-diff` use the same order as tbdiff.
 
-The core of this patch is a straight port of the ideas of tbdiff, the
-apparently dormant project at https://github.com/trast/tbdiff.
+The idea is simple: for left-to-right readers, it is natural to assume
+that the `git range-diff` is performed between an older vs a newer
+version of the branch. As such, the user is probably more interested in
+the question "where did this come from?" rather than "where did that one
+go?".
 
-The output does not at all match `tbdiff`'s output yet, as this patch
-really concentrates on getting the patch matching part right.
-
-Note: due to differences in the diff algorithm (`tbdiff` uses the Python
-module `difflib`, Git uses its xdiff fork), the cost matrix calculated
-by `range-diff` is different (but very similar) to the one calculated
-by `tbdiff`. Therefore, it is possible that they find different matching
-commits in corner cases (e.g. when a patch was split into two patches of
-roughly equal length).
+To that end, we list the commits in the order of the second commit range
+("the newer version"), inserting the unmatched commits of the first
+commit range as soon as all their predecessors have been shown.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Makefile             |   1 +
- builtin/range-diff.c |  45 ++++++-
- range-diff.c         | 311 +++++++++++++++++++++++++++++++++++++++++++
- range-diff.h         |   7 +
- 4 files changed, 363 insertions(+), 1 deletion(-)
- create mode 100644 range-diff.c
- create mode 100644 range-diff.h
+ range-diff.c | 59 +++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 40 insertions(+), 19 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 7ff7eba42..72f16882e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -925,6 +925,7 @@ LIB_OBJS += progress.o
- LIB_OBJS += prompt.o
- LIB_OBJS += protocol.o
- LIB_OBJS += quote.o
-+LIB_OBJS += range-diff.o
- LIB_OBJS += reachable.o
- LIB_OBJS += read-cache.o
- LIB_OBJS += reflog-walk.o
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index 36788ea4f..94c1f362c 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "builtin.h"
- #include "parse-options.h"
-+#include "range-diff.h"
- 
- static const char * const builtin_range_diff_usage[] = {
- N_("git range-diff [<options>] <old-base>..<old-tip> <new-base>..<new-tip>"),
-@@ -17,9 +18,51 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 			    N_("Percentage by which creation is weighted")),
- 		OPT_END()
- 	};
-+	int res = 0;
-+	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
- 
- 	argc = parse_options(argc, argv, NULL, options,
- 			     builtin_range_diff_usage, 0);
- 
--	return 0;
-+	if (argc == 2) {
-+		if (!strstr(argv[0], ".."))
-+			die(_("no .. in range: '%s'"), argv[0]);
-+		strbuf_addstr(&range1, argv[0]);
-+
-+		if (!strstr(argv[1], ".."))
-+			die(_("no .. in range: '%s'"), argv[1]);
-+		strbuf_addstr(&range2, argv[1]);
-+	} else if (argc == 3) {
-+		strbuf_addf(&range1, "%s..%s", argv[0], argv[1]);
-+		strbuf_addf(&range2, "%s..%s", argv[0], argv[2]);
-+	} else if (argc == 1) {
-+		const char *b = strstr(argv[0], "..."), *a = argv[0];
-+		int a_len;
-+
-+		if (!b) {
-+			error(_("single arg format must be symmetric range"));
-+			usage_with_options(builtin_range_diff_usage, options);
-+		}
-+
-+		a_len = (int)(b - a);
-+		if (!a_len) {
-+			a = "HEAD";
-+			a_len = strlen(a);
-+		}
-+		b += 3;
-+		if (!*b)
-+			b = "HEAD";
-+		strbuf_addf(&range1, "%s..%.*s", b, a_len, a);
-+		strbuf_addf(&range2, "%.*s..%s", a_len, a, b);
-+	} else {
-+		error(_("need two commit ranges"));
-+		usage_with_options(builtin_range_diff_usage, options);
-+	}
-+
-+	res = show_range_diff(range1.buf, range2.buf, creation_factor);
-+
-+	strbuf_release(&range1);
-+	strbuf_release(&range2);
-+
-+	return res;
- }
 diff --git a/range-diff.c b/range-diff.c
-new file mode 100644
-index 000000000..15d418afa
---- /dev/null
+index 15d418afa..2d94200d3 100644
+--- a/range-diff.c
 +++ b/range-diff.c
-@@ -0,0 +1,311 @@
-+#include "cache.h"
-+#include "range-diff.h"
-+#include "string-list.h"
-+#include "run-command.h"
-+#include "argv-array.h"
-+#include "hashmap.h"
-+#include "xdiff-interface.h"
-+#include "linear-assignment.h"
+@@ -12,7 +12,7 @@ struct patch_util {
+ 	struct hashmap_entry e;
+ 	const char *diff, *patch;
+ 
+-	int i;
++	int i, shown;
+ 	int diffsize;
+ 	size_t diff_offset;
+ 	/* the index of the matching item in the other branch, or -1 */
+@@ -260,28 +260,49 @@ static const char *short_oid(struct patch_util *util)
+ 
+ static void output(struct string_list *a, struct string_list *b)
+ {
+-	int i;
+-
+-	for (i = 0; i < b->nr; i++) {
+-		struct patch_util *util = b->items[i].util, *prev;
++	int i = 0, j = 0;
 +
-+struct patch_util {
-+	/* For the search for an exact match */
-+	struct hashmap_entry e;
-+	const char *diff, *patch;
++	/*
++	 * We assume the user is really more interested in the second argument
++	 * ("newer" version). To that end, we print the output in the order of
++	 * the RHS (the `b` parameter). To put the LHS (the `a` parameter)
++	 * commits that are no longer in the RHS into a good place, we place
++	 * them once we have shown all of their predecessors in the LHS.
++	 */
 +
-+	int i;
-+	int diffsize;
-+	size_t diff_offset;
-+	/* the index of the matching item in the other branch, or -1 */
-+	int matching;
-+	struct object_id oid;
-+};
++	while (i < a->nr || j < b->nr) {
++		struct patch_util *a_util, *b_util;
++		a_util = i < a->nr ? a->items[i].util : NULL;
++		b_util = j < b->nr ? b->items[j].util : NULL;
 +
-+/*
-+ * Reads the patches into a string list, with the `util` field being populated
-+ * as struct object_id (will need to be free()d).
-+ */
-+static int read_patches(const char *range, struct string_list *list)
-+{
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	FILE *in;
-+	struct strbuf buf = STRBUF_INIT, line = STRBUF_INIT;
-+	struct patch_util *util = NULL;
-+	int in_header = 1;
++		/* Skip all the already-shown commits from the LHS. */
++		while (i < a->nr && a_util->shown)
++			a_util = ++i < a->nr ? a->items[i].util : NULL;
 +
-+	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
-+			"--reverse", "--date-order", "--decorate=no",
-+			"--no-abbrev-commit", range,
-+			NULL);
-+	cp.out = -1;
-+	cp.no_stdin = 1;
-+	cp.git_cmd = 1;
-+
-+	if (start_command(&cp))
-+		return error_errno(_("could not start `log`"));
-+	in = fdopen(cp.out, "r");
-+	if (!in) {
-+		error_errno(_("could not read `log` output"));
-+		finish_command(&cp);
-+		return -1;
-+	}
-+
-+	while (strbuf_getline(&line, in) != EOF) {
-+		const char *p;
-+
-+		if (skip_prefix(line.buf, "commit ", &p)) {
-+			if (util) {
-+				string_list_append(list, buf.buf)->util = util;
-+				strbuf_reset(&buf);
-+			}
-+			util = xcalloc(sizeof(*util), 1);
-+			if (get_oid(p, &util->oid)) {
-+				error(_("could not parse commit '%s'"), p);
-+				free(util);
-+				string_list_clear(list, 1);
-+				strbuf_release(&buf);
-+				strbuf_release(&line);
-+				fclose(in);
-+				finish_command(&cp);
-+				return -1;
-+			}
-+			util->matching = -1;
-+			in_header = 1;
-+			continue;
-+		}
-+
-+		if (starts_with(line.buf, "diff --git")) {
-+			in_header = 0;
-+			strbuf_addch(&buf, '\n');
-+			if (!util->diff_offset)
-+				util->diff_offset = buf.len;
-+			strbuf_addbuf(&buf, &line);
-+		} else if (in_header) {
-+			if (starts_with(line.buf, "Author: ")) {
-+				strbuf_addbuf(&buf, &line);
-+				strbuf_addstr(&buf, "\n\n");
-+			} else if (starts_with(line.buf, "    ")) {
-+				strbuf_addbuf(&buf, &line);
-+				strbuf_addch(&buf, '\n');
-+			}
-+			continue;
-+		} else if (starts_with(line.buf, "@@ "))
-+			strbuf_addstr(&buf, "@@");
-+		else if (!line.buf[0] || starts_with(line.buf, "index "))
-+			/*
-+			 * A completely blank (not ' \n', which is context)
-+			 * line is not valid in a diff.  We skip it
-+			 * silently, because this neatly handles the blank
-+			 * separator line between commits in git-log
-+			 * output.
-+			 *
-+			 * We also want to ignore the diff's `index` lines
-+			 * because they contain exact blob hashes in which
-+			 * we are not interested.
-+			 */
-+			continue;
-+		else
-+			strbuf_addbuf(&buf, &line);
-+
-+		strbuf_addch(&buf, '\n');
-+		util->diffsize++;
-+	}
-+	fclose(in);
-+	strbuf_release(&line);
-+
-+	if (util)
-+		string_list_append(list, buf.buf)->util = util;
-+	strbuf_release(&buf);
-+
-+	if (finish_command(&cp))
-+		return -1;
-+
-+	return 0;
-+}
-+
-+static int patch_util_cmp(const void *dummy, const struct patch_util *a,
-+		     const struct patch_util *b, const char *keydata)
-+{
-+	return strcmp(a->diff, keydata ? keydata : b->diff);
-+}
-+
-+static void find_exact_matches(struct string_list *a, struct string_list *b)
-+{
-+	struct hashmap map;
-+	int i;
-+
-+	hashmap_init(&map, (hashmap_cmp_fn)patch_util_cmp, NULL, 0);
-+
-+	/* First, add the patches of a to a hash map */
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *util = a->items[i].util;
-+
-+		util->i = i;
-+		util->patch = a->items[i].string;
-+		util->diff = util->patch + util->diff_offset;
-+		hashmap_entry_init(util, strhash(util->diff));
-+		hashmap_add(&map, util);
-+	}
-+
-+	/* Now try to find exact matches in b */
-+	for (i = 0; i < b->nr; i++) {
-+		struct patch_util *util = b->items[i].util, *other;
-+
-+		util->i = i;
-+		util->patch = b->items[i].string;
-+		util->diff = util->patch + util->diff_offset;
-+		hashmap_entry_init(util, strhash(util->diff));
-+		other = hashmap_remove(&map, util, NULL);
-+		if (other) {
-+			if (other->matching >= 0)
-+				BUG("already assigned!");
-+
-+			other->matching = i;
-+			util->matching = other->i;
-+		}
-+	}
-+
-+	hashmap_free(&map, 0);
-+}
-+
-+static void diffsize_consume(void *data, char *line, unsigned long len)
-+{
-+	(*(int *)data)++;
-+}
-+
-+static int diffsize(const char *a, const char *b)
-+{
-+	xpparam_t pp = { 0 };
-+	xdemitconf_t cfg = { 0 };
-+	mmfile_t mf1, mf2;
-+	int count = 0;
-+
-+	mf1.ptr = (char *)a;
-+	mf1.size = strlen(a);
-+	mf2.ptr = (char *)b;
-+	mf2.size = strlen(b);
-+
-+	cfg.ctxlen = 3;
-+	if (!xdi_diff_outf(&mf1, &mf2, diffsize_consume, &count, &pp, &cfg))
-+		return count;
-+
-+	error(_("failed to generate diff"));
-+	return COST_MAX;
-+}
-+
-+static void get_correspondences(struct string_list *a, struct string_list *b,
-+				int creation_factor)
-+{
-+	int n = a->nr + b->nr;
-+	int *cost, c, *a2b, *b2a;
-+	int i, j;
-+
-+	ALLOC_ARRAY(cost, st_mult(n, n));
-+	ALLOC_ARRAY(a2b, n);
-+	ALLOC_ARRAY(b2a, n);
-+
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *a_util = a->items[i].util;
-+
-+		for (j = 0; j < b->nr; j++) {
-+			struct patch_util *b_util = b->items[j].util;
-+
-+			if (a_util->matching == j)
-+				c = 0;
-+			else if (a_util->matching < 0 && b_util->matching < 0)
-+				c = diffsize(a_util->diff, b_util->diff);
-+			else
-+				c = COST_MAX;
-+			cost[i + n * j] = c;
-+		}
-+
-+		c = a_util->matching < 0 ?
-+			a_util->diffsize * creation_factor / 100 : COST_MAX;
-+		for (j = b->nr; j < n; j++)
-+			cost[i + n * j] = c;
-+	}
-+
-+	for (j = 0; j < b->nr; j++) {
-+		struct patch_util *util = b->items[j].util;
-+
-+		c = util->matching < 0 ?
-+			util->diffsize * creation_factor / 100 : COST_MAX;
-+		for (i = a->nr; i < n; i++)
-+			cost[i + n * j] = c;
-+	}
-+
-+	for (i = a->nr; i < n; i++)
-+		for (j = b->nr; j < n; j++)
-+			cost[i + n * j] = 0;
-+
-+	compute_assignment(n, n, cost, a2b, b2a);
-+
-+	for (i = 0; i < a->nr; i++)
-+		if (a2b[i] >= 0 && a2b[i] < b->nr) {
-+			struct patch_util *a_util = a->items[i].util;
-+			struct patch_util *b_util = b->items[a2b[i]].util;
-+
-+			a_util->matching = a2b[i];
-+			b_util->matching = i;
-+		}
-+
-+	free(cost);
-+	free(a2b);
-+	free(b2a);
-+}
-+
-+static const char *short_oid(struct patch_util *util)
-+{
-+	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
-+}
-+
-+static void output(struct string_list *a, struct string_list *b)
-+{
-+	int i;
-+
-+	for (i = 0; i < b->nr; i++) {
-+		struct patch_util *util = b->items[i].util, *prev;
-+
-+		if (util->matching < 0)
-+			printf("-: -------- > %d: %s\n",
-+					i + 1, short_oid(util));
-+		else {
-+			prev = a->items[util->matching].util;
-+			printf("%d: %s ! %d: %s\n",
-+			       util->matching + 1, short_oid(prev),
-+			       i + 1, short_oid(util));
-+		}
-+	}
-+
-+	for (i = 0; i < a->nr; i++) {
-+		struct patch_util *util = a->items[i].util;
-+
-+		if (util->matching < 0)
++		/* Show unmatched LHS commit whose predecessors were shown. */
++		if (i < a->nr && a_util->matching < 0) {
 +			printf("%d: %s < -: --------\n",
-+			       i + 1, short_oid(util));
-+	}
-+}
-+
-+int show_range_diff(const char *range1, const char *range2,
-+		    int creation_factor)
-+{
-+	int res = 0;
-+
-+	struct string_list branch1 = STRING_LIST_INIT_DUP;
-+	struct string_list branch2 = STRING_LIST_INIT_DUP;
-+
-+	if (read_patches(range1, &branch1))
-+		res = error(_("could not parse log for '%s'"), range1);
-+	if (!res && read_patches(range2, &branch2))
-+		res = error(_("could not parse log for '%s'"), range2);
-+
-+	if (!res) {
-+		find_exact_matches(&branch1, &branch2);
-+		get_correspondences(&branch1, &branch2, creation_factor);
-+		output(&branch1, &branch2);
-+	}
-+
-+	string_list_clear(&branch1, 1);
-+	string_list_clear(&branch2, 1);
-+
-+	return res;
-+}
-diff --git a/range-diff.h b/range-diff.h
-new file mode 100644
-index 000000000..7b6eef303
---- /dev/null
-+++ b/range-diff.h
-@@ -0,0 +1,7 @@
-+#ifndef RANGE_DIFF_H
-+#define RANGE_DIFF_H
-+
-+int show_range_diff(const char *range1, const char *range2,
-+		    int creation_factor);
-+
-+#endif
++			       i + 1, short_oid(a_util));
++			i++;
++			continue;
++		}
+ 
+-		if (util->matching < 0)
++		/* Show unmatched RHS commits. */
++		while (j < b->nr && b_util->matching < 0) {
+ 			printf("-: -------- > %d: %s\n",
+-					i + 1, short_oid(util));
+-		else {
+-			prev = a->items[util->matching].util;
+-			printf("%d: %s ! %d: %s\n",
+-			       util->matching + 1, short_oid(prev),
+-			       i + 1, short_oid(util));
++			       j + 1, short_oid(b_util));
++			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+-	}
+-
+-	for (i = 0; i < a->nr; i++) {
+-		struct patch_util *util = a->items[i].util;
+ 
+-		if (util->matching < 0)
+-			printf("%d: %s < -: --------\n",
+-			       i + 1, short_oid(util));
++		/* Show matching LHS/RHS pair. */
++		if (j < b->nr) {
++			a_util = a->items[b_util->matching].util;
++			printf("%d: %s ! %d: %s\n",
++			       b_util->matching + 1, short_oid(a_util),
++			       j + 1, short_oid(b_util));
++			a_util->shown = 1;
++			j++;
++		}
+ 	}
+ }
+ 
 -- 
 gitgitgadget
 
