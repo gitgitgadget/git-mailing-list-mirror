@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A9251F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37E821F404
 	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730014AbeHMS6d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 14:58:33 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:46408 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728533AbeHMS6c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 14:58:32 -0400
-Received: by mail-lj1-f195.google.com with SMTP id 203-v6so12990839ljj.13
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:38 -0700 (PDT)
+        id S1729995AbeHMS6b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 14:58:31 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:39369 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729309AbeHMS6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 14:58:30 -0400
+Received: by mail-lf1-f68.google.com with SMTP id a134-v6so11653139lfe.6
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rnpvxT5LWKcsISgCwcvqei8WNNdsEKcdocY6rT1+uzI=;
-        b=foNExzE2BFti3BF/FPcbSPTGxNfaD7RLg7aSGWHHltvaFtF0RYangToazn1uEAJID8
-         qA/UCvXbUv7AZdZGJIBN3Fx+jKcSUibeRh9SFrTCXg89f3VTSeiknXSTWyu5hWPhXw7/
-         PKBsZLUHHn0iSUh5XzUXch3Jd9Z0kSh1fNyyvZl3ptWArRZ8qPBmOAMpUalXnUp585Lu
-         mgYimdUa2H5jxQwZAc74VO4fA8Qu3YAX3xuSCJ5/fyfNWEVdtNmrlN2JETIgQna2OKJw
-         /H09SLGnxbE9QyK/rbjhTbiZgvUM8hEqdx6bFp2+EO/r7xPqINb3dMH0YXZwnXlH1luj
-         JtTg==
+        bh=QO9iOCSQClfrxUHLze8svK2Lf2j4qWbFDLZ3ZSXGQEk=;
+        b=tYAnmPMxi1+J/m3irWhoS+WyjKkTyHJWi2XsC6zxYKXwzUl4JBAcxNVrSjhexNvhCo
+         Rj25R+4Pa68YHjkvzdVP+Lu82eDnas3EAYIcaAMQ1gxB5+/8CFQ4rWdxjSeJUmtkqCbI
+         LrzjYh6K4YjUteHRkYOFHuZwEthI3e4hL3xhQUfsExl0BteYMSO/BPP5YbCSIR9sI2gx
+         Ddd4LznBgcL/PydaviS24axpSDDVnKuaGoKsR5Uy59BsLqHcsbyWUG0QaAgeIx+anzJj
+         8fdg0r9kfukGEPy3sDfmPUXGOCsYa5Zz7jSWC/d6TTVFu1Dw+owTPWe10u7lFhgPBr9I
+         Q1PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rnpvxT5LWKcsISgCwcvqei8WNNdsEKcdocY6rT1+uzI=;
-        b=m8A9ZpVp99I/dHb21dIrRYmxtAwO3y828OtlUoU5BcNKLs/ZDPPiZg2rgFr0jDJ5Bp
-         bbX0GGOzWPL6uCoLvtW9cnkq9WNSq588mjeCH2yfP9ylAAgKKWRmN4VQSqwVQ5nHEiyX
-         iNFkAAvZ0lw1c89xOweY6ThZwKSbYowlIHR2V2gnWEICoDs0ijq6GrgwkDbiqMXGKF30
-         sf7mRhX61vmHxVMaDO9+wCcBvXEnSN20YB9Cl43bXqFn8HGpLlOUG7W5BmSpCNzMVY+6
-         vxokpoR86mUujOIQ1344aPQV3q++DTbSHStHvU8QXCQILIabqdL3Ny4926RfdU3eqZwJ
-         75ZQ==
-X-Gm-Message-State: AOUpUlFwF6MX0tKdRul5ujCaCHX2Hg9Y7E3DDpL3bGEPtOsugwQBqp+Z
-        55adnQ2XZS+P+E78rER1WeocWhUx
-X-Google-Smtp-Source: AA+uWPz6BBL+dI/QRwHhtXza9+xKEIrfJSwoS8FlQX7YXT/A7rIc8W00sbGiptlGQLoaC7R7cOtr3Q==
-X-Received: by 2002:a2e:557:: with SMTP id 84-v6mr13398412ljf.152.1534176937636;
-        Mon, 13 Aug 2018 09:15:37 -0700 (PDT)
+        bh=QO9iOCSQClfrxUHLze8svK2Lf2j4qWbFDLZ3ZSXGQEk=;
+        b=KmC6D7WfwyrTidE+hW9oVawCkkyvW3YKaQ7T4zccOSOLAxz/8a6iT0XGIvVXfYMeoV
+         9NeakKYTRWhY0s8Nf2eTP5w+6e1r12mE14tMyYHF48HSQBKPUJYXBNKdCsxqPS9vnQan
+         P8svAoP/0fx6KlNRPEnONmhqtYQ6jwcNlUAHKQpbPqegrL9WiVnj4x20MMH3pEd1YRs3
+         XEIK6rffqnGMyC7w/xC91gVjg++5wIr2VXFZzKKTB0rdDc9MtdtdogKNdqXCdbD79kUY
+         qbx7ulCMT1N/f70mZJeriKIpCZBe3hf4wEbuKlAQpqBy8tIk9Mmc95cuC192XacorMzA
+         bEtg==
+X-Gm-Message-State: AOUpUlG/WyAT46w2RyNw7yMPXvpqS8gWeGGObNtwv2U2wEHdd/HZPZg2
+        pdV5DRGjxsvngsKn5g+yImFlc6pw
+X-Google-Smtp-Source: AA+uWPwO8UGU89V4bJNiiBr0zuQAlJrZHPF78/d0J/ZVBxrR7F56lcV2LBlvh5HK5nj2n9ZX4SnGSQ==
+X-Received: by 2002:a19:6b03:: with SMTP id d3-v6mr1081996lfa.81.1534176935790;
+        Mon, 13 Aug 2018 09:15:35 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.35
+        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:36 -0700 (PDT)
+        Mon, 13 Aug 2018 09:15:34 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 16/24] attr: remove index from git_attr_set_direction()
-Date:   Mon, 13 Aug 2018 18:14:33 +0200
-Message-Id: <20180813161441.16824-17-pclouds@gmail.com>
+Subject: [PATCH 15/24] entry.c: use the right index instead of the_index
+Date:   Mon, 13 Aug 2018 18:14:32 +0200
+Message-Id: <20180813161441.16824-16-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
 In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
 References: <20180813161441.16824-1-pclouds@gmail.com>
@@ -68,133 +68,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since attr checking API now take the index, there's no need to set an
-index in advance with this call. Most call sites are straightforward
-because they either pass the_index or NULL (which defaults back to
-the_index previously). There's only one suspicious call site in
-unpack-trees.c where it sets a different index.
-
-This code in unpack-trees is about to check out entries from the
-new/temporary index after merging is done in it. The attributes will
-be used by entry.c code to do crlf conversion if needed. entry.c now
-respects struct checkout's istate field, and this field is correctly
-set in unpack-trees.c, there should be no regression from this change.
+checkout-index.c needs update because if checkout->istate is NULL,
+ie_match_stat() will crash. Previously this is ie_match_stat(&the_index, ..)
+so it will not crash, but it is not technically correct either.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive.c            |  2 +-
- attr.c               | 15 +++------------
- attr.h               |  3 +--
- builtin/check-attr.c |  2 +-
- unpack-trees.c       |  4 ++--
- 5 files changed, 8 insertions(+), 18 deletions(-)
+ builtin/checkout-index.c | 1 +
+ entry.c                  | 9 +++++----
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index c81e35bf23..aca9179d03 100644
---- a/archive.c
-+++ b/archive.c
-@@ -274,7 +274,7 @@ int write_archive_entries(struct archiver_args *args,
- 		init_tree_desc(&t, args->tree->buffer, args->tree->size);
- 		if (unpack_trees(1, &t, &opts))
- 			return -1;
--		git_attr_set_direction(GIT_ATTR_INDEX, &the_index);
-+		git_attr_set_direction(GIT_ATTR_INDEX);
- 	}
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index a730f6a1aa..d92db62fbd 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -190,6 +190,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
  
- 	err = read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
-diff --git a/attr.c b/attr.c
-index 863fad3bd1..98e4953f6e 100644
---- a/attr.c
-+++ b/attr.c
-@@ -708,10 +708,8 @@ static struct attr_stack *read_attr_from_array(const char **list)
-  * another thread could potentially be calling into the attribute system.
-  */
- static enum git_attr_direction direction;
--static const struct index_state *use_index;
+ 	argc = parse_options(argc, argv, prefix, builtin_checkout_index_options,
+ 			builtin_checkout_index_usage, 0);
++	state.istate = &the_index;
+ 	state.force = force;
+ 	state.quiet = quiet;
+ 	state.not_new = not_new;
+diff --git a/entry.c b/entry.c
+index b2381fd9f6..2a2ab6c839 100644
+--- a/entry.c
++++ b/entry.c
+@@ -266,7 +266,7 @@ static int write_entry(struct cache_entry *ce,
+ 	const struct submodule *sub;
  
--void git_attr_set_direction(enum git_attr_direction new_direction,
--			    const struct index_state *istate)
-+void git_attr_set_direction(enum git_attr_direction new_direction)
- {
- 	if (is_bare_repository() && new_direction != GIT_ATTR_INDEX)
- 		BUG("non-INDEX attr direction in a bare repo");
-@@ -720,7 +718,6 @@ void git_attr_set_direction(enum git_attr_direction new_direction,
- 		drop_all_attr_stacks();
+ 	if (ce_mode_s_ifmt == S_IFREG) {
+-		struct stream_filter *filter = get_stream_filter(&the_index, ce->name,
++		struct stream_filter *filter = get_stream_filter(state->istate, ce->name,
+ 								 &ce->oid);
+ 		if (filter &&
+ 		    !streaming_write_entry(ce, path, filter,
+@@ -314,14 +314,14 @@ static int write_entry(struct cache_entry *ce,
+ 		 * Convert from git internal format to working tree format
+ 		 */
+ 		if (dco && dco->state != CE_NO_DELAY) {
+-			ret = async_convert_to_working_tree(&the_index, ce->name, new_blob,
++			ret = async_convert_to_working_tree(state->istate, ce->name, new_blob,
+ 							    size, &buf, dco);
+ 			if (ret && string_list_has_string(&dco->paths, ce->name)) {
+ 				free(new_blob);
+ 				goto delayed;
+ 			}
+ 		} else
+-			ret = convert_to_working_tree(&the_index, ce->name, new_blob, size, &buf);
++			ret = convert_to_working_tree(state->istate, ce->name, new_blob, size, &buf);
  
- 	direction = new_direction;
--	use_index = istate;
- }
+ 		if (ret) {
+ 			free(new_blob);
+@@ -422,7 +422,8 @@ int checkout_entry(struct cache_entry *ce,
  
- static struct attr_stack *read_attr_from_file(const char *path, int macro_ok)
-@@ -750,17 +747,11 @@ static struct attr_stack *read_attr_from_index(const struct index_state *istate,
- 	struct attr_stack *res;
- 	char *buf, *sp;
- 	int lineno = 0;
--	const struct index_state *to_read_from;
- 
--	/*
--	 * Temporary workaround for c24f3abace (apply: file commited
--	 * with CRLF should roundtrip diff and apply - 2017-08-19)
--	 */
--	to_read_from = use_index ? use_index : istate;
--	if (!to_read_from)
-+	if (!istate)
- 		return NULL;
- 
--	buf = read_blob_data_from_index(to_read_from, path, NULL);
-+	buf = read_blob_data_from_index(istate, path, NULL);
- 	if (!buf)
- 		return NULL;
- 
-diff --git a/attr.h b/attr.h
-index 3daca3c0cb..01dab4a126 100644
---- a/attr.h
-+++ b/attr.h
-@@ -77,8 +77,7 @@ enum git_attr_direction {
- 	GIT_ATTR_CHECKOUT,
- 	GIT_ATTR_INDEX
- };
--void git_attr_set_direction(enum git_attr_direction new_direction,
--			    const struct index_state *istate);
-+void git_attr_set_direction(enum git_attr_direction new_direction);
- 
- void attr_start(void);
- 
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index f7b59993d3..c05573ff9c 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -120,7 +120,7 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (cached_attrs)
--		git_attr_set_direction(GIT_ATTR_INDEX, NULL);
-+		git_attr_set_direction(GIT_ATTR_INDEX);
- 
- 	doubledash = -1;
- 	for (i = 0; doubledash < 0 && i < argc; i++) {
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 14e9043f9d..f25089b878 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -353,7 +353,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	progress = get_progress(o);
- 
- 	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKOUT, index);
-+		git_attr_set_direction(GIT_ATTR_CHECKOUT);
- 
- 	if (should_update_submodules() && o->update && !o->dry_run)
- 		load_gitmodules_file(index, NULL);
-@@ -413,7 +413,7 @@ static int check_updates(struct unpack_trees_options *o)
- 	stop_progress(&progress);
- 	errs |= finish_delayed_checkout(&state);
- 	if (o->update)
--		git_attr_set_direction(GIT_ATTR_CHECKIN, NULL);
-+		git_attr_set_direction(GIT_ATTR_CHECKIN);
- 	return errs != 0;
- }
- 
+ 	if (!check_path(path.buf, path.len, &st, state->base_dir_len)) {
+ 		const struct submodule *sub;
+-		unsigned changed = ce_match_stat(ce, &st, CE_MATCH_IGNORE_VALID|CE_MATCH_IGNORE_SKIP_WORKTREE);
++		unsigned changed = ie_match_stat(state->istate, ce, &st,
++						 CE_MATCH_IGNORE_VALID | CE_MATCH_IGNORE_SKIP_WORKTREE);
+ 		/*
+ 		 * Needs to be checked before !changed returns early,
+ 		 * as the possibly empty directory was not changed
 -- 
 2.18.0.1004.g6639190530
 
