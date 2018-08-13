@@ -7,85 +7,93 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21ACC1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 23:36:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0B4A1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 23:42:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732435AbeHNCVS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 22:21:18 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:45865 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729478AbeHNCVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 22:21:18 -0400
-Received: by mail-yw1-f66.google.com with SMTP id 139-v6so14901463ywg.12
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 16:36:50 -0700 (PDT)
+        id S1730825AbeHNC1C (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 22:27:02 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:37555 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729947AbeHNC1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 22:27:02 -0400
+Received: by mail-yw1-f68.google.com with SMTP id w76-v6so14926831ywg.4
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 16:42:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Tvm+YwwYBGAC4ZfMHY4VBthUOB6qtbhOZHsUWg/uQ+o=;
-        b=vua22KXPiAAnpUmlZR+ZQNJWzDA/r56IMpzmQ5m6GQa0t81hjPnciFi2vXANDevXIQ
-         wzd7AIbLrFHwAZoMeTr153Cvdnjsg+N7OnZyOORwc3uQWfkzuUVLPW9O/8t+GfI67Wpz
-         Ie1VE/LRAlsFfQhfkLvSRM3ldGf+mz41sYKV8uzI2Q3aqE3askPSDybIJnwJgjzP7oEE
-         0jyRfrtqZKpOo6L3jBaifCEEty7RX3/fpwLsJ2DolbST+1Z3okgnG1Xl56haxKeKgVed
-         eajPZajh6TepYqvGpLvN8L3hlZuAo56n4Y3ywc3VpzRHXCbNw2C1/LEdvUwsLSBFGZzd
-         STHA==
+        bh=SzzIhwSxO4nY6+8UTdElM/3M8aRQTXI/jPLhbcDmNvo=;
+        b=vAWnKf/flYiiVp6Csrrgn44DI/kVryIc5OxjiiomO29Bk+EGPI1/BjGC035VcmXL0+
+         4fhrMPPdgjLVVLTfZxnGygL9/cx2ynqzy7ST8DTRACvpxZlQIBwaC1DPZ7KxUyqBhDb6
+         z6YdzlRAwgTqLh5OtsXr2tXpV8xee/WQb5Tq044wFEcACvm4vRzINF0GR7y+lM+YPEuB
+         wTVh7xFHqog6AqLKyyWQuFZBjTVQO5/Zl42j1TlyIhoprPGgU8tTnenRMZpdufMtVTMc
+         lwu3z1dEu7p6BJVUdQ6TVEs4KRmYofZoOE6c3Ef3xFDg/vvSDenH5cWm38ZBHGgPj4n4
+         Ibeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Tvm+YwwYBGAC4ZfMHY4VBthUOB6qtbhOZHsUWg/uQ+o=;
-        b=J7HDGDSKqiykxv+xI4xTPiwOuhCBPItuauNaL7Xd2e9xSr2SdfGnlAtUmSOYHluBao
-         fAAvfPrrKVqeHGfaCj1QQg5Bur2NWAs02cMiZh6Q6385TVnRp+4FEMYg2imqx9i7FHnC
-         2tQ8c4LgmDBW+rei0iLB6Z1Sk3HJsHGCoAiQmp5U5fdizpbguhV6uV7iUALT99XMSeeJ
-         Aaq/gWnnRjUQhJMGyQRSAEBjdbSji3qBpHLCLAry9qZ24Eluahlr5Hf7b7btpPw8Gr8f
-         ut42+HusrI0Yfkjh8p7+g2yhoxkUNCvypE3aW2uQ9O3UuZr1Q3IofzcjhwBjV4VREMTG
-         t44g==
-X-Gm-Message-State: AOUpUlGqQZYXAUwtevRaQAjP1vUd6zdjt/jbAoWlLhs+K4cyq5JUtlnZ
-        hS86qmtAqG6NpZAgKpnEyTGF/WBu+/CrT1AZk/pHbQ==
-X-Google-Smtp-Source: AA+uWPxPYemt5c7C0Son4lsIsTNtKy+fqZ4pfO56JoSdcMg7mlH6bMtm+L0DGaXvxcDNB4M6ZlAGMMWYQ9KbWkvwZSY=
-X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr10273115ywj.33.1534203409707;
- Mon, 13 Aug 2018 16:36:49 -0700 (PDT)
+        bh=SzzIhwSxO4nY6+8UTdElM/3M8aRQTXI/jPLhbcDmNvo=;
+        b=sOG0mL+co+DMhHmwE7+/kwWN+6ezRFdArzwQcq6YEhcamX/sQQ8NgDYBfCYRh8w5p3
+         n/uRH6VxHL0ktJhhlKa3inctY9FFr9UReLuwIgXODagbMUv3toIHpwBLR7pOtme5ng8D
+         CrCREfyPq7uS6SFyMbykXwjVA8O84MOlsIBn/Mao7mqDOGldMi6+TFImHlwk+Nha4YY+
+         tzwXEcebIew0M4c05GeM6Uvfej0WQspdxK1wtwQmbpmBq1uP4aTCfv+6cpM9uNagGG/o
+         mNoqj9YHoxyYIQw6iRcNEPyjuw2gNXemeT3FV5Q23qQiFHmwQNMEyKYZNfze5crBQcrv
+         9PpA==
+X-Gm-Message-State: AOUpUlHghRhsvWyrnX9FWTCPGhGljibbQ8N/1o4WvnK5Krfgohc46o8V
+        J2SPqonW+332W1/w/As2f8/P/4QW0aJFDgbY+fhtu+Fo
+X-Google-Smtp-Source: AA+uWPzupL9K79B4y/68ghAT8kprDQqFIDJFxg5ZMq4+VBKqx0RGTMtG+i2VaIm4nfYL13TyIaJ2+O7ucnhPi2EWmWM=
+X-Received: by 2002:a25:3624:: with SMTP id d36-v6mr10969411yba.292.1534203751944;
+ Mon, 13 Aug 2018 16:42:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180810223441.30428-1-sbeller@google.com>
-In-Reply-To: <20180810223441.30428-1-sbeller@google.com>
+References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-6-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1808131412100.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808131412100.71@tvgsbejvaqbjf.bet>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 13 Aug 2018 16:36:38 -0700
-Message-ID: <CAGZ79kZvdNNF-TnT5=a2HrMZCpTTZXRuiAoKQ3L5cKjAk9UruA@mail.gmail.com>
-Subject: Re: [PATCH 0/8] Resending sb/range-diff-colors
-To:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git <git@vger.kernel.org>
+Date:   Mon, 13 Aug 2018 16:42:20 -0700
+Message-ID: <CAGZ79kbypjBQ6gnULg6ZgMVDD8h8BMzkLK=SYKZo9PHzH7z5BA@mail.gmail.com>
+Subject: Re: [PATCH 5/8] diff.c: add set_sign to emit_line_0
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 10, 2018 at 3:34 PM Stefan Beller <sbeller@google.com> wrote:
+On Mon, Aug 13, 2018 at 5:15 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> This is also avaliable as
-> git fetch https://github.com/stefanbeller/git sb/range-diff-colors
+> Hi Stefan,
 >
-> and is a resend of sb/range-diff-colors.
+> On Fri, 10 Aug 2018, Stefan Beller wrote:
+>
+> > For now just change the signature, we'll reason about the actual
+> > change in a follow up patch.
+> >
+> > Pass 'set_sign' (which is output before the sign) and 'set' which
+> > controls the color after the first character. Hence, promote any
+> > 'set's to 'set_sign' as we want to have color before the sign
+> > for now.
+>
+> I'll freely admit that I had to study the diff in order to understand this
+> paragraph.
+>
+> My I suggest something along those lines instead?
+>
+>         Split the meaning of the `set` parameter that is passed to
+>         `emit_line_0()` to separate between the color of the "sign" (i.e.
+>         the diff marker '+', '-' or ' ' that is passed in as the `first`
+>         parameter) and the color of the rest of the line.
+>
+>         This changes the meaning of the `set` parameter to no longer refer
+>         to the color of the diff marker, but instead to refer to the color
+>         of the rest of the line. A value of `NULL` indicates that the rest
+>         of the line wants to be colored the same as the diff marker.
+>
 
-I thought about this series a bit, and I think we would want to break
-it up into 2:
-
-  * the actual sb/range-diff-colors consisting of the first two patches
-  I can resend them or you can just rebase them without conflicts.
-  These two patches (test_decode_color: FAINT/ITALIC + t3206: color)
-  are essentially just adding the tests and making sure the colored
-  range-diff will work correctly in the future
-
- * The refactoring, which might be titled sb/diff-refactor instead.
-    Given Johannes review comments, I will rework all patches
-    that are "diff: something" to have less confusion for Johannes
-    reviewing them.
-
-And once we have these two we can have a resend of
-https://public-inbox.org/git/20180810224923.143625-1-sbeller@google.com/
-which might be titled sb/range-diff-adjust-colors.
-
+That is a wonderful commit message,
+I'll just use it as-is.
 
 Thanks,
 Stefan
