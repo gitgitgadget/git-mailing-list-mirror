@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C28C1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 12:07:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AABA1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 12:09:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729640AbeHMOtO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:49:14 -0400
-Received: from mout.gmx.net ([212.227.15.15]:43699 "EHLO mout.gmx.net"
+        id S1729624AbeHMOvc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:51:32 -0400
+Received: from mout.gmx.net ([212.227.17.21]:58365 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729281AbeHMOtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:49:14 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYOY5-1fJzgc0NKz-00V6G4; Mon, 13
- Aug 2018 14:07:11 +0200
-Date:   Mon, 13 Aug 2018 14:07:17 +0200 (DST)
+        id S1729084AbeHMOvc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:51:32 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ln8gj-1gN8Qn0AUn-00hP3d; Mon, 13
+ Aug 2018 14:09:28 +0200
+Date:   Mon, 13 Aug 2018 14:09:34 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
 cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 3/8] diff.c: simplify caller of emit_line_0
-In-Reply-To: <20180810223441.30428-4-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808131406371.71@tvgsbejvaqbjf.bet>
-References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-4-sbeller@google.com>
+Subject: Re: [PATCH 4/8] diff.c: reorder arguments for emit_line_ws_markup
+In-Reply-To: <20180810223441.30428-5-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131407580.71@tvgsbejvaqbjf.bet>
+References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-5-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:C/GglYxkMaUhQ+MbNz7yO9ySMicFxUS6PdCj7MkbaQVzVrqbvLF
- vZkJ8YCX5gSHeA389Jv88SNRmcHvIYtj0u4zZLque8Q61jjRjJjkOiBcsIpOwX0XX9plQqa
- VQw6EoJm69OrhstUCX1tQr126w/yPAvKc1O94R8gjxqKo5me2C2oNbZdL46QlvmVU8oFg9o
- L7vcbTkQE8RPX+tEUub+w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KDMgUAGO3YY=:ZGXQT2qhWsWDaPWFudMzdM
- ZHOIXR0oIiySqQohLXso5rpyUXB/lOhQ//J/hFYgfMt4rbqZS6pPx8aYfxKpgKKAJoemGuRVT
- +oMy9THiMjyBRkQ/b1TsHLyE+xButaqbgoSBOBOt793qS/4z306Uy7mYd9iSN5Z6rMBAx4HZb
- drJCRf3uqCFPcbil3+PGiwFcvDy9C91lqEONKvVYsb+yaEW9sM79gpElKeVy66UzJcVO6zG3G
- Dp1azpBgalW+SLZim2kpAOvU0Ios2MzdZ5r4AVHW8krhh9v4aMKxMoSgG8JYnzHklNmJeJHGy
- zWrxcn9QBEeRyQ8yImFZovxwVppLgJxDxqK8hvQuzxtvoScIBqAeIE0f6cXA6w1nfKuUzSXQv
- 9Ykk0OhahVyXbTQYhrRtpDKCRkvpwy8Eyt/xPKqQ2tf2F3Z49Gr3NCmaQPvUIQkA15Ku5uE4Y
- BLJx8gU5wFFnM/uu5s7+NH9/Sb1oEErDbgXFTuBsiUotcmpoFT0dyKlAuWVns6iL+hldej+7c
- YgY07071W6PvtXZxDYGzlW+/tHPsmcOX1u2ic6nXYUGJR5qLK0afB2hy4yUOjrXercWSINinV
- Cy/SYcZR3JX9jLe2EBxt0rHoa92dP8NL0yHkUmfZoTiPPzEVZNj/kIGMl3QiZMulj/fsARbBw
- B6VGbWMwB8RFbiEouNdceet/cu9FXklXB730l+ORW1NZ7Ma2WTBr01gxDJlNril/zpPrlhYuQ
- vZNK8WPr7yM7Y191cTjUJy4V4aVmDnO5ejq4xz9kr0jQP96BaFqJmngRi+43wMqS7GXzBweg7
- lPVCU05
+X-Provags-ID: V03:K1:5rgLGt07k6zfvNBoyOcaRf0wqhNvexdPaZ2sWT8oOBkwukrmHbI
+ 6UIjWZkjInOJjG5bUF2gfAVakn8HcXDG7sI8NHTUfLVXqmrIS3Jy/X+vvad2xoIt7VrJ/cG
+ Y4MY7DQCgzHGZLD1NON0rI1HCLDuYU4L4/1VaiJfzYRjcTSMhT6Li5i/y/VRkqPraF8vprL
+ t9aheHctq+oo5WNsWdhvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Z/RcJE56bDw=:bJozKvhOgoQwR+goqBXEyW
+ l5Qxk9+SnuJ87m2BoFOq7nzxf745CQNWpvOHwbq4LCfzvhZFfdbdhxspG3bpvv/YQT21vpOww
+ 14HvFNl25KOwmRztkeSGxWTj9z03gjSqh4tkjmkCVZjswk6dldcHvc2E/jf53c5QXPlaBlBmj
+ i9Mb8QUqq9/2lK9pCni/clcrK4Y2qxLi6eh9vllOrq6Ji189EmzogtwQV3wtvj5yWee5y7oJ2
+ XGezAwi4Rm9l5pcCaoE4derAkQ6LrWR3FJkxsY4YFtx6IeVXHTg/KlL9szlHBUmutwljHhFK5
+ xmoM2pWvnEy7Gcb5XplPnpB5vLYDRxgwfjB8gfjksiiiY4iktNEY8IGeRvAn/nJJXGys8hd58
+ MPsaPhABXhDofxKm/seVMW1G5h+InJrBay9u/utIhtblRBDlfv+GhzokrmhwuaU1hcRLCbwEM
+ St8AjODRm5cfKl1hUZUFe/HsN8WMEDksLRNRBC58XiOqp3+LcSdOUuyoSJDSNtK4YhP76AkN3
+ wvA053mmCF64PYTSgMEzEt/gYqEgI92fNb5ZoXdx4xfnpMtlyfM+Uy9MQEjvZ1nOl2BW3vjLU
+ qUsigFCXl3ldhWa4sgzlvxa9WFDvH2oQKtzbaQPXAt5z6UlcOM8Wcbj2NEyv6LBHeXGUZtgHR
+ BJmZy+FiUiQDSVepfBjQ2H7r9IJUmYPw3zYq+AfvD7+U2tmI3cnUAJJjOVoIgueoJ6CM/9ZFe
+ TRTdxEQaqE72krSBGe0TKrCRgpXNREmcr/S7D9Ec+65frDDYAp96dXOQOmIAOx0Acxy1/d9UA
+ 7Dk5KiJ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -57,34 +57,71 @@ Hi Stefan,
 
 On Fri, 10 Aug 2018, Stefan Beller wrote:
 
-> Due to the previous condition we know "set_sign != NULL" at that point.
+> The order shall be all colors first, then the content, flags at the end.
 
-I trust your judgement on that, also on how likely this previous condition
-is to keep guaranteeing that assumption.
+Okay.
 
-Thank you,
+> The colors are in order.
+
+In order of what? Of the wavelength?
+
+(I agree that the order now makes more sense, and that the diff is
+correct.)
+
+Ciao,
 Dscho
 
+> 
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  diff.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  diff.c | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 > 
 > diff --git a/diff.c b/diff.c
-> index ae131495216..f6df18af913 100644
+> index f6df18af913..ab6e6a88a56 100644
 > --- a/diff.c
 > +++ b/diff.c
-> @@ -1202,8 +1202,7 @@ static void emit_line_ws_markup(struct diff_options *o,
->  		emit_line_0(o, set, 0, reset, sign, line, len);
->  	else if (!ws) {
->  		/* Emit just the prefix, then the rest. */
-> -		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
-> -			    sign, "", 0);
-> +		emit_line_0(o, set_sign, !!set_sign, reset, sign, "", 0);
->  		emit_line_0(o, set, 0, reset, 0, line, len);
->  	} else if (blank_at_eof)
->  		/* Blank line at EOF - paint '+' as well */
+> @@ -1185,9 +1185,9 @@ static void dim_moved_lines(struct diff_options *o)
+>  }
+>  
+>  static void emit_line_ws_markup(struct diff_options *o,
+> -				const char *set, const char *reset,
+> -				const char *line, int len,
+> -				const char *set_sign, char sign,
+> +				const char *set_sign, const char *set,
+> +				const char *reset,
+> +				char sign, const char *line, int len,
+>  				unsigned ws_rule, int blank_at_eof)
+>  {
+>  	const char *ws = NULL;
+> @@ -1271,7 +1271,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  			else if (c == '-')
+>  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
+>  		}
+> -		emit_line_ws_markup(o, set, reset, line, len, set_sign, ' ',
+> +		emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
+>  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+>  		break;
+>  	case DIFF_SYMBOL_PLUS:
+> @@ -1314,7 +1314,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
+>  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+>  		}
+> -		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
+> +		emit_line_ws_markup(o, set_sign, set, reset, '+', line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+>  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+>  		break;
+> @@ -1357,7 +1357,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  			else
+>  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+>  		}
+> -		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
+> +		emit_line_ws_markup(o, set_sign, set, reset, '-', line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+>  		break;
+>  	case DIFF_SYMBOL_WORDS_PORCELAIN:
 > -- 
 > 2.18.0.865.gffc8e1a3cd6-goog
 > 
