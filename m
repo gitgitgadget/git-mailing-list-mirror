@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE67C1F428
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2A11F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729346AbeHMS6O (ORCPT <rfc822;e@80x24.org>);
+        id S1729695AbeHMS6O (ORCPT <rfc822;e@80x24.org>);
         Mon, 13 Aug 2018 14:58:14 -0400
-Received: from mail-lf1-f49.google.com ([209.85.167.49]:37809 "EHLO
-        mail-lf1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728533AbeHMS6O (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:46960 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728772AbeHMS6O (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Aug 2018 14:58:14 -0400
-Received: by mail-lf1-f49.google.com with SMTP id j8-v6so11658178lfb.4
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:19 -0700 (PDT)
+Received: by mail-lf1-f66.google.com with SMTP id l16-v6so11637445lfc.13
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aO8DWRpjfA5igcRSG6BhJfxSNZhUdgz8MakZvkUpmuU=;
-        b=VbiDtNA9yQgguqYIx2JdAHI1vg88g7DZvA1+sWED4yBFCbI6Ti75fn1xnwTO7ESscQ
-         RLdzck/ydvHkfjipnOD2IhKwLjkHsI3lDZvUWM+ZX6irkVgQBA33k3go/pO0nMsbI0uf
-         90L18JrZpMOWxW/+8UKawwRjyzCyOH/5ckb3pO3tqaN0yMCGoEVeSi0KrIp+4WCLIq+0
-         9EEDppZHGSPwtSncFJbI0WshztpnJJzKvMeYlNjPDTOV0p5gHu7NLNjlmh4XSgKHTEM2
-         QopOKdEOD0ciDFJiszx7ebwQ85BUV1icbPObEc536iEktwuJWtlin754EgO/YtTI1MHX
-         iSNQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UIDL0kFJArNnQOgg+KPqv+13Wfmlvm9pj4HVHedjIs0=;
+        b=hzMo8MwV4urrci4aTuOMKustfPVgdC1yBeTsJo+cRxOxMx8trUiP0ibUm/CHaZzWqv
+         n9tR9RdrIR//V/ua8yj4WGrvSqVufG1iVdWRZL2Yt8G5uHxm8ELgT59Pe0+8kDLQszsI
+         nR1MYTxj0UW5fhynTCYZ3TiWUft2OD4D1qNDQjUGjJLGjs4gEkPLfOgSFAW20EIDtNZ2
+         2Dsazo5xqkdAv1BuUWzz8F6tBNppWCQb/JCAmXajL+/GaMsxHDKY51xJny7Eac6iyVIo
+         n4BHmp2JPWwnc08s1dF8j6cDIxJ92bRIGjHnByLi53ClQ+ynbuHeQayMLWxbTs9E0sam
+         pe9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=aO8DWRpjfA5igcRSG6BhJfxSNZhUdgz8MakZvkUpmuU=;
-        b=QwAg6MmzXspa08L61JkJI6/4NpK9z+g4RnyPyiYtmiU6KvdjT/z1DzddODghqyEilC
-         HU6tMCLHg4902eCymiIpRx+/sWSPT/+GzJ4V1ngY9KGsePIgz01jgAYm8fLVzYr9Klo9
-         2SKQHTzbvX2AwBFAE8W7LAFw0XZ0FK0js0Chhx+j16ARosyuZ+fVaT/LWWkQZ8/7iNGz
-         LK9EQOqjBDlCjvfZazqXkilNqWUt9ZQFJRd6Og9tPGv3iAmSg1qEGFDlKl1+My8Ma4oa
-         jWU1raH8gb6f+3kGQSHJnBAGijFFHkFxOv+pMrgbMeFnxtBQ9pwXas2C+3zTEiOm02r5
-         C0PQ==
-X-Gm-Message-State: AOUpUlHV+B3GTUcefoUpfu0fnXK2tESTxOuz/eDR1iW4+wRFHGcgC0bZ
-        LPWN9O9ATjMy0BKHWlGZXcE0G//G
-X-Google-Smtp-Source: AA+uWPwRlOa+5zAIzejpJBxV+Jr7bbIEBY5RCQBXuCaaczHqe49kRnAf8it4eAX/YfAX11ja7gs38w==
-X-Received: by 2002:a19:d819:: with SMTP id p25-v6mr11495250lfg.36.1534176918533;
-        Mon, 13 Aug 2018 09:15:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UIDL0kFJArNnQOgg+KPqv+13Wfmlvm9pj4HVHedjIs0=;
+        b=Qlp+IX1WS3A3CR0P2qFXDYSk0pZT9ZbGrCfZ8Cw9FSQz1KchBC9DEFNZWg7WsxFthG
+         VPeii7ZiXk47YMYaVRSryTWQ+tFCt6hq+PlJpky8ot7nDxg5JejrfL6SAuX5b0nD4/pF
+         rBSdAddtTdGGzMH/7nnUXpKrzV+DiHpECp+FDyNM2rdzveMZY7ifLzjfIU3R3dRwcBS5
+         rKbA21v63F+QAojJUo7U2sVyFm2n2AFsmhVxWkoSwglYozqLwbzEHzbDYknInECpUZ8k
+         9ENSGUEq7w1ZK1FOCfKQss0naHG4sfUpJ6DGQ+TRocIgO0w+upIJoo/FVYoI9BzzEQLE
+         z8FQ==
+X-Gm-Message-State: AOUpUlHECj/DDfUTRvUZNGGXCweMsBtQoMEa/F1FqAOSU55gfa4LroYB
+        hTCD9C+8CyrGcfw0/XGECKU+D6eN
+X-Google-Smtp-Source: AA+uWPza4zZ/mm+ZTwCs11DAYPMtNEabBJsH6v3vb0ejKXcy/bwJQViIOXCjqSLJ1FoSJxuL3q5ATA==
+X-Received: by 2002:a19:ef13:: with SMTP id n19-v6mr11908830lfh.48.1534176919697;
+        Mon, 13 Aug 2018 09:15:19 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.17
+        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:17 -0700 (PDT)
+        Mon, 13 Aug 2018 09:15:18 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 00/24] Kill the_index part3
-Date:   Mon, 13 Aug 2018 18:14:17 +0200
-Message-Id: <20180813161441.16824-1-pclouds@gmail.com>
+Subject: [PATCH 01/24] diff.c: move read_index() code back to the caller
+Date:   Mon, 13 Aug 2018 18:14:18 +0200
+Message-Id: <20180813161441.16824-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
+In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
+References: <20180813161441.16824-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,135 +68,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the third part of killing the_index (at least outside
-builtin/). Part 1 [1] is dropped. Part 2 is nd/no-extern on 'pu'. This
-part is built on top of nd/no-extern.
+This code is only needed for diff-tree (since f0c6b2a2fd ([PATCH]
+Optimize diff-tree -[CM] --stdin - 2005-05-27)). Let the caller do the
+preparation instead and avoid read_index() in diff.c code.
 
-This series would actually break 'pu' because builtin/stash.c uses
-three functions that are updated here. So we would need something like
-the following patch to make it build again.
+read_index() should be avoided (in addition to the_index) because it
+uses get_index_file() underneath to get the path $GIT_DIR/index. This
+effectively pulls the_repository in and may become the only reason to
+pull a 'struct repository *' in diff.c. Let's keep the dependencies as
+few as possible and kick it back to diff-tree.c
 
-I don't know if that adds too much work on Junio. If it does, I guess
-I'll hold this off for a while until builtin/stash.c gets merged
-because reordering these patches, pushing the patches that break
-stash.c away, really takes a lot of work.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/diff-tree.c |  8 +++++---
+ diff.c              | 10 ----------
+ diff.h              |  1 -
+ 3 files changed, 5 insertions(+), 14 deletions(-)
 
-[1] https://public-inbox.org/git/20180616054157.32433-1-pclouds@gmail.com/
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 74eda822ce..f34edba21f 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -294,7 +294,7 @@ static int apply_patch_from_buf(struct strbuf *patch, int cached, int reverse,
- 	const char *patch_path = ".git/stash_patch.patch";
- 	FILE *patch_file;
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index 91ba67070e..d07bf2e4c4 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -163,9 +163,11 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+ 		int saved_nrl = 0;
+ 		int saved_dcctc = 0;
  
--	if (init_apply_state(&state, NULL))
-+	if (init_apply_state(&state, the_repository, NULL))
- 		return -1;
+-		if (opt->diffopt.detect_rename)
+-			opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
+-					       DIFF_SETUP_USE_CACHE);
++		if (opt->diffopt.detect_rename) {
++			if (!the_index.cache)
++				read_index(&the_index);
++			opt->diffopt.setup |= DIFF_SETUP_USE_SIZE_CACHE;
++		}
+ 		while (fgets(line, sizeof(line), stdin)) {
+ 			struct object_id oid;
  
- 	state.cached = cached;
-@@ -873,7 +873,7 @@ static int get_untracked_files(const char **argv, const char *prefix,
- 	max_len = fill_directory(&dir, the_repository->index, &pathspec);
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
--		if (!dir_path_match(ent, &pathspec, max_len, seen)) {
-+		if (!dir_path_match(the_repository->index, ent, &pathspec, max_len, seen)) {
- 			free(ent);
- 			continue;
- 		}
-@@ -1299,7 +1299,7 @@ static int do_push_stash(int argc, const char **argv, const char *prefix,
+diff --git a/diff.c b/diff.c
+index 04d044bbb6..72ce8007fd 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4414,16 +4414,6 @@ void diff_setup_done(struct diff_options *options)
  
- 		for (i = 0; i < active_nr; ++i) {
- 			const struct cache_entry *ce = active_cache[i];
--			if (!ce_path_match(ce, &ps, ps_matched))
-+			if (!ce_path_match(&the_index, ce, &ps, ps_matched))
- 				continue;
- 		}
+ 	if (options->detect_rename && options->rename_limit < 0)
+ 		options->rename_limit = diff_rename_limit_default;
+-	if (options->setup & DIFF_SETUP_USE_CACHE) {
+-		if (!active_cache)
+-			/* read-cache does not die even when it fails
+-			 * so it is safe for us to do this here.  Also
+-			 * it does not smudge active_cache or active_nr
+-			 * when it fails, so we do not have to worry about
+-			 * cleaning it up ourselves either.
+-			 */
+-			read_cache();
+-	}
+ 	if (hexsz < options->abbrev)
+ 		options->abbrev = hexsz; /* full */
  
-Nguyễn Thái Ngọc Duy (24):
-  diff.c: move read_index() code back to the caller
-  cache-tree: wrap the_index based wrappers with #ifdef
-  attr: remove an implicit dependency on the_index
-  convert.c: remove an implicit dependency on the_index
-  dir.c: remove an implicit dependency on the_index in pathspec code
-  preload-index.c: use the right index instead of the_index
-  ls-files: correct index argument to get_convert_attr_ascii()
-  unpack-trees: remove 'extern' on function declaration
-  unpack-trees: add a note about path invalidation
-  unpack-trees: don't shadow global var the_index
-  unpack-trees: convert clear_ce_flags* to avoid the_index
-  unpack-trees: avoid the_index in verify_absent()
-  pathspec.c: use the right index instead of the_index
-  submodule.c: use the right index instead of the_index
-  entry.c: use the right index instead of the_index
-  attr: remove index from git_attr_set_direction()
-  grep: use the right index instead of the_index
-  archive.c: avoid access to the_index
-  archive-*.c: use the right repository
-  resolve-undo.c: use the right index instead of the_index
-  apply.c: pass struct apply_state to more functions
-  apply.c: make init_apply_state() take a struct repository
-  apply.c: remove implicit dependency on the_index
-  blame.c: remove implicit dependency on the_index
-
- apply.c                     | 66 +++++++++++++++++++++----------------
- apply.h                     |  4 +++
- archive-tar.c               |  2 +-
- archive-zip.c               |  2 +-
- archive.c                   | 47 ++++++++++++++++----------
- archive.h                   | 16 +++++++--
- attr.c                      | 52 +++++++++++++++++------------
- attr.h                      | 11 ++++---
- blame.c                     | 52 +++++++++++++++++------------
- blame.h                     |  1 +
- builtin/add.c               |  6 ++--
- builtin/am.c                |  2 +-
- builtin/apply.c             |  2 +-
- builtin/archive.c           |  2 +-
- builtin/blame.c             |  1 +
- builtin/cat-file.c          |  2 +-
- builtin/check-attr.c        |  6 ++--
- builtin/checkout-index.c    |  1 +
- builtin/checkout.c          |  2 +-
- builtin/clean.c             |  2 +-
- builtin/commit.c            |  2 +-
- builtin/diff-tree.c         |  8 +++--
- builtin/grep.c              |  6 ++--
- builtin/ls-files.c          | 17 +++++-----
- builtin/pack-objects.c      |  2 +-
- builtin/rm.c                |  2 +-
- builtin/submodule--helper.c |  2 +-
- builtin/update-index.c      |  2 +-
- builtin/upload-archive.c    |  3 +-
- cache-tree.c                | 12 -------
- cache-tree.h                | 17 ++++++++--
- convert.c                   | 41 +++++++++++++----------
- convert.h                   | 15 ++++++---
- diff-lib.c                  |  4 +--
- diff.c                      | 12 +------
- diff.h                      |  1 -
- dir.c                       | 27 ++++++++-------
- dir.h                       | 16 +++++----
- entry.c                     |  9 ++---
- ll-merge.c                  |  4 +--
- merge-recursive.c           |  2 +-
- pathspec.c                  |  2 +-
- preload-index.c             |  2 +-
- read-cache.c                |  2 +-
- rerere.c                    |  2 +-
- resolve-undo.c              |  2 +-
- revision.c                  |  2 +-
- sequencer.c                 |  4 +--
- sha1-file.c                 |  4 +--
- submodule.c                 |  8 ++---
- unpack-trees.c              | 57 ++++++++++++++++++++------------
- unpack-trees.h              |  4 +--
- userdiff.c                  |  2 +-
- ws.c                        |  2 +-
- wt-status.c                 |  6 ++--
- 55 files changed, 337 insertions(+), 245 deletions(-)
-
+diff --git a/diff.h b/diff.h
+index 20c697dbfe..3ada6ad33c 100644
+--- a/diff.h
++++ b/diff.h
+@@ -312,7 +312,6 @@ void diff_change(struct diff_options *,
+ struct diff_filepair *diff_unmerge(struct diff_options *, const char *path);
+ 
+ #define DIFF_SETUP_REVERSE      	1
+-#define DIFF_SETUP_USE_CACHE		2
+ #define DIFF_SETUP_USE_SIZE_CACHE	4
+ 
+ /*
 -- 
 2.18.0.1004.g6639190530
 
