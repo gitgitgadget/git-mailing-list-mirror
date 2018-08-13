@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 380201F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 22:42:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 292951F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 22:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731662AbeHNB1G (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 21:27:06 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:55930 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730213AbeHNB1G (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 21:27:06 -0400
-Received: by mail-it0-f74.google.com with SMTP id e21-v6so10971143itb.5
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:42:50 -0700 (PDT)
+        id S1731673AbeHNB1J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 21:27:09 -0400
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:55676 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730213AbeHNB1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 21:27:09 -0400
+Received: by mail-qt0-f201.google.com with SMTP id j9-v6so14171495qtn.22
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=zqfwjqlmA9N5x2hHGTcSbOHKOOxnj9PO2b2GoHGdaqU=;
-        b=uXw73zR3x9TfsSC95EznlbFflEmj7SnDn1iJSk6w/NVrfz2fn78R02yUSu9AK5E3YU
-         y7p778H+7OwuGKkfe/k7fEj4yFoku1jF2Bw/AEIzNY2OTsegqKFoyW+P1Kbia1aNCCDO
-         I+DBmSvO4b+kAM5LRNLiefLfNr3SXwWeqnKnAyTwvbnRqofn7CC+M9aYjtuCw9XS+Igd
-         EX1INLAxApiDQqAJbx35ZemSMAAbeVCxVCDaxHrdoIf+3zxufBsTT3oz8GBGC+VQDwmf
-         AMdXTMVialBat1SLTaWLauSimSCdVHX6JEG3iw2NCTS/3hqLebF5+ITQ5kdpoX7Hls3J
-         oD1Q==
+        bh=6DcS6wFz0IzP6QVuXioLXV8OvZH/ScIfaycZTVVHexU=;
+        b=bxFZR9P//jPRsjJ6jC3U3ygCwUDNGascB34sZM+QRdA8ik/+mE8eNpHN38bRrC/a3c
+         D93aq8RE+ycUV59iF0f9GyvE1SK+5cRrZ5Xh/S9ctGmZoNdVBLXs0K5Lth/43iZdkHn2
+         q8XhqsDVNrNtVXmaSZpBmInvu06AWPp3pzCiWMbXOFTLr0PVSGMCqJDk7ivNqKBUbMIR
+         ebPXkO/EF2A+abYN3LC0eu4Pu5e62JsECn8Y+yeS0eis8cjp9gKMhG1nF0GN1qQqAwUB
+         QYaaup4uptalQ/YT/LwDizA6+DcvmSqk9uRvwgvFv/ToyTo7WKAt6JBm4wSwYZHKPEaL
+         63ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=zqfwjqlmA9N5x2hHGTcSbOHKOOxnj9PO2b2GoHGdaqU=;
-        b=SxWKMxKISXbREcpcADVMQm+yWKN6UZBz6k6IRljA6O7MtOWgEhblU0L/PWCXYqCODc
-         UAvmGqmvsHd5sWzO8TcWv9g+dGaLzBL+t/NCNl09U8q109fg6GOQm5rUArW3RrWKZZST
-         Hfz5aYyG4f1/c8AfZ8sI63PiyQ0bIBuz3Lu1G2xKh3zvFizkl3GB6LO09RiN7Pt5xmcu
-         2q8jJxEaG8WeRawoaOp652S6pEmDexCH/tN5doagUwTByYQ1IgpzGoxoAJMH7fYAiEWe
-         KmZDOa4402wXzdV9ooBR5nLTW6OPFJqxjJQ9tegUZOlB6ycVa8FkVlDznp6mE3byJNvD
-         XDXQ==
-X-Gm-Message-State: AOUpUlF54q4l9DUQuPR/IHCRHa6BUehWhbwQ/aEKfKZu5GLp7Z5dtcHf
-        bgobviSEiPl9TkRhJkOCUqWjPgL6oN/4
-X-Google-Smtp-Source: AA+uWPwMB0I1eB9tE/Cu3Ft30orIwnhEMlAtz9YAYZ7veld9YyV/cMAjDeZTsw7/347WM0KC+ojVboYmiime
-X-Received: by 2002:a24:d11:: with SMTP id 17-v6mr7516810itx.3.1534200169882;
- Mon, 13 Aug 2018 15:42:49 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 15:42:31 -0700
+        bh=6DcS6wFz0IzP6QVuXioLXV8OvZH/ScIfaycZTVVHexU=;
+        b=K6PCHmQwugGollGWl3Ijb25i2Lndy6KFGZfuh7OO+L1+d/dGZ8W2CdyD5xEIi3b1Os
+         F1pQzkzRzJDcO61D0bJ6lDNuiZytBWO5AguymXZ96pkWyfR1mkrxJzWeBvEshIeacxlZ
+         xYk+au7fGxbEPrvYg3RZVJXNNk9Wkz9W9o6+j2VDmqSH6yuKJFJNtZsqVUPaDX2b71Gl
+         FiUqAaKgrd4b9TnsWdxdR6o9zN9ZE0ro+mCwGGhvwD+CYEQ9n7M4s81elkcQvOLsqUin
+         HxfOfwJkrZ4R9yXV+ypTbwDKBxfik8c0lKxech1l+MBqv+OuOv1FN/r/ffUiEbbhdMIi
+         LUWg==
+X-Gm-Message-State: AOUpUlFngf1mOxGTPK1+wAGab2n6hd6RyDriaFI7REmjA9HTNNj18jlI
+        DxqJv8aeufhblIAYF+2MWw7GJJPuM30Z
+X-Google-Smtp-Source: AA+uWPw8Il1jdB0JsrmWv6YRDPcZtM3SSl7hq3sK7zoyEWSIdR9hhQIBwNL5Ap5SYrlIs7qtjzmG5dDm3AG/
+X-Received: by 2002:a37:a9ca:: with SMTP id s193-v6mr12053970qke.36.1534200172657;
+ Mon, 13 Aug 2018 15:42:52 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 15:42:32 -0700
 In-Reply-To: <20180813224235.154580-1-sbeller@google.com>
-Message-Id: <20180813224235.154580-4-sbeller@google.com>
+Message-Id: <20180813224235.154580-5-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180803222322.261813-1-sbeller@google.com> <20180813224235.154580-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 3/7] builtin/submodule--helper: factor out submodule updating
+Subject: [PATCH 4/7] builtin/submodule--helper: store update_clone information
+ in a struct
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, bmwill@google.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
@@ -61,117 +62,104 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Separate the command line parsing from the actual execution of the command
-within the repository. For now there is not a lot of execution as
-most of it is still in git-submodule.sh.
+The information that is printed for update_submodules in
+'submodule--helper update-clone' and consumed by 'git submodule update'
+is stored as a string per submodule. This made sense at the time of
+48308681b07 (git submodule update: have a dedicated helper for cloning,
+2016-02-29), but as we want to migrate the rest of the submodule update
+into C, we're better off having access to the raw information in a helper
+struct.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 59 +++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 26 deletions(-)
+ builtin/submodule--helper.c | 37 +++++++++++++++++++++++++++----------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index da700c88963..32f00ca6f87 100644
+index 32f00ca6f87..40b94dd622e 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1474,6 +1474,8 @@ struct submodule_update_clone {
- 	/* failed clones to be retried again */
- 	const struct cache_entry **failed_clones;
- 	int failed_clones_nr, failed_clones_alloc;
-+
-+	int max_jobs;
- };
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
- 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
-@@ -1716,11 +1718,36 @@ static int git_update_clone_config(const char *var, const char *value,
+@@ -1446,6 +1446,12 @@ static int module_clone(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+static int update_submodules(struct submodule_update_clone *suc)
-+{
-+	struct string_list_item *item;
++struct update_clone_data {
++	const struct submodule *sub;
++	struct object_id oid;
++	unsigned just_cloned;
++};
 +
-+	run_processes_parallel(suc->max_jobs,
-+			       update_clone_get_next_task,
-+			       update_clone_start_failure,
-+			       update_clone_task_finished,
-+			       suc);
-+
-+	/*
-+	 * We saved the output and put it out all at once now.
-+	 * That means:
-+	 * - the listener does not have to interleave their (checkout)
-+	 *   work with our fetching.  The writes involved in a
-+	 *   checkout involve more straightforward sequential I/O.
-+	 * - the listener can avoid doing any work if fetching failed.
-+	 */
-+	if (suc->quickstop)
-+		return 1;
-+
-+	for_each_string_list_item(item, &suc->projectlines)
-+		fprintf(stdout, "%s", item->string);
-+
-+	return 0;
-+}
-+
- static int update_clone(int argc, const char **argv, const char *prefix)
+ struct submodule_update_clone {
+ 	/* index into 'list', the list of submodules to look into for cloning */
+ 	int current;
+@@ -1465,8 +1471,9 @@ struct submodule_update_clone {
+ 	const char *recursive_prefix;
+ 	const char *prefix;
+ 
+-	/* Machine-readable status lines to be consumed by git-submodule.sh */
+-	struct string_list projectlines;
++	/* to be consumed by git-submodule.sh */
++	struct update_clone_data *update_clone;
++	int update_clone_nr; int update_clone_alloc;
+ 
+ 	/* If we want to stop as fast as possible and return an error */
+ 	unsigned quickstop : 1;
+@@ -1480,7 +1487,7 @@ struct submodule_update_clone {
+ #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+ 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+ 	NULL, NULL, NULL, \
+-	STRING_LIST_INIT_DUP, 0, NULL, 0, 0}
++	NULL, 0, 0, 0, NULL, 0, 0, 0}
+ 
+ 
+ static void next_submodule_warn_missing(struct submodule_update_clone *suc,
+@@ -1574,10 +1581,12 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
+ 	strbuf_addf(&sb, "%s/.git", ce->name);
+ 	needs_cloning = !file_exists(sb.buf);
+ 
+-	strbuf_reset(&sb);
+-	strbuf_addf(&sb, "dummy %s %d\t%s\n",
+-		    oid_to_hex(&ce->oid), needs_cloning, ce->name);
+-	string_list_append(&suc->projectlines, sb.buf);
++	ALLOC_GROW(suc->update_clone, suc->update_clone_nr + 1,
++		   suc->update_clone_alloc);
++	oidcpy(&suc->update_clone[suc->update_clone_nr].oid, &ce->oid);
++	suc->update_clone[suc->update_clone_nr].just_cloned = needs_cloning;
++	suc->update_clone[suc->update_clone_nr].sub = sub;
++	suc->update_clone_nr++;
+ 
+ 	if (!needs_cloning)
+ 		goto cleanup;
+@@ -1720,7 +1729,8 @@ static int git_update_clone_config(const char *var, const char *value,
+ 
+ static int update_submodules(struct submodule_update_clone *suc)
  {
- 	const char *update = NULL;
--	int max_jobs = 1;
 -	struct string_list_item *item;
- 	struct pathspec pathspec;
- 	struct submodule_update_clone suc = SUBMODULE_UPDATE_CLONE_INIT;
++	int i;
++	struct strbuf sb = STRBUF_INIT;
  
-@@ -1742,7 +1769,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "depth", &suc.depth, "<depth>",
- 			   N_("Create a shallow clone truncated to the "
- 			      "specified number of revisions")),
--		OPT_INTEGER('j', "jobs", &max_jobs,
-+		OPT_INTEGER('j', "jobs", &suc.max_jobs,
- 			    N_("parallel jobs")),
- 		OPT_BOOL(0, "recommend-shallow", &suc.recommend_shallow,
- 			    N_("whether the initial clone should follow the shallow recommendation")),
-@@ -1758,8 +1785,8 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	};
- 	suc.prefix = prefix;
+ 	run_processes_parallel(suc->max_jobs,
+ 			       update_clone_get_next_task,
+@@ -1739,9 +1749,16 @@ static int update_submodules(struct submodule_update_clone *suc)
+ 	if (suc->quickstop)
+ 		return 1;
  
--	update_clone_config_from_gitmodules(&max_jobs);
--	git_config(git_update_clone_config, &max_jobs);
-+	update_clone_config_from_gitmodules(&suc.max_jobs);
-+	git_config(git_update_clone_config, &suc.max_jobs);
- 
- 	argc = parse_options(argc, argv, prefix, module_update_clone_options,
- 			     git_submodule_helper_usage, 0);
-@@ -1774,27 +1801,7 @@ static int update_clone(int argc, const char **argv, const char *prefix)
- 	if (pathspec.nr)
- 		suc.warn_if_uninitialized = 1;
- 
--	run_processes_parallel(max_jobs,
--			       update_clone_get_next_task,
--			       update_clone_start_failure,
--			       update_clone_task_finished,
--			       &suc);
--
--	/*
--	 * We saved the output and put it out all at once now.
--	 * That means:
--	 * - the listener does not have to interleave their (checkout)
--	 *   work with our fetching.  The writes involved in a
--	 *   checkout involve more straightforward sequential I/O.
--	 * - the listener can avoid doing any work if fetching failed.
--	 */
--	if (suc.quickstop)
--		return 1;
--
--	for_each_string_list_item(item, &suc.projectlines)
+-	for_each_string_list_item(item, &suc->projectlines)
 -		fprintf(stdout, "%s", item->string);
--
--	return 0;
-+	return update_submodules(&suc);
++	for (i = 0; i < suc->update_clone_nr; i++) {
++		strbuf_addf(&sb, "dummy %s %d\t%s\n",
++			oid_to_hex(&suc->update_clone[i].oid),
++			suc->update_clone[i].just_cloned,
++			suc->update_clone[i].sub->path);
++		fprintf(stdout, "%s", sb.buf);
++		strbuf_reset(&sb);
++	}
+ 
++	strbuf_release(&sb);
+ 	return 0;
  }
  
- static int resolve_relative_path(int argc, const char **argv, const char *prefix)
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
