@@ -2,104 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB72A1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 18:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 00F791F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 18:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729029AbeHMUzJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 16:55:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53188 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728547AbeHMUzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 16:55:09 -0400
-Received: (qmail 9788 invoked by uid 109); 13 Aug 2018 18:11:51 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Aug 2018 18:11:51 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10831 invoked by uid 111); 13 Aug 2018 18:11:54 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 13 Aug 2018 14:11:54 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2018 14:11:49 -0400
-Date:   Mon, 13 Aug 2018 14:11:49 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        SZEDER Gabor <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4 1/7] Add delta-islands.{c,h}
-Message-ID: <20180813181149.GA10013@sigill.intra.peff.net>
-References: <20180812051151.6425-1-chriscool@tuxfamily.org>
- <20180812051151.6425-2-chriscool@tuxfamily.org>
- <2113c74c-b230-6ea1-a980-d6d008bac759@ramsayjones.plus.com>
- <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com>
- <7a780fe9-e8bf-804a-82e6-8df81cd5c41c@ramsayjones.plus.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7a780fe9-e8bf-804a-82e6-8df81cd5c41c@ramsayjones.plus.com>
+        id S1729152AbeHMU6I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 16:58:08 -0400
+Received: from mail-ua1-f74.google.com ([209.85.222.74]:36986 "EHLO
+        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728547AbeHMU6I (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 16:58:08 -0400
+Received: by mail-ua1-f74.google.com with SMTP id w15-v6so7908433uao.4
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 11:14:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=2j5SO5c+Y/Rd+v+qhdY4nSwJXkYgN9gwpPub47TkX8s=;
+        b=kgPeEYSPVvGQXG2qq3BNB4Lra+DrmwmnidrwIiMjD9ElijWnGfVZZfAyr11dhGhN8v
+         2BcKyEGlTIF4kkycTvzSKOzCIaprKhZ0AnZ5NlJLOMe47ZfcPJ//+7WiS6Ma/UWjrnui
+         jOIAkGD7BjQAcoyeLmAlS5zc5C803S2xopcpMVYl5pozbmzxAlw07gEzq2TviTNOS/+B
+         lcftx3HCL8rCLbYTKCAgjHwO73sQ8/sJwTPFS6Y9STGkEJPwxMCNHcZ0xldGinJMVgBy
+         UxSW2WVAEfJQgexLOyJF0U4IFB96XPY2jrRmhyMHuyZyOsWiRy1HuzhV2tkQMyN4YHUW
+         IC9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=2j5SO5c+Y/Rd+v+qhdY4nSwJXkYgN9gwpPub47TkX8s=;
+        b=WkRn56ml252gEZNZ/NGYNILNAxcbsEFzjPqAot15HGG5VFGej6GJHFEXjJdzDcjltz
+         mkRZBkzWnn1XZZYo3GSRfkZsFvCB78c1MQ0cOa5qvrNRGRFq/wRpzezH+ytLbewjwdH5
+         ekApcF4DxU3xS1B7t+vTG94VbMR8voYPrETjxD5aJXXGRApncrK5wf2oqYwGYp5r42IE
+         jl41vSGhtYijspla04hoLuRG8KI3B77niOn7CBsCeEQIbgGM9GnDtLoqrdWX4FzdMctd
+         mKRH31Y4BHH6wiJkl6jR+g4hTTfANmatkHKQnOwAz/2wZLfmAK4K1O/qn3tifQ4hjbLc
+         e8Jw==
+X-Gm-Message-State: AOUpUlHqEDhnfb4qZNuYogdQ6emO8WgG0lsPnZHQqwKCrNVBxqVpbqxt
+        9WGoPb6YZ243i3vWp4rkT7FZH6IkRoBoESNmtULH0qj4DjjJhnZONbB1KHNvLIBJSt1kaObTWvm
+        JOKM4DGEQBpN0II+Dgd69Pj4v9S8DDUsFtyKL+JKu/5gXf5gDOI8yEBIPppc=
+X-Google-Smtp-Source: AA+uWPyL0yybu9PvK/fnnVJPfoET9hvP4N7ATArIQ9VIYhk3EAJNx+OsEOePGB2H4r+iEjzWD/oprCABRZ8s
+X-Received: by 2002:a1f:1e55:: with SMTP id e82-v6mr10353172vke.84.1534184088906;
+ Mon, 13 Aug 2018 11:14:48 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 11:14:27 -0700
+In-Reply-To: <cover.1533854545.git.matvore@google.com>
+Message-Id: <cover.1534183648.git.matvore@google.com>
+Mime-Version: 1.0
+References: <cover.1533854545.git.matvore@google.com>
+X-Mailer: git-send-email 2.18.0.597.ga71716f1ad-goog
+Subject: [PATCH v3 0/5] filter: support for excluding all trees and blobs
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, git@jeffhostetler.com,
+        jeffhost@microsoft.com, peff@peff.net, stefanbeller@gmail.com,
+        jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 01:17:18PM +0100, Ramsay Jones wrote:
+Applied the following changes suggested by git@jeffhostetler.com:
+ - Change the filter name from tree:none to tree:0 to make room for
+   future improvements which allow filtering based on depth.
+ - Made a separate filter logic function and filter data struct for
+   tree:0 rather than share it with blob:none. I would usually prefer
+   making the code less redundant whenever possible, but since there
+   are plans to extend this in the future, it makes more sense to have
+   this separate.
 
-> >>> +struct island_bitmap {
-> >>> +     uint32_t refcount;
-> >>> +     uint32_t bits[];
-> >>
-> >> Use FLEX_ARRAY here? We are slowly moving toward requiring
-> >> certain C99 features, but I can't remember a flex array
-> >> weather-balloon patch.
-> > 
-> > This was already discussed by Junio and Peff there:
-> > 
-> > https://public-inbox.org/git/20180727130229.GB18599@sigill.intra.peff.net/
-> > 
-> 
-> That is a fine discussion, without a firm conclusion, but I don't
-> think you can simply do nothing here:
-> 
->   $ cat -n junk.c
->        1	#include <stdint.h>
->        2	
->        3	struct island_bitmap {
->        4		uint32_t refcount;
->        5		uint32_t bits[];
->        6	};
->        7	
->   $ gcc --std=c89 --pedantic -c junk.c
->   junk.c:5:11: warning: ISO C90 does not support flexible array members [-Wpedantic]
->     uint32_t bits[];
->              ^~~~
->   $ gcc --std=c99 --pedantic -c junk.c
+Matthew DeVore (5):
+  list-objects: store common func args in struct
+  list-objects: refactor to process_tree_contents
+  rev-list: handle missing tree objects properly
+  revision: mark non-user-given objects instead
+  list-objects-filter: implement filter tree:0
 
-Right, whether we use the FLEX_ALLOC macros or not, this needs to be
-declared with FLEX_ARRAY, not an empty "[]".
+ Documentation/rev-list-options.txt     |   3 +
+ builtin/rev-list.c                     |  10 +-
+ list-objects-filter-options.c          |   4 +
+ list-objects-filter-options.h          |   1 +
+ list-objects-filter.c                  |  50 ++++++
+ list-objects.c                         | 236 +++++++++++++------------
+ revision.c                             |   1 -
+ revision.h                             |  10 +-
+ t/t5317-pack-objects-filter-objects.sh |  40 +++++
+ t/t5616-partial-clone.sh               |  27 +++
+ t/t6112-rev-list-filters-objects.sh    |  13 ++
+ 11 files changed, 274 insertions(+), 121 deletions(-)
 
-I'm fine either way on using the FLEX_ALLOC macros.
+-- 
+2.18.0.597.ga71716f1ad-goog
 
-> >> ... Ah, OK, trg_ => target.
-> > 
-> > I am ok to replace "trg" with "target" (or maybe "dst"? or something
-> > else) and "src" with "source" if you think it would make things
-> > clearer.
-> 
-> If it had been dst_ (or target), I would not have had a 'huh?'
-> moment, but it is not all that important.
-
-FWIW, these are all inherited from try_delta(), etc, in the existing
-code. I'm fine with using another term, but we should probably do it
-universally. And if we do, probably "base" is a better name than "src",
-since the direction depends on which part of the relationship you are
-considering. I'm not sure what that makes "dst".
-
--Peff
