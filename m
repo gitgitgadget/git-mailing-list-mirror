@@ -2,117 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44D7E1F428
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9FC91F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:53:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729335AbeHMOdb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:33:31 -0400
-Received: from mout.gmx.net ([212.227.15.18]:44717 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728055AbeHMOdb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:33:31 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LjrDd-1gQS4m2U0X-00bue1; Mon, 13
- Aug 2018 13:51:29 +0200
-Date:   Mon, 13 Aug 2018 13:51:35 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Stefan Beller <sbeller@google.com>
-cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 3/4] range-diff: make use of different output
- indicators
-In-Reply-To: <20180810224923.143625-4-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808131348120.71@tvgsbejvaqbjf.bet>
-References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-4-sbeller@google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729596AbeHMOfN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:35:13 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41023 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729333AbeHMOfN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:35:13 -0400
+Received: by mail-ed1-f65.google.com with SMTP id s24-v6so8079468edr.8
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:53:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WwPL2CpDO14+FZyRWK58c6XIdkPBo1mldt0A6/+vric=;
+        b=tFsGjhlNWCFsMByhWg5PJjpr2WZKGup1LXPbfZlrQ2Z/mnf0vAWkQr45NToNerq36m
+         gwD9Q5u76/3LlEcqZ1c7abLw+3XikSyuZiTXiXHSAho+6suW6aZhIoTNWSrDuJOxF3CR
+         8PCEK+di9mJJt7G5crgewNX28xM1PGVlus8vpgjDiWRMwY6zgaIuyza/HkUByp57N2pw
+         do+XQYqL6/vgwICsmRh/lZX8mTFZh6zCxlxXWCrhvK3oJpJllNoVhzuriEovrr+6PyO+
+         ZjkfWIA/jUsk5ka2ohoAEHZfDWhnToat4SlIz3lVr2ReqvO99LIwFUR/pi9cPUIpEgwE
+         NUlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WwPL2CpDO14+FZyRWK58c6XIdkPBo1mldt0A6/+vric=;
+        b=VRBihYbE7rWKO+JUu5xQpMdX7av8GdjOcYctEJWPe34KxZ/2ho1gar9uTi7Qh+70re
+         EYDUSTgyWM7fR2BASY4hbh+Vksvdt/IKxkEVWnfDLleH949w+CCcydVXA/XgLo7yB8Gw
+         HN0tdEWGQUgWaczK3zk2yon7doxglrxoZ4RRDmtkA8jRDdA0YmAPTMdNdIU1txdoZzkL
+         P8ZBqmVzYCIn8xSIL3SR4tjwpy9/k7uNstbOoWJQ1nhmD9pNvZOm60MGI4G/h7ku7IQ3
+         gnxfExAWlUMD1lwd/bXDT1I+LRF9QJz/3oSS5jjoQh+ryG7bcCo5HUse602ug1IPMWbA
+         AHQQ==
+X-Gm-Message-State: AOUpUlEJktmP6tlbv4+g9xjICYcvjyWDLHGA+TQTaE+77vWBBM644ZD9
+        enQkxF5ixVtRvRz51t+3By0=
+X-Google-Smtp-Source: AA+uWPypDKQr40M09bpTpYoLD3gfLRrwFQ2s296is993SOgFhS8wlHQA+rKINTBj2w2H+g2v3fojdw==
+X-Received: by 2002:a50:8345:: with SMTP id 63-v6mr21373473edh.5.1534161195064;
+        Mon, 13 Aug 2018 04:53:15 -0700 (PDT)
+Received: from localhost.localdomain (x4db0576d.dyn.telefonica.de. [77.176.87.109])
+        by smtp.gmail.com with ESMTPSA id h34-v6sm9904030eda.58.2018.08.13.04.53.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 13 Aug 2018 04:53:14 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH v2] t5318: use 'test_cmp_bin' to compare commit-graph files
+Date:   Mon, 13 Aug 2018 13:52:43 +0200
+Message-Id: <20180813115243.28295-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.18.0.408.g42635c01bc
+In-Reply-To: <CAM0VKjmhnMfND8HwAvLChgZ6iFYuHUpD=C=3sqjkF9GUsLjpVQ@mail.gmail.com>
+References: <CAM0VKjmhnMfND8HwAvLChgZ6iFYuHUpD=C=3sqjkF9GUsLjpVQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:EaASESb13Pa5C1BV7wBsupr8eb79q18ZzTsAZ18vEdyNj9y1Ehc
- LaerOVXr6U4WWfO+aKz881QHUBLA3EOsWfTBMqqHL1Q/yClq1lrFPErjhRs1JfGL/van8Um
- lPBCE+WdBzVTyXy4GoY0zkDMvnwlI5cIaUGjkoViJJe72346vt7XpIcCA8LWnd4ERjJs+p1
- Xx047SS8h5EBIfpoKK2YQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fUw5JFP+hUc=:ArDG7SjpNqXEW8CVO4V4N6
- G0NXeJv5ipKz7xymHNaHK3Ko3WapXGrypVVTILHS9mNb+Q8UxSr1KSUnROLB6QgwI9/5d4vwt
- Q9PXMsyG72NfdR8P3QqL1xbZxk12tu1GqZ01sczF7TmzFOH0k6o9A250R2yB73/7uh+uEnH+J
- 9ZOpHNHcl+tFQEehVmsQHA2y4ZdFwyuYhDDPK/G2TmkFl22B/zc3ptvtrreTtQIAurYBs1YQJ
- 8veI4wvNSuFzpHetHfmA5046X1aKxW59rWhaYSAe/Xr6QwFH2pNTEQ7AEpJ4mJajWd2+j6TwJ
- SwFD+Z91Kzx583Q/MTAxyXUgzZFWpfkhaWhuOLlmMoeFz81z4ur9mPz/MU7oPyNjY0PFdo52w
- VXswzoNy4WIYNR18wEfCAv1AxBgj1P0RyUxlKh/ZjVqy/oL2SBi6pZfKXCQfMfnUt9vFkLQFE
- TdXoy1Kri5plzny3zUT6RCRsCc1zxs/R0tTcUK035g9TfHZMRcCN1FGChqTuVeqlqtekINbIJ
- o6wGszdZOFgLMattBs8ZEzJuBz1rxNLAR+lMKJN4RIba9ZVqhYyES2+Dy0ITBAm5iTS+bSP73
- GtIYWhal3qvoe5v1vSB8Y4YHJnwi9KB8qmEWfGadBoWaWvjtEh/cSo0yBsqtV4iF3PYr9RIQP
- y59DA2paeYTUPKXuitnCWjQ6P5JRvMTKZUVTBhef5sCehKFqDihpNqins71jHJH+JaY9CJcG9
- Hxx5G2nv2ddo1suBM86t3XfVYRfE+bTHw0zvChGg5k8gyM1hobf0VFC8JQBY4FYBrpUULIWz3
- HNBoqgV
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+The commit-graph files are binary files, so they should not be
+compared with 'test_cmp', because that might cause issues like
+crashing[1] or infinite loop[2] on Windows, where 'test_cmp' is a
+shell function to deal with random LF-CRLF conversions[3].
 
-On Fri, 10 Aug 2018, Stefan Beller wrote:
+Use 'test_cmp_bin' instead.
 
-> This change itself only changes the internal communication and should
-> have no visible effect to the user. We instruct the diff code that produces
-> the inner diffs to use X, Y, Z instead of the usual markers for new, old
-> and context lines
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  range-diff.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/range-diff.c b/range-diff.c
-> index b6b9abac266..6e4192c8e79 100644
-> --- a/range-diff.c
-> +++ b/range-diff.c
-> @@ -38,6 +38,9 @@ static int read_patches(const char *range, struct string_list *list)
->  
->  	argv_array_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
->  			"--reverse", "--date-order", "--decorate=no",
-> +			"--output-indicator-new=X",
-> +			"--output-indicator-old=Y",
-> +			"--output-indicator-context=Z",
->  			"--no-abbrev-commit", range,
->  			NULL);
->  	cp.out = -1;
-> @@ -108,8 +111,18 @@ static int read_patches(const char *range, struct string_list *list)
->  			 * we are not interested.
->  			 */
->  			continue;
-> -		else
-> +		else if (line.buf[0] == 'X') {
-> +			strbuf_addch(&buf, '+');
-> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> +		} else if (line.buf[0] == 'Y') {
-> +			strbuf_addch(&buf, '-');
-> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> +		} else if (line.buf[0] == 'Z') {
-> +			strbuf_addch(&buf, ' ');
-> +			strbuf_add(&buf, line.buf + 1, line.len - 1);
-> +		} else {
->  			strbuf_addbuf(&buf, &line);
-> +		}
+1 - b93e6e3663 (t5000, t5003: do not use test_cmp to compare binary
+    files, 2014-06-04)
+2 - f9f3851b4d (t9300: use test_cmp_bin instead of test_cmp to compare
+    binary files, 2014-09-12)
+3 - 4d715ac05c (Windows: a test_cmp that is agnostic to random LF <>
+    CRLF conversions, 2013-10-26)
 
-My preliminary reading (I sadly lack the time to pull your branch and play
-with it) suggests that this works, although I have to admit that X/Y/Z
-would confuse me in 6 months from now, as they do not really read like
-diff markers but like plain text. I could imagine that '>', '<' and '#'
-would not impart that confusion on me.
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
 
-Ciao,
-Dscho
+Same diff, updated commit message, including Derrick's Reviewed-by.
 
->  
->  		strbuf_addch(&buf, '\n');
->  		util->diffsize++;
-> -- 
-> 2.18.0.865.gffc8e1a3cd6-goog
-> 
-> 
+ t/t5318-commit-graph.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 4f17d7701e..1c148ebf21 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -254,9 +254,9 @@ test_expect_success 'check that gc computes commit-graph' '
+ 	git config gc.writeCommitGraph true &&
+ 	git gc &&
+ 	cp $objdir/info/commit-graph commit-graph-after-gc &&
+-	! test_cmp commit-graph-before-gc commit-graph-after-gc &&
++	! test_cmp_bin commit-graph-before-gc commit-graph-after-gc &&
+ 	git commit-graph write --reachable &&
+-	test_cmp commit-graph-after-gc $objdir/info/commit-graph
++	test_cmp_bin commit-graph-after-gc $objdir/info/commit-graph
+ '
+ 
+ # the verify tests below expect the commit-graph to contain
+-- 
+2.18.0.408.g42635c01bc
+
