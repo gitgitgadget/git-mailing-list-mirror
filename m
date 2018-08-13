@@ -7,178 +7,164 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 473201F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:42:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A86CF1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728640AbeHMOY2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:24:28 -0400
-Received: from mout.gmx.net ([212.227.17.22]:56537 "EHLO mout.gmx.net"
+        id S1729138AbeHMO27 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:28:59 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50045 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728369AbeHMOY1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:24:27 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MNO33-1fmiPE0xsP-006yt2; Mon, 13
- Aug 2018 13:42:29 +0200
-Date:   Mon, 13 Aug 2018 13:42:34 +0200 (DST)
+        id S1729110AbeHMO27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:28:59 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfEsY-1fVs2T0idu-00OlaU; Mon, 13
+ Aug 2018 13:46:59 +0200
+Date:   Mon, 13 Aug 2018 13:47:05 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
 cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 1/4] diff.c: emit_line_0 to take string instead of first
- sign
-In-Reply-To: <20180810224923.143625-2-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808131340420.71@tvgsbejvaqbjf.bet>
-References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-2-sbeller@google.com>
+Subject: Re: [PATCH 2/4] diff.c: add --output-indicator-{new, old, context}
+In-Reply-To: <20180810224923.143625-3-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131343310.71@tvgsbejvaqbjf.bet>
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-3-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:j58ixkf0x6iwrqd6tytJmvXwc6UUEK2wQN+elKq7xAikgEOiDoE
- ubeueyaWWAeKb/moThfrMucIvRfsxTdFRFqnEnZc8jJ2YGH4wArv4mOBOMQBwVDpqeNWEps
- caWufJbQSSFd5oObmjAuPyzkyUCs/ucDz7ko4KEEJItCvLWE4SRRKfuPP7i16xxtzRq8oUA
- 7k1coTBlsdq6a62k66qRA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:1ZZl5yCf7CU=:0BzdbwvMVq23M2sWk2vU6n
- ouPdXpr/eJWjnShq9iKLdLIuZFejpYPb6hgHlkzj3Qu5BPbmCEvq9fp4RTtjaJS0uPaLTAPRY
- 3tapQE4x3VXDtMTmoXzYnpX7VAExAaU2ixNYx740CiZbZCRik/DG1jKBKlGxYiqZhA3FA5/1y
- 8IyQKkSCSfwFF6GHimYDnxZbBTQzGj8B/4CnOvbGKySlAotXSbvyJN0N7Aoe/Jbek4Gou4yZl
- w33mVQ7eVp0ep0+klEuiHCFVF5I61tMiN0eq67f7i0N/8jcPkz6mqrK0ktOPqatXi1h5bOQhB
- Wq9JgxEfDQYCEXZLXPIV4PSsErI+YI0kfIXHZ4052j284MCIUd1nmmsG7AgdGMPQYnW6C6zYS
- FiFAzxfRCxUEkpdjoQgkcLlI78jmcBIvuj1AikaNMyx31X/+ogBjyEymYz8ZldVjD3FPV2Wwk
- wT42qtHg/zCJAJNp7HMsVUiNSh2HW6ZOEfppI3DlPalyiUi/n3GNwsY5nN8XeTQeW7wpyVQ5i
- sVsN9eh1MfRbj+bktxJ8CUC/Y4W7mX6WVW7qKBN9coaMUEuOnoIXwxsucC5xiAAsLT6BPU8cX
- wnoU4/Y1zdjNXIikCgReVz2+yy1Gw0hdhk6RCtXMfG2nOaTDIWutANKULw5UENkNKl2qQVGcn
- cCmQJf/etWmS3kzykZFQR/G2nLGvY0cRHoXKrX93jfmzmq1vpAMKiT2QC3rkhL9WNB9uoxpOm
- uACHxOKLxH1FcHGluX3h6f0qqSBu41gt5oapyg6iGFyxrcNBO7clQseFJJsp3ZLojAnplbuaZ
- aCGQr9M
+X-Provags-ID: V03:K1:gLciR76VPvPvsK09H+fDcPjH5b3CKsi3yOHneDBjMgA1o2xMaBp
+ tOK/Z4XWN2HkY0aDOj7xdGsW6QiMAyV7oV/CaklvBHFhVSyV2eCOhuC6J5tzR0B17TEWuID
+ rJgLzfjej7xqSQhrRxQokPBoLv2Ta4Fk+LMCHYQ7qQv4jRgHDnJehGdUAnZpopyBGCET21y
+ 6L5xYJuBvreymNLnngbqQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:pMFhgH318Jo=:W+C4TKKiluYUglAhORa+7U
+ 6RRcQqmaJHkZAuy7mteS3kitUbvxs6HPoI+cxAGjNaDGKhl718+wMXm7htHuyEojWttd3CIfL
+ H98QXhF5Gp9xxBA5ECtxscKAzuctNVOLrisk8wNIqjHKU39WusmWp3BzyV1dVFEuEgoy/9ffR
+ L4TEvYqGh5gLbYxTanVOeDZJwwd465JUEdXMrDAtJhoTmfmfgg0un7eV0RmAkvBGBnR/5Bgxa
+ OVdMHkKnNLWVgwIIND2/Nl61gnEqrrTKa2AghpM8G4OqOYh7eNNwgE3FWEVxHa2h6Lq7K/dpK
+ R/ITp6AVOuHQI8nT7vQCYTAsYm8a71ZesjpB+15+HYSJ1S9sqqiBtCK8wRvTTLtDvKgaijHpt
+ 9EPfiYmaZE+yQffQ4fw4Qj3bzXu7wcoeKO1/vuG4gfFAwF/zsNG14kTkvuCOR/Es0lBK7g8BD
+ d8UQ6mvLa2mZ8St6MxcFM+Nxm/DJFqCYQ5HDkI7nZPKaf4odBG3CZi+V4OSD/TMokn+2IouAh
+ rF+ohyh7v6QDNiO/4bWaQ0FyN8c6J3kM6ERjBR7Y+8q8K7CrH+WIsd6V1QFauQc7oRRJSUHzy
+ fmWWjeaMPk3ZMu2gGbvh25EC57FP+vPU287bmWiGTzcndv3xw3n8UkFRUsTqPIZzpIHfPyBJX
+ v0xkQw+sBgjD/zOCFaPKSQKVl6g8eCxpCLNiPkN6BbFvNniiH1xjPUxx3nwfCIpNrZ9doimTd
+ xLkTm/Yfedv8ADOXnBNyEHbdah9b+5/PpY8PmeDFNiEC8JmgYHFRNXT0Kkd7OzFnshzMo15Kk
+ gqRvTwQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi Steafn,
 
 On Fri, 10 Aug 2018, Stefan Beller wrote:
 
-> By providing a string as the first part of the emission we can extend
-> it later more easily.
+> This will prove useful in range-diff in a later patch as we will be able to
+> differentiate between adding a new file (that line is starting with +++
+> and then the file name) and regular new lines.
 
-Thank you for working on this!
+Very good!
 
-> While at it, document emit_line_0.
+> It could also be useful for experimentation in new patch formats, i.e.
+> we could teach git to emit moved lines with lines other than +/-.
 > 
-> [...]
->  
-> +/*
-> + * Emits
-> + * <set_sign> <first> <reset> <set> <second> <reset> LF
-> + * if they are present. 'first' is a NULL terminated string,
-> + * 'second' is a buffer of length 'len'.
-> + */
-
-That does not make it clear what the role of `first` or `second` is. Could
-you clarify that?
-
-(TBH I am not so sure myself what roles they serve. Previously, it was
-kind of obvious to me that `first` tried to specify the diff marker, if
-any. But now...?)
-
-The rest looks good to me.
-
-Thanks,
-Dscho
-
->  static void emit_line_0(struct diff_options *o,
->  			const char *set_sign, const char *set, const char *reset,
-> -			int first, const char *line, int len)
-> +			const char *first, const char *second, int len)
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  diff.c | 21 +++++++++++++++++----
+>  diff.h |  5 +++++
+>  2 files changed, 22 insertions(+), 4 deletions(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index b3cb73eb69a..b75eb085cb3 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1237,7 +1237,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  					 struct emitted_diff_symbol *eds)
 >  {
->  	int has_trailing_newline, has_trailing_carriage_return;
->  	int reverse = !!set && !!set_sign;
-> @@ -633,11 +639,11 @@ static void emit_line_0(struct diff_options *o,
+>  	static const char *nneof = " No newline at end of file\n";
+> -	const char *context, *reset, *set, *set_sign, *meta, *fraginfo;
+> +	const char *context, *reset, *set, *set_sign, *meta, *fraginfo, *first;
+>  	struct strbuf sb = STRBUF_INIT;
 >  
->  	fputs(diff_line_prefix(o), file);
->  
-> -	has_trailing_newline = (len > 0 && line[len-1] == '\n');
-> +	has_trailing_newline = (len > 0 && second[len-1] == '\n');
->  	if (has_trailing_newline)
->  		len--;
->  
-> -	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-> +	has_trailing_carriage_return = (len > 0 && second[len-1] == '\r');
->  	if (has_trailing_carriage_return)
->  		len--;
->  
-> @@ -655,7 +661,7 @@ static void emit_line_0(struct diff_options *o,
->  	}
->  
->  	if (first)
-> -		fputc(first, file);
-> +		fputs(first, file);
->  
->  	if (!len)
->  		goto end_of_line;
-> @@ -666,7 +672,7 @@ static void emit_line_0(struct diff_options *o,
->  		fputs(set, file);
->  		needs_reset = 1;
->  	}
-> -	fwrite(line, len, 1, file);
-> +	fwrite(second, len, 1, file);
->  	needs_reset |= len > 0;
->  
->  end_of_line:
-> @@ -681,7 +687,7 @@ static void emit_line_0(struct diff_options *o,
->  static void emit_line(struct diff_options *o, const char *set, const char *reset,
->  		      const char *line, int len)
->  {
-> -	emit_line_0(o, set, NULL, reset, 0, line, len);
-> +	emit_line_0(o, set, NULL, reset, NULL, line, len);
->  }
->  
->  enum diff_symbol {
-> @@ -1201,7 +1207,7 @@ static void dim_moved_lines(struct diff_options *o)
->  static void emit_line_ws_markup(struct diff_options *o,
->  				const char *set_sign, const char *set,
->  				const char *reset,
-> -				char sign, const char *line, int len,
-> +				const char *sign, const char *line, int len,
->  				unsigned ws_rule, int blank_at_eof)
->  {
->  	const char *ws = NULL;
-> @@ -1244,7 +1250,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
->  		context = diff_get_color_opt(o, DIFF_CONTEXT);
->  		reset = diff_get_color_opt(o, DIFF_RESET);
->  		putc('\n', o->file);
-> -		emit_line_0(o, context, NULL, reset, '\\',
-> +		emit_line_0(o, context, NULL, reset, "\\",
->  			    nneof, strlen(nneof));
->  		break;
->  	case DIFF_SYMBOL_SUBMODULE_HEADER:
-> @@ -1282,7 +1288,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  	enum diff_symbol s = eds->s;
+> @@ -1288,7 +1288,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
 >  			else if (c == '-')
 >  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
 >  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
-> +		emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
+> -		emit_line_ws_markup(o, set_sign, set, reset, " ", line, len,
+> +		first = o->output_indicators[OI_CONTEXT] ?
+> +			o->output_indicators[OI_CONTEXT] : " ";
+> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
+
+Instead of doing this over and over again, how about
+
+1) setting o->output_indicators to " " in diff_setup()?
+
+2) passing OI_CONTEXT to emit_line_ws_markup() instead of `first`? I.e.
+   change it to the index in the output_indicators, with -1 indicating
+   "none"?
+
 >  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
 >  		break;
 >  	case DIFF_SYMBOL_PLUS:
-> @@ -1325,7 +1331,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+> @@ -1331,7 +1333,10 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
 >  				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
 >  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
 >  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, '+', line, len,
-> +		emit_line_ws_markup(o, set_sign, set, reset, "+", line, len,
+> -		emit_line_ws_markup(o, set_sign, set, reset, "+", line, len,
+> +
+> +		first = o->output_indicators[OI_NEW] ?
+> +			o->output_indicators[OI_NEW] : "+";
+> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
 >  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
 >  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
 >  		break;
-> @@ -1368,7 +1374,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+> @@ -1374,7 +1379,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
 >  			else
 >  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
 >  		}
-> -		emit_line_ws_markup(o, set_sign, set, reset, '-', line, len,
-> +		emit_line_ws_markup(o, set_sign, set, reset, "-", line, len,
+> -		emit_line_ws_markup(o, set_sign, set, reset, "-", line, len,
+> +		first = o->output_indicators[OI_OLD] ?
+> +			o->output_indicators[OI_OLD] : "-";
+> +		emit_line_ws_markup(o, set_sign, set, reset, first, line, len,
 >  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
 >  		break;
 >  	case DIFF_SYMBOL_WORDS_PORCELAIN:
+> @@ -4876,6 +4883,12 @@ int diff_opt_parse(struct diff_options *options,
+>  		 options->output_format |= DIFF_FORMAT_DIFFSTAT;
+>  	} else if (!strcmp(arg, "--no-compact-summary"))
+>  		 options->flags.stat_with_summary = 0;
+> +	else if (skip_prefix(arg, "--output-indicator-new=", &arg))
+> +		options->output_indicators[OI_NEW] = arg;
+> +	else if (skip_prefix(arg, "--output-indicator-old=", &arg))
+> +		options->output_indicators[OI_OLD] = arg;
+> +	else if (skip_prefix(arg, "--output-indicator-context=", &arg))
+> +		options->output_indicators[OI_CONTEXT] = arg;
+>  
+>  	/* renames options */
+>  	else if (starts_with(arg, "-B") ||
+> diff --git a/diff.h b/diff.h
+> index e1e54256c18..2d4097df1c7 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -194,6 +194,11 @@ struct diff_options {
+>  	FILE *file;
+>  	int close_file;
+>  
+> +#define OI_NEW 0
+> +#define OI_OLD 1
+> +#define OI_CONTEXT 2
+
+I could imagine that OI_* is too generic a prefix, and that we would want
+to have a prefix that is less prone to collide with other global
+constants, such as OUTPUT_INDICATOR_*.
+
+Ciao,
+Dscho
+
+> +	const char *output_indicators[3];
+> +
+>  	struct pathspec pathspec;
+>  	pathchange_fn_t pathchange;
+>  	change_fn_t change;
 > -- 
 > 2.18.0.865.gffc8e1a3cd6-goog
 > 
