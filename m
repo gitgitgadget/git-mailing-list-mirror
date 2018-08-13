@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 28BBB1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id CBA4C1F404
 	for <e@80x24.org>; Mon, 13 Aug 2018 11:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729385AbeHMOPW (ORCPT <rfc822;e@80x24.org>);
+        id S1729389AbeHMOPX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:15:23 -0400
+Received: from mail-pl0-f45.google.com ([209.85.160.45]:44121 "EHLO
+        mail-pl0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729369AbeHMOPW (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Aug 2018 10:15:22 -0400
-Received: from mail-pl0-f44.google.com ([209.85.160.44]:36318 "EHLO
-        mail-pl0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729288AbeHMOPV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:15:21 -0400
-Received: by mail-pl0-f44.google.com with SMTP id e11-v6so6775069plb.3
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:28 -0700 (PDT)
+Received: by mail-pl0-f45.google.com with SMTP id ba4-v6so6767479plb.11
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=13JgL+1xNJBnl/+1o0JsJAz5AVIePBak9PgoCrL4S90=;
-        b=eYumpnJ2/0w1NVPSIqqkQtD60oVzpMecZT0jZr5ksx32tO/axkP0mr8g5SMZB5umP/
-         ItR0ftktTML5AYYByT1Em3nLNsYy1udKx840Dd2VQqYY6XVXATsShJX04+2dy0zjS/oK
-         vOCBco0PnVqeWY0phAO3lg3rGe+aiqwYXTNagVsnNVmTfn6iUZMu34pW5/6OtzrFjwe7
-         dMgD7FfGywP1NPlZb1hAS6r5vkjUnncz6765n1F9dsDeBqAd8TgOlm9MtmZX4ozuP05/
-         AHdgd8HAJvY7LoxTGsnqjbOkbAb+hZuETX3r204UFhjfgouNopmYmUzUcNO3yvR0x65L
-         v8ug==
+        bh=lHzzfZ8VMPcrUk1+h3rhdw/7G97WHjeDoH+G9YKYg00=;
+        b=nr02/T+b6DfMrrDvCh6y4pUWMIxXUADkkZY70+azCNMiarIpbxPEaKQMlKpsjdw2Se
+         N9Yipd5dcB1mCMcL5krPY4vEdag1c+jt9xLulPPSQRNd436DuO/IAkG2MLmhrcT6YjH6
+         bfOuGwfoFRuiFPcEE9lWdFbQtXTnSVayhTENME15B+a5t+f4ANYNaVk0V80rcpTxFKit
+         /prPz95QRLz4+KW19UKzUneRpYwc+ZYZmAShbefaBmGRV2O6jnT01LucPeZI5oHv/KEP
+         Tnq1/8S9G0h74Bqx3LcjMLBuINwK5sBSVgr2xmiECCbevJFVeAmiFVI/X/++IfYjJyac
+         +zpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=13JgL+1xNJBnl/+1o0JsJAz5AVIePBak9PgoCrL4S90=;
-        b=FHiLDmjq7SLDj6m67Ixiwhqb8E2pmvKTtjvBUJM7DJec5XicE1xxvny8oIJRhTxXpX
-         f+p03rkg8v6BwhlXzzK5dbt0J1FftTcgDda2vTtp8TeD6d0HV3RlzcmGewGhYl5wE2mq
-         eYbrRn51nRfP+v7pRHFp+Ycpm4quRRj8ily7m3mx8v59iR5vfBTXdOYfWY8FNyq9ffLM
-         yHXGDiB2U8tfc3N5O5Xb74edFrJR7ADMszuY3lT/gHvkFSWOfKKM2F/ZSDL1i4sPxjqD
-         24YBdhR9Kqct7w9aOyf5Nk6R6uHmtzKCrhyQEd9v5xNu0HSlm0qio8jksZmahs8zgWq3
-         obAw==
-X-Gm-Message-State: AOUpUlGCQSvTXOcMRkhvSChKlBsjK0B+1bJIIOcTY3AaIWp5XWguSIJ9
-        sEq4cm071yjtLl31e3J96zk52C1I
-X-Google-Smtp-Source: AA+uWPxrzfgQC0eECWqLX6VL/mgVf3+3GCYmXpSmsLlkkqATZ8GygvsYpJvps/8uR9vmxsJlCwzOFA==
-X-Received: by 2002:a17:902:7c8e:: with SMTP id y14-v6mr16708303pll.265.1534160008248;
-        Mon, 13 Aug 2018 04:33:28 -0700 (PDT)
+        bh=lHzzfZ8VMPcrUk1+h3rhdw/7G97WHjeDoH+G9YKYg00=;
+        b=G+sgYaxL7UBTIRq80cfHMdN1n2IxWi4gj+BJS2RS0V4XTKh+w+xQ3xHdxcg54I9Z8h
+         xcYE87CA/ehri/sNMikmTg7B6K7Fobus9GlhrUWo78shcXwlINZm0dhP0oNNL4aXZ++N
+         0IkLrKE+FWxXGUndb7q5LtzzMaEpgj/ckvCv2F6EeErr/S3CSMEvfsY3HI34U46uL5h7
+         X8YAtAfe/UEnK2BUAK5/HEUQ69wF4+xqrexQJPwasKKKbNitUqPll38RRKCSdmEucc2l
+         FJ4RdVPNkT4At31KWiGaDOCM63BYKHS8CpnByhnoiNqsNCRqBZRpzYDV1rX45/eEF2y/
+         10IQ==
+X-Gm-Message-State: AOUpUlGgkqxGTMRK+ip/oWUAro9i/j7GV9Oc5kNl5CGSMhsL0Pvd5heg
+        5TG3r9i4WS1/bOErB7LCmKAttL5f
+X-Google-Smtp-Source: AA+uWPwPYnz1KYECKyNw5FhwYQB6K+tHX/0F8sM5ZzoTIruiSeeqaRO/qxnIlfmQPJqPXWkrGgBPyQ==
+X-Received: by 2002:a17:902:9b81:: with SMTP id y1-v6mr16160339plp.239.1534160009708;
+        Mon, 13 Aug 2018 04:33:29 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id g28-v6sm34837725pfe.41.2018.08.13.04.33.27
+        by smtp.gmail.com with ESMTPSA id g184-v6sm37287764pgc.22.2018.08.13.04.33.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 04:33:27 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 04:33:27 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 Aug 2018 11:32:53 GMT
-Message-Id: <16e3cf27b515ba94412c48b0f58059f1f30cc08d.1534159977.git.gitgitgadget@gmail.com>
+        Mon, 13 Aug 2018 04:33:28 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 04:33:28 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 Aug 2018 11:32:54 GMT
+Message-Id: <d9b09abcfd0b8ca51ad1f5bbc473a02139d48890.1534159977.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v6.git.gitgitgadget@gmail.com>
 References: <pull.1.v5.git.gitgitgadget@gmail.com>
         <pull.1.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 18/21] completion: support `git range-diff`
+Subject: [PATCH v6 19/21] range-diff: left-pad patch numbers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,41 +71,92 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Tab completion of `git range-diff` is very convenient, especially
-given that the revision arguments to specify the commit ranges to
-compare are typically more complex than, say, what is normally passed
-to `git log`.
+As pointed out by Elijah Newren, tbdiff has this neat little alignment
+trick where it outputs the commit pairs with patch numbers that are
+padded to the maximal patch number's width:
+
+	  1: cafedead =   1: acefade first patch
+	[...]
+	314: beefeada < 314: facecab up to PI!
+
+Let's do the same in range-diff, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- contrib/completion/git-completion.bash | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ range-diff.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 94c95516e..3d4ec3432 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1976,6 +1976,20 @@ _git_push ()
- 	__git_complete_remote_or_refspec
+diff --git a/range-diff.c b/range-diff.c
+index b1663da7c..b6b9abac2 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -259,6 +259,7 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
  }
  
-+_git_range_diff ()
-+{
-+	case "$cur" in
-+	--*)
-+		__gitcomp "
-+			--creation-factor= --dual-color
-+			$__git_diff_common_options
-+		"
-+		return
-+		;;
-+	esac
-+	__git_complete_revlist
-+}
-+
- _git_rebase ()
+ static void output_pair_header(struct diff_options *diffopt,
++			       int patch_no_width,
+ 			       struct strbuf *buf,
+ 			       struct strbuf *dashes,
+ 			       struct patch_util *a_util,
+@@ -295,9 +296,9 @@ static void output_pair_header(struct diff_options *diffopt,
+ 	strbuf_reset(buf);
+ 	strbuf_addstr(buf, status == '!' ? color_old : color);
+ 	if (!a_util)
+-		strbuf_addf(buf, "-:  %s ", dashes->buf);
++		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
+ 	else
+-		strbuf_addf(buf, "%d:  %s ", a_util->i + 1,
++		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
+ 			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
+ 
+ 	if (status == '!')
+@@ -307,9 +308,9 @@ static void output_pair_header(struct diff_options *diffopt,
+ 		strbuf_addf(buf, "%s%s", color_reset, color_new);
+ 
+ 	if (!b_util)
+-		strbuf_addf(buf, " -:  %s", dashes->buf);
++		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
+ 	else
+-		strbuf_addf(buf, " %d:  %s", b_util->i + 1,
++		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
+ 			    find_unique_abbrev(&b_util->oid, DEFAULT_ABBREV));
+ 
+ 	commit = lookup_commit_reference(the_repository, oid);
+@@ -357,6 +358,7 @@ static void output(struct string_list *a, struct string_list *b,
+ 		   struct diff_options *diffopt)
  {
- 	__git_find_repo_path
+ 	struct strbuf buf = STRBUF_INIT, dashes = STRBUF_INIT;
++	int patch_no_width = decimal_width(1 + (a->nr > b->nr ? a->nr : b->nr));
+ 	int i = 0, j = 0;
+ 
+ 	/*
+@@ -378,7 +380,7 @@ static void output(struct string_list *a, struct string_list *b,
+ 
+ 		/* Show unmatched LHS commit whose predecessors were shown. */
+ 		if (i < a->nr && a_util->matching < 0) {
+-			output_pair_header(diffopt,
++			output_pair_header(diffopt, patch_no_width,
+ 					   &buf, &dashes, a_util, NULL);
+ 			i++;
+ 			continue;
+@@ -386,7 +388,7 @@ static void output(struct string_list *a, struct string_list *b,
+ 
+ 		/* Show unmatched RHS commits. */
+ 		while (j < b->nr && b_util->matching < 0) {
+-			output_pair_header(diffopt,
++			output_pair_header(diffopt, patch_no_width,
+ 					   &buf, &dashes, NULL, b_util);
+ 			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+@@ -394,7 +396,7 @@ static void output(struct string_list *a, struct string_list *b,
+ 		/* Show matching LHS/RHS pair. */
+ 		if (j < b->nr) {
+ 			a_util = a->items[b_util->matching].util;
+-			output_pair_header(diffopt,
++			output_pair_header(diffopt, patch_no_width,
+ 					   &buf, &dashes, a_util, b_util);
+ 			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
+ 				patch_diff(a->items[b_util->matching].string,
 -- 
 gitgitgadget
 
