@@ -2,169 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDB431F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 12:17:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500C81F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 12:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729667AbeHMO7Y (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:59:24 -0400
-Received: from avasout06.plus.net ([212.159.14.18]:54675 "EHLO
-        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728509AbeHMO7Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:59:24 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id pBmhf13ixWLW2pBmifOJVm; Mon, 13 Aug 2018 13:17:20 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=PKzvZo6CAAAA:8 a=7n7QmUcq3Vq5-3k-fKMA:9
- a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v4 1/7] Add delta-islands.{c,h}
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        SZEDER Gabor <szeder.dev@gmail.com>, Jeff King <peff@peff.net>
-References: <20180812051151.6425-1-chriscool@tuxfamily.org>
- <20180812051151.6425-2-chriscool@tuxfamily.org>
- <2113c74c-b230-6ea1-a980-d6d008bac759@ramsayjones.plus.com>
- <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <7a780fe9-e8bf-804a-82e6-8df81cd5c41c@ramsayjones.plus.com>
-Date:   Mon, 13 Aug 2018 13:17:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1729640AbeHMPE0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 11:04:26 -0400
+Received: from mout.gmx.net ([212.227.15.15]:44697 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728509AbeHMPE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 11:04:26 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGjL7-1fbfBq0mYr-00DWuT; Mon, 13
+ Aug 2018 14:22:19 +0200
+Date:   Mon, 13 Aug 2018 14:22:25 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 6/8] diff: use emit_line_0 once per line
+In-Reply-To: <20180810223441.30428-7-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131418060.71@tvgsbejvaqbjf.bet>
+References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-7-sbeller@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMWfa9BcUqRCl/LnKSTEQ9Lu+A0cXQZgL+85ZN6Z2NpBjsLUYwP17qkLagQIzfEMAvIIQblr1g2Skwhaa9Zo4TabmqCJCatU9iQB55ioezRZQ8roOjrI
- uBAYcJ0850Z7J2oSyczgNta9zhnEeGg2VWplJwHZvhXVubRviuOCThi9
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:naXDPPTbemeMzySTyUod3bG7lF8giz8DWJeXAS2D219XwCbaE5v
+ /yV50uzetc/kg8+bC2xtzqmVs2OWBySBL9wmge9UmXLRalXSrII/9nNQZnlWj1uVP7qjqFw
+ qT0MH3C7Uef/D/MfQHwdeha59ycw5D2dsc+Xp/VJbC5rzQwhjNS+mtOrG+oJkY50DL2ov6B
+ QPoRIEvYxEcAStWf84Vig==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:y7FdGc3SC7o=:C4R0rmDDGvu0UvUbUtpu4W
+ JX5AVeAW1usRv+Wk0OuD3Z4Dbsor9gtRWpquZdFs1TmTZNMDYEixf7RIwrzuhLe1NogKXMBIy
+ h6nMNj4WFwbZSUdsh5uB5jlI+Qc0fKDHHEB/tI5eDISgoqjEVr2M9i3WB03fZPdnIBd4ROvQr
+ MOAogt5lXc2oQ+CS0O/n2cfaIcNz+wD++Pn9uKZv/fAszs9lll5EBQ1B1EmrM5Ys1aD3IjMu8
+ QgMFeJGUkeFN5wNW7p9zjTalyxCp71QPtC+phhSe1F7E/XnfRLVONxhuAY4oucqmoxCDYpdRE
+ F36x0Yi6lGLahVBYoW4J3U/TVDcjoP+fo3uoS4x8vukNHBDPeSIuhQs/htS8k9Czyjj5PGzr1
+ enodOgqcBL37ZB0wtt09wbBxOokInMMf2ogi2Uof4+YsMX8aBMduXyu3BXI7k20pFgq7tO8rO
+ YZ7R7Pgiw/RGlfBsxj4MjkxCi7PIQLPprsgFvPINyMni+Isl4ke6ejIrWVbmh9YV/d3Bv06ND
+ Zq9OWYxkqusp8qu9ICVb3sZ5rA9eRkXZ+iRGZHwnFBqkLNJ7xN3p04IZdHfBeTq/2OmV5rd4/
+ 9nsYDy1QvYulMYI08eMXlX2guXQ24VHWz2HNShDp/NvhA/ZPUua/Cj1IO5nZ5azGxsK1BVDdc
+ OYN+0vYaHL5SPPiI7OtnJFwcUhJu1INMEpoGwSPD4g7uVgeJcqHIbP3mmi4/LxNVCe42x2P85
+ uulcCglxvl2ohOryhSeoOo3Qd/NdYh/RHbvBFR1ChUwHqb7Rci5HF071UxsNUE1YTJwFyaXuM
+ gc79R1w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Stefan,
+
+On Fri, 10 Aug 2018, Stefan Beller wrote:
+
+> All lines that use emit_line_0 multiple times per line, are combined
+> into a single call to emit_line_0, making use of the 'set' argument.
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  diff.c | 26 ++++++++++++--------------
+>  1 file changed, 12 insertions(+), 14 deletions(-)
+> 
+> diff --git a/diff.c b/diff.c
+> index 5eea5edca50..01095a59d3d 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -629,10 +629,7 @@ static void emit_line_0(struct diff_options *o,
+>  	int nofirst;
+>  	FILE *file = o->file;
+>  
+> -	if (first)
+> -		fputs(diff_line_prefix(o), file);
+> -	else if (!len)
+> -		return;
+> +	fputs(diff_line_prefix(o), file);
+
+How about separating this into its own "now that `first` is no longer
+`NULL`, skip this" patch?
+
+I found it a bit hard to review this diff, primarily because this hunk
+would logically make more sense after the other hunks.
 
 
-On 13/08/18 04:33, Christian Couder wrote:
-> On Mon, Aug 13, 2018 at 3:14 AM, Ramsay Jones
-[snip]
->> And neither the sha1 or str hash-maps are destroyed here.
->> (That is not necessarily a problem, of course! ;-) )
-> 
-> The instances are declared as static:
-> 
->   static khash_sha1 *island_marks;
-> 
->   static kh_str_t *remote_islands;
-> 
-> so it maybe ok.
+>  	if (len == 0) {
+>  		has_trailing_newline = (first == '\n');
+> @@ -652,13 +649,17 @@ static void emit_line_0(struct diff_options *o,
+>  	if (len || !nofirst) {
+>  		if (reverse && want_color(o->use_color))
+>  			fputs(GIT_COLOR_REVERSE, file);
+> -		if (set_sign && set_sign[0])
+> -			fputs(set_sign, file);
+> +		if (set_sign || set)
+> +			fputs(set_sign ? set_sign : set, file);
 
-Yes, that's fine.
+Wait, what? Why is `set` all of a sudden also applying to `first`?
 
-> 
->>> +struct island_bitmap {
->>> +     uint32_t refcount;
->>> +     uint32_t bits[];
->>
->> Use FLEX_ARRAY here? We are slowly moving toward requiring
->> certain C99 features, but I can't remember a flex array
->> weather-balloon patch.
-> 
-> This was already discussed by Junio and Peff there:
-> 
-> https://public-inbox.org/git/20180727130229.GB18599@sigill.intra.peff.net/
-> 
+I would have expected `set_sign` to apply to `first`, and `set` to the
+rest of the line.
 
-That is a fine discussion, without a firm conclusion, but I don't
-think you can simply do nothing here:
+>  		if (first && !nofirst)
+>  			fputc(first, file);
+> -		if (set)
+> -			fputs(set, file);
+> -		fwrite(line, len, 1, file);
+> +		if (len) {
+> +			if (set_sign && set && set != set_sign)
+> +				fputs(reset, file);
+> +			if (set)
+> +				fputs(set, file);
 
-  $ cat -n junk.c
-       1	#include <stdint.h>
-       2	
-       3	struct island_bitmap {
-       4		uint32_t refcount;
-       5		uint32_t bits[];
-       6	};
-       7	
-  $ gcc --std=c89 --pedantic -c junk.c
-  junk.c:5:11: warning: ISO C90 does not support flexible array members [-Wpedantic]
-    uint32_t bits[];
-             ^~~~
-  $ gcc --std=c99 --pedantic -c junk.c
-  $ 
-  
->>> +};
-> 
->>> +int in_same_island(const struct object_id *trg_oid, const struct object_id *src_oid)
->>
->> Hmm, what does the trg_ prefix stand for?
->>
->>> +{
->>> +     khiter_t trg_pos, src_pos;
->>> +
->>> +     /* If we aren't using islands, assume everything goes together. */
->>> +     if (!island_marks)
->>> +             return 1;
->>> +
->>> +     /*
->>> +      * If we don't have a bitmap for the target, we can delta it
->>
->> ... Ah, OK, trg_ => target.
-> 
-> I am ok to replace "trg" with "target" (or maybe "dst"? or something
-> else) and "src" with "source" if you think it would make things
-> clearer.
+That sounds as if `set == set_sign` would duplicate the `set`. How about
+this instead?
 
-If it had been dst_ (or target), I would not have had a 'huh?'
-moment, but it is not all that important.
+			if (set && set != set_sign) {
+				if (set_sign)
+					fputs(reset, file);
+				fputs(set, file);
+			}
 
-> 
->>> +static void add_ref_to_island(const char *island_name, const struct object_id *oid)
->>> +{
->>> +     uint64_t sha_core;
->>> +     struct remote_island *rl = NULL;
->>> +
->>> +     int hash_ret;
->>> +     khiter_t pos = kh_put_str(remote_islands, island_name, &hash_ret);
->>> +
->>> +     if (hash_ret) {
->>> +             kh_key(remote_islands, pos) = xstrdup(island_name);
->>> +             kh_value(remote_islands, pos) = xcalloc(1, sizeof(struct remote_island));
->>> +     }
->>> +
->>> +     rl = kh_value(remote_islands, pos);
->>> +     oid_array_append(&rl->oids, oid);
->>> +
->>> +     memcpy(&sha_core, oid->hash, sizeof(uint64_t));
->>> +     rl->hash += sha_core;
->>
->> Hmm, so the first 64-bits of the oid of each ref that is part of
->> this island is added together as a 'hash' for the island. And this
->> is used to de-duplicate the islands? Any false positives? (does it
->> matter - it would only affect performance, not correctness, right?)
-> 
-> I would think that a false positive from pure chance is very unlikely.
-> We would need to approach billions of delta islands (as 2 to the power
-> 64/2 is in the order of billions) for the probability to be
-> significant. GitHub has less than 50 millions users and it is very
-> unlikely that a significant proportion of these users will fork the
-> same repo.
-> 
-> Now if there is a false positive because two forks have exactly the
-> same refs, then it is not a problem if they are considered the same,
-> because they are actually the same.
+The rest looks good to me.
 
-Yep, good point.
+Thank you,
+Dscho
 
-ATB,
-Ramsay Jones
+> +			fwrite(line, len, 1, file);
+> +		}
+>  		fputs(reset, file);
+>  	}
+>  	if (has_trailing_carriage_return)
+> @@ -1204,16 +1205,13 @@ static void emit_line_ws_markup(struct diff_options *o,
+>  	if (!ws && !set_sign)
+>  		emit_line_0(o, set, NULL, 0, reset, sign, line, len);
+>  	else if (!ws) {
+> -		/* Emit just the prefix, then the rest. */
+> -		emit_line_0(o, set_sign, NULL, !!set_sign, reset, sign, "", 0);
+> -		emit_line_0(o, set, NULL, 0, reset, 0, line, len);
+> +		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, line, len);
+>  	} else if (blank_at_eof)
+>  		/* Blank line at EOF - paint '+' as well */
+>  		emit_line_0(o, ws, NULL, 0, reset, sign, line, len);
+>  	else {
+>  		/* Emit just the prefix, then the rest. */
+> -		emit_line_0(o, set_sign ? set_sign : set, NULL, !!set_sign, reset,
+> -			    sign, "", 0);
+> +		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, "", 0);
+>  		ws_check_emit(line, len, ws_rule,
+>  			      o->file, set, reset, ws);
+>  	}
+> -- 
+> 2.18.0.865.gffc8e1a3cd6-goog
+> 
+> 
