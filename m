@@ -7,41 +7,27 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9997A1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 15:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6626C1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 15:20:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729753AbeHMR5c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 13:57:32 -0400
-Received: from mail.nic.cz ([217.31.204.67]:56411 "EHLO mail.nic.cz"
+        id S1728884AbeHMSCu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 14:02:50 -0400
+Received: from mail.nic.cz ([217.31.204.67]:56523 "EHLO mail.nic.cz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729063AbeHMR5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 13:57:32 -0400
+        id S1728293AbeHMSCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 14:02:50 -0400
 Received: from [IPv6:2001:1488:fffe:6:83a:b589:ce68:b04] (unknown [IPv6:2001:1488:fffe:6:83a:b589:ce68:b04])
-        by mail.nic.cz (Postfix) with ESMTPSA id 8116062705;
-        Mon, 13 Aug 2018 17:14:50 +0200 (CEST)
+        by mail.nic.cz (Postfix) with ESMTPSA id 2A5E06271F;
+        Mon, 13 Aug 2018 17:20:06 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nic.cz; s=default;
-        t=1534173290; bh=S6q99IfaE01rgJu6anmOWv+u3qRzAbERbnFafRnoshQ=;
+        t=1534173606; bh=N8yuZPeYsw5YEWBfRSI6m07ELZQsMQB6K/beXe0zBXk=;
         h=From:To:Date;
-        b=B0DAaYzV0ADly15AE09EeWbNzi1HmeMUC/ufN/boorDCwJ3PGKd4Wr0LrrPY90rLs
-         QrLTZX/eUSU7Q1iHwtRXZKEbOssorN1kUahxovZSVFXKJrooyGxwpoZj+T8b0loLlK
-         hR7rjaFH9yYM9NqNJiO2UrEGXWXA1yr7yCkFHL1g=
+        b=tFT4UOhSE4awSwS7vO5VG86FiWW1I/amOlVykud3M3qBJsvYYHrblN7g/AFEe/JH6
+         zJ30TiGVCanaDIvgPQLVG3UU48U19cBisJXV1ZePoLdHLyobszt3Q3J5vjl6At97pT
+         EiuPkHv5r976P1BE+VGByNK/p4uvnkIikbNdLzGY=
 From:   Vojtech Myslivec <vojtech.myslivec@nic.cz>
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?B?S2FyZWwgS2/EjcOt?= <karel.koci@nic.cz>,
-        Santiago Torres <santiago@nyu.edu>, git@vger.kernel.org
-References: <20180803133630.32oxubwttealvhxk@work-pc>
- <20180803154343.z3lgkudleood6lhs@LykOS.localdomain>
- <20180803160634.GA19944@sigill.intra.peff.net>
- <20180804084346.fhte5wusbfb5baem@cynerd-laptop>
- <20180808230456.GA21882@sigill.intra.peff.net>
- <20180808231226.GA34639@genre.crustytoothpaste.net>
- <xmqqzhxwcq2o.fsf@gitster-ct.c.googlers.com>
- <20180809014302.GB34639@genre.crustytoothpaste.net>
- <20180809143010.GD1439@sigill.intra.peff.net>
- <xmqqtvo3d0by.fsf@gitster-ct.c.googlers.com>
- <20180809171219.GF1439@sigill.intra.peff.net>
- <xmqqy3dfbcys.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?B?S2FyZWwgS2/EjcOt?= <karel.koci@nic.cz>
 Autocrypt: addr=vojtech.myslivec@nic.cz; prefer-encrypt=mutual; keydata=
  xsFNBFi7/TYBEADJSK8hCh5oHfhWxRil3VLJWJvMduf02E465GUXwdq5MIit9UEPBygW7Bda
  +M+iXeNpWXAvyeB4AmUcuzsto6WQjS9SI/fGIxnzMELqmBOf3KbZ17gaosAhoEYLN6drka/e
@@ -86,17 +72,15 @@ Autocrypt: addr=vojtech.myslivec@nic.cz; prefer-encrypt=mutual; keydata=
  VQBulQgybvXtOQorpmPxGmFfhPpdAe6zE/3OrVmKJo8E0/c+2Yqvgb5ssKwfq2XmRJWSKPDh
  dWuNPuFjxhWa78s25yDrqfmmLes9OmXQ6YGUMoK/V519DBtjBK1Q2xZdVsL+oNDDsDdXuGM2
  gy8WZQDS
-Subject: Re: [PATCH 1/1] verify-tag/verify-commit should exit unsuccessfully
- when signature is not trusted
-Message-ID: <88aca5f1-61e6-c089-f69e-952937c85a5f@nic.cz>
-Date:   Mon, 13 Aug 2018 17:14:50 +0200
+Subject: [PATCH] test verify-commit/tag to exit unsuccessfully
+Message-ID: <b196ad40-544a-6909-abec-d87ccfd78aca@nic.cz>
+Date:   Mon, 13 Aug 2018 17:20:06 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3dfbcys.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/mixed;
+ boundary="------------38726762ED098C2693C91A36"
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 X-Virus-Scanned: clamav-milter 0.99.2 at mail
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
@@ -104,22 +88,151 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9.8.2018 20:40, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> I guess leaving it serves as a sort of cross-check if gpg would return a
->> zero exit code but indicate in the status result that the signature was
->> not good. Sort of a belt-and-suspenders, I guess (which might not be
->> that implausible if we think about somebody wrapping gpg with a sloppy
->> bit of shell code that loses the exit code -- it's their fault, but it
->> might be nice for us to err on the conservative side).
-> OK, this time a real log message.
+This is a multi-part message in MIME format.
+--------------38726762ED098C2693C91A36
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Now it is possible to achieve git verify-tag/verify-commit exits
-unsuccessfully when signatures are not trusted. I would like to
-introduce some tests for this behavior to prevent this problem in the
-future.
+Hello
 
-Thank you all for discussion and for solving the issue.
+There was a discussion in the mailing list with subject
+'verify-tag/verify-commit should exit unsuccessfully when signature is
+not trusted' which leads to handling exit code of untrusted signatures
+in 4e5dc9ca1.
 
-Vojtech and Karel
+git verify-commit and verify-tag should exit unsuccessfully when
+processing a signature by a gpg key with trust level set to 'never'.
+
+This commit introduce verify checks with trust-model set to direct in
+gpg.conf (to force trust level of the second key in the keychain to
+never). In these tests, 'git verify-tag/verify-commit eighth-signed-alt'
+must exit unsuccessfully and includes 'We do NOT trust this key!' on the
+stderr (gpg output).
+
+Formatted patch is attached.
+
+Vojtech Myslivec
+
+--------------38726762ED098C2693C91A36
+Content-Type: text/x-patch;
+ name="0001-test-verify-commit-tag-to-exit-unsuccessfully.patch"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: attachment;
+ filename="0001-test-verify-commit-tag-to-exit-unsuccessfully.patch"
+
+=46rom 013678ac78ef42ef424a46da3b463ad96c2eb58d Mon Sep 17 00:00:00 2001
+From: Vojtech Myslivec <vojtech.myslivec@nic.cz>
+Date: Sat, 11 Aug 2018 22:59:49 +0200
+Subject: [PATCH] test verify-commit/tag to exit unsuccessfully
+
+git verify-commit and verify-tag should exit unsuccessfully when
+processing a signature by a gpg key with trust level set to 'never'.
+
+This commit introduce verify checks with trust-model set to direct in
+gpg.conf (to force trust level of the second key in the keychain to
+never). In these tests, 'git verify-tag/verify-commit eighth-signed-alt'
+must exit unsuccessfully and includes 'We do NOT trust this key!' on the
+stderr (gpg output).
+
+Helped-by: Karel Koci <karel.koci@nic.cz>
+---
+ t/t7030-verify-tag.sh    | 34 ++++++++++++++++++++++++++++++++++
+ t/t7510-signed-commit.sh | 36 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 70 insertions(+)
+
+diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
+index 041e319e7..6bde65c9e 100755
+--- a/t/t7030-verify-tag.sh
++++ b/t/t7030-verify-tag.sh
+@@ -172,4 +172,38 @@ test_expect_success GPG 'verifying a forged tag with=
+ --format should fail silent
+ 	test_must_be_empty actual-forged
+ '
+=20
++test_expect_success GPG 'verify signatures with direct trust-model' '
++	(
++		echo "trust-model:0:\"direct" | gpgconf --change-options gpg
++	) &&
++	(
++		for tag in initial second merge fourth-signed sixth-signed seventh-sig=
+ned
++		do
++			git verify-tag $tag 2>actual &&
++			grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			echo $tag OK || exit 1
++		done
++	) &&
++	(
++		for tag in fourth-unsigned fifth-unsigned sixth-unsigned
++		do
++			test_must_fail git verify-tag $tag 2>actual &&
++			! grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			echo $tag OK || exit 1
++		done
++	) &&
++	(
++		for tag in eighth-signed-alt
++		do
++			test_must_fail git verify-tag $tag 2>actual &&
++			grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			grep "do NOT trust" actual &&
++			echo $tag OK || exit 1
++		done
++	)
++'
++
+ test_done
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 4e37ff8f1..6e34f98a6 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -234,4 +234,40 @@ test_expect_success GPG 'check config gpg.format val=
+ues' '
+ 	test_must_fail git commit -S --amend -m "fail"
+ '
+=20
++test_expect_success GPG 'verify signatures with direct trust-model' '
++	(
++		echo "trust-model:0:\"direct" | gpgconf --change-options gpg
++	) &&
++	(
++		for commit in initial second merge fourth-signed \
++			fifth-signed sixth-signed seventh-signed tenth-signed
++		do
++			git verify-commit $commit 2>actual &&
++			grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			echo $commit OK || exit 1
++		done
++	) &&
++	(
++		for commit in merge^2 fourth-unsigned sixth-unsigned \
++			seventh-unsigned ninth-unsigned
++		do
++			test_must_fail git verify-commit $commit 2>actual &&
++			! grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			echo $commit OK || exit 1
++		done
++	) &&
++	(
++		for commit in eighth-signed-alt
++		do
++			test_must_fail git verify-commit $commit 2>actual &&
++			grep "Good signature from" actual &&
++			! grep "BAD signature from" actual &&
++			grep "do NOT trust" actual &&
++			echo $commit OK || exit 1
++		done
++	)
++'
++
+ test_done
+--=20
+2.18.0
+
+
+--------------38726762ED098C2693C91A36--
