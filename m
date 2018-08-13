@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9B0551F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D2131F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbeHMS6Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 14:58:25 -0400
-Received: from mail-lj1-f170.google.com ([209.85.208.170]:35399 "EHLO
-        mail-lj1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729760AbeHMS6X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 14:58:23 -0400
-Received: by mail-lj1-f170.google.com with SMTP id p10-v6so13059107ljg.2
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:29 -0700 (PDT)
+        id S1729921AbeHMS60 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 14:58:26 -0400
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:34273 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728533AbeHMS6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 14:58:24 -0400
+Received: by mail-lj1-f194.google.com with SMTP id f8-v6so13056480ljk.1
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Z+mv8qq5AK8S2xqHNjQxmmnxJVxjv6EoMcP6j9hrSMg=;
-        b=dTp1vJHbwgVcyu19P9HGXSuKHURiZhbR4i3wDJFCsxaQvaWa49agEtw+up6qDwrlnn
-         Kz5FEFpPWVSrpqIqoBkn9KcSb99uvdNNzUl4Wab8duSI2xmenf/YYilImTswbM6IWMYs
-         2XUltXjh8EJ6FCPDtLwZWD4YzbDslUHI9jAZ6Jco/WdsEP6MDCtBPWD+KuVhjKf1f+gN
-         4LcV+ltwkasy3Bw1gDWyyd05x8R/ofqIzGLCRXlcya2jJQDwURJ6g3Qb0mwjL/PXm+Zz
-         FF0gvxEtfMD6o6URjzmIbMgW5Voopi9LOqkR6wGX+BES4e2DXYz8E1SafOyrJMfIn/8X
-         dKcQ==
+        bh=td/O8vHni4zEsGp7DEI++JxIF1H/OhwqfnCvMe0dUtg=;
+        b=vbkPqFDeqtdrPbM2fX2sWWQquEeVbOGxJRLilf8dP2O/aW2O4/BbBPwc4a1POgImF9
+         OA5UtX02aMREuqoC/APYNPM8+zo3bLNdoBDWI+loLyg63v5x/p7gXCrXmDOYJfmMoBvx
+         NstWnwsYoz9ulrg+V1YUi6wPt6kIouvd6onRmoiML77hJJK3rnIiY5OFaaVfx2PU9Mg5
+         29B+LYWZaii8hVRPLlWFb6HGhoFcOyZuro4JRTGVANNpEJZGnrG+ycql0v5+/g2a5V7T
+         8Pl1FYHY4xlCsGlyESM4nWq5P8iJ5TwMfqM+MmrmSqfOZDbhj/qhmnI3GYH+rahbTn01
+         gawQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Z+mv8qq5AK8S2xqHNjQxmmnxJVxjv6EoMcP6j9hrSMg=;
-        b=IBi11wt9JRCMhw/URkv8vS2+31S1LAUppYy0zK6mFAVuatiy2x805JbuXT8jHAhRUe
-         Yw4p1gCdmEL2k2ihGw1Ewkbp80E6zq3ijDJVBTwGJcbWkvfazWa05N8QgBwPj7ut58SE
-         8b3IekqcfysUNpXgBAuKXnb4VItbjmaHH7XzwyUgTqURCaKy+wwa1HFrRjaDPuzhhhIt
-         YmYmVjlweT/nfjr3kXDzyoIFU/dfgcEdSK33EFF7kGPXWNL/8OavU35xpVFZpbSCwuzt
-         ENY80FQyOF3rMimuqQUuY7RJSS607x5sU5UP7htPXV/DghOh0IHTlsliESIxpKRwL79g
-         oBAw==
-X-Gm-Message-State: AOUpUlHTncqzYoRLaC2FjCxF70vh+QN9gCgPHEY57TqWYExRmO2UyJNF
-        3emxbpKKXh3PjyKD+T2l2+sMQAW/
-X-Google-Smtp-Source: AA+uWPwXm4iGH2Yg4QlYbxhMZ0MlemtcppBAKDrCEL5GznQPWv/iCliWww85k36gzQ8+6lDoCpZwIg==
-X-Received: by 2002:a2e:5f89:: with SMTP id x9-v6mr12323027lje.16.1534176928119;
-        Mon, 13 Aug 2018 09:15:28 -0700 (PDT)
+        bh=td/O8vHni4zEsGp7DEI++JxIF1H/OhwqfnCvMe0dUtg=;
+        b=MbxnMG7oZnaCDbOxQiJPEMnxwgcl1DDtdQzjBpH7ZcRDgI7AizdRsyWxJSLnFonhiP
+         huNgxzvKQEU+qb1TBCC6hBHlk/wxB5/tyTnEejtet/u36Sjr4Bqr+duIQUGM9zrfWW43
+         7s7ctPvL6X4y62taA792ekOWYebl6+tsJooXXPTzaMOFtaBF8Avtzxl3S+31w6DVpDHk
+         y+8W1N6luAPXotpJIVH+HStrODmM4pWxXMZNkdYcLbvvrj9jd4gatX9vV+KKDiORqysz
+         a0zOMvk5g/daxpXgemPrm+MptnrKJaMpyh99OdRALch5MyJcMfTTQitwQ3v66f7kkINl
+         45xw==
+X-Gm-Message-State: AOUpUlH9ysHAi7yRmycnR3LNKBMizhzQXe7b8j+KXxYzCQji5XKPDO0m
+        L4PEci1x6HiE6U9u5te6oKr7Ux2O
+X-Google-Smtp-Source: AA+uWPz0w6Vwr/VDOCFpzpLW2cjLFWpkaBaTf07MrHr12wCqbZSExeN9UmQSpBriXV6hujsaPG1giw==
+X-Received: by 2002:a2e:144f:: with SMTP id 15-v6mr13348305lju.122.1534176929308;
+        Mon, 13 Aug 2018 09:15:29 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.27
+        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:27 -0700 (PDT)
+        Mon, 13 Aug 2018 09:15:28 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 08/24] unpack-trees: remove 'extern' on function declaration
-Date:   Mon, 13 Aug 2018 18:14:25 +0200
-Message-Id: <20180813161441.16824-9-pclouds@gmail.com>
+Subject: [PATCH 09/24] unpack-trees: add a note about path invalidation
+Date:   Mon, 13 Aug 2018 18:14:26 +0200
+Message-Id: <20180813161441.16824-10-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
 In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
 References: <20180813161441.16824-1-pclouds@gmail.com>
@@ -70,24 +70,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- unpack-trees.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ unpack-trees.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/unpack-trees.h b/unpack-trees.h
-index c2b434c606..534358fcc5 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -82,8 +82,8 @@ struct unpack_trees_options {
- 	struct exclude_list *el; /* for internal use */
- };
+diff --git a/unpack-trees.c b/unpack-trees.c
+index f9efee0836..c07a6cd646 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -1552,6 +1552,17 @@ static int verify_uptodate_sparse(const struct cache_entry *ce,
+ 	return verify_uptodate_1(ce, o, ERROR_SPARSE_NOT_UPTODATE_FILE);
+ }
  
--extern int unpack_trees(unsigned n, struct tree_desc *t,
--		struct unpack_trees_options *options);
-+int unpack_trees(unsigned n, struct tree_desc *t,
-+		 struct unpack_trees_options *options);
- 
- int verify_uptodate(const struct cache_entry *ce,
- 		    struct unpack_trees_options *o);
++/*
++ * TODO: We should actually invalidate o->result, not src_index [1].
++ * But since cache tree and untracked cache both are not copied to
++ * o->result until unpacking is complete, we invalidate them on
++ * src_index instead with the assumption that they will be copied to
++ * dst_index at the end.
++ *
++ * [1] src_index->cache_tree is also used in unpack_callback() so if
++ * we invalidate o->result, we need to update it to use
++ * o->result.cache_tree as well.
++ */
+ static void invalidate_ce_path(const struct cache_entry *ce,
+ 			       struct unpack_trees_options *o)
+ {
 -- 
 2.18.0.1004.g6639190530
 
