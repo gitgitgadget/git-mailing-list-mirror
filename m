@@ -2,100 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 487EE1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 23:09:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21ACC1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 23:36:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732463AbeHNBxs (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 21:53:48 -0400
-Received: from mout.web.de ([212.227.17.12]:53311 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730203AbeHNBxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 21:53:48 -0400
-Received: from [192.168.178.36] ([91.20.56.63]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpJ4-1gC5GK1Ixi-00oCJW; Tue, 14
- Aug 2018 01:09:18 +0200
-Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
- <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
- <xmqqmutq5cpo.fsf@gitster-ct.c.googlers.com>
- <49564417-fac3-ede2-7fd1-e3a5a03e4cfe@web.de>
- <xmqqd0um3rhx.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <fc24f963-1bca-a638-e292-71044057dabb@web.de>
-Date:   Tue, 14 Aug 2018 01:09:17 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1732435AbeHNCVS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 22:21:18 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:45865 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729478AbeHNCVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 22:21:18 -0400
+Received: by mail-yw1-f66.google.com with SMTP id 139-v6so14901463ywg.12
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 16:36:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Tvm+YwwYBGAC4ZfMHY4VBthUOB6qtbhOZHsUWg/uQ+o=;
+        b=vua22KXPiAAnpUmlZR+ZQNJWzDA/r56IMpzmQ5m6GQa0t81hjPnciFi2vXANDevXIQ
+         wzd7AIbLrFHwAZoMeTr153Cvdnjsg+N7OnZyOORwc3uQWfkzuUVLPW9O/8t+GfI67Wpz
+         Ie1VE/LRAlsFfQhfkLvSRM3ldGf+mz41sYKV8uzI2Q3aqE3askPSDybIJnwJgjzP7oEE
+         0jyRfrtqZKpOo6L3jBaifCEEty7RX3/fpwLsJ2DolbST+1Z3okgnG1Xl56haxKeKgVed
+         eajPZajh6TepYqvGpLvN8L3hlZuAo56n4Y3ywc3VpzRHXCbNw2C1/LEdvUwsLSBFGZzd
+         STHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Tvm+YwwYBGAC4ZfMHY4VBthUOB6qtbhOZHsUWg/uQ+o=;
+        b=J7HDGDSKqiykxv+xI4xTPiwOuhCBPItuauNaL7Xd2e9xSr2SdfGnlAtUmSOYHluBao
+         fAAvfPrrKVqeHGfaCj1QQg5Bur2NWAs02cMiZh6Q6385TVnRp+4FEMYg2imqx9i7FHnC
+         2tQ8c4LgmDBW+rei0iLB6Z1Sk3HJsHGCoAiQmp5U5fdizpbguhV6uV7iUALT99XMSeeJ
+         Aaq/gWnnRjUQhJMGyQRSAEBjdbSji3qBpHLCLAry9qZ24Eluahlr5Hf7b7btpPw8Gr8f
+         ut42+HusrI0Yfkjh8p7+g2yhoxkUNCvypE3aW2uQ9O3UuZr1Q3IofzcjhwBjV4VREMTG
+         t44g==
+X-Gm-Message-State: AOUpUlGqQZYXAUwtevRaQAjP1vUd6zdjt/jbAoWlLhs+K4cyq5JUtlnZ
+        hS86qmtAqG6NpZAgKpnEyTGF/WBu+/CrT1AZk/pHbQ==
+X-Google-Smtp-Source: AA+uWPxPYemt5c7C0Son4lsIsTNtKy+fqZ4pfO56JoSdcMg7mlH6bMtm+L0DGaXvxcDNB4M6ZlAGMMWYQ9KbWkvwZSY=
+X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr10273115ywj.33.1534203409707;
+ Mon, 13 Aug 2018 16:36:49 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqqd0um3rhx.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:us0ktLHLTlGAQq0riNVvj7J96RHWjVLw1a34jEBzffPWwllvNq9
- jNmISAYQA/BDY5USEbMSEQAxTeDH1QN+fsr16TlzcSdzEOOM2JS39Jc0jkqwb0uv4r4er5Q
- k+BgYJxAjf5ddGXPXgpI6AtdsEpUk6wZBzUTIRLFXJ9rMmgNJ5Xd/LWoNMz8hsyDs1tnLUp
- v1zVv1o4QpYpORj83dbTA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:qqmFRTZDRaY=:Fx0iG81Xx4w4G+Q68Xrjv1
- /mvYZXXDPkiIzx2SuXIL+bpGIvQh0z9PBonwFM078E7DOEIFt2jzTRYC7pYRakIBXdvVxdDAe
- zcyAXT1q10qNa18yVIez//mIrQaQucJCK0LPzkb3N+/5lh0W/toNAC7Mtw81WMZYYc2cVr2jT
- obNVhvZq7/SQM6V90xZ+0LZmHob5BPHdKOugpreEuA+2BcqfWanZf8ryOPuabTH5ahWvRZBQ9
- vlpKXKiE7dahpQ4k+ZJ45VIZBCmV6dp+8AJeOwVLRG/7lkv42dwtdRzFx/xTRPjGB8tTbQGCh
- sUgWuPXkshm94d7WQV4bxus6UpNH8YCvO+TXklJeBlS6Jyzi0r4hyU2aTKIXL8ena7wkDdce6
- 8zp6f23nqnmIbvjlyMqJGc9nRHooGJdMIN/BNL8PvmJaxs5tmSvMjBsIiyhKMApSw8xp6QJ8c
- g300ybM+AxU5OtJqfAWJ3+/7CT+QYKVAURhS6n8cgue82T+Dm4eTt3WNVbVsRU9dgipkI3cZr
- T2atnWlGRTNIKcCpIv7J1BT4IBgG4bTdd1/ZU0YSGkxJRvOxvAC5AuOZDQOF1IVvyiGO/PMBl
- S6hc70F7hwRZ2TR5OCTv6oKN86UG5AjRu6uwz5wDAFchLrFK1H7UFi868kIU18IYabKL4AfBO
- AtPLanIzVUao4VsariE2lMQ/32+oM4dlSFK5GMqRsjPpA2SDpBmJTFjkcVvqRhZKhOe+X/n/9
- +PWQZZ5W2Hz+W10AsBdkdVdGX7qq530JADYV2zaLHk1uVKy2pGXEMJIWq8oRZtZ/Y4lQzlwK5
- d8Uu2or
+References: <20180810223441.30428-1-sbeller@google.com>
+In-Reply-To: <20180810223441.30428-1-sbeller@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Aug 2018 16:36:38 -0700
+Message-ID: <CAGZ79kZvdNNF-TnT5=a2HrMZCpTTZXRuiAoKQ3L5cKjAk9UruA@mail.gmail.com>
+Subject: Re: [PATCH 0/8] Resending sb/range-diff-colors
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.08.2018 um 23:07 schrieb Junio C Hamano:
-> René Scharfe <l.s.r@web.de> writes:
-> 
->> the mailing list [1], nor on the web interface [2].  The latter shows
->> extra spaces on the context lines of the first hunk, though, which I
->> can't see anywhere else.  All the lines look fine in the citation of
->> Ramsay's reply [3].  So I don't know where these extra spaces are
->> coming from. :-/
-> 
-> Hmph, interesting.
-> 
-> https://public-inbox.org/git/54a5367f-f832-402c-f51b-3225c92b41ad@web.de/raw
-> 
-> has "Content-Type: text/plain; charset=utf-8; format=flowed".  That
-> page's rendition is more faithful to the bare text.
+On Fri, Aug 10, 2018 at 3:34 PM Stefan Beller <sbeller@google.com> wrote:
+>
+> This is also avaliable as
+> git fetch https://github.com/stefanbeller/git sb/range-diff-colors
+>
+> and is a resend of sb/range-diff-colors.
 
-That explains it: Thunderbird 60 disables most older Add-ons, among them
-Toggle Word Wrap, which used to turn off format=flowed for me.  I did
-that now using the config settings mailnews.send_plaintext_flowed and
-mailnews.display.disable_format_flowed_support.
+I thought about this series a bit, and I think we would want to break
+it up into 2:
 
-> The funky " -" one I showed was what Gnus/Emacs came up with as the
-> result of its best effort to make the format=flawed into something
-> closer to "text", I think X-<.  
+  * the actual sb/range-diff-colors consisting of the first two patches
+  I can resend them or you can just rebase them without conflicts.
+  These two patches (test_decode_color: FAINT/ITALIC + t3206: color)
+  are essentially just adding the tests and making sure the colored
+  range-diff will work correctly in the future
 
-Sorry. :(
+ * The refactoring, which might be titled sb/diff-refactor instead.
+    Given Johannes review comments, I will rework all patches
+    that are "diff: something" to have less confusion for Johannes
+    reviewing them.
 
-> In any case, I do not think format=flowed can be reverted reliably
-> (or can it be?  If so we should teach mailinfo to repair them).
+And once we have these two we can have a resend of
+https://public-inbox.org/git/20180810224923.143625-1-sbeller@google.com/
+which might be titled sb/range-diff-adjust-colors.
 
-RFC3676 gives me a headache, perhaps I should go to bed.  If we can
-assume that lines don't have trailing spaces originally then we should
-be able to reconstruct their contents, no?  "A generating agent SHOULD:
-[...] Trim spaces before user-inserted hard line breaks.", i.e. lines
-with trailing spaces are doomed to truncation without hope for repair.
 
-René
+Thanks,
+Stefan
