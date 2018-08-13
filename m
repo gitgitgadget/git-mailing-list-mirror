@@ -2,96 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E23351F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 21:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3EF11F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 21:47:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730651AbeHNARv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 20:17:51 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:45859 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729835AbeHNARv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 20:17:51 -0400
-Received: by mail-wr1-f47.google.com with SMTP id f12-v6so15433285wrv.12
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 14:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=betpo/6gyRI8FfpI+4nTGTaP12OwIwRwWQjsAlWwGIc=;
-        b=KXio9jgU86srtjLjFRlSWRlLJxtUWLbJRDaDim9i5FPIryZ2YZaimiDkMeBBpsQ3fX
-         MsXbp6vv06mOSkJA1fFMnHELnc2RTSSozzYfnyZo0Gbwcl4JX+Q8fRox0WL8Vxc0XYIK
-         N7tZ/LluHnHPLIv7wytdQxUpP6McDZhn4h52CRufIvyJn8z5Y7ywMoAyXP6/tmMgZOP/
-         nmqhcGYqIB13vjHVx7hcvzT8h7VH7d6UxozL/H2dLxpZGJwGIKULJn/Au418rvbq5kam
-         zxb05wfxE3kXypOw6BZS7UAnrd4zYSiMNXuL2BwCTuiTEdU/qpN2p/z/DwK28im2rITS
-         S0WA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=betpo/6gyRI8FfpI+4nTGTaP12OwIwRwWQjsAlWwGIc=;
-        b=gx/NN0pUq2QA1nvmofMoXQGPeTJ5/k4iMKGeu+S2wMiueBcnFIPgRKrP2od9d4OMpl
-         BrS40y7HVNPuf4GrSZTl4JjzW+5oWu/p6CciiC9C0RgsSkhPwgrjMYYF1sFgE46igHhi
-         lRTgZegLxaI/dyPJDvm4Xebqp8QP6i+Pj+pT9BYQZaKDNPtlaTmVrkliOmF/zQIA8T+5
-         P/YR9/tQkkQ3XAxpsxG8xPavnm+LU/ezWK6RoaublML7VxTkle0awa/SAZfMBtd9/EfC
-         ulW2PLdcMt6LM7bR/kD1UTt2HzzYEkThi1p/OPtknqyUvFNrX/FcKGOr7L1YjkELOV3c
-         t+RA==
-X-Gm-Message-State: AOUpUlF7BF0ym1SP+Jpm2CW/UmgdRHSQSYQJr2iyvFvTOQIl08WUKCcA
-        Ehn9MO1PBo8XcbcAi3hV7pQ=
-X-Google-Smtp-Source: AA+uWPz5LXFx8aW7jC04Axio1l50vL0Xs0AhKfsAdLGsO4xW1+lZ2jrbCEifvao7B9aQaUBUoOnGQg==
-X-Received: by 2002:a5d:470e:: with SMTP id y14-v6mr12032268wrq.229.1534196029452;
-        Mon, 13 Aug 2018 14:33:49 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q2-v6sm7377969wmc.44.2018.08.13.14.33.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Aug 2018 14:33:48 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Yaroslav Halchenko <yoh@onerussian.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: wishlist: "--cached|--staged" to "git commit file(s)"
-References: <20180813162236.GO732@hopa.kiewit.dartmouth.edu>
-Date:   Mon, 13 Aug 2018 14:33:48 -0700
-In-Reply-To: <20180813162236.GO732@hopa.kiewit.dartmouth.edu> (Yaroslav
-        Halchenko's message of "Mon, 13 Aug 2018 12:22:36 -0400")
-Message-ID: <xmqqva8e2bpf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730281AbeHNAbI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 20:31:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53898 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1730027AbeHNAbH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 20:31:07 -0400
+Received: (qmail 17794 invoked by uid 109); 13 Aug 2018 21:47:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Aug 2018 21:47:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14241 invoked by uid 111); 13 Aug 2018 21:47:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 13 Aug 2018 17:47:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2018 17:47:03 -0400
+Date:   Mon, 13 Aug 2018 17:47:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <peartben@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 2/5] unpack-trees: add performance tracing
+Message-ID: <20180813214702.GA16006@sigill.intra.peff.net>
+References: <20180804053723.4695-1-pclouds@gmail.com>
+ <20180812081551.27927-1-pclouds@gmail.com>
+ <20180812081551.27927-3-pclouds@gmail.com>
+ <20180813192526.GC10013@sigill.intra.peff.net>
+ <CACsJy8Cxp9+xiMB6C71Kr63EWyAni-K0ZwVBbpBjUieDbZ+6AA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Cxp9+xiMB6C71Kr63EWyAni-K0ZwVBbpBjUieDbZ+6AA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Yaroslav Halchenko <yoh@onerussian.com> writes:
+On Mon, Aug 13, 2018 at 09:52:41PM +0200, Duy Nguyen wrote:
 
-> command.  ATM there is no non-interactive (via --patch/--interactive I
-> think it is possible) way to commit selected subset of staged files not
-> from the worktree (as it is done with "git commit file(s)") but from the
-> index.
+> I don't think I have really fully mastered 'perf'. In this case for
+> example, I don't think the default event 'cycles' is the right one
+> because we are hit hard by I/O as well. I think at least I now have an
+> excuse to try that famous flamegraph out ;-) but if you have time to
+> run a quick analysis of this unpack-trees with 'perf', I'd love to
+> learn a trick or two from you.
 
-Hmph, so
+To be honest, I don't feel like I know how to use perf either. ;) But
+I'll try to contribute what I know.
 
-	edit A B C
-	git add A B
-	edit A B C
-	git commit --cached B
+Usually I'd just use perf to get a callgraph with hot-spots, like:
 
-would create a commit that is different from the original HEAD by
-the edit to file B you did in the first step, but not the edit to A
-or C, or edit to B after you did "git add"?
+  perf record -g git ...
+  perf report --call-graph=fractal,0.05,caller
 
-That sounds like a useful feature.  If you do not need that "exclude
-the later edit since the last 'git add'", you can do "git commit B",
-but if you added crufts to B in the working tree since you added a
-good copy of B to the index, that would not do what you want to do.
+But that's not going to show you absolute times, which makes it lousy
+for comparing run-to-run (if you speed something up, its percentage gets
+smaller, but it's hard to tell _how much_ you've sped it up). And as you
+note, it's measuring CPU cycles, not wall-clock.
 
-Sounds like a good starter project for somebody who wants to try to
-get their hands dirty.  I think it is just the matter of updating
-builtin/commit.c::prepare_index() where COMMIT_PARTIAL is handled,
-skipping "(2) update the index with the given paths" when "--cached"
-option is given, but doing everything else in that codepath.
+To get output most similar to what you've shown, I think you'd define
+some probes at functions of interest:
 
+  for i in unpack_trees cache_tree_update; do
+    # Cover both function entrance and return.
+    perf probe -x $(which git) $i
+    perf probe -x $(which git) ${i}%return
+  done
 
+and then record a run looking for those events:
+
+  perf record -e 'probe_git:*' git ...
+
+and then dump the result:
+
+  perf script -F time,event
+
+which gives you the times for each event. If you want elapsed times, you
+have to compute them yourself:
+
+  perf script -F time,event |
+  perl -ne '
+    /([0-9.]+):\s+probe_git:(.*):/ or die "confusing: $_";
+    my ($t, $func) = ($1, $2);
+    if ($func =~ s/__return$//) {
+      my $start = pop @stack;
+      printf "%0.9f", $t - $start;
+      print " s: ";
+      print "  " for (0..@stack-1);
+      print $func, "\n";
+    } else {
+      push @stack, $t;
+    }
+  '
+
+which gives a similar inverted-graph elapsed-time output that your trace
+output does. One annoying downside is that you have to be root to create
+or use the dynamic probes. I don't know if there's an easy way around
+that. Or if there's a perf command which already handles this kind of
+elapsed stuff (there's a "perf trace" which seems really close, but I
+couldn't convince it to look at elapsed time for non-syscalls).
+
+> > I can buy the argument that it's nice to have some form of profiling
+> > that works everywhere, even if it's lowest-common-denominator. I just
+> > wonder if we could be investing effort into tooling around existing
+> > solutions that will end up more powerful and flexible in the long run.
+> 
+> I think part of this sprinkling is to highlight the performance
+> sensitive spots in the code. And it would be helpful to ask a user to
+> enable GIT_TRACE_PERFORMANCE to have a quick breakdown when something
+> is reported slow. I don't care that much about other platforms to be
+> honest, but perf being largely restricted to root does prevent it from
+> replacing GIT_TRACE_PERFORMANCE in this case.
+
+Yeah, this line of reasoning (which is similar to what Stefan said) is
+compelling to me. GIT_TRACE_* is _most_ useful when we can ask ordinary
+users to give us output. Even if we scripted the complexity I showed
+above, it's not guaranteed that perf is even available or that the user
+has permissions to use it.
+
+-Peff
