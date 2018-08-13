@@ -7,151 +7,142 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 500C81F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 12:22:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1301F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 12:26:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729640AbeHMPE0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 11:04:26 -0400
-Received: from mout.gmx.net ([212.227.15.15]:44697 "EHLO mout.gmx.net"
+        id S1729688AbeHMPIj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 11:08:39 -0400
+Received: from mout.gmx.net ([212.227.17.22]:37693 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728509AbeHMPE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 11:04:26 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MGjL7-1fbfBq0mYr-00DWuT; Mon, 13
- Aug 2018 14:22:19 +0200
-Date:   Mon, 13 Aug 2018 14:22:25 +0200 (DST)
+        id S1728410AbeHMPIj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 11:08:39 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ls8Qd-1g1b8T0qL9-013uog; Mon, 13
+ Aug 2018 14:26:30 +0200
+Date:   Mon, 13 Aug 2018 14:26:36 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
 cc:     gitster@pobox.com, git@vger.kernel.org
-Subject: Re: [PATCH 6/8] diff: use emit_line_0 once per line
-In-Reply-To: <20180810223441.30428-7-sbeller@google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808131418060.71@tvgsbejvaqbjf.bet>
-References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-7-sbeller@google.com>
+Subject: Re: [PATCH 7/8] diff.c: compute reverse locally in emit_line_0
+In-Reply-To: <20180810223441.30428-8-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131422580.71@tvgsbejvaqbjf.bet>
+References: <20180810223441.30428-1-sbeller@google.com> <20180810223441.30428-8-sbeller@google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:naXDPPTbemeMzySTyUod3bG7lF8giz8DWJeXAS2D219XwCbaE5v
- /yV50uzetc/kg8+bC2xtzqmVs2OWBySBL9wmge9UmXLRalXSrII/9nNQZnlWj1uVP7qjqFw
- qT0MH3C7Uef/D/MfQHwdeha59ycw5D2dsc+Xp/VJbC5rzQwhjNS+mtOrG+oJkY50DL2ov6B
- QPoRIEvYxEcAStWf84Vig==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:y7FdGc3SC7o=:C4R0rmDDGvu0UvUbUtpu4W
- JX5AVeAW1usRv+Wk0OuD3Z4Dbsor9gtRWpquZdFs1TmTZNMDYEixf7RIwrzuhLe1NogKXMBIy
- h6nMNj4WFwbZSUdsh5uB5jlI+Qc0fKDHHEB/tI5eDISgoqjEVr2M9i3WB03fZPdnIBd4ROvQr
- MOAogt5lXc2oQ+CS0O/n2cfaIcNz+wD++Pn9uKZv/fAszs9lll5EBQ1B1EmrM5Ys1aD3IjMu8
- QgMFeJGUkeFN5wNW7p9zjTalyxCp71QPtC+phhSe1F7E/XnfRLVONxhuAY4oucqmoxCDYpdRE
- F36x0Yi6lGLahVBYoW4J3U/TVDcjoP+fo3uoS4x8vukNHBDPeSIuhQs/htS8k9Czyjj5PGzr1
- enodOgqcBL37ZB0wtt09wbBxOokInMMf2ogi2Uof4+YsMX8aBMduXyu3BXI7k20pFgq7tO8rO
- YZ7R7Pgiw/RGlfBsxj4MjkxCi7PIQLPprsgFvPINyMni+Isl4ke6ejIrWVbmh9YV/d3Bv06ND
- Zq9OWYxkqusp8qu9ICVb3sZ5rA9eRkXZ+iRGZHwnFBqkLNJ7xN3p04IZdHfBeTq/2OmV5rd4/
- 9nsYDy1QvYulMYI08eMXlX2guXQ24VHWz2HNShDp/NvhA/ZPUua/Cj1IO5nZ5azGxsK1BVDdc
- OYN+0vYaHL5SPPiI7OtnJFwcUhJu1INMEpoGwSPD4g7uVgeJcqHIbP3mmi4/LxNVCe42x2P85
- uulcCglxvl2ohOryhSeoOo3Qd/NdYh/RHbvBFR1ChUwHqb7Rci5HF071UxsNUE1YTJwFyaXuM
- gc79R1w
+X-Provags-ID: V03:K1:jLEflznLURcyhaJvORYfyVyTw84C6cRo09wuh1oj9ritZltJio/
+ me9mQcE2T09NYd0A5bajmq+tVqeC6IiGvEdBYEcOn0C+WK6WwK+DCOqtf0OmoIrtD5AKfxy
+ NNGgtqEsKcEH2a+I0ScXqVLP1nTcN2RO3C4KlOlhshCppk267qBw6JdGb9mEP6HJpM4L8wU
+ OlMCmiEEwCoNR8Oqt76gg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:KAuZqlweAbg=:dTrInGToYuN6js0NMvbwDL
+ YmnD1nIXAFA9w9jn720JIh+2bRIvoFL5waQhMTfcm/IPsDT8VYI32ivWVnY+qjJqIzHtxRy+6
+ 4YcnETRIJwZN6VnKqePHEL5I+ynuIl1H37WWR4Y1WubqMhLY4GcUkgGhfqx09F8lOSBOyXEVZ
+ YF8oVIdteiNCuy86fOPTczPVOYvwgF64ixHWyHXkNTOcXbUCX/SquzrYsUyLekvRuD1RIgn0r
+ 9SB2Z4f/Pl1wXWZ4Q2kCJ5wc253Hzlbxi6C7KxNTINsdPVJT36veaAb1mZpG9Ux4ljGlwXxhC
+ 1rOBR3XZAd8dJ/J8wbKDRW7jWPLS0GDIQHO+hGTcSepRAThP3GDsHHRYmw5TWErvSv3rTX+9b
+ Y/F4BSL2dfVaVq0vKVwRAg36saQUJxXc5FmVqAAKpl7eDxsn/UbnfNAWqYDsjjZ+VzUNbhEjN
+ VmolH3F0p/+bHwZkzCjdbK+SjknluXA1jG0SPbB2InRd7UUMzgNKIduZiynwg5CNETT7liJSw
+ Yd4XKSz9Xeb0k1n5jUFMtcXPOU83Y4GBFrzImAvmY6UCbev3eQDAh9A9T8S8JEFwfHyiQ1nrS
+ B0Eh/1r0G3bmeqp618ikfK9eD3p1UFSBP0UG+leejT6HSYlGN50ylef9mJJRSQuVEQRQ7x4eH
+ PCsn7Nsooh3n2IMowXRJBwgQ7ikI7RbzZH6134bm6oqRm4dBJ9VA0/3sjMuSOAeq6uxrT/HRd
+ f/4g5NOOHD/C9PaqO8sRome8qjh8A8IxLDhKIg7qsh0dxDWnMGTRQd/0qmIXSRqkEoP5kX3Kj
+ XU3tu4W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stefan,
+Hi,
+
 
 On Fri, 10 Aug 2018, Stefan Beller wrote:
 
-> All lines that use emit_line_0 multiple times per line, are combined
-> into a single call to emit_line_0, making use of the 'set' argument.
-> 
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+Well, my rationale for having the explicit `reverse` parameter is: this
+code is complex enough, introducing some magic "this and that implies
+this" makes it much harder to understand.
+
+So I am not at all sure that this is a good thing.
+
 > ---
->  diff.c | 26 ++++++++++++--------------
->  1 file changed, 12 insertions(+), 14 deletions(-)
+>  diff.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
 > 
 > diff --git a/diff.c b/diff.c
-> index 5eea5edca50..01095a59d3d 100644
+> index 01095a59d3d..e50cd312755 100644
 > --- a/diff.c
 > +++ b/diff.c
-> @@ -629,10 +629,7 @@ static void emit_line_0(struct diff_options *o,
->  	int nofirst;
->  	FILE *file = o->file;
+> @@ -622,11 +622,12 @@ static void check_blank_at_eof(mmfile_t *mf1, mmfile_t *mf2,
+>  }
 >  
-> -	if (first)
-> -		fputs(diff_line_prefix(o), file);
-> -	else if (!len)
-> -		return;
-> +	fputs(diff_line_prefix(o), file);
+>  static void emit_line_0(struct diff_options *o,
+> -			const char *set_sign, const char *set, unsigned reverse, const char *reset,
+> +			const char *set_sign, const char *set, const char *reset,
+>  			int first, const char *line, int len)
+>  {
+>  	int has_trailing_newline, has_trailing_carriage_return;
+>  	int nofirst;
+> +	int reverse = !!set && !!set_sign;
 
-How about separating this into its own "now that `first` is no longer
-`NULL`, skip this" patch?
+In contrast to, say, Javascript which has this nice feature that you can
+write `set || set_sign` to mean `set ? set : set_sign`, I am fairly
+certain that `set && set_sign` already evaluates to `0` or `1`. No need
+for all those exclamation marks!!!!
 
-I found it a bit hard to review this diff, primarily because this hunk
-would logically make more sense after the other hunks.
+:-)
 
+But as I said: I think it is a bit too magic for my liking to say "if
+the diff marker color is specified as well as the color for the rest of
+the line, then the diff marker will be reversed". That's just making the
+code hard to understand, i.e. less readable rather than more.
 
->  	if (len == 0) {
->  		has_trailing_newline = (first == '\n');
-> @@ -652,13 +649,17 @@ static void emit_line_0(struct diff_options *o,
->  	if (len || !nofirst) {
->  		if (reverse && want_color(o->use_color))
->  			fputs(GIT_COLOR_REVERSE, file);
-> -		if (set_sign && set_sign[0])
-> -			fputs(set_sign, file);
-> +		if (set_sign || set)
-> +			fputs(set_sign ? set_sign : set, file);
-
-Wait, what? Why is `set` all of a sudden also applying to `first`?
-
-I would have expected `set_sign` to apply to `first`, and `set` to the
-rest of the line.
-
->  		if (first && !nofirst)
->  			fputc(first, file);
-> -		if (set)
-> -			fputs(set, file);
-> -		fwrite(line, len, 1, file);
-> +		if (len) {
-> +			if (set_sign && set && set != set_sign)
-> +				fputs(reset, file);
-> +			if (set)
-> +				fputs(set, file);
-
-That sounds as if `set == set_sign` would duplicate the `set`. How about
-this instead?
-
-			if (set && set != set_sign) {
-				if (set_sign)
-					fputs(reset, file);
-				fputs(set, file);
-			}
-
-The rest looks good to me.
-
-Thank you,
+Ciao,
 Dscho
 
-> +			fwrite(line, len, 1, file);
-> +		}
->  		fputs(reset, file);
+>  	FILE *file = o->file;
+>  
+>  	fputs(diff_line_prefix(o), file);
+> @@ -671,7 +672,7 @@ static void emit_line_0(struct diff_options *o,
+>  static void emit_line(struct diff_options *o, const char *set, const char *reset,
+>  		      const char *line, int len)
+>  {
+> -	emit_line_0(o, set, NULL, 0, reset, line[0], line+1, len-1);
+> +	emit_line_0(o, set, NULL, reset, line[0], line+1, len-1);
+>  }
+>  
+>  enum diff_symbol {
+> @@ -1203,15 +1204,15 @@ static void emit_line_ws_markup(struct diff_options *o,
 >  	}
->  	if (has_trailing_carriage_return)
-> @@ -1204,16 +1205,13 @@ static void emit_line_ws_markup(struct diff_options *o,
+>  
 >  	if (!ws && !set_sign)
->  		emit_line_0(o, set, NULL, 0, reset, sign, line, len);
+> -		emit_line_0(o, set, NULL, 0, reset, sign, line, len);
+> +		emit_line_0(o, set, NULL, reset, sign, line, len);
 >  	else if (!ws) {
-> -		/* Emit just the prefix, then the rest. */
-> -		emit_line_0(o, set_sign, NULL, !!set_sign, reset, sign, "", 0);
-> -		emit_line_0(o, set, NULL, 0, reset, 0, line, len);
-> +		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, line, len);
+> -		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, line, len);
+> +		emit_line_0(o, set_sign, set, reset, sign, line, len);
 >  	} else if (blank_at_eof)
 >  		/* Blank line at EOF - paint '+' as well */
->  		emit_line_0(o, ws, NULL, 0, reset, sign, line, len);
+> -		emit_line_0(o, ws, NULL, 0, reset, sign, line, len);
+> +		emit_line_0(o, ws, NULL, reset, sign, line, len);
 >  	else {
 >  		/* Emit just the prefix, then the rest. */
-> -		emit_line_0(o, set_sign ? set_sign : set, NULL, !!set_sign, reset,
-> -			    sign, "", 0);
-> +		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, "", 0);
+> -		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, "", 0);
+> +		emit_line_0(o, set_sign, set, reset, sign, "", 0);
 >  		ws_check_emit(line, len, ws_rule,
 >  			      o->file, set, reset, ws);
 >  	}
+> @@ -1234,7 +1235,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  		context = diff_get_color_opt(o, DIFF_CONTEXT);
+>  		reset = diff_get_color_opt(o, DIFF_RESET);
+>  		putc('\n', o->file);
+> -		emit_line_0(o, context, NULL, 0, reset, '\\',
+> +		emit_line_0(o, context, NULL, reset, '\\',
+>  			    nneof, strlen(nneof));
+>  		break;
+>  	case DIFF_SYMBOL_SUBMODULE_HEADER:
 > -- 
 > 2.18.0.865.gffc8e1a3cd6-goog
 > 
