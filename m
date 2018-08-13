@@ -2,110 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9FC91F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:53:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C9ED1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:54:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729596AbeHMOfN (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:35:13 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41023 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729333AbeHMOfN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:35:13 -0400
-Received: by mail-ed1-f65.google.com with SMTP id s24-v6so8079468edr.8
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:53:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=WwPL2CpDO14+FZyRWK58c6XIdkPBo1mldt0A6/+vric=;
-        b=tFsGjhlNWCFsMByhWg5PJjpr2WZKGup1LXPbfZlrQ2Z/mnf0vAWkQr45NToNerq36m
-         gwD9Q5u76/3LlEcqZ1c7abLw+3XikSyuZiTXiXHSAho+6suW6aZhIoTNWSrDuJOxF3CR
-         8PCEK+di9mJJt7G5crgewNX28xM1PGVlus8vpgjDiWRMwY6zgaIuyza/HkUByp57N2pw
-         do+XQYqL6/vgwICsmRh/lZX8mTFZh6zCxlxXWCrhvK3oJpJllNoVhzuriEovrr+6PyO+
-         ZjkfWIA/jUsk5ka2ohoAEHZfDWhnToat4SlIz3lVr2ReqvO99LIwFUR/pi9cPUIpEgwE
-         NUlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=WwPL2CpDO14+FZyRWK58c6XIdkPBo1mldt0A6/+vric=;
-        b=VRBihYbE7rWKO+JUu5xQpMdX7av8GdjOcYctEJWPe34KxZ/2ho1gar9uTi7Qh+70re
-         EYDUSTgyWM7fR2BASY4hbh+Vksvdt/IKxkEVWnfDLleH949w+CCcydVXA/XgLo7yB8Gw
-         HN0tdEWGQUgWaczK3zk2yon7doxglrxoZ4RRDmtkA8jRDdA0YmAPTMdNdIU1txdoZzkL
-         P8ZBqmVzYCIn8xSIL3SR4tjwpy9/k7uNstbOoWJQ1nhmD9pNvZOm60MGI4G/h7ku7IQ3
-         gnxfExAWlUMD1lwd/bXDT1I+LRF9QJz/3oSS5jjoQh+ryG7bcCo5HUse602ug1IPMWbA
-         AHQQ==
-X-Gm-Message-State: AOUpUlEJktmP6tlbv4+g9xjICYcvjyWDLHGA+TQTaE+77vWBBM644ZD9
-        enQkxF5ixVtRvRz51t+3By0=
-X-Google-Smtp-Source: AA+uWPypDKQr40M09bpTpYoLD3gfLRrwFQ2s296is993SOgFhS8wlHQA+rKINTBj2w2H+g2v3fojdw==
-X-Received: by 2002:a50:8345:: with SMTP id 63-v6mr21373473edh.5.1534161195064;
-        Mon, 13 Aug 2018 04:53:15 -0700 (PDT)
-Received: from localhost.localdomain (x4db0576d.dyn.telefonica.de. [77.176.87.109])
-        by smtp.gmail.com with ESMTPSA id h34-v6sm9904030eda.58.2018.08.13.04.53.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 13 Aug 2018 04:53:14 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2] t5318: use 'test_cmp_bin' to compare commit-graph files
-Date:   Mon, 13 Aug 2018 13:52:43 +0200
-Message-Id: <20180813115243.28295-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.18.0.408.g42635c01bc
-In-Reply-To: <CAM0VKjmhnMfND8HwAvLChgZ6iFYuHUpD=C=3sqjkF9GUsLjpVQ@mail.gmail.com>
-References: <CAM0VKjmhnMfND8HwAvLChgZ6iFYuHUpD=C=3sqjkF9GUsLjpVQ@mail.gmail.com>
+        id S1729584AbeHMOgV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:36:21 -0400
+Received: from mout.gmx.net ([212.227.17.20]:52549 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728712AbeHMOgV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:36:21 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMYZG-1fodCH20D8-008M3l; Mon, 13
+ Aug 2018 13:54:19 +0200
+Date:   Mon, 13 Aug 2018 13:54:25 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH 4/4] range-diff: indent special lines as context
+In-Reply-To: <20180810224923.143625-5-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808131353280.71@tvgsbejvaqbjf.bet>
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-5-sbeller@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:c5eUVE137L05HvdvdS7bxudLL80XoNX2JYtV65ZUxyBNNoJcvEL
+ xKSxXskQrE+zQEkzuVrDWjXN3KLhZ0g1O7ab0RHSTCY8MfMJFnR/m9ndEhQgY1+1Fq7SuJo
+ RjUsiBD1Y4nSIBECEs3wvQ79KqYm3hqRDWhlFLGX1Ybf8rUh3wwR+p1nrboayJqvn0x7pZ0
+ kcaOFvcQG9Y+iQ47iNyjA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:52jwCAqDVVE=:5xnyczvTe7N8weHA4rkyrN
+ Jq9gs4Qu7tF4J0nVhbz66qBhZ2KVcgIfxgUAL0+/LVppPrDon4/O4GbuDxn5HQtYUhiCGv0Aw
+ 71ugTJbc23i+FzB74IhHVXbJ83+xglcqx7fYuzZAC2shEKnyCw/tBYen+FWxyUfs0/xhO4nvZ
+ h7iTXBW9Z56YBWdtsKiw+g9raQ41z11m9zwdj2MN8AezBEeLFwfXmSeKHLkxEY8iJla2P7apU
+ MtE8J6XLnEg/TwWtxa3BsuhB016jQBWfQmhciHYtZLePHkNtmkyMiWIyVXHA7YT2DmuOf3Um4
+ nU5S4r3CCaLaqmSTeApB6Wg2AbOlhvcyy6ArVB1nMdb4Sm6mtDyRzKomp9L07ylilGTR9AI4x
+ rIrSkPsaRkwMjZugRnnSEx0GsJbKRNkspDPVEdRCZOw3y/wT/80aL0elT6lC5TzB+P2OJYQwh
+ TLaH++bzV2RdAZJbcMbUZ1wOQBcsofFlNHNEbFrqb8lRPqDL5KhsMKkkDzLp6z7LQ+OAJU3mF
+ 13AYz1kOaTiuC7nGBKyIT8JGRaXlNmWizrW8HhucRwt5HWq4CMv7SfTF7NR1/tXJ4v4nOieaE
+ ldiJCX+00MxbvC3m0Qy1NDgFM+dfZwvnUG4WMMhl6iPB6GPEhyrvtZUfr3aSblbvGTMNn8HKg
+ uwMgdx0seKDgJ1GVo60zC6pbTkm9/w2480w6KHJA7LDx2VklVla9wV7OFbtBrT70I1yn2aBy9
+ Yg0HrKBzchuPvYMAO866P/FnFbq/NE9OBCqlQ5WxCp6Qa/1KJYi8U5ttMaEIKOT5OAhtoVtZP
+ a7S+Y+d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The commit-graph files are binary files, so they should not be
-compared with 'test_cmp', because that might cause issues like
-crashing[1] or infinite loop[2] on Windows, where 'test_cmp' is a
-shell function to deal with random LF-CRLF conversions[3].
+Hi Stefan,
 
-Use 'test_cmp_bin' instead.
+On Fri, 10 Aug 2018, Stefan Beller wrote:
 
-1 - b93e6e3663 (t5000, t5003: do not use test_cmp to compare binary
-    files, 2014-06-04)
-2 - f9f3851b4d (t9300: use test_cmp_bin instead of test_cmp to compare
-    binary files, 2014-09-12)
-3 - 4d715ac05c (Windows: a test_cmp that is agnostic to random LF <>
-    CRLF conversions, 2013-10-26)
+> The range-diff coloring is a bit fuzzy when it comes to special lines of
+> a diff, such as indicating new and old files with +++ and ---, as it
+> would pickup the first character and interpret it for its coloring, which
+> seems annoying as in regular diffs, these lines are colored bold via
+> DIFF_METAINFO.
+> 
+> By indenting these lines by a white space, they will be treated as context
+> which is much more useful, an example [1] on the range diff series itself:
+> 
+> [...]
+>     + diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+>     + new file mode 100644
+>     + --- /dev/null
+>     + +++ b/Documentation/git-range-diff.txt
+>     +@@
+>     ++git-range-diff(1)
+> [...]
+>     +
+>       diff --git a/Makefile b/Makefile
+>       --- a/Makefile
+>       +++ b/Makefile
+> [...]
+> 
+> The first lines that introduce the new file for the man page will have the
+> '+' sign colored and the rest of the line will be bold.
+> 
+> The later lines that indicate a change to the Makefile will be treated as
+> context both in the outer and inner diff, such that those lines stay
+> regular color.
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+While I am a fan of having those lines colored correctly, I have to admit
+that I am not exactly enthusiastic about that extra indentation...
 
-Same diff, updated commit message, including Derrick's Reviewed-by.
+Otherwise, this looks good to me.
 
- t/t5318-commit-graph.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks,
+Dscho
 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 4f17d7701e..1c148ebf21 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -254,9 +254,9 @@ test_expect_success 'check that gc computes commit-graph' '
- 	git config gc.writeCommitGraph true &&
- 	git gc &&
- 	cp $objdir/info/commit-graph commit-graph-after-gc &&
--	! test_cmp commit-graph-before-gc commit-graph-after-gc &&
-+	! test_cmp_bin commit-graph-before-gc commit-graph-after-gc &&
- 	git commit-graph write --reachable &&
--	test_cmp commit-graph-after-gc $objdir/info/commit-graph
-+	test_cmp_bin commit-graph-after-gc $objdir/info/commit-graph
- '
- 
- # the verify tests below expect the commit-graph to contain
--- 
-2.18.0.408.g42635c01bc
-
+> 
+> [1] ./git-range-diff pr-1/dscho/branch-diff-v3...pr-1/dscho/branch-diff-v4
+>     These tags are found at https://github.com/gitgitgadget/git
+> 
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  range-diff.c          |  2 ++
+>  t/t3206-range-diff.sh | 12 ++++++------
+>  2 files changed, 8 insertions(+), 6 deletions(-)
+> 
+> diff --git a/range-diff.c b/range-diff.c
+> index 6e4192c8e79..a8db7c4f8d3 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -85,6 +85,7 @@ static int read_patches(const char *range, struct string_list *list)
+>  			strbuf_addch(&buf, '\n');
+>  			if (!util->diff_offset)
+>  				util->diff_offset = buf.len;
+> +			strbuf_addch(&buf, ' ');
+>  			strbuf_addbuf(&buf, &line);
+>  		} else if (in_header) {
+>  			if (starts_with(line.buf, "Author: ")) {
+> @@ -121,6 +122,7 @@ static int read_patches(const char *range, struct string_list *list)
+>  			strbuf_addch(&buf, ' ');
+>  			strbuf_add(&buf, line.buf + 1, line.len - 1);
+>  		} else {
+> +			strbuf_addch(&buf, ' ');
+>  			strbuf_addbuf(&buf, &line);
+>  		}
+>  
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 7dc7c80a1de..c94f9bf5ee1 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -133,9 +133,9 @@ test_expect_success 'changed message' '
+>  	    Z
+>  	    +    Also a silly comment here!
+>  	    +
+> -	    Zdiff --git a/file b/file
+> -	    Z--- a/file
+> -	    Z+++ b/file
+> +	    Z diff --git a/file b/file
+> +	    Z --- a/file
+> +	    Z +++ b/file
+>  	3:  147e64e = 3:  b9cb956 s/11/B/
+>  	4:  a63e992 = 4:  8add5f1 s/12/B/
+>  	EOF
+> @@ -152,9 +152,9 @@ test_expect_success 'dual-coloring' '
+>  	:     <RESET>
+>  	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
+>  	:    <REVERSE><GREEN>+<RESET>
+> -	:     diff --git a/file b/file<RESET>
+> -	:    <RED> --- a/file<RESET>
+> -	:    <GREEN> +++ b/file<RESET>
+> +	:      diff --git a/file b/file<RESET>
+> +	:      --- a/file<RESET>
+> +	:      +++ b/file<RESET>
+>  	:<RED>3:  0559556 <RESET><YELLOW>!<RESET><GREEN> 3:  b9cb956<RESET><YELLOW> s/11/B/<RESET>
+>  	:    <REVERSE><CYAN>@@ -10,7 +10,7 @@<RESET>
+>  	:      9<RESET>
+> -- 
+> 2.18.0.865.gffc8e1a3cd6-goog
+> 
+> 
