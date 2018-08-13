@@ -2,270 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F3EF1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:15:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A3CD1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730080AbeHMS6o (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 14:58:44 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:42646 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729943AbeHMS6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 14:58:43 -0400
-Received: by mail-lj1-f196.google.com with SMTP id f1-v6so13014118ljc.9
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:15:48 -0700 (PDT)
+        id S1729389AbeHMTI7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 15:08:59 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:34908 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728639AbeHMTI6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 15:08:58 -0400
+Received: by mail-io0-f195.google.com with SMTP id w11-v6so15375053iob.2
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:26:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hNIP9ivZu6bMEZaC9ijJJrqbUzBtLqhogu9qd5mVAX8=;
-        b=DW5R/YPx6fwtmND5Ohchcq7lzM1WogZquogP+YzLNFlnL/JeZApAdeHn4eAy0NFvUf
-         8UPDM6Ey569M8ypak1JC8b7zxw4yX+onljY/AskNS0IbdNP099Q5R4LxnbdPaEQTbfh6
-         h5GMvV4dRJeyNKqEyfowZAOkAXrnTFE9NOrnQUnciy8W1CEIFm60nl67AI2MNCb6toZ5
-         2237v8ws6h6KvsxhfdGTVp0OOCWwYeujZL2mxrtzeRGQFBhWVZH8X7/XszDxPsHVozSx
-         HvTq6c6oi0LKC7VQemk+/C+IViN2nLyr/FXD20CTnqTjUPSEt8Hc1ObyVbO9BrT1RPxj
-         Gm7Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+U8JuMBAHRyeSHxkH2axyefKE+19HfnxFOtu0R16jvk=;
+        b=s7RlGeUAcHs39s27cR3Cov4b3N3Vpc4HBDZ3b/g3opCGHJv0H//OmYl6r0mtZ6Un7s
+         eMKx9YC8QzjdMp8dTXAXpvDcoYNT6IkJLhGyqno4HC/FfDih802XJ91gEKvdhKtCJP8x
+         5CXDcaKPVzgq9bmQjCKsw1YM7PFL0ck6fVHMs6C2kq61UiUtFgvWRBal3Mw+wMrVWqMG
+         dg3Gadknx0/A8dGKtFsAJH0/CfKFIsmDmWrxb2aPJCdVC3r5hlXQSjaHheb3BivvtlNQ
+         mG9tkhLvyor+OGbYvjhOrIV4YL+Uy/0nEe0A8939YZcNzL0MoxY1seCuNLayXdPunibI
+         qo8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hNIP9ivZu6bMEZaC9ijJJrqbUzBtLqhogu9qd5mVAX8=;
-        b=A/ALsfNGkFDqL6Zgazas0agAr36nCpXVSp4fBO9VWbReuNlnZBYD5WxjotAQfIGr+z
-         HQ5jSYevGBrDI5HMev98SCMULSysCCsB3sfY7dsAbrSHuRZNEuD37G2QZb7vZeti0snP
-         gKiss41UZzn8rmJUk0sOBWhPpg76R+c+uNKKX2D5LUrvmYZ+S/i/FxGsiPAHgag0G6mZ
-         yi1ubr5icIFd/Z/vXG3SzBP7dIZBzCghpuyZ/tYMBMHis6T6s4FTMpGie0xf/q+j4KPB
-         iublyh2qF0GQlJP5340Fz0hSjPFd7Xs+eByTiLwDMWqv2ew6DlSEgBKv41TdY+KnhXyB
-         kBfQ==
-X-Gm-Message-State: AOUpUlFrAwuDjg6JXZXKuz0kUhDcG37mKXuBZDQ3pLrfqrmq2S9NjEuO
-        hd6vvzaGiu2EQl7/uPmpJo52/HAJ
-X-Google-Smtp-Source: AA+uWPzEmKZ192AoYMjYxF32PZublJLJ5Gi4j8oted0k2Mbmux4SEqqVZTGB/BJHdIapTN68cTpVeg==
-X-Received: by 2002:a2e:9e55:: with SMTP id g21-v6mr13327740ljk.116.1534176947077;
-        Mon, 13 Aug 2018 09:15:47 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id d14-v6sm3066031ljc.56.2018.08.13.09.15.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 09:15:45 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 24/24] blame.c: remove implicit dependency on the_index
-Date:   Mon, 13 Aug 2018 18:14:41 +0200
-Message-Id: <20180813161441.16824-25-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.1004.g6639190530
-In-Reply-To: <20180813161441.16824-1-pclouds@gmail.com>
-References: <20180813161441.16824-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+U8JuMBAHRyeSHxkH2axyefKE+19HfnxFOtu0R16jvk=;
+        b=r1pwc6WPSgrHh2BlA5U1CXK0UeN7gF67SUnW5OgXBzHzI8mshL3+tyVF1qtTBTY0kD
+         GcRV/n0HpomArdIzaC50/gl82TPBK2R56VA9zeRIFfo651ZoEUhhDmZOR9h6l5NiN7gE
+         S55DTGhiFT3ftIglJV5oKAPed5kA5rRy5XZmAY1vhER6x5E2z8JhKMwwf38ANhKa7ZFs
+         JTVF3/X6vjDQN+czOdzJYXWiBYTbqHa9w415n/cc0wLqyWdcQATabYKDSFBx/AdtLYt+
+         mcpvS0ipENB45Q0g4ePzai+SRbnnvWRcwHc3+kGHO2kXJcN/KZJz1jyD66MCewx9TraR
+         ZnFA==
+X-Gm-Message-State: AOUpUlERvGaHNj++Td/uMCl0RsR5hikXckcRxhcvx4NtiQJ317IcBqm5
+        2wWXYOAdMhF8ICA68vk81FfP3V63KzzYjvPpvS4=
+X-Google-Smtp-Source: AA+uWPwQ5AWwzMGpm/DMGaAyHK+LK5QpLbHlTWddX6P/QtgiK0jzIQBe4FRPzP98IShXr4P/C7f3b3OQ+RCiyEL7/rA=
+X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr14000390ioe.282.1534177562738;
+ Mon, 13 Aug 2018 09:26:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20180804053723.4695-1-pclouds@gmail.com> <20180812081551.27927-1-pclouds@gmail.com>
+ <20180812081551.27927-6-pclouds@gmail.com> <CABPp-BEDQfzyZjD0CuZKhvj3iUi0H6Ar0Fgm2UhehjP1pnWKgA@mail.gmail.com>
+ <a8543f33-eb1a-4122-87a4-f8d888af7381@gmail.com>
+In-Reply-To: <a8543f33-eb1a-4122-87a4-f8d888af7381@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 13 Aug 2018 18:25:36 +0200
+Message-ID: <CACsJy8A2L-WX_RLP37fF-f=YBLkCY7+iZLo+Uz=H9EFOWMVnoA@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] unpack-trees: reuse (still valid) cache-tree from src_index
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Side note, since we gain access to the right repository, we can stop
-rely on the_repository in this code as well.
+On Mon, Aug 13, 2018 at 6:05 PM Ben Peart <peartben@gmail.com> wrote:
+> I was part way through writing a patch that would copy the valid parts
+> of the cache-tree from the source index to the dest index
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- blame.c         | 52 +++++++++++++++++++++++++++++--------------------
- blame.h         |  1 +
- builtin/blame.c |  1 +
- 3 files changed, 33 insertions(+), 21 deletions(-)
+Yeah sorry about that. I make bad judgements all the time, unfortunately.
 
-diff --git a/blame.c b/blame.c
-index 58a7036847..08c0c6cf73 100644
---- a/blame.c
-+++ b/blame.c
-@@ -90,7 +90,8 @@ static struct blame_origin *get_origin(struct commit *commit, const char *path)
- 
- 
- 
--static void verify_working_tree_path(struct commit *work_tree, const char *path)
-+static void verify_working_tree_path(struct repository *repo,
-+				     struct commit *work_tree, const char *path)
- {
- 	struct commit_list *parents;
- 	int pos;
-@@ -101,15 +102,15 @@ static void verify_working_tree_path(struct commit *work_tree, const char *path)
- 		unsigned mode;
- 
- 		if (!get_tree_entry(commit_oid, path, &blob_oid, &mode) &&
--		    oid_object_info(the_repository, &blob_oid, NULL) == OBJ_BLOB)
-+		    oid_object_info(repo, &blob_oid, NULL) == OBJ_BLOB)
- 			return;
- 	}
- 
--	pos = cache_name_pos(path, strlen(path));
-+	pos = index_name_pos(repo->index, path, strlen(path));
- 	if (pos >= 0)
- 		; /* path is in the index */
--	else if (-1 - pos < active_nr &&
--		 !strcmp(active_cache[-1 - pos]->name, path))
-+	else if (-1 - pos < repo->index->cache_nr &&
-+		 !strcmp(repo->index->cache[-1 - pos]->name, path))
- 		; /* path is in the index, unmerged */
- 	else
- 		die("no such path '%s' in HEAD", path);
-@@ -165,7 +166,8 @@ static void set_commit_buffer_from_strbuf(struct commit *c, struct strbuf *sb)
-  * Prepare a dummy commit that represents the work tree (or staged) item.
-  * Note that annotating work tree item never works in the reverse.
-  */
--static struct commit *fake_working_tree_commit(struct diff_options *opt,
-+static struct commit *fake_working_tree_commit(struct repository *repo,
-+					       struct diff_options *opt,
- 					       const char *path,
- 					       const char *contents_from)
- {
-@@ -181,7 +183,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	unsigned mode;
- 	struct strbuf msg = STRBUF_INIT;
- 
--	read_cache();
-+	read_index(repo->index);
- 	time(&now);
- 	commit = alloc_commit_node(the_repository);
- 	commit->object.parsed = 1;
-@@ -193,7 +195,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 
- 	parent_tail = append_parent(parent_tail, &head_oid);
- 	append_merge_parents(parent_tail);
--	verify_working_tree_path(commit, path);
-+	verify_working_tree_path(repo, commit, path);
- 
- 	origin = make_origin(commit, path);
- 
-@@ -251,7 +253,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 		if (strbuf_read(&buf, 0, 0) < 0)
- 			die_errno("failed to read from stdin");
- 	}
--	convert_to_git(&the_index, path, buf.buf, buf.len, &buf, 0);
-+	convert_to_git(repo->index, path, buf.buf, buf.len, &buf, 0);
- 	origin->file.ptr = buf.buf;
- 	origin->file.size = buf.len;
- 	pretend_object_file(buf.buf, buf.len, OBJ_BLOB, &origin->blob_oid);
-@@ -262,27 +264,28 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
- 	 * bits; we are not going to write this index out -- we just
- 	 * want to run "diff-index --cached".
- 	 */
--	discard_cache();
--	read_cache();
-+	discard_index(repo->index);
-+	read_index(repo->index);
- 
- 	len = strlen(path);
- 	if (!mode) {
--		int pos = cache_name_pos(path, len);
-+		int pos = index_name_pos(repo->index, path, len);
- 		if (0 <= pos)
--			mode = active_cache[pos]->ce_mode;
-+			mode = repo->index->cache[pos]->ce_mode;
- 		else
- 			/* Let's not bother reading from HEAD tree */
- 			mode = S_IFREG | 0644;
- 	}
--	ce = make_empty_cache_entry(&the_index, len);
-+	ce = make_empty_cache_entry(repo->index, len);
- 	oidcpy(&ce->oid, &origin->blob_oid);
- 	memcpy(ce->name, path, len);
- 	ce->ce_flags = create_ce_flags(0);
- 	ce->ce_namelen = len;
- 	ce->ce_mode = create_ce_mode(mode);
--	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD|ADD_CACHE_OK_TO_REPLACE);
-+	add_index_entry(repo->index, ce,
-+			ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
- 
--	cache_tree_invalidate_path(&the_index, path);
-+	cache_tree_invalidate_path(repo->index, path);
- 
- 	return commit;
- }
-@@ -519,13 +522,14 @@ static void queue_blames(struct blame_scoreboard *sb, struct blame_origin *porig
-  *
-  * This also fills origin->mode for corresponding tree path.
-  */
--static int fill_blob_sha1_and_mode(struct blame_origin *origin)
-+static int fill_blob_sha1_and_mode(struct repository *repo,
-+				   struct blame_origin *origin)
- {
- 	if (!is_null_oid(&origin->blob_oid))
- 		return 0;
- 	if (get_tree_entry(&origin->commit->object.oid, origin->path, &origin->blob_oid, &origin->mode))
- 		goto error_out;
--	if (oid_object_info(the_repository, &origin->blob_oid, NULL) != OBJ_BLOB)
-+	if (oid_object_info(repo, &origin->blob_oid, NULL) != OBJ_BLOB)
- 		goto error_out;
- 	return 0;
-  error_out:
-@@ -1767,7 +1771,9 @@ void init_scoreboard(struct blame_scoreboard *sb)
- 	sb->copy_score = BLAME_DEFAULT_COPY_SCORE;
- }
- 
--void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blame_origin **orig)
-+void setup_scoreboard(struct blame_scoreboard *sb,
-+		      const char *path,
-+		      struct blame_origin **orig)
- {
- 	const char *final_commit_name = NULL;
- 	struct blame_origin *o;
-@@ -1779,6 +1785,9 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
- 	if (sb->reverse && sb->contents_from)
- 		die(_("--contents and --reverse do not blend well."));
- 
-+	if (!sb->repo)
-+		BUG("repo is NULL");
-+
- 	if (!sb->reverse) {
- 		sb->final = find_single_final(sb->revs, &final_commit_name);
- 		sb->commits.compare = compare_commits_by_commit_date;
-@@ -1800,7 +1809,8 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
- 		 * or "--contents".
- 		 */
- 		setup_work_tree();
--		sb->final = fake_working_tree_commit(&sb->revs->diffopt,
-+		sb->final = fake_working_tree_commit(sb->repo,
-+						     &sb->revs->diffopt,
- 						     path, sb->contents_from);
- 		add_pending_object(sb->revs, &(sb->final->object), ":");
- 	}
-@@ -1845,7 +1855,7 @@ void setup_scoreboard(struct blame_scoreboard *sb, const char *path, struct blam
- 	}
- 	else {
- 		o = get_origin(sb->final, path);
--		if (fill_blob_sha1_and_mode(o))
-+		if (fill_blob_sha1_and_mode(sb->repo, o))
- 			die(_("no such path %s in %s"), path, final_commit_name);
- 
- 		if (sb->revs->diffopt.flags.allow_textconv &&
-diff --git a/blame.h b/blame.h
-index 9b5240fb6d..be3a895043 100644
---- a/blame.h
-+++ b/blame.h
-@@ -102,6 +102,7 @@ struct blame_scoreboard {
- 	struct commit *final;
- 	/* Priority queue for commits with unassigned blame records */
- 	struct prio_queue commits;
-+	struct repository *repo;
- 	struct rev_info *revs;
- 	const char *path;
- 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 5c93d169dd..cbbcb26f89 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -988,6 +988,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 	sb.revs = &revs;
- 	sb.contents_from = contents_from;
- 	sb.reverse = reverse;
-+	sb.repo = the_repository;
- 	setup_scoreboard(&sb, path, &o);
- 	lno = sb.num_lines;
- 
+If it's sort of working though, please post to the list anyway to
+archive it. Who knows, some time down the road we might actually need
+it again.
+
+> I run some tests on a large repo and the results look very promising.
+>
+> base    new     diff    % saved
+> 0.55    0.52    0.02    4.32%   s:  read cache .git/index
+> 0.31    0.30    0.01    2.98%   s:  initialize name hash
+> 0.03    0.02    0.00    9.98%   s:  preload index
+> 0.09    0.09    0.00    4.86%   s:  refresh index
+> 5.93    1.19    4.74    79.95%  s:   traverse_trees
+> 0.12    0.13    -0.01   -4.15%  s:   check_updates
+> 2.14    0.00    2.14    100.00% s:   cache_tree_update
+> 10.63   4.29    6.33    59.59%  s:  unpack_trees
+
+There's a big gap here, I think. unpack_trees() takes 4s but the sum
+of traverse_trees, check_updates and cache_tree_update is 1.5s top. I
+guess that's sparse checkout and stuff? It's either that or there's
+another big hidden thing we should pay attention to ;-)
+
+> 0.97    0.91    0.06    6.41%   s:  write index, changed mask = 28
+> 3.49    0.18    3.31    94.91%  s:    traverse_trees
+> 0.00    0.00    0.00    17.53%  s:    check_updates
+> 3.61    0.30    3.31    91.77%  s:   unpack_trees
+> 3.61    0.30    3.31    91.77%  s:  diff-index
+> 17.28   8.36    8.92    51.62%  s: git command: c:git.exe checkout
+>
+> Same methodology as before, I ran "git checkout" 5 times, threw away the
+> first 2 runs and averaged the last 3.  I entered 0 for the "new"
+> cache_tree_update line as it no longer reports anything.
 -- 
-2.18.0.1004.g6639190530
-
+Duy
