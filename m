@@ -6,56 +6,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81B441F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 08:48:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A1A31F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 08:48:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728724AbeHML3d (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 07:29:33 -0400
-Received: from mail-io0-f194.google.com ([209.85.223.194]:37212 "EHLO
-        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728411AbeHML3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 07:29:33 -0400
-Received: by mail-io0-f194.google.com with SMTP id z19-v6so14016904ioh.4
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 01:48:17 -0700 (PDT)
+        id S1728757AbeHML3f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 07:29:35 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:54093 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728684AbeHML3e (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 07:29:34 -0400
+Received: by mail-it0-f67.google.com with SMTP id 72-v6so11971395itw.3
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 01:48:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PvpdRiH5mAr3qyctDCuFTUJU0RpzM33W1S1NOJT8XYA=;
-        b=mWBs0ASc/UvksmwwB8GK8/rXcCHSlg4JB8kuM6R2stFGGxcgtb1HSUwdkIMW8B5Y7z
-         SHWa7ObYj0AMEinFA08BVYeZt549v1tX/Rkw/RYM6aABLN360ybcwMJWhCXzS33bseMA
-         mMntewNj3hshkuzf/AXVYppGJRQIQ0qZ/KpJKASAPjjGvaX611SQq1qHWYTXHisAjs78
-         18cf1xSIVTunejM7bk2e4kxE1oRSwflVE7XNYY7iqBLhwq9KfrQEn4a9bxhf5kRWnRqL
-         cxzLcU1p/Td0fbMM01d0mpLsE4/fQ+VmNumz1YiArYUqB6scAc/RdhVPBZ1tHkewhHwS
-         IFzw==
+        bh=vk+vNIHXLK4AyNfOTGpLU1hCKqaVZ0W7w1BX6U1m/GQ=;
+        b=qEf9cQUAi3X+UHgYpFRD+YR16SGASBE1ZgVLa8faw4AhOnlwKnaGQt6hROERNr2Goy
+         jGMbq+tUAOYxCiy8RvcbINDg7EVRKj+77b49cB7kPRts2qh1j61FYqYFrNlO8azEXG1W
+         cwe2uBn4g0VyJMMEbMH7biGOWLHJBapdpYdwqN5eLwNeKPu9AbApkKkon8UuoOiZ8jt4
+         yZAI1V7t7VsQjV5f8JVWOfZ7T9T5H0oKoiQTryCne883m7wPfkxtU0yPDt2btwxMpgti
+         AQ18+MIflPTWvScSPB7AQ3a0KoBmjmVeRge1R8AylhWF+ADYj57a8E6XewOJzkODBMEV
+         fkYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=PvpdRiH5mAr3qyctDCuFTUJU0RpzM33W1S1NOJT8XYA=;
-        b=gj39TdA0SGttMHBvotiNcfGqaCrS0QPjJvJCVjbgGNAl8+JNsyRXuiPIsLN/oOOYLc
-         fuJ/jTObbWD9OQTeEfhscksRHUNNYqNX9Xte64uiM4RWkDOStUQC13r7BX1Z89yjN8KI
-         T0LWdlSR7xeO8QtuEpzAchTss8nqyfLYVqOQuRPRsvU/QBir/cdOYk6vZRbdhsXRZyOY
-         /kZPaWMiDELjoFJd0FkOxCKKG14lu8FH2el5v0RtvYeo5qlwvew3artGnfRJ/o7Vl2KN
-         0VN0naiWqmOMZiqUIMFFVhr7WYb8DhxqwsE4kF/43sjHXPvmprtVowHMdSKPufZrfoOB
-         YGIw==
-X-Gm-Message-State: AOUpUlFSNdJW8/+EJUVxLLnc2V2rSY6FSAY8Q9Ibcg36ur3m6YFpJPiD
-        S+Vp1ZbfcGGJhpfHz3bGZ5zZRWwq
-X-Google-Smtp-Source: AA+uWPxw2N0DnI9xs9QI2oPKu1nCjGVoqVQ+kLoNLFZtacf671W6i+3IgOVca/IoWX1Z7kR8VA34Jw==
-X-Received: by 2002:a6b:8c41:: with SMTP id o62-v6mr13827712iod.84.1534150097059;
+        bh=vk+vNIHXLK4AyNfOTGpLU1hCKqaVZ0W7w1BX6U1m/GQ=;
+        b=e8IoXlw/YUbXf97W9jyQqVV6ZwAYm9BvXIcYwYUUmCCRex0lAghHQRiKi6Ws8ENfMs
+         5Ayo24A2rk7RtkHP2jfYZc2NmeW81OYvLPo0jEspUh2b+/TDTuVn0MpaKHgVzDp1eOXF
+         uXZjEt6KCUxzIlQFEPvJ4AwGQWXZHQQ0zrB8+N88Oai+Ii91aG2nfq1srbtTUqTTqhXl
+         jXkVwcMmZdBijPbJ7QIJWg4h9/vE0gWV5NjBW27gpJIziF/jm/lVtvcp+8mzcj+6swEI
+         pDfkfJqKkWWm4bFCYUWIqVFWdE/IgMIctXEWNfPTalfVvNWvjMO5Aez3y5znDiamJurL
+         upcQ==
+X-Gm-Message-State: AOUpUlG3vDY4p/SNqxt9OA35LpNmB7N9HiHhQQGtDY6vPExp+PZjo85r
+        DRhnMyx+vnvgfDqeOjnKWOvZqDL0
+X-Google-Smtp-Source: AA+uWPwYVkiSkO/U0h3zVOo8zUvpTGKHJL61htiHcHo1aUowJ5D5lQ7rOgx8v3HN+3GMOY5PmPBcwA==
+X-Received: by 2002:a24:d358:: with SMTP id n85-v6mr10425724itg.67.1534150097796;
         Mon, 13 Aug 2018 01:48:17 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id g23-v6sm5609405iob.88.2018.08.13.01.48.16
+        by smtp.gmail.com with ESMTPSA id g23-v6sm5609405iob.88.2018.08.13.01.48.17
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Aug 2018 01:48:16 -0700 (PDT)
+        Mon, 13 Aug 2018 01:48:17 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/6] chainlint: recognize multi-line $(...) when command cuddled with "$("
-Date:   Mon, 13 Aug 2018 04:47:36 -0400
-Message-Id: <20180813084739.16134-4-sunshine@sunshineco.com>
+Subject: [PATCH v2 4/6] chainlint: let here-doc and multi-line string commence on same line
+Date:   Mon, 13 Aug 2018 04:47:37 -0400
+Message-Id: <20180813084739.16134-5-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.758.g1932418f46
 In-Reply-To: <20180813084739.16134-1-sunshine@sunshineco.com>
 References: <20180807082135.60913-1-sunshine@sunshineco.com>
@@ -67,78 +67,163 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For multi-line $(...) expressions nested within subshells, chainlint.sed
-only recognizes:
+After swallowing a here-doc, chainlint.sed assumes that no other
+processing needs to be done on the line aside from checking for &&-chain
+breakage; likewise, after folding a multi-line quoted string. However,
+it's conceivable (even if unlikely in practice) that both a here-doc and
+a multi-line quoted string might commence on the same line:
 
-    x=$(
-        echo foo &&
-        ...
+    cat <<\EOF && echo "foo
+    bar"
+    data
+    EOF
 
-but it is not unlikely that test authors may also cuddle the command
-with the opening "$(", so support that style, as well:
+Support this case by sending the line (after swallowing and folding)
+through the normal processing sequence rather than jumping directly to
+the check for broken &&-chain.
 
-    x=$(echo foo &&
-        ...
+This change also allows other somewhat pathological cases to be handled,
+such as closing a subshell on the same line starting a here-doc:
 
-The closing ")" is already correctly recognized when cuddled or not.
+    (
+        cat <<-\INPUT)
+        data
+        INPUT
+
+or, for instance, opening a multi-line $(...) expression on the same
+line starting a here-doc:
+
+    x=$(cat <<-\END &&
+        data
+        END
+        echo "x")
+
+among others.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint.sed                                       |  2 +-
- .../multi-line-nested-command-substitution.expect     | 11 ++++++++++-
- .../multi-line-nested-command-substitution.test       | 11 ++++++++++-
- 3 files changed, 21 insertions(+), 3 deletions(-)
+ t/chainlint.sed                                      | 7 ++++---
+ t/chainlint/here-doc-close-subshell.expect           | 2 ++
+ t/chainlint/here-doc-close-subshell.test             | 5 +++++
+ t/chainlint/here-doc-multi-line-command-subst.expect | 5 +++++
+ t/chainlint/here-doc-multi-line-command-subst.test   | 9 +++++++++
+ t/chainlint/here-doc-multi-line-string.expect        | 4 ++++
+ t/chainlint/here-doc-multi-line-string.test          | 8 ++++++++
+ 7 files changed, 37 insertions(+), 3 deletions(-)
+ create mode 100644 t/chainlint/here-doc-close-subshell.expect
+ create mode 100644 t/chainlint/here-doc-close-subshell.test
+ create mode 100644 t/chainlint/here-doc-multi-line-command-subst.expect
+ create mode 100644 t/chainlint/here-doc-multi-line-command-subst.test
+ create mode 100644 t/chainlint/here-doc-multi-line-string.expect
+ create mode 100644 t/chainlint/here-doc-multi-line-string.test
 
 diff --git a/t/chainlint.sed b/t/chainlint.sed
-index 2901494e8a..afb2443a9c 100644
+index afb2443a9c..6661e21f20 100644
 --- a/t/chainlint.sed
 +++ b/t/chainlint.sed
-@@ -216,7 +216,7 @@ s/.*\n//
- # "$(...)" -- command substitution; not closing ")"
- /\$([^)][^)]*)[^)]*$/bcheckchain
- # multi-line "$(...\n...)" -- command substitution; treat as nested subshell
--/\$([ 	]*$/bnest
-+/\$([^)]*$/bnest
- # "=(...)" -- Bash array assignment; not closing ")"
- /=(/bcheckchain
- # closing "...) &&"
-diff --git a/t/chainlint/multi-line-nested-command-substitution.expect b/t/chainlint/multi-line-nested-command-substitution.expect
-index 19c023b1c8..59b6c8b850 100644
---- a/t/chainlint/multi-line-nested-command-substitution.expect
-+++ b/t/chainlint/multi-line-nested-command-substitution.expect
-@@ -6,4 +6,13 @@
- >>	) &&
- 	echo ok
- >) |
--sort
-+sort &&
+@@ -157,6 +157,7 @@ s/.*\n//
+ /^[^']*'[^']*$/{
+ 	/"[^'"]*'[^'"]*"/!bsqstring
+ }
++:folded
+ # here-doc -- swallow it
+ /<<[ 	]*[-\\']*[A-Za-z0-9_]/bheredoc
+ # comment or empty line -- discard since final non-comment, non-empty line
+@@ -255,7 +256,7 @@ s/"//g
+ N
+ s/\n//
+ /"/!bdqstring
+-bcheckchain
++bfolded
+ 
+ # found multi-line single-quoted string '...\n...' -- slurp until end of string
+ :sqstring
+@@ -263,7 +264,7 @@ s/'//g
+ N
+ s/\n//
+ /'/!bsqstring
+-bcheckchain
++bfolded
+ 
+ # found here-doc -- swallow it to avoid false hits within its body (but keep
+ # the command to which it was attached)
+@@ -278,7 +279,7 @@ N
+ }
+ s/^<[^>]*>//
+ s/\n.*$//
+-bcheckchain
++bfolded
+ 
+ # found "case ... in" -- pass through untouched
+ :case
+diff --git a/t/chainlint/here-doc-close-subshell.expect b/t/chainlint/here-doc-close-subshell.expect
+new file mode 100644
+index 0000000000..f011e335e5
+--- /dev/null
++++ b/t/chainlint/here-doc-close-subshell.expect
+@@ -0,0 +1,2 @@
 +(
-+	bar &&
-+	x=$(echo bar |
-+		cat
-+>>	) &&
-+	y=$(echo baz |
-+>>		fip) &&
-+	echo fail
++>	cat)
+diff --git a/t/chainlint/here-doc-close-subshell.test b/t/chainlint/here-doc-close-subshell.test
+new file mode 100644
+index 0000000000..b857ff5467
+--- /dev/null
++++ b/t/chainlint/here-doc-close-subshell.test
+@@ -0,0 +1,5 @@
++(
++# LINT: line contains here-doc and closes nested subshell
++	cat <<-\INPUT)
++	fizz
++	INPUT
+diff --git a/t/chainlint/here-doc-multi-line-command-subst.expect b/t/chainlint/here-doc-multi-line-command-subst.expect
+new file mode 100644
+index 0000000000..e5fb752d2f
+--- /dev/null
++++ b/t/chainlint/here-doc-multi-line-command-subst.expect
+@@ -0,0 +1,5 @@
++(
++	x=$(bobble &&
++?!AMP?!>>		wiffle)
++	echo $x
 +>)
-diff --git a/t/chainlint/multi-line-nested-command-substitution.test b/t/chainlint/multi-line-nested-command-substitution.test
-index ca0620ab6b..300058341b 100644
---- a/t/chainlint/multi-line-nested-command-substitution.test
-+++ b/t/chainlint/multi-line-nested-command-substitution.test
-@@ -6,4 +6,13 @@
- 	) &&
- 	echo ok
- ) |
--sort
-+sort &&
+diff --git a/t/chainlint/here-doc-multi-line-command-subst.test b/t/chainlint/here-doc-multi-line-command-subst.test
+new file mode 100644
+index 0000000000..899bc5de8b
+--- /dev/null
++++ b/t/chainlint/here-doc-multi-line-command-subst.test
+@@ -0,0 +1,9 @@
 +(
-+	bar &&
-+	x=$(echo bar |
-+		cat
-+	) &&
-+	y=$(echo baz |
-+		fip) &&
-+	echo fail
++# LINT: line contains here-doc and opens multi-line $(...)
++	x=$(bobble <<-\END &&
++		fossil
++		vegetable
++		END
++		wiffle)
++	echo $x
++)
+diff --git a/t/chainlint/here-doc-multi-line-string.expect b/t/chainlint/here-doc-multi-line-string.expect
+new file mode 100644
+index 0000000000..1e5b724b9d
+--- /dev/null
++++ b/t/chainlint/here-doc-multi-line-string.expect
+@@ -0,0 +1,4 @@
++(
++?!AMP?!	cat && echo multi-line	string"
++	bap
++>)
+diff --git a/t/chainlint/here-doc-multi-line-string.test b/t/chainlint/here-doc-multi-line-string.test
+new file mode 100644
+index 0000000000..a53edbcc8d
+--- /dev/null
++++ b/t/chainlint/here-doc-multi-line-string.test
+@@ -0,0 +1,8 @@
++(
++# LINT: line contains here-doc and opens multi-line string
++	cat <<-\TXT && echo "multi-line
++	string"
++	fizzle
++	TXT
++	bap
 +)
 -- 
 2.18.0.267.gbc8be36ecb
