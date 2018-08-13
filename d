@@ -6,21 +6,21 @@ X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3696A1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 07:39:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0132B1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 07:39:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728644AbeHMKUm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 06:20:42 -0400
-Received: from unassigned.psychz.net ([104.149.231.218]:56878 "EHLO
+        id S1728587AbeHMKUa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 06:20:30 -0400
+Received: from unassigned.psychz.net ([104.149.231.218]:58723 "EHLO
         soapequipment.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1728055AbeHMKUm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 06:20:42 -0400
-X-Greylist: delayed 1950 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Aug 2018 06:20:41 EDT
+        with ESMTP id S1728055AbeHMKUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 06:20:30 -0400
+X-Greylist: delayed 3658 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Aug 2018 06:20:28 EDT
 To:     git@vger.kernel.org
 Subject: you need mobile apps
-Message-ID: <10db563b4d03836479cc652549ac03b8@lantronix.com>
-Date:   Mon, 13 Aug 2018 08:04:57 +0200
-From:   "Jack Dike" <toslintge@aromafloria.com>
+Message-ID: <9491af1bb2a90b5c820b7ccbf1daecf0@lantronix.com>
+Date:   Mon, 13 Aug 2018 09:01:29 +0200
+From:   "Jack Dike" <davidtens@bathbodysupply.com>
 Reply-To: cengjaos@aliyun.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
