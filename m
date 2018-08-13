@@ -2,111 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29BD31F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 21:05:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E8A1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 21:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729858AbeHMXt2 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 19:49:28 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:47725 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729063AbeHMXt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 19:49:28 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41q7Y812WPz5tl9;
-        Mon, 13 Aug 2018 23:05:32 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 6A62B1DB0;
-        Mon, 13 Aug 2018 23:05:31 +0200 (CEST)
-Subject: Re: [PATCH] mingw: enable atomic O_APPEND
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jeff Hostetler <git@jeffhostetler.com>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
- <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
- <bc9132ab-3030-07e3-03d1-d2ddae6a1b45@kdbg.org>
- <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <84c749fd-23d2-0bc5-225b-74f8d31502b6@kdbg.org>
-Date:   Mon, 13 Aug 2018 23:05:31 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1730043AbeHMXuO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 19:50:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53824 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729063AbeHMXuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 19:50:14 -0400
+Received: (qmail 16282 invoked by uid 109); 13 Aug 2018 21:06:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Aug 2018 21:06:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13966 invoked by uid 111); 13 Aug 2018 21:06:23 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 13 Aug 2018 17:06:23 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2018 17:06:18 -0400
+Date:   Mon, 13 Aug 2018 17:06:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Contributor Summit planning
+Message-ID: <20180813210617.GA19738@sigill.intra.peff.net>
+References: <20180813163108.GA6731@sigill.intra.peff.net>
+ <87h8jyrtj6.fsf@evledraar.gmail.com>
+ <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.08.2018 um 22:20 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
+On Mon, Aug 13, 2018 at 01:41:51PM -0700, Stefan Beller wrote:
+
+> > Oh, using "git shortlog" might be also simpler ;-)
 > 
->> The Windows CRT implements O_APPEND "manually": on write() calls, the
->> file pointer is set to EOF before the data is written. Clearly, this is
->> not atomic. And in fact, this is the root cause of failures observed in
->> t5552-skipping-fetch-negotiator.sh and t5503-tagfollow.sh, where
->> different processes write to the same trace file simultanously; it also
->> occurred in t5400-send-pack.sh, but there it was worked around in
->> 71406ed4d6 ("t5400: avoid concurrent writes into a trace file",
->> 2017-05-18).
->>
->> Fortunately, Windows does support atomic O_APPEND semantics using the
->> file access mode FILE_APPEND_DATA. Provide an implementation that does.
->>
->> This implementation is minimal in such a way that it only implements
->> the open modes that are actually used in the Git code base. Emulation
->> for other modes can be added as necessary later. To become aware of
->> the necessity early, the unusal error ENOSYS is reported if an
->> unsupported mode is encountered.
->>
->> Diagnosed-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->> Helped-by: Jeff Hostetler <git@jeffhostetler.com>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ---
->>   compat/mingw.c | 41 +++++++++++++++++++++++++++++++++++++++--
->>   1 file changed, 39 insertions(+), 2 deletions(-)
-> 
-> Nice.
-> 
-> I wonder how much more expensive using this implementation is
-> compared with the original "race susceptible" open(), when raciness
-> is known not to be an issue (e.g. there is higher level lock that
-> protects the appending).
+> I guess you'd need to memorize a different set of flags for that
+> as without -s it would be harder to parse than the oneliner above.
 
-Certainly, the former way that uses two syscalls 
-(SetFilePointer+WriteFile) is more costly than this new way with just 
-one syscall (WriteFile). Of course, I don't know how atomic append would 
-be implemented in the kernel, but I can't think of a reason why it 
-should be slow on Windows, but fast on POSIX.
+I frequently using "git shortlog -ns" to see who is active (especially
+coupled with "--since=".
 
-(But I can't provide numbers to back up my gut feeling...)
+I also use "--no-merges", because it makes me look a lot better when
+compared relatively to Junio. :) I agree with you that "--no-merges"
+means we don't capture all the work that goes into integrating. But
+there's a lot of work that isn't reflected in commit count (reviewing,
+bug triage, the fact that some commits are much bigger than others,
+etc). So at best it's a starting point for figuring out who
+participates.
 
-(And I also assume that you are not worried about the performance of 
-open() itself.)
-
-> ...[define race_safe_append_open]... and replace
-> the call to open(... O_APPEND ...) in trace.c::get_trace_fd() with a
-> call to that wrapper.  That way, other codepaths that use O_APPEND
-> (namely, reflog and todo-list writers) can avoid the additional
-> cost, if any.
-> 
-> Some may find it beneficial from code readability POV because that
-> approach marks the codepath that needs to have non-racy fd more
-> explicitly.
-
-O_APPEND is POSIX and means race-free append. If you mark some call 
-sites with O_APPEND, then that must be the ones that need race-free 
-append. Hence, you would have to go the other route: Mark those call 
-sites that do _not_ need race-free append with some custom 
-function/macro. (Or mark both with different helpers and avoid writing 
-down O_APPEND.)
-
--- Hannes
+-Peff
