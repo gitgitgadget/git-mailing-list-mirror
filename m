@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22B441F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 11:33:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF13F1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 11:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729208AbeHMOPF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 10:15:05 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44537 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728661AbeHMOPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 10:15:05 -0400
-Received: by mail-pf1-f194.google.com with SMTP id k21-v6so7514734pff.11
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:13 -0700 (PDT)
+        id S1729251AbeHMOPH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 10:15:07 -0400
+Received: from mail-pl0-f47.google.com ([209.85.160.47]:38655 "EHLO
+        mail-pl0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728661AbeHMOPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 10:15:07 -0400
+Received: by mail-pl0-f47.google.com with SMTP id u11-v6so6776249plq.5
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 04:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KoWJnliQT4jiXuo7wGM3LBeN9THxjB0pobP1OLXdrRQ=;
-        b=p8LtRBtcBQFZyyvgGUV1u1pPkqWNS/WOVgQiedL59bxfNUjdn88pxNlmNj/dOqdtZG
-         0EB3Nh1Hrhj4L34dKDvpT1ALv6fsBDk2AD6yQsFvbZc+EciLriOiB98H5EGEmD0iXAHV
-         4LPe04h3yT2LtbvwFYufRC4lTBck8QBPj06FieP0ziA5BgSJIAFpfdOmzFXmUx7zQNKf
-         XkCZv43FSSxp+8CHia3sYHXigmgtAS8HLKuuH4ku2tDcTXkAjnXaC6HV7M9Va80dWlqF
-         7COFFhLefENTRdzZ57xTlvu5xaw8FIOetPcLocY1d9TYySrQtHN8p2FfWMzngfdfvZEl
-         yfvQ==
+        bh=SEpBYFHK0HtbcnU3DxN6ytdSesg/BbWHz7D8aY4XmFM=;
+        b=AL8yCrBqdqn1t0S0iwC9kg4/4sL0LQJfOOLqKY67WVx7zRGCwQAayyFaYQPNmwm/ca
+         ZcoxpMRk4uFXshRqGH1J5bIUTpj+Hmb5pOXnmIP4T41foioFLDjejdVoZA31rNT+dm6/
+         6IWWYhr/uvjl/TcplRlPhFVJtGwkMZLMFNUbHT6g39daFecmhqMP7/9fhzHe5Ln0TTKi
+         nr/KK2AoHAF93Mzx5xpWY95fFZXOyd/HEB70aVjA93NI2tCtaEJ731rcB2jOJjMZ9Umv
+         TlYGDcBfpvpxPpVQjaZNYW3cvYjt/DSz4d6e6YH33K3/b29QB5f3OHUvS8ARpv0Caocd
+         fYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KoWJnliQT4jiXuo7wGM3LBeN9THxjB0pobP1OLXdrRQ=;
-        b=LIPPgYIheulRLwEJg15wK25SNADt/rAM3cF1+PuBOj4C6Mbg6xlf/K0UY42mk3QiZd
-         JkHt0JVcDgPn1PP6C/xT76OItzy0UHpkIkIl/1Cu9fcXmun8ioswrTbrTJN+ppJS37Ve
-         pVFxng49ZON//dYhXcL+d4bsrq4FtIYQ0EU+PqMuqdtRwxuOixBqOVYGWKE5p5jNztfr
-         etdVTExD8niCNA5yqe7frTLlX0KQnV6FJaSfL1T3gl0yCmrtTCr/tfrjV02oEjVcZdMS
-         VQ0t9ZQWmZch7bJZhK5+vwJLB1Yu2x70uBQ9yQLkr3zBp9oL/lrAvudFNB1/IP7Vc2hI
-         2plQ==
-X-Gm-Message-State: AOUpUlEQe0/NLmJSUR099ikJvKs4iGgwTVLBJIZ8s1/45hyHc8UsaEKb
-        fuibiV6h7zVN6dQjwHGAOj4uJmkW
-X-Google-Smtp-Source: AA+uWPzIYX853zRbDM31EAX7FUgl1Gca1K3LjwKObxnla9mkjq0PesLFCBp5/1tDw5Bt2hqL7+vodQ==
-X-Received: by 2002:a62:411a:: with SMTP id o26-v6mr18457286pfa.111.1534159992619;
-        Mon, 13 Aug 2018 04:33:12 -0700 (PDT)
+        bh=SEpBYFHK0HtbcnU3DxN6ytdSesg/BbWHz7D8aY4XmFM=;
+        b=U5BEBZAeMGgJv5CtpkeuG+gd9LAhRMON2RN9BV0sp8pvhJ4BZhDRIZ4ELii+vQrR14
+         C4OcnTNSse+Mu1b/ZlZANaKngZP7EHRUN/F3o4E/ytq6yRJgMda8UHRxDkIx1bl1pqiw
+         /ctbFVVaKZ7NxE5rh9qLYze33CG5iMP21DZxIEieHnYEHRbMhbXhp5TCFm40QTbLORZa
+         NEtR33m3YLy/OWbTS3pH0Rj0EbpdyWMgyi0SPDvrfcLl44QI9Sxp0/aRdKu6pC/nPGuV
+         wTt+DcVaOEPMTSmMgePPWno6hKlk/zw5NRIVHw6mneb5N9wjY+NbTmg2ERia8YWxzNkx
+         Do7w==
+X-Gm-Message-State: AOUpUlGbR53IYGk/54elKw2qslgaFDi57MgMIWvj8uAHAHXubcDlrpC6
+        hyldNeyuLjKGuC8/U5H3vnAacAK5
+X-Google-Smtp-Source: AA+uWPzraHKLC95bVfJUIuEU88xHUZz4SuEYe/RI/5yjBOARDwFD01WlFA7NYqKHlNczgr7JTt4b6w==
+X-Received: by 2002:a17:902:bc41:: with SMTP id t1-v6mr16535159plz.26.1534159994183;
+        Mon, 13 Aug 2018 04:33:14 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.137.127])
-        by smtp.gmail.com with ESMTPSA id l10-v6sm24855454pfj.179.2018.08.13.04.33.11
+        by smtp.gmail.com with ESMTPSA id v82-v6sm29050481pfd.64.2018.08.13.04.33.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Aug 2018 04:33:11 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 04:33:11 -0700 (PDT)
-X-Google-Original-Date: Mon, 13 Aug 2018 11:32:43 GMT
-Message-Id: <458090ffd23115545c999aeef952e2e29ee628f0.1534159977.git.gitgitgadget@gmail.com>
+        Mon, 13 Aug 2018 04:33:13 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 04:33:13 -0700 (PDT)
+X-Google-Original-Date: Mon, 13 Aug 2018 11:32:44 GMT
+Message-Id: <d3be03a446a40d2176b6ffdd9e095d97873042c2.1534159977.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1.v6.git.gitgitgadget@gmail.com>
 References: <pull.1.v5.git.gitgitgadget@gmail.com>
         <pull.1.v6.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v6 08/21] range-diff: suppress the diff headers
+Subject: [PATCH v6 09/21] range-diff: adjust the output of the commit pairs
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,65 +71,130 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When showing the diff between corresponding patches of the two branch
-versions, we have to make up a fake filename to run the diff machinery.
+This not only uses "dashed stand-ins" for "pairs" where one side is
+missing (i.e. unmatched commits that are present only in one of the two
+commit ranges), but also adds onelines for the reader's pleasure.
 
-That filename does not carry any meaningful information, hence tbdiff
-suppresses it. So we should, too.
+This change brings `git range-diff` yet another step closer to
+feature parity with tbdiff: it now shows the oneline, too, and indicates
+with `=` when the commits have identical diffs.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/range-diff.c | 1 +
- diff.c               | 5 ++++-
- diff.h               | 1 +
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ range-diff.c | 59 ++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 50 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index f0598005a..76659d0b3 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -33,6 +33,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+diff --git a/range-diff.c b/range-diff.c
+index 1ecee2c09..23aa61af5 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -7,6 +7,8 @@
+ #include "xdiff-interface.h"
+ #include "linear-assignment.h"
+ #include "diffcore.h"
++#include "commit.h"
++#include "pretty.h"
  
- 	diff_setup(&diffopt);
- 	diffopt.output_format = DIFF_FORMAT_PATCH;
-+	diffopt.flags.suppress_diff_headers = 1;
- 	diffopt.output_prefix = output_prefix_cb;
- 	strbuf_addstr(&four_spaces, "    ");
- 	diffopt.output_prefix_data = &four_spaces;
-diff --git a/diff.c b/diff.c
-index 04d044bbb..9c4bd9fa1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3395,13 +3395,16 @@ static void builtin_diff(const char *name_a,
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
- 		memset(&ecbdata, 0, sizeof(ecbdata));
-+		if (o->flags.suppress_diff_headers)
-+			lbl[0] = NULL;
- 		ecbdata.label_path = lbl;
- 		ecbdata.color_diff = want_color(o->use_color);
- 		ecbdata.ws_rule = whitespace_rule(name_b);
- 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
- 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
- 		ecbdata.opt = o;
--		ecbdata.header = header.len ? &header : NULL;
-+		if (header.len && !o->flags.suppress_diff_headers)
-+			ecbdata.header = &header;
- 		xpp.flags = o->xdl_opts;
- 		xpp.anchors = o->anchors;
- 		xpp.anchors_nr = o->anchors_nr;
-diff --git a/diff.h b/diff.h
-index a14895bb8..d88ceb357 100644
---- a/diff.h
-+++ b/diff.h
-@@ -94,6 +94,7 @@ struct diff_flags {
- 	unsigned funccontext:1;
- 	unsigned default_follow_renames:1;
- 	unsigned stat_with_summary:1;
-+	unsigned suppress_diff_headers:1;
- };
+ struct patch_util {
+ 	/* For the search for an exact match */
+@@ -255,9 +257,49 @@ static void get_correspondences(struct string_list *a, struct string_list *b,
+ 	free(b2a);
+ }
  
- static inline void diff_flags_or(struct diff_flags *a,
+-static const char *short_oid(struct patch_util *util)
++static void output_pair_header(struct strbuf *buf,
++			       struct strbuf *dashes,
++			       struct patch_util *a_util,
++			       struct patch_util *b_util)
+ {
+-	return find_unique_abbrev(&util->oid, DEFAULT_ABBREV);
++	struct object_id *oid = a_util ? &a_util->oid : &b_util->oid;
++	struct commit *commit;
++
++	if (!dashes->len)
++		strbuf_addchars(dashes, '-',
++				strlen(find_unique_abbrev(oid,
++							  DEFAULT_ABBREV)));
++
++	strbuf_reset(buf);
++	if (!a_util)
++		strbuf_addf(buf, "-:  %s ", dashes->buf);
++	else
++		strbuf_addf(buf, "%d:  %s ", a_util->i + 1,
++			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
++
++	if (!a_util)
++		strbuf_addch(buf, '>');
++	else if (!b_util)
++		strbuf_addch(buf, '<');
++	else if (strcmp(a_util->patch, b_util->patch))
++		strbuf_addch(buf, '!');
++	else
++		strbuf_addch(buf, '=');
++
++	if (!b_util)
++		strbuf_addf(buf, " -:  %s", dashes->buf);
++	else
++		strbuf_addf(buf, " %d:  %s", b_util->i + 1,
++			    find_unique_abbrev(&b_util->oid, DEFAULT_ABBREV));
++
++	commit = lookup_commit_reference(the_repository, oid);
++	if (commit) {
++		strbuf_addch(buf, ' ');
++		pp_commit_easy(CMIT_FMT_ONELINE, commit, buf);
++	}
++	strbuf_addch(buf, '\n');
++
++	fwrite(buf->buf, buf->len, 1, stdout);
+ }
+ 
+ static struct diff_filespec *get_filespec(const char *name, const char *p)
+@@ -286,6 +328,7 @@ static void patch_diff(const char *a, const char *b,
+ static void output(struct string_list *a, struct string_list *b,
+ 		   struct diff_options *diffopt)
+ {
++	struct strbuf buf = STRBUF_INIT, dashes = STRBUF_INIT;
+ 	int i = 0, j = 0;
+ 
+ 	/*
+@@ -307,25 +350,21 @@ static void output(struct string_list *a, struct string_list *b,
+ 
+ 		/* Show unmatched LHS commit whose predecessors were shown. */
+ 		if (i < a->nr && a_util->matching < 0) {
+-			printf("%d: %s < -: --------\n",
+-			       i + 1, short_oid(a_util));
++			output_pair_header(&buf, &dashes, a_util, NULL);
+ 			i++;
+ 			continue;
+ 		}
+ 
+ 		/* Show unmatched RHS commits. */
+ 		while (j < b->nr && b_util->matching < 0) {
+-			printf("-: -------- > %d: %s\n",
+-			       j + 1, short_oid(b_util));
++			output_pair_header(&buf, &dashes, NULL, b_util);
+ 			b_util = ++j < b->nr ? b->items[j].util : NULL;
+ 		}
+ 
+ 		/* Show matching LHS/RHS pair. */
+ 		if (j < b->nr) {
+ 			a_util = a->items[b_util->matching].util;
+-			printf("%d: %s ! %d: %s\n",
+-			       b_util->matching + 1, short_oid(a_util),
+-			       j + 1, short_oid(b_util));
++			output_pair_header(&buf, &dashes, a_util, b_util);
+ 			if (!(diffopt->output_format & DIFF_FORMAT_NO_OUTPUT))
+ 				patch_diff(a->items[b_util->matching].string,
+ 					   b->items[j].string, diffopt);
+@@ -333,6 +372,8 @@ static void output(struct string_list *a, struct string_list *b,
+ 			j++;
+ 		}
+ 	}
++	strbuf_release(&buf);
++	strbuf_release(&dashes);
+ }
+ 
+ int show_range_diff(const char *range1, const char *range2,
 -- 
 gitgitgadget
 
