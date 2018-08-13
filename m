@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D55A01F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 22:43:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DD101F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 22:43:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731813AbeHNB1P (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 21:27:15 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:38592 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730213AbeHNB1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 21:27:15 -0400
-Received: by mail-ua1-f73.google.com with SMTP id z17-v6so8493549uap.5
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:42:58 -0700 (PDT)
+        id S1731871AbeHNB1S (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 21:27:18 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:46669 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730213AbeHNB1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 21:27:17 -0400
+Received: by mail-qt0-f202.google.com with SMTP id o18-v6so14472929qtp.13
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=+FaJFRj+Hq2HUpVIor7nTQNanPvlTmd1Zv069gqEqy8=;
-        b=Weu+LJ+GlSwadTVw/fTCCCht9/xj6DAz74nxvbvBgtegCk+lEC6raIG/0uyICFZ7vL
-         diaKDJwzpf87Rahv30AxS/qhSCEr6bSYNF0aGtsVQVvdtTiO7MLdox++LbPR4OTUfY14
-         rZJR6JKIWpSFCkJ7rX1A7HoXeUQykqt0Ep2ez7mDgXhVemZHSU+fJ/XtYNuGTStxvxxj
-         iGq5tQZjBNYg150eChn2iKN7y6ci0S4EsmF3k+w46+nTEF+8DPYVtYACi/E2V0/eiYsu
-         joUztUX6qYnd9aA7CO2W28/770fIQR+PMn0cEkAn8KLWeJqRgt9yeVpVb4DYK9oR8MNv
-         CFeg==
+        bh=JIzaKKaR9rzksMX96zy+VHy4WMmWl76ft/OdnFSCi5c=;
+        b=Htlh0AW48ON89zJ7lzTmDGjxUyCNI5fJKrtHDEcn6f8BC/pOKejXHKz6/Fx+9cTPY/
+         SsgyFNfnPVpfYxaGzvgoROC112BIawTcXMGKBkspoJE40cydtC1B2XEvGh9RYKXWmqNG
+         841FcWr27QOEijdYVRp1bkC5OOVdE55C8v0SKe5cI0Mtm2fhLSLVzpvnOhyuohdmGn3/
+         oPXmj2GQrkeM7ZZLZY8gQyX5TX3C+iZmb2AG/uZwGfz/m+TiV5zaNVCIRba6ouHct3a0
+         f5kADg65L6ywZGRkWV3AntMPgmGKSk69/3h2nVnUQdPDxzzeaLQNewV8D833bVj1z8WV
+         tpFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=+FaJFRj+Hq2HUpVIor7nTQNanPvlTmd1Zv069gqEqy8=;
-        b=ELb+9vHSsky1mssoNgz5HABTJP/vH+fUjbKn9SZ6E1h24I6NxA/6j8/QpX1DHdiu/T
-         zcVkbYv8SYqf81CxlIMvaE/00RN455cdTq5imdDnj/K9wFYOekZszU9+hd6hV2c7iNx5
-         5NypFpFBye7JddBxLDlqxBbJACbg21YFyt8s+dsYccFDy1oQnRutMIOpMvwfx/O9LhkC
-         6yTLE4Zb/Ctnh0qSizqAh0pyIzZk64+bTX8YWm4w2d6REQymArWhkAOAAZd8PZGS+Pj/
-         KtkzX+GPSh5GxVg1J1h5UUC3LVSWwgUVYIq9jgSg7xi5xtUmwr/+GKi5WXIjO8j8tR+C
-         lleg==
-X-Gm-Message-State: AOUpUlHSFnW4bfXlDc9BX0JTJ8R/mNti6OqzztIBUiyGuOcG/KF3/QQ6
-        L4OR13iI9zWCN/yWpClfHJYj+np4apoQ
-X-Google-Smtp-Source: AA+uWPwQHpOkR/v8av9dxTEof/07cTT6Ntroy9DDEOBGtSO9S58AcJuzdOaWkha+00lKohZDj8bhRWhmL8tc
-X-Received: by 2002:a1f:804c:: with SMTP id b73-v6mr11003718vkd.12.1534200178362;
- Mon, 13 Aug 2018 15:42:58 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 15:42:34 -0700
+        bh=JIzaKKaR9rzksMX96zy+VHy4WMmWl76ft/OdnFSCi5c=;
+        b=Ap0AHI/qHUJ+aNHD6cZnDjl+O5wEYD6ZTNItosgbp+IkzvOyPfP/8nmskXSyX4W9vi
+         MDSGydzDWMCDY2Dzc/KBJDH5IShKgPUzQTKftI/zf95MImF1BHg1PGMSRJ0f9h5Z3VS3
+         UiwIjK8+nlu9dRml6AHWU/TH3n/KFbrWzxoOC59ODoxButt2HSmwbb9eKQaEDUkT71MT
+         ukBmthYk+UcZyt44A0qtOeWGXUtl0L6rpt3jQEVgEax4Z4WCTEafzVqQQKxsbL2tkIAW
+         XAAINYEx7GyG9H5XBW2YL5/LEfdiUCOxWAAtYUPS1CcNx4Vh2Bb7RdpglVRMqi02J0fA
+         ZcJg==
+X-Gm-Message-State: AOUpUlGqNntuxF2Nzei1tMFcJ6rgrGdw7882r6zq1xfHxWE4pHqFb2Pj
+        FPWAminrI1AnCxHh6Tg/J1F2StSxDyZz
+X-Google-Smtp-Source: AA+uWPyznPygQLpZOGQobXasAKhGbntFU0vrLMPCfe9P/M4wy6MCCnvePO3CHie8r/7J5baXME2M31fepzSk
+X-Received: by 2002:a37:29c1:: with SMTP id p62-v6mr11905520qkp.56.1534200181084;
+ Mon, 13 Aug 2018 15:43:01 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 15:42:35 -0700
 In-Reply-To: <20180813224235.154580-1-sbeller@google.com>
-Message-Id: <20180813224235.154580-7-sbeller@google.com>
+Message-Id: <20180813224235.154580-8-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180803222322.261813-1-sbeller@google.com> <20180813224235.154580-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 6/7] submodule--helper: replace connect-gitdir-workingtree by ensure-core-worktree
+Subject: [PATCH 7/7] submodule--helper: introduce new update-module-mode helper
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com, bmwill@google.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
@@ -61,140 +61,132 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-e98317508c0 (submodule: ensure core.worktree is set after update,
-2018-06-18) was overly aggressive in calling connect_work_tree_and_git_dir
-as that ensures both the 'core.worktree' configuration is set as well as
-setting up correct gitlink file pointing at the git directory.
-
-We do not need to check for the gitlink in this part of the cmd_update
-in git-submodule.sh, as the initial call to update-clone will have ensured
-that. So we can reduce the work to only (check and potentially) set the
-'core.worktree' setting.
-
-While at it move the check from shell to C as that proves to be useful in
-a follow up patch, as we do not need the 'name' in shell now.
+This chews off a bit of the shell part of the update command in
+git-submodule.sh. When writing the C code, keep in mind that the
+submodule--helper part will go away eventually and we want to have
+a C function that is able to determine the submodule update strategy,
+it as a nicety, make determine_submodule_update_strategy accessible
+for arbitrary repositories.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/submodule--helper.c | 64 +++++++++++++++++++++++--------------
- git-submodule.sh            |  7 ++--
- 2 files changed, 42 insertions(+), 29 deletions(-)
+ builtin/submodule--helper.c | 61 +++++++++++++++++++++++++++++++++++++
+ git-submodule.sh            | 16 +---------
+ 2 files changed, 62 insertions(+), 15 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8b1088ab58a..648e1330c15 100644
+index 648e1330c15..5c9d1fb496d 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -1964,6 +1964,45 @@ static int push_check(int argc, const char **argv, const char *prefix)
+@@ -1446,6 +1446,66 @@ static int module_clone(int argc, const char **argv, const char *prefix)
  	return 0;
  }
  
-+static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
++static void determine_submodule_update_strategy(struct repository *r,
++						int just_cloned,
++						const char *path,
++						const char *update,
++						struct submodule_update_strategy *out)
 +{
-+	const struct submodule *sub;
-+	const char *path;
-+	char *cw;
-+	struct repository subrepo;
++	const struct submodule *sub = submodule_from_path(r, &null_oid, path);
++	char *key;
++	const char *val;
 +
-+	if (argc != 2)
-+		BUG("submodule--helper connect-gitdir-workingtree <name> <path>");
++	key = xstrfmt("submodule.%s.update", sub->name);
 +
-+	path = argv[1];
++	if (update) {
++		trace_printf("parsing update");
++		if (parse_submodule_update_strategy(update, out) < 0)
++			die(_("Invalid update mode '%s' for submodule path '%s'"),
++				update, path);
++	} else if (!repo_config_get_string_const(r, key, &val)) {
++		if (parse_submodule_update_strategy(val, out) < 0)
++			die(_("Invalid update mode '%s' configured for submodule path '%s'"),
++				val, path);
++	} else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
++		trace_printf("loaded thing");
++		out->type = sub->update_strategy.type;
++		out->command = sub->update_strategy.command;
++	} else
++		out->type = SM_UPDATE_CHECKOUT;
 +
-+	sub = submodule_from_path(the_repository, &null_oid, path);
-+	if (!sub)
-+		BUG("We could get the submodule handle before?");
++	if (just_cloned &&
++	    (out->type == SM_UPDATE_MERGE ||
++	     out->type == SM_UPDATE_REBASE ||
++	     out->type == SM_UPDATE_NONE))
++		out->type = SM_UPDATE_CHECKOUT;
 +
-+	if (repo_submodule_init(&subrepo, the_repository, path))
-+		die(_("could not get a repository handle for submodule '%s'"), path);
++	free(key);
++}
 +
-+	if (!repo_config_get_string(&subrepo, "core.worktree", &cw)) {
-+		char *cfg_file, *abs_path;
-+		const char *rel_path;
-+		struct strbuf sb = STRBUF_INIT;
++static int module_update_module_mode(int argc, const char **argv, const char *prefix)
++{
++	const char *path, *update = NULL;
++	int just_cloned;
++	struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
 +
-+		cfg_file = repo_git_path(&subrepo, "config");
++	if (argc < 3 || argc > 4)
++		die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
 +
-+		abs_path = absolute_pathdup(path);
-+		rel_path = relative_path(abs_path, subrepo.gitdir, &sb);
++	just_cloned = git_config_int("just_cloned", argv[1]);
++	path = argv[2];
 +
-+		git_config_set_in_file(cfg_file, "core.worktree", rel_path);
++	if (argc == 4)
++		update = argv[3];
 +
-+		free(cfg_file);
-+		free(abs_path);
-+		strbuf_release(&sb);
-+	}
++	determine_submodule_update_strategy(the_repository,
++					    just_cloned, path, update,
++					    &update_strategy);
++	fputs(submodule_strategy_to_string(&update_strategy), stdout);
 +
 +	return 0;
 +}
 +
- static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -2029,29 +2068,6 @@ static int check_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
--static int connect_gitdir_workingtree(int argc, const char **argv, const char *prefix)
--{
--	struct strbuf sb = STRBUF_INIT;
--	const char *name, *path;
--	char *sm_gitdir;
--
--	if (argc != 3)
--		BUG("submodule--helper connect-gitdir-workingtree <name> <path>");
--
--	name = argv[1];
--	path = argv[2];
--
--	strbuf_addf(&sb, "%s/modules/%s", get_git_dir(), name);
--	sm_gitdir = absolute_pathdup(sb.buf);
--
--	connect_work_tree_and_git_dir(path, sm_gitdir, 0);
--
--	strbuf_release(&sb);
--	free(sm_gitdir);
--
--	return 0;
--}
--
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -2065,7 +2081,7 @@ static struct cmd_struct commands[] = {
+ struct update_clone_data {
+ 	const struct submodule *sub;
+ 	struct object_id oid;
+@@ -2080,6 +2140,7 @@ static struct cmd_struct commands[] = {
+ 	{"list", module_list, 0},
  	{"name", module_name, 0},
  	{"clone", module_clone, 0},
++	{"update-module-mode", module_update_module_mode, 0},
  	{"update-clone", update_clone, 0},
--	{"connect-gitdir-workingtree", connect_gitdir_workingtree, 0},
-+	{"ensure-core-worktree", ensure_core_worktree, 0},
+ 	{"ensure-core-worktree", ensure_core_worktree, 0},
  	{"relative-path", resolve_relative_path, 0},
- 	{"resolve-relative-url", resolve_relative_url, 0},
- 	{"resolve-relative-url-test", resolve_relative_url_test, 0},
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 8caaf274e25..19d010eac06 100755
+index 19d010eac06..19c9f1215e1 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -535,6 +535,8 @@ cmd_update()
- 	do
- 		die_if_unmatched "$quickabort" "$sha1"
+@@ -537,27 +537,13 @@ cmd_update()
  
-+		git submodule--helper ensure-core-worktree "$sm_path"
-+
- 		name=$(git submodule--helper name "$sm_path") || exit
- 		if ! test -z "$update"
- 		then
-@@ -577,11 +579,6 @@ cmd_update()
- 			die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
- 		fi
+ 		git submodule--helper ensure-core-worktree "$sm_path"
  
--		if ! $(git config -f "$(git rev-parse --git-common-dir)/modules/$name/config" core.worktree) 2>/dev/null
+-		name=$(git submodule--helper name "$sm_path") || exit
+-		if ! test -z "$update"
 -		then
--			git submodule--helper connect-gitdir-workingtree "$name" "$sm_path"
+-			update_module=$update
+-		else
+-			update_module=$(git config submodule."$name".update)
+-			if test -z "$update_module"
+-			then
+-				update_module="checkout"
+-			fi
 -		fi
--
- 		if test "$subsha1" != "$sha1" || test -n "$force"
++		update_module=$(git submodule--helper update-module-mode $just_cloned "$sm_path" $update)
+ 
+ 		displaypath=$(git submodule--helper relative-path "$prefix$sm_path" "$wt_prefix")
+ 
+ 		if test $just_cloned -eq 1
  		then
- 			subforce=$force
+ 			subsha1=
+-			case "$update_module" in
+-			merge | rebase | none)
+-				update_module=checkout ;;
+-			esac
+ 		else
+ 			subsha1=$(sanitize_submodule_env; cd "$sm_path" &&
+ 				git rev-parse --verify HEAD) ||
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
