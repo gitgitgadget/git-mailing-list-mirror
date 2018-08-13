@@ -2,125 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E7321F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 16:46:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FE531F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 16:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729892AbeHMT31 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 15:29:27 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:34302 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728293AbeHMT31 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 15:29:27 -0400
-Received: by mail-wm0-f42.google.com with SMTP id l2-v6so8163762wme.1
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:46:26 -0700 (PDT)
+        id S1730078AbeHMTiJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 15:38:09 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:32894 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728293AbeHMTiJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 15:38:09 -0400
+Received: by mail-wr1-f54.google.com with SMTP id g6-v6so14894831wrp.0
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 09:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=xu3wRZJjecE8+6uf6wqNkBu9G0Bh2gLh4wq5lQQA+ZA=;
-        b=K4wrt9Cpcs9my9iSPPlfINctDtchbUvTw9uBA8xVd8bIjCglQvPU+tVVbUIEI9JWjW
-         vPsG33KMvfY8u/8lMeRB8SrZVVRoiJ5hCvmGIXzb4WYSZk3zX3x07LL+JLjDij9nplLI
-         a7gZ6+55NXVghaVw2olZb7j1aYZ1o+pkO2QzLr20iHfDuKclqAMZ1VusAqoqppwtZH6/
-         l3/ccx/qq9nADq3gQvCmHmBICMHepNn0HtEdTZwVybzjsE4bcr3o784fmI6xQ8ZStBay
-         b0kG91EXGqOFKyQkxMeQC3oSoV29IGAGOg3YDWW0NjZC9bcWTrWgrRDqXSREvs8+xrJ3
-         BGQA==
+         :user-agent:mime-version;
+        bh=5V8ic7jeYDsdIyk1xaSwhVLDl6kWdVnG263hZ7r2MrE=;
+        b=vfFXMvzGVaRh0vLMBfHSrtFt4yn90MaMBSMSQRmHd2Nwh114Lhr7KYeoZ7b9pPCVU4
+         gKsfnIweA5Y7OVdlnzn5CEqtRaqsuL4BEVs5I+aPESb6CnWhj4cvkpjuAQOOUsDmxnW1
+         NiTzU/FgSKk/u8p8gkcajldtut+gm1hAD/1xN5mWoigxW5cgl47Thc6OMo1sYkM3cYHb
+         /Z8o36DCoR7S+sT1HYNS0c9p6056pmS4nyU+dsLsGEyjbephIS380SL+TeSrAF1Gy9x/
+         sykG1x23y7ji6IHrxapvDnFUSB0P5k4P1+3uDp0uOMMhsFps4funUEOZmj9SDQe0sy6T
+         p18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=xu3wRZJjecE8+6uf6wqNkBu9G0Bh2gLh4wq5lQQA+ZA=;
-        b=q+DUedCUmkNr5XEUALqiPOMUMaCc/3SkXteYJMM7ymhdMIIRc6IDltAJy74N8nla6d
-         YsEuEATTeih+fcF5fWfTRUGAUgPszTKvbk2fQD53U2ZTTpL9sG/ONjUgmINaHjEyOBjL
-         j8CYKIzfWs4DRFygQSrJu9CoNhiuMj+2Lto4iu12jID+0dyIhrrVIqDw971fc0dOKSCN
-         MxW0m5+w0oPgDd//T979+Z5Lbi/fRxCqpx3nxjCEk6OUMYiTx72pXd8zv7O4L7p7vagZ
-         bLBRH+QBrGrwI81Bs/AealUO+Zg0jVcFa6/EIGHLB90IwlV5OBOwn77zhVZM87exCFlF
-         8ZBg==
-X-Gm-Message-State: AOUpUlG07ZkFvCXX7sku2zgc5Dy8Wf8uQCA1Op9tY3VtLoiPNGq2MTbZ
-        ohKxi/CFhB5cRu7inW0oYKs=
-X-Google-Smtp-Source: AA+uWPx2oSZ4nPsypLW2WGhQs4VMVMH48zEle2iKI7z9ZsutQ7E9oCYq5VWO23CuHI2HqpwMydYBbQ==
-X-Received: by 2002:a1c:3e8e:: with SMTP id l136-v6mr8314535wma.45.1534178784967;
-        Mon, 13 Aug 2018 09:46:24 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5V8ic7jeYDsdIyk1xaSwhVLDl6kWdVnG263hZ7r2MrE=;
+        b=fic1DVu2xf7kupuN0K+i++1Cw+/RVp36kCUrBTarYknsREGGjJ6DAF0duY1EVn/JNz
+         cZA+Xf9830IXQwSs6+n27MTrCGBoB3k/G2ws7xIUTeSkngKR3TfB5EjpFlhPqahv9A03
+         S4RCnkQx267MYhmLqe6FVW2C7nED7ymPpubg2vD4EjkgYspRrs2pLGzlV+oX3szZYK1m
+         IJukG+ELkuFAhAfB5DLu9sJJiEI3pGB+2dvBLGS/aCcX7xvFf8DWZmi/tSKsg1wBraEf
+         +feVWLriMYgWiyhfEGKe79uNskw5pMd+p+2791Zc/JlEAKUWye0MXhD1P6JIBYnnHK4H
+         oPPA==
+X-Gm-Message-State: AOUpUlFNYysHd+53mZsBhKk64OEzmPbg+XnCeruqd0tELkGA2bAFIgfb
+        cdsExhhV2mJ9S5Be/YqC89g=
+X-Google-Smtp-Source: AA+uWPyTdfwWlJExAGwvznm2MURZDsP1fVB4zLtn+nTO3WVX8ZcuXZfz5n2LwixbSIn037pxFO+kXQ==
+X-Received: by 2002:a5d:62c7:: with SMTP id o7-v6mr12139370wrv.83.1534179305456;
+        Mon, 13 Aug 2018 09:55:05 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h7-v6sm17828141wrs.8.2018.08.13.09.46.23
+        by smtp.gmail.com with ESMTPSA id d18-v6sm7021342wmb.33.2018.08.13.09.55.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Aug 2018 09:46:24 -0700 (PDT)
+        Mon, 13 Aug 2018 09:55:04 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?0JrQvtC70Y8g0JPRg9GA0YzQtdCy?= <guriev-ns@ya.ru>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2] status: -i shorthand for --ignored command line option
-References: <CAPig+cTD7XYbaPBzj36Eudrud80r-cz1CPLDsLA9CHJC6Yc-Qw@mail.gmail.com>
-        <20180809062142.15638-1-guriev-ns@ya.ru>
-        <xmqqpnyrczo8.fsf@gitster-ct.c.googlers.com>
-        <a178d91c-74dd-e04a-8db3-70cd75ad6793@ya.ru>
-Date:   Mon, 13 Aug 2018 09:46:23 -0700
-In-Reply-To: <a178d91c-74dd-e04a-8db3-70cd75ad6793@ya.ru> (=?utf-8?B?ItCa?=
- =?utf-8?B?0L7Qu9GPCdCT0YPRgNGM0LXQsiIncw==?= message of "Mon, 13 Aug 2018
- 08:02:47 +0300")
-Message-ID: <xmqqftzi6wps.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?Pawe=C5=82?= Paruzel <pawelparuzel95@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Torsten =?utf-8?Q?B=C3=B6gersha?= =?utf-8?Q?usen?= 
+        <tboegi@web.de>
+Subject: Re: [PATCH v3 1/1] clone: report duplicate entries on case-insensitive filesystems
+References: <20180807190110.16216-1-pclouds@gmail.com>
+        <20180810153608.30051-1-pclouds@gmail.com>
+        <20180810153608.30051-2-pclouds@gmail.com>
+        <20180811100905.1511-1-szeder.dev@gmail.com>
+        <CACsJy8BeRYVvWvTQU+bj+hSQ3DFw0mHtSjtOg9zVSsXznpU=Xw@mail.gmail.com>
+Date:   Mon, 13 Aug 2018 09:55:03 -0700
+In-Reply-To: <CACsJy8BeRYVvWvTQU+bj+hSQ3DFw0mHtSjtOg9zVSsXznpU=Xw@mail.gmail.com>
+        (Duy Nguyen's message of "Sat, 11 Aug 2018 15:16:12 +0200")
+Message-ID: <xmqq8t5a6wbc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Коля Гурьев <guriev-ns@ya.ru> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> 09.08.2018 18:44, Junio C Hamano пишет:
->> Unlike "-u', "-i" is supported by "git commit" which shares the
->> underlying implementation, and that is the historical reason why we
->> never had "-i" shorthand, I think.  
+> I was careless and checked the wrong variable (should have checked
+> nr_duplicates not state.nr_duplicates; the second is a pointer). So we
+> always get this warning (and with no following list of files)
+
+Heh, does that bug go away if you got rid of the pointer-ness of the
+field and store the value directly in there?
+
+>>     I also notice that this patch doesn't add any tests... :)
 >
-> git-commit supports the -u flag, its meaning is the same as for
-> git-status. Although the -i flag might be confused with the --include
-> option of git-commit,...
-
-Yes, I was describing a historical perspective on the reason why
-"-u" was there but "-i" was not.  Since it is merely historical that
-'status' was a mere synonym to 'commit --dry-run', which no longer
-is the case, that no longer is a reason not to have "status -i".
-
-That is why the paragraph you are responding to in my message
-exists.
-
->> While I do understand why sometimes "-u" is useful, especially
->> "-uno", to help those whose .gitignore is not managed as well as it
->> should be, I am not sure why a "typical git-status" invocation would
->> ask for "--ignored" that often to require such a short-hand.
->
-> The --ignored option is often used for opposing purposes, to show all
-> changes in working directory regardless of .gitignore files which may be
-> written sloppy.
-
-That's not "sloppy" but "too tightly", I think, and you won't get
-"changes" to them (only the presence of them).
-
-I know a user can view more paths with "git status --ignored" in the
-output than without the option, and it may sometimes be interesting
-(after all, that is why we have the option in the first place), but
-I am trying to find out why a user needs to constantly asking for
-"--ignored" (otherwise there is no point adding a short-and-sweet
-"-i").
-
-"git status -u" is not by itself a useful tool to "hide" the
-sloppyness of the .gitignore patterns, as "git status" by default
-acts the same as "git status -unormal" does to remind you that you
-forgot to list a pattern to catch build artifacts, and the user who
-wants to stay sloppy needs to work on it by saying something like
-"git status -uno".  The short-hand does not encourage people to be
-sloppy too much.  I am hesitant to add a short-hand that is too
-convenient and encourages people being sloppy (or leaving a too
-tight list of exclude patterns and not fixing) and wondering if "git
-status -i" alone, without forcing users to type a bit more (like
-"-uno" as opposed to "-u" alone), is such a short-hand that helps
-undisciplined use of the tool.  That is why I am asking why a
-"typical git-status" invocation ask for "--ignored" that often to
-require such a short-hand.
+> This is platform specific and I was to be frank a bit lazy. Will
+> consider adding a test with CASE_INSENSITIVE_FS after this.
