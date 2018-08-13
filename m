@@ -2,102 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F4CB1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 20:37:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD0B1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 20:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730216AbeHMXV0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 19:21:26 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44285 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728540AbeHMXV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 19:21:26 -0400
-Received: by mail-ed1-f68.google.com with SMTP id f23-v6so8947156edr.11
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 13:37:36 -0700 (PDT)
+        id S1729167AbeHMXZx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 19:25:53 -0400
+Received: from mail-yw1-f53.google.com ([209.85.161.53]:45110 "EHLO
+        mail-yw1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728772AbeHMXZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 19:25:53 -0400
+Received: by mail-yw1-f53.google.com with SMTP id 139-v6so14588814ywg.12
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 13:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=NeyD7TVLKFzfHao1FGoOMyqd9UG+F4oV1iUtXW1yP6Y=;
-        b=FgvUicvPr8PZMpl4WilgMrJCvem2LEsc7owZEvhyhQ1UUPFrmJrg1dj6cyGMe6RV9I
-         G/pYAiAQ+e14ydV1JelWIohwYlT1We/GWfeQQbzMfoTmf09TN3jiYytK8Os4GVw0uHFM
-         h68z/3pLeprc4n2kFYnyPUO55lt3RaIT6FLjy78+JvlCNwUAvvGE++XFNVWWaRTnnnaw
-         PhY/tWTM1v/5SZ/GLgOFpinhDHfi0gXftERWj5FR5aALVOTHbrBwoYRijvPakKdUoF/q
-         Letiv0qF6yyeudD1YEitah4HBQ/SAKspWEbDSG3qLXPEsuve/bJa7qni2Ee6Z7acBwxK
-         wY5g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=uNx/tORwLgNcAWe35kb4jvccgXQJzj6KJUlcmQF0XaE=;
+        b=ss0fOimNK8RbDo0UUCs3Nr/fBuL15JAJK/BKnb4q4Hbb+rkH9aByJU+42WqyTic1Dt
+         hO6B16+WXSfOkR/7UByyGqg+edFNRPRXKxpidbRlMUbNCS5VvOiaIOHQOcS++YHd7iUu
+         oSQrPPclUNBkg2fJaJ7AM7G+BZzWmMUfF2twUQ8yFS2rJGFCet4gzRL/vHTECuPpqhUv
+         H8N1Dh+JRkuPihqzLy/gDMwNiiDN2pxdYrZP7MwtiIzLQhi+kmYebI7zVWCCCU8xNjfj
+         nGtM8nyA1lHfYRlpGkbUo7NEhUO7voJ87JhTBYTxntj62wPfOGb0naB6kTtnNQ2nFzgR
+         MCfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=NeyD7TVLKFzfHao1FGoOMyqd9UG+F4oV1iUtXW1yP6Y=;
-        b=NP4zKuPczwmNgpjFAPTpu1WkyPElYiY2ChL2OF7M/FpTJI4f8XuupsMwQu9CFfg+Su
-         oafbfC7lPW9yvhOITGvuEb5lmlEH8AW4qVyUl8mzk864Np70Mvmyta28qKwbspgOZt3k
-         uQ18oJOLRxK026SW5yYAEJMlyNqIvmt6D3z2qC/QGJPMwd/qJn3w+xyWUfGda87i7OmX
-         1TyIY4mmktj1BCs1f4vxrvPV+jY/kUIi4CN4MZyQGXY8Aj39/UHlDSmpNqyeQwqwY+7U
-         HS3i0e/o5gWyIk42HDVHtOwl5+lNl2EJWVWWH6GR5xiB6GG7MF8jBCh7MF9l5WYTNWIp
-         HiBA==
-X-Gm-Message-State: AOUpUlFQuHSDIiuKllUBmtMFL9wEhiKlD9H85FtCJKnRz3BLgGT6/q7e
-        bNQCnOH6T858qJDTEVURYr8=
-X-Google-Smtp-Source: AA+uWPyI55gDu9zhzy5Cv/Io4at7cA9TFRGHJOSczeFXiDe2cKP5xbNNmM1UGS7XS+iCp3F6mm4DMQ==
-X-Received: by 2002:a50:b902:: with SMTP id m2-v6mr23778108ede.185.1534192655906;
-        Mon, 13 Aug 2018 13:37:35 -0700 (PDT)
-Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id h23-v6sm6435541edr.86.2018.08.13.13.37.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 13 Aug 2018 13:37:35 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v3 0/7] Prep for "git fetch" should not clobber existing tags without --force
-References: <20180731130718.25222-1-avarab@gmail.com> <20180813192249.27585-1-avarab@gmail.com> <xmqqlg9a3t8b.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqlg9a3t8b.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 13 Aug 2018 22:37:34 +0200
-Message-ID: <87ftziroj5.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=uNx/tORwLgNcAWe35kb4jvccgXQJzj6KJUlcmQF0XaE=;
+        b=kTFMpzorL/aaK6rrES0vD5Ds08czs5shUwQymdAo0LS0bYeHrfxt11X/KCtNTuMP/Y
+         77EzWEomaFUW3W0InIx/RlG7/kcNd6SM5D4gxiNCa/BXBuer8naoRHnPRsx3ORLDiFjM
+         DKyvPIIgkbWK/Fga04+crIyQz1PmuG+xl8FncpWtA3nbXFsZlVpfK5zPKvfOFAVhAT3i
+         nb4Y4y//nZKwRXMjpFe7PlYxDRGZc3zNii32pz+CTvHrPQsFUl8hWrV7q6ClmQ0eIPoj
+         CCuEfBPRNr/suqWqKUBTblmSMIK+RBYL8+alv32MxKNk2tjPDMPshkEgdxlXOI7V2TCs
+         +luA==
+X-Gm-Message-State: AOUpUlGitFN2FZwbsxKwWa56RQUXGmqWe4kNJjIO4VFO3UXIzV1XQLDT
+        i7w2cSEBGIQZUCn1TOd/smWagvGpJcX3WMmET4eHcA==
+X-Google-Smtp-Source: AA+uWPzrUeSm6uO9ZeFlXVuCAURhMMW/QMzGftna4jgDx1r09CcwgiYQ7E7ko6Aw8ZXUy6T+acUDzIuemdMGoSkQJUk=
+X-Received: by 2002:a25:cc03:: with SMTP id l3-v6mr9987383ybf.334.1534192922759;
+ Mon, 13 Aug 2018 13:42:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180813163108.GA6731@sigill.intra.peff.net> <87h8jyrtj6.fsf@evledraar.gmail.com>
+ <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 13 Aug 2018 13:41:51 -0700
+Message-ID: <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
+Subject: Re: Contributor Summit planning
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Aug 13 2018, Junio C Hamano wrote:
-
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Mon, Aug 13, 2018 at 1:36 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> This is unchanged from what's been cooking in pu for months now, so
->> hopefully it can be merged down faster than most, and then I can later
->> submit the actual meat of this series once I fix the (mostly doc)
->> issues with it.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> They have been held in 'pu' only because you said they were not
-> ready, I think ;-)
+> >    Or would those companies be OK with trusting that some 20-ish of us
+> >    can hold our tongues for one day and not ruin the surprise?
+> >
+> >    There's also overlap with the remote A/V concerns there. I.e. an
+> >    acceptable compromise for those companies might be to talk about
+> >    those features freely in the contributor summit trusting that it's a
+> >    closed forum, but that wouldn't work if it's going to be broadcasted=
+.
+> >
+> > 1. git.git$ git log --pretty=3Dformat:%aN --since=3D2018-01-01|sort|uni=
+q -c|sort -nr|head -n 20
+>
+> You'd need --no-merges there at least.
 
-You had some feedback to 6, 8 & 10 in the last round which I haven't
-addressed yet.
+No, I would disagree, as that removes you from top of the list,
+and you seem to be a pretty central part of the community to say at least.
 
-I think the "not ready" comment you're remembering is this for v1:
-https://public-inbox.org/git/CACBZZX4yG5h5kk4NFQz_NzAweMa+Nh3H-39OHtcH4XWsA6FGpg@mail.gmail.com/
+=C3=86var specifically pointed out that we might want to hear from you and =
+Duy
+if you want to attend a conference and if so how we can make that happen
+(by choosing location/time/setting appropriately) IIUC.
 
-> I can confirm that the first 5 do look the same, and you dropped the
-> old 6, 8 and 10.  The remainder look the same.
+>
+> Oh, using "git shortlog" might be also simpler ;-)
 
-Yup!
+I guess you'd need to memorize a different set of flags for that
+as without -s it would be harder to parse than the oneliner above.
 
-> I quickly re-scanned them and all of them looked obviously good.
-> Will discard the remainder and requeue.
-
-Thanks!
+Stefan
