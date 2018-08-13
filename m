@@ -6,59 +6,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D59A1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 08:48:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC541F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 08:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728674AbeHML3b (ORCPT <rfc822;e@80x24.org>);
+        id S1728686AbeHML3c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 07:29:32 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:40201 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728411AbeHML3b (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 13 Aug 2018 07:29:31 -0400
-Received: from mail-it0-f47.google.com ([209.85.214.47]:52275 "EHLO
-        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728370AbeHML3b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 07:29:31 -0400
-Received: by mail-it0-f47.google.com with SMTP id d9-v6so11982618itf.2
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 01:48:14 -0700 (PDT)
+Received: by mail-it0-f67.google.com with SMTP id h23-v6so12629035ita.5
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 01:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=TQ3aMkGFQuvwbtp9OFsbiBzJeOUeHeo2CXK3CERI66Q=;
-        b=lLBK5dhe86nmb7x4OiRsaXkW2AWezj8zetyMl3wZqQnLmUSfyruvUFMJh7DYbK0QhD
-         iTneM4TmaWmhSSsJ22oYvq/HNA3mBjo78VqxgbQQMwTRnz1XGe1j3J0ZsVHGEobiyWK/
-         2kkcZh4FDWTAl6x6+sZULLddPeSZvJKxZdJydW8O3CoxIMC2eMCywEIQAa/mj8TZNRcb
-         VPhArbdrhh3qNUm/LbNN9SAdgOZ1sGK1uMav4PvlaUO0PEu07rkFtM8O91uEsmhj0pXQ
-         wWlBB8gtzfe0EqFTpbGqGsLP4tPg0KzFSvFDjiHSjCbDY7qhhjIDqKNj2Eta6Ee1EGqO
-         5blg==
+        bh=+l40/Y4qFpad+eT9QoV8ua7EypiSs4sVN2W3uOi3Gts=;
+        b=D/B7l9czfLej9NpLnm7CfoSJyGeBp0OPn0uqD6HMwCVBWSW9c/9bNWmSQJhsXPhzaL
+         YZor+EEqQqWZawFmFq+TH0tmq7IJC9BBmOcNCsMcCk4UPucwWz1m2wxmRTd+3Ti32LBl
+         V8r5hCVDLoyOH/Ss3jGXoTsPIiPuqwqwGPvkGF+lwyq7fy1JA9uOhvN68hB3mjNre/Uh
+         LvNyvfAR1TuJ+FCh/wI68jncsXpLh022vPDnqGKbUh+WDQtCZsCYTgkBCpjjivCju6HY
+         rU2e1aFlZpJgUHN0ga0geUSGemvNWCN9ICT7wKDawcD5xN6a6855XURXkV6wGp13mXjt
+         YxCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=TQ3aMkGFQuvwbtp9OFsbiBzJeOUeHeo2CXK3CERI66Q=;
-        b=j9z39tmk6yKSDyzaekVFvkNjllojnXuXHRgBvmzWsLC7oUqNRGx/4c0+9fIo9LHT2Q
-         SHJj9MWqr5o363kvxah/4o91atLbp1A3Bf+quopVT5ljvLxmsL1UeXfCA2AUmvxob7Ih
-         rHlAIPsegpn+aw4a7xFUhYGh6WjrHlvf2/m/3fVMaGz3KyldlD9wgJ8xd8C3KhnaCIWL
-         IXlicmSgqCJV5dvqwgQ2w/VR+GRCVQNhm8gBO/CGnIWuPIIeBK+3Zilw44VZ3TKOSxKk
-         Nx3WjwhqFZYaIiAyVDkv0IF2hHr5Qr6a4mB4uFu6W7gCuB5wCq2qJK3EzDd8iXvACs9Z
-         BO1w==
-X-Gm-Message-State: AOUpUlEvIyMXyw/uooFuOtuLVHwQmJxk8kp31xEtUjxQbqQe7IvvL31m
-        8qfwAAs7fl9U2Pmm8YL2QNWgiKxA
-X-Google-Smtp-Source: AA+uWPwSN6kBxyPE10HYTgZIywYlqS/Y9wUuXe9cW+oPAC+mFHfZslXPXrRK3TWlg9zxmtg7ZfsnwQ==
-X-Received: by 2002:a02:9a83:: with SMTP id m3-v6mr14687511jak.116.1534150094208;
-        Mon, 13 Aug 2018 01:48:14 -0700 (PDT)
+        bh=+l40/Y4qFpad+eT9QoV8ua7EypiSs4sVN2W3uOi3Gts=;
+        b=MpN1pk+4vXqXtJ+Q4VLHRlmwqwTmgyk/w6F8copNE+jR8NlYWOVXCxoIIoJ2p/SU32
+         3pikyiQ6K+b1v3gQPzxPkcV3DC+xlgdeyy18JcIhmDa0iUtfLvZ1TrEBAdhnvBKGLknn
+         rX9k3nFwzFx8jaWNbRXZyS/3QpFK0yjs/cHlParakyO9X2pwH1G8Q6hNPN2C5hodxM6/
+         UN3fayX9LdJeXJdFz80K3fE9SVc1hqZ3apOF8wHiC2QDYiwN7oZfBV85DiUBslfXo20o
+         HW9wFlyyXqzg4TsNkTgKnitEO4wE0LLn8z95Nrz0x9mGWr7C1pj1SbZMH9len5BaK52m
+         ZPOw==
+X-Gm-Message-State: AOUpUlEbw0VnWFCH/+/oyB0myZgR/jn/JETDfKCB/b9VQ/oskdo5tdob
+        mwIeZpgJMqOH/nNZvVtpqOcPCx1E
+X-Google-Smtp-Source: AA+uWPyhFEhHo4M77pMbFT2oJvplLm+1ulPya9mVFXkxJcPD9fPse0qH4Ao1ERFmZcr76OzfXAds/g==
+X-Received: by 2002:a24:4e4d:: with SMTP id r74-v6mr10798215ita.150.1534150095095;
+        Mon, 13 Aug 2018 01:48:15 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id g23-v6sm5609405iob.88.2018.08.13.01.48.12
+        by smtp.gmail.com with ESMTPSA id g23-v6sm5609405iob.88.2018.08.13.01.48.14
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Mon, 13 Aug 2018 01:48:13 -0700 (PDT)
+        Mon, 13 Aug 2018 01:48:14 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/6] chainlint: improve robustness against "unusual" shell coding
-Date:   Mon, 13 Aug 2018 04:47:33 -0400
-Message-Id: <20180813084739.16134-1-sunshine@sunshineco.com>
+Subject: [PATCH v2 1/6] chainlint: match arbitrary here-docs tags rather than hard-coded names
+Date:   Mon, 13 Aug 2018 04:47:34 -0400
+Message-Id: <20180813084739.16134-2-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.18.0.758.g1932418f46
-In-Reply-To: <20180807082135.60913-1-sunshine@sunshineco.com>
+In-Reply-To: <20180813084739.16134-1-sunshine@sunshineco.com>
 References: <20180807082135.60913-1-sunshine@sunshineco.com>
+ <20180813084739.16134-1-sunshine@sunshineco.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -66,107 +67,224 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a re-roll of [1] which improves chainlint's robustness in the
-face of unusual shell coding such as in contrib/subtree/t7900 which
-triggered a false-positive[2].
+chainlint.sed swallows top-level here-docs to avoid being fooled by
+content which might look like start-of-subshell. It likewise swallows
+here-docs in subshells to avoid marking content lines as breaking the
+&&-chain, and to avoid being fooled by content which might look like
+end-of-subshell, start-of-nested-subshell, or other specially-recognized
+constructs.
 
-Changes since v1:
+At the time of implementation, it was believed that it was not possible
+to support arbitrary here-doc tag names since 'sed' provides no way to
+stash the opening tag name in a variable for later comparison against a
+line signaling end-of-here-doc. Consequently, tag names are hard-coded,
+with "EOF" being the only tag recognized at the top-level, and only
+"EOF", "EOT", and "INPUT_END" being recognized within subshells. Also,
+special care was taken to avoid being confused by here-docs nested
+within other here-docs.
 
-* recognize lowercase in here-doc tag names (in addition to uppercase)
-* recognize 'quoted' here-doc tag names (in addition to \escaped)
+In practice, this limited number of hard-coded tag names has been "good
+enough" for the 13000+ existing Git test, despite many of those tests
+using tags other than the recognized ones, since the bodies of those
+here-docs do not contain content which would fool the linter.
+Nevertheless, the situation is not ideal since someone writing new
+tests, and choosing a name not in the "blessed" set could potentially
+trigger a false-positive.
 
-Patch 2/6 is new. Range-diff below.
+To address this shortcoming, upgrade chainlint.sed to handle arbitrary
+here-doc tag names, both at the top-level and within subshells.
 
-[1]: https://public-inbox.org/git/20180807082135.60913-1-sunshine@sunshineco.com/
-[2]: https://public-inbox.org/git/20180730181356.GA156463@aiede.svl.corp.google.com/
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+ t/chainlint.sed                      | 57 +++++++++++++++++-----------
+ t/chainlint/here-doc.expect          |  2 +
+ t/chainlint/here-doc.test            |  7 ++++
+ t/chainlint/nested-here-doc.expect   |  2 +
+ t/chainlint/nested-here-doc.test     | 10 +++++
+ t/chainlint/subshell-here-doc.expect |  4 ++
+ t/chainlint/subshell-here-doc.test   |  8 ++++
+ 7 files changed, 67 insertions(+), 23 deletions(-)
 
-Eric Sunshine (6):
-  chainlint: match arbitrary here-docs tags rather than hard-coded names
-  chainlint: match 'quoted' here-doc tags
-  chainlint: recognize multi-line $(...) when command cuddled with "$("
-  chainlint: let here-doc and multi-line string commence on same line
-  chainlint: recognize multi-line quoted strings more robustly
-  chainlint: add test of pathological case which triggered false
-    positive
-
- t/chainlint.sed                               | 98 ++++++++++++-------
- t/chainlint/here-doc-close-subshell.expect    |  2 +
- t/chainlint/here-doc-close-subshell.test      |  5 +
- .../here-doc-multi-line-command-subst.expect  |  5 +
- .../here-doc-multi-line-command-subst.test    |  9 ++
- t/chainlint/here-doc-multi-line-string.expect |  4 +
- t/chainlint/here-doc-multi-line-string.test   |  8 ++
- t/chainlint/here-doc.expect                   |  4 +
- t/chainlint/here-doc.test                     | 14 +++
- ...ti-line-nested-command-substitution.expect | 11 ++-
- ...ulti-line-nested-command-substitution.test | 11 ++-
- t/chainlint/multi-line-string.expect          | 10 +-
- t/chainlint/multi-line-string.test            | 12 +++
- t/chainlint/nested-here-doc.expect            |  2 +
- t/chainlint/nested-here-doc.test              | 10 ++
- t/chainlint/subshell-here-doc.expect          |  5 +
- t/chainlint/subshell-here-doc.test            | 12 +++
- t/chainlint/t7900-subtree.expect              | 10 ++
- t/chainlint/t7900-subtree.test                | 22 +++++
- 19 files changed, 213 insertions(+), 41 deletions(-)
- create mode 100644 t/chainlint/here-doc-close-subshell.expect
- create mode 100644 t/chainlint/here-doc-close-subshell.test
- create mode 100644 t/chainlint/here-doc-multi-line-command-subst.expect
- create mode 100644 t/chainlint/here-doc-multi-line-command-subst.test
- create mode 100644 t/chainlint/here-doc-multi-line-string.expect
- create mode 100644 t/chainlint/here-doc-multi-line-string.test
- create mode 100644 t/chainlint/t7900-subtree.expect
- create mode 100644 t/chainlint/t7900-subtree.test
-
-Range-diff against v1:
-1:  d9ed356b97 ! 1:  f4c606cb7a chainlint: match arbitrary here-docs tags rather than hard-coded names
-    @@ -64,8 +64,8 @@
-     -/<<[ 	]*[-\\]*EOF[ 	]*/ {
-     -	s/[ 	]*<<[ 	]*[-\\]*EOF//
-     -	h
-    -+/<<[ 	]*[-\\]*[A-Z0-9_][A-Z0-9_]*/ {
-    -+	s/^\(.*\)<<[ 	]*[-\\]*\([A-Z0-9_][A-Z0-9_]*\)/<\2>\1<</
-    ++/<<[ 	]*[-\\]*[A-Za-z0-9_]/ {
-    ++	s/^\(.*\)<<[ 	]*[-\\]*\([A-Za-z0-9_][A-Za-z0-9_]*\)/<\2>\1<</
-     +	s/[ 	]*<<//
-      	:hereslurp
-      	N
-    @@ -88,7 +88,7 @@
-     -/<<[ 	]*[-\\]*EOF/bheredoc
-     -/<<[ 	]*[-\\]*EOT/bheredoc
-     -/<<[ 	]*[-\\]*INPUT_END/bheredoc
-    -+/<<[ 	]*[-\\]*[A-Z0-9_][A-Z0-9_]*/bheredoc
-    ++/<<[ 	]*[-\\]*[A-Za-z0-9_]/bheredoc
-      # comment or empty line -- discard since final non-comment, non-empty line
-      # before closing ")", "done", "elsif", "else", or "fi" will need to be
-      # re-visited to drop "suspect" marking since final line of those constructs
-    @@ -104,7 +104,7 @@
-     -/EOF/{ s/[ 	]*<<[ 	]*[-\\]*EOF//; s/^/EOF/; }
-     -/EOT/{ s/[ 	]*<<[ 	]*[-\\]*EOT//; s/^/EOT/; }
-     -/INPUT_END/{ s/[ 	]*<<[ 	]*[-\\]*INPUT_END//; s/^/INPUT_END/; }
-    -+s/^\(.*\)<<[ 	]*[-\\]*\([A-Z0-9_][A-Z0-9_]*\)/<\2>\1<</
-    ++s/^\(.*\)<<[ 	]*[-\\]*\([A-Za-z0-9_][A-Za-z0-9_]*\)/<\2>\1<</
-     +s/[ 	]*<<//
-      :hereslurpsub
-      N
-    @@ -143,11 +143,11 @@
-      EOF
-      
-     +# LINT: swallow here-doc with arbitrary tag
-    -+cat <<-ARBITRARY >foo &&
-    ++cat <<-Arbitrary_Tag_42 >foo &&
-     +snoz
-     +boz
-     +woz
-    -+ARBITRARY
-    ++Arbitrary_Tag_42
-     +
-      # LINT: swallow here-doc (EOF is last line of test)
-      horticulture <<\EOF
--:  ---------- > 2:  61c0d9c979 chainlint: match 'quoted' here-doc tags
-2:  d63920cdd5 = 3:  b97a05aa9c chainlint: recognize multi-line $(...) when command cuddled with "$("
-3:  a5078923ef = 4:  9d4d2b6c4d chainlint: let here-doc and multi-line string commence on same line
-4:  4841ca6ac9 = 5:  0a7f533889 chainlint: recognize multi-line quoted strings more robustly
-5:  e9eb45a2dc = 6:  d42bad0323 chainlint: add test of pathological case which triggered false positive
+diff --git a/t/chainlint.sed b/t/chainlint.sed
+index 5f0882cb38..2af1a687f8 100644
+--- a/t/chainlint.sed
++++ b/t/chainlint.sed
+@@ -61,6 +61,22 @@
+ # "else", and "fi" in if-then-else likewise must not end with "&&", thus
+ # receives similar treatment.
+ #
++# Swallowing here-docs with arbitrary tags requires a bit of finesse. When a
++# line such as "cat <<EOF >out" is seen, the here-doc tag is moved to the front
++# of the line enclosed in angle brackets as a sentinel, giving "<EOF>cat >out".
++# As each subsequent line is read, it is appended to the target line and a
++# (whitespace-loose) back-reference match /^<(.*)>\n\1$/ is attempted to see if
++# the content inside "<...>" matches the entirety of the newly-read line. For
++# instance, if the next line read is "some data", when concatenated with the
++# target line, it becomes "<EOF>cat >out\nsome data", and a match is attempted
++# to see if "EOF" matches "some data". Since it doesn't, the next line is
++# attempted. When a line consisting of only "EOF" (and possible whitespace) is
++# encountered, it is appended to the target line giving "<EOF>cat >out\nEOF",
++# in which case the "EOF" inside "<...>" does match the text following the
++# newline, thus the closing here-doc tag has been found. The closing tag line
++# and the "<...>" prefix on the target line are then discarded, leaving just
++# the target line "cat >out".
++#
+ # To facilitate regression testing (and manual debugging), a ">" annotation is
+ # applied to the line containing ")" which closes a subshell, ">>" to a line
+ # closing a nested subshell, and ">>>" to a line closing both at once. This
+@@ -78,14 +94,17 @@
+ 
+ # here-doc -- swallow it to avoid false hits within its body (but keep the
+ # command to which it was attached)
+-/<<[ 	]*[-\\]*EOF[ 	]*/ {
+-	s/[ 	]*<<[ 	]*[-\\]*EOF//
+-	h
++/<<[ 	]*[-\\]*[A-Za-z0-9_]/ {
++	s/^\(.*\)<<[ 	]*[-\\]*\([A-Za-z0-9_][A-Za-z0-9_]*\)/<\2>\1<</
++	s/[ 	]*<<//
+ 	:hereslurp
+ 	N
+-	s/.*\n//
+-	/^[ 	]*EOF[ 	]*$/!bhereslurp
+-	x
++	/^<\([^>]*\)>.*\n[ 	]*\1[ 	]*$/!{
++		s/\n.*$//
++		bhereslurp
++	}
++	s/^<[^>]*>//
++	s/\n.*$//
+ }
+ 
+ # one-liner "(...) &&"
+@@ -139,9 +158,7 @@ s/.*\n//
+ 	/"[^'"]*'[^'"]*"/!bsqstring
+ }
+ # here-doc -- swallow it
+-/<<[ 	]*[-\\]*EOF/bheredoc
+-/<<[ 	]*[-\\]*EOT/bheredoc
+-/<<[ 	]*[-\\]*INPUT_END/bheredoc
++/<<[ 	]*[-\\]*[A-Za-z0-9_]/bheredoc
+ # comment or empty line -- discard since final non-comment, non-empty line
+ # before closing ")", "done", "elsif", "else", or "fi" will need to be
+ # re-visited to drop "suspect" marking since final line of those constructs
+@@ -249,23 +266,17 @@ s/\n//
+ bcheckchain
+ 
+ # found here-doc -- swallow it to avoid false hits within its body (but keep
+-# the command to which it was attached); take care to handle here-docs nested
+-# within here-docs by only recognizing closing tag matching outer here-doc
+-# opening tag
++# the command to which it was attached)
+ :heredoc
+-/EOF/{ s/[ 	]*<<[ 	]*[-\\]*EOF//; s/^/EOF/; }
+-/EOT/{ s/[ 	]*<<[ 	]*[-\\]*EOT//; s/^/EOT/; }
+-/INPUT_END/{ s/[ 	]*<<[ 	]*[-\\]*INPUT_END//; s/^/INPUT_END/; }
++s/^\(.*\)<<[ 	]*[-\\]*\([A-Za-z0-9_][A-Za-z0-9_]*\)/<\2>\1<</
++s/[ 	]*<<//
+ :hereslurpsub
+ N
+-/^EOF.*\n[ 	]*EOF[ 	]*$/bhereclose
+-/^EOT.*\n[ 	]*EOT[ 	]*$/bhereclose
+-/^INPUT_END.*\n[ 	]*INPUT_END[ 	]*$/bhereclose
+-bhereslurpsub
+-:hereclose
+-s/^EOF//
+-s/^EOT//
+-s/^INPUT_END//
++/^<\([^>]*\)>.*\n[ 	]*\1[ 	]*$/!{
++	s/\n.*$//
++	bhereslurpsub
++}
++s/^<[^>]*>//
+ s/\n.*$//
+ bcheckchain
+ 
+diff --git a/t/chainlint/here-doc.expect b/t/chainlint/here-doc.expect
+index 2328fe7753..33bc3cc0b4 100644
+--- a/t/chainlint/here-doc.expect
++++ b/t/chainlint/here-doc.expect
+@@ -1,3 +1,5 @@
+ boodle wobba        gorgo snoot        wafta snurb &&
+ 
++cat >foo &&
++
+ horticulture
+diff --git a/t/chainlint/here-doc.test b/t/chainlint/here-doc.test
+index bd36f6e1d3..8986eefe74 100644
+--- a/t/chainlint/here-doc.test
++++ b/t/chainlint/here-doc.test
+@@ -7,6 +7,13 @@ quoth the raven,
+ nevermore...
+ EOF
+ 
++# LINT: swallow here-doc with arbitrary tag
++cat <<-Arbitrary_Tag_42 >foo &&
++snoz
++boz
++woz
++Arbitrary_Tag_42
++
+ # LINT: swallow here-doc (EOF is last line of test)
+ horticulture <<\EOF
+ gomez
+diff --git a/t/chainlint/nested-here-doc.expect b/t/chainlint/nested-here-doc.expect
+index 559301e005..0c9ef1cfc6 100644
+--- a/t/chainlint/nested-here-doc.expect
++++ b/t/chainlint/nested-here-doc.expect
+@@ -1,3 +1,5 @@
++cat >foop &&
++
+ (
+ 	cat &&
+ ?!AMP?!	cat
+diff --git a/t/chainlint/nested-here-doc.test b/t/chainlint/nested-here-doc.test
+index 027e0bb3ff..f35404bf0f 100644
+--- a/t/chainlint/nested-here-doc.test
++++ b/t/chainlint/nested-here-doc.test
+@@ -1,3 +1,13 @@
++# LINT: inner "EOF" not misintrepreted as closing ARBITRARY here-doc
++cat <<ARBITRARY >foop &&
++naddle
++fub <<EOF
++	nozzle
++	noodle
++EOF
++formp
++ARBITRARY
++
+ (
+ # LINT: inner "EOF" not misintrepreted as closing INPUT_END here-doc
+ 	cat <<-\INPUT_END &&
+diff --git a/t/chainlint/subshell-here-doc.expect b/t/chainlint/subshell-here-doc.expect
+index 19d5aff233..7c2da63bc7 100644
+--- a/t/chainlint/subshell-here-doc.expect
++++ b/t/chainlint/subshell-here-doc.expect
+@@ -2,4 +2,8 @@
+ 	echo wobba 	       gorgo snoot 	       wafta snurb &&
+ ?!AMP?!	cat >bip
+ 	echo >bop
++>) &&
++(
++	cat >bup &&
++	meep
+ >)
+diff --git a/t/chainlint/subshell-here-doc.test b/t/chainlint/subshell-here-doc.test
+index 9c3564c247..05139af0b5 100644
+--- a/t/chainlint/subshell-here-doc.test
++++ b/t/chainlint/subshell-here-doc.test
+@@ -20,4 +20,12 @@
+ 	wednesday
+ 	pugsly
+ 	EOF
++) &&
++(
++# LINT: swallow here-doc with arbitrary tag
++	cat <<-\ARBITRARY >bup &&
++	glink
++	FIZZ
++	ARBITRARY
++	meep
+ )
 -- 
 2.18.0.267.gbc8be36ecb
+
