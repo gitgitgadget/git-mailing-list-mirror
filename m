@@ -2,172 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70E8A1F404
-	for <e@80x24.org>; Mon, 13 Aug 2018 22:37:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CB8F1F404
+	for <e@80x24.org>; Mon, 13 Aug 2018 22:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730480AbeHNBVS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 13 Aug 2018 21:21:18 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53968 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1730131AbeHNBVR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 13 Aug 2018 21:21:17 -0400
-Received: (qmail 19610 invoked by uid 109); 13 Aug 2018 22:37:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 13 Aug 2018 22:37:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14542 invoked by uid 111); 13 Aug 2018 22:37:07 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 13 Aug 2018 18:37:07 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2018 18:37:02 -0400
-Date:   Mon, 13 Aug 2018 18:37:01 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH] mingw: enable atomic O_APPEND
-Message-ID: <20180813223701.GC16006@sigill.intra.peff.net>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
- <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
- <bc9132ab-3030-07e3-03d1-d2ddae6a1b45@kdbg.org>
- <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
- <84c749fd-23d2-0bc5-225b-74f8d31502b6@kdbg.org>
- <87eff2rmgt.fsf@evledraar.gmail.com>
+        id S1730744AbeHNB0J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 13 Aug 2018 21:26:09 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:44563 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730213AbeHNB0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 13 Aug 2018 21:26:09 -0400
+Received: by mail-wr1-f41.google.com with SMTP id r16-v6so15553743wrt.11
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 15:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EKFjVo1UuT9jDG7NTw7DFPJydHFNbPovyxE5PPQ1QSg=;
+        b=UetPbie0puV/i+YM8x+CETKEIlgGM6xLunPbfMhLazojI6WoNZrit7KQ/qCgYljmOL
+         WgCvcITMWKcWz5T9sJ/ox73VIvxIRSZaUJ1ghV+7RFB3bOXUcGR/fW2nH3AZ7d1fI2KL
+         h3AsOzAKsyFaHHblm8OF+c/+hq1z/X8eMGXMMqAqq19QTxdCACCGO24ns7TNJTQIVoZ0
+         KOp5DXhMyF/bepeufb1j5c+HVoog2QKEy59Up8z7gBg1fZj8ubvawu+4cSxv/TXTsuRe
+         RWWvSyebTzPQbFOf3y2kJUuIoiaVbY/Bc6AS/GYY1APA9CAlkvBjrRXPaedS3rGRXLC/
+         CQRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EKFjVo1UuT9jDG7NTw7DFPJydHFNbPovyxE5PPQ1QSg=;
+        b=NVbNqEWcnBocPiaC6bjkWJfKMoyF2wD/PBz+P4fIeJQukkuz/HN5hKRzGzZCUJcc+R
+         NE9T3rcbMVpnAzzzpYq/ILbBZM2ygMkYvMRzjdfmAMx2Myjn9Q9+5DZ6NbiRkMQm1DH1
+         OhcOA4pp01VhfnTEZa03xzRzxjKxz7xiOL0ZnNql1dtqTROP7ZFbu96w2nzx/fgGpfy2
+         2ybuBs0uY2KtZ0PHeYPX2PKvCZlK8bfqJrhOBcUugC+y1MiU2k35X86NVLCOyOgJWYHZ
+         FB4OPxdQEPpMsG3BufLRoxjfdbrfk6PPt/phF8yqL+/uB+atV3z0Dtzm940VlBWxLwjR
+         0DwA==
+X-Gm-Message-State: AOUpUlEp4LbmQGBDYZFF8Is6sGYvHN/SLznt8zw8bImDuQRgHNEaz0Rl
+        Nv1rgSBrBFLMtX32uHoMfbk=
+X-Google-Smtp-Source: AA+uWPwy9hqd1TynJmo6Qzutk2sG6QC5jp7C9OY4T0HZgpYB70rBdrAxmed+ymXUpDoZyeSYkSb7ww==
+X-Received: by 2002:adf:f9c9:: with SMTP id w9-v6mr11868152wrr.105.1534200112321;
+        Mon, 13 Aug 2018 15:41:52 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e137-v6sm21005700wma.20.2018.08.13.15.41.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Aug 2018 15:41:51 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Ben.Peart@microsoft.com, git@vger.kernel.org, peartben@gmail.com,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v4 2/5] unpack-trees: add performance tracing
+References: <20180804053723.4695-1-pclouds@gmail.com>
+        <20180812081551.27927-1-pclouds@gmail.com>
+        <20180812081551.27927-3-pclouds@gmail.com>
+        <20180813192526.GC10013@sigill.intra.peff.net>
+Date:   Mon, 13 Aug 2018 15:41:50 -0700
+In-Reply-To: <20180813192526.GC10013@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 13 Aug 2018 15:25:26 -0400")
+Message-ID: <xmqqk1ot3n4h.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87eff2rmgt.fsf@evledraar.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 11:22:10PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Jeff King <peff@peff.net> writes:
 
-> > O_APPEND is POSIX and means race-free append. If you mark some call
-> > sites with O_APPEND, then that must be the ones that need race-free
-> > append. Hence, you would have to go the other route: Mark those call
-> > sites that do _not_ need race-free append with some custom
-> > function/macro. (Or mark both with different helpers and avoid writing
-> > down O_APPEND.)
-> 
-> O_APPEND in POSIX is race-free only up to PIPE_MAX bytes written at a
-> time, which is e.g. 2^12 by default on linux, after that all bets are
-> off and the kernel is free to interleave different write calls.
+> I can buy the argument that it's nice to have some form of profiling
+> that works everywhere, even if it's lowest-common-denominator. I just
+> wonder if we could be investing effort into tooling around existing
+> solutions that will end up more powerful and flexible in the long run.
 
-This is a claim I've run across often, but I've never seen a good
-citation for it.
+Another thing I noticed is that the codepaths we would find
+interesting to annotate with trace_performance_* stuff often
+overlaps with the "slog" thing.  If the latter aims to eventually
+replace GIT_TRACE (and if not, I suspect there is not much point
+adding it in the first place), perhaps we can extend it to also
+cover the need of these trace_performance_* calls, so that we do not
+have to carry three different tracing mechanisms.
 
-Certainly atomic writes to _pipes_ are determined by PIPE_BUF (which
-IIRC is not even a constant on Linux, but can be changed at run-time).
-But is it relevant for regular-file writes?
-
-Another gem I found while digging on this O_APPEND/FILE_APPEND_DATA
-stuff the other day: somebody claimed that the max atomic-append size on
-Linux is 4096 and 1024 on Windows. But their experimental script was
-done in bash! So I suspect they were really just measuring the size of
-stdio buffers.
-
-Here's my attempt at a test setup. This C program forces two processes
-to write simultaneously to the same file with O_APPEND:
-
--- >8 --
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <fcntl.h>
-#include <unistd.h>
-
-static void doit(int size, const char *fn, char c)
-{
-	int fd;
-	char *buf;
-
-	fd = open(fn, O_WRONLY|O_APPEND|O_CREAT, 0666);
-	if (fd < 0) {
-		perror("open");
-		return;
-	}
-
-	buf = malloc(size);
-	memset(buf, c, size);
-
-	while (1)
-		write(fd, buf, size);
-}
-
-int main(int argc, const char **argv)
-{
-	int size = atoi(argv[1]);
-
-	if (fork())
-		doit(size, argv[2], '1');
-	else
-		doit(size, argv[2], '2');
-	return 0;
-}
--- 8< --
-
-and then this program checks that we saw atomic units of the correct
-size:
-
--- >8 --
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-
-int main(int argc, const char **argv)
-{
-	int size = atoi(argv[1]);
-	char *buf;
-
-	buf = malloc(size);
-	while (1) {
-		int i;
-		/* assume atomic reads, i.e., no signals */
-		int r = read(0, buf, size);
-		if (!r)
-			break;
-		for (i = 1; i < size; i++) {
-			if (buf[i] != buf[0]) {
-				fprintf(stderr, "overlap\n");
-				return 1;
-			}
-		}
-	}
-	return 0;
-}
--- 8< --
-
-And then you can do something like:
-
-  for size in 4097 8193 16385 32769 65537 131073 262145 524289 1048577; do
-    >out ;# clean up from last run
-    echo "Trying $size..."
-    timeout 5 ./write $size out
-    if ! ./check $size <out; then
-      echo "$size failed"
-      break
-    fi
-  done
-
-On my Linux system, each of those seems to write several gigabytes
-without overlapping. I did manage to hit some failing cases, but they
-were never sheared writes, but rather cases where there was an
-incomplete write at the end-of-file.
-
-So obviously this is all a bit of a tangent. I'd be fine declaring that
-trace output is generally small enough not to worry about this in the
-first place. But those results show that it shouldn't matter even if
-we're writing 1MB trace lines on Linux. I wouldn't be at all surprised
-to see different results on other operating systems, though.
-
--Peff
