@@ -2,174 +2,266 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A83FB1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 01:41:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500A31F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 01:58:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729493AbeHNE0m (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 00:26:42 -0400
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:54772 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726034AbeHNE0m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 00:26:42 -0400
-Received: by mail-ua1-f74.google.com with SMTP id c4-v6so8829468uan.21
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 18:41:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Hd0uM7dbDBw6EiWSGkA+/vA0l64H7BI3qkZGq+nEtuk=;
-        b=CBk67V344XGKBhsKhL6mAXxEWCc6eHcBiUkfUhTvvEEI/a56yOl8rp8gC7Gwd8Qvt/
-         WbK/IgY/ZjOm1wmy0luRQkzGYhAw7bBQARZKoaTttNkVv08IlNplSThA7zRjqe8PvTnx
-         ifzSRUOO/JG0I28uOz+4NV+kXe6H/qO1KRMXhMi6/ce1nrSwk18CLRXMOA3wnCtg6bdb
-         byDIYVVfkPhLTxej9319gnReqxRaj+7sp3xdK1+i5H7BE4vcXqVZ+RRHhymFwi6thXEn
-         vvK+rkN52f71z1t1fcCLP4BcocdFHdxplUDRc9oONwMHedQJupB7miKePtO3T8NMrU5q
-         FUow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Hd0uM7dbDBw6EiWSGkA+/vA0l64H7BI3qkZGq+nEtuk=;
-        b=iLDhW9WI+OY/Rb+yu6kiLm7IksCy6KNefvdN9bnpBIvxr+itRWu80wDQEIM0+rLi9B
-         l93T0lTtnnRmvXbFk/BPYLhO4abH8nzNn3GJE2kaieKOoRySrOyjvSXhmzYZPW2Caod2
-         hXAOYXpkRKZWFMmN/LOle+86rjaQRnxfp2V2DqD0TEJwImHv7RqzHTyr5imgA+zUlW4X
-         8vh5XyAJWETaRbf5HnBdFulBlWR0t/Sqkzxh2WzoqAeqsKpp3NifLwfHZad2EfmOBDdz
-         mvS/7xPbzYo6ahe9XF+8KM9VdNw1hbyAkYkYARKdAa9NB140pn18geB7JsXvt54DE5JO
-         y8cg==
-X-Gm-Message-State: AOUpUlFVBxmLamc3yh4rpwF9IsvQzHe/opXFzd3HArt7o2GVDcSjSot1
-        aF+r/CE1rVXxaMHCJlOFpFoAnvxCf+gD
-X-Google-Smtp-Source: AA+uWPyZXMbQ2gBJYqIl+PIkvm5mHCmXhBtOkp+oPr643/cDEA2m/a+DtbQ7s39tjkfwoBe36/h7636OA2Cj
-X-Received: by 2002:ab0:5113:: with SMTP id e19-v6mr9697327uaa.103.1534210910784;
- Mon, 13 Aug 2018 18:41:50 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 18:41:22 -0700
-In-Reply-To: <20180814014122.30662-1-sbeller@google.com>
-Message-Id: <20180814014122.30662-9-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180810223441.30428-1-sbeller@google.com> <20180814014122.30662-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 8/8] diff.c: rewrite emit_line_0 more understandably
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1729990AbeHNEni (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 00:43:38 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54186 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729055AbeHNEni (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 00:43:38 -0400
+Received: (qmail 26764 invoked by uid 109); 14 Aug 2018 01:58:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 01:58:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15834 invoked by uid 111); 14 Aug 2018 01:58:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 13 Aug 2018 21:58:47 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 13 Aug 2018 21:58:42 -0400
+Date:   Mon, 13 Aug 2018 21:58:42 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+Message-ID: <20180814015842.GA27055@sigill.intra.peff.net>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
+ <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+ <20180811170248.GC27393@sigill.intra.peff.net>
+ <20180811172350.GA2689@sigill.intra.peff.net>
+ <f69e08d7-b29d-a9b7-b6d4-5294c4379133@web.de>
+ <6065f3e5-f831-802f-9adc-099de99405fc@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6065f3e5-f831-802f-9adc-099de99405fc@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rewrite emit_line_0 to have fewer (nested) conditions.
+On Mon, Aug 13, 2018 at 07:15:23PM +0200, René Scharfe wrote:
 
-The change in 'emit_line' makes sure that 'first' is never user data,
-but always under our control, a sign or special character in the
-beginning of the line (or 0, in which case we ignore it).
-So from now on, let's pass only a diff marker or 0 as the 'first'
-character of the line.
+> Am 11.08.2018 um 22:59 schrieb René Scharfe:
+> > If the current oidset implementation is so bad, why not replace it with
+> > one based on oid_array? ;-)
+> > 
+> > Intuitively I'd try a hashmap with no payload and open addressing via
+> > sha1hash(), which should reduce memory allocations quite a bit -- no
+> > need to store hash codes and next pointers, only an array of object IDs
+> > with a fill rate of 50% or so.  Deletions are a bit awkward with that
+> > scheme, though; they could perhaps be implemented as insertions into a
+> > second hashmap.
+> 
+> Here's roughly what I had in mind, only with a free/occupied bitmap (or
+> a one-bit payload, if you will).  I tried a variant that encoded empty
+> slots as null_oid first, which has lower memory usage, but isn't any
+> faster than the current code.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- diff.c | 73 ++++++++++++++++++++++++++++++++--------------------------
- 1 file changed, 40 insertions(+), 33 deletions(-)
+Hmph, I thought I had sent my version out last night, but it looks like
+I didn't. I got similarly mediocre results.
 
-diff --git a/diff.c b/diff.c
-index 7a23adf254d..c5c7739ce34 100644
---- a/diff.c
-+++ b/diff.c
-@@ -626,43 +626,50 @@ static void emit_line_0(struct diff_options *o,
- 			int first, const char *line, int len)
- {
- 	int has_trailing_newline, has_trailing_carriage_return;
--	int nofirst;
-+	int needs_reset = 0; /* at the end of the line */
- 	FILE *file = o->file;
- 
- 	fputs(diff_line_prefix(o), file);
- 
--	if (len == 0) {
--		has_trailing_newline = (first == '\n');
--		has_trailing_carriage_return = (!has_trailing_newline &&
--						(first == '\r'));
--		nofirst = has_trailing_newline || has_trailing_carriage_return;
--	} else {
--		has_trailing_newline = (len > 0 && line[len-1] == '\n');
--		if (has_trailing_newline)
--			len--;
--		has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
--		if (has_trailing_carriage_return)
--			len--;
--		nofirst = 0;
--	}
--
--	if (len || !nofirst) {
--		if (reverse && want_color(o->use_color))
--			fputs(GIT_COLOR_REVERSE, file);
--		if (set_sign)
--			fputs(set_sign, file);
--		if (first && !nofirst)
--			fputc(first, file);
--		if (len) {
--			if (set && set != set_sign) {
--				if (set_sign)
--					fputs(reset, file);
--				fputs(set, file);
--			}
--			fwrite(line, len, 1, file);
--		}
--		fputs(reset, file);
-+	has_trailing_newline = (len > 0 && line[len-1] == '\n');
-+	if (has_trailing_newline)
-+		len--;
-+
-+	has_trailing_carriage_return = (len > 0 && line[len-1] == '\r');
-+	if (has_trailing_carriage_return)
-+		len--;
-+
-+	if (!len && !first)
-+		goto end_of_line;
-+
-+	if (reverse && want_color(o->use_color)) {
-+		fputs(GIT_COLOR_REVERSE, file);
-+		needs_reset = 1;
-+	}
-+
-+	if (set_sign) {
-+		fputs(set_sign, file);
-+		needs_reset = 1;
+Your suggestion can be implemented using khash (my patch below).
+
+> Before:
+> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+> 
+>   Time (mean ± σ):     269.5 ms ±  26.7 ms    [User: 247.7 ms, System: 21.4 ms]
+> 
+>   Range (min … max):   240.3 ms … 339.3 ms
+> 
+> After:
+> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+> 
+>   Time (mean ± σ):     224.2 ms ±  18.2 ms    [User: 201.7 ms, System: 22.1 ms]
+> 
+>   Range (min … max):   205.0 ms … 259.0 ms
+
+Yeah. My best-of-five dropped from 300ms to 247ms. That 300 was using
+the memory pool, though khash's deletion strategy isn't all that
+different (the wasted memory hangs around until the next hash resize,
+but if you're evenly dropping and adding, you likely won't need to
+resize).
+
+Applying your patch, I get 337ms, worse than the hashmap with a memory
+pool. I'm not sure why.
+
+>  builtin/cat-file.c | 93 +++++++++++++++++++++++++++++++++++++++++++---
+>  1 file changed, 88 insertions(+), 5 deletions(-)
+
+By the way, your patch seemed damaged (wouldn't apply, and "am -3"
+complained of hand-editing). It looks like maybe there's an extra space
+inserted in the context lines?
+
+Anyway, here's the khash patch for reference.
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 5714bcbddd..5a86b10a5e 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -534,7 +534,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
+ 	 * add to "newlist" between calls, the additions will always be for
+ 	 * oids that are already in the set.
+ 	 */
+-	if (!tip_oids->map.map.tablesize) {
++	if (!tip_oids->map) {
+ 		add_refs_to_oidset(tip_oids, unmatched);
+ 		add_refs_to_oidset(tip_oids, newlist);
  	}
-+
-+	if (first)
-+		fputc(first, file);
-+
-+	if (!len)
-+		goto end_of_line;
-+
-+	if (set) {
-+		if (set_sign && set != set_sign)
-+			fputs(reset, file);
-+		fputs(set, file);
-+		needs_reset = 1;
-+	}
-+	fwrite(line, len, 1, file);
-+	needs_reset = 1; /* 'line' may contain color codes. */
-+
-+end_of_line:
-+	if (needs_reset)
-+		fputs(reset, file);
- 	if (has_trailing_carriage_return)
- 		fputc('\r', file);
- 	if (has_trailing_newline)
-@@ -672,7 +679,7 @@ static void emit_line_0(struct diff_options *o,
- static void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
+diff --git a/oidset.c b/oidset.c
+index 454c54f933..2964b43b2d 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -3,38 +3,44 @@
+ 
+ int oidset_contains(const struct oidset *set, const struct object_id *oid)
  {
--	emit_line_0(o, set, NULL, 0, reset, line[0], line+1, len-1);
-+	emit_line_0(o, set, NULL, 0, reset, 0, line, len);
+-	if (!set->map.map.tablesize)
++	khiter_t pos;
++
++	if (!set->map)
+ 		return 0;
+-	return !!oidmap_get(&set->map, oid);
++
++	pos = kh_get_oid(set->map, *oid);
++	return pos < kh_end(set->map);
  }
  
- enum diff_symbol {
--- 
-2.18.0.865.gffc8e1a3cd6-goog
-
+ int oidset_insert(struct oidset *set, const struct object_id *oid)
+ {
+-	struct oidmap_entry *entry;
++	int hash_ret;
+ 
+-	if (!set->map.map.tablesize)
+-		oidmap_init(&set->map, 0);
+-	else if (oidset_contains(set, oid))
+-		return 1;
++	if (!set->map)
++		set->map = kh_init_oid();
+ 
+-	entry = xmalloc(sizeof(*entry));
+-	oidcpy(&entry->oid, oid);
+-
+-	oidmap_put(&set->map, entry);
+-	return 0;
++	kh_put_oid(set->map, *oid, &hash_ret);
++	return !hash_ret;
+ }
+ 
+ int oidset_remove(struct oidset *set, const struct object_id *oid)
+ {
+-	struct oidmap_entry *entry;
++	khiter_t pos;
+ 
+-	entry = oidmap_remove(&set->map, oid);
+-	free(entry);
++	if (!set->map)
++		return 0;
++
++	pos = kh_get_oid(set->map, *oid);
++	if (pos < kh_end(set->map)) {
++		kh_del_oid(set->map, pos);
++		return 1;
++	}
+ 
+-	return (entry != NULL);
++	return 0;
+ }
+ 
+ void oidset_clear(struct oidset *set)
+ {
+-	oidmap_free(&set->map, 1);
++	kh_destroy_oid(set->map);
++	set->map = NULL;
+ }
+diff --git a/oidset.h b/oidset.h
+index 40ec5f87fe..4c4c5a42fe 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -2,6 +2,7 @@
+ #define OIDSET_H
+ 
+ #include "oidmap.h"
++#include "khash.h"
+ 
+ /**
+  * This API is similar to sha1-array, in that it maintains a set of object ids
+@@ -15,19 +16,34 @@
+  *      table overhead.
+  */
+ 
++static inline unsigned int oid_hash(const struct object_id oid)
++{
++	unsigned int hash;
++	memcpy(&hash, oid.hash, sizeof(hash));
++	return hash;
++}
++
++static inline int oid_equal(const struct object_id a,
++			    const struct object_id b)
++{
++	return !oidcmp(&a, &b);
++}
++
++KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
++
++
+ /**
+  * A single oidset; should be zero-initialized (or use OIDSET_INIT).
+  */
+ struct oidset {
+-	struct oidmap map;
++	kh_oid_t *map;
+ };
+ 
+-#define OIDSET_INIT { OIDMAP_INIT }
+-
++#define OIDSET_INIT { NULL }
+ 
+ static inline void oidset_init(struct oidset *set, size_t initial_size)
+ {
+-	oidmap_init(&set->map, initial_size);
++	set->map = NULL;
+ }
+ 
+ /**
+@@ -58,19 +74,25 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
+ void oidset_clear(struct oidset *set);
+ 
+ struct oidset_iter {
+-	struct oidmap_iter m_iter;
++	kh_oid_t *map;
++	khiter_t iter;
+ };
+ 
+ static inline void oidset_iter_init(struct oidset *set,
+ 				    struct oidset_iter *iter)
+ {
+-	oidmap_iter_init(&set->map, &iter->m_iter);
++	iter->map = set->map;
++	iter->iter = kh_begin(iter->map);
+ }
+ 
+ static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
+ {
+-	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
+-	return e ? &e->oid : NULL;
++	for (; iter->iter != kh_end(iter->map); iter->iter++) {
++		if (!kh_exist(iter->map, iter->iter))
++			continue;
++		return &kh_key(iter->map, iter->iter);
++	}
++	return NULL;
+ }
+ 
+ static inline struct object_id *oidset_iter_first(struct oidset *set,
