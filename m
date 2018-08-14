@@ -2,83 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 502F21F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 20:06:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 066D51F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 20:09:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728372AbeHNWzB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 18:55:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55252 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728034AbeHNWzB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 18:55:01 -0400
-Received: (qmail 3553 invoked by uid 109); 14 Aug 2018 20:06:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 20:06:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25686 invoked by uid 111); 14 Aug 2018 20:06:17 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 16:06:17 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 16:06:11 -0400
-Date:   Tue, 14 Aug 2018 16:06:11 -0400
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: Measuring Community Involvement (was Re: Contributor Summit
- planning)
-Message-ID: <20180814200611.GG28452@sigill.intra.peff.net>
-References: <20180813163108.GA6731@sigill.intra.peff.net>
- <87h8jyrtj6.fsf@evledraar.gmail.com>
- <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
- <20180813210617.GA19738@sigill.intra.peff.net>
- <CAGZ79kaNa2bo31rQexs4rAH6bAz1rMzpxS3-fSFE6Cj87E8saw@mail.gmail.com>
- <20180813215431.GB16006@sigill.intra.peff.net>
- <3f0da3cd-0929-4aad-2c50-92c9d6c660e5@gmail.com>
- <20180814193646.GC28452@sigill.intra.peff.net>
- <CAGZ79kZYx-BOpx8SWeaP2Zskw0-OsSSVPZB4QJerAu9ST2swaA@mail.gmail.com>
+        id S1728137AbeHNW61 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 18:58:27 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:38865 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeHNW61 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 18:58:27 -0400
+Received: by mail-it0-f41.google.com with SMTP id v71-v6so21782873itb.3
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 13:09:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=bXGVLIpap+MmAdq2ajhxMHhB+9hvdCFrt4qXd7iL83s=;
+        b=Jb+lD6UGhwUgP5p0RnbqQZzswwJJbtPlVRQ6EBI2R+j9ktNxTeU55ZzrpjTWPsaYe0
+         2ct42Ru7uCczRNC/QbXAn9O5q1nUfmOQVp/1MX16yHmcqkMvoI9AoZC6o37XZ5FEuq0h
+         oSTVHOC5nKRtajcbRfAwh/HzwgRqwhXdpKLWEkNZwuL4HLbIfBNkRbvTeksXxmd7HB5H
+         TZxP0OXFP5lFRM4UldyPEgAOGIEzPJ+ORGPD65cNmep2m0WNNRQj6GI3HlQnVeWQpvT0
+         o1FODtSxpmm/XSjz6LXLu5G34xaauh4yIo+7DY5qINEDRLLHdPeK02IRsP1kMQaT7kZc
+         cUng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=bXGVLIpap+MmAdq2ajhxMHhB+9hvdCFrt4qXd7iL83s=;
+        b=oQeUIaW58kYYKjUfhJI3le5RH0tTy9r/o/wI6dof++TGcPs5csVfbb7v+eZoELjYMQ
+         0WYqiIESukXNGD+rGCNqOWAbmYsDKBfXaop+RRkUd2y3vK+Z8AiRIbcE49OSsNNQRIef
+         dCFwbn1xbKqGdMVGi8R+Y+JliixLUrEE7YR7tsq/N5R8OifCDf4xILRFOzNPcOx1+650
+         KyhG0yzs+rEHXwy2nOvTLWC3RI+WMxh/W4dbq05m2862qI8CwhvHLIRc9hsGRq495yQh
+         iBMY+5T0ACv/ZCeM/EF7L2oFYsHE1vfNCYxqaP2ZTK8jtD17CbYM/HTD5J8hb4RwIEC9
+         TlZg==
+X-Gm-Message-State: AOUpUlF3w8EQM6hpeYhdArbsOQdrfQ9eccFlUkE0w/nQ9rHDp+eGxaT8
+        H1sGbU4ZzeYMcDgx/Ki7rgJ+t3EgIq9RbMh6/FYSCj07
+X-Google-Smtp-Source: AA+uWPzPTD6ZbQJVIGShP8p56shY5Xu8fWeZNfV+NIEHjEUDZgt/zA5Q6VOW1zDqjfRbgBfMkd3DfhDbewKEpuPGD8w=
+X-Received: by 2002:a24:dd88:: with SMTP id t130-v6mr14929191itf.129.1534277378137;
+ Tue, 14 Aug 2018 13:09:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kZYx-BOpx8SWeaP2Zskw0-OsSSVPZB4QJerAu9ST2swaA@mail.gmail.com>
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Tue, 14 Aug 2018 13:09:37
+ -0700 (PDT)
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 14 Aug 2018 22:09:37 +0200
+Message-ID: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
+Subject: Syncing HEAD
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 12:47:59PM -0700, Stefan Beller wrote:
+Hi,
 
-> On Tue, Aug 14, 2018 at 12:36 PM Jeff King <peff@peff.net> wrote:
-> 
-> > Thanks, it was nice to see a more comprehensive list in one spot.
-> >
-> > It would be neat to have a tool that presents all of these
-> > automatically, but I think the email ones are pretty tricky (most people
-> > don't have the whole list archive sitting around).
-> 
-> With the advent of public inbox, this is easy to obtain?
+When cloning with --mirror, the clone gets its HEAD initialized with
+the value HEAD has in its origin remote. After that if HEAD changes in
+origin there is no simple way to sync HEAD at the same time as the
+refs are synced.
 
-For our project, yes. But I was thinking of a tool that could be used
-for other projects, too.
+It looks like the simplest way to sync HEAD is:
 
-> > At one point I sent a patch series that would let shortlog group by
-> > trailers. Nobody seemed all that interested and I didn't end up using it
-> > for its original purpose, so I didn't polish it further.  But I'd be
-> > happy to re-submit it if you think it would be useful.
-> 
-> I would think it is useful. Didn't Linus also ask for a related thing?
-> https://public-inbox.org/git/CA+55aFzWkE43rSm-TJNKkHq4F3eOiGR0-Bo9V1=a1s=vQ0KPqQ@mail.gmail.com/
+1) git remote show origin
+2) parse "HEAD branch: XXX" from the output of the above command
+3) git symbolic-ref HEAD refs/heads/XXX
 
-He wanted grouping by committer, which we ended up adding as a separate
-feature. I think there's some discussion of the trailer thing in that
-thread.
+It looks like it would be quite easy to add an option to `fetch` to
+sync HEAD at the same time as regular refs are synced because every
+fetch from an origin that uses a recent Git contains something like:
 
--Peff
+19:55:39.304976 pkt-line.c:80           packet:          git< YYYYYYYY
+HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow
+deepen-since deepen-not deepen-relative no-progress include-tag
+multi_ack_detailed no-done symref=HEAD:refs/heads/test-1
+agent=git/2.18.0
+
+which in this example shows that HEAD is a symref to refs/heads/test-1
+in origin.
+
+Is there a reason why no such option already exists? Would it makes
+sense to add one? Is there any reason why it's not a good idea? Or am
+I missing something?
+
+I am asking because GitLab uses HEAD in the bare repos it manages to
+store the default branch against which the Merge Requests (same thing
+as Pull Requests on GitHub) are created.
+
+So when people want to keep 2 GitLab hosted repos in sync, GitLab
+needs to sync HEADs too, not just the refs.
+
+I think this could be useful to other setups than GitLab though.
+
+Thanks,
+Christian.
