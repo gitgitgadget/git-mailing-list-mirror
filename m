@@ -2,96 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAFFA1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 23:18:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76F991F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 23:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732523AbeHOCHl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 22:07:41 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:41115 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732316AbeHOCHk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 22:07:40 -0400
-Received: by mail-yw1-f67.google.com with SMTP id q129-v6so17541977ywg.8
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:18:14 -0700 (PDT)
+        id S1732603AbeHOCJq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 22:09:46 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40066 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729705AbeHOCJp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 22:09:45 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h15-v6so18570606wrs.7
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:20:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rvneEdtJBY4B525wbKKaTYAcIISuP+sml5YQrSVg0YI=;
-        b=KaBVeGv24YPNyEgeQBafoiVzEi5X2UoYvdNxfGLjSobgZ7JV130s+IinQv/40mztPb
-         VtyAhCir/kGPrZSkafTYN1nZ/nRUIORhmjWfMnWBW0tZZbDfT1nFcwngXirzWFdRGr0d
-         wgj+CCU/+kzVlhQ9Vr9x/tDNhbMSFsr4KKNM1r1K81h4qJtsS2qTAoHbJizPpQb0rKte
-         XmPYOeXklhSN6/NIHrKrz8OKGetaXEQ8RPajSp/QvfglIdub3i5CdvXhwFbvdtkv2OSG
-         9CSSJAToC+M5JcWa4t0ZRMGFPUYe/nyBNazUidVHiFjeRv8shf5JcfqYHHZ9Z+H/N1T+
-         J8YA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ERsJv4KfQQfIlBpKTEoFoCzYM1D09r6J2N0pPbqst8M=;
+        b=d+IfB3YpBDFi+ax5dLnfje/S+nmzgn5V7WlI+v5KutESlRimkVBIU0erxsGj9qS+uf
+         pFJ5/5oGCg7CXLq/GvrGQ/nOgztYEaIN3p9Ihp3WjGNwxI70pz5TRiHPy8L5S4Ih32tc
+         Zr77RuNPuNv9NzzHsSoaveoHJuTORIJitS2pph8hMj9fUYLYk2vTmyokHX2fhdVI5wD3
+         n1G+zGaNmtOZ48Ng4cfM9rtBNZsp4FNoT1H8xGc8QlD3xJ27JrBmcoXyQCn/UgLWVcPA
+         8PbyPNsgkpEqFSmsq4YH3QbYO/BvAieWY1NHBILnp7KHRBZ0ZIwem1zI/GRP6DmdWNjz
+         JKnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rvneEdtJBY4B525wbKKaTYAcIISuP+sml5YQrSVg0YI=;
-        b=BJdmZFK7ubzK2n8pkcBIzgTSTDmuRnk0di2UqnsVuPWjGmI4jdHAV+6LjgyxMOMsim
-         52DnS5obfH07fj+8RSbw+OI0qwTyHl0FuERMb3mozC/AcXe3P6g1mrqq1zIMwfSB5r70
-         EokozwCqYBho90mnSucvk0YSlsoSxhcxspZxs0RNJKs52jj33kZzUJlLZa7OSXvTKa7M
-         91+DtI4TRdxxk/WBXz6AcYQyBKPPmg0MIgxTu7RjTDprjs5w78mAnZtTluKR2XVMP0l7
-         rZ6aWIH360es6bzxF2QE++/xBBP3Qq8WX2g00sCizdgXNE7juzyTVPwo7sr/cpuJtp1x
-         7DoA==
-X-Gm-Message-State: AOUpUlGQkW+AX/kG1PvAIL1sHzL+zgsVKIeK6HKF6iJj978zj1OiqHey
-        egY43zlUZGfmVdywVkd5kTeeEPz657tozQePQ3qqpA==
-X-Google-Smtp-Source: AA+uWPyr0p6m6Jw/0ZKj3MzfKbq0gmH977vRPKjfzZiKtqcZRwwP3I8zkoKaYfFa+B0KO191QUyXHurPqAPNtX6JmgM=
-X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr12533339ywj.33.1534288693275;
- Tue, 14 Aug 2018 16:18:13 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ERsJv4KfQQfIlBpKTEoFoCzYM1D09r6J2N0pPbqst8M=;
+        b=h4+pXty1bMxEBRnsLz8wLzmTil37+XqRbihlLoI/DHAcG0D1Sq04XYSce/m+Z/wzVG
+         pkSMpLtMhr+prCF/hAWVkImmqF7QgoUhLM380Z4hfzSHe5bEjXg+HOcralr1Q2lXRzLE
+         5JJNuUKkFIckT5sG3JsjGP0ntaexyO7kGN5RAZzFitii//dA8QMy2c8CsqeoUb+EH3SO
+         736HvHPn+3LnPs4YzQj7Cgf+DejWJp2C0Ne0Vv0IFGUzGYc4UUhZfNuLt0Fjzm3c1UbE
+         WtccVQBf5HL6Cz7oh8aKQyLA2wkX1/i08+uuVQifVLqnBF4wJ9QyrmvGXjyZXWENYHf7
+         AN4A==
+X-Gm-Message-State: AOUpUlFC9B7xYwsiUclB18+nvVFKbWLQRn1gUjM6v0fYpilZe+DK+vq8
+        BXPhzTVHnV8t7aysyoAtkv4=
+X-Google-Smtp-Source: AA+uWPwTj2t8MN6HXktENW68fmKn4WEYV2iX8soXk1NvRVRiHquMrW76Rxx8uEWsSxOya3pwa/I/sQ==
+X-Received: by 2002:adf:a557:: with SMTP id j23-v6mr14407554wrb.220.1534288816694;
+        Tue, 14 Aug 2018 16:20:16 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id s10-v6sm906035wmd.22.2018.08.14.16.20.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 16:20:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     joakim.tjernlund@infinera.com, git@vger.kernel.org,
+        bmwill@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 1/2] store submodule in common dir
+References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
+        <20180814223820.123723-1-sbeller@google.com>
+        <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 14 Aug 2018 16:20:15 -0700
+In-Reply-To: <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 14 Aug 2018 16:04:36 -0700")
+Message-ID: <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180814222846.GG142615@aiede.svl.corp.google.com>
- <CAGZ79kYbmTXXwWO6Sy5ytOLS6=p=9gMzgbjdrSbJPkkQqsyJTA@mail.gmail.com> <20180814231232.GI142615@aiede.svl.corp.google.com>
-In-Reply-To: <20180814231232.GI142615@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 16:18:02 -0700
-Message-ID: <CAGZ79kb+f8-z+iVNFurSt1ezGNTonJa0ZZbFNhtbfKvCSaDBxA@mail.gmail.com>
-Subject: Re: [PATCH] partial-clone: render design doc using asciidoc
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 4:12 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Hi,
->
-> Stefan Beller wrote:
-> > On Tue, Aug 14, 2018 at 3:28 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> >> repack in GC has been updated to not touch promisor
-> >> packfiles at all, and to only repack other objects.
-> >
-> > We'd need to adapt this documentation in Jonathans series?
->
-> Yes, or in a separate patch.
->
-> >> -[0] https://bugs.chromium.org/p/git/issues/detail?id=2
-> >> -    Chromium work item for: Partial Clone
-> >> +[0] https://crbug.com/git/2
-> >> +    Bug#2: Partial Clone
-> >
-> > This is more than a formatting fix (I did not quite check the rest,
-> > but this stood out), but some change to the actual content?
->
-> "git show --word-diff" tells me it's the only place that touched
-> wording.  If you'd like, I can send it as a separate, preparatory
-> patch.
+Junio C Hamano <gitster@pobox.com> writes:
 
---word-diff is even nicer than -w which is fine for all except the links.
+> My understanding of what Joakim wants to do is to have a top-level
+> project that has three subdirectories, e.g. kernel/v2.2, kernel/v2.4
+> and kernel/v2.6, each of which is a submodule that houses these
+> versions of Linux kernel source, but only clone Linus's repository
+> (as the up-to-late tree has all the necessary history to check out
+> these past development tracks).  And that should be doable with
+> just the main checkout, without any additional worktree (it's just
+> the matter of having .git/modules/kernel%2fv2.6/ directory pointed
+> by two symlinks from .git/modules/kernel%2fv2.[24], or something
+> like that).
 
-If you are inclined to resend, please do separate, but I do not
-insist on it.
+Actually I take the last part of that back.  When thought naively
+about, it may appear that it should be doable, but because each of
+the modules/* directory in the top-level project has to serve as the
+$GIT_DIR for each submodule checkout, and the desire is to have
+these three directories to have checkout of three different
+branches, a single directory under modules/. that is shared among
+three submodules would *not* work---they must have separate index,
+HEAD, etc.
 
-Thanks,
-Stefan
+Theoretically we should be able to make modules/kernel%2fv2.[24]
+additional "worktree"s of modules/kernel%2fv2.6, but given that
+these are all "bare" repositories without an attached working tree,
+I am not sure how that would supposed to work.  Thinking about
+having multiple worktrees on a single bare repository makes me head
+spin and ache X-<;-)
