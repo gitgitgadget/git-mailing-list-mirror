@@ -2,126 +2,878 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 592D21F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 14:53:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F62F1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 14:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732150AbeHNRlQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 13:41:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54618 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731985AbeHNRlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 13:41:16 -0400
-Received: (qmail 24586 invoked by uid 109); 14 Aug 2018 14:53:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 14:53:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22838 invoked by uid 111); 14 Aug 2018 14:53:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 10:53:50 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 10:53:44 -0400
-Date:   Tue, 14 Aug 2018 10:53:44 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH] mingw: enable atomic O_APPEND
-Message-ID: <20180814145344.GC3441@sigill.intra.peff.net>
-References: <pull.17.git.gitgitgadget@gmail.com>
- <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
- <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
- <bc9132ab-3030-07e3-03d1-d2ddae6a1b45@kdbg.org>
- <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
- <84c749fd-23d2-0bc5-225b-74f8d31502b6@kdbg.org>
- <87eff2rmgt.fsf@evledraar.gmail.com>
- <20180813223701.GC16006@sigill.intra.peff.net>
- <87a7pprred.fsf@evledraar.gmail.com>
+        id S1732409AbeHNRlV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 13:41:21 -0400
+Received: from mout.gmx.net ([212.227.15.18]:42199 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731101AbeHNRlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 13:41:21 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MHHZT-1fc6Qc0q1b-00E56I; Tue, 14
+ Aug 2018 16:53:45 +0200
+Date:   Tue, 14 Aug 2018 16:53:51 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Thomas Rast via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH v6 11/21] range-diff: add tests
+In-Reply-To: <20180813183504.GD13316@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1808141652460.71@tvgsbejvaqbjf.bet>
+References: <pull.1.v5.git.gitgitgadget@gmail.com> <pull.1.v6.git.gitgitgadget@gmail.com> <1477c58e4c0c9e1d5836ffcb9bcb7360b1a5df0d.1534159977.git.gitgitgadget@gmail.com> <20180813183504.GD13316@hank.intra.tgummerer.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a7pprred.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:eUIjfeWyFwFv3zXClNidQCCB+X3a9ZJfMys5mML+vNDVE8pD0XW
+ DBwcJO4Vjf37nbHWRTw4XkC1Thg/eTUSgrMCzMmvjPJHfJMlECyNtDFzV4QIHz5EdxXwUuO
+ naA5mgAy0wj7tflWTtBtI9Wz3Y+qaTF41pW15/zB8t0xvydndxYzN7Gbqvr7dZbjTLBGZoW
+ Si63NSZf+/0Kwps/SIbOg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:aAqDx7Q2118=:nKOeO5E59IxSznIuyrIYvQ
+ IS00p3SlGIuL39IzvB4ssCU8qNA9VNjKpXvG566YJdgKTmHGZWrb0jzNOUqYnRSyaUYqNcPTb
+ pamZttCWT2uWXqT7dPlsyNbt28dOYEgtd2NOzAME91zmmMpwH4Udy3AZbzIKmGltZvK+YzYHg
+ xAZmZRhSpqadBPQEm39TbyKc2pXlzpQ4HPYfqYv8j5dMTDyGUtt4vOvKZY84NG/owUSYWYnbr
+ i70r0G4AiV1e5hdacXoTxF8Rn1cmVA+vSylpMOMRWbXiknWDG0LKofTK/inhoV9vutlykf062
+ FSWcjujYP/H92QBQzNrxtt65gwoY2o7S1DHGP3/StRFWVD0BU1hWPPaEvzRiZ8I2CdSiXytYW
+ JElq4XTQtdRiN8QbBSqYHtfnMtr1L3omk2sey8sVmwPTVEwFL41UApQ+gRpK/Q3MplufVyeX3
+ h85omexRQb3JlSNu8IvqEo0XAT1pqThT9OU/wgVRr5jC2K8riVg5NbH+tE50OhiJFqeuX7iuT
+ uBgQUlG6SupnascAUs0tibtMeRPOcsI4naLPF3GGP5aCt8nw93bdINiQh0JfWCp6c9irn9Q4C
+ scGkNI1aL5sxz8ha3Hg6kV792LShBmkavx67eJjzk/Ab4igs6Tjtgf8DRIyzhFgJfzzVh96du
+ OIozqstHSumz1Dj2tLB9T0vYSTX7pGYPNHn7USyRrnwtzwZjxcW55P2aATCK/6jhYBFv8eY6g
+ tCP/b2Kn4USeUQnP7w8wHSdswWELhmLy0KXjHEO+xxOkjbocZ++aMiK9woPOm7Mn/VU9N5LMQ
+ Pns690G
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 03:47:54PM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi Thomas,
 
-> The relevant POSIX docs are here:
-> http://pubs.opengroup.org/onlinepubs/9699919799/functions/write.html
+On Mon, 13 Aug 2018, Thomas Gummerer wrote:
+
+> On 08/13, Thomas Rast via GitGitGadget wrote:
+> > From: Thomas Rast <tr@thomasrast.ch>
+> > 
+> > These are essentially lifted from https://github.com/trast/tbdiff, with
+> > light touch-ups to account for the command now being named `git
+> > range-diff`.
+> > 
+> > Apart from renaming `tbdiff` to `range-diff`, only one test case needed
+> > to be adjusted: 11 - 'changed message'.
+> > 
+> > The underlying reason it had to be adjusted is that diff generation is
+> > sometimes ambiguous. In this case, a comment line and an empty line are
+> > added, but it is ambiguous whether they were added after the existing
+> > empty line, or whether an empty line and the comment line are added
+> > *before* the existing empty line. And apparently xdiff picks a different
+> > option here than Python's difflib.
+> >
 > 
->     Write requests of {PIPE_BUF} bytes or less shall not be interleaved
->     with data from other processes doing writes on the same pipe. Writes
->     of greater than {PIPE_BUF} bytes may have data interleaved, on
->     arbitrary boundaries, with writes by other processes, whether or not
->     the O_NONBLOCK flag of the file status flags is set.
+> Just noticed while reading the whole series again (hopefully for the
+> last time :)), do we need Thomas Rast's Sign-off here, as he is
+> credited as the author here? 
 
-Right, this is the part I've seen, but it's pretty clearly only about
-pipes, not regular files.
+Hmm. I hoped that my commit message was enough to indicate that while he
+is the author, I assembled this. Maybe I should move him to the footer, as
+an Original-Authored-By:?
 
-> > Certainly atomic writes to _pipes_ are determined by PIPE_BUF (which
-> > IIRC is not even a constant on Linux, but can be changed at run-time).
-> > But is it relevant for regular-file writes?
+Junio?
+
+Ciao,
+Dscho
 > 
-> I believe it's hardcoded at PIPE_BUF which is defined as PAGE_SIZE on
-> linux. I think you may be thinking of /proc/sys/fs/pipe-max-pages which
-> is the number of pages that a pipe will take before filling up, but I
-> may be wrong.
-
-Yeah, you're probably right.
-
-> > So obviously this is all a bit of a tangent. I'd be fine declaring that
-> > trace output is generally small enough not to worry about this in the
-> > first place. But those results show that it shouldn't matter even if
-> > we're writing 1MB trace lines on Linux. I wouldn't be at all surprised
-> > to see different results on other operating systems, though.
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/.gitattributes       |   1 +
+> >  t/t3206-range-diff.sh  | 145 ++++++++++
+> >  t/t3206/history.export | 604 +++++++++++++++++++++++++++++++++++++++++
+> >  3 files changed, 750 insertions(+)
+> >  create mode 100755 t/t3206-range-diff.sh
+> >  create mode 100644 t/t3206/history.export
+> > 
+> > diff --git a/t/.gitattributes b/t/.gitattributes
+> > index 3bd959ae5..b17bf71b8 100644
+> > --- a/t/.gitattributes
+> > +++ b/t/.gitattributes
+> > @@ -1,6 +1,7 @@
+> >  t[0-9][0-9][0-9][0-9]/* -whitespace
+> >  /diff-lib/* eol=lf
+> >  /t0110/url-* binary
+> > +/t3206/* eol=lf
+> >  /t3900/*.txt eol=lf
+> >  /t3901/*.txt eol=lf
+> >  /t4034/*/* eol=lf
+> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > new file mode 100755
+> > index 000000000..2237c7f4a
+> > --- /dev/null
+> > +++ b/t/t3206-range-diff.sh
+> > @@ -0,0 +1,145 @@
+> > +#!/bin/sh
+> > +
+> > +test_description='range-diff tests'
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +# Note that because of the range-diff's heuristics, test_commit does more
+> > +# harm than good.  We need some real history.
+> > +
+> > +test_expect_success 'setup' '
+> > +	git fast-import < "$TEST_DIRECTORY"/t3206/history.export
+> > +'
+> > +
+> > +test_expect_success 'simple A..B A..C (unmodified)' '
+> > +	git range-diff --no-color master..topic master..unmodified \
+> > +		>actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  35b9b25 s/5/A/
+> > +	2:  fccce22 = 2:  de345ab s/4/A/
+> > +	3:  147e64e = 3:  9af6654 s/11/B/
+> > +	4:  a63e992 = 4:  2901f77 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'simple B...C (unmodified)' '
+> > +	git range-diff --no-color topic...unmodified >actual &&
+> > +	# same "expected" as above
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'simple A B C (unmodified)' '
+> > +	git range-diff --no-color master topic unmodified >actual &&
+> > +	# same "expected" as above
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'trivial reordering' '
+> > +	git range-diff --no-color master topic reordered >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  aca177a s/5/A/
+> > +	3:  147e64e = 2:  14ad629 s/11/B/
+> > +	4:  a63e992 = 3:  ee58208 s/12/B/
+> > +	2:  fccce22 = 4:  307b27a s/4/A/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'removed a commit' '
+> > +	git range-diff --no-color master topic removed >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  7657159 s/5/A/
+> > +	2:  fccce22 < -:  ------- s/4/A/
+> > +	3:  147e64e = 2:  43d84d3 s/11/B/
+> > +	4:  a63e992 = 3:  a740396 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'added a commit' '
+> > +	git range-diff --no-color master topic added >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  2716022 s/5/A/
+> > +	2:  fccce22 = 2:  b62accd s/4/A/
+> > +	-:  ------- > 3:  df46cfa s/6/A/
+> > +	3:  147e64e = 4:  3e64548 s/11/B/
+> > +	4:  a63e992 = 5:  12b4063 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'new base, A B C' '
+> > +	git range-diff --no-color master topic rebased >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  cc9c443 s/5/A/
+> > +	2:  fccce22 = 2:  c5d9641 s/4/A/
+> > +	3:  147e64e = 3:  28cc2b6 s/11/B/
+> > +	4:  a63e992 = 4:  5628ab7 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'new base, B...C' '
+> > +	# this syntax includes the commits from master!
+> > +	git range-diff --no-color topic...rebased >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	-:  ------- > 1:  a31b12e unrelated
+> > +	1:  4de457d = 2:  cc9c443 s/5/A/
+> > +	2:  fccce22 = 3:  c5d9641 s/4/A/
+> > +	3:  147e64e = 4:  28cc2b6 s/11/B/
+> > +	4:  a63e992 = 5:  5628ab7 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'changed commit' '
+> > +	git range-diff --no-color topic...changed >actual &&
+> > +	cat >expected <<-EOF &&
+> > +	1:  4de457d = 1:  a4b3333 s/5/A/
+> > +	2:  fccce22 = 2:  f51d370 s/4/A/
+> > +	3:  147e64e ! 3:  0559556 s/11/B/
+> > +	    @@ -10,7 +10,7 @@
+> > +	      9
+> > +	      10
+> > +	     -11
+> > +	    -+B
+> > +	    ++BB
+> > +	      12
+> > +	      13
+> > +	      14
+> > +	4:  a63e992 ! 4:  d966c5c s/12/B/
+> > +	    @@ -8,7 +8,7 @@
+> > +	     @@
+> > +	      9
+> > +	      10
+> > +	    - B
+> > +	    + BB
+> > +	     -12
+> > +	     +B
+> > +	      13
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_expect_success 'changed message' '
+> > +	git range-diff --no-color topic...changed-message >actual &&
+> > +	sed s/Z/\ /g >expected <<-EOF &&
+> > +	1:  4de457d = 1:  f686024 s/5/A/
+> > +	2:  fccce22 ! 2:  4ab067d s/4/A/
+> > +	    @@ -2,6 +2,8 @@
+> > +	    Z
+> > +	    Z    s/4/A/
+> > +	    Z
+> > +	    +    Also a silly comment here!
+> > +	    +
+> > +	    Zdiff --git a/file b/file
+> > +	    Z--- a/file
+> > +	    Z+++ b/file
+> > +	3:  147e64e = 3:  b9cb956 s/11/B/
+> > +	4:  a63e992 = 4:  8add5f1 s/12/B/
+> > +	EOF
+> > +	test_cmp expected actual
+> > +'
+> > +
+> > +test_done
+> > diff --git a/t/t3206/history.export b/t/t3206/history.export
+> > new file mode 100644
+> > index 000000000..b8ffff094
+> > --- /dev/null
+> > +++ b/t/t3206/history.export
+> > @@ -0,0 +1,604 @@
+> > +blob
+> > +mark :1
+> > +data 51
+> > +1
+> > +2
+> > +3
+> > +4
+> > +5
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +11
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +reset refs/heads/removed
+> > +commit refs/heads/removed
+> > +mark :2
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374424921 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374484724 +0200
+> > +data 8
+> > +initial
+> > +M 100644 :1 file
+> > +
+> > +blob
+> > +mark :3
+> > +data 51
+> > +1
+> > +2
+> > +3
+> > +4
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +11
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/topic
+> > +mark :4
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +blob
+> > +mark :5
+> > +data 51
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +11
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/topic
+> > +mark :6
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :4
+> > +M 100644 :5 file
+> > +
+> > +blob
+> > +mark :7
+> > +data 50
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/topic
+> > +mark :8
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :6
+> > +M 100644 :7 file
+> > +
+> > +blob
+> > +mark :9
+> > +data 49
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +B
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/topic
+> > +mark :10
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :8
+> > +M 100644 :9 file
+> > +
+> > +blob
+> > +mark :11
+> > +data 10
+> > +unrelated
+> > +
+> > +commit refs/heads/master
+> > +mark :12
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485127 +0200
+> > +data 10
+> > +unrelated
+> > +from :2
+> > +M 100644 :11 otherfile
+> > +
+> > +commit refs/heads/rebased
+> > +mark :13
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485137 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :12
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/rebased
+> > +mark :14
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :13
+> > +M 100644 :5 file
+> > +
+> > +commit refs/heads/rebased
+> > +mark :15
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :14
+> > +M 100644 :7 file
+> > +
+> > +commit refs/heads/rebased
+> > +mark :16
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485138 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :15
+> > +M 100644 :9 file
+> > +
+> > +commit refs/heads/added
+> > +mark :17
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/added
+> > +mark :18
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :17
+> > +M 100644 :5 file
+> > +
+> > +blob
+> > +mark :19
+> > +data 51
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +A
+> > +7
+> > +8
+> > +9
+> > +10
+> > +11
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/added
+> > +mark :20
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485186 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
+> > +data 7
+> > +s/6/A/
+> > +from :18
+> > +M 100644 :19 file
+> > +
+> > +blob
+> > +mark :21
+> > +data 50
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +A
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/added
+> > +mark :22
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :20
+> > +M 100644 :21 file
+> > +
+> > +blob
+> > +mark :23
+> > +data 49
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +A
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +B
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/added
+> > +mark :24
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485341 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :22
+> > +M 100644 :23 file
+> > +
+> > +commit refs/heads/reordered
+> > +mark :25
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +blob
+> > +mark :26
+> > +data 50
+> > +1
+> > +2
+> > +3
+> > +4
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/reordered
+> > +mark :27
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :25
+> > +M 100644 :26 file
+> > +
+> > +blob
+> > +mark :28
+> > +data 49
+> > +1
+> > +2
+> > +3
+> > +4
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +B
+> > +B
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/reordered
+> > +mark :29
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :27
+> > +M 100644 :28 file
+> > +
+> > +commit refs/heads/reordered
+> > +mark :30
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485350 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :29
+> > +M 100644 :9 file
+> > +
+> > +commit refs/heads/changed
+> > +mark :31
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/changed
+> > +mark :32
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :31
+> > +M 100644 :5 file
+> > +
+> > +blob
+> > +mark :33
+> > +data 51
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +BB
+> > +12
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/changed
+> > +mark :34
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :32
+> > +M 100644 :33 file
+> > +
+> > +blob
+> > +mark :35
+> > +data 50
+> > +1
+> > +2
+> > +3
+> > +A
+> > +A
+> > +6
+> > +7
+> > +8
+> > +9
+> > +10
+> > +BB
+> > +B
+> > +13
+> > +14
+> > +15
+> > +16
+> > +17
+> > +18
+> > +19
+> > +20
+> > +
+> > +commit refs/heads/changed
+> > +mark :36
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485507 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :34
+> > +M 100644 :35 file
+> > +
+> > +commit refs/heads/changed-message
+> > +mark :37
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/changed-message
+> > +mark :38
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485530 +0200
+> > +data 35
+> > +s/4/A/
+> > +
+> > +Also a silly comment here!
+> > +from :37
+> > +M 100644 :5 file
+> > +
+> > +commit refs/heads/changed-message
+> > +mark :39
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :38
+> > +M 100644 :7 file
+> > +
+> > +commit refs/heads/changed-message
+> > +mark :40
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485536 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :39
+> > +M 100644 :9 file
+> > +
+> > +commit refs/heads/unmodified
+> > +mark :41
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/unmodified
+> > +mark :42
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485024 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485631 +0200
+> > +data 7
+> > +s/4/A/
+> > +from :41
+> > +M 100644 :5 file
+> > +
+> > +commit refs/heads/unmodified
+> > +mark :43
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :42
+> > +M 100644 :7 file
+> > +
+> > +commit refs/heads/unmodified
+> > +mark :44
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374485632 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :43
+> > +M 100644 :9 file
+> > +
+> > +commit refs/heads/removed
+> > +mark :45
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485014 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
+> > +data 7
+> > +s/5/A/
+> > +from :2
+> > +M 100644 :3 file
+> > +
+> > +commit refs/heads/removed
+> > +mark :46
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485036 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
+> > +data 8
+> > +s/11/B/
+> > +from :45
+> > +M 100644 :26 file
+> > +
+> > +commit refs/heads/removed
+> > +mark :47
+> > +author Thomas Rast <trast@inf.ethz.ch> 1374485044 +0200
+> > +committer Thomas Rast <trast@inf.ethz.ch> 1374486061 +0200
+> > +data 8
+> > +s/12/B/
+> > +from :46
+> > +M 100644 :28 file
+> > +
+> > +reset refs/heads/removed
+> > +from :47
+> > +
+> > -- 
+> > gitgitgadget
+> > 
 > 
-> I don't know how this works internally in the kernel, but I'd be very
-> careful to make that assertion. Most likely this in practice depends on
-> what FS you're using, its mount options, whether fsync() is involved,
-> I/O pressure etc.
-
-Definitely it depends on the filesystem (and I'm pretty sure that at
-least old versions of NFS could not possibly do O_APPEND correctly,
-because the protocol did not support an atomic seek+write).
-
-I agree that the experiment I did doesn't really tell us anything for
-sure. It _seems_ to work, but the machine was not under any kind of
-memory or I/O pressure.
-
-I'd feel pretty confident that writes under a page are always going to
-be fine, but anything else is "seems to work". To me that's enough for
-tracing, as the absolute worst case is jumbled output, not an on-disk
-corruption.
-
-> FWIW this is something I've ran into in the past on Linux as a practical
-> matter, but that was many kernel versions ago, so maybe the semantics
-> changed.
 > 
-> We had an ad-hoc file format with each chunk a "<start
-> marker><length><content><end marker>\n" format (and the <content> was
-> guaranteed not to contain "\n"). These would be written to the same file
-> by N workers. We would get corrupt data because of this in cases where
-> we were writing more than PIPE_BUF, e.g. start markers for unrelated
-> payloads interleaved with content, lines that were incorrectly formed
-> etc.
-
-Interesting. I wonder if it is because of PIPE_BUF, or it is simply the
-page size, which also happens to be the value of PIPE_BUF.
-
-> But yeah, whether this is a practical concern for git trace output is
-> another matter. I just wanted to chime in to note that atomic appends to
-> files are only portable on POSIX up to PIPE_BUF.
-
-I still think POSIX doesn't say anything either way here. The PIPE_BUF
-bits are _just_ about pipes. At any rate, I think we have a decent
-handle on what systems actually _do_, which is more important than POSIX
-anyway.
-
--Peff
