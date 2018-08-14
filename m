@@ -2,147 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7B9E1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 18:59:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0752A1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 19:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729516AbeHNVrx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:47:53 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:53604 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728199AbeHNVrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:47:53 -0400
-Received: by mail-wm0-f68.google.com with SMTP id s9-v6so13312020wmh.3
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:59:17 -0700 (PDT)
+        id S1728034AbeHNVyY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 17:54:24 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:36912 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725988AbeHNVyX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 17:54:23 -0400
+Received: by mail-yw1-f68.google.com with SMTP id w76-v6so17025766ywg.4
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 12:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CLXflvxPPpGkx1iGavyTuONUy5mYUla2JVtVYR8aexY=;
-        b=JJPKCR192Sg7yELum7bOoX1bOB17UUklQdFrplltkA49nPCyQZGIeNhARhZkP3egsc
-         z7OWSPVYnqOCKvsh0q2aH/Adqy+FauaAqRaqFfNP8JuVqj5nas3q9K6FbGVMMw5aHMTC
-         uor77hOkqdlZ485anckild8qOdw9DGxI0swn39Lpc4KlmiX44j+WTpiH7fYM8gWolncE
-         agWCgEL4na0poA6r7DUPf5PENyISc3ZCIC9eF6fQQuyXT1GDK6Mw3ginN5+2i/YO2j4C
-         aAA8FknakasBd0ojnNbRrGJppQxxSLgCA6aTBAvKMlfwqv7daEHpyAo90xKE9MQgCIs6
-         0wSg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Qiw5tlynEslA+2Du2hQLzc4BpvvJBnhGAcItosI2Czo=;
+        b=IjhTV3gaHKayCbg7pW93AgRc1LOcyhHNQa1jhYkpHOiMiObJw1qDGTkcw5QaF6ZcVe
+         L21lWHMgIblM9l8/LVxp+9foHmh6HFbCTOtwX1C4aPYrIZIc4+tKQ+rHiBHNSTjcrhg2
+         Kl+oA+TjSM8zRAkxe5jTYnN3Cd/jXUX+4w0yneVUx+zsgIuD4T95u+7MZTDNb2OVHUoH
+         zIoXfOoXY6qS2IaHi1S9/HFEQzcTQag5Y7fgWxrzTReYR2LxmB3elj1eyIuhBMmFRo8b
+         FiOuuMxlm+MlTc9HNdcpiSbvpFcfurqUJHiWrCSZIacsxlApHnCZ7VXQ7oSlBvEaEub4
+         iAlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=CLXflvxPPpGkx1iGavyTuONUy5mYUla2JVtVYR8aexY=;
-        b=TYcs0uEsSS6wkctJ5ZgYsbkopK6rk0UQ/O4aCPO+yItMq+4ae8Y8Z2NFnBHMfhkU0A
-         vcXx3x5RA/8Pz6cIiVHaLw3Z5v2r7mbqU9IC0H2CO4/+A0TsswJUy18iwF22fEc3fIlf
-         zMHx1dG61ylmVTXY1OusNI5yz15uLY0eIVDcNZWaQnGSSp7OEba0cu23yirTCXfRsMxj
-         2MHhCDhndfsf6iQ8OjcgXtpQ8L1HyTDZQi1knE1yOx0e6f7rBlm7GQU4ZC05TKIO9vKA
-         A1oHeHc0pV3nbPwXLNMc4ezQG5y0v12tDAMUx7rSGV/Q1X2exVCPMXIadtem6hn3L1Sq
-         ov4w==
-X-Gm-Message-State: AOUpUlEntV/FiPQI/W9SuMcFGAbsw2osvsKJ87BZxEQrhbVHcc9pf1m7
-        yJTE3HUcA1oiy3FrlytR1sbhRNcGwzM=
-X-Google-Smtp-Source: AA+uWPxUZMotf++IddxVFN9hNL0a21hMeN9a/LQc6r9iWiB5ffhaUbvrohXy6a9Lf0lqPTs/F710gA==
-X-Received: by 2002:a1c:ca0f:: with SMTP id a15-v6mr11191436wmg.102.1534273156874;
-        Tue, 14 Aug 2018 11:59:16 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id o3-v6sm20831593wrj.31.2018.08.14.11.59.15
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 14 Aug 2018 11:59:15 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] submodule: add more exhaustive up-path testing
-Date:   Tue, 14 Aug 2018 18:59:06 +0000
-Message-Id: <20180814185906.2680-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Qiw5tlynEslA+2Du2hQLzc4BpvvJBnhGAcItosI2Czo=;
+        b=qW6mhZnhRs5NYu35sY5xcnSB0AuAd0FJJLEPfyTtm+FJCB95fCetwJ5A6O1/6fzURP
+         vW9RNHXeGK0Ovj3OOcBxk6RM2cevnavDUAWMfg5z3H1Lkz+5IVAMfCTJrh/r78fYNXVH
+         1vFIWW3uL39F4OljkGQP/s9CfLuBqYwmhhL5Lm55Z+/Y8IXRzvL9EVU55iBE2pCyHgpM
+         kVBTaJJ0SpJyPFcAn3LBsxE5zck9ESTkkWItt1xcNiN61+PaHeOmpaAyv0wDKhUjUiHI
+         7uP/gOHc5umJ0qC4fsTPH/uV4L4evHxcqIaylTdEIEVSKpGAhyM41MPAI87Fu9lClO6d
+         FBZA==
+X-Gm-Message-State: AOUpUlGD3om8Qmu7nxXm+M9apL2V15mSJJxncWGt4OjwNYIcNP8wB/ed
+        H4IpfjppBGSJGeT7ClxDfCXmrpS9ebPudwIFkSMQPxaGEmo=
+X-Google-Smtp-Source: AA+uWPzxgbDhdzl8ej2/82OTkuX4CwvgWVjaf80sq+gddKt9cz0yHiekKlTrVuZo1ar0MV97NiwfIR0PZNfjEJxdInU=
+X-Received: by 2002:a0d:c5c7:: with SMTP id h190-v6mr13344463ywd.421.1534273547564;
+ Tue, 14 Aug 2018 12:05:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-5-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1808131353280.71@tvgsbejvaqbjf.bet> <CAGZ79kYVw3AXLyB1fx07WojN3dLuxJLDrbWwC_7M=9aoB9YuCg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1808141713510.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808141713510.71@tvgsbejvaqbjf.bet>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 14 Aug 2018 12:05:36 -0700
+Message-ID: <CAGZ79kZhLsUZL+bfoovV+U6W-zX6npERRG86fS8+1GsTQmKoHA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] range-diff: indent special lines as context
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The tests added in 63e95beb08 ("submodule: port resolve_relative_url
-from shell to C", 2016-04-15) didn't do a good job of testing various
-up-path invocations where the up-path would bring us beyond even the
-URL in question without emitting an error.
+On Tue, Aug 14, 2018 at 11:54 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Stefan,
+>
+> On Mon, 13 Aug 2018, Stefan Beller wrote:
+>
+> > > > The later lines that indicate a change to the Makefile will be treated as
+> > > > context both in the outer and inner diff, such that those lines stay
+> > > > regular color.
+> > >
+> > > While I am a fan of having those lines colored correctly, I have to admit
+> > > that I am not exactly enthusiastic about that extra indentation...
+> > >
+> > > Otherwise, this looks good to me.
+> >
+> > Can you explain what makes you less enthused about the indentation?
+> >
+> > Advantage:
+> > * allows easy coloring (easy implementation)
+> > Disadvantage:
+> > * formats change,
+>
+> This is it. It breaks my visual flow.
+>
+> > but the range diff is still in its early design phase, so we're not
+> > breaking things, yet?
+>
+> Indeed. We're not breaking things. If you feel strongly about it, we can
+> have that indentation, I *can* get used to it.
 
-These results look nonsensical, but it's worth exhaustively testing
-them before fixing any of this code, so we can see which of these
-cases were changed.
+I only feel strongly about it now as that is the *easiest* way to make
+the colors
+look like I want them to look. And I really value colors in the range-diff.
+Earlier you said that color-less range-diff is nearly useless for you and I
+thought it was hyperbole, but by now I realize how much truth you spoke.
+So getting the colors fixed to not markup files (+++/ --- lines of the inner
+diff) is a high priority for me. So high that I would compromise on the
+indentation/flow of these corner case areas.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+> >   (Do we ever plan on sending range-diff patches that can be applied to
+> >   rewrite history? I am very uncertain on such a feature request.  It
+> >   sounds cool, though)
+>
+> I remember that I heard you discussing this internally. I am not too big a
+> fan of this idea, I have to admit. The range diff seems more designed to
+> explain how a patch series evolved, rather than providing machine-readable
+> data that allows to recreate said evolution. For example, the committer
+> information as well as the date are missing, which would preclude a
+> faithful reconstruction.
+>
 
-The reason I started to poke at this was because I wanted to add
-support for relative URLs like //group/project.
+Ah! good point. Though we could just work around that and use the email
+date for the new author dates. ;-)
 
-This solves the problem of there being e.g. a myhost.com/group/project
-which includes a ../submodule submodule pointing to
-myhost.com/group/submodule , and me wanting to fork it to
-myhost.com/myuser/project.
+> And that is not all: if you wanted to "apply" a range diff, you would need
+> to know more about the base(s) of the two commit ranges. You would need to
+> know that they are at least very similar to the base onto which you want
+> to apply this.
 
-But of course with ../submodule the relative URL will point to
-myhost.com/myuser/submodule, which won't exist.
+You would say so in the cover letter "This is a resend of sb/range-diff-colors"
+and by the knowledge of that tip only and the range-diff you would
+know how the new series would look like, even if it was rebased.
 
-So I was hoping to find some point in the relative URL code where we
-were actually aware of what the host boundary was, so I could just cut
-off everything after that if //group/project was provided, strip off
-one slash to make it /group/project, and call it a day.
+> And quite seriously, this would be the wrong way to go in my mind. We have
+> a very efficient data format to transport all of that information: the Git
+> bundle.
 
-But as the tests below show the code isn't aware of that at all, and
-will happily trample over the host(name) to produce nonsensical
-results.
+The bundle format is very efficient for machine transport, but I thought the
+whole point of the mailing list was easy human readable parts, i.e. you can
+point out things in a diff, which you could also do in a range-diff to some
+extend. We would loose some of the "fresh eyes" as you'd only see the
+changed part of the series. :-/ So yeah even for the workflow this seems
+a net-negative. I just thought it would be cool.
 
-So I think these tests are worthwihle in themselves, but would like
-some advice on how to proceed with that from someone more familiar
-with submodules.
+> Let's not overload the range diff format with multiple, partially
+> contradicting purposes. Think "separation of concerns". It's the same
+> issue, really, as trying to send highly structured data such as bug
+> reports or code contributions via a medium meant to send unstructured
+> plain or formatted text back and forth between human beings.
 
- t/t0060-path-utils.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ok.
 
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 21a8b53132..cd74c0a471 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -330,6 +330,9 @@ test_submodule_relative_url "(null)" "../foo" "../submodule" "../submodule"
- test_submodule_relative_url "(null)" "./foo/bar" "../submodule" "foo/submodule"
- test_submodule_relative_url "(null)" "./foo" "../submodule" "submodule"
- test_submodule_relative_url "(null)" "//somewhere else/repo" "../subrepo" "//somewhere else/subrepo"
-+test_submodule_relative_url "(null)" "//somewhere else/repo" "../../subrepo" "//subrepo"
-+test_submodule_relative_url "(null)" "//somewhere else/repo" "../../../subrepo" "/subrepo"
-+test_submodule_relative_url "(null)" "//somewhere else/repo" "../../../../subrepo" "subrepo"
- test_submodule_relative_url "(null)" "$(pwd)/subsuper_update_r" "../subsubsuper_update_r" "$(pwd)/subsubsuper_update_r"
- test_submodule_relative_url "(null)" "$(pwd)/super_update_r2" "../subsuper_update_r" "$(pwd)/subsuper_update_r"
- test_submodule_relative_url "(null)" "$(pwd)/." "../." "$(pwd)/."
-@@ -344,10 +347,20 @@ test_submodule_relative_url "(null)" "file:///tmp/repo" "../subrepo" "file:///tm
- test_submodule_relative_url "(null)" "foo/bar" "../submodule" "foo/submodule"
- test_submodule_relative_url "(null)" "foo" "../submodule" "submodule"
- test_submodule_relative_url "(null)" "helper:://hostname/repo" "../subrepo" "helper:://hostname/subrepo"
-+test_submodule_relative_url "(null)" "helper:://hostname/repo" "../../subrepo" "helper:://subrepo"
-+test_submodule_relative_url "(null)" "helper:://hostname/repo" "../../../subrepo" "helper::/subrepo"
-+test_submodule_relative_url "(null)" "helper:://hostname/repo" "../../../../subrepo" "helper::subrepo"
-+test_submodule_relative_url "(null)" "helper:://hostname/repo" "../../../../../subrepo" "helper:subrepo"
-+test_submodule_relative_url "(null)" "helper:://hostname/repo" "../../../../../../subrepo" ".:subrepo"
- test_submodule_relative_url "(null)" "ssh://hostname/repo" "../subrepo" "ssh://hostname/subrepo"
-+test_submodule_relative_url "(null)" "ssh://hostname/repo" "../../subrepo" "ssh://subrepo"
-+test_submodule_relative_url "(null)" "ssh://hostname/repo" "../../../subrepo" "ssh:/subrepo"
-+test_submodule_relative_url "(null)" "ssh://hostname/repo" "../../../../subrepo" "ssh:subrepo"
-+test_submodule_relative_url "(null)" "ssh://hostname/repo" "../../../../../subrepo" ".:subrepo"
- test_submodule_relative_url "(null)" "ssh://hostname:22/repo" "../subrepo" "ssh://hostname:22/subrepo"
- test_submodule_relative_url "(null)" "user@host:path/to/repo" "../subrepo" "user@host:path/to/subrepo"
- test_submodule_relative_url "(null)" "user@host:repo" "../subrepo" "user@host:subrepo"
-+test_submodule_relative_url "(null)" "user@host:repo" "../../subrepo" ".:subrepo"
- 
- test_expect_success 'match .gitmodules' '
- 	test-tool path-utils is_dotgitmodules \
--- 
-2.18.0.865.gffc8e1a3cd6
-
+Thanks,
+Stefan
