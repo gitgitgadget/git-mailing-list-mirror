@@ -2,80 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 570A31F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 21:10:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66CF41F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 21:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728183AbeHNX7p (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 19:59:45 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:36198 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727997AbeHNX7o (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 19:59:44 -0400
-Received: by mail-yw1-f68.google.com with SMTP id v197-v6so17320132ywg.3
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:10:43 -0700 (PDT)
+        id S1728009AbeHOABQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 20:01:16 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:38109 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726648AbeHOABQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 20:01:16 -0400
+Received: by mail-pl0-f67.google.com with SMTP id u11-v6so8823112plq.5
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:12:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pIn/IR3v2OYbmUlllFWd6U+OFslKeNzmwZGd2aY4jPg=;
-        b=s0OrKAvxVVFy2ZRcfh2Y0/S5wq4aTK2xWVhiPghx825Z4gJ+8wXpggYEKy5EGncqId
-         gNdu9nc6ZctuhaOynYJfGxtHYXs9/T1ndSqHDqH1FY5ePNp4HhYkWG+9a51OYIDJjxQO
-         EZI5VzMD9BlbzYvOcI9Na65NWuyC/kV1tojyRXoD1qlse92sJQ1Ckda8We/Viz7j/QZI
-         FxeRugMC5L0dOlQLRBJYC22LUxzmBQgo7+h6PvhGqrDbTntR+5p4Hh6abgbmm3mMLsbW
-         YwUcW95sGKt2mKh4vQsjryUjb+4ZflP35ecLlHF8xfFmmPW3nQfAPtT4N9CIzeGFLk5P
-         FVYA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=JhJCjFquAKNkwyAcCcuthQ1/PvttsU429T509l6/9Zg=;
+        b=UV6JthjK1GEhJa+tIYRDVZxZnvwjoyoWyZNeGX0+NmU2Q/0qi5aeCc6zEecMf4+jLE
+         yfzAbTB3bBqaG6qpCzfl+WaZOpNgOsGSDwruxNgcYt70XvzUl3g8OQDWgzjgI/V9wAPa
+         /fQNPpLNVyoZnK0Y6kQYavawW7UPdJOzL3yndyGz77dBs9ACIIWWPJWWHKaKg5bPPA5b
+         hawfF4YNDI398vmQwRFRjyylf2Rk9iNHGogTt26zCYcq7bwQwhPgeI0+LwDPgXRGEPg7
+         qwkuf5nBInBlZCwTIwEky0T8C2wJoEKqm59ee3C9UmQkG7s5i3fpEAXphNsvHAZ/ep09
+         6qJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pIn/IR3v2OYbmUlllFWd6U+OFslKeNzmwZGd2aY4jPg=;
-        b=qccl6hfbvP4mO6dH2qBW6f6Ca5mA74SSQ97rr2FtPbx0Dna/yQzph0VVW3kqql/fo6
-         O1Cy7nmDwtKp+Assafxv4iB0oITAvhawv8c9lIqxgThKaxXRbX2y3ZkxBi+J4Ir1tXd/
-         JdRGQ4keSfKnEyyub28G5MsqJXmrEf7KL+l1S6GkICD6Jt4w6AHwssvhEBCtQ4diwE4V
-         o4Pnz3oIyh5x6L6OfUVruiDxGk0oJlpa4TLXouKK29dccFRxLRlyOFRd0+8NWLEk0oUY
-         qwItqVNgvbeDUVxgRlhPgm/GDJ7cffTza1ELugn8xv3vjtbYtOXBz97UMV6p8oJ3YKJU
-         UvGw==
-X-Gm-Message-State: AOUpUlHggxs6vWuphVCG15ssrNZ/BMzj0s+wKokkk7rpSW7WP/Xxy4WM
-        P2IekiqUNPtLeb8AJ1PhDIWmsfcdF358ZenOeYJy9Bli
-X-Google-Smtp-Source: AA+uWPwJI26Sbs7bppQokWKDMIa9Vr66oyk1dey3VqwuAYao6fCyUJ0lwPinWJBQntDMpQ/1xlUgh74/G/gOzyq4BxE=
-X-Received: by 2002:a25:3c45:: with SMTP id j66-v6mr1966052yba.247.1534281042844;
- Tue, 14 Aug 2018 14:10:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=JhJCjFquAKNkwyAcCcuthQ1/PvttsU429T509l6/9Zg=;
+        b=SskuXgHArMjzZXZr8O9atvtj3C6FEsjgYCDCMR9IQDjRy5ANpENAq8trFRH/SWch/f
+         JBe28Y6u87rSstMwxJ5JU2wr+2Xt7I0I+Ns9UZpQODCzcAx1bzCa2iA0bYtVmIMDl/88
+         MIaOSXWT9mjAgBFbcYudyIL0yQ7iLZYBTZ6RXsRPE6Uxe6cR/oqV2RTATtO9F+AL5RrL
+         AjVhV6e3tJQWfNLAXIHVfYKGoyU+0XmoP+myYIZTVbiAIqsTa6wK9SbB2cela+lw+er1
+         tWAZamfubpCYKnh4ZMJhjaX0qPiRY5xSH3CpaTLSSG1MOW845eF2dJmReGsjJFdC8H9B
+         zITQ==
+X-Gm-Message-State: AOUpUlFcTYRlHe+/nAfq6RdO7FZ/KHh/ZKGw2kEVBSAd+/lmlLryBvfb
+        3n9cOxRrDfBHAmxxzj7nOcw=
+X-Google-Smtp-Source: AA+uWPx4QCB5fNSdouem/zGr9xsf07tC4CMhu47z3WwB0TLt8ore5U/ftNF3YgHIMTJhqplymC1eJw==
+X-Received: by 2002:a17:902:26:: with SMTP id 35-v6mr13519002pla.276.1534281133766;
+        Tue, 14 Aug 2018 14:12:13 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id d34-v6sm26351749pgb.29.2018.08.14.14.12.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 14:12:13 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 14:12:11 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180814211211.GF142615@aiede.svl.corp.google.com>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <20180814185743.GE142615@aiede.svl.corp.google.com>
+ <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180814185906.2680-1-avarab@gmail.com> <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
- <87d0ukhd5g.fsf@evledraar.gmail.com>
-In-Reply-To: <87d0ukhd5g.fsf@evledraar.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 14:10:31 -0700
-Message-ID: <CAGZ79kZuH8DKkoNb3AgHFxwYccOGHeVWOE7ov5QvavtomSxyAQ@mail.gmail.com>
-Subject: Re: [PATCH] submodule: add more exhaustive up-path testing
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Hi,
 
-> > So ideally we'd also error out as soon as the host name is touched?
+Stefan Beller wrote:
+> On Tue, Aug 14, 2018 at 11:57 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> Second, what if we store the pathname in config?  We already store the
+>> URL there:
+>>
+>>         [submodule "plugins/hooks"]
+>>                 url = https://gerrit.googlesource.com/plugins/hooks
+>>
+>> So we could (as a followup patch) do something like
+>>
+>>         [submodule "plugins/hooks"]
+>>                 url = https://gerrit.googlesource.com/plugins/hooks
+>>                 gitdirname = plugins%2fhooks
+>>
+>> and use that for lookups instead of regenerating the directory name.
+>> What do you think?
 >
-> Do we have some utility function that'll take whatever we have in
-> remote.<name>.url and spew out the username / host / path? We must,
-> since the clone protocol needs it, but I haven't found it.
+> As I just looked at worktree code, this sounds intriguing for the wrong
+> reason (again), as a user may want to point the gitdirname to a repository
+> that they have already on disk outside the actual superproject. They
+> would be reinventing worktrees in the submodule space. ;-)
+>
+> This would open up the security hole that we just had, again.
+> So we'd have to make sure that the gitdirname (instead of the
+> now meaningless subsection name) is proof to ../ attacks.
+>
+> I feel uneasy about this as then the user might come in
+> and move submodules and repoint the gitdirname...
+> to a not url encoded path. Exposing this knob just
+> asks for trouble, no?
 
-Nope. Welcome to the wonderful world of submodules.
-As submodules are in the transition state towards "in C",
-we could do some refactorings that would allow for easy access to
-these properties, but the transition is done via faithful conversion from
-shell to C, which did not have these functions either, but could just
-do some string hackery. And that is how we ended up with this
-function in the first place.
+What if we forbid directory separator characters in the gitdirname?
+
+[...]
+> What would happen if gitdirname is changed as part of
+> history? (The same problem we have now with changing
+> the subsection name)
+
+In this proposal, it would only be read from config, not from
+.gitmodules.
+
+Thanks,
+Jonathan
