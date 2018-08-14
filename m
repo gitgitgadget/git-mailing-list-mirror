@@ -2,89 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5226D1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 18:44:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A916D1F428
+	for <e@80x24.org>; Tue, 14 Aug 2018 18:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727807AbeHNVcv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:32:51 -0400
-Received: from mail-yw1-f54.google.com ([209.85.161.54]:35335 "EHLO
-        mail-yw1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727755AbeHNVcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:32:51 -0400
-Received: by mail-yw1-f54.google.com with SMTP id s68-v6so16977547ywg.2
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nMkkgh0vUZhQGbLUN7ahTngVDrv1bZU4rETtDU9I6Yg=;
-        b=fFoN1xpG3+xwdlt+Nz3ypBCRFf6x3FalJwwdZvLcE8GV6kg148s1q5g8GLTFtaY915
-         iGd7a56nWpq469fGsHvoQHZAB0ZyojbfSVB1CPd6O+fku71bEngScIviKcxCaBheIzFm
-         nul7gkDKbLYJo49qZECrhYF2gOlk5YGj3rdEUiJdiSouX+MvdqwZukHnfaXg9XE7NVVQ
-         E62aIDpDYmIoxk9wzyttm44YcKZ9Fvyn0rTOo21oG/zKMPqynaAf3qpyp06jcGg+NysJ
-         hvAXJ+kXJtc+V24VcNhHr4Af8ruAL2Qam2Xe1v5vwhs1lsR3ZHVw9fkJmGUQ7EVd9q22
-         H0Sg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nMkkgh0vUZhQGbLUN7ahTngVDrv1bZU4rETtDU9I6Yg=;
-        b=BctlF83zrsVEFIWWBzBApwgLVIcfFSnJCKePP4G5WXIETbJtn2bAhnKkG/Eosbe2Pi
-         ZQOP7txmIumRuTf3j7IXSyAatN8Sy8Gj+pBdedZZiYY0yVIX5e+wMk8XYwbZvIg83V19
-         4x/zZcGoqBeQL3zlt7IIYWAVPqUh2jEi3Nuj4Z7wIwcSXzKT/g/CG9BNCqPhosRQCt+2
-         MOolpNTl9sY0EzLqoZNgRlN13+2KnLKU6OqY2TUxIfGe7RHCrUOu7fvuvBqB3k/MXj8a
-         q0u6639dII0i/S/IgirA+IN+EBFQDDoVUHfyvVK/jSVDaTSGOjei2yP4y47q0hMI58mx
-         Y+sg==
-X-Gm-Message-State: AOUpUlEsTv2SdyUFD4xpu7i49Y/6GGJ15PjCvI5tSePT9S4ZTDRlWbIa
-        NRQ0QX+rvg6H3tNYWJ7imrjVPndg83j8vJfUcCNkJw==
-X-Google-Smtp-Source: AA+uWPx4LtCNKJmGDAZLs/YOLQr7EakS+HTv9xvW4OV5qeSrOOLtUo9olyTMq3VBZZTnqZNYsAImEmHRS+LprUZNLwo=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr11969945ywk.345.1534272260751;
- Tue, 14 Aug 2018 11:44:20 -0700 (PDT)
+        id S1727872AbeHNVdk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 17:33:40 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:33952 "EHLO dcvr.yhbt.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727755AbeHNVdk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 17:33:40 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id C38C71F404;
+        Tue, 14 Aug 2018 18:45:09 +0000 (UTC)
+Date:   Tue, 14 Aug 2018 18:45:09 +0000
+From:   Eric Wong <e@80x24.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] send-email: add an option to impose delay sent E-Mails
+Message-ID: <20180814184509.GA16659@dcvr>
+References: <20180325182803.30036-1-avarab@gmail.com>
+ <20180814181534.21234-1-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20180804053723.4695-1-pclouds@gmail.com> <20180812081551.27927-1-pclouds@gmail.com>
- <20180812081551.27927-3-pclouds@gmail.com> <20180813192526.GC10013@sigill.intra.peff.net>
- <xmqqk1ot3n4h.fsf@gitster-ct.c.googlers.com> <90d1bbf7-91a3-74ac-de65-1eb8405dc1f7@jeffhostetler.com>
- <CACsJy8DQmOCD2a5QFUiyPuoPZLq-QEejLhWACKpsJLvK5ERAMg@mail.gmail.com>
-In-Reply-To: <CACsJy8DQmOCD2a5QFUiyPuoPZLq-QEejLhWACKpsJLvK5ERAMg@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 11:44:09 -0700
-Message-ID: <CAGZ79kZwVpCBMkBKuYpwZFgAN50wZub_fyzWrAsE=ksuc-aCgQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] unpack-trees: add performance tracing
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        git <git@vger.kernel.org>, Ben Peart <peartben@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180814181534.21234-1-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 11:32 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Aug 14, 2018 at 8:19 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> > I'm looking at adding code to my SLOG (better name suggestions welcome)
-> > patch series to eventually replace the existing git_trace facility.
->
-> Complement maybe. Replace, please no. I'd rather not stare at json messages.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Add a --send-delay option with a corresponding sendemail.smtpSendDelay
+> configuration variable. When set to e.g. 2, this causes send-email to
+> sleep 2 seconds before sending the next E-Mail. We'll only sleep
+> between sends, not before the first send, or after the last.
+> 
+> This option has two uses. Firstly, to be able to Ctrl+C a long send
+> with "all" if you have a change of heart. Secondly, as a hack in some
+> mail setups to, with a sufficiently high delay, force the receiving
+> client to sort the E-Mails correctly.
+> 
+> Some popular E-Mail clients completely ignore the "Date" header, which
+> format-patch is careful to set such that the patches will be displayed
+> in order, and instead sort by the time the E-mail was received.
+> 
+> Google's GMail is a good example of such a client. It ostensibly sorts
+> by some approximation of received time (although not by any "Received"
+> header). It's more usual than not to see patches showing out of order
+> in GMail. To take a few examples of orders seen on patches on the Git
+> mailing list:
+> 
+>     1 -> 3 -> 4 -> 2 -> 8 -> 7 (completion by Nguyễn Thái Ngọc Duy)
+>     2 -> 0 -> 1 -> 3 (pack search by Derrick Stolee)
+>     3 -> 2 -> 1 (fast-import by Jameson Miller)
+>     2 -> 3 -> 1 -> 5 -> 4 -> 6 (diff-highlight by Jeff King)
+> 
+> The reason to add the new "X-Mailer-Send-Delay" header is to make it
+> easy to tell what the imposed delay was, if any. This allows for
+> gathering some data on how the transfer of E-Mails with & without this
+> option behaves. This may not be workable without really long delays,
+> see [1] and [2].
 
-From the sidelines: We'd only need one logging infrastructure in place, as the
-formatting would be done as a later step? For local operations we'd certainly
-find better formatting than json, and we figured that we might end up desiring
-ProtocolBuffers[1] instead of JSon, so if it would be easy to change
-the output of
-the structured logging easily that would be great.
+Aside from the new header, I think this is better implemented
+using the existing $relogin_delay and $batch_size=1.
 
-But AFAICT these series are all about putting the sampling points into the
-code base, so formatting would be orthogonal to it?
+Disconnecting during the delay might be more sympathetic to
+existing mail servers (which aren't C10K-optimized).  If the
+client sleeps, the server may disconnect the client anyways
+to save resources.
 
-Stefan
+> @@ -1741,6 +1747,10 @@ sub process_file {
+>  		$message, $xfer_encoding, $target_xfer_encoding);
+>  	push @xh, "Content-Transfer-Encoding: $xfer_encoding";
+>  	unshift @xh, 'MIME-Version: 1.0' unless $has_mime_version;
+> +	if ($send_delay && $i > 0) {
+> +		push @xh, "X-Mailer-Send-Delay: $send_delay";
+> +		sleep $send_delay;
+> +	}
 
-[1] https://developers.google.com/protocol-buffers/
+We can add this header for relogin_delay + batch_size
+
+But maybe --send-delay can be a shortcut for
+--relogin-delay and --batch-size=1
