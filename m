@@ -2,99 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 434811F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 21:32:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 914CF1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 21:47:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732537AbeHOAVs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 20:21:48 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:43857 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727807AbeHOAVs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 20:21:48 -0400
-Received: by mail-yw1-f68.google.com with SMTP id l189-v6so17347764ywb.10
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:32:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=6H+OOoW4a3tKHt07zo+zOoZCMHoFwKjSzUMsboLV5JQ=;
-        b=s/BhT+rBBT/M1GXTm1L35snSliVzK91IRWbkzV1eaf3w2/r1tks1NtwgsCq3mtsfQz
-         mzNKnEofPq2O8/YD7e2a1GDa+jDrz9z+n1trCzbRBziimAdLVcWfhnkNZkpqi3Bi1AEG
-         DTy55qayr/uUYkVzLKxouFnDE0B0GIiZwMxE2stEnzAfM+WBuvxwzHBg/NCda7UQQkLq
-         cxX3LRomcelPH6UkODqGCLaLeUB4mZLQwOaRgiiNIGlvtBAiTkqx1iWVRqkelaZGz95N
-         e3cQvzrI9M9aQLzrix6qXUsiv43/1HkcvINDEEl8LJCWXloCtrkBIACaSIUtOvNYo6Bj
-         vSKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=6H+OOoW4a3tKHt07zo+zOoZCMHoFwKjSzUMsboLV5JQ=;
-        b=joBuIqUI9BK76sX9WiWS/QiwGEnC1WsUM8Y8ACw/0WdvaFMs2j0qQPG0UQ26UKjZjX
-         9jqM1ztNa5LGBzOMV9AWJkcfxvRaOlj0gBllUyCp+RdndPvxYKyEBsNhODKgY0zLkeNm
-         Sb0pIaG5x4HApiUYyrzzA0OiKs6xhAab42EAHqecPNRPzIP3NGzv/yubBA6Zi9dnIawG
-         FkQLRnyYmlzbP1EmxzZfvGeLH/6ZjgC6RF4EZgFUaeSQewnxOtf9OYWLs4iOUachuYwe
-         ScMEEwy9UU1e9CI66qp1a1fCQXbtI6c4u9HhUhhjbnnNsrKadPPKyReJwZTVfGoVXHpz
-         lWug==
-X-Gm-Message-State: AOUpUlFWpvhVgzV+ortXVuClVBr9S9w+6G/CIleBISLPeqAx0UokMdFZ
-        pWjFAQpDCwARCTN2OgWl2xKAKyim+tooENGaPOYfPw==
-X-Google-Smtp-Source: AA+uWPzH2HP1t3q8QTIRCHVIx60Id/EBtHad2ASh28cSvoGUUD5CdNGwdF3uFVLma75WNJy6c9tCkiB0nl9VPsr5ryM=
-X-Received: by 2002:a81:37c5:: with SMTP id e188-v6mr13368755ywa.340.1534282361363;
- Tue, 14 Aug 2018 14:32:41 -0700 (PDT)
+        id S1728348AbeHOAge (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 20:36:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55416 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728080AbeHOAge (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 20:36:34 -0400
+Received: (qmail 7190 invoked by uid 109); 14 Aug 2018 21:47:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 21:47:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26469 invoked by uid 111); 14 Aug 2018 21:47:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 17:47:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 17:47:24 -0400
+Date:   Tue, 14 Aug 2018 17:47:24 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Syncing HEAD
+Message-ID: <20180814214723.GA667@sigill.intra.peff.net>
+References: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
+ <20180814210616.GA32367@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <20180814185906.2680-1-avarab@gmail.com> <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
- <87d0ukhd5g.fsf@evledraar.gmail.com> <CAGZ79kZuH8DKkoNb3AgHFxwYccOGHeVWOE7ov5QvavtomSxyAQ@mail.gmail.com>
- <87bma4hcnl.fsf@evledraar.gmail.com>
-In-Reply-To: <87bma4hcnl.fsf@evledraar.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 14:32:30 -0700
-Message-ID: <CAGZ79kZq745X2PjRpGJGWdnd+HJtPuwCnJUcePXtRoLkaTWrsg@mail.gmail.com>
-Subject: Re: [PATCH] submodule: add more exhaustive up-path testing
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180814210616.GA32367@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 2:16 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Aug 14 2018, Stefan Beller wrote:
->
-> > On Tue, Aug 14, 2018 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >
-> >> > So ideally we'd also error out as soon as the host name is touched?
-> >>
-> >> Do we have some utility function that'll take whatever we have in
-> >> remote.<name>.url and spew out the username / host / path? We must,
-> >> since the clone protocol needs it, but I haven't found it.
-> >
-> > Nope. Welcome to the wonderful world of submodules.
-> > As submodules are in the transition state towards "in C",
-> > we could do some refactorings that would allow for easy access to
-> > these properties, but the transition is done via faithful conversion fr=
-om
-> > shell to C, which did not have these functions either, but could just
-> > do some string hackery. And that is how we ended up with this
-> > function in the first place.
->
-> The remote/clone machinery is in C and so is the resolve-relative-url
-> helper. What's the missing bridge here?
->
-> Maybe we don't have that function yet, but we can presumably expose it,
-> and this seems unrelated to some other bits of submodules being in
-> shellscript.
->
-> No?
+On Tue, Aug 14, 2018 at 05:06:16PM -0400, Jeff King wrote:
 
-Gah, I misread your original question. Sorry about that.
+> On Tue, Aug 14, 2018 at 10:09:37PM +0200, Christian Couder wrote:
+> 
+> > When cloning with --mirror, the clone gets its HEAD initialized with
+> > the value HEAD has in its origin remote. After that if HEAD changes in
+> > origin there is no simple way to sync HEAD at the same time as the
+> > refs are synced.
+> > 
+> > It looks like the simplest way to sync HEAD is:
+> > 
+> > 1) git remote show origin
+> > 2) parse "HEAD branch: XXX" from the output of the above command
+> > 3) git symbolic-ref HEAD refs/heads/XXX
+> 
+> How about:
+> 
+>   git remote set-head origin -a
+> 
+> ?
+
+Reading your message again, I see you actually care less about the
+refs/remote placeholder and more about the actual HEAD in a bare repo.
+
+In which case "git remote" isn't going to help, though its underlying
+code has the algorithm you would want.
+
+> One tricky thing is that the name "refs/remotes/<remote>/HEAD" is only
+> special by convention, and that convention is known on the writing side
+> only by git-clone and git-remote. So obviously:
+
+And so here the convention is simpler, because we're talking about the
+main HEAD. But we still have know if you want to do that, and not update
+some refs/remotes/ symref in a bare repo.
+
+So all of this really implies to me that you want to be able to say
+"take this symref on the other side and update this one on the local
+side". I.e., some way to tell a refspec "don't update the value, update
+the symref destination". So imagine we made "~" the magic character for
+"just the symrefs" (I picked that because it's not allowed in a
+refname).
+
+Then you could do what you want with:
+
+  git config --add remote.origin.fetch ~HEAD:HEAD
+
+and these two would be the same:
+
+  git remote set-head origin -a
+  git fetch origin ~HEAD:refs/remotes/origin/HEAD
+
+And it would allow more exotic things, too, like:
+
+  # always update the remote notion of HEAD on every fetch
+  git config --add remote.origin.fetch ~HEAD:refs/remotes/origin/HEAD
+
+  # update a non-HEAD symref we track for our own purposes
+  git fetch origin ~refs/tags/LATEST:refs/tags/LATEST
+
+  # or the same thing but using the usual refspec "dst defaults to src"
+  # rule and dwim lookup magic
+  git fetch origin ~LATEST
+
+In protocol v0 we don't get symref reports from the other side over the
+git protocol (except for HEAD), but we could use the same logic we use
+for determining HEAD for older versions of Git: find a ref that points
+to the same tip. Though I would say that unlike the existing code in
+guess_remote_head(), we'd probably want to treat an ambiguity as an
+error, and not just default to refs/heads/master.
+
+-Peff
