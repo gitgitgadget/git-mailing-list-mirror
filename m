@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CE051F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 01:41:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 809EB1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 01:41:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729481AbeHNE0h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 00:26:37 -0400
-Received: from mail-qk0-f201.google.com ([209.85.220.201]:41409 "EHLO
-        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726034AbeHNE0h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 00:26:37 -0400
-Received: by mail-qk0-f201.google.com with SMTP id w8-v6so18678497qkf.8
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 18:41:46 -0700 (PDT)
+        id S1729489AbeHNE0j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 00:26:39 -0400
+Received: from mail-qk0-f202.google.com ([209.85.220.202]:44394 "EHLO
+        mail-qk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726034AbeHNE0j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 00:26:39 -0400
+Received: by mail-qk0-f202.google.com with SMTP id w126-v6so18648416qka.11
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 18:41:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=yb0WRLIFyu/I5F9V2PV1stGFbE+KKEMfWmcZ/S92L1g=;
-        b=fHiFv2Uu7gmouF9PPOTgZxzGOTCu8nH2p3RyMpNJg4TMS+nS7Ppbxzh1Ude6UOy2L/
-         Rkzq0iW41KfOHDOV8UnnG7VXQe82gpED+JajoQueNWe0C8zq28rgzG58mp4Utf+5zjWR
-         EAKwLHU0B1owDwlikE3pqONHFe2q9zoImMjOZNzjM9VgiqjkTlcFZegelzvmSq7eC6/W
-         QfTvmjcf83sKi+BatSnqQnWrkRB2Gc7iKyI8wEV72e+F0EUYi8zNuImRu4vMj7qRJHZq
-         0OXln9ut37o3IOvto/U22hdi8fTfXcxRaFieR9NpkXtOjCTFo1QlXy8aAudX3Orue1yk
-         Nlvg==
+        bh=EefIuxpf0ur0hPl47RVK2xGtJsZm9YNkd6gv7e3PYzw=;
+        b=PhuVlnG1D3mXwfDvV96B6qgVp80PWXrJn6FD8F5jfg1svPP6F240TcDZP6Qx2GgeZu
+         l/Yxj77e3VScj5auQ53L1RB84bYteE0bsQ96XGxRtu+cw+M6npDY+c3vPRiNVfTjmIuG
+         5/Rg16HG/DYC8cpQsxzqi9hTQa7D+uXvd5epOp/+O8YiJZUEkGf2GHw3Sqx2xJOKDbwi
+         ost2Ab+I+/+7p3CFAP6uDvxDVCnVSIauVU0LIbcOZg1eUsnRZZFNlg/CB4X7OOgkBekr
+         yC1/VIGUb62tSm3V4hOgmIIOTBIPxBzWS4QZ2GgXEu79dBxHBDYmSckCmOyTZenuc7kX
+         il9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=yb0WRLIFyu/I5F9V2PV1stGFbE+KKEMfWmcZ/S92L1g=;
-        b=ebAt9BvUC+E6dJI3REgLJmKgvb7y9hatTGgBankE8ottI2V41D52Rl6eWn5ts8WUhX
-         JbdWSK03VAF6wcilCBCmvnN68uRYsA9zXaYtsrUzdLksHhefjmWSa84LabcdllYhRyBM
-         Vh75p5Aoc6DqVEMjQt7eYagrBBsM6locRnUtfE6zRJU3BH46k3SdDhcscqNMDD8n4zxq
-         J3ai4k3ctfOXkVujLJv1GP+Er1B47SQcxnLl8jdF+k7wJBkmxVecvWGEIdkdc+6kBWJ3
-         EiBIx6XyUV/l56W34Dw4WgS0CTehSa/m4tEP+eS2mowurSvfRSSV0Uod9QECJJnuacgq
-         6HWw==
-X-Gm-Message-State: AOUpUlGAuz6n0uaV4mKkXsKaeSsJu3j0Dq/ZiJp4CEwYRO9jz+F76isj
-        EPv1sfdw8hJw7QOrl0fyo+nrU9wF0nmC
-X-Google-Smtp-Source: AA+uWPyyVMzRciUs1W5yVPYapSA7R7WDzRfv+fvbcaVQYghglWYWENTqHobCyMdccGYYkvAurSSd69WSkrRe
-X-Received: by 2002:ac8:738a:: with SMTP id t10-v6mr11228066qtp.38.1534210905704;
- Mon, 13 Aug 2018 18:41:45 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 18:41:20 -0700
+        bh=EefIuxpf0ur0hPl47RVK2xGtJsZm9YNkd6gv7e3PYzw=;
+        b=rGFglvbthBmo0r+dbwTzyvKv4ewlKyVnJGQaYpXp1T8wPD4k0Vb59xY0Rw9HfmEpXm
+         lv5OkbzqPz8ttGpl+H6qMFpFjvSxN3MfFade0y/BfOsRqPIh2LChj6E/iV3dXyEvVZrm
+         7L/dk28eNP45vxviMO0w3MSTQkt9sfEX8X6RZ7jDMe6mApNHLGYUw/Q2l3gfoG579STW
+         DWFyCxbF8QR9Ceqt8LlmaC+uT9nNqfmyF/cl/n1KLzMa3ZfGEmHFLa3m5dsu/kttO2dz
+         rfJJ+bAVPNBT+ALA+gSRKkv7f9b9KtGCx/70AR12vU5JCLTg49/3/iznHDg1cDPF4Mvm
+         9ERQ==
+X-Gm-Message-State: AOUpUlFz+PwQnZfA14GAzTnckeLSqfYiCVX0BS5rZMlDe2ATn3BiwVLA
+        Piz1fd73S+haNs79zJ+k9ZW5gqwzBSsv
+X-Google-Smtp-Source: AA+uWPx2I9jv05XcG2COXrekQmVw7Rn3hoYffEtKdabC5KluVBAb9L9aMC8LC9VWM+WP1tweBU0oV4O1wzXy
+X-Received: by 2002:a0c:ba0e:: with SMTP id w14-v6mr10605614qvf.46.1534210908247;
+ Mon, 13 Aug 2018 18:41:48 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 18:41:21 -0700
 In-Reply-To: <20180814014122.30662-1-sbeller@google.com>
-Message-Id: <20180814014122.30662-7-sbeller@google.com>
+Message-Id: <20180814014122.30662-8-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180810223441.30428-1-sbeller@google.com> <20180814014122.30662-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 6/8] diff: use emit_line_0 once per line
+Subject: [PATCH 7/8] diff.c: omit check for line prefix in emit_line_0
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com
@@ -61,67 +61,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All lines that use emit_line_0 multiple times per line, are combined
-into a single call to emit_line_0, making use of the 'set' argument.
+As the previous patch made sure we only call emit_line_0 once per line,
+we do not need the work around introduced in f7c3b4e2d8c (diff: add an
+internal option to dual-color diffs of diffs, 2018-08-13) that would ensure
+we'd emit 'diff_line_prefix(o)' just once per line.
 
-We gain a little efficiency here, as we can omit emission of color and
-accompanying reset if 'len == 0'.
+By having just one call of emit_line_0 per line, the checks are dead code.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c                | 16 ++++++++--------
- t/t3206-range-diff.sh |  2 +-
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ diff.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 4ef66389282..4f430f44e64 100644
+index 4f430f44e64..7a23adf254d 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -656,12 +656,14 @@ static void emit_line_0(struct diff_options *o,
- 			fputs(set_sign, file);
- 		if (first && !nofirst)
- 			fputc(first, file);
--		if (set && set != set_sign) {
--			if (set_sign)
--				fputs(reset, file);
--			fputs(set, file);
-+		if (len) {
-+			if (set && set != set_sign) {
-+				if (set_sign)
-+					fputs(reset, file);
-+				fputs(set, file);
-+			}
-+			fwrite(line, len, 1, file);
- 		}
--		fwrite(line, len, 1, file);
- 		fputs(reset, file);
- 	}
- 	if (has_trailing_carriage_return)
-@@ -1207,9 +1209,7 @@ static void emit_line_ws_markup(struct diff_options *o,
- 	if (!ws && !set_sign)
- 		emit_line_0(o, set, NULL, 0, reset, sign, line, len);
- 	else if (!ws) {
--		/* Emit just the prefix, then the rest. */
--		emit_line_0(o, set_sign, NULL, !!set_sign, reset, sign, "", 0);
--		emit_line_0(o, set, NULL, 0, reset, 0, line, len);
-+		emit_line_0(o, set_sign, set, !!set_sign, reset, sign, line, len);
- 	} else if (blank_at_eof)
- 		/* Blank line at EOF - paint '+' as well */
- 		emit_line_0(o, ws, NULL, 0, reset, sign, line, len);
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 31f6458f961..7dc7c80a1de 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -151,7 +151,7 @@ test_expect_success 'dual-coloring' '
- 	:         s/4/A/<RESET>
- 	:     <RESET>
- 	:    <REVERSE><GREEN>+<RESET><BOLD>    Also a silly comment here!<RESET>
--	:    <REVERSE><GREEN>+<RESET><BOLD><RESET>
-+	:    <REVERSE><GREEN>+<RESET>
- 	:     diff --git a/file b/file<RESET>
- 	:    <RED> --- a/file<RESET>
- 	:    <GREEN> +++ b/file<RESET>
+@@ -629,10 +629,7 @@ static void emit_line_0(struct diff_options *o,
+ 	int nofirst;
+ 	FILE *file = o->file;
+ 
+-	if (first)
+-		fputs(diff_line_prefix(o), file);
+-	else if (!len)
+-		return;
++	fputs(diff_line_prefix(o), file);
+ 
+ 	if (len == 0) {
+ 		has_trailing_newline = (first == '\n');
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
