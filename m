@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-8.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF931F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 17:06:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A97DF1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 17:11:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733304AbeHNTyW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 15:54:22 -0400
-Received: from mail-pl0-f66.google.com ([209.85.160.66]:45343 "EHLO
-        mail-pl0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733145AbeHNTyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 15:54:22 -0400
-Received: by mail-pl0-f66.google.com with SMTP id j8-v6so8559500pll.12
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 10:06:22 -0700 (PDT)
+        id S1733256AbeHNT7C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 15:59:02 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:40735 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733145AbeHNT7C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 15:59:02 -0400
+Received: by mail-pg1-f196.google.com with SMTP id x5-v6so9379205pgp.7
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 10:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=qhi4ebiu1ecF1Vwgp/mK/M6/OlLgsdqdwLAyPl7zkls=;
-        b=mZ9G2QMnIT/iR941rgtztGmDSRAianSgsevw83NsyJkoWtQtMbvH2wgcNITW+yQCap
-         RHMlltatI6Cq5+6Oc2vQwJpNBPX8G4gfH0RSJSML3MJURh0XFlwIlar1gifUD76TrrkB
-         EFRI2Balc5PqbsKTPOrCDRE57bTU0Fhg0BkpPyeQkbZSzd6avoWIR0fX5mdtWs+T4UrE
-         1OV0u4aJa7fMoO3reTgpr9qaISZIMIog8cVBu8c4mhD9J4XIZQ/DbLQpK/rLddu2rLxT
-         Lf3P2UCoEyg9ytpiG/zlMvaXN/oomuaKTXHGMlmOo1tm96Mfej7d87DMPpQMEoVhXEHI
-         G37w==
+        bh=2buR78/UgwHY5d//TawbvCHxW1ih4SHLXa84bpBmHzI=;
+        b=uEOTsAfuNwB98KMKUYBNGSeLiHvXQbDf9fjnqaDk7UOmRjpa69dazlw2DwzwOxiqUf
+         QH9N/6W3+eg6RrmkqQIOCCcw8TQ8dCbizgw+2CGqsRj1iaid2G80eoIRY1EXoNq2TBUm
+         BuHvQiBUNK8Xu5mP2kWuw/5mLxeuOw/yOrqM6Zl7t2q6rPLvVN6fUh9+WgxlsT5TMR7S
+         XKFSBKdkij4cnVrBoQgy+pDnbRaAboctTI+HY0SeyjU4qJhTtUOtNDopIlnnmoVHd7CZ
+         lsSAbInJkEhm79DSjwq0ALsnHh797p6MHIHMxOmsYlA7cHOZxvsRZzRIgNB4nOgW3uLe
+         fpVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qhi4ebiu1ecF1Vwgp/mK/M6/OlLgsdqdwLAyPl7zkls=;
-        b=PJ6FkGCFbg7GMAfspi7IFdXpl7gcQQu8C36w4/E4670AT2aZbPKnMkFLjYh2nKxUbr
-         iEPsdtKAr7B5bwQIOoOVC29qCuzcsCo/okU7dbolpL/wyL8I1faDJ6eXm7UMEVg57e9T
-         k8cHUDVlJ8z4CYa2r9QNsebaOc3el9K14avFK6zJPA1WP9cBIvjV8FtqmMAktpKyAAM9
-         5nzdasfQ7iu+z9D0TYOZ2AUr0bSxT+SMyW4jOADdq4LKyFrnwLX8S2dKnpxf+EWcM7r7
-         YbT+6tv7s6nCvqvteIbdd/DnObF4IatsASS1eWs36x7bSiSZsb58d/NsFY/EtDJyImIc
-         CaOw==
-X-Gm-Message-State: AOUpUlEwlOFBhL0m0iQ6vJUxJIATWzpkPs+QBIuCo79e61vd+Xu6OOG2
-        6qakrz6Dz6EcoP1d2dZ/2ivGCA==
-X-Google-Smtp-Source: AA+uWPyfOx5s2V9zOBHMwFG37fgwWBrfpTndbiEEeAbk5UJa2rr/bu2oh5thx2BfpU8e5XLd5FKb7Q==
-X-Received: by 2002:a17:902:b58e:: with SMTP id a14-v6mr21436249pls.22.1534266381917;
-        Tue, 14 Aug 2018 10:06:21 -0700 (PDT)
+        bh=2buR78/UgwHY5d//TawbvCHxW1ih4SHLXa84bpBmHzI=;
+        b=Hyz8v6lXH9e6nFIfCUot/87CmuvStd3Chs1aVVMAQuTHazN3zhs08Lt4ysvELOM9rs
+         hXV39PXfWiR29+ZCLbMNc2wiJ5MYO+aALUzS9Dgvg8DfKP0YRXvj7a1uag8ogS1zqxDJ
+         JHFRnCvyUjAVjV7E/GYgX0vXjeVROSHFkbKVr7/kJ/QGiOIgYQIhtCQR5ujYteheDA41
+         jiKozCFvY9kbwTqB/qZxJkrQSNcKtARo4sOR5nhd7NMMQcxE89cTpCplV8pCnmANXJnu
+         1RtpIOTJ2H6e9OEMKp01apGwA3btSeeUko/jk4RGd9rZi/Nzm6kuz06UFQgCic+PlU9t
+         qXtA==
+X-Gm-Message-State: AOUpUlFT7coOLFl5LmIMYUhGmqjp3DQgMZ0IJ9gC11f7A+tAf2gcEoeW
+        7t5/Ol5FzkjRQxcFW0kYR2wI4A==
+X-Google-Smtp-Source: AA+uWPzOTEEOojMw+l/bkqe5NvhcaaV1o623k6tOsRgZ4t3GYLOKl9U9eoo09/D+Z6d5mFkouVGM8w==
+X-Received: by 2002:a63:da04:: with SMTP id c4-v6mr21019300pgh.398.1534266660241;
+        Tue, 14 Aug 2018 10:11:00 -0700 (PDT)
 Received: from google.com ([2620:0:100e:422:ff43:9291:7eda:b712])
-        by smtp.gmail.com with ESMTPSA id y86-v6sm32431735pfk.84.2018.08.14.10.06.20
+        by smtp.gmail.com with ESMTPSA id h69-v6sm49379915pfh.13.2018.08.14.10.10.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 10:06:20 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 10:06:19 -0700
+        Tue, 14 Aug 2018 10:10:58 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 10:10:58 -0700
 From:   Brandon Williams <bmwill@google.com>
 To:     Antonio Ospite <ao2@ao2.it>
 Cc:     git@vger.kernel.org,
@@ -57,15 +57,14 @@ Cc:     git@vger.kernel.org,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 3/7] t7411: be nicer to future tests and really clean
- things up
-Message-ID: <20180814170619.GE240194@google.com>
+Subject: Re: [PATCH v3 4/7] submodule--helper: add a new 'config' subcommand
+Message-ID: <20180814171058.GF240194@google.com>
 References: <20180814110525.17801-1-ao2@ao2.it>
- <20180814110525.17801-4-ao2@ao2.it>
+ <20180814110525.17801-5-ao2@ao2.it>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180814110525.17801-4-ao2@ao2.it>
+In-Reply-To: <20180814110525.17801-5-ao2@ao2.it>
 User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,62 +72,98 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 08/14, Antonio Ospite wrote:
-> Tests 5 and 8 in t/t7411-submodule-config.sh add two commits with
-> invalid lines in .gitmodules but then only the second commit is removed.
-> 
-> This may affect future subsequent tests if they assume that the
-> .gitmodules file has no errors.
-> 
-> Remove both the commits as soon as they are not needed anymore.
-> 
-> The error introduced in test 5 is also required by test 6, so the two
-> commits from above are removed respectively in tests 6 and 8.
-
-Thanks for cleaning this up.  We seem to have a habit for leaving
-testing state around for longer than is necessary which makes it a bit
-more difficult to read and understand when looking at it later.  What
-would really be nice is if each test was self-contained...course that
-would take a herculean effort to realize in our testsuite so I'm not
-suggesting you do that :)
-
+> Add a new 'config' subcommand to 'submodule--helper', this extra level
+> of indirection makes it possible to add some flexibility to how the
+> submodules configuration is handled.
 > 
 > Signed-off-by: Antonio Ospite <ao2@ao2.it>
 > ---
->  t/t7411-submodule-config.sh | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+>  builtin/submodule--helper.c | 14 ++++++++++++++
+
+>  new                         |  0
+
+Looks like you may have accidentally left in an empty file "new" it should
+probably be removed from this commit before it gets merged.
+
+Aside from that this patch looks good.  I've recently run into issues
+where we don't have a good enough abstraction layer around how we
+interact with submodules so I'm glad we're moving towards better
+abstractions :)
+
+>  t/t7411-submodule-config.sh | 26 ++++++++++++++++++++++++++
+>  3 files changed, 40 insertions(+)
+>  create mode 100644 new
 > 
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index a3c4564c6c..7481d03b63 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2029,6 +2029,19 @@ static int connect_gitdir_workingtree(int argc, const char **argv, const char *p
+>  	return 0;
+>  }
+>  
+> +static int module_config(int argc, const char **argv, const char *prefix)
+> +{
+> +	/* Equivalent to ACTION_GET in builtin/config.c */
+> +	if (argc == 2)
+> +		return print_config_from_gitmodules(argv[1]);
+> +
+> +	/* Equivalent to ACTION_SET in builtin/config.c */
+> +	if (argc == 3)
+> +		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
+> +
+> +	die("submodule--helper config takes 1 or 2 arguments: name [value]");
+> +}
+> +
+>  #define SUPPORT_SUPER_PREFIX (1<<0)
+>  
+>  struct cmd_struct {
+> @@ -2057,6 +2070,7 @@ static struct cmd_struct commands[] = {
+>  	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+>  	{"is-active", is_active, 0},
+>  	{"check-name", check_name, 0},
+> +	{"config", module_config, 0},
+>  };
+>  
+>  int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+> diff --git a/new b/new
+> new file mode 100644
+> index 0000000000..e69de29bb2
 > diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-> index 0bde5850ac..c6b6cf6fae 100755
+> index c6b6cf6fae..4afb6f152e 100755
 > --- a/t/t7411-submodule-config.sh
 > +++ b/t/t7411-submodule-config.sh
-> @@ -98,6 +98,9 @@ test_expect_success 'error in one submodule config lets continue' '
->  '
->  
->  test_expect_success 'error message contains blob reference' '
-> +	# Remove the error introduced in the previous test.
-> +	# It is not needed in the following tests.
-> +	test_when_finished "git -C super reset --hard HEAD^" &&
->  	(cd super &&
->  		sha1=$(git rev-parse HEAD) &&
->  		test-tool submodule-config \
-> @@ -123,6 +126,7 @@ test_expect_success 'using different treeishs works' '
->  '
->  
->  test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
-> +	test_when_finished "git -C super reset --hard HEAD^" &&
->  	(cd super &&
->  		git config -f .gitmodules \
->  			submodule.submodule.fetchrecursesubmodules blabla &&
-> @@ -134,8 +138,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
->  			HEAD b \
->  			HEAD submodule \
->  				>actual &&
-> -		test_cmp expect_error actual  &&
-> -		git reset --hard HEAD^
-> +		test_cmp expect_error actual
+> @@ -142,4 +142,30 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
 >  	)
 >  '
 >  
+> +test_expect_success 'reading submodules config with "submodule--helper config"' '
+> +	(cd super &&
+> +		echo "../submodule" >expected &&
+> +		git submodule--helper config submodule.submodule.url >actual &&
+> +		test_cmp expected actual
+> +	)
+> +'
+> +
+> +test_expect_success 'writing submodules config with "submodule--helper config"' '
+> +	(cd super &&
+> +		echo "new_url" >expected &&
+> +		git submodule--helper config submodule.submodule.url "new_url" &&
+> +		git submodule--helper config submodule.submodule.url >actual &&
+> +		test_cmp expected actual
+> +	)
+> +'
+> +
+> +test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
+> +	(cd super &&
+> +		echo "newer_url" >expected &&
+> +		git submodule--helper config submodule.submodule.url "newer_url" &&
+> +		git submodule--helper config submodule.submodule.url >actual &&
+> +		test_cmp expected actual
+> +	)
+> +'
+> +
+>  test_done
 > -- 
 > 2.18.0
 > 
