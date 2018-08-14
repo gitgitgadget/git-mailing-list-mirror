@@ -2,89 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 797411F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 18:28:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D56571F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 18:29:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727873AbeHNVQf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:16:35 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:39170 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726158AbeHNVQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:16:35 -0400
-Received: by mail-pf1-f193.google.com with SMTP id j8-v6so9623693pff.6
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:28:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ubxrS7oPqYOlUuM+X9A4yfwWO3xQFNwvdRlTlQdorKA=;
-        b=b852IPYBUT9lTw/oeXvckDlCdk+u8Xa8SzkjLywnCrT+6KLJ165cbc6mqbJLKeZgJW
-         fxp9TWnfjjpco0+zbHll5T6hUVMB9GHm/XzXbujk4Oz7lgokaZ9Ke18X040ysAyjZRyj
-         fG25xW8OGsJrtbDHP4ZD4WwggIEVBjJ6iYT5lmPdf7+js8WG8qKj+0B/vO4h1gxJ9/DJ
-         xJ+mhdvPU3PUG5OlGFSqiogaxNbARccCj0pDl9dATLrqtonXqzztKLZGWgwK6L9IYos1
-         0HR97+V+gcuX28QRrKvpRjhbAkeFgdOlTlHTM3xsCovGQ6JzXVSL5tj4CKnNXgNDMd+y
-         STXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ubxrS7oPqYOlUuM+X9A4yfwWO3xQFNwvdRlTlQdorKA=;
-        b=A/pggYfd8UxlvsIAeuF+6WuVTW+OdnKsyWXQ1wqxNCrAiFVRrXVGp4NSj4LPyXkdIY
-         H0W+d+A5/F96lH/BL5O3p+WPOISVO0F5gznpsSl7B+zuMUFAW1tNyGZs+gmikBEZ1ebM
-         7EsrbDJLd+rbDBo0iAl8ynT6Bo2+BERG9ix7LaymfD8Yn2g3nGWZ8UvrrcCeQasJasAC
-         40ulyk8a5I7tOybSND7wBEyalqhtIkwrwzbzmfiNoZllJc9w8amyLiJoo9KQk7QO+R+h
-         9fEkGAfJM8eI2/F30+qAhHJtYmmdopm2wg9+rLLp9QBxu0DMZQFbA4TkyvXDb3Jine9A
-         Nu8g==
-X-Gm-Message-State: AOUpUlGkUN/U9N4Oz/yULJqxKUU0/Q2p73CsyAhJcUZ42e7rjI0UBqV7
-        DsSHhu78pcH8CshRFzKO3ZI=
-X-Google-Smtp-Source: AA+uWPxzJUoc66uhwpTPmqaZYp4J6+BlfqpNZck6qbGvXyIzENrC9DpEpjve2yUL//IKBCjLeTA+5g==
-X-Received: by 2002:a63:82c7:: with SMTP id w190-v6mr22145549pgd.253.1534271289779;
-        Tue, 14 Aug 2018 11:28:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n12-v6sm45175912pfh.146.2018.08.14.11.28.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 11:28:09 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 11:28:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     jochen.kuehner@gmx.de, git@vger.kernel.org
-Subject: Re: [PATCH] git-submodule.sh: accept verbose flag in cmd_update to
- be non-quiet
-Message-ID: <20180814182807.GA142615@aiede.svl.corp.google.com>
-References: <929572FA-6B1D-4EC7-825B-93B96053A82C@gmx.de>
- <20180814182202.59442-1-sbeller@google.com>
+        id S1728301AbeHNVRd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 17:17:33 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:34413 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726158AbeHNVRd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 17:17:33 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 41qh2971jyz5tlF;
+        Tue, 14 Aug 2018 20:29:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D41251DB0;
+        Tue, 14 Aug 2018 20:29:04 +0200 (CEST)
+Subject: Re: [PATCH] mingw: enable atomic O_APPEND
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
+References: <pull.17.git.gitgitgadget@gmail.com>
+ <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
+ <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
+ <bc9132ab-3030-07e3-03d1-d2ddae6a1b45@kdbg.org>
+ <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
+ <84c749fd-23d2-0bc5-225b-74f8d31502b6@kdbg.org>
+ <87eff2rmgt.fsf@evledraar.gmail.com>
+ <20180813223701.GC16006@sigill.intra.peff.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <313beb50-f5bd-ace6-8d6d-5f2a9e7cb6e7@kdbg.org>
+Date:   Tue, 14 Aug 2018 20:29:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180814182202.59442-1-sbeller@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20180813223701.GC16006@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-
->  git-submodule.sh | 3 +++
->  1 file changed, 3 insertions(+)
+Am 14.08.2018 um 00:37 schrieb Jeff King:
+> And then you can do something like:
 > 
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index 8b5ad59bdee..f7fd80345cd 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
-> @@ -438,6 +438,9 @@ cmd_update()
->  		-q|--quiet)
->  			GIT_QUIET=1
->  			;;
-> +		-v)
-> +			GIT_QUIET=0
-> +			;;
+>    for size in 4097 8193 16385 32769 65537 131073 262145 524289 1048577; do
+>      >out ;# clean up from last run
+>      echo "Trying $size..."
+>      timeout 5 ./write $size out
+>      if ! ./check $size <out; then
+>        echo "$size failed"
+>        break
+>      fi
+>    done
+> 
+> On my Linux system, each of those seems to write several gigabytes
+> without overlapping. I did manage to hit some failing cases, but they
+> were never sheared writes, but rather cases where there was an
+> incomplete write at the end-of-file.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+I used your programs with necessary adjustments (as fork() is not 
+available), and did similar tests with concurrent processes. With packet 
+sizes 1025, 4093, 7531 (just to include some odd number), and 8193 I did 
+not observe any overlapping or short writes.
 
-Thanks.
+I'm now very confident that we are on the safe side for our purposes.
+
+-- Hannes
