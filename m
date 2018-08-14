@@ -2,420 +2,161 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B7961F428
-	for <e@80x24.org>; Tue, 14 Aug 2018 22:30:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 308D41F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 22:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728760AbeHOBSI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 21:18:08 -0400
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:43551 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727776AbeHOBSI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 21:18:08 -0400
-Received: by mail-pf1-f176.google.com with SMTP id j26-v6so9868353pfi.10
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 15:28:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=4z1XAXjkFwamWGHIc++gXEIvKESfwToRPtoSUY/MI1Q=;
-        b=RS2AD+XvVzIde+HVHn5EWEMGt7OGrW45/JwhfyW8/XcNtiVkYL0PqAxHBGW/s8NErl
-         +2qLw4be4iEEeFFy6qdM/4Fv4BVAqOirIuF5Q13eVUIRae6EFQ1Ci23Ot+4Jy92STy30
-         J4tfXoMribyn7+DB4qRQ1g1z9EQmAItSThPCOAq2CbaYg1/EpHEVDOFHqs8PIBtkwNjx
-         AM7Z4/xs8H9T00wYuOEYPZrcL8LUkw+rdV5j+DKeNRN2pXEBiMxALYQpmnZMISjENCwf
-         yeJqrnmJD9rpUtgJttmjN4eYkDQHM9EZyklhTCDfFw3ephBltp71HavSWYnzpstwNxX7
-         YREA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=4z1XAXjkFwamWGHIc++gXEIvKESfwToRPtoSUY/MI1Q=;
-        b=uYpY5MnifUwuiXhMv7/Xnr+4Lz9pFtUQ8Y/1jz31Bl/tDFJOMdCbfI3N7KAuamTpXT
-         eb32BS6UMTG2uoFef8x1eB7JwHpCsD5fB0sDO9JpqysTAF9hKytfENoisN+iQkQskIBt
-         AQZfIeJubV5DwXiG1jwijy1cJy1oHD9DQDMIEkKwoDYQAhpSS7rFLIG1rpfBD2Xpv0rb
-         EnCpL/i5KYOK1nPJYsaCvSxXqnvhf98fLEERthw+GlP8ybvjXFc+GtJTzmQVO8NzMRwu
-         zbSLpZ7vehlOCi9HTgSxNECmQd2Ou6pnmL51RZ9dPh6znn160283D8rcY2qbJXJwxV7n
-         EelQ==
-X-Gm-Message-State: AOUpUlHhbrUMTPZSwaCgv4fK0iJw6pVTcofFfNj/MyJvyVi+WxjZQuF8
-        4hawzMfLIwJxtdzraFHATgbFgOlS
-X-Google-Smtp-Source: AA+uWPxnLN+opnDHyctq9VImbTx1kqro9VSZ6McBDhdKZOahle/GoZXjBXQuvmdTOI3guVooF1Igcw==
-X-Received: by 2002:aa7:87d0:: with SMTP id i16-v6mr25157522pfo.82.1534285728969;
-        Tue, 14 Aug 2018 15:28:48 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id d75-v6sm33938329pfd.49.2018.08.14.15.28.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 15:28:48 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 15:28:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Stefan Beller <sbeller@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH] partial-clone: render design doc using asciidoc
-Message-ID: <20180814222846.GG142615@aiede.svl.corp.google.com>
+        id S1729491AbeHOBWG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 21:22:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55486 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728329AbeHOBWG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 21:22:06 -0400
+Received: (qmail 9432 invoked by uid 109); 14 Aug 2018 22:32:49 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 22:32:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26947 invoked by uid 111); 14 Aug 2018 22:32:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 18:32:52 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 18:32:47 -0400
+Date:   Tue, 14 Aug 2018 18:32:47 -0400
+From:   Jeff King <peff@peff.net>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Git mailing list <git@vger.kernel.org>,
+        Clemens Buchacher <drizzd@aon.at>
+Subject: Re: t5570-git-daemon fails with SIGPIPE on OSX
+Message-ID: <20180814223246.GA2379@sigill.intra.peff.net>
+References: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAM0VKj=MCS+cmOgzf_XyPeb+qZrFmuMH52-PV_NDMZA9X+rRoA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rendered documentation can be easier to read than raw text because
-headings and emphasized phrases stand out.  Add the missing markup and
-Makefile rule required to render this design document using asciidoc.
+On Mon, Aug 06, 2018 at 05:11:13PM +0200, SZEDER Gábor wrote:
 
-Tested by running
+>   - 'git upload-pack' receives the request, parses the want line,
+>     notices the corrupt pack, responds with an 'ERR upload-pack: not
+>     our ref' pkt-line, and die()s right away.
+> 
+>   - 'git fetch' finally approaches the end of the function, where it
+>     attempts to send a done pkt-line via another send_request() call
+>     through the now closing TCP socket.
+> 
+>   - What happens now seems to depend on the platform:
+> 
+>     - On Linux, both on my machine and on Travis CI, it shows textbook
+>       example behaviour: write() returns with error and sets errno to
+>       ECONNRESET.  Since it happens in write_or_die(), 'git fetch'
+>       die()s with 'fatal: write error: Connection reset by peer', and
+>       doesn't show the error send by 'git upload-pack'; how could it,
+>       it doesn't even get as far to receive upload-pack's ERR
+>       pkt-line.
+> 
+>       The test only checks that 'git fetch' fails, but it doesn't
+>       check whether it failed with the right error message, so the
+>       test still succeeds.  Had it checked the error message as well,
+>       we most likely had noticed this issue already, it doesn't happen
+>       all that rarely.
 
-  make -C Documentation technical/partial-clone.html
+Hmm. Traditionally we did not send ERR as part of upload-pack at all. It
+was the message you got from git-daemon if it couldn't start the
+requested sub-process. It was only later in bdb31eada7 (upload-pack:
+report "not our ref" to client, 2017-02-23) that we started sending
+them. So I think that is why it does not check the error message: it is
+not expecting that case at all (and it is not actually interesting here,
+as the real problem is that the remote side is corrupt, but it sadly
+does not say anything so useful).
 
-and viewing the output in a browser.
+I think that's somewhat tangential, though. The root of the issue is
+this:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Today I noticed that this document wasn't available at
-https://www.kernel.org/pub/software/scm/git/docs/technical/partial-clone.html,
-so I wrote this patch.
+>     - On the new OSX images with XCode 9.4 on Travis CI the write()
+>       triggers SIGPIPE right away, and 'test_must_fail' notices it and
+>       fails the test.  I couldn't see any sign of an ECONNRESET or any
+>       other error that we could act upon to avoid the SIGPIPE.
 
-Thoughts of all kinds welcome, as always.
+Right, as soon as we get SIGPIPE we can't offer any useful message,
+because we're dead. I would argue that fetch should simply turn off
+SIGPIPE entirely, and rely on getting EPIPE from write(). But since
+we're in write_or_die(), it actually turns EPIPE back into a SIGPIPE
+death!
 
- Documentation/Makefile                    |   1 +
- Documentation/technical/partial-clone.txt | 208 +++++++++++-----------
- 2 files changed, 105 insertions(+), 104 deletions(-)
+So we'd probably also want to teach it to use a real write_in_full(),
+and then output a more useful message in this case. write_or_die()
+really does produce bad messages regardless, because it doesn't know
+what it's writing to.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d079d7c73ac..a42dcfc7459 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -76,6 +76,7 @@ TECH_DOCS += technical/long-running-process-protocol
- TECH_DOCS += technical/pack-format
- TECH_DOCS += technical/pack-heuristics
- TECH_DOCS += technical/pack-protocol
-+TECH_DOCS += technical/partial-clone
- TECH_DOCS += technical/protocol-capabilities
- TECH_DOCS += technical/protocol-common
- TECH_DOCS += technical/protocol-v2
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 0bed2472c81..1ef66bd788a 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -69,24 +69,24 @@ Design Details
- 
- - A new pack-protocol capability "filter" is added to the fetch-pack and
-   upload-pack negotiation.
--
--  This uses the existing capability discovery mechanism.
--  See "filter" in Documentation/technical/pack-protocol.txt.
-++
-+This uses the existing capability discovery mechanism.
-+See "filter" in Documentation/technical/pack-protocol.txt.
- 
- - Clients pass a "filter-spec" to clone and fetch which is passed to the
-   server to request filtering during packfile construction.
--
--  There are various filters available to accommodate different situations.
--  See "--filter=<filter-spec>" in Documentation/rev-list-options.txt.
-++
-+There are various filters available to accommodate different situations.
-+See "--filter=<filter-spec>" in Documentation/rev-list-options.txt.
- 
- - On the server pack-objects applies the requested filter-spec as it
-   creates "filtered" packfiles for the client.
--
--  These filtered packfiles are *incomplete* in the traditional sense because
--  they may contain objects that reference objects not contained in the
--  packfile and that the client doesn't already have.  For example, the
--  filtered packfile may contain trees or tags that reference missing blobs
--  or commits that reference missing trees.
-++
-+These filtered packfiles are *incomplete* in the traditional sense because
-+they may contain objects that reference objects not contained in the
-+packfile and that the client doesn't already have.  For example, the
-+filtered packfile may contain trees or tags that reference missing blobs
-+or commits that reference missing trees.
- 
- - On the client these incomplete packfiles are marked as "promisor packfiles"
-   and treated differently by various commands.
-@@ -104,47 +104,47 @@ Handling Missing Objects
-   to repository corruption.  To differentiate these cases, the local
-   repository specially indicates such filtered packfiles obtained from the
-   promisor remote as "promisor packfiles".
--
--  These promisor packfiles consist of a "<name>.promisor" file with
--  arbitrary contents (like the "<name>.keep" files), in addition to
--  their "<name>.pack" and "<name>.idx" files.
-++
-+These promisor packfiles consist of a "<name>.promisor" file with
-+arbitrary contents (like the "<name>.keep" files), in addition to
-+their "<name>.pack" and "<name>.idx" files.
- 
- - The local repository considers a "promisor object" to be an object that
-   it knows (to the best of its ability) that the promisor remote has promised
-   that it has, either because the local repository has that object in one of
-   its promisor packfiles, or because another promisor object refers to it.
--
--  When Git encounters a missing object, Git can see if it a promisor object
--  and handle it appropriately.  If not, Git can report a corruption.
--
--  This means that there is no need for the client to explicitly maintain an
--  expensive-to-modify list of missing objects.[a]
-++
-+When Git encounters a missing object, Git can see if it a promisor object
-+and handle it appropriately.  If not, Git can report a corruption.
-++
-+This means that there is no need for the client to explicitly maintain an
-+expensive-to-modify list of missing objects.[a]
- 
- - Since almost all Git code currently expects any referenced object to be
-   present locally and because we do not want to force every command to do
-   a dry-run first, a fallback mechanism is added to allow Git to attempt
-   to dynamically fetch missing objects from the promisor remote.
--
--  When the normal object lookup fails to find an object, Git invokes
--  fetch-object to try to get the object from the server and then retry
--  the object lookup.  This allows objects to be "faulted in" without
--  complicated prediction algorithms.
--
--  For efficiency reasons, no check as to whether the missing object is
--  actually a promisor object is performed.
--
--  Dynamic object fetching tends to be slow as objects are fetched one at
--  a time.
-++
-+When the normal object lookup fails to find an object, Git invokes
-+fetch-object to try to get the object from the server and then retry
-+the object lookup.  This allows objects to be "faulted in" without
-+complicated prediction algorithms.
-++
-+For efficiency reasons, no check as to whether the missing object is
-+actually a promisor object is performed.
-++
-+Dynamic object fetching tends to be slow as objects are fetched one at
-+a time.
- 
- - `checkout` (and any other command using `unpack-trees`) has been taught
-   to bulk pre-fetch all required missing blobs in a single batch.
- 
- - `rev-list` has been taught to print missing objects.
--
--  This can be used by other commands to bulk prefetch objects.
--  For example, a "git log -p A..B" may internally want to first do
--  something like "git rev-list --objects --quiet --missing=print A..B"
--  and prefetch those objects in bulk.
-++
-+This can be used by other commands to bulk prefetch objects.
-+For example, a "git log -p A..B" may internally want to first do
-+something like "git rev-list --objects --quiet --missing=print A..B"
-+and prefetch those objects in bulk.
- 
- - `fsck` has been updated to be fully aware of promisor objects.
- 
-@@ -154,11 +154,11 @@ Handling Missing Objects
- - The global variable "fetch_if_missing" is used to control whether an
-   object lookup will attempt to dynamically fetch a missing object or
-   report an error.
--
--  We are not happy with this global variable and would like to remove it,
--  but that requires significant refactoring of the object code to pass an
--  additional flag.  We hope that concurrent efforts to add an ODB API can
--  encompass this.
-++
-+We are not happy with this global variable and would like to remove it,
-+but that requires significant refactoring of the object code to pass an
-+additional flag.  We hope that concurrent efforts to add an ODB API can
-+encompass this.
- 
- 
- Fetching Missing Objects
-@@ -168,10 +168,10 @@ Fetching Missing Objects
-   transport_fetch_refs(), setting a new transport option
-   TRANS_OPT_NO_DEPENDENTS to indicate that only the objects themselves are
-   desired, not any object that they refer to.
--
--  Because some transports invoke fetch_pack() in the same process, fetch_pack()
--  has been updated to not use any object flags when the corresponding argument
--  (no_dependents) is set.
-++
-+Because some transports invoke fetch_pack() in the same process, fetch_pack()
-+has been updated to not use any object flags when the corresponding argument
-+(no_dependents) is set.
- 
- - The local repository sends a request with the hashes of all requested
-   objects as "want" lines, and does not perform any packfile negotiation.
-@@ -187,13 +187,13 @@ Current Limitations
- 
- - The remote used for a partial clone (or the first partial fetch
-   following a regular clone) is marked as the "promisor remote".
--
--  We are currently limited to a single promisor remote and only that
--  remote may be used for subsequent partial fetches.
--
--  We accept this limitation because we believe initial users of this
--  feature will be using it on repositories with a strong single central
--  server.
-++
-+We are currently limited to a single promisor remote and only that
-+remote may be used for subsequent partial fetches.
-++
-+We accept this limitation because we believe initial users of this
-+feature will be using it on repositories with a strong single central
-+server.
- 
- - Dynamic object fetching will only ask the promisor remote for missing
-   objects.  We assume that the promisor remote has a complete view of the
-@@ -221,13 +221,13 @@ Future Work
- - Allow more than one promisor remote and define a strategy for fetching
-   missing objects from specific promisor remotes or of iterating over the
-   set of promisor remotes until a missing object is found.
--
--  A user might want to have multiple geographically-close cache servers
--  for fetching missing blobs while continuing to do filtered `git-fetch`
--  commands from the central server, for example.
--
--  Or the user might want to work in a triangular work flow with multiple
--  promisor remotes that each have an incomplete view of the repository.
-++
-+A user might want to have multiple geographically-close cache servers
-+for fetching missing blobs while continuing to do filtered `git-fetch`
-+commands from the central server, for example.
-++
-+Or the user might want to work in a triangular work flow with multiple
-+promisor remotes that each have an incomplete view of the repository.
- 
- - Allow repack to work on promisor packfiles (while keeping them distinct
-   from non-promisor packfiles).
-@@ -238,25 +238,25 @@ Future Work
- - Investigate use of a long-running process to dynamically fetch a series
-   of objects, such as proposed in [5,6] to reduce process startup and
-   overhead costs.
--
--  It would be nice if pack protocol V2 could allow that long-running
--  process to make a series of requests over a single long-running
--  connection.
-++
-+It would be nice if pack protocol V2 could allow that long-running
-+process to make a series of requests over a single long-running
-+connection.
- 
- - Investigate pack protocol V2 to avoid the info/refs broadcast on
-   each connection with the server to dynamically fetch missing objects.
- 
- - Investigate the need to handle loose promisor objects.
--
--  Objects in promisor packfiles are allowed to reference missing objects
--  that can be dynamically fetched from the server.  An assumption was
--  made that loose objects are only created locally and therefore should
--  not reference a missing object.  We may need to revisit that assumption
--  if, for example, we dynamically fetch a missing tree and store it as a
--  loose object rather than a single object packfile.
--
--  This does not necessarily mean we need to mark loose objects as promisor;
--  it may be sufficient to relax the object lookup or is-promisor functions.
-++
-+Objects in promisor packfiles are allowed to reference missing objects
-+that can be dynamically fetched from the server.  An assumption was
-+made that loose objects are only created locally and therefore should
-+not reference a missing object.  We may need to revisit that assumption
-+if, for example, we dynamically fetch a missing tree and store it as a
-+loose object rather than a single object packfile.
-++
-+This does not necessarily mean we need to mark loose objects as promisor;
-+it may be sufficient to relax the object lookup or is-promisor functions.
- 
- 
- Non-Tasks
-@@ -265,13 +265,13 @@ Non-Tasks
- - Every time the subject of "demand loading blobs" comes up it seems
-   that someone suggests that the server be allowed to "guess" and send
-   additional objects that may be related to the requested objects.
--
--  No work has gone into actually doing that; we're just documenting that
--  it is a common suggestion.  We're not sure how it would work and have
--  no plans to work on it.
--
--  It is valid for the server to send more objects than requested (even
--  for a dynamic object fetch), but we are not building on that.
-++
-+No work has gone into actually doing that; we're just documenting that
-+it is a common suggestion.  We're not sure how it would work and have
-+no plans to work on it.
-++
-+It is valid for the server to send more objects than requested (even
-+for a dynamic object fetch), but we are not building on that.
- 
- 
- Footnotes
-@@ -282,43 +282,43 @@ Footnotes
-     This would essentially be a sorted linear list of OIDs that the were
-     omitted by the server during a clone or subsequent fetches.
- 
--    This file would need to be loaded into memory on every object lookup.
--    It would need to be read, updated, and re-written (like the .git/index)
--    on every explicit "git fetch" command *and* on any dynamic object fetch.
-+This file would need to be loaded into memory on every object lookup.
-+It would need to be read, updated, and re-written (like the .git/index)
-+on every explicit "git fetch" command *and* on any dynamic object fetch.
- 
--    The cost to read, update, and write this file could add significant
--    overhead to every command if there are many missing objects.  For example,
--    if there are 100M missing blobs, this file would be at least 2GiB on disk.
-+The cost to read, update, and write this file could add significant
-+overhead to every command if there are many missing objects.  For example,
-+if there are 100M missing blobs, this file would be at least 2GiB on disk.
- 
--    With the "promisor" concept, we *infer* a missing object based upon the
--    type of packfile that references it.
-+With the "promisor" concept, we *infer* a missing object based upon the
-+type of packfile that references it.
- 
- 
- Related Links
- -------------
--[0] https://bugs.chromium.org/p/git/issues/detail?id=2
--    Chromium work item for: Partial Clone
-+[0] https://crbug.com/git/2
-+    Bug#2: Partial Clone
- 
--[1] https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/
--    Subject: [RFC] Add support for downloading blobs on demand
-+[1] https://public-inbox.org/git/20170113155253.1644-1-benpeart@microsoft.com/ +
-+    Subject: [RFC] Add support for downloading blobs on demand +
-     Date: Fri, 13 Jan 2017 10:52:53 -0500
- 
--[2] https://public-inbox.org/git/cover.1506714999.git.jonathantanmy@google.com/
--    Subject: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18 patches)
-+[2] https://public-inbox.org/git/cover.1506714999.git.jonathantanmy@google.com/ +
-+    Subject: [PATCH 00/18] Partial clone (from clone to lazy fetch in 18 patches) +
-     Date: Fri, 29 Sep 2017 13:11:36 -0700
- 
--[3] https://public-inbox.org/git/20170426221346.25337-1-jonathantanmy@google.com/
--    Subject: Proposal for missing blob support in Git repos
-+[3] https://public-inbox.org/git/20170426221346.25337-1-jonathantanmy@google.com/ +
-+    Subject: Proposal for missing blob support in Git repos +
-     Date: Wed, 26 Apr 2017 15:13:46 -0700
- 
--[4] https://public-inbox.org/git/1488999039-37631-1-git-send-email-git@jeffhostetler.com/
--    Subject: [PATCH 00/10] RFC Partial Clone and Fetch
-+[4] https://public-inbox.org/git/1488999039-37631-1-git-send-email-git@jeffhostetler.com/ +
-+    Subject: [PATCH 00/10] RFC Partial Clone and Fetch +
-     Date: Wed,  8 Mar 2017 18:50:29 +0000
- 
--[5] https://public-inbox.org/git/20170505152802.6724-1-benpeart@microsoft.com/
--    Subject: [PATCH v7 00/10] refactor the filter process code into a reusable module
-+[5] https://public-inbox.org/git/20170505152802.6724-1-benpeart@microsoft.com/ +
-+    Subject: [PATCH v7 00/10] refactor the filter process code into a reusable module +
-     Date: Fri,  5 May 2017 11:27:52 -0400
- 
--[6] https://public-inbox.org/git/20170714132651.170708-1-benpeart@microsoft.com/
--    Subject: [RFC/PATCH v2 0/1] Add support for downloading blobs on demand
-+[6] https://public-inbox.org/git/20170714132651.170708-1-benpeart@microsoft.com/ +
-+    Subject: [RFC/PATCH v2 0/1] Add support for downloading blobs on demand +
-     Date: Fri, 14 Jul 2017 09:26:50 -0400
--- 
-2.18.0.865.gffc8e1a3cd6
+That would give us a baby step in the right direction, because at least
+we'd always be doing a controlled die() then. And then the next step
+would be to show the remote error message (even though it's not actually
+useful in this case, in theory upload-pack could generate something
+better). And that would mean turning the die() on write into an attempt
+to drain any ERR messages before either dying or returning an error up
+the stack.
 
+I suspect the (largely untested) patch below would make your test
+problems go away. Or instead, we could simply add sigpipe=ok to the
+test_must_fail invocation, but I agree with you that the current
+behavior on OS X is not ideal (the user sees no error message).
+
+-Peff
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 5714bcbddd..3e80604562 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -188,8 +188,10 @@ static void send_request(struct fetch_pack_args *args,
+ 	if (args->stateless_rpc) {
+ 		send_sideband(fd, -1, buf->buf, buf->len, LARGE_PACKET_MAX);
+ 		packet_flush(fd);
+-	} else
+-		write_or_die(fd, buf->buf, buf->len);
++	} else {
++		if (write_in_full(fd, buf->buf, buf->len) < 0)
++			die_errno("unable to write to remote");
++	}
+ }
+ 
+ static void insert_one_alternate_object(struct fetch_negotiator *negotiator,
+@@ -1167,7 +1169,8 @@ static int send_fetch_request(struct fetch_negotiator *negotiator, int fd_out,
+ 
+ 	/* Send request */
+ 	packet_buf_flush(&req_buf);
+-	write_or_die(fd_out, req_buf.buf, req_buf.len);
++	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
++		die_errno("unable to write request to remote");
+ 
+ 	strbuf_release(&req_buf);
+ 	return ret;
+diff --git a/pkt-line.c b/pkt-line.c
+index a593c08aad..450d0801b1 100644
+--- a/pkt-line.c
++++ b/pkt-line.c
+@@ -88,13 +88,15 @@ static void packet_trace(const char *buf, unsigned int len, int write)
+ void packet_flush(int fd)
+ {
+ 	packet_trace("0000", 4, 1);
+-	write_or_die(fd, "0000", 4);
++	if (write_in_full(fd, "0000", 4) < 0)
++		die_errno("unable to write flush packet");
+ }
+ 
+ void packet_delim(int fd)
+ {
+ 	packet_trace("0001", 4, 1);
+-	write_or_die(fd, "0001", 4);
++	if (write_in_full(fd, "0000", 4) < 0)
++		die_errno("unable to write delim packet");
+ }
+ 
+ int packet_flush_gently(int fd)
