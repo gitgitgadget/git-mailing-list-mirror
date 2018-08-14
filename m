@@ -2,86 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF69C1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 15:06:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05BD11F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 15:08:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732739AbeHNRxv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 13:53:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54664 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728880AbeHNRxu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 13:53:50 -0400
-Received: (qmail 25042 invoked by uid 109); 14 Aug 2018 15:06:18 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 15:06:18 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22914 invoked by uid 111); 14 Aug 2018 15:06:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 11:06:22 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 11:06:16 -0400
-Date:   Tue, 14 Aug 2018 11:06:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Thomas Rast via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v6 11/21] range-diff: add tests
-Message-ID: <20180814150616.GE3441@sigill.intra.peff.net>
-References: <pull.1.v5.git.gitgitgadget@gmail.com>
- <pull.1.v6.git.gitgitgadget@gmail.com>
- <1477c58e4c0c9e1d5836ffcb9bcb7360b1a5df0d.1534159977.git.gitgitgadget@gmail.com>
- <20180813183504.GD13316@hank.intra.tgummerer.com>
- <nycvar.QRO.7.76.6.1808141652460.71@tvgsbejvaqbjf.bet>
- <20180814150309.GD3441@sigill.intra.peff.net>
+        id S1731841AbeHNR4P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 13:56:15 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41945 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728880AbeHNR4P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 13:56:15 -0400
+Received: by mail-wr1-f65.google.com with SMTP id j5-v6so17503852wrr.8
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 08:08:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IgqqyxQtRrr2Bz/cDtZHvsNh4LC5GKctpM8KOwtapeU=;
+        b=cz67SkvsJVkndOEMN6abWu/m2l0fiuKD76W7q5YQ1k4saCni9AlXRHu7KD8llaf9/C
+         tSewKpZswfDwJMaR67bTmWMAWQTFn3CMjI6IvUCP3HX8j+p264euOdwiL7ZNwswtvAkA
+         FLg0iiFrF5Zl19xy4l1xvO2nvnB+mx+mf+ssZNcN8ZT/sUrfmYowEk06RCtnaiA/0fpN
+         bG3MCxqK7cWZA3HW6JV2uj0auwhoKKMVX/i17LqjTf+XSsIQvIG899+gg7W0/yGZchwm
+         o6/BUpNuAGX3RkchMLftFDHAJQF/hcTItwvLMeQIvSgoOmoAsRHMtOKsyyjKsSQ44xVR
+         t8Ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IgqqyxQtRrr2Bz/cDtZHvsNh4LC5GKctpM8KOwtapeU=;
+        b=Yt2I7THoaK+gWGA4lmk5nRBiIZHCyOn/wfZuN3xLwG0y/fHPRlBfRnNph3j9WAWReP
+         xmda01TdAa8lDAgOyGZCHH2dg36rsUg02tuypWQh2s1nZaPtVDNTJARPA9FMMicU3rOg
+         R5fTVVypd+qlLZJHvLd1g3R5JzUAP7oGa0tuq/F+W7wZxO+TffEi/qB99pm7E7CN2ecq
+         rh3x3litn5zFA9u5biD6+JeFAAsDMHHU7ghCcZcLTfKBQ92C+9eIJBG4KFFrL4YQbLlQ
+         szBVbhCQ5hl7DZAwk/s7Q+28qgEVNbgksjd7QUbn1hz6Nm2H30bKws1LTjttznbBRSGx
+         U8NQ==
+X-Gm-Message-State: AOUpUlF0yzTUu02Uh7fxHN/HoHJ6tKdT6FgTlA2DS1yuHVjnIODuPeme
+        9QbSiaPCILRbBcEJOxwmyG0=
+X-Google-Smtp-Source: AA+uWPzJhQ2Yh41IY+Pvhm8WE1RCHo5uhjmmYvbNEQR1BhGTowaa5YZAuzZN6fDu0aSfudcNwfSYcw==
+X-Received: by 2002:adf:9203:: with SMTP id 3-v6mr13744017wrj.275.1534259320604;
+        Tue, 14 Aug 2018 08:08:40 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w204-v6sm18079525wmw.5.2018.08.14.08.08.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 08:08:39 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] mark_colliding_entries(): fix incorrect #if...#endif guard
+References: <pull.18.git.gitgitgadget@gmail.com>
+        <becaf4374a1f8e56a4a26203d74ba64560a465da.1534244538.git.gitgitgadget@gmail.com>
+Date:   Tue, 14 Aug 2018 08:08:38 -0700
+In-Reply-To: <becaf4374a1f8e56a4a26203d74ba64560a465da.1534244538.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Tue, 14 Aug 2018
+        04:02:21 -0700 (PDT)")
+Message-ID: <xmqqva8d0yvd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180814150309.GD3441@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 11:03:10AM -0400, Jeff King wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> > Hmm. I hoped that my commit message was enough to indicate that while he
-> > is the author, I assembled this. Maybe I should move him to the footer, as
-> > an Original-Authored-By:?
-> 
-> I think the "Author" field is actually distinct from the copyright
-> provenance. In this case it ought to be perfectly fine to add your
-> signed-off-by under the DCO's point b:
-> 
->   The contribution is based upon previous work that, to the best
->   of my knowledge, is covered under an appropriate open source
->   license and I have the right under that license to submit that
->   work with modifications [...]
-> 
-> This is based on the tests in tbdiff, which is explicitly GPL'd by
-> Thomas. So your signoff certifies that, which is fine.
-> 
-> As for the author field, IMHO it serves two purposes:
-> 
->   - to give credit where it is due
-> 
->   - so that people digging in history know who to contact for
->     questions/problems
-> 
-> In this case it probably makes sense for it to be you, as you'd take
-> responsibility for the code in _this_ project. And as you note, you can
-> give credit in the commit message (the only unfortunate thing is that
-> most automated statistics would not credit Thomas, but in theory they
-> could by mentioning him in the trailer).
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The way the guard was put, the code was declaring an unused variable on
+> Windows. No need to do that, so let's fix it.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  entry.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/entry.c b/entry.c
+> index c70340df8..2bce13352 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -402,11 +402,9 @@ static int check_path(const char *path, int len, struct stat *st, int skiplen)
+>  static void mark_colliding_entries(const struct checkout *state,
+>  				   struct cache_entry *ce, struct stat *st)
+>  {
+> +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
+>  	int i;
+>  
+> -	ce->ce_flags |= CE_MATCHED;
+> -
+> -#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
+>  	for (i = 0; i < state->istate->cache_nr; i++) {
+>  		struct cache_entry *dup = state->istate->cache[i];
+>  
+> @@ -422,6 +420,8 @@ static void mark_colliding_entries(const struct checkout *state,
+>  		}
+>  	}
+>  #endif
+> +
+> +	ce->ce_flags |= CE_MATCHED;
+>  }
 
-One thing I should have made clear: this is all my opinion, and anything
-Thomas expresses trumps that. But since he hasn't been active lately,
-this is all what I would do in the absence of input from him. Obviously
-a sign-off from him is better than none. :)
+Even though it looks a bit odd to smudge 'ce' itself after the loop,
+I think this would not break anything, simply because the loop does
+treat the 'ce' as special and stops the iteration once it sees it,
+even before its MATCHED bit is set.
 
--Peff
+Duy, if you are going to send a new version updated for other
+reasons, please squash this in.  In the meantime, I'll queue it on
+top of what we have right now.
+
+Thanks, both.
+
