@@ -8,59 +8,58 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 326FD1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 21:02:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 712DE1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 21:05:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728072AbeHNXvs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 19:51:48 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:34186 "EHLO
+        id S1727979AbeHNXyv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 19:54:51 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46113 "EHLO
         mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726648AbeHNXvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 19:51:48 -0400
-Received: by mail-ed1-f68.google.com with SMTP id h1-v6so10841184eds.1
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:02:47 -0700 (PDT)
+        with ESMTP id S1725915AbeHNXyv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 19:54:51 -0400
+Received: by mail-ed1-f68.google.com with SMTP id o8-v6so10813212edt.13
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=LmDReyckrEBareJW5iZV2yzYecOiSXB5RjEOwe7i6PM=;
-        b=lahcDQOazYnlbcPiEDgMAJcOWeEWt7Wn0EhEQApPiv+/EzEmV0lFnpIqGXc6SElaX5
-         8YvULO8n4LNUtE8T1/VXP9RCyxMEvx24oWsf/KqMlT5uEJ1aAiD8vEaIpeflzoGcE8RF
-         YK4ju69vlkZ+KO+sWUkCo8He2b3x/1yYAU/YHFs+5YUNn4jMxiXmHqKodZoM5BTWGcVB
-         U0P+cMeYM9Dzq2z9NOc+UU/XAXt7JGxi4A0bo+lQG5i/lXG7vPsndbgR9WLt/cAUcs0k
-         pi91ufJsj+gCh8YjGWbYhvgoNr/CtlsVkd4thZb41hIRgpZ7FWMy2QAw9O5tPuTkgZ+N
-         2J3w==
+        bh=8K9inE4IGNhdaggCgi3WWcOxvhuM9JqsuYCwwoUAmbk=;
+        b=mfPI1flKAhFuHkxh0cM35WWyl4PFtCZwWgDJs6jMCQOyEZboPCt03piQRj0hWZb5w6
+         N5s1+p+1x1uGC0565+aZyio22/fo5DojcH4t8Lyv8Q3ljLBk5mCEONFij5mqWWLJvsOh
+         AHWS38x+zEc0gAr5RyPMoS5eNlYRYP23S/AMqA7RMEyJ+1WZhOlcn2w31akvgKN+erLM
+         x7IGBrLHRdlV7uGnA/GBIeR8WJJpEQqUhgOYJaUA6u+dnBo3ZSCQh3BJlwQIU28MrJM9
+         gpn0OmCBuAje0h5rXt0UBTTNHnUeSxgBoHm4YQfEv1synj/csl7x0qOlO+7XKazbvrAY
+         0C8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=LmDReyckrEBareJW5iZV2yzYecOiSXB5RjEOwe7i6PM=;
-        b=Os5O+BPOthW8rHi9Df0q5RpaQAIMJusx9pMFoF+zRapTKOrzp9hga7dJghWDlRHq2c
-         46qG5IXFF5qxcXOEDsXBX/4j6g4+/BrdDaYTvkoe4UilkBwnAg11qAMUACqg43uKtub5
-         nnnd/8kdCIuw3xGziWXcvibITJ5LEnYlchntLzEuODAokpfPYnio55rlm596Ppy7rj2+
-         C1H/Q+hOBWXe5PrRMQGZW++M+7aq0TwmN+fACOUvQ0lhR82AhSJRMOBJ6Q+V10Rm5g8u
-         jA29vnkfKXD+7KBaMlACJAIN3UHMygqyIugSz34Ksf39ksyYfrQ6Io5eYQ0uoMREpntJ
-         fkIA==
-X-Gm-Message-State: AOUpUlHyulFJDWbFEehfJ45SIpM65SuPuFcHBIe7sennflFw/B6DTNVR
-        XRDWvbl+dIYxfTNB1CpTx0U=
-X-Google-Smtp-Source: AA+uWPxssXYFblGstq1MvHah8Z/RGlHEj+iJHRzABIHanADY6jV+eakn1hzan7fjfGINwWD6rEuQFg==
-X-Received: by 2002:a50:fc0f:: with SMTP id i15-v6mr28401428edr.81.1534280566730;
-        Tue, 14 Aug 2018 14:02:46 -0700 (PDT)
+        bh=8K9inE4IGNhdaggCgi3WWcOxvhuM9JqsuYCwwoUAmbk=;
+        b=fpNYTALoo1OXqpU51v6j7qOa/TpOKLdMlh64ajE1LbKKZh3ck2pqfvskHgHrAF2T3n
+         EmKdMhohwwMrFucKU7+45A+W3TB7UPu+k3aMlCr6WLi5e06k2WA9ULTKOE/dP+i901Wg
+         KCcDCglIW10C3JizZNpvGN/pFhIqj9WXcOOECzjfKh0NHFw81MrQ/drjp8oIoOeKPRdk
+         Z0vM7qD0DxrOTXJixFbCYfayNU0JrLLz+WFP9yVokGzYCPnUu/GXC7Wi/y2rcRJDlJM1
+         QY2BYcyU+TCdin+CMEY2qqx4SFvg2JTnDfvQwRNjkr01T2a5PA2xr4SI2+sv25Tndaw5
+         H69A==
+X-Gm-Message-State: AOUpUlHOyCBLglXkPxvd1hXPdE+GAw8v0/JufiRo2WIhWmwWbWAL4e44
+        u+nk0Ca6ygxGamf/aJiZ2QafCusz0bk=
+X-Google-Smtp-Source: AA+uWPwCyps8umdJnf7a2Ujyh+uPFZd4oRhSIANWT99n6+KNHPN8Ijbht/HTGyeFJuQSW5ovXk2dmQ==
+X-Received: by 2002:a50:ed09:: with SMTP id j9-v6mr28852269eds.28.1534280749367;
+        Tue, 14 Aug 2018 14:05:49 -0700 (PDT)
 Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id x13-v6sm33012695edx.17.2018.08.14.14.02.45
+        by smtp.gmail.com with ESMTPSA id g14-v6sm8088821edm.25.2018.08.14.14.05.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 14:02:45 -0700 (PDT)
+        Tue, 14 Aug 2018 14:05:48 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2] send-email: add an option to impose delay sent E-Mails
-References: <20180325182803.30036-1-avarab@gmail.com> <20180814181534.21234-1-avarab@gmail.com> <20180814184509.GA16659@dcvr>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
+Subject: Re: [PATCH] submodule: add more exhaustive up-path testing
+References: <20180814185906.2680-1-avarab@gmail.com> <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 27.0.50; mu4e 1.1.0
-In-reply-to: <20180814184509.GA16659@dcvr>
-Date:   Tue, 14 Aug 2018 23:02:44 +0200
-Message-ID: <87eff0hdaj.fsf@evledraar.gmail.com>
+In-reply-to: <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
+Date:   Tue, 14 Aug 2018 23:05:47 +0200
+Message-ID: <87d0ukhd5g.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -70,71 +69,48 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Aug 14 2018, Eric Wong wrote:
+On Tue, Aug 14 2018, Stefan Beller wrote:
 
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> wrote:
->> Add a --send-delay option with a corresponding sendemail.smtpSendDelay
->> configuration variable. When set to e.g. 2, this causes send-email to
->> sleep 2 seconds before sending the next E-Mail. We'll only sleep
->> between sends, not before the first send, or after the last.
+> On Tue, Aug 14, 2018 at 11:59 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
 >>
->> This option has two uses. Firstly, to be able to Ctrl+C a long send
->> with "all" if you have a change of heart. Secondly, as a hack in some
->> mail setups to, with a sufficiently high delay, force the receiving
->> client to sort the E-Mails correctly.
+>> The tests added in 63e95beb08 ("submodule: port resolve_relative_url
+>> from shell to C", 2016-04-15) didn't do a good job of testing various
+>> up-path invocations where the up-path would bring us beyond even the
+>> URL in question without emitting an error.
 >>
->> Some popular E-Mail clients completely ignore the "Date" header, which
->> format-patch is careful to set such that the patches will be displayed
->> in order, and instead sort by the time the E-mail was received.
->>
->> Google's GMail is a good example of such a client. It ostensibly sorts
->> by some approximation of received time (although not by any "Received"
->> header). It's more usual than not to see patches showing out of order
->> in GMail. To take a few examples of orders seen on patches on the Git
->> mailing list:
->>
->>     1 -> 3 -> 4 -> 2 -> 8 -> 7 (completion by Nguy=E1=BB=85n Th=C3=A1i N=
-g=E1=BB=8Dc Duy)
->>     2 -> 0 -> 1 -> 3 (pack search by Derrick Stolee)
->>     3 -> 2 -> 1 (fast-import by Jameson Miller)
->>     2 -> 3 -> 1 -> 5 -> 4 -> 6 (diff-highlight by Jeff King)
->>
->> The reason to add the new "X-Mailer-Send-Delay" header is to make it
->> easy to tell what the imposed delay was, if any. This allows for
->> gathering some data on how the transfer of E-Mails with & without this
->> option behaves. This may not be workable without really long delays,
->> see [1] and [2].
+>> These results look nonsensical, but it's worth exhaustively testing
+>> them before fixing any of this code, so we can see which of these
+>> cases were changed.
 >
-> Aside from the new header, I think this is better implemented
-> using the existing $relogin_delay and $batch_size=3D1.
+> Yeah. Please look at the comment in builtin/submodule--helper.c
+> in that commit, where I described my expectations.
 >
-> Disconnecting during the delay might be more sympathetic to
-> existing mail servers (which aren't C10K-optimized).
+> I should have put them into tests instead with the expectations
+> spelled out there.
 
-Yeah that's a good point, maybe we're being wasteful on remote resources
-here.
+I'll check that out thanks. I saw that comment, but have been skimming
+most of this code...
 
-> If the client sleeps, the server may disconnect the client anyways to
-> save resources.
-
-Seems like something we'd need to deal with anyway, do we?
-
->> @@ -1741,6 +1747,10 @@ sub process_file {
->>  		$message, $xfer_encoding, $target_xfer_encoding);
->>  	push @xh, "Content-Transfer-Encoding: $xfer_encoding";
->>  	unshift @xh, 'MIME-Version: 1.0' unless $has_mime_version;
->> +	if ($send_delay && $i > 0) {
->> +		push @xh, "X-Mailer-Send-Delay: $send_delay";
->> +		sleep $send_delay;
->> +	}
+> Thanks for this patch!
+> Stefan
 >
-> We can add this header for relogin_delay + batch_size
+>>
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
 >
-> But maybe --send-delay can be a shortcut for
-> --relogin-delay and --batch-size=3D1
+>
+>> So I think these tests are worthwihle in themselves,
+>
+> The reason I put it in the comment instead of tests was the
+> ease of spelling out both the status quo and expectations.
+>
+>> but would like
+>> some advice on how to proceed with that from someone more familiar
+>> with submodules.
+>
+> So ideally we'd also error out as soon as the host name is touched?
 
-I need to enter a password when sending a batch with my SMTP server now,
-once. With relogin I'd need to enter this N times unless I use whatever
-auth save facility there is in git-send-email (which I don't use now).
-
-I don't think it makes sense to conflate these two modes.
+Do we have some utility function that'll take whatever we have in
+remote.<name>.url and spew out the username / host / path? We must,
+since the clone protocol needs it, but I haven't found it.
