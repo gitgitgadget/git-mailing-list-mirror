@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 066D51F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 20:09:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AF2D1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 20:14:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728137AbeHNW61 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 18:58:27 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:38865 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbeHNW61 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 18:58:27 -0400
-Received: by mail-it0-f41.google.com with SMTP id v71-v6so21782873itb.3
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 13:09:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bXGVLIpap+MmAdq2ajhxMHhB+9hvdCFrt4qXd7iL83s=;
-        b=Jb+lD6UGhwUgP5p0RnbqQZzswwJJbtPlVRQ6EBI2R+j9ktNxTeU55ZzrpjTWPsaYe0
-         2ct42Ru7uCczRNC/QbXAn9O5q1nUfmOQVp/1MX16yHmcqkMvoI9AoZC6o37XZ5FEuq0h
-         oSTVHOC5nKRtajcbRfAwh/HzwgRqwhXdpKLWEkNZwuL4HLbIfBNkRbvTeksXxmd7HB5H
-         TZxP0OXFP5lFRM4UldyPEgAOGIEzPJ+ORGPD65cNmep2m0WNNRQj6GI3HlQnVeWQpvT0
-         o1FODtSxpmm/XSjz6LXLu5G34xaauh4yIo+7DY5qINEDRLLHdPeK02IRsP1kMQaT7kZc
-         cUng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bXGVLIpap+MmAdq2ajhxMHhB+9hvdCFrt4qXd7iL83s=;
-        b=oQeUIaW58kYYKjUfhJI3le5RH0tTy9r/o/wI6dof++TGcPs5csVfbb7v+eZoELjYMQ
-         0WYqiIESukXNGD+rGCNqOWAbmYsDKBfXaop+RRkUd2y3vK+Z8AiRIbcE49OSsNNQRIef
-         dCFwbn1xbKqGdMVGi8R+Y+JliixLUrEE7YR7tsq/N5R8OifCDf4xILRFOzNPcOx1+650
-         KyhG0yzs+rEHXwy2nOvTLWC3RI+WMxh/W4dbq05m2862qI8CwhvHLIRc9hsGRq495yQh
-         iBMY+5T0ACv/ZCeM/EF7L2oFYsHE1vfNCYxqaP2ZTK8jtD17CbYM/HTD5J8hb4RwIEC9
-         TlZg==
-X-Gm-Message-State: AOUpUlF3w8EQM6hpeYhdArbsOQdrfQ9eccFlUkE0w/nQ9rHDp+eGxaT8
-        H1sGbU4ZzeYMcDgx/Ki7rgJ+t3EgIq9RbMh6/FYSCj07
-X-Google-Smtp-Source: AA+uWPzPTD6ZbQJVIGShP8p56shY5Xu8fWeZNfV+NIEHjEUDZgt/zA5Q6VOW1zDqjfRbgBfMkd3DfhDbewKEpuPGD8w=
-X-Received: by 2002:a24:dd88:: with SMTP id t130-v6mr14929191itf.129.1534277378137;
- Tue, 14 Aug 2018 13:09:38 -0700 (PDT)
+        id S1728034AbeHNXCv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 19:02:51 -0400
+Received: from siwi.pair.com ([209.68.5.199]:18332 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725873AbeHNXCv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 19:02:51 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 0DE363F4089;
+        Tue, 14 Aug 2018 16:14:01 -0400 (EDT)
+Received: from [10.160.98.162] (unknown [167.220.148.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id A5FAA3F40B7;
+        Tue, 14 Aug 2018 16:14:00 -0400 (EDT)
+Subject: Re: [PATCH v4 2/5] unpack-trees: add performance tracing
+To:     Stefan Beller <sbeller@google.com>, Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Ben Peart <Ben.Peart@microsoft.com>, git <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+References: <20180804053723.4695-1-pclouds@gmail.com>
+ <20180812081551.27927-1-pclouds@gmail.com>
+ <20180812081551.27927-3-pclouds@gmail.com>
+ <20180813192526.GC10013@sigill.intra.peff.net>
+ <xmqqk1ot3n4h.fsf@gitster-ct.c.googlers.com>
+ <90d1bbf7-91a3-74ac-de65-1eb8405dc1f7@jeffhostetler.com>
+ <CACsJy8DQmOCD2a5QFUiyPuoPZLq-QEejLhWACKpsJLvK5ERAMg@mail.gmail.com>
+ <CAGZ79kZwVpCBMkBKuYpwZFgAN50wZub_fyzWrAsE=ksuc-aCgQ@mail.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <603037bc-57a4-92a6-9c13-ae5b253d3ba3@jeffhostetler.com>
+Date:   Tue, 14 Aug 2018 16:14:00 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Tue, 14 Aug 2018 13:09:37
- -0700 (PDT)
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Tue, 14 Aug 2018 22:09:37 +0200
-Message-ID: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
-Subject: Syncing HEAD
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kZwVpCBMkBKuYpwZFgAN50wZub_fyzWrAsE=ksuc-aCgQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-When cloning with --mirror, the clone gets its HEAD initialized with
-the value HEAD has in its origin remote. After that if HEAD changes in
-origin there is no simple way to sync HEAD at the same time as the
-refs are synced.
 
-It looks like the simplest way to sync HEAD is:
+On 8/14/2018 2:44 PM, Stefan Beller wrote:
+> On Tue, Aug 14, 2018 at 11:32 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> On Tue, Aug 14, 2018 at 8:19 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+>>> I'm looking at adding code to my SLOG (better name suggestions welcome)
+>>> patch series to eventually replace the existing git_trace facility.
+>>
+>> Complement maybe. Replace, please no. I'd rather not stare at json messages.
+> 
+>  From the sidelines: We'd only need one logging infrastructure in place, as the
+> formatting would be done as a later step? For local operations we'd certainly
+> find better formatting than json, and we figured that we might end up desiring
+> ProtocolBuffers[1] instead of JSon, so if it would be easy to change
+> the output of
+> the structured logging easily that would be great.
+> 
+> But AFAICT these series are all about putting the sampling points into the
+> code base, so formatting would be orthogonal to it?
+> 
+> Stefan
+> 
+> [1] https://developers.google.com/protocol-buffers/
+> 
 
-1) git remote show origin
-2) parse "HEAD branch: XXX" from the output of the above command
-3) git symbolic-ref HEAD refs/heads/XXX
+Last time I checked, protocol-buffers has a C++ binding but not
+a C binding.
 
-It looks like it would be quite easy to add an option to `fetch` to
-sync HEAD at the same time as regular refs are synced because every
-fetch from an origin that uses a recent Git contains something like:
+I've not had a chance to use pbuffers, so I have to ask what advantages
+would they have over JSON or some other similar self-describing format?
+And/or would it be possible for you to tail the json log file and
+convert it to whatever format you preferred?
 
-19:55:39.304976 pkt-line.c:80           packet:          git< YYYYYYYY
-HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow
-deepen-since deepen-not deepen-relative no-progress include-tag
-multi_ack_detailed no-done symref=HEAD:refs/heads/test-1
-agent=git/2.18.0
+It seems like the important thing is to capture structured data
+(whatever the format) to disk first.
 
-which in this example shows that HEAD is a symref to refs/heads/test-1
-in origin.
-
-Is there a reason why no such option already exists? Would it makes
-sense to add one? Is there any reason why it's not a good idea? Or am
-I missing something?
-
-I am asking because GitLab uses HEAD in the bare repos it manages to
-store the default branch against which the Merge Requests (same thing
-as Pull Requests on GitHub) are created.
-
-So when people want to keep 2 GitLab hosted repos in sync, GitLab
-needs to sync HEADs too, not just the refs.
-
-I think this could be useful to other setups than GitLab though.
-
-Thanks,
-Christian.
+Jeff
