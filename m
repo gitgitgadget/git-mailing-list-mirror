@@ -2,74 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76F991F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 23:20:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D18741F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 23:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732603AbeHOCJq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 22:09:46 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40066 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729705AbeHOCJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 22:09:45 -0400
-Received: by mail-wr1-f65.google.com with SMTP id h15-v6so18570606wrs.7
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:20:17 -0700 (PDT)
+        id S1732585AbeHOCMv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 22:12:51 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:45330 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729705AbeHOCMv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 22:12:51 -0400
+Received: by mail-yw1-f66.google.com with SMTP id 139-v6so17535551ywg.12
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ERsJv4KfQQfIlBpKTEoFoCzYM1D09r6J2N0pPbqst8M=;
-        b=d+IfB3YpBDFi+ax5dLnfje/S+nmzgn5V7WlI+v5KutESlRimkVBIU0erxsGj9qS+uf
-         pFJ5/5oGCg7CXLq/GvrGQ/nOgztYEaIN3p9Ihp3WjGNwxI70pz5TRiHPy8L5S4Ih32tc
-         Zr77RuNPuNv9NzzHsSoaveoHJuTORIJitS2pph8hMj9fUYLYk2vTmyokHX2fhdVI5wD3
-         n1G+zGaNmtOZ48Ng4cfM9rtBNZsp4FNoT1H8xGc8QlD3xJ27JrBmcoXyQCn/UgLWVcPA
-         8PbyPNsgkpEqFSmsq4YH3QbYO/BvAieWY1NHBILnp7KHRBZ0ZIwem1zI/GRP6DmdWNjz
-         JKnw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=De5hjMrGokYPyVBP+u255lZmchs51SCxkJdiM1Pw114=;
+        b=AH4vq1ztdcHhfWXX1uK0o6UQErzphICYPfMCzPx2lPkeQHF6lDMsjzIsdoUhrjzZAn
+         Bl5mUSSlIjzDgf+7wGCesAjR81iykHNJLSthZKu+parEw4FavEuPmOaw7mmFFIyGx2LS
+         75FSf3+S8juFmEYcfqFQw4xnpVUpI39p84ucRa3mZ6GtT848yBNUQPXCnTOZw9eQSEb2
+         1zCSSn+aS9rqvfnoqNe9aD+bSNQVMtTAk9WacOcMi8epDmWhQzBUE/o4x0atHUjSnq1I
+         4HubaI+akFcTzu1+H7i2NnsvKThD8iyBXJ9NAZTTVK9+wzJGnBVX9dbNFSKVzZUYRaFe
+         j5og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ERsJv4KfQQfIlBpKTEoFoCzYM1D09r6J2N0pPbqst8M=;
-        b=h4+pXty1bMxEBRnsLz8wLzmTil37+XqRbihlLoI/DHAcG0D1Sq04XYSce/m+Z/wzVG
-         pkSMpLtMhr+prCF/hAWVkImmqF7QgoUhLM380Z4hfzSHe5bEjXg+HOcralr1Q2lXRzLE
-         5JJNuUKkFIckT5sG3JsjGP0ntaexyO7kGN5RAZzFitii//dA8QMy2c8CsqeoUb+EH3SO
-         736HvHPn+3LnPs4YzQj7Cgf+DejWJp2C0Ne0Vv0IFGUzGYc4UUhZfNuLt0Fjzm3c1UbE
-         WtccVQBf5HL6Cz7oh8aKQyLA2wkX1/i08+uuVQifVLqnBF4wJ9QyrmvGXjyZXWENYHf7
-         AN4A==
-X-Gm-Message-State: AOUpUlFC9B7xYwsiUclB18+nvVFKbWLQRn1gUjM6v0fYpilZe+DK+vq8
-        BXPhzTVHnV8t7aysyoAtkv4=
-X-Google-Smtp-Source: AA+uWPwTj2t8MN6HXktENW68fmKn4WEYV2iX8soXk1NvRVRiHquMrW76Rxx8uEWsSxOya3pwa/I/sQ==
-X-Received: by 2002:adf:a557:: with SMTP id j23-v6mr14407554wrb.220.1534288816694;
-        Tue, 14 Aug 2018 16:20:16 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s10-v6sm906035wmd.22.2018.08.14.16.20.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 16:20:16 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     joakim.tjernlund@infinera.com, git@vger.kernel.org,
-        bmwill@google.com, pclouds@gmail.com
-Subject: Re: [PATCH 1/2] store submodule in common dir
-References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
-        <20180814223820.123723-1-sbeller@google.com>
-        <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 14 Aug 2018 16:20:15 -0700
-In-Reply-To: <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 14 Aug 2018 16:04:36 -0700")
-Message-ID: <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=De5hjMrGokYPyVBP+u255lZmchs51SCxkJdiM1Pw114=;
+        b=i1MzQ0jUss48FbiEUonxueSoZb7p4ZxjqRIA4eUFplN1FmrO2RtzrCprdefqNu8Anh
+         /Rv0reofFwGf5sYUWFedYhoGBFa5UvQdUXbXBBUNPw3KV5BnXcStxWGYDbsx3C1oaTvi
+         krghtczBbPvxYIU6+bQJtJUrtp2Ieos9bP/KN1WlHuliNZer9immMOxPqpQVadz9jw4c
+         KSnyZEmEqfOsk2wT3iAX66J9gbpqUlg30L41h+ckRhaTAQ1D+OqzVRYutpMcKtcHigBF
+         DLpq9DK+BD4ylQM84QMOb0LpUCJfUxiCwfOx9CFUsQCSLTMTKmsXTPtk23t/Sil/Pz23
+         XzNg==
+X-Gm-Message-State: AOUpUlHZtzC7kCqerCh7FkuZiuBUbKbmD9Nou5LZTaO+s/uWo+AyYBo4
+        8ZYji4bes7fvZMhpP+8mAvBCM4Vz5LiJW2/nXAne0A==
+X-Google-Smtp-Source: AA+uWPzBV+kTZqGs3bkNp3CVdl3ffsZuvN/YnTYEr6MF/2BsC+nBj3u7N3hKZTt9UhM1ErUkhZaJmH2uhffoL5zgp3Q=
+X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr12649097ywd.500.1534289002274;
+ Tue, 14 Aug 2018 16:23:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
+ <20180814223820.123723-1-sbeller@google.com> <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 14 Aug 2018 16:23:11 -0700
+Message-ID: <CAGZ79kbhwyMTmnwhuaOLOnffaEX_G1L7dR=qvV6Rjncq0POq7g@mail.gmail.com>
+Subject: Re: [PATCH 1/2] store submodule in common dir
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     joakim.tjernlund@infinera.com, git <git@vger.kernel.org>,
+        Brandon Williams <bmwill@google.com>,
+        Duy Nguyen <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
+On Tue, Aug 14, 2018 at 4:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > Signed-off-by: Stefan Beller <sbeller@google.com>
+> > ---
+> >  path.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >
+> > On Tue, Aug 14, 2018 at 3:27 PM Joakim Tjernlund <Joakim.Tjernlund@infinera.com> wrote:
+> >>
+> >> I am trying to create 3 submodules from the same git repo, each pointing to a different branch.
+> >> Since the repo is somewhat large, I don't want the 3 submodules to clone the same repo 3
+> >> times, I want one clone and then have the 3 submodules to point to different commits.
+> >>
+> >> Is this possible? If not, could it be added?
+> >
+> > yup.
+> >
+> > According to recent discussions, it would be just this patch.
+> > (plus some unspecified amount of work, TBD).
+> >
+> > I thought about proposing something proper later, but here is the WIP patch.
+> >
+> > Thanks,
+> > Stefan
+>
 > My understanding of what Joakim wants to do is to have a top-level
 > project that has three subdirectories, e.g. kernel/v2.2, kernel/v2.4
 > and kernel/v2.6, each of which is a submodule that houses these
@@ -81,18 +101,23 @@ Junio C Hamano <gitster@pobox.com> writes:
 > by two symlinks from .git/modules/kernel%2fv2.[24], or something
 > like that).
 
-Actually I take the last part of that back.  When thought naively
-about, it may appear that it should be doable, but because each of
-the modules/* directory in the top-level project has to serve as the
-$GIT_DIR for each submodule checkout, and the desire is to have
-these three directories to have checkout of three different
-branches, a single directory under modules/. that is shared among
-three submodules would *not* work---they must have separate index,
-HEAD, etc.
+Ah! I misunderstood due to fast reading.
 
-Theoretically we should be able to make modules/kernel%2fv2.[24]
-additional "worktree"s of modules/kernel%2fv2.6, but given that
-these are all "bare" repositories without an attached working tree,
-I am not sure how that would supposed to work.  Thinking about
-having multiple worktrees on a single bare repository makes me head
-spin and ache X-<;-)
+For that I think you are interested in the feature added in d92a39590d1
+(Add --reference option to git submodule., 2009-05-04), i.e.
+both the update and add command take the --reference flag
+that can be pointed at another repository such as an outside
+clone of these three submodules, so some deduplication will
+be performed.
+
+> Isn't "common_dir" stuff used to decide if each of separate
+> "worktree" instance (of the superproject) shares ".git/$stuff"
+> with each other?
+>
+> Unless I am grossly misinterpreting the original question, I fail to
+> see how changing .git/modules to be shared across worktrees possibly
+> affects anything.  I am puzzled...
+
+I did misunderstand grossly.
+
+Stefan
