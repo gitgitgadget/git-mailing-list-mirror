@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D18741F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 23:23:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD9531F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 23:30:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732585AbeHOCMv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 22:12:51 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:45330 "EHLO
+        id S1729989AbeHOCTv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 22:19:51 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:43618 "EHLO
         mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729705AbeHOCMv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 22:12:51 -0400
-Received: by mail-yw1-f66.google.com with SMTP id 139-v6so17535551ywg.12
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:23:23 -0700 (PDT)
+        with ESMTP id S1729286AbeHOCTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 22:19:51 -0400
+Received: by mail-yw1-f66.google.com with SMTP id l189-v6so17547916ywb.10
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 16:30:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=De5hjMrGokYPyVBP+u255lZmchs51SCxkJdiM1Pw114=;
-        b=AH4vq1ztdcHhfWXX1uK0o6UQErzphICYPfMCzPx2lPkeQHF6lDMsjzIsdoUhrjzZAn
-         Bl5mUSSlIjzDgf+7wGCesAjR81iykHNJLSthZKu+parEw4FavEuPmOaw7mmFFIyGx2LS
-         75FSf3+S8juFmEYcfqFQw4xnpVUpI39p84ucRa3mZ6GtT848yBNUQPXCnTOZw9eQSEb2
-         1zCSSn+aS9rqvfnoqNe9aD+bSNQVMtTAk9WacOcMi8epDmWhQzBUE/o4x0atHUjSnq1I
-         4HubaI+akFcTzu1+H7i2NnsvKThD8iyBXJ9NAZTTVK9+wzJGnBVX9dbNFSKVzZUYRaFe
-         j5og==
+        bh=DtysyyS1OaT1/oHk3RCWw09ynqRBZ65WTN0CkoWRR3w=;
+        b=CM5MCY3xBZ+D8xbfUJoUl07ZC8z3+FNVAXz/fLwFM1CL1sPA/Ix2y062pno2RY5lkT
+         EWZN7p9zogAMODmvvl8W4FAf3icWsqjqDMhkL5CIp7uE/rKCBHmYdGIaoxyfhVxJtrgt
+         xWb3+WXZkpn9Q54zADyAtUMjevIML5KJRw+SgHdXSpraVJByPH/fM83zmB5F+q5GDGYi
+         fIaBHr0lXkdmhS0t7ro4E6KG+LI8mE99gP0kioGA9s4uWwtsxp1j9v12swuA9vPL3sQp
+         J5Vzd6pKmF47kRLuFP5P1sv4nP3oJdQ5LhCZV12ZziyfTYb1t46b4uATfVuRRv+9O/Ra
+         ZB3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=De5hjMrGokYPyVBP+u255lZmchs51SCxkJdiM1Pw114=;
-        b=i1MzQ0jUss48FbiEUonxueSoZb7p4ZxjqRIA4eUFplN1FmrO2RtzrCprdefqNu8Anh
-         /Rv0reofFwGf5sYUWFedYhoGBFa5UvQdUXbXBBUNPw3KV5BnXcStxWGYDbsx3C1oaTvi
-         krghtczBbPvxYIU6+bQJtJUrtp2Ieos9bP/KN1WlHuliNZer9immMOxPqpQVadz9jw4c
-         KSnyZEmEqfOsk2wT3iAX66J9gbpqUlg30L41h+ckRhaTAQ1D+OqzVRYutpMcKtcHigBF
-         DLpq9DK+BD4ylQM84QMOb0LpUCJfUxiCwfOx9CFUsQCSLTMTKmsXTPtk23t/Sil/Pz23
-         XzNg==
-X-Gm-Message-State: AOUpUlHZtzC7kCqerCh7FkuZiuBUbKbmD9Nou5LZTaO+s/uWo+AyYBo4
-        8ZYji4bes7fvZMhpP+8mAvBCM4Vz5LiJW2/nXAne0A==
-X-Google-Smtp-Source: AA+uWPzBV+kTZqGs3bkNp3CVdl3ffsZuvN/YnTYEr6MF/2BsC+nBj3u7N3hKZTt9UhM1ErUkhZaJmH2uhffoL5zgp3Q=
-X-Received: by 2002:a0d:d342:: with SMTP id v63-v6mr12649097ywd.500.1534289002274;
- Tue, 14 Aug 2018 16:23:22 -0700 (PDT)
+        bh=DtysyyS1OaT1/oHk3RCWw09ynqRBZ65WTN0CkoWRR3w=;
+        b=Vjhoe3uBSlcHjvP86LZa7RVB4gApo5XzMaP4diGtJGRgFe5gXqQTBeaZsOsyxzy+jW
+         09bHqe8PELOQqS+Up42ThuqGJBbBV14p2XyIqg7K3hqvZkvGurlDKB9SKlCpPsAWzxKW
+         V49CSh5EldEOzwsm3qtBWGtxHK0uDbI1oGJhEh6DixNdbddMMy53D6HWaM2dMrg5oXEg
+         NkrTikOXObQzR65dQWF22/djVfNl/1QJTj/JLTfYOmq8EVl1/Yys5004WKthqrwO4SW0
+         dyNcfQckuBcU3aM05qFaKpbCUSLdr4jUeGNrC8aRcDnfJQNqzKUHvkDeC0ONdvEFNlfG
+         SD2Q==
+X-Gm-Message-State: AOUpUlGJ5mY4qToGO/mlzSP8OE7YWeWNuD/NtnQsKnEWyJL7ejUCZj9z
+        yRA3aLs3L6IEHNlP2AqhJNVpa3R8IXuV/Jhii6lMxA==
+X-Google-Smtp-Source: AA+uWPxmyQETopfO09g59fWUCtz9x5aQUN5pZlZGiZGvnN5tkbisAkXA0IBnaBYN/oB0Rgpw1+EO4F7EHVPyEHTyPy0=
+X-Received: by 2002:a25:3c45:: with SMTP id j66-v6mr2202317yba.247.1534289420526;
+ Tue, 14 Aug 2018 16:30:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
  <20180814223820.123723-1-sbeller@google.com> <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
+ <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 16:23:11 -0700
-Message-ID: <CAGZ79kbhwyMTmnwhuaOLOnffaEX_G1L7dR=qvV6Rjncq0POq7g@mail.gmail.com>
+Date:   Tue, 14 Aug 2018 16:30:09 -0700
+Message-ID: <CAGZ79kZtWkbSoMEva5Wv0H1Q23JJ6S3d36LY66+yH2Ot8kADEA@mail.gmail.com>
 Subject: Re: [PATCH 1/2] store submodule in common dir
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     joakim.tjernlund@infinera.com, git <git@vger.kernel.org>,
@@ -63,61 +64,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 4:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Aug 14, 2018 at 4:20 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Stefan Beller <sbeller@google.com> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
-> >  path.c | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
-> > On Tue, Aug 14, 2018 at 3:27 PM Joakim Tjernlund <Joakim.Tjernlund@infinera.com> wrote:
-> >>
-> >> I am trying to create 3 submodules from the same git repo, each pointing to a different branch.
-> >> Since the repo is somewhat large, I don't want the 3 submodules to clone the same repo 3
-> >> times, I want one clone and then have the 3 submodules to point to different commits.
-> >>
-> >> Is this possible? If not, could it be added?
-> >
-> > yup.
-> >
-> > According to recent discussions, it would be just this patch.
-> > (plus some unspecified amount of work, TBD).
-> >
-> > I thought about proposing something proper later, but here is the WIP patch.
-> >
-> > Thanks,
-> > Stefan
+> > My understanding of what Joakim wants to do is to have a top-level
+> > project that has three subdirectories, e.g. kernel/v2.2, kernel/v2.4
+> > and kernel/v2.6, each of which is a submodule that houses these
+> > versions of Linux kernel source, but only clone Linus's repository
+> > (as the up-to-late tree has all the necessary history to check out
+> > these past development tracks).  And that should be doable with
+> > just the main checkout, without any additional worktree (it's just
+> > the matter of having .git/modules/kernel%2fv2.6/ directory pointed
+> > by two symlinks from .git/modules/kernel%2fv2.[24], or something
+> > like that).
 >
-> My understanding of what Joakim wants to do is to have a top-level
-> project that has three subdirectories, e.g. kernel/v2.2, kernel/v2.4
-> and kernel/v2.6, each of which is a submodule that houses these
-> versions of Linux kernel source, but only clone Linus's repository
-> (as the up-to-late tree has all the necessary history to check out
-> these past development tracks).  And that should be doable with
-> just the main checkout, without any additional worktree (it's just
-> the matter of having .git/modules/kernel%2fv2.6/ directory pointed
-> by two symlinks from .git/modules/kernel%2fv2.[24], or something
-> like that).
-
-Ah! I misunderstood due to fast reading.
-
-For that I think you are interested in the feature added in d92a39590d1
-(Add --reference option to git submodule., 2009-05-04), i.e.
-both the update and add command take the --reference flag
-that can be pointed at another repository such as an outside
-clone of these three submodules, so some deduplication will
-be performed.
-
-> Isn't "common_dir" stuff used to decide if each of separate
-> "worktree" instance (of the superproject) shares ".git/$stuff"
-> with each other?
+> Actually I take the last part of that back.  When thought naively
+> about, it may appear that it should be doable, but because each of
+> the modules/* directory in the top-level project has to serve as the
+> $GIT_DIR for each submodule checkout, and the desire is to have
+> these three directories to have checkout of three different
+> branches, a single directory under modules/. that is shared among
+> three submodules would *not* work---they must have separate index,
+> HEAD, etc.
 >
-> Unless I am grossly misinterpreting the original question, I fail to
-> see how changing .git/modules to be shared across worktrees possibly
-> affects anything.  I am puzzled...
+> Theoretically we should be able to make modules/kernel%2fv2.[24]
+> additional "worktree"s of modules/kernel%2fv2.6, but given that
+> these are all "bare" repositories without an attached working tree,
+> I am not sure how that would supposed to work.  Thinking about
+> having multiple worktrees on a single bare repository makes me head
+> spin and ache X-<;-)
 
-I did misunderstand grossly.
+Well the worktree feature would do all this in a safe manner, but the existing
+feature of just cloning the submodules with a reference pointer to another
+repository at least dedupes some of the object store, although warnings
+need to be read carefully.
+
+Regarding the worktree, I would think we'd want to have
+
+  git worktree --recurse-submodules [list, add, etc]
+
+that would do a sensible thing for each action on the worktrees,
+but you seem to propose to have one of the three submodules
+the main worktree and the other two would be just worktrees of
+the first.
+
+  I guess you could just
+
+* init/update one of the submodules
+* add their worktrees manually pointed to where
+  the 2nd and 3rd submodule would go.
+* make a symbolic link from
+  ln -s .git/modules/<1st>/worktrees/<2nd> .git/modules/<2nd>
+  ln -s .git/modules/<1st>/worktrees/<3rd> .git/modules/<3rd>
+
+as then submodule operations should "just work" and by having the
+worktrees in-place where the submodules are, we'd also have
+all the protection against overzealous garbage collection, too.
 
 Stefan
