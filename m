@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55CB21F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 11:05:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C06BB1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 11:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731707AbeHNNwf (ORCPT <rfc822;e@80x24.org>);
+        id S1731478AbeHNNwf (ORCPT <rfc822;e@80x24.org>);
         Tue, 14 Aug 2018 09:52:35 -0400
-Received: from ao2.it ([92.243.12.208]:42907 "EHLO ao2.it"
+Received: from ao2.it ([92.243.12.208]:42926 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728175AbeHNNwb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 09:52:31 -0400
+        id S1731168AbeHNNwd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 09:52:33 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1fpX7U-0007ZT-QK; Tue, 14 Aug 2018 13:04:12 +0200
+        id 1fpX7V-0007ZX-0H; Tue, 14 Aug 2018 13:04:13 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1fpX90-0004e3-KJ; Tue, 14 Aug 2018 13:05:46 +0200
+        id 1fpX90-0004e7-QI; Tue, 14 Aug 2018 13:05:46 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v3 2/7] submodule: factor out a config_set_in_gitmodules_file_gently function
-Date:   Tue, 14 Aug 2018 13:05:20 +0200
-Message-Id: <20180814110525.17801-3-ao2@ao2.it>
+Subject: [PATCH v3 4/7] submodule--helper: add a new 'config' subcommand
+Date:   Tue, 14 Aug 2018 13:05:22 +0200
+Message-Id: <20180814110525.17801-5-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180814110525.17801-1-ao2@ao2.it>
 References: <20180814110525.17801-1-ao2@ao2.it>
@@ -42,90 +42,88 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a new config_set_in_gitmodules_file_gently() function to write
-config values to the .gitmodules file.
-
-This is in preparation for a future change which will use the function
-to write to the .gitmodules file in a more controlled way instead of
-using "git config -f .gitmodules".
-
-The purpose of the change is mainly to centralize the code that writes
-to the .gitmodules file to avoid some duplication.
-
-The naming follows git_config_set_in_file_gently() but the git_ prefix
-is removed to communicate that this is not a generic git-config API.
+Add a new 'config' subcommand to 'submodule--helper', this extra level
+of indirection makes it possible to add some flexibility to how the
+submodules configuration is handled.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- submodule-config.c | 12 ++++++++++++
- submodule-config.h |  1 +
- submodule.c        | 10 +++-------
- 3 files changed, 16 insertions(+), 7 deletions(-)
+ builtin/submodule--helper.c | 14 ++++++++++++++
+ new                         |  0
+ t/t7411-submodule-config.sh | 26 ++++++++++++++++++++++++++
+ 3 files changed, 40 insertions(+)
+ create mode 100644 new
 
-diff --git a/submodule-config.c b/submodule-config.c
-index eef96c4198..b7ef055c63 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -707,6 +707,18 @@ int print_config_from_gitmodules(const char *key)
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index a3c4564c6c..7481d03b63 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -2029,6 +2029,19 @@ static int connect_gitdir_workingtree(int argc, const char **argv, const char *p
  	return 0;
  }
  
-+int config_set_in_gitmodules_file_gently(const char *key, const char *value)
++static int module_config(int argc, const char **argv, const char *prefix)
 +{
-+	int ret;
++	/* Equivalent to ACTION_GET in builtin/config.c */
++	if (argc == 2)
++		return print_config_from_gitmodules(argv[1]);
 +
-+	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, value);
-+	if (ret < 0)
-+		/* Maybe the user already did that, don't error out here */
-+		warning(_("Could not update .gitmodules entry %s"), key);
++	/* Equivalent to ACTION_SET in builtin/config.c */
++	if (argc == 3)
++		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
 +
-+	return ret;
++	die("submodule--helper config takes 1 or 2 arguments: name [value]");
 +}
 +
- struct fetch_config {
- 	int *max_children;
- 	int *recurse_submodules;
-diff --git a/submodule-config.h b/submodule-config.h
-index ed40e9a478..9957bcbbfa 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -57,6 +57,7 @@ void submodule_free(struct repository *r);
- int check_submodule_name(const char *name);
+ #define SUPPORT_SUPER_PREFIX (1<<0)
  
- int print_config_from_gitmodules(const char *key);
-+int config_set_in_gitmodules_file_gently(const char *key, const char *value);
+ struct cmd_struct {
+@@ -2057,6 +2070,7 @@ static struct cmd_struct commands[] = {
+ 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+ 	{"is-active", is_active, 0},
+ 	{"check-name", check_name, 0},
++	{"config", module_config, 0},
+ };
  
- /*
-  * Note: these helper functions exist solely to maintain backward
-diff --git a/submodule.c b/submodule.c
-index 6e14547e9e..fd95cb76b3 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -89,6 +89,7 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- {
- 	struct strbuf entry = STRBUF_INIT;
- 	const struct submodule *submodule;
-+	int ret;
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+diff --git a/new b/new
+new file mode 100644
+index 0000000000..e69de29bb2
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index c6b6cf6fae..4afb6f152e 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -142,4 +142,30 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 	)
+ '
  
- 	if (!file_exists(GITMODULES_FILE)) /* Do nothing without .gitmodules */
- 		return -1;
-@@ -104,14 +105,9 @@ int update_path_in_gitmodules(const char *oldpath, const char *newpath)
- 	strbuf_addstr(&entry, "submodule.");
- 	strbuf_addstr(&entry, submodule->name);
- 	strbuf_addstr(&entry, ".path");
--	if (git_config_set_in_file_gently(GITMODULES_FILE, entry.buf, newpath) < 0) {
--		/* Maybe the user already did that, don't error out here */
--		warning(_("Could not update .gitmodules entry %s"), entry.buf);
--		strbuf_release(&entry);
--		return -1;
--	}
-+	ret = config_set_in_gitmodules_file_gently(entry.buf, newpath);
- 	strbuf_release(&entry);
--	return 0;
-+	return ret;
- }
- 
- /*
++test_expect_success 'reading submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "../submodule" >expected &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'writing submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "new_url" >expected &&
++		git submodule--helper config submodule.submodule.url "new_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
++	(cd super &&
++		echo "newer_url" >expected &&
++		git submodule--helper config submodule.submodule.url "newer_url" &&
++		git submodule--helper config submodule.submodule.url >actual &&
++		test_cmp expected actual
++	)
++'
++
+ test_done
 -- 
 2.18.0
 
