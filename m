@@ -7,97 +7,83 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 062A41F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 06:53:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C4621F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 11:02:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731767AbeHNJi6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 05:38:58 -0400
-Received: from mail-ua1-f50.google.com ([209.85.222.50]:36317 "EHLO
-        mail-ua1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727670AbeHNJi6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 05:38:58 -0400
-Received: by mail-ua1-f50.google.com with SMTP id c12-v6so11989377uan.3
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 23:53:09 -0700 (PDT)
+        id S1730004AbeHNNtC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 09:49:02 -0400
+Received: from mail-pl0-f46.google.com ([209.85.160.46]:39167 "EHLO
+        mail-pl0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727986AbeHNNtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 09:49:01 -0400
+Received: by mail-pl0-f46.google.com with SMTP id w14-v6so8173800plp.6
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 04:02:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CxHT5UhvMs5a/csn1SZulkDO+FAfcUpKY7m9lqv8PT4=;
-        b=AByc0WoobCFJS1t4hm+u/tKgQgFJNYJODr2pQchCDjV3q5uQl6SIx0KhLbF7Fc0gzS
-         JlyAdIZdVkAogo4IyfQ0KPQyCBn/ljTHV4zLm0tc5gwvQfe9f5xpSoAFCfYfu/r7BYCJ
-         JNSG0ixQXF9FKYXdxIDRvsHzZHYa4AVbS+QwCFolQQoNUHET720IfFlVDE/6fWaUhBH0
-         wb/Wy8lF6fPuvr79Kyu+GJ5oC4+GPFYJF4MNz2loF7oXFphe0WYgQTl7F6ReEHMtgmWb
-         3MH3G+Eb5zx3kcwUBt3TRkyjAqehq2h7lSvIFPthK6MGlBVtqxmzVZ+0fdjI7pisIBqp
-         OUlg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=3GRULzzI4HTZjqyWXVhOdL3izcWTKtnfkrJVsyR5kiY=;
+        b=P/VBwaC1iesuo5Oc0oC+J/9Z+FpegZ/dBg5FJdrsk21DqacZOHMXLufKjJtbFZE4jl
+         OXc3fWPxLLrffVsifdb/uJi/rqlqiOmuM3ktYerCoHk3s9xVXMgvZtUpn/C5QMIcP+ml
+         n8V1kyY+d3uZh58qmPK6fREEqJc5fv5PZPkAwK+4rHeGbS53EThgJFhPdLkxJwUxEnQk
+         fn36K+OdkTzi0OEgqGYO84EFQTk9pTshN+OYdo88y/EKNzTzbbvUcqR0lHjo9JF32ZQ2
+         q+urL18x9XyhwNNM3ADmlhzkTRyC9G5gVePEE4HEhTtGqIqPY/tzjWR46Ke/vEPFM+fi
+         UDQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CxHT5UhvMs5a/csn1SZulkDO+FAfcUpKY7m9lqv8PT4=;
-        b=fW2W7xBR80W2kwUugPlTgrqoRB0ma06BGxSXlvsoEKPNlMMqNBzQ8RTf5d8WqP443V
-         8j/Es1koqLytUTaxcyMRboyx1/PIIjXEbF8V6LLhh7GWAihq8+KguWTBIq1+R7gbivte
-         56BlceeNKHadv3W6cxclozoBsCMrd5b5QQ+oNS8vw+4OWAtjohI73xqVvcfAkkX1X7z/
-         TUxmgB5gQdrpbqt04kHUTKx4eNxZA6jfEBSDNihtUv0LMTsj7fk8TLQ7LTZEEltmL5SW
-         t7c19SVsa6+iqKmeYbskKy/9eIqp8O7z0hJr1wpvm54/aZKtH7KFnjvEduX+VVjyj+UD
-         1+xQ==
-X-Gm-Message-State: AOUpUlFhXHxHRlA59lVtoFjFi2sjUD6ywWhPCHEMNtvyJKzi/fDysB/Y
-        WztY7s5L4p0fcTkJkNuyot7AYGYbOkgm/wyb+ck=
-X-Google-Smtp-Source: AA+uWPzt3Y/gZqMfqRu8ayGleP3gupKuUgFRKaZ3x3WNCEgb9m8L0ptybSbyJWIsfQ0He1Ox3wBBTe6N6uULVBvmjaY=
-X-Received: by 2002:ab0:12e2:: with SMTP id o34-v6mr13571397uac.154.1534229589262;
- Mon, 13 Aug 2018 23:53:09 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=3GRULzzI4HTZjqyWXVhOdL3izcWTKtnfkrJVsyR5kiY=;
+        b=MXMhkzeAEIpoCNZ/zB+aW4YEWxuF4g3UEy25IfyQYxdfOl5WETm/2lFdMizJTX692Z
+         r+Wtcd+BHC9yzrmZaKjV7b2Qu/xQBcycG+53QLgVuwSz7th/A8TxZgmclHqGmRIAqVFN
+         pEGrlGcClYErCYsOzHr6pDrHbDN/Ky6OSj7qIvkEYlTSH1TiLhN6GE7XHnkKxn3dWjnC
+         m1QwEvHjNXeGFQAn2vsF/VskqIquMJZc7digLAN3I8aN9hynykpYlrDj0Vuhk1xNVDCL
+         gZzKsOuHxEoMf+vSt3j5qc125O6kkSzziAsdbwX4r8r+Kzb0rqYqN6R+FEtGDOTIkyEz
+         qa0Q==
+X-Gm-Message-State: AOUpUlF+SANAllegQK8N3CzghyXigCnmc5KkxLBgBB08NSKFDV0um+tZ
+        XHxxzMayiQoe0OkUQgHi1HLZWUWm
+X-Google-Smtp-Source: AA+uWPyU6Bq75vhIH8V83uH3CQz5ZhC7uehkuxNb80la2F/x2V3JQgSCDMx+ayHsXVw3CRelSDkM+A==
+X-Received: by 2002:a17:902:d70d:: with SMTP id w13-v6mr19894394ply.229.1534244541206;
+        Tue, 14 Aug 2018 04:02:21 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id c85-v6sm41376000pfd.110.2018.08.14.04.02.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 14 Aug 2018 04:02:20 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 04:02:20 -0700 (PDT)
+X-Google-Original-Date: Tue, 14 Aug 2018 11:02:16 GMT
+Message-Id: <pull.18.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Fix a recently-introduced compile warning
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20180813163108.GA6731@sigill.intra.peff.net>
-In-Reply-To: <20180813163108.GA6731@sigill.intra.peff.net>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 13 Aug 2018 23:52:58 -0700
-Message-ID: <CABPp-BHdoRobhF=avL+12rAJF=Qmp2vNHgwdqJxBPFs=EBm+Tw@mail.gmail.com>
-Subject: Re: Contributor Summit planning
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 10:27 AM Jeff King <peff@peff.net> wrote:
->
-> For the past several years, we've held a Git Contributor Summit as part
-> of the Git Merge conference. I'd like to get opinions from the community
-> to help plan future installments. Any feedback or opinion is welcome,
-> but some obvious things to think about:
->
->   - where, when, and how often?
->
->     Plans are shaping up to have Git Merge 2019 in Brussels right after
->     FOSDEM in February (like it was two years ago), with a contributor
->     summit attached.
->
->     Are there people who would be more likely to attend a contributor
->     summit if it were held elsewhere (e.g., in North America, probably
->     in the Bay Area)? Are people interested in attending a separate
->     contributor summit not attached to the larger Git Merge (and if so,
->     is there any other event it might be worth connecting it with,
->     time-wise)?  Are people interested in going to two summits in a year
->     (e.g., Brussels in February, and then maybe some in North America
->     later in the year), or is that diminishing returns?
+With the relatively frequent breakages of pu recently, I had trouble staying
+on top of the compile errors/test failures, sorry.
 
-Convincing my employer to send me to an event in North America is a
-lot easier than one in Europe; they mostly allow me to work on git
-stuff as a side project just to make me happy rather than as a
-business priority, so competing business interests, shifting managers,
-etc. make things hard for me to predict (so you may want to weight my
-preferences less than normal).
+This one exists since Sunday, and it is a compile error only with 
+DEVELOPER=1, which is, however, the recommended way to build in Git for
+Windows' SDK.
 
-My last manger did say they'd send me to the next contributor summit
-(I think even if it ended up being in Europe rather than North
-America), but of course, he was pulled to a different team a few
-months ago, so I'm not sure if that still stands.
+Note: it is based on nd/clone-case-smashing-warning.
+
+Johannes Schindelin (1):
+  mark_colliding_entries(): fix incorrect #if...#endif guard
+
+ entry.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 
-On a personal note, I'm also somewhat travel averse.  It'd be nice to
-go to a Git conference again (last and only I went to was I think Git
-Together 2011), but I know when it comes close to time to actually
-travel, I'll start questioning my sanity when I said that --
-particularly if it's far away or at all complicated.  (So maybe you
-really ought to discount my preferences...)
+base-commit: f80218bf4e65ccc06cc9173c0ac5a5520d380f36
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-18%2Fdscho%2Fclone-case-smashing-warning-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-18/dscho/clone-case-smashing-warning-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/18
+-- 
+gitgitgadget
