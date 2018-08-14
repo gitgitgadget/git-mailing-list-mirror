@@ -7,74 +7,94 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFD2F1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 21:24:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 434811F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 21:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728722AbeHOANa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 20:13:30 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:42324 "EHLO
+        id S1732537AbeHOAVs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 20:21:48 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:43857 "EHLO
         mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727870AbeHOANa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 20:13:30 -0400
-Received: by mail-yw1-f68.google.com with SMTP id y203-v6so17325818ywd.9
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:24:25 -0700 (PDT)
+        with ESMTP id S1727807AbeHOAVs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 20:21:48 -0400
+Received: by mail-yw1-f68.google.com with SMTP id l189-v6so17347764ywb.10
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 14:32:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BqBBcHyguZtk33/GW3HDtqAsHO8+fhsPTgslfdcgxjQ=;
-        b=WODq2/5EjBAYdZkU5kDwKkn1bjDOyfrEkaDg54WNWtUX0m9Bj3TsuMb715bNpo+0V6
-         l+JUJ3qyr22ZWEgT3E2AGaQvnVTExK50ORhk4GD81iNUMMFurVZ3uzcPSXMJXWiBGMdL
-         625ZFRJd0unGqgMTIzpCpbEoTIjZVoDSpJXPUR/BompQQbg0b379HRK3QKu8llV3GGZk
-         zOHcyfOIP41iNsCv5uvs27hah7f+3r3stR4m3f/Ez7mvAJXben393JIdXUCTlL6ClY8+
-         jic55nKdr3UOZmySaQye/DiUCciL7cbnx9g218dRgVqz7aACI9BIegLhkJTPNWIEwtoU
-         tVJA==
+         :cc:content-transfer-encoding;
+        bh=6H+OOoW4a3tKHt07zo+zOoZCMHoFwKjSzUMsboLV5JQ=;
+        b=s/BhT+rBBT/M1GXTm1L35snSliVzK91IRWbkzV1eaf3w2/r1tks1NtwgsCq3mtsfQz
+         mzNKnEofPq2O8/YD7e2a1GDa+jDrz9z+n1trCzbRBziimAdLVcWfhnkNZkpqi3Bi1AEG
+         DTy55qayr/uUYkVzLKxouFnDE0B0GIiZwMxE2stEnzAfM+WBuvxwzHBg/NCda7UQQkLq
+         cxX3LRomcelPH6UkODqGCLaLeUB4mZLQwOaRgiiNIGlvtBAiTkqx1iWVRqkelaZGz95N
+         e3cQvzrI9M9aQLzrix6qXUsiv43/1HkcvINDEEl8LJCWXloCtrkBIACaSIUtOvNYo6Bj
+         vSKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BqBBcHyguZtk33/GW3HDtqAsHO8+fhsPTgslfdcgxjQ=;
-        b=K1Y4WAJFkkSE1eMo04/8f/iYHZch1KyRup9/aRfIGUqybvJEQVTuxTTdEAebxgnya+
-         g2hYpPr6VLJqEB+NMab79C/BCC0gvdrVj95EsFlkOIjH4Ggb1xkgyoy2zZqJHs8oSqob
-         /C2Xi/3ZE0fHamsdaU0DXxuUPJJ+XFo4T4fwE/RTFskndDWjmiK1JbitIoJLyyXY1NgG
-         2yJbXaVDo+jHgTxmC6EBiwdNspCLlp15SkO4AR+rJlT4RYil9Pv9ELBPG6CvU1I23tSN
-         V0wGzZDBOZKMSGsgffbzroP4dLTUDsrHwiZ4K8XLRECYlPypZb6+6NkTygsj22+Dk9Rs
-         j9aw==
-X-Gm-Message-State: AOUpUlHYWLs2j/4yZYNSBKOYUHMWGskoTBJY9sluO8IqCHSfh3AlS5Ci
-        3ueo4JQSyW3tJhrBZrKDxdiujy+zPx51p7Nl534kHg==
-X-Google-Smtp-Source: AA+uWPxMoT53U8j3qWu0DMDjOmNfb9scdWaUmdz63vNMH1eU/3EGOTchzGzIlSpBkzEOkodnE7s+K12TSYSddayB/gg=
-X-Received: by 2002:a81:af67:: with SMTP id x39-v6mr12359831ywj.33.1534281864797;
- Tue, 14 Aug 2018 14:24:24 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=6H+OOoW4a3tKHt07zo+zOoZCMHoFwKjSzUMsboLV5JQ=;
+        b=joBuIqUI9BK76sX9WiWS/QiwGEnC1WsUM8Y8ACw/0WdvaFMs2j0qQPG0UQ26UKjZjX
+         9jqM1ztNa5LGBzOMV9AWJkcfxvRaOlj0gBllUyCp+RdndPvxYKyEBsNhODKgY0zLkeNm
+         Sb0pIaG5x4HApiUYyrzzA0OiKs6xhAab42EAHqecPNRPzIP3NGzv/yubBA6Zi9dnIawG
+         FkQLRnyYmlzbP1EmxzZfvGeLH/6ZjgC6RF4EZgFUaeSQewnxOtf9OYWLs4iOUachuYwe
+         ScMEEwy9UU1e9CI66qp1a1fCQXbtI6c4u9HhUhhjbnnNsrKadPPKyReJwZTVfGoVXHpz
+         lWug==
+X-Gm-Message-State: AOUpUlFWpvhVgzV+ortXVuClVBr9S9w+6G/CIleBISLPeqAx0UokMdFZ
+        pWjFAQpDCwARCTN2OgWl2xKAKyim+tooENGaPOYfPw==
+X-Google-Smtp-Source: AA+uWPzH2HP1t3q8QTIRCHVIx60Id/EBtHad2ASh28cSvoGUUD5CdNGwdF3uFVLma75WNJy6c9tCkiB0nl9VPsr5ryM=
+X-Received: by 2002:a81:37c5:: with SMTP id e188-v6mr13368755ywa.340.1534282361363;
+ Tue, 14 Aug 2018 14:32:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180803222322.261813-1-sbeller@google.com> <20180813224235.154580-1-sbeller@google.com>
- <xmqqva8cy85f.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqva8cy85f.fsf@gitster-ct.c.googlers.com>
+References: <20180814185906.2680-1-avarab@gmail.com> <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
+ <87d0ukhd5g.fsf@evledraar.gmail.com> <CAGZ79kZuH8DKkoNb3AgHFxwYccOGHeVWOE7ov5QvavtomSxyAQ@mail.gmail.com>
+ <87bma4hcnl.fsf@evledraar.gmail.com>
+In-Reply-To: <87bma4hcnl.fsf@evledraar.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 14:24:13 -0700
-Message-ID: <CAGZ79kbaNegk6kFD2Ks2S1ejd9f-8mLB2E_xNr1B3iQkn2EVPA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] Resend of sb/submodule-update-in-c
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
+Date:   Tue, 14 Aug 2018 14:32:30 -0700
+Message-ID: <CAGZ79kZq745X2PjRpGJGWdnd+HJtPuwCnJUcePXtRoLkaTWrsg@mail.gmail.com>
+Subject: Re: [PATCH] submodule: add more exhaustive up-path testing
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gist
-On Tue, Aug 14, 2018 at 2:01 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Aug 14, 2018 at 2:16 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Stefan Beller <sbeller@google.com> writes:
 >
-> > Thanks Brandon for pointing out to use repo_git_path instead of
-> > manually constructing the path.
+> On Tue, Aug 14 2018, Stefan Beller wrote:
+>
+> > On Tue, Aug 14, 2018 at 2:05 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
 > >
-> > That is the only change in this resend.
+> >> > So ideally we'd also error out as soon as the host name is touched?
+> >>
+> >> Do we have some utility function that'll take whatever we have in
+> >> remote.<name>.url and spew out the username / host / path? We must,
+> >> since the clone protocol needs it, but I haven't found it.
+> >
+> > Nope. Welcome to the wonderful world of submodules.
+> > As submodules are in the transition state towards "in C",
+> > we could do some refactorings that would allow for easy access to
+> > these properties, but the transition is done via faithful conversion fr=
+om
+> > shell to C, which did not have these functions either, but could just
+> > do some string hackery. And that is how we ended up with this
+> > function in the first place.
 >
-> Rcpt.  Hopefully this is now ready for 'next'?
+> The remote/clone machinery is in C and so is the resolve-relative-url
+> helper. What's the missing bridge here?
+>
+> Maybe we don't have that function yet, but we can presumably expose it,
+> and this seems unrelated to some other bits of submodules being in
+> shellscript.
+>
+> No?
 
-I don't know any reasons opposing its progression.
-
-So, Yes, I think it is.
-
-Stefan
+Gah, I misread your original question. Sorry about that.
