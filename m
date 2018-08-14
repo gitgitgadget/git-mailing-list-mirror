@@ -2,151 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL,WEIRD_PORT
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 509771F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 18:22:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 797411F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 18:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727979AbeHNVKd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:10:33 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:41939 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727807AbeHNVKc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:10:32 -0400
-Received: by mail-ua1-f73.google.com with SMTP id c13-v6so10536191uao.8
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:22:08 -0700 (PDT)
+        id S1727873AbeHNVQf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 17:16:35 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39170 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726158AbeHNVQf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 17:16:35 -0400
+Received: by mail-pf1-f193.google.com with SMTP id j8-v6so9623693pff.6
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=828pzcEPb9AccWy1QpK/H70v37+Ss/xNDgajcrPo+Z0=;
-        b=OZwwRHvHeekGVODUvMVoajUjunYqYO3aOytYjv7IsXlvptg67B7TsJXUpj4kston5t
-         N4EoCQzBE5XNd16FNe9g1PHl2Awkq9n0NOuJANTYG8xDvupfbqnOf7uOyxAd8CB/vq/k
-         LKBTjZrkGHOqUMlViazfqkXfGsiKSKsbCkBOc62hbWyNn42Z6+CMHeIdhoxujBSBND/i
-         suVfdcPsq9HrJqYnhq0BR99/bI5tlGSzx3HO1NEvWGWLBLK4DqnHqQZgMJdWPburcYtt
-         /Ro/Vh93YvANWyIz4uPgQobgFwG51iYSOZdC51TV7wnwB9xKCrJvzBiW8vsf8mBKOGYp
-         +UYg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ubxrS7oPqYOlUuM+X9A4yfwWO3xQFNwvdRlTlQdorKA=;
+        b=b852IPYBUT9lTw/oeXvckDlCdk+u8Xa8SzkjLywnCrT+6KLJ165cbc6mqbJLKeZgJW
+         fxp9TWnfjjpco0+zbHll5T6hUVMB9GHm/XzXbujk4Oz7lgokaZ9Ke18X040ysAyjZRyj
+         fG25xW8OGsJrtbDHP4ZD4WwggIEVBjJ6iYT5lmPdf7+js8WG8qKj+0B/vO4h1gxJ9/DJ
+         xJ+mhdvPU3PUG5OlGFSqiogaxNbARccCj0pDl9dATLrqtonXqzztKLZGWgwK6L9IYos1
+         0HR97+V+gcuX28QRrKvpRjhbAkeFgdOlTlHTM3xsCovGQ6JzXVSL5tj4CKnNXgNDMd+y
+         STXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=828pzcEPb9AccWy1QpK/H70v37+Ss/xNDgajcrPo+Z0=;
-        b=QN3KlrQquWb9aSf3OvY6TVWyL+2Z/GUHF9epniTmy1s2jeht8+02hFjsEopWP2+kR/
-         XB0Yadsn09aR2hPUaKQ8LlSipn3ynIjiFWQyGYBqJxcTMHiYPTN4GtAIQDdTn3udfTjF
-         4qHjgYH2dHLvBkMFqwtHo5deFwJrIH4MNzvLmWK82KN7stSU3a0fdpTPIMcjhyLH4Ku3
-         XaIb+hpSQJa0xlq0GdtNaAxG25MtYIXSKZSoeN+vmCbjIKK6vyBUrHi9ubOVTK2ltMDT
-         wfDMlQV7nFkZyBaMkJiq9BiA/BDt/BGFx4w17cKexFbM6lXEndQVMFd+gpRnVxPcbUCl
-         7Fbg==
-X-Gm-Message-State: AOUpUlFa7pAlTW100BRo7CpFKMxGJni9/daTv1vQvT8ZYqTMb2KZD7nT
-        fux80P7xkpkaOmFA/kQdaIyJ/wKflki5
-X-Google-Smtp-Source: AA+uWPx1oMDWy8FyJxbYBh5XWVP1s2NZqBT8fP1y3OKunIQPgTScATumXbLPHpET9YZOIpWFqqkSpmTPrkaC
-X-Received: by 2002:a1f:2a86:: with SMTP id q128-v6mr12906784vkq.62.1534270928274;
- Tue, 14 Aug 2018 11:22:08 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 11:22:02 -0700
-In-Reply-To: <929572FA-6B1D-4EC7-825B-93B96053A82C@gmx.de>
-Message-Id: <20180814182202.59442-1-sbeller@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ubxrS7oPqYOlUuM+X9A4yfwWO3xQFNwvdRlTlQdorKA=;
+        b=A/pggYfd8UxlvsIAeuF+6WuVTW+OdnKsyWXQ1wqxNCrAiFVRrXVGp4NSj4LPyXkdIY
+         H0W+d+A5/F96lH/BL5O3p+WPOISVO0F5gznpsSl7B+zuMUFAW1tNyGZs+gmikBEZ1ebM
+         7EsrbDJLd+rbDBo0iAl8ynT6Bo2+BERG9ix7LaymfD8Yn2g3nGWZ8UvrrcCeQasJasAC
+         40ulyk8a5I7tOybSND7wBEyalqhtIkwrwzbzmfiNoZllJc9w8amyLiJoo9KQk7QO+R+h
+         9fEkGAfJM8eI2/F30+qAhHJtYmmdopm2wg9+rLLp9QBxu0DMZQFbA4TkyvXDb3Jine9A
+         Nu8g==
+X-Gm-Message-State: AOUpUlGkUN/U9N4Oz/yULJqxKUU0/Q2p73CsyAhJcUZ42e7rjI0UBqV7
+        DsSHhu78pcH8CshRFzKO3ZI=
+X-Google-Smtp-Source: AA+uWPxzJUoc66uhwpTPmqaZYp4J6+BlfqpNZck6qbGvXyIzENrC9DpEpjve2yUL//IKBCjLeTA+5g==
+X-Received: by 2002:a63:82c7:: with SMTP id w190-v6mr22145549pgd.253.1534271289779;
+        Tue, 14 Aug 2018 11:28:09 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id n12-v6sm45175912pfh.146.2018.08.14.11.28.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 11:28:09 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 11:28:07 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     jochen.kuehner@gmx.de, git@vger.kernel.org
+Subject: Re: [PATCH] git-submodule.sh: accept verbose flag in cmd_update to
+ be non-quiet
+Message-ID: <20180814182807.GA142615@aiede.svl.corp.google.com>
 References: <929572FA-6B1D-4EC7-825B-93B96053A82C@gmx.de>
-X-Mailer: git-send-email 2.18.0.265.g16de1b435c9.dirty
-Subject: [PATCH] git-submodule.sh: accept verbose flag in cmd_update to be non-quiet
-From:   Stefan Beller <sbeller@google.com>
-To:     jochen.kuehner@gmx.de
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <20180814182202.59442-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180814182202.59442-1-sbeller@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a56771a668d (builtin/pull: respect verbosity settings in submodules,
-2018-01-25), we made sure to pass on both quiet and verbose flag from
-builtin/pull.c to the submodule shell script. However git-submodule doesn't
-understand a verbose flag, which results in a bug when invoking
+Stefan Beller wrote:
 
-  git pull --recurse-submodules -v [...]
+>  git-submodule.sh | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 8b5ad59bdee..f7fd80345cd 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -438,6 +438,9 @@ cmd_update()
+>  		-q|--quiet)
+>  			GIT_QUIET=1
+>  			;;
+> +		-v)
+> +			GIT_QUIET=0
+> +			;;
 
-There are a few different approaches to fix this bug:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-1) rewrite 'argv_push_verbosity' or its caller in builtin/pull.c to
-   cap opt_verbosity at 0. Then 'argv_push_verbosity' would only add
-   '-q' if any.
-
-2) Have a flag in 'argv_push_verbosity' that specifies if we allow adding
-  -q or -v (or both).
-
-3) Add -v to git-submodule.sh and make it a no-op
-
-(1) seems like a maintenance burden: What if we add code after
-the submodule operations or move submodule operations higher up,
-then we have altered the opt_verbosity setting further down the line
-in builtin/pull.c.
-
-(2) seems like it could work reasonably well without more regressions
-
-(3) seems easiest to implement as well as actually is a feature with the
-    last-one-wins rule of passing flags to Git commands.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
-
-On Tue, Aug 14, 2018 at 10:54 AM Jochen K=C3=BChner <jochen.kuehner@gmx.de>=
- wrote:
->
-> If I set=20
-> git config --global submodule.recurse true
-> and run git via:
-> git pull --progress -v --no-rebase "origin"
-> The command will fail with following output (Errorlevel is 1)
-> Fetching submodule submodules/tstemplates
-> From http://10.0.102.194:7990/scm/mcc/tstemplates
-> =3D [up to date]      feature/robin -> origin/feature/robin
-> =3D [up to date]      master        -> origin/master
-> Already up to date.
-> usage: git submodule [--quiet] add [-b <branch>] [-f|--force] [--name <na=
-me>] [--reference <repository>] [--] <repository> [<path>]
->    or: git submodule [--quiet] status [--cached] [--recursive] [--] [<pat=
-h>...]
->    or: git submodule [--quiet] init [--] [<path>...]
->    or: git submodule [--quiet] deinit [-f|--force] (--all| [--] <path>...=
-)
->    or: git submodule [--quiet] update [--init] [--remote] [-N|--no-fetch]=
- [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--r=
-eference <repository>] [--recursive] [--] [<path>...]
->    or: git submodule [--quiet] summary [--cached|--files] [--summary-limi=
-t <n>] [commit] [--] [<path>...]
->    or: git submodule [--quiet] foreach [--recursive] <command>
->    or: git submodule [--quiet] sync [--recursive] [--] [<path>...]
->    or: git submodule [--quiet] absorbgitdirs [--] [<path>...]
->
-> seams that the =E2=80=9Cverbose=E2=80=9D parameter =E2=80=9C-v=E2=80=9D i=
-s also sent to =E2=80=9Cgit submodules=E2=80=9D wich does not support it.
->
-> If I remove =E2=80=9C-v=E2=80=9D it will work.
->
-> Problem is, I use TortoiseGit, wich will automatically create this comman=
-d!
-
- git-submodule.sh | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 8b5ad59bdee..f7fd80345cd 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -438,6 +438,9 @@ cmd_update()
- 		-q|--quiet)
- 			GIT_QUIET=3D1
- 			;;
-+		-v)
-+			GIT_QUIET=3D0
-+			;;
- 		--progress)
- 			progress=3D1
- 			;;
---=20
-2.18.0.265.g16de1b435c9.dirty
-
+Thanks.
