@@ -2,110 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 136521F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 18:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 702051F428
+	for <e@80x24.org>; Tue, 14 Aug 2018 18:54:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728861AbeHNVkk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:40:40 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:36693 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727870AbeHNVkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:40:39 -0400
-Received: by mail-io0-f173.google.com with SMTP id m4-v6so18244172iop.3
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 11:52:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Gyl4ePX0mfJXP5euzrKmU9u1HkJHGus1TMr0hVi3v7M=;
-        b=vDpjpqdzY0Y8nex/b8V5ZbYO5oqAKGMw0OrABVIDU+dWIeNe9ApvZmQyeSJZyTVh8v
-         DYibGLhtHgb16lc8Pc7TY0xCrQ3FyEl0pJchXFOsNYsScgOjkXjNVqV7IC29cFcz/BjF
-         jpBY0UlO/DbVkeciViC0YCoG7NEJdZ9FwAu+p7GCHK1Sjy4weCbYiL4TmvV5LV7BsHJm
-         VxHV1ZSJucaX8ArcOaKtvmX5icZeHoxdKvN8/FqHIzx4F0j8X1JxSsfTGT4jpxzYJ6zr
-         n82+j0zCcittCgbs9gKSBt65ENwqC2TfbFz5E1Fr6PXY3JIB/dTIBLccEjO9QBFizn6D
-         lxlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Gyl4ePX0mfJXP5euzrKmU9u1HkJHGus1TMr0hVi3v7M=;
-        b=FyV6WZjn3mZRp8H8l0pbSo9IJRy5EpGfZVgIl8x0EQ1v2T64mXDuSK+dmeNeQBn8jp
-         ghfl9anA+Y0Mw5SXw5D4R3bCMMa8ECy2wSNcGtMIZdvovbJkWQ7+tU4GZKH3hPoLNCsd
-         xbL4XXtwALUDTVJEwdELCRy6npI/BhYPJSojfghFgGqB2MG2/+qrP/VSj3j1ASNzBwEg
-         mnVJ4/EMF+8YZYz7eIN3Y/JbzERTU/ow5Sdj7TsMNj95zIXukfVjw+nqx6GaNOpPAlj/
-         746dhIMMyIY7QDBO+/lB26JCQs4jUmYsMtC92zzQ7p+t+7MjAH3rlLvLUuEfbupJ3i63
-         uKjA==
-X-Gm-Message-State: AOUpUlGqWi0ngaHJbAAJLBZqxWW2wdrFiZHUtMzbC/5TZvis4SNxlL/F
-        yn8kKBqmtNJYuB+ypmBnAN12gaKWmR3RUd59Q58=
-X-Google-Smtp-Source: AA+uWPymwYtv0jdVxJA913kaj7b8fl6o6zXI1uS3H4ohCijDOs8TzsOxPcPUXyqayjua6JIzz4Fd4SHzaVu0AW3ANUA=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr17867650ioe.282.1534272727419;
- Tue, 14 Aug 2018 11:52:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180804053723.4695-1-pclouds@gmail.com> <20180812081551.27927-1-pclouds@gmail.com>
- <20180812081551.27927-3-pclouds@gmail.com> <20180813192526.GC10013@sigill.intra.peff.net>
- <xmqqk1ot3n4h.fsf@gitster-ct.c.googlers.com> <90d1bbf7-91a3-74ac-de65-1eb8405dc1f7@jeffhostetler.com>
- <CACsJy8DQmOCD2a5QFUiyPuoPZLq-QEejLhWACKpsJLvK5ERAMg@mail.gmail.com> <CAGZ79kZwVpCBMkBKuYpwZFgAN50wZub_fyzWrAsE=ksuc-aCgQ@mail.gmail.com>
-In-Reply-To: <CAGZ79kZwVpCBMkBKuYpwZFgAN50wZub_fyzWrAsE=ksuc-aCgQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 14 Aug 2018 20:51:41 +0200
-Message-ID: <CACsJy8CTNeR8Bchj37yNL+mWp1Y5rhD6QV2Gf06CPLHVXd8TDQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] unpack-trees: add performance tracing
+        id S1728863AbeHNVm6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 17:42:58 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55357 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727787AbeHNVm5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 17:42:57 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGFz9-1fchtl07bb-00FCad; Tue, 14
+ Aug 2018 20:54:18 +0200
+Date:   Tue, 14 Aug 2018 20:54:24 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 4/4] range-diff: indent special lines as context
+In-Reply-To: <CAGZ79kYVw3AXLyB1fx07WojN3dLuxJLDrbWwC_7M=9aoB9YuCg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808141713510.71@tvgsbejvaqbjf.bet>
+References: <20180810224923.143625-1-sbeller@google.com> <20180810224923.143625-5-sbeller@google.com> <nycvar.QRO.7.76.6.1808131353280.71@tvgsbejvaqbjf.bet> <CAGZ79kYVw3AXLyB1fx07WojN3dLuxJLDrbWwC_7M=9aoB9YuCg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oFwYyrjYm/OPIasej81uGsJl+FTdIEgRMhNc3B5Xw3XFw+E75Jh
+ FoAExu58binvlvnhkJDZZz5V5d0uk4FQj1d4IwzKzUh15CSJYKdNMmuYXmyzxCaC49n9woI
+ 5jH5lBLHenBwR8DAJkiNTDEWuDQQ6RHncHkBfARA0FYuwcReGt5gJ37xxHuSCAyQ98Mp0VI
+ TitDeYDmPGpBmwTZETSSw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:46/DRhnxTrw=:Q30Y+ct1zB92XYHCEzEIM+
+ SLUdyHDKyOlKPvQ3tGp+McH7ZgHpEWlEwZAs3FxSnE+9qXdiWwoTFsxR8vSAdDpgXFBFkJ8hg
+ gCsZ4n42+jZaNN1Lyq9/mgisrDW1RRyNFx+xJ7i1qrOztW75lFciuvJ8pjivQ6mQm00RDLvAX
+ PxbjnZprSC+swyB5EuAr7AUZRN/rJnRL2fUTljR5CBNC+Jc5lJ3MTGajTpVmJQs/ZTrE/62QC
+ FzsMfBv2lQ0Ns71mD9cAZJZGRh6YcMm75piBrbbgyJdADaUc1VCf95UnDactJ3wGL5CMxvsLB
+ 2tcuwJWArEtuwlVDFE92NZe9lO2kRVpM5AI4OiraX/IpbgO1phAxcF75IdSo2vD61AgyPLFvB
+ KykeSh5UKEUBNDBUmwlgJcD08BTkT65j8Zz7K8ZNNqK2XUq1makreaFxL8WyOzIXdhHEXzHId
+ Y9eFdSiTk/g1QD0tUJaeNdgMwrUUPU7ao6smj8lSygkHJwxCZoKxfq9nBAjODwn3ULHIUbOuO
+ uV5rJ0oeqRIrmOb+sMeoqZOJG4RSYTInevcFUEpvGysp9U4zJ0l8cLPihD08uQyN+7Ti+2oSC
+ wUgMO7wKMvXVz2FddQK1v83Ys2dPBpn1x4EdosZLa3E+4eHpw1vMkXP4cRU+M9KnR08GWLXlc
+ Z/RS5A1oasr+bNeGSnvJahlg5f9axKVTXjLc5cDzkVOhNTNryaTW8tBUhi82eqdCX0PcBX+Ok
+ znlV175X4c3esL+wNjYaiINlzmZs1L93lyteOgb76a1WERKzTedb0lyY9xKA5EPyUKEXJnREj
+ NdPQ+et
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 8:44 PM Stefan Beller <sbeller@google.com> wrote:
->
-> On Tue, Aug 14, 2018 at 11:32 AM Duy Nguyen <pclouds@gmail.com> wrote:
+Hi Stefan,
+
+On Mon, 13 Aug 2018, Stefan Beller wrote:
+
+> > > The later lines that indicate a change to the Makefile will be treated as
+> > > context both in the outer and inner diff, such that those lines stay
+> > > regular color.
 > >
-> > On Tue, Aug 14, 2018 at 8:19 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
-> > > I'm looking at adding code to my SLOG (better name suggestions welcome)
-> > > patch series to eventually replace the existing git_trace facility.
+> > While I am a fan of having those lines colored correctly, I have to admit
+> > that I am not exactly enthusiastic about that extra indentation...
 > >
-> > Complement maybe. Replace, please no. I'd rather not stare at json messages.
->
-> From the sidelines: We'd only need one logging infrastructure in place, as the
-> formatting would be done as a later step? For local operations we'd certainly
-> find better formatting than json, and we figured that we might end up desiring
-> ProtocolBuffers[1] instead of JSon, so if it would be easy to change
-> the output of
-> the structured logging easily that would be great.
+> > Otherwise, this looks good to me.
+> 
+> Can you explain what makes you less enthused about the indentation?
+> 
+> Advantage:
+> * allows easy coloring (easy implementation)
+> Disadvantage:
+> * formats change,
 
-These trace messages are made for human consumption. Granted
-occasionally we need some processing but I find one liners mostly
-suffice. Now we turn these into something made for machines, turning
-people to second citizens. I've read these messages reformatted for
-human, it's usually too verbose even if it's reformatted.
+This is it. It breaks my visual flow.
 
-> But AFAICT these series are all about putting the sampling points into the
-> code base, so formatting would be orthogonal to it?
+> but the range diff is still in its early design phase, so we're not
+> breaking things, yet?
 
-It's not just sampling points. There's things like index id being
-shown in the message for example. I prefer to keep free style format
-to help me read. There's also things like indentation I do here to
-help me read. Granted you could do all that with scripts and stuff,
-but will we pass around in mail  dumps of json messages to be decoded
-locally?
+Indeed. We're not breaking things. If you feel strongly about it, we can
+have that indentation, I *can* get used to it.
 
-> Stefan
->
-> [1] https://developers.google.com/protocol-buffers/
+>   (Do we ever plan on sending range-diff patches that can be applied to
+>   rewrite history? I am very uncertain on such a feature request.  It
+>   sounds cool, though)
 
+I remember that I heard you discussing this internally. I am not too big a
+fan of this idea, I have to admit. The range diff seems more designed to
+explain how a patch series evolved, rather than providing machine-readable
+data that allows to recreate said evolution. For example, the committer
+information as well as the date are missing, which would preclude a
+faithful reconstruction.
 
+And that is not all: if you wanted to "apply" a range diff, you would need
+to know more about the base(s) of the two commit ranges. You would need to
+know that they are at least very similar to the base onto which you want
+to apply this.
 
--- 
-Duy
+And quite seriously, this would be the wrong way to go in my mind. We have
+a very efficient data format to transport all of that information: the Git
+bundle.
+
+Let's not overload the range diff format with multiple, partially
+contradicting purposes. Think "separation of concerns". It's the same
+issue, really, as trying to send highly structured data such as bug
+reports or code contributions via a medium meant to send unstructured
+plain or formatted text back and forth between human beings.
+
+Ciao,
+Dscho
