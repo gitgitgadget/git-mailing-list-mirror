@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBFAF1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 01:41:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13CC1F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 01:41:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729426AbeHNE02 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 00:26:28 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:37006 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726034AbeHNE02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 00:26:28 -0400
-Received: by mail-ua1-f73.google.com with SMTP id w15-v6so8824901uao.4
-        for <git@vger.kernel.org>; Mon, 13 Aug 2018 18:41:38 -0700 (PDT)
+        id S1729442AbeHNE0b (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 00:26:31 -0400
+Received: from mail-qt0-f202.google.com ([209.85.216.202]:49686 "EHLO
+        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726034AbeHNE0b (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 00:26:31 -0400
+Received: by mail-qt0-f202.google.com with SMTP id b8-v6so14590310qto.16
+        for <git@vger.kernel.org>; Mon, 13 Aug 2018 18:41:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Pi8Py/+Ryx0h5DauzM8bcd/r7qDgDhl8V0ff3ZVQX1I=;
-        b=Eh3cXRO+akvDTTNz38J23JPIDfRh6mjG0RRj8VS+Vw9dsOVKxOuc8or658PeuP0WOM
-         ++gcnDy3o4ZLlfi5J7TPUvkbzV8d5i4VDFywwpQBZ74NI+pzjAESIR00eJzN1b1yB6RT
-         vAgYSlIQFY9pfYoGQuvyXOLtjlZJm2GbuYbdpSnuc7m35I+5f7E/FR1eS5CmbkyxThEZ
-         E6v1eHAhOycYjdweFtK44AdjV8TVzdlzw4vvzP1JWZnJ+0TYLnI8rn6eGCWyJl4ifI3B
-         0MTEltPjZR4pB4bUOJF3hD/wFKrZb9wcTbEmEZ7CAonD2FwBkcpCLiM5TrtamzdlPkYm
-         p8DQ==
+        bh=SaAgV1a4GiL4Uoc0LX3SdR+qmnCQKuEtdm2W1CsBQQw=;
+        b=LajyXNJ/CTHYinKZQx4hZg26QLKx2dYo0CFWtOssca82O2kWifgBoAGOLy1MC180eM
+         xUJwy2oK0L3cxS43zTJlNUFn2SqkMjXL3WMuXwyMOlJzWHSoFigJSaUlDP9IIRlghlCd
+         gfWnCxXftKQqa9AtcCajisyHrWLyul73Zr46YFUJWG7zXDT2g9B8rOIOPVpGUvgETG1L
+         Ds0zZeQxSSQKYLsL6JLiGby+Hy49jvrjHOa/JDzBZ2lx0bSpdsN9Kv6uvEa0qFFU6E/7
+         QC2MeQ7HmRWpCX/wJ4azxtwM9qeu0O2Qx2lJFkBrQe69RciUbzCmgKRtcQzvAPH9bbJU
+         gDVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Pi8Py/+Ryx0h5DauzM8bcd/r7qDgDhl8V0ff3ZVQX1I=;
-        b=BIGIXuryRJZ3sHEMvnKoykm6O2GarHEARxE9C8qKOGJHaAuI1JhkJD1uthbHDEZEkp
-         /kj5TPEqttdPuwfoXQnk4OvyAyjaz5RSMlld/hWe3zyxOFcURBIVz773AweqPedO9Bus
-         771jBXbxHaSMrBNHb6SwrbdKlkUIIG9K7msJKKUUQH3YYU8x0E8QJxBrTEWagViY26kr
-         VSq674VqR7xFU77B1mAf+JManatjj270uyElnUh+IpOeEbWnBfUCYglVTOY0T07Fg0Le
-         7BKHJ7a7DIkHVPjS+RBq5chyEX+lmUtdBHfs/72aeW1JSmzcb9w7OAeRSbsNEDE2mckJ
-         2sMg==
-X-Gm-Message-State: AOUpUlFSej+7Wx8iuHmr+bA32qFp1OQyjJOT4ApeKwTUHcwwOu+jZPvY
-        DOosN+WmVeBUwD6Dq2RmqorgP82hG+YS
-X-Google-Smtp-Source: AA+uWPyihzGZwOUCWlDqjtdG9fSvh+IFblkQHR1Y2NoK5HE+AognNDgLODqm2GvJbqXK0jVm3it/C3NvEvZZ
-X-Received: by 2002:ab0:2398:: with SMTP id b24-v6mr9623236uan.26.1534210897768;
- Mon, 13 Aug 2018 18:41:37 -0700 (PDT)
-Date:   Mon, 13 Aug 2018 18:41:17 -0700
+        bh=SaAgV1a4GiL4Uoc0LX3SdR+qmnCQKuEtdm2W1CsBQQw=;
+        b=kM7PdIVqU6tkO06NVStRmr0B6GPYfdlYnMWAgb3hVZREeR24GS85k14JRrL8pAAXoz
+         64mgLMIQYICw7CtU24zHx99K2b6EqSuhOBfHt3QG0QLZ3xRQlFoGJG/x4BabVc/P49q3
+         o2+Acwey5yQwSa1fTgWI8FeVEhx4fTN+l5P8m92+mG5FANY/cNLj5LhYPMoqV5dfbC4J
+         KCeBUNH/GnExIv5DW6NBK4RtTA50jD4PE9z5iWiYPTW95r8oJvk96a1Zm3ZXEyARnVUS
+         p2Pl+ahPFbzx6ZdPWl3SN7I474/KeefBzTySnYzW4J13OVTVKjO9CJRYGZ2wz0Sn4zKB
+         bcVQ==
+X-Gm-Message-State: AOUpUlFFTd2NKHcTEiwmf2nCAGrMT0meC2/Rg3FUZIQjpwga5JrGXG44
+        fIijD65i1h7a2l/hMV8Hj4o9oel/BRCh
+X-Google-Smtp-Source: AA+uWPyhzzqeyhR1QqVJVIo1fc3vqIlWRVd3cRYa4Ys7dQqAebpkk+5ikCsemFHwOItZf5dtEs4QdeFOT+rz
+X-Received: by 2002:a0c:e848:: with SMTP id l8-v6mr10597032qvo.1.1534210900319;
+ Mon, 13 Aug 2018 18:41:40 -0700 (PDT)
+Date:   Mon, 13 Aug 2018 18:41:18 -0700
 In-Reply-To: <20180814014122.30662-1-sbeller@google.com>
-Message-Id: <20180814014122.30662-4-sbeller@google.com>
+Message-Id: <20180814014122.30662-5-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180810223441.30428-1-sbeller@google.com> <20180814014122.30662-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH 3/8] diff.c: simplify caller of emit_line_0
+Subject: [PATCH 4/8] diff.c: reorder arguments for emit_line_ws_markup
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org, gitster@pobox.com
@@ -61,28 +61,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Due to the previous condition we know "set_sign != NULL" at that point.
+The order shall be all colors first, then the content, flags at the end.
+The colors are in the order of occurrence, i.e. first the color for the
+sign and then the color for the rest of the line.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- diff.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ diff.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index ae131495216..f6df18af913 100644
+index f6df18af913..ab6e6a88a56 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1202,8 +1202,7 @@ static void emit_line_ws_markup(struct diff_options *o,
- 		emit_line_0(o, set, 0, reset, sign, line, len);
- 	else if (!ws) {
- 		/* Emit just the prefix, then the rest. */
--		emit_line_0(o, set_sign ? set_sign : set, !!set_sign, reset,
--			    sign, "", 0);
-+		emit_line_0(o, set_sign, !!set_sign, reset, sign, "", 0);
- 		emit_line_0(o, set, 0, reset, 0, line, len);
- 	} else if (blank_at_eof)
- 		/* Blank line at EOF - paint '+' as well */
+@@ -1185,9 +1185,9 @@ static void dim_moved_lines(struct diff_options *o)
+ }
+ 
+ static void emit_line_ws_markup(struct diff_options *o,
+-				const char *set, const char *reset,
+-				const char *line, int len,
+-				const char *set_sign, char sign,
++				const char *set_sign, const char *set,
++				const char *reset,
++				char sign, const char *line, int len,
+ 				unsigned ws_rule, int blank_at_eof)
+ {
+ 	const char *ws = NULL;
+@@ -1271,7 +1271,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			else if (c == '-')
+ 				set = diff_get_color_opt(o, DIFF_FILE_OLD);
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, ' ',
++		emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
+ 				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+ 		break;
+ 	case DIFF_SYMBOL_PLUS:
+@@ -1314,7 +1314,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
+ 			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, '+',
++		emit_line_ws_markup(o, set_sign, set, reset, '+', line, len,
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+ 				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+ 		break;
+@@ -1357,7 +1357,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ 			else
+ 				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+ 		}
+-		emit_line_ws_markup(o, set, reset, line, len, set_sign, '-',
++		emit_line_ws_markup(o, set_sign, set, reset, '-', line, len,
+ 				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+ 		break;
+ 	case DIFF_SYMBOL_WORDS_PORCELAIN:
 -- 
 2.18.0.865.gffc8e1a3cd6-goog
 
