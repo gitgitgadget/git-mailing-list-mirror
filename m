@@ -2,99 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 420701F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 19:10:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB8831F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 19:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728034AbeHNV73 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 17:59:29 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:38100 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725988AbeHNV73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 17:59:29 -0400
-Received: by mail-yw1-f67.google.com with SMTP id r3-v6so17041995ywc.5
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 12:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=H6gyQSMOM/y8rutsoaaf6uYjafuOCjP6yzCusVvRDSo=;
-        b=I3Q7ltxNEkTo55FvdNn4bJ1N7ay0hDjkI4P5rGslzSAk5qnvNiBVF6VtfcbW3BgWS+
-         hr7Kwh2TkHIPy0QJLEOXC3UIJmohdkU/zj8GkKx9s8T7PH1lCW9ocB9PbxcYSqxnmMEL
-         y8mpTg8tTC8lj/WKzZCXTWGbJrmgXoU6bimXZPldm2bxJusNK77nXt+kA9MZuVL/B+OX
-         zJV0VFyn0AFUX7BMa+k0GURj6hhTevIHrZcVslBRsUObzv+2XsayZGytEfjwcg0T7AW6
-         2wJgF9oi14JrfbnuvVztw2PzGOsNfIRmbZguJmzOIHYX1JEYy2z7Wt1GJw0ZyfvGKVyB
-         H39g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=H6gyQSMOM/y8rutsoaaf6uYjafuOCjP6yzCusVvRDSo=;
-        b=ImM+TMWEjqAcK5TDGP7AGrlPGLTdL1h8HEyL3OTBLUke45nYRwBYqIpI4zQ1BBavQC
-         mdDtMTk+13q4rwJIxggOny5C2T+qqBeEn1liSD5HJUfqnxtUndFPdyN/RDl1GVdTsDmO
-         DrwytuF636K+/iKBVbAcKtCRckWsvWbb42SWkN4+LTtHsYqmSr5P7VBxAIZl2SHgVrFD
-         gIVWPygdehDjkw/9POJEN3vSkvBm2VuvTpV0fE+G+o8CfhuDpn0Iq0/a7NiwmAAxzBcS
-         3pI7U52ewZK3tYIM2RwKh5bPdw35FN/1IDG3i2pR1pdH8IBhvSGBsiX0lJkq8QEDFyha
-         vCwQ==
-X-Gm-Message-State: AOUpUlEj24DOd9OEjv9xYct1SCK+NXYLBmChxNkd7oAiJ26XdCXKqfhy
-        jeGtb31kKtatNlLZpbdSvugIq8X2Yi+nMeW9OE920A==
-X-Google-Smtp-Source: AA+uWPw5GjgvXUy+zB7kdPKXtZTQe9EW/gTJCC0jYE5dACwU4HzpnCWHEZjqUm2cnNGKFv4nGFl4fdoM3cdbTHAslx4=
-X-Received: by 2002:a25:7142:: with SMTP id m63-v6mr7178543ybc.352.1534273852497;
- Tue, 14 Aug 2018 12:10:52 -0700 (PDT)
+        id S1728603AbeHNWFs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 18:05:48 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55114 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727755AbeHNWFs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 18:05:48 -0400
+Received: (qmail 1724 invoked by uid 109); 14 Aug 2018 19:17:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 14 Aug 2018 19:17:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25375 invoked by uid 111); 14 Aug 2018 19:17:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 15:17:14 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 15:17:09 -0400
+Date:   Tue, 14 Aug 2018 15:17:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH] mingw: enable atomic O_APPEND
+Message-ID: <20180814191709.GB28452@sigill.intra.peff.net>
+References: <pull.17.git.gitgitgadget@gmail.com>
+ <811ded48-6f33-c46e-7bae-b9f7c7e8764c@kdbg.org>
+ <xmqqin4i83zg.fsf@gitster-ct.c.googlers.com>
+ <bc9132ab-3030-07e3-03d1-d2ddae6a1b45@kdbg.org>
+ <xmqqr2j23tnb.fsf@gitster-ct.c.googlers.com>
+ <84c749fd-23d2-0bc5-225b-74f8d31502b6@kdbg.org>
+ <87eff2rmgt.fsf@evledraar.gmail.com>
+ <20180813223701.GC16006@sigill.intra.peff.net>
+ <313beb50-f5bd-ace6-8d6d-5f2a9e7cb6e7@kdbg.org>
 MIME-Version: 1.0
-References: <20180814185906.2680-1-avarab@gmail.com>
-In-Reply-To: <20180814185906.2680-1-avarab@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 12:10:41 -0700
-Message-ID: <CAGZ79kaK8Wt0TGvo-PyDZRLWr9PU0BRo4=DiYUXvv8c8nZ+M8A@mail.gmail.com>
-Subject: Re: [PATCH] submodule: add more exhaustive up-path testing
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bmwill@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <313beb50-f5bd-ace6-8d6d-5f2a9e7cb6e7@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 11:59 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
-> The tests added in 63e95beb08 ("submodule: port resolve_relative_url
-> from shell to C", 2016-04-15) didn't do a good job of testing various
-> up-path invocations where the up-path would bring us beyond even the
-> URL in question without emitting an error.
->
-> These results look nonsensical, but it's worth exhaustively testing
-> them before fixing any of this code, so we can see which of these
-> cases were changed.
+On Tue, Aug 14, 2018 at 08:29:04PM +0200, Johannes Sixt wrote:
 
-Yeah. Please look at the comment in builtin/submodule--helper.c
-in that commit, where I described my expectations.
+> Am 14.08.2018 um 00:37 schrieb Jeff King:
+> > And then you can do something like:
+> > 
+> >    for size in 4097 8193 16385 32769 65537 131073 262145 524289 1048577; do
+> >      >out ;# clean up from last run
+> >      echo "Trying $size..."
+> >      timeout 5 ./write $size out
+> >      if ! ./check $size <out; then
+> >        echo "$size failed"
+> >        break
+> >      fi
+> >    done
+> > 
+> > On my Linux system, each of those seems to write several gigabytes
+> > without overlapping. I did manage to hit some failing cases, but they
+> > were never sheared writes, but rather cases where there was an
+> > incomplete write at the end-of-file.
+> 
+> I used your programs with necessary adjustments (as fork() is not
+> available), and did similar tests with concurrent processes. With packet
+> sizes 1025, 4093, 7531 (just to include some odd number), and 8193 I did not
+> observe any overlapping or short writes.
+> 
+> I'm now very confident that we are on the safe side for our purposes.
 
-I should have put them into tests instead with the expectations
-spelled out there.
+Great, thanks for testing!
 
-Thanks for this patch!
-Stefan
+Re-reading what I wrote about end-of-file above and thinking about the
+conversation with Ævar elsewhere in the thread, I suspect it _is_ easy
+to get overlapping writes if the processes are receiving signals (since
+clearly the TERM signal caused a partial write).
 
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
+My experiment doesn't simulate that at all. I suppose the parent process
+could send SIGUSR1 to the child in each loop, and the child would catch
+it but keep going.
 
+Hmm, that was easy enough to do (programs below for reference), but
+surprisingly it didn't fail for me (except for the normal end-of-file
+truncation). It's like the OS is willing to truncate the write of a
+dying program but not one for a signal that is getting handled. Which is
+great for us, since it's exactly what we want, but makes me even more
+suspicious that a non-Linux kernel might behave completely differently.
 
-> So I think these tests are worthwihle in themselves,
+I still think we're fine in practice, as I'd expect any kernel to be
+atomic under the page size. So this was mostly just for my own
+edification.
 
-The reason I put it in the comment instead of tests was the
-ease of spelling out both the status quo and expectations.
+-Peff
 
-> but would like
-> some advice on how to proceed with that from someone more familiar
-> with submodules.
+-- >8 --
+/* check.c, with separate short-read reporting */
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
-So ideally we'd also error out as soon as the host name is touched?
+int main(int argc, const char **argv)
+{
+	int size = atoi(argv[1]);
+	int block = 0;
+	char *buf;
+
+	buf = malloc(size);
+	while (1) {
+		int i;
+		/* assume atomic reads */
+		int r = read(0, buf, size);
+		if (!r)
+			break;
+		if (r < size) {
+			fprintf(stderr, "short read\n");
+			return 1;
+		}
+		for (i = 1; i < size; i++) {
+			if (buf[i] != buf[0]) {
+				fprintf(stderr, "overlap in block %d\n", block);
+				return 1;
+			}
+		}
+		block++;
+	}
+}
+-- >8 --
+
+-- >8 --
+/* write.c with signals; you can also confirm via strace
+   that each write is atomic */
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <signal.h>
+
+void handle_signal(int sig)
+{
+	/* do nothing */
+}
+
+static void doit(int size, const char *fn, char c, pid_t pid)
+{
+	int fd;
+	char *buf;
+
+	fd = open(fn, O_WRONLY|O_APPEND|O_CREAT, 0666);
+	if (fd < 0) {
+		perror("open");
+		return;
+	}
+
+	buf = malloc(size);
+	memset(buf, c, size);
+
+	while (1) {
+		if (pid)
+			kill(pid, SIGUSR1);
+		write(fd, buf, size);
+	}
+}
+
+int main(int argc, const char **argv)
+{
+	int size = atoi(argv[1]);
+	pid_t pid;
+
+	signal(SIGUSR1, handle_signal);
+
+	pid = fork();
+	if (pid)
+		doit(size, argv[2], '1', pid);
+	else
+		doit(size, argv[2], '2', pid);
+	return 0;
+}
+-- >8 --
