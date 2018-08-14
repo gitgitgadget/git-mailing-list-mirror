@@ -2,122 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52ACE1F404
-	for <e@80x24.org>; Tue, 14 Aug 2018 20:59:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05E051F404
+	for <e@80x24.org>; Tue, 14 Aug 2018 20:59:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729660AbeHNXsI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 19:48:08 -0400
-Received: from mail-yw1-f44.google.com ([209.85.161.44]:44842 "EHLO
-        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728249AbeHNXsI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 19:48:08 -0400
-Received: by mail-yw1-f44.google.com with SMTP id l9-v6so17284785ywc.11
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 13:59:09 -0700 (PDT)
+        id S1730120AbeHNXss (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 19:48:48 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:33808 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728249AbeHNXss (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 19:48:48 -0400
+Received: by mail-wr1-f45.google.com with SMTP id c13-v6so18377075wrt.1
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 13:59:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qJuf0ZjH8L21mwCLVzprzcjfSnMpQSe5b2trjPWMaLQ=;
-        b=YqbNhl3RBtQxaaGUnbEVPEqxvJb1F7MzkJE9nRonCEeHv/IAC3XjcSB29eO+wF3XvM
-         K0DTmoNdE0YQ1abtq5OlzBl2YfKSJ0Md9wxo4ES6voL95LmswyJrZczK3teQLhCHjEuG
-         OVJ3rrWoAcHw8aLpz4f4xJwkrHuz7P4jDidjcCvTYVs2kygT5SwDlyyJkOtIRb38JRLM
-         LNbimlfKMdBZAoOvxYL1xXUSBanxeBvfl5tanU8Pz98EN0gQiX7wfGkiUxIU/gz7Ygwe
-         LYaRS/sL01oaG3WbdoK6/MKa2B6iZvbQjk148qkPkAsijB3CZK7NS7LCs0c5YQgsR70r
-         gGAg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=uCpraLUregA01nEnFaE+m7yZMndvpCDhvKb887TClpI=;
+        b=CVNHCuHfF6ORW/e1JhVlCmCvJtvbRsqcjwN5o9Ee84qWrgpNYQUk+O7OuL0hEtx7bd
+         s64Y0Ypyd1hgFIxMLeooqAZbqANib5siOLDyh5xKnCqgIQyt8x2jwUDj3d3ZeSQCFeeN
+         FLnTa5fGfV2fNsAmghA9yWh79pAOkB13uagtA7oj2bTWwLGRto0NMsN6p3a207M8NElK
+         Lc2RFDExxK9fSlwDbKM/N1qB4Z0A+ifCiq3M9hzM/ijZNbMO6nA66OApauuZsiesz2Rq
+         pu4bDcxymjJwOIjMNVsJZTzhXzT2qshWlBmTM5n7NMZTI+687nXr9S+wDFdklt5sjmje
+         x3dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qJuf0ZjH8L21mwCLVzprzcjfSnMpQSe5b2trjPWMaLQ=;
-        b=pYoGRkMjO4t39rq4nPo9r5MZaJA2GvX4wfl+zoY7yiFFdj9x75AawFs9IBS3xbCtNH
-         mOunsm4j1JrvYLyZozwr3c/6bfXJI8sN9Qf8MXfQFqpkd7WlnMkHPToiLfBi+q2KhwlJ
-         g3w/t9vwY5bO08ZEK6kirTITwAMw+uwZGEzxoFnwlnPIwAYzZHYsIegq5iDu6PvK408Y
-         zOazKwDcUvtlGN6EQmVO5jf2/Rs2UH/jnAm9b+pGNsoZGocW78ejy5/QL3Oi/E4JpNTN
-         ZZqGHeA3EusZVfvMUHVQVeeb2mnxa1LF7S8Ti93+6Hr5Kq7y46QcsqD7hjBNlk/h8fZ7
-         YRbA==
-X-Gm-Message-State: AOUpUlH3hoSfpYDJQogoGeSIjBgONk35kO3gmMS80At35KfEH854mjYR
-        n5TmR/N3xRfZYov6FnmdnC6bd3KGVyvvOphdj4lpThec
-X-Google-Smtp-Source: AA+uWPyQ+Vm/8bJmZ/B2m/kVavRpG1VvZKRcUyUoof23mR74QzYl+UDP2roDQlTFbElbsW7d9zJbbI7cUxD2bcKj5Wo=
-X-Received: by 2002:a81:ae41:: with SMTP id g1-v6mr12204204ywk.345.1534280348638;
- Tue, 14 Aug 2018 13:59:08 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=uCpraLUregA01nEnFaE+m7yZMndvpCDhvKb887TClpI=;
+        b=TkmEMs1ww8gkrx+8KtI3sol7cGqi0jx2cGIwuafPvkQNIiPcjILJ5nBs/nSDXNC7Ol
+         IdIDah+G8cSOamDSEfFzAQ3RqzKs4NQC3NMI4qAMDGc0oc9mpGKfvJ/W/uK8Rp+JLZyC
+         JU8Tpx/EcUsFadwYt0e/+XX+ZZtbTdagfYNtYEE0y81Mhj88scpkJUguKLomlnNSAKxS
+         JA1kLq0/c5sx2q8QLeNlperOqRx7hUOTuf5CQFIj7JHZByWA5URGI93t9gTc0Zf3P8OV
+         r4OhXPI6ncKwfAMx/Qqu+S+EL3BDuYH+g//rJACK0BDS8ye5+OUaegPgruGOmsRS0dO5
+         XJQA==
+X-Gm-Message-State: AOUpUlEU+68tEiIEEtm+bCNrAiZFRAz/vHAXOVyi5akKZF0UZu22puDJ
+        hGAO61BS0T8nn+Mr8hZjQEc=
+X-Google-Smtp-Source: AA+uWPztkHEHa9z5OhfPfA+xL9mWUcDmnWeDE7y8VW7wvUBNBDawY+l8NpztHmS98SuI+lP9FcLlQg==
+X-Received: by 2002:adf:b456:: with SMTP id v22-v6mr14256963wrd.187.1534280387928;
+        Tue, 14 Aug 2018 13:59:47 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w3-v6sm16356624wrn.16.2018.08.14.13.59.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 13:59:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Contributor Summit planning
+References: <20180813163108.GA6731@sigill.intra.peff.net>
+        <87h8jyrtj6.fsf@evledraar.gmail.com>
+        <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
+        <20180813210617.GA19738@sigill.intra.peff.net>
+        <CACsJy8Dbf6+ZjLk0vgYvzhwweOdp+5QTno+ejoA-r2YYsdpzrQ@mail.gmail.com>
+        <20180814144711.GB3441@sigill.intra.peff.net>
+Date:   Tue, 14 Aug 2018 13:59:46 -0700
+In-Reply-To: <20180814144711.GB3441@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 14 Aug 2018 10:47:12 -0400")
+Message-ID: <xmqqzhxoy88t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
-In-Reply-To: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 14 Aug 2018 13:58:57 -0700
-Message-ID: <CAGZ79kZo3TK7O0bb+mKOkeLkp=rFHfFwGS6oispcvHwCEEh=LA@mail.gmail.com>
-Subject: Re: Syncing HEAD
-To:     Christian Couder <christian.couder@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 1:09 PM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> Hi,
->
-> When cloning with --mirror, the clone gets its HEAD initialized with
-> the value HEAD has in its origin remote. After that if HEAD changes in
-> origin there is no simple way to sync HEAD at the same time as the
-> refs are synced.
->
-> It looks like the simplest way to sync HEAD is:
->
-> 1) git remote show origin
-> 2) parse "HEAD branch: XXX" from the output of the above command
-> 3) git symbolic-ref HEAD refs/heads/XXX
->
-> It looks like it would be quite easy to add an option to `fetch` to
-> sync HEAD at the same time as regular refs are synced because every
-> fetch from an origin that uses a recent Git contains something like:
->
-> 19:55:39.304976 pkt-line.c:80           packet:          git< YYYYYYYY
-> HEAD\0multi_ack thin-pack side-band side-band-64k ofs-delta shallow
-> deepen-since deepen-not deepen-relative no-progress include-tag
-> multi_ack_detailed no-done symref=HEAD:refs/heads/test-1
-> agent=git/2.18.0
->
-> which in this example shows that HEAD is a symref to refs/heads/test-1
-> in origin.
->
-> Is there a reason why no such option already exists? Would it makes
-> sense to add one? Is there any reason why it's not a good idea? Or am
-> I missing something?
+Jeff King <peff@peff.net> writes:
 
-I think it is a great idea to add that. IIRC there was some talk when
-designing protocol v2 on how fetching of symrefs could be added later
-on in the protocol, which is why I cc'd Brandon who did the work there.
+> One problem there is that the prefixes are ambiguous (e.g., Jacob Keller
+> shares with me, and I think at least one other over the years). You
+> could look at the author of the tip commit, but that's not always right
+> (and in fact, counting just merged topics misses bug-fixes that get
+> applied directly on top of other people's topics).
 
-> I am asking because GitLab uses HEAD in the bare repos it manages to
-> store the default branch against which the Merge Requests (same thing
-> as Pull Requests on GitHub) are created.
->
-> So when people want to keep 2 GitLab hosted repos in sync, GitLab
-> needs to sync HEADs too, not just the refs.
->
-> I think this could be useful to other setups than GitLab though.
+Yes, a fix by somebody else to a bug that was recently introduced is
+safest to apply to the original topic and merge down; that way makes
+it more difficult to merge the original topic to older maintenance
+track(s) without the fix by mistake.  So a "topic" with commits from
+multiple people is not all that unusual.
 
-As said, I can see how that is useful; I recently came across some
-HEAD bug related to submodules, and there we'd also have the application.
-
-    git clone --recurse-submodules file://...
-
-might clone the submodules that are in detached HEAD, which is totally
-not a long term viable good HEAD, so a subsequent fetch might want
-to change the detached HEAD in submodules or re-affix it to branches.
-
-Unrelated/extended: I think it would be cool to mirror a repository even
-more, e.g. it would be cool to be able to fetch (if configured as allowed)
-the remote reflog, (not to be confused with you local reflog of the remote).
-I think that work would be enabled once reftables are available, which you
-have an eye on?
+Thanks.
