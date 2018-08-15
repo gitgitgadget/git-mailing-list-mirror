@@ -2,153 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE79C1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 19:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8D3C1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 19:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727623AbeHOW3i (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 18:29:38 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:39867 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727571AbeHOW3i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 18:29:38 -0400
-Received: by mail-it0-f68.google.com with SMTP id g141-v6so3485149ita.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:36:08 -0700 (PDT)
+        id S1727745AbeHOWcX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 18:32:23 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:39535 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727541AbeHOWcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 18:32:23 -0400
+Received: by mail-wr1-f45.google.com with SMTP id h10-v6so2054711wre.6
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=StpEe24qWXBzt14nas5zt2V0+4CEZK7G4uGjad+AEcY=;
-        b=svxVEYlrKHM4ykRjr9Wda56XrT5O4GMt45b+0/VhV4cIkSrFapK5syCdvqml5z4I//
-         sBXilVhHzTfpNjN2ylv7DXCyoCY+xA8HFI2/Fw8M5v+z85CyC5cD8PqMx0csKgUTrxTj
-         yvhu2SbjqPdBxcxnBI9fy+kBiPN/yvCiCbs9z1ljnJweDCqhrwoTtDg1bF7N2cl6ePDl
-         d/toQh1wrPFpRKKoGx7f7l7rZ3RGc9OW3BDKnk5raNPO83XOJKpwuTvuBwlHuDC5D58I
-         u3GklEvsd1NDhXCKp6SV90uvKg3Ay3Vr3fScYIf2iuUizmhldUyOnaxZ+6JhvTVVuU0M
-         iJxg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=azL3I72/Ktb7ma0DXFMrBeZ2GsXs+QHWZMfRtTJcxaw=;
+        b=nEdzJu0MHswq1OfBkDurp91hQyk1aDac45dO/1pKyewNP5cBceNMezzOFIL5h3mds6
+         zCNILCg5ACMIKRRULlLhDoQe8Y9P472v1VBUljnKUq/0gvvpZBOzCZ+h4Z+1A/0ijkrE
+         BO5T59nHzBhiJLT+b626oGdWao/qFfZrwaZ356KP1sI56+uoOYKBFcYkT55YiG1vSLrm
+         XySbdw31rIRFDk+PDUzk9+xgid1k7unTR+9M3OMGXMcfu6iek/UM8spruJN2TYfHRzZ6
+         VsJeerZeNq1tDiujbBlI9a9KuSdbV4zUEtMjsKy2E+/R67OxMDASyKymSYlAHK6OhnpB
+         UVFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=StpEe24qWXBzt14nas5zt2V0+4CEZK7G4uGjad+AEcY=;
-        b=RieE6455lQvMbwEs9YsZg3+6rcnTbegfRoBD/ovp3PzKo9snXJlscb2cnHUaM/5g5M
-         3DlI+9OtT/Zox/5mL15ix2hzoKl4Jk0eLE8vrX2jD0apjWy0/ujPTDmJP38nZ4hikii+
-         01UfF6vthgOL+oXugPVumyXhd7GiX2q/XeCAt0gMd5jqAVY65lBBVZgsAuNGGjPWcogh
-         SIZCA0cNKX1pfa3BvxREr0kYXl9ANLUTnBYyAAP2fMxuwhe/65kEhhfYqpSl/gTOQ5GA
-         QuI4a+VZaEj1F1S1Ee4fw+KyqmwqagO0BVBpcIta+kjC05he8SntYbX6xaOv6hRXVVOm
-         X8Ww==
-X-Gm-Message-State: AOUpUlGs/G8PRgVF39l9RrPRW4UQCzX7hS8z7NHnSxqGrTVE/djNpUNL
-        msSMDpwUm22LunkoJg0ZSUCBmwQaLZo/u+7KToE=
-X-Google-Smtp-Source: AA+uWPyJgEdGLqSRLEjWvpFWiPYVBMQEU2AcMTKeFzzuBt2zu58WGiN7G7Ze0mlvqEyOrNxdDS+YifIwzKvsjtrGN5o=
-X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr19384435itc.68.1534361768349;
- Wed, 15 Aug 2018 12:36:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180810153608.30051-1-pclouds@gmail.com> <20180812090714.19060-1-pclouds@gmail.com>
- <20180815190816.GA26521@tor.lan>
-In-Reply-To: <20180815190816.GA26521@tor.lan>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 15 Aug 2018 21:35:41 +0200
-Message-ID: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=azL3I72/Ktb7ma0DXFMrBeZ2GsXs+QHWZMfRtTJcxaw=;
+        b=N0yMltSA2Or9OXzL4JQ2/rXG/Ba4dmDW7LdegY/slt4lNa4/Rddgm484QW5uE6y3yG
+         efedhyQynZFSEQjww6o+ub6Shaz6+M8Gi28M+qkEhQB/8yBRK4WKOSMd32pbdwZFTDCL
+         FLdKZYoALAymQTC9LtSIwiKaksdIxfnoKLO92JOCM8Km4Va+bE1ke4JDyDUVSsosnVzW
+         D9o0hrfzpu/isQBvFKmdnFUpHl3ekng1Tzle8TEqE3sy5mOAcGpfPv18xlQumt5bldpz
+         P5GwIqvlLViMkmAD/jZslIuFSvMPVJpoUmnrMo/IXsdsfIfmmYTSJq/zp6qTCYfFmWpa
+         A0IA==
+X-Gm-Message-State: AOUpUlFAK+9zIjPZaAarmOtCR8eTNn3BlUbUgA++teAhTpvvT+Tk9WIr
+        Xo0RgBEfWZ49qCqybjNCALg=
+X-Google-Smtp-Source: AA+uWPwLIfgk1aI7pCa3dwWytYJlocNnpEpguiadngvlDRlzL6+Ny6Jr4LTA2aZOU+aUCzZDmJs0dg==
+X-Received: by 2002:adf:a789:: with SMTP id j9-v6mr16963302wrc.277.1534361930402;
+        Wed, 15 Aug 2018 12:38:50 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h83-v6sm2016066wmf.46.2018.08.15.12.38.49
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 12:38:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
+        pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
 Subject: Re: [PATCH v4] clone: report duplicate entries on case-insensitive filesystems
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <20180810153608.30051-1-pclouds@gmail.com>
+        <20180812090714.19060-1-pclouds@gmail.com>
+        <20180815190816.GA26521@tor.lan>
+Date:   Wed, 15 Aug 2018 12:38:49 -0700
+In-Reply-To: <20180815190816.GA26521@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Wed, 15 Aug 2018 21:08:16 +0200")
+Message-ID: <xmqqtvnvh12u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 9:08 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
-> > +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
-> > +     for (i =3D 0; i < state->istate->cache_nr; i++) {
-> > +             struct cache_entry *dup =3D state->istate->cache[i];
-> > +
-> > +             if (dup =3D=3D ce)
-> > +                     break;
-> > +
-> > +             if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORK=
-TREE))
-> > +                     continue;
-> > +
+Torsten Bögershausen <tboegi@web.de> writes:
+
+>> +
+>> +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
+>> +	for (i = 0; i < state->istate->cache_nr; i++) {
+>> +		struct cache_entry *dup = state->istate->cache[i];
+>> +
+>> +		if (dup == ce)
+>> +			break;
+>> +
+>> +		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
+>> +			continue;
+>> +
 >
-> Should the following be protected by core.checkstat ?
->         if (check_stat) {
+> Should the following be protected by core.checkstat ? 
+> 	if (check_stat) {
 
-Good catch! st_ino is ignored if core.checkStat is false. I will
-probably send a separate patch to add more details to config.txt about
-this key.
+I do not think such a if statement is strictly necessary.
 
-> > +             if (dup->ce_stat_data.sd_ino =3D=3D st->st_ino) {
-> > +                     dup->ce_flags |=3D CE_MATCHED;
-> > +                     break;
-> > +             }
-> > +     }
-> > +#endif
+Even if check_stat tells us "when checking if a cached stat
+information tells us that the path may have modified, use minimum
+set of fields from the 'struct stat'", we still capture and update
+the values from the same "full" set of fields when we mark a cache
+entry up-to-date.  So it all depends on why you are limiting with
+check_stat.  Is it because stdev is unusable?  Is it because nsec is
+unusable?  Is it because ino is unusable?  Only in the last case,
+paying attention to check_stat will reduce the false positive.
+
+But then you made me wonder what value check_stat has on Windows.
+If it is false, perhaps we do not even need the conditional
+compilation, which is a huge plus.
+
+>> +		if (dup->ce_stat_data.sd_ino == st->st_ino) {
+>> +			dup->ce_flags |= CE_MATCHED;
+>> +			break;
+>> +		}
+>> +	}
+>> +#endif
 >
 > Another thing is that we switch of the ASCII case-folding-detection-logic
 > off for Windows users, even if we otherwise rely on icase.
 > I think we can use fspathcmp() as a fallback. when inodes fail,
 > because we may be on a network file system.
-
-I admit I did not think about network file system. Will spend some
-time (and hopefully not on nfs kernel code) on it.
-
-For falling back on fspathcmp even on Windows, is it really safe? I'm
-on Linux and never have to deal with this issue to have any
-experience. It does sound good though because it should be a subset
-for any "weird" filesystems out there.
-
+>
 > (I don't have a test setup at the moment, but what happens with inodes
 > when a Windows machine exports a share to Linux or Mac ?)
 >
 > Is there a chance to get the fspathcmp() back, like this ?
->
+
+If fspathcmp() never gives false positives, I do not think we would
+mind using it like your update.  False negatives are fine, as that
+is better than just punting the whole thing when there is no usable
+inum.  And we do not care all that much if it is more expensive;
+this is an error codepath after all.
+
+And from code structure's point of view, I think it makes sense.  It
+would be even better if we can lose the conditional compilation.
+
+Another thing we maybe want to see is if we can update the caller of
+this function so that we do not overwrite the earlier checkout with
+the data for this path.  When two paths collide, we check out one of
+the paths without reporting (because we cannot notice), then attempt
+to check out the other path and report (because we do notice the
+previous one with lstat()).  The current code then goes on and overwrites
+the file with the contents from the "other" path.
+
+Even if we had false negative in this loop, if we leave the contents
+for the earlier path while reporting the "other" path, then the user
+can get curious, inspect what contents the "other" path has on the
+filesystem, and can notice that it belongs to the (unreported--due
+to false negative) earlier path.
+
 > static void mark_colliding_entries(const struct checkout *state,
->                                    struct cache_entry *ce, struct stat *s=
-t)
+> 				   struct cache_entry *ce, struct stat *st)
 > {
->         int i;
->         ce->ce_flags |=3D CE_MATCHED;
+> 	int i;
+> 	ce->ce_flags |= CE_MATCHED;
 >
->         for (i =3D 0; i < state->istate->cache_nr; i++) {
->                 struct cache_entry *dup =3D state->istate->cache[i];
->                 int folded =3D 0;
+> 	for (i = 0; i < state->istate->cache_nr; i++) {
+> 		struct cache_entry *dup = state->istate->cache[i];
+> 		int folded = 0;
 >
->                 if (dup =3D=3D ce)
->                         break;
+> 		if (dup == ce)
+> 			break;
 >
->                 if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORK=
-TREE))
->                         continue;
+> 		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
+> 			continue;
 >
->                 if (!fspathcmp(dup->name, ce->name))
->                         folded =3D 1;
+> 		if (!fspathcmp(dup->name, ce->name))
+> 			folded = 1;
 >
 > #if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
->                 if (check_stat && (dup->ce_stat_data.sd_ino =3D=3D st->st=
-_ino))
->                         folded =3D 1;
+> 		if (check_stat && (dup->ce_stat_data.sd_ino == st->st_ino))
+> 			folded = 1;
 > #endif
->                 if (folded) {
->                         dup->ce_flags |=3D CE_MATCHED;
->                         break;
->                 }
->         }
+> 		if (folded) {
+> 			dup->ce_flags |= CE_MATCHED;
+> 			break;
+> 		}
+> 	}
 > }
->
-
-
---=20
-Duy
