@@ -2,161 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,WEIRD_PORT shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 053EE1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 06:13:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8AB81F428
+	for <e@80x24.org>; Wed, 15 Aug 2018 06:27:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728480AbeHOJEg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 05:04:36 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:45766 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbeHOJEg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 05:04:36 -0400
-Received: by mail-pg1-f195.google.com with SMTP id f1-v6so103726pgq.12
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 23:13:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=werleOjS5A/UCzYRsGjCanOSpwdB1K+sb7QOYdYW0uo=;
-        b=ks2RXZle9JQhDK4SxWYo47Caw1JLa/zqOM6zlXtORYOcNnHyKFRcksBwghv4Zzyli2
-         MJbZiS57bGy0WUq1XJrVu6+07lBP9IJtbpbVESl+WRjeKE7GDvbVdbRD8H+06nqDAHD3
-         jj0vyfIOC7DjueRsv1gMqaKnpCN1+wAfAHl8hm9vzIwZCROs8U61/xpAtKkJ7y/fGvlZ
-         hmwDuFKXSy7+oMLMt05Mor5vT/NTfY5rf5+/lx1tBxdKXG5PJW2aKb9Tw98PCyv9hi94
-         AkSqyf+QVHv6dD8swf5gQa5iK5rpqO+1LJzxDHKqnN9eVOMOxvqH8PkIdE1XkGbKMW7a
-         UHaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=werleOjS5A/UCzYRsGjCanOSpwdB1K+sb7QOYdYW0uo=;
-        b=Rw4X3aABCPbPruH0mnE78iyQsQjxhouMqk/GTaZ0RtpyJskycPqygZRS29/g+k4GRJ
-         q+MM28g9nIAj7FRUcO3XVPjqb8wtg3E6meTgmiiH18TkMGK9gxVtabgYZUiG66NDxOoD
-         U6sWIJDEZEGfvxYKKNW8ikXiMGMaBNR3PW01f/vTlC8x1J9U+KgEjQf+1qkKGmdwVHJ4
-         0ALb+mT9AnwdnoV7y5vE5e72tMlXhmLB/9KVb7dx5ChNJygM5OKmLESlW9D4urb7nsuA
-         A/VOwRkxu9jlQ7uB51zkMDOd5vXbWoxJco2eiTCHdcaEFZoFIdOBu0MHgn+bEe/GOFHy
-         fQ6g==
-X-Gm-Message-State: AOUpUlGjzCTII6liWUsE9GtkiG6VsEy/jpDXagdcwUWnG787XBcQPOi5
-        +eqeZOU7LzsyzJn2gFEHCrk=
-X-Google-Smtp-Source: AA+uWPxKPNZj3f6t8aLQk1loUPD5XO5iqi86RiLO2RJKj8lpqZ7w20iCe7pQDciLXki7JyIo15ejEA==
-X-Received: by 2002:a63:951e:: with SMTP id p30-v6mr23792965pgd.318.1534313628573;
-        Tue, 14 Aug 2018 23:13:48 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u83-v6sm74483344pfj.37.2018.08.14.23.13.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 23:13:48 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 23:13:46 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: Re: [PATCHv3 1/6] Add missing includes and forward declares
-Message-ID: <20180815061346.GJ32543@aiede.svl.corp.google.com>
-References: <20180811205024.11291-1-newren@gmail.com>
- <20180813171749.10481-1-newren@gmail.com>
- <20180813171749.10481-2-newren@gmail.com>
- <20180815051011.GC32543@aiede.svl.corp.google.com>
- <CABPp-BFk2X5TApYzs3QtdokBs3Hqz9uX737M6RGMtaU+wYUikw@mail.gmail.com>
+        id S1726014AbeHOJSm convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 15 Aug 2018 05:18:42 -0400
+Received: from mout.gmx.net ([212.227.17.22]:56845 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725898AbeHOJSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 05:18:42 -0400
+Received: from [217.7.79.146] ([217.7.79.146]) by web-mail.gmx.net
+ (3c-app-gmx-bs78.server.lan [172.19.170.226]) (via HTTP); Wed, 15 Aug 2018
+ 08:27:51 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABPp-BFk2X5TApYzs3QtdokBs3Hqz9uX737M6RGMtaU+wYUikw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Message-ID: <trinity-1b5bee3c-e801-483f-b555-7ad0b97f5239-1534314471150@3c-app-gmx-bs78>
+From:   =?UTF-8?Q?=22Jochen_K=C3=BChner=22?= <jochen.kuehner@gmx.de>
+To:     "Stefan Beller" <sbeller@google.com>
+Cc:     git@vger.kernel.org, "Stefan Beller" <sbeller@google.com>
+Subject: Aw: [PATCH] git-submodule.sh: accept verbose flag in cmd_update to
+ be non-quiet
+Content-Type: text/plain; charset=UTF-8
+Date:   Wed, 15 Aug 2018 08:27:51 +0200
+Importance: normal
+Sensitivity: Normal
+In-Reply-To: <20180814182202.59442-1-sbeller@google.com>
+References: <929572FA-6B1D-4EC7-825B-93B96053A82C@gmx.de>
+ <20180814182202.59442-1-sbeller@google.com>
+Content-Transfer-Encoding: 8BIT
+X-UI-Message-Type: mail
+X-Priority: 3
+X-Provags-ID: V03:K1:vEsd5abuBvHdI/6NCkZaBy72jRxxsgOfaK/czCca+B2Oz8mxKPCpyvDn7/G8TAD/tqobf
+ H1ENTNWtETpN6tVR+FUUII/0Hq+HJsI0GVR/YmET4bkYGnKu/orN/DMsjwDnwAq+RhkCHa36k7yg
+ dueXr8JcUYHi9TjUxTUJN4kvANh7GoFPWztgt5+mBC2qY4dh01k4KrtqvllTWOEvQtgqQhmuKgbq
+ 3kPDeD1tFZxohiu/BVrWbtRs7ETkOBT4zh0FXkt8cMBBXwRnaZTceuru9nc9K4t+UrmFqEEyu3UT
+ JM=
+X-UI-Out-Filterresults: notjunk:1;V01:K0:/UDM0DLuGDE=:h4BUOAiwLD0UFeA0mmxhQH
+ 2kf5PI0Rz/VHFm1JLU6Bim/+t5rBy/bi4MmI55b9XHbERF4g0YKeAnOi1+AcNadWMlWiiB+pA
+ 7FwejgYgZVsEMgUyhfFI1vz9eaThfxl05b4QRSNHEe08KzKFGx1ctU5OFSGN3ciSW8GRa/FR8
+ Y02nLRdkB1G/A0JDvA06B7Iuzt1Eua9NLimmRMORAJRFDb3YHZ4oi9yfdjODV/YV4s8K/Ldqw
+ vqAjnKvjVvqL1pXIM51XWQ6v6mANun3djnUdmZ7a/qENxObnc+Wjvvq7hjcxrlXb/2qrye7XC
+ T44Jiu750XiF60z7NGNeXSoo8C2i4jqc0h9Axw5CSVrMScbi8wA7g5DY9Uk2g7RkPnJ0pKj8D
+ jhljiNly382OZ51uABv2rVFfVaqEH0lt0GB3qt2gJmj8bFhfKfQ+JzHUUeoAIE359Yqcz4rmz
+ sK6MzO+K/UMKO7LvCnfX+R88RMOneEyPGZbN1gxi6q3bimKv49NV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
 
-> I didn't want to repeat that description in all 6 patches, since all
-> six came from that, so I put it in the cover letter.  Since patch #1
-> has most that changes though, I guess it makes sense to include it at
-> least in that one?
+ 
 
-Yes, that sounds sensible to me.
+We use git for windows, there I cannot fin the git-submodule.sh! How can I fix it there?
+ 
 
-[...]
-> On Tue, Aug 14, 2018 at 10:10 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+Gesendet: Dienstag, 14. August 2018 um 20:22 Uhr
+Von: "Stefan Beller" <sbeller@google.com>
+An: jochen.kuehner@gmx.de
+Cc: git@vger.kernel.org, "Stefan Beller" <sbeller@google.com>
+Betreff: [PATCH] git-submodule.sh: accept verbose flag in cmd_update to be non-quiet
+In a56771a668d (builtin/pull: respect verbosity settings in submodules,
+2018-01-25), we made sure to pass on both quiet and verbose flag from
+builtin/pull.c to the submodule shell script. However git-submodule doesn't
+understand a verbose flag, which results in a bug when invoking
 
->> Is there an easy way to review it?  (Keep in mind that I'm super lazy.
->> ;-))
+git pull --recurse-submodules -v [...]
+
+There are a few different approaches to fix this bug:
+
+1) rewrite 'argv_push_verbosity' or its caller in builtin/pull.c to
+cap opt_verbosity at 0. Then 'argv_push_verbosity' would only add
+'-q' if any.
+
+2) Have a flag in 'argv_push_verbosity' that specifies if we allow adding
+-q or -v (or both).
+
+3) Add -v to git-submodule.sh and make it a no-op
+
+(1) seems like a maintenance burden: What if we add code after
+the submodule operations or move submodule operations higher up,
+then we have altered the opt_verbosity setting further down the line
+in builtin/pull.c.
+
+(2) seems like it could work reasonably well without more regressions
+
+(3) seems easiest to implement as well as actually is a feature with the
+last-one-wins rule of passing flags to Git commands.
+
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+
+On Tue, Aug 14, 2018 at 10:54 AM Jochen Kühner <jochen.kuehner@gmx.de> wrote:
 >
-> I guess I could send you my hacky python script that loops through the
-> top-level header files and creates the dummy two-line c file, and you
-> could inspect it and run it.  But that only verifies that it compiles,
-> not that the changes I choose are "correct".
-
-I suppose leaving it as an exercise to the reviewer is not terrible.
-Maybe some reviewer will be inspired to make a test tool we can check
-in, or configuration for an existing tool like iwyu.
-
-[...]
->> enums are of unknown size, so forward declarations don't work for
->> them.  See bb/pedantic for some examples.
+> If I set
+> git config --global submodule.recurse true
+> and run git via:
+> git pull --progress -v --no-rebase "origin"
+> The command will fail with following output (Errorlevel is 1)
+> Fetching submodule submodules/tstemplates
+> From http://10.0.102.194:7990/scm/mcc/tstemplates
+> = [up to date] feature/robin -> origin/feature/robin
+> = [up to date] master -> origin/master
+> Already up to date.
+> usage: git submodule [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
+> or: git submodule [--quiet] status [--cached] [--recursive] [--] [<path>...]
+> or: git submodule [--quiet] init [--] [<path>...]
+> or: git submodule [--quiet] deinit [-f|--force] (--all| [--] <path>...)
+> or: git submodule [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|--force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--reference <repository>] [--recursive] [--] [<path>...]
+> or: git submodule [--quiet] summary [--cached|--files] [--summary-limit <n>] [commit] [--] [<path>...]
+> or: git submodule [--quiet] foreach [--recursive] <command>
+> or: git submodule [--quiet] sync [--recursive] [--] [<path>...]
+> or: git submodule [--quiet] absorbgitdirs [--] [<path>...]
 >
-> structs are also of unknown size; the size is irrelevant when the
-> function signature merely uses a pointer to the struct or enum.  The
-> enum forward declaration fixes a compilation bug.
-
-My rationale may miss the point but the standard and some real compilers
-don't like this, unfortunately.
-
-For structs, having an incomplete type is fine, but for enums we need
-the full definition.  E.g. C99 sayeth (in section 6.7.2.3 "tags")
-
-	A type specifier of the form
-
-		enum identifier
-
-	without an enumerator list shall only appear after the type it
-	specifies is complete.
-
-[...]
->>> --- a/commit-graph.h
->>> +++ b/commit-graph.h
->>> @@ -4,6 +4,7 @@
->>>  #include "git-compat-util.h"
->>>  #include "repository.h"
->>>  #include "string-list.h"
->>> +#include "cache.h"
->>
->> We can skip the #include of git-compat-util.h since all .c files
->> include it.
+> seams that the “verbose” parameter “-v” is also sent to “git submodules” wich does not support it.
 >
-> Good point.  Should I go through and remove all the inclusions of
-> git-compat-util.h in header files?
-
-It's orthogonal to this series but might be a good change.
-
-[...]
->>> --- a/pathspec.h
->>> +++ b/pathspec.h
->>> @@ -1,6 +1,11 @@
->>>  #ifndef PATHSPEC_H
->>>  #define PATHSPEC_H
->>>
->>> +#include "string.h"
->>> +#include "strings.h"
->>
->> What are these headers?
+> If I remove “-v” it will work.
 >
-> The original patch[1] had explanations of why I added them:
->
-> +#include "string.h"   /* For str[n]cmp */
-> +#include "strings.h"  /* For str[n]casecmp */
+> Problem is, I use TortoiseGit, wich will automatically create this command!
 
-Ah.  Please remove these #includes: they're part of the standard
-library that we get implicitly via git-compat-util.h.
+git-submodule.sh | 3 +++
+1 file changed, 3 insertions(+)
 
-I was tripped up because they were in quotes instead of angle
-brackets.
-
-Thanks,
-Jonathan
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 8b5ad59bdee..f7fd80345cd 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -438,6 +438,9 @@ cmd_update()
+-q|--quiet)
+GIT_QUIET=1
+;;
++ -v)
++ GIT_QUIET=0
++ ;;
+--progress)
+progress=1
+;;
+--
+2.18.0.265.g16de1b435c9.dirty
+ 
