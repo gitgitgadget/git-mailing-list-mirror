@@ -7,176 +7,148 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3684C1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 19:31:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE79C1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 19:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727742AbeHOWZG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 18:25:06 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38701 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725941AbeHOWZG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 18:25:06 -0400
-Received: by mail-wr1-f66.google.com with SMTP id v14-v6so2048428wro.5
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:31:36 -0700 (PDT)
+        id S1727623AbeHOW3i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 18:29:38 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:39867 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727571AbeHOW3i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 18:29:38 -0400
+Received: by mail-it0-f68.google.com with SMTP id g141-v6so3485149ita.4
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:36:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4ryyilxWRJZz6PQWybfCM1JrUJM3gFDrx5/LfL+8buI=;
-        b=E9P8Z7vZ79vZfBloGvSUsUrrLyYfxyJnN6EFzSSmGAD/e6r6iMjRqelTgQUsIK4JNb
-         CGIkq5DKrflH4PYaMI6PnOYU+AHePtKt81aGsiyXrLRu5x/XaeLsnmwpCWd2jJkqqt66
-         E6/La3IG3c4CHtACOqsd2AA/CEKkOJf+Y3frdTYtiIc/QAx0e4EizTfVB+mvae57ckPv
-         nwG34uSeOEGgnXrq+9O7TGd/QhSg5zYSzy+Z/RRWW8zifKlnwi9Og6xBvjw9Fe3ExRNA
-         zzVKtAfRN1e01lPrKV3ndoWIVw1jdQL5nwI0kwAWQKd/gW3wqjal/r9HHQwsFYXnGro3
-         nVeg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=StpEe24qWXBzt14nas5zt2V0+4CEZK7G4uGjad+AEcY=;
+        b=svxVEYlrKHM4ykRjr9Wda56XrT5O4GMt45b+0/VhV4cIkSrFapK5syCdvqml5z4I//
+         sBXilVhHzTfpNjN2ylv7DXCyoCY+xA8HFI2/Fw8M5v+z85CyC5cD8PqMx0csKgUTrxTj
+         yvhu2SbjqPdBxcxnBI9fy+kBiPN/yvCiCbs9z1ljnJweDCqhrwoTtDg1bF7N2cl6ePDl
+         d/toQh1wrPFpRKKoGx7f7l7rZ3RGc9OW3BDKnk5raNPO83XOJKpwuTvuBwlHuDC5D58I
+         u3GklEvsd1NDhXCKp6SV90uvKg3Ay3Vr3fScYIf2iuUizmhldUyOnaxZ+6JhvTVVuU0M
+         iJxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4ryyilxWRJZz6PQWybfCM1JrUJM3gFDrx5/LfL+8buI=;
-        b=mN8mzoTTxDh2i6uT76rcAFYIeShnZNnfQFPZKHWpHt1K0cWcU/5MklHIrBojuxhfKM
-         45+nN67p1cGU+cLFr8KWdO0xm/w4GS7Ea7wElOkkeT68DknIXkF6nI+zSFPwzxGnRZ+H
-         XnyXGk5jDQnUU+7RTHyChXETW+kBuYu3nXNTAyFexdU+/PTyr9Y3EpgQxY0wxXfAgerQ
-         HQcCunbPsDlDBVc7A5ZqLJxi3fXgILq0Nd+5eT80dD4ndk4Fig7i/ZQHt4YPEiK2DvwH
-         E0mZ/O+XyPyPJSqE7USGcQtkl3ZS2IhptqlR2RivmQeArM3K/afy3OJhb/Qu9s4K9YTl
-         wELQ==
-X-Gm-Message-State: AOUpUlH5DEQ6RCz/2/jGwaz2xlrYpCvPPJ5dcyzaKq/uwoJ47LwylxKp
-        z7SOaAgZhdjDDDfo7iBrDRuJ/euc
-X-Google-Smtp-Source: AA+uWPxiN2pAOAmvOG/2Fhk+e06bWUAtyincLJa+lnufDHXTotD9LgrgZJmhW0BfB6YT9/5n+AaMnA==
-X-Received: by 2002:adf:81c3:: with SMTP id 61-v6mr17349611wra.120.1534361495298;
-        Wed, 15 Aug 2018 12:31:35 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id q70-v6sm5496209wmd.39.2018.08.15.12.31.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 12:31:34 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 20:31:33 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v7 04/26] stash: renamed test cases to be more
- descriptive
-Message-ID: <20180815193133.GJ2734@hank.intra.tgummerer.com>
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
- <cb70dc2317b8bdbe640a50de7050cb405067c0f0.1533753605.git.ungureanupaulsebastian@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=StpEe24qWXBzt14nas5zt2V0+4CEZK7G4uGjad+AEcY=;
+        b=RieE6455lQvMbwEs9YsZg3+6rcnTbegfRoBD/ovp3PzKo9snXJlscb2cnHUaM/5g5M
+         3DlI+9OtT/Zox/5mL15ix2hzoKl4Jk0eLE8vrX2jD0apjWy0/ujPTDmJP38nZ4hikii+
+         01UfF6vthgOL+oXugPVumyXhd7GiX2q/XeCAt0gMd5jqAVY65lBBVZgsAuNGGjPWcogh
+         SIZCA0cNKX1pfa3BvxREr0kYXl9ANLUTnBYyAAP2fMxuwhe/65kEhhfYqpSl/gTOQ5GA
+         QuI4a+VZaEj1F1S1Ee4fw+KyqmwqagO0BVBpcIta+kjC05he8SntYbX6xaOv6hRXVVOm
+         X8Ww==
+X-Gm-Message-State: AOUpUlGs/G8PRgVF39l9RrPRW4UQCzX7hS8z7NHnSxqGrTVE/djNpUNL
+        msSMDpwUm22LunkoJg0ZSUCBmwQaLZo/u+7KToE=
+X-Google-Smtp-Source: AA+uWPyJgEdGLqSRLEjWvpFWiPYVBMQEU2AcMTKeFzzuBt2zu58WGiN7G7Ze0mlvqEyOrNxdDS+YifIwzKvsjtrGN5o=
+X-Received: by 2002:a24:610d:: with SMTP id s13-v6mr19384435itc.68.1534361768349;
+ Wed, 15 Aug 2018 12:36:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cb70dc2317b8bdbe640a50de7050cb405067c0f0.1533753605.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+References: <20180810153608.30051-1-pclouds@gmail.com> <20180812090714.19060-1-pclouds@gmail.com>
+ <20180815190816.GA26521@tor.lan>
+In-Reply-To: <20180815190816.GA26521@tor.lan>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 15 Aug 2018 21:35:41 +0200
+Message-ID: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
+Subject: Re: [PATCH v4] clone: report duplicate entries on case-insensitive filesystems
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
+        Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Subject: Re: [GSoC][PATCH v7 04/26] stash: renamed test cases to be more descriptive
+On Wed, Aug 15, 2018 at 9:08 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+> > +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
+> > +     for (i =3D 0; i < state->istate->cache_nr; i++) {
+> > +             struct cache_entry *dup =3D state->istate->cache[i];
+> > +
+> > +             if (dup =3D=3D ce)
+> > +                     break;
+> > +
+> > +             if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORK=
+TREE))
+> > +                     continue;
+> > +
+>
+> Should the following be protected by core.checkstat ?
+>         if (check_stat) {
 
-Please use the imperative mood in the title and the commit messages
-themselves.  From Documentation/SubmittingPatches:
+Good catch! st_ino is ignored if core.checkStat is false. I will
+probably send a separate patch to add more details to config.txt about
+this key.
 
-    Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
-    instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
-    to do frotz", as if you are giving orders to the codebase to change
-    its behavior.
+> > +             if (dup->ce_stat_data.sd_ino =3D=3D st->st_ino) {
+> > +                     dup->ce_flags |=3D CE_MATCHED;
+> > +                     break;
+> > +             }
+> > +     }
+> > +#endif
+>
+> Another thing is that we switch of the ASCII case-folding-detection-logic
+> off for Windows users, even if we otherwise rely on icase.
+> I think we can use fspathcmp() as a fallback. when inodes fail,
+> because we may be on a network file system.
 
-From a quick skim over the rest of the series, this also applies to
-some of the subsequent patches in the series. 
+I admit I did not think about network file system. Will spend some
+time (and hopefully not on nfs kernel code) on it.
 
-On 08/08, Paul-Sebastian Ungureanu wrote:
-> Renamed some test cases' labels to be more descriptive and under 80
-> characters per line.
-> 
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  t/t3903-stash.sh | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
-> 
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index de6cab1fe..8d002a7f2 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -604,7 +604,7 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
->  	test_cmp expected actual
->  '
->  
-> -test_expect_success 'stash drop - fail early if specified stash is not a stash reference' '
-> +test_expect_success 'drop: fail early if specified stash is not a stash ref' '
->  	git stash clear &&
->  	test_when_finished "git reset --hard HEAD && git stash clear" &&
->  	git reset --hard &&
-> @@ -618,7 +618,7 @@ test_expect_success 'stash drop - fail early if specified stash is not a stash r
->  	git reset --hard HEAD
->  '
->  
-> -test_expect_success 'stash pop - fail early if specified stash is not a stash reference' '
-> +test_expect_success 'pop: fail early if specified stash is not a stash ref' '
->  	git stash clear &&
->  	test_when_finished "git reset --hard HEAD && git stash clear" &&
->  	git reset --hard &&
-> @@ -682,7 +682,7 @@ test_expect_success 'invalid ref of the form "n", n >= N' '
->  	git stash drop
->  '
->  
-> -test_expect_success 'stash branch should not drop the stash if the branch exists' '
-> +test_expect_success 'branch: should not drop the stash if the branch exists' '
+For falling back on fspathcmp even on Windows, is it really safe? I'm
+on Linux and never have to deal with this issue to have any
+experience. It does sound good though because it should be a subset
+for any "weird" filesystems out there.
 
-Since we're adjusting the titles of the tests here I'll allow myself
-to nitpick a little :)
+> (I don't have a test setup at the moment, but what happens with inodes
+> when a Windows machine exports a share to Linux or Mac ?)
+>
+> Is there a chance to get the fspathcmp() back, like this ?
+>
+> static void mark_colliding_entries(const struct checkout *state,
+>                                    struct cache_entry *ce, struct stat *s=
+t)
+> {
+>         int i;
+>         ce->ce_flags |=3D CE_MATCHED;
+>
+>         for (i =3D 0; i < state->istate->cache_nr; i++) {
+>                 struct cache_entry *dup =3D state->istate->cache[i];
+>                 int folded =3D 0;
+>
+>                 if (dup =3D=3D ce)
+>                         break;
+>
+>                 if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORK=
+TREE))
+>                         continue;
+>
+>                 if (!fspathcmp(dup->name, ce->name))
+>                         folded =3D 1;
+>
+> #if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
+>                 if (check_stat && (dup->ce_stat_data.sd_ino =3D=3D st->st=
+_ino))
+>                         folded =3D 1;
+> #endif
+>                 if (folded) {
+>                         dup->ce_flags |=3D CE_MATCHED;
+>                         break;
+>                 }
+>         }
+> }
+>
 
-Maybe "branch: do not drop the stash if the branch exists", which
-sounds more like an assertion, as the "pop" and "drop" titles above.
 
->  	git stash clear &&
->  	echo foo >file &&
->  	git add file &&
-> @@ -693,7 +693,7 @@ test_expect_success 'stash branch should not drop the stash if the branch exists
->  	git rev-parse stash@{0} --
->  '
->  
-> -test_expect_success 'stash branch should not drop the stash if the apply fails' '
-> +test_expect_success 'branch: should not drop the stash if the apply fails' '
->  	git stash clear &&
->  	git reset HEAD~1 --hard &&
->  	echo foo >file &&
-> @@ -707,7 +707,7 @@ test_expect_success 'stash branch should not drop the stash if the apply fails'
->  	git rev-parse stash@{0} --
->  '
->  
-> -test_expect_success 'stash apply shows status same as git status (relative to current directory)' '
-> +test_expect_success 'apply: shows same status as git status (relative to ./)' '
-
-s/shows/show/ above maybe?  This used to be a full sentence
-previously, where 'shows' was appropriate, but I think "show" sounds
-better after the colon.
-
->  	git stash clear &&
->  	echo 1 >subdir/subfile1 &&
->  	echo 2 >subdir/subfile2 &&
-> @@ -1048,7 +1048,7 @@ test_expect_success 'stash push -p with pathspec shows no changes only once' '
->  	test_i18ncmp expect actual
->  '
->  
-> -test_expect_success 'stash push with pathspec shows no changes when there are none' '
-> +test_expect_success 'push: <pathspec> shows no changes when there are none' '
-
-Maybe "push <pathspec>: show no changes when there are none"?  "push
-<pathspec>" would be the rest of the 'git stash' command, having the
-colon in between them seems a bit odd.
-
->  	>foo &&
->  	git add foo &&
->  	git commit -m "tmp" &&
-> @@ -1058,7 +1058,7 @@ test_expect_success 'stash push with pathspec shows no changes when there are no
->  	test_i18ncmp expect actual
->  '
->  
-> -test_expect_success 'stash push with pathspec not in the repository errors out' '
-> +test_expect_success 'push: <pathspec> not in the repository errors out' '
-
-This one makes sense to me.
-
->  	>untracked &&
->  	test_must_fail git stash push untracked &&
->  	test_path_is_file untracked
-> -- 
-> 2.18.0.573.g56500d98f
-> 
+--=20
+Duy
