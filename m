@@ -2,91 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 219891F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 17:22:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B6EEC1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 17:24:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729381AbeHOUPc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 16:15:32 -0400
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:36756 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727604AbeHOUPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 16:15:31 -0400
-Received: by mail-yw1-f67.google.com with SMTP id v197-v6so1374357ywg.3
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:22:30 -0700 (PDT)
+        id S1729424AbeHOURR (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 16:17:17 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:38311 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727604AbeHOURR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 16:17:17 -0400
+Received: by mail-io0-f193.google.com with SMTP id v26-v6so1606235iog.5
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=I88mia58JdvmBL51R1oxlnggJDlP114Gw+yIEqxnRJs=;
-        b=a75OpBN/tIjxb2SUwL5urlHd5JsyXb7GI05vGqUSIQuAMNn/JO4L0xLF169gESuV82
-         IMpeXeNOsOMU5fVzN9VU43TlD+Ka6zOvaOuTxhrze+QhAzND2RAewcoJ/f56+eUup2t3
-         6n8Qk/1PEnYrFORGAQfGnarIq8xkLlIFJNYuIL4iAzWfPnE/4+q9L/L+RxeiPsmLtHo6
-         nZ9gunKgK3ujSWMCudVy0XBarKWuw8iErfM8zuNDl0k0GuUBLDcM4WVV6ovOSiv1n6h4
-         +Jz7n1kRi0zR2LWAWvTPukeVYARg2hXmLxOUb/5M3hBGuAIUaQ8L7whp7PWZEsGQ/YHg
-         V31A==
+        bh=lLKj4IHRmAGD26G5S40WjjQ9GB2TaZTUdPi8B76ROzY=;
+        b=T1LeCX5eVzxzAdPKrMVkkRmDDqCxjX04N4vK6v1PcJXxIfNZKd+i7saUJnNPguErk2
+         O2o1cgjI8GAWJ8D0LAElC7AF5OdH73U+MMcSek48O3DW1WH3e2mcZfy+ZPY3UdtpRSJb
+         Ef9hQNTKBTQUhyipCvVZMZu9vbsqFF9GckGOqDIELq9A4+8f+Vd4mKP0ehb5Oji99P/W
+         0c6hX6Xu14xHuFhkoGjDkl2Ep5iyWA53xRrVGvwqxBXf2hwQ3KZOmo1MEQl8r0iEwziN
+         3NujK3fuiImc9uwUKLHh+pP7lUhGmh6fiGg4MwNgwLqnCtGSHJ7VNiqEygne1f1flxaY
+         wvBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=I88mia58JdvmBL51R1oxlnggJDlP114Gw+yIEqxnRJs=;
-        b=kasT/gHLNCQsG0ZEez/Zi6vsjQ5EvmCHtbAx8KjFM1Nb51KX+9lzETKYIuaW5Y6zlz
-         Vjvcodqr4bdRfGyJpW8vFT7KXkRR8OoRp7hndCs95Jx9Q87lce2tv4oFclETcxQMPZzq
-         WoAeMoBi199hVgfNTznEiXzqtFjFatT6sV5Gw20JGX9S15JpX9YX7lSnU5GywM0Q7EK5
-         0vjgHwd9kJntt7ovaEB+NzpbLcbpmMEhTChvsIZlT5pS/ANAB/EBWsqTKI3Wn4P0CdRp
-         taGID3k68x3An3G6qCtAGQhsR9uAtoyi0W4BWikNvaOgycCWIn8GYH0315+VLFef3OT7
-         IgWA==
-X-Gm-Message-State: AOUpUlHOyTwE/CxVpqC+SOaFZxbVp1pFYI8RlqxtT3xOzZy7WU1MrdQX
-        d8CNI00FY7hwH+MTVNEvuVpc5COfE8BNJcTuzdHE+w==
-X-Google-Smtp-Source: AA+uWPxmDCb64viYEuzlwy1qsA+hXPCs45aM7uGk3frSEZV+ajvGEZ8Daix3A64qyiVlm0KqMMS70sRiSyjohGGg81c=
-X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr14221047ywh.238.1534353749474;
- Wed, 15 Aug 2018 10:22:29 -0700 (PDT)
+        bh=lLKj4IHRmAGD26G5S40WjjQ9GB2TaZTUdPi8B76ROzY=;
+        b=HWltM6LArbOvSKniCaf1o1ZXKUfSq27WtvwxcjNY8yDmXefQz306d6OdnSzkZmxQpY
+         ghtwngBJX3VOHmGzjtbyFdwUSVQTmBGh1THTcMsoq4nek49H+wiv8BKnBu7GKoBCeeX2
+         /dijXLOZiSwx/mTwwRXP66CSK9U4PYxFioGtUsawddASiKSVpWwUtr8UVrdFej3DRb+A
+         V+99ZzNoZJDnf1FU7AYoJsxpI3wVWN2YzzEfPRIhAsdBUU9nJJgKyliG6CgUVIyyZNoh
+         2oYRMkvdEw22rCu7a9OtJvF5NFYYWim5zU4LiP5eaoMkcw8cERQq+wygOk3ooCQSl3u0
+         JfaA==
+X-Gm-Message-State: AOUpUlF8OYiL+2PCb8Q4FSAkJ0TbRVrfFfxGwusd3PE/iapCWfJnL9km
+        JLFJrVLTpgLnfHKHSC0Um5lHGKtOG5W2EC+nei0=
+X-Google-Smtp-Source: AA+uWPzwk0nTuUztQjurOt+wxIIkLb61B2VhfFtmx5Hkq5WqX0jx/R+UZ4we+oEOVPEULKy8NfelPgy551DX/t7Cayg=
+X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr21028376ioe.282.1534353854816;
+ Wed, 15 Aug 2018 10:24:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180815162308.17747-1-pclouds@gmail.com> <20180815162308.17747-2-pclouds@gmail.com>
- <CAGZ79kYo-icUHfezTMg77s_2GtKcgH6jysNTu11XOoL4UT-9bQ@mail.gmail.com> <CACsJy8Br==4ugLh5G2jU9NV1XRsH8iBmYkMZ2Ke_9jZgwuyJ7A@mail.gmail.com>
-In-Reply-To: <CACsJy8Br==4ugLh5G2jU9NV1XRsH8iBmYkMZ2Ke_9jZgwuyJ7A@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Aug 2018 10:22:18 -0700
-Message-ID: <CAGZ79kaeOoEniNDq_NEeYGH88Qkch7EodGJ-taNdxv=hC7t-oA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
+References: <20180815162308.17747-1-pclouds@gmail.com> <CABPp-BEC45snMzGeCre-dD1rtqGok-RKuLGbMaV=VJhwx1ceew@mail.gmail.com>
+ <CACsJy8B3ip+_sDrpvaZ32a35-6hWkY=eE6g4RObWgbHnf6g8uw@mail.gmail.com> <xmqqtvnvim2j.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvnvim2j.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 15 Aug 2018 19:23:48 +0200
+Message-ID: <CACsJy8Cx42bhLq9MJqcB9ayO8TqASh1xbmOE8O75-ufKXAK8ug@mail.gmail.com>
+Subject: Re: [PATCH 1/2] branch.c: remove explicit reference to the_repository
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 10:18 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Aug 15, 2018 at 7:09 PM Stefan Beller <sbeller@google.com> wrote:
-> > Technically you would not need patch 1 in this series, as you could call
-> > remove_branch_state(void) as before that patch to do the same thing here.
-> > I guess that patch 1 is more of a drive by cleanup, then?
->
-> Yes.
->
-> > It looks a bit interesting as sequencer_remove_state actually
-> > takes no arguments and assumes the_repository, but I guess that is fine.
->
-> Don't worry. My effort to kill the_index will make sequencer.c take
-> 'struct repository *' (its operations are so wide that passing just
-> struct index_state * does not make sense).
+On Wed, Aug 15, 2018 at 7:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+> I also do not think remove_branch_state() function belongs to
+> branch.c in the first place.  The state it is clearing is not even
+> about a "branch".  It is state left by the last command that stopped
+> in the middle; its only callers are "reset", "am --abort/--skip" and
+> "checkout <another-branch>".
 
-Cool! I'll give that series a read, then! Thanks for killing the_index!
-
-> > I wondered if we need to have this patch for 'a' as well, and it looks like
-> > which does a sequencer_rollback, which is just some logic before
-> > attempting sequencer_remove_state. So I'd think remove_branch_state
-> > could be done in sequencer_remove_state as well?
->
-> sequencer_rollback does not need this remove_branch_state() line
-> because it calls reset_for_rollback() which does this deletion. Patch
-> 1/1 kinda hints at that because it touches all remove_branch_state()
-> ;-)
-
-Gah! I am being slow.
+sequencer.c as its new home then?
+-- 
+Duy
