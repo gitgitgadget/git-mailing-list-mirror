@@ -2,93 +2,247 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C76B71F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 14:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCF751F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 15:15:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729435AbeHOR0J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 13:26:09 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:37870 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729265AbeHOR0J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 13:26:09 -0400
-Received: by mail-pf1-f195.google.com with SMTP id a26-v6so589336pfo.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 07:33:45 -0700 (PDT)
+        id S1729381AbeHOSHv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 14:07:51 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:37811 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729312AbeHOSHv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 14:07:51 -0400
+Received: by mail-wm0-f67.google.com with SMTP id n11-v6so1648179wmc.2
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 08:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=7SNNyvJMB0O7u+63WqzXwe7dkuB2Wi8bsWX99SU7L5U=;
-        b=EtwGS0IlqOG6d6QmrBx8Nd/qYjAZ8D8qunr4bv2R6DKSD1O/BzMrvN7fJLt7QcKfQu
-         2w/mFo2Rv/aFrlPTeHbSgvw7kS0n1sv1Ayi1PbtFgZkbb8XwAvfcAbtzcAtw/tJ1sr6f
-         0WS15MDB/JfoJkpIarmKueHGmnz7mgqMLhLw2mwzqlxZtIuF9Wr2BNsVO0gPUM+PZJl8
-         zaKA8gsC63a6F0yY+xPvjsTuB6FsqVYSwDoorjp7/Sffb8JbKFZyeKO+quHwLuumLrNG
-         31aK7HmYgwElIRHkV7qoSee2lcx3eNLhmsjph2szhwyZ12TQp8as4vtSgpVXf6Gjml6p
-         xVkA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gg5GEHfj0PnJmEJ6jS0ZHh6NWFdwbPhHYkR+TtucLgQ=;
+        b=cXQ1ZgvBSMUlp9Bzhzf+8j9RuRSo2jiJec+bMRhs2pdoSG//aLUP7qIAJeY12Gj6eJ
+         +V1xB+U7uaiq9VNalHuU9+ds6Gd/X+85s6TJOF07Rd3C0QQHlMh15kOIOBZMjS7yaHUH
+         nseBccju4phkgsZALgLv9ypal4ALjo1F//co2PCEMoMZyZjQs/8QO4YECSyfLPqFbYae
+         ryBRW/KoLxgTp5+/899VmsP2hN0/Fk6z/BybZoxdhhwWAOyRsvYtpr5J4KLSNvgYpQnY
+         TNtHTNCc8CRbM0O+QNdK04x7DoMcO9wupy8fxSS2JG6yaIeRlfpMdsnrZcGpYN2aldgC
+         n9rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7SNNyvJMB0O7u+63WqzXwe7dkuB2Wi8bsWX99SU7L5U=;
-        b=doFQnSDAvmJprUrFV4w7GR7eXxg/G81IkaieB+v0KdbieVWqURuHgQLX7dUe/cQ0eN
-         o+qJskOEe6EjpPyC/2QqhWPLM8iNIFCJ1eW5sMP5lxeB+iraKyQDz+7bkjdW0IIGjzIf
-         4z0Znx+vbWNFZfLjB1oaOt9wa93mz4NoFWoXp1H0U+J6BYxBEQUPmDxr7n3SGA5DrJwK
-         6s7coKbT47PU2lcURAckQNGdyITeZtCVk1Xuihy22RBT2P87mv/nILolQj2y1Zx5Ni+t
-         HmGQE8WM0Le7wbnr1a+0mOnmLUkWTecOG0N9zbhg53ZZdheaCXlpSDazQ9uxWNuOoxTN
-         vBKw==
-X-Gm-Message-State: AOUpUlFivLtL/b9MRLXRgOZn77tOKqAU/TwOqFYlyVoFh7g3VvAK65NS
-        ZBzVUl0Hsn3g7bNOje/xD7D+7ttf
-X-Google-Smtp-Source: AA+uWPynEF0LKFiHkh94sRnb4SBv3dzjndIGlYfLekHjnS5dibFAjvF8jwpngvNyqNjzlYS6VQX/hw==
-X-Received: by 2002:aa7:84c2:: with SMTP id x2-v6mr20626479pfn.220.1534343625298;
-        Wed, 15 Aug 2018 07:33:45 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id l79-v6sm50988601pfb.111.2018.08.15.07.33.44
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gg5GEHfj0PnJmEJ6jS0ZHh6NWFdwbPhHYkR+TtucLgQ=;
+        b=V7k+rnVxeuUKUkoMW69giSggUYpLtPhFZCQWMgWVPMrzpCbWH91R4Ge7tZJDa0Tkf4
+         gnQJJ2wnFixodGedJrnSoB5CcCds7zZ5x3kb5nni6eRIM9vkQ8SVAhldhvRrRvsqBkuu
+         oGvYlyQ+7sPx16XwyTtdbZvamddgCJ3ceo2SEtdjpLVxlWZXpQ0vXsn+JOAjfC2LaJtf
+         3Rgp977gT//FhOB/N91v7XKJnOtX5Hflo8JP5eWPomwqoTF8/C1yLPE6q5ibdBxsD8Uk
+         6zWOYbL9dMgeXzLUVkVD6kdGP+Bs0sJgNco8dbO+R3dFYSIG4Gcsua0UmrHpr9rrOsjm
+         vfkg==
+X-Gm-Message-State: AOUpUlEmWODkpufWCzLSTGaE3dJAZxzXG/jnFa7INNE6owtWtcusyTaA
+        XD3B56fQt1hJvRApfVpX5sI11B092Mw=
+X-Google-Smtp-Source: AA+uWPw/HW3FUZms05iK5ndYO/3cI4wDm+TwXsY2go5gDHI8b07t2ICbiBLPU1L3qk8pD92S3Wnpuw==
+X-Received: by 2002:a1c:3646:: with SMTP id d67-v6mr12877826wma.15.1534346116198;
+        Wed, 15 Aug 2018 08:15:16 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l15-v6sm24678104wrt.67.2018.08.15.08.15.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Aug 2018 07:33:44 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 07:33:44 -0700 (PDT)
-X-Google-Original-Date: Wed, 15 Aug 2018 14:33:40 GMT
-Message-Id: <d0d1d49d6f3e741e9c048041a2f467742bce4bdc.1534343621.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.19.git.gitgitgadget@gmail.com>
-References: <pull.19.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] chainlint: fix for core.autocrlf=true
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        Wed, 15 Aug 2018 08:15:15 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        Eygene Ryabinkin <rea-git@codelabs.ru>,
+        Philip Oakley <philipoakley@iee.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] Makefile: extend NO_TCLTK=NoThanks to cover docs
+Date:   Wed, 15 Aug 2018 15:15:05 +0000
+Message-Id: <20180815151505.12011-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Extend the NO_TCLTK=NoThanks flag to be understood by the
+Documentation Makefile.
 
-The `chainlint` target compares actual output to expected output, where
-the actual output is generated from files that are specifically checked
-out with LF-only line endings. So the expected output needs to be
-checked out with LF-only line endings, too.
+Before this change compiling and installing with NO_TCLTK would result
+in no git-gui, gitk or git-citool being installed, but their
+respective manual pages would still be installed.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/.gitattributes | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/Makefile | 23 ++++++++++++++++++-----
+ Makefile               | 39 +++++++++++++++++++++------------------
+ 2 files changed, 39 insertions(+), 23 deletions(-)
 
-diff --git a/t/.gitattributes b/t/.gitattributes
-index 3bd959ae5..9d09df5a6 100644
---- a/t/.gitattributes
-+++ b/t/.gitattributes
-@@ -1,4 +1,5 @@
- t[0-9][0-9][0-9][0-9]/* -whitespace
-+/chainlint/*.expect eol=lf
- /diff-lib/* eol=lf
- /t0110/url-* binary
- /t3900/*.txt eol=lf
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index d079d7c73a..d53979939e 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -1,5 +1,7 @@
+ # Guard against environment variables
+ MAN1_TXT =
++MAN1_TXT_WIP =
++TCLTK_FILES =
+ MAN5_TXT =
+ MAN7_TXT =
+ TECH_DOCS =
+@@ -7,13 +9,24 @@ ARTICLES =
+ SP_ARTICLES =
+ OBSOLETE_HTML =
+ 
+-MAN1_TXT += $(filter-out \
++MAN1_TXT_WIP += $(filter-out \
+ 		$(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
+ 		$(wildcard git-*.txt))
+-MAN1_TXT += git.txt
+-MAN1_TXT += gitk.txt
+-MAN1_TXT += gitremote-helpers.txt
+-MAN1_TXT += gitweb.txt
++MAN1_TXT_WIP += git.txt
++MAN1_TXT_WIP += gitremote-helpers.txt
++MAN1_TXT_WIP += gitweb.txt
++
++ifndef NO_TCLTK
++MAN1_TXT_WIP += gitk.txt
++MAN1_TXT = $(MAN1_TXT_WIP)
++else
++TCLTK_FILES += git-gui.txt
++TCLTK_FILES += gitk.txt
++TCLTK_FILES += git-citool.txt
++MAN1_TXT = $(filter-out \
++		$(TCLTK_FILES), \
++		$(MAN1_TXT_WIP))
++endif
+ 
+ MAN5_TXT += gitattributes.txt
+ MAN5_TXT += githooks.txt
+diff --git a/Makefile b/Makefile
+index bc4fc8eeab..8abb23f6ce 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2372,21 +2372,21 @@ export DEFAULT_EDITOR DEFAULT_PAGER
+ 
+ .PHONY: doc man man-perl html info pdf
+ doc: man-perl
+-	$(MAKE) -C Documentation all
++	$(MAKE) -C Documentation all NO_TCLTK='$(NO_TCLTK)'
+ 
+ man: man-perl
+-	$(MAKE) -C Documentation man
++	$(MAKE) -C Documentation man NO_TCLTK='$(NO_TCLTK)'
+ 
+ man-perl: perl/build/man/man3/Git.3pm
+ 
+ html:
+-	$(MAKE) -C Documentation html
++	$(MAKE) -C Documentation html NO_TCLTK='$(NO_TCLTK)'
+ 
+ info:
+-	$(MAKE) -C Documentation info
++	$(MAKE) -C Documentation info NO_TCLTK='$(NO_TCLTK)'
+ 
+ pdf:
+-	$(MAKE) -C Documentation pdf
++	$(MAKE) -C Documentation pdf NO_TCLTK='$(NO_TCLTK)'
+ 
+ XGETTEXT_FLAGS = \
+ 	--force-po \
+@@ -2802,10 +2802,10 @@ install-gitweb:
+ 	$(MAKE) -C gitweb install
+ 
+ install-doc: install-man-perl
+-	$(MAKE) -C Documentation install
++	$(MAKE) -C Documentation install NO_TCLTK='$(NO_TCLTK)'
+ 
+ install-man: install-man-perl
+-	$(MAKE) -C Documentation install-man
++	$(MAKE) -C Documentation install-man NO_TCLTK='$(NO_TCLTK)'
+ 
+ install-man-perl: man-perl
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(mandir_SQ)/man3'
+@@ -2813,22 +2813,22 @@ install-man-perl: man-perl
+ 	(cd '$(DESTDIR_SQ)$(mandir_SQ)/man3' && umask 022 && $(TAR) xof -)
+ 
+ install-html:
+-	$(MAKE) -C Documentation install-html
++	$(MAKE) -C Documentation install-html NO_TCLTK='$(NO_TCLTK)'
+ 
+ install-info:
+-	$(MAKE) -C Documentation install-info
++	$(MAKE) -C Documentation install-info NO_TCLTK='$(NO_TCLTK)'
+ 
+ install-pdf:
+-	$(MAKE) -C Documentation install-pdf
++	$(MAKE) -C Documentation install-pdf NO_TCLTK='$(NO_TCLTK)'
+ 
+ quick-install-doc:
+-	$(MAKE) -C Documentation quick-install
++	$(MAKE) -C Documentation quick-install NO_TCLTK='$(NO_TCLTK)'
+ 
+ quick-install-man:
+-	$(MAKE) -C Documentation quick-install-man
++	$(MAKE) -C Documentation quick-install-man NO_TCLTK='$(NO_TCLTK)'
+ 
+ quick-install-html:
+-	$(MAKE) -C Documentation quick-install-html
++	$(MAKE) -C Documentation quick-install-html NO_TCLTK='$(NO_TCLTK)'
+ 
+ 
+ 
+@@ -2875,13 +2875,16 @@ manpages = git-manpages-$(GIT_VERSION)
+ dist-doc:
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir .doc-tmp-dir
+-	$(MAKE) -C Documentation WEBDOC_DEST=../.doc-tmp-dir install-webdoc
++	$(MAKE) -C Documentation NO_TCLTK='$(NO_TCLTK)' \
++		WEBDOC_DEST=../.doc-tmp-dir install-webdoc
+ 	cd .doc-tmp-dir && $(TAR) cf ../$(htmldocs).tar .
+ 	gzip -n -9 -f $(htmldocs).tar
+ 	:
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir -p .doc-tmp-dir/man1 .doc-tmp-dir/man5 .doc-tmp-dir/man7
+-	$(MAKE) -C Documentation DESTDIR=./ \
++	$(MAKE) -C Documentation \
++		NO_TCLTK='$(NO_TCLTK)' \
++		DESTDIR=./ \
+ 		man1dir=../.doc-tmp-dir/man1 \
+ 		man5dir=../.doc-tmp-dir/man5 \
+ 		man7dir=../.doc-tmp-dir/man7 \
+@@ -2915,7 +2918,7 @@ clean: profile-clean coverage-clean
+ 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
+ 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+ 	$(RM) contrib/coccinelle/*.cocci.patch*
+-	$(MAKE) -C Documentation/ clean
++	$(MAKE) -C Documentation/ clean NO_TCLTK='$(NO_TCLTK)'
+ ifndef NO_PERL
+ 	$(MAKE) -C gitweb clean
+ 	$(RM) -r perl/build/
+@@ -2944,7 +2947,7 @@ ALL_COMMANDS += git-gui git-citool
+ 
+ .PHONY: check-docs
+ check-docs::
+-	$(MAKE) -C Documentation lint-docs
++	$(MAKE) -C Documentation lint-docs NO_TCLTK='$(NO_TCLTK)'
+ 	@(for v in $(ALL_COMMANDS); \
+ 	do \
+ 		case "$$v" in \
+@@ -2968,7 +2971,7 @@ check-docs::
+ 		    -e '/^#/d' \
+ 		    -e 's/[ 	].*//' \
+ 		    -e 's/^/listed /' command-list.txt; \
+-		$(MAKE) -C Documentation print-man1 | \
++		$(MAKE) -C Documentation print-man1  NO_TCLTK='$(NO_TCLTK)' | \
+ 		grep '\.txt$$' | \
+ 		sed -e 's|Documentation/|documented |' \
+ 		    -e 's/\.txt//'; \
 -- 
-gitgitgadget
+2.18.0.865.gffc8e1a3cd6
+
