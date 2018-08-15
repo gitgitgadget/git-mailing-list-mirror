@@ -2,92 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2C06D1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 16:17:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 10AAB1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 16:23:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729424AbeHOTK3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 15:10:29 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:43686 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729376AbeHOTK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 15:10:29 -0400
-Received: by mail-wr1-f41.google.com with SMTP id b15-v6so1582175wrv.10
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 09:17:41 -0700 (PDT)
+        id S1729430AbeHOTQC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 15:16:02 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:37775 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729300AbeHOTQC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 15:16:02 -0400
+Received: by mail-lf1-f66.google.com with SMTP id j8-v6so1281867lfb.4
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 09:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0YLeHwIWeIh9uwiRUqHxUJl2ZNlDsLsAIon/8D7GjOQ=;
-        b=kv8hMIpuvDrUf2q1lHq+55D6TCHPrNjx20SpuN4A1BwlUWM3wEmjld6m08aR5F3le9
-         SvHNllWqBMH9z5gMZlld18wJVfU6tvdYD+Ix54ytUmGocB0HjA15JkKRdV0iYNEa0VnW
-         kHwUuFaHlvWY1mh2NGoChUf5zz8beSmSQumRnM3n6gsjeVVlsn2LJm5Dv5/VPbdezli9
-         lC2IRGewt1YdMDI4OQS3g7rfG+SprfjwgsJx5Sc7J2czPyuZAHgfUePZFthE9X0T56Q4
-         ZqNSLR1ujN3N0pwu+1Ne6rbhxOQhxiN9imirHi1+ehIuDGU3QWtYKKRXZNmIr8uVv3Hh
-         /Z/Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1U3JI51tw6ikbAtaCUXFMMkeks1CGZMkuv4nz0AJlsc=;
+        b=VwnOXP2CRr39X+NbhZXhgrQ+0QqfMzayVBbYOY+TXKGb6q+lo+u28gXGGYeZb8fMdx
+         hTkTsjZcKHU/KCQkk1hLTisZrjSCjYAhFvUCEKSjZSajUNHrYBI+4rAs/gksM8X3P+ko
+         WdjqwiCEKkNdF18qzB3SxqeeC7VLOqb6wCaS5m9SaPaeqnOHxEoi/y80T2WlzNrluUq/
+         Uzp+Tw/1kJNs6QnpQD0XF+7k3sCclQuzgSO5Y1IkuNBNZzZkUaXiyuCmpu6JL+G9pGEa
+         oxsvHNvM0NdP1CKcf3wRBdmxM12w9BuWbYRnUNQ8oiPioV4v2fqNLWExElN+nmNXDsb1
+         XsLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0YLeHwIWeIh9uwiRUqHxUJl2ZNlDsLsAIon/8D7GjOQ=;
-        b=PNkTnuPi9TaZIXa0NW2bo+d31WzmqINfqWZm9bRhSr36qbFlpma9F/CyMMyrjZFHZ2
-         TbJe7c68fT0nKiaVgWBlgYgNtVb2ZprZccPunF66ywjZTihrcBllltRGOG8WAYVByzw/
-         WzwsE+DEqTYzM6zF+DT+Gmy7E9OjL2E8yEJZSFGAan7kwaM2oQRQlHO8lCVoeQiIGexH
-         PwGrQDyz9uERqCoJBmDfDMZqpu36udEYgOlANOIRCT8OZD1ULIfGkXznhKFaMkDwxQ9y
-         enpMaE2BcOgb7k3vEj712llVNKkLqhBIFkiE/q1tV75C30oPhPR8kK4bmWKXgakjYxrh
-         QBSQ==
-X-Gm-Message-State: AOUpUlHLUyJ+w75wcnTN3xD0N/6/YL1GwElD3GHx9lag4G0C3NT1LKGZ
-        xZI2XS6AwbuugDHkxB/6Ni0=
-X-Google-Smtp-Source: AA+uWPxxg7/SjNeGU/2e8YBryjgssHsTyXG2c3RAHQfPUG0Wz81Rxgz97WI6uPpGR14tgjgkgWUeDA==
-X-Received: by 2002:adf:fec8:: with SMTP id q8-v6mr16223318wrs.164.1534349860701;
-        Wed, 15 Aug 2018 09:17:40 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h5-v6sm24101393wrr.19.2018.08.15.09.17.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 09:17:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, jeffhost@microsoft.com,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v4 6/6] list-objects-filter: implement filter tree:0
-References: <cover.1533854545.git.matvore@google.com>
-        <cover.1534267611.git.matvore@google.com>
-        <05e69ef260ca2b28b2444b94850bddf44ca0388a.1534267611.git.matvore@google.com>
-        <20180814200154.GF28452@sigill.intra.peff.net>
-        <CAMfpvhJM2hUXTfTgY9jA4aB+bgx44xbCktCacpy_yWacyjk00w@mail.gmail.com>
-        <20180815012224.GA4745@sigill.intra.peff.net>
-Date:   Wed, 15 Aug 2018 09:17:39 -0700
-In-Reply-To: <20180815012224.GA4745@sigill.intra.peff.net> (Jeff King's
-        message of "Tue, 14 Aug 2018 21:22:24 -0400")
-Message-ID: <xmqqr2izk3j0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=1U3JI51tw6ikbAtaCUXFMMkeks1CGZMkuv4nz0AJlsc=;
+        b=UDeLb2qRWMfHrVInvHG9IfMtsppcPogIKSbozBGbWP5EvpgFf8GLNYtrEDkVNvMp39
+         yno9BKXkar/ccCVVGrwkPkgya+OvNp4YAYvDDpVrqtfg6IE4yb3CzxzO6A9SbmpC+iEv
+         tTKqieFEMVL+KhAgvjk7A+QKVws9kTyGsF7TA8PsWSti2R1YYKNBdve6aZtb/H78fOxD
+         588LQZTjaPKiwgkN38tu8Wq0HfDLCpFqSaeymXMu2XNdFUsS5IseVvLp9BFvxrIDWOz4
+         yh+94l5hvV4r81ipZ27qub+rK24GXLcDOYhdJNUsclHbmcUunDTJzz/pIOIcJog/agGv
+         C73A==
+X-Gm-Message-State: AOUpUlETm6BcR5z0JVPwgBoksPyt93Wz39dSSZIs4SsBKceFjc4aNr2m
+        l+qeD3BswhzhjuvqKJW4ahYJNtVr
+X-Google-Smtp-Source: AA+uWPzu43CWjiim/vnmdSiHR7qAAU3sdAH3UYmrLJ2RJbg+oHDi39sH+aIh9AOipJB3fW5h/BsXsA==
+X-Received: by 2002:a19:b598:: with SMTP id g24-v6mr16689462lfk.129.1534350191829;
+        Wed, 15 Aug 2018 09:23:11 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id h9-v6sm4501354lfc.47.2018.08.15.09.23.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Aug 2018 09:23:10 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 1/2] branch.c: remove explicit reference to the_repository
+Date:   Wed, 15 Aug 2018 18:23:07 +0200
+Message-Id: <20180815162308.17747-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.18.0.1004.g6639190530
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ branch.c           | 22 ++++++++++++----------
+ branch.h           |  7 +++++--
+ builtin/am.c       |  2 +-
+ builtin/branch.c   |  6 ++++--
+ builtin/checkout.c |  5 +++--
+ builtin/reset.c    |  2 +-
+ 6 files changed, 26 insertions(+), 18 deletions(-)
 
-> Right, I'd agree they probably want the minimum for that traversal. And
-> for `rev-list --filter`, that's probably OK. But keep in mind the main
-> goal for --filter is using it for fetches, and many servers do not
-> perform the traversal at all. Instead they use reachability bitmaps to
-> come up with the set of objects to send. The bitmaps have enough
-> information to say "remove all trees from the set", but not enough to do
-> any kind of depth-based calculation (not even "is this a root tree").
+diff --git a/branch.c b/branch.c
+index ecd710d730..0baa1f6877 100644
+--- a/branch.c
++++ b/branch.c
+@@ -244,7 +244,8 @@ N_("\n"
+ "will track its remote counterpart, you may want to use\n"
+ "\"git push -u\" to set the upstream config as you push.");
+ 
+-void create_branch(const char *name, const char *start_name,
++void create_branch(struct repository *repo,
++		   const char *name, const char *start_name,
+ 		   int force, int clobber_head_ok, int reflog,
+ 		   int quiet, enum branch_track track)
+ {
+@@ -302,7 +303,8 @@ void create_branch(const char *name, const char *start_name,
+ 		break;
+ 	}
+ 
+-	if ((commit = lookup_commit_reference(the_repository, &oid)) == NULL)
++	commit = lookup_commit_reference(repo, &oid);
++	if (!commit)
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+ 	oidcpy(&oid, &commit->object.oid);
+ 
+@@ -338,15 +340,15 @@ void create_branch(const char *name, const char *start_name,
+ 	free(real_ref);
+ }
+ 
+-void remove_branch_state(void)
++void remove_branch_state(struct repository *repo)
+ {
+-	unlink(git_path_cherry_pick_head(the_repository));
+-	unlink(git_path_revert_head(the_repository));
+-	unlink(git_path_merge_head(the_repository));
+-	unlink(git_path_merge_rr(the_repository));
+-	unlink(git_path_merge_msg(the_repository));
+-	unlink(git_path_merge_mode(the_repository));
+-	unlink(git_path_squash_msg(the_repository));
++	unlink(git_path_cherry_pick_head(repo));
++	unlink(git_path_revert_head(repo));
++	unlink(git_path_merge_head(repo));
++	unlink(git_path_merge_rr(repo));
++	unlink(git_path_merge_msg(repo));
++	unlink(git_path_merge_mode(repo));
++	unlink(git_path_squash_msg(repo));
+ }
+ 
+ void die_if_checked_out(const char *branch, int ignore_current_worktree)
+diff --git a/branch.h b/branch.h
+index 473d0a93e9..14d8282927 100644
+--- a/branch.h
++++ b/branch.h
+@@ -3,6 +3,8 @@
+ 
+ /* Functions for acting on the information about branches. */
+ 
++struct repository;
++
+ /*
+  * Creates a new branch, where:
+  *
+@@ -24,7 +26,8 @@
+  *     that start_name is a tracking branch for (if any).
+  *
+  */
+-void create_branch(const char *name, const char *start_name,
++void create_branch(struct repository *repo,
++		   const char *name, const char *start_name,
+ 		   int force, int clobber_head_ok,
+ 		   int reflog, int quiet, enum branch_track track);
+ 
+@@ -47,7 +50,7 @@ extern int validate_new_branchname(const char *name, struct strbuf *ref, int for
+  * Remove information about the state of working on the current
+  * branch. (E.g., MERGE_HEAD)
+  */
+-void remove_branch_state(void);
++void remove_branch_state(struct repository *);
+ 
+ /*
+  * Configure local branch "local" as downstream to branch "remote"
+diff --git a/builtin/am.c b/builtin/am.c
+index 2c19e69f58..7abe39939e 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2017,7 +2017,7 @@ static int clean_index(const struct object_id *head, const struct object_id *rem
+ 	if (merge_tree(remote_tree))
+ 		return -1;
+ 
+-	remove_branch_state();
++	remove_branch_state(the_repository);
+ 
+ 	return 0;
+ }
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 4fc55c3508..e04d528ce1 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -795,7 +795,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		 * create_branch takes care of setting up the tracking
+ 		 * info and making sure new_upstream is correct
+ 		 */
+-		create_branch(branch->name, new_upstream, 0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
++		create_branch(the_repository, branch->name, new_upstream,
++			      0, 0, 0, quiet, BRANCH_TRACK_OVERRIDE);
+ 	} else if (unset_upstream) {
+ 		struct branch *branch = branch_get(argv[0]);
+ 		struct strbuf buf = STRBUF_INIT;
+@@ -831,7 +832,8 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
+ 		if (track == BRANCH_TRACK_OVERRIDE)
+ 			die(_("the '--set-upstream' option is no longer supported. Please use '--track' or '--set-upstream-to' instead."));
+ 
+-		create_branch(argv[0], (argc == 2) ? argv[1] : head,
++		create_branch(the_repository,
++			      argv[0], (argc == 2) ? argv[1] : head,
+ 			      force, 0, reflog, quiet, track);
+ 
+ 	} else
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 516136a23a..4756018272 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -653,7 +653,8 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 			free(refname);
+ 		}
+ 		else
+-			create_branch(opts->new_branch, new_branch_info->name,
++			create_branch(the_repository,
++				      opts->new_branch, new_branch_info->name,
+ 				      opts->new_branch_force ? 1 : 0,
+ 				      opts->new_branch_force ? 1 : 0,
+ 				      opts->new_branch_log,
+@@ -711,7 +712,7 @@ static void update_refs_for_switch(const struct checkout_opts *opts,
+ 				delete_reflog(old_branch_info->path);
+ 		}
+ 	}
+-	remove_branch_state();
++	remove_branch_state(the_repository);
+ 	strbuf_release(&msg);
+ 	if (!opts->quiet &&
+ 	    (new_branch_info->path || (!opts->force_detach && !strcmp(new_branch_info->name, "HEAD"))))
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 11cd0dcb8c..d90ccdb839 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -399,7 +399,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
+ 			print_new_head_line(lookup_commit_reference(the_repository, &oid));
+ 	}
+ 	if (!pathspec.nr)
+-		remove_branch_state();
++		remove_branch_state(the_repository);
+ 
+ 	return update_ref_status;
+ }
+-- 
+2.18.0.1004.g6639190530
 
-If the depth-based cutoff turns out to make sense (on which I
-haven't formed an opinion yet), newer version of pack bitmaps could
-store that information ;-)
-
-How are these "fitler" expressions negotiated between the fetcher
-and uploader?  Does a "fetch-patch" say "am I allowed to ask you to
-filter with tree:4?" and refrain from using the option when
-"upload-pack" says "no"?
