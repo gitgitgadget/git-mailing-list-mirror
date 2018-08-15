@@ -7,63 +7,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A3041F428
-	for <e@80x24.org>; Wed, 15 Aug 2018 05:23:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B7F91F428
+	for <e@80x24.org>; Wed, 15 Aug 2018 05:25:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbeHOINi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 04:13:38 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38026 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725898AbeHOINh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 04:13:37 -0400
-Received: by mail-pg1-f195.google.com with SMTP id k3-v6so74398pgq.5
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:23:00 -0700 (PDT)
+        id S1725949AbeHOIQJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 04:16:09 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:46943 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725890AbeHOIQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 04:16:08 -0400
+Received: by mail-pf1-f174.google.com with SMTP id u24-v6so58066pfn.13
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:25:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=ns4hyrFumIK8ZUc4sUQNkIktdyUCdsPPgGahbE07Bl0=;
-        b=EdnKd8JYWtuHXs8VynvHHWNHYsDdd5RJ75Jt6q8SnuXWSwoKR2cLQ7u/tM52IW3qHt
-         8MchErheofWtSWIo0vqizqlOszvB9pv5GCoDfThxYFEhtd9GeB32IXoojMSj5ZeOqaDo
-         5Ydxb4tS0U2ab4rqOOqGYAkWjko13HA1WOEpMBKyBeOhoRYkHSOiQuvl5DHS4FUBVxr6
-         vTbiR64uHvPrZAAYs6n6PimpNwqus0IGO1l3OO4NLSWk5KgfT29m671O6BdqiIfqa0Vi
-         FSFcFj+iwxISSohVaV+I4cZZeHDHkDZJL/Dd4HhgerKvR4yj2/7mWbv/5hH9UglYTBbp
-         pZ0g==
+        bh=z0Sh6mYXGPVC3RA1EA9nh24cgzqXWdmbXxbcEzQ0tZ4=;
+        b=Jd/iX2ukboLCbzPVcVXN7m1LohSmo/RV+hd/U3pv2pzPHF8UpM55WyXa0RKv2+c+aq
+         4zjcpRUAdsvrj1RLwouJ9WpKLxIbX5cmhgBNb+oVqbMtvtyb1F8/qUo6Y4ed+wl8Pkh2
+         RKdGItUVjwU9JBhQs7EQ7fZCj8XbM1OvEl28EJLpep7y4lfG6P6KHB26t5L87vMxGcZO
+         UD177mpU57/UMygBAmQ0TJbUyZ9IhziHYqPwTsLj7Tbyrael5sLsDuZI1/nEDIGoaYvf
+         e13LvYOIpCC1NBnyH9f9DkNUyWGqirFY4L08aw7b6cWstFJdoXfkdB0fee+xc5Mp3djZ
+         oi+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ns4hyrFumIK8ZUc4sUQNkIktdyUCdsPPgGahbE07Bl0=;
-        b=awXniro5E+75eDhBTxlOq7vNlABDE0ujrvDkoaVocOC/z0Em4DiD0sN+tpzHZ30Ec4
-         zsZeHHS36eNFZNKvpBb49ScUrATIDCIEthYg/2Dv9iM4lTe1q6vt5E9nGFxiqOn7YppW
-         QnEC6t0FqJMy8qfuRh80JO8Z/eCQXZ5ZUoPV6EunE3kJBxndbPPlKYyWHUd6Qv3RcEAN
-         Plk8AnOHBOBcgXO5DJAmop+1Xdc02XiOX0vftWMEJga0bUPYyiPMEjEHAFfQ6RR4stQU
-         KmvZ1ZrA2sGgbr0A0b2kwEAx/PfHjrotCe8qtwZCy6JqFJtMupeyg6ZIeyejgsv+gCL8
-         zrCA==
-X-Gm-Message-State: AOUpUlHNl/gPwpKpiFjf2QahAGxxMXmaYNQwXCRGKGSKMnCHUnRaoUJ0
-        6GRmMNL2SIFWVA3nOO6Jyuo=
-X-Google-Smtp-Source: AA+uWPwoQHKtHBwc2c5wojKmTdhlFcyyMjstaCeLLH+/7WV6PY8j9FatpLG71G/0RTdT0PEAZ+t9jA==
-X-Received: by 2002:a65:560a:: with SMTP id l10-v6mr24085230pgs.130.1534310579556;
-        Tue, 14 Aug 2018 22:22:59 -0700 (PDT)
+        bh=z0Sh6mYXGPVC3RA1EA9nh24cgzqXWdmbXxbcEzQ0tZ4=;
+        b=Pk5hFcT0/Gcj9P7i4ej8xaKvHjbrhQk6j3yx2pmE3NpA5Bgxsu6vcdk36OCLZ7i3ik
+         OlNLBr/22sGJxWQxwVYL13ACN0lqnHZUhwP+QE/Fx5mAGv9XLW9RPtMGuSWtFTlNuPxA
+         4Px6b1Q6o9eYXPeT4j1aSJVeUnmZWvrni6vIVQhKm/K2dcD8CAsv4ZiLCWF016o/OWYq
+         vtLWi6oDE043zLNwoL1TvOvEZ+SE89IAGfQylH75n4NBbcbMXORdqD44qTC+HXhCit3e
+         yh+BO/WbZz6RYO32Xpqwt2DJ7K874yNP76nd6Xl6E26aWrpiopzUZhwH4LSuPYqZNyza
+         OJzg==
+X-Gm-Message-State: AOUpUlExxBMyS2l5DHRf9/xHfhnh/+G9ZF6TebJRHMIZpd6ocUEJkb7z
+        OaN3ckbL76yVlhf1HtvbEi4=
+X-Google-Smtp-Source: AA+uWPwD/isY8xBknQreebuNyyp2oBJ9c2vvnUF1ek+p33IUwSvVSOHEbBEyip7HQxqfumkfxmGzog==
+X-Received: by 2002:a65:5288:: with SMTP id y8-v6mr110293pgp.284.1534310730134;
+        Tue, 14 Aug 2018 22:25:30 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e82-v6sm33913540pfk.87.2018.08.14.22.22.58
+        by smtp.gmail.com with ESMTPSA id g184-v6sm43723918pgc.22.2018.08.14.22.25.29
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 22:22:58 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 22:22:57 -0700
+        Tue, 14 Aug 2018 22:25:29 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 22:25:28 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Elijah Newren <newren@gmail.com>
 Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
         ramsay@ramsayjones.plus.com
-Subject: Re: [PATCHv3 3/6] Move definition of enum branch_track from cache.h
- to branch.h
-Message-ID: <20180815052257.GE32543@aiede.svl.corp.google.com>
+Subject: Re: [PATCHv3 4/6] urlmatch.h: fix include guard
+Message-ID: <20180815052527.GF32543@aiede.svl.corp.google.com>
 References: <20180811205024.11291-1-newren@gmail.com>
  <20180813171749.10481-1-newren@gmail.com>
- <20180813171749.10481-4-newren@gmail.com>
+ <20180813171749.10481-5-newren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180813171749.10481-4-newren@gmail.com>
+In-Reply-To: <20180813171749.10481-5-newren@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -72,19 +71,19 @@ X-Mailing-List: git@vger.kernel.org
 
 Elijah Newren wrote:
 
-> 'branch_track' feels more closely related to branching, and it is
-> needed later in branch.h; rather than #include'ing cache.h in branch.h
-> for this small enum, just move the enum and the external declaration
-> for git_branch_track to branch.h.
->
 > Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  branch.h      | 11 +++++++++++
->  cache.h       | 10 ----------
->  config.c      |  1 +
->  environment.c |  1 +
->  4 files changed, 13 insertions(+), 10 deletions(-)
-
-\o/
+>  urlmatch.h | 2 ++
+>  1 file changed, 2 insertions(+)
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+This has two benefits:
+
+- avoids the definitions in this header from being evaluated twice
+
+- many compilers recognize the #include guard idiom and also are able
+  to avoid re-reading the text of the header twice, too
+
+The header guard had been broken since day one.  Is there a tool that
+can detect this class of problem?
