@@ -2,176 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8D3C1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 19:38:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E3C81F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 19:41:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727745AbeHOWcX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 18:32:23 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:39535 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727541AbeHOWcX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 18:32:23 -0400
-Received: by mail-wr1-f45.google.com with SMTP id h10-v6so2054711wre.6
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:38:51 -0700 (PDT)
+        id S1727669AbeHOWey (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 18:34:54 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:37459 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727661AbeHOWey (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 18:34:54 -0400
+Received: by mail-wm0-f54.google.com with SMTP id n11-v6so2274653wmc.2
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:41:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=azL3I72/Ktb7ma0DXFMrBeZ2GsXs+QHWZMfRtTJcxaw=;
-        b=nEdzJu0MHswq1OfBkDurp91hQyk1aDac45dO/1pKyewNP5cBceNMezzOFIL5h3mds6
-         zCNILCg5ACMIKRRULlLhDoQe8Y9P472v1VBUljnKUq/0gvvpZBOzCZ+h4Z+1A/0ijkrE
-         BO5T59nHzBhiJLT+b626oGdWao/qFfZrwaZ356KP1sI56+uoOYKBFcYkT55YiG1vSLrm
-         XySbdw31rIRFDk+PDUzk9+xgid1k7unTR+9M3OMGXMcfu6iek/UM8spruJN2TYfHRzZ6
-         VsJeerZeNq1tDiujbBlI9a9KuSdbV4zUEtMjsKy2E+/R67OxMDASyKymSYlAHK6OhnpB
-         UVFg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=mo0dtzkQVraTdmOiRsKbWlVPOAbpvL/Dg3GwKdgOAoQ=;
+        b=jexQHNsnGGKKzNX2rVdHoBY9T1YnedApHsJqSSPSIBwsMi8On1HPNQDSf/vnfuP6eq
+         +A4m0Lns+mX3sUHvO/q12EkYHo4dSJXbckNdw78bKe18S25L8PufDbqrH9Vqtqv9OLrr
+         vIsVizJ2mr2MzGt+MnLPH2CSu9CvjlYUKg/LR387mR/N38s4moDtIG+UJoaJNUqRGgR1
+         ZuxkDMDIVcSRaoM6U6ojwAHirmHU6K+VLPkNAvnUZGw8oCSC4MOlHzLbvtucqUWqrv3l
+         vxLwrXNQRll2Ofh0U3v1sA5wA9mQfTR58jYwdgVv8uCjz08jsKVYK7BSZzWJFW7IFFfg
+         Hy7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=azL3I72/Ktb7ma0DXFMrBeZ2GsXs+QHWZMfRtTJcxaw=;
-        b=N0yMltSA2Or9OXzL4JQ2/rXG/Ba4dmDW7LdegY/slt4lNa4/Rddgm484QW5uE6y3yG
-         efedhyQynZFSEQjww6o+ub6Shaz6+M8Gi28M+qkEhQB/8yBRK4WKOSMd32pbdwZFTDCL
-         FLdKZYoALAymQTC9LtSIwiKaksdIxfnoKLO92JOCM8Km4Va+bE1ke4JDyDUVSsosnVzW
-         D9o0hrfzpu/isQBvFKmdnFUpHl3ekng1Tzle8TEqE3sy5mOAcGpfPv18xlQumt5bldpz
-         P5GwIqvlLViMkmAD/jZslIuFSvMPVJpoUmnrMo/IXsdsfIfmmYTSJq/zp6qTCYfFmWpa
-         A0IA==
-X-Gm-Message-State: AOUpUlFAK+9zIjPZaAarmOtCR8eTNn3BlUbUgA++teAhTpvvT+Tk9WIr
-        Xo0RgBEfWZ49qCqybjNCALg=
-X-Google-Smtp-Source: AA+uWPwLIfgk1aI7pCa3dwWytYJlocNnpEpguiadngvlDRlzL6+Ny6Jr4LTA2aZOU+aUCzZDmJs0dg==
-X-Received: by 2002:adf:a789:: with SMTP id j9-v6mr16963302wrc.277.1534361930402;
-        Wed, 15 Aug 2018 12:38:50 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h83-v6sm2016066wmf.46.2018.08.15.12.38.49
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mo0dtzkQVraTdmOiRsKbWlVPOAbpvL/Dg3GwKdgOAoQ=;
+        b=RABXS7YYo3sL2En/Bdbty9kouOv/S8iX71ctsluvHxhl/4/CfI1epRn9iYer7zSmzI
+         LSugrKrjsobl4Pkj0eo7FQBzV3TS14OqDmx+y2su1SLXXVnFe+IVH+eidJvE3WJDfP75
+         HZuutub3RRzRE5j+Sx0M73MZ4Z5IGmUtiJ8dg5Iorhhs+qe1sWGsoTlsJkwvceKOFJ86
+         kzqKZio/cM/bFQkFr771qbIbJlMIPBP/rF1XwdUjKfPzk3TUob0YyEe8dhTIr4ZsgiIU
+         Tq7nk/Rb3S+PCm8UGTW9y1iG1dK0mjYy9UM7UH2sdIvLS+TmVFb5VM+I7E+yKEFtL0e6
+         oefg==
+X-Gm-Message-State: AOUpUlHU4aUMUQYYJVPF27g2znTnR2w7L+y6DUVzu4MjmqcJXNvkfJFz
+        96xIyAdyYmk1KwQmAl35dUs=
+X-Google-Smtp-Source: AA+uWPxX0Xn1hD3k2Q8dvlIxGfpKFOTW6VoIqD/ukox5tJbMt+lM1BVX82Y8P0aXDpiubOrX8UiK5A==
+X-Received: by 2002:a1c:cecf:: with SMTP id e198-v6mr13759306wmg.83.1534362081812;
+        Wed, 15 Aug 2018 12:41:21 -0700 (PDT)
+Received: from localhost ([2.30.88.37])
+        by smtp.gmail.com with ESMTPSA id 200-v6sm5015053wmv.6.2018.08.15.12.41.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 12:38:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
-        pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v4] clone: report duplicate entries on case-insensitive filesystems
-References: <20180810153608.30051-1-pclouds@gmail.com>
-        <20180812090714.19060-1-pclouds@gmail.com>
-        <20180815190816.GA26521@tor.lan>
-Date:   Wed, 15 Aug 2018 12:38:49 -0700
-In-Reply-To: <20180815190816.GA26521@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
- =?utf-8?Q?ershausen=22's?=
-        message of "Wed, 15 Aug 2018 21:08:16 +0200")
-Message-ID: <xmqqtvnvh12u.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Wed, 15 Aug 2018 12:41:20 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 20:41:20 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v7 09/26] stash: implement the "list" command in
+ the builtin
+Message-ID: <20180815194120.GK2734@hank.intra.tgummerer.com>
+References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <47556d40a9944e8cc45ba3df8e12c80a1898b160.1533753605.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <47556d40a9944e8cc45ba3df8e12c80a1898b160.1533753605.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+> Subject: stash: implement the "list" command in the builtin
 
->> +
->> +#if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
->> +	for (i = 0; i < state->istate->cache_nr; i++) {
->> +		struct cache_entry *dup = state->istate->cache[i];
->> +
->> +		if (dup == ce)
->> +			break;
->> +
->> +		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
->> +			continue;
->> +
->
-> Should the following be protected by core.checkstat ? 
-> 	if (check_stat) {
+Nit: The previous commit messages all have the format "stash: convert
+<command> to builtin", maybe follow the same pattern here?
 
-I do not think such a if statement is strictly necessary.
+The rest of the patch looks good to me.
 
-Even if check_stat tells us "when checking if a cached stat
-information tells us that the path may have modified, use minimum
-set of fields from the 'struct stat'", we still capture and update
-the values from the same "full" set of fields when we mark a cache
-entry up-to-date.  So it all depends on why you are limiting with
-check_stat.  Is it because stdev is unusable?  Is it because nsec is
-unusable?  Is it because ino is unusable?  Only in the last case,
-paying attention to check_stat will reduce the false positive.
-
-But then you made me wonder what value check_stat has on Windows.
-If it is false, perhaps we do not even need the conditional
-compilation, which is a huge plus.
-
->> +		if (dup->ce_stat_data.sd_ino == st->st_ino) {
->> +			dup->ce_flags |= CE_MATCHED;
->> +			break;
->> +		}
->> +	}
->> +#endif
->
-> Another thing is that we switch of the ASCII case-folding-detection-logic
-> off for Windows users, even if we otherwise rely on icase.
-> I think we can use fspathcmp() as a fallback. when inodes fail,
-> because we may be on a network file system.
->
-> (I don't have a test setup at the moment, but what happens with inodes
-> when a Windows machine exports a share to Linux or Mac ?)
->
-> Is there a chance to get the fspathcmp() back, like this ?
-
-If fspathcmp() never gives false positives, I do not think we would
-mind using it like your update.  False negatives are fine, as that
-is better than just punting the whole thing when there is no usable
-inum.  And we do not care all that much if it is more expensive;
-this is an error codepath after all.
-
-And from code structure's point of view, I think it makes sense.  It
-would be even better if we can lose the conditional compilation.
-
-Another thing we maybe want to see is if we can update the caller of
-this function so that we do not overwrite the earlier checkout with
-the data for this path.  When two paths collide, we check out one of
-the paths without reporting (because we cannot notice), then attempt
-to check out the other path and report (because we do notice the
-previous one with lstat()).  The current code then goes on and overwrites
-the file with the contents from the "other" path.
-
-Even if we had false negative in this loop, if we leave the contents
-for the earlier path while reporting the "other" path, then the user
-can get curious, inspect what contents the "other" path has on the
-filesystem, and can notice that it belongs to the (unreported--due
-to false negative) earlier path.
-
-> static void mark_colliding_entries(const struct checkout *state,
-> 				   struct cache_entry *ce, struct stat *st)
-> {
-> 	int i;
-> 	ce->ce_flags |= CE_MATCHED;
->
-> 	for (i = 0; i < state->istate->cache_nr; i++) {
-> 		struct cache_entry *dup = state->istate->cache[i];
-> 		int folded = 0;
->
-> 		if (dup == ce)
-> 			break;
->
-> 		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
-> 			continue;
->
-> 		if (!fspathcmp(dup->name, ce->name))
-> 			folded = 1;
->
-> #if !defined(GIT_WINDOWS_NATIVE) /* inode is always zero on Windows */
-> 		if (check_stat && (dup->ce_stat_data.sd_ino == st->st_ino))
-> 			folded = 1;
-> #endif
-> 		if (folded) {
-> 			dup->ce_flags |= CE_MATCHED;
-> 			break;
-> 		}
-> 	}
-> }
+On 08/08, Paul-Sebastian Ungureanu wrote:
+> Add stash list to the helper and delete the list_stash function
+> from the shell script.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+>  builtin/stash--helper.c | 31 +++++++++++++++++++++++++++++++
+>  git-stash.sh            |  7 +------
+>  2 files changed, 32 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> index d6bd468e0..daa4d0034 100644
+> --- a/builtin/stash--helper.c
+> +++ b/builtin/stash--helper.c
+> @@ -12,6 +12,7 @@
+>  #include "rerere.h"
+>  
+>  static const char * const git_stash_helper_usage[] = {
+> +	N_("git stash--helper list [<options>]"),
+>  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+>  	N_("git stash--helper ( pop | apply ) [--index] [-q|--quiet] [<stash>]"),
+>  	N_("git stash--helper branch <branchname> [<stash>]"),
+> @@ -19,6 +20,11 @@ static const char * const git_stash_helper_usage[] = {
+>  	NULL
+>  };
+>  
+> +static const char * const git_stash_helper_list_usage[] = {
+> +	N_("git stash--helper list [<options>]"),
+> +	NULL
+> +};
+> +
+>  static const char * const git_stash_helper_drop_usage[] = {
+>  	N_("git stash--helper drop [-q|--quiet] [<stash>]"),
+>  	NULL
+> @@ -609,6 +615,29 @@ static int branch_stash(int argc, const char **argv, const char *prefix)
+>  	return ret;
+>  }
+>  
+> +static int list_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct child_process cp = CHILD_PROCESS_INIT;
+> +	struct option options[] = {
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash_helper_list_usage,
+> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +
+> +	if (!ref_exists(ref_stash))
+> +		return 0;
+> +
+> +	cp.git_cmd = 1;
+> +	argv_array_pushl(&cp.args, "log", "--format=%gd: %gs", "-g",
+> +			 "--first-parent", "-m", NULL);
+> +	argv_array_pushv(&cp.args, argv);
+> +	argv_array_push(&cp.args, ref_stash);
+> +	argv_array_push(&cp.args, "--");
+> +	return run_command(&cp);
+> +}
+> +
+>  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	pid_t pid = getpid();
+> @@ -639,6 +668,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  		return !!pop_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "branch"))
+>  		return !!branch_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "list"))
+> +		return !!list_stash(argc, argv, prefix);
+>  
+>  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+>  		      git_stash_helper_usage, options);
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 8f2640fe9..6052441aa 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -382,11 +382,6 @@ have_stash () {
+>  	git rev-parse --verify --quiet $ref_stash >/dev/null
+>  }
+>  
+> -list_stash () {
+> -	have_stash || return 0
+> -	git log --format="%gd: %gs" -g --first-parent -m "$@" $ref_stash --
+> -}
+> -
+>  show_stash () {
+>  	ALLOW_UNKNOWN_FLAGS=t
+>  	assert_stash_like "$@"
+> @@ -574,7 +569,7 @@ test -n "$seen_non_option" || set "push" "$@"
+>  case "$1" in
+>  list)
+>  	shift
+> -	list_stash "$@"
+> +	git stash--helper list "$@"
+>  	;;
+>  show)
+>  	shift
+> -- 
+> 2.18.0.573.g56500d98f
+> 
