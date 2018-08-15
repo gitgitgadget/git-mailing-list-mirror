@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 017CA1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 20:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5354E1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 20:36:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbeHOX3f (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 19:29:35 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:42413 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726133AbeHOX3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 19:29:35 -0400
-Received: by mail-io0-f195.google.com with SMTP id n18-v6so2070658ioa.9
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 13:35:52 -0700 (PDT)
+        id S1726168AbeHOXaU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 19:30:20 -0400
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41775 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbeHOXaU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 19:30:20 -0400
+Received: by mail-pg1-f193.google.com with SMTP id z8-v6so987896pgu.8
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 13:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=9t6O0PO41Q5333jF6PfNZO2FxApDdkuGqR6e/d36SzQ=;
-        b=XobsFjN2Cdm3YQ2Qh3wMQOV5Q4mdZpREQo2Ilea6tnizFlC8odjk/DKisYCGefWB00
-         JBXkXIDWpuccq1yAKKMJ4on8L0dUaTTA336yJHLoOjANCBZkA9sbtBoOPLJS/JwfFf3g
-         424oDjOToBU9dGeWXg/fpOo7se9hOtMXdzxNI=
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=on7FTUgaw97CNMoSadIUGuo+xPGPRF9qU7d93SOYSNc=;
+        b=TIfRlHE0bBW03c/nwepJbdeHG7eMGvL2DVKXBLPHKM2c6UwjGk4S0BIEcn1AebML1v
+         zfGMSsi+3T20oELD3OB6PGyrEouGWY/u6U4DviAxG4Lz8Cq5LYi8zlN6Ba2PHX6K1xda
+         rQMU81snWXRBz8a3CQoapbAlBeIShbrW0RqvoNWmaTzgwZLn/yuS4Bc9tp5IJTEDnX0W
+         8NH0AXUlVVxqAA6RKVEFOhaUjW32XjCE1nTa1g0wupNj+rQlXRqnQpp4AtPSQl2jkrAU
+         fcz0Vin0e63ltgK6vmiZhk1L7HTLnP273pKcMvZNsuFaeXLDYIxQZiMT7hwZKuZ/vKA6
+         x3lQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=9t6O0PO41Q5333jF6PfNZO2FxApDdkuGqR6e/d36SzQ=;
-        b=bzHzakHpK9j+ijwiBWtuUC/AiYCs5Z6uSCXQUyW7YEPMzbpasEPcvBkI4IH4Ho1wpW
-         gZx0WfyjZ3w0gCPNA4uIt1fzmLbP9ZnL0shUgBWBI0imt2m88DMlu4tvfT1Kfd9lfN02
-         0OigYbXAy1IV2yHrAjyemSlwiQZPQghn1d8iMCZryERk72ZlUv1WYA1OC317aXT4+uEM
-         YOEbeZHN5BseMfNDUMcbDOKhJgEh1r920b+ZTkKVkkWB5+bhb8MQBK1r5UXhep5Ejn8b
-         5/RIrP6BxnqmDSViAbjl7iQMaddyVe2ZQUh3VJkFd6gDJ16NxvoW5lsBQEvRnTkvk254
-         dkVQ==
-X-Gm-Message-State: AOUpUlGNboJYPTa34rVw4mPD4lqc732SUkoHM+yFa18/vjkANcKmLu9y
-        O/JxzPBF8xI3EYWUFhjYbSv6zzNSHJEtJRZvGR1c/vY8
-X-Google-Smtp-Source: AA+uWPxEbgON2O04bExR74DWVpJ6FZSHNgF2CjRNoD1sr1ppxtIN/ah+EXn6+3mHZ08jSYGNYGELxo1Rt7JAS9fZ09k=
-X-Received: by 2002:a6b:f609:: with SMTP id n9-v6mr6792444ioh.259.1534365351440;
- Wed, 15 Aug 2018 13:35:51 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=on7FTUgaw97CNMoSadIUGuo+xPGPRF9qU7d93SOYSNc=;
+        b=rfi7H7PuWT5smJGDQGc0J7+XCIzECGmQU++WV2dBDygxE5VhKsXst/SEoAAETp2Px2
+         BPIS+SDlhNnk8oZcsqGvkumkiLaL9t4IgNhLQlbFyWuoSCSM+TaBLB7YNJBqKCH9kgA8
+         +F7/J8RFVAL1FGddbj2F8VwiLjMN9Agacad50Hi7wEM7UhBB6LZcb29ZwWuaFelibSUG
+         z1vem0XDcj1Y84X330g3a6+P5iJxL3CRCIIATm5vrIHZwlxScwnO4BSS2FHdGqLz/kJ8
+         ec//DN9UwdxBIT7VZ9DA1MA2fM2COaV3BoKPSf8NmNTc1DJzed6QTIqw2P+OgUd4O09b
+         kGjA==
+X-Gm-Message-State: AOUpUlEPsF98wvXb0YSbiZD85Do3930V4FDXX7QAa1jStUYw5j6DdK/j
+        awng7xFYjCzHKFrGdJUOT8WRwV4f
+X-Google-Smtp-Source: AA+uWPzJZB+76ZMUrcSWbHMgbcD5VWkq/pcfiSYigeFSKS/NZfpJ1Z+iObkGxSYYPtu9EAzB0nb5Tg==
+X-Received: by 2002:a62:d1b:: with SMTP id v27-v6mr29538936pfi.87.1534365396376;
+        Wed, 15 Aug 2018 13:36:36 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id f11-v6sm43963893pfa.131.2018.08.15.13.36.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 13:36:35 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 13:36:34 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com
+Subject: Re: [PATCHv4 1/6] Add missing includes and forward declarations
+Message-ID: <20180815203634.GA181377@aiede.svl.corp.google.com>
+References: <https://public-inbox.org/git/20180813171749.10481-1-newren@gmail.com/>
+ <20180815175410.5726-1-newren@gmail.com>
+ <20180815175410.5726-2-newren@gmail.com>
 MIME-Version: 1.0
-From:   Linus Torvalds <torvalds@linux-foundation.org>
-Date:   Wed, 15 Aug 2018 13:35:40 -0700
-Message-ID: <CA+55aFzsVt9CJOBPGABcvg464W1THvwYpNhO+9DWUNw4X36Ndg@mail.gmail.com>
-Subject: "less -F" is broken
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180815175410.5726-2-newren@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sadly, as of less-530, the behavior of "less -F" is broken enough that
-I think git needs to potentially think about changing the defaults for
-the pager, or people should at least be aware of it.
+Elijah Newren wrote:
 
-Older versions of less (at least up to less-487 - March 2017) do not
-have this bug.  There were apparently 520, 527 and 529 releases in
-2017 too, but I couldn't find their sources to verify if they were
-already broken - but 530 (February 2018) has the problem.
+[...]
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+[...]
+>  55 files changed, 132 insertions(+), 4 deletions(-)
 
-The breakage is easy to see without git:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-        (echo "hello"; sleep 5; echo "bye bye") | less -F
-
-which will result in no output at all for five seconds, and then you
-get both lines at once as "less" exits.
-
-It's not always obvious when using git, because when the terminal
-fills up, less also starts outputting, but the default options with -F
-are really horrible if you are looking for something uncommon, and
-"git log" doesn't respond at all.
-
-On the kernel tree, this is easy to see with something like
-
-   git log --oneline --grep="The most important one is the mpt3sas fix"
-
-which takes a bit over 7 seconds before it shows the commit I was looking for.
-
-In contrast, if you do
-
-   LESS=-RX git log --oneline --grep="The most important one is the mpt3sas fix"
-
-that (recent) commit is found and shown immediately. It still takes 7s
-for git to go through all history and decide "that was it", but at
-least you don't need to wait for the intermediate results.
-
-I've reported it as a bug in less, but I'm not sure what the reaction
-will be, the less releases seem to be very random.
-
-             Linus
+Thanks.
