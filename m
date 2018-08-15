@@ -7,237 +7,93 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8D6B1F428
-	for <e@80x24.org>; Wed, 15 Aug 2018 05:50:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BA271F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 05:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbeHOIk6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 04:40:58 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:35626 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725876AbeHOIk5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 04:40:57 -0400
-Received: by mail-ua1-f67.google.com with SMTP id q12-v6so174440ual.2
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:50:14 -0700 (PDT)
+        id S1726101AbeHOIsK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 04:48:10 -0400
+Received: from mail-ua1-f65.google.com ([209.85.222.65]:38957 "EHLO
+        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725993AbeHOIsJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 04:48:09 -0400
+Received: by mail-ua1-f65.google.com with SMTP id g18-v6so173591uam.6
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=aUN6HZC1iWU8ablmXPTixew9+cYKietkWvk2GhWdLA0=;
-        b=D7+TYBAQhxquRqrqo8vxElx98oXegSIGbANRQciw8i28dGb0YbtkSyPn5pelAHk7Yt
-         apbfikPP6Gme+7oGIGLPOiNfry56c8t+E05doYM/MMprIcRAAXH9r68qDZs4KiVeptns
-         VIW8qR1BlfTPPkHf1kAV+dAAt1D0MZKThPYslJtyViWYXfP4m1PYgiqmcC4MUiwkBdvA
-         lRehuetBfz7Qz/5V30hG4JXXC5j+9XXWJH/ESbI8W7XTqgni8R5cuH/h7ymGzEUqz/TS
-         KNqpBjz4n+RSDYt/76n8dZx450ygbAew3RuhTLHWpj9jrEJ9IMf1H2RJGEcQSAfiMdS1
-         AFqA==
+        bh=CJWnLpFBh8RKh0y/sbE5nYU/ZGzsub2Q/dprQTGkMo0=;
+        b=hq3t6sZnDBI5qauia8NPwf+7wMTcZZIWaYTAWmJ6ICvcvqyEMKR2V1IN7LpouB8aB1
+         4QJU9qCY5ekMAS4XaHL6Q8bLDQnEsMneEDWRyq6bD4fzLUtRx57IEgdS5ebXEEYsdTFl
+         QfmykHzKrCWzX/qeztyI0HuEEVgtdtAmnhfjg6rf4eYW98mftT2VRXHoVOBU3OyTudZj
+         Ye1FgoR4TTKgN7lQPPeucpvW3hDnrWHU1wbycsh2Ki8yBkAnfSLgCUEFTVmPR3zvI4Q3
+         Aqr0Pko2sFQFyO/QHCR876wdHHaxZlvHUStbDhnU1EKtCl3zEGNYLujxamSNztrLEK3U
+         7btQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=aUN6HZC1iWU8ablmXPTixew9+cYKietkWvk2GhWdLA0=;
-        b=rOBvwBuiZxoDexsXbCyH+qEj5ZTXOsmrvzKZeRRMQ71vwO466ThvMiBbzy0UK4uHqF
-         QGgfamaXkRj4a35/RTuXki6+Duu4DVH/Ovzpok7tb0BfLRSOM+zKhZwwEUidqgVahrbo
-         zkKzqBKPAYyAw/4GP4EYB5fPMxjWrMEgmZYwHW5vpMHNYffVlgjkq/sUPKgIetrQY6Iv
-         YGZmLWH45b9izrqwj2CEM7IqvzL9QOSWGNNshy+sSbdMgf13Lrry4tQJOEO1S5RZgta4
-         MBqNQxLe89xiuVJOyljw2MBSfNqYlnUCXCB1S0+ClYgvXHEspFov52dVkO6YHLpqWqdZ
-         hwqg==
-X-Gm-Message-State: AOUpUlGQDqh4r8lnaeyR+bUDoR7e4wwexXWZChHoFhhCfq9KW/jSnQBH
-        CvnQWmuGkOcrCZ33wT1Wyh0oHvp6PS8D3qL41m4=
-X-Google-Smtp-Source: AA+uWPztzgEIVeV1SZjwfJIGbMpIub90WSAqTiZHFMrXJxGQ2KuYojDYqzRhlS1CwVWgq7frnij4xZZ/0QIo3JuzRNk=
-X-Received: by 2002:a1f:f284:: with SMTP id q126-v6mr15632736vkh.38.1534312213972;
- Tue, 14 Aug 2018 22:50:13 -0700 (PDT)
+        bh=CJWnLpFBh8RKh0y/sbE5nYU/ZGzsub2Q/dprQTGkMo0=;
+        b=ZiWiFF8BT862boGJftjkQbF/F1leRXLDT8+xRGWrLbfBnZV7U7FGel+wg20rXUUdCH
+         S46PA9GvDURFoN+f57cImS1lZFq+vCwBDWpA/TaDfVgVUxMjddcfO2AoGo0Z5W8+YgNZ
+         NPbeZ2bloaehX7Q1FWedL0QLuMOJgghttPUj+vK6L9Tu21RK1eW6DWfqaASLwJ51abaU
+         X4QdHgq01d/aA78sipAP4WgECsYk+wt9FrCVrOnuyo0U9V5s+7db7r4wKc7ugiyfmwka
+         VF7JxzGSulTq30C+UmChvNJ0fYA53uWXsS6WWbdYt46bEEKVPG2nf8nBvky/QLQV21QO
+         AC7g==
+X-Gm-Message-State: AOUpUlGG+VH25y/AQ7Svhf/cHEn6Nnw/AZsoqLUdB3U0WfU4abBw4qit
+        Ss2S3iOJY0SDyC6s49TMc7m0fC8Qb9R8QLKb4Mw=
+X-Google-Smtp-Source: AA+uWPxrJHJYikakvu8PNh2VV5gzyKskbwUsMGSCvLpljtTazD85zHuFMCUKeQNR5FRxnZCIDIXIVbQiQdB1TxSvSdY=
+X-Received: by 2002:a1f:8c2:: with SMTP id 185-v6mr15777600vki.51.1534312644597;
+ Tue, 14 Aug 2018 22:57:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180811205024.11291-1-newren@gmail.com> <20180813171749.10481-1-newren@gmail.com>
- <20180813171749.10481-2-newren@gmail.com> <20180815051011.GC32543@aiede.svl.corp.google.com>
-In-Reply-To: <20180815051011.GC32543@aiede.svl.corp.google.com>
+References: <20180811043218.31456-1-newren@gmail.com> <87mutts3sz.fsf@evledraar.gmail.com>
+ <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
+ <20180811173406.GA9119@sigill.intra.peff.net> <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BHZoWn-mZjop+n9PJ0+A4tZFrU6vJE+A7iSeHDXcDc=Yg@mail.gmail.com> <xmqqftzgxjww.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftzgxjww.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 14 Aug 2018 22:50:02 -0700
-Message-ID: <CABPp-BFk2X5TApYzs3QtdokBs3Hqz9uX737M6RGMtaU+wYUikw@mail.gmail.com>
-Subject: Re: [PATCHv3 1/6] Add missing includes and forward declares
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Date:   Tue, 14 Aug 2018 22:57:13 -0700
+Message-ID: <CABPp-BGtuxmeLTFTmsRvaK6J0jA9Sa3wx3rR0Ov8nJkxL4aqqA@mail.gmail.com>
+Subject: Re: [PATCH 0/9] Add missing includes and forward declares
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>
+        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
+        marc@marc-stevens.nl
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 10:10 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Tue, Aug 14, 2018 at 10:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
 >
-> Elijah Newren wrote:
->
-> > Subject: Add missing includes and forward declares
->
-> nit: s/declares/declarations/
-
-Thanks.
-
-> This is a huge patch.  Was it autogenerated or generated manually?
-> Can the commit message say something about methodology?
-
-Mostly manually.  I had a simple program that would create a dummy.c
-file that included git-compat-util.h then exactly one header, compile
-it, and spit any compile errors at me.  I repeated that through the
-top-level headers.
-
-I didn't want to repeat that description in all 6 patches, since all
-six came from that, so I put it in the cover letter.  Since patch #1
-has most that changes though, I guess it makes sense to include it at
-least in that one?
-
-> Is there an easy way to review it?  (Keep in mind that I'm super lazy.
-> ;-))
-
-I guess I could send you my hacky python script that loops through the
-top-level header files and creates the dummy two-line c file, and you
-could inspect it and run it.  But that only verifies that it compiles,
-not that the changes I choose are "correct".
-
->
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> [...]
-> > --- a/alloc.h
-> > +++ b/alloc.h
-> > @@ -1,9 +1,11 @@
-> >  #ifndef ALLOC_H
-> >  #define ALLOC_H
+> > On Mon, Aug 13, 2018 at 11:24 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >> Jeff King <peff@peff.net> writes:
 > >
-> > +struct alloc_state;
-> >  struct tree;
-> >  struct commit;
-> >  struct tag;
-> > +struct repository;
+> >> As things are slowly moving out of the so-far kitchen-sink "cache.h"
+> >> into more specific subsystem headers (like object-store.h), we may
+> >> actually want to tighten the "header that includes it first" part a
+> >> bit in the future, so that 'git grep cache.h' would give us a more
+> >> explicit and a better picture of what really depends on knowing what
+> >> the lowest level plumbing API are built around.
+> >>
+> >> > So I think the better test is a two-line .c file with:
+> >> >
+> >> >   #include "git-compat-util.h"
+> >> >   #include $header_to_check
+> >>
+> >> But until that tightening happens, I do not actually mind the
+> >> two-line .c file started with inclusion of cache.h instead of
+> >> git-compat-util.h.  That would limit the scope of this series
+> >> further.
 > >
-> >  void *alloc_blob_node(struct repository *r);
+> > Yes, this removes about 2/3 of patch #1.
 >
-> That's reasonable.  Going forward, is there a way to tell if some of
-> these forward declarations are no longer needed at some point in the
-> future (e.g. can clang be convinced to warn us about it)?
+> Sorry for making a misleading comment.  I should have phrased "I
+> would not have minded if the series were looser by assuming
+> cache.h", implying that "but now the actual patch went extra mile to
+> be more complete, what we have is even better ;-)".
 
-I'm not aware of anything currently; while I could have easily missed
-things, projects like
-https://github.com/include-what-you-use/include-what-you-use (which
-look active and have a July 2018 date on them) make me suspect there
-isn't a good answer currently.
-
-> [...]
-> > --- a/apply.h
-> > +++ b/apply.h
-> > @@ -1,6 +1,9 @@
-> >  #ifndef APPLY_H
-> >  #define APPLY_H
-> >
-> > +#include "lockfile.h"
-> > +#include "string-list.h"
-> > +
-> >  enum apply_ws_error_action {
->
-> Here, to avoid strange behavior, we have to be careful to make sure
-> the headers don't #include apply.h back.  It's a pretty high-level
-> header so there's no risk of that *phew*.
-
-:-)
-
-> [...]
-> > --- a/archive.h
-> > +++ b/archive.h
-> > @@ -3,6 +3,9 @@
-> >
-> >  #include "pathspec.h"
-> >
-> > +struct object_id;
-> > +enum object_type;
->
-> enums are of unknown size, so forward declarations don't work for
-> them.  See bb/pedantic for some examples.
-
-structs are also of unknown size; the size is irrelevant when the
-function signature merely uses a pointer to the struct or enum.  The
-enum forward declaration fixes a compilation bug.
-
-> enum object_type is defined in cache.h, so should this #include that?
-
-We could, but we don't need the definition; a forward declaration is sufficient.
-
-> [...]
-> > --- a/commit-graph.h
-> > +++ b/commit-graph.h
-> > @@ -4,6 +4,7 @@
-> >  #include "git-compat-util.h"
-> >  #include "repository.h"
-> >  #include "string-list.h"
-> > +#include "cache.h"
->
-> We can skip the #include of git-compat-util.h since all .c files
-> include it.
-
-Good point.  Should I go through and remove all the inclusions of
-git-compat-util.h in header files?
-
-> [...]
-> > --- a/fsmonitor.h
-> > +++ b/fsmonitor.h
-> > @@ -1,6 +1,13 @@
-> >  #ifndef FSMONITOR_H
-> >  #define FSMONITOR_H
-> >
-> > +#include "cache.h"
-> > +#include "dir.h"
-> > +
-> > +struct cache_entry;
-> > +struct index_state;
-> > +struct strbuf;
->
-> cache_entry et al are defined in cache.h, right?  Are these forward
-> decls needed?
-
-Good catch; they can be removed.  I'm pretty sure I added the forward
-declarations first, then noticed it wasn't enough, added the cache.h
-include, and forgot to clean up.
-
-> [...]
-> > --- a/merge-recursive.h
-> > +++ b/merge-recursive.h
-> > @@ -1,8 +1,10 @@
-> >  #ifndef MERGE_RECURSIVE_H
-> >  #define MERGE_RECURSIVE_H
-> >
-> > -#include "unpack-trees.h"
-> >  #include "string-list.h"
-> > +#include "unpack-trees.h"
->
-> just curious, no need to change: where does this reordering come from?
-
-Well, since I was manually editing anyway, I saw these and decided to
-alphabetize it since it's a file I deal with a lot.  *shrug*
-
-> [...]
-> > --- a/pathspec.h
-> > +++ b/pathspec.h
-> > @@ -1,6 +1,11 @@
-> >  #ifndef PATHSPEC_H
-> >  #define PATHSPEC_H
-> >
-> > +#include "string.h"
-> > +#include "strings.h"
->
-> What are these headers?
-
-The original patch[1] had explanations of why I added them:
-
-+#include "string.h"   /* For str[n]cmp */
-+#include "strings.h"  /* For str[n]casecmp */
-
-But Peff requested that I remove the comments.
-
-[1] https://public-inbox.org/git/20180811043218.31456-2-newren@gmail.com/
-
-> The rest looks good.
->
-> Thanks and hope that helps,
-> Jonathan
-
-Thanks for taking a look!
+Ah, gotcha.  Thanks for the clarification.
