@@ -6,63 +6,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 054591F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 16:14:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C06D1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 16:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729487AbeHOTHY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 15:07:24 -0400
-Received: from mail-wm0-f46.google.com ([74.125.82.46]:39175 "EHLO
-        mail-wm0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729348AbeHOTHY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 15:07:24 -0400
-Received: by mail-wm0-f46.google.com with SMTP id q8-v6so1812034wmq.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 09:14:37 -0700 (PDT)
+        id S1729424AbeHOTK3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 15:10:29 -0400
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:43686 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729376AbeHOTK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 15:10:29 -0400
+Received: by mail-wr1-f41.google.com with SMTP id b15-v6so1582175wrv.10
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 09:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=3cbuTt1bLSFmp7lrgzNkZ5YeLEHzXF1wfVqhaRTwq9k=;
-        b=fTnF1WHXmhddlU33M+pyoqWo0vYwaBqXTA2EKK1QdYq9Q2pZhXccs3BAtef5EgGdDh
-         qdUs3UOzOf2O9cC+Xun9+0s3UaoiIkiudxOK703RZtO/w8XtwHxzGmSE6NYqPccm+IJI
-         lkKZzMKRdAt/pfLrfw0+bMUD3seJGITUUVFY45vfJobNW/l+EFFHROf+j/ovF4R1jY2F
-         QVKYvXG6fk4gc85s1zmYeg2yNL98PvPcSVwayHGuWPuOF75ZlJGfUXT/Ri7Jk70dwkp9
-         XuNY59zBQxBNNioUI4S3rCj6EIpwi67Zc8ZMIjW3OS8nSPx22jamMnEWK3LXayPJg3g2
-         oI3w==
+        bh=0YLeHwIWeIh9uwiRUqHxUJl2ZNlDsLsAIon/8D7GjOQ=;
+        b=kv8hMIpuvDrUf2q1lHq+55D6TCHPrNjx20SpuN4A1BwlUWM3wEmjld6m08aR5F3le9
+         SvHNllWqBMH9z5gMZlld18wJVfU6tvdYD+Ix54ytUmGocB0HjA15JkKRdV0iYNEa0VnW
+         kHwUuFaHlvWY1mh2NGoChUf5zz8beSmSQumRnM3n6gsjeVVlsn2LJm5Dv5/VPbdezli9
+         lC2IRGewt1YdMDI4OQS3g7rfG+SprfjwgsJx5Sc7J2czPyuZAHgfUePZFthE9X0T56Q4
+         ZqNSLR1ujN3N0pwu+1Ne6rbhxOQhxiN9imirHi1+ehIuDGU3QWtYKKRXZNmIr8uVv3Hh
+         /Z/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=3cbuTt1bLSFmp7lrgzNkZ5YeLEHzXF1wfVqhaRTwq9k=;
-        b=qXEvndMqOZmaTFzvs+qZz/47gzXCUCVRvsI4vC7zIySwmQbxKwyF5Ym8orPFHmdRGA
-         B4AdvGNYybhORj31DrEcGV7OsUsAlLnNd/0V8jWisnGOKWHreHz9rpdO3aYZN0G2igM2
-         FkEieJg5Ajos3tRAUmoeI003c5oMqDLSJXM1tyy2o2hnZbzI4qqGrWgBtzhcobkQ2fvg
-         q246B/PNcngQb1y3+E3OtEqqT+lVfMmurBPS3gj4AzRQ7jkVftzgMT8Nyn1y5J2q8SuA
-         hcIYlPsBKMmGG7BLFmZZBDd4w2XXgn8qW7CA3xnRV9L327Ag0uZacRpiASGV8stJp+/y
-         0uZw==
-X-Gm-Message-State: AOUpUlG0MYob6IOHxKpF+y81jvAyy8+Bse23fC+t8+bmtNFgHaqtOk2C
-        40F/OugYA1HWtlAPIbocCORKie5C
-X-Google-Smtp-Source: AA+uWPxkPCajSxeqgTVlTuNu56ug/6bM4zqmHXxPh8xHQ/jRkzVGhjqNI5At7dSJTGReCLi9BavXgw==
-X-Received: by 2002:a1c:c147:: with SMTP id r68-v6mr14129477wmf.161.1534349676615;
-        Wed, 15 Aug 2018 09:14:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x23-v6sm1394382wmh.26.2018.08.15.09.14.35
+        bh=0YLeHwIWeIh9uwiRUqHxUJl2ZNlDsLsAIon/8D7GjOQ=;
+        b=PNkTnuPi9TaZIXa0NW2bo+d31WzmqINfqWZm9bRhSr36qbFlpma9F/CyMMyrjZFHZ2
+         TbJe7c68fT0nKiaVgWBlgYgNtVb2ZprZccPunF66ywjZTihrcBllltRGOG8WAYVByzw/
+         WzwsE+DEqTYzM6zF+DT+Gmy7E9OjL2E8yEJZSFGAan7kwaM2oQRQlHO8lCVoeQiIGexH
+         PwGrQDyz9uERqCoJBmDfDMZqpu36udEYgOlANOIRCT8OZD1ULIfGkXznhKFaMkDwxQ9y
+         enpMaE2BcOgb7k3vEj712llVNKkLqhBIFkiE/q1tV75C30oPhPR8kK4bmWKXgakjYxrh
+         QBSQ==
+X-Gm-Message-State: AOUpUlHLUyJ+w75wcnTN3xD0N/6/YL1GwElD3GHx9lag4G0C3NT1LKGZ
+        xZI2XS6AwbuugDHkxB/6Ni0=
+X-Google-Smtp-Source: AA+uWPxxg7/SjNeGU/2e8YBryjgssHsTyXG2c3RAHQfPUG0Wz81Rxgz97WI6uPpGR14tgjgkgWUeDA==
+X-Received: by 2002:adf:fec8:: with SMTP id q8-v6mr16223318wrs.164.1534349860701;
+        Wed, 15 Aug 2018 09:17:40 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h5-v6sm24101393wrr.19.2018.08.15.09.17.39
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 09:14:35 -0700 (PDT)
+        Wed, 15 Aug 2018 09:17:39 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+To:     Jeff King <peff@peff.net>
+Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
         git@jeffhostetler.com, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Subject: Re: [PATCH v4 6/6] list-objects-filter: implement filter tree:0
-References: <CAMfpvhKr4jmjZ3NUmxMyTM7KJxQX30UYXKf_rJ30A4C=P3tB=g@mail.gmail.com>
-        <20180814201920.56534-1-jonathantanmy@google.com>
-        <xmqqa7pozmzv.fsf@gitster-ct.c.googlers.com>
-        <CAMfpvh+H5UeHmCqeVNZNoOe_-vgH3_3aTuO+c=imgzaVkC6N2g@mail.gmail.com>
-Date:   Wed, 15 Aug 2018 09:14:35 -0700
-In-Reply-To: <CAMfpvh+H5UeHmCqeVNZNoOe_-vgH3_3aTuO+c=imgzaVkC6N2g@mail.gmail.com>
-        (Matthew DeVore's message of "Tue, 14 Aug 2018 16:30:37 -0700")
-Message-ID: <xmqqva8bk3o4.fsf@gitster-ct.c.googlers.com>
+References: <cover.1533854545.git.matvore@google.com>
+        <cover.1534267611.git.matvore@google.com>
+        <05e69ef260ca2b28b2444b94850bddf44ca0388a.1534267611.git.matvore@google.com>
+        <20180814200154.GF28452@sigill.intra.peff.net>
+        <CAMfpvhJM2hUXTfTgY9jA4aB+bgx44xbCktCacpy_yWacyjk00w@mail.gmail.com>
+        <20180815012224.GA4745@sigill.intra.peff.net>
+Date:   Wed, 15 Aug 2018 09:17:39 -0700
+In-Reply-To: <20180815012224.GA4745@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 14 Aug 2018 21:22:24 -0400")
+Message-ID: <xmqqr2izk3j0.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,19 +73,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Thank you. I changed it to this:
->   awk -e "/tree|blob/{print \$1}" objs >trees_and_blobs
+> Right, I'd agree they probably want the minimum for that traversal. And
+> for `rev-list --filter`, that's probably OK. But keep in mind the main
+> goal for --filter is using it for fetches, and many servers do not
+> perform the traversal at all. Instead they use reachability bitmaps to
+> come up with the set of objects to send. The bitmaps have enough
+> information to say "remove all trees from the set", but not enough to do
+> any kind of depth-based calculation (not even "is this a root tree").
 
-The "-e" option does not appear in
+If the depth-based cutoff turns out to make sense (on which I
+haven't formed an opinion yet), newer version of pack bitmaps could
+store that information ;-)
 
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/awk.html
-
-and I think you can safely drop it from your command line.
-
-    If no -f option is specified, the first operand to awk shall be the
-    text of the awk program. The application shall supply the program
-    operand as a single argument to awk. If the text does not end in a
-    <newline>, awk shall interpret the text as if it did.
-
+How are these "fitler" expressions negotiated between the fetcher
+and uploader?  Does a "fetch-patch" say "am I allowed to ask you to
+filter with tree:4?" and refrain from using the option when
+"upload-pack" says "no"?
