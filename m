@@ -2,111 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 020AA1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 15:55:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45B191F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 16:11:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729481AbeHOSse (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 14:48:34 -0400
-Received: from mail-ua1-f66.google.com ([209.85.222.66]:46979 "EHLO
-        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729300AbeHOSse (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 14:48:34 -0400
-Received: by mail-ua1-f66.google.com with SMTP id u11-v6so1719359uan.13
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 08:55:52 -0700 (PDT)
+        id S1729392AbeHOTDx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 15:03:53 -0400
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:33035 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729300AbeHOTDx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 15:03:53 -0400
+Received: by mail-wr1-f45.google.com with SMTP id g6-v6so1594666wrp.0
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 09:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=L+O7OsIqsfgEb/Fapl9FkYCuRKaBh9ADnAaMfQDDEpU=;
-        b=iTjwhx+xx7EjJ2kk6hpwBFokwEItz0uNVNYQDrkgnwf2/fhDx402+NgPbI5OupLtnX
-         Wsj2M+bQ7eyLSLicozymgbAB1QLpjZ01b5Acgnkm8ZAcrG4vSdn42l33nS7L6avJjx1q
-         SCEZ0Cn8Bi7XHeRLSVbu7t0hFoZ5Yc0pS749WayjimO5957GhHQoagjZv3vGYXTrDcCt
-         vVWPg++IHkb+phvfafhEnnkcV/V+lfCa8P7/d1VJw4ks61k0INA5J5rrx+fqk2D4s8Ct
-         LXSFP3G3FxY2BXS6Jwi6ugWw1i8BLMkKrynC9AS3TsgcLQjRVrDUygmmUa3wecgeULaP
-         gpSA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=V9dJSJbpeC7DtATIY1ExvZHgjKrJpZsg/ehC6a2+H90=;
+        b=FqR3/46UQtecdAQRG0ow8zpVCpIV/LRR/uuHbhIEguAJHHCgBCZo3L/5XVk+j8H4Uo
+         0w/ZqJqPW1kNIBchsOp32z6/RfuTMcE/dnR2oiiC2lKSgYIRSJbJuFv8RIvRX7j/PU6r
+         U1gm4rqi1Hau/VFtI9wdA5LDaOk5cTSrkN72sxot5WIKbVkOr8S7W70xH+LO/bpQNbl4
+         BraIzkng7K0diccaULf4KmuR6oVuC6OlUPziQgbzc9kNkMCAvfZDWWNipogCiR0cxFat
+         7YvFciX0Paitt6as9OB5NYnyGsRXMvX9IjBCl3TwrwvyCdXE9xHOrKD9kgj/+Tjs5LqP
+         dSHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=L+O7OsIqsfgEb/Fapl9FkYCuRKaBh9ADnAaMfQDDEpU=;
-        b=uYBUTIUC+c14oFinwgFxHnaBainEe4yinQ4nevzQuG7uQqJZUWgh8dr6/4X1UYezSX
-         MF5F4pf+cjS2zYznc5d8NqfOMim0x35NHhgXTEgFAUULLhE6JZkaviaote28M5Tv64vN
-         XT/4ei4/elKrzlV8MZoQD2wQu7DsnbBec6ujS7hJL+aPOt+pMdP9QlKUSpRdMv2Et7Rk
-         MmL2pj2p498XCsvYRige+PvIcfFMyrl/ckjlwqZAm6MOrf5g/GoTjbJwLA5QTeuuGMDD
-         D8CVhLPlfWCytGJfRdhO5Invm55eBWtuWvkR4dEp/EvZSduDImmmRdyUperB8m1vE8xA
-         d0hw==
-X-Gm-Message-State: AOUpUlEkfD026LCk2d8YMXoXKqmqso2WmcUgFnrykwQ0FFzxVaWGXEg8
-        9RJoZjGNer2f6zdBmcNTfUbq6UKUIWV/44kZYgQ=
-X-Google-Smtp-Source: AA+uWPxCzzqqAaDEwDm4Kvt+ty+Kn9A0pvCOovFa8eY1X2lzPC032gjUZtshKfOk6At1NuHfYTKLWJAQboGxka26//0=
-X-Received: by 2002:ab0:12e2:: with SMTP id o34-v6mr17506769uac.154.1534348551529;
- Wed, 15 Aug 2018 08:55:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180811043218.31456-1-newren@gmail.com> <87mutts3sz.fsf@evledraar.gmail.com>
- <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
- <20180811173406.GA9119@sigill.intra.peff.net> <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
- <CABPp-BHZoWn-mZjop+n9PJ0+A4tZFrU6vJE+A7iSeHDXcDc=Yg@mail.gmail.com>
- <xmqqftzgxjww.fsf@gitster-ct.c.googlers.com> <CABPp-BGtuxmeLTFTmsRvaK6J0jA9Sa3wx3rR0Ov8nJkxL4aqqA@mail.gmail.com>
- <xmqqzhxnmy9m.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzhxnmy9m.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 15 Aug 2018 08:55:39 -0700
-Message-ID: <CABPp-BHLa2vEGHMc28pEAC9tVmQjpsrTKivCNof0MX-fQMOCRg@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Add missing includes and forward declares
-To:     Junio C Hamano <gitster@pobox.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=V9dJSJbpeC7DtATIY1ExvZHgjKrJpZsg/ehC6a2+H90=;
+        b=GUw8NegrlZBSDUxslteo/MZdPzW0MHIshLerAR98YZJVZp0NmwjGSrX1erJjL77XNh
+         QSqfIRFTQ9sHLxzUn5pbhvIkYKVoMuzlybM/4cCiTpQ6yyNH436FN3F9CPkC/TEsM48G
+         7rtzGOANkFWyzwEDaPMbthg2Lcs+ANbzhboiIEuVmfkX1nyBdT6DfAErIAmRlOsGoAEE
+         wUKPff8qDrtiAAk3kwpcaAdnY9nyQ2eDYfceMgb06ziCll4Qo5KfNa0mR99n6S5Jwzmn
+         k6UwzG8C4Y5M4QOLxUQ+S9k2RpWC91GcIaNLjo8cR96sN4aJypq8hq6GAQ8Um2MW25xd
+         vKqQ==
+X-Gm-Message-State: AOUpUlENpg7YmXoVXAEdV8Dy3wbYuI3T667E8coF7RCYPh5lqQ4Tc91Q
+        xmf+0a8PrHiHZ8eLfggDH5n+7Q6X
+X-Google-Smtp-Source: AA+uWPwX9YrFnBR8hO3DaxKcBWxkVsGCr4NKxhqji9vJBQteKx1SQRl2jA4oPwl5OH5SSLk8nU3XTA==
+X-Received: by 2002:adf:e3c5:: with SMTP id k5-v6mr16114560wrm.94.1534349466436;
+        Wed, 15 Aug 2018 09:11:06 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r140-v6sm3348478wmd.7.2018.08.15.09.11.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 09:11:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
         marc@marc-stevens.nl
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 0/9] Add missing includes and forward declares
+References: <20180811043218.31456-1-newren@gmail.com>
+        <87mutts3sz.fsf@evledraar.gmail.com>
+        <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
+        <20180811173406.GA9119@sigill.intra.peff.net>
+        <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BHZoWn-mZjop+n9PJ0+A4tZFrU6vJE+A7iSeHDXcDc=Yg@mail.gmail.com>
+        <xmqqftzgxjww.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BGtuxmeLTFTmsRvaK6J0jA9Sa3wx3rR0Ov8nJkxL4aqqA@mail.gmail.com>
+        <xmqqzhxnmy9m.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BHLa2vEGHMc28pEAC9tVmQjpsrTKivCNof0MX-fQMOCRg@mail.gmail.com>
+Date:   Wed, 15 Aug 2018 09:11:04 -0700
+In-Reply-To: <CABPp-BHLa2vEGHMc28pEAC9tVmQjpsrTKivCNof0MX-fQMOCRg@mail.gmail.com>
+        (Elijah Newren's message of "Wed, 15 Aug 2018 08:55:39 -0700")
+Message-ID: <xmqqzhxnk3tz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 8:43 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Tue, Aug 14, 2018 at 10:45 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >> Elijah Newren <newren@gmail.com> writes:
-> >>
-> >> > On Mon, Aug 13, 2018 at 11:24 AM Junio C Hamano <gitster@pobox.com> wrote:
-> >> >> Jeff King <peff@peff.net> writes:
-> >> >
-> >> >> As things are slowly moving out of the so-far kitchen-sink "cache.h"
-> >> >> into more specific subsystem headers (like object-store.h), we may
-> >> >> actually want to tighten the "header that includes it first" part a
-> >> >> bit in the future, so that 'git grep cache.h' would give us a more
-> >> >> explicit and a better picture of what really depends on knowing what
-> >> >> the lowest level plumbing API are built around.
-> >> >>
-> >> >> > So I think the better test is a two-line .c file with:
-> >> >> >
-> >> >> >   #include "git-compat-util.h"
-> >> >> >   #include $header_to_check
-> >> >>
-> >> >> But until that tightening happens, I do not actually mind the
-> >> >> two-line .c file started with inclusion of cache.h instead of
-> >> >> git-compat-util.h.  That would limit the scope of this series
-> >> >> further.
-> >> >
-> >> > Yes, this removes about 2/3 of patch #1.
-> >>
-> >> Sorry for making a misleading comment.  I should have phrased "I
-> >> would not have minded if the series were looser by assuming
-> >> cache.h", implying that "but now the actual patch went extra mile to
-> >> be more complete, what we have is even better ;-)".
-> >
-> > Ah, gotcha.  Thanks for the clarification.
->
-> But please remind me not to merge this round down to 'next', for the
-> "enum" forward decl gotcha.
+Elijah Newren <newren@gmail.com> writes:
 
-I'll send out a new round shortly.  Would you like me to squash the
-last patch (the one that had two hunks with minor conflicts with other
-topics in next and pu) into the first patch, or would you rather I
-dropped that patch and waited to submit it until later?
+>>
+>> But please remind me not to merge this round down to 'next', for the
+>> "enum" forward decl gotcha.
+>
+> I'll send out a new round shortly.  Would you like me to squash the
+> last patch (the one that had two hunks with minor conflicts with other
+> topics in next and pu) into the first patch, or would you rather I
+> dropped that patch and waited to submit it until later?
+
+Either way is fine, especially if you looked at the intergration
+result from yesterday and resolution of these conflicts looked
+reasonable to you.
