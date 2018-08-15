@@ -7,45 +7,43 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5300D1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 09:39:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5476E1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 09:41:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729003AbeHOMbR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 08:31:17 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:3481 "EHLO
+        id S1728921AbeHOMdU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 08:33:20 -0400
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:7383 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727611AbeHOMbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 08:31:17 -0400
+        with ESMTP id S1728811AbeHOMdU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 08:33:20 -0400
 Received: from lindisfarne.localdomain ([92.22.33.100])
         by smtp.talktalk.net with SMTP
-        id psHGfwZmBoI6LpsHMf4aEl; Wed, 15 Aug 2018 10:39:49 +0100
+        id psJGfwZyyoI6LpsJMf4aIs; Wed, 15 Aug 2018 10:41:53 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1534325989;
-        bh=dxrWgCpIYZhRuFAIadpw6mDZc9yPHsN4HKws8E9h/E0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=Q+XyrpdwVSwl55j4MlMZiEGEpWBFVIQ+BOICnx+k+DvDxlFhvo9f3h8xts0QwS5Yp
-         /1m4n8IVNKKt1uep2iPHsPqilJoKzPQXNla9vLae0T6mowj3qcMW5QlcM+0f1HFI8r
-         cdgEZGH5P8AUOw0k37yraKd88oaKbcnbVu8ulxA8=
+        s=cmr1711; t=1534326113;
+        bh=mO7axdoohcrmti9UfBHOIRIeMrhHjZgs0HSsZVpKfa0=;
+        h=From:To:Cc:Subject:Date:Reply-To;
+        b=IgsxuJaYLKhujnsR7PZCLV8cbE2PqB6rJjxxSlalnM7ME2Y4HG0yQvAd74uJtATIv
+         yYWfYM1+1UYXD3n84TJuuYZu9JFIDcjPNQfBP2+yMkQAlDoxePXGOdALp7V1J7lq1F
+         2YosMb04TaO1XTBPd2Gf8df/OTmfef9qdpdbtqk8=
 X-Originating-IP: [92.22.33.100]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=k9WtyX7eyn4O4XzWYcPtUg==:117
- a=k9WtyX7eyn4O4XzWYcPtUg==:17 a=evINK-nbAAAA:8 a=jDkEv8kEl1xXfLAzANAA:9
- a=5UrC9Gp94yTeVVeJ:21 a=wAeElkEm5LbadJSl:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=k9WtyX7eyn4O4XzWYcPtUg==:17 a=evINK-nbAAAA:8 a=lZ6Z2LaBJZjMTw-ZM3YA:9
+ a=sm9mljUkOsizycuz:21 a=pJsNHwhvjzEHR4-A:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 1/2] t3430: add conflicting commit
-Date:   Wed, 15 Aug 2018 10:39:34 +0100
-Message-Id: <20180815093935.10222-2-phillip.wood@talktalk.net>
+Subject: [PATCH] rebase -i: fix numbering in squash message
+Date:   Wed, 15 Aug 2018 10:41:25 +0100
+Message-Id: <20180815094125.12530-1-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180815093935.10222-1-phillip.wood@talktalk.net>
-References: <20180815093935.10222-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfFgV3PQpTVPbB6bMvh/3Y6vmrV0mGZYp7h/YsLks5/B6/LZBklErTTeb3l6MnJpp+eDtdQ07lQ9L6HyFB242ToMahybJ1d9Zocpt+zuZWInYHnXsFiFO
- OPemSCnjhEvk1RDzBnRyoz+HPidcrzmXJirlnRrpxugTYnMuOo1vRW3uhCHyOTu4QMw44nRF+nglwTjurZ+OI3OR9ahu5axGXrg1K671S3+Ul8OnX52XhW7B
- JPHvdvQXOGXLJP4jMyFMpybkSNonR7lFHzIFcJjZ3wCIMYsSbx7fY6t39qRZwwet
+X-CMAE-Envelope: MS4wfLtdp/8BCSJlaLWXJBNN7Z5KiVYBp+tMx/vGwnSIck0iZfuo3rvkAwTVb6IBtZK15IUHGhycgZ7mRo+wmxpigy9mSqZFG1XgPf2nVWaJHsTI1uW0ffaV
+ zTc1VbMTcf9uZyCOVUBlrOvkzCPOGyHcq87OrAAth/5T47fAFyPhGCOaE7rFM4Z1WQSp5AsM2sAq9Lu9mZPmALQ3o4H1Qt3oJBZGa2R7+C4X6iRH9a6zHlzc
+ U5rbKQpew/DXvdH4BHhkkaMibFPJPMhmj9Gl3xKFLZ5TcelsZOIhogUy5OfSiW8n
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -53,63 +51,59 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Move the creation of conflicting-G from a test to the setup so that it
-can be used in subsequent tests without creating the kind of implicit
-dependencies that plague t3404. While we're at it simplify the
-arguments to the test_commit() call the creates the conflicting commit.
+Commit e12a7ef597 ("rebase -i: Handle "combination of <n> commits" with
+GETTEXT_POISON", 2018-04-27) changed the way that individual commit
+messages are labelled when squashing commits together. In doing so a
+regression was introduced where the numbering of the messages is off by
+one. This commit fixes that and adds a test for the numbering.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t3430-rebase-merges.sh | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ sequencer.c                | 4 ++--
+ t/t3418-rebase-continue.sh | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 78f7c99580..31fe4268d5 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -13,8 +13,10 @@ Initial setup:
-     -- B --                   (first)
-    /       \
-  A - C - D - E - H            (master)
--       \       /
--         F - G                (second)
-+   \    \       /
-+    \    F - G                (second)
-+     \
-+      Conflicting-G
- '
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-rebase.sh
-@@ -49,7 +51,9 @@ test_expect_success 'setup' '
- 	git merge --no-commit G &&
- 	test_tick &&
- 	git commit -m H &&
--	git tag -m H H
-+	git tag -m H H &&
-+	git checkout A &&
-+	test_commit conflicting-G G.t
+diff --git a/sequencer.c b/sequencer.c
+index 2eb5ec7227..77d3c2346f 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1387,13 +1387,13 @@ static int update_squash_messages(enum todo_command command,
+ 		unlink(rebase_path_fixup_msg());
+ 		strbuf_addf(&buf, "\n%c ", comment_line_char);
+ 		strbuf_addf(&buf, _("This is the commit message #%d:"),
+-			    ++opts->current_fixup_count);
++			    ++opts->current_fixup_count + 1);
+ 		strbuf_addstr(&buf, "\n\n");
+ 		strbuf_addstr(&buf, body);
+ 	} else if (command == TODO_FIXUP) {
+ 		strbuf_addf(&buf, "\n%c ", comment_line_char);
+ 		strbuf_addf(&buf, _("The commit message #%d will be skipped:"),
+-			    ++opts->current_fixup_count);
++			    ++opts->current_fixup_count + 1);
+ 		strbuf_addstr(&buf, "\n\n");
+ 		strbuf_add_commented_lines(&buf, body, strlen(body));
+ 	} else
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index e9fd029160..ee871dd1bb 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -128,13 +128,15 @@ test_expect_success '--skip after failed fixup cleans commit message' '
+ 	: The first squash was skipped, therefore: &&
+ 	git show HEAD >out &&
+ 	test_i18ngrep "# This is a combination of 2 commits" out &&
++	test_i18ngrep "# This is the commit message #2:" out &&
+ 
+ 	(test_set_editor "$PWD/copy-editor.sh" && git rebase --skip) &&
+ 	git show HEAD >out &&
+ 	test_i18ngrep ! "# This is a combination" out &&
+ 
+ 	: Final squash failed, but there was still a squash &&
+-	test_i18ngrep "# This is a combination of 2 commits" .git/copy.txt
++	test_i18ngrep "# This is a combination of 2 commits" .git/copy.txt &&
++	test_i18ngrep "# This is the commit message #2:" .git/copy.txt
  '
  
- test_expect_success 'create completely different structure' '
-@@ -72,7 +76,7 @@ test_expect_success 'create completely different structure' '
- 	EOF
- 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
- 	test_tick &&
--	git rebase -i -r A &&
-+	git rebase -i -r A master &&
- 	test_cmp_graph <<-\EOF
- 	*   Merge the topic branch '\''onebranch'\''
- 	|\
-@@ -141,8 +145,7 @@ test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
- 
- 	: fail because of merge conflict &&
- 	rm G.t .git/rebase-merge/patch &&
--	git reset --hard &&
--	test_commit conflicting-G G.t not-G conflicting-G &&
-+	git reset --hard conflicting-G &&
- 	test_must_fail git rebase --continue &&
- 	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
- 	test_path_is_file .git/rebase-merge/patch
+ test_expect_success 'setup rerere database' '
 -- 
 2.18.0
 
