@@ -7,45 +7,45 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9599A1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 09:39:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5300D1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 09:39:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729014AbeHOMbR (ORCPT <rfc822;e@80x24.org>);
+        id S1729003AbeHOMbR (ORCPT <rfc822;e@80x24.org>);
         Wed, 15 Aug 2018 08:31:17 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:57291 "EHLO
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:3481 "EHLO
         smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728669AbeHOMbR (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1727611AbeHOMbR (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 15 Aug 2018 08:31:17 -0400
 Received: from lindisfarne.localdomain ([92.22.33.100])
         by smtp.talktalk.net with SMTP
-        id psHGfwZmBoI6LpsHNf4aEq; Wed, 15 Aug 2018 10:39:50 +0100
+        id psHGfwZmBoI6LpsHMf4aEl; Wed, 15 Aug 2018 10:39:49 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1534325990;
-        bh=sARCzSjGr++MlLx2tYa27kgkNeMzf2/Rmp37RmC4I9o=;
+        s=cmr1711; t=1534325989;
+        bh=dxrWgCpIYZhRuFAIadpw6mDZc9yPHsN4HKws8E9h/E0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=cob/0Uhyi+qBkAIis+qreskNdx8Pd+zZI5GADWOIXurORG8X4/YllbGdNkm3I/jWD
-         BJu0TCrmqoNItfJCdR8HkPbyLdkO43/UDO9DaYa3xdx3vVyQ44ThkdS59eCqG86ZEF
-         6ZOKLHKR/L6A39x/gjwuGUnKD9bW7TyPEd4qsZuA=
+        b=Q+XyrpdwVSwl55j4MlMZiEGEpWBFVIQ+BOICnx+k+DvDxlFhvo9f3h8xts0QwS5Yp
+         /1m4n8IVNKKt1uep2iPHsPqilJoKzPQXNla9vLae0T6mowj3qcMW5QlcM+0f1HFI8r
+         cdgEZGH5P8AUOw0k37yraKd88oaKbcnbVu8ulxA8=
 X-Originating-IP: [92.22.33.100]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=k9WtyX7eyn4O4XzWYcPtUg==:117
- a=k9WtyX7eyn4O4XzWYcPtUg==:17 a=evINK-nbAAAA:8 a=DcKE_VfHSGu-Zgv__vIA:9
- a=StuRZpykkMuD6I4Q:21 a=11VeXigJ_t3lwADh:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=k9WtyX7eyn4O4XzWYcPtUg==:17 a=evINK-nbAAAA:8 a=jDkEv8kEl1xXfLAzANAA:9
+ a=5UrC9Gp94yTeVVeJ:21 a=wAeElkEm5LbadJSl:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 2/2] rebase -i: fix SIGSEGV when 'merge <branch>' fails
-Date:   Wed, 15 Aug 2018 10:39:35 +0100
-Message-Id: <20180815093935.10222-3-phillip.wood@talktalk.net>
+Subject: [PATCH 1/2] t3430: add conflicting commit
+Date:   Wed, 15 Aug 2018 10:39:34 +0100
+Message-Id: <20180815093935.10222-2-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180815093935.10222-1-phillip.wood@talktalk.net>
 References: <20180815093935.10222-1-phillip.wood@talktalk.net>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfMyKQR6U31V/n15ChOv3uWws0brIcpbcCv3dYd57Yrxj+erNurTB7BjFLuunr7Wi6JO+MTwLKinYo3xNYcub/y4AkGtBE3o0sYnG9tEmrPtFkKLQxhm0
- HScA60qw+OIhJvFPkpQallr7xwcqj7pZo6ALhp9RDjJmcRJaTqiQkpj7+6lt87c0R7SmfvTl6kMvoONd0Wgn9vR5WRUXyTiU3tH5PWoVTrgaNDiqZVRfG7YC
- l85wuwPBtaSz29ENL5hedzKMtqzHkeYjPirQGw+GGPodevS1hnFPTnIKMkVSQql9
+X-CMAE-Envelope: MS4wfFgV3PQpTVPbB6bMvh/3Y6vmrV0mGZYp7h/YsLks5/B6/LZBklErTTeb3l6MnJpp+eDtdQ07lQ9L6HyFB242ToMahybJ1d9Zocpt+zuZWInYHnXsFiFO
+ OPemSCnjhEvk1RDzBnRyoz+HPidcrzmXJirlnRrpxugTYnMuOo1vRW3uhCHyOTu4QMw44nRF+nglwTjurZ+OI3OR9ahu5axGXrg1K671S3+Ul8OnX52XhW7B
+ JPHvdvQXOGXLJP4jMyFMpybkSNonR7lFHzIFcJjZ3wCIMYsSbx7fY6t39qRZwwet
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -53,103 +53,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-If a merge command in the todo list specifies just a branch to merge
-with no -C/-c argument then item->commit is NULL. This means that if
-there are merge conflicts error_with_patch() is passed a NULL commit
-which causes a segmentation fault when make_patch() tries to look it up.
-
-This commit implements a minimal fix which fixes the crash and allows
-the user to successfully commit a conflict resolution with 'git rebase
---continue'. It does not write .git/rebase-merge/patch,
-.git/rebase-merge/stopped-sha or update REBASE_HEAD. To sensibly get the
-hashes of the merge parents would require refactoring do_merge() to
-extract the code that parses the merge parents into a separate function
-which error_with_patch() could then use to write the parents into the
-stopped-sha file. To create meaningful output make_patch() and 'git
-rebase --show-current-patch' would also need to be modified to diff the
-merge parent and merge base in this case.
+Move the creation of conflicting-G from a test to the setup so that it
+can be used in subsequent tests without creating the kind of implicit
+dependencies that plague t3404. While we're at it simplify the
+arguments to the test_commit() call the creates the conflicting commit.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- sequencer.c              | 24 +++++++++++++++++++-----
- t/t3430-rebase-merges.sh | 15 ++++++++++++++-
- 2 files changed, 33 insertions(+), 6 deletions(-)
+ t/t3430-rebase-merges.sh | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/sequencer.c b/sequencer.c
-index 4034c0461b..df49199175 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2590,8 +2590,12 @@ static int error_with_patch(struct commit *commit,
- 	const char *subject, int subject_len,
- 	struct replay_opts *opts, int exit_code, int to_amend)
- {
--	if (make_patch(commit, opts))
--		return -1;
-+	if (commit) {
-+		if (make_patch(commit, opts))
-+			return -1;
-+	} else if (copy_file(rebase_path_message(), git_path_merge_msg(), 0666))
-+		return error(_("unable to copy '%s' to '%s'"),
-+			     git_path_merge_msg(), rebase_path_message());
- 
- 	if (to_amend) {
- 		if (intend_to_amend())
-@@ -2604,9 +2608,19 @@ static int error_with_patch(struct commit *commit,
- 			"Once you are satisfied with your changes, run\n"
- 			"\n"
- 			"  git rebase --continue\n", gpg_sign_opt_quoted(opts));
--	} else if (exit_code)
--		fprintf(stderr, "Could not apply %s... %.*s\n",
--			short_commit_name(commit), subject_len, subject);
-+	} else if (exit_code) {
-+		if (commit)
-+			fprintf(stderr, "Could not apply %s... %.*s\n",
-+				short_commit_name(commit),
-+				subject_len, subject);
-+		else
-+			/*
-+			 * We don't have the hash of the parent so
-+			 * just print the line from the todo file.
-+			 */
-+			fprintf(stderr, "Could not merge %.*s\n",
-+				subject_len, subject);
-+	}
- 
- 	return exit_code;
- }
 diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 31fe4268d5..2e767d4f1e 100755
+index 78f7c99580..31fe4268d5 100755
 --- a/t/t3430-rebase-merges.sh
 +++ b/t/t3430-rebase-merges.sh
-@@ -129,7 +129,7 @@ test_expect_success '`reset` refuses to overwrite untracked files' '
- 	git rebase --abort
+@@ -13,8 +13,10 @@ Initial setup:
+     -- B --                   (first)
+    /       \
+  A - C - D - E - H            (master)
+-       \       /
+-         F - G                (second)
++   \    \       /
++    \    F - G                (second)
++     \
++      Conflicting-G
+ '
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+@@ -49,7 +51,9 @@ test_expect_success 'setup' '
+ 	git merge --no-commit G &&
+ 	test_tick &&
+ 	git commit -m H &&
+-	git tag -m H H
++	git tag -m H H &&
++	git checkout A &&
++	test_commit conflicting-G G.t
  '
  
--test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
-+test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
- 	test_when_finished "test_might_fail git rebase --abort" &&
- 	git checkout -b conflicting-merge A &&
+ test_expect_success 'create completely different structure' '
+@@ -72,7 +76,7 @@ test_expect_success 'create completely different structure' '
+ 	EOF
+ 	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
+ 	test_tick &&
+-	git rebase -i -r A &&
++	git rebase -i -r A master &&
+ 	test_cmp_graph <<-\EOF
+ 	*   Merge the topic branch '\''onebranch'\''
+ 	|\
+@@ -141,8 +145,7 @@ test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
  
-@@ -151,6 +151,19 @@ test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
+ 	: fail because of merge conflict &&
+ 	rm G.t .git/rebase-merge/patch &&
+-	git reset --hard &&
+-	test_commit conflicting-G G.t not-G conflicting-G &&
++	git reset --hard conflicting-G &&
+ 	test_must_fail git rebase --continue &&
+ 	! grep "^merge -C .* G$" .git/rebase-merge/git-rebase-todo &&
  	test_path_is_file .git/rebase-merge/patch
- '
- 
-+SQ="'"
-+test_expect_success 'failed `merge <branch>` does not crash' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	git checkout conflicting-G &&
-+
-+	echo "merge G" >script-from-scratch &&
-+	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
-+	test_tick &&
-+	test_must_fail git rebase -ir HEAD &&
-+	! grep "^merge G$" .git/rebase-merge/git-rebase-todo &&
-+	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
-+'
-+
- test_expect_success 'with a branch tip that was cherry-picked already' '
- 	git checkout -b already-upstream master &&
- 	base="$(git rev-parse --verify HEAD)" &&
 -- 
 2.18.0
 
