@@ -7,98 +7,187 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACE861F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 04:59:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7090E1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 05:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728146AbeHOHse (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 03:48:34 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:43416 "EHLO
+        id S1725914AbeHOIAs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 04:00:48 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:34310 "EHLO
         mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbeHOHsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 03:48:33 -0400
-Received: by mail-pl0-f68.google.com with SMTP id x6-v6so37309plv.10
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 21:58:02 -0700 (PDT)
+        with ESMTP id S1725876AbeHOIAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 04:00:48 -0400
+Received: by mail-pl0-f68.google.com with SMTP id f6-v6so63060plo.1
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:10:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=SxC6XwY1SPwfYjSg0QFA/doUEbmDn0nLVNJiR10VazQ=;
-        b=CNI/mtt1zEbetE9JZcqoCn5o8U9lHm8p9WOkyGN2G8c+8JlGM1JdDKE3oTzWkPrsy4
-         JVSfm/1ugEsECf/J5KgVhSYfehc33uPI1x1b2bcQq6HsES3qi7gY+mcOH2odrmDy1ycB
-         IhJPWO1Ys8teaLDIqZPWVblSHMe30thHFdQpvMpZh+jbSeWa1ndpIfBfVIom/e2sH4Y+
-         jW68d/uZRq4McLk/ixp9MbFLg9J9kyCiRBnVwjcDZYqMtiADZMghHi4roQnlfa716tk0
-         AjHcuGOqjsiq/e1193l6tkjKom17RFwwjJ9Q/ED0VlutUYibvNTIECUDIOm3lT/khjbI
-         5Uew==
+        bh=8Ywg/j0sZUgMl61G2KwcVtAjbde3D1O0jb95uwzZz9c=;
+        b=gtrQ29cmoB1GJwSMMzMCrvYnoZJUtGUNJq95aWOwMrx4Kp9rjjbX8dhAy4V5qIXjaK
+         Zgu0+NJ5yzh1mfMWYHBqI0PkDPcDSrCZFYW8Ubs1jlEPPhGVRWUtsuHaDedl5V3Baw1V
+         81/9hzsSnf0TRMf7xKWfr++5O5R+lBZubPirmPJ0JLAaoYuiVTuCTM68JCDfbEbi3sRN
+         dYSD9OiEKehYC9Z9s8DOH/YgSUeYwrItYLKyV9LcT5IUknZFTr1NIH464TDIxxPBnd8O
+         IU9W0+HfjJDLNOuKH9LfJahOMTpInv1/dLQAfEJVQEIspeNHWeuEi5lDuizm8NcYAGs5
+         crWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=SxC6XwY1SPwfYjSg0QFA/doUEbmDn0nLVNJiR10VazQ=;
-        b=lO/IfLU+l9iqlUEypPC6xN+EX64jCk9p4nf9w+osZGdLMBvoaHuLHv4lGwqjhkrClw
-         RrlIl9+A3JIAMWTCyeCFuKx5Qoa6sgDWKRjncJdK2UKwprRC94qINmv/vG6VID/LcVOc
-         ZLKlg8dtB8LRFa+QKcsXXSmlDLrpND4a+bRJG9pgHi4Sao7ReiwZBy6DBlKt1J3QQ0SM
-         YmZxJqYUHRj1T9DTdOMNjKauJIpfglhfqV9CE0g1h3EzKbALrddtC8FSxiPlHiFT/mzf
-         8Qs5OAp76oMYSV1LXxxSZ6zZXTK8+aotEEy55eJ7HkwJgtZpEjTPNFxm25zCW2Foq0w3
-         eW9A==
-X-Gm-Message-State: AOUpUlEBZWb8Y15xLVtDRqwmoJ5VOvGRVo/oh1c5PIiJbcHWjUUgPZtS
-        sRjLLzVrpVlVkO0USOAAsMY=
-X-Google-Smtp-Source: AA+uWPz/phHybUKeqv2BG+HDW07OQtMJHZFujZXEq294XPQt9PnVWyOyEcm36IGHm0xgt77md4Nkog==
-X-Received: by 2002:a17:902:8494:: with SMTP id c20-v6mr22772314plo.336.1534309082135;
-        Tue, 14 Aug 2018 21:58:02 -0700 (PDT)
+        bh=8Ywg/j0sZUgMl61G2KwcVtAjbde3D1O0jb95uwzZz9c=;
+        b=l3vAJNct1K6sNqTtzGqhoxNf4gJUUtinsZE4BL9zYYDq7U7GlfgtJwCjDTXl5VmpG4
+         9yR6CHrnRQjcRp4Ku13RwRw83NdAQUr5gJ6AhiYifhDwd4GKlSLqwd4hj74wX4cPnYjZ
+         P+TsFEIhHpzZkFCFjOVJgm/1bnz+xDpMhkEDCPIkFGesm2D1QREhDs37q9iqfWWBDV26
+         6la1BtQ3C+YFpVtpUspXLkBe/nSAjl7OLyHA1BaK/WgQjj4iqh7krAm+3KzezM0G419x
+         xp2nR+Ginwt4nBn9KFYnqUGURbXazDQLb0brXh7ONXCdlL2JZDuHAm6F05nG30Z4yd6p
+         Bv1Q==
+X-Gm-Message-State: AOUpUlE1m8N8x8fQVajkCdjEZglVxWQYvoumGH6Qc70g9HugTu2eRRBw
+        YAIMowR0UJBDmRsk3YtbfdM=
+X-Google-Smtp-Source: AA+uWPxRF+gRS9f3w/lEukmUJ1ZTmVXkePPFxLSoN6sWc13JmYkRXmqgSRelCBoTRO30HjxVkdqphg==
+X-Received: by 2002:a17:902:654b:: with SMTP id d11-v6mr22783757pln.8.1534309814115;
+        Tue, 14 Aug 2018 22:10:14 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id d13-v6sm20724063pgq.42.2018.08.14.21.58.01
+        by smtp.gmail.com with ESMTPSA id f4-v6sm25034426pfj.46.2018.08.14.22.10.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 21:58:01 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 21:57:59 -0700
+        Tue, 14 Aug 2018 22:10:13 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 22:10:11 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
-        marc@marc-stevens.nl
-Subject: Re: [PATCH 0/9] Add missing includes and forward declares
-Message-ID: <20180815045759.GB32543@aiede.svl.corp.google.com>
-References: <20180811043218.31456-1-newren@gmail.com>
- <87mutts3sz.fsf@evledraar.gmail.com>
- <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
- <20180811173406.GA9119@sigill.intra.peff.net>
- <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
- <20180815013825.GA12178@sigill.intra.peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com
+Subject: Re: [PATCHv3 1/6] Add missing includes and forward declares
+Message-ID: <20180815051011.GC32543@aiede.svl.corp.google.com>
+References: <20180811205024.11291-1-newren@gmail.com>
+ <20180813171749.10481-1-newren@gmail.com>
+ <20180813171749.10481-2-newren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180815013825.GA12178@sigill.intra.peff.net>
+In-Reply-To: <20180813171749.10481-2-newren@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
+Elijah Newren wrote:
 
-> Subject: [PATCH] test-tool.h: include git-compat-util.h
->
-> The test-tool programs include "test-tool.h" as their first
-> include, which breaks our CodingGuideline of "the first
-> include must be git-compat-util.h or an equivalent". This
-> isn't actually a problem, as test-tool.h doesn't define
-> anything tricky, but we should probably follow our own rule.
->
-> Rather than change them all, let's instead make test-tool.h
-> one of those equivalents, just like we do for builtin.h
-> (which many of the actual git builtins include first).
+> Subject: Add missing includes and forward declares
 
-I wonder if it would not be simpler to change them all.  It would be
-one less special case.
+nit: s/declares/declarations/
 
-That said,
+This is a huge patch.  Was it autogenerated or generated manually?
+Can the commit message say something about methodology?
 
-> Signed-off-by: Jeff King <peff@peff.net>
+Is there an easy way to review it?  (Keep in mind that I'm super lazy.
+;-))
+
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 > ---
->  t/helper/test-tool.h | 2 ++
->  1 file changed, 2 insertions(+)
+[...]
+> --- a/alloc.h
+> +++ b/alloc.h
+> @@ -1,9 +1,11 @@
+>  #ifndef ALLOC_H
+>  #define ALLOC_H
+>  
+> +struct alloc_state;
+>  struct tree;
+>  struct commit;
+>  struct tag;
+> +struct repository;
+>  
+>  void *alloc_blob_node(struct repository *r);
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+That's reasonable.  Going forward, is there a way to tell if some of
+these forward declarations are no longer needed at some point in the
+future (e.g. can clang be convinced to warn us about it)?
 
-Thanks.
+[...]
+> --- a/apply.h
+> +++ b/apply.h
+> @@ -1,6 +1,9 @@
+>  #ifndef APPLY_H
+>  #define APPLY_H
+>  
+> +#include "lockfile.h"
+> +#include "string-list.h"
+> +
+>  enum apply_ws_error_action {
+
+Here, to avoid strange behavior, we have to be careful to make sure
+the headers don't #include apply.h back.  It's a pretty high-level
+header so there's no risk of that *phew*.
+
+[...]
+> --- a/archive.h
+> +++ b/archive.h
+> @@ -3,6 +3,9 @@
+>  
+>  #include "pathspec.h"
+>  
+> +struct object_id;
+> +enum object_type;
+
+enums are of unknown size, so forward declarations don't work for
+them.  See bb/pedantic for some examples.
+
+enum object_type is defined in cache.h, so should this #include that?
+
+[...]
+> --- a/commit-graph.h
+> +++ b/commit-graph.h
+> @@ -4,6 +4,7 @@
+>  #include "git-compat-util.h"
+>  #include "repository.h"
+>  #include "string-list.h"
+> +#include "cache.h"
+
+We can skip the #include of git-compat-util.h since all .c files
+include it.
+
+[...]
+> --- a/fsmonitor.h
+> +++ b/fsmonitor.h
+> @@ -1,6 +1,13 @@
+>  #ifndef FSMONITOR_H
+>  #define FSMONITOR_H
+>  
+> +#include "cache.h"
+> +#include "dir.h"
+> +
+> +struct cache_entry;
+> +struct index_state;
+> +struct strbuf;
+
+cache_entry et al are defined in cache.h, right?  Are these forward
+decls needed?
+
+[...]
+> --- a/merge-recursive.h
+> +++ b/merge-recursive.h
+> @@ -1,8 +1,10 @@
+>  #ifndef MERGE_RECURSIVE_H
+>  #define MERGE_RECURSIVE_H
+>  
+> -#include "unpack-trees.h"
+>  #include "string-list.h"
+> +#include "unpack-trees.h"
+
+just curious, no need to change: where does this reordering come from?
+
+[...]
+> --- a/pathspec.h
+> +++ b/pathspec.h
+> @@ -1,6 +1,11 @@
+>  #ifndef PATHSPEC_H
+>  #define PATHSPEC_H
+>  
+> +#include "string.h"
+> +#include "strings.h"
+
+What are these headers?
+
+The rest looks good.
+
+Thanks and hope that helps,
+Jonathan
