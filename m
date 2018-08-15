@@ -2,80 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DD031F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 20:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B2991F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 20:50:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726422AbeHOXfl (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 19:35:41 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:39529 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbeHOXfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 19:35:40 -0400
-Received: by mail-it0-f46.google.com with SMTP id g141-v6so3746051ita.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 13:41:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=mUQCdC8zbobDH9N9hoMg7oZlajneyMsKmgiZOWSJyL8=;
-        b=KEhzOUUpfroHdNqKhDOqxC953d+wrnCr/fp1epBokVTc6dW2UQN9KQFK0zhlY17gWR
-         NzK5oc+HsWvdF5/0loNax6N2RIAQozcHhmSTuz8C1UU2XXsJ2S2lF00116cxy2r+YCvG
-         HqqrBvn23ks/0vjCjRM8Pg7gnws1Y7yhvbSnlERhLEpRUeE+4U5eEAwV1raQ6cXiTD22
-         QMPwqsb3z41OhWaX9EgVDVypDKA8j4vWsL4I+z/h3oFHnv7nOWLKzr7lKPe8ulcRgbGK
-         SsFWDdivJ6PqZ3Ka+VOBwkI4kVRG4lKjBR1YLrfbu1JLpBsi2PmYd4t+Sk+/ZucTs1P2
-         uFNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mUQCdC8zbobDH9N9hoMg7oZlajneyMsKmgiZOWSJyL8=;
-        b=HNWtP4ZlomDxKBr3mSN1kQSYt/p+/Xwk8OHDtm99fEjRffZaEv7pt8qsWQLMq/wiQ6
-         kRMiKsKPAEBecA5pVEB5akc5rPIe5PVcqM3+5xpcLduSQWcHCossP9Pp/VONuRvd27Wb
-         KAP/DicFbAmDwZxF1An1E2rsOkOV6KtowziONGmaUwBxqeKf8L6NYa07NnXjiHO0JIkG
-         /EEANoNTahDesibnB2tEgLzjMgP3UG3v2qzZjwD+UFL7Gt+opicphGkGtg7mMncjQjX+
-         BUPjmJKhERpDA45XMM6sVOzXqWyspRhV7CAchRtMKK8W8HCTYDNKJq/a+6lh0Lw5pzzv
-         /H2Q==
-X-Gm-Message-State: AOUpUlHPHqn1JuIs0prbTnQ/mDdN+khougj6bZC5OPqAZrVwds5OQ8V1
-        4kmVddL7hP2XDN6VRrt2Cn7k1CQt
-X-Google-Smtp-Source: AA+uWPzWXpNVEcIoDRzb0xF5Oimxfnll4dRJnAYD6mFdMAOYxNBRZWj4nzs8m7DJ0lYkch7SbnE8qA==
-X-Received: by 2002:a24:3d81:: with SMTP id n123-v6mr20062704itn.40.1534365715212;
-        Wed, 15 Aug 2018 13:41:55 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a11-v6sm1326128ita.21.2018.08.15.13.41.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 13:41:54 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 13:41:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, avarab@gmail.com, peff@peff.net,
-        ramsay@ramsayjones.plus.com, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 0/6] Add missing includes and forward declares
-Message-ID: <20180815204152.GD181377@aiede.svl.corp.google.com>
-References: <https://public-inbox.org/git/20180813171749.10481-1-newren@gmail.com/>
- <20180815175410.5726-1-newren@gmail.com>
+        id S1727533AbeHOXoN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 19:44:13 -0400
+Received: from server65.mylittledatacenter.com ([78.46.58.69]:48582 "EHLO
+        server65.mylittledatacenter.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726123AbeHOXoN (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 15 Aug 2018 19:44:13 -0400
+X-Greylist: delayed 3306 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Aug 2018 19:44:12 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=hadisafari.ir; s=default; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Date:Message-ID:Subject:From:To:Sender:Reply-To:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=PQRYp9t7Szw53HQPrtKmtKJMWbqBo0B9OzLrgNMTlS0=; b=w5zOernaQndnz6jpgLtCW485TS
+        OrzAX0olpuEF7HHCoconi62BJaQKEoQk8eiHKhdOzuitg1kE38T5nJ5MBdvv605cFQxDkuwNU3wR7
+        nUWbPJpcijQA2PphzuAh5P3meRl64hXL5KLkxglaEy01c/UMGSHlJfjFKqKlomRKJA2mStnBs0XB2
+        0ggBWCgHnlJD32QskBttA6195wxwOf3QBx6iK2cK9CgLXbmWl0LHUBnmYc4F9/EhyMKEgkdmofOKt
+        S0ILZOd/nhdlJAJiLU0/1pKP3s4OJqaoCAgQ/3nKpg3x53XGYpIy+OLxeuvu1b4yOs5wmQCquii3Z
+        h6Qh8PLg==;
+Received: from [5.161.104.131] (port=53397 helo=Hadi.local)
+        by server65.mylittledatacenter.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.91)
+        (envelope-from <hadi@hadisafari.ir>)
+        id 1fq1tC-006Vyv-0a
+        for git@vger.kernel.org; Thu, 16 Aug 2018 00:25:30 +0430
+To:     git@vger.kernel.org
+From:   Hadi Safari <hadi@hadisafari.ir>
+Subject: "Changes not staged for commit" after cloning a repo on macOS
+Message-ID: <6022fbe8-0e07-f561-5e66-eeb4bc92704d@hadisafari.ir>
+Date:   Thu, 16 Aug 2018 00:25:24 +0430
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180815175410.5726-1-newren@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server65.mylittledatacenter.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - hadisafari.ir
+X-Get-Message-Sender-Via: server65.mylittledatacenter.com: authenticated_id: hadi@hadisafari.ir
+X-Authenticated-Sender: server65.mylittledatacenter.com: hadi@hadisafari.ir
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren wrote:
+Hi everyone!
 
->  62 files changed, 152 insertions(+), 18 deletions(-)
+I encountered a strange situation on OS X recently. I cloned a 
+repository (https://github.com/kevinxucs/Sublime-Gitignore.git), went to 
+folder, and saw "Changes not staged for commit" message for four 
+specific files. It happened every time I repeated the procedure. I even 
+was able to commit those to the repo.
+At first I thought there's something wrong with repo, but I cloned it on 
+Ubuntu 16.04 and everything was OK; no "Changes not staged for commit" 
+message.
 
-All 6 patches in this series are
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Does anyone have any idea?
 
-Thanks for your patient work.
+Thank you.
 
-Pointer to previous rounds for the curious:
-https://public-inbox.org/git/20180811043218.31456-1-newren@gmail.com/
+Log:
+
+```
+$ git clone https://github.com/kevinxucs/Sublime-Gitignore.git
+Cloning into 'Sublime-Gitignore'...
+remote: Counting objects: 515, done.
+remote: Total 515 (delta 0), reused 0 (delta 0), pack-reused 515
+Receiving objects: 100% (515/515), 102.14 KiB | 48.00 KiB/s, done.
+Resolving deltas: 100% (143/143), done.
+$ cd Sublime-Gitignore/
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+   (use "git add <file>..." to update what will be committed)
+   (use "git checkout -- <file>..." to discard changes in working directory)
+
+     modified:   boilerplates/Nanoc.gitignore
+     modified:   boilerplates/OpenCart.gitignore
+     modified:   boilerplates/SASS.gitignore
+     modified:   boilerplates/WordPress.gitignore
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+The rest of the log is available at 
+https://github.com/kevinxucs/Sublime-Gitignore/issues/6. (I don't want 
+this email to become too long.)
+
+-- 
+Hadi Safari
+http://hadisafari.ir/
