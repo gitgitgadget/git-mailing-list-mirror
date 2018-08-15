@@ -3,102 +3,159 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FA1C1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 05:45:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCEC21F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 05:49:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726101AbeHOIgE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 04:36:04 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46737 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725914AbeHOIgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 04:36:04 -0400
-Received: by mail-wr1-f68.google.com with SMTP id h14-v6so114780wrw.13
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:45:21 -0700 (PDT)
+        id S1726193AbeHOIkJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 04:40:09 -0400
+Received: from mail-io0-f173.google.com ([209.85.223.173]:42414 "EHLO
+        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725876AbeHOIkJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 04:40:09 -0400
+Received: by mail-io0-f173.google.com with SMTP id n18-v6so128624ioa.9
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 22:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YI568NamtoHiMLJ0pdofd98BaloxkEDOLEJWxCseis4=;
-        b=pdfc8Cy7wmqGnNHrqtMQif6S6ccQNRDfBlYQ1WnGdFgxH+kzIK/PmHLjokM8eamHbm
-         05kFl2VphcD8JYNbnlrslDj1oaEExG7nUcHfvWxWjRvrKQM3U7A0xNkIUjNxyiwuILHQ
-         HqjFyt9jEvfRK+syJwYKlJNa/Ly4VSBCQCNE0ylPeQdsMMuCcWjk7o7AMTUQlMqI8DhP
-         GaXcegYFjvLOepKbkBUCh2CPwQNSHxcsMoWfRsJo9FFAzgc1PgR1yHLmO+bRPkmz8tJ+
-         TnMSbkuIkAF7uEYKDwD9nJNvwRAqRuiKfh97xOTrcRpr0NvvB4I1VCp6+OWPqWstpMYv
-         56LQ==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=TZ3fJdOzhKoftJMlbewmXZw0imgehqpdiORtD0K0YtA=;
+        b=l/4XhGuot0URwsDngXQZWRiBo1XFY3xvnrlg3WZXTQKkDUfDxfyA04ZcIund7hvu0X
+         dYrIArTFVyXXy/goZTBLkcaj3FFXxqtyHRbgAOGh71+NOv5Y2pqNKk5NiEhPx6ChH+pp
+         Bk/8FfGbQqCl7Mh2N2y/Ya8lrqKXjFp9g49zBdbj8U2kWhlPf8n87B+rOqpj7V4TEI+q
+         cBZT0eZrPymNet5hkAoIQ34nJGvsKFMiv+n5AjQeVQBq0Dke2wxR01c0TBG/HMJnK6IU
+         xLCBlGtJAbztjN9ektdT+tBz8YK8mofns/30RbY7JvOevTzvIczepd1jIfPiOIGFn8xs
+         LnRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YI568NamtoHiMLJ0pdofd98BaloxkEDOLEJWxCseis4=;
-        b=nmqD3MoxAUS2JcxJAhhpZAqa91g6I9dTHjE6jUMy1tzcF2UYEF9H0a0Ehu7cHLASoY
-         45H3U2EsFMb/eN50mGJ1TMnmS9EmTPYzT1pDyj+axL0H1T3V+4rOIyzm9NuJapm7lGCL
-         igGe7LJ8/lfMk7vVCppfXXBsA+6UoEn64Ik0Y0RVv7wfi7b/HTgul6LYQB9IJKyg+bIM
-         EwvV4C+72wvtYNdlLxfjqtqhAo6ma47iMw+RiSaJdoX6bUe6RuHBN1wY+JMUpiBuEsTm
-         4S3deEGC9jgURYrvN4bVRvum52fgt5SsxjDJ47068Qb4YVJ3WMcfeqt7fypZEuIfdpQK
-         URRg==
-X-Gm-Message-State: AOUpUlFo0H8VrjTAD4VHljtIWFSEP/qOJA3dvDZQYh7XXOxP3X3cNTfk
-        03Tw3Sy/wQrP2MMfxVW7JV8=
-X-Google-Smtp-Source: AA+uWPz0RA+dJLKDlEOoKHIkz3lo9P0g3P0ZL+Nko0J9vDZlUPf4kU1tl3eQVOCPwfMxE9ZDzYNsqA==
-X-Received: by 2002:adf:90e9:: with SMTP id i96-v6mr15426641wri.146.1534311920942;
-        Tue, 14 Aug 2018 22:45:20 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y128-v6sm960062wmy.26.2018.08.14.22.45.20
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Aug 2018 22:45:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
-        marc@marc-stevens.nl
-Subject: Re: [PATCH 0/9] Add missing includes and forward declares
-References: <20180811043218.31456-1-newren@gmail.com>
-        <87mutts3sz.fsf@evledraar.gmail.com>
-        <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
-        <20180811173406.GA9119@sigill.intra.peff.net>
-        <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BHZoWn-mZjop+n9PJ0+A4tZFrU6vJE+A7iSeHDXcDc=Yg@mail.gmail.com>
-Date:   Tue, 14 Aug 2018 22:45:19 -0700
-In-Reply-To: <CABPp-BHZoWn-mZjop+n9PJ0+A4tZFrU6vJE+A7iSeHDXcDc=Yg@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 13 Aug 2018 23:42:56 -0700")
-Message-ID: <xmqqftzgxjww.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=TZ3fJdOzhKoftJMlbewmXZw0imgehqpdiORtD0K0YtA=;
+        b=Q5TRlxGDTM9TzKYXbGQWM5xo3D0nXifvfqyYY84Kos0SV29nvjqvgjGkPFiFRGSBim
+         bE2hKZO7HyUQr9QmRQONNaljNLeOSgJwExhXvfKjqyR1AloJx3Lcx/lXmtmg4ncda71i
+         0t55992zppxvX43CRpRpYnx6CnQtWWHkeSg7FW7ZuhOmo1DSUqlqLksEo49mDskge65t
+         IItQIwqaf1+0fPB+o/Y2SZk9eMOgJ28lHcMbUB11/BGq9+xMTddza7S/9JI/1m/H4Z6a
+         wyngol7DMdg+PoznSJMg5v9cjUnNT9DdK6LRzRPpXt0OpfiXEnxdaYi+FEmhNAzGtqsD
+         rhlQ==
+X-Gm-Message-State: AOUpUlG6IIxiYVWzuvUshcWo2rBg6LiR2g0s2CzAYiGyAFj065V9SyI7
+        fvN7/lQ4rCwR8f7rDAz1qlPuT32FRjvLMFZGT0sOFgt2
+X-Google-Smtp-Source: AA+uWPwyBAPN5YjlhQ+9o0/JNDAyVjk8d4zzrBR8PDMKXPaVuKIMgrKNgZjU+0DCAxpnyfsovj/7aUYMRFkUJCX1J6I=
+X-Received: by 2002:a6b:3042:: with SMTP id w63-v6mr20411121iow.223.1534312166183;
+ Tue, 14 Aug 2018 22:49:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Tue, 14 Aug 2018 22:49:25
+ -0700 (PDT)
+In-Reply-To: <20180814214723.GA667@sigill.intra.peff.net>
+References: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
+ <20180814210616.GA32367@sigill.intra.peff.net> <20180814214723.GA667@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 15 Aug 2018 07:49:25 +0200
+Message-ID: <CAP8UFD3S5vgMSuXfj1z0F7f-9SLVEm6boCHwdNwn7ysvXSRMrA@mail.gmail.com>
+Subject: Re: Syncing HEAD
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
-
-> On Mon, Aug 13, 2018 at 11:24 AM Junio C Hamano <gitster@pobox.com> wrote:
->> Jeff King <peff@peff.net> writes:
+On Tue, Aug 14, 2018 at 11:47 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 14, 2018 at 05:06:16PM -0400, Jeff King wrote:
 >
->> As things are slowly moving out of the so-far kitchen-sink "cache.h"
->> into more specific subsystem headers (like object-store.h), we may
->> actually want to tighten the "header that includes it first" part a
->> bit in the future, so that 'git grep cache.h' would give us a more
->> explicit and a better picture of what really depends on knowing what
->> the lowest level plumbing API are built around.
+>> On Tue, Aug 14, 2018 at 10:09:37PM +0200, Christian Couder wrote:
 >>
->> > So I think the better test is a two-line .c file with:
+>> > When cloning with --mirror, the clone gets its HEAD initialized with
+>> > the value HEAD has in its origin remote. After that if HEAD changes in
+>> > origin there is no simple way to sync HEAD at the same time as the
+>> > refs are synced.
 >> >
->> >   #include "git-compat-util.h"
->> >   #include $header_to_check
+>> > It looks like the simplest way to sync HEAD is:
+>> >
+>> > 1) git remote show origin
+>> > 2) parse "HEAD branch: XXX" from the output of the above command
+>> > 3) git symbolic-ref HEAD refs/heads/XXX
 >>
->> But until that tightening happens, I do not actually mind the
->> two-line .c file started with inclusion of cache.h instead of
->> git-compat-util.h.  That would limit the scope of this series
->> further.
+>> How about:
+>>
+>>   git remote set-head origin -a
+>>
+>> ?
 >
-> Yes, this removes about 2/3 of patch #1.
+> Reading your message again, I see you actually care less about the
+> refs/remote placeholder and more about the actual HEAD in a bare repo.
 
-Sorry for making a misleading comment.  I should have phrased "I
-would not have minded if the series were looser by assuming
-cache.h", implying that "but now the actual patch went extra mile to
-be more complete, what we have is even better ;-)".
+Yeah, I am interesting in updating the actual HEAD in a bare repo.
 
+> In which case "git remote" isn't going to help, though its underlying
+> code has the algorithm you would want.
+
+Ok, I will take a look at the algorithm.
+
+>> One tricky thing is that the name "refs/remotes/<remote>/HEAD" is only
+>> special by convention, and that convention is known on the writing side
+>> only by git-clone and git-remote. So obviously:
+>
+> And so here the convention is simpler, because we're talking about the
+> main HEAD. But we still have know if you want to do that, and not update
+> some refs/remotes/ symref in a bare repo.
+
+We could maybe look at the "remote.XXX.mirror" config option. If it is
+set to "true", we could interpret that as meaning we are interested in
+updating the main HEAD and not some refs/remotes/ symref.
+
+> So all of this really implies to me that you want to be able to say
+> "take this symref on the other side and update this one on the local
+> side". I.e., some way to tell a refspec "don't update the value, update
+> the symref destination". So imagine we made "~" the magic character for
+> "just the symrefs" (I picked that because it's not allowed in a
+> refname).
+>
+> Then you could do what you want with:
+>
+>   git config --add remote.origin.fetch ~HEAD:HEAD
+>
+> and these two would be the same:
+>
+>   git remote set-head origin -a
+>   git fetch origin ~HEAD:refs/remotes/origin/HEAD
+>
+> And it would allow more exotic things, too, like:
+>
+>   # always update the remote notion of HEAD on every fetch
+>   git config --add remote.origin.fetch ~HEAD:refs/remotes/origin/HEAD
+>
+>   # update a non-HEAD symref we track for our own purposes
+>   git fetch origin ~refs/tags/LATEST:refs/tags/LATEST
+>
+>   # or the same thing but using the usual refspec "dst defaults to src"
+>   # rule and dwim lookup magic
+>   git fetch origin ~LATEST
+
+And `git fetch origin ~HEAD` would sync the main HEAD?
+
+Yeah, that looks like an interesting solution to the problem.
+
+I wonder though if we should restrict the way `git fetch origin ~XXX`
+searches the .git/ directory itself.
+
+> In protocol v0 we don't get symref reports from the other side over the
+> git protocol (except for HEAD), but we could use the same logic we use
+> for determining HEAD for older versions of Git: find a ref that points
+> to the same tip. Though I would say that unlike the existing code in
+> guess_remote_head(), we'd probably want to treat an ambiguity as an
+> error, and not just default to refs/heads/master.
+
+I wonder what `git fetch origin ~refs/heads/*:refs/heads/*` should do.
+Could it know which refs are symrefs using protocol v0? Should it
+guess that refs with uppercase names are symrefs? Should we allow '*'
+at all in those kinds of refspecs?
+
+It looks like making "~" the magic character for "just the symrefs"
+might be a good solution in the end, though we might want to restrict
+it to protocol v2.
+So perhaps something like `git fetch --update-head` that you suggest
+in another email would be a good solution for now and for protocol v0.
