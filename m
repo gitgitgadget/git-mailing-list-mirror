@@ -2,87 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CD701F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 19:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3684C1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 19:31:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727562AbeHOWSp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 18:18:45 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:45775 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725941AbeHOWSp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 18:18:45 -0400
-Received: by mail-yw1-f68.google.com with SMTP id 139-v6so1648630ywg.12
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:25:17 -0700 (PDT)
+        id S1727742AbeHOWZG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 18:25:06 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38701 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725941AbeHOWZG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 18:25:06 -0400
+Received: by mail-wr1-f66.google.com with SMTP id v14-v6so2048428wro.5
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 12:31:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=RhJ266H7N4nBLjq0H1twAyXE+l3T/PhRhOSYhx+lfPc=;
-        b=d0TkzVs+nIzwTpeA3JUjQa7SizmCJyVLAjQ8VaghKTgP0tuHuUVNpZa6J2MwhAfBHZ
-         v0F10bGWM25aOuAbefTAblMbXMlLgqwBqKr1/X1HG+Ra2LATR5nGkNGvnP/nRWwn/AIL
-         CfyYmnZ0N51F9OBsvBVCOEYP99wmcF54GvIo54wdIFV5swpqVmOlS+kk1AC/rEfFc+0J
-         KA1f/03Xy5a/qUFDbJtzrVgvtKPjSxuka8C+3r4zaE9n/drj6Eqg4g4b5MXH33G5Ovfq
-         GL/dgtl74wpycrP02lQVY+1UeOfN4OmnQENw70ycWr2rKzSP56BX8JqHPpQZqZK6tYDs
-         zMwQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4ryyilxWRJZz6PQWybfCM1JrUJM3gFDrx5/LfL+8buI=;
+        b=E9P8Z7vZ79vZfBloGvSUsUrrLyYfxyJnN6EFzSSmGAD/e6r6iMjRqelTgQUsIK4JNb
+         CGIkq5DKrflH4PYaMI6PnOYU+AHePtKt81aGsiyXrLRu5x/XaeLsnmwpCWd2jJkqqt66
+         E6/La3IG3c4CHtACOqsd2AA/CEKkOJf+Y3frdTYtiIc/QAx0e4EizTfVB+mvae57ckPv
+         nwG34uSeOEGgnXrq+9O7TGd/QhSg5zYSzy+Z/RRWW8zifKlnwi9Og6xBvjw9Fe3ExRNA
+         zzVKtAfRN1e01lPrKV3ndoWIVw1jdQL5nwI0kwAWQKd/gW3wqjal/r9HHQwsFYXnGro3
+         nVeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=RhJ266H7N4nBLjq0H1twAyXE+l3T/PhRhOSYhx+lfPc=;
-        b=oyHq8npAR3z/WpAbs6yInezy8bnVPT7fLZrfjwhVDPxxbL9l9hkKyqomffow3R3+ne
-         Ic9pkoyMfmKOiY3OWc5BnQPH9iKBL58LbqmzdYKNvMVhZsdq06WSCnkzdU/ekhlpO5ve
-         JMPge3YH5wwBhQ3B+vDJN42ngH5uO1pPiUYHZWGQ9cCKKm3zgWgtIGA5eY7K7t3rp5r0
-         8FNW3mCjXHdAN36Tvfm0T5EWTGD9rZlgorxL1H9vOUa23qUIxBFqrtlaIpRYiDfS34CX
-         wOf3JkMqY6lbObaVq5Dd1aQFot2PpTYeHfxBduEc7gB7uukD3s4jsnN/SwuY/0blbN8O
-         b/mA==
-X-Gm-Message-State: AOUpUlHpRlJ5P/FwfBn4gGBMcbtFOMeUZbL+2V+mgPmMx4O7YIaJd6My
-        g0mR4Ju+ukUtFVby2dzO+QVgkMqfPh/Rynsu5ky+dw==
-X-Google-Smtp-Source: AA+uWPwvMvDjsXMdHMvZvb04BEV+ip5NS6326B+/C0NqRwpUVHMfrm/fjgrTRGO5C/Q+GuaNm90O9eG09VesBPZdB9Q=
-X-Received: by 2002:a25:874d:: with SMTP id e13-v6mr11730974ybn.515.1534361116877;
- Wed, 15 Aug 2018 12:25:16 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4ryyilxWRJZz6PQWybfCM1JrUJM3gFDrx5/LfL+8buI=;
+        b=mN8mzoTTxDh2i6uT76rcAFYIeShnZNnfQFPZKHWpHt1K0cWcU/5MklHIrBojuxhfKM
+         45+nN67p1cGU+cLFr8KWdO0xm/w4GS7Ea7wElOkkeT68DknIXkF6nI+zSFPwzxGnRZ+H
+         XnyXGk5jDQnUU+7RTHyChXETW+kBuYu3nXNTAyFexdU+/PTyr9Y3EpgQxY0wxXfAgerQ
+         HQcCunbPsDlDBVc7A5ZqLJxi3fXgILq0Nd+5eT80dD4ndk4Fig7i/ZQHt4YPEiK2DvwH
+         E0mZ/O+XyPyPJSqE7USGcQtkl3ZS2IhptqlR2RivmQeArM3K/afy3OJhb/Qu9s4K9YTl
+         wELQ==
+X-Gm-Message-State: AOUpUlH5DEQ6RCz/2/jGwaz2xlrYpCvPPJ5dcyzaKq/uwoJ47LwylxKp
+        z7SOaAgZhdjDDDfo7iBrDRuJ/euc
+X-Google-Smtp-Source: AA+uWPxiN2pAOAmvOG/2Fhk+e06bWUAtyincLJa+lnufDHXTotD9LgrgZJmhW0BfB6YT9/5n+AaMnA==
+X-Received: by 2002:adf:81c3:: with SMTP id 61-v6mr17349611wra.120.1534361495298;
+        Wed, 15 Aug 2018 12:31:35 -0700 (PDT)
+Received: from localhost ([2.30.88.37])
+        by smtp.gmail.com with ESMTPSA id q70-v6sm5496209wmd.39.2018.08.15.12.31.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 12:31:34 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 20:31:33 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v7 04/26] stash: renamed test cases to be more
+ descriptive
+Message-ID: <20180815193133.GJ2734@hank.intra.tgummerer.com>
+References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <cb70dc2317b8bdbe640a50de7050cb405067c0f0.1533753605.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
-References: <20180813161441.16824-1-pclouds@gmail.com> <20180813161441.16824-9-pclouds@gmail.com>
- <CAGZ79kbs+4_D95+F5km0ODPb1_7tPXMivet35Pq+4vut1ZS9dw@mail.gmail.com> <CACsJy8AJh16X5HPf6GqfBn-6JwiDn=3505d0+e38bNOxOTg76Q@mail.gmail.com>
-In-Reply-To: <CACsJy8AJh16X5HPf6GqfBn-6JwiDn=3505d0+e38bNOxOTg76Q@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Aug 2018 12:25:05 -0700
-Message-ID: <CAGZ79ka=G6918mECGWUm5vYs-r-SAKLGuBirahKCTv9waQ2xgw@mail.gmail.com>
-Subject: Re: [PATCH 08/24] unpack-trees: remove 'extern' on function declaration
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cb70dc2317b8bdbe640a50de7050cb405067c0f0.1533753605.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 12:21 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Aug 15, 2018 at 9:10 PM Stefan Beller <sbeller@google.com> wrote:
-> >
-> > On Mon, Aug 13, 2018 at 9:15 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> > >
-> > > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> >
-> > This removes the only existing extern keyword, which was added by
-> > Linus in  933bf40a5c6 (Start moving unpack-trees to "struct tree_desc",
-> > 2007-08-09). All other callers do not have this noise word as it was
-> > simply never
-> > present there despite the old age of unpack-trees.h. Interesting histor=
-y.
->
-> Linus did not add 'extern' though. It was Johannes a year ago in
-> 16da134b1f (read-trees: refactor the unpack_trees() part -
-> 2006-07-30). Man this function is _old_.
+> Subject: Re: [GSoC][PATCH v7 04/26] stash: renamed test cases to be more descriptive
 
-Ah, yes. I stopped at the first blame here but dug down on other functions
-as I expected some of the recent "remove externs here" and magically
-overlook this function.
+Please use the imperative mood in the title and the commit messages
+themselves.  From Documentation/SubmittingPatches:
+
+    Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
+    instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
+    to do frotz", as if you are giving orders to the codebase to change
+    its behavior.
+
+From a quick skim over the rest of the series, this also applies to
+some of the subsequent patches in the series. 
+
+On 08/08, Paul-Sebastian Ungureanu wrote:
+> Renamed some test cases' labels to be more descriptive and under 80
+> characters per line.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+>  t/t3903-stash.sh | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
+> 
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index de6cab1fe..8d002a7f2 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -604,7 +604,7 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
+>  	test_cmp expected actual
+>  '
+>  
+> -test_expect_success 'stash drop - fail early if specified stash is not a stash reference' '
+> +test_expect_success 'drop: fail early if specified stash is not a stash ref' '
+>  	git stash clear &&
+>  	test_when_finished "git reset --hard HEAD && git stash clear" &&
+>  	git reset --hard &&
+> @@ -618,7 +618,7 @@ test_expect_success 'stash drop - fail early if specified stash is not a stash r
+>  	git reset --hard HEAD
+>  '
+>  
+> -test_expect_success 'stash pop - fail early if specified stash is not a stash reference' '
+> +test_expect_success 'pop: fail early if specified stash is not a stash ref' '
+>  	git stash clear &&
+>  	test_when_finished "git reset --hard HEAD && git stash clear" &&
+>  	git reset --hard &&
+> @@ -682,7 +682,7 @@ test_expect_success 'invalid ref of the form "n", n >= N' '
+>  	git stash drop
+>  '
+>  
+> -test_expect_success 'stash branch should not drop the stash if the branch exists' '
+> +test_expect_success 'branch: should not drop the stash if the branch exists' '
+
+Since we're adjusting the titles of the tests here I'll allow myself
+to nitpick a little :)
+
+Maybe "branch: do not drop the stash if the branch exists", which
+sounds more like an assertion, as the "pop" and "drop" titles above.
+
+>  	git stash clear &&
+>  	echo foo >file &&
+>  	git add file &&
+> @@ -693,7 +693,7 @@ test_expect_success 'stash branch should not drop the stash if the branch exists
+>  	git rev-parse stash@{0} --
+>  '
+>  
+> -test_expect_success 'stash branch should not drop the stash if the apply fails' '
+> +test_expect_success 'branch: should not drop the stash if the apply fails' '
+>  	git stash clear &&
+>  	git reset HEAD~1 --hard &&
+>  	echo foo >file &&
+> @@ -707,7 +707,7 @@ test_expect_success 'stash branch should not drop the stash if the apply fails'
+>  	git rev-parse stash@{0} --
+>  '
+>  
+> -test_expect_success 'stash apply shows status same as git status (relative to current directory)' '
+> +test_expect_success 'apply: shows same status as git status (relative to ./)' '
+
+s/shows/show/ above maybe?  This used to be a full sentence
+previously, where 'shows' was appropriate, but I think "show" sounds
+better after the colon.
+
+>  	git stash clear &&
+>  	echo 1 >subdir/subfile1 &&
+>  	echo 2 >subdir/subfile2 &&
+> @@ -1048,7 +1048,7 @@ test_expect_success 'stash push -p with pathspec shows no changes only once' '
+>  	test_i18ncmp expect actual
+>  '
+>  
+> -test_expect_success 'stash push with pathspec shows no changes when there are none' '
+> +test_expect_success 'push: <pathspec> shows no changes when there are none' '
+
+Maybe "push <pathspec>: show no changes when there are none"?  "push
+<pathspec>" would be the rest of the 'git stash' command, having the
+colon in between them seems a bit odd.
+
+>  	>foo &&
+>  	git add foo &&
+>  	git commit -m "tmp" &&
+> @@ -1058,7 +1058,7 @@ test_expect_success 'stash push with pathspec shows no changes when there are no
+>  	test_i18ncmp expect actual
+>  '
+>  
+> -test_expect_success 'stash push with pathspec not in the repository errors out' '
+> +test_expect_success 'push: <pathspec> not in the repository errors out' '
+
+This one makes sense to me.
+
+>  	>untracked &&
+>  	test_must_fail git stash push untracked &&
+>  	test_path_is_file untracked
+> -- 
+> 2.18.0.573.g56500d98f
+> 
