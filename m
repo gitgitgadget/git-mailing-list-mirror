@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D51C61F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 22:13:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDCD61F428
+	for <e@80x24.org>; Wed, 15 Aug 2018 22:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727592AbeHPBHN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 21:07:13 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37574 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727544AbeHPBHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 21:07:13 -0400
-Received: by mail-wr1-f66.google.com with SMTP id u12-v6so2369266wrr.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 15:13:07 -0700 (PDT)
+        id S1727640AbeHPBTP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 21:19:15 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:53411 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727610AbeHPBTO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 21:19:14 -0400
+Received: by mail-wm0-f65.google.com with SMTP id s9-v6so2658671wmh.3
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 15:25:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=GwE9IStU+AqnV1yH2T5J3k7c62VtlKJrVLrUZuvMY24=;
-        b=L0QtQAAJ86MCNCqg7FDiSKwIvwCbxneYtvrK/cXhtO8kofL/lb8BCF7uQTkXYZezlY
-         WVHptCCKwCzrTbTW7vePbOCbEWYM5fvhrgE6/s00M3PGfY12p5zyFNOw36jE5GcGANJN
-         IYAXB6ZcrBfbiJynaDmdS7k3SWl0QE8WgZXtXTJEUuuGsOMHDYOuaX4ESPrSpaZZO4Zv
-         RnBKcJ+pjf9UtZuLAZrH4gwO5L9WwjlILS6hsZg746SoSkXUYwLB2mct4dsctJOZJp8t
-         Ewf9S/qcMr2iX3UE1D4kvVJLg1asuE7P5sFNQWPlbdtH0Iuy4ozAo2Yp4Z8Z3IZsjrik
-         WzSw==
+        bh=qiD1JTC6kdlV3ye9qk6iSI3Nqv2TMwF8bx2JhpUG+6o=;
+        b=vKHYfxmr7eCEgSkfqUTKcvozhNGtVRIQOSuz/M0bXqESLYmAKWsnjG5YgZsBnqam8Y
+         iJZDp8vyg86HGf48xr41xjYZXHTsKgmNTbGbC8Sfw64+egDsQFCl69JKqmDqqokJRdvW
+         iNKKvhTWS2qIVlbImCAhw4Jr//fTqI8tsc/xf3vf1PORLs4L58snFRMYa/Va3tqFrglt
+         9e9ZdI9vwTa39ssbxD80lxAe22RmNXWcTmvOsc9q87xAjpW0jIhaW5s16yCqWbtUtR9G
+         n8GJP73t9ev0jTdmjPSP/28UpjCnz6EHXOL8xGm5wz5PRkQpzcklGf1q0YjGb3V+pRNg
+         WCgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=GwE9IStU+AqnV1yH2T5J3k7c62VtlKJrVLrUZuvMY24=;
-        b=ImKVCLgtakfQTabRps5MObhn80KKM1+Xd1Ek9bvjqfAQTIinfUM2E67OFdsuhNcEC2
-         BO7E3FyWtp7hKfYmtqRPDJ9ChhQ3VWWkWsHUCOdYxJ1ZQdpc5d9pvFjbS7Z740BhwFSg
-         CDYhXL1cL9g6QTiB6SSZ3Z722mFu6iU8efUqGD/+9o8fWJnsqGiIY2m9hHLWD5svG+z0
-         3Vk4Ho0uCDgExmLKs7dlSAJtcax8Ktx+xqXySIAfsa7M7iiZf9jVrXXmvcLgQMvFaXPy
-         w7K6clb5B+X7hmlo9cVbMjeT3usFdJVVbrxrt8zUxeXbFa2CXDPEqMqVpOjAUyzT+fK5
-         YPmw==
-X-Gm-Message-State: AOUpUlF59cIulYsdqPSHD/69O6IhzxqB/6D8y0+/LEcckldbwHoBC8X4
-        mgdYWW4h/zQcqYH8K1xIMXg=
-X-Google-Smtp-Source: AA+uWPzlOhOha7aNzE3qorUQ8MF4flFxdx9u5OGdNQeGagF1b7qXib2O7g+CMbF8FejzAnNlw+3a0g==
-X-Received: by 2002:adf:9282:: with SMTP id 2-v6mr18242917wrn.69.1534371186949;
-        Wed, 15 Aug 2018 15:13:06 -0700 (PDT)
+        bh=qiD1JTC6kdlV3ye9qk6iSI3Nqv2TMwF8bx2JhpUG+6o=;
+        b=jlzCLClpiz9Ne+pfkpMQiA0Jwtw0ChRniQkjtMf5FO5WqkG5qGUMDxx24O4t4wDVCz
+         HkUQ03yGOXwqtC+KZtOeDHUs8SWH0x7uul7I6Fu2fIf97iD1D2+f/nTA1e2HWSDGX0nx
+         nDfntUxL72Cip1bhfo/+428fp/k498ObgKJnxO3WvDyPc57xPaosMJ17YsGI064ZnWFe
+         mHyMzY0wUVFIBCFFVKvxWFZEgKiSKDClEXmfy3iBP6IDC4rh2NakapPXFAUKAwe9g6gW
+         0UqP15vH+T8CJaYWHbCJn45TpoZnlkOrV852xe0IzWJGDUsOG+IbWRC4fb7BxtzcEgvJ
+         xc0g==
+X-Gm-Message-State: AOUpUlH7R3t7QmzDO8XqpyzvQVuBSA55NXcAjcRhjGgXYul9o5yy/9XI
+        bzLkcYLH+FJRrMgW+vssfoSGRXgX
+X-Google-Smtp-Source: AA+uWPy/AGJCUekwzn21d6tTDNqBqVZCQYdPzVq6BdKzE0tQlDjtEwWPDqlXoi3qEuFEInZpqACdOg==
+X-Received: by 2002:a1c:1510:: with SMTP id 16-v6mr13759169wmv.74.1534371905547;
+        Wed, 15 Aug 2018 15:25:05 -0700 (PDT)
 Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id v124-v6sm4227321wma.18.2018.08.15.15.13.05
+        by smtp.gmail.com with ESMTPSA id e5-v6sm1860027wmh.29.2018.08.15.15.25.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 15:13:06 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 23:13:05 +0100
+        Wed, 15 Aug 2018 15:25:04 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 23:25:03 +0100
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v7 15/26] stash: convert create to builtin
-Message-ID: <20180815221305.GQ2734@hank.intra.tgummerer.com>
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
- <0393bbd09daeb7ab67da4a343ba58d824c35532b.1533753605.git.ungureanupaulsebastian@gmail.com>
+Subject: Re: [GSoC][PATCH v7 00/26] Convert "git stash" to C builtin
+Message-ID: <20180815222503.GR2734@hank.intra.tgummerer.com>
+References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
+ <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0393bbd09daeb7ab67da4a343ba58d824c35532b.1533753605.git.ungureanupaulsebastian@gmail.com>
+In-Reply-To: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
 User-Agent: Mutt/1.10.0 (2018-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,258 +68,132 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 08/08, Paul-Sebastian Ungureanu wrote:
-> Add stash create to the helper.
+> Hello,
 > 
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  builtin/stash--helper.c | 406 ++++++++++++++++++++++++++++++++++++++++
->  git-stash.sh            |   2 +-
->  2 files changed, 407 insertions(+), 1 deletion(-)
+> Here is the whole `git stash` C version. Some of the previous
+> patches were already reviewed (up to and including "stash: convert
+> store to builtin"), but there are some which were not
+> (starting with "stash: convert create to builtin").
+
+Thanks for this new iteration, and sorry I took a while to find some
+time to review this.  I had another read through the patches up until
+patch 15, and left some comments, before running out of time again.  I
+hope to find some time in the next few days to go through the rest of
+the series as well.
+
+One more comment in terms of the structure of the series.  The
+patches doing the actual conversion from shell to C seem to be
+interleaved with cleanup patches and patches that make the C version
+use more internal APIs.  I'd suggest putting all the cleanup patches
+(e.g. "stash: change `git stash show` usage text and documentation")
+to the front of the series, as that's more likely to be
+uncontroversial, and could maybe even be merged by itself.
+
+Then I'd put all the conversion from shell to C patches, and only once
+everything is converted I'd put the patches to use more of the
+internal APIs rather than using run_command everywhere.  A possible
+alternative would be to squash the patches to replace the run_command
+calls with patches that use the internal API directly, to save the
+reviewers some time by reading through less churn.  Though I'm kind of
+on the fence with that, as a faithful conversion using 'run_command'
+may be easier to review as a first step.
+
+Hope this helps!
+
+> In order to see the difference between the shell version and
+> the C version, I ran `time` on:
 > 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 5ff810f8c..a4e57899b 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -21,6 +21,7 @@ static const char * const git_stash_helper_usage[] = {
->  	N_("git stash--helper branch <branchname> [<stash>]"),
->  	N_("git stash--helper clear"),
->  	N_("git stash--helper store [-m|--message <message>] [-q|--quiet] <commit>"),
-> +	N_("git stash--helper create [<message>]"),
->  	NULL
->  };
->  
-> @@ -64,6 +65,11 @@ static const char * const git_stash_helper_store_usage[] = {
->  	NULL
->  };
->  
-> +static const char * const git_stash_helper_create_usage[] = {
-> +	N_("git stash--helper create [<message>]"),
-> +	NULL
-> +};
-> +
->  static const char *ref_stash = "refs/stash";
->  static int quiet;
->  static struct strbuf stash_index_path = STRBUF_INIT;
-> @@ -781,6 +787,404 @@ static int store_stash(int argc, const char **argv, const char *prefix)
->  	return do_store_stash(argv[0], stash_msg, quiet);
->  }
->
-> [...]
+> * git test suite (t3903-stash.sh, t3904-stash-patch.sh,
+> t3905-stash-include-untracked.sh and t3906-stash-submodule.sh)
 > 
-> +
-> +static int do_create_stash(int argc, const char **argv, const char *prefix,
-> +			   const char **stash_msg, int include_untracked,
-> +			   int patch_mode, struct stash_info *info)
-> +{
-> +	int untracked_commit_option = 0;
-> +	int ret = 0;
-> +	int subject_len;
-> +	int flags;
-> +	const char *head_short_sha1 = NULL;
-> +	const char *branch_ref = NULL;
-> +	const char *head_subject = NULL;
-> +	const char *branch_name = "(no branch)";
-> +	struct commit *head_commit = NULL;
-> +	struct commit_list *parents = NULL;
-> +	struct strbuf msg = STRBUF_INIT;
-> +	struct strbuf commit_tree_label = STRBUF_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct strbuf final_stash_msg = STRBUF_INIT;
-> +
-> +	read_cache_preload(NULL);
-> +	refresh_cache(REFRESH_QUIET);
-> +
-> +	if (!check_changes(argv, include_untracked, prefix)) {
-> +		ret = 1;
-> +		goto done;
+>         t3903-stash.sh:
+>         ** SHELL: 12,69s user 9,95s system 109% cpu 20,730 total
+>         **     C:  2,67s user 2,84s system 105% cpu  5,206 total
+> 
+>         t3904-stash-patch.sh:
+>         ** SHELL: 1,43s user 0,94s system 106% cpu 2,242 total
+>         **     C: 1,01s user 0,58s system 104% cpu 1,530 total
+> 
+>         t3905-stash-include-untracked.sh
+>         ** SHELL: 2,22s user 1,73s system 110% cpu 3,569 total
+>         **     C: 0,59s user 0,57s system 106% cpu 1,085 total
+> 
+>         t3906-stash-submodule.sh
+>         ** SHELL: 2,89s user 2,99s system 106% cpu 5,527 total
+>         **     C: 2,21s user 2,61s system 105% cpu 4,568 total
+> 
+>         TOTAL:
+>         ** SHELL: 19.23s user 15.61s system
+>         **     C:  6.48s user  6.60s system
 
-I wonder if we can just 'exit(0)' here, instead of returning.  This
-whole command is a builtin, and I *think* outside of 'libgit.a' exiting
-early is fine.  It does mean that we're not free'ing the memory
-though, which means a leak checker would probably complain.  So
-dunno.  It would simplify the code a little, but not sure it's worth it.
+Awesome!
 
-> +	}
-> +
-> +	if (get_oid("HEAD", &info->b_commit)) {
-> +		fprintf_ln(stderr, "You do not have the initial commit yet");
-> +		ret = -1;
-> +		goto done;
-> +	} else {
-> +		head_commit = lookup_commit(the_repository, &info->b_commit);
-> +	}
-> +
-> +	branch_ref = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
-> +	if (flags & REF_ISSYMREF)
-> +		branch_name = strrchr(branch_ref, '/') + 1;
-> +	head_short_sha1 = find_unique_abbrev(&head_commit->object.oid,
-> +					     DEFAULT_ABBREV);
-> +	subject_len = find_commit_subject(get_commit_buffer(head_commit, NULL),
-> +					  &head_subject);
-> +	strbuf_addf(&msg, "%s: %s %.*s\n", branch_name, head_short_sha1,
-> +		    subject_len, head_subject);
-
-I think this can be written in a slightly simpler way:
-
-	head_short_sha1 = find_unique_abbrev(&head_commit->object.oid,
-					     DEFAULT_ABBREV);
-	strbuf_addf(&msg, "%s: %s", branch_name, head_short_sha1);
-	pp_commit_easy(CMIT_FMT_ONELINE, head_commit, &msg);
-	strbuf_addch(&msg, '\n');
-
-The other advantage this brings is that it is consistent with other
-places where we print/use the subject of a commit (e.g. in 'git reset
---hard').
-
-> +
-> +	strbuf_addf(&commit_tree_label, "index on %s\n", msg.buf);
-> +	commit_list_insert(head_commit, &parents);
-> +	if (write_cache_as_tree(&info->i_tree, 0, NULL) ||
-> +	    commit_tree(commit_tree_label.buf, commit_tree_label.len,
-> +			&info->i_tree, parents, &info->i_commit, NULL, NULL)) {
-> +		fprintf_ln(stderr, "Cannot save the current index state");
-
-Looks like this message is translated in the current 'git stash'
-implementation, so it should be here as well.  Same for the messages
-below.
-
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	if (include_untracked && get_untracked_files(argv, 1,
-> +						     include_untracked, &out)) {
-> +		if (save_untracked_files(info, &msg, &out)) {
-> +			printf_ln("Cannot save the untracked files");
-
-Why does this go to stdout, whereas "Cannot save the current index
-state" above goes to stderr?  In the shell version of git stash these
-all go to stderr fwiw.  There are a few similar cases, it would
-probably be worth going through all the print statements here and see
-if they need to be translated, and to which output stream they should
-go.
-
-> +			ret = -1;
-> +			goto done;
-> +		}
-> +		untracked_commit_option = 1;
-> +	}
-> +	if (patch_mode) {
-> +		ret = stash_patch(info, argv);
-> +		if (ret < 0) {
-> +			printf_ln("Cannot save the current worktree state");
-> +			goto done;
-> +		} else if (ret > 0) {
-> +			goto done;
-> +		}
-> +	} else {
-> +		if (stash_working_tree(info, argv)) {
-> +			printf_ln("Cannot save the current worktree state");
-> +			ret = -1;
-> +			goto done;
-> +		}
-> +	}
-> +
-> +	if (!*stash_msg || !strlen(*stash_msg))
-> +		strbuf_addf(&final_stash_msg, "WIP on %s", msg.buf);
-> +	else
-> +		strbuf_addf(&final_stash_msg, "On %s: %s\n", branch_name,
-> +			    *stash_msg);
-> +	*stash_msg = strbuf_detach(&final_stash_msg, NULL);
-
-strbuf_detach means we're taking ownership of the memory, so we'll
-have to free it afterwards. Looking at this we may not even want to
-re-use the 'stash_msg' variable here, but instead introduce another
-variable for it, so it doesn't have a dual meaning in this function.
-
-> +
-> +	/*
-> +	 * `parents` will be empty after calling `commit_tree()`, so there is
-> +	 * no need to call `free_commit_list()`
-> +	 */
-> +	parents = NULL;
-> +	if (untracked_commit_option)
-> +		commit_list_insert(lookup_commit(the_repository, &info->u_commit), &parents);
-> +	commit_list_insert(lookup_commit(the_repository, &info->i_commit), &parents);
-> +	commit_list_insert(head_commit, &parents);
-> +
-> +	if (commit_tree(*stash_msg, strlen(*stash_msg), &info->w_tree,
-> +			parents, &info->w_commit, NULL, NULL)) {
-> +		printf_ln("Cannot record working tree state");
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +done:
-> +	strbuf_release(&commit_tree_label);
-> +	strbuf_release(&msg);
-> +	strbuf_release(&out);
-> +	strbuf_release(&final_stash_msg);
-> +	return ret;
-> +}
-> +
-> +static int create_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	int include_untracked = 0;
-> +	int ret = 0;
-> +	const char *stash_msg = NULL;
-> +	struct stash_info info;
-> +	struct option options[] = {
-> +		OPT_BOOL('u', "include-untracked", &include_untracked,
-> +			 N_("include untracked files in stash")),
-> +		OPT_STRING('m', "message", &stash_msg, N_("message"),
-> +			 N_("stash message")),
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_helper_create_usage,
-> +			     0);
-> +
-> +	ret = do_create_stash(argc, argv, prefix, &stash_msg,
-> +			      include_untracked, 0, &info);
-
-stash_msg doesn't have to be passed as a pointer to a pointer here, as
-we never need the modified value after this function returns.  I think
-just passing 'stash_msg' here instead of '&stash_msg' will make
-'do_create_stash' slightly easier to read.
-
-> +
-> +	if (!ret)
-> +		printf_ln("%s", oid_to_hex(&info.w_commit));
-> +
-> +	/*
-> +	 * ret can be 1 if there were no changes. In this case, we should
-> +	 * not error out.
-> +	 */
-> +	return ret < 0;
-> +}
-> +
->  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  {
->  	pid_t pid = getpid();
-> @@ -817,6 +1221,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  		return !!show_stash(argc, argv, prefix);
->  	else if (!strcmp(argv[0], "store"))
->  		return !!store_stash(argc, argv, prefix);
-> +	else if (!strcmp(argv[0], "create"))
-> +		return !!create_stash(argc, argv, prefix);
->  
->  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
->  		      git_stash_helper_usage, options);
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 5739c5152..ab06e4ffb 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -425,7 +425,7 @@ clear)
->  	;;
->  create)
->  	shift
-> -	create_stash -m "$*" && echo "$w_commit"
-> +	git stash--helper create --message "$*"
->  	;;
->  store)
->  	shift
+> * a git repository with 4000 files: 1000 not changed,
+> 1000 staged files, 1000 unstaged files, 1000 untracked.
+> In this case I ran some of the most used commands:
+> 
+>         git stash push:
+> 
+>         ** SHELL: 0,12s user 0,21s system 101% cpu 0,329 total
+>         **     C: 0,06s user 0,13s system 105% cpu 0,185 total
+> 
+>         git stash push -u:
+> 
+>         ** SHELL: 0,18s user 0,27s system  108% cpu 0,401 total
+>         **     C: 0,09s user 0,19s system  103% cpu 0,267 total
+> 
+>         git stash pop:
+> 
+>         ** SHELL: 0,16s user 0,26s system 103% cpu 0,399 total
+>         **     C: 0,13s user 0,19s system 102% cpu 0,308 total
+> 
+> Best regards,
+> Paul Ungureanu
+> 
+> 
+> Joel Teichroeb (5):
+>   stash: improve option parsing test coverage
+>   stash: convert apply to builtin
+>   stash: convert drop and clear to builtin
+>   stash: convert branch to builtin
+>   stash: convert pop to builtin
+> 
+> Paul-Sebastian Ungureanu (21):
+>   sha1-name.c: added 'get_oidf', which acts like 'get_oid'
+>   stash: update test cases conform to coding guidelines
+>   stash: renamed test cases to be more descriptive
+>   stash: implement the "list" command in the builtin
+>   stash: convert show to builtin
+>   stash: change `git stash show` usage text and documentation
+>   stash: refactor `show_stash()` to use the diff API
+>   stash: update `git stash show` documentation
+>   stash: convert store to builtin
+>   stash: convert create to builtin
+>   stash: replace spawning a "read-tree" process
+>   stash: avoid spawning a "diff-index" process
+>   stash: convert push to builtin
+>   stash: make push to be quiet
+>   stash: add tests for `git stash push -q`
+>   stash: replace spawning `git ls-files` child process
+>   stash: convert save to builtin
+>   stash: convert `stash--helper.c` into `stash.c`
+>   stash: optimize `get_untracked_files()` and `check_changes()`
+>   stash: replace all `write-tree` child processes with API calls
+>   stash: replace all "git apply" child processes with API calls
+> 
+>  Documentation/git-stash.txt |    7 +-
+>  Makefile                    |    2 +-
+>  builtin.h                   |    1 +
+>  builtin/stash.c             | 1562 +++++++++++++++++++++++++++++++++++
+>  cache.h                     |    1 +
+>  git-stash.sh                |  752 -----------------
+>  git.c                       |    1 +
+>  sha1-name.c                 |   19 +
+>  t/t3903-stash.sh            |  190 +++--
+>  9 files changed, 1714 insertions(+), 821 deletions(-)
+>  create mode 100644 builtin/stash.c
+>  delete mode 100755 git-stash.sh
+> 
 > -- 
 > 2.18.0.573.g56500d98f
 > 
