@@ -2,321 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 132F81F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 00:23:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F26021F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 00:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728436AbeHODM6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 14 Aug 2018 23:12:58 -0400
-Received: from mail-qt0-f202.google.com ([209.85.216.202]:34972 "EHLO
-        mail-qt0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726837AbeHODM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 14 Aug 2018 23:12:58 -0400
-Received: by mail-qt0-f202.google.com with SMTP id n25-v6so9178578qtk.2
-        for <git@vger.kernel.org>; Tue, 14 Aug 2018 17:23:17 -0700 (PDT)
+        id S1728013AbeHODgw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 14 Aug 2018 23:36:52 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43648 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726837AbeHODgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 14 Aug 2018 23:36:52 -0400
+Received: by mail-pf1-f196.google.com with SMTP id j26-v6so9994817pfi.10
+        for <git@vger.kernel.org>; Tue, 14 Aug 2018 17:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=ePRQV17JKPOMeJoisIEyumgvpf3ZWKtIRym69nLtfDY=;
-        b=NxGtShuvJCVhJ8Z2EFe07ESfYUL3B3eWbg5E8/WMJX1U8U3b9pM9mBk/FMF5GTJmDB
-         21sUL9RDxfYUIzOjcWtJ1kKWxOAyjeVugwg8s+h9tHz3ddcRyfiH8dYa/sV8j6L9WHgD
-         N9KYlOnZlpllqS6KDqhOcfTpn0dxRQW+gLS7MA20NX05oKUSV5MYWIU498anpYRqh2Ep
-         vWeeEgHCPg+xtIJf4hV77uN87tipOkR9z7jImLpNMdJ4hLTRpJOsXWWI5FA92amjNsWB
-         75R/PQFyt11cbKvLA+Dv8cOuSO7lVQkB8zJGFNEevP/eqojSgLCeXVbwn0ONiqSaO8Ce
-         ZvMA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=n2Mqxp6s6wFAk9R8p0eSbZem9+coXNBIWhFl5FDZs5o=;
+        b=X5A5h8aFtB3vMKJHzPRC7WMV1IwHkP5uXX49F6yWgrkafBux14yLEyQ1LXRxylWIv0
+         InZxQbE5dBpf4D7lfzSpimabRu6HiClFRWnTzgnRAixrJb1R6eqSkPep+HKiY+6rlr+1
+         mobffFYyriQiDPsvT0LOawaOyvrPvuzYUDveVMsffyFyLBYvXV39Y+u+JU7y9j091ZlY
+         yqnRI98kqjwHU3fKBrDSFmTcuSTwovTOoqcChpzEyg7VAprUo+dNkBFmhJUlXIQlUh2k
+         BtkbYcAhBEGiIsIvEElzxuttr7XbUqNTl6u47FG/NvpizT8RG/AJr8e8ad4p4lqbcqqG
+         rQDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=ePRQV17JKPOMeJoisIEyumgvpf3ZWKtIRym69nLtfDY=;
-        b=o3cu1Bt2zGMMl7O/CTC1lPnN+QZ8Moia8Egs/wWZhQCx0keUcxdzQWnpKuaCE3qBoh
-         P/nrEw31nNx3TsU0EfDoCnkpKGiHLJCLBpHLBLKV8QEmgNCQOYVnzUbHSI5JysKRTWCV
-         VbywlV/HR9mISDun4R3+sYhr/GNIis2Htfdva/QBfzHi25+K6fb1EHc8yBwTE7iVl3Sr
-         GWbNUMvUkujLoIqFxNzKk0VuRBI1FXYW1WiZX8M2EpSOrgQuC9V7ioIdxsx4pfXSCa1i
-         Lo4IDQoym0AA3L7uGTIPNaFKTqw46TupGI+Av1KYYQlH8x/o6DcnLF3MH658jud9yvV1
-         dYMg==
-X-Gm-Message-State: AOUpUlFr9PzylF+eM0fRPBJ9v1Wx172Nud2RD0Qo5y18cUiES2NTIbj+
-        atT295Ve1FGQubswiG0XlLshFb+j2hS67ibUlGx6sogNVM604N/dMkbMhromLZKhLSo2BGyXkPB
-        B6y72ir7Xyu5WXEG3w4bvL44ER+8OZbgFQh9OcIt20wj+wbAvYZLdGD6CCRw=
-X-Google-Smtp-Source: AA+uWPyNBC4CE55x3Eo/EJbSyeyGqaQBFuo6Ja3OmyZyc/uc3F3ajGJB+QJqADdYUwBXMZbzh3q6NC/DiHN2
-X-Received: by 2002:a0c:f98a:: with SMTP id t10-v6mr12621322qvn.2.1534292597029;
- Tue, 14 Aug 2018 17:23:17 -0700 (PDT)
-Date:   Tue, 14 Aug 2018 17:22:55 -0700
-In-Reply-To: <cover.1534291033.git.matvore@google.com>
-Message-Id: <70c09e892e0acf71ecb0c93ff3cad09f5be5f19d.1534291033.git.matvore@google.com>
-Mime-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1534291033.git.matvore@google.com>
-X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6-goog
-Subject: [PATCH v5 6/6] list-objects-filter: implement filter tree:0
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org
-Cc:     Matthew DeVore <matvore@google.com>, git@jeffhostetler.com,
-        jeffhost@microsoft.com, peff@peff.net, stefanbeller@gmail.com,
-        jonathantanmy@google.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=n2Mqxp6s6wFAk9R8p0eSbZem9+coXNBIWhFl5FDZs5o=;
+        b=nJfae5YJ/1kMYb8inDd3rp9yf8fjH0HUwLn8NJ98GT5jugEffwZkp7nbEIpnD2RJpT
+         lGQ5sn/E84UxuvnPEv9AvunDDn05C3/I83SNa5JAnrK56Ogb3l7GimHrtntuIX4gboyp
+         kyneDl/i+3xh4B/YiCADZkW4i8ONoPJiBVs0X9/7QQWNYtQVDz+VmtsCPsUOLrMttyfa
+         atSZzXD5US23/FmDAhhGxu9lnqJG7akKQfPc8LS+TEBAQ8+s3Ox6/X8ygSJKNtnK3MTN
+         /Pl8ZK2dHxW+y2UJFNLgKNl1cGXJSTpnXDn4mtbkeygCnDTD6XD12M2ahBknkaZKZG3F
+         pGaw==
+X-Gm-Message-State: AOUpUlHVKCsLG4Fcc97rUspcySVivw/tLVTTII7iC5la1RVlQL+Aa2mu
+        U1KSBIxplmHC0EU1dLrBywoDKwJ0
+X-Google-Smtp-Source: AA+uWPzVRxBACv34OLKSByEI9yjuZkXsV3HqEI9h/NFibBcZGfTLrxAut4pJWKua6XPo7jw4kYjwGg==
+X-Received: by 2002:a63:4857:: with SMTP id x23-v6mr23629290pgk.30.1534294027548;
+        Tue, 14 Aug 2018 17:47:07 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id p26-v6sm41765771pfi.183.2018.08.14.17.47.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 14 Aug 2018 17:47:07 -0700 (PDT)
+Date:   Tue, 14 Aug 2018 17:47:05 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, joakim.tjernlund@infinera.com,
+        git@vger.kernel.org, bmwill@google.com, pclouds@gmail.com
+Subject: Re: [PATCH 1/2] store submodule in common dir
+Message-ID: <20180815004705.GA5932@aiede.svl.corp.google.com>
+References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
+ <20180814223820.123723-1-sbeller@google.com>
+ <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
+ <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teach list-objects the "tree:0" filter which allows for filtering
-out all tree and blob objects (unless other objects are explicitly
-specified by the user). The purpose of this patch is to allow smaller
-partial clones.
+Junio C Hamano wrote:
 
-The name of this filter - tree:0 - does not explicitly specify that
-it also filters out all blobs, but this should not cause much confusion
-because blobs are not at all useful without the trees that refer to
-them.
+> Theoretically we should be able to make modules/kernel%2fv2.[24]
+> additional "worktree"s of modules/kernel%2fv2.6, but given that
+> these are all "bare" repositories without an attached working tree,
+> I am not sure how that would supposed to work.  Thinking about
+> having multiple worktrees on a single bare repository makes me head
+> spin and ache X-<;-)
 
-I also consider only:commits as a name, but this is inaccurate because
-it suggests that annotated tags are omitted, but actually they are
-included.
+Agreed about spinning head.  This is why I suggested at [1] that
+anyone intereseted in this start with description of their proposed
+design, which would have three benefits:
 
-The name "tree:0" allows later filtering based on depth, i.e. "tree:1"
-would filter out all but the root tree and blobs. In order to avoid
-confusion between 0 and capital O, the documentation was worded in a
-somewhat round-about way that also hints at this future improvement to
-the feature.
+- after implementation, it would document the intent behind whatever
+  we choose to do, hopefully saving people debugging or improving this
+  code some head spinning
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- Documentation/rev-list-options.txt     |  5 +++
- list-objects-filter-options.c          |  4 +++
- list-objects-filter-options.h          |  1 +
- list-objects-filter.c                  | 50 ++++++++++++++++++++++++++
- t/t5317-pack-objects-filter-objects.sh | 28 +++++++++++++++
- t/t5616-partial-clone.sh               | 38 ++++++++++++++++++++
- t/t6112-rev-list-filters-objects.sh    | 12 +++++++
- 7 files changed, 138 insertions(+)
+- it would allow subject matter experts on-list to suggest refinements
+  and simplifications
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 7b273635d..5f1672913 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -731,6 +731,11 @@ the requested refs.
- +
- The form '--filter=sparse:path=<path>' similarly uses a sparse-checkout
- specification contained in <path>.
-++
-+The form '--filter=tree:<depth>' omits all blobs and trees whose depth
-+from the root tree is >= <depth> (minimum depth if an object is located
-+at multiple depths in the commits traversed). Currently, only <depth>=0
-+is supported, which omits all blobs and trees.
- 
- --no-filter::
- 	Turn off any previous `--filter=` argument.
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index c0e2bd6a0..a28382940 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -50,6 +50,10 @@ static int gently_parse_list_objects_filter(
- 			return 0;
- 		}
- 
-+	} else if (!strcmp(arg, "tree:0")) {
-+		filter_options->choice = LOFC_TREE_NONE;
-+		return 0;
-+
- 	} else if (skip_prefix(arg, "sparse:oid=", &v0)) {
- 		struct object_context oc;
- 		struct object_id sparse_oid;
-diff --git a/list-objects-filter-options.h b/list-objects-filter-options.h
-index 0000a61f8..af64e5c66 100644
---- a/list-objects-filter-options.h
-+++ b/list-objects-filter-options.h
-@@ -10,6 +10,7 @@ enum list_objects_filter_choice {
- 	LOFC_DISABLED = 0,
- 	LOFC_BLOB_NONE,
- 	LOFC_BLOB_LIMIT,
-+	LOFC_TREE_NONE,
- 	LOFC_SPARSE_OID,
- 	LOFC_SPARSE_PATH,
- 	LOFC__COUNT /* must be last */
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index a0ba78b20..8e3caf5bf 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -80,6 +80,55 @@ static void *filter_blobs_none__init(
- 	return d;
- }
- 
-+/*
-+ * A filter for list-objects to omit ALL trees and blobs from the traversal.
-+ * Can OPTIONALLY collect a list of the omitted OIDs.
-+ */
-+struct filter_trees_none_data {
-+	struct oidset *omits;
-+};
-+
-+static enum list_objects_filter_result filter_trees_none(
-+	enum list_objects_filter_situation filter_situation,
-+	struct object *obj,
-+	const char *pathname,
-+	const char *filename,
-+	void *filter_data_)
-+{
-+	struct filter_trees_none_data *filter_data = filter_data_;
-+
-+	switch (filter_situation) {
-+	default:
-+		die("unknown filter_situation");
-+		return LOFR_ZERO;
-+
-+	case LOFS_BEGIN_TREE:
-+	case LOFS_BLOB:
-+		if (filter_data->omits)
-+			oidset_insert(filter_data->omits, &obj->oid);
-+		return LOFR_MARK_SEEN; /* but not LOFR_DO_SHOW (hard omit) */
-+
-+	case LOFS_END_TREE:
-+		assert(obj->type == OBJ_TREE);
-+		return LOFR_ZERO;
-+
-+	}
-+}
-+
-+static void* filter_trees_none__init(
-+	struct oidset *omitted,
-+	struct list_objects_filter_options *filter_options,
-+	filter_object_fn *filter_fn,
-+	filter_free_fn *filter_free_fn)
-+{
-+	struct filter_trees_none_data *d = xcalloc(1, sizeof(*d));
-+	d->omits = omitted;
-+
-+	*filter_fn = filter_trees_none;
-+	*filter_free_fn = free;
-+	return d;
-+}
-+
- /*
-  * A filter for list-objects to omit large blobs.
-  * And to OPTIONALLY collect a list of the omitted OIDs.
-@@ -374,6 +423,7 @@ static filter_init_fn s_filters[] = {
- 	NULL,
- 	filter_blobs_none__init,
- 	filter_blobs_limit__init,
-+	filter_trees_none__init,
- 	filter_sparse_oid__init,
- 	filter_sparse_path__init,
- };
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index 5e35f33bf..985668a07 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -72,6 +72,34 @@ test_expect_success 'get an error for missing tree object' '
- 	grep -q "bad tree object" bad_tree
- '
- 
-+test_expect_success 'setup for tests of tree:0' '
-+	mkdir r1/subtree &&
-+	echo "This is a file in a subtree" >r1/subtree/file &&
-+	git -C r1 add subtree/file &&
-+	git -C r1 commit -m subtree
-+'
-+
-+test_expect_success 'verify tree:0 packfile has no blobs or trees' '
-+	git -C r1 pack-objects --rev --stdout --filter=tree:0 >commitsonly.pack <<-EOF &&
-+	HEAD
-+	EOF
-+	git -C r1 index-pack ../commitsonly.pack &&
-+	git -C r1 verify-pack -v ../commitsonly.pack >objs &&
-+	! grep -E "tree|blob" objs
-+'
-+
-+test_expect_success 'grab tree directly when using tree:0' '
-+	# We should get the tree specified directly but not its blobs or subtrees.
-+	git -C r1 pack-objects --rev --stdout --filter=tree:0 >commitsonly.pack <<-EOF &&
-+	HEAD:
-+	EOF
-+	git -C r1 index-pack ../commitsonly.pack &&
-+	git -C r1 verify-pack -v ../commitsonly.pack >objs &&
-+	awk -e "/tree|blob/{print \$1}" objs >trees_and_blobs &&
-+	git -C r1 rev-parse HEAD: >expected &&
-+	test_cmp trees_and_blobs expected
-+'
-+
- # Test blob:limit=<n>[kmg] filter.
- # We boundary test around the size parameter.  The filter is strictly less than
- # the value, so size 500 and 1000 should have the same results, but 1001 should
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index bbbe7537d..8eeb85fbc 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -154,6 +154,44 @@ test_expect_success 'partial clone with transfer.fsckobjects=1 uses index-pack -
- 	grep "git index-pack.*--fsck-objects" trace
- '
- 
-+test_expect_success 'use fsck before and after manually fetching a missing subtree' '
-+	# push new commit so server has a subtree
-+	mkdir src/dir &&
-+	echo "in dir" >src/dir/file.txt &&
-+	git -C src add dir/file.txt &&
-+	git -C src commit -m "file in dir" &&
-+	git -C src push -u srv master &&
-+	SUBTREE=$(git -C src rev-parse HEAD:dir) &&
-+
-+	rm -rf dst &&
-+	git clone --no-checkout --filter=tree:0 "file://$(pwd)/srv.bare" dst &&
-+	git -C dst fsck &&
-+
-+	# Make sure we only have commits, and all trees and blobs are missing.
-+	git -C dst rev-list master --missing=allow-any --objects >fetched_objects &&
-+	awk -f print_1.awk fetched_objects \
-+		| xargs -n1 git -C dst cat-file -t >fetched_types &&
-+	sort fetched_types -u >unique_types.observed &&
-+	echo commit >unique_types.expected &&
-+	test_cmp unique_types.observed unique_types.expected &&
-+
-+	# Auto-fetch a tree with cat-file.
-+	git -C dst cat-file -p $SUBTREE >tree_contents &&
-+	grep file.txt tree_contents &&
-+
-+	# fsck still works after an auto-fetch of a tree.
-+	git -C dst fsck &&
-+
-+	# Auto-fetch all remaining trees and blobs with --missing=error
-+	git -C dst rev-list master --missing=error --objects >fetched_objects &&
-+	test_line_count = 70 fetched_objects &&
-+	awk -f print_1.awk fetched_objects \
-+		| xargs -n1 git -C dst cat-file -t >fetched_types &&
-+	sort fetched_types -u >unique_types.observed &&
-+	printf "blob\ncommit\ntree\n" >unique_types.expected &&
-+	test_cmp unique_types.observed unique_types.expected
-+'
-+
- test_expect_success 'partial clone fetches blobs pointed to by refs even if normally filtered out' '
- 	rm -rf src dst &&
- 	git init src &&
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index fc0f92a16..30bf1c73e 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -213,6 +213,18 @@ test_expect_success 'rev-list W/ --missing=print and --missing=allow-any for tre
- 	test_line_count = 0 rev_list_err
- '
- 
-+# Test tree:0 filter.
-+
-+test_expect_success 'verify tree:0 includes trees in "filtered" output' '
-+	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=tree:0 \
-+		| awk -f print_1.awk \
-+		| sed s/~// \
-+		| xargs -n1 git -C r3 cat-file -t \
-+		| sort -u >filtered_types &&
-+	printf "blob\ntree\n" > expected &&
-+	test_cmp filtered_types expected
-+'
-+
- # Delete some loose objects and use rev-list, but WITHOUT any filtering.
- # This models previously omitted objects that we did not receive.
- 
--- 
-2.18.0.865.gffc8e1a3cd6-goog
+- it would avoid the interested contributor going too far down a blind
+  alley in case their initial proposal has a fatal flaw
 
+I also agree with the "theoretically we should be able to make it
+work".  As described in [1], I think most of this is work we're going
+to have to do eventually, as part of properly supporting multiple
+worktrees for a superproject.  But I don't want to set wrong
+expectations: this will be hard.
+
+Thanks,
+Jonathan
+
+[1] https://public-inbox.org/git/20180814231049.GH142615@aiede.svl.corp.google.com/
