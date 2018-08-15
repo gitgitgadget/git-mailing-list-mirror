@@ -7,93 +7,113 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B4791F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 13:28:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9A91F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 14:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729289AbeHOQU6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 12:20:58 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:35008 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729128AbeHOQU6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 12:20:58 -0400
-Received: by mail-qk0-f193.google.com with SMTP id u21-v6so727640qku.2
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 06:28:47 -0700 (PDT)
+        id S1729293AbeHOQ5Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 12:57:25 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:42789 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729239AbeHOQ5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 12:57:25 -0400
+Received: by mail-qk0-f194.google.com with SMTP id 13-v6so806601qkl.9
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 07:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=kHQnUeCdlTwXHr+A8kpbPVhWlyw2zF06cUGCxaZj6go=;
-        b=T60AwQvW18catRIhFy3Ni7b5qSOEImuOi7Lkkd/BkroQOEszZmYRCkf6ytDcQef7lO
-         clUBM9t7m5qq9h2fvD+D2cdRJz1eHXiLybS+BPG1/3MWd6DFLbp9jjRXad+7z/Qz/Dih
-         046H1JJ35i5zsjZ2NZfRr1fHzG3NjaGmlRZCQ8ZMsTL7TDl20diKC2lqXePuO3hP6+Zu
-         xECEH97LOzUga0D5tepEqw/eRnXBiPDrGXmMa21olqIzXfDFQZRpJ3+vgS0nlvyjRAu8
-         q9kvZXVdNIu3VlozY+IR+lhKT12fXf4gxRjckP9fZGP9JnO85NmjCNK9LHs6OiY737yu
-         ESpw==
+        bh=euI9sGVCf/LEeQxxtRidPyTJ3LwNslGxUE+KC7or3c0=;
+        b=jsyJREO0BA2FZ9j+2mTEvCJ7VxK5KCmmdn3WPObSsdNbIJdIV29j5/6xzMx9yssxu+
+         gg45CBiKPe6oAM4ObcoXSO6p0Jo4eyduHMR+zXitrUCNy5APR8Xsqz/Oq/ia3k9OFM32
+         PYeex177PD4FkinRr6RvBh5Kje+ElqnV8Gm0R52aZIPeUolwHBYPNJwQiUcKujEVkTU2
+         91r0ULOa6zy/rIXgDhvtwcqyzSmsaLU4DFXr2r6RimWNlQozV51ZOqnMrvOO6Mz2GmVO
+         HjSlzO5wfWCTVGXBrNqbJleKywXcOu0RveG33OQ9juSJF8lWllW0UC477ZSe1ioDtDab
+         IvNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=kHQnUeCdlTwXHr+A8kpbPVhWlyw2zF06cUGCxaZj6go=;
-        b=IuLi3Ffm3N8DCaqPZPgrke+by/LsLPb23I2WJOEZI5DhDd+ZO3kwTBefwzbSTR+NET
-         7gnwqStzkYYlyoGxo6Iahz5i+DocvjGkW8tlVA28EGzpjVRm3TDiv+TptbOLsPfaGRhk
-         DJE0WCzJp79sY/BFHfYJNIwRwUYoOQFwqc/++LZohD8lJndWgX7fJaOxkCbuvYl4I2Ph
-         17kEN0/dqZpMfbBUsyD0EHABqA/aVJOv5J/36RSAqItTKtZl0AzoYpGI9kpW05wPMr+V
-         qv6Ps6PolANOGiIUL7OjIfUEArmYWLwkQmLzsAPWilsdyXWQ/ZG9eahdhwcGXA/OYc2i
-         fBbw==
-X-Gm-Message-State: AOUpUlF1TIBm0oykbChkI96CEEvcbB2zPLRx1p5ICWLQTHvy6t6PN90p
-        JVqNiUKL6sd1/R46F+w4OhE=
-X-Google-Smtp-Source: AA+uWPxwyOCCLF1HafOKh6UqhBlvuqh9BzWX7LJeSzVm0+ikpaQ0T8TQYZnQjEJbVHv2ZvKTHKKUUQ==
-X-Received: by 2002:a37:b446:: with SMTP id d67-v6mr24039820qkf.104.1534339726790;
-        Wed, 15 Aug 2018 06:28:46 -0700 (PDT)
+        bh=euI9sGVCf/LEeQxxtRidPyTJ3LwNslGxUE+KC7or3c0=;
+        b=CtvAgt0uzXieyo7N13PqHawa6n8TVhc6ZJj7uOUwFYx9Mza0qV2lwFgjSUi5v35MeJ
+         73IPEnaqk4rWdwlNj4zAbwR1JMsEFVL8Rfotk6aNMfe1Jo3lFF3OBxZuX4wat/RUked+
+         l4ygBZZoFPrPt41ymoedfozH0s3OGFvhLidOMuvZT6vqCSE9swe19ecTMDCyuqx82PG2
+         60iMIjsDmSOfAi+Z6HkzlNXTJvISynrNyz22OFJ+WSd4OwIYYhH7RMHQzRs93iodNO9W
+         WDZQYJ4eG2r6BVdpGsU/YJWhPZLNJ9e7xLT0r7qRgA+kaZ7A85f27QwllBAne3FoT2s6
+         wD/g==
+X-Gm-Message-State: AOUpUlFX28uL8OuO1uQMUUmfCciM1IDlraeLyKnWfRHd1k9B7IHp+4bW
+        QFZ+GBTXPdJQ2mnWExu2xxc=
+X-Google-Smtp-Source: AA+uWPzioKp502QkDzy4ol6m2/wTqo0i4KHJJcngZWmDXC6L5jDNHI8k4G+hyoGVOyaGkcwyvLMM3A==
+X-Received: by 2002:a37:6b84:: with SMTP id g126-v6mr23760171qkc.231.1534341906447;
+        Wed, 15 Aug 2018 07:05:06 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:6962:3b9:979a:51c3? ([2001:4898:8010:0:5298:3b9:979a:51c3])
-        by smtp.gmail.com with ESMTPSA id c138-v6sm12775483qkg.79.2018.08.15.06.28.45
+        by smtp.gmail.com with ESMTPSA id a187-v6sm15410924qkd.47.2018.08.15.07.05.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Aug 2018 06:28:46 -0700 (PDT)
-Subject: Re: [PATCH 4/7] for_each_packed_object: support iterating in
- pack-order
+        Wed, 15 Aug 2018 07:05:05 -0700 (PDT)
+Subject: Re: [PATCH 0/7] speeding up cat-file by reordering object access
 To:     Jeff King <peff@peff.net>, git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
 References: <20180810230729.GA19090@sigill.intra.peff.net>
- <20180810231549.GD19875@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <2ac79ea0-dd58-965d-1158-d08a7731e25d@gmail.com>
-Date:   Wed, 15 Aug 2018 09:28:44 -0400
+Message-ID: <fc30f98e-0aa0-89d3-ee32-3d86cc5b342a@gmail.com>
+Date:   Wed, 15 Aug 2018 10:05:04 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20180810231549.GD19875@sigill.intra.peff.net>
+In-Reply-To: <20180810230729.GA19090@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/10/2018 7:15 PM, Jeff King wrote:
-> diff --git a/commit-graph.c b/commit-graph.c
-> index b0a55ad128..69a0d1c203 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -730,7 +730,7 @@ void write_commit_graph(const char *obj_dir,
->   				die("error adding pack %s", packname.buf);
->   			if (open_pack_index(p))
->   				die("error opening index for %s", packname.buf);
-> -			for_each_object_in_pack(p, add_packed_commits, &oids);
-> +			for_each_object_in_pack(p, add_packed_commits, &oids, 0);
->   			close_pack(p);
->   		}
+On 8/10/2018 7:07 PM, Jeff King wrote:
+> The general idea is that accessing objects in packfile order is way
+> kinder to the delta base cache, and thus way more efficient. See patches
+> 4 and 7 in particular for discussion and numbers.
+>
+> I'm primarily interested in cat-file, so this series is focused there.
+> But there may be other callers of for_each_packed_object() who could
+> benefit. Most of the existing ones just care about getting the oid, so
+> they're better off as-is. It's possible the call in is_promisor_object()
+> could benefit, since it calls parse_object() on each entry it visits. I
+> didn't experiment with it.
 
-This use in write_commit_graph() is actually a good candidate for 
-pack-order, since we are checking each object to see if it is a commit. 
-This is only used when running `git commit-graph write --stdin-packs`, 
-which is how VFS for Git maintains the commit-graph.
+I like this series, and the follow-up. I could not find any problems 
+with it.
 
-I have a note to run performance tests on this case and follow up with a 
-change on top of this series that adds the FOR_EACH_OBJECT_PACK_ORDER flag.
+One thing that I realized while reading it is that the multi-pack-index 
+is not integrated into the for_each_packed_object method. I was already 
+going to work on some cleanups in that area [1][2].
+
+When using the new flag with the multi-pack-index, I expect that we will 
+want to load the pack-files that are covered by the multi-pack-index 
+(simply, the 'packs' array) and use the same mechanism to traverse them 
+in order. The only "strange" thing about this is that we would see 
+duplicate objects when traversing the pack-files directly but not when 
+traversing the multi-pack-index (since it de-duplicates when indexing).
+
+I hope to have a series working on top of this series by end-of-week.
 
 Thanks,
 
 -Stolee
+
+[1] 
+https://public-inbox.org/git/CAPig+cTU--KrGcv4C_CwBZEuec4dgm_tJqL=CFWKT6vxxR016w@mail.gmail.com/
+
+     Re: [PATCH v4 04/23] multi-pack-index: add 'write' verb
+
+     (Recommends more user-friendly usage reporting in 'git 
+multi-pack-index')
+
+[2] 
+https://public-inbox.org/git/20180814222846.GG142615@aiede.svl.corp.google.com/
+
+     [PATCH] partial-clone: render design doc using asciidoc
+
+     (The commit-graph and multi-pack-index docs are not in the 
+Makefile, either.)
 
