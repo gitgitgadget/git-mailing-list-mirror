@@ -6,82 +6,117 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF96A1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 01:22:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F281A1F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 01:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726304AbeHOEMR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 00:12:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55732 "HELO cloud.peff.net"
+        id S1725949AbeHOE2U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 00:28:20 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55748 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725843AbeHOEMQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 00:12:16 -0400
-Received: (qmail 15836 invoked by uid 109); 15 Aug 2018 01:22:26 -0000
+        id S1725927AbeHOE2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 00:28:20 -0400
+Received: (qmail 16407 invoked by uid 109); 15 Aug 2018 01:38:27 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Aug 2018 01:22:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 15 Aug 2018 01:38:27 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28670 invoked by uid 111); 15 Aug 2018 01:22:30 -0000
+Received: (qmail 28738 invoked by uid 111); 15 Aug 2018 01:38:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 21:22:30 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 14 Aug 2018 21:38:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 21:22:24 -0400
-Date:   Tue, 14 Aug 2018 21:22:24 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Aug 2018 21:38:25 -0400
+Date:   Tue, 14 Aug 2018 21:38:25 -0400
 From:   Jeff King <peff@peff.net>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jeffhost@microsoft.com,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v4 6/6] list-objects-filter: implement filter tree:0
-Message-ID: <20180815012224.GA4745@sigill.intra.peff.net>
-References: <cover.1533854545.git.matvore@google.com>
- <cover.1534267611.git.matvore@google.com>
- <05e69ef260ca2b28b2444b94850bddf44ca0388a.1534267611.git.matvore@google.com>
- <20180814200154.GF28452@sigill.intra.peff.net>
- <CAMfpvhJM2hUXTfTgY9jA4aB+bgx44xbCktCacpy_yWacyjk00w@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, danshu@microsoft.com,
+        marc@marc-stevens.nl
+Subject: Re: [PATCH 0/9] Add missing includes and forward declares
+Message-ID: <20180815013825.GA12178@sigill.intra.peff.net>
+References: <20180811043218.31456-1-newren@gmail.com>
+ <87mutts3sz.fsf@evledraar.gmail.com>
+ <CABPp-BEADR15gOrH+GBQxKLZR2fCQwhaPWgf3VS--Z0bTNP0rA@mail.gmail.com>
+ <20180811173406.GA9119@sigill.intra.peff.net>
+ <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAMfpvhJM2hUXTfTgY9jA4aB+bgx44xbCktCacpy_yWacyjk00w@mail.gmail.com>
+In-Reply-To: <xmqqr2j25dlm.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 04:55:34PM -0700, Matthew DeVore wrote:
+On Mon, Aug 13, 2018 at 11:24:37AM -0700, Junio C Hamano wrote:
 
-> >   - it's expensive to compute, because you have to actually walk all of
-> >     the possible commits and trees that could refer to it. This
-> >     prohibits a lot of other optimizations like reachability bitmaps
-> >     (though with some complexity you could cache the depths, too).
-> I think what the user likely wants is to use the minimum depth based
-> on the commits in the traversal, not every commit in the repo - is
-> this what you mean?
+> As things are slowly moving out of the so-far kitchen-sink "cache.h"
+> into more specific subsystem headers (like object-store.h), we may
+> actually want to tighten the "header that includes it first" part a
+> bit in the future, so that 'git grep cache.h' would give us a more
+> explicit and a better picture of what really depends on knowing what
+> the lowest level plumbing API are built around.
 
-Right, I'd agree they probably want the minimum for that traversal. And
-for `rev-list --filter`, that's probably OK. But keep in mind the main
-goal for --filter is using it for fetches, and many servers do not
-perform the traversal at all. Instead they use reachability bitmaps to
-come up with the set of objects to send. The bitmaps have enough
-information to say "remove all trees from the set", but not enough to do
-any kind of depth-based calculation (not even "is this a root tree").
+Yeah, I agree that's a good long-term goal. I think "builtin.h" is
+reasonable to remain as a magic header for builtins.
 
-> Makes sense. I changed it like this -
+> > So I think the better test is a two-line .c file with:
+> >
+> >   #include "git-compat-util.h"
+> >   #include $header_to_check
 > 
-> diff --git a/Documentation/rev-list-options.txt
-> b/Documentation/rev-list-options.txt
-> index 0b5f77ad3..5f1672913 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -732,8 +732,10 @@ the requested refs.
->  The form '--filter=sparse:path=<path>' similarly uses a sparse-checkout
->  specification contained in <path>.
->  +
-> -The form '--filter=tree:<depth>' omits all blobs and trees deeper than
-> -<depth> from the root tree. Currently, only <depth>=0 is supported.
-> +The form '--filter=tree:<depth>' omits all blobs and trees whose depth
-> +from the root tree is >= <depth> (minimum depth if an object is located
-> +at multiple depths in the commits traversed). Currently, only <depth>=0
-> +is supported, which omits all blobs and trees.
+> But until that tightening happens, I do not actually mind the
+> two-line .c file started with inclusion of cache.h instead of
+> git-compat-util.h.  That would limit the scope of this series
+> further.
 
-Yes, I think that makes sense. Thanks!
+I can go either way on this. Using cache.h makes Elijah's current series
+a bit more focused. But I think we'd eventually want to go there anyway.
+I don't have a strong opinion on doing it now or later.
 
--Peff
+> > I wonder if there's an easy way to check. I guess adding '-Dint=foo' to
+> > the command line, and then putting '#undef int' at the top of
+> > git-compat-util would catch just about any code the compiler sees that
+> > doesn't have git-compat-util included. :)
+> 
+> ;-).
+
+So much to my amazement, my off-the-cuff suggestion actually worked
+pretty well. The only failures were xdiff (expected, since it does its
+own system-header stuff, though IMHO we might think about changing that)
+and the programs in t/helper. Here's a patch to address the latter (and
+you can see now why I said the above thing about "builtin.h"):
+
+-- >8 --
+Subject: [PATCH] test-tool.h: include git-compat-util.h
+
+The test-tool programs include "test-tool.h" as their first
+include, which breaks our CodingGuideline of "the first
+include must be git-compat-util.h or an equivalent". This
+isn't actually a problem, as test-tool.h doesn't define
+anything tricky, but we should probably follow our own rule.
+
+Rather than change them all, let's instead make test-tool.h
+one of those equivalents, just like we do for builtin.h
+(which many of the actual git builtins include first).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/helper/test-tool.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index 80cbcf0857..75d7c782f0 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -1,6 +1,8 @@
+ #ifndef __TEST_TOOL_H__
+ #define __TEST_TOOL_H__
+ 
++#include "git-compat-util.h"
++
+ int cmd__chmtime(int argc, const char **argv);
+ int cmd__config(int argc, const char **argv);
+ int cmd__ctype(int argc, const char **argv);
+-- 
+2.18.0.1070.g4763fa3c01
+
