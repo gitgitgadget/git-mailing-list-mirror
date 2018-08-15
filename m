@@ -2,135 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAC11F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 17:26:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F6121F428
+	for <e@80x24.org>; Wed, 15 Aug 2018 17:31:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729556AbeHOUTw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 16:19:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43991 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727604AbeHOUTw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 16:19:52 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b15-v6so1749129wrv.10
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:26:48 -0700 (PDT)
+        id S1729650AbeHOUYD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 16:24:03 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:51803 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729388AbeHOUYD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 16:24:03 -0400
+Received: by mail-it0-f65.google.com with SMTP id e14-v6so2728275itf.1
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:30:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=xotnKXfCj2SpXPjjFkc9f7s0QbcHWT7mwJLKWy4C0TI=;
-        b=eL2q+OExOgRYcMrFIhppmGGbyuQ+vc1hnAWcEmALbw9kZ8OaWZy5LwWdP8Nl/N3lrd
-         WBe0/LM3Ix/eLdMOzV9r1fnAr30Y/2ch0mVh5QAwv7O9KJQUBpj7bfoCyQYOXdEFDbSX
-         SPptSZqLij95LmE/k4rEesMS1ss/ysllZYpTfxufgStzMijLasvlxRlB/Ll0apNta6AD
-         TwAlVSxowUV6uus/ZIUgcWGxwMnPTsRir6nm37SuKpNuZSjxNrYbzgZwJBpsbxCfsJfW
-         anWNU+lCLVhaAXKlrMEokKMRSynQeIj/FMEWiCh5KQgGQS8CA2fAvxBev1+gv7LKdo+c
-         1N1w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SRG1VBWfgxm1hQn5Dbpf3fBP/rB2QFNu8/kYE5WStFY=;
+        b=DG1xlDe5SVD6nrnhfdc9TX4cA6K+o3eX0cVDfQoTeBSHYWOmdEEZF6Su1hyNPVAPeK
+         hCQtJG5OJjOmlh4L0MpKviKgjASquQuQuAQHZ0gia8nxBKkm7c++VRy8hu/hUD6JrW6B
+         IS0fNpJloCPVdwq2xe+4ql6TRfvQsVUcsc75V3zhVDSiAD71oxOhdjDi065lAPmCifXQ
+         cTKkjhja3PIffHxkvzjW+9ta0o/mHl4lqePAl8FzC4crQdJY3WFt2TIWH012hVOELHCR
+         1fuKtd9KZ78dweKARXwvaUJVye3+keY9VtzNtEyj3wdb/s8Gqhie4o4xOwZ7RhhYbrR+
+         VTcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=xotnKXfCj2SpXPjjFkc9f7s0QbcHWT7mwJLKWy4C0TI=;
-        b=OtvQ94yKThSTCrt5ub6prxXobzYOwb9lvr1WB6FepSW79k88Qj4D4V0yq7TG/JOFbP
-         u+Dsv5tvb2A/9f0JZf3opgq869q7TFoDAtrUH+XAGJShQIxhl+uendg2rFKGJro7tcPu
-         1SyLHyHcj5/U0/XxJxKS+bJZaDDraFhR/WGOf0xlB6GdFWgf7TM4R6HblFWlN9HrsTl9
-         wlALnfH9hRx3yJcCevGXb4bmBQtV0dfkXnArg1psdHxKUEeutlfZCMVC42wSwh6i4enM
-         1707C5+NlXC3WOi0Ff1gor2TYbMHgzDhEja+Yq87T6tAUA+gxP8LyW2zvcmjiwyhfSIC
-         0SaA==
-X-Gm-Message-State: AOUpUlGXOiwUzfTJFG4o7FJ3OvQFpnGEoP+j2lDm6kyiA6dZdjMeiyYV
-        khdyAt8/sEMiO05/eRzENmU=
-X-Google-Smtp-Source: AA+uWPybgJ1/gz4ZRftSnlUyoIoadvejca/vxdwug9ZOH+jrr0rzucPWrkR658iHRd8SlAPwB0SnQw==
-X-Received: by 2002:adf:deca:: with SMTP id i10-v6mr16038657wrn.163.1534354007777;
-        Wed, 15 Aug 2018 10:26:47 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m200-v6sm3354901wma.32.2018.08.15.10.26.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 10:26:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
-References: <20180815162308.17747-1-pclouds@gmail.com>
-        <20180815162308.17747-2-pclouds@gmail.com>
-Date:   Wed, 15 Aug 2018 10:26:46 -0700
-In-Reply-To: <20180815162308.17747-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 15 Aug 2018 18:23:08 +0200")
-Message-ID: <xmqqpnyjilrd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SRG1VBWfgxm1hQn5Dbpf3fBP/rB2QFNu8/kYE5WStFY=;
+        b=c/N22jwBWepsYBsih4exrkappL5xqWTXdFezl4QABLBV+zinRtV4Jqm/wTSb24ka+H
+         aBl/9WoySyWwtpDahhoN4nNo7wTcY8r5t31DmrpO3sTez7M7pjAeULP1H44cCG74aHcL
+         NrRWFiT5zqB7d+Fv9EHbWCZ+81YknfHdNqfJxnkn0vLULoeN141LMymewT3HvJlX/mfP
+         anndylHI5sFqh75esL+JqJR4zqNV4FH8wTA4d4eg3deRQiE7kAQHaeHGohdrhlzyeMxl
+         jUrgw7fWILLSGE9UxtfxWAawJN3hf4MO6IFxgWT7W/LDvEY/0tA84BO4jfR6wbwuJcaz
+         NWgA==
+X-Gm-Message-State: AOUpUlE4nvhcJpJIwuGG1Oh3eegRYpIjDutPkvUq7nzwf0/kjvpVp8Sb
+        B7hvNqzFnUhUr+r4+qY0pePRgq3t3ATJWF/Qdbo=
+X-Google-Smtp-Source: AA+uWPz2ZWsWd+ANWfO4SCqrJNuIAMUmq2TNMKkMrW+njXaRIPTiScGymBFdvQ2RLMFRuzg1aaJMKQ6+YBawKQ+ec2E=
+X-Received: by 2002:a24:b101:: with SMTP id o1-v6mr18022119itf.121.1534354259601;
+ Wed, 15 Aug 2018 10:30:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180815162308.17747-1-pclouds@gmail.com> <20180815162308.17747-2-pclouds@gmail.com>
+ <xmqqpnyjilrd.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnyjilrd.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 15 Aug 2018 19:30:33 +0200
+Message-ID: <CACsJy8CkXRc9NXRHt3a7=v04to0bMTvZo9x7zYNZWPiGDKQqdg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-
-> --quit is supposed to be --abort but without restoring HEAD. Leaving
-> CHERRY_PICK_HEAD behind could make other commands mistake that
-> cherry-pick is still ongoing (e.g. "git commit --amend" will refuse to
-> work). Clean it too.
+On Wed, Aug 15, 2018 at 7:26 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> For abort, this job of deleting CHERRY_PICK_HEAD is on "git reset" so
-> we don't need to do anything else.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-
-Please do not hide this bugfix behind 1/2 that is likely to require
-longer to cook than the fix itself.   And more importantly, it makes
-it impossible to merge down the fix to the maintenance track, as I
-do not think we'd want to merge 1/2 there.
-
-Thanks.
-
->  builtin/revert.c                | 9 +++++++--
->  t/t3510-cherry-pick-sequence.sh | 3 ++-
->  2 files changed, 9 insertions(+), 3 deletions(-)
+> > --quit is supposed to be --abort but without restoring HEAD. Leaving
+> > CHERRY_PICK_HEAD behind could make other commands mistake that
+> > cherry-pick is still ongoing (e.g. "git commit --amend" will refuse to
+> > work). Clean it too.
+> >
+> > For abort, this job of deleting CHERRY_PICK_HEAD is on "git reset" so
+> > we don't need to do anything else.
+> >
+> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+.com>
+> > ---
 >
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 76f0a35b07..e94a4ead2b 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -7,6 +7,7 @@
->  #include "rerere.h"
->  #include "dir.h"
->  #include "sequencer.h"
-> +#include "branch.h"
->  
->  /*
->   * This implements the builtins revert and cherry-pick.
-> @@ -191,8 +192,12 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
->  	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
->  	opts->strategy = xstrdup_or_null(opts->strategy);
->  
-> -	if (cmd == 'q')
-> -		return sequencer_remove_state(opts);
-> +	if (cmd == 'q') {
-> +		int ret = sequencer_remove_state(opts);
-> +		if (!ret)
-> +			remove_branch_state(the_repository);
-> +		return ret;
-> +	}
->  	if (cmd == 'c')
->  		return sequencer_continue(opts);
->  	if (cmd == 'a')
-> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-> index 3505b6aa14..9d121f8ce6 100755
-> --- a/t/t3510-cherry-pick-sequence.sh
-> +++ b/t/t3510-cherry-pick-sequence.sh
-> @@ -103,7 +103,8 @@ test_expect_success '--quit cleans up sequencer state' '
->  	pristine_detach initial &&
->  	test_expect_code 1 git cherry-pick base..picked &&
->  	git cherry-pick --quit &&
-> -	test_path_is_missing .git/sequencer
-> +	test_path_is_missing .git/sequencer &&
-> +	test_path_is_missing .git/CHERRY_PICK_HEAD
->  '
->  
->  test_expect_success '--quit keeps HEAD and conflicted index intact' '
+> Please do not hide this bugfix behind 1/2 that is likely to require
+> longer to cook than the fix itself.   And more importantly, it makes
+> it impossible to merge down the fix to the maintenance track, as I
+> do not think we'd want to merge 1/2 there.
+
+Oh sorry I did not think about that. Will drop 1/2 and send 2/2 as
+standalone. But for the record, I think this has been a bug since the
+introduction of --quit in this command (back when it was still called
+--reset).
+--=20
+Duy
