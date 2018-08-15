@@ -2,73 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6EEC1F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 17:24:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FAC11F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 17:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729424AbeHOURR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 16:17:17 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:38311 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727604AbeHOURR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 16:17:17 -0400
-Received: by mail-io0-f193.google.com with SMTP id v26-v6so1606235iog.5
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:24:15 -0700 (PDT)
+        id S1729556AbeHOUTw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 16:19:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43991 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727604AbeHOUTw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 16:19:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id b15-v6so1749129wrv.10
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 10:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lLKj4IHRmAGD26G5S40WjjQ9GB2TaZTUdPi8B76ROzY=;
-        b=T1LeCX5eVzxzAdPKrMVkkRmDDqCxjX04N4vK6v1PcJXxIfNZKd+i7saUJnNPguErk2
-         O2o1cgjI8GAWJ8D0LAElC7AF5OdH73U+MMcSek48O3DW1WH3e2mcZfy+ZPY3UdtpRSJb
-         Ef9hQNTKBTQUhyipCvVZMZu9vbsqFF9GckGOqDIELq9A4+8f+Vd4mKP0ehb5Oji99P/W
-         0c6hX6Xu14xHuFhkoGjDkl2Ep5iyWA53xRrVGvwqxBXf2hwQ3KZOmo1MEQl8r0iEwziN
-         3NujK3fuiImc9uwUKLHh+pP7lUhGmh6fiGg4MwNgwLqnCtGSHJ7VNiqEygne1f1flxaY
-         wvBw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=xotnKXfCj2SpXPjjFkc9f7s0QbcHWT7mwJLKWy4C0TI=;
+        b=eL2q+OExOgRYcMrFIhppmGGbyuQ+vc1hnAWcEmALbw9kZ8OaWZy5LwWdP8Nl/N3lrd
+         WBe0/LM3Ix/eLdMOzV9r1fnAr30Y/2ch0mVh5QAwv7O9KJQUBpj7bfoCyQYOXdEFDbSX
+         SPptSZqLij95LmE/k4rEesMS1ss/ysllZYpTfxufgStzMijLasvlxRlB/Ll0apNta6AD
+         TwAlVSxowUV6uus/ZIUgcWGxwMnPTsRir6nm37SuKpNuZSjxNrYbzgZwJBpsbxCfsJfW
+         anWNU+lCLVhaAXKlrMEokKMRSynQeIj/FMEWiCh5KQgGQS8CA2fAvxBev1+gv7LKdo+c
+         1N1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lLKj4IHRmAGD26G5S40WjjQ9GB2TaZTUdPi8B76ROzY=;
-        b=HWltM6LArbOvSKniCaf1o1ZXKUfSq27WtvwxcjNY8yDmXefQz306d6OdnSzkZmxQpY
-         ghtwngBJX3VOHmGzjtbyFdwUSVQTmBGh1THTcMsoq4nek49H+wiv8BKnBu7GKoBCeeX2
-         /dijXLOZiSwx/mTwwRXP66CSK9U4PYxFioGtUsawddASiKSVpWwUtr8UVrdFej3DRb+A
-         V+99ZzNoZJDnf1FU7AYoJsxpI3wVWN2YzzEfPRIhAsdBUU9nJJgKyliG6CgUVIyyZNoh
-         2oYRMkvdEw22rCu7a9OtJvF5NFYYWim5zU4LiP5eaoMkcw8cERQq+wygOk3ooCQSl3u0
-         JfaA==
-X-Gm-Message-State: AOUpUlF8OYiL+2PCb8Q4FSAkJ0TbRVrfFfxGwusd3PE/iapCWfJnL9km
-        JLFJrVLTpgLnfHKHSC0Um5lHGKtOG5W2EC+nei0=
-X-Google-Smtp-Source: AA+uWPzwk0nTuUztQjurOt+wxIIkLb61B2VhfFtmx5Hkq5WqX0jx/R+UZ4we+oEOVPEULKy8NfelPgy551DX/t7Cayg=
-X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr21028376ioe.282.1534353854816;
- Wed, 15 Aug 2018 10:24:14 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=xotnKXfCj2SpXPjjFkc9f7s0QbcHWT7mwJLKWy4C0TI=;
+        b=OtvQ94yKThSTCrt5ub6prxXobzYOwb9lvr1WB6FepSW79k88Qj4D4V0yq7TG/JOFbP
+         u+Dsv5tvb2A/9f0JZf3opgq869q7TFoDAtrUH+XAGJShQIxhl+uendg2rFKGJro7tcPu
+         1SyLHyHcj5/U0/XxJxKS+bJZaDDraFhR/WGOf0xlB6GdFWgf7TM4R6HblFWlN9HrsTl9
+         wlALnfH9hRx3yJcCevGXb4bmBQtV0dfkXnArg1psdHxKUEeutlfZCMVC42wSwh6i4enM
+         1707C5+NlXC3WOi0Ff1gor2TYbMHgzDhEja+Yq87T6tAUA+gxP8LyW2zvcmjiwyhfSIC
+         0SaA==
+X-Gm-Message-State: AOUpUlGXOiwUzfTJFG4o7FJ3OvQFpnGEoP+j2lDm6kyiA6dZdjMeiyYV
+        khdyAt8/sEMiO05/eRzENmU=
+X-Google-Smtp-Source: AA+uWPybgJ1/gz4ZRftSnlUyoIoadvejca/vxdwug9ZOH+jrr0rzucPWrkR658iHRd8SlAPwB0SnQw==
+X-Received: by 2002:adf:deca:: with SMTP id i10-v6mr16038657wrn.163.1534354007777;
+        Wed, 15 Aug 2018 10:26:47 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m200-v6sm3354901wma.32.2018.08.15.10.26.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 10:26:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
+References: <20180815162308.17747-1-pclouds@gmail.com>
+        <20180815162308.17747-2-pclouds@gmail.com>
+Date:   Wed, 15 Aug 2018 10:26:46 -0700
+In-Reply-To: <20180815162308.17747-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Wed, 15 Aug 2018 18:23:08 +0200")
+Message-ID: <xmqqpnyjilrd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180815162308.17747-1-pclouds@gmail.com> <CABPp-BEC45snMzGeCre-dD1rtqGok-RKuLGbMaV=VJhwx1ceew@mail.gmail.com>
- <CACsJy8B3ip+_sDrpvaZ32a35-6hWkY=eE6g4RObWgbHnf6g8uw@mail.gmail.com> <xmqqtvnvim2j.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvnvim2j.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 15 Aug 2018 19:23:48 +0200
-Message-ID: <CACsJy8Cx42bhLq9MJqcB9ayO8TqASh1xbmOE8O75-ufKXAK8ug@mail.gmail.com>
-Subject: Re: [PATCH 1/2] branch.c: remove explicit reference to the_repository
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 7:20 PM Junio C Hamano <gitster@pobox.com> wrote:
-> I also do not think remove_branch_state() function belongs to
-> branch.c in the first place.  The state it is clearing is not even
-> about a "branch".  It is state left by the last command that stopped
-> in the middle; its only callers are "reset", "am --abort/--skip" and
-> "checkout <another-branch>".
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-sequencer.c as its new home then?
--- 
-Duy
+> --quit is supposed to be --abort but without restoring HEAD. Leaving
+> CHERRY_PICK_HEAD behind could make other commands mistake that
+> cherry-pick is still ongoing (e.g. "git commit --amend" will refuse to
+> work). Clean it too.
+>
+> For abort, this job of deleting CHERRY_PICK_HEAD is on "git reset" so
+> we don't need to do anything else.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+
+Please do not hide this bugfix behind 1/2 that is likely to require
+longer to cook than the fix itself.   And more importantly, it makes
+it impossible to merge down the fix to the maintenance track, as I
+do not think we'd want to merge 1/2 there.
+
+Thanks.
+
+>  builtin/revert.c                | 9 +++++++--
+>  t/t3510-cherry-pick-sequence.sh | 3 ++-
+>  2 files changed, 9 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 76f0a35b07..e94a4ead2b 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -7,6 +7,7 @@
+>  #include "rerere.h"
+>  #include "dir.h"
+>  #include "sequencer.h"
+> +#include "branch.h"
+>  
+>  /*
+>   * This implements the builtins revert and cherry-pick.
+> @@ -191,8 +192,12 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>  	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
+>  	opts->strategy = xstrdup_or_null(opts->strategy);
+>  
+> -	if (cmd == 'q')
+> -		return sequencer_remove_state(opts);
+> +	if (cmd == 'q') {
+> +		int ret = sequencer_remove_state(opts);
+> +		if (!ret)
+> +			remove_branch_state(the_repository);
+> +		return ret;
+> +	}
+>  	if (cmd == 'c')
+>  		return sequencer_continue(opts);
+>  	if (cmd == 'a')
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index 3505b6aa14..9d121f8ce6 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -103,7 +103,8 @@ test_expect_success '--quit cleans up sequencer state' '
+>  	pristine_detach initial &&
+>  	test_expect_code 1 git cherry-pick base..picked &&
+>  	git cherry-pick --quit &&
+> -	test_path_is_missing .git/sequencer
+> +	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD
+>  '
+>  
+>  test_expect_success '--quit keeps HEAD and conflicted index intact' '
