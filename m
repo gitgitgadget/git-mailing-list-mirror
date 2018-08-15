@@ -2,106 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 304C21F404
-	for <e@80x24.org>; Wed, 15 Aug 2018 15:21:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 78AC61F404
+	for <e@80x24.org>; Wed, 15 Aug 2018 15:26:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729527AbeHOSOC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 15 Aug 2018 14:14:02 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:55404 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729347AbeHOSOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 15 Aug 2018 14:14:01 -0400
-Received: by mail-it0-f65.google.com with SMTP id d10-v6so2199422itj.5
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 08:21:26 -0700 (PDT)
+        id S1729348AbeHOSTB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 15 Aug 2018 14:19:01 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:46114 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729287AbeHOSTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 15 Aug 2018 14:19:01 -0400
+Received: by mail-ua1-f68.google.com with SMTP id u11-v6so1611837uan.13
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 08:26:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=47niag9qzgrqNdFWS3vdrWteB+oLjO6cqJD3gi0L+yQ=;
-        b=tVdXtIJenYgSqIEjHlPI+Mq+MRsqJjP/Va3dyasVAevSm7XLXnXqirEerOzDlIGDnC
-         WSqwVuKOCblJTzFWMvsXWYdBhehGBVJF42XIgV6bjQKsoGAJflQnjP0ggWqG9Im9po6q
-         DTOwbU2J/FT2/AFDF4ZVFfcQCcMtIMGZFzLgmlOgHsJn5K7lkYUZXySIEFjuLzZQjSNv
-         2nhuP9B63TKtQaJph6Hb8NTgHo8ZEn/PDIsvTrqs8M0rM29RkXQ+68ZY7QzegT6fUJSy
-         A+9ljDFoAJe3jykpzAAaVpg4EvvjCPmlaiecumxzMt1meXxixd4I7awXjcciel0XwVVB
-         giQQ==
+        bh=6gK9IaPXJgL/p9RtPI2cUi3SgS6CFTJ748sU+G8HQYo=;
+        b=jx3EjSjKiPes+irbYJ0qFm9KJv036ppAYgmGEjXTCXlayibN7aajVMwZ67j+x3CRdx
+         ND1CFEPz+5dHU+QXZI5cvTVU2SfMKDvk8I3Mn8chxvyU4UFThu4ijzpkjysWjN+NtJKH
+         kaX/Wvl8EWVvawgXUEGLJ1nJ2d9Y6xSE8C6q/jFdMEMQN1RDnTro+E6XNSlVPb43EgQO
+         RtPIJqZLjGthlewM9ozd/GFs31C4tAyBlfqXLApR1AlRLEi3ofb+NrpNwS8xXr9ARwD4
+         Cwop9AN4WVZ2efXwPc2dYkNIo1pdXKNTwqO4K4NmZJ2147w56GxDWLDkBv7LyGVdTa6c
+         TkYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=47niag9qzgrqNdFWS3vdrWteB+oLjO6cqJD3gi0L+yQ=;
-        b=WxYds4RbtwsREhPy4OcE16OI/k0UDCU4drRK77KIvmqXcCL3LSs/8Bnh0J2C+uP53W
-         gBMLhxpkLKuMnyCMg6GgJJQBGu/jCqhzCPl9/wlyV6peDZj0PuBTZyFJAm90ehNdf1sq
-         q6DZ6gFnrLCtd4p3D4zZh5KnTGT+j6F65OVuKKnNeNSwrEiLqvA2sbU/9BwosXL8tEwV
-         lhX5SDzWGYPBsQ0A4JmP4BUTsPAaqYsunQMum6RwOfcJwWvXh08Cqh/EbldITvWrJFCL
-         FIKjhxaDEUm3cuktwkWJGF1evqdt7ADNW8k+g0/qb/6g5Tdj6rZhZmVIwa0ulSeNL+Ut
-         YvAA==
-X-Gm-Message-State: AOUpUlE+Y+ZEU7MzcYcJb2Hplp27abYPgkSHj/y7LzfsfylwlCXb54G5
-        /cRNPvJmaeT1Z7wVFKMUf0LZcrUynHkAxug+wt8=
-X-Google-Smtp-Source: AA+uWPystxvD1zwYDETX/Ilgr3erFDZc2Sdc6vMWO1xHu6G+BZyPSc+TuSr78wZSP83ZOx6/skHwB6U7ZDagu/XvGNg=
-X-Received: by 2002:a24:c888:: with SMTP id w130-v6mr19546332itf.78.1534346486483;
- Wed, 15 Aug 2018 08:21:26 -0700 (PDT)
+        bh=6gK9IaPXJgL/p9RtPI2cUi3SgS6CFTJ748sU+G8HQYo=;
+        b=PVdJprY3uQW9HBAO+B4z/Cl46iQLWnSTgk2750T3WoYw2q0R6fYJlbKDOlZXi8FUCb
+         xlckV2E+cN0GxN9u1nvRR7K6TyCONk8z5kMZ8mztro7Y8HGN3RpFi2w/u5AlsxIPZJBz
+         r9ZPNwOTzjKBumzu3T+PWx3erxUYi0LQDW0JVtamTVvBjzf/bAiDNBivqp7yZnalvRmE
+         I16VG2DTXROa7yeuPBjMxScPR4prHUj20SxDm2BJQhwjWZceod/lbt/rt3J19BPLUndG
+         dNr23hGKr/wYxdqmqDgntRBcTFWK9fIp2Moha6aRtXTwhYyI4CKqgHDUMsQD+AFXsZUh
+         0zhg==
+X-Gm-Message-State: AOUpUlGqUTwWllfR6MfIRM3DOcvDnw+mLSOlV8ZDHAty0/oJNBPuAyn/
+        Ps7oYYKfZqrRUPD7PG0KLOKrf2dOPvpd0frTSAY=
+X-Google-Smtp-Source: AA+uWPzD4+hEGikQItvTdWey0R9bUJzQuw+dH+VF9heoJRUahSnV4b8YcVeMG2oLeNe9f7AuNLJBsvElxy9aC/nzJes=
+X-Received: by 2002:a9f:3d1a:: with SMTP id l26-v6mr17215951uai.29.1534346784499;
+ Wed, 15 Aug 2018 08:26:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <95e4f9df528a40bf3f3e648318904500343abf9a.camel@infinera.com>
- <20180814223820.123723-1-sbeller@google.com> <xmqqo9e4y2gr.fsf@gitster-ct.c.googlers.com>
- <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqk1osy1qo.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 15 Aug 2018 17:20:59 +0200
-Message-ID: <CACsJy8DH+c0tHS9VpirdE97G3+roWhvXfb-jcjW7n-5nuZo3=A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] store submodule in common dir
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, joakim.tjernlund@infinera.com,
-        Git Mailing List <git@vger.kernel.org>,
-        Brandon Williams <bmwill@google.com>
+References: <20180811205024.11291-1-newren@gmail.com> <20180813171749.10481-1-newren@gmail.com>
+ <20180813171749.10481-2-newren@gmail.com> <20180815051011.GC32543@aiede.svl.corp.google.com>
+ <CABPp-BFk2X5TApYzs3QtdokBs3Hqz9uX737M6RGMtaU+wYUikw@mail.gmail.com>
+ <20180815061346.GJ32543@aiede.svl.corp.google.com> <CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com>
+In-Reply-To: <CABPp-BGVVXcbZX44er6TO-PUsfEN_6GNYJ1U5cuoN9deaA48OQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 15 Aug 2018 08:26:12 -0700
+Message-ID: <CABPp-BGp_uEWF=+ENcd2SkL=PDu_NtzObFAz1Gz33OemgZbogA@mail.gmail.com>
+Subject: Re: [PATCHv3 1/6] Add missing includes and forward declares
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 1:20 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Theoretically we should be able to make modules/kernel%2fv2.[24]
-> additional "worktree"s of modules/kernel%2fv2.6, but given that
-> these are all "bare" repositories without an attached working tree,
-> I am not sure how that would supposed to work.  Thinking about
-> having multiple worktrees on a single bare repository makes me head
-> spin and ache X-<;-)
+On Tue, Aug 14, 2018 at 11:51 PM Elijah Newren <newren@gmail.com> wrote:
+> > [...]
+> > >> enums are of unknown size, so forward declarations don't work for
+> > >> them.  See bb/pedantic for some examples.
+> > >
+> > > structs are also of unknown size; the size is irrelevant when the
+> > > function signature merely uses a pointer to the struct or enum.  The
+> > > enum forward declaration fixes a compilation bug.
+> >
+> > My rationale may miss the point but the standard and some real compilers
+> > don't like this, unfortunately.
+> >
+> > For structs, having an incomplete type is fine, but for enums we need
+> > the full definition.  E.g. C99 sayeth (in section 6.7.2.3 "tags")
+> >
+> >         A type specifier of the form
+> >
+> >                 enum identifier
+> >
+> >         without an enumerator list shall only appear after the type it
+> >         specifies is complete.
+>
+> What about a type specifier of the form
+>   enum identifier *
+> ?  Can that kind of type specifier appear before the full definition
+> of the enum?  (Or, alternatively, if the standard doesn't say, are
+> there any compilers that have a problem with that?)
+>
+> If so, we can include cache.h instead.  We'll probably also have to
+> fix up packfile.h for the exact same issue (even the same enum name)
+> if that's the case.
 
-I could only read the mail subject this morning and thought a bit
-about it on the train, and came to the same conclusion that "git
-worktree" is the way to go.
+Digging a little further this morning, apparently C++ has defined a
+forward declaration of an enum to either be useless (because it was
+already defined), require an explicit size specifier, or be a
+compilation error.
 
-The bareness should not affect this at all.  If you meant core.bare,
-it can only affect the main repo. But what I'm thinking is repos with
-only linked worktrees and no main one. So when you "submodule update"
-a repo, you "clone -n", then "git worktree add" to put a worktree in
-place. The repo is strictly speaking not bare, it just does not have a
-main worktree.
+That seemed stupid to me, but a little more digging turned up
+http://c-faq.com/null/machexamp.html , which states that sizeof(char*)
+!= sizeof(int*) on some platforms.  That was a big surprise to me.
+Since an enum could be a char or int (or long or...), knowing the size
+of the enum thus is important to knowing the size of a pointer to an
+enum, so we actually do need the full enum definition (or a C++ style
+explicit size specifier).
 
-The main HEAD should be detached so that it does not block any
-worktree from checking out branches. If we could get away without the
-main HEAD, that would be great, but HEAD is part of the repo signature
-so it has to stay (and we may end up keeping more objects for this
-HEAD even after every other heads don't need the same objects
-anymore).
+What a crazy world.
 
-This also solves the problem with mupltiple worktrees on a repo with
-submodules, where we have the same problems (if I add a new worktree
-of the superproject, where do the new submodules go?). In this case
-ideally all worktrees should have separate ref namespaces to maintain
-the "separate repo" view that we currently have, but I guess we can
-live with sharing refs for a while.
-
-And simply sharing $GIT_DIR/modules won't work. For starter, it breaks
-existing setups. What I've wanted to do is adding a shared "common"
-directory. Then you could have "common/modules" (among other future
-common stuff), which is shared across all worktrees, but you don't
-have to add extra share rules since it's already covered by the
-"common" rule.
--- 
-Duy
+So, I'll go with the inclusion of cache.h and also fix up packfile.h
+the same way.  Thanks for pointing this out, Jonathan.
