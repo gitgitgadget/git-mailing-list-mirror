@@ -2,107 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 154611F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 08:42:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7D521F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 08:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388113AbeHPLjg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 07:39:36 -0400
-Received: from mout.gmx.net ([212.227.15.15]:35571 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731216AbeHPLjf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 07:39:35 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgtWa-1fUH7n2WBs-00M4C7; Thu, 16
- Aug 2018 10:42:31 +0200
-Date:   Thu, 16 Aug 2018 10:42:30 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: fix numbering in squash message
-In-Reply-To: <xmqqy3d7h21r.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808161039300.71@tvgsbejvaqbjf.bet>
-References: <20180815094125.12530-1-phillip.wood@talktalk.net> <xmqqbma3ijyq.fsf@gitster-ct.c.googlers.com> <27c91e67-7567-f820-c641-c7980965fcef@talktalk.net> <xmqqy3d7h21r.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2390137AbeHPLkz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 07:40:55 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:33109 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730435AbeHPLky (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 07:40:54 -0400
+Received: by mail-qk0-f193.google.com with SMTP id z78-v6so599181qka.0
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 01:43:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=258dF6iEXDPKUbM/Op+K0nVp6hBjOx8mArs8vdIZU8k=;
+        b=Z4Sbn1aZySz9sFisurdkzggx8LpVLSD8KR2wNehLDBL8uPwnmcs7vfPcFSWNIOMIA1
+         l/YwDqVfZ6fM5UIry+tklgX4IAavHWM+Nat/xwBbZgzETeqF16Zh4K8SEZWI57FYvae9
+         QNLIntaVWn7tr+3UD8nLdSsCYvzeu7LMOEdSRGFvUBvfj+coay4tV5zumrvfreJ/6NOQ
+         USVBx/gDEooTXlKssCpnLKEvvqsmps2VD82iwfFKJsPDN4S8qMlOUnCUhbAo6ajqWVKN
+         IkF29jvR7YM/sIhoAFHztzebWnpcAXWbFYIoVZEHwpXMuIKC+lXpl1tUmyRRKlj801nY
+         odmw==
+X-Gm-Message-State: AOUpUlFisisxYyvEEfTWMnfjfpMEAPxTZoZ4/zkHy/O2mS5O0ndoSjbO
+        TlI8E4zXGLn0cCewC7IuPKx9qGhizeREObTXLD8VdDF9
+X-Google-Smtp-Source: AA+uWPzVESELaHW4mNrZLh+tgLlrvC6fO34pdJGgQkyE8o+q8xd4G3kOnVl70V3/OeHgPhvAojmaNRoGlXhCKb8Lvg0=
+X-Received: by 2002:a37:50c3:: with SMTP id e186-v6mr26444295qkb.91.1534409035801;
+ Thu, 16 Aug 2018 01:43:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:lVuNhuwx5DbuIzkzUklX73tweOcpCjZI2dHZxZA7MJc8EVcrG1u
- +A7wjRN/FoLMcuDuF3dnZAY0z9a7dMG1cUNsKcOANUYDfhGo4oQXflfP2VjKu2fWI4Xbek5
- hpgmPKeRk3+RlBHYMWByR8TFTCcBVDi/d0Hn9tb27mDWy78qpIKrGMSFxCJFOBz9Nh86MIp
- xwfq0wckKJripKS/6RZMg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:f3qaai7pRDQ=:bLaQ8TbseOu/axLaQKwcM1
- s45ub4cFeThtod2EftjqeEJw6DDG0O7wb81ZiRwyCZs7w+6PH8OCUepOombN27WIvtcJKIDP7
- eeznrsQnd6c0IGJB6fbucTl8AdEcXL2282CER4hu0bepcrLda9wUiFilDRNGE1KREaV8QxqEM
- lEZ1H8uaBUtJtpXtz8EglHBVQ6b5SIEriDSagH89siFHgRG/+LZyAiYHD/87KYfIyHpDzSwcC
- OcbDgQaDKY+vP6AkAZ3JfRcO62E7FakHpqqI7PrzqiHrCvirGVMXLE7UnyAaSNM2Z3AhPkFzS
- WwFbA4ymEhdP9fRLd8FnqO5vSSrE+iKTT6qyeoqUVqZFIeXC8HvYDwV+x1WmMhbYOOBao/HYG
- lrtrF7fsXiUK3gwleb9Vmt+cmsQJrrL2durFmD2eUF+1jjpA/zD5f5cBo3LquLPxLiL96EID5
- a8SumbsyzON2ynNTfm3J0oMC1EaYpdyYaJcmdFSDSoFbzl8m8El06orhV0JR5ZXmPqIRKHAsr
- JSa1+Rg2sehTclgWXoEp09Qejj0FSIbkJDpSFBmCenhX/0umF9Ps+G+hp7fLek7R/2x+nDP2O
- LENDzfVj4p7bMfZ1Z4QeFxmrcJgFTHpI7LNawAm9yEiPnJk2iIpEYgOB89GGCVqG4kufH6gSf
- XBb2mtjHHgDhIIFBvPMCHIi+LLwSQR+Zsw5r9UieuIalKXkCVPzxILgNg3dC5ZRDz7154cuEJ
- To0GQQgPsI9ko27hh62Hnp4ZS46dc9+eHB8QJUtt5psZvhXSMHboFwNu/dAkKE46z/+hGbWcQ
- 1kFlZgG
+References: <20180815205630.32876-1-gitter.spiros@gmail.com>
+In-Reply-To: <20180815205630.32876-1-gitter.spiros@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 16 Aug 2018 04:43:44 -0400
+Message-ID: <CAPig+cTSZNtKUXLoR6gqvWT3bD-JgWOF38ZD7i+OocRs4p=GMA@mail.gmail.com>
+Subject: Re: [PATCH v2] worktree: add --quiet option
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Karen Arutyunov <karen@codesynthesis.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Aug 15, 2018 at 4:56 PM Elia Pinto <gitter.spiros@gmail.com> wrote:
+> Add the '--quiet' option to git worktree,
+> as for the other git commands. 'add' is the
+> only command affected by it since all other
+> commands, except 'list', are currently
+> silent by default.
 
-On Wed, 15 Aug 2018, Junio C Hamano wrote:
+Nit: wrap the commit message at around 70 columns rather than 45 or so.
 
-> Phillip Wood <phillip.wood@talktalk.net> writes:
-> 
-> >> I wonder if it makes it easier to read, understand and maintain if
-> >> there were a local variable that gets opts->current_fixup_count+2 at
-> >> the beginning of the function, make these three places refer to that
-> >> variable, and move the increment of opts->current_fixup_count down
-> >> in the function, after the "if we are squashing, do this, if we are
-> >> fixing up, do that, otherwise, we do not know what we are doing"
-> >> cascade.  And use the more common post-increment, as we no longer
-> >> depend on the returned value while at it.
-> >> 
-> >> IOW, something like this (untested), on top of yours.
-> >
-> > I think you'd need to change commit_staged_changes() as well as it
-> > relies on the current_fixup_count counting the number of fixups, not the
-> > number of fixups plus two.
-> 
-> I suspect you misread what I wrote (see below for the patch).  
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> ---
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -303,9 +304,13 @@ static int add_worktree(const char *path, const char *refname,
+> +       else {
+>                 argv_array_pushl(&cp.args, "symbolic-ref", "HEAD",
+>                                  symref.buf, NULL);
+> +               if (opts->quiet)
+> +                       argv_array_push(&cp.args, "--quiet");
+> +       }
 
-I had the same reaction as Phillip: is your patch good enough, or does it
-only touch one part, but not other that may need the same "touch-upping".
+This constructs the command as "git symbolic-ref HEAD <ref> --quiet".
+Although that's not wrong per-se, it does perhaps set an undesirable
+precedent. A more standard construction would be:
 
-> The fixup_count is a new local variable in update_squash_messages()
-> that holds N+2; in other words, I am not suggesting to change what
-> opts->current_fixup_count means.
+    argv_array_push(..., "symbolic-ref");
+    if (opts->quiet)
+        argv_array_push(..., "--quiet");
+    argv_array_pushl(..., "HEAD", symref.buf, NULL);
 
-Sure, and the better cleanup could possibly be to change the meaning of
-opts->current_fixup_count altogether.
+I used "pushl" on the last one to indicate the semantic relationship
+between those two arguments.
 
-> > Having said that using 'current_fixup_count +
-> > 2' to create the labels and incrementing the count at the end of
-> > update_squash_messages() would probably be clearer than my version. I'm
-> > about to go away so it'll probably be the second week of September
-> > before I can re-roll this, will that be too late for getting it into 2.19?
-> 
-> I actually do not mind to go with what you originally sent, unless a
-> cleaned up version is vastly more readable.  After all, a clean-up
-> can be done separately and safely.
+> +
 
-At this point, I think Phillip's version would be safer, as it would make
-it easier to do a more complete cleanup without the pressure of having to
-fix a bug in one big hurry.
+Nit: the above code is directly related to the code just below, so the
+new blank line you add here somewhat (undesirably) divorces the pieces
+of code from each other
 
-So: ACK on Phillip's patch from me.
+>         cp.env = child_env.argv;
+>         ret = run_command(&cp);
+>         if (ret)
+> @@ -315,6 +320,8 @@ static int add_worktree(const char *path, const char *refname,
+>                 argv_array_pushl(&cp.args, "reset", "--hard", NULL);
+> +               if (opts->quiet)
+> +                       argv_array_push(&cp.args, "--quiet");
 
-Ciao,
-Dscho
+I could also see this one re-written as:
+
+    argv_array_push(...,"reset");
+    argv_array_push(...,"--hard");
+    if (opts->quiet)
+        argv_array_push(...,"--quiet");
+
+now that the command invocation has added another option.
+
+Not at all worth a re-roll.
+
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> @@ -252,6 +252,11 @@ test_expect_success 'add -B' '
+> +test_expect_success 'add --quiet' '
+> +       git worktree add --quiet ../foo master >expected 2>&1 &&
+> +       test_must_be_empty expected
+> +'
+
+This test is going to create the new worktree directly in Git's t/
+directory due to "../foo". Please don't do that. Use a name without
+the leading "../".
+
+Also, you should make sure that the worktree doesn't already exist
+(wasn't created by an earlier test), otherwise the "git worktree add"
+command will fail. So, either choose a distinct worktree name or use
+"test_might_fail git worktree remove -f <worktree>" before the "git
+worktree add" command.
