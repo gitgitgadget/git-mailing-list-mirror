@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868C81F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 06:13:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12F681F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 06:13:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388863AbeHPJJn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 05:09:43 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:50869 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388857AbeHPJJm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 05:09:42 -0400
-Received: by mail-wm0-f67.google.com with SMTP id s12-v6so3308981wmc.0
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:13:34 -0700 (PDT)
+        id S2388868AbeHPJJq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 05:09:46 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35478 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388857AbeHPJJo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 05:09:44 -0400
+Received: by mail-wr1-f68.google.com with SMTP id g1-v6so3048867wru.2
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5MlpLkS7aDsPoRCmSr1pjQWa9ZfWaOIvtz1AmOxP6TI=;
-        b=oxdVI6qdbCufdBaLTLJKrRfscQbZi3S+jh9gd47W0ol7lyh0nYzLqdtZlib9Iotb+z
-         dSCg+q41Nxk/wWHxhWmjBWf5H6cJynk5wXLpxSX8ChwyPFsoPxlR1AiTyX0EbVrVU2DG
-         30e8sQibrn1Ny+YQGTdLbzOyFk5Y9RzIaknqUV0mQdUzAWBJDO4XhcNkuMr1xb88fYfa
-         moibCEjCKymXQphrjrnCineitJXz2YUqwrn/DcRdbDk1vaIfbZgimcPHTsSYRHcP20xn
-         AZR5EFZXUXewVSSCZnggRRCOxkaoDy+y5NvEFu+KqANSWT3wHRahykeq0iFB55LGkT3q
-         CMlA==
+        bh=nygb35vwxi7JnXzcpo+/wMWrAL+9G0D7rjnnusOql6g=;
+        b=tEZ0tdk1Y4YaSUDO0fR+IAGKBqDuekeG9j5xk4pXHl/cvOebGx7Hd972ldJIGK/gEG
+         jlDuXUQ02wPtjZOJwQP1F864+5Z9iwlprRpMxZNgpnpcZgkyj14B4MERgPzR1NzE+nps
+         vkRz6zQ847eEHtCQ4UiK4lynYooyJ67GY8NYfiX81Z/aQhzK6XSqBcWMmTnqOpNKq/pj
+         LLn5YNpVFOsX492u8Vqj2wKU3tKErUFqP49klTWuGoa7LvDBpwgF/7VtgTlQfT/SEQhi
+         ug01vjZuDyT0RWYnc5Mx7+O/urn/PNJmP0LDnSXKZISGbTPOO+kfG9Cabu+J5LSwgBuH
+         mE3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5MlpLkS7aDsPoRCmSr1pjQWa9ZfWaOIvtz1AmOxP6TI=;
-        b=nN4Agsav215poGUR+ViXSmOR/zgszkl8MHC202x2LzZGJE8AV6l1kLNVYtzg2QSZDa
-         /u46PyDPw/OqnDCgVAqIzUCAs+wwZgKBbfzGW2CgIGWtmGl9WL04nJkkGLrKNoiLDwug
-         w4ASM8RY2Onwr07MizRhUqR1DnbRvlYT1r3Sb+yAfefkK1YrqNlHThvJVXzEdDxfgEi3
-         C/1T+6p+wZLm6wQxgKzHPIH3RQN1YCRVS/03GLc4gI+CHjQd7wkzgAyyMQ0Z46SWAghT
-         zOPOhHIk7CqK3I4kJJWzYGyyV7Q23/dJyyHaZL30Ivb082F/OtbFtQF7cbhC4NV6lOuC
-         gMvA==
-X-Gm-Message-State: AOUpUlEzD/o2SxUvjnkRxob6FO9zmAKPH6yU2kySCKzd7hfQIrg7sv1g
-        xOI3tdbGHY9p2hEHC+YpKSAWHztl
-X-Google-Smtp-Source: AA+uWPx7s0o5XWc13+FhZ2dd0kHQHrYQk5qoYR+svwXOVeW94C00f9FYFoGPfksW5xT90M6wR+/TxA==
-X-Received: by 2002:a1c:3411:: with SMTP id b17-v6mr14632321wma.85.1534400013009;
-        Wed, 15 Aug 2018 23:13:33 -0700 (PDT)
+        bh=nygb35vwxi7JnXzcpo+/wMWrAL+9G0D7rjnnusOql6g=;
+        b=W+HWDpHzeLh0jVWJJpnOJpSXDsZeN+f4Wlsfk754Tu+6mgIHRMT1zPYgyIi8Mtzo5b
+         kJY0lYUaCFJ4i5b6GdXHzt4ZUJaUIaJ0iDrptzSmFREuAaT28JE8PvByJAYsR+SWgCkb
+         c5hLAHl+vWvlao/RwoHKstNGQd63BzkXGKdOO85D0ggk/YqSfszrITpNFHPNWgHmAwqy
+         QTc/TMwiqpiAssvQ7CooHs8qwZsKOYNxqFU3Q/yjLUZTqVuvhmSTrVgnwhPWwYUypsUw
+         zKg7U5Ur0rvlhJGmv6Fg/aBNnJgk5I+y8nkwFpRLfAKPmNkFDUqusjP72SzwQ7PZP2eg
+         gjHA==
+X-Gm-Message-State: AOUpUlFD1EEtpnUdEeDSh/ZUj+4qL54mgWX8ywjNK87+9sxdkxk5tlxh
+        Wq5DpQQR4MOabfAhW6DQBKXSQM+f
+X-Google-Smtp-Source: AA+uWPzn5K2hj+BhUfp1BDTPB2EOKzbVOX/ApitPU621hJ2o1HUCdehfHrWsal12X0Cg90dgY6bLPg==
+X-Received: by 2002:adf:ef03:: with SMTP id e3-v6mr18458032wro.182.1534400016114;
+        Wed, 15 Aug 2018 23:13:36 -0700 (PDT)
 Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
-        by smtp.gmail.com with ESMTPSA id d8-v6sm22325182wrv.68.2018.08.15.23.13.31
+        by smtp.gmail.com with ESMTPSA id d8-v6sm22325182wrv.68.2018.08.15.23.13.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Aug 2018 23:13:32 -0700 (PDT)
+        Wed, 15 Aug 2018 23:13:35 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER Gabor <szeder.dev@gmail.com>
-Subject: [PATCH v5 2/7] pack-objects: refactor code into compute_layer_order()
-Date:   Thu, 16 Aug 2018 08:13:08 +0200
-Message-Id: <20180816061313.19298-3-chriscool@tuxfamily.org>
+Subject: [PATCH v5 4/7] repack: add delta-islands support
+Date:   Thu, 16 Aug 2018 08:13:10 +0200
+Message-Id: <20180816061313.19298-5-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.18.0.673.gcd86e60100
 In-Reply-To: <20180816061313.19298-1-chriscool@tuxfamily.org>
 References: <20180816061313.19298-1-chriscool@tuxfamily.org>
@@ -72,159 +72,95 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a following commit, as we will use delta islands, we will
-have to compute the write order for different layers, not just
-for one.
+From: Jeff King <peff@peff.net>
 
-Let's prepare for that by refactoring the code that will be
-used to compute the write order for a given layer into a new
-compute_layer_order() function.
+Implement simple support for --delta-islands option and
+repack.useDeltaIslands config variable in git repack.
 
-This will make it easier to see and understand what the
-following changes are doing.
+This allows users to setup delta islands in their config and
+get the benefit of less disk usage while cloning and fetching
+is still quite fast and not much more CPU intensive.
 
-Helped-by: Duy Nguyen <pclouds@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/pack-objects.c | 90 +++++++++++++++++++++++-------------------
- 1 file changed, 50 insertions(+), 40 deletions(-)
+ Documentation/config.txt     | 4 ++++
+ Documentation/git-repack.txt | 5 +++++
+ builtin/repack.c             | 9 +++++++++
+ 3 files changed, 18 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 80c880e9ad..efe62f8ebd 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -672,48 +672,15 @@ static void add_family_to_write_order(struct object_entry **wo,
- 	add_descendants_to_write_order(wo, endp, root);
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index af8c746e75..486536f505 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -3160,6 +3160,10 @@ repack.packKeptObjects::
+ 	index is being written (either via `--write-bitmap-index` or
+ 	`repack.writeBitmaps`).
+ 
++repack.useDeltaIslands::
++	If set to true, makes `git repack` act as if `--delta-islands`
++	was passed. Defaults to `false`.
++
+ repack.writeBitmaps::
+ 	When true, git will write a bitmap index when packing all
+ 	objects to disk (e.g., when `git repack -a` is run).  This
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index d90e7907f4..a8b2d4722f 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -155,6 +155,11 @@ depth is 4095.
+ 	being removed. In addition, any unreachable loose objects will
+ 	be packed (and their loose counterparts removed).
+ 
++-i::
++--delta-islands::
++	Pass the `--delta-islands` option to `git-pack-objects`, see
++	linkgit:git-pack-objects[1].
++
+ Configuration
+ -------------
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 6c636e159e..5ab9ee69e4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -12,6 +12,7 @@
+ static int delta_base_offset = 1;
+ static int pack_kept_objects = -1;
+ static int write_bitmaps;
++static int use_delta_islands;
+ static char *packdir, *packtmp;
+ 
+ static const char *const git_repack_usage[] = {
+@@ -40,6 +41,10 @@ static int repack_config(const char *var, const char *value, void *cb)
+ 		write_bitmaps = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "repack.usedeltaislands")) {
++		use_delta_islands = git_config_bool(var, value);
++		return 0;
++	}
+ 	return git_default_config(var, value, cb);
  }
  
--static struct object_entry **compute_write_order(void)
-+static void compute_layer_order(struct object_entry **wo, unsigned int *wo_end)
- {
--	unsigned int i, wo_end, last_untagged;
--
--	struct object_entry **wo;
-+	unsigned int i, last_untagged;
- 	struct object_entry *objects = to_pack.objects;
+@@ -194,6 +199,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 				N_("pass --local to git-pack-objects")),
+ 		OPT_BOOL('b', "write-bitmap-index", &write_bitmaps,
+ 				N_("write bitmap index")),
++		OPT_BOOL('i', "delta-islands", &use_delta_islands,
++				N_("pass --delta-islands to git-pack-objects")),
+ 		OPT_STRING(0, "unpack-unreachable", &unpack_unreachable, N_("approxidate"),
+ 				N_("with -A, do not loosen objects older than this")),
+ 		OPT_BOOL('k', "keep-unreachable", &keep_unreachable,
+@@ -267,6 +274,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		argv_array_pushf(&cmd.args, "--no-reuse-object");
+ 	if (write_bitmaps)
+ 		argv_array_push(&cmd.args, "--write-bitmap-index");
++	if (use_delta_islands)
++		argv_array_push(&cmd.args, "--delta-islands");
  
- 	for (i = 0; i < to_pack.nr_objects; i++) {
--		objects[i].tagged = 0;
--		objects[i].filled = 0;
--		SET_DELTA_CHILD(&objects[i], NULL);
--		SET_DELTA_SIBLING(&objects[i], NULL);
--	}
--
--	/*
--	 * Fully connect delta_child/delta_sibling network.
--	 * Make sure delta_sibling is sorted in the original
--	 * recency order.
--	 */
--	for (i = to_pack.nr_objects; i > 0;) {
--		struct object_entry *e = &objects[--i];
--		if (!DELTA(e))
--			continue;
--		/* Mark me as the first child */
--		e->delta_sibling_idx = DELTA(e)->delta_child_idx;
--		SET_DELTA_CHILD(DELTA(e), e);
--	}
--
--	/*
--	 * Mark objects that are at the tip of tags.
--	 */
--	for_each_tag_ref(mark_tagged, NULL);
--
--	/*
--	 * Give the objects in the original recency order until
--	 * we see a tagged tip.
--	 */
--	ALLOC_ARRAY(wo, to_pack.nr_objects);
--	for (i = wo_end = 0; i < to_pack.nr_objects; i++) {
- 		if (objects[i].tagged)
- 			break;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 	last_untagged = i;
- 
-@@ -722,7 +689,7 @@ static struct object_entry **compute_write_order(void)
- 	 */
- 	for (; i < to_pack.nr_objects; i++) {
- 		if (objects[i].tagged)
--			add_to_write_order(wo, &wo_end, &objects[i]);
-+			add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -732,7 +699,7 @@ static struct object_entry **compute_write_order(void)
- 		if (oe_type(&objects[i]) != OBJ_COMMIT &&
- 		    oe_type(&objects[i]) != OBJ_TAG)
- 			continue;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -741,7 +708,7 @@ static struct object_entry **compute_write_order(void)
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
- 		if (oe_type(&objects[i]) != OBJ_TREE)
- 			continue;
--		add_to_write_order(wo, &wo_end, &objects[i]);
-+		add_to_write_order(wo, wo_end, &objects[i]);
- 	}
- 
- 	/*
-@@ -749,8 +716,51 @@ static struct object_entry **compute_write_order(void)
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
- 		if (!objects[i].filled)
--			add_family_to_write_order(wo, &wo_end, &objects[i]);
-+			add_family_to_write_order(wo, wo_end, &objects[i]);
- 	}
-+}
-+
-+static struct object_entry **compute_write_order(void)
-+{
-+	unsigned int i, wo_end;
-+
-+	struct object_entry **wo;
-+	struct object_entry *objects = to_pack.objects;
-+
-+	for (i = 0; i < to_pack.nr_objects; i++) {
-+		objects[i].tagged = 0;
-+		objects[i].filled = 0;
-+		SET_DELTA_CHILD(&objects[i], NULL);
-+		SET_DELTA_SIBLING(&objects[i], NULL);
-+	}
-+
-+	/*
-+	 * Fully connect delta_child/delta_sibling network.
-+	 * Make sure delta_sibling is sorted in the original
-+	 * recency order.
-+	 */
-+	for (i = to_pack.nr_objects; i > 0;) {
-+		struct object_entry *e = &objects[--i];
-+		if (!DELTA(e))
-+			continue;
-+		/* Mark me as the first child */
-+		e->delta_sibling_idx = DELTA(e)->delta_child_idx;
-+		SET_DELTA_CHILD(DELTA(e), e);
-+	}
-+
-+	/*
-+	 * Mark objects that are at the tip of tags.
-+	 */
-+	for_each_tag_ref(mark_tagged, NULL);
-+
-+	/*
-+	 * Give the objects in the original recency order until
-+	 * we see a tagged tip.
-+	 */
-+	ALLOC_ARRAY(wo, to_pack.nr_objects);
-+	wo_end = 0;
-+
-+	compute_layer_order(wo, &wo_end);
- 
- 	if (wo_end != to_pack.nr_objects)
- 		die(_("ordered %u objects, expected %"PRIu32),
+ 	if (pack_everything & ALL_INTO_ONE) {
+ 		get_non_kept_pack_filenames(&existing_packs, &keep_pack_list);
 -- 
 2.18.0.673.gcd86e60100
 
