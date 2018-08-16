@@ -2,97 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 031361F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 02:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63E581F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 02:47:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387726AbeHPFfE (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 01:35:04 -0400
-Received: from mail-yw1-f44.google.com ([209.85.161.44]:41335 "EHLO
-        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727009AbeHPFfE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 01:35:04 -0400
-Received: by mail-yw1-f44.google.com with SMTP id q129-v6so2416365ywg.8
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:39:54 -0700 (PDT)
+        id S2387858AbeHPFms (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 01:42:48 -0400
+Received: from mail-pl0-f68.google.com ([209.85.160.68]:35185 "EHLO
+        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731184AbeHPFmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 01:42:47 -0400
+Received: by mail-pl0-f68.google.com with SMTP id g1-v6so1338298plo.2
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:47:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=CbTX8KbLLC21nAcmq4TuBJgLG55UsZHMm2SEkHYNxk8=;
-        b=ByPwbqBRcA0qyMCcmCk8k1FsO5vg2iHACQvo+1LWgUPAZqcMXMfadJX1yXpDNHVE3k
-         k+XlqKKwKM0aRQRTBBr7Ffp24QPp+AgGAkH8Sl+Z7vVQtnCKqcpEIBWUMnJomTRTuDH2
-         0FObdfS2Z97zY9zbWsufPgBsY9RjRewsns8Ro7cjdHAxzXx0zVfiq1koGqqOVkCns7kV
-         mJCfQQ9y2XPhKQlEBtfQxzlB9vKckO0Ht8P/nZpIMxFEgf05OMKA1W0niqd2cNDDYLhl
-         Wj0mb93TS4cOnPof+ZC86vA235YxeyD4sn/EMi2hbz9EzBv6bmh6pNAg+DT549CGBNdg
-         9DBA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8wwN7mLghH5dfgMvd/vUrC+jfqxSiT8Z8FmwtTH62Ak=;
+        b=C/MgEkM6pSQnc/H+wwAicp/MdnIV2cfxRjff9bclP4/RWLE8f88tpGbEFkEhQumo/l
+         gK1MntCq8TZGaAAlMk6uXsNBsDX+BcrJ49Hv1B/b342IMQvL77WebHiqG06SoXB3Oqad
+         ssNEgH1NwCG/CHfwPxgYTtVQiH2w5iV7r+UNNef1dWfwcePCYRpAnpMBiDFmofgTzmuC
+         zA23EvV4qDbRTyK12xwNt4RooyCRWx/saigAfFVorfV/uKXNEfg5UfezCTGzZ5I3gvks
+         syDeswMvzohicxftt89wvrPytcAGJyUdof+pVzrkKJpV2kZL0fTe2jni1JsIhsF3OiWB
+         8iWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=CbTX8KbLLC21nAcmq4TuBJgLG55UsZHMm2SEkHYNxk8=;
-        b=Xn7FyM10Q5uGr1qCC8FciEl5PnglD/HXNKr63NRHBgD5TUh8/L550E7gocrwm4fQkK
-         DsKAy1iwmBegCJ70rgkpfHJTtXk/0rvvF/ncevd/EUJQYndKQj0mm66CKcdxSWgoQNlI
-         R57AI4ir8Uqg8L3ADWBgRdWFnMuHMha3yH8pHEg3uh7u8FaLHxPdGelG4IWimrnUiyWD
-         2jzPEaWQb6ga7NQ4sNykk8GvUQTQ2Fw+xpNj++XE3AzJKaXWtSQe4DVg4D8yr7frQ2cH
-         +bj8c6Jr6tZBzeX2w9qpKrIc73D+PXP7Ucx6fXe7Y2SJvgwyn+1+e+SPUuVnC9DR3A2J
-         NuHA==
-X-Gm-Message-State: AOUpUlFER13CKgFWI/gyMEvspAfCocBPxmAE3yNvx/CrwgBJDbjq7hC3
-        WiP7pfAIUjo5KiDwKptP+0B4JRq1bKZMFD6EliseXQ==
-X-Google-Smtp-Source: AA+uWPwaoQQvf0VgdeATgtl34o8RmYDrGk91F5bn4LfuoW9cADhS2miZZEV7ffsu2MiKiYjxEjKCf0QeattkrJxCWXg=
-X-Received: by 2002:a25:af08:: with SMTP id a8-v6mr12892898ybh.167.1534387193760;
- Wed, 15 Aug 2018 19:39:53 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180807230637.247200-1-bmwill@google.com> <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com> <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com> <20180814185743.GE142615@aiede.svl.corp.google.com>
- <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
- <20180814211211.GF142615@aiede.svl.corp.google.com> <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
- <20180816023446.GA127655@aiede.svl.corp.google.com>
-In-Reply-To: <20180816023446.GA127655@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 15 Aug 2018 19:39:42 -0700
-Message-ID: <CAGZ79kamoPjX_yWYABLoyTh8jqAPV4iVX0r46q=41B12zku=tg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8wwN7mLghH5dfgMvd/vUrC+jfqxSiT8Z8FmwtTH62Ak=;
+        b=DaUlD/eV4XArsLzvcu5tPM/2gf95nLbCa43mlaSOJHn8lsuBZXKmfRQYr1VkYeWcXW
+         +cHIoBE9n3dSdu/kY/APIQNNLU2pV1i3QfVBDDF2+SK4Kk45SNlXHrdPzxKMoYzZvepu
+         qjCsm2vOJG93AbS0xIRogLMijnxFZyMY8UluQx1pzWeHSqQxqOxR3cZa2yFByQm1GzmC
+         M2pFLTYrNHH6AumfonyIftJ0RlkCFGgcL7w6MgiZ4Q40bKYybk+PUfcaTmFgbzMo36Gw
+         urlQjbxp3xeVuNWB/HfkLL71RDdg5HaN/MFxPAPiTRwqmowuvbsI8BOpvlAz0zCMIPyk
+         gt/g==
+X-Gm-Message-State: AOUpUlGR77nkopFMXxzJvkED+7BUdKSL/zqHO9boTiNLf4I9ZguOm4tX
+        aKLUhJHUgWgJBfEk1xJGX9E=
+X-Google-Smtp-Source: AA+uWPxrVGZgAr05UqODjpH24pt1e0KmuVbSW3GjQo1IST/b76rL5BDWWRjLUEfBrkWn1FjigHViIA==
+X-Received: by 2002:a17:902:7c89:: with SMTP id y9-v6mr26862838pll.187.1534387656134;
+        Wed, 15 Aug 2018 19:47:36 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id i62-v6sm35262611pge.66.2018.08.15.19.47.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 19:47:35 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 19:47:33 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
         git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180816024733.GB127655@aiede.svl.corp.google.com>
+References: <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <20180814185743.GE142615@aiede.svl.corp.google.com>
+ <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
+ <20180814211211.GF142615@aiede.svl.corp.google.com>
+ <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
+ <20180816023446.GA127655@aiede.svl.corp.google.com>
+ <CAGZ79kamoPjX_yWYABLoyTh8jqAPV4iVX0r46q=41B12zku=tg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kamoPjX_yWYABLoyTh8jqAPV4iVX0r46q=41B12zku=tg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> [...]
+Stefan Beller wrote:
+> Jonathan Nieder wrote:
 
-all good reasons; ship it :-)
-
-> All at the cost of recording a little configuration somewhere.  If we
-> want to decrease the configuration, we can avoid recording it there in
-> the easy cases (e.g. when name == gitdirname).  That's "just" an
-> optimization.
-
-Sounds good, but gerrit for example would not take advantage of such
-optimisation as they have slashes in their submodules. :-(
-I wonder if we can optimize further and keep slashes if there is
-no conflict (as then name == gitdirname, so it can be optimized).
-
-> And then we have the ability later to handle all the edge cases we
-> haven't handled yet today:
+>> All at the cost of recording a little configuration somewhere.  If we
+>> want to decrease the configuration, we can avoid recording it there in
+>> the easy cases (e.g. when name == gitdirname).  That's "just" an
+>> optimization.
 >
-> - sharding when the number of submodules is too large
-> - case-insensitive filesystems
-> - path name length limits
-> - different sets of filesystem-special characters
+> Sounds good, but gerrit for example would not take advantage of such
+> optimisation as they have slashes in their submodules. :-(
+> I wonder if we can optimize further and keep slashes if there is
+> no conflict (as then name == gitdirname, so it can be optimized).
+
+One possibility would be to treat gsub("/", "%2f") as another of the
+easy cases.
+
+[...]
+>> And then we have the ability later to handle all the edge cases we
+>> haven't handled yet today:
+>>
+>> - sharding when the number of submodules is too large
+>> - case-insensitive filesystems
+>> - path name length limits
+>> - different sets of filesystem-special characters
+>>
+>> Sane?
 >
-> Sane?
+> I'll keep thinking about it.
 
-I'll keep thinking about it.
+Thanks.
 
-FYI: the reduction in configuration was just sent out.
+> FYI: the reduction in configuration was just sent out.
 
-Thanks,
-Stefan
+https://public-inbox.org/git/20180816023100.161626-1-sbeller@google.com/
+for those following along.
+
+Ciao,
+Jonathan
