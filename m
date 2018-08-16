@@ -2,82 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D21E81F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 11:54:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 861B71F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 12:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391341AbeHPOxB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 16 Aug 2018 10:53:01 -0400
-Received: from bmail02.rafael.co.il ([193.169.70.134]:43109 "EHLO
-        bmail02.rafael.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389296AbeHPOxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 10:53:01 -0400
-X-Greylist: delayed 3621 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Aug 2018 10:53:00 EDT
-X-AuditID: 0a010033-0dfff70000001349-98-5b755791d709
-Received: from EX13.visionmap.co.il ( [10.0.0.10])
-        (using TLS with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by bmail02.rafael.co.il (greeting) with SMTP id 20.4D.04937.197557B5; Thu, 16 Aug 2018 13:53:05 +0300 (IDT)
-Received: from EX13.visionmap.co.il (10.0.0.10) by EX13.visionmap.co.il
- (10.0.0.10) with Microsoft SMTP Server (TLS) id 15.0.1044.25; Thu, 16 Aug
- 2018 13:54:52 +0300
-Received: from EX13.visionmap.co.il ([::1]) by EX13.visionmap.co.il ([::1])
- with mapi id 15.00.1044.021; Thu, 16 Aug 2018 13:54:52 +0300
-From:   Shani Fridman <Shani.Fridman@visionmap.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: submodules : switching to an older commit/Tag in project with
- submodules
-Thread-Topic: submodules : switching to an older commit/Tag in project with
- submodules
-Thread-Index: AdQ1N7qozImvicb7R/+/o+PgsfCo6gAF84Pg
-Date:   Thu, 16 Aug 2018 10:54:52 +0000
-Message-ID: <bc9762aaf57e441e95f9eed4e64799b7@EX13.visionmap.co.il>
-Accept-Language: he-IL, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.0.5.67]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-MIME-Version: 1.0
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupmleLIzCtJLcpLzFFi42LhYmDg0p0YXhptcHWVvEXXlW4mB0aPz5vk
-        AhijGhhtkhJLyoIz0/P07WwS8/LySxJLUhVSUouTbZWC3BR0FVwyi5NzEjNzU4uUFDJTbJWM
-        lRQKchKTU3NT80pslRILClLzUpTsuBQwgA1QWWaeQmpecn5KZl66rVJoiJuuhZJdPCpI2MGf
-        MWXKAfaCh9wVPZv/sDcwXuDsYuTkkBAwkXh2bCkziC0k0M4kcea+YBcjF5C9klHixaeljBCJ
-        LkaJ7+tLQWw2AUOJM0e+sXQxcnCICOhL9F0QBQkLCwRLXPmzgREiHCFx+Ek2SFhEwEji6s1T
-        7CBhFgFViTOLFUDCvALOEl9uH2EDsRkFZCU+zdwIdgGzgLjErSfzmSAuE5BYsuc8M4QtKvHy
-        8T9WCNtAYuvSfSwQNlDvr2XsEL06Egt2f2KDsLUlli18zQyxS1Di5MwnLBMYRWYhWTELScss
-        JC2zkLQsYGRZxSiYm5iZ4x7uEqRXlKaXk5+cmLOJERTbjAzGOxhPXnY7xCjAwajEw/vAsCRa
-        iDWxrLgy9xCjBAezkgjvr2NAId6UxMqq1KL8+KLSnNTiQ4ymwICYyCwlmpwPTDt5JfGGxqYm
-        BoZGxgZmJsZmSuK89w7mRwsJpAPTR3ZqakFqEUwfEwcnyFwuKZFiYFpILUosLcmIB6Wq+GJg
-        spJqYDSxeJ92r2PnioUm37bnVv3wuRliv5LhVoDcp7u7di5lNSi4ZDxJQuvI5gyVL/dsN3+f
-        OXn2/tg3X+uvvLR6ndq5rq6+Yf+NSaovgj9dZTB4kHb0u9ubPb/n6bOVXeN6vutGWhljvdpP
-        z+9b1sgzbGcUjfzHkXnwY0twUHXQshbVD0UxUf3r/YSVWIozEg21mIuKEwFfwOHaHgMAAA==
+        id S1731460AbeHPPG0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 11:06:26 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:36442 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727662AbeHPPG0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 11:06:26 -0400
+Received: by mail-wm0-f66.google.com with SMTP id w24-v6so4117176wmc.1
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 05:08:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=OwC5gxNtuzLxOCdLncdyslLefVfueVuGzdEI/LG8jlE=;
+        b=t99SXTILTKXtZfC1GWPpxX2t3HnR4rQ0chfI8dbDJfcfE39S3YXc9KJAVbvhRDML1/
+         kF5z2lT5qcOpmHAsUiGe8TN8KMay9KyZoACnNKfdHtCqZO6SE6+9Jl1KvwLJaB/GIbS0
+         4nl9LMPcirigadeXCDxQc+L/FU7GAKrVVjpQ1IoiN66df7AFNHzmdLZhajM2JXP9DUzD
+         GEUTDcDzQMB5F9fPRNBkGopH+HAXgZaZgtV++WDdt8QYs0/FjKa5hqQS7UzpwacPdPM/
+         nkXV4FJf0l9u1Ft85T8FTqDCMzwYEqiqDsV3KZzuNHx8l8VazOOuu9077pn6W0Tg1KGU
+         Nd4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=OwC5gxNtuzLxOCdLncdyslLefVfueVuGzdEI/LG8jlE=;
+        b=mADmAYFGyiRB3ANwaHEOUhr4QoEvrxs2Sk2eYlqPle3Hs909FXGlUoQFRL7zcbTvHI
+         imtRlcxzIPlrAIqfxQOklkIgzrmhg5bPPGrWJjYPD7IzCYsVDu+EBs2rRT06cLAXFAp2
+         L/WZ9pvVGwSC8v2KiW2dEpx3sK59AH2IoHmvs2LjWv9EypJjTckdXW/Rn9TX95lFbRuj
+         VNqZhRKrNZsQJs01A2SO4LKZ7zucNaB4Tlz72BWwkj36jXLBRmHOHDplZtIo8NGr3em0
+         w7hcyPa0liuH8Li9KIwXlVQ2e8zXGjYBs7Ok647ZoFvvLXF3nHlLyfaQyN24H5IWoxsN
+         TvsA==
+X-Gm-Message-State: AOUpUlEdeFDiEzUtnEiE8NKcNmokb9kmYIlvdf1nJJj2qCDeviAHlwkL
+        UNHwoIoJwogY0pd0uD/MTmqgapeD
+X-Google-Smtp-Source: AA+uWPyxBBqCO7eTmDalRPbZk0bJYdJ1SoZtLHCdLHoBQIJicUjyJ5WnIVkbYc3P4hMAIWkH+de8iA==
+X-Received: by 2002:a1c:20cb:: with SMTP id g194-v6mr16738364wmg.102.1534421294542;
+        Thu, 16 Aug 2018 05:08:14 -0700 (PDT)
+Received: from agis.ws.skroutz.gr (agis.ws.skroutz.gr. [185.6.78.155])
+        by smtp.gmail.com with ESMTPSA id l72-v6sm2959714wma.17.2018.08.16.05.08.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 16 Aug 2018 05:08:13 -0700 (PDT)
+From:   Agis <agis.anast@gmail.com>
+Content-Type: text/plain;
+        charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.2 \(3445.5.20\))
+Subject: git-clone removes destination path after permission deny
+Message-Id: <A1C23FEE-55CC-4888-9BD5-1C4566E83A38@gmail.com>
+Date:   Thu, 16 Aug 2018 15:08:11 +0300
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.5.20)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello.
 
-Hi everybody,
+I've recently observed the following:
 
-I've got a question regarding submodules -
+    $ mkdir foo
+    $ # try to clone from a repository that you have no access to
+    $ git clone git@github.com:agis/private.git foo
+    Cloning into 'foo'...
+    Permission denied (publickey).
+    fatal: Could not read from remote repository.
 
-I'm working on a git project with submodules connected to it, and pulling changes from them every month (more or less).
-Sometimes I need to checkout older versions of the project (tags or specific commits), that needs the older versions of the submodules as they were when I defined the tag. The problem is, that the checkout only changes the superProject directories, and not the submodules... I have to checkout the relevant submodules commit manually.
+    Please make sure you have the correct access rights
+    and the repository exists.
+    $ ls foo
+    ls: cannot access 'foo': No such file or directory
 
-Have you came across the same problem? Any idea what can I do?
+Is this expected behavior?
 
-Thank you in advance,
+Thanks in advance,
+Agis
 
-Shani
+P.S. If this is something that should be fixed, I'd be happy to prepare =
+a patch
 
-This message (including any attachments) issued by RAFAEL- ADVANCED DEFENSE SYSTEMS LTD. (hereinafter "RAFAEL") contains confidential information intended for a specific individual and purpose, may constitute information that is privileged or confidential or otherwise protected from disclosure. If you are not the intended recipient, you should contact us immediately and thereafter delete this message from your system. You are hereby notified that any disclosure, copying, dissemination, distribution or forwarding of this message, or the taking of any action based on it, is strictly prohibited. If you have received this e-mail in error, please notify us immediately by e-mail mailto:lawraf@rafael.co.il and completely delete or destroy any and all electronic or other copies of the original message and any attachments thereof.
-
-________________________________________
-
-This message (including any attachments) issued by RAFAEL- ADVANCED DEFENSE SYSTEMS LTD. (hereinafter "RAFAEL") contains confidential information intended for a specific individual and purpose, may constitute information that is privileged or confidential or otherwise protected from disclosure. If you are not the intended recipient, you should contact us immediately and thereafter delete this message from your system. You are hereby notified that any disclosure, copying, dissemination, distribution or forwarding of this message, or the taking of any action based on it, is strictly prohibited. If you have received this e-mail in error, please notify us immediately by e-mail mailto:lawraf@rafael.co.il and completely delete or destroy any and all electronic or other copies of the original message and any attachments thereof.
