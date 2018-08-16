@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 291C61F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 20:35:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36E8E1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 20:38:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725892AbeHPXgc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 19:36:32 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:33031 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725855AbeHPXgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 19:36:31 -0400
-Received: by mail-ed1-f50.google.com with SMTP id x5-v6so3389705edr.0
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 13:35:55 -0700 (PDT)
+        id S1725943AbeHPXik (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 19:38:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:39788 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbeHPXik (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 19:38:40 -0400
+Received: by mail-wm0-f66.google.com with SMTP id q8-v6so5505750wmq.4
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 13:38:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=8cZW90Pybs8GjV/FdX9xHrzWFtBSsiGFnJMFRUgAAGs=;
-        b=WbpvFNygXr18HRXKnZa/EJzEEFrY+FevvJNU2cTPHQ37M3xPG9u9+RR/cWSMO6JNIP
-         d55tkuZdNJDEhsoD58s/MER7wH7PERu9U+zxlAwBmJ3wyK70OAmZWelV5b/i7OUq4qIe
-         7CS8Tn8Z4t/yG67RgEzbWdbcNe62aJcqLTsgr35KSg0iH7KuTIBjCOZ0AoHyFegpxvsj
-         6GQj3s6tWtOQ7TNQ5V4TcsZ/YZZvkCYUA9gDToLm3w49QzNO1nYuIEhN3XJY8KTMyxls
-         aKa+qRZKXmHzZB3ka/bMjPwSUQHT4/7KDquLC0Rz0uQcockfjWNsdGxCIZqguP2OjVDA
-         E2rA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=H98EhzapXFmRvZB8p3fecQsK5w4PJPBXdAZh7q3HQiM=;
+        b=P9IumcijaWbcpTSGJrqJv5d6QVk4qC+kvq4qsfRnyoCpT764PH8Msk/QPC2Ar8v4MN
+         Yw9UhhPUXEur5M51L7qLyEoc/yIbjP/ExJebqHVORhw6RdiVAGt0tpmhFpKyDuyBEiw5
+         GRbQiYqAlQElEX9OPz+HrWclaCsu7pBnIsbOSrmnGB0WrvMYCgEiQN75KKTO8KgzGx4O
+         wfZ5gEcvXXx8rGqwh55h1iem43wdV0ph9m3yLRNa8EHzI1xDXl9JtbGuMZBx70dYmjt/
+         0+5atDDuLrlKWGqXCyRzL5U2VdHcB9lEtm0DHVFn5hwk2JUufZJtdE9ODUm6gOKzUR6Y
+         4PCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=8cZW90Pybs8GjV/FdX9xHrzWFtBSsiGFnJMFRUgAAGs=;
-        b=VQMV79+7jeFPdRFXv7TsLWyTdtVLZGozULYhD2HfO2yt77BiwLMPyjRTJjNg40FT0u
-         Tn5X2p9VuAj8KIJq5AYXruTsEXjk4PyuVUzEtrxQGYziaVWM8wuXkKX6pk+biiKSrYVH
-         PeQmEjlovet4qhM4oNjaYUM9xK44VgYSrMTo5SZtKMPpswA6RoRIarTN/2gnLbI6aYSb
-         xgq2kFlOBRLLp2L2FXtcvhrdM103d/Io7KELA/5LuQJ8F13TxiY53yI/mojvJWuZaRuX
-         2hpq6EgP1UGqv6u0781XSvmFUP9lSjZhx+RuP2DD91pU71I+8nnTuHYQmkyMLyiKtMuz
-         h9Sg==
-X-Gm-Message-State: AOUpUlE/MTZ091wNcLwB83f726WEoFw2B90ea4LoRJX6eCcJSkiy9aLD
-        itWM2Du/8CntU6BKy5CtzaMSMz+cPFQ=
-X-Google-Smtp-Source: AA+uWPxiBHxMkKQ7Mr8+2iJQfg+UWCGQIJJ7FuC8aufZF86uPI36YdOmh8JPkgUWSD6g8W6zjbnZBQ==
-X-Received: by 2002:a50:c292:: with SMTP id o18-v6mr40123798edf.188.1534451755273;
-        Thu, 16 Aug 2018 13:35:55 -0700 (PDT)
-Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id m20-v6sm848813eds.5.2018.08.16.13.35.54
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=H98EhzapXFmRvZB8p3fecQsK5w4PJPBXdAZh7q3HQiM=;
+        b=OcVKgEhNOJwJrCpzfcHsokt4IhLdLqB/1F92bdzji4FVDJLjMMbM+1+w+aPvhFI2hY
+         IaWphDBkBcuxf155nLxcGTX3RSUE8b6eGjH8jYjONvbHwHJU7x2irKQauN9Urr/sjN4s
+         G4UnhnOEaTKHz9+l3+KsqcyWlaXMx9I5RAjWUR86Fz6s7xiOyQxTWLd5FnbcRZTp/HWF
+         MOFBiS9sRuRLe1krBNhzmywzF174LC4u0jlu/s3YJWzVJr4sSvq5k73FoY+06lCabkdQ
+         5EQcOo4p4luqE5pqkmbn9ahiKacd18SgggfOuNpzpoET16kURimQL0WlcULRfBDPuS2q
+         3gqA==
+X-Gm-Message-State: AOUpUlHohNRxA0RP9yNz0bCCC33kcLZ0hGx26fmU5tYeh697e7hAPGs4
+        GycZhvGAaXuqBHRLGmv3lnM=
+X-Google-Smtp-Source: AA+uWPwx7l/lI/kU927QLQPkeoFChpDBi/cFCPYY0ts+8cISTfbJLTlmIWUeTEHz28Ed4PFfQAuuzQ==
+X-Received: by 2002:a1c:3545:: with SMTP id c66-v6mr17340351wma.120.1534451883512;
+        Thu, 16 Aug 2018 13:38:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z141-v6sm2385339wmc.3.2018.08.16.13.38.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 13:35:54 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        git@vger.kernel.org
-Subject: Re: non-smooth progress  indication for git fsck and git gc
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de> <20180816155714.GA22739@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180816155714.GA22739@sigill.intra.peff.net>
-Date:   Thu, 16 Aug 2018 22:35:53 +0200
-Message-ID: <87bma2qcba.fsf@evledraar.gmail.com>
+        Thu, 16 Aug 2018 13:38:02 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elia Pinto <gitter.spiros@gmail.com>
+Cc:     git@vger.kernel.org, martin.agren@gmail.com, pclouds@gmail.com,
+        sunshine@sunshineco.com, karen@codesynthesis.com
+Subject: Re: [PATCH v2] worktree: add --quiet option
+References: <20180815205630.32876-1-gitter.spiros@gmail.com>
+Date:   Thu, 16 Aug 2018 13:38:02 -0700
+In-Reply-To: <20180815205630.32876-1-gitter.spiros@gmail.com> (Elia Pinto's
+        message of "Wed, 15 Aug 2018 20:56:30 +0000")
+Message-ID: <xmqqftzedp3p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -67,117 +66,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-On Thu, Aug 16 2018, Jeff King wrote:
+> diff --git a/t/t2025-worktree-add.sh b/t/t2025-worktree-add.sh
+> index be6e09314..658647d83 100755
+> --- a/t/t2025-worktree-add.sh
+> +++ b/t/t2025-worktree-add.sh
+> @@ -252,6 +252,11 @@ test_expect_success 'add -B' '
+>  	test_cmp_rev master^ poodle
+>  '
+>  
+> +test_expect_success 'add --quiet' '
+> +	git worktree add --quiet ../foo master >expected 2>&1 &&
+> +	test_must_be_empty expected
+> +'
 
-> On Thu, Aug 16, 2018 at 08:54:25AM +0200, Ulrich Windl wrote:
->
->> I'd like to point out some minor issue observed while processing some
->> 50000-object repository with many binary objects, but most are rather
->> small:
->>
->> Between the two phases of "git fsck" (checking directories and
->> checking objects) there was a break of several seconds where no
->> progress was indicated.
->>
->> During "git gc" the writing objects phase did not update for some
->> seconds, but then the percentage counter jumped like from 15% to 42%.
->>
->> I understand that updating the progress output too often can be a
->> performance bottleneck, while upating it too rarely might only bore
->> the user... ;-)
->
-> We update the counter integer for every object we process, and then
-> actually update the display whenever the percentage increases or a
-> second has elapsed, whichever comes first.
->
-> What you're seeing is likely an artifact of _what_ we're counting:
-> written objects. Not all objects are the same size, so it's not uncommon
-> to see thousands/sec when dealing with small ones, and then several
-> seconds for one giant blob.
->
-> The only way to solve that is to count bytes. We don't have a total byte
-> count in most cases, and it wouldn't always make sense (e.g., the
-> "Compressing objects" meter can show the same issue, but it's not really
-> putting through bytes in a linear way).  In some cases we do show
-> transmitted size and throughput, but that's just for network operations.
-> We could do the same for "gc" with the patch below. But usually
-> throughput isn't all that interesting for a filesystem write, because
-> bandwidth isn't the bottleneck.
->
-> Possibly we could have a "half throughput" mode that counts up the total
-> size written, but omits the speed indicator. That's not an unreasonable
-> thing to show for a local pack, since you end up with the final pack
-> size. The object counter would still be jumpy, but you'd at least have
-> one number updated at least once per second as you put through a large
-> blob.
->
-> If you really want a smooth percentage, then we'd have to start counting
-> bytes instead of objects. Two reasons we don't do that are:
->
->   - we often don't know the total byte size exactly. E.g., for a
->     packfile write, it depends on the result of deflating each object.
->     You can make an approximation and just pretend at the end that you
->     hit 100%.  Or you can count the pre-deflate sizes, but then your
->     meter doesn't match the bytes from the throughput counter.
->
->   - for something like fsck, we're not actually writing out bytes.  So I
->     guess you'd be measuring "here's how many bytes of objects I
->     fsck-ed". But is that on-disk compressed bytes, or decompressed
->     bytes?
->
->     If the former, that's only marginally better as a measure of effort,
->     since delta compression means that a small number of on-disk bytes
->     may require a big effort (imagine processing a 100 byte blob versus
->     a 100 byte delta off of a 100MB blob).
->
->     The latter is probably more accurate. But it's also not free to
->     pre-generate the total. We can get the number of objects or the size
->     of the packfile in constant-time, but totaling up the uncompressed
->     size of all objects is O(n). So that's extra computation, but it
->     also means a potential lag before we can start the progress meter.
->
->     I'm also not sure how meaningful a byte count is for a user there.
->
-> So there. That's probably more than you wanted to know about Git's
-> progress code. I think it probably _could_ be improved by counting
-> more/different things, but I also think it can be a bit of a rabbit
-> hole. Which is why AFAIK nobody's really looked too seriously into
-> changing it.
->
-> -Peff
+That's misnomer.  Unless existing tests in this file are already
+bogus, I'd like to see it called 'actual', which is the name we use
+to store the actual output (to be compared with another file we
+create to hold the expected output, typically called 'expect', like
+"test_cmp expect actual").
 
-This is all interesting, but I think unrelated to what Ulrich is talking
-about. Quote:
+I noticed the breakage after merging this to 'pu'; it seems to die
+with "fatal: ../foo already exists" which comes from die().
 
-    Between the two phases of "git fsck" (checking directories and
-    checking objects) there was a break of several seconds where no
-    progress was indicated
+Oh, more seriously, since when is it OK to muck with stuff _outside_
+the $TRASH_DIRECTORY, e.g. "../foo", which would contaminate t/
+directory by creating a direct subdirectly under it?
 
-I.e. it's not about the pause you get with your testcase (which is
-certainly another issue) but the break between the two progress bars.
+Ahh, and I suspect that it is exactly why I am seeing a failure you
+did not see---from a previously failed test cycle, "t/foo" is left
+behind because "make distclean" would not clean it (of course).
 
-Here's a test case you can clone:
-https://github.com/avar/2015-04-03-1M-git (or might already have
-"locally" :)
+Do not ever touch anywhere outside $TRASH_DIRECTORY.  Is this
+something we could enforce in our test harness, I wonder...
 
-If you fsck this repository it'll take around (on my spinning rust
-server) 30 seconds between 100% of "Checking object directories" before
-you get any output from "Checking objects".
-
-The breakdown of that is (this is from approximate eyeballing):
-
- * We spend 1-3 seconds just on this:
-   https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L181
-
- * We spend the majority of the ~30s on this:
-   https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L70-L79
-
- * Wes spend another 3-5 seconds on this QSORT:
-   https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L105
-
-I.e. it's not about objects v.s. bytes, but the structural problem with
-the code that we pass a progress bar down to verify_pack() which does a
-lot of work in verify_pack_index() and verify_packfile() before we even
-get to iterating over the objects in the file, and only then do we start
-displaying progress.
+>  test_expect_success 'local clone from linked checkout' '
+>  	git clone --local here here-clone &&
+>  	( cd here-clone && git fsck )
