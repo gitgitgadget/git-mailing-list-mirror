@@ -7,55 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1681F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 06:02:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53ED41F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 06:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388305AbeHPI6L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 04:58:11 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:40187 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727033AbeHPI6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 04:58:11 -0400
-Received: by mail-it0-f65.google.com with SMTP id h23-v6so5170845ita.5
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:02:07 -0700 (PDT)
+        id S2388821AbeHPJAs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 05:00:48 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:36549 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387491AbeHPJAs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 05:00:48 -0400
+Received: by mail-it0-f68.google.com with SMTP id p81-v6so5205105itp.1
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=vrcEc5xjmmmAVDel7Snfz7PZRAzIIygYn6W+0O1utIA=;
-        b=Qh1vgzDuiHCzY3rhtagI8JJIodF5OEx0tiZxxA9JirKP9gE+pmv+SrUaDix8agGEqV
-         3kPEaX//Eb7ECXS5dDzhioAFOV7lkqqz/t88qxynbSdxrjHGh3egrHRHZQ4iYU5cJWHn
-         BSJ2/tBQ4k1VJH0kBe6udId7Gd0QEvn+Swt0ydpB1wLfrJqBGOzOvRYeFrP7k42F7LRb
-         C9sRi4cNd/tl27N5rFStm1HUmT0l/1fiGkp/bs1DmiJ1PcKAMKThECftHhiLqEFOU1VU
-         s2NaT/Dy+cRJQpw7tqI6/0DMMrap8m1024AWxacDDScEV21Y2hpW9KAMA3pnzM33Jc4U
-         fWlg==
+        bh=eQDexXKJBb3J8RLI1PPVHrgZPSpYvZamvN2C0Wi1GoQ=;
+        b=GDly5lsxzvVAi6rPFjekj9UQWvLS0cJEP+OG70+V7gnNH4pAQleCr0F1VJSOtejWcF
+         khkjpHZz4Y5arntD9+Wa4ysSIHU3Go3eaSDLOhuGRm+xliX2F4GvcciSVxEEvVM1loyj
+         decc4rrELUx2Eoxd6/7Agre2bJmsJjmFDt0xwJT4kM1WiTai/PtLaVt5ohU6ct8I+h2S
+         ErPkN70/WhO1OyT+UZvKQsEghWlXA+Xeinvp14K9tIXgMUCcF0O0wDGsa/kWIPRe8Oyd
+         /Z3TND793E+i+8PPBAePNuuChOdt3UtmIzfRh/Wsdg2skW5mCjfacXuceQD5A75dcAmv
+         uXNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=vrcEc5xjmmmAVDel7Snfz7PZRAzIIygYn6W+0O1utIA=;
-        b=n9sNeQY2O7aoLqEsCrlB3hB73ALgr6YH55Vb/JLTsb3rIyK24t4MpASbaicRi8wTJx
-         pLd0c7+Bl/TyARevS9HcSxGeCaYT0UyVuMjXT4hHP7By78lAoRES5eCe+ubJViYS6ST3
-         k+BuhQWgIsTAfJ8akmJt+tuG4NOOfvZierS0vwzQmFJkgK+Cglq5SGy24jhNRTF9X8Jo
-         pAPW6ltYP0l+UUj04O0doLa7+7+6KUgo1NTK5Dw2boaH/DMtHEWoZtH/1X4/EtVr2A7M
-         WDQ9+PooFoYtKaVXrr49kC7m1TLfe7FSjJrW5d8UB4qaZDexuuCcpvewObcdaCUwvCyZ
-         vJTw==
-X-Gm-Message-State: AOUpUlFzgpMecdDpwCgFNjgozYy0RrkgZb3DXCYv4NDyc3IZYSOIk4ix
-        RlEimSpB9JbCWFpTi8I/ZklLNrN2ndoY7Q4bj8g=
-X-Google-Smtp-Source: AA+uWPy4RhPyH7ruOF23IlQrqPj3IWYT3NbwrjV20e18/X4JB6sXxkfu65DxLdA5rGPjYxVB0/rpiEPbIP1bhmhlWxM=
-X-Received: by 2002:a24:54d:: with SMTP id 74-v6mr19589952itl.96.1534399326471;
- Wed, 15 Aug 2018 23:02:06 -0700 (PDT)
+        bh=eQDexXKJBb3J8RLI1PPVHrgZPSpYvZamvN2C0Wi1GoQ=;
+        b=oAATokXUzJFW7XG5/po76nytFcBLj3JEeTHjjoerQnMai0gxOZ6AzUN0g1Nz9NfDGk
+         +BJ6tc1wyI08qyjP6OORFwTA0VPqdM5MQ5qkGsqWWKH0iy9P3OugDMxBrEOVIWxsLQLP
+         J6joAMwF2Q9DlRHZJbdFjoJqlTAvS+dwkjWhTFFfjOhwfumYbF88aG6XW0ZyjbIoSZBi
+         rjm3am+m5lUMU0BrCvN8z/bpT8PP10+iV8q/l5FxLOZ7TSX/SUj/F+ekcGsUievTPxAx
+         lAnEy1Eqa6je5oXEpXwwT0tna4bWevBnJBeV9mvtn7GoByP11OSzSaZFWF0k9DtpeD+I
+         xA0Q==
+X-Gm-Message-State: AOUpUlE0QAKabs/ByYK8/LglNXt85gOYDe6szWo/dqbyiBRHdJQpn5E+
+        4QFdeQ+evXPd1w5dKre6aMyktTyMW2W/4btWJac=
+X-Google-Smtp-Source: AA+uWPyHixc2ivsqHRQn+Kb3S5gr1htEN8RJm0i2qau6vFD5hPVL6Ylc0WfWEdv4KXnWxjXgWX3BTTsl5GZ137K0268=
+X-Received: by 2002:a24:69c6:: with SMTP id e189-v6mr19323701itc.21.1534399483615;
+ Wed, 15 Aug 2018 23:04:43 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Wed, 15 Aug 2018 23:02:05
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Wed, 15 Aug 2018 23:04:42
  -0700 (PDT)
-In-Reply-To: <20180813181149.GA10013@sigill.intra.peff.net>
+In-Reply-To: <20180813190005.GB10013@sigill.intra.peff.net>
 References: <20180812051151.6425-1-chriscool@tuxfamily.org>
  <20180812051151.6425-2-chriscool@tuxfamily.org> <2113c74c-b230-6ea1-a980-d6d008bac759@ramsayjones.plus.com>
- <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com>
- <7a780fe9-e8bf-804a-82e6-8df81cd5c41c@ramsayjones.plus.com> <20180813181149.GA10013@sigill.intra.peff.net>
+ <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com> <20180813190005.GB10013@sigill.intra.peff.net>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 16 Aug 2018 08:02:05 +0200
-Message-ID: <CAP8UFD1A8Z_Eh+N8204zSUG5Pnji+5=uwOiDr+LrbFGFJ-qPtg@mail.gmail.com>
+Date:   Thu, 16 Aug 2018 08:04:42 +0200
+Message-ID: <CAP8UFD0Rm6t+uiE7s=HtA1MpW7YuK_G24wadkk7AgJUpPhkrrQ@mail.gmail.com>
 Subject: Re: [PATCH v4 1/7] Add delta-islands.{c,h}
 To:     Jeff King <peff@peff.net>
 Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
@@ -71,41 +70,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 8:11 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 13, 2018 at 01:17:18PM +0100, Ramsay Jones wrote:
+On Mon, Aug 13, 2018 at 9:00 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 13, 2018 at 05:33:59AM +0200, Christian Couder wrote:
 >
->> >>> +struct island_bitmap {
->> >>> +     uint32_t refcount;
->> >>> +     uint32_t bits[];
->> >>
->> >> Use FLEX_ARRAY here? We are slowly moving toward requiring
->> >> certain C99 features, but I can't remember a flex array
->> >> weather-balloon patch.
+>> >> +     memcpy(&sha_core, oid->hash, sizeof(uint64_t));
+>> >> +     rl->hash += sha_core;
 >> >
->> > This was already discussed by Junio and Peff there:
->> >
->> > https://public-inbox.org/git/20180727130229.GB18599@sigill.intra.peff.net/
+>> > Hmm, so the first 64-bits of the oid of each ref that is part of
+>> > this island is added together as a 'hash' for the island. And this
+>> > is used to de-duplicate the islands? Any false positives? (does it
+>> > matter - it would only affect performance, not correctness, right?)
 >>
->> That is a fine discussion, without a firm conclusion, but I don't
->> think you can simply do nothing here:
+>> I would think that a false positive from pure chance is very unlikely.
+>> We would need to approach billions of delta islands (as 2 to the power
+>> 64/2 is in the order of billions) for the probability to be
+>> significant. GitHub has less than 50 millions users and it is very
+>> unlikely that a significant proportion of these users will fork the
+>> same repo.
 >>
->>   $ cat -n junk.c
->>        1      #include <stdint.h>
->>        2
->>        3      struct island_bitmap {
->>        4              uint32_t refcount;
->>        5              uint32_t bits[];
->>        6      };
->>        7
->>   $ gcc --std=c89 --pedantic -c junk.c
->>   junk.c:5:11: warning: ISO C90 does not support flexible array members [-Wpedantic]
->>     uint32_t bits[];
->>              ^~~~
->>   $ gcc --std=c99 --pedantic -c junk.c
+>> Now if there is a false positive because two forks have exactly the
+>> same refs, then it is not a problem if they are considered the same,
+>> because they are actually the same.
 >
-> Right, whether we use the FLEX_ALLOC macros or not, this needs to be
-> declared with FLEX_ARRAY, not an empty "[]".
+> Right, the idea is to find such same-ref setups to avoid spending a
+> pointless bit in the per-object bitmap. In the GitHub setup, it would be
+> an indication that two people forked at exactly the same time, so they
+> have the same refs and the same delta requirements. If one of them later
+> updates, that relationship would change at the next repack.
+>
+> I don't know that we ever collected numbers for how often this happens.
+> So let me see if I can dig some up.
+>
+> On our git/git repository network, it looks like we have ~14k forks, and
+> ~4k are unique by this hashing scheme. So it really is saving us
+> 10k-bits per bitmap. That's over 1k-byte per object in the worst case.
+> There are ~24M objects (many times what is in git.git, but people push
+> lots of random things to their forks), so that's saving us up to 24GB in
+> RAM. Of course it almost certainly isn't that helpful in practice, since
+> we copy-on-write the bitmaps to avoid the full cost per object. But I
+> think it's fair to say it is helping (more numbers below).
 
-Ok, it will use FLEX_ARRAY in the reroll I will send soon.
+[...]
 
-Thanks Ramsay and Peff!
+> So all in all (and I'd emphasize this is extremely rough) I think it
+> probably costs about 2GB for the feature in this particular case. But
+> you need much more to repack at this size sanely anyway.
+
+Thanks for the interesting numbers!
