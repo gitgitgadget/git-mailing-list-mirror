@@ -2,117 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73EE91F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 15:57:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 980D71F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 16:05:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392159AbeHPS4h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 14:56:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:57648 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2392156AbeHPS4g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 14:56:36 -0400
-Received: (qmail 6652 invoked by uid 109); 16 Aug 2018 15:57:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Aug 2018 15:57:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16674 invoked by uid 111); 16 Aug 2018 15:57:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 11:57:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 11:57:14 -0400
-Date:   Thu, 16 Aug 2018 11:57:14 -0400
-From:   Jeff King <peff@peff.net>
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     git@vger.kernel.org
-Subject: Re: non-smooth progress  indication for git fsck and git gc
-Message-ID: <20180816155714.GA22739@sigill.intra.peff.net>
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+        id S2392160AbeHPTEW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 15:04:22 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36540 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388322AbeHPTEV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 15:04:21 -0400
+Received: by mail-wm0-f67.google.com with SMTP id w24-v6so4819967wmc.1
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 09:04:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ePD4KujGanwcVK4MveoPJDQfOv4CFU1A/nVOgR874YI=;
+        b=VuaTrnPOmTXSjDZZdBYfWDOcvUpzx9cy4NfTShksmEkIrkNuHdbexcVW/wy/dSkJlH
+         +IHhuuFpNNYagjUHeX7lDV3Ebug8y+4HXGEJ88FKuykcArLSxzPfrnb2bMvurWNxrjsF
+         GyfqSyzjZNYvaxVDVeaUPnVLLDp7yC6NnOBexIRxvoU7w6jI6eTBCZg0L5QtQXCXh8Ar
+         vISiGvglOwPC3CIfD5NcfwvgKRloj9ANwiCd1a0/OTbFgwpwZqe3x7uiffJbzJmQefff
+         Vcqe7AnOp+I1HdSCoKy1C4OiRUVOrGvGaTcSIez4fz72rs9l44LXufqiNxKPXiRChq9x
+         jmig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ePD4KujGanwcVK4MveoPJDQfOv4CFU1A/nVOgR874YI=;
+        b=XZ/+sVWyKR4RyvGLni2vlAGNG6co3MtG79pTsCjvVGmsC7Jqm6lgUG51hcqjDXjsWy
+         fLykoVWdG8ALNu2LC9nbxz/8C7eFTmMOZKZARaKq/4ciBH6+sN/PXDFrsFEfs/Gan9In
+         E9tcdoU4FXQt2zT4O7ArgabH+BRovm1c8emWGSXG+hCoqki8ZBkanJFsrKuNEzsGC68j
+         AOj9ORGaexxj4b+U2ttowvS5qIY2HPCM3HMSd8see7GP3959CprZNr01DEeCyz3ggUxQ
+         PzQRChqDsLdnn/iAU9oDp26hukybohqfPIXJr3TtkhYC3tdb+bKwazKxP6PIHBciwj0l
+         JVSg==
+X-Gm-Message-State: AOUpUlGxNusXFTHGsoypsYgHQysu4e/ClnOFR4UW4L8my2qaRn7F974a
+        /NHupxEvXyFr6MKVQDN/BUY=
+X-Google-Smtp-Source: AA+uWPw4hwziCZQQkbRNJ7myzuBcV5ox0mb26ysEORWBDgLYuXd5AiFVYRsxXGxPjjyD/81tR4XJ6Q==
+X-Received: by 2002:a1c:8f0e:: with SMTP id r14-v6mr17633860wmd.79.1534435497616;
+        Thu, 16 Aug 2018 09:04:57 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id h5-v6sm26183123wrr.19.2018.08.16.09.04.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 09:04:56 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] rebase -i: fix SIGSEGV when 'merge <branch>' fails
+References: <20180815093935.10222-1-phillip.wood@talktalk.net>
+        <20180815093935.10222-3-phillip.wood@talktalk.net>
+Date:   Thu, 16 Aug 2018 09:04:56 -0700
+In-Reply-To: <20180815093935.10222-3-phillip.wood@talktalk.net> (Phillip
+        Wood's message of "Wed, 15 Aug 2018 10:39:35 +0100")
+Message-ID: <xmqqzhxmfgbb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 08:54:25AM +0200, Ulrich Windl wrote:
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-> I'd like to point out some minor issue observed while processing some
-> 50000-object repository with many binary objects, but most are rather
-> small:
-> 
-> Between the two phases of "git fsck" (checking directories and
-> checking objects) there was a break of several seconds where no
-> progress was indicated.
-> 
-> During "git gc" the writing objects phase did not update for some
-> seconds, but then the percentage counter jumped like from 15% to 42%.
-> 
-> I understand that updating the progress output too often can be a
-> performance bottleneck, while upating it too rarely might only bore
-> the user... ;-)
+> This commit implements a minimal fix which fixes the crash and allows
+> the user to successfully commit a conflict resolution with 'git rebase
+> --continue'. It does not write .git/rebase-merge/patch,
+> .git/rebase-merge/stopped-sha or update REBASE_HEAD.
 
-We update the counter integer for every object we process, and then
-actually update the display whenever the percentage increases or a
-second has elapsed, whichever comes first.
+I think that should be OK.  When merging, a patch that shows the
+diff from the merge base to the tip indeed is an interesting and
+useful reference material to help the conflict resolution, but it is
+not even clear what the latter two should mean while merging.
 
-What you're seeing is likely an artifact of _what_ we're counting:
-written objects. Not all objects are the same size, so it's not uncommon
-to see thousands/sec when dealing with small ones, and then several
-seconds for one giant blob.
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index 31fe4268d5..2e767d4f1e 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -129,7 +129,7 @@ test_expect_success '`reset` refuses to overwrite untracked files' '
+>  	git rebase --abort
+>  '
+>  
+> -test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
+> +test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
+>  	test_when_finished "test_might_fail git rebase --abort" &&
+>  	git checkout -b conflicting-merge A &&
+>  
+> @@ -151,6 +151,19 @@ test_expect_success 'failed `merge` writes patch (may be rescheduled, too)' '
+>  	test_path_is_file .git/rebase-merge/patch
+>  '
+>  
+> +SQ="'"
 
-The only way to solve that is to count bytes. We don't have a total byte
-count in most cases, and it wouldn't always make sense (e.g., the
-"Compressing objects" meter can show the same issue, but it's not really
-putting through bytes in a linear way).  In some cases we do show
-transmitted size and throughput, but that's just for network operations.
-We could do the same for "gc" with the patch below. But usually
-throughput isn't all that interesting for a filesystem write, because
-bandwidth isn't the bottleneck.
+A low-hanging fruit tangent, but somebody may want to go through the
+output from
 
-Possibly we could have a "half throughput" mode that counts up the total
-size written, but omits the speed indicator. That's not an unreasonable
-thing to show for a local pack, since you end up with the final pack
-size. The object counter would still be jumpy, but you'd at least have
-one number updated at least once per second as you put through a large
-blob.
+    $ git grep '[Ss][Qq]_*=' t
 
-If you really want a smooth percentage, then we'd have to start counting
-bytes instead of objects. Two reasons we don't do that are:
+and come up with a shared "convenience" definition of this, which
+perhaps sits next to the definition of $_x40 etc.
 
-  - we often don't know the total byte size exactly. E.g., for a
-    packfile write, it depends on the result of deflating each object.
-    You can make an approximation and just pretend at the end that you
-    hit 100%.  Or you can count the pre-deflate sizes, but then your
-    meter doesn't match the bytes from the throughput counter.
+> +test_expect_success 'failed `merge <branch>` does not crash' '
+> +	test_when_finished "test_might_fail git rebase --abort" &&
+> +	git checkout conflicting-G &&
+> +
+> +	echo "merge G" >script-from-scratch &&
+> +	test_config sequence.editor \""$PWD"/replace-editor.sh\" &&
+> +	test_tick &&
+> +	test_must_fail git rebase -ir HEAD &&
+> +	! grep "^merge G$" .git/rebase-merge/git-rebase-todo &&
+> +	grep "^Merge branch ${SQ}G${SQ}$" .git/rebase-merge/message
+> +'
+> +
+>  test_expect_success 'with a branch tip that was cherry-picked already' '
+>  	git checkout -b already-upstream master &&
+>  	base="$(git rev-parse --verify HEAD)" &&
 
-  - for something like fsck, we're not actually writing out bytes.  So I
-    guess you'd be measuring "here's how many bytes of objects I
-    fsck-ed". But is that on-disk compressed bytes, or decompressed
-    bytes?
-
-    If the former, that's only marginally better as a measure of effort,
-    since delta compression means that a small number of on-disk bytes
-    may require a big effort (imagine processing a 100 byte blob versus
-    a 100 byte delta off of a 100MB blob).
-
-    The latter is probably more accurate. But it's also not free to
-    pre-generate the total. We can get the number of objects or the size
-    of the packfile in constant-time, but totaling up the uncompressed
-    size of all objects is O(n). So that's extra computation, but it
-    also means a potential lag before we can start the progress meter.
-
-    I'm also not sure how meaningful a byte count is for a user there.
-
-So there. That's probably more than you wanted to know about Git's
-progress code. I think it probably _could_ be improved by counting
-more/different things, but I also think it can be a bit of a rabbit
-hole. Which is why AFAIK nobody's really looked too seriously into
-changing it.
-
--Peff
