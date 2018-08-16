@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10A8A1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 18:52:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 635881F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 18:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726458AbeHPVw3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 17:52:29 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43228 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbeHPVw1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 17:52:27 -0400
-Received: by mail-wr1-f68.google.com with SMTP id b15-v6so5019903wrv.10
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 11:52:15 -0700 (PDT)
+        id S1727944AbeHPVrK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 17:47:10 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:55839 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725749AbeHPVrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 17:47:07 -0400
+Received: by mail-it0-f65.google.com with SMTP id d10-v6so7653020itj.5
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 11:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=meXYWeH4LguImPLQGc9yIvX8yEm0dyFBWG6IOMLxlVo=;
-        b=RAGxzEmqUjfeUhToh0ypstKzTG+8LAmKpDXnG/9it84d0A6iakQWNMzr+8wt66PEIA
-         agvGOKkP/bSL062q4VUh6bhWWSSy2R74uzP+TUaacx5DONT3pZZTWT9HMgUCz2AtSfRT
-         o2Cs6c7dOZ7/ssA5UmFOQZgzPDrhXatU7Kutw8i6M+An6eMnM4N9p7i4JARemWBoPyGd
-         6Lzu5Pf55mvp6lbI68oa25hKIFvksUbG2uTen33lpDYK8/QDDq5vYJ1fazSAYLkmkJ5n
-         Wax3gXV0wA4czAX5cjfgTNaYs4IW8YY8IBmPv57bkScaali9E8NOLN1QdTCEJykKhpw5
-         1PoQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wSA0mtsD5i5jsjxg8eZ4R/5fOKIGegZ1s/6wu6KfDso=;
+        b=GebAXvp1YhwTx+cElpVNvEWHEjd8HHgICV5hPjmTm+DS+IedfiBO3Ig/oFJI2eQkJ8
+         Smndk8hzFe6yjRZpE7oBqtNmPygIKo9a1oiUK7/0Nkr6IBPSQAx1oMidqSRzdWOHRumo
+         N5ava0rVeqfT3iYAXFw1rtF3bJwbbKZuJupFVBpfDaBgk2hTm2JJ95HmvYACgYx764Da
+         voJ0cDAeAJAYtA5+z7en/YU2NtpvkG3bVRJonLWF/zxGJMU6bSPCmWAzNSjO3GgdaseE
+         afbQ0gEc+isq8Ts5kM/lnpdlkv+cx6k4GJPVPyI1NipQgVe4wxxOcROmBIBwrNYdpORr
+         yC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=meXYWeH4LguImPLQGc9yIvX8yEm0dyFBWG6IOMLxlVo=;
-        b=bpm3804xwqf3jUxp6oG9CDt7sQiibVYreV/kIZnrjTfrfy68xktTHNc4Kvpx63Fimk
-         Mu9wQ0Kchpss+FuBbp5rVs6fbaN76cdaQasx6WuGn/rQuEHwnzcY0G727ieV8XP5rna1
-         r1dphn2tGF3t5yEP2WQifGFXu146L0b5tC6s/lOR3Q5CYnoubzNoA0JDnYucUe61uSQ5
-         Yz2MAQWB/Ccf3HznVQcRpdIcB//7/Wk+6oNXNuaxD6T6WW9zc3mGy51iZAU4bEM9+L5c
-         Bjxu1a/ATvEQLMOIQEULrx3KItTtG79VpKtaHSHQmCEkkdsotIYcs2cOXMjsHi4OHlAr
-         vetw==
-X-Gm-Message-State: AOUpUlHdYh2zR27I0jZB974r0labs+l1bkLH5w++BDtLQsYE+bmAgvXX
-        wB+p6JS3SpdasWRI4GqP50I=
-X-Google-Smtp-Source: AA+uWPwyaKuObk6o5cAf0x3EsUs5z5T+OUK6raVORv1mnjkB4qKT5/78OxVxh12nuZkgcxUrksgbeg==
-X-Received: by 2002:adf:e78d:: with SMTP id n13-v6mr20311542wrm.136.1534445534758;
-        Thu, 16 Aug 2018 11:52:14 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j133-v6sm3379094wmd.12.2018.08.16.11.52.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 11:52:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 0/7] speeding up cat-file by reordering object access
-References: <20180810230729.GA19090@sigill.intra.peff.net>
-        <fc30f98e-0aa0-89d3-ee32-3d86cc5b342a@gmail.com>
-        <20180816173934.GC882@sigill.intra.peff.net>
-Date:   Thu, 16 Aug 2018 11:52:13 -0700
-In-Reply-To: <20180816173934.GC882@sigill.intra.peff.net> (Jeff King's message
-        of "Thu, 16 Aug 2018 13:39:34 -0400")
-Message-ID: <xmqqmutmdu02.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wSA0mtsD5i5jsjxg8eZ4R/5fOKIGegZ1s/6wu6KfDso=;
+        b=rnYZZLXR2a8Q8lVrhN8Ht7OhWrO8b3FJ/u6D5MofVISfMbaPl/9lzZvnST5izfScfZ
+         op69FwyuhyZSM3/MGslblrqX4MrbF70vd5ykaBgAoAstDVnTbnso8/WSI4VLXnSB/rqL
+         Pm5DI3lkCrIF8aDLPC/L3YQD3Rm2aYebFrMyelSH8a8sfvT1DBJx0uELm9a7BCG6asEg
+         koY7L+yztvy4HSIC84p6wwBpUEqABqGWllF4BzqlC9gfD+14VzRUd8fF0Xgqv1nqo7Ge
+         kFsMFiBpt5n2xdTsflviq2gl0rpYfa4Z2IHYCaE4KfGcsOTouy/ybWxVaMQRXt+kx9l5
+         5OPg==
+X-Gm-Message-State: AOUpUlFZ3e/di2dQI8vggcoVX3Jx5gIHpnzdGSxNPNZGfpzFNGFN/JVv
+        ZLjyrlfIuL4rbeMyYPvjCqtlZvGBuSlQrGQAHmL+Zw==
+X-Google-Smtp-Source: AA+uWPxBXUmyjS49k518qFxFqSZchH7aXjeUu+o29ENn0gHLBrg1Kx+MvvnMWVpkx5z+4fUhGHu2hcTJKE3CoFE681M=
+X-Received: by 2002:a02:7e45:: with SMTP id h66-v6mr28251440jac.97.1534445218116;
+ Thu, 16 Aug 2018 11:46:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180816183117.13716-1-pclouds@gmail.com> <20180816183903.GA3737@sigill.intra.peff.net>
+In-Reply-To: <20180816183903.GA3737@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 16 Aug 2018 20:46:31 +0200
+Message-ID: <CACsJy8A7hoOGFCnVxTMdySr=8yUP+4tt4hNO6j-VnhKHJDyE7g@mail.gmail.com>
+Subject: Re: [PATCH/RFC] commit: add short option for --amend
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 16, 2018 at 8:39 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Aug 16, 2018 at 08:31:17PM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
+>
+> > I just realized how often I type "git ci --amend". Looking back at my
+> > ~/.bash_history (only 10k lines) this is the second most often git
+> > command I type which may justify a short option for it (assuming that
+> > other people use this option often too, of course).
+> >
+> > The short option space for 'git commit' is really crowded with
+> > acCeFhimnopqsStuvz already taken. So it could be '-M' or '-A' but I'd
+> > prefer not to hold shift, so I chose '-j' even though it's not
+> > strictly related to "amend" (or perhaps we can thinking of amending as
+> > joining commits).
+> >
+> > Thoughts?
+>
+> I also used to type it a lot. So I did:
+>
+>   $ type a
+>   a is aliased to `git commit --amend'
+>
+> I don't know if that argues for or against a short option.
 
-> I think that makes sense. We already see duplicates from
-> for_each_packed_object() when they're in multiple packs, and callers
-> just need to be ready to deal with it (and depending on what you're
-> doing, you may actually _want_ the duplicates).
-
-You of course would also see dups between loose and packed until
-prune-packed is run.  
-
-I also was thinking about the same thing after Derrick's response,
-but unless you are very specialized caller, it does not allow you do
-very much to learn that object X exists as a loose object locally,
-also as a loose object in our alternate, and also in pack A, but not
-in other packs.  You need a way to say "Read the contents of object
-X from that place, not from any other place", "Remove that copy of
-object X at that place, but not at any other place" etc. to make
-effective use of that kind of information.
-
-The codepath that implements runtime access has "I found a copy
-here, but it is unusable, so let's go on to look for another usable
-copy" fallback.  This is a tangent but it is something we should not
-lose in the midx-enabled world.
+It's a "for" for me because I won't have my aliases on other people's machi=
+nes.
+--=20
+Duy
