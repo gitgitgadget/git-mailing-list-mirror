@@ -6,58 +6,68 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B9BB1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 14:58:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B4231F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 15:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391427AbeHPR5E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 13:57:04 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:38502 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391394AbeHPR5E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 13:57:04 -0400
-Received: by mail-wm0-f43.google.com with SMTP id t25-v6so4617840wmi.3
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 07:58:03 -0700 (PDT)
+        id S1731210AbeHPSGP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 14:06:15 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53084 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726306AbeHPSGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 14:06:15 -0400
+Received: by mail-wm0-f68.google.com with SMTP id o11-v6so4756167wmh.2
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 08:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=BSsqJ0kxeXVyaSY8tHglmDjr3z3NbMGRZtPxcQPIlCQ=;
-        b=Jyvjtjzw+Iu8VSn4TbuzhGfX/y2Ugd20Qvbln4CCuZdp/QBC2ii504MoF8RRFuNlSk
-         EiBviQoPztxWzJv61KCyLzzfc4p8T90tO2KrEH2SwGGRHEqYa0Xy/eni3S4Ws0iHma2l
-         rc/GcWczotn67BAKVaRQqQEuf2y9AHohSGeBSFH+FAVkqluAa892PY6JPpzglo7LfriJ
-         rYoBKrGKG7TEPnyVZfIRvFZFuHGzpp4TExjqdZXdzRH9l/nijCymeMfvxB2ZJd1jGHQA
-         h325YoGcaSJtJJ9KstYePCVmdcM4smARWac4ATCjp7VkeSZi+JCEHWKyM2hBndQxtvj2
-         DcIg==
+        bh=9m8pSg9lWrAsss8aVP75QzLjMx972ENzjdnNnNcAFp0=;
+        b=aEg0IABCD2bvVd6PJ6tnO2s9wLfqqg1voz5GF4AbsZkPXRXC+pCZ/aRrVq1HUOCI9c
+         5EQjzU8TBBm9ye28m99KKb9y0gMLo+4yG8K8ndB0cLoVqb2TzgeWvLjHhs8rFyI7vITP
+         ZehBUn71yj0bY6gmfbW7Ks1ij6wX/U9KgnjYL3P1aN6LDBZPgpuZBn2EvQySMtl4MYjH
+         0QYKRf4NeTFAXtaid1x4F7WKAnYyq0epyyxFeGox9Fj/Y5OwpC0f+eFmVW8lFGKjzRkJ
+         15X1PgjKRn+gHmWhdXUKBnU2cNEpK4XiDNpDot7U0JPr6E7wSihvO7f62Sdn1j8idtpq
+         MzfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=BSsqJ0kxeXVyaSY8tHglmDjr3z3NbMGRZtPxcQPIlCQ=;
-        b=gxGHL01qtZGlBa9wvyG+qmmA9gG6Pa1enVAl9IcnBe50J5gI5VWQzgoGyC8N+wGfXb
-         TeSD2G/BO8zpvg4uOA1SiEayHSadNr7yUBIVWE9ZFFnafflGCbkLhd/bhPTIv4wawLZH
-         K+YLzBU1KrUFeaGQbDMFCETJfUdfUcCgnzDZJLx0ytHbcUVuEG3vUY3faf2QTkFWS6Lu
-         GnSfck/VdJ9s/acMpn7ouHmgcDE+4zVaNx7+ywahtE2VPE/D5aOCHM0DRP+H1wJa9+kx
-         75iVhwiXuNJ/oHvkcLw9E7MGXkYp06+rjvjHVXcKYKt2DJ5yyH7YMuYE8zgIIzQwo+9L
-         klZQ==
-X-Gm-Message-State: AOUpUlEor0GWzHoSYhcpjsXmjPrBv8lDI907MXnDun+VDb8WqgOq8z6H
-        iO1sZMzg/KNfGTK59qpmPrDN0YPO
-X-Google-Smtp-Source: AA+uWPwzkf36ujjDupJqMdBBZKFQvzNNsoIEX1oh644b4MYGkZOuPF9aME+lS04wr5I2kO9G7tKMVg==
-X-Received: by 2002:a1c:838a:: with SMTP id f132-v6mr16694119wmd.127.1534431482126;
-        Thu, 16 Aug 2018 07:58:02 -0700 (PDT)
+        bh=9m8pSg9lWrAsss8aVP75QzLjMx972ENzjdnNnNcAFp0=;
+        b=bKrNXDm/QfUg5gJuszTaPZMhsLZssbLxeMqS9W/IJefLxf7C/erIotGTB9gbx1DqHY
+         UxaZASiS8S7GiAWfVaejdVEUTBoU+25Z8AzTwvIhSc9Y7a6b2Z2yknci43HXSjrJKJtB
+         lGoIJnM+HVxE9CfOy3uAd/mZAunRIeTWEXZ/V217yFNZqi3opXlsFC5I4Ey2+jnfu8V8
+         v445dSKYSMEa6a8PJZ7AXX9KXn/bI/aWqfKuOUAPldox3JHeicK6GLsZWBBD39kqa5cl
+         Q7lkGBgyvnGsno+3fShd8PpTewjXRjHZoF5/Ssjmo1NNL8KRoG8ES1Ualh1cZAC1S3hI
+         rjLg==
+X-Gm-Message-State: AOUpUlGnL4wNq5n+IXRwFWTawiORx0kP5UopqHfLb7UU4/ebcvhG91mz
+        0bRT/DOs2zOU9Te1dxQwR4k=
+X-Google-Smtp-Source: AA+uWPxRs+TUqjHRYe24lkPp3m9cmx4tRBAXxFRLVkJqPIummbGoK8UfH8vgVirFOvjesyCt+9BFHg==
+X-Received: by 2002:a1c:90e:: with SMTP id 14-v6mr16568869wmj.130.1534432030508;
+        Thu, 16 Aug 2018 08:07:10 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id p12-v6sm19352363wrw.3.2018.08.16.07.58.01
+        by smtp.gmail.com with ESMTPSA id v5-v6sm19033765wru.60.2018.08.16.08.07.07
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 07:58:01 -0700 (PDT)
+        Thu, 16 Aug 2018 08:07:08 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Aug 2018, #03; Wed, 15)
-References: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kar1UwZEX9d=+e57ZJCy7YaqKSPExOexp8_t=G1VjwY2g@mail.gmail.com>
-Date:   Thu, 16 Aug 2018 07:58:01 -0700
-In-Reply-To: <CAGZ79kar1UwZEX9d=+e57ZJCy7YaqKSPExOexp8_t=G1VjwY2g@mail.gmail.com>
-        (Stefan Beller's message of "Wed, 15 Aug 2018 19:35:23 -0700")
-Message-ID: <xmqqlg96gxza.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>,
+        Jeff King <peff@peff.net>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+References: <20180807230637.247200-1-bmwill@google.com>
+        <20180808223323.79989-1-bmwill@google.com>
+        <20180808223323.79989-3-bmwill@google.com>
+        <20180809212602.GA11342@sigill.intra.peff.net>
+        <20180814180406.GA86804@google.com>
+        <20180814185743.GE142615@aiede.svl.corp.google.com>
+        <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
+        <20180814211211.GF142615@aiede.svl.corp.google.com>
+        <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
+        <20180816023446.GA127655@aiede.svl.corp.google.com>
+Date:   Thu, 16 Aug 2018 08:07:07 -0700
+In-Reply-To: <20180816023446.GA127655@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Wed, 15 Aug 2018 19:34:46 -0700")
+Message-ID: <xmqqh8jugxk4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,24 +76,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>
->> * sb/config-write-fix (2018-08-08) 3 commits
->>  - git-config: document accidental multi-line setting in deprecated syntax
->>  - config: fix case sensitive subsection names on writing
->>  - t1300: document current behavior of setting options
->>
->>  Recent update to "git config" broke updating variable in a
->>  subsection, which has been corrected.
->>
->>  Expecting a reroll.
->>  cf. <CAGZ79kZ1R8sxmtfgPOQcpoWM7GWV1qiRaqMq_zhGyKBB3ARLjg@mail.gmail.com>
+> So it would be nice, for future-proofing, if we can change the naming
+> scheme later.
+> ...
+> All at the cost of recording a little configuration somewhere.  If we
+> want to decrease the configuration, we can avoid recording it there in
+> the easy cases (e.g. when name == gitdirname).  That's "just" an
+> optimization.
 >
-> That reroll happened and you picked it up,
-> cf. https://public-inbox.org/git/20180808195020.37374-1-sbeller@google.com/
+> And then we have the ability later to handle all the edge cases we
+> haven't handled yet today:
+>
+> - sharding when the number of submodules is too large
+> - case-insensitive filesystems
+> - path name length limits
+> - different sets of filesystem-special characters
+>
+> Sane?
 
-Thanks for a quick update.  I do not think I saw any other issues
-raised and a quick rescan of the patches does not raise any flags,
-so perhaps we should mark it to be merged to 'next' soonish.
+Yup.
 
