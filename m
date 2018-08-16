@@ -6,62 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E041F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 17:01:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E9E3B1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 17:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727560AbeHPUBd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 16:01:33 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54919 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725968AbeHPUBd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 16:01:33 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c14-v6so5124697wmb.4
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 10:01:51 -0700 (PDT)
+        id S1727623AbeHPUCC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 16:02:02 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34232 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725864AbeHPUCC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 16:02:02 -0400
+Received: by mail-wm0-f66.google.com with SMTP id l2-v6so16090966wme.1
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 10:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=q99JM+WepU/F0D8LMBlcxGxm5ayHVqkKMPoIWbCRd7s=;
-        b=hl6dXN1Y0YnxT7cOr3CQLSjh2fH/T79Nu8rP8EfgtIdmKutBIA+YnyfeV82ZxXLx3K
-         zWwa4WVWRAE4QRW7fNLWr0smkZ0AGp/OrVrUNcFrTDfvW0CDeDYTvDVWSqJWypcevqBJ
-         Lf0VW0M4EasAGGkb4GWMKgHOu3/r1oV6Lzg2frzJdTtCHw/oRsm+q18QhGxVBsl/5HAi
-         5MC//p2i3ebks0eA0jF+E7BZwhuHH9M8EunJMUIK3/qvvAIO7sq9/6J2LJsDvrzORPgZ
-         9lhBQk/n783i/YKlo0ADFSS0r2i2pqL9PkJe0l24/NAU86mkwQqFYkdqQbGmeoqizoG7
-         FSpw==
+        bh=fzT2IkiT4QCPI+8hHj0i0TjFs6Z63z3Zbkb/IU4B7Og=;
+        b=LYiQhe43KrnMxK18o94U9xO0gPtomclktC3n7fT0rlZxt7jSL8GUljLMJUSis7DtvQ
+         jAd5+1qibOb0Yc6Hirdcv//H2bhfJJzKECIYkTs9xOb7LxUir1i2p0nKxBRpTrDK3q76
+         qbq427GU7vkByvS071Pur519u5DhjierVqJ5vhLzlYWi3KKHLhAkTrbfanW3rnSR3eAl
+         6UHbQsfmyGgyZZkL/HkE0VQwc4RV4EIcBRKAU9+LaOBCW9LgR4+X8f9du0IFL6/+kKhu
+         jW6ovOLejRs2PuJ2d1N/JunRtPyej+Yv+G8vUUuv8T1T1hhC/fvcjAIBNbDHzSs09xqd
+         01OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=q99JM+WepU/F0D8LMBlcxGxm5ayHVqkKMPoIWbCRd7s=;
-        b=BrdxHkQMXdeTrdQ/xOFWonoyoPnxNICggmTUpIJbS1mO8oE1KIYUnk/N0m4xo+Uvgs
-         z3NenjeMpScNfaVNfcmT9JzfsyTnUjv8RXy4dTq+QQEgi6K+PpXYtw23kunWCrMX/C2S
-         scKmOtl503IUK5SkIDBq5MaA5vxOdGiwvW3gcwl+y2B6XriIjajc+ZnLW7n/4hHUaGoV
-         BsnhD7JVDLfOQJxfh4IGal6wtbX8vbGT7mBgKeQq95lWRXYl7mMsPck9SSFCLg5piKlS
-         N7WIZ46/KFUky+uwenzBPIoBHtrZ7F3tvBBkvz8yhjpwUlOPyUO1qlm7SWRX66gkWpiM
-         N3dQ==
-X-Gm-Message-State: AOUpUlGcYNxlQenVQTjsrNCkK+SW33TqJSVH+gM+iEtLzYV9RLFP33Tq
-        ODNlMeU++g/QuKceBD+WJcw=
-X-Google-Smtp-Source: AA+uWPyHjK049PyVZqSPuYi0/DlXmBe0JuEwVC53vhxMF3KZ2r8iDBmr9v41SMq/Xhr++EQiOwAB9A==
-X-Received: by 2002:a1c:588c:: with SMTP id m134-v6mr14642289wmb.154.1534438909958;
-        Thu, 16 Aug 2018 10:01:49 -0700 (PDT)
+        bh=fzT2IkiT4QCPI+8hHj0i0TjFs6Z63z3Zbkb/IU4B7Og=;
+        b=TTBvGq57KdpH4geqy4p428200KpY7usSVW3dtGvRy+5gSWbQD/j0Ft5KOZ6iRIOsad
+         0j0V5wOU0hibY5yidQuEinTwjPltXhCQ4off3614p+S0/ukDsKEI/nbi1gcdwhsXTNpd
+         xeAmdsQLUkZlHZQWjYhycbdry6rm8VkPBDgF96h7APGyqtX9oKvSwJGkjH3KwvkWeg6C
+         idWeVEKVZHKOJmNRFtQIx4Q7Es90D/dvXnad1W2aB2Qt3uqjD6J7YsoJaLSeUhXxk0W6
+         rL8qv4ZKnDM3iXHMnozj0ajPI1h4Qqz3moHDuKh8PbfWWPw6np6atmSCUTYDEktbF7Dg
+         wMLw==
+X-Gm-Message-State: AOUpUlHT7Q6/dhd9uGrrK7Bip4oXIKMREZ63SIOCVfN7MDUf/90BTVui
+        RA0oOjMOZOtDThTCV3N5iwH7xK4Z
+X-Google-Smtp-Source: AA+uWPzvBpgL9BN0OY5N364x7Mmm9sYygtSpjPKpm7KxIhtHnMwVENicTz8ZV++HNgKnv15EH+wtdQ==
+X-Received: by 2002:a1c:8f50:: with SMTP id r77-v6mr17132403wmd.44.1534438938180;
+        Thu, 16 Aug 2018 10:02:18 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e133-v6sm3164395wma.33.2018.08.16.10.01.48
+        by smtp.gmail.com with ESMTPSA id p13-v6sm19711895wrj.20.2018.08.16.10.02.17
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 10:01:49 -0700 (PDT)
+        Thu, 16 Aug 2018 10:02:17 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
-        pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com, tboegi@web.de
-Subject: Re: [PATCH] config.txt: clarify core.checkStat = minimal
-References: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
-        <20180816155647.10459-1-pclouds@gmail.com>
-Date:   Thu, 16 Aug 2018 10:01:48 -0700
-In-Reply-To: <20180816155647.10459-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
+References: <CACsJy8CkXRc9NXRHt3a7=v04to0bMTvZo9x7zYNZWPiGDKQqdg@mail.gmail.com>
+        <20180816160608.20351-1-pclouds@gmail.com>
+Date:   Thu, 16 Aug 2018 10:02:17 -0700
+In-Reply-To: <20180816160608.20351-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
  =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Thu, 16 Aug 2018 17:56:47 +0200")
-Message-ID: <xmqqin4afdoj.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Thu, 16 Aug 2018 18:06:08 +0200")
+Message-ID: <xmqqefeyfdnq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,52 +71,94 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> The description of this key does not really tell what 'minimal' mode
-> checks exactly. More information about this mode can be found in the
-> commit message of c08e4d5b5c (Enable minimal stat checking -
-> 2013-01-22).
+> --quit is supposed to be --abort but without restoring HEAD. Leaving
+> CHERRY_PICK_HEAD behind could make other commands mistake that
+> cherry-pick is still ongoing (e.g. "git commit --amend" will refuse to
+> work). Clean it too.
 >
-
-While I agree that we need to do _something_, I am not sure if this
-change adds sufficient value.  I _think_ those who wonder if they
-want to configure this want to know what are _not_ looked at
-(relative to the "default") more than what are _still_ looked at,
-partly because the description of "default" is already bogus and
-says "check all fields", which is horrible for two reasons.  It is
-unclear what are in "all" fields in the first place, and also we do
-not look at all fields (e.g. we do not look at atime for obvious
-reasons).
-
-So perhaps
-
-	When this configuration variable is missing or is set to
-	`default`, many fields in the stat structure are checked to
-	detect if a file has been modified since Git looked at it.
-	Among these fields, when this configuration variable is set
-	to `minimal`, sub-second part of mtime and ctime, the uid
-	and gid of the owner of the file, the inode number (and the
-	device number, if Git was compiled to use it), are excluded
-	from the check, leaving only the whole-second part of mtime
-	(and ctime, if `core.trustCtime` is set) and the filesize to
-	be checked.
-
-or something?
-
+> For --abort, this job of deleting CHERRY_PICK_HEAD is on "git reset"
+> so we don't need to do anything else. But let's add extra checks in
+> --abort tests to confirm.
+>
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  Documentation/config.txt | 2 ++
->  1 file changed, 2 insertions(+)
+
+Thanks, this makes sense.
+
+>  builtin/revert.c                | 9 +++++++--
+>  t/t3510-cherry-pick-sequence.sh | 7 ++++++-
+>  2 files changed, 13 insertions(+), 3 deletions(-)
 >
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index fd8d27e761..5c41314dd5 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -466,6 +466,8 @@ core.checkStat::
->  	and work tree. The user can set this to 'default' or
->  	'minimal'. Default (or explicitly 'default'), is to check
->  	all fields, including the sub-second part of mtime and ctime.
-> +	'minimal' only checks size and the whole second part of mtime
-> +	and ctime.
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 76f0a35b07..9a66720cfc 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -7,6 +7,7 @@
+>  #include "rerere.h"
+>  #include "dir.h"
+>  #include "sequencer.h"
+> +#include "branch.h"
 >  
->  core.quotePath::
->  	Commands that output paths (e.g. 'ls-files', 'diff'), will
+>  /*
+>   * This implements the builtins revert and cherry-pick.
+> @@ -191,8 +192,12 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>  	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
+>  	opts->strategy = xstrdup_or_null(opts->strategy);
+>  
+> -	if (cmd == 'q')
+> -		return sequencer_remove_state(opts);
+> +	if (cmd == 'q') {
+> +		int ret = sequencer_remove_state(opts);
+> +		if (!ret)
+> +			remove_branch_state();
+> +		return ret;
+> +	}
+>  	if (cmd == 'c')
+>  		return sequencer_continue(opts);
+>  	if (cmd == 'a')
+> diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+> index b42cd66d3a..68b8c14e27 100755
+> --- a/t/t3510-cherry-pick-sequence.sh
+> +++ b/t/t3510-cherry-pick-sequence.sh
+> @@ -103,7 +103,8 @@ test_expect_success '--quit cleans up sequencer state' '
+>  	pristine_detach initial &&
+>  	test_expect_code 1 git cherry-pick base..picked &&
+>  	git cherry-pick --quit &&
+> -	test_path_is_missing .git/sequencer
+> +	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD
+>  '
+>  
+>  test_expect_success '--quit keeps HEAD and conflicted index intact' '
+> @@ -132,6 +133,7 @@ test_expect_success '--abort to cancel multiple cherry-pick' '
+>  	test_expect_code 1 git cherry-pick base..anotherpick &&
+>  	git cherry-pick --abort &&
+>  	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
+>  	test_cmp_rev initial HEAD &&
+>  	git update-index --refresh &&
+>  	git diff-index --exit-code HEAD
+> @@ -142,6 +144,7 @@ test_expect_success '--abort to cancel single cherry-pick' '
+>  	test_expect_code 1 git cherry-pick picked &&
+>  	git cherry-pick --abort &&
+>  	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
+>  	test_cmp_rev initial HEAD &&
+>  	git update-index --refresh &&
+>  	git diff-index --exit-code HEAD
+> @@ -162,6 +165,7 @@ test_expect_success 'cherry-pick --abort to cancel multiple revert' '
+>  	test_expect_code 1 git revert base..picked &&
+>  	git cherry-pick --abort &&
+>  	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
+>  	test_cmp_rev anotherpick HEAD &&
+>  	git update-index --refresh &&
+>  	git diff-index --exit-code HEAD
+> @@ -239,6 +243,7 @@ test_expect_success '--abort after last commit in sequence' '
+>  	test_expect_code 1 git cherry-pick base..picked &&
+>  	git cherry-pick --abort &&
+>  	test_path_is_missing .git/sequencer &&
+> +	test_path_is_missing .git/CHERRY_PICK_HEAD &&
+>  	test_cmp_rev initial HEAD &&
+>  	git update-index --refresh &&
+>  	git diff-index --exit-code HEAD
