@@ -7,119 +7,81 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 779D81F428
-	for <e@80x24.org>; Thu, 16 Aug 2018 14:44:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4262F1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 14:57:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390699AbeHPRnK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 13:43:10 -0400
-Received: from mail-yb0-f176.google.com ([209.85.213.176]:37487 "EHLO
-        mail-yb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387920AbeHPRnK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 13:43:10 -0400
-Received: by mail-yb0-f176.google.com with SMTP id r3-v6so697489ybo.4
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 07:44:11 -0700 (PDT)
+        id S2388792AbeHPR4F (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 13:56:05 -0400
+Received: from mail-yw1-f48.google.com ([209.85.161.48]:41523 "EHLO
+        mail-yw1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbeHPR4F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 13:56:05 -0400
+Received: by mail-yw1-f48.google.com with SMTP id q129-v6so3204910ywg.8
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 07:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/ocLvOeRBXII3XttlgCgOxWwVD9ujoEPyGiKfpiz/d8=;
-        b=YGA9yg9XCJ4FDAIQi38B++1bsPH19Kd1x0N6A0Y+gudpBJ0ZqU4N5JSHym16Doo8kG
-         CodD7TlzDrVuQgkLNObefj1gdM2h4YCvpXEwCOq8ECF5Lw0k/WVpGoP21cwXwN/UOenj
-         rxQFUBToG79i4Df7TG8uOlYNCZMRpBkbukREz1dSi2WK2cNeXe5d9lnMUjE1eoAnmfD6
-         LiGcGHgOGRjiFnEqt2/hlqW0vI18U22m4OfjXtrFwAfbYw8LICif84boy00t7kk1OByH
-         MKGRLo1a9p6IE4RD3qFZ5j+Ydysxav7MLywtdd3Ju+DxtEzLIXLu+keal4IuT8loA4OE
-         bWZw==
+         :cc:content-transfer-encoding;
+        bh=Tlb21jSWE0QgLWiNzbsQ/8ZCe3iPkbzcqSTENkRhWGQ=;
+        b=sulAytmDnMMW+lzujEKbs2DxXhPU7kmOSsCu38I2eQxun1laXgvvzEjjA7dDWuob6z
+         Tpm9cdQxfJEScCiRCYbLYXyjAitmKGsh6Ga+2a++5NF+//Pa4nFNI6OeQbtgdTZWqvOh
+         fDHgQEdkmdxdB3DI2rges6bi+NlODZbtgmY0UC909AoDXiV/SP7d37FE8DHCSz84JE7/
+         Hq8LIUgfcQTNTgrezMu6oGjOrRpwob1MCakO3mrLyD2K0Ts1AYb6MBL9In6zJ35s4kFJ
+         sMO5bqbaoyIEhzjLyBaD7sD9/DkNrNTl/+Y8LpCDNDwkRpLBd7DcdYhToXPIZa5WpH+T
+         yZjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/ocLvOeRBXII3XttlgCgOxWwVD9ujoEPyGiKfpiz/d8=;
-        b=FG+G8cJ2o8n4TIuNie9AxvuHubqC4+ebWaWcOZYO2M9If6/JnosBdQO8COHQopyiFs
-         JSPGZGpYFSc1dvBqRNOEAb+YHDtsmNwl7pceViEkHWWvDdOCc2nPoHid91TQ6BodCa0W
-         npA9fBzcMrrWHl9W1boVrsIKYHvwYaRyn1woUfMWC77fk2+oN8Rilq+2ZCrNrOCa+cQ2
-         Tej6H4nNvelmhr8r+03fJVvFylEaGxPolart5QsFuOyfNWcrNXO6nN/UnZgkGt2vaiMe
-         ggiqsNzL3CQBPicxNS6YadKsjWtZDm5GnTpP+BFFwdE3wgFRt+5MdunoEsOuIpOCDoP/
-         2v8A==
-X-Gm-Message-State: AOUpUlFSGi944T/bnvB3+gTqqiNZ11ZU5QSR9pHFTx7DFcpa+AaDQ4AO
-        tAP1LkIdyqQWPWREFYVqM9hvMQoyR8TkbhRKhW9/EQ==
-X-Google-Smtp-Source: AA+uWPwXMr+QyJHBEKZf7kvpD/iN5yejt57ILnJV+ZjoWZBUQADWR+H8XktSCmO02frdGw10Tw9ULRaLjpJywlBjb58=
-X-Received: by 2002:a5b:a87:: with SMTP id h7-v6mr16473189ybq.521.1534430650145;
- Thu, 16 Aug 2018 07:44:10 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Tlb21jSWE0QgLWiNzbsQ/8ZCe3iPkbzcqSTENkRhWGQ=;
+        b=c0LVWjTVtiDvpbSKAUVjPt28gQp7Lkti3YX3GGjKFMVWiqr14lVWnyeyaS/zLa38m5
+         flCQppgqkU13pIXW3vWRzBibW/ZbXtODy+Dx4eLYCTOwAOc3I2oVENF0c7qW+HDmPwm+
+         C5nc1AXGx81JuCBo/JPYnIWLhL/jDsm64fH4G3JyY5JrrjDqgF9/mLPuoJR5+Nwd2vXJ
+         e6FxAERRwAfFOLT+elD7HPlw2p69gciGniZuoLVGihaH/m7r7uG+zia7nNt1Qhx5SpLw
+         KUiGdYsaRDj6Tg41b3zk5XHuWET7/X6R1ZJ0YHb2poE5dPALq2DUGI+cecIhnOqy6ZlQ
+         2Wmw==
+X-Gm-Message-State: AOUpUlFAICAKn0vIFD1VD4R1djM/DH99RnYVPAFJM3ILlxjHVxKOkGyl
+        TkJ00hELSbr8VeBbSb4C0S0nJeWSaqzueC2NpUeVDu/m
+X-Google-Smtp-Source: AA+uWPzNoENs74B/KrH/W5yzRlbH/YU+7Kgm7QnR6LUPIoby46btVXne2a4/cl9xR4aCYNMrKWMUIrYAhwS2/7PTyNY=
+X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr16302985ywh.238.1534431423427;
+ Thu, 16 Aug 2018 07:57:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com> <85c6eb4c-a083-4fb7-4860-b01a8ce9fa4f@gmail.com>
-In-Reply-To: <85c6eb4c-a083-4fb7-4860-b01a8ce9fa4f@gmail.com>
+References: <bc9762aaf57e441e95f9eed4e64799b7@EX13.visionmap.co.il>
+In-Reply-To: <bc9762aaf57e441e95f9eed4e64799b7@EX13.visionmap.co.il>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 16 Aug 2018 07:43:58 -0700
-Message-ID: <CAGZ79kZ3PzqpGzXWcmxjzi98gA+LT2MBOf8KaA89hOa-Qig=Og@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #03; Wed, 15)
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Thu, 16 Aug 2018 07:56:52 -0700
+Message-ID: <CAGZ79kbqb1b3hPhEzRRvjH65iUXkisfaFyX9EOet6ypWQEFm4A@mail.gmail.com>
+Subject: Re: submodules : switching to an older commit/Tag in project with submodules
+To:     Shani.Fridman@visionmap.com
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 6:15 AM Derrick Stolee <stolee@gmail.com> wrote:
+On Thu, Aug 16, 2018 at 4:55 AM Shani Fridman
+<Shani.Fridman@visionmap.com> wrote:
 >
-> On 8/15/2018 7:01 PM, Junio C Hamano wrote:
-> > * ds/commit-graph-with-grafts (2018-07-19) 8 commits
-> >    (merged to 'next' on 2018-08-02 at 0ee624e329)
-> >   + commit-graph: close_commit_graph before shallow walk
-> >   + commit-graph: not compatible with uninitialized repo
-> >   + commit-graph: not compatible with grafts
-> >   + commit-graph: not compatible with replace objects
-> >   + test-repository: properly init repo
-> >   + commit-graph: update design document
-> >   + refs.c: upgrade for_each_replace_ref to be a each_repo_ref_fn callback
-> >   + refs.c: migrate internal ref iteration to pass thru repository argument
-> >
-> >   The recently introduced commit-graph auxiliary data is incompatible
-> >   with mechanisms such as replace & grafts that "breaks" immutable
-> >   nature of the object reference relationship.  Disable optimizations
-> >   based on its use (and updating existing commit-graph) when these
-> >   incompatible features are in use in the repository.
-> >
-> >   Perhaps eject and replace with another reroll when it comes.
-> >   cf. <a3640919-95cf-cca4-d552-4715a031dd7f@gmail.com>
-> >   cf. <86bmap7l7a.fsf@gmail.com>
 >
-> Yes, I am working on a re-roll. Feel free to eject in the meantime.
+> Hi everybody,
 >
-> For one, I need to base it on jk/core-use-replace-refs. This is not
-> hard, as it is already in master.
+> I've got a question regarding submodules -
 >
-> For two, I was waiting for resolution on the way to handle arbitrary
-> repositories in for_each_replace_ref. Stefan had a few proposed patches,
-> but they don't seem to have completed. Can someone fill me in on the
-> status there? I could re-roll with the two simple patches that I have,
-> which send the struct repository pointer into the 'void *' data parameter.
+> I'm working on a git project with submodules connected to it, and pulling=
+ changes from them every month (more or less).
+> Sometimes I need to checkout older versions of the project (tags or speci=
+fic commits), that needs the older versions of the submodules as they were =
+when I defined the tag. The problem is, that the checkout only changes the =
+superProject directories, and not the submodules... I have to checkout the =
+relevant submodules commit manually.
+>
+> Have you came across the same problem? Any idea what can I do?
 
-Yeah, I was exploring the design space there and IIRC these two patches
-are the best for the commit graph to do for now IMHO.
-I might resend [1] to remove the first repository argument to make the API
-cleaner again.
+git checkout learned about the --recurse-submodules flag some time
+ago. If that is what you need, just set 'git config submodule.recurse
+true' so you don't have to pass that flag every time.
 
-As Duy says in [2], we should
-(A) change the construction of ref stores to not take a gitdir path, but
-    a repository argument, which is stored internally
-(B) change the signature of all the callback functions to take a ref store
-    as a first argument, and then we can have a function
-      get_repo_from(ref store)
-    or put the repo in the callback cookie as you do in this series.
-
-Wth this we do not treat the repository argument any special in the
-refs code and only if we have the pressing need to have it always
-available we might want to implement the get_repo_from_refstore
-instead of treating it just like any other data passed through the cb
-cookie.
-
-[1] https://public-inbox.org/git/20180730194731.220191-3-sbeller@google.com/
-[2] https://public-inbox.org/git/CACsJy8DwaLCxY-ryV+=OwRytzwwQZCfVmfXo0z91z9YRMMT0VA@mail.gmail.com/
-
-tl;dr: please keep these two patches for now, I'll send patches on top
-if that is where I'll go next.
-
-Thanks,
+Hope that helps,
 Stefan
