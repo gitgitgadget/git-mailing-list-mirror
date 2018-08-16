@@ -2,159 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DB081F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 16:06:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C311F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 16:20:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392195AbeHPTFm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 15:05:42 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:42136 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392167AbeHPTFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 15:05:42 -0400
-Received: by mail-lj1-f182.google.com with SMTP id f1-v6so4073349ljc.9
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 09:06:18 -0700 (PDT)
+        id S2392297AbeHPTT5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 15:19:57 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42832 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727592AbeHPTT5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 15:19:57 -0400
+Received: by mail-wr1-f66.google.com with SMTP id e7-v6so4658374wrs.9
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 09:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=mn+u9PDZu0ToX0GF7M2juGl5WrCUSwnIqZOj6+yGVIk=;
-        b=M8wXVx48kqg8q71SzWGkGlw+QucbnJoATy3K0uLYtGUcLo/WPeFTtFLhOaCg+XRLIx
-         Lg/HRNS8ZRxi51FnwmHVIU/IL3emYQKn42DVnbUzjS6BFFUxk3XzcaVRJE9U9cbrlzdz
-         5fb1dg4u/3rzJd6svG4F8FrShGtW7XCib4GxkVbQGQGmCOUfFh2yTEeogy1UB+IM//sh
-         WE4pRStlBpUIkJrXY7Ql/8Nea7IllE/OPEMDeNssYRxe53emIKW73Kj4qQdmdWp+tDm8
-         OLgNLkN5iuilQUqHlJyePI9+jlB0Z32y60SVHWrONPwC3XrbqTLfXRuMkpdscrD5x3q3
-         qbew==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=B2FeuE9w0hjsE7uFc5ji7eTTmmLrvgVVGaMDdFcqYU0=;
+        b=ZekF+5jOdAYY2va32MbW/Y2AVC+pAa/igwsNwen0vx+5WwLhlYG4PWaD9h+o+biAON
+         ySZcqkTklF3BjtWTRtQ+gAaeaeb/HNNgmTuNu72IjiJnpySFjwCWL9yCj14T/XFvDQFl
+         I/xDKcet6J7g8RdQWEDt/tAL0ZXyNVsaaYRIUY4fAHLn4LGGOR1qybG/qnlOgFeXhzYO
+         bnl8rdxkXAzbdRFi6mNe5tO4LIbfGwRw7reUGrqv4dfOwm5ZgI04h4bJ82G7+1GQNs9X
+         Sx45VTmZPaepgmpI2y/UTMUDy6i4YoefGaH3pyzV9MvFhBmmqeDPJyCZHNume9nawFPT
+         CgjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=mn+u9PDZu0ToX0GF7M2juGl5WrCUSwnIqZOj6+yGVIk=;
-        b=BqRZ1e7mtuF8xFoUyr0PvuklQ9S+S89lurqgseD70LvUqlvFPykf7UpTTW35sW80Sf
-         dk9cEckZ/Z+KyBJlYuS8AfPXERfNLNm5LoEVclFmQcmaWf8eihiXRxwo4CairWwbSjoQ
-         Za0Q78mcDXXrx17BMHmYT62xX1aXcspP1+3e0HH/Brj4aHPJqyTFFjTl/kTcclxtvc5d
-         rcs233JXQuJoT+tTFJ0cyc+GB97x8oZhQE5CcnyiuZvB2dEL9ILizXWUfXOKNgy5ayqn
-         r7Li5UjV3Rk8FIZTARIaUySIPlpIfYAkNHRSQ4jOfp6tFwOyujJVAZVwrcn3oWZCUEhk
-         K3mw==
-X-Gm-Message-State: AOUpUlEsIh46HvQKrZRXlniuLcTlP1tyTFRlwYEjM0QNYhVrhGKYbIW7
-        LdEagQ+jyvKFegvNMZ1yHDyIH+13
-X-Google-Smtp-Source: AA+uWPye1SEdv7cbqvuWOa/WFMNhEO/DPZ0CVxdcaVPdgekhyNTeJk1Bw1LCe6e7FCcsWXIuSJ9FkQ==
-X-Received: by 2002:a2e:83d7:: with SMTP id s23-v6mr5691253ljh.82.1534435577870;
-        Thu, 16 Aug 2018 09:06:17 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id 73-v6sm5010518lfs.44.2018.08.16.09.06.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Aug 2018 09:06:17 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: [PATCH v2] cherry-pick: fix --quit not deleting CHERRY_PICK_HEAD
-Date:   Thu, 16 Aug 2018 18:06:08 +0200
-Message-Id: <20180816160608.20351-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.1004.g6639190530
-In-Reply-To: <CACsJy8CkXRc9NXRHt3a7=v04to0bMTvZo9x7zYNZWPiGDKQqdg@mail.gmail.com>
-References: <CACsJy8CkXRc9NXRHt3a7=v04to0bMTvZo9x7zYNZWPiGDKQqdg@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=B2FeuE9w0hjsE7uFc5ji7eTTmmLrvgVVGaMDdFcqYU0=;
+        b=HTi0t0iVPTbeH0hIxrbZ3T9KYasHgl3460Gg1XrZ0Kib7NvprKuNcU8Vdl3AgHFcr8
+         YWrO8/oJcuXYWsQ1sZSP7pm1mNaYRk95KFGaZYd35324urix1Tek4oQG4Xqt8tkXK0tr
+         Ch/JJVZNE6PopoFzUsMEukgfeJ1EgTkENAQPMX38oexKbSjViVyIiL7NiOVVg6Bu4dmy
+         RfuxqQIeWDAWV+I567fX+qggOgcMUjVr2jHoNzVrc3xhLEDRqp7AcGz7GFEjP2puC9e+
+         dUeFzRjAkUrePDKzpeIcwSy9WTxxKrsxRDMpNdHs6g6vTJ3iTGNfAjjgs8VNrHL8weBU
+         SaUA==
+X-Gm-Message-State: AOUpUlGSUYDP6rcYN8TAY6e1E87ld/78ehiOUfwCuycXzOuDLXnsmh+l
+        8K11BVKf8YReFmA7R8/5Few=
+X-Google-Smtp-Source: AA+uWPzYMPPxNEpCTfLXQOLYpmhVFlP8tp6a9e1OxeZOHsrPPbaZOHGfVYMt14qp/b7LZsyblaufFg==
+X-Received: by 2002:a5d:6581:: with SMTP id q1-v6mr20373024wru.141.1534436428512;
+        Thu, 16 Aug 2018 09:20:28 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n8-v6sm18634863wrt.56.2018.08.16.09.20.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 09:20:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+        avarab@gmail.com, peff@peff.net, jrnieder@gmail.com
+Subject: Re: [PATCHv4 0/6] Add missing includes and forward declares
+References: <https://public-inbox.org/git/20180813171749.10481-1-newren@gmail.com/>
+        <20180815175410.5726-1-newren@gmail.com>
+        <b8553a50-6b97-2b45-2f7b-cfe2576548cb@ramsayjones.plus.com>
+Date:   Thu, 16 Aug 2018 09:20:27 -0700
+In-Reply-To: <b8553a50-6b97-2b45-2f7b-cfe2576548cb@ramsayjones.plus.com>
+        (Ramsay Jones's message of "Thu, 16 Aug 2018 01:19:17 +0100")
+Message-ID: <xmqqtvnufflg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---quit is supposed to be --abort but without restoring HEAD. Leaving
-CHERRY_PICK_HEAD behind could make other commands mistake that
-cherry-pick is still ongoing (e.g. "git commit --amend" will refuse to
-work). Clean it too.
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
-For --abort, this job of deleting CHERRY_PICK_HEAD is on "git reset"
-so we don't need to do anything else. But let's add extra checks in
---abort tests to confirm.
+> BTW, I happen to be on the 'pu' branch.
+>
+> I think some of the errors are due to missing compiler flags
+> (-I, -D, etc); which flags did you pass to the compiler?
+>
+> Well, it killed 15min. before bed! ;-)
+>
+> ATB,
+> Ramsay Jones
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/revert.c                | 9 +++++++--
- t/t3510-cherry-pick-sequence.sh | 7 ++++++-
- 2 files changed, 13 insertions(+), 3 deletions(-)
+It certainly does look fun.  I anticipate (read: mostly "hinting
+that I won't be the one who would be doing so") somebody would make
+it a real patch, as the current trend seems to be to automate as
+much checking as we reasonably can.
 
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 76f0a35b07..9a66720cfc 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -7,6 +7,7 @@
- #include "rerere.h"
- #include "dir.h"
- #include "sequencer.h"
-+#include "branch.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -191,8 +192,12 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
- 	opts->gpg_sign = xstrdup_or_null(opts->gpg_sign);
- 	opts->strategy = xstrdup_or_null(opts->strategy);
- 
--	if (cmd == 'q')
--		return sequencer_remove_state(opts);
-+	if (cmd == 'q') {
-+		int ret = sequencer_remove_state(opts);
-+		if (!ret)
-+			remove_branch_state();
-+		return ret;
-+	}
- 	if (cmd == 'c')
- 		return sequencer_continue(opts);
- 	if (cmd == 'a')
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index b42cd66d3a..68b8c14e27 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -103,7 +103,8 @@ test_expect_success '--quit cleans up sequencer state' '
- 	pristine_detach initial &&
- 	test_expect_code 1 git cherry-pick base..picked &&
- 	git cherry-pick --quit &&
--	test_path_is_missing .git/sequencer
-+	test_path_is_missing .git/sequencer &&
-+	test_path_is_missing .git/CHERRY_PICK_HEAD
- '
- 
- test_expect_success '--quit keeps HEAD and conflicted index intact' '
-@@ -132,6 +133,7 @@ test_expect_success '--abort to cancel multiple cherry-pick' '
- 	test_expect_code 1 git cherry-pick base..anotherpick &&
- 	git cherry-pick --abort &&
- 	test_path_is_missing .git/sequencer &&
-+	test_path_is_missing .git/CHERRY_PICK_HEAD &&
- 	test_cmp_rev initial HEAD &&
- 	git update-index --refresh &&
- 	git diff-index --exit-code HEAD
-@@ -142,6 +144,7 @@ test_expect_success '--abort to cancel single cherry-pick' '
- 	test_expect_code 1 git cherry-pick picked &&
- 	git cherry-pick --abort &&
- 	test_path_is_missing .git/sequencer &&
-+	test_path_is_missing .git/CHERRY_PICK_HEAD &&
- 	test_cmp_rev initial HEAD &&
- 	git update-index --refresh &&
- 	git diff-index --exit-code HEAD
-@@ -162,6 +165,7 @@ test_expect_success 'cherry-pick --abort to cancel multiple revert' '
- 	test_expect_code 1 git revert base..picked &&
- 	git cherry-pick --abort &&
- 	test_path_is_missing .git/sequencer &&
-+	test_path_is_missing .git/CHERRY_PICK_HEAD &&
- 	test_cmp_rev anotherpick HEAD &&
- 	git update-index --refresh &&
- 	git diff-index --exit-code HEAD
-@@ -239,6 +243,7 @@ test_expect_success '--abort after last commit in sequence' '
- 	test_expect_code 1 git cherry-pick base..picked &&
- 	git cherry-pick --abort &&
- 	test_path_is_missing .git/sequencer &&
-+	test_path_is_missing .git/CHERRY_PICK_HEAD &&
- 	test_cmp_rev initial HEAD &&
- 	git update-index --refresh &&
- 	git diff-index --exit-code HEAD
--- 
-2.18.0.1004.g6639190530
-
+> -- >8 --
+> Subject: [PATCH] Makefile: add a hdr-check target
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  Makefile | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/Makefile b/Makefile
+> index 9923db888c..798396c52e 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2684,6 +2684,16 @@ $(SP_OBJ): %.sp: %.c GIT-CFLAGS FORCE
+>  .PHONY: sparse $(SP_OBJ)
+>  sparse: $(SP_OBJ)
+>  
+> +EXCEPT_HDRS := ./compat% ./xdiff% ./ewah%
+> +CHK_HDRS = $(filter-out $(EXCEPT_HDRS),$(LIB_H))
+> +HCO = $(patsubst %.h,%.hco,$(CHK_HDRS))
+> +
+> +$(HCO): %.hco: %.h FORCE
+> +	$(CC) -Wall -include git-compat-util.h -I. -o /dev/null -c -xc $<
+> +
+> +.PHONY: hdr-check $(HCO)
+> +hdr-check: $(HCO)
+> +
+>  .PHONY: style
+>  style:
+>  	git clang-format --style file --diff --extensions c,h
