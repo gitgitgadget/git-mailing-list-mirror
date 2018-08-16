@@ -2,86 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4262F1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 14:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B9BB1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 14:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388792AbeHPR4F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 13:56:05 -0400
-Received: from mail-yw1-f48.google.com ([209.85.161.48]:41523 "EHLO
-        mail-yw1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbeHPR4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 13:56:05 -0400
-Received: by mail-yw1-f48.google.com with SMTP id q129-v6so3204910ywg.8
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 07:57:04 -0700 (PDT)
+        id S2391427AbeHPR5E (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 13:57:04 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:38502 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391394AbeHPR5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 13:57:04 -0400
+Received: by mail-wm0-f43.google.com with SMTP id t25-v6so4617840wmi.3
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 07:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Tlb21jSWE0QgLWiNzbsQ/8ZCe3iPkbzcqSTENkRhWGQ=;
-        b=sulAytmDnMMW+lzujEKbs2DxXhPU7kmOSsCu38I2eQxun1laXgvvzEjjA7dDWuob6z
-         Tpm9cdQxfJEScCiRCYbLYXyjAitmKGsh6Ga+2a++5NF+//Pa4nFNI6OeQbtgdTZWqvOh
-         fDHgQEdkmdxdB3DI2rges6bi+NlODZbtgmY0UC909AoDXiV/SP7d37FE8DHCSz84JE7/
-         Hq8LIUgfcQTNTgrezMu6oGjOrRpwob1MCakO3mrLyD2K0Ts1AYb6MBL9In6zJ35s4kFJ
-         sMO5bqbaoyIEhzjLyBaD7sD9/DkNrNTl/+Y8LpCDNDwkRpLBd7DcdYhToXPIZa5WpH+T
-         yZjw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BSsqJ0kxeXVyaSY8tHglmDjr3z3NbMGRZtPxcQPIlCQ=;
+        b=Jyvjtjzw+Iu8VSn4TbuzhGfX/y2Ugd20Qvbln4CCuZdp/QBC2ii504MoF8RRFuNlSk
+         EiBviQoPztxWzJv61KCyLzzfc4p8T90tO2KrEH2SwGGRHEqYa0Xy/eni3S4Ws0iHma2l
+         rc/GcWczotn67BAKVaRQqQEuf2y9AHohSGeBSFH+FAVkqluAa892PY6JPpzglo7LfriJ
+         rYoBKrGKG7TEPnyVZfIRvFZFuHGzpp4TExjqdZXdzRH9l/nijCymeMfvxB2ZJd1jGHQA
+         h325YoGcaSJtJJ9KstYePCVmdcM4smARWac4ATCjp7VkeSZi+JCEHWKyM2hBndQxtvj2
+         DcIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Tlb21jSWE0QgLWiNzbsQ/8ZCe3iPkbzcqSTENkRhWGQ=;
-        b=c0LVWjTVtiDvpbSKAUVjPt28gQp7Lkti3YX3GGjKFMVWiqr14lVWnyeyaS/zLa38m5
-         flCQppgqkU13pIXW3vWRzBibW/ZbXtODy+Dx4eLYCTOwAOc3I2oVENF0c7qW+HDmPwm+
-         C5nc1AXGx81JuCBo/JPYnIWLhL/jDsm64fH4G3JyY5JrrjDqgF9/mLPuoJR5+Nwd2vXJ
-         e6FxAERRwAfFOLT+elD7HPlw2p69gciGniZuoLVGihaH/m7r7uG+zia7nNt1Qhx5SpLw
-         KUiGdYsaRDj6Tg41b3zk5XHuWET7/X6R1ZJ0YHb2poE5dPALq2DUGI+cecIhnOqy6ZlQ
-         2Wmw==
-X-Gm-Message-State: AOUpUlFAICAKn0vIFD1VD4R1djM/DH99RnYVPAFJM3ILlxjHVxKOkGyl
-        TkJ00hELSbr8VeBbSb4C0S0nJeWSaqzueC2NpUeVDu/m
-X-Google-Smtp-Source: AA+uWPzNoENs74B/KrH/W5yzRlbH/YU+7Kgm7QnR6LUPIoby46btVXne2a4/cl9xR4aCYNMrKWMUIrYAhwS2/7PTyNY=
-X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr16302985ywh.238.1534431423427;
- Thu, 16 Aug 2018 07:57:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <bc9762aaf57e441e95f9eed4e64799b7@EX13.visionmap.co.il>
-In-Reply-To: <bc9762aaf57e441e95f9eed4e64799b7@EX13.visionmap.co.il>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 16 Aug 2018 07:56:52 -0700
-Message-ID: <CAGZ79kbqb1b3hPhEzRRvjH65iUXkisfaFyX9EOet6ypWQEFm4A@mail.gmail.com>
-Subject: Re: submodules : switching to an older commit/Tag in project with submodules
-To:     Shani.Fridman@visionmap.com
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BSsqJ0kxeXVyaSY8tHglmDjr3z3NbMGRZtPxcQPIlCQ=;
+        b=gxGHL01qtZGlBa9wvyG+qmmA9gG6Pa1enVAl9IcnBe50J5gI5VWQzgoGyC8N+wGfXb
+         TeSD2G/BO8zpvg4uOA1SiEayHSadNr7yUBIVWE9ZFFnafflGCbkLhd/bhPTIv4wawLZH
+         K+YLzBU1KrUFeaGQbDMFCETJfUdfUcCgnzDZJLx0ytHbcUVuEG3vUY3faf2QTkFWS6Lu
+         GnSfck/VdJ9s/acMpn7ouHmgcDE+4zVaNx7+ywahtE2VPE/D5aOCHM0DRP+H1wJa9+kx
+         75iVhwiXuNJ/oHvkcLw9E7MGXkYp06+rjvjHVXcKYKt2DJ5yyH7YMuYE8zgIIzQwo+9L
+         klZQ==
+X-Gm-Message-State: AOUpUlEor0GWzHoSYhcpjsXmjPrBv8lDI907MXnDun+VDb8WqgOq8z6H
+        iO1sZMzg/KNfGTK59qpmPrDN0YPO
+X-Google-Smtp-Source: AA+uWPwzkf36ujjDupJqMdBBZKFQvzNNsoIEX1oh644b4MYGkZOuPF9aME+lS04wr5I2kO9G7tKMVg==
+X-Received: by 2002:a1c:838a:: with SMTP id f132-v6mr16694119wmd.127.1534431482126;
+        Thu, 16 Aug 2018 07:58:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id p12-v6sm19352363wrw.3.2018.08.16.07.58.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 07:58:01 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: What's cooking in git.git (Aug 2018, #03; Wed, 15)
+References: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kar1UwZEX9d=+e57ZJCy7YaqKSPExOexp8_t=G1VjwY2g@mail.gmail.com>
+Date:   Thu, 16 Aug 2018 07:58:01 -0700
+In-Reply-To: <CAGZ79kar1UwZEX9d=+e57ZJCy7YaqKSPExOexp8_t=G1VjwY2g@mail.gmail.com>
+        (Stefan Beller's message of "Wed, 15 Aug 2018 19:35:23 -0700")
+Message-ID: <xmqqlg96gxza.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 4:55 AM Shani Fridman
-<Shani.Fridman@visionmap.com> wrote:
->
->
-> Hi everybody,
->
-> I've got a question regarding submodules -
->
-> I'm working on a git project with submodules connected to it, and pulling=
- changes from them every month (more or less).
-> Sometimes I need to checkout older versions of the project (tags or speci=
-fic commits), that needs the older versions of the submodules as they were =
-when I defined the tag. The problem is, that the checkout only changes the =
-superProject directories, and not the submodules... I have to checkout the =
-relevant submodules commit manually.
->
-> Have you came across the same problem? Any idea what can I do?
+Stefan Beller <sbeller@google.com> writes:
 
-git checkout learned about the --recurse-submodules flag some time
-ago. If that is what you need, just set 'git config submodule.recurse
-true' so you don't have to pass that flag every time.
+>>
+>> * sb/config-write-fix (2018-08-08) 3 commits
+>>  - git-config: document accidental multi-line setting in deprecated syntax
+>>  - config: fix case sensitive subsection names on writing
+>>  - t1300: document current behavior of setting options
+>>
+>>  Recent update to "git config" broke updating variable in a
+>>  subsection, which has been corrected.
+>>
+>>  Expecting a reroll.
+>>  cf. <CAGZ79kZ1R8sxmtfgPOQcpoWM7GWV1qiRaqMq_zhGyKBB3ARLjg@mail.gmail.com>
+>
+> That reroll happened and you picked it up,
+> cf. https://public-inbox.org/git/20180808195020.37374-1-sbeller@google.com/
 
-Hope that helps,
-Stefan
+Thanks for a quick update.  I do not think I saw any other issues
+raised and a quick rescan of the patches does not raise any flags,
+so perhaps we should mark it to be merged to 'next' soonish.
+
