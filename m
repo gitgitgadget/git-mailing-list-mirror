@@ -2,115 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C40B61F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 08:25:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E94091F428
+	for <e@80x24.org>; Thu, 16 Aug 2018 08:36:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389955AbeHPLWT convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 16 Aug 2018 07:22:19 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:39074 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726249AbeHPLWT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 07:22:19 -0400
-Received: by mail-qt0-f196.google.com with SMTP id q12-v6so4323390qtp.6
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 01:25:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=0G6L47RH9MvcnizU3Uy+6cfvGPId/6LKrn4dMfqnmjg=;
-        b=rA09aG6yzgqTq30olNxbfKn0E3EJRlJbngJLE4+S/PX8PVGTg1fWFJXFKrY3b6ing1
-         hj0/3Jz9Is0MFVzyxPz2YVPNIS/2IWmrSGzYZGmjt0k+N71gxwioEZZNlr2eh03QGQ3/
-         mPEytDV+6762OFQBOWWTMHhvi8xH0fBTyjWEVhRk70t6iMRlLmicv5Xi/SiWgGyCshgJ
-         08ktTycBjKVbvJTA8oeIJLDNU6eL6PrUFKHlMncxwnCaI2QOiR/nohLSNxSca9/97Yhf
-         qeIHjXKXV6jDzy63Kf+xnhFT/kaafn4ZS1g2jw32kUZj2Rws6mF+vvJvGLvlXTd5jKcq
-         epHw==
-X-Gm-Message-State: AOUpUlHpuwCLOtksE3cO4yEk59nLVJQVSL6AOqB9otapqc/Fsj4jL99w
-        KHb0LTQV0wXYYAkyaaaGTfG1N7JgAxbXwm/Gxw4=
-X-Google-Smtp-Source: AA+uWPxrxTXM3XHF7llugQK6sbtLAx6lMwaXJoFSYuDJxMofxcooX4PuK37Y+NvscTkzQVPgUlAebaZtuCEniem2prw=
-X-Received: by 2002:ac8:5188:: with SMTP id c8-v6mr29675806qtn.35.1534407927865;
- Thu, 16 Aug 2018 01:25:27 -0700 (PDT)
+        id S2389243AbeHPLdj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 07:33:39 -0400
+Received: from mout.gmx.net ([212.227.17.21]:42723 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728858AbeHPLdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 07:33:39 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCxfb-1fhevn3iIl-009ku9; Thu, 16
+ Aug 2018 10:36:37 +0200
+Date:   Thu, 16 Aug 2018 10:36:34 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] rebase -i: fix SIGSEGV when 'merge <branch>' fails
+In-Reply-To: <20180815093935.10222-3-phillip.wood@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1808161036200.71@tvgsbejvaqbjf.bet>
+References: <20180815093935.10222-1-phillip.wood@talktalk.net> <20180815093935.10222-3-phillip.wood@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180815205630.32876-1-gitter.spiros@gmail.com> <CAN0heSrZXjaQ0H1J1Mmqhv9qhiNbRn4fOJ4oO1XrZFEGO4YFug@mail.gmail.com>
-In-Reply-To: <CAN0heSrZXjaQ0H1J1Mmqhv9qhiNbRn4fOJ4oO1XrZFEGO4YFug@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 16 Aug 2018 04:25:16 -0400
-Message-ID: <CAPig+cR3g8MUt6VAg0RrO3VBgZ4ChsXz1t75xHgT5Q_9_hRzBQ@mail.gmail.com>
-Subject: Re: [PATCH v2] worktree: add --quiet option
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Elia Pinto <gitter.spiros@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Karen Arutyunov <karen@codesynthesis.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BREnqT/VCeU2cP6rnwM2tZVMMHIcI6no+7E5pXyH7WjLNWAupeo
+ kS9MwOVrCJSiCKOqO4HpddMhGddDZW8Z1m6x85VIE6k0aRsrtnEVo1yV+tZKB2MZUYG8Ta7
+ +KUX5Gq3YoSTFNlljstQxDoQHbP1VjLLt8qOBt6VyJkhFcwEVeZmv/56gbboS+SCVqd6wrV
+ x8IkdQkWjRUKUW5FDoQjQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YnhFAsqtejE=:V9WQFy7ygxCSIu1mgsFSP8
+ n8n0Jh7D0wCPXGwjFGy5MAP/3knbvWGd9evDeoP8+goqt1wiW6el71vVkPJf3qTn/4EYQcefs
+ 6iz1ksskYcsv7vpvQ+9VCxLla53UgpjCo1gQ7bPrbaiqDdMuenzt14Rbp0L9JjRUhm2F+hc2I
+ wh7aKDBrBlrpuOPqxnMAEhv6zonNShW1C+UUg/VCLkrw1Es3CAQznX+vOpoTuJs4MzQgZrESS
+ /E8rVJJ8KgkHPG2nbwjg646Oo9ZY5s4ccoAwJEsnpE2NHYyZhJaaTX7QtOPJtPSWbbgAkbkaD
+ oWMR0MlfxJI/b5gJlxqqhC0DC3qSwRFbzsnQDu11EPEyJxxXP/R1/E/QVmO/tEhzfkEXMLaJ1
+ Ro6QCb4HfJEn/WsvTyKAqVH3sypIstmvrsnHyLiyb1Gg0l6c8cC9gkNIgfoLzcyuJbYXENVDU
+ pXRsg325aPTStjugFzKLSkwnRhe3Q2m15Jia1R/z+5R1r0X8LK8thkwKZw6hj3RUhOorUfu9W
+ ovm/ASBDm2Ba9GIUnKbE3aBuOixK+g8uXxgdgLcQq3dNLM+rvRBAtVAz/g9WR2TGeX+l5WtGH
+ 07hmLaTORNp7X/XbAeIzjl3+H9YvofRInDkrT16dV0xDj3XBZYPRSgd9+jR9+OtxDPly60STu
+ 78vNH7yaNiKuqcHKj6hESJmTW+hAYZDj6UAnDfZtdXjPj6HWgx3TtCKQUgFVoEjt239Lb4+SS
+ 1OYd5UOnWNr+UECKOi6udKdZXj/fv7/OI0ZRRY3Ib031HWIa7/3VQQrTv+6dqLMrm93byr4kc
+ AwsMePN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 12:41 AM Martin Ågren <martin.agren@gmail.com> wrote:
-> On Wed, 15 Aug 2018 at 22:56, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> The word "currently" means I can't shake the feeling that Eric has a
-> very good point in [1]:
->
->   It might make sense to say instead that this is adding a --quiet
->   option _in general_, rather than doing so specifically for 'add'.
->
-> As an example, if `git worktree move` ever learns to produce some sort
-> of output, then Eric's approach would mean that such a hypothetical
-> `move` is buggy until it learns to respect `--quiet`. With your
-> approach, it would mean that we would get feature requests that `move`
-> should also respect `--quiet` [...]
->
-> Doing such a patch instead would mean tweaking the commit message
-> slightly...
->
->   Add the '--quiet' option to git worktree, as for the other git
->   commands. Currently, 'add' is the only command affected by it since
->   all other commands, except 'list' obviously, are already silent by
->   default.
->
-> ... and the documentation slightly ...
->
->   Suppress feedback messages.
+Hi Phillip,
 
-This is a sensible suggestion for the documentation rather than having
-it call out "add" as special (unlike the commit message in which case
-it makes sense to mention that only the behavior of "add" is
-affected).
+On Wed, 15 Aug 2018, Phillip Wood wrote:
 
-> It might make sense adding a comment to the documentation about how this
-> currently only affects `add`, but such comments do risk going stale.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> If a merge command in the todo list specifies just a branch to merge
+> with no -C/-c argument then item->commit is NULL. This means that if
+> there are merge conflicts error_with_patch() is passed a NULL commit
+> which causes a segmentation fault when make_patch() tries to look it up.
+> 
+> This commit implements a minimal fix which fixes the crash and allows
+> the user to successfully commit a conflict resolution with 'git rebase
+> --continue'. It does not write .git/rebase-merge/patch,
+> .git/rebase-merge/stopped-sha or update REBASE_HEAD. To sensibly get the
+> hashes of the merge parents would require refactoring do_merge() to
+> extract the code that parses the merge parents into a separate function
+> which error_with_patch() could then use to write the parents into the
+> stopped-sha file. To create meaningful output make_patch() and 'git
+> rebase --show-current-patch' would also need to be modified to diff the
+> merge parent and merge base in this case.
+> 
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Let's not mention "add" or any other command specially since the
-option is meant to be general.
+ACK!
 
-> I am on the fence about whether the documentation needs to say something
-> about `list` -- who in their right mind would expect `list --quiet` to
-> actually suppress the list?
-
-(/me nudges Martin off the fence onto the side of not bothering to
-mention the obvious)
-
-> Others might disagree violently with this, but I wonder whether it makes
-> sense to add a test to verify that, e.g., `git worktree move --quiet` is
-> quiet. Such a test would demonstrate that this is your intention, i.e.,
-> anyone digging into a report on "why does git worktree foo not respect
-> --quiet?" would be 100% convinced that your intention back in 2018 really
-> was to respect it everywhere. It seems wasteful to add such a test for
-> all other modes, but maybe you can identify one which you think has a
-> higher risk of learning to output some feedback in the future.
-
-My knee-jerk reaction was that such tests seem unnecessary, but I
-think you convinced me that they would make sense to avoid future
-headaches since --quiet should indeed mean "quiet" generally. (Newly
-added worktree commands would not be protected by such tests added
-today, so it's not foolproof, but still better than nothing.)
-
-Having said that, though, lack of such tests shouldn't block this
-patch from being accepted. They can always be added later if someone
-wants to do it.
+Thanks,
+Dscho
