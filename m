@@ -2,121 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEB601F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 22:41:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E1D161F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 23:10:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbeHQBmf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 21:42:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58182 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725903AbeHQBmf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 21:42:35 -0400
-Received: (qmail 22771 invoked by uid 109); 16 Aug 2018 22:41:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Aug 2018 22:41:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20073 invoked by uid 111); 16 Aug 2018 22:41:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 18:41:44 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 18:41:38 -0400
-Date:   Thu, 16 Aug 2018 18:41:38 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
+        id S1725947AbeHQCLT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 22:11:19 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:34398 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbeHQCLT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 22:11:19 -0400
+Received: by mail-wm0-f67.google.com with SMTP id l2-v6so16755820wme.1
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 16:10:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=IPE7xP85DH+cKZG+IW/4+70A7N0M4lWKeGWjMxywrEg=;
+        b=VmWI2yfFvHgpNVXbaDCiTNRVuSZEGuzJdzPAzGA4YNKyYouYaM+nlioHK462JskRdP
+         039za7LoRgOMTr8emEPfho3fuXlFjiFtO7lR7v+0IjANaES/4hrXn1I0EO8CWIRI8xvI
+         y5OFyPXmF1tu33pPlh0kVLoq6nULP/OoAo7GIpaHw4ydQ0fZ6lvxBFfmd2mqwl2MzZm/
+         CM3FjHtJVgOZv+8oqPZ6xCvbfAAb3WpWvrycBECtbHiUBreewa2nUiMD7ccnC0ZwWgxL
+         6fCc8ahc3r0BAZE6GwoNQp1uF/tpBA+B/6W3jz9cSj2ZqYDXhH5cVqBujuMQKTjMxIF2
+         upCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=IPE7xP85DH+cKZG+IW/4+70A7N0M4lWKeGWjMxywrEg=;
+        b=Y+MspfshZ5rQu7JAa4G5901DjJsozDdpa2Izv9nZHZXLJUOX/NC8PKM8qGUnmH7goD
+         D/h93Xj14cjq/92FQDDu+c8ZjCAip9ISKMjdFtqhAgr4MoZcUnAl0dAPWkiBufaN4Iya
+         iDFb3E1VKo+ruUiI6rPX1izJmpc2CwwZToDBVEMiR+hkrIgyqnyz1Rx4MKfgvFFM2zJf
+         rFljAN1pj+Qce5zd3Rrz0WR7FjrwIxSLxhhOBLjgwEvi6TS96grhnWyurs954Av/DHEq
+         AFT3KCLAdR107E9W69QHOc+EZPqIAJ9Vy/v4Jfqq8tGCvkHDGcqy2z2oI8jm5u3RzPOl
+         uenA==
+X-Gm-Message-State: AOUpUlG705sfHfzzEP1eJCiPl6i7D4lk1P2CE+49bFI2zYHAPNr63Qa6
+        RuzkSV7ikPhYbCcAdc5yXA0=
+X-Google-Smtp-Source: AA+uWPyxBp3TrZmMeehpEqO2OkMblDr29ABrT1UPG7j1DW0vmpBd25JCw5T1KPHsCAmkUVqSRVE5TA==
+X-Received: by 2002:a1c:8d0a:: with SMTP id p10-v6mr17759614wmd.121.1534461018497;
+        Thu, 16 Aug 2018 16:10:18 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m129-v6sm18266487wma.1.2018.08.16.16.09.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 16:09:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Git Project Leadership Committee
-Message-ID: <20180816224138.GA15490@sigill.intra.peff.net>
+Subject: Re: Git Project Leadership Committee
+References: <20180816224138.GA15490@sigill.intra.peff.net>
+Date:   Thu, 16 Aug 2018 16:09:31 -0700
+In-Reply-To: <20180816224138.GA15490@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 16 Aug 2018 18:41:38 -0400")
+Message-ID: <xmqqmutldi38.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a followup to the issue I raised back in March[1], which is
-that our project committee at Software Freedom Conservancy has two
-members, but is required by the charter to have at least three.
+Jeff King <peff@peff.net> writes:
 
-There wasn't any substantive discussion in response to that email or at
-the contributor summit. I intentionally left my own opinions out of that
-mail to avoid biasing discussion, and meant to follow-up after everyone
-had a chance to speak. I didn't intend to leave it this long, though. :)
+> Here are _my_ opinions on how we should fill the role....
+> ...
+> So here are the nominations I came up with. If you'd like to nominate
+> somebody else (or yourself!), please do. If you have opinions, let me
+> know (public or private, as you prefer).
+>
+>  - Christian Couder
+>  - Ævar Arnfjörð Bjarmason
 
-Just to recap: the project leadership committee (PLC) represents the Git
-project within Conservancy and decides on project-specific matters,
-including allocation of funds. Since joining in 2010, the PLC consisted
-of me, Junio, and Shawn Pearce.  With Shawn's passing, we need to elect
-another member (by simple majority of the remaining members) to meet our
-minimum number of three.
+FWIW, even though my opinions might be slightly different in some
+detail (e.g. I would not place as much weight on "ideally a
+non-professional person" as Peff does), I pretty-much agree with
+Peff on both the selection criteria and the nominations.
 
-You can get a sense of the types of issues and decisions from looking at
-my report in [1], as well as past-year reports linked from there. If you
-want a more precise picture of the day-to-day, it's mostly just
-monitoring and discussing things on a project-specific mailing list that
-gets an average of about 2-4 messages per month (usually one thread
-every month or two). I'm happy to answer any other questions people have
-about it.
-
-Here are _my_ opinions on how we should fill the role. As 50% of the
-voting populace, it's perhaps a disproportionately important opinion,
-but I really would like to hear and take into account opinions from the
-larger development community.
-
- - it should probably be somebody who has been with the project for a
-   while (so we feel comfortable that they are representative) and that
-   we expect to stay with the project for a while (so we're not doing
-   this again in 6 months). But those are negotiable. It's not the worst
-   thing for somebody to serve for a year or two and then move on.
-
- - we should avoid anyone who is affiliated with a company that already
-   has a member on the committee. So nobody from Google and nobody from
-   GitHub. I would extend that to Microsoft, too, given a certain
-   impending acquisition. I'd expect anybody who is affiliated with a
-   company to recuse themselves from decisions that directly affect that
-   company (which is what we've done so far).
-
- - I think ideally the candidate would be somebody who represents the
-   long tail of volunteer community members who don't work on Git as
-   part of their day-job. The current members have a fairly skewed view
-   in that respect. At the same time, we can't really represent the
-   _really_ long tail of infrequent contributors, by the "stick around"
-   criterion above.
-
- - I considered mostly people who have expressed interest in non-code
-   issues (e.g., GSoC, money policy, etc). But I don't think that's a
-   strict requirement if somebody is interested.
-
- - We're not restricted to three members. So we could add multiple
-   people. Four may be bad because it creates ties. On the other hand,
-   every decision so far has been unanimous. :)
-
-So here are the nominations I came up with. If you'd like to nominate
-somebody else (or yourself!), please do. If you have opinions, let me
-know (public or private, as you prefer).
-
- - Christian Couder
- - Ævar Arnfjörð Bjarmason
-
-Both are active, have been around a long time, and have taken part in
-non-code activities and governance discussions. My understanding is that
-Christian freelances on Git, which doesn't quite fit my "volunteer
-representative" request, but I think contracting on Git is its own
-interesting perspective to represent (and certainly he spent many years
-on the volunteer side).
-
-Phew. That turned out a little longer than I meant it to be, but I
-wanted to lay out my thought process, both for this decision and because
-we may eventually have to do this again in the future.
-
--Peff
-
-[1] https://public-inbox.org/git/20180306231609.GA1632@sigill.intra.peff.net/
-
+Thanks.
