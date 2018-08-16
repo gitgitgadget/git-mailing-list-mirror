@@ -2,112 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16F091F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 20:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F3761F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 20:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726029AbeHPXwZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 19:52:25 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39213 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbeHPXwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 19:52:25 -0400
-Received: by mail-ed1-f67.google.com with SMTP id h4-v6so3405232edi.6
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 13:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=jDWwuwVFzeWuBiGdhloyOfp4WdoCMehDdagNPECN5yM=;
-        b=RIPv4UGl2Wgfq0V+KcA71vO0aw6FFzahUsNaVMVcp63nYCpkp1+6fIlSXCq8VF9y3Y
-         ZvHsaCHJStPU9I1bLG1f0FEhQcDcFuKp5ZjbCV5zG04k1kWmFbt6KFeleg6IbfEj+xAD
-         awNXC/ox6BCWrgip1OhtMj5GsgBA5rKip92xAyechWjY7blBjYM6TzV6kPRUo4BB6jyf
-         Ds9L7L+rtQ2g89DY7QolGPbGIf43biYxGBj0rEkl8/R4uggTijln5KcqlV2Vbt40aNUF
-         TyYnNZCVRnHgXfhwValcNmQti3TC5IRHfVu0Y4QGnK/zxIb5Y8sLWoRlhBAjqMJlkm0v
-         sYWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=jDWwuwVFzeWuBiGdhloyOfp4WdoCMehDdagNPECN5yM=;
-        b=MCJ8RWuOXV3yypcoKzYghSk2sGRnj9Q4JP0rvkWw8XA8j11TMfbeemuLxcvvLf+Iyh
-         49MCnpFTZy3Cwb1wEEFpfrFfLCttZ+ILSrQojm7P1mZtwgcPN8qoaIuojrezo6BivtLd
-         tkPm1V2sePJjXm8MgGaoJw43d69sJ9kJGJPUi/m2MvNJnwVHfGAAHI9A0sI3LuETh6N+
-         Dlvz5X5CssFtayy/POuRPAJAFgbbECB8NjvH8ZWlIpltJEbNfHRbnzC0QrY1dxV/ce1o
-         mmVGnQ6XEWr3Sr2InyEOJh76FSLyDU6L1OeDaO94Ca0Wz5z8upYI5UtOU+yoSOXAl2vJ
-         l44w==
-X-Gm-Message-State: AOUpUlF7Uhpie4VUvndN/cNY5RsvK+XbVQCkeVPrQ6+MreUtLuzIOTT2
-        1uMiJxG7o/zqyNv9gPb4wsM=
-X-Google-Smtp-Source: AA+uWPwNgnlQzWnWArQp2ueqVceKbpwE3oVRrUx09uwBFSLPMJ6k1vwWbYzJ4iSBiGxSevYQN4ZphA==
-X-Received: by 2002:a50:9135:: with SMTP id e50-v6mr39215265eda.191.1534452706009;
-        Thu, 16 Aug 2018 13:51:46 -0700 (PDT)
-Received: from [10.46.10.6] ([185.232.21.28])
-        by smtp.gmail.com with ESMTPSA id x8-v6sm783165edr.24.2018.08.16.13.51.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Aug 2018 13:51:45 -0700 (PDT)
-Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
- use bitmap' test
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Kirill Smelkov <kirr@nexedi.com>,
-        Jeff King <peff@peff.net>
-References: <20180814114721.25577-1-szeder.dev@gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
-Date:   Thu, 16 Aug 2018 22:51:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726011AbeHPX4h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 19:56:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58070 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725835AbeHPX4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 19:56:36 -0400
+Received: (qmail 17662 invoked by uid 109); 16 Aug 2018 20:55:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Aug 2018 20:55:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19270 invoked by uid 111); 16 Aug 2018 20:56:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 16:56:03 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 16:55:57 -0400
+Date:   Thu, 16 Aug 2018 16:55:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+Subject: Re: non-smooth progress  indication for git fsck and git gc
+Message-ID: <20180816205556.GA8257@sigill.intra.peff.net>
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+ <20180816155714.GA22739@sigill.intra.peff.net>
+ <87bma2qcba.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180814114721.25577-1-szeder.dev@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bma2qcba.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 14/08/18 13:47, SZEDER Gábor wrote:
-> ... both
-> invocations produce empty 'pack{a,b}.objects' files, and the
-> subsequent 'test_cmp' happily finds those two empty files identical.
+On Thu, Aug 16, 2018 at 10:35:53PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Is test_cmp ever used for empty files? Would it make sense for
-test_cmp to issue warning when an empty file is being compared?
-
-> ---
->  t/t5310-pack-bitmaps.sh | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+> This is all interesting, but I think unrelated to what Ulrich is talking
+> about. Quote:
 > 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index 6ee4d3f2d9..557bd0d0c0 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -9,7 +9,8 @@ objpath () {
->  
->  # show objects present in pack ($1 should be associated *.idx)
->  list_packed_objects () {
-> -	git show-index <"$1" | cut -d' ' -f2
-> +	git show-index <"$1" >object-list &&
-> +	cut -d' ' -f2 object-list
->  }
->  
->  # has_any pattern-file content-file
-> @@ -204,8 +205,8 @@ test_expect_success 'pack-objects to file can use bitmap' '
->  	# verify equivalent packs are generated with/without using bitmap index
->  	packasha1=$(git pack-objects --no-use-bitmap-index --all packa </dev/null) &&
->  	packbsha1=$(git pack-objects --use-bitmap-index --all packb </dev/null) &&
-> -	list_packed_objects <packa-$packasha1.idx >packa.objects &&
-> -	list_packed_objects <packb-$packbsha1.idx >packb.objects &&
-> +	list_packed_objects packa-$packasha1.idx >packa.objects &&
-> +	list_packed_objects packb-$packbsha1.idx >packb.objects &&
->  	test_cmp packa.objects packb.objects
->  '
->  
+>     Between the two phases of "git fsck" (checking directories and
+>     checking objects) there was a break of several seconds where no
+>     progress was indicated
 > 
+> I.e. it's not about the pause you get with your testcase (which is
+> certainly another issue) but the break between the two progress bars.
 
+I think he's talking about both. What I said responds to this:
+
+> >> During "git gc" the writing objects phase did not update for some
+> >> seconds, but then the percentage counter jumped like from 15% to 42%.
+
+But yeah, I missed that the fsck thing was specifically about a break
+between two meters. That's a separate problem, but also worth
+discussing (and hopefully much easier to address).
+
+> If you fsck this repository it'll take around (on my spinning rust
+> server) 30 seconds between 100% of "Checking object directories" before
+> you get any output from "Checking objects".
+> 
+> The breakdown of that is (this is from approximate eyeballing):
+> 
+>  * We spend 1-3 seconds just on this:
+>    https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L181
+
+OK, so that's checking the sha1 over the .idx file. We could put a meter
+on that. I wouldn't expect it to generally be all that slow outside of
+pathological cases, since it scales with the number of objects (and 1s
+is our minimum update anyway, so that might be OK as-is). Your case has
+13M objects, which is quite large.
+
+>  * We spend the majority of the ~30s on this:
+>    https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L70-L79
+
+This is hashing the actual packfile. This is potentially quite long,
+especially if you have a ton of big objects.
+
+I wonder if we need to do this as a separate step anyway, though. Our
+verification is based on index-pack these days, which means it's going
+to walk over the whole content as part of the "Indexing objects" step to
+expand base objects and mark deltas for later. Could we feed this hash
+as part of that walk over the data? It's not going to save us 30s, but
+it's likely to be more efficient. And it would fold the effort naturally
+into the existing progress meter.
+
+>  * Wes spend another 3-5 seconds on this QSORT:
+>    https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L105
+
+That's a tough one. I'm not sure how we'd count it (how many compares we
+do?). And each item is doing so little work that hitting the progress
+code may make things noticeably slower.
+
+Again, your case is pretty big. Just based on the number of objects,
+linux.git should be 1.5-2.5 seconds on your machine for the same
+operation. Which I think may be small enough to ignore (or even just
+print a generic before/after). It's really the 30s packfile hash that's
+making the whole thing so terrible.
+
+-Peff
