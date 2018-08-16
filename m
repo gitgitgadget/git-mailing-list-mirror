@@ -2,115 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E581F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 02:47:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A25551F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 03:04:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387858AbeHPFms (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 01:42:48 -0400
-Received: from mail-pl0-f68.google.com ([209.85.160.68]:35185 "EHLO
-        mail-pl0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731184AbeHPFmr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 01:42:47 -0400
-Received: by mail-pl0-f68.google.com with SMTP id g1-v6so1338298plo.2
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:47:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8wwN7mLghH5dfgMvd/vUrC+jfqxSiT8Z8FmwtTH62Ak=;
-        b=C/MgEkM6pSQnc/H+wwAicp/MdnIV2cfxRjff9bclP4/RWLE8f88tpGbEFkEhQumo/l
-         gK1MntCq8TZGaAAlMk6uXsNBsDX+BcrJ49Hv1B/b342IMQvL77WebHiqG06SoXB3Oqad
-         ssNEgH1NwCG/CHfwPxgYTtVQiH2w5iV7r+UNNef1dWfwcePCYRpAnpMBiDFmofgTzmuC
-         zA23EvV4qDbRTyK12xwNt4RooyCRWx/saigAfFVorfV/uKXNEfg5UfezCTGzZ5I3gvks
-         syDeswMvzohicxftt89wvrPytcAGJyUdof+pVzrkKJpV2kZL0fTe2jni1JsIhsF3OiWB
-         8iWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8wwN7mLghH5dfgMvd/vUrC+jfqxSiT8Z8FmwtTH62Ak=;
-        b=DaUlD/eV4XArsLzvcu5tPM/2gf95nLbCa43mlaSOJHn8lsuBZXKmfRQYr1VkYeWcXW
-         +cHIoBE9n3dSdu/kY/APIQNNLU2pV1i3QfVBDDF2+SK4Kk45SNlXHrdPzxKMoYzZvepu
-         qjCsm2vOJG93AbS0xIRogLMijnxFZyMY8UluQx1pzWeHSqQxqOxR3cZa2yFByQm1GzmC
-         M2pFLTYrNHH6AumfonyIftJ0RlkCFGgcL7w6MgiZ4Q40bKYybk+PUfcaTmFgbzMo36Gw
-         urlQjbxp3xeVuNWB/HfkLL71RDdg5HaN/MFxPAPiTRwqmowuvbsI8BOpvlAz0zCMIPyk
-         gt/g==
-X-Gm-Message-State: AOUpUlGR77nkopFMXxzJvkED+7BUdKSL/zqHO9boTiNLf4I9ZguOm4tX
-        aKLUhJHUgWgJBfEk1xJGX9E=
-X-Google-Smtp-Source: AA+uWPxrVGZgAr05UqODjpH24pt1e0KmuVbSW3GjQo1IST/b76rL5BDWWRjLUEfBrkWn1FjigHViIA==
-X-Received: by 2002:a17:902:7c89:: with SMTP id y9-v6mr26862838pll.187.1534387656134;
-        Wed, 15 Aug 2018 19:47:36 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id i62-v6sm35262611pge.66.2018.08.15.19.47.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Aug 2018 19:47:35 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 19:47:33 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180816024733.GB127655@aiede.svl.corp.google.com>
-References: <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com>
- <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com>
- <20180814185743.GE142615@aiede.svl.corp.google.com>
- <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
- <20180814211211.GF142615@aiede.svl.corp.google.com>
- <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
- <20180816023446.GA127655@aiede.svl.corp.google.com>
- <CAGZ79kamoPjX_yWYABLoyTh8jqAPV4iVX0r46q=41B12zku=tg@mail.gmail.com>
+        id S1728360AbeHPGAA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 02:00:00 -0400
+Received: from server65.mylittledatacenter.com ([78.46.58.69]:48775 "EHLO
+        server65.mylittledatacenter.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727457AbeHPGAA (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 16 Aug 2018 02:00:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=hadisafari.ir; s=default; h=Content-Transfer-Encoding:Content-Type:
+        In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject:Sender
+        :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=DxZ4dfTtM9RTSYyRLJyVCuxk10X1Bjaf3TljdXaG9y0=; b=qobBtUJ+XCz8lqTnn/IyKYa+jg
+        14vYoOTInNZXCGLD2qbSYay91CQcIrE/JPSMiuXswVMCiWqdxoXnfXz4yNpF9ElL6kTdeIFZInMEg
+        R7Izhtd/2HZPgzdRFoPBLBUPVCR9RnsCNO6qxaAi4eYEWCO1/09xzYF1Ed4ZPhvNIfFrSV2j0foPp
+        +K80O4e8gDPXS4n98D2sAATjh1f+LArrXJ8uYmDxzxNQNSAwZVJxrpPyB+KAZToyf7ldNr67J0ks6
+        /BEJtTIf0Qmbd3+q84FAxUbMj8u9LZuLhQ1732d+1gsumqwJzlRNqcSeo3XWyAt9U18D7gP7Qborm
+        91Ueh1qQ==;
+Received: from [46.164.97.26] (port=49449 helo=Hadi.local)
+        by server65.mylittledatacenter.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.91)
+        (envelope-from <hadi@hadisafari.ir>)
+        id 1fq8aZ-009fn9-EB; Thu, 16 Aug 2018 07:34:43 +0430
+Subject: Re: "Changes not staged for commit" after cloning a repo on macOS
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Git Users <git@vger.kernel.org>
+References: <6022fbe8-0e07-f561-5e66-eeb4bc92704d@hadisafari.ir>
+ <CAGyf7-EKCznDksZ6jovmtoA94Tj2V95zkMkS3PJrYfEYsO9U3w@mail.gmail.com>
+From:   Hadi Safari <hadi@hadisafari.ir>
+Message-ID: <3e0d7bd4-003e-60ea-ce1a-323ac49b4f71@hadisafari.ir>
+Date:   Thu, 16 Aug 2018 07:34:37 +0430
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kamoPjX_yWYABLoyTh8jqAPV4iVX0r46q=41B12zku=tg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAGyf7-EKCznDksZ6jovmtoA94Tj2V95zkMkS3PJrYfEYsO9U3w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server65.mylittledatacenter.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - hadisafari.ir
+X-Get-Message-Sender-Via: server65.mylittledatacenter.com: authenticated_id: hadi@hadisafari.ir
+X-Authenticated-Sender: server65.mylittledatacenter.com: hadi@hadisafari.ir
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller wrote:
-> Jonathan Nieder wrote:
+I checked line-ending but didn't think to file names.
 
->> All at the cost of recording a little configuration somewhere.  If we
->> want to decrease the configuration, we can avoid recording it there in
->> the easy cases (e.g. when name == gitdirname).  That's "just" an
->> optimization.
->
-> Sounds good, but gerrit for example would not take advantage of such
-> optimisation as they have slashes in their submodules. :-(
-> I wonder if we can optimize further and keep slashes if there is
-> no conflict (as then name == gitdirname, so it can be optimized).
+Thank you so much.
 
-One possibility would be to treat gsub("/", "%2f") as another of the
-easy cases.
+On 25/5/1397 AP 1:36 AM, Bryan Turner wrote:
+> Taking a look at the repository's file list on GitHub[1], it shows
+> that this is because HFS and APFS by default are case-insensitive.
+> 
+> The file listing shows that there is a "nanoc.gitignore" and
+> "Nanoc.gitignore". On APFS and HFS, those are the same file. As a
+> result, one overwrites the other. This is discussed pretty regularly
+> on the list[2], so you can find more details there.
+> 
+> [1]: https://github.com/kevinxucs/Sublime-Gitignore/tree/master/boilerplates
+> [2]: https://public-inbox.org/git/24A09B73-B4D4-4C22-BC1B-41B22CB59FE6@gmail.com/
+> is a fairly recent (fairly long) thread about this behavior.
+> 
 
-[...]
->> And then we have the ability later to handle all the edge cases we
->> haven't handled yet today:
->>
->> - sharding when the number of submodules is too large
->> - case-insensitive filesystems
->> - path name length limits
->> - different sets of filesystem-special characters
->>
->> Sane?
->
-> I'll keep thinking about it.
-
-Thanks.
-
-> FYI: the reduction in configuration was just sent out.
-
-https://public-inbox.org/git/20180816023100.161626-1-sbeller@google.com/
-for those following along.
-
-Ciao,
-Jonathan
+-- 
+Hadi Safari
