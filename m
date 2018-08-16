@@ -2,96 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6264E1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 15:57:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73EE91F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 15:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392155AbeHPS4X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 14:56:23 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:44682 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729847AbeHPS4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 14:56:23 -0400
-Received: by mail-lf1-f68.google.com with SMTP id g6-v6so3765209lfb.11
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 08:57:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PAVZ+5TQWN6KxENkfUNLy9WM8IyB/KrLjcUZXKbEiRk=;
-        b=vQFYWNOT81LintCAptbN0podnYFzyRKWEv2DtE9y6rh960ykGCK0zuT633Q9C/drhX
-         uZPBTBWo8o8RZtZA5UoThz4jfLFQ0fYHAgqRZsRFhCPmA8jeht0gc8ERMhVb9qOQ9Y9s
-         W/3Dg8qzmkOpM7tEQNRJJ+uQT83Eo9qcbAuoeCqhgnOKUH/z4eIoAEK0Vlse0rknM2Hb
-         x/ZWwMCWrEd0PixRXve0NoKD1f/QmNJl91b76hfXBu3aHQ4aYj+e5Jnj86wLSToGRKrH
-         91Ld3eZUF5W60KYXSFGQjnxhLPcBGMx5aXK4E6ipKQoCdX+Y2Fo/c5+Cp+u6AP2IC+t5
-         0Q0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PAVZ+5TQWN6KxENkfUNLy9WM8IyB/KrLjcUZXKbEiRk=;
-        b=tMq2Hfxd7wKoVCZmuiTmXyBuUD/EAQE1V9t8v+nSInxzz2L638x2jAH9We2ySuIeaY
-         okTUInAD3chZmK2005wcKDGuvaTQXkXEgrvo18dkueDroYIsDAuBdZG0gJc29mchJvth
-         acezrf0Tnz100ITbSh4xhTRjlMH9FClJWhnkitGJVr31bJZ9GJjdea4e2iFThilcUM/y
-         PodzWgdvJXdhfj73R0NC+sd9ldohwVSs+dj+gH8DmahpFziXP0bLmstOUfchnNGR22ns
-         CSC123UKCAaiB+OlFhJq6gVZk/EyFrjKQxKHJL+xLF1e0sibx6KRxDT2oeDNsWp6OCRX
-         tM+A==
-X-Gm-Message-State: AOUpUlGUta492B4isFLYt1pE66gPJEGCEEeJQb30YlOXtwH00v7qee7N
-        FXTjIlrTD2EofAw1so7eZgknNtoD
-X-Google-Smtp-Source: AA+uWPxSroBkVLdVYz4iy+nQ/hHyyPXdbRNBeR0IXL8GsUfOEi2X71GUyuI2k7fWuBxjT8LFcmFqeQ==
-X-Received: by 2002:a19:ec04:: with SMTP id b4-v6mr20283456lfa.91.1534435021749;
-        Thu, 16 Aug 2018 08:57:01 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id h4-v6sm4922247lfj.69.2018.08.16.08.57.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Aug 2018 08:57:00 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com, tboegi@web.de
-Subject: [PATCH] config.txt: clarify core.checkStat = minimal
-Date:   Thu, 16 Aug 2018 17:56:47 +0200
-Message-Id: <20180816155647.10459-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.1004.g6639190530
-In-Reply-To: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
-References: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
+        id S2392159AbeHPS4h (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 14:56:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57648 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2392156AbeHPS4g (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 14:56:36 -0400
+Received: (qmail 6652 invoked by uid 109); 16 Aug 2018 15:57:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Aug 2018 15:57:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16674 invoked by uid 111); 16 Aug 2018 15:57:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 11:57:21 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 11:57:14 -0400
+Date:   Thu, 16 Aug 2018 11:57:14 -0400
+From:   Jeff King <peff@peff.net>
+To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
+Cc:     git@vger.kernel.org
+Subject: Re: non-smooth progress  indication for git fsck and git gc
+Message-ID: <20180816155714.GA22739@sigill.intra.peff.net>
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The description of this key does not really tell what 'minimal' mode
-checks exactly. More information about this mode can be found in the
-commit message of c08e4d5b5c (Enable minimal stat checking -
-2013-01-22).
+On Thu, Aug 16, 2018 at 08:54:25AM +0200, Ulrich Windl wrote:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/config.txt | 2 ++
- 1 file changed, 2 insertions(+)
+> I'd like to point out some minor issue observed while processing some
+> 50000-object repository with many binary objects, but most are rather
+> small:
+> 
+> Between the two phases of "git fsck" (checking directories and
+> checking objects) there was a break of several seconds where no
+> progress was indicated.
+> 
+> During "git gc" the writing objects phase did not update for some
+> seconds, but then the percentage counter jumped like from 15% to 42%.
+> 
+> I understand that updating the progress output too often can be a
+> performance bottleneck, while upating it too rarely might only bore
+> the user... ;-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index fd8d27e761..5c41314dd5 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -466,6 +466,8 @@ core.checkStat::
- 	and work tree. The user can set this to 'default' or
- 	'minimal'. Default (or explicitly 'default'), is to check
- 	all fields, including the sub-second part of mtime and ctime.
-+	'minimal' only checks size and the whole second part of mtime
-+	and ctime.
- 
- core.quotePath::
- 	Commands that output paths (e.g. 'ls-files', 'diff'), will
--- 
-2.18.0.1004.g6639190530
+We update the counter integer for every object we process, and then
+actually update the display whenever the percentage increases or a
+second has elapsed, whichever comes first.
 
+What you're seeing is likely an artifact of _what_ we're counting:
+written objects. Not all objects are the same size, so it's not uncommon
+to see thousands/sec when dealing with small ones, and then several
+seconds for one giant blob.
+
+The only way to solve that is to count bytes. We don't have a total byte
+count in most cases, and it wouldn't always make sense (e.g., the
+"Compressing objects" meter can show the same issue, but it's not really
+putting through bytes in a linear way).  In some cases we do show
+transmitted size and throughput, but that's just for network operations.
+We could do the same for "gc" with the patch below. But usually
+throughput isn't all that interesting for a filesystem write, because
+bandwidth isn't the bottleneck.
+
+Possibly we could have a "half throughput" mode that counts up the total
+size written, but omits the speed indicator. That's not an unreasonable
+thing to show for a local pack, since you end up with the final pack
+size. The object counter would still be jumpy, but you'd at least have
+one number updated at least once per second as you put through a large
+blob.
+
+If you really want a smooth percentage, then we'd have to start counting
+bytes instead of objects. Two reasons we don't do that are:
+
+  - we often don't know the total byte size exactly. E.g., for a
+    packfile write, it depends on the result of deflating each object.
+    You can make an approximation and just pretend at the end that you
+    hit 100%.  Or you can count the pre-deflate sizes, but then your
+    meter doesn't match the bytes from the throughput counter.
+
+  - for something like fsck, we're not actually writing out bytes.  So I
+    guess you'd be measuring "here's how many bytes of objects I
+    fsck-ed". But is that on-disk compressed bytes, or decompressed
+    bytes?
+
+    If the former, that's only marginally better as a measure of effort,
+    since delta compression means that a small number of on-disk bytes
+    may require a big effort (imagine processing a 100 byte blob versus
+    a 100 byte delta off of a 100MB blob).
+
+    The latter is probably more accurate. But it's also not free to
+    pre-generate the total. We can get the number of objects or the size
+    of the packfile in constant-time, but totaling up the uncompressed
+    size of all objects is O(n). So that's extra computation, but it
+    also means a potential lag before we can start the progress meter.
+
+    I'm also not sure how meaningful a byte count is for a user there.
+
+So there. That's probably more than you wanted to know about Git's
+progress code. I think it probably _could_ be improved by counting
+more/different things, but I also think it can be a bit of a rabbit
+hole. Which is why AFAIK nobody's really looked too seriously into
+changing it.
+
+-Peff
