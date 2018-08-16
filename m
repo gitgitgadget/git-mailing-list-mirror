@@ -2,118 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53ED41F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 06:04:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A21231F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 06:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388821AbeHPJAs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 05:00:48 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36549 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387491AbeHPJAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 05:00:48 -0400
-Received: by mail-it0-f68.google.com with SMTP id p81-v6so5205105itp.1
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:04:44 -0700 (PDT)
+        id S2388856AbeHPJJj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 05:09:39 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:33722 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387491AbeHPJJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 05:09:38 -0400
+Received: by mail-wr1-f66.google.com with SMTP id g6-v6so3056948wrp.0
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=eQDexXKJBb3J8RLI1PPVHrgZPSpYvZamvN2C0Wi1GoQ=;
-        b=GDly5lsxzvVAi6rPFjekj9UQWvLS0cJEP+OG70+V7gnNH4pAQleCr0F1VJSOtejWcF
-         khkjpHZz4Y5arntD9+Wa4ysSIHU3Go3eaSDLOhuGRm+xliX2F4GvcciSVxEEvVM1loyj
-         decc4rrELUx2Eoxd6/7Agre2bJmsJjmFDt0xwJT4kM1WiTai/PtLaVt5ohU6ct8I+h2S
-         ErPkN70/WhO1OyT+UZvKQsEghWlXA+Xeinvp14K9tIXgMUCcF0O0wDGsa/kWIPRe8Oyd
-         /Z3TND793E+i+8PPBAePNuuChOdt3UtmIzfRh/Wsdg2skW5mCjfacXuceQD5A75dcAmv
-         uXNw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rgCBPEhV4gacAR1O6Zxe5iOScuCYy+833Tj8UmkEGqw=;
+        b=jsPlFeQ6fHCImc7Yyk9hDYotGdKkBfpwXV7ariPLio9pTU5W/UvTinQGjnAcPbO72/
+         Vuq/4jfdN/4+zM3eEFGCQoF2TrKH9mDIlr3krqXY8Ame4u2mKImybhzTb243n8dnFcmi
+         9HNj06pkHKza2n69gfjYE3WnWk8luPA6sOorcOFIZ8WSzVd3n471Xln3Wa7muRZw+rB8
+         En5ZG/D+LUx4SpPJIjbyGYzd1Tv9Y6aXiLMj6KrE7DyPlx8W6ijNcSYymTdS7CkDcKSI
+         UW7Nk/FOvgsjkJxxf+d8WTt181jGuyrE6z/EbwWtmNx3fhEYkyeEUmNYtlf4APBr5xZX
+         lFKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=eQDexXKJBb3J8RLI1PPVHrgZPSpYvZamvN2C0Wi1GoQ=;
-        b=oAATokXUzJFW7XG5/po76nytFcBLj3JEeTHjjoerQnMai0gxOZ6AzUN0g1Nz9NfDGk
-         +BJ6tc1wyI08qyjP6OORFwTA0VPqdM5MQ5qkGsqWWKH0iy9P3OugDMxBrEOVIWxsLQLP
-         J6joAMwF2Q9DlRHZJbdFjoJqlTAvS+dwkjWhTFFfjOhwfumYbF88aG6XW0ZyjbIoSZBi
-         rjm3am+m5lUMU0BrCvN8z/bpT8PP10+iV8q/l5FxLOZ7TSX/SUj/F+ekcGsUievTPxAx
-         lAnEy1Eqa6je5oXEpXwwT0tna4bWevBnJBeV9mvtn7GoByP11OSzSaZFWF0k9DtpeD+I
-         xA0Q==
-X-Gm-Message-State: AOUpUlE0QAKabs/ByYK8/LglNXt85gOYDe6szWo/dqbyiBRHdJQpn5E+
-        4QFdeQ+evXPd1w5dKre6aMyktTyMW2W/4btWJac=
-X-Google-Smtp-Source: AA+uWPyHixc2ivsqHRQn+Kb3S5gr1htEN8RJm0i2qau6vFD5hPVL6Ylc0WfWEdv4KXnWxjXgWX3BTTsl5GZ137K0268=
-X-Received: by 2002:a24:69c6:: with SMTP id e189-v6mr19323701itc.21.1534399483615;
- Wed, 15 Aug 2018 23:04:43 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Wed, 15 Aug 2018 23:04:42
- -0700 (PDT)
-In-Reply-To: <20180813190005.GB10013@sigill.intra.peff.net>
-References: <20180812051151.6425-1-chriscool@tuxfamily.org>
- <20180812051151.6425-2-chriscool@tuxfamily.org> <2113c74c-b230-6ea1-a980-d6d008bac759@ramsayjones.plus.com>
- <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com> <20180813190005.GB10013@sigill.intra.peff.net>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=rgCBPEhV4gacAR1O6Zxe5iOScuCYy+833Tj8UmkEGqw=;
+        b=dcrCi5xRkcPVj2CJbrbV6+zeX2JlKJCr3I4XtEodfaflqlrH0ZMspax6+PJhlw5F31
+         4WWuQ6vZ/n0fdDU80ipu9gfFge1LiHNerHpVdq/BOJg9Txs4zkJKIZyjE2b+0GvoDwMK
+         E++8B+WtKNh35uBTDxKGeohJorQjTWrSxwRBjEBU8G1JUl7uVXUplhmTyLz3SYMNFFhe
+         SeXq0ZMVSUKhs4QXpNVFjNT3zd5SnIzRneVWoy4gsnptt67jHQwI63/MeFbyb46a84/d
+         D3gLZVle6Jf5IWRgvo5XxuE8kUmlmEBXQmmvbZlh1o7ae7nrh5QELO3VXBEh0XkqNjAn
+         EZ6g==
+X-Gm-Message-State: AOUpUlH3/TVj9pU46ipvYhAHBBs+UawHVTOQsONbJtszQTPvX08QedBF
+        qAN3Ai/XYHbG7g11hhZsVyxPglZ5
+X-Google-Smtp-Source: AA+uWPyuflvbK/jWm24rKAzAyca4p1an9USm7J3lo9twYpMj0OZuNCQPH2PKRWuH3z29SGgR5NuS4w==
+X-Received: by 2002:a5d:6601:: with SMTP id n1-v6mr17662050wru.281.1534400009656;
+        Wed, 15 Aug 2018 23:13:29 -0700 (PDT)
+Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
+        by smtp.gmail.com with ESMTPSA id d8-v6sm22325182wrv.68.2018.08.15.23.13.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 15 Aug 2018 23:13:28 -0700 (PDT)
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Thu, 16 Aug 2018 08:04:42 +0200
-Message-ID: <CAP8UFD0Rm6t+uiE7s=HtA1MpW7YuK_G24wadkk7AgJUpPhkrrQ@mail.gmail.com>
-Subject: Re: [PATCH v4 1/7] Add delta-islands.{c,h}
-To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Stefan Beller <sbeller@google.com>,
         Christian Couder <chriscool@tuxfamily.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER Gabor <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: [PATCH v5 0/7] [PATCH v4 0/7] Add delta islands support
+Date:   Thu, 16 Aug 2018 08:13:06 +0200
+Message-Id: <20180816061313.19298-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.18.0.673.gcd86e60100
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 9:00 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Aug 13, 2018 at 05:33:59AM +0200, Christian Couder wrote:
->
->> >> +     memcpy(&sha_core, oid->hash, sizeof(uint64_t));
->> >> +     rl->hash += sha_core;
->> >
->> > Hmm, so the first 64-bits of the oid of each ref that is part of
->> > this island is added together as a 'hash' for the island. And this
->> > is used to de-duplicate the islands? Any false positives? (does it
->> > matter - it would only affect performance, not correctness, right?)
->>
->> I would think that a false positive from pure chance is very unlikely.
->> We would need to approach billions of delta islands (as 2 to the power
->> 64/2 is in the order of billions) for the probability to be
->> significant. GitHub has less than 50 millions users and it is very
->> unlikely that a significant proportion of these users will fork the
->> same repo.
->>
->> Now if there is a false positive because two forks have exactly the
->> same refs, then it is not a problem if they are considered the same,
->> because they are actually the same.
->
-> Right, the idea is to find such same-ref setups to avoid spending a
-> pointless bit in the per-object bitmap. In the GitHub setup, it would be
-> an indication that two people forked at exactly the same time, so they
-> have the same refs and the same delta requirements. If one of them later
-> updates, that relationship would change at the next repack.
->
-> I don't know that we ever collected numbers for how often this happens.
-> So let me see if I can dig some up.
->
-> On our git/git repository network, it looks like we have ~14k forks, and
-> ~4k are unique by this hashing scheme. So it really is saving us
-> 10k-bits per bitmap. That's over 1k-byte per object in the worst case.
-> There are ~24M objects (many times what is in git.git, but people push
-> lots of random things to their forks), so that's saving us up to 24GB in
-> RAM. Of course it almost certainly isn't that helpful in practice, since
-> we copy-on-write the bitmaps to avoid the full cost per object. But I
-> think it's fair to say it is helping (more numbers below).
+This patch series is upstreaming work made by GitHub and available in:
 
-[...]
+https://github.com/peff/git/commits/jk/delta-islands
 
-> So all in all (and I'd emphasize this is extremely rough) I think it
-> probably costs about 2GB for the feature in this particular case. But
-> you need much more to repack at this size sanely anyway.
+The above work has been already described in the following article:
 
-Thanks for the interesting numbers!
+https://githubengineering.com/counting-objects/
+
+The above branch contains only one patch. In this patch series the
+patch has been split into 4 patches (1/7, 3/7, 4/7 and 5/7) with their
+own commit message, and on top of that 3 new patches (2/7, 6/7 and
+7/7) have been added. The new patches implement things that have been
+requested on the mailing list.
+
+I kept Peff as the author of the original 4 patches and took the
+liberty to add his Signed-off-by to them.
+
+As explained in details in the "Counting Objects" article referenced
+above, the goal of the delta island mechanism is for a hosting
+provider to make it possible to have the "forks" of a repository share
+as much storage as possible while preventing object packs to contain
+deltas between different forks.
+
+If deltas between different forks are not prevented, when users clone
+or fetch a fork, preparing the pack that should be sent to them can be
+very costly CPU wise, as objects from a different fork should not be
+sent, which means that a lot of deltas might need to be computed
+again (instead of reusing existing deltas).
+
+
+The following changes have been made since the previous iteration:
+
+* suggested by Ramsay: fix typo in "deltified" in commit message in
+  patch 1/7
+
+* suggested by Ramsay and Peff: use FLEX_ARRAY when defining 'struct
+  island_bitmap' in delta-islands.c in patch 1/7
+
+The diff against v4 is:
+
+=======
+diff --git a/delta-islands.c b/delta-islands.c
+index 2ced34d99c..8e5018e406 100644
+--- a/delta-islands.c
++++ b/delta-islands.c
+@@ -35,7 +35,7 @@ struct remote_island {
+ 
+ struct island_bitmap {
+        uint32_t refcount;
+-       uint32_t bits[];
++       uint32_t bits[FLEX_ARRAY];
+ };
+ 
+ static uint32_t island_bitmap_size;
+=======
+
+This patch series is also available on GitHub in:
+
+https://github.com/chriscool/git/commits/delta-islands
+
+The previous versions are available there:
+
+V4: https://github.com/chriscool/git/commits/delta-islands32
+V3: https://github.com/chriscool/git/commits/delta-islands29
+V2: https://github.com/chriscool/git/commits/delta-islands19
+V1: https://github.com/chriscool/git/commits/delta-islands6
+
+V4: https://public-inbox.org/git/20180812051151.6425-1-chriscool@tuxfamily.org/
+V3: https://public-inbox.org/git/20180809155532.26151-1-chriscool@tuxfamily.org/
+V2: https://public-inbox.org/git/20180805172525.15278-1-chriscool@tuxfamily.org/
+V1: https://public-inbox.org/git/20180722054836.28935-1-chriscool@tuxfamily.org/
+
+
+Christian Couder (3):
+  pack-objects: refactor code into compute_layer_order()
+  pack-objects: move tree_depth into 'struct packing_data'
+  pack-objects: move 'layer' into 'struct packing_data'
+
+Jeff King (4):
+  Add delta-islands.{c,h}
+  pack-objects: add delta-islands support
+  repack: add delta-islands support
+  t: add t5319-delta-islands.sh
+
+ Documentation/config.txt           |  19 ++
+ Documentation/git-pack-objects.txt |  97 ++++++
+ Documentation/git-repack.txt       |   5 +
+ Makefile                           |   1 +
+ builtin/pack-objects.c             | 137 +++++---
+ builtin/repack.c                   |   9 +
+ delta-islands.c                    | 502 +++++++++++++++++++++++++++++
+ delta-islands.h                    |  11 +
+ pack-objects.c                     |  12 +
+ pack-objects.h                     |  39 +++
+ t/t5319-delta-islands.sh           | 143 ++++++++
+ 11 files changed, 932 insertions(+), 43 deletions(-)
+ create mode 100644 delta-islands.c
+ create mode 100644 delta-islands.h
+ create mode 100755 t/t5319-delta-islands.sh
+
+-- 
+2.18.0.673.gcd86e60100
+
