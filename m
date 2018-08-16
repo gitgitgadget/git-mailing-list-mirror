@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 540A81F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 21:43:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DE141F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 22:10:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725977AbeHQAny (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 20:43:54 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:51993 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbeHQAny (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 20:43:54 -0400
-Received: by mail-wm0-f67.google.com with SMTP id y2-v6so5777590wma.1
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 14:43:06 -0700 (PDT)
+        id S1725965AbeHQBK5 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 21:10:57 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:40571 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725864AbeHQBK4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 21:10:56 -0400
+Received: by mail-wr1-f65.google.com with SMTP id h15-v6so5431168wrs.7
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 15:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=DztNPblQCseg8UGRLrTC/K20kgtYiEIPJWugOoEdBTA=;
-        b=uPKVwkZMu5AW9psA/0mDoKNejjws+F9tB9mjF6etIP9c5ZvBorD406WjNH0MmE9Ec1
-         zDIZPFONBH2nG0zfdY4W/8XFSiMTP7+/MUSmxQagsECB9ZNS8MkmchLdItogtP6olvbO
-         85MiW4PjMPiVjkwesY4C46mAvCoXio342nflfqEjUsJcbTV0XCF9GwDb8E6wLQnA+3Ug
-         7EaVRQ7/2u/PMFsG9/vLAnO8fVcWM+o4Q65IE27sJCtjOimz6R1sBRwQP8hkckV9/nGW
-         j8eFZmh7qksIXEpgsEom1uDJiLW6f2XEij/SNxKQeAKl/X/TNRKrjh2DTOxx4WsMMfbP
-         2yMA==
+        bh=vByCW2s4C6dUE4kIjtD+B/Wu5oEgE9gJUalsskZxu5c=;
+        b=lus7tvFXaeIlPYO9Nal2elE0mYK2VlnF7y5JAcv9xihA2TgS4+tWWtEYknubUZg2WZ
+         n69tovfTrl0yfL1lKNr9dR+dv/eb8izcWVzrQUPXm0qzjPYhNyPOTWpaNJ4P3sN1ri1p
+         HKk8EGKE9l68nP4Dk/4HH5YDqgn+KKauWQtmAiyhMRqrMCcxN5+AyE6dwpMPtfj6m4NN
+         SFHXgiFTSSve6BxVly3fBWUvSYZ4d+jpsljcbly1QDJwLsT6yTfjTmZMlnfdNmiWialG
+         ea/elv/W52VhYjj4V4d7U87raF63OatK1tUjgIm3DEWzXsqTN4f2aj0hJGg+oCxuq4M9
+         JLzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=DztNPblQCseg8UGRLrTC/K20kgtYiEIPJWugOoEdBTA=;
-        b=BHVEexjN9t6lfqa6FRSiP0BHjcvjTXRLyNUp/yD7IbNfqTz+duLxG5m54JXoKmggoy
-         Owiff/22VrELvxmwPMB4P3u97P33QKf5ahMnreP/nS/wKakcYZeDTd6H5bKvO9dUdRqy
-         rYWs9HSMlxg6iaAsUbjeUv+df0TEAHAYyJi6wU3j7HuWvkdsv2CBd2DkG2g4/SI8rHdR
-         QPq/bOjuw0qjYNXKrfvsD7/kxB/Q0J3c6tNnlNMd2zCyVyKEQ441T2A+hgoi3aogQYzg
-         oyPxd8a1HPV8ZHdEV5JnDHOWK5AqitNc+WUrZ/Afj/T3BX4y8N4GA7xF00gpka+PYnpk
-         H/7w==
-X-Gm-Message-State: AOUpUlErn0acOzHNhXbkK7KPIDujsNfXvgqE9SRb4kA1Zp6eJHutzrIH
-        fGmbiOxNEW7qv+1DvZouBxs=
-X-Google-Smtp-Source: AA+uWPxTQBLpc6Ph8DKv1jgBmAy53TLIox414tJqSylIv22AMDAqgH9JwDWdXv57Bty+WJsmyNGPvw==
-X-Received: by 2002:a1c:a813:: with SMTP id r19-v6mr16452464wme.100.1534455785511;
-        Thu, 16 Aug 2018 14:43:05 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 199-v6sm4710459wmp.37.2018.08.16.14.43.04
+        bh=vByCW2s4C6dUE4kIjtD+B/Wu5oEgE9gJUalsskZxu5c=;
+        b=iNj7PswNDyEa2h8WdXZLEEkka5cN5i50jowSg6JZ1FkUjE0q3oPDr89jzppo3v6tkz
+         qoAdkQHOLGfhQJziGtPcvI4BxpIYOwRZtw7A5jYk6+lWW6voPeIvhlmgo5Pd4eXmJNNo
+         KeoV4FGgRV1fcKlDgDzu53pzsqblc0/MCWW4yIojI/LceiXia+q/yGJoOc/UeWEFkc76
+         C8JXKjnGC0keN9U3KSxv/abHqqNDJxEZal6MP1OUdsz0mP8Y/RZaslEIG7jPvzL9Zfs6
+         UzZilAH3fg4mGKkGTrW8tjTud1NjPHreptMdsFL5bi8sdv60+0336WPqSkdlceJBfQJ8
+         XQ4Q==
+X-Gm-Message-State: AOUpUlGlVsWpslJv+aNRLV/ExVSsd1oqj+TSIcRJ1HVsnOGB642GVg3p
+        4QEWbXkM19r0T9A80xL5VJA=
+X-Google-Smtp-Source: AA+uWPytgF2XOQdRKAJLtTAb8ZipYlsuWVDfUqwb242jVGkPrNOQgDQO/Pz7se92XT/TnXlN/ZuYOA==
+X-Received: by 2002:adf:9f13:: with SMTP id l19-v6mr21631238wrf.206.1534457403640;
+        Thu, 16 Aug 2018 15:10:03 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x82-v6sm5035283wmd.11.2018.08.16.15.10.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 14:43:04 -0700 (PDT)
+        Thu, 16 Aug 2018 15:10:03 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Pratik Karki <predatoramigo@gmail.com>, alban.gruin@gmail.com
-Cc:     git@vger.kernel.org, christian.couder@gmail.com,
-        Johannes.Schindelin@gmx.de, sbeller@google.com
-Subject: Re: [GSoC] [PATCH v6 3/3] builtin/rebase: support running "git rebase <upstream>"
-References: <20180730162920.20318-1-predatoramigo@gmail.com>
-        <20180806193111.12229-1-predatoramigo@gmail.com>
-        <20180806193111.12229-4-predatoramigo@gmail.com>
-Date:   Thu, 16 Aug 2018 14:43:04 -0700
-In-Reply-To: <20180806193111.12229-4-predatoramigo@gmail.com> (Pratik Karki's
-        message of "Tue, 7 Aug 2018 01:16:11 +0545")
-Message-ID: <xmqq7ekqdm3b.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+Subject: Re: non-smooth progress  indication for git fsck and git gc
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+        <20180816155714.GA22739@sigill.intra.peff.net>
+        <20180816200222.GA7422@sigill.intra.peff.net>
+Date:   Thu, 16 Aug 2018 15:10:02 -0700
+In-Reply-To: <20180816200222.GA7422@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 16 Aug 2018 16:02:23 -0400")
+Message-ID: <xmqq36vedkud.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,32 +68,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Now, there is a parallel "rebase-i-in-c" effort going on, and of
-course, setting various shell various and formulating a command line
-that essentially does 
+Jeff King <peff@peff.net> writes:
 
-	. git-rebase--$backend
+> On Thu, Aug 16, 2018 at 11:57:14AM -0400, Jeff King wrote:
+>
+>> The only way to solve that is to count bytes. We don't have a total byte
+>> count in most cases, and it wouldn't always make sense (e.g., the
+>> "Compressing objects" meter can show the same issue, but it's not really
+>> putting through bytes in a linear way).  In some cases we do show
+>> transmitted size and throughput, but that's just for network operations.
+>> We could do the same for "gc" with the patch below. But usually
+>> throughput isn't all that interesting for a filesystem write, because
+>> bandwidth isn't the bottleneck.
+>
+> Just realized I forgot to include the patch. Here it is, for reference.
 
-of course stops working.
+I've been wondering when you'd realize the omission ;-)
 
-> +static int run_specific_rebase(struct rebase_options *opts)
-> +{
-> +	const char *argv[] = { NULL, NULL };
-> + ...
-> +	switch (opts->type) {
-> +	case REBASE_AM:
-> +		backend = "git-rebase--am";
-> +		backend_func = "git_rebase__am";
-> +		break;
-> +	case REBASE_INTERACTIVE:
-> +		backend = "git-rebase--interactive";
-> +		backend_func = "git_rebase__interactive";
-> +		break;
-> + ...
-> +	strbuf_addf(&script_snippet,
-> +		    ". git-sh-setup && . git-rebase--common &&"
-> +		    " . %s && %s", backend, backend_func);
-> +	argv[0] = script_snippet.buf;
-> +
-> +	status = run_command_v_opt(argv, RUN_USING_SHELL);
+> Doing something similar for fsck would be quite a bit more invasive.
 
+Yeah, on that codepath there is no streaming write passing through a
+single chokepoint you can count bytes X-<.
+
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 80c880e9ad..e1130b959d 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -837,7 +837,7 @@ static void write_pack_file(void)
+>  		if (pack_to_stdout)
+>  			f = hashfd_throughput(1, "<stdout>", progress_state);
+>  		else
+> -			f = create_tmp_packfile(&pack_tmp_name);
+> +			f = create_tmp_packfile(&pack_tmp_name, progress_state);
+>  
+>  		offset = write_pack_header(f, nr_remaining);
+>  
+> diff --git a/bulk-checkin.c b/bulk-checkin.c
+> index 9f3b644811..0df45b8f55 100644
+> --- a/bulk-checkin.c
+> +++ b/bulk-checkin.c
+> @@ -178,7 +178,7 @@ static void prepare_to_stream(struct bulk_checkin_state *state,
+>  	if (!(flags & HASH_WRITE_OBJECT) || state->f)
+>  		return;
+>  
+> -	state->f = create_tmp_packfile(&state->pack_tmp_name);
+> +	state->f = create_tmp_packfile(&state->pack_tmp_name, NULL);
+>  	reset_pack_idx_option(&state->pack_idx_opts);
+>  
+>  	/* Pretend we are going to write only one object */
+> diff --git a/pack-write.c b/pack-write.c
+> index a9d46bc03f..b72480b440 100644
+> --- a/pack-write.c
+> +++ b/pack-write.c
+> @@ -334,14 +334,15 @@ int encode_in_pack_object_header(unsigned char *hdr, int hdr_len,
+>  	return n;
+>  }
+>  
+> -struct hashfile *create_tmp_packfile(char **pack_tmp_name)
+> +struct hashfile *create_tmp_packfile(char **pack_tmp_name,
+> +				     struct progress *progress)
+>  {
+>  	struct strbuf tmpname = STRBUF_INIT;
+>  	int fd;
+>  
+>  	fd = odb_mkstemp(&tmpname, "pack/tmp_pack_XXXXXX");
+>  	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
+> -	return hashfd(fd, *pack_tmp_name);
+> +	return hashfd_throughput(fd, *pack_tmp_name, progress);
+>  }
+>  
+>  void finish_tmp_packfile(struct strbuf *name_buffer,
+> diff --git a/pack.h b/pack.h
+> index 34a9d458b4..c87628b093 100644
+> --- a/pack.h
+> +++ b/pack.h
+> @@ -98,7 +98,8 @@ extern int encode_in_pack_object_header(unsigned char *hdr, int hdr_len,
+>  #define PH_ERROR_PROTOCOL	(-3)
+>  extern int read_pack_header(int fd, struct pack_header *);
+>  
+> -extern struct hashfile *create_tmp_packfile(char **pack_tmp_name);
+> +extern struct hashfile *create_tmp_packfile(char **pack_tmp_name,
+> +					    struct progress *progress);
+>  extern void finish_tmp_packfile(struct strbuf *name_buffer, const char *pack_tmp_name, struct pack_idx_entry **written_list, uint32_t nr_written, struct pack_idx_option *pack_idx_opts, unsigned char sha1[]);
+>  
+>  #endif
