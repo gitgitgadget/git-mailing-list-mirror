@@ -2,56 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B18DD1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 06:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC64E1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 06:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388880AbeHPJJw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 05:09:52 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37472 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388872AbeHPJJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 05:09:50 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u12-v6so3041538wrr.4
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:13:41 -0700 (PDT)
+        id S2388896AbeHPJNV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 05:13:21 -0400
+Received: from mail-io0-f193.google.com ([209.85.223.193]:40929 "EHLO
+        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726168AbeHPJNV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 05:13:21 -0400
+Received: by mail-io0-f193.google.com with SMTP id l14-v6so2977204iob.7
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:17:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ehXrhBp7BUbEjZj1HXe+R9s0Xa6SCJxiNpkWkYcQ8/M=;
-        b=N2euqxM2XQ4XX+NXSrvBr8/WWIPKB15coCiZ/CpAWvHacLeVSJXwBFDTb/8Yw2Nm1T
-         M3hmYYYLHadHop6zJnllzrS5E5dPJIers3zGuL9vhqoxu3I4D0K/Li4YbtDe2FEN94ef
-         eQks4a4Jg2SK3mjCbBCZWgcWD//4wozRj/ICQeT2Z7riKLlIWmHYsXKY+msLvkOhlM9c
-         m5NM9Dyav5QyF3lao+y3SoIsOqxErFhubgB54CW6aouF1jBaNcld+KT/Kvd+ycKK9Nr1
-         nL2TUWHrZLdrMy3Xga0CM+Vn1FVQVntw8wKtmrbOccs0IPBEndp0woEqUfzLpcJ4IgCT
-         IFMA==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=eTGeuSXER+YISmFD4hMpqxTi3spLQXeomOUDwAfxhUY=;
+        b=bwvwq3db9MfRdtXVsmeS8BmsKdJFchPeZQQ/ZjsTy1J7d5+tnajEExG2CvysjzbWXY
+         R3tULQXI6vcJewMoyJjKi5CaHXOa2/pbwFAquv9dLeFjgRbyZJSLoVPd8AtLeg7ujJPs
+         yybN4tqGERIonZjpn7Vhoz+fZ8YQUbXgw0jtdT+ikwjoJkm1up4qx8gN33NBeArLcRBj
+         MFH+E7uz+IJZXU44T4odRMamnsIdX1gWhvwzAIpS8zm8AfU9atVqeGeuxgQt3pmisH4R
+         0xWyUoozfHQLN/Y29WwWL4fYzVw3+sJu7fHqASNI4aFNS64NKtNTJtA6yMXwj3lrIZ8x
+         uf0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ehXrhBp7BUbEjZj1HXe+R9s0Xa6SCJxiNpkWkYcQ8/M=;
-        b=SZofaTu/Jq/6brZpcjXWtq9eKk/4vEo3i3FaAMtncjhjZJb/JR31NufM+ayJCjFbF8
-         VFO7q7sj2feIuQ8G3kNj20YSkHrdQaYrJt8rSSYkfKOlML5fLRs1I8tA9vHFlIZOeVWg
-         06mioxkMcQIkENB5CahTgtv1d4/YEPtzqkF9b3v0p5/TtQ4PA4UideQIb0HUrukjTDwg
-         5Spt395/hKZp2GKq54BEM/GDiWSF+FSpvx/KcnpeQbaI/Z+aqmyhKUew6q1bSp3WtWXa
-         wJfggkxv1J6ZiQMeEFg2Wz51CE6+HFEwRq/WzqdA1ALW5dyN3J5XYl9oJOZdwcHdUUJl
-         4+uw==
-X-Gm-Message-State: AOUpUlEYbwf5FcvD98E6Coj34DXGzU/nHypfl/2xve5TH4Nxd6l73yJf
-        Qfoa4Suk9dvuwVpo9gyNsL4xYyw7
-X-Google-Smtp-Source: AA+uWPyCpLJQ8E3imoUVRIuwG22bT76a9m/X7aja4GMuhbn0+Ik4O1Hxbt6ETmRuERuFEnYR7jpNfA==
-X-Received: by 2002:adf:f485:: with SMTP id l5-v6mr19202754wro.259.1534400020492;
-        Wed, 15 Aug 2018 23:13:40 -0700 (PDT)
-Received: from localhost.localdomain (228.14.112.78.rev.sfr.net. [78.112.14.228])
-        by smtp.gmail.com with ESMTPSA id d8-v6sm22325182wrv.68.2018.08.15.23.13.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 15 Aug 2018 23:13:39 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=eTGeuSXER+YISmFD4hMpqxTi3spLQXeomOUDwAfxhUY=;
+        b=HtrcvPLilvj+43qijWKymdd56wAeHECnGrLFvOVdYza9SDT3qHddD4iLtVoedAkrQp
+         DZO2NQVqfH1vaPb9sEpgIgCBsMysnW+k9X9vCEp2c4XcYflOR6weHkrxKSCi6jAoUoms
+         mVDfOItRCEWagJL9Kp8OsfcDZZvs7BxaGWkCNGBglDr0EnIOFFZzHi4086QDQbsFCFZ2
+         VA1NQER67XnfDokIy46R56vsbpRAYnbnEdlZFqY8bnsk74j0UHn49Z2PsYU4AMsm6vpY
+         XUMubBPOSNPXLU3ozejY7Zp8moUQ489fgz6/jQXkPdjV8tTHU/BzjljIByUgZR6czrop
+         fZIQ==
+X-Gm-Message-State: APzg51A4Bwx2aGm1yjPa4QCiomQk9Oe1YOHw0hLsP9lLDwBW/g0adJHg
+        kr0YsARbT//g3cKpFcBMUGTbP+c5yYmpIi6dLriLl5i+
+X-Google-Smtp-Source: ANB0Vdb+RIt2U6ROxUT8xD9qtwy5vN9UuAlSOI6X5x9yhwdmoT0qbsPeC+MqosY2u1kxgrG6pgLdUit2BUkNI1sfE2I=
+X-Received: by 2002:a5e:9615:: with SMTP id a21-v6mr3648983ioq.53.1534400232535;
+ Wed, 15 Aug 2018 23:17:12 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Wed, 15 Aug 2018 23:17:11
+ -0700 (PDT)
+In-Reply-To: <20180816061313.19298-1-chriscool@tuxfamily.org>
+References: <20180816061313.19298-1-chriscool@tuxfamily.org>
 From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
+Date:   Thu, 16 Aug 2018 08:17:11 +0200
+Message-ID: <CAP8UFD1PzJ90zwLCVR_4nwFhSL1-H8MpNjXrOrEvzFz38dbSJQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/7] [PATCH v4 0/7] Add delta islands support
+To:     git <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Duy Nguyen <pclouds@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -59,144 +62,18 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Ramsay Jones <ramsay@ramsayjones.plus.com>,
         SZEDER Gabor <szeder.dev@gmail.com>
-Subject: [PATCH v5 7/7] pack-objects: move 'layer' into 'struct packing_data'
-Date:   Thu, 16 Aug 2018 08:13:13 +0200
-Message-Id: <20180816061313.19298-8-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.18.0.673.gcd86e60100
-In-Reply-To: <20180816061313.19298-1-chriscool@tuxfamily.org>
-References: <20180816061313.19298-1-chriscool@tuxfamily.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This reduces the size of 'struct object_entry' from 88 bytes
-to 80 and therefore makes packing objects more efficient.
+Sorry, I made a copy paste error in the subject there should not be
+"[PATCH v4 0/7]" in it.
 
-For example on a Linux repo with 12M objects,
-`git pack-objects --all` needs extra 96MB memory even if the
-layer feature is not used.
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Duy Nguyen <pclouds@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/pack-objects.c |  4 ++--
- delta-islands.c        |  4 ++--
- pack-objects.c         |  6 ++++++
- pack-objects.h         | 20 ++++++++++++++++++--
- 4 files changed, 28 insertions(+), 6 deletions(-)
+On Thu, Aug 16, 2018 at 8:13 AM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> This patch series is upstreaming work made by GitHub and available in:
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index c86d2a9ad1..cc31d27793 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -616,7 +616,7 @@ static inline void add_to_write_order(struct object_entry **wo,
- 			       unsigned int *endp,
- 			       struct object_entry *e)
- {
--	if (e->filled || e->layer != write_layer)
-+	if (e->filled || oe_layer(&to_pack, e) != write_layer)
- 		return;
- 	wo[(*endp)++] = e;
- 	e->filled = 1;
-@@ -719,7 +719,7 @@ static void compute_layer_order(struct object_entry **wo, unsigned int *wo_end)
- 	 * Finally all the rest in really tight order
- 	 */
- 	for (i = last_untagged; i < to_pack.nr_objects; i++) {
--		if (!objects[i].filled && objects[i].layer == write_layer)
-+		if (!objects[i].filled && oe_layer(&to_pack, &objects[i]) == write_layer)
- 			add_family_to_write_order(wo, wo_end, &objects[i]);
- 	}
- }
-diff --git a/delta-islands.c b/delta-islands.c
-index b0b9157c85..8e5018e406 100644
---- a/delta-islands.c
-+++ b/delta-islands.c
-@@ -488,13 +488,13 @@ int compute_pack_layers(struct packing_data *to_pack)
- 		struct object_entry *entry = &to_pack->objects[i];
- 		khiter_t pos = kh_get_sha1(island_marks, entry->idx.oid.hash);
- 
--		entry->layer = 1;
-+		oe_set_layer(to_pack, entry, 1);
- 
- 		if (pos < kh_end(island_marks)) {
- 			struct island_bitmap *bitmap = kh_value(island_marks, pos);
- 
- 			if (island_bitmap_get(bitmap, island_counter_core))
--				entry->layer = 0;
-+				oe_set_layer(to_pack, entry, 0);
- 		}
- 	}
- 
-diff --git a/pack-objects.c b/pack-objects.c
-index 30314572e6..98389460c2 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -163,6 +163,9 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
- 
- 		if (pdata->tree_depth)
- 			REALLOC_ARRAY(pdata->tree_depth, pdata->nr_alloc);
-+
-+		if (pdata->layer)
-+			REALLOC_ARRAY(pdata->layer, pdata->nr_alloc);
- 	}
- 
- 	new_entry = pdata->objects + pdata->nr_objects++;
-@@ -181,5 +184,8 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
- 	if (pdata->tree_depth)
- 		pdata->tree_depth[pdata->nr_objects - 1] = 0;
- 
-+	if (pdata->layer)
-+		pdata->layer[pdata->nr_objects - 1] = 0;
-+
- 	return new_entry;
- }
-diff --git a/pack-objects.h b/pack-objects.h
-index 3cb5527eeb..ad3c208764 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -101,8 +101,6 @@ struct object_entry {
- 	unsigned no_try_delta:1;
- 	unsigned in_pack_type:TYPE_BITS; /* could be delta */
- 
--	unsigned char layer;
--
- 	unsigned preferred_base:1; /*
- 				    * we do not pack this, but is available
- 				    * to be used as the base object to delta
-@@ -147,6 +145,7 @@ struct packing_data {
- 
- 	/* delta islands */
- 	unsigned int *tree_depth;
-+	unsigned char *layer;
- };
- 
- void prepare_packing_data(struct packing_data *pdata);
-@@ -369,4 +368,21 @@ static inline void oe_set_tree_depth(struct packing_data *pack,
- 	pack->tree_depth[e - pack->objects] = tree_depth;
- }
- 
-+static inline unsigned char oe_layer(struct packing_data *pack,
-+				     struct object_entry *e)
-+{
-+	if (!pack->layer)
-+		return 0;
-+	return pack->layer[e - pack->objects];
-+}
-+
-+static inline void oe_set_layer(struct packing_data *pack,
-+				struct object_entry *e,
-+				unsigned char layer)
-+{
-+	if (!pack->layer)
-+		ALLOC_ARRAY(pack->layer, pack->nr_objects);
-+	pack->layer[e - pack->objects] = layer;
-+}
-+
- #endif
--- 
-2.18.0.673.gcd86e60100
-
+[...]
