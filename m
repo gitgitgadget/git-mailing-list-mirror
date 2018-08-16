@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4818E1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 02:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01B0C1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 02:31:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387686AbeHPF00 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 01:26:26 -0400
-Received: from mail-vk0-f74.google.com ([209.85.213.74]:46386 "EHLO
-        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbeHPF00 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 01:26:26 -0400
-Received: by mail-vk0-f74.google.com with SMTP id h81-v6so843970vke.13
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:31:19 -0700 (PDT)
+        id S2387689AbeHPF03 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 01:26:29 -0400
+Received: from mail-it0-f74.google.com ([209.85.214.74]:51817 "EHLO
+        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726473AbeHPF03 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 01:26:29 -0400
+Received: by mail-it0-f74.google.com with SMTP id q5-v6so3054924ith.1
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=JkatnKAZ/LecQk7nPFZXnqJiOgYmZRw3qBinuT4Rqa8=;
-        b=YEZVlPDsz2BJZSoN4zLb2UlvU86LoycdvDZHjfupOEZvBmUze+448uKGZkF7rvhxcS
-         TXZlmNOD9H4mLvC/VQ+pIgavbiqQQ1V+KqVZKAIhJo41fWGO3kVXbdHEVt+SHpnN5B/n
-         3LKZiYWUmsy54ahfOa4ZcgYjt87D06CQ1QPgMLgH1f1my5wZrG0xSax6pT+WZzVqibfP
-         7KU5R4WuOEwqAHY3y6/7UezBZNw2ncufSJBoPNsk89QpgcyTgBf4vYoUoWJQr2A3m92c
-         XimrnW9nJTkcCJlgHXj1pmTSSP25IG4bJ/FcH1SkjlBBGZhyZv3iNsjGm2F+cI2Y2/gX
-         UTWQ==
+        bh=Qv7QfPS5qrcTtvfQBRbhRtyf+qGYCQTnjx5PRsmBesk=;
+        b=Q2nl0dEZRtwKBuoV/HtW72WUFPOy2wVZDuS1/b1zzo/7BXjyix6HrkE5QuNpaurH4Q
+         Q98hLz/nMceMNQyoMShZRWjf8nQhy7X8v/t0ChqJJEL3x3KGaERF1sQOSRvszs8uY+hA
+         2/lDwNx3ZE/K5n9M09UnziDsvRkll+9l2OWNwL1ep+9uayIQKIDvXUW1RgzyjUu9CCxf
+         aIMUU+Rval+3LKz/QZVv0WU8BW6Ywg0VVOdfH3OFZuuvn4uEH6V012hRrVYDl1zqtmq9
+         IPnd3AlRH6qx8xPyY/nTrhFMraf1pRpoiHzZZKUBrbCZTocevQ3dw+19qS96067WxDGM
+         0xzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=JkatnKAZ/LecQk7nPFZXnqJiOgYmZRw3qBinuT4Rqa8=;
-        b=goHXn+hKuUeNficmIVqxneSJQjc/rmZIHsxirYSl4fugbo3ULptgJkKhb62sfcaGNA
-         qu/ga5SOhSywdARmFTIH6sDO7w4Iq/LbNgmHJ3ufMtUdieKD5INzoicoMMvoYOTMkYoj
-         LKI5NpQM2vpA67ZvinrI1YnMsMrS4eyFjVGa41I06z1qx1YlUc+6L1aXSzL1v47WjG7Q
-         sNLOoJd/3f0ASeg+0oPHvrU5MfyR+l3LoLVlK6HwUl9Gy9KEH6TpxLRxK5xnsCsjFcJX
-         PtMDq6I4yPAYrnvb80CvLoAHRr+iU4vEZ4R/s4qsCFqSr9+5ortaq8/YvDznti73nrZf
-         RZgA==
-X-Gm-Message-State: AOUpUlGLV8PQUGTtu3Fb4gTN5Lw+EIBEcYdFNTIerzivgyLRduCEeFve
-        IPBIvaN5NyGWhK1n+P++HlZ3Ka0HQnOhUZhNpR2h14Suok7Of8DRk24hCkw40eWi85A2Aer5yG8
-        PrOeCjNEEfv+rVtXzR3SRzx05WMY9i0i+cOkFTN8/qpL70akzkezOJ75I9cAv
-X-Google-Smtp-Source: AA+uWPy28EZb2KgwKT9gHEZbpkiNJZvapc+acp0VquyXDKFjYJ+jhFizTkAV6K2ZMiDinFQ2horxEJ79R+4y
+        bh=Qv7QfPS5qrcTtvfQBRbhRtyf+qGYCQTnjx5PRsmBesk=;
+        b=V37sZSoCzZZiCiBH2O/Dmy68Rf8pyqZT525/usBFXtPoCmFYy5HFGdNcsN++AoutkW
+         r3s0PbiCUo6LLoDkJADMR2+kPkNleGZ4Bc7B3Teo3+qNrgCX/42s8XPNqGMyMKQx7XBh
+         MVRuyjQASSvz1oEbs/FMhOsvn/V/W2tWVVpX6qC6IY3vRs1u2qz8NpIwjsEQmcvYOoer
+         R4UC1mWtcTzoG2qz1s65KGrNzV03x0c+rAWW97clxHzTu4jcsj6QOHZfMAcfAZd2dskB
+         oNuVv0uwtWvAK6OYjXVzIoCjVhfHFGQ+aJFlieddMHh8CZ3F+j+z3/ZFCPSqVXNIBm2D
+         nyPQ==
+X-Gm-Message-State: AOUpUlE1Km7ILyZ+uxwmpttErSkw9vUk0uIG24kpuRrMOPBZapF0c6il
+        WpZcxXsHhGbG4Xr8z+RT7A7ePutd+5gRnERucxAdcOrqnVHppKx+9iUIheCKta1xJxrdhZeQrfx
+        FRomIBgBYYaPa4h2JikmA4rPzwWKRhs657dunnpDfiuTzT4Sf69gbcdhd1Aux
+X-Google-Smtp-Source: AA+uWPwp1osaiQPep/GWk5uOP0YtKhmxJrQJ5n4x25MJE/lym+WD7eCnq4YgZ4+HMUMHg9AFAJdeXCkteWYj
 MIME-Version: 1.0
-X-Received: by 2002:a1f:7d07:: with SMTP id y7-v6mr15396687vkc.45.1534386678583;
- Wed, 15 Aug 2018 19:31:18 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 19:30:56 -0700
+X-Received: by 2002:a6b:6a18:: with SMTP id x24-v6mr4164855iog.48.1534386681148;
+ Wed, 15 Aug 2018 19:31:21 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 19:30:57 -0700
 In-Reply-To: <20180816023100.161626-1-sbeller@google.com>
-Message-Id: <20180816023100.161626-4-sbeller@google.com>
+Message-Id: <20180816023100.161626-5-sbeller@google.com>
 References: <20180816023100.161626-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.265.g16de1b435c9.dirty
-Subject: [PATCH 3/7] submodule: is_submodule_active to differentiate between
- new and old mode
+Subject: [PATCH 4/7] submodule sync: omit setting submodule URL in config if possible
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     bmwill@google.com, jrnieder@gmail.com,
@@ -64,66 +63,50 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The change a086f921a72 (submodule: decouple url and submodule interest,
-2017-03-17) enables us to do more than originally thought.
-As the url setting was used both to actually set the url where to
-obtain the submodule from, as well as used as a boolean flag later
-to see if it was active, we would need to keep the url around.
-
-Now that submodules can be activated using the submodule.[<name>.]active
-setting, we could remove the url if the submodule is activated via that
-setting.
-
-In preparation to do so, pave the way by providing an easy way to see
-if a submodule is considered active via the new .active setting or via
-the old .url setting.
+We do not need to update the submodule url in the superprojects config
+if the url is not used to keep the submodule active.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 5 +----
- submodule.h | 6 ++++++
- 2 files changed, 7 insertions(+), 4 deletions(-)
+ builtin/submodule--helper.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/submodule.c b/submodule.c
-index 6e14547e9e0..d56350ed094 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -221,9 +221,6 @@ int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- 	return 0;
- }
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 2f20bd4abdc..639d0bb20a1 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -922,8 +922,10 @@ static void sync_submodule(const char *path, const char *prefix,
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	char *sub_config_path = NULL;
++	int active, r;
  
--/*
-- * Determine if a submodule has been initialized at a given 'path'
-- */
- int is_submodule_active(struct repository *repo, const char *path)
- {
- 	int ret = 0;
-@@ -267,7 +264,7 @@ int is_submodule_active(struct repository *repo, const char *path)
+-	if (!is_submodule_active(the_repository, path))
++	active = is_submodule_active(the_repository, path);
++	if (!active)
+ 		return;
  
- 	/* fallback to checking if the URL is set */
- 	key = xstrfmt("submodule.%s.url", module->name);
--	ret = !repo_config_get_string(repo, key, &value);
-+	ret = !repo_config_get_string(repo, key, &value) ? 2 : 0;
+ 	sub = submodule_from_path(the_repository, &null_oid, path);
+@@ -983,13 +985,15 @@ static void sync_submodule(const char *path, const char *prefix,
+ 	strbuf_strip_suffix(&sb, "\n");
+ 	remote_key = xstrfmt("remote.%s.url", sb.buf);
  
- 	free(value);
- 	free(key);
-diff --git a/submodule.h b/submodule.h
-index 4644683e6cb..bfc070e4629 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -45,6 +45,12 @@ extern int git_default_submodule_config(const char *var, const char *value, void
- struct option;
- int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- 						     const char *arg, int unset);
-+/*
-+ * Determine if a submodule has been initialized at a given 'path'.
-+ * Returns 1 if it is considered active via the submodule.[<name>.]active
-+ * setting, or return 2 if it is active via the older submodule.url setting.
-+ */
-+#define SUBMODULE_ACTIVE_VIA_URL 2
- extern int is_submodule_active(struct repository *repo, const char *path);
- /*
-  * Determine if a submodule has been populated at a given 'path' by checking if
++	if (active == SUBMODULE_ACTIVE_VIA_URL)
++		FREE_AND_NULL(sub_origin_url);
+ 	strbuf_reset(&sb);
+ 	submodule_to_gitdir(&sb, path);
+ 	strbuf_addstr(&sb, "/config");
+-
+-	if (git_config_set_in_file_gently(sb.buf, remote_key, sub_origin_url))
+-		die(_("failed to update remote for submodule '%s'"),
+-		      path);
++	if ((r = git_config_set_in_file_gently(sb.buf, remote_key, sub_origin_url)))
++		if (sub_origin_url || r != CONFIG_NOTHING_SET)
++			die(_("failed to update remote for submodule '%s'"),
++			      path);
+ 
+ 	if (flags & OPT_RECURSIVE) {
+ 		struct child_process cpr = CHILD_PROCESS_INIT;
 -- 
 2.18.0.265.g16de1b435c9.dirty
 
