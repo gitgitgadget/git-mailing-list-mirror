@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 988721F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 02:31:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8D681F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 02:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387680AbeHPF0V (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 01:26:21 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:49191 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbeHPF0V (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 01:26:21 -0400
-Received: by mail-yw1-f74.google.com with SMTP id d20-v6so3529004ywa.16
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:31:14 -0700 (PDT)
+        id S2387683AbeHPF0Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 01:26:24 -0400
+Received: from mail-vk0-f74.google.com ([209.85.213.74]:55787 "EHLO
+        mail-vk0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726473AbeHPF0Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 01:26:24 -0400
+Received: by mail-vk0-f74.google.com with SMTP id j80-v6so835448vke.22
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:date:in-reply-to:message-id:references:subject:from:to
          :cc;
-        bh=vM5o5OCjk7mrjUCgJf+8rX3JEY+dwNvMuB5LhWO0re0=;
-        b=GL0qKJuq2+TXJWjWvaLgFssI6yS5yB+QoOQXdsellSI0vXrKcjmwvBLfRCsv6+GK2z
-         ALoUo3YVZcwH9HENKCVcRDIT5txnTXCJnVzl+huYkEAVyvX71DaLCM0tHvTb7X84ZAUe
-         4m5m6ec3MS1oxlg6h0SGMty69nIA++I9a7Fi4LO68sCY5TeiuPlEVvhG8kY+Nzaamz/G
-         tRoOOsrIKDPGshF4UHqigz4eTRPEqGhVy86SMkfarRccSXREt4/e3xF+VkMQE0aFI6id
-         UFlvuEsLokUjbsVUf/1dQwRs/HjxfeVTu3/spHvf73IOatDW7/lbIRLiIUn8kYBMZXc9
-         l7fw==
+        bh=LoYQkDMNC5oV7oV1C1KRgNBVF1lkSBoP6KKcwZVTOGw=;
+        b=Zn0qPmsmj/nOu0wQOd9edngeT8FZw7U1K5WNo5XF/E3qOHslhyXoQJhfjBzyNwD619
+         rhRUWd/bhq9Am5zXRklqVpNHU8zw0eP5J+hIMvx4k8HYX7FU8QWQftugMJz/k99QhoH+
+         SqRa+e9DFfO7Tw5Qs4escRkwAoyGtMrtKv3YIGu8aDKsbeOBdwgR7qxwFgTzeuNIJ0u1
+         RyRgzzZH/+AvwdW0QbcHC6UOg+Ywi8Agkcch3K2x3SIy7brkn8f5zrdOzZTl4sSg/fqY
+         HLZSIc0B756PNJ4IyEhUldkdtcQnw+bFYLYgtSL9PB1DGK3ffiR5m4z6XtemizuxoIGc
+         Xqcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:date:in-reply-to:message-id
          :references:subject:from:to:cc;
-        bh=vM5o5OCjk7mrjUCgJf+8rX3JEY+dwNvMuB5LhWO0re0=;
-        b=ezkpazwJkd2K0CtZ42mA5i6SrjpV7FY7vn5nBbicxUInttOx4WKh7C6jR03uETecbn
-         FXRKj8rl3DdTgrcVQCISfBIO4dEZ6UH0WC6VdkgbiuH6DJM6YK6x/9NfTfQQLuplXZv0
-         CNsk6JIIEfNeSgNI18MbszDh19Mx2lzg6cUpRsiehKiH7BtVmLbFyKcRQFohq+06A4EW
-         ubI5Apz+IAQCX6wFVfSaIdBhS75dAf9x8Oa8iWkRlBiIdCJQJPlD1vIb3ATiHG4q27AK
-         9sWq1QtGjSdZ6cDm0kJnR8HPDv4p/XeK92YpfY2iWRMuKAnlkhHlRoqg1KC8BEKenGTA
-         xCGw==
-X-Gm-Message-State: AOUpUlGoreh9jc5iLxC5NThimKQyjTuAo/DQNHRFKVygqvNyxYdNKpdB
-        RKRJTd0BYONHP1Mq3YN89JoSHloVreYrNBt2OxFW+rTCg+B29qnV7hh77XBgPvGp/Jv/nkl4aF3
-        oWhVun3K0tDCcxmNDcMAQzNTGCEkPid88EcucJcG73Y6f8mK570rsci833cQc
-X-Google-Smtp-Source: AA+uWPxDypZ7iA7b0giHNh5V2tawNhmF0U9okb7Z/43JL1aAiEA6lbc5RrwAhqhyzBE983z4Z7NcjdJ9Uk4f
+        bh=LoYQkDMNC5oV7oV1C1KRgNBVF1lkSBoP6KKcwZVTOGw=;
+        b=Q5ry2rR5S/n6nqC0Sx8sK+AYEJk9A7DqM0wCTR+tKOW20WeveK+5Ja5tFWxbIxGsV6
+         2Ha8SuGLutaWqbwUC9WWwwNtrgspi1pnXXID7FQVoXqw4kbherUDKMn4PwmgAimyGOqm
+         I9tnRgiV6JqugiOzgKJrJr1nWwdSxePJ5NucjhmGQAJE6K2ubjQoOQOV62RgQa8RfEqa
+         FtF+g+SkpcedeQEvyOsn4EY/ma37Vd/rrgoB/Pqzges8VreN8k+GZMGxFCJ+jtcMQl/G
+         jMO4muHjz9wUdOEMuWgm1FoJfxzKzNnD5FJlE6qvFZNnWU0O0Fh9dxdwb8UGJrQzjRSC
+         IsTQ==
+X-Gm-Message-State: AOUpUlHSZfGY84Zsg2he31mV1C33lVAb24/M2QRmwz0W6SatiSpJdRzt
+        OlSanUTxlZteihddlcllZSF8NQhTu+BxqEEInaZb605k7tu2BcyvRHt4jx4jQhfRDQ/w6UKf+bL
+        fL98+AH6KHNtFy1rPBCKQcdAduwokn2pPlEZS+L9EQiLvINqiFB69CTy2kI4q
+X-Google-Smtp-Source: AA+uWPxL+mcosB//SyoKpUVtQFWgJTCieYDe4DXl44aRrITvaiKbqnjHsppLv1neSIXTlveudq0cMekPQ6Ml
 MIME-Version: 1.0
-X-Received: by 2002:a81:ae1c:: with SMTP id m28-v6mr8275548ywh.42.1534386673837;
- Wed, 15 Aug 2018 19:31:13 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 19:30:54 -0700
+X-Received: by 2002:ab0:50d7:: with SMTP id d23-v6mr13308006uaa.125.1534386676255;
+ Wed, 15 Aug 2018 19:31:16 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 19:30:55 -0700
 In-Reply-To: <20180816023100.161626-1-sbeller@google.com>
-Message-Id: <20180816023100.161626-2-sbeller@google.com>
+Message-Id: <20180816023100.161626-3-sbeller@google.com>
 References: <20180816023100.161626-1-sbeller@google.com>
 X-Mailer: git-send-email 2.18.0.265.g16de1b435c9.dirty
-Subject: [PATCH 1/7] t7410: update to new style
+Subject: [PATCH 2/7] builtin/submodule--helper: remove stray new line
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     bmwill@google.com, jrnieder@gmail.com,
@@ -63,132 +63,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While at it fix a typo (s/independed/independent) and
-make sure git is not in a chain of pipes.
-
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- t/t7410-submodule-checkout-to.sh | 99 +++++++++++++++++++-------------
- 1 file changed, 58 insertions(+), 41 deletions(-)
+ builtin/submodule--helper.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/t/t7410-submodule-checkout-to.sh b/t/t7410-submodule-checkout-to.sh
-index 1acef32647a..f1b492ebc46 100755
---- a/t/t7410-submodule-checkout-to.sh
-+++ b/t/t7410-submodule-checkout-to.sh
-@@ -6,55 +6,72 @@ test_description='Combination of submodules and multiple workdirs'
- 
- base_path=$(pwd -P)
- 
--test_expect_success 'setup: make origin' \
--    'mkdir -p origin/sub && ( cd origin/sub && git init &&
--	echo file1 >file1 &&
--	git add file1 &&
--	git commit -m file1 ) &&
--    mkdir -p origin/main && ( cd origin/main && git init &&
--	git submodule add ../sub &&
--	git commit -m "add sub" ) &&
--    ( cd origin/sub &&
--	echo file1updated >file1 &&
--	git add file1 &&
--	git commit -m "file1 updated" ) &&
--    ( cd origin/main/sub && git pull ) &&
--    ( cd origin/main &&
--	git add sub &&
--	git commit -m "sub updated" )'
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 5c9d1fb496d..2f20bd4abdc 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1024,7 +1024,6 @@ static void sync_submodule_cb(const struct cache_entry *list_item, void *cb_data
+ {
+ 	struct sync_cb *info = cb_data;
+ 	sync_submodule(list_item->name, info->prefix, info->flags);
 -
--test_expect_success 'setup: clone' \
--    'mkdir clone && ( cd clone &&
--	git clone --recursive "$base_path/origin/main")'
-+test_expect_success 'setup: make origin'  '
-+	mkdir -p origin/sub &&
-+	(
-+		cd origin/sub && git init &&
-+		echo file1 >file1 &&
-+		git add file1 &&
-+		git commit -m file1
-+	) &&
-+	mkdir -p origin/main &&
-+	(
-+		cd origin/main && git init &&
-+		git submodule add ../sub &&
-+		git commit -m "add sub"
-+	) &&
-+	(
-+		cd origin/sub &&
-+		echo file1updated >file1 &&
-+		git add file1 &&
-+		git commit -m "file1 updated"
-+	) &&
-+	git -C origin/main/sub pull &&
-+	(
-+		cd origin/main &&
-+		git add sub &&
-+		git commit -m "sub updated"
-+	)
-+'
-+
-+test_expect_success 'setup: clone' '
-+	mkdir clone &&
-+	git -C clone clone --recursive "$base_path/origin/main"
-+'
+ }
  
- rev1_hash_main=$(git --git-dir=origin/main/.git show --pretty=format:%h -q "HEAD~1")
- rev1_hash_sub=$(git --git-dir=origin/sub/.git show --pretty=format:%h -q "HEAD~1")
- 
--test_expect_success 'checkout main' \
--    'mkdir default_checkout &&
--    (cd clone/main &&
--	git worktree add "$base_path/default_checkout/main" "$rev1_hash_main")'
-+test_expect_success 'checkout main' '
-+	mkdir default_checkout &&
-+	git -C clone/main worktree add "$base_path/default_checkout/main" "$rev1_hash_main"
-+'
- 
--test_expect_failure 'can see submodule diffs just after checkout' \
--    '(cd default_checkout/main && git diff --submodule master"^!" | grep "file1 updated")'
-+test_expect_failure 'can see submodule diffs just after checkout' '
-+	git -C default_checkout/main diff --submodule master"^!" >out &&
-+	grep "file1 updated" out
-+'
- 
--test_expect_success 'checkout main and initialize independed clones' \
--    'mkdir fully_cloned_submodule &&
--    (cd clone/main &&
--	git worktree add "$base_path/fully_cloned_submodule/main" "$rev1_hash_main") &&
--    (cd fully_cloned_submodule/main && git submodule update)'
-+test_expect_success 'checkout main and initialize independent clones' '
-+	mkdir fully_cloned_submodule &&
-+	git -C clone/main worktree add "$base_path/fully_cloned_submodule/main" "$rev1_hash_main" &&
-+	git -C fully_cloned_submodule/main submodule update
-+'
- 
--test_expect_success 'can see submodule diffs after independed cloning' \
--    '(cd fully_cloned_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
-+test_expect_success 'can see submodule diffs after independent cloning' '
-+	git -C fully_cloned_submodule/main diff --submodule master"^!" >out &&
-+	grep "file1 updated" out
-+'
- 
--test_expect_success 'checkout sub manually' \
--    'mkdir linked_submodule &&
--    (cd clone/main &&
--	git worktree add "$base_path/linked_submodule/main" "$rev1_hash_main") &&
--    (cd clone/main/sub &&
--	git worktree add "$base_path/linked_submodule/main/sub" "$rev1_hash_sub")'
-+test_expect_success 'checkout sub manually' '
-+	mkdir linked_submodule &&
-+	git -C clone/main worktree add "$base_path/linked_submodule/main" "$rev1_hash_main" &&
-+	git -C clone/main/sub worktree add "$base_path/linked_submodule/main/sub" "$rev1_hash_sub"
-+'
- 
--test_expect_success 'can see submodule diffs after manual checkout of linked submodule' \
--    '(cd linked_submodule/main && git diff --submodule master"^!" | grep "file1 updated")'
-+test_expect_success 'can see submodule diffs after manual checkout of linked submodule' '
-+	git -C linked_submodule/main diff --submodule master"^!" >out &&
-+	grep "file1 updated" out
-+'
- 
- test_done
+ static int module_sync(int argc, const char **argv, const char *prefix)
 -- 
 2.18.0.265.g16de1b435c9.dirty
 
