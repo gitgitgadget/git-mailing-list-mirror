@@ -2,100 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D68AE1F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 16:58:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E041F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 17:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727312AbeHPT6O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 15:58:14 -0400
-Received: from resqmta-po-11v.sys.comcast.net ([96.114.154.170]:59704 "EHLO
-        resqmta-po-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725968AbeHPT6O (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 16 Aug 2018 15:58:14 -0400
-X-Greylist: delayed 491 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Aug 2018 15:58:14 EDT
-Received: from resomta-po-18v.sys.comcast.net ([96.114.154.242])
-        by resqmta-po-11v.sys.comcast.net with ESMTP
-        id qJTYfKBXoJ7OtqLTefMr84; Thu, 16 Aug 2018 16:50:26 +0000
-Received: from [IPv6:2601:646:c101:c8a2:97f:6088:8686:d247] ([IPv6:2601:646:c101:c8a2:97f:6088:8686:d247])
-        by resomta-po-18v.sys.comcast.net with ESMTPA
-        id qLTdfkDC9f1URqLTdfTFY9; Thu, 16 Aug 2018 16:50:25 +0000
-Subject: Re: "less -F" is broken
-To:     Linus Torvalds <torvalds@linux-foundation.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>, bug-less@gnu.org
-References: <CA+55aFzsVt9CJOBPGABcvg464W1THvwYpNhO+9DWUNw4X36Ndg@mail.gmail.com>
- <87k1orqpxj.fsf@evledraar.gmail.com>
- <CA+55aFxjUsvhHwQGthGiLr537BGHkd-LECXVv8KzBTMMCo1bKQ@mail.gmail.com>
-From:   Mark Nudelman <markn@greenwoodsoftware.com>
-Message-ID: <e7fb0ae0-b3e3-d7ad-7f6e-c114ee563d59@greenwoodsoftware.com>
-Date:   Thu, 16 Aug 2018 09:50:25 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.2.1
+        id S1727560AbeHPUBd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 16:01:33 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54919 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725968AbeHPUBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 16:01:33 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so5124697wmb.4
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 10:01:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=q99JM+WepU/F0D8LMBlcxGxm5ayHVqkKMPoIWbCRd7s=;
+        b=hl6dXN1Y0YnxT7cOr3CQLSjh2fH/T79Nu8rP8EfgtIdmKutBIA+YnyfeV82ZxXLx3K
+         zWwa4WVWRAE4QRW7fNLWr0smkZ0AGp/OrVrUNcFrTDfvW0CDeDYTvDVWSqJWypcevqBJ
+         Lf0VW0M4EasAGGkb4GWMKgHOu3/r1oV6Lzg2frzJdTtCHw/oRsm+q18QhGxVBsl/5HAi
+         5MC//p2i3ebks0eA0jF+E7BZwhuHH9M8EunJMUIK3/qvvAIO7sq9/6J2LJsDvrzORPgZ
+         9lhBQk/n783i/YKlo0ADFSS0r2i2pqL9PkJe0l24/NAU86mkwQqFYkdqQbGmeoqizoG7
+         FSpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=q99JM+WepU/F0D8LMBlcxGxm5ayHVqkKMPoIWbCRd7s=;
+        b=BrdxHkQMXdeTrdQ/xOFWonoyoPnxNICggmTUpIJbS1mO8oE1KIYUnk/N0m4xo+Uvgs
+         z3NenjeMpScNfaVNfcmT9JzfsyTnUjv8RXy4dTq+QQEgi6K+PpXYtw23kunWCrMX/C2S
+         scKmOtl503IUK5SkIDBq5MaA5vxOdGiwvW3gcwl+y2B6XriIjajc+ZnLW7n/4hHUaGoV
+         BsnhD7JVDLfOQJxfh4IGal6wtbX8vbGT7mBgKeQq95lWRXYl7mMsPck9SSFCLg5piKlS
+         N7WIZ46/KFUky+uwenzBPIoBHtrZ7F3tvBBkvz8yhjpwUlOPyUO1qlm7SWRX66gkWpiM
+         N3dQ==
+X-Gm-Message-State: AOUpUlGcYNxlQenVQTjsrNCkK+SW33TqJSVH+gM+iEtLzYV9RLFP33Tq
+        ODNlMeU++g/QuKceBD+WJcw=
+X-Google-Smtp-Source: AA+uWPyHjK049PyVZqSPuYi0/DlXmBe0JuEwVC53vhxMF3KZ2r8iDBmr9v41SMq/Xhr++EQiOwAB9A==
+X-Received: by 2002:a1c:588c:: with SMTP id m134-v6mr14642289wmb.154.1534438909958;
+        Thu, 16 Aug 2018 10:01:49 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e133-v6sm3164395wma.33.2018.08.16.10.01.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 10:01:49 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
+        pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com, tboegi@web.de
+Subject: Re: [PATCH] config.txt: clarify core.checkStat = minimal
+References: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
+        <20180816155647.10459-1-pclouds@gmail.com>
+Date:   Thu, 16 Aug 2018 10:01:48 -0700
+In-Reply-To: <20180816155647.10459-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Thu, 16 Aug 2018 17:56:47 +0200")
+Message-ID: <xmqqin4afdoj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CA+55aFxjUsvhHwQGthGiLr537BGHkd-LECXVv8KzBTMMCo1bKQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfF9kZ4WmkbnUEKPBVf29pNr0sxlzM9vkRlPmNPEF26NuFuYuP6LuOltBertuc2Y150Kp5p2fhNp2/T4sPsiSMetbDWMwqCTShZuAIdJufMHyb79bvX8e
- PU/M8iEnXv7m3wXp5IZvslHsonZqmbpIMdclVTmsAdA4nUeNjuNrjBiwk53UdKinf/NTs/8MkOhs2XnLDtJtnx8s5cG1aisd+HdR5FGixin/c+q1OI7iG5Mz
- svpu+vU4VVOng6JISXEA64tKiN8kTcHhE+xtX1LiTZ4xJVeOodvHD+NB1a9Ivf+M4Z0yfY0vt8XrbUrzcq5jq19JPS6pzD4aH1pDSY5ymPdZuyFvAWQNjNwi
- 8kNS4ODc3/Vj8+KktqHWHIJ4XXfKNtkMp4iozE1TsvEj9eZt5uvE2QLy7PPKTj3yPbAYHhiI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
--X is a workaround for the previous behavior of -F, but it's not a great 
-solution.  By not sending the terminal init sequence, some things can be 
-broken, depending on the terminal.  For example, some terminals send the 
-"wrong" sequences for the arrow keys when the terminal doesn't receive 
-the init sequence.  For that reason and similar ones, I've never liked 
--X.  The change in behavior for -F was to deal with some other types of 
-(arguably broken) terminals that switch to an alternate screen when they 
-receive the init sequence.  This makes -F fairly useless on such 
-terminals.  However this does change the behavior to the one Linus 
-objected to, where the first page is not output until we know whether it 
-fits on the screen, so any delays in the first screen will delay all 
-output.  (Note that this doesn't happen for delays that occur after the 
-first screen has been displayed.)
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-So I'm not sure what the best solution is.  Linus's proposal to disable 
-the line counting stuff if -X is set seems reasonable.  I will look into 
-that and see if there are any issues with it.
+> The description of this key does not really tell what 'minimal' mode
+> checks exactly. More information about this mode can be found in the
+> commit message of c08e4d5b5c (Enable minimal stat checking -
+> 2013-01-22).
+>
 
---Mark
+While I agree that we need to do _something_, I am not sure if this
+change adds sufficient value.  I _think_ those who wonder if they
+want to configure this want to know what are _not_ looked at
+(relative to the "default") more than what are _still_ looked at,
+partly because the description of "default" is already bogus and
+says "check all fields", which is horrible for two reasons.  It is
+unclear what are in "all" fields in the first place, and also we do
+not look at all fields (e.g. we do not look at atime for obvious
+reasons).
 
-On 8/15/2018 2:57 PM, Linus Torvalds wrote:
-> On Wed, Aug 15, 2018 at 2:29 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->>
->> Downloading & trying versions of it locally reveals that it's as of
->> version 520, not 530. The last version before 520 is 487. Presumably
->> it's covered by this item in the changelog:
->>
->>      Don't output terminal init sequence if using -F and file fits on one
->>      screen[1]
-> 
-> Side note: that's sad, because we already use X in the default exactly
-> for that reason.
-> 
-> So apparently "less" was broken for us to fix something that we
-> already had long solved. The code basically tried to do "automatic X
-> when F is set".
-> 
-> And all that line_count stuff (which is what breaks) is pointless when
-> -X is already given.
-> 
-> That does give a possible fix: just stop doing the line_count thing if
-> no_init is set.
-> 
-> So "-F" would continue to be broken, but "-FX" would work.
-> 
-> Something like the attached patch, perhaps?
-> 
->              Linus
-> 
+So perhaps
+
+	When this configuration variable is missing or is set to
+	`default`, many fields in the stat structure are checked to
+	detect if a file has been modified since Git looked at it.
+	Among these fields, when this configuration variable is set
+	to `minimal`, sub-second part of mtime and ctime, the uid
+	and gid of the owner of the file, the inode number (and the
+	device number, if Git was compiled to use it), are excluded
+	from the check, leaving only the whole-second part of mtime
+	(and ctime, if `core.trustCtime` is set) and the filesize to
+	be checked.
+
+or something?
+
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+> ---
+>  Documentation/config.txt | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index fd8d27e761..5c41314dd5 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -466,6 +466,8 @@ core.checkStat::
+>  	and work tree. The user can set this to 'default' or
+>  	'minimal'. Default (or explicitly 'default'), is to check
+>  	all fields, including the sub-second part of mtime and ctime.
+> +	'minimal' only checks size and the whole second part of mtime
+> +	and ctime.
+>  
+>  core.quotePath::
+>  	Commands that output paths (e.g. 'ls-files', 'diff'), will
