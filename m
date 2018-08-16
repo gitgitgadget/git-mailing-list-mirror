@@ -7,126 +7,105 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57AB01F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 04:41:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E1681F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 06:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727735AbeHPHgp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 03:36:45 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:41821 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725866AbeHPHgp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 03:36:45 -0400
-Received: by mail-pl0-f65.google.com with SMTP id w19-v6so1448633ply.8
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 21:41:06 -0700 (PDT)
+        id S2388305AbeHPI6L (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 04:58:11 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:40187 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727033AbeHPI6L (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 04:58:11 -0400
+Received: by mail-it0-f65.google.com with SMTP id h23-v6so5170845ita.5
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 23:02:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=VWa1KeM1aGHfqzBYZ/TOWvmYW7bTvdgX+Wrsl7ibRps=;
-        b=ht3IdYfEvpGA5wNexOMMI0Hj+4xnejdVg4HLNPUW5mwCV72Jluh5AZuU53gxEUtwk1
-         d1/6Up34C5d45HsiK6Nw1k3HLQ1m94Ojt8MwAVrjn4SyZfVYVwSPjiqfIjg+Sil4lXC/
-         riqfG/7iG8QObKJdnL1gmt8QklPgtoeya453RJ6d37iOThfWDk4UFErJExU6+KV9FhVb
-         qyY3VD8Dw5GA0OwjF2QK/Efw5ElOeDzDSOvNT1r0eBHfJtKx4L06o7FzQR6TuRZ5TflN
-         B4gdpZd9uTHMpe8zb4Rz8xv2QA515aovBaEZ9+fqqV1KO9gF3RwR5vv6OLfqDPBwSgSd
-         M8aA==
+        bh=vrcEc5xjmmmAVDel7Snfz7PZRAzIIygYn6W+0O1utIA=;
+        b=Qh1vgzDuiHCzY3rhtagI8JJIodF5OEx0tiZxxA9JirKP9gE+pmv+SrUaDix8agGEqV
+         3kPEaX//Eb7ECXS5dDzhioAFOV7lkqqz/t88qxynbSdxrjHGh3egrHRHZQ4iYU5cJWHn
+         BSJ2/tBQ4k1VJH0kBe6udId7Gd0QEvn+Swt0ydpB1wLfrJqBGOzOvRYeFrP7k42F7LRb
+         C9sRi4cNd/tl27N5rFStm1HUmT0l/1fiGkp/bs1DmiJ1PcKAMKThECftHhiLqEFOU1VU
+         s2NaT/Dy+cRJQpw7tqI6/0DMMrap8m1024AWxacDDScEV21Y2hpW9KAMA3pnzM33Jc4U
+         fWlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=VWa1KeM1aGHfqzBYZ/TOWvmYW7bTvdgX+Wrsl7ibRps=;
-        b=rlwsZZPoteD2gl1pALvGueAReUcVsWqnaKhVpUjHSl5+LdjH0aIC9gOWlg8gT27IzO
-         Cm5zfA4vG7ZXfG1MgpzBqsS6si6VgUB6ZMxgZ5wpemrx4G/ctFY6SJU0XlUQW1pL5VUN
-         S2H4D0mf3vw8w8wSKdTFXAp+pMcaFo0G8lGcvL+BF2ZflyRee4Djng7F0o553D4Zguaa
-         3AgtRHpPRm9fwaqQlQgAic47s82z4KemIWBZtKxHYv37vHOCDqUiLWqHPBc6ynzVPbkA
-         5xtI4ZboYNiHMtQ/+zN/GuugXYymLoS7w5HYj65Kh7jlDC0ioAWlp1KzkW1eH/kuP+Bu
-         ywPA==
-X-Gm-Message-State: AOUpUlFwxk9bt1gs2M/gTUIIhCmz+/diHebI86LxNLPwj5kvxwmGB1Wv
-        JXKtleEYDfvstrMFrxo5ISx1hC0E44ENtf3Mm74=
-X-Google-Smtp-Source: AA+uWPwjejz63DasTyV8TDdLUpThtpYoUquDbEEqRcPhHkzVAqIv760UkMbVNQ0E3QFU0qg+aWXGVKKAV/lpN2M9DmQ=
-X-Received: by 2002:a17:902:1a2:: with SMTP id b31-v6mr26665674plb.279.1534394466190;
- Wed, 15 Aug 2018 21:41:06 -0700 (PDT)
+        bh=vrcEc5xjmmmAVDel7Snfz7PZRAzIIygYn6W+0O1utIA=;
+        b=n9sNeQY2O7aoLqEsCrlB3hB73ALgr6YH55Vb/JLTsb3rIyK24t4MpASbaicRi8wTJx
+         pLd0c7+Bl/TyARevS9HcSxGeCaYT0UyVuMjXT4hHP7By78lAoRES5eCe+ubJViYS6ST3
+         k+BuhQWgIsTAfJ8akmJt+tuG4NOOfvZierS0vwzQmFJkgK+Cglq5SGy24jhNRTF9X8Jo
+         pAPW6ltYP0l+UUj04O0doLa7+7+6KUgo1NTK5Dw2boaH/DMtHEWoZtH/1X4/EtVr2A7M
+         WDQ9+PooFoYtKaVXrr49kC7m1TLfe7FSjJrW5d8UB4qaZDexuuCcpvewObcdaCUwvCyZ
+         vJTw==
+X-Gm-Message-State: AOUpUlFzgpMecdDpwCgFNjgozYy0RrkgZb3DXCYv4NDyc3IZYSOIk4ix
+        RlEimSpB9JbCWFpTi8I/ZklLNrN2ndoY7Q4bj8g=
+X-Google-Smtp-Source: AA+uWPy4RhPyH7ruOF23IlQrqPj3IWYT3NbwrjV20e18/X4JB6sXxkfu65DxLdA5rGPjYxVB0/rpiEPbIP1bhmhlWxM=
+X-Received: by 2002:a24:54d:: with SMTP id 74-v6mr19589952itl.96.1534399326471;
+ Wed, 15 Aug 2018 23:02:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180815205630.32876-1-gitter.spiros@gmail.com>
-In-Reply-To: <20180815205630.32876-1-gitter.spiros@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 16 Aug 2018 06:40:51 +0200
-Message-ID: <CAN0heSrZXjaQ0H1J1Mmqhv9qhiNbRn4fOJ4oO1XrZFEGO4YFug@mail.gmail.com>
-Subject: Re: [PATCH v2] worktree: add --quiet option
-To:     Elia Pinto <gitter.spiros@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        karen@codesynthesis.com
+Received: by 2002:a4f:228d:0:0:0:0:0 with HTTP; Wed, 15 Aug 2018 23:02:05
+ -0700 (PDT)
+In-Reply-To: <20180813181149.GA10013@sigill.intra.peff.net>
+References: <20180812051151.6425-1-chriscool@tuxfamily.org>
+ <20180812051151.6425-2-chriscool@tuxfamily.org> <2113c74c-b230-6ea1-a980-d6d008bac759@ramsayjones.plus.com>
+ <CAP8UFD1tX+rAxQc47o-50Kzo6hnX9mTWH2BPSq9HiO_OgBzYTw@mail.gmail.com>
+ <7a780fe9-e8bf-804a-82e6-8df81cd5c41c@ramsayjones.plus.com> <20180813181149.GA10013@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 16 Aug 2018 08:02:05 +0200
+Message-ID: <CAP8UFD1A8Z_Eh+N8204zSUG5Pnji+5=uwOiDr+LrbFGFJ-qPtg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/7] Add delta-islands.{c,h}
+To:     Jeff King <peff@peff.net>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        SZEDER Gabor <szeder.dev@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 15 Aug 2018 at 22:56, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> Add the '--quiet' option to git worktree,
-> as for the other git commands. 'add' is the
-> only command affected by it since all other
-> commands, except 'list', are currently
-> silent by default.
+On Mon, Aug 13, 2018 at 8:11 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 13, 2018 at 01:17:18PM +0100, Ramsay Jones wrote:
+>
+>> >>> +struct island_bitmap {
+>> >>> +     uint32_t refcount;
+>> >>> +     uint32_t bits[];
+>> >>
+>> >> Use FLEX_ARRAY here? We are slowly moving toward requiring
+>> >> certain C99 features, but I can't remember a flex array
+>> >> weather-balloon patch.
+>> >
+>> > This was already discussed by Junio and Peff there:
+>> >
+>> > https://public-inbox.org/git/20180727130229.GB18599@sigill.intra.peff.net/
+>>
+>> That is a fine discussion, without a firm conclusion, but I don't
+>> think you can simply do nothing here:
+>>
+>>   $ cat -n junk.c
+>>        1      #include <stdint.h>
+>>        2
+>>        3      struct island_bitmap {
+>>        4              uint32_t refcount;
+>>        5              uint32_t bits[];
+>>        6      };
+>>        7
+>>   $ gcc --std=c89 --pedantic -c junk.c
+>>   junk.c:5:11: warning: ISO C90 does not support flexible array members [-Wpedantic]
+>>     uint32_t bits[];
+>>              ^~~~
+>>   $ gcc --std=c99 --pedantic -c junk.c
+>
+> Right, whether we use the FLEX_ALLOC macros or not, this needs to be
+> declared with FLEX_ARRAY, not an empty "[]".
 
-Thanks for a follow-up.
+Ok, it will use FLEX_ARRAY in the reroll I will send soon.
 
-The word "currently" means I can't shake the feeling that Eric has a
-very good point in [1]:
-
-  It might make sense to say instead that this is adding a --quiet
-  option _in general_, rather than doing so specifically for 'add'.
-
-As an example, if `git worktree move` ever learns to produce some sort
-of output, then Eric's approach would mean that such a hypothetical
-`move` is buggy until it learns to respect `--quiet`. With your
-approach, it would mean that we would get feature requests that `move`
-should also respect `--quiet` (which we would then need to redefine in
-the documentation) or that it should learn of a `--quiet-move` (which I
-do not think is a particularly good UI).
-
-Doing such a patch instead would mean tweaking the commit message
-slightly...
-
-  Add the '--quiet' option to git worktree, as for the other git
-  commands. Currently, 'add' is the only command affected by it since
-  all other commands, except 'list' obviously, are already silent by
-  default.
-
-... and the documentation slightly ...
-
-  Suppress feedback messages.
-
-It might make sense adding a comment to the documentation about how this
-currently only affects `add`, but such comments do risk going stale. I
-am on the fence about whether the documentation needs to say something
-about `list` -- who in their right mind would expect `list --quiet` to
-actually suppress the list? And if `list` ever learns to give some
-feedback messages in addition to the list itself, then we would want
-`--quiet` to suppress *those*, I guess.
-
-Others might disagree violently with this, but I wonder whether it makes
-sense to add a test to verify that, e.g., `git worktree move --quiet` is
-quiet. Such a test would demonstrate that this is your intention, i.e.,
-anyone digging into a report on "why does git worktree foo not respect
---quiet?" would be 100% convinced that your intention back in 2018 really
-was to respect it everywhere. It seems wasteful to add such a test for
-all other modes, but maybe you can identify one which you think has a
-higher risk of learning to output some feedback in the future.
-
-To be clear, it is fine for you to disagree with the above! :-)
-
->         }
-> -
-> -       print_preparing_worktree_line(opts.detach, branch, new_branch, !!new_branch_force);
-> +       if (!opts.quiet)
-> +               print_preparing_worktree_line(opts.detach, branch, new_branch, !!new_branch_force);
-
-I think that empty line should be kept. Probably not worth a reroll.
-
-Good work!
-
-[1] https://public-inbox.org/git/CAPig+cS-b2yL2FeLRzS+jW-O5fRd1g8Kqak7j1QX5PRP0ojQEQ@mail.gmail.com/
-
-Martin
+Thanks Ramsay and Peff!
