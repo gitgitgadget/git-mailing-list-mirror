@@ -2,183 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F7E01F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 02:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47A081F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 02:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387699AbeHPF0g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 01:26:36 -0400
-Received: from mail-it0-f73.google.com ([209.85.214.73]:35686 "EHLO
-        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726473AbeHPF0g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 01:26:36 -0400
-Received: by mail-it0-f73.google.com with SMTP id h17-v6so2970393itj.0
-        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:31:28 -0700 (PDT)
+        id S2387655AbeHPF35 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 01:29:57 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:45171 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727560AbeHPF35 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 01:29:57 -0400
+Received: by mail-pl0-f67.google.com with SMTP id j8-v6so1307392pll.12
+        for <git@vger.kernel.org>; Wed, 15 Aug 2018 19:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=zc9rJUDpcsXSmYQOApLYZ4ndJkzGaTh+C43eI0eNtwc=;
-        b=nq2TXDcUU8ztktZZS/Q4iHEzB5P819iYkegbte9cnV9EAAOsv8wiV73PN71rcFSMqo
-         NrhOKnOs1blZCN8EldPl/SvgsRHFfBfW3encg+ogXoG66MouDcUe/nOxhSn2RbGeBIJ4
-         eOP6gbawJsYGmjDqcv2BFTvgefyYuURBmlZxUz4u8ZDaRzQ3+te+IX4V4c7a3a4Dh9Lk
-         AOJ4SyxjRu6OVB7cDJJP06daURzBNdvR2Mj6pfr6Ucyc1bu9lApRy3DT2bBTsjkImlrb
-         rB6bfIE0Pa1r6kBqhn9JS8DeDdHVGz2574Ow8exKnhKQVTJfb0kSdGenGXzJMv87OnZy
-         WUzA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zDjd52iTM1Wp1/PuGr67inwdHCJ8QO7Ms0oVIrf+nsc=;
+        b=IxvGCqcbRTzU3+icJtdfatGKVhN769niQN1FkQIngUr4XGc/sbLg4HKgCJmAuA4mYC
+         ZasCNdna/4fhlvTYmU2GxjBmC8ednrumhXU/A1o3aD2s6gvK57eZwTi3ZEXgL5N1RMTV
+         94STnYiDeUK9IV5H+o+0yp6nhn+R9XX1DdBoKYW1G2Jd8heuJvJF5BGuAcaWOm96Z5W/
+         M3I9x4fgY6HNoH0M9W64InPEhEeRSdNQgFV88TbGpXEZOUjgfnT6fOuONFkTpoVV2a4U
+         fDSJVNSwjcsFpZhCi7YVYk9qaCCkw+IHKnj4bCfdVW+O9bWCOxWWQktqUJqFQIPEO5KR
+         6H6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=zc9rJUDpcsXSmYQOApLYZ4ndJkzGaTh+C43eI0eNtwc=;
-        b=k0bIfrsWV6/yVQs7qNqaeJos7t/yUQSgHlwF7dhOVhtfB/35vsJDXvIFmcSStxEe4I
-         VNMJAq7uHxAPyR3VUxsHMp5YbzdrZnsYv5LFyEEVfYvWqPbWsX9Dmdqk2zaufTCCyXcL
-         GhzqvZDLwVqfdbr9o6hFHN+ok9PtV41AOrK+/R10AqwuPp8Kf9YS/cbcbxCytMIbPRGz
-         uqMGssZ9AfSFSadpQS0ZnTbxinDUwlKm+uPum98fLGdGR9P5nioUf7S2essWi9Nw7ol7
-         lr3knoVJCMj6gwUyecMpfftZtotl5NPeJ2g8F/+Bypb/8IKR0BV9l59bxHxePcUlvk9i
-         fUoA==
-X-Gm-Message-State: AOUpUlGzSfK/xvGMbexukCHLi/h0hz9JZ5Z2+dG/1UDut6RNT+jw9syB
-        nTsLj/AadNDuHnoqjhCrpM3g/w/HKmMwLDM7Hvg5H6ork+Kd7hduiZsfUPhxrR9fXfHyXvXivp0
-        c8ONgiCUGQ+GOBY9Wrx1wKNl5avAgyxq3KfNdB87u+lvyJSIToMDnkJqJN+KB
-X-Google-Smtp-Source: AA+uWPzGuqxsIgcVS3//yXr81MrEjSEIyt5HDgVOJpOpfSwrJmBQlENqAyKeECSrJBpdvFmW4EYUFq93L5Dm
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zDjd52iTM1Wp1/PuGr67inwdHCJ8QO7Ms0oVIrf+nsc=;
+        b=Mlpnvtrr9lxZLxgnS8ZE8ZopjAb0B7p2JGTYq2j40Mn0uJ5pZJEvjz68zHfWGPSoeH
+         1cXfoHvgsbGcKaUuwM85d8nrNANzWnOAh03iOkpMW5HqhraZls33sOouzhtoh+rslVxg
+         sb6JqIRkDaSZQ5he23T1T8a+qNfTckDW6lsMfipBRYFyBgwl/Jr9vlzwfHcGK20OsAe0
+         lnm5H+VPw3OkWoc+kgrGjko92IbVkpubaI06RI5zQLK7w3lew330n4czucEIkLdGuK/L
+         wtyxmfEmpNjw9MGu5LDoIHeKveCOq/zoD2MByW6oTsy5ohKUp5ezNndfPbWJd80oEf6S
+         6OYA==
+X-Gm-Message-State: AOUpUlFnjcwuYJyhJR0EGloWmD9FrLyeSC1Dq44v9ooh8REor5O6BCNy
+        S/cEcU3ItJ3Pi7XiRRbcpEs=
+X-Google-Smtp-Source: AA+uWPzJajNFNrAZel1B4uYBJd1Yf44f8rg39bvoWDM/sduY2Xr1+2Ej/6LT23jxjZtFxb3cb9Phdw==
+X-Received: by 2002:a17:902:76c5:: with SMTP id j5-v6mr26692533plt.296.1534386888909;
+        Wed, 15 Aug 2018 19:34:48 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 84-v6sm46584380pfj.33.2018.08.15.19.34.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Aug 2018 19:34:48 -0700 (PDT)
+Date:   Wed, 15 Aug 2018 19:34:46 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Brandon Williams <bmwill@google.com>, Jeff King <peff@peff.net>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180816023446.GA127655@aiede.svl.corp.google.com>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <20180814185743.GE142615@aiede.svl.corp.google.com>
+ <CAGZ79kZUq5jPqyb=B1ppEi1QhNGmhLXeV6vPn8ouR=YGEN32pg@mail.gmail.com>
+ <20180814211211.GF142615@aiede.svl.corp.google.com>
+ <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
 MIME-Version: 1.0
-X-Received: by 2002:a6b:6b02:: with SMTP id g2-v6mr13028387ioc.126.1534386688335;
- Wed, 15 Aug 2018 19:31:28 -0700 (PDT)
-Date:   Wed, 15 Aug 2018 19:31:00 -0700
-In-Reply-To: <20180816023100.161626-1-sbeller@google.com>
-Message-Id: <20180816023100.161626-8-sbeller@google.com>
-References: <20180816023100.161626-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0.265.g16de1b435c9.dirty
-Subject: [PATCH 7/7] builtin/submodule--helper: unset submodule url if possible
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     bmwill@google.com, jrnieder@gmail.com,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYfoK9hfXM2-VMAZLPpqBOFQYKtyYuYJb8twzz6Oz5ymQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c      | 24 ++++++++++++++++++++++--
- t/t5526-fetch-submodules.sh      |  2 +-
- t/t7406-submodule-update.sh      |  8 ++++++++
- t/t7410-submodule-checkout-to.sh |  2 +-
- 4 files changed, 32 insertions(+), 4 deletions(-)
+Hi again,
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 36de64902ec..3aa385bce5c 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1515,6 +1515,7 @@ struct update_clone_data {
- 	struct object_id oid;
- 	unsigned just_cloned;
- 	unsigned retried;
-+	unsigned cleanup_url;
- };
- 
- struct submodule_update_clone {
-@@ -1590,7 +1591,7 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	struct strbuf displaypath_sb = STRBUF_INIT;
- 	struct strbuf sb = STRBUF_INIT;
- 	const char *displaypath = NULL;
--	int needs_cloning = 0;
-+	int needs_cloning = 0, active;
- 
- 	if (ce_stage(ce)) {
- 		if (suc->recursive_prefix)
-@@ -1632,7 +1633,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	}
- 
- 	/* Check if the submodule has been initialized. */
--	if (!is_submodule_active(the_repository, ce->name)) {
-+	active = is_submodule_active(the_repository, ce->name);
-+	if (!active) {
- 		next_submodule_warn_missing(suc, out, displaypath);
- 		goto cleanup;
- 	}
-@@ -1653,6 +1655,8 @@ static int prepare_to_clone_next_submodule(const struct cache_entry *ce,
- 	suc->update_clone[suc->update_clone_nr].sub = sub;
- 	suc->update_clone[suc->update_clone_nr].retried = 0;
- 	suc->update_clone[suc->update_clone_nr].ce = ce;
-+	suc->update_clone[suc->update_clone_nr].cleanup_url =
-+		(active != SUBMODULE_ACTIVE_VIA_URL);
- 	suc->update_clone_nr++;
- 
- 	if (!needs_cloning)
-@@ -1801,6 +1805,22 @@ static int git_update_clone_config(const char *var, const char *value,
- 
- static void update_submodule(struct update_clone_data *ucd)
- {
-+	if (ucd->cleanup_url) {
-+		struct strbuf cfg = STRBUF_INIT;
-+		struct strbuf submodule_url = STRBUF_INIT;
-+		int r;
-+
-+		strbuf_addf(&submodule_url, "submodule.%s.url", ucd->sub->name);
-+		strbuf_repo_git_path(&cfg, the_repository, "config");
-+
-+		r = git_config_set_in_file_gently(cfg.buf, submodule_url.buf, NULL);
-+		if (r && r != CONFIG_NOTHING_SET)
-+			die(_("failed to remove '%s'"), submodule_url.buf);
-+
-+		strbuf_release(&cfg);
-+		strbuf_release(&submodule_url);
-+	}
-+
- 	fprintf(stdout, "dummy %s %d\t%s\n",
- 		oid_to_hex(&ucd->oid),
- 		ucd->just_cloned,
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 0f730d77815..cd1bd131b59 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -508,7 +508,7 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
- 		git config -f .gitmodules submodule.fake.path fake &&
- 		git config -f .gitmodules submodule.fake.url fakeurl &&
- 		git add .gitmodules &&
--		git config --unset submodule.submodule.url &&
-+		test_might_fail git config --unset submodule.submodule.url &&
- 		git fetch >../actual.out 2>../actual.err &&
- 		# cleanup
- 		git config --unset fetch.recurseSubmodules &&
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index f604ef7a729..f581fea28e0 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -84,6 +84,14 @@ test_expect_success 'submodule update detaching the HEAD ' '
- 	)
- '
- 
-+test_expect_success 'active submodule leaves no URL config in superproject' '
-+	# relies on previous test
-+	(
-+		cd super &&
-+		test_must_fail git config -f .git/config submodule.submodule.url
-+	)
-+'
-+
- test_expect_success 'submodule update from subdirectory' '
- 	(cd super/submodule &&
- 	 git reset --hard HEAD~1
-diff --git a/t/t7410-submodule-checkout-to.sh b/t/t7410-submodule-checkout-to.sh
-index f1b492ebc46..683e957934b 100755
---- a/t/t7410-submodule-checkout-to.sh
-+++ b/t/t7410-submodule-checkout-to.sh
-@@ -55,7 +55,7 @@ test_expect_failure 'can see submodule diffs just after checkout' '
- test_expect_success 'checkout main and initialize independent clones' '
- 	mkdir fully_cloned_submodule &&
- 	git -C clone/main worktree add "$base_path/fully_cloned_submodule/main" "$rev1_hash_main" &&
--	git -C fully_cloned_submodule/main submodule update
-+	git -C fully_cloned_submodule/main submodule update --init
- '
- 
- test_expect_success 'can see submodule diffs after independent cloning' '
--- 
-2.18.0.265.g16de1b435c9.dirty
+Stefan Beller wrote:
+> On Tue, Aug 14, 2018 at 2:12 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 
+>> What if we forbid directory separator characters in the gitdirname?
+>
+> Fine with me, but ideally we'd want to allow sharding the
+> submodules. When you have 1000 submodules
+> we'd want them not all inside the toplevel "modules/" ?
+
+That's a good reason to permit slashes in the gitdirname.
+
+If I understood the rest of your reply correctly, your worry was about
+dangerous gitdirname values in .gitmodules.  I never had any wish to
+read them from there anyway, so this worry hopefully goes away.
+
+[...]
+>> In this proposal, it would only be read from config, not from
+>> .gitmodules.
+>
+> Ah good point. That makes sense.
+>
+> Stepping back a bit regarding the config:
+[...]
+> Now that we have the submodule.active or even
+> submodule.<name>.active flags, we do not need (b) any more.
+> So the URL turns into a useless piece of cruft that just is unneeded
+> and might confuse the user.
+>
+> So maybe I'd want to propose a patch that removes
+> submodule.<name>.url from the config once it is cloned.
+> (I just read up on "submodule sync" again, but that might not
+> even need special care for this new world)
+>
+> And with all that said, I think if we can avoid having the submodules
+> gitdir in the config, the config would look much cleaner, too.
+
+Yes, I understand and agree with this.
+
+I should further spell out my motivation with this gitdirname
+suggestion.  The issue that some people have mentioned in this thread
+is that urlencoding might not be perfect --- it's pretty close to
+perfect, but it's likely we'll come up with some unanticipated needs
+later (like sharding) that it doesn't solve.  Solving those all right
+now would not necessarily be wise, since the thing about unanticipated
+needs is that you never know in advance what they will be. ;-)
+
+So it would be nice, for future-proofing, if we can change the naming
+scheme later.
+
+As a bonus, that would also make interoperability with other
+implementations easier.  For example, suppose we mess up in JGit and
+urlencode a different set of characters than Git does.  Then a mixed
+Git + JGit installation would have this subtle bug of the submodule
+.git directory not being reused when I switch to and from and branch
+not containing that submodule, in some circumstances.  That sounds
+difficult to support.
+
+Whereas if we have a gitdirname configuration variable, then JGit and
+libgit2 and go-git do not have to match the naming scheme Git chooses.
+They can try, but if one gets it subtly wrong then that is okay
+because the submodule's directory name is right there and easy to look
+up.
+
+All at the cost of recording a little configuration somewhere.  If we
+want to decrease the configuration, we can avoid recording it there in
+the easy cases (e.g. when name == gitdirname).  That's "just" an
+optimization.
+
+And then we have the ability later to handle all the edge cases we
+haven't handled yet today:
+
+- sharding when the number of submodules is too large
+- case-insensitive filesystems
+- path name length limits
+- different sets of filesystem-special characters
+
+Sane?
+
+Thanks,
+Jonathan
