@@ -2,109 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 816431F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 13:15:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3FD91F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 14:03:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403838AbeHPQOM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 12:14:12 -0400
-Received: from mail-qk0-f172.google.com ([209.85.220.172]:43903 "EHLO
-        mail-qk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389123AbeHPQOL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 12:14:11 -0400
-Received: by mail-qk0-f172.google.com with SMTP id z74-v6so3517931qkb.10
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 06:15:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=kp9NHQaN278GgC+Ka2hWq7GJveXh6MJ37qUuGk3y24M=;
-        b=o5ga1tnNtIuW/+cu+FVyv1DlOKFRyM2J+Mmqvpffqb6AUAGQDebpmRxGvrj2LEmzqf
-         mSKzX35LOHiqTgFCDNiWYo4BYLg7+I/f7A5CbjCYJ0JiM5sSuH0RDMfq2rY760o4PNeC
-         lQYXjidEKmMdxR2cSkeUzxcL8LCr4arL0T18dj5HGDKAB1JM9dYcojY93Fwj5jJf470k
-         X+iQju6s36ofPR1+/XEPvj1bA47ze/V9O3x4oy09TApanX3qVL6gdHZOurhkWpaUQNvh
-         Rh8w+RzgAlh7bngVrf6uvdh5ymFwKNh7rkiBbjvLNN2UX6RYfmfwcZPAZmlUpI4gGJs5
-         fvJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=kp9NHQaN278GgC+Ka2hWq7GJveXh6MJ37qUuGk3y24M=;
-        b=WNug5KeyU29SobpQF3Nqe97g0bWqVATndAjOX7dszfBkRv0I5ro9g9XIg05suIjsas
-         SoRTKoxJIfmwGhi/923v/LenECSSs22GyuxNZAus4tQd/a/y98r/QeBstJLps9CTgGfD
-         Wou1LzAUlAoswlENWscSU+dvVyJj83bTZ2032km3EhL+BsrlqbtNLZtZTCD1+b+fh0WJ
-         0GnCtKJuzkYj0Pc0VkIb04OR0LkVZutNW13xE+Z1ICtg5xluJW6pIEm8gtxI0sc/GbrP
-         Zro5Ds3eKdiTiPHECjlXC3Mmk4Okb/qZmogOeSBmV3DOoqovgSnDRJL5kUmID8+HhZJ6
-         B9Zw==
-X-Gm-Message-State: AOUpUlH6NBtZxduDmBTmDWUulWaFdleupqojP5EzayPD/DPNu27lkn4F
-        lQMgKuPIcaUzCRX4tvnsLcg=
-X-Google-Smtp-Source: AA+uWPxQ7PvJuL0Fo2FXZT0t9MYcT3zmXiyAs/i5naxuY7aGkIlqBJww3tR4dJ84IVx6dTMZJLnMQg==
-X-Received: by 2002:ac8:3525:: with SMTP id y34-v6mr28208011qtb.241.1534425338072;
-        Thu, 16 Aug 2018 06:15:38 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:79e0:b48f:7e06:fa78? ([2001:4898:8010:0:6316:b48f:7e06:fa78])
-        by smtp.gmail.com with ESMTPSA id q195-v6sm16099357qke.13.2018.08.16.06.15.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 16 Aug 2018 06:15:37 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Aug 2018, #03; Wed, 15)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>, jnareb@gmail.com
-References: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <85c6eb4c-a083-4fb7-4860-b01a8ce9fa4f@gmail.com>
-Date:   Thu, 16 Aug 2018 09:15:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S2387574AbeHPRCZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 13:02:25 -0400
+Received: from mout.web.de ([217.72.192.78]:39913 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726312AbeHPRCZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 13:02:25 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRUFI-1fSDV42ZWi-00SbnK; Thu, 16
+ Aug 2018 16:03:14 +0200
+Date:   Thu, 16 Aug 2018 16:03:12 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
+        pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net,
+        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH v4] clone: report duplicate entries on case-insensitive
+ filesystems
+Message-ID: <20180816140312.GA6102@tor.lan>
+References: <20180810153608.30051-1-pclouds@gmail.com>
+ <20180812090714.19060-1-pclouds@gmail.com>
+ <20180815190816.GA26521@tor.lan>
+ <xmqqtvnvh12u.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqtvnvh12u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:x1aElhFCPj0qIQVa+Xtet4x5ICipe+jxw+z0hD3RsYrsJTO5enf
+ El9r+CRZcR8h/YGlrVPKuZzVx3LDh6odYc70uX71mlwqbmmYvkxxzOjX5bGNbHFYdR7fFE7
+ Nh9dApYvC7JkfvWQpxZZxxj2f/hvkJEVlA/3eR1TQW//qpsf4kIwT+STXR15pwBhP/1kpbL
+ H/ONMEW3bZH7YtIZAyRKA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:DPKM7yFPUW4=:kPu2rkuS/ascom/15tK94f
+ SU/r4GnWrougx890oucVjXnSnr5QpphagHdQWB4Mtbgd6XjOlVrWkuZyI7YHMT9WCJGLIknWk
+ YVXuXY8k5sA1QPuKDQeQRd0qcvUJ99e5F9Jn7nnfFJOtVhUfVE/b2jm8lw3zamBnNFiYRfHd1
+ FUYiHQTZ2om92nSDanz6I3U3cz960Bn4GzERQFlYU/1C6UbekF5cb6MjbkEyVGyRpCwrTERJw
+ epVbo36dLXWorZbC+MigwHGHt7SdLVQ5OsXk3N/2nCsEr2AScSlD3+yUKGV5BMnKZx+qqeLPw
+ llJ9PK2xwnTx7csSnVwFGghZDDoxpbbm1yoffAJjVS2WOSBBKeWLzZIb3eDjp0t9ejybE8/2y
+ okm5XH7L8JTUGccCdWdP+Q5uRGqcvrr1f3jfDOT/qe3mB0TvFcL8h50PKGgT/uZHZraglYiIZ
+ BipB3OCPwwSbrEmjRY7maI0ZddmQz4NZFsQutawvNkV5rIFxJSPMwHMuefJtaJbvC+SvpUhZ7
+ PaDr41p8jDKS3+6jI0JcLF0H0sWjT3dEiAQ+b6Lyl82u9zF/O5p1Mo0O414TKZcbJfzhxmkVp
+ iZgyM7sKFcqHm8bN499f348cbe83nojOnrdaC1LWqe+2RT0peWVr/+cBJrTBSjC6TYl9fyFXQ
+ qFp4TWUZgFEaGDFt+8qMLZjQ6MwmrRYA4+iHZwnbOHcxGVKUp0mv30iUJ4vXllbr+Rz9o6Q9f
+ 0aTy4YsPfE3dxOqMYNcSTcwotY8KLbzBWOrsQD2lGsFDcCnid2jqtwF8sJU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/15/2018 7:01 PM, Junio C Hamano wrote:
-> * ds/commit-graph-with-grafts (2018-07-19) 8 commits
->    (merged to 'next' on 2018-08-02 at 0ee624e329)
->   + commit-graph: close_commit_graph before shallow walk
->   + commit-graph: not compatible with uninitialized repo
->   + commit-graph: not compatible with grafts
->   + commit-graph: not compatible with replace objects
->   + test-repository: properly init repo
->   + commit-graph: update design document
->   + refs.c: upgrade for_each_replace_ref to be a each_repo_ref_fn callback
->   + refs.c: migrate internal ref iteration to pass thru repository argument
->
->   The recently introduced commit-graph auxiliary data is incompatible
->   with mechanisms such as replace & grafts that "breaks" immutable
->   nature of the object reference relationship.  Disable optimizations
->   based on its use (and updating existing commit-graph) when these
->   incompatible features are in use in the repository.
->
->   Perhaps eject and replace with another reroll when it comes.
->   cf. <a3640919-95cf-cca4-d552-4715a031dd7f@gmail.com>
->   cf. <86bmap7l7a.fsf@gmail.com>
+On Wed, Aug 15, 2018 at 12:38:49PM -0700, Junio C Hamano wrote:
 
-Yes, I am working on a re-roll. Feel free to eject in the meantime.
+This should answer Duys comments as well.
+> Torsten Bögershausen <tboegi@web.de> writes:
+> 
+[snip]
+> > Should the following be protected by core.checkstat ? 
+> > 	if (check_stat) {
+> 
+> I do not think such a if statement is strictly necessary.
+> 
+> Even if check_stat tells us "when checking if a cached stat
+> information tells us that the path may have modified, use minimum
+> set of fields from the 'struct stat'", we still capture and update
+> the values from the same "full" set of fields when we mark a cache
+> entry up-to-date.  So it all depends on why you are limiting with
+> check_stat.  Is it because stdev is unusable?  Is it because nsec is
+> unusable?  Is it because ino is unusable?  Only in the last case,
+> paying attention to check_stat will reduce the false positive.
+> 
+> But then you made me wonder what value check_stat has on Windows.
+> If it is false, perhaps we do not even need the conditional
+> compilation, which is a huge plus.
 
-For one, I need to base it on jk/core-use-replace-refs. This is not 
-hard, as it is already in master.
+Agreed:
+check_stat is 0 on Windows, and inum is allways 0 in lstat().
+I was thinking about systems which don't have inodes and inum,
+and then generate an inum in memory, sometimes random.
+After a reboot or a re-mount of the file systems those ino values
+change.
+However, for the initial clone we are fine in any case.
 
-For two, I was waiting for resolution on the way to handle arbitrary 
-repositories in for_each_replace_ref. Stefan had a few proposed patches, 
-but they don't seem to have completed. Can someone fill me in on the 
-status there? I could re-roll with the two simple patches that I have, 
-which send the struct repository pointer into the 'void *' data parameter.
+> 
+> >> +		if (dup->ce_stat_data.sd_ino == st->st_ino) {
+> >> +			dup->ce_flags |= CE_MATCHED;
+> >> +			break;
+> >> +		}
+> >> +	}
+> >> +#endif
+> >
+> > Another thing is that we switch of the ASCII case-folding-detection-logic
+> > off for Windows users, even if we otherwise rely on icase.
+> > I think we can use fspathcmp() as a fallback. when inodes fail,
+> > because we may be on a network file system.
+> >
+> > (I don't have a test setup at the moment, but what happens with inodes
+> > when a Windows machine exports a share to Linux or Mac ?)
+> >
+> > Is there a chance to get the fspathcmp() back, like this ?
+> 
+> If fspathcmp() never gives false positives, I do not think we would
+> mind using it like your update.  False negatives are fine, as that
+> is better than just punting the whole thing when there is no usable
+> inum.  And we do not care all that much if it is more expensive;
+> this is an error codepath after all.
+> 
+> And from code structure's point of view, I think it makes sense.  It
+> would be even better if we can lose the conditional compilation.
 
-Finally, I have some non-trivial feedback from Jakub to work on.
+The current implementation of fspathcmp() does not give false positvies,
+and future versions should not either.
+All case-insentive file systems have always treated 'a-z' equal to 'A-Z'.
+In FAT MS/DOS there had only been uppercase letters as file names,
+and `type file.txt` (the equivilant to ´cat file.txt´ in *nix)
+simply resultet in `type FILE.TXT`
+Later, with VFAT and later with HPFS/NTFS a file could be stored on
+disk as "File.txt".
+From now on  ´type FILE.TXT´ still worked, (and all other upper-lowercase
+combinations).
+This all is probably nothing new.
+The main point should be that fspathcmp() should never return a false positive,
+and I think we all agree on that. 
 
-Thanks,
 
--Stolee
+Now back to the compiler switch:
+Windows always set inum to 0 and I can't think about a situation where
+a file in a working tree gets inum = 0, can we use the following:
 
+static void mark_colliding_entries(const struct checkout *state,
+				   struct cache_entry *ce, struct stat *st)
+{
+	int i;
+	ce->ce_flags |= CE_MATCHED;
+
+	for (i = 0; i < state->istate->cache_nr; i++) {
+		struct cache_entry *dup = state->istate->cache[i];
+		int folded = 0;
+
+		if (dup == ce)
+			break;
+
+		if (dup->ce_flags & (CE_MATCHED | CE_VALID | CE_SKIP_WORKTREE))
+			continue;
+		/*
+		 * Windows sets ino to 0. On other FS ino = 0 will already be
+		 *  used, so we don't see it for a file in a Git working tree
+		 */
+		if (st->st_ino && (dup->ce_stat_data.sd_ino == st->st_ino))
+			folded = 1;
+
+		/*
+		 * Fallback for NTFS and other case insenstive FS,
+		 * which don't use POSIX inums
+		 */
+		if (!fspathcmp(dup->name, ce->name))
+			folded = 1;
+
+		if (folded) {
+			dup->ce_flags |= CE_MATCHED;
+			break;
+		}
+	}
+}
+
+
+> 
+> Another thing we maybe want to see is if we can update the caller of
+> this function so that we do not overwrite the earlier checkout with
+> the data for this path.  When two paths collide, we check out one of
+> the paths without reporting (because we cannot notice), then attempt
+> to check out the other path and report (because we do notice the
+> previous one with lstat()).  The current code then goes on and overwrites
+> the file with the contents from the "other" path.
+> 
+> Even if we had false negative in this loop, if we leave the contents
+> for the earlier path while reporting the "other" path, then the user
+> can get curious, inspect what contents the "other" path has on the
+> filesystem, and can notice that it belongs to the (unreported--due
+> to false negative) earlier path.
+> 
+[snip]
