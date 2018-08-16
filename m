@@ -7,78 +7,102 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E94091F428
-	for <e@80x24.org>; Thu, 16 Aug 2018 08:36:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 154611F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 08:42:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389243AbeHPLdj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 07:33:39 -0400
-Received: from mout.gmx.net ([212.227.17.21]:42723 "EHLO mout.gmx.net"
+        id S2388113AbeHPLjg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 07:39:36 -0400
+Received: from mout.gmx.net ([212.227.15.15]:35571 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728858AbeHPLdj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 07:33:39 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCxfb-1fhevn3iIl-009ku9; Thu, 16
- Aug 2018 10:36:37 +0200
-Date:   Thu, 16 Aug 2018 10:36:34 +0200 (DST)
+        id S1731216AbeHPLjf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 07:39:35 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgtWa-1fUH7n2WBs-00M4C7; Thu, 16
+ Aug 2018 10:42:31 +0200
+Date:   Thu, 16 Aug 2018 10:42:30 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] rebase -i: fix SIGSEGV when 'merge <branch>' fails
-In-Reply-To: <20180815093935.10222-3-phillip.wood@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1808161036200.71@tvgsbejvaqbjf.bet>
-References: <20180815093935.10222-1-phillip.wood@talktalk.net> <20180815093935.10222-3-phillip.wood@talktalk.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Phillip Wood <phillip.wood@talktalk.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: fix numbering in squash message
+In-Reply-To: <xmqqy3d7h21r.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808161039300.71@tvgsbejvaqbjf.bet>
+References: <20180815094125.12530-1-phillip.wood@talktalk.net> <xmqqbma3ijyq.fsf@gitster-ct.c.googlers.com> <27c91e67-7567-f820-c641-c7980965fcef@talktalk.net> <xmqqy3d7h21r.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BREnqT/VCeU2cP6rnwM2tZVMMHIcI6no+7E5pXyH7WjLNWAupeo
- kS9MwOVrCJSiCKOqO4HpddMhGddDZW8Z1m6x85VIE6k0aRsrtnEVo1yV+tZKB2MZUYG8Ta7
- +KUX5Gq3YoSTFNlljstQxDoQHbP1VjLLt8qOBt6VyJkhFcwEVeZmv/56gbboS+SCVqd6wrV
- x8IkdQkWjRUKUW5FDoQjQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:YnhFAsqtejE=:V9WQFy7ygxCSIu1mgsFSP8
- n8n0Jh7D0wCPXGwjFGy5MAP/3knbvWGd9evDeoP8+goqt1wiW6el71vVkPJf3qTn/4EYQcefs
- 6iz1ksskYcsv7vpvQ+9VCxLla53UgpjCo1gQ7bPrbaiqDdMuenzt14Rbp0L9JjRUhm2F+hc2I
- wh7aKDBrBlrpuOPqxnMAEhv6zonNShW1C+UUg/VCLkrw1Es3CAQznX+vOpoTuJs4MzQgZrESS
- /E8rVJJ8KgkHPG2nbwjg646Oo9ZY5s4ccoAwJEsnpE2NHYyZhJaaTX7QtOPJtPSWbbgAkbkaD
- oWMR0MlfxJI/b5gJlxqqhC0DC3qSwRFbzsnQDu11EPEyJxxXP/R1/E/QVmO/tEhzfkEXMLaJ1
- Ro6QCb4HfJEn/WsvTyKAqVH3sypIstmvrsnHyLiyb1Gg0l6c8cC9gkNIgfoLzcyuJbYXENVDU
- pXRsg325aPTStjugFzKLSkwnRhe3Q2m15Jia1R/z+5R1r0X8LK8thkwKZw6hj3RUhOorUfu9W
- ovm/ASBDm2Ba9GIUnKbE3aBuOixK+g8uXxgdgLcQq3dNLM+rvRBAtVAz/g9WR2TGeX+l5WtGH
- 07hmLaTORNp7X/XbAeIzjl3+H9YvofRInDkrT16dV0xDj3XBZYPRSgd9+jR9+OtxDPly60STu
- 78vNH7yaNiKuqcHKj6hESJmTW+hAYZDj6UAnDfZtdXjPj6HWgx3TtCKQUgFVoEjt239Lb4+SS
- 1OYd5UOnWNr+UECKOi6udKdZXj/fv7/OI0ZRRY3Ib031HWIa7/3VQQrTv+6dqLMrm93byr4kc
- AwsMePN
+X-Provags-ID: V03:K1:lVuNhuwx5DbuIzkzUklX73tweOcpCjZI2dHZxZA7MJc8EVcrG1u
+ +A7wjRN/FoLMcuDuF3dnZAY0z9a7dMG1cUNsKcOANUYDfhGo4oQXflfP2VjKu2fWI4Xbek5
+ hpgmPKeRk3+RlBHYMWByR8TFTCcBVDi/d0Hn9tb27mDWy78qpIKrGMSFxCJFOBz9Nh86MIp
+ xwfq0wckKJripKS/6RZMg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:f3qaai7pRDQ=:bLaQ8TbseOu/axLaQKwcM1
+ s45ub4cFeThtod2EftjqeEJw6DDG0O7wb81ZiRwyCZs7w+6PH8OCUepOombN27WIvtcJKIDP7
+ eeznrsQnd6c0IGJB6fbucTl8AdEcXL2282CER4hu0bepcrLda9wUiFilDRNGE1KREaV8QxqEM
+ lEZ1H8uaBUtJtpXtz8EglHBVQ6b5SIEriDSagH89siFHgRG/+LZyAiYHD/87KYfIyHpDzSwcC
+ OcbDgQaDKY+vP6AkAZ3JfRcO62E7FakHpqqI7PrzqiHrCvirGVMXLE7UnyAaSNM2Z3AhPkFzS
+ WwFbA4ymEhdP9fRLd8FnqO5vSSrE+iKTT6qyeoqUVqZFIeXC8HvYDwV+x1WmMhbYOOBao/HYG
+ lrtrF7fsXiUK3gwleb9Vmt+cmsQJrrL2durFmD2eUF+1jjpA/zD5f5cBo3LquLPxLiL96EID5
+ a8SumbsyzON2ynNTfm3J0oMC1EaYpdyYaJcmdFSDSoFbzl8m8El06orhV0JR5ZXmPqIRKHAsr
+ JSa1+Rg2sehTclgWXoEp09Qejj0FSIbkJDpSFBmCenhX/0umF9Ps+G+hp7fLek7R/2x+nDP2O
+ LENDzfVj4p7bMfZ1Z4QeFxmrcJgFTHpI7LNawAm9yEiPnJk2iIpEYgOB89GGCVqG4kufH6gSf
+ XBb2mtjHHgDhIIFBvPMCHIi+LLwSQR+Zsw5r9UieuIalKXkCVPzxILgNg3dC5ZRDz7154cuEJ
+ To0GQQgPsI9ko27hh62Hnp4ZS46dc9+eHB8QJUtt5psZvhXSMHboFwNu/dAkKE46z/+hGbWcQ
+ 1kFlZgG
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Hi,
 
-On Wed, 15 Aug 2018, Phillip Wood wrote:
+On Wed, 15 Aug 2018, Junio C Hamano wrote:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Phillip Wood <phillip.wood@talktalk.net> writes:
 > 
-> If a merge command in the todo list specifies just a branch to merge
-> with no -C/-c argument then item->commit is NULL. This means that if
-> there are merge conflicts error_with_patch() is passed a NULL commit
-> which causes a segmentation fault when make_patch() tries to look it up.
+> >> I wonder if it makes it easier to read, understand and maintain if
+> >> there were a local variable that gets opts->current_fixup_count+2 at
+> >> the beginning of the function, make these three places refer to that
+> >> variable, and move the increment of opts->current_fixup_count down
+> >> in the function, after the "if we are squashing, do this, if we are
+> >> fixing up, do that, otherwise, we do not know what we are doing"
+> >> cascade.  And use the more common post-increment, as we no longer
+> >> depend on the returned value while at it.
+> >> 
+> >> IOW, something like this (untested), on top of yours.
+> >
+> > I think you'd need to change commit_staged_changes() as well as it
+> > relies on the current_fixup_count counting the number of fixups, not the
+> > number of fixups plus two.
 > 
-> This commit implements a minimal fix which fixes the crash and allows
-> the user to successfully commit a conflict resolution with 'git rebase
-> --continue'. It does not write .git/rebase-merge/patch,
-> .git/rebase-merge/stopped-sha or update REBASE_HEAD. To sensibly get the
-> hashes of the merge parents would require refactoring do_merge() to
-> extract the code that parses the merge parents into a separate function
-> which error_with_patch() could then use to write the parents into the
-> stopped-sha file. To create meaningful output make_patch() and 'git
-> rebase --show-current-patch' would also need to be modified to diff the
-> merge parent and merge base in this case.
+> I suspect you misread what I wrote (see below for the patch).  
+
+I had the same reaction as Phillip: is your patch good enough, or does it
+only touch one part, but not other that may need the same "touch-upping".
+
+> The fixup_count is a new local variable in update_squash_messages()
+> that holds N+2; in other words, I am not suggesting to change what
+> opts->current_fixup_count means.
+
+Sure, and the better cleanup could possibly be to change the meaning of
+opts->current_fixup_count altogether.
+
+> > Having said that using 'current_fixup_count +
+> > 2' to create the labels and incrementing the count at the end of
+> > update_squash_messages() would probably be clearer than my version. I'm
+> > about to go away so it'll probably be the second week of September
+> > before I can re-roll this, will that be too late for getting it into 2.19?
 > 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> I actually do not mind to go with what you originally sent, unless a
+> cleaned up version is vastly more readable.  After all, a clean-up
+> can be done separately and safely.
 
-ACK!
+At this point, I think Phillip's version would be safer, as it would make
+it easier to do a more complete cleanup without the pressure of having to
+fix a bug in one big hurry.
 
-Thanks,
+So: ACK on Phillip's patch from me.
+
+Ciao,
 Dscho
