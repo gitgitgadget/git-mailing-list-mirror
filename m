@@ -2,91 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 635881F404
-	for <e@80x24.org>; Thu, 16 Aug 2018 18:53:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD6FE1F404
+	for <e@80x24.org>; Thu, 16 Aug 2018 19:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbeHPVrK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 16 Aug 2018 17:47:10 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:55839 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725749AbeHPVrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 16 Aug 2018 17:47:07 -0400
-Received: by mail-it0-f65.google.com with SMTP id d10-v6so7653020itj.5
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 11:46:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wSA0mtsD5i5jsjxg8eZ4R/5fOKIGegZ1s/6wu6KfDso=;
-        b=GebAXvp1YhwTx+cElpVNvEWHEjd8HHgICV5hPjmTm+DS+IedfiBO3Ig/oFJI2eQkJ8
-         Smndk8hzFe6yjRZpE7oBqtNmPygIKo9a1oiUK7/0Nkr6IBPSQAx1oMidqSRzdWOHRumo
-         N5ava0rVeqfT3iYAXFw1rtF3bJwbbKZuJupFVBpfDaBgk2hTm2JJ95HmvYACgYx764Da
-         voJ0cDAeAJAYtA5+z7en/YU2NtpvkG3bVRJonLWF/zxGJMU6bSPCmWAzNSjO3GgdaseE
-         afbQ0gEc+isq8Ts5kM/lnpdlkv+cx6k4GJPVPyI1NipQgVe4wxxOcROmBIBwrNYdpORr
-         yC9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wSA0mtsD5i5jsjxg8eZ4R/5fOKIGegZ1s/6wu6KfDso=;
-        b=rnYZZLXR2a8Q8lVrhN8Ht7OhWrO8b3FJ/u6D5MofVISfMbaPl/9lzZvnST5izfScfZ
-         op69FwyuhyZSM3/MGslblrqX4MrbF70vd5ykaBgAoAstDVnTbnso8/WSI4VLXnSB/rqL
-         Pm5DI3lkCrIF8aDLPC/L3YQD3Rm2aYebFrMyelSH8a8sfvT1DBJx0uELm9a7BCG6asEg
-         koY7L+yztvy4HSIC84p6wwBpUEqABqGWllF4BzqlC9gfD+14VzRUd8fF0Xgqv1nqo7Ge
-         kFsMFiBpt5n2xdTsflviq2gl0rpYfa4Z2IHYCaE4KfGcsOTouy/ybWxVaMQRXt+kx9l5
-         5OPg==
-X-Gm-Message-State: AOUpUlFZ3e/di2dQI8vggcoVX3Jx5gIHpnzdGSxNPNZGfpzFNGFN/JVv
-        ZLjyrlfIuL4rbeMyYPvjCqtlZvGBuSlQrGQAHmL+Zw==
-X-Google-Smtp-Source: AA+uWPxBXUmyjS49k518qFxFqSZchH7aXjeUu+o29ENn0gHLBrg1Kx+MvvnMWVpkx5z+4fUhGHu2hcTJKE3CoFE681M=
-X-Received: by 2002:a02:7e45:: with SMTP id h66-v6mr28251440jac.97.1534445218116;
- Thu, 16 Aug 2018 11:46:58 -0700 (PDT)
+        id S1726200AbeHPWqD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 16 Aug 2018 18:46:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57992 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725835AbeHPWqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 16 Aug 2018 18:46:03 -0400
+Received: (qmail 14816 invoked by uid 109); 16 Aug 2018 19:45:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 16 Aug 2018 19:45:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18881 invoked by uid 111); 16 Aug 2018 19:45:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 15:45:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 15:45:38 -0400
+Date:   Thu, 16 Aug 2018 15:45:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 0/7] speeding up cat-file by reordering object access
+Message-ID: <20180816194537.GA5813@sigill.intra.peff.net>
+References: <20180810230729.GA19090@sigill.intra.peff.net>
+ <fc30f98e-0aa0-89d3-ee32-3d86cc5b342a@gmail.com>
+ <20180816173934.GC882@sigill.intra.peff.net>
+ <xmqqmutmdu02.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180816183117.13716-1-pclouds@gmail.com> <20180816183903.GA3737@sigill.intra.peff.net>
-In-Reply-To: <20180816183903.GA3737@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 16 Aug 2018 20:46:31 +0200
-Message-ID: <CACsJy8A7hoOGFCnVxTMdySr=8yUP+4tt4hNO6j-VnhKHJDyE7g@mail.gmail.com>
-Subject: Re: [PATCH/RFC] commit: add short option for --amend
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmutmdu02.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 8:39 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Aug 16, 2018 at 08:31:17PM +0200, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
->
-> > I just realized how often I type "git ci --amend". Looking back at my
-> > ~/.bash_history (only 10k lines) this is the second most often git
-> > command I type which may justify a short option for it (assuming that
-> > other people use this option often too, of course).
-> >
-> > The short option space for 'git commit' is really crowded with
-> > acCeFhimnopqsStuvz already taken. So it could be '-M' or '-A' but I'd
-> > prefer not to hold shift, so I chose '-j' even though it's not
-> > strictly related to "amend" (or perhaps we can thinking of amending as
-> > joining commits).
-> >
-> > Thoughts?
->
-> I also used to type it a lot. So I did:
->
->   $ type a
->   a is aliased to `git commit --amend'
->
-> I don't know if that argues for or against a short option.
+On Thu, Aug 16, 2018 at 11:52:13AM -0700, Junio C Hamano wrote:
 
-It's a "for" for me because I won't have my aliases on other people's machi=
-nes.
---=20
-Duy
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think that makes sense. We already see duplicates from
+> > for_each_packed_object() when they're in multiple packs, and callers
+> > just need to be ready to deal with it (and depending on what you're
+> > doing, you may actually _want_ the duplicates).
+> 
+> You of course would also see dups between loose and packed until
+> prune-packed is run.
+
+Yes, although there are two separate calls to look at those two sources,
+so it's a bit more obvious that the caller has to de-dup. I'm not
+opposed to a flag to ask the function to de-dup for us, but it really
+only makes sense if we do a combined for_each_object() call.
+De-duping is potentially expensive, and there's little point in
+de-duping the packs if we have to then de-dup the result with the loose
+objects.
+
+One benefit of having the iterator function de-dup is that it _could_ be
+done more efficiently. Right now, even before my recent patches the
+cat-file de-dup happens by creating a secondary list, sorting it, and
+then skipping the duplicates.
+
+But if a function knew _all_ of the sources we were going to look at
+(any loose directories, including alternates, and all available packs),
+and it could walk each individual source in sorted order (easy for packs
+by .idx, not too bad for loose by sorting the readdir() results), then
+we could do it as an online list-merge, with a single walk through the
+results.
+
+In practice I don't know if it's worth the effort. If you're accessing
+the object contents, sorted order really is bad. And if you're just
+collecting the hashes, then you're likely generating some data structure
+for future lookups, and you can just de-dup as part of that process.
+
+> I also was thinking about the same thing after Derrick's response,
+> but unless you are very specialized caller, it does not allow you do
+> very much to learn that object X exists as a loose object locally,
+> also as a loose object in our alternate, and also in pack A, but not
+> in other packs.  You need a way to say "Read the contents of object
+> X from that place, not from any other place", "Remove that copy of
+> object X at that place, but not at any other place" etc. to make
+> effective use of that kind of information.
+
+We do have those functions, and use them. E.g., fsck uses
+read_loose_object() to actually check that particular copy of the
+object. That's obviously a specialized caller as you note, but then
+anybody iterating over all of the objects is pretty specialized already.
+
+> The codepath that implements runtime access has "I found a copy
+> here, but it is unusable, so let's go on to look for another usable
+> copy" fallback.  This is a tangent but it is something we should not
+> lose in the midx-enabled world.
+
+Yeah, good catch. That's orthogonal to most of this discussion, I think,
+but it's a possible downside of the midx because it has literally
+discarded those duplicate index entries (or at least that's my
+understanding). If we kept the .idx for each pack as a fallback for
+older Gits, then it's easy to solve: in the unlikely case the
+.midx-referenced copy fails, you look in each individual pack for
+another copy.
+
+But I think eventually you'd want to stop generating those .idx files,
+too, if you know that you'll only use a modern version of Git. I wonder
+if the .midx format should have an extension for "here are all the
+duplicates I found". They could even be part of the main index (it's
+easy enough for a binary-search lookup to always point to the start of a
+run of duplicates), but if you had a ton of duplicates they would slow
+your binary searches a little.
+
+I'll leave all that to Stolee to ponder. :)
+
+-Peff
