@@ -6,84 +6,135 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BF441F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 20:54:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AED31F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 20:55:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728336AbeHQX7W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 19:59:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59254 "HELO cloud.peff.net"
+        id S1728380AbeHRAAB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 20:00:01 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59264 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728332AbeHQX7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 19:59:22 -0400
-Received: (qmail 8749 invoked by uid 109); 17 Aug 2018 20:54:29 -0000
+        id S1728332AbeHRAAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 20:00:01 -0400
+Received: (qmail 8786 invoked by uid 109); 17 Aug 2018 20:55:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Aug 2018 20:54:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Aug 2018 20:55:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28414 invoked by uid 111); 17 Aug 2018 20:54:33 -0000
+Received: (qmail 28442 invoked by uid 111); 17 Aug 2018 20:55:12 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 17 Aug 2018 16:54:33 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 17 Aug 2018 16:55:12 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Aug 2018 16:54:27 -0400
-Date:   Fri, 17 Aug 2018 16:54:27 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Aug 2018 16:55:06 -0400
+Date:   Fri, 17 Aug 2018 16:55:06 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
-Subject: [PATCH 0/6] reuse on-disk deltas for fetches with bitmaps
-Message-ID: <20180817205427.GA19580@sigill.intra.peff.net>
+Subject: [PATCH 1/6] t/perf: factor boilerplate out of test_perf
+Message-ID: <20180817205506.GA20088@sigill.intra.peff.net>
+References: <20180817205427.GA19580@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20180817205427.GA19580@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series more aggressively reuses on-disk deltas to serve fetches
-when reachability bitmaps tell us a more complete picture of what the
-client has. That saves server CPU and results in smaller packs. See the
-final patch for numbers and more discussion.
+About half of test_perf() is boilerplate preparing to run
+_any_ test, and the other half is specifically running a
+timing test. Let's split it into two functions, so that we
+can reuse the boilerplate in future commits.
 
-It's a resurrection of this very old series:
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Best viewed with "-w".
 
-  https://public-inbox.org/git/20140326072215.GA31739@sigill.intra.peff.net/
+ t/perf/perf-lib.sh | 61 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 35 insertions(+), 26 deletions(-)
 
-The core idea is good, but it got left as "I should dig into this more
-to see if we can do even better". In fact, I _did_ do some of that
-digging, as you can see in the thread, so I'm mildly embarrassed not to
-have reposted it before now.
+diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
+index e4c343a6b7..a54be09516 100644
+--- a/t/perf/perf-lib.sh
++++ b/t/perf/perf-lib.sh
+@@ -179,8 +179,8 @@ exit $ret' >&3 2>&4
+ 	return "$eval_ret"
+ }
+ 
+-
+-test_perf () {
++test_wrapper_ () {
++	test_wrapper_func_=$1; shift
+ 	test_start_
+ 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
+ 	test "$#" = 2 ||
+@@ -191,35 +191,44 @@ test_perf () {
+ 		base=$(basename "$0" .sh)
+ 		echo "$test_count" >>"$perf_results_dir"/$base.subtests
+ 		echo "$1" >"$perf_results_dir"/$base.$test_count.descr
+-		if test -z "$verbose"; then
+-			printf "%s" "perf $test_count - $1:"
+-		else
+-			echo "perf $test_count - $1:"
+-		fi
+-		for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
+-			say >&3 "running: $2"
+-			if test_run_perf_ "$2"
+-			then
+-				if test -z "$verbose"; then
+-					printf " %s" "$i"
+-				else
+-					echo "* timing run $i/$GIT_PERF_REPEAT_COUNT:"
+-				fi
++		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
++		"$test_wrapper_func_" "$@"
++	fi
++
++	test_finish_
++}
++
++test_perf_ () {
++	if test -z "$verbose"; then
++		printf "%s" "perf $test_count - $1:"
++	else
++		echo "perf $test_count - $1:"
++	fi
++	for i in $(test_seq 1 $GIT_PERF_REPEAT_COUNT); do
++		say >&3 "running: $2"
++		if test_run_perf_ "$2"
++		then
++			if test -z "$verbose"; then
++				printf " %s" "$i"
+ 			else
+-				test -z "$verbose" && echo
+-				test_failure_ "$@"
+-				break
++				echo "* timing run $i/$GIT_PERF_REPEAT_COUNT:"
+ 			fi
+-		done
+-		if test -z "$verbose"; then
+-			echo " ok"
+ 		else
+-			test_ok_ "$1"
++			test -z "$verbose" && echo
++			test_failure_ "$@"
++			break
+ 		fi
+-		base="$perf_results_dir"/"$perf_results_prefix$(basename "$0" .sh)"."$test_count"
+-		"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
++	done
++	if test -z "$verbose"; then
++		echo " ok"
++	else
++		test_ok_ "$1"
+ 	fi
+-	test_finish_
++	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".times
++}
++
++test_perf () {
++	test_wrapper_ test_perf_ "$@"
+ }
+ 
+ # We extend test_done to print timings at the end (./run disables this
+-- 
+2.18.0.1205.g3878b1e64a
 
-We've been using that original at GitHub since 2014, which I think helps
-demonstrate the correctness of the approach (and the numbers here and in
-that thread show that performance is generally a net win over the status
-quo).
-
-I's rebased on top of the current master, since the original made some
-assumptions about struct object_entry that are no longer true post-v2.18
-(due to the struct-shrinking exercise). So I fixed that and a few other
-rough edges. But that also means you're not getting code with 4-years of
-production testing behind it. :)
-
-The other really ugly thing in the original was the way it leaked
-object_entry structs (though in practice that didn't really matter since
-we needed them until the end of the program anyway). This version fixes
-that.
-
-  [1/6]: t/perf: factor boilerplate out of test_perf
-  [2/6]: t/perf: factor out percent calculations
-  [3/6]: t/perf: add infrastructure for measuring sizes
-  [4/6]: t/perf: add perf tests for fetches from a bitmapped server
-  [5/6]: pack-bitmap: save "have" bitmap from walk
-  [6/6]: pack-objects: reuse on-disk deltas for thin "have" objects
-
- builtin/pack-objects.c             | 28 +++++++----
- pack-bitmap.c                      | 23 +++++++++-
- pack-bitmap.h                      |  7 +++
- pack-objects.c                     | 19 ++++++++
- pack-objects.h                     | 20 +++++++-
- t/perf/README                      | 25 ++++++++++
- t/perf/aggregate.perl              | 69 ++++++++++++++++++++++------
- t/perf/p5311-pack-bitmaps-fetch.sh | 45 ++++++++++++++++++
- t/perf/perf-lib.sh                 | 74 +++++++++++++++++++-----------
- 9 files changed, 258 insertions(+), 52 deletions(-)
- create mode 100755 t/perf/p5311-pack-bitmaps-fetch.sh
-
--Peff
