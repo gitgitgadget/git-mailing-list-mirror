@@ -2,77 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB9411F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 22:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 093F01F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 22:07:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726441AbeHRBJl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 21:09:41 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51170 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbeHRBJl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 21:09:41 -0400
-Received: by mail-wm0-f68.google.com with SMTP id s12-v6so8841342wmc.0
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 15:04:34 -0700 (PDT)
+        id S1726480AbeHRBMX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 21:12:23 -0400
+Received: from mail-pl0-f53.google.com ([209.85.160.53]:45285 "EHLO
+        mail-pl0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeHRBMX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 21:12:23 -0400
+Received: by mail-pl0-f53.google.com with SMTP id j8-v6so4278390pll.12
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 15:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=1zQLGYrCgWdV97bDG5chmcu6QY5KJUNizWvC4Du2pYY=;
-        b=QMBv3ZMdrVVpmra7LDk1p5NhIxeCi1pvLsoQc0IYOQF+DJl7LCwUboSw2s62GuLy9X
-         JN843ScE+DPV8xIQzcZdnHQtNjQD4jkKLYHowGaVgiWxHlNUv5EvwGdm/uIJB1Srz0aY
-         cLgJvaUjVB2Vn5mUatC52d9sJGbCPC5SJlPbGCOJWyLNJfFb6HNDjqC0OVriqVCxyfJ4
-         e8NfFJ/kP+N54pD3TAxHTHqZQkXiTNjh55w0skXcP4mRiFE6gjINQeOM/3//7KvpzpLS
-         9SsntNE3oLV/RZd+8cgUyN9FZ9jBpuNey5Gtt/Aej3nzXAWHiru1nsP/V4XZXLv4MTpb
-         lAzg==
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lcnKl09Tv65SR7f4XwFXBV7PY1qAhtwLeH0IOQTePoU=;
+        b=PbcOhUugKov+eBEt2PD6oc9GXBBw0g4GHOFcB6WvOqLCpSjckTNZZTX1qbXccyw0RF
+         r85X1AKdoc9A3EeT0ePTP1pEkxE+5IpnIFWwZpes+nrLrLa8yrtnAIs+P53fgRogT6pe
+         cQdQlE93nGjjbQVtHBOREN6hT5yNhkyLfPe4N39wluTYtNn07bAmTKwKf5ECzFpbISAk
+         WjZiuWlE50OS/iw6BpDOgyZZiYdIkvtBGwuErqi/pLQsShxgieY1/Z8v8El4WsuNrp+4
+         oMlsWznZ9vtt+Ih1fCbPO8EfpJhyYNY21ArwHlcxJrvaPmwVvjng9fgZE7Y9UfjZ6Yl+
+         uguQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=1zQLGYrCgWdV97bDG5chmcu6QY5KJUNizWvC4Du2pYY=;
-        b=gbr1NimaLgzU+WekfND06rwcmPyVLUVKPEC/0yluG1dAJbbHS0Mj4O+cI2H5pqWeSo
-         f8peli5ekC7b9wTMnjwbBf3/EPYfyU1jKgJ3aAgS3ykrYUYkVy8Qus0jo2u2ZlTv+L7O
-         PXG5HZYmd9lmoGvOJ8Lf+h5PdWnp54a+AwIJmwJciqEFn/xlQ5W58fyW7J8hIRuxM2Wb
-         mRZIEK+UPDaNlUi3HwB8O+teJDC9IEFacc9tt0TICsWuQgL8H4eCyatxDlVkd6JSUAzu
-         60XtQY2Vbk3l16InutXy3mip+a7h/sVe6zNVwhR+WCJgMCUEGXpYibS5qYZY4L/WSYlF
-         1FSg==
-X-Gm-Message-State: AOUpUlHkwjWRLQFkrjOFJQgNfjNwm4xHARdBeFizMVYZUt0UVcHr0Km6
-        b+rDs7qnuO685yub9v4pQfM=
-X-Google-Smtp-Source: AA+uWPxqXedLdaNJL1lQbdfD/bxkf4SXSaTMZtre6rgyyxETDnQ/w8WR4wLSqtVtc2Nj5C6PcNiY7w==
-X-Received: by 2002:a1c:dac6:: with SMTP id r189-v6mr19893497wmg.150.1534543473547;
-        Fri, 17 Aug 2018 15:04:33 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm11487971wmd.35.2018.08.17.15.04.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Aug 2018 15:04:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     johannes.schindelin@gmx.de, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Better colors in range-diff
-References: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet>
-        <20180817204354.108625-1-sbeller@google.com>
-Date:   Fri, 17 Aug 2018 15:04:32 -0700
-In-Reply-To: <20180817204354.108625-1-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 17 Aug 2018 13:43:51 -0700")
-Message-ID: <xmqqzhxkabv3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=lcnKl09Tv65SR7f4XwFXBV7PY1qAhtwLeH0IOQTePoU=;
+        b=rv3d+7YGrlfVQw2Ei9+2Ynz6g0+IVZx3u20kS2zIOpZVm79x3aPdG4R2h5uptiwtx5
+         2Ui0Z1XXAgQIlrwKerQ/YO6uK5rs2tPg471IbuU31GYpjNQK20ytZAWLDYlnLAaqr1aU
+         UH26tbsOtoR5qXtHxqO+FmjIU2owsxK5Dwd67MtoLoXrqVAbozaofizP1/B7BFZ/T6zV
+         5Rx34zFkxT2drg8c/SoGHaTstqsX6azdGQaBOQZPoqNfpO0bP8wDb+pvmF/pq2gEJKl3
+         n3UaI9nDh82LGUA0PnudAZ//r0eJWgllPvEkGnVg3+UzSc1HIbVysn+xpIuTWF4s9n7N
+         +Www==
+X-Gm-Message-State: AOUpUlGkskNLXI9Tdb5J/s42rJQRVYoIEzmxHF/m88el8uI0HED+DCBT
+        HlnTwzp6RFQ+opt6ouq6Q9YxZ2DOnNvN+1ClBeruqvQk
+X-Google-Smtp-Source: AA+uWPzfZnJxRt1jYGlWIwBA4I7U020/JWoFMAHFzj8uDer//sHpU3F1SeSLI/jELt9nVZHvHMychrO46dB1B6RHCVw=
+X-Received: by 2002:a17:902:7b97:: with SMTP id w23-v6mr35656678pll.66.1534543636033;
+ Fri, 17 Aug 2018 15:07:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a17:90a:de05:0:0:0:0 with HTTP; Fri, 17 Aug 2018 15:06:35
+ -0700 (PDT)
+From:   =?UTF-8?Q?Michael_Mur=C3=A9?= <batolettre@gmail.com>
+Date:   Sat, 18 Aug 2018 00:06:35 +0200
+Message-ID: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+Subject: git-bug: Distributed bug tracker embedded in git
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Hi everyone,
 
-> This improves colors of the range-diff, see last patch for details.
+I released today git-bug, a distributed bug tracker that embeds in
+git. It use git's internal storage to store bugs information in a way
+that can be merged without conflict. You can push/pull to the normal
+git remote you are already using to interact with other people. Normal
+code and bugs are completely separated and no files are added in the
+regular branches.
 
-How does this relate to your other "color with range-diff" topic
-that is still in flight?  This supersedes it?  Builds on it?
-Something else?
+Someone suggested in the Hacker News thread [0] to post it here as well.
 
-Thanks.
+The project is here [1].
 
+It's a all-in-one binary that is picked up by git as a porcelain
+command. It features a set of CLI command for simple interaction, an
+interactive terminal UI and a rich web UI.
+
+For more information about the internal design, please read this
+document [2]. In short, bugs are stored as a series of edit operations
+stored in git blobs and assembled in a linear chain of commits. This
+allow to have conflict-free merge and to not pollute the regular
+branches with bug data. Media embedding is also possible but not yet
+finished.
+
+I'd love to have some feedback from you. Contribution are also very
+much welcomed.
+
+Best regards,
+
+[0]: https://news.ycombinator.com/item?id=3D17782121
+[1]: https://github.com/MichaelMure/git-bug
+[2]: https://github.com/MichaelMure/git-bug/blob/master/doc/model.md
+
+--=20
+Michael Mur=C3=A9
