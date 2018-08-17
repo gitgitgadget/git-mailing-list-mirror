@@ -2,138 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 650E31F404
-	for <e@80x24.org>; Fri, 17 Aug 2018 01:48:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4261F404
+	for <e@80x24.org>; Fri, 17 Aug 2018 06:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725833AbeHQEtW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 00:49:22 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58278 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725756AbeHQEtW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 00:49:22 -0400
-Received: (qmail 29352 invoked by uid 109); 17 Aug 2018 01:48:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Aug 2018 01:48:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20887 invoked by uid 111); 17 Aug 2018 01:48:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 16 Aug 2018 21:48:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Aug 2018 21:47:58 -0400
-Date:   Thu, 16 Aug 2018 21:47:58 -0400
-From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: Syncing HEAD
-Message-ID: <20180817014757.GA17048@sigill.intra.peff.net>
-References: <CAP8UFD0_jpKdcDvNx5CYnmyDMagE_O-E7cef5VthaT_w-=4xsA@mail.gmail.com>
- <20180814210616.GA32367@sigill.intra.peff.net>
- <20180814214723.GA667@sigill.intra.peff.net>
- <CAP8UFD3S5vgMSuXfj1z0F7f-9SLVEm6boCHwdNwn7ysvXSRMrA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD3S5vgMSuXfj1z0F7f-9SLVEm6boCHwdNwn7ysvXSRMrA@mail.gmail.com>
+        id S1726316AbeHQJod (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 05:44:33 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:57012 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726094AbeHQJoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 05:44:32 -0400
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 2DD4D335D0D;
+        Fri, 17 Aug 2018 06:42:22 +0000 (UTC)
+Message-ID: <1534488137.1262.2.camel@gentoo.org>
+Subject: Re: [PATCH] gpg-interface.c: detect and reject multiple signatures
+ on commits
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
+Date:   Fri, 17 Aug 2018 08:42:17 +0200
+In-Reply-To: <20180815213108.GM181377@aiede.svl.corp.google.com>
+References: <xmqqbmaa9t8k.fsf@gitster-ct.c.googlers.com>
+         <20180814151142.13960-1-mgorny@gentoo.org>
+         <20180815213108.GM181377@aiede.svl.corp.google.com>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-ruoXI0uTxvT5mExW/sdn"
+X-Mailer: Evolution 3.24.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 07:49:25AM +0200, Christian Couder wrote:
 
-> > And so here the convention is simpler, because we're talking about the
-> > main HEAD. But we still have know if you want to do that, and not update
-> > some refs/remotes/ symref in a bare repo.
-> 
-> We could maybe look at the "remote.XXX.mirror" config option. If it is
-> set to "true", we could interpret that as meaning we are interested in
-> updating the main HEAD and not some refs/remotes/ symref.
+--=-ruoXI0uTxvT5mExW/sdn
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, for the mirror case I think that would be sufficient, and that's a
-subset of the larger problem. I'm not _totally_ opposed to solving just
-this narrow case, but I think it would be great if we could solve the
-larger problem.
+On Wed, 2018-08-15 at 14:31 -0700, Jonathan Nieder wrote:
+> Micha=C5=82 G=C3=B3rny wrote:
+>=20
+> > GnuPG supports creating signatures consisting of multiple signature
+> > packets.  If such a signature is verified, it outputs all the status
+> > messages for each signature separately.  However, git currently does no=
+t
+> > account for such scenario and gets terribly confused over getting
+> > multiple *SIG statuses.
+> >=20
+> > For example, if a malicious party alters a signed commit and appends
+> > a new untrusted signature, git is going to ignore the original bad
+> > signature and report untrusted commit instead.  However, %GK and %GS
+> > format strings may still expand to the data corresponding
+> > to the original signature, potentially tricking the scripts into
+> > trusting the malicious commit.
+> >=20
+> > Given that the use of multiple signatures is quite rare, git does not
+> > support creating them without jumping through a few hoops, and finally
+> > supporting them properly would require extensive API improvement, it
+> > seems reasonable to just reject them at the moment.
+> > ---
+>=20
+> Thanks for the clear analysis and fix.
+>=20
+> May we have your sign-off?  See
+> https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html#s=
+ign-off
+> (or the equivalent section of your local copy of
+> Documentation/SubmittingPatches) for what this means.
 
-> >   # or the same thing but using the usual refspec "dst defaults to src"
-> >   # rule and dwim lookup magic
-> >   git fetch origin ~LATEST
-> 
-> And `git fetch origin ~HEAD` would sync the main HEAD?
+Of course, I'm sorry for missing it in the original submission.
 
-Yes, exactly.
+>=20
+> >  gpg-interface.c | 38 ++++++++++++++++++++++++++++++--------
+> >  1 file changed, 30 insertions(+), 8 deletions(-)
+> >=20
+> > diff --git a/gpg-interface.c b/gpg-interface.c
+> > index 09ddfbc26..4e03aec15 100644
+> > --- a/gpg-interface.c
+> > +++ b/gpg-interface.c
+> > @@ -24,21 +24,23 @@ void signature_check_clear(struct signature_check *=
+sigc)
+> >  static struct {
+> >  	char result;
+> >  	const char *check;
+> > +	int is_status;
+> >  } sigcheck_gpg_status[] =3D {
+> > -	{ 'G', "\n[GNUPG:] GOODSIG " },
+> > -	{ 'B', "\n[GNUPG:] BADSIG " },
+> > -	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
+> > -	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
+> > -	{ 'E', "\n[GNUPG:] ERRSIG "},
+> > -	{ 'X', "\n[GNUPG:] EXPSIG "},
+> > -	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
+> > -	{ 'R', "\n[GNUPG:] REVKEYSIG "},
+> > +	{ 'G', "\n[GNUPG:] GOODSIG ", 1 },
+> > +	{ 'B', "\n[GNUPG:] BADSIG ", 1 },
+> > +	{ 'U', "\n[GNUPG:] TRUST_NEVER", 0 },
+> > +	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED", 0 },
+> > +	{ 'E', "\n[GNUPG:] ERRSIG ", 1},
+> > +	{ 'X', "\n[GNUPG:] EXPSIG ", 1},
+> > +	{ 'Y', "\n[GNUPG:] EXPKEYSIG ", 1},
+> > +	{ 'R', "\n[GNUPG:] REVKEYSIG ", 1},
+> >  };
+>=20
+> nit: I wonder if making is_status into a flag field (like 'option' in
+> git.c's cmd_struct) and having an explicit SIGNATURE_STATUS value to
+> put there would make this easier to read.
 
-> I wonder though if we should restrict the way `git fetch origin ~XXX`
-> searches the .git/ directory itself.
+I think that makes sense.
 
-The matching is done against the list of refs that the remote
-advertises. So everything is under refs/ except for HEAD. If you tried
-to do something funky with top-level refs like:
+>=20
+> It's not clear to me that the name is_status or SIGNATURE_STATUS
+> captures what this field represents.  Aren't these all sigcheck
+> statuses?  Can you describe briefly what distinguishes the cases where
+> this should be 0 versus 1?
 
-  git fetch origin ~MERGE_HEAD
+Yes, the name really does suck.  Maybe it should be EXCLUSIVE_STATUS
+or something like that, to distinguish from things that can occur
+simultaneously to them.
 
-it would always come up with "couldn't find remote ref MERGE_HEAD".
+>=20
+> > =20
+> >  static void parse_gpg_output(struct signature_check *sigc)
+> >  {
+> >  	const char *buf =3D sigc->gpg_status;
+> >  	int i;
+> > +	int had_status =3D 0;
+> > =20
+> >  	/* Iterate over all search strings */
+> >  	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+> > @@ -50,6 +52,10 @@ static void parse_gpg_output(struct signature_check =
+*sigc)
+> >  				continue;
+> >  			found +=3D strlen(sigcheck_gpg_status[i].check);
+> >  		}
+> > +
+> > +		if (sigcheck_gpg_status[i].is_status)
+> > +			had_status++;
+> > +
+> >  		sigc->result =3D sigcheck_gpg_status[i].result;
+> >  		/* The trust messages are not followed by key/signer information */
+> >  		if (sigc->result !=3D 'U') {
+> > @@ -62,6 +68,22 @@ static void parse_gpg_output(struct signature_check =
+*sigc)
+> >  			}
+> >  		}
+> >  	}
+> > +
+> > +	/*
+> > +	 * GOODSIG, BADSIG etc. can occur only once for each signature.
+> > +	 * Therefore, if we had more than one then we're dealing with multipl=
+e
+> > +	 * signatures.  We don't support them currently, and they're rather
+> > +	 * hard to create, so something is likely fishy and we should reject
+> > +	 * them altogether.
+> > +	 */
+> > +	if (had_status > 1) {
+> > +		sigc->result =3D 'E';
+> > +		/* Clear partial data to avoid confusion */
+> > +		if (sigc->signer)
+> > +			FREE_AND_NULL(sigc->signer);
+> > +		if (sigc->key)
+> > +			FREE_AND_NULL(sigc->key);
+> > +	}
+>=20
+> Makes sense to me.
+>=20
+> >  }
+> > =20
+> >  int check_signature(const char *payload, size_t plen, const char *sign=
+ature,
+> > --=20
+> > 2.18.0
+>=20
+> Can we have a test to make sure this behavior doesn't regress?  See
+> t/README for an overview of the test framework and "git grep -e gpg t/"
+> for some examples.
 
-> I wonder what `git fetch origin ~refs/heads/*:refs/heads/*` should do.
-> Could it know which refs are symrefs using protocol v0? Should it
-> guess that refs with uppercase names are symrefs? Should we allow '*'
-> at all in those kinds of refspecs?
+Will try.  Do I presume correctly that I should include the commit
+object with the double signature instead of hacking git to construct it?
+;-)
 
-That's an interesting question. I'd be tempted to say that it is an
-error to use "~" with a wildcard ref, at least for the first version of
-the patch. That way we don't back ourselves into a corner, and can make
-it do something useful later.
+>=20
+> The result looks good.  Thanks again for writing it.
+>=20
+> Sincerely,
+> Jonathan
 
-I think one sane set of rules is:
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
 
- - for protocol v2+, where we know which remote refs are symrefs,
-   transfer them as symrefs
+--=-ruoXI0uTxvT5mExW/sdn
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
- - for protocol v0, either transfer them as normal refs (except HEAD,
-   which we always suspect of being a symref), or simply declare it
-   an error
+-----BEGIN PGP SIGNATURE-----
 
-For the most part, though, I think people would be fine without
-combining wildcards with the symref feature, and would just do:
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlt2bklfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQpvlQ/9GtAMuA45lgIgDJYwZKy4dX+XyaxunQR05C/1WNmu921YN6n2pWRsmATh
+7bqQURBI0MRcUX6/4jplLv9H7LezfHDypA2boXbT8ybUBtsu+jy08olHzX7Iuf2e
+tHHhCAmeyjei7RZuwaiuhVrcT8eVRBAMaWskOI2g3S12fmYhPWcP4TICMWJX2eK3
+uMoDxSmUTGwMZK/TSrs2Gj4IE7xK6d+D93gRcmM/VlL2lfTKylEDV6IfXCA3NNZs
+ZfC6JL8YARv+t2WKMZ9ecg9zsCgN0LI086M1l9LY8q2XE005l6uNTtTdLPiLRXjH
+eYBQX554ntLGXfFadJPAsLl5s4pYXZ/2WQuHfJKibCwUABddtHR7LMYFXhNiI29o
+1lcTiySitPEsYsJ4oyLjKaGheSmknRQNOt+eRDw49TmgOPfxzFATLF55zgXZck6X
+W6zubYNfFtzKiRLYv/3vrgSNt90al3dZ+J/za5oTGBaHfknWb3xIZgqaxhZ6Ey1d
+Er7QtR5xJxTdY+6WOWGoYJejP9zzIx0XA20xnReFdV7w//QSr1r1sNOKdVq8EewC
+icpc0Hrlc9CXTbfcPdlwH/j+D3xtQnIvsK+qJsSk04BPukbacbzgihmS2pse8GNd
+aSyplN6rIkBXqlhqCCX7WUkK04H6dpYDsdiYjilRH89LAMIYCzg=
+=C9el
+-----END PGP SIGNATURE-----
 
-  +refs/*:refs/*
-  ~HEAD:HEAD
+--=-ruoXI0uTxvT5mExW/sdn--
 
-for a bare mirror, and:
-
-  +refs/heads/*:refs/remotes/origin/*
-  ~HEAD:refs/remotes/origin/HEAD
-
-for an auto-updating non-bare remote.
-
-> It looks like making "~" the magic character for "just the symrefs"
-> might be a good solution in the end, though we might want to restrict
-> it to protocol v2.
-> So perhaps something like `git fetch --update-head` that you suggest
-> in another email would be a good solution for now and for protocol v0.
-
-You still have the problem with --update-head of where to store the
-result. I think the semantics for a non-wildcard "~" are clear enough,
-even with protocol v0, that it would be OK to start down that road.
-
-A few final thoughts:
-
- - I like the look of "~", but there are not very many characters
-   disallowed in refs, and we're using one of them. Another notable one
-   is "^", from which we've built the "^{foo}" syntax elsewhere. So this
-   could be something like "^{symref}HEAD:HEAD", which leaves room for
-   new "^{}" types in the future. But man, that looks really ugly
-   compared to "~HEAD:HEAD".
-
- - Is there a case for a symref update where we'd want to require a
-   force-push? Maybe if the local side exists and is not already a
-   symref?
-
- - What do we do if the other side isn't a symref (e.g., a detached
-   HEAD)? Is that an error? Do we detach ourselves? Does it require a
-   force?
-
--Peff
