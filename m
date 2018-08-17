@@ -2,96 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5146C1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 21:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB9411F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 22:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727206AbeHRArz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 20:47:55 -0400
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:35417 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727055AbeHRAry (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 20:47:54 -0400
-Received: by mail-yw1-f66.google.com with SMTP id s68-v6so4911530ywg.2
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 14:42:52 -0700 (PDT)
+        id S1726441AbeHRBJl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 21:09:41 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:51170 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeHRBJl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 21:09:41 -0400
+Received: by mail-wm0-f68.google.com with SMTP id s12-v6so8841342wmc.0
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 15:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N8C7Ha/4No94y/eLmiIqg3ZQuyuY2IPxtUpBIwt0YcM=;
-        b=TENeeqyNJNbN5GvEgS/f5eTwwxJM1VS9Vd/izQ0rS8/FuRA//vpppKdfRwN8FZgv50
-         3cFE7Er479kuuz07UQ5L0yU6DydQBW+6YzWZPeEk3rMj07aGdvYGXBgg1Pqy1/fgb220
-         SYeh0y6kV9bFxC3Mq5vWDT+1R+Yma6kY5tI2Pqu2GNaQITaGtvG+7jeYx2ulasE+BI+n
-         b15618Q6c4Dd6OHMKidYYnjQYyEiZzuFSpEQK9EqT1lrfAthP98oOEaiBjxFY9e79fsa
-         PwFav/rRzd4v7qw4/RiSuhfbCwRLjE7E3pj/Fw1EQ0uqrXyBdPJ1zGxgxOYJyZcpyuGX
-         QXwA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=1zQLGYrCgWdV97bDG5chmcu6QY5KJUNizWvC4Du2pYY=;
+        b=QMBv3ZMdrVVpmra7LDk1p5NhIxeCi1pvLsoQc0IYOQF+DJl7LCwUboSw2s62GuLy9X
+         JN843ScE+DPV8xIQzcZdnHQtNjQD4jkKLYHowGaVgiWxHlNUv5EvwGdm/uIJB1Srz0aY
+         cLgJvaUjVB2Vn5mUatC52d9sJGbCPC5SJlPbGCOJWyLNJfFb6HNDjqC0OVriqVCxyfJ4
+         e8NfFJ/kP+N54pD3TAxHTHqZQkXiTNjh55w0skXcP4mRiFE6gjINQeOM/3//7KvpzpLS
+         9SsntNE3oLV/RZd+8cgUyN9FZ9jBpuNey5Gtt/Aej3nzXAWHiru1nsP/V4XZXLv4MTpb
+         lAzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=N8C7Ha/4No94y/eLmiIqg3ZQuyuY2IPxtUpBIwt0YcM=;
-        b=i3rTwKgH3V+/orlai55YCYjgH2I4usBBp9f0hcPYytayvU8JeED1ZibJe8JkBhSY30
-         qolIVtVpAsmP3f64wraYdDHAwT4rzqQece2vHl13QAt+P8Zhzb3xLXLIOhJ7qvHVaEMv
-         eKUyO4h5e42U7/uwtmjsX40nOu2HKSdAq3FdKkPZ3x3mon72HiIU2JuXl/w/zCRj8k7+
-         A6mmuIl/9YpEpKAEt43ciPN48WO8uNEGPRVNfA7RlPgx6CNgm7S+SbMYbZTUyaNC6ZOH
-         jr6v62SlZbEBYAA6Qp2VInCPmOwC6YbXLQB+0h75bdM3kRKAeW5W+HjLp1nEqGo6/YUC
-         AL8g==
-X-Gm-Message-State: AOUpUlEFSXudhlTQIG+LVKpj/ytFfav00jSK55HB7LOn3oZDFSpGJdIc
-        DOmsfgQ9Qh4R0Oxl9P2Kdzyadlit3jNrUHRmDOcqQA==
-X-Google-Smtp-Source: AA+uWPyhhKJfKZ+nLGGSjZv2fyH3Zg+HoUHrL1WllcvpQvVKRv9j9Mtc9tkCofNREQh2ZaJU0pt99VwrtZ3XjE8C+0Q=
-X-Received: by 2002:a81:9a17:: with SMTP id r23-v6mr21137899ywg.119.1534542171492;
- Fri, 17 Aug 2018 14:42:51 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=1zQLGYrCgWdV97bDG5chmcu6QY5KJUNizWvC4Du2pYY=;
+        b=gbr1NimaLgzU+WekfND06rwcmPyVLUVKPEC/0yluG1dAJbbHS0Mj4O+cI2H5pqWeSo
+         f8peli5ekC7b9wTMnjwbBf3/EPYfyU1jKgJ3aAgS3ykrYUYkVy8Qus0jo2u2ZlTv+L7O
+         PXG5HZYmd9lmoGvOJ8Lf+h5PdWnp54a+AwIJmwJciqEFn/xlQ5W58fyW7J8hIRuxM2Wb
+         mRZIEK+UPDaNlUi3HwB8O+teJDC9IEFacc9tt0TICsWuQgL8H4eCyatxDlVkd6JSUAzu
+         60XtQY2Vbk3l16InutXy3mip+a7h/sVe6zNVwhR+WCJgMCUEGXpYibS5qYZY4L/WSYlF
+         1FSg==
+X-Gm-Message-State: AOUpUlHkwjWRLQFkrjOFJQgNfjNwm4xHARdBeFizMVYZUt0UVcHr0Km6
+        b+rDs7qnuO685yub9v4pQfM=
+X-Google-Smtp-Source: AA+uWPxqXedLdaNJL1lQbdfD/bxkf4SXSaTMZtre6rgyyxETDnQ/w8WR4wLSqtVtc2Nj5C6PcNiY7w==
+X-Received: by 2002:a1c:dac6:: with SMTP id r189-v6mr19893497wmg.150.1534543473547;
+        Fri, 17 Aug 2018 15:04:33 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o14-v6sm11487971wmd.35.2018.08.17.15.04.32
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Aug 2018 15:04:32 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     johannes.schindelin@gmx.de, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Better colors in range-diff
+References: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet>
+        <20180817204354.108625-1-sbeller@google.com>
+Date:   Fri, 17 Aug 2018 15:04:32 -0700
+In-Reply-To: <20180817204354.108625-1-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 17 Aug 2018 13:43:51 -0700")
+Message-ID: <xmqqzhxkabv3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1534374650.git.matvore@google.com>
- <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
-In-Reply-To: <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 17 Aug 2018 14:42:40 -0700
-Message-ID: <CAGZ79kaWcGbyc2S5gOCU7NdvT4fN46jq4xK9MvTLAFBGhyuo2A@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 15, 2018 at 4:23 PM Matthew DeVore <matvore@google.com> wrote:
->
-> Teach list-objects the "tree:0" filter which allows for filtering
-> out all tree and blob objects (unless other objects are explicitly
-> specified by the user). The purpose of this patch is to allow smaller
-> partial clones.
->
-> The name of this filter - tree:0 - does not explicitly specify that
-> it also filters out all blobs, but this should not cause much confusion
-> because blobs are not at all useful without the trees that refer to
-> them.
->
-> I also consider only:commits as a name, but this is inaccurate because
-> it suggests that annotated tags are omitted, but actually they are
-> included.
+Stefan Beller <sbeller@google.com> writes:
 
-Speaking of tag objects, it is possible to tag anything, including blobs.
-Would a blob that is tagged (hence reachable without a tree) be not
-filtered by tree:0 (or in the future any deeper depth) ?
+> This improves colors of the range-diff, see last patch for details.
 
-I found this series a good read, despite my unfamiliarity of the
-partial cloning.
+How does this relate to your other "color with range-diff" topic
+that is still in flight?  This supersedes it?  Builds on it?
+Something else?
 
-One situation where I scratched my head for a second were previous patches
-that  use "test_line_count = 0 rev_list_err" whereas using test_must_be_empty
-would be an equally good choice (I am more used to the latter than the former)
+Thanks.
 
-Thanks,
-Stefan
