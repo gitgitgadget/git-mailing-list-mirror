@@ -7,97 +7,100 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 272AD1F404
-	for <e@80x24.org>; Fri, 17 Aug 2018 06:47:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC9C1F404
+	for <e@80x24.org>; Fri, 17 Aug 2018 06:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbeHQJtr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 05:49:47 -0400
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:43793 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726094AbeHQJtr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 05:49:47 -0400
-Received: by mail-pg1-f174.google.com with SMTP id v66-v6so1831742pgb.10
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 23:47:37 -0700 (PDT)
+        id S1726496AbeHQJ47 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 05:56:59 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:37887 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726226AbeHQJ47 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 05:56:59 -0400
+Received: by mail-pg1-f194.google.com with SMTP id n7-v6so3178681pgq.4
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 23:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:content-transfer-encoding:in-reply-to
          :user-agent;
-        bh=jH/cOPVh1niYrD/1XQAyxkjBFqTvYCb59MSL7BI4eyo=;
-        b=JYJYJoKdV/+BHNuG0i5TKG0q/bMOQhcZFdxOtQLQaxwjYanPKz1+/eOBIqTzgDdWvR
-         ouF7j4cpPvM7z8QOq6SWd/kyxXn4urChuJFL3d5+ICk8RpSRj7OBlWZDSYdRU4Yke1Jx
-         UBFbbQOszH1TiN55diLvlxUeOJIrXmkycO5GMD8s5W0n5b4Gwk2tz2G9SNVAqeGKz62m
-         T2MZXQHJnXMQWcgn7yVimA1tarSncZAiFyDhX+LQKuQ67E5vmhIHVQSLy99eqEBfKXzR
-         oASjBELYkyvhHzh9AJKNNFfPn6jZixo0HGERR4m9mAvKysjvAqwzTt5U1k/1XnjbYSbQ
-         GRXA==
+        bh=xrxPbsT48jRpi/mr7LFvzHgRlvkUee4EIDBEAf0RzZE=;
+        b=TC96Obmkj/t57+ZtpqEPSd5unjbBoRrSj2r3Wen6KgocnOiOpGMVk05Ya92YNuEtO7
+         V3ehVD11mstvWqou63uuE4HuFpZlmqtNZzkb92C4wLVspKOQ/03xtRTC/C/WuViPhpC0
+         9CTZSjJwZCS/FTVJq6r3C0sRaNKr+koirKsmz5CVC49EZlCtxu9oqLRmoAyS5sOl4RQk
+         uFS3Y+hxSBiZ7Qq3zbnqBfvcT2VaCfL8//EJ5CkRccfPO1qj/9qCf43k4lFo1rEHhlQI
+         W8Fs764DuMe+tOlkj65ATDXom6A2TaIuOiD2jWEO1//taqHAXHC3BFAFCwoRYpqeU49w
+         v8TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        bh=jH/cOPVh1niYrD/1XQAyxkjBFqTvYCb59MSL7BI4eyo=;
-        b=B3w71hwjrX/Oizr0IYGnFGrn50IdbE2gH1Eh2y8Bz4EA4f6e1PBd4fk3UuM4K3IMjK
-         uC7sU9najdM4DDquOtS2LHjWfSZLc5dy+HCRtJyLRUJF9KgsqUYOPGjM8roo5fmH9PuV
-         rFFvCWOJ4K1JlRDGrzOdZGWR5m38VrRdusSDFS+65pC0tr0jan8MlswVrIma9IKwtURB
-         G3UyhhTap1zRomJ4CghAsYGSWNuBC/Pwfwgdih/SgQ4Trz/FIz9pRgz0uPfRjo1vuc8y
-         X5M9QGD95QQFK2k+gywb5+236AsHYSshgBoJiYXOgmNrGa80pUcWpPMm1gi71IshUlS4
-         mM3A==
-X-Gm-Message-State: AOUpUlFS/5MHcvdMwtAe+qJEHFBFcG4yZqUmbBpMTVTTHaBBf0KDyZtp
-        yaS+mgVz5wJDp2CiJAobdk8=
-X-Google-Smtp-Source: AA+uWPxDG6Kqgf6rEgRNzq/t94GEq7e+o73HUyuNvJcXDx/KNA0CGIOmDhrN0zVpshR2ls3Vh7t0ww==
-X-Received: by 2002:a63:b445:: with SMTP id n5-v6mr32378807pgu.104.1534488456697;
-        Thu, 16 Aug 2018 23:47:36 -0700 (PDT)
+        bh=xrxPbsT48jRpi/mr7LFvzHgRlvkUee4EIDBEAf0RzZE=;
+        b=SuXr7FmPneVCWntnBNqirKJja9KvQj1pl2yYbWQgD1MAU8XZgmTDypXwjaflynP1Fn
+         MY1xnUPGTKdHv2IYWBjL+egsFJ7oddt9a2vAZabNoiOd3+aHW3Io/pxCD3R0lcPDorjb
+         /+13vtcj5xe7Z7NWoOUZxAThS2uAaS2oYdIS2mfSQtU2ilAqYrTs2CwV43BA5CtszNUP
+         hVdof/h83btpr4/uNLZwf/SyxTpOMIlTEJ7HZIbgLHSTcLJUQWLsJrG5aO6oe0IIbRGf
+         eVd0OYKAngFxUyuzSfqvT56r/fsBT/mqaXqZaHbnBnqCB8yOkDgP7QAsD2qc/Oxr808Z
+         L4mw==
+X-Gm-Message-State: AOUpUlHGQh1CPy8cC2YTxkZwKyQvdJUku4dBe+xOKIZ5D2+tH93kPI2L
+        ClpG84ZuDwIG2bjNcSxMlm2RKj9g
+X-Google-Smtp-Source: AA+uWPwkKEtCjwNwtuiT+MtTdkjhh+ANEB7PUhojhfEWovCJxG4UO0C+zo2qhQQRI6xmirM6zSYZkg==
+X-Received: by 2002:a63:9e0a:: with SMTP id s10-v6mr31675632pgd.326.1534488886697;
+        Thu, 16 Aug 2018 23:54:46 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id d81-v6sm1681573pfj.122.2018.08.16.23.47.36
+        by smtp.gmail.com with ESMTPSA id l79-v6sm2229682pfb.111.2018.08.16.23.54.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 23:47:36 -0700 (PDT)
-Date:   Thu, 16 Aug 2018 23:47:34 -0700
+        Thu, 16 Aug 2018 23:54:46 -0700 (PDT)
+Date:   Thu, 16 Aug 2018 23:54:44 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] commit: add short option for --amend
-Message-ID: <20180817064734.GB131749@aiede.svl.corp.google.com>
-References: <20180816183117.13716-1-pclouds@gmail.com>
+To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
+Subject: Re: [PATCH] gpg-interface.c: detect and reject multiple signatures
+ on commits
+Message-ID: <20180817065444.GC131749@aiede.svl.corp.google.com>
+References: <xmqqbmaa9t8k.fsf@gitster-ct.c.googlers.com>
+ <20180814151142.13960-1-mgorny@gentoo.org>
+ <20180815213108.GM181377@aiede.svl.corp.google.com>
+ <1534488137.1262.2.camel@gentoo.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180816183117.13716-1-pclouds@gmail.com>
+In-Reply-To: <1534488137.1262.2.camel@gentoo.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy wrote:
+Michał Górny wrote:
+> On Wed, 2018-08-15 at 14:31 -0700, Jonathan Nieder wrote:
 
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1489,7 +1489,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  			    STATUS_FORMAT_LONG),
->  		OPT_BOOL('z', "null", &s.null_termination,
->  			 N_("terminate entries with NUL")),
-> -		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
-> +		OPT_BOOL('j', "amend", &amend, N_("amend previous commit")),
+>> It's not clear to me that the name is_status or SIGNATURE_STATUS
+>> captures what this field represents.  Aren't these all sigcheck
+>> statuses?  Can you describe briefly what distinguishes the cases where
+>> this should be 0 versus 1?
 [...]
-> Thoughts?
+>                                  Maybe it should be EXCLUSIVE_STATUS
+> or something like that, to distinguish from things that can occur
+> simultaneously to them.
 
-I'm not a fan.  I would have trouble remembering what the short option
-name means, and it matches the common --jobs option for parallelism
-that many commands use.  "git commit --am" works today already and
-doesn't run into those problems.
+Thanks.  Makes sense.
 
-I'm sympathetic to the goal of saving typing, but I'm more sympathetic
-to the goal of making user support easier, which is what makes me end
-up there.
+[...]
+>> Can we have a test to make sure this behavior doesn't regress?  See
+>> t/README for an overview of the test framework and "git grep -e gpg t/"
+>> for some examples.
+>
+> Will try.  Do I presume correctly that I should include the commit
+> object with the double signature instead of hacking git to construct it?
+> ;-)
 
-That said, I've been looking recently at Mercurial's "hg evolve"
-extension[1] and I wouldn't be against a well thought out new command
-(e.g. "git amend") that does the equivalent of "git commit --amend"
-with some related features.  So I think there are some paths forward
-that involve abbreviating.
+Good question.  You can hack away with a new program in t/helper/, or
+you can make your test do object manipulation with "git cat-file
+commit <object>" and "git hash-object -t commit -w --stdin".  If you
+run into trouble, just let the list know and I'm happy to try to help.
+(Or if you would like real-time help, I'm usually in #git-devel on
+freenode.)
 
-Thanks,
 Jonathan
-
-[1] https://www.mercurial-scm.org/wiki/EvolveExtension
