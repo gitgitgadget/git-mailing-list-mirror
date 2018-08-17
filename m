@@ -2,124 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B0B01F981
-	for <e@80x24.org>; Fri, 17 Aug 2018 19:27:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21C821F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 19:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727870AbeHQWcD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 18:32:03 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45093 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727218AbeHQWcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 18:32:03 -0400
-Received: by mail-wr1-f65.google.com with SMTP id 20-v6so1985037wrb.12
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 12:27:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Yi7jl3bB55fY26RxJY+BoCPzPM1jxZHvQF5+b7yDmqA=;
-        b=d9ZIA4p+UW8lHFxd8KxgFKDIsuXwwjcwiE55zhMDF0wsBJQQ8Gips6etMN3/2H6oyN
-         FQ5BsCEeCg5efj5ypj9NBVCgY/5vdaX9YaHsO0yn+sUf72+DxK+rxPviIboaxsXMi6ao
-         hHJTwQeJWB6MfNCpl9TjBeBJmuoYKGUfWRVPwRQxgwXmLXCUt7lkysMkqKrdRyceNG1G
-         n4uU2tWQaumlBd7akF1ibGSzUSUCWJQkyfyKeSZ7V7oEvGQRhslMsfLl1EbpAgyKxcZr
-         PGp2OPBT7m67bAqakh0KfsJXsBuMi1RoV9vzjqjpxOzohrBrD/2/oUc5DkFMj3REdgp8
-         uSmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Yi7jl3bB55fY26RxJY+BoCPzPM1jxZHvQF5+b7yDmqA=;
-        b=pogZoqKShG3ppvT5w7eZOLZadu35VSuzMt5733IrTKshp5lKN/M3oG0y3saeZA9GaN
-         0csX+17w0CtJQ34OAoKlxL7352kKDiQYcSic14LGtBKH3Mhw1wKYzaQKtbDXel07eWPf
-         uGW0rWbbfiEkiYusk+8K5q3a04GAog1S/xG6rIZjfRic9BMFR8BFCXCbf85dDUI03rRf
-         w148wwu4HaIllZcoOICRsK3BEZpiFoY66ywntUxOX3l4JVfE4hor1DrLdOTg2kuiR/gH
-         gHptR4EgjCDFmHkm8e2tevSJ9EZqn9YDzhurNyP4oHPOSt2NvtZpNG+DeWYhs6wRtDLW
-         FmTg==
-X-Gm-Message-State: AOUpUlFBMNA0fU0SBp9lieCea68gL8RBlhfxVaKCAagRw/z4DCnS3smt
-        A1QkuzirBrqi7cvILtA4lAYIV1CH+da3wQ==
-X-Google-Smtp-Source: AA+uWPzaKpNp6UR2KCqNhyTalJIQW1bJjMW5pmpnImRPjSv4mA463aanzPPm+XMhnIaCUeJpzY5blQ==
-X-Received: by 2002:a5d:4210:: with SMTP id n16-v6mr22968805wrq.55.1534534045177;
-        Fri, 17 Aug 2018 12:27:25 -0700 (PDT)
-Received: from [10.26.10.6] ([185.230.127.242])
-        by smtp.gmail.com with ESMTPSA id w14-v6sm8680356wme.6.2018.08.17.12.27.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Aug 2018 12:27:24 -0700 (PDT)
-Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
- use bitmap' test
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Git mailing list <git@vger.kernel.org>,
-        Kirill Smelkov <kirr@nexedi.com>, Jeff King <peff@peff.net>
-References: <20180814114721.25577-1-szeder.dev@gmail.com>
- <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
- <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com>
- <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
-Date:   Fri, 17 Aug 2018 21:27:22 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1728236AbeHQWrb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 18:47:31 -0400
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64580 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727218AbeHQWrb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 18:47:31 -0400
+X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Aug 2018 18:47:29 EDT
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 890B533806;
+        Fri, 17 Aug 2018 15:33:53 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=jTLXR2R1mH0281h+V2Ep1vgWlno=; b=ZwgrCEo
+        e+en/nSMHv6azXDvkMIHA0UM40A7u0C+c/bT+0Ox8NqPf10oN3L6Qj2U+lQxtCiI
+        x2QLsXGrzIpeCWcQV/YmCelsfwEQKPr2JUorIgfscSSDdg7cs5DVSqUf3qhLR1Ic
+        EFcObUjrCGHQu1b93CNooxNcr1f1B9CWaK7Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+        :subject:message-id:references:mime-version:content-type
+        :in-reply-to; q=dns; s=sasl; b=o39xAzOi1yV97pRN/kycybXZlKEanR/pz
+        9fE/WipTTnA3iq0SVAZCeAQymyS3PtiisaILWshIe5UV1zVxpfqoD4tz9//6VZKr
+        8LpsUlkEcqRkLsDcBwnAgpDkDatBrAH1UmE+j2nheRInYE7SliOn+8BgDO/yFZWF
+        wtn9uogxZM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 826DB33805;
+        Fri, 17 Aug 2018 15:33:53 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 43FE9337FD;
+        Fri, 17 Aug 2018 15:33:50 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Fri, 17 Aug 2018 15:33:47 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] drop vcs-svn experiment
+Message-ID: <20180817193347.GL24629@zaya.teonanacatl.net>
+References: <20180817190310.GA5360@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180817190310.GA5360@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Pobox-Relay-ID: 77C2DD98-A254-11E8-93CA-F5C31241B9FE-09356542!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/08/18 19:39, SZEDER Gábor wrote:
-> 
-> See, we have quite a few tests that extract repetitive common tasks
-> into helper functions, which sometimes includes preparing the expected
-> results and running 'test_cmp', e.g. something like this
-> (oversimplified) example:
-> 
->   check_cmd () {
->         git cmd $1 >actual &&
->         echo "$2" >expect &&
->         test_cmp expect actual
->   }
-> 
->   check_cmd --foo    FOO
->   check_cmd --no-foo ""
+Hi Jeff,
 
-I've only had time to look into this from t0001 up to t0008-ignores.sh, where
-test_check_ignore does this. If these helper functions need to allow comparing
-empty files -- how about adding special variation of cmp functions for cases
-like this: test_cmp_allow_empty and test_i18ncmp_allow_empty?
+Jeff King wrote:
+>  .gitignore                     |   1 -
+>  Makefile                       |  22 --
+>  contrib/svn-fe/.gitignore      |   4 -
+>  contrib/svn-fe/Makefile        | 105 -------
+>  contrib/svn-fe/svn-fe.c        |  18 --
+>  contrib/svn-fe/svn-fe.txt      |  71 -----
+>  contrib/svn-fe/svnrdump_sim.py |  68 -----
+>  remote-testsvn.c               | 337 --------------------
+>  t/helper/test-line-buffer.c    |  81 -----
+>  t/helper/test-svn-fe.c         |  52 ----
+>  t/t9020-remote-svn.sh          |  89 ------
 
-I think it would be a good trade-off to allow these helper functions to skip
-checking emptiness of arguments for test_cmp. Such patch will require only
-s/test_cmp/&_allow_empty/ for these helper functions and it will help catch
-cases as bogus test in t5310.
+Doesn't t/t9010-svn-fe.sh also need to be removed?  It uses
+the test-svn-fe helper which is removed.
 
-I'll try something like the following on the weekend:
+The Fedora git-svn package has included git-remote-testsvn
+for years now but no one has ever filed any bug reports
+about it.  I looked at whether it should be packaged last
+year.  I came to the conclusion that while it could be used
+outside of the test suite it was doubtful it actually was.
 
-	test_cmp() {
-		if test "$1" != - && ! test -s "$1"
-		then
-			echo >&4 "error: trying to compare empty file '$1'"
-			return 1
-		fi
-		if test "$2" != - && ! test -s "$2"
-		then
-			echo >&4 "error: trying to compare empty file '$2'"
-			return 1
-		fi
-		test_cmp_allow_empty "$@"
-	}
-	
-	test_cmp_allow_empty() {
-		$GIT_TEST_CMP "$@"
-	}
+-- 
+Todd
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+No one ever went broke underestimating the taste of the American
+public.
+    -- H. L. Mencken
 
-(I'm not sure about redirections in test lib functions. The two if's would
-probably be in a separate function to be re-used by test_i18ncmp.)
