@@ -7,98 +7,101 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B4461F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 14:40:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21E231F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 14:48:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727218AbeHQRoB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 13:44:01 -0400
-Received: from mail-it0-f46.google.com ([209.85.214.46]:53995 "EHLO
-        mail-it0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbeHQRoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 13:44:01 -0400
-Received: by mail-it0-f46.google.com with SMTP id 72-v6so11551794itw.3
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 07:40:23 -0700 (PDT)
+        id S1727773AbeHQRvw (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 13:51:52 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:54846 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726815AbeHQRvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 13:51:52 -0400
+Received: by mail-it0-f66.google.com with SMTP id s7-v6so11567509itb.4
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 07:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VJBXG+G3lffkZsNVgwnNR0i7MQUcdyCXDjNk4VTbIkA=;
-        b=OAQpL+95aVP6qqINrCwQy97xPp4ZT4/l9cF1v4u56/GZs67p8VXPeGmA1GNyRqrVLW
-         wXES8llbq0N0QUlpeED2LD9aiGanUST4oNcsrYFrz/D9ZNJil1xLnj7vp5fZ/ISW6Uha
-         bzDzH52OHku7n3vjPhyV1sZMYdkYv4ZGyBzHIgRA5AOTsC+txmaOiYbwOjNAI94ryqRx
-         /2AG4HnMtDVE3NewUhHtP7Ng/5WTsj3lV5qCDOkbkCeaMQmWcaYjqplAN6qXkLaPd5Cc
-         m21ArF8x14wMMPyawG2hmJB3WLtWsTz9cAY7OVCULEsqXPkWzU0z0Mnvr+tJ6iKvpTrx
-         FIeg==
+         :cc:content-transfer-encoding;
+        bh=WtqjBwDBXFNGGWejgP951YVmrSDAD8lzQCPHfUl6+FM=;
+        b=VX4O04K2o8pwS2L82HM0S518eVzJytFqT4Xh92oB3T1o/tFV1kUVc5QIaOy90R4WrR
+         cuSFBm3S9DG4xJxwPNhPWCC7X3o3+bJtfXBVj24JlmbeNFFwt4XxI/IEngTT2dp2Ky19
+         lAs5C1kRKGX2jUCPUDBOc0FS72r8cWbqv01XNGIKZ6a26PlBtVyrFJLoIf2u9aBV3LgM
+         Ij7dOXWKuWCgLFa5qQuKIE3e8cjo3KbhYavSEFBJRCIJtHjR0c/9H6YmAloW3qXv/Jkp
+         xl9sgu3+o4gyH4Tz1ScrZQAKFNL05k6C6W92R4HvhglrsxgjYVF9HFY3NB2rV9f25WsS
+         tcVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VJBXG+G3lffkZsNVgwnNR0i7MQUcdyCXDjNk4VTbIkA=;
-        b=GyBRdWnQZmlvrTW+d/kWKPFf7pldM3HySj+pU8PBNNT271nE+2EbJQec09qNYMXpNj
-         jz6I9+1hvUR8oaLNNMWmlU5t6C5vEXNlKF16p2kX4XcNaWOH+4LM/VeKoqL52T03yX6c
-         orgrVx80Qm27iob/6hAXxexrQwAQnzL0siSMFuGzSxt/Zgha1DoiLdN61xN4PiTpRGSZ
-         NID0IV0M0HdT2wUpx3Gkj8d3eFo10HPRwO2yA653dZQ55jy7HE4M9oinQuAr60x2iHsu
-         aihcw9f4TE5OPbBukdR58JPzE4rVy5Dd+kv6N5YwBaZvIwx3zJGrlxrqtcreXCyl0XyE
-         KYcg==
-X-Gm-Message-State: AOUpUlEVf2H4nFdDF4MHOhrL5DUnMVI2vJ4+pQK6auD79VUaI4bKyMpd
-        x6NvV7lSU7nUmr8JgEmJE+sX0Vuo4J98A9rmVK4=
-X-Google-Smtp-Source: AA+uWPzuGPVTI06EclPPWSNmLvGhOPb7TqaiCgbMekIB+yeG2W6ftQ3uHTnEW7O/jIBwo3llKDCPFHUCq37l8uA5bXI=
-X-Received: by 2002:a02:c50b:: with SMTP id s11-v6mr31468415jam.61.1534516823536;
- Fri, 17 Aug 2018 07:40:23 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WtqjBwDBXFNGGWejgP951YVmrSDAD8lzQCPHfUl6+FM=;
+        b=MevTQCvrx5U1pAQ638Lqvjsx1o1xyVV6kl8jmk92ib6abhVh/CXtyD7dZXINbFltfW
+         L3YOEA/owHBOtjitPk/PjNfADgbrnu3dHTlJGqnrSRfJ5XMi3b6vO6Wafm0TXe5SWgYl
+         oBEkmfvJpaqLBdCGZRKRHWipu4wCf/BbzqD/Gq6ha71KCqes9dZeWpNFd5nRg5l113uN
+         tvRUsPCNe1gJrSOuA7t8x+LXXz1Jf4D634AxkQS2mEabFJAdSgesL2IgO6qhhpeODzR0
+         H95ddyiUID/lFAFpJgsFWqTaogTVuBQKs+rpjZ7ApPfLbeQiO0Y4nrPzOyC2EV9ylWul
+         Ph8w==
+X-Gm-Message-State: AOUpUlHrq1zkT3/FJrJgWlmLQkoL1b70ZBB08fNLXIEe+fgKKxc7kxP7
+        ixPjytTTR8TranprfirC8nQL1ie5vPvynMNysw0=
+X-Google-Smtp-Source: AA+uWPyVk2g0Hao4laBBFG17slRvj7fGv57IbQh8k85TFV2bbfAWRAUCWVufxu5hBarQPY9MjRw/kwsEPROnI5dsQUQ=
+X-Received: by 2002:a02:c99:: with SMTP id 25-v6mr880278jan.97.1534517293038;
+ Fri, 17 Aug 2018 07:48:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
- <20180816155714.GA22739@sigill.intra.peff.net> <87bma2qcba.fsf@evledraar.gmail.com>
- <20180816205556.GA8257@sigill.intra.peff.net> <20180816210657.GA9291@sigill.intra.peff.net>
-In-Reply-To: <20180816210657.GA9291@sigill.intra.peff.net>
+References: <69624916-f6ba-d4a4-e346-69498662905e@hadisafari.ir> <20180816151125.11803-1-avarab@gmail.com>
+In-Reply-To: <20180816151125.11803-1-avarab@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 17 Aug 2018 16:39:56 +0200
-Message-ID: <CACsJy8Aycxf3S9zARuv_BeKLyh667ewcB1dr3X9VY3i3meR9hg@mail.gmail.com>
-Subject: Re: non-smooth progress indication for git fsck and git gc
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ulrich.Windl@rz.uni-regensburg.de,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Fri, 17 Aug 2018 16:47:46 +0200
+Message-ID: <CACsJy8AtoftZL7dKCL2qpKvGHHcSXKj057CU3aCACUqUMgMp-g@mail.gmail.com>
+Subject: Re: [PATCH] completion: include PARSE_OPT_HIDDEN in completion output
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, hadi@hadisafari.ir,
+        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 11:08 PM Jeff King <peff@peff.net> wrote:
+On Thu, Aug 16, 2018 at 8:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> On Thu, Aug 16, 2018 at 04:55:56PM -0400, Jeff King wrote:
+> The PARSE_OPT_HIDDEN is, per the documentation of the "option" struct
+> in option parse-options.h, only supposed to affect -h output, not
+> completion. That's what the PARSE_OPT_NOCOMPLETE flag is supposed to
+> be for.
 >
-> > >  * We spend the majority of the ~30s on this:
-> > >    https://github.com/git/git/blob/63749b2dea5d1501ff85bab7b8a7f64911d21dea/pack-check.c#L70-L79
-> >
-> > This is hashing the actual packfile. This is potentially quite long,
-> > especially if you have a ton of big objects.
-> >
-> > I wonder if we need to do this as a separate step anyway, though. Our
-> > verification is based on index-pack these days, which means it's going
-> > to walk over the whole content as part of the "Indexing objects" step to
-> > expand base objects and mark deltas for later. Could we feed this hash
-> > as part of that walk over the data? It's not going to save us 30s, but
-> > it's likely to be more efficient. And it would fold the effort naturally
-> > into the existing progress meter.
+> Since 2e29dca66a ("completion: use __gitcomp_builtin in _git_commit",
+> 2018-02-09) we've been using e.g. "git commit --git-completion-helper"
+> to get the bash completion for the git-commit command. Due to
+> PARSE_OPT_HIDDEN this excluded e.g. --allow-empty and
+> --allow-empty-message.
 >
-> Actually, I take it back. That's the nice, modern way we do it in
-> git-verify-pack. But git-fsck uses the ancient "just walk over all of
-> the idx entries method". It at least sorts in pack order, which is good,
-> but:
+> Now, this wasn't a behavior change in that commit. Before that we had
+> a hardcoded list of options, removed in 2e29dca66a ("completion: use
+> __gitcomp_builtin in _git_commit", 2018-02-09). This list didn't
+> contain those two options.
 >
->   - it's not multi-threaded, like index-pack/verify-pack
+> But as noted in the follow-up discussion to c9b5fde759 ("Add option to
+> git-commit to allow empty log messages", 2010-04-06) in
+> https://public-inbox.org/git/20100406055530.GE3901@coredump.intra.peff.ne=
+t/
+> the motivation for PARSE_OPT_HIDDEN was to keep the "git commit -h"
+> output to a minimum, not to hide it from completion.
 >
->   - the index-pack way is actually more efficient than pack-ordering for
->     the delta-base cache, because it actually walks the delta-graph in
->     the optimal order
->
+> I think it makes sense to exclude options like these from -h output,
+> but for the completion the user is usually not trying to complete "git
+> commit --<TAB>",
 
-I actually tried to make git-fsck use index-pack --verify at one
-point. The only thing that stopped it from working was index-pack
-automatically wrote the newer index version if I remember correctly,
-and that would fail the final hash check. fsck performance was not a
-big deal so I dropped it. Just saying it should be possible, if
-someone's interested in that direction.
--- 
+Actually I do :)
+
+> but e.g. "git commit --allo<TAB>", and because of this behavior we don't =
+show these options at all there.
+
+And it would be great if these options do not show up at --<tab> but
+do when with --a<tab>.
+
+We already do something similar to this with --no-<tab>. So this could
+be another option.
+--=20
 Duy
