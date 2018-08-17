@@ -2,105 +2,180 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DC9C1F404
-	for <e@80x24.org>; Fri, 17 Aug 2018 06:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09CFE1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 07:34:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbeHQJ47 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 05:56:59 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37887 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726226AbeHQJ47 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 05:56:59 -0400
-Received: by mail-pg1-f194.google.com with SMTP id n7-v6so3178681pgq.4
-        for <git@vger.kernel.org>; Thu, 16 Aug 2018 23:54:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=xrxPbsT48jRpi/mr7LFvzHgRlvkUee4EIDBEAf0RzZE=;
-        b=TC96Obmkj/t57+ZtpqEPSd5unjbBoRrSj2r3Wen6KgocnOiOpGMVk05Ya92YNuEtO7
-         V3ehVD11mstvWqou63uuE4HuFpZlmqtNZzkb92C4wLVspKOQ/03xtRTC/C/WuViPhpC0
-         9CTZSjJwZCS/FTVJq6r3C0sRaNKr+koirKsmz5CVC49EZlCtxu9oqLRmoAyS5sOl4RQk
-         uFS3Y+hxSBiZ7Qq3zbnqBfvcT2VaCfL8//EJ5CkRccfPO1qj/9qCf43k4lFo1rEHhlQI
-         W8Fs764DuMe+tOlkj65ATDXom6A2TaIuOiD2jWEO1//taqHAXHC3BFAFCwoRYpqeU49w
-         v8TQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xrxPbsT48jRpi/mr7LFvzHgRlvkUee4EIDBEAf0RzZE=;
-        b=SuXr7FmPneVCWntnBNqirKJja9KvQj1pl2yYbWQgD1MAU8XZgmTDypXwjaflynP1Fn
-         MY1xnUPGTKdHv2IYWBjL+egsFJ7oddt9a2vAZabNoiOd3+aHW3Io/pxCD3R0lcPDorjb
-         /+13vtcj5xe7Z7NWoOUZxAThS2uAaS2oYdIS2mfSQtU2ilAqYrTs2CwV43BA5CtszNUP
-         hVdof/h83btpr4/uNLZwf/SyxTpOMIlTEJ7HZIbgLHSTcLJUQWLsJrG5aO6oe0IIbRGf
-         eVd0OYKAngFxUyuzSfqvT56r/fsBT/mqaXqZaHbnBnqCB8yOkDgP7QAsD2qc/Oxr808Z
-         L4mw==
-X-Gm-Message-State: AOUpUlHGQh1CPy8cC2YTxkZwKyQvdJUku4dBe+xOKIZ5D2+tH93kPI2L
-        ClpG84ZuDwIG2bjNcSxMlm2RKj9g
-X-Google-Smtp-Source: AA+uWPwkKEtCjwNwtuiT+MtTdkjhh+ANEB7PUhojhfEWovCJxG4UO0C+zo2qhQQRI6xmirM6zSYZkg==
-X-Received: by 2002:a63:9e0a:: with SMTP id s10-v6mr31675632pgd.326.1534488886697;
-        Thu, 16 Aug 2018 23:54:46 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l79-v6sm2229682pfb.111.2018.08.16.23.54.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 16 Aug 2018 23:54:46 -0700 (PDT)
-Date:   Thu, 16 Aug 2018 23:54:44 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Cc:     git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH] gpg-interface.c: detect and reject multiple signatures
- on commits
-Message-ID: <20180817065444.GC131749@aiede.svl.corp.google.com>
-References: <xmqqbmaa9t8k.fsf@gitster-ct.c.googlers.com>
- <20180814151142.13960-1-mgorny@gentoo.org>
- <20180815213108.GM181377@aiede.svl.corp.google.com>
- <1534488137.1262.2.camel@gentoo.org>
+        id S1726329AbeHQKhL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 06:37:11 -0400
+Received: from smtp.gentoo.org ([140.211.166.183]:60214 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726041AbeHQKhL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 06:37:11 -0400
+Received: from localhost.localdomain (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id B90B3335D6E;
+        Fri, 17 Aug 2018 07:34:50 +0000 (UTC)
+From:   =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com,
+        =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>
+Subject: [PATCH v2] gpg-interface.c: detect and reject multiple signatures on commits
+Date:   Fri, 17 Aug 2018 09:34:41 +0200
+Message-Id: <20180817073441.5247-1-mgorny@gentoo.org>
+X-Mailer: git-send-email 2.18.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1534488137.1262.2.camel@gentoo.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Michał Górny wrote:
-> On Wed, 2018-08-15 at 14:31 -0700, Jonathan Nieder wrote:
+GnuPG supports creating signatures consisting of multiple signature
+packets.  If such a signature is verified, it outputs all the status
+messages for each signature separately.  However, git currently does not
+account for such scenario and gets terribly confused over getting
+multiple *SIG statuses.
 
->> It's not clear to me that the name is_status or SIGNATURE_STATUS
->> captures what this field represents.  Aren't these all sigcheck
->> statuses?  Can you describe briefly what distinguishes the cases where
->> this should be 0 versus 1?
-[...]
->                                  Maybe it should be EXCLUSIVE_STATUS
-> or something like that, to distinguish from things that can occur
-> simultaneously to them.
+For example, if a malicious party alters a signed commit and appends
+a new untrusted signature, git is going to ignore the original bad
+signature and report untrusted commit instead.  However, %GK and %GS
+format strings may still expand to the data corresponding
+to the original signature, potentially tricking the scripts into
+trusting the malicious commit.
 
-Thanks.  Makes sense.
+Given that the use of multiple signatures is quite rare, git does not
+support creating them without jumping through a few hoops, and finally
+supporting them properly would require extensive API improvement, it
+seems reasonable to just reject them at the moment.
 
-[...]
->> Can we have a test to make sure this behavior doesn't regress?  See
->> t/README for an overview of the test framework and "git grep -e gpg t/"
->> for some examples.
->
-> Will try.  Do I presume correctly that I should include the commit
-> object with the double signature instead of hacking git to construct it?
-> ;-)
+Signed-off-by: Michał Górny <mgorny@gentoo.org>
+---
+ gpg-interface.c          | 41 ++++++++++++++++++++++++++++++++--------
+ t/t7510-signed-commit.sh | 26 +++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+), 8 deletions(-)
 
-Good question.  You can hack away with a new program in t/helper/, or
-you can make your test do object manipulation with "git cat-file
-commit <object>" and "git hash-object -t commit -w --stdin".  If you
-run into trouble, just let the list know and I'm happy to try to help.
-(Or if you would like real-time help, I'm usually in #git-devel on
-freenode.)
+Changes in v2:
+* used generic 'flags' instead of boolean field,
+* added test case for git-verify-commit & git-show.
 
-Jonathan
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 09ddfbc26..35c25106a 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -21,24 +21,29 @@ void signature_check_clear(struct signature_check *sigc)
+ 	FREE_AND_NULL(sigc->key);
+ }
+ 
++/* An exclusive status -- only one of them can appear in output */
++#define GPG_STATUS_EXCLUSIVE	(1<<0)
++
+ static struct {
+ 	char result;
+ 	const char *check;
++	unsigned int flags;
+ } sigcheck_gpg_status[] = {
+-	{ 'G', "\n[GNUPG:] GOODSIG " },
+-	{ 'B', "\n[GNUPG:] BADSIG " },
+-	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
+-	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
+-	{ 'E', "\n[GNUPG:] ERRSIG "},
+-	{ 'X', "\n[GNUPG:] EXPSIG "},
+-	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
+-	{ 'R', "\n[GNUPG:] REVKEYSIG "},
++	{ 'G', "\n[GNUPG:] GOODSIG ", GPG_STATUS_EXCLUSIVE },
++	{ 'B', "\n[GNUPG:] BADSIG ", GPG_STATUS_EXCLUSIVE },
++	{ 'U', "\n[GNUPG:] TRUST_NEVER", 0 },
++	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED", 0 },
++	{ 'E', "\n[GNUPG:] ERRSIG ", GPG_STATUS_EXCLUSIVE },
++	{ 'X', "\n[GNUPG:] EXPSIG ", GPG_STATUS_EXCLUSIVE },
++	{ 'Y', "\n[GNUPG:] EXPKEYSIG ", GPG_STATUS_EXCLUSIVE },
++	{ 'R', "\n[GNUPG:] REVKEYSIG ", GPG_STATUS_EXCLUSIVE },
+ };
+ 
+ static void parse_gpg_output(struct signature_check *sigc)
+ {
+ 	const char *buf = sigc->gpg_status;
+ 	int i;
++	int had_exclusive_status = 0;
+ 
+ 	/* Iterate over all search strings */
+ 	for (i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+@@ -50,6 +55,10 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 				continue;
+ 			found += strlen(sigcheck_gpg_status[i].check);
+ 		}
++
++		if (sigcheck_gpg_status[i].flags & GPG_STATUS_EXCLUSIVE)
++			had_exclusive_status++;
++
+ 		sigc->result = sigcheck_gpg_status[i].result;
+ 		/* The trust messages are not followed by key/signer information */
+ 		if (sigc->result != 'U') {
+@@ -62,6 +71,22 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 			}
+ 		}
+ 	}
++
++	/*
++	 * GOODSIG, BADSIG etc. can occur only once for each signature.
++	 * Therefore, if we had more than one then we're dealing with multiple
++	 * signatures.  We don't support them currently, and they're rather
++	 * hard to create, so something is likely fishy and we should reject
++	 * them altogether.
++	 */
++	if (had_exclusive_status > 1) {
++		sigc->result = 'E';
++		/* Clear partial data to avoid confusion */
++		if (sigc->signer)
++			FREE_AND_NULL(sigc->signer);
++		if (sigc->key)
++			FREE_AND_NULL(sigc->key);
++	}
+ }
+ 
+ int check_signature(const char *payload, size_t plen, const char *signature,
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 6e2015ed9..51fb92a72 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -227,4 +227,30 @@ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+ 	grep "gpg: Good signature" actual
+ '
+ 
++test_expect_success GPG 'detect fudged commit with double signature' '
++	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
++	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
++		sed -e "s/^gpgsig//;s/^ //" | gpg --dearmor >double-sig1.sig &&
++	gpg -o double-sig2.sig -u 29472784 --detach-sign double-base &&
++	cat double-sig1.sig double-sig2.sig | gpg --enarmor >double-combined.asc &&
++	sed -e "s/^\(-.*\)ARMORED FILE/\1SIGNATURE/;1s/^/gpgsig /;2,\$s/^/ /" \
++		double-combined.asc > double-gpgsig &&
++	sed -e "/committer/r double-gpgsig" double-base >double-commit &&
++	git hash-object -w -t commit double-commit >double-commit.commit &&
++	test_must_fail git verify-commit $(cat double-commit.commit) &&
++	git show --pretty=short --show-signature $(cat double-commit.commit) >double-actual &&
++	grep "BAD signature from" double-actual &&
++	grep "Good signature from" double-actual
++'
++
++test_expect_success GPG 'show double signature with custom format' '
++	cat >expect <<-\EOF &&
++	E
++
++
++	EOF
++	git log -1 --format="%G?%n%GK%n%GS" $(cat double-commit.commit) >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.18.0
+
