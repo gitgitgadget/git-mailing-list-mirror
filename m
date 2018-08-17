@@ -2,155 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DF4C1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 20:15:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA94E1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 20:44:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbeHQXUS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 19:20:18 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:36081 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbeHQXUS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 19:20:18 -0400
-Received: by mail-lf1-f66.google.com with SMTP id b22-v6so6742039lfa.3
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 13:15:31 -0700 (PDT)
+        id S1726308AbeHQXs6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 19:48:58 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:38488 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726220AbeHQXs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 19:48:58 -0400
+Received: by mail-yw1-f73.google.com with SMTP id q141-v6so6729248ywg.5
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 13:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=BWVYF3+TRiY8MP2R/0v0dBgEeKF+c/xsLmNbwhosx8k=;
-        b=dh/eI8kSePGbSnnTfN0/YFSZV5S4tHRwn9rxvd+Yf8RRowoMQkEBrXguWCltwfwyxX
-         VCd690u7fQDi55CjK0rjMz9l8rVSZ1BlR7DlgJBVwdabPfQXBawnRS1k1r9/7k6sMjyq
-         uJSJKJVHSXFt4HkMGpHrxSRu3Yf81i4XGF36cExL0TggDu1ApUxMB1ePRQNJK2Noio3H
-         eddEQU2bkaOr6vM16a9Mdmiutd1uCRDxWHHVNQ8vHZ7BnECKeY2BrANmB6QIkaV012aM
-         /8k3DjcdxKvDD8CS2M199LTCA0Q1CRMwMog6cbrIVc+06VJt2kbpU4VU0NuxIfXQS01V
-         E0Ow==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=xwx55FP4moe6ty/xrJcPVP3rRckP3hv0Un/b6nmQzpY=;
+        b=ZASG6nUx2Xzo0MxhuHnK++yIHaNv5oHZ67NhJBKEGeBH6LgFbfGfK7xXTaIM6+YqLu
+         /vw9iZowKSQhvFGO/b6JTjBNe3Or2BMp9iNaPdlr756BiFcN+jlCZfVmdB1mPlqy/HXp
+         swETf5Yia3wc3DVdnpBGKCM7o96PXcnHyQEsp92f30nYmkNF9+JNghV9RSGSppeYGcny
+         6qBMmIQMz4FQxP/8zu4nKAHbynQA77G48bNerr56boklYilAxOzoaUF/m9ncpswcwLad
+         irhcZW0xpGWaR+c3ZOw1D0tgZWctdG6nFNm0v9q8pOgMbIwZSclbmiyN9j7/4kDFeYEG
+         JeSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BWVYF3+TRiY8MP2R/0v0dBgEeKF+c/xsLmNbwhosx8k=;
-        b=ZbqmciB1OJE3Hdmk1sMTxtQqNSbSi1Vz2IHkpqXM0xaqHxmfK61fVdnUIzjAqGxPcl
-         bEk4Yfj9AcFVtC7jRJcvPFbLhUjtb1fMMwZFz0+wPm0i2xwbKLQg4QW0Y7/URd6j1+Wa
-         NBZppTUcjTJp6II/5uFIR2AC0VnL2/sP434x56BdUUpJoNYszNvy5KAXDgka8fVbPiGc
-         /ldA47m7riTB6BPfnnu1kfj5GPzcdMHPln2mphlyzLgRqGig+csU2gGXdY9l79zHs00F
-         1r5tNEOLEgGMVle7Ian6kLZIsbYYVm1MEpRh0HnVEX6w0kf51IFklch1xXGNJJMLAVMw
-         6NYw==
-X-Gm-Message-State: AOUpUlHVNkxoJOxwVuNyl8S3hm2HcodyIqf58d1f+x37BDYaPEg88Whs
-        ziJA/xe4znFEv0lUpdzHPNWJhdvEnk/YJ8yriQw=
-X-Google-Smtp-Source: AA+uWPxKWGY+wQgfqmRaDKLIB2Y95teshdG2JftVQYLzrDMMDHgcczXuAmw65mzVB9qK6ywKE31JUSybflTG4RmeVmk=
-X-Received: by 2002:a19:5154:: with SMTP id f81-v6mr5766248lfb.55.1534536930895;
- Fri, 17 Aug 2018 13:15:30 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=xwx55FP4moe6ty/xrJcPVP3rRckP3hv0Un/b6nmQzpY=;
+        b=dh2uMmGYDX8vTKdX5dH/6vq8BidcNj0khSmHevB+ITQqisupxR2DqNb4AiNR7Krbls
+         0P/Z3O3zblvmqfvzC/T9e0cFndmfihtPvNq06HP2svmbKUOmCMiNidJZJmdzgWC7EbLl
+         YUwqLbxvkFZfGDS0eMTPQdbxpnNVsAphU/QHZq4+SFkrb5Dj5/nI99/jqhWweFP0/w2G
+         Hw4VfLy0I/8/JzpPps+JOLV6F27DzrlLrETUF0XjunUBmUkZALsS66YYw8QI/nZfO9Nd
+         MdhOEwF3MyIjBEignVc6XMGTEkCjG/eV3jlncY7eWOkqX9iFqDkkpXV2rVhutj55e/0f
+         U1Pg==
+X-Gm-Message-State: AOUpUlGZVqoCEkEqQ/aHAoiZUo0k4vHctfMQxe0y67psRfx98ZKUkCO6
+        cwoUFxyk6vQ1oBemEbGuTmHEkyHRLmIW
+X-Google-Smtp-Source: AA+uWPw3CR8JOSpcNjwD1baSRuMpUre+Xdvup9oSx2O+/eAxqOWIzbYRFUOKO/XXEBAqc6vFMCJYp0mfDaC9
 MIME-Version: 1.0
-References: <20180814114721.25577-1-szeder.dev@gmail.com> <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
- <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com> <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
- <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
-In-Reply-To: <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
-From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Date:   Fri, 17 Aug 2018 22:15:19 +0200
-Message-ID: <CAM0VKj=rw14MbLbXvuJiiwf05Txo1tu6A8xzy+_3RHOytX8mXA@mail.gmail.com>
-Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
- use bitmap' test
-To:     rybak.a.v@gmail.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Kirill Smelkov <kirr@nexedi.com>, Jeff King <peff@peff.net>
+X-Received: by 2002:a25:d6d8:: with SMTP id n207-v6mr11084446ybg.55.1534538646921;
+ Fri, 17 Aug 2018 13:44:06 -0700 (PDT)
+Date:   Fri, 17 Aug 2018 13:43:51 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet>
+Message-Id: <20180817204354.108625-1-sbeller@google.com>
+References: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet>
+X-Mailer: git-send-email 2.18.0.265.g16de1b435c9.dirty
+Subject: [PATCH 0/3] Better colors in range-diff
+From:   Stefan Beller <sbeller@google.com>
+To:     johannes.schindelin@gmx.de
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 9:27 PM Andrei Rybak <rybak.a.v@gmail.com> wrote:
->
-> On 17/08/18 19:39, SZEDER G=C3=A1bor wrote:
-> >
-> > See, we have quite a few tests that extract repetitive common tasks
-> > into helper functions, which sometimes includes preparing the expected
-> > results and running 'test_cmp', e.g. something like this
-> > (oversimplified) example:
-> >
-> >   check_cmd () {
-> >         git cmd $1 >actual &&
-> >         echo "$2" >expect &&
-> >         test_cmp expect actual
-> >   }
-> >
-> >   check_cmd --foo    FOO
-> >   check_cmd --no-foo ""
->
-> I've only had time to look into this from t0001 up to t0008-ignores.sh, w=
-here
-> test_check_ignore does this. If these helper functions need to allow comp=
-aring
-> empty files -- how about adding special variation of cmp functions for ca=
-ses
-> like this: test_cmp_allow_empty and test_i18ncmp_allow_empty?
->
-> I think it would be a good trade-off to allow these helper functions to s=
-kip
-> checking emptiness of arguments for test_cmp. Such patch will require onl=
-y
-> s/test_cmp/&_allow_empty/ for these helper functions and it will help cat=
-ch
-> cases as bogus test in t5310.
->
-> I'll try something like the following on the weekend:
->
->         test_cmp() {
->                 if test "$1" !=3D - && ! test -s "$1"
->                 then
->                         echo >&4 "error: trying to compare empty file '$1=
-'"
->                         return 1
->                 fi
->                 if test "$2" !=3D - && ! test -s "$2"
->                 then
->                         echo >&4 "error: trying to compare empty file '$2=
-'"
->                         return 1
->                 fi
+This improves colors of the range-diff, see last patch for details.
+it is also available via
 
-Yeah, these conditions are what I instrumented 'test_cmp' with (except
-I used 'error "bug in test script ..."') to find callsites that could
-be converted to 'test_must_be_empty', that's how I found the bug fixed
-in this patch.  However, it resulted in a lot of errors from the cases
-mentioned in my previous email.  Then I reached out to Bash and tried
-this:
+  git fetch https://github.com/stefanbeller/git sb/range-diff-better-colors
 
-  test_cmp() {
-         if test -n "$BASH_VERSION" &&
-            test "${FUNCNAME[1]}" =3D "test_eval_inner_" &&
-            test "$1" !=3D "-" &&
-            test ! -s "$1"
-         then
-                 error "bug in test script: using test_cmp to check
-empty file; use test_must_be_empty instead"
-         fi
-         $GIT_TEST_CMP "$@"
-  }
+Thanks,
+Stefan
 
-i.e. to limit the check callsites where 'test_cmp' is called directly
-from within a test_expect_{success,failure} block.  This is better,
-almost all errors could be converted to 'test_must_be_empty' stright
-away; I have the patches almost ready.  There are, however, a few
-parametric cases that choke on this: where we run 'test_cmp' in a
-loop, e.g. 'cvs update (-p)' in t9400, and I think there was a case
-where the 'test_expect_success' block is within a function.
+Stefan Beller (3):
+  diff.c: add --output-indicator-{new, old, context}
+  range-diff: make use of different output indicators
+  range-diff: indent special lines as context
 
+ diff.c                | 21 ++++++++++++++++++---
+ diff.h                |  5 +++++
+ range-diff.c          | 22 +++++++++++++++++++++-
+ t/t3206-range-diff.sh | 12 ++++++------
+ 4 files changed, 50 insertions(+), 10 deletions(-)
 
->                 test_cmp_allow_empty "$@"
->         }
->
->         test_cmp_allow_empty() {
->                 $GIT_TEST_CMP "$@"
->         }
->
-> (I'm not sure about redirections in test lib functions. The two if's woul=
-d
-> probably be in a separate function to be re-used by test_i18ncmp.)
+-- 
+2.18.0.265.g16de1b435c9.dirty
+
