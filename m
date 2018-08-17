@@ -2,98 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1114F1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 19:51:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 758A11F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 20:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726185AbeHQW43 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 18:56:29 -0400
-Received: from mout.web.de ([217.72.192.78]:40745 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726054AbeHQW43 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 18:56:29 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M40zO-1g80b23jk2-00rc1Q; Fri, 17
- Aug 2018 21:46:03 +0200
-Date:   Fri, 17 Aug 2018 21:46:00 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
-        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive
- filesystems
-Message-ID: <20180817194600.GA10393@tor.lan>
-References: <20180812090714.19060-1-pclouds@gmail.com>
- <20180817161645.28249-1-pclouds@gmail.com>
+        id S1726341AbeHQXN5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 19:13:57 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36486 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725825AbeHQXN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 19:13:57 -0400
+Received: by mail-wm0-f68.google.com with SMTP id w24-v6so8353189wmc.1
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 13:09:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=s6cVF0oBTFF2D88OXlOiwrg7qZ7XCjISUd52iuEBBNw=;
+        b=DK/LsFioWXfExRfKUuuJ0H+vdQMKavQpf4rtbtz5DGBMl/bOZ6OBq31r+oFxPQa9JU
+         yvF1bYJhc+k1z3fNFT5GaZJuwt6hCuFYLWwb2O8aVnerNqDkNvY/UYIi/x2TrdhavdFa
+         o8lo24gIFP50/D+wOOyQB8uG7V6UHaexu6M4Cc9RGRaUojEuNWgLD2vN2OTevFUQ9XOj
+         CuDQI6I7LOYvNm/sEGiSl7mREqd4IFeG/c5D4a3Z6BhpzzO2+tBfNIJFyLh76LfJxPUz
+         t/JZ7ipVf34We8BIC1zfRMT8w0Yr4Efe7Y4ADGDaM/WnnvuOgm2oBAjtVAVzGwWeR48N
+         pkmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=s6cVF0oBTFF2D88OXlOiwrg7qZ7XCjISUd52iuEBBNw=;
+        b=cbRuWfJe4FVtDn9V2vUtrGZ/9imHfUtkGKJRQP64FI/t21kAkTeusGENuK9Wi1gT3B
+         MbFwb8/mJoHav7zROz6OzU98ejI8HAAybl/gXLRPBnRiPGSjz/x6skGoJIvCVefujyL8
+         /s8Q3kVheMWPncoBNERjfMH2yjQeAt/qrJwHrVcRe5/S1SUAOQIwn69Ed+kLaSZvRlEd
+         pgCL92EkKR6Zy6uSe3oVq+wgGNJm7957jpD9NgQ8YPZLRnGaWIBDuHj0Mdo8XWeihW6S
+         KoAV25PfAL3/cxD70kuoXp7SCb5Z0c8IT06RtAJ/9pwhQdSBZMfBjSyumTz7m5z0N+q8
+         0sOg==
+X-Gm-Message-State: AOUpUlEJqT2JVIsktyB1U1erHJLG1Rzn9Eh8QOCCCgrxXWxqxa6Kd4ED
+        DOHrXtZrAw4W7iGh6sGpGbY=
+X-Google-Smtp-Source: AA+uWPzI8Bs5UoK5IdTO2oRundOBV+rsadpBJmvDVsFzCCzFYFqYq0e+35RXl+3IcpwPrZzGimV66Q==
+X-Received: by 2002:a1c:588c:: with SMTP id m134-v6mr17604106wmb.154.1534536550927;
+        Fri, 17 Aug 2018 13:09:10 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l72-v6sm14051755wma.17.2018.08.17.13.09.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Aug 2018 13:09:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Kirill Smelkov <kirr@nexedi.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can use bitmap' test
+References: <20180814114721.25577-1-szeder.dev@gmail.com>
+        <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
+        <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com>
+        <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
+        <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
+Date:   Fri, 17 Aug 2018 13:09:09 -0700
+In-Reply-To: <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com> (Andrei Rybak's
+        message of "Fri, 17 Aug 2018 21:27:22 +0200")
+Message-ID: <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180817161645.28249-1-pclouds@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:P7V/iGs5VA3YIgw7XKgH59oR+EoYeTqRyAznkuHyxmZ6syFeas5
- XhMeNZfjwEGPnHkY/quSqcA3/tOz6qonbeDmtFw85eLUs5o6AhZGA9vYqZsvUlCNTwEZGuZ
- 5972jqgWbn0WkVwP0mugPcZBCT7aICy/54l35IRPqRKi8u347XqoA8itd+5RMHJN3NJhh85
- H6CE0atk6RVapmHv4+RZg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:SAtyXKgmNYs=:hJeJUO8H3jW3UcTLFXghNc
- MSCSlFQAq04Gj9q+gFVHL8OjUOR/fxdwPgUm5MdINCVIF29pwPsVGoh+AALOsMADviiK8EeFR
- PBOjhHWwC/Vhy9aj0ZjJX/m4rr/RbOsb8XOb9XktGP0crlTO1/34mYakNhv/hNuRehHcuIHDV
- DGBdcoAAjToxchFz0YFl42KCTyoMpXPXcU8stWr8x3xeKT86AIuy9jE/167eVKh5NZGog7CV5
- Qd29Z3TEZBmlH1pCkH5qbEptn6wgCvDxJs7zwIzQbM495V4CNZfOF0ZRs3kYEfDRnd21CEPn9
- SqmOAUTbOPzswBjbpJLzqbSkeC4hwLj/2wFPV3qOx9qq9csiUhYiCWdlqEtD65o8RU37MqVym
- /tRFvDopVX2M9y8ejJrU80Yt514hMTbxldiQwq8mprCsavWjCbkxM2ew0Exwmjwfz+W7iwq9k
- MB6JKM8DUIs04zOOXnMUnhbSy6HjvaucGc9ar5XMxsK6Q9G6qar1RB+RqUoRQii10+fuAirE6
- zN3U1GeLT1EG37yuizY5sINbdViZXitHuODWoeHOTVEeX2Z+zMQLZi3epJ39XqpUwri7lJpbf
- tTMtEmF0m5WKmHxoOb+GwpLhnTJ8df6Qul+Qw3dXPvga/0Tbpgm6f6h0lS44GfAJ47et/01BW
- GyDfzANmKT3SvPQDQi6oZYwAG3yTBgQRSn6vLbUrUjCI3+P7qn1WaKDGhNonQklu7tsG8Fi99
- dFNPpVrOLFnYv84LRj7pWMreLV9Ye89T+veYuvNOHBwRHh+JGAJywKqA6IU=
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 06:16:45PM +0200, Nguyễn Thái Ngọc Duy wrote:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
-The whole patch looks good to me.
-(I was just sending a different version, but your version is better :-)
+> I think it would be a good trade-off to allow these helper functions to skip
+> checking emptiness of arguments for test_cmp. Such patch will require only
+> s/test_cmp/&_allow_empty/ for these helper functions and it will help catch
+> cases as bogus test in t5310.
+>
+> I'll try something like the following on the weekend:
+>
+> 	test_cmp() {
 
-One minor remark, should the line
-warning: the following paths have collided 
-start with a capital letter:
-Warning: the following paths have collided 
+Style: SP before and after ().
 
-> Paths that only differ in case work fine in a case-sensitive
-> filesystems, but if those repos are cloned in a case-insensitive one,
-> you'll get problems. The first thing to notice is "git status" will
-> never be clean with no indication what exactly is "dirty".
-> 
-> This patch helps the situation a bit by pointing out the problem at
-> clone time. Even though this patch talks about case sensitivity, the
-> patch makes no assumption about folding rules by the filesystem. It
-> simply observes that if an entry has been already checked out at clone
-> time when we're about to write a new path, some folding rules are
-> behind this.
-> 
-> In the case that we can't rely on filesystem (via inode number) to do
-> this check, fall back to fspathcmp() which is not perfect but should
-> not give false positives.
-> 
-> This patch is tested with vim-colorschemes and Sublime-Gitignore
-> repositories on a JFS partition with case insensitive support on
-> Linux.
+> 		if test "$1" != - && ! test -s "$1"
+> 		then
+> 			echo >&4 "error: trying to compare empty file '$1'"
+> 			return 1
+> 		fi
+> 		if test "$2" != - && ! test -s "$2"
+> 		then
+> 			echo >&4 "error: trying to compare empty file '$2'"
+> 			return 1
+> 		fi
+> 		test_cmp_allow_empty "$@"
+> 	}
 
-Now even tested under Mac OS/HFS+
+I actually think the above gives way too confusing output, when the
+actual output is empty and we are expecting some output.  I.e.
 
-[]
->  '
->  
-> +test_expect_success !MINGW,!CYGWIN,CASE_INSENSITIVE_FS 'colliding file detection' '
+	: >expect &&
+	git cmd >actual &&
+	test_cmp expect actual
 
-My ambition is to run the test under Windows (both CYGWIN and native) next week,
-so that we can remove !MINGW and !CYGWIN 
+The tester wants to hear from test_cmp "your 'git cmd' produced some
+output when we are expecting none" as the primary message.  We are
+trying to find bugs in "git" under development, and diagnosing iffy
+tests is secondary.  But with your change, the first thing that is
+checked is if 'expect' is an empty file and that is what we get
+complaints about, without even looking at what is in 'actual'.
 
+It's the same story, and it is even worse than the above, when we
+are expecting some output but the command produced no output, i.e.
+
+
+	echo Everything up-to-date. >expect &&
+	git cmd >actual &&
+	test_cmp expect actual
+
+We should get a complaint from test_cmp that 'actual' does not match
+the string we were expecting (and even better, we show how they are
+different by running them thru "diff -u"), not that 'actual' is an
+empty file.
+
+
+> 	test_cmp_allow_empty() {
+> 		$GIT_TEST_CMP "$@"
+> 	}
+>
+> (I'm not sure about redirections in test lib functions. The two if's would
+> probably be in a separate function to be re-used by test_i18ncmp.)
