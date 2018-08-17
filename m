@@ -2,111 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72E531F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 15:10:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CD5B1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 15:19:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727994AbeHQSOB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 14:14:01 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:38320 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727607AbeHQSOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 14:14:01 -0400
-Received: by mail-lf1-f66.google.com with SMTP id a4-v6so6128695lff.5
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:10:16 -0700 (PDT)
+        id S1727507AbeHQSW7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 14:22:59 -0400
+Received: from mail-it0-f54.google.com ([209.85.214.54]:39455 "EHLO
+        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727037AbeHQSW7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 14:22:59 -0400
+Received: by mail-it0-f54.google.com with SMTP id g141-v6so12204376ita.4
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:19:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=bzMA0uMuAulQqAvMrmlcOFQtG3TNhNmXgtBu9jgszho=;
-        b=dbUSoaRdr718QFuWItjtzoF84jSZM1T4YgmKf2ev0ZvQeOXeVEDy6FkBWn8B7JDPY8
-         TJqEaYwczfr/cVB/W3vgylaBwkxfX7vNPK9vK5zVKySUl0g48t9VaAAqdxKjSocC19ck
-         QhUKb/QEDWkRb9lo2kDnuYDWJ5VAYKHaROeodDsV3u8JqvOmznvra7XvZGvLSCJ5Xybf
-         cXX/IBTx1nDXBjHtcglSJl0evrckpdVVPEH2wOnXP4PinLXjkQvuxy1hcn0Va6Xe6of1
-         Ic/WekELaZa6wtXWpon+/Y9XF8s/vaXmbsEgKt9DTL4O4SjTf+/h0ESQr/lVL9l35Jod
-         n5Kw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Z3EOatfapvV6XSUUcxfWFNJhuLi/NafY58D9QZxk7tc=;
+        b=ZosQewdCX7apsbJ00I3ix28unxrHignbz3tUbZ5vk1Ur6ErxvXcqrwr9O2r9XfMeCC
+         w0/WS4dx+eDdDTOZB36zhIh5FKoB4wZL13nptRoiz4PNTtAyT+Eq1rx+L0kF15CtT9vc
+         i8NrAn4Zv7AgOlZLR6WdF6bbyuKGwmiOeUAlr9C0uCJdBY0ZobY9gh5SM3LTVx2jqYVc
+         LfuWfnOZAPDnny/T49sJIJDhocI5R1MGQP1LdXh8jEqEcbIjATv8a9lv6SOvVrSaR8Mm
+         uJFFH7HcKRECCN9yMAL5Kh0dEo3uVCsSJBdmn8HVj+5vQh4+4F4Xz0Vv5dr3c2jeC8pi
+         Qs+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=bzMA0uMuAulQqAvMrmlcOFQtG3TNhNmXgtBu9jgszho=;
-        b=NkMQYnTv4N+MuRLk75MWE5oVUZO43KRsRu4+exC3efv5RjwUJ/ifocBB9WFQfPKIJq
-         XosHaAaao8A2GYRT4Lr45/ZiXFe5+5/te5AZ/83+bfQP+Cxqxp9ZT8kvf3Db2NzJO+6i
-         4Hi+CPOcjFkvoNXKAz+64x73itudpoCDVgWaLyZgxBQozD68L/gTH4nt/muXYyK21ZSE
-         3vApQ9ilImoeiVdJdx1TeBpngB2f6Ut0rhvBYI3Lm50c38kBbzUZJrTzZmy9Fjv6PFuu
-         8VkOTueA6sge2til/A5ftIea1qLAmIC+Ui9wQ/ilT4pZJYL0BMiLotcHu/eUMOr3e673
-         Up3Q==
-X-Gm-Message-State: AOUpUlHmDMEXppWphRMXhLIoMbi9JCgIFstFuUT9KOHo+YGveS6U+8eI
-        itCmOQPFErcnOdIE8PD6cgU=
-X-Google-Smtp-Source: AA+uWPz0qBqMQYszdXhjsXANKbFLRaQ/ddBRPucgRPWwLL+ZMeUBNRgzW6w9mkONwHeEd2uJaNo93g==
-X-Received: by 2002:a19:db94:: with SMTP id t20-v6mr22072347lfi.126.1534518615404;
-        Fri, 17 Aug 2018 08:10:15 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id r23-v6sm349158ljc.15.2018.08.17.08.10.14
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Aug 2018 08:10:14 -0700 (PDT)
-Date:   Fri, 17 Aug 2018 17:10:12 +0200
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] refactor various if (x) FREE_AND_NULL(x) to just
- FREE_AND_NULL(x)
-Message-ID: <20180817151012.GA20262@duynguyen.home>
-References: <1534498806.1262.8.camel@gentoo.org>
- <20180817130250.20354-1-avarab@gmail.com>
- <CACsJy8DH2tESV4xkCYutH=Ye37zGwifGdJhdnNOsRd+JusdOwg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Z3EOatfapvV6XSUUcxfWFNJhuLi/NafY58D9QZxk7tc=;
+        b=FDyv6ZzAQAfao1R962PU/6IyAcTQd8duDKrlI0QNtUi+ymUjnQHOHDveu+ste5O8Or
+         QnQAR/MN6/7W0SIzmmPWGn+uwy8TYh3Avb0GJQm7eFqpQXRgbLAz5KgJv4t7oePjTgDR
+         Q5UjI2X+/nWU8WdEkhbllwRd4JzDLZjaT0pWe7ON6hlSvhc/LqReTJM/bY1OW6Et4ffj
+         xT8ofzst2jaESBLjqlapgspIaWpmeAmUpcWd4wIOj0FZAl9KDozg+klypIuklrLncB3M
+         ZfLF8PUXOPwTTn3M25IJn89qCq4nebKLOhr1kEjmZWNXWkyea3Lf/vhQYFh/PmdCWrFL
+         4JTA==
+X-Gm-Message-State: AOUpUlGWioEirxVd41q37iW74lyUgTjFfrHZwyfOQhoUMPXGkAAWmSYH
+        o9i4gEAfQlKM7Bz6lIwVybVfp1ySuKK0Sk3N7J0=
+X-Google-Smtp-Source: AA+uWPxik7rzwt3+eyuSCRPNTacKdJ9n3FMvpgKwksaHjRs1vecBHJ4aJnIu+aCKDWG8jc8beohNIgwWBzuhTmz4cSo=
+X-Received: by 2002:a02:c50b:: with SMTP id s11-v6mr31623002jam.61.1534519152822;
+ Fri, 17 Aug 2018 08:19:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8DH2tESV4xkCYutH=Ye37zGwifGdJhdnNOsRd+JusdOwg@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20180813163108.GA6731@sigill.intra.peff.net> <87h8jyrtj6.fsf@evledraar.gmail.com>
+ <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com> <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
+In-Reply-To: <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 17 Aug 2018 17:18:46 +0200
+Message-ID: <CACsJy8CukvQcEY-EmyE7iB2sMwbTSaM_bqGOE0G82FV3Om64kw@mail.gmail.com>
+Subject: Re: Contributor Summit planning
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 04:36:13PM +0200, Duy Nguyen wrote:
-> On Fri, Aug 17, 2018 at 3:05 PM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > Change the few conditional uses of FREE_AND_NULL(x) to be
-> > unconditional. As noted in the standard[1] free(NULL) is perfectly
-> > valid, so we might as well leave this check up to the C library.
-> 
-> I'm not trying to make you work more on this. But out of curiosity
-> would coccinelle help catch this pattern? Szeder's recent work on
-> running cocci automatically would help catch all future code like this
-> if we could write an spatch.
+On Mon, Aug 13, 2018 at 10:42 PM Stefan Beller <sbeller@google.com> wrote:
+> =C3=86var specifically pointed out that we might want to hear from you an=
+d Duy
+> if you want to attend a conference and if so how we can make that happen
+> (by choosing location/time/setting appropriately) IIUC.
 
-Just fyi this seems to do the trick. Although I'm nowhere good at
-coccinelle to say if we should include this (or something like it)
-
--- 8< --
-diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
-index 4490069df9..f8e018d104 100644
---- a/contrib/coccinelle/free.cocci
-+++ b/contrib/coccinelle/free.cocci
-@@ -16,3 +16,9 @@ expression E;
- - free(E);
- + FREE_AND_NULL(E);
- - E = NULL;
-+
-+@@
-+expression E;
-+@@
-+- if (E) { FREE_AND_NULL(E); }
-++ FREE_AND_NULL(E);
--- 8< --
-
---
+Since my name shows up... I'm with Elijah on the travel resistance
+thing (and am probably even lazier than him). I guess I will remain
+the mystery in the git circle.
+--=20
 Duy
