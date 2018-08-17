@@ -2,367 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9E541F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 21:06:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5146C1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 21:42:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727084AbeHRALD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 20:11:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59306 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726334AbeHRALD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 20:11:03 -0400
-Received: (qmail 9222 invoked by uid 109); 17 Aug 2018 21:06:06 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 17 Aug 2018 21:06:06 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28581 invoked by uid 111); 17 Aug 2018 21:06:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 17 Aug 2018 17:06:10 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Aug 2018 17:06:04 -0400
-Date:   Fri, 17 Aug 2018 17:06:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Subject: [PATCH 6/6] pack-objects: reuse on-disk deltas for thin "have"
- objects
-Message-ID: <20180817210604.GF20088@sigill.intra.peff.net>
-References: <20180817205427.GA19580@sigill.intra.peff.net>
+        id S1727206AbeHRArz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 20:47:55 -0400
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:35417 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727055AbeHRAry (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 20:47:54 -0400
+Received: by mail-yw1-f66.google.com with SMTP id s68-v6so4911530ywg.2
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 14:42:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=N8C7Ha/4No94y/eLmiIqg3ZQuyuY2IPxtUpBIwt0YcM=;
+        b=TENeeqyNJNbN5GvEgS/f5eTwwxJM1VS9Vd/izQ0rS8/FuRA//vpppKdfRwN8FZgv50
+         3cFE7Er479kuuz07UQ5L0yU6DydQBW+6YzWZPeEk3rMj07aGdvYGXBgg1Pqy1/fgb220
+         SYeh0y6kV9bFxC3Mq5vWDT+1R+Yma6kY5tI2Pqu2GNaQITaGtvG+7jeYx2ulasE+BI+n
+         b15618Q6c4Dd6OHMKidYYnjQYyEiZzuFSpEQK9EqT1lrfAthP98oOEaiBjxFY9e79fsa
+         PwFav/rRzd4v7qw4/RiSuhfbCwRLjE7E3pj/Fw1EQ0uqrXyBdPJ1zGxgxOYJyZcpyuGX
+         QXwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=N8C7Ha/4No94y/eLmiIqg3ZQuyuY2IPxtUpBIwt0YcM=;
+        b=i3rTwKgH3V+/orlai55YCYjgH2I4usBBp9f0hcPYytayvU8JeED1ZibJe8JkBhSY30
+         qolIVtVpAsmP3f64wraYdDHAwT4rzqQece2vHl13QAt+P8Zhzb3xLXLIOhJ7qvHVaEMv
+         eKUyO4h5e42U7/uwtmjsX40nOu2HKSdAq3FdKkPZ3x3mon72HiIU2JuXl/w/zCRj8k7+
+         A6mmuIl/9YpEpKAEt43ciPN48WO8uNEGPRVNfA7RlPgx6CNgm7S+SbMYbZTUyaNC6ZOH
+         jr6v62SlZbEBYAA6Qp2VInCPmOwC6YbXLQB+0h75bdM3kRKAeW5W+HjLp1nEqGo6/YUC
+         AL8g==
+X-Gm-Message-State: AOUpUlEFSXudhlTQIG+LVKpj/ytFfav00jSK55HB7LOn3oZDFSpGJdIc
+        DOmsfgQ9Qh4R0Oxl9P2Kdzyadlit3jNrUHRmDOcqQA==
+X-Google-Smtp-Source: AA+uWPyhhKJfKZ+nLGGSjZv2fyH3Zg+HoUHrL1WllcvpQvVKRv9j9Mtc9tkCofNREQh2ZaJU0pt99VwrtZ3XjE8C+0Q=
+X-Received: by 2002:a81:9a17:: with SMTP id r23-v6mr21137899ywg.119.1534542171492;
+ Fri, 17 Aug 2018 14:42:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180817205427.GA19580@sigill.intra.peff.net>
+References: <cover.1533854545.git.matvore@google.com> <cover.1534374650.git.matvore@google.com>
+ <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
+In-Reply-To: <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 17 Aug 2018 14:42:40 -0700
+Message-ID: <CAGZ79kaWcGbyc2S5gOCU7NdvT4fN46jq4xK9MvTLAFBGhyuo2A@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we serve a fetch, we pass the "wants" and "haves" from
-the fetch negotiation to pack-objects. That tells us not
-only which objects we need to send, but we also use the
-boundary commits as "preferred bases": their trees and blobs
-are candidates for delta bases, both for reusing on-disk
-deltas and for finding new ones.
+On Wed, Aug 15, 2018 at 4:23 PM Matthew DeVore <matvore@google.com> wrote:
+>
+> Teach list-objects the "tree:0" filter which allows for filtering
+> out all tree and blob objects (unless other objects are explicitly
+> specified by the user). The purpose of this patch is to allow smaller
+> partial clones.
+>
+> The name of this filter - tree:0 - does not explicitly specify that
+> it also filters out all blobs, but this should not cause much confusion
+> because blobs are not at all useful without the trees that refer to
+> them.
+>
+> I also consider only:commits as a name, but this is inaccurate because
+> it suggests that annotated tags are omitted, but actually they are
+> included.
 
-However, this misses some opportunities. Modulo some special
-cases like shallow or partial clones, we know that every
-object reachable from the "haves" could be a preferred base.
-We don't use them all for two reasons:
+Speaking of tag objects, it is possible to tag anything, including blobs.
+Would a blob that is tagged (hence reachable without a tree) be not
+filtered by tree:0 (or in the future any deeper depth) ?
 
-  1. It's expensive to traverse the whole history and
-     enumerate all of the objects the other side has.
+I found this series a good read, despite my unfamiliarity of the
+partial cloning.
 
-  2. The delta search is expensive, so we want to keep the
-     number of candidate bases sane. The boundary commits
-     are the most likely to work.
+One situation where I scratched my head for a second were previous patches
+that  use "test_line_count = 0 rev_list_err" whereas using test_must_be_empty
+would be an equally good choice (I am more used to the latter than the former)
 
-When we have reachability bitmaps, though, reason 1 no
-longer applies. We can efficiently compute the set of
-reachable objects on the other side (and in fact already did
-so as part of the bitmap set-difference to get the list of
-interesting objects). And using this set conveniently
-covers the shallow and partial cases, since we have to
-disable the use of bitmaps for those anyway.
-
-The second reason argues against using these bases in the
-search for new deltas. But there's one case where we can use
-this information for free: when we have an existing on-disk
-delta that we're considering reusing, we can do so if we
-know the other side has the base object. This in fact saves
-time during the delta search, because it's one less delta we
-have to compute.
-
-And that's exactly what this patch does: when we're
-considering whether to reuse an on-disk delta, if bitmaps
-tell us the other side has the object (and we're making a
-thin-pack), then we reuse it.
-
-Here are the results on p5311 using linux.git, which
-simulates a client fetching after `N` days since their last
-fetch:
-
-Test                         origin              HEAD
---------------------------------------------------------------------------
-5311.3: server   (1 days)    0.27(0.27+0.04)     0.12(0.09+0.03) -55.6%
-5311.4: size     (1 days)               0.9M              237.0K -73.7%
-5311.5: client   (1 days)    0.04(0.05+0.00)     0.10(0.10+0.00) +150.0%
-5311.7: server   (2 days)    0.34(0.42+0.04)     0.13(0.10+0.03) -61.8%
-5311.8: size     (2 days)               1.5M              347.7K -76.5%
-5311.9: client   (2 days)    0.07(0.08+0.00)     0.16(0.15+0.01) +128.6%
-5311.11: server   (4 days)   0.56(0.77+0.08)     0.13(0.10+0.02) -76.8%
-5311.12: size     (4 days)              2.8M              566.6K -79.8%
-5311.13: client   (4 days)   0.13(0.15+0.00)     0.34(0.31+0.02) +161.5%
-5311.15: server   (8 days)   0.97(1.39+0.11)     0.30(0.25+0.05) -69.1%
-5311.16: size     (8 days)              4.3M                1.0M -76.0%
-5311.17: client   (8 days)   0.20(0.22+0.01)     0.53(0.52+0.01) +165.0%
-5311.19: server  (16 days)   1.52(2.51+0.12)     0.30(0.26+0.03) -80.3%
-5311.20: size    (16 days)              8.0M                2.0M -74.5%
-5311.21: client  (16 days)   0.40(0.47+0.03)     1.01(0.98+0.04) +152.5%
-5311.23: server  (32 days)   2.40(4.44+0.20)     0.31(0.26+0.04) -87.1%
-5311.24: size    (32 days)             14.1M                4.1M -70.9%
-5311.25: client  (32 days)   0.70(0.90+0.03)     1.81(1.75+0.06) +158.6%
-5311.27: server  (64 days)   11.76(26.57+0.29)   0.55(0.50+0.08) -95.3%
-5311.28: size    (64 days)             89.4M               47.4M -47.0%
-5311.29: client  (64 days)   5.71(9.31+0.27)     15.20(15.20+0.32) +166.2%
-5311.31: server (128 days)   16.15(36.87+0.40)   0.91(0.82+0.14) -94.4%
-5311.32: size   (128 days)            134.8M              100.4M -25.5%
-5311.33: client (128 days)   9.42(16.86+0.49)    25.34(25.80+0.46) +169.0%
-
-In all cases we save CPU time on the server (sometimes
-significant) and the resulting pack is smaller. We do spend
-more CPU time on the client side, because it has to
-reconstruct more deltas. But that's the right tradeoff to
-make, since clients tend to outnumber servers. It just means
-the thin pack mechanism is doing its job.
-
-From the user's perspective, the end-to-end time of the
-operation will generally be faster. E.g., in the 128-day
-case, we saved 15s on the server at a cost of 16s on the
-client. Since the resulting pack is 34MB smaller, this is a
-net win if the network speed is less than 270Mbit/s. And
-that's actually the worst case. The 64-day case saves just
-over 11s at a cost of just under 11s. So it's a slight win
-at any network speed, and the 40MB saved is pure bonus. That
-trend continues for the smaller fetches.
-
-The implementation itself is mostly straightforward, with
-the new logic going into check_object(). But there are two
-tricky bits.
-
-The first is that check_object() needs access to the
-relevant information (the thin flag and bitmap result). We
-can do this by pushing these into program-lifetime globals.
-
-The second is that the rest of the code assumes that any
-reused delta will point to another "struct object_entry" as
-its base. But by definition, we don't have such an entry!
-
-I looked at a number of options that didn't quite work:
-
- - we could use a different flag for reused deltas. But it's
-   not a single bit for "I'm being reused". We have to
-   actually store the oid of the base, which is normally
-   done by pointing to the existing object_entry. And we'd
-   have to modify all the code which looks at deltas.
-
- - we could add the reused bases to the end of the existing
-   object_entry array. While this does create some extra
-   work as later stages consider the extra entries, it's
-   actually not too bad (we're not sending them, so they
-   don't cost much in the delta search, and at most we'd
-   have 2*N of them).
-
-   But there's a more subtle problem. Adding to the existing
-   array means we might need to grow it with realloc, which
-   could move the earlier entries around. While many of the
-   references to other entries are done by integer index,
-   some (including ones on the stack) use pointers, which
-   would become invalidated.
-
-   This isn't insurmountable, but it would require quite a
-   bit of refactoring (and it's hard to know that you've got
-   it all, since it may work _most_ of the time and then
-   fail subtly based on memory allocation patterns).
-
- - we could allocate a new one-off entry for the base. In
-   fact, this is what an earlier version of this patch did.
-   However, since the refactoring brought in by ad635e82d6
-   (Merge branch 'nd/pack-objects-pack-struct', 2018-05-23),
-   the delta_idx code requires that both entries be in the
-   main packing list.
-
-So taking all of those options into account, what I ended up
-with is a separate list of "external bases" that are not
-part of the main packing list. Each delta entry that points
-to an external base has a single-bit flag to do so; we have a
-little breathing room in the bitfield section of
-object_entry.
-
-This lets us limit the change primarily to the oe_delta()
-and oe_set_delta_ext() functions. And as a bonus, most of
-the rest of the code does not consider these dummy entries
-at all, saving both runtime CPU and code complexity.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/pack-objects.c | 28 +++++++++++++++++++---------
- pack-objects.c         | 19 +++++++++++++++++++
- pack-objects.h         | 20 ++++++++++++++++++--
- 3 files changed, 56 insertions(+), 11 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 80c880e9ad..6340cad944 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -40,6 +40,7 @@
- #define DELTA_CHILD(obj) oe_delta_child(&to_pack, obj)
- #define DELTA_SIBLING(obj) oe_delta_sibling(&to_pack, obj)
- #define SET_DELTA(obj, val) oe_set_delta(&to_pack, obj, val)
-+#define SET_DELTA_EXT(obj, oid) oe_set_delta_ext(&to_pack, obj, oid)
- #define SET_DELTA_SIZE(obj, val) oe_set_delta_size(&to_pack, obj, val)
- #define SET_DELTA_CHILD(obj, val) oe_set_delta_child(&to_pack, obj, val)
- #define SET_DELTA_SIBLING(obj, val) oe_set_delta_sibling(&to_pack, obj, val)
-@@ -59,6 +60,7 @@ static struct packing_data to_pack;
- 
- static struct pack_idx_entry **written_list;
- static uint32_t nr_result, nr_written, nr_seen;
-+static struct bitmap_index *bitmap_git;
- 
- static int non_empty;
- static int reuse_delta = 1, reuse_object = 1;
-@@ -79,6 +81,7 @@ static unsigned long pack_size_limit;
- static int depth = 50;
- static int delta_search_threads;
- static int pack_to_stdout;
-+static int thin = 0;
- static int num_preferred_base;
- static struct progress *progress_state;
- 
-@@ -1510,11 +1513,15 @@ static void check_object(struct object_entry *entry)
- 			break;
- 		}
- 
--		if (base_ref && (base_entry = packlist_find(&to_pack, base_ref, NULL))) {
-+		if (base_ref && (
-+		    (base_entry = packlist_find(&to_pack, base_ref, NULL)) ||
-+		    (thin &&
-+		     bitmap_has_sha1_in_uninteresting(bitmap_git, base_ref)))) {
- 			/*
- 			 * If base_ref was set above that means we wish to
--			 * reuse delta data, and we even found that base
--			 * in the list of objects we want to pack. Goodie!
-+			 * reuse delta data, and either we found that object in
-+			 * the list of objects we want to pack, or it's one we
-+			 * know the receiver has.
- 			 *
- 			 * Depth value does not matter - find_deltas() will
- 			 * never consider reused delta as the base object to
-@@ -1523,10 +1530,16 @@ static void check_object(struct object_entry *entry)
- 			 */
- 			oe_set_type(entry, entry->in_pack_type);
- 			SET_SIZE(entry, in_pack_size); /* delta size */
--			SET_DELTA(entry, base_entry);
- 			SET_DELTA_SIZE(entry, in_pack_size);
--			entry->delta_sibling_idx = base_entry->delta_child_idx;
--			SET_DELTA_CHILD(base_entry, entry);
-+
-+			if (base_entry) {
-+				SET_DELTA(entry, base_entry);
-+				entry->delta_sibling_idx = base_entry->delta_child_idx;
-+				SET_DELTA_CHILD(base_entry, entry);
-+			} else {
-+				SET_DELTA_EXT(entry, base_ref);
-+			}
-+
- 			unuse_pack(&w_curs);
- 			return;
- 		}
-@@ -2954,7 +2967,6 @@ static int pack_options_allow_reuse(void)
- 
- static int get_object_list_from_bitmap(struct rev_info *revs)
- {
--	struct bitmap_index *bitmap_git;
- 	if (!(bitmap_git = prepare_bitmap_walk(revs)))
- 		return -1;
- 
-@@ -2970,7 +2982,6 @@ static int get_object_list_from_bitmap(struct rev_info *revs)
- 	}
- 
- 	traverse_bitmap_commit_list(bitmap_git, &add_object_entry_from_bitmap);
--	free_bitmap_index(bitmap_git);
- 	return 0;
- }
- 
-@@ -3118,7 +3129,6 @@ static int option_parse_unpack_unreachable(const struct option *opt,
- int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- {
- 	int use_internal_rev_list = 0;
--	int thin = 0;
- 	int shallow = 0;
- 	int all_progress_implied = 0;
- 	struct argv_array rp = ARGV_ARRAY_INIT;
-diff --git a/pack-objects.c b/pack-objects.c
-index 92708522e7..9ae0cecd81 100644
---- a/pack-objects.c
-+++ b/pack-objects.c
-@@ -177,3 +177,22 @@ struct object_entry *packlist_alloc(struct packing_data *pdata,
- 
- 	return new_entry;
- }
-+
-+void oe_set_delta_ext(struct packing_data *pdata,
-+		      struct object_entry *delta,
-+		      const unsigned char *sha1)
-+{
-+	struct object_entry *base;
-+
-+	ALLOC_GROW(pdata->ext_bases, pdata->nr_ext + 1, pdata->alloc_ext);
-+	base = &pdata->ext_bases[pdata->nr_ext++];
-+	memset(base, 0, sizeof(*base));
-+	hashcpy(base->idx.oid.hash, sha1);
-+
-+	/* These flags mark that we are not part of the actual pack output. */
-+	base->preferred_base = 1;
-+	base->filled = 1;
-+
-+	delta->ext_base = 1;
-+	delta->delta_idx = base - pdata->ext_bases + 1;
-+}
-diff --git a/pack-objects.h b/pack-objects.h
-index edf74dabdd..a9c7f1d0ab 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -110,6 +110,7 @@ struct object_entry {
- 	unsigned dfs_state:OE_DFS_STATE_BITS;
- 	unsigned char in_pack_header_size;
- 	unsigned depth:OE_DEPTH_BITS;
-+	unsigned ext_base:1; /* delta_idx points outside packlist */
- 
- 	/*
- 	 * pahole results on 64-bit linux (gcc and clang)
-@@ -140,6 +141,14 @@ struct packing_data {
- 	struct packed_git **in_pack_by_idx;
- 	struct packed_git **in_pack;
- 
-+	/*
-+	 * This list contains entries for bases which we know the other side
-+	 * has (e.g., via reachability bitmaps), but which aren't in our
-+	 * "objects" list.
-+	 */
-+	struct object_entry *ext_bases;
-+	uint32_t nr_ext, alloc_ext;
-+
- 	uintmax_t oe_size_limit;
- };
- 
-@@ -227,9 +236,12 @@ static inline struct object_entry *oe_delta(
- 		const struct packing_data *pack,
- 		const struct object_entry *e)
- {
--	if (e->delta_idx)
-+	if (!e->delta_idx)
-+		return NULL;
-+	if (e->ext_base)
-+		return &pack->ext_bases[e->delta_idx - 1];
-+	else
- 		return &pack->objects[e->delta_idx - 1];
--	return NULL;
- }
- 
- static inline void oe_set_delta(struct packing_data *pack,
-@@ -242,6 +254,10 @@ static inline void oe_set_delta(struct packing_data *pack,
- 		e->delta_idx = 0;
- }
- 
-+void oe_set_delta_ext(struct packing_data *pack,
-+		      struct object_entry *e,
-+		      const unsigned char *sha1);
-+
- static inline struct object_entry *oe_delta_child(
- 		const struct packing_data *pack,
- 		const struct object_entry *e)
--- 
-2.18.0.1205.g3878b1e64a
+Thanks,
+Stefan
