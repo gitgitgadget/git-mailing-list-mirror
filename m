@@ -2,87 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B3B81F97E
-	for <e@80x24.org>; Fri, 17 Aug 2018 15:31:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 151AD1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 15:31:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727496AbeHQSfX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 14:35:23 -0400
-Received: from mail-wm0-f45.google.com ([74.125.82.45]:53055 "EHLO
-        mail-wm0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726815AbeHQSfX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 14:35:23 -0400
-Received: by mail-wm0-f45.google.com with SMTP id o11-v6so7910203wmh.2
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:31:34 -0700 (PDT)
+        id S1727557AbeHQSfd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 14:35:33 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:44427 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727507AbeHQSfc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 14:35:32 -0400
+Received: by mail-io0-f195.google.com with SMTP id q19-v6so7207587ioh.11
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:31:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JOhHyMBtYS7O8WR5hZVPATNKWWMxzKd3tzJBA6+iHGc=;
-        b=LfPO+BX8inuJxN4D5cW4knC/VeLYvfxrDr02K50ykqzdAjxI9zcN+Jba/+IjPvopB8
-         rZoQeXBr0XatVORlgcMKNQCt+vbGeIF3l8HNvP8SahciGGhH/nWsj7CFUTnAWbNmuWaR
-         rLeY0uVOBI6rrKMG1xrKh8XoVTJid3P/KfACvhfah9tJNQzdH8mNawneh43vbz3Io9+b
-         ns5KNwICqR2NCbYmiGM1FQ7+HD1IQkxJAb2GihAnyyEcV/bhZ9pxFi1XYkXvl7CPCrJt
-         B6D4LQDI99/lsLKWfz1FmqUfpu1UkkPIIdxVBEy4/sS+ou8wRCc0h55qumxMVmVP9tB9
-         eomA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RRnnqBHR5HG98jmENWizZxIegviD+6z1XJCtntIZfHc=;
+        b=my+nui1xLKBOaMOdUrP+iJbhqSVbr++qj9U0uo+RMwKQC1qQ3P5PGZIZJUrvD6OFF8
+         57rtTdQiz1L7h5Ce+Heuvk4Wl8onhsRE+phc0HSruF2P7tfvbrHVR0CiDPEjJjmI9TjU
+         7fhTenLhKKgeCB5/istm2T1uxvCB3WfNkGUxm1FV5nmOpAll4PgTvEVnMaVcDVgad4pB
+         OuVmotecXx24Xzocl2WlqEIKQfYz2TWM9JzeAL8NIqHRBIWncD+0WLR0O5dMjHs0mxLw
+         d+D0JdQQA0feHsXvQ14r67WVJRBcWcm/rFEId/9E0U7HeQf4hX1FiH1F5+h2qvwx/hZS
+         7Wyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JOhHyMBtYS7O8WR5hZVPATNKWWMxzKd3tzJBA6+iHGc=;
-        b=sb2f0VyPU47ETWjVO8828E/0i2iIkPb88xj3jsreMO5Ao+tUJ4ygjvoBK02/5VczAQ
-         UJXfn1ZoyOjQlaJ7yltbWiRViwfdnoTaaYgvIgal5oTovR8X3xoZKBdVNufKyNJ+wFsK
-         AtZOwF0z19gOlnOrhmCE/sqZYhJ5pFTN7/emeY/r2Pd6ZW9M4rKpHXtH8A3RdyWnZdZ0
-         pAVBHsDvDVROAIb6JJrZOOWwWR1kUbP/Z8yM6TWxPALEcKav+1e1ijM6xjFkc2dm0lrS
-         ANDOvLsxFw1O2oDhymybgiVP/Zoxei8M/7C2EGz4lrcoJqlcaK1bpKJEUT019QKJSadQ
-         oF+Q==
-X-Gm-Message-State: AOUpUlE5rSpX2qTtwjcJPzOSiGp6jNdFHTBpariGv90paoNurqrmMe0o
-        ET84qFrhCB21G3SvuemrJk8=
-X-Google-Smtp-Source: AA+uWPw0HLB4Eq5vTZhhG5ZY5b+RjS4wuEJSVKAscEoj0SyMVH5OG4FQ8helLa6Mi/6WLEvuB8NDsQ==
-X-Received: by 2002:a1c:8010:: with SMTP id b16-v6mr20195860wmd.9.1534519893404;
-        Fri, 17 Aug 2018 08:31:33 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r13-v6sm2626050wmf.34.2018.08.17.08.31.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Aug 2018 08:31:32 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] commit: add short option for --amend
-References: <20180816183117.13716-1-pclouds@gmail.com>
-        <20180817064734.GB131749@aiede.svl.corp.google.com>
-        <CACsJy8Di4GQLqkBmcnrfmU9aS=wizxU36Ly0BRgDEDmFG=+2Fg@mail.gmail.com>
-Date:   Fri, 17 Aug 2018 08:31:32 -0700
-In-Reply-To: <CACsJy8Di4GQLqkBmcnrfmU9aS=wizxU36Ly0BRgDEDmFG=+2Fg@mail.gmail.com>
-        (Duy Nguyen's message of "Fri, 17 Aug 2018 16:33:30 +0200")
-Message-ID: <xmqqa7plc8mj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RRnnqBHR5HG98jmENWizZxIegviD+6z1XJCtntIZfHc=;
+        b=BtwPhNGXB9TlIQa4ebk9G6T8cIn2gy3wueCK9e+Kn8NV8wtU2k0ZtG2S6Vcd/obuK6
+         GMadIxDOTJDIUWwL/Fm0i4Vn6xjwx7D4N457cDj7hQgNXZDJfi523KqzA5dr4CWiZ4AX
+         rBkJOGA/qIYdTXcTIgquaqXArm1FyUSQDuW2Ta7Y1swAQnyoqNJksFW1abK80NQu9vJn
+         DHelSitVw+WmFTPHzLwwz4V0B/IO+JSWQvHRuV+wnFd/nuflOiV6dkhV/qYD0rGSXyth
+         4wnXHCSPWPqAH+JDJf4vfy/f9e0ad1XUryh+JT6cV261G/R5M4zpwO8FBj9+8UV+QVsS
+         6JZQ==
+X-Gm-Message-State: AOUpUlEuN2t1VIZ2Aqhlo4V2RPQcpWC83ah23ZNhcWhTsXzE+Z2NuJEL
+        aGZvJheE6khc1O8K5fV8LM4ZVCZPqj+wE/UBYSA=
+X-Google-Smtp-Source: AA+uWPyFLUnAOlXd1VeIOyUuoKCXPWFpyjPRYJUwvVQFJ1hKj+YapU4HvbWrmNsBccs2AhzejWX7UgXqLoidqXOtO4U=
+X-Received: by 2002:a6b:a2cf:: with SMTP id l198-v6mr27421730ioe.282.1534519904122;
+ Fri, 17 Aug 2018 08:31:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180816183117.13716-1-pclouds@gmail.com> <20180817064734.GB131749@aiede.svl.corp.google.com>
+ <CACsJy8Di4GQLqkBmcnrfmU9aS=wizxU36Ly0BRgDEDmFG=+2Fg@mail.gmail.com> <20180817152655.GA4816@sigill.intra.peff.net>
+In-Reply-To: <20180817152655.GA4816@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 17 Aug 2018 17:31:17 +0200
+Message-ID: <CACsJy8ArEu=AV-eHtTxDOee=SKNL94oxgkrq0eJg5fcggaboNw@mail.gmail.com>
+Subject: Re: [PATCH/RFC] commit: add short option for --amend
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Aug 17, 2018 at 5:26 PM Jeff King <peff@peff.net> wrote:
+>
+> On Fri, Aug 17, 2018 at 04:33:30PM +0200, Duy Nguyen wrote:
+>
+> > On Fri, Aug 17, 2018 at 8:47 AM Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> > >
+> > > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> > >
+> > > > --- a/builtin/commit.c
+> > > > +++ b/builtin/commit.c
+> > > > @@ -1489,7 +1489,7 @@ int cmd_commit(int argc, const char **argv, c=
+onst char *prefix)
+> > > >                           STATUS_FORMAT_LONG),
+> > > >               OPT_BOOL('z', "null", &s.null_termination,
+> > > >                        N_("terminate entries with NUL")),
+> > > > -             OPT_BOOL(0, "amend", &amend, N_("amend previous commi=
+t")),
+> > > > +             OPT_BOOL('j', "amend", &amend, N_("amend previous com=
+mit")),
+> > > [...]
+> > > > Thoughts?
+> > >
+> > > I'm not a fan.  I would have trouble remembering what the short optio=
+n
+> > > name means, and it matches the common --jobs option for parallelism
+> > > that many commands use.  "git commit --am" works today already and
+> > > doesn't run into those problems.
+> >
+> > The alternative is -A or -M which may be easier associated with
+> > --amend. That "--am" also would break the moment somebody adds
+> > --amsomething.
+>
+> I think "-A" has been considered as possibility for matching "commit -a"
+> / "add -A" in the past, but I had trouble finding past discussion
+> (searching for "A" in the mailing list is not very productive). It was
+> mentioned in 3ba1f11426 (git-add --all: add all files, 2008-07-19), but
+> that was quite a while ago.
+>
+> Not necessarily a blocker, but something to consider.
+>
+> Like Jonathan, I do find "-j" a little non-intuitive, but I agree that
+> most of the intuitive ones are taken. :)
 
-> The alternative is -A or -M which may be easier associated with
-> --amend.
-
-I would be confused to mistake that "git commit -A $args" would do
-something similar to "git add -A && git commit $args".
-
-I do my fair share of amends during the day, and I've never felt the
-need for a short-hand, but perhaps that is just me.  I am wondering
-if "-E" (stands for 'edit', not 'A or M are out, and the next letter
-in amend is E') is understandable and memorable enough---after all,
-it is "editing" an existing commit, and the edit is done in a big
-and different way than the existing "commit --edit".
-
-But perhaps that reasoning is a bit too cute.  I dunno.
-
+Oh well. Maybe next time we'll be more careful with adding short
+options. Consider this patch dropped.
+--=20
+Duy
