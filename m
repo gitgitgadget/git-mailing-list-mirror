@@ -2,80 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D7D41F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 14:56:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72E531F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 15:10:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727333AbeHQSAS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 14:00:18 -0400
-Received: from mail-it0-f51.google.com ([209.85.214.51]:52190 "EHLO
-        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726709AbeHQSAR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 14:00:17 -0400
-Received: by mail-it0-f51.google.com with SMTP id e14-v6so11629255itf.1
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 07:56:36 -0700 (PDT)
+        id S1727994AbeHQSOB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 14:14:01 -0400
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38320 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727607AbeHQSOB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 14:14:01 -0400
+Received: by mail-lf1-f66.google.com with SMTP id a4-v6so6128695lff.5
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZK/8osFKRPjY0aR95utoxk4Z2sZbZEecw0iXoR2BxPQ=;
-        b=VS+LrNKBm1p7LU6WcfBTCiLr2C4sTbmIvCvcGAxSGEhD+jPWmS0fs/wJnlAzfI/a3z
-         SbIGV3hEtkOlhjh3uetMA6To1yirKr1JfLPMhdQHXxCnspHEdJ9BWOtE+X9V6EFylSCN
-         iL+mu5RrI3KS8V3PH9qwDNEQoQxCdBbcNeatyZMiu05DOaks1vVAB1aFquc021BrS5H6
-         tD8MpAA9tGN3ALfAEFzr+l36XrAjrfPTIPK7IwGeHCLPHrYOvwWbXm9cOJNbiizf0hWH
-         PERb4xmljYHj8CYgA+0fUrTIOoyDHws6idxjhuG4F4nE6rUoDvvi1/qrNMFzZH0g62MT
-         7hKg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=bzMA0uMuAulQqAvMrmlcOFQtG3TNhNmXgtBu9jgszho=;
+        b=dbUSoaRdr718QFuWItjtzoF84jSZM1T4YgmKf2ev0ZvQeOXeVEDy6FkBWn8B7JDPY8
+         TJqEaYwczfr/cVB/W3vgylaBwkxfX7vNPK9vK5zVKySUl0g48t9VaAAqdxKjSocC19ck
+         QhUKb/QEDWkRb9lo2kDnuYDWJ5VAYKHaROeodDsV3u8JqvOmznvra7XvZGvLSCJ5Xybf
+         cXX/IBTx1nDXBjHtcglSJl0evrckpdVVPEH2wOnXP4PinLXjkQvuxy1hcn0Va6Xe6of1
+         Ic/WekELaZa6wtXWpon+/Y9XF8s/vaXmbsEgKt9DTL4O4SjTf+/h0ESQr/lVL9l35Jod
+         n5Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZK/8osFKRPjY0aR95utoxk4Z2sZbZEecw0iXoR2BxPQ=;
-        b=EaxKflw0qa+2Y4Pa9rzpZbFOTP1B+xnCVz70s+bX0PIkx1JdYEbsbbecqbN8oLNWwl
-         shJLvYfBJkFEjEKmIcwXd66CoS2mphOFDQ8fR4iWKKSSS5Rb/Lmg7rQoVjiHQrKpK0mG
-         CKXVxcknsnfGB4s1u3S21mEieYQp9ACjAQb5zNS7/fJBEyfRcxyVa6MPtOErcjOrA4/F
-         pFrXPDV4swtU3HLs6pvR60wFMVNyJRM57fPP04BD5ADpwGbc7JQTQIvdJKD8iuGKbDv0
-         EHtX4SYW5xq/VtpbXsiJBlk1U8t05G/yLgcmf+jwQ3VGBeFP/cETLehWSmmK2LKBarNR
-         dKVA==
-X-Gm-Message-State: AOUpUlHVyZNmp47+aHTiXQHDmfGkB1B9LNYqaE5M/liHRXl/lU3dG/RD
-        0eimxNZmUGUdN0eyXDULm2jRAmlgLLLomvkVtRc=
-X-Google-Smtp-Source: AA+uWPyBoKI39zt+2n6yit3c663uY9mKIrXn00qhCh+1pZy8emdVkM0PDV7Lxn2DRWwLQGOjwsa3Fz0kjLcKdrc8jq0=
-X-Received: by 2002:a24:144:: with SMTP id 65-v6mr4274610itk.62.1534517796310;
- Fri, 17 Aug 2018 07:56:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqpnyjgroj.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=bzMA0uMuAulQqAvMrmlcOFQtG3TNhNmXgtBu9jgszho=;
+        b=NkMQYnTv4N+MuRLk75MWE5oVUZO43KRsRu4+exC3efv5RjwUJ/ifocBB9WFQfPKIJq
+         XosHaAaao8A2GYRT4Lr45/ZiXFe5+5/te5AZ/83+bfQP+Cxqxp9ZT8kvf3Db2NzJO+6i
+         4Hi+CPOcjFkvoNXKAz+64x73itudpoCDVgWaLyZgxBQozD68L/gTH4nt/muXYyK21ZSE
+         3vApQ9ilImoeiVdJdx1TeBpngB2f6Ut0rhvBYI3Lm50c38kBbzUZJrTzZmy9Fjv6PFuu
+         8VkOTueA6sge2til/A5ftIea1qLAmIC+Ui9wQ/ilT4pZJYL0BMiLotcHu/eUMOr3e673
+         Up3Q==
+X-Gm-Message-State: AOUpUlHmDMEXppWphRMXhLIoMbi9JCgIFstFuUT9KOHo+YGveS6U+8eI
+        itCmOQPFErcnOdIE8PD6cgU=
+X-Google-Smtp-Source: AA+uWPz0qBqMQYszdXhjsXANKbFLRaQ/ddBRPucgRPWwLL+ZMeUBNRgzW6w9mkONwHeEd2uJaNo93g==
+X-Received: by 2002:a19:db94:: with SMTP id t20-v6mr22072347lfi.126.1534518615404;
+        Fri, 17 Aug 2018 08:10:15 -0700 (PDT)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id r23-v6sm349158ljc.15.2018.08.17.08.10.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 17 Aug 2018 08:10:14 -0700 (PDT)
+Date:   Fri, 17 Aug 2018 17:10:12 +0200
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 17 Aug 2018 16:56:09 +0200
-Message-ID: <CACsJy8BG+rYx9Epg6vV+q9+A9Kv09RFhR7VGHEqwYw7wt9KXtg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #03; Wed, 15)
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] refactor various if (x) FREE_AND_NULL(x) to just
+ FREE_AND_NULL(x)
+Message-ID: <20180817151012.GA20262@duynguyen.home>
+References: <1534498806.1262.8.camel@gentoo.org>
+ <20180817130250.20354-1-avarab@gmail.com>
+ <CACsJy8DH2tESV4xkCYutH=Ye37zGwifGdJhdnNOsRd+JusdOwg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8DH2tESV4xkCYutH=Ye37zGwifGdJhdnNOsRd+JusdOwg@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 16, 2018 at 1:01 AM Junio C Hamano <gitster@pobox.com> wrote:
-> * bp/checkout-new-branch-optim (2018-07-31) 1 commit
->  - checkout: optimize "git checkout -b <new_branch>"
->
->  "git checkout -b newbranch [HEAD]" should not have to do as much as
->  checking out a commit different from HEAD.  An attempt is made to
->  optimize this special case.
->
->  So... what is the status of this thing?  Is the other "optimize
->  unpack-trees" effort turning out to be a safer and less hacky way
->  to achieve similar gain and this no longer is needed?
+On Fri, Aug 17, 2018 at 04:36:13PM +0200, Duy Nguyen wrote:
+> On Fri, Aug 17, 2018 at 3:05 PM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+> >
+> > Change the few conditional uses of FREE_AND_NULL(x) to be
+> > unconditional. As noted in the standard[1] free(NULL) is perfectly
+> > valid, so we might as well leave this check up to the C library.
+> 
+> I'm not trying to make you work more on this. But out of curiosity
+> would coccinelle help catch this pattern? Szeder's recent work on
+> running cocci automatically would help catch all future code like this
+> if we could write an spatch.
 
-I still dislike the fact that this depends on config keys to tweak
-behavior and believe there are still rooms for general optimizations.
-But the feeling I have so far is I'm doing all the work for Microsoft
-in that direction. So I give up. It's up to you and Ben to decide.
--- 
+Just fyi this seems to do the trick. Although I'm nowhere good at
+coccinelle to say if we should include this (or something like it)
+
+-- 8< --
+diff --git a/contrib/coccinelle/free.cocci b/contrib/coccinelle/free.cocci
+index 4490069df9..f8e018d104 100644
+--- a/contrib/coccinelle/free.cocci
++++ b/contrib/coccinelle/free.cocci
+@@ -16,3 +16,9 @@ expression E;
+ - free(E);
+ + FREE_AND_NULL(E);
+ - E = NULL;
++
++@@
++expression E;
++@@
++- if (E) { FREE_AND_NULL(E); }
+++ FREE_AND_NULL(E);
+-- 8< --
+
+--
 Duy
