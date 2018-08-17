@@ -2,228 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4261F404
-	for <e@80x24.org>; Fri, 17 Aug 2018 06:42:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5E0F1F404
+	for <e@80x24.org>; Fri, 17 Aug 2018 06:43:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726316AbeHQJod (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 05:44:33 -0400
-Received: from smtp.gentoo.org ([140.211.166.183]:57012 "EHLO smtp.gentoo.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726094AbeHQJoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 05:44:32 -0400
-Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mgorny)
-        by smtp.gentoo.org (Postfix) with ESMTPSA id 2DD4D335D0D;
-        Fri, 17 Aug 2018 06:42:22 +0000 (UTC)
-Message-ID: <1534488137.1262.2.camel@gentoo.org>
-Subject: Re: [PATCH] gpg-interface.c: detect and reject multiple signatures
- on commits
-From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <junio@pobox.com>
-Date:   Fri, 17 Aug 2018 08:42:17 +0200
-In-Reply-To: <20180815213108.GM181377@aiede.svl.corp.google.com>
-References: <xmqqbmaa9t8k.fsf@gitster-ct.c.googlers.com>
-         <20180814151142.13960-1-mgorny@gentoo.org>
-         <20180815213108.GM181377@aiede.svl.corp.google.com>
-Organization: Gentoo
-Content-Type: multipart/signed; micalg="pgp-sha512";
-        protocol="application/pgp-signature"; boundary="=-ruoXI0uTxvT5mExW/sdn"
-X-Mailer: Evolution 3.24.6 
-Mime-Version: 1.0
+        id S1726497AbeHQJpN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 05:45:13 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35780 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbeHQJpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 05:45:12 -0400
+Received: by mail-pf1-f196.google.com with SMTP id p12-v6so3107255pfh.2
+        for <git@vger.kernel.org>; Thu, 16 Aug 2018 23:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=QWgVwbXREX6ce00vEaQf0FSRLyOdxhCWevpgYoZnOjA=;
+        b=SbBnWk/zXvlCPIbfqYTalH3dBFZZIaMZFam490k/AVOt3K+PZZagTcc1pbufmC/U7h
+         7thPnivWB1dUW8ssJtKHKOfrSeG9ySMEuJ6mx9AOpKzVKDfOk/z15zabroZwxsYKW3i5
+         9IPyar1Jn8kSLHfW8Z8W15LIZmfFbjb24NMTJNmXo05XcxMzj49BOQrqto+z9QQ72Ep2
+         /s4CdoGbQIaCxNysz8cOMG2MwJr6xQMPOLv5zYehZAgjFbBE74CdiVu5ldG8q1LRnJtb
+         EDKrdq6maQkwXraF69sTit+pkC42WxIUO1t5FiECjRR9v7BtJLh4nKLwXwwkDw62+HzM
+         A49g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=QWgVwbXREX6ce00vEaQf0FSRLyOdxhCWevpgYoZnOjA=;
+        b=PPC9SJKR4jLMomLQ5XYo5aDyY+JRzon1x2tYjW4ZDkpTB0jOkjKeiQFznz7ey2FmP4
+         DCIIKDNKXTGTVo6AWRT9MYoWpDponq/0kEvmEtVJbGzAUMmAwwtdNC60MJPB8Ouo0Ztw
+         9NmApqKlQrFoiFxAVKHgiss44u9cxxwrx7PxqbmIM9MRbF9kb1L3YwMA0ZZ8NmDtII0a
+         OGyZfYyg2rQiYpQ04Pl2HgkIvK1qDaztjVxykElyYj9cHYL7egBVB9PPaTndCXqcFUqj
+         cLnfh2LgSmfg/xbtA18+BV3CZM3DIqP20dBs3q4yzoOIPWMKodTqn+NNls6pkB7TvyBx
+         +WhQ==
+X-Gm-Message-State: AOUpUlF1VaU9KymohBQ6BoSQ7FGDMXdkfIjsF++692YQpBDtgGT/1xhr
+        C+mIZsxYKUvCA97eT/RNDLYQRKcQ
+X-Google-Smtp-Source: AA+uWPwwRzPeOFnG8AZsUYQIgg/RFhi8gcKY3/qzG3gH3mwdD4lvVWCAuLU85tXtYqWG9X7aAoiyFA==
+X-Received: by 2002:a63:947:: with SMTP id 68-v6mr32050902pgj.131.1534488182326;
+        Thu, 16 Aug 2018 23:43:02 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r23-v6sm1838043pfd.144.2018.08.16.23.43.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 16 Aug 2018 23:43:01 -0700 (PDT)
+Date:   Thu, 16 Aug 2018 23:42:59 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Eygene Ryabinkin <rea-git@codelabs.ru>,
+        Philip Oakley <philipoakley@iee.org>
+Subject: Re: [PATCH] Makefile: extend NO_TCLTK=NoThanks to cover docs
+Message-ID: <20180817064259.GA131749@aiede.svl.corp.google.com>
+References: <20180815151505.12011-1-avarab@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180815151505.12011-1-avarab@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---=-ruoXI0uTxvT5mExW/sdn
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Ævar Arnfjörð Bjarmason wrote:
 
-On Wed, 2018-08-15 at 14:31 -0700, Jonathan Nieder wrote:
-> Micha=C5=82 G=C3=B3rny wrote:
->=20
-> > GnuPG supports creating signatures consisting of multiple signature
-> > packets.  If such a signature is verified, it outputs all the status
-> > messages for each signature separately.  However, git currently does no=
-t
-> > account for such scenario and gets terribly confused over getting
-> > multiple *SIG statuses.
-> >=20
-> > For example, if a malicious party alters a signed commit and appends
-> > a new untrusted signature, git is going to ignore the original bad
-> > signature and report untrusted commit instead.  However, %GK and %GS
-> > format strings may still expand to the data corresponding
-> > to the original signature, potentially tricking the scripts into
-> > trusting the malicious commit.
-> >=20
-> > Given that the use of multiple signatures is quite rare, git does not
-> > support creating them without jumping through a few hoops, and finally
-> > supporting them properly would require extensive API improvement, it
-> > seems reasonable to just reject them at the moment.
-> > ---
->=20
-> Thanks for the clear analysis and fix.
->=20
-> May we have your sign-off?  See
-> https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html#s=
-ign-off
-> (or the equivalent section of your local copy of
-> Documentation/SubmittingPatches) for what this means.
+> Extend the NO_TCLTK=NoThanks flag to be understood by the
+> Documentation Makefile.
+>
+> Before this change compiling and installing with NO_TCLTK would result
+> in no git-gui, gitk or git-citool being installed, but their
+> respective manual pages would still be installed.
 
-Of course, I'm sorry for missing it in the original submission.
+Like Junio mentioned, what this commit message is missing is a
+description of why that is a bad thing.
 
->=20
-> >  gpg-interface.c | 38 ++++++++++++++++++++++++++++++--------
-> >  1 file changed, 30 insertions(+), 8 deletions(-)
-> >=20
-> > diff --git a/gpg-interface.c b/gpg-interface.c
-> > index 09ddfbc26..4e03aec15 100644
-> > --- a/gpg-interface.c
-> > +++ b/gpg-interface.c
-> > @@ -24,21 +24,23 @@ void signature_check_clear(struct signature_check *=
-sigc)
-> >  static struct {
-> >  	char result;
-> >  	const char *check;
-> > +	int is_status;
-> >  } sigcheck_gpg_status[] =3D {
-> > -	{ 'G', "\n[GNUPG:] GOODSIG " },
-> > -	{ 'B', "\n[GNUPG:] BADSIG " },
-> > -	{ 'U', "\n[GNUPG:] TRUST_NEVER" },
-> > -	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED" },
-> > -	{ 'E', "\n[GNUPG:] ERRSIG "},
-> > -	{ 'X', "\n[GNUPG:] EXPSIG "},
-> > -	{ 'Y', "\n[GNUPG:] EXPKEYSIG "},
-> > -	{ 'R', "\n[GNUPG:] REVKEYSIG "},
-> > +	{ 'G', "\n[GNUPG:] GOODSIG ", 1 },
-> > +	{ 'B', "\n[GNUPG:] BADSIG ", 1 },
-> > +	{ 'U', "\n[GNUPG:] TRUST_NEVER", 0 },
-> > +	{ 'U', "\n[GNUPG:] TRUST_UNDEFINED", 0 },
-> > +	{ 'E', "\n[GNUPG:] ERRSIG ", 1},
-> > +	{ 'X', "\n[GNUPG:] EXPSIG ", 1},
-> > +	{ 'Y', "\n[GNUPG:] EXPKEYSIG ", 1},
-> > +	{ 'R', "\n[GNUPG:] REVKEYSIG ", 1},
-> >  };
->=20
-> nit: I wonder if making is_status into a flag field (like 'option' in
-> git.c's cmd_struct) and having an explicit SIGNATURE_STATUS value to
-> put there would make this easier to read.
+E.g. is this affecting some distro or some end user?  Are the docs
+taking up too much space?  What is the motivation that leads to this
+patch?
 
-I think that makes sense.
+(I may be a little more sympathetic to the goal than Junio was if I
+understood correctly, but I think it's useful and important to spell
+that goal out.  When building for a distro with NO_PYTHON=YesPlease,
+my strategy was to simply rm the unwanted man pages after the fact in
+the packaging rules and that worked fine.)
 
->=20
-> It's not clear to me that the name is_status or SIGNATURE_STATUS
-> captures what this field represents.  Aren't these all sigcheck
-> statuses?  Can you describe briefly what distinguishes the cases where
-> this should be 0 versus 1?
+[...]
+> --- a/Documentation/Makefile
+> +++ b/Documentation/Makefile
+> @@ -1,5 +1,7 @@
+>  # Guard against environment variables
+>  MAN1_TXT =
+> +MAN1_TXT_WIP =
 
-Yes, the name really does suck.  Maybe it should be EXCLUSIVE_STATUS
-or something like that, to distinguish from things that can occur
-simultaneously to them.
+It took me a while to understand this MAN1_TXT_WIP.
 
->=20
-> > =20
-> >  static void parse_gpg_output(struct signature_check *sigc)
-> >  {
-> >  	const char *buf =3D sigc->gpg_status;
-> >  	int i;
-> > +	int had_status =3D 0;
-> > =20
-> >  	/* Iterate over all search strings */
-> >  	for (i =3D 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
-> > @@ -50,6 +52,10 @@ static void parse_gpg_output(struct signature_check =
-*sigc)
-> >  				continue;
-> >  			found +=3D strlen(sigcheck_gpg_status[i].check);
-> >  		}
-> > +
-> > +		if (sigcheck_gpg_status[i].is_status)
-> > +			had_status++;
-> > +
-> >  		sigc->result =3D sigcheck_gpg_status[i].result;
-> >  		/* The trust messages are not followed by key/signer information */
-> >  		if (sigc->result !=3D 'U') {
-> > @@ -62,6 +68,22 @@ static void parse_gpg_output(struct signature_check =
-*sigc)
-> >  			}
-> >  		}
-> >  	}
-> > +
-> > +	/*
-> > +	 * GOODSIG, BADSIG etc. can occur only once for each signature.
-> > +	 * Therefore, if we had more than one then we're dealing with multipl=
-e
-> > +	 * signatures.  We don't support them currently, and they're rather
-> > +	 * hard to create, so something is likely fishy and we should reject
-> > +	 * them altogether.
-> > +	 */
-> > +	if (had_status > 1) {
-> > +		sigc->result =3D 'E';
-> > +		/* Clear partial data to avoid confusion */
-> > +		if (sigc->signer)
-> > +			FREE_AND_NULL(sigc->signer);
-> > +		if (sigc->key)
-> > +			FREE_AND_NULL(sigc->key);
-> > +	}
->=20
-> Makes sense to me.
->=20
-> >  }
-> > =20
-> >  int check_signature(const char *payload, size_t plen, const char *sign=
-ature,
-> > --=20
-> > 2.18.0
->=20
-> Can we have a test to make sure this behavior doesn't regress?  See
-> t/README for an overview of the test framework and "git grep -e gpg t/"
-> for some examples.
+Could this just use MAN1_TXT and have the filtered one be
+MAN1_TXT_FILTERED?  Since the latter gets a value using =, it doesn't
+need to be cleared up front.
 
-Will try.  Do I presume correctly that I should include the commit
-object with the double signature instead of hacking git to construct it?
-;-)
+It seems a little odd to see this specific to Tcl/Tk.  Do other
+languages with NO_x options need the same treatment?
 
->=20
-> The result looks good.  Thanks again for writing it.
->=20
-> Sincerely,
-> Jonathan
-
---=20
-Best regards,
-Micha=C5=82 G=C3=B3rny
-
---=-ruoXI0uTxvT5mExW/sdn
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlt2bklfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
-QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
-EQpvlQ/9GtAMuA45lgIgDJYwZKy4dX+XyaxunQR05C/1WNmu921YN6n2pWRsmATh
-7bqQURBI0MRcUX6/4jplLv9H7LezfHDypA2boXbT8ybUBtsu+jy08olHzX7Iuf2e
-tHHhCAmeyjei7RZuwaiuhVrcT8eVRBAMaWskOI2g3S12fmYhPWcP4TICMWJX2eK3
-uMoDxSmUTGwMZK/TSrs2Gj4IE7xK6d+D93gRcmM/VlL2lfTKylEDV6IfXCA3NNZs
-ZfC6JL8YARv+t2WKMZ9ecg9zsCgN0LI086M1l9LY8q2XE005l6uNTtTdLPiLRXjH
-eYBQX554ntLGXfFadJPAsLl5s4pYXZ/2WQuHfJKibCwUABddtHR7LMYFXhNiI29o
-1lcTiySitPEsYsJ4oyLjKaGheSmknRQNOt+eRDw49TmgOPfxzFATLF55zgXZck6X
-W6zubYNfFtzKiRLYv/3vrgSNt90al3dZ+J/za5oTGBaHfknWb3xIZgqaxhZ6Ey1d
-Er7QtR5xJxTdY+6WOWGoYJejP9zzIx0XA20xnReFdV7w//QSr1r1sNOKdVq8EewC
-icpc0Hrlc9CXTbfcPdlwH/j+D3xtQnIvsK+qJsSk04BPukbacbzgihmS2pse8GNd
-aSyplN6rIkBXqlhqCCX7WUkK04H6dpYDsdiYjilRH89LAMIYCzg=
-=C9el
------END PGP SIGNATURE-----
-
---=-ruoXI0uTxvT5mExW/sdn--
-
+Curious,
+Jonathan
