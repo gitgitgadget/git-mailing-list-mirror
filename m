@@ -2,152 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58C691F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 13:03:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9FC11F97E
+	for <e@80x24.org>; Fri, 17 Aug 2018 13:14:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727366AbeHQQGW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 12:06:22 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:39390 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726376AbeHQQGV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 12:06:21 -0400
-Received: by mail-wm0-f68.google.com with SMTP id q8-v6so7349956wmq.4
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 06:03:00 -0700 (PDT)
+        id S1726097AbeHQQRb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 12:17:31 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:35632 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725800AbeHQQRb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 12:17:31 -0400
+Received: by mail-lj1-f175.google.com with SMTP id p10-v6so6340293ljg.2
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 06:14:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=xJliRksLZpO8Wx8mDiANeOtLp2fPs099JQvGKgnHV70=;
-        b=p+e3nL66CFRA+gz/9kjMKL6zP/RaoGEoEdMzE4AbGvz8E/ydsXbPCU2UkHgGZ7Iemc
-         m4v2rK92CcCwJrcCMAn732INnPxjA4sUTlXsnY/PSaECeCvFVnIWJEd0n3DwHkmsWlYK
-         IS83HY/Qm1Suyf9/CTVWSbamOYzpcTVhbyDbhms3gYaMzex4Lu38ulE+VnkhevZLH/DJ
-         2ONUcbJziEfOLm1ug5dPSiV4MR7oXYblVGnllBbHk/aUhdUc0bVU7dsWc1/CUtI3lWa0
-         gw4iCjMDaNswhqvats3iaLDQ0cYDw0J2s3iBO4PJyJ2vVNYte5wmlpDDFyOTy5oPSwzW
-         xi5g==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=eS1Oi0q38mTa46astenWKE1YthLYB6YGMVXRCRKnZlM=;
+        b=iMuwKY+8jSwgeEZIkSEI17AJO1+zCWIP4xBDElmSrVMc8J82/WrZRt4buxyFSQEnkL
+         IB26fEs1cCnZOu/kq/Yh69zKIcd2tsa3zvffJ+hJFbiy/XUUYYnzXZTI74XyDhzEq/hO
+         KVtMjyY9QshheHup/81JqODbaTotjD6nM0v8wo5Z0AnjNLjT2yIBPAtTIV6Y1wSEVk4f
+         RmXZEDt8hHh83Biyi+FZuPwNT/5a7lJ4KuNNoNnhRQrFoCLyHJhGpkbOddmJIppY49rZ
+         /+nQEpdqjh1PUD9D2U/Iz1R+fhzHG1vDUzlfr7jNC6vwwKFwd7fm8KHJDleYpO5kKI10
+         w8zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=xJliRksLZpO8Wx8mDiANeOtLp2fPs099JQvGKgnHV70=;
-        b=ijHXFLOuOH4sBGVrO4tkJtfOFBX8O9SN6LisITuF5KNCorJFy1PsPdK04IxzUV676D
-         8WDnfrYq2Z+XWMVOu/n2cVbg38ILKhjRbZYwiG642pd4uuLirrzOw6uOzj6BCo3mB9rD
-         6Ad/dJlbu+Zk1gL1234Iaqvwxmplxi15hs+b+7e5f9SxNF0xI4gCswpjntkzqfz0clpk
-         t4HVW4N2hzEwlB6fxDZtz/B6P1nhDFDa/tUdUb7G8VXSJslvppXGvj0/rxDygeCiGj4I
-         WqP+1AQTBIKXLHj44BXOFyST+dXNe2v72+Qt/OZeafNOUfGYi4qLvWRO2uAQOe7hO8Z4
-         UxRA==
-X-Gm-Message-State: AOUpUlFJCTOzzyJ7cBWm0RWO0tYfgggK3gPjRXs8nomJzA5ThS6jg8oZ
-        Z6Uscd9l1S1jYp0leIeTY8bFLtj1zYM=
-X-Google-Smtp-Source: AA+uWPwDO3XyS6TltNfiT2kNBCwRKNSyWVgInTdnTckwhIGfX5pfw3i63EaUF4Ps8qyddiaeQO9kYA==
-X-Received: by 2002:a1c:9945:: with SMTP id b66-v6mr18288699wme.159.1534510979242;
-        Fri, 17 Aug 2018 06:02:59 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q188-v6sm6836371wmd.36.2018.08.17.06.02.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 17 Aug 2018 06:02:58 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Micha=C5=82=20G=C3=B3rny?= <mgorny@gentoo.org>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] refactor various if (x) FREE_AND_NULL(x) to just FREE_AND_NULL(x)
-Date:   Fri, 17 Aug 2018 13:02:50 +0000
-Message-Id: <20180817130250.20354-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
-In-Reply-To: <1534498806.1262.8.camel@gentoo.org>
-References: <1534498806.1262.8.camel@gentoo.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=eS1Oi0q38mTa46astenWKE1YthLYB6YGMVXRCRKnZlM=;
+        b=OaGupYITe0TTebljum80KGwG1Yn+BJ2ZKEeY2J7zvcnN7GD9v0bQWACph/tqUe7ua5
+         WapBoeS72QZjzGDJWLfrNDIYpOPt/1yGOZCxPmCwthcRp4cR8YKDNb0OyKTCu6z0SyCC
+         b35M88FaTMaQn0k3JkpntZn7i7DGujNkt0JpfMuVIofvdSffb3LgxlkuDfngXqRCyPEH
+         ddEjD9bGwC6hKePyQGGYhYHjca9wVglXMRY4W7m785o9tfh0T8WZir0Bv1qVJSMuGrN0
+         486WgCukBgIGkV/k0eq58c4Hx6vfYkYE3tpm9GYRhKe7xlWYXghtsIfKoPP+ufuuHqNg
+         tBLQ==
+X-Gm-Message-State: AOUpUlFi6iNgVO6x4wXTKJhw557vrbw/d5pjFLzFLpkSOr/ouFo9i4go
+        dAfqTthTsUOFdueeZlOpMn5kUJcFMrV0ZJmUcx+2JUKa
+X-Google-Smtp-Source: AA+uWPyifS2VvAYgHSALazdQ7m0katrycMZJhLAoEj0Tfrd9RyWKWfWfQYdq2pIt47g5gu5FGHt1SJ73x/t7Lngkk08=
+X-Received: by 2002:a2e:83d7:: with SMTP id s23-v6mr8386929ljh.82.1534511647373;
+ Fri, 17 Aug 2018 06:14:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From:   Samuel Maftoul <samuel.maftoul@gmail.com>
+Date:   Fri, 17 Aug 2018 15:13:56 +0200
+Message-ID: <CAFj+z07x=X0_8Tdg6KsVwyRhcaUTGrSA2=t5W91m9b702A0xUA@mail.gmail.com>
+Subject: [RFC] git send-email hashbang
+To:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the few conditional uses of FREE_AND_NULL(x) to be
-unconditional. As noted in the standard[1] free(NULL) is perfectly
-valid, so we might as well leave this check up to the C library.
+I recently contributed for the first time patches on this maillist and
+used for the first time `git format-patch` and `git send-email`.
+I had hard times making `git send-email` work on my mac, because the
+OSX bundled perl was missing the Net::SMTP::SSL module.
+So I did `cpan -f Net::SMTP::SSL` (I'm using gmail with smtps/ssl)
+which asked me some questions (to setup cpan, I'm not really using
+perl usually), and installed the module.
+Still `git send-email` wasn't able to find the module.
+Actually, during the setup of cpan, I have been asked this:
 
-1. http://pubs.opengroup.org/onlinepubs/9699919799/functions/free.html
+--------------------------
+Warning: You do not have write permission for Perl library directories.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+To install modules, you need to configure a local Perl library directory or
+escalate your privileges.  CPAN can help you by bootstrapping the local::lib
+module or by configuring itself to use 'sudo' (if available).  You may also
+resolve this problem manually if you need to customize your setup.
 
-Let's do the opposite of this instead.
+What approach do you want?  (Choose 'local::lib', 'sudo' or 'manual')
+--------------------------
 
- blame.c     | 4 +---
- branch.c    | 4 +---
- http.c      | 4 +---
- tree-diff.c | 4 +---
- 4 files changed, 4 insertions(+), 12 deletions(-)
+I have naturally choosed the default ('local::lib'), but it still didn't worked.
 
-diff --git a/blame.c b/blame.c
-index 58a7036847..b22a95de7b 100644
---- a/blame.c
-+++ b/blame.c
-@@ -334,9 +334,7 @@ static void fill_origin_blob(struct diff_options *opt,
- 
- static void drop_origin_blob(struct blame_origin *o)
- {
--	if (o->file.ptr) {
--		FREE_AND_NULL(o->file.ptr);
--	}
-+	FREE_AND_NULL(o->file.ptr);
- }
- 
- /*
-diff --git a/branch.c b/branch.c
-index ecd710d730..776f55fc66 100644
---- a/branch.c
-+++ b/branch.c
-@@ -25,9 +25,7 @@ static int find_tracked_branch(struct remote *remote, void *priv)
- 			tracking->remote = remote->name;
- 		} else {
- 			free(tracking->spec.src);
--			if (tracking->src) {
--				FREE_AND_NULL(tracking->src);
--			}
-+			FREE_AND_NULL(tracking->src);
- 		}
- 		tracking->spec.src = NULL;
- 	}
-diff --git a/http.c b/http.c
-index b4bfbceaeb..4162860ee3 100644
---- a/http.c
-+++ b/http.c
-@@ -2418,9 +2418,7 @@ void release_http_object_request(struct http_object_request *freq)
- 		close(freq->localfile);
- 		freq->localfile = -1;
- 	}
--	if (freq->url != NULL) {
--		FREE_AND_NULL(freq->url);
--	}
-+	FREE_AND_NULL(freq->url);
- 	if (freq->slot != NULL) {
- 		freq->slot->callback_func = NULL;
- 		freq->slot->callback_data = NULL;
-diff --git a/tree-diff.c b/tree-diff.c
-index fe2e466ac1..553bc0e63a 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -557,9 +557,7 @@ struct combine_diff_path *diff_tree_paths(
- 	 * free pre-allocated last element, if any
- 	 * (see path_appendnew() for details about why)
- 	 */
--	if (p->next) {
--		FREE_AND_NULL(p->next);
--	}
-+	FREE_AND_NULL(p->next);
- 
- 	return p;
- }
--- 
-2.18.0.865.gffc8e1a3cd6
+So I choose to not use the system bundled perl and installed my own
+perl with homebrew, installed the Net::SMTP::SSL module ... but still
+, it didn't worked.
+I looked at the send-email script, changed the hashbang to use
+/usr/local/bin/perl instead of /usr/bin/perl and it worked !
 
+Then I wondered what happened, and I discovered that using the bundled
+cpan's "sudo" approach works, but I'm not very satisfied that I need
+to be root to make this script work.
+I also found several stackoverflow questions, gists and other
+discussiond with people having this exact problem (on osx) with some
+different solution (mostly not working, using `sudo cpan` or
+whatever).
+
+It seems strange to me that the script doesn't uses "the perl I use in
+my environment", that is, I would have thought the `git-send-email.pl`
+script had `#!/usr/bin/env perl` as hashbang.
+Then, I read that some environment (namely busybox) don't bundle
+`/usr/bin/env`, so I understood this might not be portable.
+I think there is a solution involving using a combination of /bin/sh
+as hashbang and there executing perl with probably the `-x` flag (see
+`perldoc perlrun`).
+Is it worth proposing a solution for this problem ?
+
+Thanks !
