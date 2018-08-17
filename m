@@ -6,58 +6,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF06A1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 18:33:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 022671F97E
+	for <e@80x24.org>; Fri, 17 Aug 2018 18:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727707AbeHQVhe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 17:37:34 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38493 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727607AbeHQVhe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 17:37:34 -0400
-Received: by mail-wr1-f66.google.com with SMTP id w11-v6so5265285wrc.5
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 11:33:08 -0700 (PDT)
+        id S1727950AbeHQVtb (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 17:49:31 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:55145 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726888AbeHQVtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 17:49:31 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so8446504wmb.4
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 11:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ejEEE5gWni2zzVOMtFUqdjJyFDo5kFHJBFxwpEMCHPw=;
-        b=N/kbcI0dsFHdL+npx0mPOy87oRw+ncwS/KmBtd/wIKdacwZjeI2lVhun8nRzEl04T7
-         NxRAmixZJKajrRaMHzyMFeLx1gYGMrTtVv41h8ric44bUSUiXs/H7JNbujlp3mv580de
-         MkplsBY0xWxoVR91J6jx3stjD6Ab9OSa7wmjW0pEPEYRnpI3ayscJzC6HyLbFxPtxK0A
-         YksAmkUeDDZ5zDYnxgrbolNKzndaZciR1BliNCYnNWtAEddNQmG9XuVF3pL4Y1aL+Cuz
-         CVHxdiKvNoAqLTWM6phhEN1ZHHKfKEGL4yCyAgilqC7q/3gpOjTTXag1vH30kRN+0BuJ
-         bQjA==
+        bh=/yzxBEeXhI3FfVbucaZDJyO2QKYVjQWBasl1IIBQRjU=;
+        b=mfENCYhY2lv5aA0uDEcFIFLgnTpkw9VQRjbNPsIiLALzHOfWJ5rK3L/TPvFzq/i0is
+         nSfMTnTzgL1E4YYUDOhtkOCZcSmM9jXjika8Xo9lrRemBWKaFw9Vhli07jPBw7u0Pqbd
+         rdBOZzAz7fXSMBYomQ64Q2XPCuNVRIUSuvwZ9yJWk5Gi6slrY7zpRtSiyALBHOFPaMyd
+         LsNdk5xyxF3hmSaItbR7zRBk5lpHcERUk+0FD28mZAA8/huRKTMJAxd0eUAHav1lMhkj
+         lA7YSZmdNdJw28ofG21Ecb/umVRTDZGTQLzTm3iZtZm6L4Y1CQ6q9jkCO4ujMMO273ss
+         IShA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ejEEE5gWni2zzVOMtFUqdjJyFDo5kFHJBFxwpEMCHPw=;
-        b=lgxt0gB584ZjKV/x7xlmhOHMdfKylPVuUZPZXv48L0qOEFDBXvF4vg4bGERigtqvD5
-         lS2km8ciMzGwvEVILLF/s2Ak+El91jSQ3ceymJUMCgpNGqCq6CwuMAJYmsAJdtwZ8j+M
-         +EzUSmatf8WDI9BY81DxsSMvOH5z+4Cwbej8+iOL6eRgmpyX25h2gZebQvmX05r3y+OE
-         U9NtkjcLyIs2zZLb1Z/lhE5H1TNAGQrKueIiG93Xad5pBxTdmtarYc6EHU+1ZOvOXKyv
-         JCGNjDP0cLJM7yT38egAPaib5/893KlLMQKSvtBs+32y5EDGJ6ZPyWTCRElj/3dwVR+5
-         86UQ==
-X-Gm-Message-State: AOUpUlH5OBflhTm7goFbFfVHG4dq1YkiXHbV7XEYU6K2tLTuTFfaL1iN
-        HoySFpa5a1loor/83QZhXi8=
-X-Google-Smtp-Source: AA+uWPyIrA92KzuKP04oQYG+i28DyjhZvWYw4MsnHsaP1SsvwNCPNCSUBIoo7xdhsIG5VtYvvl8pKA==
-X-Received: by 2002:adf:adc9:: with SMTP id w67-v6mr23104727wrc.135.1534530787505;
-        Fri, 17 Aug 2018 11:33:07 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t19-v6sm2811223wmi.42.2018.08.17.11.33.06
+        bh=/yzxBEeXhI3FfVbucaZDJyO2QKYVjQWBasl1IIBQRjU=;
+        b=EjzDQJY44+a+88wQw6xIdMQ3KCNZjPRJ6TE+CvQQq08HaZKM+8nTQtxvF05Wu73/S/
+         EOk0AX8cTFTDwt6RTkdnQOAICzKxCO1exfclGShg3jDdjvPnVwZBKxtJGwrSncZVCaFK
+         pTIgsVehwDoNsmMDNVKwDqWU7RuIu++E/KOZE2dDeM96ZhqyaaERwk8ouWALur3YQahp
+         5dJvH+a+yih1I54Mee+c4rw2cxnt/lttCp2CRwvu/4XCXzJ69vy65vq28+8IxDI9dHaX
+         O/oNjl6zKNTtHuwbVA33ezjFfn/AkCU4krmjS6DroDWIp3vxCU5PNUzN/G1sDorYHi2n
+         1/4Q==
+X-Gm-Message-State: AOUpUlGvDBR92cBjrGqraaAbkKSzPHdGd/NRhQH+qaDCtSvh/0pmnm6f
+        eCHMAO3vQCtC0wf6GkLiOrM=
+X-Google-Smtp-Source: AA+uWPyevy5FOy5FiVnPPqplfp440GpptxynvfWQ0l8fS6AUyCQPUzmV+3te3JkRkkkVsJzRC3fIyQ==
+X-Received: by 2002:a1c:92:: with SMTP id 140-v6mr18227562wma.87.1534531501282;
+        Fri, 17 Aug 2018 11:45:01 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o33-v6sm4527469wrf.11.2018.08.17.11.45.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Aug 2018 11:33:06 -0700 (PDT)
+        Fri, 17 Aug 2018 11:45:00 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Han-Wen Nienhuys <hanwen@google.com>
 Cc:     sunshine@sunshineco.com, jrn@google.com, git@vger.kernel.org
-Subject: Re: [PATCH v7 1/1] sideband: highlight keywords in remote sideband output
+Subject: Re* [PATCH v7 1/1] sideband: highlight keywords in remote sideband output
 References: <20180807125108.104293-1-hanwen@google.com>
         <20180807125108.104293-2-hanwen@google.com>
-Date:   Fri, 17 Aug 2018 11:33:06 -0700
-In-Reply-To: <20180807125108.104293-2-hanwen@google.com> (Han-Wen Nienhuys's
-        message of "Tue, 7 Aug 2018 14:51:08 +0200")
-Message-ID: <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
+        <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
+Date:   Fri, 17 Aug 2018 11:44:59 -0700
+In-Reply-To: <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 17 Aug 2018 11:33:06 -0700")
+Message-ID: <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,93 +67,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Han-Wen Nienhuys <hanwen@google.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +/*
-> + * Optionally highlight one keyword in remote output if it appears at the start
-> + * of the line. This should be called for a single line only, which is
-> + * passed as the first N characters of the SRC array.
-> + */
-> +static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-> +{
-> +	int i;
-> +
-> +	if (!want_color_stderr(use_sideband_colors())) {
-> +		strbuf_add(dest, src, n);
-> +		return;
-> +	}
-> +
-> +	while (isspace(*src)) {
-> +		strbuf_addch(dest, *src);
-> +		src++;
-> +		n--;
-> +	}
+> This loop can run out of bytes in src in search of non-space before
+> n gets to zero or negative, and when that happens ...
+>
+>> +	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+>> +		struct keyword_entry *p = keywords + i;
+>> +		int len = strlen(p->keyword);
+>> +		/*
+>> +		 * Match case insensitively, so we colorize output from existing
+>> +		 * servers regardless of the case that they use for their
+>> +		 * messages. We only highlight the word precisely, so
+>> +		 * "successful" stays uncolored.
+>> +		 */
+>> +		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+>
+> ... these access src[] beyond the end of what the caller intended to
+> show us, and also ...
 
-This loop can run out of bytes in src in search of non-space before
-n gets to zero or negative, and when that happens ...
+Actually, leaving when !n before this loop is insufficient.  src[]
+may have 2 bytes "in" remaining, and we may be trying to see if it
+begins with "info", for example, and using strncasecmp() with len==4
+would of course read beyond the end of src[].
 
-> +	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-> +		struct keyword_entry *p = keywords + i;
-> +		int len = strlen(p->keyword);
-> +		/*
-> +		 * Match case insensitively, so we colorize output from existing
-> +		 * servers regardless of the case that they use for their
-> +		 * messages. We only highlight the word precisely, so
-> +		 * "successful" stays uncolored.
-> +		 */
-> +		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+-- >8 --
+Subject: sideband: do not read beyond the end of input
 
-... these access src[] beyond the end of what the caller intended to
-show us, and also ...
+The caller of maybe_colorize_sideband() gives a counted buffer
+<src,n>, but the callee checked *src as if it were a NUL terminated
+buffer.  If src[] had all isspace() bytes in it, we would have made
+n negative, and then (1) called number of strncasecmp() to see if
+the remaining bytes in src[] matched keywords, reading beyond the
+end of the array, and/or (2) called strbuf_add() with negative
+count, most likely triggering the "you want to use way too much
+memory" error due to unsigned integer overflow.
 
-> +			strbuf_addstr(dest, p->color);
-> +			strbuf_add(dest, src, len);
-> +			strbuf_addstr(dest, GIT_COLOR_RESET);
-> +			n -= len;
-> +			src += len;
-> +			break;
-> +		}
-> +	}
-> +
-> +	strbuf_add(dest, src, n);
-
-... this will now try to add 0 or negative number of bytes.
-
-> +
-> +}
-> +
-
-Perhaps this will help (not really tested).  The second hunk is an
-unrelated style clean-up.
-
-
- sideband.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ sideband.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/sideband.c b/sideband.c
-index 1c6bb0e25b..d99a559a44 100644
+index 1c6bb0e25b..372039247f 100644
 --- a/sideband.c
 +++ b/sideband.c
-@@ -75,11 +75,13 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+@@ -75,7 +75,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
  		return;
  	}
  
 -	while (isspace(*src)) {
-+	while (isspace(*src) && n) {
++	while (0 < n && isspace(*src)) {
  		strbuf_addch(dest, *src);
  		src++;
  		n--;
- 	}
-+	if (!n)
-+		return;
- 
+@@ -84,6 +84,9 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
  	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
  		struct keyword_entry *p = keywords + i;
-@@ -101,7 +103,6 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		int len = strlen(p->keyword);
++
++		if (n <= len)
++			continue;
+ 		/*
+ 		 * Match case insensitively, so we colorize output from existing
+ 		 * servers regardless of the case that they use for their
+@@ -100,8 +103,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		}
  	}
  
- 	strbuf_add(dest, src, n);
+-	strbuf_add(dest, src, n);
 -
++	if (0 < n)
++		strbuf_add(dest, src, n);
  }
  
  
