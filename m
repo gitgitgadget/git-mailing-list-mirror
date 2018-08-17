@@ -2,93 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21C821F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 19:42:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1114F1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 19:51:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728236AbeHQWrb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 18:47:31 -0400
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64580 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727218AbeHQWrb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 18:47:31 -0400
-X-Greylist: delayed 538 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Aug 2018 18:47:29 EDT
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 890B533806;
-        Fri, 17 Aug 2018 15:33:53 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to; s=sasl; bh=jTLXR2R1mH0281h+V2Ep1vgWlno=; b=ZwgrCEo
-        e+en/nSMHv6azXDvkMIHA0UM40A7u0C+c/bT+0Ox8NqPf10oN3L6Qj2U+lQxtCiI
-        x2QLsXGrzIpeCWcQV/YmCelsfwEQKPr2JUorIgfscSSDdg7cs5DVSqUf3qhLR1Ic
-        EFcObUjrCGHQu1b93CNooxNcr1f1B9CWaK7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to; q=dns; s=sasl; b=o39xAzOi1yV97pRN/kycybXZlKEanR/pz
-        9fE/WipTTnA3iq0SVAZCeAQymyS3PtiisaILWshIe5UV1zVxpfqoD4tz9//6VZKr
-        8LpsUlkEcqRkLsDcBwnAgpDkDatBrAH1UmE+j2nheRInYE7SliOn+8BgDO/yFZWF
-        wtn9uogxZM=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 826DB33805;
-        Fri, 17 Aug 2018 15:33:53 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Received: from zaya.teonanacatl.net (unknown [98.111.125.125])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 43FE9337FD;
-        Fri, 17 Aug 2018 15:33:50 -0400 (EDT)
-        (envelope-from tmz@pobox.com)
-Date:   Fri, 17 Aug 2018 15:33:47 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] drop vcs-svn experiment
-Message-ID: <20180817193347.GL24629@zaya.teonanacatl.net>
-References: <20180817190310.GA5360@sigill.intra.peff.net>
+        id S1726185AbeHQW43 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 18:56:29 -0400
+Received: from mout.web.de ([217.72.192.78]:40745 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726054AbeHQW43 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 18:56:29 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M40zO-1g80b23jk2-00rc1Q; Fri, 17
+ Aug 2018 21:46:03 +0200
+Date:   Fri, 17 Aug 2018 21:46:00 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, gitster@pobox.com,
+        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com
+Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive
+ filesystems
+Message-ID: <20180817194600.GA10393@tor.lan>
+References: <20180812090714.19060-1-pclouds@gmail.com>
+ <20180817161645.28249-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180817190310.GA5360@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Pobox-Relay-ID: 77C2DD98-A254-11E8-93CA-F5C31241B9FE-09356542!pb-smtp20.pobox.com
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180817161645.28249-1-pclouds@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:P7V/iGs5VA3YIgw7XKgH59oR+EoYeTqRyAznkuHyxmZ6syFeas5
+ XhMeNZfjwEGPnHkY/quSqcA3/tOz6qonbeDmtFw85eLUs5o6AhZGA9vYqZsvUlCNTwEZGuZ
+ 5972jqgWbn0WkVwP0mugPcZBCT7aICy/54l35IRPqRKi8u347XqoA8itd+5RMHJN3NJhh85
+ H6CE0atk6RVapmHv4+RZg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:SAtyXKgmNYs=:hJeJUO8H3jW3UcTLFXghNc
+ MSCSlFQAq04Gj9q+gFVHL8OjUOR/fxdwPgUm5MdINCVIF29pwPsVGoh+AALOsMADviiK8EeFR
+ PBOjhHWwC/Vhy9aj0ZjJX/m4rr/RbOsb8XOb9XktGP0crlTO1/34mYakNhv/hNuRehHcuIHDV
+ DGBdcoAAjToxchFz0YFl42KCTyoMpXPXcU8stWr8x3xeKT86AIuy9jE/167eVKh5NZGog7CV5
+ Qd29Z3TEZBmlH1pCkH5qbEptn6wgCvDxJs7zwIzQbM495V4CNZfOF0ZRs3kYEfDRnd21CEPn9
+ SqmOAUTbOPzswBjbpJLzqbSkeC4hwLj/2wFPV3qOx9qq9csiUhYiCWdlqEtD65o8RU37MqVym
+ /tRFvDopVX2M9y8ejJrU80Yt514hMTbxldiQwq8mprCsavWjCbkxM2ew0Exwmjwfz+W7iwq9k
+ MB6JKM8DUIs04zOOXnMUnhbSy6HjvaucGc9ar5XMxsK6Q9G6qar1RB+RqUoRQii10+fuAirE6
+ zN3U1GeLT1EG37yuizY5sINbdViZXitHuODWoeHOTVEeX2Z+zMQLZi3epJ39XqpUwri7lJpbf
+ tTMtEmF0m5WKmHxoOb+GwpLhnTJ8df6Qul+Qw3dXPvga/0Tbpgm6f6h0lS44GfAJ47et/01BW
+ GyDfzANmKT3SvPQDQi6oZYwAG3yTBgQRSn6vLbUrUjCI3+P7qn1WaKDGhNonQklu7tsG8Fi99
+ dFNPpVrOLFnYv84LRj7pWMreLV9Ye89T+veYuvNOHBwRHh+JGAJywKqA6IU=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jeff,
+On Fri, Aug 17, 2018 at 06:16:45PM +0200, Nguyễn Thái Ngọc Duy wrote:
 
-Jeff King wrote:
->  .gitignore                     |   1 -
->  Makefile                       |  22 --
->  contrib/svn-fe/.gitignore      |   4 -
->  contrib/svn-fe/Makefile        | 105 -------
->  contrib/svn-fe/svn-fe.c        |  18 --
->  contrib/svn-fe/svn-fe.txt      |  71 -----
->  contrib/svn-fe/svnrdump_sim.py |  68 -----
->  remote-testsvn.c               | 337 --------------------
->  t/helper/test-line-buffer.c    |  81 -----
->  t/helper/test-svn-fe.c         |  52 ----
->  t/t9020-remote-svn.sh          |  89 ------
+The whole patch looks good to me.
+(I was just sending a different version, but your version is better :-)
 
-Doesn't t/t9010-svn-fe.sh also need to be removed?  It uses
-the test-svn-fe helper which is removed.
+One minor remark, should the line
+warning: the following paths have collided 
+start with a capital letter:
+Warning: the following paths have collided 
 
-The Fedora git-svn package has included git-remote-testsvn
-for years now but no one has ever filed any bug reports
-about it.  I looked at whether it should be packaged last
-year.  I came to the conclusion that while it could be used
-outside of the test suite it was doubtful it actually was.
+> Paths that only differ in case work fine in a case-sensitive
+> filesystems, but if those repos are cloned in a case-insensitive one,
+> you'll get problems. The first thing to notice is "git status" will
+> never be clean with no indication what exactly is "dirty".
+> 
+> This patch helps the situation a bit by pointing out the problem at
+> clone time. Even though this patch talks about case sensitivity, the
+> patch makes no assumption about folding rules by the filesystem. It
+> simply observes that if an entry has been already checked out at clone
+> time when we're about to write a new path, some folding rules are
+> behind this.
+> 
+> In the case that we can't rely on filesystem (via inode number) to do
+> this check, fall back to fspathcmp() which is not perfect but should
+> not give false positives.
+> 
+> This patch is tested with vim-colorschemes and Sublime-Gitignore
+> repositories on a JFS partition with case insensitive support on
+> Linux.
 
--- 
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-No one ever went broke underestimating the taste of the American
-public.
-    -- H. L. Mencken
+Now even tested under Mac OS/HFS+
+
+[]
+>  '
+>  
+> +test_expect_success !MINGW,!CYGWIN,CASE_INSENSITIVE_FS 'colliding file detection' '
+
+My ambition is to run the test under Windows (both CYGWIN and native) next week,
+so that we can remove !MINGW and !CYGWIN 
 
