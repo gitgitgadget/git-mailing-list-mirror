@@ -2,78 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CD5B1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 15:19:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05B191F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 15:26:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727507AbeHQSW7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 14:22:59 -0400
-Received: from mail-it0-f54.google.com ([209.85.214.54]:39455 "EHLO
-        mail-it0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727037AbeHQSW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 14:22:59 -0400
-Received: by mail-it0-f54.google.com with SMTP id g141-v6so12204376ita.4
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:19:13 -0700 (PDT)
+        id S1727519AbeHQS34 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 14:29:56 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42944 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727398AbeHQS3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 14:29:55 -0400
+Received: by mail-wr1-f66.google.com with SMTP id e7-v6so7414176wrs.9
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 08:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Z3EOatfapvV6XSUUcxfWFNJhuLi/NafY58D9QZxk7tc=;
-        b=ZosQewdCX7apsbJ00I3ix28unxrHignbz3tUbZ5vk1Ur6ErxvXcqrwr9O2r9XfMeCC
-         w0/WS4dx+eDdDTOZB36zhIh5FKoB4wZL13nptRoiz4PNTtAyT+Eq1rx+L0kF15CtT9vc
-         i8NrAn4Zv7AgOlZLR6WdF6bbyuKGwmiOeUAlr9C0uCJdBY0ZobY9gh5SM3LTVx2jqYVc
-         LfuWfnOZAPDnny/T49sJIJDhocI5R1MGQP1LdXh8jEqEcbIjATv8a9lv6SOvVrSaR8Mm
-         uJFFH7HcKRECCN9yMAL5Kh0dEo3uVCsSJBdmn8HVj+5vQh4+4F4Xz0Vv5dr3c2jeC8pi
-         Qs+g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=X8My/Fkn+tXZzdpdiqkqsxIohZ6+ikS9gY9LdDlX2Qg=;
+        b=g7d0MLQ8LATBhsjKpEQI8LYf9O6ZljuKxmdPUBj6shAJzpv2XkwG/bZO0qmWhCeCeZ
+         zGA7lOccIRZnJvwiqROPmdmZrJpGaqXg4yooEfo/Vs60jyTCzITBf7tVlFWQWZzvpXZx
+         djhEHUsqMSKs5GzNWRN6cGceDPGiNybuir3cIoUMSJHyhn/MgJqoLJB8dPV0pX5nJhE7
+         PgzvQ0jh7SE0Ll0VrfJy34CDhuJtLBtKjFXw2yQhy6IN8JMvK9pwNgtkSZNresEV7NXI
+         pk45rPju+YWWvMdAb6qjohP9N/RfRsml+4DRxnEHoFC4MOg/BXAq0iyUKwBGY4OZJQ4G
+         iPmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Z3EOatfapvV6XSUUcxfWFNJhuLi/NafY58D9QZxk7tc=;
-        b=FDyv6ZzAQAfao1R962PU/6IyAcTQd8duDKrlI0QNtUi+ymUjnQHOHDveu+ste5O8Or
-         QnQAR/MN6/7W0SIzmmPWGn+uwy8TYh3Avb0GJQm7eFqpQXRgbLAz5KgJv4t7oePjTgDR
-         Q5UjI2X+/nWU8WdEkhbllwRd4JzDLZjaT0pWe7ON6hlSvhc/LqReTJM/bY1OW6Et4ffj
-         xT8ofzst2jaESBLjqlapgspIaWpmeAmUpcWd4wIOj0FZAl9KDozg+klypIuklrLncB3M
-         ZfLF8PUXOPwTTn3M25IJn89qCq4nebKLOhr1kEjmZWNXWkyea3Lf/vhQYFh/PmdCWrFL
-         4JTA==
-X-Gm-Message-State: AOUpUlGWioEirxVd41q37iW74lyUgTjFfrHZwyfOQhoUMPXGkAAWmSYH
-        o9i4gEAfQlKM7Bz6lIwVybVfp1ySuKK0Sk3N7J0=
-X-Google-Smtp-Source: AA+uWPxik7rzwt3+eyuSCRPNTacKdJ9n3FMvpgKwksaHjRs1vecBHJ4aJnIu+aCKDWG8jc8beohNIgwWBzuhTmz4cSo=
-X-Received: by 2002:a02:c50b:: with SMTP id s11-v6mr31623002jam.61.1534519152822;
- Fri, 17 Aug 2018 08:19:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180813163108.GA6731@sigill.intra.peff.net> <87h8jyrtj6.fsf@evledraar.gmail.com>
- <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com> <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
-In-Reply-To: <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 17 Aug 2018 17:18:46 +0200
-Message-ID: <CACsJy8CukvQcEY-EmyE7iB2sMwbTSaM_bqGOE0G82FV3Om64kw@mail.gmail.com>
-Subject: Re: Contributor Summit planning
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=X8My/Fkn+tXZzdpdiqkqsxIohZ6+ikS9gY9LdDlX2Qg=;
+        b=pj4bYCIjuqN5EghlzK0Vm6XCWdP+Yf7i19vS5gcCk0vngdrwBQeR/S42GOwFILx2Vh
+         Z8L6MujrxrhIpWkAjqNdj7am3UDeDE0hWFVaXU+7PRS35zFxkPKZg4uI7RP3ASmx61xQ
+         bZ2x07cue9qoaYfb6r3JTJwpOfcowhWJ3euIasKwBjO4cWk6bNYF8r4nAM+BKqiiOuZw
+         vqbRscFeyCGN7Td9I1cQ65DvsHWIGGSJ89jZCE1qfw3Mf+IXIfe02HyyNXfXTiOLXWz5
+         hjg6fkcd/oTZYjwVvY3MuQWqhDIhMdP1PoM/2C3K6dZl+Cv8d5MrG40mwqjWX9lu831v
+         RMkQ==
+X-Gm-Message-State: AOUpUlFLUvfxaCotjAibmEWpWvIxT6NvsWwLsOAj+jHzZ/pkl3mK5KIw
+        JhYfAZxrCZAo1ZcsDOs+lNw=
+X-Google-Smtp-Source: AA+uWPxesNQPOvhHME/mfKu8Bz0nKZwtRIxtPFKKvPGshm9H2mEdj/XaZ16uRQdo8MwiGF4Qqvbi+A==
+X-Received: by 2002:adf:bd90:: with SMTP id l16-v6mr23274584wrh.250.1534519566726;
+        Fri, 17 Aug 2018 08:26:06 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a66-v6sm1879683wmh.0.2018.08.17.08.26.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Aug 2018 08:26:05 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?Pawe?= =?utf-8?Q?=C5=82?= Paruzel 
+        <pawelparuzel95@gmail.com>, Jeff King <peff@peff.net>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH] config.txt: clarify core.checkStat = minimal
+References: <CACsJy8AYQL3oDLyt14eJ1emynngqKQv9GXju56gU9u4mHrFHOg@mail.gmail.com>
+        <20180816155647.10459-1-pclouds@gmail.com>
+        <xmqqin4afdoj.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8C2r5y0m88yrRQHQ-_QNXemy2pfcjxYK0zSd0J3fFy3rQ@mail.gmail.com>
+Date:   Fri, 17 Aug 2018 08:26:05 -0700
+In-Reply-To: <CACsJy8C2r5y0m88yrRQHQ-_QNXemy2pfcjxYK0zSd0J3fFy3rQ@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 16 Aug 2018 20:19:01 +0200")
+Message-ID: <xmqqefexc8vm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 13, 2018 at 10:42 PM Stefan Beller <sbeller@google.com> wrote:
-> =C3=86var specifically pointed out that we might want to hear from you an=
-d Duy
-> if you want to attend a conference and if so how we can make that happen
-> (by choosing location/time/setting appropriately) IIUC.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Since my name shows up... I'm with Elijah on the travel resistance
-thing (and am probably even lazier than him). I guess I will remain
-the mystery in the git circle.
---=20
-Duy
+> Perfect. I could wrap it in a patch, but I feel you should take
+> authorship for that one. I'll leave it to you to create this commit.
+
+OK, here is what I ended up with.  An extra paragraph was taken from
+the old commit you referrred to, which is probably the only
+remaining part from your contribution, so the attribution has been
+demoted to "Helped-by", but your initiative still is appreciated
+very much.
+
+-- >8 --
+Subject: [PATCH] config.txt: clarify core.checkStat
+
+The description of this key does not really tell what the 'minimal'
+mode checks and does not check.  The description for the 'default'
+mode is not much better and just says 'all fields', which is unclear
+and is not even correct (e.g. we do not look at 'atime').
+
+Spell out what are and what are not checked under the 'minimal' mode
+relative to the 'default' mode to help those who want to decide if
+they want to use the 'minimal' mode, also taking information about
+this mode from the commit message of c08e4d5b5c (Enable minimal stat
+checking - 2013-01-22).
+
+Helped-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/config.txt | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ab641bf5a9..933d719137 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -449,10 +449,20 @@ core.untrackedCache::
+ 	See linkgit:git-update-index[1]. `keep` by default.
+ 
+ core.checkStat::
+-	Determines which stat fields to match between the index
+-	and work tree. The user can set this to 'default' or
+-	'minimal'. Default (or explicitly 'default'), is to check
+-	all fields, including the sub-second part of mtime and ctime.
++	When missing or is set to `default`, many fields in the stat
++	structure are checked to detect if a file has been modified
++	since Git looked at it.  When this configuration variable is
++	set to `minimal`, sub-second part of mtime and ctime, the
++	uid and gid of the owner of the file, the inode number (and
++	the device number, if Git was compiled to use it), are
++	excluded from the check among these fields, leaving only the
++	whole-second part of mtime (and ctime, if `core.trustCtime`
++	is set) and the filesize to be checked.
+++
++There are implementations of Git that do not leave usable values in
++some fields (e.g. JGit); by excluding these fields from the
++comparison, the `minimal` mode may help interoperability when the
++same repository is used by these other systems at the same time.
+ 
+ core.quotePath::
+ 	Commands that output paths (e.g. 'ls-files', 'diff'), will
+-- 
+2.18.0-666-g63749b2dea
+
