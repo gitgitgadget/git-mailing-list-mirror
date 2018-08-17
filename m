@@ -2,99 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A29C1F954
-	for <e@80x24.org>; Fri, 17 Aug 2018 18:29:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF06A1F954
+	for <e@80x24.org>; Fri, 17 Aug 2018 18:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728077AbeHQVeL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 17 Aug 2018 17:34:11 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:35079 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728004AbeHQVeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 17 Aug 2018 17:34:10 -0400
-Received: by mail-io0-f193.google.com with SMTP id w11-v6so7668811iob.2
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 11:29:46 -0700 (PDT)
+        id S1727707AbeHQVhe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 17 Aug 2018 17:37:34 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38493 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727607AbeHQVhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 17 Aug 2018 17:37:34 -0400
+Received: by mail-wr1-f66.google.com with SMTP id w11-v6so5265285wrc.5
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 11:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FTj/kyCoRRyAW6TCmdKj3Yy9h8+yxHpeiSa/buXrcdI=;
-        b=twSGsBQxY7xkc1rLd1XQ9GuMSiQUCmHPmkkr/lv1ZYkz/e7On1nstMRkXd8/uXu0J6
-         ejF0loZkDEQQ0eG8MyCB71uYMelnLH6VqzMIW5z7mS2A5H/N2PuXDlMJp/ooAhi09r1k
-         xcc0jPODj8tGx/19fgWhVXmNQGKxmC/H7qEmbiTKIWnl3v5aBqf/Q6XqegEc0CTcldb7
-         SMWBSC5Ur9cyzSYCaZvxtieEAYLRZdw2N70kfPeHk0zphDVs6xkdmkPX2P4W0SnvAuNr
-         JzxBa9Au2MDVg/6WTui8SEHVIqhAbYvbzbh+V1KW0D7skNb6zRxLb4HAsWANBUCrMBNY
-         ImYQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ejEEE5gWni2zzVOMtFUqdjJyFDo5kFHJBFxwpEMCHPw=;
+        b=N/kbcI0dsFHdL+npx0mPOy87oRw+ncwS/KmBtd/wIKdacwZjeI2lVhun8nRzEl04T7
+         NxRAmixZJKajrRaMHzyMFeLx1gYGMrTtVv41h8ric44bUSUiXs/H7JNbujlp3mv580de
+         MkplsBY0xWxoVR91J6jx3stjD6Ab9OSa7wmjW0pEPEYRnpI3ayscJzC6HyLbFxPtxK0A
+         YksAmkUeDDZ5zDYnxgrbolNKzndaZciR1BliNCYnNWtAEddNQmG9XuVF3pL4Y1aL+Cuz
+         CVHxdiKvNoAqLTWM6phhEN1ZHHKfKEGL4yCyAgilqC7q/3gpOjTTXag1vH30kRN+0BuJ
+         bQjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FTj/kyCoRRyAW6TCmdKj3Yy9h8+yxHpeiSa/buXrcdI=;
-        b=ilfjBZvCxN0D3AHIikhV+aiyMcumsEca12exEx86p6WLC3od0k6Lrqjk9sPVCjkCXg
-         bO6k0Gt/Zsq3+QMoTo1ktaAv5EfjTqKfHtKexooV7lIDjJ250lPqsCTxh2U0cRrwwJ8b
-         sBQCNNLEB6wbOdMwi+/cOk5fEve43LoAv+t4XTsECcGxYjH1GdzDXZKUd3NhFK+x328N
-         9fSXoTacKgsGJ24FwYn1b/2vUAiUghnZ1g03k69qdKAXSELpQZ59/PRBBDDtm+3TcVmn
-         IM0hsNbzQg1b/TLEZiyeLaqTN6/qnApthW/el7ciL9rG/4QO6of36TDXDs6vJv3Yp21W
-         bSuA==
-X-Gm-Message-State: AOUpUlEDNa6UCUY5l8vIMrLKsJ//SoGrTz/MmQBsbAX3EVIjKzoG6B+o
-        YgXn9bR6iFqVgwhmUcoK/b7f/VsgUzrVujsusDg=
-X-Google-Smtp-Source: AA+uWPxBHy9HfnnS2+2dE8bmOS2+JLCATTX85Z+17KcYiEGRGJytOjyYd8WVwzcEEMz+EBljfxqgdCUafEWQgksaARc=
-X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr30279843iod.118.1534530585923;
- Fri, 17 Aug 2018 11:29:45 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ejEEE5gWni2zzVOMtFUqdjJyFDo5kFHJBFxwpEMCHPw=;
+        b=lgxt0gB584ZjKV/x7xlmhOHMdfKylPVuUZPZXv48L0qOEFDBXvF4vg4bGERigtqvD5
+         lS2km8ciMzGwvEVILLF/s2Ak+El91jSQ3ceymJUMCgpNGqCq6CwuMAJYmsAJdtwZ8j+M
+         +EzUSmatf8WDI9BY81DxsSMvOH5z+4Cwbej8+iOL6eRgmpyX25h2gZebQvmX05r3y+OE
+         U9NtkjcLyIs2zZLb1Z/lhE5H1TNAGQrKueIiG93Xad5pBxTdmtarYc6EHU+1ZOvOXKyv
+         JCGNjDP0cLJM7yT38egAPaib5/893KlLMQKSvtBs+32y5EDGJ6ZPyWTCRElj/3dwVR+5
+         86UQ==
+X-Gm-Message-State: AOUpUlH5OBflhTm7goFbFfVHG4dq1YkiXHbV7XEYU6K2tLTuTFfaL1iN
+        HoySFpa5a1loor/83QZhXi8=
+X-Google-Smtp-Source: AA+uWPyIrA92KzuKP04oQYG+i28DyjhZvWYw4MsnHsaP1SsvwNCPNCSUBIoo7xdhsIG5VtYvvl8pKA==
+X-Received: by 2002:adf:adc9:: with SMTP id w67-v6mr23104727wrc.135.1534530787505;
+        Fri, 17 Aug 2018 11:33:07 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t19-v6sm2811223wmi.42.2018.08.17.11.33.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Aug 2018 11:33:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     sunshine@sunshineco.com, jrn@google.com, git@vger.kernel.org
+Subject: Re: [PATCH v7 1/1] sideband: highlight keywords in remote sideband output
+References: <20180807125108.104293-1-hanwen@google.com>
+        <20180807125108.104293-2-hanwen@google.com>
+Date:   Fri, 17 Aug 2018 11:33:06 -0700
+In-Reply-To: <20180807125108.104293-2-hanwen@google.com> (Han-Wen Nienhuys's
+        message of "Tue, 7 Aug 2018 14:51:08 +0200")
+Message-ID: <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <1534498806.1262.8.camel@gentoo.org> <20180817130250.20354-1-avarab@gmail.com>
- <CACsJy8DH2tESV4xkCYutH=Ye37zGwifGdJhdnNOsRd+JusdOwg@mail.gmail.com>
- <20180817151012.GA20262@duynguyen.home> <xmqqpnyhaq93.fsf@gitster-ct.c.googlers.com>
- <xmqqlg94c46f.fsf@gitster-ct.c.googlers.com> <20180817173308.GA9111@sigill.intra.peff.net>
-In-Reply-To: <20180817173308.GA9111@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 17 Aug 2018 20:29:19 +0200
-Message-ID: <CACsJy8DW6MP-a8u8KgB0ueO8d9eWmoZwF6c0Z5i+Psy980XcHg@mail.gmail.com>
-Subject: Re: [PATCH] refactor various if (x) FREE_AND_NULL(x) to just FREE_AND_NULL(x)
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 7:33 PM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Aug 17, 2018 at 10:07:36AM -0700, Junio C Hamano wrote:
->
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > It is a bit sad that
-> > >
-> > >     - if (E)
-> > >       FREE_AND_NULL(E);
-> > >
-> > > is not sufficient to catch it.  Shouldn't we be doing the same for
-> > > regular free(E) as well?  IOW, like the attached patch.
-> > > ...
-> >
-> > And revised even more to also spell "E" as "E != NULL" (and "!E" as
-> > "E == NULL"), which seems to make a difference, which is even more
-> > sad.  I do not want to wonder if I have to also add "NULL == E" and
-> > other variants, so I'll stop here.
->
-> I think it makes sense that these are all distinct if you're using
-> coccinelle to do stylistic transformations between them (e.g., enforcing
-> curly braces even around one-liners).
+Han-Wen Nienhuys <hanwen@google.com> writes:
 
-Googling a bit shows a kernel patch [1]. Assuming that it works (I
-didn't check if it made it to linux.git) it would simplify our rules a
-bit.
+> +/*
+> + * Optionally highlight one keyword in remote output if it appears at the start
+> + * of the line. This should be called for a single line only, which is
+> + * passed as the first N characters of the SRC array.
+> + */
+> +static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+> +{
+> +	int i;
+> +
+> +	if (!want_color_stderr(use_sideband_colors())) {
+> +		strbuf_add(dest, src, n);
+> +		return;
+> +	}
+> +
+> +	while (isspace(*src)) {
+> +		strbuf_addch(dest, *src);
+> +		src++;
+> +		n--;
+> +	}
 
-[1] https://patchwork.kernel.org/patch/5167641/
--- 
-Duy
+This loop can run out of bytes in src in search of non-space before
+n gets to zero or negative, and when that happens ...
+
+> +	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+> +		struct keyword_entry *p = keywords + i;
+> +		int len = strlen(p->keyword);
+> +		/*
+> +		 * Match case insensitively, so we colorize output from existing
+> +		 * servers regardless of the case that they use for their
+> +		 * messages. We only highlight the word precisely, so
+> +		 * "successful" stays uncolored.
+> +		 */
+> +		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+
+... these access src[] beyond the end of what the caller intended to
+show us, and also ...
+
+> +			strbuf_addstr(dest, p->color);
+> +			strbuf_add(dest, src, len);
+> +			strbuf_addstr(dest, GIT_COLOR_RESET);
+> +			n -= len;
+> +			src += len;
+> +			break;
+> +		}
+> +	}
+> +
+> +	strbuf_add(dest, src, n);
+
+... this will now try to add 0 or negative number of bytes.
+
+> +
+> +}
+> +
+
+Perhaps this will help (not really tested).  The second hunk is an
+unrelated style clean-up.
+
+
+ sideband.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/sideband.c b/sideband.c
+index 1c6bb0e25b..d99a559a44 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -75,11 +75,13 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		return;
+ 	}
+ 
+-	while (isspace(*src)) {
++	while (isspace(*src) && n) {
+ 		strbuf_addch(dest, *src);
+ 		src++;
+ 		n--;
+ 	}
++	if (!n)
++		return;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+ 		struct keyword_entry *p = keywords + i;
+@@ -101,7 +103,6 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 	}
+ 
+ 	strbuf_add(dest, src, n);
+-
+ }
+ 
+ 
