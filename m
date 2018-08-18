@@ -2,146 +2,250 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F52C1F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 15:03:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07F8D1F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 15:11:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726322AbeHRSLO (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 14:11:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59822 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726269AbeHRSLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 14:11:14 -0400
-Received: (qmail 14975 invoked by uid 109); 18 Aug 2018 15:03:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 18 Aug 2018 15:03:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1643 invoked by uid 111); 18 Aug 2018 15:03:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 18 Aug 2018 11:03:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Aug 2018 11:03:12 -0400
-Date:   Sat, 18 Aug 2018 11:03:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] drop vcs-svn experiment
-Message-ID: <20180818150312.GA7488@sigill.intra.peff.net>
-References: <20180817190310.GA5360@sigill.intra.peff.net>
- <20180818052605.GA241538@aiede.svl.corp.google.com>
+        id S1726309AbeHRSTa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 14:19:30 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:36313 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726088AbeHRSTa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 14:19:30 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k15-v6so6078038edr.3
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 08:11:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=NnAJPwEhdwqwXHIW5HLH9vfaSyRzKbEpFyQWI17+j9I=;
+        b=ZGggflcyRSDnua6Gulu8chtoHYiASf2DStLqL8mKv+86XcMjCj+2Cq8jlrBBpGjvSi
+         xS0A3cpfEol+82abQoyXaNcaO/1ZN7jTLauF+XuXlfbQ+GwQELEOV2D48PMgxiFr852z
+         IMUE0f+8djDr/qOBgQsVxJRj08+r5YVVidpv08JKuSIKlpcVOFYmgFTrVx8NjumgA+xP
+         V3LdVc9VeRq/IB09f2bOY/e7zs5D7GOk2p+/IIxkrCjzwjxbKvHEY7SSRguSyTCwIu8m
+         w+QYHyfiP5djMCw0r+/CsuKhlqqVO5S1A99PH45pRnQ04vBOUszKV+T24ccg/e3pO3BY
+         xyIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=NnAJPwEhdwqwXHIW5HLH9vfaSyRzKbEpFyQWI17+j9I=;
+        b=ksqM1vCrc2acmGH+L4achHkdaZCTBmgS7CiVxgHQqCF3XNezfLWsP0h0zEBiSMYwkx
+         4p1xb349NTcCb7o+8Q04g8iCwejArUZqdirREeoeV76e6vIMML5G45kE3fPM5RCaN5Bt
+         GSak8lNZPnwdCeA4/QwgmiK3n7Pe0zkNJXwWDT4nzna71zmwzvIdzYM1u7p4kWq3tlFR
+         7Nw0s65Y9y9LIUAzy7YkpDCx6J3A6NvX/QmvDPBcOqKcEcfui3HHEMc/QXYO+ADSnHqb
+         QCaBqxxN4Yuc6jYq1U+kCcnsnq+s/fOb401anv7b4RGJEoBnFRHqOaSs0ZrfdSxlQHr0
+         tQog==
+X-Gm-Message-State: AOUpUlEbYRMHBEzH6LDtkPrVmLUqdOo12rnzKyX4nLdVl9bf0BJEb8Fr
+        3/SXBueb9pu+Fn3cal2ynmm/VmporG70Fl0gZr0=
+X-Google-Smtp-Source: AA+uWPzPjVzAGsBD56NfzvniK8TRW1yUuCdVAC7i/7O0GiiO8gmi/urxwzUxRvJ4jWRgHIGHYIx5nTxWW8AeClu7u1Y=
+X-Received: by 2002:a50:c313:: with SMTP id a19-v6mr47781063edb.177.1534605087089;
+ Sat, 18 Aug 2018 08:11:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180818052605.GA241538@aiede.svl.corp.google.com>
+Received: by 2002:a17:906:2642:0:0:0:0 with HTTP; Sat, 18 Aug 2018 08:11:26
+ -0700 (PDT)
+In-Reply-To: <20180815210142.GN2734@hank.intra.tgummerer.com>
+References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <35e6fdfab85c21f0554da061cfab3f643d1aa794.1533753605.git.ungureanupaulsebastian@gmail.com>
+ <20180815210142.GN2734@hank.intra.tgummerer.com>
+From:   Paul Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Date:   Sat, 18 Aug 2018 18:11:26 +0300
+Message-ID: <CADzBBBbrE7DFQ_wN1VEYriagjfWqYZzcFM26LfnNP-3MmYmyzQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v7 12/26] stash: refactor `show_stash()` to use the
+ diff API
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 10:26:05PM -0700, Jonathan Nieder wrote:
+On Thu, Aug 16, 2018 at 12:01 AM, Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> On 08/08, Paul-Sebastian Ungureanu wrote:
+>> Currently, `show_stash()` uses `cmd_diff()` to generate
+>> the output. After this commit, the output will be generated
+>> using the internal API.
+>>
+>> Before this commit, `git stash show --quiet` would act like
+>> `git diff` and error out if the stash is not empty. Now, the
+>> `--quiet` option does not error out given an empty stash.
+>
+> I think this needs a bit more justification.  As I mentioned in my
+> comment to a previous patch, I'm not sure '--quiet' makes much sense
+> with 'git stash show' (it will show nothing, and will always exit with
+> an error code, as the stash will always contain something), but if we
+> are supporting the same flags as 'git diff', and essentially just
+> forwarding them, shouldn't they keep the same behaviour as well?
 
-> > We also ship contrib/svn-fe, which builds on the vcs-svn
-> > work. However, it does not seem to build out of the box for
-> > me, as the link step misses some required libraries for
-> > using libgit.a.
-> 
-> What libraries do you mean?  It builds and runs fine for me with
-> 
->  $ git diff
->  diff --git i/contrib/svn-fe/Makefile w/contrib/svn-fe/Makefile
->  index e8651aaf4b5..bd709f8d83b 100644
->  --- i/contrib/svn-fe/Makefile
->  +++ w/contrib/svn-fe/Makefile
->  @@ -4,7 +4,7 @@ CC = cc
->   RM = rm -f
->   MV = mv
->  
->  -CFLAGS = -g -O2 -Wall
->  +CFLAGS = -g -O2 -Wall -pthread
->   LDFLAGS =
->   EXTLIBS = -lz
-> 
-> which appears to be platform related, not due to some internal change
-> in Git.
+If we are going to support them, I guess there wouldn't be a problem
+if any change in behaviour is noted in documentation (but as you said,
+the next commit should be squashed into this). Indeed, the big question
+is if we should support them. I would say no considering there is no
+benefit.
 
-Yes, it works for me with that, too[1]. So clearly there's some system
-dependence. But I suspect it's broken for every system with pthreads,
-which is most of them. And older versions _do_ compile out of the box,
-even on my modern system. For completeness, here's what I dug up:
+>> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+>> ---
+>>  builtin/stash--helper.c | 73 +++++++++++++++++++++++++----------------
+>>  1 file changed, 45 insertions(+), 28 deletions(-)
+>>
+>> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+>> index 0c1efca6b..ec8c38c6f 100644
+>> --- a/builtin/stash--helper.c
+>> +++ b/builtin/stash--helper.c
+>> @@ -10,6 +10,8 @@
+>>  #include "run-command.h"
+>>  #include "dir.h"
+>>  #include "rerere.h"
+>> +#include "revision.h"
+>> +#include "log-tree.h"
+>>
+>>  static const char * const git_stash_helper_usage[] = {
+>>       N_("git stash--helper list [<options>]"),
+>> @@ -662,56 +664,71 @@ static int git_stash_config(const char *var, const char *value, void *cb)
+>>
+>>  static int show_stash(int argc, const char **argv, const char *prefix)
+>>  {
+>> -     int i, ret = 0;
+>> -     struct child_process cp = CHILD_PROCESS_INIT;
+>> -     struct argv_array args_refs = ARGV_ARRAY_INIT;
+>> +     int i;
+>> +     int flags = 0;
+>>       struct stash_info info;
+>> +     struct rev_info rev;
+>> +     struct argv_array stash_args = ARGV_ARRAY_INIT;
+>>       struct option options[] = {
+>>               OPT_END()
+>>       };
+>>
+>> -     argc = parse_options(argc, argv, prefix, options,
+>> -                          git_stash_helper_show_usage,
+>> -                          PARSE_OPT_KEEP_UNKNOWN);
+>> +     init_diff_ui_defaults();
+>> +     git_config(git_diff_ui_config, NULL);
+>>
+>> -     cp.git_cmd = 1;
+>> -     argv_array_push(&cp.args, "diff");
+>> +     init_revisions(&rev, prefix);
+>>
+>> -     /* Push arguments which are not options into args_refs. */
+>> -     for (i = 0; i < argc; ++i) {
+>> -             if (argv[i][0] == '-')
+>> -                     argv_array_push(&cp.args, argv[i]);
+>> +     /* Push arguments which are not options into stash_args. */
+>> +     for (i = 1; i < argc; ++i) {
+>> +             if (argv[i][0] != '-')
+>> +                     argv_array_push(&stash_args, argv[i]);
+>>               else
+>> -                     argv_array_push(&args_refs, argv[i]);
+>> -     }
+>> -
+>> -     if (get_stash_info(&info, args_refs.argc, args_refs.argv)) {
+>> -             child_process_clear(&cp);
+>> -             argv_array_clear(&args_refs);
+>> -             return -1;
+>> +                     flags++;
+>>       }
+>>
+>>       /*
+>>        * The config settings are applied only if there are not passed
+>>        * any flags.
+>>        */
+>> -     if (cp.args.argc == 1) {
+>> +     if (!flags) {
+>>               git_config(git_stash_config, NULL);
+>>               if (show_stat)
+>> -                     argv_array_push(&cp.args, "--stat");
+>> +                     rev.diffopt.output_format |= DIFF_FORMAT_DIFFSTAT;
+>> +             if (show_patch) {
+>> +                     rev.diffopt.output_format = ~DIFF_FORMAT_NO_OUTPUT;
+>> +                     rev.diffopt.output_format |= DIFF_FORMAT_PATCH;
+>> +             }
+>
+> I failed to notice this in the previous patch (the problem existed
+> there as well), but this changes the behaviour of 'git -c
+> stash.showStat=false stash show <stash>'.  Previously doing this would
+> not show anything, which is the correct behaviour, while now still
+> shows the diffstat.
+>
+> I think the show_stat variable is interpreted the wrong way around in
+> the previous patch.
+>
+> Something else I noticed now that I was playing around more with the
+> config options is that the parsing of the config options is not
+> correctly done in the previous patch.  It does a 'strcmp(var,
+> "stash.showStat"))', but the config API makes all variables lowercase
+> (config options are case insensitive, and making everything lowercase
+> is the way to ensure that), so it should be 'strcmp(var, "stash.showstat"))',
+> and similar for the 'stash.showpatch' config option.
+>
+> This all sounds like it would be nice to have some tests for these
+> config options, to make sure we get it right, and won't break them in
+> the future.
 
- - it builds fine up through v1.8.2
+Thanks! Great suggestion! I will add some tests for this.
 
- - after eff80a9fd9 (Allow custom "comment char", 2013-01-16), it breaks
-   with a ton of undefined references during the link stage, including
-   SHA1_* and some xdl_* functions. I still have no idea why, as that
-   commit is fairly mundane, but I guess it just somehow tickles
-   something in the linker or the way we build libgit.a.
+>> +     }
+>>
+>> -             if (show_patch)
+>> -                     argv_array_push(&cp.args, "-p");
+>> +     if (get_stash_info(&info, stash_args.argc, stash_args.argv)) {
+>> +             argv_array_clear(&stash_args);
+>> +             return -1;
+>>       }
+>>
+>> -     argv_array_pushl(&cp.args, oid_to_hex(&info.b_commit),
+>> -                      oid_to_hex(&info.w_commit), NULL);
+>> +     argc = setup_revisions(argc, argv, &rev, NULL);
+>> +     if (!rev.diffopt.output_format)
+>> +             rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+>> +     diff_setup_done(&rev.diffopt);
+>> +     rev.diffopt.flags.recursive = 1;
+>> +     setup_diff_pager(&rev.diffopt);
+>>
+>> -     ret = run_command(&cp);
+>> +     /*
+>> +      * We can return early if there was any option not recognised by
+>> +      * `diff_opt_parse()`, besides the word `stash`.
+>> +      */
+>
+> I'm not sure I follow what you mean with this comment.  I don't see
+> any 'diff_opt_parse' in the code above?
 
- - after da011cb0e7 (contrib/svn-fe: fix Makefile, 2014-08-28), the
-   error becomes:
+Oh, right. `diff_opt_parse()` is called by `setup_revision()` at some point,
+but as you said a little bit below, these two comments (the previous one
+and the next one) are redundant.
 
-     /usr/bin/ld: ../../libgit.a(sha1_file.o): undefined reference to symbol 'SHA1_Update@@OPENSSL_1_1_0'
-     /usr/bin/ld: //usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: error adding symbols: DSO missing from command line
-
-   Presumably this did work for the author at the time. It's seems quite
-   plausible that older versions of openssl did not exhibit this
-   problem, and that it's system-specific. Or that it was possible to
-   build with BLK_SHA1.
-
- - after e6b07da278 (Makefile: make DC_SHA1 the default, 2017-03-17),
-   the openssl error goes away (naturally), but is replaced with:
-
-     /usr/bin/ld: ../../libgit.a(run-command.o): undefined reference to symbol 'pthread_sigmask@@GLIBC_2.2.5'
-     /usr/bin/ld: //lib/x86_64-linux-gnu/libpthread.so.0: error adding symbols: DSO missing from command line
-
-   If I go back to 2014-era and start building with NO_OPENSSL, then
-   even da011cb0e7 fails with:
-
-     /usr/bin/ld: ../../libgit.a(run-command.o): undefined reference to symbol 'pthread_setspecific@@GLIBC_2.2.5'
-
-   So again, assuming it worked back then for the author of that commit,
-   that's something that has changed on the system, and we can't figure
-   out through bisecting git when that became common.
-
-So that does mean it's possible that it works for some people on some
-systems today (though it was also probably broken for everybody for a
-year and a half in 2013 with nobody noticing).
-
-[1] That patch actually doesn't quite work out of the box, because we
-    also include config.mak, and mine overrides CFLAGS. It also doesn't
-    seem to work with USE_LIBPCRE. But those are only evidence that the
-    Makefile is not very mature, not that people aren't using it for
-    out-of-the-box config.
-
-> > Of course, I could be completely wrong about people using this. Maybe
-> > svn-fe builds are just completely broken on my system, and maybe people
-> > really do use testsvn::. But if so, they certainly aren't talking about
-> > it on the mailing list. :)
-> 
-> My take:
-> 
->  - svn-fe works fine and has been useful to me, though its Makefile
->    could likely be simplified and made more user-friendly
-> 
->  - I've benefited from the test coverage of having this in-tree
-> 
->  - testsvn:: is a demo and at a minimum we ought not to install it
->    with "make install"
-> 
->  - keeping this in-tree for the benefit of just one user is excessive,
->    so removing it is probably the right thing
-
-Thanks, all of that sounds sensible to me.
-
->  - it would be nice if the commit removing this code from Git includes
->    a note to help people find its new home
-> 
-> Would you mind holding off until I'm able to arrange that last bit?
-
-Not at all. This patch was mostly meant to start the discussion. Mission
-accomplished. ;)
-
--Peff
+>> +     if (argc > 1) {
+>> +             free_stash_info(&info);
+>> +             argv_array_clear(&stash_args);
+>> +             usage_with_options(git_stash_helper_show_usage, options);
+>> +     }
+>> +
+>> +     /* Do the diff thing. */
+>
+> This comment should be dropped.  It's obvious that we are doing the
+> diff thing below from the code, so the comment is redundant at best,
+> makes people read more lines, and could possibly get outdated.
+>
+> I'd also drop the other comments above, as they do not provide a lot
+> of extra value imho.
+>
+>> +     diff_tree_oid(&info.b_commit, &info.w_commit, "", &rev.diffopt);
+>> +     log_tree_diff_flush(&rev);
+>>
+>>       free_stash_info(&info);
+>> -     argv_array_clear(&args_refs);
+>> -     return ret;
+>> +     argv_array_clear(&stash_args);
+>> +     return 0;
+>>  }
+>>
+>>  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>> --
+>> 2.18.0.573.g56500d98f
+>>
