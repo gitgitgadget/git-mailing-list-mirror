@@ -2,176 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2B421F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 22:17:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1461F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 22:25:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726438AbeHSB0f (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 21:26:35 -0400
-Received: from mail-wm0-f52.google.com ([74.125.82.52]:33446 "EHLO
-        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbeHSB0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 21:26:35 -0400
-Received: by mail-wm0-f52.google.com with SMTP id i134-v6so4091464wmf.0
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 15:17:22 -0700 (PDT)
+        id S1726458AbeHSB2y (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 21:28:54 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:33031 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726352AbeHSB2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 21:28:53 -0400
+Received: by mail-ed1-f43.google.com with SMTP id x5-v6so6400585edr.0
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 15:19:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Dx2+tAf8F5CTHvYtrV7eDEi3XzJF9g6YJ7/0bZCIA+c=;
-        b=Nj5K3m7p6l6V2ea3rmsQmIwUjMhLPor8F5uoDtfq5KCcBEtEUrJfTnI7CEYvUSD8UL
-         ocHnNE5iW46iqtLXKPZM+dgINBMsy7N2WJq5jmJB10nQm/U7LtYCqJ8c9eJVnybGFuYn
-         1dMzNNJ0Cqh9NhjL1/jPmwukAx1QVRBIlsnrabB5mFQmZUf4MWJkDlgPWycZ9IOgGhBb
-         uTK0BJCXHRxBlGgNtMTSgbR3TVaWY56X7M0D++1U2iAt8+MeFW3WgGd3iQa+AWVunED4
-         LL0EKrq0DP6gyUB22sUf4KZiNBDsYCOTnJciaXOHat/OitB9hccPhniHZ+hWaZeTZCMq
-         pSWQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=ULdbzsqOIYXMNIU0DEKFL4uoY48rU1xzpkyvYGFo2sA=;
+        b=ZDXuLHTAJum/lnmcNud1grA7uKoXMVVJj6fDaZjiI9MM+RyJrPV8mYXZ1k+/3obNFd
+         +osPNtMlhYqssz8eIsIb1vcPoFfw7OnaznB15n9/4+j2sTouCluN4QoUI1y1n4aw4YPN
+         6503sUiux4AtvHpDwOkMCrRSc3Odo4/m+WNXgiLdkiGnI6lKyISkXUYgvsxiGvX0AJO1
+         alQmb0BCrv15QPwRZzvo1w+i2FAeurIYk8xGHRKf20AFY9OMRnrdFK4fZcmrRHCth230
+         sT7kWBzQoDrq3Hz4pcgRwj26vcFPnpZa1QVC3MI6GXuxa8aAv3Ggp4IBDbo8b5U4WefA
+         U6rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Dx2+tAf8F5CTHvYtrV7eDEi3XzJF9g6YJ7/0bZCIA+c=;
-        b=HyHk7HljiXUhVlaqUPJu7CmjOpxSqU86wKupAW0Myf5sOxRKno6Lpw67+yUzyVYp37
-         /pUFIk+enTKL3T4NlZNs3qzqR59pUSbijCZU/wYv56qUdfNNyOuP5X9zV1LqZ2D03DLL
-         7O+di4g69efsAO0htDEHFVk7lIIZaGGTLJkkoEC0tQ65OZBrieRDtfoYTz3vXaA4QwWB
-         SI+du3xItp4SF1nEDmoT2WOGNus+/JPU9kXGug9giVQ2dMU8HCAt8C0v5e3SF/vvIR7y
-         /xjOr8AyVB1BFXvyf3XEOJJnDn3pyNg8YLePqX3btVy30Uiznn46TI0dvZbrCIM3kaA7
-         pfNw==
-X-Gm-Message-State: AOUpUlGaW40VfjEFf7Yq93NB4DnmKRFLOTbvwLhu7wnf1xIR2/LWlfGu
-        salhhZRDhv+tnl4GOOrUm/I=
-X-Google-Smtp-Source: AA+uWPyZNgK7h8XKiKL53FRRMuSVsVbjBI54q4toSCOZfrx0VVI2etJeG6C4vZJoWztGISsV11ud+A==
-X-Received: by 2002:a1c:c507:: with SMTP id v7-v6mr21491990wmf.151.1534630642267;
-        Sat, 18 Aug 2018 15:17:22 -0700 (PDT)
-Received: from localhost ([2.30.88.37])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm4873432wme.36.2018.08.18.15.17.20
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=ULdbzsqOIYXMNIU0DEKFL4uoY48rU1xzpkyvYGFo2sA=;
+        b=fGv4PhlLAKIoKzVEUKPGVaPpALGIdWbnTqXB+gNKM0tADTjkS2KrMb3Lq9NX49WBcF
+         1rp5GoqjPTBvsj80ehUAAiPnP/qbaiVHR1vYAaxnnct0uVHPqoV61lMybRH0kUUroWlj
+         eNo9i519NvqKLO+3X4yRcej7GejhZg65WzWe3IYQBOblKisldyFqtvaM2yKN5P3l+YCO
+         QyE/wlcPEaIx/damtyCd0fjMs3w25vBA/LH1Frea6u1tWzFNvezbm1c2xw5O6CNNDx7g
+         tk9HVBP/aEpGAC/gi2iH3KC90G0A7UpsmLnf00wLeFjoPuJeSrTMDr8VeZPH1LxDUd9o
+         o5OQ==
+X-Gm-Message-State: AOUpUlEN68cXeL0jo5e6aE3KDN67Q2TWnD5k4scIYAuZhvIdVryWZ4QD
+        HamzDE++3TZpTryRRCyDDyXzhhd3LJs=
+X-Google-Smtp-Source: AA+uWPwneAhtRVwNIPZhpXP7u1oBfC578jklhRxWt5h+Th5RSCgsALRqIgF8REg666EJE3fC1ieM/A==
+X-Received: by 2002:a50:8a9b:: with SMTP id j27-v6mr48742523edj.36.1534630781021;
+        Sat, 18 Aug 2018 15:19:41 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id p5-v6sm3783014edc.33.2018.08.18.15.19.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Aug 2018 15:17:21 -0700 (PDT)
-Date:   Sat, 18 Aug 2018 23:17:20 +0100
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v7 21/26] stash: replace spawning `git ls-files`
- child process
-Message-ID: <20180818221720.GI11326@hank.intra.tgummerer.com>
-References: <cover.1533753605.git.ungureanupaulsebastian@gmail.com>
- <3286e8443ed1c8f9560aa6bef01aa18ed78266df.1533753605.git.ungureanupaulsebastian@gmail.com>
+        Sat, 18 Aug 2018 15:19:40 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Michael =?utf-8?Q?Mur=C3=A9?= <batolettre@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-bug: Distributed bug tracker embedded in git
+References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+        <20180818054300.GB241538@aiede.svl.corp.google.com>
+        <874lfrrhfp.fsf@evledraar.gmail.com>
+        <20180818204243.GA136983@aiede.svl.corp.google.com>
+        <8736vbqr2p.fsf@evledraar.gmail.com>
+        <20180818220821.GC144170@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180818220821.GC144170@aiede.svl.corp.google.com>
+Date:   Sun, 19 Aug 2018 00:19:39 +0200
+Message-ID: <871savqpvo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3286e8443ed1c8f9560aa6bef01aa18ed78266df.1533753605.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/08, Paul-Sebastian Ungureanu wrote:
-> This commit replaces spawning `git ls-files` child process with
-> API calls to get the untracked files.
-> ---
->  builtin/stash--helper.c | 49 +++++++++++++++++++++++++++--------------
->  1 file changed, 32 insertions(+), 17 deletions(-)
-> 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 4fd79532c..5c27f5dcf 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -813,27 +813,42 @@ static int store_stash(int argc, const char **argv, const char *prefix)
->  /*
->   * `out` will be filled with the names of untracked files. The return value is:
->   *
-> - * < 0 if there was a bug (any arg given outside the repo will be detected
-> - *     by `setup_revision()`)
->   * = 0 if there are not any untracked files
->   * > 0 if there are untracked files
->   */
-> -static int get_untracked_files(const char **argv, int line_term,
-> +static int get_untracked_files(const char **argv, const char *prefix,
->  			       int include_untracked, struct strbuf *out)
->  {
-> -	struct child_process cp = CHILD_PROCESS_INIT;
-> -	cp.git_cmd = 1;
-> -	argv_array_pushl(&cp.args, "ls-files", "-o", NULL);
-> -	if (line_term)
-> -		argv_array_push(&cp.args, "-z");
-> +	int max_len;
-> +	int i;
-> +	char *seen;
-> +	struct dir_struct dir;
-> +	struct pathspec pathspec;
-> +
-> +	memset(&dir, 0, sizeof(dir));
->  	if (include_untracked != 2)
-> -		argv_array_push(&cp.args, "--exclude-standard");
-> -	argv_array_push(&cp.args, "--");
-> -	if (argv)
-> -		argv_array_pushv(&cp.args, argv);
-> +		setup_standard_excludes(&dir);
->  
-> -	if (pipe_command(&cp, NULL, 0, out, 0, NULL, 0))
-> -		return -1;
-> +	parse_pathspec(&pathspec, 0,
-> +		       PATHSPEC_PREFER_FULL,
-> +		       prefix, argv);
-> +	seen = xcalloc(pathspec.nr, 1);
-> +
-> +	max_len = fill_directory(&dir, the_repository->index, &pathspec);
-> +	for (i = 0; i < dir.nr; i++) {
-> +		struct dir_entry *ent = dir.entries[i];
-> +		if (!dir_path_match(ent, &pathspec, max_len, seen)) {
-> +			free(ent);
-> +			continue;
-> +		}
-> +		strbuf_addf(out, "%s\n", ent->name);
 
-As mentioned in my comments about the 'diff-index' replacement, this
-'\n' should probably be '\0', and we should keep the '-z' flag in 'git
-update-index', in case somebody has a '\n' in their filenames.
+On Sat, Aug 18 2018, Jonathan Nieder wrote:
 
-While creating such a file is probably not a good idea anyway, we
-should still be able to handle it (and have been before this, so we
-shouldn't break it).
+> Ævar Arnfjörð Bjarmason wrote:
+>
+>> The reason I can drop a "git-whatever" in my $PATH and invoke it as "git
+>> whatever" is just a historical accident of how git was implemented.
+>
+> No.  This is a very deliberate design decision, to allow people to
+> prototype new Git commands (and to create the kind of ecosystem that
+> allows commands to be implemented outside Git.
+>
+> [...]
+>> So we don't get to say "you never asked us about git-annex, we're using
+>> that name now" without considering how widely used it is. It's us who
+>> decided to expose the API of seamlessly integrating 3rd party tools.
+>
+> I think we're talking past each other.  I haven't proposed any blanket
+> policy.  I'm saying that "git bug" is a bad name for this tool:
+>
+>  - it's hard to find with search engines
+>  - it conflicts with some likely good future changes to Git
+>  - it assumes that no one else will have some other refinement of the
+>    Git bugtracker concept, that it is the only "git bug" tool
+>
+> It's a namespace grab.  There's nothing stopping someone from naming a
+> command "bug", either, but that doesn't make it a good idea.  (I'm not
+> saying that was the intent --- that's just the effect.)
+>
+> Meanwhile it looks like a neat tool, and I'm very supportive of the
+> idea.  But you certainly still have not convinced me that the name is
+> a good idea, or that I shouldn't be bringing this up.
+>
+> I'm not sure *what* you're trying to convince me of, actually.
 
-> +		free(ent);
-> +	}
-> +
-> +	free(dir.entries);
-> +	free(dir.ignored);
-> +	clear_directory(&dir);
-> +	free(seen);
->  	return out->len;
->  }
->  
-> @@ -888,7 +903,7 @@ static int check_changes(const char **argv, int include_untracked,
->  		goto done;
->  	}
->  
-> -	if (include_untracked && get_untracked_files(argv, 0,
-> +	if (include_untracked && get_untracked_files(argv, prefix,
->  						     include_untracked, &out))
->  		ret = 1;
->  
-> @@ -908,7 +923,7 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
->  	struct child_process cp2 = CHILD_PROCESS_INIT;
->  
->  	cp.git_cmd = 1;
-> -	argv_array_pushl(&cp.args, "update-index", "-z", "--add",
-> +	argv_array_pushl(&cp.args, "update-index", "--add",
->  			 "--remove", "--stdin", NULL);
->  	argv_array_pushf(&cp.env_array, "GIT_INDEX_FILE=%s",
->  			 stash_index_path.buf);
-> @@ -1134,7 +1149,7 @@ static int do_create_stash(int argc, const char **argv, const char *prefix,
->  		goto done;
->  	}
->  
-> -	if (include_untracked && get_untracked_files(argv, 1,
-> +	if (include_untracked && get_untracked_files(argv, prefix,
->  						     include_untracked, &out)) {
->  		if (save_untracked_files(info, &msg, &out)) {
->  			if (!quiet)
-> -- 
-> 2.18.0.573.g56500d98f
-> 
+I'm not saying the git-bug name is a good idea, or that it isn't. I
+don't care about this particular case when it comes to naming.
+
+I'm just pointing out in the more general case that if someone comes up
+with a badly named git-xyz it doesn't scale to try to point this out to
+them before git-xyz is widely deployed.
+
+So we must either let it go (solution #1), or come up with some
+API-level solution that makes it a non-issue (my #3).
