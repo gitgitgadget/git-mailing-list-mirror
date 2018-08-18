@@ -2,130 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64EC31F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 22:50:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB3631F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 23:22:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726486AbeHSCAM (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 22:00:12 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:34472 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbeHSCAM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 22:00:12 -0400
-Received: by mail-pl0-f65.google.com with SMTP id f6-v6so5316876plo.1
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 15:50:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=eRdPI6scb15tYlaX3Ou6UFLR1K6R7gT2jkJaavD1d/0=;
-        b=q2/GHzQXSMPmaaUbMnSf3GtIZBWJ7l/krIDlnQpGuzbDSxlrzKmREw/57sI4OYSsCC
-         hvSiOCg9zWpRDFaFoR4GYRiEJ6lqJIivxnVk6TZwVzALWw7Qu4xUHDQ5krxOWuoHcXjF
-         iN+Ix65844Dg0inv15hOOYJfelJihBRn/c2Ng6O/IottggAYZk0a0Q5OLYkOfu3Jmm8w
-         t98ip29ZlXqIsliqM9JKgDSQp2boYnRgdPDRRl8oDraipc/ou3nV/9JmDX5DsclhjiP3
-         m0/aK2O90hyBfmYkgnv1sjIYReL+vztIR8KkW3ms/BfExXGHnfdqYwWa9D6CK+l37Mmc
-         /ptQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=eRdPI6scb15tYlaX3Ou6UFLR1K6R7gT2jkJaavD1d/0=;
-        b=fmpG+m976/RDzctQTpfRO5s50UwCS5zOc7IeolhQKztdfVbbPdFtpSKY9rccJ/7hsq
-         4pBX+EEke6IQjd98HqGV0AInU07A3DH2R26Mlj2JKWkrazb93xYvlkfmKt0cq5Xe8m5E
-         2xDIdSJoKud6+kkgeaYbEMjHm+TOot77nIDSYr4Yq62y+hklK5L8dXwux7LUiuLq/mqI
-         mlWfMRFK8bGR4yBV0Ad28cThBaQwJ2fKLoHkVQCWnO6L3vPuSFQfWcoxSmXW9YJ9YFd0
-         QxvozdTML2eEBC1o9szCN7HZsbES9WGir6Dgg/W9alGXqa8A9aCMkqa9Pk52hCVy6WbJ
-         q49Q==
-X-Gm-Message-State: AOUpUlEkoxmzSyxaB4dijaIdBkzDl4NGrp7V12P3bIAjdYZ+zdrK0BC8
-        zL0eXdYwAPcyY0OZa3ZgdCU=
-X-Google-Smtp-Source: AA+uWPx1RNCZ6H8pOVGUxqy3+1b8sGFoIh4EFhl9oEMjFW661rgRYsIIYIaUG6QvnQqVGJtBBWEVpQ==
-X-Received: by 2002:a17:902:59cf:: with SMTP id d15-v6mr2593790plj.184.1534632654569;
-        Sat, 18 Aug 2018 15:50:54 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s73-v6sm8382283pfi.154.2018.08.18.15.50.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Aug 2018 15:50:53 -0700 (PDT)
-Date:   Sat, 18 Aug 2018 15:50:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Michael =?utf-8?B?TXVyw6k=?= <batolettre@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: git-bug: Distributed bug tracker embedded in git
-Message-ID: <20180818225052.GE144170@aiede.svl.corp.google.com>
-References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+        id S1726551AbeHSCbo (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 22:31:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:60070 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726506AbeHSCbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 22:31:43 -0400
+Received: (qmail 32515 invoked by uid 109); 18 Aug 2018 23:22:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 18 Aug 2018 23:22:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3934 invoked by uid 111); 18 Aug 2018 23:22:27 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 18 Aug 2018 19:22:27 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Aug 2018 19:22:21 -0400
+Date:   Sat, 18 Aug 2018 19:22:21 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>, sunshine@sunshineco.com,
+        git@vger.kernel.org
+Subject: Re: Re* [PATCH v7 1/1] sideband: highlight keywords in remote
+ sideband output
+Message-ID: <20180818232220.GA24533@sigill.intra.peff.net>
+References: <20180807125108.104293-1-hanwen@google.com>
+ <20180807125108.104293-2-hanwen@google.com>
+ <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
+ <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
+ <20180818060911.GC241538@aiede.svl.corp.google.com>
+ <xmqqmutjagc7.fsf@gitster-ct.c.googlers.com>
+ <xmqqin47acir.fsf@gitster-ct.c.googlers.com>
+ <xmqqa7pjabvn.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqa7pjabvn.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(cc-ing Elijah Newren for the points about merging)
-Hi again,
+On Sat, Aug 18, 2018 at 09:16:28AM -0700, Junio C Hamano wrote:
 
-To avoid the other thread shadowing more important things:
+> -- >8 --
+> Subject: [PATCH] sideband: do not read beyond the end of input
+> 
+> The caller of maybe_colorize_sideband() gives a counted buffer
+> <src, n>, but the callee checked src[] as if it were a NUL terminated
+> buffer.  If src[] had all isspace() bytes in it, we would have made
+> n negative, and then
+> 
+>  (1) made number of strncasecmp() calls to see if the remaining
+>      bytes in src[] matched keywords, reading beyond the end of the
+>      array (this actually happens even if n does not go negative),
+>      and/or
+> 
+>  (2) called strbuf_add() with negative count, most likely triggering
+>      the "you want to use way too much memory" error due to unsigned
+>      integer overflow.
+> 
+> Fix both issues by making sure we do not go beyond &src[n].
 
-Michael Muré wrote:
+Thanks. I've been sporadically seeing "fatal: you want to use way too
+much memory" the last few days while running 'next', and finally managed
+to catch a reproducible case. This patch definitely fixes it.
 
-> Someone suggested in the Hacker News thread [0] to post it here as well.
+> In the longer term we may want to accept size_t as parameter for
+> clarity (even though we know that a sideband message we are painting
+> typically would fit on a line on a terminal and int is sufficient).
+> Write it down as a NEEDSWORK comment.
 
-Thanks to Ævar for that.
+This "typically" made me nervous about what happens in the non-typical
+case, but I think we can say something even stronger: the length comes
+from a pktline, so the maximum is less than 16 bits. I wondered if we
+might ever call this on the accumulated string from multiple sidebands,
+but it doesn't look like it.
 
-[...]
-> git-bug use as identifier the hash of the first commit in the chain
-> of commit of the bug.
-
-Clever!  I like this approach to the naming problem.
-
-[...]
-> Git doesn't provide a low-level command to rebase a branch onto
-> another without touching the index.
-
-Thanks for pointing this out.  There's been some recent work to make
-Git's merge code (also used for cherry-pick) less reliant on the index
-and worktree.  See https://crbug.com/git/12 for some references.
-There's also been some heavy refactoring of "git rebase" code to be in
-C and be able to make use of library functions instead of being a
-shell script.
-
-That's all to say that we're in a pretty good place to consider
-introducing commands like
-
-  git cherry-pick --onto=<branch> <revisions>
-
-In absence of that kind of thing, you can run commands that need to
-touch the index (but not the working tree) by setting the GIT_INDEX
-environment variable to point to a temporary index file.
-
-> I'd love to have some feedback from you. Contribution are also very
-> much welcomed.
-
-Can you say more about the federation model it intends to support?
-For example, do you imagine
-
-- having multiple copies of a git bugs repo that automatically fetch
-  updates from each other
-
-- having explicit "pull request" synchronization moments when the
-  owners of one copy of a bug tracker push or request a fetch of
-  changes that have been happening on another
-
-- individual contributors using an offline copy of the bug tracker
-  and pushing push/pull mostly to synchronize with a single
-  centralized copy
-
-- something else?
-
-Thanks,
-Jonathan
+-Peff
