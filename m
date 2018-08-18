@@ -2,72 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12B2F1F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 20:46:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6B71FC7F
+	for <e@80x24.org>; Sat, 18 Aug 2018 20:52:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726351AbeHRXvn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 19:51:43 -0400
-Received: from mail-pf1-f180.google.com ([209.85.210.180]:44928 "EHLO
-        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726299AbeHRXvn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 19:51:43 -0400
-Received: by mail-pf1-f180.google.com with SMTP id k21-v6so4935252pff.11
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 13:42:46 -0700 (PDT)
+        id S1726392AbeHSABW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 20:01:22 -0400
+Received: from mail-vk0-f66.google.com ([209.85.213.66]:42561 "EHLO
+        mail-vk0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726326AbeHSABW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 20:01:22 -0400
+Received: by mail-vk0-f66.google.com with SMTP id t4-v6so4820006vke.9
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 13:52:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=esl+TKY9i1S5PwxL6hhor40Xr61Owlbs5sjsW6/KVAo=;
-        b=EGJCpHqigomPijWLVnNKSCErJBNVbtQyKQP3O1iVveRTilHyesnby6NYqC7ypIvI+i
-         3TqBrXHkt0+1qFIvN7JCZnKLw0QMEsrV+N14uY/IEJaxv9Qh86zNsAG0frjFlYGvVwuG
-         XFXWmJjYFhnckPF7+RtWrsvWWTjcY+9X82ZstbVenPcGcFlIAuefToW2e/vL/lynrg17
-         HU9CiF1RYaNfDFzbS3UHPAJpTbEjdlfkHGY2t+1wi5CbPUzHfYef+6NvnMlYxrN2n5t4
-         HDaW035kx8XPkdVMNljYhJXrSrbUXg23lqwH1xPjoH/9iCy9AbfDUc6iZycecwVjdzil
-         /7/Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=P/qv8r33yyWFzhZeaU9tB0heeiNVeWQNPWDjnfpZXOQ=;
+        b=Aq45duhyiMPV+6U6kKPqwHWSzltNetgRCPAEt28cbG0wn3w7vhJ5rS4bAAGjt+umXG
+         6An0EiA2P0u4pozEQOWKMw718i/vJEe51gw8xpeLxvZ+16hoolnl2uzYOz5VszH6e8Ms
+         Ck53trITYiJeTZFrGNEJkH1GA4UYUtpElx48KZ5yjFNKbMg/VG5OWso66TzUSKbTLMn+
+         C1ekcE0pZhugkbKN81m8jeL3vDng9K2Wn2zO4vXltFpzTncs0nWeZOSbY6UXUPPI/jyw
+         C0jP+cRQyBUM4bYP6faLAIdroAgjHlk6H/2vVrI2h6aeijnhMOAivtVGDRjfP6CgWOUm
+         wbQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=esl+TKY9i1S5PwxL6hhor40Xr61Owlbs5sjsW6/KVAo=;
-        b=Ep+t5v6OJXWudUI12dhsDQXHBh6LZods7VCZpeOOjXshl1XNEsToABixDXHroSIwkf
-         rRVyqeU2ujYMIXq2RZXbbYRe7n7bdMIxw00GIooih3vCviWmxb9h8aTarCTk+fi2GyuU
-         dumhMwz7Do5l6/qNCkgK1xmXQbYfi+3uxrDuwg2ewhv30Cpzb0H+7aAJCAxXlE+7siRU
-         kM2XMkWsYpIGEw2/YQA6xWKzq8dUVi8hXp3VdF92CDwWUU6rYC9FS5BMI6ZFaoGWudtK
-         uZx6hjHTuXDuDEhVWYsXxjsbS8mfFfsLFFdBTtsnyGK5VpWKg+GN9WpdcajWtqMPXXLN
-         9thA==
-X-Gm-Message-State: AOUpUlFqlmBTA7TNkzds6OZ64HzWRymjAxQJ2NlOZZYHhUuy6cR0cxYQ
-        7zx807Cn5CdRu3w3f3UnCbOPDKZW
-X-Google-Smtp-Source: AA+uWPxAVbWPFN2wgqjwBXwNtioD85gBn8Qrk+om+A+LBeEIE/37Dbsy7l+T25HPxdsNKyUQ6QYCvw==
-X-Received: by 2002:a62:571b:: with SMTP id l27-v6mr41848946pfb.29.1534624965874;
-        Sat, 18 Aug 2018 13:42:45 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id x25-v6sm6027792pgv.63.2018.08.18.13.42.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Aug 2018 13:42:45 -0700 (PDT)
-Date:   Sat, 18 Aug 2018 13:42:43 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Michael =?iso-8859-1?Q?Mur=E9?= <batolettre@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-bug: Distributed bug tracker embedded in git
-Message-ID: <20180818204243.GA136983@aiede.svl.corp.google.com>
-References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
- <20180818054300.GB241538@aiede.svl.corp.google.com>
- <874lfrrhfp.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=P/qv8r33yyWFzhZeaU9tB0heeiNVeWQNPWDjnfpZXOQ=;
+        b=q/7hZBQt1dWEIxrLQ5Z+DQR1qAgm/7SccHW1kd7IlUWPzN7LvIXpwph8K7CHVGywjQ
+         AgHR3WO60q4ygy5REvI8bEIaeRgNHW79PpayEclyRtd87sYNo29g972GUvcjsITXEE8g
+         d5Fz6BVkuIvo5LeQEzXWGwHRDPm+/2JVabgDJw3TZBKK3VYGfRNuf2ypiLUQFuxQwwwQ
+         u+8wzXr+ti3Gvm8HsUqtoUQF4NM5J5fLPJvi61S2+Yyrp5Cj58wzNaGLnPzkJAlNy8am
+         sNuuhg1Fxy3/tFPG/1o8hbLck2f6PPyJLF4r+/X0jL5HYJtT2mltqCzWF6zxw95e+TlG
+         6ltw==
+X-Gm-Message-State: AOUpUlFaqhYht96/FD1mtUl2KyADWu+zEJyeb3zn8wd/Us6AiZe+8jl9
+        a9vrHJgjetBlhjJJJ1J4fjon4ostrZsc7jHKoPk=
+X-Google-Smtp-Source: AA+uWPwG6YeMAbq3xo9/3KJK0/lK9vNH3Hknf/S/UxGgUVt3qMeqIXcllRx2FRZi+YnvIj+2fb8YjjpVEyTVy8nIu5U=
+X-Received: by 2002:a1f:5c7:: with SMTP id 190-v6mr26286841vkf.47.1534625542513;
+ Sat, 18 Aug 2018 13:52:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874lfrrhfp.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180806152524.27516-1-newren@gmail.com> <20180807164905.3859-1-newren@gmail.com>
+ <CAM0VKjn6QAp-hQa3Qp07qZ2unNk20SXYoPwwFbpiLfqqx+KV+A@mail.gmail.com>
+In-Reply-To: <CAM0VKjn6QAp-hQa3Qp07qZ2unNk20SXYoPwwFbpiLfqqx+KV+A@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 18 Aug 2018 13:52:10 -0700
+Message-ID: <CABPp-BG2q9b1og50auV6-u6hV7Vht8Dxojk8E1802pDpCNnObg@mail.gmail.com>
+Subject: Re: [PATCHv3 0/5] Simple fixes to t7406
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -75,50 +67,63 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Sat, Aug 18 2018, Jonathan Nieder wrote:
->> Michael Muré wrote:
-
->>> I released today git-bug, a distributed bug tracker
-[...]
->> I am a bit unhappy about the namespace grab.  Not for trademark
->> reasons: the Git trademark rules are pretty clear about this kind of
->> usage being okay.  Instead, the unhappiness comes because a future Git
->> command like "git bug" to produce a bug report with appropriate
->> diagnostics for a bug in Git seems like a likely and useful thing to
->> get added to Git some day.  And now the name's taken.
->>
->> Is it too late to ask if it's possible to come up with a less generic
->> name?
+On Mon, Aug 13, 2018 at 1:28 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
+> On Tue, Aug 7, 2018 at 6:49 PM Elijah Newren <newren@gmail.com> wrote:
 >
-> Wouldn't we call such a thing "git-reportbug", or "git gitbug", with
-> reference to Debian reportbug or perl's perlbug?
-
-I hope you're kidding about "git gitbug".
-
-[...]
-> 1) Accept the status quo where people do create third party tools, much
->    of which are way too obscure to matter (e.g. I'm sure someone's
->    created a tool/alias called range-diff before, but we didn't
->    care).
+> > Since folks like to notice other problems with t7406 while reading my
+> > patches, here's a challenge:
+> >
+> >   Find something *else* wrong with t7406 that neither I nor any of the
+> >   reviewers so far have caught that could be fixed.
 >
->    If those tools become popular enough in the wild they get own that
->    namespace, e.g. we're not going to ship a "git-annex" or "git-lfs"
->    ourselves implementing some unrelated features
+> Well, I'd hate to be that guy...  but since those who already
+> commented on previous rounds are not explicitly excluded from the
+> challenge, let's see.
+>
+> - There are still a few command substitutions running git commands,
+>   where the exit status of that command is ignored; just look for the
+>   '[^=3D]$(' pattern in the test script.
+>
+>   (Is not noticing those cases considered as "flubbing"?)
 
-That's fair.  Let me spell out my thinking a little more.
+Hmm, borderline.
 
-This framework would lead me to rephrase my question to Michael a
-different way.  Instead of saying that I'm not happy with the
-namespace grab, I should say something more severe:
+> - The 'compare_head' helper function defined in this test script looks
+>   very similar to the generally available 'test_cmp_rev' function,
+>   which has the benefit to provide some visible output on failure
+>   (though, IMO, not a particularly useful output, because the diff of
+>   two OIDs is not very informative, but at least it's something as
+>   opposed to the silence of 'test $this =3D $that").
+>
+>   Now, since 'compare_head' always compares the same two revisions,
+>   namely 'master' and HEAD, replacing 'compare_head' with an
+>   appropriate 'test_cmp_rev' call would result in repeating 'master'
+>   and 'HEAD' arguments all over the test script.  I'm not sure whether
+>   that's good or bad.  Anyway, I think that 'compare_head' could be
+>   turned into a wrapper around 'test_cmp_rev'.
 
-  Don't be surprised if Git itself makes a "git bug" command in the
-  future, and be prepared to rename.
+Ooh, that does sound better.
 
-Is that preferable, in your opinion?
+> >     - You get bonus points if that thing is in the context region for
+> >       one of my five patches.
+> >     - Extra bonus points if the thing needing fixing was on a line I
+> >       changed.
+> >     - You win outright if it's something big enough that I give up and
+> >       request to just have my series merged as-is and punt your
+> >       suggested fixes down the road to someone else.
+>
+> Well, there's always the indentation of the commands run in subshells,
+> which doesn't conform to our coding style...
+>
+> Gah, now you made me that guy ;)
 
-I still think it's a reasonable thing for me to ask about, if only to
-save Michael some trouble later.
+I read this on Monday and got a really good laugh.  I meant to fix it
+up, but fell asleep too soon the first couple nights...and now this
+series is in next anyway and there are a couple other git things that
+have my attention.  You have pointed out a couple additional nice
+fixups, like you always do, but I think at this point I'm just going
+to declare you the winner and label these as #leftoverbits.
 
-Thanks,
-Jonathan
+Thanks for always thoroughly looking over the testcase patches and
+your constant work to improve the testsuite.
