@@ -7,91 +7,160 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06F551F97E
-	for <e@80x24.org>; Sat, 18 Aug 2018 05:43:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0110D1F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 06:14:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726072AbeHRIt0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 04:49:26 -0400
-Received: from mail-pg1-f177.google.com ([209.85.215.177]:46509 "EHLO
-        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726040AbeHRIt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 04:49:26 -0400
-Received: by mail-pg1-f177.google.com with SMTP id f14-v6so4436983pgv.13
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 22:43:02 -0700 (PDT)
+        id S1726071AbeHRJPn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 05:15:43 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39514 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725891AbeHRJPm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 05:15:42 -0400
+Received: by mail-pf1-f194.google.com with SMTP id j8-v6so4387358pff.6
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 23:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=pic3psDxwR3+00swdqhxwQkriQqgcA6ns00pVzhvB2Q=;
-        b=ABvU+LdUIZxiSoea7BOu4MwfLOFWP5WA/+FuzV1eaqvyd9Ei9wbH47QQVUwlEzzob5
-         Y3EGc6YSEqHJOllpXw3qBPkz1mbPiA37T/c7FminV51E95o6lRDtmk+G5dBQYL2GQ6Gr
-         pmbtimeqTDEcxLP7ANbUKEtnad5DsHXbpukjVP8DZGWACw/aYNJInklDQ4rTWHjcvpvh
-         cNbh2Cx3fcuPBVeY0QxRjQb78ErDyLZX2oWwWTbISC4nUteETJ42+DZM2bAXnxCo+xZK
-         +8Ms2mhDTobHxMBngndy9YWg93Fh47puYkTO9MnBs9GaxDVcwV0PiZunHq9ua25Bp+PD
-         /qxw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=C7EiSqsyiOZRGQv7Ix5eEmI0DRPR9210HLBVB5dtgdY=;
+        b=b1M0HJpMKTGopgVDVeHpcCVi9vcJRa5/Mape3pKuEfeoyod4xSIZM1dNE14aA7uzT8
+         x1yJyj5VN35kqBAF2iB7LWCnOd868i4qE39b1/fTQUG+TiVobq1tBWHUeuhuS+hB+FGw
+         BdtHxjmRB+AQtN7OTp5Nrx3aCl1vuPilo4gCqHdewQuxMLI+myN+M2Bfjs6hUzeYXPLi
+         nCc6rTibl43ZTMSivTM11r2DjS2rpWx0ibsAS0imClncDIxEWFD7xo7in1DgsqgJghOA
+         zixr8eJ+pVa/C4mS7/vTFt9RuTYtwdO5q+vtLmPHn7yXGSlEjtgxLCm0jf9iNCKLzH9c
+         0NCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=pic3psDxwR3+00swdqhxwQkriQqgcA6ns00pVzhvB2Q=;
-        b=GXaviQFNVhRxVcADT3bOXnBQdAGPcig82cKx3jbkNSfUYAhZ37WAO2nnRI8MqHBHTd
-         7mH+8hd4Prfh3BrCSNNBr/iNOXlNFYzt6iZlW25rE8A52THFUE5kAli3NKcN+m6Efsss
-         SY2LN2bPS34jm3BvPRogp2kzw5wZTTvZ1qVYPnboTsUsPrPffzMrSRFZ9VbjvHBvWMRq
-         GguD1WaiLN4wyTbZ7Px6JjFFp034ynEG3lH5gOBu7Cz64/vupI8K0P4oKdR97mkqxLm0
-         9lQzl8jePMF/oOmDnNma2FbHaiRSjgM6/2Bj46RygmQpMuG4E0bCQUYI+pU+iIwUJd0O
-         yxcw==
-X-Gm-Message-State: AOUpUlHdaLNAGvQKQtxDWPH9NR598SaAhoh23jESngoyN3USDfqe1i4F
-        7HGXWrTEohweEEn6NRAarxM=
-X-Google-Smtp-Source: AA+uWPwprlw2lj7FrPLxjFxHtl3Ssi8bJxs4TrpA6KxSMEF7K65I7fnWwkF4BLgEQx4gR3XEfFGr7g==
-X-Received: by 2002:a63:352:: with SMTP id 79-v6mr4011422pgd.112.1534570982184;
-        Fri, 17 Aug 2018 22:43:02 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=C7EiSqsyiOZRGQv7Ix5eEmI0DRPR9210HLBVB5dtgdY=;
+        b=nfbkculBeZbPRa/ELOBz5ScpDVC77RSGIsYut3gsZAsZlRodKHlb+YMatyXbMy5M9Y
+         7VPPwA+OWTYdjG3/yHA0f2a1AR475+7imipt40il1tZIzYSjAxY48RbNE0mXWNnIF/La
+         yk4TXf1p53A5t5WHen4rNlX0gdtZeHRkYYEDC6Qgpj3rjb0EOzncnCHv6aeu99qdUXid
+         guOUxI6mQoDlWk3hxnYmPfCC3xh4NwHNGsIpzrFxjTy6dfa20PuOwywG+Xm3BfzuHTK1
+         IUTRf+1ZtMAbURlZGlUYCiVeUh7Jm2Zou/jJk0LDCMKlyRS2nRm9+tacst3ajU4OBa6t
+         mOuw==
+X-Gm-Message-State: AOUpUlGlefMX3cbi7P/mdsa5eM1Z7RygjxJhglrpl4veniqVFCwNy/6a
+        twjmoTFWrEyw7xGkWs8iDlw=
+X-Google-Smtp-Source: AA+uWPySknrMlCeggkOCWoKzDT0W9j1Qns5dtI8d8gXMUY6GfIQ2UarzEkN+4TjDD92tK9Z2n9zdsw==
+X-Received: by 2002:a63:2744:: with SMTP id n65-v6mr5842953pgn.29.1534572554004;
+        Fri, 17 Aug 2018 23:09:14 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n80-v6sm5316087pfb.95.2018.08.17.22.43.01
+        by smtp.gmail.com with ESMTPSA id e8-v6sm4760162pgi.24.2018.08.17.23.09.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Aug 2018 22:43:01 -0700 (PDT)
-Date:   Fri, 17 Aug 2018 22:43:00 -0700
+        Fri, 17 Aug 2018 23:09:13 -0700 (PDT)
+Date:   Fri, 17 Aug 2018 23:09:11 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Michael =?iso-8859-1?Q?Mur=E9?= <batolettre@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git-bug: Distributed bug tracker embedded in git
-Message-ID: <20180818054300.GB241538@aiede.svl.corp.google.com>
-References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Han-Wen Nienhuys <hanwen@google.com>, sunshine@sunshineco.com,
+        git@vger.kernel.org
+Subject: Re: Re* [PATCH v7 1/1] sideband: highlight keywords in remote
+ sideband output
+Message-ID: <20180818060911.GC241538@aiede.svl.corp.google.com>
+References: <20180807125108.104293-1-hanwen@google.com>
+ <20180807125108.104293-2-hanwen@google.com>
+ <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
+ <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+In-Reply-To: <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+(-cc: my @google.com email)
 Hi,
 
-Michael Muré wrote:
+Junio C Hamano wrote:
 
-> I released today git-bug, a distributed bug tracker that embeds in
-> git. It use git's internal storage to store bugs information in a way
-> that can be merged without conflict. You can push/pull to the normal
-> git remote you are already using to interact with other people. Normal
-> code and bugs are completely separated and no files are added in the
-> regular branches.
+> Subject: sideband: do not read beyond the end of input
+>
+> The caller of maybe_colorize_sideband() gives a counted buffer
+> <src,n>, but the callee checked *src as if it were a NUL terminated
+> buffer.  If src[] had all isspace() bytes in it, we would have made
+> n negative, and then (1) called number of strncasecmp() to see if
+> the remaining bytes in src[] matched keywords, reading beyond the
+> end of the array, and/or (2) called strbuf_add() with negative
+> count, most likely triggering the "you want to use way too much
+> memory" error due to unsigned integer overflow.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  sideband.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 
-I am a bit unhappy about the namespace grab.  Not for trademark
-reasons: the Git trademark rules are pretty clear about this kind of
-usage being okay.  Instead, the unhappiness comes because a future Git
-command like "git bug" to produce a bug report with appropriate
-diagnostics for a bug in Git seems like a likely and useful thing to
-get added to Git some day.  And now the name's taken.
+This indeed avoids the "you want to use way too much memory" error
+when I apply it.
 
-Is it too late to ask if it's possible to come up with a less generic
-name?
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -75,7 +75,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
 
-Separately from that, I'm happy to see progress being made in the
-distributed bug tracker world; thanks for that!
+Not about this patch: should the 'n' parameter be a size_t instead of
+an int?  It doesn't matter in practice (since the caller has an int,
+it can never be more than INT_MAX) but it might make the intent
+clearer.
 
-Thanks,
-Jonathan
+Based on inspecting the caller, using an int seems fine.
+
+>  		return;
+>  	}
+>  
+> -	while (isspace(*src)) {
+> +	while (0 < n && isspace(*src)) {
+
+Yes, we need to check 'n && isspace(*src)' to avoid overflowing the
+buffer if it consists entirely of spaces.
+
+>  		strbuf_addch(dest, *src);
+>  		src++;
+>  		n--;
+> @@ -84,6 +84,9 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+>  	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+>  		struct keyword_entry *p = keywords + i;
+>  		int len = strlen(p->keyword);
+> +
+> +		if (n <= len)
+> +			continue;
+
+Using <= instead of < since we look at the character after the word as
+well.  Good.
+
+>  		/*
+>  		 * Match case insensitively, so we colorize output from existing
+>  		 * servers regardless of the case that they use for their
+> 		 * messages. We only highlight the word precisely, so
+> 		 * "successful" stays uncolored.
+> 		 */
+> 		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+
+Not about this patch: should this check "&& src[len] == ':'" instead,
+as discussed upthread?
+
+> @@ -100,8 +103,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+>  		}
+>  	}
+>  
+> -	strbuf_add(dest, src, n);
+> +	if (0 < n)
+> +		strbuf_add(dest, src, n);
+
+This check seems unnecessary.  strbuf_add can cope fine with !n.
+Should we put
+
+	assert(n >= 0);
+
+or even
+
+	if (n < 0)
+		BUG();
+
+instead, since the earlier part of the fix guarantees that n >= 0?
+
+Thanks for the careful work.  With or without such a change,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
