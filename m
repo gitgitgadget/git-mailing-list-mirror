@@ -2,121 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5F6A1FAD4
-	for <e@80x24.org>; Sat, 18 Aug 2018 21:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22F571F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 21:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726394AbeHSAyT (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 20:54:19 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:45695 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726352AbeHSAyT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 20:54:19 -0400
-Received: by mail-ua1-f67.google.com with SMTP id k8-v6so7706112uaq.12
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 14:45:12 -0700 (PDT)
+        id S1726434AbeHSBDB (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 21:03:01 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45620 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726385AbeHSBDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 21:03:01 -0400
+Received: by mail-ed1-f66.google.com with SMTP id s16-v6so6373337edq.12
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 14:53:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YNfDqw60IeQCnrmgIErf/JMo78+hlpnbLqC5iZrkALg=;
-        b=eKVX6h2fwYcQ/IAHYQ+nr4/z/BUvKAdl53uzmjK5GATo6a5nEKyIOSKO7S/PYsfbIU
-         CjbC43HL6Ki+Us9I/4N/UGIcL1hyA3DZISGyBJvB7BagkNB5BF1vAwSAiVt1LZbq1Ptc
-         lGDMPsP0lVNHSemSrQuhyOjTGDBLn/v1Wia0Zlhv1LEdXTbXWVM4oTsuxhylAyOf2Xsa
-         rgelej+tdFy+wnPf+j5e4ZxGKbzOBqkhzuwYDFmnjCsrx4GV0X1/+AuKHuX8Rc9X0o04
-         mLvbgxjvE4QcxlntfvLNl/qllkr/S7oxIu7Dr4rPamjl2ovZX0ZZaPBU3NheKG3TJr3Y
-         fFmw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=z6Hv0iG2So0V+XkPFRyG7i25Re4Hk3ltdBwVru27160=;
+        b=lSrnFMnatqGBQY8S4JHxlYxn+jRa1bE1iSbaEm4ZoO9P1URqI8LVO3jteDf8x63ySV
+         qZ5EL+gLC9XoxgP4ov3jpMeMlxq5u/QHg7H6tXCfkhV4OA8LeAMuJ81jX1hUwIE3aGI4
+         Yn2KqCL8ARmUmhUY9PbuffcOX9OBwr/8oCi60iZAJy5fkEm4sWFMiDxvzcwQvaJX6j3p
+         b5JAKu3VzSyu6LvgWDlxmSx3M4R3RqARCm0SaRwbjQtQkPH05bp4CBzcsbiCDRewLZnM
+         /vHOPJ8BoTtEdvYoRwQE/RE1FvCVbzjj8O4sobyCib3nNIV8rKwqXc/PScsxIHcRSPTv
+         UDFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YNfDqw60IeQCnrmgIErf/JMo78+hlpnbLqC5iZrkALg=;
-        b=pdoDHv2ScfuOVIG7YeC67qQucBThvQd9to7tqDwadypsMNvIBONTIiE8Cj8xx81c8u
-         h6GOnOyNrg8GoIv94d2NtHHxFRZD6688ZkWkxaJzEMemC04+rnNwOy7SYxpFXXI5rydV
-         oDxl2h5Gn0CONJvaN+3X+lZSQuoIKyqxqYh7v/lhrVXfay93dbX+YiNPsMmZLNLqdjI6
-         FKinaFMN1IEmVPpS1RdI8akYMOSdJ3Mb3n5XiU1omtrQyMTRZtNN7Ks1GaEtAv8cSJTX
-         H/zpSb8HnR1JTIomykZrJgxqOSsPGx5CFA2P/hbtlGJuPIXdMgglrR9IN2sjOUEUDuoI
-         vI4w==
-X-Gm-Message-State: AOUpUlFaplR6tUqANRq5Ov2mtvNf2wUtpdyLuZZWtZBckUazTPxG9J9Y
-        r7LI9S1+mwAhgzuGiY58gECWlVTP1TH9XnhDq5s=
-X-Google-Smtp-Source: AA+uWPxlTHUAyeVw0w/LLL6fCLh+awUcvk40KG+YMNn6KDEIwr49fIfa6LDNTzuDKW13WxFBfKpmRZsMg5kXUtgneXU=
-X-Received: by 2002:ab0:3242:: with SMTP id r2-v6mr26585854uan.92.1534628711573;
- Sat, 18 Aug 2018 14:45:11 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=z6Hv0iG2So0V+XkPFRyG7i25Re4Hk3ltdBwVru27160=;
+        b=QspEJ78w+/0zGn0Rt1XDvTRsHi2dbwgrevqLJMEGSK/y1EwpJyWIFoMb6iZ+2mLvec
+         Jt1BGpFY2uuEpCR9mn9TiWonXfQgJZ053K/L8ALci6F/FXkS/JtOQN11ezGnVCIyywvX
+         peH8cSxcril3byeiCxOHTXeeEj0KMlflqCD7v5Anp0jDn4vJ5JfnAYuzoLPA+mc9KrLh
+         HodXVHNuXxXLLAD7BHrZojTtWyhHyLG1IysUsUDoOPI9EVxjUlLmsmoWMZA7Iw5qKMTv
+         7bfIeCwASbulsZGNpSXzszdW9h7j7JTuUlD+7b/XjN0tI/57kU4KLYq4jyq4Itu5CGLR
+         hIxg==
+X-Gm-Message-State: AOUpUlHcPYvfjv7wa7NyOzhoNYabAyyN/tdGd/jn9kJILRA8lt1Ge/ld
+        3/SKdX8vhGBuVmbI14Ea0yI=
+X-Google-Smtp-Source: AA+uWPw8C4YYs0RVTjP48vlvzkq/PQ5yS7mQsnNk1bkOaoD6AqQFw6DDUqQQwogAZdM3NHCBCfsYzA==
+X-Received: by 2002:a50:8f84:: with SMTP id y4-v6mr49463309edy.71.1534629232003;
+        Sat, 18 Aug 2018 14:53:52 -0700 (PDT)
+Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
+        by smtp.gmail.com with ESMTPSA id w3-v6sm5945272edb.16.2018.08.18.14.53.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 18 Aug 2018 14:53:51 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Michael =?utf-8?Q?Mur=C3=A9?= <batolettre@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git-bug: Distributed bug tracker embedded in git
+References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
+        <20180818054300.GB241538@aiede.svl.corp.google.com>
+        <874lfrrhfp.fsf@evledraar.gmail.com>
+        <20180818204243.GA136983@aiede.svl.corp.google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180818204243.GA136983@aiede.svl.corp.google.com>
+Date:   Sat, 18 Aug 2018 23:53:50 +0200
+Message-ID: <8736vbqr2p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20180812081551.27927-1-pclouds@gmail.com> <20180818144128.19361-1-pclouds@gmail.com>
- <20180818144128.19361-8-pclouds@gmail.com>
-In-Reply-To: <20180818144128.19361-8-pclouds@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Sat, 18 Aug 2018 14:45:00 -0700
-Message-ID: <CABPp-BGn_BauwEGuHBR92CBQ-sOuS_tDwW5uDdmjrqpF2jxwxA@mail.gmail.com>
-Subject: Re: [PATCH v5 7/7] cache-tree: verify valid cache-tree in the test suite
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <peartben@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Aug 18, 2018 at 7:41 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
-...
-> diff --git a/read-cache.c b/read-cache.c
-> index 5ce40f39b3..41f313bc9e 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2744,6 +2744,9 @@ int write_locked_index(struct index_state *istate, =
-struct lock_file *lock,
->         int new_shared_index, ret;
->         struct split_index *si =3D istate->split_index;
->
-> +       if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
-> +               cache_tree_verify(istate);
-> +
->         if ((flags & SKIP_IF_UNCHANGED) && !istate->cache_changed) {
->                 if (flags & COMMIT_LOCK)
->                         rollback_lock_file(lock);
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 78f7097746..5b50f6e2e6 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1083,6 +1083,12 @@ else
->         test_set_prereq C_LOCALE_OUTPUT
->  fi
->
-> +if test -z "$GIT_TEST_CHECK_CACHE_TREE"
-> +then
-> +       GIT_TEST_CHECK_CACHE_TREE=3Dtrue
-> +       export GIT_TEST_CHECK_CACHE_TREE
-> +fi
-> +
->  test_lazy_prereq PIPE '
->         # test whether the filesystem supports FIFOs
->         test_have_prereq !MINGW,!CYGWIN &&
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index bc43922922..3394540842 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1578,6 +1578,8 @@ int unpack_trees(unsigned len, struct tree_desc *t,=
- struct unpack_trees_options
->         if (o->dst_index) {
->                 move_index_extensions(&o->result, o->src_index);
->                 if (!ret) {
-> +                       if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
-> +                               cache_tree_verify(&o->result);
->                         if (!o->result.cache_tree)
->                                 o->result.cache_tree =3D cache_tree();
->                         if (!cache_tree_fully_valid(o->result.cache_tree)=
-)
-> --
-> 2.18.0.1004.g6639190530
 
-Should documentation of GIT_TEST_CHECK_CACHE_TREE be added in
-t/README, int the "Running tests with special setups" section?
+On Sat, Aug 18 2018, Jonathan Nieder wrote:
+
+> Hi,
+>
+> Ævar Arnfjörð Bjarmason wrote:
+>> On Sat, Aug 18 2018, Jonathan Nieder wrote:
+>>> Michael Muré wrote:
+>
+>>>> I released today git-bug, a distributed bug tracker
+> [...]
+>>> I am a bit unhappy about the namespace grab.  Not for trademark
+>>> reasons: the Git trademark rules are pretty clear about this kind of
+>>> usage being okay.  Instead, the unhappiness comes because a future Git
+>>> command like "git bug" to produce a bug report with appropriate
+>>> diagnostics for a bug in Git seems like a likely and useful thing to
+>>> get added to Git some day.  And now the name's taken.
+>>>
+>>> Is it too late to ask if it's possible to come up with a less generic
+>>> name?
+>>
+>> Wouldn't we call such a thing "git-reportbug", or "git gitbug", with
+>> reference to Debian reportbug or perl's perlbug?
+>
+> I hope you're kidding about "git gitbug".
+
+It sounds a bit silly, but such a tool is going to be rarely used enough
+that we probably don't want to squat a 3 letter command to invoke it.
+
+> [...]
+>> 1) Accept the status quo where people do create third party tools, much
+>>    of which are way too obscure to matter (e.g. I'm sure someone's
+>>    created a tool/alias called range-diff before, but we didn't
+>>    care).
+>>
+>>    If those tools become popular enough in the wild they get own that
+>>    namespace, e.g. we're not going to ship a "git-annex" or "git-lfs"
+>>    ourselves implementing some unrelated features
+>
+> That's fair.  Let me spell out my thinking a little more.
+>
+> This framework would lead me to rephrase my question to Michael a
+> different way.  Instead of saying that I'm not happy with the
+> namespace grab, I should say something more severe:
+>
+>   Don't be surprised if Git itself makes a "git bug" command in the
+>   future, and be prepared to rename.
+>
+> Is that preferable, in your opinion?
+
+We're not going to make some blanket policy that doesn't recognize the
+difference between say git-lfs and git-tool_nobody_has_ever_heard_of,
+and then decide that it would be just as reasonable for us to ship a new
+git-lfs ourselves (which would do something different) as it were for us
+to ship git-tool_nobody_has_ever_heard_of.
+
+The reason I can drop a "git-whatever" in my $PATH and invoke it as "git
+whatever" is just a historical accident of how git was implemented.
+
+But because that feature has been exposed since the very beginning it's
+become an implicit API. There's thousands of git-whatever tools, and
+people do use these. The likes of git-lfs and git-annex are used a *lot*
+more than some builtins we ship.
+
+So we don't get to say "you never asked us about git-annex, we're using
+that name now" without considering how widely used it is. It's us who
+decided to expose the API of seamlessly integrating 3rd party tools.
