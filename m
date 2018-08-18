@@ -7,59 +7,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45C7A1F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 05:26:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06F551F97E
+	for <e@80x24.org>; Sat, 18 Aug 2018 05:43:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbeHRIca (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 04:32:30 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:40169 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725891AbeHRIca (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 04:32:30 -0400
-Received: by mail-pf1-f194.google.com with SMTP id e13-v6so4353087pff.7
-        for <git@vger.kernel.org>; Fri, 17 Aug 2018 22:26:09 -0700 (PDT)
+        id S1726072AbeHRIt0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 04:49:26 -0400
+Received: from mail-pg1-f177.google.com ([209.85.215.177]:46509 "EHLO
+        mail-pg1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbeHRIt0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 04:49:26 -0400
+Received: by mail-pg1-f177.google.com with SMTP id f14-v6so4436983pgv.13
+        for <git@vger.kernel.org>; Fri, 17 Aug 2018 22:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=oka3LdxOP+90B7wBHM208JOlOHJouXfE3fx3/mKqPh4=;
-        b=XetC79LerGeSoEL1q3ZJyjrBvk5aCBVhRS8aW1J7+aMO2qnBMpYCywCLdqH5XvefCC
-         pZdadJw7m7Yx9PGPN1LqcKFXJW9bZZnd/cG5009D9vlczekBKl3mQ1jhj6cDJEgPNz2w
-         UMBr0DyD3kGLuMm1/cJpxQhPTVM4B0EqwGdtbL5w3cILjyn69sS+n8JQZ5Pb84l+A79G
-         vj8nQvffvKWES3KMCZkFia4L1dyuk5jNACnUr2eoat0ktn0iEN7v4LAynmZVTZMIdyco
-         cuwkQfv/GTAG4xz/eMF9ldYHqHLJHSwWAzowtxmgTr4S9eEROoeEaZDKebZC8sHcstlo
-         XvCw==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=pic3psDxwR3+00swdqhxwQkriQqgcA6ns00pVzhvB2Q=;
+        b=ABvU+LdUIZxiSoea7BOu4MwfLOFWP5WA/+FuzV1eaqvyd9Ei9wbH47QQVUwlEzzob5
+         Y3EGc6YSEqHJOllpXw3qBPkz1mbPiA37T/c7FminV51E95o6lRDtmk+G5dBQYL2GQ6Gr
+         pmbtimeqTDEcxLP7ANbUKEtnad5DsHXbpukjVP8DZGWACw/aYNJInklDQ4rTWHjcvpvh
+         cNbh2Cx3fcuPBVeY0QxRjQb78ErDyLZX2oWwWTbISC4nUteETJ42+DZM2bAXnxCo+xZK
+         +8Ms2mhDTobHxMBngndy9YWg93Fh47puYkTO9MnBs9GaxDVcwV0PiZunHq9ua25Bp+PD
+         /qxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=oka3LdxOP+90B7wBHM208JOlOHJouXfE3fx3/mKqPh4=;
-        b=WjZls0f5NBy/mkeZTfNnm1K3NyCwlYepUhWxVZY4QQeAisVZJBmTpIF86+kVX7zmJ9
-         UkDkYzk5Cv+aNgnTFVRMUTF4JwqSZAfAoDo8Bw+sbPTZFPsQALWXxc/29SZ7O/bY9DcU
-         teo6MfMHY7ycT+SeuOarkYfgyoqR6+tS3vDJGewTX28crpBkta0sNOkHCcwh2OEHnaJa
-         evIx6yd4+NsWI03yQQbWF4BtILew6ULDB2On41YChbWxGLMgUMu0he6IL0Hi4qB8j2tG
-         lrpidMLVfsBm1BR01qoeZi26k0sIOXMDFIIqF8FF9nfKrA8LkmUQWbofjD8F3ei4hman
-         qiFA==
-X-Gm-Message-State: AOUpUlFyICC+ctbkx1RWQiKI7dCbXt1VjMI7dfCtGRAdl7yjRNuzLXjo
-        aOUFq9OhLCgvDEmwO6jVanMBQ5IK
-X-Google-Smtp-Source: AA+uWPzlojPSHx1zxWp9plMoz7Pygt96DeUkcRLza7kuSodkcDps6vR8beiBTaCeeM7Kp67UOLzrZA==
-X-Received: by 2002:a63:b349:: with SMTP id x9-v6mr35464203pgt.337.1534569968430;
-        Fri, 17 Aug 2018 22:26:08 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=pic3psDxwR3+00swdqhxwQkriQqgcA6ns00pVzhvB2Q=;
+        b=GXaviQFNVhRxVcADT3bOXnBQdAGPcig82cKx3jbkNSfUYAhZ37WAO2nnRI8MqHBHTd
+         7mH+8hd4Prfh3BrCSNNBr/iNOXlNFYzt6iZlW25rE8A52THFUE5kAli3NKcN+m6Efsss
+         SY2LN2bPS34jm3BvPRogp2kzw5wZTTvZ1qVYPnboTsUsPrPffzMrSRFZ9VbjvHBvWMRq
+         GguD1WaiLN4wyTbZ7Px6JjFFp034ynEG3lH5gOBu7Cz64/vupI8K0P4oKdR97mkqxLm0
+         9lQzl8jePMF/oOmDnNma2FbHaiRSjgM6/2Bj46RygmQpMuG4E0bCQUYI+pU+iIwUJd0O
+         yxcw==
+X-Gm-Message-State: AOUpUlHdaLNAGvQKQtxDWPH9NR598SaAhoh23jESngoyN3USDfqe1i4F
+        7HGXWrTEohweEEn6NRAarxM=
+X-Google-Smtp-Source: AA+uWPwprlw2lj7FrPLxjFxHtl3Ssi8bJxs4TrpA6KxSMEF7K65I7fnWwkF4BLgEQx4gR3XEfFGr7g==
+X-Received: by 2002:a63:352:: with SMTP id 79-v6mr4011422pgd.112.1534570982184;
+        Fri, 17 Aug 2018 22:43:02 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a77-v6sm7726453pfj.38.2018.08.17.22.26.07
+        by smtp.gmail.com with ESMTPSA id n80-v6sm5316087pfb.95.2018.08.17.22.43.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Aug 2018 22:26:07 -0700 (PDT)
-Date:   Fri, 17 Aug 2018 22:26:05 -0700
+        Fri, 17 Aug 2018 22:43:01 -0700 (PDT)
+Date:   Fri, 17 Aug 2018 22:43:00 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
+To:     Michael =?iso-8859-1?Q?Mur=E9?= <batolettre@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] drop vcs-svn experiment
-Message-ID: <20180818052605.GA241538@aiede.svl.corp.google.com>
-References: <20180817190310.GA5360@sigill.intra.peff.net>
+Subject: Re: git-bug: Distributed bug tracker embedded in git
+Message-ID: <20180818054300.GB241538@aiede.svl.corp.google.com>
+References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180817190310.GA5360@sigill.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,70 +71,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Jeff King wrote:
+Michael Muré wrote:
 
-> The code in vcs-svn was started in 2010 as an attempt to
-> build a remote-helper for interacting with svn repositories
-> (as opposed to git-svn). However, we never got as far as
-> shipping a mature remote helper, and the last substantive
-> commit was e99d012a6bc in 2012.
+> I released today git-bug, a distributed bug tracker that embeds in
+> git. It use git's internal storage to store bugs information in a way
+> that can be merged without conflict. You can push/pull to the normal
+> git remote you are already using to interact with other people. Normal
+> code and bugs are completely separated and no files are added in the
+> regular branches.
 
-I do use svn-fe occasionally, and have done so in the past few years.
-That said, it's probably not worth keeping this in tree just for me.
+I am a bit unhappy about the namespace grab.  Not for trademark
+reasons: the Git trademark rules are pretty clear about this kind of
+usage being okay.  Instead, the unhappiness comes because a future Git
+command like "git bug" to produce a bug report with appropriate
+diagnostics for a bug in Git seems like a likely and useful thing to
+get added to Git some day.  And now the name's taken.
 
-> We do have a git-remote-testsvn, and it is even installed as
-> part of "make install".
+Is it too late to ask if it's possible to come up with a less generic
+name?
 
-At a minimum, we should stop doing that.
-
-[...]
-> We also ship contrib/svn-fe, which builds on the vcs-svn
-> work. However, it does not seem to build out of the box for
-> me, as the link step misses some required libraries for
-> using libgit.a.
-
-What libraries do you mean?  It builds and runs fine for me with
-
- $ git diff
- diff --git i/contrib/svn-fe/Makefile w/contrib/svn-fe/Makefile
- index e8651aaf4b5..bd709f8d83b 100644
- --- i/contrib/svn-fe/Makefile
- +++ w/contrib/svn-fe/Makefile
- @@ -4,7 +4,7 @@ CC = cc
-  RM = rm -f
-  MV = mv
- 
- -CFLAGS = -g -O2 -Wall
- +CFLAGS = -g -O2 -Wall -pthread
-  LDFLAGS =
-  EXTLIBS = -lz
-
-which appears to be platform related, not due to some internal change
-in Git.
-
-[...]
-> Of course, I could be completely wrong about people using this. Maybe
-> svn-fe builds are just completely broken on my system, and maybe people
-> really do use testsvn::. But if so, they certainly aren't talking about
-> it on the mailing list. :)
-
-My take:
-
- - svn-fe works fine and has been useful to me, though its Makefile
-   could likely be simplified and made more user-friendly
-
- - I've benefited from the test coverage of having this in-tree
-
- - testsvn:: is a demo and at a minimum we ought not to install it
-   with "make install"
-
- - keeping this in-tree for the benefit of just one user is excessive,
-   so removing it is probably the right thing
-
- - it would be nice if the commit removing this code from Git includes
-   a note to help people find its new home
-
-Would you mind holding off until I'm able to arrange that last bit?
+Separately from that, I'm happy to see progress being made in the
+distributed bug tracker world; thanks for that!
 
 Thanks,
 Jonathan
