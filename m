@@ -2,146 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAC3C1F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 14:41:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F52C1F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 15:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726392AbeHRRtk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 13:49:40 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:37005 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726088AbeHRRtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 13:49:40 -0400
-Received: by mail-lj1-f193.google.com with SMTP id v9-v6so8481853ljk.4
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 07:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=h0jG4FwbyH4HSb2YA0pwlDNQCMUIRUfx2F09xdELoEE=;
-        b=nDpsL/m0P27X+O0NAFwbjfp0xgZM0ngzdtDm+IUZf5o+YRxyb9S73zW4zr6qq9KiNq
-         MR/139B2CigDQajneQStEJQCtZN6CQaFmjRpeX6MbSTHPhlCJT8qCbsqibWQUSeMfR1f
-         npTn6CwmHl9iOsU1u05ZHp18VvnDm8k7flmksaXlnKS7dQhWqE1g1V+CYRnY9h7ULJ1P
-         1C1lmKT4JBQB4M6yRhTawqWLYkbYe0bftZ5D0E311ufnOZok0j9pXpCRQhXkX63hV1q8
-         Kjq2Ynt3TO+Vi53eKtjzQkWgil7bBIsZfnz7qXNyLseLXehPdqgN0KcTXIIykbNI1saW
-         4wkA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=h0jG4FwbyH4HSb2YA0pwlDNQCMUIRUfx2F09xdELoEE=;
-        b=iFhFPA2O8bgRxEyRFhmSMT1zL4Uzd+PVHtJtyA3kAEiiFl+MfKsq4OotH4LqEYgD07
-         kOWX/7Q+4DDX43ZFB6y6aXj0+BI12R/ZPVI1FUBvE57cJ/YLc8YfsgHj2O0I4XKJ3I10
-         pIxFjN3bN/dUht7mjqTzloEZUnRKW9vlG/awcszjcTluGk72ncHQlx9U9YcJ51NGMKl2
-         XIYri6fxWCXuwczzydJFsrfuenfkI9ll5LAe8nFp5Gi5oNy6M7ItcU2yeK9zhNVIwhUq
-         EbJPq5sDaW8qVvc3ltmjksQbnYX3smVCWhQAZcQtEYfnjqRQbWHCHsFlJXeuPvFNcd78
-         LC0A==
-X-Gm-Message-State: AOUpUlElTLf+tfOzNFLGLPtJTlM2y+6YJG4TaqLbIZT0F4HPuUh0Tu3A
-        hsa0UjxJnhoGxrCKpM7wBvc=
-X-Google-Smtp-Source: AA+uWPy+PR8tZfepew9Nnk5Wgj3iwszRXBMa/yBa3ycyGRCK5OvFKU++sJpU7w4vuHqsVRE/v2uRqQ==
-X-Received: by 2002:a2e:610a:: with SMTP id v10-v6mr26089316ljb.39.1534603302540;
-        Sat, 18 Aug 2018 07:41:42 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id b76-v6sm884451lff.53.2018.08.18.07.41.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Aug 2018 07:41:41 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        newren@gmail.com, peartben@gmail.com, peff@peff.net
-Subject: [PATCH v5 4/7] unpack-trees: reduce malloc in cache-tree walk
-Date:   Sat, 18 Aug 2018 16:41:25 +0200
-Message-Id: <20180818144128.19361-5-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.1004.g6639190530
-In-Reply-To: <20180818144128.19361-1-pclouds@gmail.com>
-References: <20180812081551.27927-1-pclouds@gmail.com>
- <20180818144128.19361-1-pclouds@gmail.com>
+        id S1726322AbeHRSLO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 14:11:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:59822 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726269AbeHRSLO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 14:11:14 -0400
+Received: (qmail 14975 invoked by uid 109); 18 Aug 2018 15:03:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 18 Aug 2018 15:03:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1643 invoked by uid 111); 18 Aug 2018 15:03:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 18 Aug 2018 11:03:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Aug 2018 11:03:12 -0400
+Date:   Sat, 18 Aug 2018 11:03:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC/PATCH] drop vcs-svn experiment
+Message-ID: <20180818150312.GA7488@sigill.intra.peff.net>
+References: <20180817190310.GA5360@sigill.intra.peff.net>
+ <20180818052605.GA241538@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180818052605.GA241538@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a micro optimization that probably only shines on repos with
-deep directory structure. Instead of allocating and freeing a new
-cache_entry in every iteration, we reuse the last one and only update
-the parts that are new each iteration.
+On Fri, Aug 17, 2018 at 10:26:05PM -0700, Jonathan Nieder wrote:
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- unpack-trees.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+> > We also ship contrib/svn-fe, which builds on the vcs-svn
+> > work. However, it does not seem to build out of the box for
+> > me, as the link step misses some required libraries for
+> > using libgit.a.
+> 
+> What libraries do you mean?  It builds and runs fine for me with
+> 
+>  $ git diff
+>  diff --git i/contrib/svn-fe/Makefile w/contrib/svn-fe/Makefile
+>  index e8651aaf4b5..bd709f8d83b 100644
+>  --- i/contrib/svn-fe/Makefile
+>  +++ w/contrib/svn-fe/Makefile
+>  @@ -4,7 +4,7 @@ CC = cc
+>   RM = rm -f
+>   MV = mv
+>  
+>  -CFLAGS = -g -O2 -Wall
+>  +CFLAGS = -g -O2 -Wall -pthread
+>   LDFLAGS =
+>   EXTLIBS = -lz
+> 
+> which appears to be platform related, not due to some internal change
+> in Git.
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8376663b59..dbef6e1b8a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -685,6 +685,8 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- {
- 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
- 	struct unpack_trees_options *o = info->data;
-+	struct cache_entry *tree_ce = NULL;
-+	int ce_len = 0;
- 	int i, d;
- 
- 	if (!o->merge)
-@@ -699,30 +701,39 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 	 * get here in the first place.
- 	 */
- 	for (i = 0; i < nr_entries; i++) {
--		struct cache_entry *tree_ce;
--		int len, rc;
-+		int new_ce_len, len, rc;
- 
- 		src[0] = o->src_index->cache[pos + i];
- 
- 		len = ce_namelen(src[0]);
--		tree_ce = xcalloc(1, cache_entry_size(len));
-+		new_ce_len = cache_entry_size(len);
-+
-+		if (new_ce_len > ce_len) {
-+			new_ce_len <<= 1;
-+			tree_ce = xrealloc(tree_ce, new_ce_len);
-+			memset(tree_ce, 0, new_ce_len);
-+			ce_len = new_ce_len;
-+
-+			tree_ce->ce_flags = create_ce_flags(0);
-+
-+			for (d = 1; d <= nr_names; d++)
-+				src[d] = tree_ce;
-+		}
- 
- 		tree_ce->ce_mode = src[0]->ce_mode;
--		tree_ce->ce_flags = create_ce_flags(0);
- 		tree_ce->ce_namelen = len;
- 		oidcpy(&tree_ce->oid, &src[0]->oid);
- 		memcpy(tree_ce->name, src[0]->name, len + 1);
- 
--		for (d = 1; d <= nr_names; d++)
--			src[d] = tree_ce;
--
- 		rc = call_unpack_fn((const struct cache_entry * const *)src, o);
--		free(tree_ce);
--		if (rc < 0)
-+		if (rc < 0) {
-+			free(tree_ce);
- 			return rc;
-+		}
- 
- 		mark_ce_used(src[0], o);
- 	}
-+	free(tree_ce);
- 	if (o->debug_unpack)
- 		printf("Unpacked %d entries from %s to %s using cache-tree\n",
- 		       nr_entries,
--- 
-2.18.0.1004.g6639190530
+Yes, it works for me with that, too[1]. So clearly there's some system
+dependence. But I suspect it's broken for every system with pthreads,
+which is most of them. And older versions _do_ compile out of the box,
+even on my modern system. For completeness, here's what I dug up:
 
+ - it builds fine up through v1.8.2
+
+ - after eff80a9fd9 (Allow custom "comment char", 2013-01-16), it breaks
+   with a ton of undefined references during the link stage, including
+   SHA1_* and some xdl_* functions. I still have no idea why, as that
+   commit is fairly mundane, but I guess it just somehow tickles
+   something in the linker or the way we build libgit.a.
+
+ - after da011cb0e7 (contrib/svn-fe: fix Makefile, 2014-08-28), the
+   error becomes:
+
+     /usr/bin/ld: ../../libgit.a(sha1_file.o): undefined reference to symbol 'SHA1_Update@@OPENSSL_1_1_0'
+     /usr/bin/ld: //usr/lib/x86_64-linux-gnu/libcrypto.so.1.1: error adding symbols: DSO missing from command line
+
+   Presumably this did work for the author at the time. It's seems quite
+   plausible that older versions of openssl did not exhibit this
+   problem, and that it's system-specific. Or that it was possible to
+   build with BLK_SHA1.
+
+ - after e6b07da278 (Makefile: make DC_SHA1 the default, 2017-03-17),
+   the openssl error goes away (naturally), but is replaced with:
+
+     /usr/bin/ld: ../../libgit.a(run-command.o): undefined reference to symbol 'pthread_sigmask@@GLIBC_2.2.5'
+     /usr/bin/ld: //lib/x86_64-linux-gnu/libpthread.so.0: error adding symbols: DSO missing from command line
+
+   If I go back to 2014-era and start building with NO_OPENSSL, then
+   even da011cb0e7 fails with:
+
+     /usr/bin/ld: ../../libgit.a(run-command.o): undefined reference to symbol 'pthread_setspecific@@GLIBC_2.2.5'
+
+   So again, assuming it worked back then for the author of that commit,
+   that's something that has changed on the system, and we can't figure
+   out through bisecting git when that became common.
+
+So that does mean it's possible that it works for some people on some
+systems today (though it was also probably broken for everybody for a
+year and a half in 2013 with nobody noticing).
+
+[1] That patch actually doesn't quite work out of the box, because we
+    also include config.mak, and mine overrides CFLAGS. It also doesn't
+    seem to work with USE_LIBPCRE. But those are only evidence that the
+    Makefile is not very mature, not that people aren't using it for
+    out-of-the-box config.
+
+> > Of course, I could be completely wrong about people using this. Maybe
+> > svn-fe builds are just completely broken on my system, and maybe people
+> > really do use testsvn::. But if so, they certainly aren't talking about
+> > it on the mailing list. :)
+> 
+> My take:
+> 
+>  - svn-fe works fine and has been useful to me, though its Makefile
+>    could likely be simplified and made more user-friendly
+> 
+>  - I've benefited from the test coverage of having this in-tree
+> 
+>  - testsvn:: is a demo and at a minimum we ought not to install it
+>    with "make install"
+> 
+>  - keeping this in-tree for the benefit of just one user is excessive,
+>    so removing it is probably the right thing
+
+Thanks, all of that sounds sensible to me.
+
+>  - it would be nice if the commit removing this code from Git includes
+>    a note to help people find its new home
+> 
+> Would you mind holding off until I'm able to arrange that last bit?
+
+Not at all. This patch was mostly meant to start the discussion. Mission
+accomplished. ;)
+
+-Peff
