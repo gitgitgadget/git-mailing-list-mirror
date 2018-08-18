@@ -2,87 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FFB91F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 16:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 821C51F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 16:05:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbeHRTKu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 15:10:50 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:40337 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726219AbeHRTKu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 15:10:50 -0400
-Received: by mail-wm0-f48.google.com with SMTP id y9-v6so9995979wma.5
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 09:02:38 -0700 (PDT)
+        id S1726349AbeHRTNz (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 15:13:55 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:44035 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbeHRTNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 15:13:55 -0400
+Received: by mail-io0-f194.google.com with SMTP id q19-v6so9297005ioh.11
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 09:05:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=36JUBl/Znt0FqrDqnYxQeEk7sYEH1xrExYBqdKGnBTo=;
-        b=YlogWXoWRaC7o9/dOzktSDGSxHDeX2VPc969b5TSyVhQdAnfwpeqW4OGUo387H2FvZ
-         LH52c+smlsgjrLl3kZ7Ws2E+GPKmCE6tRAcJasJae3FkOuwqz96b3vSDTHj351qkvMzJ
-         YVr5cG+WnNDKJlSW42xQ3j0EEEGOeoUzRZjBaf9+m7lTFCssedRTEiqJuHm0OTngeq2i
-         luVz9Hl9fd8yI9r+yYgHviGmnezN4dNYCi0xGmCQLhs32V0hBHg6pvmc1tw7ymb5kuiM
-         J22wkiU6Sn7lauJkgkubsejMmlDL2ovqox8kchBD31oGm3rWzx2vb6ChkuEid7rhtX1F
-         Lo9Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ujNeKxs037aX2Zi9j3jbO5Zu1Yo7EZowq/BEG6DlKfE=;
+        b=q6LCjL5iQFen5RBbMLVc29cq59GqwV43shg0SxNfOdkEAOtq9VoV4LWvPO0m9kPTGX
+         GwJFGe6NJS7dF5Kf3OBRs/cmpNIuBaCn2lI6yA2XbTyj/pQ+k4UfoagLYpn0ivQgFEbf
+         1QYmZHLO5Uh589JJcLv6hOoe+EjiiU69hpxjAvyPVD6kX1kAwIWyMzyd3sC/c5TS4C5G
+         3vZqYU9XxXbhVHIrFN1t+qaRslDspCoBWStzo3qDfrKTc+YPG+D8wAJ3y7rL4e4F09Hz
+         kaIB6jAwaMwsT3Z8nVMJ0KauSMeg54zTOEyfFWykRJcsGRxYWlgfAvBD6Ui7Lyo7ttCn
+         NvQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=36JUBl/Znt0FqrDqnYxQeEk7sYEH1xrExYBqdKGnBTo=;
-        b=qdXYK4424qWUskbSg9SdBrle1w8g+H2o5ezoX/nTy5zmsafQZxcjHDAKPIkyONg76w
-         jUeTFhFplEpY6jX9srP6CnTeVU8/UozLRrmsBtDAJQNpjcJG5OnHF96AQk8Gj5jYTFc9
-         wrMlZJmZZ9KGjvUM3pWK44pALhW1g7h9+J9CNnopl2lsAL2lrzJ1tm9RhlL/6NrEsucN
-         ccLntfuepdinWByu9pRCiHSWOPtB4ADr5T/eZwOpuzIXWxZGwuYMPXFOPQtUs7NE3C41
-         CFXPjqUTqui6mobsRRd68Keg9pTxkp8U+syGnQWH4gn8foqpgIqggYiwrwHNAJHstH25
-         26Mw==
-X-Gm-Message-State: AOUpUlFXEf5vSkDjIgcn0F2Dts049CdBBWwHoYkNk3izjdXL2+CoIsNl
-        Wk37nnkLCwwWkBvG8M7o9SY=
-X-Google-Smtp-Source: AA+uWPyOU+F/hBGM3KHrMC7tCPjCFZmxzgAAYXUindkMFB/DLQRFB8307A/WC/Mn0w8Bc8rcmc74oQ==
-X-Received: by 2002:a1c:3545:: with SMTP id c66-v6mr21921645wma.120.1534608157628;
-        Sat, 18 Aug 2018 09:02:37 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e141-v6sm12126478wmd.32.2018.08.18.09.02.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Aug 2018 09:02:36 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>, sunshine@sunshineco.com,
-        git@vger.kernel.org
-Subject: Re: Re* [PATCH v7 1/1] sideband: highlight keywords in remote sideband output
-References: <20180807125108.104293-1-hanwen@google.com>
-        <20180807125108.104293-2-hanwen@google.com>
-        <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
-        <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
-        <20180818060911.GC241538@aiede.svl.corp.google.com>
-        <xmqqmutjagc7.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 18 Aug 2018 09:02:36 -0700
-In-Reply-To: <xmqqmutjagc7.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sat, 18 Aug 2018 07:40:08 -0700")
-Message-ID: <xmqqin47acir.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ujNeKxs037aX2Zi9j3jbO5Zu1Yo7EZowq/BEG6DlKfE=;
+        b=bVR2Hcrnyl42uNFXzAfJgSF/4gcbpLCb+iq4pToHjOCpguKZ0377Eon+KGgwcJADj2
+         A0xZrQf8nw9BCN2N9DwDr1gtQZDQ/Stj+whqF2gZoINnehRO2xgtY4m1IrcVMtTQrLyX
+         JCkqJR6GlpDbcfXKqaeJkHpbCikl4Hax56F5eTa0kJ1dlbp2FScfpPIlwucz3akaPLDK
+         s0+SezUgQlxJs9nTRQp65BidCEWK9RSi42/XFHafM8jdv5GW0A66lWaCZ3NRiuerLmKl
+         Ho1yWsjpjxy4I3HIXV5jZG9FAHwyPeVtaPti+q6m+T76rNjKHvOKT8TYcbSgh2fCW3ha
+         Uqgw==
+X-Gm-Message-State: AOUpUlEgjCvSA2rrOxCdrp9JNbd1mlpc9JRBzsA6KhzdGqJ+RvxYeN6x
+        3mKFTrjDR5aI8MyvdZlAuCfCr0YGoh9aRaKLVH4=
+X-Google-Smtp-Source: AA+uWPyuQcLcRgZz2fN01m1UdPLmuwhg5GTTRTN5QfV81RxOmPMMDqKP4FLq8FD+Wwz5OrNO5+75IroAsrQTgMBt1CA=
+X-Received: by 2002:a6b:8f4b:: with SMTP id r72-v6mr32963345iod.118.1534608343299;
+ Sat, 18 Aug 2018 09:05:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1533672584.git.jonathantanmy@google.com>
+ <cover.1533767314.git.jonathantanmy@google.com> <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
+In-Reply-To: <3dab08e467c23f2c0785e34c3a8703d809b6479a.1533767314.git.jonathantanmy@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 18 Aug 2018 18:05:17 +0200
+Message-ID: <CACsJy8D63N3UPspm9-+ns0mv0OhEKDtxC25oZHR-d6SB6Hf2Lg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] repack: repack promisor objects if -a or -A is set
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->>> -	strbuf_add(dest, src, n);
->>> +	if (0 < n)
->>> +		strbuf_add(dest, src, n);
->>
->> This check seems unnecessary.  strbuf_add can cope fine with !n.
+On Thu, Aug 9, 2018 at 12:35 AM Jonathan Tan <jonathantanmy@google.com> wrote:
+> @@ -179,6 +179,76 @@ static void prepare_pack_objects(struct child_process *cmd,
+>         cmd->out = -1;
+>  }
 >
-> I was primarily interested in catching negatives, and !n was a mere
-> optimization, but you are correct to point out that negative n at
-> this point in the codeflow is a BUG().
+> +/*
+> + * Write oid to the given struct child_process's stdin, starting it first if
+> + * necessary.
+> + */
+> +static int write_oid(const struct object_id *oid, struct packed_git *pack,
+> +                    uint32_t pos, void *data)
+> +{
+> +       struct child_process *cmd = data;
+> +
+> +       if (cmd->in == -1) {
+> +               if (start_command(cmd))
+> +                       die("Could not start pack-objects to repack promisor objects");
 
-Actually, let's just lose the conditional.  strbuf_add() would catch
-and issue an error message when it notices that we fed negative
-count anyway ;-).
+_() ? (also other messages)
+-- 
+Duy
