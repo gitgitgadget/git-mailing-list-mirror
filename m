@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4576C1F954
-	for <e@80x24.org>; Sat, 18 Aug 2018 14:41:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAC3C1F954
+	for <e@80x24.org>; Sat, 18 Aug 2018 14:41:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726434AbeHRRto (ORCPT <rfc822;e@80x24.org>);
-        Sat, 18 Aug 2018 13:49:44 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:39124 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbeHRRto (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 18 Aug 2018 13:49:44 -0400
-Received: by mail-lf1-f68.google.com with SMTP id a134-v6so7870058lfe.6
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 07:41:46 -0700 (PDT)
+        id S1726392AbeHRRtk (ORCPT <rfc822;e@80x24.org>);
+        Sat, 18 Aug 2018 13:49:40 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:37005 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726088AbeHRRtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 18 Aug 2018 13:49:40 -0400
+Received: by mail-lj1-f193.google.com with SMTP id v9-v6so8481853ljk.4
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 07:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=bwMKmUx+YzVbN9edh92XNNICmE/DgrpRA0A7yH6igFY=;
-        b=dW3d/FdAiCiJwsb3PPbQ8HZEn9S2vDpWy4TIMb57dGxTu5DUyu6Yj9PGqkPiL5JpMz
-         srJozxKxr7Uu8V3IaATfKwcBsToAkNlMPMUwBwPjSr8p1A6tQfIXgrkopyPqfeqdzRPB
-         pqceGTT00I9xMrKiNIkcQnBEktR05J1zW+MqJlqsSAb+zleef+k9gVz22md30tUEijIZ
-         eSIvuhnNe0bm7cfEqhWLqCbKnvb0UGkqru4BUmohscN+1NSHXJZ2AKaB1LICwHncMvoL
-         vZOkvOcj0kpAOobTZHGfdBagPE3E96FYQmZIznqVb6joTMmcYUBZGjrj+U05RT4TS3s4
-         gdHQ==
+        bh=h0jG4FwbyH4HSb2YA0pwlDNQCMUIRUfx2F09xdELoEE=;
+        b=nDpsL/m0P27X+O0NAFwbjfp0xgZM0ngzdtDm+IUZf5o+YRxyb9S73zW4zr6qq9KiNq
+         MR/139B2CigDQajneQStEJQCtZN6CQaFmjRpeX6MbSTHPhlCJT8qCbsqibWQUSeMfR1f
+         npTn6CwmHl9iOsU1u05ZHp18VvnDm8k7flmksaXlnKS7dQhWqE1g1V+CYRnY9h7ULJ1P
+         1C1lmKT4JBQB4M6yRhTawqWLYkbYe0bftZ5D0E311ufnOZok0j9pXpCRQhXkX63hV1q8
+         Kjq2Ynt3TO+Vi53eKtjzQkWgil7bBIsZfnz7qXNyLseLXehPdqgN0KcTXIIykbNI1saW
+         4wkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=bwMKmUx+YzVbN9edh92XNNICmE/DgrpRA0A7yH6igFY=;
-        b=crOYCrazEZBR3Mnq/Ww3tAM5o4d0mvNQCkAPv6egfqpQv5JL0Girf85AhyBs46FDJn
-         ougdfxtqejg9Zj/gMlXj0l1SneIH+XG8z3uptglUm82c+t2zdsVwiE/KAKAFLXOlM0HS
-         fuGdDjW9QjH/TMHx80CTWHjBEdyS1U2PzrIL7a5C0EDmNVDfYhrXXR7SXFNUnyt+NSF7
-         Pl4Hrr2IfaK34dU/64Q9mwHUN9RPQd8HzIeazkqx/FEQMkj/T0zFaQO9tQKICnEbSs+d
-         cxG+RdBokKGw69tcnawiornKkO2JKnuyIipwUU1IVrnknV/4kPEz/bj/lqZUAGOAuW+a
-         z0dQ==
-X-Gm-Message-State: AOUpUlHmA3/9LEl7ef/Oe5h8faveVcEdo5Ha2B7KsjJrSHpliCH1jRJI
-        z8Pru+7/60JEDrgvQV9KyvI=
-X-Google-Smtp-Source: AA+uWPz9eYkrVgxzFjz5UDs9XxlYNI7YyHpWvNQOSF2ZR6arFGaI++1DC/NqqITq+86M+Au2Y/vhGA==
-X-Received: by 2002:a19:ef13:: with SMTP id n19-v6mr9919440lfh.48.1534603306112;
-        Sat, 18 Aug 2018 07:41:46 -0700 (PDT)
+        bh=h0jG4FwbyH4HSb2YA0pwlDNQCMUIRUfx2F09xdELoEE=;
+        b=iFhFPA2O8bgRxEyRFhmSMT1zL4Uzd+PVHtJtyA3kAEiiFl+MfKsq4OotH4LqEYgD07
+         kOWX/7Q+4DDX43ZFB6y6aXj0+BI12R/ZPVI1FUBvE57cJ/YLc8YfsgHj2O0I4XKJ3I10
+         pIxFjN3bN/dUht7mjqTzloEZUnRKW9vlG/awcszjcTluGk72ncHQlx9U9YcJ51NGMKl2
+         XIYri6fxWCXuwczzydJFsrfuenfkI9ll5LAe8nFp5Gi5oNy6M7ItcU2yeK9zhNVIwhUq
+         EbJPq5sDaW8qVvc3ltmjksQbnYX3smVCWhQAZcQtEYfnjqRQbWHCHsFlJXeuPvFNcd78
+         LC0A==
+X-Gm-Message-State: AOUpUlElTLf+tfOzNFLGLPtJTlM2y+6YJG4TaqLbIZT0F4HPuUh0Tu3A
+        hsa0UjxJnhoGxrCKpM7wBvc=
+X-Google-Smtp-Source: AA+uWPy+PR8tZfepew9Nnk5Wgj3iwszRXBMa/yBa3ycyGRCK5OvFKU++sJpU7w4vuHqsVRE/v2uRqQ==
+X-Received: by 2002:a2e:610a:: with SMTP id v10-v6mr26089316ljb.39.1534603302540;
+        Sat, 18 Aug 2018 07:41:42 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id b76-v6sm884451lff.53.2018.08.18.07.41.45
+        by smtp.gmail.com with ESMTPSA id b76-v6sm884451lff.53.2018.08.18.07.41.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 18 Aug 2018 07:41:45 -0700 (PDT)
+        Sat, 18 Aug 2018 07:41:41 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
         newren@gmail.com, peartben@gmail.com, peff@peff.net
-Subject: [PATCH v5 7/7] cache-tree: verify valid cache-tree in the test suite
-Date:   Sat, 18 Aug 2018 16:41:28 +0200
-Message-Id: <20180818144128.19361-8-pclouds@gmail.com>
+Subject: [PATCH v5 4/7] unpack-trees: reduce malloc in cache-tree walk
+Date:   Sat, 18 Aug 2018 16:41:25 +0200
+Message-Id: <20180818144128.19361-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.18.0.1004.g6639190530
 In-Reply-To: <20180818144128.19361-1-pclouds@gmail.com>
 References: <20180812081551.27927-1-pclouds@gmail.com>
@@ -69,169 +69,79 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This makes sure that cache-tree is consistent with the index. The main
-purpose is to catch potential problems by saving the index in
-unpack_trees() but the line in write_index() would also help spot
-missing invalidation in other code.
+This is a micro optimization that probably only shines on repos with
+deep directory structure. Instead of allocating and freeing a new
+cache_entry in every iteration, we reuse the last one and only update
+the parts that are new each iteration.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache-tree.c   | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++
- cache-tree.h   |  1 +
- read-cache.c   |  3 ++
- t/test-lib.sh  |  6 ++++
- unpack-trees.c |  2 ++
- 5 files changed, 90 insertions(+)
+ unpack-trees.c | 29 ++++++++++++++++++++---------
+ 1 file changed, 20 insertions(+), 9 deletions(-)
 
-diff --git a/cache-tree.c b/cache-tree.c
-index caafbff2ff..c3c206427c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -4,6 +4,7 @@
- #include "tree-walk.h"
- #include "cache-tree.h"
- #include "object-store.h"
-+#include "replace-object.h"
- 
- #ifndef DEBUG
- #define DEBUG 0
-@@ -732,3 +733,80 @@ int update_main_cache_tree(int flags)
- 		the_index.cache_tree = cache_tree();
- 	return cache_tree_update(&the_index, flags);
- }
-+
-+static void verify_one(struct index_state *istate,
-+		       struct cache_tree *it,
-+		       struct strbuf *path)
-+{
-+	int i, pos, len = path->len;
-+	struct strbuf tree_buf = STRBUF_INIT;
-+	struct object_id new_oid;
-+
-+	for (i = 0; i < it->subtree_nr; i++) {
-+		strbuf_addf(path, "%s/", it->down[i]->name);
-+		verify_one(istate, it->down[i]->cache_tree, path);
-+		strbuf_setlen(path, len);
-+	}
-+
-+	if (it->entry_count < 0 ||
-+	    /* no verification on tests (t7003) that replace trees */
-+	    lookup_replace_object(the_repository, &it->oid) != &it->oid)
-+		return;
-+
-+	if (path->len) {
-+		pos = index_name_pos(istate, path->buf, path->len);
-+		pos = -pos - 1;
-+	} else {
-+		pos = 0;
-+	}
-+
-+	i = 0;
-+	while (i < it->entry_count) {
-+		struct cache_entry *ce = istate->cache[pos + i];
-+		const char *slash;
-+		struct cache_tree_sub *sub = NULL;
-+		const struct object_id *oid;
-+		const char *name;
-+		unsigned mode;
-+		int entlen;
-+
-+		if (ce->ce_flags & (CE_STAGEMASK | CE_INTENT_TO_ADD | CE_REMOVE))
-+			BUG("%s with flags 0x%x should not be in cache-tree",
-+			    ce->name, ce->ce_flags);
-+		name = ce->name + path->len;
-+		slash = strchr(name, '/');
-+		if (slash) {
-+			entlen = slash - name;
-+			sub = find_subtree(it, ce->name + path->len, entlen, 0);
-+			if (!sub || sub->cache_tree->entry_count < 0)
-+				BUG("bad subtree '%.*s'", entlen, name);
-+			oid = &sub->cache_tree->oid;
-+			mode = S_IFDIR;
-+			i += sub->cache_tree->entry_count;
-+		} else {
-+			oid = &ce->oid;
-+			mode = ce->ce_mode;
-+			entlen = ce_namelen(ce) - path->len;
-+			i++;
-+		}
-+		strbuf_addf(&tree_buf, "%o %.*s%c", mode, entlen, name, '\0');
-+		strbuf_add(&tree_buf, oid->hash, the_hash_algo->rawsz);
-+	}
-+	hash_object_file(tree_buf.buf, tree_buf.len, tree_type, &new_oid);
-+	if (oidcmp(&new_oid, &it->oid))
-+		BUG("cache-tree for path %.*s does not match. "
-+		    "Expected %s got %s", len, path->buf,
-+		    oid_to_hex(&new_oid), oid_to_hex(&it->oid));
-+	strbuf_setlen(path, len);
-+	strbuf_release(&tree_buf);
-+}
-+
-+void cache_tree_verify(struct index_state *istate)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+
-+	if (!istate->cache_tree)
-+		return;
-+	verify_one(istate, istate->cache_tree, &path);
-+	strbuf_release(&path);
-+}
-diff --git a/cache-tree.h b/cache-tree.h
-index 9799e894f7..c1fde531f9 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -32,6 +32,7 @@ struct cache_tree *cache_tree_read(const char *buffer, unsigned long size);
- 
- int cache_tree_fully_valid(struct cache_tree *);
- int cache_tree_update(struct index_state *, int);
-+void cache_tree_verify(struct index_state *);
- 
- int update_main_cache_tree(int);
- 
-diff --git a/read-cache.c b/read-cache.c
-index 5ce40f39b3..41f313bc9e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2744,6 +2744,9 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 	int new_shared_index, ret;
- 	struct split_index *si = istate->split_index;
- 
-+	if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
-+		cache_tree_verify(istate);
-+
- 	if ((flags & SKIP_IF_UNCHANGED) && !istate->cache_changed) {
- 		if (flags & COMMIT_LOCK)
- 			rollback_lock_file(lock);
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 78f7097746..5b50f6e2e6 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1083,6 +1083,12 @@ else
- 	test_set_prereq C_LOCALE_OUTPUT
- fi
- 
-+if test -z "$GIT_TEST_CHECK_CACHE_TREE"
-+then
-+	GIT_TEST_CHECK_CACHE_TREE=true
-+	export GIT_TEST_CHECK_CACHE_TREE
-+fi
-+
- test_lazy_prereq PIPE '
- 	# test whether the filesystem supports FIFOs
- 	test_have_prereq !MINGW,!CYGWIN &&
 diff --git a/unpack-trees.c b/unpack-trees.c
-index bc43922922..3394540842 100644
+index 8376663b59..dbef6e1b8a 100644
 --- a/unpack-trees.c
 +++ b/unpack-trees.c
-@@ -1578,6 +1578,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 	if (o->dst_index) {
- 		move_index_extensions(&o->result, o->src_index);
- 		if (!ret) {
-+			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
-+				cache_tree_verify(&o->result);
- 			if (!o->result.cache_tree)
- 				o->result.cache_tree = cache_tree();
- 			if (!cache_tree_fully_valid(o->result.cache_tree))
+@@ -685,6 +685,8 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
+ {
+ 	struct cache_entry *src[MAX_UNPACK_TREES + 1] = { NULL, };
+ 	struct unpack_trees_options *o = info->data;
++	struct cache_entry *tree_ce = NULL;
++	int ce_len = 0;
+ 	int i, d;
+ 
+ 	if (!o->merge)
+@@ -699,30 +701,39 @@ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
+ 	 * get here in the first place.
+ 	 */
+ 	for (i = 0; i < nr_entries; i++) {
+-		struct cache_entry *tree_ce;
+-		int len, rc;
++		int new_ce_len, len, rc;
+ 
+ 		src[0] = o->src_index->cache[pos + i];
+ 
+ 		len = ce_namelen(src[0]);
+-		tree_ce = xcalloc(1, cache_entry_size(len));
++		new_ce_len = cache_entry_size(len);
++
++		if (new_ce_len > ce_len) {
++			new_ce_len <<= 1;
++			tree_ce = xrealloc(tree_ce, new_ce_len);
++			memset(tree_ce, 0, new_ce_len);
++			ce_len = new_ce_len;
++
++			tree_ce->ce_flags = create_ce_flags(0);
++
++			for (d = 1; d <= nr_names; d++)
++				src[d] = tree_ce;
++		}
+ 
+ 		tree_ce->ce_mode = src[0]->ce_mode;
+-		tree_ce->ce_flags = create_ce_flags(0);
+ 		tree_ce->ce_namelen = len;
+ 		oidcpy(&tree_ce->oid, &src[0]->oid);
+ 		memcpy(tree_ce->name, src[0]->name, len + 1);
+ 
+-		for (d = 1; d <= nr_names; d++)
+-			src[d] = tree_ce;
+-
+ 		rc = call_unpack_fn((const struct cache_entry * const *)src, o);
+-		free(tree_ce);
+-		if (rc < 0)
++		if (rc < 0) {
++			free(tree_ce);
+ 			return rc;
++		}
+ 
+ 		mark_ce_used(src[0], o);
+ 	}
++	free(tree_ce);
+ 	if (o->debug_unpack)
+ 		printf("Unpacked %d entries from %s to %s using cache-tree\n",
+ 		       nr_entries,
 -- 
 2.18.0.1004.g6639190530
 
