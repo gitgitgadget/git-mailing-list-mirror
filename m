@@ -2,118 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A09421F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 01:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F04BA1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 01:45:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725809AbeHSEhc (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 00:37:32 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:45936 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725741AbeHSEhc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 00:37:32 -0400
-Received: by mail-pg1-f195.google.com with SMTP id f1-v6so5146497pgq.12
-        for <git@vger.kernel.org>; Sat, 18 Aug 2018 18:27:51 -0700 (PDT)
+        id S1725812AbeHSEyu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 00:54:50 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:41874 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725741AbeHSEyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 00:54:50 -0400
+Received: by mail-ua1-f66.google.com with SMTP id h1-v6so7861185uao.8
+        for <git@vger.kernel.org>; Sat, 18 Aug 2018 18:45:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=QetmngArlo8jcqAa3cp4cJpe8ACwiEvOmqOo+ZH6Vao=;
-        b=laYoARwxlSghqhjUjg1++wstCOKEtYig6H+APKAiKER/MDL1HkU9vCGYobH2pt8XBL
-         EXfvDfRKFVVNYLDe8BH2T7h0901WOkJIf7Jh3KQIvoPnn97F49tNmcuRXZJlKNB82NmB
-         mDkV/O/ES8N6UQjCiyoD6hvwFQcDMy5KFG4+soYLZh7UBwcEPoHZwjmP7mnf4kSkuLYb
-         6vEGVM9/9mwX/7lVg7GWdzC6BmMCwYnqyKhuE8TR6kCvNdCVe8WAaqEIOdVAKneCOgwP
-         XEL4J5fgkO8+Th2DnYuPmJUkvXbvY7C0/Hb4oe14QtSnXjQiJArgZLkB38B+2prVVRvH
-         bPkQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mKrxUqsXh8F25YTvwMETc78zPz7hV/EYU61c0AY+nEI=;
+        b=u6Shq5bXmZZAWnQowlR2/TLpw/1Coy7YGK79vi5BMJYztR3Fke8RtLfAyZvWDEO61+
+         egfI154c2m1iw9U05frt3vJZl2EjfPgRfbaNhtJjXLi8lznbLO22v+JQtvMdOFEvRdCU
+         d7VAcQ+TzZQqBYBBqaFXUmf1727C2PJkZ/kvoH7JwyYT7o/Of5pKYYDGa8D+Ga542Lwl
+         X020dRUJAoBbqe66ACbRl8A1vuY4WIj1wTbdFeaJrxLFoVqSThYPiBcp2fVNYBS43hdc
+         dMD9OcMuob9a1eApGPbYWnMTUUXIOtzNaBu83YT+b5tOfAmURRPskbHdNE6uXiZbc3iU
+         n9lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=QetmngArlo8jcqAa3cp4cJpe8ACwiEvOmqOo+ZH6Vao=;
-        b=OFrK3OS0z37lZFEFR/dcvizA7q1d/VbXonIvMAOD9EPeBdQdL1zVgTHkhCLAOIG/hf
-         1IXpQx1TvYCtrNE9yq1qRsw5K4bXWauuc8uhC0AyT+CjmP05OFTgqzUDFQ5Tb+spJpKX
-         ivj/BvNOTWIi2jp1JJxi8laXWwlssd0bh0CW5qrU9AFF/KcjWTANet6YDCJaQ64EnZh7
-         4sWS/lNrrVLCQEmy7n/LuAgHyfY816R7fF+b3VeeV+T39Wk6AsNiJdWthGEDVIT6C4wu
-         MOWtUy7BLYQ+HlgbzgYYrOOF+SYJnC2shuTEmvx6mS/n1LW9jFdhdaLdN/atq0jC7NNK
-         /dpw==
-X-Gm-Message-State: AOUpUlG/xnmGhmFNhXpWVFUkVYQVobSTpn9qZoPs2+ksLYoTEf/bfsoQ
-        mrKne8AOs4BVdA8+hFZwed0=
-X-Google-Smtp-Source: AA+uWPzgGnuuGfQFOJnjIPrIsk5XNPdlI3LAHoOlpNP7arfryAwXTCKUFrQj0dfFYIMsJHE1AByGqg==
-X-Received: by 2002:a63:d309:: with SMTP id b9-v6mr38214148pgg.163.1534642070790;
-        Sat, 18 Aug 2018 18:27:50 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm15475882pfk.76.2018.08.18.18.27.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 18 Aug 2018 18:27:50 -0700 (PDT)
-Date:   Sat, 18 Aug 2018 18:27:48 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Michael =?utf-8?B?TXVyw6k=?= <batolettre@gmail.com>,
-        git@vger.kernel.org, Scott Chacon <schacon@gmail.com>
-Subject: Re: git-bug: Distributed bug tracker embedded in git
-Message-ID: <20180819012748.GA175033@aiede.svl.corp.google.com>
-References: <CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com>
- <xmqq6007abmu.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mKrxUqsXh8F25YTvwMETc78zPz7hV/EYU61c0AY+nEI=;
+        b=alCiWUgOwH9st09CXFdlHr1RUt/IHWlqFjbasb2RBPxEYM2iNTtEgcZyH3EpxUghoy
+         mrdAr0rAFdbiK+OMoEqb+4AISMPVOlz/dRz/aGWvGEiHO3mCQU+ZT3JqcpnsW3FiTBZu
+         f8FAru5Rnl/HyawNSTLaZsFDSDrrGi3EuQ4WPCyMwyK/KBafoHTO413MKQ6pE/Rn54aQ
+         pWvj/P4sQ6AQ95k5EL5OE3Po1jyGdV/WmthdvNLuMw6ngLNHG+iFiqpufYQgW0xe0Pop
+         hQ8gRyy6fmgVZeyqxDPHEQv3Uf92EfThC5YwUJDWx3gxU5pJkteCr/0V3htGRz+Y/ca4
+         QlFg==
+X-Gm-Message-State: AOUpUlEEwpkvmheOybtPpQP3Ugn4PwGamlFlvQ6DHIw3SFPgFNgUu2Zv
+        2p7ivUcYiwcZPpWzRcdhbxJOIXEfnXij3Bwv4SI=
+X-Google-Smtp-Source: AA+uWPwJ0q9ksA65mSnetR9GmGkdZzZARSfFQUIursyutifBqptUmD21Lj/5gF8KH1lg0c3qk7YhgHLm+fn1cH0QAls=
+X-Received: by 2002:a9f:22ed:: with SMTP id 100-v6mr26817857uan.116.1534643105567;
+ Sat, 18 Aug 2018 18:45:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq6007abmu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180724180122.29212-1-benpeart@microsoft.com>
+ <20180816182653.15580-1-benpeart@microsoft.com> <CACsJy8B84T9HSJKAErNAyoMwbBpu6Gwgyz3RsvmqD0+o=bg3Ng@mail.gmail.com>
+ <448bd740-73fb-aa3a-ded0-e4012cf6ec21@gmail.com>
+In-Reply-To: <448bd740-73fb-aa3a-ded0-e4012cf6ec21@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Sat, 18 Aug 2018 18:44:54 -0700
+Message-ID: <CABPp-BGir_5xyqEfwytDog0rZDydPHXjuqXCpNKk67dVPXjUjA@mail.gmail.com>
+Subject: Re: [PATCH v3] checkout: optimize "git checkout -b <new_branch>"
+To:     Ben Peart <peartben@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-(cc-ing Scott)
-Hi Junio,
-
-Junio C Hamano wrote:
-> Michael Muré <batolettre@gmail.com> writes:
-
->> I released today git-bug, a distributed bug tracker that embeds in
->> git. It use git's internal storage to store bugs information in a way
->> that can be merged without conflict. You can push/pull to the normal
->> git remote you are already using to interact with other people. Normal
->> code and bugs are completely separated and no files are added in the
->> regular branches.
+On Fri, Aug 17, 2018 at 5:41 AM Ben Peart <peartben@gmail.com> wrote:
+> On 8/16/2018 2:37 PM, Duy Nguyen wrote:
+> > On Thu, Aug 16, 2018 at 8:27 PM Ben Peart <Ben.Peart@microsoft.com> wrote:
+> >>
+> >> From: Ben Peart <Ben.Peart@microsoft.com>
+> >>
+> >> Skip merging the commit, updating the index and working directory if and
+> >> only if we are creating a new branch via "git checkout -b <new_branch>."
+> >> Any other checkout options will still go through the former code path.
+> >>
+> >> If sparse_checkout is on, require the user to manually opt in to this
+> >> optimzed behavior by setting the config setting checkout.optimizeNewBranch
+> >> to true as we will no longer update the skip-worktree bit in the index, nor
+> >> add/remove files in the working directory to reflect the current sparse
+> >> checkout settings.
+> >>
+> >> For comparison, running "git checkout -b <new_branch>" on a large repo takes:
+> >>
+> >> 14.6 seconds - without this patch
+> >> 0.3 seconds - with this patch
+> >
+> > I still don't think we should do this. If you want lightning fast
+> > branch creation, just use 'git branch'. From the timing breakdown you
+> > shown in the other thread it looks like sparse checkout still takes
+> > seconds, which could be optimized (or even excluded, I mentioned this
+> > too). And split index (or something similar if you can't use it) would
+> > give you saving across the board. There is still one idea Elijah gave
+> > me that should further lower traverse_trees()  cost.
+> >
 >
-> This reminds me of a demo Scott Chacon showed us ages ago, the name
-> of which escapes me.  I guess great minds think alike, or something?
+> We have investigated some of these already - split index ended up
+> slowing things down more than it sped them up do to the higher compute
+> costs.  Sparse checkout we've already optimized significantly - limiting
+> the patterns we accept so that we can do the lookup via a hashmap
+> instead of the robust pattern matching.  We will continue to look for
+> other optimizations and appreciate any and all ideas!
+>
+> In the end, this optimization makes a huge performance improvement by
+> avoiding doing a lot of work that isn't necessary.  Taking a command
+> from 14+ seconds to sub-second is just too much of a win for us to ignore.
+>
+> > But anyway, it's not my call. I'll stop here.
 
-I believe you're thinking of TicGit[1].
+It's even less of my call, but since things seem to be stuck in
+what-should-we-do state (as per Junio's comments on this patch in the
+last two "What's cooking" emails), and since Ben and Duy obviously
+have opposite opinions on Ben's patch, let's see if I might be able to
+help at all.  Here's my summary and my findings:
 
-Some other related work is listed at [2].  Most of these projects have
-gone quiet:
+== The pain ==
+- For repositories with a really large number of entries (500K as Ben
+says), some operations are much slower than it feels like they should
+be.
+- This does not seem to be GFVS-specific in any way, I can duplicate
+slowness with a simple git-bomb[1]-like repo that has a sparse
+checkout pattern ignoring the "bomb" side.  (It has 1M+1 entries in
+the index, and .git/info/sparse-checkout ignores the 1M so the working
+copy only has 1 entry).  The timings on my repo for "git checkout -b
+$NEWBRANCH" are almost exactly double what Ben reports he gets on
+their repo.
 
-- ditz[3]
-- git-issues[4]
-- cil[5]
-- Bugs Everywhere[6]
-- milli by Steve Kemp, which I haven't found a copy of
-- simple defects[7]
-- kipling[8]
+[1] https://kate.io/blog/making-your-own-exploding-git-repos/
 
-http://www.cs.unb.ca/~bremner/blog/posts/git-issue-trackers/ gives a
-nice overview, though it's rather old.
+== Short term solutions ==
+- Alternative git commands exist today to do a fast checkout of a new
+branch in a huge repo.  I also get sub-second timings in my
+even-bigger repo with this:
+   git branch $NEWBRANCH && git symbolic-ref HEAD $NEWBRANCH
+But I do understand that wrapping this into a script or executable
+(git-fast-new-branch?) and asking users to use it is a usability
+problem and an uphill battle.  (Sidenote: this isn't quite the same
+operation; it's missing a reflog update.  The -m option to
+symbolic-ref doesn't seem to help; I guess the fact that HEAD's
+sha1sum is not changing is viewed as not an update?  However, that
+could also be scripted around.)
+- Ben's patch successfully drops the time for "git checkout -b
+$NEWBRANCH" from 26+ seconds (in my cooked-up testcase) to sub-second
+(in fact, under .1 seconds for me).  That's a _huge_ win.
 
-This area seems to have gone mostly quiet since 2014, so it's nice to
-see new work.
+== unpack_trees optimization notes ==
+- Ben's patch is extremely focused.  It only affects "git checkout -b
+$NEWBRANCH".  If someone runs "git branch $NEWBRANCH && git checkout
+$NEWBRANCH", they get the old 26+ second timing.  They also suddenly
+get the really long timing if they add any other flags or checkout a
+commit that differs in only a single entry in the entire tree.  It
+would be nice if we did general optimization for all issues rather
+than just special casing such narrow cases.
+- However, optimizing unpack_trees is hard.  It's really easy to get
+lost trying to look at the code.  Time has been spent trying to
+optimizing it.  Ben really likes the speedup factors of 2-3 that Duy
+has produced.  But he's pessimistic we'll find enough to bridge the
+gap for this case.  And he's worried about breaking unrelated stuff
+due to the complexity of unpack_trees.
+- Duy is pretty sure we can optimize unpack_trees in at least one more
+way.  I've tried looking through the code and think there are others,
+but then again I'm known to get lost and confused in unpack_trees.
 
-Thanks,
-Jonathan
+== The patch ==
+- Ben's patch only affects the "checkout -b $NEWBRANCH" case.  He
+checks for it by looking for any other flag that would be a different
+case, and using the old codepath if he finds any.
+- This means there is a "giant list of checks" for this optimization,
+and an ongoing maintenance burden because if anyone ever adds any
+extra options, this optimization might suddenly break things if that
+giant list of checks isn't updated.  Ben even added a comment to the
+code hoping to help alert others who come along and add extra options:
++ /*
++ * If new checkout options are added, skip_merge_working_tree
++ * should be updated accordingly.
++ */
 
-[1] https://github.com/jeffWelling/ticgit
-[2] https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Bug.2Fissue_trackers.2C_etc.
-[3] https://github.com/jashmenn/ditz
-[4] https://github.com/duplys/git-issues
-[5] https://github.com/chilts/cil
-[6] http://bugseverywhere.org/
-[7] https://syncwith.us/sd/, https://gitorious.org/prophet/sd
-[8] https://gitorious.org/kipling/mainline
+== Other notes ==
+- In my cooked-up testcase, I also noticed that things like git add or
+git status were slow in a repo with lots of index entries.  There may
+be several other areas in need of performance boosts too.
+
+
+== My opinions ==
+- The performance wins are big enough that I can see why Ben is pushing this.
+- I totally see Duy's point that more general optimizations would be
+really nice.
+- I really dislike the "giant list of checks" and the ongoing
+maintenance burden it implies.
+
+Overall, I have to side with Duy and say I don't think we should take
+the patch as-is.  Since that'll be frustrating for Ben to hear, I've
+tried to come up with some additional alternatives:
+
+== Alternatives (both short and long term) ==
+- Use the 'git branch $NEWBRANCH && git symbolic-ref HEAD $NEWBRANCH'
+trick.  It's essentially just as fast (well, you exec git twice so
+it's slightly slower, but it's close).  However, there's a difficult
+get-it-to-the-users hurdle.
+- Rewrite this patch so it instead does a very small set of checks at
+the beginning of cmd_checkout(); e.g. check if argc == 3 and argv[1]
+== "-b" and if so then perform the minimum operations needed to create
+and checkout the new branch (maybe even calling in to cmd_branch() and
+cmd_symbolic_ref() and calling some reflog update function).  Preface
+it with a comment that it's a performance hack that might eventually
+be able to go away.
+- Look into the performance optimization(s) Duy mentioned.
+- Other performance optimizations in unpack_trees(); it seems we have
+an awful lot of loops over all cache entries, and it sure seems to me
+like some of them could somehow be focused on just the things that are
+changing instead of again checking everything.  Or maybe I'm wrong and
+they're all needed.
+- Possibly crazy idea for massive global performance win: modify how
+the cache works so that it can have tree entries instead of just file
+entries; make use of that with sparse checkouts (and partial clones?)
+so that the cache only stores a tree when that entire tree is
+"unwanted".  Suddenly, git status, git add, git checkout, etc., etc.
+are all much faster.  merge needs some special work to operate,
+though.
+
+
+I'm potentially interested in eventually looking into and/or helping
+with optimization work in this area.  I might even get more time to
+work on git at $DAYJOB since sparse-checkouts/partial-clone/gvfs/etc.
+all are looking more and more interesting as we have large repos that
+are growing quickly (particularly as we consolidate many repos down to
+fewer).  But they've said that such work won't take priority for
+several months down the road for them, it's not yet clear how much
+they'd sponsor vs. just want to see what existed and how we can use
+it, and I'd kind of like to clear a few other things off my plate
+first too (such as the merge-recursive rewrite).
+
+Anyway, that's just my $0.02.  I hope something I said helps.
+
+Elijah
