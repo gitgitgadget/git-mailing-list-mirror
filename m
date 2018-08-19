@@ -2,125 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368491F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 12:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 110EF1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 17:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726505AbeHSPdj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 11:33:39 -0400
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:46510 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbeHSPdj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 11:33:39 -0400
-Received: by mail-ed1-f47.google.com with SMTP id o8-v6so6882809edt.13
-        for <git@vger.kernel.org>; Sun, 19 Aug 2018 05:22:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=bIV5qIO3km4yXJUyPBkEtq+xWEJpEXxPpHtYAzgUzgE=;
-        b=p+AjJ0Bn0e4MsX6NubTyDlUppgcCXDVjB+em+fEJ0g34gAJSf6Dk7D03jIBJsL8rhu
-         Jc6JRvFordbtXghnKnkkFOj56PfNadkoiUg0xgyajkI7aGJ14EwCnmEgtuRJlPcG7Q1/
-         c0v+bGU0pgtzJgmqZMptgvk8r6EoZFC6lrKXOqIxSDNb6+rGOH4gKbz2XnqgjplFMvLu
-         tw5b7mfFtrRp0ix/P/KyiQ9YkNIxy6XHdn3fc3iH2llo59t+6QgpkldhZ2UC7NWReu7B
-         46ulnA1Y/IHLMPXVr116z8KW43mgof1yfK3QEfj+GiUFDP+VjdX82qCK8ZGtLEslR4eU
-         pKMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=bIV5qIO3km4yXJUyPBkEtq+xWEJpEXxPpHtYAzgUzgE=;
-        b=OLhID8k6GPkHEVbqk8m23n7/w6urguY1QREK2Chz/wCOzIUWowBpsxudSHAdYScOPc
-         cfxYGlNZBpSI8T1eUEr5eiRIgP73zy34OlDGAACmVdjphqVfVwSri2ai8rhaIcb8tIuX
-         ci1L2q1lTQ+LbS6CSTRzKsZnjCfwn6J60JzDsKqHep9Uhqisf86qSAwHZnuaiWmkJz9F
-         q8dgAwYY3Rc/P9nOn/za7o5MGkxnZ/tPN6tQuL21iJBDCz8gUdU++d7iz08D7gumv7GA
-         7lX3EvpXy/6HNjdGvsCojHdTZPekna2eV+0tnn8PD2FLIv3Q8zv7RLlK1eDU+2qfZEyM
-         uUvg==
-X-Gm-Message-State: AOUpUlFrtMIIU6MRlL+gGOwrS0dlVHLYu+x/e+fNeIa6bkig2h5W0A1N
-        tef89JKO+8S+Oq4ytPSu7rG9PnV1
-X-Google-Smtp-Source: AA+uWPyqHHYlzeUeTRKzVxmOcYhWWWQAAPmu3qCh4OWJjFpO2iP00/8dqWmxF1ojNG9XDqHbvYJlbw==
-X-Received: by 2002:a50:8f05:: with SMTP id 5-v6mr50021460edy.192.1534681340859;
-        Sun, 19 Aug 2018 05:22:20 -0700 (PDT)
-Received: from evledraar (h98111.upc-h.chello.nl. [62.194.98.111])
-        by smtp.gmail.com with ESMTPSA id b44-v6sm7009586edd.93.2018.08.19.05.22.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 19 Aug 2018 05:22:19 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: Git Project Leadership Committee
-References: <20180816224138.GA15490@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180816224138.GA15490@sigill.intra.peff.net>
-Date:   Sun, 19 Aug 2018 14:22:18 +0200
-Message-ID: <87zhxipmv9.fsf@evledraar.gmail.com>
+        id S1726557AbeHSUq5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 16:46:57 -0400
+Received: from mout.web.de ([212.227.15.3]:33747 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726400AbeHSUq5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 16:46:57 -0400
+Received: from [192.168.178.36] ([79.237.244.101]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MC6ZE-1fibtO2iZ6-008sak; Sun, 19
+ Aug 2018 19:34:38 +0200
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] checkout-index: improve argument help for --stage
+Message-ID: <34a13c2b-05a4-8788-de2a-d794bde1420d@web.de>
+Date:   Sun, 19 Aug 2018 19:34:35 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:/YeQVYi2fWS70zkj+yAqAg70zeguhWOgBI66/Qt6N0lIUS/BvrQ
+ 2mlNe1DuIX1X8dcJL+Yt8M9GiFrl13JHOWH0bgGDnFnHoKwiFBSjM5MKwwerMqPFax4NsPb
+ 5/TR3exwfmigPCIgqUQ9lM6Wm1tc3jKmJ0424oCXCccCGkbemyujIwcnffVkAxcDs/TB6k3
+ sUL4ehnY2Ffr+t0vq1pqQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4ggWKCqFD/g=:fBY7gkCSx5lWfOjxbFUmF/
+ A3nQ+fClWERRGtb5XYFBWT5fQwabPgefGg9DylQQ1WW7gTn62GnopzxEXSQ7wAz2T3+70NF3L
+ elJLEia+Cd6Tb4HThlpOnZHyDPtma8iB0DwOmR+auXrBmUpuCDhL4G8/vwndPKSp5egxLrHow
+ BNttxOsF3EYkcYt6ORIUrt3NabODsGZui7p82Y2q7u1WuPZ0aUCcPsoJtvN3OtzgNXK3Qbotb
+ wv4FwyKrg0apxwMk5weq46Jfl7dtIoGJelqi7CkIN81+CfBFtfkfYJZdimjQA1J5MVXPUgonN
+ 5/R3dhzNF1/y6/laImNs3EzRul4SjAF7l1oCqxqlyiKbup87Kc7yPjBHCWC6pVOU8eTk6cyVF
+ e5XMkk/2DOFK46ojp4ZFD3mFrplGinyhUBDNmW4ZuMUXKUI1zSC2jWzEgtOjEswlUwprCYntD
+ 5GvTV+JJJQzNTlSaEFRmp7riP2N1/5QM7Ns0EttNoAvr5QgH7I2iNI3gk8kuh8XZ62nTR3HNQ
+ GInO1BJEP4qTb9TATo9bxgJlc3epzjWDh45+iNZQeG+Y8fiVdNR0BVbW2YYhqmELL35ziWBTO
+ eIytl1CY1eWJwCxkckQEiXYbVcA0ZyZVT86TKFbyW3iKDMK22B9Jnxrrpkzfw73HPzH83xMeW
+ cUi2LyDkIPUybNq0RBm6S2tnkgpb8yWAIVNDuI966TBCInn2bITwlffV/Sj9tZ57quc+uOzJ1
+ El1u6zY+Hc4LfV1LjM7891hFr200RMaBwlpXHZp4p/fr2viq3KkYWMe8xGSMELNZXuyGcPioH
+ sMxHMDk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Spell out all alternatives and avoid using a numerical range operator,
+as it is not mentioned in CodingGuidelines and the resulting string is
+still concise.  Wrap them in parentheses to document clearly that the
+"--stage=" part is common among them.
 
-On Thu, Aug 16 2018, Jeff King wrote:
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/checkout-index.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->  - Christian Couder
->  - Ævar Arnfjörð Bjarmason
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index a730f6a1aa..92e9d0d69f 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -172,7 +172,7 @@ int cmd_checkout_index(int argc, const char **argv, const char *prefix)
+ 			N_("write the content to temporary files")),
+ 		OPT_STRING(0, "prefix", &state.base_dir, N_("string"),
+ 			N_("when creating files, prepend <string>")),
+-		{ OPTION_CALLBACK, 0, "stage", NULL, "1-3|all",
++		{ OPTION_CALLBACK, 0, "stage", NULL, "(1|2|3|all)",
+ 			N_("copy out the files from named stage"),
+ 			PARSE_OPT_NONEG, option_parse_stage },
+ 		OPT_END()
+-- 
+2.18.0
 
-Thanks for the nomination. I'm happy to help the project by serving on
-the leadership committee if you'll have me.
-
-> Both are active, have been around a long time, and have taken part in
-> non-code activities and governance discussions. My understanding is that
-> Christian freelances on Git, which doesn't quite fit my "volunteer
-> representative" request, but I think contracting on Git is its own
-> interesting perspective to represent (and certainly he spent many years
-> on the volunteer side).
-
-I'd say I'd mostly be a "volunteer representative", but in the interest
-of full disclosure here's the extent to which I'm not.
-
-I'm involved in internal Git infrastructure at my employer, Booking.com,
-and some of the the work I do on git is company sponsored, since it
-happens to be stuff Booking.com needs from git. E.g. my recent
-fetch.fsck.* series is one example of that, as well as the
-"fetch.pruneTags" option in 2.17.
-
-Booking.com doesn't really have any sort of git.git infrastructure team
-in the sense that Microsoft & GitHub do. I'm on the team which, among
-other things, manages our internal GitLab installation and git-related
-things in general.
-
-I'm trusted to spend company time on patching git when that's the
-easiest or best way to accomplish some task. Usually I don't even
-discuss the specifics of that with anyone, I just go ahead and do it.
-
-I'm not aware of Booking.com, or its parent company Booking Holdings (or
-sister companies) in any way being involved in any business model that
-involves Git (unlike say GitHub, Atlassian etc).
-
-So I can't imagine any situation where I'd need to recuse myself due to
-real or perceived conflict of interest, but would of course do so if
-there was even the appearance of impropriety.
-
-Booking.com has also had a contract with Christian Couder to work on
-things in git.git since 2015-ish. E.g. the rebase speedups Christian did
-and the ongoing work on reftables is paid for by Booking.com.
-
-During this time I've been the person tasked with managing the work that
-Christian is doing on git.git for Booking.com, in a very loose sense of
-"managing". It's usually just e.g. "hey rebase performance kind of
-sucks, can you work on it?" "sure!".
-
-I know Christian also does contract work for GitLab, e.g. I understand
-that his delta island integration work these days is done on their
-behalf, but I'll let him provide details on that or any other corporate
-entanglements he may have to the extent he feels it's relevant.
