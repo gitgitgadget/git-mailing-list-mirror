@@ -7,73 +7,109 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D46F1F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 17:34:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351351F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 17:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726601AbeHSUrF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 16:47:05 -0400
-Received: from mout.web.de ([212.227.15.4]:53171 "EHLO mout.web.de"
+        id S1726626AbeHSUrH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 16:47:07 -0400
+Received: from mout.web.de ([212.227.15.14]:57873 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726400AbeHSUrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 16:47:05 -0400
-Received: from [192.168.178.36] ([79.237.244.101]) by smtp.web.de (mrweb002
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MUEsc-1fRd0W1nyU-00R2EN; Sun, 19
- Aug 2018 19:34:46 +0200
+        id S1726400AbeHSUrH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 16:47:07 -0400
+Received: from [192.168.178.36] ([79.237.244.101]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeNUV-1fUhXy3ezH-00QBFm; Sun, 19
+ Aug 2018 19:34:49 +0200
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] remote: improve argument help for add --mirror
-Message-ID: <03cafb74-1671-727a-b53d-519381b18e32@web.de>
-Date:   Sun, 19 Aug 2018 19:34:43 +0200
+Subject: [PATCH] parseopt: group literal string alternatives in argument help
+Message-ID: <0635e9e0-41ac-95b5-257c-d572f5cdb2cd@web.de>
+Date:   Sun, 19 Aug 2018 19:34:48 +0200
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:jUgQ6fLMWHuEWhDM1UHjJUfdSh6LRSHV02tSH7BburPBilVvO7b
- /VbHGYx06clsz/U+VkYfaYQQtgWtcXK6WDE9KmkrvECBzSiUekLT2ZO83+5zmsVV99WSi8f
- /NGZVU9T5yj4x/cLeFa+1WD2IBok12MHEaI7fSpmugKvOcx6/Wvk6kPmpy65n9KdSTcNOXE
- fxKqOsKiDk+UsfbrrFZ5Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:JwX6m0+vY5E=:xpDGHpW6JoOoeHIsTRKGbc
- I0yb7P6Hriy2WE65FpJh+8xa0Zr9MKlbgiWTHReasYsQAPNmD9RnxPDgTeV4InhsXbVfRLRxl
- nMlEeqn1plWoqogweAqLuvAAEASMCj8DDUUl9fscjnS0WX+nGPMqCawut+KaPktEtKno431kB
- q3Q3yO+uJWsKDZ7ryfJ2UezMxcw/TE8pgeyCnIe/shm7K/pFsBjScpIRvf9aMe0XQW1Uxv2Og
- VIWuYaeCdpgSj7OW5FvMGNaWgfpW+EWzftzp1cr4cDIGOEf54fZcD3KYM6pr2gijYNr5lmWS3
- 2MkkeqKGy62gAII2FdvYhRYgEIjEzYYl7vF57D7aoDhPwGbvI2Ok3HDhJofgpna8Cqls+ABft
- MkG3uaXYtLM5HOdy/anGdQVhaAAZuaNvnwH301QB0P1H2nFQ5BPyDJcIkvA8+Z1USL+gMQzfh
- rSWn3L0vyTc1Dyg7zqEfZB4v2Qe5O8JBxQl/yG4jLng1qZFCzjpdY8O8xkduOE33YTiBd096d
- /wT37CJtW4BNNDcsqWLcmsbpLNg6IMjFfdg3mv5qiR7DGO7PVEiPFRfE5Czvg+Yc3OvO0SKGH
- po1URct9NGaNsEUY7AvTSuMIpEJH6NDAw02jHxYD0Qp2+775emDm+fNeZOdBqOZoe9kxVpab9
- vCyghSnab+SDcYjVjZ0aGa3cAUOuMrVXFgudGEpiKsqJTrSlbZqoVPH5QttwcUGN1Mh17eP/m
- wmuPMZgbEc8/BS/o8llDdCIGrMb/ghLAaPxFUQurev5ngJWqGfJ+L1E3jY9rfW4tU0VDHXLg0
- LzitJ6Q
+X-Provags-ID: V03:K1:mDQ98tsX8nuLLXRyMeb0s6/jULwp0OJ84B2kNc01sRo4wHDDuV9
+ W+N7L7+AGJq5tMEI36E/AJsYmrZAY9bMikRqb1+540AbZ9S30SEoTaEkV8q0b1Nc/0D3y8D
+ JcuyvOxDSAwRoDXo3d7oZ7Xh4ig2jlLZtZWul4+tQs9x4Yi8GNQG46Hq6zbMQFojkG5zzOv
+ HaxPSwCeaS+72c+53BF2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jJKt1Lfyk4s=:6WlDrQ4vc2yamT3gR1Vu6n
+ JlYK45QoqewHqQDKy6ylE3282fRG7QkPRLXW9OJYuizM3A0zN7xwVvkW8wXi5meFoSrwrPDqn
+ EJvMNY3p9vm/4aBmsDrlKly49eTEV5kXpz63cYBc+a9AGgUQzs6KVhMwN13/FFyvyU+NQk+Vs
+ nYCo4z8xyOwDcxOwlDngTsbTjA185wZ+3qmLvvbraGFl+/azytdmZxWy80tOSphjfKdY2bETt
+ /dZDj5f2bJMUK+Ke2iSWqRCWUTdyjzj/znWhuGYqk1TPBQPC9p/JkS3PBcBnBE1+xvxvlKxIT
+ 4zWXd4irGMcJYCdmew20mR4VC7m9snvUfFcf1f3LNtPGx3zC/qv66JiKhg9iyw6zO1dCsmMRP
+ udjOjCznqgNPwXtsrqO+H8d15VrE4GBnZain9DDuj3PC5qvw3BV3fGq6OAuI7aXb+CPpmiJKg
+ w9fMTyCjM+Ef1EmHA7ydTwkSO3++sCmyh6lJis8RmZjHvMOaONX3ZGAX5ovfZSfLtkPH3Yal/
+ fjRvgOkRUoeJsRe/vdyWlIqNCK1Wn24BmYaB84lGY0AQ7eTFy4WDQpkukq/HH9bLrITebrDpl
+ KySXqGRGUphqqAqYtLUOMAUbzPwY2cdWwxSPDzLPUdQEUogdI8eJATHV8paAtAe5HlOsJ0XOS
+ ZXouWh4g1xx+gcq2C5mph06LsJT2aoof+TL0/ocYBxvQQfzyijmVLQ7cBseuJ5D1rh9rgNjOw
+ oLaBYZBZLRvsCghZpCPcqh4NnW0A/fbsW5NhDUOhSsyOrpu30021o3j8xY9C6cCEC1w/5ixX1
+ E05hLul
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Group the possible values using a pair of parentheses and don't mark
-them for translation, as they are literal strings that have to be used
-as-is in any locale.
+This formally clarifies that the "--option=" part is the same for all
+alternatives.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- builtin/remote.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/pull.c      | 2 +-
+ builtin/push.c      | 4 ++--
+ builtin/send-pack.c | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 07bd51f8eb..7876db1c20 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -168,7 +168,7 @@ static int add(int argc, const char **argv)
- 		OPT_STRING_LIST('t', "track", &track, N_("branch"),
- 				N_("branch(es) to track")),
- 		OPT_STRING('m', "master", &master, N_("branch"), N_("master branch")),
--		{ OPTION_CALLBACK, 0, "mirror", &mirror, N_("push|fetch"),
-+		{ OPTION_CALLBACK, 0, "mirror", &mirror, "(push|fetch)",
- 			N_("set up remote as a mirror to push to or fetch from"),
- 			PARSE_OPT_OPTARG | PARSE_OPT_COMP_ARG, parse_mirror_opt },
- 		OPT_END()
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 53bc5facfd..681c127a07 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -135,7 +135,7 @@ static struct option pull_options[] = {
+ 	/* Options passed to git-merge or git-rebase */
+ 	OPT_GROUP(N_("Options related to merging")),
+ 	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
+-	  "false|true|merges|preserve|interactive",
++	  "(false|true|merges|preserve|interactive)",
+ 	  N_("incorporate changes by rebasing rather than merging"),
+ 	  PARSE_OPT_OPTARG, parse_opt_rebase },
+ 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
+diff --git a/builtin/push.c b/builtin/push.c
+index ef4c188895..d09a42062c 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -561,7 +561,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		  0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
+ 		  N_("require old value of ref to be at this value"),
+ 		  PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option },
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
++		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
+ 			N_("control recursive pushing of submodules"),
+ 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
+ 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
+@@ -576,7 +576,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
+ 			TRANSPORT_PUSH_FOLLOW_TAGS),
+ 		{ OPTION_CALLBACK,
+-		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
++		  0, "signed", &push_cert, "(yes|no|if-asked)", N_("GPG sign the push"),
+ 		  PARSE_OPT_OPTARG, option_parse_push_signed },
+ 		OPT_BIT(0, "atomic", &flags, N_("request atomic transaction on remote side"), TRANSPORT_PUSH_ATOMIC),
+ 		OPT_STRING_LIST('o', "push-option", &push_options_cmdline, N_("server-specific"), N_("option to transmit")),
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index 724b484850..8e3c7490f7 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -166,7 +166,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "mirror", &send_mirror, N_("mirror all refs")),
+ 		OPT_BOOL('f', "force", &force_update, N_("force updates")),
+ 		{ OPTION_CALLBACK,
+-		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
++		  0, "signed", &push_cert, "(yes|no|if-asked)", N_("GPG sign the push"),
+ 		  PARSE_OPT_OPTARG, option_parse_push_signed },
+ 		OPT_STRING_LIST(0, "push-option", &push_options,
+ 				N_("server-specific"),
 -- 
 2.18.0
