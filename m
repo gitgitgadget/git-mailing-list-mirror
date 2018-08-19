@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6E0B1F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 19:54:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4F9F1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 20:01:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726374AbeHSXG6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 19:06:58 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:38147 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726265AbeHSXG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 19:06:58 -0400
-Received: by mail-qt0-f196.google.com with SMTP id x7-v6so4833246qtk.5
-        for <git@vger.kernel.org>; Sun, 19 Aug 2018 12:54:20 -0700 (PDT)
+        id S1726398AbeHSXNz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 19:13:55 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:43158 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726171AbeHSXNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 19:13:55 -0400
+Received: by mail-qt0-f172.google.com with SMTP id f18-v6so14114161qtp.10
+        for <git@vger.kernel.org>; Sun, 19 Aug 2018 13:01:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=tcAcLFeHpRANAnVazYbiIlLkNT1Lw/1G7Cikyj8eJhQ=;
-        b=qVgTtsD+LtUJn6safiNznKmbe+mMuftE+oMPmaagCIww5CMcYtEa4KbnKs50EXOyn3
-         q7Y0H6b7TGzV+hlGiSHr3O33OYODD7cbAjmnKwo2Y70M+c/Os//er6cDbsCSv8zpBgeW
-         h+tGabrdJw5SkXKrybsQh8i9pzaBqFmTye71ibOZf+tSBiW5P4BznTu6dJwmH/swZJnc
-         SWx1elZ1MCSdrR/UT+P/mj8bRq+aFUa60pckusMK9RRim64/wpIXzTg5idCEOcwFYQXj
-         JYK6KfdKhyfk7JQv0OQdFx/aOVp5aIoCyTxpp77zJGf5vmnkQZqo4WyO23lkDSQt5Z/q
-         xvzw==
-X-Gm-Message-State: AOUpUlG0LElke1kecHzhLOhHOaEZu6esR6vTrcDO7ZGqlhK5bKSltl/X
-        VmCcn2YOUo/JmzbhZPRAdq+t+1wK9yVLaJ949Yk=
-X-Google-Smtp-Source: AA+uWPzFaE0S5LjVkwGN5lJQBi4lqmeO6FgFRG5D10z4WntU11a8hs0SzNoHiAvyc7ZBHVxasZpVvhpm4MVbco3M/H8=
-X-Received: by 2002:ac8:3872:: with SMTP id r47-v6mr41664754qtb.69.1534708460415;
- Sun, 19 Aug 2018 12:54:20 -0700 (PDT)
+        bh=hluqf8ajhpUYpjYHu3CNdQQYydCp4VJDNVBFUYyQl8Q=;
+        b=gtKYqbFM3mnAyurYnFWi/2L/dFL0kDYnea20rueD8UCwMBY335mgsRB2ePz/CGJR9J
+         WXayIu32i5dexmkh8CrQGSwVhTtMhS7UvlKNz6v8bd/RZPx7hQhiM6T9o8iKItak4b55
+         nds+E9uPgVhGOopPO/NmoBOaK/Vzl8Lw5mmqU5Hem+2ffYIMZzzqQa8GI2lLK5UdUQYf
+         EQzKSITgQIR4KXXE9r0awuPrKsEdPhI2bJ0hBIWe9bfkNqj3oOaafE+sFc3AKDEmwpx2
+         /v9yv/Z9McWQqy1q5is96p4pRHv13kamDNh091lUeifZ06zqz8CXZhSimMNBKpkClZXE
+         8qHQ==
+X-Gm-Message-State: AOUpUlE7EYWCCg0PDF5YyImn3GMifu1HN5m5C6zTNnNkNapx4xMxcg2R
+        bpO1ZPPM6hGJBOC1iTM2s45wYgdnOBHF9SuS5cQ=
+X-Google-Smtp-Source: AA+uWPyJa/d0otreZyguMvByEphTFQVPBKe6EQYkqE281kJLUZDn/xD9ICgCAxYAul3SCAtlnpWGlg7z7uam3pB9H14=
+X-Received: by 2002:a0c:e5ce:: with SMTP id u14-v6mr38130685qvm.6.1534708876562;
+ Sun, 19 Aug 2018 13:01:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180819175351.449973-1-sandals@crustytoothpaste.net> <20180819175351.449973-3-sandals@crustytoothpaste.net>
-In-Reply-To: <20180819175351.449973-3-sandals@crustytoothpaste.net>
+References: <20180819175351.449973-1-sandals@crustytoothpaste.net> <20180819175351.449973-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20180819175351.449973-4-sandals@crustytoothpaste.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 19 Aug 2018 15:54:09 -0400
-Message-ID: <CAPig+cTmSN3CGGW0ws2K-CHrvVon4W+iFS_MdTxSY-TP6OUh1Q@mail.gmail.com>
-Subject: Re: [PATCH v2 02/11] t0000: use hash translation table
+Date:   Sun, 19 Aug 2018 16:01:05 -0400
+Message-ID: <CAPig+cSRYZ6X-71oZ473g_pChcfNcFyFPO3e8YoJmYyg+KwoyQ@mail.gmail.com>
+Subject: Re: [PATCH v2 03/11] t0000: update tests for SHA-256
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -53,37 +53,44 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Aug 19, 2018 at 1:54 PM brian m. carlson
 <sandals@crustytoothpaste.net> wrote:
-> If the hash we're using is 32 bytes in size, attempting to insert a
-> 20-byte object name won't work.  Since these are synthesized objects
-> that are almost all zeros, look them up in a translation table.
+> Test t0000 tests the "basics of the basics" and as such, checks that we
+> have various fixed hard-coded object IDs.  The tests relying on these
+> assertions have been marked with the SHA1 prerequisite, as they will
+> obviously not function in their current form with SHA-256.
 >
+> Use the test_oid helper to update these assertions and provide values
+> for both SHA-1 and SHA-256.
+> [...]
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
 > diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> @@ -1007,12 +1007,13 @@ test_expect_success SHA1 'validate object ID for a known tree' '
->  test_expect_success 'put invalid objects into the index' '
->         rm -f .git/index &&
-> -       [...]
-> +       suffix=$(echo $ZERO_OID | sed -e "s/^.//") &&
+> @@ -868,8 +870,9 @@ test_expect_success 'writing tree out with git write-tree' '
+> +test_expect_success 'validate object ID of a known tree' '
+> +echo $tree &&
 
-What's this "suffix" thing for? I don't see it used anywhere.
+Debugging gunk?
 
-> +       cat >badobjects <<-EOF &&
-> +       100644 blob $(test_oid 001)     dir/file1
-> +       100644 blob $(test_oid 002)     dir/file2
-> +       100644 blob $(test_oid 003)     dir/file3
-> +       100644 blob $(test_oid 004)     dir/file4
-> +       100644 blob $(test_oid 005)     dir/file5
+> +       test "$tree" = $(test_oid simpletree)
 
-So, test_oid() knows about these keys because the patch 1/11 loaded
-them via test_oid_cache(). Are the keys in oid-info/hash-info and
-oid-info/oid going to be needed by multiple scripts? If so, I'm
-wondering if it would make more sense to have test-lib-functions.sh
-load them instead of expecting each script to do so. Another
-possibility is to have a test_oid_init() function in
-test-lib-functions.sh which both loads that low-level information and
-initializes the hash algorithm.
+If test_oid() fails to find key "simpletree", this expression will be
+invalid. Therefore, it probably would be a good idea to quote the
+$(test_oid ...) invocation.
 
+> @@ -911,17 +914,18 @@ test_expect_success 'showing stage with git ls-files --stage' '
+> +test_expect_success 'validate git ls-files output for a known tree' '
+> +       cat >expected <<-EOF &&
+> +       100644 $(test_oid path0f) 0     path0
+> +       120000 $(test_oid path0s) 0     path0sym
+> +       100644 $(test_oid path2f) 0     path2/file2
+> +       120000 $(test_oid path2s) 0     path2/file2sym
+> +       100644 $(test_oid path3f) 0     path3/file3
+> +       120000 $(test_oid path3s) 0     path3/file3sym
+> +       100644 $(test_oid subp3f) 0     path3/subp3/file3
+> +       120000 $(test_oid subp3s) 0     path3/subp3/file3sym
 >         EOF
->         git update-index --index-info <badobjects
+> +       cat expected &&
+
+Debugging gunk?
+
+>         test_cmp expected current
 >  '
