@@ -2,167 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 944C31F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 23:06:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A87E1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 23:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726451AbeHTCTf (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 22:19:35 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37687 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726252AbeHTCTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 22:19:35 -0400
-Received: by mail-qt0-f194.google.com with SMTP id n6-v6so14396591qtl.4
-        for <git@vger.kernel.org>; Sun, 19 Aug 2018 16:06:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=HRSsp7mKZuHrAN61qw0BXXSQh4W8j0H2s27A7ITMU4c=;
-        b=UoAXNH6X67uwlDL5mFRtjG+H1K5iio7yuXW6h9rfLW0XhnIHgGISTCYtU2bm5f6s6x
-         yvc630JVqKnFAPeJr/aUwcwQCMzkYtvhTFwvap/b/Pz9TrqvqYZnKUH8lDLtUNLeBxvG
-         d5w/92EByzeOyqew8it/ASo9vQ88itf7w3vyMd1UdOemqUjBrWtQQsGQWFWQS5GfYGLH
-         6B/rYBHo1Lm8XXZLkM5YQ2HmwfLTqqVBQrlE0ZHY39RZkVNcuv1T4UnEQTGxqN6uva/B
-         J7HmoMPdwVIS5uV+8lCyvKHHdbt5eAVpXI58+UQJlFV5gfLzj58SUoanxduGGUJ7gKh1
-         P1nQ==
-X-Gm-Message-State: AOUpUlGaXU00XkEb4SWuZwjgLDywUnmkyR0FLsHmoIjgiTBFNeTJ316Z
-        2rpAg3/0LKWHlgmjYnZsqbYjCunuQJQ6/375/zo=
-X-Google-Smtp-Source: AA+uWPyq2R5Xpn3kMDS0K9gEqN/iqpfFLNclS55MWFYh5fcUsPbxMXu4r2Azpcn5s8h1IuCmMnIHF2d7cK+SKpKnqP4=
-X-Received: by 2002:ac8:6c8:: with SMTP id j8-v6mr40770629qth.314.1534719985764;
- Sun, 19 Aug 2018 16:06:25 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180819175351.449973-1-sandals@crustytoothpaste.net>
- <20180819175351.449973-2-sandals@crustytoothpaste.net> <CAPig+cRZsJ00wNW08-jxmD=aW0V1hJJYEa9EVTMQT4=r0B+jeQ@mail.gmail.com>
- <20180819215022.GH70480@genre.crustytoothpaste.net>
-In-Reply-To: <20180819215022.GH70480@genre.crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 19 Aug 2018 19:06:14 -0400
-Message-ID: <CAPig+cRSUDAdE2ECcH+b8h4urJySaS_VybQdHNv24rad_kFEag@mail.gmail.com>
+        id S1726478AbeHTDJ1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 23:09:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55438 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726436AbeHTDJ1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Aug 2018 23:09:27 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6C3116047A;
+        Sun, 19 Aug 2018 23:56:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1534722968;
+        bh=2E12/ZXHvcwdFKQyrhPSr6wlbvSvGb7oevWXUIMQUHM=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=EK6fsp0ziWD65xBP5f9ojXse6jGJ+Cg2hHj/R8eodgeNuKpVZGN80oNRzOBA4LJ56
+         qJzVasGTF7iGMIfAnVwZaUkU7K/TCHZleCnUh5PmarRvuQz5ZVrTKzePsgYmMSgL5z
+         iyXlC01Ecz9LjbnDbOlKm8iw/7zAAGJwpX+8hk41bg0P3zByuBQq5nke+1tffsxTe6
+         dMZaCOluh/gJLV/rcpinC8AWcvwunv9+oJZU+xlbKD9syx2lFETQqnyj1cNP54q989
+         O2OxF8wQuH6DiqKkxlEltAVqRRkR7SIDpqxApKrMRUw5EZvIkl5UaFh5Ec7jMAGkWz
+         S0y6mMWtMXR7LtG2AsEauLXgcjQDb4cz2j2Zuom/tGW9XGbR2W2uIJ6nnyNiXKrcmK
+         5GxNWVF0vXCN2TA6gb1maLpJXW+EF53KbwMOSFkxIOQlGVyy4s6kgOrLkeQbtFerKU
+         io+axI6+EzMSjrtOMVdnl187KJqHfq4xT2Df8alcnYl9yhc/PNJ
+Date:   Sun, 19 Aug 2018 23:56:03 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
 Subject: Re: [PATCH v2 01/11] t: add tool to translate hash-related values
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+Message-ID: <20180819235603.GK70480@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
         Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+References: <20180819175351.449973-1-sandals@crustytoothpaste.net>
+ <20180819175351.449973-2-sandals@crustytoothpaste.net>
+ <CAPig+cRZsJ00wNW08-jxmD=aW0V1hJJYEa9EVTMQT4=r0B+jeQ@mail.gmail.com>
+ <20180819215022.GH70480@genre.crustytoothpaste.net>
+ <CAPig+cRSUDAdE2ECcH+b8h4urJySaS_VybQdHNv24rad_kFEag@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="+svXpSx+RSEd8UhP"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cRSUDAdE2ECcH+b8h4urJySaS_VybQdHNv24rad_kFEag@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 19, 2018 at 5:50 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Sun, Aug 19, 2018 at 03:40:22PM -0400, Eric Sunshine wrote:
-> > On Sun, Aug 19, 2018 at 1:54 PM brian m. carlson
-> > <sandals@crustytoothpaste.net> wrote:
-> > > +       test "$(test_oid hexsz)" -eq $(wc -c <actual) &&
-> > > +       test $(( $(test_oid rawsz) * 2)) -eq "$(test_oid hexsz)"
-> > > +'
+
+--+svXpSx+RSEd8UhP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Aug 19, 2018 at 07:06:14PM -0400, Eric Sunshine wrote:
+> On Sun, Aug 19, 2018 at 5:50 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > I think what I'd like to do instead is store in a variable and make
+> > test_oid return unsuccessfully if the value doesn't exist.  I think
+> > that's better for writing tests overall and will accomplish the same
+> > goal.
+>=20
+> My knee-jerk reaction is that could get clunky in practice, but
+> perhaps I'm not seeing the full picture.
+>=20
+> An alternative would be to return a distinguished error value.
+
+We already do it in several other places in the testsuite when we want
+to check the exit status of a command substitution, so I think it will
+end up being fine.  I'd like to try it and see.
+
+I think that we need to fix the return code either way, though.
+
+> > Putting them in a separate directory makes it possible to do something
+> > like this:
 > >
-> > If $(test_oid rawsz) fails to find "rawsz" and returns nothing, this
-> > expression will be "*2", which will error out in a
-> > less-than-meaningful way. Perhaps it would make more sense to dump the
-> > results of the two test_oid() to file and use test_cmp()?
->
-> I think what I'd like to do instead is store in a variable and make
-> test_oid return unsuccessfully if the value doesn't exist.  I think
-> that's better for writing tests overall and will accomplish the same
-> goal.
-
-My knee-jerk reaction is that could get clunky in practice, but
-perhaps I'm not seeing the full picture.
-
-An alternative would be to return a distinguished error value.
-
-> > > + test_oid_cache <"$TEST_DIRECTORY/oid-info/$1"
+> >    (cd t && ./t0002-* --verbose)
 > >
-> > What is the benefit of placing test-specific OID info in some
-> > dedicated directory? I suppose the idea of lumping all these OID files
-> > together in a single oid-info/ directory is that it makes it easier to
-> > see at a glance what needs to be changed next time a new hash
-> > algorithm is selected. However, that potential long-term benefit comes
-> > at the cost of divorcing test-specific information from the tests
-> > themselves. I imagine (for myself, at least) that it would be easier
-> > to grok a test if its OID's were specified and cached directly in the
-> > test script itself (via test_oid_cache <<here-doc). I could even
-> > imagine a test script invoking test_oid_cache<<here-doc before each
-> > test which has unique OID's in order to localize OID information to
-> > the test which needs it, or perhaps even within a test.
->
-> Putting them in a separate directory makes it possible to do something
-> like this:
->
->    (cd t && ./t0002-* --verbose)
->
-> and then use shell editing to change the command line.  If we put them
-> in the same directory as the tests, we make developers' lives a bit
-> harder.
+> > and then use shell editing to change the command line.  If we put them
+> > in the same directory as the tests, we make developers' lives a bit
+> > harder.
+>=20
+> Perhaps I'm missing something obvious, but I'm not following what
+> you're trying to convey.
+>=20
+> Okay, thinking upon this further, I guess you mean people who type
+> your example directly rather than using "./t0002-*.sh" or something.
 
-Perhaps I'm missing something obvious, but I'm not following what
-you're trying to convey.
+Right.  It also makes completion nicer (in Vim at least).
 
-Okay, thinking upon this further, I guess you mean people who type
-your example directly rather than using "./t0002-*.sh" or something.
+> I'm still open to the idea of supporting experimentation with other
+> hash algorithms and I see how lumping all the OID tables into a single
+> directory can make it easy to locate everything that will require
+> adjustment for a new algorithm. But, this information can also be
+> gleaned via a simple grep for "test_oid_cache", so I'm not sure the
+> lumped-directory approach buys much.
+>=20
+> Also, my gut feeling is that such experimentation will be very rare,
+> whereas the addition of new tests which have some sort of
+> OID-dependency will likely be a more frequent occurrence. And, the
+> locality of an OID-table plopped down right next to the test which
+> requires it seems a win (in my mind).
 
-> You mentioned the desire to experiment with additional hash algorithms
-> as a hope for this series.  I don't know if that's still something
-> desirable to have, now that we've decided on SHA-256, but I felt it
-> would make it easier to find all the places that need updating.
+Okay.  I'll do that, and we'll see how it works.
 
-I'm still open to the idea of supporting experimentation with other
-hash algorithms and I see how lumping all the OID tables into a single
-directory can make it easy to locate everything that will require
-adjustment for a new algorithm. But, this information can also be
-gleaned via a simple grep for "test_oid_cache", so I'm not sure the
-lumped-directory approach buys much.
+> However, I'm sympathetic to the ugliness each caller having to specify
+> "$TEST_DIRECTORY/...". In my review of 2/11, I suggested the idea of a
+> test_oid_init() function which could load those common OID tables for
+> scripts which need them, thus hiding that ugliness. Another idea which
+> has some appeal is to define an $OIDDB variable (or some such name)
+> with value "$TEST_DIRECTORY/oid-info", which lets callers use:
+>=20
+>     test_oid_cache <"$OIDDB/bloop"
+>=20
+> which isn't so bad.
 
-Also, my gut feeling is that such experimentation will be very rare,
-whereas the addition of new tests which have some sort of
-OID-dependency will likely be a more frequent occurrence. And, the
-locality of an OID-table plopped down right next to the test which
-requires it seems a win (in my mind).
+I'll stuff in a test_oid_init function.  I think I like that approach
+the best.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-> > So, I'm having trouble understanding the benefit of the current
-> > approach over merely loading OID's via here-docs in the test scripts
-> > themselves. Perhaps the commit message could say something about why
-> > the current approach was taken.
->
-> I can do that.  The idea is that we have lots of common uses of certain
-> values that will need to be loaded, and it's better to load some of
-> those values from a file.  I felt it would be ugly to have to write out
-> the full "$TEST_DIRECTORY..." piece every time.
+--+svXpSx+RSEd8UhP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I do favor the simplicity of the caller deciding whether to use
-"test_oid_cache <file" or "test_oid_cache <<here-doc"; it provides
-extra flexibility over a function which loads the OID tables from a
-fixed path.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
 
-However, I'm sympathetic to the ugliness each caller having to specify
-"$TEST_DIRECTORY/...". In my review of 2/11, I suggested the idea of a
-test_oid_init() function which could load those common OID tables for
-scripts which need them, thus hiding that ugliness. Another idea which
-has some appeal is to define an $OIDDB variable (or some such name)
-with value "$TEST_DIRECTORY/oid-info", which lets callers use:
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlt6A5MACgkQv1NdgR9S
+9ouXIg/8CcyifyD9HyOKUZaSPD8jZIUe0eciB4ziOTb20KiuBrixN/4EKxvFpiSR
++Ukg6eWIDvti4MXKWISxjpJoy38vi/SV2AZ1eNWvoeUPzU0vp72og1pYzj8zh07p
+U8PLGikmLp6z/y3iD8NIVNR2YDsnLhAHCTJkXKbrOysmuISBiMJK9KiK2b6GtXcd
+vCweXq8mmoKziHvYTdrM0EaR9smd2JAE3Vw6ld+gUxhMZQolGMfK6+WhQWfzTyHx
+6kXM/ZBlQLCbX1kgqbhsqqttF9XFcad28NIS5MlCjMhd5rLiSxUQELHvLte/GAwf
+7TC4v+G9zJ98GF7xM1IZzYTM1ArIxLIqHzOi3BSMbJhHLXn//lNj6YnQ09OvkPD/
+D1EiqJLPzvTukksKzAFPNv0N24dPqfkhDkyn+H+YsQOg/m5gkE3Su584jIIz3TvI
+r9HTsFKpTeH6jXv5LfCPPTZj0aOQNIBpWQ8XNwXy7b2johzxwD7nZkEGk+ol8QEz
+s0fS4tP8uD5MgdxZS9xUXf+fpgmDB1H5Q6hVHCCOoFs9luT4kHoOIQiBFgq38yOd
+op6ovCIeibM85/VOot81pyZb5rYcjjpc2EME1KqMyfjTZi6pEVL+dHcCde7xZx57
+LKE0vGBPDEulm7ebn3jSht5Gxp9C+uRDgCE5MsVuK7I4nDvDUVc=
+=X70/
+-----END PGP SIGNATURE-----
 
-    test_oid_cache <"$OIDDB/bloop"
-
-which isn't so bad.
-
-> > Why, specifically, return $? here, as opposed to simply returning?
->
-> A simple return is probably better.  I think I wasn't clear on whether
-> POSIX required a bare "return" to return $? and may not have been online
-> at that time to look.  I remember being very clear that I didn't want to
-> return 0 unconditionally, though.
-
-I asked because, as far as I can see, this _is_ returning 0
-unconditionally since $? will always be 0 by the time it gets to the
-'return' (since it's not making any effort to break from the 'while'
-loop with a meaningful value upon failure.
-
-Fixing this function to return a meaningful value (success or failure)
-might be sensible since that would allow it to be used directly in a
-test rather than only outside.
+--+svXpSx+RSEd8UhP--
