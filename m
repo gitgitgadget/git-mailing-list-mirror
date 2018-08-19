@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CD341F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 17:54:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 181191F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 17:54:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726755AbeHSVGw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 17:06:52 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:55078 "EHLO
+        id S1726762AbeHSVGy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 17:06:54 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55102 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726737AbeHSVGv (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 19 Aug 2018 17:06:51 -0400
+        by vger.kernel.org with ESMTP id S1726597AbeHSVGx (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Aug 2018 17:06:53 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CC1006075D;
-        Sun, 19 Aug 2018 17:54:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 28A4F6081C;
+        Sun, 19 Aug 2018 17:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1534701274;
-        bh=Y2NrRKJEQKltaHb7O82w75UnZtrHvW4M8xwPHQly+uM=;
+        s=default; t=1534701276;
+        bh=l7BbuanO+KI9IQXaN8aalOwRIXDHYxrbPSK7IkN3XMs=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=DXIptRyljIRUrJvh9Sz2T1jPkG2osQjQjpsz6npcaiHSjmng1Yut7w5BoCQqrOUr2
-         voEqcw3rXhgQWUlYo6qhEAOQFARO0blEN0c3ewd9JrFSdij4bSyTicuGgWAn/qmO+S
-         Nym+7vkrhnZQ7OSrYmzvtUiijOmLQbWi8tox8fsvjA0dnVW7Jsv/w1naiS/g/e20LG
-         wgzD4Cv7l+H1Dj7SczGu1NQ/TCXi9TXHOZW6HfWp9PyOvr7L8g6OGJgCPfQfi38pIf
-         y90RF0Sf19ka/dAIq0qTpf3WDSMGNeBwIBzxlG+Icd92+i+C6IoWMxQtZJi3yl1m8V
-         vXwL50I5SSNZxq6X1oRfWrcxcbqRr4N4/ne89mzGZe24tmSR7szZfdi/9QuMchUOV/
-         NQlv950V85jbTa5hFEeFDd9DkZC1PtcB6mNjkxkiZHUuJgJlmT2t/M0zACbt2/oPzl
-         3kB+LBXfBXLb9XQDCsj7UxkPI60zksC3aELSJxblgWUJPvESpGk
+        b=IDbeomH/2fKwsn2ha9vjkg46CH0clOvs4TMU+2BQaIgGCYIuWbZgTaL1xyDHDvfTN
+         dl2/siGM4eMiM3lB07sB+2Qtrc3bbXnmCCaVTGTDGmx7w+0G/qao/EfQClLtWaAcXN
+         FpjWvMKrV4CuH4m0WDadT2+9p1qnmluVe23L54Rj2rDFmLvg1WsZeyLWcHk0gxIFZH
+         xjZOLsDJZdjya12qDHVzR66eTFUhgS+AcYISnWzEw9Rqj+G4UUCX9tRDUUWLH5fKAn
+         frMMLDCpGgAtfeUPhUR/HayxlLsRSEVT3w+4gZ17v+jlRKF/V0fJiNZUfzyCugy2eo
+         9n6jlOnNnq1MQwMzVZbdOttaIP3Fdh6+5MJPXiPSahSInpKVZ/b7tzUTHDlyE25gX3
+         2QFvYNsy7y9xwe0E+Xo5ShJX7c/rtIo0esMtLv3H1SWDjHpUoPpmXTYnuH6Exak0Hg
+         ZDYGtgc2+ewElEVv8HkF+LrCwKk0x8qAQdyFyqWJghYwj7OaPWu
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v2 08/11] t1400: switch hard-coded object ID to variable
-Date:   Sun, 19 Aug 2018 17:53:48 +0000
-Message-Id: <20180819175351.449973-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v2 10/11] t1406: make hash-size independent
+Date:   Sun, 19 Aug 2018 17:53:50 +0000
+Message-Id: <20180819175351.449973-11-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.18.0.1017.ga543ac7ca45
 In-Reply-To: <20180819175351.449973-1-sandals@crustytoothpaste.net>
 References: <20180819175351.449973-1-sandals@crustytoothpaste.net>
@@ -55,23 +55,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Switch a hard-coded all-zeros object ID to use a variable instead.
+Instead of hard-coding a 40-based constant, split the output of
+for-each-ref and for-each-reflog by field.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1400-update-ref.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t1406-submodule-ref-store.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 7c8df20955..6072650686 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -346,7 +346,7 @@ test_expect_success "verifying $m's log (logged by config)" '
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+index e093782cc3..d199d872fb 100755
+--- a/t/t1406-submodule-ref-store.sh
++++ b/t/t1406-submodule-ref-store.sh
+@@ -39,7 +39,7 @@ test_expect_success 'rename_refs() not allowed' '
+ '
  
- git update-ref $m $D
- cat >.git/logs/$m <<EOF
--0000000000000000000000000000000000000000 $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
-+$Z $C $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
- $C $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150350 -0500
- $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
- $F $Z $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
+ test_expect_success 'for_each_ref(refs/heads/)' '
+-	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
++	$RUN for-each-ref refs/heads/ | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	master 0x0
+ 	new-master 0x0
+@@ -48,7 +48,7 @@ test_expect_success 'for_each_ref(refs/heads/)' '
+ '
+ 
+ test_expect_success 'for_each_ref() is sorted' '
+-	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
++	$RUN for-each-ref refs/heads/ | cut -d" " -f 2- >actual &&
+ 	sort actual > expected &&
+ 	test_cmp expected actual
+ '
+@@ -65,7 +65,7 @@ test_expect_success 'verify_ref(new-master)' '
+ '
+ 
+ test_expect_success 'for_each_reflog()' '
+-	$RUN for-each-reflog | sort | cut -c 42- >actual &&
++	$RUN for-each-reflog | sort | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	refs/heads/master 0x0
