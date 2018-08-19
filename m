@@ -2,114 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 351351F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 17:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 723FD1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 17:51:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726626AbeHSUrH (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 16:47:07 -0400
-Received: from mout.web.de ([212.227.15.14]:57873 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726400AbeHSUrH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 16:47:07 -0400
-Received: from [192.168.178.36] ([79.237.244.101]) by smtp.web.de (mrweb004
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MeNUV-1fUhXy3ezH-00QBFm; Sun, 19
- Aug 2018 19:34:49 +0200
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] parseopt: group literal string alternatives in argument help
-Message-ID: <0635e9e0-41ac-95b5-257c-d572f5cdb2cd@web.de>
-Date:   Sun, 19 Aug 2018 19:34:48 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726527AbeHSVDD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 17:03:03 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40363 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbeHSVDD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 17:03:03 -0400
+Received: by mail-ed1-f67.google.com with SMTP id e19-v6so7159128edq.7
+        for <git@vger.kernel.org>; Sun, 19 Aug 2018 10:50:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=kWUgajFjd6lZ4po2dr3EAowyalvkszATMs5hyk2GOrI=;
+        b=FA1CYxbf6QkIWhmN9R4a++tY0Dp2Koc66AaAStJ68nWtox7HelXkOl+4HxdDq8LDla
+         ucOkDxVWGbK3WcG6JqhHsHNcMwTZ0l3fAQn3Jm7QvYYSDavWMLCHIMJD0Gg9jip/z3dO
+         FZyzSeL7lwXHqbBaqPY6nhxhDRZnBxkJw2e+7h6TieIaYP99ofv/d2qTn9wJJ9y/ETzj
+         UKzJJlKoimi5NFyQDTVxCK6S3aXyrgYesOb1W51wjPSbB6o/JGd1DMNeD4xoI7ABJrmt
+         ZkNiSppUTFPDa2PJbOKy2muMsFo+8xYYaKQslFLPThWU4gV2gWbY9tzOiUH/KzZqzoTv
+         NsCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=kWUgajFjd6lZ4po2dr3EAowyalvkszATMs5hyk2GOrI=;
+        b=OXCYwYeuOwC8fr4HKkoKnHpJToam3p2IeefsXMeXBPZe+dxt9EkfI5qHtM8M5yzhlJ
+         pXnc4EvcvVB5xrAJ7MS/zY4GZX/J4OEQxfmZaVWRZ9cCQpvptHSBY1Ujrl/ma201DXSB
+         Z+htEn5VfsO8Lxyxj1pOvtOoP8eHzqHDzvVsa3zQV48rznHg6eqNwvi1isy5Cm3+s/5q
+         iFoXM8dszYdk4mETZwFxDGlwG4M2IDN61/9h6jPaBKnWRrBmaXxWK5Wl8HDsTGgwevej
+         UfXeNbOyJPLeJEcqlEQpZgkIR70Cc9CMOKdFxvLkmMNgVt1XHww33EKmJOI4GH/eYXS+
+         /IlA==
+X-Gm-Message-State: AOUpUlHjO6l8Bq1QB9bkSa8HrpzPza4qZYCnrz7u/qOJhp5MW0XMXqyX
+        PnqpjKjW6JkT4emzeoatZ6o=
+X-Google-Smtp-Source: AA+uWPwb0KZmwf4gBVKDzocWLNFlzIWCaZW7wLPvvFK1w0vRFaI3bACHe5KUYMWh9hmR24EWb7QZOQ==
+X-Received: by 2002:a50:81a4:: with SMTP id 33-v6mr50688925ede.200.1534701045771;
+        Sun, 19 Aug 2018 10:50:45 -0700 (PDT)
+Received: from [10.9.11.6] ([46.246.123.46])
+        by smtp.gmail.com with ESMTPSA id w3-v6sm7618872edb.16.2018.08.19.10.50.44
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 19 Aug 2018 10:50:45 -0700 (PDT)
+Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
+ use bitmap' test
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Kirill Smelkov <kirr@nexedi.com>, Jeff King <peff@peff.net>
+References: <20180814114721.25577-1-szeder.dev@gmail.com>
+ <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
+ <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com>
+ <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
+ <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
+ <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
+From:   Andrei Rybak <rybak.a.v@gmail.com>
+Message-ID: <73346b91-6d19-651a-c361-1666a39681f0@gmail.com>
+Date:   Sun, 19 Aug 2018 19:50:42 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:mDQ98tsX8nuLLXRyMeb0s6/jULwp0OJ84B2kNc01sRo4wHDDuV9
- W+N7L7+AGJq5tMEI36E/AJsYmrZAY9bMikRqb1+540AbZ9S30SEoTaEkV8q0b1Nc/0D3y8D
- JcuyvOxDSAwRoDXo3d7oZ7Xh4ig2jlLZtZWul4+tQs9x4Yi8GNQG46Hq6zbMQFojkG5zzOv
- HaxPSwCeaS+72c+53BF2A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jJKt1Lfyk4s=:6WlDrQ4vc2yamT3gR1Vu6n
- JlYK45QoqewHqQDKy6ylE3282fRG7QkPRLXW9OJYuizM3A0zN7xwVvkW8wXi5meFoSrwrPDqn
- EJvMNY3p9vm/4aBmsDrlKly49eTEV5kXpz63cYBc+a9AGgUQzs6KVhMwN13/FFyvyU+NQk+Vs
- nYCo4z8xyOwDcxOwlDngTsbTjA185wZ+3qmLvvbraGFl+/azytdmZxWy80tOSphjfKdY2bETt
- /dZDj5f2bJMUK+Ke2iSWqRCWUTdyjzj/znWhuGYqk1TPBQPC9p/JkS3PBcBnBE1+xvxvlKxIT
- 4zWXd4irGMcJYCdmew20mR4VC7m9snvUfFcf1f3LNtPGx3zC/qv66JiKhg9iyw6zO1dCsmMRP
- udjOjCznqgNPwXtsrqO+H8d15VrE4GBnZain9DDuj3PC5qvw3BV3fGq6OAuI7aXb+CPpmiJKg
- w9fMTyCjM+Ef1EmHA7ydTwkSO3++sCmyh6lJis8RmZjHvMOaONX3ZGAX5ovfZSfLtkPH3Yal/
- fjRvgOkRUoeJsRe/vdyWlIqNCK1Wn24BmYaB84lGY0AQ7eTFy4WDQpkukq/HH9bLrITebrDpl
- KySXqGRGUphqqAqYtLUOMAUbzPwY2cdWwxSPDzLPUdQEUogdI8eJATHV8paAtAe5HlOsJ0XOS
- ZXouWh4g1xx+gcq2C5mph06LsJT2aoof+TL0/ocYBxvQQfzyijmVLQ7cBseuJ5D1rh9rgNjOw
- oLaBYZBZLRvsCghZpCPcqh4NnW0A/fbsW5NhDUOhSsyOrpu30021o3j8xY9C6cCEC1w/5ixX1
- E05hLul
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This formally clarifies that the "--option=" part is the same for all
-alternatives.
+On 17/08/18 22:09, Junio C Hamano wrote:
+> Andrei Rybak <rybak.a.v@gmail.com> writes:
+>>
+>> I'll try something like the following on the weekend:
+>>
+>> 	test_cmp () {
+>> 		if test "$1" != - && ! test -s "$1"
+>> 		then
+>> 			echo >&4 "error: trying to compare empty file '$1'"
+>> 			return 1
+>> 		fi
+>> 		if test "$2" != - && ! test -s "$2"
+>> 		then
+>> 			echo >&4 "error: trying to compare empty file '$2'"
+>> 			return 1
+>> 		fi
+>> 		test_cmp_allow_empty "$@"
+>> 	}
+> 
+> I actually think the above gives way too confusing output, when the
+> actual output is empty and we are expecting some output.
+> 
+> The tester wants to hear from test_cmp "your 'git cmd' produced some
+> output when we are expecting none" as the primary message.  We are
+> trying to find bugs in "git" under development, and diagnosing iffy
+> tests is secondary.  But with your change, the first thing that is
+> checked is if 'expect' is an empty file and that is what we get
+> complaints about, without even looking at what is in 'actual'.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/pull.c      | 2 +-
- builtin/push.c      | 4 ++--
- builtin/send-pack.c | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+I came up with two solutions for this issue:
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 53bc5facfd..681c127a07 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -135,7 +135,7 @@ static struct option pull_options[] = {
- 	/* Options passed to git-merge or git-rebase */
- 	OPT_GROUP(N_("Options related to merging")),
- 	{ OPTION_CALLBACK, 'r', "rebase", &opt_rebase,
--	  "false|true|merges|preserve|interactive",
-+	  "(false|true|merges|preserve|interactive)",
- 	  N_("incorporate changes by rebasing rather than merging"),
- 	  PARSE_OPT_OPTARG, parse_opt_rebase },
- 	OPT_PASSTHRU('n', NULL, &opt_diffstat, NULL,
-diff --git a/builtin/push.c b/builtin/push.c
-index ef4c188895..d09a42062c 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -561,7 +561,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		  0, CAS_OPT_NAME, &cas, N_("<refname>:<expect>"),
- 		  N_("require old value of ref to be at this value"),
- 		  PARSE_OPT_OPTARG | PARSE_OPT_LITERAL_ARGHELP, parseopt_push_cas_option },
--		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "check|on-demand|no",
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &recurse_submodules, "(check|on-demand|no)",
- 			N_("control recursive pushing of submodules"),
- 			PARSE_OPT_OPTARG, option_parse_recurse_submodules },
- 		OPT_BOOL_F( 0 , "thin", &thin, N_("use thin pack"), PARSE_OPT_NOCOMPLETE),
-@@ -576,7 +576,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "follow-tags", &flags, N_("push missing but relevant tags"),
- 			TRANSPORT_PUSH_FOLLOW_TAGS),
- 		{ OPTION_CALLBACK,
--		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
-+		  0, "signed", &push_cert, "(yes|no|if-asked)", N_("GPG sign the push"),
- 		  PARSE_OPT_OPTARG, option_parse_push_signed },
- 		OPT_BIT(0, "atomic", &flags, N_("request atomic transaction on remote side"), TRANSPORT_PUSH_ATOMIC),
- 		OPT_STRING_LIST('o', "push-option", &push_options_cmdline, N_("server-specific"), N_("option to transmit")),
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 724b484850..8e3c7490f7 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -166,7 +166,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "mirror", &send_mirror, N_("mirror all refs")),
- 		OPT_BOOL('f', "force", &force_update, N_("force updates")),
- 		{ OPTION_CALLBACK,
--		  0, "signed", &push_cert, "yes|no|if-asked", N_("GPG sign the push"),
-+		  0, "signed", &push_cert, "(yes|no|if-asked)", N_("GPG sign the push"),
- 		  PARSE_OPT_OPTARG, option_parse_push_signed },
- 		OPT_STRING_LIST(0, "push-option", &push_options,
- 				N_("server-specific"),
--- 
-2.18.0
+  1. Check both files at the same time (combination with Gábor's
+     function):
+
+	test_cmp () {
+		if test "$1" != - &&
+		   test "$2" != - &&
+		   ! test -s "$1" && 
+		   ! test -s "$2"
+		then
+			error "bug in test script: using test_cmp to check empty file; use test_must_be_empty instead"
+		fi
+		test_cmp_allow_empty "$@"
+	}
+
+     This will still be reporting to the developer clearly, but
+     will only catch cases exactly like the bogus test in t5310.
+
+  2. Enable this check via variable, smth like EMPTY_CMP_LINT=1
