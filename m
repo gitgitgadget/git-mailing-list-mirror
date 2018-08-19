@@ -2,63 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A62681F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 21:57:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC1CD1F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 21:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726480AbeHTBKl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 21:10:41 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:40094 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726349AbeHTBKk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 21:10:40 -0400
-Received: by mail-wr1-f65.google.com with SMTP id n2-v6so899312wrw.7
-        for <git@vger.kernel.org>; Sun, 19 Aug 2018 14:57:41 -0700 (PDT)
+        id S1726508AbeHTBKn (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 21:10:43 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39574 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726349AbeHTBKm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 19 Aug 2018 21:10:42 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o37-v6so2501813wrf.6
+        for <git@vger.kernel.org>; Sun, 19 Aug 2018 14:57:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n4djlva33xSMP+Yg5EX9Ia350qz6uQf0foyO7tB/KM0=;
-        b=vZPocVNkdo5LIw5mrDw0ka0QXFr5sqxkFEcIItS2xsu19MGo364tlkWiYhVnl6BXhu
-         /AO+O4RjbhvBaiNllCK9eLNUkMPA1Kzq2k9jWpMPcYa8d1JutzFPP6stOLMZSn2zDbdd
-         db2gmA73BerA8u4tqlyqBwXGqpiIeLHyVFdaKBEj6xt1KCdqsX3o+WxZdNPFNNT/O9+m
-         aXH7BUEJfyfFFSgBm+fNpgWBPBH6ZTWb4JLfXIOjukw8MJCWS2pd40e1deEhMkeG93qF
-         VGZV2dqwboBMzO+b4oHpgMqLZKPqZH4BTPJzJtX80ZqA15Lv6Oa50WQCxV8JrpAlwzl1
-         ldLQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=DfI4bgcC1vdq/B59gt1dj0wPhimMdBhz6GFD4SdwUkc=;
+        b=sAZxXcWsB5732qgvi+goEN1KN6R26+2kaG2eRyRWJY6N4DdzMXzeVSjWV1zyr3EgU/
+         n61cSZef9hqCjPmecbwsCrEj+kjRfTkPqabfWE3YRqtCahdKUFHa2Jd5MwUbcETCo3xv
+         nanRYdUCbx0djPF8CaAokcYYRZE7BaRsqYecaaK2UHDvFhaZee5PUMSDofdxEbH43Wl6
+         gOmjM6K4lIxADMfgOnFJIlBCTZ3dizc85/E66ihwwljM+35w6IVFaRp4YCus2ZHXvb8l
+         SoQwYaT1XmqyOWSbPL5IIUQ9Ci4rier1woOgrEhbNTbztDgfhicwpGdzdqc3XUAP/F77
+         80Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n4djlva33xSMP+Yg5EX9Ia350qz6uQf0foyO7tB/KM0=;
-        b=VAJyVcFLvWEgrMdiOz7Cnn2QQcJHkY9X5pLIIhrgdwkX4Ow7dE5nZyx+VpN8zv1WDx
-         +gvSV0n3ACvk8aBEtoxmjLuSX9pMI0do+zgIyobuzGNpCg6ALJe4Bs5JJpy74ksewnDy
-         eePhRyzofqQ9VfrwC7JiSwcZHFK2K9ldLzG+mBuNKzrBg3DTFGhk9RClQ7UxxTxZJvY/
-         f8SDSypbn1aQfkvB1zfN6DdKuJD7+3yLkrG4wlMKmu4iL5GAb2Z4RHzM3ivm14WPysUe
-         Go/SSykuK+mWu1+zBuwX/1upJINKurC9iQKkm+uyelUjDO5bZsuyXKkmg+G2r5ce2Ubp
-         MJcA==
-X-Gm-Message-State: AOUpUlG7FA/EU6a1bYBpqDd51o/4XrNBlFbLsS5lE6JDakzAW7MkK7Nm
-        j27n5TJxiVtCQ7PqsG5fMhQ=
-X-Google-Smtp-Source: AA+uWPypBhWPu8N1nvXdNRqep6LJ1n773EM98If7O6iC+Eibx10Mr6hAmcbIVkzGIR4bR2KmM58vHA==
-X-Received: by 2002:a5d:48c7:: with SMTP id p7-v6mr28140003wrs.0.1534715860798;
-        Sun, 19 Aug 2018 14:57:40 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=DfI4bgcC1vdq/B59gt1dj0wPhimMdBhz6GFD4SdwUkc=;
+        b=qwnGSB33L0e+Nzrt1MfmZVmM7vXCL/TQx4cbtrHTG37W6XN1T1Wart/Hh4gh602cOB
+         7l24fv1UARDOhJ5JRQGgSk/pYSS6+tXFnlu4riVTZ36MRidECnOF6utmDo95+/EPHlv4
+         Y+OixMQMJMOSCSKOZJDF0LxA2ZVCgj2P4pTZwbNPI9KJbfhVOiAa+VCIV9CIjfmRenx2
+         BNEwDh6XEx+fXTAcjd+1bjUa+K6b2X4q8H2LQoSEGm7OPxjCMASDEdVDj5ILGvU9qPP3
+         jLDzPKsSwYGEFdDIVO3xmL6ggLQOM+YlqH8G0Z7ZwPDu5cmw+VGToi7+6JCZXNKc/1l8
+         yp0A==
+X-Gm-Message-State: AOUpUlEnBrePrT/fGv5Y40zWT9Nf0E5MN3lvbS7WW7l0xBFYHrEAQJ4G
+        FaDiIrjYrRDZHqCGVaJCYTs=
+X-Google-Smtp-Source: AA+uWPxK442Yr7guWbedIuiMI/5rGQxlwjUpz/s9TonjfxRgR5bKuYlFBLVgm+YHGB7nQmHNrkYptQ==
+X-Received: by 2002:a5d:540d:: with SMTP id g13-v6mr29279910wrv.4.1534715863465;
+        Sun, 19 Aug 2018 14:57:43 -0700 (PDT)
 Received: from localhost.localdomain (84-236-78-30.pool.digikabel.hu. [84.236.78.30])
-        by smtp.gmail.com with ESMTPSA id x82-v6sm30485975wmd.11.2018.08.19.14.57.39
+        by smtp.gmail.com with ESMTPSA id x82-v6sm30485975wmd.11.2018.08.19.14.57.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 19 Aug 2018 14:57:39 -0700 (PDT)
+        Sun, 19 Aug 2018 14:57:42 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Andrei Rybak <rybak.a.v@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 0/4] tests: make more use of 'test_must_be_empty'
-Date:   Sun, 19 Aug 2018 23:57:21 +0200
-Message-Id: <20180819215725.29001-1-szeder.dev@gmail.com>
+Subject: [PATCH 2/4] tests: use 'test_must_be_empty' instead of 'test ! -s'
+Date:   Sun, 19 Aug 2018 23:57:23 +0200
+Message-Id: <20180819215725.29001-3-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.18.0.903.gab616d7dc6
+In-Reply-To: <20180819215725.29001-1-szeder.dev@gmail.com>
+References: <20180819215725.29001-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,99 +69,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series is a continuation of and applies on top of
-'ab/test-must-be-empty-for-master', and converts even more places to
-use 'test_must_be_empty'.
+Using 'test_must_be_empty' is preferable to 'test ! -s', because it
+gives a helpful error message if the given file is unexpectedly no
+empty, while the latter remains completely silent.  Furthermore, it
+also catches cases when the given file unexpectedly does not exist at
+all.
 
-There are still a bunch of cases in the form of 'test -z "$(cmd...)"'
-that could use 'test_must_be_empty'...  maybe someday.
+This patch was created by:
 
-SZEDER Gábor (4):
-  tests: use 'test_must_be_empty' instead of '! test -s'
-  tests: use 'test_must_be_empty' instead of 'test ! -s'
-  tests: use 'test_must_be_empty' instead of 'test_cmp /dev/null <out>'
-  tests: use 'test_must_be_empty' instead of 'test_cmp <empty> <out>'
+  sed -i -e 's/test ! -s/test_must_be_empty/' t[0-9]*.sh
 
- t/t0000-basic.sh                             |  2 +-
- t/t0001-init.sh                              |  5 +--
- t/t0003-attributes.sh                        |  3 +-
- t/t0030-stripspace.sh                        | 22 ++++------
- t/t0040-parse-options.sh                     |  4 +-
- t/t0061-run-command.sh                       |  9 ++--
- t/t0090-cache-tree.sh                        |  2 +-
- t/t0203-gettext-setlocale-sanity.sh          |  4 +-
- t/t1300-config.sh                            |  5 +--
- t/t1410-reflog.sh                            |  3 +-
- t/t1411-reflog-show.sh                       |  3 +-
- t/t1450-fsck.sh                              | 11 +++--
- t/t1501-work-tree.sh                         |  2 +-
- t/t1510-repo-setup.sh                        | 24 +++++------
- t/t1600-index.sh                             |  3 +-
- t/t1700-split-index.sh                       |  4 +-
- t/t2013-checkout-submodule.sh                |  6 +--
- t/t2200-add-update.sh                        |  3 +-
- t/t2203-add-intent.sh                        |  6 +--
- t/t2204-add-ignored.sh                       |  8 ++--
- t/t3001-ls-files-others-exclude.sh           |  6 +--
- t/t3004-ls-files-basic.sh                    |  6 +--
- t/t3035-merge-sparse.sh                      |  5 +--
- t/t3210-pack-refs.sh                         |  6 +--
- t/t3301-notes.sh                             |  4 +-
- t/t3308-notes-merge.sh                       |  2 +-
- t/t3310-notes-merge-manual-resolve.sh        |  8 ++--
- t/t3404-rebase-interactive.sh                |  5 +--
- t/t3600-rm.sh                                |  6 +--
- t/t4011-diff-symlink.sh                      |  2 +-
- t/t4015-diff-whitespace.sh                   |  4 +-
- t/t4019-diff-wserror.sh                      |  2 +-
- t/t4027-diff-submodule.sh                    | 29 ++++++-------
- t/t4041-diff-submodule-option.sh             | 18 ++++----
- t/t4047-diff-dirstat.sh                      |  4 +-
- t/t4060-diff-submodule-option-diff-format.sh | 18 ++++----
- t/t4116-apply-reverse.sh                     |  2 +-
- t/t4124-apply-ws-rule.sh                     |  2 +-
- t/t4132-apply-removal.sh                     |  5 +--
- t/t4150-am.sh                                |  4 +-
- t/t4201-shortlog.sh                          |  2 +-
- t/t4203-mailmap.sh                           |  4 +-
- t/t4211-line-log.sh                          |  2 +-
- t/t4212-log-corrupt.sh                       |  6 +--
- t/t4300-merge-tree.sh                        | 34 +++------------
- t/t5304-prune.sh                             |  3 +-
- t/t5314-pack-cycle-detection.sh              |  3 +-
- t/t5401-update-hooks.sh                      | 10 ++---
- t/t5500-fetch-pack.sh                        |  2 +-
- t/t5509-fetch-push-namespaces.sh             |  2 +-
- t/t5523-push-upstream.sh                     |  2 +-
- t/t5526-fetch-submodules.sh                  | 45 ++++++++++----------
- t/t5541-http-push-smart.sh                   |  2 +-
- t/t5570-git-daemon.sh                        |  2 +-
- t/t6112-rev-list-filters-objects.sh          |  3 +-
- t/t6120-describe.sh                          |  3 +-
- t/t6130-pathspec-noglob.sh                   |  9 ++--
- t/t6200-fmt-merge-msg.sh                     |  4 +-
- t/t7001-mv.sh                                |  6 +--
- t/t7004-tag.sh                               |  8 +---
- t/t7008-grep-binary.sh                       |  6 +--
- t/t7064-wtstatus-pv2.sh                      |  5 +--
- t/t7201-co.sh                                |  7 ++-
- t/t7400-submodule-basic.sh                   | 28 ++++--------
- t/t7401-submodule-summary.sh                 |  2 +-
- t/t7406-submodule-update.sh                  |  2 +-
- t/t7501-commit.sh                            |  6 +--
- t/t7600-merge.sh                             |  9 ++--
- t/t7610-mergetool.sh                         |  3 +-
- t/t7810-grep.sh                              | 35 ++++++---------
- t/t7811-grep-open.sh                         | 18 +++-----
- t/t8010-cat-file-filters.sh                  |  2 +-
- t/t9011-svn-da.sh                            | 14 +++---
- t/t9131-git-svn-empty-symlink.sh             |  6 +--
- t/t9135-git-svn-moved-branch-empty-file.sh   |  3 +-
- t/t9200-git-cvsexportcommit.sh               |  4 +-
- t/t9802-git-p4-filetype.sh                   |  2 +-
- t/t9903-bash-prompt.sh                       |  6 +--
- 78 files changed, 232 insertions(+), 345 deletions(-)
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t4201-shortlog.sh         | 2 +-
+ t/t4211-line-log.sh         | 2 +-
+ t/t8010-cat-file-filters.sh | 2 +-
+ t/t9802-git-p4-filetype.sh  | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 58c2773676..d3a7ce6bbb 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -192,7 +192,7 @@ test_expect_success 'shortlog with revision pseudo options' '
+ 
+ test_expect_success 'shortlog with --output=<file>' '
+ 	git shortlog --output=shortlog -1 master >output &&
+-	test ! -s output &&
++	test_must_be_empty output &&
+ 	test_line_count = 3 shortlog
+ '
+ 
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index d0377fae5c..6e378b23c7 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -102,7 +102,7 @@ test_expect_success '-L with --first-parent and a merge' '
+ test_expect_success '-L with --output' '
+ 	git checkout parallel-change &&
+ 	git log --output=log -L :main:b.c >output &&
+-	test ! -s output &&
++	test_must_be_empty output &&
+ 	test_line_count = 70 log
+ '
+ 
+diff --git a/t/t8010-cat-file-filters.sh b/t/t8010-cat-file-filters.sh
+index 0f86c19174..31de4b64dc 100755
+--- a/t/t8010-cat-file-filters.sh
++++ b/t/t8010-cat-file-filters.sh
+@@ -47,7 +47,7 @@ test_expect_success 'cat-file --textconv --path=<path> works' '
+ test_expect_success '--path=<path> complains without --textconv/--filters' '
+ 	sha1=$(git rev-parse -q --verify HEAD:world.txt) &&
+ 	test_must_fail git cat-file --path=hello.txt blob $sha1 >actual 2>err &&
+-	test ! -s actual &&
++	test_must_be_empty actual &&
+ 	grep "path.*needs.*filters" err
+ '
+ 
+diff --git a/t/t9802-git-p4-filetype.sh b/t/t9802-git-p4-filetype.sh
+index 1fc9b33aeb..9978352d78 100755
+--- a/t/t9802-git-p4-filetype.sh
++++ b/t/t9802-git-p4-filetype.sh
+@@ -310,7 +310,7 @@ test_expect_success SYMLINKS 'empty symlink target' '
+ 		# p4 to sync here will make it generate errors.
+ 		cd "$cli" &&
+ 		p4 print -q //depot/empty-symlink#2 >out &&
+-		test ! -s out
++		test_must_be_empty out
+ 	) &&
+ 	test_when_finished cleanup_git &&
+ 
 -- 
 2.18.0.903.gab616d7dc6
 
