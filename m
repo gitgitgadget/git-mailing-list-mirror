@@ -2,127 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 723FD1F954
-	for <e@80x24.org>; Sun, 19 Aug 2018 17:51:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E3141F954
+	for <e@80x24.org>; Sun, 19 Aug 2018 17:54:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbeHSVDD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 19 Aug 2018 17:03:03 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:40363 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726425AbeHSVDD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 19 Aug 2018 17:03:03 -0400
-Received: by mail-ed1-f67.google.com with SMTP id e19-v6so7159128edq.7
-        for <git@vger.kernel.org>; Sun, 19 Aug 2018 10:50:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=kWUgajFjd6lZ4po2dr3EAowyalvkszATMs5hyk2GOrI=;
-        b=FA1CYxbf6QkIWhmN9R4a++tY0Dp2Koc66AaAStJ68nWtox7HelXkOl+4HxdDq8LDla
-         ucOkDxVWGbK3WcG6JqhHsHNcMwTZ0l3fAQn3Jm7QvYYSDavWMLCHIMJD0Gg9jip/z3dO
-         FZyzSeL7lwXHqbBaqPY6nhxhDRZnBxkJw2e+7h6TieIaYP99ofv/d2qTn9wJJ9y/ETzj
-         UKzJJlKoimi5NFyQDTVxCK6S3aXyrgYesOb1W51wjPSbB6o/JGd1DMNeD4xoI7ABJrmt
-         ZkNiSppUTFPDa2PJbOKy2muMsFo+8xYYaKQslFLPThWU4gV2gWbY9tzOiUH/KzZqzoTv
-         NsCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=kWUgajFjd6lZ4po2dr3EAowyalvkszATMs5hyk2GOrI=;
-        b=OXCYwYeuOwC8fr4HKkoKnHpJToam3p2IeefsXMeXBPZe+dxt9EkfI5qHtM8M5yzhlJ
-         pXnc4EvcvVB5xrAJ7MS/zY4GZX/J4OEQxfmZaVWRZ9cCQpvptHSBY1Ujrl/ma201DXSB
-         Z+htEn5VfsO8Lxyxj1pOvtOoP8eHzqHDzvVsa3zQV48rznHg6eqNwvi1isy5Cm3+s/5q
-         iFoXM8dszYdk4mETZwFxDGlwG4M2IDN61/9h6jPaBKnWRrBmaXxWK5Wl8HDsTGgwevej
-         UfXeNbOyJPLeJEcqlEQpZgkIR70Cc9CMOKdFxvLkmMNgVt1XHww33EKmJOI4GH/eYXS+
-         /IlA==
-X-Gm-Message-State: AOUpUlHjO6l8Bq1QB9bkSa8HrpzPza4qZYCnrz7u/qOJhp5MW0XMXqyX
-        PnqpjKjW6JkT4emzeoatZ6o=
-X-Google-Smtp-Source: AA+uWPwb0KZmwf4gBVKDzocWLNFlzIWCaZW7wLPvvFK1w0vRFaI3bACHe5KUYMWh9hmR24EWb7QZOQ==
-X-Received: by 2002:a50:81a4:: with SMTP id 33-v6mr50688925ede.200.1534701045771;
-        Sun, 19 Aug 2018 10:50:45 -0700 (PDT)
-Received: from [10.9.11.6] ([46.246.123.46])
-        by smtp.gmail.com with ESMTPSA id w3-v6sm7618872edb.16.2018.08.19.10.50.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 19 Aug 2018 10:50:45 -0700 (PDT)
-Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
- use bitmap' test
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Git mailing list <git@vger.kernel.org>,
-        Kirill Smelkov <kirr@nexedi.com>, Jeff King <peff@peff.net>
-References: <20180814114721.25577-1-szeder.dev@gmail.com>
- <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
- <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com>
- <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
- <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
- <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <73346b91-6d19-651a-c361-1666a39681f0@gmail.com>
-Date:   Sun, 19 Aug 2018 19:50:42 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726644AbeHSVG1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 19 Aug 2018 17:06:27 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:55000 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726508AbeHSVG1 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 19 Aug 2018 17:06:27 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EF5F76047A;
+        Sun, 19 Aug 2018 17:54:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1534701248;
+        bh=LGN7E3RoDuSCfPSzQghe69soB0XnMwzQXdZOiEGriow=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=KNdusrhPfQuQ78zwATaxqvk7oSOM6zWRb8/RVe1tgWy8hzVZuR9nvPqR2QmPDG9pw
+         73hvyQ0sCtPx3m6SfRElpgRYf8CroFwURZNEpVqwsiPJa3s3aWGqeA7ygMArbP4DuY
+         PIrH+SZwEWWBqlPzljBWt8hB/tPeJsgxqiZIxcnNHFicG8xxMjebCEOa3mag+VLDwj
+         yJBe5P+2StakHnR3yfDCSoCydVuRhXxnYyBQbkDLSNEE9taf7OHetgUY1Wx4KnydpW
+         h6S7i5tbKEIINorhvPyKgapkEdR8lDBLutZJpsWhoIoyVmks7wlvzRNbI7EHzvQcA4
+         BHWFYn3lm+JYimNPaAfwX48NeVtgSV4X/M1FawWwGFoWELjZw+nmhasLG7kit4Hs+r
+         KOt+ua0uYwk768LYKTu/35vTQzL7bAizupHh90uVbzqUJxqV8Dnp57Xx6QfpCGvtCG
+         9C/lpCDJC2pnOECpUOWwcjqcbmsej6lZibt6qnqyFM+CyW+B88l
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 00/11] Hash-independent tests (part 3)
+Date:   Sun, 19 Aug 2018 17:53:40 +0000
+Message-Id: <20180819175351.449973-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.18.0.1017.ga543ac7ca45
 MIME-Version: 1.0
-In-Reply-To: <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/08/18 22:09, Junio C Hamano wrote:
-> Andrei Rybak <rybak.a.v@gmail.com> writes:
->>
->> I'll try something like the following on the weekend:
->>
->> 	test_cmp () {
->> 		if test "$1" != - && ! test -s "$1"
->> 		then
->> 			echo >&4 "error: trying to compare empty file '$1'"
->> 			return 1
->> 		fi
->> 		if test "$2" != - && ! test -s "$2"
->> 		then
->> 			echo >&4 "error: trying to compare empty file '$2'"
->> 			return 1
->> 		fi
->> 		test_cmp_allow_empty "$@"
->> 	}
-> 
-> I actually think the above gives way too confusing output, when the
-> actual output is empty and we are expecting some output.
-> 
-> The tester wants to hear from test_cmp "your 'git cmd' produced some
-> output when we are expecting none" as the primary message.  We are
-> trying to find bugs in "git" under development, and diagnosing iffy
-> tests is secondary.  But with your change, the first thing that is
-> checked is if 'expect' is an empty file and that is what we get
-> complaints about, without even looking at what is in 'actual'.
+This is next in the series of improvements to make tests
+hash-independent.
 
-I came up with two solutions for this issue:
+This round modifies the helpers to more closely follow the
+lighter-weight design that Eric Sunshine suggested in v1, at the cost of
+requiring lookup keys to be shell identifiers.  If that's judged to be
+undesirable, I can always hash the key before use.
 
-  1. Check both files at the same time (combination with Gábor's
-     function):
+Since we've decided on SHA-256, I put in an extra commit to update t0000
+and remove the use of the SHA1 prerequisite.  As described in the commit
+message, I wrote a Ruby script to synthesize the SHA-1 and SHA-256 blobs
+and then used a second one to generate the trees, using the same
+methodology for both algorithms. I did this specifically to ensure that
+the object IDs are exactly the ones we think they are.
 
-	test_cmp () {
-		if test "$1" != - &&
-		   test "$2" != - &&
-		   ! test -s "$1" && 
-		   ! test -s "$2"
-		then
-			error "bug in test script: using test_cmp to check empty file; use test_must_be_empty instead"
-		fi
-		test_cmp_allow_empty "$@"
-	}
+Changes from v1:
+* Adopt pure shell approach for helper.
+* Add tests for the helpers.
+* Explicitly refer to SHA-256 now that we know it will be NewHash.
+* Updated t0000 to remove SHA1 prerequisite.
+* Change name of helper from test_translate to test_oid.
+* Add helper to cache information in the shell.
+* Simplified lookup of HEAD in t0002.
+* Switched to using existing helper function in t0027.
+* Simplified handling of IDs in t0064.
 
-     This will still be reporting to the developer clearly, but
-     will only catch cases exactly like the bogus test in t5310.
+brian m. carlson (11):
+  t: add tool to translate hash-related values
+  t0000: use hash translation table
+  t0000: update tests for SHA-256
+  t0002: abstract away SHA-1 specific constants
+  t0027: make hash size independent
+  t0064: make hash size independent
+  t1006: make hash size independent
+  t1400: switch hard-coded object ID to variable
+  t1405: make hash size independent
+  t1406: make hash-size independent
+  t1407: make hash size independent
 
-  2. Enable this check via variable, smth like EMPTY_CMP_LINT=1
+ t/oid-info/hash-info           |   8 ++
+ t/oid-info/oid                 |  29 ++++++
+ t/oid-info/t0000               |  38 ++++++++
+ t/t0000-basic.sh               | 168 ++++++++++++++++++++-------------
+ t/t0002-gitfile.sh             |  26 ++---
+ t/t0027-auto-crlf.sh           |   3 +-
+ t/t0064-sha1-array.sh          |  49 +++++-----
+ t/t1006-cat-file.sh            |   6 +-
+ t/t1400-update-ref.sh          |   2 +-
+ t/t1405-main-ref-store.sh      |   4 +-
+ t/t1406-submodule-ref-store.sh |   6 +-
+ t/t1407-worktree-ref-store.sh  |   4 +-
+ t/test-lib-functions.sh        |  36 +++++++
+ 13 files changed, 267 insertions(+), 112 deletions(-)
+ create mode 100644 t/oid-info/hash-info
+ create mode 100644 t/oid-info/oid
+ create mode 100644 t/oid-info/t0000
+
