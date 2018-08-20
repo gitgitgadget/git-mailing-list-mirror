@@ -2,137 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFFEF1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 13:09:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75D761F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 13:18:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727072AbeHTQZJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 12:25:09 -0400
-Received: from mail-it0-f41.google.com ([209.85.214.41]:55061 "EHLO
-        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726685AbeHTQZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 12:25:08 -0400
-Received: by mail-it0-f41.google.com with SMTP id s7-v6so20430520itb.4
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 06:09:33 -0700 (PDT)
+        id S1727269AbeHTQeZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 12:34:25 -0400
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:52025 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726632AbeHTQeZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 12:34:25 -0400
+Received: by mail-yw1-f73.google.com with SMTP id v14-v6so9553228ywv.18
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 06:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=VXJnfiJVGxTc7vEIJ6JJIeLTyOpMGvIDk1OtL8PhwzY=;
-        b=dWOUWC3CVpJ7nBbmUChgv7DxvebvkwR8LqjnUDhEHi+XUHi+0fsV9kQrrkwYBdWHME
-         3Cy8LpRADBxzvpR5hRizBSCPdTKA3IyudFoOXMDb18ohsN12zVqiwNVQ5aH9umYkZz2b
-         /VuUQfP4o1HAdNq+66LpVSDK6M7Ej/kGwm5uBb+kS6fV//tng2N2AhZNOND+z03/ENqY
-         5IozEaUjuKHcbSA5fBOLgyYLJHwpDPO81OENVgqCoAS9ymL1asdvfz9PWOASruSlqYUb
-         ixp5nczhTsBuA1X695qkRaPR9hKf+WEt0cFsJzk4kRztSd9kaoZpR94xBOpE/v3E93Rm
-         KREQ==
+        d=google.com; s=20161025;
+        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
+         :cc;
+        bh=Qcz/NYynuVi8GI4pe1/k5Dx26+K6Ko8D9Qc8bSJ8uj0=;
+        b=nngeqRGnqe125ibwt4yyJstr/nLTMLr9TbXKlEpdSWg+XgQXHWWdi3jG/cHL3qSNT/
+         wnsVBhBlQmF5kgRkn2lQx3Axk0cobIxdlDKf+An/6oeyXZOhi2POmU0YLTu+wfEeKQkn
+         pxkF2uMsCv7TeJ59E9rcu5BL4ktjLp9HoeufKwOwG6aYVr/zQpg45MeT8kO5Gom15jGV
+         ZoIV12/H78lLW3AhxbUwzdHmqQV9I6wOSjvzAG9ww1uJNX7T0Lm/aTl3ayzPRk4bhRoX
+         5904tmW5NEqfD2brSMP/47rotXbbv+epQSRlm6K14bWP5gjZRm5b4XKqKbr8zGBs/GSY
+         ALeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=VXJnfiJVGxTc7vEIJ6JJIeLTyOpMGvIDk1OtL8PhwzY=;
-        b=BPj+ZkqSn4BsllShMXmlp1J9A2EqcR+5h0JCQ+3gRR1DNOjiiFOcRCL35TtpkZyO0a
-         gw6ENaqV7F1Z+WtBYNNIk9rWWSJXRaZYj2mixFVh2Xus01lHY0sEF97YIXhEvPX5a7EN
-         3f1qjtw1q1zwSAi5zik4ICGZ8NOvdUbZiJUz+YgIc8oaZ6vS4hJNJFfTmMBaT9ybpgRP
-         sEkPqyY1etSN1Hq/JSgnbp0Q2vJaUCF0OGtEv0Lzrq460HHEcWUkBfIji/kr5UkECQB7
-         jTC2tOKqpWKq91CYmCFiFYCmB21XrvBy4wf4cwlNHecUtKCxicuZAf/IplrCK+Xp9iWW
-         NmnQ==
-X-Gm-Message-State: AOUpUlEDgnbaA7+FOi0vBijHoI+K6EeCPk4YdGoY81HqQJggWwd20vc7
-        H7cwn81sadJYWPg43zYLupNsMI1H5Zx0DGckTEQL4aYN
-X-Google-Smtp-Source: AA+uWPy5yoZr6cG3OhkBviM2HqLVy5tbL7/gPEgILU+YuB2/og6u2AjtiUzl+EOucvIviqa08L8/fW+4I4K8bDZDJxU=
-X-Received: by 2002:a24:70b:: with SMTP id f11-v6mr12948724itf.137.1534770572977;
- Mon, 20 Aug 2018 06:09:32 -0700 (PDT)
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
+         :references:subject:from:to:cc;
+        bh=Qcz/NYynuVi8GI4pe1/k5Dx26+K6Ko8D9Qc8bSJ8uj0=;
+        b=stCG9DSUFS03U6Rs7MhliCF16bzpd+eZCgMT+ca2L2ZT4KTQ2xHEGqsb8zIyIGsuj8
+         htI7f4VnLBas13fzSf6QROZ6vse80q/lF5BaeNvcSIvA9KFrHZIv/r4Vsl1oZ9AGjUPC
+         0QPAgy3GGZZ+homH0BYTUZJjTYfeeF9mPjXdIBAT/0C1P09USG3ESNGgVJiHhwbqHVnn
+         WVU56Z87GqZRct6hzk3PKodo6uLSQNElaZDDbwkLfm979UwjwuJHWD8l6EioCAnN3wcg
+         yalmv492aInX/y4XiXx4q5sahZErgZek9LipDFHlwl8tmS/nNb/VJZCrQT7dmW7w7khB
+         BQGQ==
+X-Gm-Message-State: AOUpUlFfUFIf8nN2w1SR6PZze0OQsIgcXj4uEf82IHpalDmJIjnGHzZk
+        sjrdOvhG2MPlZQaSYgjWuh8ToM7aPZE=
+X-Google-Smtp-Source: AA+uWPxKQRO39lmmcF9LrBflmIwmfBiOkAmQQJru82p+/v5Z+bqAgbHxoQ8uKjd8id7kytiDKGN+GZsORQR4
 MIME-Version: 1.0
-Received: by 2002:a4f:22d3:0:0:0:0:0 with HTTP; Mon, 20 Aug 2018 06:09:32
- -0700 (PDT)
-In-Reply-To: <20180816224138.GA15490@sigill.intra.peff.net>
-References: <20180816224138.GA15490@sigill.intra.peff.net>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 20 Aug 2018 15:09:32 +0200
-Message-ID: <CAP8UFD3agHbDuDtjs7SsOaLx5A6vZ=HUxkCWYTwTSw1x5Zvbyw@mail.gmail.com>
-Subject: Re: Git Project Leadership Committee
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-Received: by 2002:a0d:c207:: with SMTP id e7-v6mr13904297ywd.154.1534771128110;
+ Mon, 20 Aug 2018 06:18:48 -0700 (PDT)
+Date:   Mon, 20 Aug 2018 06:04:25 -0700
+In-Reply-To: <cover.1533854545.git.matvore@google.com>
+Message-Id: <msg.1534770125.matvore@google.com>
+References: <cover.1533854545.git.matvore@google.com> <cover.1534374650.git.matvore@google.com>
+ <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com> <CACsJy8AE+MwBzzUFRGLKVp6vaAg2W_KO-qbUU2LQpd=rMQw2sA@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
+From:   Matthew DeVore <matvore@google.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 12:41 AM, Jeff King <peff@peff.net> wrote:
+There were many instances in this file where it seemed like BUG would be
+better, so I created a new commit before this one to switch them over. The
+interdiff is below.
 
-> So here are the nominations I came up with. If you'd like to nominate
-> somebody else (or yourself!), please do. If you have opinions, let me
-> know (public or private, as you prefer).
->
->  - Christian Couder
->  - =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+BTW, why are there so many instances of "die" without "_"? I expect all
+errors that may be caused by a user to be localized.
 
-Thanks for nominating both!
+I'm going by the output of this: grep -IrE '\Wdie\([^_]' --exclude-dir=t
 
-> Both are active, have been around a long time, and have taken part in
-> non-code activities and governance discussions. My understanding is that
-> Christian freelances on Git, which doesn't quite fit my "volunteer
-> representative" request, but I think contracting on Git is its own
-> interesting perspective to represent (and certainly he spent many years
-> on the volunteer side).
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 8e3caf5bf..09b2b05d5 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -44,8 +44,7 @@ static enum list_objects_filter_result filter_blobs_none(
 
-Yeah, I am freelancing since October 2015 mostly for GitLab,
-Booking.com and Protocol Labs as can be seen on my LinkedIn profile:
+  	switch (filter_situation) {
+  	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
 
-https://www.linkedin.com/in/christian-couder-569a731/
+  	case LOFS_BEGIN_TREE:
+  		assert(obj->type == OBJ_TREE);
+@@ -99,8 +98,7 @@ static enum list_objects_filter_result filter_trees_none(
 
-I feel lucky to be considered mostly like a regular employee
-especially by GitLab and Protocol Labs. Both of these companies employ
-a high ratio of remote developers from around the world, who often
-have some kind of freelance legal status, so they give them as much as
-possible the same kind of perks or incentives (like stock options) as
-regular employees.
+  	switch (filter_situation) {
+  	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
 
-GitLab is a very open and transparent company. The way it works is
-described in details in its Handbook
-(https://about.gitlab.com/handbook/). Its informal policy regarding
-Git has been to use regular released versions of Git in GitLab. If
-possible GitLab should use a recent version of Git to benefit from the
-latest improvements, though it should be compatible with old versions
-of Git, as this can be useful for example to people who want to build
-GitLab from source on top of a regular Linux distro that comes with an
-old Git.
+  	case LOFS_BEGIN_TREE:
+  	case LOFS_BLOB:
+@@ -151,8 +149,7 @@ static enum list_objects_filter_result  
+filter_blobs_limit(
 
-So for GitLab my work on Git has to be integrated upstream. I have
-been working on remote odb related things, which I haven't managed to
-get merged yet, and on a few other small things like delta islands for
-which things have been going better so far.
+  	switch (filter_situation) {
+  	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
 
-I also do some Git support at GitLab (for Git users, GitLab
-developers, customers, sales people, ...). I am sponsored by them to
-participate in or give presentations at conferences (like FOSSASIA
-2017, GSoC Mentor Summit, Bloomberg Hackathon, Git Merge, GitLab
-Summit, ...). And sometimes I do other marketing, security, developer
-relations or sales (like meeting a few French customers) related
-things.
+  	case LOFS_BEGIN_TREE:
+  		assert(obj->type == OBJ_TREE);
+@@ -257,8 +254,7 @@ static enum list_objects_filter_result filter_sparse(
 
-=C3=86var already talked in details about Booking.com and my work for them.
+  	switch (filter_situation) {
+  	default:
+-		die("unknown filter_situation");
+-		return LOFR_ZERO;
++		BUG("unknown filter_situation: %d", filter_situation);
 
-I have been working much less for Protocol Labs than for GitLab or
-Booking.com since I started working for GitLab around 2 years ago.
+  	case LOFS_BEGIN_TREE:
+  		assert(obj->type == OBJ_TREE);
+@@ -439,7 +435,7 @@ void *list_objects_filter__init(
+  	assert((sizeof(s_filters) / sizeof(s_filters[0])) == LOFC__COUNT);
 
-As with Git I had started working on my free time on IPFS
-(https://ipfs.io/) before I became a freelance working on it. So for
-Protocol Labs I have been using Sharness
-(https://github.com/chriscool/sharness/, which was created in 2011 by
-extracting t/test-lib.sh from Git) to add and maintain end to end
-tests to go-IPFS and other IPFS related projects.
+  	if (filter_options->choice >= LOFC__COUNT)
+-		die("invalid list-objects filter choice: %d",
++		BUG("invalid list-objects filter choice: %d",
+  		    filter_options->choice);
 
-Around one year ago Protocol Labs made a successful ICO (Initial Coin
-Offering) for Filecoin (https://filecoin.io/) and since then things
-have become a bit more like in a regular company (which is not
-necessarily bad).
-
-I have also had a few consulting contracts from various French
-companies for a few days each about consulting or teaching Git/GitLab.
+  	init_fn = s_filters[filter_options->choice];
