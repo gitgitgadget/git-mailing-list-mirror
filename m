@@ -2,158 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48BBD1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 15:41:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F11AE1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 15:54:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726132AbeHTS5j (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 14:57:39 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:43861 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbeHTS5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 14:57:39 -0400
-Received: by mail-lf1-f66.google.com with SMTP id f135-v6so11236177lfg.10
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 08:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=12BPE4CUuTJhGYacxwGPLVj1nu91SoyOcZPMWVlXxEE=;
-        b=ahTO4gGq/e1dgx1a/2gnCMSzbCUldZu11ywZ9t+W1SDuri4Bbio8UCd1e1WDkBfc5w
-         UW5rxwH6hF6PZENDROFD/lMZcnud4JMili/2wf5f+3eBoCR9HcG38wv8dIQ//2n989l8
-         KE7BtPZN5JgVMzJwmDH13Ey8UdL6BqEmKr+NOG9dcAJzYUEMtU5NPCi9euTLUdbiDCWw
-         vMeeQP4eXyRGRHmzeL3CJ+7n1MhscZjqWbHlGhzhsYnow61nPKyxtiuphQsqgWRBNnse
-         3BA3QVK922eETqodIdIW3VAw62PJ4u3N7lcybmoQWW2JmJux9QJsMbQi+hMS2voFlq1E
-         VYcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=12BPE4CUuTJhGYacxwGPLVj1nu91SoyOcZPMWVlXxEE=;
-        b=EFnHG5mOmtpswTn3iYSVc8a6JNqdVC01Ts+87kM8yUTJ4B3+RUrbmE7IjfeFR9hT6Q
-         d4xWUukJQdVZzRAOadVBcqr8BQ4yGYIQMhAx1hMMnwanrrGNtXWwtjfi6t7vnRGkHPml
-         ocNMtiHkoHAHW8IZNSlQLb2XmniHo+opNFJBYRAA+E57dfHVpF1kB3FSegQVNzLNFiMb
-         Nk5LvvK3kQzIZnoBhOBnenVD/vqyW8aHh3TVU8Tkj/NyNuUUnRRCkWKN9QeGO4TMWbxI
-         v+TukBhJs4oayQ0hvVzGKziXw8YQnDW7I2a9MzjTWHfB9/5LOymi8B1f5RtEiE6k1PXd
-         qkVQ==
-X-Gm-Message-State: AOUpUlF1lhNgqq1ILi/3IJcpq6bOZSdrPrG7cTM3JKEfWWYut4SZ5wAs
-        3rC822gTStapMhO2wmxlDKXReUNA
-X-Google-Smtp-Source: AA+uWPwA0ok47OtWHKVEagygq99+Bzj2Ini9C2l0aeR8QhSxOXckuHw70iHjbxWBpy/ReJ1dzKP+1w==
-X-Received: by 2002:a19:290c:: with SMTP id p12-v6mr28798516lfp.124.1534779689357;
-        Mon, 20 Aug 2018 08:41:29 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id n3-v6sm1659729lji.96.2018.08.20.08.41.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 20 Aug 2018 08:41:28 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH/RFC] commit: new option to abort -a something is already staged
-Date:   Mon, 20 Aug 2018 17:41:20 +0200
-Message-Id: <20180820154120.19297-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.18.0.1003.g5e2e2c8169
+        id S1726604AbeHTTKi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 15:10:38 -0400
+Received: from resqmta-po-02v.sys.comcast.net ([96.114.154.161]:53696 "EHLO
+        resqmta-po-02v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726033AbeHTTKi (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Aug 2018 15:10:38 -0400
+Received: from resomta-po-09v.sys.comcast.net ([96.114.154.233])
+        by resqmta-po-02v.sys.comcast.net with ESMTP
+        id rjR1fzkgUu3kirmVff6F48; Mon, 20 Aug 2018 15:54:27 +0000
+Received: from [IPv6:2601:646:c101:c8a2:90b2:a105:e027:80e1] ([IPv6:2601:646:c101:c8a2:90b2:a105:e027:80e1])
+        by resomta-po-09v.sys.comcast.net with ESMTPA
+        id rmVPfoZtwkOjvrmVPfpkFu; Mon, 20 Aug 2018 15:54:27 +0000
+Subject: Re: "less -F" is broken
+To:     Linus Torvalds <torvalds@linux-foundation.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <CA+55aFzsVt9CJOBPGABcvg464W1THvwYpNhO+9DWUNw4X36Ndg@mail.gmail.com>
+ <87k1orqpxj.fsf@evledraar.gmail.com>
+ <CA+55aFxjUsvhHwQGthGiLr537BGHkd-LECXVv8KzBTMMCo1bKQ@mail.gmail.com>
+ <e7fb0ae0-b3e3-d7ad-7f6e-c114ee563d59@greenwoodsoftware.com>
+ <CA+55aFzutOgNbw2jeKox81-9O4+eSDntgrSAqaZrf0-28sTSUg@mail.gmail.com>
+From:   Mark Nudelman <markn@greenwoodsoftware.com>
+Message-ID: <00804f16-f265-c4a1-332d-4b362548e663@greenwoodsoftware.com>
+Date:   Mon, 20 Aug 2018 08:54:13 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.2.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CA+55aFzutOgNbw2jeKox81-9O4+eSDntgrSAqaZrf0-28sTSUg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOcg3qvhJGUg2EDiZ6Taa/C6gvB+aiKB04d7nAZdL7cfeX5WYNClXebepzcxVuLtkIYsDm1XPG4BA2dL106rYDqs+iWwd7s5H9OsoB6l/5u/gi/bICbw
+ SFddVqFaomLeIVX1dbJYykW/VJm8fy5FqLCkYhPlcH2/gamCvA5j9wYgHMwPZ61YyDvC1/V0nY7wi9hn+3vCxeO3KyK/HiUHSksT4HGrMxXoc1z7a67voGKa
+ uKQ0aqKAnjL8C3b4TWI9PHmpOvb4pZ8/2+Lo1/FuxaVBALIaiDDpKtb2jbzy9cyuA55+CiK/batFG5v7njNtNxgiNbdhDiJvP1dMFX3kx1hIk1AtvwTLIh+c
+ bWjHoNtU90FwojQsFc36c9fD19pj5HWe1IGFTY2Q0LTnfr8N5jQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So many times I have carefully cherry picked changes to the index with
-`git add -p` then accidentally did `git commit -am ....` (usually by
-retrieving a command from history and pressing Enter too quickly)
-which destroyed beautiful index.
+On 8/16/2018 10:10 AM, Linus Torvalds wrote:
+> One option that I didn't try to go for - because I just don't know the
+> less code base well enough - is to basically make the behavior of '-F'
+> be something like this:
+> 
+>   - as long as all the lines are short and well-behaved, and we haven't
+> seen enough lines to fill the screen, act like 'cat' and just feed
+> them through
+> 
+>   - when you fill the screen (or when you hit some other condition that
+> makes you go "now I won't exit" - that could be a long line, but maybe
+> it could also be the user giving keyboard input for a less command?)
+> you send the init sequence and just redraw the whole screen.
 
-One way to deal with this is some form of `git undo` that allows me to
-retrieve the old index. That's not a lot of work by itself. The problem
-is designing that `git undo` interface because there are more undo
-options that this.
+I'm not sure that this would be a very nice user experience.  On a 
+terminal where the init sequence opens an alternate screen, some lines 
+from the start of the file would be printed in the main screen, and then 
+the whole file would be viewed in the alternate screen.  After exiting 
+less, the user would see his main screen with some lines from the first 
+page of the file displayed and then cut off at a seemingly arbitrary 
+point.  Seems like that could be confusing and annoying.
 
-Instead, let's handle just this problem for now. This new option
-commit.preciousDirtyIndex, if set to false, will not allow `commit -a`
-to continue if the final index is different from the existing one. I
-don't think this can be achieved with hooks because the hooks don't
-know about "-a" or different commit modes.
 
-Or is there a better way to handle this?
+> But let's say that that was all the user was interested in, and the
+> user presses 'q' to quit less. That doesn't work at all - it will wait
+> for that full ten seconds.
+> 
+> That actually happens even without -F too.
+> 
+> Wouldn't it be good to react to things like searches to highlight
+> something (and to 'quit' for the 'never mind, alteady got it' case)
+> even if there isn't enough data to fill the whole screen yet?
+> 
+> that said, ^C works, and this is not new behavior, so I'm just
+> throwing this out as a "maybe a different approach would fix _both_
+> the -F behavior _and_ the above traditional issue"?
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/config.txt |  5 +++++
- builtin/commit.c         | 19 +++++++++++++++++++
- 2 files changed, 24 insertions(+)
+This issue is, as you say, not related to the -F issue, but arises 
+because less doesn't have a way to be reading a file and simultaneously 
+react to terminal key presses.  When I first wrote less, there was no 
+easy way to do this in Unix.  Less also runs on other OSes which don't 
+provide this functionality.  The best I was able to do was to allow 
+ctrl-C to interrupt the read.  Of course in a modern OS that has 
+select() or similar functionality this could be implemented, but I think 
+it would require some largish changes to the architecture.  (Or maybe 
+not; I haven't really investigated this in detail.)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 95ad715a44..3937681ee9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1417,6 +1417,11 @@ commit.gpgSign::
- 	convenient to use an agent to avoid typing your GPG passphrase
- 	several times.
- 
-+commit.preciousDirtyIndex::
-+	If some changes are partially staged in the index (i.e.
-+	"git commit -a" and "git commit" commit different changes), reject
-+	"git commit -a".
-+
- commit.status::
- 	A boolean to enable/disable inclusion of status information in the
- 	commit message template when using an editor to prepare the commit
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 213fca2d8e..489e4b9f50 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -98,6 +98,7 @@ static const char *author_message, *author_message_buffer;
- static char *edit_message, *use_message;
- static char *fixup_message, *squash_message;
- static int all, also, interactive, patch_interactive, only, amend, signoff;
-+static int allow_dirty_index = 1;
- static int edit_flag = -1; /* unspecified */
- static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
- static int config_commit_verbose = -1; /* unspecified */
-@@ -385,10 +386,24 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
- 	 * (B) on failure, rollback the real index.
- 	 */
- 	if (all || (also && pathspec.nr)) {
-+		int compare_oid = all && !allow_dirty_index;
-+		struct object_id previous_oid;
-+
-+		if (compare_oid) {
-+			if (update_main_cache_tree(0) || !the_index.cache_tree)
-+				die(_("error building trees"));
-+			if (the_index.cache_tree->entry_count >= 0)
-+				oidcpy(&previous_oid, &the_index.cache_tree->oid);
-+			else
-+				oidclr(&previous_oid);
-+		}
- 		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
- 		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
- 		refresh_cache_or_die(refresh_flags);
- 		update_main_cache_tree(WRITE_TREE_SILENT);
-+		if (compare_oid && the_index.cache_tree &&
-+		    oidcmp(&previous_oid, &the_index.cache_tree->oid))
-+			die(_("staged content is different, aborting"));
- 		if (write_locked_index(&the_index, &index_lock, 0))
- 			die(_("unable to write new_index file"));
- 		commit_style = COMMIT_NORMAL;
-@@ -1413,6 +1428,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
- 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
- 		return 0;
- 	}
-+	if (!strcmp(k, "commit.preciousdirtyindex")) {
-+		allow_dirty_index = !git_config_bool(k, v);
-+		return 0;
-+	}
- 
- 	status = git_gpg_config(k, v, NULL);
- 	if (status)
--- 
-2.18.0.1003.g5e2e2c8169
+BTW, your first message seems to indicate that you didn't find the less 
+project on github.  It's at https://github.com/gwsw/less (mentioned in 
+the README).  The latest version (v535) has the -F change implemented, 
+but I haven't yet released this for beta testing.
+
+--Mark
 
