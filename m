@@ -2,196 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C63E21F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 18:11:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6F281F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 18:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726174AbeHTV2R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 17:28:17 -0400
-Received: from mail-yb0-f174.google.com ([209.85.213.174]:36607 "EHLO
-        mail-yb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbeHTV2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 17:28:17 -0400
-Received: by mail-yb0-f174.google.com with SMTP id d34-v6so4956498yba.3
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 11:11:37 -0700 (PDT)
+        id S1726547AbeHTVbD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 17:31:03 -0400
+Received: from mail-pl0-f52.google.com ([209.85.160.52]:45731 "EHLO
+        mail-pl0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726228AbeHTVbD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 17:31:03 -0400
+Received: by mail-pl0-f52.google.com with SMTP id j8-v6so7490560pll.12
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 11:14:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sYEStHOExmlnHKkHq653YjRQ2jW2HpKX2qlekXuOZXk=;
-        b=WF5YkNXVrwj+so2iksGe0BbWSbKtdfbfe2GRsPebKE8rgOfr8sDt564bzbzPq18UFy
-         X+ANpe19QfLXCyJe9T87eGD80qJYojxEBrGFp61BTh5so2Xutzt8CxG4WwEttYOz6S+a
-         8XQ94XWTwbmUY9cz6TJLwHVdlVSG3SVkQELjerl2xSQ8m6/JP12sOOQoR1+6qChuOfgX
-         MvbpThX706zoBaPc9022QP0Fz8ahLA0oE9LDy/keidwCW3BOAeNz5M4GK03Q9c+Qw2Ms
-         01silexlC+M6ZZzXXVJYXOS9pDLfJ8peXxJvM6y7pbtHONO/mPUBifDdXTkrs00/mpjw
-         S0rw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=QftRPNxQbGQ+WXmHRPMIxL3r3sHGmNxIkOPO7Ts8kqU=;
+        b=PCjfMHng+C8M5XcXQICMyDp7/tc5A/NaVtexC81MADLKbEttBcn+/WKLepyGWWJU4y
+         gIN74l1xUEGP7pXy1BUZNWtYffjTjz7u0IM4w6zLkqtEhd5u9wUSJ5lu1p9ucjDdebCO
+         Oc98hnlX0NY5kAMFvatOrTrCrfVA65bh7DFvVsh5QRFLohjq9KrM05NpYDo2KpssjLei
+         hg1esJT0juSXgCQbdV5k/pnGxU4cm+TyRb1nsp25Bk+t5sBKp+bNl59shq0Ocbz0CiVU
+         gllygS2g5tWy8abKMHdoAEGmFQT5OR1itD7zXFGW9IRAPk5XZQSHOx36hGE1HGtzK/Pr
+         Qm3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sYEStHOExmlnHKkHq653YjRQ2jW2HpKX2qlekXuOZXk=;
-        b=FuTpARA/g6ye0CSuh0w1ptLew2lxMHzeCMhifIloAH0sJYeBvzPNWJrsSWxbjoRH7j
-         Atuo3rY2ZmsxN2fBzU1MmzpeDjK9DFsphJ05xDI9kruF5TizdtSqJ9ol14mh8sIs37x6
-         1w8GpFmb+l4dmhbnXsWOoM+ioUvDpBl7H3WmynuNZpnu1SzXQHDoDhWNrfLGnircVs7m
-         VizcExrQuUHKxc3W1hZwn1qXXc7tSs9oxlV1WVjulybHEGiOreidjig1vv8d7gFJpSDg
-         hULre+C5dlZP0G3S0SmCwe8Xe7Z2Ixjn19uNBm6nFKpgDMmCFoGYSnfvaMpDHyMnbSle
-         4kew==
-X-Gm-Message-State: AOUpUlFoFBe35aqzFXQL4ZqR1jmPAaUU+jGhOtiCMolTiz5+wCp69COD
-        DlcHwZuHv9Jpm2L0Igd7N6GN7EhmYYiEMvqHunI83Q==
-X-Google-Smtp-Source: AA+uWPw9/ZcH0ffJ8LINfTjGYdMRm6O9bFTj60HwOxIPdgPcVx4BRJKTOU7ldAX0giYbyKU2DwTHUstzSrOqJWXC6lg=
-X-Received: by 2002:a25:aea2:: with SMTP id b34-v6mr21250603ybj.416.1534788696358;
- Mon, 20 Aug 2018 11:11:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Aug 2018 11:11:25 -0700
-Message-ID: <CAGZ79kbQ5L39kdsfouPXJjJOm_Ni9TY5Qan7nHZE9VbcaEMyGA@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=QftRPNxQbGQ+WXmHRPMIxL3r3sHGmNxIkOPO7Ts8kqU=;
+        b=ncXGuUSUb6KL37ynU554jN9UWYT9GG5nMcp9xtbRmHuzD4LNNVRHc4XoSx7ziPlw/G
+         lry7N+dqWERPAQz8D0xZRA/OM4+urOpXUMusR4oYad65+qfE4phGYb3dT1xjfEtAdhiY
+         xVRryh/yoGBqkOy11DHfo0VpzmB+rk5dy3xcQxPB1og7QG3jobBn9Sav+56hp0/mfGTD
+         r0Yrqw6yObEsXmxsuDLS96cGFVcN4rUnKXEAdC5GE1r8GjLRT3HOR+U378ILS0s2phw/
+         nS7uye7bIFe6P0er5LpmToQXaWgDZ0Rk94RKBUcbEDRLq5EX8HK79E1n9MLIIwwGFmrI
+         VfHg==
+X-Gm-Message-State: AOUpUlE7GIK2eh/QES+7v35+6I/caNUEVjf0N1fhCN8HBqKBEq0NxhXs
+        mZKRAzu55ldegaXALbzPT2fTqPDl
+X-Google-Smtp-Source: AA+uWPysmTr/hUXpMMHs5GNKfnIYpWSe6xOHi5TxuD4/KGrA3TwNREBlb+Xff3ikVSynlsfMpPWSrw==
+X-Received: by 2002:a17:902:44a4:: with SMTP id l33-v6mr46406723pld.134.1534788861950;
+        Mon, 20 Aug 2018 11:14:21 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:b885:8a8f:31f:ed4e? ([2001:4898:e008:1:41c2:8a8f:31f:ed4e])
+        by smtp.gmail.com with ESMTPSA id d75-v6sm15998218pfd.49.2018.08.20.11.14.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 20 Aug 2018 11:14:21 -0700 (PDT)
 Subject: Re: What's cooking in git.git (Aug 2018, #04; Fri, 17)
-To:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
-        Antonio Ospite <ao2@ao2.it>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org
+References: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com>
+ <20180818065953.GE241538@aiede.svl.corp.google.com>
+ <xmqqlg91aqzh.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <800850d1-1880-2a8a-f5d5-7d0593787142@gmail.com>
+Date:   Mon, 20 Aug 2018 14:14:20 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqlg91aqzh.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 3:44 PM Junio C Hamano <gitster@pobox.com> wrote:
+On 8/20/2018 1:26 PM, Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Usually, I refrain from merging larger topics in 'next' down to
-> 'master' when we get close to -rc0, but I am wondering if it is
-> better to merge all of them to 'master', even the ones on the larger
-> and possibly undercooked side, expecting that we collectively spend
-> effort on hunting and fixing bugs in them during the pre-release
-> freeze period.  If we were to go that route, I'd want everybody's
-> buy-in and I'll promise to ignore any shiny new toys that appear on
-> list that are not regression fixes to topics merged to 'master'
-> since the end of the previous cycle to make sure people are not
-> distracted.
-
-Speaking of releases, linux for example has some releases that are
-more stable than others, as most distros pick the same release for
-their 'stable' release, whereas the regular and new releases are just
-off of the latest release of linux.
-
-Would a similar model be an interesting thought to entertain?
-
-I guess I could buy into a few weeks of bug fixing.
-
-> * nd/config-blame-sort (2018-08-06) 1 commit
-[...]
-> * nd/no-extern (2018-08-03) 12 commits
-[...]
-
-Thanks Duy for these two series!
-
-I would have expected the no-extern series to
-have a bit of merge conflicts similar to  sb/object-store-lookup
-as it touches a lot of headers, but so far this looks like smooth sailing?
-
-> * sb/submodule-cleanup (2018-08-16) 2 commits
->   (merged to 'next' on 2018-08-17 at ca9d8aaef4)
->  + builtin/submodule--helper: remove stray new line
->  + t7410: update to new style
+>>> Usually, I refrain from merging larger topics in 'next' down to
+>>> 'master' when we get close to -rc0, but I am wondering if it is
+>>> better to merge all of them to 'master', even the ones on the larger
+>>> and possibly undercooked side, expecting that we collectively spend
+>>> effort on hunting and fixing bugs in them during the pre-release
+>>> freeze period.  If we were to go that route, I'd want everybody's
+>>> buy-in and I'll promise to ignore any shiny new toys that appear on
+>>> list that are not regression fixes to topics merged to 'master'
+>>> since the end of the previous cycle to make sure people are not
+>>> distracted.
+>> Based on what I see in 'next' (midx, range-diff, etc), I quite like
+>> this idea.
+> The comment above was about the ones that was marked as "Will merge
+> to 'master'" that are in 'next', not the ones marked as "Will cook
+> in 'next'", like the midx ones.
 >
->  A few preliminary minor clean-ups in the area around submodules.
+> I am not worried about range-diff, as I do not think it came close
+> enough to the core-ish code to break other things; the potential
+> damage is fairly isolated and the worst would be that we'd realize
+> that we shipped with a new command that was buggy after the release,
+> which is not the end of the world.  'midx' and 'reachable' are quite
+> different stories, as bugs in them would in the worst case lead to
+> an immediate and unrecoverable repository corruption.
 >
->  Will merge to 'master'.
+> So I am still on the fence, even though I am leaning toward merging
+> them down to 'master'.
 
-Oh, that is the prologue of
-https://public-inbox.org/git/20180816023100.161626-1-sbeller@google.com/
-which I will resend to build on top. Given your question to hunt more bugs,
-I'd delay its resend until after the release.
+I'm happy to wait until 2.19 is cut for ds/multi-pack-index to merge 
+down. I sent a new series today [1] that improves the series and 
+corrects some bugs I found while making the full Git test suite work 
+when writing a multi-pack-index on every repack. Nothing was 
+"unrecoverable repository corruption," but I understand the concern 
+there. Making the safest decision is probably the best decision.
 
->
-> * ao/submodule-wo-gitmodules-checked-out (2018-08-14) 7 commits
->  - submodule: support reading .gitmodules even when it's not checked out
->  - t7506: clean up .gitmodules properly before setting up new scenario
->  - submodule: use the 'submodule--helper config' command
->  - submodule--helper: add a new 'config' subcommand
->  - t7411: be nicer to future tests and really clean things up
->  - submodule: factor out a config_set_in_gitmodules_file_gently function
->  - submodule: add a print_config_from_gitmodules() helper
->
->  The submodule support has been updated to read from the blob at
->  HEAD:.gitmodules when the .gitmodules file is missing from the
->  working tree.
->
->  I find the design a bit iffy in that our usual "missing in the
->  working tree?  let's use the latest blob" fallback is to take it
->  from the index, not from the HEAD.
-
-I am not sure; why does it feel iffy?
-
-> * bw/submodule-name-to-dir (2018-08-10) 2 commits
->  In modern repository layout, the real body of a cloned submodule
->  repository is held in .git/modules/ of the superproject, indexed by
->  the submodule name.  URLencode the submodule name before computing
->  the name of the directory to make sure they form a flat namespace.
->
->  Will merge to 'next'.
-
-Cool! Is the discussion on top of it still going whether to use a
-new config for special cases or how we distinguish between a/b/
-and a%2fb as submodule names?
-
-> * md/filter-trees (2018-08-16) 6 commits
->  - list-objects-filter: implement filter tree:0
->  - revision: mark non-user-given objects instead
->  - rev-list: handle missing tree objects properly
->  - list-objects: always parse trees gently
->  - list-objects: refactor to process_tree_contents
->  - list-objects: store common func args in struct
->
->  The "rev-list --filter" feature learned to exclude all trees via
->  "tree:0" filter.
-
-I gave this a read and think it is good to go.
-
-> * sb/config-write-fix (2018-08-08) 3 commits
->   (merged to 'next' on 2018-08-17 at 7d9c7ce81f)
->  + git-config: document accidental multi-line setting in deprecated syntax
->  + config: fix case sensitive subsection names on writing
->  + t1300: document current behavior of setting options
->
->  Recent update to "git config" broke updating variable in a
->  subsection, which has been corrected.
->
->  Will merge to 'master'.
-
-Thanks!
-
->
->
-> * sb/range-diff-colors (2018-08-14) 8 commits
->  - diff.c: rewrite emit_line_0 more understandably
->  - diff.c: omit check for line prefix in emit_line_0
->  - diff: use emit_line_0 once per line
->  - diff.c: add set_sign to emit_line_0
->  - diff.c: reorder arguments for emit_line_ws_markup
->  - diff.c: simplify caller of emit_line_0
->  - t3206: add color test for range-diff --dual-color
->  - test_decode_color: understand FAINT and ITALIC
->  (this branch uses js/range-diff; is tangled with es/format-patch-rangediff.)
->
->  The color output support for recently introduced "range-diff"
->  command got tweaked a bit.
-
-No, this series doesn't tweak the colored range-diff.
-This might be:
-
-  Add more test coverage to colored range-diff and
-  refactor the diff machinery to be more readable.
-  The test coverage proves no user visible changes
-  are made.
-
-The tweaking comes in on top of this via
-https://public-inbox.org/git/20180817204354.108625-1-sbeller@google.com/
+I'm happy to contribute to a "pre-2.19 bug bash" after you merge things 
+into master.
 
 Thanks,
-Stefan
+
+-Stolee
+
+[1] 
+https://public-inbox.org/git/20180820165124.152146-1-dstolee@microsoft.com/T/#u
+
+     [PATCH 0/9] multi-pack-index cleanups
+
