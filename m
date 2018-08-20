@@ -2,92 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84C481F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 14:22:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD55A1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 14:30:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726675AbeHTRhy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 13:37:54 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:39940 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726194AbeHTRhx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 13:37:53 -0400
-Received: by mail-wr1-f45.google.com with SMTP id n2-v6so2677197wrw.7
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 07:22:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=okClTCWIGWvwNCS7q3QUIxUXFaHorI52wg7f6ZFAzBM=;
-        b=crJQAOntx8splkLOYHEbHmhF1sUExFkvUE+zzbf42xm2Vy0H9aCi4aV6/6mq3XkPZJ
-         Uo9MQXISqJHlwQpwQpqFoa3rusQVuVO1cSc0A3TI6zMnaeRJjc5M3RPiKuRgch5A1n+a
-         12m98S9HwomYxg+Zf+eVjPXSkDuyEda6Qic9ScrQMDTK372B2Z8ZyHf6MofrgIPt0e/+
-         Awvy9whA2q9mqp3yHKlalMEmjEEFrWAV9R1fkIIWkDn+YINE39iPPH1rDT7x8u3oiPmZ
-         YSuwXq05/HTJicEFCYJ4wbXJi0oFI7LN3ZET5LLe4PDvrjQmCzktgqmUg6dLeeThPLU5
-         9nzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=okClTCWIGWvwNCS7q3QUIxUXFaHorI52wg7f6ZFAzBM=;
-        b=B43PCibFvDDYzotGchGCoW7FmV+gCTPzrSZhMuNHvxfgR4hCk+E6BHtcc23/0368dD
-         uwmyhxiGRZMaOowesOdtR38jeAZtVVWohaYUb3g3XIpOBwp42fSsmzTXQiZoGj2lsM2W
-         W1byC0kmrMIifQXKu+iJFOWFa0rsnW9e9R1UmhBMW7P1S8i68f+crwbIx9oQ3P1SB2aI
-         dCgBcZkHIvmH7LyryYvt4WoD+xSX77MeYUMck5Xpas+WUTKcgVziwoXvk4mwcKnDL6R9
-         8wWMXu/8hQTKsrVumzEkoIzz72vKoykvr1dCEXrZvO6d3LMuEGYSXIL1eY/dtLQbeHPi
-         vX4A==
-X-Gm-Message-State: APzg51BMvv62a4VJt3GVmM0smFZJwYr8lkfwvMDssBNQF0xcBnYoCX6F
-        nMihynmsu3RSffch7nxMzLM=
-X-Google-Smtp-Source: ANB0VdY18iadIHSDzZCxDA5wQVs4eKCtT46Tfwh78r9+FJtD3Yta+2QlKgqDMpRmTYINsz4FL8LSRg==
-X-Received: by 2002:adf:ad34:: with SMTP id p49-v6mr8838049wrc.10.1534774917818;
-        Mon, 20 Aug 2018 07:21:57 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t69-v6sm17264356wmt.40.2018.08.20.07.21.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Aug 2018 07:21:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Han-Wen Nienhuys <hanwen@google.com>, sunshine@sunshineco.com,
-        git@vger.kernel.org
-Subject: Re: Re* [PATCH v7 1/1] sideband: highlight keywords in remote sideband output
-References: <20180807125108.104293-1-hanwen@google.com>
-        <20180807125108.104293-2-hanwen@google.com>
-        <xmqqd0ugc07x.fsf@gitster-ct.c.googlers.com>
-        <xmqq8t54bzo4.fsf_-_@gitster-ct.c.googlers.com>
-        <20180818060911.GC241538@aiede.svl.corp.google.com>
-        <xmqqmutjagc7.fsf@gitster-ct.c.googlers.com>
-        <xmqqin47acir.fsf@gitster-ct.c.googlers.com>
-        <xmqqa7pjabvn.fsf@gitster-ct.c.googlers.com>
-        <20180818232220.GA24533@sigill.intra.peff.net>
-Date:   Mon, 20 Aug 2018 07:21:54 -0700
-In-Reply-To: <20180818232220.GA24533@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 18 Aug 2018 19:22:21 -0400")
-Message-ID: <xmqqa7phce4d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726776AbeHTRqR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 13:46:17 -0400
+Received: from mout.web.de ([212.227.15.4]:37151 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726099AbeHTRqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 13:46:17 -0400
+Received: from [192.168.209.20] ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LuuC9-1g0fEh3CS1-0103Tt; Mon, 20
+ Aug 2018 16:29:38 +0200
+Subject: Re: [PATCH v2 05/11] t0027: make hash size independent'
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <20180819175351.449973-1-sandals@crustytoothpaste.net>
+ <20180819175351.449973-6-sandals@crustytoothpaste.net>
+ <CAPig+cS6Z+U-Z26m-eW-JX5D29ONSb_Zzur2fvWGb_ZMbmF4UQ@mail.gmail.com>
+ <20180819215732.GJ70480@genre.crustytoothpaste.net>
+ <CAPig+cTTmOw-d7umES9p2xv4uCkjTnNtjTni_DaVFKbhc8WTgA@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <31634401-f889-c551-4232-4745b9ccce44@web.de>
+Date:   Mon, 20 Aug 2018 16:29:31 +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:52.0)
+ Gecko/20100101 Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAPig+cTTmOw-d7umES9p2xv4uCkjTnNtjTni_DaVFKbhc8WTgA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:pKB5T//3+HG4bFwlXtc9dPAdeRirRyg/kQ2evcdHgOXQibVCWCO
+ 6DKYJPuoT5YZ+FnAK/LXtYhqjWlWRAnyiXNx/S71daa2V4IXWV4udFNsh0NmEO8iDWEUefd
+ 8Gk+gF6kbfFlBuSkNGUK/HP9wif9Dcq3BLtj1yeqef+F3wRNb+RattwOV0dUhdVGD1Hnz8H
+ 2smx7oaWbdmQs8P/lkbvw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F3eHtMXgHpY=:AYiu0yol7CGEns4BiRynmT
+ RBIOPDqhjOeJKETyrs3ux2pVQdzNqZC93fQuNYTZS36FhkRDEIkMcLcNkViJxqXSd3ZY9cJKo
+ CI7USzsjLUWMmoBx7liWN8AbEm1A/SgHxbs/s3+ZPb49E1s8opyUO6C4uAPig7/HR6jokd8cD
+ Qrzh9n7fgAjiQQMYUnEEiG7es2fHvCy/k4mohETI1HLoKH33Y2ox8waHh/RuZz9BtGL3Xkpkm
+ uB7W/xvz8Hf33EZZRAa9Nr8L3maMlVNxgXZOvBlbW+XLiJf5/XJIyIIyOG4TnQ47CDiZuQ/NL
+ fO2U8DQGg99UjR6N5GSw13kL1eoA+57dH451Rotwq+qHUgmVyw5/ZUhHWDq2zJt6yeLRmbf5p
+ xsz0TsjSMzR/hRsKSqw82RDrndSsmaf5wIexRrIFXpDGbU1Abw62/bAJBcc0C3YG76ChxHIqq
+ 295YsjNH1uazhv0MzXouPwxaiCVHI/o+LS88XeIV/d/CsKSKUVmS3eJQpV0eK/RMvk8B2p7i8
+ aVPLVGqcRPVqm1ERQwOfqp7OZRmwuT0fS61eD0n4D7toyEVUvD36P9eWaaBPga+D8U+5xIWxM
+ iMkQ7X47FNyzW3llntmhQ6w2UnTrqSM27kS2cH8CaFGWLKGZp+7eKJk0wmh9sGgk2v8tUWz+P
+ /hocxZHLKctWjlsm0bdTehzfGvWrUtPXkEoxRS5g/jmAWYqhIeZ4HzvqShzp0olvhszGq3U0E
+ 7hgZ8aPvuX64QoRbOvgm49hofRRnwWkPHoWJNXzp2Sidg0EWGak9ltlGGrqOdVtronPIfK+sf
+ 627ZyEN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 20.08.18 00:10, Eric Sunshine wrote:
+> On Sun, Aug 19, 2018 at 5:57 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+>> On Sun, Aug 19, 2018 at 04:10:21PM -0400, Eric Sunshine wrote:
+>>> On Sun, Aug 19, 2018 at 1:54 PM brian m. carlson
+>>>> -       tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
+>>>> +       tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp+" &&
+>>>
+>>> My immediate thought upon reading this was whether "+" is valid in
+>>> Windows filenames. Apparently, it is, but perhaps (if you re-roll) it
+>>> would make sense to use a character less likely to cause brain
+>>> hiccups; for instance, "exp0'.
+>>
+>> The reason I picked that is that we use it quite a bit in the Makefile,
+>> so it seemed like an obvious choice for a temporary file name.  If you
+>> feel strongly I can pick something else, but I thought it would be
+>> reasonably intuitive for other developers.  Maybe I was wrong, though.
+> 
+> I don't feel strongly about it. My brain tripped over it probably
+> because it's not an idiom in Git tests. In fact, I see just one place
+> where "+" has been used like this, in t6026.
+> 
 
->> In the longer term we may want to accept size_t as parameter for
->> clarity (even though we know that a sideband message we are painting
->> typically would fit on a line on a terminal and int is sufficient).
->> Write it down as a NEEDSWORK comment.
->
-> This "typically" made me nervous about what happens in the non-typical
-> case, but I think we can say something even stronger: the length comes
-> from a pktline, so the maximum is less than 16 bits. I wondered if we
-> might ever call this on the accumulated string from multiple sidebands,
-> but it doesn't look like it.
+Probably "tmp" is a better name than "exp+" 
+(Why the '+' ? Is it better that the non-'+' ?)
 
-I think a sideband packet may be split on one but not the other
-codepath to result in multiple calls, but I do not think we coalesce
-them together, so I agree that int is sufficient.
+Anyway,
+If we re-order a little bit, can we use a simple '|' instead ?
+
+tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
+	sed -e "s/0000+/$ZERO_OID/"               >"$exp" &&
+tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
