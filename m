@@ -7,108 +7,107 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 06A2B1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 19:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E3BED1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 19:40:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbeHTWyr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 18:54:47 -0400
-Received: from mail-yb0-f194.google.com ([209.85.213.194]:43363 "EHLO
-        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbeHTWyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 18:54:47 -0400
-Received: by mail-yb0-f194.google.com with SMTP id k5-v6so2027874ybo.10
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 12:37:54 -0700 (PDT)
+        id S1726106AbeHTW5G (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 18:57:06 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:36491 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726077AbeHTW5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 18:57:06 -0400
+Received: by mail-yw1-f68.google.com with SMTP id w202-v6so1165329yww.3
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 12:40:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JtxgzAnHbluPfoBYxS/PMpOIpcBm0UAJeUC9XtRDD5Q=;
-        b=votf7V8jMnrgU31Ge2onc8KTmUxAOV6AgUeKFkoH65AzRf8FwZ/sVmYY9Ol0GQaanS
-         7WfV8XhlPAsj6pW82O5CVSBGxHuGPytVVHYaIimSRPn5W+eMmf1rq6FcVT2yVCfnN6gp
-         rVRb4DJ0OH3TvanLvObsRU3CZ0wweqT2l9yFCP9bjB3VM0q4cZk2lnCi5j9xX4bok1sK
-         6eQXCB/7FIgmywvGaJJnhAmAMuE0KMqf5BU89yvnLSHKZQOTDHVbK3j9g//Qjf/P8G9p
-         t+7h4ap1lNUsvDQ1t9H9SVuBon/uEFVm/1I8sGm8LF1WWUqWQVQBXO7gZldcWY4/l7LZ
-         HI8Q==
+        bh=lEMbjcjyKAOedixRdc1vz0RCluZ0TPPc1DxP7CkjrW8=;
+        b=lM3vaUF5jR91KwwEnhUwi3sDvS+ryIAvj+vbBbFSbotKUc/dWRaAzunaTCG9mZXleh
+         O1t1Q8+UNvnBhQCLm/+lQwv3eKgqsmMQOTa9UpDAWIETt/fo0FJNvI0KH6fR8ovFCfOV
+         +EN9tWk69Z/ZA5W5cdxK+l3NPgjb0KWIZl3KzWTTQuTp19K7ZpHOsWc7wAtgGSc1i/Iv
+         yBIOVmqeoiQhN/6X50V5LwoMUOI9NH12bpzXKtL/LkrflPOr2NU1vo/dscxNS++2JYf6
+         EbkVkXJqdi9HZ3KHyg3kI3/mUTiB6AtJ1ALs/TobfZhtpyZ2N0xdl0nS4BoqhOa879Zr
+         xRsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JtxgzAnHbluPfoBYxS/PMpOIpcBm0UAJeUC9XtRDD5Q=;
-        b=Q5LdC2Mv/qd0mE41UEDbrqBNmYIU6ayWCR4ET2TkUisRINEXDn3zTg84DtTX7LbwRd
-         LVWvr3louz2d06+ZlPcpJOsxVetfeuLBfVxyfpy+Jke8i9VPlFTjZgt0yjavCrsGqXPY
-         k1jt2PBZxpfhXTUS+Dq5E1Zt7A48Dq4ZNDRuwpkq7alhM3/6+jcfsFS9JyGicu/EUIXT
-         wEa/DQ2mqr+n8buk42bo2miKnP4aHP+cTvtLsVYCyxvWYyrQsTAbIs3/X8UXaNzRg7sM
-         pJfo+rWOLvvN1FD5PpFj1Zo2mt1PP2U88kOzG0jXRDXGBrR56DjeP4lC+ESeLXL966Z8
-         IYaQ==
-X-Gm-Message-State: APzg51AK/F6xZimMSu6+jDNBqIad/kNGiklptw3OwN85ASA0ZBSmUWmT
-        FYO9wpuoXLsywr4+/EWspMNASCnc5QMQazbIR5RdsLU4xR0=
-X-Google-Smtp-Source: ANB0VdbjdPq94BNSXDVa/XYUTo9zDprbon65lnesK9yhSpix0IsyIIn1tHF0U5ubWwmeGqe9nqByd1i7jThWzQ6TWuM=
-X-Received: by 2002:a25:16c3:: with SMTP id 186-v6mr297697ybw.521.1534793873539;
- Mon, 20 Aug 2018 12:37:53 -0700 (PDT)
+        bh=lEMbjcjyKAOedixRdc1vz0RCluZ0TPPc1DxP7CkjrW8=;
+        b=t9PUmGrOAeshOzO/NDNSsPflxIVW70erG7AbNoi0pfALlzlgRaQd8aNgjpTbkdz/Xc
+         +4nrnbXOSDStn6xffvF7GNFfbrVYy1kF59zJ87VKVibE7cn4sSHlhhETJAKuDUjXFoLI
+         K2iWTdPpmHhS68qbKaDhjjJmAPs+HOOkFQBQivJhNGCVatqJf6QAt3uUc5CtJ0GB0bNZ
+         ORId0TOVXPfgSSTVwGI2H6Qudzqn6buPZw1rT7FQ+JyLOLYtaSddSe54JMfTNwf9oAaM
+         92XrNn9VflOUDrkhpRttJEdprVfbUjLAf1ghpnykr5cm8IhvviU4uD+8UdSRPG5tiYDQ
+         vxMA==
+X-Gm-Message-State: AOUpUlG7SJ6/rnugSOMOLvno4BuBoScYhL8iqc9GtY3ZxU9lrtmlrZ16
+        /hx0fWxeqLq4k9S4ynyN3gPeb08JyKi8uZ38cCd5P7P9
+X-Google-Smtp-Source: AA+uWPyQQZQV9qla4yIGrj4WHn3ebGHnJx2bdLlrsHBrHaEwBSY1RwV0adnCcT1fw6SxUQhK5K9x5oXVYHrgbcMneUM=
+X-Received: by 2002:a81:a9c4:: with SMTP id g187-v6mr24935318ywh.238.1534794010439;
+ Mon, 20 Aug 2018 12:40:10 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.11.git.gitgitgadget@gmail.com> <20180820182359.165929-1-dstolee@microsoft.com>
-In-Reply-To: <20180820182359.165929-1-dstolee@microsoft.com>
+References: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet>
+ <20180817204354.108625-1-sbeller@google.com> <20180817204354.108625-2-sbeller@google.com>
+ <nycvar.QRO.7.76.6.1808202129420.73@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808202129420.73@tvgsbejvaqbjf.bet>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Aug 2018 12:37:42 -0700
-Message-ID: <CAGZ79ka6=Zw8pFhwVysoE3Wa+mpUm4E83cf7TCKmYZ7XC0ZL2A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] Clarify commit-graph and grafts/replace/shallow incompatibilities
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Date:   Mon, 20 Aug 2018 12:39:59 -0700
+Message-ID: <CAGZ79kY8oadQ2nKWr7znMa8QJgLcidb0FefPDBaba+q2J=nfPg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] diff.c: add --output-indicator-{new, old, context}
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 20, 2018 at 11:24 AM Derrick Stolee <dstolee@microsoft.com> wrote:
+On Mon, Aug 20, 2018 at 12:31 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> One unresolved issue with the commit-graph feature is that it can cause
-> issues when combined with replace objects, commit grafts, or shallow
-> clones. These are not 100% incompatible, as one could be reasonably
-> successful writing a commit-graph after replacing some objects and not
-> have issues. The problems happen when commits that are already in the
-> commit-graph file are replaced, or when git is run with the
-> `--no-replace-objects` option; this can cause incorrect parents or
-> incorrect generation numbers. Similar things occur with commit grafts
-> and shallow clones, especially when running `git fetch --unshallow` in a
-> shallow repo.
+> Hi Stefan,
 >
-> Instead of trying (and probably failing) to make these features work
-> together, default to making the commit-graph feature unavailable in these
-> situations. Create a new method 'commit_graph_compatible(r)' that checks
-> if the repository 'r' has any of these features enabled.
+> On Fri, 17 Aug 2018, Stefan Beller wrote:
 >
-> CHANGES IN V2:
+> > This will prove useful in range-diff in a later patch as we will be able
+> > to differentiate between adding a new file (that line is starting with
+> > +++ and then the file name) and regular new lines.
+> >
+> > It could also be useful for experimentation in new patch formats, i.e.
+> > we could teach git to emit moved lines with lines other than +/-.
 >
-> * The first two commits regarding the ref iterators are unchanged, despite
->   a lot of discussion on the subject [1].
+> Thanks.
 >
-> * I included Peff's changes in jk/core-use-replace-refs, changing the base
->   commit for the series to 1689c22c1c328e9135ed51458e9f9a5d224c5057 (the merge
->   that brought that topic into 'msater').
+> > diff --git a/diff.c b/diff.c
+> > index c5c7739ce34..03486c35b75 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -1281,7 +1281,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+> >                       else if (c == '-')
+> >                               set = diff_get_color_opt(o, DIFF_FILE_OLD);
+> >               }
+> > -             emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
+>                                     ^
+> Here we already pass `o`... so...
 >
-> * I fixed the tests for the interactions with the graft feature.
+> > +             emit_line_ws_markup(o, set_sign, set, reset,
+> > +                                 o->output_indicators[OUTPUT_INDICATOR_CONTEXT],
+>                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> ... here, we could simply pass `OUTPUT_INDICATOR_CONTEXT` and let the
+> callee look it up in`o->output_indicators[]`...
 >
-> Because of the change of base, it is hard to provide a side-by-side diff
-> from v1.
+> I read all three patches and did not see a reason why we could not
+> simplify the code that way.
 >
-> Thanks,
-> -Stolee
->
-> [1] https://public-inbox.org/git/CAGZ79kZ3PzqpGzXWcmxjzi98gA+LT2MBOf8KaA89hOa-Qig=Og@mail.gmail.com/
->     Stefan's response recommending we keep the first two commits.
->
+> Other than that: great!
 
-After reviewing my own patches, I flipped again (Sorry!) and would
-rather not see my patches be merged, but the very original solution
-by you, that you proposed at [1]. That said, I will not insist on it, and
-if this is merged as is, we can fix it up later.
+Thanks!
 
-With that said, I just read through the remaining patches, I think
-they are a valuable addition to Git and could be merged as-is.
+I considered it, but was put off by the (small) effort of yet another
+diff refactoring.
 
-[1] https://github.com/gitgitgadget/git/pull/11/commits/300db80140dacc927db0d46c804ca0ef4dcc1be1
+I'll include it in a resend if a resend is needed, otherwise
+I would suggest to make it a patch on top?
 
 Thanks,
 Stefan
