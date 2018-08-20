@@ -7,40 +7,41 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E60111F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 18:25:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C20381F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 18:26:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726548AbeHTVlp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 17:41:45 -0400
-Received: from mail-cys01nam02on0132.outbound.protection.outlook.com ([104.47.37.132]:10688
-        "EHLO NAM02-CY1-obe.outbound.protection.outlook.com"
+        id S1726661AbeHTVnC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 17:43:02 -0400
+Received: from mail-sn1nam01on0115.outbound.protection.outlook.com ([104.47.32.115]:36896
+        "EHLO NAM01-SN1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726229AbeHTVlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 17:41:45 -0400
+        id S1726293AbeHTVnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 17:43:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vzwvE3JiGb8Wnu3Kf7DJX/k7pTUDsZB8t/Q4jEkmt58=;
- b=hsFIXt+9Nz32NVcK5BV5iB6bwnB58FGUq5AuhOdk6LNHX3YlRA2rIqhfj19BBDAF8kA9sSOvKWzTDo3f6OPpmcCShDtscpT8adn/wu7t12/ur6Jd3+on+OGRBvIkfqxTJAU54UJQCjaczCqF0Y5r5JadcRVMyvY5bcwaGTU038E=
+ bh=Pl00M5VJvLL26v+wIKGqKDpMinQ1eO3+fPIlRPwMOXA=;
+ b=gfGd6uMm054dI5xfUi3gRcfFnBaFmcgpjcHeyLOlj+IoE+hcaLNg49oBnSAsf983IjfueMzuN1Bm5kP38ngYYoSqbRj+E4QORSqFNG5YXG+LmviI6KuWUJQYJ1lubPht8kJkn/G7zLfgEYS+0o95uVl8cIHAGKaC8vjuLu2G2r0=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0995.namprd21.prod.outlook.com (52.132.23.157) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.1101.1; Mon, 20 Aug 2018 18:24:27 +0000
+ BL0PR2101MB0929.namprd21.prod.outlook.com (52.132.20.142) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1101.2; Mon, 20 Aug 2018 18:24:36 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49%2]) with mapi id 15.20.1101.000; Mon, 20 Aug 2018
- 18:24:27 +0000
+ 18:24:36 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "jnareb@gmail.com" <jnareb@gmail.com>,
         "sbeller@google.com" <sbeller@google.com>,
         Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH v2 5/8] commit-graph: not compatible with replace objects
-Thread-Topic: [PATCH v2 5/8] commit-graph: not compatible with replace objects
-Thread-Index: AQHUOLMHRyZkAC1e1keN1hyYMjgTIw==
-Date:   Mon, 20 Aug 2018 18:24:27 +0000
-Message-ID: <20180820182359.165929-6-dstolee@microsoft.com>
+Subject: [PATCH v2 8/8] commit-graph: close_commit_graph before shallow walk
+Thread-Topic: [PATCH v2 8/8] commit-graph: close_commit_graph before shallow
+ walk
+Thread-Index: AQHUOLMLlpdPUXYb9kCFCL2GC0ATQA==
+Date:   Mon, 20 Aug 2018 18:24:34 +0000
+Message-ID: <20180820182359.165929-9-dstolee@microsoft.com>
 References: <pull.11.git.gitgitgadget@gmail.com>
  <20180820182359.165929-1-dstolee@microsoft.com>
 In-Reply-To: <20180820182359.165929-1-dstolee@microsoft.com>
@@ -54,191 +55,119 @@ x-clientproxiedby: MWHPR1201CA0002.namprd12.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:e008:1:8b51:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0995;6:H3/s1DjnxyO1fJsAH2aIkQj5tackJd8mgc6twW9ZZ3k2nXLWc4S2VHuCybDQg/pYWf9Lq2LLj9o93jSbNz50Ldf5ualG4YnPqwKu9yCm9czHg2I1p8wY/3E870NF4H7MuuWvBF8zPYoazovAUSm3+d2bSOnUF+I3y1nT9VnIrGr3U8MOeLZCOs81lYxMr0O4JfM6U3Fztfrg188eok6OTINv4V9K8A0Erpg0MQav7hJthtP4sHeWu5rx2lnoUwtjjk3au19qn4rbINUWLNplnrMY2+KZQCJWQ31wQZX0yfpvZ8dwIcc8c6Krfgb/c9vtDinGxFfDayHvtpiy/9ZUEcmAf8DJfUUyLwWXXLvqQcJG/ICAyYLs3HOAyB8Raeap2DqWnoSQNmcS03wvAPYuRgJpn6WYihY1nbBjW9Ves9OBVCZEGR7uS8qte2r6qec6v8jJCIl1Igkx5D4h8CrRiw==;5:jDZenRUBySuFQCj2PtQ187664e9yHZAd4Wk7qHpuBXnKn8HNfVs5evj6NSCrGbLnzXlcrbYkMgcRqBWSR1HVEl4GQvKzs/6iNzjg2YphJMoljz4UZ7oWPBrGRUbsxoiMJ5Qql+EG01SJ7KK0LXon/F1Yc3/C9mWZ7lloh67psrA=;7:tjRf03ZFUiiPUCfZAAKT0CxuA2J9LysXk7owUrlyl765l70KcekZmcK6R1Ws9O8js3yEPB0LJUu4L6bTciB/ESKIVCCV1MCHsQCZwM/zO9MH3qSyc+YE3hdzFyEGEeyaY+OUIn2RyqSwXECSBxSp5wiO6Xt7LAWCAFzi/qVtZDjsUL+gyQHX5IO6q5xareA2HwFyAxqqmBsuIr77s/hqH/tu8t+aOLOq4OLh3mkxCQzgLJ6R4Tn5J1YGq1Xu8DbE
-x-ms-office365-filtering-correlation-id: 19c37d24-9ab6-4cea-c5e3-08d606ca2964
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0929;6:1DM8rVmeD9lqes5WRn2nQ122Ohl5z3HVdSbL94u9lt8x1LVVTVnh/s89Mj/E2YzahpZolWqXCEA6IFbXT8Xb1GH7Ia+pWCgz8kRVVbxaj0mdkMkeG/p2C4Np8bgakEPEWLZcU4rGDCm5T6ry9MEC6JYQdDN2YoLbvLuZUXbnjOwbgt3AIllpc3wwvM/yN+qpB8CSV+3UEMvQQ0MfuPg8R7f70xZbVav64jpeOeSg3RfVPusIQDTmBmJEMf5eZVh0zWiOTza5xBX31O0Tyl1M9pT//I8bKERO4uuKk9reTBiLU8WEIBPtfRPa1ELfK9jiVRv9esHBthqTlHN3ASAxg2NN+odCFaW32LJ1d7OjnsDKkyUaPy7rhi28lrDoHDTHWOFaDybYWaaM9xCKdzn+0d8+5C4sj4hBuuWdaZ4oToUsAfeHFBcZiZUSTjxpP1PkohE/US6LdZ1ganPe/SA25g==;5:tIgnsd1g/xSIPPFFAAZVZy+OJXOtpJeC2+kbwtSYnorJ9IOXjgdlKkbbIfdRSOP75+ImHoE6mTsSwF3TR7t7UGoMe3KTQp9rnXQZfMBMODzPq+xN7hMUzNn6+heaeZUyirenEfld3X2ynbPa3IsCWcAgFQdqOvuiHN1gA6UscGY=;7:Oco8cPD94EuO1NHSqnFaAqadiLU6GImuhIrZ9iRT4emsXJyJRYkumrVXq/NbLC2duRj+x9lF2aIF2Zq9zlm5u6io6WHuMAdnsCvfkoMwR8AxxvD5mWt3bFqaHcVIaDFcYSLS3dh/ejWYjPCsPZust0drmz025VM9IKIlBDSKoJC+I9heZFHG8JR+fTlXxQDV3bi6qkQewvbaBPMJkD3lTL8QyJUs+QbHV4mE/8eaVJQpNiKSiN29KmSj9kmgYtoa
+x-ms-office365-filtering-correlation-id: 8f81081e-67f0-4374-414d-08d606ca2e05
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB0995;
-x-ms-traffictypediagnostic: BL0PR2101MB0995:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB09950BDDE3037C059BE618C1A1320@BL0PR2101MB0995.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(788757137089);
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB0929;
+x-ms-traffictypediagnostic: BL0PR2101MB0929:
+x-microsoft-antispam-prvs: <BL0PR2101MB092949AD6FC7EDD56F62D51AA1320@BL0PR2101MB0929.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(20180801012)(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(3231336)(944501410)(52105095)(2018427008)(10201501046)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123558120)(20161123562045)(20161123564045)(201708071742011)(7699016);SRVR:BL0PR2101MB0995;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0995;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(20180801012)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(10201501046)(3231336)(944501410)(52105095)(2018427008)(6055026)(149027)(150027)(6041310)(20161123562045)(20161123564045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(201708071742011)(7699016);SRVR:BL0PR2101MB0929;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0929;
 x-forefront-prvs: 0770F75EA9
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(136003)(396003)(366004)(39860400002)(346002)(189003)(199004)(1076002)(4326008)(8936002)(2616005)(105586002)(86362001)(575784001)(6486002)(5640700003)(6436002)(106356001)(5660300001)(10090500001)(8676002)(11346002)(446003)(486006)(14454004)(39060400002)(305945005)(81166006)(86612001)(81156014)(10290500003)(7736002)(6916009)(1730700003)(478600001)(6116002)(107886003)(102836004)(25786009)(476003)(2906002)(46003)(68736007)(53936002)(6512007)(2900100001)(5250100002)(2501003)(97736004)(2351001)(99286004)(22452003)(52116002)(14444005)(36756003)(256004)(76176011)(316002)(386003)(186003)(54906003)(6506007);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0995;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(376002)(136003)(396003)(366004)(346002)(39860400002)(189003)(199004)(5660300001)(2501003)(305945005)(6916009)(256004)(86612001)(6486002)(14444005)(14454004)(86362001)(4326008)(25786009)(1730700003)(8676002)(22452003)(81156014)(39060400002)(107886003)(316002)(76176011)(7736002)(99286004)(52116002)(54906003)(81166006)(5250100002)(478600001)(386003)(186003)(46003)(6506007)(102836004)(6436002)(97736004)(10290500003)(6116002)(68736007)(106356001)(53936002)(1076002)(105586002)(5640700003)(10090500001)(2906002)(2900100001)(36756003)(8936002)(2351001)(446003)(6512007)(6346003)(476003)(2616005)(486006)(11346002)(309714004);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0929;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: fifmpRShZsZrOYfZcT6iHEuTpVBjJ2nUgqefj0T12CbqdZVORKcsVyN8muSXU+xCspOwDsSZ3u14aTC87HEOOLUNemfcgJKVFfnXWq+NZ21kJ84kMIXg0/y5cDiAY73pNRsk5jRl89AAORNECs8wp8eqfimUkxzq/T2UR4FHW9MGdP09ZocRboCKLb24i3oOK+lTIJ8tR9J821616TTNehgnvwrKlgnWZ/yA6Xr4bFSJuvklwfRTSbgn+m8uRK5oDWkJce0+1FsY2ZIvPo6D+QYcFNlfF1gHp7qPydwvJPJ3edVKLWCcsM3sTO5btj6Z6Fuxl9rfotl7W6mZftZ6Wz28bKdP0o7Yv9jkqIqomU4=
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: rND87D67j/yF7yP9DILmnPvEk7+rkKhsw7mdbyFArB/3UId7bS6g3+CwxYm3dMTs1kikJv0XEQ8ms4bHNBKW0nKNb1ovxXa1awTMb59vGAvGuNdmEZfY/hub5GZygRQxOpMpE8JsW3FcHDvO/fC4ITMZEFFSnUnYGzlt5gcstayqvgoOPRx4EKs325TEYIKBVlhVxLXB+irO94vXxQxyHvOcR38utusFf4cVheI5UTyZfxgC55E1BWHSYIeX5TxlHu0RB5w5VHtN5+cU36w2ZWPU7N45zp536PY/1wYsMKdB/p67J3gIMIZxGr6tvMSy3Rtw4swfX8zdHLO3lku+fprvUe5f7nzpV173eVfx/gk=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19c37d24-9ab6-4cea-c5e3-08d606ca2964
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 18:24:27.2528
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8f81081e-67f0-4374-414d-08d606ca2e05
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 18:24:34.9684
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0995
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0929
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create new method commit_graph_compatible(r) to check if a given
-repository r is compatible with the commit-graph feature. Fill the
-method with a check to see if replace-objects exist. Test this
-interaction succeeds, including ignoring an existing commit-graph and
-failing to write a new commit-graph. However, we do ensure that
-we write a new commit-graph by setting read_replace_refs to 0, thereby
-ignoring the replace refs.
+Call close_commit_graph() when about to start a rev-list walk that
+includes shallow commits. This is necessary in code paths that "fake"
+shallow commits for the sake of fetch. Specifically, test 351 in
+t5500-fetch-pack.sh runs
+
+	git fetch --shallow-exclude one origin
+
+with a file-based transfer. When the "remote" has a commit-graph, we do
+not prevent the commit-graph from being loaded, but then the commits are
+intended to be dynamically transferred into shallow commits during
+get_shallow_commits_by_rev_list(). By closing the commit-graph before
+this call, we prevent this interaction.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/commit-graph.c  |  4 ++++
- commit-graph.c          | 21 +++++++++++++++++++++
- replace-object.c        |  2 +-
- replace-object.h        |  2 ++
- t/t5318-commit-graph.sh | 22 ++++++++++++++++++++++
- 5 files changed, 50 insertions(+), 1 deletion(-)
+ commit-graph.c | 8 ++++----
+ commit-graph.h | 1 +
+ upload-pack.c  | 2 ++
+ 3 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 0bf0c48657..da737df321 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -120,6 +120,8 @@ static int graph_read(int argc, const char **argv)
- 	return 0;
- }
-=20
-+extern int read_replace_refs;
-+
- static int graph_write(int argc, const char **argv)
- {
- 	struct string_list *pack_indexes =3D NULL;
-@@ -150,6 +152,8 @@ static int graph_write(int argc, const char **argv)
- 	if (!opts.obj_dir)
- 		opts.obj_dir =3D get_object_directory();
-=20
-+	read_replace_refs =3D 0;
-+
- 	if (opts.reachable) {
- 		write_commit_graph_reachable(opts.obj_dir, opts.append);
- 		return 0;
 diff --git a/commit-graph.c b/commit-graph.c
-index b0a55ad128..2c01fa433f 100644
+index cee2caab5c..4bd1a4abbf 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -13,6 +13,8 @@
- #include "commit-graph.h"
- #include "object-store.h"
- #include "alloc.h"
-+#include "hashmap.h"
-+#include "replace-object.h"
-=20
- #define GRAPH_SIGNATURE 0x43475048 /* "CGPH" */
- #define GRAPH_CHUNKID_OIDFANOUT 0x4f494446 /* "OIDF" */
-@@ -56,6 +58,19 @@ static struct commit_graph *alloc_commit_graph(void)
- 	return g;
+@@ -260,10 +260,10 @@ static int prepare_commit_graph(struct repository *r)
+ 	return !!r->objects->commit_graph;
  }
 =20
-+extern int read_replace_refs;
-+
-+static int commit_graph_compatible(struct repository *r)
-+{
-+	if (read_replace_refs) {
-+		prepare_replace_object(r);
-+		if (hashmap_get_size(&r->objects->replace_map->map))
-+			return 0;
-+	}
-+
-+	return 1;
-+}
-+
- struct commit_graph *load_commit_graph_one(const char *graph_file)
+-static void close_commit_graph(void)
++void close_commit_graph(struct repository *r)
  {
- 	void *graph_map;
-@@ -223,6 +238,9 @@ static int prepare_commit_graph(struct repository *r)
- 		 */
- 		return 0;
-=20
-+	if (!commit_graph_compatible(r))
-+		return 0;
-+
- 	obj_dir =3D r->objects->objectdir;
- 	prepare_commit_graph_one(r, obj_dir);
- 	prepare_alt_odb(r);
-@@ -693,6 +711,9 @@ void write_commit_graph(const char *obj_dir,
- 	int num_extra_edges;
- 	struct commit_list *parent;
-=20
-+	if (!commit_graph_compatible(the_repository))
-+		return;
-+
- 	oids.nr =3D 0;
- 	oids.alloc =3D approximate_object_count() / 4;
-=20
-diff --git a/replace-object.c b/replace-object.c
-index 3c17864eb7..9821f1477e 100644
---- a/replace-object.c
-+++ b/replace-object.c
-@@ -32,7 +32,7 @@ static int register_replace_ref(struct repository *r,
- 	return 0;
+-	free_commit_graph(the_repository->objects->commit_graph);
+-	the_repository->objects->commit_graph =3D NULL;
++	free_commit_graph(r->objects->commit_graph);
++	r->objects->commit_graph =3D NULL;
  }
 =20
--static void prepare_replace_object(struct repository *r)
-+void prepare_replace_object(struct repository *r)
+ static int bsearch_graph(struct commit_graph *g, struct object_id *oid, ui=
+nt32_t *pos)
+@@ -875,7 +875,7 @@ void write_commit_graph(const char *obj_dir,
+ 	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
+ 	write_graph_chunk_large_edges(f, commits.list, commits.nr);
+=20
+-	close_commit_graph();
++	close_commit_graph(the_repository);
+ 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
+ 	commit_lock_file(&lk);
+=20
+diff --git a/commit-graph.h b/commit-graph.h
+index 76e098934a..13d736cdde 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -59,6 +59,7 @@ void write_commit_graph(const char *obj_dir,
+=20
+ int verify_commit_graph(struct repository *r, struct commit_graph *g);
+=20
++void close_commit_graph(struct repository *);
+ void free_commit_graph(struct commit_graph *);
+=20
+ #endif
+diff --git a/upload-pack.c b/upload-pack.c
+index 82b393ec31..2ae9d9bb47 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -24,6 +24,7 @@
+ #include "quote.h"
+ #include "upload-pack.h"
+ #include "serve.h"
++#include "commit-graph.h"
+=20
+ /* Remember to update object flag allocation in object.h */
+ #define THEY_HAVE	(1u << 11)
+@@ -740,6 +741,7 @@ static void deepen_by_rev_list(int ac, const char **av,
  {
- 	if (r->objects->replace_map)
- 		return;
-diff --git a/replace-object.h b/replace-object.h
-index 9345e105dd..16528df942 100644
---- a/replace-object.h
-+++ b/replace-object.h
-@@ -10,6 +10,8 @@ struct replace_object {
- 	struct object_id replacement;
- };
+ 	struct commit_list *result;
 =20
-+void prepare_replace_object(struct repository *r);
-+
- /*
-  * This internal function is only declared here for the benefit of
-  * lookup_replace_object().  Please do not call it directly.
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 4f17d7701e..e0c3c60f66 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -259,6 +259,28 @@ test_expect_success 'check that gc computes commit-gra=
-ph' '
- 	test_cmp commit-graph-after-gc $objdir/info/commit-graph
- '
-=20
-+test_expect_success 'replace-objects invalidates commit-graph' '
-+	cd "$TRASH_DIRECTORY" &&
-+	test_when_finished rm -rf replace &&
-+	git clone full replace &&
-+	(
-+		cd replace &&
-+		git commit-graph write --reachable &&
-+		test_path_is_file .git/objects/info/commit-graph &&
-+		git replace HEAD~1 HEAD~2 &&
-+		git -c core.commitGraph=3Dfalse log >expect &&
-+		git -c core.commitGraph=3Dtrue log >actual &&
-+		test_cmp expect actual &&
-+		git commit-graph write --reachable &&
-+		git -c core.commitGraph=3Dfalse --no-replace-objects log >expect &&
-+		git -c core.commitGraph=3Dtrue --no-replace-objects log >actual &&
-+		test_cmp expect actual &&
-+		rm -rf .git/objects/info/commit-graph &&
-+		git commit-graph write --reachable &&
-+		test_path_is_file .git/objects/info/commit-graph
-+	)
-+'
-+
- # the verify tests below expect the commit-graph to contain
- # exactly the commits reachable from the commits/8 branch.
- # If the file changes the set of commits in the list, then the
++	close_commit_graph(the_repository);
+ 	result =3D get_shallow_commits_by_rev_list(ac, av, SHALLOW, NOT_SHALLOW);
+ 	send_shallow(result);
+ 	free_commit_list(result);
 --=20
 2.18.0.118.gd4f65b8d14
 
