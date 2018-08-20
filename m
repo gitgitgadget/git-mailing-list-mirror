@@ -2,140 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7643E1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 23:30:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 342191F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 23:39:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726758AbeHUCsH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 22:48:07 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:44960 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726585AbeHUCsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 22:48:07 -0400
-Received: by mail-oi0-f67.google.com with SMTP id s198-v6so28916937oih.11
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 16:30:28 -0700 (PDT)
+        id S1726803AbeHUC4o (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 22:56:44 -0400
+Received: from mail-pf1-f173.google.com ([209.85.210.173]:45100 "EHLO
+        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726681AbeHUC4o (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 22:56:44 -0400
+Received: by mail-pf1-f173.google.com with SMTP id i26-v6so7539192pfo.12
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 16:39:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4C3ueZpuI20PI+tQW4t174ls/rRkL10p+C/vnetgPpU=;
-        b=ZDTTtlk86dlx8+oOWETAnJ75WyJ+E83KVcnJqgNTdXddUSlOLDR16KW+sMvZZEOgNp
-         wuCzMRYTznP8Il1R146+i57wR6Jec8XHTnjCpgwcn5eMdmfJpurouWA+5dTklkckUKHo
-         tek8mQrjQjUGXVpjQDIDYv4a+Ks5S2TqcbPx2MqfnU8kKHJwwL+yVFN/ecAA4H2qNZ0q
-         bbHP3SxPNpZRSICqcR6TZ5JF5RAIkcrTaNi+6WLdyVE/MCO8XT2GVGSrGRUDJtub/9Lx
-         T6Zf9Ync6Jpqce2uJM1cqaNsYOUFUR9a25WIiObFRTHFRWNu9iOQLcRRU1cHVsKv8V8V
-         3rxA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ILlezAosY5YwsuHc4D37fbGJ93BwzDDHwlz2wTJ8w5Y=;
+        b=mfCyLJF89e0MBXHL5mqVFY6XVdfu4Q6P9Ho3PKaln5/7rAO28o7c3XW/dN+RmtXvGa
+         TbPo9yjjHHIiBFdjiUccbSyRoehdS0G17Z6DnIdiCcX5n1V/EIe6elTchcmZlyneIXYz
+         PhxePZV6kEilEmWQspAMf3HY8kw9afNfiEhYoWO/AfbXfTwVmtkGfGuOdGIi69mweWax
+         anPfYLljdchZQk7ovfn59nLvMTUbYrppwk2rdw1lsEQnusxnTlAGAd/i/v9cG9FxFroi
+         Hd34UJPK8VkEjLnl0mAoSfbQXZIpMs9BJgOSLuv8OlAzzCk/ahSnZpnDOt/04FrVf66+
+         uBHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4C3ueZpuI20PI+tQW4t174ls/rRkL10p+C/vnetgPpU=;
-        b=IVrIOqX+RYBmJMkE1Z84x50fBf9nn68xDe+dN1vLe4/1GcVcfjoSHz2wM6L2ATHTyF
-         KgBCwPgq+AgKRL+2pAc28PXgaEgov0uNNXMGDBLuu0WQttY4sIv6cdBaAIchHlxkPPmX
-         awmKupd1cjAIgkdh+TqQPSSV+Z3aGCa6A9aR5nKHEVoQXsXgKZjPCt31HeocDrrXPY6w
-         aHFhZDacf1ySXJE/iMpGmvoYIzZCKUv2w1boN96EYM3m1xk/pLxsocgwEUT5+oXxkgVk
-         +qdUmEyz18Oe3LqgHaOL2SLNJvCsUZuds2KrwUdc1k9QOQYBKBR5Xx5eFeSOUrxM/Lvw
-         BmWg==
-X-Gm-Message-State: AOUpUlGNWF7Gme5qH+Y5eoTDo6pRffOxTs1HOIHVe5J0fV9dnvFP3pxs
-        eirtVUfUj+OEjoTUIuJ1/TlDQXuKqSUrepti+c/fkA7VnbiI
-X-Google-Smtp-Source: AA+uWPwtfgzhHZz01ybmfk4WRFrlJQ+eV/5yRLgP4mkhfvNZu0dBlxpbvdnQu1ul18dmqPFId8p+Ouoq29LKhjVWXW8=
-X-Received: by 2002:aca:3507:: with SMTP id c7-v6mr17670498oia.46.1534807827330;
- Mon, 20 Aug 2018 16:30:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1534374650.git.matvore@google.com>
- <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
- <CAGZ79kaWcGbyc2S5gOCU7NdvT4fN46jq4xK9MvTLAFBGhyuo2A@mail.gmail.com>
- <CAMfpvhK3ouxa5H1ZWy_ZrQBjSq_qwavOtLe98SshaUmjTyBQXw@mail.gmail.com> <CAGZ79kb3W6fNkqNemcdziXBB_cDmd3ngBU_0tdS_32rUhAW4dA@mail.gmail.com>
-In-Reply-To: <CAGZ79kb3W6fNkqNemcdziXBB_cDmd3ngBU_0tdS_32rUhAW4dA@mail.gmail.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Mon, 20 Aug 2018 16:30:15 -0700
-Message-ID: <CAMfpvhKPJijO_E2FRh-UtrOthEc2YTaG0=1ToYy3akjzWUZWiw@mail.gmail.com>
-Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ILlezAosY5YwsuHc4D37fbGJ93BwzDDHwlz2wTJ8w5Y=;
+        b=Q9bp7nJlXbSV70EQ+d9fD0eYQ+QD4oYgWqFc9Csnr685wPiJsOjTM5pz60XHIkkXCF
+         mIdOrPc++0B0U6Crl83t7M6M/ewkG9Z7Gm/YuChLPS7vsSua4rFtUXXckurtAycZeBUe
+         +e7D39KOVcBX9tkkzoRRosuSL9IO1R4IDNdy/HRhgpjncw/bOdzzcAHKfRjGp5qBXVCQ
+         yOpKTbl/81cK8BIXanOaBKOvsczDzbaCsQL3E9BguepEsFHN7Tk2aLvtOEP4w9h2bxH+
+         nBv/IBI1ndgojur8BncK1K2cJFKlLeuhe6e0qM4L1y2yTWXiJITfPBc0VrPNq+23Nq3f
+         1EsQ==
+X-Gm-Message-State: AOUpUlEdGrpJLy8/V/HzsAztJ5SkOtTcXhIg31DZwtspNoJl+DwKqtnV
+        PbWUWnE9yd66qGMK1ouTD1Zd9Osb
+X-Google-Smtp-Source: AA+uWPwKlCm8QFBy5PLLjfZFnuLjsXodr0GxX7t5adfBosbAGhv1MYpQXATRQ+cl1GN5xTxw7j6OfA==
+X-Received: by 2002:a63:e40d:: with SMTP id a13-v6mr44630995pgi.289.1534808343658;
+        Mon, 20 Aug 2018 16:39:03 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id o34-v6sm9648254pgm.44.2018.08.20.16.39.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 20 Aug 2018 16:39:02 -0700 (PDT)
+Date:   Mon, 20 Aug 2018 16:39:01 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, git@jeffhostetler.com, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
+Message-ID: <20180820233901.GC31020@aiede.svl.corp.google.com>
+References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
+ <CAGZ79kbrv62ttBYt7nwO7E4S7wTVWZGceqE6hPjAbhPPWfRkEQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kbrv62ttBYt7nwO7E4S7wTVWZGceqE6hPjAbhPPWfRkEQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 17, 2018 at 3:28 PM Stefan Beller <sbeller@google.com> wrote:
->
-> On Fri, Aug 17, 2018 at 3:20 PM Matthew DeVore <matvore@google.com> wrote:
-> >
-> > On Fri, Aug 17, 2018 at 2:42 PM Stefan Beller <sbeller@google.com> wrote:
-> > >
-> > > On Wed, Aug 15, 2018 at 4:23 PM Matthew DeVore <matvore@google.com> wrote:
-> > > >
-> > > > Teach list-objects the "tree:0" filter which allows for filtering
-> > > > out all tree and blob objects (unless other objects are explicitly
-> > > > specified by the user). The purpose of this patch is to allow smaller
-> > > > partial clones.
-> > > >
-> > > > The name of this filter - tree:0 - does not explicitly specify that
-> > > > it also filters out all blobs, but this should not cause much confusion
-> > > > because blobs are not at all useful without the trees that refer to
-> > > > them.
-> > > >
-> > > > I also consider only:commits as a name, but this is inaccurate because
-> > > > it suggests that annotated tags are omitted, but actually they are
-> > > > included.
-> > >
-> > > Speaking of tag objects, it is possible to tag anything, including blobs.
-> > > Would a blob that is tagged (hence reachable without a tree) be not
-> > > filtered by tree:0 (or in the future any deeper depth) ?
-> > I think so. If I try to fetch a tagged tree or blob, it should fetch
-> > that object itself, since I'm referring to it explicitly in the git
-> > pack-objects arguments (I mention fetch since git rev-list apparently
-> > doesn't support specifying non-commits on the command line). This is
-> > similar to how I can fetch a commit that would otherwise be filtered
-> > *if* I specify it explicitly (rather than a child commit).
-> >
-> > If you're fetching a tagged tree, then for depth=0, it will fetch the
-> > given tree only, and not fetch any referents of an explicitly-given
-> > tree. For depth=1, it will fetch all direct referents.
-> >
-> > If you're fetching a commit, then for depth=0, you will not get any
-> > tree objects, and for depth=1, you'll get only the root tree object
-> > and none of its referrents. So the commit itself is like a "layer" in
-> > the depth count.
->
-> That seems smart. Thanks!
->
-> >
-> > >
-> > > I found this series a good read, despite my unfamiliarity of the
-> > > partial cloning.
-> > >
-> > > One situation where I scratched my head for a second were previous patches
-> > > that  use "test_line_count = 0 rev_list_err" whereas using test_must_be_empty
-> > > would be an equally good choice (I am more used to the latter than the former)
-> >
-> > Done. Here is an interdiff (sorry, the tab characters are not
-> > maintained by my mail client):
->
-> heh. Thanks for switching the style; I should have emphasized that
-> (after reflection) I found them equally good, I am used to one
-> over the other more.
-It seems marginally better to me. I also noticed a clean-up patch
-going by that aggressively switched to test_must_be_empty wherever
-possible: https://public-inbox.org/git/20180819215725.29001-1-szeder.dev@gmail.com/
+(-cc: other lists)
+Stefan Beller wrote:
+> Junio C Hamano wrote:
 
-OTOH, if it were up to me I would have just gotten rid of
-test_must_be_empty and used an existing function with the right
-argument, like `test_cmp /dev/null` - but using some form consistently
-is the most important, whatever it is.
+>>  * "git submodule" did not correctly adjust core.worktree setting that
+>>    indicates whether/where a submodule repository has its associated
+>>    working tree across various state transitions, which has been
+>>    corrected.
+>>    (merge 984cd77ddb sb/submodule-core-worktree later to maint).
+>
+> Personally I do not view this as a bug fix but a feature
+> (but then again my thinking might be tainted of too much
+> submodule work) hence I would not merge it down.
 
->
-> So if that is the only issue brought up, I would not even ask for a resend.
->
-> Thanks,
-> Stefan
+Can you elaborate?
+
+The symptom that this series fixes was pretty bad, so I'm pretty glad
+you wrote it.
+
+Thanks,
+Jonathan
