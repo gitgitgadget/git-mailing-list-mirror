@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47F4B1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 16:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 142621F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 16:52:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727406AbeHTUIX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 16:08:23 -0400
-Received: from mail-eopbgr710102.outbound.protection.outlook.com ([40.107.71.102]:35723
-        "EHLO NAM05-BY2-obe.outbound.protection.outlook.com"
+        id S1727410AbeHTUIc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 16:08:32 -0400
+Received: from mail-co1nam03on0090.outbound.protection.outlook.com ([104.47.40.90]:59456
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727278AbeHTUIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 16:08:22 -0400
+        id S1726106AbeHTUIc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 16:08:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HFUaD4H19dZP4CgAlNW+Np4a9OAg3GqIqNORmSKjkDw=;
- b=iDIvTbl1GmbOVxpukDzFZIw4rByQDUWKvvLlyBbN+5SPsUf1iWynUQQIXGq52tSF3FgfMpAq7KUxA8TKIdi+hgfxgTlIlTxrklYdk9WRkMP/yMgoiZ06wuPxA40d75eFW7Y237UdmcE+mlbenG47moG1ZbFcFgat6E6sKIbyHI4=
+ bh=YSWXjEJpF4ALImeoKN+Pt38uIaS83LJ4iyw93sVQsBw=;
+ b=PfMpw0370Aj8AYa/plk3rNHqjavKo8AV+dVoQNFeRSQUPFekMFQXV9a8qPiiiC746Km38yvy5IkT+zekor2fuC3/Hhrn6QYTT7JZaujU9VFIo9OYsmmQH7QAS5h5o5kA3uegK4SH8D+FCJNLrJ/wZ3mRErZRYVvXop77vESB6d8=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
- BL0PR2101MB0994.namprd21.prod.outlook.com (52.132.23.156) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P256) id
- 15.20.1080.2; Mon, 20 Aug 2018 16:51:53 +0000
+ BL0PR2101MB0962.namprd21.prod.outlook.com (52.132.20.155) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1101.3; Mon, 20 Aug 2018 16:51:57 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49%2]) with mapi id 15.20.1101.000; Mon, 20 Aug 2018
- 16:51:53 +0000
+ 16:51:57 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 1/9] multi-pack-index: provide more helpful usage info
-Thread-Topic: [PATCH 1/9] multi-pack-index: provide more helpful usage info
-Thread-Index: AQHUOKYYUXdOEn7HlkO1Yi3dlY46Ig==
-Date:   Mon, 20 Aug 2018 16:51:53 +0000
-Message-ID: <20180820165124.152146-2-dstolee@microsoft.com>
+Subject: [PATCH 3/9] midx: mark bad packed objects
+Thread-Topic: [PATCH 3/9] midx: mark bad packed objects
+Thread-Index: AQHUOKYbuKkXGsPMA0Wm7AZcIhYIKA==
+Date:   Mon, 20 Aug 2018 16:51:57 +0000
+Message-ID: <20180820165124.152146-4-dstolee@microsoft.com>
 References: <20180820165124.152146-1-dstolee@microsoft.com>
 In-Reply-To: <20180820165124.152146-1-dstolee@microsoft.com>
 Accept-Language: en-US
@@ -50,78 +50,74 @@ x-clientproxiedby: CY4PR19CA0044.namprd19.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:e008:1:8b51:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0994;6:wNZtCPP4kp+BnFGX7aROU3c8d7m9SvfvZocGN+egq9v7aeI12oCfPh5G+dTvfErd3G4gA739kKsPWtivXE1p7XH3e4r51xU6e71MoEUKfKd+6P64FaSu580zOAOm+AsR8OxXOZTaG43EYawVGt4/Ea+kCEyE80ALbVsB8WB1mYZ+PUis5cKOspnJevGUgUxFYjBrBWojAxwPCJY/hsL5hGD2SiZgez5IZj8oMN9GwIeCRCGwMrc9IVa0kFqB5gWQoIg6Fr8GuHi5/OUub5GP+JpS49CjwBrD5K6RhhNn0jWGWm2fzTRCFQjXubM/N/Dkr8Zjn18dPXX7SrMFFNKE0MWM8E5oy2ST0OsvTP00iWo6DpAUf5q3aY5VqCua2RwTKjKSs7Ws9eMO89FH4cutpcRl4M5jd0q03ex4hY+Xew9q93cNUsdIqcGihaaYr3RILThhxTYllEhtJ+m61uHrdg==;5:ilBwOAmG/iIf/tqbQvFQTBNDzNRUBQdRsIv4rIcCfF5xXwmwrYvh63EdKI5YyHhWLUzj875Bw65QXA8qB0ZitEMjArenr0cUK8uxMHU21S8GKj5JNsxlffLU9yKsGvATgrRmrFhxesVib1Y8Pa5yI9Z2dycS/pHx6sv0MuthIII=;7:cg40AGNYgeQKoCT0iG6lmalQGseXvK7c5JjGh+dLVDTefPr5swEZzwqVk5gqlAobpjorpWJsSCHeneUOBLRzLqAEihB2TQz6v0HFTfL0psqtvlOwRmEuKbiHKVMZ7A5rOvStIwSL+uPS1mVrHQvwLLqblJI4ppfoNIG1LjcgJAlT8bz7+VpVO06DN4FXSlvlR7a6PmE65GVqi6CxmYSzaG5WEATCrrn6NEygoIg7pPwAQGJuZAKMcoq0UeHdhzGg
-x-ms-office365-filtering-correlation-id: fb6cbcb3-dcff-491e-7204-08d606bd3b26
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0962;6:wBwtyilLIEeJKBMz1aL1c5IhridINgLs3nFm8EYmyPBpMHAd9jwMYHJVqoLM2W1H/ZIor1PBmLzGCnFKNVmfUPyM8DB623JiRVP9l7AMoc3eIE7nQM9Lryok7eevY5QmUbHBpclbS+EYt4bAuW4wxVWe2u3VylbX67ZShuKFKb/HUV6Rm1HnCTSuoerHtM8NiH8ZT4p8JipJBqVgQJFJFW6WUzTjlKOyHHMi2i4H2SVnqb9zHTBZPEtzJaQosP5ceap11fWRL79Z57o8OC4SRDtDpp9dq5Tl25S/ULtUZ+ShhF6Bm7701n8C1a9Pyt00JZf2rGv5/zfkAJnz1zMX1kLmuXztyI7czDrxDrHtnxUfXuouZaW0Lpp5ec5pM6ig3k50h/DKmkuBEkkNaufiDAYviCdjWWW9JBl8mj0uB5LgYislA2MrmhdZ7S1JSYlMv4/73zY4sRPW4fy3n0JbCA==;5:xzJwUF1d/qRaINus6Zo6mnx2z5RZmZrVTjJxxYOsnPbCuWtGfBHu1jRMIKQNr26/cH4UbRe4G+nsEftB5nGjF0ecPmyhhKDzAEt+CsJdOTT6bG0+XJ78WzJgZxtqXBVq4u2DONy2sfQnbvGEMugELDzPmxnCZiYRjvILnFJOqZY=;7:LZO5uPZI35K4pnZDuDkQjperwLPuM1dJMYQJXSr7D3rWj9oYOpKBwimXHvAmeKQaqqonSzLA2Ykrs3pRRgXP23CqQsvPIofMvG0gyv3INIXgxYnPvFRl1It7YaxS6yzM87m4KFXovISsCk3F6tmifXuBxwsxBAKCvsfeWyxRSTc8rAwCOJibaPUrfqZMQG2HLujUwhSwmRPfyI9NnmYwrm9O4woQW59ZbtLsugzZf0EPJk6eUn0wvJnHTmoO5Rkq
+x-ms-office365-filtering-correlation-id: bf76238a-a0e9-4a8f-cee9-08d606bd3d5a
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB0994;
-x-ms-traffictypediagnostic: BL0PR2101MB0994:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-prvs: <BL0PR2101MB09949B2090024870D91D1136A1320@BL0PR2101MB0994.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(211171220733660);
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB0962;
+x-ms-traffictypediagnostic: BL0PR2101MB0962:
+x-microsoft-antispam-prvs: <BL0PR2101MB0962E29E09CF48D9B17D3356A1320@BL0PR2101MB0962.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(20180801012)(6040522)(2401047)(5005006)(8121501046)(3231336)(944501410)(52105095)(2018427008)(10201501046)(93006095)(93001095)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(201708071742011)(7699016);SRVR:BL0PR2101MB0994;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0994;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(20180801012)(6040522)(2401047)(5005006)(8121501046)(3231336)(944501410)(52105095)(2018427008)(10201501046)(93006095)(93001095)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(201708071742011)(7699016);SRVR:BL0PR2101MB0962;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0962;
 x-forefront-prvs: 0770F75EA9
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(136003)(376002)(346002)(366004)(189003)(199004)(99286004)(7736002)(10090500001)(6916009)(476003)(1076002)(1730700003)(8676002)(81166006)(81156014)(186003)(6116002)(46003)(2616005)(97736004)(486006)(305945005)(52116002)(5250100002)(316002)(446003)(2501003)(386003)(36756003)(6506007)(22452003)(102836004)(11346002)(5660300001)(6486002)(107886003)(6436002)(256004)(4326008)(5640700003)(76176011)(14454004)(106356001)(8936002)(53936002)(2906002)(68736007)(86612001)(2900100001)(25786009)(86362001)(105586002)(478600001)(2351001)(6512007)(10290500003);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0994;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(396003)(39860400002)(346002)(366004)(376002)(136003)(189003)(199004)(8676002)(476003)(5640700003)(68736007)(2616005)(2906002)(81166006)(14454004)(81156014)(1730700003)(446003)(7736002)(2351001)(305945005)(22452003)(5660300001)(36756003)(6436002)(1076002)(6916009)(6486002)(46003)(316002)(25786009)(6116002)(53936002)(486006)(14444005)(86362001)(76176011)(8936002)(6512007)(97736004)(256004)(86612001)(107886003)(478600001)(52116002)(10290500003)(6346003)(186003)(10090500001)(11346002)(2900100001)(386003)(102836004)(5250100002)(4326008)(99286004)(2501003)(106356001)(105586002)(6506007);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB0962;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: eg+1s9N9R5DuBhYD/DpLmoLXyxfzvkdeEsEzDc6t8OW7oRQB7zHbGpPVTA5ql17c/MauCP1ssWRReaWhXYrxkImxAtYjVKjO6+Jkn3we/E4mtRRMUn+w4L5V2oPJPVZlR9/QfG2oE/E/RKduHRlBt2utfAQers1z3xvpdFXo8922zEnC9dAKKnikHij2tklN/H4QPkpNmXS2U0UyylLuYXDFUzMBrq8eA406cH+KjT+yR00gfdHriW+bs4HxVnVUalwHfywzoWxcaCWgLx1Q2OdjJRmJfnvNwOps37lK2qhbc5NPlQe5E+jAS7E76yUUYgc5zZBhu5BjeQ2M3sgTYguT97iE6Jipj7RtLa1whF4=
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: Aum42sxrRK3ucYduZ9q7udfI+51jxKAm6sH/kR/Ftqgre5vEQ0t4ZRphK9duYwmds9x0gYHOr2upmkMRWBPJaKwBE7rRwJ15QA++ybBJkbbe+qfx7t21/3f/ooZhiEpFluqROs3s84QruvUnIM9fXgFcIDyY8Vx9RQxW+XgTmP8nW7Lx9khW1e5uMOzJlSnYOFNQV1ibd3ZcNGBmRMTswBrL06O5KrYdvm28wRPwhAo8rSJStGNwzgrAKpZYCfRP7MSFB2Uw9Dqgeegi2CwPQNccaLISTAmJSC4ltp7YDlIdPep7G2kskC9rgGG+M0vKV6bVq1B2ZOFjivbpmq0uTt/AqBW9A1luL99i8lddNCY=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fb6cbcb3-dcff-491e-7204-08d606bd3b26
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 16:51:53.5538
+X-MS-Exchange-CrossTenant-Network-Message-Id: bf76238a-a0e9-4a8f-cee9-08d606bd3d5a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 16:51:57.2964
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0994
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB0962
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The multi-pack-index builtin has a very simple command-line
-interface. Instead of simply reporting usage, give the user a
-hint to why the arguments failed.
+When an object fails to decompress from a pack-file, we mark the object
+as 'bad' so we can retry with a different copy of the object (if such a
+copy exists).
 
-Reported-by: Eric Sunshine <sunshine@sunshineco.com>
+Before now, the multi-pack-index did not update the bad objects list for
+the pack-files it contains, and we did not check the bad objects list
+when reading an object. Now, do both.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- builtin/multi-pack-index.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ midx.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 6a7aa00cf2..2633efd95d 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -32,16 +32,16 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 		opts.object_dir =3D get_object_directory();
+diff --git a/midx.c b/midx.c
+index 6824acf5f8..7fa75a37a3 100644
+--- a/midx.c
++++ b/midx.c
+@@ -280,6 +280,16 @@ static int nth_midxed_pack_entry(struct multi_pack_ind=
+ex *m, struct pack_entry *
+ 	if (!is_pack_valid(p))
+ 		return 0;
 =20
- 	if (argc =3D=3D 0)
--		goto usage;
-+		usage_with_options(builtin_multi_pack_index_usage,
-+				   builtin_multi_pack_index_options);
-=20
--	if (!strcmp(argv[0], "write")) {
--		if (argc > 1)
--			goto usage;
-+	if (argc > 1) {
-+		die(_("too many arguments"));
-+		return 1;
++	if (p->num_bad_objects) {
++		uint32_t i;
++		struct object_id oid;
++		nth_midxed_object_oid(&oid, m, pos);
++		for (i =3D 0; i < p->num_bad_objects; i++)
++			if (!hashcmp(oid.hash,
++				     p->bad_object_sha1 + the_hash_algo->rawsz * i))
++				return 0;
 +	}
++
+ 	e->offset =3D nth_midxed_offset(m, pos);
+ 	e->p =3D p;
 =20
-+	if (!strcmp(argv[0], "write"))
- 		return write_midx_file(opts.object_dir);
--	}
-=20
--usage:
--	usage_with_options(builtin_multi_pack_index_usage,
--			   builtin_multi_pack_index_options);
-+	die(_("unrecognized verb: %s"), argv[0]);
- }
 --=20
 2.18.0.118.gd4f65b8d14
 
