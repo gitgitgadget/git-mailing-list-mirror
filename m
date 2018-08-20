@@ -2,117 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47AF31F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 10:23:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8369A1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 10:30:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726500AbeHTNij (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 09:38:39 -0400
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:62564 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbeHTNii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 09:38:38 -0400
-Received: from [192.168.2.201] ([92.22.43.193])
-        by smtp.talktalk.net with SMTP
-        id rhLQf55zCoI6LrhLRf6QQz; Mon, 20 Aug 2018 11:23:34 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1534760614;
-        bh=OzTUA9GSXRpkJYSU1UUogJpPz2x4bdU2NvbrFdMMlT4=;
-        h=Reply-To:Subject:To:References:From:Date:In-Reply-To;
-        b=AJ2NQgIGnottNZKN88EL+bGAAR8zIjoFY1/i+i2M3MDXaRi3INlvcH4kAS/xqzfzA
-         Yd7DaTfoXYJhlEWJHyc2NVv4nC0KSqxus3WtTheMPIHzfdXXH2O/to2eefLhJYPpRM
-         DFNgqpoOnjb6koXF3C/jglPh+qNQWA7zQ1kkR78Q=
-X-Originating-IP: [92.22.43.193]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=0uAVYj1wOgJByxYeJIV+0Q==:117
- a=0uAVYj1wOgJByxYeJIV+0Q==:17 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8
- a=nN7BH9HXAAAA:8 a=G-sI35Mni8sQ33JZkVUA:9 a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Aug 2018, #04; Fri, 17)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <7b340c01-f57d-1a71-e4d5-0346bb042d0c@talktalk.net>
-Date:   Mon, 20 Aug 2018 11:23:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726642AbeHTNpg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 09:45:36 -0400
+Received: from forward102o.mail.yandex.net ([37.140.190.182]:45002 "EHLO
+        forward102o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726060AbeHTNpg (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 20 Aug 2018 09:45:36 -0400
+X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Aug 2018 09:45:33 EDT
+Received: from mxback3g.mail.yandex.net (mxback3g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:164])
+        by forward102o.mail.yandex.net (Yandex) with ESMTP id 7B4A95A04359
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 13:22:43 +0300 (MSK)
+Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [2a02:6b8:0:1a2d::27])
+        by mxback3g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id h2S08dPI6L-MhHuOLG2;
+        Mon, 20 Aug 2018 13:22:43 +0300
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1534760563;
+        bh=P308eRHK2Tmfgo+I4INxiEmD6jae9FOl0TglPFgeEFM=;
+        h=To:From:Subject:Message-ID:Date;
+        b=OseSXR8cbktSUjvNemKbxZ/0v2tI+tgcvx6b2J8l9kMubBafnXngaFVT0dSj0FDL3
+         vk87TqepvBwOWtbuOwOrI6A6gS0cclS/2e5Xp3QzsjYL/3cH4Rhwot0zGJfutC1V0q
+         3i/gNsdUZrX6pW7asgm7hnuWCqa0z/5BUDC7UmL4=
+Received: by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id qNFUXY1h6V-MgpC0LQo;
+        Mon, 20 Aug 2018 13:22:42 +0300
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (Client certificate not present)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1534760562;
+        bh=P308eRHK2Tmfgo+I4INxiEmD6jae9FOl0TglPFgeEFM=;
+        h=To:From:Subject:Message-ID:Date;
+        b=T4GA9+VhoLtPSI/ihwRBb456+imE1ZtYSjTNMmfdpdC99ZwNnCNwWldsXwfuRC5iL
+         1CINOI4JZM2mcbiTwGIUa1gC4tNqqf3BDV2vnbIFEDag/UM5Dv/lRwMSUdhcYqk6VH
+         aDi59ldkMkGtLid/nl5LnuU4NXCmtn0Se7gl7I4o=
+Authentication-Results: smtp3o.mail.yandex.net; dkim=pass header.i=@yandex.ru
+To:     git@vger.kernel.org
+From:   Konstantin Kharlamov <hi-angel@yandex.ru>
+Subject: Do not raise conflict when a code in a patch was already added
+Message-ID: <fae8346d-398f-e984-5aa5-e3dc3ee71d70@yandex.ru>
+Date:   Mon, 20 Aug 2018 13:22:37 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHe8QuCHqyJ/MpkCItK+85c0N+jWM9yislvt8JR97qNNw0LoV6UAxBEELqv5dv28mXljpRDpybWF53vt5LNL8llvt7c9357Hlpp7UNFuniRqKDDYTtvS
- XxT26sEXipekY+kEkWmYDJLMQANRRk24TKyCFPvapUbjwAGuSXIzPwjNKFbVg/zzledwSj8LsFOleBczjgDvJvWleYjisq8OtILPIMFlP/BU15KxoXk3SNjG
- d0q5VsOt4hWe9XfE1j9e0vi9ndX3DlsFHMbLoeC75pTw/ehQtIg10DznebppBzDD
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17/08/2018 23:44, Junio C Hamano wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+So, steps-to-reproduce below rather full of trivia like setting up a
+repo, but the TL;DR is:
 
-> * pw/rebase-i-author-script-fix (2018-08-07) 2 commits
->  - sequencer: fix quoting in write_author_script
->  - sequencer: handle errors from read_author_ident()
-> 
->  Recent "git rebase -i" update started to write bogusly formatted
->  author-script, with a matching broken reading code.  These are
->  being fixed.
-> 
->  Undecided.
->  Is it the list consensus to favor this "with extra code, read the
->  script written by bad writer" approach?
+Upon using `git rebase -i HEAD~1` and then `git add -p` to add part of a
+"hunk" as one commit, and then using `git rebase --continue` so the
+other part of hunk would be left in top commit; git raises a conflict.
 
-I think there was agreement between myself and Eric on the last version,
-I'm not sure anyone else has expressed an opinion. The problem with
-fixing the quoting without any backwards compatibility is that if git is
-upgraded while a rebase is stopped read_author_script() will happily use
-the broken quoting to create a corrupted author name in the new commit
-if the name contains "'".
+It's spectacular, that content of one of inserted conflict markers is
+empty, so all you have to do is to remove the markers, and use `git add`
+on the file, and then `git rebase --continue`
 
-The compatibility code in the latest version relies on the missing "'"
-at the end of the GIT_AUTHOR_DATE line which is fixed by
-es/rebase-i-author-script-fix which is now in master. If there is a
-release with es/rebase-i-author-script-fix but not
-pw/rebase-i-author-script-fix we'll have to rethink as the detection
-wont be reliable. I have a branch that fixes read_author_script() to use
-sq_dequote() at
-https://github.com/phillipwood/git/commits/wip/fix-author-script. At the
-moment it has compatibility with broken quoting, but I could strip that
-out and then sq_dequote() will return an error with the broken quoting
-and the user would have to restart the rebase. So one option is to drop
-this series and wait for me to finish the improved solution next month.
+Its a lot of unncessary actions, git could just figure that the code it
+sees in the patch is already there, being a part of another commit.
 
-> 
-> * pw/add-p-select (2018-07-26) 4 commits
->  - add -p: optimize line selection for short hunks
->  - add -p: allow line selection to be inverted
->  - add -p: select modified lines correctly
->  - add -p: select individual hunk lines
-> 
->  "git add -p" interactive interface learned to let users choose
->  individual added/removed lines to be used in the operation, instead
->  of accepting or rejecting a whole hunk.
-> 
->  Will hold.
->  cf. <d622a95b-7302-43d4-4ec9-b2cf3388c653@talktalk.net>
->  I found the feature to be hard to explain, and may result in more
->  end-user complaints, but let's see.
+Maybe git could issue a warning, or to question a user interactively 
+(y/n); but raising a conflict IMO is unnecessary.
 
-Thanks, I'll send some follow up patches to improve the help and
-documentation next month.
+# Steps to reproduce
 
-Best Wishes
+In empty dir execute:
 
-Phillip
+	$ git init
+	$ touch test
+	Initialized empty Git repository in /tmp/test/.git/
+	$ git add test
+	$ git commit
+	[master (root-commit) a7ce543] 1st commit
+	 1 file changed, 2 insertions(+)
+	 create mode 100644 test
+	$ echo -e "foo\nbar" > test             # content you'll want to break
+	$ git add -u && git commit
+	[detached HEAD 9e28331] 2-nd commit
+	 1 file changed, 2 insertions(+)
+	$ git rebase -i --root
+	Stopped at a7ce543...  1st commit
+	You can amend the commit now, with
+
+	  git commit --amend
+
+	Once you are satisfied with your changes, run
+
+	  git rebase --continue
+
+Put "edit" for the 2-nd commit
+
+	$ git reset HEAD^
+	Unstaged changes after reset:
+	M       test
+	$ git add -p
+	diff --git a/test b/test
+	index e69de29..3bd1f0e 100644
+	--- a/test
+	+++ b/test
+	@@ -0,0 +1,2 @@
+	+foo
+	+bar
+	Stage this hunk [y,n,q,a,d,e,?]? e
+
+	╭─constantine@constantine-N61Ja  /tmp/test ‹node-›  ‹› (e721fa3*)
+	╰─$ git commit
+	[detached HEAD 27b2f63] add foo
+	 1 file changed, 1 insertion(+)
+	╭─constantine@constantine-N61Ja  /tmp/test ‹node-›  ‹› (27b2f63*)
+	╰─$ git rebase --continue
+	test: needs update
+	You must edit all merge conflicts and then
+	mark them as resolved using git add
+
+What happened is that it's obvious that the hunk was broken to multiple
+commits, and git should figure that out, and not to raise a conflict.
+
+Side note: for some reason in the test git didn't insert conflict
+markers. It did in real-world usecase though, and there was simply no
+content inside one of them.
