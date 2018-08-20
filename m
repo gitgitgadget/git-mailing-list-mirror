@@ -2,123 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6D481F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 19:30:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B85C11F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 19:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbeHTWrC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 18:47:02 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:43554 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbeHTWrC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 18:47:02 -0400
-Received: by mail-pg1-f194.google.com with SMTP id v66-v6so5928941pgb.10
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 12:30:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=+Nykqkrusml3VBGOeggg3WmKKfG46MzFRJrP+2NQZO8=;
-        b=FJmPfzo/OxYbIyI3dijVXvrPbYlylea2utstb65B2iUYcf+AdUAUfDno3Fjcv3Diw6
-         vAXjfH/sj2tM4DfxVhpPHd8fLrlwmi+yBl6Ye+7Hnhc4pOvYDa/XwniMbXiVge19gRM3
-         IrMArTy0saPASt7CGKKI06uSGMDj62+H9vwIlirdp1YUt75rri1hq6GK3Z/tPZUQ4IYY
-         9iWowu8t7GSp17dSj/yvUosnlnMsBQXzxahoD4JEC/g4TFggNHuK8Jd7iuSvX44aLVwm
-         mH1GjlexlMPLyl7BAPl4PI34luuybfvHIBcqAsmXH2K6/N5NeSJ7UZZYk1avPqTh9SuV
-         hHOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=+Nykqkrusml3VBGOeggg3WmKKfG46MzFRJrP+2NQZO8=;
-        b=pp87dPpofvuvi5kkxgALPhJK09XxJzaZ+4jzab7EuvDAN9uhBhDiEtywTFPZGGC+pC
-         AVjgSdid1t3MpsrqRIU2sBPdTrr9RMV90j5sps1krBBG25pdxN7DCvt515c0aAfCWDoo
-         xF5dLgfp0ovslNvJb9SthK2Ic8bToM5SE13N/heRiIR7ZSyCj69qEFxyobFxbi2z5U3i
-         1ZrXEpq7Yg3ezZdO7a15BSD8See+9ARNv4+yYWYuXEGj+8V5EiCvDCw74loXW0xYxITQ
-         expG4Dz26ApbyCp6pN/lL15aXVvxLiAHCDwQwXLc9fzl25+2/CeKaB0RstRLIeYyz0jp
-         QsaQ==
-X-Gm-Message-State: AOUpUlGa3FWM6R62BJXnFfqZcufQUWLqqIKWMvDMusPyMLbyb0+onl2i
-        yuCle+wnIQCizvpn/LUQttA=
-X-Google-Smtp-Source: AA+uWPw+KxvB4qnzpCxD7IjPtSX7qORoG9uOrj4btCMAwStj4fTfao3MYXy8xbKCU/gZS0zDjhSfJg==
-X-Received: by 2002:a63:e40d:: with SMTP id a13-v6mr43947263pgi.289.1534793409634;
-        Mon, 20 Aug 2018 12:30:09 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id e82-v6sm16818759pfk.87.2018.08.20.12.30.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Aug 2018 12:30:09 -0700 (PDT)
-Date:   Mon, 20 Aug 2018 12:30:07 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC] commit: new option to abort -a something is already
- staged
-Message-ID: <20180820193007.GB31020@aiede.svl.corp.google.com>
-References: <20180820154120.19297-1-pclouds@gmail.com>
+        id S1726670AbeHTWso (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 18:48:44 -0400
+Received: from mout.gmx.net ([212.227.17.20]:48061 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726077AbeHTWsn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 18:48:43 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LkSOt-1gO9W623Ip-00cU46; Mon, 20
+ Aug 2018 21:31:45 +0200
+Date:   Mon, 20 Aug 2018 21:31:43 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 1/3] diff.c: add --output-indicator-{new, old, context}
+In-Reply-To: <20180817204354.108625-2-sbeller@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808202129420.73@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1808161022180.71@tvgsbejvaqbjf.bet> <20180817204354.108625-1-sbeller@google.com> <20180817204354.108625-2-sbeller@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180820154120.19297-1-pclouds@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:aL1VZnny6tPCGvJC7P/jipnbRMco6TbCzOqmTga8KrWfborAjT9
+ iZCLYgReHS775WF8V2L/UkW2p31RQP0wm+LZwnFDgBc9FSi1uVX5n5FwRWRBSoAWdqYJ/Nk
+ 2q0E3K7QjdN7t40qrEZwxqiAKmZ4Lx56JfQqTTuNyptMQ9+/Kl3pEo2PKMY2Wvp/+aCy0tZ
+ yjKz17p8qK1HexJ9g2ruQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YM+WSzT3OFk=:IvXu3AZJBQJtpbIuK92JWv
+ w9hvALigFZZ9XwDxTG4dcwLMHsY+AVvTpqtFi87tvMkb8YMjrBivEqJzay4QJBkun4aa1vx70
+ igfd/pSiNAGxElpqWocJv/uwg2HtQz5iZEe/4/+WTPrM8uoVe80os/rRT+WL1zUZ//03gfX1X
+ H443OTY4IjEFEHxlUMj1/1VWj5dkbVm4Q39WYosUnvAozS8IrZwLFtHeT91ZXLSjk7X7XNXPn
+ fQ2FBW9a2yPA5cD3AV3tIr3qKJ29Jfp5up/6D18jl6FXhESRpf8ToxtX2NwWyZoQnw4BGOPtE
+ WqK5CeBF7wfdStStB/21vgcnVU0wMnPQE0goZH+SKt5wP82AD9LTZ69lYlLl9qmvfao3CM6TB
+ fwoFljfMaTJ/Wc5l4cHfo96d3/eJ7TQJcNK9aIjZQngo+hqh90SWq0LghbDfeAjrz6919NSRK
+ +AAVnAY2O5az1enmeGn2vapN9eZcxAFJflFTc6PbND6Mc9XNoQ3z+cQc2VpSg6lyjBTLR+PU/
+ Nm2Ndy/3Qx1NgKYfl20yCILnJgOBOhs4cfo3fdP14VH4szifoDYckBegX87wRCrGj2KRY4EAk
+ nB1J0se3Z3W3t7+o187pYudM+SlvFYskm2RLnPoMXLxq8Y9RbW4hud2qzgclnH5gTc4d5fbYl
+ ELSJ4NQGlAzIA4mBP1uqyQ14supqgsSf0yxT741axQKvUphgWYosNT56zCu6nzQg5Sjsmr7Nq
+ St8cNB6ZffVV0QumBmcofooHKBQ+dKOYrfDyFCioH/fEz40j8gJ3LUBhmndSeBZlCIEX216sT
+ XDXvarn
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Stefan,
 
-Nguyễn Thái Ngọc Duy wrote:
+On Fri, 17 Aug 2018, Stefan Beller wrote:
 
-> So many times I have carefully cherry picked changes to the index with
-> `git add -p` then accidentally did `git commit -am ....` (usually by
-> retrieving a command from history and pressing Enter too quickly)
-> which destroyed beautiful index.
->
-> One way to deal with this is some form of `git undo` that allows me to
-> retrieve the old index.
+> This will prove useful in range-diff in a later patch as we will be able
+> to differentiate between adding a new file (that line is starting with
+> +++ and then the file name) and regular new lines.
+> 
+> It could also be useful for experimentation in new patch formats, i.e.
+> we could teach git to emit moved lines with lines other than +/-.
 
-Yes, I would love such an undo feature!
+Thanks.
 
-How would you imagine that this information would get stored?  We can
-start with adding that and a low-level (plumbing) interface to it, to
-avoid being blocked on getting the user-facing (porcelain) "git undo"
-interface right.  (Or we can go straight for the porcelain.  It's fine
-for it to start minimal and gain switches later.)
+> diff --git a/diff.c b/diff.c
+> index c5c7739ce34..03486c35b75 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -1281,7 +1281,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  			else if (c == '-')
+>  				set = diff_get_color_opt(o, DIFF_FILE_OLD);
+>  		}
+> -		emit_line_ws_markup(o, set_sign, set, reset, ' ', line, len,
+                                    ^
+Here we already pass `o`... so...
 
-[...]
-> Instead, let's handle just this problem for now. This new option
-> commit.preciousDirtyIndex, if set to false, will not allow `commit -a`
-> to continue if the final index is different from the existing one. I
-> don't think this can be achieved with hooks because the hooks don't
-> know about "-a" or different commit modes.
+> +		emit_line_ws_markup(o, set_sign, set, reset,
+> +				    o->output_indicators[OUTPUT_INDICATOR_CONTEXT],
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+... here, we could simply pass `OUTPUT_INDICATOR_CONTEXT` and let the
+callee look it up in`o->output_indicators[]`...
 
-I frequently use "git commit -a" this way intentionally, so I would be
-unlikely to turn this config on.  That leads me to suspect it's not a
-good candidate for configuration:
+I read all three patches and did not see a reason why we could not
+simplify the code that way.
 
-- it's not configuration for the sake of a transition period, since some
-  people would keep it on forever
+Other than that: great!
 
-- it's not configuration based on different project needs, either
+Thank you,
+Dscho
 
-So configuration doesn't feel like a good fit.
-
-It might be that I can switch my muscle memory to "git add -u && git
-commit", in which case this could work as a new default without
-configuration (or with configuration for a transition period).  A
-separate commandline option "git commit -a --no-clobber-index" might
-make sense as well, since then I could pass --clobber-index to keep my
-current workflow.  That would also follow the usual progression:
-introduce commandline option first, then config, then change default.
-
-That said, I lean toward your initial thought, that this is papering
-over a missing undo feature.  Can you say more about how you'd imagine
-undo working?
-
-Thanks,
-Jonathan
+> +				    line, len,
+>  				    flags & (DIFF_SYMBOL_CONTENT_WS_MASK), 0);
+>  		break;
+>  	case DIFF_SYMBOL_PLUS:
+> @@ -1324,7 +1326,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  				set = diff_get_color_opt(o, DIFF_CONTEXT_BOLD);
+>  			flags &= ~DIFF_SYMBOL_CONTENT_WS_MASK;
+>  		}
+> -		emit_line_ws_markup(o, set_sign, set, reset, '+', line, len,
+> +		emit_line_ws_markup(o, set_sign, set, reset,
+> +				    o->output_indicators[OUTPUT_INDICATOR_NEW],
+> +				    line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK,
+>  				    flags & DIFF_SYMBOL_CONTENT_BLANK_LINE_EOF);
+>  		break;
+> @@ -1367,7 +1371,9 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+>  			else
+>  				set = diff_get_color_opt(o, DIFF_CONTEXT_DIM);
+>  		}
+> -		emit_line_ws_markup(o, set_sign, set, reset, '-', line, len,
+> +		emit_line_ws_markup(o, set_sign, set, reset,
+> +				    o->output_indicators[OUTPUT_INDICATOR_OLD],
+> +				    line, len,
+>  				    flags & DIFF_SYMBOL_CONTENT_WS_MASK, 0);
+>  		break;
+>  	case DIFF_SYMBOL_WORDS_PORCELAIN:
+> @@ -4382,6 +4388,9 @@ void diff_setup(struct diff_options *options)
+>  
+>  	options->file = stdout;
+>  
+> +	options->output_indicators[OUTPUT_INDICATOR_NEW] = '+';
+> +	options->output_indicators[OUTPUT_INDICATOR_OLD] = '-';
+> +	options->output_indicators[OUTPUT_INDICATOR_CONTEXT] = ' ';
+>  	options->abbrev = DEFAULT_ABBREV;
+>  	options->line_termination = '\n';
+>  	options->break_opt = -1;
+> @@ -4869,6 +4878,12 @@ int diff_opt_parse(struct diff_options *options,
+>  		 options->output_format |= DIFF_FORMAT_DIFFSTAT;
+>  	} else if (!strcmp(arg, "--no-compact-summary"))
+>  		 options->flags.stat_with_summary = 0;
+> +	else if (skip_prefix(arg, "--output-indicator-new=", &arg))
+> +		options->output_indicators[OUTPUT_INDICATOR_NEW] = arg[0];
+> +	else if (skip_prefix(arg, "--output-indicator-old=", &arg))
+> +		options->output_indicators[OUTPUT_INDICATOR_OLD] = arg[0];
+> +	else if (skip_prefix(arg, "--output-indicator-context=", &arg))
+> +		options->output_indicators[OUTPUT_INDICATOR_CONTEXT] = arg[0];
+>  
+>  	/* renames options */
+>  	else if (starts_with(arg, "-B") ||
+> diff --git a/diff.h b/diff.h
+> index e1e54256c18..d7edc64454a 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -194,6 +194,11 @@ struct diff_options {
+>  	FILE *file;
+>  	int close_file;
+>  
+> +#define OUTPUT_INDICATOR_NEW 0
+> +#define OUTPUT_INDICATOR_OLD 1
+> +#define OUTPUT_INDICATOR_CONTEXT 2
+> +	char output_indicators[3];
+> +
+>  	struct pathspec pathspec;
+>  	pathchange_fn_t pathchange;
+>  	change_fn_t change;
+> -- 
+> 2.18.0.265.g16de1b435c9.dirty
+> 
+> 
