@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3B3F1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 16:52:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC47F1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 16:52:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727448AbeHTUId (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 16:08:33 -0400
+        id S1727459AbeHTUIf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 16:08:35 -0400
 Received: from mail-co1nam03on0090.outbound.protection.outlook.com ([104.47.40.90]:59456
         "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726144AbeHTUId (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 16:08:33 -0400
+        id S1726106AbeHTUIe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 16:08:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VtWVuG/VsIN2eOzUWAh0WQqW7ONE/5i99OUVJoLxlmw=;
- b=mfqgaIxPBWYx7eotM+wW0m36MQAZoXRWV4zgCvTyXUSxZfFR9HIODReEpt6u/syCoXs8jKcaV/ljzxhHQ/jx5eL0YNlKHsGAhdmJulodFRdYKNp99lAt2584zif/KzCxjJK06t2dpLaSfjwdj7oBtDgldgw4NtVGwDJGjH+SZHM=
+ bh=XDigVA/TzJEFVVB58Px9+W/f1v8FbGWEnsVmicB6fBY=;
+ b=YAv8brkspYjuKGDCIozZkCgyFun0ZhEzTFy3ESY2cfGbaYNAcCfhzZBE42P46vq1Jvl+H4X/upSc6KV/iY4bn1Z6K1KjBzpnWqOGIjwftIblxEQtqJvOc1j2Ax4FaRhrH8UjULonCgFFVOKnep8WLO1xMiicGNwO3gIVtsBWjQ4=
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
  BL0PR2101MB0962.namprd21.prod.outlook.com (52.132.20.155) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1101.3; Mon, 20 Aug 2018 16:51:59 +0000
+ 15.20.1101.3; Mon, 20 Aug 2018 16:52:00 +0000
 Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49]) by BL0PR2101MB1011.namprd21.prod.outlook.com
  ([fe80::c997:1e4b:40d8:1a49%2]) with mapi id 15.20.1101.000; Mon, 20 Aug 2018
- 16:51:59 +0000
+ 16:52:00 +0000
 From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     Derrick Stolee <dstolee@microsoft.com>
-Subject: [PATCH 4/9] midx: stop reporting garbage
-Thread-Topic: [PATCH 4/9] midx: stop reporting garbage
-Thread-Index: AQHUOKYccDss1F/c0kuYp/0y78qmqQ==
-Date:   Mon, 20 Aug 2018 16:51:59 +0000
-Message-ID: <20180820165124.152146-5-dstolee@microsoft.com>
+Subject: [PATCH 5/9] midx: fix bug that skips midx with alternates
+Thread-Topic: [PATCH 5/9] midx: fix bug that skips midx with alternates
+Thread-Index: AQHUOKYdAGZTofFa1U6UNNwn6MPDYA==
+Date:   Mon, 20 Aug 2018 16:52:00 +0000
+Message-ID: <20180820165124.152146-6-dstolee@microsoft.com>
 References: <20180820165124.152146-1-dstolee@microsoft.com>
 In-Reply-To: <20180820165124.152146-1-dstolee@microsoft.com>
 Accept-Language: en-US
@@ -50,13 +50,13 @@ x-clientproxiedby: CY4PR19CA0044.namprd19.prod.outlook.com
 x-ms-exchange-messagesentrepresentingtype: 1
 x-originating-ip: [2001:4898:e008:1:8b51:5dff:fe0f:730f]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0962;6:CkKJ3olsVupOnur+piycRojfqAuJE5bxy+tVkISmklrERXPG2wNF8Jbstn0m3lm5rPqDFHlOSM5/qCjzdzk3GgXQ3GnXLAn78HDtPx3Gupi9V9Gk50ltMbM9b1v95dd8e94s8orX93Y2kobwFtsQS/KFwrCQ3sAOORuBVcxbBDjIDkqnt2ml8N4W7PQJJaOV2rGiJrfU00Y820Z83ceNJRrwkCkYxBCsS7uzbq9LWFyvtqOnypdfUKluXgsFLBK+mRjFxWMBrI423TY232o9kCTlBNVnitXYMQnLxYLflMAThCVaDJdNh4RGiVDO6qUfb9LCxd695lN+tHRZ/Zg62Epu8UtA6/22m1jkf13WA+LcaA3xasxYb1b9PeK+JA2T/UUE/LewGNzoojj0oq+A8d0kKwMuHGQYexR6EsA5/Mi9KIfrEtknOV6dCLG5HVpu6r2sF9N4SgECme959DITwA==;5:b7xQ/1Iz12dTqWq09/GyZlCXhDk+/NMcDkDvBLe9e/RhTFUFtybzw+SbZnYMzv2XmIrGcyPSLjaSSklTPDUYT88JZ4O9kxdK3jXUxR4VCG+yG2aesdmgJcdduj71GdabMSe7MECAP4iUgtKVKTIidkZB3Nh0fShfnAcTX6t3tZE=;7:ygYuqG38RD+dltmu17xujZ4DoR84dqMKMFxvRvOYK8mQhOHT1DUalUhZ4IP79zANLcYjB8UcgWVmeuI+NFGB5Ry27gqPU+s+xl2+rjYnbRyekWtQRbZOoeJsa2r9D5VPr96TpSdHzKjfyYXqGOJW6tBkU8Vp3TFq9i5nkF7fqCofN8gu7DOVw5oqPoBrI6qbXtgLAtQPVXbiLkW4hNyoYp8JKutyXKsECLSH99SZ8cMw8aSsztHzud1boWov2ibm
-x-ms-office365-filtering-correlation-id: 9eb1742a-07b8-4348-d3e7-08d606bd3e6b
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB0962;6:fTKnCpguMTwes71QSlCucKU8YaG5VhampPJVnovEvGeMB4BX9FZeJXWpjTDgKJEycD/34x98H1umgGbHNL4X8N3J8zTvlfkvHKbddXuAHPBcSrOLKc5StG7E4aJKIBhfur028g5zIOholEpL+1ShRW/d9ZHVDRvsU/GPmmycgiUtTmTsLDITmTeFy32ImGJPly2As2tJTdxRhC4eCF07CeAd5ew5fYXvxKQSprO6U3/cjzTuWPZ2TJNGiL9VL1kCi83MCUHgIspE1SwR/eME5kJLiqDBpgF9skJjcqNwbeU1cy/UvKSkK1o77IWUv963iLf4PDIBErY/OPZZafo7RPcWtrymjszuUU/t3W+bujiKVr8XP9IKxNeCtacGlJy7LiCv7pe9zIDtxczXuSsGgONMxd2HMyrQXuH1SHlMnZmYpHDU+gYAV3tefJk4UtTDiBkyPWssUO+SwlBvtG5/mQ==;5:n9nI6F2tfPCyMIL5eyRQEjolkIb9c/cG0qgRen2KgwjMeT0fJhE94/sxh6Q8gt4v4b4yx4S6Tl9vFas+CgXlaPM0WMNMFa6Wm73hTQyR00uMZpJKiJGqyS+0I6RkwS1U5nvVzyShRD/M/X+ahOR0MCPg/pK0mJkxOfEYXhpJawY=;7:x3DKv9PAP2Tk+nKKR8MtXI1yC3JT0U3hpZAr0+pC1FHnn0F1+YCgPWQ4jnt9Zm+GU6i3PPQ9es2YgFUkHbHkNwiRoTHcaVpgec0C0tsGyiOlE/uTAHXab7ZSfZMA5oN8ZpTSuQ++iHhvdIXDvYmWgLlukRvFbd88yDgzvnw85F2Qu7yoIRUCjFjMQFnxu1XA5+GeDs3FDi6M3R1NGIyYdT330jH6NGFS7ZNDFsfacacjNbdbw6JvGnQRCy4N4nLl
+x-ms-office365-filtering-correlation-id: ec80e478-7067-4b58-7e76-08d606bd3f6e
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB0962;
 x-ms-traffictypediagnostic: BL0PR2101MB0962:
-x-microsoft-antispam-prvs: <BL0PR2101MB096276AE375235601AEEBBA7A1320@BL0PR2101MB0962.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(211171220733660);
+x-microsoft-antispam-prvs: <BL0PR2101MB0962161F4917E7EBE6C5A2A0A1320@BL0PR2101MB0962.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(20180801012)(6040522)(2401047)(5005006)(8121501046)(3231336)(944501410)(52105095)(2018427008)(10201501046)(93006095)(93001095)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(201708071742011)(7699016);SRVR:BL0PR2101MB0962;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB0962;
 x-forefront-prvs: 0770F75EA9
@@ -65,15 +65,15 @@ received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=dstolee@microsoft.com; 
-x-microsoft-antispam-message-info: FeOpan4qmxR9lq+M+mey/IT8Rxh9uvQMEWkpOSSy/4+kNR8Splt5ZFLiy0O16HNFVmWkkQr+PbL8Y7fCbco/aXYZglmHzSWzlOnSMxNGBjStrF2M6yIXgAuJuhfXgucukFLaZJz9D/U5KWSbka3/06Ly34dZbVNW/Z9rU3KqBBdsMU3pvmpAnbbhDJ0tP5/Tr7eSZ95l6miYtfzIUr0DUM7+qeqcAsJVhctBMqLG5nfTc3iXIBh+tGPYWkOiXt5v9WicmR/a2N60ZBj3RbvApqReehh4IhRaE4/Vq4ok/j3GtMQ0bCrybq2n8jpSaYA0To85EheZJOTcor0lqpnTE+NftYkmpdF0pQZhf8AQDWY=
+x-microsoft-antispam-message-info: 5ZK8OeBNzTx4mUY59WdR49Li+hicwRvLguAN4XmS4wv9Hl6I6L4858gy9/4IZPlCPRFVnYhlnnvO8VXdevwS+5XDZNFkPFvX1Vrp2hdrEArnKiXUjEguOAG/DjN9UAJOyisZzLxFN1w4mIZpqeSbeCqr9wGHhraCQ07IIBnwzYSxAp1GaXfkMnIxPdA8RgNf2PMp8Es3FO+Nl/C5YMjCRB3yE/fwnCetJZx7tR6oLr4ZyNYlRSj0QVft432ZeR/l0M4qxJp6KmhJ/mzhK6/tFxIWBvmko2yKvpYDd6SWydsdjNV1dvJBTUvgLrLMo7h81srlbb72D2LNmWSBOw1VPc9+/e7ceCe1T1dpThcUp7Y=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9eb1742a-07b8-4348-d3e7-08d606bd3e6b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 16:51:59.0507
+X-MS-Exchange-CrossTenant-Network-Message-Id: ec80e478-7067-4b58-7e76-08d606bd3f6e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Aug 2018 16:52:00.7859
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -83,43 +83,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When prepare_packed_git is called with the report_garbage method
-initialized, we report unexpected files in the objects directory
-as garbage. Stop reporting the multi-pack-index and the pack-files
-it covers as garbage.
+The logic for constructing the linked list of multi-pack-indexes
+in the object store is incorrect. If the local object store has
+a multi-pack-index, but an alternate does not, then the list is
+dropped.
+
+Add tests that would have revealed this bug.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- packfile.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ midx.c                      | 11 ++++++-----
+ t/t5319-multi-pack-index.sh | 17 +++++++++++++++++
+ 2 files changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/packfile.c b/packfile.c
-index 896da460ac..fe713a0242 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -820,9 +820,8 @@ static void prepare_pack(const char *full_name, size_t =
-full_name_len,
- 	struct packed_git *p;
- 	size_t base_len =3D full_name_len;
+diff --git a/midx.c b/midx.c
+index 7fa75a37a3..0710c4c175 100644
+--- a/midx.c
++++ b/midx.c
+@@ -331,7 +331,7 @@ int midx_contains_pack(struct multi_pack_index *m, cons=
+t char *idx_name)
 =20
--	if (strip_suffix_mem(full_name, &base_len, ".idx")) {
--		if (data->m && midx_contains_pack(data->m, file_name))
--			return;
-+	if (strip_suffix_mem(full_name, &base_len, ".idx") &&
-+	    !(data->m && midx_contains_pack(data->m, file_name))) {
- 		/* Don't reopen a pack we already have. */
- 		for (p =3D data->r->objects->packed_git; p; p =3D p->next) {
- 			size_t len;
-@@ -842,6 +841,8 @@ static void prepare_pack(const char *full_name, size_t =
-full_name_len,
- 	if (!report_garbage)
- 		return;
+ int prepare_multi_pack_index_one(struct repository *r, const char *object_=
+dir, int local)
+ {
+-	struct multi_pack_index *m =3D r->objects->multi_pack_index;
++	struct multi_pack_index *m;
+ 	struct multi_pack_index *m_search;
+ 	int config_value;
 =20
-+	if (!strcmp(file_name, "multi-pack-index"))
-+		return;
- 	if (ends_with(file_name, ".idx") ||
- 	    ends_with(file_name, ".pack") ||
- 	    ends_with(file_name, ".bitmap") ||
+@@ -339,14 +339,15 @@ int prepare_multi_pack_index_one(struct repository *r=
+, const char *object_dir, i
+ 	    !config_value)
+ 		return 0;
+=20
+-	for (m_search =3D m; m_search; m_search =3D m_search->next)
++	for (m_search =3D r->objects->multi_pack_index; m_search; m_search =3D m_=
+search->next)
+ 		if (!strcmp(object_dir, m_search->object_dir))
+ 			return 1;
+=20
+-	r->objects->multi_pack_index =3D load_multi_pack_index(object_dir, local)=
+;
++	m =3D load_multi_pack_index(object_dir, local);
+=20
+-	if (r->objects->multi_pack_index) {
+-		r->objects->multi_pack_index->next =3D m;
++	if (m) {
++		m->next =3D r->objects->multi_pack_index;
++		r->objects->multi_pack_index =3D m;
+ 		return 1;
+ 	}
+=20
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index ae1d5d4592..4b6e2825a6 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -149,6 +149,23 @@ test_expect_success 'repack removes multi-pack-index' =
+'
+=20
+ compare_results_with_midx "after repack"
+=20
++test_expect_success 'multi-pack-index and alternates' '
++	git init --bare alt.git &&
++	echo $(pwd)/alt.git/objects >.git/objects/info/alternates &&
++	echo content1 >file1 &&
++	altblob=3D$(GIT_DIR=3Dalt.git git hash-object -w file1) &&
++	git cat-file blob $altblob &&
++	git rev-list --all
++'
++
++compare_results_with_midx "with alternate (local midx)"
++
++test_expect_success 'multi-pack-index in an alternate' '
++	mv .git/objects/pack/* alt.git/objects/pack
++'
++
++compare_results_with_midx "with alternate (remote midx)"
++
+=20
+ # usage: corrupt_data <file> <pos> [<data>]
+ corrupt_data () {
 --=20
 2.18.0.118.gd4f65b8d14
 
