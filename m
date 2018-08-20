@@ -2,108 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E50281F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 19:42:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2BB3C1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 19:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726391AbeHTW73 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 18:59:29 -0400
-Received: from siwi.pair.com ([209.68.5.199]:41135 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726089AbeHTW73 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 18:59:29 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2249A3F4094;
-        Mon, 20 Aug 2018 15:42:34 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id EF3BF3F4088;
-        Mon, 20 Aug 2018 15:42:33 -0400 (EDT)
-Subject: Re: [PATCH v7 09/16] fetch: support filters
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20171208155851.855-1-git@jeffhostetler.com>
- <20171208155851.855-10-git@jeffhostetler.com>
- <CACsJy8D3nC+fXFYMKWh6AStbMVOVfmcAvAT9tBqtG9K6r043eQ@mail.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <409954a1-6aff-f187-ec3e-c0bf044d279f@jeffhostetler.com>
-Date:   Mon, 20 Aug 2018 15:42:33 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726476AbeHTXBu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 19:01:50 -0400
+Received: from mail-yb0-f196.google.com ([209.85.213.196]:33456 "EHLO
+        mail-yb0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726089AbeHTXBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 19:01:49 -0400
+Received: by mail-yb0-f196.google.com with SMTP id d4-v6so1132508ybl.0
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 12:44:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mP+xc+wDFZ7ELheEh7NIW0gbVA7CVTawX2ZZ6WWy3ew=;
+        b=fTLp5UStDyRk9fpky6vBUafgSSfKiQ0pRptdB2UFEiBEXsrdGsYc2N4ppg0hEFAI0g
+         gCZIA6LOnyL7Zjm2itUKnoZmqttXgKSb+cRehlDJVinDPDhUwdLH9/JXRTY3lvhjBJjf
+         3h0+oFqYtpg6rBU70vxBC3++KZ+S9xRuqMUaHS9GKoDkRN91tGKWatUn1R+2paq3ArHR
+         0B/nRSFjD4z2nmLuCbA7IFCgk8b8zfgSvhz7Ng0o57aoxZbCAN3XsoA0im6cyjwNIOHD
+         Z6soQ2qIh6Pv2JKGp38lVVyaoVdLluMV/Z5aTDeNTu+7++PnntPzH2v7ALp4FAF/zD51
+         hKRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mP+xc+wDFZ7ELheEh7NIW0gbVA7CVTawX2ZZ6WWy3ew=;
+        b=pN2JvJmc4S92o9W26g5/VfMB3tYogZ/KOEGWRo7Jdt7RXwMsIX72x8PzlcehZHo47n
+         tlwExsNslpNX3pI3DOD+wPJQPYoGCorFX8kb98iNtPC86Omi41ktPqhXn/ppOUlVPJnI
+         iFePK7x8Bd7AwIKVPbetAwpsR+bTzvxviPR4sKhwxgZcE3PDQEfhqz+ejMrLTSHzS/VI
+         5PEm7cBv3pFS3Dz6I1ktGON2j+tiaiAfTc9SlIOssycLBCJ+3CAMqibXAmwk25vWrq6R
+         9Qpt9jsXo1xj6TCmUxEE+pzcQWQwOsfF35E1R+gE/VxOfBxzELOKDM95skCrC3+aYu2O
+         uJow==
+X-Gm-Message-State: AOUpUlGYtmcLIkgHRiF8iO2gXtNvfiSfy/gcOtGvT+hcASYJu3eg4GgS
+        Km2zGM0luvjuaboFRq8glQTkW7FRfSxMtP/7oQUYfw==
+X-Google-Smtp-Source: AA+uWPykOlJ8Y/sNB3IpsyFJUpHBrAiyiVx6cfRlhViT+9k+jtuWUieKvi6usi6i1xoSQQN2R6gnKo2UAtgAVU6JmYU=
+X-Received: by 2002:a25:6007:: with SMTP id u7-v6mr13938561ybb.191.1534794294464;
+ Mon, 20 Aug 2018 12:44:54 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8D3nC+fXFYMKWh6AStbMVOVfmcAvAT9tBqtG9K6r043eQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180803222322.261813-1-sbeller@google.com> <20180813224235.154580-1-sbeller@google.com>
+ <20180813224235.154580-8-sbeller@google.com> <CACsJy8BWTd5LEtZ00z7a1sOwx3n=RfPDqguNb+zTW0CZUUyJaA@mail.gmail.com>
+In-Reply-To: <CACsJy8BWTd5LEtZ00z7a1sOwx3n=RfPDqguNb+zTW0CZUUyJaA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Aug 2018 12:44:43 -0700
+Message-ID: <CAGZ79kYALb4=uth1mMFdYLQCz=Z0m0VJDaGe5zWmXbYNDFui-Q@mail.gmail.com>
+Subject: Re: [PATCH 7/7] submodule--helper: introduce new update-module-mode helper
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, Aug 18, 2018 at 9:11 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Tue, Aug 14, 2018 at 12:45 AM Stefan Beller <sbeller@google.com> wrote:
+> > +static int module_update_module_mode(int argc, const char **argv, const char *prefix)
+> > +{
+> > +       const char *path, *update = NULL;
+> > +       int just_cloned;
+> > +       struct submodule_update_strategy update_strategy = { .type = SM_UPDATE_CHECKOUT };
+> > +
+> > +       if (argc < 3 || argc > 4)
+> > +               die("submodule--helper update-module-clone expects <just-cloned> <path> [<update>]");
+>
+> Maybe _() ?
 
+I would rather not, as the submodule--helper is "internal only" and these die()
+calls could be clarified via
 
-On 8/19/2018 7:24 AM, Duy Nguyen wrote:
-> On Fri, Dec 8, 2017 at 5:00 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
->>
->> From: Jeff Hostetler <jeffhost@microsoft.com>
->>
->> Teach fetch to support filters. This is only allowed for the remote
->> configured in extensions.partialcloneremote.
->>
->> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
->> ---
->>   builtin/fetch.c       | 23 +++++++++++++++++++++--
->>   connected.c           |  2 ++
->>   remote-curl.c         |  6 ++++++
->>   t/t5500-fetch-pack.sh | 36 ++++++++++++++++++++++++++++++++++++
->>   4 files changed, 65 insertions(+), 2 deletions(-)
->>
->> diff --git a/builtin/fetch.c b/builtin/fetch.c
->> index 1b1f039..14aab71 100644
->> --- a/builtin/fetch.c
->> +++ b/builtin/fetch.c
->> @@ -18,6 +18,7 @@
->>   #include "argv-array.h"
->>   #include "utf8.h"
->>   #include "packfile.h"
->> +#include "list-objects-filter-options.h"
->>
->>   static const char * const builtin_fetch_usage[] = {
->>          N_("git fetch [<options>] [<repository> [<refspec>...]]"),
->> @@ -55,6 +56,7 @@ static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
->>   static int shown_url = 0;
->>   static int refmap_alloc, refmap_nr;
->>   static const char **refmap_array;
->> +static struct list_objects_filter_options filter_options;
->>
->>   static int git_fetch_config(const char *k, const char *v, void *cb)
->>   {
->> @@ -160,6 +162,7 @@ static struct option builtin_fetch_options[] = {
->>                          TRANSPORT_FAMILY_IPV4),
->>          OPT_SET_INT('6', "ipv6", &family, N_("use IPv6 addresses only"),
->>                          TRANSPORT_FAMILY_IPV6),
->> +       OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-> 
-> Documentation is missing. Please add something to git-fetch.txt (or
-> fetch-options.txt) about this option. I would make a patch but I don't
-> know enough about this to write and I'm in the middle of something
-> else.
-> 
+    #define BUG_IN_CALLING_SH(x) die(x)
 
-Documentation for --filter=<fs> (and --no-filter) were added to
-rev-list-options.txt.  The opening paragraph talks about --objects
-which would need to be omitted for fetch and clone, but the rest
-of that text is relevant.
+After the conversion to C is done, all these submodule helpers would go away,
+so I'd not burden the translators too much?
 
-I'll push up a patch shortly.
-
-Thanks
-Jeff
+Thanks,
+Stefan
