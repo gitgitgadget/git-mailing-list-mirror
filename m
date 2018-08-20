@@ -2,91 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48ABA1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 22:41:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 186CE1FAD5
+	for <e@80x24.org>; Mon, 20 Aug 2018 23:21:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726771AbeHUB7C (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 21:59:02 -0400
-Received: from mail-yw1-f52.google.com ([209.85.161.52]:37542 "EHLO
-        mail-yw1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726119AbeHUB7C (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 21:59:02 -0400
-Received: by mail-yw1-f52.google.com with SMTP id x83-v6so69984ywd.4
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 15:41:33 -0700 (PDT)
+        id S1726714AbeHUCik (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 22:38:40 -0400
+Received: from mail-oi0-f67.google.com ([209.85.218.67]:44749 "EHLO
+        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726681AbeHUCik (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 22:38:40 -0400
+Received: by mail-oi0-f67.google.com with SMTP id s198-v6so28885512oih.11
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 16:21:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=G8mTI1+a5+TRH2Lwrujn00YE6MhN8HUV1/tJyCBu9yA=;
-        b=MlykcVASvSGOYgQ7ZfQ6ijx99M1upT1bPpbOtNa8UQJ2JC+0fbhzPp8c6XwU/KaSI0
-         dfPk4+Xp/sG0XrSMtffS44UOJtopICv3Q4lg1eEOVCydET0GukxbNO8BOBAmoMjr+T9Y
-         nRWkRcIhB/2Ctui/0p13fxwt8tW48QhCZP+W6rStj7VtJ3psabi7Aheg7TbJ90KypekK
-         72zyQnimPK0UWsEObVpevvT7VYRMhT6BaJalMttqpHSxekWorpxXfwfLEC2XhNaQen1A
-         2j1vzArod+r+RC3FwRPUwlX2JpNOnv88r4+sq5ukBmyVMOTZEa+YhdWYdE40QvIjGfkI
-         +2nQ==
+        bh=P9SsY7JH3lnm+Z/v9u9KRcs9rYO49LK7Wdd6lLkEvKc=;
+        b=koram6NqZbbD4onWJ0fEy5loXnpi3y7nM0dlsmdVaD0oNyhj+vqclwIO2pBO2pXj92
+         oQxnML2kl7rVW1WIWm2ufBacSvMfqWyLMF90UGCi2pMGFcuCkTmiR89VD271l6fKfold
+         BeJGkN8xcaGhz/mpzGX4ZsLhCFa1TQ/smY0EHGrry8J5+DXn8RvaY96fvTCbtDfvq++G
+         nxdVHUSPP9cSIt0nRlVSs70OXb7R6/wE6m7qJj1q6KOAb1wz4z2eyZI9KM7FPycF7ZNV
+         pgAgk6ffybSyMX0Fmp7BTwiUujLu+ybX5hYb1Ewnd8bMXNZ85qwh8AKmVXIywLBcNBDJ
+         jqtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=G8mTI1+a5+TRH2Lwrujn00YE6MhN8HUV1/tJyCBu9yA=;
-        b=K+rVpMPWA5UzBcrJqUA/jnq7K0sxrw6fQf+Q0HLhAJzmx+iSL/YqktG7UoeM+ZZnqP
-         cie3V/uD/TBWGzi/AbrmZwxqT2MhWkzQ8DKgGH9n6bfkaMflQU/00+lZ7NJRX6Jf6iQM
-         NQEozHaoBiWIhaDd9D5vPZvXMj4V/QyR7FQUOHi+QARilLIv1XTecOuR/Esz0rvqkx0+
-         m9kI4FA+TaXzLbXI2GqtQhPQrg4KzRs7+e6f3pmsEWaVJ2XYP1YemTGw2qy9P6rT64nD
-         aC85JrcSaeAfRxJXG/uhkwbELEBxV0cRjWE1KtUoGusVmy0JUUN4uAU/zU98nb6OFhs4
-         cwuw==
-X-Gm-Message-State: AOUpUlGICXPrQSJGUQnLIjrgoFV9jzgNcHn4+XX0pwAa/skezNoDPLSK
-        6a4iJzPSK+m01o8w7sxaPXXprOCwrCwxRbMHnJiwLw==
-X-Google-Smtp-Source: AA+uWPysgqxw3NKt5xTCv3YKUFTLH/Rq8AxyFbvSODgKjeqW+2ih1WvEOG75XmScZjMglRW2Ww4AnTyO06Bpfrc90b8=
-X-Received: by 2002:a81:6a45:: with SMTP id f66-v6mr7909387ywc.300.1534804892721;
- Mon, 20 Aug 2018 15:41:32 -0700 (PDT)
+        bh=P9SsY7JH3lnm+Z/v9u9KRcs9rYO49LK7Wdd6lLkEvKc=;
+        b=OY8PYfxKDamMgytw+STSUXWEsVwfSRJ29fr3dPBd/oCpUY4Zdx5hnsh8WYRRtCtIqe
+         oTGbB6rxtyoblT+IZWin3W0oeOfvirfTKQVI1Qw7AM1yK+XQdbDboITv7amqIs3TYnn9
+         j0bQXcD1esWSGpHfoQEusmqGCaf7aFiYdlorfPLimA33GEICTXp7VxC6pJBWx5I7UgJx
+         dLlrhahYQwffZvXiP38IeDnjHl08kB608SGTscBvnCmoXubK2fEpDcVkcgM+YiOc5PwK
+         nJDuMWkZz7b3LXOsCy/+RDgzIGXMoDUecm4oXppvN2hYUtfqdssZS+UwKPDXwbHr6ofF
+         8khQ==
+X-Gm-Message-State: AOUpUlHj760yzh0/+4qtNcLtd8ZcvZMATS56/YQMDRQoM2GMOcP0nHVF
+        ojQLnbSsrQHgS2b8EnNaO/aHNg3y1u3+t0NT6kD3
+X-Google-Smtp-Source: AA+uWPxiPQJAPdlu9Ricp5TL5pF5Gxrd8bKqzAaCmsRHbEyoQjMbYBp0TgnWpmRc5gl3kDpD0sx8nqDTIFRwZ27dF0c=
+X-Received: by 2002:aca:3507:: with SMTP id c7-v6mr17642151oia.46.1534807261959;
+ Mon, 20 Aug 2018 16:21:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Aug 2018 15:41:21 -0700
-Message-ID: <CAGZ79kbrv62ttBYt7nwO7E4S7wTVWZGceqE6hPjAbhPPWfRkEQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>,
-        "Linux-Kernel@Vger. Kernel. Org" <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
+References: <cover.1534374650.git.matvore@google.com> <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
+ <CACsJy8AE+MwBzzUFRGLKVp6vaAg2W_KO-qbUU2LQpd=rMQw2sA@mail.gmail.com>
+ <cover.1533854545.git.matvore@google.com> <msg.1534770125.matvore@google.com> <CAGZ79kZfNeWnZEnX4Z0hMShxZZEsB2jYJ67JgE7F_d-3ymHi+A@mail.gmail.com>
+In-Reply-To: <CAGZ79kZfNeWnZEnX4Z0hMShxZZEsB2jYJ67JgE7F_d-3ymHi+A@mail.gmail.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Mon, 20 Aug 2018 16:20:50 -0700
+Message-ID: <CAMfpvh+7NoOGAmypGSCAtxH7DxHTvVB8_C3OkWNC14+c3MBO4A@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
+To:     Stefan Beller <sbeller@google.com>
+Cc:     pclouds@gmail.com, git@vger.kernel.org, git@jeffhostetler.com,
+        jeffhost@microsoft.com, Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->  * The conversion to pass "the_repository" and then "a_repository"
->    throughout the object access API continues.
+On Mon, Aug 20, 2018 at 11:38 AM Stefan Beller <sbeller@google.com> wrote:
 >
-[...]
+> On Mon, Aug 20, 2018 at 6:18 AM Matthew DeVore <matvore@google.com> wrote:
+> >
+> > There were many instances in this file where it seemed like BUG would be
+> > better, so I created a new commit before this one to switch them over. The
+> > interdiff is below.
+> >
+> > BTW, why are there so many instances of "die" without "_"? I expect all
+> > errors that may be caused by a user to be localized.
 >
->  * The conversion to pass "the_repository" and then "a_repository"
->    throughout the object access API continues.
+> Well, there is the porcelain layer to be consumed by a human user
+> and the plumbing that is good for scripts. And in scripts you might want
+> to grep for certain errors and react to that, so a non-localized error
+> message makes the script possible to run in any localisation.
+>
+> The BUG is strictly for things that are due to Gits internals,
+> not for problematic user input. Problematic user input
+> definitely wants a die(...), and depending on the plumbing/porcelain
+> layer it may need to be _(translatable).
+Ah I see. Plumbing commands are not translated. Makes perfect sense now.
 
-I guess it continues twice as two large series were merged? ;-)
-sb/object-store-grafts
-sb/object-store-lookup
+>
+> I think BUG() would never go with translated strings.
+>
+> > I'm going by the output of this: grep -IrE '\Wdie\([^_]' --exclude-dir=t
+> >
+> > diff --git a/list-objects-filter.c b/list-objects-filter.c
+> > index 8e3caf5bf..09b2b05d5 100644
+> > --- a/list-objects-filter.c
+> > +++ b/list-objects-filter.c
+> > @@ -44,8 +44,7 @@ static enum list_objects_filter_result filter_blobs_none(
+> >
+> >         switch (filter_situation) {
+> >         default:
+> > -               die("unknown filter_situation");
+> > -               return LOFR_ZERO;
+> > +               BUG("unknown filter_situation: %d", filter_situation);
+> >
+> >         case LOFS_BEGIN_TREE:
+> >                 assert(obj->type == OBJ_TREE);
+> > @@ -99,8 +98,7 @@ static enum list_objects_filter_result filter_trees_none(
+> >
+> >         switch (filter_situation) {
+> >         default:
+> > -               die("unknown filter_situation");
+> > -               return LOFR_ZERO;
+> > +               BUG("unknown filter_situation: %d", filter_situation);
+> >
+> >         case LOFS_BEGIN_TREE:
+> >         case LOFS_BLOB:
+> > @@ -151,8 +149,7 @@ static enum list_objects_filter_result
+> > filter_blobs_limit(
+> >
+> >         switch (filter_situation) {
+> >         default:
+> > -               die("unknown filter_situation");
+> > -               return LOFR_ZERO;
+> > +               BUG("unknown filter_situation: %d", filter_situation);
+> >
+> >         case LOFS_BEGIN_TREE:
+> >                 assert(obj->type == OBJ_TREE);
+> > @@ -257,8 +254,7 @@ static enum list_objects_filter_result filter_sparse(
+> >
+> >         switch (filter_situation) {
+> >         default:
+> > -               die("unknown filter_situation");
+> > -               return LOFR_ZERO;
+> > +               BUG("unknown filter_situation: %d", filter_situation);
+>
+> Up until here we just have replace the die by BUG in the default
+> case of the state machine switch. (We need the default due to strict
+> compile flags, but as filter_situation is an enum I thought we would not
+> as compilers are smart enough to see we got all values of the enum
+> covered).
+At the risk of going on a tangent, I assumed this was because enums
+are really ints, and the "default" is there in case the enum somehow
+got assigned to an int without a corresponding value. Either because
+of a cast from an int that was out-of-range, or new values that were
+obtained from arithmetic or bitwise operations on the declared enum
+values, which created undeclared values.
 
-The latter one is not the correct one, as later we'll have
+>
+> I agree that keeping the defaults and having a BUG() is reasonable.
+>
+>
+> >
+> >         case LOFS_BEGIN_TREE:
+> >                 assert(obj->type == OBJ_TREE);
+> > @@ -439,7 +435,7 @@ void *list_objects_filter__init(
+> >         assert((sizeof(s_filters) / sizeof(s_filters[0])) == LOFC__COUNT);
+> >
+> >         if (filter_options->choice >= LOFC__COUNT)
+> > -               die("invalid list-objects filter choice: %d",
+> > +               BUG("invalid list-objects filter choice: %d",
+> >                     filter_options->choice);
+>
+> This also makes sense, combined with the assert before, this looks like
+> really defensive code.
+>
+> I think this patch is a good idea!
+Thank you for your feedback :)
 
-  * lookup_commit_reference() and friends have been updated to find
-    in-core object for a specific in-core repository instance.
-
->  * "git submodule" did not correctly adjust core.worktree setting that
->    indicates whether/where a submodule repository has its associated
->    working tree across various state transitions, which has been
->    corrected.
->    (merge 984cd77ddb sb/submodule-core-worktree later to maint).
-
-Personally I do not view this as a bug fix but a feature
-(but then again my thinking might be tainted of too much
-submodule work) hence I would not merge it down.
-
-Stefan
+>
+> Thanks,
+> Stefan
