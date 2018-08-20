@@ -2,131 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=0.1 required=3.0 tests=ADVANCE_FEE_5_NEW_MONEY,AWL,
+	BAYES_05,FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,HK_SCAM_N2,
+	LOTS_OF_MONEY,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,UNCLAIMED_MONEY,URG_BIZ
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8369A1F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 10:30:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4699D1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 11:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbeHTNpg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 09:45:36 -0400
-Received: from forward102o.mail.yandex.net ([37.140.190.182]:45002 "EHLO
-        forward102o.mail.yandex.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726060AbeHTNpg (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 20 Aug 2018 09:45:36 -0400
-X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Aug 2018 09:45:33 EDT
-Received: from mxback3g.mail.yandex.net (mxback3g.mail.yandex.net [IPv6:2a02:6b8:0:1472:2741:0:8b7:164])
-        by forward102o.mail.yandex.net (Yandex) with ESMTP id 7B4A95A04359
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 13:22:43 +0300 (MSK)
-Received: from smtp3o.mail.yandex.net (smtp3o.mail.yandex.net [2a02:6b8:0:1a2d::27])
-        by mxback3g.mail.yandex.net (nwsmtp/Yandex) with ESMTP id h2S08dPI6L-MhHuOLG2;
-        Mon, 20 Aug 2018 13:22:43 +0300
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1534760563;
-        bh=P308eRHK2Tmfgo+I4INxiEmD6jae9FOl0TglPFgeEFM=;
-        h=To:From:Subject:Message-ID:Date;
-        b=OseSXR8cbktSUjvNemKbxZ/0v2tI+tgcvx6b2J8l9kMubBafnXngaFVT0dSj0FDL3
-         vk87TqepvBwOWtbuOwOrI6A6gS0cclS/2e5Xp3QzsjYL/3cH4Rhwot0zGJfutC1V0q
-         3i/gNsdUZrX6pW7asgm7hnuWCqa0z/5BUDC7UmL4=
-Received: by smtp3o.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id qNFUXY1h6V-MgpC0LQo;
-        Mon, 20 Aug 2018 13:22:42 +0300
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (Client certificate not present)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail; t=1534760562;
-        bh=P308eRHK2Tmfgo+I4INxiEmD6jae9FOl0TglPFgeEFM=;
-        h=To:From:Subject:Message-ID:Date;
-        b=T4GA9+VhoLtPSI/ihwRBb456+imE1ZtYSjTNMmfdpdC99ZwNnCNwWldsXwfuRC5iL
-         1CINOI4JZM2mcbiTwGIUa1gC4tNqqf3BDV2vnbIFEDag/UM5Dv/lRwMSUdhcYqk6VH
-         aDi59ldkMkGtLid/nl5LnuU4NXCmtn0Se7gl7I4o=
-Authentication-Results: smtp3o.mail.yandex.net; dkim=pass header.i=@yandex.ru
-To:     git@vger.kernel.org
-From:   Konstantin Kharlamov <hi-angel@yandex.ru>
-Subject: Do not raise conflict when a code in a patch was already added
-Message-ID: <fae8346d-398f-e984-5aa5-e3dc3ee71d70@yandex.ru>
-Date:   Mon, 20 Aug 2018 13:22:37 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726570AbeHTPEx convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 20 Aug 2018 11:04:53 -0400
+Received: from [40.124.5.175] ([40.124.5.175]:1280 "EHLO eserver.org"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726499AbeHTPEx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 11:04:53 -0400
+Received: from [127.0.0.1] (account kolinas@eserver.org HELO austynoud3.austynoud34382.j2.internal.cloudapp.net)
+  by eserver.org (CommuniGate Pro SMTP 6.2.6 _community_)
+  with ESMTPA id 12617585 for git@vger.kernel.org; Mon, 20 Aug 2018 06:39:27 -0500
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: Re:Re:Expecting Your Urgent Response...
+To:     git@vger.kernel.org
+From:   "William van brook" <shellybian@ailyun.cn.com>
+Date:   Mon, 20 Aug 2018 06:39:27 -0500
+Reply-To: vanbrookwilliam307@gmail.com
+Message-ID: <auto-000012617585@eserver.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-So, steps-to-reproduce below rather full of trivia like setting up a
-repo, but the TL;DR is:
+Good Day,
 
-Upon using `git rebase -i HEAD~1` and then `git add -p` to add part of a
-"hunk" as one commit, and then using `git rebase --continue` so the
-other part of hunk would be left in top commit; git raises a conflict.
+My name is Barrister William van brook and I work with AKD CHAMBERS NETHER LAND. Actually, I got your contact information through the World Netherlands public records while searching for a last name similar to my late client's a business magnate by name Thomas Munoz , who lived in Netherlands for over a decade, He died along with her nuclear family in a car accident along Utrecht express way which occurred on 29th December 2009.
 
-It's spectacular, that content of one of inserted conflict markers is
-empty, so all you have to do is to remove the markers, and use `git add`
-on the file, and then `git rebase --continue`
+Before I digress, I must first apologize for this unsolicited mail to you. I am aware that this is certainly an UN-orthodox way of approach to foster a relationship of trust. Yet, I felt compelled due to the prevailing circumstances and the urgency surrounding this claim. Prior to his death he deposited the cash sum of $4. 500.000 (Four Million, Five Hundred US Dollars) with an offshore bank here in Netherlands. Being the attorney to late Thomas Munoz And family, the bank has authorized me to present the late beneficiary to make Claims else the deposited fund will be confiscated and taken to the State Treasury as unclaimed fund.
 
-Its a lot of unncessary actions, git could just figure that the code it
-sees in the patch is already there, being a part of another commit.
 
-Maybe git could issue a warning, or to question a user interactively 
-(y/n); but raising a conflict IMO is unnecessary.
+Ensuing to the above I embarked on exhaustive search for a direct family member to my late client which came to no avail. Based on this and the ultimatum I was given from the bank to look for a relative to come for the claim fund or it will be liquidated and made unserviceable in accordance with existing deposit laws here in the Netherlands.
 
-# Steps to reproduce
 
-In empty dir execute:
+Against this backdrop, my suggestion to you is that I like you to stand as the next of kin and beneficiary to my late client deposited fund, I know you may not be anyway related to my late client but having a common surname with him and the modality I have in place, I can guarantee that if you follow my instructions and upon our capitalizing of some judicial loop holes the fund will be released to us.
 
-	$ git init
-	$ touch test
-	Initialized empty Git repository in /tmp/test/.git/
-	$ git add test
-	$ git commit
-	[master (root-commit) a7ce543] 1st commit
-	 1 file changed, 2 insertions(+)
-	 create mode 100644 test
-	$ echo -e "foo\nbar" > test             # content you'll want to break
-	$ git add -u && git commit
-	[detached HEAD 9e28331] 2-nd commit
-	 1 file changed, 2 insertions(+)
-	$ git rebase -i --root
-	Stopped at a7ce543...  1st commit
-	You can amend the commit now, with
+All I require is your honest cooperation to enable us achieve this transaction. I wish to point out that I suggest 20% of this money to be donated to Charity Organizations, while the remaining 80% is shared equally between us. If you are interested, please contact me via my private email address Email: vanbrookwilliam307@gmail.com, upon your response, I shall then provide you with more details that will help you understand this transaction well.
 
-	  git commit --amend
+Thank you for your cooperation
 
-	Once you are satisfied with your changes, run
-
-	  git rebase --continue
-
-Put "edit" for the 2-nd commit
-
-	$ git reset HEAD^
-	Unstaged changes after reset:
-	M       test
-	$ git add -p
-	diff --git a/test b/test
-	index e69de29..3bd1f0e 100644
-	--- a/test
-	+++ b/test
-	@@ -0,0 +1,2 @@
-	+foo
-	+bar
-	Stage this hunk [y,n,q,a,d,e,?]? e
-
-	╭─constantine@constantine-N61Ja  /tmp/test ‹node-›  ‹› (e721fa3*)
-	╰─$ git commit
-	[detached HEAD 27b2f63] add foo
-	 1 file changed, 1 insertion(+)
-	╭─constantine@constantine-N61Ja  /tmp/test ‹node-›  ‹› (27b2f63*)
-	╰─$ git rebase --continue
-	test: needs update
-	You must edit all merge conflicts and then
-	mark them as resolved using git add
-
-What happened is that it's obvious that the hunk was broken to multiple
-commits, and git should figure that out, and not to raise a conflict.
-
-Side note: for some reason in the test git didn't insert conflict
-markers. It did in real-world usecase though, and there was simply no
-content inside one of them.
+William van brook
