@@ -2,100 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 040131F954
-	for <e@80x24.org>; Mon, 20 Aug 2018 21:04:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C6B591F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 21:14:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726589AbeHUAVI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 20:21:08 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:52693 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726499AbeHUAVI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 20:21:08 -0400
-Received: by mail-wm0-f50.google.com with SMTP id o11-v6so874867wmh.2
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 14:03:57 -0700 (PDT)
+        id S1726488AbeHUAbv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 20:31:51 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:35728 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726333AbeHUAbv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 20:31:51 -0400
+Received: by mail-yw1-f68.google.com with SMTP id s68-v6so7376434ywg.2
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 14:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=QYyGgPNgN3J0aRH9aM8zfbaepbxF0BRVmIb78F/eT8A=;
-        b=Rfeh7Tg8Ho/HVuzUEFs82pK/JEFmkGeCiSmvhvSSyAJl5I5aHV/iQl4C57IfR58KH1
-         5KQ0WDKnPGWvkCAETet2+grrm1Lb+3keewDdEwJyVY2BvAHuGSKxUaLHFk/qOavfJzDs
-         j7ie9YJiewTL1s4UzkYwrtTf3UHGsYH79mtQa+GFrZmX9J9Dk6hY5mzb7twHFlr2AX4N
-         G27eTd76rdKxK0OStvn72odKgR9RebtWxb8K23XsL9SbQJqLc2VJn/oSrAvfUqNMBRUe
-         cnpOWdAgkzxXGqIWpIhatW/MpeA0gqROckv7CXxQDcrXAvEnzClpXm8SfukwztemGfYD
-         6FGQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CXAnl6xqB9aI47VvMrfhrp5yrsk55q3QL5QWBdV/Vk4=;
+        b=UvGh/U5yHZ8SVBormZk7jO6NNdZMNB6MMCuOveUjAqRnMAz4mykTCckyMx14FBr7JB
+         h8U+/Yak/MOKP1ujWHhph7xMwhUD2kgEYHiSjUdPTfikd7QwseK3MZY+7RYq4GSOtToq
+         ceqasz9NrXXEv/yB83Mym+OlQ0fE17VKsaoyTl9efG8C6Km5ON86POdp58lVYlf/izZO
+         JgKtzJl4leJpet+Wbl7BA/YcIMO6GtRlXUdgFbu4ZQ7nCH9M8lKi0f/ljCyRxTVqsSa5
+         6X3zEpSCpurs1wFRiSnOFJ9+2IH6WXr4zng7IzOQ2+zQtzBsODUm8VCR6tABQXxBTMnF
+         f3Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=QYyGgPNgN3J0aRH9aM8zfbaepbxF0BRVmIb78F/eT8A=;
-        b=rD1MCjNKjZCuj6+NEQyj0NOjVTnIEDkuUQlbl20y9wjqu/lsyd7NhtSU6v91GVkiv8
-         a/J+vmCQXgPZA+0lYkPtpE1yO1gvTCi8sv2JbZuxiT2zVU6HISzyj/00brqYZ4dXWoK5
-         qr5jBnAngZS0ua6/c1tMFJe/l5Fa5bEbSiI8sHlOLnY8HiUHQL9tPRgC2ObKg9W9LMKz
-         FnBIg+DvT/k5LcTAaQlWOkkbLk713TX119/hYlPVoQ/cESVzQfEFsxjy+gjudiK3GasP
-         KvozIyNhEroPi/pXe+lk0IvLqoikLu5GtLSJS/8YXTeCn+HpGwPl5kcH8eDE3YMm5Pga
-         HF7A==
-X-Gm-Message-State: AOUpUlGt2wZGlTsDCwDD9as8hlV9ncNR9KKp5N8Yzf9nSQlRmJzuaZQ7
-        7I17Ao1QKWhF2K0Ty5xd7LIZ4VOF
-X-Google-Smtp-Source: AA+uWPwrQQXbJRSoNB9LK31kKiSt86y0aHUh4qZk6C6ynnV1FrGHTH5hjpKJ9KxgnYtHk5URtogM2A==
-X-Received: by 2002:a1c:92:: with SMTP id 140-v6mr24928865wma.87.1534799036062;
-        Mon, 20 Aug 2018 14:03:56 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n12-v6sm7753036wrm.62.2018.08.20.14.03.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 20 Aug 2018 14:03:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/6] pack-objects: reuse on-disk deltas for thin "have" objects
-References: <20180817205427.GA19580@sigill.intra.peff.net>
-        <20180817210604.GF20088@sigill.intra.peff.net>
-Date:   Mon, 20 Aug 2018 14:03:53 -0700
-In-Reply-To: <20180817210604.GF20088@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 17 Aug 2018 17:06:04 -0400")
-Message-ID: <xmqqa7pgbvie.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CXAnl6xqB9aI47VvMrfhrp5yrsk55q3QL5QWBdV/Vk4=;
+        b=SX20f/Kz6MR+/C1cWAs53dVFkJmi7whLSt4N+t54BwKJY2h2b2eEqAFpr8BH1r9rpT
+         GTGf5QYSxptih7GpxJsxKMewiIpYTHBb5BZ8M6pmAa5lg5k7NiDJiGof3Bi4iFhU+45e
+         K94MtpQ62GRUKbVXsddPoUtFNQKjFxK5Q6OXxx6exxNAnPZLJD2rnm9dihem71axi/fl
+         hwJccyszpsJ7AlY5/HwOEm3reUEQ8QqzOJrPfTua3eW2NyGMO2FRuZoKmyuelYT1o6IX
+         DioQ/AC6hyHAqGSW1XWJAIbKm0swkeTyuT7rSYOAIcQhArwYAwejBVgZwRKbn6l50OJE
+         QEKA==
+X-Gm-Message-State: AOUpUlFyihVfMu60lTjCXZYV0J+V4MI//6Wp4aI3d2wKxVXrIYGHgXGF
+        kuAFerar2wJOxUasOLfOLzK5f0+Epeo1p0uZ9vRoqQ==
+X-Google-Smtp-Source: ANB0VdYqZxVwt41+sOjO2nxlF+PVvVe5kjajGP6S8Mxkp7+tVQby9hBL1RgbY7ewabpaSn+lXOlkK13QU4lFSSpc974=
+X-Received: by 2002:a81:ae06:: with SMTP id m6-v6mr2564056ywh.119.1534799678165;
+ Mon, 20 Aug 2018 14:14:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180820165124.152146-1-dstolee@microsoft.com> <20180820165124.152146-3-dstolee@microsoft.com>
+In-Reply-To: <20180820165124.152146-3-dstolee@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Aug 2018 14:14:27 -0700
+Message-ID: <CAGZ79kZJJk5DSu+kNBZgxMvy36Fq9tYcBG-BLmpJ6LOKPRtGVg@mail.gmail.com>
+Subject: Re: [PATCH 2/9] multi-pack-index: store local property
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> And that's exactly what this patch does: when we're
-> considering whether to reuse an on-disk delta, if bitmaps
-> tell us the other side has the object (and we're making a
-> thin-pack), then we reuse it.
-
-That's really the natural extension and logical consequence of the
-"reuse existing deltas" mechanism from Feb 2006 ;-)
-
-> So taking all of those options into account, what I ended up
-> with is a separate list of "external bases" that are not
-> part of the main packing list. Each delta entry that points
-> to an external base has a single-bit flag to do so; we have a
-> little breathing room in the bitfield section of
-> object_entry.
+On Mon, Aug 20, 2018 at 9:52 AM Derrick Stolee <dstolee@microsoft.com> wrote:
 >
-> This lets us limit the change primarily to the oe_delta()
-> and oe_set_delta_ext() functions. And as a bonus, most of
-> the rest of the code does not consider these dummy entries
-> at all, saving both runtime CPU and code complexity.
+> A pack-file is 'local' if it is stored within the usual object
+> directory. If it is stored in an alternate, it is non-local.
+>
+> Pack-files are stored using a 'pack_local' member in the packed_git
+> struct. Add a similar 'local' member to the multi_pack_index struct
+> and 'local' parameters to the methods that load and prepare multi-
+> pack-indexes.
 
-Tricky ;-)
+Going by that example, maybe we'd want to have it be the first bit
+of a bitfield, c.f.
 
-I wonder if we can move the preferred base objects that we are not
-going to send also off of the "main packing list" to this new
-mechanism?
+    unsigned pack_local:1,
+        pack_keep:1,
+        pack_keep_in_core:1,
+        freshened:1,
+        do_not_close:1,
+        pack_promisor:1;
 
-> +static struct bitmap_index *bitmap_git;
-> ...
-> +static int thin = 0;
+in the definition of packed_git.
 
-Please trust what BSS will do to your static vars.
+Is there value in documenting both packfiles as well as midx variables?
+(When going with the bitfield example, it may be a bit more worthwhile,
+as the commit message is harder to find, as it will need repeated
+blaming in the future, if there is a commit on top that adds another
+bit to the field; I am unsure, but I would lean towards documentation
+as it becomes a bit unclear: Is the local flag for the midx file that
+is read, or rather for the underlying packs? What exactly is local? )
+
+AFAICT this patch alone doesn't have any effect, yet, as it only pipes
+the flag thru, is that worth mentioning or is that obvious?
+
+Thanks,
+Stefan
