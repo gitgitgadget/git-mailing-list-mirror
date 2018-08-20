@@ -2,105 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C72361F97E
-	for <e@80x24.org>; Mon, 20 Aug 2018 19:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06A2B1F954
+	for <e@80x24.org>; Mon, 20 Aug 2018 19:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726573AbeHTWxo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 20 Aug 2018 18:53:44 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50359 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726077AbeHTWxo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 20 Aug 2018 18:53:44 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M2nfO-1gACPS1P1i-00sdx3; Mon, 20
- Aug 2018 21:36:44 +0200
-Date:   Mon, 20 Aug 2018 21:36:42 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: pw/rebase-i-author-script-fix, was Re: What's cooking in git.git
- (Aug 2018, #04; Fri, 17)
-In-Reply-To: <7b340c01-f57d-1a71-e4d5-0346bb042d0c@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1808202132510.73@tvgsbejvaqbjf.bet>
-References: <xmqqva88aa0c.fsf@gitster-ct.c.googlers.com> <7b340c01-f57d-1a71-e4d5-0346bb042d0c@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726148AbeHTWyr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 20 Aug 2018 18:54:47 -0400
+Received: from mail-yb0-f194.google.com ([209.85.213.194]:43363 "EHLO
+        mail-yb0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726077AbeHTWyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 20 Aug 2018 18:54:47 -0400
+Received: by mail-yb0-f194.google.com with SMTP id k5-v6so2027874ybo.10
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 12:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JtxgzAnHbluPfoBYxS/PMpOIpcBm0UAJeUC9XtRDD5Q=;
+        b=votf7V8jMnrgU31Ge2onc8KTmUxAOV6AgUeKFkoH65AzRf8FwZ/sVmYY9Ol0GQaanS
+         7WfV8XhlPAsj6pW82O5CVSBGxHuGPytVVHYaIimSRPn5W+eMmf1rq6FcVT2yVCfnN6gp
+         rVRb4DJ0OH3TvanLvObsRU3CZ0wweqT2l9yFCP9bjB3VM0q4cZk2lnCi5j9xX4bok1sK
+         6eQXCB/7FIgmywvGaJJnhAmAMuE0KMqf5BU89yvnLSHKZQOTDHVbK3j9g//Qjf/P8G9p
+         t+7h4ap1lNUsvDQ1t9H9SVuBon/uEFVm/1I8sGm8LF1WWUqWQVQBXO7gZldcWY4/l7LZ
+         HI8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JtxgzAnHbluPfoBYxS/PMpOIpcBm0UAJeUC9XtRDD5Q=;
+        b=Q5LdC2Mv/qd0mE41UEDbrqBNmYIU6ayWCR4ET2TkUisRINEXDn3zTg84DtTX7LbwRd
+         LVWvr3louz2d06+ZlPcpJOsxVetfeuLBfVxyfpy+Jke8i9VPlFTjZgt0yjavCrsGqXPY
+         k1jt2PBZxpfhXTUS+Dq5E1Zt7A48Dq4ZNDRuwpkq7alhM3/6+jcfsFS9JyGicu/EUIXT
+         wEa/DQ2mqr+n8buk42bo2miKnP4aHP+cTvtLsVYCyxvWYyrQsTAbIs3/X8UXaNzRg7sM
+         pJfo+rWOLvvN1FD5PpFj1Zo2mt1PP2U88kOzG0jXRDXGBrR56DjeP4lC+ESeLXL966Z8
+         IYaQ==
+X-Gm-Message-State: APzg51AK/F6xZimMSu6+jDNBqIad/kNGiklptw3OwN85ASA0ZBSmUWmT
+        FYO9wpuoXLsywr4+/EWspMNASCnc5QMQazbIR5RdsLU4xR0=
+X-Google-Smtp-Source: ANB0VdbjdPq94BNSXDVa/XYUTo9zDprbon65lnesK9yhSpix0IsyIIn1tHF0U5ubWwmeGqe9nqByd1i7jThWzQ6TWuM=
+X-Received: by 2002:a25:16c3:: with SMTP id 186-v6mr297697ybw.521.1534793873539;
+ Mon, 20 Aug 2018 12:37:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wBBRWdmz9qAEDX2JtMYFn4qqtD7LE0FNHS3VYQD+rljLKwJK8p2
- IvFf+MHpbfXmEbLOHvwdnmDxinYqj5FMNneDThDOpw3+dHhJkcYRCXb7SN4GRCf8EH7sO3g
- JTzUkeijUhOLhcGVUF6Vvq4IpraGBKTMgrndYSQUk5GXxbmMpw+tTTSrIZ3PB50RzyT7Cox
- HyyqWkZXW/uSO7bP8yrQw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FdnqpJPpSpU=:k1KtvC/Puumso86mEuWS0c
- jeVxbciUXZkeLp6n2QywMuxIQ7Y90xXzFZL/BeA/OC9Fumw1x7GXxM6eeHCzf7z+4KmiHRMUu
- AFStuSEmrCmuLN/qK3i3VyEaWx1zXPs5/XQhTDE13AQRYXc+lMbobPT/PDca33LqGkwDPldgw
- nl0c8wLUiFeMBjrQYjsNyNRDsugMa7E1NQVxyVafXNzuXHfzYZ+KpzbEaIpIPtkdD7OzPdCJG
- puPw/sKsWdSzba5GuLxKFFabOPiDWyAUAWifqn1xqDMrxThbQWYUBgb6IWEpP7IwC/u3buuz+
- hOH1b/B32PfvtGYzeVCcsSo9dY9OukSAKRApHU5dU/4JP75+pInEu1qqFcFeqLAiXuYwzFnXJ
- revBcnBudvtplLVVVk/dIy1/U5sswubs+HM6ycyRa+WH/ru/d58BY0Gl0BzyYZE9Mbq543QAC
- wsQhfYyQc9tdC5d5Lvu6HwfUFfQTITYTn5LC+5hQRbzu3P5juNrWPr6JVNhAY0ZKSN/q6tAY6
- dI5bJmAAypiOBOHJYU+XyHkRX7PKAi1QlTyrqJ94BySeLInQr0Axx5yS6Ku+dOI4DfTKADwOn
- tv8yErDXzLdFzG2wcaoJBhTiiD/JKKM3EEUGqZzdF2jV6j7V1tUwFlS4yEoXvi/w8p0qJSpea
- Ci3zZ+gpUPBti6KluP7FYGoC9VKH2O2MLSSyRWt7ZMdzFT8yJ9lsqsgEf3nLe42G3U1bO6uJG
- Q2OvWqacfSfXxyQYguhTifUAc9G0UMjJe9+D5WNmiqbXS4naNs+fwyAoPq+S6/1j8LG0wOg9f
- 1UIryXR
+References: <pull.11.git.gitgitgadget@gmail.com> <20180820182359.165929-1-dstolee@microsoft.com>
+In-Reply-To: <20180820182359.165929-1-dstolee@microsoft.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 20 Aug 2018 12:37:42 -0700
+Message-ID: <CAGZ79ka6=Zw8pFhwVysoE3Wa+mpUm4E83cf7TCKmYZ7XC0ZL2A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/8] Clarify commit-graph and grafts/replace/shallow incompatibilities
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Team,
+On Mon, Aug 20, 2018 at 11:24 AM Derrick Stolee <dstolee@microsoft.com> wrote:
+>
+> One unresolved issue with the commit-graph feature is that it can cause
+> issues when combined with replace objects, commit grafts, or shallow
+> clones. These are not 100% incompatible, as one could be reasonably
+> successful writing a commit-graph after replacing some objects and not
+> have issues. The problems happen when commits that are already in the
+> commit-graph file are replaced, or when git is run with the
+> `--no-replace-objects` option; this can cause incorrect parents or
+> incorrect generation numbers. Similar things occur with commit grafts
+> and shallow clones, especially when running `git fetch --unshallow` in a
+> shallow repo.
+>
+> Instead of trying (and probably failing) to make these features work
+> together, default to making the commit-graph feature unavailable in these
+> situations. Create a new method 'commit_graph_compatible(r)' that checks
+> if the repository 'r' has any of these features enabled.
+>
+> CHANGES IN V2:
+>
+> * The first two commits regarding the ref iterators are unchanged, despite
+>   a lot of discussion on the subject [1].
+>
+> * I included Peff's changes in jk/core-use-replace-refs, changing the base
+>   commit for the series to 1689c22c1c328e9135ed51458e9f9a5d224c5057 (the merge
+>   that brought that topic into 'msater').
+>
+> * I fixed the tests for the interactions with the graft feature.
+>
+> Because of the change of base, it is hard to provide a side-by-side diff
+> from v1.
+>
+> Thanks,
+> -Stolee
+>
+> [1] https://public-inbox.org/git/CAGZ79kZ3PzqpGzXWcmxjzi98gA+LT2MBOf8KaA89hOa-Qig=Og@mail.gmail.com/
+>     Stefan's response recommending we keep the first two commits.
+>
 
-On Mon, 20 Aug 2018, Phillip Wood wrote:
+After reviewing my own patches, I flipped again (Sorry!) and would
+rather not see my patches be merged, but the very original solution
+by you, that you proposed at [1]. That said, I will not insist on it, and
+if this is merged as is, we can fix it up later.
 
-> On 17/08/2018 23:44, Junio C Hamano wrote:
-> > Here are the topics that have been cooking.  Commits prefixed with
-> > '-' are only in 'pu' (proposed updates) while commits prefixed with
-> > '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> > the integration branches, but I am still holding onto them.
-> 
-> > * pw/rebase-i-author-script-fix (2018-08-07) 2 commits
-> >  - sequencer: fix quoting in write_author_script
-> >  - sequencer: handle errors from read_author_ident()
-> > 
-> >  Recent "git rebase -i" update started to write bogusly formatted
-> >  author-script, with a matching broken reading code.  These are
-> >  being fixed.
-> > 
-> >  Undecided.
-> >  Is it the list consensus to favor this "with extra code, read the
-> >  script written by bad writer" approach?
-> 
-> I think there was agreement between myself and Eric on the last version,
-> I'm not sure anyone else has expressed an opinion. The problem with
-> fixing the quoting without any backwards compatibility is that if git is
-> upgraded while a rebase is stopped read_author_script() will happily use
-> the broken quoting to create a corrupted author name in the new commit
-> if the name contains "'".
-> 
-> The compatibility code in the latest version relies on the missing "'"
-> at the end of the GIT_AUTHOR_DATE line which is fixed by
-> es/rebase-i-author-script-fix which is now in master. If there is a
-> release with es/rebase-i-author-script-fix but not
-> pw/rebase-i-author-script-fix we'll have to rethink as the detection
-> wont be reliable. I have a branch that fixes read_author_script() to use
-> sq_dequote() at
-> https://github.com/phillipwood/git/commits/wip/fix-author-script. At the
-> moment it has compatibility with broken quoting, but I could strip that
-> out and then sq_dequote() will return an error with the broken quoting
-> and the user would have to restart the rebase. So one option is to drop
-> this series and wait for me to finish the improved solution next month.
+With that said, I just read through the remaining patches, I think
+they are a valuable addition to Git and could be merged as-is.
 
-Having thought about it, I am now convinced that it wold be overkill to
-cater to "upgrade in the middle of a rebase". I think we should drop that
-part, as it uglifies the code rather a lot, and the impact is not worth
-the effort IMHO.
+[1] https://github.com/gitgitgadget/git/pull/11/commits/300db80140dacc927db0d46c804ca0ef4dcc1be1
 
-Ciao,
-Johannes
+Thanks,
+Stefan
