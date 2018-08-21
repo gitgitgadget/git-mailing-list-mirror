@@ -2,62 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A072F1F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 22:10:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 084B81F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 23:28:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727506AbeHVBcH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 21:32:07 -0400
-Received: from o4.sgmail.github.com ([192.254.112.99]:4315 "EHLO
-        o4.sgmail.github.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726628AbeHVBcH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 21:32:07 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=github.com; 
-        h=from:to:subject:mime-version:content-type:content-transfer-encoding; 
-        s=s20150108; bh=bfeziYuz10zP11z+WdTZtA94q+Q=; b=SvpDyqgVzy8gNhOM
-        1kcaN3xD4OoihWnLweNLqfaY0G3rWh8nWW3b8vVdETCjIcN/oBLv9sU0/KAe/W9P
-        xOXWDj4Jj6s2Gr6cG2mVwr0AQNgVRdmyyGlnY3WsJAK116X+BGImNiGgLV0F6V+4
-        bOeyCDbLGaFBYnNxiZ7Cn3Q3AL0=
-Received: by filter1087p1las1.sendgrid.net with SMTP id filter1087p1las1-4403-5B7C8DC0-5
-        2018-08-21 22:10:08.16861842 +0000 UTC m=+345751.562321486
-Received: from github-lowworker-0be93ae.cp1-iad.github.net (unknown [192.30.252.33])
-        by ismtpd0001p1iad1.sendgrid.net (SG) with ESMTP id WfjeRvXSQWOYomOkDDKKqg
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 22:10:08.053 +0000 (UTC)
-Received: from github.com (localhost [127.0.0.1])
-        by github-lowworker-0be93ae.cp1-iad.github.net (Postfix) with ESMTP id 0AFE33E0506
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 15:10:08 -0700 (PDT)
-Date:   Tue, 21 Aug 2018 22:10:08 +0000 (UTC)
-From:   GitHub <noreply@github.com>
-To:     amc2399 <git@vger.kernel.org>
-Message-ID: <5b7c8dc0a851_252fd3fb2c82be6246667b@github-lowworker-0be93ae.cp1-iad.github.net.mail>
-Subject: [GitHub] An email address was added to your account.
-Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Auto-Response-Suppress: All
-categories: account-security,email_address_added
-X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA92QXXq2erl5hmQbnMK0uoTYULKJ8hPP0O6ykd
- Z5yXSEWN4UAzkdtdb8ynLdYBr+yHU2bckg54xszpBbDKX/BnXoQaKySaQvXGzzdxDn9PXz22e+Kzyn
- UH6eSxNjcRXCd0rRU4PSzVJrSwgCJZYzTUfwdGrCBfl9Yv0iV+H8Y8RCGQ==
-X-SG-ID: HjuyJHjWedrv+ZABmVoKqJUGcbnIrpG8Dl8TZw63o/teiuYlv/svLWvTtckV3H4h2IstErhGBn+bQI
- o/BJtZbw==
+        id S1727077AbeHVCuf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 22:50:35 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38308 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727016AbeHVCuf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 22:50:35 -0400
+Received: by mail-wm0-f67.google.com with SMTP id t25-v6so397296wmi.3
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 16:28:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fMaxX7viv0j+B4FWwwrA4foYZVtw7dbDZ13Gx2Ck210=;
+        b=D3UUhW1vf2pR6tXX1vTmU0E/dD7Y7AJ+CdPAuVlHK8PcrISB5z3TFM8/VfnOVPW6X2
+         ahyz0SFC8d8yttMw5bzNObqdvbCxL/QgU4hq0HuYelGfCF/IYuwperjQJgTlQjl9oRvq
+         kIEV1KbzzMyNjvK0eaCZk/EJlQjgjp5v1b4+OqKqNyfpPnNTMyiEKpdrdv4I7+YuWIHc
+         qs01ycxUDd8AZ/jkTGusHzUjlnoBp6q2CUhN8rRHOKmYziGeBct8dv7kad3tWumEyUZX
+         Zo6dAJf5grtUSJFpzE3jgbYdjMSct5meNiPSGZvfV4ou5Y41P/lKeZ/u/Y0+BasGXJc6
+         0qrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=fMaxX7viv0j+B4FWwwrA4foYZVtw7dbDZ13Gx2Ck210=;
+        b=JcofIKQJOrAniviMiTnUMAlIzISCC/qOQvYPsYj8j6f/xGZ7JgVpCKoWqtqntitqvX
+         iNmAWIc1qo623B00iOj+onChjNjDSbLgNWM20WOQoWVry2suTms5FWBAc6gdYZ2rJzBY
+         Kb0/6f/2Nrkw0r/hQq9iMPY8S0KPShym+yIZdqOTwia+Ass+pJ7679yFZCfD5bmk0Z83
+         uF2qNZgKDYTGCQGk1j+/OV4FXuib2MROe3Ghh+czz9W3BkF6JzJ+swvBOhgJ7AsDvR+a
+         Kk27qX6BiPB9b7wIGTH2yoKQnHNJn7aPkVAgrQCYC2PSMegn7fUZ4slXVmFnWDXXxmnD
+         ZHMg==
+X-Gm-Message-State: APzg51D14NuxtWskHQNhNJC6K5DbRlWdCUbkkZQYvGgx7Kfit4+uKVtH
+        7kR+uqbNpeD3he9nJsVnFJE=
+X-Google-Smtp-Source: ANB0VdZb8gl5RuRFBbIpUH0e83E30GKq1Y9nyGqiG4nZ9gunJmdCfdUZqR/hxBEt0dFdrifVkqMLMA==
+X-Received: by 2002:a1c:14c3:: with SMTP id 186-v6mr778488wmu.21.1534894101317;
+        Tue, 21 Aug 2018 16:28:21 -0700 (PDT)
+Received: from localhost.localdomain (84-236-78-30.pool.digikabel.hu. [84.236.78.30])
+        by smtp.gmail.com with ESMTPSA id l72-v6sm1166880wma.17.2018.08.21.16.28.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 21 Aug 2018 16:28:20 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t7501-commit: drop silly command substitution
+Date:   Wed, 22 Aug 2018 01:28:11 +0200
+Message-Id: <20180821232811.3610-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.136.gd2dd172e64
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey amc2399!
+The test '--dry-run with conflicts fixed from a merge' in
+'t7501-commit.sh', added in 8dc874b2ee (wt-status.c: set commitable
+bit if there is a meaningful merge., 2016-02-15), runs the following
+unnecessary and downright bogus command substitution:
 
-An email address (aamac3@icloud.com) was added to your account. Visit https://github.com/settings/emails to review email addresses currently associated with your account.
+  ! $(git merge --no-commit commit-1) &&
 
-To see this and other security events for your account, visit https://github.com/settings/security
+I.e. after 'git merge ...' is executed and expectedly fails, the test
+attempts to execute its output:
 
-If you run into problems, please contact support by visiting https://github.com/contact
+  Merging:
+  80f2ea2 commit 2
+  virtual commit-1
+  found 1 common ancestor:
+  e60d113 Initial commit
+  Auto-merging test-file
+  CONFLICT (content): Merge conflict in test-file
+  Automatic merge failed; fix conflicts and then commit the result.
 
-Thanks,
-Your friends at GitHub
+as a command, which most likely fails, because there is no such
+command as "Merging:".  Then '!' negates the failed exit status, the
+test continues, and eventually succeeds.
+
+Remove this command substitution and use 'test_must_fail' to ensure
+that 'git merge' fails.
+
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t7501-commit.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 51646d8019..d766bf34c4 100755
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -677,7 +677,7 @@ test_expect_success '--dry-run with conflicts fixed from a merge' '
+ 	git checkout -b branch-2 HEAD^1 &&
+ 	echo "commit-2-state" >test-file &&
+ 	git commit -m "commit 2" -i test-file &&
+-	! $(git merge --no-commit commit-1) &&
++	test_must_fail git merge --no-commit commit-1 &&
+ 	echo "commit-2-state" >test-file &&
+ 	git add test-file &&
+ 	git commit --dry-run &&
+-- 
+2.19.0.rc0.136.gd2dd172e64
+
