@@ -3,161 +3,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EACB61FAD3
-	for <e@80x24.org>; Tue, 21 Aug 2018 19:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51EF61F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 19:34:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbeHUWul (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 18:50:41 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:42694 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbeHUWul (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 18:50:41 -0400
-Received: by mail-pg1-f196.google.com with SMTP id y4-v6so8897552pgp.9
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:29:15 -0700 (PDT)
+        id S1726860AbeHUWzu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 18:55:50 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34222 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726627AbeHUWzu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 18:55:50 -0400
+Received: by mail-wr1-f65.google.com with SMTP id g33-v6so6762028wrd.1
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:34:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ydvMjViGd1HV/ZhLpuZ8QYTYokR97jSzStMjAPx+6xg=;
-        b=TjAP1PdIaTE/JQeWZqvuQ+GmNUbbTs5UqU6M3Sgq8ODLSsozlbqAsymqp3W/2PCcNt
-         63Q/RA1QN4NdU9oL9D899F+1i/yptRDnrcrrQc9/WG+BwTXX9sgna/TVT+gS8l6bbiax
-         Wnx0yCYGe3aMatd1QlWFG7vHo8RYU/+2MswG6jowrINgVoFVWnA4I//ABrVJi5oCQLaL
-         P0EHBYCKxTUXBqpgFAsU8aKFy0fTfnOmNcV4qHrzL07HgzeUJEAr++c7iCQHatuOuAE7
-         Sxp4klUY5CWFTA+dAW9rAxaxtojAiYcEori2sq7f/EZWMvjVyXJioryfZZMeCLHgt8kG
-         hfnA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=l4KsR6aDgm1QPnzKcOTBer3e/cIkDk6f9fAYoHSm5zQ=;
+        b=Zsdi36BQxABRkjUVkykJPO1jOFrs9tgauYTkvqxutBcMCS3eHb3sXAD47eersM0Pk7
+         38QFiCSVIvBKOCO65t6WQ8648EOlX5dw2Ao8Gf5uUfO55m9FKCDj+TMDe8TMKsnb+NPB
+         /hkkWcoV9RaqkjS1fIPhuh93Mxl4aXKkjZhxdDKBPr8hGEJH8C11Rep7KiKmKnCKFft4
+         rLyRttjB4xbEiG2Mxwh2O6pgNsuwGYDs+Ue5OirB6Rc3ZZyeotTshbSKtPE0I65EHpyX
+         lvI2goJCktmMv0mUWRUMoL+g8xErZ44DAi/U/RAu1QlSjLhMg6W4tvMuhv/uxMt7fH6a
+         2NMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ydvMjViGd1HV/ZhLpuZ8QYTYokR97jSzStMjAPx+6xg=;
-        b=m76V8H0kk1WYVe1OPeCaNdM4rad8PMtPiL0YI4cwV+ymI8U2djYJvuk3S52p7kRsQ0
-         VvYMKeD/6T0VjSfyLQhsTzC50S0o4dfd6tzrbuCCYHpSXD8IuV0jfgDVYghfp09FbL35
-         CJS4RCmzOdN2mJzeIKDgOZQzlqYApWhSAeW+060GHjHd9fJowG9i2b+I1hSKcwin3YKt
-         8KLsMMT2ZAPjP3rt6xHzR1qYe1E/U9w8OwJk47GA1kUa2TcnK1RtEpo0Ti//e97RoIVr
-         BK3sZMSAVlR1J6ONXubjFiWF7qdahU9AuWMq1/wMLT322xzEfqU/vUeIcErw9SW4Ymtc
-         kqNQ==
-X-Gm-Message-State: AOUpUlEOXamzYw7X0RcQNpbdvr+zDXNUEvdvW9UUSIffLcutTs4MLrFR
-        PruPXQo8WkqywK+4m69OK3XhneFW
-X-Google-Smtp-Source: AA+uWPz3/znMHRgkyS8QjuFi3ce25+xKV7yg4eG6r2wFDdAYesM3iORdGr9TGBIJXrPOqEQJj3lhdA==
-X-Received: by 2002:a63:cf4a:: with SMTP id b10-v6mr48998791pgj.235.1534879754385;
-        Tue, 21 Aug 2018 12:29:14 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id f75-v6sm24087306pfk.85.2018.08.21.12.29.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 12:29:13 -0700 (PDT)
-Date:   Tue, 21 Aug 2018 12:29:13 -0700 (PDT)
-X-Google-Original-Date: Tue, 21 Aug 2018 19:29:07 GMT
-Message-Id: <6cf253c2a6a091520e1376839dff8b97869c9808.1534879749.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.22.v2.git.gitgitgadget@gmail.com>
-References: <pull.22.git.gitgitgadget@gmail.com>
-        <pull.22.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 2/2] commit-graph.txt: improve formatting for asciidoc
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=l4KsR6aDgm1QPnzKcOTBer3e/cIkDk6f9fAYoHSm5zQ=;
+        b=mPjx5tiV6TJInNDVwX+HBitoKCaUgZqIrZ31lr0dvhvjz7HCD0fouSpwVN8hiXsCSP
+         eAV3hpDaEFHCq5Ar2o1b6NeZP24URJ1dLxlI88VsFLpQu5gmA0lcwVH5P/kIu8Vf1PYP
+         +Iaha8TWNrvo8GDFCV+oMgo6f+l+3r8UC+o2fovsXDYJMd/fieXwDbSGOAz5Y78eiTE5
+         pqq22uxqH0fF91dVylnlpSZR43Xf950DjGF/hUQfznThpxQYCQtSnYAhr/JKPNikRbXS
+         ntugYDDZEsg9jM8xq1ZmOtemIvMU7ir42k3Kz9LFnda3jRPW6hO0pSHK4HPCkyY8lktz
+         zNEA==
+X-Gm-Message-State: AOUpUlGiNoEFm9vIZnoPs04Ca5zdRYzIiLbRqvUoglvW0TH+abVWxQaE
+        LAS0OKW/jXWpNsz9CgJ9dls=
+X-Google-Smtp-Source: AA+uWPyBlrC/agExvFuW6fZZ6rcXeoDh9h2/kr/B6U3UUzd4g1gcwrag5mBFY4lW431iGwTYoHJopA==
+X-Received: by 2002:adf:dd07:: with SMTP id a7-v6mr31734623wrm.2.1534880060530;
+        Tue, 21 Aug 2018 12:34:20 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l6-v6sm5351986wrq.76.2018.08.21.12.34.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Aug 2018 12:34:19 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/6] reuse on-disk deltas for fetches with bitmaps
+References: <20180817205427.GA19580@sigill.intra.peff.net>
+        <20180821190622.GA30301@sigill.intra.peff.net>
+Date:   Tue, 21 Aug 2018 12:34:18 -0700
+In-Reply-To: <20180821190622.GA30301@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 21 Aug 2018 15:06:22 -0400")
+Message-ID: <xmqqo9dv8qf9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Jeff King <peff@peff.net> writes:
 
-When viewing commit-graph.txt as a plain-text document, it makes
-sense to keep paragraphs left-padded between bullet points.
-However, asciidoc converts these left-padded paragraphs as monospace
-fonts, creating an unpleasant document. Remove the padding.
+> On Fri, Aug 17, 2018 at 04:54:27PM -0400, Jeff King wrote:
+>
+>> This series more aggressively reuses on-disk deltas to serve fetches
+>> when reachability bitmaps tell us a more complete picture of what the
+>> client has. That saves server CPU and results in smaller packs. See the
+>> final patch for numbers and more discussion.
+>
+> Here's a v2, with just a few cosmetic fixes to address the comments on
+> v1 (range-diff below).
+>
+>   [1/6]: t/perf: factor boilerplate out of test_perf
+>   [2/6]: t/perf: factor out percent calculations
+>   [3/6]: t/perf: add infrastructure for measuring sizes
+>   [4/6]: t/perf: add perf tests for fetches from a bitmapped server
+>   [5/6]: pack-bitmap: save "have" bitmap from walk
+>   [6/6]: pack-objects: reuse on-disk deltas for thin "have" objects
 
-The "Future Work" section includes a bulleted list of items, and one
-item has sub-items. These do not render properly in asciidoc, so
-remove the sub-list and incorporate them into the paragraph.
+Thanks.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/technical/commit-graph.txt | 43 +++++++++++-------------
- 1 file changed, 20 insertions(+), 23 deletions(-)
+> 1:  89fa0ec8d8 ! 1:  3e1b94d7d6 pack-bitmap: save "have" bitmap from walk
+>     @@ -69,6 +69,8 @@
+>      +
+>      +	if (!bitmap_git)
+>      +		return 0; /* no bitmap loaded */
+>     ++	if (!bitmap_git->result)
+>     ++		BUG("failed to perform bitmap walk before querying");
+>      +	if (!bitmap_git->haves)
+>      +		return 0; /* walk had no "haves" */
+>      +
 
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index c664acbd7..bdc3eab9e 100644
---- a/Documentation/technical/commit-graph.txt
-+++ b/Documentation/technical/commit-graph.txt
-@@ -49,23 +49,23 @@ Equivalently, the generation number of a commit A is one more than the
- length of a longest path from A to a root commit. The recursive definition
- is easier to use for computation and observing the following property:
- 
--    If A and B are commits with generation numbers N and M, respectively,
--    and N <= M, then A cannot reach B. That is, we know without searching
--    that B is not an ancestor of A because it is further from a root commit
--    than A.
-+If A and B are commits with generation numbers N and M, respectively,
-+and N <= M, then A cannot reach B. That is, we know without searching
-+that B is not an ancestor of A because it is further from a root commit
-+than A.
- 
--    Conversely, when checking if A is an ancestor of B, then we only need
--    to walk commits until all commits on the walk boundary have generation
--    number at most N. If we walk commits using a priority queue seeded by
--    generation numbers, then we always expand the boundary commit with highest
--    generation number and can easily detect the stopping condition.
-+Conversely, when checking if A is an ancestor of B, then we only need
-+to walk commits until all commits on the walk boundary have generation
-+number at most N. If we walk commits using a priority queue seeded by
-+generation numbers, then we always expand the boundary commit with highest
-+generation number and can easily detect the stopping condition.
- 
- This property can be used to significantly reduce the time it takes to
- walk commits and determine topological relationships. Without generation
- numbers, the general heuristic is the following:
- 
--    If A and B are commits with commit time X and Y, respectively, and
--    X < Y, then A _probably_ cannot reach B.
-+If A and B are commits with commit time X and Y, respectively, and
-+X < Y, then A _probably_ cannot reach B.
- 
- This heuristic is currently used whenever the computation is allowed to
- violate topological relationships due to clock skew (such as "git log"
-@@ -121,11 +121,8 @@ Future Work
- - After computing and storing generation numbers, we must make graph
-   walks aware of generation numbers to gain the performance benefits they
-   enable. This will mostly be accomplished by swapping a commit-date-ordered
--  priority queue with one ordered by generation number. The following
--  operations are important candidates:
--
--    - 'log --topo-order'
--    - 'tag --merged'
-+  priority queue with one ordered by generation number. Commands that could
-+  improve include 'git log --topo-order' and 'git tag --merged'.
- 
- - A server could provide a commit graph file as part of the network protocol
-   to avoid extra calculations by clients. This feature is only of benefit if
-@@ -148,13 +145,13 @@ Related Links
-     More discussion about generation numbers and not storing them inside
-     commit objects. A valuable quote:
- 
--    "I think we should be moving more in the direction of keeping
--     repo-local caches for optimizations. Reachability bitmaps have been
--     a big performance win. I think we should be doing the same with our
--     properties of commits. Not just generation numbers, but making it
--     cheap to access the graph structure without zlib-inflating whole
--     commit objects (i.e., packv4 or something like the "metapacks" I
--     proposed a few years ago)."
-+"I think we should be moving more in the direction of keeping
-+ repo-local caches for optimizations. Reachability bitmaps have been
-+ a big performance win. I think we should be doing the same with our
-+ properties of commits. Not just generation numbers, but making it
-+ cheap to access the graph structure without zlib-inflating whole
-+ commit objects (i.e., packv4 or something like the "metapacks" I
-+ proposed a few years ago)."
- 
- [4] https://public-inbox.org/git/20180108154822.54829-1-git@jeffhostetler.com/T/#u
-     A patch to remove the ahead-behind calculation from 'status'.
--- 
-gitgitgadget
+The first four are unchanged, so this actually compares 5/6 of the
+previous and the current one.  Omitting the four identical ones
+makes sense, but I wonder if it makes it easier to see if we keep
+the number-label of the surviving patches.
+
+> 2:  f7ca0d59e3 ! 2:  b8b2416aac pack-objects: reuse on-disk deltas for thin "have" objects
+
