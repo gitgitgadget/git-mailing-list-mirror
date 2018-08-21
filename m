@@ -7,80 +7,90 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40EC11F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 15:22:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2FFF1F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 15:51:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727610AbeHUSmd (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 14:42:33 -0400
-Received: from mail-io0-f181.google.com ([209.85.223.181]:40033 "EHLO
-        mail-io0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727498AbeHUSmd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 14:42:33 -0400
-Received: by mail-io0-f181.google.com with SMTP id l14-v6so15697026iob.7
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 08:21:58 -0700 (PDT)
+        id S1727968AbeHUTL6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 15:11:58 -0400
+Received: from mail-io0-f194.google.com ([209.85.223.194]:37582 "EHLO
+        mail-io0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726743AbeHUTL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 15:11:58 -0400
+Received: by mail-io0-f194.google.com with SMTP id v14-v6so6714852iob.4
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 08:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Z5U76oQRQuEl1WDtMOkE20uuSX0ujLol3U58RnYb1iY=;
-        b=BgzpKesi/n4XXIqRtRBXLK7cHniCgBJldikDb/O8a5mM5cAqcWQ/GKvO6qYupLgRRT
-         D4epm9QUubzhCe9SMUwgIDP62fSgu78g+BBm9D1nrg5sx/4AfhlaL+Ds0EqCZE/FBt26
-         VnUofFs1utgKyCJDs35TiFjvqY0o8oc/Em30J+idgw5WmR7zWPQAuONLYnWuqRKYLFQv
-         +aoSd9+oT30ODVF4pWVv4rcoolkkMzXGF9rLaGE9mpELMIbD7eMwtjSvkO3WfusI2lWx
-         PfQoPdPobdinxMHlhWFUgBo0afcb89dWeruvOpE+/Y73T5sXcq88JwbatFHPvR1c53bq
-         yZ2A==
+        bh=4xahukij9lVw9Y7mPQ8o3dOp2SF2i6r5YQGtFwaq28U=;
+        b=RBwWaUShPdSYDBLmBBOZqVdhgMrui3Pjcm4MuNMDTeKCLAOYDHaYh3EOax6syCjPeR
+         ikrSlpcoJESn8y9vuJuB73O6LSVAYuXES8jLZdG0bNAyB4UT9dUAi16AB5GPLXSb6XVg
+         yw2GawQnj35YsDcvKYQkYFeCJM2sV9rCUUxyEU1xQfsQ2yCZaJgFv7meZUTfX1LevtyF
+         AfA7Nz05Os5eDn7xVQ0VOUWiCVLKOKM9vXORiLD0lK28zOsYHsJoMPnkU60wIGKvpSIX
+         HXPWu8e5WwY9bE/cYjH/uCB+Eu8D0s1ElqMF0OV6Wvh93KNVoPEHWh7ewcw39dJGdSvU
+         +cJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Z5U76oQRQuEl1WDtMOkE20uuSX0ujLol3U58RnYb1iY=;
-        b=ZKckyur796QZKbxGRpnLhB71YJilwB8j6FBsvaq6yfwhzTtw82U+u8925ddGM7Ojnu
-         DwanVUJCb4oMemF7DzgauW1CCeEyIm4JtJthHWuMkpoKYx5UwwEi8V1ZjRJN7rwoLfSB
-         Nj4SPqlDd0UH65KcjhN4njDyreh3HSWTsQKPHvHS74UJleLevWkOYbxzaClxRsKlKPHc
-         0cgxjUmuVgZD575TLShZa+1dYtH5AB6HEMUOf8ql6KEsu9Di5MZjMl3EhUvbPdrfH4kj
-         MlZfoR/k0W5RwOHMq2cxMaXutFpJMyhaDMHiwBKMe4STpXCxGVg6ZwYS4TPCtqpFmagr
-         3t8g==
-X-Gm-Message-State: APzg51BXvOp8C4wesr5Hj4G4S65H3vzBHk8LrcQvAYd34fquA5iJn+TP
-        oIZIUAvNZQzD5+Ze1u10e+2s6t//lGuSEqTgHso=
-X-Google-Smtp-Source: ANB0VdaN7CJJa16loueOZAng0vvCL8aCkzauw/m/DnFOM9U3xbTWJ+gXh7tNi6wTZdN98ACgSOB5IbnOmBc6YcJACoo=
-X-Received: by 2002:a6b:8fd0:: with SMTP id r199-v6mr6110395iod.118.1534864917976;
- Tue, 21 Aug 2018 08:21:57 -0700 (PDT)
+        bh=4xahukij9lVw9Y7mPQ8o3dOp2SF2i6r5YQGtFwaq28U=;
+        b=BCmOUA6QE7Pn+HyeaYkbgskfKuTi3kzQQqtaoCvVGzT4QPQiHxGRTL9CtHRyTy6Qsc
+         lO3RveAQNBEUyPQ6fyzHRoq87r2LwTInLq8Iz0YhlQeHa8pTiBKcxAuIHyNWmCYNaCg9
+         iL6eStHrU1KIOzd/LC9/gsHc7Ot+V6mK9MnJCa9YDUKosfHTqXREWtmsiP/PzLe4obGR
+         jI4hQNQFYXTOtcwWGcl5+UELdniZheDB70iCT4s13aGQqqIPGjJ2sZv/Riy2cnpnCrlX
+         KYKvSh6/hUx1q5+K0jNOqBXzTtusPINQnT5OX73UXtmvf6lVyFJlyzybkedG1vczK5wH
+         gi5A==
+X-Gm-Message-State: APzg51AszPIK3VnffeSqt/ptMm3OdudqSxN3UmN8J4VeWkK3tadZRS3b
+        XIE2EK2T75LHkbdNwOgPUfuRuRqMTGcVdSgzxuc=
+X-Google-Smtp-Source: ANB0VdbwYCESDAYzoQm2b26fpZjGwwDOZ4/JQcxJ4PSdfEIZ4MmvWLIH4Wa1NuhsbGBb3ZZgMyWsFnXlMhzOhfTTd44=
+X-Received: by 2002:a6b:8fd0:: with SMTP id r199-v6mr6210258iod.118.1534866677153;
+ Tue, 21 Aug 2018 08:51:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
- <20180816155714.GA22739@sigill.intra.peff.net> <87bma2qcba.fsf@evledraar.gmail.com>
- <20180816205556.GA8257@sigill.intra.peff.net> <5B7A7CDC020000A10002CDCF@gwsmtp1.uni-regensburg.de>
- <87woslpg9i.fsf@evledraar.gmail.com> <20180821010712.GA32126@sigill.intra.peff.net>
-In-Reply-To: <20180821010712.GA32126@sigill.intra.peff.net>
+References: <cover.1534374650.git.matvore@google.com> <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
+ <CACsJy8AE+MwBzzUFRGLKVp6vaAg2W_KO-qbUU2LQpd=rMQw2sA@mail.gmail.com>
+ <cover.1533854545.git.matvore@google.com> <msg.1534770125.matvore@google.com> <CAGZ79kZfNeWnZEnX4Z0hMShxZZEsB2jYJ67JgE7F_d-3ymHi+A@mail.gmail.com>
+In-Reply-To: <CAGZ79kZfNeWnZEnX4Z0hMShxZZEsB2jYJ67JgE7F_d-3ymHi+A@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 21 Aug 2018 17:21:31 +0200
-Message-ID: <CACsJy8CztYM4XqC1uZ+MxXaQjp8qWjNYyNM1=wD0Q=PyqAmfVg@mail.gmail.com>
-Subject: Re: Antw: Re: non-smooth progress indication for git fsck and git gc
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 21 Aug 2018 17:50:51 +0200
+Message-ID: <CACsJy8CNyep5cEV2bWkAMiZNrd9uGi1i8He3jGhPFq4NtKAPzg@mail.gmail.com>
+Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Matthew DeVore <matvore@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 3:13 AM Jeff King <peff@peff.net> wrote:
-> I _think_ they should work together OK without further modification.
-> Once upon a time the caller had to say "don't show if we're past N%
-> after M seconds", but I think with the current code we'd just show it if
-> we're not completely finished after 2 seconds.
+On Mon, Aug 20, 2018 at 8:38 PM Stefan Beller <sbeller@google.com> wrote:
 >
-> So it really should just be a simple:
+> On Mon, Aug 20, 2018 at 6:18 AM Matthew DeVore <matvore@google.com> wrote:
+> >
+> > There were many instances in this file where it seemed like BUG would be
+> > better, so I created a new commit before this one to switch them over. The
+> > interdiff is below.
+> >
+> > BTW, why are there so many instances of "die" without "_"? I expect all
+> > errors that may be caused by a user to be localized.
 >
->   progress = start_delayed_progress("Hashing packfile", 0);
->
-> That said, counting bytes would probably be ugly (just because the
-> numbers get really big). We'd probably prefer to show a throughput or
-> something.
+> Well, there is the porcelain layer to be consumed by a human user
+> and the plumbing that is good for scripts. And in scripts you might want
+> to grep for certain errors and react to that, so a non-localized error
+> message makes the script possible to run in any localisation.
 
-Or just an ascii throbber. I think the important thing is communicate
-"I'm still doing something, not hanging up". "Hashing packfile"
-satisfies the "something" part, the throbber the "hanging".
+I probably have a different view about this, but strings (as English
+sentences) are for human only and should be translated. For machines
+there should be well defined format (that  just might look like
+English), not totally free text. In some case, this format can be as
+simple as the "error/warning/fatal" prefix, which is left
+untranslated, but the rest should be. There is no guarantee that these
+die() messages will not change in the future, even left untranslated.
 -- 
 Duy
