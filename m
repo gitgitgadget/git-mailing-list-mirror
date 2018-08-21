@@ -2,108 +2,155 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 726041F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 19:47:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BB4B1F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 19:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbeHUXJI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 19:09:08 -0400
-Received: from mail-qt0-f176.google.com ([209.85.216.176]:40430 "EHLO
-        mail-qt0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726626AbeHUXJI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 19:09:08 -0400
-Received: by mail-qt0-f176.google.com with SMTP id h4-v6so21682442qtj.7
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:47:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=O6ILkxCoc/LUM3IsmjLJBRypcFUFq+Ru2wPwh0jX1SU=;
-        b=ctmaDvA09LgvCZ52+egwRQPS1/T8LX9zj8hqI6L8MoV9X2wV/cxBBxx2U+YG9p8cW+
-         f9lK2XaFm+UwzFH8d9/7lC8EdDyW4YwJBLY2sfiAjiJclP22yLJBGOpxWLzUhn/ZotfY
-         6jDz9vYOTMEJRQMoA56L+9UrsO2d3AY/r2GR26fLq5mgbWKSiyuoiDDk5gtLcR+1TyJ0
-         0C3sM9CHxO1ySgk/13RkmhXa6XPvLj68K2wSxNaJBEaP/qK0s7qX7v0OXSM1dMOgF+21
-         1aDAsS7a6A8rDsJeDAkapeKaugCPq3/U78k7Hj+LVWAS5UBhXOanIK1fiB07F5r1l26x
-         fUAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=O6ILkxCoc/LUM3IsmjLJBRypcFUFq+Ru2wPwh0jX1SU=;
-        b=SYYEwjczvKtNFB18oWnqOYjlqPGB0MY0fIdJVAPXhifHUMXCiTgwL4xitHP7y+NZ5l
-         D2Dqi7Yn7J2iSm/OoG/Ay0Xle8VXv448z7L/LHmsxsLS/AqnTnnfxSIikbofwF4vd4PH
-         xxUKOGE+PWKw6LI+D66SkDkqIoDVCB5K10On1iNXoKF+wW8NL7YjeNlUaHoPjOPwkRw2
-         hxwY2fd6fUG3xGnv5t+UpDl7xspz4+SJ/b3H2vBy/Cb1PN1gaKpjNlW9cRUKeKsrEf2r
-         w82PuHN5+XttLrys0OvAWjjXvvbvT3bn0gxtTNStXYqwQPM8LtGI0IPTFechpv9kwycB
-         5nhg==
-X-Gm-Message-State: AOUpUlFDUowT8qP2r/38jCxzoyfpOSQAyWsrRfzOj6/u0c5LNQ7LzeqB
-        ILzPHpu557AJRzioy+fDQq/O81it
-X-Google-Smtp-Source: AA+uWPxo1AvneIuAs/HV+2tYX5AHkM0hgziVQGEkfUD/19LCKZ1tWgnS6Ak7T83aUCSI1TqG4vxNxg==
-X-Received: by 2002:a0c:b131:: with SMTP id q46-v6mr47965859qvc.168.1534880856439;
-        Tue, 21 Aug 2018 12:47:36 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:bcc1:4ea1:6a05:dc2a? ([2001:4898:8010:0:a5f7:4ea1:6a05:dc2a])
-        by smtp.gmail.com with ESMTPSA id e29-v6sm10015870qte.47.2018.08.21.12.47.35
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 12:47:35 -0700 (PDT)
-Subject: Re: [PATCH 5/6] pack-bitmap: save "have" bitmap from walk
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20180821184140.GA24165@sigill.intra.peff.net>
- <20180821190701.GE30764@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <7dadd117-e7f4-4d15-b907-043718022494@gmail.com>
-Date:   Tue, 21 Aug 2018 15:47:36 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727590AbeHUXMf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 19:12:35 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50882 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726861AbeHUXMf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 19:12:35 -0400
+Received: (qmail 8653 invoked by uid 109); 21 Aug 2018 19:51:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 19:51:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26530 invoked by uid 111); 21 Aug 2018 19:51:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 Aug 2018 15:51:10 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2018 15:51:02 -0400
+Date:   Tue, 21 Aug 2018 15:51:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v2 0/6] reuse on-disk deltas for fetches with bitmaps
+Message-ID: <20180821195102.GB859@sigill.intra.peff.net>
+References: <20180817205427.GA19580@sigill.intra.peff.net>
+ <20180821190622.GA30301@sigill.intra.peff.net>
+ <xmqqo9dv8qf9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20180821190701.GE30764@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqo9dv8qf9.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/21/2018 3:07 PM, Jeff King wrote:
-> When we do a bitmap walk, we save the result, which
-> represents (WANTs & ~HAVEs); i.e., every object we care
-> about visiting in our walk. However, we throw away the
-> haves bitmap, which can sometimes be useful, too. Save it
-> and provide an access function so code which has performed a
-> walk can query it.
+On Tue, Aug 21, 2018 at 12:34:18PM -0700, Junio C Hamano wrote:
 
-This makes a lot of sense. Based on the amount of time the "Counting 
-Objects" blog post [1] spent talking about delta bases, I would have 
-assumed this "haves" bitmap was already part of it. But, I can also see 
-how it could be dropped if you are focusing on performance for 'git clone'.
+> > 1:  89fa0ec8d8 ! 1:  3e1b94d7d6 pack-bitmap: save "have" bitmap from walk
+> >     @@ -69,6 +69,8 @@
+> >      +
+> >      +	if (!bitmap_git)
+> >      +		return 0; /* no bitmap loaded */
+> >     ++	if (!bitmap_git->result)
+> >     ++		BUG("failed to perform bitmap walk before querying");
+> >      +	if (!bitmap_git->haves)
+> >      +		return 0; /* walk had no "haves" */
+> >      +
+> 
+> The first four are unchanged, so this actually compares 5/6 of the
+> previous and the current one.  Omitting the four identical ones
+> makes sense, but I wonder if it makes it easier to see if we keep
+> the number-label of the surviving patches.
 
+Agreed, but I think this is user error, and not the tool.
 
-> A few notes on the accessor interface:
->
->   - the bitmap code calls these "haves" because it grew out
->     of the want/have negotiation for fetches. But really,
->     these are simply the objects that would be flagged
->     UNINTERESTING in a regular traversal. Let's use that
->     more universal nomenclature for the external module
->     interface. We may want to change the internal naming
->     inside the bitmap code, but that's outside the scope of
->     this patch.
+I ran:
 
-I saw the uninteresting-vs-haves name confusion in the patch below, but 
-I agree with your logic here.
+  git range-diff @{push}...HEAD
 
-Sorry that I'm late to the party, but I was interested in the topic.
+since I knew that I had not pushed since beginning my revisions today.
+But of course "rebase -i" is clever enough not to change the commit id
+on the earlier commits I did not touch, and thus the merge base is
+actually patch 4.
 
-Thanks,
+I should instead be more explicit about the base, like:
 
--Stolee
+  git range-diff origin @{push} HEAD
 
-[1] https://githubengineering.com/counting-objects/
+That shows much more sensible output (see below).
 
-     "Counting Objects" by Vincent Martí
+For my triangular setup, I could even do:
+
+  git range-diff @{upstream} @{push} HEAD
+
+but I'm not sure if that is generally applicable advice (I'm not sure
+how many people have really bought into @{push} and using triangular
+config -- traditionally I think many people treat @{upstream} as the
+place they push to). It also needs adjusting if your revisions might
+span several sessions; you'd really need @{push}@{yesterday} or similar.
+The best thing to compare against is probably what got queued, so
+something like:
+
+  git range-diff origin..origin/jk/$branch_name origin..HEAD
+
+though that also introduces sign-off noise.
+
+-Peff
+
+-- >8 --
+1:  9665189d70 = 1:  9665189d70 t/perf: factor boilerplate out of test_perf
+2:  fa1ad80e4e = 2:  fa1ad80e4e t/perf: factor out percent calculations
+3:  abf0ddbb9f = 3:  abf0ddbb9f t/perf: add infrastructure for measuring sizes
+4:  49981526ad = 4:  49981526ad t/perf: add perf tests for fetches from a bitmapped server
+5:  89fa0ec8d8 ! 5:  3e1b94d7d6 pack-bitmap: save "have" bitmap from walk
+    @@ -69,6 +69,8 @@
+     +
+     +	if (!bitmap_git)
+     +		return 0; /* no bitmap loaded */
+    ++	if (!bitmap_git->result)
+    ++		BUG("failed to perform bitmap walk before querying");
+     +	if (!bitmap_git->haves)
+     +		return 0; /* walk had no "haves" */
+     +
+6:  f7ca0d59e3 ! 6:  b8b2416aac pack-objects: reuse on-disk deltas for thin "have" objects
+    @@ -12,7 +12,7 @@
+         However, this misses some opportunities. Modulo some special
+         cases like shallow or partial clones, we know that every
+         object reachable from the "haves" could be a preferred base.
+    -    We don't use them all for two reasons:
+    +    We don't use all of them for two reasons:
+     
+           1. It's expensive to traverse the whole history and
+              enumerate all of the objects the other side has.
+    @@ -100,15 +100,16 @@
+     
+         The second is that the rest of the code assumes that any
+         reused delta will point to another "struct object_entry" as
+    -    its base. But by definition, we don't have such an entry!
+    +    its base. But of course the case we are interested in here
+    +    is the one where don't have such an entry!
+     
+         I looked at a number of options that didn't quite work:
+     
+    -     - we could use a different flag for reused deltas. But it's
+    -       not a single bit for "I'm being reused". We have to
+    -       actually store the oid of the base, which is normally
+    -       done by pointing to the existing object_entry. And we'd
+    -       have to modify all the code which looks at deltas.
+    +     - we could use a flag to signal a reused delta, but it's
+    +       not a single bit. We have to actually store the oid of
+    +       the base, which is normally done by pointing to the
+    +       existing object_entry. And we'd have to modify all the
+    +       code which looks at deltas.
+     
+          - we could add the reused bases to the end of the existing
+            object_entry array. While this does create some extra
+    @@ -173,7 +174,7 @@
+      static int depth = 50;
+      static int delta_search_threads;
+      static int pack_to_stdout;
+    -+static int thin = 0;
+    ++static int thin;
+      static int num_preferred_base;
+      static struct progress *progress_state;
+      
+
 
