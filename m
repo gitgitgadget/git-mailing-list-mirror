@@ -2,102 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 113B71F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 01:07:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C886D1F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 01:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726305AbeHUEZI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 00:25:08 -0400
-Received: from cloud.peff.net ([104.130.231.41]:49976 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725773AbeHUEZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 00:25:08 -0400
-Received: (qmail 30149 invoked by uid 109); 21 Aug 2018 01:07:14 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 01:07:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12530 invoked by uid 111); 21 Aug 2018 01:07:19 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 Aug 2018 21:07:19 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2018 21:07:12 -0400
-Date:   Mon, 20 Aug 2018 21:07:12 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        git@vger.kernel.org
-Subject: Re: Antw: Re: non-smooth progress  indication for git fsck and git gc
-Message-ID: <20180821010712.GA32126@sigill.intra.peff.net>
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
- <20180816155714.GA22739@sigill.intra.peff.net>
- <87bma2qcba.fsf@evledraar.gmail.com>
- <20180816205556.GA8257@sigill.intra.peff.net>
- <5B7A7CDC020000A10002CDCF@gwsmtp1.uni-regensburg.de>
- <87woslpg9i.fsf@evledraar.gmail.com>
+        id S1726182AbeHUEb1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 00:31:27 -0400
+Received: from mail-qt0-f178.google.com ([209.85.216.178]:45975 "EHLO
+        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725731AbeHUEb1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 00:31:27 -0400
+Received: by mail-qt0-f178.google.com with SMTP id y5-v6so18429563qti.12
+        for <git@vger.kernel.org>; Mon, 20 Aug 2018 18:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=RnnBBa3c8t+u1ENTfTBGWVRy7MYQj0WNUpUTYPKRKTg=;
+        b=Y3DgPSRxkcncIcCsdy7w6KoO2KY2y6X9JuXEoWzeysBRkeKsvMz2R9VtLkVWlLEFf5
+         8frqTQim/73rvPXezQHMdFe9ovSc/yA3Nn4MaduTfnDAD6SQHFGmzKnJ6tIixDQDahzq
+         nEmboykzGHzwzhlVRQn6NEd+OwhZhJgJoq68Ozk/Mf8cEro9OzOKbD+H/UQai/5MscDc
+         +fpTj+fVud5O+X11vM6Rqj0vyYG8a2ALBcC4N6t0hc0WhgpJknjQiIBPzpP7Eafra5Li
+         hgIv5moZCDR2eg6OLAL4V/dvSgmcM16KFjW68NGgJoaxpS6GuVkb1USA7Fcxwae53L1A
+         NwVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
+         :content-transfer-encoding;
+        bh=RnnBBa3c8t+u1ENTfTBGWVRy7MYQj0WNUpUTYPKRKTg=;
+        b=Dddx8IpBHTAw7caBfR1viOHuYapKRA3BmnWxCsJTmkDzFaFkVdwH8DYBy58tbwvOxB
+         lKnSrG2TuHrn41hGXczy9i1Lnriq92LOYL5LqBR2WOV3Tb1rpuAZwhNCg3uGnUAv0/+o
+         M/9vlRof5t0Dg0VMqFJ3bu5VoKvJAHLp6UO5hNqN+Rh+MolPEc8YsU1Bwd90WxB0dCog
+         klYDSaxhMrzTzIaY5PIZoobp4b+kt/7HuibpMcixb9qovhMR1vnzdcf27zqDCEHCm4/F
+         7buHljaWxuOnc3Mt+QnX3i+2qzs827s+7S9px+BvRKze3JZoQ9uRZy7atyAvo+wlEglv
+         EP4A==
+X-Gm-Message-State: APzg51Bvu9HEszGyWfImJuvgRBPjtRW3oFqGwmuT0xJALADzbYWvvFIE
+        LtqOBDhwn+oNmkr/1KQaXJLgzNc7I0Bg5OPhjvA=
+X-Google-Smtp-Source: ANB0Vda5pUH5wJo9b9qeKIjC6s2oD+xzCljAxZyohb/gjnmL3pcR/J2ok6jFJ9VOgDKT0+WMYk3crAqonZKH+Ncdn4I=
+X-Received: by 2002:ad4:4089:: with SMTP id l9-v6mr4823839qvp.160.1534814011519;
+ Mon, 20 Aug 2018 18:13:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87woslpg9i.fsf@evledraar.gmail.com>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Tue, 21 Aug 2018 09:13:19 +0800
+Message-ID: <CANYiYbG=PCiObEWJV0Qk_Hra70+1t0wCMbjDO5ArrTBa2njQjQ@mail.gmail.com>
+Subject: [L10N] Kickoff for Git 2.19.0 round 1
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 20, 2018 at 10:57:13AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Hi,
 
-> > That seems to apply. BTW: Is there a way go get some repository statistics
-> > like a histogram of object sizes (or whatever that might be useful to help
-> > making decisions)?
-> 
-> The git-sizer program is really helpful in this regard:
-> https://github.com/github/git-sizer
+Git v2.19.0-rc0 has been released, and it's time to start new round of git =
+l10n.
+This time there are 382 updated messages need to be translated since last
+update:
 
-Yeah, I'd very much agree that's the best tool for a general overview of
-the repository stats.
+    l10n: git.pot: v2.19.0 round 1 (382 new, 30 removed)
 
-Ulrich, if you want to more analysis (like a histogram), probably
-something like:
+    Generate po/git.pot from v2.19.0-rc0 for git v2.19.0 l10n round 1.
 
-  git cat-file --batch-all-objects --batch-check='%(objectsize)'
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>>
 
-might be a good starting place to dump information (see the "BATCH
-OUTPUT" section of "git help cat-file" for more format items).
+You can get it from the usual place:
 
-> > If it's sorting, maybe add some code like (wild guess):
-> >
-> > if (objects_to_sort > magic_number)
-> >    message("Sorting something...");
-> 
-> I think a good solution to these cases is to just introduce something to
-> the progress.c mode where it learns how to display a counter where we
-> don't know what the end-state will be. Something like your proposed
-> magic_number can just be covered under the more general case where we
-> don't show the progress bar unless it's been 1 second (which I believe
-> is the default).
+    https://github.com/git-l10n/git-po/
 
-Yeah.  We already have open-ended counters (e.g., "counting objects"),
-and delayed meters (we actually normalized the default to 2s recently).
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
 
-I _think_ they should work together OK without further modification.
-Once upon a time the caller had to say "don't show if we're past N%
-after M seconds", but I think with the current code we'd just show it if
-we're not completely finished after 2 seconds.
-
-So it really should just be a simple:
-
-  progress = start_delayed_progress("Hashing packfile", 0);
-
-That said, counting bytes would probably be ugly (just because the
-numbers get really big). We'd probably prefer to show a throughput or
-something. And as you noted, there's some refactoring to be done with
-pack-check for it to show multiple progress meters.
-
-(I still think in the long run we would want to scrap that code, but
-that's a much bigger job; I'm fine if somebody wants to do incremental
-improvements in the meantime).
-
--Peff
+--
+Jiang Xin
