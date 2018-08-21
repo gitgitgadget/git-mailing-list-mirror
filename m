@@ -2,105 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6BCA1F97E
-	for <e@80x24.org>; Tue, 21 Aug 2018 20:14:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 642661F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 20:22:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726966AbeHUXgJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 19:36:09 -0400
-Received: from cloud.peff.net ([104.130.231.41]:50938 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726628AbeHUXgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 19:36:09 -0400
-Received: (qmail 9547 invoked by uid 109); 21 Aug 2018 20:14:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 20:14:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26784 invoked by uid 111); 21 Aug 2018 20:14:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 Aug 2018 16:14:39 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2018 16:14:31 -0400
-Date:   Tue, 21 Aug 2018 16:14:31 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 6/6] pack-objects: reuse on-disk deltas for thin "have"
- objects
-Message-ID: <20180821201431.GA23263@sigill.intra.peff.net>
-References: <20180821184140.GA24165@sigill.intra.peff.net>
- <20180821190705.GF30764@sigill.intra.peff.net>
- <xmqqin438pze.fsf@gitster-ct.c.googlers.com>
- <xmqqbm9v8pou.fsf@gitster-ct.c.googlers.com>
- <20180821200747.GA21955@sigill.intra.peff.net>
+        id S1727540AbeHUXn6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 19:43:58 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:41267 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726628AbeHUXn5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 19:43:57 -0400
+Received: by mail-qt0-f177.google.com with SMTP id e19-v6so21827388qtp.8
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 13:22:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xfqnth562VVjQq9sQvOpu3ISYaA/v5vcK09SpePDDO8=;
+        b=hSIMvQDzvmRNyOH8eKSaBeVbrzavUj4tWbY2FlKCxIC344V1dUEWwycrg/x8lKpl01
+         3scJo1kU/Rxd/SHcaqeVokw5g7nbn+Nvx1xcWdDTLZHhceEOvH38ZOVfKcI3WJX8efF1
+         I/Nnnp7cWAWUAqcjYx3rwXcU2vpYI5lseuAicK+0igZwFzlednNEQ2ze57LT7oWFJ6jn
+         veLaeVyVcNHuc9KY/91UOI1CdDgbnaSCPoi+T+FK7+gMrTp56UNSqwxYU5H+vxIknCyc
+         TQn3d5kONWBftCNVzOVmzQ9lHBfpwcNIGTvXRHHuAXTJtYRI0Uvpy31LYCCzw9LHdwKz
+         fE9Q==
+X-Gm-Message-State: AOUpUlG0uuTGIHRdIj5903WhuX30JItpTvH14b3p16iuY91Uii4EbKDT
+        hA7xJKY5YgLGMx9HzP//ar6yMQGA1CMoymjJGFs=
+X-Google-Smtp-Source: AA+uWPxJJuqLZ4pK7+ebrJNRAGehFaVsNIYC/nzHH5glWcGtfDpGOUjkNlUa5VDag+Eo9+glJY5iERavHewoBND6Hzk=
+X-Received: by 2002:a0c:b458:: with SMTP id e24-v6mr47410719qvf.82.1534882939398;
+ Tue, 21 Aug 2018 13:22:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180821200747.GA21955@sigill.intra.peff.net>
+References: <20180821192321.GA720@sigill.intra.peff.net> <20180821193556.GA859@sigill.intra.peff.net>
+In-Reply-To: <20180821193556.GA859@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 21 Aug 2018 16:22:08 -0400
+Message-ID: <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
+Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention doc-diff
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 04:07:47PM -0400, Jeff King wrote:
+On Tue, Aug 21, 2018 at 3:36 PM Jeff King <peff@peff.net> wrote:
+> The script does basically this to set up the temporary tree:
+>
+>   test -d $tmp || git worktree add $tmp ...
+>
+> The script never cleans up the worktree (since its results can often be
+> reused between runs), but you may do so with "rm" or "git clean". That
+> creates an interesting situation if the script is run again before
+> "worktree prune" runs.
 
-> On Tue, Aug 21, 2018 at 12:50:09PM -0700, Junio C Hamano wrote:
-> 
-> > > Sorry for commenting on something completely off-topic, but when
-> > > applied with "git am -s", I get a resulting commit with 3 S-o-b (the
-> > > above two, plus the one added by "-s"), with a blank line in between
-> > > them.  I can understand the first blank line (the one between your
-> > > two S-o-b), as the first S-o-b does not even appear to be part of
-> > > the trailer block, but cannot explain why I get an extra one before
-> > > the one added by "-s".  Puzzled...
-> > 
-> > I think your original "two s-o-b with a blank line in between" was
-> > caused by the same problem, and "git commit --amend -s" perhaps
-> > added an extra one at the end, and added a blank line before the
-> > last "paragraph" while at it?
-> > 
-> > My suspicion is the long horizontal line at the beginning of the
-> > table, triggers it.  I haven't followed the code closely yet,
-> > though.
-> 
-> Ah, yeah, I think you're right. We call find_patch_start(), which thinks
-> the "---" line is the end of the commit message. That makes sense when
-> parsing trailers out of "format-patch" output, but not when we know we
-> have just the commit message.
-> 
-> So one obvious fix is a new option for the trailer code to tell it we
-> have _just_ a commit message. That would still leave this obvious false
-> positive for the format-patch case, but I'm not sure it can be helped.
+Aside from the problems you enumerate below, leaving worktrees sitting
+around which the user did not create explicitly does seem a bit
+unfriendly, which leads me to think that worktrees may not be the best
+tool for this task. How about using "git clone --shared" instead?
 
-Another is to tighten the check. Something like this seems more
-sensible:
+More below...
 
-diff --git a/trailer.c b/trailer.c
-index 4e309460d1..92ec5cae82 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -793,7 +793,8 @@ static int find_patch_start(const char *str)
- 	const char *s;
- 
- 	for (s = str; *s; s = next_line(s)) {
--		if (starts_with(s, "---"))
-+		const char *v;
-+		if (skip_prefix(s, "---", &v) && isspace(*v))
- 			return s - str;
- 	}
- 
+> We identify the directory as a "new" worktree,
+> and add it to the list. So you may end up with several copies:
+>
+>   $ git worktree list
+>   [...]
+>   /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  cc6237c051 (detached HEAD)
+>   /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  e55de40950 (detached HEAD)
+>   /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  e55de40950 (detached HEAD)
+>
+> If I then run "git worktree prune", those duplicates don't go away
+> (because the directory is still there; it just corresponds to only the
+> final entry). If I delete the tmp-doc-diff directory and then run "git
+> worktree prune", they do all go away.
+>
+>   1. Should the script be doing something else to indicate that the
+>      worktree may be reused? I tried "git worktree remove", but it's
+>      unhappy that the directory doesn't exist. Should it quietly handle
+>      ignore that and remove any leftover cruft in $GIT_DIR/worktrees?
 
-as it would catch "--- /some/file", "--- ", "---\n", and "---\r\n", but
-not longer dashed lines. I wondered what "git am" does, though, and I
-think it is mailinfo.c:patchbreak(), which has a few other cases to
-handle things that git itself would not have generated. I don't know if
-that's worth supporting or not.
+That's a weird case. There are multiple entries in
+.git/worktrees/*/gitdir pointing at the same worktree directory, which
+I don't think was considered when the machinery was being designed.
+"git worktree remove" refusing to delete the worktree in this case
+seems a good safety measure since something is obviously askew in the
+bookkeeping and it doesn't want to lose potential work.
 
-I think there really are two bugs here, though. The find_patch_start()
-check is overly lax, but we also should not have to use it at all when
-we know there is no patch.
+The solution to this problem might be to upgrade "prune" as you
+describe in #3 and then ensure that that sort of aggressive pruning
+happens automatically at "git worktree add" time.
 
--Peff
+>   2. Should "git worktree add" be more clever about realizing that an
+>      existing entry in $GIT_DIR/worktrees points to this directory? That
+>      would be fine for my use, but I wonder if there's some potential
+>      for loss (e.g., you blew away the work tree but until you do a
+>      "worktree prune", the refs are still there, objects reachable,
+>      etc).
+
+In the case that you've already blown away the directory, then having
+"git worktree add" prune away the old worktree bookkeeping would make
+sense and wouldn't lose anything (you've already thrown it away
+manually). However, it could be lossy for the case when the directory
+is only temporarily missing (because it's on removable media or a
+network share).
+
+In this case, it might make sense for "git worktree add" to refuse to
+operate if an existing worktree entry still points at the directory
+that you're trying to add. That should prevent those duplicate
+worktree entries you saw.
+
+>   3. Should "git worktree prune" be more clever about dropping
+>      duplicates? I think it should be easy to identify them: they are
+>      entries in $GIT_DIR/worktrees for which:
+>
+>        - the directory in $entry/gitdir does exist, but
+>        - $(cat $entry/gitdir)/.git does not point back to $entry
+
+Seems a sensible improvement to the pruning logic.
+
+However, upon further consideration, any of the proposed "fixes" could
+potentially be lossy. Consider a case like this:
+
+% git worktree add foo
+... make some changes in 'foo' ...
+% mv foo bar # (fogetting to do "git worktree move foo bar")
+% git worktree add foo
+
+As currently implemented, one can "correct" the situation by manually
+fixing the bookkeeping file in .git/worktrees for the worktree created
+first. If it gets pruned automatically, then the state of those
+changes in "bar" (nee "foo") could be lost.
+
+So, I'm not sure what, if any, fix is appropriate.
+
+Such uncertainty also further argues in favor of "git clone --shared"
+for your particular use-case, I think.
