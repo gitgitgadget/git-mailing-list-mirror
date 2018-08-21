@@ -6,69 +6,69 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AF411F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 21:46:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 587211F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 21:52:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726861AbeHVBIU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 21:08:20 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:43034 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726626AbeHVBIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 21:08:20 -0400
-Received: by mail-wr1-f41.google.com with SMTP id k5-v6so5528327wre.10
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 14:46:26 -0700 (PDT)
+        id S1727113AbeHVBOn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 21:14:43 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:52666 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726755AbeHVBOm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 21:14:42 -0400
+Received: by mail-wm0-f68.google.com with SMTP id y139-v6so224520wmc.2
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 14:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=42xmbMLg3YgDATxIKyhAyYfXCloGujh0YYRhLholjFg=;
-        b=XTXT2BH/wpkU0EWwmBISRKA53Igpi7Ym7lwVlZXk3WUZMptZlE9WpCxxp3Nt6Mk4vm
-         frTUvw6FNNTNDJlrhpAOkiqx3VhdiNpuyc7KCPKYMEEoju4IMegLIAfVfFnWTselwmRH
-         Q33Nhlu8q/kNwBmib/vjYUpOjmbIoR/WzeDvM+pX8ZGJDu2E2U7F0nEZtLL+57t4MN6P
-         5umwVZt4DgY2PDnpCIVO3O9Cr9Z283zhV2viSO0HCEXJL13ON0Mzpe5f+AM7Xyul1zJ0
-         qjH/mS06nCSa7fjYOPb3ipebCL08EjAjftQeo1QHCfdIJF+ISHPJLxZJJ3l/UAkMuz32
-         MrvQ==
+        bh=NQSn+Ju/aNTr6X9s12sC01o1bIyy7kxODwk8UZTQfLg=;
+        b=SA80S87oQWdOmT/V+7mlaZW4+unUNyhKK7FCfYIIfKrqchQAd4mfJyfINUovNKuEAS
+         C3qlVRX2i8Emtfu9bimrMxAZzFGa4s3qK+FBzVsXLr21QVMBn0SZAWe/hZuBiUnVrKlK
+         js/5bu8dTwE4bQaFGeKNV8UD8qmgHdJIxof0thPIbJMsvcOAof3vIEHqZK3CndyBW80z
+         EIRZNaEwcl+Cu6UW8xC3foLX2sq18e4uVnm3h4Cn+YpI8j0OCq8GSvEZKTyHH5dFuoi8
+         LwHFqCXU7DqxguCY9y7K1SpAbdzPhu8GjU/UQvckjoS2Iq1HuPKj5CSt9v5wUOPKlqIi
+         0S1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=42xmbMLg3YgDATxIKyhAyYfXCloGujh0YYRhLholjFg=;
-        b=IotoGqBngJOUAPyA5EFmhevBnfdFmim2nHt1GArm62QuAmEmt8/i4MdbeWYYK9lALW
-         ZCruQFEuXZp/GjZsIp4bqzJisx0I16tnXGPsUZ+UXrE+IPKJWjiMU1gMkT7XgrrNFDYC
-         E3bzJ1OqG2aTR7sN2y9IwI6cHyQZn05TymYzdQHV0iw4WdttTOgAuya7C1Ls/SbHkN4P
-         JQ02JuKnqXCGSAvdojtJ8xRe4maANrlqt0K6Ok28eX5XenYU8n6hpM2HAdJW39Yn1Kun
-         vvr8EtGE4rXPDRDj7kymD3KCnzx8TGi4cucC8Lmcbkl5q74B5JS+ygsA6H8iZoeByeZ3
-         xofw==
-X-Gm-Message-State: APzg51BWvsShky/CV54RLnxGxQO9xFwCoxXBh+w0r086jzp4YYC8Pv7y
-        2wpRcjZWIkCk1CA/w9N31b0=
-X-Google-Smtp-Source: ANB0VdZdK5saVwV6qpe6Acaq0xCBIc9KM0hQNFPbjORgeb9Tk31+GhGeZlV236InrtYrg11FdxH6Mw==
-X-Received: by 2002:adf:c38e:: with SMTP id p14-v6mr8263512wrf.68.1534887984999;
-        Tue, 21 Aug 2018 14:46:24 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f8-v6sm14889543wrj.9.2018.08.21.14.46.23
+        bh=NQSn+Ju/aNTr6X9s12sC01o1bIyy7kxODwk8UZTQfLg=;
+        b=pLoOOdkUrF8YgBFbk/qvWroWnCP6jmwqWwPWyEyH1S5dqOpOTa1S+oAopFcTi4fEMs
+         AcYCjWy+Mud9/f6/GO3bl+rK6Zw5GchBLfqPlYpmyArfc5iyRIF7XwM+0JFRT+8JVELL
+         nhoHcHh3he/DanIl1a6syxa5ozqGlBmORdH7w2L45XKa5iRkU5fIZR48wFHC14yvebbI
+         zEtfubmJi5/Bm9J5teFdGM+K4YLEbj0F3FRcdGY1yRQ5Vo0/cTewvRHU4EyCLjMkaCHt
+         OOsigjGs2xYfYTPHzek0dKSUtvWNxuowRY7QiQUCLEGf5EbBHGkJEXHZyxgd+Yf+IWAc
+         SI0g==
+X-Gm-Message-State: APzg51CqO9Pl3zUVyAZW26Ys/TnFK7UL60neymWybxQgj2zWe7lBfF+y
+        szu8tg2j0pbZi6zB4NoPQnI=
+X-Google-Smtp-Source: ANB0Vdas6mRvrVtoAotLkILosCdixQnyx8P4pZw/88ZTH6XU0XSmo4mbw3JytiGr1uxmmHqtv7ViAA==
+X-Received: by 2002:a1c:3351:: with SMTP id z78-v6mr695111wmz.23.1534888366632;
+        Tue, 21 Aug 2018 14:52:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j133-v6sm472989wmd.12.2018.08.21.14.52.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 21 Aug 2018 14:46:23 -0700 (PDT)
+        Tue, 21 Aug 2018 14:52:45 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Matthew DeVore <matvore@google.com>, git <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v6 6/6] list-objects-filter: implement filter tree:0
-References: <cover.1533854545.git.matvore@google.com>
-        <cover.1534374650.git.matvore@google.com>
-        <5d3b4e4acb73009e4cefecd0965fe5dd371efea1.1534374650.git.matvore@google.com>
-        <CAGZ79kaWcGbyc2S5gOCU7NdvT4fN46jq4xK9MvTLAFBGhyuo2A@mail.gmail.com>
-        <CAMfpvhK3ouxa5H1ZWy_ZrQBjSq_qwavOtLe98SshaUmjTyBQXw@mail.gmail.com>
-        <CAGZ79kb3W6fNkqNemcdziXBB_cDmd3ngBU_0tdS_32rUhAW4dA@mail.gmail.com>
-        <CAMfpvhKPJijO_E2FRh-UtrOthEc2YTaG0=1ToYy3akjzWUZWiw@mail.gmail.com>
-        <CAGZ79kZfZ2FWfgrvb82YxXP7zHjYDp0J_581ZHgG3un1phHxGg@mail.gmail.com>
-Date:   Tue, 21 Aug 2018 14:46:23 -0700
-In-Reply-To: <CAGZ79kZfZ2FWfgrvb82YxXP7zHjYDp0J_581ZHgG3un1phHxGg@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 20 Aug 2018 17:29:50 -0700")
-Message-ID: <xmqqlg8z75qo.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Kirill Smelkov <kirr@nexedi.com>
+Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can use bitmap' test
+References: <20180814114721.25577-1-szeder.dev@gmail.com>
+        <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
+        <xmqqr2iyc526.fsf@gitster-ct.c.googlers.com>
+        <CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com>
+        <eeb04c94-50c1-13ee-880b-ea380031a685@gmail.com>
+        <xmqq4lfsbvru.fsf@gitster-ct.c.googlers.com>
+        <73346b91-6d19-651a-c361-1666a39681f0@gmail.com>
+        <20180819203253.GA5789@sigill.intra.peff.net>
+        <aedb7f33-65cc-5d63-4e7e-dd5f37831e19@gmail.com>
+        <20180819214334.GA2626@sigill.intra.peff.net>
+Date:   Tue, 21 Aug 2018 14:52:45 -0700
+In-Reply-To: <20180819214334.GA2626@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 19 Aug 2018 17:43:34 -0400")
+Message-ID: <xmqqh8jn75g2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -77,28 +77,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
->> ...
->> OTOH, if it were up to me I would have just gotten rid of
->> test_must_be_empty and used an existing function with the right
->> argument, like `test_cmp /dev/null` - but using some form consistently
->> is the most important, whatever it is.
+>> > If we assume that "expect" is first (which is our convention but not
+>> > necessarily guaranteed), then I think the best logic is something like:
+>> > 
+>> >   if $1 is empty; then
+>> >     bug in the test script
+>> >   elif test_cmp_allow_empty "$@"
+>> >     test failure
+>> > 
+>> > We do not need to check $2 at all. An empty one is either irrelevant (if
+>> > the expectation is empty), or a test failure (because it would not match
+>> > the non-empty $1).
+>> 
+>> ... this is indeed a better solution. I written out the cases for
+>> updated test_cmp to straighten out my thinking:
 >
-> /dev/null, eh? It shows you don't use Windows on a day to day basis. ;-)
-> But yeah consistency is really good to have. :)
+> I'd be OK pursuing either this line, or what you showed originally.
 
-Just to make sure we don't give wrong impression to bystanders, do
-you mean that we should discourage using /dev/null in our tests or
-scripts due to portability concerns?
+As I do find [1] to be a real concern, I'd prefer not to flag empty
+input to test_cmp as special.  But if we _were_ to do something, I
+agree that "$2 can be anything---that is the output from the
+potentially buggy program we are testing" is the right attitude to
+take.
 
-I thought they had good enough emulation that writing /dev/null on
-the command line in scripts do what we expect the shell to do; the
-same thing can be said for calling open(2) on "/dev/null".
+[Footnote]
 
-Back to the topic from the tangent, but there was a discussion on
-choosing between "test_must_be_empty actual" vs "test_cmp empty
-actual", and was even a proposal to trigger an error when an empty
-file is given to test_cmp.  You two might want to join the party
-there, perhaps?
-
+*1*
+https://public-inbox.org/git/CAM0VKjkT7fBJRie_3f4B13BHT9hp9MxRhuX5r1sogh2x7KQzbg@mail.gmail.com/
