@@ -2,112 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC79D1F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 21:29:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 66A571F97E
+	for <e@80x24.org>; Tue, 21 Aug 2018 21:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726810AbeHVAvQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 20:51:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:51018 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726628AbeHVAvQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 20:51:16 -0400
-Received: (qmail 12304 invoked by uid 109); 21 Aug 2018 21:29:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 21:29:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27261 invoked by uid 111); 21 Aug 2018 21:29:31 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 Aug 2018 17:29:31 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2018 17:29:24 -0400
-Date:   Tue, 21 Aug 2018 17:29:24 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-Message-ID: <20180821212923.GB24431@sigill.intra.peff.net>
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
- <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
+        id S1726925AbeHVAvs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 20:51:48 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42034 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726628AbeHVAvs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 20:51:48 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v17-v6so2409555wrr.9
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 14:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=mwIuE5FdlW5NI3wBrkG8xL+ONRZ292RS3nrqESra3Uc=;
+        b=Pt1h43Kf7tH8obAoiiQci85Uiv7Qf6AXh/34V37aVqerWrc6OufsZeuEnQMBPrpUbW
+         /uWJpTDRstu2LprxZYl3YrF0PnOjAMRSXdqXy1z1mgsKDMt9FAbpjxBck91quE1rS7h5
+         Kxes8icpgJYWmIp47twFDStRP5uKhhykHU29ICGvNRU2nX05vkMVE0h8UP/KSi6UC0MO
+         06dBucT/j+J1Xbq67ioC9kaa10S6FJxaCrxDlCBwY4tPQ//GrdFehvP5NGD29FHyR6xN
+         AVlRxsOfGc/0e2baUHWmE0+392avvVhB0cqnZKvlX/qDWCbagQizSADWvccfJG8ABuuU
+         kvtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=mwIuE5FdlW5NI3wBrkG8xL+ONRZ292RS3nrqESra3Uc=;
+        b=smwJj1qT3ggysd6y2Rl85janB/RxwPgl/1fiJz6h6FMmu3UIR5j6rJrFztmphcOQMA
+         wt+SzBF/jLfb1bam5BvjD6UElBgIuGMdUYPp4uPO1rCz0silIvgzAxDYhE5Spt24NIWU
+         GjG1QlnPmJA2PFZkrPyoueoE94C5hJeYWVCYdvtX7FrNJ/elJ6MUeN400oWBU+LGt2Uq
+         ghQJiVEvCsrQr543WPZV2fRd8okcxlQZk+3Xsph5trvhEULNndcKCzjA5h6vKY7sZ7tx
+         TEg/4v4HcGzW593UdsaGtK4CNQkXJPiFUCu5UbnVW5DRPKFMxk8t+hm8vP4DySWJNit7
+         TDPQ==
+X-Gm-Message-State: APzg51CK8WC1irKwK5bwLOFpNco/fwN3kZ69exGtIzyyCQmb0dOrnNVH
+        CCQIntzBd8gAVEF3dk78OFY=
+X-Google-Smtp-Source: ANB0VdY86c5TLI1zodB5MESc0QLl40cvoAsFDSVy3oZgZReJ7DIaSILEjAPrLt8OinURPkfT5Wg8Ew==
+X-Received: by 2002:adf:f112:: with SMTP id r18-v6mr2614444wro.29.1534886996392;
+        Tue, 21 Aug 2018 14:29:56 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l18-v6sm459255wru.75.2018.08.21.14.29.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 21 Aug 2018 14:29:55 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v2 2/2] commit-graph.txt: improve formatting for asciidoc
+References: <pull.22.git.gitgitgadget@gmail.com>
+        <pull.22.v2.git.gitgitgadget@gmail.com>
+        <6cf253c2a6a091520e1376839dff8b97869c9808.1534879749.git.gitgitgadget@gmail.com>
+Date:   Tue, 21 Aug 2018 14:29:55 -0700
+In-Reply-To: <6cf253c2a6a091520e1376839dff8b97869c9808.1534879749.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 21 Aug 2018
+        12:29:13 -0700 (PDT)")
+Message-ID: <xmqqtvnn76i4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 04:41:02PM -0400, Derrick Stolee wrote:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On 8/20/2018 6:13 PM, Junio C Hamano wrote:
-> > An early preview release Git v2.19.0-rc0 is now available for
-> > testing at the usual places.
-> 
-> As part of testing the release candidate, I ran the performance suite
-> against a fresh clone of the Linux repository using v2.18.0 and v2.19.0-rc0
-> (also: GIT_PERF_REPEAT_COUNT=10).
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> When viewing commit-graph.txt as a plain-text document, it makes
+> sense to keep paragraphs left-padded between bullet points.
+> However, asciidoc converts these left-padded paragraphs as monospace
+> fonts, creating an unpleasant document. Remove the padding.
 
-Wow, you're a glutton for punishment. :)
+That's completely backwards.
 
-> I found a few nice improvements, but I
-> also found a possible regression in tree walking. I say "tree walking"
-> because it was revealed using p0001-rev-list.sh, but only with the
-> "--objects" flag. I also saw some similar numbers on 'git log --raw'.
-> 
-> Test v2.18.0             v2.19.0-rc0
-> --------------------------------------------------------------------------------------------
-> 0001.1: rev-list --all 6.69(6.33+0.35)     6.52(6.20+0.31) -2.5%
-> 0001.2: rev-list --all --objects 52.14(47.43+1.02)   57.15(51.09+1.18) +9.6%
-> 
-> To me, 9.6% seems out of the range of just noise for this length of a
-> command, but I could be wrong. Could anyone else try to repro these results?
+These indented two paragraphs that follow "... the following
+property:" do not fall into the same classes of paragraphs as
+others.  The way the text version makes them stand out by indenting
+clearly show these two are what "... the following ..." refers to.
 
-I got:
+Perhaps these two would want to become a bulleted list or
+something.  
 
-0001.2: rev-list --all --objects  37.07(36.62+0.45)   39.11(38.58+0.51) +5.5%
+>
+> The "Future Work" section includes a bulleted list of items, and one
+> item has sub-items. These do not render properly in asciidoc, so
+> remove the sub-list and incorporate them into the paragraph.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/technical/commit-graph.txt | 43 +++++++++++-------------
 
-Less change, but my overall times were smaller, too, so clearly our
-hardware or exact repos are a little bit different. Those numbers seem
-pretty consistent in further runs.
+I said I didn't check if commit-graph-format.txt doc format
+correctly, but that does not mean you do not have to ;-).  I suspect
+that most of the contents would become monospaced wall of text,
+which is no better than the original text and because only the
+headings are typeset in different font, the result actually would be
+harder to read than the original.
 
-It bisects to 509f6f62a4 (cache: update object ID functions for
-the_hash_algo, 2018-07-16). Which make sense. An "--objects" traversal
-spends a huge amount of time checking each tree entry to see if we've
-processed that object yet, which ends up as hashcmp() in the hash table.
-I expect that a fixed 20-byte memcmp() can be optimized a lot more than
-one with an arbitrary value.
+We are not in a hurry to do this during the pre-release period, are
+we?  My understanding is that the original text documentation files
+will be shipped and installed, and they are adequately readable
+(correct me if it is not the case).
 
-Even if _we_ know the value can only take on one of a few values, I
-don't know that we have an easy way to tell the compiler that. Possibly
-we could improve things by jumping directly to an optimized code path.
-Sort of a poor-man's JIT. ;)
+Unless we are making the result a lot more readable as the original
+text, let's not distract ourselves by rerolling this in too quick
+cycles without giving us sufficiently big improvements.
 
-Doing this:
-
-diff --git a/cache.h b/cache.h
-index b1fd3d58ab..9c004a26c9 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1023,7 +1023,10 @@ extern const struct object_id null_oid;
- 
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- {
--	return memcmp(sha1, sha2, the_hash_algo->rawsz);
-+	if (the_hash_algo->rawsz == 20)
-+		return memcmp(sha1, sha2, 20);
-+	else
-+		return memcmp(sha1, sha1, the_hash_algo->rawsz);
- }
- 
- static inline int oidcmp(const struct object_id *oid1, const struct object_id *oid2)
-on top of v2.19-rc0 seems to give me about a 3% speedup (though I might
-be imaging it, as there's a bit of noise). A function pointer in
-the_hash_algo might make even more sense.
-
--Peff
+Thanks.
