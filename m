@@ -2,105 +2,164 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 99C901F97E
-	for <e@80x24.org>; Tue, 21 Aug 2018 20:41:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9EF01F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 20:43:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbeHVACp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 20:02:45 -0400
-Received: from mail-qt0-f181.google.com ([209.85.216.181]:37344 "EHLO
-        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726626AbeHVACp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 20:02:45 -0400
-Received: by mail-qt0-f181.google.com with SMTP id n6-v6so21900987qtl.4
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 13:41:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=EL7Mp2slKp7eRa5EeyDx0Gsb2KUdD5i0S7a8okZW3SI=;
-        b=NASIMeH5OevjhletH+MgCxmXNUC44TTruhGwr28JIPhYgMNbzL8pADwWDPKJTk+ZNz
-         0mtDzZfdSNlI1lqg+iCgKNSdJCzFnKQFxhrNgBHcIDMQVl7cfAntfXVkkmwvsZx51IvT
-         W1VkBgNyqeIEjLC2nDr9xY1Tktxu8kJbyD5/KOuMFrVW/kIEjjNHnk/kh9dCc6x2d2yY
-         WT/KdxFaYF66+A2mCAIXGLF7V37uR8zGcnN/vDF8/ejVakmHZHPlyIv2+ePI2Hai2TAf
-         PnNsTTyL6cU8DM5uh/m+uKYVB0TlzAeFryXoXKALsQBxWTRrj3TYkMdp6cwm8ZCw3OzG
-         ovwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=EL7Mp2slKp7eRa5EeyDx0Gsb2KUdD5i0S7a8okZW3SI=;
-        b=mpScCWUjBJjPUraw0ol3/hXrZ9Eaw/L0JJmJ0WbFQXxqxRlWIebuXe7s/UdydKewPK
-         /Q8YdQvBrOkYSkxHk3bJmvLg8iNhQBevcQb+eSaTOdvUh3mxBOff7q1+UigBPrr9b83V
-         7PUyd/tNYKqV2bhUUJM9ii97eDkGr3R71bz0G5iC7m9su9+oEZhdiwliDxE6y36WGIVt
-         cYYikDj2uDPxiVDaIhJJeYDIeY9aaXEdTyy4fRj1Jy8i3IcrGY86x23ucoaAcRIop0lm
-         nsAH120AgeU5/iuEr+hLPyyRINIQpDPiFU5nbZjYzUSj7/pgz0+1nih1Orcj19Ca4TID
-         fCsQ==
-X-Gm-Message-State: APzg51BYgIloLksGP5YgIZQbYwfSjfGQB6gMSoJdw7cVy0Lf7Pxf1HtS
-        Ys0Kb7adWORqF8tyk/kIJr7BEYyu
-X-Google-Smtp-Source: ANB0VdaGgcVgvAHNkryWzOGmyUAfTk1lcacGaxFxky13g+9LSsTioSWnHc+mKrAtWOQTqq8DAb3EOA==
-X-Received: by 2002:ac8:1b5b:: with SMTP id p27-v6mr4475601qtk.99.1534884063423;
-        Tue, 21 Aug 2018 13:41:03 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:bcc1:4ea1:6a05:dc2a? ([2001:4898:8010:0:a5f7:4ea1:6a05:dc2a])
-        by smtp.gmail.com with ESMTPSA id l23-v6sm2175494qta.30.2018.08.21.13.41.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 13:41:02 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
-Date:   Tue, 21 Aug 2018 16:41:02 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727811AbeHVAFZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 20:05:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50970 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726626AbeHVAFZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 20:05:25 -0400
+Received: (qmail 10606 invoked by uid 109); 21 Aug 2018 20:43:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 20:43:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26979 invoked by uid 111); 21 Aug 2018 20:43:49 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 Aug 2018 16:43:49 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2018 16:43:41 -0400
+Date:   Tue, 21 Aug 2018 16:43:41 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention
+ doc-diff
+Message-ID: <20180821204341.GA24431@sigill.intra.peff.net>
+References: <20180821192321.GA720@sigill.intra.peff.net>
+ <20180821193556.GA859@sigill.intra.peff.net>
+ <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/20/2018 6:13 PM, Junio C Hamano wrote:
-> An early preview release Git v2.19.0-rc0 is now available for
-> testing at the usual places.
+On Tue, Aug 21, 2018 at 04:22:08PM -0400, Eric Sunshine wrote:
 
-As part of testing the release candidate, I ran the performance suite 
-against a fresh clone of the Linux repository using v2.18.0 and 
-v2.19.0-rc0 (also: GIT_PERF_REPEAT_COUNT=10). I found a few nice 
-improvements, but I also found a possible regression in tree walking. I 
-say "tree walking" because it was revealed using p0001-rev-list.sh, but 
-only with the "--objects" flag. I also saw some similar numbers on 'git 
-log --raw'.
+> On Tue, Aug 21, 2018 at 3:36 PM Jeff King <peff@peff.net> wrote:
+> > The script does basically this to set up the temporary tree:
+> >
+> >   test -d $tmp || git worktree add $tmp ...
+> >
+> > The script never cleans up the worktree (since its results can often be
+> > reused between runs), but you may do so with "rm" or "git clean". That
+> > creates an interesting situation if the script is run again before
+> > "worktree prune" runs.
+> 
+> Aside from the problems you enumerate below, leaving worktrees sitting
+> around which the user did not create explicitly does seem a bit
+> unfriendly, which leads me to think that worktrees may not be the best
+> tool for this task. How about using "git clone --shared" instead?
 
-Test v2.18.0             v2.19.0-rc0
---------------------------------------------------------------------------------------------
-0001.1: rev-list --all 6.69(6.33+0.35)     6.52(6.20+0.31) -2.5%
-0001.2: rev-list --all --objects 52.14(47.43+1.02)   57.15(51.09+1.18) +9.6%
+That seems even more dangerous to me, since the created clone can become
+corrupt when the parent prunes. Probably not huge for a single
+operation, but you may be surprised when you run the script a few days
+later and it barfs horribly due to a missing object.
 
-To me, 9.6% seems out of the range of just noise for this length of a 
-command, but I could be wrong. Could anyone else try to repro these results?
+We could do a local filesystem clone which would make a hardlink. But
+eventually those hardlinks would be broken, and we'd be wasting a lot of
+extra space (and there's no provision for repacking or maintenance of
+the temp repo; again, OK for a day or two, but if maybe not if you leave
+this thing lying around for months).
 
-(This may also not just be tree-walking, but general pack-file loading 
-and decompression, since I computed and stored a commit-graph file. 
-Hence, commits are not being parsed from the pack-file by either command.)
+I also considered just using "git archive | tar xf -" to create the
+checkouts.  But we really would like to move between trees without
+updating files unnecessarily (to avoid triggering rebuilds via make).
 
-Aside: the perf results were not all bad. Here was an interesting 
-improvement:
+We could do that without a full-on worktree by just keeping our own
+temporary index. But I think that potentially ends up with similar
+problems to the "clone --shared" one: at some point objects in the
+parent go away, and it has no idea about our custom index.
 
-Test v2.18.0             v2.19.0-rc0
---------------------------------------------------------------------------------------------
-0002.1: read_cache/discard_cache 1000 times 5.63(5.30+0.32)       
-3.34(3.03+0.30) -40.7%
+I think a worktree with a detached HEAD is roughly the same concept, but
+with an officially-approved mechanism by which the parent knows about
+our worktree.
 
-Thanks,
+> >   1. Should the script be doing something else to indicate that the
+> >      worktree may be reused? I tried "git worktree remove", but it's
+> >      unhappy that the directory doesn't exist. Should it quietly handle
+> >      ignore that and remove any leftover cruft in $GIT_DIR/worktrees?
+> 
+> That's a weird case. There are multiple entries in
+> .git/worktrees/*/gitdir pointing at the same worktree directory, which
+> I don't think was considered when the machinery was being designed.
+> "git worktree remove" refusing to delete the worktree in this case
+> seems a good safety measure since something is obviously askew in the
+> bookkeeping and it doesn't want to lose potential work.
+> 
+> The solution to this problem might be to upgrade "prune" as you
+> describe in #3 and then ensure that that sort of aggressive pruning
+> happens automatically at "git worktree add" time.
 
--Stolee
+I would feel funny about running "git worktree prune" in my script,
+since it may also delete _other_ worktrees. But if "worktree prune"
+handled this case, I'd be OK just ignoring occasional duplicates, and
+periodic "git gc" would clean up the cruft.
 
+> >   2. Should "git worktree add" be more clever about realizing that an
+> >      existing entry in $GIT_DIR/worktrees points to this directory? That
+> >      would be fine for my use, but I wonder if there's some potential
+> >      for loss (e.g., you blew away the work tree but until you do a
+> >      "worktree prune", the refs are still there, objects reachable,
+> >      etc).
+> 
+> In the case that you've already blown away the directory, then having
+> "git worktree add" prune away the old worktree bookkeeping would make
+> sense and wouldn't lose anything (you've already thrown it away
+> manually). However, it could be lossy for the case when the directory
+> is only temporarily missing (because it's on removable media or a
+> network share).
+
+I think the removable ones already suffer from that problem (an auto-gc
+can prune them). And they should already be marked with "git worktree
+lock". That said, people don't always do what they should, and I'd
+rather not make the problem worse. :)
+
+> In this case, it might make sense for "git worktree add" to refuse to
+> operate if an existing worktree entry still points at the directory
+> that you're trying to add. That should prevent those duplicate
+> worktree entries you saw.
+
+Yes, but then what's the next step for my script? I can't "remove" since
+the worktree isn't there. I can't blow away any directory that I know
+about, since there isn't one. I need to somehow know that an existing
+"$GIT_DIR/worktrees/foo" is the problem. But "foo" is not even
+deterministic. Looking at the duplicates, it seems to be the basename of
+the working tree, but then mutated to avoid collisions with other
+worktrees.
+
+What about refusing by default, but forcing an overwrite with "-f"?
+
+That should keep the existing case as safe as now, but give an outlet
+for this kind of case where the caller is in charge of the worktree and
+knows that any prior contents are trashable.
+
+> However, upon further consideration, any of the proposed "fixes" could
+> potentially be lossy. Consider a case like this:
+> 
+> % git worktree add foo
+> ... make some changes in 'foo' ...
+> % mv foo bar # (fogetting to do "git worktree move foo bar")
+> % git worktree add foo
+> 
+> As currently implemented, one can "correct" the situation by manually
+> fixing the bookkeeping file in .git/worktrees for the worktree created
+> first. If it gets pruned automatically, then the state of those
+> changes in "bar" (nee "foo") could be lost.
+
+True, though again, you're already in danger with:
+
+  $ git worktree add foo
+  $ mv foo bar ;# forget to "git worktree move"
+  $ git fetch ;# oops, we ran auto-gc!
+
+-Peff
