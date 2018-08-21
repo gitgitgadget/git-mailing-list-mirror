@@ -2,85 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8360C1F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 19:35:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C1591F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 19:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbeHUW5U (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 18:57:20 -0400
-Received: from mail-qt0-f169.google.com ([209.85.216.169]:36470 "EHLO
-        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726627AbeHUW5U (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 18:57:20 -0400
-Received: by mail-qt0-f169.google.com with SMTP id t5-v6so21632826qtn.3
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:35:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mZr3s1HEaNZjwL7QHgCX8EVk9h/VA/jw538UH0gG0zQ=;
-        b=bXlJFiV6+vetHLo/L/QW2b6Vnlj5KCvu0vRC6GQOMoPvrCaNcrZlO8pPBAV1S0Mv8Q
-         c9+1a1yKW4INivuc9xF6xGnHxUDXQ7rSjqJGUkwhxFz7RoTP6QyoSVaykV6SXGtZXPBX
-         Rwo8xU17X9DyfwCBgsDKC8cGFpPYjOBEnqXhrSc4VFTQZTVlyqhbuIhvQyYsLBHqaXef
-         7xMxs8cfi8nPR3wqunyghzSCOgAYqPyW6Vfw1rHfi+BEiq8XKFPI41UuDuta3Uj8E7sf
-         EL9OoXtkJceSx0SFBafbStkX2PT4/RyqXxG/uOtVi6VyneeZm819LH9HQbDlgJQ3XWAE
-         uhzQ==
-X-Gm-Message-State: AOUpUlHNjBH+NHTsx1/ra5CV6jMP2o7w18X1kPDIixc16TUxrfR4LlJX
-        T7nw22xCh0GveMME2uEA+KRhlK9crL611FmMkaU=
-X-Google-Smtp-Source: AA+uWPwUgxkic1Y2GRDy5TAOohaI0UVi03OXseakUWAmwv6iyZYBZCxZQ3p5+vV26UfkKPQvyJZd2I+oLJ+sTZifNxQ=
-X-Received: by 2002:ac8:e84:: with SMTP id v4-v6mr13035754qti.220.1534880151875;
- Tue, 21 Aug 2018 12:35:51 -0700 (PDT)
+        id S1727360AbeHUW5Z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 18:57:25 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50842 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726627AbeHUW5Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 18:57:25 -0400
+Received: (qmail 8095 invoked by uid 109); 21 Aug 2018 19:35:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 19:35:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26384 invoked by uid 111); 21 Aug 2018 19:36:03 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 21 Aug 2018 15:36:03 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Aug 2018 15:35:56 -0400
+Date:   Tue, 21 Aug 2018 15:35:56 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: worktree duplicates, was: [PATCH] SubmittingPatches: mention doc-diff
+Message-ID: <20180821193556.GA859@sigill.intra.peff.net>
+References: <20180821192321.GA720@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <pull.22.git.gitgitgadget@gmail.com> <pull.22.v2.git.gitgitgadget@gmail.com>
- <6cf253c2a6a091520e1376839dff8b97869c9808.1534879749.git.gitgitgadget@gmail.com>
-In-Reply-To: <6cf253c2a6a091520e1376839dff8b97869c9808.1534879749.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 21 Aug 2018 15:35:40 -0400
-Message-ID: <CAPig+cR7OuF8LfZFY-b6egCOn0-p1uC5KeerhOig5FAC4rqrrw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] commit-graph.txt: improve formatting for asciidoc
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180821192321.GA720@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 3:29 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> When viewing commit-graph.txt as a plain-text document, it makes
-> sense to keep paragraphs left-padded between bullet points.
-> However, asciidoc converts these left-padded paragraphs as monospace
-> fonts, creating an unpleasant document. Remove the padding.
->
-> The "Future Work" section includes a bulleted list of items, and one
-> item has sub-items. These do not render properly in asciidoc, so
-> remove the sub-list and incorporate them into the paragraph.
+On Tue, Aug 21, 2018 at 03:23:21PM -0400, Jeff King wrote:
 
-See: http://asciidoc.org/userguide.html#_bulleted_lists
+> We already advise people to make sure their documentation
+> formats correctly. Let's point them at the doc-diff script,
+> which can help with that.
+> 
+> Let's also put a brief note in the script about its purpose,
+> since that otherwise can only be found in the original
+> commit message. Along with the existing -h/usage text,
+> that's hopefully enough for developers to make use of it.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Just a finishing touch on the jk/diff-rendered-docs topic.
 
-And...
+I noticed one other oddity with this script, but I actually think the
+fix lies elsewhere.
 
-> diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-> @@ -148,13 +145,13 @@ Related Links
-> -    "I think we should be moving more in the direction of keeping
-> -     repo-local caches for optimizations. Reachability bitmaps have been
-> -     a big performance win. I think we should be doing the same with our
-> -     properties of commits. Not just generation numbers, but making it
-> -     cheap to access the graph structure without zlib-inflating whole
-> -     commit objects (i.e., packv4 or something like the "metapacks" I
-> -     proposed a few years ago)."
-> +"I think we should be moving more in the direction of keeping
-> + repo-local caches for optimizations. Reachability bitmaps have been
-> + a big performance win. I think we should be doing the same with our
-> + properties of commits. Not just generation numbers, but making it
-> + cheap to access the graph structure without zlib-inflating whole
-> + commit objects (i.e., packv4 or something like the "metapacks" I
-> + proposed a few years ago)."
+The script does basically this to set up the temporary tree:
 
-Perhaps this should be using a quote block:
-http://asciidoc.org/userguide.html#_quote_blocks
+  test -d $tmp || git worktree add $tmp ...
+
+The script never cleans up the worktree (since its results can often be
+reused between runs), but you may do so with "rm" or "git clean". That
+creates an interesting situation if the script is run again before
+"worktree prune" runs. We identify the directory as a "new" worktree,
+and add it to the list. So you may end up with several copies:
+
+  $ git worktree list
+  /home/peff/compile/git                                      eee785d2e0 [jk/doc-diff]
+  /home/peff/compile/git/.git/tmp-ci                          290f16acda (detached HEAD)
+  /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  cc6237c051 (detached HEAD)
+  /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  e55de40950 (detached HEAD)
+  /home/peff/compile/git/Documentation/tmp-doc-diff/worktree  e55de40950 (detached HEAD)
+
+If I then run "git worktree prune", those duplicates don't go away
+(because the directory is still there; it just corresponds to only the
+final entry). If I delete the tmp-doc-diff directory and then run "git
+worktree prune", they do all go away.
+
+So I'm not sure:
+
+  1. Should the script be doing something else to indicate that the
+     worktree may be reused? I tried "git worktree remove", but it's
+     unhappy that the directory doesn't exist. Should it quietly handle
+     ignore that and remove any leftover cruft in $GIT_DIR/worktrees?
+
+  2. Should "git worktree add" be more clever about realizing that an
+     existing entry in $GIT_DIR/worktrees points to this directory? That
+     would be fine for my use, but I wonder if there's some potential
+     for loss (e.g., you blew away the work tree but until you do a
+     "worktree prune", the refs are still there, objects reachable,
+     etc).
+
+  3. Should "git worktree prune" be more clever about dropping
+     duplicates? I think it should be easy to identify them: they are
+     entries in $GIT_DIR/worktrees for which:
+
+       - the directory in $entry/gitdir does exist, but
+
+       - $(cat $entry/gitdir)/.git does not point back to $entry
+
+I could see any of them being plausible fixes, but people who have given
+worktrees a lot of thought may have stronger opinions.
+
+-Peff
