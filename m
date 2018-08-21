@@ -2,91 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B41C31F97F
-	for <e@80x24.org>; Tue, 21 Aug 2018 13:56:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3AD51F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 14:34:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727306AbeHURRB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 13:17:01 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:35322 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726679AbeHURRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 13:17:01 -0400
-Received: by mail-qk0-f195.google.com with SMTP id 89-v6so7941359qkp.2
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 06:56:45 -0700 (PDT)
+        id S1727462AbeHURzF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 13:55:05 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:40100 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727053AbeHURzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 13:55:05 -0400
+Received: by mail-io0-f195.google.com with SMTP id l14-v6so15559041iob.7
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 07:34:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=EixBg13v5b60J14F1gle4HpfWGjosUEPLvzV8udDL64=;
-        b=cBEFdGtm5j2flOeGpcemkrkEZwnXg4/nFGa6r6bRpbEIa0QWBcUkeidPNJs9LzKAL4
-         Wi136BA50M/1e7LX/o+Y7X1DHXdn3pEgoy/gOyrKfpLJLdeJU0jWLAKFqqCaEtAFYJGw
-         OGWzGmQxoJVAKj1ZciOlXa4guGPSWPfSqwjvRSG37Wfng65IJ0YVSdfdBsPGVWlnEGzx
-         j/mRcMF0d9+7D6aKLzsJ+Mtax9wPDSCF2R3r9VP7MwrJGFxqY6puyNE61XhHNnpbr6S4
-         bmw+sm2uxtx8/eT/Ai4u83dL2kOHyFV7ZU82zbQ+NGTDMn8gqGtr2DJFBItqxD35TMJ/
-         Iugw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=x5k3PkoZUuYHsx8Z8ihhfF3UqiYOGWFkc5dng6fisfc=;
+        b=mpu0mvxqLtq6Brn6PpszH3quT+k2pZs16oCq8LTPYQbaSFUEe3QGBQfouyQk/tCJxt
+         5nYWz1t6rp/gPcA0kPxZXRZkGZ/xCfjLd+9337Nh1wtzDvDXaL4ozyGwJ7b/OpkHiTCs
+         F4+2tUBckYLuzdX9NVp4Jk+v9IRAPFL1EeSXJ/7xcsPyWeLrPRX8/Yadhrg34ggExKJG
+         QTfIpqgt7pd4DkrshMUK/7sIX/Ev+RepPRHYUI0qep0eGYj3Ak7Rng7Dw4vDUmxp7Xcx
+         ZU5wdvMnKM8YTxa4QbUodjKXckPArqPTEDoh1etpA1JB99vGgEDnTbjSMLSL5g4pornI
+         XyOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=EixBg13v5b60J14F1gle4HpfWGjosUEPLvzV8udDL64=;
-        b=pN6Gov5nxnIUzsJ9pW3QYXkzcf+q5FyVbiSumEKYwS+iozzH0/T/sPt40gFQ+Thdn8
-         fHV0HNYqTkASrvRfh84QjwIWVsgxpl5uYYEDI9BbgTe5LlsaRIF6/kNMhwpCv87qZ7BS
-         YWzP6n22uyXJsX34iT+Uwfy3I8uwpHsLs/BAUo6rZrhrSe56fhA/zDwSXNzYDvxbGmOE
-         Zzk3/YHIrp5dVd5KdFdzZdXwAwui9t9cac2IeTocfZ3CmmN3BDCXnjUk6bECngT0QjUM
-         +jxW2+llpakS3rKYDh+oLnb7u4e4yS89IlU4ZbKORv6WJTmi879+KLPkdjJEUKHr8a3X
-         tLBA==
-X-Gm-Message-State: AOUpUlG7cq4sJQ8BPHPpXOlfLl2ddyGWtpr19OkFMENUS/HsrWy0jDGm
-        NtTZhwZtf1jgiXS/5B+O5zwVbcxP
-X-Google-Smtp-Source: AA+uWPwquqqbPXs8OPSwHKbDkU9mycYTsm06pJBnCOuf130KcGYN8vzuh/4X8O/eIy3OFoEyWiLkUA==
-X-Received: by 2002:a37:bfc2:: with SMTP id p185-v6mr44578474qkf.169.1534859804712;
-        Tue, 21 Aug 2018 06:56:44 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:bcc1:4ea1:6a05:dc2a? ([2001:4898:8010:0:a5f7:4ea1:6a05:dc2a])
-        by smtp.gmail.com with ESMTPSA id a5-v6sm7917759qkj.63.2018.08.21.06.56.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 06:56:43 -0700 (PDT)
-Subject: Re: [PATCH 7/9] treewide: use get_all_packs
-To:     Stefan Beller <sbeller@google.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     git <git@vger.kernel.org>
-References: <20180820165124.152146-1-dstolee@microsoft.com>
- <20180820165124.152146-8-dstolee@microsoft.com>
- <CAGZ79kZFXof091d4qXUVyLJ9wGPL0sfs9XruZ-3Hjoq74-tjCg@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <05f42490-bf11-8673-61db-e0afd04af43a@gmail.com>
-Date:   Tue, 21 Aug 2018 09:56:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=x5k3PkoZUuYHsx8Z8ihhfF3UqiYOGWFkc5dng6fisfc=;
+        b=Aax1QtXgETbBrCTBgvxtzj08YRg5h3bL8TIfAb05YleJIuOWj3Futb0xC7OEGw3AUs
+         RPZD3egYl73f0LcT4+jfJUG6Qzzif65ZyjaHgBL0C6xRgcd7VAOlblI2JF9GxD5macAS
+         IjF7KcSyn26dgeT1ZRTIDIBMdrFc2K/Mj1hBIEx5tlCbgVjdT37xR3Rnbpgy7QdU+Goh
+         UaRKNAa4XKAjhUAScWV1dO5LcMEbHT/YJYqImL1nE06DaIf0XgfP66/8bwa/ZLAXnwk1
+         GojyqpkNXARaC5Oxq0FbFoAfm8xtGcb+PZkAq22Md52TL4HwdcO/W7vORKbL6kq5Lg+Q
+         +/iQ==
+X-Gm-Message-State: APzg51Co7LxoOmZL3TR/3mvf/YITHRBpk/w59J1gPXyU6D5qT65Rmuy4
+        NnRPMa1HiRSPQfOfLQy1NuQ9rosY9C87gMLavMt/sABn
+X-Google-Smtp-Source: ANB0VdaE9p3FwUty04WMvBbuGTGXnfIT5yXcXbo1Qyj7ezBZrZQ0f5P6va4qxNTsd5IYf2y6FRVU9wZjieBuxPBKiZg=
+X-Received: by 2002:a6b:8fd0:: with SMTP id r199-v6mr5928281iod.118.1534862081634;
+ Tue, 21 Aug 2018 07:34:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZFXof091d4qXUVyLJ9wGPL0sfs9XruZ-3Hjoq74-tjCg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20180820165124.152146-1-dstolee@microsoft.com>
+In-Reply-To: <20180820165124.152146-1-dstolee@microsoft.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 21 Aug 2018 16:34:14 +0200
+Message-ID: <CACsJy8CKnXVJYkKM_W=N=Vq-TVXf+YCqZP_uP7B-dN_6xddB=g@mail.gmail.com>
+Subject: Re: [PATCH 0/9] multi-pack-index cleanups
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/20/2018 6:01 PM, Stefan Beller wrote:
-> On Mon, Aug 20, 2018 at 9:52 AM Derrick Stolee <dstolee@microsoft.com> wrote:
->> There are many places in the codebase that want to iterate over
->> all packfiles known to Git. The purposes are wide-ranging, and
->> those that can take advantage of the multi-pack-index already
->> do. So, use get_all_packs() instead of get_packed_git() to be
->> sure we are iterating over all packfiles.
-> So get_packed_git shouold not be used any further?
-> Do we want to annotate it as deprecated, to be deleted
-> in the future? Or even remove it as part of this series
-> (that might be an issue with other series in flight).
+On Mon, Aug 20, 2018 at 6:53 PM Derrick Stolee <dstolee@microsoft.com> wrote:
+> To better understand the implications of the multi-pack-index with
+> other scenarios, I ran the test suite after adding a step to 'git repack'
+> to write a multi-pack-index, and to default core.multiPackIndex to 'true'.
+> This commit is available as [1].
+>
+> ...
+>
+> [1] https://github.com/derrickstolee/git/commit/098dd1d515b592fb165a276241d7d68d1cde0036
+>     DO-NOT-MERGE: compute multi-pack-index on repack.
 
-Perhaps the right thing to do would be to put a big warning over the 
-definition to say "only use this if you really don't want 
-get_all_packs()" or something. The reason I didn't remove it from 
-packfile.h is that it is used in sha1-name.c alongside 
-get_multi_pack_index() (so making it 'static' would be incorrect).
-
+It should be able to _merge_ this patch, but only activate it when
+some test environment variable is set. On Travis x86 we run the test
+suite twice, once normal, and once with special features activated
+(see "if test "$jobname" = "linux-gcc"" in ci/run-build-and-tests.sh).
+I don't think midx is incompatible with any of those features, so we
+could activate and run the whole test suite with it too.
+-- 
+Duy
