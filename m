@@ -2,90 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17E871F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 00:46:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 113B71F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 01:07:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726128AbeHUEER (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 00:04:17 -0400
-Received: from mail-yb0-f170.google.com ([209.85.213.170]:35512 "EHLO
-        mail-yb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725736AbeHUEEQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 00:04:16 -0400
-Received: by mail-yb0-f170.google.com with SMTP id o17-v6so5351531yba.2
-        for <git@vger.kernel.org>; Mon, 20 Aug 2018 17:46:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2f3QgqHjZ1C0xQ7TXUTM1FO+V/Rk2bHfDx9IMmtgRF0=;
-        b=sBf2OU43QqH4BVzcQvlnlKyaj/b7zWVNZ/Esv4qX5AKmNlEfM/aYECO0amS+aMNUpo
-         SDPG2pSHhCnhhzXBpKCb7/72LtMgS5S+3vcjThDHymeGpBRf6eLw31zw9673ONE4JBSJ
-         HeB+xER2+7BEPminD/He4+CZm3Jy6Z4t+UiNng41esC+2B4PPXZS8DTUwWFgz3y/kO2r
-         2x4jECxa6VsvbvpkeOsgh+2CHQHprTq6s4Y8smOoP1dpl9aEYG072tZyZJH7vtTr9jZ1
-         4AV3py/5Up8hYGH7ypbTgERunuFWe47lTWz8RCR01hrO0CKiZpC/si6rBPJ4dd2qGBGI
-         /EKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2f3QgqHjZ1C0xQ7TXUTM1FO+V/Rk2bHfDx9IMmtgRF0=;
-        b=QtF8/ibKT19JPf080+ySShW2+Oo7Z09edTXmv72zRv2SRY79lPDvrgAy9gxP+X0IR8
-         bDHTfVFFTSWzsOGNxwiOkSv8RZm7iyydtM81q5K28XtT3MwkJnNmHCUYk6XlGryr9ZGg
-         4B8pvtswywzw9koHHVeKMVlTEq/rOtXLvIk0xLI1sSTCBPQdxVD8olAVyA1W51WvYNSf
-         Pu5KLoPlsd0gayVQGEsJheXyJncWEaR4RdK/I7iax5BmPyHWywqi94cFj13MvLaU/6IY
-         x0T+B+zwK+Q1pICGPrl4/XIy4OVUtpPcNqF1b6pFysESICfciU2860+dqgaY5UQMPIE8
-         O+KA==
-X-Gm-Message-State: AOUpUlEvntTdxao/ya6nRFbAGn/trG1oAoHaq3OS8cHejP/27qKV2pmF
-        Ie4aWLVTdgoRQtcJjLbBvUIDBCKMza6yC3GS84Jjww==
-X-Google-Smtp-Source: AA+uWPyUHYY47cUANxSv07pVEum8J2Xc6mffN+w4ce4AvZTkXiHx/TBfpG3RRGhfPIU5Ukg30xfYECo9vs0kwacRMlc=
-X-Received: by 2002:a25:41c3:: with SMTP id o186-v6mr10189819yba.493.1534812384520;
- Mon, 20 Aug 2018 17:46:24 -0700 (PDT)
+        id S1726305AbeHUEZI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 00:25:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:49976 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725773AbeHUEZI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 00:25:08 -0400
+Received: (qmail 30149 invoked by uid 109); 21 Aug 2018 01:07:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 21 Aug 2018 01:07:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12530 invoked by uid 111); 21 Aug 2018 01:07:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 20 Aug 2018 21:07:19 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Aug 2018 21:07:12 -0400
+Date:   Mon, 20 Aug 2018 21:07:12 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+Subject: Re: Antw: Re: non-smooth progress  indication for git fsck and git gc
+Message-ID: <20180821010712.GA32126@sigill.intra.peff.net>
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+ <20180816155714.GA22739@sigill.intra.peff.net>
+ <87bma2qcba.fsf@evledraar.gmail.com>
+ <20180816205556.GA8257@sigill.intra.peff.net>
+ <5B7A7CDC020000A10002CDCF@gwsmtp1.uni-regensburg.de>
+ <87woslpg9i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com> <CAGZ79kbrv62ttBYt7nwO7E4S7wTVWZGceqE6hPjAbhPPWfRkEQ@mail.gmail.com>
- <20180820233901.GC31020@aiede.svl.corp.google.com> <20180821002722.GA174626@aiede.svl.corp.google.com>
-In-Reply-To: <20180821002722.GA174626@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 20 Aug 2018 17:46:13 -0700
-Message-ID: <CAGZ79kbAmt9qxcoo+hhcZzcGxQ3AxhMLdzmX3ZfL1GzvEBZb2w@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87woslpg9i.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 20, 2018 at 5:27 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Jonathan Nieder wrote:
-> > Stefan Beller wrote:
-> >> Junio C Hamano wrote:
->
-> >>>  * "git submodule" did not correctly adjust core.worktree setting that
-> >>>    indicates whether/where a submodule repository has its associated
-> >>>    working tree across various state transitions, which has been
-> >>>    corrected.
-> >>>    (merge 984cd77ddb sb/submodule-core-worktree later to maint).
-> >>
-> >> Personally I do not view this as a bug fix but a feature
-> >> (but then again my thinking might be tainted of too much
-> >> submodule work) hence I would not merge it down.
+On Mon, Aug 20, 2018 at 10:57:13AM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > That seems to apply. BTW: Is there a way go get some repository statistics
+> > like a histogram of object sizes (or whatever that might be useful to help
+> > making decisions)?
+> 
+> The git-sizer program is really helpful in this regard:
+> https://github.com/github/git-sizer
+
+Yeah, I'd very much agree that's the best tool for a general overview of
+the repository stats.
+
+Ulrich, if you want to more analysis (like a histogram), probably
+something like:
+
+  git cat-file --batch-all-objects --batch-check='%(objectsize)'
+
+might be a good starting place to dump information (see the "BATCH
+OUTPUT" section of "git help cat-file" for more format items).
+
+> > If it's sorting, maybe add some code like (wild guess):
 > >
-> > Can you elaborate?
->
-> ... ah, I figured it out.  You are saying "would not merge it down to
-> maint".  In that case, I agree, since this this is not a recent bug
-> (it's existed since before v1.7.10-rc1~14^2~2, 2012-03-02).
+> > if (objects_to_sort > magic_number)
+> >    message("Sorting something...");
+> 
+> I think a good solution to these cases is to just introduce something to
+> the progress.c mode where it learns how to display a counter where we
+> don't know what the end-state will be. Something like your proposed
+> magic_number can just be covered under the more general case where we
+> don't show the progress bar unless it's been 1 second (which I believe
+> is the default).
 
-Yeah; the behavior was the gold standard for submodules ever since,
-so I am wary of changing it under the guise of fixing a bug.
-The core.worktree setting doesn't harm the user by default; you
-need to craft a very specific situation to benefit from this feature.
+Yeah.  We already have open-ended counters (e.g., "counting objects"),
+and delayed meters (we actually normalized the default to 2s recently).
 
-Stefan
+I _think_ they should work together OK without further modification.
+Once upon a time the caller had to say "don't show if we're past N%
+after M seconds", but I think with the current code we'd just show it if
+we're not completely finished after 2 seconds.
+
+So it really should just be a simple:
+
+  progress = start_delayed_progress("Hashing packfile", 0);
+
+That said, counting bytes would probably be ugly (just because the
+numbers get really big). We'd probably prefer to show a throughput or
+something. And as you noted, there's some refactoring to be done with
+pack-check for it to show multiple progress meters.
+
+(I still think in the long run we would want to scrap that code, but
+that's a much bigger job; I'm fine if somebody wants to do incremental
+improvements in the meantime).
+
+-Peff
