@@ -7,86 +7,89 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 342CC1F954
-	for <e@80x24.org>; Tue, 21 Aug 2018 12:53:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1FF91F954
+	for <e@80x24.org>; Tue, 21 Aug 2018 12:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbeHUQND (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 12:13:03 -0400
-Received: from mail-pl0-f41.google.com ([209.85.160.41]:37782 "EHLO
-        mail-pl0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726863AbeHUQNC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 21 Aug 2018 12:13:02 -0400
-Received: by mail-pl0-f41.google.com with SMTP id c6-v6so3926338pls.4
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 05:53:01 -0700 (PDT)
+        id S1727255AbeHUQNE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 21 Aug 2018 12:13:04 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:32899 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726863AbeHUQNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 12:13:04 -0400
+Received: by mail-pf1-f193.google.com with SMTP id d4-v6so8473600pfn.0
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 05:53:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=G8uqTfFI54b2uQW7SXTgNd2v36697mYu0ZixySvIE3o=;
-        b=YXl0CY3ldUvTnQBMKxDD8gsW84tAzj0y3lDZHkTkzo1TXShk0rMGWmQJUQg0bmiaKJ
-         3VMsgpK/48g2xeYQ9odAFXWMTuolg+tjfRj52E7TbBuCnQyqDwbTJwAJ9yfZxLv9CvHT
-         9XFORr89lcITP/nPWh0w6QwdYXWoEx9HMkzEPuW3bhLFBzYlMGa4jWjw+zsUjanZgNzw
-         LVenGCoRrYqou235C618xNu6aS698Ysc0Y5NgqQ4l0PXGvUOljXjRg8NudQsP03ws2vE
-         nonzIBDobS2LuGrHrBH0uGvjbfHGyDe9DpgwM+RD5WOiHsylW6IHg5lokuY3D4rtDIxz
-         WnqA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mZqje63yJ4Au23xsfBMM4im3dLBIe54in3LoBEmAvBE=;
+        b=QFDZIfl57+BDoZO/TNPOmru289b54UQasAItl2E9h3WeblWIC8gQokXhpuXtUsSpBi
+         1FbTsZgUCsyEFTMOzuXBSBjH0XPpejMHZvmME2yqg0Gd3NBg7Xxu/U4INZvgBKaxLdnX
+         aR14zJ6RxeWPsX7PEuK8wHCT/dwr3nRjgCPcVZzXYsz9T1wEbGx2tNU68uL4FgKJarM4
+         CRMY/4NRxMfoQ+xLDQvEoEx2pS7FCmmVwXrP1QxIyX8q8Iwvk9Jisfmk8REKZ46a/z/9
+         ke5jwhQr3KseoB1Q6+p4k+8Ip+C+0Z4kqAyHbdqVWu7sKFzJT8bx0Hn2k/Pablck+bca
+         GSOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=G8uqTfFI54b2uQW7SXTgNd2v36697mYu0ZixySvIE3o=;
-        b=gEou1oDdgcWD5ZO84Y5yDwOl0D9vB2Y4JHg7ScB/L8TBPEpFdMVmRImiGiyuYnfGdK
-         UduQ1Kc3kZukjRE1IS6RWOnKaYKjfTuEwnpnSJRH5L143c1o9ZN5hnNCMcQs9NnbzH/R
-         0WGnA8tDO6exP1EhhLe0Il4hxE7ds4AQa9qzqEDXbP5qCc1SM03Wb0qyamm89HxO69GT
-         gxpqog2EtAQdtnLmEbC2cTGUVkH/5kMCRMMuV7gIXqn77AcoZszyuqaLpGobvjrskE6P
-         hYQl1D8tcWFSK1snsmQXmnbfaxpSJFHbmzar0/LSo4GsGbsoI4dAllppqbgsd55fhhgH
-         UL3w==
-X-Gm-Message-State: AOUpUlFiBNf1hVY/WVCTqvAqvL/oi1c+DR0nDPdOgmsrH5RTU+ltVAG8
-        ZWhkvLJcGaGQ4Ml7TSFIy1cfZ4r5vaA=
-X-Google-Smtp-Source: AA+uWPzV+e9XrPHphfcYhIy64z+4jcTh4jhP4ILj6eIk49N8o18DqsMYI0l5IQPQhLB9upAU+wDk7Q==
-X-Received: by 2002:a17:902:7803:: with SMTP id p3-v6mr49281103pll.119.1534855980838;
-        Tue, 21 Aug 2018 05:53:00 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=mZqje63yJ4Au23xsfBMM4im3dLBIe54in3LoBEmAvBE=;
+        b=AaLb68z2MTUgj7YLVF9ZfmH6HBBqICyM+DOGf50Ua4SD5jmjLqlA5OE1BUeH6MrLj9
+         x/cmTer5PezlemJ0VdXuA7afk8Vm+UBWiHbgESKZq0MKRPjuTYrp58tCUkc72T1+5k/X
+         tE9vbDQB/GaqvSrJkkqb428NmY298JWYAHsNM4fzcN+WmNcB4xH2D7gGw/zwatOYDKsF
+         bC9yblvqM7nO1gmnpnnwqNFK8DgTanH1B/6vaSkWQqqHgElvOxaOl2eu7TVN2bqg71QO
+         3TBq10TU04XaPDaBXv2WnxsQkjOvlCRHcCEdsvMR6cJOi5y0bVq1WffiSV6Lr65AcKdn
+         efoA==
+X-Gm-Message-State: AOUpUlEIEa467yksW+/wBPBhqaMWDJNhF+S2Xk3pB/tG8sBOf0+Jm/WI
+        f0ONKX0T1SpXdrjdEWcoINGuEqO6C1Y=
+X-Google-Smtp-Source: AA+uWPxdv0d/fLFRBrW2FCbBdjSdvP8vuZEFCYcmuhsmgICBmFQDg8uRI+H+PayRZRs9I4vy6O7awA==
+X-Received: by 2002:a62:c182:: with SMTP id i124-v6mr52301497pfg.248.1534855982207;
+        Tue, 21 Aug 2018 05:53:02 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id v20-v6sm22474404pfk.12.2018.08.21.05.52.59
+        by smtp.gmail.com with ESMTPSA id t76-v6sm20495185pfe.109.2018.08.21.05.53.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 05:53:00 -0700 (PDT)
-Date:   Tue, 21 Aug 2018 05:53:00 -0700 (PDT)
-X-Google-Original-Date: Tue, 21 Aug 2018 12:52:57 GMT
-Message-Id: <pull.22.git.gitgitgadget@gmail.com>
+        Tue, 21 Aug 2018 05:53:01 -0700 (PDT)
+Date:   Tue, 21 Aug 2018 05:53:01 -0700 (PDT)
+X-Google-Original-Date: Tue, 21 Aug 2018 12:52:58 GMT
+Message-Id: <ef5af2ccc7ea662a4059d118772cdbe282fc7e43.1534855978.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.22.git.gitgitgadget@gmail.com>
+References: <pull.22.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Docs: Add commit-graph tech docs to Makefile
+Subject: [PATCH 1/1] Docs: Add commit-graph tech docs to Makefile
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Similar to [1], add the commit-graph and commit-graph-format technical docs
-to Documentation/Makefile so they are automatically converted to HTML when
-needed.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-I compiled the docs and inspected the HTML manually in the browser. Nothing
-looked strange, so I don't think the docs themselves need any editing for
-format.
+Ensure that the commit-graph.txt and commit-graph-format.txt files
+are compiled to HTML using ASCIIDOC.
 
-[1] 
-https://public-inbox.org/git/20180814222846.GG142615@aiede.svl.corp.google.com/
-[PATCH] partial-clone: render design doc using asciidoc
-
-Derrick Stolee (1):
-  Docs: Add commit-graph tech docs to Makefile
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  Documentation/Makefile | 2 ++
  1 file changed, 2 insertions(+)
 
-
-base-commit: 53f9a3e157dbbc901a02ac2c73346d375e24978c
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-22%2Fderrickstolee%2Fmake-docs-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-22/derrickstolee/make-docs-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/22
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index d079d7c73..841e4f705 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -69,6 +69,8 @@ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technica
+ SP_ARTICLES += $(API_DOCS)
+ 
+ TECH_DOCS += SubmittingPatches
++TECH_DOCS += technical/commit-graph
++TECH_DOCS += technical/commit-graph-format
+ TECH_DOCS += technical/hash-function-transition
+ TECH_DOCS += technical/http-protocol
+ TECH_DOCS += technical/index-format
 -- 
 gitgitgadget
