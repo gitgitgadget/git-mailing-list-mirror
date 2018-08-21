@@ -7,91 +7,97 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 78ED91F97F
-	for <e@80x24.org>; Tue, 21 Aug 2018 19:29:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 297041F981
+	for <e@80x24.org>; Tue, 21 Aug 2018 19:29:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbeHUWuk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 21 Aug 2018 18:50:40 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:34001 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726703AbeHUWuj (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726785AbeHUWuj (ORCPT <rfc822;e@80x24.org>);
         Tue, 21 Aug 2018 18:50:39 -0400
-Received: by mail-pf1-f194.google.com with SMTP id k19-v6so8978874pfi.1
-        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:29:13 -0700 (PDT)
+Received: from mail-pg1-f178.google.com ([209.85.215.178]:43708 "EHLO
+        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726703AbeHUWui (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 21 Aug 2018 18:50:38 -0400
+Received: by mail-pg1-f178.google.com with SMTP id v66-v6so7569374pgb.10
+        for <git@vger.kernel.org>; Tue, 21 Aug 2018 12:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=mZqje63yJ4Au23xsfBMM4im3dLBIe54in3LoBEmAvBE=;
-        b=tUqkAOibwEm053WsrmDbgaWjbtr3Ps1QIYpu0vfIGqATF1wDIMLLIm/RKbJMkl00nq
-         /lcMVdGBBEsLK5jqInMVN4K/Nos63sO2P6cEyzCjsJ6QzJG+hdxtkNipHI+VGXfkjsTt
-         GThicOqncgNEkcnaikb6qJFoUYbGy3SRc2N6QdTnQ+FR49Pl5J1odVo4OEZ7gs6l6hKI
-         yBKXr1c5mlMBGo64RsF6q9qVfxipgvnr+d/aWcAdDnhhexMaz3y/gXGvOzBw4oNSzZlG
-         5dHnKFtzToPA9ydJB7KUbnm5S67GlhYa15ApWHcaU6PN5X752oArweN71iX30GaUbcjn
-         bExg==
+        bh=1nvQQ97o7PoBc9QR0pNoQ8MokiB9shbSRcqkCliBisE=;
+        b=Q+mnMdAUf0eKi4cjObHgK1VKC8qwARc5Df0WN/bjKyXxLk7MxmqMUQy/iyoBDwPrzK
+         zu4DeN7zlyalafskMKjJR5VR8vluWO4zHgtwDpWVrLXaLDGZE59vuRpFa0KjfsbSvVes
+         WuToGjbaALWacYuiPu0x0hHMPPSsvDaNcdW6Ll6GoEQqI6RCOSZtC3of6QlkBd6PscyQ
+         H1I19NfMYWc6DjB9qgLNxZMBfwywSpHZDlB6AtUlnXbtTfmiNVHKQE0lLSayFZz9DHkP
+         PMpIvk467KoeCKxPCQHcuW6wsI9eFqYZt0922QW6xWuExSLz5ED27jsEv7IVmNFj+vL1
+         49eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=mZqje63yJ4Au23xsfBMM4im3dLBIe54in3LoBEmAvBE=;
-        b=GH5iVrf1XJv9LteYmhOiCMEsnlmh0ejAGKoZ4KXxuzp767uNVUsoIN7pzYPGGcTc+M
-         2Dm18MIB4QsGouvpqBkaPIefkK1Ezhadf2ZsJn8B+Wt1pTORDl++EjVoX7/7I+g/uBbZ
-         6uao1uvb4Zu3okx7dfJYXepCEvAOQUqwb8PopX8FSSKdVeCuJlNs/G5qf58/7ENirL6T
-         78EFQ2MgFiyAPoi+XnMJotfbWHgtEkvsiMVhmio3s1ui9sDXH6322pQrMPjHbaLc4bdL
-         qaJkHUxKYa7fu9AB9AGof8/yxLXOo19OOpjuRAHTntcTKrRxf3TXtU8Y7xgedH+IBiti
-         7zew==
-X-Gm-Message-State: AOUpUlEsi6YCnEovdUz2118t8qJL7YdXEIZaXky9BRco/2GFITvZt7I9
-        bHv5hCgA9ctkRZ6D8aw9jSbbRisQ
-X-Google-Smtp-Source: AA+uWPxMw+nE70Brjg/ySAMtVNbnD4yvYEAkyHRxEWVOu4iXB8Wor0SDT/o+sJu6IZo01Sd6knbdcA==
-X-Received: by 2002:a63:4e25:: with SMTP id c37-v6mr48247949pgb.6.1534879752998;
-        Tue, 21 Aug 2018 12:29:12 -0700 (PDT)
+        bh=1nvQQ97o7PoBc9QR0pNoQ8MokiB9shbSRcqkCliBisE=;
+        b=LMoyRXqIxAgX6EH/kYG/yIfXdBBXTnF7PsPIg9xeswiQwSQQ/zFhX/EE3bTYgm54N5
+         LPXhej7Sw+nINdfj/nT5/bpFk/HnNbKxCM88UyXgiuaA9nXF/PEVOnURF5x2phYbtlye
+         H9rYBvW8p95EUHRFpr7bxp1DVfkl8R3Md/LH0yGtC/vGVp86yGwfqZgozaa3CPebDF5r
+         BzceO73cveQTIkYTACeg8QHZKH1JBXIiUrBHgguPtm/SwPwehHj2rKPebWTCkEOMCL8S
+         Z+h07j3pb5jFn/WbJyTyKuOP797f83SC3JqPbyom4aHCSA6plD41n77VWANaoEwDF60s
+         pBKg==
+X-Gm-Message-State: AOUpUlHWZkjztcSg0k4GkKEAh6+4/G7t+en+/04e62Retqeds1L/cQNB
+        CMBK1bH1gK36gK0LTtDiHmsKCx/H
+X-Google-Smtp-Source: AA+uWPyiqBBLwFBroNyIR8OHPcCd0Zu9lKIov7nN4b1NhOIIExaxcoS3wEpw3DOxjZY79e0ko1BwUw==
+X-Received: by 2002:a63:41c1:: with SMTP id o184-v6mr16666928pga.297.1534879751622;
+        Tue, 21 Aug 2018 12:29:11 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id x66-v6sm27873330pff.123.2018.08.21.12.29.11
+        by smtp.gmail.com with ESMTPSA id c1-v6sm27708765pfg.25.2018.08.21.12.29.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 21 Aug 2018 12:29:12 -0700 (PDT)
-Date:   Tue, 21 Aug 2018 12:29:12 -0700 (PDT)
-X-Google-Original-Date: Tue, 21 Aug 2018 19:29:06 GMT
-Message-Id: <4c66af6262b17f856f8ea35676f753058d12d6e2.1534879749.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.22.v2.git.gitgitgadget@gmail.com>
+        Tue, 21 Aug 2018 12:29:10 -0700 (PDT)
+Date:   Tue, 21 Aug 2018 12:29:10 -0700 (PDT)
+X-Google-Original-Date: Tue, 21 Aug 2018 19:29:05 GMT
+Message-Id: <pull.22.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.22.git.gitgitgadget@gmail.com>
 References: <pull.22.git.gitgitgadget@gmail.com>
-        <pull.22.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/2] Docs: Add commit-graph tech docs to Makefile
+Subject: [PATCH v2 0/2] Docs: Add commit-graph tech docs to Makefile
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Similar to [1], add the commit-graph and commit-graph-format technical docs
+to Documentation/Makefile so they are automatically converted to HTML when
+needed.
 
-Ensure that the commit-graph.txt and commit-graph-format.txt files
-are compiled to HTML using ASCIIDOC.
+I compiled the docs and inspected the HTML manually in the browser. As
+suggested, I modified the documents to format a bit better. See the commit
+messages for details. Since the files had been modified since 'maint', this
+version is based on 'master'.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+[1] 
+https://public-inbox.org/git/20180814222846.GG142615@aiede.svl.corp.google.com/
+[PATCH] partial-clone: render design doc using asciidoc
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d079d7c73..841e4f705 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -69,6 +69,8 @@ API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technica
- SP_ARTICLES += $(API_DOCS)
- 
- TECH_DOCS += SubmittingPatches
-+TECH_DOCS += technical/commit-graph
-+TECH_DOCS += technical/commit-graph-format
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/http-protocol
- TECH_DOCS += technical/index-format
+Derrick Stolee (2):
+  Docs: Add commit-graph tech docs to Makefile
+  commit-graph.txt: improve formatting for asciidoc
+
+ Documentation/Makefile                   |  2 ++
+ Documentation/technical/commit-graph.txt | 43 +++++++++++-------------
+ 2 files changed, 22 insertions(+), 23 deletions(-)
+
+
+base-commit: fa03cdc39b951d1cfbfd690fe6f3ac6c57ab6a44
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-22%2Fderrickstolee%2Fmake-docs-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-22/derrickstolee/make-docs-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/22
+
+Range-diff vs v1:
+
+ 1:  ef5af2ccc = 1:  4c66af626 Docs: Add commit-graph tech docs to Makefile
+ -:  --------- > 2:  6cf253c2a commit-graph.txt: improve formatting for asciidoc
+
 -- 
 gitgitgadget
-
