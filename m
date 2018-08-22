@@ -2,95 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C3B41F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 17:40:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B3041F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 17:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727594AbeHVVGS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 17:06:18 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:40342 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727466AbeHVVGR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 17:06:17 -0400
-Received: by mail-wm0-f42.google.com with SMTP id 207-v6so3002794wme.5
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 10:40:27 -0700 (PDT)
+        id S1727627AbeHVVOU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 17:14:20 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:52183 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727602AbeHVVOU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 17:14:20 -0400
+Received: by mail-wm0-f67.google.com with SMTP id y2-v6so2785129wma.1
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 10:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:subject:references:cc:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=41RGJIVDzjEOMP3tkIWuA9GCilbDU+Dz9mxYZTFkSDI=;
-        b=vhV/NESea8LA14tcKPHEhiNixYAs/CrFXttGpNmkVsTHOsBImg0Tf2fFWxasb7sYxg
-         goqSWl3PwwSQO8prA68VqKphWQxKzS0STJd1Q/jNlpHt0MUX1MS2IS1EIeDd2FIXG7ab
-         u8mXtDsAmTniqxgoAYIhDqZONTvNzpUGhbvDbn/oACwIb7K2msAknrRCvVenbf21OCKf
-         y1oAStWO9NFseHUfYGH4IqutYpUZZFUF1KrmVG64ESUP9bdZFGMbQHpIhNk17FO/nh+A
-         0A0PP8/bbclmKdtFl1aHeuaejl9LkXnMhZKsxnZTu1bSq+CuyF9Q3zPJcQu1UigaXR0t
-         NOKQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=q8selHQjabjQ3oZAEau1mz802IuUfBQ4gsbIkOV/ILs=;
+        b=JQHHYEOlUouI4skIaYVqpuWW9a6D+3LwLRA13MdUH9iCYrBtn7lJJznoimMWyT3kBR
+         TFQW+RirYfEO8xbRnkraRKDWhiIfkerwzu1iL1TAiaYwNEcDEjUGxTAKKH2s8btRrAJh
+         yvcB0c10Gi2CX6Erl9KDcQ1LmY84+qme8TMQpqd9SlNgWKw7oS8s35zT2ai9hS9ZC+rY
+         jnIjjuUydIw4RCgf2RkmgjZA1qPRhtogbLxt0pIMrA1C9tobQ1LiupXap3K4Tsy7//Wz
+         OfOlNORNEU/Qf2gT7Sxp97PZJB1yVZ5BvDiyej1kg9fHw08QW2tyxW3IPLng0P3VwWxO
+         EZHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:subject:references:cc:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=41RGJIVDzjEOMP3tkIWuA9GCilbDU+Dz9mxYZTFkSDI=;
-        b=ilKHhzimWwddWvc5kmLqnCWSR7dz63azIpexlSudRrMd7oeGLp3OtNFMbMwIKNRvmh
-         YhrZgV0nfqMgftQS9QWsbMn+BHjZniDkqRJvDOZmxCu4x3EeXd36fbb1oaPnDg92MfM/
-         uXG6Ua3gr3yrFj6pgTRtlcE9OK0flHij4GWSpPbKu1aKGc9S0zdTHcKeUU0ablQXr6qr
-         9Jpb2aabXLzNbksdQy4mRiteCj6jiKOhejLOXuOGMOgtGgIneZxF4zLH9UiltL431yM6
-         7QKA2P09BUItn02GIDIAdoahzIWzSMuOqC9ZV99gs1ZtElrRUUYQlJEn/fYMrWZ0gz82
-         1PSw==
-X-Gm-Message-State: APzg51DB7a+iBgQ/FH86bJljsxg0BMmSJrHzqxVVUi2LQHD8GV42QWsT
-        qEtkOFkWTt77aPThktmPMAA=
-X-Google-Smtp-Source: ANB0VdYUQTs9lJEnfa6ALwrz/wJjB6M2OVNQ9qG0qAfNyuv+R0e6OH4933gPOoK6y31lOZIJfsoDPg==
-X-Received: by 2002:a1c:1510:: with SMTP id 16-v6mr2866528wmv.74.1534959626888;
-        Wed, 22 Aug 2018 10:40:26 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v7-v6sm1554904wrr.19.2018.08.22.10.40.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 10:40:25 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Aug 2018, #05; Mon, 20)
-References: <xmqqsh38admf.fsf@gitster-ct.c.googlers.com>
-CC:     Alban Gruin <alban.gruin@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Date:   Wed, 22 Aug 2018 10:40:24 -0700
-In-Reply-To: <xmqqsh38admf.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 20 Aug 2018 15:15:36 -0700")
-Message-ID: <xmqqo9dumh9z.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=q8selHQjabjQ3oZAEau1mz802IuUfBQ4gsbIkOV/ILs=;
+        b=WjyQIcgf9OlHJrR1LV1e0JKJlFWyKFbFB0u3jbkH25fc6N6/KiSVxE6tW/4YPJM4nP
+         4LXVHub7YTrhEb7tkuCtn7RgozoQ7/U1Ny5jCXVyhWhCM1Kqj/3vD5ojOfQfXlZD96zT
+         qwdiUZ/EDTY7BkoaA9rj5/kjqsDC6SAEdibEbo+SK8k6entvrrLm9PzqF7IymvYl8EpC
+         gWgdFSLtnj/BmmEH9YxbC9WOzK/S6fQ4ySQnXJLXUTIYze03zAynqCSn/cHE6Vi4egvs
+         pn6St+HPQ+IB4T2GGJIid4UDBKTlII1d/LTfvsm1bWxABvvSdnGUYcnIqzMHFZy6wFOl
+         PXlw==
+X-Gm-Message-State: APzg51ASr0dxFnG2Mmhby5tKtHsSufCIL7XcVft0biuSTakyG6gtbVAQ
+        kwOX/zNwP657znpzWm7POkI=
+X-Google-Smtp-Source: ANB0VdYnn9eQGVGnXm/7hSbHvjyN7znm5WoRc2YFl1a93okFzf02xn9EaeqTIN76UH1mCB8JmBCCUg==
+X-Received: by 2002:a1c:80d4:: with SMTP id b203-v6mr168963wmd.9.1534960107885;
+        Wed, 22 Aug 2018 10:48:27 -0700 (PDT)
+Received: from localhost.localdomain (62-165-238-147.pool.digikabel.hu. [62.165.238.147])
+        by smtp.gmail.com with ESMTPSA id w8-v6sm4578824wra.22.2018.08.22.10.48.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 22 Aug 2018 10:48:27 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t6018-rev-list-glob: fix 'empty stdin' test
+Date:   Wed, 22 Aug 2018 19:48:20 +0200
+Message-Id: <20180822174820.12909-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.136.gd2dd172e64
+In-Reply-To: <20180727174811.27360-1-avarab@gmail.com>
+References: <20180727174811.27360-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Prior to d3c6751b18 (tests: make use of the test_must_be_empty
+function, 2018-07-27), in the test 'rev-list should succeed with empty
+output on empty stdin' in 't6018-rev-list-glob' the empty 'expect'
+file served dual purpose: besides specifying the expected output, as
+usual, it also served as empty input for 'git rev-list --stdin'.
 
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> the integration branches, but I am still holding onto them.
+Then d3c6751b18 came along, and, as part of the conversion to
+'test_must_be_empty', removed this empty 'expect' file, not realizing
+its secondary purpose.  Redirecting stdin from the now non-existing
+file failed the test, but since this test expects failure in the first
+place, this issue went unnoticed.
 
-Mentors (and GSoC students),
+Redirect 'git rev-list's stdin explicitly from /dev/null to provide
+empty input.  (Strictly speaking we don't need this redirection,
+because the test script's stdin is already redirected from /dev/null
+anyway, but I think it's better to be explicit about it.)
 
-Two topics your students have worked on conflict heavily at the
-philosophical level; "rebase in C" rewrite assumes that backend
-implementations are forever written in shell and can be invoked by
-dot-sourcing ". git-rebase--$backend", while violating that
-assumption is the whole point of "rebase-i in C" rewrite.  Trying to
-use them together would of course not work without a bit of "last
-mile" further glue.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t6018-rev-list-glob.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I do not think neither topic is ready for the upcoming release, but
-can you help your students to come up with "the final step" to make
-the fruits of their effort work well together?
-
-Thanks.
-
-
+diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
+index 02936c2f24..0bf10d0686 100755
+--- a/t/t6018-rev-list-glob.sh
++++ b/t/t6018-rev-list-glob.sh
+@@ -256,7 +256,7 @@ test_expect_success 'rev-list accumulates multiple --exclude' '
+ '
+ 
+ test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
+-	git rev-list --stdin <expect >actual &&
++	git rev-list --stdin </dev/null >actual &&
+ 	test_must_be_empty actual
+ '
+ 
+-- 
+2.19.0.rc0.136.gd2dd172e64
 
