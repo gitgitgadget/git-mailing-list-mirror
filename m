@@ -6,65 +6,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 038811F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 21:50:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3CC321F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 21:50:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728096AbeHWBQq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 21:16:46 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35334 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727950AbeHWBQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 21:16:45 -0400
-Received: by mail-wm0-f66.google.com with SMTP id o18-v6so3695654wmc.0
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:50:07 -0700 (PDT)
+        id S1727950AbeHWBRK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 21:17:10 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:34977 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727372AbeHWBRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 21:17:10 -0400
+Received: by mail-wr1-f67.google.com with SMTP id j26-v6so2832225wre.2
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:50:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=rtvHWTTN/LeZCBNQBu4D8/KW16NR+WS3q+2RDNazYYo=;
-        b=f8n6YS5fzca6+GUylqBm5eymK2dFRVXKSUo9f5lyV9PZONv2ndPei9KPvVyqPPnTQN
-         dTaSClqnTl50rYJpTTmM3zZpS4CN8D2aiTnH1oBfLvZNy5AI5nRo9rEcuc/4uREZ6t28
-         m4kKf9MPEA/KFoTEHFJ/T8mousKb6l6wy5xv/17CpJP62LuUMyobVEsavEpPuUl0JyNM
-         R0oImtt8S5msxs5HiiDSSNXso9igJJujTeH599+syGBJhNu7ppPkcOYAYeOFWQpXujH2
-         9FbkMWYpqlmnci0yk2wRv3WbCm6hfofQOx2oltL8qwNxQvthrIi7/2BbT+bryupuMHuH
-         7H+Q==
+        bh=4qwNaVwmXZoJLzTHINVsMRQqEO3bPKcLCC3S4XAYxEg=;
+        b=Zhu3x6n2wTO98AlNNjc6I18HUykQtKfwPZghcoGvRmadkbxMKwZTysjff2j/Y0EvGE
+         GqDst6qBWuClvd/4Tn7y/IvdDQHAAdqOFbNL9Ds8fFZMgvHxhKxv+0w7RhKT8xAAZ2RA
+         tlHZBGvU3U3vCOC2a2oVfeDsRMgZ2/BiHJe/1sZxt2UvXIu+QbwMXN0O6Lqw/ECxDFyY
+         BkjFOQbxYUjiLAUpzYgiJwjeO5Vl+hnCTRE5onOVqW1wuVlTOUbJSuv/0YQXWsq+CPh+
+         wWPYpWfGZ27IEqVwFjF3exYNDW43uUAIrUSNdUKw7/ovnqmwrA5gUR/Xxwe2eyQIZPZ4
+         1tAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=rtvHWTTN/LeZCBNQBu4D8/KW16NR+WS3q+2RDNazYYo=;
-        b=WdS47vtd6drYNqz18PBO25WfQp6ZMsWZRki60HYdx0eI8QF4aOFKWG0ZnPDpNTW+5A
-         kZPdZKHEAWVLj8HEiHsEnRg0Cmj4KLpWJVEN/D8baPfchuq028xrBAJ24BvG1bn1MTIO
-         xgPP9vLAu1OCwhSM1DrgU/diugR7Qt1MaWAWjg3P6pDELsEtVMgHVvQiw22LLERb3JBX
-         qUCTvLiqFpPrrH826ihM4Acg/EbxGR/MReprxFQfzNU3zZDaFZGz8nvkT3Vr9tfGuK/X
-         1im8ZKxQHXeg+sdt5B+BFL5WlDiKvgW+qcFwWN7mNdBV15Vz95wQvXM810ol4UGixAjc
-         x9/Q==
-X-Gm-Message-State: APzg51BQla5ZDvky5bqfrV/tbu5ccz+bNUrDWWNPUincBk7Lz+n7DlB2
-        lrqg1JMyqnbu7IIhi7oMa/A=
-X-Google-Smtp-Source: ANB0VdY9MXCWjm0OkVRcjYwdTaqipLkRukcBQBjckBVKNdc+xsGvrNO+mH27hf+aXksX3KYmywYMMQ==
-X-Received: by 2002:a1c:1004:: with SMTP id 4-v6mr3441170wmq.68.1534974606103;
-        Wed, 22 Aug 2018 14:50:06 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n17-v6sm1963306wmc.13.2018.08.22.14.50.05
+        bh=4qwNaVwmXZoJLzTHINVsMRQqEO3bPKcLCC3S4XAYxEg=;
+        b=ao4GilHO4JCLWpm/SWCWgDpudkqW5IJQbqg//3EuxopzbIJXX/JmN1nwwNxjrAqWZA
+         XuKGd7+wZ2htQiZo0rwFImm0lXx6HVB+JdCNIY5JpvQGIX9BI+MMamdaJfaLVNi8knGw
+         3bH5BaP+t3m8dUvxwVS7gksbdeRDy8J1rzsUSbRJFq02WrIf8kU+nueW+ScwJfsFDrRw
+         PDHgMMVB4zIZCNj8aXkiGFVIBFIAy/0OvvzpDLa/EuBq5ywuzJOfuRKlv3fIKsMBgN87
+         N/jjgZmkrAoV0pUOviE+GM1clvQjbdb4W8J8RKggEvZ/rNDekNY3kYniilXWt+iAEQ6P
+         drbg==
+X-Gm-Message-State: APzg51B5hjYnqEwrXUAGtBVyCKiyhylfh/F4hRXlE8DuZkyQc8vnry0Q
+        ysLlLUy2pgINprcceO4YVc4=
+X-Google-Smtp-Source: ANB0VdY4OHxI+Bjc6tbznKbyNiGK49FiR1sjBT33Wst6duEIKixSQF0UBnp6+Gbm3v7LrQUxYffy3A==
+X-Received: by 2002:adf:fc4a:: with SMTP id e10-v6mr2588833wrs.157.1534974630990;
+        Wed, 22 Aug 2018 14:50:30 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e5-v6sm2075557wmh.29.2018.08.22.14.50.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 14:50:05 -0700 (PDT)
+        Wed, 22 Aug 2018 14:50:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] rev-list: make empty --stdin not an error
-References: <20180727174811.27360-1-avarab@gmail.com>
-        <20180822174820.12909-1-szeder.dev@gmail.com>
-        <xmqqefeqme0p.fsf@gitster-ct.c.googlers.com>
-        <20180822192308.GB19730@sigill.intra.peff.net>
-        <20180822195045.GC19730@sigill.intra.peff.net>
-        <xmqqa7pem8ul.fsf@gitster-ct.c.googlers.com>
-        <20180822213722.GA25180@sigill.intra.peff.net>
-Date:   Wed, 22 Aug 2018 14:50:05 -0700
-In-Reply-To: <20180822213722.GA25180@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 22 Aug 2018 17:37:23 -0400")
-Message-ID: <xmqqr2iqkr5e.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive rebase
+References: <pull.23.git.gitgitgadget@gmail.com>
+Date:   Wed, 22 Aug 2018 14:50:29 -0700
+In-Reply-To: <pull.23.git.gitgitgadget@gmail.com> (Johannes Schindelin via
+        GitGitGadget's message of "Wed, 22 Aug 2018 14:35:22 -0700 (PDT)")
+Message-ID: <xmqqmutekr4q.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,29 +65,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Yes. I was thinking it had more purpose than this, but it really is just
-> a flag to check "did we do this already?". Which is one of the main
-> purposes I claimed for the new flag in my commit message. :)
+> This patch fixes that.
+>
+> Note: while this patch targets pk/rebase-in-c-6-final, it will not work
+> correctly without ag/rebase-i-in-c. So my suggestion is to rewrite the 
+> pk/rebas-in-c-6-final branch by first merging ag/rebase-i-in-c, then
+> applying this here patch, and only then cherry-pick "rebase: default to
+> using the builtin rebase".
 
-OK.  
-
-The reason I was on the fence was primarily because read_from_stdin
-field in the structure observable from outside can be a boolean
-(that is, "unsigned :1"), but internally this may want to count up
-to two.
-
-Or with "unsigned read_from_stdin:1", would this 
-
-	if (revs->read_from_stdin++)
-		die("twice???");
-
-still be usable?  As the value of post-increment would be 1 even
-when the resulting field would have wrapped-around already, it
-should be OK, but it just felt strange to me.
-
-But that is something we do not have to worry about until somebody
-tries to shrink the structure by making these flags into bitfields.
-
-Thanks for an updated patch.
+Yup, that sounds like a very sensible structure.
