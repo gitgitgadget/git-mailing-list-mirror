@@ -3,102 +3,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3C81F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 21:30:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 910E81F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 21:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727467AbeHWA4w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 20:56:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:40744 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727250AbeHWA4w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 20:56:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id 207-v6so3595452wme.5
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:30:17 -0700 (PDT)
+        id S1727545AbeHWBB6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 21:01:58 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:41533 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727031AbeHWBB6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 21:01:58 -0400
+Received: by mail-pf1-f193.google.com with SMTP id h79-v6so707448pfk.8
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+SsQl0zqwxxGHK7FqbG4DzQBoMFwfE0HI3ZjYivYtZs=;
-        b=j2dQ2qEoOgC1z7O/9r7cOAfCWGCnRyjZhpfSQkRQhAAsYwYMjil4VhUaIzG/c1l3su
-         WLN8Vzzp/6ZLgqUBVA9QPnOUXY95AIcwZb2vMNje8QixaksV9022FxNxSAKbUEXDbzH8
-         JjEcf+GqSJ96nGnLA25+pgolF6aVTMN0dVMniTXJz7RTWa1q7Qryd6ZWCmSNWDAhN1rK
-         iIN0uZX8ZIIUeQ0OMGK3dbgGMOJaDL8vP0pw3WgJhJrfLz8C/8i7xpVSE2D22QrJIU1q
-         1ca72W6jp+s2aG0FsVeicI9+Bj2HtHvPm0qFZVywO3LMlY6KYkqT/Po7RjH/IDBgueRU
-         CMHw==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=TGHt0NT14vcVOwG5/+StKWFKzpizagGkwFwoQTPmWfI=;
+        b=GCpiMI6OdvCkS0WwJ4k64NEbt6QIdKsv6JVd9YPDr1pMeqzKqr8HfY5jc96vv4oJ2L
+         lQEEkMyufx0kD7oRHZUFwWFbiVFvnRqZccQ5YKYSUOEuPw2O2tXAqUekqpw4ff/+ZTq1
+         kvOwrCmupCt4G8VwwOVTp6qhZC1hcyOL7rF17fON+Rlg+3aiYXNY3zSyk+Bz8jcrM3e9
+         nJHz8K7wfHwYsIVMl/GrsYngiBmJN2IOL/OpRCxwd2eLrO6sKuQ5brNRWB4sG1GXh1UW
+         yQhqxaoQx6u86ZU8KEMEUcrIANHzqqIeCTfDReXVyTNgI4GxwPkfMIlMNI65xbcwastf
+         oiRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+SsQl0zqwxxGHK7FqbG4DzQBoMFwfE0HI3ZjYivYtZs=;
-        b=KYUnaKcuEGx/3CfzL9gKElKBzW899X5gkmzZ3M1lDWje91+h2uBMKBQt4EKjIesKZr
-         ZdDExp6opQu9YbUfSDpPYBtbdOu3jrTtZf5CZ8jD8qa1HAHar1XGLDJ1eZtZx6mQHDqy
-         kQC1AyMaGOplGjnz7O0RphvjvMvMDfRm1/uOMuc8Qq6Mgyse7yIP2HV4RTYbBM4WOhQK
-         gnTjltrtzmMnSjObpqPdbMRzsPsk/0X0aDtO9M2eaJNwJAWtEFxc9ioqWjK1btKg07y/
-         UrlMovq0C+RLgx6Q+HH0T8NwNlkqgqhlr6oyhZdm4gJTL4IymUVXrG8PVuz8FSC2tKT6
-         XmdQ==
-X-Gm-Message-State: APzg51Aex5m5qGdUCEn+G35+nD6y+FHU9j8zOKuZQZmqFE1te+Ul0gtG
-        QSBUjtWhpXjlFAJfHEoigV4=
-X-Google-Smtp-Source: ANB0VdYBzyNQzoiiALXBYK9o1U7xK6UyauUe3tGyNmzUo+bgYLS8yFCS9rl05xhJFcBwip0cbYMLeg==
-X-Received: by 2002:a1c:82c8:: with SMTP id e191-v6mr3141082wmd.35.1534973416824;
-        Wed, 22 Aug 2018 14:30:16 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q1-v6sm2036877wrw.42.2018.08.22.14.30.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 14:30:15 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v6 18/20] rebase--interactive2: rewrite the submodes of interactive rebase in C
-References: <20180731180003.5421-1-alban.gruin@gmail.com>
-        <20180810165147.4779-1-alban.gruin@gmail.com>
-        <20180810165147.4779-19-alban.gruin@gmail.com>
-        <nycvar.QRO.7.76.6.1808222310220.73@tvgsbejvaqbjf.bet>
-Date:   Wed, 22 Aug 2018 14:30:15 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1808222310220.73@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 22 Aug 2018 23:14:43 +0200 (DST)")
-Message-ID: <xmqqzhxeks2g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=TGHt0NT14vcVOwG5/+StKWFKzpizagGkwFwoQTPmWfI=;
+        b=i3UxJU+Wkf2xN7Qbde/64y6B7GvM2mEXiwebDdDAN41AsiL1kU0A2j+ebDRdnV52KH
+         G+mRuRUUiJ12fBuBDtcoMAs+gKYC7yEv7+lMRIf1sWRVEHyW5GlATVYkAIn2siWBcLEy
+         2QtGbkxSfJ+kB0Ocl7EGruIxNp63GUmJeS3eBmZPI0NoqQrRsntLzMOrdFljMOOrVThJ
+         KkOCLsdVt+AWH51XIL05mM8gvCDL9MKV+EJ91IZw1mnfVgRMEJAG91V3VR7jv/IFA98U
+         RRtTDp1VK0CiBmROM8IK/qkoreWJRSw1TlAU71R2e5u1gPQKiGpMlBS8SWTomHzOuDxr
+         hg8w==
+X-Gm-Message-State: APzg51BcGIGaFSeMbHS3yjlI5Z5iUTXiVb03r2ekMEtznfeEOftmQTsj
+        6Hcsxq93ZLo7P8brqWB+Bfqo6cE7
+X-Google-Smtp-Source: ANB0VdbhEYvlA0BTA6Eirc0JHt+CbyEwAlqjCuKRuBExvlH5s+3MQW9UK6JrADcejLqYFOwQj5rHqw==
+X-Received: by 2002:a62:f208:: with SMTP id m8-v6mr405900pfh.222.1534973723234;
+        Wed, 22 Aug 2018 14:35:23 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id t16-v6sm2858268pga.21.2018.08.22.14.35.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Aug 2018 14:35:22 -0700 (PDT)
+Date:   Wed, 22 Aug 2018 14:35:22 -0700 (PDT)
+X-Google-Original-Date: Wed, 22 Aug 2018 21:35:19 GMT
+Message-Id: <pull.23.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Teach the builtin rebase about the builtin interactive rebase
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+The builtin rebase and the builtin interactive rebase have been developed
+independently, on purpose: Google Summer of Code rules specifically state
+that students have to work on independent projects, they cannot collaborate
+on the same project.
 
-> I made this same mistake over and over again, myself. For some reason,
-> John Keeping decided to use the singular form "revision" in 1e0dacdbdb75
-> (rebase: omit patch-identical commits with --fork-point, 2014-07-16), not
-> the plural.
+The reason is probably the very fine tradition in academia to prohibit
+teamwork, which makes grading easier (at the expense of not exactly
+preparing the students for the real world, unless they want to stay in
+academia).
 
-Perhaps we should give a synonym to the option?  Renaming it to the
-plural form may keep the existing usage working as it would be the
-unique abbreviation, which may be a way to reduce the mistake.
+One fallout is that the rebase-in-c and rebase-i-in-c patches cause no merge
+conflicts but a royal number of tests in the test suite to fail.
 
->
-> So you will need to squash this in:
->
-> -- snipsnap --
-> diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-> index fb0395af5b1..7600765f541 100755
-> --- a/git-legacy-rebase.sh
-> +++ b/git-legacy-rebase.sh
-> @@ -145,8 +145,8 @@ run_interactive () {
->  	test -n "$autosquash" && autosquash="--autosquash"
->  	test -n "$verbose" && verbose="--verbose"
->  	test -n "$force_rebase" && force_rebase="--no-ff"
-> -	test -n "$restrict_revisions" && \
-> -		restrict_revisions="--restrict-revisions=^$restrict_revisions"
-> +	test -n "$restrict_revision" && \
-> +		restrict_revision="--restrict-revision=^$restrict_revision"
->  	test -n "$upstream" && upstream="--upstream=$upstream"
->  	test -n "$onto" && onto="--onto=$onto"
->  	test -n "$squash_onto" && squash_onto="--squash-onto=$squash_onto"
+It is easy to explain why: rebase-in-c was developed under the assumption
+that all rebase backends are implemented in Unix shell script and can be
+sourced via . git-rebase--<backend>, which is no longer true with 
+rebase-i-in-c, where git-rebase--interactive is a hard-linked builtin.
+
+This patch fixes that.
+
+Note: while this patch targets pk/rebase-in-c-6-final, it will not work
+correctly without ag/rebase-i-in-c. So my suggestion is to rewrite the 
+pk/rebas-in-c-6-final branch by first merging ag/rebase-i-in-c, then
+applying this here patch, and only then cherry-pick "rebase: default to
+using the builtin rebase".
+
+Johannes Schindelin (1):
+  builtin rebase: prepare for builtin rebase -i
+
+ builtin/rebase.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+
+
+base-commit: a5bb2345d2d414aba04e18531de1e0f041f0434a
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-23%2Fdscho%2Frebase-in-c-6-final-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-23/dscho/rebase-in-c-6-final-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/23
+-- 
+gitgitgadget
