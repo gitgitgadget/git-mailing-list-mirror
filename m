@@ -3,102 +3,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C93C91F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 15:55:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEBC91F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729307AbeHVTU2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 15:20:28 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:54711 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729288AbeHVTU2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:20:28 -0400
-Received: by mail-wm0-f65.google.com with SMTP id c14-v6so2470198wmb.4
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 08:55:01 -0700 (PDT)
+        id S1726881AbeHVTbj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 15:31:39 -0400
+Received: from mail-lf1-f47.google.com ([209.85.167.47]:45542 "EHLO
+        mail-lf1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726812AbeHVTbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:31:39 -0400
+Received: by mail-lf1-f47.google.com with SMTP id r4-v6so1775346lff.12
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=CYofQD9KoYOfpaDf5uNj7JxBCjipIkGITZxjgeEp9Gg=;
-        b=iDV1xK5qPvKZ7SkQMWHcaR2ORArns5UPYRl8shyG7Tv3t4a4zlK/J31GXNcYzBQCPA
-         P0cubEinO9prpE9iZDK+gLGBzdgaii5AKbLcWRmOw2rWk2/p3YPM1FXd/dAZb05DXAvd
-         ea0OLquXXzpUpSmkWU+Vx2hXIGAGQCWFXGUstloGsXhx31IfkQyHPsDcc/rwm3CSdX9B
-         H8kHBzrJPwd3/AaQihhNN7/59QH/R+/ZlTbtq4zT+sEjb56JpdSnAx4uEM8jqPwLUtXT
-         Mtdolt9bpQuD7fG0EXJUNk7bATgvsqUdzi6NYtMPgYUXLvym2wMXwyi5iqkXVQs1jzqF
-         xKBg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hnYU954yAjjc17JYNrwJK3q0L5aNyakcOMT79lpLgj4=;
+        b=Vto1vRMI1MObf1YtAE5EFuCgz1MvBnE0i/Let4Eagr5o1ekbFACbQRvU6gOrH+x73U
+         Sp4keOseZCUBGQ94vNeQvTVXKvIaIoOACif1Y0BVCs33v3X+9Vu4IsJNgU3yYE9l+Auu
+         WNqLHG1z6fR0sXOKtxbyn8GueiFjEGOZI5zi7Gl4PiSInfBf1nFeu6uPzCOz7OuJSUsy
+         C8IPPcIGoPuZRBrXFZ/ofuwkE2sOqaSyK4T6y/0AXDupd4HPple3YE9Y/0ufnmxeJb2C
+         bbsTgnozsjPH5wos8eXwcGOR3ir2Daf1SK9qst0RfoOfRBTBEOr0CEkqQHBtyFW3he1x
+         Eo5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=CYofQD9KoYOfpaDf5uNj7JxBCjipIkGITZxjgeEp9Gg=;
-        b=kG56HGKiZIGnt1yHW0hWfOiYlee8F2kYWnSeaEZJ/oY79yHgGda1TF4X9fwSfcRmZp
-         9PdT8MSjpq1ohiNIvArWDGoUXc1u3BwJMUR0pmqzWqKtQvf1S9RVxkZbgPCTl2CUxvsd
-         H2JnQWrCwkA7AilMLfTQBE6H6vPUBtIkSJz3VE81MRGDTSiZWEe6ZtEoT7MMVcJxhlYT
-         wMMYiwKUHJtYhmnMhWQOP+KUHURseimgizvOpuwtfpyBkQ4TioLer4gpO2y8ZxLxNkFT
-         75vLwZER8FO8lRvPDVcs1EcP5edok2R2CrbqDpXShnL+c2aAuwHLWJSKVl59jfRQzjAK
-         nnIw==
-X-Gm-Message-State: APzg51Ak6RlsqTNPVcKHX1BJpi82P/6Lt88l0ge4QHJxVPOiqGQ+u/xV
-        bkGtOV1zcDgyD8XP1cY1Z38=
-X-Google-Smtp-Source: ANB0VdaTIOYHaxKjZJZEQqh6xCZZurRgEV5vbYxD56TmkV53UB6QwNoBSAte98ZI3CmQmfk/8z/Ewg==
-X-Received: by 2002:a1c:8016:: with SMTP id b22-v6mr2842569wmd.9.1534953300434;
-        Wed, 22 Aug 2018 08:55:00 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v1-v6sm1034715wrt.34.2018.08.22.08.54.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 08:54:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen Smith <ischis2@cox.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] wt-status.c: set commitable bit if there is a meaningful merge.
-References: <72756249.nAoBccgOj7@thunderbird>
-        <1455590305-30923-1-git-send-email-ischis2@cox.net>
-        <28440975.G22uFktzHy@thunderbird>
-Date:   Wed, 22 Aug 2018 08:54:59 -0700
-In-Reply-To: <28440975.G22uFktzHy@thunderbird> (Stephen Smith's message of
-        "Tue, 21 Aug 2018 22:33:09 -0700")
-Message-ID: <xmqqzhxe5rcc.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hnYU954yAjjc17JYNrwJK3q0L5aNyakcOMT79lpLgj4=;
+        b=ByRRk8sJk0Z1goAVGhoEacWyt2AniRiuvjEJD4gox0RHnwY9y005xSBi7a6ye0CzlZ
+         ntXkJLgrAUjVDE+u/7C91N/jAG4WGuHKiHLoG0pV0XGnKhfTb8A8Pb4cpXjV7kDntOeR
+         GHCVGMYTYxKpA9Gk6l5OHHCV2eghOm4RZK3bZCwrDtkBwRtCqRL99tlYikKj5P9n8FjR
+         2uwsPIBF1c+mjtC/Qh9kKU/7jMMGmPCOWhVEhXqpXy8T3Rr9krs87kTCdCn50ZUWFRYr
+         mOxv98Ux03Ifo6rQWH7+DJZjgm0ekX6eRa49fSCujSqei8b8nNrrpaVIWBMxx6OIv1MT
+         0C9A==
+X-Gm-Message-State: AOUpUlG3gBCcuCEPJy2xWBWAYFt4CEPvRb++Sd9fdFCrU+S4ycWBwaHy
+        qt+4S9XF/bmRmgf7pMxsKpD3j+7S
+X-Google-Smtp-Source: AA+uWPwYLy2l1CqmYrtibjYeL+OqWEasBuqwdcCusBlWKUCe+xm3h/nBLTiTXSjgOXBtMM0FO4nRPw==
+X-Received: by 2002:a19:2a51:: with SMTP id f78-v6mr9943210lfl.97.1534953968637;
+        Wed, 22 Aug 2018 09:06:08 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Aug 2018 09:06:07 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH/RFC 00/11] Break down Documentation/config.txt
+Date:   Wed, 22 Aug 2018 18:05:54 +0200
+Message-Id: <20180822160605.21864-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.335.ga73d156e9c
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen Smith <ischis2@cox.net> writes:
+I notice a couple times lately that people added new config keys in
+the wrong place, which is understandable since this file has become so
+big, it's hard to see the structure of anything.
 
-> On Tuesday, February 16, 2016 8:33:54 PM MST Junio C Hamano wrote:
+Since we have broken down some parts of it into separate files
+already, this continues in that direction and moves even more parts
+out of config.txt.
 
-Wow, that's quite an old discussion ;-)
+I don't have a well defined criteria to decide which part should be
+moved out. I just did it when I see a section is getting too big, or
+becomes less relevant today, or not move to avoid conflicts on 'pu'.
+But if this is a good move, we can discuss this further.
 
->> So if you do this:
->> 
->>     $ git reset --hard HEAD
->>     $ >a-new-file && git add a-new-file
->>     $ git commit --dry-run --short; echo $?
->> 
->> you'd get "No, there is nothing interesting to commit", which is
->> clearly bogus.
->
-> I was about to start working on working on this and ran the test you suggested 
-> back in 2016.   I don't get the error message from that time period.  I 
-> believe that this was fixed.   
+I group by section, but I think in some cases we can even do better
+and group multiple sections in one file (which also means they are
+rendered close together). This again is up to discussion.
 
-After these:
+Nguyễn Thái Ngọc Duy (11):
+  config.txt: follow camelCase naming
+  config.txt: move fetch part out to a separate file
+  config.txt: move format part out to a separate file
+  config.txt: move gitcvs part out to a separate file
+  config.txt: move gui part out to a separate file
+  config.txt: move pull part out to a separate file
+  config.txt: move push part out to a separate file
+  config.txt: move receive part out to a separate file
+  config.txt: move sendemail part out to a separate file
+  config.txt: move sequence.editor out of "core" part
+  config.txt: move submodule part out to a separate file
 
-    $ git reset --hard HEAD
-    $ >a-new-file && git add a-new-file
+ Documentation/config.txt           | 720 +----------------------------
+ Documentation/fetch-config.txt     |  65 +++
+ Documentation/format-config.txt    |  87 ++++
+ Documentation/gitcvs-config.txt    |  67 +++
+ Documentation/gui-config.txt       |  57 +++
+ Documentation/pull-config.txt      |  36 ++
+ Documentation/push-config.txt      | 113 +++++
+ Documentation/receive-config.txt   | 123 +++++
+ Documentation/sendemail-config.txt |  63 +++
+ Documentation/submodule-config.txt |  82 ++++
+ 10 files changed, 711 insertions(+), 702 deletions(-)
+ create mode 100644 Documentation/fetch-config.txt
+ create mode 100644 Documentation/format-config.txt
+ create mode 100644 Documentation/gitcvs-config.txt
+ create mode 100644 Documentation/gui-config.txt
+ create mode 100644 Documentation/pull-config.txt
+ create mode 100644 Documentation/push-config.txt
+ create mode 100644 Documentation/receive-config.txt
+ create mode 100644 Documentation/sendemail-config.txt
+ create mode 100644 Documentation/submodule-config.txt
 
-running 
+-- 
+2.19.0.rc0.335.ga73d156e9c
 
-    $ git commit --dry-run; echo $?
-    $ git commit --dry-run --short; echo $?
-
-tells me that "--short" still does not notice that there _is_
-something to be committed, either with an ancient version like
-v2.10.5 or more modern versions of Git.  The "long" version exits
-with 0, while "--short" one exists with 1.
-
-So...?
