@@ -3,260 +3,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BF2491F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4FC1F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbeHVTby (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 15:31:54 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:42962 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727023AbeHVTbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:31:52 -0400
-Received: by mail-lf1-f65.google.com with SMTP id z11-v6so1777460lff.9
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:22 -0700 (PDT)
+        id S1727051AbeHVTcH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 15:32:07 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:43985 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727023AbeHVTcH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:32:07 -0400
+Received: by mail-wr1-f66.google.com with SMTP id k5-v6so2044894wre.10
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Y9sKnTQKfM6pM+QRxobm6togybqwllE+7v5NV441tLs=;
-        b=P+asiM2YDElCU/2RKSTUDnqhVU/qlT9qOBMl+ZpCGl19KY+GbaIvz9eLMdunSRURk5
-         Cfchkd2dybwXzi+LvYLmlTXGR1qI1LS3+0TwmDkgbFI5RqUiz41kUUwtbeWpXfDbi3DA
-         cwP9LZUMcmMriMyFA5kFJxYfaKM/mZpaol1OJ2WhJmMdAArbXDzl6uCnjsInGYX0JPwD
-         XUO+q1IEYf9gFAWUYDwKvamukEBJXjvQwSDSmIG9bE0a7CVPRlTkKXwz64EvQFkdA+1W
-         5ebLFy9uZSAd8C9ebLZDniXClayH+7lMOdzEdcd+o8gTJ3+OlDpTxNO6Lj+bmIH1R4QY
-         hJcg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=D0j4BUl9zZo742Z564XDtMRcDQRJiDEpI4hDvoFGJRE=;
+        b=GwXp3SnxenOdtuSH/CQ5KsUtzByDNVLt0jPAseDL15NTLsY8raWqZnrPMR+XBr8FKD
+         0DOCQrsaiYrCvAEuqZSdw3xh6m9+kAzThhY0g42jz77tEZCbqvWpVfIVrxsDwQuqfNx7
+         21YnTPComNcnpnzEI1A5cKcr+mwkxGTkyMhmS80tjptU5R/EHdrk6B5WZJpzkqdAByK5
+         TgUiCqn97fS6SxnLUOMf717Z/2SbDM6D8CveXkLM23AcTKbZzkYr6Zus7HmCtMbUDtVD
+         3YyIiXsUuXFIFBEfplHLhHFKtoPR0bUPHn0OSg5qQJjGyMb2x4zvNh+c8XF588U1kVjq
+         kZ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Y9sKnTQKfM6pM+QRxobm6togybqwllE+7v5NV441tLs=;
-        b=QVCnvAxaeicBPqubD27GhdZT7zeZ6gxs8WKCkmPMcCkpm7FhAM9/aIcGCqj2eMdzqK
-         Iv8ORuBn2BU9jcUWoCNauxbiUhruTuevZBU54sQ0K8cv3g8uawaO0EODuYVChmCDllvR
-         gBbx+KbVT3l2h/wWrI8KbmcQ2EOEgE6VBAoj4rnFfq1XsALf/YKqh2cfr1bUqlRZodAW
-         pQJLXIObeq2TYAhqOa39KvOXS45Bcl9pO8RGQaCVNLUwjGVJLbtd1TafvyVWOFnb5b3m
-         WR/RXryGh0rFhPiugIrqR4h+l5qdqxyIfKk4OjpZF/oTe4cnXiz7TT/wgDkqIcAx2uRO
-         StlA==
-X-Gm-Message-State: AOUpUlH4tb6tpWTbzxoAmGS6rqQyzbYgvoX0kVKI/2qxJyyPHWEczOCU
-        MYMwQgwQJvZ9VGi24udIs+/3KCOy
-X-Google-Smtp-Source: AA+uWPxGOS29gT17aJ5SVOL8Gyp+HAMQnziqxGWTAzUzLkrBmPxwko7QKoJKqx+aGxAceunnJswuqw==
-X-Received: by 2002:a19:53d6:: with SMTP id h83-v6mr21261148lfl.15.1534953981224;
-        Wed, 22 Aug 2018 09:06:21 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Aug 2018 09:06:20 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 11/11] config.txt: move submodule part out to a separate file
-Date:   Wed, 22 Aug 2018 18:06:05 +0200
-Message-Id: <20180822160605.21864-12-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.335.ga73d156e9c
-In-Reply-To: <20180822160605.21864-1-pclouds@gmail.com>
-References: <20180822160605.21864-1-pclouds@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=D0j4BUl9zZo742Z564XDtMRcDQRJiDEpI4hDvoFGJRE=;
+        b=qNGh87WhRS8vJIkiRovXIGxNv1PZG56n5CChqPud0hCJ/7GBvU++7Lb7v0HXKit89Y
+         CJ1UqgfTBW6tE2vpF+Owr6ROpb2PW60ScjDZR5LON0IFJ2PjOXfbHCJHRtQk2kfx8PlM
+         Z+hNjIHyzNGdtAYMLJyUWbt0lg86RKIuGHr/GLmgkIKDxcjn0uhw+CCi3TKJGFu+Q6er
+         9gt83nrgH8b8uxAIaUCr/fginxZs23XKbzQRXk8O2QA362pVTdWdG2ciR6iTMWivsSQV
+         t6pRBR7tbejhLPuJiW+7gdSFnTjBqcSj0amLREpgxzu7xukQ9PwPBQ1a5DCh5NQQG3yg
+         4jZg==
+X-Gm-Message-State: APzg51AfMywoajz10ARQS27EixQ4RKstWUgcDVz5Y/VE/SdXB7O8BQcp
+        WBqPAa9GYl4YFdeKPWvM7Rg=
+X-Google-Smtp-Source: ANB0Vdaj8oabvdOQx4YgvO61GkNRB5/hBZ2TssLFqoAu93BNQzgDSgLrOyCil+96ssc7L3yAPCsU4g==
+X-Received: by 2002:adf:c38e:: with SMTP id p14-v6mr10569066wrf.68.1534953996981;
+        Wed, 22 Aug 2018 09:06:36 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 204-v6sm2934457wmh.25.2018.08.22.09.06.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Aug 2018 09:06:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v4 10/11] rerere: teach rerere to handle nested conflicts
+References: <20180714214443.7184-1-t.gummerer@gmail.com>
+        <20180805172037.12530-1-t.gummerer@gmail.com>
+        <20180805172037.12530-11-t.gummerer@gmail.com>
+        <CACBZZX6xvsZ4K86b53ura6zENs2p0SBjwYYG=h0TNem3wnEbuQ@mail.gmail.com>
+Date:   Wed, 22 Aug 2018 09:06:35 -0700
+In-Reply-To: <CACBZZX6xvsZ4K86b53ura6zENs2p0SBjwYYG=h0TNem3wnEbuQ@mail.gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 22 Aug
+ 2018 13:00:55
+        +0200")
+Message-ID: <xmqqsh365qt0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/config.txt           | 83 +-----------------------------
- Documentation/submodule-config.txt | 82 +++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+), 82 deletions(-)
- create mode 100644 Documentation/submodule-config.txt
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a0eaf40564..b7b557d0e7 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2791,88 +2791,7 @@ stash.showStat::
- 	option will show diffstat of the stash entry.  Defaults to true.
- 	See description of 'show' command in linkgit:git-stash[1].
- 
--submodule.<name>.url::
--	The URL for a submodule. This variable is copied from the .gitmodules
--	file to the git config via 'git submodule init'. The user can change
--	the configured URL before obtaining the submodule via 'git submodule
--	update'. If neither submodule.<name>.active or submodule.active are
--	set, the presence of this variable is used as a fallback to indicate
--	whether the submodule is of interest to git commands.
--	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
--
--submodule.<name>.update::
--	The method by which a submodule is updated by 'git submodule update',
--	which is the only affected command, others such as
--	'git checkout --recurse-submodules' are unaffected. It exists for
--	historical reasons, when 'git submodule' was the only command to
--	interact with submodules; settings like `submodule.active`
--	and `pull.rebase` are more specific. It is populated by
--	`git submodule init` from the linkgit:gitmodules[5] file.
--	See description of 'update' command in linkgit:git-submodule[1].
--
--submodule.<name>.branch::
--	The remote branch name for a submodule, used by `git submodule
--	update --remote`.  Set this option to override the value found in
--	the `.gitmodules` file.  See linkgit:git-submodule[1] and
--	linkgit:gitmodules[5] for details.
--
--submodule.<name>.fetchRecurseSubmodules::
--	This option can be used to control recursive fetching of this
--	submodule. It can be overridden by using the --[no-]recurse-submodules
--	command-line option to "git fetch" and "git pull".
--	This setting will override that from in the linkgit:gitmodules[5]
--	file.
--
--submodule.<name>.ignore::
--	Defines under what circumstances "git status" and the diff family show
--	a submodule as modified. When set to "all", it will never be considered
--	modified (but it will nonetheless show up in the output of status and
--	commit when it has been staged), "dirty" will ignore all changes
--	to the submodules work tree and
--	takes only differences between the HEAD of the submodule and the commit
--	recorded in the superproject into account. "untracked" will additionally
--	let submodules with modified tracked files in their work tree show up.
--	Using "none" (the default when this option is not set) also shows
--	submodules that have untracked files in their work tree as changed.
--	This setting overrides any setting made in .gitmodules for this submodule,
--	both settings can be overridden on the command line by using the
--	"--ignore-submodules" option. The 'git submodule' commands are not
--	affected by this setting.
--
--submodule.<name>.active::
--	Boolean value indicating if the submodule is of interest to git
--	commands.  This config option takes precedence over the
--	submodule.active config option. See linkgit:gitsubmodules[7] for
--	details.
--
--submodule.active::
--	A repeated field which contains a pathspec used to match against a
--	submodule's path to determine if the submodule is of interest to git
--	commands. See linkgit:gitsubmodules[7] for details.
--
--submodule.recurse::
--	Specifies if commands recurse into submodules by default. This
--	applies to all commands that have a `--recurse-submodules` option,
--	except `clone`.
--	Defaults to false.
--
--submodule.fetchJobs::
--	Specifies how many submodules are fetched/cloned at the same time.
--	A positive integer allows up to that number of submodules fetched
--	in parallel. A value of 0 will give some reasonable default.
--	If unset, it defaults to 1.
--
--submodule.alternateLocation::
--	Specifies how the submodules obtain alternates when submodules are
--	cloned. Possible values are `no`, `superproject`.
--	By default `no` is assumed, which doesn't add references. When the
--	value is set to `superproject` the submodule to be cloned computes
--	its alternates location relative to the superprojects alternate.
--
--submodule.alternateErrorStrategy::
--	Specifies how to treat errors with the alternates for a submodule
--	as computed via `submodule.alternateLocation`. Possible values are
--	`ignore`, `info`, `die`. Default is `die`.
-+include::submodule-config.txt[]
- 
- tag.forceSignAnnotated::
- 	A boolean to specify whether annotated tags created should be GPG signed.
-diff --git a/Documentation/submodule-config.txt b/Documentation/submodule-config.txt
-new file mode 100644
-index 0000000000..0a1293b051
---- /dev/null
-+++ b/Documentation/submodule-config.txt
-@@ -0,0 +1,82 @@
-+submodule.<name>.url::
-+	The URL for a submodule. This variable is copied from the .gitmodules
-+	file to the git config via 'git submodule init'. The user can change
-+	the configured URL before obtaining the submodule via 'git submodule
-+	update'. If neither submodule.<name>.active or submodule.active are
-+	set, the presence of this variable is used as a fallback to indicate
-+	whether the submodule is of interest to git commands.
-+	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
-+
-+submodule.<name>.update::
-+	The method by which a submodule is updated by 'git submodule update',
-+	which is the only affected command, others such as
-+	'git checkout --recurse-submodules' are unaffected. It exists for
-+	historical reasons, when 'git submodule' was the only command to
-+	interact with submodules; settings like `submodule.active`
-+	and `pull.rebase` are more specific. It is populated by
-+	`git submodule init` from the linkgit:gitmodules[5] file.
-+	See description of 'update' command in linkgit:git-submodule[1].
-+
-+submodule.<name>.branch::
-+	The remote branch name for a submodule, used by `git submodule
-+	update --remote`.  Set this option to override the value found in
-+	the `.gitmodules` file.  See linkgit:git-submodule[1] and
-+	linkgit:gitmodules[5] for details.
-+
-+submodule.<name>.fetchRecurseSubmodules::
-+	This option can be used to control recursive fetching of this
-+	submodule. It can be overridden by using the --[no-]recurse-submodules
-+	command-line option to "git fetch" and "git pull".
-+	This setting will override that from in the linkgit:gitmodules[5]
-+	file.
-+
-+submodule.<name>.ignore::
-+	Defines under what circumstances "git status" and the diff family show
-+	a submodule as modified. When set to "all", it will never be considered
-+	modified (but it will nonetheless show up in the output of status and
-+	commit when it has been staged), "dirty" will ignore all changes
-+	to the submodules work tree and
-+	takes only differences between the HEAD of the submodule and the commit
-+	recorded in the superproject into account. "untracked" will additionally
-+	let submodules with modified tracked files in their work tree show up.
-+	Using "none" (the default when this option is not set) also shows
-+	submodules that have untracked files in their work tree as changed.
-+	This setting overrides any setting made in .gitmodules for this submodule,
-+	both settings can be overridden on the command line by using the
-+	"--ignore-submodules" option. The 'git submodule' commands are not
-+	affected by this setting.
-+
-+submodule.<name>.active::
-+	Boolean value indicating if the submodule is of interest to git
-+	commands.  This config option takes precedence over the
-+	submodule.active config option. See linkgit:gitsubmodules[7] for
-+	details.
-+
-+submodule.active::
-+	A repeated field which contains a pathspec used to match against a
-+	submodule's path to determine if the submodule is of interest to git
-+	commands. See linkgit:gitsubmodules[7] for details.
-+
-+submodule.recurse::
-+	Specifies if commands recurse into submodules by default. This
-+	applies to all commands that have a `--recurse-submodules` option,
-+	except `clone`.
-+	Defaults to false.
-+
-+submodule.fetchJobs::
-+	Specifies how many submodules are fetched/cloned at the same time.
-+	A positive integer allows up to that number of submodules fetched
-+	in parallel. A value of 0 will give some reasonable default.
-+	If unset, it defaults to 1.
-+
-+submodule.alternateLocation::
-+	Specifies how the submodules obtain alternates when submodules are
-+	cloned. Possible values are `no`, `superproject`.
-+	By default `no` is assumed, which doesn't add references. When the
-+	value is set to `superproject` the submodule to be cloned computes
-+	its alternates location relative to the superprojects alternate.
-+
-+submodule.alternateErrorStrategy::
-+	Specifies how to treat errors with the alternates for a submodule
-+	as computed via `submodule.alternateLocation`. Possible values are
-+	`ignore`, `info`, `die`. Default is `die`.
--- 
-2.19.0.rc0.335.ga73d156e9c
+> But why not add this to the git-rerere manpage? These technical docs
+> get way less exposure, and in this case we're not describing some
+> interna implementation detail, which the technical docs are for, but
+> something that's user-visible, let's put that in  the user-visiblee
+> docs.
+
+I actually consider that the documentation describes low-level
+internal implementation detail, which the end users do not care nor
+need to know in order to make use of "rerere".  How would it help
+the end-users to know that the common ancestor portion of diff3
+style conflict does not participate in conflict identification,
+sides of conflicts sometimes get swapped for easier indexing of
+conflicts, or conflict shapes are hashed via SHA-1 to determine
+which subdirectory of $GIT_DIR/rr-cache/ to use to store it, etc.?
+
+By the way, I just noticed that what the last section (i.e. nested
+conflicts) says is completely bogus.  Nested conflicts are handled
+by lengthening markers for conflict in inner-merge and paying
+attention only to the outermost merge.  The only case where the
+conflict markers can appear in the way depicted in the section is
+when the contents from branches being merged had these conflict
+marker looking strings from the beginning---that's "doctor it hurts
+when I do this---don't do it then" situation.  The section may
+describe correctly what the code happens to do when it gets thrown
+such a garbage at, but I do not think it is a useful piece of
+information about a designed behaviour.
 
