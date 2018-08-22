@@ -2,52 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4CA91F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 15:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C93C91F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 15:55:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729156AbeHVTFT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 15:05:19 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:44478 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729024AbeHVTFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:05:19 -0400
-Received: by mail-wr1-f50.google.com with SMTP id v16-v6so1973679wro.11
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 08:39:55 -0700 (PDT)
+        id S1729307AbeHVTU2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 15:20:28 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:54711 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729288AbeHVTU2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:20:28 -0400
+Received: by mail-wm0-f65.google.com with SMTP id c14-v6so2470198wmb.4
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 08:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=aS6XYr9tvwbciGjMdN4KGz1bthsIxIWovP1T4OJiIjF997Mqw93CEXznuJfDS8AnDy
-         ZpSBroMk7gm3u0K0nru9b0jwBJWlMc2fIenJd1H5sm2pCkwXZJVVXJbvRxMI3Qpouiwl
-         QHryEIc+qBy6MEPT2mk7cNO3HLFXgZ9Jo4bsSHFIOYPBOv3wGInOO0YGIiyafovuX0xR
-         K06Ih7a5hBpHtd9zLgCWVq3KC05z3AWMcv8iIrnZy6PYkOkSEf2CrLY/0jDvA3lTSaH2
-         HL16PwNK8PQlqsGd5DR7WrJEydFj1zNEiXqTRusf/tI1cEIOPczQ0Vsz8wgFyyGI6Seb
-         w5uw==
+        bh=CYofQD9KoYOfpaDf5uNj7JxBCjipIkGITZxjgeEp9Gg=;
+        b=iDV1xK5qPvKZ7SkQMWHcaR2ORArns5UPYRl8shyG7Tv3t4a4zlK/J31GXNcYzBQCPA
+         P0cubEinO9prpE9iZDK+gLGBzdgaii5AKbLcWRmOw2rWk2/p3YPM1FXd/dAZb05DXAvd
+         ea0OLquXXzpUpSmkWU+Vx2hXIGAGQCWFXGUstloGsXhx31IfkQyHPsDcc/rwm3CSdX9B
+         H8kHBzrJPwd3/AaQihhNN7/59QH/R+/ZlTbtq4zT+sEjb56JpdSnAx4uEM8jqPwLUtXT
+         Mtdolt9bpQuD7fG0EXJUNk7bATgvsqUdzi6NYtMPgYUXLvym2wMXwyi5iqkXVQs1jzqF
+         xKBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
-        b=MQXcBLh4zExF9zzkztUWGB5DsiHmCo7LaRNKs704SAllAgMWbr2ghSc2V2ktxkXD+1
-         qeZvIBJyaTzWQyk6a5l8iwDsU/OtNs4xz1lgWeq7zHYkDQ0KidXNCiAlJW9/zfsUAzw6
-         2SiVn4ujdhhynrVdVL9SiX2PQ0IbZ2QPPac0eZsOzgKihiWDH7kGWH+iUuft+hYHctvF
-         5dvbn2tIKvQpZy+XIjJNz1f8D7TY3e5BraQIhnkblWocE6juTFs3haKL70FNs0M4fz/j
-         ZLLzq5z92erKJqQpIyawzOXIK63O7BcaJC2QF8LbtOGbLkd63G0PTp4mu3XnfP7f7CXp
-         DTKA==
-X-Gm-Message-State: AOUpUlFogdriiR0s7ouSDt6OAytPou0ynWDNcZofV1uVYtrdnMFrxubN
-        b7WgcE1vTkrp8PpnQLVoaZI=
-X-Google-Smtp-Source: AA+uWPzUaiYkZEUECMokdkAwhHtkeyKbsKVmbXpsq3mThnOG5lG3zB9lBS3UfwDbrDI9PclZJvdkRw==
-X-Received: by 2002:a5d:428a:: with SMTP id k10-v6mr37816294wrq.225.1534952394347;
-        Wed, 22 Aug 2018 08:39:54 -0700 (PDT)
+        bh=CYofQD9KoYOfpaDf5uNj7JxBCjipIkGITZxjgeEp9Gg=;
+        b=kG56HGKiZIGnt1yHW0hWfOiYlee8F2kYWnSeaEZJ/oY79yHgGda1TF4X9fwSfcRmZp
+         9PdT8MSjpq1ohiNIvArWDGoUXc1u3BwJMUR0pmqzWqKtQvf1S9RVxkZbgPCTl2CUxvsd
+         H2JnQWrCwkA7AilMLfTQBE6H6vPUBtIkSJz3VE81MRGDTSiZWEe6ZtEoT7MMVcJxhlYT
+         wMMYiwKUHJtYhmnMhWQOP+KUHURseimgizvOpuwtfpyBkQ4TioLer4gpO2y8ZxLxNkFT
+         75vLwZER8FO8lRvPDVcs1EcP5edok2R2CrbqDpXShnL+c2aAuwHLWJSKVl59jfRQzjAK
+         nnIw==
+X-Gm-Message-State: APzg51Ak6RlsqTNPVcKHX1BJpi82P/6Lt88l0ge4QHJxVPOiqGQ+u/xV
+        bkGtOV1zcDgyD8XP1cY1Z38=
+X-Google-Smtp-Source: ANB0VdaTIOYHaxKjZJZEQqh6xCZZurRgEV5vbYxD56TmkV53UB6QwNoBSAte98ZI3CmQmfk/8z/Ewg==
+X-Received: by 2002:a1c:8016:: with SMTP id b22-v6mr2842569wmd.9.1534953300434;
+        Wed, 22 Aug 2018 08:55:00 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s13-v6sm2561086wrq.39.2018.08.22.08.39.53
+        by smtp.gmail.com with ESMTPSA id v1-v6sm1034715wrt.34.2018.08.22.08.54.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 08:39:53 -0700 (PDT)
+        Wed, 22 Aug 2018 08:54:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stephen Smith <ischis2@cox.net>
 Cc:     Git Mailing List <git@vger.kernel.org>
@@ -55,15 +55,50 @@ Subject: Re: [PATCH] wt-status.c: set commitable bit if there is a meaningful me
 References: <72756249.nAoBccgOj7@thunderbird>
         <1455590305-30923-1-git-send-email-ischis2@cox.net>
         <28440975.G22uFktzHy@thunderbird>
-Date:   Wed, 22 Aug 2018 08:39:53 -0700
+Date:   Wed, 22 Aug 2018 08:54:59 -0700
 In-Reply-To: <28440975.G22uFktzHy@thunderbird> (Stephen Smith's message of
         "Tue, 21 Aug 2018 22:33:09 -0700")
-Message-ID: <xmqq4lfm76ly.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqqzhxe5rcc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stephen Smith <ischis2@cox.net> writes:
+
+> On Tuesday, February 16, 2016 8:33:54 PM MST Junio C Hamano wrote:
+
+Wow, that's quite an old discussion ;-)
+
+>> So if you do this:
+>> 
+>>     $ git reset --hard HEAD
+>>     $ >a-new-file && git add a-new-file
+>>     $ git commit --dry-run --short; echo $?
+>> 
+>> you'd get "No, there is nothing interesting to commit", which is
+>> clearly bogus.
+>
+> I was about to start working on working on this and ran the test you suggested 
+> back in 2016.   I don't get the error message from that time period.  I 
+> believe that this was fixed.   
+
+After these:
+
+    $ git reset --hard HEAD
+    $ >a-new-file && git add a-new-file
+
+running 
+
+    $ git commit --dry-run; echo $?
+    $ git commit --dry-run --short; echo $?
+
+tells me that "--short" still does not notice that there _is_
+something to be committed, either with an ancient version like
+v2.10.5 or more modern versions of Git.  The "long" version exits
+with 0, while "--short" one exists with 1.
+
+So...?
