@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DC231F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF2491F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbeHVTbw (ORCPT <rfc822;e@80x24.org>);
+        id S1727044AbeHVTby (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 15:31:54 -0400
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:42962 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727023AbeHVTbw (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 22 Aug 2018 15:31:52 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:44586 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726854AbeHVTbu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:31:50 -0400
-Received: by mail-lj1-f196.google.com with SMTP id q127-v6so1834797ljq.11
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:20 -0700 (PDT)
+Received: by mail-lf1-f65.google.com with SMTP id z11-v6so1777460lff.9
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fjtSO5F14HRCuZ3dM9r/wpJOFVEsMO4l86ApgVTvO7w=;
-        b=R/7uMevYErElOCw1CFk28u8Eq6NkcYBUP2PCUzPdRRfiokACUo1qU0E6dB9IF2fAox
-         nt1czDklsdTrZIxfQGBJass4V+1L0SJmL/wLcNkuuYpgmunGug6NRIGd3dYb10ccjhFb
-         MDvIm5LAJULjycVPkWwbDRp3jNVjoQExie2eDfE0ckk3vpu2Bt9RLYul7MOPZmNQa63c
-         QY2E6v2u+1wDVV0RvpXtHylJaTaA1moSr1D5Mra2R2OE9PvSHTcp/9PM/qvAjR5B03il
-         CjqXg/nHXCf6yNLOiYrjLClpkQgsGl7hwsBTBeFwePdbHXKWxQs7b6V3cfIdQcoeEZcp
-         9vSQ==
+        bh=Y9sKnTQKfM6pM+QRxobm6togybqwllE+7v5NV441tLs=;
+        b=P+asiM2YDElCU/2RKSTUDnqhVU/qlT9qOBMl+ZpCGl19KY+GbaIvz9eLMdunSRURk5
+         Cfchkd2dybwXzi+LvYLmlTXGR1qI1LS3+0TwmDkgbFI5RqUiz41kUUwtbeWpXfDbi3DA
+         cwP9LZUMcmMriMyFA5kFJxYfaKM/mZpaol1OJ2WhJmMdAArbXDzl6uCnjsInGYX0JPwD
+         XUO+q1IEYf9gFAWUYDwKvamukEBJXjvQwSDSmIG9bE0a7CVPRlTkKXwz64EvQFkdA+1W
+         5ebLFy9uZSAd8C9ebLZDniXClayH+7lMOdzEdcd+o8gTJ3+OlDpTxNO6Lj+bmIH1R4QY
+         hJcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fjtSO5F14HRCuZ3dM9r/wpJOFVEsMO4l86ApgVTvO7w=;
-        b=ax/Mn/deAwTzt5GwKyXVkScvE/Z2oBYx35T1fg+kp9KyYz1+C8puq2TYgHYvi4+a8l
-         FMQs5y7elL53HrJwogmeSH5LuUtQiqjE3qRxLPY4uAIQ5AbDdxq4NnrbiGdtb8oO/7um
-         LmXJUGcjg9w961/npuAuW+045jM1vKiIot2tLY2+MJEORkoUeoR5qX+LDdO/Ed5oMsri
-         SpbKloymZAij0IGmPQSNPT0UMeDIqV74l2I+oSNkaWPOEgFv6VN24OqunTnNCW+Smv5Z
-         2GfMeHYEkCFvZTjl1C4HZ3zmcd4HncYlCPYRG8+5MuEoj48tVasI6twt73anRzwBLF5n
-         B8aA==
-X-Gm-Message-State: APzg51Ab/eQ23KZhAZ9cTsnjyjTksLC93Jow35kq2pTZk44NWeHJn2rR
-        M/o3dOgTQXYl2a17M7ty49hlP8Zf
-X-Google-Smtp-Source: ANB0VdZz+SNYEC3eJdWzxoIPL2Nqu/iAP+6ky/FEOs1ke1W7gsoYYnwpps9O2UcTybl5IXkLzIVDMQ==
-X-Received: by 2002:a2e:5f93:: with SMTP id x19-v6mr3072077lje.60.1534953979931;
-        Wed, 22 Aug 2018 09:06:19 -0700 (PDT)
+        bh=Y9sKnTQKfM6pM+QRxobm6togybqwllE+7v5NV441tLs=;
+        b=QVCnvAxaeicBPqubD27GhdZT7zeZ6gxs8WKCkmPMcCkpm7FhAM9/aIcGCqj2eMdzqK
+         Iv8ORuBn2BU9jcUWoCNauxbiUhruTuevZBU54sQ0K8cv3g8uawaO0EODuYVChmCDllvR
+         gBbx+KbVT3l2h/wWrI8KbmcQ2EOEgE6VBAoj4rnFfq1XsALf/YKqh2cfr1bUqlRZodAW
+         pQJLXIObeq2TYAhqOa39KvOXS45Bcl9pO8RGQaCVNLUwjGVJLbtd1TafvyVWOFnb5b3m
+         WR/RXryGh0rFhPiugIrqR4h+l5qdqxyIfKk4OjpZF/oTe4cnXiz7TT/wgDkqIcAx2uRO
+         StlA==
+X-Gm-Message-State: AOUpUlH4tb6tpWTbzxoAmGS6rqQyzbYgvoX0kVKI/2qxJyyPHWEczOCU
+        MYMwQgwQJvZ9VGi24udIs+/3KCOy
+X-Google-Smtp-Source: AA+uWPxGOS29gT17aJ5SVOL8Gyp+HAMQnziqxGWTAzUzLkrBmPxwko7QKoJKqx+aGxAceunnJswuqw==
+X-Received: by 2002:a19:53d6:: with SMTP id h83-v6mr21261148lfl.15.1534953981224;
+        Wed, 22 Aug 2018 09:06:21 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.18
+        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Aug 2018 09:06:19 -0700 (PDT)
+        Wed, 22 Aug 2018 09:06:20 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/11] config.txt: move sequence.editor out of "core" part
-Date:   Wed, 22 Aug 2018 18:06:04 +0200
-Message-Id: <20180822160605.21864-11-pclouds@gmail.com>
+Subject: [PATCH 11/11] config.txt: move submodule part out to a separate file
+Date:   Wed, 22 Aug 2018 18:06:05 +0200
+Message-Id: <20180822160605.21864-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.335.ga73d156e9c
 In-Reply-To: <20180822160605.21864-1-pclouds@gmail.com>
 References: <20180822160605.21864-1-pclouds@gmail.com>
@@ -70,39 +70,193 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/config.txt           | 83 +-----------------------------
+ Documentation/submodule-config.txt | 82 +++++++++++++++++++++++++++++
+ 2 files changed, 83 insertions(+), 82 deletions(-)
+ create mode 100644 Documentation/submodule-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 414e28244e..a0eaf40564 100644
+index a0eaf40564..b7b557d0e7 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -822,12 +822,6 @@ core.packedRefsTimeout::
- 	all; -1 means to try indefinitely. Default is 1000 (i.e.,
- 	retry for 1 second).
+@@ -2791,88 +2791,7 @@ stash.showStat::
+ 	option will show diffstat of the stash entry.  Defaults to true.
+ 	See description of 'show' command in linkgit:git-stash[1].
  
--sequence.editor::
--	Text editor used by `git rebase -i` for editing the rebase instruction file.
--	The value is meant to be interpreted by the shell when it is used.
--	It can be overridden by the `GIT_SEQUENCE_EDITOR` environment variable.
--	When not configured the default commit message editor is used instead.
+-submodule.<name>.url::
+-	The URL for a submodule. This variable is copied from the .gitmodules
+-	file to the git config via 'git submodule init'. The user can change
+-	the configured URL before obtaining the submodule via 'git submodule
+-	update'. If neither submodule.<name>.active or submodule.active are
+-	set, the presence of this variable is used as a fallback to indicate
+-	whether the submodule is of interest to git commands.
+-	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
 -
- core.pager::
- 	Text viewer for use by Git commands (e.g., 'less').  The value
- 	is meant to be interpreted by the shell.  The order of preference
-@@ -2679,6 +2673,12 @@ rerere.enabled::
+-submodule.<name>.update::
+-	The method by which a submodule is updated by 'git submodule update',
+-	which is the only affected command, others such as
+-	'git checkout --recurse-submodules' are unaffected. It exists for
+-	historical reasons, when 'git submodule' was the only command to
+-	interact with submodules; settings like `submodule.active`
+-	and `pull.rebase` are more specific. It is populated by
+-	`git submodule init` from the linkgit:gitmodules[5] file.
+-	See description of 'update' command in linkgit:git-submodule[1].
+-
+-submodule.<name>.branch::
+-	The remote branch name for a submodule, used by `git submodule
+-	update --remote`.  Set this option to override the value found in
+-	the `.gitmodules` file.  See linkgit:git-submodule[1] and
+-	linkgit:gitmodules[5] for details.
+-
+-submodule.<name>.fetchRecurseSubmodules::
+-	This option can be used to control recursive fetching of this
+-	submodule. It can be overridden by using the --[no-]recurse-submodules
+-	command-line option to "git fetch" and "git pull".
+-	This setting will override that from in the linkgit:gitmodules[5]
+-	file.
+-
+-submodule.<name>.ignore::
+-	Defines under what circumstances "git status" and the diff family show
+-	a submodule as modified. When set to "all", it will never be considered
+-	modified (but it will nonetheless show up in the output of status and
+-	commit when it has been staged), "dirty" will ignore all changes
+-	to the submodules work tree and
+-	takes only differences between the HEAD of the submodule and the commit
+-	recorded in the superproject into account. "untracked" will additionally
+-	let submodules with modified tracked files in their work tree show up.
+-	Using "none" (the default when this option is not set) also shows
+-	submodules that have untracked files in their work tree as changed.
+-	This setting overrides any setting made in .gitmodules for this submodule,
+-	both settings can be overridden on the command line by using the
+-	"--ignore-submodules" option. The 'git submodule' commands are not
+-	affected by this setting.
+-
+-submodule.<name>.active::
+-	Boolean value indicating if the submodule is of interest to git
+-	commands.  This config option takes precedence over the
+-	submodule.active config option. See linkgit:gitsubmodules[7] for
+-	details.
+-
+-submodule.active::
+-	A repeated field which contains a pathspec used to match against a
+-	submodule's path to determine if the submodule is of interest to git
+-	commands. See linkgit:gitsubmodules[7] for details.
+-
+-submodule.recurse::
+-	Specifies if commands recurse into submodules by default. This
+-	applies to all commands that have a `--recurse-submodules` option,
+-	except `clone`.
+-	Defaults to false.
+-
+-submodule.fetchJobs::
+-	Specifies how many submodules are fetched/cloned at the same time.
+-	A positive integer allows up to that number of submodules fetched
+-	in parallel. A value of 0 will give some reasonable default.
+-	If unset, it defaults to 1.
+-
+-submodule.alternateLocation::
+-	Specifies how the submodules obtain alternates when submodules are
+-	cloned. Possible values are `no`, `superproject`.
+-	By default `no` is assumed, which doesn't add references. When the
+-	value is set to `superproject` the submodule to be cloned computes
+-	its alternates location relative to the superprojects alternate.
+-
+-submodule.alternateErrorStrategy::
+-	Specifies how to treat errors with the alternates for a submodule
+-	as computed via `submodule.alternateLocation`. Possible values are
+-	`ignore`, `info`, `die`. Default is `die`.
++include::submodule-config.txt[]
  
- include::sendemail-config.txt[]
- 
-+sequence.editor::
-+	Text editor used by `git rebase -i` for editing the rebase instruction file.
-+	The value is meant to be interpreted by the shell when it is used.
-+	It can be overridden by the `GIT_SEQUENCE_EDITOR` environment variable.
-+	When not configured the default commit message editor is used instead.
+ tag.forceSignAnnotated::
+ 	A boolean to specify whether annotated tags created should be GPG signed.
+diff --git a/Documentation/submodule-config.txt b/Documentation/submodule-config.txt
+new file mode 100644
+index 0000000000..0a1293b051
+--- /dev/null
++++ b/Documentation/submodule-config.txt
+@@ -0,0 +1,82 @@
++submodule.<name>.url::
++	The URL for a submodule. This variable is copied from the .gitmodules
++	file to the git config via 'git submodule init'. The user can change
++	the configured URL before obtaining the submodule via 'git submodule
++	update'. If neither submodule.<name>.active or submodule.active are
++	set, the presence of this variable is used as a fallback to indicate
++	whether the submodule is of interest to git commands.
++	See linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
 +
- showBranch.default::
- 	The default set of branches for linkgit:git-show-branch[1].
- 	See linkgit:git-show-branch[1].
++submodule.<name>.update::
++	The method by which a submodule is updated by 'git submodule update',
++	which is the only affected command, others such as
++	'git checkout --recurse-submodules' are unaffected. It exists for
++	historical reasons, when 'git submodule' was the only command to
++	interact with submodules; settings like `submodule.active`
++	and `pull.rebase` are more specific. It is populated by
++	`git submodule init` from the linkgit:gitmodules[5] file.
++	See description of 'update' command in linkgit:git-submodule[1].
++
++submodule.<name>.branch::
++	The remote branch name for a submodule, used by `git submodule
++	update --remote`.  Set this option to override the value found in
++	the `.gitmodules` file.  See linkgit:git-submodule[1] and
++	linkgit:gitmodules[5] for details.
++
++submodule.<name>.fetchRecurseSubmodules::
++	This option can be used to control recursive fetching of this
++	submodule. It can be overridden by using the --[no-]recurse-submodules
++	command-line option to "git fetch" and "git pull".
++	This setting will override that from in the linkgit:gitmodules[5]
++	file.
++
++submodule.<name>.ignore::
++	Defines under what circumstances "git status" and the diff family show
++	a submodule as modified. When set to "all", it will never be considered
++	modified (but it will nonetheless show up in the output of status and
++	commit when it has been staged), "dirty" will ignore all changes
++	to the submodules work tree and
++	takes only differences between the HEAD of the submodule and the commit
++	recorded in the superproject into account. "untracked" will additionally
++	let submodules with modified tracked files in their work tree show up.
++	Using "none" (the default when this option is not set) also shows
++	submodules that have untracked files in their work tree as changed.
++	This setting overrides any setting made in .gitmodules for this submodule,
++	both settings can be overridden on the command line by using the
++	"--ignore-submodules" option. The 'git submodule' commands are not
++	affected by this setting.
++
++submodule.<name>.active::
++	Boolean value indicating if the submodule is of interest to git
++	commands.  This config option takes precedence over the
++	submodule.active config option. See linkgit:gitsubmodules[7] for
++	details.
++
++submodule.active::
++	A repeated field which contains a pathspec used to match against a
++	submodule's path to determine if the submodule is of interest to git
++	commands. See linkgit:gitsubmodules[7] for details.
++
++submodule.recurse::
++	Specifies if commands recurse into submodules by default. This
++	applies to all commands that have a `--recurse-submodules` option,
++	except `clone`.
++	Defaults to false.
++
++submodule.fetchJobs::
++	Specifies how many submodules are fetched/cloned at the same time.
++	A positive integer allows up to that number of submodules fetched
++	in parallel. A value of 0 will give some reasonable default.
++	If unset, it defaults to 1.
++
++submodule.alternateLocation::
++	Specifies how the submodules obtain alternates when submodules are
++	cloned. Possible values are `no`, `superproject`.
++	By default `no` is assumed, which doesn't add references. When the
++	value is set to `superproject` the submodule to be cloned computes
++	its alternates location relative to the superprojects alternate.
++
++submodule.alternateErrorStrategy::
++	Specifies how to treat errors with the alternates for a submodule
++	as computed via `submodule.alternateLocation`. Possible values are
++	`ignore`, `info`, `die`. Default is `die`.
 -- 
 2.19.0.rc0.335.ga73d156e9c
 
