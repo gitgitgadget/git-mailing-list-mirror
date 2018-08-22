@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81F581F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D25651F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726949AbeHVTbn (ORCPT <rfc822;e@80x24.org>);
+        id S1726941AbeHVTbn (ORCPT <rfc822;e@80x24.org>);
         Wed, 22 Aug 2018 15:31:43 -0400
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:43140 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726854AbeHVTbn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:31:43 -0400
-Received: by mail-lj1-f195.google.com with SMTP id m84-v6so1832632lje.10
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:12 -0700 (PDT)
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:36843 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726812AbeHVTbm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:31:42 -0400
+Received: by mail-lf1-f65.google.com with SMTP id c21-v6so1796495lfh.3
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8ZMPOdl2FJClyex2ASGAJN3tZbHF1z7EaJ24AxLbd4Y=;
-        b=RcIpOTK7zCCHv70wHtlUdtanFdKxlCwZ7ULOQpjkf7pP7OL2TFX3vmEbTK58bmLpDl
-         1/73iq/8/V4MARwjaFEMS1hBD4kgAqPBG+UMTEjX+Zv67X70yz0c8iquOt+3udbQAzDH
-         i4aSU8qZlsUce8c7HX/tA/qNK2lucfn/3R46hERq3o5wodw5EjDcVfQzSZG7wqcMbwbu
-         G8mZes/36+OkCoy1r8tgoCXkIHz8tEOT+aJD7Ay2Am4d5BvZt8/2Niy8hyW3Bv7xF+IN
-         UcqRA3/YYn+TDxw2OyUwfM1NmTBAKxZgFl78L/E6kQFFWltSWQbTyvMmAw0S+pFpjK5k
-         pynw==
+        bh=oP66ZmTXmIVNqHGuCZZLoH3cne/VoO1lSshlaWf1y64=;
+        b=n8Es8QEC31fZlj7J88BGyK2n/JGPlkz+jt4HUPkbK3nuNwgsdI+C3iUtLHbhLW9U5+
+         1USRVHsscA1Gr8VcL90/xt0E0FLf6GcFuNfauSqSSmoj839L5mf8cHSOB7xyZKlnUNeB
+         tCaJOXbRT+LK/MOFiUsjdl5zkqsjg6gb0aKU6Xx9Q9E8UO+437L4WaIdbg6Zp9Z6h0lb
+         FmoVs4dEM4zqTItUifsf+KjDXayjad34kha7RWO5SqBEwwrRgkGGdVBYr4gmxyUQPFtx
+         u2yJbPUS4lb3oBOabxCqRoVaUwjJ+ktb8wtm3YWGVf0A/heCUMAkktqIfgwdZilL6H75
+         Ptow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8ZMPOdl2FJClyex2ASGAJN3tZbHF1z7EaJ24AxLbd4Y=;
-        b=liGSvs/8DGw8bxk4HCW0e1TpNkLxfgcTzBGEpoJW2/e+NmxG0xz/+aHd375uJXaSw5
-         ScdpENU3IRrUqESdezHK4/zrz9t/6820tgPFncIoVXOlfih24j4BC9ZIbPqQK+KfqduY
-         w2daAo2dUd/1oiwB8KZWfe1QTnXtnz6dlZ+jx9ANZKhXnsAEIwMzBK6WzfIOoV5gRjgC
-         1cPRBEAIQXdZGakCKM5VQiSwzAV7mPk6jul0K0Dg3NlT4M/AZbNby8M4OlTu9bgych/m
-         xMrz6bO23GjzFcGnk5lFwvdIe60CKA+p2E18Ol1D1OX11/ZwVDbF0zLOYaloBcsbegSj
-         FVFg==
-X-Gm-Message-State: AOUpUlGkd+yPoFPU1diG5Js1a8IpDwh5F/rKKeqp8J5oz1nXj8e0f1xo
-        1kMaYcoG+dTdLUeYYBKcW8Zzc1Yl
-X-Google-Smtp-Source: AA+uWPxeMfdPHEEj25uE6A6ws7tK+jFkHRF8gwnqTtjQa1WEMViBCmKscyoW/Pzt05tzPuMK4YEiZQ==
-X-Received: by 2002:a2e:2d2:: with SMTP id y79-v6mr36472741lje.100.1534953971773;
-        Wed, 22 Aug 2018 09:06:11 -0700 (PDT)
+        bh=oP66ZmTXmIVNqHGuCZZLoH3cne/VoO1lSshlaWf1y64=;
+        b=Y8SipDuNgGvLU8Rq9LSCUObswhhwIGAHf685zCLZim1mcSJLgLngOy6x4vZli0D6ZB
+         1iK9FfPjCayWam9wiYE5ryeO1TvQsOSWX6UP0HRwlMZ8r6tlphntGM8AAwmd5xvucqfb
+         lWSJ+/Kw66I9ycwpdJ5iCPCpWZNa1Xmag82pQpfTC1CgdVH2QUJZEwQfq79XODzxgxcV
+         koCtCoyAAQyMF2+p2FlYCOIIykO8YxNm6UQsbaFaIpeB/+hj6h6j7kacUFEvV1Kkem75
+         OQ7IqriZb3Hr/mdrao4ZOfvFpIPUYnbIR8q3m4D3emmMLRiGICX3J9YVY59OudIO7Vt9
+         XARw==
+X-Gm-Message-State: AOUpUlEMU9A7wGJFar19zTMV5zbIrvQxmbRh6wtbHSH3S2CbC/PDlY2R
+        UFgmBI13A06iu4GY2Xz6csD0IfHL
+X-Google-Smtp-Source: AA+uWPxcdNyH8c2/nTqsBWZOnkd1mEoWDhstsHRB4k66mL+SRzfbE+OgO4xFZYVtPiyAGVMz9dEb3Q==
+X-Received: by 2002:a19:2545:: with SMTP id l66-v6mr7869603lfl.73.1534953970739;
+        Wed, 22 Aug 2018 09:06:10 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.10
+        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Aug 2018 09:06:11 -0700 (PDT)
+        Wed, 22 Aug 2018 09:06:10 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/11] config.txt: move format part out to a separate file
-Date:   Wed, 22 Aug 2018 18:05:57 +0200
-Message-Id: <20180822160605.21864-4-pclouds@gmail.com>
+Subject: [PATCH 02/11] config.txt: move fetch part out to a separate file
+Date:   Wed, 22 Aug 2018 18:05:56 +0200
+Message-Id: <20180822160605.21864-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.335.ga73d156e9c
 In-Reply-To: <20180822160605.21864-1-pclouds@gmail.com>
 References: <20180822160605.21864-1-pclouds@gmail.com>
@@ -70,203 +70,159 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt        | 88 +--------------------------------
- Documentation/format-config.txt | 87 ++++++++++++++++++++++++++++++++
- 2 files changed, 88 insertions(+), 87 deletions(-)
- create mode 100644 Documentation/format-config.txt
+ Documentation/config.txt       | 66 +---------------------------------
+ Documentation/fetch-config.txt | 65 +++++++++++++++++++++++++++++++++
+ 2 files changed, 66 insertions(+), 65 deletions(-)
+ create mode 100644 Documentation/fetch-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 33ba7ca2cd..393f6843f5 100644
+index 30adca61ee..33ba7ca2cd 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1507,93 +1507,7 @@ fastimport.unpackLimit::
+@@ -1505,71 +1505,7 @@ fastimport.unpackLimit::
+ 	operation complete faster, especially on slow filesystems.  If
+ 	not set, the value of `transfer.unpackLimit` is used instead.
  
- include::fetch-config.txt[]
+-fetch.recurseSubmodules::
+-	This option can be either set to a boolean value or to 'on-demand'.
+-	Setting it to a boolean changes the behavior of fetch and pull to
+-	unconditionally recurse into submodules when set to true or to not
+-	recurse at all when set to false. When set to 'on-demand' (the default
+-	value), fetch and pull will only recurse into a populated submodule
+-	when its superproject retrieves a commit that updates the submodule's
+-	reference.
+-
+-fetch.fsckObjects::
+-	If it is set to true, git-fetch-pack will check all fetched
+-	objects. See `transfer.fsckObjects` for what's
+-	checked. Defaults to false. If not set, the value of
+-	`transfer.fsckObjects` is used instead.
+-
+-fetch.fsck.<msg-id>::
+-	Acts like `fsck.<msg-id>`, but is used by
+-	linkgit:git-fetch-pack[1] instead of linkgit:git-fsck[1]. See
+-	the `fsck.<msg-id>` documentation for details.
+-
+-fetch.fsck.skipList::
+-	Acts like `fsck.skipList`, but is used by
+-	linkgit:git-fetch-pack[1] instead of linkgit:git-fsck[1]. See
+-	the `fsck.skipList` documentation for details.
+-
+-fetch.unpackLimit::
+-	If the number of objects fetched over the Git native
+-	transfer is below this
+-	limit, then the objects will be unpacked into loose object
+-	files. However if the number of received objects equals or
+-	exceeds this limit then the received pack will be stored as
+-	a pack, after adding any missing delta bases.  Storing the
+-	pack from a push can make the push operation complete faster,
+-	especially on slow filesystems.  If not set, the value of
+-	`transfer.unpackLimit` is used instead.
+-
+-fetch.prune::
+-	If true, fetch will automatically behave as if the `--prune`
+-	option was given on the command line.  See also `remote.<name>.prune`
+-	and the PRUNING section of linkgit:git-fetch[1].
+-
+-fetch.pruneTags::
+-	If true, fetch will automatically behave as if the
+-	`refs/tags/*:refs/tags/*` refspec was provided when pruning,
+-	if not set already. This allows for setting both this option
+-	and `fetch.prune` to maintain a 1=1 mapping to upstream
+-	refs. See also `remote.<name>.pruneTags` and the PRUNING
+-	section of linkgit:git-fetch[1].
+-
+-fetch.output::
+-	Control how ref update status is printed. Valid values are
+-	`full` and `compact`. Default value is `full`. See section
+-	OUTPUT in linkgit:git-fetch[1] for detail.
+-
+-fetch.negotiationAlgorithm::
+-	Control how information about the commits in the local repository is
+-	sent when negotiating the contents of the packfile to be sent by the
+-	server. Set to "skipping" to use an algorithm that skips commits in an
+-	effort to converge faster, but may result in a larger-than-necessary
+-	packfile; The default is "default" which instructs Git to use the default algorithm
+-	that never skips commits (unless the server has acknowledged it or one
+-	of its descendants).
+-	Unknown values will cause 'git fetch' to error out.
+-+
+-See also the `--negotiation-tip` option for linkgit:git-fetch[1].
++include::fetch-config.txt[]
  
--format.attach::
--	Enable multipart/mixed attachments as the default for
--	'format-patch'.  The value can also be a double quoted string
--	which will enable attachments as the default and set the
--	value as the boundary.  See the --attach option in
--	linkgit:git-format-patch[1].
--
--format.from::
--	Provides the default value for the `--from` option to format-patch.
--	Accepts a boolean value, or a name and email address.  If false,
--	format-patch defaults to `--no-from`, using commit authors directly in
--	the "From:" field of patch mails.  If true, format-patch defaults to
--	`--from`, using your committer identity in the "From:" field of patch
--	mails and including a "From:" field in the body of the patch mail if
--	different.  If set to a non-boolean value, format-patch uses that
--	value instead of your committer identity.  Defaults to false.
--
--format.numbered::
--	A boolean which can enable or disable sequence numbers in patch
--	subjects.  It defaults to "auto" which enables it only if there
--	is more than one patch.  It can be enabled or disabled for all
--	messages by setting it to "true" or "false".  See --numbered
--	option in linkgit:git-format-patch[1].
--
--format.headers::
--	Additional email headers to include in a patch to be submitted
--	by mail.  See linkgit:git-format-patch[1].
--
--format.to::
--format.cc::
--	Additional recipients to include in a patch to be submitted
--	by mail.  See the --to and --cc options in
--	linkgit:git-format-patch[1].
--
--format.subjectPrefix::
--	The default for format-patch is to output files with the '[PATCH]'
--	subject prefix. Use this variable to change that prefix.
--
--format.signature::
--	The default for format-patch is to output a signature containing
--	the Git version number. Use this variable to change that default.
--	Set this variable to the empty string ("") to suppress
--	signature generation.
--
--format.signatureFile::
--	Works just like format.signature except the contents of the
--	file specified by this variable will be used as the signature.
--
--format.suffix::
--	The default for format-patch is to output files with the suffix
--	`.patch`. Use this variable to change that suffix (make sure to
--	include the dot if you want it).
--
--format.pretty::
--	The default pretty format for log/show/whatchanged command,
--	See linkgit:git-log[1], linkgit:git-show[1],
--	linkgit:git-whatchanged[1].
--
--format.thread::
--	The default threading style for 'git format-patch'.  Can be
--	a boolean value, or `shallow` or `deep`.  `shallow` threading
--	makes every mail a reply to the head of the series,
--	where the head is chosen from the cover letter, the
--	`--in-reply-to`, and the first patch mail, in this order.
--	`deep` threading makes every mail a reply to the previous one.
--	A true boolean value is the same as `shallow`, and a false
--	value disables threading.
--
--format.signOff::
--	A boolean value which lets you enable the `-s/--signoff` option of
--	format-patch by default. *Note:* Adding the Signed-off-by: line to a
--	patch should be a conscious act and means that you certify you have
--	the rights to submit this work under the same open source license.
--	Please see the 'SubmittingPatches' document for further discussion.
--
--format.coverLetter::
--	A boolean that controls whether to generate a cover-letter when
--	format-patch is invoked, but in addition can be set to "auto", to
--	generate a cover-letter only when there's more than one patch.
--
--format.outputDirectory::
--	Set a custom directory to store the resulting files instead of the
--	current working directory.
--
--format.useAutoBase::
--	A boolean value which lets you enable the `--base=auto` option of
--	format-patch by default.
-+include::format-config.txt[]
- 
- filter.<driver>.clean::
- 	The command which is used to convert the content of a worktree
-diff --git a/Documentation/format-config.txt b/Documentation/format-config.txt
+ format.attach::
+ 	Enable multipart/mixed attachments as the default for
+diff --git a/Documentation/fetch-config.txt b/Documentation/fetch-config.txt
 new file mode 100644
-index 0000000000..dc77941c48
+index 0000000000..cbfad6cdbb
 --- /dev/null
-+++ b/Documentation/format-config.txt
-@@ -0,0 +1,87 @@
-+format.attach::
-+	Enable multipart/mixed attachments as the default for
-+	'format-patch'.  The value can also be a double quoted string
-+	which will enable attachments as the default and set the
-+	value as the boundary.  See the --attach option in
-+	linkgit:git-format-patch[1].
++++ b/Documentation/fetch-config.txt
+@@ -0,0 +1,65 @@
++fetch.recurseSubmodules::
++	This option can be either set to a boolean value or to 'on-demand'.
++	Setting it to a boolean changes the behavior of fetch and pull to
++	unconditionally recurse into submodules when set to true or to not
++	recurse at all when set to false. When set to 'on-demand' (the default
++	value), fetch and pull will only recurse into a populated submodule
++	when its superproject retrieves a commit that updates the submodule's
++	reference.
 +
-+format.from::
-+	Provides the default value for the `--from` option to format-patch.
-+	Accepts a boolean value, or a name and email address.  If false,
-+	format-patch defaults to `--no-from`, using commit authors directly in
-+	the "From:" field of patch mails.  If true, format-patch defaults to
-+	`--from`, using your committer identity in the "From:" field of patch
-+	mails and including a "From:" field in the body of the patch mail if
-+	different.  If set to a non-boolean value, format-patch uses that
-+	value instead of your committer identity.  Defaults to false.
++fetch.fsckObjects::
++	If it is set to true, git-fetch-pack will check all fetched
++	objects. See `transfer.fsckObjects` for what's
++	checked. Defaults to false. If not set, the value of
++	`transfer.fsckObjects` is used instead.
 +
-+format.numbered::
-+	A boolean which can enable or disable sequence numbers in patch
-+	subjects.  It defaults to "auto" which enables it only if there
-+	is more than one patch.  It can be enabled or disabled for all
-+	messages by setting it to "true" or "false".  See --numbered
-+	option in linkgit:git-format-patch[1].
++fetch.fsck.<msg-id>::
++	Acts like `fsck.<msg-id>`, but is used by
++	linkgit:git-fetch-pack[1] instead of linkgit:git-fsck[1]. See
++	the `fsck.<msg-id>` documentation for details.
 +
-+format.headers::
-+	Additional email headers to include in a patch to be submitted
-+	by mail.  See linkgit:git-format-patch[1].
++fetch.fsck.skipList::
++	Acts like `fsck.skipList`, but is used by
++	linkgit:git-fetch-pack[1] instead of linkgit:git-fsck[1]. See
++	the `fsck.skipList` documentation for details.
 +
-+format.to::
-+format.cc::
-+	Additional recipients to include in a patch to be submitted
-+	by mail.  See the --to and --cc options in
-+	linkgit:git-format-patch[1].
++fetch.unpackLimit::
++	If the number of objects fetched over the Git native
++	transfer is below this
++	limit, then the objects will be unpacked into loose object
++	files. However if the number of received objects equals or
++	exceeds this limit then the received pack will be stored as
++	a pack, after adding any missing delta bases.  Storing the
++	pack from a push can make the push operation complete faster,
++	especially on slow filesystems.  If not set, the value of
++	`transfer.unpackLimit` is used instead.
 +
-+format.subjectPrefix::
-+	The default for format-patch is to output files with the '[PATCH]'
-+	subject prefix. Use this variable to change that prefix.
++fetch.prune::
++	If true, fetch will automatically behave as if the `--prune`
++	option was given on the command line.  See also `remote.<name>.prune`
++	and the PRUNING section of linkgit:git-fetch[1].
 +
-+format.signature::
-+	The default for format-patch is to output a signature containing
-+	the Git version number. Use this variable to change that default.
-+	Set this variable to the empty string ("") to suppress
-+	signature generation.
++fetch.pruneTags::
++	If true, fetch will automatically behave as if the
++	`refs/tags/*:refs/tags/*` refspec was provided when pruning,
++	if not set already. This allows for setting both this option
++	and `fetch.prune` to maintain a 1=1 mapping to upstream
++	refs. See also `remote.<name>.pruneTags` and the PRUNING
++	section of linkgit:git-fetch[1].
 +
-+format.signatureFile::
-+	Works just like format.signature except the contents of the
-+	file specified by this variable will be used as the signature.
++fetch.output::
++	Control how ref update status is printed. Valid values are
++	`full` and `compact`. Default value is `full`. See section
++	OUTPUT in linkgit:git-fetch[1] for detail.
 +
-+format.suffix::
-+	The default for format-patch is to output files with the suffix
-+	`.patch`. Use this variable to change that suffix (make sure to
-+	include the dot if you want it).
-+
-+format.pretty::
-+	The default pretty format for log/show/whatchanged command,
-+	See linkgit:git-log[1], linkgit:git-show[1],
-+	linkgit:git-whatchanged[1].
-+
-+format.thread::
-+	The default threading style for 'git format-patch'.  Can be
-+	a boolean value, or `shallow` or `deep`.  `shallow` threading
-+	makes every mail a reply to the head of the series,
-+	where the head is chosen from the cover letter, the
-+	`--in-reply-to`, and the first patch mail, in this order.
-+	`deep` threading makes every mail a reply to the previous one.
-+	A true boolean value is the same as `shallow`, and a false
-+	value disables threading.
-+
-+format.signOff::
-+	A boolean value which lets you enable the `-s/--signoff` option of
-+	format-patch by default. *Note:* Adding the Signed-off-by: line to a
-+	patch should be a conscious act and means that you certify you have
-+	the rights to submit this work under the same open source license.
-+	Please see the 'SubmittingPatches' document for further discussion.
-+
-+format.coverLetter::
-+	A boolean that controls whether to generate a cover-letter when
-+	format-patch is invoked, but in addition can be set to "auto", to
-+	generate a cover-letter only when there's more than one patch.
-+
-+format.outputDirectory::
-+	Set a custom directory to store the resulting files instead of the
-+	current working directory.
-+
-+format.useAutoBase::
-+	A boolean value which lets you enable the `--base=auto` option of
-+	format-patch by default.
++fetch.negotiationAlgorithm::
++	Control how information about the commits in the local repository is
++	sent when negotiating the contents of the packfile to be sent by the
++	server. Set to "skipping" to use an algorithm that skips commits in an
++	effort to converge faster, but may result in a larger-than-necessary
++	packfile; The default is "default" which instructs Git to use the default algorithm
++	that never skips commits (unless the server has acknowledged it or one
++	of its descendants).
++	Unknown values will cause 'git fetch' to error out.
+++
++See also the `--negotiation-tip` option for linkgit:git-fetch[1].
 -- 
 2.19.0.rc0.335.ga73d156e9c
 
