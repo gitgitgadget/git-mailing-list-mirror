@@ -2,144 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 644CA1F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 18:50:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D96B1F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 18:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727803AbeHVWQw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 18:16:52 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36752 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727016AbeHVWQw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 18:16:52 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j192-v6so2918807wmj.1
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 11:50:48 -0700 (PDT)
+        id S1728006AbeHVWZ2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 18:25:28 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:39667 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727997AbeHVWZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 18:25:28 -0400
+Received: by mail-lj1-f175.google.com with SMTP id l15-v6so2237235lji.6
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 11:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Dji2pU9CzhGgLD0IfPRxq2r+OSoevGAZyuxMhr+UQRM=;
-        b=WM4DoaR8f95+iwg18YnFUbRefbItzHzmTT59GHeJsfBODfbfD+JgILj33Irt0m9w37
-         n/pXlWBK4Nexd75hwljWnPP0ACtyBDENlJWfXaklWHpiA/gCJT1qshnA32KZ1ERHb7/U
-         E4iBdZ8DapqAmIb2guX705Bh4GbXI+cgsDzbqck9UJ71y0oxP+Er4tTUaX7De2IUbX6t
-         xw34wU841r6S2+1rpsb9FZ8OlGsUNX0eqpUxHu2pxdA2ZjHLmBd8EBzZU7MsoLlNirDS
-         5qmZrBNXkyZKtRqyhUrwnndHn6jF1BcxXsiWA9Nrg9GeGt66E53bzjnx7M0rpBJdevOQ
-         Queg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=j0UPlF6jhRhSRN/bboo6pw6/5TkSdkPCx08huhdpoyU=;
+        b=JPmOvq3pj1jCv/LlLmRicMYqHYmkoVTll+dbPDDR+8WBpzJsxbn8fLGjOembgmwQWw
+         kA3PsLmAjHqyAWumA9OtiEnTQh2OH3jGOFFy1AXe95mSAl5nBwCHcvu/deJCw8ZOp8bQ
+         I7WFzc4J50kf0pidq2vgg3bxSdt8RuE7q30xosmhPTD1LAPtQmmZSGsQsGpKWf9iFOIa
+         lFxVTcSr7angOG7qpqFpX8xqTy5QXoTOB6mcqLpJjDidtFTmDQ5cZOppKMO2dwMuN28u
+         SNE05vA2LlCCBAEKxxvHefFIQZKYZ3Xi0qLdK6Hc/UiMruhQt1KG2poz8/e8xcY/cCdy
+         HQ2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Dji2pU9CzhGgLD0IfPRxq2r+OSoevGAZyuxMhr+UQRM=;
-        b=Rc/X6bmf9IszHP2YHweqnqNrAkcZx/uLQJJ69ZElYxKMOCEWBBAnErpXYtmzZpH5Gy
-         p2QtsWXju8j8/qBnnJnrz15LmBd5jaPvjopr9a5QmeUuIGSn+PqRt4bEgVX3zVvJpA1t
-         OIFKcq4CcT1Xhx6wMMEW6+s+jNzA/I2VVJAF/6EnZM+7U8Nf7TIJOz20SwfOccg1zQ++
-         Xgk3m4jCweswrAou66RWKTIJnGUVlobPKwkrqb7PvvbnBCZuRi3WvxQgs1hAk7QOgGRf
-         3kjZW/WRTcwNvQgUjmeu85gdw3mtw/DlfSM3ngnkg2j7Z7zZdjJ+fKkg9/O1w2Ts1zjU
-         PooA==
-X-Gm-Message-State: APzg51AENWz+BSBhW6oh/N+5Cf4oHjOOSmi2d3jJN3fhOQ7gx7brBTb8
-        YXynuZVKkNdxOF9ZYVsxh48=
-X-Google-Smtp-Source: ANB0VdabNIwdeRFvisUWSnvQ4mzDTz69SMKkqOcA44nCM8zt4L/Wcjnce0QbkmNavmEzicE61ZSwLA==
-X-Received: by 2002:a1c:1188:: with SMTP id 130-v6mr3052147wmr.138.1534963847876;
-        Wed, 22 Aug 2018 11:50:47 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u65-v6sm3725046wmd.31.2018.08.22.11.50.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 11:50:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] t6018-rev-list-glob: fix 'empty stdin' test
-References: <20180727174811.27360-1-avarab@gmail.com>
-        <20180822174820.12909-1-szeder.dev@gmail.com>
-Date:   Wed, 22 Aug 2018 11:50:46 -0700
-In-Reply-To: <20180822174820.12909-1-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Wed, 22 Aug 2018 19:48:20 +0200")
-Message-ID: <xmqqefeqme0p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=j0UPlF6jhRhSRN/bboo6pw6/5TkSdkPCx08huhdpoyU=;
+        b=QMTEj2xYZ9DX40mr1E8X7LJCzdCoQmerrOnB8M3H0mdiL0jhDhRU8v+EnobLSSotmf
+         b9EOemb0bs5ZhzKqBh8+sgvKGqrfz62hP/PSLFT5qipKyfwupGocRI3wL6kXvssphGcn
+         CHwLIlRoxKZ1LmSOmFl30BU9fBJ8ByKCtcBkF2RFciEgMgEiXK/pHOT26wSxJxb/Zw62
+         EK8s1lfYLkvQRQBK1zuCUiv48OtY/kjKwI8XH6YYOlrBcLWEwM5hFRA6jx4Cje0V5B+N
+         eituYn+DQZgRPxahr4/soqlEsjR8AMLxsJkNyH5slFnVXJTiYXgqItJW+2o/mCQoUPrw
+         SpMg==
+X-Gm-Message-State: APzg51Bez6ehx9XY4hB2MWKhThA2ncUsRKqDGsOy8SamnuAMtuaqfJSb
+        wfa/1Er8PKE51e46psDtU2GpkSywGYrUDo1xueE=
+X-Google-Smtp-Source: ANB0VdbSN0S+oKz8iXQM1hp/QGNJQ7BwFkIZ7dE7OZTuFpmoJX2PYXA6GARMAxAfSZgF3SaWlU+2cWobWKSpIr1LQNI=
+X-Received: by 2002:a2e:360c:: with SMTP id d12-v6mr3574770lja.88.1534964362955;
+ Wed, 22 Aug 2018 11:59:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180727174811.27360-1-avarab@gmail.com> <20180822174820.12909-1-szeder.dev@gmail.com>
+ <CAPig+cTQrBmgXQdwQpH7DO2AbraD3B4LiRHDx4Sf9rXg0d_eDA@mail.gmail.com>
+In-Reply-To: <CAPig+cTQrBmgXQdwQpH7DO2AbraD3B4LiRHDx4Sf9rXg0d_eDA@mail.gmail.com>
+From:   =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Date:   Wed, 22 Aug 2018 20:59:11 +0200
+Message-ID: <CAM0VKjkVreBKQsvMZ=pEE0NN5gG0MM+XJ0MzCbw1rxi_pR+FXQ@mail.gmail.com>
+Subject: Re: [PATCH] t6018-rev-list-glob: fix 'empty stdin' test
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git mailing list <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+On Wed, Aug 22, 2018 at 7:53 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 
-> Redirect 'git rev-list's stdin explicitly from /dev/null to provide
-> empty input.  (Strictly speaking we don't need this redirection,
-> because the test script's stdin is already redirected from /dev/null
-> anyway, but I think it's better to be explicit about it.)
+> Can you say a word or two (here in the email thread) about how you're
+> finding these failures (across the various test fixes you've posted
+> recently)? Are you instrumenting the code in some fashion? Or, finding
+> them by visual inspection?
 
-Yes.
+Errors from system commands in our tests look like these:
 
->  test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
-> -	git rev-list --stdin <expect >actual &&
-> +	git rev-list --stdin </dev/null >actual &&
->  	test_must_be_empty actual
->  '
+  grep: file3: No such file or directory
+  sed: -e expression #1, char 2: extra characters after command
+  diff: sub1/.git: No such file or directory
+  tar: rmtlseek not stopped at a record boundary
+  tar: Error is not recoverable: exiting now
 
-By the way, it may be about time to turn that expect-failure into
-expect-success.  It is somewhat unfortunate that 0c5dc743 ("t6018:
-flesh out empty input/output rev-list tests", 2017-08-02) removed
-the comment that said "we _might_ want to change the behaviour in
-these cases" and explained the tests as reminders, anticipating that
-the series will change the behaviour for three cases where the
-pending list ends up empty to make the discussion moot, but it
-changed the behaviour of only two of them, leaving the "--stdin
-reads empty" case behind.
+while errors from the shell running the test like these:
 
-It may be just the matter of doing something like the attached
-patch.  I won't be committing such a behaviour change during the
-pre-release feature freeze, but we may want to consider doing this
-early in the next cycle.
+  t0020-crlf.sh: 8: eval: cannot open two: No such file
+  t6018-rev-list-glob.sh: 4: eval: cannot open expect: No such file
+  t7408-submodule-reference.sh: 615: test: =: unexpected operator
 
- revision.c               | 13 +++++++++++++
- t/t6018-rev-list-glob.sh |  4 ++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+i.e. lines starting with various system commands' or test scripts'
+names, followed by ': '.
 
-diff --git a/revision.c b/revision.c
-index d12e6d8a4a..21fb413511 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2441,6 +2441,19 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 		object = get_reference(revs, revs->def, &oid, 0);
- 		add_pending_object_with_mode(revs, object, revs->def, oc.mode);
- 	}
-+	/* 
-+	 * Even if revs->pending is empty after all the above, if we
-+	 * handled "--stdin", then the caller really meant to give us
-+	 * an empty commit range.  Just let the traversal give an
-+	 * empty result without causing a "no input?  do you know how
-+	 * to use this command?" failure.
-+	 *
-+	 * NOTE!!!  Because "--stdin </dev/null --default HEAD" should
-+	 * default to HEAD, this must come _after_ the above block
-+	 * that deals with revs->ref fallback.
-+	 */
-+	if (read_from_stdin)
-+		revs->rev_input_given = 1;
- 
- 	/* Did the user ask for any diff output? Run the diff! */
- 	if (revs->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT)
-diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-index 02936c2f24..db8a7834d8 100755
---- a/t/t6018-rev-list-glob.sh
-+++ b/t/t6018-rev-list-glob.sh
-@@ -255,8 +255,8 @@ test_expect_success 'rev-list accumulates multiple --exclude' '
- 	compare rev-list "--exclude=refs/remotes/* --exclude=refs/tags/* --all" --branches
- '
- 
--test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
-+test_expect_success 'rev-list should succeed with empty output on empty stdin' '
- 	git rev-list --stdin </dev/null >actual &&
- 	test_must_be_empty actual
- '
- 
+So I've modified t/Makefile to not remove the 'test-results' directory
+after a successful 'make test':
+
+diff --git a/t/Makefile b/t/Makefile
+index ea36cf7ac7..c7b1655593 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -54,10 +54,11 @@ pre-clean:
+        $(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
+
+ clean-except-prove-cache:
+-       $(RM) -r 'trash directory'.* '$(TEST_RESULTS_DIRECTORY_SQ)'
++       $(RM) -r 'trash directory'.*
+        $(RM) -r valgrind/bin
+
+ clean: clean-except-prove-cache
++       $(RM) '$(TEST_RESULTS_DIRECTORY_SQ)'
+
+ distclean: clean
+        $(RM) .prove
+
+And then scanned the results of a '--verbose-log -x' test run with:
+
+  grep -E '^(awk|basename|cat|cd|chmod|cmp|cp|cut|diff|dirname|egrep|find|fgrep|grep|gunzip|gzip|ln|mkdir|mkfifo|mktemp|mv|readlink|rmdir|sed|sort|tar|touch|tr|ulimit|umask|uniq|unzip|wc|zipinfo|t[0-9][0-9][0-9][0-9]-[^:]*\.sh):
+' test-results/*.out
+
+and then, for lack of something better to do ;), I started looking at
+the simpler looking errors.
+
+I've though about how a check like this could be automated, but
+haven't had any workable idea yet.  There are commands that can
+legitimately print errors, e.g. when checking for a prereq which the
+system doesn't have (e.g. the 'tar' errors above, I think).  And the
+list of system commands in the grep pattern above is surely incomplete
+and will likely change in the future...
