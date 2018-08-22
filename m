@@ -2,138 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C2531F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 11:14:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F12C31F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 11:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728531AbeHVOjN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 10:39:13 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:41210 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728413AbeHVOjN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 10:39:13 -0400
-Received: by mail-qt0-f194.google.com with SMTP id t39-v6so752350qtc.8
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 04:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=+45l7mMSNAmmrR2GCrR7/p9wrz35X5vWw6DXwnWEp50=;
-        b=c+iYY35gZtL+9asxLePhBueyw3cgJybR39xnNqEW4Iw6Z7pr2AqLX+hGTVDrJtcQQ5
-         jzFArq7Mt/1XSaxieWyOhaZs2Ufka2/xjVE6cH0lU8cZLEfQ8Bz70ltsdOqcLG9fgdQg
-         fiC+QLtIk5D+D2gikJAKSrDCN6DmcwKu3qyYuSPIeS1cZ8qKt2+lp+2YPH7er06/1Ieq
-         YeErGBWvPpqI6wOFU5Li1KXbJPFCBpc8vr0y7YZ1G1KDrwS81Z0zmIhJ8mwFim7sD7Ki
-         JzUfFx4bsPGgEtz23fVXR0nrhqyoix0osX+FaHYk0SQy7gH8Fo1uIfgT30sn+0Xtn1F1
-         KnrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+45l7mMSNAmmrR2GCrR7/p9wrz35X5vWw6DXwnWEp50=;
-        b=PpydGmhGc6z4itryrwJP6dD0FH4egoEA8PjlKi/ox3V6BsAk9RlXuaJp6joFzw1Qwx
-         1m2Jfy56UAyd/R/Ak9J4bXzABJjT3iITPxq62uNNYC0ixYmmKr7dDD1FUWauuXZKeIuY
-         pflXifPE81HY4veBNjLO9JDw9bUUha5nYRWQGmmJiEOCQXkyZDjehwR8fjFKE4yMSyuA
-         cvAfvleZrLCaCa8rX7yk4L8MLPCbn9f8vSQPXYAXdfpiFfBOQvCdFpCi4+hG6P9BHrg5
-         ZGICZwIb6Ur9oBUkIMNcc9RJgWxdkUJJIbP4Or36rYgpFllYKju9NtwIUhJtTcDo/JTQ
-         wChg==
-X-Gm-Message-State: APzg51DE/4d9SPQI5C+7NeUWkaVJlAe7b0vp1dWZmZtRLZDn3Nii3xrt
-        1luiSDmsR4MPNfYgHHE0HuvaD4c3
-X-Google-Smtp-Source: ANB0Vda2aByV/xWgM3gJaQdK8l+siq8ZmvozLrapYfsp5riIsW+WioHWQjtRO2qitA11PaS7+zfSUg==
-X-Received: by 2002:a0c:8ab0:: with SMTP id 45-v6mr17724571qvv.49.1534936484516;
-        Wed, 22 Aug 2018 04:14:44 -0700 (PDT)
-Received: from [10.0.1.17] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id c11-v6sm723570qkb.22.2018.08.22.04.14.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Aug 2018 04:14:43 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
- <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
- <20180821212923.GB24431@sigill.intra.peff.net>
- <20180822004815.GA535143@genre.crustytoothpaste.net>
- <20180822030344.GA14684@sigill.intra.peff.net>
- <20180822053626.GB535143@genre.crustytoothpaste.net>
- <20180822060735.GA13195@sigill.intra.peff.net>
- <CACBZZX7Cmp8d=UKF2nk36fL7mR+umdKwKZAKNZSkyP0NXvquhw@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d1fafc75-d6e4-d363-d600-579c200aca43@gmail.com>
-Date:   Wed, 22 Aug 2018 07:14:42 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <CACBZZX7Cmp8d=UKF2nk36fL7mR+umdKwKZAKNZSkyP0NXvquhw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+        id S1729050AbeHVPQd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 11:16:33 -0400
+Received: from ao2.it ([92.243.12.208]:54610 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728312AbeHVPQc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 11:16:32 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fsReK-0000SW-V6; Wed, 22 Aug 2018 13:50:09 +0200
+Date:   Wed, 22 Aug 2018 13:51:52 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v3 7/7] submodule: support reading .gitmodules even when
+ it's not checked out
+Message-Id: <20180822135152.1d40cd05d0b0cadb5eefb31f@ao2.it>
+In-Reply-To: <20180820233755.dc7b6a6927faccc37b25075f@ao2.it>
+References: <20180814110525.17801-1-ao2@ao2.it>
+        <20180814110525.17801-8-ao2@ao2.it>
+        <xmqqmutoznwe.fsf@gitster-ct.c.googlers.com>
+        <20180820233755.dc7b6a6927faccc37b25075f@ao2.it>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 20 Aug 2018 23:37:55 +0200
+Antonio Ospite <ao2@ao2.it> wrote:
 
-On 8/22/2018 3:39 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Wed, Aug 22, 2018 at 8:20 AM Jeff King <peff@peff.net> wrote:
->> On Wed, Aug 22, 2018 at 05:36:26AM +0000, brian m. carlson wrote:
->>
->>> On Tue, Aug 21, 2018 at 11:03:44PM -0400, Jeff King wrote:
->>> I don't know if something like this is an improvement or now, but this
->>> seems to at least compile:
->>>
->>> diff --git a/cache.h b/cache.h
->>> index 1398b2a4e4..3207f74771 100644
->>> --- a/cache.h
->>> +++ b/cache.h
->>> @@ -1033,7 +1033,13 @@ extern const struct object_id null_oid;
->>>
->>>   static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
->>>   {
->>> -     return memcmp(sha1, sha2, the_hash_algo->rawsz);
->>> +     switch (the_hash_algo->rawsz) {
->>> +             case 20:
->>> +             case 32:
->>> +                     return memcmp(sha1, sha2, the_hash_algo->rawsz);
->>> +             default:
->>> +                     assert(0);
->>> +     }
->> I think that would end up with the same slow code, as gcc would rather
->> call memcmp than expand out the two sets of asm.
->>
->>> I won't have time to sit down and test this out until tomorrow afternoon
->>> at the earliest.  If you want to send in something in the mean time,
->>> even if that limits things to just 20 for now, that's fine.
->> I don't have a good option. The assert() thing works until I add in the
->> "32" branch, but that's just punting the issue off until you add support
->> for the new hash.
->>
->> Hand-rolling our own asm or C is a portability headache, and we need to
->> change all of the callsites to use a new hasheq().
->>
->> Hiding it behind a per-hash function is conceptually cleanest, but not
->> quite as fast. And it also requires hasheq().
->>
->> So all of the solutions seem non-trivial.  Again, I'm starting to wonder
->> if it's worth chasing this few percent.
-> Did you try __builtin_expect? It's a GCC builtin for these sorts of
-> situations, and sometimes helps:
-> https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html
+> On Tue, 14 Aug 2018 13:36:17 -0700
+> Junio C Hamano <gitster@pobox.com> wrote:
+> 
+> > Antonio Ospite <ao2@ao2.it> writes:
+[...]
+> > >  
+> > > +	# For more details about this check, see
+> > > +	# builtin/submodule--helper.c::module_config()
+> > > +	if test ! -e .gitmodules && git cat-file -e HEAD:.gitmodules > /dev/null 2>&1
+> > 
+[...]
+> > More importantly, I think it is better to add a submodule--helper
+> > subcommand that exposes the check in question, as the code is
+> > already written ;-) That approach will guarantee that the logic and
+> > the message stay the same between here and in the C code.  Then you
+> > do not even need these two line comment.
+> >
+[...]
+> Does the interface suggested in the patch annotation sound acceptable?
+> 
+> To recap:
+> 
+>   - add an is_gitmodules_safely_writeable() helper;
+>   - expose a "submodule--helper config --is-safely-writeable"
+>     subcommand for git-submodule.sh to use.
 >
-> I.e. you'd tell GCC we expect to have the 20 there with:
+
+Maybe "submodule--helper config --check-writeable" could be a better
+name to avoid confusion between the boolean return value of the C
+function (0: false, 1: true) and the exit status returned to the shell
+(0: safe to write, !0: unsafe).
+
+I'll use the following to map the returned value, as I saw that in
+other places in the code base:
+
+	if (argc == 1 && command == CHECK_WRITEABLE)
+		return is_gitmodules_safely_writeable() ? 0 : -1;
+
+I am assuming a command flag to the "config" subcommand is OK instead
+of a brand new subcommand.
+
+> [...]
+> > > @@ -603,8 +604,19 @@ static void submodule_cache_check_init(struct repository *repo)
+> > >  static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void *data)
+> > >  {
+> > >  	if (repo->worktree) {
+> > > -		char *file = repo_worktree_path(repo, GITMODULES_FILE);
+> > > -		git_config_from_file(fn, file, data);
+> > > +		struct git_config_source config_source = { 0 };
+> > > +		const struct config_options opts = { 0 };
+> > > +		struct object_id oid;
+> > > +		char *file;
+> > > +
+> > > +		file = repo_worktree_path(repo, GITMODULES_FILE);
+> > > +		if (file_exists(file))
+> > > +			config_source.file = file;
+> > > +		else if (get_oid(GITMODULES_HEAD, &oid) >= 0)
+> > > +			config_source.blob = GITMODULES_HEAD;
+> > 
+> > What is the reason why we fall back directly to HEAD when working
+> > tree file does not exist?  I thought that our usual fallback was to
+> > the version in the index for other things like .gitignore/attribute
+> > and this codepath look like an oddball.  Are you trying to handle
+> > the case where we are in a bare repository without any file checked
+> > out (and there is not even the index)?
+> >
+> 
+> My use case is about *reading* .gitmodules when it's ignored in a sparse
+> checkout, in this scenario there are usually no staged changes
+> to .gitmodules, so I basically just didn't care about the index.
+> 
+> Would using ":.gitmodules" instead of "HEAD:.gitmodules" be enough?
+> 
+[...]
+> 
+> If so, what name should I use instead of GITMODULES_HEAD?
+> GITMODULES_BLOB is already taken for something different, maybe
+> GITMODULES_REF or GITMODULES_OBJECT?
 >
->      if (__builtin_expect(the_hash_algo->rawsz == 20, 1)) { ... }
->
-> The perl codebase has LIKELY() and UNLIKELY() macros for this which if
-> the feature isn't available fall back on just plain C code:
-> https://github.com/Perl/perl5/blob/v5.27.7/perl.h#L3335-L3344
-The other thing I was going to recommend (and I'll try to test this out 
-myself later) is to see if 'the_hash_algo->rawsz' is being treated as a 
-volatile variable, since it is being referenced through a pointer. 
-Perhaps storing the value locally and then casing on it would help?
+
+If using ":.gitmodules" is good enough I could rename the current use
+of GITMODULES_BLOB in fsck.c to GITMODULES_NONBLOB and use
+GITMODULES_BLOB for ":.gitmodules" after all.
+
+This is to avoid preprocessor clashes with the symbolic constant
+GITMODULES_BLOB currently used in in fsck.c.
+
+Ciao,
+   Antonio
+
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
+
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
