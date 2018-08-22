@@ -2,82 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E89C21F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 16:28:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E224A1F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 16:30:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727023AbeHVTy0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 15:54:26 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:37998 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726550AbeHVTyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 15:54:25 -0400
-Received: by mail-wr1-f49.google.com with SMTP id w11-v6so2119087wrc.5
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:28:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=fMLRdSmXjPjKm1c6hvMSXVI1B3M7SrM5XWu7XgItq1U=;
-        b=YLzxhiFHfTcuZ2+qIcrkX1kH7NW5MWl1fgRG8+3ODL6ZiKH70AvxSFW5NCgP6F4Bif
-         yetP2/W68/duYFK1CEXvO4gE8QMtqvLMhHSG4W1wYsF2dtNhR5FerBcMQ9nVPPWqVMUB
-         TKxX0NIT5O8TlxC2ARmwJxb6yqPGlnPYlzb6fBOMgpDfI8Fmbyg01AW8tcys4VGnofXd
-         Nho7ZIp97o07lJq4554QbhC2WEocvRRH73SZZHVXG3KBKe3Ahwq8sZ6UnxKweN1+VJRR
-         GxE2ElmKE8D6V7q2isd2+KCXdjVYuPpDzeydM1ga8CJWFa3WlALT9Uphml3urI6W6HFw
-         LRaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=fMLRdSmXjPjKm1c6hvMSXVI1B3M7SrM5XWu7XgItq1U=;
-        b=p9UcvSAzMHn0hvhzkmnKOAerkYE6LmDYBHFk4LymsMPZq06vr+T5NAkYBQaAjdeKpT
-         51SQw8OeOW0wh8FXwf8KgpjN6u/F1WZebh7HkDRXvfiX5FgqXHkvdirhMsifsBPGFAZ9
-         EcgZM3yzfeR+LcF91PwFDk9oZJQanJf7i5hPzsaiGua46gaIWTPY2c621voz0JgdN4J9
-         ut9H5IS/D958EfjbJJQUktWDyBsc0vaY1weNuJMOxq6vnG1dd7VVfyrDMWY4xqGAkJRR
-         NTxZUOt7ArslxA5oAhFDtWCu01RxVIS5kwTB48Cz92AR2lTed8hrmBMjaBVZpGj6hHFp
-         CV+g==
-X-Gm-Message-State: AOUpUlFy7QT46zTpYmTOeAqBT1eBui/HZzgk3D53cRp0A92sMIKZ3HmU
-        Naicw5nI6zUbleUHlj1LnnA=
-X-Google-Smtp-Source: AA+uWPymyWn8YoZHnmLPZ6T+QpsI5ekPnzmJQ1O3ECmHbYtDnfatFmcLkK4CuD56zsCcBvP/nL26sw==
-X-Received: by 2002:adf:9007:: with SMTP id h7-v6mr37602575wrh.178.1534955330426;
-        Wed, 22 Aug 2018 09:28:50 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm1564540wrw.79.2018.08.22.09.28.49
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 09:28:49 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC 00/11] Break down Documentation/config.txt
-References: <20180822160605.21864-1-pclouds@gmail.com>
-Date:   Wed, 22 Aug 2018 09:28:49 -0700
-In-Reply-To: <20180822160605.21864-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Wed, 22 Aug 2018 18:05:54 +0200")
-Message-ID: <xmqqh8jm5pry.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727019AbeHVTzg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 15:55:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:51836 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726550AbeHVTzg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:55:36 -0400
+Received: (qmail 21080 invoked by uid 109); 22 Aug 2018 16:30:02 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 22 Aug 2018 16:30:02 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1177 invoked by uid 111); 22 Aug 2018 16:30:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 12:30:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 12:30:00 -0400
+Date:   Wed, 22 Aug 2018 12:30:00 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/2] t0020-crlf: check the right file
+Message-ID: <20180822163000.GB11904@sigill.intra.peff.net>
+References: <20180822124437.11242-1-szeder.dev@gmail.com>
+ <xmqqo9du5qlf.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqo9du5qlf.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On Wed, Aug 22, 2018 at 09:11:08AM -0700, Junio C Hamano wrote:
 
-> I notice a couple times lately that people added new config keys in
-> the wrong place, which is understandable since this file has become so
-> big, it's hard to see the structure of anything.
->
-> Since we have broken down some parts of it into separate files
-> already, this continues in that direction and moves even more parts
-> out of config.txt.
+> This originates from fd777141 ("t0020: fix ignored exit code inside
+> loops", 2015-03-25) where a loop
+> 
+>     for f in one dir/two
+>     do
+>             do things on "$f" || break
+>     done
+> 
+> was unrolled to correctly break out of the &&-chain.  The filenames
+> on the update-index line correctly copied one and dir/two, but the
+> has_cr line somehow lost dir/ prefix.
+> 
+> Thanks.  Will queue.
 
-Especially with <20180819105210.19296-1-pclouds@gmail.com>, which is
-your recent update to the "git help --config" collection machinery
-in place, this sounds like a sensible move.
+Whoops, my error. Thanks for catching it.
+
+> > diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+> > index 5f056982a5..854da0ae16 100755
+> > --- a/t/t0020-crlf.sh
+> > +++ b/t/t0020-crlf.sh
+> > @@ -160,7 +160,7 @@ test_expect_success 'checkout with autocrlf=input' '
+> >  	git config core.autocrlf input &&
+> >  	git read-tree --reset -u HEAD &&
+> >  	test_must_fail has_cr one &&
+> > -	test_must_fail has_cr two &&
+> > +	test_must_fail has_cr dir/two &&
+
+I think I'm also responsible for these mis-uses of test_must_fail, which
+probably ought to be "!".
+
+-Peff
