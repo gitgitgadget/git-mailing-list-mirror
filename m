@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 431861F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 20:42:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 135E71F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 21:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbeHWAIy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 20:08:54 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:51965 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726760AbeHWAIy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 20:08:54 -0400
-Received: by mail-wm0-f68.google.com with SMTP id y2-v6so3172036wma.1
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 13:42:28 -0700 (PDT)
+        id S1727560AbeHWAdq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 20:33:46 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:51499 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726588AbeHWAdq (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 20:33:46 -0400
+Received: by mail-wm0-f42.google.com with SMTP id y2-v6so3222778wma.1
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:07:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=31mFI7DokuBoGxYkPL88fvHRm03KBuitUut05jNaUj0=;
-        b=rFZAgskn3FVyBNpAYLS1BK4CxflkxZpgp2z7AqgL9zJjIO/m3sJy3QTAa2DX3UFw6r
-         6cmU6PHZmHQqp2lGUvJn6esPSJ6SlBCB/KTq61A1tC3T9Lv1JaGjth4erebcN6RB6EWO
-         2t4vCuKIqLkPeQpekLv4C79d4No0aVMms4WKUC5wfxUW3nP6C0U36FEgO3Y5X1GqwvCh
-         aN9Qs8xKIEBJxqVIzzf1EG1utV5/SrkkpbYj100rzetbN7htEMxf1YVFYx+No0mVljmS
-         C6IhP3csEqzdDW/c0ccf4MXksFRIicscCB/k71T7EH5ZUS+LQ5pj+7BkWFOm5f5nb670
-         gnPg==
+        bh=xgtfSYg02wbEDPOKXn62W1+4T4q6GFbU9+1HEDf+HFA=;
+        b=E7pPbpBrXTpQuGyRABS+EnDnJGhokrC8dxbsDv+Bg0YrkHIMa6D0p1nrkTZHLbbYr7
+         2dJhIHdt0a49INjGKlSvLe+7Mn6dofAcypxHrfzmX7iWHHXUUwwPFgWAsmUSlMR2b5Cj
+         b7PQs3DXHK4ulPompC0SNeE4IwXy/kBBuQUO8ovMTFZiTV4Un4mUsu0cJbmGRjEO/Yai
+         yTPr7gewu4umrXLexHHn1ks6/CGnek2aKP3FlH+zUgpLsV0g4TeFe4ZYkEEu50Ij4kfV
+         ruewaQxjIUmuIFfIdu1pNr/PAZjSbqWObM+AZVBLyc2bbHdfuVv5YM2Y42WaZ88CP8zj
+         ICpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=31mFI7DokuBoGxYkPL88fvHRm03KBuitUut05jNaUj0=;
-        b=HIQmN4Cl3eC8zImLiS3M7D32SRlFNBBPHZVd9JAmoZGzamErRlvFf893hzou49rODq
-         fGhX42w7wsXIfK+2ExpYk2dP+/XOkT3AK0JM+ELS54MBQBIdEZC1sXBFJb1u81do7ZIN
-         RhFMXaB4lk0H4+ZLpaerM237GvNSYIe4JT5hxZR0UwXIY8/VZSnO8d4gC+PpYBZnGQj7
-         O1h9O3qzHC5kV7T99XiyfFQON2adXrUmnAWU4RwXpbtdFcb8xeQRRtSUf+HI9uFlA2Nb
-         Mt6GUHh3DdKnhJtRCgu1/5ehjYKstOhRsKvVfZnMFnE5P6B8I69XCVPsjS0gvQL0g8xH
-         Ry8A==
-X-Gm-Message-State: APzg51DgsPluR+d6zyFRSqadh/SWTvZ82u1M7gM+vLTQAPVe0lo1wQJe
-        dgkEs1mj5AY/NE2QLiQpFlg=
-X-Google-Smtp-Source: ANB0VdYqWigMH1933yfrxOQGVehvJCKyzBTVecfaJVepXliv492Y0/UsA/+uXfG4Qemtb4WoT7qUxg==
-X-Received: by 2002:a1c:5bc7:: with SMTP id p190-v6mr3273066wmb.101.1534970547320;
-        Wed, 22 Aug 2018 13:42:27 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t6-v6sm2993276wmf.8.2018.08.22.13.42.26
+        bh=xgtfSYg02wbEDPOKXn62W1+4T4q6GFbU9+1HEDf+HFA=;
+        b=TIolIKfVYPhBzXUVWJNXMsNqlR6hEEiNn2t9ihfFsAFhm2so7oioCntxKszta0gUyC
+         JqcZsg+PukXLKAAkz2hxccjbTHfPHMZsrDobAOSemH6KbKAOMRQR7nHYEFAI6ZE5V3TD
+         q0tkarPJb2uFUBTUIcHxCtLExwcWJbnnWtvy1BGAGxMiM4lrKcYijeEepVKRrB+sGNkQ
+         EYw89VujbMJwk80s3Kp64UBzGwN5jlP5Tql6kqenk5SV0Vsd76a24pPetmXK1nNX1ytg
+         fftMRVe9bDE5SjixxVWVw1+n0dkIcJasTDtX59jFw5H0lLiyptZAI8tjWn0vBkv8zf4I
+         NC/A==
+X-Gm-Message-State: APzg51CQynck77usj1zSVTkdPYPbJN8WG5SvZI231UGFhZd5xCMLUngK
+        cXFqtxbvoqG8LUTU8iV4qd8=
+X-Google-Smtp-Source: ANB0VdbI6xkzrYLqy7ds4/fAki95jduTIXKDOaKxmrsi/wuZM7bFOmPVO+l0teqtVo3K0zsjXhKiqA==
+X-Received: by 2002:a1c:1a48:: with SMTP id a69-v6mr3139318wma.43.1534972034159;
+        Wed, 22 Aug 2018 14:07:14 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j133-v6sm4529059wmd.12.2018.08.22.14.07.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 13:42:26 -0700 (PDT)
+        Wed, 22 Aug 2018 14:07:13 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] rev-list: make empty --stdin not an error
-References: <20180727174811.27360-1-avarab@gmail.com>
-        <20180822174820.12909-1-szeder.dev@gmail.com>
-        <xmqqefeqme0p.fsf@gitster-ct.c.googlers.com>
-        <20180822192308.GB19730@sigill.intra.peff.net>
-        <20180822195045.GC19730@sigill.intra.peff.net>
-Date:   Wed, 22 Aug 2018 13:42:26 -0700
-In-Reply-To: <20180822195045.GC19730@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 22 Aug 2018 15:50:46 -0400")
-Message-ID: <xmqqa7pem8ul.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH v4 10/11] rerere: teach rerere to handle nested conflicts
+References: <20180714214443.7184-1-t.gummerer@gmail.com>
+        <20180805172037.12530-1-t.gummerer@gmail.com>
+        <20180805172037.12530-11-t.gummerer@gmail.com>
+        <CACBZZX6xvsZ4K86b53ura6zENs2p0SBjwYYG=h0TNem3wnEbuQ@mail.gmail.com>
+        <xmqqsh365qt0.fsf@gitster-ct.c.googlers.com>
+        <20180822203451.GG13316@hank.intra.tgummerer.com>
+Date:   Wed, 22 Aug 2018 14:07:12 -0700
+In-Reply-To: <20180822203451.GG13316@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Wed, 22 Aug 2018 21:34:51 +0100")
+Message-ID: <xmqq4lfmm7pb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,73 +71,87 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Instead, let's keep two flags: one to denote when we got
-> actual input (which triggers both roles) and one for when we
-> read stdin (which triggers only the first).
+> Hmm, it does describe what happens in the code, which is what this
+> patch implements.  Maybe we should rephrase the title here?
 >
-> This does mean a caller interested in the first role has to
-> check both flags, but there's only one such caller. And any
-> future callers might want to make the distinction anyway
-> (e.g., if they care less about erroring out, and more about
-> whether revision.c soaked up our stdin).
->
-> [1] https://public-inbox.org/git/20170802223416.gwiezhbuxbdmbjzx@sigill.intra.peff.net/
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/rev-list.c       | 2 +-
->  revision.c               | 1 +
->  revision.h               | 5 +++++
->  t/t6018-rev-list-glob.sh | 2 +-
->  4 files changed, 8 insertions(+), 2 deletions(-)
+> Or are you suggesting dropping this patch (and the next one)
+> completely, as we don't want to try and handle the case where this
+> kind of garbage is thrown at 'rerere'?
 
-I think this makes sense, but if we were to give a dedicated field
-in the revs structure, can we lose the local variable at the same
-time, I wonder?
+I consider these two patches as merely attempting to punt a bit
+better.  Once users start committing conflict-marker-looking lines
+in the contents, and getting them involved in actual conflicts, I do
+not think any approach (including what the original rerere uses
+before this patch) that assumes the markers will neatly form set of
+blocks of text enclosed in << == >> will reliably step around such
+broken contents.  E.g. it is entirely conceivable both branches have
+the <<< beginning of conflict marker plus contents from the HEAD
+before they recorded the marker that are identical, that diverge as
+you scan the text down and get closer to ===, something like:
 
-Thanks.
+        side A                  side B
+        --------------------    --------------------
 
-> diff --git a/revision.c b/revision.c
-> index de4dce600d..4d53102cf4 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -2369,6 +2369,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
->  				}
->  				if (read_from_stdin++)
->  					die("--stdin given twice?");
-> +				revs->read_from_stdin = 1;
->  				read_revisions_from_stdin(revs, &prune_data);
->  				continue;
->  			}
-> diff --git a/revision.h b/revision.h
-> index 007278cc11..1225957927 100644
-> --- a/revision.h
-> +++ b/revision.h
-> @@ -82,6 +82,11 @@ struct rev_info {
->  	 */
->  	int rev_input_given;
->  
-> +	/*
-> +	 * Whether we read from stdin due to the --stdin option.
-> +	 */
-> +	int read_from_stdin;
-> +
->  	/* topo-sort */
->  	enum rev_sort_order sort_order;
->  
-> diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-> index 0bf10d0686..db8a7834d8 100755
-> --- a/t/t6018-rev-list-glob.sh
-> +++ b/t/t6018-rev-list-glob.sh
-> @@ -255,7 +255,7 @@ test_expect_success 'rev-list accumulates multiple --exclude' '
->  	compare rev-list "--exclude=refs/remotes/* --exclude=refs/tags/* --all" --branches
->  '
->  
-> -test_expect_failure 'rev-list should succeed with empty output on empty stdin' '
-> +test_expect_success 'rev-list should succeed with empty output on empty stdin' '
->  	git rev-list --stdin </dev/null >actual &&
->  	test_must_be_empty actual
->  '
+        shared                  shared
+        <<<<<<<                 <<<<<<<
+        version before          version before
+        these guys merged       these guys merged
+        their ancestor          their ancestor
+        versions                versions.
+        but some                now some
+        lines are different     lines are different
+        =======                 ========
+        and other               totally different
+        contents                contents
+        ...                     ...
+
+And a merge of these may make <<< part shared (i.e. outside the
+conflicted region) while lines near and below ==== part of conflict,
+which would give us something like
+
+        merge of side A & B
+        -------------------
+
+        shared                  
+        <<<<<<<                 (this is part of contents)
+        version before          
+        these guys merged       
+        their ancestor          
+        <<<<<<< HEAD            (conflict marker)
+        versions
+        but some
+        lines are different
+        =======                 (this is part of contents)
+        and other
+        contents
+        ...
+        =======                 (conflict marker)
+        versions.
+        now some
+        lines are different
+        =======                 (this is part of contents)
+        totally different
+        contents
+        ...
+        >>>>>>> theirs          (conflict marker)
+
+Depending on the shape of the original conflict that was committed,
+we may have two versions of <<<, together with the real conflict
+marker, but shared closing >>> marker.  With contents like that,
+there is no way for us to split these lines into two groups at a
+line '=====' (which one?) and swap to come up with the normalized
+shape.
+
+The original rerere algorithm would punt when such an unmatched
+markers are found, and deals with "nested conflict" situation by
+avoiding to create such a thing altogether.  I am sure your two
+patches may make the code punt less, but I suspect that is not a
+foolproof "solution" but more of a workaround, as I do not think it
+is solvable, once you allow users to commit conflict-marker looking
+strings in contents.  As the heuristics used in such a workaround
+are very likely to change, and something the end-users should not
+even rely on, I'd rather not document and promise the exact
+behaviour---perhaps we should stress "don't do that" even stronger
+instead.
