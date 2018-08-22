@@ -2,156 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 135E71F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 21:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57D1F1F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 21:14:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727560AbeHWAdq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 20:33:46 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:51499 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726588AbeHWAdq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 20:33:46 -0400
-Received: by mail-wm0-f42.google.com with SMTP id y2-v6so3222778wma.1
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 14:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=xgtfSYg02wbEDPOKXn62W1+4T4q6GFbU9+1HEDf+HFA=;
-        b=E7pPbpBrXTpQuGyRABS+EnDnJGhokrC8dxbsDv+Bg0YrkHIMa6D0p1nrkTZHLbbYr7
-         2dJhIHdt0a49INjGKlSvLe+7Mn6dofAcypxHrfzmX7iWHHXUUwwPFgWAsmUSlMR2b5Cj
-         b7PQs3DXHK4ulPompC0SNeE4IwXy/kBBuQUO8ovMTFZiTV4Un4mUsu0cJbmGRjEO/Yai
-         yTPr7gewu4umrXLexHHn1ks6/CGnek2aKP3FlH+zUgpLsV0g4TeFe4ZYkEEu50Ij4kfV
-         ruewaQxjIUmuIFfIdu1pNr/PAZjSbqWObM+AZVBLyc2bbHdfuVv5YM2Y42WaZ88CP8zj
-         ICpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=xgtfSYg02wbEDPOKXn62W1+4T4q6GFbU9+1HEDf+HFA=;
-        b=TIolIKfVYPhBzXUVWJNXMsNqlR6hEEiNn2t9ihfFsAFhm2so7oioCntxKszta0gUyC
-         JqcZsg+PukXLKAAkz2hxccjbTHfPHMZsrDobAOSemH6KbKAOMRQR7nHYEFAI6ZE5V3TD
-         q0tkarPJb2uFUBTUIcHxCtLExwcWJbnnWtvy1BGAGxMiM4lrKcYijeEepVKRrB+sGNkQ
-         EYw89VujbMJwk80s3Kp64UBzGwN5jlP5Tql6kqenk5SV0Vsd76a24pPetmXK1nNX1ytg
-         fftMRVe9bDE5SjixxVWVw1+n0dkIcJasTDtX59jFw5H0lLiyptZAI8tjWn0vBkv8zf4I
-         NC/A==
-X-Gm-Message-State: APzg51CQynck77usj1zSVTkdPYPbJN8WG5SvZI231UGFhZd5xCMLUngK
-        cXFqtxbvoqG8LUTU8iV4qd8=
-X-Google-Smtp-Source: ANB0VdbI6xkzrYLqy7ds4/fAki95jduTIXKDOaKxmrsi/wuZM7bFOmPVO+l0teqtVo3K0zsjXhKiqA==
-X-Received: by 2002:a1c:1a48:: with SMTP id a69-v6mr3139318wma.43.1534972034159;
-        Wed, 22 Aug 2018 14:07:14 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j133-v6sm4529059wmd.12.2018.08.22.14.07.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 14:07:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v4 10/11] rerere: teach rerere to handle nested conflicts
-References: <20180714214443.7184-1-t.gummerer@gmail.com>
-        <20180805172037.12530-1-t.gummerer@gmail.com>
-        <20180805172037.12530-11-t.gummerer@gmail.com>
-        <CACBZZX6xvsZ4K86b53ura6zENs2p0SBjwYYG=h0TNem3wnEbuQ@mail.gmail.com>
-        <xmqqsh365qt0.fsf@gitster-ct.c.googlers.com>
-        <20180822203451.GG13316@hank.intra.tgummerer.com>
-Date:   Wed, 22 Aug 2018 14:07:12 -0700
-In-Reply-To: <20180822203451.GG13316@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Wed, 22 Aug 2018 21:34:51 +0100")
-Message-ID: <xmqq4lfmm7pb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727307AbeHWAl1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 20:41:27 -0400
+Received: from mout.gmx.net ([212.227.15.18]:57995 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727007AbeHWAl1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 20:41:27 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mg3Vt-1fV8IS0wMP-00NRMz; Wed, 22
+ Aug 2018 23:14:45 +0200
+Date:   Wed, 22 Aug 2018 23:14:43 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Alban Gruin <alban.gruin@gmail.com>
+cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        phillip.wood@dunelm.org.uk, gitster@pobox.com
+Subject: Re: [GSoC][PATCH v6 18/20] rebase--interactive2: rewrite the submodes
+ of interactive rebase in C
+In-Reply-To: <20180810165147.4779-19-alban.gruin@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808222310220.73@tvgsbejvaqbjf.bet>
+References: <20180731180003.5421-1-alban.gruin@gmail.com> <20180810165147.4779-1-alban.gruin@gmail.com> <20180810165147.4779-19-alban.gruin@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:PwajD9AoDgEHLtLV96CHTkRwtMAU12+mFt7zQz7ccC2JTaXbWZb
+ AYJHeCFX+8/hNoxI9hGoczadwKfeps9SBRDgdGZGeD5G3Fu76qAgcp2EzNmwRplwAZLiZj5
+ n4zSd2PIMT7Kto9I/jRsIcA0sATjl9AHZgIF8hdWVg0/aS2XoTtOuA85OwBmcktqHvzybqw
+ 28s6BSgvHZ0d9SVVloLXA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:EQKYiVp+C+k=:gxZfs4N62AXiXvIcgiuiMx
+ Ud4ZxDg0LvixaHGtgW56rG4lEdZHfCa9pxjkOKbOi/BHG8l+36EK/HQNnjIrnQvakQ3xEi2qZ
+ b/jrVjSyGS0vNGsIFkRFAzXqxGBOxG98lh0iqgJJe+jdeiI6MzDJutSQG6B51hzMBlWBdVeMY
+ Gq3mDnkp3RZiTAnNFqkQIwQxmy+5n/jcdTKYfXojqvbS/xcKg/NkBrSTUE4G2zrv/GNX1PI1B
+ t4CptqyHgD1fUkC45AyA+apIYVy44waPD7an+TYCGiK5x0/m8mDskOQrmD3MGfj8N+dfGEURp
+ DTxnXiMRB9sLZxEuAdWJDPbZ7I/jlnSj6S/T8ZFMBvE9tlTvuqFNvlkop1hGM8ONrbr/bdbZa
+ 5emSrYUq2Aj1PeIi9FIMF31aVFBIlnLFSH6HszV6gBacyS1MxwAfJriyPSC3VhyjxGWZQ53x9
+ f8rkT3fg8X3GCRkLSti09avMh4yrHvc+R4ZTU/F/rDkxo4ZKsQwoo1oSGeWNECwTgAxaojtAF
+ Xu4+T5Ez4c3jkXgeNfEWXyfr/0as8nr0+MMP2sw9pqBEwH1Mm5Al6JcN+KAvA/ny7F1+bbYbt
+ VA2wlgScX2/XXr+ioIW++kIWvUQBvOSDgCZ6o2YQ6ff28lV2cdue/5K0aqj5wMuXI3wSDETBe
+ zSvRx+9v7fvpk2OQqyTKQW51fjPiTYQgIf1BQWuS2w1WP62RkMTs1yWc1FPvZAXj9NGlYD81J
+ 4o+8vwKjqMCg00dKQWX8V5S6mhCl5F6uPh5cCNSNHWteUyu0dc7BWZwjQa7vVrHI5O1PyaxDE
+ neqApG3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi Alban,
 
-> Hmm, it does describe what happens in the code, which is what this
-> patch implements.  Maybe we should rephrase the title here?
->
-> Or are you suggesting dropping this patch (and the next one)
-> completely, as we don't want to try and handle the case where this
-> kind of garbage is thrown at 'rerere'?
+thank you for your tireless work on this!
 
-I consider these two patches as merely attempting to punt a bit
-better.  Once users start committing conflict-marker-looking lines
-in the contents, and getting them involved in actual conflicts, I do
-not think any approach (including what the original rerere uses
-before this patch) that assumes the markers will neatly form set of
-blocks of text enclosed in << == >> will reliably step around such
-broken contents.  E.g. it is entirely conceivable both branches have
-the <<< beginning of conflict marker plus contents from the HEAD
-before they recorded the marker that are identical, that diverge as
-you scan the text down and get closer to ===, something like:
+One thing that needs to be fixed, though:
 
-        side A                  side B
-        --------------------    --------------------
+On Fri, 10 Aug 2018, Alban Gruin wrote:
 
-        shared                  shared
-        <<<<<<<                 <<<<<<<
-        version before          version before
-        these guys merged       these guys merged
-        their ancestor          their ancestor
-        versions                versions.
-        but some                now some
-        lines are different     lines are different
-        =======                 ========
-        and other               totally different
-        contents                contents
-        ...                     ...
+> +run_interactive () {
+> +	GIT_CHERRY_PICK_HELP="$resolvemsg"
+> +	export GIT_CHERRY_PICK_HELP
+> +
+> +	test -n "$keep_empty" && keep_empty="--keep-empty"
+> +	test -n "$rebase_merges" && rebase_merges="--rebase-merges"
+> +	test -n "$rebase_cousins" && rebase_cousins="--rebase-cousins"
+> +	test -n "$autosquash" && autosquash="--autosquash"
+> +	test -n "$verbose" && verbose="--verbose"
+> +	test -n "$force_rebase" && force_rebase="--no-ff"
+> +	test -n "$restrict_revisions" && \
+> +		restrict_revisions="--restrict-revisions=^$restrict_revisions"
 
-And a merge of these may make <<< part shared (i.e. outside the
-conflicted region) while lines near and below ==== part of conflict,
-which would give us something like
+I made this same mistake over and over again, myself. For some reason,
+John Keeping decided to use the singular form "revision" in 1e0dacdbdb75
+(rebase: omit patch-identical commits with --fork-point, 2014-07-16), not
+the plural.
 
-        merge of side A & B
-        -------------------
+So you will need to squash this in:
 
-        shared                  
-        <<<<<<<                 (this is part of contents)
-        version before          
-        these guys merged       
-        their ancestor          
-        <<<<<<< HEAD            (conflict marker)
-        versions
-        but some
-        lines are different
-        =======                 (this is part of contents)
-        and other
-        contents
-        ...
-        =======                 (conflict marker)
-        versions.
-        now some
-        lines are different
-        =======                 (this is part of contents)
-        totally different
-        contents
-        ...
-        >>>>>>> theirs          (conflict marker)
-
-Depending on the shape of the original conflict that was committed,
-we may have two versions of <<<, together with the real conflict
-marker, but shared closing >>> marker.  With contents like that,
-there is no way for us to split these lines into two groups at a
-line '=====' (which one?) and swap to come up with the normalized
-shape.
-
-The original rerere algorithm would punt when such an unmatched
-markers are found, and deals with "nested conflict" situation by
-avoiding to create such a thing altogether.  I am sure your two
-patches may make the code punt less, but I suspect that is not a
-foolproof "solution" but more of a workaround, as I do not think it
-is solvable, once you allow users to commit conflict-marker looking
-strings in contents.  As the heuristics used in such a workaround
-are very likely to change, and something the end-users should not
-even rely on, I'd rather not document and promise the exact
-behaviour---perhaps we should stress "don't do that" even stronger
-instead.
+-- snipsnap --
+diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
+index fb0395af5b1..7600765f541 100755
+--- a/git-legacy-rebase.sh
++++ b/git-legacy-rebase.sh
+@@ -145,8 +145,8 @@ run_interactive () {
+ 	test -n "$autosquash" && autosquash="--autosquash"
+ 	test -n "$verbose" && verbose="--verbose"
+ 	test -n "$force_rebase" && force_rebase="--no-ff"
+-	test -n "$restrict_revisions" && \
+-		restrict_revisions="--restrict-revisions=^$restrict_revisions"
++	test -n "$restrict_revision" && \
++		restrict_revision="--restrict-revision=^$restrict_revision"
+ 	test -n "$upstream" && upstream="--upstream=$upstream"
+ 	test -n "$onto" && onto="--onto=$onto"
+ 	test -n "$squash_onto" && squash_onto="--squash-onto=$squash_onto"
