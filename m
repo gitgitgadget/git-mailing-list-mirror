@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CCE01F954
+	by dcvr.yhbt.net (Postfix) with ESMTP id 237EB1F954
 	for <e@80x24.org>; Wed, 22 Aug 2018 16:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726978AbeHVTbq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 15:31:46 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:36850 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726854AbeHVTbp (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726972AbeHVTbp (ORCPT <rfc822;e@80x24.org>);
         Wed, 22 Aug 2018 15:31:45 -0400
-Received: by mail-lf1-f67.google.com with SMTP id c21-v6so1796673lfh.3
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:15 -0700 (PDT)
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:41606 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726896AbeHVTbp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 15:31:45 -0400
+Received: by mail-lf1-f68.google.com with SMTP id l26-v6so1788203lfc.8
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 09:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mjGQBmGqavTKYi4PvehTdm+FTz7rBo+y8ywHgtxSPiw=;
-        b=cqmhgj5mQwMVmqCTnhb08oXhgfHfW/uR6lm/rY+Gof5zaiSdXQLzDGzIdfcenVfwac
-         kcIUaDInBRfbR3xZOJYqT6lqVMuddFbKrj0H14HrDcCH8dczyVUQIolldkGFKxhg6oVP
-         /LvBtRppxZtvFvvwD7RjIC0lWF565CmHgFuR1vqBZuKBjOihQSCF/6NhpVlgxJQgsyYT
-         gPYrQzbumDFBe2mi4jiwh3ZmBuc6YUIT8m2bnxd5VjmZYzG8lN6dnzEYrz4uVS4ETQSC
-         gTA3oJRpDCf1majiIF8/e6C/ArhqfG+VsAtsP4/668fryIdbaooQ+ieV/RrLFFuAgpUv
-         YXVw==
+        bh=SFMfJ/zzVJgrfxCXq51YFM8I8ZYPWxsLNwXIouP79mc=;
+        b=fXFWg+dshFg0gOju1W8xEs2jFwJstGu/AFw9lyceNrQ6r4W4NNfIlK5BhUDv68nhdg
+         5bBzzlKNu5v6f1LY+Rf29HT+1hpEGEuLCXX6Hn1GVXC++/vEd8Ryw5blIU6l0IQSA4Qo
+         Lz+BAk3XmES+x6Ib1hfHMODKUEyS/kYrhlJocsCeB5dTEtdmDswldgpUlIjuQYGfJ/Fa
+         IsDMORmTUigK6r73TMNpzKkmiQY1NMg/yvuHcMV+6dlXIBw6ll92BIfGDFjQokiwkMPy
+         gBj5RLoqOe67Z3jtbUdYFGE2hp8D/4jzIBBxuObxZsJ38vTM2TW4z1zJSAICGXr4jwGC
+         6E3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mjGQBmGqavTKYi4PvehTdm+FTz7rBo+y8ywHgtxSPiw=;
-        b=fRxMaMLXyjfHYfPVJDJA4GD5LgDPIxOm3hBOuqSv04kmrUSC8jBTK1u8o+Jp8ZJsSf
-         UHBq6nef/8lir0J6uMZWCVKFGnVM415GxJvytom3hb2bBD/OrgYP3c2BDneq2LZASkun
-         IYncIbCmT1wG4vWHqK2bfEuE5bIvi7WCcbPzEHU/o29Lnv50H4nGcXaoUCfYxLuoTEHz
-         G0LBHWJQGkdjfj6R0xdj+RUxNkKHfAR2bzIb3A3FjnYLvwEIIp2e2Lok4ynRuNoOMzt+
-         6z9yJO/vz5b7O7IIZOJPXUo+GEdR/vcM1/uUWAOQuxVZdjFmXX3/Bb1QGYTblY4EPrLq
-         d4lg==
-X-Gm-Message-State: AOUpUlFLayrCeDqmaiWXdl7jBaqHmQzZOXyFaclRAegK70Ilo4GIQjHK
-        MM5onyDXiS9pGdwFthySQp4jZr4C
-X-Google-Smtp-Source: AA+uWPyXTta3Ccre3JDtk1zOBaOL/sJWxGs88ucxbYsqRKw/bgP/uS9dVu0XlgYakaBGGQkZKOFWuw==
-X-Received: by 2002:ac2:4141:: with SMTP id c1-v6mr11774160lfi.11.1534953974393;
-        Wed, 22 Aug 2018 09:06:14 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=SFMfJ/zzVJgrfxCXq51YFM8I8ZYPWxsLNwXIouP79mc=;
+        b=OOT7S6ScpGHIwl8dQ9Dd6xU7NKjqdk9FocwxHgOcewFNo8KYLROfO9FwS0pasO/IQS
+         Os6idE3BbjZprN/FQHnvfsV5EsNWaLHXgSzem62z5XnQbXeGIrc9k0l49IqFvoRSWNrv
+         766uX1KgMHjUMsR3Z8j+qePv1lS+sWvzeB5Ikvk+JGb08o4FoCEGMNRS7s192LR80PPq
+         BQf/w1NgXLieZAHTLUdTiShaLVUVDEbiyCWaB5XYfT+se9mwnSVcbPbyAFDU89Xa+vHk
+         l+y3iyhZXlu/VPykO2KUeXX2+rAVR2LJ/RZBfuZbZ/DmbdWehBxiBwMKDdUgTCbL7/U5
+         0ejg==
+X-Gm-Message-State: AOUpUlEYRq3i9r8owuechF5EUgcZwjzEaJW9c7kz6+ZQ9YXVJ1TtncA5
+        RmOpLYlGB764R8vaw7TmBmx4WQof
+X-Google-Smtp-Source: AA+uWPzH0bAFBCq3WoOdlH73GQ5fljtEuWD4uPxdLQtMuzH+2odg0Nnsq85U85HdwmGkA46El60eiQ==
+X-Received: by 2002:ac2:50c7:: with SMTP id h7-v6mr9834595lfm.47.1534953973322;
         Wed, 22 Aug 2018 09:06:13 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id u86-v6sm375213lfi.90.2018.08.22.09.06.11
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 22 Aug 2018 09:06:12 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 05/11] config.txt: move gui part out to a separate file
-Date:   Wed, 22 Aug 2018 18:05:59 +0200
-Message-Id: <20180822160605.21864-6-pclouds@gmail.com>
+Subject: [PATCH 04/11] config.txt: move gitcvs part out to a separate file
+Date:   Wed, 22 Aug 2018 18:05:58 +0200
+Message-Id: <20180822160605.21864-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.335.ga73d156e9c
 In-Reply-To: <20180822160605.21864-1-pclouds@gmail.com>
 References: <20180822160605.21864-1-pclouds@gmail.com>
@@ -70,143 +70,163 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/config.txt     | 58 +-----------------------------------
- Documentation/gui-config.txt | 57 +++++++++++++++++++++++++++++++++++
- 2 files changed, 58 insertions(+), 57 deletions(-)
- create mode 100644 Documentation/gui-config.txt
+ Documentation/config.txt        | 68 +--------------------------------
+ Documentation/gitcvs-config.txt | 67 ++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+), 67 deletions(-)
+ create mode 100644 Documentation/gitcvs-config.txt
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9309695a9e..4b1e9e830d 100644
+index 393f6843f5..9309695a9e 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1740,63 +1740,7 @@ gpg.<format>.program::
- 	be used as a legacy synonym for	`gpg.openpgp.program`. The default
- 	value for `gpg.x509.program` is "gpgsm".
+@@ -1675,73 +1675,7 @@ gc.rerereUnresolved::
+ 	You can also use more human-readable "1.month.ago", etc.
+ 	The default is 15 days.  See linkgit:git-rerere[1].
  
--gui.commitMsgWidth::
--	Defines how wide the commit message window is in the
--	linkgit:git-gui[1]. "75" is the default.
+-gitcvs.commitMsgAnnotation::
+-	Append this string to each commit message. Set to empty string
+-	to disable this feature. Defaults to "via git-CVS emulator".
 -
--gui.diffContext::
--	Specifies how many context lines should be used in calls to diff
--	made by the linkgit:git-gui[1]. The default is "5".
+-gitcvs.enabled::
+-	Whether the CVS server interface is enabled for this repository.
+-	See linkgit:git-cvsserver[1].
 -
--gui.displayUntracked::
--	Determines if linkgit:git-gui[1] shows untracked files
--	in the file list. The default is "true".
+-gitcvs.logFile::
+-	Path to a log file where the CVS server interface well... logs
+-	various stuff. See linkgit:git-cvsserver[1].
 -
--gui.encoding::
--	Specifies the default encoding to use for displaying of
--	file contents in linkgit:git-gui[1] and linkgit:gitk[1].
--	It can be overridden by setting the 'encoding' attribute
--	for relevant files (see linkgit:gitattributes[5]).
--	If this option is not set, the tools default to the
--	locale encoding.
+-gitcvs.usecrlfattr::
+-	If true, the server will look up the end-of-line conversion
+-	attributes for files to determine the `-k` modes to use. If
+-	the attributes force Git to treat a file as text,
+-	the `-k` mode will be left blank so CVS clients will
+-	treat it as text. If they suppress text conversion, the file
+-	will be set with '-kb' mode, which suppresses any newline munging
+-	the client might otherwise do. If the attributes do not allow
+-	the file type to be determined, then `gitcvs.allBinary` is
+-	used. See linkgit:gitattributes[5].
 -
--gui.matchTrackingBranch::
--	Determines if new branches created with linkgit:git-gui[1] should
--	default to tracking remote branches with matching names or
--	not. Default: "false".
+-gitcvs.allBinary::
+-	This is used if `gitcvs.usecrlfattr` does not resolve
+-	the correct '-kb' mode to use. If true, all
+-	unresolved files are sent to the client in
+-	mode '-kb'. This causes the client to treat them
+-	as binary files, which suppresses any newline munging it
+-	otherwise might do. Alternatively, if it is set to "guess",
+-	then the contents of the file are examined to decide if
+-	it is binary, similar to `core.autocrlf`.
 -
--gui.newBranchTemplate::
--	Is used as suggested name when creating new branches using the
--	linkgit:git-gui[1].
+-gitcvs.dbName::
+-	Database used by git-cvsserver to cache revision information
+-	derived from the Git repository. The exact meaning depends on the
+-	used database driver, for SQLite (which is the default driver) this
+-	is a filename. Supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details). May not contain semicolons (`;`).
+-	Default: '%Ggitcvs.%m.sqlite'
 -
--gui.pruneDuringFetch::
--	"true" if linkgit:git-gui[1] should prune remote-tracking branches when
--	performing a fetch. The default value is "false".
+-gitcvs.dbDriver::
+-	Used Perl DBI driver. You can specify any available driver
+-	for this here, but it might not work. git-cvsserver is tested
+-	with 'DBD::SQLite', reported to work with 'DBD::Pg', and
+-	reported *not* to work with 'DBD::mysql'. Experimental feature.
+-	May not contain double colons (`:`). Default: 'SQLite'.
+-	See linkgit:git-cvsserver[1].
 -
--gui.trustmtime::
--	Determines if linkgit:git-gui[1] should trust the file modification
--	timestamp or not. By default the timestamps are not trusted.
+-gitcvs.dbUser, gitcvs.dbPass::
+-	Database user and password. Only useful if setting `gitcvs.dbDriver`,
+-	since SQLite has no concept of database users and/or passwords.
+-	'gitcvs.dbUser' supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details).
 -
--gui.spellingDictionary::
--	Specifies the dictionary used for spell checking commit messages in
--	the linkgit:git-gui[1]. When set to "none" spell checking is turned
--	off.
+-gitcvs.dbTableNamePrefix::
+-	Database table name prefix.  Prepended to the names of any
+-	database tables used, allowing a single database to be used
+-	for several repositories.  Supports variable substitution (see
+-	linkgit:git-cvsserver[1] for details).  Any non-alphabetic
+-	characters will be replaced with underscores.
 -
--gui.fastCopyBlame::
--	If true, 'git gui blame' uses `-C` instead of `-C -C` for original
--	location detection. It makes blame significantly faster on huge
--	repositories at the expense of less thorough copy detection.
--
--gui.copyBlameThreshold::
--	Specifies the threshold to use in 'git gui blame' original location
--	detection, measured in alphanumeric characters. See the
--	linkgit:git-blame[1] manual for more information on copy detection.
--
--gui.blamehistoryctx::
--	Specifies the radius of history context in days to show in
--	linkgit:gitk[1] for the selected commit, when the `Show History
--	Context` menu item is invoked from 'git gui blame'. If this
--	variable is set to zero, the whole history is shown.
-+include::gui-config.txt[]
+-All gitcvs variables except for `gitcvs.usecrlfattr` and
+-`gitcvs.allBinary` can also be specified as
+-'gitcvs.<access_method>.<varname>' (where 'access_method'
+-is one of "ext" and "pserver") to make them apply only for the given
+-access method.
++include::gitcvs-config.txt[]
  
- guitool.<name>.cmd::
- 	Specifies the shell command line to execute when the corresponding item
-diff --git a/Documentation/gui-config.txt b/Documentation/gui-config.txt
+ gitweb.category::
+ gitweb.description::
+diff --git a/Documentation/gitcvs-config.txt b/Documentation/gitcvs-config.txt
 new file mode 100644
-index 0000000000..d30831a130
+index 0000000000..02da427fd9
 --- /dev/null
-+++ b/Documentation/gui-config.txt
-@@ -0,0 +1,57 @@
-+gui.commitMsgWidth::
-+	Defines how wide the commit message window is in the
-+	linkgit:git-gui[1]. "75" is the default.
++++ b/Documentation/gitcvs-config.txt
+@@ -0,0 +1,67 @@
++gitcvs.commitMsgAnnotation::
++	Append this string to each commit message. Set to empty string
++	to disable this feature. Defaults to "via git-CVS emulator".
 +
-+gui.diffContext::
-+	Specifies how many context lines should be used in calls to diff
-+	made by the linkgit:git-gui[1]. The default is "5".
++gitcvs.enabled::
++	Whether the CVS server interface is enabled for this repository.
++	See linkgit:git-cvsserver[1].
 +
-+gui.displayUntracked::
-+	Determines if linkgit:git-gui[1] shows untracked files
-+	in the file list. The default is "true".
++gitcvs.logFile::
++	Path to a log file where the CVS server interface well... logs
++	various stuff. See linkgit:git-cvsserver[1].
 +
-+gui.encoding::
-+	Specifies the default encoding to use for displaying of
-+	file contents in linkgit:git-gui[1] and linkgit:gitk[1].
-+	It can be overridden by setting the 'encoding' attribute
-+	for relevant files (see linkgit:gitattributes[5]).
-+	If this option is not set, the tools default to the
-+	locale encoding.
++gitcvs.usecrlfattr::
++	If true, the server will look up the end-of-line conversion
++	attributes for files to determine the `-k` modes to use. If
++	the attributes force Git to treat a file as text,
++	the `-k` mode will be left blank so CVS clients will
++	treat it as text. If they suppress text conversion, the file
++	will be set with '-kb' mode, which suppresses any newline munging
++	the client might otherwise do. If the attributes do not allow
++	the file type to be determined, then `gitcvs.allBinary` is
++	used. See linkgit:gitattributes[5].
 +
-+gui.matchTrackingBranch::
-+	Determines if new branches created with linkgit:git-gui[1] should
-+	default to tracking remote branches with matching names or
-+	not. Default: "false".
++gitcvs.allBinary::
++	This is used if `gitcvs.usecrlfattr` does not resolve
++	the correct '-kb' mode to use. If true, all
++	unresolved files are sent to the client in
++	mode '-kb'. This causes the client to treat them
++	as binary files, which suppresses any newline munging it
++	otherwise might do. Alternatively, if it is set to "guess",
++	then the contents of the file are examined to decide if
++	it is binary, similar to `core.autocrlf`.
 +
-+gui.newBranchTemplate::
-+	Is used as suggested name when creating new branches using the
-+	linkgit:git-gui[1].
++gitcvs.dbName::
++	Database used by git-cvsserver to cache revision information
++	derived from the Git repository. The exact meaning depends on the
++	used database driver, for SQLite (which is the default driver) this
++	is a filename. Supports variable substitution (see
++	linkgit:git-cvsserver[1] for details). May not contain semicolons (`;`).
++	Default: '%Ggitcvs.%m.sqlite'
 +
-+gui.pruneDuringFetch::
-+	"true" if linkgit:git-gui[1] should prune remote-tracking branches when
-+	performing a fetch. The default value is "false".
++gitcvs.dbDriver::
++	Used Perl DBI driver. You can specify any available driver
++	for this here, but it might not work. git-cvsserver is tested
++	with 'DBD::SQLite', reported to work with 'DBD::Pg', and
++	reported *not* to work with 'DBD::mysql'. Experimental feature.
++	May not contain double colons (`:`). Default: 'SQLite'.
++	See linkgit:git-cvsserver[1].
 +
-+gui.trustmtime::
-+	Determines if linkgit:git-gui[1] should trust the file modification
-+	timestamp or not. By default the timestamps are not trusted.
++gitcvs.dbUser, gitcvs.dbPass::
++	Database user and password. Only useful if setting `gitcvs.dbDriver`,
++	since SQLite has no concept of database users and/or passwords.
++	'gitcvs.dbUser' supports variable substitution (see
++	linkgit:git-cvsserver[1] for details).
 +
-+gui.spellingDictionary::
-+	Specifies the dictionary used for spell checking commit messages in
-+	the linkgit:git-gui[1]. When set to "none" spell checking is turned
-+	off.
++gitcvs.dbTableNamePrefix::
++	Database table name prefix.  Prepended to the names of any
++	database tables used, allowing a single database to be used
++	for several repositories.  Supports variable substitution (see
++	linkgit:git-cvsserver[1] for details).  Any non-alphabetic
++	characters will be replaced with underscores.
 +
-+gui.fastCopyBlame::
-+	If true, 'git gui blame' uses `-C` instead of `-C -C` for original
-+	location detection. It makes blame significantly faster on huge
-+	repositories at the expense of less thorough copy detection.
-+
-+gui.copyBlameThreshold::
-+	Specifies the threshold to use in 'git gui blame' original location
-+	detection, measured in alphanumeric characters. See the
-+	linkgit:git-blame[1] manual for more information on copy detection.
-+
-+gui.blamehistoryctx::
-+	Specifies the radius of history context in days to show in
-+	linkgit:gitk[1] for the selected commit, when the `Show History
-+	Context` menu item is invoked from 'git gui blame'. If this
-+	variable is set to zero, the whole history is shown.
++All gitcvs variables except for `gitcvs.usecrlfattr` and
++`gitcvs.allBinary` can also be specified as
++'gitcvs.<access_method>.<varname>' (where 'access_method'
++is one of "ext" and "pserver") to make them apply only for the given
++access method.
 -- 
 2.19.0.rc0.335.ga73d156e9c
 
