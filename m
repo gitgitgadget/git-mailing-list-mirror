@@ -2,91 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21ABE1F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 13:41:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9348A1F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 13:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728879AbeHVRF5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 13:05:57 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:41562 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728624AbeHVRF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 13:05:57 -0400
-Received: by mail-qt0-f195.google.com with SMTP id t39-v6so1260151qtc.8
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 06:40:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=dqpimH3tXegYA/nKQ2YsjkHD+7hh0b89NCaoJkFDjaE=;
-        b=m1ztO7tEwG8+XPSOMG1wIwlS8AfooYyCtO5HUQM6UDJeAtq4b6wPO+b1749uFyJR+c
-         XBGOUZfOWXTHnWm7TVXixcDkd9Qzm7f9FxN/PTLXe+aGb4aX7QdEi+NUxXxtcPyUGm4q
-         SKzW1V1x5TZ69BKB03KALwBlfiEwVYZozynNpDKGCQdLFj/inRkrBsmirJj2hgNZ86YT
-         WxV+kPchxNLQGQXAgLeh/ifCZi/grK5tSeOuCAdBrtTTUogvC7lRLJI+AVXV0GZ8vfD/
-         X5bwHhYCoRPzTzsLGJjSRmBbJDxH6BUtWoGVX2WehAQeP0nYrCANn39hlXHU7EK7INRX
-         ZiMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=dqpimH3tXegYA/nKQ2YsjkHD+7hh0b89NCaoJkFDjaE=;
-        b=GsR2gmLTGyJzW3LtykOoZmZLClLDIvf1mrj7HGs7IhPZRm8GYogST3tvxPzIesphNK
-         mGwxze99e4lQwqyeNmn037tGvzeHpAj3fPqzoF3iD5xHSI6oSsfAD37TR1wFUB+a53a5
-         c6oAeKcQ/0x/N0gCAqNMTKoiZ8sQa0/ZWp+UJ72eEjnlXPvyNqZtuzExoK82vCScjobk
-         FBBxU3SdxI8w5TvtiWx6JO8VLYYlxaJKkcotK2FASl0hgBzPh3dObLRTtYHgL35zOIuq
-         HB2AJhiarUMZuhaJnnBtqIB520e2+JDZZq/65HP38/6gU4aM0gnf0a1HJTIEJGmDZnlc
-         Oy5A==
-X-Gm-Message-State: AOUpUlHgaGIt/NNm+EbU0fUaaTZXQeb5TuSo5MoZaNw7PC6ukGC0Y3nI
-        370i2iVDXJlhReoqpgpJ/TzOgbkY
-X-Google-Smtp-Source: AA+uWPyuQzYZEdoLXDMEztwLdpJJtRZhYU/FpYUZqi7nOabbbMcMNZZeHEyUR81fDABG3mY6YIhvcg==
-X-Received: by 2002:aed:257d:: with SMTP id w58-v6mr11113641qtc.110.1534945258366;
-        Wed, 22 Aug 2018 06:40:58 -0700 (PDT)
-Received: from [10.0.1.17] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id f53-v6sm1154147qtk.40.2018.08.22.06.40.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 22 Aug 2018 06:40:57 -0700 (PDT)
-Subject: Re: [PATCH 3/6] t/perf: add infrastructure for measuring sizes
+        id S1728935AbeHVRGK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 13:06:10 -0400
+Received: from gproxy4-pub.mail.unifiedlayer.com ([69.89.23.142]:45642 "EHLO
+        gproxy4-pub.mail.unifiedlayer.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728624AbeHVRGK (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 22 Aug 2018 13:06:10 -0400
+X-Greylist: delayed 2409 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Aug 2018 13:06:09 EDT
+Received: from cmgw12.unifiedlayer.com (unknown [10.9.0.12])
+        by gproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id 7AE5717759E
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 06:42:22 -0600 (MDT)
+Received: from box5008.bluehost.com ([50.116.64.19])
+        by cmsmtp with ESMTP
+        id sSSsfijxjak7tsSSsflvMs; Wed, 22 Aug 2018 06:42:22 -0600
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=mad-scientist.us; s=default; h=Content-Transfer-Encoding:Mime-Version:
+        Content-Type:References:In-Reply-To:Date:To:Reply-To:From:Subject:Message-ID:
+        Sender:Cc:Content-ID:Content-Description:Resent-Date:Resent-From:
+        Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+        List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=UK7XQhTPkx2ED8zzvIEkOt+lymEB/i40mhgIN/KA1mg=; b=axkRUaEjmXgG8TsyClhU2NMdmp
+        LSTNGyqA+4Hq0K8M+ui4g0m7n1yc+tX8/hZhY4pbkdVSTdAtEcGPCr3fStftNAEmjsIa9+nBu6thN
+        P4nrOU7XYn7BV2MXZMreUDPCo;
+Received: from pool-72-70-58-227.bstnma.fios.verizon.net ([72.70.58.227]:48358 helo=homebase)
+        by box5008.bluehost.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <paul@mad-scientist.net>)
+        id 1fsSSr-000rxV-Si; Wed, 22 Aug 2018 06:42:22 -0600
+Message-ID: <814549a01074e89a4b26cb0cf13e4dddeb3a040a.camel@mad-scientist.net>
+Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
+From:   Paul Smith <paul@mad-scientist.net>
+Reply-To: paul@mad-scientist.net
 To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20180821184140.GA24165@sigill.intra.peff.net>
- <20180821190654.GC30764@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b071f6a2-2403-0bbb-72a5-695f8c4e724d@gmail.com>
-Date:   Wed, 22 Aug 2018 09:40:55 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <20180821190654.GC30764@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Date:   Wed, 22 Aug 2018 08:42:20 -0400
+In-Reply-To: <20180822030344.GA14684@sigill.intra.peff.net>
+References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
+         <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
+         <20180821212923.GB24431@sigill.intra.peff.net>
+         <20180822004815.GA535143@genre.crustytoothpaste.net>
+         <20180822030344.GA14684@sigill.intra.peff.net>
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.1-2 
+Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5008.bluehost.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - mad-scientist.net
+X-BWhitelist: no
+X-Source-IP: 72.70.58.227
+X-Source-L: No
+X-Exim-ID: 1fsSSr-000rxV-Si
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: pool-72-70-58-227.bstnma.fios.verizon.net (homebase) [72.70.58.227]:48358
+X-Source-Auth: paul@mad-scientist.us
+X-Email-Count: 1
+X-Source-Cap: bWFkc2NpZTE7bWFkc2NpZTE7Ym94NTAwOC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/21/2018 3:06 PM, Jeff King wrote:
-> The main objective of scripts in the perf framework is to
-> run "test_perf", which measures the time it takes to run
-> some operation. However, it can also be interesting to see
-> the change in the output size of certain operations.
->
-> This patch introduces test_size, which records a single
-> numeric output from the test and shows it in the aggregated
-> output (with pretty printing and relative size comparison).
+On Tue, 2018-08-21 at 23:03 -0400, Jeff King wrote:
+>  static inline int hashcmp(const unsigned char *sha1, const unsigned
+> char *sha2)
+>  {
+> +       assert(the_hash_algo->rawsz == 20);
+>         return memcmp(sha1, sha2, the_hash_algo->rawsz);
+>  }
 
-I'm interested in exploring this test_size mechanism. The other area 
-that could benefit from size testing is 'git repack', but I don't have 
-any plans to change our compression or delta strategies. If we _did_ 
-look into that, then using test_size would be a natural fit.
+I'm not familiar with Git code, but for most environments assert() is a
+macro which is compiled out when built for "release mode" (whatever
+that might mean).  If that's the case for Git too, then relying on
+assert() to provide a side-effect (even an optimizer hint side-effect)
+won't work and this will actually get slower when built for "release
+mode".
 
-Overall, I really like this series!
-
-Thanks
--Stolee
-
-
+Just a thought...
