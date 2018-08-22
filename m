@@ -2,92 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B00EF1F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 22:53:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 356F91F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 23:16:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbeHWCTo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 22:19:44 -0400
-Received: from mail-wm0-f54.google.com ([74.125.82.54]:54944 "EHLO
-        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726396AbeHWCTo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 22:19:44 -0400
-Received: by mail-wm0-f54.google.com with SMTP id c14-v6so3374278wmb.4
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 15:52:56 -0700 (PDT)
+        id S1726960AbeHWCn2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 22:43:28 -0400
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:37917 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726783AbeHWCn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 22:43:28 -0400
+Received: by mail-lj1-f175.google.com with SMTP id p6-v6so2698037ljc.5
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 16:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XXX8cAKIA2Z9QW7ZpzK96bB7MXJXnKvZt1rCxzzWNPk=;
-        b=jZ7PRJ97d45BkYl5OqqeiA9ePfAJIecUatHALTwNASZXV5soz+1ESK2EOynL6ifcFg
-         GnAzzfDGBLve4Eu/AwUequJgZ2bphpxJpi+d6IxfkmLfCaqP69UUqIBUbip8tOfhX/QF
-         76B08svxn6duCpXwVMa+zDDCxPMzZMh9W2to3grzAHGonA4IPPMj6o8WAotTxohp6wsA
-         S7+zVOngv81tmleEbMoRJtZevw0SL/3IWzPOerZET4D5dvz6cS1nSzQ6cfRVDd5JYyNw
-         IatSdHu0P/sVjDDl22q+mKu9JFD0kKSKxU8Kk0cMUD8tIRRxkjFsGw2qO5BMr5rJREob
-         Y4gw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=P/FvT1jz/75SaZsxR33G8f69dkHPNTUIRFuU+4ITCV0=;
+        b=msL9xXW2COgDl40O8XpewEPtsHX+Jiu+dptlEo7vGoME22KyZzFq8ect3JNgEVPQM3
+         zI+vrMSLHqTRE26SRpG7mENUS2g3BjTqIYe29a5xEWydWA78xqdTEWh47FMmhEzorMY+
+         3u5ubxrEphl2OPoEHmbxvsMrjmHtOEVpoZ5yWeLPRvoW3EvPVlwkvcHMFxPeEQn1gI1E
+         v0b7ODtcGULAdGyzntnbZePurDSb497jgpoL6+fTNjGEFBgbWVfv7RzWcmfh6q7lRUri
+         mRH5qbwQtWNONYkUZzfSgym4/fCD2Ww9PCDjkWdmLWvBrg8kmQYniuVy2PtTiztS55fT
+         gKOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XXX8cAKIA2Z9QW7ZpzK96bB7MXJXnKvZt1rCxzzWNPk=;
-        b=gASEKLxpDT+e0x5kfwq8OodB5c7JLMDqCFV+lUOBk3iV2Xenqiv0yD4aJGlxgC17bU
-         2ZzHqVEfcfWpjfrrf4XJ/T8TGdCGJoqij8celdWLdERU32L+crIw4KBrowOusoiKcz1l
-         HIenuZO0G6hs7VXpdOdEB/odqKDW3arK1oeQ0gimJMm9wcjDTY8G9v51Ket3YbbA9epP
-         dhI1UpgN3paGooFzrbQ2pE0b2OeBPDkZvxcm3i4yJG57IHdMBYfYk+HEqI1RtFglGa8t
-         6ujxYd1U1HcvZo3+/HwaCW+CzAAC2eTphbo/N8PRHsvr2zuNHX3OUZ+b2nTXtP1WIclc
-         S7Uw==
-X-Gm-Message-State: APzg51DZ5fqEVmQwvnCQadpc+by3+WP4e+irrqLAD00ijdxANFXs9LMq
-        gdVEze+ewg/UD6Y4qMaq/Gg=
-X-Google-Smtp-Source: ANB0VdYUnFbCweDpllLcLr3RZwtSuNllWHLxu7q1OIsjbU5P8ftCDDQbkYop2eqpQjX06HajdCgrqw==
-X-Received: by 2002:a1c:5f82:: with SMTP id t124-v6mr3626097wmb.14.1534978375127;
-        Wed, 22 Aug 2018 15:52:55 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b144-v6sm4108644wmd.23.2018.08.22.15.52.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 15:52:54 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2018, #05; Mon, 20)
-References: <xmqqsh38admf.fsf@gitster-ct.c.googlers.com>
-        <xmqqo9dumh9z.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1808222339490.73@tvgsbejvaqbjf.bet>
-Date:   Wed, 22 Aug 2018 15:52:53 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1808222339490.73@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Wed, 22 Aug 2018 23:44:17 +0200 (DST)")
-Message-ID: <xmqqin42ko8q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=P/FvT1jz/75SaZsxR33G8f69dkHPNTUIRFuU+4ITCV0=;
+        b=FBd96Zvp6fCtIoFiFGYxCTxipEpn3KHKaMMZcjp2LnQmjm41eLFLvpqn5p0dCKEBem
+         evFrFCgIqHoZDZQKhj938pFfxe0QQIZnq4nSjSB6v6FC7HS93yX9uw4COQOB/7dA7U5l
+         kS4lUHicZ3DIFeVax8USGF2SFGuw9cAK/xFMPcdXhZfDq6QWhbQIX6z9HWtJENE1uPoQ
+         byfuJIdDSQS7YE5CFSX3MXyU9rI013/rsTAugHEEb3NTugm6xA7GvcTe81psQxJccYpQ
+         tQt1Bs7SdGlBOivRTaAOMhuYSQbEAd1GlU782GaqakTIXaWCHzuNw5I+TzSYLkdos8GH
+         P3/Q==
+X-Gm-Message-State: AOUpUlEqnUYfygqlj67GATQRHbW5o4vgasZkvrqCdecVW4Fkf90lpPeR
+        NFp4Kmsp1WmggllaElQpPMoQgnoXtTDw6LBO6Y36cp8F
+X-Google-Smtp-Source: AA+uWPw4Z2bhHMW/fARqzMkbJvVNjdxSyRx3wiTzDsUNVtIF5Klyyx21DMGzeSBqbTc1xesDeh0W6Y3WjNlTiPLiAYQ=
+X-Received: by 2002:a2e:610a:: with SMTP id v10-v6mr37098420ljb.39.1534979796925;
+ Wed, 22 Aug 2018 16:16:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   Gregory Oschwald <oschwald@gmail.com>
+Date:   Wed, 22 Aug 2018 16:16:00 -0700
+Message-ID: <CAFKzd1qaMU=K6uc62xL0DUyZOWxY79Qakaog2dzBjiNrmq0ydg@mail.gmail.com>
+Subject: $GIT_DIR is no longer set when pre-commit hooks are called
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+As of the release of 2.18.0, $GIT_DIR is no longer set before calling
+pre-commit hooks. This change was introduced in "set_work_tree: use
+chdir_notify" (8500e0de) and is still present in master.
 
-> FWIW I am a lot more bold about these builtins, and want to get them into
-> Git for Windows v2.19.0, either as full replacements, or like I did with
-> the difftool: by offering them as experimental options in the installer.
->
-> Maybe this will remain a dream, but maybe, just maybe, I will manage to do
-> this, with your help.
+I reviewed the discussion when this change was initially submitted,
+and I don't think this behavior change was intentional.
 
-Heh, I do not think you need much help from me to cut GfW releases.
+I have several hooks that were broken like this, and from a quick
+Google search, using $GIT_DIR without setting a default does seem
+pretty common in hooks.
 
-In any case, thanks for a quick "last mile" patch, which unblocked
-'pu' that has been in sorry state for about a week or so.  I've
-inserted a new topic branch between -5 and -6 that (1) merges the
-other track into -5 and (2) applies your "call it in a new way"
-patch, and then rebased -6 on top of the result.  If you have a
-chance, it is appreciated if you can give a quick eyeballing near
-the tip of 'pu' today.
-
-Thanks.
+Greg
