@@ -2,128 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4551F954
-	for <e@80x24.org>; Wed, 22 Aug 2018 18:13:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B4401F954
+	for <e@80x24.org>; Wed, 22 Aug 2018 18:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbeHVVjp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 22 Aug 2018 17:39:45 -0400
-Received: from mail-wm0-f48.google.com ([74.125.82.48]:33356 "EHLO
-        mail-wm0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727016AbeHVVjp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 22 Aug 2018 17:39:45 -0400
-Received: by mail-wm0-f48.google.com with SMTP id i134-v6so200649wmf.0
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 11:13:48 -0700 (PDT)
+        id S1727825AbeHVVkn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 22 Aug 2018 17:40:43 -0400
+Received: from mail-io0-f201.google.com ([209.85.223.201]:46532 "EHLO
+        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727602AbeHVVkn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 22 Aug 2018 17:40:43 -0400
+Received: by mail-io0-f201.google.com with SMTP id f4-v6so2201593ioh.13
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 11:14:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=gHV4FH7HvnSHYll6K2YKZmSntdE4maH2X4f6YOaisQk=;
-        b=U22w5jMipFzcwSaK5VlUPAKHX0sX5BTIAOd0MVqxawylGr235eidGEPhzfMNzECJgi
-         4SUoaNU+tcTuHuPRV6bLszIVz6ZFlMTCDLE70NXPES1RJFhmualCJ0iGUMC51ncwozg2
-         vbSGuq/F08wA/XEAX9beCDQFI00FtpQfAcE8OfqRGTcj56F2SMobmlFq7LEPHiJQDGGk
-         4k/7z8aitFkQYn10NgLocOFPqHLsop5e3oobB46XpHGTC1Jl0S3wPkIJZRZbWSTOt3dM
-         2iD492MY6NUwo13V8vlORRPZPxQ/XgOotZkE7YAWTavCEqayQiBJP/lIseQtr8vNQFiv
-         a8fA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=V6y7V5wDkLUKILxogqhn7QACW/2OZt/+HzoGBERWkX8=;
+        b=SLYPYLnjOzj8QGBWm/Sz8n/KhuheipwC6KUQBie1lJ+ylEl+1eIEsd6gxcsGCOcfUw
+         ckRPqd5FTAkPSsa4Nq1SbOTJlAWP0l9zH2HYVm3rltD6agSfxQgcgF60BPnIMbmRalIo
+         JqE3QptJkTcHIrYof/D4qTlEePi2uIy03JpKDHF7zewpHs+d2FnVArD7YmsQydBbPgwb
+         Yad9yKStKTqYLYEIUZ+m8T5jpREaq5hNlAPce9uREgCsubPIj9Bt2nV2vVAzBmgdmItA
+         A/kkSb/zSOINXfHLlOdYdUkqzoJWyh11NiOPW9RMzyyKlHCymS9mLwEZWS4wI1n9VbaT
+         y5Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=gHV4FH7HvnSHYll6K2YKZmSntdE4maH2X4f6YOaisQk=;
-        b=t0XebZT7pd07OWazkOTQUBzxT7CKuFub80wou8ezT/hXX3eaIlPBBRlG5mYx9e5P7t
-         gRTywm/jOH/e7ZgM60HrVxw/g4HPbCVsYsxzzI8/Fowm3CAE8B9di8ykyGGifcoUYelf
-         RNeqJmNK+XqBAUt2hECCsLY4ClPLwZIgE3JyqdUuWiTAIkZJB2d6hxF5CFmrkFOsAcUY
-         vEj7BTJhYxvRWmh4S/F0ycwhC9DVY2B33NLcApcjIDO1dOt464STqgE3q7USa2MQZ7hC
-         6l4UUjDU+VNKgWGORF0UNUO0xkPdZx22k3Pzd3TboY+0mvvbbf7ZeoR57nIZynPeSuy1
-         BE9w==
-X-Gm-Message-State: APzg51ALPMdNi333txBvQh1Mub/JZyLNmtHpZKx+hHd5XMt1npQGjF3q
-        7sCcWUIpFuhtCqZE3Tg8DRo=
-X-Google-Smtp-Source: ANB0VdZ72ahr8Nqgj4wBiqeNPwM5BCBoGWccPZSm1ypMt+l7IxAJnaMrQxCCj5Eyot/QPDiH7El+IQ==
-X-Received: by 2002:a1c:be14:: with SMTP id o20-v6mr3111824wmf.73.1534961628025;
-        Wed, 22 Aug 2018 11:13:48 -0700 (PDT)
-Received: from localhost.localdomain (62-165-238-147.pool.digikabel.hu. [62.165.238.147])
-        by smtp.gmail.com with ESMTPSA id q3-v6sm2222490wma.45.2018.08.22.11.13.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 22 Aug 2018 11:13:47 -0700 (PDT)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 2/2] t3420-rebase-autostash: don't try to grep non-existing files
-Date:   Wed, 22 Aug 2018 20:13:20 +0200
-Message-Id: <20180822181320.14055-2-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.136.gd2dd172e64
-In-Reply-To: <20180822181320.14055-1-szeder.dev@gmail.com>
-References: <20180822181320.14055-1-szeder.dev@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=V6y7V5wDkLUKILxogqhn7QACW/2OZt/+HzoGBERWkX8=;
+        b=of67+dL8W5/zjr6ARAUMohVf190W5g49ACn9zRUNYYTYs55utQjS6oxdhXwXIV5DRf
+         RwZdsWPTeqVgxwQjzP9u70SEIEv6AqwDwORni5i8Ym0V2ivxVmB7Kg4MMZ+3li6ZCd7h
+         qRht4HZqs5WaSECJOSJW6U9XRHrgats7xUbZ4xPuzgrUnanJB6ZOD/27WhmqeMWhq/4D
+         CRXJkjMpxJBc2tWlcobUkoiNM8vXGbSAgQLyiJAkemIOqDCaIaYKBYIonAd5e9EsCZst
+         /0YXsLj/zctH+TrlsOeINLj22pnpqiCoqa944ZlNlvhHlcI94BSQtT6nuwNrGVQyv2lo
+         6VZg==
+X-Gm-Message-State: APzg51B1R00u7RM1IufAw1MYx2ieDHzCwfatZZn8+DwUGeoD+baHWIX8
+        w5mHGbL+27JdQOWP6BfzF3f59fh76HM=
+X-Google-Smtp-Source: ANB0VdYspyT6wbBojlT3591eVk9EJyCEsQov7pKXYAjXTAKBjPNYDG05FxA8FsMRnzPOP7OhwWFyURB0aQth
+X-Received: by 2002:a6b:4919:: with SMTP id u25-v6mr1044311iob.0.1534961687192;
+ Wed, 22 Aug 2018 11:14:47 -0700 (PDT)
+Date:   Wed, 22 Aug 2018 11:14:44 -0700
+In-Reply-To: <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
+Message-Id: <20180822181444.169611-1-matvore@google.com>
+Mime-Version: 1.0
+References: <4d6ffc81-a1e8-a60f-d53f-2ec159160fcd@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0-goog
+Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can
+ use bitmap' test
+From:   Matthew DeVore <matvore@google.com>
+To:     rybak.a.v@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, kirr@nexedi.com,
+        peff@peff.net, szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Several tests in 't3420-rebase-autostash.sh' start various rebase
-processes that are expected to fail because of merge conflicts.  These
-tests then run '! grep' to ensure that the autostash feature did its
-job, and the dirty contents of a file is gone.  However, due to the
-test repo's history and the choice of upstream branch that file
-shouldn't exist in the conflicted state at all.  Consequently, this
-'grep' doesn't fail as expected, because it can't find the dirty
-content, but it fails because it can't open the file.
+I would encourage use of an existing function to check for emptiness,
+but require a particular argument for it to be considered "the right
+way:"
 
-Tighten this check by using 'test_path_is_missing' instead, thereby
-avoiding unexpected errors from 'grep' as well.
+test_cmp /dev/null actual
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/t3420-rebase-autostash.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This means less vocabulary to memorize for test writers. It's usually a
+code smell to have special logic for a specific value for a specific
+argument - a sign that a separate function ought to be created - but
+since we want to add an error or warning in test_cmp anyway when
+<EXPECTED> is empty, I think this special logic is OK.
 
-diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
-index e243700660..0c4eefec76 100755
---- a/t/t3420-rebase-autostash.sh
-+++ b/t/t3420-rebase-autostash.sh
-@@ -202,7 +202,7 @@ testrebase () {
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
--		! grep dirty file3 &&
-+		test_path_is_missing file3 &&
- 		rm -rf $dotest &&
- 		git reset --hard &&
- 		git checkout feature-branch
-@@ -216,7 +216,7 @@ testrebase () {
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
--		! grep dirty file3 &&
-+		test_path_is_missing file3 &&
- 		echo "conflicting-plus-goodbye" >file2 &&
- 		git add file2 &&
- 		git rebase --continue &&
-@@ -233,7 +233,7 @@ testrebase () {
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
--		! grep dirty file3 &&
-+		test_path_is_missing file3 &&
- 		git rebase --skip &&
- 		test_path_is_missing $dotest/autostash &&
- 		grep dirty file3 &&
-@@ -248,7 +248,7 @@ testrebase () {
- 		echo dirty >>file3 &&
- 		test_must_fail git rebase$type related-onto-branch &&
- 		test_path_is_file $dotest/autostash &&
--		! grep dirty file3 &&
-+		test_path_is_missing file3 &&
- 		git rebase --abort &&
- 		test_path_is_missing $dotest/autostash &&
- 		grep dirty file3 &&
--- 
-2.19.0.rc0.136.gd2dd172e64
+As for comparing against a file that *might* be empty, like a utility
+function, might I suggest requiring the file name be formatted in a
+specific way if it may be empty? Like require a certain substring. Then
+the syntax for comparison would be:
 
+# If the emptiness is unconditional
+test_cmp /dev/null actual
+
+# If the emptiness is unknown ahead of time
+test_cmp maybe_empty_expected actual
+
+Then, issue an error for something like:
+> expected && test_cmp expected actual
+
+which says: "
+Use test_cmp /dev/null <ACTUAL> to verify a file is empty.
+If the <EXPECTED> file may or may not be empty (as in a utility
+function), include the string "maybe_empty" in the <EXPECTED> file name.
+"
