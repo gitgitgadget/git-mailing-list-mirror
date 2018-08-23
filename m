@@ -2,86 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9A2C1F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 22:11:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8664C1F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 23:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728146AbeHXBni (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 21:43:38 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35267 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727125AbeHXBni (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 21:43:38 -0400
-Received: by mail-pf1-f195.google.com with SMTP id p12-v6so3519080pfh.2
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 15:11:55 -0700 (PDT)
+        id S1726256AbeHXDCV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 23:02:21 -0400
+Received: from mail-ed1-f41.google.com ([209.85.208.41]:43569 "EHLO
+        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726085AbeHXDCV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 23:02:21 -0400
+Received: by mail-ed1-f41.google.com with SMTP id z27-v6so2370373edb.10
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 16:30:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ODCMr/bV3A81uTfimlIO1GWSpcwsxMdQ4s7yFZax/Mc=;
-        b=twq2m06BNp47FsB0RozjxQt4MsR/XrcEyMUk296AQ5uZBf8aWUanQBTkKWhXQZh4U+
-         J9bgZdVjO7t271jH+x6GPVVHpPNnMg9h6RaXVxYgUdzu8UYQ/F7WEj5ij8Xui2ao4UBP
-         cvFXpht20IiBqJE7v1lsHyDu82jRnW0JTNiP9IabWb1BvnGvOIYuqIr64jVAERNnQ+O7
-         01Jzvn7I8kXV6u8VU+6XZV2weQxj3x6ZTyyrBFaxiqiyNTjiohHHVdtDwNdag21bRHD3
-         op0/Jj+L2rRei9wmdsfOApu9WHvG69aw57Quc3UrDMW6BvMseQhwLUuWlkGC5YlZFA68
-         YGUg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5L94ioK9GlsdeQu0YmGIIcTdYUIitNIMm4Qn4t+pqnY=;
+        b=X6/XzssE6ekTP9JRZDdvTLRKzckFgqAMi2CwXXcjDNAFKeunDrNVBoouKF475mkHoK
+         Li54sWA3Qd0L5hk3+eQsUzcnEV5Pqd/uOj9RilShieNgrN4IYhDoIgO2X3nqhSmg99n5
+         2wfIybZPFm8GLJTJevHpX1QXxSW3jqAbkfVPozQkPWN5jbFlpYsNMgNgtnWCBUQ14Jsi
+         lOTB+wJX6agB0zFFDyIpvbhK6NJZuOIaNSTix4B2VHWyUfwIn2sYJnCblvF1pJnq7Yx6
+         RH+lKpAYQZpa2jVLgmI8BHmXjr2Uv6ImC1my7/Ks+uuG2/G91XmloCvkZl2GfNBq1eta
+         eBMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ODCMr/bV3A81uTfimlIO1GWSpcwsxMdQ4s7yFZax/Mc=;
-        b=QJvJ4mnHDTEMpI6k4iOeWFRYbBNGuKeuvI9YYy/rN81rpzasyvXc04tiKnea+exSI8
-         CVCCL3RI6ISZjkgxDIOMYV8cDglwXxXS4nswGsqYgeKrpuUjsx1O3FXKjWrKWEKAiTT7
-         LzH2ys2IKWOLXGbdeAWSxFqXMboXymMg/EnFm5xvnGXhgEZ1wJy7cZdOOANf4rT4zpiQ
-         au37AIwibtbWFgbtL90c8luM+Jt385aiTFlaK32QidRsQfoCdOzL++0P321ESH+gQirI
-         eLmNEkBLtbZjN8rheeN5r5SCt0yk53PWQTAeef4oFHQhGlut8K0y5bL03b90q7YNGjCo
-         dwAQ==
-X-Gm-Message-State: AOUpUlFz5fycVjdsLT/1/Iv2QdYnRmYnKWxl/RhiWHNCZ8hkttWH9eqj
-        jYU1KpDtEGRNOig0YD8akTY=
-X-Google-Smtp-Source: AA+uWPxKLTTygDUaEPdE6gKGY/8gfNegGcNDBtAy8LMVODPNfqAiuBb3T+JsxIJMVX3niNi0rhfJSA==
-X-Received: by 2002:a62:6c04:: with SMTP id h4-v6mr30147608pfc.113.1535062314515;
-        Thu, 23 Aug 2018 15:11:54 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u83-v6sm18693012pfj.37.2018.08.23.15.11.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 15:11:53 -0700 (PDT)
-Date:   Thu, 23 Aug 2018 15:11:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v3] range-diff: update stale summary of --no-dual-color
-Message-ID: <20180823221152.GD99542@aiede.svl.corp.google.com>
-References: <20180823211028.GA99542@aiede.svl.corp.google.com>
- <20180823215748.3474-1-kyle@kyleam.com>
- <20180823220207.GC99542@aiede.svl.corp.google.com>
- <xmqqo9dshh1j.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5L94ioK9GlsdeQu0YmGIIcTdYUIitNIMm4Qn4t+pqnY=;
+        b=EXdHZVeKg2ufIvqlX6xbif46sP2/lBm24XsOqTeCJHSsX+qAc/0GJwViN//fjbtF+I
+         XhVTm64pRdmUjJkrP7aKuZaoKaECZhJSNy5ybIB1EztO1Z7nvMTpkTYW7iq2gNO+uC6+
+         Ji0+UDMwcGw84DuKfbBXwxeEHGsqsA4HuNSnG64gDqFXQBMIQnnkgASd5Xx80inDmVlJ
+         qA0g3P+vFxRCV+wpjPxWaUbFDZfpxkeeOAF+Ig6pQPAAlutCHfTscU966x2MHV74b6hP
+         1nZMZvjqrdb55XrpMyVRB8+bmNt8B8xPg/wL2nfuSxkyJl/ppSXBC7W3Z3sD6870l8fp
+         Qqrw==
+X-Gm-Message-State: AOUpUlFvYTSuIkjhnFgfoMPfosUnCis+yYfbKJ3ahf68JGVHSRXVbFX1
+        9VbxOjYJJC6I1OAgrLZEAjmcg33MyRGL8+qlmBB28g==
+X-Google-Smtp-Source: AA+uWPwV/og6w4tjxMOTxRgmGrfopEB5cEBM1pOOyksx1uJ6jIxoptlN5LeBW773nPVCi00jYc9UVo1717Wku/DFcJs=
+X-Received: by 2002:a50:da01:: with SMTP id z1-v6mr73337038edj.62.1535067022215;
+ Thu, 23 Aug 2018 16:30:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo9dshh1j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180821212923.GB24431@sigill.intra.peff.net> <20180822004815.GA535143@genre.crustytoothpaste.net>
+ <20180822030344.GA14684@sigill.intra.peff.net> <814549a01074e89a4b26cb0cf13e4dddeb3a040a.camel@mad-scientist.net>
+ <20180822152306.GC32630@sigill.intra.peff.net> <20180823012343.GB92374@aiede.svl.corp.google.com>
+ <20180823021618.GA12052@sigill.intra.peff.net> <20180823034707.GD535143@genre.crustytoothpaste.net>
+ <20180823050418.GB318@sigill.intra.peff.net> <f854aba0-6d28-7f2b-aad2-858983c4af36@gmail.com>
+ <20180823161451.GB29579@sigill.intra.peff.net>
+In-Reply-To: <20180823161451.GB29579@sigill.intra.peff.net>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 23 Aug 2018 16:30:10 -0700
+Message-ID: <CA+P7+xqbt_BVi9+1-4=ha64LW_07dJB84F0gjKd9TRE1R-Ld7A@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>, paul@mad-scientist.net,
+        Git mailing list <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->> Kyle Meyer wrote:
-
->>> Subject: [PATCH v3] range-diff: update stale summary of --no-dual-color
-[...]
->> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+On Thu, Aug 23, 2018 at 9:30 AM Jeff King <peff@peff.net> wrote:
+> I think that audit isn't actually too bad (but definitely not something
+> we should do for v2.19). The cocci patch I showed earlier hits most of
+> them. It misses the negated ones (e.g., "if (oidcmp(...))"). I'm not
+> sure if there's a way to ask coccinelle only for oidcmp()
+> used in a boolean context.
 >
-> Sorry, too late.  I'll revert the merge of the previous round out of
-> 'next' and requeue this one, but that will have to wait until the
-> next integration cycle.
 
-Thanks for the heads up.  Sounds like a fine plan.
+You can look for explicitly "if (oidcmp(...))" though. I don't know if
+you can catch *any* use which degrades to boolean outside of an if
+statement, but I wouldn't expect there to be too many of those?
 
-Jonathan
+Thanks,
+Jake
