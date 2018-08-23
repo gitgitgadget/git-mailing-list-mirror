@@ -2,113 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D85C41F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 16:08:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 846061F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 16:11:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726642AbeHWTi5 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 15:38:57 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35027 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbeHWTi4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 15:38:56 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j26-v6so5108465wre.2
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 09:08:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=KPmSQwKfcBLbtebY5p2kVdAm+1RFVo1SUwGhsdibxEU=;
-        b=ByQ0SOBSMwKMw2Ej6feAYaHP2VhNohCexOWGf+ddl3G2g6RmchRQWNtxpP66puhSac
-         /NytUa0f6vB/4qgDxc2bbfDFUIG2DNKHEd6rsOJuvUPQsU0ToNw5xjvK9Y78QZ/pByRa
-         DOyQyfGaiJ/8CRkhs7Yq97Ua+fpg3yFV3FTG/noejhSnTZYrI6nZ8OG6FgqiII6LDZqq
-         5jCaxTgK6TnKpoEC07/RB+c7Zd/rsaTQjSPtfD7oUN33IXbXFyaF/HBt+1+doIqKZO9c
-         1/5rN+YW1Jn1Beg0dsD+AbkPhOaHpI8bjfCP0Ch2ceNwhtKXnQecIQBA0e+77RHZuahZ
-         VISA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=KPmSQwKfcBLbtebY5p2kVdAm+1RFVo1SUwGhsdibxEU=;
-        b=q5GSrmxn3PoODRm+PeyfouNi7AcxolSP/1gpkZaT/0DLM81KX0grc/pwYJs/Fab7rG
-         Iqd4cvA0Ft2LGN4hJ5TOo6BOj+FRZ49YYpWw/GyYgt8Qka8DebQtdphpkaCed8BASg8X
-         Qk6OzHMoUNwgK2zF6KVGM7d73qtm5owh9n4z5k3z6WzTHt/dhVV6Cj24MZ/hK2vdMVV7
-         UfwNPZeMnovPdaIbHEHdx9eAOuOArPjnuqnaeWIgMIUooVo0KhGfKpN5jfP3J3UfZVKY
-         11IU0xWPs51s1GGLwd2ff5vKlfvx71ulydRtZa9/svAxLtilBbEJIFa1PE0Pg9kBXA5r
-         QrMw==
-X-Gm-Message-State: APzg51A9mJB3+L+9ojCj2sp0Kht0igJpGitJ1Pm4ogvsYpDfEa1iM+sY
-        927Ah27czh+71l9y6/vGhSY=
-X-Google-Smtp-Source: ANB0VdaP1uGe7MDZpbAbldvBF7I0JCxS6C4j32eIESceY8ftjhOTK0JIukL/8x2pj9JduIe1gZYGPQ==
-X-Received: by 2002:a5d:6604:: with SMTP id n4-v6mr2767445wru.281.1535040514681;
-        Thu, 23 Aug 2018 09:08:34 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o33-v6sm9650470wrf.11.2018.08.23.09.08.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 09:08:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1726649AbeHWTmO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 15:42:14 -0400
+Received: from cloud.peff.net ([104.130.231.41]:53398 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726118AbeHWTmO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 15:42:14 -0400
+Received: (qmail 13882 invoked by uid 109); 23 Aug 2018 16:11:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 16:11:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12384 invoked by uid 111); 23 Aug 2018 16:11:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 23 Aug 2018 12:11:59 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Aug 2018 12:11:51 -0400
+Date:   Thu, 23 Aug 2018 12:11:51 -0400
+From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org
-Subject: Re: [PATCH v2 2/2] tests: fix and add lint for non-portable seq
+Subject: Re: [PATCH v2 1/2] tests: fix and add lint for non-portable head -c N
+Message-ID: <20180823161150.GA29579@sigill.intra.peff.net>
 References: <20180823091427.1756-1-avarab@gmail.com>
-        <20180823152502.3886-2-avarab@gmail.com>
-Date:   Thu, 23 Aug 2018 09:08:33 -0700
-In-Reply-To: <20180823152502.3886-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 23 Aug 2018 15:25:02 +0000")
-Message-ID: <xmqqefepjcam.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <20180823152502.3886-1-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180823152502.3886-1-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Thu, Aug 23, 2018 at 03:25:01PM +0000, Ævar Arnfjörð Bjarmason wrote:
 
-> GNU seq is not a POSIX command, and doesn't exist on
+> The "head -c BYTES" option is non-portable (not in POSIX[1]). Change
+> such invocations to use the test_copy_bytes wrapper added in
+> 48860819e8 ("t9300: factor out portable "head -c" replacement",
+> 2016-06-30).
+> 
+> This fixes a test added in 9d2e330b17 ("ewah_read_mmap: bounds-check
+> mmap reads", 2018-06-14), which has been breaking
+> t5310-pack-bitmaps.sh on OpenBSD since 2.18.0. The OpenBSD ports
+> already have a similar workaround after their upgrade to 2.18.0[2].
 
-s/GNU //; the command did not even originate there, but came from V8
-and/or Plan9 IIRC.
+Heh, I even considered using this when writing that test. But the reason
+I introduced test_copy_bytes is not because the target platform did not
+have "head -c" at all, but because some tests need very specific
+buffering guarantees when reading from a shared pipe.
 
-> e.g. OpenBSD. We've had the test_seq wrapper since d17cf5f3a3 ("tests:
-> Introduce test_seq", 2012-08-04), but use of it keeps coming back,
-> e.g. in the recently added "fetch negotiator" tests being added here.
->
-> So let's also add a check to "make test-lint". The regex is aiming to
-> capture the likes of $(seq ..) and "seq" as a stand-alone command,
-> without capturing some existing cases where we e.g. have files called
-> "seq".
->
+That said, if OpenBSD's "head" doesn't have "-c" at all, I'm fine with
+this as a fix (and it sounds like we know that IRIX lacks it, too).
+
+> Also, change a valgrind-specific codepath in test-lib.sh to use this
+> wrapper. Given where valgrind runs I don't think this would ever
+> become a portability issue in practice, but it's easier to just use
+> the wrapper than introduce some exception for the "make test-lint"
+> check being added here.
+
+When working on 9d2e330b17, I recall finding these other "head -c"
+invocations in the test suite when I did 9d2e330b17 and took them as
+evidence that it was OK to use in vanilla cases. So even if these sites
+don't affect any platforms in practice, I think it's worth it to ban
+"head -c" completely.
+
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->
-> Now with a fix & check in v2 for the seq issue mentioned in
-> https://public-inbox.org/git/87a7pdfltp.fsf@evledraar.gmail.com/
+>  t/check-non-portable-shell.pl | 1 +
+>  t/t5310-pack-bitmaps.sh       | 2 +-
+>  t/test-lib.sh                 | 4 ++--
+>  3 files changed, 4 insertions(+), 3 deletions(-)
 
-Thanks.
+Patch itself looks good to me. Thanks.
 
->  t/check-non-portable-shell.pl        |  1 +
->  t/t5552-skipping-fetch-negotiator.sh | 12 ++++++------
->  t/t5703-upload-pack-ref-in-want.sh   |  4 ++--
->  3 files changed, 9 insertions(+), 8 deletions(-)
->
-> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-> index c8f10d40a1..75f38298d7 100755
-> --- a/t/check-non-portable-shell.pl
-> +++ b/t/check-non-portable-shell.pl
-> @@ -42,6 +42,7 @@ sub err {
->  	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (use =)';
->  	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
->  	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
-> +	/(?:\$\(seq|^\s*seq\b)/ and err 'seq is not portable (use test_seq)';
-
-Looking at $(wc -l) thing a few lines above, I am not sure if this
-deviation is a good idea.  Wouldn't /\bseq\s/ be sufficient?
-
+-Peff
