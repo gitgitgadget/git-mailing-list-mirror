@@ -2,101 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A4F991F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 11:48:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 126E21F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 12:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730365AbeHWPRv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 11:17:51 -0400
-Received: from ao2.it ([92.243.12.208]:57216 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729095AbeHWPRu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 11:17:50 -0400
-Received: from localhost ([::1] helo=jcn.localdomain)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1fso4W-0001Ju-3l; Thu, 23 Aug 2018 13:46:40 +0200
-Date:   Thu, 23 Aug 2018 13:48:24 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v3 7/7] submodule: support reading .gitmodules even when
- it's not checked out
-Message-Id: <20180823134824.db90021628baef8c6706fa38@ao2.it>
-In-Reply-To: <xmqqd0ua773e.fsf@gitster-ct.c.googlers.com>
-References: <20180814110525.17801-1-ao2@ao2.it>
-        <20180814110525.17801-8-ao2@ao2.it>
-        <xmqqmutoznwe.fsf@gitster-ct.c.googlers.com>
-        <20180820233755.dc7b6a6927faccc37b25075f@ao2.it>
-        <20180822135152.1d40cd05d0b0cadb5eefb31f@ao2.it>
-        <xmqqd0ua773e.fsf@gitster-ct.c.googlers.com>
-X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+        id S1732444AbeHWPaQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 11:30:16 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63266 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732359AbeHWPaP (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 11:30:15 -0400
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id D2B83F00B7;
+        Thu, 23 Aug 2018 08:00:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:date:message-id:in-reply-to:references; s=sasl; bh=SIKi
+        lLGfTMlvJTFADv/2yK0ket4=; b=M7SzE3dfisAqyiwbU5R/MMS95x5gNhqN7EGk
+        7QFVHMVWOR6aLGVMDWb339OyiAQuYcpmFaZ3cj/absYmW121hGmV9jZuGiYzxVrv
+        Qcuss9Scnrvls/d/D+PaYAtAdLpLS6XaZEjOyVtV9yJRsaXPT3PKJ+jXBL2nU/Od
+        rW6Arpw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id C9B61F00B5;
+        Thu, 23 Aug 2018 08:00:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references; s=mesmtp;
+ bh=DomPz5oxJ+E0s3m8wB01nPUDQw/0qhzJqg3gFUVVXLA=;
+ b=c6gWKWje0bCrFkg1Vt1CQvxi+MnTnmCkvJC2QIjCsXQ6WkKmzKKeNa8hrqIsXE1SNrnnXdXddk3hgAbFvy3orl/HAIIAv31VNmOBij1cwFqMl1GYB7Gn2dI6Tipte7qMzAiQs63sf8xSaUUfyef7g+ry9ZMQj1XOdUs7GYJruMs=
+Received: from hylob.local (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 3E890F00B4;
+        Thu, 23 Aug 2018 08:00:48 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com, Johannes.Schindelin@gmx.de,
+        Kyle Meyer <kyle@kyleam.com>
+Subject: [PATCH v2] range-diff: update stale summary of --no-dual-color
+Date:   Thu, 23 Aug 2018 08:00:26 -0400
+Message-Id: <20180823120026.32127-1-kyle@kyleam.com>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180823082725.GB160081@aiede.svl.corp.google.com>
+References: <20180823082725.GB160081@aiede.svl.corp.google.com>
+X-Pobox-Relay-ID: 2C6DE24E-A6CC-11E8-8925-BFB3E64BB12D-24757444!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 22 Aug 2018 08:29:25 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+275267937b (range-diff: make dual-color the default mode, 2018-08-13)
+replaced --dual-color with --no-dual-color but left the option's
+summary untouched.  Rewrite the summary to describe --no-dual-color
+rather than dual-color.
 
-> Antonio Ospite <ao2@ao2.it> writes:
-> 
-[...]
-> >> > > +		else if (get_oid(GITMODULES_HEAD, &oid) >= 0)
-> >> > > +			config_source.blob = GITMODULES_HEAD;
-> >> > 
-> >> Would using ":.gitmodules" instead of "HEAD:.gitmodules" be enough?
-> 
-> Yeah, either "instead of", or "in addition" (i.e. "try the index
-> version in addition, before falling further back to the HEAD
-> version"), would be more consistent with the remainder of the system
-> (or, at least where the remainder of the system wants to go).
->
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+---
+ builtin/range-diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-OK, I now tested with both "rm .gitmodules" and "git rm .gitmodules"
-and I see why one would want to try _both_ ":.gitmodules" and
-"HEAD:.gitmodules".
-
-I'll go with "in addition" then, adding tests for both the scenarios.
-
-> >> If so, what name should I use instead of GITMODULES_HEAD?
-> >> GITMODULES_BLOB is already taken for something different, maybe
-> >> GITMODULES_REF or GITMODULES_OBJECT?
-> 
-> I do not know why you want to refrain from spelling them out as
-> "HEAD:.gitmodules" and ":.gitmodules"; at least to me the extra
-> layer of names do not look like they are making the code easier
-> to understand that much.
-> 
-
-This is in the spirit of commit 4c0eeafe47 (cache.h: add
-GITMODULES_FILE macro, 2017-08-02), IIRC this was done mainly to get
-help from the preprocessor to spot typos: I caught myself writing
-".gitmdoules" several times; GITMDOULES_FILE would not compile.
-
-If this makes sense I'll use GITMODULES_INDEX and GITMODULES_HEAD.
-
-Thanks,
-   Antonio
-
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index f52d45d9d6..057afdbf46 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 		OPT_INTEGER(0, "creation-factor", &creation_factor,
+ 			    N_("Percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "no-dual-color", &simple_color,
+-			    N_("color both diff and diff-between-diffs")),
++			    N_("color only based on the diff-between-diffs")),
+ 		OPT_END()
+ 	};
+ 	int i, j, res = 0;
 -- 
-Antonio Ospite
-https://ao2.it
-https://twitter.com/ao2it
+2.18.0
 
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
