@@ -2,82 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 464171F97E
-	for <e@80x24.org>; Thu, 23 Aug 2018 09:14:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 653FB1F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 09:14:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730133AbeHWMnH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 08:43:07 -0400
-Received: from mail-yw1-f47.google.com ([209.85.161.47]:45594 "EHLO
-        mail-yw1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729142AbeHWMnG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 08:43:06 -0400
-Received: by mail-yw1-f47.google.com with SMTP id p206-v6so1693940ywg.12
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 02:14:21 -0700 (PDT)
+        id S2388911AbeHWMnZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 08:43:25 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54588 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728440AbeHWMnZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 08:43:25 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so4481186wmb.4
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 02:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=QX8LUIgFPaIax3wJsgRh7+2mAZ0WQOD/qLd2XB1oe5E=;
-        b=vRhPu9E1p5g4T648LtdEjCKURiFfQxMlOmVRV444243EFGr6BM3kqwAEOi3dY4R0Xd
-         kpzqlgiU7WRHNbjixrMNo2Vg0EIbICemDTPbSb7xeph38/Z312dUuauS7+5kn4OGAzCA
-         Zm7OJZyA9I5n5gYdn7dlUmSmKFwIxiOq998+k61D7yzWceKJATmadEt0ChrVuPhv5BwE
-         1YpocgMKVJiWrKu0BnPe8aZOSoNU5Bq9HnI7Wzw+Rfb9WQwspgcxc7TDj7Q9atKb/v2J
-         aLnoRlamf3OzhLA7pY3QPU+acUE/SL9qv6Dsn6yiy48cTQ4dMn98UU7VhhX5sOuAFmzG
-         Bhdg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EMgrvgqjGluxxzp9UKIwWkbywrLDxMECMEonoa1/kPM=;
+        b=nXgF7flWxbsN//zF+3SzCBLuPxhBucNU0kyyvtMs+uTFcuYU3qbN7e+2JXI8cnxc6O
+         hvbdNnqnWnIJZhOWhfAJVHyALslaVCmJ0918CuxNDEqnUEFO4MhUN5WJ+a+p6u2e94Rw
+         8Xa3AunaHni/i8hL3hPCMuuqaM1ZWVDJCTz1Cv/Hvm2o47/rSamo1p6NluDTNDLZZUJY
+         bWhmECV856QAWwGtEFeYVkmUL1qvAE8ZGHC93cfKHTdR1nNQxRrMYUdP1bSLhKubT3Jt
+         mKcU0MtrENa/84ASZzw2tEZ1KHlOobwjsTaGzwQ40uvQ1AKpRwDe5d6r+Sy2x618na/p
+         U6SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=QX8LUIgFPaIax3wJsgRh7+2mAZ0WQOD/qLd2XB1oe5E=;
-        b=NuZhYYi+Sic/EP3tuzpxn3T5y/PghU2aQOD11d7eXxiUkV8/YagMptbPjuhObUREqR
-         xQwtE94R5DzbbN3VC1hTsiLQkgUgjdXySnI4N0yZqHb2UhOHqZsPjPSBeE9M98RFsOHV
-         5ZlGRNAXE2UkopOLDFHZF3hSU+JE8fgbtyADasZ2eSkybulC4bzg2hDZdX8lPYW3m0IC
-         50mdXuU9KRLzwHHxMe7VctSj81kBAYcPa1p7PY2kA9Nj2iqxqr/6KNC8yr2j/LJcGE89
-         JyJV+WCkA7XD6KPc4MbJbMCQKXMQ/Xh6olhMIi86UnoYSFj8K34inF2DP1MWbx69XRdI
-         w+Yg==
-X-Gm-Message-State: APzg51DWyyiUpCkffSUGfzaH3qtRlrEwDMK7420WzAJgULUn15q4SfkU
-        gYgWvWDfpLPk2Hwcv2GfpidymP38KAUs/R5XuX46sCaw
-X-Google-Smtp-Source: ANB0VdaZEhWswL3PAkgKQJdRFLM1X00Pmgy9TFLRHyuQbPzhLGiJFe+6gL4vknfQQSiuiRRdKBbAXpkXpt7ASyqO06A=
-X-Received: by 2002:a81:7d46:: with SMTP id y67-v6mr2175208ywc.457.1535015660172;
- Thu, 23 Aug 2018 02:14:20 -0700 (PDT)
-MIME-Version: 1.0
-From:   Timothee Cour <timothee.cour@gmail.com>
-Date:   Thu, 23 Aug 2018 02:13:54 -0700
-Message-ID: <CANri+EwMTwtmg9NMe6XBg=wVdsmW51MbkpfWtBQ+KT8KMjJryQ@mail.gmail.com>
-Subject: how to output absolute paths in git diff?
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=EMgrvgqjGluxxzp9UKIwWkbywrLDxMECMEonoa1/kPM=;
+        b=RilluE7tLbB2IzE5PDresmZ2Z1bSvCGmV3S9F9QMVSdoMUeJ0V/pz3kQwIrX8zTTY/
+         4QRripYNGcxaqFONBPbpS83YpUpzXLgqvDga4zEwrRmazAv4t17srdajIi86Hb0SkASw
+         Jiai5uYL3I8a4Nmy8FwSbenLX9IwMaCPfELRiO7ZopVT4meHh8LJcelHQQKH34MHmIM1
+         RvaCsGI4QuiwUkLiHwHvuxMW/a+SUnIUIN9CEPw4w5zmKtpVHAnkTu68MBJxEoxy95Fb
+         gNFv+PhaXAQ0XntY2Ip7TWy2Wd3RwEiXzHrSghz+x4OvGh6P5Nw66vLcbcHSI8TPjBLs
+         m5Aw==
+X-Gm-Message-State: APzg51Cb0YfCdzgjLBcOPZthJQ+/fhW/Sr1B2bXaCC97o6SUCaxgFUaR
+        EopPIPHgjSpzqNFHrimHHsdNnH5W
+X-Google-Smtp-Source: ANB0VdZ8DduoXIqJMExikQpr5sEid7/64+mMUok0yNVq/EwnqHqJ2Wj3MLgVI7jrxObgRMia6bLqWg==
+X-Received: by 2002:a1c:700a:: with SMTP id l10-v6mr4733465wmc.90.1535015677341;
+        Thu, 23 Aug 2018 02:14:37 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id v133-v6sm6567830wma.36.2018.08.23.02.14.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Aug 2018 02:14:36 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] tests: fix and add lint for non-portable head -c N
+Date:   Thu, 23 Aug 2018 09:14:27 +0000
+Message-Id: <20180823091427.1756-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This has all the context:
-https://stackoverflow.com/questions/22698505/how-to-show-full-paths-in-git-diff
+The "head -c BYTES" option is non-portable (not in POSIX[1]). Change
+such invocations to use the test_copy_bytes wrapper added in
+48860819e8 ("t9300: factor out portable "head -c" replacement",
+2016-06-30).
 
-I'd like `--show-abs-path` to show absolute paths in:
-git diff --show-abs-path args...
+This fixes a test added in 9d2e330b17 ("ewah_read_mmap: bounds-check
+mmap reads", 2018-06-14), which has been breaking
+t5310-pack-bitmaps.sh on OpenBSD since 2.18.0. The OpenBSD ports
+already have a similar workaround after their upgrade to 2.18.0[2].
 
-eg:
-git diff --no-index `get_file1` `get_file2`
-could show:
---- a/Users/timothee/temp/ripgrep/help0.txt
-+++ b/help1.txt
+I have not tested this on IRIX, but according to 4de0bbd898 ("t9300:
+use perl "head -c" clone in place of "dd bs=1 count=16000" kluge",
+2010-12-13) this invocation would have broken things there too.
 
-* passing '--dst-prefix=$PWD' and '--src-prefix=$PWD' doesn't help
-because path arguments could be absolute, so it'll create
-$PWD/Users/timothee/temp/ripgrep/help0.txt (wrong)
+Also, change a valgrind-specific codepath in test-lib.sh to use this
+wrapper. Given where valgrind runs I don't think this would ever
+become a portability issue in practice, but it's easier to just use
+the wrapper than introduce some exception for the "make test-lint"
+check being added here.
 
-* passing '--dst-prefix=.' will behave weirdly, replacing leading `/`
-by `.` (seems wrong)
-diff --git .Users/timothee/temp/ripgrep/help0.txt b/help1.txt
+1. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/head.html
+2. https://github.com/openbsd/ports/commit/08d5d82eaefe5cf2f125ecc0c6a57df9cf91350c#diff-f7d3c4fabeed1691620d608f1534f5e5
 
-NOTE: I'm invoking the `git diff` command via a more complicated case
-(with multiple arguments including git diff flags and git diff files),
-so it's awkward for me to parse which arguments correspond to a file
-vs a flag (ie prevents easily converting input file arguments to
-absolute paths), but `git` could do it easily via a flag, eg
-`--show-abs-path`
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Junio: Even though this isn't a 2.19.0-rc0 regression I think it makes
+sense for 2.19.0. The fix is trivial, and it'll unbreak (at least some
+of) the tests on stock git on OpenBSD.
+
+OpenBSD guys: If you CC the git mailing list when you find you need to
+apply patches like these, we're happy to fix this more pro-actively. I
+just happened to be testing the upcoming 2.19.0 on OpenBSD and spotted
+this.
+
+ t/check-non-portable-shell.pl | 1 +
+ t/t5310-pack-bitmaps.sh       | 2 +-
+ t/test-lib.sh                 | 4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+index d5823f71d8..94a7e6165e 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -35,6 +35,7 @@ sub err {
+ 		chomp;
+ 	}
+ 
++	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
+ 	/\bsed\s+-i/ and err 'sed -i is not portable';
+ 	/\becho\s+-[neE]/ and err 'echo with option is not portable (use printf)';
+ 	/^\s*declare\s+/ and err 'arrays/declare not portable';
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 557bd0d0c0..7bff7923f2 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -335,7 +335,7 @@ test_expect_success 'truncated bitmap fails gracefully' '
+ 	git rev-list --use-bitmap-index --count --all >expect &&
+ 	bitmap=$(ls .git/objects/pack/*.bitmap) &&
+ 	test_when_finished "rm -f $bitmap" &&
+-	head -c 512 <$bitmap >$bitmap.tmp &&
++	test_copy_bytes 512 <$bitmap >$bitmap.tmp &&
+ 	mv -f $bitmap.tmp $bitmap &&
+ 	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
+ 	test_cmp expect actual &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 8bb0f4348e..44288cbb59 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -867,7 +867,7 @@ then
+ 		# handle only executables, unless they are shell libraries that
+ 		# need to be in the exec-path.
+ 		test -x "$1" ||
+-		test "# " = "$(head -c 2 <"$1")" ||
++		test "# " = "$(test_copy_bytes 2 <"$1")" ||
+ 		return;
+ 
+ 		base=$(basename "$1")
+@@ -882,7 +882,7 @@ then
+ 		# do not override scripts
+ 		if test -x "$symlink_target" &&
+ 		    test ! -d "$symlink_target" &&
+-		    test "#!" != "$(head -c 2 < "$symlink_target")"
++		    test "#!" != "$(test_copy_bytes 2 <"$symlink_target")"
+ 		then
+ 			symlink_target=../valgrind.sh
+ 		fi
+-- 
+2.18.0.865.gffc8e1a3cd6
+
