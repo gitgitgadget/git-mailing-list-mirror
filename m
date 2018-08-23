@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56D061F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 02:47:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 208D31F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 02:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726992AbeHWGOr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 02:14:47 -0400
-Received: from mail-pl0-f67.google.com ([209.85.160.67]:34055 "EHLO
-        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726191AbeHWGOr (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 02:14:47 -0400
-Received: by mail-pl0-f67.google.com with SMTP id f6-v6so1720039plo.1
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:47:21 -0700 (PDT)
+        id S1726819AbeHWGQZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 02:16:25 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36186 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726191AbeHWGQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 02:16:25 -0400
+Received: by mail-pg1-f194.google.com with SMTP id h17-v6so1824134pgv.3
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=UeaM3F208lyLwcsSa6t8kxWApPLzPHaOAhUUEoOwSN4=;
-        b=EznP2wCqIH/vON8Nqkg3MgLJY/7xQRvcJ46yACXTzp8gxcXKL2uIubJ+vOu/IWGPCP
-         J8uhZKbyAGc30wEYcdjQU9xVw+2sSq2TvnFNu1hB4WE3vYgi/mIsRNAcXLOBrhUzYHio
-         BggQh9joyNa/Ag2A3roj+zIT+xO5OUAG/DtWSR6sioE4ruL+WKvX1c/Y8hy2QC6ASKm7
-         PCCgC+Fo1X+aqcIa0dfXUBIQQvkUa5jnQ1HZatwDce+M3qtwxc++OQJRoFUEB9kIxwBk
-         bokKbfzXGkEQYq4GdD9eqPjCz/+W4/6/nV9zvXx0QgQMhyY20KB0NxwFnswksGNyUbj9
-         S8uA==
+        bh=7KHwk/Djb3vKbcIDwP4c1tGAB/dX96QeeoSjDS+NkT8=;
+        b=UMJEyiW6cowVm3KONCPj/1DHAdQ9mChQIzOO56bloivBPCngJn0wF8+QAlWS55etEJ
+         eCXQQ40CwRC6yzQ/mfkt9rGWmrt08oEkaPZWg7h799Nz+oRTS+APoDaBrSf9LwNwF4rA
+         8IDdCsp18MgTX7Ah8e2ICu0HF71TF+gfBeDPdQG9RIt2lt5+bocNZkmrzWKJ1S8qyEBT
+         QQ99zfmPypR2nNaXWxpQKFSCeTzERilPv8rN97AVseXnps0CXsliuWf3qyqHIGs1Ed5A
+         xi1/PavRQQKNiSNhZQ11EMJ69jNlEwAWJI9Zt+M4qoyHo3X14EvodeP2o0BCeftkV1gp
+         zsrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UeaM3F208lyLwcsSa6t8kxWApPLzPHaOAhUUEoOwSN4=;
-        b=iNLui8v2wflJNjEmOjKWcW/G7l92rm19zLSu2emYRoHS+oOvsVh/rpju1BH/9zN1IE
-         tKp2QY6Na02Xg0pZ8WmClAnAbPtiVhGtI5dLNnn1jGYjL2Jzo/ouws1sKsSobJiQYvgQ
-         NpYAmbuNQVwfl10v9x/KR4ajmdGJRHEHCM41HzhZxqAOQ0NZ5nmtRDauPI/up2BSgqtN
-         +cOtUymaNYqKLCPa1pf8o6NovXesMQ/gnAEHBw70+8V0AMLxTFhHMFz6yGFABCL4gbBh
-         2AG8Xz1rqvPNRhyhL6WxqXwZJeRepPuzMlSzv+Njh43mJ6OOuUt8A0/iJQo7jc1MGuCP
-         ZYLw==
-X-Gm-Message-State: AOUpUlHwU9MDNOVkwaXQldkNpP5ndhIgM9MZuo/Ex0DhKU5C4dJhHltu
-        NSb2GVO1oy8KouFQPb+kftqbSZxW
-X-Google-Smtp-Source: AA+uWPyxSw1gP7LMJDfbNvfpsADZQzyVrMfGa7quE/bJxh/XzZJzhQZjrueOuRqtMaThArlFk0yfjQ==
-X-Received: by 2002:a17:902:bf44:: with SMTP id u4-v6mr57026160pls.84.1534992441230;
-        Wed, 22 Aug 2018 19:47:21 -0700 (PDT)
+        bh=7KHwk/Djb3vKbcIDwP4c1tGAB/dX96QeeoSjDS+NkT8=;
+        b=Qv3aTX7mussvVSQSWyJ3WglVg/ySypy53uOqfXizf2SYqImblWC3dQVYbunPv9iHv7
+         W3Q2l23dL9ktJlMVHVg6x5uFvQuoFPjqJ5P8090zRRgLwQfaNBZR6WHMGlzQkWQFLRdz
+         TrzC9TdauOeN0DCC1U1OSfKhHdl7//WxyFTWjH36Zjnj5GyKbd+AxxuwVZ7189O+FP7s
+         vXVKb7dUKZTv+BIVQSFC+lbsTvbWV2vpWXoQLaU1eCXXJbq2O5jPU1FtjWUoI1Yr4Y6V
+         07t71uZsessXuGL19XHdcdzYKf+VBl5KiQWv21+e0vjKduSFTRUvFjMF+fRCks2DC8UX
+         r7TA==
+X-Gm-Message-State: AOUpUlFJ8vrvKIobKkRzqFvuhrtmLfySeYZLNA/OjkG+5gpeBVJnTf/K
+        ySO7yb2nJDYD30mdsL/JsHTVzUV1
+X-Google-Smtp-Source: AA+uWPwv97hf4zPdmZzVOd0lPsTflpe/70SQfFu7rOd5/Lx6jp2hE+GcQANvsKD84XVDxWGFoIgYJw==
+X-Received: by 2002:a63:e841:: with SMTP id a1-v6mr27335011pgk.126.1534992539051;
+        Wed, 22 Aug 2018 19:48:59 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l123-v6sm3529202pgl.82.2018.08.22.19.47.20
+        by smtp.gmail.com with ESMTPSA id t19-v6sm4537401pfk.182.2018.08.22.19.48.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 19:47:20 -0700 (PDT)
-Date:   Wed, 22 Aug 2018 19:47:19 -0700
+        Wed, 22 Aug 2018 19:48:58 -0700 (PDT)
+Date:   Wed, 22 Aug 2018 19:48:56 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
-Message-ID: <20180823024719.GG92374@aiede.svl.corp.google.com>
-References: <20180823023955.12980-1-kyle@kyleam.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin
+ interactive rebase
+Message-ID: <20180823024856.GH92374@aiede.svl.corp.google.com>
+References: <pull.23.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180823023955.12980-1-kyle@kyleam.com>
+In-Reply-To: <pull.23.git.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -68,32 +69,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Kyle Meyer wrote:
+Johannes Schindelin wrote:
 
-> 275267937b (range-diff: make dual-color the default mode, 2018-08-13)
-> replaced --dual-color with --no-dual-color but left the option's
-> summary untouched.  Rewrite the summary to describe --no-dual-color
-> rather than dual-color.
->
-> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
-> ---
->  builtin/range-diff.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+[nice description snipped]
+> This patch fixes that.
 
-Thanks, good catch!
-
-> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-> index f52d45d9d6..7dc90a5ec3 100644
-> --- a/builtin/range-diff.c
-> +++ b/builtin/range-diff.c
-> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
->  		OPT_INTEGER(0, "creation-factor", &creation_factor,
->  			    N_("Percentage by which creation is weighted")),
->  		OPT_BOOL(0, "no-dual-color", &simple_color,
-> -			    N_("color both diff and diff-between-diffs")),
-> +			    N_("restrict coloring to outer diff markers")),
-
-What is an outer diff marker?
+Please include this information in the commit message.  It's super
+helpful to find this kind of information about why a patch does what
+it does when encountering a patch later "in the wild" (in git log -S
+output).
 
 Thanks,
 Jonathan
