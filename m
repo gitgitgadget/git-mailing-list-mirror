@@ -2,117 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68CE41F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 20:44:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5034E1F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 20:53:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbeHXAQB (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 20:16:01 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55834 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726740AbeHXAQB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 20:16:01 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f21-v6so6433882wmc.5
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 13:44:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=q1Qo7V0zi4lbIx5jhLqADUrsKU0TOeHx1r8vcIHNYKQ=;
-        b=stCRo+CopWNZTnqT1WgKwR5lnrvcBjHNS3KD6Jf5prda3iGMtERbNuOUX7onwtacxw
-         0bvSlQT5yH8fK6w129MoHGnLsFgucfPjw7QoDNRGwBdFZfxbcuR2Uic15gAK+Jx0EWRw
-         TL3N9AmD/xIuAe6dD1pDaiY2ZdcpV+WlziSF/YtuikjjMJJFOE32TaIFYh8abcXmL4mm
-         AZQXDdjFulPSpoNvMcsgl3Ay7p1qOOaSp+GXviWS/ZlwREReuSNgN7LOElj/eQEkIqQm
-         oprMPghtg8UmV4fd/x3iJwT5S+p2SWuamrsP+A67rGOt0XS+jfgZz4Jerb15WVuwRUTk
-         E1rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=q1Qo7V0zi4lbIx5jhLqADUrsKU0TOeHx1r8vcIHNYKQ=;
-        b=AXymqZWARoKX4sz6Pncb9NxToiOlL2vcRSp+QTBlmmEzzJQHVrxgWRI8S2UczRtz/G
-         tXj8Ln4TE0KgiocRv743/BoMZzTUazXkD0TSppPEm0FnJ5O4KE1PdFilSxOpEbP0glH5
-         gjfTi8gFXclZnH50JzzbNTT9fu1FcgHS1s3bKh/XXF5+ci3Ditht50bjmpLdfFN8baBF
-         qiMvpYAgzDcz6EBwWhBVMUTGhY1BygC754x9QxNV2qwrr8w6VROxykJqT3EUb48VXNer
-         r70yiViysr+/Qp9S+aDKFLuMcglN41GwxMWRqj+/aBrZqwFeKcpo138172Yl4EkDQuuX
-         OrHQ==
-X-Gm-Message-State: APzg51B8xeinGJ4SJE18zSS72DHb5AzIzjqp2q52SBaia1e2zIwrOtti
-        gUtL+KV7ayi27AU8xH3SUqg=
-X-Google-Smtp-Source: ANB0VdY3I83JtJ/UIuFi84IyetWv86cLC0gSCTvJiJZUxHz1S2YAf90DjErRnUG1mTH+gzCkYQaoRg==
-X-Received: by 2002:a1c:ca17:: with SMTP id a23-v6mr654809wmg.122.1535057075741;
-        Thu, 23 Aug 2018 13:44:35 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m8-v6sm8292462wrf.93.2018.08.23.13.44.34
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 13:44:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v3 5/5] tests: fix and add lint for non-portable grep --file
-References: <20180823152502.3886-2-avarab@gmail.com>
-        <20180823203604.5564-6-avarab@gmail.com>
-Date:   Thu, 23 Aug 2018 13:44:34 -0700
-In-Reply-To: <20180823203604.5564-6-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 23 Aug 2018 20:36:04 +0000")
-Message-ID: <xmqq6000izil.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727453AbeHXAZS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 20:25:18 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39657 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727128AbeHXAZS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 20:25:18 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgHHO-1fVLBO0APW-00NgvK; Thu, 23
+ Aug 2018 22:53:44 +0200
+Date:   Thu, 23 Aug 2018 22:53:41 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>, ch <cr@onlinehome.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] t/lib-rebase.sh: support explicit 'pick' commands in
+ 'fake_editor.sh'
+In-Reply-To: <20180823100915.22855-1-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808232253220.73@tvgsbejvaqbjf.bet>
+References: <20180619124651.17425-1-phillip.wood@talktalk.net> <20180823100915.22855-1-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1459482733-1535057624=:73"
+X-Provags-ID: V03:K1:Vy9mFQ6B4b0sDYGm/OdROeqqGgX1zTWzQMuHvpgX4tFzGEXwgFV
+ sD+0lfFpps4GJYKC6XtH3YaYhv2EByTtyhBK9RQGgjWGetGMyBritoJY4KurhTisvyEITAl
+ Jy4+K4pjWMw+0ISAcVnFeVfbjnsyGxHoQZ3AFB1ablIucKamWbV08KvCHD/+9BYWqHkwnn1
+ NDM8ABQqkZDqK+4iAzgPQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:n5UVBS4hQFE=:6DIBIaQUKXDv9jhDlYgFOW
+ F89ZKteue2AqP6XHWEk8YYUiop7JAqWt7GgRziXikD2yijlckx0DDmnvdDvVyzBc4w+E4tspv
+ nQw+jufDUWX4q9S9sk7CjPQU+lmg6Tdj2ZaxoK7Wt6LqwViaQT+mkrNV/+/XfXAVvhIlDYlkP
+ m4CVuXJNDm0QNONLMdlpgiAgalQumfzOBYQczRAzXvbiEJNStO40TIdgPe2ohFTCzyd6WQKDE
+ sYREKjTJsR+3y/kyr8FvX0t5/AsS140D7qKekpBLssQrHRZs5jVHScW3ksrJ92n05XMwkhtLO
+ 0iD662iKDhuLWoRQ/OY+UWMMvAB/19OCcQL/lh/LBib9kD+8ObKwT/APTpi7XQWm0M6RpB0e4
+ pubLRT0EGRpbSgfN1NtgiRZfZIt2DqIkHoAnCTQCHQgcgZcctbwtTnIyqkgOJpXXvVgac7uAn
+ uA8aV0RSgZ0VGqlKYPTtAbMyXVROfGaco+PyqRbXaD+4XNtuGs05GUJ838wZQYvgR1ElSZAvs
+ 1iFCqCc9yQDEZbDj23UfizQJWFkMayCth+0ZpJ2PbXWTyrNo7GWS4R75Cz99wskhXPQffpEHT
+ ZDFrqBaD2sE5dxKY/pYNoLU6zifCA/m6TSBoPHIJ3kmpZomhXK5Ck8Rb3IjOlQT7aGHa+djsd
+ ddYNbVkQLQPZ8RTAPMe2GHNrvTP5O53EHPmXUUwpSL9LEIGgKaFSUEOFIzGgA3Qkc0fK0CH0n
+ 5yUtO9M/3jg9uA3DA5e4wgb/Rfyq8xHETwaGTBNWgCe+TXToutYRnLuNa+dDYCNjbx+4E0Otx
+ NuhjXRa
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> The --file option to grep isn't in POSIX[1], but -f is[1]. Let's check
-> for that in the future, and fix the portability regression in
-> f237c8b6fe ("commit-graph: implement git-commit-graph write",
-> 2018-04-02) that broke e.g. AIX.
->
-> 1. http://pubs.opengroup.org/onlinepubs/009695399/utilities/grep.html
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+--8323328-1459482733-1535057624=:73
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+
+Hi G=C3=A1bor,
+
+On Thu, 23 Aug 2018, SZEDER G=C3=A1bor wrote:
+
+> The verbose output of the test 'reword without issues functions as
+> intended' in 't3423-rebase-reword.sh', added in a9279c6785 (sequencer:
+> do not squash 'reword' commits when we hit conflicts, 2018-06-19),
+> contains the following error output:
+>=20
+>   sed: -e expression #1, char 2: extra characters after command
+>=20
+> This error comes from within the 'fake-editor.sh' script created by
+> 'lib-rebase.sh's set_fake_editor() function, and the root cause is the
+> FAKE_LINES=3D"pick 1 reword 2" variable in the test in question, in
+> particular the "pick" word.  'fake-editor.sh' assumes 'pick' to be the
+> default rebase command and doesn't support an explicit 'pick' command
+> in FAKE_LINES.  As a result, 'pick' will be used instead of a line
+> number when assembling the following 'sed' script:
+>=20
+>   sed -n picks/^pick/pick/p
+>=20
+> which triggers the aforementioned error.
+>=20
+> Luckily, this didn't affect the test's correctness: the erroring 'sed'
+> command doesn't write anything to the todo script, and processing the
+> rest of FAKE_LINES generates the desired todo script, as if that
+> 'pick' command were not there at all.
+>=20
+> The minimal fix would be to remove the 'pick' word from FAKE_LINES,
+> but that would leave us susceptible to similar issues in the future.
+>=20
+> Instead, teach the fake-editor script to recognize an explicit 'pick'
+> command, which is still a fairly trivial change.
+>=20
+> In the future we might want to consider reinforcing this fake editor
+> script with an &&-chain and stricter parsing of the FAKE_LINES
+> variable (e.g. to error out when encountering unknown rebase commands
+> or commands and line numbers in the wrong order).
+>=20
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+
+ACK!
+
+Thank you very much,
+Dscho
+
 > ---
-
-Thanks.
-
->  t/check-non-portable-shell.pl | 1 +
->  t/t5318-commit-graph.sh       | 2 +-
->  2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-> index 75f38298d7..b45bdac688 100755
-> --- a/t/check-non-portable-shell.pl
-> +++ b/t/check-non-portable-shell.pl
-> @@ -43,6 +43,7 @@ sub err {
->  	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
->  	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
->  	/(?:\$\(seq|^\s*seq\b)/ and err 'seq is not portable (use test_seq)';
-> +	/\bgrep\b.*--file\b/ and err 'grep --file FILE is not portable (use grep -f FILE)';
->  	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (use FOO=bar && export FOO)';
->  	/^\s*([A-Z0-9_]+=(\w+|(["']).*?\3)\s+)+(\w+)/ and exists($func{$4}) and
->  		err '"FOO=bar shell_func" assignment extends beyond "shell_func"';
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 3c1ffad491..0c500f7ca2 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -134,7 +134,7 @@ test_expect_success 'Add one more commit' '
->  	git branch commits/8 &&
->  	ls $objdir/pack | grep idx >existing-idx &&
->  	git repack &&
-> -	ls $objdir/pack| grep idx | grep -v --file=existing-idx >new-idx
-> +	ls $objdir/pack| grep idx | grep -v -f existing-idx >new-idx
->  '
->  
->  # Current graph structure:
+>  t/lib-rebase.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
+> index 25a77ee5cb..592865d019 100644
+> --- a/t/lib-rebase.sh
+> +++ b/t/lib-rebase.sh
+> @@ -47,7 +47,7 @@ set_fake_editor () {
+>  =09action=3Dpick
+>  =09for line in $FAKE_LINES; do
+>  =09=09case $line in
+> -=09=09squash|fixup|edit|reword|drop)
+> +=09=09pick|squash|fixup|edit|reword|drop)
+>  =09=09=09action=3D"$line";;
+>  =09=09exec*)
+>  =09=09=09echo "$line" | sed 's/_/ /g' >> "$1";;
+> --=20
+> 2.19.0.rc0.136.gd2dd172e64
+>=20
+>=20
+--8323328-1459482733-1535057624=:73--
