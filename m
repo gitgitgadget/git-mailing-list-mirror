@@ -7,112 +7,94 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 621AA1F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 02:12:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4876C1F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 02:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726264AbeHWFjS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 01:39:18 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:36862 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726165AbeHWFjS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 01:39:18 -0400
-Received: by mail-pl0-f65.google.com with SMTP id e11-v6so1681762plb.3
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:11:59 -0700 (PDT)
+        id S1726407AbeHWFnJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 01:43:09 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42726 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726267AbeHWFnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 01:43:09 -0400
+Received: by mail-pf1-f196.google.com with SMTP id l9-v6so1876201pff.9
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:15:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=EuldwXOLC6gmA9fSEiEARD0VtVw83jR57nPOWXW6GV4=;
-        b=OmvBv6T2pEI666e1Dd59oK8eq/moEZ1dZc9MDyRTA0kSHYjvNna/oZpk1ktHKfZkvt
-         4VYxzwkcWYSPljkkQOGyYJw2QwcSU88MKpa48UAspzfnIPCG56GqJXzsIEUIijMdnlEa
-         AjtaDn5rFw0VilQhKNLsA8npqorTO8gfBifHE5nRjR+RpTmnui5gXUie6Rslb7zsDgDb
-         dNY67OHllXV6O+zBtdZwGkIgtpYHZ/ZKdTw/5fJTF888GsNVeRA14w4HtIyhngueE6S7
-         dtT/93fQkraBjjEEFdsHhZ+KUiKPMoJvWkVL35oeR39RLY034KWLcIWCojxZzbtYJ3/f
-         oELw==
+        bh=rmVY152qqQGx5kIdyE0GJGynwF+oiJaekuJ8gUry5gA=;
+        b=BU95J2XkzojiWUC1/3lEUJbp08pHeIdb0Lo7/EaZRSKN3yB04TK1cUjH2IlAObKHso
+         1R9/Ei7U3s6sVQ26FV3MB292N4ANFbVUNfXhjbe2oQ+qpnq94kGqtEQOocuN8eDFyj7u
+         bX24emEaMrCiSAa4fQRiBlPvVz8vw9xxipKFTtuYHSEcV4cR9CP64j6bLIFgVl+ilG9o
+         ZX+2FMFFxN1qzvkD5FeGBGbo6E78i83NUMpRI58rBWlv2basKOeYlSfQNIRU6mXrLeUz
+         aQS1OmTreKzy0149+1koCf9wKouhGWXX+TdSTincDIr5SiH5BfF+F+TTojL7/3iM18mh
+         sQeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EuldwXOLC6gmA9fSEiEARD0VtVw83jR57nPOWXW6GV4=;
-        b=jLJE42z64VMmTFwKD3E/bu1UGAw4vlN0CKrpnNkPl71deV5TSTaIRekop13JF7zfV9
-         XuviFQRw1VoNxr7AzVTjppcg6H+f6R2yurcR1nzZesfEM4o+cD3AGKnzPT9BeBgXJvT3
-         b6VtTfjzAKzWYSXyp0HUheE/nynrBeGpHmnjh76k6dUIFHceXjg6uI2qltM9pGLzpDID
-         1xGX848OJnHos4c2++NK9qwBNxPpFyvHKdGFZVnMm5d4uxHmLND+sKkbPBJQ6VU7zD/G
-         Znk014e32aPfeqLdpNS/PU7gHWB9T+fYXxcGwVgrkXsx2GeCzj/1XghXiTQiq1d6TvWt
-         ycFQ==
-X-Gm-Message-State: AOUpUlHvK6sezySnQ51BovKiXxE0rNWDlzhf/x87ktwO40lDAUatYCQP
-        u6efDCNw0NcR0hKq07l4psc=
-X-Google-Smtp-Source: AA+uWPyV0con5ZwH5Ofr5F/XnEqKvEJQLugea4Fx1wTIZeyiDmwAtLhB4aI/HL5PRoK5//tRP3Buqg==
-X-Received: by 2002:a17:902:8e81:: with SMTP id bg1-v6mr56478314plb.129.1534990318773;
-        Wed, 22 Aug 2018 19:11:58 -0700 (PDT)
+        bh=rmVY152qqQGx5kIdyE0GJGynwF+oiJaekuJ8gUry5gA=;
+        b=H/HPjYUrmvgkQ79ozeSN1QJUSiqqpLoD7XaypIBtaCYtRYNtZD+zQr4cfbgzczZEr/
+         FNYYRyhnxlOqN33Ax8yv9xNQJwrGMsqRAoym6gZ4XfmAqxIHPonnZ98z24nVsCIYR2Xh
+         Ikr9vC+uIYb/6Y0yOiK4SlEV76vosEBpPOCKLVeOG85AvbSE8rK5GcDbS/akJkquWs0C
+         vXEU8AN6D+fZAcNfk1jVP6gCl8lw3Hr09B/pql/3d49Cm5MVohFkB6987YkK6xrzjFDk
+         3XySc9hCOkeRJA/jy4MKq0Lk+psmz/58MnzMwNYA/jvKGjJ3AjdD7FDaic7lM3snFihA
+         fozQ==
+X-Gm-Message-State: APzg51A1bYHdpvt6dxCrjkew27X4wYhaVPP2ZAJoBIgl0LY9eo9yhnVD
+        MKczWL6uyH3T7PHRJItwY+pZIqkK
+X-Google-Smtp-Source: ANB0VdYK2YzxlY55wMeOZlHNHcxF2jDz2dvVNTfGyDvChDnBTdmnxFv7Q2nngsB0KiQPVdjLvXEJaw==
+X-Received: by 2002:a63:a619:: with SMTP id t25-v6mr1879783pge.288.1534990549282;
+        Wed, 22 Aug 2018 19:15:49 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id y124-v6sm4895558pfg.63.2018.08.22.19.11.58
+        by smtp.gmail.com with ESMTPSA id x24-v6sm4192770pfh.67.2018.08.22.19.15.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 19:11:58 -0700 (PDT)
-Date:   Wed, 22 Aug 2018 19:11:56 -0700
+        Wed, 22 Aug 2018 19:15:48 -0700 (PDT)
+Date:   Wed, 22 Aug 2018 19:15:47 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: [PATCH/RFC] commit: new option to abort -a something is already
  staged
-Message-ID: <20180823021156.GD92374@aiede.svl.corp.google.com>
+Message-ID: <20180823021547.GE92374@aiede.svl.corp.google.com>
 References: <20180820154120.19297-1-pclouds@gmail.com>
  <20180820193007.GB31020@aiede.svl.corp.google.com>
  <CACsJy8DsEhV6p=cE6FC6Ka4=E0c-8JG0LRU_DEq-Ser5PqMcGw@mail.gmail.com>
+ <20180823021156.GD92374@aiede.svl.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8DsEhV6p=cE6FC6Ka4=E0c-8JG0LRU_DEq-Ser5PqMcGw@mail.gmail.com>
+In-Reply-To: <20180823021156.GD92374@aiede.svl.corp.google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen wrote:
-> On Mon, Aug 20, 2018 at 9:30 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+A few quick corrections:
 
->> I frequently use "git commit -a" this way intentionally, so I would be
->> unlikely to turn this config on.  That leads me to suspect it's not a
->> good candidate for configuration:
->>
->> - it's not configuration for the sake of a transition period, since some
->>   people would keep it on forever
->>
->> - it's not configuration based on different project needs, either
->>
->> So configuration doesn't feel like a good fit.
+Jonathan Nieder wrote:
+
+> I'm starting to lean toward having this on unconditionally, with a
+> message that points the user who really doesn't want to clobber their
+
+... who really *does* want to clobber their index ...
+
+> index toward "git add -u", as a good idea.  I think that for humans,
+> that would be okay and that configuration doesn't really help much
+> for this.
 >
-> I think it falls under personal preference (yes some people like me
-> will keep it on forever in fear of losing staged changes).
+> The remaining question becomes scripts.  A script might do
+>
+>	... modify old-file and create new-file ...
+> 	git add new-file
+> 	git commit -m "some great message"
+>
+> which would trip this error.  For that matter, humans might do that,
+> too.  Could the check detect this case (where the only changes in the
+> index are additions of new files) and treat it as non-destructive?
 
-Sorry for the lack of clarity.  I meant "some people would keep it off
-forever".
+(where the only changes in the index are additions of new files *that
+match the worktree*)
 
->> That said, I lean toward your initial thought, that this is papering
->> over a missing undo feature.  Can you say more about how you'd imagine
->> undo working?
-[...]
-> [1] https://public-inbox.org/git/1375597720-13236-1-git-send-email-pclouds@gmail.com/
-> [2] https://public-inbox.org/git/1375966270-10968-1-git-send-email-pclouds@gmail.com/
-
-Thanks for the links!  That's very helpful.
-
-I'm starting to lean toward having this on unconditionally, with a
-message that points the user who really doesn't want to clobber their
-index toward "git add -u", as a good idea.  I think that for humans,
-that would be okay and that configuration doesn't really help much
-for this.
-
-The remaining question becomes scripts.  A script might do
-
-	... modify old-file and create new-file ...
-	git add new-file
-	git commit -m "some great message"
-
-which would trip this error.  For that matter, humans might do that,
-too.  Could the check detect this case (where the only changes in the
-index are additions of new files) and treat it as non-destructive?
-
-Thanks,
+Sorry for the noise,
 Jonathan
