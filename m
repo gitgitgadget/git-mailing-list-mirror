@@ -6,30 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4751F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 00:45:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73CBA1F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 00:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726075AbeHWEMt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 00:12:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52506 "HELO cloud.peff.net"
+        id S1726085AbeHWEN3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 00:13:29 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52518 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726058AbeHWEMt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 00:12:49 -0400
-Received: (qmail 11961 invoked by uid 109); 23 Aug 2018 00:45:46 -0000
+        id S1725924AbeHWEN2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 00:13:28 -0400
+Received: (qmail 12014 invoked by uid 109); 23 Aug 2018 00:46:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:45:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:46:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6186 invoked by uid 111); 23 Aug 2018 00:45:51 -0000
+Received: (qmail 6205 invoked by uid 111); 23 Aug 2018 00:46:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:45:51 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:46:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:45:44 -0400
-Date:   Wed, 22 Aug 2018 20:45:44 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:46:23 -0400
+Date:   Wed, 22 Aug 2018 20:46:23 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: [PATCH 2/9] trailer: use size_t for iterating trailer list
-Message-ID: <20180823004543.GB3126@sigill.intra.peff.net>
+Subject: [PATCH 3/9] trailer: pass process_trailer_opts to trailer_info_get()
+Message-ID: <20180823004623.GC3126@sigill.intra.peff.net>
 References: <20180823004300.GA1355@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -40,68 +40,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We store the length of the trailers list in a size_t. So on
-a 64-bit system with a 32-bit int, in the unlikely case that
-we manage to actually allocate a list with 2^31 entries,
-we'd loop forever trying to iterate over it (our "int" would
-wrap to negative before exceeding info->trailer_nr).
+Most of the trailer code has an "opts" struct which is
+filled in by the caller. We don't pass it down to
+trailer_info_get(), which does the initial parsing, because
+there hasn't yet been a need to do so.
 
-This probably doesn't matter in practice. Each entry is at
-least a pointer plus a non-empty string, so even without
-malloc overhead or the memory to hold the original string
-we're parsing from, you'd need to allocate tens of
-gigabytes. But it's easy enough to do it right.
+Let's start passing it down in preparation for adding new
+options. Note that there's a single caller which doesn't
+otherwise have such an options struct. Since it's just one
+caller (that we'd have to modify anyway), let's not bother
+with any special treatment like accepting a NULL options
+struct, and just have it allocate one with the defaults.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- sequencer.c | 2 +-
- trailer.c   | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
+We end up needing to pass an option in that caller later anyway...
+
+ sequencer.c | 3 ++-
+ trailer.c   | 7 ++++---
+ trailer.h   | 3 ++-
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/sequencer.c b/sequencer.c
-index 65d371c746..c81b276239 100644
+index c81b276239..3e15faa94e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -228,7 +228,7 @@ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+@@ -227,11 +227,12 @@ static const char *get_todo_path(const struct replay_opts *opts)
+ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
  	int ignore_footer)
  {
++	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
  	struct trailer_info info;
--	int i;
-+	size_t i;
+ 	size_t i;
  	int found_sob = 0, found_sob_last = 0;
  
- 	trailer_info_get(&info, sb->buf);
+-	trailer_info_get(&info, sb->buf);
++	trailer_info_get(&info, sb->buf, &opts);
+ 
+ 	if (info.trailer_start == info.trailer_end)
+ 		return 0;
 diff --git a/trailer.c b/trailer.c
-index 88b35b8e89..40eef8880e 100644
+index 40eef8880e..e769c5b72c 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -948,7 +948,7 @@ static size_t process_input_file(FILE *outfile,
- 	struct trailer_info info;
- 	struct strbuf tok = STRBUF_INIT;
+@@ -950,7 +950,7 @@ static size_t process_input_file(FILE *outfile,
  	struct strbuf val = STRBUF_INIT;
--	int i;
-+	size_t i;
+ 	size_t i;
  
- 	trailer_info_get(&info, str);
+-	trailer_info_get(&info, str);
++	trailer_info_get(&info, str, opts);
  
-@@ -1112,7 +1112,7 @@ void trailer_info_get(struct trailer_info *info, const char *str)
+ 	/* Print lines before the trailers as is */
+ 	if (!opts->only_trailers)
+@@ -1067,7 +1067,8 @@ void process_trailers(const char *file,
+ 	strbuf_release(&sb);
+ }
  
- void trailer_info_release(struct trailer_info *info)
+-void trailer_info_get(struct trailer_info *info, const char *str)
++void trailer_info_get(struct trailer_info *info, const char *str,
++		      const struct process_trailer_options *opts)
  {
--	int i;
-+	size_t i;
- 	for (i = 0; i < info->trailer_nr; i++)
- 		free(info->trailers[i]);
- 	free(info->trailers);
-@@ -1122,7 +1122,7 @@ static void format_trailer_info(struct strbuf *out,
- 				const struct trailer_info *info,
- 				const struct process_trailer_options *opts)
+ 	int patch_start, trailer_end, trailer_start;
+ 	struct strbuf **trailer_lines, **ptr;
+@@ -1159,7 +1160,7 @@ void format_trailers_from_commit(struct strbuf *out, const char *msg,
  {
--	int i;
-+	size_t i;
+ 	struct trailer_info info;
  
- 	/* If we want the whole block untouched, we can take the fast path. */
- 	if (!opts->only_trailers && !opts->unfold) {
+-	trailer_info_get(&info, msg);
++	trailer_info_get(&info, msg, opts);
+ 	format_trailer_info(out, &info, opts);
+ 	trailer_info_release(&info);
+ }
+diff --git a/trailer.h b/trailer.h
+index 9c10026c35..b38c8f0d16 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -79,7 +79,8 @@ void process_trailers(const char *file,
+ 		      const struct process_trailer_options *opts,
+ 		      struct list_head *new_trailer_head);
+ 
+-void trailer_info_get(struct trailer_info *info, const char *str);
++void trailer_info_get(struct trailer_info *info, const char *str,
++		      const struct process_trailer_options *opts);
+ 
+ void trailer_info_release(struct trailer_info *info);
+ 
 -- 
 2.19.0.rc0.412.g7005db4e88
 
