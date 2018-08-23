@@ -2,458 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F29C11F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 15:45:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A786E1F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 15:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728279AbeHWTPc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 15:15:32 -0400
-Received: from mail-eopbgr700121.outbound.protection.outlook.com ([40.107.70.121]:24992
-        "EHLO NAM04-SN1-obe.outbound.protection.outlook.com"
+        id S1728186AbeHWTXR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 15:23:17 -0400
+Received: from mail-eopbgr690090.outbound.protection.outlook.com ([40.107.69.90]:40930
+        "EHLO NAM04-CO1-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727148AbeHWTPb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 15:15:31 -0400
+        id S1726277AbeHWTXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 15:23:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+0YtIYNev/Q7SgrcfPf86ySE715FG2+hBs4pEXbczhs=;
- b=giQQO7CWzaoeXiuOUKMWvK8yRpw6XV1XAGUK49q2Og1MULcmxPtx+jy3i3sSznLueXZswQIcLK6QhQi9O3Dck/Vg3MpgWS+O/9P7Kkgoy/HWmunH2B/xe+59+aIb6gKojY7yf7ku56H8aIIOVUL8KkannwrIVJUx0yh1yp5ydDw=
-Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
- MW2PR2101MB0892.namprd21.prod.outlook.com (52.132.152.24) with Microsoft SMTP
+ bh=rUbzHziEG2jfx+b15tCl8AKaik6yp9/qLiOh1O0k2X8=;
+ b=CLarqRmZXyLNeYFsXrM+ETXjB2m6QHWeG3kA17aplHAf4cL3n/sVoZwmt8JOz4kIWlk/dK5qC/u1b+3pZZNLA4FkdY6h/IdYdoWH1oYKipI7xKXPSz9eLnevxZmt9Wu4LIVRGEmokuIdjtRmKpZ+HQNPV19WR5Y5jpR4C6dG7KE=
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com (52.132.24.10) by
+ BL0PR2101MB1043.namprd21.prod.outlook.com (52.132.24.13) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1101.3; Thu, 23 Aug 2018 15:41:12 +0000
-Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
- ([fe80::bdbe:f40c:90b7:b4cf]) by MW2PR2101MB0970.namprd21.prod.outlook.com
- ([fe80::bdbe:f40c:90b7:b4cf%3]) with mapi id 15.20.1101.007; Thu, 23 Aug 2018
- 15:41:12 +0000
-From:   Ben Peart <Ben.Peart@microsoft.com>
+ 15.20.1101.2; Thu, 23 Aug 2018 15:51:19 +0000
+Received: from BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::c997:1e4b:40d8:1a49]) by BL0PR2101MB1011.namprd21.prod.outlook.com
+ ([fe80::c997:1e4b:40d8:1a49%2]) with mapi id 15.20.1101.007; Thu, 23 Aug 2018
+ 15:51:19 +0000
+From:   Derrick Stolee <dstolee@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v1] read-cache: speed up index load through parallelization
-Thread-Topic: [PATCH v1] read-cache: speed up index load through
- parallelization
-Thread-Index: AQHUOve4uFWQ1nAzZ0q8oX/6ULh64A==
-Date:   Thu, 23 Aug 2018 15:41:12 +0000
-Message-ID: <20180823154053.20212-1-benpeart@microsoft.com>
+        "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        "j6t@kdbg.org" <j6t@kdbg.org>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: [PATCH v2] config: fix commit-graph related config docs
+Thread-Topic: [PATCH v2] config: fix commit-graph related config docs
+Thread-Index: AQHUOvkie1rtG1+a8EWZVNU0+nDFGA==
+Date:   Thu, 23 Aug 2018 15:51:19 +0000
+Message-ID: <20180823155107.16658-1-dstolee@microsoft.com>
+References: <20180822131547.56899-1-dstolee@microsoft.com>
+In-Reply-To: <20180822131547.56899-1-dstolee@microsoft.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-x-originating-ip: [70.33.148.227]
-x-mailer: git-send-email 2.18.0.windows.1
-x-clientproxiedby: BN4PR12CA0022.namprd12.prod.outlook.com
- (2603:10b6:403:2::32) To MW2PR2101MB0970.namprd21.prod.outlook.com
- (2603:10b6:302:4::19)
+x-clientproxiedby: CY4PR0601CA0052.namprd06.prod.outlook.com
+ (2603:10b6:910:89::29) To BL0PR2101MB1011.namprd21.prod.outlook.com
+ (2603:10b6:207:37::10)
 x-ms-exchange-messagesentrepresentingtype: 1
+x-originating-ip: [167.220.148.125]
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR2101MB0892;6:dUK6+Uq5hZK7RBkeSqBp9n+PP0/8hNZ5AHUx8cw4JI6VcK+p34OQDshUITrztwuhj3GO6SWNqItTJkgARaPaAzZO01od6yPvQ7TPcFlqxXdYFlY+HDXixvBdR3h9D5pZfpVeZCCpfAng4QpteFcfBW4mOCM19M1T+oOJefUHHU/+6QRVYahFUL0Ty2WWy+MgkhtNh0qs/EJVNrvShBrcz0G67J/VN7fXTXehLbf7bZo+QVGXYqoNzQntDfUU4V5CY7+kCz3m1io/sG97P5xEqBIFH9ZCf5Ll6lnm+aAwE3Gej2cTVkByLNPIfcW98arbDRuvEb+CY2Cuy27QX47XFYffzrhZ4tr7tWZXUegWL9AU6nHqVD1e5VKA+05C90CShlipF/lYzcbrQlZPUjAalMz0G9zDnjKkxpnlejxbOWAmaBHqlaprn4JW5VTr76xJe42KoaOQATGAneJyLtteXg==;5:j6nrCIA5BMwleQGP9rqUfBe9SlajkHVw+BZcv5ts5DR5M0Faxxc6d3JZCV5XQEnWCZQyqWKgmQIN2JkEozXUIIqFK4TJC3wXtiOWx0UnYSDcCu0s2TxBxRNsKZNsjSh8NO5Q0ykaJwBGmxRnMVSmjtAEBhfrtTm9FN6v4ENCGwE=;7:9hNzf0TJKmTFor5CXNlkSp1R2gt8zmNL4XdwxGxXGcjaz8FkXjonUUsL8FYTiWvRpahZIASvRvO4ITPvJeJvp91tflGH2L0SJOxOqaPUOf/ja1QGLofiZuFQb41l2ijHmkFSvcvesTZ2BjJJ4tASfIS2Qiph7OlruulC/V1accMEQr3dgBGZ2GKwrBeI5pE2U0r4lmngqXe011XAaS2uJdOKbsgMjJUVf1HuMzdnFLgUelnCK/XH+j9jzqR/Whrk
-x-ms-office365-filtering-correlation-id: 4b0e4151-b4c5-4a37-5df3-08d6090eda1c
+x-microsoft-exchange-diagnostics: 1;BL0PR2101MB1043;6:NWUnVL6OlUWRTPU4pakhV5ELvox71O27x+3Z4KPCN17lWGcTMNdbA63uAwNnU5NWNx3hdzNlJHDat5HtjEW6Kn2/5lwTUCHiork3yc8PQoICaMeFtPLH8n4j0DyM47aUtlEywZyMiGznwWSCKLpuBBdwDee3P06t6UoC0H2dMY/tG/jEzp4kZv9GtrUj4lvVO9t/2HG3yaseL8J9Z5Sgr7X8/bBi4//PJdrn7JPRnAjLD48CPZfoRAsY0BfMIBghHpnINGC2wFqzFaMWd5f8A50zjBbtwDYDMhKCXnyzkAxPlDL1dsOXsKKd5vjwRODbQxtxFd9BWedBd8dmcefBEXUFVVdtfnxvV8QFfihtz7CFZBmcdkQ0GYBrCt036YEaWCJDJnVpc8/GIq2PlmqHZ4f75N44b8qItfOjJv3m6WJRmk8+9BrOxeZNasJNtI+EYguOjBC8n4TFzWrvmexY4g==;5:BFO9+D0SrGPWAJSxr78V2624Tk+jCLJM9d9UFoZoi3/CWqVAO0FRAjcB4+DdXx2lUNFpTCilMwFOjj3G0xzUfj3XLKzoR2qB9booEjUyrZWumLxgCMNzTRRogwcvbjnebPPwnGZbuOprysTHe93mEu7QHBpAbQ4lFG3svGNYank=;7:DXgCa7gKTS66bZfvRSXomLcipJksL6uDIr3S0Am1NdreFOrc2xztEiaGwmwaxbDALHibWVnfbZhxoe4hO+JPZjeltl9HSf5vBQr4ZdXeG+gLDoyN9zjgw/Ab1paX8OtKCGofG1vw0M8lVN+N05YDnCBDYvMEO6PohkiJPRvhAVpUm14PaMXIEkyk2T2QnRYwAPr60lVH9qdFNu6zz7zNnG2iWMIqwptlfYsmUjGxcC6MaGjQg0H0YXADEeOlgopr
+x-ms-office365-filtering-correlation-id: c346000c-b672-4a96-1597-08d609104480
 x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB0892;
-x-ms-traffictypediagnostic: MW2PR2101MB0892:
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-prvs: <MW2PR2101MB08920C4926389A0453F6EF27F4370@MW2PR2101MB0892.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(166708455590820)(209352067349851);
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:BL0PR2101MB1043;
+x-ms-traffictypediagnostic: BL0PR2101MB1043:
+x-microsoft-antispam-prvs: <BL0PR2101MB10438173B24173EEA6B73CACA1370@BL0PR2101MB1043.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
 x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3002001)(3231336)(944501410)(52105095)(2018427008)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123560045)(20161123558120)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(201708071742011)(7699037)(76991021);SRVR:MW2PR2101MB0892;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB0892;
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(3002001)(3231336)(944501410)(52105095)(2018427008)(10201501046)(93006095)(93001095)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123560045)(20161123564045)(20161123558120)(201708071742011)(7699037)(76991021);SRVR:BL0PR2101MB1043;BCL:0;PCL:0;RULEID:;SRVR:BL0PR2101MB1043;
 x-forefront-prvs: 0773BB46AC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(376002)(396003)(136003)(366004)(39860400002)(189003)(199004)(10090500001)(2351001)(575784001)(86612001)(50226002)(97736004)(25786009)(305945005)(8936002)(2906002)(7736002)(5660300001)(316002)(6916009)(66066001)(3846002)(6116002)(54906003)(52116002)(105586002)(22452003)(99286004)(1076002)(106356001)(6512007)(2900100001)(36756003)(26005)(81166006)(256004)(14444005)(6306002)(486006)(561924002)(102836004)(53936002)(8676002)(476003)(2616005)(386003)(186003)(6506007)(107886003)(68736007)(14454004)(10290500003)(72206003)(966005)(478600001)(4326008)(5250100002)(6486002)(5640700003)(6436002)(2501003)(1730700003)(81156014);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB0892;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(366004)(376002)(39860400002)(136003)(396003)(189003)(199004)(476003)(6346003)(186003)(52116002)(99286004)(5640700003)(5250100002)(14454004)(68736007)(2351001)(26005)(305945005)(2616005)(2906002)(6486002)(446003)(11346002)(2501003)(7736002)(386003)(6506007)(8936002)(6116002)(2900100001)(478600001)(3846002)(1076002)(6436002)(6512007)(256004)(97736004)(53936002)(25786009)(22452003)(6916009)(10290500003)(8676002)(81156014)(54906003)(107886003)(105586002)(486006)(66066001)(10090500001)(102836004)(36756003)(5660300001)(4326008)(81166006)(39060400002)(316002)(106356001)(86362001)(76176011)(1730700003)(86612001);DIR:OUT;SFP:1102;SCL:1;SRVR:BL0PR2101MB1043;H:BL0PR2101MB1011.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: z9uHZdkTuQbCnCy35nhqTUGl4HjwHTErzm3iFs0dEtIlWXLe9jpbZPragiaezyHi8wB8qsymCnL27c7mmPr3b8B9QWqurGHw8DHu9PDSHOPLL6tykLahCCv1qw2uCPTMGvoyde55Y2zPxBF65xtI0qZazhE+GJuOOcwy1bL1jq9qpBSfIdEhE236gdvJVnfpg2Gr2zZEyctquWSQbzK87nZU8pi9IFdS/Ug2JOrQHtD5h1Li1UADc5JrOn2NSRyGuaocR2uoZBP8UgEOXhpQjmrXaJGCSMAo6hDpVjod68JSor0fdGOkR29g5xkW0yIbpw+Kdp4S6bwCQiIVifqsjIfzaY9xvxQ0xwmeMNxxIBg=
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=dstolee@microsoft.com; 
+x-microsoft-antispam-message-info: 9b8nlLKiGXIglPdYqAgF9tyIOST43puX3JC11BGVQBpDQ4y4jqAbEYoTiDaO7pfiRgdxIIyAuVV7hYvFRabf4RI/frtlVyB+c+c1qQUlMxeUQnVIw4LCAH2k7ysVnA9wG0XkGNwsp5OAe0lxGep1QDA3iVH24XHurm+iviewsUt8VRtxyk2wg+3AmhiDGP8EriofMDmSjFz6LlDHUNNcpHlvSjkP5Ife6LdTw+4R4mB2h3kRw4ng1qWiTgn0M2lhl36xZCtgjsWqLqgETLyFa08H8KVX3dEYkOSc3PPIoIMIlIOg7hPWdVwm/8nb3SPhq6cmsd7tFgd/FotySEgijQ7J7UDYrtr2PkJDCh7BdoM=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <2EF6E30CF97DA44C82F58944FF71CA84@namprd21.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4b0e4151-b4c5-4a37-5df3-08d6090eda1c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2018 15:41:12.5486
+X-MS-Exchange-CrossTenant-Network-Message-Id: c346000c-b672-4a96-1597-08d609104480
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Aug 2018 15:51:19.8629
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR2101MB0892
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR2101MB1043
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch helps address the CPU cost of loading the index by creating
-multiple threads to divide the work of loading and converting the cache
-entries across all available CPU cores.
-
-It accomplishes this by having the primary thread loop across the index fil=
-e
-tracking the offset and (for V4 indexes) expanding the name. It creates a
-thread to process each block of entries as it comes to them. Once the
-threads are complete and the cache entries are loaded, the rest of the
-extensions can be loaded and processed normally on the primary thread.
-
-Performance impact:
-
-read cache .git/index times on a synthetic repo with:
-
-100,000 entries
-FALSE       TRUE        Savings     %Savings
-0.014798767 0.009580433 0.005218333 35.26%
-
-1,000,000 entries
-FALSE       TRUE        Savings     %Savings
-0.240896533 0.1751243   0.065772233 27.30%
-
-read cache .git/index times on an actual repo with:
-
-~3M entries
-FALSE       TRUE        Savings     %Savings
-0.59898098  0.4513169   0.14766408  24.65%
-
-Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
----
-
-Notes:
-    Base Ref: master
-    Web-Diff: https://github.com/benpeart/git/commit/67a700419b
-    Checkout: git fetch https://github.com/benpeart/git read-index-multithr=
-ead-v1 && git checkout 67a700419b
-
- Documentation/config.txt |   8 ++
- config.c                 |  13 +++
- config.h                 |   1 +
- read-cache.c             | 218 ++++++++++++++++++++++++++++++++++-----
- 4 files changed, 216 insertions(+), 24 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1c42364988..3344685cc4 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -899,6 +899,14 @@ relatively high IO latencies.  When enabled, Git will =
-do the
- index comparison to the filesystem data in parallel, allowing
- overlapping IO's.  Defaults to true.
-=20
-+core.fastIndex::
-+       Enable parallel index loading
-++
-+This can speed up operations like 'git diff' and 'git status' especially
-+when the index is very large.  When enabled, Git will do the index
-+loading from the on disk format to the in-memory format in parallel.
-+Defaults to true.
-+
- core.createObject::
- 	You can set this to 'link', in which case a hardlink followed by
- 	a delete of the source are used to make sure that object creation
-diff --git a/config.c b/config.c
-index 9a0b10d4bc..883092fdd3 100644
---- a/config.c
-+++ b/config.c
-@@ -2289,6 +2289,19 @@ int git_config_get_fsmonitor(void)
- 	return 0;
- }
-=20
-+int git_config_get_fast_index(void)
-+{
-+	int val;
-+
-+	if (!git_config_get_maybe_bool("core.fastindex", &val))
-+		return val;
-+
-+	if (getenv("GIT_FASTINDEX_TEST"))
-+		return 1;
-+
-+	return -1; /* default value */
-+}
-+
- NORETURN
- void git_die_config_linenr(const char *key, const char *filename, int line=
-nr)
- {
-diff --git a/config.h b/config.h
-index ab46e0165d..74ca4e7db5 100644
---- a/config.h
-+++ b/config.h
-@@ -250,6 +250,7 @@ extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
- extern int git_config_get_max_percent_split_change(void);
- extern int git_config_get_fsmonitor(void);
-+extern int git_config_get_fast_index(void);
-=20
- /* This dies if the configured or default date is in the future */
- extern int git_config_get_expiry(const char *key, const char **output);
-diff --git a/read-cache.c b/read-cache.c
-index 7b1354d759..0fa7e1a04c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -24,6 +24,10 @@
- #include "utf8.h"
- #include "fsmonitor.h"
-=20
-+#ifndef min
-+#define min(a,b) (((a) < (b)) ? (a) : (b))
-+#endif
-+
- /* Mask for the name length in ce_flags in the on-disk index */
-=20
- #define CE_NAMEMASK  (0x0fff)
-@@ -1889,16 +1893,203 @@ static size_t estimate_cache_size(size_t ondisk_si=
-ze, unsigned int entries)
- 	return ondisk_size + entries * per_entry;
- }
-=20
-+static unsigned long load_cache_entry_block(struct index_state *istate, st=
-ruct mem_pool *ce_mem_pool, int offset, int nr, void *mmap, unsigned long s=
-tart_offset, struct strbuf *previous_name)
-+{
-+	int i;
-+	unsigned long src_offset =3D start_offset;
-+
-+	for (i =3D offset; i < offset + nr; i++) {
-+		struct ondisk_cache_entry *disk_ce;
-+		struct cache_entry *ce;
-+		unsigned long consumed;
-+
-+		disk_ce =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
-+		ce =3D create_from_disk(ce_mem_pool, disk_ce, &consumed, previous_name);
-+		set_index_entry(istate, i, ce);
-+
-+		src_offset +=3D consumed;
-+	}
-+	return src_offset - start_offset;
-+}
-+
-+static unsigned long load_all_cache_entries(struct index_state *istate, vo=
-id *mmap, size_t mmap_size, unsigned long src_offset)
-+{
-+	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
-+	unsigned long consumed;
-+
-+	if (istate->version =3D=3D 4) {
-+		previous_name =3D &previous_name_buf;
-+		mem_pool_init(&istate->ce_mem_pool,
-+			      estimate_cache_size_from_compressed(istate->cache_nr));
-+	} else {
-+		previous_name =3D NULL;
-+		mem_pool_init(&istate->ce_mem_pool,
-+			      estimate_cache_size(mmap_size, istate->cache_nr));
-+	}
-+
-+	consumed =3D load_cache_entry_block(istate, istate->ce_mem_pool, 0, istat=
-e->cache_nr, mmap, src_offset, previous_name);
-+	strbuf_release(&previous_name_buf);
-+	return consumed;
-+}
-+
-+#ifdef NO_PTHREADS
-+
-+#define load_cache_entries load_all_cache_entries
-+
-+#else
-+
-+#include "thread-utils.h"
-+
-+/*
-+* Mostly randomly chosen maximum thread counts: we
-+* cap the parallelism to online_cpus() threads, and we want
-+* to have at least 7500 cache entries per thread for it to
-+* be worth starting a thread.
-+*/
-+#define THREAD_COST		(7500)
-+
-+struct load_cache_entries_thread_data
-+{
-+	pthread_t pthread;
-+	struct index_state *istate;
-+	struct mem_pool *ce_mem_pool;
-+	int offset, nr;
-+	void *mmap;
-+	unsigned long start_offset;
-+	struct strbuf previous_name_buf;
-+	struct strbuf *previous_name;
-+	unsigned long consumed;	/* return # of bytes in index file processed */
-+};
-+
-+/*
-+* A thread proc to run the load_cache_entries() computation
-+* across multiple background threads.
-+*/
-+static void *load_cache_entries_thread(void *_data)
-+{
-+	struct load_cache_entries_thread_data *p =3D _data;
-+
-+	p->consumed +=3D load_cache_entry_block(p->istate, p->ce_mem_pool, p->off=
-set, p->nr, p->mmap, p->start_offset, p->previous_name);
-+	return NULL;
-+}
-+
-+static unsigned long load_cache_entries(struct index_state *istate, void *=
-mmap, size_t mmap_size, unsigned long src_offset)
-+{
-+	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
-+	struct load_cache_entries_thread_data *data;
-+	int threads, cpus, thread_nr;
-+	unsigned long consumed;
-+	int i, thread;
-+
-+	cpus =3D online_cpus();
-+	threads =3D istate->cache_nr / THREAD_COST;
-+	if (threads > cpus)
-+		threads =3D cpus;
-+
-+	/* enable testing with fewer than default minimum of entries */
-+	if ((istate->cache_nr > 1) && (threads < 2) && getenv("GIT_FASTINDEX_TEST=
-"))
-+		threads =3D 2;
-+
-+	if (threads < 2 || !git_config_get_fast_index())
-+		return load_all_cache_entries(istate, mmap, mmap_size, src_offset);
-+
-+	mem_pool_init(&istate->ce_mem_pool, 0);
-+	if (istate->version =3D=3D 4)
-+		previous_name =3D &previous_name_buf;
-+	else
-+		previous_name =3D NULL;
-+
-+	thread_nr =3D (istate->cache_nr + threads - 1) / threads;
-+	data =3D xcalloc(threads, sizeof(struct load_cache_entries_thread_data));
-+
-+	/* loop through index entries starting a thread for every thread_nr entri=
-es */
-+	consumed =3D thread =3D 0;
-+	for (i =3D 0; ; i++) {
-+		struct ondisk_cache_entry *ondisk;
-+		const char *name;
-+		unsigned int flags;
-+
-+		/* we've reached the begining of a block of cache entries, kick off a th=
-read to process them */
-+		if (0 =3D=3D i % thread_nr) {
-+			struct load_cache_entries_thread_data *p =3D &data[thread];
-+
-+			p->istate =3D istate;
-+			p->offset =3D i;
-+			p->nr =3D min(thread_nr, istate->cache_nr - i);
-+
-+			/* create a mem_pool for each thread */
-+			if (istate->version =3D=3D 4)
-+				mem_pool_init(&p->ce_mem_pool,
-+						  estimate_cache_size_from_compressed(p->nr));
-+			else
-+				mem_pool_init(&p->ce_mem_pool,
-+						  estimate_cache_size(mmap_size, p->nr));
-+
-+			p->mmap =3D mmap;
-+			p->start_offset =3D src_offset;
-+			if (previous_name) {
-+				strbuf_addbuf(&p->previous_name_buf, previous_name);
-+				p->previous_name =3D &p->previous_name_buf;
-+			}
-+
-+			if (pthread_create(&p->pthread, NULL, load_cache_entries_thread, p))
-+				die("unable to create load_cache_entries_thread");
-+			if (++thread =3D=3D threads || p->nr !=3D thread_nr)
-+				break;
-+		}
-+
-+		ondisk =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
-+
-+		/* On-disk flags are just 16 bits */
-+		flags =3D get_be16(&ondisk->flags);
-+
-+		if (flags & CE_EXTENDED) {
-+			struct ondisk_cache_entry_extended *ondisk2;
-+			ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
-+			name =3D ondisk2->name;
-+		} else
-+			name =3D ondisk->name;
-+
-+		if (!previous_name) {
-+			size_t len;
-+
-+			/* v3 and earlier */
-+			len =3D flags & CE_NAMEMASK;
-+			if (len =3D=3D CE_NAMEMASK)
-+				len =3D strlen(name);
-+			src_offset +=3D (flags & CE_EXTENDED) ?
-+				ondisk_cache_entry_extended_size(len) :
-+				ondisk_cache_entry_size(len);
-+		} else
-+			src_offset +=3D (name - ((char *)ondisk)) + expand_name_field(previous_=
-name, name);
-+	}
-+
-+	for (i =3D 0; i < threads; i++) {
-+		struct load_cache_entries_thread_data *p =3D data + i;
-+		if (pthread_join(p->pthread, NULL))
-+			die("unable to join load_cache_entries_thread");
-+		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
-+		strbuf_release(&p->previous_name_buf);
-+		consumed +=3D p->consumed;
-+	}
-+
-+	free(data);
-+	strbuf_release(&previous_name_buf);
-+
-+	return consumed;
-+}
-+
-+#endif
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_e=
-xist)
- {
--	int fd, i;
-+	int fd;
- 	struct stat st;
- 	unsigned long src_offset;
- 	struct cache_header *hdr;
- 	void *mmap;
- 	size_t mmap_size;
--	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
-=20
- 	if (istate->initialized)
- 		return istate->cache_nr;
-@@ -1935,29 +2126,8 @@ int do_read_index(struct index_state *istate, const =
-char *path, int must_exist)
- 	istate->cache =3D xcalloc(istate->cache_alloc, sizeof(*istate->cache));
- 	istate->initialized =3D 1;
-=20
--	if (istate->version =3D=3D 4) {
--		previous_name =3D &previous_name_buf;
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size_from_compressed(istate->cache_nr));
--	} else {
--		previous_name =3D NULL;
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size(mmap_size, istate->cache_nr));
--	}
--
- 	src_offset =3D sizeof(*hdr);
--	for (i =3D 0; i < istate->cache_nr; i++) {
--		struct ondisk_cache_entry *disk_ce;
--		struct cache_entry *ce;
--		unsigned long consumed;
--
--		disk_ce =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
--		ce =3D create_from_disk(istate->ce_mem_pool, disk_ce, &consumed, previou=
-s_name);
--		set_index_entry(istate, i, ce);
--
--		src_offset +=3D consumed;
--	}
--	strbuf_release(&previous_name_buf);
-+	src_offset +=3D load_cache_entries(istate, mmap, mmap_size, src_offset);
- 	istate->timestamp.sec =3D st.st_mtime;
- 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
-=20
-
-base-commit: 29d9e3e2c47dd4b5053b0a98c891878d398463e3
---=20
-2.18.0.windows.1
-
+VGhlIGNvcmUuY29tbWl0R3JhcGggY29uZmlnIHNldHRpbmcgd2FzIGFjY2lkZW50YWxseSByZW1v
+dmVkIGZyb20NCnRoZSBjb25maWcgZG9jdW1lbnRhdGlvbi4gSW4gdGhhdCBzYW1lIHBhdGNoLCB0
+aGUgY29uZmlnIHNldHRpbmcNCnRoYXQgd3JpdGVzIGEgY29tbWl0LWdyYXBoIGR1cmluZyBnYXJi
+YWdlIGNvbGxlY3Rpb24gd2FzIGluY29ycmVjdGx5DQp3cml0dGVuIHRvIHRoZSBkb2MgYXMgImdj
+LmNvbW1pdEdyYXBoIiBpbnN0ZWFkIG9mICJnYy53cml0ZUNvbW1pdEdyYXBoIi4NCg0KUmVwb3J0
+ZWQtYnk6IFN6ZWRlciBHw6Fib3IgPHN6ZWRlci5kZXZAZ21haWwuY29tPg0KU2lnbmVkLW9mZi1i
+eTogRGVycmljayBTdG9sZWUgPGRzdG9sZWVAbWljcm9zb2Z0LmNvbT4NCi0tLQ0KIERvY3VtZW50
+YXRpb24vY29uZmlnLnR4dCB8IDE3ICsrKysrKysrKysrLS0tLS0tDQogMSBmaWxlIGNoYW5nZWQs
+IDExIGluc2VydGlvbnMoKyksIDYgZGVsZXRpb25zKC0pDQoNCmRpZmYgLS1naXQgYS9Eb2N1bWVu
+dGF0aW9uL2NvbmZpZy50eHQgYi9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQNCmluZGV4IDFjNDIz
+NjQ5ODguLjZlZTE4OTA5ODQgMTAwNjQ0DQotLS0gYS9Eb2N1bWVudGF0aW9uL2NvbmZpZy50eHQN
+CisrKyBiL0RvY3VtZW50YXRpb24vY29uZmlnLnR4dA0KQEAgLTkxNywxMiArOTE3LDEwIEBAIGNv
+cmUubm90ZXNSZWY6Og0KIFRoaXMgc2V0dGluZyBkZWZhdWx0cyB0byAicmVmcy9ub3Rlcy9jb21t
+aXRzIiwgYW5kIGl0IGNhbiBiZSBvdmVycmlkZGVuIGJ5DQogdGhlIGBHSVRfTk9URVNfUkVGYCBl
+bnZpcm9ubWVudCB2YXJpYWJsZS4gIFNlZSBsaW5rZ2l0OmdpdC1ub3Rlc1sxXS4NCiANCi1nYy5j
+b21taXRHcmFwaDo6DQotCUlmIHRydWUsIHRoZW4gZ2Mgd2lsbCByZXdyaXRlIHRoZSBjb21taXQt
+Z3JhcGggZmlsZSB3aGVuDQotCWxpbmtnaXQ6Z2l0LWdjWzFdIGlzIHJ1bi4gV2hlbiB1c2luZyBs
+aW5rZ2l0OmdpdC1nY1sxXQ0KLQknLS1hdXRvJyB0aGUgY29tbWl0LWdyYXBoIHdpbGwgYmUgdXBk
+YXRlZCBpZiBob3VzZWtlZXBpbmcgaXMNCi0JcmVxdWlyZWQuIERlZmF1bHQgaXMgZmFsc2UuIFNl
+ZSBsaW5rZ2l0OmdpdC1jb21taXQtZ3JhcGhbMV0NCi0JZm9yIGRldGFpbHMuDQorY29yZS5jb21t
+aXRHcmFwaDo6DQorCUlmIHRydWUsIHRoZW4gZ2l0IHdpbGwgcmVhZCB0aGUgY29tbWl0LWdyYXBo
+IGZpbGUgKGlmIGl0IGV4aXN0cykNCisJdG8gcGFyc2UgdGhlIGdyYXBoIHN0cnVjdHVyZSBvZiBj
+b21taXRzLiBEZWZhdWx0cyB0byBmYWxzZS4gU2VlDQorCWxpbmtnaXQ6Z2l0LWNvbW1pdC1ncmFw
+aFsxXSBmb3IgbW9yZSBpbmZvcm1hdGlvbi4NCiANCiBjb3JlLnVzZVJlcGxhY2VSZWZzOjoNCiAJ
+SWYgc2V0IHRvIGBmYWxzZWAsIGJlaGF2ZSBhcyBpZiB0aGUgYC0tbm8tcmVwbGFjZS1vYmplY3Rz
+YA0KQEAgLTE3NjMsNiArMTc2MSwxMyBAQCB0aGlzIGNvbmZpZ3VyYXRpb24gdmFyaWFibGUgaXMg
+aWdub3JlZCwgYWxsIHBhY2tzIGV4Y2VwdCB0aGUgYmFzZSBwYWNrDQogd2lsbCBiZSByZXBhY2tl
+ZC4gQWZ0ZXIgdGhpcyB0aGUgbnVtYmVyIG9mIHBhY2tzIHNob3VsZCBnbyBiZWxvdw0KIGdjLmF1
+dG9QYWNrTGltaXQgYW5kIGdjLmJpZ1BhY2tUaHJlc2hvbGQgc2hvdWxkIGJlIHJlc3BlY3RlZCBh
+Z2Fpbi4NCiANCitnYy53cml0ZUNvbW1pdEdyYXBoOjoNCisJSWYgdHJ1ZSwgdGhlbiBnYyB3aWxs
+IHJld3JpdGUgdGhlIGNvbW1pdC1ncmFwaCBmaWxlIHdoZW4NCisJbGlua2dpdDpnaXQtZ2NbMV0g
+aXMgcnVuLiBXaGVuIHVzaW5nIGxpbmtnaXQ6Z2l0LWdjWzFdDQorCSctLWF1dG8nIHRoZSBjb21t
+aXQtZ3JhcGggd2lsbCBiZSB1cGRhdGVkIGlmIGhvdXNla2VlcGluZyBpcw0KKwlyZXF1aXJlZC4g
+RGVmYXVsdCBpcyBmYWxzZS4gU2VlIGxpbmtnaXQ6Z2l0LWNvbW1pdC1ncmFwaFsxXQ0KKwlmb3Ig
+ZGV0YWlscy4NCisNCiBnYy5sb2dFeHBpcnk6Og0KIAlJZiB0aGUgZmlsZSBnYy5sb2cgZXhpc3Rz
+LCB0aGVuIGBnaXQgZ2MgLS1hdXRvYCB3b24ndCBydW4NCiAJdW5sZXNzIHRoYXQgZmlsZSBpcyBt
+b3JlIHRoYW4gJ2djLmxvZ0V4cGlyeScgb2xkLiAgRGVmYXVsdCBpcw0KLS0gDQoyLjE5LjAucmMw
+DQoNCg==
