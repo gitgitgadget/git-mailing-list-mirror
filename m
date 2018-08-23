@@ -2,102 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E98F1F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 21:28:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5945C1F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 21:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728129AbeHXBAc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 21:00:32 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38850 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727814AbeHXBAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 21:00:32 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w11-v6so5778296wrc.5
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 14:28:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=y2fexUy5s++5Qr9UZBptlkpa/yljp0tb6hf2zgkOwCk=;
-        b=GG9nhNkky6vkMYAaRgoR6jUV+w9kRcPTVy8wkBcQPWjHw8TBnkX52R7q9w1glIk6pz
-         hm983NWYes69h6hz/doZJad6I3cEGtznblyFKAtPXiH3XW2XV4Y1rTa23L/UWJYgZiI0
-         N89U94RM2DJgPvxgGigDPl75VzgwmNJ0y+9R6toELFRifpblafOr2zgyt1nVxnfpa9RG
-         q8zCmvb5hy80SrGbBtiDfa0jEfFjesxn0wBUsiGDn0vNfc4anUe+2gNZ+Bq0Yc5+BBBH
-         yEB/iOnfNMLu/5VKZgMRk9spZI9+M81LLiJftWUsnz6yd8CwS2agBgoF7elmWVlljjrG
-         KUfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=y2fexUy5s++5Qr9UZBptlkpa/yljp0tb6hf2zgkOwCk=;
-        b=BZQEZwe9NKzUI5K9GkL/1AhmIihT2r3v879IgzjW6KnienSM3Jc2d920fvFfxEZAo+
-         TRjZ5EJqcytrmbkE+FGUDZF2YkNiEWHqgXx7ZsrdTfqCI9xaQdJSgcOXAjEocKr/RoOG
-         bRQmbOpYokXvoPJ5Z38jb1sYlqHnsaDgMzPUDH3L5vjBIIKp3Xc7bn9a3enlZ+pigHVO
-         88gEfwBuAI38+ZcCG1H9bGkwA1fY7iSO7iJY2sHhwv9DUosxCyz+zHSFGPcwJWFOUTMF
-         BjjkrQlPnxBTfDFABgUkm3Ldn4uQMJoUkCq/SwVFSXn3e+KRwp4yMnDZb2/r0/DMH0W7
-         f0yQ==
-X-Gm-Message-State: APzg51A0OOlfxLR4PJ8reU8bWG4HPVTVOmbwsSwFTFWmB+fymagtkSSU
-        GLi2QDI60eJ53aT6smq5ddw=
-X-Google-Smtp-Source: ANB0VdYRdBH4069gprelDsKg0Un0bfSlXpmE31J0eNK/Xi8cDwgDkPQMP5gXR7buxclfVwUkmM1I4A==
-X-Received: by 2002:adf:f648:: with SMTP id x8-v6mr10681047wrp.144.1535059736519;
-        Thu, 23 Aug 2018 14:28:56 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 72-v6sm7182604wrb.48.2018.08.23.14.28.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 14:28:55 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] i18n: fix mistakes in translated strings
-References: <20180823210056.27489-1-jn.avila@free.fr>
-Date:   Thu, 23 Aug 2018 14:28:55 -0700
-In-Reply-To: <20180823210056.27489-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean-?=
- =?utf-8?Q?No=C3=ABl?= Avila"'s
-        message of "Thu, 23 Aug 2018 23:00:56 +0200")
-Message-ID: <xmqqwosghiw8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728124AbeHXBMv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 21:12:51 -0400
+Received: from mout.gmx.net ([212.227.17.21]:54253 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727485AbeHXBMu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 21:12:50 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcnRD-1gHXO91zmR-00kC5o; Thu, 23
+ Aug 2018 23:41:06 +0200
+Date:   Thu, 23 Aug 2018 23:41:04 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
+In-Reply-To: <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808232333160.73@tvgsbejvaqbjf.bet>
+References: <20180823023955.12980-1-kyle@kyleam.com> <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet> <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7BXUagFSGJgYZPxy/z2aqyUOujS37Le8iVMMxHsVD9HjAni9Gi2
+ w8tuODR/CKrCL8t+MQdUAnVteHwjJgKTrCcd1HBrH9zCV236PCzuwWPvkiq+6p/WknCNJoQ
+ TuELXmRb+JBHwfxEKhI7kWXnaGn24jYaIvcmnE2mH4WXIYzYp3J3Grt1IE4AG0VtRLZbqpw
+ pJj6De8U6WzKhTDX5rNxw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:W+6+xTbxvx8=:JpCzdpzo/uGxcMOXzLfv4C
+ pSSPJbF2s3czUHP20Hq5dU9UGly2USs7wfkJaeGEKzB9IrfLyEh2AbROwhM2V5pIUdxQ38b5i
+ arG6bK/SjN3GN6wlFfv7gRLqg5R8IGkif1JsnMa/NIyGgMeQzaeRc5WbEO+Lvn1qinRhhIv7X
+ x2sWbW3ZGL0AXFsbTvk1zMHvcc0yUrAps+x7g3j3KcfcpBvWzSVr1FgDVZChPcP0mtHq1aO6O
+ Cy4BuGzTBrHeKR1c3B5rvE5X+PPhwM1Ur6HzNKMu9IPgY3x/g2eJ2Sj/12NrXWD7eOofaa0Nw
+ cUlimIT3sNfrhz+mHd6UosY+gU+Al2eh3tinToCaStEc8D3MzXNBjJ5jL8ebYnj6UvMkif1M+
+ jKLvchrK6bcVc9tXi4mbQGr6GiHa2Ir6xFDlLzVyzujz+fEsks1vBtFHo72dUW25kWHLfAgjB
+ uso2SpYjRzSf30TnalmLj68Zv8DBH5gGPfKHc/EPfW6brmUI78usIU5UWSTzexNA5qATQ2PtN
+ 5DtZLqlaAlWE1vcizDKh9gxJ/gt08wO72H0BuFz5J/nCDSkzCWRZZ5xU8caOFoWBu3rtZR6/L
+ Sv+XUlr7EaYhCpPgpXHRXbqvj3BOKV3bkZq8Y4H/Bi2nlvBXwUmPyP0Z+N3TTydpeUGlP0pbT
+ d03FNsOoJaFXRHof5UTt+kvvWnVBquP1LLZdcnDdBocQsa69OcFD+pu4d7So5kPSjMMExEGm1
+ 0G4JQx24wbBHd4R1euiwRwuHICmS0NO87z2+dZQwot7jlVlS/TqC7zU2fqbvfMOFSwW6GGTtb
+ NOdtk1N
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Hi Junio,
 
-> -			die(_("run_command returned non-zero status while"
-> +			die(_("run_command returned non-zero status while "
->  				"recursing in the nested submodules of %s\n."),
+On Thu, 23 Aug 2018, Junio C Hamano wrote:
 
-Obviously good.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Wed, 22 Aug 2018, Kyle Meyer wrote:
+> >
+> >> 275267937b (range-diff: make dual-color the default mode, 2018-08-13)
+> >> replaced --dual-color with --no-dual-color but left the option's
+> >> summary untouched.  Rewrite the summary to describe --no-dual-color
+> >> rather than dual-color.
+> >> 
+> >> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+> >> ---
+> >>  builtin/range-diff.c | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >> 
+> >> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+> >> index f52d45d9d6..7dc90a5ec3 100644
+> >> --- a/builtin/range-diff.c
+> >> +++ b/builtin/range-diff.c
+> >> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+> >>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
+> >>  			    N_("Percentage by which creation is weighted")),
+> >>  		OPT_BOOL(0, "no-dual-color", &simple_color,
+> >> -			    N_("color both diff and diff-between-diffs")),
+> >> +			    N_("restrict coloring to outer diff markers")),
+> >
+> > How about "use simple diff colors" instead?
+> 
+> I am wondering if it makes sense to remove the option altogether.
+> I've been trying to view the comparison of the same ranges in both
+> styles for the past few days, and I never found a reason to choose
+> "no dual color" option myself.
 
-> diff --git a/config.c b/config.c
-> index 9a0b10d4bc..3461993f0a 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -124,7 +124,7 @@ static const char include_depth_advice[] = N_(
->  "	%s\n"
->  "from\n"
->  "	%s\n"
-> -"Do you have circular includes?");
-> +"This might be due to circular includes.");
+We do have a track record of making decisions based on our little bubble,
+don't we.
 
-OK.
+On IRC, there is at least on publicly viewable comment by a user who
+preferred the simple color diff, at least in one use case:
 
-> diff --git a/sequencer.c b/sequencer.c
-> index 65d371c746..84bf598c3e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -720,7 +720,7 @@ static const char *read_author_ident(struct strbuf *buf)
->  	/* dequote values and construct ident line in-place */
->  	for (in = buf->buf; i < 3 && in - buf->buf < buf->len; i++) {
->  		if (!skip_prefix(in, keys[i], (const char **)&in)) {
-> -			warning(_("could not parse '%s' (looking for '%s'"),
-> +			warning(_("could not parse '%s' (looking for '%s')"),
+http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-07-13#l97
 
-Good.  Thanks.
+And I am living in my own bubble, too. I think I heard feedback regarding
+range-diff from some dozen people. Multiplying 6% by the download numbers
+of Git for Windows alone... that's a lot of people who can put
+--no-dual-color to good use at least in *some* situations.
+
+In short: I am hesitant to remove a feature that would help some users.
+
+Ciao,
+Dscho
