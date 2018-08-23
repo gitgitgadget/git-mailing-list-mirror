@@ -2,85 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 252921F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 08:27:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 464171F97E
+	for <e@80x24.org>; Thu, 23 Aug 2018 09:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730209AbeHWL4A (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 07:56:00 -0400
-Received: from mail-pl0-f65.google.com ([209.85.160.65]:39122 "EHLO
-        mail-pl0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727410AbeHWLz7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 07:55:59 -0400
-Received: by mail-pl0-f65.google.com with SMTP id w14-v6so2080417plp.6
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 01:27:28 -0700 (PDT)
+        id S1730133AbeHWMnH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 08:43:07 -0400
+Received: from mail-yw1-f47.google.com ([209.85.161.47]:45594 "EHLO
+        mail-yw1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729142AbeHWMnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 08:43:06 -0400
+Received: by mail-yw1-f47.google.com with SMTP id p206-v6so1693940ywg.12
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 02:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gyvcZWNal8NQycfJYBAWL894Tu52iPgYQOQGLLNp4yg=;
-        b=s0m9S0amxjUOx0KH5A1mO6uswy3s19vwJ7QoT/BBzR2LAQeM4MLiZxVmoyp0kJU1d9
-         yI5lheiHnkfLGRe5zn6iFXb1I8HbMKFUOFOUPUQ0kvd3MByxLn6x7k6wnetHnLtSdu/E
-         Bvhn0ArQ9USPNSS1eH0yMUlWe2fuoisnIkVEqW/a3OnB8qQL6sLCahDSJKt3Ywms+fXu
-         oHoiKzfFeraD0c360KosfeLwZTQKrWlgE7yT4mwoToshEtTCG8E8bMvDtC799CCREQau
-         ZFU4eWl8pLEJjvERZOAnQajmXBWtcAgmeAmnlas9G1NbYrFushykj9usZ+eIaDRMCPTO
-         cBlQ==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=QX8LUIgFPaIax3wJsgRh7+2mAZ0WQOD/qLd2XB1oe5E=;
+        b=vRhPu9E1p5g4T648LtdEjCKURiFfQxMlOmVRV444243EFGr6BM3kqwAEOi3dY4R0Xd
+         kpzqlgiU7WRHNbjixrMNo2Vg0EIbICemDTPbSb7xeph38/Z312dUuauS7+5kn4OGAzCA
+         Zm7OJZyA9I5n5gYdn7dlUmSmKFwIxiOq998+k61D7yzWceKJATmadEt0ChrVuPhv5BwE
+         1YpocgMKVJiWrKu0BnPe8aZOSoNU5Bq9HnI7Wzw+Rfb9WQwspgcxc7TDj7Q9atKb/v2J
+         aLnoRlamf3OzhLA7pY3QPU+acUE/SL9qv6Dsn6yiy48cTQ4dMn98UU7VhhX5sOuAFmzG
+         Bhdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gyvcZWNal8NQycfJYBAWL894Tu52iPgYQOQGLLNp4yg=;
-        b=CmmjH4Gc7kyZx0peJadxONH5oSJAbxin8EwrPDGj9KRdLkDV7Jq28u1uC60LZ8uXz9
-         0l1GH1RpbI6Uhi+bMKm1DgFIDJmoJABkOfCWFHRqzekGciFDF7SQ9JOn6M8peA7b5sZp
-         titrrtwo0nB0IOcL4meAENNl/uncMtG7GwgaNDVeSw86mKJMuZco4GdDQ+SFH0KULvsq
-         o+RZ1VqklyoVEAHJ74R0N4QF2V+hh6IEDQxtHUwlcZA31UhxCNp4JkoOfCjbksNH54Mx
-         w/EeYH9Iv11VRJilapcbBtQOuSdzVbZdV3Ykn3/w44/kt5n7wyDhWOePvAh+b8j83rGG
-         Sgcw==
-X-Gm-Message-State: AOUpUlH04U6cHkO3FavqmbDXlnRKBrBnEENruFUoBFfUR62ARFwJNs2M
-        2yBJ4Mgc2cnZfOOr7U6GFPI=
-X-Google-Smtp-Source: AA+uWPyyO9Ccha3+nldM8xsAvw7OmHjyrYEGn4oQ4aEJXuNpQS2wWjtUDXQueauyeYfkRc36dlmm0g==
-X-Received: by 2002:a17:902:aa83:: with SMTP id d3-v6mr56898982plr.242.1535012847863;
-        Thu, 23 Aug 2018 01:27:27 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id l70-v6sm29991pge.36.2018.08.23.01.27.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 01:27:26 -0700 (PDT)
-Date:   Thu, 23 Aug 2018 01:27:25 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
-Message-ID: <20180823082725.GB160081@aiede.svl.corp.google.com>
-References: <20180823023955.12980-1-kyle@kyleam.com>
- <20180823024719.GG92374@aiede.svl.corp.google.com>
- <87wosh7pjj.fsf@kyleam.com>
- <20180823032238.GI92374@aiede.svl.corp.google.com>
- <87d0u9ybhk.fsf@kyleam.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=QX8LUIgFPaIax3wJsgRh7+2mAZ0WQOD/qLd2XB1oe5E=;
+        b=NuZhYYi+Sic/EP3tuzpxn3T5y/PghU2aQOD11d7eXxiUkV8/YagMptbPjuhObUREqR
+         xQwtE94R5DzbbN3VC1hTsiLQkgUgjdXySnI4N0yZqHb2UhOHqZsPjPSBeE9M98RFsOHV
+         5ZlGRNAXE2UkopOLDFHZF3hSU+JE8fgbtyADasZ2eSkybulC4bzg2hDZdX8lPYW3m0IC
+         50mdXuU9KRLzwHHxMe7VctSj81kBAYcPa1p7PY2kA9Nj2iqxqr/6KNC8yr2j/LJcGE89
+         JyJV+WCkA7XD6KPc4MbJbMCQKXMQ/Xh6olhMIi86UnoYSFj8K34inF2DP1MWbx69XRdI
+         w+Yg==
+X-Gm-Message-State: APzg51DWyyiUpCkffSUGfzaH3qtRlrEwDMK7420WzAJgULUn15q4SfkU
+        gYgWvWDfpLPk2Hwcv2GfpidymP38KAUs/R5XuX46sCaw
+X-Google-Smtp-Source: ANB0VdaZEhWswL3PAkgKQJdRFLM1X00Pmgy9TFLRHyuQbPzhLGiJFe+6gL4vknfQQSiuiRRdKBbAXpkXpt7ASyqO06A=
+X-Received: by 2002:a81:7d46:: with SMTP id y67-v6mr2175208ywc.457.1535015660172;
+ Thu, 23 Aug 2018 02:14:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87d0u9ybhk.fsf@kyleam.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Timothee Cour <timothee.cour@gmail.com>
+Date:   Thu, 23 Aug 2018 02:13:54 -0700
+Message-ID: <CANri+EwMTwtmg9NMe6XBg=wVdsmW51MbkpfWtBQ+KT8KMjJryQ@mail.gmail.com>
+Subject: how to output absolute paths in git diff?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kyle Meyer wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+This has all the context:
+https://stackoverflow.com/questions/22698505/how-to-show-full-paths-in-git-diff
 
->> I think what you mean is something like "color only based on the
->> diff-between-diffs".
->
-> Yeah, I that sounds OK to me.
+I'd like `--show-abs-path` to show absolute paths in:
+git diff --show-abs-path args...
 
-Thanks.  Want to prepare a patch along those lines to finish this off?
+eg:
+git diff --no-index `get_file1` `get_file2`
+could show:
+--- a/Users/timothee/temp/ripgrep/help0.txt
++++ b/help1.txt
 
-I'm off to sleep now, can look at this again tomorrow morning.
+* passing '--dst-prefix=$PWD' and '--src-prefix=$PWD' doesn't help
+because path arguments could be absolute, so it'll create
+$PWD/Users/timothee/temp/ripgrep/help0.txt (wrong)
 
-Thanks,
-Jonathan
+* passing '--dst-prefix=.' will behave weirdly, replacing leading `/`
+by `.` (seems wrong)
+diff --git .Users/timothee/temp/ripgrep/help0.txt b/help1.txt
+
+NOTE: I'm invoking the `git diff` command via a more complicated case
+(with multiple arguments including git diff flags and git diff files),
+so it's awkward for me to parse which arguments correspond to a file
+vs a flag (ie prevents easily converting input file arguments to
+absolute paths), but `git` could do it easily via a flag, eg
+`--show-abs-path`
