@@ -2,99 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4876C1F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 02:15:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF6521F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 02:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726407AbeHWFnJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 01:43:09 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:42726 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726267AbeHWFnJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 01:43:09 -0400
-Received: by mail-pf1-f196.google.com with SMTP id l9-v6so1876201pff.9
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:15:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=rmVY152qqQGx5kIdyE0GJGynwF+oiJaekuJ8gUry5gA=;
-        b=BU95J2XkzojiWUC1/3lEUJbp08pHeIdb0Lo7/EaZRSKN3yB04TK1cUjH2IlAObKHso
-         1R9/Ei7U3s6sVQ26FV3MB292N4ANFbVUNfXhjbe2oQ+qpnq94kGqtEQOocuN8eDFyj7u
-         bX24emEaMrCiSAa4fQRiBlPvVz8vw9xxipKFTtuYHSEcV4cR9CP64j6bLIFgVl+ilG9o
-         ZX+2FMFFxN1qzvkD5FeGBGbo6E78i83NUMpRI58rBWlv2basKOeYlSfQNIRU6mXrLeUz
-         aQS1OmTreKzy0149+1koCf9wKouhGWXX+TdSTincDIr5SiH5BfF+F+TTojL7/3iM18mh
-         sQeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rmVY152qqQGx5kIdyE0GJGynwF+oiJaekuJ8gUry5gA=;
-        b=H/HPjYUrmvgkQ79ozeSN1QJUSiqqpLoD7XaypIBtaCYtRYNtZD+zQr4cfbgzczZEr/
-         FNYYRyhnxlOqN33Ax8yv9xNQJwrGMsqRAoym6gZ4XfmAqxIHPonnZ98z24nVsCIYR2Xh
-         Ikr9vC+uIYb/6Y0yOiK4SlEV76vosEBpPOCKLVeOG85AvbSE8rK5GcDbS/akJkquWs0C
-         vXEU8AN6D+fZAcNfk1jVP6gCl8lw3Hr09B/pql/3d49Cm5MVohFkB6987YkK6xrzjFDk
-         3XySc9hCOkeRJA/jy4MKq0Lk+psmz/58MnzMwNYA/jvKGjJ3AjdD7FDaic7lM3snFihA
-         fozQ==
-X-Gm-Message-State: APzg51A1bYHdpvt6dxCrjkew27X4wYhaVPP2ZAJoBIgl0LY9eo9yhnVD
-        MKczWL6uyH3T7PHRJItwY+pZIqkK
-X-Google-Smtp-Source: ANB0VdYK2YzxlY55wMeOZlHNHcxF2jDz2dvVNTfGyDvChDnBTdmnxFv7Q2nngsB0KiQPVdjLvXEJaw==
-X-Received: by 2002:a63:a619:: with SMTP id t25-v6mr1879783pge.288.1534990549282;
-        Wed, 22 Aug 2018 19:15:49 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id x24-v6sm4192770pfh.67.2018.08.22.19.15.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 19:15:48 -0700 (PDT)
-Date:   Wed, 22 Aug 2018 19:15:47 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH/RFC] commit: new option to abort -a something is already
- staged
-Message-ID: <20180823021547.GE92374@aiede.svl.corp.google.com>
-References: <20180820154120.19297-1-pclouds@gmail.com>
- <20180820193007.GB31020@aiede.svl.corp.google.com>
- <CACsJy8DsEhV6p=cE6FC6Ka4=E0c-8JG0LRU_DEq-Ser5PqMcGw@mail.gmail.com>
- <20180823021156.GD92374@aiede.svl.corp.google.com>
+        id S1726811AbeHWFnk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 01:43:40 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52654 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726267AbeHWFnj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 01:43:39 -0400
+Received: (qmail 15215 invoked by uid 109); 23 Aug 2018 02:16:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 02:16:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6647 invoked by uid 111); 23 Aug 2018 02:16:26 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 22:16:26 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 22:16:18 -0400
+Date:   Wed, 22 Aug 2018 22:16:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Paul Smith <paul@mad-scientist.net>, git@vger.kernel.org,
+        Derrick Stolee <stolee@gmail.com>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
+Message-ID: <20180823021618.GA12052@sigill.intra.peff.net>
+References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
+ <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
+ <20180821212923.GB24431@sigill.intra.peff.net>
+ <20180822004815.GA535143@genre.crustytoothpaste.net>
+ <20180822030344.GA14684@sigill.intra.peff.net>
+ <814549a01074e89a4b26cb0cf13e4dddeb3a040a.camel@mad-scientist.net>
+ <20180822152306.GC32630@sigill.intra.peff.net>
+ <20180823012343.GB92374@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180823021156.GD92374@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20180823012343.GB92374@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A few quick corrections:
+On Wed, Aug 22, 2018 at 06:23:43PM -0700, Jonathan Nieder wrote:
 
-Jonathan Nieder wrote:
+> Jeff King wrote:
+> >> On Tue, 2018-08-21 at 23:03 -0400, Jeff King wrote:
+> 
+> >>>  static inline int hashcmp(const unsigned char *sha1, const unsigned
+> >>> char *sha2)
+> >>>  {
+> >>> +       assert(the_hash_algo->rawsz == 20);
+> >>>         return memcmp(sha1, sha2, the_hash_algo->rawsz);
+> >>>  }
+> [...]
+> >              The bigger questions are:
+> >
+> >   - are we OK with such an assertion; and
+> >
+> >   - does the assertion still give us the desired behavior when we add in
+> >     a branch for rawsz==32?
+> >
+> > And I think the answers for those are both "probably not".
+> 
+> At this point in the release process, I think the answer to the first
+> question is a pretty clear "yes".
+> 
+> A ~10% increase in latency of some operations is quite significant, in
+> exchange for no user benefit yet.  We can continue to try to figure
+> out how to convince compilers to generate good code for this (and
+> that's useful), but in the meantime we should also do the simple thing
+> to avoid the regression for users.
 
-> I'm starting to lean toward having this on unconditionally, with a
-> message that points the user who really doesn't want to clobber their
+FWIW, it's not 10%. The best I measured was ~4% on a very
+hashcmp-limited operation, and I suspect even that may be highly
+dependent on the compiler. We might be able to improve more by
+sprinkling more asserts around, but there are 75 mentions of
+the_hash_algo->rawsz. I wouldn't want to an assert at each one.
 
-... who really *does* want to clobber their index ...
+I don't mind doing one or a handful of these asserts as part of v2.19 if
+we want to try to reclaim those few percent. But I suspect the very
+first commit in any further hash-transition work is just going to be to
+rip them all out.
 
-> index toward "git add -u", as a good idea.  I think that for humans,
-> that would be okay and that configuration doesn't really help much
-> for this.
->
-> The remaining question becomes scripts.  A script might do
->
->	... modify old-file and create new-file ...
-> 	git add new-file
-> 	git commit -m "some great message"
->
-> which would trip this error.  For that matter, humans might do that,
-> too.  Could the check detect this case (where the only changes in the
-> index are additions of new files) and treat it as non-destructive?
-
-(where the only changes in the index are additions of new files *that
-match the worktree*)
-
-Sorry for the noise,
-Jonathan
+-Peff
