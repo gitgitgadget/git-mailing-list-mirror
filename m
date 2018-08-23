@@ -2,112 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18E481F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 21:27:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5F6F1F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 21:27:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727824AbeHXA7P (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 20:59:15 -0400
-Received: from mout.gmx.net ([212.227.17.21]:55443 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727784AbeHXA7P (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 20:59:15 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlHsg-1gQdCE2VPC-00b5Or; Thu, 23
- Aug 2018 23:27:32 +0200
-Date:   Thu, 23 Aug 2018 23:27:30 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>, gitster@pobox.com
-Subject: Re: [GSoC][PATCH v6 15/20] rebase -i: rewrite write_basic_state()
- in C
-In-Reply-To: <3da3ce19-38f8-0c46-47a1-9510f203b65f@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1808232309570.73@tvgsbejvaqbjf.bet>
-References: <20180731180003.5421-1-alban.gruin@gmail.com> <20180810165147.4779-1-alban.gruin@gmail.com> <20180810165147.4779-16-alban.gruin@gmail.com> <3da3ce19-38f8-0c46-47a1-9510f203b65f@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728227AbeHXA7d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 20:59:33 -0400
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:51329 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728212AbeHXA7d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 20:59:33 -0400
+Received: from pb-smtp21.pobox.com (unknown [10.110.30.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPS id A510FF59D1;
+        Thu, 23 Aug 2018 17:27:56 -0400 (EDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 086A222325;
+        Thu, 23 Aug 2018 17:27:56 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=tC6+kdFSynvxx1Ebe/On96U16TE=; b=KUm9AC
+        g+8lF56Ea2hTkjNWGmbScSbwRcBNBshIAzAiMYDMHuwv8oir2Ts0Apm2OBCwlYd8
+        +iPnqv4v9NGXOhVb6EXjck8X/oNJbMjKLJMvKanVyDLiEVVmIemmDuU02BMcAaUP
+        glsopODlY+CCekDv+ipFfKPDjkATz0ApBN9HU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 0198922324;
+        Thu, 23 Aug 2018 17:27:56 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=t+3GL7r7VjEqtrHdAH0HpYWRtanPmONPeLyKxKXzgGk=; b=kzPTcc6VaRjC0kW1IqQRmbV30mFxCEgWmb7K1UPh5PS79Rod8Vc6MuHSG2oyFNw+Yb9GKr1dV71mf37o1L8ARLKXbFkqNIo0+pYEA88VQMr/DMAveu5l3Ybjhaod4THg0Hhjey1EgnyIIpYKt8WjPDGLQf39BILEc6PsW12oxPI=
+Received: from localhost (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 645A622322;
+        Thu, 23 Aug 2018 17:27:50 -0400 (EDT)
+        (envelope-from kyle@kyleam.com)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
+In-Reply-To: <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
+References: <20180823023955.12980-1-kyle@kyleam.com> <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet> <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 23 Aug 2018 17:27:48 -0400
+Message-ID: <87pny8wz6z.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HHLFtQbiqJbIWRYdNOdMeotVjtPRrK61CHINPSvTfxIL6S9aP5y
- RLlaU/I6YWbb8UH2QZXuRqvo+VgxS1CSdGcz02nLqfLPY1xy/pTjPyqATjNYPKsBHxQOT78
- GY0hKL9Mq0BpTCTF4bzI5WV2WtX6QK1b0ibNpyCZOiAommNiimy3Za71XAG64wKjbq62vqi
- nigBN20eDJvlQGZFDuofw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:cZM4ed2iEjw=:QqhRux/JvSfIcl3Gz46mdS
- 37QmNq4dhQ+fs4eSeEIEzH+PJ1AUUbfcFBVV+HaoOg5K1Bi1QOe7t6t1LAesXEqdj/DcFFes/
- eeFsD0hpuwydNF8P3oPAEaP624WFS3ZurG2R4Lj9Z8UpVGeSPVWEW0PaPFQxMRHYSlSZfo45h
- ULYEiQEKGVkg/LC7Pc5qNaCw25j//4zJZqch+LnVV6WG1iTDm1UHZIKHNryNFqWwfpR+D+/c1
- gPz8DM+KyMl3fymcJTGCQyBT2aaKwfHzr9Km8VNnTv864BWN/fdhTwjjMOYB6CKvUvZli903o
- ED04lufX03MWrWo6mwOtIEa/8XT+wuixL0MLa1L4gfSKZ42STw7ZPxp0uxisMidhof58sulac
- 8foZvz82Fs7bKK7b0qvF6qWFL/Zi4hKlQ5sdPId5LKl3NedR3he7xv/eK4tSDmz9VPl2ImO5I
- 0fh9S6RfNp/E8r9I5vQVIm+FwtDXqsTokQ1lbem2ZjcF8yIpkDjm2PvkuYnBZ++1AT3kdbYc5
- rJqNSxtOJznEZT7T3kpiESLi6q3yfwMv+0/K6qrAVOVHq1294cRxh6gv7ul8DNRQLt2+cRKty
- cQYPzttFZuhi44c7bZUnug1EBSFa+cMO5EiyItXYWSYSrgGsa0QG2AjCLqOSzhDmC2gCgxAcF
- 2FikM1K77xMOGIONDNtZDAqVQhAmM+YegkBZi2l3sayECGjEErpxYNIn/bDqs+45qt7ydmrWN
- 6cX01mHs1Fgfj/GuAgd4LI8MQkxWtvFJfq2nJx9bH1GXqTKxRWu6VNfCp1iwet7Bd8bCXhdKT
- Z5wp9pQ
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6327102C-A71B-11E8-8765-CC883AD79A78-24757444!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Fri, 17 Aug 2018, Phillip Wood wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On 10/08/2018 17:51, Alban Gruin wrote:
-> 
-> > +{
-> > +	const char *quiet = getenv("GIT_QUIET");
-> > +
-> > +	if (head_name)
-> > +		write_file(rebase_path_head_name(), "%s\n", head_name);
-> 
-> write_file() can call die() which isn't encouraged for code in libgit.
-> I'm not sure how much it matters in this case. Rewriting all these as
-> 
-> 	if (head_name && write_message(onto, strlen(onto), rebase_path_onto(), 1))
-> 		return -1;
-> 
-> is a bit tedious. An alternative would be it leave it for now and in the
-> longer term move this function (and the ones above which I've just
-> noticed also call write_file()) to in builtin/rebase.c (assuming that
-> builtin/rebase--interactive.c and builtin/rebase.c get merged once
-> they're finalized - I'm not sure if there is a plan for that or not.)
+[...]
 
-This came up in the review, and Alban said exactly what you did.
+>>> -			    N_("color both diff and diff-between-diffs")),
+>>> +			    N_("restrict coloring to outer diff markers")),
+>>
+>> How about "use simple diff colors" instead?
 
-I then even dragged Peff into the discussion, as it was his idea to change
-`write_file()` from returning an `int` to returning a `void` (instead of
-libifying the function so that it would not `die()` in error cases and
-`return 0` otherwise):
+That's certainly better than the one above, and I also prefer it to
+"color only based on the diff-between-diffs" in v2.
 
-	https://github.com/git/git/pull/518#discussion_r200606997
+> I am wondering if it makes sense to remove the option altogether.
+> I've been trying to view the comparison of the same ranges in both
+> styles for the past few days, and I never found a reason to choose
+> "no dual color" option myself.
 
-Christian Couder (one of Alban's mentors) then even jumped in and *agreed*
-that libifying code "could be seen as unnecessary code churn and
-rejected."
-
-In light of these two respected community members suggesting to Alban to
-go and not give a flying fish about proper error handling, I have to admit
-that I am sympathetic to Alban simply using `write_file()` as-is.
-
-I do agree with you, of course, that the over-use of `die()` in our code
-base is a pretty bad thing.
-
-But that's neither Alban's fault, nor should he be punished for the advice
-he has been given.
-
-In short: I agree with you that `write_file()` should be libified
-properly, and I would suggest not to burden Alban with this (Alban, of
-course you should feel free to work on this if this is something you care
-about, too).
-
-Ciao,
-Dscho
+But I like this suggestion even better.
