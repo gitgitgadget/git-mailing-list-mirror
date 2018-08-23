@@ -2,145 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05FB41F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 10:27:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77D091F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 11:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726813AbeHWN4E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 09:56:04 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:44393 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726488AbeHWN4E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 09:56:04 -0400
-Received: by mail-qt0-f194.google.com with SMTP id r13-v6so5552256qtr.11
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 03:27:02 -0700 (PDT)
+        id S1728979AbeHWOyU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 10:54:20 -0400
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:37644 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727302AbeHWOyU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 10:54:20 -0400
+Received: by mail-yw1-f67.google.com with SMTP id x83-v6so1812105ywd.4
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 04:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=+eLnoNcifkgbz6/PtzcY72x18Em0EAFboUJIBYJVjS4=;
-        b=oh0pYXt39PnhU1UVHc9ELQn5eukQSpBnheKO9dsxTz7LqEiIIbCv9eLxkW2xKrlx7P
-         dOTFwUq7HLLbCrrlIzfubmVuBjm4v8TTzF94PPnqwCV+UilFYJ+73DypfdwSzYM57qqJ
-         IgwIzBFwi4/6wiHUaei8ps7X9nXwD23pnSS1cB244hogaCmuaj90jWrSfdbqQWAbbe0E
-         Sh/L4mzWAVOtPxLWfsjxirt4Lx58qQjRXBWebShlxmHzbniscmq48pkH/ct2LtUX/Zyq
-         GiCBcqEQS1Q5SmlcOZLEKWOfJibypY/QYxPqLHTQqzboUrJFWBvvj65+Er8wdUD61TYO
-         okCw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Xymt0N5Lcvz1O4SbxmH3PUq5kFhGaaSmbQ8q1MGa4t8=;
+        b=CcSFJpYyR7DLNt89wvnJX3nYLdU0CEvqsdKuu/OQPBgYGKmQFzGEg8dxSeM5wsdTO6
+         2UlTnIP+AjyVI7fjIe5oeWgIt6FusSyeGpllXWGENefxNQjga/GjKg+6AGEa7N+sWzK3
+         d3Xr1YDOiV1eWbBXMXVPDdFciO0hIJN9NDdzAxLK5ylHwymBEf5/mRgrTjOP67Q3jORM
+         jVTukczGCS1A8v9HUDB1vZ4kNkkvzHzOK1WqPs5MCFyB6iSFixdjlEZevFRuA5QPIzCh
+         PtpGja3moRuQJ8AXzbK5EGsPu5+dTvTAVR9lbuo5G0z2eR/QIAC1AjpeMRxG2KEXrPcY
+         xbRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=+eLnoNcifkgbz6/PtzcY72x18Em0EAFboUJIBYJVjS4=;
-        b=h5aqZPeECL4HSkB61keCOEq89nncPg4Eg0KfihQ55PEKwv8XiF7h36i9KUdqkotj2E
-         JfXZG6MP5qYOlOkf277iS42dqcJciyGKFqZn1frKIWEJTGfnKI2v9GnCjt7wYnBUt0Uo
-         ZUQVWbKglDV0cqRKD6KIPQqv7ppf/CrHLuZgiAhEqO0tHzio2DTS1yQUqMhpLp0X+yMX
-         aFmJ9coFPmZvnr+j9GuOa/M0z/EMzBkKEVy6zGC4ffR6eUCldEcYG0pDaCIc3tVoWlq5
-         L7Go4eTTN0IQw5VyWct0d0MmFvFJVM23IOMJCkZxpTnkPMOXb26MDdqRA3t3KBNLbWD3
-         8Rwg==
-X-Gm-Message-State: AOUpUlGghD5LmcWvN7uCxeJz4YRNh87wiPlAOV9kTNj0hFmKcUAhsCzY
-        bcurKgDQNGM80ddyeBGlhYo=
-X-Google-Smtp-Source: AA+uWPwVZm1j3OhTLVFgjiIVYGJ+mOp3z9VGhPPcwIdaZUC9KGoWsMJzuVXpCbEYO2pI1jjODoycBA==
-X-Received: by 2002:ac8:9e:: with SMTP id c30-v6mr15770083qtg.173.1535020021911;
-        Thu, 23 Aug 2018 03:27:01 -0700 (PDT)
-Received: from [10.0.1.17] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id l5-v6sm2267638qte.20.2018.08.23.03.27.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 23 Aug 2018 03:27:01 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Smith <paul@mad-scientist.net>, git@vger.kernel.org,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <xmqqwoskadpe.fsf@gitster-ct.c.googlers.com>
- <1b20b754-987c-a712-2594-235b845bc5d0@gmail.com>
- <20180821212923.GB24431@sigill.intra.peff.net>
- <20180822004815.GA535143@genre.crustytoothpaste.net>
- <20180822030344.GA14684@sigill.intra.peff.net>
- <814549a01074e89a4b26cb0cf13e4dddeb3a040a.camel@mad-scientist.net>
- <20180822152306.GC32630@sigill.intra.peff.net>
- <20180823012343.GB92374@aiede.svl.corp.google.com>
- <20180823021618.GA12052@sigill.intra.peff.net>
- <20180823034707.GD535143@genre.crustytoothpaste.net>
- <20180823050418.GB318@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <f854aba0-6d28-7f2b-aad2-858983c4af36@gmail.com>
-Date:   Thu, 23 Aug 2018 06:26:58 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Xymt0N5Lcvz1O4SbxmH3PUq5kFhGaaSmbQ8q1MGa4t8=;
+        b=c9qIfBX/Hw5Xcy/6DJlSWPtETP8mZ+H/Bvg0LPxcCYluAnbm9CKfgdhsBY3c9d3uko
+         BnxQccdiW7xlEhOnNYHKSaw8/b4Au2pjbXql88bduwsoEL92FbRrVArRlqS9hu/mDw5J
+         zO01+rhiFTUuNXX7w6zBm2bbD6JxVxzNcRK2pNudcyeVC+0WX2QpWuGs9HppqfPknPZt
+         l6qwRVyQzrobl4ftv9oqECQvOBWV8oEicLzULuy2POtNJvlR4vN6DrlFX4tWxw1CtnOf
+         U/vF3jmwSV0iWbRLto8IzVsxzfttmxqfNlsAY1m4tbExfFouahufKIkYHzibg+ty9o6s
+         6xvg==
+X-Gm-Message-State: APzg51BdOum2iknmsVXIEGkFecWQXnDWc/5IA0UO01+XVQHM4UqlGM7R
+        aBhSXUWY9k8JWy6LRtWMlsZ0lVmk/L7hQNnCFZUJmyHB
+X-Google-Smtp-Source: ANB0VdY9f4qrEa6lQpnH3DhwbAfnTHX7R7CWrjlLP7hy2xurTLHb26jyvtraIX70wu343IhY05ZDTy5J/QaD7EGm9p0=
+X-Received: by 2002:a81:7d46:: with SMTP id y67-v6mr2421068ywc.457.1535023503492;
+ Thu, 23 Aug 2018 04:25:03 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180823050418.GB318@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <CANri+EzXBxEf7XtjnJONAYD4h_woqw06-4mcWCH6xODNMMp26w@mail.gmail.com>
+ <CACBZZX6F1ez-yfnc3asPXBkBd9VKCjS7paN5ZsWVnpn=QUyGew@mail.gmail.com>
+In-Reply-To: <CACBZZX6F1ez-yfnc3asPXBkBd9VKCjS7paN5ZsWVnpn=QUyGew@mail.gmail.com>
+From:   Timothee Cour <timothee.cour2@gmail.com>
+Date:   Thu, 23 Aug 2018 04:24:37 -0700
+Message-ID: <CANri+ExMY9G9aSm2TumHd8a9p2ZVXqcBOV-H=7P-_Xh_ng=Cpg@mail.gmail.com>
+Subject: Re: [feature] how to output absolute paths in git diff? => --show-abs-path
+To:     avarab@gmail.com
+Cc:     Timothee Cour <timothee.cour2@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2018 1:04 AM, Jeff King wrote:
-> On Thu, Aug 23, 2018 at 03:47:07AM +0000, brian m. carlson wrote:
+> Wanting such a feature seems sensible
+
+happy to hear that!
+
+> So this seems to work for --no-index, or if it doesn't what situations do=
+esn't it work in?
+
+cases where path arguments are already absolute (as I showed earlier)
+
+
+> Is this a mistake, or would you only like --show-abs-paths to implicitly =
+supply --src-prefix, but not --dst-prefix? If so, why?
+
+notice I didn't use `--show-abs-paths` in that example; I'm showing
+what `git diff` currently outputs (the `could show` meant depending on
+your use case; eg when `get_file1` returns an absolute path and
+`get_file2` returns a relative one)
+
+> Ah, so it's about supplying both the prefix *and* absolute paths, whereas=
+ I see without --no-index we seem to handle this sort of thing just fine:
+
+indeed, without `--no-index` things work just fine as I noted in
+https://stackoverflow.com/questions/22698505/how-to-show-full-paths-in-git-=
+diff.
+The problem is with `--no-index`
+I tried messing around with `--src-prefix` and `--dst-prefix` to
+remedy this but as I showed, it can't work currently.
+
+> without --no-index we seem to handle this sort of thing just fine:
+
+you also need `--relative` in case you're not at repo root in your
+snippet (that' what I'm using, without `--no-index`)
+
+
+> This is because the default prefixes are a/ and b/, respectively
+
+that seems buggy:
+with default options I get:
+--- a/Users/timothee/help0.txt
++++ b/help1.txt
+
+with `--src-prefix=3DFOO ` and `--dst-prefix=3DFOO ` I get:
+--- FOOUsers/timothee/help0.txt
++++ FOOhelp1.txt
+
+this seems buggy because there's not good option for FOO:
+when FOO =3D /, relative paths become a broken absolute path (/help1.txt)
+when FOO =3D ./, absolute paths become a broken relative path
+(./Users/timothee/help0.txt)
+
+I propose instead to show:
+with `--src-prefix=3DFOO ` and `--dst-prefix=3DFOO ` I get:
+--- join(FOO,path1)
++++ join(FOO,path2)
+
+where join(prefix, path) simply appends prefix to path, taking care of
+avoiding a double `//` in case prefix ends in / and path starts with
+/,
+
+that way, the defauls (with a/, b/) are unchanged and we can have:
+with `--src-prefix=3D` and `--dst-prefix=3D` (empty FOO):
+--- /Users/timothee/help0.txt
++++ help1.txt
+=3D> the paths are not broken
+
+## summary:
+
+* `--show-abs-paths` would be useful
+* `--src-prefix=3DFOO ` and `--dst-prefix=3DFOO ` could use join(FOO,path)
+instead of the currently used join(FOO,path1.removeLeadingSlash)
+On Thu, Aug 23, 2018 at 2:42 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
->> I expect that's going to be the case as well.  I have patches that
->> wire up actual SHA-256 support in my hash-impl branch.
->>
->> However, having said that, I'm happy to defer to whatever everyone else
->> thinks is best for 2.19.  The assert solution would be fine with me in
->> this situation, and if we need to pull it out in the future, that's okay
->> with me.
->>
->> I don't really have a strong opinion on this either way, so if someone
->> else does, please say so.  I have somewhat more limited availability
->> over the next couple days, as I'm travelling on business, but I'm happy
->> to review a patch (and it seems like Peff has one minus the actual
->> commit message).
-> I just posted the patch elsewhere in the thread.
-
-Thank you for that!
-
-> I think you can safely
-> ignore the rest of it if you are otherwise occupied. Even if v2.19 ships
-> without some mitigation, I don't know that it's all that big a deal,
-> given the numbers I generated (which for some reason are less dramatic
-> than Stolee's).
-My numbers may be more dramatic because my Linux environment is a 
-virtual machine.
-
-I was thinking that having a mitigation for 2.19 is best, and then we 
-can focus as part of the 2.20 cycle how we can properly avoid this cost, 
-especially when 32 is a valid option.
-
-Around the time that my proposed approaches were getting vetoed for 
-alignment issues, I figured I was out of my depth here. I reached out to 
-Daniel Lemire (of EWAH bitmap fame) on Twitter [1]. His blog is full of 
-posts of word-based approaches to different problems, so I thought he 
-might know something off the top of his head that would be applicable. 
-His conclusion (after looking only a short time) was to take a 'hasheq' 
-approach [2] like Peff suggested [3]. Since that requires auditing all 
-callers of hashcmp to see if hasheq is appropriate, it is not a good 
-solution for 2.19 but (in my opinion) should be evaluated as part of the 
-2.20 cycle.
-
-Of course, if someone with knowledge of word-alignment issues across the 
-platforms we support knows how to enforce an alignment for object_id, 
-then something word-based like [4] could be reconsidered.
-
-Thanks, everyone!
--Stolee
-
-[1] https://twitter.com/stolee/status/1032312965754748930
-
-[2] 
-https://lemire.me/blog/2018/08/22/avoid-lexicographical-comparisons-when-testing-for-string-equality/
-
-[3] 
-https://public-inbox.org/git/20180822030344.GA14684@sigill.intra.peff.net/
-
-[4] 
-https://public-inbox.org/git/7ea416cf-b043-1274-e161-85a8780b8e1c@gmail.com/
+> On Thu, Aug 23, 2018 at 11:16 AM Timothee Cour <thelastmammoth@gmail.com>=
+ wrote:
+> >
+> > This has all the context:
+> > https://stackoverflow.com/questions/22698505/how-to-show-full-paths-in-=
+git-diff
+>
+> It's helpful to copy it anyway, so we can discuss it here:
+>
+> QUOTE
+>
+> How do I show full paths in git diff? One can use '--dst-prefix=3D$PWD'
+> and '--src-prefix=3D$PWD' but this is fragile as it won't work in many
+> cases, eg with --no-index, or when running the commond from a
+> subdirectory without using --relative=3Drealpath_to_cwd
+>
+> END QUOTE
+>
+> Wanting such a feature seems sensible. But I'm unclear on the details.
+>
+> You say that --{src,dst}-prefix is fragile and doesn't work for
+> --no-index. But if I do this:
+>
+>     (
+>     cd /tmp &&
+>     echo foo >a &&
+>     echo bar >b &&
+>     git --no-pager diff --src-prefix=3D$PWD/ --dst-prefix=3D$PWD/ a b
+>     )
+>
+> I get this diff:
+>
+>     diff --git /tmp/a /tmp/b
+>     new file mode 100644
+>     index 257cc56..5716ca5 100644
+>     --- /tmp/a
+>     +++ /tmp/b
+>     @@ -1 +1 @@
+>     -foo
+>     +bar
+>
+> So this seems to work for --no-index, or if it doesn't what situations
+> doesn't it work in?
+>
+> > I'd like `--show-abs-path` to show absolute paths in:
+> > git diff --show-abs-path args...
+> >
+> > eg:
+> > git diff --no-index `get_file1` `get_file2`
+> > could show:
+> > --- a/Users/timothee/temp/ripgrep/help0.txt
+> > +++ b/help1.txt
+>
+> Is this a mistake, or would you only like --show-abs-paths to
+> implicitly supply --src-prefix, but not --dst-prefix? If so, why?
+>
+> > * passing '--dst-prefix=3D$PWD' and '--src-prefix=3D$PWD' doesn't help
+> > because path arguments could be absolute, so it'll create
+> > $PWD/Users/timothee/temp/ripgrep/help0.txt (wrong)
+>
+> Ah, so it's about supplying both the prefix *and* absolute paths,
+> whereas I see without --no-index we seem to handle this sort of thing
+> just fine:
+>
+>     git diff --src-prefix=3D$PWD/ --dst-prefix=3D$PWD HEAD~.. $PWD/some-f=
+ile
+>
+> > * passing '--dst-prefix=3D.' will behave weirdly, replacing leading `/`
+> > by `.` (seems wrong)
+> > diff --git .Users/timothee/temp/ripgrep/help0.txt b/help1.txt
+>
+> This is because the default prefixes are a/ and b/, respectively, and
+> the option allows you to entirely replace them. E.g. imagine needing
+> "../some-relative-path/"
+>
+> > NOTE: I'm invoking the `git diff` command via a more complicated case
+> > (with multiple arguments including git diff flags and git diff files),
+> > so it's awkward for me to parse which arguments correspond to a file
+> > vs a flag (ie prevents easily converting input file arguments to
+> > absolute paths), but `git` could do it easily via a flag, eg
+> > `--show-abs-path`
