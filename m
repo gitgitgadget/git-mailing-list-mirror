@@ -7,82 +7,84 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D518A1F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 14:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 881F41F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 14:31:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730505AbeHWR6L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 13:58:11 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58061 "EHLO mout.gmx.net"
+        id S1730719AbeHWSBR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 14:01:17 -0400
+Received: from mout.gmx.net ([212.227.15.19]:40515 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727597AbeHWR6L (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 13:58:11 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwGDy-1ftFVE2t0o-017zA7; Thu, 23
- Aug 2018 16:28:10 +0200
-Date:   Thu, 23 Aug 2018 16:28:08 +0200 (DST)
+        id S1729381AbeHWSBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 14:01:17 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nt7-1g2pyb2aYX-00yxxd; Thu, 23
+ Aug 2018 16:31:16 +0200
+Date:   Thu, 23 Aug 2018 16:31:15 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Aug 2018, #05; Mon, 20)
-In-Reply-To: <xmqqin42ko8q.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808231626360.73@tvgsbejvaqbjf.bet>
-References: <xmqqsh38admf.fsf@gitster-ct.c.googlers.com> <xmqqo9dumh9z.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808222339490.73@tvgsbejvaqbjf.bet> <xmqqin42ko8q.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
+In-Reply-To: <20180823032238.GI92374@aiede.svl.corp.google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808231629540.73@tvgsbejvaqbjf.bet>
+References: <20180823023955.12980-1-kyle@kyleam.com> <20180823024719.GG92374@aiede.svl.corp.google.com> <87wosh7pjj.fsf@kyleam.com> <20180823032238.GI92374@aiede.svl.corp.google.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:z3sCRhUewjlsmDCrXLg1ZBYAfefE3EWX7Sw0mZjm7bHCisWo65r
- kOsGPJA8jTNjv2kabDLWqiGxxPBS7XO3406NmqhY/YVMSkNkluukCaE3ch9Ol5vNmMUhvC2
- +jWoqWXNEDMGrMOYa4y5yIFoxGGq3hO67/v2gks1VC2B9QiCPtMp9hKRFeuyuRCEKYvseJ+
- 4NvTwwC8q8IJ8NH2ZgI/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:h3J3K8bLOQ4=:3P50+6UMdjKU8xaNg8bCuq
- wXIMg0HUo7jgfIs4mkB+N5vdLr0wt6/Go/xnmcYzSzV26qInJlHWBJF0SVMpBeYYqj/YkYhxU
- L9QCiuOekPvNoXy7OaBCeEes2UcK8tquhU1SZb93aR/MhtozPV/zLV1/V9A7uvDlvESbP6JvW
- McxJXhqxKyB1oI3IrtspkrUZZ8EapSh8ZhKDdp3aQX36NwDsz4Q23+zzN62CzGR09nrdYpelY
- +F5SPRWpv5un3Rak3dhlt5lywM7iaa0TvNaE5FcdPLAreBj6fOSzSuRqXpYkmpbCsFfWlVALL
- hzOoUhfxNntAErC5aVwAQkUUM5j8a+DESGk73oawsSqmST7jlMAa+R2E1SERADgeR1CEV4JFw
- RHwM/AiK3hak4RgeOg0AW98cS4uWfeDTT3wrpc0Dz5CIv8WDaN0fWHYzVpskPQSuSOjf8bo/8
- cC+4gfO6Enr2LVJqRwievCOQZHp4mLy4tIVE75TD6d/LII43lIGoHnzAtFCyK3kQwce46LHkl
- Z/1w3cxOPGdSBKYR13rg+vcXO3bBBTg6RsKNFTXCNqkhKLJgZ+NzehchgxTmLcg/CdAXEAg/+
- eggJyEGZ+jpOUQ0ANJ9rVwKebzShjgJHOYHZvFu/UZBIi/Md9wS7V9nTwP6qScTslw9UOgy8S
- A7cTdQiPsdQM1wNJg9drer7jqiM/KpclDhTWfPtuq2vPUzaQ+0U1Xdu6sw3AFLa8+rUAGtKjX
- f+VuXJE2VXPY2+4TjVF56jdZLzWIdxHcvg3iRBCF6OEkKVCbJp4vBENElhtP7KgJnrGWH9tG5
- M9xa/X1
+X-Provags-ID: V03:K1:gxT5BP4DBWtrZUY8Wm/AtE8UgFSwLmWbTSON3A55OHHHvq5Lyoc
+ UyUrVFWWDq5pEsRYZgTnc0wvlsjWuPCVC1E/Nq+XPZLxoXt7uXZYdByeEbl9OqBqrUPLRUs
+ Kx/RHE3mPovrvWyA6+uRHbSBWux3NEnJsfwbyTnvUlvQqfXtNdAMxmjZRPcbe79fRRaiIg+
+ NHCwdwX5QYljHCiwbPSFg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:awF8oW+ylX4=:zU3XJsa+jZW1z13JovtHaO
+ v70FgmVK2cQ+Fw0vRSzC4OviOVgMiT7SuXSE9xN/q6Vc7PWCfnDp+wqxOARC6idYTxcQYhBnU
+ wTmR+4RKfbz4Pih1PI3J0EjiV9PY9hRLDDibxMiglc7l9pFTESZfoH6lKKHDLZDuJBjk97HaX
+ gwj8I6NINSRISMOBWy4X8KR0/shas3hAZaAmrki0jEUF8k/K0kufuZ2eKRop3E56zHrMjtHaY
+ HAmhC1RaHhlKkYpYKJsIMk0i5dzTyuSWWvc2RJdHAMSk5CSBqUL3+qNIh7jknatR1t53zd2o8
+ Hs5kx6OGOpQSjgOpakiPECHhANkxWHSzVbgtXINZ0JblS4aXJlhDksX6OdV8mItZCuz76EHek
+ TCkW8o/PyT9cxAr3FM0DHWdyy6tvD2rzQoXX046PI7306ecF+AHZCD+2OZiFh31Bq0gxlpNVj
+ w2Fk2Qj1i6TQq5DAVb/eU4beBF9hsSe92v/5foUNJ9wj/bKcTbbGvriT0seVl1Z0kXRH7BT/S
+ gWFAceOciwGS+HZ5vFH5GvXTDiMESCZ2v+qaRX2r3HoszVm9UQW7Z9xDTPSan28AEnbYqkZq+
+ zumNgvwBHR5RC41+287S4J2hdff7p4bUBdN7L003wycPF/X9xH3fhPJQ/zy+maxY2GCBSKoAL
+ AJdaiucQlgN5uPnd2DDX7BpQbH2mZpIErskTB3torni/4ncVH4yiyAhT2d5+w8GOTih6ecjV/
+ TYhEaipn/zzDLRL0R5NikMaoCtjjmcCsPkbqGF0q9ze1cDHbjAyIIqwdKnv6IXxF2CaTdg7lv
+ 0xQKtA6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Jonathan,
 
-On Wed, 22 Aug 2018, Junio C Hamano wrote:
+On Wed, 22 Aug 2018, Jonathan Nieder wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > FWIW I am a lot more bold about these builtins, and want to get them
-> > into Git for Windows v2.19.0, either as full replacements, or like I
-> > did with the difftool: by offering them as experimental options in the
-> > installer.
-> >
-> > Maybe this will remain a dream, but maybe, just maybe, I will manage
-> > to do this, with your help.
-> 
-> Heh, I do not think you need much help from me to cut GfW releases.
+>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
+>  			    N_("Percentage by which creation is weighted")),
+> -		OPT_BOOL(0, "no-dual-color", &simple_color,
+> -			    N_("color both diff and diff-between-diffs")),
+> +		OPT_BOOL(0, "dual-color", &dual_color,
+> +			    N_("color both diff and diff-between-diffs (default)")),
 
-I know. And that's why I asked for your help with the three massive patch
-sets in flight that convert scripted things to builtins instead.
+There is one very good reason *not* to do that. And that reason is the
+output of `git range-diff -h`. If anybody read that the option
+`--dual-color` exists, they are prone to believe that the default is *not*
+dual color. In contrast, when reading `--no-dual-color`, it is clear that
+dual color mode is the default.
 
-> In any case, thanks for a quick "last mile" patch, which unblocked
-> 'pu' that has been in sorry state for about a week or so.  I've
-> inserted a new topic branch between -5 and -6 that (1) merges the
-> other track into -5 and (2) applies your "call it in a new way"
-> patch, and then rebased -6 on top of the result.  If you have a
-> chance, it is appreciated if you can give a quick eyeballing near
-> the tip of 'pu' today.
-
-It looks good. Thanks.
+Ciao,
 Dscho
+
+>  		OPT_END()
+>  	};
+>  	int i, j, res = 0;
+> @@ -63,8 +63,8 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+>  			     options + ARRAY_SIZE(options) - 1, /* OPT_END */
+>  			     builtin_range_diff_usage, 0);
+>  
+> -	if (simple_color < 1) {
+> -		if (!simple_color)
+> +	if (dual_color != 0) {
+> +		if (dual_color > 0)
+>  			/* force color when --dual-color was used */
+>  			diffopt.use_color = 1;
+>  		diffopt.flags.dual_color_diffed_diffs = 1;
+> 
