@@ -8,134 +8,167 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A734D1F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 09:42:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96A381F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 09:56:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729122AbeHWNLp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 09:11:45 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:35054 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727153AbeHWNLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 09:11:45 -0400
-Received: by mail-qt0-f182.google.com with SMTP id f19-v6so4031125qtf.2
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 02:42:52 -0700 (PDT)
+        id S1726676AbeHWNZS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 09:25:18 -0400
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:40483 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725909AbeHWNZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 09:25:17 -0400
+Received: by mail-ed1-f48.google.com with SMTP id e19-v6so3206351edq.7
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 02:56:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SLkek8Jf8b9MeuwdAO/65ZsKDDESR6fyOjQUc5t4gJ0=;
-        b=A2/aMHxWVbzzabp9F2E53WxZe8a9Yl77T6tuDla01rngNt5c6ENqk7VH07a25AA0fl
-         ghNLENNjYKl9piuIqG3ESkY6btnjvziBNodidSiOK4i6YUjmF5KeM4rsnSRY9sQH5ZcI
-         yWY7XxKik+dBAVy/XzbcVv58IQ2zAZi+xAAtQqaNr4QjdyvYqDJuxfa2YOVlyNYLUu8e
-         Gk1NxZf6fN7NOldRDOxBdb2NuQD6GIH0nSr6tiGds1v7RGLCcQ0iptdpukkB2Dn7ZEQL
-         sCmeM84r35uVwI6Na90vAekjqnMnz7QbI3CCaDelkQFv1LNsVzMv/SSCW5rp5SY/Y+pY
-         6H+Q==
+        h=from:to:cc:subject:in-reply-to:user-agent:date:message-id
+         :mime-version;
+        bh=ppVGpu+tYOdixqB+gDTdXqNhi4fZ9xA1KL6Uc3EFVKI=;
+        b=FrATfgQl//670Tir4nqY9fHtx/TZzvxG20ehbKS55j5BK3SLVo2PgQD6u7U51CfTnI
+         w/vv57mczuoAR9pJckiCpGJ8+BZuxbUQ7aZBOKfKbQgb+1MtBBEmeJcWXlyCe2czRlGN
+         FADEDIdWMCI/Pzh+oFw3QVhXLVhaeB0xhapHbhfj3qbd8HRCzOOiSRnRpGa+wNRLgDC1
+         5HTpL5CkstO0L84EyvasLHZIBlFLWtBpqRYDNAa+q8T5EFQQKm5bixDiwhf+njTP9Aen
+         z+oKhRIWdHSUynYNEbfCMWqriSCaq40JT4IRD3lfY6s/yr8ahJ6xzDuhpLdxZOKjBvbC
+         ptog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SLkek8Jf8b9MeuwdAO/65ZsKDDESR6fyOjQUc5t4gJ0=;
-        b=UN33M5nXw9/+Op778B0sfzTGzvHyoICWmgn6YW0zP75jAeZyt6Bma1xxeKdvvenUpK
-         LW1F5tpGN0yCTG59LeEkyAlouYl+Q3LFkDgdOhX9vZecXFx/M/3MoDWJf8aVmao/ZPRW
-         WXo7S9ElMf2MYn2PJR20Je+KYe2CaAFALXh378R4oeCnfgTWLtWRAnNzNDljEcPvcCgK
-         eWYdunHvDnh6LgDWq0e4AJO6AiHuSFt4sExfUXwK+elDE9CDi1bDqwzQU0+y31o4h//W
-         UBeRnYJIMHrt67B0li1XXyONOUQG5Rw8os7DmWejxOUmftwnEVxouzQxjS6NcFPs6u+a
-         4knA==
-X-Gm-Message-State: AOUpUlHez8edLCL2oAjh3uBE9xawZaoU7KbqApqCQ1xwv8KsJIzigTum
-        D0ZI9Xv7p8aB2DWz7NfzXnFSyKfuPserivJUxg0=
-X-Google-Smtp-Source: AA+uWPzQ2JYcvDH7Le40G3W9XLWcYacYZ+0HedbVwZlnlQVm5yo2kRrEVzwXc59EHTub97asVSqt5PGYUr+lp09I0rs=
-X-Received: by 2002:ac8:2807:: with SMTP id 7-v6mr59465617qtq.111.1535017371698;
- Thu, 23 Aug 2018 02:42:51 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:in-reply-to:user-agent:date
+         :message-id:mime-version;
+        bh=ppVGpu+tYOdixqB+gDTdXqNhi4fZ9xA1KL6Uc3EFVKI=;
+        b=d9AvRwjyT2tf+9+kH2JoJVJe844z2qbxLczI2KnDVz6uWa6/BRCaWU8SJLFk5F3wuh
+         ScvdNI4338r0nKVlOTsxqHrTzjLcy7T/nY+3FRXMR11yTel5jKxnKOSTCjvHpwZekeGw
+         FosMSMn30LPTSzB9FvoBe2Ff6Dg14g4aVpIzfqOHghQFwSlV4/EL+cqMAfFfjljvMDjx
+         ho8h3ZCvM2S7vIJCEwemHz3iiPgdLFFBnwAUTahAVm9ifw8yMNBiYGQiAFldmf7sEWiq
+         gIJXbAPpV67NuIOkOl22MPt+acp4oV76gdXV4YAVkasL2Vso0rxmp3hH5/1MokiX5gxt
+         9cZQ==
+X-Gm-Message-State: APzg51AfikNmPXEDkwBxlhCapZ7e5cVmOB6LxZDaambdOdXDfDcTVqLh
+        2Y3zRRQKXL9tgXbk3SltUgJv+tMOZHQ=
+X-Google-Smtp-Source: ANB0Vdb73PzQyRU6iyAWkroN4auzantkmx/20sR+EKNj981og046DNd+K/v9VIRhP4Z0fNklPAE+iQ==
+X-Received: by 2002:a50:d9c6:: with SMTP id x6-v6mr1232926edj.63.1535018180067;
+        Thu, 23 Aug 2018 02:56:20 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id v1-v6sm1783038edf.3.2018.08.23.02.56.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 23 Aug 2018 02:56:19 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Test failures on OpenBSD
+In-Reply-To: <20180823091427.1756-1-avarab@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+Date:   Thu, 23 Aug 2018 11:56:18 +0200
+Message-ID: <87a7pdfltp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CANri+EzXBxEf7XtjnJONAYD4h_woqw06-4mcWCH6xODNMMp26w@mail.gmail.com>
-In-Reply-To: <CANri+EzXBxEf7XtjnJONAYD4h_woqw06-4mcWCH6xODNMMp26w@mail.gmail.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Thu, 23 Aug 2018 11:42:40 +0200
-Message-ID: <CACBZZX6F1ez-yfnc3asPXBkBd9VKCjS7paN5ZsWVnpn=QUyGew@mail.gmail.com>
-Subject: Re: [feature] how to output absolute paths in git diff? => --show-abs-path
-To:     timothee.cour2@gmail.com
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 23, 2018 at 11:16 AM Timothee Cour <thelastmammoth@gmail.com> wrote:
->
-> This has all the context:
-> https://stackoverflow.com/questions/22698505/how-to-show-full-paths-in-git-diff
+This is on OpenBSD 6.2 amd64 with my "tests: fix and add lint for
+non-portable head -c N" patch (which fixes one failure).
 
-It's helpful to copy it anyway, so we can discuss it here:
+    $ for t in t1305-config-include.sh t1308-config-set.sh t5004-archive-corner-cases.sh t5552-skipping-fetch-negotiator.sh; do ./$t --no-color -v -x 2>&1 | grep -B10 "^not ok"; done
+    
+    + cd bar
+    + echo [includeIf "gitdir:bar/"]path=bar7
+    + >> .git/config 
+    + echo [test]seven=7
+    + > .git/bar7 
+    + echo 7
+    + > expect 
+    + git config test.seven
+    + > actual 
+    error: last command exited with $?=1
+    not ok 27 - conditional include, gitdir matching symlink
+    --
+    + cd bar
+    + echo [includeIf "gitdir/i:BAR/"]path=bar8
+    + >> .git/config 
+    + echo [test]eight=8
+    + > .git/bar8 
+    + echo 8
+    + > expect 
+    + git config test.eight
+    + > actual 
+    error: last command exited with $?=1
+    not ok 28 - conditional include, gitdir matching symlink, icase
+    	test_cmp expect actual
+    
+    + echo Error (-1) reading configuration file a-directory.
+    + > expect 
+    + mkdir a-directory
+    + test_expect_code 2 test-tool config configset_get_value foo.bar a-directory
+    + 2> output 
+    Value not found for "foo.bar"
+    test_expect_code: command exited with 1, we wanted 2 test-tool config configset_get_value foo.bar a-directory
+    error: last command exited with $?=1
+    not ok 23 - proper error on directory "files"
+    + make_dir extract
+    + tar xf subtree-all.tar -C extract
+    tar: Cannot identify format. Searching...
+    tar: End of archive volume 1 reached
+    tar: Sorry, unable to determine archive format.
+    error: last command exited with $?=1
+    + rm -rf extract
+    + exit 1
+    + eval_ret=1
+    + :
+    not ok 9 - archive empty subtree with no pathspec
+    --
+    + make_dir extract
+    + tar xf subtree-path.tar -C extract
+    tar: Cannot identify format. Searching...
+    tar: End of archive volume 1 reached
+    tar: Sorry, unable to determine archive format.
+    error: last command exited with $?=1
+    + rm -rf extract
+    + exit 1
+    + eval_ret=1
+    + :
+    not ok 10 - archive empty subtree by direct pathspec
+    'git <command> [<revision>...] -- [<file>...]'
+    fatal: ambiguous argument 'c7': unknown revision or path not in the working tree.
+    Use '--' to separate paths from revisions, like this:
+    'git <command> [<revision>...] -- [<file>...]'
+    No have c7 (c7)
+    error: last command exited with $?=1
+    + test_unconfig -C client fetch.negotiationalgorithm
+    + exit 1
+    + eval_ret=1
+    + :
+    not ok 1 - commits with no parents are sent regardless of skip distance
+    --
+     Author: A U Thor <author@example.com>
+     1 file changed, 1 insertion(+)
+     create mode 100644 to_fetch.t
+    + git init client
+    Initialized empty Git repository in /home/avar/g/git/t/trash directory.t5552-skipping-fetch-negotiator/client/.git/
+    + seq 11
+    ./t5552-skipping-fetch-negotiator.sh: seq: not found
+    + git -C client checkout c5
+    error: pathspec 'c5' did not match any file(s) known to git
+    error: last command exited with $?=1
+    not ok 3 - when two skips collide, favor the larger one
+    --
+    + git init client
+    Initialized empty Git repository in /home/avar/g/git/t/trash directory.t5552-skipping-fetch-negotiator/client/.git/
+    + seq 8
+    ./t5552-skipping-fetch-negotiator.sh: seq: not found
+    + seq 19
+    ./t5552-skipping-fetch-negotiator.sh: seq: not found
+    + pwd
+    + git -C server fetch --no-tags /home/avar/g/git/t/trash directory.t5552-skipping-fetch-negotiator/client b1:refs/heads/b1
+    fatal: Couldn't find remote ref b1
+    error: last command exited with $?=128
+    not ok 6 - do not send "have" with ancestors of commits that server ACKed
 
-QUOTE
+Full output at https://gitlab.com/snippets/1747801
 
-How do I show full paths in git diff? One can use '--dst-prefix=$PWD'
-and '--src-prefix=$PWD' but this is fragile as it won't work in many
-cases, eg with --no-index, or when running the commond from a
-subdirectory without using --relative=realpath_to_cwd
-
-END QUOTE
-
-Wanting such a feature seems sensible. But I'm unclear on the details.
-
-You say that --{src,dst}-prefix is fragile and doesn't work for
---no-index. But if I do this:
-
-    (
-    cd /tmp &&
-    echo foo >a &&
-    echo bar >b &&
-    git --no-pager diff --src-prefix=$PWD/ --dst-prefix=$PWD/ a b
-    )
-
-I get this diff:
-
-    diff --git /tmp/a /tmp/b
-    new file mode 100644
-    index 257cc56..5716ca5 100644
-    --- /tmp/a
-    +++ /tmp/b
-    @@ -1 +1 @@
-    -foo
-    +bar
-
-So this seems to work for --no-index, or if it doesn't what situations
-doesn't it work in?
-
-> I'd like `--show-abs-path` to show absolute paths in:
-> git diff --show-abs-path args...
->
-> eg:
-> git diff --no-index `get_file1` `get_file2`
-> could show:
-> --- a/Users/timothee/temp/ripgrep/help0.txt
-> +++ b/help1.txt
-
-Is this a mistake, or would you only like --show-abs-paths to
-implicitly supply --src-prefix, but not --dst-prefix? If so, why?
-
-> * passing '--dst-prefix=$PWD' and '--src-prefix=$PWD' doesn't help
-> because path arguments could be absolute, so it'll create
-> $PWD/Users/timothee/temp/ripgrep/help0.txt (wrong)
-
-Ah, so it's about supplying both the prefix *and* absolute paths,
-whereas I see without --no-index we seem to handle this sort of thing
-just fine:
-
-    git diff --src-prefix=$PWD/ --dst-prefix=$PWD HEAD~.. $PWD/some-file
-
-> * passing '--dst-prefix=.' will behave weirdly, replacing leading `/`
-> by `.` (seems wrong)
-> diff --git .Users/timothee/temp/ripgrep/help0.txt b/help1.txt
-
-This is because the default prefixes are a/ and b/, respectively, and
-the option allows you to entirely replace them. E.g. imagine needing
-"../some-relative-path/"
-
-> NOTE: I'm invoking the `git diff` command via a more complicated case
-> (with multiple arguments including git diff flags and git diff files),
-> so it's awkward for me to parse which arguments correspond to a file
-> vs a flag (ie prevents easily converting input file arguments to
-> absolute paths), but `git` could do it easily via a flag, eg
-> `--show-abs-path`
+Some of this, like the t5552-skipping-fetch-negotiator.sh failures are
+new in 2.19.0 (those go away with s/seq/test_seq). But some are
+older. E.g. the archive corner cases failure is becuse that test wants
+unzip & GNU tar, which OpenBSD upstream has patched already:
+https://github.com/openbsd/ports/blob/master/devel/git/patches/patch-t_test-lib_sh
