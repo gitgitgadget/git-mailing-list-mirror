@@ -2,104 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A0C6A1F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 15:00:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 304201F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 15:20:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732886AbeHWSaF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 14:30:05 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45239 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732062AbeHWSaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 14:30:05 -0400
-Received: by mail-ed1-f66.google.com with SMTP id p52-v6so3792705eda.12
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 08:00:02 -0700 (PDT)
+        id S1731354AbeHWSuO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 14:50:14 -0400
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:33710 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730024AbeHWSuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 14:50:14 -0400
+Received: by mail-ed1-f49.google.com with SMTP id h9-v6so3876477edr.0
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 08:20:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=c7rmnJRXs034b9ZY/f5SNx4hQllGhHl3bCsSLPneNUU=;
-        b=XZAnpFgc5XoJ4WRRfdlLi/GwSwghstQnU7ErKkXUQujFugSE1n7F4RtF4C5r2NO54g
-         UWC/MDM5mHbsR+NvOnKA1064bYC2wWsf7h25AdvT1qrIGrygHOgmugkVgyDc34B+QMwu
-         JKzS5ZaeO0OZ8QwhjCNqlLxlsgadPQxl0owOAa/ETOZBNoKm+nNbw6Z4bKF29+8NAYLO
-         f6xj7oZGL7v9Mrci7kX1xk2Y8X+TwCplkIwKCBe9+hIhF+MJwg+3YWBYwAwVeZimKkPS
-         VeT0xi8T+JSSwOX66mig7bpM8NwxKAy2VmARglSjMZd/yeUlEi9vJy/2+5fR/uf3jpF1
-         US4Q==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=rWcJru1hwG4LU58oLvp0yPnBhVQnVje71QK9oHbkfJM=;
+        b=JCK5EXIfnQ2qupoKqx87vuPksRQ9W3Zau+PnkRIyiqONFcsMJXOJwrfJ75Qjq8wjby
+         4DOm0OWsmQhcJ/5voG/FFY0RP/F4Tj2QpnejlXG+X02U97oyibRjSjgqqtb6m4rE2/Yn
+         C6u/vEigHkulxKkYruu8XjslyUs1x/QyIGaXsuSXVQJkroIvI1OQwpAbSVDUHoOP3VUk
+         Ipu3CYeliMmXDqjjRVa5yeA5ok8sh/Mhdm5k6XtEJOYNZrHe/bC08CgP4GAo96xQB5GJ
+         p/mccUDPx0PIqJbfNksG/xLoWaUkc3f7EGQGaQ7bWPTa+sR2jJEcmNiutQi7XzDgB8s3
+         a69g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=c7rmnJRXs034b9ZY/f5SNx4hQllGhHl3bCsSLPneNUU=;
-        b=YZWm4hWLTWlJ4blvgP/jomF4k5i07KJD8tUyqahNwXrALOeFmz3Vhv9ZLVXy7UjqwI
-         vKomLgT+Su/mCa9035+jxGOqeqFecxC8gzLAcia79qkvUzitiW6MfFeiZJvMDayZMp3k
-         t4QKdMSFCq9jGJFnBLVe3Qr0Q0HAv5hSaPNOcA0oE1RIeBb1/xMFO24f5HExzeO++liC
-         Xam/QDKMySxS1URBYoDybhz5uLFRtmUnUatpTc70qp6pGh7HByOaJWi5vcGrGgntmKem
-         M2bhknwngYiwnHU+3uF9a9Rs05Wv+aRpUIa/5UgiLtbpq5F+6Y9OPM3fDXGpIK2H1y41
-         3vwg==
-X-Gm-Message-State: APzg51AELCB+jVPFaIwclIBEfHBvZMLclYlqdv4Z+CxEqX0Cc/zVefJQ
-        0Fyp6bjaihxC4nm9fJqC9ipPN6XAXJU=
-X-Google-Smtp-Source: ANB0VdYO+vHr5sIs2AXEkPwi5+/3aND85dh45sNKOBGn16zu1KgnZxOK4V4KfnT7Et3iiF5MgFrGgg==
-X-Received: by 2002:a50:d9c6:: with SMTP id x6-v6mr2561441edj.63.1535036401636;
-        Thu, 23 Aug 2018 08:00:01 -0700 (PDT)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=rWcJru1hwG4LU58oLvp0yPnBhVQnVje71QK9oHbkfJM=;
+        b=tSLjNO1HS/HfYNUOaHty0+9goHQ6pIhFocNw1oaPpfPCH7B5NYYJIpS79aGqQDtmkC
+         IFnPdat5lnNDezKQuQgGdGmz3El1xPdQN2GExGdFQKJcpbLqV7rQXmKLu7JiRbYVTUyC
+         d9h81RQCvYzIxmBUo9AjWqbA5eabSGDO1oZC4zjNeL/op8QyourXRuMQ3yv+M05lq3tm
+         QyiEEHImi47P72Kbmx6gkB8+YBY60XljMo6fqjYz8/FRLYvXh2Vn9tjddVdWDx1AjcIz
+         gpsdAGbdXLKH+a5f4NXkbvnpQByJIePcOPJ2LyUP0C0FsdI9OL66eRV24LdvbZMmS50y
+         H99w==
+X-Gm-Message-State: AOUpUlF2ndSQYjphS9dLwn6t7irMt6zUIgqJ+X0Qg5lVEM+cv0NZXp4m
+        jVQjoMvLLD73pqwSD+eiKEo=
+X-Google-Smtp-Source: AA+uWPz/BKyj+kkrIT9s7oA+SH4PtmVtiuls01kc95wx9YAmcNSRKCqpdsSuAdCDwxg1/Y4RbA0hAA==
+X-Received: by 2002:a50:f69b:: with SMTP id d27-v6mr27096307edn.103.1535037606120;
+        Thu, 23 Aug 2018 08:20:06 -0700 (PDT)
 Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id e25-v6sm2268984edd.35.2018.08.23.08.00.00
+        by smtp.gmail.com with ESMTPSA id q24-v6sm2273678edd.73.2018.08.23.08.20.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 08:00:00 -0700 (PDT)
+        Thu, 23 Aug 2018 08:20:05 -0700 (PDT)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 1/1] t2024: mark a `checkout -p` test as requiring Perl
-References: <pull.20.git.gitgitgadget@gmail.com> <pull.20.v2.git.gitgitgadget@gmail.com> <8d46b31f5ad9925c8d1867c8db4fcbf86480d431.1535035282.git.gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Questions about the hash function transition
+References: <878t4xfaes.fsf@evledraar.gmail.com> <xmqqy3cxjgz1.fsf@gitster-ct.c.googlers.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <8d46b31f5ad9925c8d1867c8db4fcbf86480d431.1535035282.git.gitgitgadget@gmail.com>
-Date:   Thu, 23 Aug 2018 17:00:00 +0200
-Message-ID: <877ekhf7rj.fsf@evledraar.gmail.com>
+In-reply-to: <xmqqy3cxjgz1.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 23 Aug 2018 17:20:04 +0200
+Message-ID: <876001f6u3.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Aug 23 2018, Johannes Schindelin via GitGitGadget wrote:
+On Thu, Aug 23 2018, Junio C Hamano wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 >
-> A recently-added test case tries to verify that the output of `checkout
-> -p` contains a certain piece of advice.
+>>> - The trailer consists of the following:
+>>>   - A copy of the 20-byte SHA-256 checksum at the end of the
+>>>     corresponding packfile.
+>>>
+>>>   - 20-byte SHA-256 checksum of all of the above.
+>>
+>> We need to update both of these to 32 byte, right? Or are we planning to
+>> truncate the checksums?
 >
-> But if Git was built without Perl and therefore lacks support for `git
-> add -i`, the error output contains the hint that `-p` is not even
-> available instead.
->
-> Let's just skip that test case altogether if Git was built with NO_PERL.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t2024-checkout-dwim.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/t/t2024-checkout-dwim.sh b/t/t2024-checkout-dwim.sh
-> index 26dc3f1fc0..29e1e25300 100755
-> --- a/t/t2024-checkout-dwim.sh
-> +++ b/t/t2024-checkout-dwim.sh
-> @@ -76,7 +76,8 @@ test_expect_success 'checkout of branch from multiple remotes fails #1' '
->  	test_branch master
->  '
->
-> -test_expect_success 'checkout of branch from multiple remotes fails with advice' '
-> +test_expect_success NO_PERL \
-> +	'checkout of branch from multiple remotes fails with advice' '
->  	git checkout -B master &&
->  	test_might_fail git branch -D foo &&
->  	test_must_fail git checkout foo 2>stderr &&
+> https://public-inbox.org/git/CA+55aFwc7UQ61EbNJ36pFU_aBCXGya4JuT-TvpPJ21hKhRengQ@mail.gmail.com/
 
-This issue is already fixed in master as 3338e9950e ("t2024: mark test
-using "checkout -p" with PERL prerequisite", 2018-08-18).
+Thanks.
+
+Yeah for this checksum purpose even 10 or 5 characters would do, but
+since we'll need a new pack format anyway for SHA-256 why not just use
+the full length of the SHA-256 here? We're using the full length of the
+SHA-1.
+
+I don't see it mattering for security / corruption detection purposes,
+but just to avoid confusion. We'll have this one place left where
+something looks like a SHA-1, but is actually a trunctated SHA-256.
