@@ -2,82 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 208D31F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 02:49:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F177E1F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 03:03:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726819AbeHWGQZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 02:16:25 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:36186 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726191AbeHWGQZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 02:16:25 -0400
-Received: by mail-pg1-f194.google.com with SMTP id h17-v6so1824134pgv.3
-        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:48:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7KHwk/Djb3vKbcIDwP4c1tGAB/dX96QeeoSjDS+NkT8=;
-        b=UMJEyiW6cowVm3KONCPj/1DHAdQ9mChQIzOO56bloivBPCngJn0wF8+QAlWS55etEJ
-         eCXQQ40CwRC6yzQ/mfkt9rGWmrt08oEkaPZWg7h799Nz+oRTS+APoDaBrSf9LwNwF4rA
-         8IDdCsp18MgTX7Ah8e2ICu0HF71TF+gfBeDPdQG9RIt2lt5+bocNZkmrzWKJ1S8qyEBT
-         QQ99zfmPypR2nNaXWxpQKFSCeTzERilPv8rN97AVseXnps0CXsliuWf3qyqHIGs1Ed5A
-         xi1/PavRQQKNiSNhZQ11EMJ69jNlEwAWJI9Zt+M4qoyHo3X14EvodeP2o0BCeftkV1gp
-         zsrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7KHwk/Djb3vKbcIDwP4c1tGAB/dX96QeeoSjDS+NkT8=;
-        b=Qv3aTX7mussvVSQSWyJ3WglVg/ySypy53uOqfXizf2SYqImblWC3dQVYbunPv9iHv7
-         W3Q2l23dL9ktJlMVHVg6x5uFvQuoFPjqJ5P8090zRRgLwQfaNBZR6WHMGlzQkWQFLRdz
-         TrzC9TdauOeN0DCC1U1OSfKhHdl7//WxyFTWjH36Zjnj5GyKbd+AxxuwVZ7189O+FP7s
-         vXVKb7dUKZTv+BIVQSFC+lbsTvbWV2vpWXoQLaU1eCXXJbq2O5jPU1FtjWUoI1Yr4Y6V
-         07t71uZsessXuGL19XHdcdzYKf+VBl5KiQWv21+e0vjKduSFTRUvFjMF+fRCks2DC8UX
-         r7TA==
-X-Gm-Message-State: AOUpUlFJ8vrvKIobKkRzqFvuhrtmLfySeYZLNA/OjkG+5gpeBVJnTf/K
-        ySO7yb2nJDYD30mdsL/JsHTVzUV1
-X-Google-Smtp-Source: AA+uWPwv97hf4zPdmZzVOd0lPsTflpe/70SQfFu7rOd5/Lx6jp2hE+GcQANvsKD84XVDxWGFoIgYJw==
-X-Received: by 2002:a63:e841:: with SMTP id a1-v6mr27335011pgk.126.1534992539051;
-        Wed, 22 Aug 2018 19:48:59 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id t19-v6sm4537401pfk.182.2018.08.22.19.48.58
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 22 Aug 2018 19:48:58 -0700 (PDT)
-Date:   Wed, 22 Aug 2018 19:48:56 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin
- interactive rebase
-Message-ID: <20180823024856.GH92374@aiede.svl.corp.google.com>
-References: <pull.23.git.gitgitgadget@gmail.com>
+        id S1727866AbeHWGam (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 02:30:42 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:54280 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726645AbeHWGam (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 02:30:42 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11FC0F567E;
+        Wed, 22 Aug 2018 23:03:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:in-reply-to:references:date:message-id:mime-version
+        :content-type; s=sasl; bh=f49W5cfaY1cl7zTyGPHrRC2yLOE=; b=yO6SFQ
+        adpdg1ijnQ5dPSe0kvhFCK+1D3bv+FMR+ktJRjylzqpM8JKX8hrqTmjImeRKQurW
+        mZ5q4jZ52wgJzXqLPALLNT3Ocmkaq0BYq1mPlS+Ffz2cTPqIoeeik25L0PLBlxaG
+        VE712x0VeZ7rpkPzRWFCZe+nvCPK0fVdC4ebE=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0AABCF567D;
+        Wed, 22 Aug 2018 23:03:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
+ h=from:to:cc:subject:in-reply-to:references:date:message-id:mime-version:content-type; s=mesmtp; bh=v6xWWLXr76nudPuHa6tXM1PBK48eU/bDz79B7NhjtDY=; b=ygpWnfdcwc9eyCdyfq94BuWeQnzqNjQ9SmVvqzJ6AGkon2IenmwCMT1RdN9OxRfI4uIcP+toyZfIyWu0q4B5o9ngA2tNr780JIH56NTneq2fqKvaYI6Sr2Q97Hk254uIrfY39Ok0Ke3qZpY6OqVK0T5gYH3OkTQq15+0hiiQ9eI=
+Received: from localhost (unknown [76.118.43.98])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8AED9F567C;
+        Wed, 22 Aug 2018 23:03:13 -0400 (EDT)
+From:   Kyle Meyer <kyle@kyleam.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
+In-Reply-To: <20180823024719.GG92374@aiede.svl.corp.google.com>
+References: <20180823023955.12980-1-kyle@kyleam.com> <20180823024719.GG92374@aiede.svl.corp.google.com>
+Date:   Wed, 22 Aug 2018 23:03:12 -0400
+Message-ID: <87wosh7pjj.fsf@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.23.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1313055E-A681-11E8-BEE0-063AD72159A7-24757444!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Johannes Schindelin wrote:
+[...]
 
-[nice description snipped]
-> This patch fixes that.
+> What is an outer diff marker?
 
-Please include this information in the commit message.  It's super
-helpful to find this kind of information about why a patch does what
-it does when encountering a patch later "in the wild" (in git log -S
-output).
+The diff markers from the diff of patches as opposed to the ones from
+the original patches.  I took the term from git-range-diff.txt:
 
-Thanks,
-Jonathan
+    --no-dual-color::
+        When the commit diffs differ, `git range-diff` recreates the
+        original diffs' coloring, and adds outer -/+ diff markers [...]
+
+    Use `--no-dual-color` to revert to color all lines according to the
+    outer diff markers (and completely ignore the inner diff when it
+    comes to color).
+
+-- 
+Kyle
