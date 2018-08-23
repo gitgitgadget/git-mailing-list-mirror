@@ -2,102 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 304201F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 15:20:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 731551F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 15:25:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731354AbeHWSuO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 14:50:14 -0400
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:33710 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730024AbeHWSuO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 14:50:14 -0400
-Received: by mail-ed1-f49.google.com with SMTP id h9-v6so3876477edr.0
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 08:20:06 -0700 (PDT)
+        id S1726955AbeHWSzV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 14:55:21 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36562 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726117AbeHWSzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 14:55:21 -0400
+Received: by mail-wm0-f68.google.com with SMTP id j192-v6so5968929wmj.1
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 08:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=rWcJru1hwG4LU58oLvp0yPnBhVQnVje71QK9oHbkfJM=;
-        b=JCK5EXIfnQ2qupoKqx87vuPksRQ9W3Zau+PnkRIyiqONFcsMJXOJwrfJ75Qjq8wjby
-         4DOm0OWsmQhcJ/5voG/FFY0RP/F4Tj2QpnejlXG+X02U97oyibRjSjgqqtb6m4rE2/Yn
-         C6u/vEigHkulxKkYruu8XjslyUs1x/QyIGaXsuSXVQJkroIvI1OQwpAbSVDUHoOP3VUk
-         Ipu3CYeliMmXDqjjRVa5yeA5ok8sh/Mhdm5k6XtEJOYNZrHe/bC08CgP4GAo96xQB5GJ
-         p/mccUDPx0PIqJbfNksG/xLoWaUkc3f7EGQGaQ7bWPTa+sR2jJEcmNiutQi7XzDgB8s3
-         a69g==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zjlYSJV6SEdnyWwriONhpEYg9dO/ThAdQz/nAcK3wWw=;
+        b=sMGftxlcVqSf9Pklr+Nz7wrsHqyw+oMsDtSX9hlLvEXzc9xp+JMbMAWx4nyd++gkgc
+         myGpNR09g8cLZ5/Xaers4/tsgVCnOFogHYkSdMTnrlkdTfSp9o1JcOi54RUArzt7BwQ7
+         eBLq7IkYSoMXWVlLNDzu1U+/2OxHt5OSglzzPJt4PgqWgsUUqdqDK5ptgm3S7IYthSsr
+         X55V6uwFPu5KPQBwEJGR7alW/NsHAI2FYaXc+i4RlwfxeM3qsxfgJUPv6OMZygZKzxfY
+         w7/3U0P+04OGRCJ9jBfQKSgl8Kc9u2cAzFwFzH92YnhXp7PyeTDJJKc0+SgJNvw/LVAL
+         6ZfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=rWcJru1hwG4LU58oLvp0yPnBhVQnVje71QK9oHbkfJM=;
-        b=tSLjNO1HS/HfYNUOaHty0+9goHQ6pIhFocNw1oaPpfPCH7B5NYYJIpS79aGqQDtmkC
-         IFnPdat5lnNDezKQuQgGdGmz3El1xPdQN2GExGdFQKJcpbLqV7rQXmKLu7JiRbYVTUyC
-         d9h81RQCvYzIxmBUo9AjWqbA5eabSGDO1oZC4zjNeL/op8QyourXRuMQ3yv+M05lq3tm
-         QyiEEHImi47P72Kbmx6gkB8+YBY60XljMo6fqjYz8/FRLYvXh2Vn9tjddVdWDx1AjcIz
-         gpsdAGbdXLKH+a5f4NXkbvnpQByJIePcOPJ2LyUP0C0FsdI9OL66eRV24LdvbZMmS50y
-         H99w==
-X-Gm-Message-State: AOUpUlF2ndSQYjphS9dLwn6t7irMt6zUIgqJ+X0Qg5lVEM+cv0NZXp4m
-        jVQjoMvLLD73pqwSD+eiKEo=
-X-Google-Smtp-Source: AA+uWPz/BKyj+kkrIT9s7oA+SH4PtmVtiuls01kc95wx9YAmcNSRKCqpdsSuAdCDwxg1/Y4RbA0hAA==
-X-Received: by 2002:a50:f69b:: with SMTP id d27-v6mr27096307edn.103.1535037606120;
-        Thu, 23 Aug 2018 08:20:06 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id q24-v6sm2273678edd.73.2018.08.23.08.20.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 08:20:05 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Questions about the hash function transition
-References: <878t4xfaes.fsf@evledraar.gmail.com> <xmqqy3cxjgz1.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqy3cxjgz1.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 23 Aug 2018 17:20:04 +0200
-Message-ID: <876001f6u3.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zjlYSJV6SEdnyWwriONhpEYg9dO/ThAdQz/nAcK3wWw=;
+        b=ZW7Wot1SZre9UjUMP/WuSToJQNHzBtVd1gJPObYbB1aBUz3f2u1y6WMXSufGtCzpLu
+         TbH+0L4nR23BnXf4Ss/Chy6Af+wBAoW/MEyM8dRyVCv7FAPQcHc08rDQJHYYWJ34q4Vl
+         E5ixPPifO97TzmyPyvPHUrJdZx4QSjCa+34YsPN7dCErZ8jBZvfacpHHFLLW/ys74beZ
+         eOdODUaji77y0CyjmNApU1soSYsDdYEoA4u2dAFuO6wJQaSIS3T07jDuOWAZS/8PYcyM
+         VqIDij7JHvccW2eFUtkQ1A0m8NP3nQzRAQ0KV3QEyXLrZXd8IHmTEj61cO2bRf8mwyNb
+         vlew==
+X-Gm-Message-State: APzg51AhSP9HuBo4D2/4TuNQgwK7BxCZeuAZgzAUEdtMi7KXGeGL2H8U
+        bsw/Zvwejql/7s2mN+X4rpkgs2Op6zI=
+X-Google-Smtp-Source: ANB0VdbFNyWxGYKX529Ez8xGnLKOxn0XTYBGu2Wi4uDAyMyo/e3KugWOiJzXntn422bh8HeHu7BLZQ==
+X-Received: by 2002:a1c:3a8f:: with SMTP id h137-v6mr5931406wma.41.1535037911120;
+        Thu, 23 Aug 2018 08:25:11 -0700 (PDT)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id u40-v6sm6391208wrc.43.2018.08.23.08.25.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 23 Aug 2018 08:25:10 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 1/2] tests: fix and add lint for non-portable head -c N
+Date:   Thu, 23 Aug 2018 15:25:01 +0000
+Message-Id: <20180823152502.3886-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
+In-Reply-To: <20180823091427.1756-1-avarab@gmail.com>
+References: <20180823091427.1756-1-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The "head -c BYTES" option is non-portable (not in POSIX[1]). Change
+such invocations to use the test_copy_bytes wrapper added in
+48860819e8 ("t9300: factor out portable "head -c" replacement",
+2016-06-30).
 
-On Thu, Aug 23 2018, Junio C Hamano wrote:
+This fixes a test added in 9d2e330b17 ("ewah_read_mmap: bounds-check
+mmap reads", 2018-06-14), which has been breaking
+t5310-pack-bitmaps.sh on OpenBSD since 2.18.0. The OpenBSD ports
+already have a similar workaround after their upgrade to 2.18.0[2].
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->>> - The trailer consists of the following:
->>>   - A copy of the 20-byte SHA-256 checksum at the end of the
->>>     corresponding packfile.
->>>
->>>   - 20-byte SHA-256 checksum of all of the above.
->>
->> We need to update both of these to 32 byte, right? Or are we planning to
->> truncate the checksums?
->
-> https://public-inbox.org/git/CA+55aFwc7UQ61EbNJ36pFU_aBCXGya4JuT-TvpPJ21hKhRengQ@mail.gmail.com/
+I have not tested this on IRIX, but according to 4de0bbd898 ("t9300:
+use perl "head -c" clone in place of "dd bs=1 count=16000" kluge",
+2010-12-13) this invocation would have broken things there too.
 
-Thanks.
+Also, change a valgrind-specific codepath in test-lib.sh to use this
+wrapper. Given where valgrind runs I don't think this would ever
+become a portability issue in practice, but it's easier to just use
+the wrapper than introduce some exception for the "make test-lint"
+check being added here.
 
-Yeah for this checksum purpose even 10 or 5 characters would do, but
-since we'll need a new pack format anyway for SHA-256 why not just use
-the full length of the SHA-256 here? We're using the full length of the
-SHA-1.
+1. http://pubs.opengroup.org/onlinepubs/9699919799/utilities/head.html
+2. https://github.com/openbsd/ports/commit/08d5d82eaefe5cf2f125ecc0c6a57df9cf91350c#diff-f7d3c4fabeed1691620d608f1534f5e5
 
-I don't see it mattering for security / corruption detection purposes,
-but just to avoid confusion. We'll have this one place left where
-something looks like a SHA-1, but is actually a trunctated SHA-256.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/check-non-portable-shell.pl | 1 +
+ t/t5310-pack-bitmaps.sh       | 2 +-
+ t/test-lib.sh                 | 4 ++--
+ 3 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+index d5823f71d8..c8f10d40a1 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -41,6 +41,7 @@ sub err {
+ 	/^\s*[^#]\s*which\s/ and err 'which is not portable (use type)';
+ 	/\btest\s+[^=]*==/ and err '"test a == b" is not portable (use =)';
+ 	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
++	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
+ 	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (use FOO=bar && export FOO)';
+ 	/^\s*([A-Z0-9_]+=(\w+|(["']).*?\3)\s+)+(\w+)/ and exists($func{$4}) and
+ 		err '"FOO=bar shell_func" assignment extends beyond "shell_func"';
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index 557bd0d0c0..7bff7923f2 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -335,7 +335,7 @@ test_expect_success 'truncated bitmap fails gracefully' '
+ 	git rev-list --use-bitmap-index --count --all >expect &&
+ 	bitmap=$(ls .git/objects/pack/*.bitmap) &&
+ 	test_when_finished "rm -f $bitmap" &&
+-	head -c 512 <$bitmap >$bitmap.tmp &&
++	test_copy_bytes 512 <$bitmap >$bitmap.tmp &&
+ 	mv -f $bitmap.tmp $bitmap &&
+ 	git rev-list --use-bitmap-index --count --all >actual 2>stderr &&
+ 	test_cmp expect actual &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 8bb0f4348e..44288cbb59 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -867,7 +867,7 @@ then
+ 		# handle only executables, unless they are shell libraries that
+ 		# need to be in the exec-path.
+ 		test -x "$1" ||
+-		test "# " = "$(head -c 2 <"$1")" ||
++		test "# " = "$(test_copy_bytes 2 <"$1")" ||
+ 		return;
+ 
+ 		base=$(basename "$1")
+@@ -882,7 +882,7 @@ then
+ 		# do not override scripts
+ 		if test -x "$symlink_target" &&
+ 		    test ! -d "$symlink_target" &&
+-		    test "#!" != "$(head -c 2 < "$symlink_target")"
++		    test "#!" != "$(test_copy_bytes 2 <"$symlink_target")"
+ 		then
+ 			symlink_target=../valgrind.sh
+ 		fi
+-- 
+2.18.0.865.gffc8e1a3cd6
+
