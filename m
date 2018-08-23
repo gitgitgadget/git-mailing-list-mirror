@@ -2,75 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6DC071F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 02:40:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56D061F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 02:47:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727313AbeHWGHb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 02:07:31 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54012 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726402AbeHWGHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 02:07:31 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 66C80F5333;
-        Wed, 22 Aug 2018 22:40:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id; s=sasl; bh=b+pWfBbX69Nc48eimdFX37WxUeM
-        =; b=h/jq6y/wXb2S5IabSrw3ttSV5c5cLdFsDrkgBHT9DFjUfMcQwcvoL+Useg7
-        zqO6RpvRaT1jaWhJbKMcFoZtjhrXZ0nsaZiJ22Cb7UWxcP4kqsHdaXQzPY/uW2lT
-        JoK/aHkTH03/NyvfYN4hPaFHHNvwjSWhJko53D9bUcIfYvN4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A28EF5332;
-        Wed, 22 Aug 2018 22:40:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=kyleam.com;
- h=from:to:cc:subject:date:message-id; s=mesmtp;
- bh=U19Z3dO5G41wdXPBmvGGxZmkpZj1+d8qAn8N3l/ycx4=;
- b=dHcPM/0rP/I2gNvjrtlJbw50MLiWpvQJMtDyBDbznKn386Tgzi28WdEYejcBwBO3+orP4WY2QiHEf51xUHHIga3KFRh7xZChCCC10KqzxDVM5ypj15WWEsWRlKodf7a84OKtqXDtl0Kgy7c4YuK/AjwYvdGj8HzR1lUD0uOMvF8=
-Received: from hylob.local (unknown [76.118.43.98])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 58421F5331;
-        Wed, 22 Aug 2018 22:40:06 -0400 (EDT)
-From:   Kyle Meyer <kyle@kyleam.com>
-To:     git@vger.kernel.org
-Cc:     Johannes.Schindelin@gmx.de, Kyle Meyer <kyle@kyleam.com>
-Subject: [PATCH] range-diff: update stale summary of --no-dual-color
-Date:   Wed, 22 Aug 2018 22:39:55 -0400
-Message-Id: <20180823023955.12980-1-kyle@kyleam.com>
-X-Mailer: git-send-email 2.18.0
-X-Pobox-Relay-ID: D8489E32-A67D-11E8-81F2-063AD72159A7-24757444!pb-smtp1.pobox.com
+        id S1726992AbeHWGOr (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 02:14:47 -0400
+Received: from mail-pl0-f67.google.com ([209.85.160.67]:34055 "EHLO
+        mail-pl0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726191AbeHWGOr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 02:14:47 -0400
+Received: by mail-pl0-f67.google.com with SMTP id f6-v6so1720039plo.1
+        for <git@vger.kernel.org>; Wed, 22 Aug 2018 19:47:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=UeaM3F208lyLwcsSa6t8kxWApPLzPHaOAhUUEoOwSN4=;
+        b=EznP2wCqIH/vON8Nqkg3MgLJY/7xQRvcJ46yACXTzp8gxcXKL2uIubJ+vOu/IWGPCP
+         J8uhZKbyAGc30wEYcdjQU9xVw+2sSq2TvnFNu1hB4WE3vYgi/mIsRNAcXLOBrhUzYHio
+         BggQh9joyNa/Ag2A3roj+zIT+xO5OUAG/DtWSR6sioE4ruL+WKvX1c/Y8hy2QC6ASKm7
+         PCCgC+Fo1X+aqcIa0dfXUBIQQvkUa5jnQ1HZatwDce+M3qtwxc++OQJRoFUEB9kIxwBk
+         bokKbfzXGkEQYq4GdD9eqPjCz/+W4/6/nV9zvXx0QgQMhyY20KB0NxwFnswksGNyUbj9
+         S8uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=UeaM3F208lyLwcsSa6t8kxWApPLzPHaOAhUUEoOwSN4=;
+        b=iNLui8v2wflJNjEmOjKWcW/G7l92rm19zLSu2emYRoHS+oOvsVh/rpju1BH/9zN1IE
+         tKp2QY6Na02Xg0pZ8WmClAnAbPtiVhGtI5dLNnn1jGYjL2Jzo/ouws1sKsSobJiQYvgQ
+         NpYAmbuNQVwfl10v9x/KR4ajmdGJRHEHCM41HzhZxqAOQ0NZ5nmtRDauPI/up2BSgqtN
+         +cOtUymaNYqKLCPa1pf8o6NovXesMQ/gnAEHBw70+8V0AMLxTFhHMFz6yGFABCL4gbBh
+         2AG8Xz1rqvPNRhyhL6WxqXwZJeRepPuzMlSzv+Njh43mJ6OOuUt8A0/iJQo7jc1MGuCP
+         ZYLw==
+X-Gm-Message-State: AOUpUlHwU9MDNOVkwaXQldkNpP5ndhIgM9MZuo/Ex0DhKU5C4dJhHltu
+        NSb2GVO1oy8KouFQPb+kftqbSZxW
+X-Google-Smtp-Source: AA+uWPyxSw1gP7LMJDfbNvfpsADZQzyVrMfGa7quE/bJxh/XzZJzhQZjrueOuRqtMaThArlFk0yfjQ==
+X-Received: by 2002:a17:902:bf44:: with SMTP id u4-v6mr57026160pls.84.1534992441230;
+        Wed, 22 Aug 2018 19:47:21 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id l123-v6sm3529202pgl.82.2018.08.22.19.47.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 22 Aug 2018 19:47:20 -0700 (PDT)
+Date:   Wed, 22 Aug 2018 19:47:19 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
+Message-ID: <20180823024719.GG92374@aiede.svl.corp.google.com>
+References: <20180823023955.12980-1-kyle@kyleam.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180823023955.12980-1-kyle@kyleam.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-275267937b (range-diff: make dual-color the default mode, 2018-08-13)
-replaced --dual-color with --no-dual-color but left the option's
-summary untouched.  Rewrite the summary to describe --no-dual-color
-rather than dual-color.
+Hi,
 
-Signed-off-by: Kyle Meyer <kyle@kyleam.com>
----
- builtin/range-diff.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Kyle Meyer wrote:
 
-diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-index f52d45d9d6..7dc90a5ec3 100644
---- a/builtin/range-diff.c
-+++ b/builtin/range-diff.c
-@@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
- 		OPT_INTEGER(0, "creation-factor", &creation_factor,
- 			    N_("Percentage by which creation is weighted")),
- 		OPT_BOOL(0, "no-dual-color", &simple_color,
--			    N_("color both diff and diff-between-diffs")),
-+			    N_("restrict coloring to outer diff markers")),
- 		OPT_END()
- 	};
- 	int i, j, res = 0;
--- 
-2.18.0
+> 275267937b (range-diff: make dual-color the default mode, 2018-08-13)
+> replaced --dual-color with --no-dual-color but left the option's
+> summary untouched.  Rewrite the summary to describe --no-dual-color
+> rather than dual-color.
+>
+> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+> ---
+>  builtin/range-diff.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
+Thanks, good catch!
+
+> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+> index f52d45d9d6..7dc90a5ec3 100644
+> --- a/builtin/range-diff.c
+> +++ b/builtin/range-diff.c
+> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
+>  			    N_("Percentage by which creation is weighted")),
+>  		OPT_BOOL(0, "no-dual-color", &simple_color,
+> -			    N_("color both diff and diff-between-diffs")),
+> +			    N_("restrict coloring to outer diff markers")),
+
+What is an outer diff marker?
+
+Thanks,
+Jonathan
