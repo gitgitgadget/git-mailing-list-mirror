@@ -6,31 +6,30 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7DA71F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 00:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E007D1F97E
+	for <e@80x24.org>; Thu, 23 Aug 2018 00:49:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726064AbeHWEP1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 00:15:27 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52530 "HELO cloud.peff.net"
+        id S1725960AbeHWERC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 00:17:02 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52546 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725727AbeHWEP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 00:15:27 -0400
-Received: (qmail 12098 invoked by uid 109); 23 Aug 2018 00:48:23 -0000
+        id S1725729AbeHWERC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 00:17:02 -0400
+Received: (qmail 12142 invoked by uid 109); 23 Aug 2018 00:49:58 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:48:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:49:58 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6226 invoked by uid 111); 23 Aug 2018 00:48:29 -0000
+Received: (qmail 6304 invoked by uid 111); 23 Aug 2018 00:50:04 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:48:29 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:50:04 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:48:21 -0400
-Date:   Wed, 22 Aug 2018 20:48:21 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:49:56 -0400
+Date:   Wed, 22 Aug 2018 20:49:56 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: [PATCH 4/9] interpret-trailers: tighten check for "---" patch
- boundary
-Message-ID: <20180823004821.GD3126@sigill.intra.peff.net>
+Subject: [PATCH 5/9] interpret-trailers: allow suppressing "---" divider
+Message-ID: <20180823004955.GE3126@sigill.intra.peff.net>
 References: <20180823004300.GA1355@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -41,82 +40,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The interpret-trailers command accepts not only raw commit
-messages, but it also can manipulate trailers in
-format-patch output. That means it must find the "---"
-boundary separating the commit message from the patch.
-However, it does so by looking for any line starting with
-"---", regardless of whether there is further content.
+Even with the newly-tightened "---" parser, it's still
+possible for a commit message to trigger a false positive if
+it contains something like "--- foo". If the caller knows
+that it has only a single commit message, it can now tell us
+with the "--no-divider" option, eliminating any false
+positives.
 
-This is overly lax compared to the parsing done in
-mailinfo.c's patchbreak(), and may cause false positives
-(e.g., t/perf output tables uses dashes; if you cut and
-paste them into your commit message, it fools the parser).
+If we were designing this from scratch, I'd probably make
+this the default. But we've advertised the "---" behavior in
+the documentation since interpret-trailers has existed.
+Since it's meant to be scripted, breaking that would be a
+bad idea.
 
-We could try to reuse patchbreak() here, but it actually has
-several heuristics that are not of interest to us (e.g.,
-matching "diff -" without a three-dash separator or even a
-CVS "Index:" line). We're not interested in taking in
-whatever random cruft people may send, but rather handling
-git-formatted patches.
-
-Note that the existing documentation was written in a loose
-way, so technically we are changing the behavior from what
-it said. But this should implement the original intent in a
-more accurate way.
+Note that the logic is in the underlying trailer.c code,
+which is used elsewhere. The default there will keep the
+current behavior, but many callers will benefit from setting
+this new option. That's left for future patches.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-By itself, this would fix the case that spawned this
-discussion, though we still have false positives on "---" in
-a commit message.
-
- Documentation/git-interpret-trailers.txt |  5 +++--
- t/t7513-interpret-trailers.sh            | 22 ++++++++++++++++++++++
- trailer.c                                |  4 +++-
- 3 files changed, 28 insertions(+), 3 deletions(-)
+ Documentation/git-interpret-trailers.txt |  7 ++++++-
+ builtin/interpret-trailers.c             |  1 +
+ t/t7513-interpret-trailers.sh            | 20 ++++++++++++++++++++
+ trailer.c                                |  6 +++++-
+ trailer.h                                |  1 +
+ 5 files changed, 33 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index b8fafb1e8b..7385bfdb45 100644
+index 7385bfdb45..a5e8b36f62 100644
 --- a/Documentation/git-interpret-trailers.txt
 +++ b/Documentation/git-interpret-trailers.txt
-@@ -56,8 +56,9 @@ least one Git-generated or user-configured trailer and consists of at
- least 25% trailers.
- The group must be preceded by one or more empty (or whitespace-only) lines.
+@@ -58,7 +58,7 @@ The group must be preceded by one or more empty (or whitespace-only) lines.
  The group must either be at the end of the message or be the last
--non-whitespace lines before a line that starts with '---'. Such three
--minus signs start the patch part of the message.
-+non-whitespace lines before a line that starts with '---' (followed by a
-+space or the end of the line). Such three minus signs start the patch
-+part of the message.
+ non-whitespace lines before a line that starts with '---' (followed by a
+ space or the end of the line). Such three minus signs start the patch
+-part of the message.
++part of the message. See also `--no-divider` below.
  
  When reading trailers, there can be whitespaces after the
  token, the separator and the value. There can also be whitespaces
+@@ -126,6 +126,11 @@ OPTIONS
+ 	A convenience alias for `--only-trailers --only-input
+ 	--unfold`.
+ 
++--no-divider::
++	Do not treat `---` as the end of the commit message. Use this
++	when you know your input contains just the commit message itself
++	(and not an email or the output of `git format-patch`).
++
+ CONFIGURATION VARIABLES
+ -----------------------
+ 
+diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
+index b742539d4d..4b87e0dd2e 100644
+--- a/builtin/interpret-trailers.c
++++ b/builtin/interpret-trailers.c
+@@ -104,6 +104,7 @@ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "unfold", &opts.unfold, N_("join whitespace-continued values")),
+ 		{ OPTION_CALLBACK, 0, "parse", &opts, NULL, N_("set parsing options"),
+ 			PARSE_OPT_NOARG | PARSE_OPT_NONEG, parse_opt_parse },
++		OPT_BOOL(0, "no-divider", &opts.no_divider, N_("do not treat --- specially")),
+ 		OPT_CALLBACK(0, "trailer", &trailers, N_("trailer"),
+ 				N_("trailer(s) to add"), option_parse_trailer),
+ 		OPT_END()
 diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 164719d1c9..e13b40b43f 100755
+index e13b40b43f..c441861331 100755
 --- a/t/t7513-interpret-trailers.sh
 +++ b/t/t7513-interpret-trailers.sh
-@@ -1417,4 +1417,26 @@ test_expect_success 'unfold' '
+@@ -1439,4 +1439,24 @@ test_expect_success 'handling of --- lines in input' '
  	test_cmp expected actual
  '
  
-+test_expect_success 'handling of --- lines in input' '
++test_expect_success 'suppress --- handling' '
 +	echo "real-trailer: just right" >expected &&
 +
-+	git interpret-trailers --parse >actual <<-\EOF &&
++	git interpret-trailers --parse --no-divider >actual <<-\EOF &&
 +	subject
 +
-+	body
++	This commit message has a "---" in it, but because we tell
++	interpret-trailers not to respect that, it has no effect.
 +
 +	not-a-trailer: too soon
-+	------ this is just a line in the commit message with a bunch of
-+	------ dashes; it does not have any syntactic meaning.
++	---
++
++	This is still the commit message body.
 +
 +	real-trailer: just right
-+	---
-+	below the dashed line may be a patch, etc.
-+
-+	not-a-trailer: too late
 +	EOF
 +
 +	test_cmp expected actual
@@ -124,20 +134,34 @@ index 164719d1c9..e13b40b43f 100755
 +
  test_done
 diff --git a/trailer.c b/trailer.c
-index e769c5b72c..8392c6c030 100644
+index 8392c6c030..0796f326b3 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -793,7 +793,9 @@ static size_t find_patch_start(const char *str)
- 	const char *s;
+@@ -1080,7 +1080,11 @@ void trailer_info_get(struct trailer_info *info, const char *str,
  
- 	for (s = str; *s; s = next_line(s)) {
--		if (starts_with(s, "---"))
-+		const char *v;
+ 	ensure_configured();
+ 
+-	patch_start = find_patch_start(str);
++	if (opts->no_divider)
++		patch_start = strlen(str);
++	else
++		patch_start = find_patch_start(str);
 +
-+		if (skip_prefix(s, "---", &v) && isspace(*v))
- 			return s - str;
- 	}
+ 	trailer_end = find_trailer_end(str, patch_start);
+ 	trailer_start = find_trailer_start(str, trailer_end);
  
+diff --git a/trailer.h b/trailer.h
+index b38c8f0d16..b997739649 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -71,6 +71,7 @@ struct process_trailer_options {
+ 	int only_trailers;
+ 	int only_input;
+ 	int unfold;
++	int no_divider;
+ };
+ 
+ #define PROCESS_TRAILER_OPTIONS_INIT {0}
 -- 
 2.19.0.rc0.412.g7005db4e88
 
