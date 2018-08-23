@@ -2,107 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5945C1F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 21:41:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D36491F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 21:48:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728124AbeHXBMv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 21:12:51 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54253 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727485AbeHXBMu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 21:12:50 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LcnRD-1gHXO91zmR-00kC5o; Thu, 23
- Aug 2018 23:41:06 +0200
-Date:   Thu, 23 Aug 2018 23:41:04 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+        id S1728120AbeHXBUS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 21:20:18 -0400
+Received: from mail-wm0-f49.google.com ([74.125.82.49]:39777 "EHLO
+        mail-wm0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727485AbeHXBUS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 21:20:18 -0400
+Received: by mail-wm0-f49.google.com with SMTP id q8-v6so7299782wmq.4
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 14:48:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4aZx+77fsBms/MVxH3srJ1K9B0saNb7hUQDGg8M1dnA=;
+        b=nT2PwdozbcTj5qoKsXlxbTFZqSZ2tjFYHHraVa/VMzi3DbQxXuQM0e3UTcb6vCFDwk
+         I+L5CEzbIWgdUIRalEXveCpT8N/NxDwftTjo/PQv0zDDuRznLRMg58vPEyTOV2WA2o8w
+         iQBcxBb8iz++vRrz/5UIxc0XUrraiNPj1JL20TxfzjSrCz2Qff37lys5AzM78xhCtL6e
+         +BevxTvABg1WWxdJrr598zOmtyILF4IppQQP2Q0B8UN45lGdf0lzZ1er90nywBPoevyY
+         GQJdYor/1W9V6QxTeQvhsGp8ECYyhmWKvi9MURg0bP4BIAAlqZrZqVM08/9MWaIAUIVS
+         92ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4aZx+77fsBms/MVxH3srJ1K9B0saNb7hUQDGg8M1dnA=;
+        b=Um7dI+E5PtIfuobJadaA1og9Aadqlg+2YaCuw9IvjUp4uWQEbzwM4aO2c3hf4bD3uv
+         vDJz2iRrhnw0XG8mCFjRYRFWan3Y6g48+FFfcM1Y52Tu/vGytxv+WUY5+ipjN+AGGAJD
+         odPEv+XQVpSRCVTi3Y36l+ma968t2Mbx0Vx6p/Jx+HnZsxFtlC35VWc0l2d/OG3rWcKa
+         dgVKvOvdxeyNiueho7+M7IWATPyDlyBFVpAQX6kCka1uITjkT+FFeWSR/GMn43twqtKg
+         dHLdzQlNj7QqBfKqZjZ5e/QubV9hV4QNn3zF4Ug81QiFyLpEYz3lV/2Lu7fC5w+1JYer
+         4K9A==
+X-Gm-Message-State: APzg51CYRGaaPVQDmzjagHwiB9851Iz4Kdt1EMKmPT1auman0eVZqBJ6
+        xZWRYpGf6sZu2D4lyi2UKec=
+X-Google-Smtp-Source: ANB0VdZ2jkRWIAfPV062waDkqjcnPC/RezY17B2B5VuMnh0Il6+7Kr51WBCFe8sNucJ8QTpx/zSmjw==
+X-Received: by 2002:a1c:8f50:: with SMTP id r77-v6mr6612223wmd.44.1535060917766;
+        Thu, 23 Aug 2018 14:48:37 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c15-v6sm3734328wmb.2.2018.08.23.14.48.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 23 Aug 2018 14:48:37 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
-In-Reply-To: <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808232333160.73@tvgsbejvaqbjf.bet>
-References: <20180823023955.12980-1-kyle@kyleam.com> <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet> <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+References: <20180823023955.12980-1-kyle@kyleam.com>
+        <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet>
+        <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
+        <87pny8wz6z.fsf@kyleam.com>
+Date:   Thu, 23 Aug 2018 14:48:36 -0700
+In-Reply-To: <87pny8wz6z.fsf@kyleam.com> (Kyle Meyer's message of "Thu, 23 Aug
+        2018 17:27:48 -0400")
+Message-ID: <xmqqsh34hhzf.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7BXUagFSGJgYZPxy/z2aqyUOujS37Le8iVMMxHsVD9HjAni9Gi2
- w8tuODR/CKrCL8t+MQdUAnVteHwjJgKTrCcd1HBrH9zCV236PCzuwWPvkiq+6p/WknCNJoQ
- TuELXmRb+JBHwfxEKhI7kWXnaGn24jYaIvcmnE2mH4WXIYzYp3J3Grt1IE4AG0VtRLZbqpw
- pJj6De8U6WzKhTDX5rNxw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:W+6+xTbxvx8=:JpCzdpzo/uGxcMOXzLfv4C
- pSSPJbF2s3czUHP20Hq5dU9UGly2USs7wfkJaeGEKzB9IrfLyEh2AbROwhM2V5pIUdxQ38b5i
- arG6bK/SjN3GN6wlFfv7gRLqg5R8IGkif1JsnMa/NIyGgMeQzaeRc5WbEO+Lvn1qinRhhIv7X
- x2sWbW3ZGL0AXFsbTvk1zMHvcc0yUrAps+x7g3j3KcfcpBvWzSVr1FgDVZChPcP0mtHq1aO6O
- Cy4BuGzTBrHeKR1c3B5rvE5X+PPhwM1Ur6HzNKMu9IPgY3x/g2eJ2Sj/12NrXWD7eOofaa0Nw
- cUlimIT3sNfrhz+mHd6UosY+gU+Al2eh3tinToCaStEc8D3MzXNBjJ5jL8ebYnj6UvMkif1M+
- jKLvchrK6bcVc9tXi4mbQGr6GiHa2Ir6xFDlLzVyzujz+fEsks1vBtFHo72dUW25kWHLfAgjB
- uso2SpYjRzSf30TnalmLj68Zv8DBH5gGPfKHc/EPfW6brmUI78usIU5UWSTzexNA5qATQ2PtN
- 5DtZLqlaAlWE1vcizDKh9gxJ/gt08wO72H0BuFz5J/nCDSkzCWRZZ5xU8caOFoWBu3rtZR6/L
- Sv+XUlr7EaYhCpPgpXHRXbqvj3BOKV3bkZq8Y4H/Bi2nlvBXwUmPyP0Z+N3TTydpeUGlP0pbT
- d03FNsOoJaFXRHof5UTt+kvvWnVBquP1LLZdcnDdBocQsa69OcFD+pu4d7So5kPSjMMExEGm1
- 0G4JQx24wbBHd4R1euiwRwuHICmS0NO87z2+dZQwot7jlVlS/TqC7zU2fqbvfMOFSwW6GGTtb
- NOdtk1N
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Kyle Meyer <kyle@kyleam.com> writes:
 
-On Thu, 23 Aug 2018, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+> [...]
+>
+>>>> -			    N_("color both diff and diff-between-diffs")),
+>>>> +			    N_("restrict coloring to outer diff markers")),
+>>>
+>>> How about "use simple diff colors" instead?
+>
+> That's certainly better than the one above, and I also prefer it to
+> "color only based on the diff-between-diffs" in v2.
+>
+>> I am wondering if it makes sense to remove the option altogether.
+>> I've been trying to view the comparison of the same ranges in both
+>> styles for the past few days, and I never found a reason to choose
+>> "no dual color" option myself.
+>
+> But I like this suggestion even better.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > On Wed, 22 Aug 2018, Kyle Meyer wrote:
-> >
-> >> 275267937b (range-diff: make dual-color the default mode, 2018-08-13)
-> >> replaced --dual-color with --no-dual-color but left the option's
-> >> summary untouched.  Rewrite the summary to describe --no-dual-color
-> >> rather than dual-color.
-> >> 
-> >> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
-> >> ---
-> >>  builtin/range-diff.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >> 
-> >> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
-> >> index f52d45d9d6..7dc90a5ec3 100644
-> >> --- a/builtin/range-diff.c
-> >> +++ b/builtin/range-diff.c
-> >> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
-> >>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
-> >>  			    N_("Percentage by which creation is weighted")),
-> >>  		OPT_BOOL(0, "no-dual-color", &simple_color,
-> >> -			    N_("color both diff and diff-between-diffs")),
-> >> +			    N_("restrict coloring to outer diff markers")),
-> >
-> > How about "use simple diff colors" instead?
-> 
-> I am wondering if it makes sense to remove the option altogether.
-> I've been trying to view the comparison of the same ranges in both
-> styles for the past few days, and I never found a reason to choose
-> "no dual color" option myself.
+That wasn't even a suggestion.  I just did not see the point of the
+optional behaviour myself, and was soliciting concrete examples
+where the --no-dual mode would help.
 
-We do have a track record of making decisions based on our little bubble,
-don't we.
-
-On IRC, there is at least on publicly viewable comment by a user who
-preferred the simple color diff, at least in one use case:
-
-http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-07-13#l97
-
-And I am living in my own bubble, too. I think I heard feedback regarding
-range-diff from some dozen people. Multiplying 6% by the download numbers
-of Git for Windows alone... that's a lot of people who can put
---no-dual-color to good use at least in *some* situations.
-
-In short: I am hesitant to remove a feature that would help some users.
-
-Ciao,
-Dscho
