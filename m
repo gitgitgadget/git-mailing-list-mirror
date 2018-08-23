@@ -2,109 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 180421F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 21:08:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A24BC1F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 21:10:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727622AbeHXAkZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 20:40:25 -0400
-Received: from mout.gmx.net ([212.227.15.19]:39725 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727485AbeHXAkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 20:40:25 -0400
-Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MH07e-1ffBCn0HvW-00DqJh; Thu, 23
- Aug 2018 23:08:47 +0200
-Date:   Thu, 23 Aug 2018 23:08:45 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC][PATCH v6 18/20] rebase--interactive2: rewrite the submodes
- of interactive rebase in C
-In-Reply-To: <xmqqzhxeks2g.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808232306010.73@tvgsbejvaqbjf.bet>
-References: <20180731180003.5421-1-alban.gruin@gmail.com> <20180810165147.4779-1-alban.gruin@gmail.com> <20180810165147.4779-19-alban.gruin@gmail.com> <nycvar.QRO.7.76.6.1808222310220.73@tvgsbejvaqbjf.bet> <xmqqzhxeks2g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728659AbeHXAmB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 20:42:01 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:42208 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727944AbeHXAmB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 20:42:01 -0400
+Received: by mail-pl1-f193.google.com with SMTP id g23-v6so120665plq.9
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 14:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=6SXH+JsmT/LmPoeswGNWOf7WF4vTmaZLAqyp2NzbeL8=;
+        b=Kp1wWpG2+A1NN3V+R0SviPN4Xsh0Djp0+zZ0ikP3J69dmlquE/NL3yYpJJ2NOGcxK0
+         LJQllJSah7Ekqc1AJwY8q6H3AQNY8d/JPVvQgYRoIUFxZc70ex8QDPmkvtxzfHGxRkpA
+         YFJhJ+QqJacstR09eTUvSwTd/OXD3OGuKjgAJsgPR0o29vC7ji0PGltCEniAEecaQOfx
+         K+u0yggarefNLEsT8utDVHx6SHUSaGGkmtJf+NQ+wtGfE966x+J8LZyo+POYAyhU9Oxs
+         cR+vWDh6ghYLYzvIa3fWrvO6C819buRnT+PbIgJHPwXG1d6+sF+uuROIWsCJFvnfZ9p1
+         nJSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=6SXH+JsmT/LmPoeswGNWOf7WF4vTmaZLAqyp2NzbeL8=;
+        b=ZDbx9OPz4FXunm1fMRrBZTxPIasUkkwj01DfCe6a9JAkNJxBUt3cM4U77BCNfpE6Ic
+         gbxDqZSmcKxPR5MFj6uUoYPSZUAzTDH5wmGAe0G9VcxGUsv6c7G+xfY+x5yfKXiab1e2
+         vr+Tq2qyjEwvPr/DELMMEOgMdaYo4/EsNqyZUnYzgKCh5dQ0fNNupfue+l6tpqVcvyZR
+         7iCdL3LovF5E0l4qQTuZ2Z5ycExSnD/Uj17zXZnOCVleiDQWKjgTopBklAsWTjXZSWSy
+         u8f1Tc0RLYYED8g507Z0Q62hAqqKwKXCiR/xsa+szqAAjHZeVubiQqJ+N8nrKyH7LAk6
+         7rEg==
+X-Gm-Message-State: AOUpUlFsSjIHbNI4Lo+3QjsR343xfo2dFn1MVo9dL1+1VneDc3x05RUj
+        U/KS9ITkh96HvE3DoIbXEsa9onl7
+X-Google-Smtp-Source: AA+uWPzu6w3aFV/LhkRD/jO+4R1ntTc7l1ZEp6qNc2SHH+1ykmS1OtD4v72ZtD4m1Fk5p8XHAe4LNQ==
+X-Received: by 2002:a17:902:6907:: with SMTP id j7-v6mr60116857plk.323.1535058630395;
+        Thu, 23 Aug 2018 14:10:30 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id l84-v6sm11306353pfg.3.2018.08.23.14.10.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 23 Aug 2018 14:10:29 -0700 (PDT)
+Date:   Thu, 23 Aug 2018 14:10:28 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Kyle Meyer <kyle@kyleam.com>
+Cc:     git@vger.kernel.org, Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v2] range-diff: update stale summary of --no-dual-color
+Message-ID: <20180823211028.GA99542@aiede.svl.corp.google.com>
+References: <20180823082725.GB160081@aiede.svl.corp.google.com>
+ <20180823120026.32127-1-kyle@kyleam.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pFdlJcuXCSvKULcf0vCAu+G/JMoGsrCo/GX9sP13qf+USSgc08n
- qa6RXPsr0zzfZ943bGTCpSKqaqkxZDs+jSWjM7KJ8Y+F5OWei7IVLEwWdpJ4cDRTV6AUftt
- Jf0b7H37IkS0B2t/8NrmnAMcD4h8JcJWGwpczQJ+SSPVLyfn/NkhERbC/Iz4OyzzLTRCjbW
- QGTfrgWbah1jgq7/aeDEg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:9CKzXlY9SmY=:i+n5bKfHp67b+ChH2BDvqg
- OI6UXjThFNQJqm4V9G31mIiITRCpNc6rxszoS13I3sj5YKYXisac1lwxRWvA1mzIdWmGhX5RK
- pym5K3KihkC5YUy4vYmxKvnkSdJg4zNGezO6ErQopAvMatEfwGCRQAccU+vz/ORJkryTOYaL6
- ioyFAB12muWMyB+vLP+quaHNjp0IxGiGWM9Jqnv/UunFJrwR0vegFDHvuT50XDs4871+xN3Db
- fnWQeqxGS5PMaYSHiFWHVXjvIefMbXlzD5LDwyxvUas47HmA10deWdygUtAnAQY4Ly13c0tGF
- UIrbrZ24aoAqCRK1JuKGYQFzySu0z+ZjCinNZXisnoDgjH+yyHXj+MElLJQVrphXmMHW3KRKe
- BX91cKHj20F+KxzmbtsF/rLdU191QlVeZRGMX03U4mqwquaN6w56tuCIka+8XUiHu02JTdgqZ
- Fd/bM6SToCRw5FSPak8smuyN4tk4o5QzeExB3dMLqFOGgpT5K5sb8BslkQur2Nq9VOKpIxSst
- WvMp+CgdA5N6/ipUPOc68DOGy0MrvCDZGTvdxylIYb6enJpUJKyaXmoXB2HhKTqmpnYAudTbN
- qphB33TIRyIBuo+Pdl1dUxAYT+dAQYPFglhtC9G27AKECo1A5/jh3YQrL/2kXc7s43pCHXSNe
- yRo+dgXOHMpQpdtNr5FNFYtmQUKUwriLI5s111GF/0TvNymPzrE9fmLZW1aLMuZyldK9AJ6NE
- APZj+5DtNPUn6xVVGP3N4vWOXyZOZ6OWY033OmMs2bI28TdcvLdOVTeFui9Bk5CjbPqcUkBJh
- TjvCRRY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180823120026.32127-1-kyle@kyleam.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Kyle Meyer wrote:
 
-On Wed, 22 Aug 2018, Junio C Hamano wrote:
+>  		OPT_BOOL(0, "no-dual-color", &simple_color,
+> -			    N_("color both diff and diff-between-diffs")),
+> +			    N_("color only based on the diff-between-diffs")),
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > I made this same mistake over and over again, myself. For some reason,
-> > John Keeping decided to use the singular form "revision" in 1e0dacdbdb75
-> > (rebase: omit patch-identical commits with --fork-point, 2014-07-16), not
-> > the plural.
-> 
-> Perhaps we should give a synonym to the option?  Renaming it to the
-> plural form may keep the existing usage working as it would be the
-> unique abbreviation, which may be a way to reduce the mistake.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-The obvious plan is to switch from spawning a separate process after
-parsing the `git rebase` options just to execute the interactive rebase to
-performing both parts in the same process.
+Dscho's suggestion "use simple diff colors" also sounds fine to me
+(probably even better).
 
-In other words: this option will simply go away.
-
-I'd much rather spend time and effort on designing a nice API for calling
-the rebase backends in-process than on adding code that adds some plural
-form (which might not even be appropriate, given that you really can only
-pass one single negative revision to restrict the commit range).
-
-Ciao,
-Dscho
-
-> 
-> >
-> > So you will need to squash this in:
-> >
-> > -- snipsnap --
-> > diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-> > index fb0395af5b1..7600765f541 100755
-> > --- a/git-legacy-rebase.sh
-> > +++ b/git-legacy-rebase.sh
-> > @@ -145,8 +145,8 @@ run_interactive () {
-> >  	test -n "$autosquash" && autosquash="--autosquash"
-> >  	test -n "$verbose" && verbose="--verbose"
-> >  	test -n "$force_rebase" && force_rebase="--no-ff"
-> > -	test -n "$restrict_revisions" && \
-> > -		restrict_revisions="--restrict-revisions=^$restrict_revisions"
-> > +	test -n "$restrict_revision" && \
-> > +		restrict_revision="--restrict-revision=^$restrict_revision"
-> >  	test -n "$upstream" && upstream="--upstream=$upstream"
-> >  	test -n "$onto" && onto="--onto=$onto"
-> >  	test -n "$squash_onto" && squash_onto="--squash-onto=$squash_onto"
-> 
+Thanks,
+Jonathan
