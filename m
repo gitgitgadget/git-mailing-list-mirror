@@ -6,104 +6,93 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70BD31F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 18:19:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 664361F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 18:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727001AbeHWVuO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 17:50:14 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:44870 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726573AbeHWVuO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 17:50:14 -0400
-Received: by mail-qt0-f193.google.com with SMTP id r13-v6so7323054qtr.11
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 11:19:20 -0700 (PDT)
+        id S1727292AbeHWV7E convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 23 Aug 2018 17:59:04 -0400
+Received: from mail-qk0-f194.google.com ([209.85.220.194]:46017 "EHLO
+        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726780AbeHWV7E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 17:59:04 -0400
+Received: by mail-qk0-f194.google.com with SMTP id z125-v6so4240093qkb.12
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 11:28:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nLJN5YqnafTGc68+ah6WvVJhnOd0GC1V8HIWBXTTIZw=;
-        b=o+yVbUw95NkO/Eo7pQPOSypS9GJGErL22aqTMIvMKli/sIXeRQA/KuKnn1E/hQ3L34
-         blJ+n+NBgztZy4+5UezAbdLYcOHAWqjLruaftF2DqpjzwEEAK69JBKCv0HhDWdnadq6I
-         dgJ6WUnhb98QP7rALJBBnuEfVgEc8138psdutm+Rgr39+KEKtpfBIizCBJMSo67+5lxW
-         xyfSbFJk5UiF5cCI5V5T8bMWARdBspiXkkKnAufFwOozQA70zFotT+JfzQX+3PpjiBuh
-         pQD7qEg5r6P/QP+LUbk1P3L2BsjBFlbL2M+ZxmyCg1h/jk9OaViwEou5cCRfVxFtuKng
-         7Sww==
-X-Gm-Message-State: AOUpUlGlceyyG+/8H8mfQpvrJZah6YgEjvxo6jFUhON/jBP1vomPtWp/
-        TinvRO1ruoSA1q7vqTmvHRQBtHM3eJmoKtEQ7KNXSq/4
-X-Google-Smtp-Source: AA+uWPw1Z/moO6EHKksawgqxutrG66wicPqxtK11pOOEVWYllAuqVCHaBudSkTDTJxtNqCYifK1RRY7TWwe/bDK96Z8=
-X-Received: by 2002:ac8:e84:: with SMTP id v4-v6mr22519611qti.220.1535048359698;
- Thu, 23 Aug 2018 11:19:19 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KSO+Sb5NcLuwtSppTwUwsuX/TvQr0cIEUAyhIRCq148=;
+        b=DLPp/h/2uN6cBiug/Vfu7PCTkzu1fkSXI0SVpzNoVBeEkwSDDVgjb4QUcYW7cC0ySO
+         pfDRKwWq6IJGMGEPBTZNEn0roNjfgmLvMjoQQpcfNpww4xFKpxPiWu1akQ+SEMOApXuB
+         I7uvL9+7Qj3NQBZJ3eW5p+7sJBzAaaGsDGqZqJlNsp/iEjnWyvO/zKQNZB/r0DpWVp3q
+         U0ml2TB67iTU/hy1pBNVDTi1JHAZJ57cYhgLokh6roVr+frCF9FpKhkedmwueodK3jkh
+         MWqei6FPOSs3+YEqsCUrA56orC0nRadL3djZKsa5yAo5XzeIcR2LGZVdROInHaHlpArm
+         mXzg==
+X-Gm-Message-State: APzg51DGOqtF9G/Ewg7h9+RK7D/uzb8dc2USc44UICW35vce3TELIpfq
+        FOgZ5euicAXamfx20t50SZ8GqxxtXYbhjOkFHVU=
+X-Google-Smtp-Source: ANB0VdYPlLYOT6W5M3eE9l//6v5sbaJz20HjyYAGyDQklCPzwe0Kq9XSZEvZ4cOaAmCPcSIcAu79bOHsVBBoZbQEiP0=
+X-Received: by 2002:ae9:ef13:: with SMTP id d19-v6mr20233041qkg.152.1535048888151;
+ Thu, 23 Aug 2018 11:28:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180821192321.GA720@sigill.intra.peff.net> <20180821193556.GA859@sigill.intra.peff.net>
- <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com> <20180821204341.GA24431@sigill.intra.peff.net>
-In-Reply-To: <20180821204341.GA24431@sigill.intra.peff.net>
+References: <20180626073001.6555-1-sunshine@sunshineco.com>
+ <20180711064642.6933-1-sunshine@sunshineco.com> <20180711064642.6933-2-sunshine@sunshineco.com>
+ <871sapezba.fsf@evledraar.gmail.com>
+In-Reply-To: <871sapezba.fsf@evledraar.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 23 Aug 2018 14:19:08 -0400
-Message-ID: <CAPig+cTghgbBo5VfZN+VP2VM00nPkhUqm0dOUqO37arxraxBKw@mail.gmail.com>
-Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention doc-diff
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
+Date:   Thu, 23 Aug 2018 14:27:57 -0400
+Message-ID: <CAPig+cTTbU5HFMKgNyrxTp3+kcK46-Fn=4ZH6zDt1oQChAc3KA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/10] t/test-lib: teach --chain-lint to detect broken
+ &&-chains in subshells
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Luke Diamand <luke@diamand.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 4:43 PM Jeff King <peff@peff.net> wrote:
-> On Tue, Aug 21, 2018 at 04:22:08PM -0400, Eric Sunshine wrote:
-> > On Tue, Aug 21, 2018 at 3:36 PM Jeff King <peff@peff.net> wrote:
-> > How about using "git clone --shared" instead?
+On Thu, Aug 23, 2018 at 2:02 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> Found in some 2.19 testing on AIX:
+
+Thanks for reporting these issues.
+
+> > +     /^[     ]*EOF[  ]*$/!bhereslurp
 >
-> That seems even more dangerous to me, since the created clone can become
-> corrupt when the parent prunes. Probably not huge for a single
-> operation, but you may be surprised when you run the script a few days
-> later and it barfs horribly due to a missing object.
+> AIX sed doesn't like this, and will yell:
+>     :hereslurp is greater than eight characters
+> This on top fixes it:
 
-Okay. I had thought that doc-diff was never doing anything other than
-read-only operations on the checked-out worktree after the initial
-creation, but, looking more closely at the script, I now see that it
-can perform other Git-based operations, so what you say makes sense.
+Fix make sense, and checking POSIX[1] , I see that it says that
+behavior is unspecified for labels longer than 8 bytes.
 
-> > In the case that you've already blown away the directory, then having
-> > "git worktree add" prune away the old worktree bookkeeping would make
-> > sense and wouldn't lose anything (you've already thrown it away
-> > manually). However, it could be lossy for the case when the directory
-> > is only temporarily missing (because it's on removable media or a
-> > network share).
+[1]: http://pubs.opengroup.org/onlinepubs/9699919799/utilities/sed.html
+
+> > +# bare "(" line?
+> > +/^[  ]*([    ]*$/ {
+> > +     # stash for later printing
 >
-> I think the removable ones already suffer from that problem (an auto-gc
-> can prune them). And they should already be marked with "git worktree
-> lock". That said, people don't always do what they should, and I'd
-> rather not make the problem worse. :)
+> AIX sed doesn't like this either, and prints:
+>     sed:    # stash for later printing is not a recognized function.
+> I have no idea what the fix is for that one.
 
-Hmph. I thought that "git worktree prune" had a sensible "expire"
-default to protect against such cases of removable media for which
-"git worktree lock" wasn't invoked, but, looking at the code, I see
-that the default is TIME_MAX.
+That's the only indented comment in the entire script, so it's almost
+certainly that. How about we move the indented comment up to the
+comment for the enclosing block, so it reads:
 
-> > In this case, it might make sense for "git worktree add" to refuse to
-> > operate if an existing worktree entry still points at the directory
-> > that you're trying to add. That should prevent those duplicate
-> > worktree entries you saw.
->
-> Yes, but then what's the next step for my script? I can't "remove" since
-> the worktree isn't there. I can't blow away any directory that I know
-> about, since there isn't one.
+    # bare "(" line? -- stash for later printing
+    /^[  ]*([    ]*$/ {
+        h
+        bnextline
+    }
 
-I was thinking that "worktree add" could start respecting the --force
-option as an escape hatch.
-
-> I need to somehow know that an existing
-> "$GIT_DIR/worktrees/foo" is the problem. But "foo" is not even
-> deterministic. Looking at the duplicates, it seems to be the basename of
-> the working tree, but then mutated to avoid collisions with other
-> worktrees.
-
-If the worktree directory still existed, "git -C rev-parse --git-dir"
-inside the worktree would give you the proper path of
-$GIT_DIR/worktrees/foo, but the directory doesn't exist, so...
-nothing.
-
-> What about refusing by default, but forcing an overwrite with "-f"?
-
-My thought, also.
+I could prepare such a patch, although perhaps it would be better for
+you to do so since you are in a position to test it (and because you
+discovered the problems)?
