@@ -2,98 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 436821F404
-	for <e@80x24.org>; Thu, 23 Aug 2018 21:18:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 18E481F404
+	for <e@80x24.org>; Thu, 23 Aug 2018 21:27:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728148AbeHXAuP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 20:50:15 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:35277 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727153AbeHXAuP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 20:50:15 -0400
-Received: by mail-wm0-f67.google.com with SMTP id o18-v6so7245549wmc.0
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 14:18:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jy1/6plsObdWamDFwTnxVJoLziBYDn2w4jZQBHUCOSo=;
-        b=tKmjyEl2sBeY135LhBpX6QjnIF4QZdM/+ppffFQOIwtPKaTxETf+TmK99o2ta7kIma
-         TV8D6P48oSKg7BZSxHhQesFfFPlNyDT7uM+/z5qcKCgiR3/FXVWfRhKyWcw/AxpqmDpj
-         MeDTjyLtoqWTLvv55zWc96jRV9vVWzZTEPQWC9DYeVB8rOmQTUApPG8xU9MsQcT5oS3/
-         o1GcaUFrNKNQIhceGUxZmqsgcJQ17ZEYRTWefMbhlJxZzDdJxM6wn2SEMy5mwfaF5+TD
-         ds9e9KlQ1d/SNjJbzzFDLjCar57oXL/4gqwKZ5wjzVU/vY1IpK+K5Mrx4x/hT9DADZcN
-         VpBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jy1/6plsObdWamDFwTnxVJoLziBYDn2w4jZQBHUCOSo=;
-        b=FStcVppHMGWEO3X47NMIbBrRU+p09mUjtEqSGX7J2yRhfqqAzcnEisCgc/f3YlVbly
-         QnD7Q6Qxd9G5CQcG/lYJNaCmsfxWmBI3HaKSgVRz0bBqa6Z4IJOe6b8sQVRuDhuOMlS1
-         e6op4VeQddjSiVOMqOBHY1uyyp/ky/VoGNi4PnpK86u0d7ZH11ubHeA1oO+aCjM3TaoK
-         nAJCi3WjGJ8W4K9N4Z/t5EY9UHjKwNKfvFTKDMgyRssqFeJ5l5vKNWbkox2yJsVCU3/f
-         B2HsGAPRTOQX3qRdPF1rAkrB/KFkBnxWHd2kCBb7+PgyUGzl3tv8oxq/q0Pv2oMCAkk+
-         Vpug==
-X-Gm-Message-State: APzg51Ak2FMAdJMcP/zP4J7vetHyZoQDc4ri6zfOh6jh4Yv35o7eLmh+
-        agK+tsqLhlabnJjmOklTlE1tjJTJ
-X-Google-Smtp-Source: ANB0VdYmbU/1F7Q5vXSRCX8cCk8QTijZepuMCxHDfe8BTuUNvJQTHgBlN5rfePNEHPj7cTBX+Gz7/g==
-X-Received: by 2002:a1c:8dc6:: with SMTP id p189-v6mr4033990wmd.99.1535059120416;
-        Thu, 23 Aug 2018 14:18:40 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h18-v6sm3461684wru.42.2018.08.23.14.18.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 14:18:39 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Subject: Re: [PATCH] range-diff: update stale summary of --no-dual-color
-References: <20180823023955.12980-1-kyle@kyleam.com>
-        <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet>
-Date:   Thu, 23 Aug 2018 14:18:39 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1808232254260.73@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Thu, 23 Aug 2018 22:54:44 +0200 (DST)")
-Message-ID: <xmqq1saoixxs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727824AbeHXA7P (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 20:59:15 -0400
+Received: from mout.gmx.net ([212.227.17.21]:55443 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727784AbeHXA7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 20:59:15 -0400
+Received: from [192.168.0.129] ([37.201.193.145]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LlHsg-1gQdCE2VPC-00b5Or; Thu, 23
+ Aug 2018 23:27:32 +0200
+Date:   Thu, 23 Aug 2018 23:27:30 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     phillip.wood@dunelm.org.uk
+cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Pratik Karki <predatoramigo@gmail.com>, gitster@pobox.com
+Subject: Re: [GSoC][PATCH v6 15/20] rebase -i: rewrite write_basic_state()
+ in C
+In-Reply-To: <3da3ce19-38f8-0c46-47a1-9510f203b65f@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1808232309570.73@tvgsbejvaqbjf.bet>
+References: <20180731180003.5421-1-alban.gruin@gmail.com> <20180810165147.4779-1-alban.gruin@gmail.com> <20180810165147.4779-16-alban.gruin@gmail.com> <3da3ce19-38f8-0c46-47a1-9510f203b65f@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HHLFtQbiqJbIWRYdNOdMeotVjtPRrK61CHINPSvTfxIL6S9aP5y
+ RLlaU/I6YWbb8UH2QZXuRqvo+VgxS1CSdGcz02nLqfLPY1xy/pTjPyqATjNYPKsBHxQOT78
+ GY0hKL9Mq0BpTCTF4bzI5WV2WtX6QK1b0ibNpyCZOiAommNiimy3Za71XAG64wKjbq62vqi
+ nigBN20eDJvlQGZFDuofw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cZM4ed2iEjw=:QqhRux/JvSfIcl3Gz46mdS
+ 37QmNq4dhQ+fs4eSeEIEzH+PJ1AUUbfcFBVV+HaoOg5K1Bi1QOe7t6t1LAesXEqdj/DcFFes/
+ eeFsD0hpuwydNF8P3oPAEaP624WFS3ZurG2R4Lj9Z8UpVGeSPVWEW0PaPFQxMRHYSlSZfo45h
+ ULYEiQEKGVkg/LC7Pc5qNaCw25j//4zJZqch+LnVV6WG1iTDm1UHZIKHNryNFqWwfpR+D+/c1
+ gPz8DM+KyMl3fymcJTGCQyBT2aaKwfHzr9Km8VNnTv864BWN/fdhTwjjMOYB6CKvUvZli903o
+ ED04lufX03MWrWo6mwOtIEa/8XT+wuixL0MLa1L4gfSKZ42STw7ZPxp0uxisMidhof58sulac
+ 8foZvz82Fs7bKK7b0qvF6qWFL/Zi4hKlQ5sdPId5LKl3NedR3he7xv/eK4tSDmz9VPl2ImO5I
+ 0fh9S6RfNp/E8r9I5vQVIm+FwtDXqsTokQ1lbem2ZjcF8yIpkDjm2PvkuYnBZ++1AT3kdbYc5
+ rJqNSxtOJznEZT7T3kpiESLi6q3yfwMv+0/K6qrAVOVHq1294cRxh6gv7ul8DNRQLt2+cRKty
+ cQYPzttFZuhi44c7bZUnug1EBSFa+cMO5EiyItXYWSYSrgGsa0QG2AjCLqOSzhDmC2gCgxAcF
+ 2FikM1K77xMOGIONDNtZDAqVQhAmM+YegkBZi2l3sayECGjEErpxYNIn/bDqs+45qt7ydmrWN
+ 6cX01mHs1Fgfj/GuAgd4LI8MQkxWtvFJfq2nJx9bH1GXqTKxRWu6VNfCp1iwet7Bd8bCXhdKT
+ Z5wp9pQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Phillip,
 
-> On Wed, 22 Aug 2018, Kyle Meyer wrote:
->
->> 275267937b (range-diff: make dual-color the default mode, 2018-08-13)
->> replaced --dual-color with --no-dual-color but left the option's
->> summary untouched.  Rewrite the summary to describe --no-dual-color
->> rather than dual-color.
->> 
->> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
->> ---
->>  builtin/range-diff.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/builtin/range-diff.c b/builtin/range-diff.c
->> index f52d45d9d6..7dc90a5ec3 100644
->> --- a/builtin/range-diff.c
->> +++ b/builtin/range-diff.c
->> @@ -25,7 +25,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
->>  		OPT_INTEGER(0, "creation-factor", &creation_factor,
->>  			    N_("Percentage by which creation is weighted")),
->>  		OPT_BOOL(0, "no-dual-color", &simple_color,
->> -			    N_("color both diff and diff-between-diffs")),
->> +			    N_("restrict coloring to outer diff markers")),
->
-> How about "use simple diff colors" instead?
+On Fri, 17 Aug 2018, Phillip Wood wrote:
 
-I am wondering if it makes sense to remove the option altogether.
-I've been trying to view the comparison of the same ranges in both
-styles for the past few days, and I never found a reason to choose
-"no dual color" option myself.
+> On 10/08/2018 17:51, Alban Gruin wrote:
+> 
+> > +{
+> > +	const char *quiet = getenv("GIT_QUIET");
+> > +
+> > +	if (head_name)
+> > +		write_file(rebase_path_head_name(), "%s\n", head_name);
+> 
+> write_file() can call die() which isn't encouraged for code in libgit.
+> I'm not sure how much it matters in this case. Rewriting all these as
+> 
+> 	if (head_name && write_message(onto, strlen(onto), rebase_path_onto(), 1))
+> 		return -1;
+> 
+> is a bit tedious. An alternative would be it leave it for now and in the
+> longer term move this function (and the ones above which I've just
+> noticed also call write_file()) to in builtin/rebase.c (assuming that
+> builtin/rebase--interactive.c and builtin/rebase.c get merged once
+> they're finalized - I'm not sure if there is a plan for that or not.)
+
+This came up in the review, and Alban said exactly what you did.
+
+I then even dragged Peff into the discussion, as it was his idea to change
+`write_file()` from returning an `int` to returning a `void` (instead of
+libifying the function so that it would not `die()` in error cases and
+`return 0` otherwise):
+
+	https://github.com/git/git/pull/518#discussion_r200606997
+
+Christian Couder (one of Alban's mentors) then even jumped in and *agreed*
+that libifying code "could be seen as unnecessary code churn and
+rejected."
+
+In light of these two respected community members suggesting to Alban to
+go and not give a flying fish about proper error handling, I have to admit
+that I am sympathetic to Alban simply using `write_file()` as-is.
+
+I do agree with you, of course, that the over-use of `die()` in our code
+base is a pretty bad thing.
+
+But that's neither Alban's fault, nor should he be punished for the advice
+he has been given.
+
+In short: I agree with you that `write_file()` should be libified
+properly, and I would suggest not to burden Alban with this (Alban, of
+course you should feel free to work on this if this is something you care
+about, too).
+
+Ciao,
+Dscho
