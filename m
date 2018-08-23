@@ -6,141 +6,205 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11BF01F954
-	for <e@80x24.org>; Thu, 23 Aug 2018 00:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A5A31F954
+	for <e@80x24.org>; Thu, 23 Aug 2018 00:44:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726068AbeHWEKG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 23 Aug 2018 00:10:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52476 "HELO cloud.peff.net"
+        id S1726067AbeHWELo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 23 Aug 2018 00:11:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52498 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725924AbeHWEKG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 23 Aug 2018 00:10:06 -0400
-Received: (qmail 11836 invoked by uid 109); 23 Aug 2018 00:43:03 -0000
+        id S1725721AbeHWELo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 23 Aug 2018 00:11:44 -0400
+Received: (qmail 11925 invoked by uid 109); 23 Aug 2018 00:44:40 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:43:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 23 Aug 2018 00:44:40 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6087 invoked by uid 111); 23 Aug 2018 00:43:09 -0000
+Received: (qmail 6166 invoked by uid 111); 23 Aug 2018 00:44:46 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:43:09 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 22 Aug 2018 20:44:46 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:43:01 -0400
-Date:   Wed, 22 Aug 2018 20:43:01 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 22 Aug 2018 20:44:38 -0400
+Date:   Wed, 22 Aug 2018 20:44:38 -0400
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Subject: [PATCH 0/9] trailer-parsing false positives
-Message-ID: <20180823004300.GA1355@sigill.intra.peff.net>
-References: <20180821184140.GA24165@sigill.intra.peff.net>
- <20180821190705.GF30764@sigill.intra.peff.net>
- <xmqqin438pze.fsf@gitster-ct.c.googlers.com>
- <xmqqbm9v8pou.fsf@gitster-ct.c.googlers.com>
- <20180821200747.GA21955@sigill.intra.peff.net>
- <xmqq36v78ml8.fsf@gitster-ct.c.googlers.com>
+Subject: [PATCH 1/9] trailer: use size_t for string offsets
+Message-ID: <20180823004438.GA3126@sigill.intra.peff.net>
+References: <20180823004300.GA1355@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq36v78ml8.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180823004300.GA1355@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 21, 2018 at 01:57:07PM -0700, Junio C Hamano wrote:
+Many of the string-parsing functions inside trailer.c return
+integer offsets into the string (e.g., to point to the end
+of the trailer block). Several of these use an "int" to
+return or store the offsets. On a system where "size_t" is
+much larger than "int" (e.g., most 64-bit ones), it's easy
+to feed a gigantic commit message that results in a negative
+offset. This can result in us reading memory before the
+string (if the int is used as an index) or far after (if
+it's implicitly cast to a size_t by passing to a strbuf
+function).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Ah, yeah, I think you're right. We call find_patch_start(), which thinks
-> > the "---" line is the end of the commit message. That makes sense when
-> > parsing trailers out of "format-patch" output, but not when we know we
-> > have just the commit message.
-> 
-> Yes, but that does not explain what we are seeing.  If the code
-> mistakenly thinks that the log message ends before that table, then
-> it should have inserted the S-o-b: _before_ that table, but that is
-> not happening.
-> 
-> So there are three issues; (1) find-patch-start uses too weak a
-> logic to find the beginning of a patch section (2) even if it found
-> the right place, its caller does not tell "commit --amend -s" where
-> the log message ends correctly and (3) some callchains that get
-> there know they only have a log message but there is no way to take
-> advantage of that information and skip the call to find-patch-start.
+Let's fix this by using size_t for all string offsets. Note
+that several of the functions need ssize_t, since they use
+"-1" as a sentinel value. The interactions here can be
+pretty subtle. E.g., end_of_title in find_trailer_start()
+does not itself need to be signed, but it is compared to the
+result of last_line(), which is. That promotes the latter to
+unsigned, and the ">=" does not behave as you might expect.
 
-So this turned into a bit of a rabbit hole. Here's what I have so far
-(which I think is not quite ready, but I wanted to start discussing).
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Noticed while I was in the area. I did pretty easily reproduce a
+segfault with this.
 
-Issues (2) and (3) are actually the same issue. The caller that does the
-bogus appending for (2) is always append_signoff(). But it always has
-just a commit message (modulo some complications, which I'll get to in a
-minute), and so fixing it with respect to (3) magically solves (2).
-I.e., the code was simply not prepared for the case of "end of string is
-not end of trailers". But since that case cannot exist, we do not have
-to deal with it. :)
+ trailer.c | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-Now here's the tricky part. I think patches 1-8 are mostly sensible. But
-while doing 7/8, I noticed some weirdness around the ignore_footer
-parameter. It seems git-commit strips some cruft off the end of the
-buffer, including "#" comments, before looking for the trailers. But
-that doesn't make any sense. We should just handle the cleaned-up commit
-message. Worse, the stripping does not take into account options like
---cleanup=verbatim, where "#" comments are _not_ cruft anymore. Double
-worse, it uses the current notion of core.commentChar, but we might be
-operating on historical data (i.e., something created with a different
-comment char). Triple-worse, this same cleanup is used in the trailer
-parsing code!
+diff --git a/trailer.c b/trailer.c
+index 4e309460d1..88b35b8e89 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -585,7 +585,7 @@ static const char *token_from_item(struct arg_item *item, char *tok)
+ 	return item->conf.name;
+ }
+ 
+-static int token_matches_item(const char *tok, struct arg_item *item, int tok_len)
++static int token_matches_item(const char *tok, struct arg_item *item, size_t tok_len)
+ {
+ 	if (!strncasecmp(tok, item->conf.name, tok_len))
+ 		return 1;
+@@ -603,7 +603,7 @@ static int token_matches_item(const char *tok, struct arg_item *item, int tok_le
+  * distinguished from the non-well-formed-line case (in which this function
+  * returns -1) because some callers of this function need such a distinction.
+  */
+-static int find_separator(const char *line, const char *separators)
++static ssize_t find_separator(const char *line, const char *separators)
+ {
+ 	int whitespace_found = 0;
+ 	const char *c;
+@@ -630,10 +630,10 @@ static int find_separator(const char *line, const char *separators)
+  */
+ static void parse_trailer(struct strbuf *tok, struct strbuf *val,
+ 			 const struct conf_info **conf, const char *trailer,
+-			 int separator_pos)
++			 ssize_t separator_pos)
+ {
+ 	struct arg_item *item;
+-	int tok_len;
++	size_t tok_len;
+ 	struct list_head *pos;
+ 
+ 	if (separator_pos != -1) {
+@@ -721,7 +721,7 @@ static void process_command_line_args(struct list_head *arg_head,
+ 	list_for_each(pos, new_trailer_head) {
+ 		struct new_trailer_item *tr =
+ 			list_entry(pos, struct new_trailer_item, list);
+-		int separator_pos = find_separator(tr->text, cl_separators);
++		ssize_t separator_pos = find_separator(tr->text, cl_separators);
+ 
+ 		if (separator_pos == 0) {
+ 			struct strbuf sb = STRBUF_INIT;
+@@ -763,9 +763,9 @@ static const char *next_line(const char *str)
+ /*
+  * Return the position of the start of the last line. If len is 0, return -1.
+  */
+-static int last_line(const char *buf, size_t len)
++static ssize_t last_line(const char *buf, size_t len)
+ {
+-	int i;
++	ssize_t i;
+ 	if (len == 0)
+ 		return -1;
+ 	if (len == 1)
+@@ -788,7 +788,7 @@ static int last_line(const char *buf, size_t len)
+  * Return the position of the start of the patch or the length of str if there
+  * is no patch in the message.
+  */
+-static int find_patch_start(const char *str)
++static size_t find_patch_start(const char *str)
+ {
+ 	const char *s;
+ 
+@@ -804,10 +804,11 @@ static int find_patch_start(const char *str)
+  * Return the position of the first trailer line or len if there are no
+  * trailers.
+  */
+-static int find_trailer_start(const char *buf, size_t len)
++static size_t find_trailer_start(const char *buf, size_t len)
+ {
+ 	const char *s;
+-	int end_of_title, l, only_spaces = 1;
++	ssize_t end_of_title, l;
++	int only_spaces = 1;
+ 	int recognized_prefix = 0, trailer_lines = 0, non_trailer_lines = 0;
+ 	/*
+ 	 * Number of possible continuation lines encountered. This will be
+@@ -838,7 +839,7 @@ static int find_trailer_start(const char *buf, size_t len)
+ 	     l = last_line(buf, l)) {
+ 		const char *bol = buf + l;
+ 		const char **p;
+-		int separator_pos;
++		ssize_t separator_pos;
+ 
+ 		if (bol[0] == comment_line_char) {
+ 			non_trailer_lines += possible_continuation_lines;
+@@ -899,14 +900,14 @@ static int find_trailer_start(const char *buf, size_t len)
+ }
+ 
+ /* Return the position of the end of the trailers. */
+-static int find_trailer_end(const char *buf, size_t len)
++static size_t find_trailer_end(const char *buf, size_t len)
+ {
+ 	return len - ignore_non_trailer(buf, len);
+ }
+ 
+ static int ends_with_blank_line(const char *buf, size_t len)
+ {
+-	int ll = last_line(buf, len);
++	ssize_t ll = last_line(buf, len);
+ 	if (ll < 0)
+ 		return 0;
+ 	return is_blank_line(buf + ll);
+@@ -939,10 +940,10 @@ static void unfold_value(struct strbuf *val)
+ 	strbuf_release(&out);
+ }
+ 
+-static int process_input_file(FILE *outfile,
+-			      const char *str,
+-			      struct list_head *head,
+-			      const struct process_trailer_options *opts)
++static size_t process_input_file(FILE *outfile,
++				 const char *str,
++				 struct list_head *head,
++				 const struct process_trailer_options *opts)
+ {
+ 	struct trailer_info info;
+ 	struct strbuf tok = STRBUF_INIT;
+@@ -1032,7 +1033,7 @@ void process_trailers(const char *file,
+ {
+ 	LIST_HEAD(head);
+ 	struct strbuf sb = STRBUF_INIT;
+-	int trailer_end;
++	size_t trailer_end;
+ 	FILE *outfile = stdout;
+ 
+ 	ensure_configured();
+@@ -1132,7 +1133,7 @@ static void format_trailer_info(struct strbuf *out,
+ 
+ 	for (i = 0; i < info->trailer_nr; i++) {
+ 		char *trailer = info->trailers[i];
+-		int separator_pos = find_separator(trailer, separators);
++		ssize_t separator_pos = find_separator(trailer, separators);
+ 
+ 		if (separator_pos >= 1) {
+ 			struct strbuf tok = STRBUF_INIT;
+-- 
+2.19.0.rc0.412.g7005db4e88
 
-So:
-
-  git interpret-trailers --parse <<-\EOF
-  subject
-
-  body
-
-  Signed-off-by: me
-
-  # is this a comment or not?
-  EOF
-
-will find that s-o-b. Should that "#" thing be a comment? I'd say no. We
-are not dealing with a commit message template at all. And even in
-git-commit, I think we aren't (or at least ought not to be) passing the
-template around to the signoff code.
-
-So I think there may be further opportunities for cleanup here. I'm not
-sure if we'd need to retain this behavior for git-interpret-trailers.
-AFAICT it is not documented, and I suspect is mostly historical
-accident, and not anything anybody ever wanted.
-
-If we do keep it by default, then the "--no-divider" option I added in
-patch 4 should probably get a more generic name and cover this.
-Something like "--verbatim-input".
-
-I'm going to sleep on it and see how I feel tomorrow.
-
-  [1/9]: trailer: use size_t for string offsets
-  [2/9]: trailer: use size_t for iterating trailer list
-  [3/9]: trailer: pass process_trailer_opts to trailer_info_get()
-  [4/9]: interpret-trailers: tighten check for "---" patch boundary
-  [5/9]: interpret-trailers: allow suppressing "---" divider
-  [6/9]: pretty, ref-filter: format %(trailers) with no_divider option
-  [7/9]: sequencer: ignore "---" divider when parsing trailers
-  [8/9]: append_signoff: use size_t for string offsets
-  [9/9]: sequencer: handle ignore_footer when parsing trailers
-
- Documentation/git-interpret-trailers.txt | 10 +++-
- builtin/interpret-trailers.c             |  1 +
- commit.c                                 |  6 +--
- commit.h                                 |  2 +-
- pretty.c                                 |  3 ++
- ref-filter.c                             |  2 +
- sequencer.c                              | 20 ++++++--
- sequencer.h                              |  9 +++-
- t/t4205-log-pretty-formats.sh            | 23 +++++++++
- t/t6300-for-each-ref.sh                  | 23 +++++++++
- t/t7501-commit.sh                        | 16 ++++++
- t/t7513-interpret-trailers.sh            | 42 ++++++++++++++++
- trailer.c                                | 62 +++++++++++++-----------
- trailer.h                                |  4 +-
- 14 files changed, 184 insertions(+), 39 deletions(-)
-
--Peff
