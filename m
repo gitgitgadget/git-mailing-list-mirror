@@ -2,98 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A05631F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 04:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31AD31F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 06:42:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726475AbeHXIZx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 04:25:53 -0400
-Received: from mail-pg1-f176.google.com ([209.85.215.176]:39736 "EHLO
-        mail-pg1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726244AbeHXIZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 04:25:53 -0400
-Received: by mail-pg1-f176.google.com with SMTP id m3-v6so2816352pgp.6
-        for <git@vger.kernel.org>; Thu, 23 Aug 2018 21:52:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=I5eGl10PHGsXe0uzTW+ht2gcT2krflKbUjwnn6k+eRE=;
-        b=IghnHYIc15P5c0cM07LXEZ3L9pogIj8D0exJKb/p1YlW/A+dnsne3DAiUcYiRNLkKJ
-         P0+b/bQpWMvxkbuLqfUiHLYq8tjjhlfiZULmvxTM16YSh9aSZumG0gvAzuNlOUyhcO2d
-         Qx7iTKmenM9+g8tnHA9CVkmXzFPD/Og7PKAlRlz4Ih3MSqam0DGa7MCEzhhpVv9y9kT0
-         zEykMBaJFk3etZ/IyAVQo3MuIlmUlrP675KoYr88/eAvbmNJ1bm1x0p3SNIYCnQCEmYX
-         Cv8PhwnH+A2viLwFGE3B1Z1qxPDsL4rK856Mrc21o8GVksDtg06d2bLSi1klXaJq2Qtj
-         aMwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=I5eGl10PHGsXe0uzTW+ht2gcT2krflKbUjwnn6k+eRE=;
-        b=cfFhQy9auST+g0OZjNwnD7iOwPX4TOcSviKr+awjla4BJI11YTpjKi77BJyVIRmIQl
-         U3/tG7tud1hpAGAcZyCPMMnD4IeNU3k9NQIILoD35Mvqc7tLvNfpzald24nxhC5ihARu
-         Gp02vEbmcUeo4m9bIZiO3PAFyBeH5Tr4I5OQdepRz2VvGZeTF2wgKV9aHJEjmInMN+Vj
-         kwi/6aSuh+vgz/8bQN+ukT/dEkIuM737xvlIacIYt2aNzdKWZRKf0mBacbfdMH4t3rvm
-         7h7wwzsBIiKuxdDj4x4Dd2ZLPNGzBC57p8/RPiC5Q0Kip7s8d/t/LncKiC3/ldojACeI
-         95aQ==
-X-Gm-Message-State: APzg51Bd7phxDtVOYGOYI+Ataxc08ZeGaO8gd3/8d/hbxcOgMko3cgwj
-        6/O2VVOSXNF/OIwGtpaT2u0=
-X-Google-Smtp-Source: ANB0VdbbZlEpRt+aKONsrr2rP/Z5TmIExKA5/givmBKYy1uTE3SYNyQ2bkhgIGFu1JCEVd+0kitIxA==
-X-Received: by 2002:a63:65c2:: with SMTP id z185-v6mr73436pgb.276.1535086377306;
-        Thu, 23 Aug 2018 21:52:57 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id y86-v6sm9834216pfk.84.2018.08.23.21.52.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 23 Aug 2018 21:52:56 -0700 (PDT)
-Date:   Thu, 23 Aug 2018 21:52:54 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: Questions about the hash function transition
-Message-ID: <20180824045254.GA214696@aiede.svl.corp.google.com>
-References: <878t4xfaes.fsf@evledraar.gmail.com>
- <20180824014007.GF535143@genre.crustytoothpaste.net>
- <20180824015438.GF99542@aiede.svl.corp.google.com>
- <20180824044720.GG535143@genre.crustytoothpaste.net>
+        id S1726649AbeHXKPn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 06:15:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54288 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726198AbeHXKPn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 06:15:43 -0400
+Received: (qmail 13788 invoked by uid 109); 24 Aug 2018 06:42:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 06:42:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24172 invoked by uid 111); 24 Aug 2018 06:42:37 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 Aug 2018 02:42:37 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2018 02:42:29 -0400
+Date:   Fri, 24 Aug 2018 02:42:29 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org, cocci@systeme.lip6.fr
+Subject: excluding a function from coccinelle transformation
+Message-ID: <20180824064228.GA3183@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180824044720.GG535143@genre.crustytoothpaste.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-brian m. carlson wrote:
-> On Thu, Aug 23, 2018 at 06:54:38PM -0700, Jonathan Nieder wrote:
+In Git's Coccinelle patches, we sometimes want to suppress a
+transformation inside a particular function. For example, in finding
+conversions of hashcmp() to oidcmp(), we should not convert the call in
+oidcmp() itself, since that would cause infinite recursion. We write the
+semantic patch like this:
 
->> For what it's worth, even if it all is in one commit with message
->> "wip", I think I'd benefit from being able to see this code.  I can
->> promise not to critique it, and to only treat it as a rough
->> premonition of the future.
->
-> It's in my object-id-partn branch at https://github.com/bk2204/git.
->
-> It doesn't do protocol v2 yet, but it does do protocol v1.  It is, of
-> course, subject to change (especially naming) depending on what the list
-> thinks is most appropriate.
+  @@
+  identifier f != oidcmp;
+  expression E1, E2;
+  @@
+    f(...) {...
+  - hashcmp(E1->hash, E2->hash)
+  + oidcmp(E1, E2)
+    ...}
 
- $ git diff --shortstat origin/master...bmc/object-id-partn
-  185 files changed, 2263 insertions(+), 1535 deletions(-)
+This catches some cases, but not all. For instance, there's one case in
+sequencer.c which it does not convert. Now here's where it gets weird.
+If I instead use the angle-bracket form of ellipses, like this:
 
-Beautiful.  Thanks much for this.
+  @@
+  identifier f != oidcmp;
+  expression E1, E2;
+  @@
+    f(...) {<...
+  - hashcmp(E1->hash, E2->hash)
+  + oidcmp(E1, E2)
+    ...>}
 
-Sincerely,
-Jonathan
+then we do generate the expected diff! Here's a much more cut-down
+source file that demonstrates the same behavior:
+
+  int foo(void)
+  {
+    if (1)
+      if (!hashcmp(x, y))
+        return 1;
+    return 0;
+  }
+
+If I remove the initial "if (1)" then a diff is generated with either
+semantic patch (and the particulars of the "if" are not important; the
+same thing happens if it's a while-loop. The key thing seems to be that
+the code is not in the top-level block of the function).
+
+And here's some double-weirdness. I get those results with spatch 1.0.4,
+which is what's in Debian unstable. If I then upgrade to 1.0.6 from
+Debian experimental, then _neither_ patch produces any results! Instead
+I get:
+
+  init_defs_builtins: /usr/lib/coccinelle/standard.h
+  (ONCE) Expected tokens oidcmp hashcmp hash
+  Skipping:foo.c
+
+(whereas before, even the failing case said "HANDLING: foo.c").
+
+And then one final check: I built coccinelle from the current tip of
+https://github.com/coccinelle/coccinelle (1.0.7-00504-g670b2243).
+With my cut-down case, that version generates a diff with either
+semantic patch. But for the full-blown case in sequencer.c, it still
+only works with the angle brackets.
+
+So my questions are:
+
+  - is this a bug in coccinelle? Or I not understand how "..." is
+    supposed to work here?
+
+    (It does seem like there was possibly a separate bug introduced in
+    1.0.6 that was later fixed; we can probably ignore that and just
+    focus on the behavior in the current tip of master).
+
+  - is there a better way to represent this kind of "transform this
+    everywhere _except_ in this function" semantic patch? (preferably
+    one that does not tickle this bug, if it is indeed a bug ;) ).
+
+-Peff
