@@ -7,169 +7,140 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC35E1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 21:56:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B83381F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 22:10:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727055AbeHYBcv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 21:32:51 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:47073 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726746AbeHYBcv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 21:32:51 -0400
-Received: by mail-wr1-f65.google.com with SMTP id a108-v6so8538065wrc.13
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 14:56:22 -0700 (PDT)
+        id S1727285AbeHYBqm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 21:46:42 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:54884 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbeHYBqm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 21:46:42 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c14-v6so2837924wmb.4
+        for <git@vger.kernel.org>; Fri, 24 Aug 2018 15:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WpI+6ioZyLIlJtX3ayGMwl0JWcCZvvXK01NCjB7Ar3w=;
-        b=Ib5TGAra4OeGXLJN68fiYNXsZNjmxrAqFhz3+a5aldauCiezMdQ1p1gZubcJyQC9jI
-         I+GDjOige5sMmPkOKrEepAler258xZ9at3OAQsiUbBen+D1/u1tW7q5hkTMjyL2PXZ9n
-         43X6maCj1OD7lnuCUrdEhyWtLhg3zG3zzMXTR3pf7fsuwz87bFk8iSdkATNDBtc+NVfn
-         Sqozw6Hzea9Qd43vMBDxDgt9ZsyAJW8QWbI9nBQM5JHdp519ecoq77lofN8SY4rz0YfH
-         tAksRozVtgu23cHuM7BIL10eAqvi7t1bH/oi4jZqLTQj8MnP11tF6z/nYbiNpz+jQI4g
-         PJZQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=HkdTPxJ8iwI7biaw9IFzgOqlCaP0AZhlItXjO3dsWjY=;
+        b=F2AJEPw6c9dn6/reZVqjcDnhWLz5gW/5pyQUjE5m19Eh6gPMkZfnNUNXDzCm/35TCm
+         V6ByFxkKDaVspC0kyiNk9eyTkaNoWSyfiKVQQMcofDWD1+uO47oZsmP5EGhI+n2l1ih7
+         5qcQd5G4srhx3ZLnQOZuFIfXrTT3ao2wAiZijaUGHdWzU3kQru1GBTOe94w+WpdXaLoy
+         tSewTzVGOxoZbJy0S5btkjYZ87GSiOdv3aItQash2CMHgWpb3ek2AVRCSa2V21d0/Fu3
+         JSajyjHwiUuJA1+Da+h8kP6hDhhW8+vgrwzQRqT5akFphviuNiD1ut4M/yrtHgIAWaTc
+         P5og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WpI+6ioZyLIlJtX3ayGMwl0JWcCZvvXK01NCjB7Ar3w=;
-        b=mM3R6RMpSRa0TsR4UoA/57Wrnh/IcxoT5IhZgSHfOYtta5ix3e9nqhGjbbhF9+yv48
-         3iFhHpP6DShR54q88KjEBgPx5Lq32lmpikxbM8VU47YfgSAy4XB7pOh/F/+P2IvYbgtt
-         Mzl/M+Hnq33wDQzdvIUgtJnaYldxT0j63yYzrYshAx5dzwzum/HF1ezf1JfUmBf2yQZd
-         K9FQCbPg08y95NQclraT1PKVf2m/njX+H84myfgol0ysygvk9HoO46wMDvBSwzgaKNzM
-         6DWfLLtyzE6j+fI3N/az6gNRAMnv5IDx2eeuTtNUKGnRcRg3YRx2qvyKZlFa3cLfT9iI
-         EwxQ==
-X-Gm-Message-State: APzg51BaLixPJH/qK4wiFUR8+OJY8F45ETBHW6ffg9QrZZrcSbpbhaaW
-        F95XfojTmjSlqYrB3UiaK2E=
-X-Google-Smtp-Source: ANB0VdYZJOJ9GKN98/ikOKihzb5zrWlOX1EFM/D1HfwlzO3BKa8TOsnyXfsIcSC2LFmaURNCl5rKHg==
-X-Received: by 2002:adf:eb0d:: with SMTP id s13-v6mr2294634wrn.174.1535147781765;
-        Fri, 24 Aug 2018 14:56:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=HkdTPxJ8iwI7biaw9IFzgOqlCaP0AZhlItXjO3dsWjY=;
+        b=J4MafJXG0heq8YFhy37cx3TYnfMX6pOJRyuA0i7XDCKV/8FpX1DlBfC4z0z/SyVg2+
+         IQYnKixpClVtZO/NaWPMTboXaomQya80hOgvpPUeGdl0vuydi0kcYMGdH+7lgJUcv/Of
+         NdPSdRAnBVevGZIQDi5MhkoAgkq+zpH3iHZEIXdnCM3u4vj3qmVqULs5A0QXbz3ZBgv3
+         Goir5rVNQQTXMR5rdYhCVGGc+/F7XehHf3WAEYiYPg6gGtUdh/a8dk/Cgc2BjMVBTNuf
+         yArRmuuGc1fsbnlFQj/pNnmxxdKuSH3JL9lQB6SgjLimDdaB1nwtrM9sGyLkk5d6mSLn
+         56LQ==
+X-Gm-Message-State: APzg51Aq3nHgnaxjezzZGGrUuqAOgB+d0G2L7E6ouXvnJTeB5/Tg7rK9
+        v9Vzbw621NH+iYdEN7ro6gsschxU
+X-Google-Smtp-Source: ANB0VdYHluA4qQVQyhnLx1WJZXauzZb5pIEWU1EQiGngttf1VKUJZwRr/fuwWqG/Eo9vAqeXtPvrsw==
+X-Received: by 2002:a1c:760d:: with SMTP id r13-v6mr2356450wmc.22.1535148609749;
+        Fri, 24 Aug 2018 15:10:09 -0700 (PDT)
 Received: from localhost ([2.29.27.208])
-        by smtp.gmail.com with ESMTPSA id v133-v6sm3943093wma.36.2018.08.24.14.56.20
+        by smtp.gmail.com with ESMTPSA id r140-v6sm2998840wmd.7.2018.08.24.15.10.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 Aug 2018 14:56:20 -0700 (PDT)
-Date:   Fri, 24 Aug 2018 22:56:19 +0100
+        Fri, 24 Aug 2018 15:10:08 -0700 (PDT)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v4 10/11] rerere: teach rerere to handle nested conflicts
-Message-ID: <20180824215619.GH13316@hank.intra.tgummerer.com>
-References: <20180714214443.7184-1-t.gummerer@gmail.com>
- <20180805172037.12530-1-t.gummerer@gmail.com>
- <20180805172037.12530-11-t.gummerer@gmail.com>
- <CACBZZX6xvsZ4K86b53ura6zENs2p0SBjwYYG=h0TNem3wnEbuQ@mail.gmail.com>
- <xmqqsh365qt0.fsf@gitster-ct.c.googlers.com>
- <20180822203451.GG13316@hank.intra.tgummerer.com>
- <xmqq4lfmm7pb.fsf@gitster-ct.c.googlers.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 1/2] rerere: remove documentation for "nested conflicts"
+Date:   Fri, 24 Aug 2018 23:10:04 +0100
+Message-Id: <20180824221005.5983-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.18.0.1088.ge017bf2cd1
+In-Reply-To: <20180824215619.GH13316@hank.intra.tgummerer.com>
+References: <20180824215619.GH13316@hank.intra.tgummerer.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4lfmm7pb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.0 (2018-05-17)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/22, Junio C Hamano wrote:
-> Thomas Gummerer <t.gummerer@gmail.com> writes:
-> 
-> > Hmm, it does describe what happens in the code, which is what this
-> > patch implements.  Maybe we should rephrase the title here?
-> >
-> > Or are you suggesting dropping this patch (and the next one)
-> > completely, as we don't want to try and handle the case where this
-> > kind of garbage is thrown at 'rerere'?
-> 
-> I consider these two patches as merely attempting to punt a bit
-> better.  Once users start committing conflict-marker-looking lines
-> in the contents, and getting them involved in actual conflicts, I do
-> not think any approach (including what the original rerere uses
-> before this patch) that assumes the markers will neatly form set of
-> blocks of text enclosed in << == >> will reliably step around such
-> broken contents.  E.g. it is entirely conceivable both branches have
-> the <<< beginning of conflict marker plus contents from the HEAD
-> before they recorded the marker that are identical, that diverge as
-> you scan the text down and get closer to ===, something like:
-> 
->         side A                  side B
->         --------------------    --------------------
-> 
->         shared                  shared
->         <<<<<<<                 <<<<<<<
->         version before          version before
->         these guys merged       these guys merged
->         their ancestor          their ancestor
->         versions                versions.
->         but some                now some
->         lines are different     lines are different
->         =======                 ========
->         and other               totally different
->         contents                contents
->         ...                     ...
-> 
-> And a merge of these may make <<< part shared (i.e. outside the
-> conflicted region) while lines near and below ==== part of conflict,
-> which would give us something like
-> 
->         merge of side A & B
->         -------------------
-> 
->         shared                  
->         <<<<<<<                 (this is part of contents)
->         version before          
->         these guys merged       
->         their ancestor          
->         <<<<<<< HEAD            (conflict marker)
->         versions
->         but some
->         lines are different
->         =======                 (this is part of contents)
->         and other
->         contents
->         ...
->         =======                 (conflict marker)
->         versions.
->         now some
->         lines are different
->         =======                 (this is part of contents)
->         totally different
->         contents
->         ...
->         >>>>>>> theirs          (conflict marker)
-> 
-> Depending on the shape of the original conflict that was committed,
-> we may have two versions of <<<, together with the real conflict
-> marker, but shared closing >>> marker.  With contents like that,
-> there is no way for us to split these lines into two groups at a
-> line '=====' (which one?) and swap to come up with the normalized
-> shape.
-> 
-> The original rerere algorithm would punt when such an unmatched
-> markers are found, and deals with "nested conflict" situation by
-> avoiding to create such a thing altogether.  I am sure your two
-> patches may make the code punt less, but I suspect that is not a
-> foolproof "solution" but more of a workaround, as I do not think it
-> is solvable, once you allow users to commit conflict-marker looking
-> strings in contents.
+4af32207bc ("rerere: teach rerere to handle nested conflicts",
+2018-08-05) introduced slightly better behaviour if the user commits
+conflict markers and then gets another conflict in 'git rerere'.
+However this is just a heuristic to punt on such conflicts better, and
+the documentation might be misleading to users, in case we change the
+heuristic in the future.
 
-Agreed.  I think it may be solvable if we'd actually get the
-information about what belongs to which side from the merge algorithm
-directly.  But that sounds way more involved than what I'm able to
-commit to for something that I don't forsee running into myself :)
+Remove this documentation to avoid being potentially misleading in the
+documentation.
 
->                       As the heuristics used in such a workaround
-> are very likely to change, and something the end-users should not
-> even rely on, I'd rather not document and promise the exact
-> behaviour---perhaps we should stress "don't do that" even stronger
-> instead.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+---
 
-Fair enough.  I thought of the technical documentation as something
-that doesn't promise users anything, but rather describes how the
-internals work right now, which is what this bit of documentation
-attempted to write down.  But if we are worried about this giving end
-users ideas then I definitely agree and we should get rid of this bit
-of documentation.  I'll send a patch for that, and for adding a note
-about "don't do that" in the man page.
+The original series already made it into 'next', so these patches are
+on top of that.  I also see it is marked as "will merge to master" in
+the "What's cooking" email, so these two patches would be on top of
+that.  If you are not planning to merge the series down to master
+before 2.19, we could squash this into 10/11, otherwise I'm happy with
+the patches on top.
+
+ Documentation/technical/rerere.txt | 42 ------------------------------
+ 1 file changed, 42 deletions(-)
+
+diff --git a/Documentation/technical/rerere.txt b/Documentation/technical/rerere.txt
+index e65ba9b0c6..3d10dbfa67 100644
+--- a/Documentation/technical/rerere.txt
++++ b/Documentation/technical/rerere.txt
+@@ -138,45 +138,3 @@ SHA1('B<NUL>C<NUL>').
+ If there are multiple conflicts in one file, the sha1 is calculated
+ the same way with all hunks appended to each other, in the order in
+ which they appear in the file, separated by a <NUL> character.
+-
+-Nested conflicts
+-~~~~~~~~~~~~~~~~
+-
+-Nested conflicts are handled very similarly to "simple" conflicts.
+-Similar to simple conflicts, the conflict is first normalized by
+-stripping the labels from conflict markers, stripping the common ancestor
+-version, and the sorting the conflict hunks, both for the outer and the
+-inner conflict.  This is done recursively, so any number of nested
+-conflicts can be handled.
+-
+-The only difference is in how the conflict ID is calculated.  For the
+-inner conflict, the conflict markers themselves are not stripped out
+-before calculating the sha1.
+-
+-Say we have the following conflict for example:
+-
+-    <<<<<<< HEAD
+-    1
+-    =======
+-    <<<<<<< HEAD
+-    3
+-    =======
+-    2
+-    >>>>>>> branch-2
+-    >>>>>>> branch-3~
+-
+-After stripping out the labels of the conflict markers, and sorting
+-the hunks, the conflict would look as follows:
+-
+-    <<<<<<<
+-    1
+-    =======
+-    <<<<<<<
+-    2
+-    =======
+-    3
+-    >>>>>>>
+-    >>>>>>>
+-
+-and finally the conflict ID would be calculated as:
+-`sha1('1<NUL><<<<<<<\n3\n=======\n2\n>>>>>>><NUL>')`
+-- 
+2.18.0.1088.ge017bf2cd1
+
