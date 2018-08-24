@@ -2,103 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEA4F1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 22:10:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AA9981F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 22:53:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727389AbeHYBqu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 21:46:50 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:52118 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726785AbeHYBqu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 21:46:50 -0400
-Received: by mail-wm0-f66.google.com with SMTP id y2-v6so2844039wma.1
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 15:10:19 -0700 (PDT)
+        id S1727516AbeHYCaZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 22:30:25 -0400
+Received: from mail-it0-f43.google.com ([209.85.214.43]:51695 "EHLO
+        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726754AbeHYCaY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 22:30:24 -0400
+Received: by mail-it0-f43.google.com with SMTP id e14-v6so4219278itf.1
+        for <git@vger.kernel.org>; Fri, 24 Aug 2018 15:53:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ExBgLK2e6jqB4rgL/5xJLWTtvY3+SQtXbo1SYkz7jbE=;
-        b=SoWwQy6/XlD84uS5b3wM78pZn6cDABS2bFYkLQY77RydksAABoyubciLsUeFaXOYhp
-         s8bj7A1PPkDFziNq5zacOXzqjN8K7pa/Zj4AumuHnv8J8XyE7+MVm/rqIYl8bxnD52dO
-         buTU2Z6AIlEcI2l+++UZyCf4whFVGCesjIlEhhgCrpxT5buahB1UAUKsl72BLyQL35ql
-         uFW7WTmeFR+IObRz0DtxDlMz5LZPe1v/0nIRwWnDbJOY9+FXLWQuQbnw+qMoYA2IiRyk
-         YLRQzS35hNQngaE/LNU0djINJn+1kwL/D8/XFBBziiALEirU9ntNrItlCA+41+ABNPAT
-         m7VA==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=iS04hnDePmreWyEbdjRSgiy2MxRfKWGQjrTc/wsLWs8=;
+        b=afRv8OpJcSSDIJPh0PXmmxqsra78dcqM5GhC7OKUbf72PkuevHY7KkdHbd+atJhNWs
+         74ApYFb5reQ0LknsEgStF9b3z/GboAQrpZ/2BeLNYkKni37ODHF3F9mwIDYZhAykNujf
+         CneUVj4u08MN1aTdaf7dxXazvJL0ZHJY3S1yAZjcA6nlBAA1ndXMjfu8NlQO0h5YlAQ/
+         W1+rZex8syA18npQIfh6Wj85IGPWe7A02yEavHVLv7r7hXe3JYSO197nHqAAC+uThkJr
+         pRonAySR91I2woUWq66B+SXmwrDJCEaBlePIKNeAhOZgFH1KoJKWoCz1RuBzxT2aR9KH
+         COVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ExBgLK2e6jqB4rgL/5xJLWTtvY3+SQtXbo1SYkz7jbE=;
-        b=q52nN9ZdVzXzdP8hBaVPRr2AbLCnQi3l4TwTWyYzzEpCV4ELuUeA1O7q413cOcUWMp
-         rEh4byK8oksMTkcadAzKQHEP+AUe97dXxFOMFgw2YffRwmkCg6wV1w9I0RYlghOxW2wn
-         SGRD/PZxW70EHcAwdYQ37CjBo0BoDxnsxyB5tA9efX0wRL8RKtd8ScEA5E8gx1N4G4Du
-         smLzScnIU6Zf0xZtlHPiyPSM91jwPhec+RZ5GNKutTPf9j9Cy6CGt0FN9UT9TIkjS1Bu
-         4M2aqE5gkXd7bgs8LtnbjPbzuiaThnu+QhOh0Am7md8HA7XMgzAhKHpv2lxliCQalVvR
-         nelA==
-X-Gm-Message-State: APzg51Bk8u6e8CxaeB2typ+eIQ+UfjGyqLw1ZaMLgzbHrzyGoeKmRCOm
-        lB0NQGeTIyQcDY2SYb0jVUuOy7fz
-X-Google-Smtp-Source: ANB0VdbXrqBJMIpAbaeS2O9mBxKtoR8rkxaz7Woi2rn7uX0V3grYR+MHRmhvydJDWfIYWuIbKxsHQg==
-X-Received: by 2002:a1c:ea17:: with SMTP id i23-v6mr2594896wmh.29.1535148618341;
-        Fri, 24 Aug 2018 15:10:18 -0700 (PDT)
-Received: from localhost ([2.29.27.208])
-        by smtp.gmail.com with ESMTPSA id 34-v6sm11622441wra.20.2018.08.24.15.10.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 24 Aug 2018 15:10:17 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 2/2] rerere: add not about files with existing conflict markers
-Date:   Fri, 24 Aug 2018 23:10:05 +0100
-Message-Id: <20180824221005.5983-2-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.18.0.1088.ge017bf2cd1
-In-Reply-To: <20180824221005.5983-1-t.gummerer@gmail.com>
-References: <20180824215619.GH13316@hank.intra.tgummerer.com>
- <20180824221005.5983-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=iS04hnDePmreWyEbdjRSgiy2MxRfKWGQjrTc/wsLWs8=;
+        b=nPnmjiJW5eNOUxmPEaFp0DTK7rJssYBYthoVHnx4OF3a9PtboK0bzWnvt2P5jeb1t3
+         HayxbsWY8RBb+4SaQwg5FaRPNF5NCMer6O383CmqvzGh3YMLinHZdsI9TM/hKhdkW9zf
+         rxm/YLF8jfMP0JzQZsLtZwnz755uI7rDMv35BIiIekRTnPPiqewpRQ0O77SPPXmEumkd
+         /xLdQ9Sjv/0KCqhPEw5/uPZDCwJca8UKreaAlvaabar+nZhts4s4brqGmvyRo7sphjGe
+         QEljjRq77bq8IrdR43uZ4oNmEpMRzQehr+48+OTPsboqLdwweA/GGXkWrZxoyt52PDAh
+         1R8Q==
+X-Gm-Message-State: APzg51BVjqM6pFyc/5UgaZ/xY58mv2ly8RSKVSqw6LrU2+LHTE7W7/YO
+        xVKAyKsVaNUMdCA1/AU4aO1nq9vX4GqZ9ppW1aHhCg==
+X-Google-Smtp-Source: ANB0VdZOm1lnA+OpEskbM4TOiYx23pUoj5Xa11+iLzMCjCh8vxvWEcNroNqdFgCItlpzt1cedXlX8xJXfTUY+DEJUiI=
+X-Received: by 2002:a24:764d:: with SMTP id z74-v6mr2876215itb.34.1535151225851;
+ Fri, 24 Aug 2018 15:53:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Fri, 24 Aug 2018 15:53:34 -0700
+Message-ID: <CAGyf7-FB6oBpKHTBLoqviu=Ymk0Ksi_EHrxM6-Z4YK44w0kpYg@mail.gmail.com>
+Subject: Re: Request for testing v2.19.0-rc0 *with builtin stash/rebase*
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git-for-windows@googlegroups.com, Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a file contains lines that look like conflict markers, 'git
-rerere' may fail not be able to record a conflict resolution.
-Emphasize that in the man page.
+On Fri, Aug 24, 2018 at 5:14 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> For that reason, I was delighted to see that our Google Summer of Code
+> pushed pretty hard in that direction. And I could not help myself so I had
+> to test how much faster things got. Here is the result of my first, really
+> quick and dirty test:
+>
+>                 without builtin stash/rebase    with builtin stash/rebase
+> t3400 (rebase)          1m27s                           32s
+> t3404 (rebase -i)       13m15s                          3m59s
+> t3903 (stash)           8m37s                           1m18s
+>
+> What can I say? Even if the numbers are off by as much as 10%, these are
+> impressive improvements: keep in mind that there is a lot of churn going
+> on in the test suite because it is itself implemented in Unix shell
+> scripts (and hence I won't even bother to try more correct performance
+> benchmarking because that is simply not possible when Unix shell scripts
+> are in the equation). So the speed improvements of the stash/rebase
+> commands are *even higher* than this.
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
+Thanks for taking the time to make these pre-releases available. I
+appreciate the effort. And the same to Junio, for always posting
+release candidates. We rely on them heavily to find changes that might
+cause issues before admins start upgrading in the wild and find them
+for us.
 
-Not sure if there may be a better place in the man page for this, but
-this is the best I could come up with.
+I downloaded both the rc0.1 and rc0.2 builds, as well as 2.18.0, and
+ran them all through Bitbucket Server's test suite a few times (to
+ensure warm disk for comparable numbers). I added support for some
+"simple" rebase cases a few releases ago, so we have a set of tests
+that verify the rebase behaviors we use. (We don't use git stash, so
+we don't have any tests in our suite for that.)
 
- Documentation/git-rerere.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
+Running our entire Git test suite (~1,600 tests) against Git for
+Windows 2.18.0 takes ~5 minutes, and 2.19.0-rc0.1 produced an almost
+identical duration. Running our tests against rc0.2 cut the duration
+down to 4 minutes. There were no test failures on either pre-release
+build.
 
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index 031f31fa47..036ea11528 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -211,6 +211,12 @@ would conflict the same way as the test merge you resolved earlier.
- 'git rerere' will be run by 'git rebase' to help you resolve this
- conflict.
- 
-+[NOTE]
-+'git rerere' relies on the conflict markers in the file to detect the
-+conflict.  If the file already contains lines that look the same as
-+lines with conflict markers, 'git rerere' may fail to record a
-+conflict resolution.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.18.0.1088.ge017bf2cd1
+To try and get a better sense of the rebase performance improvement
+specifically, I filtered down to a set of 14 specific tests which use
+it and ran those. On Git 2.18, those 14 tests take just over 19
+seconds. On 2.19.0-rc0.2, they take just over 8 seconds.
 
+When they do ship, whether it's in 2.19 (by default or optional) or
+later, the changes definitely offer some significant performance wins.
+
+Thanks again, to everyone involved, for all the effort that went into
+designing, implementing, reviewing and releasing these improvements.
+As someone who develops under Windows most of the time, they make a
+big difference in my day to day work. And that's not to mention all
+the Bitbucket Server and Bitbucket Data Center users who will enjoy a
+snappier experience as these changes make their way out into the wild.
+
+Best regards,
+Bryan Turner
