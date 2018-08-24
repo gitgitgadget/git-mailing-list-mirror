@@ -2,222 +2,271 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 61FBB1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 01:40:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 231991F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 01:47:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726835AbeHXFMg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 01:12:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59934 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725735AbeHXFMg (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 24 Aug 2018 01:12:36 -0400
-Received: from genre.crustytoothpaste.net (108-60-118-130.static.wiline.com [108.60.118.130])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E418D60745;
-        Fri, 24 Aug 2018 01:40:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535074813;
-        bh=UaonI9LnFiv+rqiJK1A7+qTSmw2s5edWXu/zzLsVA6I=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=zYd1/XLylZQ88i/+D33yYlg0gXZ+l9bi3EVxy6ouIPS1uMl769TW4OWxBUHxaIm0S
-         fRiujCY8klS1/dvU1OeBZ0jPpGXzU7aPWeUMWYMEyp/x3OBcvX463HeB4nhzW9USLu
-         rixsnVKcUey3iEwRTVOvc3zEe2zV5ALxxPe49hP8So9weNkCg9RPbkSEpoyxBEV61K
-         nlKUOXAHoscFOj51JVvPX/cfQvnPMG1goMZzOBzfdSj2jkbf2whEKsOqYS+7dZc+cM
-         y9uRCraYIyLBjX+LMUBlc+oDTnrmB9dDOWnxfWCDdkosvGC/H1s5aMZ32YMEefSvKc
-         pfvp2NpSi8qn2CmKYKU+LyLpPt3eGchIE8puUK7QSoQLsxqgStj5qTP4RvKNWUM86o
-         jdi8U/XSNWCHlbU2UU9KRrBpyIrJh/KyRYgkM+6JnTYVnsqGEpnF4wxkPsww6A1ED9
-         ysWNkS76gi3RdFMIaQes128v7AdGR75JJwl9lWxavL+hBodY6Ga
-Date:   Fri, 24 Aug 2018 01:40:07 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1726282AbeHXFT2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 01:19:28 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:39543 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725735AbeHXFT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 01:19:27 -0400
+Received: by mail-pf1-f174.google.com with SMTP id j8-v6so3734144pff.6
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 18:47:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MtO0ZB1x949y4iqB+kgZfbfjWgz569nVd0v12eoIZpg=;
+        b=laqo4ndvJhrh6tmbF/j8TZdscQ0/1jwg3qSPvKQxUBCQ4Ncj+kDR4ALTGDsnEfr8fB
+         OAME7GspIsRSYkqSY9M344Jevr/riQ+4j3d4bZwaGDhezGAo6e5X+o3TqIdfZy6Jajy+
+         3z23y8qns8pIInaL0D9DG2SwRm8yXiOLjdQsOd8yGRyfoWHLtDj1mxOgRgtT+0UN6AH/
+         eBFIWdoOWsCC+MHC9PNRQeK3Vm6vLex3ErRZ38T8mL0jdp6iDYuGtp6GZAJugrTiWXeC
+         3XKD4y7CoscMqvtaMvtCzTKJ+6celzjNhmdKbL2dKVJpU1h3Wnwbn9RmZvTOGBiTwlo9
+         +ArA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MtO0ZB1x949y4iqB+kgZfbfjWgz569nVd0v12eoIZpg=;
+        b=CEsItDVScRtEReXUjAwPOqPUxuZohJCNhyLfqkAkufHSAtty2TYabHjpqwk2qdun7w
+         slfuwUQExj8bXDnrnuEPeeDnheK5I9K6mUH+wEPGeVLS3ETFbi3E76r8jsbm7rV4Otl8
+         cSh0Yzd5OqdhulfBjo6wsRtKvxQAskqJkHNle6YEkjPjG7cI0uglaLPa3wR1FFJi2LdZ
+         hpswzz650dwaCT7SHp264SXS6Duxn5U01reZp7VDGcfhByANyNo1eKlapruKy8SNiJiE
+         Uae7HEWhkqpLOVIainU5YZkHHZT9IA/TCfOaRF9re2skq7G6vTlLFaQcyfKvvcbRA6BP
+         XH3A==
+X-Gm-Message-State: AOUpUlFUDeh0uvhcRVc6jCid0Whklw1cNu//Eg8la1SFtbR2uYQDlg+z
+        Ie2XZbTcBVZFHhhY0g90p68=
+X-Google-Smtp-Source: AA+uWPzXa3rdWjFkkF3NMjvi/+7tB4CkJImYuKoUi+vCNozZsQRc853X5YpYsYCfHJ5fDTTRhm0yqQ==
+X-Received: by 2002:a63:3587:: with SMTP id c129-v6mr31424553pga.290.1535075225595;
+        Thu, 23 Aug 2018 18:47:05 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id t12-v6sm7159468pgg.72.2018.08.23.18.47.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 23 Aug 2018 18:47:04 -0700 (PDT)
+Date:   Thu, 23 Aug 2018 18:47:03 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Linus Torvalds <torvalds@linux-foundation.org>,
         Edward Thomson <ethomson@edwardthomson.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         demerphq <demerphq@gmail.com>,
         Brandon Williams <bmwill@google.com>,
         Derrick Stolee <stolee@gmail.com>
 Subject: Re: Questions about the hash function transition
-Message-ID: <20180824014007.GF535143@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>, Brandon Williams <bmwill@google.com>,
-        Derrick Stolee <stolee@gmail.com>
+Message-ID: <20180824014703.GE99542@aiede.svl.corp.google.com>
 References: <878t4xfaes.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5Mfx4RzfBqgnTE/w"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <878t4xfaes.fsf@evledraar.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---5Mfx4RzfBqgnTE/w
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ævar Arnfjörð Bjarmason wrote:
 
-On Thu, Aug 23, 2018 at 04:02:51PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> > [...]
-> > Goals
-> > -----
-> > 1. The transition to SHA-256 can be done one local repository at a time.
-> >    a. Requiring no action by any other party.
-> >    b. A SHA-256 repository can communicate with SHA-1 Git servers
-> >       (push/fetch).
-> >    c. Users can use SHA-1 and SHA-256 identifiers for objects
-> >       interchangeably (see "Object names on the command line", below).
-> >    d. New signed objects make use of a stronger hash function than
-> >       SHA-1 for their security guarantees.
-> > 2. Allow a complete transition away from SHA-1.
-> >    a. Local metadata for SHA-1 compatibility can be removed from a
-> >       repository if compatibility with SHA-1 is no longer needed.
-> > 3. Maintainability throughout the process.
-> >    a. The object format is kept simple and consistent.
-> >    b. Creation of a generalized repository conversion tool.
-> >
-> > Non-Goals
-> > ---------
-> > 1. Add SHA-256 support to Git protocol. This is valuable and the
-> >    logical next step but it is out of scope for this initial design.
->=20
+> I wanted to send another series to clarify things in
+> hash-function-transition.txt, but for some of the issues I don't know
+> the answer, and I had some questions after giving this another read.
+
+Thanks for looking it over!  Let's go. :)
+
+[...]
+>> Objective
+>> ---------
+>> Migrate Git from SHA-1 to a stronger hash function.
+>
+> Should way say "Migrate Git from SHA-1 to SHA-256" here instead?
+>
+> Maybe it's overly specific, i.e. really we're also describnig how /any/
+> hash function transition might happen, but having just read this now
+> from start to finish it takes us a really long time to mention (and at
+> first, only offhand) that SHA-256 is the new hash.
+
+Well, the objective really is to migrate to a stronger hash function,
+and that we chose SHA-256 is part of the details of how we chose to do
+that.  So I think this would be a misleading change.
+
+You can tell that I'm not just trying to justify after the fact
+because the initial version of the design doc at [*] already uses this
+wording, and that version assumed that the hash function was going to
+be SHA-256.
+
+[*] https://public-inbox.org/git/20170304011251.GA26789@aiede.mtv.corp.google.com/
+
+[...]
+>> Non-Goals
+>> ---------
+>> 1. Add SHA-256 support to Git protocol. This is valuable and the
+>>    logical next step but it is out of scope for this initial design.
+>
 > This is a non-goal according to the docs, but now that we have protocol
 > v2 in git, perhaps we could start specifying or describing how this
 > protocol extension will work?
 
-I have code that does this.  The reason is that the first stage of the
-transition code is to implement stage 4 of the transition: that is, a
-full SHA-256 implementation without any SHA-1 support.  Implementing it
-that way means that we don't have to deal with any of the SHA-1 to
-SHA-256 mapping in the first stage of the code.
+Yes, that would be great!  But I suspect it's cleanest to do so in a
+separate doc.  That would allow clarifying this part, by pointing to
+the protocol doc.
 
-In order to clone an SHA-256 repo (which the testsuite is completely
-broken without), you need to be able to have basic SHA-256 support in
-the protocol.  I know this was a non-goal, but the alternative is a an
-inability to run the testsuite using SHA-256 until all the code is
-merged, which is unsuitable for development.  The transition plan also
-anticipates stage 4 (full SHA-256) support before earlier stages, so
-this will be required.
-
-I hope to be able to spend some time documenting this in a little bit.
-I have documentation for that code in my branch, but I haven't sent it
-in yet.
-
-I realize I have a lot of code that has not been sent in yet, but I also
-tend to build on my own series a lot, and I probably need to be a bit
-better about extracting reusable pieces that can go in independently
-without waiting for the previous series to land.
-
-> > [...]
-> > 3. Intermixing objects using multiple hash functions in a single
-> >    repository.
->=20
+[...]
+>> 3. Intermixing objects using multiple hash functions in a single
+>>    repository.
+>
 > But isn't that the goal now per "Translation table" & writing both SHA-1
 > and SHA-256 versions of objects?
 
-No, I think this statement is basically that you have to have the entire
-repository use all one algorithm under the hood in the .git directory,
-translation tables excluded.  I don't think that's controversial.
+No, we don't write both versions of objects.  The translation records
+both names of an object.
 
-> > [...]
-> > Pack index
-> > ~~~~~~~~~~
-> > Pack index (.idx) files use a new v3 format that supports multiple
-> > hash functions. They have the following format (all integers are in
-> > network byte order):
-> >
-> > - A header appears at the beginning and consists of the following:
-> >   - The 4-byte pack index signature: '\377t0c'
-> >   - 4-byte version number: 3
-> >   - 4-byte length of the header section, including the signature and
-> >     version number
-> >   - 4-byte number of objects contained in the pack
-> >   - 4-byte number of object formats in this pack index: 2
-> >   - For each object format:
-> >     - 4-byte format identifier (e.g., 'sha1' for SHA-1)
->=20
+[...]
+>>   - For each object format:
+>>     - 4-byte format identifier (e.g., 'sha1' for SHA-1)
+>
 > So, given that we have 4-byte limit and have decided on SHA-256 are we
-> just going to call this 'sha2'? That might be confusingly ambiguous
+> just going to call this 'sha2'?
+
+Good question.  'sha2' sounds fine to me.  If we want to do
+SHA-512/256 later, say, we'd just have to come up with a name for that
+at that point (and it doesn't have to be ASCII).
+
+>                                 That might be confusingly ambiguous
+
+This is a binary format.  Are you really worried that people are going
+to misinterpret the magic numbers it contains?
+
 > since SHA2 is a standard with more than just SHA-256, maybe 's256', or
 > maybe we should give this 8 bytes with trailing \0s so we can have
 > "SHA-1\0\0\0" and "SHA-256\0"?
 
-This is the format_version field in struct git_hash_algo.
+For what it's worth, if that's the alternative, I'd rather have four
+random bytes.
 
-For SHA-1, I have 0x73686131, which is "sha1", big-endian, and for
-SHA-256, I have 0x73323536, which is "s256", big-endian.  The former is
-in the codebase already; the latter, in my hash-impl branch.
+[...]
+>> The loose object index is protected against concurrent writes by a
+>> lock file $GIT_OBJECT_DIR/loose-object-idx.lock. To add a new loose
+>> object:
+>>
+>> 1. Write the loose object to a temporary file, like today.
+>> 2. Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the lock.
+>> 3. Rename the loose object into place.
+>> 4. Open loose-object-idx with O_APPEND and write the new object
+>> 5. Unlink loose-object-idx.lock to release the lock.
+>>
+>> To remove entries (e.g. in "git pack-refs" or "git-prune"):
+>>
+>> 1. Open loose-object-idx.lock with O_CREAT | O_EXCL to acquire the
+>>    lock.
+>> 2. Write the new content to loose-object-idx.lock.
+>> 3. Unlink any loose objects being removed.
+>> 4. Rename to replace loose-object-idx, releasing the lock.
+>
+> Do we expect multiple concurrent writers to poll the lock if they can't
+> aquire it right away? I.e. concurrent "git commit" would block? Has this
+> overall approach been benchmarked somewhere?
 
-If people have objections, we can change this up until we merge the pack
-index v3 code (which is not yet finished).  It needs to be unique, and
-that's it.  We could specify 0x00000001 and 0x00000002 if we wanted,
-although I feel the values I mentioned above are self-documenting, which
-is desirable.
+Git doesn't support concurrent "git commit" today.
 
-> > [...]
-> > - The trailer consists of the following:
-> >   - A copy of the 20-byte SHA-256 checksum at the end of the
-> >     corresponding packfile.
-> >
-> >   - 20-byte SHA-256 checksum of all of the above.
->=20
-> We need to update both of these to 32 byte, right? Or are we planning to
-> truncate the checksums?
->=20
-> This seems like just a mistake when we did s/NewHash/SHA-256/g, but then
-> again it was originally "20-byte NewHash checksum" ever since 752414ae43
-> ("technical doc: add a design doc for hash function transition",
-> 2017-09-27), so what do we mean here?
+My feeling is that if loose object writing becomes a performance
+problem, we should switch to writing packfiles instead (as "git
+receive-pack" already does).  So when there's a choice between better
+performance of writing loose objects and simplicity, I lean toward
+simplicity (though that's not absolute, there are definitely tradeoffs
+to be made).
 
-Yes, this will be 32 bytes.  The code I have uses 32 bytes, because
-truncating it means that we have to write special code just for that
-case, which seems silly.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Earlier discussion about this had sharded loose object indices for
+each xy/ subdir.  It was more complicated, for not much gain.
 
---5Mfx4RzfBqgnTE/w
-Content-Type: application/pgp-signature; name="signature.asc"
+[...]
+> Maybe I've missed some subtlety where that won't work, I'm just
+> concerned that something that's writing a lot of objects in parallel
+> will be slowed down (e.g. the likes of BFG repo cleaner).
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
+BFG repo cleaner is an application like fast-import that is a good fit
+for writing packs, not loose objects.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlt/YfcACgkQv1NdgR9S
-9osBUg//ZW9LHQK2EyukLoFX13Eu83z7kmD4WlpSYQ9h4weQ7Ew4Jc5dcsFblMmn
-2dEDSldCpOm9K4/DBRpDTz+XBjE9SnsO8eGniJxNVO41xDpV/6W+Z8ebtpcaK2Cm
-0LAia5hqOrpzTlpfonvCtbcob50izHF0TzhjYno0ehywoSdfvlGWgDe32p5Xa3La
-Q8vNasCRbkkTYYRhUOL52xnB1BdMl2ZaRSlHVfdV3h0vEEjdPX37MGHlXYo+LYEZ
-Guc4wP7QAZZ+QTXR5pUOQp5WcE97uNP+fK1W/kuuSx5x8qXgg4Wpquj8hZyjdFgJ
-JNV0TEo5CpIRiKn6RnDBFL0T0RLOqylhwoZm1/hvSqaeS8Poq7YjrBREnMX6n+Hl
-JQU+ImoQeR+uIhQ4YtbyhMRvO6OrjwKcBPDmOOBUa4Uph/xD9a4ktiZyAu5cOJEz
-NlCmyCrD2PZgDdlnCvjdpesEvwsGgZdpdJGTp8jbKAj8+1R+i0QX4/wAyx7zqO54
-D7CYksD1MHdKkY08rcypsPeuo/HoiF8tIN33F24TAU3cLK6iI5/sI/36I8GIfXkg
-L3neml/lVQ5XXALYLszqQO7t+/JCYcSf/wJhfVDCTv/s6tzgNHk60MjVa4zaTomy
-DjCXOpHoY7nSh7lW/VlBX8guoA0/9kmL7Va27VrHaeUhCROrQoY=
-=rQkz
------END PGP SIGNATURE-----
+[...]
+>> Since all operations that make new objects (e.g., "git commit") add
+>> the new objects to the corresponding index, this mapping is possible
+>> for all objects in the object store.
+>
+> Are we going to need a midx version of these mapping files? How does
+> midx fit into this picture? Perhaps it's too obscure to worry about...
 
---5Mfx4RzfBqgnTE/w--
+That's a great question!  I think the simplest answer is to have a
+midx only for the primary object format and fall back to using
+ordinary idx files for the others.
+
+The midx format already has a field for hash function (thanks,
+Derrick!).
+
+[...]
+>> 5. clean up: remove the SHA-1 based pack file, index, and
+>>    topologically sorted list obtained from the server in steps 1
+>>    and 2.
+>
+> Doesn't this process require us to implement a "fetch quarantine"? Least
+> we have (e.g. other concurrent fetches) referencing those new SHA-1
+> objects we've fetched in a pack that we'll remove in step #5?
+
+During a fetch today, objects aren't accessible until the
+corresponding .idx file has been put in place.
+
+[...]
+>> The user can also explicitly specify which format to use for a
+>> particular revision specifier and for output, overriding the mode. For
+>> example:
+>>
+>> git --output-format=sha1 log abac87a^{sha1}..f787cac^{sha256}
+>
+> How is this going to interact with other peel syntax? I.e. now we have
+> <object>^{commit} <sha>^{tag} etc. It seems to me we'll need not ^{sha1}
+> but ^{sha1:<current_type>}, e.g. ^{sha1:commit} or ^{sha1:tag}, with
+> current ^{} being a synonym for ^{sha1:}.
+>
+> Or is this expected to be chained, as e.g. <object>^{tag}^{sha256} ?
+
+Great question.  The latter (well, <hexdigits>^{sha256}^{tag}, not the
+other way around).
+
+>> Transition plan
+>> ---------------
+>
+> One thing that's not covered in this document at all, which I feel is
+> missing, is how we're going to handle references to old commit IDs in
+> commit messages, bug trackers etc. once we go through the whole
+> migration process.
+>
+> I.e. are users who expect to be able to read old history and "git show
+> <sha1 I found>" expected to maintain a repository that has a live
+> sha1<->sha256 mapping forever, or could we be smarter about this and
+> support some sort of marker in the repository saying "maintain the
+> mapping up until this point".
+
+That's a good question, too.  My feeling is that such a selective
+mapping could be invented later and would want to work differently
+than this design.  The important thing with this design is that the
+information is not lost, so the door to implementing that is not
+closed.
+
+As a brief strawman of what I mean, I wouldn't be surprised if
+projects want to distribute a simple signed flat sha1<->sha256 mapping
+table for commits from "before the SHA-256 era", and Git could learn
+to consume that.
+
+Thanks,
+Jonathan
