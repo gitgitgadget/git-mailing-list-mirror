@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB1461F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 15:20:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 623FE1F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 15:20:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727218AbeHXSzl (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 14:55:41 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46234 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726535AbeHXSzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 14:55:41 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a108-v6so7767661wrc.13
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 08:20:35 -0700 (PDT)
+        id S1727273AbeHXSzn (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 14:55:43 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53852 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726535AbeHXSzn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 14:55:43 -0400
+Received: by mail-wm0-f67.google.com with SMTP id b19-v6so1944863wme.3
+        for <git@vger.kernel.org>; Fri, 24 Aug 2018 08:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eF4Y6yP13d8ZfGBL5/gGFwpyLrHDLByx1MZu3iWLRgo=;
-        b=aAgEf7uPSLA3jtAXmQINO99CZpy0b7e9FLZnBOXs7SeVvS20iSAyEOc2v10ZggYzxu
-         AR7u/WcWGfUNqMIGfp2iBFh5EbutK1UK2vZ4rduxiPyNm/fKfpYH4hD+1EF4kjwuSZ8d
-         LG3BocwoUIdfP6/32SBSzDLR4HRCA1nMXevTYhrznOgQIzrdjeOgArqDAHrghJKnOU8F
-         3qMLEZe6zbWrMoJ5uRyn4lXF/IqKBCzBd8QVUfeJI4TYgbbyt8tsZEZqLqdgOjU6enT6
-         YN4Bx6B5CCY/pBHqYRsTjamKsBLjWT9uZULktH/GWZj2sFGDe41uOp/NZJraQ4qPpVR+
-         vBng==
+        bh=//K+q9BJzyUB3j0s6RVf0plU9hbpD3Mq0d5M69cR6dI=;
+        b=bmurXm3bUyI8lK8gDEJBbHbLYanZJvb48hO3MHQFUBeqOCqPm5NrE5h7XwC8rBnqE+
+         AedUCYEz6lffv8X6Tt/U5Smt2DZGniZPBMws1ihu85vyxJZEPXUCBJChrYfyl3hL/42Q
+         wVVZQQou1irJo2bCryRFlQ0CxkollYHRJ+RqJ691pfnXcT3cEM1aUPhrVzxone8pkd+a
+         U1FLmKm2BcoENYON6eG1jcN2QwecccnYj+SFQdqKgozdJElyT2KZhaXFnFcCrx1Wm7Nd
+         t0pg78ypMNsnE3UUE29mKMEpAnJW7vxcPh+TY3zFfN/QGp3c54FSUrh2kouO2W3xcae0
+         KICg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eF4Y6yP13d8ZfGBL5/gGFwpyLrHDLByx1MZu3iWLRgo=;
-        b=kqhi21IDHBbtN9BVY40Ft/GkSJwRxtl4RzoKfwbNbLMaPHF48JI1aMakcj0sPXM+r6
-         2q2ITJ8lisf3OT3dm+R59WXcf+S9RbIouTvUlrHNuSh5uLBueNJgk/5CTHW6uBJQOqUM
-         dhsg1u66ZFG2PaiqI6XYtoUaeDyOCC7OQ6m9QXNh8VTE7z6E+nTTzY84921I2C5CwMPZ
-         RXaOMiWC/DIUc+2EBTnwrzanM+LdNEiVWVyqeQeLIJS/74fnWs7n3NFFnqggdczd5ij/
-         sVCADxDE9/ZbrASfoevoNG8oVWfpdqx/R32+zvUMdxU05kjjb4a3LWHUyTiZ+qAWFHw5
-         zdfg==
-X-Gm-Message-State: APzg51A07oQ4QZDdP9nhATT5qUuNGrfXeskOtOUTA0YAhD9MVWW7bpCK
-        OcqIjQSvZnGvw2uV6A9Qb+uHWJdR/y4=
-X-Google-Smtp-Source: ANB0VdbG0SgvsALMARycJiHAvIrr51H67I1wlOP4bbMmASfGs8El63iUjE4LeHHXGSUI8gcNZcAj1w==
-X-Received: by 2002:a5d:470d:: with SMTP id y13-v6mr1529834wrq.229.1535124034322;
-        Fri, 24 Aug 2018 08:20:34 -0700 (PDT)
+        bh=//K+q9BJzyUB3j0s6RVf0plU9hbpD3Mq0d5M69cR6dI=;
+        b=lucYa61kTDbJgT9aw4dBxKw/Fyc1snSluVmJSHbV1OK3KEjs+4PUsHDfqQz1NV9v/z
+         ZhIMrH/ZOpd/3e7ySF08VOzFBjyoRU8Q56lkXfPc7i53SdHMzyOSdCMyHKe53dwG4mbB
+         xgqdkUf/ydwK+lPmxG8fpVSdaN7uAxtxS7m4r3D5B7S09JWu2EDs+ohKB1EVh50cWivU
+         32dM9VaDZWn/gyTowAvHTE6pGIVXCzBm0Gw1WJYpqyXLSPJTNfRpqhbRUF7/VLsqBlMG
+         QM2WfM81t9sFHmjQ6CSYvELZ4UnS3ts4K7088QPvM/N7bYuD80YUVg8xhK58dSotvrhv
+         rG/g==
+X-Gm-Message-State: APzg51CXKD8H/r85JVaKCghhHNDO0hCeZI5dJ6AjHREAiomay69YrV0z
+        mE9iXZ25/zecU+1qH87ZG2hIlxHo7Ig=
+X-Google-Smtp-Source: ANB0VdbUl4NuLsx0hNvU6nwzgY+FHJAGb+mabMnK0p4B8bZWL+B3sapVzzPWCVCy65+RGiUgix5fxg==
+X-Received: by 2002:a1c:cc0e:: with SMTP id h14-v6mr1750509wmb.2.1535124035737;
+        Fri, 24 Aug 2018 08:20:35 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id z16-v6sm6689485wrq.78.2018.08.24.08.20.33
+        by smtp.gmail.com with ESMTPSA id z16-v6sm6689485wrq.78.2018.08.24.08.20.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Aug 2018 08:20:33 -0700 (PDT)
+        Fri, 24 Aug 2018 08:20:35 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 4/6] tests: use shorter here-docs in chainlint.sed for AIX sed
-Date:   Fri, 24 Aug 2018 15:20:14 +0000
-Message-Id: <20180824152016.20286-5-avarab@gmail.com>
+Subject: [PATCH v4 5/6] tests: fix version-specific portability issue in Perl JSON
+Date:   Fri, 24 Aug 2018 15:20:15 +0000
+Message-Id: <20180824152016.20286-6-avarab@gmail.com>
 X-Mailer: git-send-email 2.18.0.865.gffc8e1a3cd6
 In-Reply-To: <CAPig+cS4yeHNbc1Anq1DtLPEEGLpGeGEV74JHZrYft2wRmZAPQ@mail.gmail.com>
 References: <CAPig+cS4yeHNbc1Anq1DtLPEEGLpGeGEV74JHZrYft2wRmZAPQ@mail.gmail.com>
@@ -73,178 +73,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve the portability of chainlint by using shorter here-docs. On
-AIX sed will complain about:
+The test guarded by PERLJSON added in 75459410ed ("json_writer: new
+routines to create JSON data", 2018-07-13) assumed that a JSON boolean
+value like "true" or "false" would be represented as "1" or "0" in
+Perl.
 
-    sed: 0602-417 The label :hereslurp is greater than eight
-    characters
+This behavior can't be relied upon, e.g. with JSON.pm 2.50 and
+JSON::PP A JSON::PP::Boolean object will be represented as "true" or
+"false". To work around this let's check if we have any refs left
+after we check for hashes and arrays, assume those are JSON objects,
+and coerce them to a known boolean value.
 
-This, in combination with the previous fix to this file makes
-GIT_TEST_CHAIN_LINT=1 (which is the default) working again on AIX
-without issues, and the "gmake check-chainlint" test also passes.
+The behavior of this test still looks odd to me. Why implement our own
+ad-hoc encoder just for some one-off test, as opposed to say Perl's
+own Data::Dumper with Sortkeys et al? But with this change it works,
+so let's leave it be.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/chainlint.sed | 56 ++++++++++++++++++++++++-------------------------
- 1 file changed, 28 insertions(+), 28 deletions(-)
+ t/t0019/parse_json.perl | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/t/chainlint.sed b/t/chainlint.sed
-index dcb4b333ed..c80d2fad7a 100644
---- a/t/chainlint.sed
-+++ b/t/chainlint.sed
-@@ -97,11 +97,11 @@
- /<<[ 	]*[-\\']*[A-Za-z0-9_]/ {
- 	s/^\(.*\)<<[ 	]*[-\\']*\([A-Za-z0-9_][A-Za-z0-9_]*\)'*/<\2>\1<</
- 	s/[ 	]*<<//
--	:hereslurp
-+	:hered
- 	N
- 	/^<\([^>]*\)>.*\n[ 	]*\1[ 	]*$/!{
- 		s/\n.*$//
--		bhereslurp
-+		bhered
- 	}
- 	s/^<[^>]*>//
- 	s/\n.*$//
-@@ -149,7 +149,7 @@ s/.*\n//
- 
- :slurp
- # incomplete line "...\"
--/\\$/bincomplete
-+/\\$/bicmplte
- # multi-line quoted string "...\n..."?
- /"/bdqstring
- # multi-line quoted string '...\n...'? (but not contraction in string "it's")
-@@ -171,7 +171,7 @@ s/.*\n//
- 	/"[^"]*#[^"]*"/!s/[ 	]#.*$//
- }
- # one-liner "case ... esac"
--/^[ 	]*case[ 	]*..*esac/bcheckchain
-+/^[ 	]*case[ 	]*..*esac/bchkchn
- # multi-line "case ... esac"
- /^[ 	]*case[ 	]..*[ 	]in/bcase
- # multi-line "for ... done" or "while ... done"
-@@ -200,32 +200,32 @@ s/.*\n//
- /^[ 	]*fi[ 	]*[<>|]/bdone
- /^[ 	]*fi[ 	]*)/bdone
- # nested one-liner "(...) &&"
--/^[ 	]*(.*)[ 	]*&&[ 	]*$/bcheckchain
-+/^[ 	]*(.*)[ 	]*&&[ 	]*$/bchkchn
- # nested one-liner "(...)"
--/^[ 	]*(.*)[ 	]*$/bcheckchain
-+/^[ 	]*(.*)[ 	]*$/bchkchn
- # nested one-liner "(...) >x" (or "2>x" or "<x" or "|x")
--/^[ 	]*(.*)[ 	]*[0-9]*[<>|]/bcheckchain
-+/^[ 	]*(.*)[ 	]*[0-9]*[<>|]/bchkchn
- # nested multi-line "(...\n...)"
- /^[ 	]*(/bnest
- # multi-line "{...\n...}"
- /^[ 	]*{/bblock
- # closing ")" on own line -- exit subshell
--/^[ 	]*)/bclosesolo
-+/^[ 	]*)/bclssolo
- # "$((...))" -- arithmetic expansion; not closing ")"
--/\$(([^)][^)]*))[^)]*$/bcheckchain
-+/\$(([^)][^)]*))[^)]*$/bchkchn
- # "$(...)" -- command substitution; not closing ")"
--/\$([^)][^)]*)[^)]*$/bcheckchain
-+/\$([^)][^)]*)[^)]*$/bchkchn
- # multi-line "$(...\n...)" -- command substitution; treat as nested subshell
- /\$([^)]*$/bnest
- # "=(...)" -- Bash array assignment; not closing ")"
--/=(/bcheckchain
-+/=(/bchkchn
- # closing "...) &&"
- /)[ 	]*&&[ 	]*$/bclose
- # closing "...)"
- /)[ 	]*$/bclose
- # closing "...) >x" (or "2>x" or "<x" or "|x")
- /)[ 	]*[<>|]/bclose
--:checkchain
-+:chkchn
- # mark suspect if line uses ";" internally rather than "&&" (but not ";" in a
- # string and not ";;" in one-liner "case...esac")
- /;/{
-@@ -244,7 +244,7 @@ n
- bslurp
- 
- # found incomplete line "...\" -- slurp up next line
--:incomplete
-+:icmplte
- N
- s/\\\n//
- bslurp
-@@ -282,11 +282,11 @@ bfolded
- :heredoc
- s/^\(.*\)<<[ 	]*[-\\']*\([A-Za-z0-9_][A-Za-z0-9_]*\)'*/<\2>\1<</
- s/[ 	]*<<//
--:hereslurpsub
-+:heredsub
- N
- /^<\([^>]*\)>.*\n[ 	]*\1[ 	]*$/!{
- 	s/\n.*$//
--	bhereslurpsub
-+	bheredsub
- }
- s/^<[^>]*>//
- s/\n.*$//
-@@ -316,43 +316,43 @@ x
- # is 'done' or 'fi' cuddled with ")" to close subshell?
- /done.*)/bclose
- /fi.*)/bclose
--bcheckchain
-+bchkchn
- 
- # found nested multi-line "(...\n...)" -- pass through untouched
- :nest
- x
--:nestslurp
-+:nstslurp
- n
- # closing ")" on own line -- stop nested slurp
--/^[ 	]*)/bnestclose
-+/^[ 	]*)/bnstclose
- # comment -- not closing ")" if in comment
--/^[ 	]*#/bnestcontinue
-+/^[ 	]*#/bnstcnt
- # "$((...))" -- arithmetic expansion; not closing ")"
--/\$(([^)][^)]*))[^)]*$/bnestcontinue
-+/\$(([^)][^)]*))[^)]*$/bnstcnt
- # "$(...)" -- command substitution; not closing ")"
--/\$([^)][^)]*)[^)]*$/bnestcontinue
-+/\$([^)][^)]*)[^)]*$/bnstcnt
- # closing "...)" -- stop nested slurp
--/)/bnestclose
--:nestcontinue
-+/)/bnstclose
-+:nstcnt
- x
--bnestslurp
--:nestclose
-+bnstslurp
-+:nstclose
- s/^/>>/
- # is it "))" which closes nested and parent subshells?
- /)[ 	]*)/bslurp
--bcheckchain
-+bchkchn
- 
- # found multi-line "{...\n...}" block -- pass through untouched
- :block
- x
- n
- # closing "}" -- stop block slurp
--/}/bcheckchain
-+/}/bchkchn
- bblock
- 
- # found closing ")" on own line -- drop "suspect" from final line of subshell
- # since that line legitimately lacks "&&" and exit subshell loop
--:closesolo
-+:clssolo
- x
- s/?!AMP?!//
- p
+diff --git a/t/t0019/parse_json.perl b/t/t0019/parse_json.perl
+index ca4e5bfa78..fea87fb81b 100644
+--- a/t/t0019/parse_json.perl
++++ b/t/t0019/parse_json.perl
+@@ -34,6 +34,9 @@ sub dump_item {
+     } elsif (ref($value) eq 'HASH') {
+ 	print "$label_in hash\n";
+ 	dump_hash($label_in, $value);
++    } elsif (ref $value) {
++	my $bool = $value ? 1 : 0;
++	print "$label_in $bool\n";
+     } elsif (defined $value) {
+ 	print "$label_in $value\n";
+     } else {
 -- 
 2.18.0.865.gffc8e1a3cd6
 
