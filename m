@@ -6,109 +6,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31AD31F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 06:42:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BF501F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 06:45:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726649AbeHXKPn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 06:15:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54288 "HELO cloud.peff.net"
+        id S1726589AbeHXKS2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 06:18:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:54296 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726198AbeHXKPn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 06:15:43 -0400
-Received: (qmail 13788 invoked by uid 109); 24 Aug 2018 06:42:30 -0000
+        id S1726198AbeHXKS2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 06:18:28 -0400
+Received: (qmail 13924 invoked by uid 109); 24 Aug 2018 06:45:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 06:42:30 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 06:45:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24172 invoked by uid 111); 24 Aug 2018 06:42:37 -0000
+Received: (qmail 24202 invoked by uid 111); 24 Aug 2018 06:45:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 Aug 2018 02:42:37 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 Aug 2018 02:45:21 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2018 02:42:29 -0400
-Date:   Fri, 24 Aug 2018 02:42:29 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2018 02:45:13 -0400
+Date:   Fri, 24 Aug 2018 02:45:13 -0400
 From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org, cocci@systeme.lip6.fr
-Subject: excluding a function from coccinelle transformation
-Message-ID: <20180824064228.GA3183@sigill.intra.peff.net>
+To:     Jacob Keller <jacob.keller@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Paul Smith <paul@mad-scientist.net>,
+        Git mailing list <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
+Message-ID: <20180824064512.GA10521@sigill.intra.peff.net>
+References: <20180823034707.GD535143@genre.crustytoothpaste.net>
+ <20180823050418.GB318@sigill.intra.peff.net>
+ <f854aba0-6d28-7f2b-aad2-858983c4af36@gmail.com>
+ <20180823161451.GB29579@sigill.intra.peff.net>
+ <CA+P7+xqbt_BVi9+1-4=ha64LW_07dJB84F0gjKd9TRE1R-Ld7A@mail.gmail.com>
+ <20180823234049.GA3855@sigill.intra.peff.net>
+ <20180824000637.GA10847@sigill.intra.peff.net>
+ <20180824001643.GA14259@sigill.intra.peff.net>
+ <CA+P7+xpm-gsjCpPOZ=2z03Peb1Jb6axKo2nTp=UUpAFgWNureg@mail.gmail.com>
+ <20180824025955.GA24535@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20180824025955.GA24535@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In Git's Coccinelle patches, we sometimes want to suppress a
-transformation inside a particular function. For example, in finding
-conversions of hashcmp() to oidcmp(), we should not convert the call in
-oidcmp() itself, since that would cause infinite recursion. We write the
-semantic patch like this:
+On Thu, Aug 23, 2018 at 10:59:55PM -0400, Jeff King wrote:
 
-  @@
-  identifier f != oidcmp;
-  expression E1, E2;
-  @@
-    f(...) {...
-  - hashcmp(E1->hash, E2->hash)
-  + oidcmp(E1, E2)
-    ...}
+> So I think we have a winner. I'll polish that up into patches and send
+> it out later tonight.
 
-This catches some cases, but not all. For instance, there's one case in
-sequencer.c which it does not convert. Now here's where it gets weird.
-If I instead use the angle-bracket form of ellipses, like this:
+Oof. This rabbit hole keeps going deeper and deeper. I wrote up my
+coccinelle findings separately in:
 
-  @@
-  identifier f != oidcmp;
-  expression E1, E2;
-  @@
-    f(...) {<...
-  - hashcmp(E1->hash, E2->hash)
-  + oidcmp(E1, E2)
-    ...>}
+  https://public-inbox.org/git/20180824064228.GA3183@sigill.intra.peff.net/
 
-then we do generate the expected diff! Here's a much more cut-down
-source file that demonstrates the same behavior:
-
-  int foo(void)
-  {
-    if (1)
-      if (!hashcmp(x, y))
-        return 1;
-    return 0;
-  }
-
-If I remove the initial "if (1)" then a diff is generated with either
-semantic patch (and the particulars of the "if" are not important; the
-same thing happens if it's a while-loop. The key thing seems to be that
-the code is not in the top-level block of the function).
-
-And here's some double-weirdness. I get those results with spatch 1.0.4,
-which is what's in Debian unstable. If I then upgrade to 1.0.6 from
-Debian experimental, then _neither_ patch produces any results! Instead
-I get:
-
-  init_defs_builtins: /usr/lib/coccinelle/standard.h
-  (ONCE) Expected tokens oidcmp hashcmp hash
-  Skipping:foo.c
-
-(whereas before, even the failing case said "HANDLING: foo.c").
-
-And then one final check: I built coccinelle from the current tip of
-https://github.com/coccinelle/coccinelle (1.0.7-00504-g670b2243).
-With my cut-down case, that version generates a diff with either
-semantic patch. But for the full-blown case in sequencer.c, it still
-only works with the angle brackets.
-
-So my questions are:
-
-  - is this a bug in coccinelle? Or I not understand how "..." is
-    supposed to work here?
-
-    (It does seem like there was possibly a separate bug introduced in
-    1.0.6 that was later fixed; we can probably ignore that and just
-    focus on the behavior in the current tip of master).
-
-  - is there a better way to represent this kind of "transform this
-    everywhere _except_ in this function" semantic patch? (preferably
-    one that does not tickle this bug, if it is indeed a bug ;) ).
+which is possibly a coccinelle bug (there I talked about oidcmp, since
+it can be demonstrated with the existing transformations, but the same
+thing happens with my hasheq patches). I'll wait to see how that
+discussion plays out, but I do otherwise have hasheq() patches ready to
+go, so it's probably not worth anybody else digging in further.
 
 -Peff
