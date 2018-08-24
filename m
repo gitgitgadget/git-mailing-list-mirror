@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 452BE1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEC281F404
 	for <e@80x24.org>; Fri, 24 Aug 2018 13:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727880AbeHXRE7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 13:04:59 -0400
-Received: from ao2.it ([92.243.12.208]:59510 "EHLO ao2.it"
+        id S1727994AbeHXRFA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 13:05:00 -0400
+Received: from ao2.it ([92.243.12.208]:59504 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727813AbeHXRE7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 13:04:59 -0400
+        id S1727415AbeHXRFA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 13:05:00 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1ftC8c-0000hX-Mj; Fri, 24 Aug 2018 15:28:30 +0200
+        id 1ftC8c-0000hR-2z; Fri, 24 Aug 2018 15:28:30 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1ftCAJ-000264-UZ; Fri, 24 Aug 2018 15:30:15 +0200
+        id 1ftCAJ-00025y-LH; Fri, 24 Aug 2018 15:30:15 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v4 4/9] t7411: be nicer to future tests and really clean things up
-Date:   Fri, 24 Aug 2018 15:29:46 +0200
-Message-Id: <20180824132951.8000-5-ao2@ao2.it>
+Subject: [PATCH v4 1/9] submodule: add a print_config_from_gitmodules() helper
+Date:   Fri, 24 Aug 2018 15:29:43 +0200
+Message-Id: <20180824132951.8000-2-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180824132951.8000-1-ao2@ao2.it>
 References: <20180824132951.8000-1-ao2@ao2.it>
@@ -42,51 +42,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests 5 and 7 in t/t7411-submodule-config.sh add two commits with
-invalid lines in .gitmodules but then only the second commit is removed.
+Add a new print_config_from_gitmodules() helper function to print values
+from .gitmodules just like "git config -f .gitmodules" would.
 
-This may affect future subsequent tests if they assume that the
-.gitmodules file has no errors.
-
-Remove both the commits as soon as they are not needed anymore.
+This will be used by a new submodule--helper subcommand to be able to
+access the .gitmodules file in a more controlled way.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- t/t7411-submodule-config.sh | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ submodule-config.c | 25 +++++++++++++++++++++++++
+ submodule-config.h |  2 ++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index f2cd1f4a2c..b1f3c6489b 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -83,6 +83,8 @@ Submodule name: 'submodule' for path 'submodule'
- EOF
+diff --git a/submodule-config.c b/submodule-config.c
+index fc2c41b947..eef96c4198 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -682,6 +682,31 @@ void submodule_free(struct repository *r)
+ 		submodule_cache_clear(r->submodule_cache);
+ }
  
- test_expect_success 'error in history of one submodule config lets continue, stderr message contains blob ref' '
-+	ORIG=$(git -C super rev-parse HEAD) &&
-+	test_when_finished "git -C super reset --hard $ORIG" &&
- 	(cd super &&
- 		cp .gitmodules .gitmodules.bak &&
- 		echo "	value = \"" >>.gitmodules &&
-@@ -115,6 +117,8 @@ test_expect_success 'using different treeishs works' '
- '
++static int config_print_callback(const char *key_, const char *value_, void *cb_data)
++{
++	char *key = cb_data;
++
++	if (!strcmp(key, key_))
++		printf("%s\n", value_);
++
++	return 0;
++}
++
++int print_config_from_gitmodules(const char *key)
++{
++	int ret;
++	char *store_key;
++
++	ret = git_config_parse_key(key, &store_key, NULL);
++	if (ret < 0)
++		return CONFIG_INVALID_KEY;
++
++	config_from_gitmodules(config_print_callback, the_repository, store_key);
++
++	free(store_key);
++	return 0;
++}
++
+ struct fetch_config {
+ 	int *max_children;
+ 	int *recurse_submodules;
+diff --git a/submodule-config.h b/submodule-config.h
+index dc7278eea4..ed40e9a478 100644
+--- a/submodule-config.h
++++ b/submodule-config.h
+@@ -56,6 +56,8 @@ void submodule_free(struct repository *r);
+  */
+ int check_submodule_name(const char *name);
  
- test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
-+	ORIG=$(git -C super rev-parse HEAD) &&
-+	test_when_finished "git -C super reset --hard $ORIG" &&
- 	(cd super &&
- 		git config -f .gitmodules \
- 			submodule.submodule.fetchrecursesubmodules blabla &&
-@@ -126,8 +130,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
- 			HEAD b \
- 			HEAD submodule \
- 				>actual &&
--		test_cmp expect_error actual  &&
--		git reset --hard HEAD^
-+		test_cmp expect_error actual
- 	)
- '
- 
++int print_config_from_gitmodules(const char *key);
++
+ /*
+  * Note: these helper functions exist solely to maintain backward
+  * compatibility with 'fetch' and 'update_clone' storing configuration in
 -- 
 2.18.0
 
