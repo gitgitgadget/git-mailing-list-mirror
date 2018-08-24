@@ -7,128 +7,70 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B621F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 16:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E701B1F428
+	for <e@80x24.org>; Fri, 24 Aug 2018 16:10:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726808AbeHXTmS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 15:42:18 -0400
-Received: from mout.gmx.net ([212.227.17.20]:47669 "EHLO mout.gmx.net"
+        id S1726647AbeHXTpg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 15:45:36 -0400
+Received: from mout.gmx.net ([212.227.15.18]:44757 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726504AbeHXTmS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 15:42:18 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LaXmV-1fX3L548dz-00mMpU; Fri, 24
- Aug 2018 18:06:57 +0200
-Date:   Fri, 24 Aug 2018 18:06:56 +0200 (DST)
+        id S1726391AbeHXTpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 15:45:35 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Me8di-1gJ9uU1cNy-00Pu5o; Fri, 24
+ Aug 2018 18:10:12 +0200
+Date:   Fri, 24 Aug 2018 18:10:11 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
+To:     Stefan Beller <sbeller@google.com>
+cc:     Pratik Karki <predatoramigo@gmail.com>, git <git@vger.kernel.org>,
         Christian Couder <christian.couder@gmail.com>,
-        Stefan Beller <sbeller@google.com>, alban.gruin@gmail.com,
+        Alban Gruin <alban.gruin@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 11/18] builtin rebase: support `--autostash` option
-In-Reply-To: <CACsJy8CS5aABuQrqWxdfLOTbFRhQDQ+tFO+wOCLTdeJG8mH0hw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808241805550.73@tvgsbejvaqbjf.bet>
-References: <20180808152140.14585-1-predatoramigo@gmail.com> <20180808152140.14585-12-predatoramigo@gmail.com> <CACsJy8CS5aABuQrqWxdfLOTbFRhQDQ+tFO+wOCLTdeJG8mH0hw@mail.gmail.com>
+Subject: Re: [PATCH 08/11] builtin rebase: support --force-rebase
+In-Reply-To: <CAGZ79ka1uokeUzyZ37=o7J0Tu0k8P4fKj8hv8L-GpktU5i7+mQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808241809110.73@tvgsbejvaqbjf.bet>
+References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-9-predatoramigo@gmail.com> <CAGZ79ka1uokeUzyZ37=o7J0Tu0k8P4fKj8hv8L-GpktU5i7+mQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:iUQDPF1i69+Nwx4XdXGmmkeGbwQdmHYdkVEf7N+zWIofB26OZxh
- Tmr2rkfZ//BrHlCitLvSvNADuqEmSe1u9V+vTo/1aKOMujSvAU/eM4mjvpXpYFmx9y533P5
- ImrakDLfS4miWBwjW152b2c0e1tC9eUu2gJOm06X0eP6f8v0Ja+xE0KmDu/cxzfr6zUM1KD
- qauRJq4gNiKprmpvGQ0NQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:o9kJREGQoMk=:ZQ9JoTtSppM+6GdIWYIzQ5
- XPV6HRy1rrcPvswVCT+/ECkCe/6h4neeZ4qb1NzWjGsoaMViCAeSzNlGJ6FhXsKlO6/50nEpv
- RT9aMKgSzKm6oyQHB8KS+t84BNwoqF2hUFyhjwU41DsL6GzN36iV0jwixtijB88WdPTzLubrr
- +GTCu9iaeyFC1WnTG95IJZUEJ2KKjcf4H7qt8WVLv/805IQJXZ11Xixp+N/p+36FXG3dB8xcX
- Wy9xQVCS44fOhyj4TZ03a0ejJZKe0/c2/O7riKHyhBH/4zS4VIBQLLwItchAQrRgmQsBAL2S9
- kZlni4If4WTiluXnVlDsz8a/FnMxF7fMQ5T0e948WO9d+DGSULUWbzL6vUTewCrT01JOk8zQj
- D6CxW8e+DUv7ah5wh9SzcS/9ky7NQBU/AZCAUidnKkH7/KuIxiVesgbdAB95L9jj9TJ2cv2al
- dRmSxoTKqoQDQbxXoYy5JaiHvDHky7zOq6+SH/fZ0d+f43zxygFAEhOqjhTXrkE/7fWtpnjLt
- 3/bo4k9WIARc/F/Mv+yepatUlrYRfV4Vxnzd2SYH9Buo7iBjVKV5/AodedfVPddbTl7TeqOBS
- AbjyhEonL+fr7/lrpttN17GtAOEsgNP7rNFVXhSlsED3LpeeQdA+ZR3gMPb+0I2ZbOicPNX2r
- G6AmBT0DQ4ANCQJgA07J4OtJsibolz2dWLSrtDvjo2cNE0gj2zPFxTRVWE4cFr00IsixScciZ
- KKMEbfF/CglnKCGpf/vzVNQXBUvS78vs/RhFlcAGl8AKzd9vQiW7Fpy7X0RZgBWBwxoLgegXS
- +nKQKi0
+X-Provags-ID: V03:K1:79/MnkT/N+uyd1ifN0QmQPeJF4DZRKcaBt3am8twMrs+eUNr8Ej
+ n+NMxOJJCmmvOiej6keUo1dZq1/gHszOxNKhSCzzoJAjySxFRVOxoK0UA+gmv5PjahjZhjK
+ TdjdZndAaHozNqcouOknr6H7c0E/N2/znJIw86j5KKrehHUPqDyx5IGiWtIXjtMNnfZnIKm
+ wFa1rXSU+4T/B/BhnG7aw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Lz2RYvdlvhU=:NmoCfZai8FmQwFmMUcxp9v
+ jrWnRrZN8F1EAgbmsHvFOnmzM87wuvuMs5ZqECpKh6xsDELAYAXPpxbeUa/jRZ2Nd0OBefgDz
+ IR94m4A4PePwjhaNYaSxbamTV/N2ar9KRF8cIJhSwGjOhMGQkvnN2opLBmfaC6lRrNN2Y6ebB
+ 2rcbKsjHT1bCsiL892vSRenSG9x7vFhX8JO7N1xXZUA8UqNQnJ3jcGoTw874LIFI29TWi/qQN
+ uwP+I6kuv+ObuLqplJs9rZnNeBgOGmQR1sRGdnOZH9Ai+uP2EtrTkZK5Qi/vNqvEdcCpqGIEa
+ 2FMLP8q5pvnhLsPzukGasOG4jUbugAP9HciLfnttzKFdjj4thTNBEnraqD5KbutBtdF27QTpv
+ YQZ8PEKuslah3oW7hFmrteCxNsv9Lk8ZnpXI1NXToOk+6ovIBOtUNxQZ7t96spISpcyA2Q3+U
+ TY2x+CD3XMIpOQG9jg1Z3iFCKNr+tdh50O9TrqMrxOp7v5/YHGgECGfPKoGq0MSkye0qybpij
+ NPkJlwFjJ3/nbTveqErpz41bl9kSPp8Rnrd1mIBN5MskZW0rkJY3zGrkTBHXOR5FG8zBQW7Gi
+ JdY4ObjJuhm+LrK+ffUOz41D89ic79KGtHeia0JpT+E5jqPBzA+ounkH/FoREt8pw1XEFSh8P
+ GC0oy10oPnhppIF1Gq/gJ653xYfkqLX9h8oh5sUmAdqv/LsDKhEDYT+jnsQgWNQxCKmC5DPgj
+ BBlqqvxhZlExAenG51FVEpn5lgeKkj1HkCq6WXasK70pdLGRF51hvIpi10xbLnBQS/9AG+ADT
+ rGaVOPt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
+Hi Stefan,
 
-On Sat, 18 Aug 2018, Duy Nguyen wrote:
+On Wed, 8 Aug 2018, Stefan Beller wrote:
 
-> On Wed, Aug 8, 2018 at 5:26 PM Pratik Karki <predatoramigo@gmail.com> wrote:
-> > @@ -224,13 +219,56 @@ static int read_basic_state(struct rebase_options *opts)
-> >         return 0;
-> >  }
-> >
-> > +static int apply_autostash(struct rebase_options *opts)
-> > +{
-> > +       const char *path = state_dir_path("autostash", opts);
-> > +       struct strbuf autostash = STRBUF_INIT;
-> > +       struct child_process stash_apply = CHILD_PROCESS_INIT;
-> > +
-> > +       if (!file_exists(path))
-> > +               return 0;
-> > +
-> > +       if (read_one(state_dir_path("autostash", opts), &autostash))
-> > +               return error(_("Could not read '%s'"), path);
-> > +       argv_array_pushl(&stash_apply.args,
-> > +                        "stash", "apply", autostash.buf, NULL);
-> > +       stash_apply.git_cmd = 1;
-> > +       stash_apply.no_stderr = stash_apply.no_stdout =
-> > +               stash_apply.no_stdin = 1;
-> > +       if (!run_command(&stash_apply))
-> > +               printf("Applied autostash.\n");
+> On Wed, Aug 8, 2018 at 6:51 AM Pratik Karki <predatoramigo@gmail.com> wrote:
 > 
-> I think you need _() here.
+> > @@ -551,10 +560,21 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> [...]
+> >                         ; /* be quiet */
+> >                 else if (!strcmp(branch_name, "HEAD") &&
+> > -                       resolve_ref_unsafe("HEAD", 0, NULL, &flag))
+> > +                        resolve_ref_unsafe("HEAD", 0, NULL, &flag))
+> 
+> This line is changing only the indentation whitespace?
+> Would it make sense to have it in the previous patch?
 
-Good catch.
-
-Will fix before sending v2,
+Correct. I will fix this before sending the next iteration,
 Dscho
-
-> 
-> > +       else {
-> > +               struct argv_array args = ARGV_ARRAY_INIT;
-> > +               int res = 0;
-> > +
-> > +               argv_array_pushl(&args,
-> > +                                "stash", "store", "-m", "autostash", "-q",
-> > +                                autostash.buf, NULL);
-> > +               if (run_command_v_opt(args.argv, RUN_GIT_CMD))
-> > +                       res = error(_("Cannot store %s"), autostash.buf);
-> > +               argv_array_clear(&args);
-> > +               strbuf_release(&autostash);
-> > +               if (res)
-> > +                       return res;
-> > +
-> > +               fprintf(stderr,
-> > +                       _("Applying autostash resulted in conflicts.\n"
-> > +                         "Your changes are safe in the stash.\n"
-> > +                         "You can run \"git stash pop\" or \"git stash drop\" "
-> > +                         "at any time.\n"));
-> > +       }
-> > +
-> > +       strbuf_release(&autostash);
-> > +       return 0;
-> > +}
-> > +
-> >  static int finish_rebase(struct rebase_options *opts)
-> >  {
-> >         struct strbuf dir = STRBUF_INIT;
-> >         const char *argv_gc_auto[] = { "gc", "--auto", NULL };
-> >
-> >         delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
-> > -       apply_autostash();
-> > +       apply_autostash(opts);
-> >         close_all_packs(the_repository->objects);
-> >         /*
-> >          * We ignore errors in 'gc --auto', since the
-> -- 
-> Duy
-> 
