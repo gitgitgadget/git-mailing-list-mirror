@@ -2,122 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4DDC1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 13:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E0C21F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 14:32:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727871AbeHXRYc (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 13:24:32 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:38233 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727444AbeHXRYb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 13:24:31 -0400
-Received: by mail-qt0-f194.google.com with SMTP id x7-v6so10177242qtk.5
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 06:49:46 -0700 (PDT)
+        id S1726391AbeHXSHh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 14:07:37 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43014 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726264AbeHXSHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 14:07:37 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k5-v6so7657902wre.10
+        for <git@vger.kernel.org>; Fri, 24 Aug 2018 07:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Z2F32psoPIe9Ek01BsZbp98lTyt2+V8hVOp2SIEU3nU=;
-        b=nyzko8NdBQiJoJUVq5XYw8If3z3YyT6Cp4NgXRChn5lSJf5czGFJo0WorCLj84vCtc
-         r1Vw/QpoCyVRl1os4WjOh04UcwiHcGzRkqYBEWdfApDJ4odmQ1razQcLK9uyvxGchJV8
-         XVN9oTMul9Pc2AiNcA1se+UroyMSPqmxCGXMTDQElvryiVg8BV9kJyYj34oOy1mVjrrZ
-         uf+E1rS41moWzmSznSZM6swjmFavcZ48BAVyVehIuiNx6s1BaLMRhen77PJ2dUzNo+Lu
-         PeBo/PkBTfx9mislcT+eHeUR8nPKK57R8CtQsENFS/HmuIsBX8GrBFIwqjU9cWTkc7AP
-         Jxpg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=fiiQfQ1QlWH6e5rTbI/P7TihR5aBo1bG6Ogyl0XcMwI=;
+        b=fmlgr7G1g/eXxSo0Bz1s3h24uAHJ/gabJnekflrnNAYcO8EH9K9rur7eUYHePlR9sz
+         GHKyZnPOOaBUgIOREkoGPChGSvy4T6C20jy1sSvttzCJ493lMYRCaUBFILZ5KdAm5qvT
+         2Z/yJGpgeRq0uBERgh54f1zTDdYScgE4y1W+YZyLq5HIPPMJx7tbJM/hU2y7/5DQUSVk
+         xB22GlC/5g0ySAB2ZHcYTCZ5r7nZPr5lO5ngH+wdTi4BMaSa/CURcCrNV3jIVrk/EmUt
+         Y7cwErl5ASgbYrcrjtgsY7nLCWR8KFfs8S09mJZTa0HqOkQ04Xd4pVF4yAvFciVt/8FG
+         YW5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Z2F32psoPIe9Ek01BsZbp98lTyt2+V8hVOp2SIEU3nU=;
-        b=XU3wtSgESv/ahlCOaTCyNYRDscJ/6v4FnjAJPp8ofCqt/cuQvyh8tv6MH1E3dd9BtU
-         maZ+x5JpSLc6npO3Ke/QPCeVMjHzEks0s2TuLOCB3AJhChsJuYNAHEm6+zBwnVjgLl3X
-         8tOfR9Skfd06h3rUMJq3eHQ7qzUjyHNecWnsF56hT7HWM/TjZsVuIA17+CwPtGFtMeQg
-         7d42GkBDbJQVyypooa+0mWwEN6P3CZcm0rJcihDEsAKzsuFE5VcU4O43JoPq/9CKDnPb
-         gnbIcgP/+8+o+OZ7tkmGWzpsZoC0p0wg6fPw63epHyVFL/sOvvKkf+JjAMlE5PkXQnh0
-         TznA==
-X-Gm-Message-State: APzg51BSwDSKZtjq3Rd4sZTO7mC2VU+n66EjV8LV/bKHKjl8xJ/NA/OC
-        WzfSWZxvbgdvh0rELiWIpsk=
-X-Google-Smtp-Source: ANB0Vdbh/7HO+Ly1suAde/9DkKTRWnHzN+xIsZYOT+HqIRn9qlXZLiQB6Bx051qViyY1mVKO8TgHyw==
-X-Received: by 2002:aed:3d05:: with SMTP id g5-v6mr1778241qtf.247.1535118585612;
-        Fri, 24 Aug 2018 06:49:45 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:7cdf:e697:e8f8:d87a? ([2001:4898:8010:0:6615:e697:e8f8:d87a])
-        by smtp.gmail.com with ESMTPSA id z13-v6sm5416999qtz.4.2018.08.24.06.49.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Aug 2018 06:49:44 -0700 (PDT)
-Subject: Re: [PATCH v3 5/5] tests: fix and add lint for non-portable grep
- --file
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <20180823152502.3886-2-avarab@gmail.com>
- <20180823203604.5564-6-avarab@gmail.com>
- <xmqq6000izil.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <b1dc8c6a-1f42-b92f-8544-9593b6bd298f@gmail.com>
-Date:   Fri, 24 Aug 2018 09:49:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=fiiQfQ1QlWH6e5rTbI/P7TihR5aBo1bG6Ogyl0XcMwI=;
+        b=Swx/ZzxlxK6vxpItyGg+ouGvJWulLmyZv7RwoufLIwUnFMmwKqadCgaRfWvXWw5J1X
+         HEhFUKwb2LLkRBamulBSLSLJ02WAeb4Ma6/9PKzuemwe4ASno5hDOrmYgyFhwq3j15lO
+         9yv1ep6aRR2wfCP9K7OP9Jo2u6OD0ae8Ph0T/wPC5WulmnjqCWxW5knh7LST6ZZcsVqq
+         P1cPIMtExszTgh7xUlhperjHqJRSO/vAm6gIkpu/gy0XgFPK4ykPEzBNVejcFcYLfuAJ
+         F2Pg8YSpkG1tiq7LRbOs0RGnzRHtMapSh1utpQ5vFPikTbUAVJLpQhDKKxygYzlg2tVE
+         JBmQ==
+X-Gm-Message-State: APzg51A6sWs19dgIAzSxlCEB8CQYUj/o25ykBaL2o2lY+5prgj1sjc4l
+        40L9dqbAnvwtEXCXcvuC6ol2cVW2eGw=
+X-Google-Smtp-Source: ANB0VdZn9vLOB7Npb0unA4CByv8eWGvFuMAVNBM4AzfHDs8kB578OCDckS509gUrnZjc1fgUCg4TbQ==
+X-Received: by 2002:a5d:55ca:: with SMTP id i10-v6mr1370667wrw.38.1535121160699;
+        Fri, 24 Aug 2018 07:32:40 -0700 (PDT)
+Received: from evledraar ([5.57.21.50])
+        by smtp.gmail.com with ESMTPSA id r140-v6sm2170520wmd.7.2018.08.24.07.32.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 24 Aug 2018 07:32:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Antonio Ospite <ao2@ao2.it>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?utf-8?Q?Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 1/9] submodule: add a print_config_from_gitmodules() helper
+References: <20180824132951.8000-1-ao2@ao2.it> <20180824132951.8000-2-ao2@ao2.it>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180824132951.8000-2-ao2@ao2.it>
+Date:   Fri, 24 Aug 2018 16:32:38 +0200
+Message-ID: <87wosfesxl.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqq6000izil.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/23/2018 4:44 PM, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+
+On Fri, Aug 24 2018, Antonio Ospite wrote:
+
+> Add a new print_config_from_gitmodules() helper function to print values
+> from .gitmodules just like "git config -f .gitmodules" would.
 >
->> The --file option to grep isn't in POSIX[1], but -f is[1]. Let's check
->> for that in the future, and fix the portability regression in
->> f237c8b6fe ("commit-graph: implement git-commit-graph write",
->> 2018-04-02) that broke e.g. AIX.
->>
->> 1. http://pubs.opengroup.org/onlinepubs/009695399/utilities/grep.html
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
-> Thanks.
+> This will be used by a new submodule--helper subcommand to be able to
+> access the .gitmodules file in a more controlled way.
+>
+> Signed-off-by: Antonio Ospite <ao2@ao2.it>
+> ---
+>  submodule-config.c | 25 +++++++++++++++++++++++++
+>  submodule-config.h |  2 ++
+>  2 files changed, 27 insertions(+)
+>
+> diff --git a/submodule-config.c b/submodule-config.c
+> index fc2c41b947..eef96c4198 100644
+> --- a/submodule-config.c
+> +++ b/submodule-config.c
+> @@ -682,6 +682,31 @@ void submodule_free(struct repository *r)
+>  		submodule_cache_clear(r->submodule_cache);
+>  }
+>
+> +static int config_print_callback(const char *key_, const char *value_, void *cb_data)
+> +{
+> +	char *key = cb_data;
+> +
+> +	if (!strcmp(key, key_))
+> +		printf("%s\n", value_);
+> +
+> +	return 0;
+> +}
 
-Yes, thanks! I'll keep this in mind for the future.
+No problem with the code itself, but I'd find this a lot easier to read
+in context if it was:
 
->>   t/check-non-portable-shell.pl | 1 +
->>   t/t5318-commit-graph.sh       | 2 +-
->>   2 files changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
->> index 75f38298d7..b45bdac688 100755
->> --- a/t/check-non-portable-shell.pl
->> +++ b/t/check-non-portable-shell.pl
->> @@ -43,6 +43,7 @@ sub err {
->>   	/\bwc -l.*"\s*=/ and err '`"$(wc -l)"` is not portable (use test_line_count)';
->>   	/\bhead\s+-c\b/ and err 'head -c is not portable (use test_copy_bytes BYTES <file >out)';
->>   	/(?:\$\(seq|^\s*seq\b)/ and err 'seq is not portable (use test_seq)';
->> +	/\bgrep\b.*--file\b/ and err 'grep --file FILE is not portable (use grep -f FILE)';
->>   	/\bexport\s+[A-Za-z0-9_]*=/ and err '"export FOO=bar" is not portable (use FOO=bar && export FOO)';
->>   	/^\s*([A-Z0-9_]+=(\w+|(["']).*?\3)\s+)+(\w+)/ and exists($func{$4}) and
->>   		err '"FOO=bar shell_func" assignment extends beyond "shell_func"';
->> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
->> index 3c1ffad491..0c500f7ca2 100755
->> --- a/t/t5318-commit-graph.sh
->> +++ b/t/t5318-commit-graph.sh
->> @@ -134,7 +134,7 @@ test_expect_success 'Add one more commit' '
->>   	git branch commits/8 &&
->>   	ls $objdir/pack | grep idx >existing-idx &&
->>   	git repack &&
->> -	ls $objdir/pack| grep idx | grep -v --file=existing-idx >new-idx
->> +	ls $objdir/pack| grep idx | grep -v -f existing-idx >new-idx
->>   '
->>   
->>   # Current graph structure:
+    key_ -> var
+    value_ -> value
+    key -> wanted_key, perhaps?
+
+I.e. the rest of the file uses the convention of the
+config_from_gitmodules callbacks getting "var" and "value",
+respectively.
+
+We don't use this convention of suffixing variables with "_" if they're
+arguments to the function anywhere else.
+
+> +int print_config_from_gitmodules(const char *key)
+> +{
+> +	int ret;
+> +	char *store_key;
+> +
+> +	ret = git_config_parse_key(key, &store_key, NULL);
+> +	if (ret < 0)
+> +		return CONFIG_INVALID_KEY;
+
+Isn't this a memory leak? I.e. we should free() and return here, no?
+
+> +	config_from_gitmodules(config_print_callback, the_repository, store_key);
+> +
+> +	free(store_key);
+> +	return 0;
+> +}
+> +
+>  struct fetch_config {
+>  	int *max_children;
+>  	int *recurse_submodules;
+> diff --git a/submodule-config.h b/submodule-config.h
+> index dc7278eea4..ed40e9a478 100644
+> --- a/submodule-config.h
+> +++ b/submodule-config.h
+> @@ -56,6 +56,8 @@ void submodule_free(struct repository *r);
+>   */
+>  int check_submodule_name(const char *name);
+>
+> +int print_config_from_gitmodules(const char *key);
+> +
+>  /*
+>   * Note: these helper functions exist solely to maintain backward
+>   * compatibility with 'fetch' and 'update_clone' storing configuration in
+
+Another style nit: Makes more sense to put this new function right
+underneath "submodule_free" above, instead of under 1/2 of the functions
+that have a big comment describing how they work, since that comment
+doesn't apply to this new function.
