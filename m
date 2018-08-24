@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A5771F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id B40211F404
 	for <e@80x24.org>; Fri, 24 Aug 2018 13:30:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728086AbeHXRFD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 13:05:03 -0400
-Received: from ao2.it ([92.243.12.208]:59523 "EHLO ao2.it"
+        id S1728099AbeHXRFE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 13:05:04 -0400
+Received: from ao2.it ([92.243.12.208]:59521 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728048AbeHXRFD (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728002AbeHXRFD (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 24 Aug 2018 13:05:03 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1ftC8c-0000hU-De; Fri, 24 Aug 2018 15:28:30 +0200
+        id 1ftC8c-0000hV-Fq; Fri, 24 Aug 2018 15:28:30 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1ftCAJ-000262-Rj; Fri, 24 Aug 2018 15:30:15 +0200
+        id 1ftCAK-000269-3l; Fri, 24 Aug 2018 15:30:16 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
 Cc:     Brandon Williams <bmwill@google.com>,
@@ -30,9 +30,9 @@ Cc:     Brandon Williams <bmwill@google.com>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Richard Hartmann <richih.mailinglist@gmail.com>,
         Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v4 3/9] t7411: merge tests 5 and 6
-Date:   Fri, 24 Aug 2018 15:29:45 +0200
-Message-Id: <20180824132951.8000-4-ao2@ao2.it>
+Subject: [PATCH v4 6/9] submodule: use the 'submodule--helper config' command
+Date:   Fri, 24 Aug 2018 15:29:48 +0200
+Message-Id: <20180824132951.8000-7-ao2@ao2.it>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180824132951.8000-1-ao2@ao2.it>
 References: <20180824132951.8000-1-ao2@ao2.it>
@@ -42,56 +42,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tests 5 and 6 check for the effects of the same commit, merge the two
-tests to make it more straightforward to clean things up after the test
-has finished.
+Use the 'submodule--helper config' command in git-submodules.sh to avoid
+referring explicitly to .gitmodules by the hardcoded file path.
 
-The cleanup will be added in a future commit.
+This makes it possible to access the submodules configuration in a more
+controlled way.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- t/t7411-submodule-config.sh | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ git-submodule.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 0bde5850ac..f2cd1f4a2c 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -82,29 +82,21 @@ Submodule name: 'a' for path 'b'
- Submodule name: 'submodule' for path 'submodule'
- EOF
+diff --git a/git-submodule.sh b/git-submodule.sh
+index f7fd80345c..9e47dc9574 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -72,7 +72,7 @@ get_submodule_config () {
+ 	value=$(git config submodule."$name"."$option")
+ 	if test -z "$value"
+ 	then
+-		value=$(git config -f .gitmodules submodule."$name"."$option")
++		value=$(git submodule--helper config submodule."$name"."$option")
+ 	fi
+ 	printf '%s' "${value:-$default}"
+ }
+@@ -283,11 +283,11 @@ or you are unsure what this means choose another name with the '--name' option."
+ 	git add --no-warn-embedded-repo $force "$sm_path" ||
+ 	die "$(eval_gettext "Failed to add submodule '\$sm_path'")"
  
--test_expect_success 'error in one submodule config lets continue' '
-+test_expect_success 'error in history of one submodule config lets continue, stderr message contains blob ref' '
- 	(cd super &&
- 		cp .gitmodules .gitmodules.bak &&
- 		echo "	value = \"" >>.gitmodules &&
- 		git add .gitmodules &&
- 		mv .gitmodules.bak .gitmodules &&
- 		git commit -m "add error" &&
--		test-tool submodule-config \
--			HEAD b \
--			HEAD submodule \
--				>actual &&
--		test_cmp expect_error actual
--	)
--'
--
--test_expect_success 'error message contains blob reference' '
--	(cd super &&
- 		sha1=$(git rev-parse HEAD) &&
- 		test-tool submodule-config \
- 			HEAD b \
- 			HEAD submodule \
--				2>actual_err &&
--		test_i18ngrep "submodule-blob $sha1:.gitmodules" actual_err >/dev/null
-+				>actual \
-+				2>actual_stderr &&
-+		test_cmp expect_error actual &&
-+		test_i18ngrep "submodule-blob $sha1:.gitmodules" actual_stderr >/dev/null
- 	)
- '
- 
+-	git config -f .gitmodules submodule."$sm_name".path "$sm_path" &&
+-	git config -f .gitmodules submodule."$sm_name".url "$repo" &&
++	git submodule--helper config submodule."$sm_name".path "$sm_path" &&
++	git submodule--helper config submodule."$sm_name".url "$repo" &&
+ 	if test -n "$branch"
+ 	then
+-		git config -f .gitmodules submodule."$sm_name".branch "$branch"
++		git submodule--helper config submodule."$sm_name".branch "$branch"
+ 	fi &&
+ 	git add --force .gitmodules ||
+ 	die "$(eval_gettext "Failed to register submodule '\$sm_path'")"
 -- 
 2.18.0
 
