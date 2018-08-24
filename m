@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A024B1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 12:20:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 452BE1F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 13:30:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbeHXPyv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 11:54:51 -0400
-Received: from waltz.apk.li ([185.177.140.48]:59951 "EHLO waltz.apk.li"
+        id S1727880AbeHXRE7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 13:04:59 -0400
+Received: from ao2.it ([92.243.12.208]:59510 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726268AbeHXPyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 11:54:50 -0400
-X-Greylist: delayed 352 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Aug 2018 11:54:49 EDT
-Received: from continuum.iocl.org (localhost [IPv6:::1])
-        by waltz.apk.li (Postfix) with ESMTP id B303959804E;
-        Fri, 24 Aug 2018 14:14:31 +0200 (CEST)
-Received: (from krey@localhost)
-        by continuum.iocl.org (8.11.3/8.9.3) id w7OCE7919690;
-        Fri, 24 Aug 2018 14:14:07 +0200
-Date:   Fri, 24 Aug 2018 14:14:07 +0200
-From:   Andreas Krey <a.krey@gmx.de>
+        id S1727813AbeHXRE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 13:04:59 -0400
+Received: from localhost ([::1] helo=jcn)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1ftC8c-0000hX-Mj; Fri, 24 Aug 2018 15:28:30 +0200
+Received: from ao2 by jcn with local (Exim 4.91)
+        (envelope-from <ao2@ao2.it>)
+        id 1ftCAJ-000264-UZ; Fri, 24 Aug 2018 15:30:15 +0200
+From:   Antonio Ospite <ao2@ao2.it>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: clone, hardlinks, and file modes (and CAP_FOWNER)
-Message-ID: <20180824121407.GA19597@inner.h.apk.li>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.1i
+Cc:     Brandon Williams <bmwill@google.com>,
+        =?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>, Antonio Ospite <ao2@ao2.it>
+Subject: [PATCH v4 4/9] t7411: be nicer to future tests and really clean things up
+Date:   Fri, 24 Aug 2018 15:29:46 +0200
+Message-Id: <20180824132951.8000-5-ao2@ao2.it>
+X-Mailer: git-send-email 2.18.0
+In-Reply-To: <20180824132951.8000-1-ao2@ao2.it>
+References: <20180824132951.8000-1-ao2@ao2.it>
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everybody,
+Tests 5 and 7 in t/t7411-submodule-config.sh add two commits with
+invalid lines in .gitmodules but then only the second commit is removed.
 
-I'm currently looking into more aggressively sharing space between multiple repositories,
-and into getting them to share again after one did a repack (which costs us 15G space).
+This may affect future subsequent tests if they assume that the
+.gitmodules file has no errors.
 
-One thing I stumbled on is the /proc/sys/fs/protected_hardlinks stuff which disallows
-hardlinking pack files belonging to someone else. This consequently inhibits sharing
-when first cloning from a common shared cache repo.
+Remove both the commits as soon as they are not needed anymore.
 
-Installing git with CAP_FOWNER is probably too dangerous;
-at least the capability should only be enabled during the directory copying.
+Signed-off-by: Antonio Ospite <ao2@ao2.it>
+---
+ t/t7411-submodule-config.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-*
-
-And the next thing is that copied object/pack files are created with mode rw-rw-r--,
-unlike those that come out of the regular transports.
-
-Apparent patch:
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fd2c3ef090..6ffb4db4da 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -448,7 +448,7 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-                                die_errno(_("failed to create link '%s'"), dest->buf);
-                        option_no_hardlinks = 1;
-                }
--               if (copy_file_with_time(dest->buf, src->buf, 0666))
-+               if (copy_file_with_time(dest->buf, src->buf, 0444))
-                        die_errno(_("failed to copy file to '%s'"), dest->buf);
-        }
-        closedir(dir);
-
-Alas, copy_file takes the mode just as a crude hint to executability, so also:
-
-diff --git a/copy.c b/copy.c
-index 4de6a110f0..883060009c 100644
---- a/copy.c
-+++ b/copy.c
-@@ -32,7 +32,7 @@ int copy_file(const char *dst, const char *src, int mode)
- {
-        int fdi, fdo, status;
+diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
+index f2cd1f4a2c..b1f3c6489b 100755
+--- a/t/t7411-submodule-config.sh
++++ b/t/t7411-submodule-config.sh
+@@ -83,6 +83,8 @@ Submodule name: 'submodule' for path 'submodule'
+ EOF
  
--       mode = (mode & 0111) ? 0777 : 0666;
-+       mode = (mode & 0111) ? 0777 : (mode & 0222) ? 0666 : 0444;
-        if ((fdi = open(src, O_RDONLY)) < 0)
-                return fdi;
-        if ((fdo = open(dst, O_WRONLY | O_CREAT | O_EXCL, mode)) < 0) {
-
-(copy_file is also used with 0644 instead of the usual 0666 in refs/files-backend.c)
-
-Will submit as patch if acceptable; I'm not sure what the mode casing will
-do with other users.
-
-- Andreas
-
+ test_expect_success 'error in history of one submodule config lets continue, stderr message contains blob ref' '
++	ORIG=$(git -C super rev-parse HEAD) &&
++	test_when_finished "git -C super reset --hard $ORIG" &&
+ 	(cd super &&
+ 		cp .gitmodules .gitmodules.bak &&
+ 		echo "	value = \"" >>.gitmodules &&
+@@ -115,6 +117,8 @@ test_expect_success 'using different treeishs works' '
+ '
+ 
+ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
++	ORIG=$(git -C super rev-parse HEAD) &&
++	test_when_finished "git -C super reset --hard $ORIG" &&
+ 	(cd super &&
+ 		git config -f .gitmodules \
+ 			submodule.submodule.fetchrecursesubmodules blabla &&
+@@ -126,8 +130,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 			HEAD b \
+ 			HEAD submodule \
+ 				>actual &&
+-		test_cmp expect_error actual  &&
+-		git reset --hard HEAD^
++		test_cmp expect_error actual
+ 	)
+ '
+ 
 -- 
-"Totally trivial. Famous last words."
-From: Linus Torvalds <torvalds@*.org>
-Date: Fri, 22 Jan 2010 07:29:21 -0800
+2.18.0
+
