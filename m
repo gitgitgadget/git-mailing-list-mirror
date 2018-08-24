@@ -2,72 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37D101F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 20:52:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D8021F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 20:53:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726992AbeHYA3H convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 24 Aug 2018 20:29:07 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:42654 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726855AbeHYA3H (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 20:29:07 -0400
-Received: by mail-qt0-f194.google.com with SMTP id z8-v6so11624668qto.9
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 13:52:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=BtXMxlcvMesCz1KU4JwiJf5QPij0+wsgui0dL8FBpC4=;
-        b=fT2rfa4EVjq6Mttz2dCBCmIvAjM2vJFiWtU7juXaTmyNy4Pb8OcJxbrti7XrFUuSNY
-         9r5xlcbj7MSptQ2g7rvyPYTtKAXzUTyorub38h+T+aR7BIF19tYOkxcK064qblFScAhQ
-         KF9mPbKKbSUQW7WtugcICJDRNYLVIOyTk2B7PC6NwVvH01SSxKIfqEOw2PLj5PRn3EZL
-         94XQbqICK6AHHRfjQ4lFf2/6BNL6rhwQ+U7bR1Fk911bcAxouKPgIe1wAYeVBZKPz0wV
-         mGUorqMDC2+jMee8ctoqweOdyyGSqEWFZEq3aCRqdxQlNuGbaX3yF7Qq4sFLmzGE4V+k
-         0vqA==
-X-Gm-Message-State: APzg51BX6CySLG+adtI9Kdio6UHlFkz6JNyhwV4qtaYQl3UAGTdzNhRG
-        SUfSu1h/XDdny6QiDqcm2MbiELar77D5+RgNndF7jJKP
-X-Google-Smtp-Source: ANB0Vdb+eqpkuFHlFJjrwBAWJoy/jp35wS72OpKK+10Q0Uu+ulnFBrLMo3oy5iXZ2U+5gI4IzVZKv1f2+ggPfQh2IZ8=
-X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr3634642qtc.50.1535143972029;
- Fri, 24 Aug 2018 13:52:52 -0700 (PDT)
+        id S1727162AbeHYAaG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 20:30:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55316 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726928AbeHYAaG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 20:30:06 -0400
+Received: (qmail 12713 invoked by uid 109); 24 Aug 2018 20:53:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 20:53:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31463 invoked by uid 111); 24 Aug 2018 20:53:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 Aug 2018 16:53:58 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2018 16:53:50 -0400
+Date:   Fri, 24 Aug 2018 16:53:50 -0400
+From:   Jeff King <peff@peff.net>
+To:     Julia Lawall <julia.lawall@lip6.fr>
+Cc:     git@vger.kernel.org, cocci@systeme.lip6.fr
+Subject: Re: [Cocci] excluding a function from coccinelle transformation
+Message-ID: <20180824205349.GA31853@sigill.intra.peff.net>
+References: <20180824064228.GA3183@sigill.intra.peff.net>
+ <alpine.DEB.2.21.1808240652370.2344@hadrien>
 MIME-Version: 1.0
-References: <CAPig+cS4yeHNbc1Anq1DtLPEEGLpGeGEV74JHZrYft2wRmZAPQ@mail.gmail.com>
- <20180824152016.20286-4-avarab@gmail.com>
-In-Reply-To: <20180824152016.20286-4-avarab@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 24 Aug 2018 16:52:41 -0400
-Message-ID: <CAPig+cTONP22UFdHKBfef_qbzHXX9PBH4h01_0_wPF6TV9xrWg@mail.gmail.com>
-Subject: Re: [PATCH v4 3/6] tests: fix comment syntax in chainlint.sed for AIX sed
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, benoit@openbsd.org, kn@openbsd.org,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.21.1808240652370.2344@hadrien>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 24, 2018 at 11:20 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> Change a comment in chainlint.sed to appease AIX sed, which would
-> previously print this error:
->
->     sed:    # stash for later printing is not a recognized function
->
-> 1. https://public-inbox.org/git/CAPig+cTTbU5HFMKgNyrxTp3+kcK46-Fn=4ZH6zDt1oQChAc3KA@mail.gmail.com/
+On Fri, Aug 24, 2018 at 07:04:27AM -0400, Julia Lawall wrote:
 
-It would have been nice for the commit message to explain that the
-problem was caused by the comment being indented, since it's otherwise
-not otherwise obvious to the reader without chasing the link to the
-email exchange, but probably not worth a re-roll.
+> On Fri, 24 Aug 2018, Jeff King wrote:
+> 
+> > In Git's Coccinelle patches, we sometimes want to suppress a
+> > transformation inside a particular function. For example, in finding
+> > conversions of hashcmp() to oidcmp(), we should not convert the call in
+> > oidcmp() itself, since that would cause infinite recursion. We write the
+> > semantic patch like this:
+> >
+> >   @@
+> >   identifier f != oidcmp;
+> >   expression E1, E2;
+> >   @@
+> >     f(...) {...
+> >   - hashcmp(E1->hash, E2->hash)
+> >   + oidcmp(E1, E2)
+> >     ...}
+> 
+> The problem is with how how ... works.  For transformation, A ... B
+> requires that B occur on every execution path starting with A, unless that
+> execution path ends up in error handling code.
+> (eg, if (...) { ... return; }).  Here your A is the start if the function.
+> So you need a call to hashcmp on every path through the function, which
+> fails when you add ifs.
 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Thank you! This explanation (and the one below about A and B not
+appearing in the matched region) helped my understanding tremendously.
 
-FWIW,
-Acked-by: Eric Sunshine <sunshine@sunshineco.com>
+> What you want is what you ended up using, which is <... P ...> which
+> allows zero or more occurrences of P.
+
+And now this makes much more sense (I stumbled onto it through brute
+force, but now I understand _why_ it works).
+
+> However, this can all be very expensive, because you are matching paths
+> through the function definition which you don't really care about.  All
+> you care about here is the name.  So another approach is
+
+Yeah, it is. Using the pre-1.0.7 version, the original patch runs in
+~1.3 minutes on my machine. With "<... P ...>" it's almost 4 minutes.
+Your python suggestion runs in about 1.5 minutes.
+
+Curiously, 1.0.4 runs the original patch in only 24 seconds, and the
+angle-bracket one takes 52 seconds. I'm not sure if something changed in
+coccinelle, or if my build is simply less optimized (my 1.0.4 is from
+the Debian package, and I'm building 1.0.7 from source; I had trouble
+building 1.0.4 from source).
+
+> @@
+> position p : script:python() { p[0].current_element != "oldcmp" };
+> expression E1,E2;
+> @@
+> 
+> - hashcmp(E1->hash, E2->hash)
+> + oidcmp(E1, E2)
+
+Aha, this is exactly the magic I was hoping for. I agree this is the
+best way to express it. I just had to tweak the patch to include the
+position:
+
+  - hashcmp@p(E1->hash, E2->hash)
+
+and it worked great. Unfortunately, Debian's spatch is not built with
+python support. :(
+
+I'm not sure if we (the Git project) want to make the jump to requiring
+a more specific spatch. OTOH, only a handful of developers actually run
+it, and the python support does seem quite useful. And 1.0.4 is rather
+old at this point.
+
+Again, thanks very much for your response. I have a much better
+understanding of what's going on now, and what our options are for
+moving forward.
+
+-Peff
