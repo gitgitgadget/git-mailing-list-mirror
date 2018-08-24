@@ -2,139 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADD081F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 03:01:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A595D1F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 03:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727813AbeHXGdm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 02:33:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:54220 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726956AbeHXGcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 02:32:33 -0400
-Received: (qmail 5618 invoked by uid 109); 24 Aug 2018 02:59:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 02:59:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23093 invoked by uid 111); 24 Aug 2018 03:00:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 23 Aug 2018 23:00:04 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 23 Aug 2018 22:59:55 -0400
-Date:   Thu, 23 Aug 2018 22:59:55 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jacob Keller <jacob.keller@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Smith <paul@mad-scientist.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-Message-ID: <20180824025955.GA24535@sigill.intra.peff.net>
-References: <20180823021618.GA12052@sigill.intra.peff.net>
- <20180823034707.GD535143@genre.crustytoothpaste.net>
- <20180823050418.GB318@sigill.intra.peff.net>
- <f854aba0-6d28-7f2b-aad2-858983c4af36@gmail.com>
- <20180823161451.GB29579@sigill.intra.peff.net>
- <CA+P7+xqbt_BVi9+1-4=ha64LW_07dJB84F0gjKd9TRE1R-Ld7A@mail.gmail.com>
- <20180823234049.GA3855@sigill.intra.peff.net>
- <20180824000637.GA10847@sigill.intra.peff.net>
- <20180824001643.GA14259@sigill.intra.peff.net>
- <CA+P7+xpm-gsjCpPOZ=2z03Peb1Jb6axKo2nTp=UUpAFgWNureg@mail.gmail.com>
+        id S1726519AbeHXGfE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 02:35:04 -0400
+Received: from mail-ed1-f51.google.com ([209.85.208.51]:39211 "EHLO
+        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726140AbeHXGfE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 02:35:04 -0400
+Received: by mail-ed1-f51.google.com with SMTP id h4-v6so4887309edi.6
+        for <git@vger.kernel.org>; Thu, 23 Aug 2018 20:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ts9yVBLU5DIZXfCeUOcCJ3UccInw7X48AmY3llkAXTE=;
+        b=nDZvDhIoJqLQWXu4YU3fFvB+NqbePz1ilowB7MfUMLaiG4zk0ADwb35SyzkZxGTOr3
+         3O0TB9ejtVBN4XofM9bGlkFZZ9FHP3Fdlbp4Qlfh/uXgFelX74gFSyQglbIhrthpggjS
+         9IPUakQyqyOiH+pN1X0gsEsJah3cbqWyBrd32zMlJ7p7jnizGGpfa1a1giNoA0yrV1De
+         2DMLtUUqHmwF6cIRXUvKgVV+0bBdPDQaga1rdMeVWSJvzJwucc6OZT5Rftd2R0tDba6+
+         sRa30/BM+Z1r4taPfibCUc61liTqkeazQ5ArAa/2dhOcRKGdrxZDpqsbYsD8JQjm2sRi
+         vPGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ts9yVBLU5DIZXfCeUOcCJ3UccInw7X48AmY3llkAXTE=;
+        b=SvAgqTytkSZPITcxisBJScjfqF6cn+eKTH7eO+51mMeTzBuTtWZjzXC4FK1l3iO6EC
+         NDSvNRk8kYZjCq3/PLQtN6KjaNZC0wcrWTn1oXDYIxiuVZYY6ZSEOMx8RyAMApnPeoty
+         yCPQYZqYDHbVJmWavNEDneTzmmsg/0b/YgIMjgcdx3iKxHL85CuKEj/jp5+NMfW6pjdW
+         S9T8C3HDr8/DCMp78jyMfutBCd+1saM97rNjt7eLLyUu3kXgQNBIXeTWN7IxMb2+6bEO
+         iZceqoHYSTbKEKdKZMGyKgdIBZajbeK5AOTHQpxpoa2vo8KsFK/hcW335S4uN8z2P1JX
+         1VnA==
+X-Gm-Message-State: APzg51APVBy9PXw5RQe1n4T/ZwStYpBpPFviQiX6FLjdgpHxX7vgp3JD
+        hxq22ZPdYJ6TwoCS9zukxW1qULb/Y0cCpPGyv98=
+X-Google-Smtp-Source: ANB0VdaQay266L4cjI8sOQgcBCR1TNb0/tzk+fvimafJpic/TqXDc/7nzBbNrlePn8js7z9wAPe6Rbu/qIEhgKUdzFA=
+X-Received: by 2002:a50:9a02:: with SMTP id o2-v6mr231821edb.236.1535079747751;
+ Thu, 23 Aug 2018 20:02:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CA+P7+xpm-gsjCpPOZ=2z03Peb1Jb6axKo2nTp=UUpAFgWNureg@mail.gmail.com>
+References: <20180820154120.19297-1-pclouds@gmail.com> <20180820193007.GB31020@aiede.svl.corp.google.com>
+ <CACsJy8DsEhV6p=cE6FC6Ka4=E0c-8JG0LRU_DEq-Ser5PqMcGw@mail.gmail.com>
+ <20180823021156.GD92374@aiede.svl.corp.google.com> <20180823021547.GE92374@aiede.svl.corp.google.com>
+ <CACsJy8DdZLxdA4XSVVBSpeZaF+q6=81LxecYea2JtJ6-Krnk-A@mail.gmail.com> <xmqqr2ipje5i.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2ipje5i.fsf@gitster-ct.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 23 Aug 2018 20:02:16 -0700
+Message-ID: <CA+P7+xq3m8PXo9wYu1L7p4uG4hf-i=uwQdh+e=0QJXG1cBi04A@mail.gmail.com>
+Subject: Re: [PATCH/RFC] commit: new option to abort -a something is already staged
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 23, 2018 at 07:48:42PM -0700, Jacob Keller wrote:
+On Thu, Aug 23, 2018 at 9:28 AM Junio C Hamano <gitster@pobox.com> wrote:
+> I think the above example forgets "-a" on the final "git commit"
+> step.  With it added, I can understand the concern (and I am sure
+> you would, too).
+>
+> The user is trying to add everything done in the working tree, and
+> "commit -a" would catch all changes to paths that were already
+> tracked, but a separate "add" is necessary for newly created paths.
+> But adding a new path means the index no longer matches HEAD, and
+> the "commit -a" at the final step sweeps the changes to already
+> tracked paths---failing that because there "already is something
+> staged" will break the workflow.
 
-> Odd...
-> 
-> What about..
-> 
-> - if (oidcmp(a,b))
-> + if(!oideq(a,b))
->   { ... }
+Right. I think this would need to be able to understand the case of
+"different only by new files".
 
-Nope, it doesn't like that syntactically.
-
-> Or maybe you need to use something like
-> 
->   <...
-> - if (oidcmp(a,b))
-> + if (!oideq(a,b))
->   ...>
-
-Nor that (I also tried finding documentation on what exactly the angle
-brackets mean, but couldn't).
-
-> Hmm. Yea, semantic patches are a bit confusing overall sometimes.
-> 
-> But it looks like you got something which works?
-
-Actually, what I showed earlier does seem to have some weirdness with
-else-if. But I finally stumbled on something even better:
-
-  - oidcmp(a, b) != 0
-  + !oideq(a, b)
-
-Because of the isomorphisms that coccinelle knows about, that catches
-everything we want.  Obvious ones like:
-
-diff --git a/bisect.c b/bisect.c
-index 41c56a665e..7c1d8f1a6d 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -595,7 +595,7 @@ static struct commit_list *skip_away(struct commit_list *list, int count)
- 
-        for (i = 0; cur; cur = cur->next, i++) {
-                if (i == index) {
--                       if (oidcmp(&cur->item->object.oid, current_bad_oid))
-+                       if (!oideq(&cur->item->object.oid, current_bad_oid))
-                                return cur;
-                        if (previous)
-                                return previous;
-
-and compound conditionals like:
-
-diff --git a/blame.c b/blame.c
-index 10d72e36dd..538d0ab1aa 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1834,7 +1834,7 @@ void setup_scoreboard(struct blame_scoreboard *sb,
-
-                sb->revs->children.name = "children";
-                while (c->parents &&
--                      oidcmp(&c->object.oid, &sb->final->object.oid)) {
-+                      !oideq(&c->object.oid, &sb->final->object.oid)) {
-                        struct commit_list *l = xcalloc(1, sizeof(*l));
-
-                        l->item = c;
-
-and even non-if contexts, like:
-
-diff --git a/sha1-file.c b/sha1-file.c
-index 631f6b9dc2..d85f4e93e1 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -825,7 +825,7 @@ int check_object_signature(const struct object_id *oid, void *map,
- 
-        if (map) {
-                hash_object_file(map, size, type, &real_oid);
--               return oidcmp(oid, &real_oid) ? -1 : 0;
-+               return !oideq(oid, &real_oid) ? -1 : 0;
-        }
-
-So I think we have a winner. I'll polish that up into patches and send
-it out later tonight.
-
--Peff
+Thanks,
+Jake
