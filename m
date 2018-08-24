@@ -2,115 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3534E1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 11:04:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92AC91F404
+	for <e@80x24.org>; Fri, 24 Aug 2018 12:14:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726762AbeHXOjE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 10:39:04 -0400
-Received: from mail-qk0-f169.google.com ([209.85.220.169]:36890 "EHLO
-        mail-qk0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726522AbeHXOjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 10:39:04 -0400
-Received: by mail-qk0-f169.google.com with SMTP id f17-v6so5565804qkh.4
-        for <git@vger.kernel.org>; Fri, 24 Aug 2018 04:04:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=BGvCxLj29kuDgX6sdTtVKxMjZdeFCZ5lJ8mslU5Axpo=;
-        b=dFuOyMe7hw/TPIuj6Dze+TWk/6mrmpFDY7rFm6eNaRNFwgbcNukkJtj4VtegkFRkwe
-         +A9eMhkWR+WJUdKWpesNroB9OKayvvjQRywYez0IfgX9Pwv8AzmbWGWigzLncvBvKuBg
-         n8CyJwFBPZB6B41qxLzVwFppko/IfSvi/I1SMvHgrfGQTHPGp7JbaQaNsz+i3ubAzb1Y
-         XhSA70oe23JSmoFH43mHhM8gC3gjioAyAUxBjuHxB9c4fEIRX0pkpJanpEo3y9n0rSim
-         id5iudgjsAD8ZdEQindmyi5Uu2sXry0K/mmX4Ffhe1iwbB1D80RWfDk4iET+CXzWNskN
-         RfKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=BGvCxLj29kuDgX6sdTtVKxMjZdeFCZ5lJ8mslU5Axpo=;
-        b=I+P8JZwKQCeBgxA+V8g2IGpftjqj8I0AX51c0szkUyhNqUZQxa3UYJvREbzeYGK3li
-         8KmTXCwplvTlZUCthm8P4oPwKRbEKdCIMx6XLUM5HmNSS0aYZQvk02uwAf7S/0QHW73t
-         TCdA4FLZ6w8ubQMpD8SgkKNlMDboM653MYFF4P3XC4OoGGyxd7JYRiYFL52h/Q5QFyky
-         6DzzpOJOwcWPhKwYPbDbO3lp1kRnomY2nzLuC0H5V7BM6TYknxXPIhsN/a5biGHuGFDo
-         JlSfdhmEJTEatXHZFttP67QtECrX1kDc/yixMOr/Zr5z3Fve1vmqmLUQZd/DB6n22tgT
-         mZnQ==
-X-Gm-Message-State: APzg51DYCmYQ2zp6Qaw2Tew+2H1WAES25sgYsbEqmDfg71uPA1IkYzE7
-        i7L3wACQ+F0Kc5nNf4xHMuA=
-X-Google-Smtp-Source: ANB0Vda6KWi26I+s9nWqxdYCmDRmJMtPpzBQWQ798pYmohcOnmuzeqovZiauvkFBJgRLQVAEwFq5Bg==
-X-Received: by 2002:ae9:f401:: with SMTP id y1-v6mr1052205qkl.178.1535108694858;
-        Fri, 24 Aug 2018 04:04:54 -0700 (PDT)
-Received: from [10.0.1.17] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id x14-v6sm1864843qkf.59.2018.08.24.04.04.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 24 Aug 2018 04:04:54 -0700 (PDT)
-Subject: Re: [ANNOUNCE] Git v2.19.0-rc0
-To:     Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Paul Smith <paul@mad-scientist.net>,
-        Git mailing list <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20180823034707.GD535143@genre.crustytoothpaste.net>
- <20180823050418.GB318@sigill.intra.peff.net>
- <f854aba0-6d28-7f2b-aad2-858983c4af36@gmail.com>
- <20180823161451.GB29579@sigill.intra.peff.net>
- <CA+P7+xqbt_BVi9+1-4=ha64LW_07dJB84F0gjKd9TRE1R-Ld7A@mail.gmail.com>
- <20180823234049.GA3855@sigill.intra.peff.net>
- <20180824000637.GA10847@sigill.intra.peff.net>
- <20180824001643.GA14259@sigill.intra.peff.net>
- <CA+P7+xpm-gsjCpPOZ=2z03Peb1Jb6axKo2nTp=UUpAFgWNureg@mail.gmail.com>
- <20180824025955.GA24535@sigill.intra.peff.net>
- <20180824064512.GA10521@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <3c73a374-ddc7-2c6b-5578-1b695c0ea7e0@gmail.com>
-Date:   Fri, 24 Aug 2018 07:04:51 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727561AbeHXPtL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 24 Aug 2018 11:49:11 -0400
+Received: from mout.gmx.net ([212.227.17.20]:56795 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726513AbeHXPtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 24 Aug 2018 11:49:11 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkiqm-1gR8E52d88-00aZ0O; Fri, 24
+ Aug 2018 14:14:45 +0200
+Date:   Fri, 24 Aug 2018 14:14:44 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org
+Subject: Request for testing v2.19.0-rc0 *with builtin stash/rebase*
+Message-ID: <nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20180824064512.GA10521@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:se8JugQkAI9gxb7EwCZcyHmR0p4pNshE+nwlNUgynkUkVwvVG8/
+ gWIXNKc6ihDWwo2o/ZQ2jE5FN4xJgxw2LN7b8iKcay7mxFPeiF0bwc9ANrbIRpil2AWSB2D
+ ExvOZYCc2yLj5/HR129034Z5ToSyqGhNLIQzOn9+jYs3KfYmaTFLeTEwIouZ8yPDHqTzbKw
+ Ci0WhZ8eR1Ov3zBu4VPYw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:E3st2unq8wI=:tC2GSZd/Hz1mu9bGt0+uh4
+ vgDLz3wEdenoeOgCy0VvdnrJobI4mjaLWfrRl0ZCarCRrf+TteLEodD+wrfxhfRHDe9FhEIch
+ 5AyvCwKQ+9O238mS/74jFyLEi7sPYqhtH1yuDQtvCq3imC9efPw+wO1f2/XZQW4QB14JfTQNh
+ FbuweKmbepM38GG990AJ2WDftngCNEuOyhDEas8M/AaH7SqGps1819yto9BzQEjyu9IFOrqlC
+ w1yroxnTBe0eTR3fkz3pNrUMLRWFb35GO9JO/HkSyGmt4fQ0PVyTsjlTQt0gFmY3vUNMzxvaL
+ DdESu6mNGa4dINp2k+y/9I+7tQ73ld9aGX2qYzaMvBXvbyAXioQnxjzP/iCfpzriCD4QZ/Vm8
+ DMbVd2niiDMbiab+YrAss9s6aRM0+ijNloWWD3GSpFzNo62632jEvbGMr4CzQqiamA4hIRW0n
+ u39WL1yuggkLad1kWg4vAtL5SQbccV2DksU0X58SRcTjOEcChLBt/Eb70yO7BQpDFlbpvzNJR
+ qqGa8T+6u7PtVhmMOgJ9bGxgKgJpYxTBvTh47mTfDiHSbqcMdCJGo/VcTkH1gLAmPRfyOTPot
+ LmWJujJFPu7iVlnRhXBB29k82Dj2yGDZeiH2QDHDO/Iz+NISUraLDqH/h8zUfAIMMziaweBZj
+ GF+hfQChqwAr86CiuVNTL2H5bB+Rr+G9bB3j/aT7Skp+/L/u2LAMuaZZKRNbSSCMtKp2RIkbV
+ JyfQpUos7ijKClnz/bpRnzjz1NHxyKZWW0NAyqb8XH0AegRjgkF1s0ay1n30n4fAPYT56tvK2
+ u6vLluF
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/24/2018 2:45 AM, Jeff King wrote:
-> On Thu, Aug 23, 2018 at 10:59:55PM -0400, Jeff King wrote:
->
->> So I think we have a winner. I'll polish that up into patches and send
->> it out later tonight.
-> Oof. This rabbit hole keeps going deeper and deeper. I wrote up my
-> coccinelle findings separately in:
->
->    https://public-inbox.org/git/20180824064228.GA3183@sigill.intra.peff.net/
->
-> which is possibly a coccinelle bug (there I talked about oidcmp, since
-> it can be demonstrated with the existing transformations, but the same
-> thing happens with my hasheq patches). I'll wait to see how that
-> discussion plays out, but I do otherwise have hasheq() patches ready to
-> go, so it's probably not worth anybody else digging in further.
->
-I was trying this myself yesterday, and found a doc _somewhere_ that 
-said what we should do is this:
+Team,
 
-@@
-expression e1, e2;
-@@
-if (
-- oidcmp(e1, e2)
-+ !oideq(e1, e2)
-  )
+while this mail talks about Git for Windows, please keep in mind that we
+try *very* hard to keep Git for Windows' master working correctly not only
+on Windows but also on macOS and Linux.
 
-(Don't forget the space before the last end-paren!)
+I, for one, run Git built from Git for Windows' `master` branch in my
+Linux VMs all the time.
 
--Stolee
+As all of you know by now, the fact that Git was pretty much designed to
+work well on Linux is not exactly helping Git for Windows. (Or for that
+matter, macOS: Git is substantially slower on macOS than on Linux when
+running on the same hardware.) The quickest pay-off comes from converting
+Unix shell scripts (which are designed to spawn processes, whereas Windows
+is more optimized for multi-threaded applications).
+
+For that reason, I was delighted to see that our Google Summer of Code
+pushed pretty hard in that direction. And I could not help myself so I had
+to test how much faster things got. Here is the result of my first, really
+quick and dirty test:
+
+		without builtin stash/rebase	with builtin stash/rebase
+t3400 (rebase)		1m27s				32s
+t3404 (rebase -i)	13m15s				3m59s
+t3903 (stash)		8m37s				1m18s
+
+What can I say? Even if the numbers are off by as much as 10%, these are
+impressive improvements: keep in mind that there is a lot of churn going
+on in the test suite because it is itself implemented in Unix shell
+scripts (and hence I won't even bother to try more correct performance
+benchmarking because that is simply not possible when Unix shell scripts
+are in the equation). So the speed improvements of the stash/rebase
+commands are *even higher* than this.
+
+So I really, really, really want those builtins in Git for Windows
+v2.19.0. At *least* as an option.
+
+Therefore, after creating a pre-release of Git for Windows corresponding
+to Git v2.19.0-rc0, I created another one (note the .2 at the end), *with*
+those new builtins:
+https://github.com/git-for-windows/git/releases/tag/v2.19.0-rc0.windows.2
+
+I would like to ask you for help in dog-fooding this. In particular if you
+are a heavy stash/rebase user (like I am), it would be helpful to really
+kick those tires.
+
+Of course, those are only Windows binaries on that web page, but it should
+be easy to compile from that tag on Linux and macOS. I could also build a
+macOS installer and add it to that pre-release, is there interest in that?
+
+Currently I am uncertain whether I should spend the time to reinstate the
+old scripted `git stash` guarded by `stash.useBuiltin` and the old
+scripted `git rebase -i` (guarded by the same `rebase.useBuiltin` that
+guards the scripted `git rebase`), as a fall-back (or make the new
+builtins opt-ins instead of opt-outs).
+
+So far, I have not encountered any serious bug, but then, I did not really
+have a chance to use it yet (I installed it, of course, but I have not
+done any serious rebasing yet). So your help will be crucial in
+determining where I need to spend time.
+
+Thanks,
+Johannes
+
