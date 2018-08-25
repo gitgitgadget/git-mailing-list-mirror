@@ -2,115 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB9C21F404
-	for <e@80x24.org>; Sat, 25 Aug 2018 13:34:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA1301F404
+	for <e@80x24.org>; Sat, 25 Aug 2018 18:50:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726646AbeHYRNN (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Aug 2018 13:13:13 -0400
-Received: from mout01.posteo.de ([185.67.36.65]:46801 "EHLO mout01.posteo.de"
+        id S1726968AbeHYW3T (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Aug 2018 18:29:19 -0400
+Received: from mout.web.de ([212.227.15.3]:56179 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726624AbeHYRNN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Aug 2018 13:13:13 -0400
-Received: from submission (posteo.de [89.146.220.130]) 
-        by mout01.posteo.de (Postfix) with ESMTPS id CA79420F5B
-        for <git@vger.kernel.org>; Sat, 25 Aug 2018 15:34:11 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
-        t=1535204051; bh=w0XILprPs2mvV2T+hTmV3tXLXJm6m8/na8NhT4LTtLw=;
-        h=From:To:Subject:Date:From;
-        b=rm1acUkWzFe6Qob2W7xB0/dnydZQDSeQgEonMrAub6cYkYP4U47s4GGrGKj9tcAJ1
-         CttAq3S5XDm85nuCUxxbN7oLv9n/+HQnUk8J/zCIDVM7NnXxrGNR+EixPsAL8lm0mC
-         EuPf5xbRqs9ZvXX3O3cleqT4QbViiKsikiXvEanElt9ly1O/rmyw9ari74jYYfOw/M
-         JxBEgjEdcRisnVGNR5S/ZeLS9oG6pwUWLsPqvf1mGkY9lOqZLCvTRP+OWYzStEaEfI
-         7jmoovAdSzTsFUN1XUi/+kTRKTeQCcYtsftXjAcmcpJjFP65wHsGkofmnIown80SFp
-         TU1IKG8bmw+fQ==
-Received: from customer (localhost [127.0.0.1])
-        by submission (posteo.de) with ESMTPSA id 41yJyq0b8Lz6tm5;
-        Sat, 25 Aug 2018 15:34:11 +0200 (CEST)
-Content-Type: text/plain; charset="utf-8"
+        id S1726913AbeHYW3T (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Aug 2018 18:29:19 -0400
+Received: from [192.168.178.36] ([91.20.53.4]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0M09z2-1ffH4R2CVg-00uN13; Sat, 25
+ Aug 2018 20:49:23 +0200
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
+ <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+ <bc9f21c6-b362-2e3f-1820-7da93a76a7c8@ramsayjones.plus.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <a2577ecd-52a4-1343-a0b8-bbf1883db619@web.de>
+Date:   Sat, 25 Aug 2018 20:49:19 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-From:   =?utf-8?q?Constantin_Wei=C3=9Fer?= <i7c@posteo.de>
-User-Agent: alot/0.7
-To:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org
-References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
-In-Reply-To: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
-Message-ID: <153520405068.637.7595973048355361242@cwe>
-Subject: Re: Would a config var for --force-with-lease be useful?
-Date:   Sat, 25 Aug 2018 15:34:10 +0200
+In-Reply-To: <bc9f21c6-b362-2e3f-1820-7da93a76a7c8@ramsayjones.plus.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:jag+laWS/fSXMw5m1xRJfi8x9C3NiAGEDLy91lv9DjfWEFwItbG
+ 1VkgJbqE4wLogh3w0mT59IB5PLE8tdjyn60383/gjR+HSthVt0327tUCSYZghMgDfiscopH
+ rEU8G2wxxNpjfUXfJLiCKHOWtEr3pV1Kx8uAEqF3saHQ3/yj+PfsymBH9emw5d9Uf8lKa5e
+ EIpwmHeqNML5aGeqq9BDw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:qSNQHYBcZAE=:tYeSosZytqLiaHGMoj0wkx
+ o7hILk9W32KO3VS96fEuBYs5ZZPtiuopy8odJIDKynz6j3/G57pusU3/7ZFrzdpCsO6SCbHR/
+ iJYdscEwqf+i6MQaoLfmFt+9ZYzbvx+98hug5ekJJWAYgx2vIjINXH+89v23UsPxC6Ee5+REv
+ asnjL71Q+KV/TM9Zy6rxau2Q0o8QvMbZu3GMxll8z26oZdHaCALQErd9H+RhulV97E0qERsHD
+ NOWGgNicQsL+RcCSw/1Qxkryo36tAPdSOWm1/K/aky2/mdnmlpjBT7HfONTTmhsgijWO7d0mY
+ xtRwqL0QYO6Zs03RqgOH0ZrehPXqvdSH5R+/XtUe1bl0QIaBHtc1SAnCkkr+k4+8x3yD6ut1O
+ b/Swi3CB7ho7T8sgQmqZv82686iZXjOud4tJqa50ccfIWikR7344SyHLs05Y8xSG6Oj9Ec3U/
+ xHI88L0wBinjHegXKzyUsEN6n604jzmD9SAjtfKFHMLY0Gzw2vVdychPUFQRL1COML82hzAOD
+ znEi/whoQbJd/KlWRGAKhJcoMX1OZ6SERnJfYAx8uF3JXiWwOLT5dTL/9SXRJVQUAR3tQu9HV
+ CDpCYM6ChQMA5eUl1kDl8RYnIjz8hNnc1qS/WcyQRs0jNHog+PkONEkjQwWOPnu1KB+F4ZnZM
+ 6ShTzGQgZ9YwG3h7+xxZ3PL7g3ULDpJHQPsCRCJ1/VsedFDQEq5B48k6GMDqA9AAQogKX01wT
+ DRle5SSlC0RsriloI3dl4k1lBgw3QWUxdBZJnkVKW4mPzvmf9XKD/3DhTtFf1fLlI1eh8mEiR
+ 9/+byDu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think there are two aspects to using "force with lease".
+Am 11.08.2018 um 22:48 schrieb Ramsay Jones:
+> On 11/08/18 16:47, René Scharfe wrote:
+>> @@ -34,12 +36,12 @@ struct fsck_options {
+>>      fsck_error error_func;
+>>      unsigned strict:1;
+>>      int *msg_type;
+>> -    struct oid_array *skiplist;
+>> +    struct oidset skiplist;
+>>      struct decoration *object_names;
+>>  };
+>>  
+>> -#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
+>> -#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL }
+>> +#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT }
+>> +#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT }
+> 
+> Note that a NULL initialiser, for the object_names field, is missing
+> (not introduced by this patch). Since you have bumped into the 80th
+> column, you may not want to add that NULL to the end of these macros
+> (it is not _necessary_ after all). However, ... :-D
 
-Firstly, you, a person aware of the option, using it. In this case I
-think an alias is very fitting, because you get quickly used to just
-typing `git pf` or so. Plus, you don't have the disadvantage you
-described: if you=E2=80=99re working on a machine without your alias, you=
-=E2=80=99ll
-just notice immediately and type the full option.
+Exactly my thoughts -- except the "However" part. :)
 
-The other aspect is working in a team. The problem there is, that most
-(at least in my surroundings) use plain --force and you have to make
-them aware of --force-with-lease. But with an option or an alias, you
-depend on them using force with lease instead of plain force, so again I
-don't really see the advantage of such an option.
+I even thought about reordering the struct to move the NULL-initialized
+elements to the end, allowing us to drop them from the initializer, but
+felt that this would be a bit too much..
 
-And lastly, a question: say you are using your proposed option and it is
-turned on. Now, git refuses to push, you clarify the situation and
-actually mean to push --force now. How would you do this? 1) turn off 2)
-push 3) turn option on again?
-
-Regards,
-Constantin
-
-Quoting Scott Johnson (2018-08-24 18:39:27)
-> Hello Everyone:
-> =
-
-> I'm considering writing a patch that adds a configuration variable
-> that will allow the user to default the command:
-> =
-
-> git push --force
-> =
-
-> to:
-> =
-
-> git push --force-with-lease
-> =
-
-> As discussed here:
-> =
-
-> https://stackoverflow.com/questions/30542491/push-force-with-lease-by-def=
-ault
-> =
-
-> Now, I understand that there are downsides to having this enabled,
-> namely that a user who has this enabled might forget that they have it
-> enabled, and, as such, on a machine that _doesn't_ have it enabled (of
-> which they are unfamiliar) might then run the more consequential
-> command "git push --force", but my thinking is that adding this as a
-> feature to the git codebase as an _optional_ (i.e. not enabled by
-> default) configuration variable would then save some of us who use a
-> "rebase-then-force-push for pull request" workflow some time and
-> headaches.
-> =
-
-> Of course, I don't want to submit a patch if this is a feature that
-> isn't likely to be accepted, so I wanted to get some thoughts from the
-> mailing list regarding this idea.
-> =
-
-> Thank you,
-> =
-
-> ~Scott Johnson
+René
