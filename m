@@ -2,91 +2,230 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-0.8 required=3.0 tests=BAYES_00,DEAR_SOMETHING,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B50B1F404
-	for <e@80x24.org>; Fri, 24 Aug 2018 23:25:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E97D1F404
+	for <e@80x24.org>; Sat, 25 Aug 2018 02:45:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbeHYDBt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 24 Aug 2018 23:01:49 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55522 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726770AbeHYDBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 24 Aug 2018 23:01:49 -0400
-Received: (qmail 18413 invoked by uid 109); 24 Aug 2018 23:25:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 24 Aug 2018 23:25:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 402 invoked by uid 111); 24 Aug 2018 23:25:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 24 Aug 2018 19:25:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Aug 2018 19:25:02 -0400
-Date:   Fri, 24 Aug 2018 19:25:02 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention
- doc-diff
-Message-ID: <20180824232502.GA21265@sigill.intra.peff.net>
-References: <20180821192321.GA720@sigill.intra.peff.net>
- <20180821193556.GA859@sigill.intra.peff.net>
- <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
- <20180821204341.GA24431@sigill.intra.peff.net>
- <CAPig+cTghgbBo5VfZN+VP2VM00nPkhUqm0dOUqO37arxraxBKw@mail.gmail.com>
- <CACsJy8BxxyRxqCj5ZoOmPaiwmFRKHU72yTxyC_eHXS+cEa94zw@mail.gmail.com>
- <CAPig+cQNkMEUj=6e=6czbkWeozJQ-Go09C6bZwVJUTpM3JJiiw@mail.gmail.com>
+        id S1726235AbeHYGXJ convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sat, 25 Aug 2018 02:23:09 -0400
+Received: from fw.upaca.com.pe ([190.187.44.226]:54655 "EHLO pluto-saft.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726110AbeHYGXJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Aug 2018 02:23:09 -0400
+X-Greylist: delayed 44464 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Aug 2018 02:23:08 EDT
+From:   "PROMISKI VOLGr" <info@pluto-saft.com>
+To:     git@vger.kernel.org
+Subject: git@vger.kernel.org Quality  Petroleum Products
+Date:   24 Aug 2018 21:54:20 -0500
+Message-ID: <20180824215420.1B3EB6D3B113D084@pluto-saft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAPig+cQNkMEUj=6e=6czbkWeozJQ-Go09C6bZwVJUTpM3JJiiw@mail.gmail.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 24, 2018 at 06:55:24PM -0400, Eric Sunshine wrote:
+Dear Sir/Madam,
 
-> On Fri, Aug 24, 2018 at 10:47 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > On Thu, Aug 23, 2018 at 8:21 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > Peff wrote:
-> > > > Yes, but then what's the next step for my script? I can't "remove" since
-> > > > the worktree isn't there. I can't blow away any directory that I know
-> > > > about, since there isn't one.
-> > >
-> > > I was thinking that "worktree add" could start respecting the --force
-> > > option as an escape hatch.
-> > >
-> > > > What about refusing by default, but forcing an overwrite with "-f"?
-> > >
-> > > My thought, also.
-> >
-> > Sounds good. Eric are you going to implement this? Just checking so
-> > that I can (hopefully) cross this off my backlog ;-)
-> 
-> It wasn't something I was planning on working on (at least not
-> immediately) since it's still a bit fuzzy for me whether this is
-> enough to help Peff's use-case (and because I have several other
-> things in my queue, already).
+We "VASUGANNEFT LLC" is an official registered 
+Representatives/Mandate Company, on behalf of our End 
+Seller/Refinery Company; offer oil products from the leading 
+companies in the Russian Federation producing the highest quality 
+of Petroleum products e.g.
 
-I'm pretty sure it would just be a one-liner to "worktree add -f" in the
-doc-diff script. So I think it does solve the problem.
 
-> However, before even considering implementing it, there's at least one
-> question (and possibly others) needing answering. For instance, how
-> should "add --force" interact with a locked (not-present) worktree?
-> Should it blast it despite the lock? Or would that need --force
-> specified twice ("git worktree add -f -f foo")?
+*MAZUT M100 GOST -10585-99 RUSSIA ORIGIN: 
+*MAZUT M100 GOST -10585-75 RUSSIA ORIGIN: 
+*RUSSIAN D2 GAS OIL GOST 305-82: 
+*RUSSIAN PETROLEUM COKE (PETCOKE):
+*JET FUEL A1 91/91:
+*AVIATION KEROSENE COLONIAL GRADE 54 JET FUEL RUSSIAN ORIGIN: 
+*LIQUIDIFIED NATURAL GAZ: 
+*LIQUIDFIED PATROLEUM GAZ. 50% PROPANE & 50% BUTANE MIX:
+*DIESEL D6 VIRGIN LOW POUR FUEL OIL:
+*AUTOMOTIVE GAZ OIL (AGO): 
+*RUSSIA EXPORT BLEND CRUDE GOST 9965-76: 
+*GASOLINE 95 OCTANES:
+*RUSSIAN BITUMEN OF ALL SPECIFICATIONS:
+*DIESEL FUEL EN590:
+*UREA GRANULAR AND PRILLED RUSSIAN ORIGIN:
 
-Yes, I think that should probably be two forces.
+ 
 
-> As for the actual implementation, I haven't yet looked at how much
-> surgery will be needed to make 'add' respect --force.
+Guaranteeing high quality of our oil with full Corporate & Legal 
+Responsibility, under penalty of Perjury we confirms/certify that 
+our Seller have the availability and capability to Sale & supply 
+the below mentioned commodities in-according to the terms and 
+conditions stipulated on our commercial Procedure.for Inquiries 
+please Contact us on(vasuganneft@rerms.eu)Also Below is our 
+working procedures please kindly review and revert back to us for 
+Further proceedings thanks.
 
-Me either. I may take a look this weekend. I got sucked into an asm and
-coccinelle rabbit hole the last few days.
 
--Peff
+                                FOB (DIP/PAY) TRANSACTION 
+PROCEDURE 1 :
+
+1. Buyer Company Issues LOI/ICPO to Purchase Products along with 
+seller procedure acceptance letter.
+
+ 2. Seller issues CI for Available quantity in the Storage Tank 
+to Buyer, Buyer signs and return to Seller with TSA signed by 
+buyer and their appointed storage company.
+
+ 3. Seller issues dip test authorization, which shall be endorsed 
+by seller, buyer and their storage tank company.  
+
+ 4. Upon receipt of the signed Dip Test Authorization , buyer 
+Storage company issues note of readiness (NOR) to commence 
+injection into buyer rented tanks. Injection concluded and buyer 
+commence dip test for the injected product. 
+
+ 5. Buyer confirms dip test result and Makes 100% Payment by 
+MT103 TT wire Transfer within 24hours. After confirmation of 
+Buyers' payment, seller out pays facilitators involved in the 
+transaction.
+
+ 6. Seller issues Final Agreement to Buyer Company to review 
+Contract on R/E Monthly Deliveries.
+
+ 7. Buyer review and approves Contract and Issues SBLC/IRDLC 
+Irrevocable, non-transferable, auto revolving for 12 months 
+Shipment Value, Documentary Letter Of Credit for Length of 
+Contract and for each lifting as schedule.
+
+ 8. Buyer pays after successful Dip Test by MT103 Wire Transfer 
+on each Monthly delivery.
+
+9. The Subsequent delivery shall commence according to the terms 
+and conditions of the Contract and Seller pays commissions to 
+Seller side and to Buyer side intermediaries via MT103 according 
+to Monthly Delivery.
+
+
+
+                            FOB TRANSACTION PROCEDURE 2 :
+
+ 1. Buyer Company Issues LOI/ICPO to Purchase Products along with 
+seller procedure acceptance letter.
+
+ 2. Buyer pays for ICPO registration to enable the Refinery 
+export department approve and allocate allocation to buyer.
+
+ 3. On receipt of buyer payment by seller attorney, seller issues 
+CI for Available quantity in the Storage Tank to Buyer, Buyer 
+signs and return to Seller with NCNDA/IMFPA signed by all Groups 
+with Commission Structures.
+
+ 4. Seller issue unconditional DTA to buyer for immediate dip 
+test of the product in seller storage tank where the product is 
+stored.
+
+ 5. Buyer confirms dip test result and Makes 100% Payment by 
+MT103 TT wire Transfer within 24hours also deduct the amount paid 
+for the registration of the ICPO. After confirmation of Buyers' 
+payment, seller out pays facilitators involved in the 
+transaction. Buyer will extend seller storage tank or immediately 
+inject the product into their own rented storage tanks.
+
+ 6. Seller issues Final Agreement to Buyer Company to review 
+Contract on R/E Monthly Deliveries.
+
+7. Buyer review and approves Contract and Issues SBLC/IRDLC 
+Irrevocable, non-transferable, auto revolving for 12 months 
+Shipment Value, Documentary Letter Of Credit for Length of 
+Contract and for each lifting as schedule.
+
+ 8. Buyer pays after successful Dip Test by MT103 Wire Transfer 
+on each Monthly delivery.
+
+ 9. The Subsequent delivery shall commence according to the terms 
+and conditions of the Contract and Seller pays commissions to 
+Seller side and to Buyer side intermediaries viaMT103 according 
+to Monthly Delivery.
+ 
+
+
+                                    CIF TRANSACTION PROCEDURE 1:
+
+1. Buyer issues irrevocable corporate purchase order (ICPO) with 
+seller procedure inserted in the ICPO.
+
+ 2. Seller issues sales and purchase agreement (SPA) to buyer, 
+buyer countersigns and sends back to seller.
+
+ 3. Seller signs and seal the draft contract and send back to 
+buyer.
+
+ 4. Buyer legalize and register the transaction with the 
+ministries which will enable the shipping company accept 
+anchoring their vessel for loading at the loading port upon 
+confirmation that the product to be loaded has been legalized.
+
+ 5. Seller finalize with shipping company for the delivery of the 
+product to buyer destination port (CHARTER PARTY AGREEMENT), 
+shipping cost will be paid 100% by seller.
+
+ 6. Shipping company confirms the payment and buyer's bank swift 
+to seller's bank financial instrument SBLC MT760, seller's bank 
+in return swift to the buyer's bank 2% performance bond 
+guarantee,.
+
+ 7. Seller effect allocation tittle transfer and obtain 
+certificate on seller expense, shipping company approve dip test 
+and buyer conduct dip test for the immediate lift.
+
+ 8. Shipping of the product will commence as agreed by buyer and 
+seller.
+
+9. Within 5 banking days of vessel arrival at buyer discharge 
+port, buyer release the full payment of the product, seller's 
+bank release the commissions to the intermediaries.
+
+ 
+ 
+                                                CIF TRANSACTION 
+PROCEDURE 2:
+
+1. Buyer issues irrevocable corporate purchase order (ICPO) with 
+seller procedure inserted in the ICPO.
+
+2. Buyer pays for registration of their ICPO to enable Refinery 
+export department approve the ICPO and allocate product to buyer.  
+Seller Attorney receives payment and seller issues sales and 
+purchase agreement (SPA) to buyer, buyer countersigns and sends 
+back to seller.
+
+3. Seller signs and seal the draft contract and send back to 
+buyer along with verbiage of SBLC MT760 and letter of commitment 
+to supply.
+
+4. Upon seller bank receipt of the SBLC MT 760, Seller finalize 
+with shipping company for the delivery of the product to buyer 
+destination port (CHARTER PARTY AGREEMENT), shipping cost will be 
+paid 100% by seller.
+
+5. Shipping company confirms seller payment and seller's bank in 
+return swift to the buyer's bank 2% performance bond guarantee,.
+
+6. Seller effect allocation tittle transfer and obtain 
+certificate on seller expense, shipping company approve dip test 
+and buyer conduct dip test for the immediate lift.
+
+7. Shipping of the product will commence as agreed by buyer and 
+seller.
+
+9. Within 5 banking days of vessel arrival at buyer discharge 
+port, buyer release the full payment of the product, seller's 
+bank release the commissions to the intermediaries.
+
+
+Regards,
+Oleg Sergeevich
+
+
+
