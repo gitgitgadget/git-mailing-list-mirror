@@ -6,167 +6,240 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B0EC1F404
-	for <e@80x24.org>; Sat, 25 Aug 2018 08:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFD3B1F428
+	for <e@80x24.org>; Sat, 25 Aug 2018 08:03:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726672AbeHYLim (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Aug 2018 07:38:42 -0400
-Received: from cloud.peff.net ([104.130.231.41]:55662 "HELO cloud.peff.net"
+        id S1726802AbeHYLl4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Aug 2018 07:41:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:55676 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726526AbeHYLim (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Aug 2018 07:38:42 -0400
-Received: (qmail 4567 invoked by uid 109); 25 Aug 2018 08:00:34 -0000
+        id S1726412AbeHYLl4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Aug 2018 07:41:56 -0400
+Received: (qmail 4694 invoked by uid 109); 25 Aug 2018 08:03:48 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Aug 2018 08:00:34 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 25 Aug 2018 08:03:48 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2273 invoked by uid 111); 25 Aug 2018 08:00:40 -0000
+Received: (qmail 2307 invoked by uid 111); 25 Aug 2018 08:03:55 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 25 Aug 2018 04:00:40 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 25 Aug 2018 04:03:55 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Aug 2018 04:00:31 -0400
-Date:   Sat, 25 Aug 2018 04:00:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 25 Aug 2018 04:03:46 -0400
+Date:   Sat, 25 Aug 2018 04:03:46 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         Derrick Stolee <stolee@gmail.com>,
         Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH 0/9] introducing oideq()
-Message-ID: <20180825080031.GA32139@sigill.intra.peff.net>
+Subject: [PATCH 1/9] coccinelle: use <...> for function exclusion
+Message-ID: <20180825080346.GA737@sigill.intra.peff.net>
+References: <20180825080031.GA32139@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20180825080031.GA32139@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a follow-up to the discussion in:
+Sometimes we want to suppress a coccinelle transformation
+inside a particular function. For example, in finding
+conversions of hashcmp() to oidcmp(), we should not convert
+the call in oidcmp() itself, since that would cause infinite
+recursion. We write that like this:
 
-  https://public-inbox.org/git/20180822030344.GA14684@sigill.intra.peff.net/
+  @@
+  identifier f != oidcmp;
+  expression E1, E2;
+  @@
+    f(...) {...
+  - hashcmp(E1->hash, E2->hash)
+  + oidcmp(E1, E2)
+    ...}
 
-The general idea is that the majority of callers don't care about actual
-plus/minus ordering from oidcmp() and hashcmp(); they just want to know
-if two oids are equal. The stricter equality check can be optimized
-better by the compiler.
+to match the interior of any function _except_ oidcmp().
 
-Due to the simplicity of the current code and our inlining, the compiler
-can usually figure this out for now. So I wouldn't expect this patch to
-actually improve performance right away. But as that discussion shows,
-we are likely to take a performance hit as we move to more runtime
-determination of the_hash_algo parameters. Having these callers use the
-more strict form will potentially help us recover that.
+Unfortunately, this doesn't catch all cases (e.g., the one
+in sequencer.c that this patch fixes). The problem, as
+explained by one of the Coccinelle developers in [1], is:
 
-So in that sense we _could_ simply punt on this series until then (and
-it's certainly post-v2.19 material). But I think it's worth doing now,
-simply from a readability/annotation standpoint. IMHO the resulting code
-is more clear (though I've long since taught myself to read !foocmp() as
-equality).
+  For transformation, A ... B requires that B occur on every
+  execution path starting with A, unless that execution path
+  ends up in error handling code.  (eg, if (...) { ...
+  return; }).  Here your A is the start of the function.  So
+  you need a call to hashcmp on every path through the
+  function, which fails when you add ifs.
 
-If we do punt, patch 1 could still be picked up now, as it's a related
-cleanup that stands on its own.
+  [...]
 
-The diffstat is scary, but the vast majority of that is purely
-mechanical via coccinelle. There's some discussion in the individual
-patches.
+  Another issue with A ... B is that by default A and B
+  should not appear in the matched region.  So your original
+  rule matches only the case where every execution path
+  contains exactly one call to hashcmp, not more than one.
 
-We also don't _have_ to convert all sites now. I strongly suspect that
-only a few calls are actual measurable bottlenecks (the one in
-lookup_object() is the one I was primarily interested in).  But it's
-just as easy to do it all at once with coccinelle, rather than try to
-measure each one (and once we add the coccinelle patches, we have to
-convert everything, or "make coccicheck" will nag people to do so).
+One way to solve this is to put the pattern inside an
+angle-bracket pattern like "<... P ...>", which allows zero
+or more matches of P. That works (and is what this patch
+does), but it has one drawback: it matches more than we care
+about, and Coccinelle uses extra CPU. Here are timings for
+"make coccicheck" before and after this patch:
 
-I didn't bother to hold back changes for any topics in flight.  There
-are a handful of conflicts with "pu", but they're mostly trivial.  The
-only big one is due to some code movement in ds/reachable. But though
-the conflict is big, the resolution is still easy (you can even just
-take the other side and "make coccicheck" to do it automatically).
+  [before]
+  real	1m27.122s
+  user	7m34.451s
+  sys	0m37.330s
 
-  [1/9]: coccinelle: use <...> for function exclusion
-  [2/9]: introduce hasheq() and oideq()
-  [3/9]: convert "oidcmp() == 0" to oideq()
-  [4/9]: convert "hashcmp() == 0" to hasheq()
-  [5/9]: convert "oidcmp() != 0" to "!oideq()"
-  [6/9]: convert "hashcmp() != 0" to "!hasheq()"
-  [7/9]: convert hashmap comparison functions to oideq()
-  [8/9]: read-cache: use oideq() in ce_compare functions
-  [9/9]: show_dirstat: simplify same-content check
+  [after]
+  real	2m18.040s
+  user	10m58.310s
+  sys	0m41.549s
 
- bisect.c                           |  6 ++--
- blame.c                            |  8 ++---
- builtin/am.c                       |  2 +-
- builtin/checkout.c                 |  2 +-
- builtin/describe.c                 | 10 +++---
- builtin/diff.c                     |  2 +-
- builtin/difftool.c                 |  4 +--
- builtin/fast-export.c              |  2 +-
- builtin/fetch.c                    |  6 ++--
- builtin/fmt-merge-msg.c            |  6 ++--
- builtin/index-pack.c               |  8 ++---
- builtin/log.c                      |  6 ++--
- builtin/merge-tree.c               |  2 +-
- builtin/merge.c                    |  6 ++--
- builtin/pack-objects.c             |  4 +--
- builtin/pull.c                     |  4 +--
- builtin/receive-pack.c             |  4 +--
- builtin/remote.c                   |  2 +-
- builtin/replace.c                  |  6 ++--
- builtin/rm.c                       |  2 +-
- builtin/show-branch.c              |  6 ++--
- builtin/tag.c                      |  2 +-
- builtin/unpack-objects.c           |  4 +--
- builtin/update-index.c             |  4 +--
- bulk-checkin.c                     |  2 +-
- bundle.c                           |  2 +-
- cache-tree.c                       |  2 +-
- cache.h                            | 22 +++++++++----
- combine-diff.c                     |  4 +--
- commit-graph.c                     | 10 +++---
- commit.c                           |  2 +-
- connect.c                          |  2 +-
- contrib/coccinelle/commit.cocci    |  4 +--
- contrib/coccinelle/object_id.cocci | 50 ++++++++++++++++++++++++------
- diff-lib.c                         |  4 +--
- diff.c                             | 23 ++++++--------
- diffcore-break.c                   |  2 +-
- diffcore-rename.c                  |  2 +-
- dir.c                              |  6 ++--
- fast-import.c                      | 10 +++---
- fetch-pack.c                       |  2 +-
- http-push.c                        |  2 +-
- http-walker.c                      |  4 +--
- http.c                             |  2 +-
- log-tree.c                         |  6 ++--
- match-trees.c                      |  2 +-
- merge-recursive.c                  |  4 +--
- notes-merge.c                      | 24 +++++++-------
- notes.c                            |  8 ++---
- object.c                           |  2 +-
- oidmap.c                           | 12 +++----
- pack-check.c                       |  6 ++--
- pack-objects.c                     |  2 +-
- pack-write.c                       |  4 +--
- packfile.c                         | 12 +++----
- patch-ids.c                        |  8 ++---
- read-cache.c                       | 12 +++----
- ref-filter.c                       |  2 +-
- refs.c                             |  8 ++---
- refs/files-backend.c               |  6 ++--
- refs/packed-backend.c              |  2 +-
- refs/ref-cache.c                   |  2 +-
- remote.c                           |  8 ++---
- revision.c                         |  2 +-
- sequencer.c                        | 40 ++++++++++++------------
- sha1-array.c                       |  2 +-
- sha1-file.c                        | 12 +++----
- sha1-name.c                        |  2 +-
- submodule-config.c                 |  4 +--
- submodule.c                        |  2 +-
- t/helper/test-dump-cache-tree.c    |  2 +-
- transport.c                        |  2 +-
- tree-diff.c                        |  2 +-
- unpack-trees.c                     |  6 ++--
- wt-status.c                        | 10 +++---
- xdiff-interface.c                  |  2 +-
- 76 files changed, 259 insertions(+), 224 deletions(-)
+That's not ideal, but it's more important for this to be
+correct than to be fast. And coccicheck is already fairly
+slow (and people don't run it for every single patch). So
+it's an acceptable tradeoff.
+
+There _is_ a better way to do it, which is to record the
+position at which we find hashcmp(), and then check it
+against the forbidden function list. Like:
+
+  @@
+  position p : script:python() { p[0].current_element != "oidcmp" };
+  expression E1,E2;
+  @@
+  - hashcmp@p(E1->hash, E2->hash)
+  + oidcmp(E1, E2)
+
+This is only a little slower than the current code, and does
+the right thing in all cases. Unfortunately, not all builds
+of Coccinelle include python support (including the ones in
+Debian). Requiring it may mean that fewer people can easily
+run the tool, which is worse than it simply being a little
+slower.
+
+We may want to revisit this decision in the future if:
+
+  - builds with python become more common
+
+  - we find more uses for python support that tip the
+    cost-benefit analysis
+
+But for now this patch sticks with the angle-bracket
+solution, and converts all existing cocci patches. This
+fixes only one missed case in the current code, though it
+makes a much better difference for some new rules I'm adding
+(converting "!hashcmp()" to "hasheq()" misses over half the
+possible conversions using the old form).
+
+[1] https://public-inbox.org/git/alpine.DEB.2.21.1808240652370.2344@hadrien/
+
+Helped-by: Julia Lawall <julia.lawall@lip6.fr>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/coccinelle/commit.cocci    |  4 ++--
+ contrib/coccinelle/object_id.cocci | 20 ++++++++++----------
+ sequencer.c                        |  2 +-
+ 3 files changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/contrib/coccinelle/commit.cocci b/contrib/coccinelle/commit.cocci
+index aec3345adb..c49aa558f0 100644
+--- a/contrib/coccinelle/commit.cocci
++++ b/contrib/coccinelle/commit.cocci
+@@ -15,10 +15,10 @@ expression c;
+ identifier f !~ "^(get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit)$";
+ expression c;
+ @@
+-  f(...) {...
++  f(...) {<...
+ - c->maybe_tree
+ + get_commit_tree(c)
+-  ...}
++  ...>}
+ 
+ @@
+ expression c;
+diff --git a/contrib/coccinelle/object_id.cocci b/contrib/coccinelle/object_id.cocci
+index 09afdbf994..5869979be7 100644
+--- a/contrib/coccinelle/object_id.cocci
++++ b/contrib/coccinelle/object_id.cocci
+@@ -20,10 +20,10 @@ expression E1;
+ identifier f != oid_to_hex;
+ expression E1;
+ @@
+-  f(...) {...
++  f(...) {<...
+ - sha1_to_hex(E1->hash)
+ + oid_to_hex(E1)
+-  ...}
++  ...>}
+ 
+ @@
+ expression E1, E2;
+@@ -35,10 +35,10 @@ expression E1, E2;
+ identifier f != oid_to_hex_r;
+ expression E1, E2;
+ @@
+-   f(...) {...
++   f(...) {<...
+ - sha1_to_hex_r(E1, E2->hash)
+ + oid_to_hex_r(E1, E2)
+-  ...}
++  ...>}
+ 
+ @@
+ expression E1;
+@@ -50,10 +50,10 @@ expression E1;
+ identifier f != oidclr;
+ expression E1;
+ @@
+-  f(...) {...
++  f(...) {<...
+ - hashclr(E1->hash)
+ + oidclr(E1)
+-  ...}
++  ...>}
+ 
+ @@
+ expression E1, E2;
+@@ -65,10 +65,10 @@ expression E1, E2;
+ identifier f != oidcmp;
+ expression E1, E2;
+ @@
+-  f(...) {...
++  f(...) {<...
+ - hashcmp(E1->hash, E2->hash)
+ + oidcmp(E1, E2)
+-  ...}
++  ...>}
+ 
+ @@
+ expression E1, E2;
+@@ -92,10 +92,10 @@ expression E1, E2;
+ identifier f != oidcpy;
+ expression E1, E2;
+ @@
+-  f(...) {...
++  f(...) {<...
+ - hashcpy(E1->hash, E2->hash)
+ + oidcpy(E1, E2)
+-  ...}
++  ...>}
+ 
+ @@
+ expression E1, E2;
+diff --git a/sequencer.c b/sequencer.c
+index 65d371c746..6a11f49651 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4545,7 +4545,7 @@ int skip_unnecessary_picks(void)
+ 		if (item->commit->parents->next)
+ 			break; /* merge commit */
+ 		parent_oid = &item->commit->parents->item->object.oid;
+-		if (hashcmp(parent_oid->hash, oid->hash))
++		if (oidcmp(parent_oid, oid))
+ 			break;
+ 		oid = &item->commit->object.oid;
+ 	}
+-- 
+2.19.0.rc0.412.g7005db4e88
 
