@@ -2,93 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B908B1F404
-	for <e@80x24.org>; Sat, 25 Aug 2018 10:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 917B11F404
+	for <e@80x24.org>; Sat, 25 Aug 2018 12:18:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726636AbeHYOgz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Aug 2018 10:36:55 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:33511 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbeHYOgz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Aug 2018 10:36:55 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v90-v6so9492093wrc.0
-        for <git@vger.kernel.org>; Sat, 25 Aug 2018 03:58:17 -0700 (PDT)
+        id S1726616AbeHYP5m (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Aug 2018 11:57:42 -0400
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:36343 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726521AbeHYP5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Aug 2018 11:57:41 -0400
+Received: by mail-lj1-f195.google.com with SMTP id v26-v6so5044918ljj.3
+        for <git@vger.kernel.org>; Sat, 25 Aug 2018 05:18:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=n1iLZXhQtWLVoUzMSVlhHMPSaiseqBUpKd25vWBW5rQ=;
-        b=nNSRkPSALmQvEYBprKwX8Mw62tH9WtWCcWjPKXdixY2/IWTjDEPSPqUpTf8UKZAxRn
-         dT4/QrHzHjlDTLh1DXmIhynQX4erR/JPKXYO1X3KCd7E9yiViUw/0c9ZEfqiorAci/Da
-         sX+4/azSkPZK3aSYa/LUlNAmKvyQZommwqrQ1t5XXc8EztBUy8kZrMVQL7Zdh52AVexl
-         czzayCQKN8yNfZyNSe56KakejcIQ05W+bgbtFryi8BF+odacXgCt8FDFByEklvYwiuwG
-         FXuHH4yzFBd+BCVCFXnOH/2N4Rza2/mI9wfvK02AGeh490vpqOwQg59OSJSoCz4mSKeA
-         jBVQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=MXQDQZUORyRYidj9Z6xbK/eQ2XoLOxmTVRNkxm+RGto=;
+        b=Orr1FhW5/RRxs5Yh2zyzfn/Ito++q3j+0MfjBVz7yf3WyuFP61iSQBc3Gba5J/jLnF
+         cPz/Jp4/oriIZlFQTXoCHG+//BU+w41BwSlYBLE2A8+QrhihkvywrkmdcDmiv0Mn5dss
+         g/8VzQE43IN8OslUNZiqFsD0lpmM9sLN4OuBiajMnAER3MPW35GIxzibBmprIA+JPHYF
+         qNRiaefwjQdlRsUi/bqCZbbHGO4+7jowy8lN0AE6CPWsbNd4+hdOuW6Nl5OJy0JvP1ZX
+         1RnU8WhlStmabKFIZF2LO2oEFTSHdEnc3mWDs0kuJkvrNAF/SntYAPTQqiBKRnhEIlq2
+         xcVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=n1iLZXhQtWLVoUzMSVlhHMPSaiseqBUpKd25vWBW5rQ=;
-        b=EmxISabexWlxZfKV4nChXm+/lRn3bQTkxsA630w9SLultC4HKP0A9MGJ/MEaAB/UHj
-         eMKIU5whsoyvgP3cjPUFKNMIacYPTi8c13Yutwuiv0Usqm9aTjkTOTd5F3c4t9FtPsut
-         i+nM1/BLFa+ZeIYsLlaByrDVJzsvaUGMqOyi4vwdJ7vKmt1V9R7YxdHodI+lW6IPgZ4j
-         sfSoPQbykWiTlj++rzhcSyz2qmGVrWHMNi4JkTppbzo8AZ+jGrFi7XuQHvT5E5Cc+cCK
-         2hwXeTSNlp7dE31LkdEEUgzzdJqQA7LS/ObhZpC+P+eSw22nZN6ZxQhubWnnWxJJ9rJw
-         qPZA==
-X-Gm-Message-State: APzg51CtY0BFuDM2iYxybBprgAUCUOq24+w9NpVJMe1z2BYts7p33jSl
-        suHUHql7ru501srRet8nbKk=
-X-Google-Smtp-Source: ANB0VdZ4ei/w7N668z3oTDDfa5ipxgx6iCTX7NncIodIpeXPZ5947qBQzZQXumlLOoxnx/loEpfm3Q==
-X-Received: by 2002:adf:ad47:: with SMTP id p65-v6mr3684005wrc.222.1535194697147;
-        Sat, 25 Aug 2018 03:58:17 -0700 (PDT)
-Received: from [192.168.178.82] (ppp-93-104-98-64.dynamic.mnet-online.de. [93.104.98.64])
-        by smtp.gmail.com with ESMTPSA id r13-v6sm3137945wmf.35.2018.08.25.03.58.15
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=MXQDQZUORyRYidj9Z6xbK/eQ2XoLOxmTVRNkxm+RGto=;
+        b=WmY/fQvqcfd0a0dGYrT038FtukXLZAJz50os2Sd/s7TZJkL8zAiEcyHzMOcgVRdX/s
+         wl9jCc73mxKcFYxQpI038/JB2kwAara3E/3CdeAtIFfa25xhVDkvVQ9b3Ohk5yPBt/ue
+         tUzqrvTHTVuv7yzi6Y2DfVEBTc4w5Z2hzTYynzxRRP4Mi//fvdERp70T8lkfCCcR+Gok
+         9iJa1mTqWKllI29EaqCzrF9qkfVNDLznFu5fNOdwvHCY/U+5+w9LMJeLDeWL8hlnotBz
+         +S6A+xfiIK3xbPpgzjUyE4Nu1BZY3ye+9Xb9LV7D0Ier0YInAU7GncOyHF5p/hW+WxzV
+         WjOQ==
+X-Gm-Message-State: APzg51Agq4UTL9Anm+y0ZuAUibCkvcCIGWrmTF1QkpS0AOzl9qcMRuwk
+        hXZTP2utzah/gtPy61cB3U0Rq5SC
+X-Google-Smtp-Source: ANB0VdZCIQQz+PfrjJh3D9GqsZQ9HNuQA3OtPCsCEIsn2Wy+dgtytWmE5916ow2l5KwZll8pu/TgNA==
+X-Received: by 2002:a2e:9d0c:: with SMTP id t12-v6mr3929006lji.75.1535199532118;
+        Sat, 25 Aug 2018 05:18:52 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id v63-v6sm1669800lje.20.2018.08.25.05.18.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Aug 2018 03:58:16 -0700 (PDT)
-Subject: Re: [PATCH 2/9] introduce hasheq() and oideq()
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-References: <20180825080031.GA32139@sigill.intra.peff.net>
- <20180825080543.GB737@sigill.intra.peff.net>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <d8cc6d0e-d713-2387-6bde-072f208a87c6@gmail.com>
-Date:   Sat, 25 Aug 2018 12:58:14 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Sat, 25 Aug 2018 05:18:51 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
+        newren@gmail.com, peartben@gmail.com
+Subject: [PATCH] Document update for nd/unpack-trees-with-cache-tree
+Date:   Sat, 25 Aug 2018 14:18:48 +0200
+Message-Id: <20180825121848.11606-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
+In-Reply-To: <20180818144128.19361-1-pclouds@gmail.com>
+References: <20180818144128.19361-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180825080543.GB737@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/08/18 10:05, Jeff King wrote:
-> The main comparison functions we provide for comparing
-> object ids are hashcmp() and oidcmp(). These are more
-> flexible than a strict equality check, since they also
-> express ordering. That makes them them useful for sorting
+Fix an incorrect comment in the new code added in b4da37380b
+(unpack-trees: optimize walking same trees with cache-tree -
+2018-08-18) and document about the new test variable that is enabled
+by default in test-lib.sh in 4592e6080f (cache-tree: verify valid
+cache-tree in the test suite - 2018-08-18)
 
-s/them them/them/
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ On top of nd/unpack-trees-with-cache-tree. Incremental update since
+ this topic has entered 'next'
 
-> We can solve that by introducing a hasheq() function (and
-> matching oideq() wrapper), which callers can use to make
+ t/README       | 4 ++++
+ unpack-trees.c | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-s/make/& it/
-
-> clear that they only care about equality. For now, the
-> implementation will literally be "!hashcmp()", but it frees
-> us up later to introduce code optimized specifically for the
-> equality check.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+diff --git a/t/README b/t/README
+index 8373a27fea..0e7cc23734 100644
+--- a/t/README
++++ b/t/README
+@@ -315,6 +315,10 @@ packs on demand. This normally only happens when the object size is
+ over 2GB. This variable forces the code path on any object larger than
+ <n> bytes.
+ 
++GIT_TEST_VALIDATE_INDEX_CACHE_ENTRIES=<boolean> checks that cache-tree
++records are valid when the index is written out or after a merge. This
++is mostly to catch missing invalidation. Default is true.
++
+ Naming Tests
+ ------------
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 3394540842..5a18f36143 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -676,8 +676,8 @@ static int index_pos_by_traverse_info(struct name_entry *names,
+ 
+ /*
+  * Fast path if we detect that all trees are the same as cache-tree at this
+- * path. We'll walk these trees recursively using cache-tree/index instead of
+- * ODB since already know what these trees contain.
++ * path. We'll walk these trees in an iteractive loop using cache-tree/index
++ * instead of ODB since already know what these trees contain.
+  */
+ static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
+ 				  struct name_entry *names,
+-- 
+2.19.0.rc0.337.ge906d732e7
 
