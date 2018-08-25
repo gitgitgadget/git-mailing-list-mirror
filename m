@@ -2,117 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FBC31F404
-	for <e@80x24.org>; Sat, 25 Aug 2018 13:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB9C21F404
+	for <e@80x24.org>; Sat, 25 Aug 2018 13:34:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726677AbeHYQl2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 25 Aug 2018 12:41:28 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:43976 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726412AbeHYQl1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 25 Aug 2018 12:41:27 -0400
-Received: by mail-lj1-f194.google.com with SMTP id m84-v6so8858755lje.10
-        for <git@vger.kernel.org>; Sat, 25 Aug 2018 06:02:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RFx1JOc0tbpbaOnpGGx4m5Guu20gZVImewwO4zAeB5A=;
-        b=ctfEuJgn+SZ5U537qJvjvgbF57fuYQTOSTudgllfu9jrq8N55b4gSPcaxFwYqofIMP
-         tmebje3CMGYznun0KGbkvkyGXUgajGWU8cvDVpX9oV1CDoPPLUftG9OHEa8q9wsnEUcC
-         x0xUcTT7qhpINY0MFMQn5tekbFE2jFU18O/sCcGWV8D0jAWBTqYTGtysT9OceHJLNjmT
-         WKJOSryecjBJtPnUgmvOgpaEekos+5DwOf2hVPZOS0o76cfPv9Z0uhQ5isb0RH+WKM0h
-         6Hwmb3hrvyJQdv20+UZIOTW8on4ehDZnd2iGQ6+NcI/reDlkiGLQbbHnst0QxK/G7Fg8
-         HiDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RFx1JOc0tbpbaOnpGGx4m5Guu20gZVImewwO4zAeB5A=;
-        b=O9EKnRLqEFttwHJ5+9Yc0bs6SSNEZFqPLpRkOcSNBjJO6uRTIP37aMOhw/NAAROwBJ
-         oNb8FoO352kVIBc0U4x85NAayUTnvW7yi1bZodAa5Gz0os+TPVOEnfL8C8gCnBiCektH
-         UStNEsZnDp/cYYwJa1euZY8eJoMfevMmOrxYaqKl4dogUVUihYAWL7H5Bd4cHNQX9QSi
-         jCJ9gEL7WdU7b0PmftOtIf3gd0UyfCdWT95ahdwVhhGdicIhAvqZWz5JBnNIbOPX/BZI
-         EmtuKZdTGA2Vkgp5k5pnjboS1UNd35XsAxPMhzVOHRQuIl77pTwHrdP7zBn/CAy2eN7g
-         g7gQ==
-X-Gm-Message-State: APzg51CPD/c2HTj8gPYSWYaLTDkIuhEQtjgiUXxEGF+VHyGDuJB9hJIO
-        5Z5lvYOvtP9lcCtuo1tl42I=
-X-Google-Smtp-Source: ANB0VdY4ORwR/+VyFtgE8cUTJOi4WMPdhIJHlu4/h3wqYhDfMF2PRugs33dgYT/yaD7Spq7i5ZuXDw==
-X-Received: by 2002:a2e:9e17:: with SMTP id e23-v6mr3869970ljk.14.1535202151389;
-        Sat, 25 Aug 2018 06:02:31 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id m187-v6sm1803145lfe.45.2018.08.25.06.02.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 25 Aug 2018 06:02:30 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
-        newren@gmail.com, peartben@gmail.com,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-Subject: [PATCH v2] Document update for nd/unpack-trees-with-cache-tree
-Date:   Sat, 25 Aug 2018 15:02:09 +0200
-Message-Id: <20180825130209.31231-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180825121848.11606-1-pclouds@gmail.com>
-References: <20180825121848.11606-1-pclouds@gmail.com>
+        id S1726646AbeHYRNN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 25 Aug 2018 13:13:13 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:46801 "EHLO mout01.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726624AbeHYRNN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 25 Aug 2018 13:13:13 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id CA79420F5B
+        for <git@vger.kernel.org>; Sat, 25 Aug 2018 15:34:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1535204051; bh=w0XILprPs2mvV2T+hTmV3tXLXJm6m8/na8NhT4LTtLw=;
+        h=From:To:Subject:Date:From;
+        b=rm1acUkWzFe6Qob2W7xB0/dnydZQDSeQgEonMrAub6cYkYP4U47s4GGrGKj9tcAJ1
+         CttAq3S5XDm85nuCUxxbN7oLv9n/+HQnUk8J/zCIDVM7NnXxrGNR+EixPsAL8lm0mC
+         EuPf5xbRqs9ZvXX3O3cleqT4QbViiKsikiXvEanElt9ly1O/rmyw9ari74jYYfOw/M
+         JxBEgjEdcRisnVGNR5S/ZeLS9oG6pwUWLsPqvf1mGkY9lOqZLCvTRP+OWYzStEaEfI
+         7jmoovAdSzTsFUN1XUi/+kTRKTeQCcYtsftXjAcmcpJjFP65wHsGkofmnIown80SFp
+         TU1IKG8bmw+fQ==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 41yJyq0b8Lz6tm5;
+        Sat, 25 Aug 2018 15:34:11 +0200 (CEST)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+From:   =?utf-8?q?Constantin_Wei=C3=9Fer?= <i7c@posteo.de>
+User-Agent: alot/0.7
+To:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org
+References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
+In-Reply-To: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
+Message-ID: <153520405068.637.7595973048355361242@cwe>
+Subject: Re: Would a config var for --force-with-lease be useful?
+Date:   Sat, 25 Aug 2018 15:34:10 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix an incorrect comment in the new code added in b4da37380b
-(unpack-trees: optimize walking same trees with cache-tree -
-2018-08-18) and document about the new test variable that is enabled
-by default in test-lib.sh in 4592e6080f (cache-tree: verify valid
-cache-tree in the test suite - 2018-08-18)
+I think there are two aspects to using "force with lease".
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Some more typo fix, found by Martin.
+Firstly, you, a person aware of the option, using it. In this case I
+think an alias is very fitting, because you get quickly used to just
+typing `git pf` or so. Plus, you don't have the disadvantage you
+described: if you=E2=80=99re working on a machine without your alias, you=
+=E2=80=99ll
+just notice immediately and type the full option.
 
- t/README       | 4 ++++
- unpack-trees.c | 4 ++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+The other aspect is working in a team. The problem there is, that most
+(at least in my surroundings) use plain --force and you have to make
+them aware of --force-with-lease. But with an option or an alias, you
+depend on them using force with lease instead of plain force, so again I
+don't really see the advantage of such an option.
 
-diff --git a/t/README b/t/README
-index 8373a27fea..0e7cc23734 100644
---- a/t/README
-+++ b/t/README
-@@ -315,6 +315,10 @@ packs on demand. This normally only happens when the object size is
- over 2GB. This variable forces the code path on any object larger than
- <n> bytes.
- 
-+GIT_TEST_VALIDATE_INDEX_CACHE_ENTRIES=<boolean> checks that cache-tree
-+records are valid when the index is written out or after a merge. This
-+is mostly to catch missing invalidation. Default is true.
-+
- Naming Tests
- ------------
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3394540842..515c374373 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -676,8 +676,8 @@ static int index_pos_by_traverse_info(struct name_entry *names,
- 
- /*
-  * Fast path if we detect that all trees are the same as cache-tree at this
-- * path. We'll walk these trees recursively using cache-tree/index instead of
-- * ODB since already know what these trees contain.
-+ * path. We'll walk these trees in an iterative loop using cache-tree/index
-+ * instead of ODB since we already know what these trees contain.
-  */
- static int traverse_by_cache_tree(int pos, int nr_entries, int nr_names,
- 				  struct name_entry *names,
--- 
-2.19.0.rc0.337.ge906d732e7
+And lastly, a question: say you are using your proposed option and it is
+turned on. Now, git refuses to push, you clarify the situation and
+actually mean to push --force now. How would you do this? 1) turn off 2)
+push 3) turn option on again?
 
+Regards,
+Constantin
+
+Quoting Scott Johnson (2018-08-24 18:39:27)
+> Hello Everyone:
+> =
+
+> I'm considering writing a patch that adds a configuration variable
+> that will allow the user to default the command:
+> =
+
+> git push --force
+> =
+
+> to:
+> =
+
+> git push --force-with-lease
+> =
+
+> As discussed here:
+> =
+
+> https://stackoverflow.com/questions/30542491/push-force-with-lease-by-def=
+ault
+> =
+
+> Now, I understand that there are downsides to having this enabled,
+> namely that a user who has this enabled might forget that they have it
+> enabled, and, as such, on a machine that _doesn't_ have it enabled (of
+> which they are unfamiliar) might then run the more consequential
+> command "git push --force", but my thinking is that adding this as a
+> feature to the git codebase as an _optional_ (i.e. not enabled by
+> default) configuration variable would then save some of us who use a
+> "rebase-then-force-push for pull request" workflow some time and
+> headaches.
+> =
+
+> Of course, I don't want to submit a patch if this is a feature that
+> isn't likely to be accepted, so I wanted to get some thoughts from the
+> mailing list regarding this idea.
+> =
+
+> Thank you,
+> =
+
+> ~Scott Johnson
