@@ -2,300 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B78DA1F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3CE41F428
 	for <e@80x24.org>; Sun, 26 Aug 2018 11:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbeHZPUU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 11:20:20 -0400
-Received: from mout.web.de ([212.227.17.12]:34511 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726721AbeHZPUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 11:20:20 -0400
-Received: from [192.168.178.36] ([91.20.53.4]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MY6sm-1gOmCF2XjM-00UpkJ; Sun, 26
- Aug 2018 13:37:43 +0200
-Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
- <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
- <20180811170248.GC27393@sigill.intra.peff.net>
- <20180811172350.GA2689@sigill.intra.peff.net>
- <f69e08d7-b29d-a9b7-b6d4-5294c4379133@web.de>
- <6065f3e5-f831-802f-9adc-099de99405fc@web.de>
- <20180814015842.GA27055@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <030bac66-eeb4-7bc9-8f27-1e6b4124fd76@web.de>
-Date:   Sun, 26 Aug 2018 13:37:41 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <20180814015842.GA27055@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
+        id S1726805AbeHZPV4 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 11:21:56 -0400
+Received: from mail-co1nam03on0055.outbound.protection.outlook.com ([104.47.40.55]:39395
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726542AbeHZPV4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 11:21:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=firemon.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vuOieryJPugimzpuEgNX6OYMPSwW57kAi8xCWU+Q0NI=;
+ b=JsAGMyWosa8TuadeRwX7lyUW1dGxZld6JSft4b2++wRYqeqCMX2U14h/ZruO6W6oYwGGyxgOMH7RaR1FhKIICQosOrUly0hvLk7o49VOuxzJYYlBrDC39Dr4A6SwqU9rNPsnHPkTWJpZIYT6He7JVGf7e00HbzUREthmBVVccrs=
+Received: from MWHPR10MB1517.namprd10.prod.outlook.com (10.169.233.150) by
+ MWHPR10MB1486.namprd10.prod.outlook.com (10.169.233.143) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1080.14; Sun, 26 Aug 2018 11:37:52 +0000
+Received: from MWHPR10MB1517.namprd10.prod.outlook.com
+ ([fe80::6142:aa0f:d578:65f]) by MWHPR10MB1517.namprd10.prod.outlook.com
+ ([fe80::6142:aa0f:d578:65f%9]) with mapi id 15.20.1080.015; Sun, 26 Aug 2018
+ 11:37:52 +0000
+From:   Bentzy Sagiv <bentzy.sagiv@firemon.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Get "Your branch is ahead of 'origin/master'" message when explicitly
+ passing origin url at push command
+Thread-Topic: Get "Your branch is ahead of 'origin/master'" message when
+ explicitly passing origin url at push command
+Thread-Index: AQHUPTBFQMkaI6MdA0+jaK8pPNuw1Q==
+Date:   Sun, 26 Aug 2018 11:37:52 +0000
+Message-ID: <MWHPR10MB1517982C582BEFB7D9171EFD9B340@MWHPR10MB1517.namprd10.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:ESh5AvVssQuLRZE4ecvD+LIA4yvNEtDv9CZyoEVmQfmnfxlfDGQ
- WXSUXY7MbnrOLwoSHT1icUFAyQydA4BjkedAWS76kLpoJ9cp79ZZfsQxEu+6b+tmJvSOFuM
- V8eS+pmU6mq0tKG9EocmLuED/Sr8LPQGruyIZkFw/O7LUCujGBeP3dRUXk+gmxaI8tSseEY
- iMXI7YPMApylxt1zpM0Gg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:u9Uo6++Yn8o=:eFSLtZXlAqRgyeoFoKfjaf
- DhHjK6CipUeNzrpnISnlL9seR2MJRG/W+BMANhbOJneUVIGfP5l4sXuZjEcearnebMpVp1zPw
- Y7QsqnVNRufb8Dnutc4e8IQFJyPz4fVx/PrDCRTvxS95EWWOtYujez4TL+c4y1oUY1L+yFbE1
- JJUsmtmmO489yBhDnQVr6tZUEBdPRboc3ifCj3Ql3EXcryp/wjNCyV7nPP7c405VQ1x1Mke64
- 7Re2GhX+tmkGDeVME8A4N11dymst7wlAfxSgxESrZCBD9aNdsJIYVnV6IiXGZx6YrBru3gyRQ
- o0jyTmmjdkVfBxg4xxbGdS3k+iUBiwxL9wcz+qLrOkG5ySPjhNyyFJUBUhIOR5JmysUc/nzFo
- XvGSJQedl8hhyhztOSwrFu2BT0wdi9xpuL1OE9+aH2E6r92F2pXPY/l6RXIBnzakAMid3ivam
- Pukjeuv+GTs4PQ9LFxP5ToRy5qCIfxD2IzeUnvRUwJKcsCCzPZVYgqcAys+7YDpSPNFCNvxBh
- 2vUD2r2+J1MlG0Ys3AWSRgYgCjOtp7l+1So2LAoKgu2qX5Pb9WK4W4f4oAaaQn5uah2DAWmOK
- RcrFLu/GxgDZZn7jF8708/0sy0ZsY2T1CENqff14QSfeXP4WwKYo3luOQorMANUmrds4BxZ5c
- 6RKb3GWCXxYYfcl5GUQCtmqsZVwQQ/LoK3WzlyAVcODI8bzwog7PKJZ0VbdSjoT0lTlAqgDRi
- ItJxhS+FHCLz4oz/7R+9Xzcl0Y2TrxXNG0lxoRrxPM/VvUWILaY5nCA24/EWD1EC6FRaZnL0o
- SarmHb4
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=bentzy.sagiv@firemon.com; 
+x-originating-ip: [207.232.46.170]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;MWHPR10MB1486;6:vihuiZQQBcWmvk5vAxLvRs4DhTkLuod7RUq75hvbCf5fr7DTJe21Vnm7yOu5KOJJLHSRzKbBXeZMsEYWptq1KgSJrZguscc1DsHXv7IURBQWYuhXoEuSSZXekmWY2zxlUI1mkmdHT5HIPapDcgfDhEKcPPT5PtOvOPSEcLaoovnVBRH/MoEzXMvTtgm9QXR0kOLhy7PqdEkDZ9xaqxWeMDrlk7WFDPhgSmqPR+udC7T9L7GdJa7lqNGiDtFyNM6xkW3ymODr7s3aUxnFfOc7teXn9v+ggJtJhqrzyST6sQ2EofeMfVwJ7zcS65EkT87hsTQ1odEzOhye39k7FgwsFD2m4kw/B3qLC2SoaUbl4fa0XPxBHOeKoT1r955EhGWvjhCeQPRGi9E6CRkSdhxMcEOBkdvCp7xNRV+EffNuX+gjgB9DdivhIsoPFM9ieTdnmoXP0lPY+qiwf0aInsH8Ag==;5:vWtWyurw5txwI4w0fDsQsKHwAklOCOreXmr+wBLUno/huzEtWGe9gEIs7CofTJWh73Lt63Eik6t6ZrBpBtw/sWIiTH+ZAEsFj1VjxAFYiauMWs/fvfDzsDPhDuHnVE2f89Y50Uym6Yr2KALiwEJg3ABAwW0BFZbd0BW3CnVri94=;7:1YAe9Vp+xPWZ88k8AH4o7RKdJ4EK3VaURVw846PK+VV7C/ub7MNBBZTU0Fwt+R5dIyCSW0Nc2aPRmrIx1ZidgrrVlGSEumSl0OH8E3aDip2NzNnNkkOxC1trlGHMXKKPk70qEQWOU9hy5Bc6LcNXuUqzuMuoHdx9qMN+OTLPfVIdEA2hHuRYwiQgPnJVhHOswracyO5MxRjLHTNRynArqGu8qwAL+EsqY/EWYumw0TU85pkV/9BkYtT01gmaZzQW
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: bcc3d65e-1572-4d75-4d58-08d60b485be5
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:MWHPR10MB1486;
+x-ms-traffictypediagnostic: MWHPR10MB1486:
+x-microsoft-antispam-prvs: <MWHPR10MB14867D1EB2B3D1FFCDE3F9A69B340@MWHPR10MB1486.namprd10.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(63843785518722);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(3231311)(944501410)(52105095)(10201501046)(3002001)(149027)(150027)(6041310)(20161123560045)(20161123564045)(20161123562045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(201708071742011)(7699016);SRVR:MWHPR10MB1486;BCL:0;PCL:0;RULEID:;SRVR:MWHPR10MB1486;
+x-forefront-prvs: 0776C39A48
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(376002)(136003)(396003)(39840400004)(346002)(366004)(189003)(199004)(6506007)(7736002)(305945005)(256004)(5660300001)(2501003)(186003)(478600001)(97736004)(966005)(14454004)(86362001)(5250100002)(6436002)(5640700003)(55016002)(66066001)(14444005)(8936002)(2906002)(6916009)(81156014)(6306002)(486006)(81166006)(316002)(25786009)(105586002)(106356001)(44832011)(33656002)(2351001)(2900100001)(53936002)(6116002)(3846002)(9686003)(68736007)(102836004)(26005)(99286004)(74316002)(1730700003)(476003)(551544002)(7696005)(8676002);DIR:OUT;SFP:1101;SCL:1;SRVR:MWHPR10MB1486;H:MWHPR10MB1517.namprd10.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: firemon.com does not designate
+ permitted sender hosts)
+x-microsoft-antispam-message-info: bdgU+GZQRvQCHH/80t8XhxGGLZaQqAHtCFsXl1TvUSAcnxpElOH1l2FB9VTOwcCFJMvsS19KnJ5VnU7kh9EGfTFNkBrfNM5gt2d4uFKovnkIYtXUhMkg0aqC9FlPJvdOgCh1YgnPSBTJmCd4+VODj0GY1sqlNeQvWK0pJ+P5eYjCozo6Mjafkq0Y0smEYjZ/VZTw896vVDH1IBAeLa2iR2rnL6S+FOgZZv+cndDyrwj9XF9vSpgqN9r/qtygJxlHlZzeeVkgKpXAEjwAHrinSkSIP05WkOGC6er0svZKW2ReVFppCY/VHiHq8uMkxsgNe3UaOd40KZ9F4JGE9StqJNCT+ViG+k3rnZ6TITZuBQg=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: firemon.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bcc3d65e-1572-4d75-4d58-08d60b485be5
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Aug 2018 11:37:52.3936
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: acd234ad-0e86-43b0-a357-9dce4d20f5c4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR10MB1486
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.08.2018 um 03:58 schrieb Jeff King:
-> Your suggestion can be implemented using khash (my patch below).
-> 
->> Before:
->> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
->>
->>   Time (mean ± σ):     269.5 ms ±  26.7 ms    [User: 247.7 ms, System: 21.4 ms]
->>
->>   Range (min … max):   240.3 ms … 339.3 ms
->>
->> After:
->> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
->>
->>   Time (mean ± σ):     224.2 ms ±  18.2 ms    [User: 201.7 ms, System: 22.1 ms]
->>
->>   Range (min … max):   205.0 ms … 259.0 ms
-> 
-> Yeah. My best-of-five dropped from 300ms to 247ms. That 300 was using
-> the memory pool, though khash's deletion strategy isn't all that
-> different (the wasted memory hangs around until the next hash resize,
-> but if you're evenly dropping and adding, you likely won't need to
-> resize).
+git version 2.7.4
+___________________________________________________________________________=
+___________________________
 
-With your khash patch:
+First try: NOT passing origin url explicitly
 
-Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+ubuntu@ci-bentzy:/var/lib/jenkins$ git remote -v
+origin  https://USER @ bitbucket.org/OWNER/jenkinsconf-repo.git (fetch)
+origin  https://USER @ bitbucket.org/OWNER/jenkinsconf-repo.git (push)
 
-  Time (mean ± σ):     159.1 ms ±  20.5 ms    [User: 140.3 ms, System: 18.5 ms]
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo vim jobs/bentzytest1/config.xml
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git add .
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git commit -m'First try' -a
+[master b8549c3] First try
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+=20
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git push
+Password for 'https://USER @ bitbucket.org':
+Counting objects: 5, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 399 bytes | 0 bytes/s, done.
+Total 5 (delta 3), reused 0 (delta 0)
+To https://USER @ bitbucket.org/OWNER/jenkinsconf-repo.git
+   d2cc229..b8549c3  master -> master
+ =20
+ubuntu@ci-bentzy:/var/lib/jenkins$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+ubuntu@ci-bentzy:/var/lib/jenkins$
 
-  Range (min … max):   140.0 ms … 214.0 ms
+___________________________________________________________________________=
+___________________________
 
-So it seems worth it.
+Second try: passing origin url explicitily
 
-> Anyway, here's the khash patch for reference.
-> 
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 5714bcbddd..5a86b10a5e 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -534,7 +534,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
->  	 * add to "newlist" between calls, the additions will always be for
->  	 * oids that are already in the set.
->  	 */
-> -	if (!tip_oids->map.map.tablesize) {
-> +	if (!tip_oids->map) {
->  		add_refs_to_oidset(tip_oids, unmatched);
->  		add_refs_to_oidset(tip_oids, newlist);
->  	}
+ubuntu@ci-bentzy:/var/lib/jenkins$ git remote -v                      =20
+origin  https://USER @ bitbucket.org/OWNER/jenkinsconf-repo.git (fetch)
+origin  https://USER @ bitbucket.org/OWNER/jenkinsconf-repo.git (push)
 
-The caller shouldn't look at the private parts of the implementation
-like this.  tablesize is the allocation count, which becomes non-zero
-if at least one entry was added.  tip_oids is only inserted into, never
-deleted from, so a count or size function could be used instead as a
-cleaner interface.  (In a separate patch..)
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo vim jobs/bentzytest1/config.xml
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git add .
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git commit -m'Second try' -a
+[master 331ac84] Second try
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+=20
+ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git push https://bitbucket.org/OWNE=
+R/jenkinsconf-repo.git
+Username for 'https://bitbucket.org': USER
+Password for 'https://USER @ bitbucket.org':
+Counting objects: 5, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (5/5), 403 bytes | 0 bytes/s, done.
+Total 5 (delta 3), reused 0 (delta 0)
+To https://bitbucket.org/OWNER/jenkinsconf-repo.git
+   7383066..331ac84  master -> master
+ =20
+ubuntu@ci-bentzy:/var/lib/jenkins$ git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+nothing to commit, working directory clean
 
-> diff --git a/oidset.c b/oidset.c
-> index 454c54f933..2964b43b2d 100644
-> --- a/oidset.c
-> +++ b/oidset.c
-> @@ -3,38 +3,44 @@
->  
->  int oidset_contains(const struct oidset *set, const struct object_id *oid)
->  {
-> -	if (!set->map.map.tablesize)
-> +	khiter_t pos;
-> +
-> +	if (!set->map)
->  		return 0;
-> -	return !!oidmap_get(&set->map, oid);
-> +
-> +	pos = kh_get_oid(set->map, *oid);
-> +	return pos < kh_end(set->map);
->  }
->  
->  int oidset_insert(struct oidset *set, const struct object_id *oid)
->  {
-> -	struct oidmap_entry *entry;
-> +	int hash_ret;
->  
-> -	if (!set->map.map.tablesize)
-> -		oidmap_init(&set->map, 0);
-> -	else if (oidset_contains(set, oid))
-> -		return 1;
-> +	if (!set->map)
-> +		set->map = kh_init_oid();
->  
-> -	entry = xmalloc(sizeof(*entry));
-> -	oidcpy(&entry->oid, oid);
-> -
-> -	oidmap_put(&set->map, entry);
-> -	return 0;
-> +	kh_put_oid(set->map, *oid, &hash_ret);
-> +	return !hash_ret;
->  }
+___________________________________________________________________________=
+___________________________
+     =20
+An additional " sudo git push" (without explicit origin) solves the issue
 
-So initialization is deferred to the first insert, and the empty set
-can be represented in two ways -- map == NULL and map->size == 0.
 
-I wondered about the performance impact of all those NULL checks at
-insert and lookup and converted it to stack storage, with a dirty
-hand-rolled oidset_clear() implementation.  It wasn't any faster.
 
->  
->  int oidset_remove(struct oidset *set, const struct object_id *oid)
->  {
-> -	struct oidmap_entry *entry;
-> +	khiter_t pos;
->  
-> -	entry = oidmap_remove(&set->map, oid);
-> -	free(entry);
-> +	if (!set->map)
-> +		return 0;
-> +
-> +	pos = kh_get_oid(set->map, *oid);
-> +	if (pos < kh_end(set->map)) {
-> +		kh_del_oid(set->map, pos);
-> +		return 1;
-> +	}
->  
-> -	return (entry != NULL);
-> +	return 0;
->  }
->  
->  void oidset_clear(struct oidset *set)
->  {
-> -	oidmap_free(&set->map, 1);
-> +	kh_destroy_oid(set->map);
-> +	set->map = NULL;
->  }
-> diff --git a/oidset.h b/oidset.h
-> index 40ec5f87fe..4c4c5a42fe 100644
-> --- a/oidset.h
-> +++ b/oidset.h
-> @@ -2,6 +2,7 @@
->  #define OIDSET_H
->  
->  #include "oidmap.h"
+Bentzy Sagiv
+=20
 
-This can go.
-
-> +#include "khash.h"
->  
->  /**
->   * This API is similar to sha1-array, in that it maintains a set of object ids
-> @@ -15,19 +16,34 @@
->   *      table overhead.
->   */
->  
-> +static inline unsigned int oid_hash(const struct object_id oid)
-> +{
-> +	unsigned int hash;
-> +	memcpy(&hash, oid.hash, sizeof(hash));
-> +	return hash;
-> +}
-> +
-> +static inline int oid_equal(const struct object_id a,
-> +			    const struct object_id b)
-> +{
-> +	return !oidcmp(&a, &b);
-> +}
-
-Look, it's oideq() from that other series in disguise! :)
-
-> +
-> +KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
-
-Note to self: The 0 is for kh_is_map, which means that no values are
-kept and the given value type (int) doesn't matter.
-
-> +
-> +
->  /**
->   * A single oidset; should be zero-initialized (or use OIDSET_INIT).
->   */
->  struct oidset {
-> -	struct oidmap map;
-> +	kh_oid_t *map;
->  };
->  
-> -#define OIDSET_INIT { OIDMAP_INIT }
-> -
-> +#define OIDSET_INIT { NULL }
->  
->  static inline void oidset_init(struct oidset *set, size_t initial_size)
->  {
-> -	oidmap_init(&set->map, initial_size);
-> +	set->map = NULL;
->  }
-
-This ignores initial_size, which is misleading.  We should probably
-call kh_resize_oid() here and move the function to oidset.c.  Or
-get rid of the second parameter..
-
->  
->  /**
-> @@ -58,19 +74,25 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
->  void oidset_clear(struct oidset *set);
->  
->  struct oidset_iter {
-> -	struct oidmap_iter m_iter;
-> +	kh_oid_t *map;
-> +	khiter_t iter;
->  };
->  
->  static inline void oidset_iter_init(struct oidset *set,
->  				    struct oidset_iter *iter)
->  {
-> -	oidmap_iter_init(&set->map, &iter->m_iter);
-> +	iter->map = set->map;
-> +	iter->iter = kh_begin(iter->map);
->  }
-
-This is fine even if map == NULL, because kh_begin() can handle any
-parameter value, as it ignores them...
-
->  
->  static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
->  {
-> -	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
-> -	return e ? &e->oid : NULL;
-> +	for (; iter->iter != kh_end(iter->map); iter->iter++) {
-> +		if (!kh_exist(iter->map, iter->iter))
-> +			continue;
-> +		return &kh_key(iter->map, iter->iter);
-> +	}
-> +	return NULL;
->  }
-
-... but kh_end() dereferences map, so iterating a fresh oidset will
-segfault here.
-
->  
->  static inline struct object_id *oidset_iter_first(struct oidset *set,
-> 
+=A0 =20
+   =20
+=20
+    =
