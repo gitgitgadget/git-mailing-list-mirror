@@ -7,58 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 354EE1F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 06:13:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE091F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 06:49:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbeHZJye (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 05:54:34 -0400
-Received: from o11.sgmail.github.com ([167.89.101.202]:63260 "EHLO
-        o11.sgmail.github.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726324AbeHZJye (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 05:54:34 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=github.com; 
-        h=from:to:subject:mime-version:content-type:content-transfer-encoding; 
-        s=s20150108; bh=+fhndnFbvgKBdveQXxX6cJzyoAQ=; b=SzQg3vrpa0rKkhmf
-        YIfbG9nlrz8iZLz7a0SE84xVK9GemocMzK+DAlrl/+utEESCQyD2Q/gJaq+T71Lf
-        YLDg0/lc/uTtfffml4HK5G8r9joiEGF2ZXzJEBQutalbImWpVn2+d6uObHyGhuwD
-        DTD2ljP5YHrqq90cCETPq8DASTY=
-Received: by filter1094p1las1.sendgrid.net with SMTP id filter1094p1las1-24963-5B8244F0-4
-        2018-08-26 06:13:04.267049365 +0000 UTC m=+718998.585309466
-Received: from github-lowworker9-cp1-prd.iad.github.net (unknown [192.30.252.47])
-        by ismtpd0005p1iad1.sendgrid.net (SG) with ESMTP id 452eyLzATKCBiCSzeteGzw
-        Sun, 26 Aug 2018 06:13:04.189 +0000 (UTC)
-Received: from github.com (localhost [127.0.0.1])
-        by github-lowworker9-cp1-prd.iad.github.net (Postfix) with ESMTP id 2B687A00C2;
-        Sat, 25 Aug 2018 23:13:04 -0700 (PDT)
-Date:   Sun, 26 Aug 2018 06:13:04 +0000 (UTC)
+        id S1727272AbeHZKam (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 06:30:42 -0400
+Received: from out-15.smtp.github.com ([192.30.254.198]:44933 "EHLO
+        out-15.smtp.github.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726793AbeHZKal (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 06:30:41 -0400
+Date:   Sat, 25 Aug 2018 23:49:06 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=github.com;
+        s=pf2014; t=1535266146;
+        bh=EAlV8pPBz0tfRrymhs0jV1vQs6VgI92mZIowOUABSGI=;
+        h=Date:From:To:Subject:From;
+        b=EsggiPXOq7ZNnuJ8knyxa7o82R/CIkoMF/ZnkQDx0oTRbARyPjGR7eqInttfkXdQ1
+         QcXEUi5SfBPiXTy3dqwmPpGF+AQXkwdRESdnW2DW4oJOQLoCgSMelf9aHbeYigKAZp
+         9CIoFuvS0UDDpm5S+B3wfS6cvtGcWm6klY+piWys=
 From:   GitHub <noreply@github.com>
 To:     amc2399 <git@vger.kernel.org>
-Message-ID: <5b8244f02ad88_44c73f82692be6186144f@github-lowworker9-cp1-prd.iad.github.net.mail>
-Subject: [GitHub] Your password was reset
+Message-ID: <5b824d62e102_66a03ff76fad45c0274d2@github-lowworker-f6df7df.cp1-iad.github.net.mail>
+Subject: [GitHub] Please reset your password
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 X-Auto-Response-Suppress: All
-categories: account-security,password-changed
-X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA90vCjwcp/FUtyYRN90ddh5t6IwH6nJ6WT1JZz
- jZEO7LSwX+RUymfBXfdwThHkAmhDgN7X0cynpy2wrLskbphPni7Gra1Bl7RVU2uA4vckn7IGa/92Ed
- rbXIOP+TS4u5FrBgwOXoAjPatqs+2Ppi0kDG7yzDXVrCH/e336Ahk2ElFg==
-X-SG-ID: HjuyJHjWedrv+ZABmVoKqJUGcbnIrpG8Dl8TZw63o/ttfsKFiCNQbipH148DcHHLyQLi2AaIA6cVxk
- aCikgwJw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello amc2399,
+We heard that you lost your GitHub password. Sorry about that!
 
-We wanted to let you know that your GitHub password was reset.
+But don=E2=80=99t worry! You can use the following link to reset your pas=
+sword:
 
-If you did not perform this action, you can recover access by entering git@vger.kernel.org into the form at https://github.com/password_reset
+https://github.com/password_reset/0289e07960cb65215eefb2f61c23506a55bbfa8=
+2268ca3c092ce5b82779283a5656d61696cb367697440766765722e6b65726e656c2e6f72=
+67a5666f726365c2b374776f5f666163746f725f7665726966696564c2
 
-To see this and other security events for your account, visit https://github.com/settings/security
+If you don=E2=80=99t use this link within 3 hours, it will expire. To get=
+ a new password reset link, visit https://github.com/password_reset
 
-If you run into problems, please contact support by visiting https://github.com/contact
-
-Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.
+Thanks,
+Your friends at GitHub
