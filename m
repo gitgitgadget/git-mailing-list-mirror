@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7C931F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 10:03:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9341E1F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 10:03:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726988AbeHZNpr (ORCPT <rfc822;e@80x24.org>);
+        id S1726978AbeHZNpr (ORCPT <rfc822;e@80x24.org>);
         Sun, 26 Aug 2018 09:45:47 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:46426 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbeHZNpr (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:44455 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726945AbeHZNpr (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 26 Aug 2018 09:45:47 -0400
-Received: by mail-lj1-f194.google.com with SMTP id 203-v6so9988957ljj.13
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 03:03:39 -0700 (PDT)
+Received: by mail-lf1-f68.google.com with SMTP id g6-v6so9703033lfb.11
+        for <git@vger.kernel.org>; Sun, 26 Aug 2018 03:03:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=4ABPlcKg4yel10hPaWMV8pqLYvSK+2yU7PwjPDCE7ME=;
-        b=XgaLFzktKTjRMAv7uuiV5NkYaZXGwRht84BbMLibmJ8x/c6Oz9GXpUEf8tF4si8QNq
-         c7FGvzgFFlp/OxdilUUILERKBknagqaDRH7umrO0z3RUF2XN6X1Vqy+a5jzvPyn63XcG
-         I6JYsLXGIgoT776v6gm3xkrxvGudPETtcJPWSv0e1Nr4Hl3zpoDzZOaEWLsXbYokXGhX
-         JD/CJNrVVzOfaDP9xPnrVIzJOBX9wag0V6KgBqWcLdbX/iR+tMoK+uzTLPBz84B9n3J3
-         3RvO40qwX8/erNzlNenU41s33KkJ5oT79knzYTP1ybr2p9MMXRgm5UB5oY3ait1U0DE/
-         bs4A==
+        bh=F5YeWhdeEVYIE62Wh/PLY3+KUmlkvX0Ero0bD+7QEcc=;
+        b=dz7NNeilsdbltXQqhW+CvZVJEcGveSI9vmjx09z8hs55F7CYJ0ijJpxDh+2ZldXBa+
+         rcZLHZapF2znAhZrwfKVWZtFhVKdx+fM67iY5pe8wtw8wHF7RyvFM3+KtVqvXqVwxPVg
+         mJGMTE/jz5tAIWvkMw5rodHxHPQZXs8M8j70kU+Ypy0fTgktvCAr/dtpSIaaXLY7FdaF
+         Wdf5mw247AH4jpldx7UE4fDjmDehgszLQEspx5mw30/S0txrIdq3Pn25TrreVb56wtT9
+         fc52GEVylqh63jLQGzsUmIxsr299iv0jKHQTPbKRKFdyjL0glTEOulhc7lehtsK4Rr6H
+         whfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=4ABPlcKg4yel10hPaWMV8pqLYvSK+2yU7PwjPDCE7ME=;
-        b=lIcZCU4VFYNQhJ9bUNVM+Jfzs+IUFUPCrCB9FerSuMbQWG7xKsV8Tpeth2CaNKqxJL
-         BtJQO01AgmoFXjsp3lgij+M7rcbMKdsDGdvu+YXBYWb3pFqumq6IF5Jr1zriYbtrAZIB
-         DG9+YndkOQSc/E1IUzkb6OQ0eI5sAlRAsK6oK8Nx4F+7TTNx+iFWWAqGx6slp2G7Kjq+
-         4K0lV5JOBAshRDh5Vg8NlqJB3PYDCciReq47+AWh7Zb1jAAzQ3Pdag1JibmGdhpcB3Bf
-         +PGIElGvB1zenMXC2oVrGoUm/BGCaaPzelAd4BSXM4kNxpUs2dhkWeRuQHbE+4oG57SF
-         Xe8w==
-X-Gm-Message-State: APzg51Ad5/aD7vwxZAdyCl0nGyFR8KhdSyqhnYH4UL6OkCIMYaS818nX
-        pijUc5hyPPUVqepFkWXcSAagahLK
-X-Google-Smtp-Source: ANB0VdYo4UuHlpeRrWSJAODuEf2KK+G8vURLgQeCjOWxn/fuZDtBqEZ+a08Mhr1NMCyzBddfDpNQgQ==
-X-Received: by 2002:a2e:1301:: with SMTP id 1-v6mr5561386ljt.56.1535277818328;
-        Sun, 26 Aug 2018 03:03:38 -0700 (PDT)
+        bh=F5YeWhdeEVYIE62Wh/PLY3+KUmlkvX0Ero0bD+7QEcc=;
+        b=GUDefnqz41gjsALL/aryr63mxyj/R5/3XHF/H2JTzHQ98/DoMitXPpfhztp8SIqsHL
+         VcwLJJIZILkBweaG4CKCYRcxnsea1UzllfMdi+znQuZ2DFGP/LClf/55knhHtTv9ooz3
+         pQzK403N6XfdiOZZNg1YKe5EM/TleIF8XEAbG9TtrZCK2xk7QTFsci6Q5k7cvFFEp4pm
+         suN62fdYEwbPHmCHHST86QotYbewjJKpd/aGQO/CfwS0e9iL3IicuYa4ioG3s9qvyfRX
+         exDH0LwroMCWytW4byXMM8xEhqp0wurkqiLvzOhm6hP/i6ABCGF3LvzoSO1/KPRb+mNq
+         eP6w==
+X-Gm-Message-State: APzg51Cvy9fleYaKJzsx1mu9+Q5b0suDwl16t/C8vSOxi+imjsokudY2
+        rS/eujbegPG6Y3bjycbs+KxYwn0n
+X-Google-Smtp-Source: ANB0VdaVBKBSZBecktUIYFhKrgaR8x9b71UYIpFdOqVypOrhhAJe7a3NWSQNGcH5Px/IFUwArPDXww==
+X-Received: by 2002:a19:f015:: with SMTP id p21-v6mr5792938lfc.56.1535277819261;
+        Sun, 26 Aug 2018 03:03:39 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z5-v6sm2276882lfg.75.2018.08.26.03.03.37
+        by smtp.gmail.com with ESMTPSA id z5-v6sm2276882lfg.75.2018.08.26.03.03.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Aug 2018 03:03:37 -0700 (PDT)
+        Sun, 26 Aug 2018 03:03:38 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 20/21] wt-status.c: remove implicit dependency on the_index
-Date:   Sun, 26 Aug 2018 12:03:13 +0200
-Message-Id: <20180826100314.5137-21-pclouds@gmail.com>
+Subject: [PATCH 21/21] wt-status.c: remove implicit dependency the_repository
+Date:   Sun, 26 Aug 2018 12:03:14 +0200
+Message-Id: <20180826100314.5137-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180826100314.5137-1-pclouds@gmail.com>
 References: <20180826100314.5137-1-pclouds@gmail.com>
@@ -70,307 +70,135 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/commit.c |  2 +-
- builtin/pull.c   |  3 ++-
- sequencer.c      |  6 ++---
- wt-status.c      | 64 ++++++++++++++++++++++++++++--------------------
- wt-status.h      | 17 +++++++++----
- 5 files changed, 56 insertions(+), 36 deletions(-)
+ ref-filter.c |  2 +-
+ wt-status.c  | 24 +++++++++++++-----------
+ wt-status.h  |  4 +++-
+ 3 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 731e98fd63..64adc078d7 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -183,7 +183,7 @@ static void determine_whence(struct wt_status *s)
- 
- static void status_init_config(struct wt_status *s, config_fn_t fn)
- {
--	wt_status_prepare(s);
-+	wt_status_prepare(s, the_repository);
- 	init_diff_ui_defaults();
- 	git_config(fn, s);
- 	determine_whence(s);
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 73e06625c8..ce333ac708 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -887,7 +887,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 			die(_("Updating an unborn branch with changes added to the index."));
- 
- 		if (!autostash)
--			require_clean_work_tree(N_("pull with rebase"),
-+			require_clean_work_tree(the_repository,
-+				N_("pull with rebase"),
- 				_("please commit or stash them."), 1, 0);
- 
- 		if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
-diff --git a/sequencer.c b/sequencer.c
-index cb7fefde9c..4dbbc7389d 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2679,7 +2679,7 @@ static int do_exec(const char *command_line)
- 	if (discard_cache() < 0 || read_cache() < 0)
- 		return error(_("could not read index"));
- 
--	dirty = require_clean_work_tree("rebase", NULL, 1, 1);
-+	dirty = require_clean_work_tree(the_repository, "rebase", NULL, 1, 1);
- 
- 	if (status) {
- 		warning(_("execution failed: %s\n%s"
-@@ -3550,10 +3550,10 @@ static int commit_staged_changes(struct replay_opts *opts,
- 	unsigned int flags = ALLOW_EMPTY | EDIT_MSG;
- 	unsigned int final_fixup = 0, is_clean;
- 
--	if (has_unstaged_changes(1))
-+	if (has_unstaged_changes(the_repository, 1))
- 		return error(_("cannot rebase: You have unstaged changes."));
- 
--	is_clean = !has_uncommitted_changes(0);
-+	is_clean = !has_uncommitted_changes(the_repository, 0);
- 
- 	if (file_exists(rebase_path_amend())) {
- 		struct strbuf rev = STRBUF_INIT;
+diff --git a/ref-filter.c b/ref-filter.c
+index 0bccfceff2..1b229b84da 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1409,7 +1409,7 @@ char *get_head_description(void)
+ 	struct strbuf desc = STRBUF_INIT;
+ 	struct wt_status_state state;
+ 	memset(&state, 0, sizeof(state));
+-	wt_status_get_state(&state, 1);
++	wt_status_get_state(the_repository, &state, 1);
+ 	if (state.rebase_in_progress ||
+ 	    state.rebase_interactive_in_progress) {
+ 		if (state.branch)
 diff --git a/wt-status.c b/wt-status.c
-index 5ffab61015..57bc2aac0f 100644
+index 57bc2aac0f..1d3a5fe267 100644
 --- a/wt-status.c
 +++ b/wt-status.c
-@@ -119,9 +119,11 @@ static void status_printf_more(struct wt_status *s, const char *color,
- 	va_end(ap);
+@@ -1322,7 +1322,7 @@ static void show_rebase_in_progress(struct wt_status *s,
+ 			status_printf_ln(s, color,
+ 				_("  (use \"git rebase --abort\" to check out the original branch)"));
+ 		}
+-	} else if (state->rebase_in_progress || !stat(git_path_merge_msg(the_repository), &st)) {
++	} else if (state->rebase_in_progress || !stat(git_path_merge_msg(s->repo), &st)) {
+ 		print_rebase_state(s, state, color);
+ 		if (s->hints)
+ 			status_printf_ln(s, color,
+@@ -1477,7 +1477,8 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
+ 	return 1;
  }
  
--void wt_status_prepare(struct wt_status *s)
-+void wt_status_prepare(struct wt_status *s,
-+		       struct repository *repo)
+-static void wt_status_get_detached_from(struct wt_status_state *state)
++static void wt_status_get_detached_from(struct repository *repo,
++					struct wt_status_state *state)
  {
- 	memset(s, 0, sizeof(*s));
-+	s->repo = repo;
- 	memcpy(s->color_palette, default_wt_status_colors,
- 	       sizeof(default_wt_status_colors));
- 	s->show_untracked_files = SHOW_NORMAL_UNTRACKED_FILES;
-@@ -494,19 +496,19 @@ static void wt_status_collect_changed_cb(struct diff_queue_struct *q,
- 	}
+ 	struct grab_1st_switch_cbdata cb;
+ 	struct commit *commit;
+@@ -1494,7 +1495,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
+ 	    /* sha1 is a commit? match without further lookup */
+ 	    (!oidcmp(&cb.noid, &oid) ||
+ 	     /* perhaps sha1 is a tag, try to dereference to a commit */
+-	     ((commit = lookup_commit_reference_gently(the_repository, &oid, 1)) != NULL &&
++	     ((commit = lookup_commit_reference_gently(repo, &oid, 1)) != NULL &&
+ 	      !oidcmp(&cb.noid, &commit->object.oid)))) {
+ 		const char *from = ref;
+ 		if (!skip_prefix(from, "refs/tags/", &from))
+@@ -1551,30 +1552,31 @@ int wt_status_check_bisect(const struct worktree *wt,
+ 	return 0;
  }
  
--static int unmerged_mask(const char *path)
-+static int unmerged_mask(struct index_state *istate, const char *path)
+-void wt_status_get_state(struct wt_status_state *state,
++void wt_status_get_state(struct repository *repo,
++			 struct wt_status_state *state,
+ 			 int get_detached_from)
  {
- 	int pos, mask;
- 	const struct cache_entry *ce;
+ 	struct stat st;
+ 	struct object_id oid;
  
--	pos = cache_name_pos(path, strlen(path));
-+	pos = index_name_pos(istate, path, strlen(path));
- 	if (0 <= pos)
- 		return 0;
- 
- 	mask = 0;
- 	pos = -pos-1;
--	while (pos < active_nr) {
--		ce = active_cache[pos++];
-+	while (pos < istate->cache_nr) {
-+		ce = istate->cache[pos++];
- 		if (strcmp(ce->name, path) || !ce_stage(ce))
- 			break;
- 		mask |= (1 << (ce_stage(ce) - 1));
-@@ -563,7 +565,8 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			oidcpy(&d->oid_index, &p->two->oid);
- 			break;
- 		case DIFF_STATUS_UNMERGED:
--			d->stagemask = unmerged_mask(p->two->path);
-+			d->stagemask = unmerged_mask(s->repo->index,
-+						     p->two->path);
- 			/*
- 			 * Don't bother setting {mode,oid}_{head,index} since the print
- 			 * code will output the stage values directly and not use the
-@@ -640,14 +643,15 @@ static void wt_status_collect_changes_index(struct wt_status *s)
- 
- static void wt_status_collect_changes_initial(struct wt_status *s)
- {
-+	struct index_state *istate = s->repo->index;
- 	int i;
- 
--	for (i = 0; i < active_nr; i++) {
-+	for (i = 0; i < istate->cache_nr; i++) {
- 		struct string_list_item *it;
- 		struct wt_status_change_data *d;
--		const struct cache_entry *ce = active_cache[i];
-+		const struct cache_entry *ce = istate->cache[i];
- 
--		if (!ce_path_match(&the_index, ce, &s->pathspec, NULL))
-+		if (!ce_path_match(istate, ce, &s->pathspec, NULL))
- 			continue;
- 		if (ce_intent_to_add(ce))
- 			continue;
-@@ -679,6 +683,7 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	int i;
- 	struct dir_struct dir;
- 	uint64_t t_begin = getnanotime();
-+	struct index_state *istate = s->repo->index;
- 
- 	if (!s->show_untracked_files)
- 		return;
-@@ -693,25 +698,25 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 		if (s->show_ignored_mode == SHOW_MATCHING_IGNORED)
- 			dir.flags |= DIR_SHOW_IGNORED_TOO_MODE_MATCHING;
- 	} else {
--		dir.untracked = the_index.untracked;
-+		dir.untracked = istate->untracked;
+-	if (!stat(git_path_merge_head(the_repository), &st)) {
++	if (!stat(git_path_merge_head(repo), &st)) {
+ 		state->merge_in_progress = 1;
+ 	} else if (wt_status_check_rebase(NULL, state)) {
+ 		;		/* all set */
+-	} else if (!stat(git_path_cherry_pick_head(the_repository), &st) &&
++	} else if (!stat(git_path_cherry_pick_head(repo), &st) &&
+ 			!get_oid("CHERRY_PICK_HEAD", &oid)) {
+ 		state->cherry_pick_in_progress = 1;
+ 		oidcpy(&state->cherry_pick_head_oid, &oid);
+ 	}
+ 	wt_status_check_bisect(NULL, state);
+-	if (!stat(git_path_revert_head(the_repository), &st) &&
++	if (!stat(git_path_revert_head(repo), &st) &&
+ 	    !get_oid("REVERT_HEAD", &oid)) {
+ 		state->revert_in_progress = 1;
+ 		oidcpy(&state->revert_head_oid, &oid);
  	}
  
- 	setup_standard_excludes(&dir);
+ 	if (get_detached_from)
+-		wt_status_get_detached_from(state);
++		wt_status_get_detached_from(repo, state);
+ }
  
--	fill_directory(&dir, &the_index, &s->pathspec);
-+	fill_directory(&dir, istate, &s->pathspec);
+ static void wt_longstatus_print_state(struct wt_status *s,
+@@ -1602,7 +1604,7 @@ static void wt_longstatus_print(struct wt_status *s)
+ 	struct wt_status_state state;
  
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
--		if (cache_name_is_other(ent->name, ent->len) &&
--		    dir_path_match(&the_index, ent, &s->pathspec, 0, NULL))
-+		if (index_name_is_other(istate, ent->name, ent->len) &&
-+		    dir_path_match(istate, ent, &s->pathspec, 0, NULL))
- 			string_list_insert(&s->untracked, ent->name);
- 		free(ent);
+ 	memset(&state, 0, sizeof(state));
+-	wt_status_get_state(&state,
++	wt_status_get_state(s->repo, &state,
+ 			    s->branch && !strcmp(s->branch, "HEAD"));
+ 
+ 	if (s->branch) {
+@@ -1947,7 +1949,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
+ 	char eol = s->null_termination ? '\0' : '\n';
+ 
+ 	memset(&state, 0, sizeof(state));
+-	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
++	wt_status_get_state(s->repo, &state, s->branch && !strcmp(s->branch, "HEAD"));
+ 
+ 	fprintf(s->fp, "# branch.oid %s%c",
+ 			(s->is_initial ? "(initial)" : sha1_to_hex(s->sha1_commit)),
+@@ -2355,7 +2357,7 @@ int has_uncommitted_changes(struct repository *repo,
+ 		 * We have no head (or it's corrupt); use the empty tree,
+ 		 * which will complain if the index is non-empty.
+ 		 */
+-		struct tree *tree = lookup_tree(the_repository, the_hash_algo->empty_tree);
++		struct tree *tree = lookup_tree(repo, the_hash_algo->empty_tree);
+ 		add_pending_object(&rev_info, &tree->object, "");
  	}
  
- 	for (i = 0; i < dir.ignored_nr; i++) {
- 		struct dir_entry *ent = dir.ignored[i];
--		if (cache_name_is_other(ent->name, ent->len) &&
--		    dir_path_match(&the_index, ent, &s->pathspec, 0, NULL))
-+		if (index_name_is_other(istate, ent->name, ent->len) &&
-+		    dir_path_match(istate, ent, &s->pathspec, 0, NULL))
- 			string_list_insert(&s->ignored, ent->name);
- 		free(ent);
- 	}
-@@ -2142,6 +2147,7 @@ static void wt_porcelain_v2_print_unmerged_entry(
- 	struct wt_status *s)
- {
- 	struct wt_status_change_data *d = it->util;
-+	struct index_state *istate = s->repo->index;
- 	const struct cache_entry *ce;
- 	struct strbuf buf_index = STRBUF_INIT;
- 	const char *path_index = NULL;
-@@ -2180,11 +2186,11 @@ static void wt_porcelain_v2_print_unmerged_entry(
- 	 */
- 	memset(stages, 0, sizeof(stages));
- 	sum = 0;
--	pos = cache_name_pos(it->string, strlen(it->string));
-+	pos = index_name_pos(istate, it->string, strlen(it->string));
- 	assert(pos < 0);
- 	pos = -pos-1;
--	while (pos < active_nr) {
--		ce = active_cache[pos++];
-+	while (pos < istate->cache_nr) {
-+		ce = istate->cache[pos++];
- 		stage = ce_stage(ce);
- 		if (strcmp(ce->name, it->string) || !stage)
- 			break;
-@@ -2309,7 +2315,8 @@ void wt_status_print(struct wt_status *s)
- /**
-  * Returns 1 if there are unstaged changes, 0 otherwise.
-  */
--int has_unstaged_changes(int ignore_submodules)
-+int has_unstaged_changes(struct repository *repo,
-+			 int ignore_submodules)
- {
- 	struct rev_info rev_info;
- 	int result;
-@@ -2328,12 +2335,13 @@ int has_unstaged_changes(int ignore_submodules)
- /**
-  * Returns 1 if there are uncommitted changes, 0 otherwise.
-  */
--int has_uncommitted_changes(int ignore_submodules)
-+int has_uncommitted_changes(struct repository *repo,
-+			    int ignore_submodules)
- {
- 	struct rev_info rev_info;
- 	int result;
- 
--	if (is_cache_unborn())
-+	if (is_index_unborn(repo->index))
- 		return 0;
- 
- 	init_revisions(&rev_info, NULL);
-@@ -2360,24 +2368,28 @@ int has_uncommitted_changes(int ignore_submodules)
-  * If the work tree has unstaged or uncommitted changes, dies with the
-  * appropriate message.
-  */
--int require_clean_work_tree(const char *action, const char *hint, int ignore_submodules, int gently)
-+int require_clean_work_tree(struct repository *repo,
-+			    const char *action,
-+			    const char *hint,
-+			    int ignore_submodules,
-+			    int gently)
- {
- 	struct lock_file lock_file = LOCK_INIT;
- 	int err = 0, fd;
- 
- 	fd = hold_locked_index(&lock_file, 0);
--	refresh_cache(REFRESH_QUIET);
-+	refresh_index(repo->index, REFRESH_QUIET, NULL, NULL, NULL);
- 	if (0 <= fd)
--		update_index_if_able(&the_index, &lock_file);
-+		update_index_if_able(repo->index, &lock_file);
- 	rollback_lock_file(&lock_file);
- 
--	if (has_unstaged_changes(ignore_submodules)) {
-+	if (has_unstaged_changes(repo, ignore_submodules)) {
- 		/* TRANSLATORS: the action is e.g. "pull with rebase" */
- 		error(_("cannot %s: You have unstaged changes."), _(action));
- 		err = 1;
- 	}
- 
--	if (has_uncommitted_changes(ignore_submodules)) {
-+	if (has_uncommitted_changes(repo, ignore_submodules)) {
- 		if (err)
- 			error(_("additionally, your index contains uncommitted changes."));
- 		else
 diff --git a/wt-status.h b/wt-status.h
-index 1673d146fa..253c5ce7ec 100644
+index 253c5ce7ec..9e8337e9db 100644
 --- a/wt-status.h
 +++ b/wt-status.h
-@@ -7,6 +7,7 @@
- #include "pathspec.h"
- #include "remote.h"
- 
-+struct repository;
- struct worktree;
- 
- enum color_wt_status {
-@@ -65,6 +66,7 @@ enum wt_status_format {
- };
- 
- struct wt_status {
-+	struct repository *repo;
- 	int is_initial;
- 	char *branch;
- 	const char *reference;
-@@ -127,7 +129,7 @@ struct wt_status_state {
- 
- size_t wt_status_locate_end(const char *s, size_t len);
- void wt_status_add_cut_line(FILE *fp);
--void wt_status_prepare(struct wt_status *s);
-+void wt_status_prepare(struct wt_status *s, struct repository *repo);
+@@ -132,7 +132,9 @@ void wt_status_add_cut_line(FILE *fp);
+ void wt_status_prepare(struct wt_status *s, struct repository *repo);
  void wt_status_print(struct wt_status *s);
  void wt_status_collect(struct wt_status *s);
- void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
-@@ -142,9 +144,14 @@ __attribute__((format (printf, 3, 4)))
- void status_printf(struct wt_status *s, const char *color, const char *fmt, ...);
- 
- /* The following functions expect that the caller took care of reading the index. */
--int has_unstaged_changes(int ignore_submodules);
--int has_uncommitted_changes(int ignore_submodules);
--int require_clean_work_tree(const char *action, const char *hint,
--	int ignore_submodules, int gently);
-+int has_unstaged_changes(struct repository *repo,
-+			 int ignore_submodules);
-+int has_uncommitted_changes(struct repository *repo,
-+			    int ignore_submodules);
-+int require_clean_work_tree(struct repository *repo,
-+			    const char *action,
-+			    const char *hint,
-+			    int ignore_submodules,
-+			    int gently);
- 
- #endif /* STATUS_H */
+-void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
++void wt_status_get_state(struct repository *repo,
++			 struct wt_status_state *state,
++			 int get_detached_from);
+ int wt_status_check_rebase(const struct worktree *wt,
+ 			   struct wt_status_state *state);
+ int wt_status_check_bisect(const struct worktree *wt,
 -- 
 2.19.0.rc0.337.ge906d732e7
 
