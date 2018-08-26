@@ -2,121 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35D871F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 18:22:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1E41F428
+	for <e@80x24.org>; Sun, 26 Aug 2018 18:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726772AbeHZWFy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 18:05:54 -0400
-Received: from mail-it0-f50.google.com ([209.85.214.50]:50918 "EHLO
-        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726694AbeHZWFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 18:05:54 -0400
-Received: by mail-it0-f50.google.com with SMTP id j81-v6so8251978ite.0
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 11:22:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Le+WCHMfhrbF9bCwZvJiL0kUGAOSgMYRHlxYaebUP0M=;
-        b=16bNY6luTACwwg5TfZ3IIWe//Ncm25w7TEmxBXyPSzSfIU82mLfKU+i9UVTVksYY06
-         MiY5YNI9iwvouaEyYig7p0+3I4lJFosL7yydN/wX+flyREZYqTG+EJNbv/jP7CgpyTrj
-         KvTc5I2hD/batc2ti5j1oPkHFt4jI3XGm6Jb11H90sXzNukDcRmiqPjaPwT9QDcNVsnz
-         gZCLT8dTGqc9fVZq5atRULjo1+F2TSkn2A8KH8FGEpfubat7rVVdi9rwBg9XBQ5FphYh
-         W+1B+N+aOy54JSEJPE0TKkPqTawWdGO8uqHHjsTpv3fjte+rChG8AiGYWLLzwcOIz5wM
-         /iPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Le+WCHMfhrbF9bCwZvJiL0kUGAOSgMYRHlxYaebUP0M=;
-        b=lhVPVZUODbAe2R7ln0YO/ulRGrFo7BL3vwbG/ZNeIN2OuzpmDfOlg/YlipTu0AuVKZ
-         RwpyV6KmlDY7pnpdsZl3MJJv5W3XKwP859+aLajreCm/BM8VvmqMOyOPCTTQGqO9ll2G
-         GUaMbA/U7CrcBo554wAX9IfjAJC9hU1WObisfzEDyZfARXebvzDu6odZZUQeAI17XKY4
-         VHV4bvK+4xRC9isl1hqlJiUNvsHOuZBlXQ/iPKcoVo4t/TlqCbzCQVyOC60AM1lZK8oD
-         q12GjvE1Y6TEuxr2/P1GnumDeOWpqKmcDJBZES9066XGEjFlr86E8IfsAfkwrlC+GvV0
-         6bdA==
-X-Gm-Message-State: APzg51CYczTkNMgtqb30IomVmK2C2vDldBkr1vs8Y5dZL/dSAE9zZPXK
-        k+GjR7CvHMwTm3wJcRrEMyB+teTsrMd3MZTLdbjruY9pCAc=
-X-Google-Smtp-Source: ANB0VdYLwvQ9GAwKGIorRy2EDLhbquSRDHvTidWtV5spqzTym4YCV/hlf25zifhhyuIRUan7RzASSGYPf1pPpYhXQ2w=
-X-Received: by 2002:a24:d9d6:: with SMTP id p205-v6mr4496894itg.89.1535307755401;
- Sun, 26 Aug 2018 11:22:35 -0700 (PDT)
+        id S1726793AbeHZWTy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 18:19:54 -0400
+Received: from mout.gmx.net ([212.227.17.21]:56157 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726643AbeHZWTx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 18:19:53 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjdS8-1fMs4J1dCC-00beyO; Sun, 26
+ Aug 2018 20:36:27 +0200
+Date:   Sun, 26 Aug 2018 20:36:25 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, sbeller@google.com,
+        alban.gruin@gmail.com
+Subject: Re: [PATCH 02/11] builtin rebase: support `git rebase --onto
+ A...B`
+In-Reply-To: <xmqq1sb8hdvd.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808241821470.73@tvgsbejvaqbjf.bet>
+References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-3-predatoramigo@gmail.com> <xmqq1sb8hdvd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <MWHPR10MB1517982C582BEFB7D9171EFD9B340@MWHPR10MB1517.namprd10.prod.outlook.com>
-In-Reply-To: <MWHPR10MB1517982C582BEFB7D9171EFD9B340@MWHPR10MB1517.namprd10.prod.outlook.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Sun, 26 Aug 2018 11:22:24 -0700
-Message-ID: <CAGyf7-H+YoeO5bOvTkLtViMWv85cpQsxL=gxmA592WJ8=rd8hA@mail.gmail.com>
-Subject: Re: Get "Your branch is ahead of 'origin/master'" message when
- explicitly passing origin url at push command
-To:     bentzy.sagiv@firemon.com
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:00xkA2voXRxZQ7kaUyEAPmzLPz4sbpWgGN07MZRKOMDvs4ibUbi
+ p/TWpWAbb/UM/x/hFyutFsdYM7IZWdqBl0HaYfyBZhNG7XK9xTqUT7ZT7vK6OE/2aWTSK/w
+ GltkM8Ia2CXILNUQ/hetfn5sPGs2BtAS3+MeIxFvV5H/wp6kXz6zjhB1sKEz56xOrtD/U0M
+ 8i+gvscuMeV9GSwx/FWyQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:D01YQrbO8ZQ=:WGMG5YcRfbEiarKLtFd5Hd
+ J6tuN1QemQG3oEDuuv8MIY921OTAiPM03Dv40kFTIZ9D6gBeZFcpKITsx7DFdUQElbZd90OE4
+ ugokA6o1D5Se1Qjk+Uz0q5ubCskd/oNCybRUX/Dv5GNQqlwz9hw1xvwbrEBI1n0OPDGKaLfLv
+ TbBUJQvdOPADmZjKp1JDObBxp3zOuVa0H1UvsEoqjAtUkG5dEm4aH5Juwcis5PdDnUGgH+Fm+
+ yF8ETX0c/OmKZezjlH+zwdeubWc7cforD1PVTGS7GeTvhApeKGXkxpYqF9py6n9HG+kAsgPUo
+ LFSpEOE42BJdTxWoe5+8YozOzhdHfo6GaSHOVv8F4kAKBTBwMWIstvIIZIaUZT7AyX4CAqt4/
+ iKoKA1lb1VNNA2ejSrCGgDB9mF6reiU8cmSqkBvE4PB8ONTKblBC6o5M+2YhUkXzPY4Qao5f+
+ rxAAKvJAR4PUibqkqqESMkMkNiF/xP9yj+uBOX8uZjX+qIi4ht/LPPTri51zUZ5G+36C9wf+D
+ LGtUyk5hcFAS0ozDEwfkn4WgFWyi6GeWx+hHpVpjn+pt1btIFJ31JjXweMF3hnWOn/6FA7YNg
+ MROljnhxzx7UhZGSRg7PFMu987g5lPKdkutY4WBPTRjI6JZ+S9a+VOfRBTC1FLpYz4QJw+xtN
+ ZhkXcJBQYDHngjGN/yHGjle12zBPUcdHpwobencbMqIdTeju7QVRYKAMhz4L0hutrjPJ3trcv
+ 5dvsk4Bi14VplVfCAnsLZ5s7Adti5OQqQhWeCgGWWoXwe+KXGKndWnlNjYn1+2PgVh8wwN8Wp
+ z4jp1Af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 26, 2018 at 4:39 AM Bentzy Sagiv <bentzy.sagiv@firemon.com> wrote:
->
-> git version 2.7.4
-> ______________________________________________________________________________________________________
->
-> First try: NOT passing origin url explicitly
->
-> ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git push
+Hi Junio,
 
-Since you didn't specify a remote here, Git assumes origin. It uses
-your configured "push.default" behavior ("simple" by default) to
-determine which refs to push and pushes your master branch to the
-origin's master branch. Since it _knows_ it pushed to origin, it
-updates your local "refs/remotes/origin/master" ref with the same
-commit it just pushed, resulting in an "up-to-date" message.
+On Wed, 8 Aug 2018, Junio C Hamano wrote:
 
->
-> ubuntu@ci-bentzy:/var/lib/jenkins$ git status
-> On branch master
-> Your branch is up-to-date with 'origin/master'.
-> nothing to commit, working directory clean
-> ubuntu@ci-bentzy:/var/lib/jenkins$
->
-> ______________________________________________________________________________________________________
->
-> Second try: passing origin url explicitily
->
-> ubuntu@ci-bentzy:/var/lib/jenkins$ sudo git push https://bitbucket.org/OWNER/jenkinsconf-repo.git
+> Pratik Karki <predatoramigo@gmail.com> writes:
+> 
+> > This commit implements support for an --onto argument that is actually a
+> > "symmetric range" i.e. `<rev1>...<rev2>`.
+> >
+> > The equivalent shell script version of the code offers two different
+> > error messages for the cases where there is no merge base vs more than
+> > one merge base. Though following the similar approach would be nice,
+> > this would create more complexity than it is of current. Currently, for
+> 
+> Sorry, but it is unclear what you mean by "than it is of current."
+> Do you mean we leave it broken at this step in the series for now
+> for expediency, with the intention to later revisit and fix it, or
+> do you mean something else?
 
-This, on the other hand, _is not pushing to a configured remote_. It's
-pushing to an explicit URL, which happens to match the URL of a
-configured remote. But it's still not a configured remote. It's using
-origin's URL, but you didn't push to origin. As a result,
-"refs/remotes/origin/master" is not updated, and you get an "ahead"
-message.
+I suggested to drop the distinction, in favor of simpler code. Not for the
+time being, but for good.
 
->
-> ubuntu@ci-bentzy:/var/lib/jenkins$ git status
-> On branch master
-> Your branch is ahead of 'origin/master' by 1 commit.
->   (use "git push" to publish your local commits)
-> nothing to commit, working directory clean
->
-> ______________________________________________________________________________________________________
->
-> An additional " sudo git push" (without explicit origin) solves the issue
+I reworded the commit message thusly:
 
-Everything here is working as intended. If you want to push to a
-_remote_, you either need to:
-- Name the remote ("git push origin"), or
-- Leave it off, so Git will assume origin ("git push")
+    builtin rebase: support `git rebase --onto A...B`
 
-Pushing to a URL that matches a remote's URL is _not_ pushing to a
-remote. It's pushing to an explicit URL.
+    This commit implements support for an --onto argument that is actually a
+    "symmetric range" i.e. `<rev1>...<rev2>`.
 
-Hope this helps,
-Bryan Turner
->
->
->
+    The equivalent shell script version of the code offers two different
+    error messages for the cases where there is no merge base vs more than
+    one merge base.
+
+    Though it would be nice to retain this distinction, dropping it makes it
+    possible to simply use the `get_oid_mb()` function. Besides, it happens
+    rarely in real-world scenarios.
+
+    Therefore, in the interest of keeping the code less complex, let's just
+    use that function, and live with an error message that does not
+    distinguish between those two error conditions.
+
+> > @@ -387,7 +389,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >  	if (!options.onto_name)
+> >  		options.onto_name = options.upstream_name;
+> >  	if (strstr(options.onto_name, "...")) {
+> > -		die("TODO");
+> > +		if (get_oid_mb(options.onto_name, &merge_base) < 0)
+> > +			die(_("'%s': need exactly one merge base"),
+> > +			    options.onto_name);
+> > +		options.onto = lookup_commit_or_die(&merge_base,
+> > +						    options.onto_name);
+> 
+> The original is slightly sloppy in that it will misparse
+> 
+> 	rebase --onto 'master^{/log ... message}'
+> 
+> and this shares the same, which I think is probably OK.
+
+I did run into this recently, but not with an `--onto` option. I forgot
+the details (I meant to write it down, and forgot that, too).
+
+Sorry for musing, back on the topic. Yes, it shares the same, and *that*
+makes it okay. Remember: this patch series is not about improving `git
+rebase` at all. It is about converting from shell script to builtin.
+
+> When this actually becomes problematic, the original can easily be
+> salvaged by making it to fall back to the same peel_committish in its
+> else clause; I am not sure if this C rewrite is as easily be fixed the
+> same way, though.
+
+I will make a note so that I hopefully won't forget.
+
+Thanks,
+Dscho
+
+> 
+> >  	} else {
+> >  		options.onto = peel_committish(options.onto_name);
+> >  		if (!options.onto)
+> 
