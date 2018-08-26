@@ -2,137 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E1E41F428
-	for <e@80x24.org>; Sun, 26 Aug 2018 18:36:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8EBD1F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 19:49:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbeHZWTy (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 18:19:54 -0400
-Received: from mout.gmx.net ([212.227.17.21]:56157 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726643AbeHZWTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 18:19:53 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LjdS8-1fMs4J1dCC-00beyO; Sun, 26
- Aug 2018 20:36:27 +0200
-Date:   Sun, 26 Aug 2018 20:36:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org,
-        christian.couder@gmail.com, sbeller@google.com,
-        alban.gruin@gmail.com
-Subject: Re: [PATCH 02/11] builtin rebase: support `git rebase --onto
- A...B`
-In-Reply-To: <xmqq1sb8hdvd.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808241821470.73@tvgsbejvaqbjf.bet>
-References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-3-predatoramigo@gmail.com> <xmqq1sb8hdvd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726812AbeHZXbq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 19:31:46 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:34734 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726741AbeHZXbq (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 26 Aug 2018 19:31:46 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 02CBD60745;
+        Sun, 26 Aug 2018 19:48:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1535312895;
+        bh=399+146UjkEr+XZY7tPB4gNCboAF1Q7uobdBl8wlD7g=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=W+3uVx/s1ujd2d7HxQlZ+xninVTKQ1icm08/mI4wmMNvdZKF6bAk2QUeLRUMVWfzZ
+         ebFzGvEX2js860pvDsYy6vOq2kSn5AmfHqQl64lXxs1gr/tP0CPzfBwVFtPRVKjK9X
+         LyFidxDwCzszXrvTypKCbk8RuNZ/7N044BCZGmOAtpFqjP/H7b4x1Fd78Tn+d8X1MF
+         XKYupcWstzo1KcDb54kUSWuQiQ8IVe+BEmbc0+JM5OSPPgv9PaGME8cBo/r3FHg3wS
+         qkwoh3YZz56RYSm78bA6nl6LuRQP54Zz/mEnD3R4xavMMlb9qA6Vo0vQMk0AI19wTL
+         hfrRoks9dtRJaM7neQ5LtvxtUSLyb3wArU7l6E5zepvCIizVDMzLciEvdDd9S+FiA9
+         LOu7ksxDDySjjRLI4Onnwcf6dh+T+MpO9QK00JJ6i2DD7o2KPsYe2fWTLLHNzebF9X
+         59xG1Kz9kjvXYTMRPqQrb7bl/Bn/xRJBNcXRpZQKFGVCnu1MhkV
+Date:   Sun, 26 Aug 2018 19:48:10 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'pedro rijo' <pedrorijo91@gmail.com>,
+        'Git Users' <git@vger.kernel.org>
+Subject: Re: [GitHub] Your password was reset
+Message-ID: <20180826194810.GB873448@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>,
+        'pedro rijo' <pedrorijo91@gmail.com>,
+        'Git Users' <git@vger.kernel.org>
+References: <5b827432100c5_33683fe5790d45b43591aa@github-lowworker-4f62d42.cp1-iad.github.net.mail>
+ <CAPMsMoCR4J_gLBYCZpNW7JcMmdSGu-jFHpvVkQks7myYte1KeA@mail.gmail.com>
+ <001101d43d52$fe25f4e0$fa71dea0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:00xkA2voXRxZQ7kaUyEAPmzLPz4sbpWgGN07MZRKOMDvs4ibUbi
- p/TWpWAbb/UM/x/hFyutFsdYM7IZWdqBl0HaYfyBZhNG7XK9xTqUT7ZT7vK6OE/2aWTSK/w
- GltkM8Ia2CXILNUQ/hetfn5sPGs2BtAS3+MeIxFvV5H/wp6kXz6zjhB1sKEz56xOrtD/U0M
- 8i+gvscuMeV9GSwx/FWyQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:D01YQrbO8ZQ=:WGMG5YcRfbEiarKLtFd5Hd
- J6tuN1QemQG3oEDuuv8MIY921OTAiPM03Dv40kFTIZ9D6gBeZFcpKITsx7DFdUQElbZd90OE4
- ugokA6o1D5Se1Qjk+Uz0q5ubCskd/oNCybRUX/Dv5GNQqlwz9hw1xvwbrEBI1n0OPDGKaLfLv
- TbBUJQvdOPADmZjKp1JDObBxp3zOuVa0H1UvsEoqjAtUkG5dEm4aH5Juwcis5PdDnUGgH+Fm+
- yF8ETX0c/OmKZezjlH+zwdeubWc7cforD1PVTGS7GeTvhApeKGXkxpYqF9py6n9HG+kAsgPUo
- LFSpEOE42BJdTxWoe5+8YozOzhdHfo6GaSHOVv8F4kAKBTBwMWIstvIIZIaUZT7AyX4CAqt4/
- iKoKA1lb1VNNA2ejSrCGgDB9mF6reiU8cmSqkBvE4PB8ONTKblBC6o5M+2YhUkXzPY4Qao5f+
- rxAAKvJAR4PUibqkqqESMkMkNiF/xP9yj+uBOX8uZjX+qIi4ht/LPPTri51zUZ5G+36C9wf+D
- LGtUyk5hcFAS0ozDEwfkn4WgFWyi6GeWx+hHpVpjn+pt1btIFJ31JjXweMF3hnWOn/6FA7YNg
- MROljnhxzx7UhZGSRg7PFMu987g5lPKdkutY4WBPTRjI6JZ+S9a+VOfRBTC1FLpYz4QJw+xtN
- ZhkXcJBQYDHngjGN/yHGjle12zBPUcdHpwobencbMqIdTeju7QVRYKAMhz4L0hutrjPJ3trcv
- 5dvsk4Bi14VplVfCAnsLZ5s7Adti5OQqQhWeCgGWWoXwe+KXGKndWnlNjYn1+2PgVh8wwN8Wp
- z4jp1Af
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="uCPdOCrL+PnN2Vxy"
+Content-Disposition: inline
+In-Reply-To: <001101d43d52$fe25f4e0$fa71dea0$@nexbridge.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Wed, 8 Aug 2018, Junio C Hamano wrote:
+--uCPdOCrL+PnN2Vxy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Pratik Karki <predatoramigo@gmail.com> writes:
-> 
-> > This commit implements support for an --onto argument that is actually a
-> > "symmetric range" i.e. `<rev1>...<rev2>`.
-> >
-> > The equivalent shell script version of the code offers two different
-> > error messages for the cases where there is no merge base vs more than
-> > one merge base. Though following the similar approach would be nice,
-> > this would create more complexity than it is of current. Currently, for
-> 
-> Sorry, but it is unclear what you mean by "than it is of current."
-> Do you mean we leave it broken at this step in the series for now
-> for expediency, with the intention to later revisit and fix it, or
-> do you mean something else?
+On Sun, Aug 26, 2018 at 11:39:30AM -0400, Randall S. Becker wrote:
+> My first reactions were:
+>=20
+> 1. Someone is trying a phishing scam on the distribution list. It has hap=
+pened before.
+>=20
+> 2. Someone set up the wrong email address for their GitHub account.
+>=20
+> I hope it's not #1.
 
-I suggested to drop the distinction, in favor of simpler code. Not for the
-time being, but for good.
+The emails do appear to be coming from GitHub.  I've reached out to
+the security team so that they can investigate what's going on.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-I reworded the commit message thusly:
+--uCPdOCrL+PnN2Vxy
+Content-Type: application/pgp-signature; name="signature.asc"
 
-    builtin rebase: support `git rebase --onto A...B`
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
 
-    This commit implements support for an --onto argument that is actually a
-    "symmetric range" i.e. `<rev1>...<rev2>`.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluDA/oACgkQv1NdgR9S
+9osEoQ//QvpJclGPtVt9F1FN7z2i+JsEME888aWvg9GS4RJKjAWzQYo5fHtdTxvA
+4tZIev1B7N8MdeM00hHuVdC6TEyopJV7zKNzGBDgqs7SPz6vNJwWOgF8qWLLar5n
+OSZnfZCcDIIdplgJkc/WRHc4Ri/jZFqk5itOrKehUjDPWTtziRfbSZnjpJRX1ZNS
+r9TMGOh+g4+HGinspxfoEgpaHrhawVuK7C3PPwTKiwiZAPBd6cbaat1QP62gNsoW
+t273m//7U1WER5fX7DhNOW7UtgO184FvlLlVO9sLVcpVnzCy5Z1HWtYRg98lUq0T
+5henUozSENer8N5NBISCfF1rffSFEQBAmsErRyCdBmthgJ7pkuQYKi92YJGESsLQ
+XRA4Mv/+qVxVzsNPo6nhR72QpDvd0ItiGjt8KfzTECG1fvUAH8+iNULU8RPknmQM
+jj20rJAA+ZHI04gBWRNYgOkwHaiMP+bLHm/hgHuSj9AAZo/xySAbFhNjF+z5jM8l
+NvGz3WP7WCpFDHFsAjGDQ+qZOEnXHMCf6GixyVFy8xrJ/ZFk6CfkqbnX8CZYgpaS
+1GXJpyLgvga2c6ND4RjocgHwt7YlUXzTK4acs48yjWdJMK8VPNfNMukadTT/dW0i
+V3VxcPj4ThbhoV99b9Psd4eAom8XcwBeeUlLlxvwlGp44tMnFlU=
+=k64G
+-----END PGP SIGNATURE-----
 
-    The equivalent shell script version of the code offers two different
-    error messages for the cases where there is no merge base vs more than
-    one merge base.
-
-    Though it would be nice to retain this distinction, dropping it makes it
-    possible to simply use the `get_oid_mb()` function. Besides, it happens
-    rarely in real-world scenarios.
-
-    Therefore, in the interest of keeping the code less complex, let's just
-    use that function, and live with an error message that does not
-    distinguish between those two error conditions.
-
-> > @@ -387,7 +389,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
-> >  	if (!options.onto_name)
-> >  		options.onto_name = options.upstream_name;
-> >  	if (strstr(options.onto_name, "...")) {
-> > -		die("TODO");
-> > +		if (get_oid_mb(options.onto_name, &merge_base) < 0)
-> > +			die(_("'%s': need exactly one merge base"),
-> > +			    options.onto_name);
-> > +		options.onto = lookup_commit_or_die(&merge_base,
-> > +						    options.onto_name);
-> 
-> The original is slightly sloppy in that it will misparse
-> 
-> 	rebase --onto 'master^{/log ... message}'
-> 
-> and this shares the same, which I think is probably OK.
-
-I did run into this recently, but not with an `--onto` option. I forgot
-the details (I meant to write it down, and forgot that, too).
-
-Sorry for musing, back on the topic. Yes, it shares the same, and *that*
-makes it okay. Remember: this patch series is not about improving `git
-rebase` at all. It is about converting from shell script to builtin.
-
-> When this actually becomes problematic, the original can easily be
-> salvaged by making it to fall back to the same peel_committish in its
-> else clause; I am not sure if this C rewrite is as easily be fixed the
-> same way, though.
-
-I will make a note so that I hopefully won't forget.
-
-Thanks,
-Dscho
-
-> 
-> >  	} else {
-> >  		options.onto = peel_committish(options.onto_name);
-> >  		if (!options.onto)
-> 
+--uCPdOCrL+PnN2Vxy--
