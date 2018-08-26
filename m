@@ -2,473 +2,300 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71CC31F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 10:03:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B78DA1F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 11:47:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726851AbeHZNpj (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 09:45:39 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:34989 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726680AbeHZNpi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 09:45:38 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p10-v6so10011716ljg.2
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 03:03:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=MmBld1wAWdcEkR7sf/omzrQcdQMgiPdONvdvd/JU1Pg=;
-        b=MLqYWrL/MsMVm/V74TQl5OCNesPtmenNM1Tx4NC9X5ta2QULf9JClY3oZs1zVnWIPp
-         dPcWO0ydwJc8CmTMqeKnghfFRlhQ5iKUO1lSweGbJkSbGne7YPpRQYwnf7dAkY+HJmZs
-         SXfVmUPbMvhx0SHxMnQrvZ+Z3USYhQkYX/ii6xTFJ/RBHRxz909UtxR+9BrGEBfotgQu
-         wXJNWbVl9XEjzGAomPIHs56d8ayzyD3yJW8mOGo/Fo53cXGHkvlAKoF5raq7yDes+/AL
-         tPrx7yaSGNafLhd5KwZwFhJznRrbwJK4n4C3qYUhRYlZFHZkc60zNRJfMwLHkAdHuNx5
-         Cu9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=MmBld1wAWdcEkR7sf/omzrQcdQMgiPdONvdvd/JU1Pg=;
-        b=OohFeNPygwnJjMo1NgSmYSoZPiNrvaY1C1U6IXzaYlfytIMcMKKMKG65ArjMPbZTSc
-         olRnnCowdUR9PEazt2OzuD2HfzfIT3ZNLMuv2YR6Z0CEw/CkyFBU7ad/OqFQukAMwdlH
-         6KI39SsUDA8UqRM1djuOJQQAHJNAMRySDl/sXhOQ0QD7gB7gV/W3CQwl1huuOs5hqtTg
-         h1x/LGzKjJ444Q2CKqhASvQ1cDm3isfIvBFLKCFOV+00Qxe7s7Dc5IPrgwQcp7U9kxDP
-         JRo1bhOA49ZChjQtF3gEcZB+8UgVsISpRDsZKpUFxK+d5aJjZW4RTldm0Rf4y/qcOuZN
-         zaYg==
-X-Gm-Message-State: APzg51ApsARxIjH+rrvDwciRllyRsgv4gH50Tp6KVzueKQJjsnE/sgGC
-        f4Qx5JOBrq+Q+vfAbmbFlwGgiMno
-X-Google-Smtp-Source: ANB0Vdag4JeqLdsI8OpFz4BiMvlSy8weiaMbVrRO0i41pVCruhFCR6r1PNKPdj9DLD8sJjfb5I5QhA==
-X-Received: by 2002:a2e:44c6:: with SMTP id b67-v6mr5552000ljf.102.1535277810440;
-        Sun, 26 Aug 2018 03:03:30 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z5-v6sm2276882lfg.75.2018.08.26.03.03.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Aug 2018 03:03:29 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 13/21] sha1-file.c: remove implicit dependency on the_index
-Date:   Sun, 26 Aug 2018 12:03:06 +0200
-Message-Id: <20180826100314.5137-14-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180826100314.5137-1-pclouds@gmail.com>
-References: <20180826100314.5137-1-pclouds@gmail.com>
+        id S1726741AbeHZPUU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 11:20:20 -0400
+Received: from mout.web.de ([212.227.17.12]:34511 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726721AbeHZPUU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 11:20:20 -0400
+Received: from [192.168.178.36] ([91.20.53.4]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MY6sm-1gOmCF2XjM-00UpkJ; Sun, 26
+ Aug 2018 13:37:43 +0200
+Subject: Re: [PATCH 2/2] fsck: use oidset for skiplist
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de>
+ <54a5367f-f832-402c-f51b-3225c92b41ad@web.de>
+ <20180811170248.GC27393@sigill.intra.peff.net>
+ <20180811172350.GA2689@sigill.intra.peff.net>
+ <f69e08d7-b29d-a9b7-b6d4-5294c4379133@web.de>
+ <6065f3e5-f831-802f-9adc-099de99405fc@web.de>
+ <20180814015842.GA27055@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <030bac66-eeb4-7bc9-8f27-1e6b4124fd76@web.de>
+Date:   Sun, 26 Aug 2018 13:37:41 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20180814015842.GA27055@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:ESh5AvVssQuLRZE4ecvD+LIA4yvNEtDv9CZyoEVmQfmnfxlfDGQ
+ WXSUXY7MbnrOLwoSHT1icUFAyQydA4BjkedAWS76kLpoJ9cp79ZZfsQxEu+6b+tmJvSOFuM
+ V8eS+pmU6mq0tKG9EocmLuED/Sr8LPQGruyIZkFw/O7LUCujGBeP3dRUXk+gmxaI8tSseEY
+ iMXI7YPMApylxt1zpM0Gg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:u9Uo6++Yn8o=:eFSLtZXlAqRgyeoFoKfjaf
+ DhHjK6CipUeNzrpnISnlL9seR2MJRG/W+BMANhbOJneUVIGfP5l4sXuZjEcearnebMpVp1zPw
+ Y7QsqnVNRufb8Dnutc4e8IQFJyPz4fVx/PrDCRTvxS95EWWOtYujez4TL+c4y1oUY1L+yFbE1
+ JJUsmtmmO489yBhDnQVr6tZUEBdPRboc3ifCj3Ql3EXcryp/wjNCyV7nPP7c405VQ1x1Mke64
+ 7Re2GhX+tmkGDeVME8A4N11dymst7wlAfxSgxESrZCBD9aNdsJIYVnV6IiXGZx6YrBru3gyRQ
+ o0jyTmmjdkVfBxg4xxbGdS3k+iUBiwxL9wcz+qLrOkG5ySPjhNyyFJUBUhIOR5JmysUc/nzFo
+ XvGSJQedl8hhyhztOSwrFu2BT0wdi9xpuL1OE9+aH2E6r92F2pXPY/l6RXIBnzakAMid3ivam
+ Pukjeuv+GTs4PQ9LFxP5ToRy5qCIfxD2IzeUnvRUwJKcsCCzPZVYgqcAys+7YDpSPNFCNvxBh
+ 2vUD2r2+J1MlG0Ys3AWSRgYgCjOtp7l+1So2LAoKgu2qX5Pb9WK4W4f4oAaaQn5uah2DAWmOK
+ RcrFLu/GxgDZZn7jF8708/0sy0ZsY2T1CENqff14QSfeXP4WwKYo3luOQorMANUmrds4BxZ5c
+ 6RKb3GWCXxYYfcl5GUQCtmqsZVwQQ/LoK3WzlyAVcODI8bzwog7PKJZ0VbdSjoT0lTlAqgDRi
+ ItJxhS+FHCLz4oz/7R+9Xzcl0Y2TrxXNG0lxoRrxPM/VvUWILaY5nCA24/EWD1EC6FRaZnL0o
+ SarmHb4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/difftool.c     |  2 +-
- builtin/hash-object.c  |  2 +-
- builtin/replace.c      |  2 +-
- builtin/update-index.c |  2 +-
- cache.h                |  4 ++--
- diff.c                 | 20 ++++++++---------
- notes-merge.c          |  2 +-
- read-cache.c           | 25 ++++++++++++---------
- sha1-file.c            | 50 ++++++++++++++++++++++++------------------
- 9 files changed, 61 insertions(+), 48 deletions(-)
+Am 14.08.2018 um 03:58 schrieb Jeff King:
+> Your suggestion can be implemented using khash (my patch below).
+> 
+>> Before:
+>> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+>>
+>>   Time (mean ± σ):     269.5 ms ±  26.7 ms    [User: 247.7 ms, System: 21.4 ms]
+>>
+>>   Range (min … max):   240.3 ms … 339.3 ms
+>>
+>> After:
+>> Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+>>
+>>   Time (mean ± σ):     224.2 ms ±  18.2 ms    [User: 201.7 ms, System: 22.1 ms]
+>>
+>>   Range (min … max):   205.0 ms … 259.0 ms
+> 
+> Yeah. My best-of-five dropped from 300ms to 247ms. That 300 was using
+> the memory pool, though khash's deletion strategy isn't all that
+> different (the wasted memory hangs around until the next hash resize,
+> but if you're evenly dropping and adding, you likely won't need to
+> resize).
 
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index cdd585ca76..e7023e3adf 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -112,7 +112,7 @@ static int use_wt_file(const char *workdir, const char *name,
- 		int fd = open(buf.buf, O_RDONLY);
- 
- 		if (fd >= 0 &&
--		    !index_fd(&wt_oid, fd, &st, OBJ_BLOB, name, 0)) {
-+		    !index_fd(&the_index, &wt_oid, fd, &st, OBJ_BLOB, name, 0)) {
- 			if (is_null_oid(oid)) {
- 				oidcpy(oid, &wt_oid);
- 				use = 1;
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 9ada4f4dfd..d6f06ea32f 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -40,7 +40,7 @@ static void hash_fd(int fd, const char *type, const char *path, unsigned flags,
- 	if (fstat(fd, &st) < 0 ||
- 	    (literally
- 	     ? hash_literally(&oid, fd, type, flags)
--	     : index_fd(&oid, fd, &st, type_from_string(type), path, flags)))
-+	     : index_fd(&the_index, &oid, fd, &st, type_from_string(type), path, flags)))
- 		die((flags & HASH_WRITE_OBJECT)
- 		    ? "Unable to add %s to database"
- 		    : "Unable to hash %s", path);
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 4f05791f3e..e0b16ad44b 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -295,7 +295,7 @@ static int import_object(struct object_id *oid, enum object_type type,
- 			close(fd);
- 			return -1;
- 		}
--		if (index_fd(oid, fd, &st, type, NULL, flags) < 0)
-+		if (index_fd(&the_index, oid, fd, &st, type, NULL, flags) < 0)
- 			return error(_("unable to write object to database"));
- 		/* index_fd close()s fd for us */
- 	}
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index fe84003b4f..3086212fdb 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -282,7 +282,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
- 	fill_stat_cache_info(ce, st);
- 	ce->ce_mode = ce_mode_from_stat(old, st->st_mode);
- 
--	if (index_path(&ce->oid, path, st,
-+	if (index_path(&the_index, &ce->oid, path, st,
- 		       info_only ? 0 : HASH_WRITE_OBJECT)) {
- 		discard_cache_entry(ce);
- 		return -1;
-diff --git a/cache.h b/cache.h
-index 218edaa198..0964611997 100644
---- a/cache.h
-+++ b/cache.h
-@@ -787,8 +787,8 @@ extern int ie_modified(struct index_state *, const struct cache_entry *, struct
- #define HASH_WRITE_OBJECT 1
- #define HASH_FORMAT_CHECK 2
- #define HASH_RENORMALIZE  4
--extern int index_fd(struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
--extern int index_path(struct object_id *oid, const char *path, struct stat *st, unsigned flags);
-+extern int index_fd(struct index_state *istate, struct object_id *oid, int fd, struct stat *st, enum object_type type, const char *path, unsigned flags);
-+extern int index_path(struct index_state *istate, struct object_id *oid, const char *path, struct stat *st, unsigned flags);
- 
- /*
-  * Record to sd the data from st that we use to check whether a file
-diff --git a/diff.c b/diff.c
-index 81582679e0..ec3029df82 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4252,7 +4252,7 @@ static void run_diff_cmd(const char *pgm,
- 		fprintf(o->file, "* Unmerged path %s\n", name);
- }
- 
--static void diff_fill_oid_info(struct diff_filespec *one)
-+static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *istate)
- {
- 	if (DIFF_FILE_VALID(one)) {
- 		if (!one->oid_valid) {
-@@ -4263,7 +4263,7 @@ static void diff_fill_oid_info(struct diff_filespec *one)
- 			}
- 			if (lstat(one->path, &st) < 0)
- 				die_errno("stat '%s'", one->path);
--			if (index_path(&one->oid, one->path, &st, 0))
-+			if (index_path(istate, &one->oid, one->path, &st, 0))
- 				die("cannot hash %s", one->path);
- 		}
- 	}
-@@ -4311,8 +4311,8 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
- 		return;
- 	}
- 
--	diff_fill_oid_info(one);
--	diff_fill_oid_info(two);
-+	diff_fill_oid_info(one, o->repo->index);
-+	diff_fill_oid_info(two, o->repo->index);
- 
- 	if (!pgm &&
- 	    DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
-@@ -4359,8 +4359,8 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
- 	if (o->prefix_length)
- 		strip_prefix(o->prefix_length, &name, &other);
- 
--	diff_fill_oid_info(p->one);
--	diff_fill_oid_info(p->two);
-+	diff_fill_oid_info(p->one, o->repo->index);
-+	diff_fill_oid_info(p->two, o->repo->index);
- 
- 	builtin_diffstat(name, other, p->one, p->two,
- 			 diffstat, o, p);
-@@ -4384,8 +4384,8 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
- 	if (o->prefix_length)
- 		strip_prefix(o->prefix_length, &name, &other);
- 
--	diff_fill_oid_info(p->one);
--	diff_fill_oid_info(p->two);
-+	diff_fill_oid_info(p->one, o->repo->index);
-+	diff_fill_oid_info(p->two, o->repo->index);
- 
- 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
- }
-@@ -5685,8 +5685,8 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
- 		if (DIFF_PAIR_UNMERGED(p))
- 			continue;
- 
--		diff_fill_oid_info(p->one);
--		diff_fill_oid_info(p->two);
-+		diff_fill_oid_info(p->one, options->repo->index);
-+		diff_fill_oid_info(p->two, options->repo->index);
- 
- 		len1 = remove_space(p->one->path, strlen(p->one->path));
- 		len2 = remove_space(p->two->path, strlen(p->two->path));
-diff --git a/notes-merge.c b/notes-merge.c
-index ed5b7178f0..ea062b0ad6 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -710,7 +710,7 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		/* write file as blob, and add to partial_tree */
- 		if (stat(path.buf, &st))
- 			die_errno("Failed to stat '%s'", path.buf);
--		if (index_path(&blob_oid, path.buf, &st, HASH_WRITE_OBJECT))
-+		if (index_path(&the_index, &blob_oid, path.buf, &st, HASH_WRITE_OBJECT))
- 			die("Failed to write blob object from '%s'", path.buf);
- 		if (add_note(partial_tree, &obj_oid, &blob_oid, NULL))
- 			die("Failed to add resolved note '%s' to notes tree",
-diff --git a/read-cache.c b/read-cache.c
-index b9df81e94e..e12d54a39f 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -205,14 +205,16 @@ void fill_stat_cache_info(struct cache_entry *ce, struct stat *st)
- 	}
- }
- 
--static int ce_compare_data(const struct cache_entry *ce, struct stat *st)
-+static int ce_compare_data(struct index_state *istate,
-+			   const struct cache_entry *ce,
-+			   struct stat *st)
- {
- 	int match = -1;
- 	int fd = git_open_cloexec(ce->name, O_RDONLY);
- 
- 	if (fd >= 0) {
- 		struct object_id oid;
--		if (!index_fd(&oid, fd, st, OBJ_BLOB, ce->name, 0))
-+		if (!index_fd(istate, &oid, fd, st, OBJ_BLOB, ce->name, 0))
- 			match = oidcmp(&oid, &ce->oid);
- 		/* index_fd() closed the file descriptor already */
- 	}
-@@ -257,11 +259,13 @@ static int ce_compare_gitlink(const struct cache_entry *ce)
- 	return oidcmp(&oid, &ce->oid);
- }
- 
--static int ce_modified_check_fs(const struct cache_entry *ce, struct stat *st)
-+static int ce_modified_check_fs(struct index_state *istate,
-+				const struct cache_entry *ce,
-+				struct stat *st)
- {
- 	switch (st->st_mode & S_IFMT) {
- 	case S_IFREG:
--		if (ce_compare_data(ce, st))
-+		if (ce_compare_data(istate, ce, st))
- 			return DATA_CHANGED;
- 		break;
- 	case S_IFLNK:
-@@ -407,7 +411,7 @@ int ie_match_stat(struct index_state *istate,
- 		if (assume_racy_is_modified)
- 			changed |= DATA_CHANGED;
- 		else
--			changed |= ce_modified_check_fs(ce, st);
-+			changed |= ce_modified_check_fs(istate, ce, st);
- 	}
- 
- 	return changed;
-@@ -447,7 +451,7 @@ int ie_modified(struct index_state *istate,
- 	    (S_ISGITLINK(ce->ce_mode) || ce->ce_stat_data.sd_size != 0))
- 		return changed;
- 
--	changed_fs = ce_modified_check_fs(ce, st);
-+	changed_fs = ce_modified_check_fs(istate, ce, st);
- 	if (changed_fs)
- 		return changed | changed_fs;
- 	return 0;
-@@ -753,7 +757,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 		}
- 	}
- 	if (!intent_only) {
--		if (index_path(&ce->oid, path, st, newflags)) {
-+		if (index_path(istate, &ce->oid, path, st, newflags)) {
- 			discard_cache_entry(ce);
- 			return error("unable to index file %s", path);
- 		}
-@@ -2230,7 +2234,8 @@ static int ce_flush(git_hash_ctx *context, int fd, unsigned char *hash)
- 	return (write_in_full(fd, write_buffer, left) < 0) ? -1 : 0;
- }
- 
--static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
-+static void ce_smudge_racily_clean_entry(struct index_state *istate,
-+					 struct cache_entry *ce)
- {
- 	/*
- 	 * The only thing we care about in this function is to smudge the
-@@ -2249,7 +2254,7 @@ static void ce_smudge_racily_clean_entry(struct cache_entry *ce)
- 		return;
- 	if (ce_match_stat_basic(ce, &st))
- 		return;
--	if (ce_modified_check_fs(ce, &st)) {
-+	if (ce_modified_check_fs(istate, ce, &st)) {
- 		/* This is "racily clean"; smudge it.  Note that this
- 		 * is a tricky code.  At first glance, it may appear
- 		 * that it can break with this sequence:
-@@ -2494,7 +2499,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 		if (ce->ce_flags & CE_REMOVE)
- 			continue;
- 		if (!ce_uptodate(ce) && is_racy_timestamp(istate, ce))
--			ce_smudge_racily_clean_entry(ce);
-+			ce_smudge_racily_clean_entry(istate, ce);
- 		if (is_null_oid(&ce->oid)) {
- 			static const char msg[] = "cache entry has null sha1: %s";
- 			static int allow = -1;
-diff --git a/sha1-file.c b/sha1-file.c
-index 97b7423848..308d5e20e2 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1813,7 +1813,8 @@ static void check_tag(const void *buf, size_t size)
- 		die(_("corrupt tag"));
- }
- 
--static int index_mem(struct object_id *oid, void *buf, size_t size,
-+static int index_mem(struct index_state *istate,
-+		     struct object_id *oid, void *buf, size_t size,
- 		     enum object_type type,
- 		     const char *path, unsigned flags)
- {
-@@ -1828,7 +1829,7 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	 */
- 	if ((type == OBJ_BLOB) && path) {
- 		struct strbuf nbuf = STRBUF_INIT;
--		if (convert_to_git(&the_index, path, buf, size, &nbuf,
-+		if (convert_to_git(istate, path, buf, size, &nbuf,
- 				   get_conv_flags(flags))) {
- 			buf = strbuf_detach(&nbuf, &size);
- 			re_allocated = 1;
-@@ -1852,17 +1853,20 @@ static int index_mem(struct object_id *oid, void *buf, size_t size,
- 	return ret;
- }
- 
--static int index_stream_convert_blob(struct object_id *oid, int fd,
--				     const char *path, unsigned flags)
-+static int index_stream_convert_blob(struct index_state *istate,
-+				     struct object_id *oid,
-+				     int fd,
-+				     const char *path,
-+				     unsigned flags)
- {
- 	int ret;
- 	const int write_object = flags & HASH_WRITE_OBJECT;
- 	struct strbuf sbuf = STRBUF_INIT;
- 
- 	assert(path);
--	assert(would_convert_to_git_filter_fd(&the_index, path));
-+	assert(would_convert_to_git_filter_fd(istate, path));
- 
--	convert_to_git_filter_fd(&the_index, path, fd, &sbuf,
-+	convert_to_git_filter_fd(istate, path, fd, &sbuf,
- 				 get_conv_flags(flags));
- 
- 	if (write_object)
-@@ -1875,14 +1879,15 @@ static int index_stream_convert_blob(struct object_id *oid, int fd,
- 	return ret;
- }
- 
--static int index_pipe(struct object_id *oid, int fd, enum object_type type,
-+static int index_pipe(struct index_state *istate, struct object_id *oid,
-+		      int fd, enum object_type type,
- 		      const char *path, unsigned flags)
- {
- 	struct strbuf sbuf = STRBUF_INIT;
- 	int ret;
- 
- 	if (strbuf_read(&sbuf, fd, 4096) >= 0)
--		ret = index_mem(oid, sbuf.buf, sbuf.len, type, path, flags);
-+		ret = index_mem(istate, oid, sbuf.buf, sbuf.len, type, path, flags);
- 	else
- 		ret = -1;
- 	strbuf_release(&sbuf);
-@@ -1891,14 +1896,15 @@ static int index_pipe(struct object_id *oid, int fd, enum object_type type,
- 
- #define SMALL_FILE_SIZE (32*1024)
- 
--static int index_core(struct object_id *oid, int fd, size_t size,
-+static int index_core(struct index_state *istate,
-+		      struct object_id *oid, int fd, size_t size,
- 		      enum object_type type, const char *path,
- 		      unsigned flags)
- {
- 	int ret;
- 
- 	if (!size) {
--		ret = index_mem(oid, "", size, type, path, flags);
-+		ret = index_mem(istate, oid, "", size, type, path, flags);
- 	} else if (size <= SMALL_FILE_SIZE) {
- 		char *buf = xmalloc(size);
- 		ssize_t read_result = read_in_full(fd, buf, size);
-@@ -1909,11 +1915,11 @@ static int index_core(struct object_id *oid, int fd, size_t size,
- 			ret = error(_("short read while indexing %s"),
- 				    path ? path : "<unknown>");
- 		else
--			ret = index_mem(oid, buf, size, type, path, flags);
-+			ret = index_mem(istate, oid, buf, size, type, path, flags);
- 		free(buf);
- 	} else {
- 		void *buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
--		ret = index_mem(oid, buf, size, type, path, flags);
-+		ret = index_mem(istate, oid, buf, size, type, path, flags);
- 		munmap(buf, size);
- 	}
- 	return ret;
-@@ -1941,7 +1947,8 @@ static int index_stream(struct object_id *oid, int fd, size_t size,
- 	return index_bulk_checkin(oid, fd, size, type, path, flags);
- }
- 
--int index_fd(struct object_id *oid, int fd, struct stat *st,
-+int index_fd(struct index_state *istate, struct object_id *oid,
-+	     int fd, struct stat *st,
- 	     enum object_type type, const char *path, unsigned flags)
- {
- 	int ret;
-@@ -1950,14 +1957,14 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
- 	 * Call xsize_t() only when needed to avoid potentially unnecessary
- 	 * die() for large files.
- 	 */
--	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(&the_index, path))
--		ret = index_stream_convert_blob(oid, fd, path, flags);
-+	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(istate, path))
-+		ret = index_stream_convert_blob(istate, oid, fd, path, flags);
- 	else if (!S_ISREG(st->st_mode))
--		ret = index_pipe(oid, fd, type, path, flags);
-+		ret = index_pipe(istate, oid, fd, type, path, flags);
- 	else if (st->st_size <= big_file_threshold || type != OBJ_BLOB ||
--		 (path && would_convert_to_git(&the_index, path)))
--		ret = index_core(oid, fd, xsize_t(st->st_size), type, path,
--				 flags);
-+		 (path && would_convert_to_git(istate, path)))
-+		ret = index_core(istate, oid, fd, xsize_t(st->st_size),
-+				 type, path, flags);
- 	else
- 		ret = index_stream(oid, fd, xsize_t(st->st_size), type, path,
- 				   flags);
-@@ -1965,7 +1972,8 @@ int index_fd(struct object_id *oid, int fd, struct stat *st,
- 	return ret;
- }
- 
--int index_path(struct object_id *oid, const char *path, struct stat *st, unsigned flags)
-+int index_path(struct index_state *istate, struct object_id *oid,
-+	       const char *path, struct stat *st, unsigned flags)
- {
- 	int fd;
- 	struct strbuf sb = STRBUF_INIT;
-@@ -1976,7 +1984,7 @@ int index_path(struct object_id *oid, const char *path, struct stat *st, unsigne
- 		fd = open(path, O_RDONLY);
- 		if (fd < 0)
- 			return error_errno("open(\"%s\")", path);
--		if (index_fd(oid, fd, st, OBJ_BLOB, path, flags) < 0)
-+		if (index_fd(istate, oid, fd, st, OBJ_BLOB, path, flags) < 0)
- 			return error(_("%s: failed to insert into database"),
- 				     path);
- 		break;
--- 
-2.19.0.rc0.337.ge906d732e7
+With your khash patch:
 
+Benchmark #1: ./git-cat-file --batch-all-objects --buffer --unordered --batch-check='%(objectname)'
+
+  Time (mean ± σ):     159.1 ms ±  20.5 ms    [User: 140.3 ms, System: 18.5 ms]
+
+  Range (min … max):   140.0 ms … 214.0 ms
+
+So it seems worth it.
+
+> Anyway, here's the khash patch for reference.
+> 
+> diff --git a/fetch-pack.c b/fetch-pack.c
+> index 5714bcbddd..5a86b10a5e 100644
+> --- a/fetch-pack.c
+> +++ b/fetch-pack.c
+> @@ -534,7 +534,7 @@ static int tip_oids_contain(struct oidset *tip_oids,
+>  	 * add to "newlist" between calls, the additions will always be for
+>  	 * oids that are already in the set.
+>  	 */
+> -	if (!tip_oids->map.map.tablesize) {
+> +	if (!tip_oids->map) {
+>  		add_refs_to_oidset(tip_oids, unmatched);
+>  		add_refs_to_oidset(tip_oids, newlist);
+>  	}
+
+The caller shouldn't look at the private parts of the implementation
+like this.  tablesize is the allocation count, which becomes non-zero
+if at least one entry was added.  tip_oids is only inserted into, never
+deleted from, so a count or size function could be used instead as a
+cleaner interface.  (In a separate patch..)
+
+> diff --git a/oidset.c b/oidset.c
+> index 454c54f933..2964b43b2d 100644
+> --- a/oidset.c
+> +++ b/oidset.c
+> @@ -3,38 +3,44 @@
+>  
+>  int oidset_contains(const struct oidset *set, const struct object_id *oid)
+>  {
+> -	if (!set->map.map.tablesize)
+> +	khiter_t pos;
+> +
+> +	if (!set->map)
+>  		return 0;
+> -	return !!oidmap_get(&set->map, oid);
+> +
+> +	pos = kh_get_oid(set->map, *oid);
+> +	return pos < kh_end(set->map);
+>  }
+>  
+>  int oidset_insert(struct oidset *set, const struct object_id *oid)
+>  {
+> -	struct oidmap_entry *entry;
+> +	int hash_ret;
+>  
+> -	if (!set->map.map.tablesize)
+> -		oidmap_init(&set->map, 0);
+> -	else if (oidset_contains(set, oid))
+> -		return 1;
+> +	if (!set->map)
+> +		set->map = kh_init_oid();
+>  
+> -	entry = xmalloc(sizeof(*entry));
+> -	oidcpy(&entry->oid, oid);
+> -
+> -	oidmap_put(&set->map, entry);
+> -	return 0;
+> +	kh_put_oid(set->map, *oid, &hash_ret);
+> +	return !hash_ret;
+>  }
+
+So initialization is deferred to the first insert, and the empty set
+can be represented in two ways -- map == NULL and map->size == 0.
+
+I wondered about the performance impact of all those NULL checks at
+insert and lookup and converted it to stack storage, with a dirty
+hand-rolled oidset_clear() implementation.  It wasn't any faster.
+
+>  
+>  int oidset_remove(struct oidset *set, const struct object_id *oid)
+>  {
+> -	struct oidmap_entry *entry;
+> +	khiter_t pos;
+>  
+> -	entry = oidmap_remove(&set->map, oid);
+> -	free(entry);
+> +	if (!set->map)
+> +		return 0;
+> +
+> +	pos = kh_get_oid(set->map, *oid);
+> +	if (pos < kh_end(set->map)) {
+> +		kh_del_oid(set->map, pos);
+> +		return 1;
+> +	}
+>  
+> -	return (entry != NULL);
+> +	return 0;
+>  }
+>  
+>  void oidset_clear(struct oidset *set)
+>  {
+> -	oidmap_free(&set->map, 1);
+> +	kh_destroy_oid(set->map);
+> +	set->map = NULL;
+>  }
+> diff --git a/oidset.h b/oidset.h
+> index 40ec5f87fe..4c4c5a42fe 100644
+> --- a/oidset.h
+> +++ b/oidset.h
+> @@ -2,6 +2,7 @@
+>  #define OIDSET_H
+>  
+>  #include "oidmap.h"
+
+This can go.
+
+> +#include "khash.h"
+>  
+>  /**
+>   * This API is similar to sha1-array, in that it maintains a set of object ids
+> @@ -15,19 +16,34 @@
+>   *      table overhead.
+>   */
+>  
+> +static inline unsigned int oid_hash(const struct object_id oid)
+> +{
+> +	unsigned int hash;
+> +	memcpy(&hash, oid.hash, sizeof(hash));
+> +	return hash;
+> +}
+> +
+> +static inline int oid_equal(const struct object_id a,
+> +			    const struct object_id b)
+> +{
+> +	return !oidcmp(&a, &b);
+> +}
+
+Look, it's oideq() from that other series in disguise! :)
+
+> +
+> +KHASH_INIT(oid, struct object_id, int, 0, oid_hash, oid_equal)
+
+Note to self: The 0 is for kh_is_map, which means that no values are
+kept and the given value type (int) doesn't matter.
+
+> +
+> +
+>  /**
+>   * A single oidset; should be zero-initialized (or use OIDSET_INIT).
+>   */
+>  struct oidset {
+> -	struct oidmap map;
+> +	kh_oid_t *map;
+>  };
+>  
+> -#define OIDSET_INIT { OIDMAP_INIT }
+> -
+> +#define OIDSET_INIT { NULL }
+>  
+>  static inline void oidset_init(struct oidset *set, size_t initial_size)
+>  {
+> -	oidmap_init(&set->map, initial_size);
+> +	set->map = NULL;
+>  }
+
+This ignores initial_size, which is misleading.  We should probably
+call kh_resize_oid() here and move the function to oidset.c.  Or
+get rid of the second parameter..
+
+>  
+>  /**
+> @@ -58,19 +74,25 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
+>  void oidset_clear(struct oidset *set);
+>  
+>  struct oidset_iter {
+> -	struct oidmap_iter m_iter;
+> +	kh_oid_t *map;
+> +	khiter_t iter;
+>  };
+>  
+>  static inline void oidset_iter_init(struct oidset *set,
+>  				    struct oidset_iter *iter)
+>  {
+> -	oidmap_iter_init(&set->map, &iter->m_iter);
+> +	iter->map = set->map;
+> +	iter->iter = kh_begin(iter->map);
+>  }
+
+This is fine even if map == NULL, because kh_begin() can handle any
+parameter value, as it ignores them...
+
+>  
+>  static inline struct object_id *oidset_iter_next(struct oidset_iter *iter)
+>  {
+> -	struct oidmap_entry *e = oidmap_iter_next(&iter->m_iter);
+> -	return e ? &e->oid : NULL;
+> +	for (; iter->iter != kh_end(iter->map); iter->iter++) {
+> +		if (!kh_exist(iter->map, iter->iter))
+> +			continue;
+> +		return &kh_key(iter->map, iter->iter);
+> +	}
+> +	return NULL;
+>  }
+
+... but kh_end() dereferences map, so iterating a fresh oidset will
+segfault here.
+
+>  
+>  static inline struct object_id *oidset_iter_first(struct oidset *set,
+> 
