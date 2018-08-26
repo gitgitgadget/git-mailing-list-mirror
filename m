@@ -2,90 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C747F1F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 15:35:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 392F61F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 15:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726809AbeHZTS3 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 15:18:29 -0400
-Received: from mail-lj1-f171.google.com ([209.85.208.171]:46694 "EHLO
-        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726771AbeHZTS3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 15:18:29 -0400
-Received: by mail-lj1-f171.google.com with SMTP id 203-v6so10324859ljj.13
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 08:35:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=OTHMCNQ+udZPLL39UJlJZyYMOlQHIrpzUZQ1EASkmyY=;
-        b=C0QVcKqdCehTo6VNZZZ6N1xwdukyKcXQwJVPddjaiUfsiaj6FGGDyU4idTMlr4oh/C
-         KNJpi6K7SIQIczDn1siY+zETk+zjezCR1/bXcUjE6Nsb4LzR4pvTf7D2xEqpOuYJFbQ4
-         B89Wh7L6apnN32/M+D2nloq+BgV6BtyicH6KhTMHBj3QXWod/TJbNnFlTB/qREyk9wXh
-         AzsIMzltEfPdIr4lfreKbne4a52+wkKAH7uQ2cBwQhoL5uAT47hcB/aYsYIBQVE4Gj6W
-         cINVNf8fD8YEqsxF8Ag77ZCjQVphXELGFFXh717LHA2A+E0T/L/XIodB4BHSH4ycdAG1
-         uW8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=OTHMCNQ+udZPLL39UJlJZyYMOlQHIrpzUZQ1EASkmyY=;
-        b=pYqChu44ms8RZ3MbF+yWQgzZNhfxC7wA68PCsNYqtqeW53VPaMuYEElDhfH9lHfepC
-         OeOOd4W+uTNejRHc2wmwAPCL6MfAnA4SanDGcFIvutVgbGA0B3IBRkCmp8zLK7N4cFPP
-         tmp4ERyXDL4vJ7G0jcxxOX8T/ze8GGYIwtxcAyx29goq6gZCyiSn0AcYAdDJBADcyh5q
-         m2p0HrP5wskqeVDMLLsFm2eV3COg+EMg2rDAHUWO3rRhPm0NZky6kwQu1UPLCB/G7omn
-         XTiGWXPnzdvqELYNb1NGdqw2k1WJyiaQWameE6c3cSmcmwieahgz9O6vQWjlMI7rIg/w
-         YjtA==
-X-Gm-Message-State: APzg51D0k+ysdmDapNIHh1kpQQGe2Ok1zMzyeF3Sr8j75y632jMgW05F
-        QJE4oNX5g1yFGk2zCG9B0sCIkMlBQH6b/5T0SkY6ig==
-X-Google-Smtp-Source: ANB0VdaEdF8KaxL2AQhrSymGrj6FOOFRSLifeVZjj3DjE641JSuqS24EUeOiFSdZr2WV/RzrhGxVx+Q86I66ZGzYEto=
-X-Received: by 2002:a2e:360c:: with SMTP id d12-v6mr6043459lja.88.1535297735087;
- Sun, 26 Aug 2018 08:35:35 -0700 (PDT)
+        id S1726845AbeHZTWe convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 26 Aug 2018 15:22:34 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:28581 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726771AbeHZTWe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 15:22:34 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w7QFdaWS057009
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 26 Aug 2018 11:39:37 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'pedro rijo'" <pedrorijo91@gmail.com>,
+        "'Git Users'" <git@vger.kernel.org>
+References: <5b827432100c5_33683fe5790d45b43591aa@github-lowworker-4f62d42.cp1-iad.github.net.mail> <CAPMsMoCR4J_gLBYCZpNW7JcMmdSGu-jFHpvVkQks7myYte1KeA@mail.gmail.com>
+In-Reply-To: <CAPMsMoCR4J_gLBYCZpNW7JcMmdSGu-jFHpvVkQks7myYte1KeA@mail.gmail.com>
+Subject: RE: [GitHub] Your password was reset
+Date:   Sun, 26 Aug 2018 11:39:30 -0400
+Message-ID: <001101d43d52$fe25f4e0$fa71dea0$@nexbridge.com>
 MIME-Version: 1.0
-References: <5b827432100c5_33683fe5790d45b43591aa@github-lowworker-4f62d42.cp1-iad.github.net.mail>
-In-Reply-To: <5b827432100c5_33683fe5790d45b43591aa@github-lowworker-4f62d42.cp1-iad.github.net.mail>
-From:   pedro rijo <pedrorijo91@gmail.com>
-Date:   Sun, 26 Aug 2018 16:34:56 +0100
-Message-ID: <CAPMsMoCR4J_gLBYCZpNW7JcMmdSGu-jFHpvVkQks7myYte1KeA@mail.gmail.com>
-Subject: Re: [GitHub] Your password was reset
-To:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQNM2kjpvIymdmZ46EBXpv/MpJUN2wBxkXzUod1kNmA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-just wondering if there's something going on? Is there a github
-account associated with the mailing list email? seems odd...
 
-GitHub <noreply@github.com> escreveu no dia domingo, 26/08/2018 =C3=A0(s) 1=
-0:35:
->
-> Hello amc2399,
->
-> We wanted to let you know that your GitHub password was reset.
->
-> If you did not perform this action, you can recover access by entering gi=
-t@vger.kernel.org into the form at https://github.com/password_reset
->
-> To see this and other security events for your account, visit https://git=
-hub.com/settings/security
->
-> If you run into problems, please contact support by visiting https://gith=
-ub.com/contact
->
-> Please do not reply to this email with your password. We will never ask f=
-or your password, and we strongly discourage you from sharing it with anyon=
-e.
+On August 26, 2018 11:35 AM, pedro rijo, wrote:
+> Subject: Re: [GitHub] Your password was reset
+> 
+> just wondering if there's something going on? Is there a github account
+> associated with the mailing list email? seems odd...
+> 
+> GitHub <noreply@github.com> escreveu no dia domingo, 26/08/2018 à(s)
+> 10:35:
+> >
+> > Hello amc2399,
+> >
+<snip>
+
+My first reactions were:
+
+1. Someone is trying a phishing scam on the distribution list. It has happened before.
+
+2. Someone set up the wrong email address for their GitHub account.
+
+I hope it's not #1.
+
+Cheers,
+Randall
+
+-- Brief whoami:
+  NonStop developer since approximately NonStop(211288444200000000)
+  UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
 
 
---=20
-Obrigado,
-
-Pedro Rijo
