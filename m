@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9341E1F404
-	for <e@80x24.org>; Sun, 26 Aug 2018 10:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDB451F404
+	for <e@80x24.org>; Sun, 26 Aug 2018 10:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726978AbeHZNpr (ORCPT <rfc822;e@80x24.org>);
-        Sun, 26 Aug 2018 09:45:47 -0400
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:44455 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726945AbeHZNpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 26 Aug 2018 09:45:47 -0400
-Received: by mail-lf1-f68.google.com with SMTP id g6-v6so9703033lfb.11
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 03:03:40 -0700 (PDT)
+        id S1726883AbeHZNpj (ORCPT <rfc822;e@80x24.org>);
+        Sun, 26 Aug 2018 09:45:39 -0400
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:33518 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726802AbeHZNph (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 26 Aug 2018 09:45:37 -0400
+Received: by mail-lj1-f193.google.com with SMTP id s12-v6so10019389ljj.0
+        for <git@vger.kernel.org>; Sun, 26 Aug 2018 03:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=F5YeWhdeEVYIE62Wh/PLY3+KUmlkvX0Ero0bD+7QEcc=;
-        b=dz7NNeilsdbltXQqhW+CvZVJEcGveSI9vmjx09z8hs55F7CYJ0ijJpxDh+2ZldXBa+
-         rcZLHZapF2znAhZrwfKVWZtFhVKdx+fM67iY5pe8wtw8wHF7RyvFM3+KtVqvXqVwxPVg
-         mJGMTE/jz5tAIWvkMw5rodHxHPQZXs8M8j70kU+Ypy0fTgktvCAr/dtpSIaaXLY7FdaF
-         Wdf5mw247AH4jpldx7UE4fDjmDehgszLQEspx5mw30/S0txrIdq3Pn25TrreVb56wtT9
-         fc52GEVylqh63jLQGzsUmIxsr299iv0jKHQTPbKRKFdyjL0glTEOulhc7lehtsK4Rr6H
-         whfg==
+        bh=UM41TiqC/eBBiaRd0WldTZckTizvRWeLUxdnQPgQ3hY=;
+        b=knqJtoY/ZsOyN7QJKzeaKQmgo03pR45auLzTPjQCoAa+JIcFU52kh88p4crfY6rCeW
+         VsoISTBdIZIBj+qNmHQGfUIIMjproB4tWX/2GYF0PHnqGxY1Ez0Zy9JdGqBW5OJNEPb4
+         WR6B/LbiGh9QBNHchhcxtTDt46s+R3f7rCb3DovMs7tycYsSzNXQ4iDhZ16nsqwF8BIa
+         m9eIuxztyDCcHuPMy9Ki0JjK2qXpfNU69zPBE9rW3CnLGyCZn7RredpnmrKrwKQIUGvh
+         ex+dxbxpQbXL5KfRGvM2eGrbL4xsliLQCbAKnTTbmiGwx7zUdvoGLbpt08t7Rwn4aLQn
+         54FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=F5YeWhdeEVYIE62Wh/PLY3+KUmlkvX0Ero0bD+7QEcc=;
-        b=GUDefnqz41gjsALL/aryr63mxyj/R5/3XHF/H2JTzHQ98/DoMitXPpfhztp8SIqsHL
-         VcwLJJIZILkBweaG4CKCYRcxnsea1UzllfMdi+znQuZ2DFGP/LClf/55knhHtTv9ooz3
-         pQzK403N6XfdiOZZNg1YKe5EM/TleIF8XEAbG9TtrZCK2xk7QTFsci6Q5k7cvFFEp4pm
-         suN62fdYEwbPHmCHHST86QotYbewjJKpd/aGQO/CfwS0e9iL3IicuYa4ioG3s9qvyfRX
-         exDH0LwroMCWytW4byXMM8xEhqp0wurkqiLvzOhm6hP/i6ABCGF3LvzoSO1/KPRb+mNq
-         eP6w==
-X-Gm-Message-State: APzg51Cvy9fleYaKJzsx1mu9+Q5b0suDwl16t/C8vSOxi+imjsokudY2
-        rS/eujbegPG6Y3bjycbs+KxYwn0n
-X-Google-Smtp-Source: ANB0VdaVBKBSZBecktUIYFhKrgaR8x9b71UYIpFdOqVypOrhhAJe7a3NWSQNGcH5Px/IFUwArPDXww==
-X-Received: by 2002:a19:f015:: with SMTP id p21-v6mr5792938lfc.56.1535277819261;
-        Sun, 26 Aug 2018 03:03:39 -0700 (PDT)
+        bh=UM41TiqC/eBBiaRd0WldTZckTizvRWeLUxdnQPgQ3hY=;
+        b=LWw/ZF1fmjTWbnlx12MridunWneNhKNhxYH9Ikl2ups7w7id5bY0Vso6DSlw1SrZQz
+         ZfkKp6xXSuRwpw6RVfdEUqjenQxaluRJ/g+z52qWerBpRX/cswNSJWvXc1w1Qwpd/GzK
+         B8gsPgU8gPinBOsZQdZcMJVTB2szt7k2IYVq872DBKNPo+c32a+K12jckoCJ/wE8wGmX
+         ujZ8ngn/V0MDQ3P7bW0ij8z0BPcKq/MfJO7FUsM/7DYVXcG00M4nhA/SlLEqftDcxzSg
+         rm0Tcd77mSrOyJoYY2tOhyrdfhqhtVKhJW9TxMV7OVGwCBlz4tzT1vrPQf0O07DnxxZ0
+         DZUg==
+X-Gm-Message-State: APzg51C7YEQ5CHZdvzjsM+AQIK7bVR5QjXHV5ADYjaQxKA1i3kpym6np
+        Mw7uBkrFo/4G2yYw3iijQuFjKFl3
+X-Google-Smtp-Source: ANB0VdZKNQQIJKpydwvwFh/vV7jWEDB/aSpAGSOTdwUznX1OJOa14iiDeA8t5iQZW+4neYx99hxZoQ==
+X-Received: by 2002:a2e:750d:: with SMTP id q13-v6mr5509053ljc.148.1535277808514;
+        Sun, 26 Aug 2018 03:03:28 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z5-v6sm2276882lfg.75.2018.08.26.03.03.38
+        by smtp.gmail.com with ESMTPSA id z5-v6sm2276882lfg.75.2018.08.26.03.03.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 26 Aug 2018 03:03:38 -0700 (PDT)
+        Sun, 26 Aug 2018 03:03:27 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 21/21] wt-status.c: remove implicit dependency the_repository
-Date:   Sun, 26 Aug 2018 12:03:14 +0200
-Message-Id: <20180826100314.5137-22-pclouds@gmail.com>
+Subject: [PATCH 11/21] merge.c: remove implicit dependency on the_index
+Date:   Sun, 26 Aug 2018 12:03:04 +0200
+Message-Id: <20180826100314.5137-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180826100314.5137-1-pclouds@gmail.com>
 References: <20180826100314.5137-1-pclouds@gmail.com>
@@ -70,135 +70,171 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- ref-filter.c |  2 +-
- wt-status.c  | 24 +++++++++++++-----------
- wt-status.h  |  4 +++-
- 3 files changed, 17 insertions(+), 13 deletions(-)
+ builtin/merge.c |  8 +++++---
+ builtin/pull.c  |  7 +++++--
+ cache.h         |  6 ++++--
+ merge.c         | 20 +++++++++++---------
+ sequencer.c     |  6 +++---
+ 5 files changed, 28 insertions(+), 19 deletions(-)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 0bccfceff2..1b229b84da 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1409,7 +1409,7 @@ char *get_head_description(void)
- 	struct strbuf desc = STRBUF_INIT;
- 	struct wt_status_state state;
- 	memset(&state, 0, sizeof(state));
--	wt_status_get_state(&state, 1);
-+	wt_status_get_state(the_repository, &state, 1);
- 	if (state.rebase_in_progress ||
- 	    state.rebase_interactive_in_progress) {
- 		if (state.branch)
-diff --git a/wt-status.c b/wt-status.c
-index 57bc2aac0f..1d3a5fe267 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1322,7 +1322,7 @@ static void show_rebase_in_progress(struct wt_status *s,
- 			status_printf_ln(s, color,
- 				_("  (use \"git rebase --abort\" to check out the original branch)"));
- 		}
--	} else if (state->rebase_in_progress || !stat(git_path_merge_msg(the_repository), &st)) {
-+	} else if (state->rebase_in_progress || !stat(git_path_merge_msg(s->repo), &st)) {
- 		print_rebase_state(s, state, color);
- 		if (s->hints)
- 			status_printf_ln(s, color,
-@@ -1477,7 +1477,8 @@ static int grab_1st_switch(struct object_id *ooid, struct object_id *noid,
- 	return 1;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 0a37d5ef2c..a56754db5c 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -728,8 +728,9 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			die(_("unable to write %s"), get_index_file());
+ 		return clean ? 0 : 1;
+ 	} else {
+-		return try_merge_command(strategy, xopts_nr, xopts,
+-						common, head_arg, remoteheads);
++		return try_merge_command(the_repository,
++					 strategy, xopts_nr, xopts,
++					 common, head_arg, remoteheads);
+ 	}
  }
  
--static void wt_status_get_detached_from(struct wt_status_state *state)
-+static void wt_status_get_detached_from(struct repository *repo,
-+					struct wt_status_state *state)
+@@ -1470,7 +1471,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
+ 
+-		if (checkout_fast_forward(&head_commit->object.oid,
++		if (checkout_fast_forward(the_repository,
++					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+ 					  overwrite_ignore)) {
+ 			ret = 1;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 53bc5facfd..9b2f76f9d9 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -562,7 +562,9 @@ static int pull_into_void(const struct object_id *merge_head,
+ 	 * index/worktree changes that the user already made on the unborn
+ 	 * branch.
+ 	 */
+-	if (checkout_fast_forward(the_hash_algo->empty_tree, merge_head, 0))
++	if (checkout_fast_forward(the_repository,
++				  the_hash_algo->empty_tree,
++				  merge_head, 0))
+ 		return 1;
+ 
+ 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
+@@ -915,7 +917,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			"fast-forwarding your working tree from\n"
+ 			"commit %s."), oid_to_hex(&orig_head));
+ 
+-		if (checkout_fast_forward(&orig_head, &curr_head, 0))
++		if (checkout_fast_forward(the_repository, &orig_head,
++					  &curr_head, 0))
+ 			die(_("Cannot fast-forward your working tree.\n"
+ 				"After making sure that you saved anything precious from\n"
+ 				"$ git diff %s\n"
+diff --git a/cache.h b/cache.h
+index 31013ce8af..218edaa198 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1706,10 +1706,12 @@ extern struct startup_info *startup_info;
+ 
+ /* merge.c */
+ struct commit_list;
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *repo,
++		const char *strategy, size_t xopts_nr,
+ 		const char **xopts, struct commit_list *common,
+ 		const char *head_arg, struct commit_list *remotes);
+-int checkout_fast_forward(const struct object_id *from,
++int checkout_fast_forward(struct repository *repo,
++			  const struct object_id *from,
+ 			  const struct object_id *to,
+ 			  int overwrite_ignore);
+ 
+diff --git a/merge.c b/merge.c
+index e30e03fb84..3c8c769e50 100644
+--- a/merge.c
++++ b/merge.c
+@@ -14,7 +14,8 @@ static const char *merge_argument(struct commit *commit)
+ 	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
+ }
+ 
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *repo,
++		      const char *strategy, size_t xopts_nr,
+ 		      const char **xopts, struct commit_list *common,
+ 		      const char *head_arg, struct commit_list *remotes)
  {
- 	struct grab_1st_switch_cbdata cb;
- 	struct commit *commit;
-@@ -1494,7 +1495,7 @@ static void wt_status_get_detached_from(struct wt_status_state *state)
- 	    /* sha1 is a commit? match without further lookup */
- 	    (!oidcmp(&cb.noid, &oid) ||
- 	     /* perhaps sha1 is a tag, try to dereference to a commit */
--	     ((commit = lookup_commit_reference_gently(the_repository, &oid, 1)) != NULL &&
-+	     ((commit = lookup_commit_reference_gently(repo, &oid, 1)) != NULL &&
- 	      !oidcmp(&cb.noid, &commit->object.oid)))) {
- 		const char *from = ref;
- 		if (!skip_prefix(from, "refs/tags/", &from))
-@@ -1551,30 +1552,31 @@ int wt_status_check_bisect(const struct worktree *wt,
+@@ -35,15 +36,16 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 	argv_array_clear(&args);
+ 
+-	discard_cache();
+-	if (read_cache() < 0)
++	discard_index(repo->index);
++	if (read_index(repo->index) < 0)
+ 		die(_("failed to read the cache"));
+-	resolve_undo_clear();
++	resolve_undo_clear_index(repo->index);
+ 
+ 	return ret;
+ }
+ 
+-int checkout_fast_forward(const struct object_id *head,
++int checkout_fast_forward(struct repository *repo,
++			  const struct object_id *head,
+ 			  const struct object_id *remote,
+ 			  int overwrite_ignore)
+ {
+@@ -54,7 +56,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	struct dir_struct dir;
+ 	struct lock_file lock_file = LOCK_INIT;
+ 
+-	refresh_cache(REFRESH_QUIET);
++	refresh_index(repo->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 
+ 	if (hold_locked_index(&lock_file, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -86,8 +88,8 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 
+ 	opts.head_idx = 1;
+-	opts.src_index = &the_index;
+-	opts.dst_index = &the_index;
++	opts.src_index = repo->index;
++	opts.dst_index = repo->index;
+ 	opts.update = 1;
+ 	opts.verbose_update = 1;
+ 	opts.merge = 1;
+@@ -101,7 +103,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 	clear_unpack_trees_porcelain(&opts);
+ 
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++	if (write_locked_index(repo->index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
  	return 0;
  }
+diff --git a/sequencer.c b/sequencer.c
+index 65d371c746..83c1f0e42b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -470,8 +470,8 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
  
--void wt_status_get_state(struct wt_status_state *state,
-+void wt_status_get_state(struct repository *repo,
-+			 struct wt_status_state *state,
- 			 int get_detached_from)
- {
- 	struct stat st;
- 	struct object_id oid;
+-	read_cache();
+-	if (checkout_fast_forward(from, to, 1))
++	read_index(&the_index);
++	if (checkout_fast_forward(the_repository, from, to, 1))
+ 		return -1; /* the callee should have complained already */
  
--	if (!stat(git_path_merge_head(the_repository), &st)) {
-+	if (!stat(git_path_merge_head(repo), &st)) {
- 		state->merge_in_progress = 1;
- 	} else if (wt_status_check_rebase(NULL, state)) {
- 		;		/* all set */
--	} else if (!stat(git_path_cherry_pick_head(the_repository), &st) &&
-+	} else if (!stat(git_path_cherry_pick_head(repo), &st) &&
- 			!get_oid("CHERRY_PICK_HEAD", &oid)) {
- 		state->cherry_pick_in_progress = 1;
- 		oidcpy(&state->cherry_pick_head_oid, &oid);
- 	}
- 	wt_status_check_bisect(NULL, state);
--	if (!stat(git_path_revert_head(the_repository), &st) &&
-+	if (!stat(git_path_revert_head(repo), &st) &&
- 	    !get_oid("REVERT_HEAD", &oid)) {
- 		state->revert_in_progress = 1;
- 		oidcpy(&state->revert_head_oid, &oid);
- 	}
+ 	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+@@ -1798,7 +1798,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
  
- 	if (get_detached_from)
--		wt_status_get_detached_from(state);
-+		wt_status_get_detached_from(repo, state);
- }
- 
- static void wt_longstatus_print_state(struct wt_status *s,
-@@ -1602,7 +1604,7 @@ static void wt_longstatus_print(struct wt_status *s)
- 	struct wt_status_state state;
- 
- 	memset(&state, 0, sizeof(state));
--	wt_status_get_state(&state,
-+	wt_status_get_state(s->repo, &state,
- 			    s->branch && !strcmp(s->branch, "HEAD"));
- 
- 	if (s->branch) {
-@@ -1947,7 +1949,7 @@ static void wt_porcelain_v2_print_tracking(struct wt_status *s)
- 	char eol = s->null_termination ? '\0' : '\n';
- 
- 	memset(&state, 0, sizeof(state));
--	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
-+	wt_status_get_state(s->repo, &state, s->branch && !strcmp(s->branch, "HEAD"));
- 
- 	fprintf(s->fp, "# branch.oid %s%c",
- 			(s->is_initial ? "(initial)" : sha1_to_hex(s->sha1_commit)),
-@@ -2355,7 +2357,7 @@ int has_uncommitted_changes(struct repository *repo,
- 		 * We have no head (or it's corrupt); use the empty tree,
- 		 * which will complain if the index is non-empty.
- 		 */
--		struct tree *tree = lookup_tree(the_repository, the_hash_algo->empty_tree);
-+		struct tree *tree = lookup_tree(repo, the_hash_algo->empty_tree);
- 		add_pending_object(&rev_info, &tree->object, "");
- 	}
- 
-diff --git a/wt-status.h b/wt-status.h
-index 253c5ce7ec..9e8337e9db 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -132,7 +132,9 @@ void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct wt_status *s, struct repository *repo);
- void wt_status_print(struct wt_status *s);
- void wt_status_collect(struct wt_status *s);
--void wt_status_get_state(struct wt_status_state *state, int get_detached_from);
-+void wt_status_get_state(struct repository *repo,
-+			 struct wt_status_state *state,
-+			 int get_detached_from);
- int wt_status_check_rebase(const struct worktree *wt,
- 			   struct wt_status_state *state);
- int wt_status_check_bisect(const struct worktree *wt,
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res |= try_merge_command(opts->strategy,
++		res |= try_merge_command(the_repository, opts->strategy,
+ 					 opts->xopts_nr, (const char **)opts->xopts,
+ 					common, oid_to_hex(&head), remotes);
+ 		free_commit_list(common);
 -- 
 2.19.0.rc0.337.ge906d732e7
 
