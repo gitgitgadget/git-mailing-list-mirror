@@ -2,110 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 644C41F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 22:29:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E06981F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 22:34:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727178AbeH1CSM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 22:18:12 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:34765 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727050AbeH1CSM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 22:18:12 -0400
-Received: by mail-wm0-f66.google.com with SMTP id m199-v6so373166wma.1
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 15:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=mcvYMqdXvcUk/TgMkAsQBzRWDHF50xb/b8MgYKdv1Q4=;
-        b=fBYTXieo90zE2VBcGzlDnieJKpuYE7scoeqXur1VTGxOJ+KKGWVhTj6SrDqqScdnbu
-         9/Fuc8Rp4OgSJJyJhXFxNMswIz7PI4wO/aCNN5/Vk6yssa9WyJQB4sKJPtbLOWPeF1HF
-         3xdBJS0f6f/hx6XHlHAHDuEf2XN/jqe4MasSzVIBihw/Sz9vYBzaCV+MLCVpk4NtWiWs
-         Yl1CIVX04UvHLLZ2fnuofNgve1yT1X1cFk56koQ65f1Fx5RQd8FqyNAuBxScAwSZ4+wD
-         Z0qml0l1RUcUu3tx3PELtEg5zCmkBkyT2/DdjrthLh66uoPASQ3tYwl35iepwY39gy+n
-         PRjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=mcvYMqdXvcUk/TgMkAsQBzRWDHF50xb/b8MgYKdv1Q4=;
-        b=lZ8kG5UJnzptWNloK2B5nJYy2uqLq/ov7gPgtwrtrWmCtt6zwbSiQE552LxQvbdjzx
-         b8Ve5LE7s8uHkE89nLT491B+xSAB6cNVeaLgK1wNVyHlY1/spxdxLdGkcOf5OdZVfcsJ
-         JSKwVOTFXZxtm8SZpIQLq3QX3VSkHWGV5NSk1333PdQM+zi91saj+UVx+A49Jj0jj7xp
-         70P0aw2BzT+GF/jza+368lqoXd227CVWvGaGIY/22usGdDlIW3bheNcE3Cax48NVXR2C
-         O52XmnnEVjZmTus3plOCeY7ovF5Gu3OQ/EqkuSTU7DoFKzoQN/8SHmbv7oOpoR2k7Gff
-         BINA==
-X-Gm-Message-State: APzg51BsmfsXx+jNif64tjQLwSc0mhY46KbKwO4+M3Me0Yedmn9pUSCK
-        UxMrRNWkcxXCdHNCgrKiadg=
-X-Google-Smtp-Source: ANB0VdbUup4cblgasXRI1wGmNgcvSGVBadJpI9LIjqAGncooLmEk45H4mKeTcSEj9D6Yk5hNxr/kcA==
-X-Received: by 2002:a1c:f317:: with SMTP id q23-v6mr3411111wmq.132.1535408974532;
-        Mon, 27 Aug 2018 15:29:34 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id n17-v6sm251341wmc.13.2018.08.27.15.29.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Aug 2018 15:29:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org,
-        Constantin =?utf-8?Q?Wei=C3=9Fer?= <i7c@posteo.de>
-Subject: Re: Would a config var for --force-with-lease be useful?
-References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
-        <xmqqin3vk3yv.fsf@gitster-ct.c.googlers.com>
-        <87o9dnegxi.fsf@evledraar.gmail.com>
-        <xmqqlg8rinbz.fsf@gitster-ct.c.googlers.com>
-        <87k1obee0f.fsf@evledraar.gmail.com>
-Date:   Mon, 27 Aug 2018 15:29:33 -0700
-In-Reply-To: <87k1obee0f.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Mon, 27 Aug 2018 22:44:00 +0200")
-Message-ID: <xmqqd0u3igtu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727062AbeH1CXb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 22:23:31 -0400
+Received: from mout.gmx.net ([212.227.15.15]:59239 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726994AbeH1CXb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 22:23:31 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LkfdE-1fKFrb0cnE-00aYMp; Tue, 28
+ Aug 2018 00:34:43 +0200
+Date:   Tue, 28 Aug 2018 00:34:40 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Hilco Wijbenga <hilco.wijbenga@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@talktalk.net>,
+        Akinori MUSHA <knu@idaemons.org>
+Subject: Re: [PATCH v2 0/4] fix "rebase -i --root" corrupting root commit
+In-Reply-To: <CAPig+cT0ATgRMY-mhttViaburFW37G352BX=mj-Cnr2_wZruaQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808280033130.73@tvgsbejvaqbjf.bet>
+References: <20180731073331.40007-1-sunshine@sunshineco.com> <CAE1pOi3oeBEyD8skwfLAd7JviGYOUZaZwj3u9pznM4eLAR7fDQ@mail.gmail.com> <CAPig+cRe1R1YWpLaXVtTmwhaJiz2dONU83qtn_+XhaRevjn2fQ@mail.gmail.com> <CAE1pOi3+FW8itk4AHhG+r02TGyGTeoZpq7S6HKXkQtOVqigWGQ@mail.gmail.com>
+ <CAPig+cT0ATgRMY-mhttViaburFW37G352BX=mj-Cnr2_wZruaQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:dC+zq3UmoZxBnw7RDQG+Ha6W+dUOEOEh1QT7MDoOoRutAsC67SI
+ pZanFMF8RFYzxRHNATvTeVIHcfwkCyatoOJFEowdC+BsdGRqiu6GzdM4G5eF2kwVyBFflSP
+ pn3GKaij39SeKs7rQXKvUSRiv7wxaBrFfuIwGcg1qCSOELO7qXCR8T0J0LIlmTW7Xp6NFnx
+ wqx5fDBm7pjlW8Mvdn92A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ziUEprsiIZo=:1U7rK28WaGNxrxa74fPSTM
+ khIhOUBxmlZd7i61PDPM1UiQqEjQBYgCbjTVfDZLLy/tV20YAU+05n5F+lB8ZDXabmIuon4Oj
+ 1oKWKubiwjkNAM+wR3VuMRDToKsf5Q1Pdzwxg8ciXztXwsbXnXWIbdAzin3FWpAUcsURWjma/
+ LEQYsR84vYREYyHmSspR8VboHD+WLoT66UIaEbUXBjGS/YyMIi0bNKxdbR9uLhx0b2mGZphNU
+ Xgvw5lMPHh7NKMOg2y13v/HOSMkFHUsQkohJnm/PBPUGI9nsCqwOUJrclSpRQMYblMW6SBQWg
+ iKqA1cJEVYU7JqxLuGHTcFCX60LN1CCrDtpqWYPH7+RUJKXX9MWxrrZ9CzGlXCMR+/EvMMavu
+ NtOlLPqJLggSkpnx+qSucpdcyITLPkiKMcuGltsbkk0XbgmzxSD4Nnb06oYohYJ+yb907Djvg
+ aCm+IaCHDdEA3V8Y3GSCTK1oj5PgdA2nKXfpIAOfHJuc8NONEnELE9ku6hnx43A+eoQo9aHYY
+ 1uU/zD+ZOWz0kTWqPU83SST6UXUUBCkTpz9b+49qKHZ1OAHc5citSpDl3ld8mR/aqOrxWJtc+
+ 3AVjEYmVkGlR3Pz2gf38cT0X8BuhY7s9Bh1ejxs6GVWIvU57+Z2kNCbzW8Xv3Sf/gmY8UKbqd
+ +6D6GfbC9h3XSF3SOtynMG++5JhQ/NhEoDL4bty/bpZ1Pr1KTTV6d6d0QapGMyhVeJ4ardec2
+ TJPOs6deBEyInrl+pwxpLrCiR0mIKYli1whzsi1Xnr83Jr+vbI9CbtVW3DO5N5BSf6Aelrk+b
+ AAkKAGE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi,
 
-> I.e. making plain --force-with-lease harder to use by hiding it behind a
-> config option gives the user fewer options than with --force to recover.
+On Mon, 6 Aug 2018, Eric Sunshine wrote:
 
-I agree with that.  But I would consider it a good thing, if done
-properly (i.e. suggest --force-with-lease that is not a lzzy form).
+> On Mon, Aug 6, 2018 at 9:20 PM Hilco Wijbenga <hilco.wijbenga@gmail.com> wrote:
+> > But your suggestion did make me think about what behaviour I would
+> > like to see, exactly. I like that Git removes commits that no longer
+> > serve any purpose (because I've included their changes in earlier
+> > commits). So I would not want to keep commits that become empty during
+> > the rebase. What I would like to see is that commits that _start out_
+> > as empty, are retained. Would such behaviour make sense? Or would that
+> > be considered surprising behaviour?
+> 
+> I, personally, have no opinion since I don't use empty commits.
+> Perhaps someone more experienced and more long-sighted will chime in.
 
-> So I think we should still recommend the longer and even safer variants
-> of --force-with-lease, but being guaranteed to have the SHA-1 you just
-> clobbered locally is *better*, and allows us to e.g. do this:
->
->     $ git push --force-with-lease
->     hint: You just clobbered <X> on <remote with <Y>. If you regret
->     hint: this you can (until the object gets pruned) do:
->     hint:     git push <remote> --force-with-lease=<refname>:<Y>
+I got aware about two weeks ago that my mail provider fails to deliver all
+the mails that are addressed to me. Two days ago, I managed to get this
+mail (and the thread) via public-inbox (thanks, Eric!!!). Hence my late
+reply.
 
-Until the object gets pruned, and until somebody else pushes there
-to make the damage bigger, you can recover from a mistake with that
-information.  It probably is a bug that the lazy force-with-lease
-does not report what the remote tip you just overwrote was, and this
-would help great deal.  It would be a good place to start.
+Hilco: if you provide a patch to extend the test suite to demonstrate the
+breakage (via `test_expect_failure`), I promise to try my best to provide
+a fix on top.
 
-One thing that I am still not clear how this line of thought truly
-would help users is how to help them decide their answer to "If you
-regret this".  An unthinking naïve user would say "of course I meant
-it when I gave the option---why do you think I regret it?" without a
-bit more hint, namely, "<Y> was taken from the remote tracking
-branch, are you sure that is still what the newly prepared contents
-you built to replace?  Did somebody clobber it while you are not
-watching?"
-
-These three lines however will be felt too loud by those who would
-most benefit from them (i.e. those who do not know why they need
-protection); I do not think advise.* to allow them to be squelched
-would be appropriate.
+Ciao,
+Johannes
