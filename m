@@ -2,135 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4667E1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 10:37:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DC151F42F
+	for <e@80x24.org>; Mon, 27 Aug 2018 12:15:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726887AbeH0OXx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 10:23:53 -0400
-Received: from mail180-29.suw31.mandrillapp.com ([198.2.180.29]:50821 "EHLO
-        mail180-29.suw31.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726825AbeH0OXx (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 27 Aug 2018 10:23:53 -0400
-X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Aug 2018 10:23:53 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
- h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
- bh=NUTj37jtAB2KFb05DuMjcXBoYr2yW2gTFP1qD7jTqak=;
- b=fLZnMzv42Vn6ZMWrmZOF6Pr/UoKapSttqGuxbLNK7C7Dk0NPjjj/bIcaDbzsjCREpRAEqomiuJ4Q
-   eEHLr2Wo2Ux4S6fC1fHS5VGnKzrbu0fzKW2n8A3ThpsUDTp8qVfnpxy5KjQxOFyRMoIxb6JyrYpT
-   qOhvgpoA05u/UfXN9+o=
-Received: from pmta03.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail180-29.suw31.mandrillapp.com id hgfa7m22sc05 for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:22:46 +0000 (envelope-from <bounce-md_31050260.5b83d0f6.v1-9d1ba2aac1024befbda2539cb29b2cd8@mandrillapp.com>)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
- i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1535365366; h=From : 
- Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
- MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
- Subject : Date : X-Mandrill-User : List-Unsubscribe; 
- bh=NUTj37jtAB2KFb05DuMjcXBoYr2yW2gTFP1qD7jTqak=; 
- b=Bv1kIPGHP6DN6sU5VJ9GohuJyI4wcOgL4NzJBazMKN7OP5yXVkcXM6wobNiP39bqrjvHER
- wkzuScoIe4gCga4vcH1J0B0pbHgzKhOyBYtmI9CQP4zQm6hcwxSbRDfpVCjHcsYbNh1y8wvL
- YM7CjLAwNJVuhbAuSLZ+YI/6HM/Pg=
-From:   Kirill Smelkov <kirr@nexedi.com>
-Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can use bitmap' test
-Received: from [87.98.221.171] by mandrillapp.com id 9d1ba2aac1024befbda2539cb29b2cd8; Mon, 27 Aug 2018 10:22:46 +0000
-To:     =?utf-8?Q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>
-Message-Id: <20180827102238.GA26738@deco.navytux.spb.ru>
-References: <20180814114721.25577-1-szeder.dev@gmail.com>
-In-Reply-To: <20180814114721.25577-1-szeder.dev@gmail.com>
-X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
-X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.9d1ba2aac1024befbda2539cb29b2cd8
-X-Mandrill-User: md_31050260
-Date:   Mon, 27 Aug 2018 10:22:46 +0000
+        id S1726872AbeH0QCO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 12:02:14 -0400
+Received: from mout.gmx.net ([212.227.17.20]:57795 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726374AbeH0QCO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 12:02:14 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M1zFf-1fdp2c323X-00u12u; Mon, 27
+ Aug 2018 14:15:41 +0200
+Date:   Mon, 27 Aug 2018 14:15:40 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Pratik Karki <predatoramigo@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, sbeller@google.com,
+        alban.gruin@gmail.com
+Subject: Re: [PATCH 03/11] builtin rebase: handle the pre-rebase hook (and
+ add --no-verify)
+In-Reply-To: <xmqqwot0fydp.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808271412140.73@tvgsbejvaqbjf.bet>
+References: <20180808134830.19949-1-predatoramigo@gmail.com> <20180808134830.19949-4-predatoramigo@gmail.com> <xmqqwot0fydp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:8DcEv27Bms0G72oex0Sz7BYB8ESDwZ/410d2mTQj0DUyMt4IpdJ
+ B3v/blnDkH7Wo4IErt+d+Cm/rx3JRr/FERPLB+TSkG0Lnnif5wA6tiksnxx8dB81iOiCK2U
+ bopqVIpJRsB+uWQoQza12Uqq/Y5f4rbh915zIStCUmuEY/jvmlhq6gegSDzJHiYiLBH5TRZ
+ ++48r7SUHU9B2dRI0JuFQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:av5rW9ikSbk=:rFXjqE7fYZLsZ2aipM3R+C
+ 4L8VtqooZIQvv3gqo+aJJLryqlZUQvXWfvsBhyle+Hap7cLxUYmcoil3T9hNO9Y0sqc4mnVxU
+ /HSmEh9a3ruk3ugy2bV8uZsLJUT39V/+5BW8yAjnw0CIlAulyeE6vHkSEmfZaBYrP7jzbbVoj
+ L/G+9c6K6U09LdQDCLtDkYovv2PdZIlSWOHxe5T4iqVQyPcetPTy3gZ29EpPMfz0EJTXn4uR7
+ ND1cfalxUTNJL4xJQlANScg2y/SzJqJlWdNR1oZcQd+v6lw+gzQ3T9zH+8NTfXB9pIURwON54
+ BIho6W68jTGzkSZgBs4WG9UKEJrQfH0tpfbcwCCnDNLGbliZXLW7RSubg+OsmNOIGS5Yp0OPq
+ R05kRHD8iSv3wyTHEIm1YqBbVETiddN1NbOH/DBATsdHardN06H39iF9eXD1lRoItf0BKsEIV
+ RNXfrKLHfk6hp34WvxdPTXi8f1fx4GPzTTfHwtvc9EPAnRa5ioIXize6ZIy+hMt47W4SauZn2
+ N9XNQONc8DcTQzbw741vGIOac1D89Vi2L0rv9pQpIHr2U+weDM0gMY4QPNBe8oguNBBI1QCIz
+ H7sfv2FxFA1UGjiEehKesdkqLDDXw1unMD7idV8zTTCGcvQDiFDuVnuLow8+r03WwY/yIUpIR
+ IBd/KUQYWw+WJ2f4lDONWharLdy58jjjw5HE76tNZoFiffSNda8ySlu4f7K5TP1WOcdUl70SJ
+ pohB3JcQPc9NVRf/PnxeFW4x6no6Vnsw7kTowp1SvYT3zjXgNdZvL7aGgBkMrxJalWjkMBfRX
+ bZTQdSH
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 14, 2018 at 01:47:21PM +0200, SZEDER G=C3=A1bor wrote:
-> The test 'pack-objects to file can use bitmap' added in 645c432d61
-> (pack-objects: use reachability bitmap index when generating
-> non-stdout pack, 2016-09-10) is silently buggy and doesn't check what
-> it's supposed to.
-> 
-> In 't5310-pack-bitmaps.sh', the 'list_packed_objects' helper function
-> does what its name implies by running:
-> 
->   git show-index <"$1" | cut -d' ' -f2
-> 
-> The test in question invokes this function like this:
-> 
->   list_packed_objects <packa-$packasha1.idx >packa.objects &&
->   list_packed_objects <packb-$packbsha1.idx >packb.objects &&
->   test_cmp packa.objects packb.objects
-> 
-> Note how these two callsites don't specify the name of the pack index
-> file as the function's parameter, but redirect the function's standard
-> input from it.  This triggers an error message from the shell, as it
-> has no filename to redirect from in the function, but this error is
-> ignored, because it happens upstream of a pipe.  Consequently, both
-> invocations produce empty 'pack{a,b}.objects' files, and the
-> subsequent 'test_cmp' happily finds those two empty files identical.
-> 
-> Fix these two 'list_packed_objects' invocations by specifying the pack
-> index files as parameters.  Furthermore, eliminate the pipe in that
-> function by replacing it with an &&-chained pair of commands using an
-> intermediate file, so a failure of 'git show-index' or the shell
-> redirection will fail the test.
-> 
-> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> ---
->  t/t5310-pack-bitmaps.sh | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-> index 6ee4d3f2d9..557bd0d0c0 100755
-> --- a/t/t5310-pack-bitmaps.sh
-> +++ b/t/t5310-pack-bitmaps.sh
-> @@ -9,7 +9,8 @@ objpath () {
->  
->  # show objects present in pack ($1 should be associated *.idx)
->  list_packed_objects () {
-> -=09git show-index <"$1" | cut -d' ' -f2
-> +=09git show-index <"$1" >object-list &&
-> +=09cut -d' ' -f2 object-list
->  }
->  
->  # has_any pattern-file content-file
-> @@ -204,8 +205,8 @@ test_expect_success 'pack-objects to file can use bit=
-map' '
->  =09# verify equivalent packs are generated with/without using bitmap ind=
-ex
->  =09packasha1=3D$(git pack-objects --no-use-bitmap-index --all packa </de=
-v/null) &&
->  =09packbsha1=3D$(git pack-objects --use-bitmap-index --all packb </dev/n=
-ull) &&
-> -=09list_packed_objects <packa-$packasha1.idx >packa.objects &&
-> -=09list_packed_objects <packb-$packbsha1.idx >packb.objects &&
-> +=09list_packed_objects packa-$packasha1.idx >packa.objects &&
-> +=09list_packed_objects packb-$packbsha1.idx >packb.objects &&
->  =09test_cmp packa.objects packb.objects
->  '
+Hi Junio,
 
-Thanks for catching and correcting this.
+On Wed, 8 Aug 2018, Junio C Hamano wrote:
 
-A minor comment from outside observer: running tests under something
-like
+> Pratik Karki <predatoramigo@gmail.com> writes:
+> 
+> > This commit converts the equivalent part of the shell script
+> > `git-legacy-rebase.sh` to run the pre-rebase hook (unless disabled), and
+> > to interrupt the rebase with error if the hook fails.
+> >
+> > Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
+> > ---
+> 
+> Introduction of upstream_arg in this step looked a bit
+> surprising, but the hook invocation is the only thing that uses it,
+> so it is understandable.
 
-=09-e and -o pipefail
+Yep, that's literally all that `upstream_arg` is used for:
 
-would automatically catch the mistake in the first place. Maybe `-o
-pipefail` is bashism (I had not checked), but `git grep " | " t/` shows
-there are a lot of pipelines being used, and thus similar errors might be
-silently resting there. Something like -o pipefail would catch all such
-problems automatically.
+$ git grep upstream_arg v2.19.0-rc0
+v2.19.0-rc0:git-rebase.sh:      upstream_arg="$upstream_name"
+v2.19.0-rc0:git-rebase.sh:      upstream_arg=--root
+v2.19.0-rc0:git-rebase.sh:run_pre_rebase_hook "$upstream_arg" "$@"
 
-Kirill
+> "rebase: handle the re-rebase hook and --no-verify" would have been
+> sufficient, without "add" or parentheses.
 
+Fixed.
+
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 38c496dd10..b79f9b0a9f 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -317,6 +319,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >  		OPT_STRING(0, "onto", &options.onto_name,
+> >  			   N_("revision"),
+> >  			   N_("rebase onto given branch instead of upstream")),
+> > +		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+> > +			 N_("allow pre-rebase hook to run")),
+> 
+> Do we need to catch "--no-no-verify" ourselves with NONEG bit, or is
+> this sufficient to tell parse_options() machinery to take care of
+> it?
+
+I just issued
+
+	$ ./git rebase --verify --no-no-verify --xyz
+
+and it showed
+
+	error: unknown option `xyz'
+	[... usage ...]
+
+I vaguely remembered that the parse_options() machinery special-cases
+"no-" prefixes, and my test seems to confirm it.
+
+Holler if you want a more in-depth analysis.
+
+Ciao,
+Dscho
