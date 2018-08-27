@@ -2,129 +2,223 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E8121F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 03:15:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 152BA1F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 07:37:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726776AbeH0HAV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 03:00:21 -0400
-Received: from mail-oi0-f52.google.com ([209.85.218.52]:39696 "EHLO
-        mail-oi0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726731AbeH0HAV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 03:00:21 -0400
-Received: by mail-oi0-f52.google.com with SMTP id c190-v6so24822395oig.6
-        for <git@vger.kernel.org>; Sun, 26 Aug 2018 20:15:39 -0700 (PDT)
+        id S1727144AbeH0LWl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 07:22:41 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41158 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726988AbeH0LWl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 07:22:41 -0400
+Received: by mail-ed1-f67.google.com with SMTP id f38-v6so9741271edd.8
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 00:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=endlessm-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=XEnTzPG/xSU0rs5VVUHZoSTMUEHlyzQARla9H2iEGys=;
-        b=gk7ylr8Y+LlatC+3Y8eDhTcKTNQd1ymKhjIZTGc5eBuwWsX7wDV0Mc+8EbooiyUwN8
-         8vN8ryw43sdvOMd2wrjy0+SQBx64sIb1lfzlfp4O2uTix6fgqHhH4vHxQAWO8+XLkUJJ
-         PYF2UBRcaTizzwsRx01TLhFHI4sLj9K7LIuYD2TvOBwVk/Clrup6Aih0MH1qS5H0gieo
-         /hqFS2p62X7G97ANrZqBOQ0Ve+7vIR4Oc5yjayuyJBAyzaKy/V76mn/MjQW3fEEA2e+n
-         SDfdg7JJ4j6K6z48hNBJkSGn0CeYHrwBcPm245DzcQTMYgUiR4hX7mZXFk0dBRSynivB
-         cOhA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=o0D1xOdqatO3irrQU9eKVVSveuTdv7yCBOHzYOWFvxo=;
+        b=vbWmjl+BtTuFThLe8yJbzIS2SZ7IW9OK8saEjp7Yxr8R0wCI/I5aXoSkK7gr4gwkr4
+         zVwRM0PNxQdRpECKyqrfr3pCvD0OU23aUYFYOjYejGmyP4wK2vhn03a7WtgPPrI77HL4
+         7MDklgwIprOkXiTIgwpbQ7Kp0qPuOYehTqeHYXAt2eZp4EmM84EuAvl959lyWXARx6yj
+         iOR7/UVk/AX5PrFWS5cKIY98yVj666kwMh+65D7hgYEk84GtfXCZtyiU6IGYPAJbH4+9
+         JR4WWhjkZ75gccfq2xep4/BM5AQg1U/l9HjBIIPNZEhJ4vsa2HnQvoZ3suQTJlzvNfL7
+         KUEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=XEnTzPG/xSU0rs5VVUHZoSTMUEHlyzQARla9H2iEGys=;
-        b=sMaVAjFU8c3D8T6w37i32qojxHFRPlDijlIN9olD0goC+BV9zWhQ8StARXAW9uHA/G
-         UXMAiunqX3KYLkz/zp/JVNhir3nNXe+T4712ZRYX/CJm7CqjAuvZ7wA88zk2F48V8643
-         PY/aUxvT/6pUMr04jb5WoGZ6EFwH12w93caSw4kVUu2NnJDikaDKQ+1fLDN5L3i8Jd3G
-         cQ+TLKWWlPkyYJDcXQulQqQ6hIeVzzaiVytz3aG2giyZdnLUqjd8pm2BrNJZP9HJPfhn
-         kQst4sSKsb1iWZBL4pKDRkx0QZJD75gpfBfJvRwkTLPcDKaQ8YqKOo9IzBYJukvHtE9G
-         6MGQ==
-X-Gm-Message-State: APzg51DMYjg9ModOL0HCORC5JA3V9Qw42EvcnFxNBpuERZmOr4rWT5KS
-        6pAqd0s2lQnMsm705PnxT/FNCx3Panp2esh9wtWtFpIb
-X-Google-Smtp-Source: ANB0VdakPLAw7ltauI9PxyYndEGJNHgDJ0AUUaOr9mG0qnFexiS3pd19ixj+gUC1Nz1ol63/qB98BlhZQk9E+s7QoLY=
-X-Received: by 2002:aca:e155:: with SMTP id y82-v6mr11269138oig.90.1535339738227;
- Sun, 26 Aug 2018 20:15:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=o0D1xOdqatO3irrQU9eKVVSveuTdv7yCBOHzYOWFvxo=;
+        b=t3D7mIJc0XdnhOhzLR8IE6eDDZlhwEKjdxjm6tYuU/5xyNcSLlb1Nd7F/aJqDv+r/8
+         xr1qI1xw94nhL6v1HKcoHOFnUaqi1w27L1KFab8gM6xJ5w4JeJzddbDxC0UmQJV/XTze
+         /iduH9V8XTQLIds/xeHKt5cdNHhWpQQId9Uz+Lulw/1C+ZFRXkbB7tYJYkE/FEUXER/o
+         izHKzq9I82cIYtVFoZ3R27Jlp9tt7BSersV6X1RLpv3M9g0oMOFyosT3+pm/GZsf5QKU
+         wZ8IXoGe1Rz+S/iqSrzoNAx841PSKIw/Qvjm153R7W1rUArzufOp40Ojp19U59GQHv2x
+         gfvQ==
+X-Gm-Message-State: APzg51DmesFCsypRFN1+b7SNpO2dMo6fjNAChc2H3xvMrX4DSTQkP9GI
+        dIy7Co5ruOH6SV67rZ6/oZ8=
+X-Google-Smtp-Source: ANB0VdZkk7o/sBxeZhRk50uEzw5Eirk52biedYR/rIuKU4QNXDtMOsl4P6IvdkKrw8mgs+DUSUsEgw==
+X-Received: by 2002:a50:9b5c:: with SMTP id a28-v6mr15592330edj.167.1535355432680;
+        Mon, 27 Aug 2018 00:37:12 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id k28-v6sm7012233ede.11.2018.08.27.00.37.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Aug 2018 00:37:11 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] fsck: use oidset for skiplist
+References: <c1ea6be5-57f7-68f1-0215-b4dceb07603a@web.de> <ae61a845-16fa-e2d6-935d-ce5eb1e33e5a@web.de>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <ae61a845-16fa-e2d6-935d-ce5eb1e33e5a@web.de>
+Date:   Mon, 27 Aug 2018 09:37:11 +0200
+Message-ID: <87r2ikdzvc.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a9d:4a21:0:0:0:0:0 with HTTP; Sun, 26 Aug 2018 20:15:37
- -0700 (PDT)
-From:   Daniel Drake <drake@endlessm.com>
-Date:   Mon, 27 Aug 2018 11:15:37 +0800
-Message-ID: <CAD8Lp45mBWtxsXBVgKuDmhP1rUzVkLJRTff=v1NKjMHZR5g87A@mail.gmail.com>
-Subject: Strange commit count shown by "git describe"
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Using git 2.17.1 in Ubuntu 18.04 I'm seeing some strange behaviour
-when using "git describe" with the repo at
-http://github.com/endlessm/linux
+On Sat, Aug 25 2018, René Scharfe wrote:
 
-First to rewind to a recent commit on the eos3.4 branch and observe:
-$ git reset --hard 282b7f72f11f5617947df941a247b0a286faac35
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 2fa65b7516..80ab570579 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1715,7 +1715,7 @@ doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
+>  will only cause git to warn.
+>
+>  fsck.skipList::
+> -	The path to a sorted list of object names (i.e. one SHA-1 per
+> +	The path to a list of object names (i.e. one SHA-1 per
+>  	line) that are known to be broken in a non-fatal way and should
+>  	be ignored. This feature is useful when an established project
+>  	should be accepted despite early commits containing errors that
 
-$ git describe
-Version_4.15.0-32.35-724859-g282b7f72f11f
-$ git describe --match 'Version_*'
-Version_4.15.0-32.35-185-g282b7f72f11f
+I was going to say that since this is a file format we're likely to
+support across versions we should make a note that "up to version
+so-and-so this needed to be sorted, but that's longer the case. So
+e.g. someone wouldn't test this on 2.20 (or read the online docs) and
+then deploy this for older clients..
 
-Why is the commit count vastly different when I specify a glob to
-match the same (annotated) tag? 724859 vs 185.
+But...
 
-185 is what I would have expected.. at least this shows 182 commits:
-$ git rev-list Version_4.15.0-32.35..HEAD
+> -	if (options->skiplist)
+> -		sorted = options->skiplist->sorted;
+> -	else {
+> -		sorted = 1;
+> -		options->skiplist = &skiplist;
+> -	}
+> -
+>  	fp = fopen(path, "r");
+>  	if (!fp)
+>  		die("Could not open skip list: %s", path);
+> @@ -202,19 +192,12 @@ static void init_skiplist(struct fsck_options *options, const char *path)
+>  		const char *p;
+>  		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+>  			die("Invalid SHA-1: %s", sb.buf);
+> -		oid_array_append(&skiplist, &oid);
+> -		if (sorted && skiplist.nr > 1 &&
+> -				oidcmp(&skiplist.oid[skiplist.nr - 2],
+> -				       &oid) > 0)
+> -			sorted = 0;
+> +		oidset_insert(&options->skiplist, &oid);
 
-Same again with --debug output:
+...reading this implementation, where we always called
+oid_array_append(), but then just kept track of whether the set was
+sorted...
 
-$ git describe --debug
-describe HEAD
-No exact match on refs or tags, searching to describe
- annotated     724859 Version_4.15.0-32.35
- annotated        117 Version_4.15.0-30.32
- annotated        124 Ubuntu-4.15.0-29.31
- annotated        142 Ubuntu-4.15.0-28.30
- annotated        146 Ubuntu-4.15.0-27.29
- annotated        149 Ubuntu-4.15.0-26.28
- annotated        152 Ubuntu-4.15.0-25.27
- annotated        167 Ubuntu-4.15.0-24.26
- annotated        919 Release_3.4.6
- annotated        926 Release_3.4.4
-traversed 728431 commits
-more than 10 tags found; listed 10 most recent
-gave up search at f30048d13c9ea1763af8c8e448d9e91de116c114
-Version_4.15.0-32.35-724859-g282b7f72f11f
+>  	}
+>  	if (ferror(fp))
+>  		die_errno("Could not read '%s'", path);
+>  	fclose(fp);
+>  	strbuf_release(&sb);
+> -
+> -	if (sorted)
+> -		skiplist.sorted = 1;
 
-$ git describe --debug --match 'Version_*'
-describe HEAD
-No exact match on refs or tags, searching to describe
-finished search at 2261ba7c40893b3659d8b48a77745bfe79e66526
- annotated        185 Version_4.15.0-32.35
- annotated        289 Version_4.15.0-30.32
- annotated       1100 Version_4.15.0-23.25
- annotated       1234 Version_4.15.0-22.24
- annotated       1274 Version_4.15.0-20.21
- annotated       1813 Version_4.15.0-15.16
- annotated       2949 Version_4.15.0-12.13
- annotated       3564 Version_4.15.0-10.11
- annotated       3607 Version_4.15.0-9.10
- annotated       3754 Version_4.15.0-5.6
-traversed 3757 commits
-Version_4.15.0-32.35-185-g282b7f72f11f
+...and here where we assigned to the .sorted member of the oid_array...
 
+>  static int object_on_skiplist(struct fsck_options *opts, struct object *obj)
+>  {
+> -	if (opts && opts->skiplist && obj)
+> -		return oid_array_lookup(opts->skiplist, &obj->oid) >= 0;
+> -	return 0;
+> +	return opts && obj && oidset_contains(&opts->skiplist, &obj->oid);
+>  }
 
-A similar problem occurs on the current HEAD
-(773a8ad2c3b6a54993bc88381b509621aac5be4f) of the eos3.4 branch.
-However in that case, even with the --match arg I get a strange commit
-count:
+....and here where we'd always do the lookup if the skiplist was
+initialized, *not* just if it's sorted, and how the sha1-array.c code
+has looked ever since cd94c6f91 ("fsck: git receive-pack: support
+excluding objects from fsck'ing", 2015-06-22) when this was first added:
 
-$ git describe --match 'Version_*'
-Version_4.15.0-33.36-724860-g773a8ad2c3b6
+    $ git show cd94c6f91:sha1-array.c|grep -A5 sha1_array_lookup
+    int sha1_array_lookup(struct sha1_array *array, const unsigned char *sha1)
+    {
+            if (!array->sorted)
+                    sha1_array_sort(array);
+            return sha1_pos(sha1, array->sha1, array->nr, sha1_access);
+    }
 
-but I would have expected to see a commit count of ~183:
-$ git rev-list Version_4.15.0-33.36..HEAD | wc -l
-183
+So I think it makes sense to make this series a three-part, where in the
+first part we only change these docs to say s/sorted //, and modify the
+tests I added in 65a836fa6b ("fsck: add stress tests for fsck.skipList",
+2018-07-27) to assert that an unsorted & sorted list of SHA-1s works
+just as well.
 
+Then following up with your [12]/2, where the internal implementation is
+changed, but we make it clear that it's *just* the internal
+implementation. I.e. from a UI perspective the list never had to be
+pre-sorted, we'd just spend some work sorting it on the first lookup if
+it wasn't sorted already.
 
-Daniel
+Now without some very careful reading it's not clear what "we don't need
+to worry about any sort order anymore" in the commit message means,
+i.e. what it really means is "for the purposes of the internal
+implementation, and as an opt-in user-side optimization ...".
+
+I.e. an alternate version of this whole patch series could also be:
+
+    diff --git a/Documentation/config.txt b/Documentation/config.txt
+    index 1c4236498..930807e43 100644
+    --- a/Documentation/config.txt
+    +++ b/Documentation/config.txt
+    @@ -1709,5 +1709,5 @@ will only cause git to warn.
+
+     fsck.skipList::
+    -       The path to a sorted list of object names (i.e. one SHA-1 per
+    +       The path to a list of object names (i.e. one SHA-1 per
+            line) that are known to be broken in a non-fatal way and should
+            be ignored. This feature is useful when an established project
+    diff --git a/fsck.c b/fsck.c
+    index a0cee0be5..9d4e938ad 100644
+    --- a/fsck.c
+    +++ b/fsck.c
+    @@ -184,14 +184,10 @@ static void init_skiplist(struct fsck_options *options, const char *path)
+     {
+            static struct oid_array skiplist = OID_ARRAY_INIT;
+    -       int sorted, fd;
+    +       int fd;
+            char buffer[GIT_MAX_HEXSZ + 1];
+            struct object_id oid;
+
+    -       if (options->skiplist)
+    -               sorted = options->skiplist->sorted;
+    -       else {
+    -               sorted = 1;
+    +       if (!options->skiplist)
+                    options->skiplist = &skiplist;
+    -       }
+
+            fd = open(path, O_RDONLY);
+    @@ -208,13 +204,6 @@ static void init_skiplist(struct fsck_options *options, const char *path)
+                            die("Invalid SHA-1: %s", buffer);
+                    oid_array_append(&skiplist, &oid);
+    -               if (sorted && skiplist.nr > 1 &&
+    -                               oidcmp(&skiplist.oid[skiplist.nr - 2],
+    -                                      &oid) > 0)
+    -                       sorted = 0;
+            }
+            close(fd);
+    -
+    -       if (sorted)
+    -               skiplist.sorted = 1;
+     }
+
+Now, I like yours much better. I'm just saying that currently the
+patch/commit message combo is confusing about *what* it's
+doing. I.e. let's not mix up the correction of docs that were always
+wrong with a non-change in the user facing implementation, and some
+internal optimization all in one patch.
