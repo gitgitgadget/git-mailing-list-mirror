@@ -6,118 +6,110 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E6D21F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 23:37:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF9C31F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 23:53:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727067AbeH1DZ6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 23:25:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:58128 "HELO cloud.peff.net"
+        id S1727130AbeH1DmQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 23:42:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:58138 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727021AbeH1DZ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 23:25:58 -0400
-Received: (qmail 10246 invoked by uid 109); 27 Aug 2018 23:37:08 -0000
+        id S1727067AbeH1DmQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 23:42:16 -0400
+Received: (qmail 11230 invoked by uid 109); 27 Aug 2018 23:53:24 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Aug 2018 23:37:08 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Aug 2018 23:53:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27213 invoked by uid 111); 27 Aug 2018 23:37:16 -0000
+Received: (qmail 27243 invoked by uid 111); 27 Aug 2018 23:53:31 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 27 Aug 2018 19:37:16 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 27 Aug 2018 19:53:31 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2018 19:37:06 -0400
-Date:   Mon, 27 Aug 2018 19:37:06 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2018 19:53:21 -0400
+Date:   Mon, 27 Aug 2018 19:53:21 -0400
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Gregory Oschwald <oschwald@gmail.com>, git@vger.kernel.org
-Subject: Re: $GIT_DIR is no longer set when pre-commit hooks are called
-Message-ID: <20180827233706.GA11663@sigill.intra.peff.net>
-References: <CAFKzd1qaMU=K6uc62xL0DUyZOWxY79Qakaog2dzBjiNrmq0ydg@mail.gmail.com>
- <20180826004150.GA31168@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1808271824270.73@tvgsbejvaqbjf.bet>
+To:     Stas Bekman <stas@stason.org>
+Cc:     git@vger.kernel.org
+Subject: Re: GIT_TRACE doesn't show content filter files it's operating on
+Message-ID: <20180827235321.GB11663@sigill.intra.peff.net>
+References: <3fdc0c24-bbee-e7b3-ec43-7e926cee71e1@stason.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1808271824270.73@tvgsbejvaqbjf.bet>
+In-Reply-To: <3fdc0c24-bbee-e7b3-ec43-7e926cee71e1@stason.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 06:25:26PM +0200, Johannes Schindelin wrote:
+On Mon, Aug 27, 2018 at 04:23:34PM -0700, Stas Bekman wrote:
 
-> On Sat, 25 Aug 2018, Jeff King wrote:
+> I'm debugging the workings of a configured git content filter
+> (nbstripout) and I'm trying to get GIT_TRACE to show me the files it's
+> operating on, but it doesn't. Consider:
 > 
-> > On Wed, Aug 22, 2018 at 04:16:00PM -0700, Gregory Oschwald wrote:
-> > 
-> > diff --git a/builtin/commit.c b/builtin/commit.c
-> > index 3bfeabc463..3670024a25 100644
-> > --- a/builtin/commit.c
-> > +++ b/builtin/commit.c
-> > @@ -1440,6 +1440,7 @@ int run_commit_hook(int editor_is_used, const char *index_file, const char *name
-> >  	int ret;
-> >  
-> >  	argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
-> > +	argv_array_pushf(&hook_env, "GIT_DIR=%s", get_git_dir());
+> $ GIT_TRACE=1 git pull origin master
+> [...] removed irrelevant sections of the output
+> 16:49:28.846707 run-command.c:640       trace: run_command: git merge
+> FETCH_HEAD
+> 16:49:28.849309 git.c:344               trace: built-in: git merge
+> FETCH_HEAD
+> Updating 1ea49ad..ae0ba93
+> 16:49:28.863291 run-command.c:640       trace: run_command: nbstripout
+> 16:49:28.864700 run-command.c:640       trace: run_command: nbstripout
+> 16:49:28.866060 run-command.c:640       trace: run_command: nbstripout
+> [...] many more of the same
 > 
-> We did something similar in sequencer.c, and it required setting
-> `GIT_WORK_TREE`, too, to avoid problems in worktrees. Do you need the same
-> here, too?
+> How can I get GIT_TRACE's run_command to show the arguments passed to
+> the filter? I looked at various other debug environment variables in
+> git's manual, but I don't see anything that would enable that level of
+> debug.
 
-Hmm, good point. Maybe. If we're just trying to restore the original
-behavior (i.e., fix a regression), then this would behave as the
-original.
+GIT_TRACE should always show the arguments. But unless you specify
+arguments in the clean/smudge filter config, then Git won't pass any.
+The stdin/stdout stream is all that matters.
 
-I'm not at all opposed to going beyond that and actually fixing more
-cases. But I am a little nervous of introducing a new regression, given
-the subtlety around some of our startup code.
+So e.g.:
 
-My current understanding is:
+  $ echo '* filter=foo' >.gitattributes
+  $ git config filter.foo.clean 'myfilter'
+  $ GIT_TRACE=1 git add .
+  19:42:16.516401 [pid=14112] git.c:415             trace: built-in: git add .
+  19:42:16.517454 [pid=14112] run-command.c:637     trace: run_command: myfilter
 
-  - If we're setting GIT_DIR, it's probably always save to set
-    GIT_WORK_TREE (or GIT_IMPLICIT_WORK_TREE=0 if there isn't a
-    worktree). I.e., there is no case I know that would be broken by
-    this.
+  $ git config filter.foo.clean 'myfilter --foo'
+  $ touch .gitattributes ;# make sure we actually read it again ;)
+  $ GIT_TRACE=1 git add .
+  19:42:58.122942 [pid=14156] git.c:415             trace: built-in: git add .
+  19:42:58.124023 [pid=14156] run-command.c:637     trace: run_command: 'myfilter --foo'
 
-  - Passing GIT_DIR to any sub-process operating in the context of our
-    repo (i.e., excluding cases where we're clearing local_repo_env) can
-    break a script that expects to do:
+You can use "%f" to pass the name of the file, like:
 
-      cd /another/repo
-      git ...
+  $ git config filter.foo.clean 'myfilter %f'
+  $ touch .gitattributes
+  $ GIT_TRACE=1 git add .
+  19:44:51.187177 [pid=14318] git.c:415             trace: built-in: git add .
+  19:44:51.188256 [pid=14318] run-command.c:637     trace: run_command: 'myfilter '\''.gitattributes'\'''
 
-    and operate in /another/repo. But such a script is already broken at
-    least in some cases, because running the initial command as:
+Of course that won't be helpful if your filter actually respects the
+argument. For a "clean" filter that might be OK (e.g., if it just tells
+your filter to read from the filesystem instead of stdin), but it's
+almost certainly not what you want for a "smudge" filter.
 
-      git --git-dir=/some/repo
+You can work around it with some shell hackery:
 
-    will mean that GIT_DIR is set. So a hook depending on that is
-    already broken, though it may be small consolation to somebody whose
-    hook happened to work most of the time, because they do not pass in
-    GIT_DIR.
+  git config filter.foo.clean 'f() { echo >&2 "cleaning $1"; myfilter ...; }; f %f'
 
-  - Any command that uses setup_work_tree() (which includes things with
-    NEED_WORK_TREE in git.c) would have always been setting GIT_DIR up
-    through v2.17.x. So any hooks they run would have seen it
-    consistently, and therefore are exempt from being regressed in the
-    case above.
+and then even without GIT_TRACE, you get:
 
-So I _think_ it would be safe to:
+  $ git add .
+  cleaning .gitattributes
 
-  1. Set GIT_DIR again anytime we call setup_work_tree(), because that's
-     what has always happened.
+Or if you really just want to trigger for GIT_TRACE, try just this:
 
-  2. Start setting GIT_WORK_TREE at the same time. This didn't happen
-     before, but it can't break anybody, and might help.
+  $ git config filter.foo.clean 'f() { myfilter; }; f %f'
+  19:52:52.874064 [pid=14719] git.c:415             trace: built-in: git add .
+  19:52:52.875115 [pid=14719] run-command.c:637     trace: run_command: 'f() { myfilter; }; f '\''.gitattributes'\'''
 
-That makes the rules for when GIT_DIR is set confusing, but at least it
-shouldn't regress. A more consistent rule of "hooks always see GIT_DIR"
-(or even "any sub-process always sees...") is easier to explain, but
-might break people in practice.
-
-I notice also that sequencer.c sets an absolute path, since 09d7b6c6fa
-(sequencer: pass absolute GIT_DIR to exec commands, 2017-10-31). That
-does seem friendlier, though I wonder if could break any scripts. I
-cannot think of a case, unless the intermediate paths were no accessible
-to the uid running the process (but then, how would Git have generated
-the absolute path in the first place?).
+There you get the name in the trace output, but the invoked command
+doesn't actually do anything with it.
 
 -Peff
