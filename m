@@ -2,76 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5C451F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 09:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4667E1F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 10:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727203AbeH0Nlx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 09:41:53 -0400
-Received: from mail-qt0-f178.google.com ([209.85.216.178]:45435 "EHLO
-        mail-qt0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726925AbeH0Nlx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 09:41:53 -0400
-Received: by mail-qt0-f178.google.com with SMTP id g44-v6so16539453qtb.12
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 02:55:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oVIsPeHjb+Wm690m5DtNRYP2Ogffczz8QVViBE1b9Vc=;
-        b=B5kpT0H4ZBUSm5x+/xYpWBaV80rYq6pMu0foi/y8WSW4LJILH5t5+B9/oDCMIgmD2B
-         22ZLLIrTbn+sRhVzxsZQOBDnyjEJ3z5JPHDLm9E4bW1iJ6psIUaA761ylTENWsABR3BI
-         p785tlNgbjqLtULoselMUETsk/k9hc70IprDtxy+CPgK5xVUvjN4leDtr37wJjKeQ9rM
-         7gJ20gRgL0h0vKHVxTrTee7c5Lgeb3zySUhVLtxuECXXc1kkbhJwfUxXxvAblX7YF1BK
-         ASnvdYJfwRxm3v/EXwix13N73NY2/NouZIQEPYZ8bmnpTOwZbVHf3H98yWbRSW2+oFk0
-         hBsA==
-X-Gm-Message-State: APzg51Dg/LLu7IlRhh8rG1hRde3P6WyZFAGIO/B+WHdLtlP9z9m51vZP
-        apB/grHp66lo1jNU7B5zmjJCjo22o0DMiMEyHIhE2w==
-X-Google-Smtp-Source: ANB0VdZgXQohtfCtaEipbgHpXpT8ChYv401NdwVWx0acson08UtgRlWCjy0Xheo6Wzu8Sti19GgbNwIHuXmW0EmcpL8=
-X-Received: by 2002:ac8:764c:: with SMTP id i12-v6mr12736332qtr.250.1535363754583;
- Mon, 27 Aug 2018 02:55:54 -0700 (PDT)
+        id S1726887AbeH0OXx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 10:23:53 -0400
+Received: from mail180-29.suw31.mandrillapp.com ([198.2.180.29]:50821 "EHLO
+        mail180-29.suw31.mandrillapp.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726825AbeH0OXx (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 27 Aug 2018 10:23:53 -0400
+X-Greylist: delayed 903 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Aug 2018 10:23:53 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=mandrill; d=nexedi.com;
+ h=From:Subject:To:Cc:Message-Id:References:In-Reply-To:Date:MIME-Version:Content-Type:Content-Transfer-Encoding; i=kirr@nexedi.com;
+ bh=NUTj37jtAB2KFb05DuMjcXBoYr2yW2gTFP1qD7jTqak=;
+ b=fLZnMzv42Vn6ZMWrmZOF6Pr/UoKapSttqGuxbLNK7C7Dk0NPjjj/bIcaDbzsjCREpRAEqomiuJ4Q
+   eEHLr2Wo2Ux4S6fC1fHS5VGnKzrbu0fzKW2n8A3ThpsUDTp8qVfnpxy5KjQxOFyRMoIxb6JyrYpT
+   qOhvgpoA05u/UfXN9+o=
+Received: from pmta03.mandrill.prod.suw01.rsglab.com (127.0.0.1) by mail180-29.suw31.mandrillapp.com id hgfa7m22sc05 for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:22:46 +0000 (envelope-from <bounce-md_31050260.5b83d0f6.v1-9d1ba2aac1024befbda2539cb29b2cd8@mandrillapp.com>)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com; 
+ i=@mandrillapp.com; q=dns/txt; s=mandrill; t=1535365366; h=From : 
+ Subject : To : Cc : Message-Id : References : In-Reply-To : Date : 
+ MIME-Version : Content-Type : Content-Transfer-Encoding : From : 
+ Subject : Date : X-Mandrill-User : List-Unsubscribe; 
+ bh=NUTj37jtAB2KFb05DuMjcXBoYr2yW2gTFP1qD7jTqak=; 
+ b=Bv1kIPGHP6DN6sU5VJ9GohuJyI4wcOgL4NzJBazMKN7OP5yXVkcXM6wobNiP39bqrjvHER
+ wkzuScoIe4gCga4vcH1J0B0pbHgzKhOyBYtmI9CQP4zQm6hcwxSbRDfpVCjHcsYbNh1y8wvL
+ YM7CjLAwNJVuhbAuSLZ+YI/6HM/Pg=
+From:   Kirill Smelkov <kirr@nexedi.com>
+Subject: Re: [PATCH] t5310-pack-bitmaps: fix bogus 'pack-objects to file can use bitmap' test
+Received: from [87.98.221.171] by mandrillapp.com id 9d1ba2aac1024befbda2539cb29b2cd8; Mon, 27 Aug 2018 10:22:46 +0000
+To:     =?utf-8?Q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
+Message-Id: <20180827102238.GA26738@deco.navytux.spb.ru>
+References: <20180814114721.25577-1-szeder.dev@gmail.com>
+In-Reply-To: <20180814114721.25577-1-szeder.dev@gmail.com>
+X-Report-Abuse: Please forward a copy of this message, including all headers, to abuse@mandrill.com
+X-Report-Abuse: You can also report abuse here: http://mandrillapp.com/contact/abuse?id=31050260.9d1ba2aac1024befbda2539cb29b2cd8
+X-Mandrill-User: md_31050260
+Date:   Mon, 27 Aug 2018 10:22:46 +0000
 MIME-Version: 1.0
-References: <20180821192321.GA720@sigill.intra.peff.net> <20180821193556.GA859@sigill.intra.peff.net>
- <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
- <20180821204341.GA24431@sigill.intra.peff.net> <CAPig+cTghgbBo5VfZN+VP2VM00nPkhUqm0dOUqO37arxraxBKw@mail.gmail.com>
- <CACsJy8BxxyRxqCj5ZoOmPaiwmFRKHU72yTxyC_eHXS+cEa94zw@mail.gmail.com>
- <CAPig+cQNkMEUj=6e=6czbkWeozJQ-Go09C6bZwVJUTpM3JJiiw@mail.gmail.com> <20180824232502.GA21265@sigill.intra.peff.net>
-In-Reply-To: <20180824232502.GA21265@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 27 Aug 2018 05:55:43 -0400
-Message-ID: <CAPig+cQMv=ByvmH=+V3hZ1NC-=eT+CShuM7g+Y4evD1nVFr4XQ@mail.gmail.com>
-Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention doc-diff
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 24, 2018 at 7:25 PM Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 24, 2018 at 06:55:24PM -0400, Eric Sunshine wrote:
-> > On Fri, Aug 24, 2018 at 10:47 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > > > I was thinking that "worktree add" could start respecting the --force
-> > > > option as an escape hatch.
-> > >
-> > > Sounds good. Eric are you going to implement this? Just checking so
-> > > that I can (hopefully) cross this off my backlog ;-)
-> >
-> > It wasn't something I was planning on working on (at least not
-> > immediately) [...]
-> > As for the actual implementation, I haven't yet looked at how much
-> > surgery will be needed to make 'add' respect --force.
->
-> Me either. I may take a look this weekend. [...]
+On Tue, Aug 14, 2018 at 01:47:21PM +0200, SZEDER G=C3=A1bor wrote:
+> The test 'pack-objects to file can use bitmap' added in 645c432d61
+> (pack-objects: use reachability bitmap index when generating
+> non-stdout pack, 2016-09-10) is silently buggy and doesn't check what
+> it's supposed to.
+> 
+> In 't5310-pack-bitmaps.sh', the 'list_packed_objects' helper function
+> does what its name implies by running:
+> 
+>   git show-index <"$1" | cut -d' ' -f2
+> 
+> The test in question invokes this function like this:
+> 
+>   list_packed_objects <packa-$packasha1.idx >packa.objects &&
+>   list_packed_objects <packb-$packbsha1.idx >packb.objects &&
+>   test_cmp packa.objects packb.objects
+> 
+> Note how these two callsites don't specify the name of the pack index
+> file as the function's parameter, but redirect the function's standard
+> input from it.  This triggers an error message from the shell, as it
+> has no filename to redirect from in the function, but this error is
+> ignored, because it happens upstream of a pipe.  Consequently, both
+> invocations produce empty 'pack{a,b}.objects' files, and the
+> subsequent 'test_cmp' happily finds those two empty files identical.
+> 
+> Fix these two 'list_packed_objects' invocations by specifying the pack
+> index files as parameters.  Furthermore, eliminate the pipe in that
+> function by replacing it with an &&-chained pair of commands using an
+> intermediate file, so a failure of 'git show-index' or the shell
+> redirection will fail the test.
+> 
+> Signed-off-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
+> ---
+>  t/t5310-pack-bitmaps.sh | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+> index 6ee4d3f2d9..557bd0d0c0 100755
+> --- a/t/t5310-pack-bitmaps.sh
+> +++ b/t/t5310-pack-bitmaps.sh
+> @@ -9,7 +9,8 @@ objpath () {
+>  
+>  # show objects present in pack ($1 should be associated *.idx)
+>  list_packed_objects () {
+> -=09git show-index <"$1" | cut -d' ' -f2
+> +=09git show-index <"$1" >object-list &&
+> +=09cut -d' ' -f2 object-list
+>  }
+>  
+>  # has_any pattern-file content-file
+> @@ -204,8 +205,8 @@ test_expect_success 'pack-objects to file can use bit=
+map' '
+>  =09# verify equivalent packs are generated with/without using bitmap ind=
+ex
+>  =09packasha1=3D$(git pack-objects --no-use-bitmap-index --all packa </de=
+v/null) &&
+>  =09packbsha1=3D$(git pack-objects --use-bitmap-index --all packb </dev/n=
+ull) &&
+> -=09list_packed_objects <packa-$packasha1.idx >packa.objects &&
+> -=09list_packed_objects <packb-$packbsha1.idx >packb.objects &&
+> +=09list_packed_objects packa-$packasha1.idx >packa.objects &&
+> +=09list_packed_objects packb-$packbsha1.idx >packb.objects &&
+>  =09test_cmp packa.objects packb.objects
+>  '
 
-Okay, I got an implementation up and running. It didn't require too
-much code, but neither was it a simple 1- or 2-liner.
+Thanks for catching and correcting this.
 
-I still need to update documentation, write tests, and compose the
-actual patch series (which will probably run to about 5 patches), so
-it's not quite ready to send out, but hopefully soon.
+A minor comment from outside observer: running tests under something
+like
+
+=09-e and -o pipefail
+
+would automatically catch the mistake in the first place. Maybe `-o
+pipefail` is bashism (I had not checked), but `git grep " | " t/` shows
+there are a lot of pipelines being used, and thus similar errors might be
+silently resting there. Something like -o pipefail would catch all such
+problems automatically.
+
+Kirill
+
