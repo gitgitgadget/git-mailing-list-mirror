@@ -2,77 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31B2F1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 21:24:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3C11F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 22:13:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727408AbeH1BMX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 21:12:23 -0400
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:36234 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727026AbeH1BMX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 21:12:23 -0400
-Received: by mail-wr1-f53.google.com with SMTP id m27-v6so348794wrf.3
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 14:23:59 -0700 (PDT)
+        id S1727062AbeH1CBe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 22:01:34 -0400
+Received: from mail-qk0-f201.google.com ([209.85.220.201]:55310 "EHLO
+        mail-qk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727023AbeH1CBe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 22:01:34 -0400
+Received: by mail-qk0-f201.google.com with SMTP id z18-v6so467429qki.22
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 15:13:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Sgm4XJgdSer4ZOsWk/KIW2FMZBTQndOrDroT3+qBsLY=;
-        b=vAW3uw+p2ftBd+qiA1EW9YiFZYltf2pkSf8pVSbRKA9JwpVi3rqpOtG+9d1tgz/WqR
-         6bQqRyMXi/DVfX2kln+NayOF4XrdGzkWoHsOmUrweE69vJzjAOigy5zrjI3GlT9x0e56
-         83qM/8gSLXMlUJ6Y3lzilbO3q7HoA6FJM1RwGL9J4YKmLbklP1Xc3RHngT8aOf/Pp4x4
-         /0WkGvElyA2CzDVKynyjyMgK741TXpgvA5Fpj2tVyEFEkJHlimGhxoGQUShYLRtghYzl
-         03sN/3gKlzVraumovfWDcyGr4xuMm6Kq2PBHeb7THEmJBNv8/U5W7yYnUM9KSvX/weGN
-         HNkQ==
+        d=google.com; s=20161025;
+        h=mime-version:date:message-id:subject:from:to:cc;
+        bh=ALNRdXb/WMqkisG4/Vm7AR5PD41ZRO1nJa1J7L6p53o=;
+        b=ASG48kD82pPxNOY6AHf9YJ0Yjw95oaKHaD8dljfJiH8BYtEkz3qCTmYnF28xMH8kgs
+         XbUu1Lxw+hBrnPZ/fW3QvrUQ/Xkc+wROAuX4oHVFJuK9rHOHu4ih3JZ6VytV86ZaRj0S
+         fEY5GEQQ50l8tw0zBx4uu/tpm3gwdtWw0/HFAXtIBklHQ6Q4mrTfDMC+r7c55IXFxU26
+         m7L9UJ/QM0AgXmq2AR+8Jernv43rK4fFHw6Fk1vC3yotO5wJa/TaT00nik5BZ9lFovPw
+         BLRhKDLoPZZ9vKgZHFWxb+fr5j98vhcS46qB+9JSRZr4lS8YO6uUPCJJOUREIwldChqF
+         H5BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Sgm4XJgdSer4ZOsWk/KIW2FMZBTQndOrDroT3+qBsLY=;
-        b=S7kUKEJy6wvHiXn6ol003SglEEm6KAZlpEclm96hagAm4779Xb7i4UBtceKuGXX5oQ
-         zf+PPZB2PjxbzNwWHRDWj5FyfhtQ8xEWcc+iZgIzfJcbPTDhCJj/24GdoXnnKixi9fDu
-         6NdDU1iw6mb3XLLqdcrVpsoE+YHhsKhHE7Pb7y35PLY7YJwYonna2qw6UmlTYH2kqvV5
-         4bOOYLclKD/C15aYjiiuyHpM2GFTA6byYUPuMqj13ZrkxM+UTmN7ZYFyS03l0SQcqigK
-         BEr/fRfZzrvjmYUJH38yoqneAlHk/tfxaU0AqbFljIceCG+pA+AQ3GErBt6eMoxnjYPg
-         /4MA==
-X-Gm-Message-State: APzg51AZe49v11b9RDCVZpOkEoqYOCIVRZUI9gFfPEuha9bMQ4rzYpyM
-        eCXhOaXof9TIqGbHS+9nV0E=
-X-Google-Smtp-Source: ANB0VdawMY0LuhGZW4HgjQN6W+j/gSsZQX1zICgJ9ddLJwckxdeb90hRnpEP+ZyNLbge2eKs7OullA==
-X-Received: by 2002:adf:b2f3:: with SMTP id g106-v6mr10365067wrd.53.1535405038358;
-        Mon, 27 Aug 2018 14:23:58 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a37-v6sm632653wrc.21.2018.08.27.14.23.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Aug 2018 14:23:57 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Use generation numbers for --topo-order
-References: <pull.25.git.gitgitgadget@gmail.com>
-Date:   Mon, 27 Aug 2018 14:23:57 -0700
-In-Reply-To: <pull.25.git.gitgitgadget@gmail.com> (Derrick Stolee via
-        GitGitGadget's message of "Mon, 27 Aug 2018 13:41:21 -0700 (PDT)")
-Message-ID: <xmqqh8jfijv6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc;
+        bh=ALNRdXb/WMqkisG4/Vm7AR5PD41ZRO1nJa1J7L6p53o=;
+        b=KFi4VHnZ86DsegYSjdBB2kFb83FtumqFh3gKFsXRUoRUzDpUlIM4ms5zDlyckZBUDC
+         nerQkeAcKzHreflQTpyHm3KZmBy2FJ9G8zhA/GSce7xcyCcGlklAwzr5FpmTBzzX+vhN
+         J69zHIc36dFYEmYVzVcsLBtexc3ZdgNKm2GV6Hw1jJycOCDB68GzbL9/ub0kN0Yj7Wr+
+         2iDmhm1h4r2Vlm43oFbdMX9Hx4UC9YoHteT9EXoUZhvtIQz+hZb7Mpxt49iwvmaR6jYS
+         HX6obbhwyU3+KX7nlYQeReuOkEGpiGRv6PMC3OFkVfLN6AlhLLDQSflmEnKm8cUnBHUD
+         1o9w==
+X-Gm-Message-State: APzg51ASYbSh4SznwLMgpwxXSgnr4U21BCkkxlMieNzszP5y2nOX5nnn
+        tmuN8/R5FIsmTCRXiSDqiD7pcVxgRL9dKlRGhuBm4F3f3vgmNIYf/S87jjm3SP3Qmpx4134ZyfF
+        qhWBq3bmSESHIA7WHPbZory/ycj2mRQuSm5Y6PIlSutm4WRo0cPMt2lOt1O7w
+X-Google-Smtp-Source: ANB0VdYBLdMZm0ozeYjMOJPfR1KMSK+VebaoV7YcsenrJK6BB+PVrmmjyhklcN3ozYJPkIIek9T26vwMZujw
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Received: by 2002:a37:9c90:: with SMTP id f138-v6mr415912qke.51.1535407981775;
+ Mon, 27 Aug 2018 15:13:01 -0700 (PDT)
+Date:   Mon, 27 Aug 2018 15:12:56 -0700
+Message-Id: <20180827221257.149257-1-sbeller@google.com>
+X-Mailer: git-send-email 2.18.0
+Subject: [PATCH 1/2] t2013: add test for missing but active submodule
+From:   Stefan Beller <sbeller@google.com>
+To:     git@vger.kernel.org
+Cc:     Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+When cloning a superproject with the option
+ --recurse-submodules='.', it is easy to find yourself wanting
+a submodule active, but not having that submodule present in
+the modules directory.
 
-> This patch series performs a decently-sized refactoring of the revision-walk
-> machinery. Well, "refactoring" is probably the wrong word, as I don't
-> actually remove the old code. Instead, when we see certain options in the
-> 'rev_info' struct, we redirect the commit-walk logic to a new set of methods
-> that distribute the workload differently. By using generation numbers in the
-> commit-graph, we can significantly improve 'git log --graph' commands (and
-> the underlying 'git rev-list --topo-order').
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t2013-checkout-submodule.sh | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-Finally ;-).
+diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+index 6ef15738e44..c69640fc341 100755
+--- a/t/t2013-checkout-submodule.sh
++++ b/t/t2013-checkout-submodule.sh
+@@ -63,6 +63,30 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
+ 	! test -s actual
+ '
+ 
++test_expect_success 'setup superproject with historic submodule' '
++	test_create_repo super1 &&
++	test_create_repo sub1 &&
++	test_commit -C sub1 sub_content &&
++	git -C super1 submodule add ../sub1 &&
++	git -C super1 commit -a -m "sub1 added" &&
++	test_commit -C super1 historic_state &&
++	git -C super1 rm sub1 &&
++	git -C super1 commit -a -m "deleted sub" &&
++	test_commit -C super1 new_state &&
++	test_path_is_missing super1/sub &&
++
++	# The important part is to ensure sub1 is not in there any more.
++	# There is another series in flight, that may remove an
++	# empty .gitmodules file entirely.
++	test_must_be_empty super1/.gitmodules
++'
++
++test_expect_failure 'checkout old state with deleted submodule' '
++	test_when_finished "rm -rf super1 sub1 super1_clone" &&
++	git clone --recurse-submodules super1 super1_clone &&
++	git -C super1_clone checkout --recurse-submodules historic_state
++'
++
+ KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
+ test_submodule_switch_recursing_with_args "checkout"
+ 
+-- 
+2.18.0
+
