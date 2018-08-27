@@ -2,98 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2409F1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 17:32:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A4701F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 17:32:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727058AbeH0VTn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 17:19:43 -0400
-Received: from mail-lf1-f54.google.com ([209.85.167.54]:38523 "EHLO
-        mail-lf1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726826AbeH0VTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 17:19:43 -0400
-Received: by mail-lf1-f54.google.com with SMTP id i7-v6so12617647lfh.5
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:32:11 -0700 (PDT)
+        id S1727065AbeH0VT6 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 17:19:58 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:43294 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726826AbeH0VT6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 17:19:58 -0400
+Received: by mail-ed1-f54.google.com with SMTP id z27-v6so8745781edb.10
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:32:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=CtNP7C6ZmxEfwmrtNC0dK883O0SypAqGZw5zljFW6C0=;
-        b=IQqhUXuYPj74194GqyMuLgr2odj7OzeTnpV7bM0UNqT/GIpgb/auFGt3WunDKHfkSD
-         TKGKu86wNbfMO8DzjzMzt789t007XhC3bLIgjRwD6/zBbVFGiT2ENndygSHHwGNdS3M4
-         OQUhUCx0NToZlg70+Az0JK0Evu8s+TJ4uJ7WasyUBsPFw0j9YWMLYp0HmB5p1PlqB/mI
-         sc+JDJlSvX9Zz3TZzRlQ79BrVub2MsJgzBwlW4XUEyew2QAJIG+2r1u97QiVcX2hc3kV
-         DSt4yguBl9zcaDt20M3bY7K8+fiDPASdJ84A/WwFlqsWo5EXorjW1yizaIUTzpWQK+p1
-         +5AQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=23k0GqK7sZuJRg5OEHBX4lX1Jb6rZnlcGzY/wg18564=;
+        b=GolY+7lR9sJpxinYBCzgQDt2IfF0wMIM8eIMTqNsLIjncILjZo9FKzLIJsCp1EtJKi
+         +noqtYuGpNci2lxGmqP+hrbNIK9cKFFpGOvm7TYLzr5WlKLdZK49TDo659Im07tav387
+         Bca8+ih39ce7yOc/z1M0njGwPJF4lIE2J/WRp5MYr03vlOiTS93sO5lu8Ffxvz3v/FL/
+         abFU73GSY32wuO8CGUkedZk93KgKaUkATB45DnyOowf7DuPaEFM2vadPzpSuzhxXkNpo
+         vzVNBaiA+AzS5kjdPCHD71vaLAvtXA8n7z4bQ0+cPJokZKaMf+hmNwNm9YqStbCXpuGj
+         RqSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=CtNP7C6ZmxEfwmrtNC0dK883O0SypAqGZw5zljFW6C0=;
-        b=Yc9Mg8elqLaaV3AvqpbJZ0ZJ1MnY1+e82jhLeJKAOAioS2hb6WIMKBBdSXEVMtrPcc
-         mZIssBItWyj8rM8Ibx20kQ3ZRHOFq97osJfTVTBO1ZZxhclgLOvFC1LBmGARtLGviV+0
-         XM7Bk8QPw4Xqq/lU6zNIInXYm545s+XaF58UgmoZo0RGjaPiMpEjsmaXMguKGXbZfnhq
-         glPww15Ak1VjRvlA4rSrpeQoHuk9gsjgU7ftUJGjTZn8H7AXbnNERsIc+g41MCVTPPPc
-         hwlbKCpnqNwFvCJlURbq8GkuxfriBuBeMZQ0e1WtFEta3F6gk2tJ+mOWqcGXo4xPpbKt
-         3x2g==
-X-Gm-Message-State: APzg51A4qIOwLvV43tGLX0Y4FYxnDmtYOX2R6hMKJV2I2CmXJ4btL+qM
-        WWK6/q5O/wuEhiPIDkYBfGPMU4iX9y/B2Q==
-X-Google-Smtp-Source: ANB0VdaJOPj0aKwIADMgk3X+2NBNTea+UyToH6FgSSgoYqT+X6oEvFn8M+9by2uu2lIe4MJgIyYJlg==
-X-Received: by 2002:a19:a201:: with SMTP id l1-v6mr8698188lfe.129.1535391130446;
-        Mon, 27 Aug 2018 10:32:10 -0700 (PDT)
-Received: from [192.168.221.164] ([185.79.217.61])
-        by smtp.gmail.com with ESMTPSA id m8-v6sm2980036lfh.25.2018.08.27.10.32.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Aug 2018 10:32:09 -0700 (PDT)
-Subject: Re: Automatic core.autocrlf?
-To:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com>
- <20180827153524.GA18025@tor.lan>
- <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-Message-ID: <94afe154-53e1-761a-4a66-4f77188036f7@gmail.com>
-Date:   Mon, 27 Aug 2018 19:32:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=23k0GqK7sZuJRg5OEHBX4lX1Jb6rZnlcGzY/wg18564=;
+        b=F39gp5HWYJMcoEUoCx/4iN52thE6q8eXkiTPzortkPLbAdiG0qc/2VWNYHoBtEHCLP
+         +nSL5J+CNGfyp6D4fOCOHtkx5JqmsA5ccqI66Mft9DBThlIY6WZzU937dg0PUKWG/rzs
+         PDeMsWXyCGJInHrlx4ZTugyEGssSCuxjP3dBSgOvPqiDWY2SFaXkUJEOgcIzwClXVZUH
+         yzt9HEch9qJGAp0DcOfLvQox+pno9oK21DGG6v5I65TjxBD1kb0NpzydcIEYzQIF6dLg
+         KA4Q+ermC5UWcuUrSouYAPgaLdgcnMTIuVEByY7HSHZH/Cxs8F53lbSX5gVbSYGg7B/n
+         NO2w==
+X-Gm-Message-State: APzg51C44N7u6PSI0MQfbuACxlhfFDGls/T5bAmL5xr4jz0fxJo3t7Le
+        OnCs3IAtcZTfej3gCogI70JyjZEQ8rStEMv4ue8v2g==
+X-Google-Smtp-Source: ANB0VdbrHF4PieqioIuyVwiyUlaeK/n1YcsgFgTOIa8tEoVPylFIiXcuN/DH+OTzcCHB8tZNYzhcbMDdkrZs20G63Sc=
+X-Received: by 2002:a50:b603:: with SMTP id b3-v6mr1016435ede.181.1535391145944;
+ Mon, 27 Aug 2018 10:32:25 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <20180826100314.5137-1-pclouds@gmail.com>
+In-Reply-To: <20180826100314.5137-1-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 27 Aug 2018 10:32:14 -0700
+Message-ID: <CAGZ79kas5TsCi0yN7mypH53A1iOveGNmQ03BkmspEH1-NfZgBg@mail.gmail.com>
+Subject: Re: [PATCH 00/21] Kill the_index part 4
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-08-27 17:52, Duy Nguyen wrote:
-> On Mon, Aug 27, 2018 at 5:37 PM Torsten Bögershausen <tboegi@web.de> wrote:
->>> In those cases, when it falls back to
->>> configuration for line ending management, I want it to be
->>> automatically configured based on the host platform.
->>
-> 
-> An alternative is supporting conditional config includes based on
-> platform or host name, but I don't know if there are more use cases
-> like this to justify it.
-> 
+On Sun, Aug 26, 2018 at 3:03 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+>
+> This continues the journey of getting rid of the_index at least in
+> library code. The focus of part 4 is diff code. Since 'struct
+> repository *' is passed around more (and even more in part 5), I take
+> this opportunity to remove some the_repository references too.
 
-How about just using unconditional includes?
+yay! Thank you for continuing on the_index!
 
-global.gitconfig (synced across machines):
+>
+> Besides some small conflicts on 'pu', like the previous part, it also
+> breaks 'pu' because of API changes. The fix is trivial though, just
+> prepend the_repository as the first argument for the broken function
+> calls.
 
-  [include]
-      path = platform-specific.gitconfig
+This sounds like a problem. I said the same when sending the
+object store lookup series, which ended via
+3a2a1dc1707 (Merge branch 'sb/object-store-lookup', 2018-08-02)
+in master, but I do recall Junio being somewhat unhappy about it[1].
 
-And two version of file named "platform-specific.gitconfig", which
-are not synced, and include only code.autocrlf setting.
+By just adding the argument to the function, it might merge easily
+but not compile, which would have to be fixed up; and that object store
+series seemed to touch a lot of functions that were also used in series
+in-flight.
 
---
-Best regards, Andrei R.
+I have since lost track of the refactoring and focused more on
+submodules again, but plan to come back to more 'repositorification'.
+
+> After this and ~20 more patches in part5, the_index is gone from
+> library code.
+
+This sounds promising! I'll take a look.
+
+>  diff.c                 | 259 +++++++++++++++++++++++------------------
+
+Ugh? That sounds like there is an interesting change coming.
+
+Stefan
