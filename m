@@ -2,82 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 594CE1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 19:36:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FBE01F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 19:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727056AbeH0XYd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 19:24:33 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54392 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726939AbeH0XYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 19:24:33 -0400
-Received: by mail-wm0-f66.google.com with SMTP id c14-v6so80475wmb.4
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 12:36:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=yY5cdlvhy/aE3xAgFzRRUNOn4nVLywtkj70ls9O5KJU=;
-        b=siDHgnKLG+cUaiGJVrHErcC5XqwWFhHFuQTYKtYErCUgaWskzjb7WDOihtfk/ok5Nz
-         L3nkKsW7QmsAZAdOmBHIduqpmpETxTmzcbSqvtvI8rN4a6SWaMSqRoc2jdw6R1eYJvnN
-         7lVi/q0vB4S6cCeX26580LilBnp+W54crmC4IQm3KFiJzIOu9hEp0g1MPHgYXM2JGY1R
-         6iFj0uEBY9Ksu0YiTVJ9nrcTsOd4CF6bgdgAgJTXNDFGhgO/EbovALnsukNC7Yml2ngb
-         JMbBakqihDROgvoWMVW2gYAMvzeiaa/iWdrauSU3pmz/BMGvA/WX0FifbwXHVs+plfpr
-         Ek/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=yY5cdlvhy/aE3xAgFzRRUNOn4nVLywtkj70ls9O5KJU=;
-        b=rbulM6iWXGdOZRYSPjZ0cAJhJxX9m0whvk0O9JpMurxFH/N8IoM/dfC5/7Vr9OJiwS
-         QT8oKbJ2DcCJxoE4aV4akSgDARKHy5iVdrH3db2liTieu8WN+HTnRmx6S7d+5rBhbJTT
-         Lopqt5pG1LW7tvz2M27QxFToLjfU7inBp+vBBTR58ZE4em+X9MX6Tfgtk7/YBs7B5M2r
-         ekpxwbLpnAAuEsfo2RG0dkWnzKIUZlMYPZG7cfyDU3kU+7sIknxGVOIsBpl8xNNLMP0g
-         +7NZ4fh50iocKoQ5oZkzrsMZMqdW8FSkllKscPETH0pDhEQZZQBsf1s9M7I1i/ROorNc
-         0vkA==
-X-Gm-Message-State: APzg51AXoeymYGFtJiiEWo8qgH5R3lW0NyP48uepvB00GLOXdswoO5bc
-        W1vVJ8DN/O0Ffa4iVUY7TU4=
-X-Google-Smtp-Source: ANB0VdZroks7MYr2HXiFlqYffbt5QPR10hZ17LEvCkMk0dmek5tFK+JRL/l5AbxwIK2betqCSFNvNA==
-X-Received: by 2002:a1c:5c4:: with SMTP id 187-v6mr6532491wmf.10.1535398593837;
-        Mon, 27 Aug 2018 12:36:33 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o15-v6sm131155wru.23.2018.08.27.12.36.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Aug 2018 12:36:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Benoit Lecocq <benoit@openbsd.org>, kn@openbsd.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v4 4/6] tests: use shorter here-docs in chainlint.sed for AIX sed
-References: <CAPig+cS4yeHNbc1Anq1DtLPEEGLpGeGEV74JHZrYft2wRmZAPQ@mail.gmail.com>
-        <20180824152016.20286-5-avarab@gmail.com>
-Date:   Mon, 27 Aug 2018 12:36:32 -0700
-Message-ID: <xmqqpny3iou7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727380AbeH0X2D (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 19:28:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:57716 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727077AbeH0X2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 19:28:03 -0400
+Received: (qmail 28271 invoked by uid 109); 27 Aug 2018 19:40:04 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 27 Aug 2018 19:40:04 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24527 invoked by uid 111); 27 Aug 2018 19:40:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 27 Aug 2018 15:40:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Aug 2018 15:40:02 -0400
+Date:   Mon, 27 Aug 2018 15:40:02 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: worktree duplicates, was: [PATCH] SubmittingPatches: mention
+ doc-diff
+Message-ID: <20180827194002.GA27158@sigill.intra.peff.net>
+References: <20180821192321.GA720@sigill.intra.peff.net>
+ <20180821193556.GA859@sigill.intra.peff.net>
+ <CAPig+cT+LBSJHoR1kUi+S2h96y_qmVEpK0xAy6sRUGQj6GQEyg@mail.gmail.com>
+ <20180821204341.GA24431@sigill.intra.peff.net>
+ <CAPig+cTghgbBo5VfZN+VP2VM00nPkhUqm0dOUqO37arxraxBKw@mail.gmail.com>
+ <CACsJy8BxxyRxqCj5ZoOmPaiwmFRKHU72yTxyC_eHXS+cEa94zw@mail.gmail.com>
+ <CAPig+cQNkMEUj=6e=6czbkWeozJQ-Go09C6bZwVJUTpM3JJiiw@mail.gmail.com>
+ <20180824232502.GA21265@sigill.intra.peff.net>
+ <CAPig+cQMv=ByvmH=+V3hZ1NC-=eT+CShuM7g+Y4evD1nVFr4XQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQMv=ByvmH=+V3hZ1NC-=eT+CShuM7g+Y4evD1nVFr4XQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Mon, Aug 27, 2018 at 05:55:43AM -0400, Eric Sunshine wrote:
 
-> Improve the portability of chainlint by using shorter here-docs. On
-> AIX sed will complain about:
->
->     sed: 0602-417 The label :hereslurp is greater than eight
->     characters
+> On Fri, Aug 24, 2018 at 7:25 PM Jeff King <peff@peff.net> wrote:
+> > On Fri, Aug 24, 2018 at 06:55:24PM -0400, Eric Sunshine wrote:
+> > > On Fri, Aug 24, 2018 at 10:47 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> > > > > I was thinking that "worktree add" could start respecting the --force
+> > > > > option as an escape hatch.
+> > > >
+> > > > Sounds good. Eric are you going to implement this? Just checking so
+> > > > that I can (hopefully) cross this off my backlog ;-)
+> > >
+> > > It wasn't something I was planning on working on (at least not
+> > > immediately) [...]
+> > > As for the actual implementation, I haven't yet looked at how much
+> > > surgery will be needed to make 'add' respect --force.
+> >
+> > Me either. I may take a look this weekend. [...]
+> 
+> Okay, I got an implementation up and running. It didn't require too
+> much code, but neither was it a simple 1- or 2-liner.
+> 
+> I still need to update documentation, write tests, and compose the
+> actual patch series (which will probably run to about 5 patches), so
+> it's not quite ready to send out, but hopefully soon.
 
-Remind me again not to forget doing s/here-doc/label/ on this patch
-before queueing.  Other than that, looks good, together with 3/6 for
-the the indented comment issue.
+Great, and thanks for letting me know before we duplicated effort.
 
+-Peff
