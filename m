@@ -2,117 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E49AF1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 22:13:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 644C41F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 22:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727101AbeH1CBg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 22:01:36 -0400
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:42843 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727023AbeH1CBg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 22:01:36 -0400
-Received: by mail-pg1-f201.google.com with SMTP id q67-v6so300572pgq.9
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 15:13:04 -0700 (PDT)
+        id S1727178AbeH1CSM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 22:18:12 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34765 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727050AbeH1CSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 22:18:12 -0400
+Received: by mail-wm0-f66.google.com with SMTP id m199-v6so373166wma.1
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 15:29:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:date:in-reply-to:message-id:references:subject:from:to
-         :cc;
-        bh=aCFqJOYCQ2D6+64iy9PJiT4ytID+WRjNJ3Fxkdh7TAY=;
-        b=TJk+Z1V7m0KOaq4yc15IEOvhQw6jKpT2LNkkokysrqsJZU8P7adAzhhNQZGNVUiUq+
-         Cuh+CyXK/PncErL5tswo10s5+/nJBW53Ms/1sXiEXzEQ8bCx8fbxtkjoh1pyFrB9THFS
-         hcEUjnNF8TPvM2DlCQJamg63Lj6DWusdVmotlgmvoQsfgOWZTR2BMNBbURR0guI5RudI
-         RzXGDQD2aPsnoNQ8Je0acbeWX6UDWEOVlSSZXMqM/EnBwiLSFIKDZ+jIQI5yUgcb1vwd
-         6Pk6fi/BWaRMDcq5IKZ1vdxDECGuMx2x80HC+egDk+CCz0SiUaVmrHorlHnkhPeBQqRJ
-         8xjA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=mcvYMqdXvcUk/TgMkAsQBzRWDHF50xb/b8MgYKdv1Q4=;
+        b=fBYTXieo90zE2VBcGzlDnieJKpuYE7scoeqXur1VTGxOJ+KKGWVhTj6SrDqqScdnbu
+         9/Fuc8Rp4OgSJJyJhXFxNMswIz7PI4wO/aCNN5/Vk6yssa9WyJQB4sKJPtbLOWPeF1HF
+         3xdBJS0f6f/hx6XHlHAHDuEf2XN/jqe4MasSzVIBihw/Sz9vYBzaCV+MLCVpk4NtWiWs
+         Yl1CIVX04UvHLLZ2fnuofNgve1yT1X1cFk56koQ65f1Fx5RQd8FqyNAuBxScAwSZ4+wD
+         Z0qml0l1RUcUu3tx3PELtEg5zCmkBkyT2/DdjrthLh66uoPASQ3tYwl35iepwY39gy+n
+         PRjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:date:in-reply-to:message-id
-         :references:subject:from:to:cc;
-        bh=aCFqJOYCQ2D6+64iy9PJiT4ytID+WRjNJ3Fxkdh7TAY=;
-        b=hYllCKJCHXNnlYFgEH3lvxx4SdINoG/wA5Z29p9Wdq/GoZqtknJD07vqoKye//jV32
-         qWrrN/kD6kMPm4BLwSIaiJePPF51HvU/R5c9i1AJ7hSWQl462/3oRoXUH4a2QEpzS9iW
-         QPhLQMT9f/P05VM1NdZyC2nNxqdGgFlaFynnPxFkbHelN1Prr+2txlfVNkfRsUbfqMPC
-         0UnkABoSf42EwcZnxMoRNa3tKu3MeEB2uilq2UzLuIOkC0b1mLdWzEmA03BZeTIFDiD0
-         TgV3Lwtwl+FTKutN0HwW4o89jLg35KAzNFy4YBCyZH8dZYznx6rJXIyPaTdjRfJsA6u+
-         8+dQ==
-X-Gm-Message-State: APzg51Df0UGYYDSZGi0SzBch6fVNU1Wgepja+7nvyRXlZfJr2Bgrv66y
-        9HpzP/NcaQ7dmlquKYU5QzFl6alxrmTPmyXj+yMVjigW3jrqRU1lH9uOuZKIlAX6N0vW2CzMcSv
-        qR5KhGSP4vE9S9OW0dnBR8myhdn65CG0HOE6ck2/Hl0ta2s75T/h7ngLHW7Mo
-X-Google-Smtp-Source: ANB0VdaJTP2Cv5CkzDFPO5YWgZEfemE1pTwZdpmrs8KaCvriCQ9sabCo24qzcjo0O2UvVUlLE7kRhpx6BMbQ
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=mcvYMqdXvcUk/TgMkAsQBzRWDHF50xb/b8MgYKdv1Q4=;
+        b=lZ8kG5UJnzptWNloK2B5nJYy2uqLq/ov7gPgtwrtrWmCtt6zwbSiQE552LxQvbdjzx
+         b8Ve5LE7s8uHkE89nLT491B+xSAB6cNVeaLgK1wNVyHlY1/spxdxLdGkcOf5OdZVfcsJ
+         JSKwVOTFXZxtm8SZpIQLq3QX3VSkHWGV5NSk1333PdQM+zi91saj+UVx+A49Jj0jj7xp
+         70P0aw2BzT+GF/jza+368lqoXd227CVWvGaGIY/22usGdDlIW3bheNcE3Cax48NVXR2C
+         O52XmnnEVjZmTus3plOCeY7ovF5Gu3OQ/EqkuSTU7DoFKzoQN/8SHmbv7oOpoR2k7Gff
+         BINA==
+X-Gm-Message-State: APzg51BsmfsXx+jNif64tjQLwSc0mhY46KbKwO4+M3Me0Yedmn9pUSCK
+        UxMrRNWkcxXCdHNCgrKiadg=
+X-Google-Smtp-Source: ANB0VdbUup4cblgasXRI1wGmNgcvSGVBadJpI9LIjqAGncooLmEk45H4mKeTcSEj9D6Yk5hNxr/kcA==
+X-Received: by 2002:a1c:f317:: with SMTP id q23-v6mr3411111wmq.132.1535408974532;
+        Mon, 27 Aug 2018 15:29:34 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n17-v6sm251341wmc.13.2018.08.27.15.29.33
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Aug 2018 15:29:33 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org,
+        Constantin =?utf-8?Q?Wei=C3=9Fer?= <i7c@posteo.de>
+Subject: Re: Would a config var for --force-with-lease be useful?
+References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
+        <xmqqin3vk3yv.fsf@gitster-ct.c.googlers.com>
+        <87o9dnegxi.fsf@evledraar.gmail.com>
+        <xmqqlg8rinbz.fsf@gitster-ct.c.googlers.com>
+        <87k1obee0f.fsf@evledraar.gmail.com>
+Date:   Mon, 27 Aug 2018 15:29:33 -0700
+In-Reply-To: <87k1obee0f.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 27 Aug 2018 22:44:00 +0200")
+Message-ID: <xmqqd0u3igtu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-Received: by 2002:a63:6c3:: with SMTP id 186-v6mr212611pgg.178.1535407983873;
- Mon, 27 Aug 2018 15:13:03 -0700 (PDT)
-Date:   Mon, 27 Aug 2018 15:12:57 -0700
-In-Reply-To: <20180827221257.149257-1-sbeller@google.com>
-Message-Id: <20180827221257.149257-2-sbeller@google.com>
-References: <20180827221257.149257-1-sbeller@google.com>
-X-Mailer: git-send-email 2.18.0
-Subject: [PATCH 2/2] submodule.c: warn about missing submodule git directories
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is the continuation of f2d48994dc1 (submodule.c: submodule_move_head
-works with broken submodules, 2017-04-18), which tones down the case of
-"broken submodule" in case of a missing git directory of the submodule to
-be only a warning.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c                   | 16 ++++++++++++++++
- t/t2013-checkout-submodule.sh |  2 +-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+> I.e. making plain --force-with-lease harder to use by hiding it behind a
+> config option gives the user fewer options than with --force to recover.
 
-diff --git a/submodule.c b/submodule.c
-index 50cbf5f13ed..689439a3d0c 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1641,6 +1641,22 @@ int submodule_move_head(const char *path,
- 		} else {
- 			char *gitdir = xstrfmt("%s/modules/%s",
- 				    get_git_common_dir(), sub->name);
-+
-+			if (!is_git_directory(gitdir)) {
-+				/*
-+				 * It is safe to assume we could just clone
-+				 * the submodule here, as we passed the
-+				 * is_submodule_active test above (i.e. the
-+				 * user is interested in this submodule.
-+				 *
-+				 * However as this code path is exercised
-+				 * for operations that typically do not involve
-+				 * network operations, let's not do that for now.
-+				 */
-+				warning(_("Submodule '%s' missing"), path);
-+				free(gitdir);
-+				return 0;
-+			}
- 			connect_work_tree_and_git_dir(path, gitdir, 0);
- 			free(gitdir);
- 
-diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-index c69640fc341..82ef4576b91 100755
---- a/t/t2013-checkout-submodule.sh
-+++ b/t/t2013-checkout-submodule.sh
-@@ -81,7 +81,7 @@ test_expect_success 'setup superproject with historic submodule' '
- 	test_must_be_empty super1/.gitmodules
- '
- 
--test_expect_failure 'checkout old state with deleted submodule' '
-+test_expect_success 'checkout old state with deleted submodule' '
- 	test_when_finished "rm -rf super1 sub1 super1_clone" &&
- 	git clone --recurse-submodules super1 super1_clone &&
- 	git -C super1_clone checkout --recurse-submodules historic_state
--- 
-2.18.0
+I agree with that.  But I would consider it a good thing, if done
+properly (i.e. suggest --force-with-lease that is not a lzzy form).
 
+> So I think we should still recommend the longer and even safer variants
+> of --force-with-lease, but being guaranteed to have the SHA-1 you just
+> clobbered locally is *better*, and allows us to e.g. do this:
+>
+>     $ git push --force-with-lease
+>     hint: You just clobbered <X> on <remote with <Y>. If you regret
+>     hint: this you can (until the object gets pruned) do:
+>     hint:     git push <remote> --force-with-lease=<refname>:<Y>
+
+Until the object gets pruned, and until somebody else pushes there
+to make the damage bigger, you can recover from a mistake with that
+information.  It probably is a bug that the lazy force-with-lease
+does not report what the remote tip you just overwrote was, and this
+would help great deal.  It would be a good place to start.
+
+One thing that I am still not clear how this line of thought truly
+would help users is how to help them decide their answer to "If you
+regret this".  An unthinking naïve user would say "of course I meant
+it when I gave the option---why do you think I regret it?" without a
+bit more hint, namely, "<Y> was taken from the remote tracking
+branch, are you sure that is still what the newly prepared contents
+you built to replace?  Did somebody clobber it while you are not
+watching?"
+
+These three lines however will be felt too loud by those who would
+most benefit from them (i.e. those who do not know why they need
+protection); I do not think advise.* to allow them to be squelched
+would be appropriate.
