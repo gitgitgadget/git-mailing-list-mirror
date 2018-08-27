@@ -3,81 +3,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 367AB1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 16:25:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7211F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 17:29:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727027AbeH0UMr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 16:12:47 -0400
-Received: from mout.gmx.net ([212.227.17.21]:54897 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726731AbeH0UMr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 16:12:47 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MTMzb-1gKTse17ot-00SLhK; Mon, 27
- Aug 2018 18:25:27 +0200
-Date:   Mon, 27 Aug 2018 18:25:26 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Gregory Oschwald <oschwald@gmail.com>, git@vger.kernel.org
-Subject: Re: $GIT_DIR is no longer set when pre-commit hooks are called
-In-Reply-To: <20180826004150.GA31168@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1808271824270.73@tvgsbejvaqbjf.bet>
-References: <CAFKzd1qaMU=K6uc62xL0DUyZOWxY79Qakaog2dzBjiNrmq0ydg@mail.gmail.com> <20180826004150.GA31168@sigill.intra.peff.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726986AbeH0VQ4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 17:16:56 -0400
+Received: from mail-lf1-f48.google.com ([209.85.167.48]:43394 "EHLO
+        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726826AbeH0VQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 17:16:56 -0400
+Received: by mail-lf1-f48.google.com with SMTP id h64-v6so11106106lfi.10
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:29:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:sender:from:date:message-id
+         :subject:to:cc:content-transfer-encoding;
+        bh=itqpnrluyzGqar+/KDqVsDBlEZj+ImwQsQU8Y2smG7k=;
+        b=Jq1r6Lpz+B7Y/XucKRbGBX6FHGO7/ww7vnGkAXejdN9J+f3O1BTQRNKx4PMQzfgoUf
+         nJxf1Va7/qjXKbJQwtx0GbzCVNbaZsvYjf/9I3ZRVYYoeaYX0vqzNn/Q5yePraUBveAQ
+         /P45Nvg8IoCRfeGlx1vkfnplhIE3MLK1rAisNE0WZzemlO0nQq36Ppo1WsG79HKbre7/
+         2qbyddIdJWg3z/Q2nFbWVtvqleZpphKR4jcjoVtJL2KsdRM8vDo0mTNPCidw0ZKAYCks
+         q0/hxXvNVP0l5qVWoFpQnVRkuc+GBcqLBxU76EVKJzJJJFgp9jAEB2VM+7H1AcwZW7UG
+         MnqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
+         :date:message-id:subject:to:cc:content-transfer-encoding;
+        bh=itqpnrluyzGqar+/KDqVsDBlEZj+ImwQsQU8Y2smG7k=;
+        b=qMNUaGYTYxt2adxQDM+9txoqORVrVsjOz3NfHq5dSZoDN3h7SF7+kWY8JxMGFJJTfc
+         R3g932n9HiPCxzgo5FpZyfIEx1RrxzMgM+FKGhaanx0xozaVEdtsRu1HzbTrLrI8R2rc
+         ut9gwe1PzSSFjQWp0AFQ5VrEIuCa5Dpz7DhUQ28mmOQR7+N/meAjOBNMaKFcXIykU8K0
+         wC6x20olM4XvFDDTWgQYa4Elm8+9br7LRNmb8/mst0kC5bd7eGkBaRY3u9CoRH2eXi3u
+         XvAkb3a4ZY4vh9XCeUPKmilrHYwsSaDQA0iAz795IE8Z0ZBUHNe3QAtwvuykzpfEUONw
+         +7dA==
+X-Gm-Message-State: APzg51C4FSK7BK+i2ly7XxKG1EVWXsj+zbGslXQZ/iZEY2NAMn564LZK
+        K/iPnraDY/PxtTsq5bNVOXr2gEJp7QcTWuswCCY=
+X-Google-Smtp-Source: ANB0Vda8GImSwCbENZ7TIIqWTKL5WMy/nBwD7kjnmcBTwwvAebmojdNy2S+DwBo0S48ETsveXL9ZFnJa9+ASn+2Ci4U=
+X-Received: by 2002:a19:5353:: with SMTP id h80-v6mr9478436lfb.9.1535390964346;
+ Mon, 27 Aug 2018 10:29:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CEZH4A3VelXuZ/lGCgfR8zR8AgYh5ruDrInqjgDfpDysHUfDHWh
- DXu9rpMaETYM8SSY9HVjYOn850TVckzGZye3IqEi6jANEuAlDb81zQXYYSIVphhziVDW7OI
- OezX3CjFq377pKUwPj8Tl3bUAYbm5zjcPaZLMXLOq8rhFREvSA7Gd2M2yOftEtu4J45VyYv
- xlOPu6mR0St5il/JtEOpA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4qP+0OPmkO4=:lEA0lv1qhQjkMoWeF9eSQd
- 26LBodlczDK4/ctOG1WDurZKZlmXbQXvfHWvKs8bu3EcmmvZaDakl+faeSwU+7gp5nrDCytkv
- 82mntmIAaa6/bq6mtBkacaJ7yyfThrIO38qdDRYbVyakTsCsBi8qPke0qUL4Mdm0LgHEFGj7v
- bePcPd9AtiIAVZFFKu32cjOsBaV0D+gTssp+X29ttVBxYiQzjMoY3BKCMvIIXST/3SL7AxTbo
- bykb0eYMP3hoUEmFD73feuMY1u2Z8DptEIHF6RHqIurXmEN9bPSmv4Qkt2nIzn87010SN0IPN
- qGiz/ddRv6KErBGQKsk6tNHU4m6KGd90DdVi8+SKayIaeDiZzJMuatw8lZ3ybbOLT0i50E9S3
- YuF/64NLygmQ8UBqpN7CkQkTNAVlZJC3o9aA1bjvQRl+paEazFamDuCA6qlpWz8f7nLn8MQzN
- 6ut7myNrEo3c7gIHG4Eu4LjUj+F4nWBkndW/fHNnq25jFMZla60pMB0HSYAV8mt6P8DpTB1Q5
- ekooeYOQcgAb9yCQ+cZb5aYsgzgsHx9/Pq1wh8WGxgoEJcLmHlSAeKBkwnNDsTWt4CCG4sWN8
- BOw7XAy7+VAB7vnJfuGUhwn8B5tBLAB1go1yQtZZWKPEARxYPOQiaH66vqrjEpVZ2m4tPD8Ds
- zokhtdtwNhfLBFQcChQILTvwUX0epLmVswLPusmKW2MlKjXW9x0W1D7RowarBL9XufQ6d11Es
- wGbzKPsBN+viXj5eyA9mpT73ZTXoFLQKDCgyRGf2rG73aBii9DWCOWGmG/WB7yEoSArgJ7K4K
- DYR1luC
+References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com>
+ <20180827153524.GA18025@tor.lan> <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
+In-Reply-To: <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
+X-Google-Sender-Delegation: rcdailey@gmail.com
+From:   Robert Dailey <rcdailey.lists@gmail.com>
+Date:   Mon, 27 Aug 2018 12:29:12 -0500
+X-Google-Sender-Auth: gvogh6TKN0bPr7WxXXWboEpTRok
+Message-ID: <CAHd499AFUtW3=JNrmevdHRLgfK+QSdpkkSj0wsbRkhE8tqu-rA@mail.gmail.com>
+Subject: Re: Automatic core.autocrlf?
+To:     pclouds@gmail.com
+Cc:     tboegi@web.de, Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+On Mon, Aug 27, 2018 at 10:53 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Mon, Aug 27, 2018 at 5:37 PM Torsten B=C3=B6gershausen <tboegi@web.de>=
+ wrote:
+> > > In those cases, when it falls back to
+> > > configuration for line ending management, I want it to be
+> > > automatically configured based on the host platform.
+> >
+> > There is
+> > git config core.eol native
+>
+> An alternative is supporting conditional config includes based on
+> platform or host name, but I don't know if there are more use cases
+> like this to justify it.
 
-On Sat, 25 Aug 2018, Jeff King wrote:
+To Torsten's comment: Yes, I've looked at git-config. it doesn't have
+the answer to my question there, hence I posted on the mailing list.
+To your point, eol being native doesn't matter if text=3Dauto can't be
+simulated. If there was a version of `autocrlf` that set `eol=3Dnative`
+and `text=3Dauto`, that would work as well. But the `true` setting sets
+`text=3Dauto` and `eol=3Dcrlf`.
 
-> On Wed, Aug 22, 2018 at 04:16:00PM -0700, Gregory Oschwald wrote:
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 3bfeabc463..3670024a25 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -1440,6 +1440,7 @@ int run_commit_hook(int editor_is_used, const char *index_file, const char *name
->  	int ret;
->  
->  	argv_array_pushf(&hook_env, "GIT_INDEX_FILE=%s", index_file);
-> +	argv_array_pushf(&hook_env, "GIT_DIR=%s", get_git_dir());
+Duy: There are more use cases I've run into, but they are not related to th=
+e OP:
 
-We did something similar in sequencer.c, and it required setting
-`GIT_WORK_TREE`, too, to avoid problems in worktrees. Do you need the same
-here, too?
+* Different user email between machines (work vs personal)
+* Different tooling on platform (e.g. `nano` on Ubuntu, Notepad++ on Window=
+s)
 
-Ciao,
-Dscho
-
->  	/*
->  	 * Let the hook know that no editor will be launched.
-> 
-> -Peff
-> 
+Centralizing .gitconfig, especially when you have tons of aliases,
+becomes more important. 95% of my .gitconfig is platform-agnostic, if
+there was an `#ifdef` mechanism, per your suggestion, this would allow
+a lot more flexibility. Maybe I should have worded my OP more in terms
+of platform-specific configuration sections, instead of specifically
+about autocrlf, since that's just one symptom of the real problem.
