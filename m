@@ -6,62 +6,62 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EB1971F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 17:48:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 011EC1F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 17:57:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727193AbeH0Vfr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 17:35:47 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:43930 "EHLO
+        id S1727021AbeH0VpQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 17:45:16 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39519 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726986AbeH0Vfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 17:35:46 -0400
-Received: by mail-wr1-f68.google.com with SMTP id k5-v6so14415533wre.10
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:48:12 -0700 (PDT)
+        with ESMTP id S1726968AbeH0VpQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 17:45:16 -0400
+Received: by mail-wr1-f68.google.com with SMTP id o37-v6so14438066wrf.6
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:57:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=GCvaktkphuHbusrvrDPXsEOPeEgPM3W6jXgMcc/XV3o=;
-        b=p1FY1WiIg/RP9PcLN3DsSgaErrULqgPgGSM6+15OiY5nKQSKacdwgEf/jw5KZll0tL
-         MAWX9ZZrtpA0+oB5tEHL2CR4/IVAW58BxW1VkY36N4zu7u03y7oEkBmIj033bXDz3A3F
-         48aDzSFZ+NJCUifU/XR6k8NLj/S6QYHUDW4IyZDZWvqRrRUhtK0T3oovtx7RQMIecvql
-         Oo9eqoSR1mMNS5ZB87r+DXwfA7F+fLaspL4qcWC2Ho78iUDu+puNxc/7PEEzgFUDo73f
-         8FylYEMt9bUs/EgenENlqyfuhizASf8nypybqZ/LmdVAE+MuOR90zdkvic/OaBFG4xpp
-         fo/g==
+        bh=lvSOhXBnvh4bVsJP7i5FsKcxVUEw8UeZ66CbTO8yu8A=;
+        b=TlJg9bnFt+R1lrUETvjj8MOLa8YlqgkQH6u0Iku8icyAgmmSfMuaclX9XTMAekSJwr
+         vQIZzlJeUiefp7DW7+BamJRbGjvRpB6ZfIq5/Pq7vFhsgwqsKEGPibVYPiCjFzJBvE6l
+         6z3Ym8gDA2jrP8PdjD63u0NA/GNlWWiUKnzdJ1SGzgQi0QbsYLu/uWYD6/V30qT13WfR
+         UYBOGR2/d9+btkoP8NOQEiCsW8h2lNsVq/n0cN+g8gRRabLGUc+lYEBZVKFWoojEDiAi
+         JZtP9CCOEVCUeFeLHJNSUrXm2OG8GxMddGzLjSjn3qMmoV+SqxnXxGVLLLxfc/e+Gfpe
+         GYPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=GCvaktkphuHbusrvrDPXsEOPeEgPM3W6jXgMcc/XV3o=;
-        b=PNXZiFTWQQdoHi7ZL89s5uCOhzyiTSajctxqIMCslyUOpRrIjvwjENaz3VmsRjHRqn
-         uDkaJUxrOfWHfQgRA7ouizQrZYVTFaDwTshQRNmKJRAQpB9cytc83TFAElmeMr7/ebbD
-         jl0aiW4BCTCyjBOCSMOIZ0EoAzUTEZ8hhpQykk6WYwzrrOIeHv+lRSAgrHZTD9o0GLBr
-         +DfbPQvWvU1tiJ17C8MzA96/b/Kd+RlANqN7/bq6Rqo6V+nz9UV1+jULO9Gy6yo9ahjR
-         GydBqNk3EuYAimjkasbeA8trosUkL3sK4MpLatzARXni+sCu34PXt5BI2zRYZvF4S3hP
-         PVYg==
-X-Gm-Message-State: APzg51B553JRrtNDZIPsIFca0FntHjQkSI5Gxtw0Og0bBbmdkjAUZYN5
-        6R6n77LSZukCuXxQGvrxqZU=
-X-Google-Smtp-Source: ANB0Vda2v0ZWHNWqGLAUO0JfRW4g/YXU/2ejnyLRtkJL/U+baGQCE3sSmah7TGqerOy+cvcKwIZaaw==
-X-Received: by 2002:adf:db11:: with SMTP id s17-v6mr9908795wri.221.1535392091350;
-        Mon, 27 Aug 2018 10:48:11 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m129-v6sm15010129wma.1.2018.08.27.10.48.10
+        bh=lvSOhXBnvh4bVsJP7i5FsKcxVUEw8UeZ66CbTO8yu8A=;
+        b=nwMEmZy68RWF/NomKOl4CAG7BSpkFFtUpOwju4ZnDp7o3i0m3Zrf41dxD3lro9Uzt/
+         oHpmv7hYFE7yg8r+WAI2EwQpIGyQb6+XPU04xr2i9ZDAZ57/pZSWc1bAM05if1ul/asP
+         reRFYrDnM0E2NWHr2DlRXzd+cP6dimk9nEyTfOukZC1l7Rmr6oOJZHZbEXpkORMXOSJS
+         u2LoGwSw68ftEWbXmkia3qoDNoNcAmgMC/weya3XMQ924qxKfz63aWlRnShK5p+ni29U
+         zNxtGjo8d26Z8ePIZlDZtVq0UcnwzFfXqWcg5GyXzLs5eHIqpakGTXcv36tUs2tvylM1
+         y3yw==
+X-Gm-Message-State: APzg51D9fuCv/Amrbca46q568zC5P1fFrHX4aW3fO9EFuCm5wzIc8MgE
+        hByHTN9W+Hwh8bYHQTsm1AM=
+X-Google-Smtp-Source: ANB0VdYv+ORkwCkpB7Zljns4W/utXsxTCv1OmAHDZyzf3xscSA1quZHRHfJZHl9pdJe58EMjokhC3w==
+X-Received: by 2002:a5d:5450:: with SMTP id w16-v6mr9944586wrv.4.1535392658524;
+        Mon, 27 Aug 2018 10:57:38 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id h73-v6sm4753318wma.11.2018.08.27.10.57.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Aug 2018 10:48:10 -0700 (PDT)
+        Mon, 27 Aug 2018 10:57:37 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive rebase
-References: <pull.23.git.gitgitgadget@gmail.com>
-        <20180823024856.GH92374@aiede.svl.corp.google.com>
-        <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet>
-Date:   Mon, 27 Aug 2018 10:48:10 -0700
-In-Reply-To: <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet>
-        (Johannes Schindelin's message of "Sun, 26 Aug 2018 01:46:10 +0200
-        (DST)")
-Message-ID: <xmqqa7p7lmzp.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v3] range-diff: update stale summary of --no-dual-color
+References: <20180823211028.GA99542@aiede.svl.corp.google.com>
+        <20180823215748.3474-1-kyle@kyleam.com>
+        <20180823220207.GC99542@aiede.svl.corp.google.com>
+        <xmqqo9dshh1j.fsf@gitster-ct.c.googlers.com>
+        <20180823221152.GD99542@aiede.svl.corp.google.com>
+Date:   Mon, 27 Aug 2018 10:57:37 -0700
+In-Reply-To: <20180823221152.GD99542@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Thu, 23 Aug 2018 15:11:52 -0700")
+Message-ID: <xmqq5zzvlmjy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,29 +70,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> Please include this information in the commit message.  It's super
->> helpful to find this kind of information about why a patch does what
->> it does when encountering a patch later "in the wild" (in git log -S
->> output).
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>> Kyle Meyer wrote:
 >
-> I thought I did include the relevant part? As to the full back story: I
-> was repeatedly dressed down by Junio in recent attempts to include more
-> motivation in my commit messages. So I am reluctant to do as you say,
-> because Junio is the BDFL here.
+>>>> Subject: [PATCH v3] range-diff: update stale summary of --no-dual-color
+> [...]
+>>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>>
+>> Sorry, too late.  I'll revert the merge of the previous round out of
+>> 'next' and requeue this one, but that will have to wait until the
+>> next integration cycle.
+>
+> Thanks for the heads up.  Sounds like a fine plan.
 
-I do recall discouraging you from including irrelevant rant/whine in
-the log message a few times in the recent past, and also I do recall
-you never listening to me.  Don't make me an excuse.
+Having said that, I do not think the change from v2 to v3 is an
+improvement.  At least the one in v2 explained what the input is to
+the logic to determine colors, helping the users to understand what
+is painted and why and decide if that coloring is useful to them.
 
-I think what Jonathan finds helpful is the other half of the story
-of what you did write in [1/1].  You wrote that it is no longer a
-shell script and needs to follow a separate calling convention.
-What was missing from that description that was given in [0/1] is
-why the original "rebase-in-c" series was done while pretending that
-the other effort "rebase-i-in-c" did not even exist, which made it
-necessary to do this change as a separate step.
+The phrasing in v3, "use simple diff colors", does not give much
+information over saying something like "paint it differently" (which
+is silly because "differently" is a given, once you give an option
+to cause a non-default behaviour).
 
-And I tend to agree that it _is_ a relevant story in this case.
+Not limited to this particular case, but in general, subjective
+words like "simple" have much less information density than more
+specific words, and we need to be careful when spending bits on a
+limited space (like option description) to them.
 
