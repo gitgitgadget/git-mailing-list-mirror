@@ -2,106 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BDD31F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 17:47:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB1971F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 17:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727014AbeH0Ve4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 17:34:56 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:34265 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726958AbeH0Vez (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 17:34:55 -0400
-Received: by mail-ed1-f44.google.com with SMTP id h1-v6so11075314eds.1
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:47:21 -0700 (PDT)
+        id S1727193AbeH0Vfr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 17:35:47 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:43930 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726986AbeH0Vfq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 17:35:46 -0400
+Received: by mail-wr1-f68.google.com with SMTP id k5-v6so14415533wre.10
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 10:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2G3h/s9A4Ksmdhg2xZ5NGnqqpiXtLW2pqCot9aq15Dw=;
-        b=mmsQyrAm2bJpESEZg9JDUfEl0ybQjJ5IWh8Jxfs5ojPSR14pz0GetV6tPl184UsHsc
-         4VKZlkFOiVztUiJgwXZrTQXYsoa0oc+L5N6XTyLINzOjvkaXgd2hk1BQB6bCaszsHQCR
-         mYmbXZOdgYALkPFNsesNaPJuN204hLcd8GU4UN/ADTAvXgRL+UxJbUkHw9hjU3KKCH/k
-         /qlzl7dj095eEgFxo8F6nYBBs64ivRMVgyzFO3ScQas/o+NueEP6iCEAyiYXzfsC289G
-         MCxeq5JTeJic5vcxm/hTQVoKhyA2JfddcajRoioDSq0OkZ/UAi3g2XpJZn+vOeV4Vs5H
-         VXKA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GCvaktkphuHbusrvrDPXsEOPeEgPM3W6jXgMcc/XV3o=;
+        b=p1FY1WiIg/RP9PcLN3DsSgaErrULqgPgGSM6+15OiY5nKQSKacdwgEf/jw5KZll0tL
+         MAWX9ZZrtpA0+oB5tEHL2CR4/IVAW58BxW1VkY36N4zu7u03y7oEkBmIj033bXDz3A3F
+         48aDzSFZ+NJCUifU/XR6k8NLj/S6QYHUDW4IyZDZWvqRrRUhtK0T3oovtx7RQMIecvql
+         Oo9eqoSR1mMNS5ZB87r+DXwfA7F+fLaspL4qcWC2Ho78iUDu+puNxc/7PEEzgFUDo73f
+         8FylYEMt9bUs/EgenENlqyfuhizASf8nypybqZ/LmdVAE+MuOR90zdkvic/OaBFG4xpp
+         fo/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2G3h/s9A4Ksmdhg2xZ5NGnqqpiXtLW2pqCot9aq15Dw=;
-        b=aAGH7dZfeLOnbbV46kMqjBaakkv+24b2/6ehXRdApK9xVkj971XjAMLSI/tviAcrBm
-         6V3egFpOcWqkcKxyplveyzOC1iQY36raHbnAyjrGE4lkCBJn8dq1Sdh6TFhK+rHag9x6
-         dR76DhTqBIEGTaZjyXDfRqHlbiqvXAL0jZpaGqxF5zApflV/YtGdGxbUC18RIjTFEO4E
-         87zrGz6XXVRFAzkrSuIRP22cqupVGnHEDPmZW3CHdiP9RkIAeZEzAOGydm4W6w2kzOQO
-         Oc3wV2DoV1ThRL4BhMZz1Wtm5TNYra/+Qck/z2m1E5XlAE7ST5D7IcLsPjd0CNR/8AZq
-         kx+A==
-X-Gm-Message-State: APzg51BkxrA+6Csgbp6XGb6t9fV8tjfFhgwPjKm8ysvHrT89lzR6ap7v
-        G5QbqwK1Gf9PhvOafGn2iCJ+aEKPlkbfX+FbBlL8zw==
-X-Google-Smtp-Source: ANB0VdZMqXu0Fk1iqWdb8OYH+u+fDUsfj1i1ur3Sw5nvZzHh+ZEWmn6lAnMTgpElguHyTEfEud3Td2wMdy4pWhb6uOA=
-X-Received: by 2002:a50:d083:: with SMTP id v3-v6mr17889817edd.243.1535392040742;
- Mon, 27 Aug 2018 10:47:20 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GCvaktkphuHbusrvrDPXsEOPeEgPM3W6jXgMcc/XV3o=;
+        b=PNXZiFTWQQdoHi7ZL89s5uCOhzyiTSajctxqIMCslyUOpRrIjvwjENaz3VmsRjHRqn
+         uDkaJUxrOfWHfQgRA7ouizQrZYVTFaDwTshQRNmKJRAQpB9cytc83TFAElmeMr7/ebbD
+         jl0aiW4BCTCyjBOCSMOIZ0EoAzUTEZ8hhpQykk6WYwzrrOIeHv+lRSAgrHZTD9o0GLBr
+         +DfbPQvWvU1tiJ17C8MzA96/b/Kd+RlANqN7/bq6Rqo6V+nz9UV1+jULO9Gy6yo9ahjR
+         GydBqNk3EuYAimjkasbeA8trosUkL3sK4MpLatzARXni+sCu34PXt5BI2zRYZvF4S3hP
+         PVYg==
+X-Gm-Message-State: APzg51B553JRrtNDZIPsIFca0FntHjQkSI5Gxtw0Og0bBbmdkjAUZYN5
+        6R6n77LSZukCuXxQGvrxqZU=
+X-Google-Smtp-Source: ANB0Vda2v0ZWHNWqGLAUO0JfRW4g/YXU/2ejnyLRtkJL/U+baGQCE3sSmah7TGqerOy+cvcKwIZaaw==
+X-Received: by 2002:adf:db11:: with SMTP id s17-v6mr9908795wri.221.1535392091350;
+        Mon, 27 Aug 2018 10:48:11 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m129-v6sm15010129wma.1.2018.08.27.10.48.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 27 Aug 2018 10:48:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive rebase
+References: <pull.23.git.gitgitgadget@gmail.com>
+        <20180823024856.GH92374@aiede.svl.corp.google.com>
+        <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet>
+Date:   Mon, 27 Aug 2018 10:48:10 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet>
+        (Johannes Schindelin's message of "Sun, 26 Aug 2018 01:46:10 +0200
+        (DST)")
+Message-ID: <xmqqa7p7lmzp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
-In-Reply-To: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 27 Aug 2018 10:47:09 -0700
-Message-ID: <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com>
-Subject: Re: Possible bug: identical lines added/removed in git diff
-To:     gthepiper@gmail.com
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Aug 26, 2018 at 6:54 PM Gabriel Holodak <gthepiper@gmail.com> wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+>> Please include this information in the commit message.  It's super
+>> helpful to find this kind of information about why a patch does what
+>> it does when encountering a patch later "in the wild" (in git log -S
+>> output).
 >
-> I think I'm running into a bug with git diff on v2.18.0.
+> I thought I did include the relevant part? As to the full back story: I
+> was repeatedly dressed down by Junio in recent attempts to include more
+> motivation in my commit messages. So I am reluctant to do as you say,
+> because Junio is the BDFL here.
 
-I cannot reproduce with the two files attached.
+I do recall discouraging you from including irrelevant rant/whine in
+the log message a few times in the recent past, and also I do recall
+you never listening to me.  Don't make me an excuse.
 
-I suspected you might have a different diff algorithm configured,
-so I tested
-    git diff --no-index old new
-    git diff --patience --no-index old new
-    git diff --histogram --no-index old new
+I think what Jonathan finds helpful is the other half of the story
+of what you did write in [1/1].  You wrote that it is no longer a
+shell script and needs to follow a separate calling convention.
+What was missing from that description that was given in [0/1] is
+why the original "rebase-in-c" series was done while pretending that
+the other effort "rebase-i-in-c" did not even exist, which made it
+necessary to do this change as a separate step.
 
-all of which do not reproduce the issue.
+And I tend to agree that it _is_ a relevant story in this case.
 
-Are there any encoding issues locally (Which platform
-are you on?) or in transit (Could you re-download the files
-from [1] and confirm it still produces this bug?)
-
-[1] https://public-inbox.org/git/CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com/
-
-
-> where the "DWIDTH 8 0" and "BITMAP" lines are removed and added,
-> despite being identical. It only seems to be happening around this
-> section of the file, for the U+00F0 character. This also seems close
-> to a minimal reproduction of the issue.
-
-Could you cut down to a real minimal reproduction, i.e. just these 20
-lines or so?
-
->  If I git add --patch and stage
-> a few hunks, then the duplicated lines seem to disappear.
-
-Do you have any smudge filters or configuration regarding
-line endings?
-
-Are the lines really different or the same ? (Can you inspect with a
-hex editor, maybe there are different kinds of invisible white spaces?)
-
-> Steps to reproduce:
-> git diff --no-index unitera_bold_italic.bdf.old unitera_bold_italic.bdf.new
-> (It also happens inside a repo, this just seemed the easiest way to
-> demonstrate.)
-
-Thanks,
-Stefan
