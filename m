@@ -2,101 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FF6B1F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 13:30:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3BE21F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 13:34:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727299AbeH0RRZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 13:17:25 -0400
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:46805 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbeH0RRZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 13:17:25 -0400
-Received: by mail-qt0-f177.google.com with SMTP id d4-v6so17900104qtn.13
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 06:30:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=wwPcVLALGmLuaZiKdaiEAKc7OB7RugHQK/gOEbUxAXk=;
-        b=Z0p5zQOrfL6BQE5hIkbFAVQ7pgbHLy47b0K5r5Tma7CS72NyCSrSM3hhz0ADMlhKQY
-         Lfl0+AVP+Pv1I9Lbh2m99/U1dUCLlFbIsT/TzjtgC9o7Imql7e40W5YW6/rAmfEyluFk
-         H6HGe8dJDRJ9497IJuTYfvMeCnrnphRGo4gOkvncx4to8CUzL1jJ8DNkxKlsXVPMORm3
-         b+Ufv5QH+EFWP2NN4dB3BfHPoPvUIHKaZYdkjFBdTGatZubwGQPU6hob3RYE5hehl/gl
-         pK+/EoGaR/KkhYwEtFwBGTBHlC5MC6YWeNAp50bq9YNq0cTKihQ+mTEnv1yQtqNfLb8d
-         WTVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=wwPcVLALGmLuaZiKdaiEAKc7OB7RugHQK/gOEbUxAXk=;
-        b=Nj6A1afQCVzU0zhEzu+AC1k9YI/UpFrG06vLIjwMO78NkA6DqF+cFOKNhD98z/oi/+
-         rE5K+1W5aoqlw/XcpFLJBkx/soWLlR/0WGbygbCOEAZlfkfJoiIaKidWYFs9tHZhvMaP
-         lTFfU3ULmS6GzeNgzzpoUdooWP2kH1zwq3AwUyXsvpWFNJuTd+rzqB9JTpJB6LgfeeUI
-         8lhjKZ41ypf7EaBAGwgC77eSVRVX2JI8/pWHS8ztULP2DU6Mh4YhtaZqmXGBO+LnXpVy
-         CpyOKUy3QDiP7OYuEOOPcL4X2RfYQrK5MoI5bcBCohhIJLpahd7NOxuNF8KcGOQ4HE+5
-         h/rw==
-X-Gm-Message-State: APzg51DZYD+OCyGchj/BrI1dt9TBPJhdWJuhX02uuRIMfCEnrDPVZNbD
-        SJbpNJrQ557zFgVpBeWKRUHzcF5m
-X-Google-Smtp-Source: ANB0VdYdocP3xryLTU7UyhSdjibg1mDCQxAUZtMmyqQJXaiDoW4orVDMkxyvTohtx8sePAiQbMgJiQ==
-X-Received: by 2002:a0c:becb:: with SMTP id f11-v6mr796507qvj.217.1535376644503;
-        Mon, 27 Aug 2018 06:30:44 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:10b0:d7ed:482d:ab9b? ([2001:4898:8010:0:f9e5:d7ed:482d:ab9b])
-        by smtp.gmail.com with ESMTPSA id n41-v6sm10263093qtn.73.2018.08.27.06.30.43
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Aug 2018 06:30:43 -0700 (PDT)
+        id S1727094AbeH0RVE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 13:21:04 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39745 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726934AbeH0RVE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 13:21:04 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MSdz2-1gLfsj11Yi-00Rc5M; Mon, 27
+ Aug 2018 15:34:17 +0200
+Date:   Mon, 27 Aug 2018 15:34:16 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     git@vger.kernel.org
 Subject: Re: Contributor Summit planning
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+In-Reply-To: <20180813163108.GA6731@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1808271523180.73@tvgsbejvaqbjf.bet>
 References: <20180813163108.GA6731@sigill.intra.peff.net>
- <d5d3fe71-d52b-ac9b-d48d-d288b6569e5a@gmail.com>
- <20180813171535.GA8476@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
-Date:   Mon, 27 Aug 2018 09:30:43 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ifkQyW69tgRzbodUJmvzhOEqrCtjZUyRwcTU2oBBYGbeNjYFpb5
+ r7yrcR/CeXMwCGJJTehaT8JGQRu8/HGimb9Ql/MeU6Sw8hwZ9kQmmvbGa5SIIos7e5cQYnW
+ puh4McJcd5J0gchbZZG+rbstOd4rZC4IO1be9x1+V+nD5DHvsVmYtUxDJLQiywb8heV49ZQ
+ akPpN3PdUeRImJ/C1PeQw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:daXHlPh5lKg=:ZkSzkdScCWGc5SdFqJ46QY
+ PXnMVoW8l8ILeRLxUijSGvUWOh2FVrMC5XxILBjOWJAgx+O5ZmQNojfKj70x/JHWA2tCIVf+O
+ YCzZxANQuyqg9P0EulLr07YEVS55rTJleGkXMWKwVjFl/5U7WSXtt+qar/s84aBrgZa93NUzm
+ 0xZlavmmKSJG1BPQveaKGou3/3C/RHPE4UVgiv+BdV5GoZPmoUqr+cdvm1nYaKEejlF4U/VqS
+ 00NT8NACZ8LV8pu4lPfuNhLurftyNvQAgctvQu405ri/qH9MHSFHKsxJ5fMRGlcu7MtgWn9dq
+ hsRaqQWCbEE4vk3BNgTic5+KhHzApIRPv8CxO9xUebbYeDipc4YqdgBVZ8aOuf3wVw4eUG30W
+ 4tOoLNvYjv/DDCHJkSDK6YJNa/8iLBmwWIauTfaJxcicq/nvqRSonMKMommsmXt1Su3o9pTYa
+ wr3C2EOJTi0S8LfhkM02Q2yy36edaYm0mg1Ys4E8924Syf44mQfsCiyeRn9ukbcgPvIwtp6Yn
+ KI8w5CnzrHdYNQOSw/lJbD6s6VemfDfyWcPPYPfR+Vpa6RNOaMljbDpmtGd9DdS7poiYb2dlK
+ S0HFNmyf7hredd5APazi0M5L9LQaWNflxm7lrpYxzfXh042ke5rbth9zhyHGXiE6/TXAuKvFM
+ NX3p331sJdkB9BfMNsg7XEdwY1N9N9yaxb407FIaTazK65VXtiRGejfcnlLRZDpskDSAgM/Si
+ I/PCZZKTL6jE/dQkF3dtQ2S7hNWlN1u/LjDJm4xg/MluUosN5/5DAMXTRJ60vtuF9CNqoaBB9
+ t3KmZZy
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/27/2018 9:22 AM, Johannes Schindelin wrote:
-> Point in favor of the pure-online meeting: the informal standup on IRC
-> every second Friday. I really try to attend it (it is a bit awkward
-> because it is on a Friday evening in my timezone, right at the time when I
-> want to unwind from the work week), as it does have a similar effect to
-> in-person standups: surprising collaborations spring up, unexpected help,
-> and a general sense of belonging.
->
-> Of course, the value of these standups comes from the makeup of the
-> participants: Stefan, Brandon, Stolee, JeffH, Jonathan and other *very*
-> active core contributors hang out for roughly half an hour, sharing what
-> they are working on, exchanging ideas, etc.
+Hi Peff,
 
-A focused aside, since you brought up the online "standup": it seems the 
-IRC channel has been less than ideal, with people trying to participate 
-but having nickname issues or being muted. You also describe another 
-issue: the timing. Having a real-time discussion has its benefits, but 
-also it leaves many people out.
+On Mon, 13 Aug 2018, Jeff King wrote:
 
-One idea to try next time is to create a mailing list thread asking for 
-statuses, and each person can chime in asynchronously and spawn a new 
-discussion based on that status. Perhaps we can try that next time.
+> For the past several years, we've held a Git Contributor Summit as part
+> of the Git Merge conference. I'd like to get opinions from the community
+> to help plan future installments. Any feedback or opinion is welcome,
+> but some obvious things to think about:
+> 
+>   - where, when, and how often?
+> 
+>     Plans are shaping up to have Git Merge 2019 in Brussels right after
+>     FOSDEM in February (like it was two years ago), with a contributor
+>     summit attached.
+> 
+>     Are there people who would be more likely to attend a contributor
+>     summit if it were held elsewhere (e.g., in North America, probably
+>     in the Bay Area)? Are people interested in attending a separate
+>     contributor summit not attached to the larger Git Merge (and if so,
+>     is there any other event it might be worth connecting it with,
+>     time-wise)?  Are people interested in going to two summits in a year
+>     (e.g., Brussels in February, and then maybe some in North America
+>     later in the year), or is that diminishing returns?
 
-Thanks,
+I cannot speak for "the people", but for myself: Brussels is an ideal
+location *for me*. I would probably be unable to physically go to a
+second, in-person meeting in the same year, but I would of course love to
+attend remotely.
 
--Stolee
+>   - format
+> 
+>     For those who haven't attended before, it's basically 25-ish Git
+>     (and associated project) developers sitting in a room for a day
+>     chatting about the project. Topics go on a whiteboard in the
+>     morning, and then we discuss each for 30-60 minutes.
+> 
+>     We could do multiple days (which might give more room for actually
+>     working collaboratively instead of just discussing). We could do
+>     something more formal (like actual talks). We could do something
+>     less formal (like an all-day spaghetti buffet, where conversation
+>     happens only between mouthfuls). The sky is the limit. Some of those
+>     ideas may be better than others.
 
+I found the unconference-style, one day meeting to be most productive.
+
+As to more formal? I don't know... talks seem to be fun and all, but they
+require a lot of preparation. Something championed in our standups are
+"chalk talks", i.e. somebody presenting in a bit more detail what they are
+working on, in particular explaining the context (think: Stolee
+enlightening the audience about finer points of computational graph
+theory) *without* preparing for it specifically. That makes for fun
+presentations, if a bit more chaotic than a real "conference talk". This
+format obviously lends itself to Google Hangouts.
+
+As to multiple days: Of course it would be nice to have a kind of a "hack
+day", but I wonder how productive this would be in the context of Git,
+where interests very so widely.
+
+Rather than have a "hack day", I would actually prefer to work with other
+contributors in a way that we have not done before, but which I had the
+pleasure of "test ballooning" with Pratik: using Visual Studio Code Live
+Share. This allows multiple users to work on the same code base, in the
+same worktree, seeing what each other is doing. It requires a separate
+communication channel to talk; Pratik & I used IRC, but I think Google
+Hangout (or Skype or WhatsApp or <insert-your-favorite-chat-here>) would
+have worked a bit better. It's kind of pair programming, but with some of
+the limitations removed.
+
+I guess I went off on a tangent here...
+
+Ciao,
+Dscho
