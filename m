@@ -2,123 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1D071F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 20:44:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FDDA1F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 21:21:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727172AbeH1AcQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 20:32:16 -0400
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:37051 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727029AbeH1AcQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 20:32:16 -0400
-Received: by mail-wr1-f44.google.com with SMTP id u12-v6so259519wrr.4
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 13:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=hBMfn8mtJ1zNzxfuxhlLIL4Zl3nP2wuNM3TWu06XLMI=;
-        b=ZzRVWb0ug5l29BGPhdnr2o292ZV1mstjc+hLg4U2P5JBJMMdenXK4hVjmscO135Yfc
-         oQ1CZDrcqyiHWQJrcWjtKJAHp5DZh/jrj5lSg9aYBohVmdosFoi018kWPdDA/KR32F5a
-         0LZxgU3/AN7wW9HscfFGjWDzTn130YVwjeO1sEmBGtMPI0T/+d33k6oFhT0xtAS6zh9y
-         U52YMYx8jVmGePDRp/k5CkCRTa5g7lGjIwL3pxOxRJ1jeG81ruaNxcwyw9nhKit5oFgS
-         Qrmiipdm4wMtCwCg7w2UwODwxwGiI9b7ThCSaFookik5V/Pgg6hdJXZkn7YNSRbYP3bU
-         CvKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=hBMfn8mtJ1zNzxfuxhlLIL4Zl3nP2wuNM3TWu06XLMI=;
-        b=fNJVXRoYjdUdpyV4K8AEPhOnBEIA/LKah1CXbTGxZTXdpvVudn6cbYL8IoSl0PTs0/
-         egmWwhM7ah3adv9Z83ZBFqpIqGU8VgalsRSiHyaOALfyIGbzh2wlp4BayiieQ7ZgMRLO
-         L4CQBPG80vzhVM8v3baXj4IB8fbxgYcbAxyLG0W3tbYB8a7lIvEQFVWLgRY+jX/kHcX3
-         djBHRzBUTOurCMXGSjQIKDq96wQvCgG7rBM1DGGWQinrCwpjm6bvQMIQdI84BSo8N52J
-         Hc/AiSVheSh0oykLNvekKWkQKUarX+p3d+qXS269sY7RiENOYgNrTiQ037XMPMq2ExK7
-         2tXQ==
-X-Gm-Message-State: APzg51By1Y+9KfIAx0QezR3EoroRtg6nCmh6g7400CCq14AsJpfL05b9
-        yHoPiyYVQcDON/JMVajCgno=
-X-Google-Smtp-Source: ANB0VdaRKqhWJnNAHrZyNqfCX3bOytt01qM+yYOPkRrBNn1zSf1psUOCTxkGxOXMwfbNVMTBDwQbbA==
-X-Received: by 2002:a5d:438d:: with SMTP id i13-v6mr10093667wrq.156.1535402641640;
-        Mon, 27 Aug 2018 13:44:01 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id c8-v6sm179422wrp.33.2018.08.27.13.44.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 27 Aug 2018 13:44:00 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org,
-        =?utf-8?Q?Cons?= =?utf-8?Q?tantin_Wei=C3=9Fer?= <i7c@posteo.de>
+        id S1727497AbeH1BJk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 21:09:40 -0400
+Received: from mout.gmx.net ([212.227.15.19]:43411 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727199AbeH1BJk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 21:09:40 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MexaL-1gIoUM00gj-00OYIF; Mon, 27
+ Aug 2018 23:21:15 +0200
+Date:   Mon, 27 Aug 2018 23:21:14 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Constantin_Wei=C3=9Fer?= <i7c@posteo.de>
+cc:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org
 Subject: Re: Would a config var for --force-with-lease be useful?
-References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
-        <xmqqin3vk3yv.fsf@gitster-ct.c.googlers.com>
-        <87o9dnegxi.fsf@evledraar.gmail.com>
-        <xmqqlg8rinbz.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqlg8rinbz.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 27 Aug 2018 22:44:00 +0200
-Message-ID: <87k1obee0f.fsf@evledraar.gmail.com>
+In-Reply-To: <153520405068.637.7595973048355361242@cwe>
+Message-ID: <nycvar.QRO.7.76.6.1808272306271.73@tvgsbejvaqbjf.bet>
+References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com> <153520405068.637.7595973048355361242@cwe>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1493945599-1535404875=:73"
+X-Provags-ID: V03:K1:ikC4UiJN9ZhWsBAvAAhhiomSLiZ8E5688Pn9KdO8BPl3Qde87Wz
+ bgsZl1x2Oho9Bu4Kwq8h+167aJ/IIX20oyGpWIPs1CBwc/2OeYTQShNKWvt/rmryjZNjxsu
+ 7zNGIdIL7ShrnhHsdISOMq5st8OkGYRD9G+klGQXf/8WKxJwr1W8fRiC1ARINMPrU8QnKy2
+ scHKTx3S1tqYOeLW2c+QQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LeWmH9NlXM0=:t49ju0T70n+W+dnfWJhgv6
+ bIUm/Veikt8T5R31nNDBiOd5epEbrDlJr5u20+eIZ8SlrlqThrYr1ZS/doqE6iq083iRnAqzq
+ AQCwNIvrKyPqN2MBxgnt8Vrjnw5KlxgBDvWaDaDa/oRwpp33kw7sUwmvvusY/jp4OnkF7CNDB
+ ikQvjdS4+eGtoDkY+qiBITAMjROftFLxwYWpCBBmEgmOyEqGbT7lf0zfu4vqWjg6pza0RxcSl
+ 3nlmyKuGwNtAAVa+dU2dwmc2A1HtfwLo/blIjDuEYqRtEkSPBdURvwEGyXDqLRhcesCY0YGRi
+ 5N/yIH4Gp7qCUY78NwhoJHj2n76hy/TbMGchS/EN7kRYR5VF4m9CT7tbuNDMGl6avMuXZg8Gd
+ HZnv/YTx0oIbxGISTKz8BeZ3vE4q4B7qGI28Z8WPkM3RKs8n0X6TL2Sug+oL5HU04xVBcUJYn
+ CQQXQW6aHpgDwvxyiyBHeQQuD4+R8pLoCX18YAB2CBcGGR8Cl2Usf0kLoSHRoAuOT8sPyit75
+ Dm+N2akJcVe+heACNdpNlnnD72m6ZpEVRtpjQrR0awNXbRjWmnXhdO9RPHMTx79uXSrFbpGGi
+ YeOn7zeuf6RxZIvckUF6wD0jwb3ARpivP4U+cTe5TlLxeXBIs6lTPNXBgCCWt2N/E3DCYP+Sc
+ z7lIUoGHRMgUCSWTkg3/6lMbnHu3udym3kszaR93cgArcLbeafW2BJT3AKYrncXKgt/ParvE1
+ CFrAoOsPSwfJsGooXXBwnogtqvrusb7Mjv4qhqxAHELuz2v3/HdVTx2jwgKuTcDeqv5rGwQIx
+ FxAZ/PS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, Aug 27 2018, Junio C Hamano wrote:
+--8323328-1493945599-1535404875=:73
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-[Scott, I hope you're still with us despite your recent attempt to
-unsubscribe from git@ :)]
+Hi,
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> This was after/during a long discussion starting with:
->> https://public-inbox.org/git/CACBZZX7MeX-6RHgh2Fa9+YL03mjxs8xmyE86HnVxBxjMYizcig@mail.gmail.com/
->>
->> It appears the only patch that got in from that discussion was my
->> f17d642d3b ("push: document & test --force-with-lease with multiple
->> remotes", 2017-04-19) (https://github.com/git/git/commit/f17d642d3b)
->
-> Thanks for pointing at the old thread.
->
-> As far as our documentation is concerned, the invitation to improve
-> the situation, offered in "git push --help", is still valid:
->
->     Note that all forms other than `--force-with-lease=<refname>:<expect>`
->     that specifies the expected current value of the ref explicitly are
->     still experimental and their semantics may change as we gain experience
->     with this feature.
->
-> But I do not think (and I did not think back then) there is a magic
-> bullet to make the lazy force-with-lease automatically safe for
-> everybody, so it may be time to declare that the lazy force-with-lease
-> was a failed experiment and move on, with a patch like the one
-> suggested last year in the message:
->
->    https://public-inbox.org/git/xmqq37a9fl8a.fsf_-_@gitster.mtv.corp.google.com/
+On Sat, 25 Aug 2018, Constantin Wei=C3=9Fer wrote:
 
-With the benefit of hindsight I still agree with my counter-argument to
-that in https://public-inbox.org/git/8760f4bmig.fsf@gmail.com/
+> I think there are two aspects to using "force with lease".
 
-I.e. making plain --force-with-lease harder to use by hiding it behind a
-config option gives the user fewer options than with --force to recover.
+There is a third, very, very important aspect.
 
-So I think we should still recommend the longer and even safer variants
-of --force-with-lease, but being guaranteed to have the SHA-1 you just
-clobbered locally is *better*, and allows us to e.g. do this:
+When you use --force-with-lease (and I, for one, do, all the time), keep
+in mind that it assumes that you are at least aware of the latest fetched
+ref.
 
-    $ git push --force-with-lease
-    hint: You just clobbered <X> on <remote with <Y>. If you regret
-    hint: this you can (until the object gets pruned) do:
-    hint:     git push <remote> --force-with-lease=<refname>:<Y>
+Let's add a little color to this, to make it less theoretical, and more
+relateable. Let's assume that you work on a branch, say,
+`make-this-thing-work`, and you have to work on this branch on two
+different machines, because it is a finicky thing you need to make work.
+Let's add even more color by saying that one of your machines is a windows
+machine, and the other one an old IRIX machine. We will call them
+`windoze` and `irixxx`.
 
-Or, doing the same with --force with some config option to use the
-marginally safer (because at least you have a local copy)
---force-with-lease automatically.
+The common use case for `--force-with-lease`, at least as far as I know,
+is that this branch is pushed from one of these setups first, say,
+`windoze`, and fetched on the other, then a fixup is necessary and you
+rebase the branch with `--autosquash` to make it compile on IRIX, and then
+you push with `--force-with-lease` a day later, just in case that you
+forgot to re-fetch something that you did on the `windoze` machine.
+
+(Something like this happened to me recently, where one of my branches did
+not compile in a Linux VM with an older cURL, and I had to fix a
+Windows-targeting branch to keep it cross-platform)
+
+The `--force-with-lease` option helps here, and quite a bit.
+
+It would totally lose its usefulness, though, if you use a tool that
+auto-fetches those remote branches. For example, "synchronizing" in
+<name-your-favorite-git-gui-here>.
+
+In that case, you did not see what was fetched, and you might have missed
+updates, and you will overwrite them, even if you tried to be careful by
+using `--for-ce-with-lease`.
+
+I proposed, a couple of months ago, to either fix `--force-with-lease`, or
+to deprecate it in favor of a new option, with a new behavior. The new
+behavior would look at the *reflog*, much as the `--fork-point` option of
+`git rebase`: in addition to the regular `--force-with-lease` server-side
+checks, a client-side check *first* verifies that the remote-tracking
+branch is reachable at least from *one* of the items in the reflog of the
+branch we are about to push.
+
+That is, it would ensure that even if we rebased locally, we did
+incorporate the tip commit of the remote-tracking branch, at some stage.
+
+Granted, there are probably cases where you would fetch, look at the
+remote-tracking branch, and reject those changes without integrating those
+into the local branch. In that case, you would want to relax to the
+current behavior of `--force-with-lease`. But I would expect that to
+happen only rarely.
+
+The safety by the proposed behavior would make it a lot easier to accept a
+config setting that makes this the default.
+
+I guess that is the reason why that config setting does not exist yet: we
+would want to have that new behavior in place first...
+
+Ciao,
+Johannes
+
+>=20
+> Firstly, you, a person aware of the option, using it. In this case I
+> think an alias is very fitting, because you get quickly used to just
+> typing `git pf` or so. Plus, you don't have the disadvantage you
+> described: if you=E2=80=99re working on a machine without your alias, you=
+=E2=80=99ll
+> just notice immediately and type the full option.
+>=20
+> The other aspect is working in a team. The problem there is, that most
+> (at least in my surroundings) use plain --force and you have to make
+> them aware of --force-with-lease. But with an option or an alias, you
+> depend on them using force with lease instead of plain force, so again I
+> don't really see the advantage of such an option.
+>=20
+> And lastly, a question: say you are using your proposed option and it is
+> turned on. Now, git refuses to push, you clarify the situation and
+> actually mean to push --force now. How would you do this? 1) turn off 2)
+> push 3) turn option on again?
+>=20
+> Regards,
+> Constantin
+>=20
+> Quoting Scott Johnson (2018-08-24 18:39:27)
+> > Hello Everyone:
+> >=20
+> > I'm considering writing a patch that adds a configuration variable
+> > that will allow the user to default the command:
+> >=20
+> > git push --force
+> >=20
+> > to:
+> >=20
+> > git push --force-with-lease
+> >=20
+> > As discussed here:
+> >=20
+> > https://stackoverflow.com/questions/30542491/push-force-with-lease-by-d=
+efault
+> >=20
+> > Now, I understand that there are downsides to having this enabled,
+> > namely that a user who has this enabled might forget that they have it
+> > enabled, and, as such, on a machine that _doesn't_ have it enabled (of
+> > which they are unfamiliar) might then run the more consequential
+> > command "git push --force", but my thinking is that adding this as a
+> > feature to the git codebase as an _optional_ (i.e. not enabled by
+> > default) configuration variable would then save some of us who use a
+> > "rebase-then-force-push for pull request" workflow some time and
+> > headaches.
+> >=20
+> > Of course, I don't want to submit a patch if this is a feature that
+> > isn't likely to be accepted, so I wanted to get some thoughts from the
+> > mailing list regarding this idea.
+> >=20
+> > Thank you,
+> >=20
+> > ~Scott Johnson
+>=20
+--8323328-1493945599-1535404875=:73--
