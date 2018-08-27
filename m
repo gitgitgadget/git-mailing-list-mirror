@@ -2,78 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CD481F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 15:53:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 299441F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 15:55:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727192AbeH0TkV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 15:40:21 -0400
-Received: from mail-io0-f177.google.com ([209.85.223.177]:46235 "EHLO
-        mail-io0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727065AbeH0TkV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 15:40:21 -0400
-Received: by mail-io0-f177.google.com with SMTP id y12-v6so13180754ioj.13
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 08:53:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=5o52nTwie+JVZjI8c4tzIb26o7ZWSRmDsXwnaCR2iLg=;
-        b=JVk/8KhhMPlkCduKviILXK2eE7w6ETptBQ6GWa4Nl67328VKGaWzQRyMohLFQPGPj9
-         TaUvYNZRsozzoEVRa7YZcW1qzvGaCCNhcRZB+moOXpeCGafkQgoZ656+SsQGR9O1KvZR
-         PNrfn450gxemTAa0NWnigniA3yl464Fy7+uo+qVanzOpzi8LNTfg0fHfpMoQ27QNk/ve
-         I63b6ttLBMmSq3UchV5fW3NM4EADhYeunDK02gwHvrLhGxa1nAiku8JrdT7+fwOGcn0y
-         QoTkBsHzFZQjlFdtvGe3Oc5yDmTuMmH7HAQbYmMYxzbcgvvyU/A4k/Q80PzGunD3sIOz
-         LkYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5o52nTwie+JVZjI8c4tzIb26o7ZWSRmDsXwnaCR2iLg=;
-        b=B071QXpvOLHLn1n9hRDfvjlZZCqpZzVozTNp4LRDfoqDJ1ju9DoZODa4KZcrXvjsLi
-         FuXSQVHz4bSIQ5/GpHMop5kkIpijIjhvVBSte4yffEl7Wgg/lrO2ytBBLMch6C+l9wxk
-         Tn5uMXNR1P32AP3Z3gmlOtKRi8Ls09v4FruP7G0N1DU+LxrLODubUtU6k55Ip+zQp9l3
-         XJttR/QHddG41e+rd0RPKpkS/LUOnSUsLDkjNJ34OuKo5CDpcT6W0vG3zUorforpp4/O
-         yDQ6fbEyZmlEQxmWnhO0YFJMz6wmDHPJOq7mX+Fe3GZQLT4LGWK5/lTLpSODBg9xNO+K
-         p7sg==
-X-Gm-Message-State: APzg51CB8AxkjyIE6WlkPBCp91oOZ5XTragAoFmDj8iqqEkD0SYHU0JG
-        2JT4b88aCp8xcsy/lu5cLGQRj1agBl+9C1ACKPo=
-X-Google-Smtp-Source: ANB0VdZnppE5eNHlQpIEM0jOz5N8EUTpCn2tXLuinBsBifk9x03hbf/T5VNfNYsrR3mAEEVYCBpmU9AffW0frkRy5sA=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr2393860ioe.282.1535385190987;
- Mon, 27 Aug 2018 08:53:10 -0700 (PDT)
+        id S1727128AbeH0TmV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 15:42:21 -0400
+Received: from mout.gmx.net ([212.227.17.21]:59901 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727058AbeH0TmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 15:42:21 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MV6PJ-1gQZA10mVx-00YQdf; Mon, 27
+ Aug 2018 17:55:00 +0200
+Date:   Mon, 27 Aug 2018 17:54:58 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: Measuring Community Involvement (was Re: Contributor Summit
+ planning)
+In-Reply-To: <xmqqin4cznmt.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808271754140.73@tvgsbejvaqbjf.bet>
+References: <20180813163108.GA6731@sigill.intra.peff.net>        <87h8jyrtj6.fsf@evledraar.gmail.com>        <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>        <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>       
+ <20180813210617.GA19738@sigill.intra.peff.net>        <CAGZ79kaNa2bo31rQexs4rAH6bAz1rMzpxS3-fSFE6Cj87E8saw@mail.gmail.com>        <20180813215431.GB16006@sigill.intra.peff.net>        <3f0da3cd-0929-4aad-2c50-92c9d6c660e5@gmail.com>       
+ <20180814193646.GC28452@sigill.intra.peff.net> <xmqqin4cznmt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com>
- <20180827153524.GA18025@tor.lan>
-In-Reply-To: <20180827153524.GA18025@tor.lan>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 27 Aug 2018 17:52:44 +0200
-Message-ID: <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
-Subject: Re: Automatic core.autocrlf?
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Robert Dailey <rcdailey.lists@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:z+LpGNJZwp3TO19VAEW77dRFAo49mdEdPsBiD4dai59/rigAho8
+ ldRy/UBN/QnReCCPm4SdEkhP9D9Mjv3xL5E+nTVO4E/00fJCUosgj954qSaQb35a6FeaEgv
+ LImfycJithRaNuXwvmxKYGaGLZFKdVs2rHzO1kkUIkhSQHPMMyKxM7etym36c6LQHh0CbY/
+ FWc2oHJw+IyeAZEdRqkhw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:iPqGEHtgWKk=:pJFLWYyrGxJPNUfuh2uFNx
+ kNOvoqhlRWX2n52++Z0mcNH03OMwu6wIlEVc3CaRrYnW+wXwkPGGaCFSGf+0WVRMUFx2Ts8jd
+ dWfNrTHvltaQqHaabZStf5iMxcbyTC4YV7WdWG1YFq01X3frv8PstElvTUJOrgZJejjDpxSve
+ 7iW3qpY7bIm4JXSM1Bglj01T4CLFNWK6H2U3d0TI8hi0VcthsTAHyvub3sYllXBa2yGklgGM1
+ 9r2FZCY1TcH1F05NqYOYN7XifpIFunHrOIf8ISJ4Fb27ymIVedOleerQL/aUwZsvEHIZlcuyH
+ NwBH/mxb2XxiR1peASp/keHp6aT+ZQ3XfIYTc8ckWlKZiJ2R2YXtbFisvQZKIXZut3Id0qZS9
+ /BMVBuEvC/0Wv0qQUnJ1HQFmavbp875BMn5oCOvrZgptRP1w34FHjcNcFULPv7b+4FfFdhZcC
+ n7uvZ11FOdp2H9XSPWNnGJVACeFeGZHNyntqw4/fJd/sVzr51Tl0USFA3rSCWZDq6UaESOaD8
+ pAIfztDnTUXuwqfsDF1smuAzrmXB0PSbvatVSz2Jj/a5FRZUbcmb4nvbEPF7s8gWIEPCQBX1Z
+ 2q0kbxNq2Bv+cGYHs+jWgssVjROsR8LXm91usJ2SEM/7T3qcHCC9UtMrV8hpLaBMpfbi6j/PX
+ yTXe+4oSTD7VT6ZDZpgL77e39e5buHuMNzGSgADMUDa7ANgDLRUsqAu7J3PrtmCRlE3a5EoLO
+ nEMuQaUlUFNFOKDb1S+coLB4m8cLSGpoZJlUqDSKGL8RgBMrg4XGlXZBdrfcHM2swDdKpeWLT
+ v2J7iK8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 5:37 PM Torsten B=C3=B6gershausen <tboegi@web.de> w=
-rote:
-> > In those cases, when it falls back to
-> > configuration for line ending management, I want it to be
-> > automatically configured based on the host platform.
->
-> There is
-> git config core.eol native
+Hi Junio,
 
-An alternative is supporting conditional config includes based on
-platform or host name, but I don't know if there are more use cases
-like this to justify it.
---=20
-Duy
+On Tue, 14 Aug 2018, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Tue, Aug 14, 2018 at 01:43:38PM -0400, Derrick Stolee wrote:
+> >
+> >> On 8/13/2018 5:54 PM, Jeff King wrote:
+> >> > So I try not to think too hard on metrics, and just use them to get a
+> >> > rough view on who is active.
+> >> 
+> >> I've been very interested in measuring community involvement, with the
+> >> knowledge that any metric is flawed and we should not ever say "this metric
+> >> is how we measure the quality of a contributor". It can be helpful, though,
+> >> to track some metrics and their change over time.
+> >> 
+> >> Here are a few measurements we can make:
+> >
+> > Thanks, it was nice to see a more comprehensive list in one spot.
+> >
+> > It would be neat to have a tool that presents all of these
+> > automatically, but I think the email ones are pretty tricky (most people
+> > don't have the whole list archive sitting around).
+> 
+> I do not think it covered e-mail at all, but there was git stats
+> project several years ago (perhaps part of GSoC IIRC).
+> 
+> > I think I mentioned "surviving lines" elsewhere, which I do like this
+> > (and almost certainly stole from Junio a long time ago):
+> 
+> Yeah, I recall that one as part of counting how many of 1244 lines
+> Linus originally wrote still were in our codebase at around v1.6.0
+> timeframe (the answer was ~220 IIRC) ;-)
+
+And if you do not remember precisely, you can easily re-run `Linus` from
+here: https://github.com/git/git/blob/todo/Linus
+
+Ciao,
+Dscho
