@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6701F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 19:43:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08F201F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 19:43:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727513AbeH0Xbo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 19:31:44 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:50200 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727506AbeH0Xbo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 19:31:44 -0400
-Received: by mail-wm0-f66.google.com with SMTP id s12-v6so116068wmc.0
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 12:43:43 -0700 (PDT)
+        id S1727522AbeH0Xbq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 19:31:46 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:36836 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727506AbeH0Xbq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 19:31:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id j192-v6so121924wmj.1
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 12:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=tMmvUjfXPa7my9k4u98RuZmUBLQ3m7TdAM5w7txFXMA=;
-        b=krvflm6evehUgpRcoEp35p9T22KSEuE8bPDU6PwhVLuG3PEgt/SA+LC/LRQaBiHbsu
-         RKz1VaKIIjE4Z1d1QuV+SPCBIJM5FuyFtI/SY2WsGwYZYTIeFRSOHSQ6nNk2A8WJvcxv
-         hZR/gQTGFN9oLZ2Qj/J9Sf6B9Kb0Qx284PijbsrC5VFWK/9zO39GNfgPEWGS4T/wGvDU
-         t1XZKVegvYYJqDDe1I0RzWQ9ogOSbSKmGhqZhWbocn8qOu3767YwSMMCc/RosgoOnoAM
-         mc5mydKmj6VUXt00whKkCY6IUtjB6GUroe0zEUgyUzcrBqEDKMp0WfgKlRYg3hBSdQ+F
-         6tqA==
+        bh=OSDu03Htkfy+Hvq7eHdO3vS/MbQ/Yt0pgpanwxrqCsM=;
+        b=OxzlGS0xdsB7rggWmso0FIwLCPRd+zen9XNEkpQE2+HuNX9WWYcdNJABVVcgWzny8L
+         XXYjhs0S+acJkbVfz4NqSSYAGzlNALhJ2tH8chdqyT0R223QJaYRxP7EYmCgeWJQN4no
+         qlrnOvsmjVZadZ5Yf8TgudCtTrBRKOCMiE3PJmmevfs5vz3gOgEAgsv2fJoRYatz23UB
+         4cKk60XoT1RQIrk+qHwoSRtrMAG0Sax+VelaUWaW6RVl8IOeYxL6HdFUfMxIJx5vv16U
+         o+oP4ApXkk4wj4KklNvUG+psG3C48Wg6PBZZL6jSksLFyx4FnBoMN9haEWL7Y64xJgTO
+         5M4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=tMmvUjfXPa7my9k4u98RuZmUBLQ3m7TdAM5w7txFXMA=;
-        b=VD7il30UHHsMayF0m8kfQ7KVqcdaMP/P1+CpDkprJ51MZt2SJkS5I4G22qcEoVr/Hl
-         BLz6DtPczNfKhYLd6Nrl8sKLZ6hpkNXv6gsl4XM2e8Br7/LbCSr6O+GCI1PcHWF6gB6A
-         MkvWhWgO0x6yUpiSAp5Tz5wKTivrLVPX/w+MRvkFrb5BLZCxIUoXxeD+uZ8luRaLRzGB
-         yflsRK8LUH0GAMpmYo8S0GI4YfpyoI7a12nGAH982xQFwTD4UzIMipXHYaSXNOIkqUbQ
-         xv/0LOwJRS4XYkLPtcxlEytwOVWSer2B0fKugoxG6IO5h9LFsgDucrrwVyIfleojpI7a
-         lWLg==
-X-Gm-Message-State: APzg51Bt7NuBRjwbhVE/yR3/JyEuSQZ4xMBpWNEIg8XGzDbefvaOzvMt
-        +JhF1AqJN3nYOFr/l3f9gnovbmvggoM=
-X-Google-Smtp-Source: ANB0VdaifLEYiG9SnffjfpPPp9ezue52kLicDuRXj+2aq/6ne/gND6I33DZTCNe5GRZ+Gx+J7dK0JQ==
-X-Received: by 2002:a1c:f30d:: with SMTP id q13-v6mr6264426wmq.36.1535399022065;
-        Mon, 27 Aug 2018 12:43:42 -0700 (PDT)
+        bh=OSDu03Htkfy+Hvq7eHdO3vS/MbQ/Yt0pgpanwxrqCsM=;
+        b=LIbcZsfs7ytMwkfMxXq2foMjAL2uTBNFCMGMdIBE4pIpf8iEznv1yvJeTXUusQwHo/
+         +SusgXVj8LNbcMlhxDGhUe1m76Kr5HmE/NNVJM2A9vqCM/2+lrpQxqrMlQlXpUsOYaCd
+         pRm+stjOseQIm35owXtsQ0x6M2RNwfqrNtC4R58lUMK6i1usdjZRIvQTijDf4/Y2VeJA
+         MmJtFxlywBWiqB7Gm0oWfsvkaZdCfO32wqoA+8szMcdIDTDS1eafpl5cGKfjlzFFGc6O
+         7HF5Ky/VG01rv2zykPeUX0ARzLw+0A+8pNjnZ0bijaqxvIRvjMcGUHXYwNnKf1G6ouPf
+         5C3Q==
+X-Gm-Message-State: APzg51AYMtCy0k7gCXsX5yMdnBHkJTdEJbn1eESq3EKj48rvRk+oCI2s
+        dFKhbP8fL9rH10uvRNNozP2JIbaQ2dg=
+X-Google-Smtp-Source: ANB0VdaIs7u92dJOcmdi7BH5A/iXlnPYYpmcwUnQsC4PjROF6jDiYnBXto4KHk8T3bf6faCCOPwnbA==
+X-Received: by 2002:a1c:9dc3:: with SMTP id g186-v6mr6518113wme.26.1535399024130;
+        Mon, 27 Aug 2018 12:43:44 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q135-v6sm121958wmd.4.2018.08.27.12.43.41
+        by smtp.gmail.com with ESMTPSA id q135-v6sm121958wmd.4.2018.08.27.12.43.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Aug 2018 12:43:41 -0700 (PDT)
+        Mon, 27 Aug 2018 12:43:43 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 5/7] fsck: use strbuf_getline() to read skiplist file
-Date:   Mon, 27 Aug 2018 19:43:21 +0000
-Message-Id: <20180827194323.17055-6-avarab@gmail.com>
+Subject: [PATCH v3 6/7] fsck: use oidset for skiplist
+Date:   Mon, 27 Aug 2018 19:43:22 +0000
+Message-Id: <20180827194323.17055-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180827194323.17055-1-avarab@gmail.com>
 References: <20180827194323.17055-1-avarab@gmail.com>
@@ -75,86 +75,146 @@ X-Mailing-List: git@vger.kernel.org
 
 From: René Scharfe <l.s.r@web.de>
 
-buffer is unlikely to contain a NUL character, so printing its contents
-using %s in a die() format is unsafe (detected with ASan).
+Object IDs to skip are stored in a shared static oid_array.  Lookups do
+a binary search on the sorted array.  The code checks if the object IDs
+are already in the correct order while loading and skips sorting in that
+case.  Lookups are done before reporting a (non-fatal) corruption and
+before checking .gitmodules files.
 
-Use an idiomatic strbuf_getline() loop instead, which ensures the buffer
-is always NUL-terminated, supports CRLF files as well, accepts files
-without a newline after the last line, supports any hash length
-automatically, and is shorter.
+Simplify the code by using an oidset instead.  Memory usage is a bit
+higher, but we don't need to worry about any sort order anymore.  Embed
+the oidset into struct fsck_options to make its ownership clear (no
+hidden sharing) and avoid unnecessary pointer indirection.
 
-Helped-by: Jeff King <peff@peff.net>
+Performance on repositories with a low number of reported issues and
+.gitmodules files (i.e. the usual case) won't be affected much.  The
+oidset should be a bit quicker with higher numbers of bad objects in
+the skipList.
+
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- fsck.c                          | 25 ++++++++++++-------------
- t/t5504-fetch-receive-strict.sh |  2 +-
- 2 files changed, 13 insertions(+), 14 deletions(-)
+ Documentation/config.txt | 11 ++++++-----
+ fsck.c                   | 23 ++---------------------
+ fsck.h                   |  8 +++++---
+ 3 files changed, 13 insertions(+), 29 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index a8dfafa61d..3d0556e85d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1729,11 +1729,12 @@ all three of them they must all set to the same values.
+ +
+ Older versions of Git (before 2.20) documented that the object names
+ list should be sorted. This was never a requirement, the object names
+-can appear in any order, but when reading the list we track whether
+-the list is sorted for the purposes of an internal binary search
+-implementation, which can save itself some work with an already sorted
+-list.  Unless you have a humongous list there's no reason to go out of
+-your way to pre-sort the list.
++could appear in any order, but when reading the list we tracked whether
++the list was sorted for the purposes of an internal binary search
++implementation, which could save itself some work with an already sorted
++list. Unless you had a humongous list there was no reason to go out of
++your way to pre-sort the list. After Git version 2.20 a hash implementation
++is used instead, so there's now no reason to pre-sort the list.
+ 
+ gc.aggressiveDepth::
+ 	The depth parameter used in the delta compression
 diff --git a/fsck.c b/fsck.c
-index a0cee0be59..972a26b9ba 100644
+index 972a26b9ba..4c643f1d40 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -183,8 +183,9 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+@@ -10,7 +10,6 @@
+ #include "fsck.h"
+ #include "refs.h"
+ #include "utf8.h"
+-#include "sha1-array.h"
+ #include "decorate.h"
+ #include "oidset.h"
+ #include "packfile.h"
+@@ -182,19 +181,10 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+ 
  static void init_skiplist(struct fsck_options *options, const char *path)
  {
- 	static struct oid_array skiplist = OID_ARRAY_INIT;
--	int sorted, fd;
--	char buffer[GIT_MAX_HEXSZ + 1];
-+	int sorted;
-+	FILE *fp;
-+	struct strbuf sb = STRBUF_INIT;
+-	static struct oid_array skiplist = OID_ARRAY_INIT;
+-	int sorted;
+ 	FILE *fp;
+ 	struct strbuf sb = STRBUF_INIT;
  	struct object_id oid;
  
- 	if (options->skiplist)
-@@ -194,25 +195,23 @@ static void init_skiplist(struct fsck_options *options, const char *path)
- 		options->skiplist = &skiplist;
- 	}
- 
--	fd = open(path, O_RDONLY);
--	if (fd < 0)
-+	fp = fopen(path, "r");
-+	if (!fp)
+-	if (options->skiplist)
+-		sorted = options->skiplist->sorted;
+-	else {
+-		sorted = 1;
+-		options->skiplist = &skiplist;
+-	}
+-
+ 	fp = fopen(path, "r");
+ 	if (!fp)
  		die("Could not open skip list: %s", path);
--	for (;;) {
-+	while (!strbuf_getline(&sb, fp)) {
+@@ -202,19 +192,12 @@ static void init_skiplist(struct fsck_options *options, const char *path)
  		const char *p;
--		int result = read_in_full(fd, buffer, sizeof(buffer));
--		if (result < 0)
--			die_errno("Could not read '%s'", path);
--		if (!result)
--			break;
--		if (parse_oid_hex(buffer, &oid, &p) || *p != '\n')
--			die("Invalid SHA-1: %s", buffer);
-+		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
-+			die("Invalid SHA-1: %s", sb.buf);
- 		oid_array_append(&skiplist, &oid);
- 		if (sorted && skiplist.nr > 1 &&
- 				oidcmp(&skiplist.oid[skiplist.nr - 2],
- 				       &oid) > 0)
- 			sorted = 0;
+ 		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+ 			die("Invalid SHA-1: %s", sb.buf);
+-		oid_array_append(&skiplist, &oid);
+-		if (sorted && skiplist.nr > 1 &&
+-				oidcmp(&skiplist.oid[skiplist.nr - 2],
+-				       &oid) > 0)
+-			sorted = 0;
++		oidset_insert(&options->skiplist, &oid);
  	}
--	close(fd);
-+	if (ferror(fp))
-+		die_errno("Could not read '%s'", path);
-+	fclose(fp);
-+	strbuf_release(&sb);
+ 	if (ferror(fp))
+ 		die_errno("Could not read '%s'", path);
+ 	fclose(fp);
+ 	strbuf_release(&sb);
+-
+-	if (sorted)
+-		skiplist.sorted = 1;
+ }
  
- 	if (sorted)
- 		skiplist.sorted = 1;
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 38aaf3b928..c7224db3bb 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -185,7 +185,7 @@ test_expect_success 'fsck with invalid or bogus skipList input (comments & empty
- 	test_i18ngrep "^fatal: Invalid SHA-1: " err-with-empty-line
- '
+ static int parse_msg_type(const char *str)
+@@ -319,9 +302,7 @@ static void append_msg_id(struct strbuf *sb, const char *msg_id)
  
--test_expect_failure 'fsck no garbage output from comments & empty lines errors' '
-+test_expect_success 'fsck no garbage output from comments & empty lines errors' '
- 	test_line_count = 1 err-with-comment &&
- 	test_line_count = 1 err-with-empty-line
- '
+ static int object_on_skiplist(struct fsck_options *opts, struct object *obj)
+ {
+-	if (opts && opts->skiplist && obj)
+-		return oid_array_lookup(opts->skiplist, &obj->oid) >= 0;
+-	return 0;
++	return opts && obj && oidset_contains(&opts->skiplist, &obj->oid);
+ }
+ 
+ __attribute__((format (printf, 4, 5)))
+diff --git a/fsck.h b/fsck.h
+index 0c7e8c9428..b95595ae5f 100644
+--- a/fsck.h
++++ b/fsck.h
+@@ -1,6 +1,8 @@
+ #ifndef GIT_FSCK_H
+ #define GIT_FSCK_H
+ 
++#include "oidset.h"
++
+ #define FSCK_ERROR 1
+ #define FSCK_WARN 2
+ #define FSCK_IGNORE 3
+@@ -35,12 +37,12 @@ struct fsck_options {
+ 	fsck_error error_func;
+ 	unsigned strict:1;
+ 	int *msg_type;
+-	struct oid_array *skiplist;
++	struct oidset skiplist;
+ 	struct decoration *object_names;
+ };
+ 
+-#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
+-#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL }
++#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT }
++#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT }
+ 
+ /* descend in all linked child objects
+  * the return value is:
 -- 
 2.19.0.rc0.228.g281dcd1b4d0
 
