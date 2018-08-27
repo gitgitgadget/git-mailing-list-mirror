@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08F201F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 19:43:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A6601F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 19:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727522AbeH0Xbq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 19:31:46 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:36836 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727506AbeH0Xbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 19:31:46 -0400
-Received: by mail-wm0-f68.google.com with SMTP id j192-v6so121924wmj.1
-        for <git@vger.kernel.org>; Mon, 27 Aug 2018 12:43:45 -0700 (PDT)
+        id S1727506AbeH0Xbr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 19:31:47 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39869 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727515AbeH0Xbr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 19:31:47 -0400
+Received: by mail-wr1-f65.google.com with SMTP id o37-v6so116843wrf.6
+        for <git@vger.kernel.org>; Mon, 27 Aug 2018 12:43:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=OSDu03Htkfy+Hvq7eHdO3vS/MbQ/Yt0pgpanwxrqCsM=;
-        b=OxzlGS0xdsB7rggWmso0FIwLCPRd+zen9XNEkpQE2+HuNX9WWYcdNJABVVcgWzny8L
-         XXYjhs0S+acJkbVfz4NqSSYAGzlNALhJ2tH8chdqyT0R223QJaYRxP7EYmCgeWJQN4no
-         qlrnOvsmjVZadZ5Yf8TgudCtTrBRKOCMiE3PJmmevfs5vz3gOgEAgsv2fJoRYatz23UB
-         4cKk60XoT1RQIrk+qHwoSRtrMAG0Sax+VelaUWaW6RVl8IOeYxL6HdFUfMxIJx5vv16U
-         o+oP4ApXkk4wj4KklNvUG+psG3C48Wg6PBZZL6jSksLFyx4FnBoMN9haEWL7Y64xJgTO
-         5M4w==
+        bh=GMz+lmnvqI7UQpjoZA3LupqFjfPCZ16t26V1M3fnrUw=;
+        b=j/nP5nUCxQX8gUlCy2V6CgvBHoZdUPDB5B9i+jHS8FYW160KndPeNKy15wUsKNhtcm
+         1dIPTQgahwstkU/bojfirhG5I9BYdUp1yr5KboVukwPYPRzNYZldgqDzQ7KirBYw7so/
+         dPGfWbiuljjjAoPrV6SLqv1mMryO7xOCZxMPhag+RASxws/PJeYZL4qkS2A3n7QKI1aL
+         R8rLCJu8YB84cRefPs6VxapwOSReWr7KhgApeOfVD1L+tsWicJgiop/TAvZ4nh3cjqyD
+         JkEKtOvWkQ6RnR5djd8j96QIUazVaWCcreXkQmSfzIAak7Sr8pAo+aeL4moJSQJIl1ds
+         T6Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=OSDu03Htkfy+Hvq7eHdO3vS/MbQ/Yt0pgpanwxrqCsM=;
-        b=LIbcZsfs7ytMwkfMxXq2foMjAL2uTBNFCMGMdIBE4pIpf8iEznv1yvJeTXUusQwHo/
-         +SusgXVj8LNbcMlhxDGhUe1m76Kr5HmE/NNVJM2A9vqCM/2+lrpQxqrMlQlXpUsOYaCd
-         pRm+stjOseQIm35owXtsQ0x6M2RNwfqrNtC4R58lUMK6i1usdjZRIvQTijDf4/Y2VeJA
-         MmJtFxlywBWiqB7Gm0oWfsvkaZdCfO32wqoA+8szMcdIDTDS1eafpl5cGKfjlzFFGc6O
-         7HF5Ky/VG01rv2zykPeUX0ARzLw+0A+8pNjnZ0bijaqxvIRvjMcGUHXYwNnKf1G6ouPf
-         5C3Q==
-X-Gm-Message-State: APzg51AYMtCy0k7gCXsX5yMdnBHkJTdEJbn1eESq3EKj48rvRk+oCI2s
-        dFKhbP8fL9rH10uvRNNozP2JIbaQ2dg=
-X-Google-Smtp-Source: ANB0VdaIs7u92dJOcmdi7BH5A/iXlnPYYpmcwUnQsC4PjROF6jDiYnBXto4KHk8T3bf6faCCOPwnbA==
-X-Received: by 2002:a1c:9dc3:: with SMTP id g186-v6mr6518113wme.26.1535399024130;
-        Mon, 27 Aug 2018 12:43:44 -0700 (PDT)
+        bh=GMz+lmnvqI7UQpjoZA3LupqFjfPCZ16t26V1M3fnrUw=;
+        b=r0tjAD/pz5ocHb6M2m+j8DP2TeC5Ya1cfYbm97Mpn432jepjdyIMWdSyfopKpYLiZJ
+         1QkkpbTvzQtkFBxWOK9Ar038i2n/PExejbMMGmjqNEgYM3zM35DbiwaqTkn49q07bRuv
+         seBqOiYnk/ig7o30XcgMoBUfQo3ags3nU4MLLfebIWGy0sN63sGl40oOOBKSn9GeW64A
+         Ek1OSyfr7dPDHB1j3H0nTnSCHdsZTOVaFRan/+qo4Q5kUDmK9qT8nwpKCd2fDSbT0lsv
+         qF6Gkob5c3HKJlk30pIhf1kyRbzuIWZj5tPdu7ShnSsUFEg5TPw683yKB+KRXjcjZNaB
+         P2Wg==
+X-Gm-Message-State: APzg51CFSwRxjsj88f2IzPM1dUVLKBalv6drgeqaqJt4bkB27mIAqyMy
+        aBHx1o7ZQ1/urULfgZHALgtae86M0Co=
+X-Google-Smtp-Source: ANB0VdYd+9Y/nFt5tlZwVPUfjpvPzyZw7fogL1pWPJ9FJ/J7H366i0bo574awh4TEHedAuaf58Kt8g==
+X-Received: by 2002:adf:e505:: with SMTP id j5-v6mr9231013wrm.111.1535399025875;
+        Mon, 27 Aug 2018 12:43:45 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id q135-v6sm121958wmd.4.2018.08.27.12.43.42
+        by smtp.gmail.com with ESMTPSA id q135-v6sm121958wmd.4.2018.08.27.12.43.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Aug 2018 12:43:43 -0700 (PDT)
+        Mon, 27 Aug 2018 12:43:45 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 6/7] fsck: use oidset for skiplist
-Date:   Mon, 27 Aug 2018 19:43:22 +0000
-Message-Id: <20180827194323.17055-7-avarab@gmail.com>
+Subject: [PATCH v3 7/7] fsck: support comments & empty lines in skipList
+Date:   Mon, 27 Aug 2018 19:43:23 +0000
+Message-Id: <20180827194323.17055-8-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180827194323.17055-1-avarab@gmail.com>
 References: <20180827194323.17055-1-avarab@gmail.com>
@@ -73,148 +73,78 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: René Scharfe <l.s.r@web.de>
+It's annoying not to be able to put comments and empty lines in the
+skipList, when e.g. keeping a big central list of commits to skip in
+/etc/gitconfig, which was my motivation for 1362df0d41 ("fetch:
+implement fetch.fsck.*", 2018-07-27).
 
-Object IDs to skip are stored in a shared static oid_array.  Lookups do
-a binary search on the sorted array.  The code checks if the object IDs
-are already in the correct order while loading and skips sorting in that
-case.  Lookups are done before reporting a (non-fatal) corruption and
-before checking .gitmodules files.
+Implement that, and document what version of Git this was changed in,
+since this on-disk format can be expected to be used by multiple
+versions of git.
 
-Simplify the code by using an oidset instead.  Memory usage is a bit
-higher, but we don't need to worry about any sort order anymore.  Embed
-the oidset into struct fsck_options to make its ownership clear (no
-hidden sharing) and avoid unnecessary pointer indirection.
-
-Performance on repositories with a low number of reported issues and
-.gitmodules files (i.e. the usual case) won't be affected much.  The
-oidset should be a bit quicker with higher numbers of bad objects in
-the skipList.
-
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt | 11 ++++++-----
- fsck.c                   | 23 ++---------------------
- fsck.h                   |  8 +++++---
- 3 files changed, 13 insertions(+), 29 deletions(-)
+ Documentation/config.txt        | 4 ++--
+ fsck.c                          | 2 ++
+ t/t5504-fetch-receive-strict.sh | 6 +++---
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index a8dfafa61d..3d0556e85d 100644
+index 3d0556e85d..e6f95a7fb2 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1729,11 +1729,12 @@ all three of them they must all set to the same values.
+@@ -1710,8 +1710,8 @@ will only cause git to warn.
+ fsck.skipList::
+ 	The path to a list of object names (i.e. one SHA-1 per
+ 	line) that are known to be broken in a non-fatal way and should
+-	be ignored. Comments ('#') and empty lines are not supported, and
+-	will error out.
++	be ignored. On versions of Git 2.20 and later comments ('#') and empty
++	lines are ignored, but will error out on older versions.
  +
- Older versions of Git (before 2.20) documented that the object names
- list should be sorted. This was never a requirement, the object names
--can appear in any order, but when reading the list we track whether
--the list is sorted for the purposes of an internal binary search
--implementation, which can save itself some work with an already sorted
--list.  Unless you have a humongous list there's no reason to go out of
--your way to pre-sort the list.
-+could appear in any order, but when reading the list we tracked whether
-+the list was sorted for the purposes of an internal binary search
-+implementation, which could save itself some work with an already sorted
-+list. Unless you had a humongous list there was no reason to go out of
-+your way to pre-sort the list. After Git version 2.20 a hash implementation
-+is used instead, so there's now no reason to pre-sort the list.
- 
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
+ This feature is useful when an established project should be accepted
+ despite early commits containing errors that can be safely ignored
 diff --git a/fsck.c b/fsck.c
-index 972a26b9ba..4c643f1d40 100644
+index 4c643f1d40..589548308a 100644
 --- a/fsck.c
 +++ b/fsck.c
-@@ -10,7 +10,6 @@
- #include "fsck.h"
- #include "refs.h"
- #include "utf8.h"
--#include "sha1-array.h"
- #include "decorate.h"
- #include "oidset.h"
- #include "packfile.h"
-@@ -182,19 +181,10 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
- 
- static void init_skiplist(struct fsck_options *options, const char *path)
- {
--	static struct oid_array skiplist = OID_ARRAY_INIT;
--	int sorted;
- 	FILE *fp;
- 	struct strbuf sb = STRBUF_INIT;
- 	struct object_id oid;
- 
--	if (options->skiplist)
--		sorted = options->skiplist->sorted;
--	else {
--		sorted = 1;
--		options->skiplist = &skiplist;
--	}
--
- 	fp = fopen(path, "r");
- 	if (!fp)
+@@ -190,6 +190,8 @@ static void init_skiplist(struct fsck_options *options, const char *path)
  		die("Could not open skip list: %s", path);
-@@ -202,19 +192,12 @@ static void init_skiplist(struct fsck_options *options, const char *path)
+ 	while (!strbuf_getline(&sb, fp)) {
  		const char *p;
++		if (!strcmp(sb.buf, "") || starts_with(sb.buf, "#"))
++			continue;
  		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
  			die("Invalid SHA-1: %s", sb.buf);
--		oid_array_append(&skiplist, &oid);
--		if (sorted && skiplist.nr > 1 &&
--				oidcmp(&skiplist.oid[skiplist.nr - 2],
--				       &oid) > 0)
--			sorted = 0;
-+		oidset_insert(&options->skiplist, &oid);
- 	}
- 	if (ferror(fp))
- 		die_errno("Could not read '%s'", path);
- 	fclose(fp);
- 	strbuf_release(&sb);
--
--	if (sorted)
--		skiplist.sorted = 1;
- }
+ 		oidset_insert(&options->skiplist, &oid);
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index c7224db3bb..a1bac164d1 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -169,20 +169,20 @@ test_expect_success 'fsck with invalid or bogus skipList input' '
+ 	test_i18ngrep "Invalid SHA-1: \[core\]" err
+ '
  
- static int parse_msg_type(const char *str)
-@@ -319,9 +302,7 @@ static void append_msg_id(struct strbuf *sb, const char *msg_id)
+-test_expect_success 'fsck with invalid or bogus skipList input (comments & empty lines)' '
++test_expect_success 'fsck with other accepted skipList input (comments & empty lines)' '
+ 	cat >SKIP.with-comment <<-EOF &&
+ 	# Some bad commit
+ 	0000000000000000000000000000000000000001
+ 	EOF
+ 	test_must_fail git -c fsck.skipList=SKIP.with-comment fsck 2>err-with-comment &&
+-	test_i18ngrep "^fatal: Invalid SHA-1: # Some bad commit$" err-with-comment &&
++	test_i18ngrep "missingEmail" err-with-comment &&
+ 	cat >SKIP.with-empty-line <<-EOF &&
+ 	0000000000000000000000000000000000000001
  
- static int object_on_skiplist(struct fsck_options *opts, struct object *obj)
- {
--	if (opts && opts->skiplist && obj)
--		return oid_array_lookup(opts->skiplist, &obj->oid) >= 0;
--	return 0;
-+	return opts && obj && oidset_contains(&opts->skiplist, &obj->oid);
- }
+ 	0000000000000000000000000000000000000002
+ 	EOF
+ 	test_must_fail git -c fsck.skipList=SKIP.with-empty-line fsck 2>err-with-empty-line &&
+-	test_i18ngrep "^fatal: Invalid SHA-1: " err-with-empty-line
++	test_i18ngrep "missingEmail" err-with-empty-line
+ '
  
- __attribute__((format (printf, 4, 5)))
-diff --git a/fsck.h b/fsck.h
-index 0c7e8c9428..b95595ae5f 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -1,6 +1,8 @@
- #ifndef GIT_FSCK_H
- #define GIT_FSCK_H
- 
-+#include "oidset.h"
-+
- #define FSCK_ERROR 1
- #define FSCK_WARN 2
- #define FSCK_IGNORE 3
-@@ -35,12 +37,12 @@ struct fsck_options {
- 	fsck_error error_func;
- 	unsigned strict:1;
- 	int *msg_type;
--	struct oid_array *skiplist;
-+	struct oidset skiplist;
- 	struct decoration *object_names;
- };
- 
--#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL }
--#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL }
-+#define FSCK_OPTIONS_DEFAULT { NULL, fsck_error_function, 0, NULL, OIDSET_INIT }
-+#define FSCK_OPTIONS_STRICT { NULL, fsck_error_function, 1, NULL, OIDSET_INIT }
- 
- /* descend in all linked child objects
-  * the return value is:
+ test_expect_success 'fsck no garbage output from comments & empty lines errors' '
 -- 
 2.19.0.rc0.228.g281dcd1b4d0
 
