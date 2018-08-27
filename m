@@ -7,97 +7,113 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 299441F404
-	for <e@80x24.org>; Mon, 27 Aug 2018 15:55:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4958F1F404
+	for <e@80x24.org>; Mon, 27 Aug 2018 15:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbeH0TmV (ORCPT <rfc822;e@80x24.org>);
-        Mon, 27 Aug 2018 15:42:21 -0400
-Received: from mout.gmx.net ([212.227.17.21]:59901 "EHLO mout.gmx.net"
+        id S1727318AbeH0TnB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 27 Aug 2018 15:43:01 -0400
+Received: from mout.gmx.net ([212.227.15.15]:51245 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727058AbeH0TmV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 27 Aug 2018 15:42:21 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MV6PJ-1gQZA10mVx-00YQdf; Mon, 27
- Aug 2018 17:55:00 +0200
-Date:   Mon, 27 Aug 2018 17:54:58 +0200 (DST)
+        id S1727058AbeH0TnB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 27 Aug 2018 15:43:01 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MbgWb-1gB9tT00gP-00J2qg; Mon, 27
+ Aug 2018 17:55:42 +0200
+Date:   Mon, 27 Aug 2018 17:55:40 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
+        <avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>,
         Derrick Stolee <dstolee@microsoft.com>
 Subject: Re: Measuring Community Involvement (was Re: Contributor Summit
  planning)
-In-Reply-To: <xmqqin4cznmt.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808271754140.73@tvgsbejvaqbjf.bet>
-References: <20180813163108.GA6731@sigill.intra.peff.net>        <87h8jyrtj6.fsf@evledraar.gmail.com>        <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com>        <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com>       
- <20180813210617.GA19738@sigill.intra.peff.net>        <CAGZ79kaNa2bo31rQexs4rAH6bAz1rMzpxS3-fSFE6Cj87E8saw@mail.gmail.com>        <20180813215431.GB16006@sigill.intra.peff.net>        <3f0da3cd-0929-4aad-2c50-92c9d6c660e5@gmail.com>       
- <20180814193646.GC28452@sigill.intra.peff.net> <xmqqin4cznmt.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <CACsJy8DYYL5cNSo4ibWNmiexdWkhob1QTqFxJz56dSu8NdDViA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808271755160.73@tvgsbejvaqbjf.bet>
+References: <20180813163108.GA6731@sigill.intra.peff.net> <87h8jyrtj6.fsf@evledraar.gmail.com> <xmqqh8jy3sx1.fsf@gitster-ct.c.googlers.com> <CAGZ79kbLVoGFEEPHgEJxBFqAMCzjgXK6gxRix__P5PWL8M2MyA@mail.gmail.com> <20180813210617.GA19738@sigill.intra.peff.net>
+ <CAGZ79kaNa2bo31rQexs4rAH6bAz1rMzpxS3-fSFE6Cj87E8saw@mail.gmail.com> <20180813215431.GB16006@sigill.intra.peff.net> <3f0da3cd-0929-4aad-2c50-92c9d6c660e5@gmail.com> <CACsJy8DYYL5cNSo4ibWNmiexdWkhob1QTqFxJz56dSu8NdDViA@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:z+LpGNJZwp3TO19VAEW77dRFAo49mdEdPsBiD4dai59/rigAho8
- ldRy/UBN/QnReCCPm4SdEkhP9D9Mjv3xL5E+nTVO4E/00fJCUosgj954qSaQb35a6FeaEgv
- LImfycJithRaNuXwvmxKYGaGLZFKdVs2rHzO1kkUIkhSQHPMMyKxM7etym36c6LQHh0CbY/
- FWc2oHJw+IyeAZEdRqkhw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:iPqGEHtgWKk=:pJFLWYyrGxJPNUfuh2uFNx
- kNOvoqhlRWX2n52++Z0mcNH03OMwu6wIlEVc3CaRrYnW+wXwkPGGaCFSGf+0WVRMUFx2Ts8jd
- dWfNrTHvltaQqHaabZStf5iMxcbyTC4YV7WdWG1YFq01X3frv8PstElvTUJOrgZJejjDpxSve
- 7iW3qpY7bIm4JXSM1Bglj01T4CLFNWK6H2U3d0TI8hi0VcthsTAHyvub3sYllXBa2yGklgGM1
- 9r2FZCY1TcH1F05NqYOYN7XifpIFunHrOIf8ISJ4Fb27ymIVedOleerQL/aUwZsvEHIZlcuyH
- NwBH/mxb2XxiR1peASp/keHp6aT+ZQ3XfIYTc8ckWlKZiJ2R2YXtbFisvQZKIXZut3Id0qZS9
- /BMVBuEvC/0Wv0qQUnJ1HQFmavbp875BMn5oCOvrZgptRP1w34FHjcNcFULPv7b+4FfFdhZcC
- n7uvZ11FOdp2H9XSPWNnGJVACeFeGZHNyntqw4/fJd/sVzr51Tl0USFA3rSCWZDq6UaESOaD8
- pAIfztDnTUXuwqfsDF1smuAzrmXB0PSbvatVSz2Jj/a5FRZUbcmb4nvbEPF7s8gWIEPCQBX1Z
- 2q0kbxNq2Bv+cGYHs+jWgssVjROsR8LXm91usJ2SEM/7T3qcHCC9UtMrV8hpLaBMpfbi6j/PX
- yTXe+4oSTD7VT6ZDZpgL77e39e5buHuMNzGSgADMUDa7ANgDLRUsqAu7J3PrtmCRlE3a5EoLO
- nEMuQaUlUFNFOKDb1S+coLB4m8cLSGpoZJlUqDSKGL8RgBMrg4XGlXZBdrfcHM2swDdKpeWLT
- v2J7iK8
+Content-Type: multipart/mixed; boundary="8323328-57970677-1535385342=:73"
+X-Provags-ID: V03:K1:DphQqeBLJR5p7opLQPd6iSFcAyUyqFTMGPdbrKKGY/mC3+ZlXrL
+ 8pVFZMRiHZ8fpbGf1zpJcpd20MbtI+w8uCC0AUB3gB5I7VDI0B6Sa5SdVqErP3m1+ktqoDV
+ +kyXY5tTQ+C1/Eqii9jXZjxHu/h8eGbBNekBHAbGupNqOJ5oWZB9undhpRRK0XspVOQ4clD
+ ll2a+wRgMm5uKzGEMZa3w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LqD//Y3SFz4=:GadfXRNBZASAPwKh7eS0/O
+ hSv7/GV7TSWVCh5MMrBWd0Bwdoue0LkjCLyCrxshe8cIneXK5LPJjV6naiJJjFrhwKMAyppDI
+ vdVJu2u8EfpucDuCRx4Q+IrFqB7yZXrT3IvlMVIUh8gk2mcwaXkN1jFICiC7rXBzKOF03zX91
+ 6mFf+32ttEaJRV+S28k1Oc0n95tzbRPMkZ1q+2J8eu4Kf2dVZ2FVFIiC+qMHprIoB4i3fqDaN
+ P/EynoSVMCLhHFCVEahMr7ug4/7tgHoiUd74EZ38/ai3zrlbQwxdLh2cFP/uS5ijsv0Nr+zTH
+ fD7Puh5Kyp7ZA5lS77Dp21VLOAHH5SOF4R6y74pbzdZChAW79scFuZvy+TIJQVvx9gnQqLRXr
+ vYKH7X5p7hHJus/dDkymwHU0h2jJAR4VQkDffgbphRwI+B0S9k5h6cmzO26TFtolHKUq9Qg+6
+ PTATjF8QjgQE6HUoSgX6gYeY+wSaR4cUrrIGBlcbEWB9Bl9rEy7CrcO78J9C+yDa91hZV03Hy
+ iDDX4wUwHng3iXimp9kMIA2X6zjpUddTOkq/oL2uYR5pLGGf/0KOEx8YglDGYR5MYPW1kVMMa
+ K9Hiz0CcYOGTaEyGg/Jp3XKEGs//WXrJWfLJRzvRQFMQ0f/8hlc2CQiVVpKX45SxTUtAcF7+U
+ Is+FbhrlJsv7H/79JpfVxYy7Fuu+Zeg5raerR0OVTk6ylXIrrvLYudRRhqdsrHCeAL8XJY9e6
+ XTKdKskSj8H8+VTfINe7FHmy068MO7mdRWU+iDPJATm1DAVh6yV/q9SpglhsT9I2b3tQWKFjc
+ C1D4TEK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 14 Aug 2018, Junio C Hamano wrote:
+--8323328-57970677-1535385342=:73
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Tue, Aug 14, 2018 at 01:43:38PM -0400, Derrick Stolee wrote:
-> >
-> >> On 8/13/2018 5:54 PM, Jeff King wrote:
-> >> > So I try not to think too hard on metrics, and just use them to get a
-> >> > rough view on who is active.
-> >> 
-> >> I've been very interested in measuring community involvement, with the
-> >> knowledge that any metric is flawed and we should not ever say "this metric
-> >> is how we measure the quality of a contributor". It can be helpful, though,
-> >> to track some metrics and their change over time.
-> >> 
-> >> Here are a few measurements we can make:
-> >
-> > Thanks, it was nice to see a more comprehensive list in one spot.
-> >
-> > It would be neat to have a tool that presents all of these
-> > automatically, but I think the email ones are pretty tricky (most people
-> > don't have the whole list archive sitting around).
-> 
-> I do not think it covered e-mail at all, but there was git stats
-> project several years ago (perhaps part of GSoC IIRC).
-> 
-> > I think I mentioned "surviving lines" elsewhere, which I do like this
-> > (and almost certainly stole from Junio a long time ago):
-> 
-> Yeah, I recall that one as part of counting how many of 1244 lines
-> Linus originally wrote still were in our codebase at around v1.6.0
-> timeframe (the answer was ~220 IIRC) ;-)
+Hi Duy,
 
-And if you do not remember precisely, you can easily re-run `Linus` from
-here: https://github.com/git/git/blob/todo/Linus
+On Wed, 15 Aug 2018, Duy Nguyen wrote:
+
+> On Tue, Aug 14, 2018 at 7:43 PM Derrick Stolee <stolee@gmail.com> wrote:
+> > 2. Number of other commit tag-lines (Reviewed-By, Helped-By,
+> > Reported-By, etc.).
+> >
+> >      Using git repo:
+> >
+> >      $ git log --since=3D2018-01-01 junio/next|grep by:|grep -v
+> > Signed-off-by:|sort|uniq -c|sort -nr|head -n 20
+> >
+> >       66     Reviewed-by: Stefan Beller <sbeller@google.com>
+> >       22     Reviewed-by: Jeff King <peff@peff.net>
+> >       19     Reviewed-by: Jonathan Tan <jonathantanmy@google.com>
+> >       12     Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> >       11     Helped-by: Junio C Hamano <gitster@pobox.com>
+> >        9     Helped-by: Jeff King <peff@peff.net>
+> >        8     Reviewed-by: Elijah Newren <newren@gmail.com>
+> >        7     Reported-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> >        7     Acked-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >        7     Acked-by: Brandon Williams <bmwill@google.com>
+> >        6     Reviewed-by: Eric Sunshine <sunshine@sunshineco.com>
+> >        6     Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de=
+>
+> >        5     Mentored-by: Christian Couder <christian.couder@gmail.com>
+> >        5     Acked-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> >        4     Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> >        4     Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.=
+de>
+> >        4     Helped-by: Stefan Beller <sbeller@google.com>
+> >        4     Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+> >        3     Reviewed-by: Martin =C3=85gren <martin.agren@gmail.com>
+> >        3     Reviewed-by: Lars Schneider <larsxschneider@gmail.com>
+> >
+> >      (There does not appear to be enough density here to make a useful
+> > metric.)
+>=20
+> If your database keeps mail relationship (e.g. what mail is replied to
+> what according to In-Reply-To header) then look for mail replies to
+> patches. I think we have a rough picture who are active reviewers with
+> that.
+
+Not really, as there is a high percentage of "on a tangent" replies in
+many, many patch threads.
 
 Ciao,
 Dscho
+--8323328-57970677-1535385342=:73--
