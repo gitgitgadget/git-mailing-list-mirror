@@ -2,109 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31D041F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:49:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C95101F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727230AbeH2BnI (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:43:08 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:41967 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727166AbeH2BnI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:43:08 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f38-v6so2452099edd.8
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=jFlVdcETeLiXM0OhIS0G6yRzCHirW6QExP06gsAQOnY=;
-        b=M0Eqy2TLn/5ky0DEwU2b0hxsSe4t0ITOAjrgedb/NnUCsmODMIfKACLgqbDXN7rOWr
-         aeIaUzsXNDs5bT6TeNoZldLyzDKR0bBdFklOf/7po87F+0Xp8H2+LoRxO/Cebg9oKtau
-         YOvimfKrCqM1O51KnlrOS+OpX2NBv6UyKnrkBik89jiRjdjau82KlQNq0tSPdQWq1hb5
-         McFXBquQEraKEVtWh7c0fWWuNUHsV1n9ZRwmKMGzsvKhbWFQGBqxhdkLkYOIGi+Gf1HJ
-         UiSGvilLA6y0JRCmvjg1dXP2iS+x0gZhYKN/xZAJmv5e9jBm/BNMx+D8YgP6Tfdfr/dd
-         qo8Q==
+        id S1727221AbeH2BxT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:53:19 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:44551 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbeH2BxT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:53:19 -0400
+Received: by mail-qt0-f195.google.com with SMTP id k38-v6so3558563qtk.11
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:59:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=jFlVdcETeLiXM0OhIS0G6yRzCHirW6QExP06gsAQOnY=;
-        b=KBaxC6waKMtfvO0pUoFvufpRdXCwfCwrYyhFDGLW1Pi/DHNY7jEvHpj17E8sw+bhzG
-         sPkAtdI3iJxIQHToagHViJ7sgMAu0T35d8TtsMhzHqt0ea9xFpVGJLUjfGwWMh+IqOah
-         pTcHUhfGO2TBP98BrW90ioaEqaErkkT/IWdsGt1CD4aSdtxMFHeNr5M2aydFBjAc4YTD
-         kiojKsToN1dicWbZQUqkTf6aj/FptVA54LkBHfU7bX1+xG0QavHSbYqgM/lWiGVcjlRM
-         u5Uc8vqTNWgttpJAMBYTo3hJnkbu4Fvb/iEvmG5sULnoTA165F0B6fPF8LevFp66LlxR
-         CXAg==
-X-Gm-Message-State: APzg51CqDOq0pSDHHZymFI9fc9Wf+t6O9sQZ6Gqji2WZP/Rg51B1ccW6
-        IXbFekugkqn2HekdjQwmvc8NHw0Bq9GdjpI+mqZ3Ua6crX4=
-X-Google-Smtp-Source: ANB0VdZp5ZdOSJ+VwIrSy5kXVxGbiUCKCvVTY+A9O+DPcJTbqo7bJDk7vFgMPovZEctpCoEBCdS5kLd/9ATTG/4yhyw=
-X-Received: by 2002:a50:b0c1:: with SMTP id j59-v6mr4483551edd.267.1535492970682;
- Tue, 28 Aug 2018 14:49:30 -0700 (PDT)
+        bh=7xu9SZwDNnC8eay10JY+48rrK1S3Q5prASQ+hbpvycQ=;
+        b=StujgoHQmqFaWeu+zwyvi7UBu1vJvDLrquKaBGBkdFpVdtmkL0b8MiqeYnfC+2ydMN
+         1PajzILvCgPXPVFOOyUU4eSp408DltKm6xakIaGVpO2NM9kAY/NV5KwtjMivJYobOd2r
+         m0FxQ12uBqSKk1LWZ3kFSYpAX0L8RkrGmfKwaCMVSf9k5sSwGZt1PFezizxa+4cs4BCW
+         O2vQ/aN9sd/iWsEKOyqjkaUhWAoR/YIbMeQI5qw4NM08T9nSoRK67r+7CmyJH1WK3kSW
+         sw4tH2AjelcPJCMcrwvuuOUq5sjbUvNRFzzeOg1+YcdjfvultEt3HGiYvgkyUj5zjUc0
+         rn0g==
+X-Gm-Message-State: APzg51AgGQRJnUWHk8P6nb7f78atDdcDeOkIfbV4w3MEzPN/bGpw2oXJ
+        RJENerO9sJbj7YUkQeCGCBDC3YtaqQw+GCIa8MI=
+X-Google-Smtp-Source: ANB0Vdb9V/8XF7Nbbl+sAawnBbDTXwuR4klds5MGmIcGHCEdD1LxFviYn2HtzYAopoF4xm/QgJHrovsTkcijDBjT8Rc=
+X-Received: by 2002:a0c:e5ce:: with SMTP id u14-v6mr3675046qvm.6.1535493580676;
+ Tue, 28 Aug 2018 14:59:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180827221257.149257-1-sbeller@google.com> <20180827221257.149257-2-sbeller@google.com>
- <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 28 Aug 2018 14:49:19 -0700
-Message-ID: <CAGZ79kYApAdFzC82LZNjYDzL5uWxtXHbvqUyjZ9OF+b=pGNbUA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule git directories
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
+References: <pull.26.git.gitgitgadget@gmail.com> <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
+ <CAGZ79kbsJXF=X7tzpdogAY7LdLd87YkPY0euiYaa3uQKQPoZuQ@mail.gmail.com> <3bb1d527-87ae-5fdb-be9a-b83f6a68d3a0@gmail.com>
+In-Reply-To: <3bb1d527-87ae-5fdb-be9a-b83f6a68d3a0@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 28 Aug 2018 17:59:29 -0400
+Message-ID: <CAPig+cSjanDi=jV75PdzYpAjwVgd4Suh3UyvY+Vy7yeHAuY8RA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 28, 2018 at 11:56 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Aug 28, 2018 at 5:31 PM Derrick Stolee <stolee@gmail.com> wrote:
+> On 8/28/2018 4:41 PM, Stefan Beller wrote:
+> > On Tue, Aug 28, 2018 at 1:33 PM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >> +               GIT_TEST_COMMIT_GRAPH=0 &&
+> >> +               test_must_fail git merge -m final G
+> > This could go on the same line without the && in between, setting the
+> > variable as a prefix.
 >
-> Stefan Beller <sbeller@google.com> writes:
->
-> > This is the continuation of f2d48994dc1 (submodule.c: submodule_move_head
-> > works with broken submodules, 2017-04-18), which tones down the case of
-> > "broken submodule" in case of a missing git directory of the submodule to
-> > be only a warning.
->
-> After seeing this warning, as we do not do any remedial action in
-> this codepath, the user with a repository in this state will keep
-> seeing the 'missing' message.  Wouldn't we want to give a hint in
-> addition (e.g. 'you can run "git submodule update $name" to
-> recover', or something like that)?
+> It cannot! The Linux build I ran complained that you can't put
+> environment variables through test_must_fail.
 
-Not quite, as this is only triggered in the case of 'old_head = NULL', which
-is when you have a superproject that is missing the submodule in the
-working tree before and wants to have it afterwards.
+Is GIT_TEST_COMMIT_GRAPH exported? If not, it won't have an impact on
+git-merge anyhow.
 
-Looking at the test in the previous patch, I would think a reasonable workflow
-in the test is
+As for the special case of one-shot environment variable and
+test_must_fail(), you'll find "env" used as a workaround in a number
+of tests:
 
-    git clone --recurse-submodules super1 super1_clone && cd super1_clone
-    git checkout --recurse-submodules historic_state
-    # see warning, but checkout proceeds
-
-    git fetch --recurse-submodules
-    # clones the submodule as it was configured active via the clone
-
-    git checkout --recurse-submodules historic_state
-    # this checkout will put the submodule in place
-    #  not sure if -f is needed here, though.
-
-
-I am currently working on the cloning of submodules that are not currently
-in the working tree while fetching in the superproject, which would address
-the latter part.
-
-> The MOVE_HEAD_FORCE codepath that follows this hunk is, eh, already
-> forcing to correct the situation, so there is no need to touch that,
-> which makes sense, if I understand correctly.
-
-No, that is not executed for now as it depends on 'old_head'.
-
-In case of FORCE we might want to die instead of just warn about that submodule.
-
-Stefan
+    test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge ... &&
