@@ -2,97 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF66D1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BAE391F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:37:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727174AbeH1X0X (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:26:23 -0400
-Received: from mail-it0-f65.google.com ([209.85.214.65]:39133 "EHLO
-        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726807AbeH1X0X (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 19:26:23 -0400
-Received: by mail-it0-f65.google.com with SMTP id h1-v6so2088883itj.4
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:33:16 -0700 (PDT)
+        id S1727135AbeH1Xav (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:30:51 -0400
+Received: from mail-wm0-f44.google.com ([74.125.82.44]:40681 "EHLO
+        mail-wm0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727098AbeH1Xau (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:30:50 -0400
+Received: by mail-wm0-f44.google.com with SMTP id 207-v6so3134419wme.5
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:37:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vM95mmgGe4W3TRW+N0pR/oOGrdUPTTcv4HxMuHyGBng=;
-        b=KFHXFCAJzV7njlqH3H7faQSb+Usax7pi5FmoIq0c83txjStE9gmNagOoUqT95B7b/G
-         f9EKnq4I0C5iU21HCccUWAhnL4YEgM2fsPWTkrJXEwuQOs51/4mokF1lOlXmG0IZE9cC
-         oIEi+hkD988GAKQhT+Y3rWZUEOW3YMQcPPy6ok3kSUFHqU8IaEdJj6NFG/atML6H2cJm
-         63aljvCrw3vOusLabKieCa9TjTnSv6+E1e4v9A2u1QhYROEWtjtOMpZQe7FXGhSEbRl8
-         680aCmDt3A9ezVNiqHOk+BQiC9Pqp+cGkQRkYtLQhu0NXLFbSiTLDQAlvyIJCIomAJ23
-         vMCg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QL84X1NZ43GMb2ylgotXaOE0uGbDsNbT3bEsBRvGHds=;
+        b=oAffmcq6aZjVO1S6Zq/corj/G6NUMABxU2DgUTOAesL1567bo+yVqYX4bL5f6raYuP
+         e5od6iYxa6+jAAiNEZKRINimXs86OINEYLwtzihqd/Rs46GNXSmrCmmJ4ImemUaS+LIc
+         VRcLYJMV3/4YrfSjm1MgrE3CS3dwQ9ZAQXh+CgB3bRpePvohikKWLK54Bj6qr4yp5F7s
+         kdiVrxy1g1eWgXZZ2YtFl7jeJd52jXSGMFmUl4oYsLiQ3csOE/zICLsQO82EAm04rPHP
+         yE2uxZQWv5V66ZWRfB8upPySMlXiM12pVc296CMNw0QBD/aoBMK9EXj+xNP56fIes3Pz
+         0COQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vM95mmgGe4W3TRW+N0pR/oOGrdUPTTcv4HxMuHyGBng=;
-        b=dRvOs05pK8hQeB+jV/22WexVUqc0ookZthnEyG6Io/fVI6RSRAkxaS8Se8+34Hksqr
-         PX1ig+9qmdQIU1nqO4FkB/XAjEyoasdcsFCQs2Mh27IN8ajuAEqwp1cb0/DETgKtL8QE
-         Y10mNUOITlbteG/HsR/VHZuRutDHG39VwiGNHgInMTj3dwJNjBcbb6WyS6OkD9pDwoUU
-         p2hbUokFfJn7/8caeiNT6m4Aa1PbbbOsBG5rAeQN5JjluujiTO2fbTO+B63+sAS3m70Z
-         Blzgc+qamg6wpmyXDo6wilxxWW2kV0ppCRPQJ2Hr5Px+bNngbLVL5iDTc8iil4P/zPWT
-         wIJQ==
-X-Gm-Message-State: APzg51CXWUD+5cOuQsUneWtWYxX6vkmDN5rlWhAEQNqTAysj9Xxmx1iG
-        6fxCxsq3eK3DSa511V5nfLfe4otR2bEvdDRDMwoeig==
-X-Google-Smtp-Source: ANB0VdZ/xDHDJjpCgjxeUo6Onz2KESJr/pN0bNQXjg2SSngC/eakfy/mNFx8YEvJempdgP84Nzs3lhGiwR54KD+KDXk=
-X-Received: by 2002:a02:b006:: with SMTP id p6-v6mr2758884jah.97.1535484796518;
- Tue, 28 Aug 2018 12:33:16 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QL84X1NZ43GMb2ylgotXaOE0uGbDsNbT3bEsBRvGHds=;
+        b=uT2yQN/eoAnC9kqXyApIxqZgEFHJmB6Qign+QYcu4XP1t34OmTjhZjac24a2izs499
+         UEfr8nsF4vlukcL2j6+eYY0iKBQBVtuuQ1bUnABHpDJ9vTrYJJzRp5Mp1uFWAPSfrVto
+         kpmld3gEEhrjvQUy/uLvc1WYNXyfG3T7btUoeKXKv1l9+f0A4PURv0u8SsP+9ptUsKss
+         +OGurBoPQX2WMJYTvwVJr7oM1k9FKBGBFVmYK3/LucWJKeBolE7W/LTtoPuvsoVytatx
+         1HEYrTNVI8rFM6wp+xcVBXs4qrHP6wFQYjMMM9vqTJNMm7IJzeOG7F9srkHBJycZzsfR
+         Cygw==
+X-Gm-Message-State: APzg51BBozQrDbQuEpW6JowJc2by832emibC0Okt+XUjeCu3zX1Am0IL
+        eCMYebDErTrBSflxAVJ0NDM=
+X-Google-Smtp-Source: ANB0VdYj5IQ27AmxLUPn9utvyNN+TvwljeH7AGisrgL1e8WQ5ipsk2bcLv2mhOxPQHEb+e2CvJuj1Q==
+X-Received: by 2002:a1c:7f93:: with SMTP id a141-v6mr2245444wmd.45.1535485061966;
+        Tue, 28 Aug 2018 12:37:41 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m68-v6sm4371026wmb.10.2018.08.28.12.37.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 12:37:41 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature request: be able to pass arguments to difftool command
+References: <20180828175711.3a0aeacc@pc09.procura.nl>
+Date:   Tue, 28 Aug 2018 12:37:40 -0700
+In-Reply-To: <20180828175711.3a0aeacc@pc09.procura.nl> (H. Merijn Brand's
+        message of "Tue, 28 Aug 2018 17:57:11 +0200")
+Message-ID: <xmqqpny2ffjv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180826100314.5137-1-pclouds@gmail.com> <CAGZ79kas5TsCi0yN7mypH53A1iOveGNmQ03BkmspEH1-NfZgBg@mail.gmail.com>
-In-Reply-To: <CAGZ79kas5TsCi0yN7mypH53A1iOveGNmQ03BkmspEH1-NfZgBg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 28 Aug 2018 21:32:50 +0200
-Message-ID: <CACsJy8Axhh6G3RHr5WsB+VyB3U4-=tNV+UfpW6kwbkMb7ed5Tg@mail.gmail.com>
-Subject: Re: [PATCH 00/21] Kill the_index part 4
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 7:32 PM Stefan Beller <sbeller@google.com> wrote:
-> > Besides some small conflicts on 'pu', like the previous part, it also
-> > breaks 'pu' because of API changes. The fix is trivial though, just
-> > prepend the_repository as the first argument for the broken function
-> > calls.
+"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+
+> So, my wish would be to have an option, possibly using -- to pass
+> additional command line arguments to git difftool, so that
 >
-> This sounds like a problem. I said the same when sending the
-> object store lookup series, which ended via
-> 3a2a1dc1707 (Merge branch 'sb/object-store-lookup', 2018-08-02)
-> in master, but I do recall Junio being somewhat unhappy about it[1].
+>  $ git difftool $commit~1..$commit -- -m -v2
 >
-> By just adding the argument to the function, it might merge easily
-> but not compile, which would have to be fixed up; and that object store
-> series seemed to touch a lot of functions that were also used in series
-> in-flight.
+> would pass the arguments after -- transparantly to ccdiff (in my case)
 
-Which is why I state it clearly here so Junio could choose not to pick
-this series up (I'm totally ok with that, I could wait until the dust
-settles and send again).
+At the syntax level passing any option after "--" would be a no
+starter, as I would imagine that "git difftool $revs -- $paths"
+should still be supported.
 
-Another option is me adding a patch that renames diff_setup() to
-diff_setup2() or something that takes 'struct repository *', leaving
-diff_setup() as a light wrapper around diff_setup2(). I would need to
-wait until in-flight series are merged, then rename diff_setup2() back
-to diff_setup(). Not sure if it's worth doing.
+At the concept level, however, I can see why such a feature would be
+useful.  Perhaps
 
-> >  diff.c                 | 259 +++++++++++++++++++++++------------------
->
-> Ugh? That sounds like there is an interesting change coming.
+    $ git difftool --backend-option=-m --backend-option=-v2 HEAD
+    $ git mergetool --backend-option=--foo
 
-Yeah. sequencer.c also needs struct repository in lots of places
-(sha1-name.c comes second). But at least builtin/ code looks a lot
-like it's supposed to be when 'struct repository *' is introduced, we
-now have lots of function calls there that pass the_repository...
--- 
-Duy
+with appropriate way(s) [*1*] to make it easier to type (and
+implement) would be an acceptable avenue to pursue, I wonder?
+
+
+[Footnote]
+
+*1* There are various possible ways, not all of them are mutually
+    incompatible.
+
+    a. Give a short-form synonym, e.g. -X, to "--backend-option";
+
+    b. Assume that backend option always begins with a dash and add
+       one when missing, e.g. -Xm becomes --backend-option=-m
+
+    c. Allow giving multiple backend options on a single option and
+       split at whitespace, e.g. --backend-option="-m -v2"
+
+    d. Allow difftool.$toolname.opts configuration variable that is
+       multi-valued, so you can say
+
+	git -c difftool.ccdiff.opts=-v2 -c difftool.ccdiff.opts=-m difftool
+
+       (of course, not necessarily from the command line but the
+       point is you could configure it)
+
+    Some of these (e.g. b, c) may not be desirable, though.
+
