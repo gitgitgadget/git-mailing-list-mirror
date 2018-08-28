@@ -2,90 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C5AAA1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 16:58:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBB6B1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 17:11:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727416AbeH1Uui (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 16:50:38 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:44652 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726998AbeH1Uui (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 16:50:38 -0400
-Received: by mail-wr1-f49.google.com with SMTP id v16-v6so2228364wro.11
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 09:58:05 -0700 (PDT)
+        id S1727336AbeH1VEA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 17:04:00 -0400
+Received: from mail-pf1-f175.google.com ([209.85.210.175]:38525 "EHLO
+        mail-pf1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726998AbeH1VEA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 17:04:00 -0400
+Received: by mail-pf1-f175.google.com with SMTP id x17-v6so1001418pfh.5
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 10:11:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/oYayDifbllWoMyYF3ePKZOI8imJ87cJe52LgnMhlOo=;
-        b=Z28JoP4TYvU/DPXtXNlGnNuIiAIRRrwEwFzFhlu6peibAHARp9g9cUc+aqBDIVjr75
-         oMsTLMk6T7iQ0fGjJCDGlK0+zfB4kfpd9gkUaKz0/LelZJEwqjqEN8cI5KC7aj5p/y7y
-         PBUT62EVNcXLrzY5tWS4kvhIuoLuGsfWerUdiXPcFeK40NobHOGFAgRaKFIReNY/Zjbd
-         K7auu7Up4mQPfkIIiwISfNTKcVVqzM33jdyj0BW3hGQ2jpgruTnqTUgCnsFsALjGVuCp
-         ujVrwZl7fZyZvq0T+TU5JpKQgRjD2QlgaE/3afU4wavM6TtRvCtEN+Zs5FwpzOmdIUBK
-         rC+A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ZwFM5pI8YoCRGwDLqeCVWlwRZcHvV2hBIp241cfMA/w=;
+        b=PwITIeW7E6umSXLXssvC2IeBGfJTYyxZzTgz2MIMRGgQOZpFjbVCz+iYv1LNwSeUQR
+         OJbFzCgsED5PiaB4RHq26g7OpGGcD8smq4SKjWLAP79ogLKN4Nmkecxj0aE0lvP9Hfhu
+         GS6t8wmHFuOgT1ZNLl52rHO2AbMbKsP6lxUkVEcUDBUxOXztppbQkn3JJ9okMnr9LhfF
+         /prvS414XLOZiMBOyArR46YenhELVM7WI57PcKP813YT+KTb0F0bl/LZZODEnsesSlsZ
+         yDea1UTWOiG/jvEjbKFHy/xiC3jji40Veefm4qIaYu71a/YGSyTpKchox/iONiZYcD1R
+         pX6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/oYayDifbllWoMyYF3ePKZOI8imJ87cJe52LgnMhlOo=;
-        b=GpkpTXW8KOlm69zgJkGh3v5ETDeaGH76dCUU+A2jZcKEm0GEl5e+U6lfp3iXd4e/sT
-         rMK1nAeK+/3kJEURj6BaVyWtGQpArdIc7FhK9r44Cl7pKTo2wQl6L649voQydc4oraJ1
-         QK1OOJSc4g57dlVCEfYtpWMU9j0uVPRuYFtVWOMEpebMeNxUzb0x5nGbXbYa0lV62n52
-         JBr/a3lTiCrerXJm8nRbk+HFIpKyqhnaTm+EWxUH5JAqqiYXVS+T42PQ668g1McKvopd
-         F+q9wdrCBrpDcrvQrGd3dJolwszAf8qXdOF2dHmHCFzMrpDFXAmepf1shEwTf3H1SilM
-         EAHg==
-X-Gm-Message-State: APzg51Bw8TYhNj2TqYmuOZVDqRk/xlUN6oZVMxtjwUOQqICoCgrEr06M
-        mhhjfe9BrD4C+Io9XSvl5ds=
-X-Google-Smtp-Source: ANB0VdZaZajcQ73IqowjhE1vOCOoKFdTh8W1JiDA45SKmtWE6fP+JvbwiTj71RGUJPF0SOMDf6HMpw==
-X-Received: by 2002:adf:b609:: with SMTP id f9-v6mr1689275wre.14.1535475483996;
-        Tue, 28 Aug 2018 09:58:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g129-v6sm2758627wmf.42.2018.08.28.09.58.02
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ZwFM5pI8YoCRGwDLqeCVWlwRZcHvV2hBIp241cfMA/w=;
+        b=UMGlFAHiBDTg7BYLBPYLbRXTESPrzrMHg6EemVfmCyRMN4sW9ztEN+kCEYdKUvvJFa
+         7iW4utcLAt9/hXly7z4+iosF4UHDqhTX14dqHyw0IUUg43407UHvSFa80Xz2Z2aj2dsh
+         BDYpfwPjnLyezMk7ZT5sxaWS9oQjblm2w6NzFSvyoP68oI9q1Ybuy2r9hX9U0ELGgm8y
+         /96Q2fgpMSXFLR0vjhOFv4u9rTbRryvhFU2647LJJlm6xaRqv5T2Kell4ZhLUJii+B13
+         6ZKa+ijjVbVAEsXtkcIpz/zqHUZuT2Zlrs1nr8htsLJ+dC2/cViPfHwJ8e/Zc6EBk9Uv
+         gLrQ==
+X-Gm-Message-State: APzg51A+Dv8AaaVQs7V5jP+fiNvIhU2PiAF4F63nRqVZaggvJbSc6PYO
+        CE7gRtnva+2lSf8LSXuLE8qaCJvP
+X-Google-Smtp-Source: ANB0VdZv4O5UPe2cpgolb75WXnzGee+7XVq/JZt6vgD/ko/HfkxTspMhjqcPs1B2gftzYu3DM8ZjMQ==
+X-Received: by 2002:a65:614a:: with SMTP id o10-v6mr2376003pgv.387.1535476283114;
+        Tue, 28 Aug 2018 10:11:23 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id c4-v6sm2736459pfh.180.2018.08.28.10.11.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 09:58:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= 
-        <avarab@gmail.com>, corrmage@gmail.com,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: A rebase regression in Git 2.18.0
-References: <679370A8-E477-450D-96E5-6B1869D27576@gmail.com>
-        <87in3ueiks.fsf@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
-        <CABPp-BENB=mqfFU4FGb2OS9VDV=9VdT71HhFLZwtyxD8MpdTMQ@mail.gmail.com>
-Date:   Tue, 28 Aug 2018 09:58:02 -0700
-In-Reply-To: <CABPp-BENB=mqfFU4FGb2OS9VDV=9VdT71HhFLZwtyxD8MpdTMQ@mail.gmail.com>
-        (Elijah Newren's message of "Tue, 28 Aug 2018 08:35:03 -0700")
-Message-ID: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Tue, 28 Aug 2018 10:11:22 -0700 (PDT)
+Date:   Tue, 28 Aug 2018 10:11:13 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Questions about the hash function transition
+Message-ID: <20180828171113.GA23314@aiede.svl.corp.google.com>
+References: <878t4xfaes.fsf@evledraar.gmail.com>
+ <20180824014703.GE99542@aiede.svl.corp.google.com>
+ <nycvar.QRO.7.76.6.1808281402510.73@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1808281402510.73@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi,
 
->   - Add a flag to turn off directory rename detection, and set the
-> flag for every call from am.c in order to avoid problems like this.
+Johannes Schindelin wrote:
+> On Thu, 23 Aug 2018, Jonathan Nieder wrote:
+> > Ævar Arnfjörð Bjarmason wrote:
 
-I'd say this is the only practical solution, before you deprecate
-the "pipe format-patch output to am -3" style of "git rebase" (and
-optionally replace with something else).
+>>> Are we going to need a midx version of these mapping files? How does
+>>> midx fit into this picture? Perhaps it's too obscure to worry about...
+>>
+>> That's a great question!  I think the simplest answer is to have a
+>> midx only for the primary object format and fall back to using
+>> ordinary idx files for the others.
+>>
+>> The midx format already has a field for hash function (thanks,
+>> Derrick!).
+>
+> Related: I wondered whether we could simply leverage the midx code for the
+> bidirectional SHA-1 <-> SHA-256 mapping, as it strikes me as very similar
+> in concept and challenges.
 
-The whole point of "am -3" is to do _better_ than just "patch" with
-minimum amount of information available on the pre- and post- image
-blobs, without knowing the remainder of the tree that the patch did
-not touch.  It is not surprising that the heuristics that look at
-the unchanging part of the tree to infer renames that may or may not
-exist guesses incorrectly, either with false positive or negative.
-In the context of "rebase", we always have all the trees that are
-involved.  We should be able to do better than "am -3".
+Interesting: tell me more.
+
+My first instinct is to prefer the idx-based design that is already
+described in the design doc.  If we want to change that, we should
+have a motivating reason.
+
+Midx is designed to be optional and to not necessarily cover all
+objects, so it doesn't seem like a good fit.
+
+Thanks,
+Jonathan
