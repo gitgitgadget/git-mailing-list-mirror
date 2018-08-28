@@ -6,58 +6,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E88A31F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 17:38:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14F961F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 18:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbeH1Vbk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 17:31:40 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39217 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726383AbeH1Vbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 17:31:40 -0400
-Received: by mail-wr1-f65.google.com with SMTP id o37-v6so2338422wrf.6
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 10:38:57 -0700 (PDT)
+        id S1727199AbeH1WAQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 18:00:16 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36352 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727130AbeH1WAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 18:00:15 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j192-v6so2944281wmj.1
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 11:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=dj3BlDZVviv6PJ+3ZcqcoqlNwTDDzgZfsonlIcNtJDI=;
-        b=lX5JgK66OXsO9xWUA3u0OkGiuouw3aI1IFORnHeoz1omiECFsCtcrV7n1+RgcKSwtZ
-         W5D76icajiZ33a3dEgbbHKwzKhLJDs1tVof5BUGHDGgHfMd9h1yhX9PqPS2JQnf7KS6Y
-         6x4F83VveBN6keIehHWvJ03osW6jJK4WHgfY/EszcwVdHiaWFpevv7AbZymTDG+mLNOK
-         VYS+O7B5Z7SEgiVzeo5I3zQRcY1ly7MIcXfLQi/BeEC/6lCqObyueXmapcDav9LIJqiP
-         UI213/vi1CbBge3hhg85kBS0L9IunXm90Z7Foy4BJHOIlPBTzj9lP1n7RC3aZWHCS2h3
-         sYgg==
+        bh=sTFlEshTA10aDIc9O44ffpkwsAFrkFF3OGM7EmVKNcs=;
+        b=p2w4F4GSEnJZCawy9gyL1rlzH8YmmSp46V4xQnTzn38Yv85tKAL2xi8axfaWdisAW7
+         h46pV6vF3A/iMeKGEporU6IWwnihyhVmXs4DBcJUiFjjFhGfNwDmQ+yASncqOcHs8f3/
+         l9Zm/bIKcb4ZV6X6oO86tGQ7X22LO9gjT50i3R4OzctbUf23c/llKJZOlZ3n9/vY+uzM
+         /hCMFPq/OtLa3XBwWEAokFKonHon4txKwX3vZBSSkduLDHw7YX9NqsSm78sBTvMm0Sw0
+         o9ty3n6E9E88ejKHVEXqFqHzg/iw+oFCW/8+DWrgjgkpSq4MEP1O64RNqVkGG+Ux2czF
+         3aHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=dj3BlDZVviv6PJ+3ZcqcoqlNwTDDzgZfsonlIcNtJDI=;
-        b=LUK8h54lp7djqigRqb0afgNQ895fD0iH75sS1pQxPduOplNcRyBBqiRrMMAU1dXKD9
-         jDj7f7rzqMZ5TEWXuXk6MLtJSooFNflcR5hclpaEK+SzPes82uMLshRpBPzn74hY+U6u
-         yf749SbZsfe7APvZ/azl1XpnI2Z6A03f0vcVXT+x733lybeqUIQi1Ns14kjgtBLqMvjF
-         N+/o5QOozVqM/YPcE4x1eGZN0goTyV5Mfc248olbOvu9oP9Rb2p9z/iECJNfzq4jZEQc
-         0QMEnfcwyld+j0t1RRQ3KYUQ5c+A/uaDN7zFgsig4FshDNHVZDgZ6hPbfdUBMbWsT/CY
-         YUvw==
-X-Gm-Message-State: APzg51ACY/0uu04v4VhFmGDsRTn3i4I4DYYuDOBGa12XL0JCJ9MgBHG2
-        saQIz4tuOrrJgPVz4O0gkv8=
-X-Google-Smtp-Source: ANB0VdYMxtgkwSvyO/y3UvESrc8yOb4rQ/D3gEKwSjZaZMyluC8KQHDzhOxqFukMlsBwaqKgWCoZiA==
-X-Received: by 2002:adf:e1c5:: with SMTP id l5-v6mr1883173wri.36.1535477936055;
-        Tue, 28 Aug 2018 10:38:56 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y184-v6sm3056226wmg.17.2018.08.28.10.38.54
+        bh=sTFlEshTA10aDIc9O44ffpkwsAFrkFF3OGM7EmVKNcs=;
+        b=CmVoCO6FjPY2DxrkM0RHmoDlasOzcOHU5kOyIAJHPr2wIY57jVP6YkqGJyGmydbENp
+         eA9YrNs6kPMxVZ6etNDOPQNjimPiW2oNVIDo4Gr3EpkCvX5SKMF122g1/H6/PkkI8dIB
+         TuSONqnQJkdKa6/9Jv1DTQ0X6X2U68iAoVV0IQx7dHE5La3tPl51MecOR3SDI//aN2jK
+         nuqIT2oc49AGvKs4xFgWBvQDhPr4CP8ekc2cCbAR2lwEaLQbXIq6C6QyAJIjOgV/8POL
+         cEIq1HrzpcM3dfUPFbZkKFEulLwMVMrtDmC96BhrXWNs7y9fbvTzccBzJSEwlJoX4vXi
+         Z6yw==
+X-Gm-Message-State: APzg51C/TH1iEXC5tghNd93cgUNRHG8KYmPK3NER/BV2Tief/i612ytR
+        ravKoMaGOZ85bj4c4uwBmEw=
+X-Google-Smtp-Source: ANB0VdYYqPNa4Z7TYzIq9toSzraXwmGWoe8s8kDnkKSkHAbrvaCeizZJpnRgnu46mqa9/c2KxncnZQ==
+X-Received: by 2002:a1c:f11a:: with SMTP id p26-v6mr2128032wmh.92.1535479644075;
+        Tue, 28 Aug 2018 11:07:24 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q3-v6sm1318024wma.45.2018.08.28.11.07.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 10:38:54 -0700 (PDT)
+        Tue, 28 Aug 2018 11:07:22 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     git@jeffhostetler.com
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v1 00/25] RFC: structured logging
-References: <20180713165621.52017-1-git@jeffhostetler.com>
-Date:   Tue, 28 Aug 2018 10:38:53 -0700
-In-Reply-To: <20180713165621.52017-1-git@jeffhostetler.com> (git's message of
-        "Fri, 13 Jul 2018 16:55:56 +0000")
-Message-ID: <xmqqd0u2gzma.fsf@gitster-ct.c.googlers.com>
+To:     Jochen Sprickerhof <git@jochen.sprickerhof.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] add -p: coalesce hunks before testing applicability
+References: <20180828085858.3933-1-git@jochen.sprickerhof.de>
+Date:   Tue, 28 Aug 2018 11:07:21 -0700
+In-Reply-To: <20180828085858.3933-1-git@jochen.sprickerhof.de> (Jochen
+        Sprickerhof's message of "Tue, 28 Aug 2018 10:58:58 +0200")
+Message-ID: <xmqq36uygyau.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,74 +65,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git@jeffhostetler.com writes:
+Jochen Sprickerhof <git@jochen.sprickerhof.de> writes:
 
-> From: Jeff Hostetler <jeffhost@microsoft.com>
+> When a hunk was split before being edited manually, it does not apply
+> anymore cleanly. Apply coalesce_overlapping_hunks() first to make it
+> work. Enable test for it as well.
 >
-> This RFC patch series adds structured logging to git.  The motivation,
-> ...
+> Signed-off-by: Jochen Sprickerhof <git@jochen.sprickerhof.de>
+> ---
+>  git-add--interactive.perl  | 8 ++++----
+>  t/t3701-add-interactive.sh | 2 +-
+>  2 files changed, 5 insertions(+), 5 deletions(-)
 >
-> Jeff Hostetler (25):
->   structured-logging: design document
->   structured-logging: add STRUCTURED_LOGGING=1 to Makefile
->   structured-logging: add structured logging framework
->   structured-logging: add session-id to log events
->   structured-logging: set sub_command field for branch command
->   structured-logging: set sub_command field for checkout command
->   structured-logging: t0420 basic tests
->   structured-logging: add detail-event facility
->   structured-logging: add detail-event for lazy_init_name_hash
->   structured-logging: add timer facility
->   structured-logging: add timer around do_read_index
->   structured-logging: add timer around do_write_index
->   structured-logging: add timer around wt-status functions
->   structured-logging: add timer around preload_index
->   structured-logging: t0420 tests for timers
->   structured-logging: add aux-data facility
->   structured-logging: add aux-data for index size
->   structured-logging: add aux-data for size of sparse-checkout file
->   structured-logging: t0420 tests for aux-data
->   structured-logging: add structured logging to remote-curl
->   structured-logging: add detail-events for child processes
->   structured-logging: add child process classification
->   structured-logging: t0420 tests for child process detail events
->   structured-logging: t0420 tests for interacitve child_summary
->   structured-logging: add config data facility
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 36f38ced9..c9f434e4a 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1195,10 +1195,10 @@ sub edit_hunk_loop {
+>  		# delta from the original unedited hunk.
+>  		$hunk->{OFS_DELTA} and
+>  				$newhunk->{OFS_DELTA} += $hunk->{OFS_DELTA};
+> -		if (diff_applies($head,
+> -				 @{$hunks}[0..$ix-1],
+> -				 $newhunk,
+> -				 @{$hunks}[$ix+1..$#{$hunks}])) {
+> +		my @hunk = @{$hunks};
+> +		splice (@hunk, $ix, 1, $newhunk);
+> +		@hunk = coalesce_overlapping_hunks(@hunk);
+> +		if (diff_applies($head, @hunk)) {
+>  			$newhunk->{DISPLAY} = [color_diff(@{$newtext})];
+>  			return $newhunk;
+>  		}
 
+OK.  I think I understand how this may be needed in certain forms of
+edit.  I do not think coalesce would reliably work against arbitrary
+kind of edit, but the function is called at the end of the loop of
+the caller of this function anyway, so it is not like this is making
+anything worse at all.  Let's queue it and try it out.
 
-I noticed that Travis job has been failing with a trivially fixable
-failure, so I'll push out today's 'pu' with the attached applied on
-top.  This may become unapplicable to the code when issues raised in
-recent reviews addressed, though.
+Thanks.
 
- structured-logging.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+All of the following is a tangent for future/further work, and
+should not be done as part of your patch.  While this change may
+work around the immediate issue of diff_applies() returning "no", it
+makes it feel a bit iffy to keep the interface to return $newhunk.
 
-diff --git a/structured-logging.c b/structured-logging.c
-index 0e3f79ee48..78abcd2e59 100644
---- a/structured-logging.c
-+++ b/structured-logging.c
-@@ -593,8 +593,7 @@ void slog_set_command_name(const char *command_name)
- 	 * the cmd_<command>() and/or it may be too early to force a
- 	 * lazy load.
- 	 */
--	if (my__command_name)
--		free(my__command_name);
-+	free(my__command_name);
- 	my__command_name = xstrdup(command_name);
- }
- 
-@@ -606,8 +605,7 @@ void slog_set_sub_command_name(const char *sub_command_name)
- 	 * the cmd_<command>() and/or it may be too early to force a
- 	 * lazy load.
- 	 */
--	if (my__sub_command_name)
--		free(my__sub_command_name);
-+	free(my__sub_command_name);
- 	my__sub_command_name = xstrdup(sub_command_name);
- }
- 
--- 
-2.19.0-rc0-48-gb9dfa238d5
+With the current interface, the function is saying the caller "here
+is a text that shows a new hunk, when spliced back into the @hunk
+array and coalesced together with others, would apply cleanly to the
+current index".  But the corrected code is already doing a trial
+splice with trial coalescing anyway, so perhaps it may make more
+sense to update the interface into this function for the caller to
+say "the user asks to edit $ix'th hunk in @$hunks" and the function
+to answer "Here is the edited result in @$hunks; I've made sure it
+would cleanly apply".
 
+Incidentally, that would make it possible in the future to allow
+edit_hunk_loop to be told "the user wants to edit this $ix'th hunk",
+allow the editor to split that hunk into multiple hunks, and return
+the result by stuffing them (not just a single $newhunk) into the
+@hunk array.  The caller's loop could then further select or join
+these hunks---such an interaction is impossible with the current
+interface that allows edit_hunk_loop to take a single hunk and
+return a single newhunk.
 
+But again, all of the above is a tangent for future/further work,
+and should not be done as part of your patch.
