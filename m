@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4D761F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:38:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34C2C1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727199AbeH1Xbs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:31:48 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41749 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727098AbeH1Xbs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 19:31:48 -0400
-Received: by mail-wr1-f67.google.com with SMTP id z96-v6so2622228wrb.8
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:38:40 -0700 (PDT)
+        id S1727222AbeH1Xbt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:31:49 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:39113 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727179AbeH1Xbt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:31:49 -0400
+Received: by mail-wr1-f65.google.com with SMTP id o37-v6so2619246wrf.6
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=3J7vuojJlddd2Ez1A0L+sZspAMHaOeMQYhPzH9Ioue8=;
-        b=sMHqj0yc1wTqiAC1456i6QGHxE2avZxbZ9EG2ScUh6kdqKU1YhgtqwzNvr029wQeu/
-         nAeBREi3Vz69n/03nTpwRNmvsLc2eIObupvMJt+ESNpirhmInh7cXMji20juRUoTlK2v
-         ZfEUhisUtH+XlYQVLslH55ppkkEF80GpTXzr0DyOWoeHfBVHr5z4/Z9v3xqzCC7Ef8n3
-         medtNX4WEVjoGzcy+TlZ1/cOPJdJPSx5b9SWoAcwWrAnQCE3ZHxmVEtfX+bLmgAbFjw5
-         LuqkDqrTsignWJ9jj5izLQ3NhK2KIUAYEOPQ2w0/ByUWkVT5Rp3yocxchPwEwK7vj3Xq
-         nfKA==
+        bh=/CWEV3QqHeR/d8h6g9AWtoEtq1rGAXrKO0ijJSOZUdk=;
+        b=ToaUUR9bc7dXD2mNw3r7JZTActsUsvaBNxZd6Gy841PktUmjtS7B6XwKsSjzENN+aw
+         LOLTdzTCcoUexHKv/Z4KvOLGXdpGUTKP8muHgWf6GoLbqo2fjK+tR0DU1NTcaEfKPfSF
+         kAwYY3hvSW23b7gqMQuLmYxurTIfhvG6nFPxtwmtRQs2pwgcet5pHDNWKeGPOHX1YW9q
+         HhIyfvstrHiLtkZFJF2kKIUtPbGxdaZ0PzlInLB1h894wVIvcO14OmU5uDQfzHbQk1yL
+         2JEjAqiu6gbGPdJIUX31HsAQ/UU5SjDe8+T8zmgwDwMQcTrwKrsNn5YOLq07igB+nQ1p
+         GPeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3J7vuojJlddd2Ez1A0L+sZspAMHaOeMQYhPzH9Ioue8=;
-        b=Mj4J51I6/Qg9ASv6n2KqkukNZx2NdZqMuE0Jb1GE4e/NJzYGtMl9qqg4gHdRTHGQzL
-         Mrg1xmMbw1ssDnmh5VJtz0nduShB4rsDAmUca8ofZA6lV+LaIeiMC3fWzP8OOzKOh6sd
-         ghP6loVnCWeWBLlDNffqzj9vmF51xY9BooRN1Wg+Q6Yk30p5Mt1ro7HaIvNwmER2wYb+
-         qNWyXbBBGPDX62C4Sk83rCEvF5RmKI1FUqEoPy2lOHkeqkoSC0XFZeJaphu6VyMgQQEg
-         FPSn90k8JF3RzMXEa7DVhlN3k++VDHYlF2f21TCT62TD0MBVO6CZPOuYymIGbZ4HrP7C
-         M3/w==
-X-Gm-Message-State: APzg51D2oxOjFjZz+ZZ7hBb10W0ggUQYxwAp8inDybf/S+O7w1jSxRFM
-        dexutPzkrMWS5n7i0G/DsdhlecnWNPA=
-X-Google-Smtp-Source: ANB0Vdb80tVLdC5xH2r4lE5pU7CMQ5xWDPRkGY6QNrErcLd4/B/EO5J/Bdznk3XeWLM+XZbSV/73Aw==
-X-Received: by 2002:adf:8445:: with SMTP id 63-v6mr2108382wrf.41.1535485119201;
-        Tue, 28 Aug 2018 12:38:39 -0700 (PDT)
+        bh=/CWEV3QqHeR/d8h6g9AWtoEtq1rGAXrKO0ijJSOZUdk=;
+        b=pZ7nduloSvubBiBmMca5l/jcDY2WNAhKZCEygws88qLT27GBJQmTxq0zb4zLad1tdR
+         1n4371FGmhn3HuKD2JyV1n6P1Al7NvX257VX5fDDmm1FvqPhyOIa7v6xWeW27fa+PY9p
+         QiQy1z23iXyjhGYgZPUxOcB+P5myUPm7w4dViG87dQAfDVFfnm38NXtbIphLrO4R3DqZ
+         HuyOQ24KklNGTUQUhMUapJsuFHrvvoj+ayUcpr6bzcZ4I9CE+st/oiOrfVS+53sdTHLO
+         UvgwRu0jlIZI1mdejeauXH6Kwfdv31XqfaQ9hU133R8HiGn9SdzTt7biOM6DtXDHuo3D
+         74dw==
+X-Gm-Message-State: APzg51APfKfJVcQr8Etg9LId6AY+CpUXl6aSDhRaDFBwO2P6rUem8Ct+
+        vnXYsTARzBEaou66JMycILGRyp4k/iE=
+X-Google-Smtp-Source: ANB0VdZVUqqjWI+OINepJBd0WKPI5ygGarzMt67p/UEcamS6IOVYUfSEEge3TQgSBq6Aj1acuvIFNA==
+X-Received: by 2002:a5d:68c9:: with SMTP id p9-v6mr2122370wrw.108.1535485120569;
+        Tue, 28 Aug 2018 12:38:40 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 139-v6sm3436938wmp.4.2018.08.28.12.38.38
+        by smtp.gmail.com with ESMTPSA id 139-v6sm3436938wmp.4.2018.08.28.12.38.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 12:38:38 -0700 (PDT)
+        Tue, 28 Aug 2018 12:38:39 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Ann T Ropea <bedhanger@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 1/2] tests: fix non-portable "${var:-"str"}" construct
-Date:   Tue, 28 Aug 2018 19:38:26 +0000
-Message-Id: <20180828193827.8648-2-avarab@gmail.com>
+Subject: [PATCH 2/2] tests: fix non-portable iconv invocation
+Date:   Tue, 28 Aug 2018 19:38:27 +0000
+Message-Id: <20180828193827.8648-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180828193827.8648-1-avarab@gmail.com>
 References: <20180828193827.8648-1-avarab@gmail.com>
@@ -71,39 +71,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On both AIX 7200-00-01-1543 and FreeBSD 11.2-RELEASE-p2 the
-"${var:-"str"}" syntax means something different than what it does
-under the bash or dash shells.
+The iconv that comes with a FreeBSD 11.2-RELEASE-p2 box I have access
+to doesn't support the SHIFT-JIS encoding. Guard a test added in
+e92d62253 ("convert: add round trip check based on
+'core.checkRoundtripEncoding'", 2018-04-15) first released with Git
+v2.18.0 with a prerequisite that checks for its availability.
 
-Both will consider the start of the new unescaped quotes to be a new
-argument to test_expect_success, resulting in the following error:
-
-    error: bug in the test script: 'git diff-tree initial # magic
-    is (not' does not look like a prereq
-
-Fix this by removing the redundant quotes. There's no need for them,
-and the resulting code works under all the aforementioned shells. This
-fixes a regression in c2f1d3989 ("t4013: test new output from diff
---abbrev --raw", 2017-12-03) first released with Git v2.16.0.
+The iconv command is in POSIX, and we have numerous tests
+unconditionally relying on its ability to convert ASCII, UTF-8 and
+UTF-16, but unconditionally relying on the presence of more obscure
+encodings isn't portable.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t4013-diff-various.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0028-working-tree-encoding.sh | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index f8d853595b..73f7038253 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -140,7 +140,7 @@ do
- 	expect="$TEST_DIRECTORY/t4013/diff.$test"
- 	actual="$pfx-diff.$test"
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 12b8eb963a..b0f4490e8e 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -203,7 +203,11 @@ test_expect_success 'error if encoding garbage is already in Git' '
+ 	test_i18ngrep "error: BOM is required" err.out
+ '
  
--	test_expect_success "git $cmd # magic is ${magic:-"(not used)"}" '
-+	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
- 		{
- 			echo "$ git $cmd"
- 			case "$magic" in
+-test_expect_success 'check roundtrip encoding' '
++test_lazy_prereq ICONV_SHIFT_JIS '
++	iconv -f UTF-8 -t SHIFT-JIS </dev/null 2>/dev/null
++'
++
++test_expect_success ICONV_SHIFT_JIS 'check roundtrip encoding' '
+ 	test_when_finished "rm -f roundtrip.shift roundtrip.utf16" &&
+ 	test_when_finished "git reset --hard HEAD" &&
+ 
 -- 
 2.19.0.rc0.228.g281dcd1b4d0
 
