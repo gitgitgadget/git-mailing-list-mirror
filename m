@@ -2,100 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 899DF1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 14:15:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07A661F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 14:29:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727524AbeH1SHa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 14:07:30 -0400
-Received: from mail-lf1-f41.google.com ([209.85.167.41]:35199 "EHLO
-        mail-lf1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726998AbeH1SHa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 14:07:30 -0400
-Received: by mail-lf1-f41.google.com with SMTP id q13-v6so1526193lfc.2
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 07:15:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=edwardthomson-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YhYqsFrruRaI48choYoQSeHoTWDgBVYZ3+VRy7RLjaY=;
-        b=NcvR33ldEIgDWYtng1xdKQ0iws6zWl+/WZllnUAk6iUorV+iq0Uo4EVTk0ymynVelq
-         iz50elkXUeiMLa88D/YcETWrNvtJi/ex2IM8tkhe2gelH9R+/59cMD1SaI1ipp3AhEe1
-         XYQ4pm9MriZKfViUUids68QgKT1NX2Dh1bpwRD7rQWIg3trrJmfLZs9+i6oZKf1qKi6M
-         eb8zBfxpxuf1e35dm/bU5i7FFunZPhrFIyUDjA70mrPjytZI0ctYSdeNVhTNEjGtCM2h
-         CDu2fXHTSkW36bv7wdxMLmT9jyI53FbmMWTRaId6gWHoU7sZ1VEGFd++4BbI086CDPe7
-         RyVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YhYqsFrruRaI48choYoQSeHoTWDgBVYZ3+VRy7RLjaY=;
-        b=cJKnQc0MzdqxjdT0+rEj1AbvukCyerhP0bwu6G0UYmLegWrD+/DCJXZqclb+f9BeRz
-         7bRkQWDVvdi6kwPeJWuduKo3vqngIwzgwoL4MMPYhVzJeQMW7hS2BIMdeVp3x5lOjJXl
-         jqcSJIDojqytWi1Jt1fy6fe3qFm1kKjOmeGYRSkSMKR0d3SglH7CHPkyYSord5Uzs6d1
-         TB45DAko3uUpR0X3vkj5V5y6q0e0V5H//PPLVkDyg4E9d/qTNJVCo/0W7lodZtMKclmN
-         Tbm0MsKn6Cv0WS2BQr9gh1tfTobQ16S17KSKaINN1Xmaik+YRwYHu7uQa1NPqCNBvotP
-         psRg==
-X-Gm-Message-State: APzg51DAhFQSt5bfuL0fiqYvVpZzmcwl6K193CNtnZFnbsb0DpwADI8I
-        m6wrVF4l4IeWcnONx/NbrSM2ZYH+qpKG/cJMpHh95A==
-X-Google-Smtp-Source: ANB0VdbUv2pnjujaZ1fGIfBBexfKbwMUBzmj9tg4/t0pBQhrZPBtEvbOT5JpvbX1HaYHocfLfth5lyl2kEDqkUIlf28=
-X-Received: by 2002:a19:d85c:: with SMTP id p89-v6mr1402985lfg.27.1535465736612;
- Tue, 28 Aug 2018 07:15:36 -0700 (PDT)
+        id S1728021AbeH1SVS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 14:21:18 -0400
+Received: from mout.web.de ([212.227.17.12]:48759 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726120AbeH1SVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 14:21:18 -0400
+Received: from [192.168.178.36] ([91.20.48.192]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7KR8-1fgxea43SY-00x2ds; Tue, 28
+ Aug 2018 16:29:11 +0200
+Subject: Re: [PATCH v3 6/7] fsck: use oidset for skiplist
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
+References: <20180827194323.17055-1-avarab@gmail.com>
+ <20180827194323.17055-7-avarab@gmail.com>
+ <87lg8refcr.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <c356f239-f3f4-242b-fb75-95a4ccbe374b@web.de>
+Date:   Tue, 28 Aug 2018 16:29:09 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Received: by 2002:a2e:8ec1:0:0:0:0:0 with HTTP; Tue, 28 Aug 2018 07:15:35
- -0700 (PDT)
-In-Reply-To: <87h8jeeh2e.fsf@evledraar.gmail.com>
-References: <878t4xfaes.fsf@evledraar.gmail.com> <87h8jeeh2e.fsf@evledraar.gmail.com>
-From:   Edward Thomson <ethomson@edwardthomson.com>
-Date:   Tue, 28 Aug 2018 15:15:35 +0100
-Message-ID: <CA+WKDT1k1SpHQmUKunV+vC+VLBfTBjZBgw+n4NeTE=oKxWL-Sg@mail.gmail.com>
-Subject: Re: Questions about the hash function transition
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87lg8refcr.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:SEjBKOfq/AVpSqgCArqE22qTGs6BZOVtcjpRBf0q5QRq0h/fXEO
+ H6oXwzi77HEhzGHHqMTmp5zq53+LqfX5bH44cLc/8rFEAo2SVc1RBIZm2xUzG0pDGzMQPYw
+ xVw9qwLmkTARmCy5HNbmQ1i36LMQQzw8bKbxxKl71wBqS75UgdEzg3pUnWUA7MyGi1hhrTt
+ jEO/HaYK+L4llYZozqG7w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:F961b1GFFeE=:M2BCCgEUSYHQsJtlJrK9f8
+ SEsLIW/w5FfKyLM4a7fEet94VkbWwx++FhfKj7lJLYvdFSAULLYayG3nzbD5sIJSY2Qzyj64p
+ MKWmZtK3hHWjqjln6XjAChsopY/Z3lBm9MDxJMTBDkr1AMyuPwWEcodqdKzp0dKtXfQsO5WTr
+ jbXzDgtfcRKpf0Ol/D5qRWyDFD5TrvO388WUZDgEb9mrQEfEJSmC0PFRmEBNg6y4ZDhhS3TSP
+ vLOkdyDA/soIKfvS3l+amEsZauQdB4f/Lq4Weql19ktJjU5BTBdLOVPnS+EmoM6qy364293bD
+ TVGJXEPkBHOqqDiLN9R8R7NT47S+ivQ57QC5F7Fa82NlchKsnqLJSAqWadY1StfQ4AxHfL7fh
+ f0nLq0vcfV805tUsgZ87wDCgaVbqcAnQ3pGcpoowDc/TkBPABGwQjuGCTboYDlxflDF3OsF3E
+ fbjGw9MPiYE5sXoHrRemFldb125t2+7DQUrd/ri7VHxeRjrU2zlOOrP1cJHRgEy28adUQwgzn
+ q5o11lfBGkApxBJ561qGrlsrJsYCju3b4IIaXVPGVGjsxDnhpBWsWZvBYC50bgIyM7rK/5yAa
+ vJjGysBkcyUYpUy5OJqEQk5Hm7e936wveLBxgAsHX34H+Af8Eyk3mVRU36mvw5uKZPEvRkF1W
+ WQD/c/OMNmHlXgjrf/3dYEHS5zQniJ3aFOWlF8T+LeGT0dGBuKRdCu6+iNmb8tB6hHA9+6ghp
+ Xps+jzGKSiLHFnS687ElMSKvYiit2ULaYUJjMKn6ruGL+2TceIEGLLNVCWbpke8znK1JHiVoP
+ z4rDSTZ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 28, 2018 at 2:50 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> If we instead had something like clean/smudge filters:
->
->     [extensions]
->         objectFilter =3D sha256-to-sha1
->         compatObjectFormat =3D sha1
->     [objectFilter "sha256-to-sha1"]
->         clean  =3D ...
->         smudge =3D ...
->
-> We could apply arbitrary transformations on objects through filters
-> which would accept/return some simple format requesting them to
-> translate such-and-such objects, and would either return object
-> names/types under which to store them, or "nothing to do".
+Am 27.08.2018 um 22:15 schrieb Ævar Arnfjörð Bjarmason:
+> 
+> On Mon, Aug 27 2018, Ævar Arnfjörð Bjarmason wrote:
+> 
+>> From: René Scharfe <l.s.r@web.de>
+>>
+>> Object IDs to skip are stored in a shared static oid_array.  Lookups do
+>> a binary search on the sorted array.  The code checks if the object IDs
+>> are already in the correct order while loading and skips sorting in that
+>> case.  Lookups are done before reporting a (non-fatal) corruption and
+>> before checking .gitmodules files.
+>>
+>> Simplify the code by using an oidset instead.  Memory usage is a bit
+>> higher, but we don't need to worry about any sort order anymore.  Embed
+>> the oidset into struct fsck_options to make its ownership clear (no
+>> hidden sharing) and avoid unnecessary pointer indirection.
+>>
+>> Performance on repositories with a low number of reported issues and
+>> .gitmodules files (i.e. the usual case) won't be affected much.  The
+>> oidset should be a bit quicker with higher numbers of bad objects in
+>> the skipList.
+> 
+> I didn't change this commit message at all, but FWIW this still has me
+> somewhat confused. What is the interaction with .gitmodules being
+> described here? You also mentioned it in
+> https://public-inbox.org/git/113aa2d7-6f66-8d03-dda4-7337cda9b2df@web.de/
+> (but I don't get that either)
 
-If I'm understanding you correctly, then on the libgit2 side, I'm very much
-opposed to this proposal.  We never execute commands, nor do I want to star=
-t
-thinking that we can do so arbitrarily.  We run in environments where that'=
-s
-a non-starter
+The skipList is consulted before checking .gitmodules blobs, since
+fb16287719 (fsck: check skiplist for object in fsck_blob()).
 
-At present, in libgit2, users can provide their own mechanism for running
-clean/smudge filters.  But hash transformation / compatibility is going to
-be a crucial compatibility component.  So this is not something that we
-could simply opt out of or require users to implement themselves.
+> Does that just mean that when cloning with --recursive with
+> transfer.fsckObjects=true we'll re-read the file for each "clone"
+> invocation, both for the main project and everything listed in
+> .gitmodules?
 
--ed
+That is probably true, but I didn't mean that.  I was only talking
+about when an object is looked up in the skiplist (oid_array/oidset).
+
+> If so, I think something like this commit message would be clearer:
+> 
+>     fsck: use oidset instead of oid_array for skipList
+> 
+>     Change the implementation of the skipList feature to use oidset
+>     instead of oid_array to store SHA-1s for later lookup.
+> 
+>     This list is parsed once on startup by fsck, fetch-pack or
+>     receive-pack depending on the *.skipList config in use, so for fetch
+>     it's currently re-parsed for each submodule fetch.
+
+OK; the patch doesn't change that, though.  Mentioning it sound like
+a good idea if the load takes a significant amount of time -- I
+didn't measure this separately, so perhaps this needs to be explored
+further if people use big skipLists.
+
+>     Memory usage is a bit higher, but we don't need to keep track of the
+>     sort order anymore. Embed the oidset into struct fsck_options to
+>     make its ownership clear (no hidden sharing) and avoid unnecessary
+>     pointer indirection.
+> 
+> Then let's just attach the test program you wrote in
+> https://public-inbox.org/git/113aa2d7-6f66-8d03-dda4-7337cda9b2df@web.de/
+> and note the results and let them speak for themselves.
+
+I was surprised that such a big repo can be mocked up relatively
+quickly, but the numbers are a bit underwhelming -- there is not a
+lot of change.  The script is not too expensive, so I don't mind
+adding it.
+
+> I can do all that if that seems fine to you. I also notice that the test
+> case only sets up a case where all the items on the skip list are bad
+> commits in the repo, it would be interesting to test with a few needles
+> in a large haystack (I can modify it to do that...).
+
+I tried something like this first, and its results are even more
+boring.  Since skipList lookups are done only for bad objects (and
+.gitmodules) you won't see  any difference at all.  Having only bad
+objects is the edge case, this test being designed to highlight the
+performance of the skipList implementation.
+
+René
