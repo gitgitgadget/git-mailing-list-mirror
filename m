@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8418B1F459
-	for <e@80x24.org>; Tue, 28 Aug 2018 12:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E29FF1F452
+	for <e@80x24.org>; Tue, 28 Aug 2018 12:11:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727955AbeH1QCt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 12:02:49 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42872 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727941AbeH1QCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 12:02:49 -0400
-Received: by mail-wr1-f67.google.com with SMTP id v17-v6so1348170wrr.9
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 05:11:26 -0700 (PDT)
+        id S1727940AbeH1QCl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 12:02:41 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:38159 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727854AbeH1QCl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 12:02:41 -0400
+Received: by mail-wm0-f67.google.com with SMTP id t25-v6so1759377wmi.3
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 05:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vznnz5D7n8IbSYHjibZemm2oY5Ezy4DJnuhAbU00TEs=;
-        b=LQ2NVjHugWizQoJ/aTW9fS+TEaej2yOp0gEth83QH+evhP5tmbuU6sd0H7laTQrP7s
-         mzwcHwyEZ7wwbQ8N5T652qhoreiBg9UYvanBqE2MNOu74WMGuccyER4pOAhr0TNy5ocX
-         i8Z5/l16JFw2ebc1JP/NIJNhez6PQtZnlAVhHgv+B48+kJ9fKI9SBOV8AB/rNh0i8Rgr
-         mQ5dr7FBuWOhxd8wVe4W9ixV5b93T1G1t6lbPNUYRNN3uLapi8+qPIo0Kf/Bw2LLEKYS
-         0i0Yt3/CLJq6nQOC9hQxfAgSnl+yCK17wIeuMkCANLBKk3WOtsRNtQipF/whxCL/dEZI
-         Qfsg==
+        bh=m0NGeWs7P3cs7I7nv+i2CtvFtPHghUxVEU13oKeDSjk=;
+        b=A/XRjJEVbS4ZZONvmpVjqVvoKF1YKFCy8vz7b6Dm3wvTEo0KfYbNw/NlE/lUlh3NqV
+         yykqTn3azU+TQ95bh9GId6D8CLSyt2hqmNtzAlNna0T4JCCKqkLRyyNjfyE2KD+EOXqi
+         tImPzRBH4WNondMDLzdjf0FTlNhJ8qLfkoRbQrE8cqNiVvLlzmNIzZTDRz+b6yCNQWT8
+         1ezP7iAXOv6fSnUvNHgO2xKKbC9HA/f0n2JaMveRdDO+CRkFE/t4QIlJ8OyJ5PlPeZlA
+         wmO4qfkWecd7nX11zJ6cigDuIv6+iyAGf4IHjYkizC6Dt/5AlISUCc2j896G4fYI4dmw
+         /9TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vznnz5D7n8IbSYHjibZemm2oY5Ezy4DJnuhAbU00TEs=;
-        b=HNP1k8IV2uD25iBLZIG0TkMlOP1HhFCkUNYB/WQzA08G5T1hQlpucqrRxiEJbOu5gd
-         T0SSrvy1karsAVIPwtSQHU8eaOG09GUIouAGuWCs73x7vLLFX89RFv/xYmGMNDL+ypCN
-         IF6s/HziRC3Cy+NzfuZINIzEQjpn7hownchN0DsieHpP1Sljpaeiut9o/a3nf32O28kF
-         eDdB8RFAl2FgPmTCMhRQKEYq+rz3D5hXSM+DKv2DyKZORobCgGXTutmD+f81DAHaSwDO
-         yUo7tJgPWUdzqIFrW6aDV5wC202VEiPs09venmhFJGpawJzowcODCKcblXSaQ39/3gsg
-         bo+Q==
-X-Gm-Message-State: APzg51DenibAmwPFJ6BerN6OyUyOj7XjhuJME+Nt4IgVPMRRjUI0T3Am
-        SrGfxP7k7/oYOmGdtwWKFY3LtjpA
-X-Google-Smtp-Source: ANB0VdaGsVjUbPoxiQaYRmC2OVpqDQGGfsEDIVHU2dtgSD0u8KxqGuuaK3kvn2/vkRGI8Q4mx6BVmQ==
-X-Received: by 2002:adf:92c2:: with SMTP id 60-v6mr973140wrn.153.1535458285161;
-        Tue, 28 Aug 2018 05:11:25 -0700 (PDT)
+        bh=m0NGeWs7P3cs7I7nv+i2CtvFtPHghUxVEU13oKeDSjk=;
+        b=fz9fbh/Ky1FMP95TD0W+5ycdW9AMxk4oFIbqjHN8IUzddVbJ9+hzOf6Ydtf4s6O6wa
+         wA/H3G5WVTPkhgJnlzH+M9HmgfmsxmTfC0DOZ4oMua51OSrkMJNAljNCAmTtx2TbS9i5
+         xKwB1VnY4pZKx1qjPoIM1DMcF4gyFnER6lDh2u4nuKp1DaKH4G9zpyk/QzL/hxx0y+xP
+         rIpfbVjiSQG2WviHnxFlFrskIVBixSwA382xhoOl8VupJFeRlhWeKpZN2NzM8rxwxCe8
+         VG5RfhAevlvRDpyUOcsTvj9akfn4mQglOJkvvoGeuShS2JIMZGiY8Fjn8D7iMwY/9k/e
+         WA3g==
+X-Gm-Message-State: APzg51B5zTIxo98JZe4FRCfxNoLAmddPA1ZmtdqEDQBZXbphC43VGFrF
+        cyowQMv7P8A4jp/MtPzuEFYFkeSY
+X-Google-Smtp-Source: ANB0VdatmamLzhe2M2nWnKov1AQEAcXSANvYrhIaCla4yjiWeGQAH0P1YNXjS2lHQyN9P6NXNuJz6w==
+X-Received: by 2002:a1c:c44a:: with SMTP id u71-v6mr1167545wmf.43.1535458277522;
+        Tue, 28 Aug 2018 05:11:17 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-33-140.w86-221.abo.wanadoo.fr. [86.221.112.140])
-        by smtp.googlemail.com with ESMTPSA id y206-v6sm1702790wmg.14.2018.08.28.05.11.23
+        by smtp.googlemail.com with ESMTPSA id y206-v6sm1702790wmg.14.2018.08.28.05.11.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 05:11:23 -0700 (PDT)
+        Tue, 28 Aug 2018 05:11:16 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,9 +56,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v7 14/20] rebase -i: rewrite the rest of init_revisions_and_shortrevisions() in C
-Date:   Tue, 28 Aug 2018 14:10:39 +0200
-Message-Id: <20180828121045.14933-15-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v7 10/20] t3404: todo list with commented-out commands only aborts
+Date:   Tue, 28 Aug 2018 14:10:35 +0200
+Message-Id: <20180828121045.14933-11-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180828121045.14933-1-alban.gruin@gmail.com>
 References: <20180810165147.4779-1-alban.gruin@gmail.com>
@@ -68,148 +68,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites the part of init_revisions_and_shortrevisions() needed by
-`--complete-action` (which initialize $shortrevisions) from shell to C.
-
-When `upstream` is empty, it means that the user launched a `rebase
---root`, and `onto` contains the ID of an empty commit.  As a range
-between an empty commit and `head` is not really meaningful, `onto` is
-not used to initialize `shortrevisions` in this case.
-
-The corresponding arguments passed to `--complete-action` are then
-dropped, and init_revisions_and_shortrevisions() is stripped from
-git-rebase--interactive.sh
+If the todo list generated by `--make-script` is empty,
+complete_action() writes a noop, but if it has only commented-out
+commands, it will abort with the message "Nothing to do", and does not
+launch the editor.  This adds a new test to ensure that
+complete_action() behaves this way.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
 No changes since v6.
 
- builtin/rebase--helper.c   | 40 ++++++++++++++++++++++++++++++++------
- git-rebase--interactive.sh | 27 ++++---------------------
- 2 files changed, 38 insertions(+), 29 deletions(-)
+ t/t3404-rebase-interactive.sh | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index acc71a6f99..0716bbfd78 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -10,7 +10,7 @@ static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 01616901bd..496d88d7d6 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -75,6 +75,16 @@ test_expect_success 'rebase --keep-empty' '
+ 	test_line_count = 6 actual
+ '
  
- static int get_revision_ranges(const char *upstream, const char *onto,
- 			       const char **head_hash,
--			       char **revisions)
-+			       char **revisions, char **shortrevisions)
- {
- 	const char *base_rev = upstream ? upstream : onto;
- 	struct object_id orig_head;
-@@ -19,7 +19,25 @@ static int get_revision_ranges(const char *upstream, const char *onto,
- 		return error(_("no HEAD?"));
- 
- 	*head_hash = find_unique_abbrev(&orig_head, GIT_MAX_HEXSZ);
--	*revisions = xstrfmt("%s...%s", base_rev, *head_hash);
++cat > expect <<EOF
++Nothing to do
++EOF
 +
-+	if (revisions)
-+		*revisions = xstrfmt("%s...%s", base_rev, *head_hash);
-+	if (shortrevisions) {
-+		const char *shorthead;
++test_expect_success 'rebase -i with empty HEAD' '
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="1 exec_true" git rebase -i HEAD^ >actual 2>&1 &&
++	test_i18ncmp expect actual
++'
 +
-+		shorthead = find_unique_abbrev(&orig_head, DEFAULT_ABBREV);
-+
-+		if (upstream) {
-+			const char *shortrev;
-+			struct object_id rev_oid;
-+
-+			get_oid(base_rev, &rev_oid);
-+			shortrev = find_unique_abbrev(&rev_oid, DEFAULT_ABBREV);
-+
-+			*shortrevisions = xstrfmt("%s..%s", shortrev, shorthead);
-+		} else
-+			*shortrevisions = xstrdup(shorthead);
-+	}
- 
- 	return 0;
- }
-@@ -116,7 +134,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		if (!upstream && squash_onto)
- 			write_file(path_squash_onto(), "%s\n", squash_onto);
- 
--		ret = get_revision_ranges(upstream, onto, &head_hash, &revisions);
-+		ret = get_revision_ranges(upstream, onto, &head_hash, &revisions, NULL);
- 		if (ret)
- 			return ret;
- 
-@@ -145,9 +163,19 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		return !!edit_todo_list(flags);
- 	if (command == PREPARE_BRANCH && argc == 2)
- 		return !!prepare_branch_to_be_rebased(&opts, argv[1]);
--	if (command == COMPLETE_ACTION && argc == 6)
--		return !!complete_action(&opts, flags, argv[1], argv[2], argv[3],
--					 argv[4], argv[5], autosquash);
-+	if (command == COMPLETE_ACTION && argc == 3) {
-+		char *shortrevisions = NULL;
-+
-+		ret = get_revision_ranges(upstream, onto, &head_hash, NULL, &shortrevisions);
-+		if (ret)
-+			return ret;
-+
-+		ret = complete_action(&opts, flags, shortrevisions, argv[1], onto,
-+				      head_hash, argv[2], autosquash);
-+
-+		free(shortrevisions);
-+		return !!ret;
-+	}
- 
- 	usage_with_options(builtin_rebase_helper_usage, options);
- }
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 4ca47aed1e..08e9a21c2f 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -60,23 +60,6 @@ init_basic_state () {
- 	write_basic_state
- }
- 
--init_revisions_and_shortrevisions () {
--	shorthead=$(git rev-parse --short $orig_head)
--	shortonto=$(git rev-parse --short $onto)
--	if test -z "$rebase_root"
--		# this is now equivalent to ! -z "$upstream"
--	then
--		shortupstream=$(git rev-parse --short $upstream)
--		revisions=$upstream...$orig_head
--		shortrevisions=$shortupstream..$shorthead
--	else
--		revisions=$onto...$orig_head
--		shortrevisions=$shorthead
--		test -z "$squash_onto" ||
--		echo "$squash_onto" >"$state_dir"/squash-onto
--	fi
--}
--
- git_rebase__interactive () {
- 	initiate_action "$action"
- 	ret=$?
-@@ -87,8 +70,6 @@ git_rebase__interactive () {
- 	git rebase--helper --prepare-branch "$switch_to" ${verbose:+--verbose}
- 	init_basic_state
- 
--	init_revisions_and_shortrevisions
--
- 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
- 		${rebase_merges:+--rebase-merges} \
- 		${rebase_cousins:+--rebase-cousins} \
-@@ -97,8 +78,8 @@ git_rebase__interactive () {
- 		${restrict_revision:+--restrict-revision ^"$restrict_revision"} >"$todo" ||
- 	die "$(gettext "Could not generate todo list")"
- 
--	exec git rebase--helper --complete-action "$shortrevisions" "$onto_name" \
--		"$shortonto" "$orig_head" "$cmd" $allow_empty_message \
--		${autosquash:+--autosquash} ${keep_empty:+--keep-empty} \
--		${verbose:+--verbose} ${force_rebase:+--no-ff}
-+	exec git rebase--helper --complete-action "$onto_name" "$cmd" \
-+		$allow_empty_message ${autosquash:+--autosquash} ${verbose:+--verbose} \
-+		${keep_empty:+--keep-empty} ${force_rebase:+--no-ff} \
-+		${upstream:+--upstream "$upstream"} ${onto:+--onto "$onto"}
- }
+ test_expect_success 'rebase -i with the exec command' '
+ 	git checkout master &&
+ 	(
 -- 
 2.18.0
 
