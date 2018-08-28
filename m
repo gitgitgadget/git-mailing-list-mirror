@@ -2,125 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC4911F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:39:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31D041F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:49:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727265AbeH2BdL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:33:11 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:42554 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727117AbeH2BdL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:33:11 -0400
-Received: by mail-qk0-f193.google.com with SMTP id g13-v6so2052410qki.9
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:39:36 -0700 (PDT)
+        id S1727230AbeH2BnI (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:43:08 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:41967 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727166AbeH2BnI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:43:08 -0400
+Received: by mail-ed1-f65.google.com with SMTP id f38-v6so2452099edd.8
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:49:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=apmXUcZDErLJb4B1FiN8XXZzLgUk3cjyL4hr3jVdS5I=;
-        b=fhEphLMbKfoOMZYJaxAe4n8sgTnvDpttE3nT4jJRMgqcMM+YKYPJJBweUjB7tFLM23
-         v3ep/XEKF4j2ehATF9Ecj/1TQg5CivRl1ECryVl2Dq+gCjLW7KGdQsPNeMXD43IgEQm0
-         xXyhLXq1uFA46nE9N+7hHsHbF/Pcbk9qyYQi523h4jnAKYpNtQD7BpcWMk2+y0veUHAo
-         PgFTqX2BzApBU950H5WXAlK78Ciim748t0HCeyZY7oZpjU+SYFHoi+8BQOsvQFFIvyM8
-         YF02VM0zS0XnMcjc5T0n5+qw7vbw4UWltXA8L7QhzC+KpVVnL7LGritCj0TP4vvK8jlH
-         cwZQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=jFlVdcETeLiXM0OhIS0G6yRzCHirW6QExP06gsAQOnY=;
+        b=M0Eqy2TLn/5ky0DEwU2b0hxsSe4t0ITOAjrgedb/NnUCsmODMIfKACLgqbDXN7rOWr
+         aeIaUzsXNDs5bT6TeNoZldLyzDKR0bBdFklOf/7po87F+0Xp8H2+LoRxO/Cebg9oKtau
+         YOvimfKrCqM1O51KnlrOS+OpX2NBv6UyKnrkBik89jiRjdjau82KlQNq0tSPdQWq1hb5
+         McFXBquQEraKEVtWh7c0fWWuNUHsV1n9ZRwmKMGzsvKhbWFQGBqxhdkLkYOIGi+Gf1HJ
+         UiSGvilLA6y0JRCmvjg1dXP2iS+x0gZhYKN/xZAJmv5e9jBm/BNMx+D8YgP6Tfdfr/dd
+         qo8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=apmXUcZDErLJb4B1FiN8XXZzLgUk3cjyL4hr3jVdS5I=;
-        b=irftJeh/EaBJ6+cJokwQ9Ivo+3+PTSm/Hf4s+CIixcjiVoWlf7Qw3Yn+r4F1R4bonr
-         DJyoHLC0qXNw1DdN0TnX8gMg3uP/d3O36PYx9FOq0EinWeZ9HFvrrlYbsaXFBNFqxD+R
-         ADqLAufJ6IZelWNsddBM8jYcJ5vlVYoUemSAN9hJZQPMPl7CU/Ts5Jn7Tu3k8URFAVB4
-         XUGepU2NaXRZTW/A0Wlx7sgH04IZaLHOuGhas0+M+5haNRrrkwB1zNsPaojaIFxD2MfY
-         Q3OcgSHzyo3WQc/y4CnHbm1/R1XHXhgc0Ot6EXiThzSDMZMK9FTgwn2vZt8jsMCcWtb/
-         4ZxA==
-X-Gm-Message-State: APzg51ApAO7KTnkT55VUN4PgQH/NY8+Qvp+9OqVxkixoYX0+bH1BfFxT
-        g6THTNC7Ve60WWZFM7cVkg4=
-X-Google-Smtp-Source: ANB0VdbhBinFjrs5ge7Ei5ATpL1TTp8hA/2gItph1Mofpl0bZWnghZCcFz1PFOdjjlb3BruivQaKIA==
-X-Received: by 2002:a37:5bc5:: with SMTP id p188-v6mr3657779qkb.318.1535492376336;
-        Tue, 28 Aug 2018 14:39:36 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id m95-v6sm1228969qte.69.2018.08.28.14.39.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 14:39:35 -0700 (PDT)
-Subject: Re: [PATCH] commit-reach: correct accidental #include of C file
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <20180720163227.105950-1-dstolee@microsoft.com>
- <20180720163227.105950-5-dstolee@microsoft.com>
- <20180828212457.GA74687@aiede.svl.corp.google.com>
- <20180828213657.GA74296@aiede.svl.corp.google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6ae7f8fd-9be5-992e-e5a4-35254c263280@gmail.com>
-Date:   Tue, 28 Aug 2018 17:39:32 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jFlVdcETeLiXM0OhIS0G6yRzCHirW6QExP06gsAQOnY=;
+        b=KBaxC6waKMtfvO0pUoFvufpRdXCwfCwrYyhFDGLW1Pi/DHNY7jEvHpj17E8sw+bhzG
+         sPkAtdI3iJxIQHToagHViJ7sgMAu0T35d8TtsMhzHqt0ea9xFpVGJLUjfGwWMh+IqOah
+         pTcHUhfGO2TBP98BrW90ioaEqaErkkT/IWdsGt1CD4aSdtxMFHeNr5M2aydFBjAc4YTD
+         kiojKsToN1dicWbZQUqkTf6aj/FptVA54LkBHfU7bX1+xG0QavHSbYqgM/lWiGVcjlRM
+         u5Uc8vqTNWgttpJAMBYTo3hJnkbu4Fvb/iEvmG5sULnoTA165F0B6fPF8LevFp66LlxR
+         CXAg==
+X-Gm-Message-State: APzg51CqDOq0pSDHHZymFI9fc9Wf+t6O9sQZ6Gqji2WZP/Rg51B1ccW6
+        IXbFekugkqn2HekdjQwmvc8NHw0Bq9GdjpI+mqZ3Ua6crX4=
+X-Google-Smtp-Source: ANB0VdZp5ZdOSJ+VwIrSy5kXVxGbiUCKCvVTY+A9O+DPcJTbqo7bJDk7vFgMPovZEctpCoEBCdS5kLd/9ATTG/4yhyw=
+X-Received: by 2002:a50:b0c1:: with SMTP id j59-v6mr4483551edd.267.1535492970682;
+ Tue, 28 Aug 2018 14:49:30 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20180828213657.GA74296@aiede.svl.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <20180827221257.149257-1-sbeller@google.com> <20180827221257.149257-2-sbeller@google.com>
+ <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 28 Aug 2018 14:49:19 -0700
+Message-ID: <CAGZ79kYApAdFzC82LZNjYDzL5uWxtXHbvqUyjZ9OF+b=pGNbUA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule git directories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2018 5:36 PM, Jonathan Nieder wrote:
-> Without this change, the build breaks with clang:
-For some reason, it didn't fail with GCC for me, but this is an 
-obviously correct change to make. Thanks!
->   libgit/ref-filter.pic.o: multiple definition of 'filter_refs'
->   libgit/commit-reach.pic.o: previous definition here
+On Tue, Aug 28, 2018 at 11:56 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Jonathan Nieder wrote:
->> Derrick Stolee wrote:
->>> --- a/commit-reach.c
->>> +++ b/commit-reach.c
->>> @@ -1,8 +1,10 @@
->>>   #include "cache.h"
->>>   #include "commit.h"
->>> +#include "commit-graph.h"
->>>   #include "decorate.h"
->>>   #include "prio-queue.h"
->>>   #include "tree.h"
->>> +#include "ref-filter.c"
->> Did you mean "ref-filter.h"?
->>
->> This broke the build here.  Is there some check that we can use to
->> prevent it happening again?  I don't think we ever intentionally
->> #include a .c file.
-> Here's what I'm applying locally.
+> Stefan Beller <sbeller@google.com> writes:
 >
-> Thanks,
-> Jonathan
+> > This is the continuation of f2d48994dc1 (submodule.c: submodule_move_head
+> > works with broken submodules, 2017-04-18), which tones down the case of
+> > "broken submodule" in case of a missing git directory of the submodule to
+> > be only a warning.
 >
->   commit-reach.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/commit-reach.c b/commit-reach.c
-> index c996524032..86715c103c 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -4,7 +4,7 @@
->   #include "decorate.h"
->   #include "prio-queue.h"
->   #include "tree.h"
-> -#include "ref-filter.c"
-> +#include "ref-filter.h"
->   #include "revision.h"
->   #include "tag.h"
->   #include "commit-reach.h"
+> After seeing this warning, as we do not do any remedial action in
+> this codepath, the user with a repository in this state will keep
+> seeing the 'missing' message.  Wouldn't we want to give a hint in
+> addition (e.g. 'you can run "git submodule update $name" to
+> recover', or something like that)?
+
+Not quite, as this is only triggered in the case of 'old_head = NULL', which
+is when you have a superproject that is missing the submodule in the
+working tree before and wants to have it afterwards.
+
+Looking at the test in the previous patch, I would think a reasonable workflow
+in the test is
+
+    git clone --recurse-submodules super1 super1_clone && cd super1_clone
+    git checkout --recurse-submodules historic_state
+    # see warning, but checkout proceeds
+
+    git fetch --recurse-submodules
+    # clones the submodule as it was configured active via the clone
+
+    git checkout --recurse-submodules historic_state
+    # this checkout will put the submodule in place
+    #  not sure if -f is needed here, though.
+
+
+I am currently working on the cloning of submodules that are not currently
+in the working tree while fetching in the superproject, which would address
+the latter part.
+
+> The MOVE_HEAD_FORCE codepath that follows this hunk is, eh, already
+> forcing to correct the situation, so there is no need to touch that,
+> which makes sense, if I understand correctly.
+
+No, that is not executed for now as it depends on 'old_head'.
+
+In case of FORCE we might want to die instead of just warn about that submodule.
+
+Stefan
