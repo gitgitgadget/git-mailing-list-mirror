@@ -2,82 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C8BDA1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:11:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1761F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:25:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727292AbeH1XEp (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:04:45 -0400
-Received: from mail-pg1-f178.google.com ([209.85.215.178]:44631 "EHLO
-        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726807AbeH1XEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 19:04:45 -0400
-Received: by mail-pg1-f178.google.com with SMTP id r1-v6so1159804pgp.11
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:11:43 -0700 (PDT)
+        id S1727174AbeH1XSu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:18:50 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:32999 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726975AbeH1XSu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:18:50 -0400
+Received: by mail-io0-f195.google.com with SMTP id r196-v6so2464376iod.0
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=KG1EXHxjZCBZH6OPSqw3gHh8WmdJQFN5l624aWdau8E=;
-        b=foOjx48WfC/nQG4+4bAsvGCDA7Ht7oV1Y5a5zPrhliIpdYITJioaePsZ1xfcB2WBXZ
-         mPSzX/p0NxLk662yiZ+UBXy7jk//kUfUt55hmdSNNqcB9u3kc3c8nmrYrymTIQUgUMX4
-         f+W2QU2bw8VR9CvToD2/4o8IXEzeFT561VQoJnedDa6wfm+Lag51lcJ+t3bGRAesIGal
-         FIdXikjxC29pHPULbU/W8RodGHPGN8ZbHVxJUV7km7lR9mby8IteJFhjyTh8H8bbbMSd
-         mSzhIuQt5DWiD/Y7QeJWZYGh7SycOZiCW23eAw/JEVZ6DXD+LqaV1vEoXjWmltu+cllj
-         6eFA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mir4wiyXTowL4KwQ5m2kOc6CyccJfu8QBvlksh1VlhY=;
+        b=esPrGpQuv04cDI/vaFc4XXKsVGRg9jObO6A0mHeI8IZ3uQmswxWOvHLhkMJfN4O92E
+         jv+1fL1Fju4SWrw8vyn0bBeECrpryouL/NWwiY+xsqcgR2Chsx5pWoZOUDduBNeAUq3U
+         QrYf4qTXSmVYolXgEnU50cM6phY1S7BQwlMMCRPjB5VMaSqkN10a8aTB55FRndXDikgY
+         P4uuoLQdoW19HedH5ZdQX30gQ3B6PlhEI8brgu286r7LsAmJY9rzyibOTKRIr/qYENiR
+         m5GOUlB4Uaf15SNANKMprTg3gDyZm6B2HWMCwl3xDK81IVwOIR7x1C5XAgioYAM22fRU
+         M6zQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=KG1EXHxjZCBZH6OPSqw3gHh8WmdJQFN5l624aWdau8E=;
-        b=f6QcHmr2zfVmT4CnGXZw6YlnQUy1yoBv+h22Lvs4UlQseYTaZzCAeFZkwtMY2O9WAr
-         4wUQIuCQIVenMCkz9zN3rWDrPDPp9XT01sUGnE8nCi5p/Qw2IaV6WUTjiilTsBwvqGvM
-         +0AaUEU75jRLqctK07ol4W9fqOJ8qSbpP0JDj8HLwbOINqf4ijz08aWTJMSdCfCJDPRn
-         xN7OjFBe+9SI5+HJxbB2AcBCTexZ36cvJNiqru2Y9AOa2QMYEr5YIe3VGgtG3bviAC3w
-         IPwZQw/eLLuWucRHyMQ0clnsWvZCc6dcX9ViCu075/ZCfIYpzMDjRC3aZqmc6+FcVlVl
-         QOFw==
-X-Gm-Message-State: APzg51CqqjEta/jApj+cIKb7trFxpQO0ct9ubMuv8u+HUSNXRf7lskQj
-        Q1j+JTkl44Yd2MFZJThhEKA=
-X-Google-Smtp-Source: ANB0VdYIdegdvucZsY/P+eulapJkpkjJi1fBKDP7RZrki/ma+e/WIFgjtvkRabYnd+A9stZRa3qWAQ==
-X-Received: by 2002:a65:6499:: with SMTP id e25-v6mr2621625pgv.224.1535483503267;
-        Tue, 28 Aug 2018 12:11:43 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u9-v6sm3444421pfi.104.2018.08.28.12.11.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 12:11:42 -0700 (PDT)
-Date:   Tue, 28 Aug 2018 12:11:40 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: Contributor Summit planning
-Message-ID: <20180828191140.GB46388@aiede.svl.corp.google.com>
-References: <20180813163108.GA6731@sigill.intra.peff.net>
- <d5d3fe71-d52b-ac9b-d48d-d288b6569e5a@gmail.com>
- <20180813171535.GA8476@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet>
- <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
- <20180828190608.GA46388@aiede.svl.corp.google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mir4wiyXTowL4KwQ5m2kOc6CyccJfu8QBvlksh1VlhY=;
+        b=rmPXxfVoLpfe9mlMN5JXzrtpfewyCHYtZwanEe5paou06q9IfZyUPta1OfRoSIm6EJ
+         z/AoUn8ZyVksoB86CXotrmC1sqB0IlCMgjsigtjXDuKhs4kxArwtPgmTKhT8Rg4hY3dn
+         NjqZ7BOz3PuBYGDFPaROL3FKypO9Uy6mUe5EVynVE9vrZLvvvjP4Jbdfx96teEu06aRs
+         RocaAkFrqvWfLGLkZt+Y+4te7xdgWn/i/CXMQ72WXI+00EprCDTiE+JwIAWQvvOI1T1X
+         1Na6z6GqZd/ne2R9nPYjyob+PV5AMkO/z2G/qAoN5/+PkFbc429PNUjXS7wNNyDwuh4/
+         QRpg==
+X-Gm-Message-State: APzg51AhpU3oTFw2JRTHqXBu03DbDjnqLMIZsylkzMpjrXAGVGI59jan
+        iYMn036Csg+fjzL9uSdLRFb6F6UtlAcgULR1Ybg=
+X-Google-Smtp-Source: ANB0VdYRL/2+xTcrmpkimSntOt0vIQ8pI8mG4GByIIm4TYtVU6Kx3QvR12Fc6es41RuL7frsoDFwH/nvSwcwxyfuneE=
+X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr2526889iok.236.1535484345775;
+ Tue, 28 Aug 2018 12:25:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180828190608.GA46388@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180824155734.GA6170@duynguyen.home> <20180825064458.28484-1-pclouds@gmail.com>
+ <xmqqwosbiouc.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwosbiouc.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 28 Aug 2018 21:25:19 +0200
+Message-ID: <CACsJy8B38QAW8qq-CctLJyJNaC329o6Rr1gs0kd=EkV+ARAaVw@mail.gmail.com>
+Subject: Re: [PATCH] read-cache.c: optimize reading index format v4
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Ben Peart <peartben@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
+On Mon, Aug 27, 2018 at 9:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > PS. I notice that v4 does not pad to align entries at 4 byte boundary
+> > like v2/v3. This could cause a slight slow down on x86 and segfault on
+> > some other platforms.
+>
+> Care to elaborate?
+>
+> Long time ago, we used to mmap and read directly from the index file
+> contents, requiring either an unaligned read or padded entries.  But
+> that was eons ago and we first read and convert from on-disk using
+> get_be32() etc. to in-core structure, so I am not sure what you mean
+> by "segfault" here.
+>
 
-> The current IRC experience might be a bit unrepresentative, due to
-> https://freenode.net/news/spam-shake:
+My bad. I saw this line
 
-https://freenode.net/news/spambot-attack may be a better link.
+#define get_be16(p) ntohs(*(unsigned short *)(p))
 
-Thanks,
-Jonathan
+and jumped to conclusion without realizing that block is for safe
+unaligned access.
+
+> > @@ -1898,7 +1884,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+> >       struct cache_header *hdr;
+> >       void *mmap;
+> >       size_t mmap_size;
+> > -     struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+> > +     const struct cache_entry *previous_ce = NULL;
+> > +     struct cache_entry *dummy_entry = NULL;
+> >
+> >       if (istate->initialized)
+> >               return istate->cache_nr;
+> > @@ -1936,11 +1923,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+> >       istate->initialized = 1;
+> >
+> >       if (istate->version == 4) {
+> > -             previous_name = &previous_name_buf;
+> > +             previous_ce = dummy_entry = make_empty_transient_cache_entry(0);
+>
+> I do like the idea of passing the previous ce around to tell the
+> next one what the previous name was, but I would have preferred to
+> see this done a bit more cleanly without requiring us to support "a
+> dummy entry with name whose length is 0"; a real cache entry never
+> has zero-length name, and our code may want to enforce it as a
+> sanity check.
+>
+> I think we can just call create_from_disk() with NULL set to
+> previous_ce in the first round; of course, the logic to assign the
+> one we just created to previous_ce must check istate->version,
+> instead of "is previous_ce NULL?" (which is an indirect way to check
+> the same thing used in this patch).
+
+Yeah I kinda hated dummy_entry too but the feeling wasn't strong
+enough to move towards the index->version check. I guess I'm going to
+do it now.
+-- 
+Duy
