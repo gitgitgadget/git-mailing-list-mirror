@@ -2,95 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31FC11F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 12:22:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 325991F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 12:27:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727963AbeH1QNg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 12:13:36 -0400
-Received: from mout.gmx.net ([212.227.17.21]:53073 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727961AbeH1QNg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 12:13:36 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Las1k-1fWWaR21qS-00kQP3; Tue, 28
- Aug 2018 14:22:03 +0200
-Date:   Tue, 28 Aug 2018 14:22:03 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Derrick Stolee <stolee@gmail.com>
-cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: Contributor Summit planning
-In-Reply-To: <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808281419300.73@tvgsbejvaqbjf.bet>
-References: <20180813163108.GA6731@sigill.intra.peff.net> <d5d3fe71-d52b-ac9b-d48d-d288b6569e5a@gmail.com> <20180813171535.GA8476@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet> <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:IzonUVca4WtYAkoOnpa/f9ulp/dt/BOsV2jQJscADhbBQN2CBSy
- P3j33kjX44iRJandGBMmqcP9+8+jcZABshi5eOxWUkBO2WjZlFKSpo7J+4gT12MxZeduPY1
- WwcScNQJrD9RszDs6xItRUAJzJrMa0aBXHiUy2tDQmR8W6XJSANZBMKH3Mg1EOVbfYyWYID
- Y7JH0iHrlef6UNCpdxC3w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FZFJwV1gPOQ=:JehQAYO684CrkaMIH46K7A
- dW2C8WbK4spp8b4y2mH7/i/0Ce1//OtFQr0vl9XAn11NMaDz70PHNw8XUKOxoMVE2Tk9HjVHS
- pviycnHttdRMC6uyfaE7QQTnclRxgccJnS+/RjBOFNYE8cU2S2kezk8EsCk5pc62qrZCl0rZP
- KdvtwS3a9dS7YBwFViwR0mIN7Vfv9iTqIpC6ecyHi23anwYZEiSscEAKkEBHbCAMtEun4TOPr
- zzOARI4x3fuoBS2TT3XaFANJvDnv31OygHI1Tu1m8ug52ZcHnqcxE8RBgr1Rvxv3LKMB/wG/H
- 2FZpd5/90TWEnmvhr3ZHL6oOTs7VIMpWdRSJVIKqpGlIj/2Fl1g3ANr3qAMaD4AHr6VyMZc92
- n5yOG3WtbqgMocPOOPh+BsRaJYPQbE4WapavUrOyJj0ZPeHIvmHIYs9R6/9U47dqpaa6lSF9a
- xfvE/tEWUXvSPtWNOx78a34MF1m9nvXNhcRnjQKWlrG9565SpGePHJrsPx/KGQUndliUC3o7b
- FF4DFIexTd2BGHjcwpV/pqeybbahechgxkOs8HpSd9PxUYKO6sLbOEL1OEfrBPNbyrq4t0P6T
- Vw1PZ7zB5O7QqxwCfk8kEHBWRjDgXNHRgYPsSSOgqB8QdgRlDhPKS/s4kYAC1uCaoWkvo017G
- idVTzyts60Uvvqt19EqwjXqF2VMf/NmtxfRG9UFUqyL0910TZTp4gIov4ErMJeWS7y6YffXQc
- I+1m6Fg1wlhWOpWgptVeyvJax9RBCq71/lsQ1pc6YBj1G0VCeJ6ziWTx1YclN19DwKeY71+UH
- tYYtMfp
+        id S1727258AbeH1QSm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 12:18:42 -0400
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:33989 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727162AbeH1QSm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 12:18:42 -0400
+Received: by mail-ed1-f54.google.com with SMTP id u1-v6so1059547eds.1
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 05:27:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:content-transfer-encoding:mime-version:subject:message-id:date
+         :to;
+        bh=Wns5JvH2KMlb2QlZgbtOFzbzJBt6DxcLqFmaFD0ISc0=;
+        b=VLCT75uTHmXBN2NSOGj5to87GKT4OzHJ6Jt0stdG4skkI0Xp6mkZZBMhwgp7OCct9L
+         ejPsTleF7IJZgvdhiaCOHytYN9QV1SAzvpQCRWXDnCOcVBqWNLGUAFWyAO6SXfDdKZv9
+         YyyaygVcemUofMxp1a2VQqogwB0sxKTgE0dXnEzTLYb5msB+mb5e63fBY0CFbPHkdtb8
+         qD/QqzionZEmFHOYR3AgIcjNH9Ivue7O9qVPjBhhRtWS9DXyAmPlKtKMZsWFTzUQ3/uc
+         EIEmhTJ5DXPgWkp9nROCfsETfv19quPEYlKyXXZ3nlWgoQZZl13bgngRPihB30vRVw6g
+         yIug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:content-transfer-encoding:mime-version
+         :subject:message-id:date:to;
+        bh=Wns5JvH2KMlb2QlZgbtOFzbzJBt6DxcLqFmaFD0ISc0=;
+        b=bRzzS1i6FE1Z+847nxGG8trdNtzDWo6IpAXLelQd+qDL1L/70QnTMrVAGc/jnLxJU4
+         9181aDbDhpgO8GUGWqF9O/50OmfwovtBt6FJpoJdZxxzAihQSidlPg1csPvhOKPxcWaO
+         x5gClc19U4HxbI4w+SgiFp1eHlgHbD7nuEUZ0PGsQKAjjBksf3KGidoiDGFTIUNpO9Wa
+         563CwKKXJ8UKry//ENO4cCc9cRdEl3PmNyCgxHZ6W8cbu6l4LYpnYFV1VJrGE7BHSaY2
+         EoH6eu77XjZ314QszdN7WsulCZd/yt26NSRPrgC7azjBRGZJTGdNtdqVki/6wQk6ciZO
+         pG+Q==
+X-Gm-Message-State: APzg51Cj2bikBGVsquCVsl1pdrMSoty1K/Qy260oEStkMI3Gv/KMfBKp
+        nk5fNGPhxx/Geza71oEXyZ65sVmp
+X-Google-Smtp-Source: ANB0VdYS05CUtwe6PGlFRHDrJdpSRGZCm/elr7JSlzzmM1pfUAEnVJQOANDJ7FqoumW7cHNMHLh88g==
+X-Received: by 2002:a50:af45:: with SMTP id g63-v6mr2285293edd.30.1535459234965;
+        Tue, 28 Aug 2018 05:27:14 -0700 (PDT)
+Received: from nikolays-mbp.flixbus.com (h-213.61.119.99.host.de.colt.net. [213.61.119.99])
+        by smtp.gmail.com with ESMTPSA id j10-v6sm551091ede.5.2018.08.28.05.27.13
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Aug 2018 05:27:14 -0700 (PDT)
+From:   Nikolay Kasyanov <corrmage@gmail.com>
+Content-Type: text/plain;
+        charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
+Subject: A rebase regression in Git 2.18.0
+Message-Id: <679370A8-E477-450D-96E5-6B1869D27576@gmail.com>
+Date:   Tue, 28 Aug 2018 14:27:13 +0200
+To:     git@vger.kernel.org
+X-Mailer: Apple Mail (2.3445.9.1)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Stolee,
+Hi,
 
-On Mon, 27 Aug 2018, Derrick Stolee wrote:
+I=E2=80=99ve found something that may be a regression in git rebase =
+implementation in 2.18.0.
+First I spotted it on macOS but I can also confirm it happening on =
+Linux.
+Git 2.19.0.rc0.48.gb9dfa238d is affected too.
 
-> On 8/27/2018 9:22 AM, Johannes Schindelin wrote:
-> > Point in favor of the pure-online meeting: the informal standup on IRC
-> > every second Friday. I really try to attend it (it is a bit awkward
-> > because it is on a Friday evening in my timezone, right at the time when I
-> > want to unwind from the work week), as it does have a similar effect to
-> > in-person standups: surprising collaborations spring up, unexpected help,
-> > and a general sense of belonging.
-> >
-> > Of course, the value of these standups comes from the makeup of the
-> > participants: Stefan, Brandon, Stolee, JeffH, Jonathan and other *very*
-> > active core contributors hang out for roughly half an hour, sharing what
-> > they are working on, exchanging ideas, etc.
-> 
-> A focused aside, since you brought up the online "standup": it seems the IRC
-> channel has been less than ideal, with people trying to participate but having
-> nickname issues or being muted. You also describe another issue: the timing.
-> Having a real-time discussion has its benefits, but also it leaves many people
-> out.
-> 
-> One idea to try next time is to create a mailing list thread asking for
-> statuses, and each person can chime in asynchronously and spawn a new
-> discussion based on that status. Perhaps we can try that next time.
+In order to trigger it, a repo layout similar to the following is =
+required:
 
-Not so sure I like this idea. For me, mails are *extremely* asynchronous.
-I started already over a decode ago to switch off automatic mail checking,
-as it interfered with my productivity.
+files/
+	file1
+	file2
+	file3
+	file4
+	file5
+project
 
-And for me, one of the main benefits of a standup is the chiming in from
-unexpected sides. That's very much a real-time thing, and I don't know how
-to achieve that otherwise.
+Let=E2=80=99s call this state baseline. Then, in a branch, let=E2=80=99s =
+edit project file and move file3 to nested/files subdirectory, here=E2=80=99=
+s the final layout:
 
-But for our standup, I could imagine that even so much as shifting it from
-Friday to any other weekday would decrease the timezone issues (because,
-you know, weekend).
+files/
+	file1
+	file2
+	file4
+	file5
+nested/
+	files/
+		file3
+project
 
-Ciao,
-Dscho
+Let=E2=80=99s get back to master and also edit project file to cause a =
+conflict. After that trying to rebase the branch upon master will cause =
+the following git status output:
+
+rebase in progress; onto baf8d2a
+You are currently rebasing branch 'branch' on 'baf8d2a'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	renamed:    files/file1 -> nested/files/file1
+	renamed:    files/file2 -> nested/files/file2
+	renamed:    files/file3 -> nested/files/file3
+	renamed:    files/file4 -> nested/files/file4
+	renamed:    files/file5 -> nested/files/file5
+
+Unmerged paths:
+  (use "git reset HEAD <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   project
+
+All renames except file3 are invalid and shouldn=E2=80=99t be here.
+Here=E2=80=99s how the output looks like produced by an older Git =
+version (git version 2.15.1):
+
+rebase in progress; onto baf8d2a
+You are currently rebasing branch 'branch' on 'baf8d2a'.
+  (fix conflicts and then run "git rebase --continue")
+  (use "git rebase --skip" to skip this patch)
+  (use "git rebase --abort" to check out the original branch)
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	renamed:    files/file3 -> nested/files/file3
+
+Unmerged paths:
+  (use "git reset HEAD <file>..." to unstage)
+  (use "git add <file>..." to mark resolution)
+
+	both modified:   project
+
+Here=E2=80=99s a ready-to-use repository: =
+https://github.com/nikolaykasyanov/git-rebase-bug.
+
+Regards,
+Nikolay Kasyanov
+
