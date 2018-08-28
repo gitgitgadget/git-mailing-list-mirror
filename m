@@ -2,183 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C09B61F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 13:46:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 473BB1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 13:50:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727775AbeH1RiB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 13:38:01 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:36377 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727137AbeH1RiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 13:38:01 -0400
-Received: by mail-ed1-f67.google.com with SMTP id f4-v6so1424084edq.3
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 06:46:15 -0700 (PDT)
+        id S1727615AbeH1RmH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 13:42:07 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:53781 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726181AbeH1RmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 13:42:07 -0400
+Received: by mail-wm0-f54.google.com with SMTP id b19-v6so2016746wme.3
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 06:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OXHgRmUAuEEatU9wlDAP4B00C39VBUFPmD26RHsaOVY=;
-        b=agXXKVIj7OwKivgowbWhvh8H41POp21jFFoaXXX6KA+OFyP3BjRBxoQ5KFnS5i3oxk
-         eBpzx4erCFkIOJRVsjv43eaO4MSiaMcG6eoGXTn2McgstHFDMXyAfn8FEcldChiW3g4M
-         50Hzeb6Z6PbiVys2oNsMdykqdXR0SkJGI+m8ekBe0LQQecbELS5xXSEMlnqOlmdEwYRL
-         tsgH/Pcrw03lNduWXQhKumjuvYm/GqNDyRjjLxhTIBepNozGIT6lqrPi8m+aQ6WHdpKZ
-         9rp9dTzUcmg6eBPg1mW/hqaTooGpUzRCzIpoLtTzEvk8D1d2Uqs3XW7jLsajyTpf+c2x
-         oWSw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=/sd2nsFGPtFR6d/QaHLlTDnS5ntkJojNdEQ3pTShV/c=;
+        b=Fj6skKpUBgV194ojbUzkNTB4fF0kbDsucY89xEb/v5Hr5hJ7BgFOgSy5jVlWX4E7dJ
+         fI4Dj/PjL2gkQfW855wvdqAfqWaUowbKPCpJOIegRnAUJNwFzuGcm+2AbqjYpeAJz2cA
+         DDIaaPuFfBSQlCbVMXd0JktBXpQ4YZzy0BQr4S4EhNv5HNvkLRZkS9r0q2mpuaHV+wxj
+         MaqSoVgOM05QEsyDgYGL7nPLoGMhIdC3nR4YcL/1XtOfW9jjQww+ApcKvM9Tbu4iaIS+
+         NUK7i8rreKnUMyqYa/HDlXmvUZaZ7xV9j2kku+syG/+DbDs7Y1b8wF6XgT6yLC2b0U8l
+         7Qpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=OXHgRmUAuEEatU9wlDAP4B00C39VBUFPmD26RHsaOVY=;
-        b=Mcm/oEj+oU0UZqf5hMmpULTETSwn+pnGJWWuGpuKzOuxHRC4Eo3bhY8kH6WIVQ95SJ
-         5+UJ6v/R3BglkJrmunwG88pTpCeD/7UbimfCoWQ6j27P2LcPRpnGSp4WqnMFLd19Cib0
-         0Jo9l5cB7ogKiyV9iRdoNyT2P0T+2Gba2I9sP5gJEYNp9IA1276Cjw94cHIa3g5y45AB
-         Q2uZ/dshrgHQFvfY3ra4Ws9KkHbHaKkNoHnuvUGUEhevddZk8F3PYZxdHh2Kn72MXpsr
-         GkL8hz+MMHCmf4vIANJf0X6Ldio1o9z5EWJa7mJ5s68veIojV0h1uSCCW+zfqEbMrAsV
-         xLog==
-X-Gm-Message-State: APzg51CqxIAmxKa8S5Qq9GLDuc4AYSBRgSrGHtApZr49b5HhclAWLfay
-        FcaSE+gTgvjKBQj/9fW0pAQ=
-X-Google-Smtp-Source: ANB0VdZRLxRjy/QTa4/QihKEMOP54DhZDO4yPfP6gMRUhqnCfXN0YImXDdN809BO0CS4+7A6bPyJuQ==
-X-Received: by 2002:aa7:c384:: with SMTP id k4-v6mr2604765edq.270.1535463974778;
-        Tue, 28 Aug 2018 06:46:14 -0700 (PDT)
-Received: from nikolays-mbp.flixbus.com (h-213.61.119.99.host.de.colt.net. [213.61.119.99])
-        by smtp.gmail.com with ESMTPSA id g39-v6sm788432edg.63.2018.08.28.06.46.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 06:46:14 -0700 (PDT)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 11.5 \(3445.9.1\))
-Subject: Re: A rebase regression in Git 2.18.0
-From:   Nikolay Kasyanov <corrmage@gmail.com>
-In-Reply-To: <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
-Date:   Tue, 28 Aug 2018 15:46:12 +0200
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <FDE5DF36-1E32-4FC0-A206-81FAA1A962E4@gmail.com>
-References: <679370A8-E477-450D-96E5-6B1869D27576@gmail.com>
- <87in3ueiks.fsf@evledraar.gmail.com>
- <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: Apple Mail (2.3445.9.1)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=/sd2nsFGPtFR6d/QaHLlTDnS5ntkJojNdEQ3pTShV/c=;
+        b=EdzoSOGNGkhTtNpCLiSVpgx0GligRZCok2cWfyQVgMYX82W4eEy+s4DNvdwhlqmzR9
+         jaW0S9SsBqt8ulZCLdPJQm63ZV8WRWIgt0itZUVtaI7++VOVrWFKtRgizpLc15Rkdr+v
+         OtyabtQTlgAzBoiJX51jNfF4Xa2J0BzKgyQCjeepvCHddp/5ocEKJFlgAsRkMb/6UYuP
+         83yXvLGqN88uRmsoJmjdK+zbt5e8WG+K5amJJb8UMoO68KpkvD9m74Tkf43OPrpOAwZI
+         sU1Y9RtuWY8XDzfXpIfETnMowIawwAbr2EM8uyj+Q8ZIjypbG2aFzPyF875C0SRa8PVO
+         Hd5Q==
+X-Gm-Message-State: APzg51CECslIqs2wmQ3Kxptjev1MposiJXrarqDG1aPqvYu0cTAwJel2
+        m4swn+LaS1w+2AEgYEhQPqaoxluhuHs=
+X-Google-Smtp-Source: ANB0VdahNc4wpfmsSKY3fHxkqhTjWm+xangMy82Iu7kCK1Gl/YJs4RJA9hxAX2S8FNtVZUgFRFxa9w==
+X-Received: by 2002:a1c:385:: with SMTP id 127-v6mr1473150wmd.92.1535464219141;
+        Tue, 28 Aug 2018 06:50:19 -0700 (PDT)
+Received: from evledraar ([5.57.21.50])
+        by smtp.gmail.com with ESMTPSA id z3-v6sm897086wmf.12.2018.08.28.06.50.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 06:50:18 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Questions about the hash function transition
+References: <878t4xfaes.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <878t4xfaes.fsf@evledraar.gmail.com>
+Date:   Tue, 28 Aug 2018 15:50:17 +0200
+Message-ID: <87h8jeeh2e.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-Yes, it does fix this behavior. Could you please point me to the thread?
+On Thu, Aug 23 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Best,
-Nikolay
-> On 28. Aug 2018, at 15:33, Johannes Schindelin =
-<Johannes.Schindelin@gmx.de> wrote:
->=20
-> Hi,
->=20
-> On Tue, 28 Aug 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->=20
->> On Tue, Aug 28 2018, Nikolay Kasyanov wrote:
->>=20
->>> I=E2=80=99ve found something that may be a regression in git rebase =
-implementation in 2.18.0.
->>> First I spotted it on macOS but I can also confirm it happening on =
-Linux.
->>> Git 2.19.0.rc0.48.gb9dfa238d is affected too.
->>>=20
->>> In order to trigger it, a repo layout similar to the following is =
-required:
->>>=20
->>> files/
->>> 	file1
->>> 	file2
->>> 	file3
->>> 	file4
->>> 	file5
->>> project
->>>=20
->>> Let=E2=80=99s call this state baseline. Then, in a branch, let=E2=80=99=
-s edit project file and move file3 to nested/files subdirectory, =
-here=E2=80=99s the final layout:
->>>=20
->>> files/
->>> 	file1
->>> 	file2
->>> 	file4
->>> 	file5
->>> nested/
->>> 	files/
->>> 		file3
->>> project
->>>=20
->>> Let=E2=80=99s get back to master and also edit project file to cause =
-a conflict. After that trying to rebase the branch upon master will =
-cause the following git status output:
->>>=20
->>> rebase in progress; onto baf8d2a
->>> You are currently rebasing branch 'branch' on 'baf8d2a'.
->>>  (fix conflicts and then run "git rebase --continue")
->>>  (use "git rebase --skip" to skip this patch)
->>>  (use "git rebase --abort" to check out the original branch)
->>>=20
->>> Changes to be committed:
->>>  (use "git reset HEAD <file>..." to unstage)
->>>=20
->>> 	renamed:    files/file1 -> nested/files/file1
->>> 	renamed:    files/file2 -> nested/files/file2
->>> 	renamed:    files/file3 -> nested/files/file3
->>> 	renamed:    files/file4 -> nested/files/file4
->>> 	renamed:    files/file5 -> nested/files/file5
->>>=20
->>> Unmerged paths:
->>>  (use "git reset HEAD <file>..." to unstage)
->>>  (use "git add <file>..." to mark resolution)
->>>=20
->>> 	both modified:   project
->>>=20
->>> All renames except file3 are invalid and shouldn=E2=80=99t be here.
->>> Here=E2=80=99s how the output looks like produced by an older Git =
-version (git version 2.15.1):
->>>=20
->>> rebase in progress; onto baf8d2a
->>> You are currently rebasing branch 'branch' on 'baf8d2a'.
->>>  (fix conflicts and then run "git rebase --continue")
->>>  (use "git rebase --skip" to skip this patch)
->>>  (use "git rebase --abort" to check out the original branch)
->>>=20
->>> Changes to be committed:
->>>  (use "git reset HEAD <file>..." to unstage)
->>>=20
->>> 	renamed:    files/file3 -> nested/files/file3
->>>=20
->>> Unmerged paths:
->>>  (use "git reset HEAD <file>..." to unstage)
->>>  (use "git add <file>..." to mark resolution)
->>>=20
->>> 	both modified:   project
->>>=20
->>> Here=E2=80=99s a ready-to-use repository: =
-https://github.com/nikolaykasyanov/git-rebase-bug.
->>=20
->> Thanks for the test case. This bisects down to 9c0743fe1e
->> ("merge-recursive: apply necessary modifications for directory =
-renames",
->> 2018-04-19) first released as part of 2.18.0.
->>=20
->> I have not dug to see if the behavior change is desired or not, that
->> commit changed the results of a bunch of test cases, maybe it was
->> intended. Elijah?
->=20
-> I think this was already mentioned before, in a different mail thread:
-> have you tried whether `git rebase -m` fixes that behavior?
->=20
-> Ciao,
-> Johannes
+>> Transition plan
+>> ---------------
+>
+> One thing that's not covered in this document at all, which I feel is
+> missing, is how we're going to handle references to old commit IDs in
+> commit messages, bug trackers etc. once we go through the whole
+> migration process.
+>
+> I.e. are users who expect to be able to read old history and "git show
+> <sha1 I found>" expected to maintain a repository that has a live
+> sha1<->sha256 mapping forever, or could we be smarter about this and
+> support some sort of marker in the repository saying "maintain the
+> mapping up until this point".
+>
+> Then, along with some v2 protocol extension to transfer such a
+> historical mapping (and perhaps a default user option to request it)
+> we'd be guaranteed to be able to read old log messages and "git show"
+> them, and servers could avoid breaking past URLs without maintaining the
+> mapping going forward.
+>
+> One example of this on the server is that on GitLab (I don't know how
+> GitHub does this) when you reference a commit from e.g a bug, a
+> refs/keep-around/<sha1> is created, to make sure it doesn't get GC'd.
+>
+> Those sorts of hosting providers would like to not break *existing*
+> links, without needing to forever maintain a bidirectional mapping.
 
+Considering this a bit more, I think this would nicely fall under what I
+suggested in
+https://public-inbox.org/git/874ll3yd75.fsf@evledraar.gmail.com/
+
+I.e. the interface that's now proposed / documented is fairly
+inelastic. I.e.:
+
+    [extensions]
+        objectFormat = sha256
+        compatObjectFormat = sha1
+
+If we instead had something like clean/smudge filters:
+
+    [extensions]
+        objectFilter = sha256-to-sha1
+        compatObjectFormat = sha1
+    [objectFilter "sha256-to-sha1"]
+        clean  = ...
+        smudge = ...
+
+We could apply arbitrary transformations on objects through filters
+which would accept/return some simple format requesting them to
+translate such-and-such objects, and would either return object
+names/types under which to store them, or "nothing to do".
+
+So we could also have filters that would munge the contents of objects
+between local & remote (for e.g. this "use a public remote host for
+storing an encrypted repo" that'll fsck on their end) use-case, but also
+e.g. be able to pass arguments to the filters saying that only commits
+older than so-and-so are to have a reverse mapping (for looking up old
+commits), or just ones on some branch etc.
+
+It wouldn't be any slower than the current proposal, since some subset
+of it would be picked up and implemented in C directly via some fast
+path, similar to the proposal that e.g. some encoding filters be
+implemented as built-ins.
+
+But by having it be more extendable it'll be easy to e.g. pass options,
+or implement custom transformations.
+
+We're still far away from reviewing patches to implement this, but in
+anticipation of that I'd like to see what people think about
+future-proofing this objectFilter syntax.
