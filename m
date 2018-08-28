@@ -6,55 +6,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 827FA1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:20:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2087D1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbeH2BOU (ORCPT <rfc822;e@80x24.org>);
+        id S1727293AbeH2BOW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:14:22 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:53994 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727054AbeH2BOU (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 Aug 2018 21:14:20 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:40051 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726961AbeH2BOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:14:19 -0400
-Received: by mail-io0-f196.google.com with SMTP id l14-v6so2706702iob.7
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:20:49 -0700 (PDT)
+Received: by mail-it0-f65.google.com with SMTP id p79-v6so4746768itp.3
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=lIpVPO5y6jPw3YGlwYAdNuZzlWVJeH2kOLQU9le+FR4=;
-        b=GpZSi28EFnBQvKtZf90verUnPqCz/yT9c+tn9jLZVAr7LnueYsrXrXlindhe6ST+Gx
-         /Jbq92EZ0AnslfW2SAqurK33r5aO9x3w39VpE2rq0aax9MT5D6/kei2AxY5bZpCWLQaW
-         auLDdUiunstAIeS0gz8zpTOk6NVbrbVMvMZyMaqd9RyqxfMlHM1HhnFgMFoCMTujEOMF
-         2pxOtKnOrzVq3kAPp7GErZ4h4CtP6uVk4wQ47gG1j4E6kHvzpbHqI/XcAt9sRmjUlf7x
-         FM90OquHD+UZmO4X1UXuh0QFfbiK74xTRAPlIChGQaurCdf3PhcFYIRMaj2aY8dRfmjm
-         wizg==
+        bh=oe25CAAzFqcB895a6QXhooMFHUtox8Yzni00iOW9tOk=;
+        b=FFg3cKieo416rhPESjz5yJV8CDqfRcbp8Fg3JNdREo9y8BwsOgTeIc6M64o36QGODT
+         HackWisFIJwbX8DFa41hqPQQjt2dRcDrDSVSinM4zmQQfni1Wgvi9oDQcQVDmHR8HdUg
+         Uxthf2mXPJ504xzKS3GuaLUkNTBSjNThZ8ez2TJxE7JxoI75NdtyahJ94BwUMH22W6CX
+         f/1GRBSWZmnKj2vM2u4n7wViyPxE4BXXWX79KiFNenrB2RAx7YpIZNvAU9JAF/QZDG88
+         hQnspxiO13D95OiRj4E4DkP2kOuqF6SHPeDes4hualh6eVDPM91aHUwT0tjyUjCaD1lm
+         leLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=lIpVPO5y6jPw3YGlwYAdNuZzlWVJeH2kOLQU9le+FR4=;
-        b=UFVwErXKUbsIZS7vps/dERIZJNsGESMklOa02MALxAxW4KWSwTEQlNqkt6fSOfWnG1
-         jG0AIGNbDLMuF/waWR0iO4Y5CcwD0UxW1x+vtXJb8DxHRBRJ0XBuq20UmrGbhhE8K6kf
-         cz7ct2Hv2Vu9fXLWs3whJQrJySGwhsv6mZtMzPyFyAPfLudw20igFAQH1xB9yBr7Srgd
-         q+j5yoGF7nmPd5XDs9rfmFG4/wUGB31EwulHdE3ldPHDjXY9dB2oat1lEaWM2eqhjM5v
-         5xcHeuV5H+UDUWBlrqUQ28umGmtKGQee1hremMuRgnnpmYmdycHiyubki/b4wM/6lm7K
-         3Etg==
-X-Gm-Message-State: APzg51DoIKipPBtnO0YAu6esaubIVU97DcQu06W9f/dMTH6Q7gSbHRi6
-        3V1gZobSiiGPcK6F6rEasUZbOVvs
-X-Google-Smtp-Source: ANB0VdY5xdjusbTF5zry2u/vDexYjJEexPHEj79Ms1RpBz9u5AknMsuXIMn2kDpwhfAA9hIuNvr90g==
-X-Received: by 2002:a5e:db07:: with SMTP id q7-v6mr3131700iop.81.1535491248767;
-        Tue, 28 Aug 2018 14:20:48 -0700 (PDT)
+        bh=oe25CAAzFqcB895a6QXhooMFHUtox8Yzni00iOW9tOk=;
+        b=kIH9GhMKgjcV4B+gI64Jt1hVqSOfcbTy8oAfb848K6kjFPrWi3TcXvQi4jBUoWw+P9
+         N06S04r8/90JRv8Yd8OSH6CvlebCQNAVUu+2bxMBTxoPtD9f4Rd24SP31DfSncdAdWPM
+         cUwAb1thVr7h9UolWitc3b8dG0q+/v+Artq3H1E/N1o5FZkDawv4+15MEKteR5PCSidh
+         tPT8/tV+EaNA6uQXJznpZUYGMREZpL4MdEK4eSIfAvval3azOlH970Qc1TdC3MbSaQFw
+         Kjw4jz5RnUOyAG8uFRS7ONDifU8l4FDtNN9F8nTFuWDhGhYkqGvzlDi896/N2CrS/I56
+         SNQw==
+X-Gm-Message-State: APzg51BLjp2q+zdihfLwcQMxy/UkZjQLX8ZrWPyWzwlt0N55k3cKTC0x
+        fjB/PJ/kU86ZPNHBrJWdVpaOgixY
+X-Google-Smtp-Source: ANB0VdbWGzq34YoUwMPwiQkO0wlQ2VHc+tVyua7RmrdRuPNeg0q4RYWFU4nXo5JuNkBQLYGFaE+E8A==
+X-Received: by 2002:a24:184a:: with SMTP id 71-v6mr3337428itr.56.1535491249441;
+        Tue, 28 Aug 2018 14:20:49 -0700 (PDT)
 Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id o1-v6sm1090344iop.12.2018.08.28.14.20.47
+        by smtp.gmail.com with ESMTPSA id o1-v6sm1090344iop.12.2018.08.28.14.20.48
         (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Aug 2018 14:20:48 -0700 (PDT)
+        Tue, 28 Aug 2018 14:20:49 -0700 (PDT)
 From:   Eric Sunshine <sunshine@sunshineco.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/9] worktree: move delete_git_dir() earlier in file for upcoming new callers
-Date:   Tue, 28 Aug 2018 17:20:19 -0400
-Message-Id: <20180828212026.21989-3-sunshine@sunshineco.com>
+Subject: [PATCH 3/9] worktree: generalize delete_git_dir() to reduce code duplication
+Date:   Tue, 28 Aug 2018 17:20:20 -0400
+Message-Id: <20180828212026.21989-4-sunshine@sunshineco.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180828212026.21989-1-sunshine@sunshineco.com>
 References: <20180828212026.21989-1-sunshine@sunshineco.com>
@@ -65,60 +65,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a pure code movement to avoid having to forward-declare the
-function when new callers are subsequently added.
+prune_worktrees() and delete_git_dir() both remove worktree
+administrative entries from .git/worktrees, and their implementations
+are nearly identical. The only difference is that prune_worktrees() is
+also capable of removing a bogus non-worktree-related file from
+.git/worktrees.
+
+Simplify by extending delete_git_dir() to handle the little bit of
+extra functionality needed by prune_worktrees(), and drop the
+effectively duplicate code from the latter.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- builtin/worktree.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ builtin/worktree.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 41e7714396..a8128289cc 100644
+index a8128289cc..0affcb476c 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -47,6 +47,20 @@ static int git_worktree_config(const char *var, const char *value, void *cb)
+@@ -47,16 +47,17 @@ static int git_worktree_config(const char *var, const char *value, void *cb)
  	return git_default_config(var, value, cb);
  }
  
-+static int delete_git_dir(struct worktree *wt)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	int ret = 0;
-+
-+	strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
-+	if (remove_dir_recursively(&sb, 0)) {
-+		error_errno(_("failed to delete '%s'"), sb.buf);
-+		ret = -1;
-+	}
-+	strbuf_release(&sb);
-+	return ret;
-+}
-+
- static int prune_worktree(const char *id, struct strbuf *reason)
- {
- 	struct stat st;
-@@ -822,20 +836,6 @@ static int delete_git_work_tree(struct worktree *wt)
- 	return ret;
- }
- 
 -static int delete_git_dir(struct worktree *wt)
--{
--	struct strbuf sb = STRBUF_INIT;
++static int delete_git_dir(const char *id)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
 -	int ret = 0;
--
++	int ret;
+ 
 -	strbuf_addstr(&sb, git_common_path("worktrees/%s", wt->id));
 -	if (remove_dir_recursively(&sb, 0)) {
--		error_errno(_("failed to delete '%s'"), sb.buf);
++	strbuf_addstr(&sb, git_common_path("worktrees/%s", id));
++	ret = remove_dir_recursively(&sb, 0);
++	if (ret < 0 && errno == ENOTDIR)
++		ret = unlink(sb.buf);
++	if (ret)
+ 		error_errno(_("failed to delete '%s'"), sb.buf);
 -		ret = -1;
 -	}
--	strbuf_release(&sb);
--	return ret;
--}
--
- static int remove_worktree(int ac, const char **av, const char *prefix)
+ 	strbuf_release(&sb);
+ 	return ret;
+ }
+@@ -130,10 +131,8 @@ static int prune_worktree(const char *id, struct strbuf *reason)
+ static void prune_worktrees(void)
  {
- 	int force = 0;
+ 	struct strbuf reason = STRBUF_INIT;
+-	struct strbuf path = STRBUF_INIT;
+ 	DIR *dir = opendir(git_path("worktrees"));
+ 	struct dirent *d;
+-	int ret;
+ 	if (!dir)
+ 		return;
+ 	while ((d = readdir(dir)) != NULL) {
+@@ -146,18 +145,12 @@ static void prune_worktrees(void)
+ 			printf("%s\n", reason.buf);
+ 		if (show_only)
+ 			continue;
+-		git_path_buf(&path, "worktrees/%s", d->d_name);
+-		ret = remove_dir_recursively(&path, 0);
+-		if (ret < 0 && errno == ENOTDIR)
+-			ret = unlink(path.buf);
+-		if (ret)
+-			error_errno(_("failed to remove '%s'"), path.buf);
++		delete_git_dir(d->d_name);
+ 	}
+ 	closedir(dir);
+ 	if (!show_only)
+ 		rmdir(git_path("worktrees"));
+ 	strbuf_release(&reason);
+-	strbuf_release(&path);
+ }
+ 
+ static int prune(int ac, const char **av, const char *prefix)
+@@ -882,7 +875,7 @@ static int remove_worktree(int ac, const char **av, const char *prefix)
+ 	 * continue on even if ret is non-zero, there's no going back
+ 	 * from here.
+ 	 */
+-	ret |= delete_git_dir(wt);
++	ret |= delete_git_dir(wt->id);
+ 
+ 	free_worktrees(worktrees);
+ 	return ret;
 -- 
 2.19.0.rc1.350.ge57e33dbd1
 
