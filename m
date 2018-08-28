@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DF571F45C
-	for <e@80x24.org>; Tue, 28 Aug 2018 12:11:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 792891F45F
+	for <e@80x24.org>; Tue, 28 Aug 2018 12:11:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727963AbeH1QCw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 12:02:52 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:33024 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727956AbeH1QCw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 12:02:52 -0400
-Received: by mail-wm0-f65.google.com with SMTP id i134-v6so1743441wmf.0
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 05:11:29 -0700 (PDT)
+        id S1727982AbeH1QC7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 12:02:59 -0400
+Received: from mail-wm0-f50.google.com ([74.125.82.50]:53066 "EHLO
+        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727822AbeH1QC6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 12:02:58 -0400
+Received: by mail-wm0-f50.google.com with SMTP id y139-v6so1660342wmc.2
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 05:11:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JFefcuFhUPtFBbkjZxAZDBjeOx5Tutl2tiUL5usaapE=;
-        b=kTFhDnMLbd6faPyghZ3Jbnaf4W8sO7+HokhnTVRQO0z8D37HpOK97qMBcqz4IZP9Eq
-         hfUI4xCU8D2hw1By0YnX/PVZ3wdKZVP0BoXxGPapSH7mI9WsbsclnXgkBhYzvqzK+Ftk
-         Hbw3zYvv7BOeYrFiuOxwXG8PAN+Kwc3YiAcwibTraoVHgjxPAaXGpV2It4te1tYTJFul
-         eSZi2RFegWz8D620YInBmO50E0ypS/D9DzB+dowgz77AC8w05WPXBKDbCYndGzd5DC9/
-         3yPIVsTwzyF5FIN7qcxxg7PzvCM6yHHsvLcjmBxp7woT+Uc1mP4BHqw1BxGiwtx9RRK3
-         6sAQ==
+        bh=wy4PFWdkA9+aFNmAbEOsBKw4E6KjzYkMlN5JWOrBDxg=;
+        b=UdpBqq3EAUJyp/fcUkRUIwjGlGDpaeNFKr84sBBifb+Xl5rJ7jsAk/d+IJ0uSsKI7i
+         j5uEcY2i+r7jFbMQ0+4klp69kGoDSxTHSAEPPRYslhYkoZDRDUHRn5TxcFKAWpPR/jN3
+         Uvx8rb3jgzbQWx1ETO3+hnggIzXojtFVsGyzvuGNHvNAnpjA9Geo9QDLThSuef4QZcUJ
+         IKbExl0XwY+kTeTDEGJNh1/8QLqdoja7I5BJWGmxAtNWOzelw0huMCXZ50Y/Op7z496W
+         ZJT2A5YHDf007dsgb68eDHc81Xkz38PsXj+8t6soqjTI7kiNiDT+YYSOoH8CuOBtt47k
+         fl6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JFefcuFhUPtFBbkjZxAZDBjeOx5Tutl2tiUL5usaapE=;
-        b=VUpOfSR9GcLtrawss6Ix3jORswgydwMmQx4F6HHKc1eY5cT23zwW8vzjEYQzsPqk4u
-         sWfrvcbGBlsnK5Y4lnKvHU1GrJaZnZzGsSEzSrKrLy7xIZitsP8uuVGydUBoFIZ3cfHj
-         kkO7UC3TeOnF19hScorivHmUCr7airR4ji30yBbs13zr0/yUW5nV+E52DVz/gnxKvyW6
-         l5cAsNp9rUZ4qfHcGvO2VQhqa4X+LNWNt60G/OiawhgLkrFqBKNQouh+XmqCY5rG8b34
-         dUTpde49ifrFMfdxJgeL8IC78iKPacgQvjmqZC+D09+8DBR9wwEeIxr9Kle6nvm/++iC
-         W7RQ==
-X-Gm-Message-State: APzg51CZeOuSO4AY8VASKE0SK9RMMUWeI/Jo5aWmNDmetg1vvQRnN3JF
-        8bU/S2OfA4bHmz9LcAMhQXcngrXN
-X-Google-Smtp-Source: ANB0VdbUkGFvaKziJ+cphxjIM3TMZd/tpAKffcs0hhaoATUzDlCblOJAot9yY/qf/EGRABxv/zocug==
-X-Received: by 2002:a1c:8c49:: with SMTP id o70-v6mr1128014wmd.11.1535458288442;
-        Tue, 28 Aug 2018 05:11:28 -0700 (PDT)
+        bh=wy4PFWdkA9+aFNmAbEOsBKw4E6KjzYkMlN5JWOrBDxg=;
+        b=bE9OWGB876wcKYpoDFH+14gCggAkTYVhG7V5eEr6Us0zwJwgp3ghhcFu8rV9SXUhhe
+         kEcl9cLh8uf7yxv+Ko2tLT1S6ym2fzwZ/CqBH4txFnUEO4IzknT9tJrW88QpsSV5hs8g
+         5pXu16wMu14RLFs+qrES6XiVrbKhs87WPNRlR8Je1D96TvpYm+UFzRTBPYTADHZxJe48
+         PJyOwIY2u+EdZtfnPj9EbAQv0VHBv2NAbo3OuU224DZZuYFWriaEBzimJB7El1FwNrP9
+         4rpy5k3UQDTv9YAjj/CmD2fl/3lmRJfRIeJYpWG6oIPvUJKDIhCmD+LxWpCWpaCNFHtk
+         qC3Q==
+X-Gm-Message-State: APzg51DrIvhzE5cpOo9U93BueGCUadq0Eq0fFVYA7hpXwGv0lEUg+pCm
+        JREO+qk7Zf3z6h7c9VKkDHg14YKZ
+X-Google-Smtp-Source: ANB0VdaiHJehTOGIU/yam44KD6vyfTyGf+9EVQ2SaQWGXtkc3xCdpuHAKp9l/fSnOtDP99Yb5z9QUg==
+X-Received: by 2002:a1c:357:: with SMTP id 84-v6mr1171193wmd.8.1535458294190;
+        Tue, 28 Aug 2018 05:11:34 -0700 (PDT)
 Received: from localhost.localdomain (AToulouse-658-1-33-140.w86-221.abo.wanadoo.fr. [86.221.112.140])
-        by smtp.googlemail.com with ESMTPSA id y206-v6sm1702790wmg.14.2018.08.28.05.11.27
+        by smtp.googlemail.com with ESMTPSA id y206-v6sm1702790wmg.14.2018.08.28.05.11.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 05:11:27 -0700 (PDT)
+        Tue, 28 Aug 2018 05:11:33 -0700 (PDT)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -56,9 +56,9 @@ Cc:     Stefan Beller <sbeller@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         phillip.wood@dunelm.org.uk, gitster@pobox.com,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [GSoC][PATCH v7 16/20] rebase -i: rewrite init_basic_state() in C
-Date:   Tue, 28 Aug 2018 14:10:41 +0200
-Message-Id: <20180828121045.14933-17-alban.gruin@gmail.com>
+Subject: [GSoC][PATCH v7 19/20] rebase -i: remove git-rebase--interactive.sh
+Date:   Tue, 28 Aug 2018 14:10:44 +0200
+Message-Id: <20180828121045.14933-20-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.18.0
 In-Reply-To: <20180828121045.14933-1-alban.gruin@gmail.com>
 References: <20180810165147.4779-1-alban.gruin@gmail.com>
@@ -68,99 +68,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This rewrites init_basic_state() from shell to C.  The call to
-write_basic_state() in cmd_rebase__helper() is replaced by a call to the
-new function.
+This removes git-rebase--interactive.sh, as its functionnality has been
+replaced by git-rebase--interactive2.
 
-The shell version is then stripped from git-rebase--interactive.sh.
+git-rebase--interactive2.c is then renamed to git-rebase--interactive.c.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
 No changes since v6.
 
- builtin/rebase--helper.c   | 23 ++++++++++++++++++++++-
- git-rebase--interactive.sh |  9 ---------
- 2 files changed, 22 insertions(+), 10 deletions(-)
+ .gitignore                                    |  1 -
+ Makefile                                      |  4 +-
+ ...--interactive2.c => rebase--interactive.c} |  0
+ git-rebase--interactive.sh                    | 84 -------------------
+ git-rebase.sh                                 |  2 +-
+ git.c                                         |  2 +-
+ 6 files changed, 3 insertions(+), 90 deletions(-)
+ rename builtin/{rebase--interactive2.c => rebase--interactive.c} (100%)
+ delete mode 100644 git-rebase--interactive.sh
 
-diff --git a/builtin/rebase--helper.c b/builtin/rebase--helper.c
-index 63c5086e42..f8128037d3 100644
---- a/builtin/rebase--helper.c
-+++ b/builtin/rebase--helper.c
-@@ -5,10 +5,13 @@
- #include "sequencer.h"
- #include "rebase-interactive.h"
- #include "argv-array.h"
-+#include "refs.h"
- #include "rerere.h"
- #include "alias.h"
- 
-+static GIT_PATH_FUNC(path_state_dir, "rebase-merge/")
- static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
-+static GIT_PATH_FUNC(path_interactive, "rebase-merge/interactive")
- 
- static int get_revision_ranges(const char *upstream, const char *onto,
- 			       const char **head_hash,
-@@ -44,6 +47,24 @@ static int get_revision_ranges(const char *upstream, const char *onto,
- 	return 0;
- }
- 
-+static int init_basic_state(struct replay_opts *opts, const char *head_name,
-+			    const char *onto, const char *orig_head)
-+{
-+	FILE *interactive;
-+
-+	if (!is_directory(path_state_dir()) && mkdir_in_gitdir(path_state_dir()))
-+		return error_errno(_("could not create temporary %s"), path_state_dir());
-+
-+	delete_reflog("REBASE_HEAD");
-+
-+	interactive = fopen(path_interactive(), "w");
-+	if (!interactive)
-+		return error_errno(_("could not mark as interactive"));
-+	fclose(interactive);
-+
-+	return write_basic_state(opts, head_name, onto, orig_head);
-+}
-+
- static const char * const builtin_rebase_helper_usage[] = {
- 	N_("git rebase--helper [<options>]"),
- 	NULL
-@@ -198,7 +219,7 @@ int cmd_rebase__helper(int argc, const char **argv, const char *prefix)
- 		if (ret)
- 			return ret;
- 
--		return !!write_basic_state(&opts, head_name, onto, head_hash);
-+		return !!init_basic_state(&opts, head_name, onto, head_hash);
- 	}
- 
- 	usage_with_options(builtin_rebase_helper_usage, options);
+diff --git a/.gitignore b/.gitignore
+index 404c9a8472..3284a1e9b1 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -118,7 +118,6 @@
+ /git-rebase--am
+ /git-rebase--helper
+ /git-rebase--interactive
+-/git-rebase--interactive2
+ /git-rebase--merge
+ /git-rebase--preserve-merges
+ /git-receive-pack
+diff --git a/Makefile b/Makefile
+index 71f8f45fe5..584834726d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -619,7 +619,6 @@ SCRIPT_SH += git-web--browse.sh
+ SCRIPT_LIB += git-mergetool--lib
+ SCRIPT_LIB += git-parse-remote
+ SCRIPT_LIB += git-rebase--am
+-SCRIPT_LIB += git-rebase--interactive
+ SCRIPT_LIB += git-rebase--preserve-merges
+ SCRIPT_LIB += git-rebase--merge
+ SCRIPT_LIB += git-sh-setup
+@@ -1060,8 +1059,8 @@ BUILTIN_OBJS += builtin/prune.o
+ BUILTIN_OBJS += builtin/pull.o
+ BUILTIN_OBJS += builtin/push.o
+ BUILTIN_OBJS += builtin/read-tree.o
+-BUILTIN_OBJS += builtin/rebase--interactive2.o
+ BUILTIN_OBJS += builtin/rebase--helper.o
++BUILTIN_OBJS += builtin/rebase--interactive.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+ BUILTIN_OBJS += builtin/reflog.o
+ BUILTIN_OBJS += builtin/remote.o
+@@ -2400,7 +2399,6 @@ XGETTEXT_FLAGS_PERL = $(XGETTEXT_FLAGS) --language=Perl \
+ LOCALIZED_C = $(C_OBJ:o=c) $(LIB_H) $(GENERATED_H)
+ LOCALIZED_SH = $(SCRIPT_SH)
+ LOCALIZED_SH += git-parse-remote.sh
+-LOCALIZED_SH += git-rebase--interactive.sh
+ LOCALIZED_SH += git-rebase--preserve-merges.sh
+ LOCALIZED_SH += git-sh-setup.sh
+ LOCALIZED_PERL = $(SCRIPT_PERL)
+diff --git a/builtin/rebase--interactive2.c b/builtin/rebase--interactive.c
+similarity index 100%
+rename from builtin/rebase--interactive2.c
+rename to builtin/rebase--interactive.c
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 6367da66e2..761be95ed1 100644
+deleted file mode 100644
+index e87d708a4d..0000000000
 --- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -51,14 +51,6 @@ initiate_action () {
- 	esac
- }
- 
--init_basic_state () {
--	orig_head=$(git rev-parse --verify HEAD) || die "$(gettext "No HEAD?")"
--	mkdir -p "$state_dir" || die "$(eval_gettext "Could not create temporary \$state_dir")"
--	rm -f "$(git rev-parse --git-path REBASE_HEAD)"
++++ /dev/null
+@@ -1,84 +0,0 @@
+-# This shell script fragment is sourced by git-rebase to implement
+-# its interactive mode.  "git rebase --interactive" makes it easy
+-# to fix up commits in the middle of a series and rearrange commits.
+-#
+-# Copyright (c) 2006 Johannes E. Schindelin
+-#
+-# The original idea comes from Eric W. Biederman, in
+-# https://public-inbox.org/git/m1odwkyuf5.fsf_-_@ebiederm.dsl.xmission.com/
+-#
+-# The file containing rebase commands, comments, and empty lines.
+-# This file is created by "git rebase -i" then edited by the user.  As
+-# the lines are processed, they are removed from the front of this
+-# file and written to the tail of $done.
+-todo="$state_dir"/git-rebase-todo
 -
--	: > "$state_dir"/interactive || die "$(gettext "Could not mark as interactive")"
+-GIT_CHERRY_PICK_HELP="$resolvemsg"
+-export GIT_CHERRY_PICK_HELP
+-
+-# Initiate an action. If the cannot be any
+-# further action it  may exec a command
+-# or exit and not return.
+-#
+-# TODO: Consider a cleaner return model so it
+-# never exits and always return 0 if process
+-# is complete.
+-#
+-# Parameter 1 is the action to initiate.
+-#
+-# Returns 0 if the action was able to complete
+-# and if 1 if further processing is required.
+-initiate_action () {
+-	case "$1" in
+-	continue)
+-		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
+-		     --continue
+-		;;
+-	skip)
+-		git rerere clear
+-		exec git rebase--helper ${force_rebase:+--no-ff} $allow_empty_message \
+-		     --continue
+-		;;
+-	edit-todo)
+-		exec git rebase--helper --edit-todo
+-		;;
+-	show-current-patch)
+-		exec git show REBASE_HEAD --
+-		;;
+-	*)
+-		return 1 # continue
+-		;;
+-	esac
 -}
 -
- git_rebase__interactive () {
- 	initiate_action "$action"
- 	ret=$?
-@@ -67,7 +59,6 @@ git_rebase__interactive () {
- 	fi
+-git_rebase__interactive () {
+-	initiate_action "$action"
+-	ret=$?
+-	if test $ret = 0; then
+-		return 0
+-	fi
+-
+-	test -n "$keep_empty" && keep_empty="--keep-empty"
+-	test -n "$rebase_merges" && rebase_merges="--rebase-merges"
+-	test -n "$rebase_cousins" && rebase_cousins="--rebase-cousins"
+-	test -n "$autosquash" && autosquash="--autosquash"
+-	test -n "$verbose" && verbose="--verbose"
+-	test -n "$force_rebase" && force_rebase="--no-ff"
+-	test -n "$restrict_revisions" && restrict_revisions="--restrict-revisions=^$restrict_revisions"
+-	test -n "$upstream" && upstream="--upstream=$upstream"
+-	test -n "$onto" && onto="--onto=$onto"
+-	test -n "$squash_onto" && squash_onto="--squash-onto=$squash_onto"
+-	test -n "$onto_name" && onto_name="--onto-name=$onto_name"
+-	test -n "$head_name" && head_name="--head-name=$head_name"
+-	test -n "$strategy" && strategy="--strategy=$strategy"
+-	test -n "$strategy_opts" && strategy_opts="--strategy-opts=$strategy_opts"
+-	test -n "$switch_to" && switch_to="--switch-to=$switch_to"
+-	test -n "$cmd" && cmd="--cmd=$cmd"
+-
+-	exec git rebase--interactive2 "$keep_empty" "$rebase_merges" "$rebase_cousins" \
+-		"$upstream" "$onto" "$squash_onto" "$restrict_revision" \
+-		"$allow_empty_message" "$autosquash" "$verbose" \
+-		"$force_rebase" "$onto_name" "$head_name" "$strategy" \
+-		"$strategy_opts" "$cmd" "$switch_to" \
+-		"$allow_rerere_autoupdate" "$gpg_sign_opt" "$signoff"
+-}
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 6e1e413cf2..3e7798e07b 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -223,7 +223,7 @@ run_interactive () {
+ 	test -n "$cmd" && cmd="--cmd=$cmd"
+ 	test -n "$action" && action="--$action"
  
- 	git rebase--helper --prepare-branch "$switch_to" ${verbose:+--verbose}
--	init_basic_state
- 
- 	git rebase--helper --init-basic-state ${upstream:+--upstream "$upstream"} \
- 		${onto:+--onto "$onto"} ${head_name:+--head-name "$head_name"} \
+-	exec git rebase--interactive2 "$action" "$keep_empty" "$rebase_merges" "$rebase_cousins" \
++	exec git rebase--interactive "$action" "$keep_empty" "$rebase_merges" "$rebase_cousins" \
+ 		"$upstream" "$onto" "$squash_onto" "$restrict_revision" \
+ 		"$allow_empty_message" "$autosquash" "$verbose" \
+ 		"$force_rebase" "$onto_name" "$head_name" "$strategy" \
+diff --git a/git.c b/git.c
+index 8309fb24a6..19d0b6e3b8 100644
+--- a/git.c
++++ b/git.c
+@@ -518,7 +518,7 @@ static struct cmd_struct commands[] = {
+ 	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "push", cmd_push, RUN_SETUP },
+ 	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
+-	{ "rebase--interactive2", cmd_rebase__interactive, RUN_SETUP | NEED_WORK_TREE },
++	{ "rebase--interactive", cmd_rebase__interactive, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "rebase--helper", cmd_rebase__helper, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "receive-pack", cmd_receive_pack },
+ 	{ "reflog", cmd_reflog, RUN_SETUP },
 -- 
 2.18.0
 
