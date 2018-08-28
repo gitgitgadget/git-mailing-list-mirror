@@ -2,24 +2,23 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: *
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_05,
+X-Spam-Status: No, score=1.8 required=3.0 tests=AWL,BAYES_40,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A4591F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 13:22:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4A891F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 13:22:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727645AbeH1ROM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 13:14:12 -0400
-Received: from 172-245-210-172-host.colocrossing.com ([172.245.210.172]:59587
+        id S1727854AbeH1ROa (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 13:14:30 -0400
+Received: from 172-245-210-172-host.colocrossing.com ([172.245.210.172]:59240
         "EHLO binglee.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727224AbeH1ROM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 13:14:12 -0400
-X-Greylist: delayed 381 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Aug 2018 13:14:11 EDT
+        with ESMTP id S1727224AbeH1ROa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 13:14:30 -0400
 To:     git@vger.kernel.org
 Subject: Solutions
-Message-ID: <7ae6f4b8f6fe108cf86a01f9df9ddfdb@racingradios.com>
-Date:   Tue, 28 Aug 2018 12:56:15 +0200
+Message-ID: <463aa770af96515b29af995683dc4818@racingradios.com>
+Date:   Tue, 28 Aug 2018 13:28:01 +0200
 From:   "Jason" <xisani@bulbstagelightingie.com>
 Reply-To: hansrekan@outlook.com
 MIME-Version: 1.0
