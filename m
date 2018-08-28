@@ -2,105 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D3AC1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:27:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7F521F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbeH2BVX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:21:23 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:52453 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727144AbeH2BVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:21:23 -0400
-Received: by mail-wm0-f65.google.com with SMTP id y139-v6so3244008wmc.2
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:27:50 -0700 (PDT)
+        id S1727278AbeH2BZQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:25:16 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:43605 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbeH2BZQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:25:16 -0400
+Received: by mail-qt0-f173.google.com with SMTP id g53-v6so3484256qtg.10
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:31:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9qI9YGVxHhAnPHaM2V8kfrW6tc1ordgaVymY1dN67B0=;
-        b=cPDFXJrt9SkBAgY+y59QjlVLjseXlZA1hAdGxGMeW3+P50LkNziNf2F+ybQ0xvXIGG
-         OF7kij8UKqqnpn/TjC0UJzw+bXaeAqfy/DithfDF3YSnsnt9Pp8vSfKxTHFnbfN6DJFF
-         QNBCfjYxynlY9pLFA0f+D8S4KmFuzx5SH8VDOh0j1hcrUaNgWt50y//jyJXXltk7NUaV
-         VjxmPxvC4nXe1a4VGoTuFbhU3hsGhLOWIn1TWWHsM+C1ovLtejVMIoDvi7dSP02++JHn
-         Oh50yQl0V9Clki0Y/l+Gaj4EUIxQd4JETBLw5iwjYUq5ryg+mbcSp964DClBb0cnLRar
-         PfZw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=Tm1nudEJ74lf3zQRdpcCoHvY/2EblVHy7btvdszEO9U=;
+        b=eB7RPBbFY5S5wz70RTe7MyPeuzmUWAf7fl8OwutN82H0Vw9l3VaBUfWXxSIk6QEkWt
+         OIH1lWfCF2+ql6CDcg5A/jtJp16w6AKh/7BCYts/9R0S4JReGnWZifUpUA6azGe6poVH
+         zuUTthzFMlFJohlLnRNOYhkjxkY6V2fR+1dRDsm33ydZdOCo08lHlH7ZPriYhp+4qVNb
+         Q/mLIMwjL+JApeNW/HKJCuYFI1yLQ3juLNgo32XI3gboWLsBnyR13akgk32rON+I5MFH
+         x75FUJljdbWq16NpdjnrqCA0GPoh5/IcuOfjbBCSTQTHPYy94bWvNGkbOe2h7ntIOvJQ
+         Tmdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9qI9YGVxHhAnPHaM2V8kfrW6tc1ordgaVymY1dN67B0=;
-        b=hNSsfognsYkR9TOAnKMKxfbjy0b+27/MLfn5AWdY4kFxeQEY66yI/97+VVeIr3pMUw
-         sEQiGwpiGIfOS+1fC7GpL8pJIJopa4Yhw4N+CQmr838dfpCWeKu7JzWK4nQ7vZNnn98y
-         yVUs+lRw04JrWq40wMWVbH5jgXTurUL3NgkAVMsLQ+FQ83T45z1Iklob6alf+vknZr7M
-         cxSLverhaot1GNGI1IJu2fDAMetqspVmc47IIoSRx876N35A8S5yjiGOYcqSZD82eh76
-         Ngp3b3hm9fLKHFaDxYVEd8Ri/dBJJNscimCw1E5jnRvb2jMTfdQHLeRCDz3prR0qkaEM
-         auTg==
-X-Gm-Message-State: APzg51AuvWs2e08WGfESLAKeSBvgTe0L7G0SL2prRC20AKNHxxBdpEhV
-        qtQALwuC3gm1JNpg5ZLhLyDxIgAg
-X-Google-Smtp-Source: ANB0VdbbMq2Hg1uCQ0C1oFhLhDJWntwzvyRsgvnUy1kC/T+pIx0fkBmU/REur8+1w1SoAufcgF+BYA==
-X-Received: by 2002:a1c:3411:: with SMTP id b17-v6mr2360060wma.85.1535491669715;
-        Tue, 28 Aug 2018 14:27:49 -0700 (PDT)
-Received: from localhost ([2.29.27.208])
-        by smtp.gmail.com with ESMTPSA id 199-v6sm3778184wmp.37.2018.08.28.14.27.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 14:27:48 -0700 (PDT)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v2 2/2] rerere: add note about files with existing conflict markers
-Date:   Tue, 28 Aug 2018 22:27:44 +0100
-Message-Id: <20180828212744.18714-2-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.18.0.1088.ge017bf2cd1
-In-Reply-To: <20180828212744.18714-1-t.gummerer@gmail.com>
-References: <20180824221005.5983-1-t.gummerer@gmail.com>
- <20180828212744.18714-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=Tm1nudEJ74lf3zQRdpcCoHvY/2EblVHy7btvdszEO9U=;
+        b=BXg+ogZh5UFfQeQpD20mYepS6d/Gxbb6PL0bJ2sGqOmrIt30sJfBXIInagLZFLyE9y
+         7TO7XLyk+2zJgfFWmmeEe6Jk8DRNDq+sdSP9bCVho0VtEu0MStK7iu84DLogv5nC1T4l
+         4UOWVgKrsp3XZjqYnIagej3NT6RclWFHK/5lP0NBzOs5l40CWKdBrBtumK4PK9YExo8m
+         1S2d1WreLxvUM6g/Ocy01WtkOq7IIh0IRDo72lXm6/dfO8YLxnWDchKJngmvTnStI0HR
+         qDbJtQ2FffsaAesJ0Xtss/GclZA4LQoOdwQVGxTSY85peOSbwTGPXHMlceCugocU1x3N
+         hp6w==
+X-Gm-Message-State: APzg51CH3JyzBozg7IpldjDXiTGb40WF07Jt+GXwmeeGweloRTDAia6/
+        9zuGBd7VRwJOIU8JLSxrTZY=
+X-Google-Smtp-Source: ANB0VdZBDZddggSC2G9sjgQzJA9eceRUI1hELboGKCASY7+AnHL/URxHD7qGx2fYVvH38DOqR7RF4g==
+X-Received: by 2002:ac8:1b5b:: with SMTP id p27-v6mr3712402qtk.99.1535491902991;
+        Tue, 28 Aug 2018 14:31:42 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id m5-v6sm1443863qkh.30.2018.08.28.14.31.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Aug 2018 14:31:42 -0700 (PDT)
+Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
+To:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.26.git.gitgitgadget@gmail.com>
+ <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
+ <CAGZ79kbsJXF=X7tzpdogAY7LdLd87YkPY0euiYaa3uQKQPoZuQ@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3bb1d527-87ae-5fdb-be9a-b83f6a68d3a0@gmail.com>
+Date:   Tue, 28 Aug 2018 17:31:40 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGZ79kbsJXF=X7tzpdogAY7LdLd87YkPY0euiYaa3uQKQPoZuQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When a file contains lines that look like conflict markers, 'git
-rerere' may fail not be able to record a conflict resolution.
-Emphasize that in the man page, and mention a possible workaround for
-the issue.
+On 8/28/2018 4:41 PM, Stefan Beller wrote:
+> On Tue, Aug 28, 2018 at 1:33 PM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> The commit-graph feature is tested in isolation by
+>> t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
+>> more interesting scenarios involving commit walks. Many of these
+>> scenarios are covered by the existing test suite, but we need to
+>> maintain coverage when the optional commit-graph structure is not
+>> present.
+>>
+>> To allow running the full test suite with the commit-graph present,
+>> add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
+>> to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
+>> to load the commit-graph when parsing commits, and writes the
+>> commit-graph file after every 'git commit' command.
+>>
+>> There are a few tests that rely on commits not existing in
+>> pack-files to trigger important events, so manually set
+>> GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
+> So the plan is to turn on the commit graph for the whole test suite
+> excluding these selected tests?
+Excluding these specific _steps_, but yes.
+>
+>> +               GIT_TEST_COMMIT_GRAPH=0 &&
+>> +               test_must_fail git merge -m final G
+> This could go on the same line without the && in between, setting the
+> variable as a prefix.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
+It cannot! The Linux build I ran complained that you can't put 
+environment variables through test_must_fail.
 
-Compared to v1, this now mentions the workaround of setting the
-'conflict-marker-size', as mentioned in
-<xmqqk1oblnor.fsf@gitster-ct.c.googlers.com>
-
- Documentation/git-rerere.txt | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.txt
-index 031f31fa47..df310d2a58 100644
---- a/Documentation/git-rerere.txt
-+++ b/Documentation/git-rerere.txt
-@@ -211,6 +211,12 @@ would conflict the same way as the test merge you resolved earlier.
- 'git rerere' will be run by 'git rebase' to help you resolve this
- conflict.
- 
-+[NOTE] 'git rerere' relies on the conflict markers in the file to
-+detect the conflict.  If the file already contains lines that look the
-+same as lines with conflict markers, 'git rerere' may fail to record a
-+conflict resolution.  To work around this, the `conflict-marker-size`
-+setting in linkgit:gitattributes[5] can be used.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
--- 
-2.18.0.1088.ge017bf2cd1
+-Stolee
 
