@@ -2,117 +2,190 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B76F91F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 18:31:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF6221F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 18:39:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727083AbeH1WYc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 18:24:32 -0400
-Received: from mail-eopbgr680111.outbound.protection.outlook.com ([40.107.68.111]:42914
-        "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726807AbeH1WYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 18:24:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r/ZXY2gda0NH9Q7aS1GT7dyqRcvpn4DHjdBLHpHoj0s=;
- b=cK7onhrBq87wx1Xs26T4pEdDgZ95zyWMAOncPylJw3a+VBX3dnje/4WpdcA7YPftMukgm+rBFVriYybcrgco3BS1B+zOTIucFOH/Km8J0Czdc+BuKyG0XprkAYPJbeE9L+GIK17nx/l1qdn9FQgZv05ZvntbtT8E6Et8t77tBm4=
-Received: from MWHPR21MB0701.namprd21.prod.outlook.com (10.175.142.11) by
- MWHPR21MB0846.namprd21.prod.outlook.com (10.173.51.140) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1122.1; Tue, 28 Aug 2018 18:29:56 +0000
-Received: from MWHPR21MB0701.namprd21.prod.outlook.com
- ([fe80::211c:e997:6d2f:2dc2]) by MWHPR21MB0701.namprd21.prod.outlook.com
- ([fe80::211c:e997:6d2f:2dc2%7]) with mapi id 15.20.1122.000; Tue, 28 Aug 2018
- 18:29:55 +0000
-From:   Brennan Conroy <brecon@microsoft.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Git clean removing tracked files semi-regularly
-Thread-Topic: Git clean removing tracked files semi-regularly
-Thread-Index: AdQ+OSCvyHcGJtFFTISUdCPT9MCWRAAMQwgAACSarQA=
-Date:   Tue, 28 Aug 2018 18:29:55 +0000
-Message-ID: <MWHPR21MB0701E9B53BC72CC33497AF45D60A0@MWHPR21MB0701.namprd21.prod.outlook.com>
-References: <MWHPR21MB0701CD1D9653E82116E482ECD60B0@MWHPR21MB0701.namprd21.prod.outlook.com>
- <20180828005803.GB432229@genre.crustytoothpaste.net>
-In-Reply-To: <20180828005803.GB432229@genre.crustytoothpaste.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Owner=brecon@microsoft.com;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2018-08-28T18:29:53.4244007Z;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Application=Microsoft Azure
- Information Protection;
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Extended_MSFT_Method=Automatic;
- Sensitivity=General
-x-originating-ip: [2001:4898:80e8:3:883d:e5a3:ea29:dd51]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MWHPR21MB0846;6:hL2vWxTxPvV6GPhnyOqJcIryQJivK8Plg6GoBlthqgPi1GMS/5x/QEmkhQIkghKJXbAzlb2RBl1afgzUqMDSysp7e1T8wW/cLQZvdNl0N3C6jplyLZLxk9D+8V4Voi8evBDRS5/25uTU+uvppzuV/GMOwIApFmKJHp0YPj/qE0VxQhPJ/f9wSHkCXSYGsTyb+vj7ui7m20OVnG233nVuf1dg4MT9/RCwJe7RpihONI1iNj7ERjlpmMHg0XgxL0DBdp7cRcYegmG57bWkh/rYN9mQy8xOpicOUPYJZcBgaPNyTB9oqQY9IHjotneZ/xYThwHIi3iQ6hzmKg6qXeo3pF97x4YNjytABBweX0bA6W3U10/PqSryBV4qDrk9ajfKrw+vjf0OmODhkA5YG5A/QZSKonJg+OdH4rB2H2Tco/sGZ4a4gV995AOir4IdFqwFwj0UADiit1LT648Mc8Ed6Q==;5:BSREm+kc3mOIthzNsOIxlJPwvl8fdfgo5R/PBLj69aV9X2wGp+6+mqmjqZKiz8+laDqHJCZXAB4h9rkBkmTc7/1FTMyIY2DQa757QQyNJ+BwaVPiQ2vLPdRzuBsXwyIibh4js5n1h1dzepwLBS6xF6hVNWYjYgp0RsKmXrZWU/w=;7:IZ8OUpiM7ATWQxKFEvpIpdzCgFJN49l0H/tlsp4j9+k6hAjTT79X15iKXmiN5bxsYhr1TLRQdRP0iCdSwMx45JHED/Rm2biZhVNDUWLixlM+XpF6d+fw2N8gENtc3xbjOXxZYj4i8yIbJisW1NZc07FQ7IOhQvbzwxF3qtvMfvRx7u4ZTOeUBZ2uRyAlJKP35rTMJSo7pUA8zYhe9s6O0/GU+tmKrNgqhp5sURn71HOkP3rhls+3AUNTv8iSZbnB
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: 78755171-1666-4fa2-2325-08d60d1440f6
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MWHPR21MB0846;
-x-ms-traffictypediagnostic: MWHPR21MB0846:
-x-microsoft-antispam-prvs: <MWHPR21MB08463C56AFB46A10D63644E7D60A0@MWHPR21MB0846.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(166708455590820)(9452136761055);
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(5005006)(8121501046)(93006095)(93001095)(10201501046)(3231336)(944501410)(52105095)(2018427008)(3002001)(6055026)(149027)(150027)(6041310)(20161123564045)(20161123562045)(20161123558120)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(201708071742011)(7699049)(76991033);SRVR:MWHPR21MB0846;BCL:0;PCL:0;RULEID:;SRVR:MWHPR21MB0846;
-x-forefront-prvs: 077884B8B5
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(136003)(376002)(366004)(39860400002)(396003)(346002)(199004)(189003)(13464003)(9686003)(55016002)(68736007)(14454004)(97736004)(2906002)(6306002)(8990500004)(478600001)(966005)(6246003)(99286004)(10290500003)(2900100001)(7696005)(5660300001)(76176011)(476003)(11346002)(446003)(46003)(106356001)(105586002)(486006)(81166006)(8676002)(102836004)(6116002)(53546011)(22452003)(10090500001)(316002)(33656002)(6506007)(86612001)(81156014)(74316002)(8936002)(53936002)(7736002)(5250100002)(86362001)(305945005)(186003)(6916009)(229853002)(6436002)(256004)(25786009)(14444005)(4326008)(6346003)(42262002);DIR:OUT;SFP:1102;SCL:1;SRVR:MWHPR21MB0846;H:MWHPR21MB0701.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
-received-spf: None (protection.outlook.com: microsoft.com does not designate
- permitted sender hosts)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=brecon@microsoft.com; 
-x-microsoft-antispam-message-info: gHotPXN5zG7/ONPVU7ogvITX2a4vKhgVuknLsiY8rdesg5GzV+zRTWjYlXAGFsgrkW+Qj0/noSvN9iJrShZG4TgKRrZ3rqJm4HfnsOQV8yj5Iqu0kE10T3pGW3Ud3BYplIUEqa3npwy7T+PXM7/AtGJ95i3MndD7S4YbhZyZS5Y9UGtexPZKtwfM+bzKqUL9+9NyEyF7GpwxFO/AEQeqQ4mTc0gHY5D1ra6v57hOkaIMVuaOWlOjtqgbHviXC+mDujCsVU9VcAjXkS6ep9jRgTs6J4lpaYBMin9AqztktpBSKlECrjr8Naqw/rBXUISC+pG2bvtQ37s9GtJJjGoGU48NjrcV3dn7YZNtnHNGufI=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        id S1726998AbeH1Wcr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 18:32:47 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:54338 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726128AbeH1Wcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 18:32:46 -0400
+Received: by mail-wm0-f68.google.com with SMTP id c14-v6so2895080wmb.4
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 11:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=RMbGiNMbN1zVJl25TJQDjyxB84LrrjDY8F4d9G35Rf4=;
+        b=c04WPWvbteF5j4QtA6EZ9EIf/nDBFDbq7jBtyJmnhNen1vCLuIRyjpcUatt2gupBru
+         1MeEYANKgubGYr5Ls+GanlhrLL4uPJCHvJRG9QLy8fJqNvLBoI5qLS2FL65QFQTLAnIO
+         xoH4SwodXCbOtl0v6bP1w8LsfHHzn7+J+1RDJj0BTgbcSLtRAnX8NM3pPVZiTufrQhgJ
+         +INqHrcufGrK556V6Yu8uBSSbK/gInMSFfKQjBFmDOAMA4XL3nbcxZTjHlsgueGyV/+n
+         uCX6CzFVH95uQmm2MHOnIPlVMv7he6XEMX7Smd84ItOxzhfKKIRuzG0ZAdahFtXAC7Yr
+         2KTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=RMbGiNMbN1zVJl25TJQDjyxB84LrrjDY8F4d9G35Rf4=;
+        b=dT3rmi2hqQ3Gsy5DwcV2REPpLGF76KQVOhCLmwQTwSogWyct0Rq3N8cHAC1mzjGJDp
+         Cqqqp+bULhPcbfz/bNYX2k0YaQDli0auR07ICCuBIqn7Zj+POD6/YP4B1U88htsx5otF
+         EB1rcMZpBleLxVreacKQvf79oCk2Z9W/bENl594InzmxOLFviUKx/ZW83VJlGErXCy4E
+         gVlNvLkhlYYea1GAcFJRarnU4XUt3ivje2TqgrdhrUDOVXUA0rUTjckMKW23znlRIu9H
+         tLtaPw+Mr3m616Lyf0wtFqzkE14VKl/NHCh8eF4pfGT3BPYzB+Vb01jP944GBBsFCyRF
+         WgHg==
+X-Gm-Message-State: APzg51BITvm3hwRGU0OgDR3TiDBpGjaff+F9e93M3WEJyNcKQFF+ewCJ
+        pbiT01GRNhx59I9qq3bWxNU=
+X-Google-Smtp-Source: ANB0Vdazzze8T6Rw67ZPjSJ8xTnp2l1VL8Z8QEqc1Y0/2Kx5Y/AEP0nYCVnXXZ0nGn6tnKLAEavZdg==
+X-Received: by 2002:a1c:99c2:: with SMTP id b185-v6mr2003874wme.15.1535481588920;
+        Tue, 28 Aug 2018 11:39:48 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id r30-v6sm3363650wrc.90.2018.08.28.11.39.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 11:39:48 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Tiago Botelho <tiagonbotelho@gmail.com>, git@vger.kernel.org,
+        christian.couder@gmail.com, haraldnordgren@gmail.com,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [PATCH v6] Implement --first-parent for git rev-list --bisect
+References: <20180828123234.44582-1-tiagonbotelho@hotmail.com>
+        <nycvar.QRO.7.76.6.1808281512240.73@tvgsbejvaqbjf.bet>
+Date:   Tue, 28 Aug 2018 11:39:47 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1808281512240.73@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 28 Aug 2018 15:21:09 +0200 (DST)")
+Message-ID: <xmqqy3cqfi8c.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 78755171-1666-4fa2-2325-08d60d1440f6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Aug 2018 18:29:55.8522
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR21MB0846
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SSdtIHVzaW5nIHdpbmRvd3MuIEhhdmUgaGFkIGl0IGhhcHBlbiBvbiA4LjEgYW5kIDEwLg0KDQoi
-Z2l0IHN0YXR1cyIgc2hvd3MgIm5vdGhpbmcgdG8gY29tbWl0LCB3b3JraW5nIHRyZWUgY2xlYW4i
-LiBJIGFtIHVzaW5nIGdpdCB2ZXJzaW9uIDIuMTcuMS53aW5kb3dzLjINCg0KLS0tLS1PcmlnaW5h
-bCBNZXNzYWdlLS0tLS0NCkZyb206IGJyaWFuIG0uIGNhcmxzb24gPHNhbmRhbHNAY3J1c3R5dG9v
-dGhwYXN0ZS5uZXQ+IA0KU2VudDogTW9uZGF5LCBBdWd1c3QgMjcsIDIwMTggNTo1OCBQTQ0KVG86
-IEJyZW5uYW4gQ29ucm95IDxicmVjb25AbWljcm9zb2Z0LmNvbT4NCkNjOiBnaXRAdmdlci5rZXJu
-ZWwub3JnDQpTdWJqZWN0OiBSZTogR2l0IGNsZWFuIHJlbW92aW5nIHRyYWNrZWQgZmlsZXMgc2Vt
-aS1yZWd1bGFybHkNCg0KT24gTW9uLCBBdWcgMjcsIDIwMTggYXQgMDc6MDY6NTlQTSArMDAwMCwg
-QnJlbm5hbiBDb25yb3kgd3JvdGU6DQo+IEhlbGxvLCBJIHdvcmsgb24gYSBwcm9qZWN0IHRoYXQg
-dXNlcyBnaXQuICJnaXQgY2xlYW4gLXhkZiIgaXMgYSBjb21tb24gDQo+IGNvbW1hbmQgdG8gcnVu
-IHRvIGNsZWFuIHVwIHRoZSBlbnZpcm9ubWVudCwgaG93ZXZlciBzb21ldGltZXMgdGhpcyANCj4g
-Y29tbWFuZCBkZWxldGVzIHRoZSBlbnRpcmUgY29udGVudHMgb2YgdHdvIG9mIHRoZSBmb2xkZXJz
-IGFuZCBhbGwgdGhlIA0KPiBmaWxlcyBpdCBkZWxldGVzIGFyZSBiZWluZyB0cmFja2VkIHdoaWNo
-IGFjY29yZGluZyB0byB0aGUgDQo+IGRvY3VtZW50YXRpb24gc2hvdWxkIG5vdCBiZSBkZWxldGVk
-Lg0KPiANCj4gVGhlIHByb2plY3QgaXMgbG9jYXRlZCBhdCBodHRwczovL2dpdGh1Yi5jb20vYXNw
-bmV0L1NpZ25hbFIgYW5kIHRoZSANCj4gdHdvIGZvbGRlcnMgaXQgbGlrZXMgdG8gZGVsZXRlIGFy
-ZSANCj4gaHR0cHM6Ly9naXRodWIuY29tL2FzcG5ldC9TaWduYWxSL3RyZWUvcmVsZWFzZS8yLjIv
-Y2xpZW50cy90cy9zaWduYWxyLQ0KPiBwcm90b2NvbC1tc2dwYWNrIGFuZCANCj4gaHR0cHM6Ly9n
-aXRodWIuY29tL2FzcG5ldC9TaWduYWxSL3RyZWUvcmVsZWFzZS8yLjIvY2xpZW50cy90cy9zaWdu
-YWxyDQo+IA0KPiBJZiB5b3UgbmVlZCBtZSB0byBjb2xsZWN0IGdpdCBsb2dzIGV0Yy4gcGxlYXNl
-IGRvbid0IGhlc2l0YXRlIHRvIGFzayENCg0KSXQgd291bGQgYmUgaGVscGZ1bCB0byBrbm93IG1v
-cmUgYWJvdXQgeW91ciBlbnZpcm9ubWVudC4gIElzIHRoaXMgb25seSByZXByb2R1Y2libGUgb24g
-Y2VydGFpbiBvcGVyYXRpbmcgc3lzdGVtcyAoZS5nLiBjYXNlLWluc2Vuc2l0aXZlIG9uZXMpPw0K
-V2hhdCB2ZXJzaW9uIG9mIEdpdCBhcmUgeW91IHVzaW5nPyAgV2hhdCBkb2VzICJnaXQgc3RhdHVz
-IiBzYXkgYmVmb3JlIHlvdSBydW4gZ2l0IGNsZWFuPw0KLS0NCmJyaWFuIG0uIGNhcmxzb246IEhv
-dXN0b24sIFRleGFzLCBVUw0KT3BlblBHUDogaHR0cHM6Ly9rZXliYXNlLmlvL2JrMjIwNA0K
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+
+> Hi Tiago,
+>
+> On Tue, 28 Aug 2018, Tiago Botelho wrote:
+>
+>> This will enable users to implement bisecting on first parents
+>> which can be useful for when the commits from a feature branch
+>> that we want to merge are not always tested.
+>
+> This message is still lacking the explanation I asked for, namely for the
+> lines:
+>
+> 	@@ -329,6 +334,11 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+> 	 	if (0 <= weight(p))
+> 	 		continue;
+> 	 	for (q = p->item->parents; q; q = q->next) {
+> 	+		if ((bisect_flags & BISECT_FIRST_PARENT)) {
+> 	+			if (weight(q) < 0)
+> 	+				q = NULL;
+> 	+			break;
+> 	+		}
+> 	 	if (q->item->object.flags & UNINTERESTING)
+> 	 		continue;
+> 	 	if (0 <= weight(q))
+
+I've just finished scanning the discussion thread on public-inbox
+for v5, v4, v3, v2 and the initial round of this series, but found
+your comments only on the tests.  If you have a pointer that would
+be great; it also is OK to say what kind of explanation is needed
+for that addition again.  
+
+FWIW I too was puzzled about the correctness of the added logic
+above, especially the part that reads weight(q) before checking if
+it is not UNINTERESTING, but I covered it on a separate message.
+
+> I would have preferred to reuse the already existing commits generated in
+> the `setup` phase rather than generating yet another batch, and to not
+> introduce an inconsistent way to present a commit graph (compare your
+> diagram with the one in
+> https://github.com/git/git/blob/v2.18.0/t/t6002-rev-list-bisect.sh#L64-L90
+> i.e. *in the same file*)
+
+As I already said in the previous round, I do agree with these.
+That is, ...
+
+>> diff --git a/t/t6002-rev-list-bisect.sh b/t/t6002-rev-list-bisect.sh
+>> index a66140803..1bc297de5 100755
+>> --- a/t/t6002-rev-list-bisect.sh
+>> +++ b/t/t6002-rev-list-bisect.sh
+>> @@ -263,4 +263,62 @@ test_expect_success 'rev-parse --bisect can default to good/bad refs' '
+>>  	test_cmp expect.sorted actual.sorted
+>>  '
+>>  
+>> +# We generate the following commit graph:
+>> +#
+>> +#   B ------ C
+>> +#  /          \
+>> +# A            FX
+>> +#  \          /
+>> +#   D - CC - EX
+>> +
+>> +test_expect_success 'setup' '
+>> +  test_commit A &&
+>> +  test_commit B &&
+>> +  test_commit C &&
+>> +  git reset --hard A &&
+>> +  test_commit D &&
+>> +  test_commit CC &&
+>> +  test_commit EX &&
+>> +  test_merge FX C
+>> +'
+
+... the above graph construction should not be necessary.  An
+earlier part of t6002 would have already created a history of
+suitable shape to use for writing the following tests.
+
+>> +test_output_expect_success "--bisect --first-parent" 'git rev-list --bisect --first-parent FX ^A' <<EOF
+>> +$(git rev-parse CC)
+>> +EOF
+>> +
+>> +test_output_expect_success "--first-parent" 'git rev-list --first-parent FX ^A' <<EOF
+>> +$(git rev-parse FX)
+>> +$(git rev-parse EX)
+>> +$(git rev-parse CC)
+>> +$(git rev-parse D)
+>> +EOF
+>> +
+>> +test_output_expect_success "--bisect-vars --first-parent" 'git rev-list --bisect-vars --first-parent FX ^A' <<EOF
+>> +bisect_rev='$(git rev-parse CC)'
+>> +bisect_nr=1
+>> +bisect_good=1
+>> +bisect_bad=1
+>> +bisect_all=4
+>> +bisect_steps=1
+>> +EOF
+>> +
+>> +test_expect_success "--bisect-all --first-parent" '
+>> +cat >expect <<EOF &&
+>> +$(git rev-parse CC) (dist=2)
+>> +$(git rev-parse EX) (dist=1)
+>> +$(git rev-parse D) (dist=1)
+>> +$(git rev-parse FX) (dist=0)
+>> +EOF
+>> +
+>> +# Make sure we have the same entries, nothing more, nothing less
+>> +git rev-list --bisect-all --first-parent FX ^A >actual &&
+>> +  sort actual >actual.sorted &&
+>> +  sort expect >expect.sorted &&
+>> +  test_cmp expect.sorted actual.sorted &&
+>> +  # Make sure the entries are sorted in the dist order
+>> +  sed -e "s/.*(dist=\([1-9]*[0-9]\)).*/\1/" actual >actual.dists &&
+>> +  sort -r actual.dists >actual.dists.sorted &&
+>> +  test_cmp actual.dists.sorted actual.dists
+>> +'
+>> +
+>>  test_done
+>> -- 
+>> 2.16.3
+>> 
+>> 
