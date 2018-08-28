@@ -2,96 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A919B1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FA9E1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:24:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727474AbeH2BQf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:16:35 -0400
-Received: from cloud.peff.net ([104.130.231.41]:59568 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726998AbeH2BQf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:16:35 -0400
-Received: (qmail 29863 invoked by uid 109); 28 Aug 2018 21:23:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 28 Aug 2018 21:23:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5879 invoked by uid 111); 28 Aug 2018 21:23:13 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 28 Aug 2018 17:23:13 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Aug 2018 17:23:03 -0400
-Date:   Tue, 28 Aug 2018 17:23:03 -0400
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v2 9/9] show_dirstat: simplify same-content check
-Message-ID: <20180828212303.GI11036@sigill.intra.peff.net>
-References: <20180828212126.GA7039@sigill.intra.peff.net>
+        id S1727176AbeH2BSZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:18:25 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35437 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726998AbeH2BSZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:18:25 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so3431103wmc.0
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=ILwH/4XGMey2nTELTriw0GN95lHMxg8upfs69O4Y0UE=;
+        b=MkPhvAY3JgmKFD5VFM17k/W/U2Zs7RKIvQ/cgDJzOIExzGuXaoCyQo2yCAsy5jMF0j
+         bFDrJQDg/iEqzsxKIS6igdnGG5ZnuhNug217Htv5bm4CV7hhIqGjyzaXbUvngecR0t5V
+         ZKHMLgOIjY//w0LfrNxxzIdvE7mpEQ0tM8vlZxYI4ODpnwikV7OKjanixOts1E0TKTLP
+         qrpm7yqhDDfRwiNdGVbG5+TSsLTWAZi3pq9nFZpGCmwoVN2lheMk6AuK0rgbO0aSTMB6
+         Wvn8PnAazEoigyEtcfDTcKpVBffD9jw4I+RA4nusZcYvyv/550e17tf0x7wxbHkPD3rR
+         yr6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=ILwH/4XGMey2nTELTriw0GN95lHMxg8upfs69O4Y0UE=;
+        b=gZQ1y9MTM1/00H64kwAFOexa2l6zfjs/p9bN4t9HpRHB+yvLzFqQ3m6X2iywmELnIO
+         GY2fSLC+VSthcG1uSjsBN7jcmA8xqHmRp6NDXT8n8sQvMe/wPEtN8B3K34/EUk4DOidv
+         S0z25cZ20mwCIKgIgf/UN9eYkR4wCK7O4TXzhNBIkWpaAlFG/jHVJouCIyOMkMWN7/hY
+         YNLG16cF6fOAawBqHuvYHWhz5O25phLjwOSjIUdIh6X2LUw5FXm8n8pG6w484Qnfmum7
+         tVEbQlJwmuDvU0O+RVI/Ue4vCJXGDYdpBYQ9hUHkz6xYp0Rd/0oKF2BLr7v3ulPgMwGv
+         gxMg==
+X-Gm-Message-State: APzg51ARzASeF1RDkcC6PAV1bibd57Hc4SPztBaqdMAqzdcU0srSyXXT
+        oufsZe+R9XACVJkjcYzJ6Qo=
+X-Google-Smtp-Source: ANB0VdZ4nCoDOfyHzzpLCAQLDyzenboKLPmDRAg69tUMP8BOCAwIf5GWlyebmsP2jEn/SCuhHQot7Q==
+X-Received: by 2002:a1c:3a08:: with SMTP id h8-v6mr2583370wma.126.1535491491525;
+        Tue, 28 Aug 2018 14:24:51 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 20-v6sm5070678wmu.21.2018.08.28.14.24.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 14:24:50 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tiago Botelho <tiagonbotelho@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org, christian.couder@gmail.com,
+        haraldnordgren@gmail.com, Tiago Botelho <tiagonbotelho@hotmail.com>
+Subject: Re: [PATCH v6] Implement --first-parent for git rev-list --bisect
+References: <20180828123234.44582-1-tiagonbotelho@hotmail.com>
+        <nycvar.QRO.7.76.6.1808281512240.73@tvgsbejvaqbjf.bet>
+        <xmqqy3cqfi8c.fsf@gitster-ct.c.googlers.com>
+        <xmqqbm9mfcf4.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 28 Aug 2018 14:24:50 -0700
+In-Reply-To: <xmqqbm9mfcf4.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Tue, 28 Aug 2018 13:45:19 -0700")
+Message-ID: <xmqqwosadw0t.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180828212126.GA7039@sigill.intra.peff.net>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We use two nested conditionals to store a content_changed
-variable, but only bother to look at the result once,
-directly after we set it. We can drop the variable entirely
-and just use a single "if".
+Junio C Hamano <gitster@pobox.com> writes:
 
-This needless complexity is the result of 2ff3a80334 (Teach
---dirstat not to completely ignore rearranged lines within a
-file, 2011-04-11). Before that, we held onto the
-content_changed variable much longer.
+> Something like the following, perhaps?
 
-While we're touching the condition, we can swap out oidcmp()
-for !oideq(). Our coccinelle patches didn't previously find
-this case because of the intermediate variable, but now it's
-a simple boolean in a conditional.
+Having said all that.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- diff.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+> +# See the drawing near the top --- e4 is in the middle of the first parent chain
+> +printf "%s\n" e4 |
+> +test_output_expect_success '--bisect --first-parent' '
+> +	git rev-list --bisect --first-parent E ^F
+> +'
+> +
+> +printf "%s\n" E e1 e2 e3 e4 e5 e6 e7 e8 |
+> +test_output_expect_success "--first-parent" '
+> +	git rev-list --first-parent E ^F
+> +'
 
-diff --git a/diff.c b/diff.c
-index 5d3219b600..605ba4b6b8 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2933,16 +2933,11 @@ static void show_dirstat(struct diff_options *options)
- 		struct diff_filepair *p = q->queue[i];
- 		const char *name;
- 		unsigned long copied, added, damage;
--		int content_changed;
- 
- 		name = p->two->path ? p->two->path : p->one->path;
- 
--		if (p->one->oid_valid && p->two->oid_valid)
--			content_changed = oidcmp(&p->one->oid, &p->two->oid);
--		else
--			content_changed = 1;
--
--		if (!content_changed) {
-+		if (p->one->oid_valid && p->two->oid_valid &&
-+		    oideq(&p->one->oid, &p->two->oid)) {
- 			/*
- 			 * The SHA1 has not changed, so pre-/post-content is
- 			 * identical. We can therefore skip looking at the
-@@ -2989,7 +2984,7 @@ static void show_dirstat(struct diff_options *options)
- 		 * made to the preimage.
- 		 * If the resulting damage is zero, we know that
- 		 * diffcore_count_changes() considers the two entries to
--		 * be identical, but since content_changed is true, we
-+		 * be identical, but since the oid changed, we
- 		 * know that there must have been _some_ kind of change,
- 		 * so we force all entries to have damage > 0.
- 		 */
--- 
-2.19.0.rc0.584.g84d5b2a847
+The above two are probably not controversial.
+
+> +test_output_expect_success '--bisect-vars --first-parent' '
+> +	git rev-list --bisect-vars --first-parent E ^F
+> +' <<-EOF
+> +	bisect_rev='e5'
+> +	bisect_nr=4
+> +	bisect_good=4
+> +	bisect_bad=3
+> +	bisect_all=9
+> +	bisect_steps=2
+> +EOF
+
+Perhaps this one isn't either.
+
+
+> +test_expect_success '--bisect-all --first-parent' '
+> +	cat >expect <<-EOF &&
+> +	$(git rev-parse tags/e5) (dist=4)
+> +	$(git rev-parse tags/e4) (dist=4)
+> +	$(git rev-parse tags/e6) (dist=3)
+> +	$(git rev-parse tags/e3) (dist=3)
+> +	$(git rev-parse tags/e7) (dist=2)
+> +	$(git rev-parse tags/e2) (dist=2)
+> +	$(git rev-parse tags/e8) (dist=1)
+> +	$(git rev-parse tags/e1) (dist=1)
+> +	$(git rev-parse tags/E) (dist=0)
+> +	EOF
+> +
+> +	# Make sure we have the same entries, nothing more, nothing less
+> +	git rev-list --bisect-all --first-parent E ^F >actual &&
+> +	sort actual >actual.sorted &&
+> +	sort expect >expect.sorted &&
+> +	test_cmp expect.sorted actual.sorted &&
+
+By sorting both, we attempt allow them to come out in any random
+order when sorting done by --bisect-all gets tiebroken differently
+between commits with the same dist value.  As Johannes said, this is
+a bit too strict to insist that E *must* get dist 0, when the only
+thing we may care about are e2 and e7 get the same dist value, which
+is larger than the dist value given to E, etc.  If we wanted to ease
+the over-strictness, we could omit " (dist=N)" from the 'expect' file,
+and then
+
+	sed -e 's/ (dist=[0-9]*)$//' actual | sort >actual.sorted &&
+	sort expect >expect.sorted &&
+	test_cmp expect.sorted actual.sorted &&
+
+to compare only the object names.
+
+This over-strictness would have caught a bug in Git if we reverted
+this new feature (i.e. "rev-list --first-parent --bisect-all" does
+not refuse to work---it just does not do what we expect), which
+gives distance of -1 in the output (!).  From that point of view, I
+think it is also OK for the test to be spelling the values out like
+the above.
+
+> +	# Make sure the entries are sorted in the dist order
+> +	sed -e "s/.*(dist=\([0-9]*\)).*/\1/" actual >actual.dists &&
+> +	sort -r -n actual.dists >actual.dists.sorted &&
+
+I forgot to mention but I added "-n" here to make sure we
+numerically sort the list of distance values.  Also you had a bogus
+regexp to catch digits inherited from "something like this" I showed
+in an older discussion (I think it is sufficient to say [0-9]* here).
+
+The above makes sure that commits that have larger distance number
+are listed earlier in the output, and we do not care if which one of
+e4 or e5, both of which have distant number 4, is shown first---we'd
+be happy as long as all the ones at distance 4 are shown before the
+others at smaller distance number.  So with this in place, I think
+we can omit the exact distance number from the earlier part of this
+test, but as I said, it would have caught the bug that produces a
+negative distance value in the output, so I am still on the fence,
+leaning a bit toward being stricter than necessary.
+
+> +	test_cmp actual.dists.sorted actual.dists
+> +'
+> +
+>  test_done
