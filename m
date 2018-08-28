@@ -2,103 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEFF51F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:36:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65AC11F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727612AbeH2B3k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:29:40 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:41792 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727176AbeH2B3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:29:40 -0400
-Received: by mail-qk0-f194.google.com with SMTP id h138-v6so2052263qke.8
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:36:06 -0700 (PDT)
+        id S1727480AbeH2Bae (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:30:34 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:33341 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727265AbeH2Bae (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:30:34 -0400
+Received: by mail-pl1-f194.google.com with SMTP id 60-v6so1309122ple.0
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=GUDWwk+3aDtOpfa2ONMQz6BdF53uDAwLTdYH5HLlLxI=;
-        b=NyYzxiBOZkMQTzqm6i6TqI8mXHkwD31q6UIP/Dn4uFNaNTVRDKldxzLNtTProXmosQ
-         16nxAXFRXlv2wZbOXN5anFOZ5JDc0pDsYikp4F7YtpLVJPZiw2gXw1LfkV/lmbjLQXod
-         Ggv1VjkktKZnMzrN0MLpJgjLdVrQc3IdbVsmHG38KWTcZbsTsbhximwcosW+Dt+xzqmf
-         DVdkCjQDrjKvsOzqrsJvXJPWNLM6OkKbIWZs0SQbEcdQ6QX9ba7BLM1hkjyvfIjG4ar+
-         OBhpNKp5Rz0xXj05zdSIyDJzU0OvYKfMwIPnjZ2g078qM0uq98NpiSvIPHbGM3mtEZAu
-         bTzw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HoNk1zMe/NnogDXqTxiYFlyfhv/bmlKtdeOPVjyYihM=;
+        b=kCv+IrhbTq2YQTEl1GXNpubhV4YAqdB4lxuKnBI84pfj+AWi0GRcjngRIQzqkBG4qw
+         hDMJxb8hwIGVotfUXC2yg96ec5q8LewXnevMx/3MVN7Id/cWvg/XKT2KDZBVUUHu72+K
+         pityrBGndJxR1AOnsyFhfxwuLZSdrsLI8RMBr71t/f3QLqUzwkEftrDJRQ2jdRRdTTrh
+         XjEEDb4Xrh+KcALIFVbPUrKx9sYu89yon79kPu5X5p4mS62rq0MEsMc7y69JoyXclG/d
+         Na9o71UPWxwjjKAifrAWRIh816/f4e3a/wHv0wV9MQPpo4O+Pd2aXCBxWvXEdF1qeKGi
+         G8aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=GUDWwk+3aDtOpfa2ONMQz6BdF53uDAwLTdYH5HLlLxI=;
-        b=P3Sc38nxoF1YOVzJKEmzVDn7/BjG6iwTo8vmPzamUSApGABcJ3JdIWPTFiJYQGQIX9
-         7m7OJ4r8MPpbAUtyZnasMk+Tcss5AoTgF9AZNthKMyYD+IQPqorK7dowCIThC5BgfjMk
-         ByMSeVKeAcL0V0sarPcLYfOx0PGOsewZ7RAoQZ9EBiE5iJUZ9guHDdOXSbJkvuIDwAoJ
-         SxVeU0l7ywUyWQh2GcnFdp/curjpxJnnA0xx3OBv+NChmcz8bAKadUnwm/qFsH0N6dOW
-         PDFonzt0sp9qyWQMlYjrv2ZzdFqDX/RfeS00DN3qzggp4ppAQaPj56/1FE0xLgJ+LWcq
-         JPmA==
-X-Gm-Message-State: APzg51DCpZc3xXfpdCDQmdLyKF+Vii5qfdfg0tCYoWEkz/roJT5c1MNy
-        8alMoWCcbaCpUwrYWx+je2w=
-X-Google-Smtp-Source: ANB0VdbxvbpGa9kE0FQPaBYUZ3n6Iskl3NVOr7zNT+aVkF7L052gwbwqhvc5BSauirQEnEcmnLFLLg==
-X-Received: by 2002:ae9:eb8d:: with SMTP id b135-v6mr3649372qkg.123.1535492165982;
-        Tue, 28 Aug 2018 14:36:05 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id b16-v6sm1354158qkj.76.2018.08.28.14.36.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 14:36:05 -0700 (PDT)
-Subject: Re: [PATCH 0/9] introducing oideq()
-To:     Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-References: <20180825080031.GA32139@sigill.intra.peff.net>
- <20180826205620.GC873448@genre.crustytoothpaste.net>
- <20180828212126.GA7039@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4a35886d-b1f5-6d5a-554e-508d838e542e@gmail.com>
-Date:   Tue, 28 Aug 2018 17:36:03 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HoNk1zMe/NnogDXqTxiYFlyfhv/bmlKtdeOPVjyYihM=;
+        b=UeX3Rf9agkYhrsI949OxyRC7iCJGgEax7FRPQ0hnNjUh7pNjb1bPlS41Bti5PySfK7
+         JwQnls+C1UTTXvjlv9fEm+HA7M9CvwkQPuj1g534U10lk/vuM1xoV/2zwcUKKqj+4Xnm
+         V/EH8vYQ7Qh6mnpHfjywuMYK+GQt0gBZ0ZQuOuVlNN6EdOQ5ZOaQIxQvhwtc3sSIfDMD
+         o8ebSBTmrvUYaHS6UxMWOmzjCe/3yxeK71CMGXFOQ4av9qCLIYHQBGUm72uIqnDxWJS2
+         GmgYB1mDGE3QPOnmla7PFgl+pb7/s0DIrdzDKvTV850zB1WcjaZOLa/MJ1y3q6DwgLMv
+         c74Q==
+X-Gm-Message-State: APzg51CPcq1+Rk4nVYBv7O89AWfFB14a15/tu1Ak91tRrpcEj4sj6khz
+        aFlGg38hkqS4nUVcxbqayE8=
+X-Google-Smtp-Source: ANB0VdaKmhb73sd7n7/Nzqggu6KZtbpKh6hyCEwXP9m1JYtV8Oncg8ERDkYMqyl5BJnTrYzLDzCoOQ==
+X-Received: by 2002:a17:902:b702:: with SMTP id d2-v6mr3268666pls.12.1535492220105;
+        Tue, 28 Aug 2018 14:37:00 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id h7-v6sm6682640pfd.155.2018.08.28.14.36.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 14:36:59 -0700 (PDT)
+Date:   Tue, 28 Aug 2018 14:36:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "stolee@gmail.com" <stolee@gmail.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>
+Subject: [PATCH] commit-reach: correct accidental #include of C file
+Message-ID: <20180828213657.GA74296@aiede.svl.corp.google.com>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <20180720163227.105950-1-dstolee@microsoft.com>
+ <20180720163227.105950-5-dstolee@microsoft.com>
+ <20180828212457.GA74687@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20180828212126.GA7039@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180828212457.GA74687@aiede.svl.corp.google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2018 5:21 PM, Jeff King wrote:
-> On Sun, Aug 26, 2018 at 08:56:21PM +0000, brian m. carlson wrote:
+Without this change, the build breaks with clang:
+
+ libgit/ref-filter.pic.o: multiple definition of 'filter_refs'
+ libgit/commit-reach.pic.o: previous definition here
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Jonathan Nieder wrote:
+> Derrick Stolee wrote:
+
+>> --- a/commit-reach.c
+>> +++ b/commit-reach.c
+>> @@ -1,8 +1,10 @@
+>>  #include "cache.h"
+>>  #include "commit.h"
+>> +#include "commit-graph.h"
+>>  #include "decorate.h"
+>>  #include "prio-queue.h"
+>>  #include "tree.h"
+>> +#include "ref-filter.c"
 >
->>> Due to the simplicity of the current code and our inlining, the compiler
->>> can usually figure this out for now. So I wouldn't expect this patch to
->>> actually improve performance right away. But as that discussion shows,
->>> we are likely to take a performance hit as we move to more runtime
->>> determination of the_hash_algo parameters. Having these callers use the
->>> more strict form will potentially help us recover that.
->>>
->>> So in that sense we _could_ simply punt on this series until then (and
->>> it's certainly post-v2.19 material). But I think it's worth doing now,
->>> simply from a readability/annotation standpoint. IMHO the resulting code
->>> is more clear (though I've long since taught myself to read !foocmp() as
->>> equality).
->> I would quite like to see this series picked up for v2.20.  If we want
->> to minimize performance regressions with the SHA-256 work, I think it's
->> important.
-> Thanks. One of the things I was worried about was causing unnecessary
-> conflicts with existing topics, including your work. But if everybody is
-> on board, I'd be happy to see this go in early in the next release cycle
-> (the longer we wait, the more annoying conflicts Junio has to resolve).
+> Did you mean "ref-filter.h"?
+>
+> This broke the build here.  Is there some check that we can use to
+> prevent it happening again?  I don't think we ever intentionally
+> #include a .c file.
 
-I'm happy to take this change whenever. In my opinion, right after 
-v2.19.0 is cut would be a great time to merge it into master.
+Here's what I'm applying locally.
 
-This v2 is good.
+Thanks,
+Jonathan
 
-Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
+ commit-reach.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/commit-reach.c b/commit-reach.c
+index c996524032..86715c103c 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -4,7 +4,7 @@
+ #include "decorate.h"
+ #include "prio-queue.h"
+ #include "tree.h"
+-#include "ref-filter.c"
++#include "ref-filter.h"
+ #include "revision.h"
+ #include "tag.h"
+ #include "commit-reach.h"
+-- 
+2.19.0.rc0.228.g281dcd1b4d0
 
