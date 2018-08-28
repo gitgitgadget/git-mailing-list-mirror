@@ -2,192 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 240F81F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 15:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8A531F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 15:45:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727109AbeH1T13 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 15:27:29 -0400
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:44931 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726961AbeH1T13 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 15:27:29 -0400
-Received: by mail-ua1-f67.google.com with SMTP id m11-v6so1256221uao.11
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 08:35:16 -0700 (PDT)
+        id S1727125AbeH1TiA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 15:38:00 -0400
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:38142 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726951AbeH1Th7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 15:37:59 -0400
+Received: by mail-wr1-f48.google.com with SMTP id w11-v6so2036633wrc.5
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 08:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=jIP0h6LwYCqDZyxnE7Oyk6zMJE+tp3zLi07VKud6KbQ=;
-        b=vdDmDH22Y8lLPbERYIAFS/oEijkKqZE6pDVOd7FA9wBhs016+E6gV3xjUFi5U4S9y+
-         IytuannqmQPHYdb+abBC8MKjeRkwL+xVBlDNlAqGSF2D+5cGOvni4C36oHtKL/CQS+hy
-         78IH8oHyVJdfwABzEGNkxoDGPwZeZQ2JYp8f98tmz1cgo0kmT84xoYQa689sr0HsX6W3
-         HC/vXacjA3fpq7T+LUprK6t78khT2lyafTslr6at611bU12Xnn1sPe35Xcv1QjPGsvzd
-         ISECCrMPMXjx99XBmLyTUf9QL5hiXw3Bk7kH358leSPfk+ZoGcTNk10Hn8HPdsuFP7aA
-         SAEw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=NetsV5bl7ZCtl3MShB8GfCDU6w92Nyp3Oj53nm+58C8=;
+        b=leya0w/kL1JZNftZ01Tx+bLIO9kTjmkx4EgIe2ct4QPoiMAL2q4ndY6ZfAciMTFNiV
+         fCrKANdrvfJMfUsN7/goen9Up1yU4tzHJNS6yBLEkryer/dHK8PVM88da0ikn0z77M2S
+         9VPm+oPa/7JUvo4AKxRivTVZg+R3E6twBWgncAdEDaP7Gx7yKa5+jStuUap5nGlk2PyR
+         Qijub9R+cf9Fdz0pOx9yDYu2P966MrFT5zO+lxxCt7cL0qcEVg2UjFrEO2SNGbXXv00H
+         UPAWo53+Xy/ajFjhViQ9l2PPAtU7xW4U1Sfpz5OP/0ifA0YTDguzFhjdm0y0F0f1/lkJ
+         8ngA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=jIP0h6LwYCqDZyxnE7Oyk6zMJE+tp3zLi07VKud6KbQ=;
-        b=p0bZ7Owro6p+tbM54D+eYjGqJNCTsI/4C7ctIxBA6ajhzBmGxX8UBXSzmIeKOSicPY
-         AF6XUENg2bsXqfTmJTotw1Bl3h+tq1VW3ONBzgH4q1xHCDa75R5XpXt0kkiv9kL0fsP5
-         JM/Cmic1YMoFDEErUlSWI0F6EZryze1qFTbZ9AChUzx3l67nlkT8hSjULWDgZM8utIA5
-         Kti0f7TbDgaiUKs1pWkOe5EIyPYkdQBq4PuYm9IjYZS8BV6sB8wU4namapp957DHxlsL
-         8AN0g5/ElMB4bG54TlAvD4KnCnDLdq/x5W63Zy0UrnPSkW8CN4pgdLXy9lXcFNgJD/g1
-         atMg==
-X-Gm-Message-State: APzg51C+nVnt4W5MlDuli02GrQHmKb/mymsSlFDne0DIUQayCt8ATQoL
-        iM9q5Ke2YBoyZ8bqrPAAVvp21Pnf0a0UmI8GwQg=
-X-Google-Smtp-Source: ANB0VdZQcO01v5hKsRVCWQ0W6YpxFXO2LlWHau6vnKgvtraf1y+TDExZnyqk98zrvpCqr+4/wabeMlpy7Ly9pie73jQ=
-X-Received: by 2002:ab0:5507:: with SMTP id t7-v6mr1412533uaa.100.1535470516064;
- Tue, 28 Aug 2018 08:35:16 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=NetsV5bl7ZCtl3MShB8GfCDU6w92Nyp3Oj53nm+58C8=;
+        b=DI4i2S/zfB1mA5ZVFOd3U/+ZCG8+MDIDm1SOAqGwNkauB8OUVJS7lt8xckym1k1pe+
+         xLa8FnLlMq65ZRHiSRb7RqHNSgK/0r3OY1IldDg8xHCgAlt0PlgqElP3dkkl+6CTKCDg
+         8tu7ilOviBgWVdJZ7DZY5ITu3Nd5fbIjZYuCpc5+bADrGGlLyfK8C+R6QexBHNYuvzF0
+         ZpFWrdgHVegdRb1YU/RfgDxswLeTCimrLOjP2oHVj5iRi1dPgvuj2PQYXzKkcE0DX8bA
+         Vwarjz9gS1yP2Gp7KMu2C/CPqBbx2aHl8aGSsCsO7dxEVZiE7r0Ztu/+40C8K19gafda
+         y39A==
+X-Gm-Message-State: APzg51A3Ge1VbObr1UbEZrqH9QRG/yQPpYqVn6v2h+Z8it2cIKrKFOn9
+        HKq7jIlzaCCttf4siyK6mZg=
+X-Google-Smtp-Source: ANB0VdYNOUtknHZ2Yr/vKPE2faw3gmdBwQLc/Q6SE5R9CA8bHdedgH/vzuJWTDATwtrFIVmPSllxew==
+X-Received: by 2002:adf:b357:: with SMTP id k23-v6mr1623404wrd.207.1535471143546;
+        Tue, 28 Aug 2018 08:45:43 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r13-v6sm2767181wmf.34.2018.08.28.08.45.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 08:45:42 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Edward Thomson <ethomson@edwardthomson.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: Questions about the hash function transition
+References: <878t4xfaes.fsf@evledraar.gmail.com>
+        <87h8jeeh2e.fsf@evledraar.gmail.com>
+        <CA+WKDT1k1SpHQmUKunV+vC+VLBfTBjZBgw+n4NeTE=oKxWL-Sg@mail.gmail.com>
+Date:   Tue, 28 Aug 2018 08:45:42 -0700
+In-Reply-To: <CA+WKDT1k1SpHQmUKunV+vC+VLBfTBjZBgw+n4NeTE=oKxWL-Sg@mail.gmail.com>
+        (Edward Thomson's message of "Tue, 28 Aug 2018 15:15:35 +0100")
+Message-ID: <xmqqzhx6h4ux.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <679370A8-E477-450D-96E5-6B1869D27576@gmail.com>
- <87in3ueiks.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 28 Aug 2018 08:35:03 -0700
-Message-ID: <CABPp-BENB=mqfFU4FGb2OS9VDV=9VdT71HhFLZwtyxD8MpdTMQ@mail.gmail.com>
-Subject: Re: A rebase regression in Git 2.18.0
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        corrmage@gmail.com, Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 28, 2018 at 6:33 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 28 Aug 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > On Tue, Aug 28 2018, Nikolay Kasyanov wrote:
-> >
-> > > I=E2=80=99ve found something that may be a regression in git rebase i=
-mplementation in 2.18.0.
-> > > First I spotted it on macOS but I can also confirm it happening on Li=
-nux.
-> > > Git 2.19.0.rc0.48.gb9dfa238d is affected too.
-> > >
-> > > In order to trigger it, a repo layout similar to the following is req=
-uired:
-> > >
-> > > files/
-> > >     file1
-> > >     file2
-> > >     file3
-> > >     file4
-> > >     file5
-> > > project
-> > >
-> > > Let=E2=80=99s call this state baseline. Then, in a branch, let=E2=80=
-=99s edit project file and move file3 to nested/files subdirectory, here=E2=
-=80=99s the final layout:
-> > >
-> > > files/
-> > >     file1
-> > >     file2
-> > >     file4
-> > >     file5
-> > > nested/
-> > >     files/
-> > >             file3
-> > > project
-> > >
-> > > Let=E2=80=99s get back to master and also edit project file to cause =
-a conflict. After that trying to rebase the branch upon master will cause t=
-he following git status output:
-> > >
-> > > rebase in progress; onto baf8d2a
-> > > You are currently rebasing branch 'branch' on 'baf8d2a'.
-> > >   (fix conflicts and then run "git rebase --continue")
-> > >   (use "git rebase --skip" to skip this patch)
-> > >   (use "git rebase --abort" to check out the original branch)
-> > >
-> > > Changes to be committed:
-> > >   (use "git reset HEAD <file>..." to unstage)
-> > >
-> > >     renamed:    files/file1 -> nested/files/file1
-> > >     renamed:    files/file2 -> nested/files/file2
-> > >     renamed:    files/file3 -> nested/files/file3
-> > >     renamed:    files/file4 -> nested/files/file4
-> > >     renamed:    files/file5 -> nested/files/file5
-> > >
-> > > Unmerged paths:
-> > >   (use "git reset HEAD <file>..." to unstage)
-> > >   (use "git add <file>..." to mark resolution)
-> > >
-> > >     both modified:   project
-...
-> > >
-> > > Here=E2=80=99s a ready-to-use repository: https://github.com/nikolayk=
-asyanov/git-rebase-bug.
-> >
-> > Thanks for the test case. This bisects down to 9c0743fe1e
-> > ("merge-recursive: apply necessary modifications for directory renames"=
-,
-> > 2018-04-19) first released as part of 2.18.0.
-> >
-> > I have not dug to see if the behavior change is desired or not, that
-> > commit changed the results of a bunch of test cases, maybe it was
-> > intended. Elijah?
+Edward Thomson <ethomson@edwardthomson.com> writes:
+
+> If I'm understanding you correctly, then on the libgit2 side, I'm very much
+> opposed to this proposal.  We never execute commands, nor do I want to start
+> thinking that we can do so arbitrarily.  We run in environments where that's
+> a non-starter
 >
-> I think this was already mentioned before, in a different mail thread:
-> have you tried whether `git rebase -m` fixes that behavior?
+> At present, in libgit2, users can provide their own mechanism for running
+> clean/smudge filters.  But hash transformation / compatibility is going to
+> be a crucial compatibility component.  So this is not something that we
+> could simply opt out of or require users to implement themselves.
 
-I'm not aware of a previous mention, but yes, using a rebase type
-other than the default am one (either -m or -i) will fix this.  (I did
-previously bring up that am-based rebase would fail to detect
-directory renames, due to not even calling in to the recursive merge
-machinery in many cases[1].  But this is an example of am-based rebase
-doing the opposite -- detecting a directory rename where there is
-none, which had never occurred to me until seeing this report.)
+While I suspect the "apparent flexibility" does not equal to "we
+must be able to run arbitrary external programs" in the proposal, I
+do agree that hash transformation MUST NOT be configurable like
+this.  We do not want to add random source of incompatible mappings
+when there is no need to introduce confusion.
 
+If old object names under old hash users find in log messages and
+other places need to be easily looked up in a repository that has
+been converted, then:
 
-I'm pretty sure this is a bad interaction between the
-build_fake_ancestor() stuff and directory rename detection.  You see,
-you *think* the following three commits are being merged:
+ (1) get_sha1() equivalent in the new world should learn to fall
+     back to use old hash when there is no object with that name
+     under new hash;
 
-Base: files/{file1,file2,file3,file4,file5}, project_v1
-branch: files/{file1,file2,file4,file5}, nested/files/file3, project_v2
-master: files/{file1,file2,file3,file4,file5}, project_v3
+ (2) in addition to the above fallback, there should be a syntax to
+     explicitly tell that function that it is using the old hash;
 
-But the default rebase (via builtin/am) does NOT do that.  It instead
-merges the following trees:
+ (3) get_commit_buffer() should learn to optionally allow converting
+     old hash in log messages to new ones, in a way similar to how
+     textconv filter can be specified by the end-users to make
+     binary blob easier to grok by text-based tools (the important
+     part is that such a filter does not have to be limited to
+     "upgrade hash algorithm"---it can be more general "correct
+     misspelt words automatically" filter).
 
-Base: files/file3, project_v1
-branch: nested/files/file3, project_v2
-master: files/{file1,file2,file3,file4,file5}, project_v3
-
-
-To the recursive machinery, that looks an awful lot like "branch"
-renamed files/ -> nested/files/, and that master just added a bunch of
-paths (file[1245]) into the files/ directory.  From this view, what
-merge-recursive did was correct, it's just that rebase/am fed it
-information that doesn't quite match what should really be merged.
-
-Possible fixes:
-  - Change builtin/am.c:fall_back_threeway() to use actual commit
-trees when available instead of building fake minimal ones.  (One of
-the problems with am, is that the "base" commit may not exist in the
-current repo, so there's an issue here with threading information from
-rebase down to am.)
-  - Add a flag to turn off directory rename detection, and set the
-flag for every call from am.c in order to avoid problems like this.
-
-The first option might be a bit nicer for the end-user, but would only
-help when am is called from rebase; when running `git am` directly,
-things would get pretty messy.  So we might need the second option
-anyway.  Since we're in -rc for 2.19, we should probably just go for
-the second option.  I'll try to put together some patches this
-evening.
-
-
-[1] https://public-inbox.org/git/20180607171344.23331-4-newren@gmail.com/
+With 1+2, you can say "git log $sha1" and also "git log sha1:$sha1"
+to disambiguate.  3 would be icing on the cake.
