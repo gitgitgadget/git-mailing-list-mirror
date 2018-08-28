@@ -2,95 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00EAA1F428
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:44:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED281F428
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727094AbeH1XiF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:38:05 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:47141 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727072AbeH1XiF (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 28 Aug 2018 19:38:05 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 8B70520F12;
-        Tue, 28 Aug 2018 15:44:55 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 28 Aug 2018 15:44:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm3; bh=r9H8dqI1djqgsoB/Jg6zG6JhyMr9t
-        shnBjKSLcyHUgw=; b=B3MNcWo6DSWlEDyaWHiUo1/WR9P8pDDhP8HkoRwHD9q6k
-        kPHz1T26aK9ps3Jq6kJcCURiqCjpvI+Vmz7R/QttxzEgoguMl9ANdQ3aKZ5UXaUP
-        J92IZ2gHJCeooceVlKOezH563ZBCuquJLO3UC5OlsnQ31upXXbMkY3AlfaIVIGej
-        skhC6XNsnp8YxLMi36fdloZo9pgPl93p5JIO4t6PHI99jsxXCRcikrGvcsPYZGtr
-        grCTPCqjrln6RzHYEbcgIT6HmS8mW+vk1L+CSEhvBsU0CgCu2mq95SlFiv6gBzjt
-        Dl0idwxVh9qHJ7/Nuqc7HsTrOrUBkfoK5cyIT5DGw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=r9H8dq
-        I1djqgsoB/Jg6zG6JhyMr9tshnBjKSLcyHUgw=; b=wLZF7TM8KbBykgPGrIS9eQ
-        L0gBde3pGmhQYl6NF2J5pAwh5hzGjABggI9mzksoy/YwozixcIkKMd4rFqVW5zV4
-        TdJiXoI97VjAf+fGjJg988QAsQnKMuzySpE1Qr+FArCE1PaFqoO7f5iET74CE1Ms
-        z30WufMtDvo9CBM+c9zziPYW4XCwxkFMKkZTrDfasl1gOxebK1AsKnSMftAX2l/g
-        j7yh0nu94NknOCRceBmDMsjqV6Wp9WtEDNiGg6JphVb4f/lJEzljQQcnKwCTaQZS
-        1INt3GUao4BDcmmUKfG2ypGGTiKNy5uOKRKhcLW2yirBfe/7Ax7e/f2JhK0k8AIA
-        ==
-X-ME-Proxy: <xmx:N6aFWyOyO99x--wnYiXEcj03Nm1gTn8ImeOc0X1HOpjt7THdXwNJkA>
-    <xmx:N6aFW24jZ09WwFmxlqIBe0l2lP0P2ks9fMd6fzqKY5DR7YJjKih8jQ>
-    <xmx:N6aFW26ix7XH3f_CWFLaiuR710sykphOKNhjrgzs2FhcCpQxipkbEw>
-    <xmx:N6aFWxg37Z5-D401qJXULCCLFmszWL2VYfjtoBqh1W1m2WRWAuGDnA>
-    <xmx:N6aFW7BrIxqm-uyAHsJnwC9oXTfoICUWMNIuRcy8bIa3-1F-q9zlsA>
-    <xmx:N6aFWy8xFHRXLkW83E6EXstRcsGGS_foacTmHWXdQHicbM3uYxvPNw>
-X-ME-Sender: <xms:N6aFW-VvvAYttVmHX9ndwk0s_-HnlxIS5rrQMKJIwVT7pRHr3wsVnA>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id B0728E4686;
-        Tue, 28 Aug 2018 15:44:54 -0400 (EDT)
-Subject: Re: GIT_TRACE doesn't show content filter files it's operating on
-From:   Stas Bekman <stas@stason.org>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <3fdc0c24-bbee-e7b3-ec43-7e926cee71e1@stason.org>
- <20180827235321.GB11663@sigill.intra.peff.net>
- <28045b26-4822-b00c-30f3-1076d2e49d1f@stason.org>
- <20180828005810.GA18659@sigill.intra.peff.net>
- <9fc6cdcf-2e72-8eb1-9bcd-f513babd9c6f@stason.org>
-Organization: Hope, Humanized
-Message-ID: <a3a1e935-8eb7-0894-4474-74f79dade11e@stason.org>
-Date:   Tue, 28 Aug 2018 12:44:52 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727176AbeH1Xlb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:41:31 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41374 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726807AbeH1Xlb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:41:31 -0400
+Received: by mail-wr1-f65.google.com with SMTP id z96-v6so2644153wrb.8
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:48:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Na/XLfuhAaSs1UvF0Oo9Uqrcg8KmeGATeDA40zIhSnk=;
+        b=qaPGotP7iaX9fQkPLFqQ1Wf3XjUikQJ9RUF02IND7SMTl3Yl6I1JRqZdyz3tJAj2XQ
+         K5cjrwhknt1xNnfmkB2UzF6tbPT+mVy8hBEvWpdkIy7ZXXsyzm4i+e2C1l4VZTFy1Llb
+         yYqBKSh8uEyQVwiG3GmF9FQUAVHaJZQaP7qA8i1MjW+3XV1FXuUdEUZ8UHFGLDTNnQvs
+         uwN5zowr1BH47IQ8QX1PwynZkJcsP2quDG42fNmfKMWyoFTRr/dMsUQ1U7LX84KRq1uY
+         Vp7YGrAnHtP2g1uKeT/bbNxbS1Mvlt02R8++yF65yKYzYSLUnr8HC5NxU3anhwzMUlvi
+         LRww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Na/XLfuhAaSs1UvF0Oo9Uqrcg8KmeGATeDA40zIhSnk=;
+        b=FnUUQfI58EeB8/6jGDmw1/x1KvrpEgdlpX30Y1xN8SCSeExtAbj3hTLJhLHuWYj4i+
+         ugNmgr/rh9BOiPKBEth+vHCiKMMvhUIdBde0ZR5Rf0eLB4wS3B3VcjWh17P9ZDcLwglC
+         rxkPMCam/ooHasi4nV5B3y/Y31dlfTEseuAjLmefm3y3RRRZezF7SOLP/PscJ9sMDL9e
+         kIZ4MOhtoIT8X6gKlk9W0CmG0ZxpciZ9UvpgBjWf8woK37DIS9JIBTOokDDuZdW+Vo+j
+         jJJtsqn4v2eR7auLfRoZZiyKH9i6qJceJ808o18OPxhkorhNQwpd36inTFNgEfOmR7Nj
+         fvOQ==
+X-Gm-Message-State: APzg51BlNauNLIHciSGEGM96EDkP7JmqvnqVXIiGmExe8ufkTGHQ3BSl
+        q8iAs5oySeEfHDsFhxA8+Zk=
+X-Google-Smtp-Source: ANB0VdaHy1CMlC4xuAqpLn5y/ptj3QRn3FRhlHJYRMIBrX4tvYxstug8Pk7mINH62XsHuMgZnQ36nA==
+X-Received: by 2002:adf:9227:: with SMTP id 36-v6mr2195291wrj.275.1535485699871;
+        Tue, 28 Aug 2018 12:48:19 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l18-v6sm2883058wru.75.2018.08.28.12.48.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 28 Aug 2018 12:48:19 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Ann T Ropea <bedhanger@gmx.de>
+Subject: Re: [PATCH 1/2] tests: fix non-portable "${var:-"str"}" construct
+References: <20180828193827.8648-1-avarab@gmail.com>
+        <20180828193827.8648-2-avarab@gmail.com>
+Date:   Tue, 28 Aug 2018 12:48:19 -0700
+In-Reply-To: <20180828193827.8648-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 28 Aug 2018 19:38:26 +0000")
+Message-ID: <xmqqlg8qff24.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <9fc6cdcf-2e72-8eb1-9bcd-f513babd9c6f@stason.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-08-27 06:13 PM, Stas Bekman wrote:
-[...]
-> I now know how get the filenames for "clean/smudge" filters. Can you
-> please help with the same for "textconv". %f doesn't work - it gets
-> stuck there waiting for stdin, the following seems to pass, but I'm not
-> sure it's correct:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-On a closer look this is not needed for "textconv" as it already logs
-the filename in the GIT_TRACE=1 trace.
+> On both AIX 7200-00-01-1543 and FreeBSD 11.2-RELEASE-p2 the
+> "${var:-"str"}" syntax means something different than what it does
+> under the bash or dash shells.
+>
+> Both will consider the start of the new unescaped quotes to be a new
+> argument to test_expect_success, resulting in the following error:
+>
+>     error: bug in the test script: 'git diff-tree initial # magic
+>     is (not' does not look like a prereq
+>
+> Fix this by removing the redundant quotes. There's no need for them,
+> and the resulting code works under all the aforementioned shells.
 
-I have no more remaining questions, Thank you for your help, Jeff.
+Yup, there is no need for that inner dq pair in this particular case.
 
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+I was more worried about scripted Porcelains, like 
+
+   : "${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}"
+
+which I think can safely lose the outer dq pair.  In t/ directory,
+there is this one in test-lib-functions.sh which I do not offhand
+know how these problematic shells would handle.
+
+	echo "#!${2-"$SHELL_PATH"}" &&
+
+Other than the presence of these two that are not covered by this
+patch, the patch itself looks good.  Thanks.
+
+> fixes a regression in c2f1d3989 ("t4013: test new output from diff
+> --abbrev --raw", 2017-12-03) first released with Git v2.16.0.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t4013-diff-various.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index f8d853595b..73f7038253 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -140,7 +140,7 @@ do
+>  	expect="$TEST_DIRECTORY/t4013/diff.$test"
+>  	actual="$pfx-diff.$test"
+>  
+> -	test_expect_success "git $cmd # magic is ${magic:-"(not used)"}" '
+> +	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
+>  		{
+>  			echo "$ git $cmd"
+>  			case "$magic" in
