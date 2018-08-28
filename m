@@ -2,143 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07A661F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 14:29:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 372A61F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 14:52:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728021AbeH1SVS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 14:21:18 -0400
-Received: from mout.web.de ([212.227.17.12]:48759 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726120AbeH1SVS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 14:21:18 -0400
-Received: from [192.168.178.36] ([91.20.48.192]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M7KR8-1fgxea43SY-00x2ds; Tue, 28
- Aug 2018 16:29:11 +0200
-Subject: Re: [PATCH v3 6/7] fsck: use oidset for skiplist
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-References: <20180827194323.17055-1-avarab@gmail.com>
- <20180827194323.17055-7-avarab@gmail.com>
- <87lg8refcr.fsf@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <c356f239-f3f4-242b-fb75-95a4ccbe374b@web.de>
-Date:   Tue, 28 Aug 2018 16:29:09 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727579AbeH1Sow (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 14:44:52 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:40527 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727176AbeH1Sow (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 14:44:52 -0400
+Received: by mail-qt0-f169.google.com with SMTP id h4-v6so1990249qtj.7
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 07:52:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=uJ5PbtnoTYXZ8+1LyamO0vIfe3RU6g30IA7ti7Ktd2Q=;
+        b=gOnf0AXYfTetKTv32wTju9gEFv7YagvSNbjENFVq8oX4BnNeS77ZsmRCo0WyFI52Qk
+         lXS0vh4nwH3NA28V9mXRWE83Z1UxR0C1tylsn1QOruolIgR2CDr9wuQK+HykgfvMZFDO
+         WL515Jo6e5Fe16aRIcRL0aL19qsDX7v/4PNYGHjZjQiHaCtKY+rJn4tGhTUnDMckRZmN
+         Ru07fxFrrfIZa9pUSTrsWBvkozrhJKJr7D8wfH/MhPjJbPoB3y2zm5vQqwLfD82944nv
+         aQoUkok4/nl1GDK45cGXD+OFJHOzmaVPbeLVI68mPc02LVSror+d0Y9wq/tu9E633Upw
+         BTfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=uJ5PbtnoTYXZ8+1LyamO0vIfe3RU6g30IA7ti7Ktd2Q=;
+        b=WBG65n+TYgc4jIlvfGK7ZQmoVXWSyK/wc6ZUtKA1OASpCO+ei/m21dNh7WCt/DMw0c
+         6PEaEetBoD9PccH0BOengp+T96N093CIZgBkdJ9hrm1cRzvHPKl+hbf+IrrSGwuOVw1V
+         eVXDn48NARkT12R1Qwj4uwQtgGCvbV7AyWMIpSz+HDhuKM8X00HqzTwcJXFYRgOR0hqT
+         e5p9olHo/8Uk9k7l9ZxtPxu7trKkEHhXGgtXeZsxL4xamveUes+WI+rAlBnrDWk9vXgL
+         geQ7JIAvXiILkOKF0qZc0oyeZqMLLimkbFQqCwygTqhXy687yWsoc7KV9vn9wC3ZskBY
+         oS2Q==
+X-Gm-Message-State: APzg51AvIgQWKdPyp85ZYlZgxRKBuvJ2nFKQZzGpPLgLpp4gFhxcNbRA
+        tRmUcIm00O9yAaKWRONjxo0=
+X-Google-Smtp-Source: ANB0VdYXtpIVI2pO2uMo0pfTA44V7zk3kmxi37+IAc4YDDHlPs/QwBkWkAxlAAXHeVX+UPD8S9bcdg==
+X-Received: by 2002:a0c:ae15:: with SMTP id y21-v6mr1874958qvc.233.1535467969456;
+        Tue, 28 Aug 2018 07:52:49 -0700 (PDT)
+Received: from [192.168.1.142] (70-33-148-226.unassigned.ntelos.net. [70.33.148.226])
+        by smtp.gmail.com with ESMTPSA id a185-v6sm690794qkg.57.2018.08.28.07.52.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Aug 2018 07:52:48 -0700 (PDT)
+Subject: Re: [PATCH v1] read-cache: speed up index load through
+ parallelization
+To:     Duy Nguyen <pclouds@gmail.com>, Stefan Beller <sbeller@google.com>
+Cc:     Ben Peart <Ben.Peart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <CAGZ79kbXfPPvcQ1rnUdiOqWs5wC2qccGCnf8DvCVnp8QV126MA@mail.gmail.com>
+ <CACsJy8Cnxz0w0g53Gb=_iXEdbSUFgssTozfxea0H52mWJ-RmTg@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <00c3b1de-4fcf-ba03-0f8d-9ea2540ba657@gmail.com>
+Date:   Tue, 28 Aug 2018 10:53:34 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <87lg8refcr.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <CACsJy8Cnxz0w0g53Gb=_iXEdbSUFgssTozfxea0H52mWJ-RmTg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:SEjBKOfq/AVpSqgCArqE22qTGs6BZOVtcjpRBf0q5QRq0h/fXEO
- H6oXwzi77HEhzGHHqMTmp5zq53+LqfX5bH44cLc/8rFEAo2SVc1RBIZm2xUzG0pDGzMQPYw
- xVw9qwLmkTARmCy5HNbmQ1i36LMQQzw8bKbxxKl71wBqS75UgdEzg3pUnWUA7MyGi1hhrTt
- jEO/HaYK+L4llYZozqG7w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:F961b1GFFeE=:M2BCCgEUSYHQsJtlJrK9f8
- SEsLIW/w5FfKyLM4a7fEet94VkbWwx++FhfKj7lJLYvdFSAULLYayG3nzbD5sIJSY2Qzyj64p
- MKWmZtK3hHWjqjln6XjAChsopY/Z3lBm9MDxJMTBDkr1AMyuPwWEcodqdKzp0dKtXfQsO5WTr
- jbXzDgtfcRKpf0Ol/D5qRWyDFD5TrvO388WUZDgEb9mrQEfEJSmC0PFRmEBNg6y4ZDhhS3TSP
- vLOkdyDA/soIKfvS3l+amEsZauQdB4f/Lq4Weql19ktJjU5BTBdLOVPnS+EmoM6qy364293bD
- TVGJXEPkBHOqqDiLN9R8R7NT47S+ivQ57QC5F7Fa82NlchKsnqLJSAqWadY1StfQ4AxHfL7fh
- f0nLq0vcfV805tUsgZ87wDCgaVbqcAnQ3pGcpoowDc/TkBPABGwQjuGCTboYDlxflDF3OsF3E
- fbjGw9MPiYE5sXoHrRemFldb125t2+7DQUrd/ri7VHxeRjrU2zlOOrP1cJHRgEy28adUQwgzn
- q5o11lfBGkApxBJ561qGrlsrJsYCju3b4IIaXVPGVGjsxDnhpBWsWZvBYC50bgIyM7rK/5yAa
- vJjGysBkcyUYpUy5OJqEQk5Hm7e936wveLBxgAsHX34H+Af8Eyk3mVRU36mvw5uKZPEvRkF1W
- WQD/c/OMNmHlXgjrf/3dYEHS5zQniJ3aFOWlF8T+LeGT0dGBuKRdCu6+iNmb8tB6hHA9+6ghp
- Xps+jzGKSiLHFnS687ElMSKvYiit2ULaYUJjMKn6ruGL+2TceIEGLLNVCWbpke8znK1JHiVoP
- z4rDSTZ
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.08.2018 um 22:15 schrieb Ævar Arnfjörð Bjarmason:
-> 
-> On Mon, Aug 27 2018, Ævar Arnfjörð Bjarmason wrote:
-> 
->> From: René Scharfe <l.s.r@web.de>
->>
->> Object IDs to skip are stored in a shared static oid_array.  Lookups do
->> a binary search on the sorted array.  The code checks if the object IDs
->> are already in the correct order while loading and skips sorting in that
->> case.  Lookups are done before reporting a (non-fatal) corruption and
->> before checking .gitmodules files.
->>
->> Simplify the code by using an oidset instead.  Memory usage is a bit
->> higher, but we don't need to worry about any sort order anymore.  Embed
->> the oidset into struct fsck_options to make its ownership clear (no
->> hidden sharing) and avoid unnecessary pointer indirection.
->>
->> Performance on repositories with a low number of reported issues and
->> .gitmodules files (i.e. the usual case) won't be affected much.  The
->> oidset should be a bit quicker with higher numbers of bad objects in
->> the skipList.
-> 
-> I didn't change this commit message at all, but FWIW this still has me
-> somewhat confused. What is the interaction with .gitmodules being
-> described here? You also mentioned it in
-> https://public-inbox.org/git/113aa2d7-6f66-8d03-dda4-7337cda9b2df@web.de/
-> (but I don't get that either)
 
-The skipList is consulted before checking .gitmodules blobs, since
-fb16287719 (fsck: check skiplist for object in fsck_blob()).
 
-> Does that just mean that when cloning with --recursive with
-> transfer.fsckObjects=true we'll re-read the file for each "clone"
-> invocation, both for the main project and everything listed in
-> .gitmodules?
+On 8/24/2018 2:40 PM, Duy Nguyen wrote:
+> On Thu, Aug 23, 2018 at 7:33 PM Stefan Beller <sbeller@google.com> wrote:
+>>> +core.fastIndex::
+>>> +       Enable parallel index loading
+>>> ++
+>>> +This can speed up operations like 'git diff' and 'git status' especially
+>>> +when the index is very large.  When enabled, Git will do the index
+>>> +loading from the on disk format to the in-memory format in parallel.
+>>> +Defaults to true.
+>> "fast" is a non-descriptive word as we try to be fast in any operation?
+>> Maybe core.parallelIndexReading as that just describes what it
+>> turns on/off, without second guessing its effects?
+> Another option is index.threads (the "index" section currently only
+> has one item, index.version). The value could be the same as
+> grep.threads or pack.threads.
+>
+> (and if you're thinking about parallelizing write as well but it
+> should be tuned differently, then perhaps index.readThreads, but I
+> don't think we need to go that far)
 
-That is probably true, but I didn't mean that.  I was only talking
-about when an object is looked up in the skiplist (oid_array/oidset).
-
-> If so, I think something like this commit message would be clearer:
-> 
->     fsck: use oidset instead of oid_array for skipList
-> 
->     Change the implementation of the skipList feature to use oidset
->     instead of oid_array to store SHA-1s for later lookup.
-> 
->     This list is parsed once on startup by fsck, fetch-pack or
->     receive-pack depending on the *.skipList config in use, so for fetch
->     it's currently re-parsed for each submodule fetch.
-
-OK; the patch doesn't change that, though.  Mentioning it sound like
-a good idea if the load takes a significant amount of time -- I
-didn't measure this separately, so perhaps this needs to be explored
-further if people use big skipLists.
-
->     Memory usage is a bit higher, but we don't need to keep track of the
->     sort order anymore. Embed the oidset into struct fsck_options to
->     make its ownership clear (no hidden sharing) and avoid unnecessary
->     pointer indirection.
-> 
-> Then let's just attach the test program you wrote in
-> https://public-inbox.org/git/113aa2d7-6f66-8d03-dda4-7337cda9b2df@web.de/
-> and note the results and let them speak for themselves.
-
-I was surprised that such a big repo can be mocked up relatively
-quickly, but the numbers are a bit underwhelming -- there is not a
-lot of change.  The script is not too expensive, so I don't mind
-adding it.
-
-> I can do all that if that seems fine to you. I also notice that the test
-> case only sets up a case where all the items on the skip list are bad
-> commits in the repo, it would be interesting to test with a few needles
-> in a large haystack (I can modify it to do that...).
-
-I tried something like this first, and its results are even more
-boring.  Since skipList lookups are done only for bad objects (and
-.gitmodules) you won't see  any difference at all.  Having only bad
-objects is the edge case, this test being designed to highlight the
-performance of the skipList implementation.
-
-René
+I like that.  I'll switch to index.threads and make 'true' or '0' mean 
+"automatically determine the number of threads to use" similar to 
+pack.threads.
