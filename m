@@ -7,63 +7,68 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BAC81F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:32:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4DC1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727264AbeH2B0W (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:26:22 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:34908 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727144AbeH2B0W (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:26:22 -0400
-Received: by mail-qk0-f195.google.com with SMTP id 89-v6so2054677qkp.2
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:32:49 -0700 (PDT)
+        id S1727309AbeH2B1P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:27:15 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:37512 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727144AbeH2B1P (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:27:15 -0400
+Received: by mail-qt0-f195.google.com with SMTP id n6-v6so3510214qtl.4
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=GlBvYX0rAl8SoR/W1a1NucVqCLoYqeKCmqrtdQmIFjA=;
-        b=Z6WyAHfXkkOfZXvBYGcd4lY4PII5MVeEcxdHTi+xgx4TF5RvTSp2PejTiRvJBLzuR1
-         bhuhWelrBS3EP+W7Va6bkjaKQcYoada7l9f9p1kw/8EoTcfKfAoQhUBid0CiKmQc5nvf
-         6dS4eM8bFYe5O8oQtIsgKEGd/BT7y2fSElpleEA6b0ql0lu04UeMX4zQ3Ij+jykWcThW
-         BCGroEXOS2fNvcx2WtO4tRT6VdKAmog0+RCIvZ3fs9E955pe5hOKivQjVzXoasjilHfj
-         FYfFFlu+kp9PLaM+XN0yk0KRH6bBorK1iurjA1kM4EnyHfxXz88hQmggo4Truq7oZedS
-         V7Iw==
+        bh=zc+btNKIilm8IIE+xShBjLXXHsmRCRxrYO2SlufJuPE=;
+        b=ebV3p2hJB1tagVtjX7c+n078n/LOMUIgV+Sm0u1hnao3Al7rMDf5Z6BAQCE83mqcAn
+         7h65/1aL2E4ovRGMAJS1hQaS2Nd9OAeZ/JRKGTECUG8ZdFjL+ZEeC0kI/VMfpiZXLfH7
+         +aCKaC2V9ksHTGMeaFxiJBX3Bf+mmBShbfwBfgoia3v5dl6Eq7nkPRlaC3/Xje9EsKyI
+         iF8gD9B/xDoGS0I2Ly02OXFp0xzBbVqPglHhW+xJJHj2qqUNkqPgrByO2dUnndRiQuiV
+         AFDEW3AvCsl3jomU2jQErAoV8XjDfZffBda2NcQ0n53wSZ9n8e/FxFlq5/z0tUsllnGu
+         SrDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=GlBvYX0rAl8SoR/W1a1NucVqCLoYqeKCmqrtdQmIFjA=;
-        b=pYiz7k5dLChc4ekEfrY1DE2/aKo5bmyB2OOdiPbZ7Q6uLoDiKeM3BxnvzD39JuzDsM
-         ymt0Oo8kTzy4rv9t7qX8WWHLPKZTAG+XlCBK2zMI5vHDBoOScof3vlVpJYwIqPfSHlXp
-         yx2JlhZCzv//4c8AbFc5rJFVjZq9A6BogV3aHFPxlTOZ83iJ9zMeZC0wLuOto2L78ZV4
-         U9gpxmZgz3piyyaGEmZRt/HpgO9mcF7TpFYAXBeXr3XtKJ25qIb65bPAXpNeaCZbkRzg
-         IVCDQPYCioxVwZRQB5P2q7kCDrgT9xn6UMVB/sSJOEpl7BiveZkA94eqjgRqc5Sr+Lsk
-         G1uQ==
-X-Gm-Message-State: APzg51B6BHyOKwcqJHBessar6jDHP8GwVuvM6oQsd5n5gDgUlaVMAKwS
-        T/LwvnFf0ygoKm2IDGVuLNg=
-X-Google-Smtp-Source: ANB0Vda5VFkT/IL8GAN7/WLflozleHYdjhHeZZW/a6VpMCcjutwLkVwgIi6HzWZx6Npy9ETejDlTIQ==
-X-Received: by 2002:a37:7607:: with SMTP id r7-v6mr3639468qkc.133.1535491968706;
-        Tue, 28 Aug 2018 14:32:48 -0700 (PDT)
+        bh=zc+btNKIilm8IIE+xShBjLXXHsmRCRxrYO2SlufJuPE=;
+        b=dpyH3LNETV2Y2tf6fj00Mnl4dLrT58PX8h+bel9hEEiIRecB1eUnl+jllY0wtu/uRN
+         VtOh+aeMMy25oqwqIeDL6YgPD1mygX0qGCSvjGUJvomgzYzozxrI6r5lr8Qgvi6iJFM+
+         P62xudF6aN71mUurMEZiftD5yVk8nFpmuN3HH4/+7BI/VKPW+UK+SHTzdR07K+gPO/8n
+         PieWtX1cCaAqNwOnhrEEnVR76XOYfvJo6BpYOK2/VA1nq1izEYVReHVID1ztCTKBN49X
+         Lko+0zAAAguLG43WkLhjIR+BthtFzq0GFvb9G2uex5J6lRHTxu3Zy3/ZOyfZfdx0Zv+8
+         BT3w==
+X-Gm-Message-State: APzg51DvOJfStxVS0D8u/2xNuDSGGeBgpBp2YG3+xKl+ajCPnn3H3r8E
+        9e/2ECWUh4oXhBSumXW0MIw=
+X-Google-Smtp-Source: ANB0VdYg2NOlGKyIsNkAZPeh3iNC112s4+OQZ4bMfmzDUfNH4+/cvXfPVqN23+qepGLK+Tdjm5dADA==
+X-Received: by 2002:aed:2ce1:: with SMTP id g88-v6mr3819567qtd.285.1535492021382;
+        Tue, 28 Aug 2018 14:33:41 -0700 (PDT)
 Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id r10-v6sm1368971qtj.41.2018.08.28.14.32.44
+        by smtp.gmail.com with ESMTPSA id k15-v6sm1489252qtf.95.2018.08.28.14.33.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 14:32:48 -0700 (PDT)
-Subject: Re: [PATCH 0/1] Define GIT_TEST_COMMIT_GRAPH for commit-graph test
- coverage
-To:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-References: <pull.26.git.gitgitgadget@gmail.com>
- <CAGZ79kZ=jsCmxKdcPB+Q1__uO8Z2tXx6OkdyTSM8P3QdNGpKQA@mail.gmail.com>
+        Tue, 28 Aug 2018 14:33:40 -0700 (PDT)
+Subject: Re: [PATCH v2 04/18] commit-reach: move commit_contains from
+ ref-filter
+To:     Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "sbeller@google.com" <sbeller@google.com>,
+        "jonathantanmy@google.com" <jonathantanmy@google.com>,
+        "gitster@pobox.com" <gitster@pobox.com>
+References: <pull.10.git.gitgitgadget@gmail.com>
+ <20180720163227.105950-1-dstolee@microsoft.com>
+ <20180720163227.105950-5-dstolee@microsoft.com>
+ <20180828212457.GA74687@aiede.svl.corp.google.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <42231d43-c1f7-592f-cec8-0b07eb9f70bc@gmail.com>
-Date:   Tue, 28 Aug 2018 17:32:42 -0400
+Message-ID: <e71b2540-430d-d3e8-0c29-f290a12de4b0@gmail.com>
+Date:   Tue, 28 Aug 2018 17:33:37 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZ=jsCmxKdcPB+Q1__uO8Z2tXx6OkdyTSM8P3QdNGpKQA@mail.gmail.com>
+In-Reply-To: <20180828212457.GA74687@aiede.svl.corp.google.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -72,27 +77,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2018 4:37 PM, Stefan Beller wrote:
-> On Tue, Aug 28, 2018 at 1:33 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> The commit-graph (and multi-pack-index) features are optional data
->> structures that can make Git operations faster. Since they are optional, we
->> do not enable them in most Git tests. The commit-graph is tested in
->> t5318-commit-graph.sh (and t6600-test-reach.sh in ds/reachable), but that
->> one script cannot cover the data shapes present in the rest of the test
->> suite.
+On 8/28/2018 5:24 PM, Jonathan Nieder wrote:
+> Hi,
+>
+> Derrick Stolee wrote:
+>
+>> There are several commit walks in the codebase. Group them together into
+>> a new commit-reach.c file and corresponding header. After we group these
+>> walks into one place, we can reduce duplicate logic by calling
+>> equivalent methods.
 >>
->> This patch introduces a new test environment variable, GIT_TEST_COMMIT_GRAPH
->> . Similar to GIT_TEST_SPLIT_INDEX, it enables the commit-graph and writes it
->> with every git commit command.
->> Thanks, Duy, for pointing out this direction
-> Did you mean to cc Duy (instead of me)?
-> (I'll happily review the patch, too... just asking)
-
-I just added you because you've been on a lot of commit-graph things 
-lately. But yes, I forgot to add Duy to the CC list. Added to this message.
-
-Thanks,
-
--Stolee
-
+>> All methods are direct moves, except we also make the commit_contains()
+>> method public so its consumers in ref-filter.c can still call it. We can
+>> also test this method in a test-tool in a later commit.
+>>
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>>   commit-reach.c | 121 +++++++++++++++++++++++++++++++++++++++++
+>>   commit-reach.h |  20 ++++++-
+>>   ref-filter.c   | 145 +++----------------------------------------------
+>>   3 files changed, 147 insertions(+), 139 deletions(-)
+>>
+>> diff --git a/commit-reach.c b/commit-reach.c
+>> index a6bc4781a6..01d796f011 100644
+>> --- a/commit-reach.c
+>> +++ b/commit-reach.c
+>> @@ -1,8 +1,10 @@
+>>   #include "cache.h"
+>>   #include "commit.h"
+>> +#include "commit-graph.h"
+>>   #include "decorate.h"
+>>   #include "prio-queue.h"
+>>   #include "tree.h"
+>> +#include "ref-filter.c"
+> Did you mean "ref-filter.h"?
+>
+> This broke the build here.  Is there some check that we can use to
+> prevent it happening again?  I don't think we ever intentionally
+> #include a .c file.
+Woah! How did that ever work? I definitely built this locally.
