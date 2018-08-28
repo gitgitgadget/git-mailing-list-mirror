@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82C271F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 09:52:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0DEE21F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 09:52:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727556AbeH1Nna (ORCPT <rfc822;e@80x24.org>);
+        id S1727595AbeH1Nnb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 09:43:31 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:40699 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727176AbeH1Nna (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 28 Aug 2018 09:43:30 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:37962 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727542AbeH1Nn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 09:43:29 -0400
-Received: by mail-wm0-f65.google.com with SMTP id t25-v6so1316348wmi.3
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 02:52:37 -0700 (PDT)
+Received: by mail-wm0-f67.google.com with SMTP id 207-v6so1297281wme.5
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 02:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SfMxrg6qCjWmjprNhE39ggySgEDqZpU4+reA1okVGVE=;
-        b=fEC2H67YlAS7rtDRTMS+//gM6IDbTl4tN7ZoLmmyTBz/f1hrkSiuplkuClqadWa65d
-         uzKDudlfyFrAcE2rRLa8joCFTMM4wS7328s2+w+dX/T50/VacbMyKfbZb/GxWlcxY75+
-         7KbSL83eartzg7u1PU/0UVLClNSUUqUgbBsma9BsV1gRjhiDwwT1dPt7WDMLXjt+S9m4
-         hfMFUmzq3kKIW+u0NniMxe+a8nt454Z7nobFj/higajn6j4ZtYG4Pg1KcaevUA94a8en
-         oQpBNTwqwWvLVzJShA8CYCiqAVQMhnRQSa88+HQZqMvI+HDIx6t37PI3MYLgXOb1qHra
-         YfEA==
+        bh=Yi7EozukgtrIOetTZl4nyix7Uj3c2OU6OCRFlbMPjr4=;
+        b=ebU3UcsAyBQN/x32yRy0tOKXc/JFyfD3QpGUahxpt/T1rkt6heHhzHzMeRbuqfc5w4
+         skvs/dnXKmKVGsuIGeIgFN07Kaenxq7v2XqlsOYsDCkackZ9FYj3bVty2ew1Mw5t1IvI
+         TA8SeQ2GH2RjvYh6q61DYwxwiU03XK0m84QrzQl18lvlX31BJtCjfLD7amX2bm/SCtEE
+         VTs/qpb5i2dMdljCJx4nKfL4lsUHhT4wMyJmEMx4VtQjGWaaXnMBjsuF4/Sduz6zejUX
+         9FTaXlLzgSa5mIRKn9QgWhtGtN11/oc5Al0EwQB/5180M14kGrTX9Cah7jRcJCi6sfkG
+         7glQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SfMxrg6qCjWmjprNhE39ggySgEDqZpU4+reA1okVGVE=;
-        b=XVBK9V+Rome10TluOrteZzuysiH+TPdTlRGaE0zw+P9yUbOJCfnSjy5EJKUDoYJnSt
-         ZP6aHlBiogPp39uxDbSNrpyUsqtTAqHU6N9y5PgVbjEuEDFQF4td+d0ovA6RKCN2UHTS
-         yGeJkVtYIxo2k4UcnEmtk0U4Dl/0DDyNj6GAzURKdrTM02cWP83ztAwGqw6VeIw4dtLD
-         b+Rq+/UEHw1ZNufx4lWq+mGy2qVdq+Ex06kS3Q8fVc0HmD+LY118UnYzP0FcE3lXO5VD
-         +yIBA4rN+Pa6tt1Y/MVJPga72F7IfVWBv3zVpP+KNd26aCS2WqVR5QGQLo2MwnXeRIlz
-         r2TQ==
-X-Gm-Message-State: APzg51C6sD3UgTowh8NVRVknnxjCkwkX9R4PEd5xUKGPEimldxQJ7Q7b
-        yzxz+4hSLsOPu2kIH5wLcqF5Hh8cd78=
-X-Google-Smtp-Source: ANB0VdYUCDDQh9GNItIw2OYkXPeULWXllmaUUKMUAz22wutxnrWCVWLyQGnfLdy8p6B3AuEqAR7Jeg==
-X-Received: by 2002:a1c:5e08:: with SMTP id s8-v6mr909383wmb.88.1535449956335;
-        Tue, 28 Aug 2018 02:52:36 -0700 (PDT)
+        bh=Yi7EozukgtrIOetTZl4nyix7Uj3c2OU6OCRFlbMPjr4=;
+        b=heeyOTM8tIMgau5qFXJpvmgXKofNP97agl40NV+aSH7GozEQrkduwqrxFoh/5SwN+0
+         Wecv4MpwxPxjwdzz3Uj0F6V6SXFA2ZjugTJZsTeFJ/yJcjOrJvkH7GBAV0WRXjxNIEka
+         5CfUYlrMhl6sbun86WzLsfGFqognFXu+oeXJMUTxie0yTWfGeRuglad8kEY2ZdfkM9nv
+         Al7YTFNGFEs9WZurNx7aNUG2nq0qi9Dx7QtUuujRkESlL6G2MFidWiNEADIEqaTYBeF8
+         KOHNkxaz2m3WoAZUjNzGr7SlE4gtCT+gA65hauNcJ/hy5+GD5ZntabFWXPEnbe6MZ+La
+         3bBg==
+X-Gm-Message-State: APzg51DpfMq4Jyda+sj6lni9O37rnZ2r256/ejOU8d21EsyazExjgPlf
+        DGkU0S8sdaeqyDlnpNUN9Y3ILeFwrzc=
+X-Google-Smtp-Source: ANB0VdaMu1WiOFwN9HJtKWZQVFSYvfUowRyxngwiRQttt0iGzroo5l+PVMsUxFBRXcHs7KbmNQOH5w==
+X-Received: by 2002:a1c:82c8:: with SMTP id e191-v6mr797881wmd.35.1535449957780;
+        Tue, 28 Aug 2018 02:52:37 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a37-v6sm1572238wrc.21.2018.08.28.02.52.35
+        by smtp.gmail.com with ESMTPSA id a37-v6sm1572238wrc.21.2018.08.28.02.52.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 02:52:35 -0700 (PDT)
+        Tue, 28 Aug 2018 02:52:37 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 3/8] fsck: document and test sorted skipList input
-Date:   Tue, 28 Aug 2018 09:52:14 +0000
-Message-Id: <20180828095219.23296-4-avarab@gmail.com>
+Subject: [PATCH v4 4/8] fsck: document and test commented & empty line skipList input
+Date:   Tue, 28 Aug 2018 09:52:15 +0000
+Message-Id: <20180828095219.23296-5-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <87lg8refcr.fsf@evledraar.gmail.com>
 References: <87lg8refcr.fsf@evledraar.gmail.com>
@@ -73,91 +73,74 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since the skipList support was first added in cd94c6f91 ("fsck:
-git receive-pack: support excluding objects from fsck'ing",
-2015-06-22) the documentation for the format has that the file is a
-sorted list of object names.
+There is currently no comment syntax for the fsck.skipList, this isn't
+really by design, and it would be nice to have support for comments.
 
-Thus, anyone using the feature would have thought the list needed to
-be sorted. E.g. I recently in conjunction with my fetch.fsck.*
-implementation in 1362df0d41 ("fetch: implement fetch.fsck.*",
-2018-07-27) wrote some code to ship a skipList, and went out of my way
-to sort it.
-
-Doing so seems intuitive, since it contains fixed-width records, and
-has no support for comments, so one might expect it to be binary
-searched in-place on-disk.
-
-However, as documented here this was never a requirement, so let's
-change the documentation. Since this is a file format change let's
-also document what was said about this in the past, so e.g. someone
-like myself reading the new docs can see this never needed to be
-sorted ("why do I have all this code to sort this thing...").
+Document that this doesn't work, and test for how this errors
+out. These tests reveal a current bug, if there's invalid input the
+output will emit some of the next line, and then go into uninitialized
+memory. This is fixed in a subsequent change.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/config.txt        | 10 +++++++++-
- t/t5504-fetch-receive-strict.sh | 19 +++++++++++++++++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ Documentation/config.txt        | 11 +++++++----
+ t/t5504-fetch-receive-strict.sh | 21 +++++++++++++++++++++
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index eb66a11975..b2fdbc6764 100644
+index b2fdbc6764..c7f033f036 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -1710,7 +1710,7 @@ doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
- will only cause git to warn.
- 
+@@ -1712,10 +1712,13 @@ will only cause git to warn.
  fsck.skipList::
--	The path to a sorted list of object names (i.e. one SHA-1 per
-+	The path to a list of object names (i.e. one SHA-1 per
+ 	The path to a list of object names (i.e. one SHA-1 per
  	line) that are known to be broken in a non-fatal way and should
- 	be ignored. This feature is useful when an established project
- 	should be accepted despite early commits containing errors that
-@@ -1725,6 +1725,14 @@ Unlike variables like `color.ui` and `core.editor` the
- fall back on the `fsck.skipList` configuration if they aren't set. To
- uniformly configure the same fsck settings in different circumstances
- all three of them they must all set to the same values.
+-	be ignored. This feature is useful when an established project
+-	should be accepted despite early commits containing errors that
+-	can be safely ignored such as invalid committer email addresses.
+-	Note: corrupt objects cannot be skipped with this setting.
++	be ignored. Comments ('#') and empty lines are not supported, and
++	will error out.
 ++
-+Older versions of Git (before 2.20) documented that the object names
-+list should be sorted. This was never a requirement, the object names
-+can appear in any order, but when reading the list we track whether
-+the list is sorted for the purposes of an internal binary search
-+implementation, which can save itself some work with an already sorted
-+list.  Unless you have a humongous list there's no reason to go out of
-+your way to pre-sort the list.
- 
- gc.aggressiveDepth::
- 	The depth parameter used in the delta compression
++This feature is useful when an established project should be accepted
++despite early commits containing errors that can be safely ignored
++such as invalid committer email addresses.  Note: corrupt objects
++cannot be skipped with this setting.
+ +
+ Like `fsck.<msg-id>` this variable has corresponding
+ `receive.fsck.skipList` and `fetch.fsck.skipList` variants.
 diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index cbae31f330..fa56052f0f 100755
+index fa56052f0f..38aaf3b928 100755
 --- a/t/t5504-fetch-receive-strict.sh
 +++ b/t/t5504-fetch-receive-strict.sh
-@@ -142,6 +142,25 @@ test_expect_success 'fsck with no skipList input' '
- 	test_i18ngrep "missingEmail" err
+@@ -169,6 +169,27 @@ test_expect_success 'fsck with invalid or bogus skipList input' '
+ 	test_i18ngrep "Invalid SHA-1: \[core\]" err
  '
  
-+test_expect_success 'setup sorted and unsorted skipLists' '
-+	cat >SKIP.unsorted <<-EOF &&
-+	0000000000000000000000000000000000000004
-+	0000000000000000000000000000000000000002
-+	$commit
++test_expect_success 'fsck with invalid or bogus skipList input (comments & empty lines)' '
++	cat >SKIP.with-comment <<-EOF &&
++	# Some bad commit
 +	0000000000000000000000000000000000000001
-+	0000000000000000000000000000000000000003
 +	EOF
-+	sort SKIP.unsorted >SKIP.sorted
++	test_must_fail git -c fsck.skipList=SKIP.with-comment fsck 2>err-with-comment &&
++	test_i18ngrep "^fatal: Invalid SHA-1: # Some bad commit$" err-with-comment &&
++	cat >SKIP.with-empty-line <<-EOF &&
++	0000000000000000000000000000000000000001
++
++	0000000000000000000000000000000000000002
++	EOF
++	test_must_fail git -c fsck.skipList=SKIP.with-empty-line fsck 2>err-with-empty-line &&
++	test_i18ngrep "^fatal: Invalid SHA-1: " err-with-empty-line
 +'
 +
-+test_expect_success 'fsck with sorted skipList' '
-+	git -c fsck.skipList=SKIP.sorted fsck
++test_expect_failure 'fsck no garbage output from comments & empty lines errors' '
++	test_line_count = 1 err-with-comment &&
++	test_line_count = 1 err-with-empty-line
 +'
 +
-+test_expect_success 'fsck with unsorted skipList' '
-+	git -c fsck.skipList=SKIP.unsorted fsck
-+'
-+
- test_expect_success 'fsck with invalid or bogus skipList input' '
- 	git -c fsck.skipList=/dev/null -c fsck.missingEmail=ignore fsck &&
- 	test_must_fail git -c fsck.skipList=does-not-exist -c fsck.missingEmail=ignore fsck 2>err &&
+ test_expect_success 'push with receive.fsck.skipList' '
+ 	git push . $commit:refs/heads/bogus &&
+ 	rm -rf dst &&
 -- 
 2.19.0.rc0.228.g281dcd1b4d0
 
