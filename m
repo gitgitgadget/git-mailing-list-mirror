@@ -2,159 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 138241F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 21:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 502FB1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 21:21:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727368AbeH2BO1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 21:14:27 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:34093 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727331AbeH2BOX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 21:14:23 -0400
-Received: by mail-io0-f193.google.com with SMTP id c22-v6so2733372iob.1
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 14:20:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Eq1s1DsF+TFzd1axJk+Pk/RMVNqPHRI9zG4y/32N8sc=;
-        b=rdoElwAL6hn4zxJAnbXwuYKveWIx3FM6MSQ7LZ1YiuICuH8mjtr84NSVMYSTS3DIaN
-         uu6cuHOk5toigW36/yGCwxjbksQsqK/6Say2AQOSng99Lumget5ftCEINOPZzCDF6QIA
-         FejHh/YbNhLZh4YQB1GDv84EJm7BM1Ug60CBwgCps7q2I6hfXgbYFs6F8LrwDBdveGiM
-         7aDcNupgiQi+lVjw4pW5c1H5jtSiDudhvfeiDN6pflRINKJCYzNCEvmP3LsBl8Taywmf
-         ov03wxaBG9OmDBAf+mVE35UWwOVLAOMgnuY+YQOUfesm2Pjy13XJ7N8G2iKjVbCacUrn
-         ZR3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=Eq1s1DsF+TFzd1axJk+Pk/RMVNqPHRI9zG4y/32N8sc=;
-        b=IghsUsIKYKYjN2bksXFv6OfHPCypHIfI7HeaeHCrxNCUe7wlAbvFk6UynqA7Oksmz0
-         MVTI5rinbytdAww+c0OooFz5thy8wEoagoLUF7NEBrEP4PH73k3ya9GtJOlmOm43hKBd
-         Or+EErah/agtDGrnmk+aDtrln49p+PZ1eeYgcCR+oWG9wXAUHgjw87NT81gmCtcrm/fk
-         nnVkWzh3xLd4Pdq1d+17tdf+tCvdvpSXylANVALoWI1U3MW9gEUSIbWdUHjNPHW5sTkS
-         r1NpYlMTe5IyD5X7kW/BHNAC6qh4/F0Q1nrVyjzrt/5VTzD9a7/nq0EkqinD1uh2z2ge
-         qiBQ==
-X-Gm-Message-State: APzg51CynVpg8S+jJIJtza4ildC0EAGmZtAe/2S65806wHxzHj2fFVNZ
-        SZkEFrkx0FVQcQAAdz+8C9KXmt38
-X-Google-Smtp-Source: ANB0VdY0G15/3bI4YqfkjvJjlEXa9cLZSOCNi9LdyAJwqHw/biJasMRxqjQBAEi68KFmbFYZx2qvSA==
-X-Received: by 2002:a6b:b8d4:: with SMTP id i203-v6mr2964896iof.287.1535491252535;
-        Tue, 28 Aug 2018 14:20:52 -0700 (PDT)
-Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
-        by smtp.gmail.com with ESMTPSA id o1-v6sm1090344iop.12.2018.08.28.14.20.51
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Tue, 28 Aug 2018 14:20:52 -0700 (PDT)
-From:   Eric Sunshine <sunshine@sunshineco.com>
+        id S1727172AbeH2BOw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 21:14:52 -0400
+Received: from mout.gmx.net ([212.227.17.21]:45867 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726998AbeH2BOw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 21:14:52 -0400
+Received: from localhost.localdomain ([185.190.160.130]) by mail.gmx.com
+ (mrgmx103 [212.227.17.168]) with ESMTPSA (Nemesis) id
+ 0Ma2Lr-1gDnRu2Sat-00Lj6F; Tue, 28 Aug 2018 23:21:21 +0200
+From:   Tim Schumacher <timschumi@gmx.de>
 To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 7/9] worktree: teach 'move' to override lock when --force given twice
-Date:   Tue, 28 Aug 2018 17:20:24 -0400
-Message-Id: <20180828212026.21989-8-sunshine@sunshineco.com>
-X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
-In-Reply-To: <20180828212026.21989-1-sunshine@sunshineco.com>
-References: <20180828212026.21989-1-sunshine@sunshineco.com>
+Cc:     timschumi@gmx.de
+Subject: [PATCH] doc: Don't echo sed command for manpage-base-url.xsl
+Date:   Tue, 28 Aug 2018 23:21:04 +0200
+Message-Id: <20180828212104.2515-1-timschumi@gmx.de>
+X-Mailer: git-send-email 2.19.0.rc1.1.g093671f86
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:uYl5FHqELOx/9k2/vgT93UYDjdFiYciN/sQ3x+q1b/DaSIKqjkU
+ YrVHf+z32G+NnovbA81TSrzlyJVAnm8VJFcQRl0vYuAGRehLyAO0IfTXjprOx9WfOpNR6rz
+ Y+1hgZy+oh/ueIEAbYRVkyisVftlIMxlh1GIXmBt+7YpDoAx/HCEiqu9w0lAcI95g0F85zJ
+ nCynOch0ZZDmN7i/SwabA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:fo/hzWQKA64=:01UQohP+fd6kZD3DJbjF2l
+ WPptogPSFBsxPSJtf0cLTh3l/km2EMHA7J6DzDyNwWoRCgIkosgBwt3nOjUbJMMTwFvKVmpv+
+ 4FJdsUJm+kJ+dKvCeRfeVT7GqXiwlmx7x43vDov6j+5BEN56LtVCFaeG4YzSvLxXWltY8TnN/
+ nNGYVErcqgQktm8SNMMgn7uvX/W1V9stTyK4n5QuODsSfL9KTi6xkCDMTwFxpnxfVPrce509n
+ q4fBoM8K+RrOy8uTpTLRh3+RZq9dgRxMdnVNwM0A93rbzWDR3gQCzAgNxJq31JxcKdc4zDwDV
+ t6e6YsoTxuj+nP2PpLT1thNw9tJ6dRB/GNXCXoW18oIkn5UppC+yCw0y1z4o5zJp/MsVFIlAg
+ Z52w7ypSm+d2/pZE2fwp6kqqfr3WbhgQ/8fV4lnmvxsQ9gY1nzJT6JkyOuYvsGJH2x3bz5A70
+ 74hMHtvexwhIs9Qcep5gOLoG2u44IqHsK25enk+dhBjErvOGnZShWgE6mc240glFk7SlN14m/
+ W1DfeGE+jExCSwolPxucXLEpCs8+WdS3ClgL3kLbAeLPyqmPX5jsoSarq+52nU9F6FA8dW/VJ
+ zGEMTf3lxTI/VEII3IizcA99/zKduqyXiCD9g6nL4703+rGljpVkMdQ7ZZoZQR04QwNrlLj4I
+ eT9DWRdqbBQZIx9/OgEqr0fpjMNi2Ce2tIJa65e9yXYmEPNd5+4VbbWmqlavQI57VPZuv26lo
+ 2thCNyeY4nbwsG8Ux60oN3WbZUI9CVDtLl/6C2C9Tl+EIMtIZr9w4uBKQsY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For consistency with "add -f -f", which allows a missing but locked
-worktree path to be re-used, allow "move -f -f" to override a lock,
-as well, as a convenience.
+Previously, the sed command for generating manpage-base-url.xsl
+was printed to the console when being run.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+For the purpose of silencing it, define a $(QUIET) variable which
+contains an '@' if verbose mode isn't enabled and which is empty
+otherwise. This just silences the command invocation without doing
+anything else.
+
+Signed-off-by: Tim Schumacher <timschumi@gmx.de>
 ---
- Documentation/git-worktree.txt |  3 +++
- builtin/worktree.c             | 13 +++++++++----
- t/t2028-worktree-move.sh       | 14 ++++++++++++++
- 3 files changed, 26 insertions(+), 4 deletions(-)
+ Documentation/Makefile | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
-index 8537692f05..d08b8d8e4f 100644
---- a/Documentation/git-worktree.txt
-+++ b/Documentation/git-worktree.txt
-@@ -125,6 +125,9 @@ OPTIONS
- 	manually). This option overrides these safeguards. To add a missing but
- 	locked working tree path, specify `--force` twice.
- +
-+`move` refuses to move a locked working tree unless `--force` is specified
-+twice.
-++
- `remove` refuses to remove an unclean working tree unless `--force` is used.
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index a42dcfc74..45454e9b5 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -217,6 +217,7 @@ endif
  
- -b <new-branch>::
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 3eb2f89b0f..354a6c0eb5 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -740,13 +740,17 @@ static void validate_no_submodules(const struct worktree *wt)
+ ifneq ($(findstring $(MAKEFLAGS),s),s)
+ ifndef V
++	QUIET		= @
+ 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ 	QUIET_XMLTO	= @echo '   ' XMLTO $@;
+ 	QUIET_DB2TEXI	= @echo '   ' DB2TEXI $@;
+@@ -344,7 +345,7 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
+ 	mv $@+ $@
  
- static int move_worktree(int ac, const char **av, const char *prefix)
- {
-+	int force = 0;
- 	struct option options[] = {
-+		OPT__FORCE(&force,
-+			 N_("force move even if worktree is dirty or locked"),
-+			 PARSE_OPT_NOCOMPLETE),
- 		OPT_END()
- 	};
- 	struct worktree **worktrees, *wt;
- 	struct strbuf dst = STRBUF_INIT;
- 	struct strbuf errmsg = STRBUF_INIT;
--	const char *reason;
-+	const char *reason = NULL;
- 	char *path;
+ manpage-base-url.xsl: manpage-base-url.xsl.in
+-	sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
++	$(QUIET)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
  
- 	ac = parse_options(ac, av, prefix, options, worktree_usage, 0);
-@@ -777,12 +781,13 @@ static int move_worktree(int ac, const char **av, const char *prefix)
- 
- 	validate_no_submodules(wt);
- 
--	reason = is_worktree_locked(wt);
-+	if (force < 2)
-+		reason = is_worktree_locked(wt);
- 	if (reason) {
- 		if (*reason)
--			die(_("cannot move a locked working tree, lock reason: %s"),
-+			die(_("cannot move a locked working tree, lock reason: %s\nuse 'move -f -f' to override or unlock first"),
- 			    reason);
--		die(_("cannot move a locked working tree"));
-+		die(_("cannot move a locked working tree;\nuse 'move -f -f' to override or unlock first"));
- 	}
- 	if (validate_worktree(wt, &errmsg, 0))
- 		die(_("validation failed, cannot move working tree: %s"),
-diff --git a/t/t2028-worktree-move.sh b/t/t2028-worktree-move.sh
-index 60aba7c41a..9756ede8f1 100755
---- a/t/t2028-worktree-move.sh
-+++ b/t/t2028-worktree-move.sh
-@@ -98,6 +98,20 @@ test_expect_success 'move worktree to another dir' '
- 	test_cmp expected2 actual2
- '
- 
-+test_expect_success 'move locked worktree (force)' '
-+	test_when_finished "
-+		git worktree unlock flump || :
-+		git worktree remove flump || :
-+		git worktree unlock ploof || :
-+		git worktree remove ploof || :
-+		" &&
-+	git worktree add --detach flump &&
-+	git worktree lock flump &&
-+	test_must_fail git worktree move flump ploof" &&
-+	test_must_fail git worktree move --force flump ploof" &&
-+	git worktree move --force --force flump ploof
-+'
-+
- test_expect_success 'remove main worktree' '
- 	test_must_fail git worktree remove .
- '
+ %.1 %.5 %.7 : %.xml manpage-base-url.xsl
+ 	$(QUIET_XMLTO)$(RM) $@ && \
 -- 
-2.19.0.rc1.350.ge57e33dbd1
+2.19.0.rc0
 
