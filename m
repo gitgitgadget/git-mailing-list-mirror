@@ -3,121 +3,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED281F428
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:48:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D9AFA1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:59:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727176AbeH1Xlb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:41:31 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41374 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726807AbeH1Xlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 19:41:31 -0400
-Received: by mail-wr1-f65.google.com with SMTP id z96-v6so2644153wrb.8
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:48:20 -0700 (PDT)
+        id S1727135AbeH1Xw4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:52:56 -0400
+Received: from mail-qk0-f180.google.com ([209.85.220.180]:39979 "EHLO
+        mail-qk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727072AbeH1Xw4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:52:56 -0400
+Received: by mail-qk0-f180.google.com with SMTP id c126-v6so1859843qkd.7
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:59:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=Na/XLfuhAaSs1UvF0Oo9Uqrcg8KmeGATeDA40zIhSnk=;
-        b=qaPGotP7iaX9fQkPLFqQ1Wf3XjUikQJ9RUF02IND7SMTl3Yl6I1JRqZdyz3tJAj2XQ
-         K5cjrwhknt1xNnfmkB2UzF6tbPT+mVy8hBEvWpdkIy7ZXXsyzm4i+e2C1l4VZTFy1Llb
-         yYqBKSh8uEyQVwiG3GmF9FQUAVHaJZQaP7qA8i1MjW+3XV1FXuUdEUZ8UHFGLDTNnQvs
-         uwN5zowr1BH47IQ8QX1PwynZkJcsP2quDG42fNmfKMWyoFTRr/dMsUQ1U7LX84KRq1uY
-         Vp7YGrAnHtP2g1uKeT/bbNxbS1Mvlt02R8++yF65yKYzYSLUnr8HC5NxU3anhwzMUlvi
-         LRww==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=UHkSfHBVAtSLxOLU4Y7SUL06DC+nXOzQkvGAGwBscJA=;
+        b=cKq5DF9KWmeczkSNT1zEjEyLgjf8Mgzc0xEbl1dts2hARvCieK3VI/oSlgUpsYgtap
+         476QwUC+L4QASinyv7mb1pscAv+/RhMzuxhMlaarh85YBb/ipU3hIzIdygPMZv4qqcTy
+         HVmI2G6NNbHuuILBtyZWz/U/FRxLJrWG0kIMgFHVrQM1U28CB5MkpDLoyyy4nmTq09RE
+         +nqnJPDCQ1mDBmdi/Au6UVn9xYd+f7p58C9WS/AMj8bnRGBbv7ORukA3RSTpHpAxrkln
+         RJxG6sh2MDpwMn3eTFe9vMQIClOJDyV31x0gsRgLvfIO9efr4PMQ2OhuazQiXCOwf8bQ
+         N1wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=Na/XLfuhAaSs1UvF0Oo9Uqrcg8KmeGATeDA40zIhSnk=;
-        b=FnUUQfI58EeB8/6jGDmw1/x1KvrpEgdlpX30Y1xN8SCSeExtAbj3hTLJhLHuWYj4i+
-         ugNmgr/rh9BOiPKBEth+vHCiKMMvhUIdBde0ZR5Rf0eLB4wS3B3VcjWh17P9ZDcLwglC
-         rxkPMCam/ooHasi4nV5B3y/Y31dlfTEseuAjLmefm3y3RRRZezF7SOLP/PscJ9sMDL9e
-         kIZ4MOhtoIT8X6gKlk9W0CmG0ZxpciZ9UvpgBjWf8woK37DIS9JIBTOokDDuZdW+Vo+j
-         jJJtsqn4v2eR7auLfRoZZiyKH9i6qJceJ808o18OPxhkorhNQwpd36inTFNgEfOmR7Nj
-         fvOQ==
-X-Gm-Message-State: APzg51BlNauNLIHciSGEGM96EDkP7JmqvnqVXIiGmExe8ufkTGHQ3BSl
-        q8iAs5oySeEfHDsFhxA8+Zk=
-X-Google-Smtp-Source: ANB0VdaHy1CMlC4xuAqpLn5y/ptj3QRn3FRhlHJYRMIBrX4tvYxstug8Pk7mINH62XsHuMgZnQ36nA==
-X-Received: by 2002:adf:9227:: with SMTP id 36-v6mr2195291wrj.275.1535485699871;
-        Tue, 28 Aug 2018 12:48:19 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l18-v6sm2883058wru.75.2018.08.28.12.48.19
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 12:48:19 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH 1/2] tests: fix non-portable "${var:-"str"}" construct
-References: <20180828193827.8648-1-avarab@gmail.com>
-        <20180828193827.8648-2-avarab@gmail.com>
-Date:   Tue, 28 Aug 2018 12:48:19 -0700
-In-Reply-To: <20180828193827.8648-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 28 Aug 2018 19:38:26 +0000")
-Message-ID: <xmqqlg8qff24.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=UHkSfHBVAtSLxOLU4Y7SUL06DC+nXOzQkvGAGwBscJA=;
+        b=UQUVQ6jsKJCn+uXwZkhnz75+Uq3SIQqSi9FjdJrWmLMmBZSVfkX8yeULzamji1R3fT
+         sqlP8l5UEkWsj46NlZX9i5O4MLk9fhvzYJB4uI+t/QHHg8jVa+6kMBuwlWes8TrC39sJ
+         +FVZTVArhAxLI8+4BRtp92Tl7VraoDpSsRWWSmlnUaKiS9PW8YMG4zP1Mzphel53YgQL
+         0LPkmXT3KoqBief2L1dmRX6dfIyNm4QWqR0GCqnAq1660uyVjNfK962/tNFYWDD9DZ50
+         z+GDUGMkGCdZPd2TgUCBKXR755eUkWEunwRLHpMx374Foc1v1U0cnCS6ky5B7gzSuSZV
+         wZpg==
+X-Gm-Message-State: APzg51DF89jzJwuot/uQ3dSqMR6RABkmyT8Uu2Y2fSnJPL0LiRR2netA
+        8yFqFMQKQe7iM8UHJ7EGdTHy+BKx
+X-Google-Smtp-Source: ANB0VdaFByuBfFIk4ZXyqJyU734hgbm/uKIMYn2hPuFhxzDv1LYbXv39frEHJRDhplxmNqZ38/ANuA==
+X-Received: by 2002:a37:af42:: with SMTP id y63-v6mr3263927qke.87.1535486384054;
+        Tue, 28 Aug 2018 12:59:44 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:f86b:1660:ae35:a1de? ([2001:4898:8010:0:e1a1:1660:ae35:a1de])
+        by smtp.gmail.com with ESMTPSA id x76-v6sm1180323qkx.25.2018.08.28.12.59.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 28 Aug 2018 12:59:43 -0700 (PDT)
+Subject: Re: Git clean removing tracked files semi-regularly
+To:     Brennan Conroy <brecon@microsoft.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <MWHPR21MB0701CD1D9653E82116E482ECD60B0@MWHPR21MB0701.namprd21.prod.outlook.com>
+ <20180828005803.GB432229@genre.crustytoothpaste.net>
+ <MWHPR21MB0701E9B53BC72CC33497AF45D60A0@MWHPR21MB0701.namprd21.prod.outlook.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8ed02573-3356-9d38-c1ae-f5a2c82693c6@gmail.com>
+Date:   Tue, 28 Aug 2018 15:59:44 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <MWHPR21MB0701E9B53BC72CC33497AF45D60A0@MWHPR21MB0701.namprd21.prod.outlook.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-
-> On both AIX 7200-00-01-1543 and FreeBSD 11.2-RELEASE-p2 the
-> "${var:-"str"}" syntax means something different than what it does
-> under the bash or dash shells.
+On 8/28/2018 2:29 PM, Brennan Conroy wrote:
+> I'm using windows. Have had it happen on 8.1 and 10.
 >
-> Both will consider the start of the new unescaped quotes to be a new
-> argument to test_expect_success, resulting in the following error:
->
->     error: bug in the test script: 'git diff-tree initial # magic
->     is (not' does not look like a prereq
->
-> Fix this by removing the redundant quotes. There's no need for them,
-> and the resulting code works under all the aforementioned shells.
+> "git status" shows "nothing to commit, working tree clean". I am using git version 2.17.1.windows.2
 
-Yup, there is no need for that inner dq pair in this particular case.
+I tested on my machine and could not reproduce this issue. Could you 
+find a full repro (first command 'git clone 
+https://github.com/aspnet/SignalR') and create an Issue at 
+https://github.com/git-for-windows/git/issues ?
 
-I was more worried about scripted Porcelains, like 
+Thanks,
 
-   : "${GIT_OBJECT_DIRECTORY="$(git rev-parse --git-path objects)"}"
+-Stolee
 
-which I think can safely lose the outer dq pair.  In t/ directory,
-there is this one in test-lib-functions.sh which I do not offhand
-know how these problematic shells would handle.
-
-	echo "#!${2-"$SHELL_PATH"}" &&
-
-Other than the presence of these two that are not covered by this
-patch, the patch itself looks good.  Thanks.
-
-> fixes a regression in c2f1d3989 ("t4013: test new output from diff
-> --abbrev --raw", 2017-12-03) first released with Git v2.16.0.
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  t/t4013-diff-various.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-> index f8d853595b..73f7038253 100755
-> --- a/t/t4013-diff-various.sh
-> +++ b/t/t4013-diff-various.sh
-> @@ -140,7 +140,7 @@ do
->  	expect="$TEST_DIRECTORY/t4013/diff.$test"
->  	actual="$pfx-diff.$test"
->  
-> -	test_expect_success "git $cmd # magic is ${magic:-"(not used)"}" '
-> +	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
->  		{
->  			echo "$ git $cmd"
->  			case "$magic" in
