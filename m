@@ -7,115 +7,77 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0266C1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8BDA1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727135AbeH1W7N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 18:59:13 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:46601 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726807AbeH1W7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 18:59:12 -0400
-Received: by mail-pf1-f195.google.com with SMTP id u24-v6so1113003pfn.13
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:06:12 -0700 (PDT)
+        id S1727292AbeH1XEp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:04:45 -0400
+Received: from mail-pg1-f178.google.com ([209.85.215.178]:44631 "EHLO
+        mail-pg1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726807AbeH1XEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:04:45 -0400
+Received: by mail-pg1-f178.google.com with SMTP id r1-v6so1159804pgp.11
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:11:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=sYtcU6PMALC0skaRCmgGcH1BIDWLkX99k3J642Ixfyw=;
-        b=Q22S0eoMUaPso5QBnyLm0cbzGjcZWIxg8eEdK5MOCwO8DM2LMlfjjvRxhTOY77zwhF
-         pnKvzAcjsRl1QOal1WJe+CyAJZMMI1AwndWgsm7HZDkwFs0twPepVXXVhkF+bfoGjVvN
-         bsA6rcAghJR6scyyWZ5IMNjiUlUQsElZGc6wYYooerlIETWNC6kosJ5OO8O6+ofPbMJS
-         YSe+YE+wWk57+DoA9WRsacPhwqKiXQw8pKpq26OXPlZztZJzQ7QkOhlOgkAA8WinEZjQ
-         vpX3M1uFqxv3rAEdTsRofrHfvnLw6VrdTf4MDia/K2B39/4zNFQrePuNxcaQhJVVpopW
-         TrCA==
+        bh=KG1EXHxjZCBZH6OPSqw3gHh8WmdJQFN5l624aWdau8E=;
+        b=foOjx48WfC/nQG4+4bAsvGCDA7Ht7oV1Y5a5zPrhliIpdYITJioaePsZ1xfcB2WBXZ
+         mPSzX/p0NxLk662yiZ+UBXy7jk//kUfUt55hmdSNNqcB9u3kc3c8nmrYrymTIQUgUMX4
+         f+W2QU2bw8VR9CvToD2/4o8IXEzeFT561VQoJnedDa6wfm+Lag51lcJ+t3bGRAesIGal
+         FIdXikjxC29pHPULbU/W8RodGHPGN8ZbHVxJUV7km7lR9mby8IteJFhjyTh8H8bbbMSd
+         mSzhIuQt5DWiD/Y7QeJWZYGh7SycOZiCW23eAw/JEVZ6DXD+LqaV1vEoXjWmltu+cllj
+         6eFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=sYtcU6PMALC0skaRCmgGcH1BIDWLkX99k3J642Ixfyw=;
-        b=owDA7Z+q7Uzl5P5UYemiQ4bRrAPylyvYrqR//MA+GOvfMCJTeE/Xs55Q2LyxGwJLc0
-         X8uKolBV54pn1YeFe5Jum9lhSH3tkT47CWWWpLWPehqg0ks8VsdpLgYxLT6UziuZ6hDl
-         oFEudFlxQltx0z8jwBblE01UCuEKwhUvt9J/u91ylXO2kP0J0wxNMs+LZi+K3RdZFnba
-         KfeJ9cokepo2xJraLcQO3GgTOe1DIxEvzTNHL4MSFPA0XUqujLLs7AJQMNSkBcTqJXw7
-         9jvb2y+G6AKWq6yVO4mnmti6lvCnU0VwpRpSaiwTa4e38B8Xgqp7nYz73e8WMv+rULIb
-         avsQ==
-X-Gm-Message-State: APzg51BaAK96wzTwLe/c4zOJ0Peh9OEUmgA0deLwfCt0slmicb8GHioI
-        uAjKc4u9PzWSXRKbD8LUVmM=
-X-Google-Smtp-Source: ANB0VdYC6vn5CKN2j0W9lqXd1UwETWC5rxOEzzU2XQwMAVR5OQPfIEVV+AxPLNNEu3iGskM8xy8NsQ==
-X-Received: by 2002:a63:842:: with SMTP id 63-v6mr2729432pgi.44.1535483171386;
-        Tue, 28 Aug 2018 12:06:11 -0700 (PDT)
+        bh=KG1EXHxjZCBZH6OPSqw3gHh8WmdJQFN5l624aWdau8E=;
+        b=f6QcHmr2zfVmT4CnGXZw6YlnQUy1yoBv+h22Lvs4UlQseYTaZzCAeFZkwtMY2O9WAr
+         4wUQIuCQIVenMCkz9zN3rWDrPDPp9XT01sUGnE8nCi5p/Qw2IaV6WUTjiilTsBwvqGvM
+         +0AaUEU75jRLqctK07ol4W9fqOJ8qSbpP0JDj8HLwbOINqf4ijz08aWTJMSdCfCJDPRn
+         xN7OjFBe+9SI5+HJxbB2AcBCTexZ36cvJNiqru2Y9AOa2QMYEr5YIe3VGgtG3bviAC3w
+         IPwZQw/eLLuWucRHyMQ0clnsWvZCc6dcX9ViCu075/ZCfIYpzMDjRC3aZqmc6+FcVlVl
+         QOFw==
+X-Gm-Message-State: APzg51CqqjEta/jApj+cIKb7trFxpQO0ct9ubMuv8u+HUSNXRf7lskQj
+        Q1j+JTkl44Yd2MFZJThhEKA=
+X-Google-Smtp-Source: ANB0VdYIdegdvucZsY/P+eulapJkpkjJi1fBKDP7RZrki/ma+e/WIFgjtvkRabYnd+A9stZRa3qWAQ==
+X-Received: by 2002:a65:6499:: with SMTP id e25-v6mr2621625pgv.224.1535483503267;
+        Tue, 28 Aug 2018 12:11:43 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id h69-v6sm3148677pfh.13.2018.08.28.12.06.10
+        by smtp.gmail.com with ESMTPSA id u9-v6sm3444421pfi.104.2018.08.28.12.11.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 28 Aug 2018 12:06:10 -0700 (PDT)
-Date:   Tue, 28 Aug 2018 12:06:08 -0700
+        Tue, 28 Aug 2018 12:11:42 -0700 (PDT)
+Date:   Tue, 28 Aug 2018 12:11:40 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Derrick Stolee <stolee@gmail.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jeff King <peff@peff.net>, git@vger.kernel.org
 Subject: Re: Contributor Summit planning
-Message-ID: <20180828190608.GA46388@aiede.svl.corp.google.com>
+Message-ID: <20180828191140.GB46388@aiede.svl.corp.google.com>
 References: <20180813163108.GA6731@sigill.intra.peff.net>
  <d5d3fe71-d52b-ac9b-d48d-d288b6569e5a@gmail.com>
  <20180813171535.GA8476@sigill.intra.peff.net>
  <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet>
  <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
+ <20180828190608.GA46388@aiede.svl.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4f0e85ed-6402-65b2-442e-67a1a7a7486d@gmail.com>
+In-Reply-To: <20180828190608.GA46388@aiede.svl.corp.google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Derrick,
+Jonathan Nieder wrote:
 
-Derrick Stolee wrote:
+> The current IRC experience might be a bit unrepresentative, due to
+> https://freenode.net/news/spam-shake:
 
-> A focused aside, since you brought up the online "standup": it seems the IRC
-> channel has been less than ideal, with people trying to participate but
-> having nickname issues or being muted. You also describe another issue: the
-> timing. Having a real-time discussion has its benefits, but also it leaves
-> many people out.
-
-For me, the real-time element is the entire point.  If timezones are a
-problem for some people, I'm happy to e.g. alternate with a different
-hour.
-
-The current IRC experience might be a bit unrepresentative, due to
-https://freenode.net/news/spam-shake:
-
-| As you may be aware there has been a prolonged spambot attack
-| directed at freenode (and other IRC networks) in recent weeks,
-| targeting a number of individuals involved with freenode and the
-| wider IRC communities.
-
-A kind person configured the channel to withstand this spam attack.
-This involved users having to authenticate to Freenode using
-https://freenode.net/kb/answer/registration#nickname-setup so that it
-knows whether you are a spammer.  Sorry for the inconvenience.
-
-My offer to +v anyone affected by the channel's current settings still
-stands (just /msg me).  Zero people have taken me up on this offer so
-far.
-
-> One idea to try next time is to create a mailing list thread asking for
-> statuses, and each person can chime in asynchronously and spawn a new
-> discussion based on that status. Perhaps we can try that next time.
-
-I don't want to discourage a good idea.  The logical extension of this
-(not one thread but a whole list) reminds me of the Kernel Newbies
-mailing list <https://kernelnewbies.org/>, which appears to work well
-in that context.  Given my current time commitments, I wouldn't be
-able to participate, but I would be happy to see other volunteers set
-something like that up if interested.
-
-The usual practice of sending email about current work on progress to
-git@vger to get feedback also still works, and that is something I can
-commit to continue to spend time on.
+https://freenode.net/news/spambot-attack may be a better link.
 
 Thanks,
 Jonathan
