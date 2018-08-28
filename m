@@ -2,163 +2,206 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33C4B1F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 09:52:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C50B11F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 09:59:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727679AbeH1Nng (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 09:43:36 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36832 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727597AbeH1Nng (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 09:43:36 -0400
-Received: by mail-wr1-f67.google.com with SMTP id m27-v6so968845wrf.3
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 02:52:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Owbr1eeoPkI5z+Nv4cWhYtIQPcf03HxcramcfGIuqRU=;
-        b=h/KmFEVjftbdpI5se+fEvBMpHHa2to+yyjCMvaRrurwWkUUysIx/Fv2AI9QMhM+y6a
-         0jI2VhCXlGd5aHxw1KkqTBkzP65wkPBUXjUZ6QcnTSv1MwyMPEf4m9WM0q/97aBB+8Pn
-         OtdQ8DSdsphKGpOWcwguBWHis3zMd89BkwhgeRY54QIPV1L6BS0pLZy3zux3Q8jUvzTB
-         Tg2wFwcPyFDsoMdA5qoZLwi4dR+hMGinRY1kVJh483upriYpF0pVX88RuqqgkNGwvvfw
-         X9ojDjSpFVTjE/p0Xgx8t6L3Q8jydKfNqhd0JZQ7ipp5KEZUapdLT3NrleSY6kG5zW+a
-         MLwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Owbr1eeoPkI5z+Nv4cWhYtIQPcf03HxcramcfGIuqRU=;
-        b=LKNMjsG8a+y8lOi8a/41uy4MU+lenJZKlkJ8g2jPPkuXoEkO8lih9SncL0J0XYryAM
-         hf38e3hVx7JUmBZs6clQhKFPyL32AZu/ceGdVs+0DUUgkhzkF+eAvI6hIg7cRZSuriNU
-         2a8Lsaakz4LsI/wS/LP0HoJL/L7X9cmyziOlUjecPqftI9kzMCMxBzM+R2jyIQAh0hGM
-         o6XB8+d1yAGyQJ9huHPxSfhat3WLK+uj55rzLFgDmFUyzZFrdxEj+8bI+uGY6K8p5IT/
-         uCq2f8KXGKfCLvdmR2JSqfIjWanvqtuGFCIaWfL+79v3uUESId8jfiG0IuT0BnOBQ6dV
-         X/Sw==
-X-Gm-Message-State: APzg51Bk+n10Bu8BV64PamskOSFfZ947rwu844hre6mux7g2FatGDBFB
-        X0H2atc682+zmSZmXaHuIC22NEnRIh0=
-X-Google-Smtp-Source: ANB0VdYe+VI1QlchLv9x4S3za8Tf6Ho3XIkvYx0WBMUC3MJKrr6Gx/OSw1GGoKEqIy+HODIvAwks/A==
-X-Received: by 2002:adf:fc44:: with SMTP id e4-v6mr629046wrs.9.1535449963282;
-        Tue, 28 Aug 2018 02:52:43 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a37-v6sm1572238wrc.21.2018.08.28.02.52.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Aug 2018 02:52:42 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 8/8] fsck: support comments & empty lines in skipList
-Date:   Tue, 28 Aug 2018 09:52:19 +0000
-Message-Id: <20180828095219.23296-9-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
-In-Reply-To: <87lg8refcr.fsf@evledraar.gmail.com>
-References: <87lg8refcr.fsf@evledraar.gmail.com>
+        id S1727404AbeH1NuU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 09:50:20 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:44986 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727094AbeH1NuU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 09:50:20 -0400
+Received: from [192.168.1.47] ([80.2.221.225])
+        by smtp.talktalk.net with SMTP
+        id uamQf6NncdJAeuamQfjmh6; Tue, 28 Aug 2018 10:59:24 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1535450364;
+        bh=cqpHwiQeokiRIqpyfwzOOvcjtPrEahmcvREbX+G+O3s=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=TqNfo/olFK+v11rTJypPRNH6nOnj0QXOgSrve/TUj7Y51+3RV+eYoXdTrWPx+LTiO
+         EHoAOzaSwvocb3IXldsZOfMP8IAz0APyZGd3LBx82XbejN1vFzumSSysF6N5gnpOD5
+         CxE053skXd+xZPmwNZoYmr1WqmjxPc/NHQtg2m7s=
+X-Originating-IP: [80.2.221.225]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=g2gnxnp7LLDBudNdzH9G8Q==:117
+ a=g2gnxnp7LLDBudNdzH9G8Q==:17 a=IkcTkHD0fZMA:10 a=uPZiAMpXAAAA:8
+ a=MulqWcVwai4obZlxjmgA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Would a config var for --force-with-lease be useful?
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?Constantin_Wei=c3=9fer?= <i7c@posteo.de>
+Cc:     Scott Johnson <jaywir3@gmail.com>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <CAEFop40OJ5MRwM8zxE44yB0f2Fxw9YsUdM1e-H=Nn9e=sAGJ=w@mail.gmail.com>
+ <153520405068.637.7595973048355361242@cwe>
+ <nycvar.QRO.7.76.6.1808272306271.73@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <b5b1987e-d761-64c5-a58e-6863bb80d848@talktalk.net>
+Date:   Tue, 28 Aug 2018 10:59:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <nycvar.QRO.7.76.6.1808272306271.73@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-HK
 Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfJLFus0UOju00uMpiAKGdpVh/PoZAfFbVIKd5hC01mYNrpdrq7LFoG3cn0J43KeZYu9NzfFo+1LK9rJAEsOLa/vlUcq/t/r99Ia3QSiNpqoZ3DdEVsJQ
+ g8X6IWyI9VmitEcJTuWSRLgOlrl45RkJEuAv0RtGOYER93S/LB6ToBJXa1KzbgSICFQEW8y3Blz7t3e1N84a0yiSKLWSC64oALLsxCoTOszjIDHLqUwBsQ6q
+ u7G8kRGm4GVKb8CffT99Cp/ZVbSCeNy3xFUFV49uHQyhUklj8AiSIgTBJjyz+syjH2WOVjaUj3PAxm9tRZWwaA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It's annoying not to be able to put comments and empty lines in the
-skipList, when e.g. keeping a big central list of commits to skip in
-/etc/gitconfig, which was my motivation for 1362df0d41 ("fetch:
-implement fetch.fsck.*", 2018-07-27).
+Hi Johannes
 
-Implement that, and document what version of Git this was changed in,
-since this on-disk format can be expected to be used by multiple
-versions of git.
+On 27/08/18 22:21, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 25 Aug 2018, Constantin Weißer wrote:
+> 
+>> I think there are two aspects to using "force with lease".
+> 
+> There is a third, very, very important aspect.
+> 
+> When you use --force-with-lease (and I, for one, do, all the time), keep
+> in mind that it assumes that you are at least aware of the latest fetched
+> ref.
+> 
+> Let's add a little color to this, to make it less theoretical, and more
+> relateable. Let's assume that you work on a branch, say,
+> `make-this-thing-work`, and you have to work on this branch on two
+> different machines, because it is a finicky thing you need to make work.
+> Let's add even more color by saying that one of your machines is a windows
+> machine, and the other one an old IRIX machine. We will call them
+> `windoze` and `irixxx`.
+> 
+> The common use case for `--force-with-lease`, at least as far as I know,
+> is that this branch is pushed from one of these setups first, say,
+> `windoze`, and fetched on the other, then a fixup is necessary and you
+> rebase the branch with `--autosquash` to make it compile on IRIX, and then
+> you push with `--force-with-lease` a day later, just in case that you
+> forgot to re-fetch something that you did on the `windoze` machine.
 
-There is no notable performance impact from this change, using the
-test setup described a couple of commist back:
+I have this workflow scripted to sync between my desktop and laptop and 
+use it a lot.
 
-    Test                                             HEAD~             HEAD
-    ----------------------------------------------------------------------------------------
-    1450.3: fsck with 0 skipped bad commits          7.81(7.42+0.39)   7.72(7.34+0.38) -1.2%
-    1450.5: fsck with 1 skipped bad commits          7.75(7.36+0.38)   7.66(7.26+0.39) -1.2%
-    1450.7: fsck with 10 skipped bad commits         7.81(7.43+0.38)   7.70(7.30+0.39) -1.4%
-    1450.9: fsck with 100 skipped bad commits        7.85(7.42+0.42)   7.73(7.31+0.41) -1.5%
-    1450.11: fsck with 1000 skipped bad commits      7.81(7.43+0.38)   7.84(7.46+0.38) +0.4%
-    1450.13: fsck with 10000 skipped bad commits     7.87(7.47+0.40)   7.86(7.46+0.40) -0.1%
-    1450.15: fsck with 100000 skipped bad commits    7.77(7.39+0.38)   7.83(7.48+0.34) +0.8%
-    1450.17: fsck with 1000000 skipped bad commits   7.17(6.92+0.24)   7.11(6.85+0.26) -0.8%
+> (Something like this happened to me recently, where one of my branches did
+> not compile in a Linux VM with an older cURL, and I had to fix a
+> Windows-targeting branch to keep it cross-platform)
+> 
+> The `--force-with-lease` option helps here, and quite a bit.
+> 
+> It would totally lose its usefulness, though, if you use a tool that
+> auto-fetches those remote branches. For example, "synchronizing" in
+> <name-your-favorite-git-gui-here>.
+> 
+> In that case, you did not see what was fetched, and you might have missed
+> updates, and you will overwrite them, even if you tried to be careful by
+> using `--for-ce-with-lease`.
+> 
+> I proposed, a couple of months ago, to either fix `--force-with-lease`, or
+> to deprecate it in favor of a new option, with a new behavior. The new
+> behavior would look at the *reflog*, much as the `--fork-point` option of
+> `git rebase`: in addition to the regular `--force-with-lease` server-side
+> checks, a client-side check *first* verifies that the remote-tracking
+> branch is reachable at least from *one* of the items in the reflog of the
+> branch we are about to push.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/config.txt        | 4 ++--
- fsck.c                          | 2 ++
- t/t5504-fetch-receive-strict.sh | 6 +++---
- 3 files changed, 7 insertions(+), 5 deletions(-)
+I think to be completely safe you only want to check the reflog items 
+added since the last push, you can get that time by walking the reflog 
+of the remote branch. (In my script I have to settle for using the hash 
+of the last push rather than the time as there are no pretty format 
+specifiers for the reflog dates, just commit and author dates). The 
+script also implements a pull command that will rebase any local changes 
+since the last push on top of the remote changes so long as the local 
+changes are descendants of the last push (i.e rebase --onto $new_remote 
+$last_push - I've never been sure if this is the same as using 
+--fork-point or not).
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ebaa044689..824634c412 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1712,8 +1712,8 @@ will only cause git to warn.
- fsck.skipList::
- 	The path to a list of object names (i.e. one SHA-1 per
- 	line) that are known to be broken in a non-fatal way and should
--	be ignored. Comments ('#') and empty lines are not supported, and
--	will error out.
-+	be ignored. On versions of Git 2.20 and later comments ('#') and empty
-+	lines are ignored, but will error out on older versions.
- +
- This feature is useful when an established project should be accepted
- despite early commits containing errors that can be safely ignored
-diff --git a/fsck.c b/fsck.c
-index 4c643f1d40..589548308a 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -190,6 +190,8 @@ static void init_skiplist(struct fsck_options *options, const char *path)
- 		die("Could not open skip list: %s", path);
- 	while (!strbuf_getline(&sb, fp)) {
- 		const char *p;
-+		if (!strcmp(sb.buf, "") || starts_with(sb.buf, "#"))
-+			continue;
- 		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
- 			die("Invalid SHA-1: %s", sb.buf);
- 		oidset_insert(&options->skiplist, &oid);
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index c7224db3bb..a1bac164d1 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -169,20 +169,20 @@ test_expect_success 'fsck with invalid or bogus skipList input' '
- 	test_i18ngrep "Invalid SHA-1: \[core\]" err
- '
- 
--test_expect_success 'fsck with invalid or bogus skipList input (comments & empty lines)' '
-+test_expect_success 'fsck with other accepted skipList input (comments & empty lines)' '
- 	cat >SKIP.with-comment <<-EOF &&
- 	# Some bad commit
- 	0000000000000000000000000000000000000001
- 	EOF
- 	test_must_fail git -c fsck.skipList=SKIP.with-comment fsck 2>err-with-comment &&
--	test_i18ngrep "^fatal: Invalid SHA-1: # Some bad commit$" err-with-comment &&
-+	test_i18ngrep "missingEmail" err-with-comment &&
- 	cat >SKIP.with-empty-line <<-EOF &&
- 	0000000000000000000000000000000000000001
- 
- 	0000000000000000000000000000000000000002
- 	EOF
- 	test_must_fail git -c fsck.skipList=SKIP.with-empty-line fsck 2>err-with-empty-line &&
--	test_i18ngrep "^fatal: Invalid SHA-1: " err-with-empty-line
-+	test_i18ngrep "missingEmail" err-with-empty-line
- '
- 
- test_expect_success 'fsck no garbage output from comments & empty lines errors' '
--- 
-2.19.0.rc0.228.g281dcd1b4d0
+> That is, it would ensure that even if we rebased locally, we did
+> incorporate the tip commit of the remote-tracking branch, at some stage.
+> 
+> Granted, there are probably cases where you would fetch, look at the
+> remote-tracking branch, and reject those changes without integrating those
+> into the local branch. In that case, you would want to relax to the
+> current behavior of `--force-with-lease`. But I would expect that to
+> happen only rarely.
+> 
+> The safety by the proposed behavior would make it a lot easier to accept a
+> config setting that makes this the default.
 
+I agree having this as an option to push would be very useful for this 
+sort of work flow.
+
+Best Wishes
+
+Phillip
+
+> 
+> I guess that is the reason why that config setting does not exist yet: we
+> would want to have that new behavior in place first...
+> 
+> Ciao,
+> Johannes
+> 
+>>
+>> Firstly, you, a person aware of the option, using it. In this case I
+>> think an alias is very fitting, because you get quickly used to just
+>> typing `git pf` or so. Plus, you don't have the disadvantage you
+>> described: if you’re working on a machine without your alias, you’ll
+>> just notice immediately and type the full option.
+>>
+>> The other aspect is working in a team. The problem there is, that most
+>> (at least in my surroundings) use plain --force and you have to make
+>> them aware of --force-with-lease. But with an option or an alias, you
+>> depend on them using force with lease instead of plain force, so again I
+>> don't really see the advantage of such an option.
+>>
+>> And lastly, a question: say you are using your proposed option and it is
+>> turned on. Now, git refuses to push, you clarify the situation and
+>> actually mean to push --force now. How would you do this? 1) turn off 2)
+>> push 3) turn option on again?
+>>
+>> Regards,
+>> Constantin
+>>
+>> Quoting Scott Johnson (2018-08-24 18:39:27)
+>>> Hello Everyone:
+>>>
+>>> I'm considering writing a patch that adds a configuration variable
+>>> that will allow the user to default the command:
+>>>
+>>> git push --force
+>>>
+>>> to:
+>>>
+>>> git push --force-with-lease
+>>>
+>>> As discussed here:
+>>>
+>>> https://stackoverflow.com/questions/30542491/push-force-with-lease-by-default
+>>>
+>>> Now, I understand that there are downsides to having this enabled,
+>>> namely that a user who has this enabled might forget that they have it
+>>> enabled, and, as such, on a machine that _doesn't_ have it enabled (of
+>>> which they are unfamiliar) might then run the more consequential
+>>> command "git push --force", but my thinking is that adding this as a
+>>> feature to the git codebase as an _optional_ (i.e. not enabled by
+>>> default) configuration variable would then save some of us who use a
+>>> "rebase-then-force-push for pull request" workflow some time and
+>>> headaches.
+>>>
+>>> Of course, I don't want to submit a patch if this is a feature that
+>>> isn't likely to be accepted, so I wanted to get some thoughts from the
+>>> mailing list regarding this idea.
+>>>
+>>> Thank you,
+>>>
+>>> ~Scott Johnson
