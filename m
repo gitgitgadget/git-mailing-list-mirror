@@ -7,115 +7,87 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C1761F404
-	for <e@80x24.org>; Tue, 28 Aug 2018 19:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CECCE1F404
+	for <e@80x24.org>; Tue, 28 Aug 2018 19:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727174AbeH1XSu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 28 Aug 2018 19:18:50 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:32999 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726975AbeH1XSu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 28 Aug 2018 19:18:50 -0400
-Received: by mail-io0-f195.google.com with SMTP id r196-v6so2464376iod.0
-        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:25:46 -0700 (PDT)
+        id S1727146AbeH1XVC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 28 Aug 2018 19:21:02 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:38440 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726996AbeH1XVC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 28 Aug 2018 19:21:02 -0400
+Received: by mail-it0-f66.google.com with SMTP id p129-v6so4042108ite.3
+        for <git@vger.kernel.org>; Tue, 28 Aug 2018 12:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mir4wiyXTowL4KwQ5m2kOc6CyccJfu8QBvlksh1VlhY=;
-        b=esPrGpQuv04cDI/vaFc4XXKsVGRg9jObO6A0mHeI8IZ3uQmswxWOvHLhkMJfN4O92E
-         jv+1fL1Fju4SWrw8vyn0bBeECrpryouL/NWwiY+xsqcgR2Chsx5pWoZOUDduBNeAUq3U
-         QrYf4qTXSmVYolXgEnU50cM6phY1S7BQwlMMCRPjB5VMaSqkN10a8aTB55FRndXDikgY
-         P4uuoLQdoW19HedH5ZdQX30gQ3B6PlhEI8brgu286r7LsAmJY9rzyibOTKRIr/qYENiR
-         m5GOUlB4Uaf15SNANKMprTg3gDyZm6B2HWMCwl3xDK81IVwOIR7x1C5XAgioYAM22fRU
-         M6zQ==
+         :cc:content-transfer-encoding;
+        bh=/DlbiJlqvYUNtvruob8doyyz4eY70sFDsHsA/oQeUJI=;
+        b=qQHZHOA5kW6hVrJfMGE++e5iegZYME6PF7wN5iHUhl5Mjt13irKWSSjFmFu0lqi14o
+         /inN7WiM/iEv3LmSHQpZcCs0PP6XXT4Y7E8RRxzKWeR+oBninucqGB+IPy54F6sdLTX6
+         uKPahjb59RUlzaYdA4n7Ro1jsuC/V6yG/VxgSF93B2gjW5lagGQQyvCRh2L3zyKQElgm
+         rmmau3cSAyAaISre/Y+FX5++vGHeyb+dB1xAQMfYQKSdRD+FIks5zqKXuHAoQt6BMk3p
+         BnXG+A8ZDRwHEE/qdrX5qJ0iYt9eZ8ytljjqFx0INxaWLik+fzKJU9Nist8ymLADyDkN
+         0K+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mir4wiyXTowL4KwQ5m2kOc6CyccJfu8QBvlksh1VlhY=;
-        b=rmPXxfVoLpfe9mlMN5JXzrtpfewyCHYtZwanEe5paou06q9IfZyUPta1OfRoSIm6EJ
-         z/AoUn8ZyVksoB86CXotrmC1sqB0IlCMgjsigtjXDuKhs4kxArwtPgmTKhT8Rg4hY3dn
-         NjqZ7BOz3PuBYGDFPaROL3FKypO9Uy6mUe5EVynVE9vrZLvvvjP4Jbdfx96teEu06aRs
-         RocaAkFrqvWfLGLkZt+Y+4te7xdgWn/i/CXMQ72WXI+00EprCDTiE+JwIAWQvvOI1T1X
-         1Na6z6GqZd/ne2R9nPYjyob+PV5AMkO/z2G/qAoN5/+PkFbc429PNUjXS7wNNyDwuh4/
-         QRpg==
-X-Gm-Message-State: APzg51AhpU3oTFw2JRTHqXBu03DbDjnqLMIZsylkzMpjrXAGVGI59jan
-        iYMn036Csg+fjzL9uSdLRFb6F6UtlAcgULR1Ybg=
-X-Google-Smtp-Source: ANB0VdYRL/2+xTcrmpkimSntOt0vIQ8pI8mG4GByIIm4TYtVU6Kx3QvR12Fc6es41RuL7frsoDFwH/nvSwcwxyfuneE=
-X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr2526889iok.236.1535484345775;
- Tue, 28 Aug 2018 12:25:45 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=/DlbiJlqvYUNtvruob8doyyz4eY70sFDsHsA/oQeUJI=;
+        b=qAos7ViCUbqaMXF3cRi2DbWVcaxxn7ZSWsypVOyJ7iMMuEaAhMRV6rjMDYGFgksnbH
+         y+Ps/jxjjdVq0h6Fg5lb4WfWdkpFg2JEAppfVTAISSq7pDIDuyecE7m6djBsCRJLcH6R
+         s3NhmKk4ApkWFnJp11Kq7v66B382gVBO76akmY8jVRCtBfJnFcunaaPJFsYCR9S8fdiJ
+         +RXqBQGOPF2MPAGWoD+KiuthKkEZUC65MCgUzpuiOXH2D+mLe0ODWSvX+T8QdSyvH7s7
+         6suqTxpc59yJFuDM3KbS35jT78phpkZNH/vDktVokEAsxzAtrmvQ12aX7aS4nVS1GF3l
+         k9Eg==
+X-Gm-Message-State: APzg51DOd7g2K669hzCRnuK28tq0yl9Dq15dw2QdmPBpbuE/+uTxse9B
+        7+0xTYrOEkmbnR1QfdTMQ7xnQ3kAZ2BkWV/Q0sysRw==
+X-Google-Smtp-Source: ANB0VdbS7a9+B4JKQFk7PAnYEfQoGfkSOI3YraAodnki3ef5gvTlQRzBbpdxt+XEv9fuE1PvlUG4cMk4GbvcW3ylayE=
+X-Received: by 2002:a24:144:: with SMTP id 65-v6mr2646529itk.62.1535484476746;
+ Tue, 28 Aug 2018 12:27:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180824155734.GA6170@duynguyen.home> <20180825064458.28484-1-pclouds@gmail.com>
- <xmqqwosbiouc.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwosbiouc.fsf@gitster-ct.c.googlers.com>
+References: <20180826100314.5137-1-pclouds@gmail.com> <20180826100314.5137-3-pclouds@gmail.com>
+ <CAGZ79kbZRuzaoK=922b2JyfY9u8kOqm44KzKmbpWdWAkJ=SVDg@mail.gmail.com>
+In-Reply-To: <CAGZ79kbZRuzaoK=922b2JyfY9u8kOqm44KzKmbpWdWAkJ=SVDg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 28 Aug 2018 21:25:19 +0200
-Message-ID: <CACsJy8B38QAW8qq-CctLJyJNaC329o6Rr1gs0kd=EkV+ARAaVw@mail.gmail.com>
-Subject: Re: [PATCH] read-cache.c: optimize reading index format v4
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Ben Peart <peartben@gmail.com>
+Date:   Tue, 28 Aug 2018 21:27:30 +0200
+Message-ID: <CACsJy8CYUcL+BNBYqX51vCZXahG6sO03=GJZCihCvh8MLn3KqQ@mail.gmail.com>
+Subject: Re: [PATCH 02/21] read-cache.c: remove 'const' from index_has_changes()
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 9:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > PS. I notice that v4 does not pad to align entries at 4 byte boundary
-> > like v2/v3. This could cause a slight slow down on x86 and segfault on
-> > some other platforms.
+On Mon, Aug 27, 2018 at 8:37 PM Stefan Beller <sbeller@google.com> wrote:
 >
-> Care to elaborate?
->
-> Long time ago, we used to mmap and read directly from the index file
-> contents, requiring either an unaligned read or padded entries.  But
-> that was eons ago and we first read and convert from on-disk using
-> get_be32() etc. to in-core structure, so I am not sure what you mean
-> by "segfault" here.
->
-
-My bad. I saw this line
-
-#define get_be16(p) ntohs(*(unsigned short *)(p))
-
-and jumped to conclusion without realizing that block is for safe
-unaligned access.
-
-> > @@ -1898,7 +1884,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
-> >       struct cache_header *hdr;
-> >       void *mmap;
-> >       size_t mmap_size;
-> > -     struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
-> > +     const struct cache_entry *previous_ce = NULL;
-> > +     struct cache_entry *dummy_entry = NULL;
+> On Sun, Aug 26, 2018 at 3:03 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+ <pclouds@gmail.com> wrote:
 > >
-> >       if (istate->initialized)
-> >               return istate->cache_nr;
-> > @@ -1936,11 +1923,10 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
-> >       istate->initialized = 1;
-> >
-> >       if (istate->version == 4) {
-> > -             previous_name = &previous_name_buf;
-> > +             previous_ce = dummy_entry = make_empty_transient_cache_entry(0);
+> > This function calls do_diff_cache() which eventually needs to set this
+> > "istate" to unpack_options->src_index (*). This is an unfornate fact
 >
-> I do like the idea of passing the previous ce around to tell the
-> next one what the previous name was, but I would have preferred to
-> see this done a bit more cleanly without requiring us to support "a
-> dummy entry with name whose length is 0"; a real cache entry never
-> has zero-length name, and our code may want to enforce it as a
-> sanity check.
+> unfortunate
 >
-> I think we can just call create_from_disk() with NULL set to
-> previous_ce in the first round; of course, the logic to assign the
-> one we just created to previous_ce must check istate->version,
-> instead of "is previous_ce NULL?" (which is an indirect way to check
-> the same thing used in this patch).
+> > diff --git a/diff.c b/diff.c
+>
+> Unlike I thought in the cover letter, this is just adding the repository =
+all
+> over the place and not adding new code, despite the size.
+>
+> A cursory read seems to make sense, though I'd nitpick on the
+> choice of the variable name as I used to use 'r' for the repository
+> struct. I am not saying that is better, but we could think if we want to
+> strive for some consistency eventually. (for example most strbufs are
+> named 'sb', as they are temporary helpers with no explicit naming
+> required. So maybe we could strive to name all "repository pass throughs"
+> to be "repo" or "r").
 
-Yeah I kinda hated dummy_entry too but the feeling wasn't strong
-enough to move towards the index->version check. I guess I'm going to
-do it now.
--- 
+"r" it is! I forgot about it. But this is for local variable or
+argument names only right? The field name (in diff_options for
+example) should stay something more descriptive like repo, I think.
+--=20
 Duy
