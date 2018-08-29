@@ -3,117 +3,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9EEB01F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 22:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7794C1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 23:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbeH3Cvg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 22:51:36 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38348 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727328AbeH3Cvg (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 22:51:36 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E3ADA60428;
-        Wed, 29 Aug 2018 22:52:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535583147;
-        bh=xVz4uFezddWUYbTziFXmlknchKtElMxpMkiCd67Da1U=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dukszwkHX9Hee0TLusYmemQC8mCDhuuiYSMa40iZndK9Po6KTZsJitzzS7j/4F7QG
-         BjetZCMX+jr9WSkYHS8Pq8SGhRDFg2IP7YlXLgPVhGD15LqTpQwmwYDKg17Y49gBuV
-         rbfAg8fidEHAlxCryZ94fCpwuQQ7RdWZggnJlS3AtrF6uN4p85uikZOrZTfol09rMx
-         Xj7mCm4Yp8/kzpy9VaMqdHVAln8Vov02FdKMu/qwaGNzqBSvWKJtSqDxH+938qwSQO
-         NVjNIKH7twCMCVjmDWlPJ94HjAq8Txlw8a5bU0FiN4NdPfgQYc6JvKExfX8/WoLgbr
-         NFGWvVnXLAdPvehkYvYZ8VczNWbWq/FycxYVmryXN9dXyNGQrw0GadcjOrMpoNglTx
-         it4/kbJo0QODYPdsnDvSZr8N52snwQyqjTWqlCLo21JRkmqSkmkpb+viVXXiYambYh
-         Qg13oSLkx+oBshzwLP4W2WPWxeNwRVzmakW9Ca1YAoqDLjYjWaU
-Date:   Wed, 29 Aug 2018 22:52:22 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v3 01/11] t: add tool to translate hash-related values
-Message-ID: <20180829225222.GE432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
- <20180829005642.980617-2-sandals@crustytoothpaste.net>
- <777ea296-005d-0408-1197-178898399593@gmail.com>
+        id S1727760AbeH3DAL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 23:00:11 -0400
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:34865 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727367AbeH3DAL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 23:00:11 -0400
+Received: by mail-ua1-f68.google.com with SMTP id m26-v6so4332453uap.2
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 16:01:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=NSk7kEKXMq3+xvnoIhWLnV/JocH8icHs+TA4bviIGrs=;
+        b=G02zDaJoJe3ZdDZ17B40gTXIViigOXMa6S98eb+O8R9G8lr49kxZCkhhi4i3uFc6ii
+         Hpu5oaeXMyaZIOAFTEBW2o4Rfu5J2H/POOhgN9nT+Ul0xA3Z6LWA0KLoTeLvDRaVy9WS
+         TmPEitU8dNY35uCoblbpbsfqM2Ve4EnExw7MOM+B8DD0Z5vJHV/TyeNlF1sz0CGKmgEB
+         wntn8Cu9ce76LeKX9IR2tH0O5Pvxkzow0ABcoeJ2Vnzqs1EKx8wsDRvpPYjQrYdasGda
+         1p17SiU2dDIthsTPDtlKn2CsIFt/RVyLG1PgZG+xEWCN5V1aD/ecGxg0of8G7rpyGS22
+         bEMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=NSk7kEKXMq3+xvnoIhWLnV/JocH8icHs+TA4bviIGrs=;
+        b=LjfonHPbiFYNzd5qgMSJzgh3pbRozACdrOqwbAKWADBP/vw0iyZ6/ipnG3/thnF1Wx
+         FsqkkZx63vPklWhe8RRCX/+4San4kXxvMOrkRfOkvIoMkCqbd5oAeaxsz7Xe0FbaH3qD
+         pC8hWsu5rwhk6GAhg6Qj9VEhY7JTDjZbTJSXHvhSDhQBLtXOisyMJYdJmuz2OEGdXgs9
+         WjpvChu8Hf0tLWTDAcoH4XlagLealR7s7FBtHycL8oaZC79wkt0Qc8QT4D12vrtj+chN
+         9tVYo0/chEg/9EFkBHd/7BJqF+bvQmazSXm+hhEjjZLn0wfLbNd8GaWWlh/UoewjEQ4O
+         myrQ==
+X-Gm-Message-State: APzg51BRnbYXZossCjAn79u7sYlKIdjeZd49eeHYeXiRMuvukPFgAjLB
+        MzdFIywDKr7S/3Rw1QQ7jYFFR6FzigBgsllwomA=
+X-Google-Smtp-Source: ANB0VdZ59UC7+la+qHXwbmClBwi47zQu9IUNrDHOUNqsNNs1d5Evk/MaVIMXdFhK4JcKvanpu4LpjmNyb2o0/P4qWwI=
+X-Received: by 2002:ab0:5507:: with SMTP id t7-v6mr5697648uaa.100.1535583660557;
+ Wed, 29 Aug 2018 16:01:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="M/SuVGWktc5uNpra"
-Content-Disposition: inline
-In-Reply-To: <777ea296-005d-0408-1197-178898399593@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com> <20180829070613.11793-1-newren@gmail.com>
+ <20180829070613.11793-3-newren@gmail.com> <nycvar.QRO.7.76.6.1808291452070.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1808291452070.71@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 29 Aug 2018 16:00:48 -0700
+Message-ID: <CABPp-BHFrk026R5VZLGwVvRYq_d82GTFqAyAeyTD=iQX4df2Bw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] merge-recursive: add ability to turn off directory
+ rename detection
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, corrmage@gmail.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Aug 29, 2018 at 5:54 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Wed, 29 Aug 2018, Elijah Newren wrote:
+>
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
+> >  merge-recursive.c | 18 +++++++++++++-----
+> >  merge-recursive.h |  1 +
+> >  2 files changed, 14 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index f110e1c5ec..bf3cb03d3a 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -2843,12 +2843,19 @@ static int handle_renames(struct merge_options *o,
+> >       head_pairs = get_diffpairs(o, common, head);
+> >       merge_pairs = get_diffpairs(o, common, merge);
+> >
+> > -     dir_re_head = get_directory_renames(head_pairs, head);
+> > -     dir_re_merge = get_directory_renames(merge_pairs, merge);
+> > +     if (o->detect_directory_renames) {
+> > +             dir_re_head = get_directory_renames(head_pairs, head);
+> > +             dir_re_merge = get_directory_renames(merge_pairs, merge);
+> >
+> > -     handle_directory_level_conflicts(o,
+> > -                                      dir_re_head, head,
+> > -                                      dir_re_merge, merge);
+> > +             handle_directory_level_conflicts(o,
+> > +                                              dir_re_head, head,
+> > +                                              dir_re_merge, merge);
+> > +     } else {
+> > +             dir_re_head  = xmalloc(sizeof(*dir_re_head));
+> > +             dir_re_merge = xmalloc(sizeof(*dir_re_merge));
+>
+> This is not a suggestion to change anything, but a genuine question out of
+> curiosity: would it make sense to put the `dir_re_head` and `dir_re_merge`
+> structures into `struct merge_options` to avoid these extra `malloc()`s?
+> Or would that cause issues with the recursive nature of the recursive
+> merge?
 
---M/SuVGWktc5uNpra
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Aug 29, 2018 at 08:37:48AM -0400, Derrick Stolee wrote:
-> On 8/28/2018 8:56 PM, brian m. carlson wrote:
-> > +	rawsz=3D"$(test_oid rawsz)" &&
-> > +	hexsz=3D"$(test_oid hexsz)" &&
->=20
-> These are neat helpers! The 'git commit-graph verify' tests in
-> t5318-commit-graph.sh should automatically work if we use these for HASH_=
-LEN
-> instead of 20. I'll use a similar pattern when writing 'git multi-pack-in=
-dex
-> verify'.
-
-Thanks.  In the future, test_oid will learn about internal versus
-external object names, since we'll have what's printed by the UI (which
-might be SHA-1) and what's under the hood (which might be SHA-256).
-However, it should be easy enough to update all those pplaces, so if you
-use them now, it should be easy enough to update them in them in the
-future to refer to the right thing.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---M/SuVGWktc5uNpra
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluHI6YACgkQv1NdgR9S
-9ouMGQ/+MzUdXh81mnaqZBb3rY/U6uefb+5fDGqoTsbqiVMaWHbkIw4pk1TXyTFr
-TxCl8OeTeSuStwk/EBVyGI1egHAlIOjm0VhT65T/ZKyqbgER3vT4Qqc+4pPX3sqa
-M4OgtJuVzHRGufovBe0YE7Pl+8axeXAfq53Y54QsOvHHpJR6X+hwDqmLKiL+V74D
-O+ixJdrLH1B1CVuAOcumI2HpX/EFXNy617nRetjCFcrvCEJ6/fjxA97CVGcpUnz1
-HXoImr90IeDXv9X1siw/5C0RD594Z/8Iu9IsuAoA7gs0/DUU+NlwjzzpFQ4qKmik
-f82Ybr3CHHjiRRHBBySO5iDilyD0ctQSKV2KgjVstS9atwZk+J0GBgt/w5H0Ba5O
-CkcKW+o4IbszS5Xukr4f3sxEQHcHoBv3hdn6jKJvvlKQLR852EfdWvr8/t0tudwi
-Yw4r2YTVCu+pCMMC8/EFBBuhw/msgUszBksl3N86ugTdTuwanejjYjXK8BVrQgte
-/EJgOjyvQeGrjKX/KZvGYbsXcC4GWXa31dSRkjknjv2zUNRIeVsZOmdEpzM5j6b0
-PYPt37BOBdqHgjTwLIENQrS1yqmC9VpCz/LhIIT0k2V7PU4sILofZHlqEP/3hk7G
-/hjtpjoEQymfxt858I9r3q64TUN0JNpVP3JchuD+IX6OsVjh8IM=
-=1Eqm
------END PGP SIGNATURE-----
-
---M/SuVGWktc5uNpra--
+That would work to avoid the extra `malloc()`s, and be inline with the
+current usage of merge_options.  However, I'm not sure I like the
+current usage of merge_options. That struct is supposed to be public
+API, but it's got a lot of private internal-only use stuff (and
+putting dir_re_head and dir_re_merge there would add more).  I'm
+tempted to go the other way and eject some of the other internal-only
+stuff from merge_options (or wrap it inside an opaque struct
+merge_options_internal* internal field, or something like that).
