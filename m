@@ -6,30 +6,31 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E9451F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:30:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4886C1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:32:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727852AbeH3B3A (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:29:00 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32906 "HELO cloud.peff.net"
+        id S1727227AbeH3BbG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:31:06 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32920 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727324AbeH3B3A (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:29:00 -0400
-Received: (qmail 21124 invoked by uid 109); 29 Aug 2018 21:30:14 -0000
+        id S1727177AbeH3BbG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:31:06 -0400
+Received: (qmail 21215 invoked by uid 109); 29 Aug 2018 21:32:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:30:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:32:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19042 invoked by uid 111); 29 Aug 2018 21:30:22 -0000
+Received: (qmail 19063 invoked by uid 111); 29 Aug 2018 21:32:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:30:22 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:32:27 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:30:12 -0400
-Date:   Wed, 29 Aug 2018 17:30:12 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:32:17 -0400
+Date:   Wed, 29 Aug 2018 17:32:17 -0400
 From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
 Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180829213012.GA32400@sigill.intra.peff.net>
+Message-ID: <20180829213217.GB32400@sigill.intra.peff.net>
 References: <20180807230637.247200-1-bmwill@google.com>
  <20180808223323.79989-1-bmwill@google.com>
  <20180808223323.79989-3-bmwill@google.com>
@@ -37,44 +38,36 @@ References: <20180807230637.247200-1-bmwill@google.com>
  <20180814180406.GA86804@google.com>
  <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
  <20180829052519.GA17253@sigill.intra.peff.net>
- <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
- <20180829210348.GA29880@sigill.intra.peff.net>
- <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+ <20180829210913.GF7547@aiede.svl.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+In-Reply-To: <20180829210913.GF7547@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 02:10:37PM -0700, Stefan Beller wrote:
+On Wed, Aug 29, 2018 at 02:09:13PM -0700, Jonathan Nieder wrote:
 
-> > Yes, that makes even the capitalized "CON" issues go away. It's not a
-> > one-to-one mapping, though ("foo-" and "foo_" map to the same entity).
+> Jeff King wrote:
+> > On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
 > 
-> foo_ would map to foo__, and foo- would map to something else.
-> (foo- as we do not rewrite dashes, yet?)
-
-Ah, OK, I took your:
-
->   [A-Z]  -> _[a-z]
-
-to mean "A-Z becomes a-z, and everything else becomes underscore".
-
-If you mean a real one-to-one mapping that allows a-z and only a few
-safe metacharacters, then yeah, that's what I was thinking, too.
-
-> > If we want that, too, I think something like url-encoding is fine, with
-> > the caveat that we simply urlencode _more_ things (i.e., anything not in
-> > [a-z_]).
+> >> Yeah, then let's just convert '/' with as little overhead as possible.
+> >
+> > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
+> > colliding)?
+> >
+> > I'm OK if the answer is "no", but if you do want to deal with it, the
+> > time is probably now.
 > 
-> Yeah I think we need more than url encoding now.
+> Have we rejected the config approach?  I really liked the attribute of
+> not having to solve everything right away.  I'm getting scared that
+> we've forgotten that goal.
 
-If you take "url encoding" to only be the mechanical transformation of
-quoting, not the set of _what_ gets quoting, we can still stick with it.
-We don't need to, but it's probably no worse than inventing our own
-set of quoting rules.
+I personally have no problem with that approach, but I also haven't
+thought that hard about it (I was mostly ignoring the discussion since
+it seemed like submodule-interested folks, but I happened to see what
+looked like a potentially bad idea cc'd to me ;) ).
 
 -Peff
