@@ -2,104 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 520471F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 20:59:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8D331F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:01:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728819AbeH3A5r (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 20:57:47 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:44809 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeH3A5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 20:57:47 -0400
-Received: by mail-yw1-f74.google.com with SMTP id w23-v6so3104105ywg.11
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 13:59:08 -0700 (PDT)
+        id S1727704AbeH3BAN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:00:13 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:35604 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeH3BAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:00:13 -0400
+Received: by mail-pf1-f195.google.com with SMTP id p12-v6so2831158pfh.2
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=pEW/vUp/fQeWpaJddpS0JvJmi803pBimC2lSQc1e1o8=;
-        b=aYVSBmYRHXpGY3/1Z140WzzLvBK1D/nuntrTfMwIcAO10jyvB46ORqy3BIsKqwqhAh
-         /ULXuKd4cC7Sk+cnUKdsv8xY2Psa3/45Z0bTvT6jiOrmeYQosnAWPWaqOvtMrvISEqoM
-         BEmXGdbV40lKypjcDc/kPOPb7XQj9TKil9oqiksyg4NHh+Szh55YNndWmAGQ8T1RkqfT
-         gwbHjGB3S3k6Aw2jRGAZmbMUAZJ0kMXNhEjyWHGTQjqdudM91CyMpWechUxR8B8RfnGO
-         klkz1pR3gefbJdmHV8qIQs2oklRKLBdUQRuCsfuxvwMXHp/BB02kLV4O6IXWlY1Kzlm+
-         K13w==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ApGISWSDLp3mm1DpBGVLHfsN/UmYXRgTxqQ4lRRLPEI=;
+        b=FeV1y+DsVZKqcnAQYvIhiViTO3sAeU9qSbk0uSijWbLPFy25bhU2FXrq/9TA8Y+5Lh
+         NemctIqR78dEa/5g7OYOf+7sdxlfoClxfLt/vek1VgxMHxMe/BXkitXajNyM815oxj8F
+         c4WTv+AkHJUutmZqj+S2KMUXgPZYiwBYfSL/7M06VIXhJi+32DdXPDNmhM/7+/rPXs+J
+         x1VXq/MLKgZqpvjT4JAUZX15Sbt5NW1JG6bjVYFOKJpQrGlX34kCJiRZsDcYaZ+y4kI0
+         pdxl3TrTB12SBuuUnbeAQp1/O/x7JwoWmnHB3qT7EjugcCeoSwYyg1yBorjU/jjzA3+Y
+         fcMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=pEW/vUp/fQeWpaJddpS0JvJmi803pBimC2lSQc1e1o8=;
-        b=eV0AQ2Fa8bJi4wKhVtTw4KdmRbKOby6JF5RcXteCp+c9qC6W0f5XX8inU4DQx3pAAC
-         ILx5ayOmUTRdAT7zAhSCEIGIKXPHwhTaSsZrYq+HCOofjIZ7oMB/pmNk8dDD2IC2rxyG
-         mWnxhzspE1aBoz9uhDXEbE+aYPGUplZgNuXB7spvBv+oXvw5Eo/oyRleT6mGzDvaKRz7
-         SuQU5Ku8HBkCBUNywONxm++kupruvsVcqLBYrRXnPllDfiJhVY65fH9wBIjQb7fQSnGD
-         bmVdAJ7q+aOYyGiqhyu/18veiyLQ5d7mAXhX3IwGdnh6mhqrCnwJ2ce2O3wonhnrGV8M
-         7JqQ==
-X-Gm-Message-State: APzg51BQtswxMmuhD+45TX68wTzRA+ph4ypskNvVDHpB5Q0qicBV22M3
-        x3lFYLVFUut6/ifI4HCSpghj5vW85SZiKKEn6nxI4LZMUBGyh+u6dc4eT6D4asQvD5K2QdC0pXw
-        DO303k7cQ4bN6Iw5vCXYvLBjoPkUJM2/TsHnH9PwsS1ayogyr7Q0bTok=
-X-Google-Smtp-Source: ANB0VdZUG/WvJL3HY0FwYWvynULXUc4TFkYdcCRhKR9oMVheTIgNOFYuLR6RaCl2hemcHb9ckTVzA6wfZA==
-X-Received: by 2002:a25:dd04:: with SMTP id u4-v6mr2265447ybg.76.1535576348131;
- Wed, 29 Aug 2018 13:59:08 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 22:58:57 +0200
-In-Reply-To: <20180829205857.77340-1-jannh@google.com>
-Message-Id: <20180829205857.77340-3-jannh@google.com>
-Mime-Version: 1.0
-References: <20180829205857.77340-1-jannh@google.com>
-X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0-goog
-Subject: [PATCH 3/3] t5303: add tests for corrupted deltas
-From:   Jann Horn <jannh@google.com>
-To:     git@vger.kernel.org, jannh@google.com
-Cc:     gitster@pobox.com,
-        "=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=" 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Jeff King <peff@peff.net>, Nicolas Pitre <nico@cam.org>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ApGISWSDLp3mm1DpBGVLHfsN/UmYXRgTxqQ4lRRLPEI=;
+        b=rdgNwi9SGUEvj4bOjIXQ27VyChBl94nnAA7S2PT5osZxygG9iwsuRjNTlc8azHWrK4
+         7IunwOAu7hGu/BLVE+Vq0Zy0AkaNwBejfLIigX8mRrX5iBW8CX8+QGS7/1ph0IF3AwMk
+         ei1I3M3LBpq+aGy4JbKqaHcj0SxfRMJjg8ELbFuaoW/MSZseuRGqTZF4un31u3CXSlze
+         eU59K1ojB1xOyeVoP4PcURwWouLfHlLkErQakjLMguTIuAx42bEFXByxT1RbE3EfFeZX
+         s/FYBgJf5jLu888oJZFS/iW5RTCk/QNg/pFm+rJKD8r6qCEbzO8zHccoCzJsUfHdYzSI
+         xtFw==
+X-Gm-Message-State: APzg51CaU9MKSxPcSZGkp3VM8P+Pb5r0SG+vwj6GcH6xe75fA3oXLOky
+        WEqFywpqcX5SXuSk8kEhU6Y=
+X-Google-Smtp-Source: ANB0VdZkljupnljdU8uyw29yrrlbcHcg62QgGhmh9Y57n0lIVTQVoxrigZyEePo1FUmM2EPz0MXZ2g==
+X-Received: by 2002:a62:1089:: with SMTP id 9-v6mr7507130pfq.30.1535576492418;
+        Wed, 29 Aug 2018 14:01:32 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id v72-v6sm11918175pfj.22.2018.08.29.14.01.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 14:01:31 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 14:01:29 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: How is the ^{sha256} peel syntax supposed to work?
+Message-ID: <20180829210129.GE7547@aiede.svl.corp.google.com>
+References: <878t4xfaes.fsf@evledraar.gmail.com>
+ <20180824014703.GE99542@aiede.svl.corp.google.com>
+ <877ek9edsa.fsf@evledraar.gmail.com>
+ <CAGZ79kaGb_TL7SiR4CFGFzrfy2Lotioy76o6sUK4=vZK5qwqNA@mail.gmail.com>
+ <20180829175950.GB7547@aiede.svl.corp.google.com>
+ <87zhx5c8wo.fsf@evledraar.gmail.com>
+ <20180829191232.GC7547@aiede.svl.corp.google.com>
+ <xmqq36uwc2s8.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq36uwc2s8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This verifies the changes from commit "patch-delta: fix oob read".
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Jann Horn <jannh@google.com>
----
- t/t5303-pack-corruption-resilience.sh | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+>> In other words, I want the input format and output format completely
+>> decoupled.
+>
+> I thought that the original suggestion was to use "hashname:" as a
+> prefix to specify input format.  In other words
+>
+> 	sha1:abababab
+> 	sha256:abababab
 
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index 3634e258f..7152376b6 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -311,4 +311,22 @@ test_expect_success \
-      test_must_fail git cat-file blob $blob_2 > /dev/null &&
-      test_must_fail git cat-file blob $blob_3 > /dev/null'
- 
-+test_expect_success \
-+    'apply good minimal delta' \
-+    'printf "\x00\x01\x01X" > minimal_delta &&
-+     test-tool delta -p /dev/null minimal_delta /dev/null
-+     '
-+
-+test_expect_success \
-+    'apply truncated delta' \
-+    'printf "\x00\x02\x02X" > truncated_delta &&
-+     test_must_fail test-tool delta -p /dev/null truncated_delta /dev/null
-+     '
-+
-+test_expect_success \
-+    'apply delta with trailing garbage command' \
-+    'printf "\x00\x01\x01X\x01" > tail_garbage_delta &&
-+     test_must_fail test-tool delta -p /dev/null tail_garbage_delta /dev/null
-+     '
-+
- test_done
--- 
-2.19.0.rc0.228.g281dcd1b4d0-goog
+That's fine with me too, and it's probably easier to understand than
+^{sha1}.  The disadvantage is that it clashes with existing meaning of
+"path abababab in branch sha1".  If we're okay with that change, then
+it's a good syntax.
 
+If we have a collection of proposed syntaxes, I can get some help from
+a UI designer here, too, to help find any ramifications we've missed.
+
+[...]
+> I do not think ^{hashname} mixes well with ^{objecttype} syntax at
+> all as an output specifier, either.  It would make sense to be more
+> explicit, I would think, e.g.
+>
+> 	git rev-parse --output=sha1 sha256:abababab
+
+Agreed.  I don't think it makes sense to put output specifiers in
+revision names.  It would create a lot of unnecessary complexity and
+ambiguity.
+
+Thanks,
+Jonathan
