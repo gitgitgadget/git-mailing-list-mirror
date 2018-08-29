@@ -2,119 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16C8A1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91B581F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:25:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727471AbeH3BTL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:19:11 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32872 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727363AbeH3BTL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:19:11 -0400
-Received: (qmail 20726 invoked by uid 109); 29 Aug 2018 21:20:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:20:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18895 invoked by uid 111); 29 Aug 2018 21:20:36 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:20:36 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:20:25 -0400
-Date:   Wed, 29 Aug 2018 17:20:25 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jann Horn <jannh@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 1/3] patch-delta: fix oob read
-Message-ID: <20180829212025.GB29880@sigill.intra.peff.net>
-References: <20180829205857.77340-1-jannh@google.com>
+        id S1728774AbeH3BXx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:23:53 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:37475 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727449AbeH3BXx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:23:53 -0400
+Received: by mail-pf1-f196.google.com with SMTP id h69-v6so2853745pfd.4
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z0FudICNXS28cLm3FQTslwtIKZD9LTWVMeC7RHd0JRs=;
+        b=i4c1+2+g7Po4RlXtHPBqoPHon5tR7JUU9EXSYxajN2Fezi5C5g6GCdPH0gJ6e6hkND
+         HYgNuz71ouDF2Fv33fK24DUX2747OHJES1/YJmk0S35iNL7fLX4WM4BlMby7rvW0t34y
+         jJbXDfK9dtzF6RAJhmMOjDVglltRo+2uOA6e1/EJeBxqwDhUYjFN1ceUAU5q9OxIYMOi
+         FQxwshlwSUsY8DEdIUDz+54PMtTRdt54TL/nRLod7cBdlP80s6kvts5c39L1D6yixF3C
+         wcuHlFT37JTmbGGtcRxZDD/DlWSOcfOLOoO3aAbjh3A6QnDchku/PJWEcri/5eoLfxew
+         dX6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Z0FudICNXS28cLm3FQTslwtIKZD9LTWVMeC7RHd0JRs=;
+        b=ZwcqKBFJnGJCv9CKloc9SXiz9cQMgCJTrxGMpRYs3pGrrlpAqTBYll4F5ni6N9HCT7
+         qaUC5r3NFarNbKAuP6tiNGu1SiGJcSY3z7favBb3w5MRSRpuAnc4LzP0UtindhMg1qJF
+         UB8xJTst8MwddRRR+saUZhMYcyqDW1c6sIi0rp/cOeaibCZia9EPiHELr4mOXQMgzFTS
+         QMh7M8TwvAG9ohI6COFo3f/fy+CqXkXvpVPcpg27Swz7lfRdKACr4NSQx/k1Ac9zzl9v
+         kVBMIboKAuSQiLV6SWSIxvVT4jS3VeyP+yVxqP1TfVHrs9pEqQXS81JtQXTcPV5t75YV
+         m6lw==
+X-Gm-Message-State: APzg51AFbKz2yvRaLcH4fsZPtYUc3WTY+Q1IkMJIEAUCeJ3pYFgZCuj1
+        c1KwdUf0HjWTQk6fZDHycyzFEA==
+X-Google-Smtp-Source: ANB0VdaW2/CAslPGkv0Dx5HiNYPJqcZC6swvDHJErW/D3m83pwqwHs97FW/HOFkHPHwYq1UTzafuBg==
+X-Received: by 2002:a63:804a:: with SMTP id j71-v6mr5332607pgd.171.1535577906842;
+        Wed, 29 Aug 2018 14:25:06 -0700 (PDT)
+Received: from google.com ([2620:0:100e:3010:35ad:1810:bc11:7e7])
+        by smtp.gmail.com with ESMTPSA id x87-v6sm13203067pfa.143.2018.08.29.14.25.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Aug 2018 14:25:05 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 14:25:04 -0700
+From:   Brandon Williams <bmwill@google.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180829212504.GA72254@google.com>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
+ <20180829052519.GA17253@sigill.intra.peff.net>
+ <20180829210913.GF7547@aiede.svl.corp.google.com>
+ <CAGZ79kafLRXag0DBmw57sJ0WdTUEckCejKFz0j6UJVNdG7_UDA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180829205857.77340-1-jannh@google.com>
+In-Reply-To: <CAGZ79kafLRXag0DBmw57sJ0WdTUEckCejKFz0j6UJVNdG7_UDA@mail.gmail.com>
+User-Agent: Mutt/1.9.2 (2017-12-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 10:58:55PM +0200, Jann Horn wrote:
-
-> If `cmd` is in the range [0x01,0x7f] and `cmd > top-data`, the
-> `memcpy(out, data, cmd)` can copy out-of-bounds data from after `delta_buf`
-> into `dst_buf`.
+On 08/29, Stefan Beller wrote:
+> On Wed, Aug 29, 2018 at 2:09 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> >
+> > Jeff King wrote:
+> > > On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
+> >
+> > >> Yeah, then let's just convert '/' with as little overhead as possible.
+> > >
+> > > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
+> > > colliding)?
+> > >
+> > > I'm OK if the answer is "no", but if you do want to deal with it, the
+> > > time is probably now.
+> >
+> > Have we rejected the config approach?
 > 
-> This is not an exploitable bug because triggering the bug increments the
-> `data` pointer beyond `top`, causing the `data != top` sanity check after
-> the loop to trigger and discard the destination buffer - which means that
-> the result of the out-of-bounds read is never used for anything.
-> 
-> Also, directly jump into the error handler instead of just breaking out of
-> the loop - otherwise, data corruption would be silently ignored if the
-> delta buffer ends with a command and the destination buffer is already
-> full.
+> I did not reject that approach, but am rather waiting for patches. ;-)
 
-Nice catch. The patch looks good to me, but just to lay out my thought
-process looking for other related problems:
+Note I did send out a patch using this approach, so no need to wait any
+longer! :D
 
-We have two types of instructions:
+https://public-inbox.org/git/20180816181940.46114-1-bmwill@google.com/
 
-  1. Take N bytes from position P within the source.
-
-  2. Take the next N bytes from the delta stream.
-
-In both cases we need to check that:
-
-  a. We have enough space in the destination buffer.
-
-  b. We have enough source bytes.
-
-So this:
-
-> diff --git a/patch-delta.c b/patch-delta.c
-> index 56e0a5ede..283fb4b75 100644
-> --- a/patch-delta.c
-> +++ b/patch-delta.c
-> @@ -51,13 +51,13 @@ void *patch_delta(const void *src_buf, unsigned long src_size,
->  			if (unsigned_add_overflows(cp_off, cp_size) ||
->  			    cp_off + cp_size > src_size ||
->  			    cp_size > size)
-> -				break;
-> +				goto bad_length;
->  			memcpy(out, (char *) src_buf + cp_off, cp_size);
-
-Covers 1a (cp_size > size) and 1b (cp_off + cp_size > src_size), plus
-the obvious overflow possibility.
-
-And then here:
-
->  		} else if (cmd) {
-> -			if (cmd > size)
-> -				break;
-> +			if (cmd > size || cmd > top - data)
-> +				goto bad_length;
->  			memcpy(out, data, cmd);
-
-We had previously dealt with 2a (cmd > size), but failed to handle 2b,
-which you've added. We don't need to deal with over/underflow here,
-because our subtraction is on pointers to the same buffer.
-
-> @@ -75,6 +75,7 @@ void *patch_delta(const void *src_buf, unsigned long src_size,
->  
->  	/* sanity check */
->  	if (data != top || size != 0) {
-> +		bad_length:
->  		error("delta replay has gone wild");
->  		bad:
->  		free(dst_buf);
-
-And I agree that jumping straight here is a good idea.
-
-Overall, very nicely done.
-
--Peff
+-- 
+Brandon Williams
