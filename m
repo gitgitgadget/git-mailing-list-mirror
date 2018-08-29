@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4AB0B1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 00:57:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3DC9D1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 00:57:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727207AbeH2EvT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 00:51:19 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37194 "EHLO
+        id S1727263AbeH2EvV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 00:51:21 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37216 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727166AbeH2EvS (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 00:51:18 -0400
+        by vger.kernel.org with ESMTP id S1726759AbeH2EvU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 00:51:20 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DEB126074C;
-        Wed, 29 Aug 2018 00:57:01 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CD53860752;
+        Wed, 29 Aug 2018 00:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535504222;
-        bh=bGUYLK4cx+LnQojvmYW/KZklRswp5FBNT813zlLjigc=;
+        s=default; t=1535504224;
+        bh=DKKbUF8jQ0sKpzl2KUgOBksBBTmS+eU6rAi68nytXXQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=c7mKgW57p636O/h9ySM6kd5PBCT9VB7oAnrpf8bn23/wdynxo/GTbE5IlmZ3bmjNf
-         dbX4SsExKRsz1UxnZSsn7UqXYAYdKTfI/5NWneZYiMgRUU8v9pgwtrcF4TumTpewLI
-         Gxa534arqBSIwgzjtMxEA97d6X1/yIR3/Dhp2m8ljU8S00WaIM+/WxU+n09VfAK6R3
-         twJupY4ttf3tmYKWfLD1uKfTz3a01O5iX0wc21zK74EPApiEiPpDrdkn0ZeM2rmWaS
-         dG7cp1E3TmaXuLT6mhA5sXx6FqNZ8VW1VbgcQHnYb0vD6t92kDzeg1/HiLYbC7E9lI
-         QCm+iHxt3ortc6YTnrr6cPJozAk1rHJmpxqUYXMwA0gacyIhPoECa/wqnVTo2/+tZ6
-         3Sjn1/D6fKSEnq0rtFYc+ToZkgbt7OFdUP1wv0SD3/kyaM4dQY6h7mdi3aE0el18mg
-         WgVTA5xm/grCDLz4oDyoibUfPrRQQIE4V8refx/qsXV63wZm4XC
+        b=Llnb4LfxXz/qiPrVRynOctxS99cQ4Z/FZFKFMjz5uD/lv6RDXx5Tv/I3LqR0gBg6v
+         UjiOpmSFi7gJTF/bqGmoS6OX7kwvk/YW28rg8zYpypDGs3/IP0E1s3dUv2FREp1fsL
+         1hBTLEBOHkrppmgdqsiNVoDXSwQMOWKmAJq8+i9ixl8Au1Wo70GZxNZFeDt7n9YvDs
+         MGiimb6nahYaKjgEp4H7CfzYkCFfmNwvKZLkLI2b+5CCbyLxdfOFBbmBvvVIrnngLz
+         bGGjBMNegCqHh2q0ROU2tuwKtgqvGtOYIPXezvwpx+2wk1bbzDQopeECjAyaVlp6cz
+         ycVVLff+vK3we4TK9xE5f4wjjHyFIOCnyv9cis0U7XtjRjwwC6zUbxCil2tsXirRdB
+         c9j3t20mzTF8yEUL0my9krDIgjrIN+xtSQSXlNinRC/H3BFM0HaWAsQLRTLDbh49ob
+         ZwV4yQOfr1gy7DH1fK/BKz4wdjUHGJLksCZkWTQAqsC6Z7phj9w
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3 01/11] t: add tool to translate hash-related values
-Date:   Wed, 29 Aug 2018 00:56:32 +0000
-Message-Id: <20180829005642.980617-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 03/11] t0000: update tests for SHA-256
+Date:   Wed, 29 Aug 2018 00:56:34 +0000
+Message-Id: <20180829005642.980617-4-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180829005642.980617-1-sandals@crustytoothpaste.net>
 References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
@@ -55,176 +55,275 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a test function helper, test_oid, that produces output that varies
-depending on the hash in use.  Add two additional helpers,
-test_oid_cache, which can be used to load data for test_oid from
-standard input, and test_oid_init, which can be used to load certain
-fixed values from lookup charts.  Check that these functions work in
-t0000, as the rest of the testsuite will soon come to depend on them.
+Test t0000 tests the "basics of the basics" and as such, checks that we
+have various fixed hard-coded object IDs.  The tests relying on these
+assertions have been marked with the SHA1 prerequisite, as they will
+obviously not function in their current form with SHA-256.
 
-Implement two basic lookup charts, one for common invalid or synthesized
-object IDs, and one for various facts about the hash function in use.
-Provide versions for both SHA-1 and SHA-256.
+Use the test_oid helper to update these assertions and provide values
+for both SHA-1 and SHA-256.
 
-Note that due to the implementation used, names used for lookup can
-currently consist only of shell identifier characters.  If this is a
-problem in the future, we can hash the names before use.
+These object IDs were synthesized using a set of scripts that created
+the objects for both SHA-1 and SHA-256 using the same method to ensure
+that they are indeed the correct values.
 
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/oid-info/hash-info    |  8 ++++++++
- t/oid-info/oid          | 29 +++++++++++++++++++++++++++
- t/t0000-basic.sh        | 35 ++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh | 44 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 116 insertions(+)
- create mode 100644 t/oid-info/hash-info
- create mode 100644 t/oid-info/oid
+ t/t0000-basic.sh | 163 +++++++++++++++++++++++++++++------------------
+ 1 file changed, 102 insertions(+), 61 deletions(-)
 
-diff --git a/t/oid-info/hash-info b/t/oid-info/hash-info
-new file mode 100644
-index 0000000000..ccdbfdf974
---- /dev/null
-+++ b/t/oid-info/hash-info
-@@ -0,0 +1,8 @@
-+rawsz sha1:20
-+rawsz sha256:32
-+
-+hexsz sha1:40
-+hexsz sha256:64
-+
-+zero sha1:0000000000000000000000000000000000000000
-+zero sha256:0000000000000000000000000000000000000000000000000000000000000000
-diff --git a/t/oid-info/oid b/t/oid-info/oid
-new file mode 100644
-index 0000000000..a754970523
---- /dev/null
-+++ b/t/oid-info/oid
-@@ -0,0 +1,29 @@
-+# These are some common invalid and partial object IDs used in tests.
-+001	sha1:0000000000000000000000000000000000000001
-+001	sha256:0000000000000000000000000000000000000000000000000000000000000001
-+002	sha1:0000000000000000000000000000000000000002
-+002	sha256:0000000000000000000000000000000000000000000000000000000000000002
-+003	sha1:0000000000000000000000000000000000000003
-+003	sha256:0000000000000000000000000000000000000000000000000000000000000003
-+004	sha1:0000000000000000000000000000000000000004
-+004	sha256:0000000000000000000000000000000000000000000000000000000000000004
-+005	sha1:0000000000000000000000000000000000000005
-+005	sha256:0000000000000000000000000000000000000000000000000000000000000005
-+006	sha1:0000000000000000000000000000000000000006
-+006	sha256:0000000000000000000000000000000000000000000000000000000000000006
-+007	sha1:0000000000000000000000000000000000000007
-+007	sha256:0000000000000000000000000000000000000000000000000000000000000007
-+# All zeros or Fs missing one or two hex segments.
-+zero_1		sha1:000000000000000000000000000000000000000
-+zero_1		sha256:000000000000000000000000000000000000000000000000000000000000000
-+zero_2		sha1:00000000000000000000000000000000000000
-+zero_2		sha256:00000000000000000000000000000000000000000000000000000000000000
-+ff_1		sha1:fffffffffffffffffffffffffffffffffffffff
-+ff_1		sha256:fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-+ff_2		sha1:ffffffffffffffffffffffffffffffffffffff
-+ff_2		sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-+# More various invalid OIDs.
-+numeric		sha1:0123456789012345678901234567890123456789
-+numeric		sha256:0123456789012345678901234567890123456789012345678901234567890123
-+deadbeef	sha1:deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
-+deadbeef	sha256:deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 850f651e4e..e3cace299e 100755
+index b7f57ea052..72cf6bcb12 100755
 --- a/t/t0000-basic.sh
 +++ b/t/t0000-basic.sh
-@@ -821,6 +821,41 @@ test_expect_success 'tests clean up even on failures' "
- 	EOF
- "
- 
-+test_oid_init
-+
-+test_expect_success 'test_oid provides sane info by default' '
-+	test_oid zero >actual &&
-+	grep "^00*$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test "$hexsz" -eq $(wc -c <actual) &&
-+	test $(( $rawsz * 2)) -eq "$hexsz"
-+'
-+
-+test_expect_success 'test_oid can look up data for SHA-1' '
-+	test_when_finished "test_detect_hash" &&
-+	test_set_hash sha1 &&
-+	test_oid zero >actual &&
-+	grep "^00*$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test $(wc -c <actual) -eq 40 &&
-+	test "$rawsz" -eq 20 &&
-+	test "$hexsz" -eq 40
-+'
-+
-+test_expect_success 'test_oid can look up data for SHA-256' '
-+	test_when_finished "test_detect_hash" &&
-+	test_set_hash sha256 &&
-+	test_oid zero >actual &&
-+	grep "^00*$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test $(wc -c <actual) -eq 64 &&
-+	test "$rawsz" -eq 32 &&
-+	test "$hexsz" -eq 64
-+'
-+
+@@ -859,6 +859,47 @@ test_expect_success 'test_oid can look up data for SHA-256' '
  ################################################################
  # Basics of the basics
  
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 4207af4077..2300ec49dd 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1155,3 +1155,47 @@ depacketize () {
- 		}
- 	'
- }
++test_oid_cache <<\EOF
++path0f sha1:f87290f8eb2cbbea7857214459a0739927eab154
++path0f sha256:638106af7c38be056f3212cbd7ac65bc1bac74f420ca5a436ff006a9d025d17d
 +
-+test_set_hash () {
-+	test_hash_algo="$1"
-+}
++path0s sha1:15a98433ae33114b085f3eb3bb03b832b3180a01
++path0s sha256:3a24cc53cf68edddac490bbf94a418a52932130541361f685df685e41dd6c363
 +
-+test_detect_hash () {
-+	test_hash_algo='sha1'
-+}
++path2f sha1:3feff949ed00a62d9f7af97c15cd8a30595e7ac7
++path2f sha256:2a7f36571c6fdbaf0e3f62751a0b25a3f4c54d2d1137b3f4af9cb794bb498e5f
 +
-+test_oid_init () {
-+	test_oid_cache <"$TEST_DIRECTORY/oid-info/hash-info" &&
-+	test_oid_cache <"$TEST_DIRECTORY/oid-info/oid"
-+}
++path2s sha1:d8ce161addc5173867a3c3c730924388daedbc38
++path2s sha256:18fd611b787c2e938ddcc248fabe4d66a150f9364763e9ec133dd01d5bb7c65a
 +
-+test_oid_cache () {
-+	test -n "$test_hash_algo" || test_detect_hash
-+	while read _tag _rest
-+	do
-+		case $_tag in
-+		\#*)
-+			continue;;
-+		?*)
-+			# non-empty
-+			;;
-+		*)
-+			# blank line
-+			continue;;
++path2d sha1:58a09c23e2ca152193f2786e06986b7b6712bdbe
++path2d sha256:00e4b32b96e7e3d65d79112dcbea53238a22715f896933a62b811377e2650c17
 +
-+		esac &&
++path3f sha1:0aa34cae68d0878578ad119c86ca2b5ed5b28376
++path3f sha256:09f58616b951bd571b8cb9dc76d372fbb09ab99db2393f5ab3189d26c45099ad
 +
-+		_k="${_rest%:*}" &&
-+		_v="${_rest#*:}" &&
-+		{ echo "$_k" | egrep '^[a-z0-9]+$' >/dev/null ||
-+			error 'bug in the test script: bad hash algorithm'; } &&
-+		eval "test_oid_${_k}_$_tag=\"\$_v\"" || return 1
-+	done
-+}
++path3s sha1:8599103969b43aff7e430efea79ca4636466794f
++path3s sha256:fce1aed087c053306f3f74c32c1a838c662bbc4551a7ac2420f5d6eb061374d0
 +
-+test_oid () {
-+	eval "
-+		test -n \"\${test_oid_${test_hash_algo}_$1+set}\" &&
-+		printf '%s' \"\${test_oid_${test_hash_algo}_$1}\"
-+	"
-+}
++path3d sha1:21ae8269cacbe57ae09138dcc3a2887f904d02b3
++path3d sha256:9b60497be959cb830bf3f0dc82bcc9ad9e925a24e480837ade46b2295e47efe1
++
++subp3f sha1:00fb5908cb97c2564a9783c0c64087333b3b464f
++subp3f sha256:a1a9e16998c988453f18313d10375ee1d0ddefe757e710dcae0d66aa1e0c58b3
++
++subp3s sha1:6649a1ebe9e9f1c553b66f5a6e74136a07ccc57c
++subp3s sha256:81759d9f5e93c6546ecfcadb560c1ff057314b09f93fe8ec06e2d8610d34ef10
++
++subp3d sha1:3c5e5399f3a333eddecce7a9b9465b63f65f51e2
++subp3d sha256:76b4ef482d4fa1c754390344cf3851c7f883b27cf9bc999c6547928c46aeafb7
++
++root sha1:087704a96baf1c2d1c869a8b084481e121c88b5b
++root sha256:9481b52abab1b2ffeedbf9de63ce422b929f179c1b98ff7bee5f8f1bc0710751
++
++simpletree sha1:7bb943559a305bdd6bdee2cef6e5df2413c3d30a
++simpletree sha256:1710c07a6c86f9a3c7376364df04c47ee39e5a5e221fcdd84b743bc9bb7e2bc5
++EOF
++
+ # updating a new file without --add should fail.
+ test_expect_success 'git update-index without --add should fail adding' '
+ 	test_must_fail git update-index should-be-empty
+@@ -874,8 +915,8 @@ test_expect_success 'writing tree out with git write-tree' '
+ '
+ 
+ # we know the shape and contents of the tree and know the object ID for it.
+-test_expect_success SHA1 'validate object ID of a known tree' '
+-	test "$tree" = 7bb943559a305bdd6bdee2cef6e5df2413c3d30a
++test_expect_success 'validate object ID of a known tree' '
++	test "$tree" = "$(test_oid simpletree)"
+     '
+ 
+ # Removing paths.
+@@ -917,16 +958,16 @@ test_expect_success 'showing stage with git ls-files --stage' '
+ 	git ls-files --stage >current
+ '
+ 
+-test_expect_success SHA1 'validate git ls-files output for a known tree' '
+-	cat >expected <<-\EOF &&
+-	100644 f87290f8eb2cbbea7857214459a0739927eab154 0	path0
+-	120000 15a98433ae33114b085f3eb3bb03b832b3180a01 0	path0sym
+-	100644 3feff949ed00a62d9f7af97c15cd8a30595e7ac7 0	path2/file2
+-	120000 d8ce161addc5173867a3c3c730924388daedbc38 0	path2/file2sym
+-	100644 0aa34cae68d0878578ad119c86ca2b5ed5b28376 0	path3/file3
+-	120000 8599103969b43aff7e430efea79ca4636466794f 0	path3/file3sym
+-	100644 00fb5908cb97c2564a9783c0c64087333b3b464f 0	path3/subp3/file3
+-	120000 6649a1ebe9e9f1c553b66f5a6e74136a07ccc57c 0	path3/subp3/file3sym
++test_expect_success 'validate git ls-files output for a known tree' '
++	cat >expected <<-EOF &&
++	100644 $(test_oid path0f) 0	path0
++	120000 $(test_oid path0s) 0	path0sym
++	100644 $(test_oid path2f) 0	path2/file2
++	120000 $(test_oid path2s) 0	path2/file2sym
++	100644 $(test_oid path3f) 0	path3/file3
++	120000 $(test_oid path3s) 0	path3/file3sym
++	100644 $(test_oid subp3f) 0	path3/subp3/file3
++	120000 $(test_oid subp3s) 0	path3/subp3/file3sym
+ 	EOF
+ 	test_cmp expected current
+ '
+@@ -935,20 +976,20 @@ test_expect_success 'writing tree out with git write-tree' '
+ 	tree=$(git write-tree)
+ '
+ 
+-test_expect_success SHA1 'validate object ID for a known tree' '
+-	test "$tree" = 087704a96baf1c2d1c869a8b084481e121c88b5b
++test_expect_success 'validate object ID for a known tree' '
++	test "$tree" = "$(test_oid root)"
+ '
+ 
+ test_expect_success 'showing tree with git ls-tree' '
+     git ls-tree $tree >current
+ '
+ 
+-test_expect_success SHA1 'git ls-tree output for a known tree' '
+-	cat >expected <<-\EOF &&
+-	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+-	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+-	040000 tree 58a09c23e2ca152193f2786e06986b7b6712bdbe	path2
+-	040000 tree 21ae8269cacbe57ae09138dcc3a2887f904d02b3	path3
++test_expect_success 'git ls-tree output for a known tree' '
++	cat >expected <<-EOF &&
++	100644 blob $(test_oid path0f)	path0
++	120000 blob $(test_oid path0s)	path0sym
++	040000 tree $(test_oid path2d)	path2
++	040000 tree $(test_oid path3d)	path3
+ 	EOF
+ 	test_cmp expected current
+ '
+@@ -959,16 +1000,16 @@ test_expect_success 'showing tree with git ls-tree -r' '
+ 	git ls-tree -r $tree >current
+ '
+ 
+-test_expect_success SHA1 'git ls-tree -r output for a known tree' '
+-	cat >expected <<-\EOF &&
+-	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+-	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+-	100644 blob 3feff949ed00a62d9f7af97c15cd8a30595e7ac7	path2/file2
+-	120000 blob d8ce161addc5173867a3c3c730924388daedbc38	path2/file2sym
+-	100644 blob 0aa34cae68d0878578ad119c86ca2b5ed5b28376	path3/file3
+-	120000 blob 8599103969b43aff7e430efea79ca4636466794f	path3/file3sym
+-	100644 blob 00fb5908cb97c2564a9783c0c64087333b3b464f	path3/subp3/file3
+-	120000 blob 6649a1ebe9e9f1c553b66f5a6e74136a07ccc57c	path3/subp3/file3sym
++test_expect_success 'git ls-tree -r output for a known tree' '
++	cat >expected <<-EOF &&
++	100644 blob $(test_oid path0f)	path0
++	120000 blob $(test_oid path0s)	path0sym
++	100644 blob $(test_oid path2f)	path2/file2
++	120000 blob $(test_oid path2s)	path2/file2sym
++	100644 blob $(test_oid path3f)	path3/file3
++	120000 blob $(test_oid path3s)	path3/file3sym
++	100644 blob $(test_oid subp3f)	path3/subp3/file3
++	120000 blob $(test_oid subp3s)	path3/subp3/file3sym
+ 	EOF
+ 	test_cmp expected current
+ '
+@@ -978,19 +1019,19 @@ test_expect_success 'showing tree with git ls-tree -r -t' '
+ 	git ls-tree -r -t $tree >current
+ '
+ 
+-test_expect_success SHA1 'git ls-tree -r output for a known tree' '
+-	cat >expected <<-\EOF &&
+-	100644 blob f87290f8eb2cbbea7857214459a0739927eab154	path0
+-	120000 blob 15a98433ae33114b085f3eb3bb03b832b3180a01	path0sym
+-	040000 tree 58a09c23e2ca152193f2786e06986b7b6712bdbe	path2
+-	100644 blob 3feff949ed00a62d9f7af97c15cd8a30595e7ac7	path2/file2
+-	120000 blob d8ce161addc5173867a3c3c730924388daedbc38	path2/file2sym
+-	040000 tree 21ae8269cacbe57ae09138dcc3a2887f904d02b3	path3
+-	100644 blob 0aa34cae68d0878578ad119c86ca2b5ed5b28376	path3/file3
+-	120000 blob 8599103969b43aff7e430efea79ca4636466794f	path3/file3sym
+-	040000 tree 3c5e5399f3a333eddecce7a9b9465b63f65f51e2	path3/subp3
+-	100644 blob 00fb5908cb97c2564a9783c0c64087333b3b464f	path3/subp3/file3
+-	120000 blob 6649a1ebe9e9f1c553b66f5a6e74136a07ccc57c	path3/subp3/file3sym
++test_expect_success 'git ls-tree -r output for a known tree' '
++	cat >expected <<-EOF &&
++	100644 blob $(test_oid path0f)	path0
++	120000 blob $(test_oid path0s)	path0sym
++	040000 tree $(test_oid path2d)	path2
++	100644 blob $(test_oid path2f)	path2/file2
++	120000 blob $(test_oid path2s)	path2/file2sym
++	040000 tree $(test_oid path3d)	path3
++	100644 blob $(test_oid path3f)	path3/file3
++	120000 blob $(test_oid path3s)	path3/file3sym
++	040000 tree $(test_oid subp3d)	path3/subp3
++	100644 blob $(test_oid subp3f)	path3/subp3/file3
++	120000 blob $(test_oid subp3s)	path3/subp3/file3sym
+ 	EOF
+ 	test_cmp expected current
+ '
+@@ -999,16 +1040,16 @@ test_expect_success 'writing partial tree out with git write-tree --prefix' '
+ 	ptree=$(git write-tree --prefix=path3)
+ '
+ 
+-test_expect_success SHA1 'validate object ID for a known tree' '
+-	test "$ptree" = 21ae8269cacbe57ae09138dcc3a2887f904d02b3
++test_expect_success 'validate object ID for a known tree' '
++	test "$ptree" = $(test_oid path3d)
+ '
+ 
+ test_expect_success 'writing partial tree out with git write-tree --prefix' '
+ 	ptree=$(git write-tree --prefix=path3/subp3)
+ '
+ 
+-test_expect_success SHA1 'validate object ID for a known tree' '
+-	test "$ptree" = 3c5e5399f3a333eddecce7a9b9465b63f65f51e2
++test_expect_success 'validate object ID for a known tree' '
++	test "$ptree" = $(test_oid subp3d)
+ '
+ 
+ test_expect_success 'put invalid objects into the index' '
+@@ -1042,16 +1083,16 @@ test_expect_success 'git read-tree followed by write-tree should be idempotent'
+ 	test "$newtree" = "$tree"
+ '
+ 
+-test_expect_success SHA1 'validate git diff-files output for a know cache/work tree state' '
+-	cat >expected <<\EOF &&
+-:100644 100644 f87290f8eb2cbbea7857214459a0739927eab154 0000000000000000000000000000000000000000 M	path0
+-:120000 120000 15a98433ae33114b085f3eb3bb03b832b3180a01 0000000000000000000000000000000000000000 M	path0sym
+-:100644 100644 3feff949ed00a62d9f7af97c15cd8a30595e7ac7 0000000000000000000000000000000000000000 M	path2/file2
+-:120000 120000 d8ce161addc5173867a3c3c730924388daedbc38 0000000000000000000000000000000000000000 M	path2/file2sym
+-:100644 100644 0aa34cae68d0878578ad119c86ca2b5ed5b28376 0000000000000000000000000000000000000000 M	path3/file3
+-:120000 120000 8599103969b43aff7e430efea79ca4636466794f 0000000000000000000000000000000000000000 M	path3/file3sym
+-:100644 100644 00fb5908cb97c2564a9783c0c64087333b3b464f 0000000000000000000000000000000000000000 M	path3/subp3/file3
+-:120000 120000 6649a1ebe9e9f1c553b66f5a6e74136a07ccc57c 0000000000000000000000000000000000000000 M	path3/subp3/file3sym
++test_expect_success 'validate git diff-files output for a know cache/work tree state' '
++	cat >expected <<EOF &&
++:100644 100644 $(test_oid path0f) $ZERO_OID M	path0
++:120000 120000 $(test_oid path0s) $ZERO_OID M	path0sym
++:100644 100644 $(test_oid path2f) $ZERO_OID M	path2/file2
++:120000 120000 $(test_oid path2s) $ZERO_OID M	path2/file2sym
++:100644 100644 $(test_oid path3f) $ZERO_OID M	path3/file3
++:120000 120000 $(test_oid path3s) $ZERO_OID M	path3/file3sym
++:100644 100644 $(test_oid subp3f) $ZERO_OID M	path3/subp3/file3
++:120000 120000 $(test_oid subp3s) $ZERO_OID M	path3/subp3/file3sym
+ EOF
+ 	git diff-files >current &&
+ 	test_cmp current expected
+@@ -1067,23 +1108,23 @@ test_expect_success 'no diff after checkout and git update-index --refresh' '
+ '
+ 
+ ################################################################
+-P=087704a96baf1c2d1c869a8b084481e121c88b5b
++P=$(test_oid root)
+ 
+-test_expect_success SHA1 'git commit-tree records the correct tree in a commit' '
++test_expect_success 'git commit-tree records the correct tree in a commit' '
+ 	commit0=$(echo NO | git commit-tree $P) &&
+ 	tree=$(git show --pretty=raw $commit0 |
+ 		 sed -n -e "s/^tree //p" -e "/^author /q") &&
+ 	test "z$tree" = "z$P"
+ '
+ 
+-test_expect_success SHA1 'git commit-tree records the correct parent in a commit' '
++test_expect_success 'git commit-tree records the correct parent in a commit' '
+ 	commit1=$(echo NO | git commit-tree $P -p $commit0) &&
+ 	parent=$(git show --pretty=raw $commit1 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q") &&
+ 	test "z$commit0" = "z$parent"
+ '
+ 
+-test_expect_success SHA1 'git commit-tree omits duplicated parent in a commit' '
++test_expect_success 'git commit-tree omits duplicated parent in a commit' '
+ 	commit2=$(echo NO | git commit-tree $P -p $commit0 -p $commit0) &&
+ 	     parent=$(git show --pretty=raw $commit2 |
+ 		sed -n -e "s/^parent //p" -e "/^author /q" |
