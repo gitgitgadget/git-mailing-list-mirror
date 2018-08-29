@@ -7,39 +7,39 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB8581F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 00:59:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E7BD1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 00:59:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727561AbeH2ExY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 00:53:24 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37322 "EHLO
+        id S1727599AbeH2ExZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 00:53:25 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37324 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726857AbeH2ExY (ORCPT
+        by vger.kernel.org with ESMTP id S1727099AbeH2ExY (ORCPT
         <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 00:53:24 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2DE566081A
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id CA0AC60758
         for <git@vger.kernel.org>; Wed, 29 Aug 2018 00:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535504348;
-        bh=aTAUHBtr5JEM4vGqbbaGgAVwP3MMHAqG8qvQUw8YWxI=;
+        s=default; t=1535504349;
+        bh=QWhvm+441vp3ZHmjeDPtSxgTjVqXk8yAyfWHa4iN+HU=;
         h=From:To:Subject:Date:In-Reply-To:References:From:Reply-To:Subject:
          Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:
          References:Content-Type:Content-Disposition;
-        b=mCMFpurWRWrWTfkrHxW20yPy7k3r1hQs8ge3e8wW3zoC3Zf3wG243bhrsY3p2sKAU
-         kHgoJt75V9lPm3czs4jMjmi1nE94Qw1NF1EuKwrM/LruF0avx0DzVdUnOyRDjPabMD
-         6wY3BPY2SHBHcYvVuXdsV/xuiPh7kme9w5x8zhhKT9BVeHpdZlyazZuMqOboz/tL8X
-         Jr99u5NFtcCkDiEm0ZAwaRiMz1Iqj1bOIy8DE/kSINo0T/wpMQIFisksKsL1r0YtEN
-         3Z4+/0hpWn9RRLJwORcWkP1bD4Wzn1oR3mAAcd54SXNvqRA/2l8wUvFCftZPsCXNaZ
-         N5j6Y64OVwq8mqiwm6dXEmwDG5raKomD1AwG0UnvUrkFGNmncGq2hVPBXs7NV9V4BB
-         lMnjZdEdyIctmLRRVyLDXFD0CUPRtQ/y6EkdfEyCUg/goH81vQMKE6Dt8TVitr8ug1
-         CUiCyPOWa9W27c/yOSJRSp5T7FmUhLjeg5K/4rrdGYOTxWsCZve
+        b=Rx/TPTF+MbKsGvm0FpZIg8gg6ZBKVrZS0FwNfabjwgY5nPMyXwdU24bw5MnBhadsY
+         HVWS+R0N7nM3zCI+B57H3wo+PaceY8T9cfglVaIav3aMXw9wAR0KRKvLeMg1EcfXw3
+         G5yluqk0fUH3DG131dxl5i3HTNX0Op4uKLCPDnkNqPts9eUnaAMwqszgT7aaDtnnu+
+         kHPib81K2ZK6hkRKVjFWRFGKRY5IeZ6J9F6VHJiLgDQ+mqut6XHId+w73XV1kSlLxs
+         e2jBjd5unT7ENK1qqVTe6Ac4nJBY3+GNI2YB0odELIlklo4MFNF4O2eGghAFJpXjT9
+         lya/RsfGEMvwisBzQHfLD6jrCWW2m1Kag82ZUKrx5yOZrryheCpLb7t8qJitRZv5Sj
+         zXyf83M5Uv7lhvhQhZsqcKIXwQoMy0zVDeKrZ4pK0wDmqIzh2ZXfDbmmhS/k1NkgbD
+         7SlnxcX204WA0Cfx8baDa2F3y2Lq9tnBAyEEqxKi/4xH6XfhxeA
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Subject: [RFC PATCH 03/12] hex: introduce functions to print arbitrary hashes
-Date:   Wed, 29 Aug 2018 00:58:48 +0000
-Message-Id: <20180829005857.980820-4-sandals@crustytoothpaste.net>
+Subject: [RFC PATCH 04/12] t: add basic tests for our SHA-1 implementation
+Date:   Wed, 29 Aug 2018 00:58:49 +0000
+Message-Id: <20180829005857.980820-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180829005857.980820-1-sandals@crustytoothpaste.net>
 References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
@@ -51,121 +51,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently, we have functions that turn an arbitrary SHA-1 value or an
-object ID into hex format, either using a static buffer or with a
-user-provided buffer.  Add variants of these functions that can handle
-an arbitrary hash algorithm, specified by constant.  Update the
-documentation as well.
-
-While we're at it, remove the "extern" declaration from this family of
-functions, since it's not needed and our style now recommends against
-it.
-
-We use the variant taking the algorithm structure pointer as the
-internal variant, since in the future we'll want to replace sha1_to_hex
-with a hash_to_hex that handles the_hash_algo, and taking an algorithm
-pointer is the easiest way to handle all of the variants in use.
+We have in the past had some unfortunate endianness issues with some
+SHA-1 implementations we ship, especially on big-endian machines.  Add
+an explicit test using the test helper to catch these issues and point
+them out prominently.  This test can also be used as a staging ground
+for people testing additional algorithms to verify that their
+implementations are working as expected.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- cache.h | 14 ++++++++------
- hex.c   | 32 ++++++++++++++++++++++++--------
- 2 files changed, 32 insertions(+), 14 deletions(-)
+ t/t0014-hash.sh | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+ create mode 100755 t/t0014-hash.sh
 
-diff --git a/cache.h b/cache.h
-index 4d014541ab..3cb953445c 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1351,9 +1351,9 @@ extern int get_oid_hex(const char *hex, struct object_id *sha1);
- extern int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
- 
- /*
-- * Convert a binary sha1 to its hex equivalent. The `_r` variant is reentrant,
-+ * Convert a binary hash to its hex equivalent. The `_r` variant is reentrant,
-  * and writes the NUL-terminated output to the buffer `out`, which must be at
-- * least `GIT_SHA1_HEXSZ + 1` bytes, and returns a pointer to out for
-+ * least `GIT_MAX_HEXSZ + 1` bytes, and returns a pointer to out for
-  * convenience.
-  *
-  * The non-`_r` variant returns a static buffer, but uses a ring of 4
-@@ -1361,10 +1361,12 @@ extern int hex_to_bytes(unsigned char *binary, const char *hex, size_t len);
-  *
-  *   printf("%s -> %s", sha1_to_hex(one), sha1_to_hex(two));
-  */
--extern char *sha1_to_hex_r(char *out, const unsigned char *sha1);
--extern char *oid_to_hex_r(char *out, const struct object_id *oid);
--extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
--extern char *oid_to_hex(const struct object_id *oid);	/* same static buffer as sha1_to_hex */
-+char *hash_to_hex_algo_r(char *buffer, const unsigned char *hash, int algo);
-+char *sha1_to_hex_r(char *out, const unsigned char *sha1);
-+char *oid_to_hex_r(char *out, const struct object_id *oid);
-+char *hash_to_hex_algo(const unsigned char *hash, int algo);	/* static buffer result! */
-+char *sha1_to_hex(const unsigned char *sha1);			/* same static buffer */
-+char *oid_to_hex(const struct object_id *oid);			/* same static buffer */
- 
- /*
-  * Parse a 40-character hexadecimal object ID starting from hex, updating the
-diff --git a/hex.c b/hex.c
-index 10af1a29e8..870032a868 100644
---- a/hex.c
-+++ b/hex.c
-@@ -73,14 +73,15 @@ int parse_oid_hex(const char *hex, struct object_id *oid, const char **end)
- 	return ret;
- }
- 
--char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
-+static inline char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
-+					const struct git_hash_algo *algop)
- {
- 	static const char hex[] = "0123456789abcdef";
- 	char *buf = buffer;
- 	int i;
- 
--	for (i = 0; i < the_hash_algo->rawsz; i++) {
--		unsigned int val = *sha1++;
-+	for (i = 0; i < algop->rawsz; i++) {
-+		unsigned int val = *hash++;
- 		*buf++ = hex[val >> 4];
- 		*buf++ = hex[val & 0xf];
- 	}
-@@ -89,20 +90,35 @@ char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
- 	return buffer;
- }
- 
--char *oid_to_hex_r(char *buffer, const struct object_id *oid)
-+char *hash_to_hex_algo_r(char *buffer, const unsigned char *hash, int algo)
- {
--	return sha1_to_hex_r(buffer, oid->hash);
-+	return hash_to_hex_algop_r(buffer, hash, &hash_algos[algo]);
- }
- 
--char *sha1_to_hex(const unsigned char *sha1)
-+char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
-+{
-+	return hash_to_hex_algo_r(buffer, sha1, GIT_HASH_SHA1);
-+}
+diff --git a/t/t0014-hash.sh b/t/t0014-hash.sh
+new file mode 100755
+index 0000000000..8e763c2c3d
+--- /dev/null
++++ b/t/t0014-hash.sh
+@@ -0,0 +1,29 @@
++#!/bin/sh
 +
-+char *oid_to_hex_r(char *buffer, const struct object_id *oid)
-+{
-+	return hash_to_hex_algop_r(buffer, oid->hash, the_hash_algo);
-+}
++test_description='test basic hash implementation'
++. ./test-lib.sh
 +
-+char *hash_to_hex_algo(const unsigned char *hash, int algo)
- {
- 	static int bufno;
- 	static char hexbuffer[4][GIT_MAX_HEXSZ + 1];
- 	bufno = (bufno + 1) % ARRAY_SIZE(hexbuffer);
--	return sha1_to_hex_r(hexbuffer[bufno], sha1);
-+	return hash_to_hex_algo_r(hexbuffer[bufno], hash, algo);
-+}
 +
-+char *sha1_to_hex(const unsigned char *sha1)
-+{
-+	return hash_to_hex_algo(sha1, GIT_HASH_SHA1);
- }
- 
- char *oid_to_hex(const struct object_id *oid)
- {
--	return sha1_to_hex(oid->hash);
-+	return hash_to_hex_algo(oid->hash, hash_algo_by_ptr(the_hash_algo));
- }
++test_expect_success 'test basic SHA-1 hash values' '
++	test-tool sha1 </dev/null >actual &&
++	grep da39a3ee5e6b4b0d3255bfef95601890afd80709 actual &&
++	printf "a" | test-tool sha1 >actual &&
++	grep 86f7e437faa5a7fce15d1ddcb9eaeaea377667b8 actual &&
++	printf "abc" | test-tool sha1 >actual &&
++	grep a9993e364706816aba3e25717850c26c9cd0d89d actual &&
++	printf "message digest" | test-tool sha1 >actual &&
++	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
++	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
++	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
++	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
++		test-tool sha1 >actual &&
++	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
++	printf "blob 0\0" | test-tool sha1 >actual &&
++	grep e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 actual &&
++	printf "blob 3\0abc" | test-tool sha1 >actual &&
++	grep f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f actual &&
++	printf "tree 0\0" | test-tool sha1 >actual &&
++	grep 4b825dc642cb6eb9a060e54bf8d69288fbee4904 actual
++'
++
++test_done
