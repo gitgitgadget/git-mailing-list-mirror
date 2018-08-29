@@ -2,157 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6067A1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 14:43:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CA501F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 14:44:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728521AbeH2SlD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 14:41:03 -0400
-Received: from mail-qk0-f182.google.com ([209.85.220.182]:42502 "EHLO
-        mail-qk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727676AbeH2SlD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 14:41:03 -0400
-Received: by mail-qk0-f182.google.com with SMTP id g13-v6so3502153qki.9
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 07:43:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=S+nbr1OrYRHNY409VOkMcmSTT3pRUeMgxuTnA5h8dvw=;
-        b=IIUltSRvmBnjmOK3Mdwku4CouzMS6t4jTbwRkyrYPt1JE2xIR1wV9SPe79sy9//9z8
-         TNylPPavI6uFC3kwTHqW1kUNlXjgaTgWGS7EtuWEg3Nh6KxSVwLPmFv/67ekSX55UPaW
-         rMjQE20t+RGYRDZoDk4HqikmuNLl2iTdNNU4H5STKTdes5MDPO8lgcAuyNN3ffF0fjhd
-         +V/oXTOt5tmP4HAFt4+ATZ8LzN9GYPRmv0l1kpXEgDxa+xp3CIxvbCCa87yAo/R7uiiC
-         uONBRr0LW0bhkrhqYOwb+hZVySJX9+2EwOzSAqPsfP4bQZ54kw8O3T2thEfBQxvGC/ld
-         WYsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=S+nbr1OrYRHNY409VOkMcmSTT3pRUeMgxuTnA5h8dvw=;
-        b=TM9W+koaaDTXnvViNk7Gs5SPpI9SV3c5IfId0NEA/u2OKylMcGlYcBQtR1fuUE79uo
-         PtABCFVyhvFzsAaRQHN2fHcQDl3eZDhEA9DosmFC1scFbwI6IdehEyZdpJcscNCOl2qV
-         qCWafFODU5LNCLsi14K1JiuQdXf7Bwfk+P8PVZKehLlv8Gec/sMOGIdKGtSEXMYW1VgR
-         WejfKDRbNt/ld+vptqglbCaXBWl/3lB9OHzbVhTEiSrbJL81CTUPft3VtSvAYLDPSjP2
-         PJyWRox5mOGXcngxw8HNlAXCqhj2zszFGI0O+kYI4TM5EqwEmwYEO/miZf/cX2n3jPnE
-         JQXA==
-X-Gm-Message-State: APzg51DbwmKxGhp8TU97RjGQ81akKgb9lOc/HGpwTpInjwEGsxhb+3sh
-        Vb8NySdnkgSMRnztN+cZ6pY=
-X-Google-Smtp-Source: ANB0VdYLRty9SNEoiELqnB9DpmP4s+MIv6qIWILh7HBMs3Fr4+ygJbRquZuTaAM1Zowqn0TmdrZJqg==
-X-Received: by 2002:a37:72c4:: with SMTP id n187-v6mr6686021qkc.103.1535553826096;
-        Wed, 29 Aug 2018 07:43:46 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d923:e823:6a50:26a6? ([2001:4898:8010:0:c259:e823:6a50:26a6])
-        by smtp.gmail.com with ESMTPSA id f13-v6sm2066629qth.62.2018.08.29.07.43.39
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 07:43:41 -0700 (PDT)
-Subject: Re: Questions about the hash function transition
-From:   Derrick Stolee <stolee@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>
-References: <878t4xfaes.fsf@evledraar.gmail.com>
- <20180824014703.GE99542@aiede.svl.corp.google.com>
- <nycvar.QRO.7.76.6.1808281402510.73@tvgsbejvaqbjf.bet>
- <20180828171113.GA23314@aiede.svl.corp.google.com>
- <nycvar.QRO.7.76.6.1808291458480.71@tvgsbejvaqbjf.bet>
- <04300dbc-622a-c8cb-172e-985726249a8e@gmail.com>
-Message-ID: <74787b14-ea63-de76-4eba-ce322aa7b1d2@gmail.com>
-Date:   Wed, 29 Aug 2018 10:43:37 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727676AbeH2SmI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 14:42:08 -0400
+Received: from mout.gmx.net ([212.227.15.19]:56677 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727204AbeH2SmI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 14:42:08 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ledpu-1fZP940OUQ-00qRmk; Wed, 29
+ Aug 2018 16:44:32 +0200
+Date:   Wed, 29 Aug 2018 16:44:31 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: Contributor Summit planning
+In-Reply-To: <20180829045237.GA15274@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1808291640400.71@tvgsbejvaqbjf.bet>
+References: <20180813163108.GA6731@sigill.intra.peff.net> <d5d3fe71-d52b-ac9b-d48d-d288b6569e5a@gmail.com> <20180813171535.GA8476@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1808271458450.73@tvgsbejvaqbjf.bet> <20180829045237.GA15274@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <04300dbc-622a-c8cb-172e-985726249a8e@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:yxiktLinCSpaIwX/nhB6d5lLGaS+uIy2KnEWDbcvUosBHel0iov
+ evolGBkiaDgNk0Gsu9kyTODImxIP9voEkBWGRZLI+CRdG/9Um8oZjVebB2vIXeTrh3Kneqg
+ NSxdE4DpdgfIThO1xTCrRSpoh3Kl5HWD6jSGNh1OolSNttq5F/ow+XZBtE5aeonnhD6v/ER
+ q+A3+qPQHlLNTbUCrUgqQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:8+r7ehuPB1g=:eUR6uxH0hKHWEKG9DrTZCx
+ D0bztmp7ph8hMn1cCRPwqD5Z8j3iyFOaO/hLUonj7zRVhBg21cgC2COLzjmqy9DQSkWXdG60Q
+ MpgfE73z8rMWmKdjRSG8kfcz0FW7/s4PEAllEBwbkNO0et/KP2f3Cq39q2SR8bR0PRechZhnP
+ +NM+3Plm3NXliHXc7pol/FFn9d3dlVccdaD4lJmUf5kszXjXLZILGEmMYRTq7P27nCFMO9ag7
+ 5TL9CwkOj/lQeCzjOo0gyWUyFLMrH+gzB+s8CSQfIueNhrOCp+U/gzqjVR84s78/b3bf8noqM
+ IKAUDfd+ZWsiJBE+wQ0Sbzh+9wNaeWyAdwXpzgjvgYfu8W/VduNrA53wWLr9mekvdqGqbk7z1
+ uoIdi3QdbcSmcjBXyuqJYZXJ7ljhaLbCr2d6HJICsAolYJgDTRsjWBhBxNdiu/QiCZ1SkEJlS
+ Gbu99ozpi1R9FDkF5i3i205vTBINihRPkWgiDaKqnRjH62bAWLUcUgwbpioMREkwA5EB4CBfV
+ aN4JbQBksQ3SM5yBNn7169kKPY17MpFS2r1B2uJJ1jJ79tg4sD81maShkbiYBT3jtLwLkBM4j
+ sEYIn0tFmWOkRboW0qfNm477x9BI8VKb/SVAc2kpxbmRmVV73D1SXBLHvrVsWirTGR/t5A+Vi
+ 9wsmgQcPFEOpsr0OB6Sjv4j0nTEcBpIRaL72SDqHEYHVml2G+UZAhbGECL9AVGaZ7ZXmKA/vd
+ Y2DM7XPD7K3E6sfof2qgRbJimhJ0NJv0szJPh79BaOM6eeCgwA0zWI77S7PkBLjVt4Pgkhjdq
+ gAVWNIE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/29/2018 9:27 AM, Derrick Stolee wrote:
-> On 8/29/2018 9:09 AM, Johannes Schindelin wrote:
->>
->> What I meant was to leverage the midx code, not the .midx files.
->>
->> My comment was motivated by my realizing that both the SHA-1 <-> SHA-256
->> mapping and the MIDX code have to look up (in a *fast* way) information
->> with hash values as keys. *And* this information is immutable. *And* the
->> amount of information should grow with new objects being added to the
->> database.
->
-> I'm unsure what this means, as the multi-pack-index simply uses 
-> bsearch_hash() to find hashes in the list. The same method is used for 
-> IDX lookups.
->
-I talked with Johannes privately, and we found differences in our 
-understanding of the current multi-pack-index feature. Johannes thought 
-the feature was farther along than it is, specifically related to how 
-much we value the data in the multi-pack-index when adding objects to 
-pack-files or repacking. Some of this misunderstanding is due to how the 
-equivalent feature works in VSTS (where there is no IDX-file equivalent, 
-every object in the repo is tracked by a multi-pack-index).
+Hi Peff,
 
-I'd like to point out a few things about how the multi-pack-index works 
-now, and how we hope to extend it in the future.
+On Wed, 29 Aug 2018, Jeff King wrote:
 
-Currently:
+> On Mon, Aug 27, 2018 at 03:22:39PM +0200, Johannes Schindelin wrote:
+> 
+> > Having said that, I believe that we core contributors can learn to have a
+> > fruitful online meeting. With 30+ participants, too.
+> > 
+> > Learning from my past life in academia (it is hard for me to imagine a
+> > less disciplined crowd than a bunch of white, male, old scientists), we
+> > would need a moderator, and some forum that allows to "give somebody the
+> > mic". That software/platform should exist somewhere.
+> 
+> Yes, I agree that software tools could help a lot with a crowd that
+> size. I have used various "virtual classroom" tools before, and I think
+> the core of the idea is there, but I was often unimpressed by the
+> execution (and expense). So if you know of a good tool, it might be
+> worth trying.
 
-1. Objects are added to the multi-pack-index by adding a new set of 
-.idx/.pack file pairs. We scan the .idx file for the objects and offsets 
-to add.
+I don't, and I will keep looking.
 
-2. We re-use the information in the multi-pack-index only to write the 
-new one without re-reading the .pack files that are already covered.
+> > I would love to have the best of both worlds. For example, it is an annual
+> > annoyance that we are discussion all kinds of things regarding Git, trying
+> > to steer the direction, to form collaborations on certain features, and
+> > the person at the helm is not even there.
+> > 
+> > Maybe *two* meetings per year, one attached to GitMerge, and one purely
+> > online, would help.
+> 
+> I'm somewhat skeptical of the utility of an online meeting. That said,
+> I'm willing give it a try (or any other scheme people want to come up
+> with, for that matter).
 
-3. If a 'git repack' command deletes a pack-file, then we delete the 
-multi-pack-index. It must be regenerated by 'git multi-pack-index write' 
-later.
+I am glad you say that.
 
-In the current world, the multi-pack-index is completely secondary to 
-the .idx files.
+> > Point in favor of the pure-online meeting: the informal standup on IRC
+> > every second Friday. I really try to attend it (it is a bit awkward
+> > because it is on a Friday evening in my timezone, right at the time when I
+> > want to unwind from the work week), as it does have a similar effect to
+> > in-person standups: surprising collaborations spring up, unexpected help,
+> > and a general sense of belonging.
+> 
+> Yes, I've been meaning to make it to another one (I popped in for one a
+> month or two ago, and it didn't seem like much of anything was
+> happening).
+> 
+> What time is it, again?
 
-In the future, I hope these features exist in the multi-pack-index:
+It is supposed to happen every two weeks, on Fridays, 17:00-17:30 UTC:
+https://public-inbox.org/git/20180713170018.GA139708@aiede.svl.corp.google.com/
 
-1. A stable object order. As objects are added to the multi-pack-index, 
-we assign a distinct integer value to each. As we add objects, those 
-integers values do not change. We can then pair the reachability bitmap 
-to the multi-pack-index instead of a specific pack-file (allowing repack 
-and bitmap computations to happen asynchronously). The data required to 
-store this object order is very similar to storing the bijection between 
-SHA-1 and SHA-256 hashes.
+The latest one is logged here:
+http://colabti.org/irclogger/irclogger_log/git-devel?date=2018-08-24#l144
 
-2. Incremental multi-pack-index: Currently, we have only one 
-multi-pack-index file per object directory. We can use a mechanism 
-similar to the split-index to keep a small number of multi-pack-index 
-files (at most 3, probably) such that the 
-'.git/objects/pack/multi-pack-index' file is small and easy to rewrite, 
-while it refers to larger '.git/objects/pack/*.midx' files that change 
-infrequently.
+> > Such an online summit as I suggested above would really only work if
+> > enough frequent contributors would attend. If enough people like you,
+> > Junio, and the standup regulars would say: yep, we're willing to plan and
+> > attend an online summit, where we try to have a timezone-friendly
+> > "unconference"-style meeting on one day (on which we would of course try
+> > to free ourselves from our regular work obligations).
+> > 
+> > I guess I am asking for a "raise your hands", with mine high up in the
+> > air.
+> 
+> I'll come if you want to organize it.
 
-3. Multi-pack-index-aware repack: The repacker only knows about the 
-multi-pack-index enough to delete it. We could instead directly 
-manipulate the multi-pack-index during repack, and we could decide to do 
-more incremental repacks based on data stored in the multi-pack-index.
+That's a good idea. I am a week away from taking a vacation, and I will
+try to come back to that idea afterwards and see what I can do there.
 
-In conclusion: please keep the multi-pack-index in mind as we implement 
-the transition plan. I'll continue building the feature as planned (the 
-next thing to do after the current series of cleanups is 'git 
-multi-pack-index verify') but am happy to look into other applications 
-as we need it.
+The more I think about it, the more excited I get about it.
 
-Thanks,
-
--Stolee
-
+Ciao,
+Dscho
