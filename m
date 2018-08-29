@@ -2,86 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00C701F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 17:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69DFE1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 17:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727868AbeH2VOz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 17:14:55 -0400
-Received: from mail-wm0-f43.google.com ([74.125.82.43]:38524 "EHLO
-        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727704AbeH2VOz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 17:14:55 -0400
-Received: by mail-wm0-f43.google.com with SMTP id t25-v6so6278265wmi.3
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 10:17:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=MTlFzq05H/Gz6vh7JQvU/ue3Og+C+1JBer5YAzvbqwI=;
-        b=U2APBUNcqXjrrkv8AAgmyUVxlI4TqYV3fByrftx0Ss5Pk4qBfUSFPl095szvZwYV8n
-         Hqau3TqjW4ES214mlVD70Zz5+Kj43Jv1gBUDaVHyO67AKJ/m/zwnHEewSlxmXyrBKqvE
-         gwP1Fn1uDA1osM3LwKDrobQiTy5zLX5SnCJUqAtXbhoOvC0XOBtuhRI334/5dGyX6w0g
-         8Tfd4pK/oT1gG6yzeK2d8szPn3ehNBq2KlozUFqe0qPc0jyXMD8pB6aLDZ/jxl249zKZ
-         Rg9rzOtWkprrtHStsAztAdXK54PdxZ2/ZbgoO5dzz1xhhU6UVbcwbbqO+9zYeZv7evbp
-         IZjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=MTlFzq05H/Gz6vh7JQvU/ue3Og+C+1JBer5YAzvbqwI=;
-        b=DVaCLlgIY3+Gb+BZRl6JHy+91lW4oGETbo6w7SguK4hTleQzzNo8P+oSuTi0WscGxq
-         PFSjZ0oZ9hPdkIve7fiGk9Gr4opwxDZKljoUmGa7xCdsV5IPxkA2/fV1+ixJGi0CyR2I
-         oBvVdPH3AoAM+Y4TlqwobTHLKbAhLdCkgUHl/GGugnX8zEGFDAJ03YU/gC6GDUoZdTxg
-         2OWbZNQVlFWCdoIyoohAz9O0y++Qw0BbmezkPQ1a8EtfOSCGTarBgpIGETvV8dnmVXgH
-         euB3mNtM85rsk/Ibd40MTZRDkRMkNyn+k1zMCOQSkNviShkSdNS3B++mWrj6WcrRwJO3
-         jykQ==
-X-Gm-Message-State: APzg51AqNdgPtAO+brD/ns1DLpuTXymiRkwoiHaZ9NnX3sxodluxHzZl
-        lcPZ2XoW4htZHG9j7cqTuR0=
-X-Google-Smtp-Source: ANB0VdaJBFASEC9pFCRi3QcYnjkONswDZQPDp4wnyYS4xQn/Szr7zswqM98pqyvoYvAynZOZTK8QMw==
-X-Received: by 2002:a1c:f60c:: with SMTP id w12-v6mr4698975wmc.80.1535563019873;
-        Wed, 29 Aug 2018 10:16:59 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 144-v6sm7702216wma.19.2018.08.29.10.16.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 10:16:59 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule git directories
-References: <20180827221257.149257-1-sbeller@google.com>
-        <20180827221257.149257-2-sbeller@google.com>
-        <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kYApAdFzC82LZNjYDzL5uWxtXHbvqUyjZ9OF+b=pGNbUA@mail.gmail.com>
-Date:   Wed, 29 Aug 2018 10:16:58 -0700
-In-Reply-To: <CAGZ79kYApAdFzC82LZNjYDzL5uWxtXHbvqUyjZ9OF+b=pGNbUA@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 28 Aug 2018 14:49:19 -0700")
-Message-ID: <xmqq1sahcctx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727293AbeH2Vkc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 17:40:32 -0400
+Received: from mout.gmx.net ([212.227.17.21]:37899 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727204AbeH2Vkc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 17:40:32 -0400
+Received: from [10.24.110.212] ([185.190.160.130]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWxtA-1gOirg38Ym-00W1ai; Wed, 29
+ Aug 2018 19:42:28 +0200
+Subject: Re: [PATCH v3] doc: Don't echo sed command for manpage-base-url.xsl
+To:     Jonathan Nieder <jrnieder@gmail.com>
+References: <20180829134334.14619-1-timschumi@gmx.de>
+ <20180829154720.20297-1-timschumi@gmx.de>
+ <20180829165540.GB170940@aiede.svl.corp.google.com>
+From:   Tim Schumacher <timschumi@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Message-ID: <c38b994b-b77d-fe03-42f9-9e22ac92e98d@gmx.de>
+Date:   Wed, 29 Aug 2018 19:42:24 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180829165540.GB170940@aiede.svl.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US-large
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:rtvOCobY5Ilowrd9BTs+INeXQUSdG+b6s5dGQHIKW7NOky0jj7x
+ NGJubac2D0O85hTiWmBfrHt6v7G8OSA34PdhULst+ayN0q2FCctNKI5uocscCghvhYSduAo
+ 2ObFX0fW9BS9jCTmk0p+UQOVEAuIqK/0rqkO10bsKGvS2m957+FeS1Cj59WhWFfo2K9RnTj
+ Hkvf7EQbmhkfxfGjXnFzg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:RBA27g8bD3M=:nD1gyt0tAGy8b9DMr1xW2j
+ 35DJC7gfgz0lXdlK30mVP78LX5YFEoAxPIQ92I0d7hHF5vLTAQK7WZSAagivdTOqaU8NjeLa3
+ n61gnsuBm99S3so/psOEqdbo6xfp2XiXlvTiN3qewG5FCmi6c2e6FzwVsYFFelkiJMCxWNV4t
+ sait19l/QcKXGB1hZz6NMrUiRlg+WT0H+MVqRZyT5t09W1jSCVrsKoFQExCAzzbDcNoyY2W3v
+ hYJ/Vq2v7DThAv2gXyUrqsxK07A8aq6OAWtLv0nvNHzT8S0PYOYmkwx0PeMjQ/60a9WyUyhU3
+ zOHdeUzLnN4K+0NYgcarMvtuyPJua6tmy6ovRg0QGS7OXTlyIl/fpbjSolFN0NCCSOfZLf0cz
+ 8+aaKgUa7fiAS7LsOWOtwfkOvDckLYPn7dz1hIEurCaR1wyQgyyAb63ZRDZO9HZg9WYYnudo5
+ EHkBkDQWCdzeD0Um0qH69n3XfUEPyUi83R9yw+405Zr8n2dFV9SZ/CKn4LzVe8y/tMqvoxXh5
+ upxhJ3rgy6OtY0WGPQMyJKB3KV+cuXCGfhQYj/OHdfs4XitMrNxRXbnVQa7zPSlFO7/DM3Tqm
+ oM4l3c3b1C6uvQgly2PNgCxvTUuS9BTvT+4POUhQmPyjXLW+HKQGSpzyyIs//5laGJvZ27oUE
+ JASnYccLtfWSqrN/vh9MLvqUcqtWAd2Yu5d4oIi20p8q0HjlG4kK7+ofQcVVn1V0BFmWZzAg2
+ 7fgkTLnMYvbnI52+BsGSnQxGtHZzsJJCsPuT6oV7HSAWbYlAXimct5a2bltNUk18MXRkeXaQk
+ SnwOYbpOWbWLhVuSk8GdMmxBgPXVVmIueBXSM6Ix8K29lp2qqmViI267VlbUP+rpjoqYK145j
+ vBeDb1nhS8j81fHZSzuXEel4vN06WQKlsA+wOECPc=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
-
-> Not quite, as this is ...
->
-> Looking at the test in the previous patch, I would think a reasonable workflow
-> in the test is ...
+On 29.08.18 18:55, Jonathan Nieder wrote:
+> Tim Schumacher wrote:
 > 
->> The MOVE_HEAD_FORCE codepath that follows this hunk is, eh, already
->> forcing to correct the situation, so there is no need to touch that,
->> which makes sense, if I understand correctly.
->
-> No, that is not executed for now as it depends on 'old_head'.
+>> Subject: doc: Don't echo sed command for manpage-base-url.xsl
+> 
+> Cribbing from my review of v2: a description like
+> 
+> 	Documentation/Makefile: make manpage-base-url.xsl generation quieter
+> 
+> would make it more obvious what this does when viewed in "git log
+> --oneline".
 
-All explanation worth having in the log message to help future
-readers, don't you think?
+imho, the "Documentation/Makefile" is a bit too long (about 1/3 of the
+first line). Would it be advisable to keep the previous prefix of "doc"
+(which would shorten down the line from 68 characters down to 49) and
+to use only the second part of your proposed first line? Depending on
+the response I would address this in v4 of this patch.
 
-Thanks.
+> 
+>> Previously, the sed command for generating manpage-base-url.xsl
+>> was printed to the console when being run.
+>>
+>> Make the console output for this rule similiar to all the
+>> other rules by printing a short status message instead of
+>> the whole command.
+>>
+>> Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+>> ---
+>>   Documentation/Makefile | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Oh!  Ignore my reply to v2; looks like you anticipated what I was
+> going to suggest already.  For next time, if you include a note about
+> what changed between versions after the --- delimiter, that can help
+> save some time.
+> 
+
+The change to QUIET_GEN was proposed by Junio, but that E-Mail
+wasn't CC'ed to the mailing list, probably due to him typing
+the response on a phone.
+
+I originally included a note about the change as well, but I
+forgot to copy it over to the new patch after I generated a
+second version of v3.
+
+> With or without the suggested commit message tweak,
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+> Thank you.
+> 
+
+Thanks for the review!
