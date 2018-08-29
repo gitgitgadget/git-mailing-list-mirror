@@ -2,188 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D06371F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 19:37:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F3991F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 20:05:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728366AbeH2Xfx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 19:35:53 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33503 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeH2Xfx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 19:35:53 -0400
-Received: by mail-ed1-f68.google.com with SMTP id h9-v6so4800392edr.0
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 12:37:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=y4/zlZz9vUWz3SSe//4lRrPZm6YRI7uPulq9ORaajpk=;
-        b=Kkk0MVIbSGEySo82f/8EDiPcgAEUYISX8vTkgTIoUWH1fElA5svXaVB+zafftar/6f
-         kKrnLIYne2bJP8PRLNTtC32kU9xVRBlQVFmnas6uYFAwOovzfQsogHaCo6knWSdQMnqu
-         8zZqRUzCWPuRSLnEWSuBjD2amKx47hSKuGFaABMlzbH0WS2zNH78AMd5v6r3LP8g7xyt
-         QD5MNaL3yNBO1857hagH/Dcm9FuS6ry8qNcCKqN5Ca473iMCe/6NVDVrlPv8EiURhu88
-         ozz9zuxDsKeWwdJmkcHztr0dus4etCIK5S+0hVY/RsI2dOaDriap7wkVVzIjL3Y9IlTC
-         sVxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=y4/zlZz9vUWz3SSe//4lRrPZm6YRI7uPulq9ORaajpk=;
-        b=cB04gDrRZQBpqwWwMMGkk3F1o8+KHf0RLi7+ssg89eEuseQvzHvFrCD2KvXVYt3dg8
-         IipcW2Vfb+FTYzZWXuooTm7937oKrPa/h3/+8e/RNFT3lmtdEDlF33XoqANxrxDz2lz1
-         1or7X6vxzC4HxiaYAT1dtnFO1xuyeyfRJ6qfrYUI+9jsylvj1bzToba4T/hbrgfJI0RE
-         wkAPmVD83wNoYsFWEksW+zy9UlxEHYh1/0uf5ufwSFgxG64JHx/GF+ZQ5C1SUIIM87Yg
-         T0wHpzEVpDK+zOyeR6KvZeustkmSfyh7PSFQTHXcCPGcpJ0wQP+bFuEH3JUpV6gZQuIR
-         fSGg==
-X-Gm-Message-State: APzg51Ctb1yPSdfn2p7CDriHCaUL/a41qtHQhe5nZOGjqMX6Xopz+nEe
-        HGKmrLNvdrde0V47D/+ZYsfpeHceo0Y=
-X-Google-Smtp-Source: ANB0VdZ4U1GnKt67BMu7IH1iCKVu2DyZagxcVUgG0Grnb4vRiFo3D1rWT0suZSxJC3oBizK5nMCyBA==
-X-Received: by 2002:a50:95a8:: with SMTP id w37-v6mr8937013eda.33.1535571448749;
-        Wed, 29 Aug 2018 12:37:28 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id x48-v6sm2639881edm.18.2018.08.29.12.37.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 12:37:27 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Edward Thomson <ethomson@edwardthomson.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        demerphq <demerphq@gmail.com>,
-        Brandon Williams <bmwill@google.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Subject: Re: How is the ^{sha256} peel syntax supposed to work?
-References: <878t4xfaes.fsf@evledraar.gmail.com>
-        <20180824014703.GE99542@aiede.svl.corp.google.com>
-        <877ek9edsa.fsf@evledraar.gmail.com>
-        <CAGZ79kaGb_TL7SiR4CFGFzrfy2Lotioy76o6sUK4=vZK5qwqNA@mail.gmail.com>
-        <20180829175950.GB7547@aiede.svl.corp.google.com>
-        <87zhx5c8wo.fsf@evledraar.gmail.com>
-        <20180829191232.GC7547@aiede.svl.corp.google.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180829191232.GC7547@aiede.svl.corp.google.com>
-Date:   Wed, 29 Aug 2018 21:37:26 +0200
-Message-ID: <87y3cpc6bt.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        id S1727809AbeH3AEZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 20:04:25 -0400
+Received: from mx3-rdu2.redhat.com ([66.187.233.73]:41564 "EHLO mx1.redhat.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727605AbeH3AEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 20:04:25 -0400
+Received: from smtp.corp.redhat.com (int-mx06.intmail.prod.int.rdu2.redhat.com [10.11.54.6])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mx1.redhat.com (Postfix) with ESMTPS id 1CF8740241C0
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 20:05:56 +0000 (UTC)
+Received: from max.home.com (ovpn-117-188.ams2.redhat.com [10.36.117.188])
+        by smtp.corp.redhat.com (Postfix) with ESMTP id 58BB62166B41;
+        Wed, 29 Aug 2018 20:05:55 +0000 (UTC)
+From:   Andreas Gruenbacher <agruenba@redhat.com>
+To:     git@vger.kernel.org
+Cc:     rpeterso@redhat.com, Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [RFC] revision: Don't let ^<rev> cancel out the default <rev>
+Date:   Wed, 29 Aug 2018 22:05:53 +0200
+Message-Id: <20180829200553.19379-1-agruenba@redhat.com>
+X-Scanned-By: MIMEDefang 2.78 on 10.11.54.6
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Wed, 29 Aug 2018 20:05:56 +0000 (UTC)
+X-Greylist: inspected by milter-greylist-4.5.16 (mx1.redhat.com [10.11.55.7]); Wed, 29 Aug 2018 20:05:56 +0000 (UTC) for IP:'10.11.54.6' DOMAIN:'int-mx06.intmail.prod.int.rdu2.redhat.com' HELO:'smtp.corp.redhat.com' FROM:'agruenba@redhat.com' RCPT:''
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Some commands like 'log' default to HEAD if no other revisions are
+specified on the command line or otherwise.  Unfortunately, excludes
+(^<rev>) cancel out that default, so when a command only excludes
+revisions (e.g., 'git log ^origin/master'), the command will not produce
+any result.
 
-On Wed, Aug 29 2018, Jonathan Nieder wrote:
+If all the specified revisions are excludes, it seems more useful to
+stick with the default revision instead.
 
-> Hi,
->
-> Ævar Arnfjörð Bjarmason wrote:
->> On Wed, Aug 29 2018, Jonathan Nieder wrote:
->
->>> what objects would you expect the following to refer to?
->>>
->>>   abcdabcd^{sha1}
->>>   abcdabcd^{sha256}
->>>   ef01ef01^{sha1}
->>>   ef01ef01^{sha256}
->>
->> I still can't really make any sense of why anyone would even want #2 as
->> described above, but for this third case I think we should do this:
->>
->>     abcdabcd^{sha1}   = abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
->>     abcdabcd^{sha256} = ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01
->>     ef01ef01^{sha1}   = ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01
->>     ef01ef01^{sha256} = abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd...
->>
->> I.e. a really useful thing about this peel syntax is that it's
->> forgiving, and will try to optimistically look up what you want.
->
-> Sorry, I'm still not understanding.
->
-> I am not attached to any particular syntax, but what I really want is
-> the following:
->
-> 	Someone who only uses SHA-256 sent me the commit id
-> 	abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd... out of band.
-> 	Show me that commit.
+This makes writing wrappers that exclude certain revisions much easier:
+for example, a simple alias l='git log ^origin/master' will show the
+revisions between origin/master and HEAD by default, and 'l foo' will
+show the revisions between origin/master and foo, as you would usually
+expect.
 
-This is reasonable.
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+---
+ revision.c     | 18 ++++++++++++++----
+ t/t4202-log.sh |  6 ++++++
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
-> 	I don't care what object id you show me when you show that
-> 	commit.  If I pass --output-format=sha1, then that means I
-> 	care, and show me the SHA-1.
->
-> In other words, I want the input format and output format completely
-> decoupled.  If I pass ^{sha1}, I am indicating the input format.  To
-> specify the output format, I'd use --output-format instead.
+diff --git a/revision.c b/revision.c
+index de4dce600..c2c51bd5d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1158,6 +1158,18 @@ static void add_rev_cmdline(struct rev_info *revs,
+ 	info->nr++;
+ }
+ 
++static int has_interesting_revisions(struct rev_info *revs)
++{
++	struct rev_cmdline_info *info = &revs->cmdline;
++	unsigned int n;
++
++	for (n = 0; n < info->nr; n++) {
++		if (!(info->rev[n].flags & UNINTERESTING))
++			return 1;
++	}
++	return 0;
++}
++
+ static void add_rev_cmdline_list(struct rev_info *revs,
+ 				 struct commit_list *commit_list,
+ 				 int whence,
+@@ -2318,7 +2330,7 @@ static void NORETURN diagnose_missing_default(const char *def)
+  */
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *opt)
+ {
+-	int i, flags, left, seen_dashdash, read_from_stdin, got_rev_arg = 0, revarg_opt;
++	int i, flags, left, seen_dashdash, read_from_stdin, revarg_opt;
+ 	struct argv_array prune_data = ARGV_ARRAY_INIT;
+ 	const char *submodule = NULL;
+ 
+@@ -2401,8 +2413,6 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			argv_array_pushv(&prune_data, argv + i);
+ 			break;
+ 		}
+-		else
+-			got_rev_arg = 1;
+ 	}
+ 
+ 	if (prune_data.argc) {
+@@ -2431,7 +2441,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		opt->tweak(revs, opt);
+ 	if (revs->show_merge)
+ 		prepare_show_merge(revs);
+-	if (revs->def && !revs->pending.nr && !revs->rev_input_given && !got_rev_arg) {
++	if (revs->def && !revs->rev_input_given && !has_interesting_revisions(revs)) {
+ 		struct object_id oid;
+ 		struct object *object;
+ 		struct object_context oc;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 153a50615..e6670859c 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -213,6 +213,12 @@ test_expect_success 'git show <commits> leaves list of commits as given' '
+ 	test_cmp expect actual
+ '
+ 
++printf "sixth\nfifth\n" > expect
++test_expect_success '^<rev>' '
++	git log --pretty="tformat:%s" ^HEAD~2 > actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup case sensitivity tests' '
+ 	echo case >one &&
+ 	test_tick &&
+-- 
+2.17.1
 
-This is also a reasonable thing to want, but I don't see how it can be
-sensibly squared with the existing peel syntax.
-
-The peel syntax <thing>^{commit} doesn't mean <thing> is a commit, it
-means that thing might be some thing (commit, tag), and it should be
-(recursively if needed) *resolved* as the thing on the RHS.
-
-So to be consistent <thing>^{sha1} shouldn't mean <thing> is SHA-1, but
-that I want a SHA-1 out of <thing>.
-
-> That lets me mix both hash functions in my input:
->
-> 	git --output-format=sha256 diff abcdabcd^{sha1} abcdabcd^{sha256}
-
-Presumably you mean something like:
-
-     git diff-tree --raw -r -p bcdabcd^{sha1} abcdabcd^{sha256}
-
-I.e. we don't show any sort of SHAs in diff output, so what would this
---output-format=sha256 mean?
-
-> I learned about these two commits out of band from different users,
-> one who only uses SHA-1 and the other who only uses SHA-256.
-
-I think for those cases we would just support:
-
-     git diff-tree --raw -r -p bcdabcd abcdabcd
-
-I.e. there's no need to specify the hash type, unless the two happen to
-be ambiguous, but yeah, if that's the case we'd need to peel them (or
-supply more hexdigits).
-
-> In other words:
->
-> [...]
->> Similarly, I think it would be very useful if we just make this work:
->>
->>     git rev-parse $some_hash^{sha256}^{commit}
->>
->> And not care whether $some_hash is SHA-1 or SHA-256, if it's the former
->> we'd consult the SHA-1 <-> SHA-256 lookup table and go from there, and
->> always return a useful value.
->
-> The opposite of this. :)
-
-Can you elaborate on that? What do you think that should do? Return an
-error if $some_hash is SHA-1, even though we have a $some_hash =
-$some_hash_256 mapping?
-
-I.e. if I'm using this in a script I'd need:
-
-    if x = git rev-parse $some_hash^{sha256}^{commit}
-        hash = x
-    elsif x = git rev-parse $some_hash^{sha1}^{commit}
-        hash = x
-    endif
-
-As opposed to the thing I'm saying is the redeeming quality of the peel
-syntax:
-
-    hash = git rev-parse $some_hash^{sha256}^{commit}
