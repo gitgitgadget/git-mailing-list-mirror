@@ -2,96 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF6111F428
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:03:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BA2E1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:04:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727817AbeH3BC3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:02:29 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32798 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727595AbeH3BC3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:02:29 -0400
-Received: (qmail 20038 invoked by uid 109); 29 Aug 2018 21:03:50 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:03:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18612 invoked by uid 111); 29 Aug 2018 21:03:59 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:03:59 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:03:48 -0400
-Date:   Wed, 29 Aug 2018 17:03:48 -0400
-From:   Jeff King <peff@peff.net>
+        id S1728586AbeH3BDX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:03:23 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:36763 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeH3BDX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:03:23 -0400
+Received: by mail-wr1-f68.google.com with SMTP id m27-v6so6094626wrf.3
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:04:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=69K0ou4GQCXEJaCc5VmRmQdHUJb4KVZAQmGKBRKvQbM=;
+        b=bY1ugoj69+HmC3hDeVNxlAKxJwFu50TnvjYb1hqHra6TkyeaqDFQl+rQccdvBkp1aU
+         6s/KNhuZo+/zEyKPA23L7Zx0hYNWOMz6uFKmLtkm78JYGfopc8alTTYduxkciOn9MMag
+         yeMVcPYaqQo90Dxx3k0F25CwWKu75nW9mxZVZXtCLr9S8ojkO6VcUEAO/yW8oOhgnJpb
+         tDsJpIxbwTjvaBd644mL9gy2nGg4/lBsoQ7ttBP6MDeWNk//EgFOY+apQO6BxWvChm3F
+         qOGsaxFyWO5eTHD4L2bPDXUg0Oqf3tZMHOnGYtMd4G2ZAZuDoy1pbjCoWCHfewnac6aJ
+         VYxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=69K0ou4GQCXEJaCc5VmRmQdHUJb4KVZAQmGKBRKvQbM=;
+        b=t1M7zHVlNwEKvFO7vzkOSb9lADivrvM2Kp1mq7IKQiwZeZhQCe5yTOcNBTAY2QBIBV
+         Kk7ubpds+4NwpaBpQsWhs0+3741CVGPF20JpD+4Pm33oZonDd2HkFswjRKchM+bhQQIi
+         NPH662ypM/+4fHlhLezJDFjIWFmgHHBZBIia71GMIQOyuXY1Rn/cxqrydmuUEOWt5rsO
+         BAXzpThKmAc7jdCp/LxE+jvdCz8FbwLE3dD7MzZu1DZ4SvIY08cYdOqRFoB6VVTpcUtf
+         e2fWy06Pd4awvhEdVRcgZKDExuaMuTxHVC8tXa7CdS2Eb9v5o0s1Ha/l4B3aJSXvNctd
+         PRVQ==
+X-Gm-Message-State: APzg51Bj35E4Pp5A4b8UO/xGbkV2vog3OdOQI1J6IOxIfs7h0MzybNpR
+        WskfxnvFMLBTcWfzZ3RjPwQSLFc+
+X-Google-Smtp-Source: ANB0VdZbJd/Vw+SY5tb/ufvtQFXT+W4AbSRNXF8oOHyX9p4YzXAMdOPaxSTX2G8MaWz3uTrSi4gzwg==
+X-Received: by 2002:adf:9b11:: with SMTP id b17-v6mr5780399wrc.119.1535576682382;
+        Wed, 29 Aug 2018 14:04:42 -0700 (PDT)
+Received: from localhost (62-165-238-163.pool.digikabel.hu. [62.165.238.163])
+        by smtp.gmail.com with ESMTPSA id k63-v6sm8881783wmd.46.2018.08.29.14.04.40
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Aug 2018 14:04:41 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 23:04:36 +0200
+From:   SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
 To:     Stefan Beller <sbeller@google.com>
-Cc:     Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180829210348.GA29880@sigill.intra.peff.net>
-References: <20180807230637.247200-1-bmwill@google.com>
- <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com>
- <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com>
- <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
- <20180829052519.GA17253@sigill.intra.peff.net>
- <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] t2013: add test for missing but active submodule
+Message-ID: <20180829210436.GA31707@localhost>
+References: <20180827221257.149257-1-sbeller@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
+In-Reply-To: <20180827221257.149257-1-sbeller@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 11:10:51AM -0700, Stefan Beller wrote:
-
-> > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
-> > colliding)?
+On Mon, Aug 27, 2018 at 03:12:56PM -0700, Stefan Beller wrote:
+> When cloning a superproject with the option
+>  --recurse-submodules='.', it is easy to find yourself wanting
+> a submodule active, but not having that submodule present in
+> the modules directory.
 > 
-> I do. :(
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  t/t2013-checkout-submodule.sh | 24 ++++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
 > 
-> 2d84f13dcb6 (config: fix case sensitive subsection names on writing, 2018-08-08)
-> explains the latest episode of case folding with submodules involved.
+> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
+> index 6ef15738e44..c69640fc341 100755
+> --- a/t/t2013-checkout-submodule.sh
+> +++ b/t/t2013-checkout-submodule.sh
+> @@ -63,6 +63,30 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
+>  	! test -s actual
+>  '
+>  
+> +test_expect_success 'setup superproject with historic submodule' '
+> +	test_create_repo super1 &&
+> +	test_create_repo sub1 &&
+> +	test_commit -C sub1 sub_content &&
+> +	git -C super1 submodule add ../sub1 &&
+> +	git -C super1 commit -a -m "sub1 added" &&
+> +	test_commit -C super1 historic_state &&
+> +	git -C super1 rm sub1 &&
+> +	git -C super1 commit -a -m "deleted sub" &&
+> +	test_commit -C super1 new_state &&
+
+These six consecutive commands above all specify the '-C super1'
+options ...
+
+> +	test_path_is_missing super1/sub &&
+> +
+> +	# The important part is to ensure sub1 is not in there any more.
+> +	# There is another series in flight, that may remove an
+> +	# empty .gitmodules file entirely.
+> +	test_must_be_empty super1/.gitmodules
+
+... and both of these two checks use the 'super1/' path prefix.  I
+think it would be more readable to simply 'cd super1' first.
+
+> +'
+> +
+> +test_expect_failure 'checkout old state with deleted submodule' '
+> +	test_when_finished "rm -rf super1 sub1 super1_clone" &&
+> +	git clone --recurse-submodules super1 super1_clone &&
+> +	git -C super1_clone checkout --recurse-submodules historic_state
+> +'
+> +
+>  KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
+>  test_submodule_switch_recursing_with_args "checkout"
+>  
+> -- 
+> 2.18.0
 > 
-> > I'm OK if the answer is "no", but if you do want to deal with it, the
-> > time is probably now.
-> 
-> Good point. But as soon as we start discussing case sensitivity, we
-> are drawn down the rabbit hole of funny file names. (Try naming
-> a submodule "CON1" and obtain it on Windows for example)
-> So we would need to have a file system specific encoding function for
-> submodule names, which sounds like a maintenance night mare.
-
-Hmph. I'd hoped that simply escaping metacharacters and doing some
-obvious case-folding would be enough. And I think that would cover most
-accidental cases. But yeah, Windows reserved names are basically
-indistinguishable from reasonable names. They'd probably need
-special-cased.
-
-OTOH, I'm not sure how we handle those for entries in the actual tree.
-Poking around git-for-windows/git, I think it uses the magic "\\?"
-marker to tell the OS to interpret the name literally.
-
-So I wonder if it might be sufficient to just deal with the more obvious
-folding issues. Or as you noted, if we just choose lowercase names as
-the normalized form, that might also be enough. :)
-
-> So if I was thinking in the scheme presented above, we could just
-> have another rule that is
-> 
->   [A-Z]  -> _[a-z]
-> 
-> (lowercase capital letters and escape them with an underscore)
-
-Yes, that makes even the capitalized "CON" issues go away. It's not a
-one-to-one mapping, though ("foo-" and "foo_" map to the same entity).
-
-If we want that, too, I think something like url-encoding is fine, with
-the caveat that we simply urlencode _more_ things (i.e., anything not in
-[a-z_]).
-
--Peff
