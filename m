@@ -2,112 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4A81F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:18:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16C8A1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728312AbeH3BQt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:16:49 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:40754 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727363AbeH3BQt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:16:49 -0400
-Received: by mail-pf1-f195.google.com with SMTP id s13-v6so2836442pfi.7
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=00Vk/bKli9dWEf/fJppsxkgeOgHExsAJTvKqB3jxvp4=;
-        b=fKMgcQlVYkjfJz1gTxMSyEO7+hoZwE4b70oG0bMF52i3Ed1Qwo3KVbSsF77UITCMFD
-         MBlBj2Y/WoWin6y88SvGWp6PYteUJhwfyap/EhaPk1BfsgLZFYepKD0paQGmFcjdgD/3
-         Hdy3HHPjVr968KZj/jvL/GwwZOQxRM0ABi+DCm+S2NXSwaymF+F4q655Hcb4BBzKa2wP
-         BDX4Xf+7jbQt4rBBAO3BWu68Kzi7kUvhO/5sU21Fl0zqHgSiDnVAYOmxDGaP5j7r1XW0
-         OfuDWHZYpsMcRM0pn8dMzHb0MZL99PUHCqk+adfc8/c3C/zJh5+d1I4Zx/Awq/VFxb6x
-         mQNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=00Vk/bKli9dWEf/fJppsxkgeOgHExsAJTvKqB3jxvp4=;
-        b=cWHviEsQO8rKNIkyzcKw9kfeqr+nLbBK1Wtd6/h99Aj6xxX965Ncqp2yLNAmQywkLD
-         y9v9z0q2Fw9igonYy6CWmu72Y4tYGHljunQ0zKrKyBZhIHkFzbGZZXpTjs8t1xc2DvyC
-         uz3tbd66pQHfzujwpC/ywnEXrwHld4Ke9aJ0lWaCEqJSaLRXDBvSJjXwlqsSybUQXJdE
-         oKn0Wnoy4yuB5TTBxjUdqZVwxlKmn2KBunG5iHHTuZ5nG4lzt+jIGO+bgQWV2ILSR/8S
-         a89wz5yD+0tm8O6GBh5QMaoK7FqOIaNoskV0vhUS8iufXu3xy3PVhELD0ZpJubCFYDH8
-         BZSQ==
-X-Gm-Message-State: APzg51Daoaz8KaTLU7UrdvJum/5lFi84n2b/bNNu/G/9LGShIjWPAoIZ
-        kKDIc1KV95KnvmoTK4C18/A=
-X-Google-Smtp-Source: ANB0VdaUWhPzj2KhHmOvvw47AebHyUxC7pbaGk9PmiiKqxt0ExRhDg4ZL4JkwxRF/2v1MFWTaRGTqQ==
-X-Received: by 2002:a62:f40a:: with SMTP id r10-v6mr7503355pff.47.1535577484878;
-        Wed, 29 Aug 2018 14:18:04 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id s85-v6sm8177537pfa.116.2018.08.29.14.18.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 14:18:04 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 14:18:02 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180829211802.GG7547@aiede.svl.corp.google.com>
-References: <20180807230637.247200-1-bmwill@google.com>
- <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com>
- <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com>
- <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
- <20180829052519.GA17253@sigill.intra.peff.net>
- <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
- <20180829210348.GA29880@sigill.intra.peff.net>
- <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+        id S1727471AbeH3BTL (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:19:11 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32872 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727363AbeH3BTL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:19:11 -0400
+Received: (qmail 20726 invoked by uid 109); 29 Aug 2018 21:20:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:20:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18895 invoked by uid 111); 29 Aug 2018 21:20:36 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:20:36 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:20:25 -0400
+Date:   Wed, 29 Aug 2018 17:20:25 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jann Horn <jannh@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 1/3] patch-delta: fix oob read
+Message-ID: <20180829212025.GB29880@sigill.intra.peff.net>
+References: <20180829205857.77340-1-jannh@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20180829205857.77340-1-jannh@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Aug 29, 2018 at 10:58:55PM +0200, Jann Horn wrote:
 
-Stefan Beller wrote:
+> If `cmd` is in the range [0x01,0x7f] and `cmd > top-data`, the
+> `memcpy(out, data, cmd)` can copy out-of-bounds data from after `delta_buf`
+> into `dst_buf`.
+> 
+> This is not an exploitable bug because triggering the bug increments the
+> `data` pointer beyond `top`, causing the `data != top` sanity check after
+> the loop to trigger and discard the destination buffer - which means that
+> the result of the out-of-bounds read is never used for anything.
+> 
+> Also, directly jump into the error handler instead of just breaking out of
+> the loop - otherwise, data corruption would be silently ignored if the
+> delta buffer ends with a command and the destination buffer is already
+> full.
 
->> Yes, that makes even the capitalized "CON" issues go away. It's not a
->> one-to-one mapping, though ("foo-" and "foo_" map to the same entity).
->
-> foo_ would map to foo__, and foo- would map to something else.
-> (foo- as we do not rewrite dashes, yet?)
->
->> If we want that, too, I think something like url-encoding is fine, with
->> the caveat that we simply urlencode _more_ things (i.e., anything not in
->> [a-z_]).
->
-> Yeah I think we need more than url encoding now.
+Nice catch. The patch looks good to me, but just to lay out my thought
+process looking for other related problems:
 
-Can you say more?  Perhaps my expectations have been poisoned by tools
-like dpkg-buildpackage that use urlencode.  As far as I can tell, it
-works fine.
+We have two types of instructions:
 
-Moreover, urlencode has some attributes that make it a good potential
-fit: it's intuitive, it's unambiguous (yes, it's one-to-many, but at
-least it's not many-to-many), and people know how to deal with it from
-their lives using browsers.  Can you spell out for me what problem
-we're solving with something more custom?
+  1. Take N bytes from position P within the source.
 
-Stepping back, I am very worried about any design that doesn't give us
-the ability to tweak things later.  See [1] and [2] for more on that
-subject.
+  2. Take the next N bytes from the delta stream.
 
-Thanks,
-Jonathan
+In both cases we need to check that:
 
-[1] https://public-inbox.org/git/20180816023446.GA127655@aiede.svl.corp.google.com/
-[2] https://public-inbox.org/git/20180829210913.GF7547@aiede.svl.corp.google.com/
+  a. We have enough space in the destination buffer.
+
+  b. We have enough source bytes.
+
+So this:
+
+> diff --git a/patch-delta.c b/patch-delta.c
+> index 56e0a5ede..283fb4b75 100644
+> --- a/patch-delta.c
+> +++ b/patch-delta.c
+> @@ -51,13 +51,13 @@ void *patch_delta(const void *src_buf, unsigned long src_size,
+>  			if (unsigned_add_overflows(cp_off, cp_size) ||
+>  			    cp_off + cp_size > src_size ||
+>  			    cp_size > size)
+> -				break;
+> +				goto bad_length;
+>  			memcpy(out, (char *) src_buf + cp_off, cp_size);
+
+Covers 1a (cp_size > size) and 1b (cp_off + cp_size > src_size), plus
+the obvious overflow possibility.
+
+And then here:
+
+>  		} else if (cmd) {
+> -			if (cmd > size)
+> -				break;
+> +			if (cmd > size || cmd > top - data)
+> +				goto bad_length;
+>  			memcpy(out, data, cmd);
+
+We had previously dealt with 2a (cmd > size), but failed to handle 2b,
+which you've added. We don't need to deal with over/underflow here,
+because our subtraction is on pointers to the same buffer.
+
+> @@ -75,6 +75,7 @@ void *patch_delta(const void *src_buf, unsigned long src_size,
+>  
+>  	/* sanity check */
+>  	if (data != top || size != 0) {
+> +		bad_length:
+>  		error("delta replay has gone wild");
+>  		bad:
+>  		free(dst_buf);
+
+And I agree that jumping straight here is a good idea.
+
+Overall, very nicely done.
+
+-Peff
