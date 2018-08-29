@@ -7,83 +7,100 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8674C1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 12:37:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA97E1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 12:41:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728401AbeH2Qee (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 12:34:34 -0400
-Received: from mail-qk0-f195.google.com ([209.85.220.195]:33699 "EHLO
-        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727204AbeH2Qee (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 12:34:34 -0400
-Received: by mail-qk0-f195.google.com with SMTP id z78-v6so3209572qka.0
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 05:37:50 -0700 (PDT)
+        id S1727514AbeH2QiX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 12:38:23 -0400
+Received: from mail-qk0-f196.google.com ([209.85.220.196]:45041 "EHLO
+        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727254AbeH2QiX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 12:38:23 -0400
+Received: by mail-qk0-f196.google.com with SMTP id d131-v6so3194253qke.11
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 05:41:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ZcOoo+MOKB7mW9xKKtKUoIz2hPULclaGHAYnVXL284Y=;
-        b=ZgMkwavG1yoadNmDXp7Ilb1aCtkL+SxbIogugSTwyBeBhte4nLa3mHqSt/GSNv4dhu
-         ms3cn9CQgfoBJoVUWaT7kk6ZwkdmTLEeTgeKPLavDXdlOzn+2Vc811ueAmoBqOTgQyl/
-         DbLsm4MK1xzKPy0pzPAy7Jw/SexURnsjqdg9g3oPGSNTuto3eKPg3VIGvfiYs5t1C8jB
-         Emf4bmw0Kfr5m+gXShVko69lCYHU99A3NrvbSunIwe3jHYVrXawdr+Hz0fgLPZ8wwh1Z
-         z73QGq5rt+6JCp23pin99x5RH55EvviwaPkAZT1iW4VUGW/YKer5PIDECycAmW5+tex4
-         rBKg==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=q1bw4QzoYuWdBpqXLRRqkcWSqasQAbR4VjmtTyEWEs4=;
+        b=JnJi5iV0w0JInORIsG1RXh3SKWlAVHxXnVFS4ibHC65sgs9m5U7esrugxl2m9qnmYl
+         l6LpCZpNMZkaAbmjlIq7HK8iVVJBYuVX/LTo7hooRPg/pwRCNEpmd+kyKcRKe+WiOhfV
+         +nLonJwC2SFctykoX4qYOOYv0rgkDwRXOnfGi9NJayACsdw3KcHfWUV7y1E88bz6ZF7Q
+         Fmbp93jgGWOZ4piwtSb3Z8K1DUPlmLuYHHyU7QAphmaW/3x6BeiCFpOJXwxVQOO4Mgpb
+         vr6cqULdp2QdgX0sl2A0gSa5La8rmGgr8yFRjVTcxi0epIW5WPCQgNP5lXDTzHDxUuE2
+         DmGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=ZcOoo+MOKB7mW9xKKtKUoIz2hPULclaGHAYnVXL284Y=;
-        b=tNlbTYBnrPwXq/f7/C0N1s5wNmbO8Akfhv2Pyh98pOu4nJ0CuLj+3PDDp6qsGszmDL
-         wIyeXPujkBx3SPipAB4GLgJIPTjt3mrRKxBCnOAEiEPUwFSeiLGem4ItXSc61OWTfyjf
-         cm+PcWvn4l4sEkIo+RUmwVwW5zy8OaOLMZ2L8NMWhgizqq/jD9PYyz5VsU//BMPVYjDT
-         ov/NpvbmpWZLtJ8Oh8tYvUvLs1RNchrTjYcYCNv4uWxCb+nixOO9gsVHsP/0DxvpB8by
-         NNYM7w8elMM7ttMByhD/r0etHEZfJHXXFhU1JgAXn7C9SUe/WoViVsCBwhxqyqK+BNYG
-         1U1g==
-X-Gm-Message-State: APzg51BVM8WNav3NuzHOobMM7IKQueaI7I+0xWvk335JKfSHuxG+w79U
-        MDiTsshLDIyAcqi81IHF7a4=
-X-Google-Smtp-Source: ANB0VdaYfv667ptyEVk3vyt3nvitIAG8fZkZUUTCLuul9y66X/3miFodQom49LSRY5512vNeGdhBIw==
-X-Received: by 2002:a37:4dcf:: with SMTP id a198-v6mr6065676qkb.139.1535546270311;
-        Wed, 29 Aug 2018 05:37:50 -0700 (PDT)
+        bh=q1bw4QzoYuWdBpqXLRRqkcWSqasQAbR4VjmtTyEWEs4=;
+        b=Vv5R/aFeUntkVyw0SddOiMQMcVwhsyW4dLz/RXSu2jOcd25m8pRuHR3RtnhlixF8yu
+         /AWpS555Iq8iGEkGRAxMuu33lfrYRc4d+q7F3WSxWgI4zmAILB/G6dOya9prBmpOhmAb
+         FtMrQEaE/ESoE0l+Xto9Ll2eIowjOabWFH0+JrbzjvIeECGjwkdO3tqOsyTBL0E9YNJj
+         0+llH6RXyDWMRdSPeHP0qQgNkRnKbWl9EhEjeh9bZE9jEYtYcwGCuJkKUPTkpwfgjqvi
+         TDsZTQuoO6jiJZ6uxcUU+2R2q2C6QbEtoRqJyDh/UIkfojurdOn7GtuUPu4VLx1DCt2N
+         WT+g==
+X-Gm-Message-State: APzg51CjNmVe6fKJtg7H1u3+g0/LLWMJpgLvqI6rFPYP51k+lPjlqR96
+        cK7Yl3kGt+3QicaAzcvGQkLvVHSENJU=
+X-Google-Smtp-Source: ANB0VdY9V/HApBejU43sQvd3hVcg1Pid1EN4T18uqz8caibloaxXqynzcd5rUIOXoPOo4/LEb+FnsQ==
+X-Received: by 2002:a37:8dc2:: with SMTP id p185-v6mr5953667qkd.53.1535546497928;
+        Wed, 29 Aug 2018 05:41:37 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:f86b:1660:ae35:a1de? ([2001:4898:8010:0:e1a1:1660:ae35:a1de])
-        by smtp.gmail.com with ESMTPSA id g39-v6sm2627847qtb.90.2018.08.29.05.37.48
+        by smtp.gmail.com with ESMTPSA id r20-v6sm2496722qtc.81.2018.08.29.05.41.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 05:37:49 -0700 (PDT)
-Subject: Re: [PATCH v3 01/11] t: add tool to translate hash-related values
+        Wed, 29 Aug 2018 05:41:37 -0700 (PDT)
+Subject: Re: [RFC PATCH 08/12] commit-graph: convert to using the_hash_algo
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
- <20180829005642.980617-2-sandals@crustytoothpaste.net>
+References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
+ <20180829005857.980820-9-sandals@crustytoothpaste.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <777ea296-005d-0408-1197-178898399593@gmail.com>
-Date:   Wed, 29 Aug 2018 08:37:48 -0400
+Message-ID: <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
+Date:   Wed, 29 Aug 2018 08:41:36 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <20180829005642.980617-2-sandals@crustytoothpaste.net>
+In-Reply-To: <20180829005857.980820-9-sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2018 8:56 PM, brian m. carlson wrote:
-> +	rawsz="$(test_oid rawsz)" &&
-> +	hexsz="$(test_oid hexsz)" &&
+On 8/28/2018 8:58 PM, brian m. carlson wrote:
+> Instead of using hard-coded constants for object sizes, use
+> the_hash_algo to look them up.  In addition, use a function call to look
+> up the object ID version and produce the correct value.
 
-These are neat helpers! The 'git commit-graph verify' tests in 
-t5318-commit-graph.sh should automatically work if we use these for 
-HASH_LEN instead of 20. I'll use a similar pattern when writing 'git 
-multi-pack-index verify'.
+The C code in this patch looks good to me. The only issue is that I 
+predict failure in the 'git commit-graph verify' tests in 
+t5318-commit-graph.sh. Squashing in this commit should help (assuming 
+that test_oid works, it doesn't at my current branch):
 
-Thanks,
+-->8--
 
--Stolee
+Subject: [PATCH] t5318-commit-graph.sh: use test_oid for HASH_LEN
 
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+  t/t5318-commit-graph.sh | 2 +-
+  1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 6aee861f78..676c1a9ae0 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -333,7 +333,7 @@ test_expect_success 'git commit-graph verify' '
+
+  NUM_COMMITS=9
+  NUM_OCTOPUS_EDGES=2
+-HASH_LEN=20
++HASH_LEN="$(test_oid rawsz)"
+  GRAPH_BYTE_VERSION=4
+  GRAPH_BYTE_HASH=5
+  GRAPH_BYTE_CHUNK_COUNT=6
+--
+2.19.0.rc1
