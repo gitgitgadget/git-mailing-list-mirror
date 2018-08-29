@@ -2,102 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE4481F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 14:29:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73F011F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 14:31:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727547AbeH2S0e (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 14:26:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:38307 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727428AbeH2S0e (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 14:26:34 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPlMc-1fytLj1elO-0053Dq; Wed, 29
- Aug 2018 16:29:17 +0200
-Date:   Wed, 29 Aug 2018 16:29:16 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jonathan Nieder <jrnieder@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive
- rebase
-In-Reply-To: <20180828171748.GC23314@aiede.svl.corp.google.com>
-Message-ID: <nycvar.QRO.7.76.6.1808291525130.71@tvgsbejvaqbjf.bet>
-References: <pull.23.git.gitgitgadget@gmail.com> <20180823024856.GH92374@aiede.svl.corp.google.com> <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet> <xmqqa7p7lmzp.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808281451191.73@tvgsbejvaqbjf.bet>
- <20180828171748.GC23314@aiede.svl.corp.google.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728750AbeH2S23 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 14:28:29 -0400
+Received: from mail-pl1-f171.google.com ([209.85.214.171]:43613 "EHLO
+        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeH2S23 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 14:28:29 -0400
+Received: by mail-pl1-f171.google.com with SMTP id x6-v6so2367789plv.10
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 07:31:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8G+7FEDsped4oQdOT6qLPSd5D6FDwJJthMck3XwCHkc=;
+        b=GnKR2sJF0PzGk7PbXQX3GgAp9DuZFkEncCCDgyY+HfIB/Ok1bBnRqvILR6pFD5IB/E
+         MTv034Rwkiwxxxd/Q3iAQ085mdiTQ2oKWakh4SFlLTAoaiqZAVllCa7MF6RD+PBCt/EM
+         HAI3KlIz6Bdiy9njp8v46ez4JCFNN8PsUMtKLG2q0Yp7i/4n5enp3V6q0zepXIZOKOpb
+         wBPwYbvv6F0ORDRRxyTqFVvycrAtvw5H731jScZb8Y/1dbXMU3C0DT2VG9moo8/kr272
+         hzVV4ZNU21aKeDeaZ6cOvZKSYEn4PBLkWe8/pX+63/va80PIoFOCc7SRTjyQ8dOcDd8J
+         Pqsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8G+7FEDsped4oQdOT6qLPSd5D6FDwJJthMck3XwCHkc=;
+        b=a0KzzZmTGN69menUmCgduvB252VyDRAN0QjhMR8BogUKLQUeUxSjzQaxw0hgd1xaVS
+         m2mIKPei6d/05MaXCCec98E8dnpCSUTZV6OEG5/hr9+9EW68ch/uyAK4OSZgqUeCxssR
+         k6zB4JBLH3VTisF8egP5h1MA0v6d15Wl6rWePhkwJq7bJlu4lULn+9nDpFrf2gXccHd6
+         jbRdkPPukXMrsiM+LFJNDFaMvtQnuYiauh3CuOXVnjQ1+zJn22kFbphMU/lgcsvgtj8k
+         fD5klmuBs9oKGcMusilSA7gexo+C9snLWt4VGdnltBYETstgOOOZ9yuhcaelHDRY2YGH
+         obVw==
+X-Gm-Message-State: APzg51CYncq5KIqivp0gTv1E//277JW6YaCpCWKmLEwmyLoZUpXl5J+J
+        lbHM9SCSZZv1uZG84o33bKlH2bdT
+X-Google-Smtp-Source: ANB0VdbN968X4HZir23/NexvlW3ow0mw5j35LBvjx/UkB7dTvZaJpu8Di+afLQXAn0nqplPmEfXcaQ==
+X-Received: by 2002:a17:902:48c8:: with SMTP id u8-v6mr6379264plh.152.1535553076186;
+        Wed, 29 Aug 2018 07:31:16 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id 143-v6sm6141540pfy.156.2018.08.29.07.31.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Aug 2018 07:31:15 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 07:31:15 -0700 (PDT)
+X-Google-Original-Date: Wed, 29 Aug 2018 14:31:12 GMT
+Message-Id: <pull.23.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.23.git.gitgitgadget@gmail.com>
+References: <pull.23.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] Teach the builtin rebase about the builtin interactive rebase
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:/is1p9fBwduNmvDj1nSrStq2zlKe+MZiMR/qlNvuOtGp1MCKb5d
- cHLozljVekJoYNq53g9onkmDQfou3IwtvfIOuGzhY2ilow0VIFYBqSMpx1eXmSiwPqrX6Wy
- UHBUEXLnd+9kPhCiQbtuO+TrIfjmGXkpSa3Yy+OsCQxrRTUvc/F1+inl22iSvcN7F8slcLF
- Xtc4VHSvjI+wBYjsb+xKw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:zPwL7wPp0JU=:kZxPGJ2ZCMitUm2r7aWZs7
- 5PalxoGcjR38E7k8bVa/+6ZrLbR258/Y1qeCdUTZ+YnhwdoSKJoHip/SoQCUQdFRYPCVw6w4r
- h3A0gQVwuyS8Gqs4LZKcDUW/9E7qxenDCLOxExdIOeLQW6d20NpBLZnczbP9tieOCiwnjkzB5
- 49//9IZy8iTu553fwfk/nraM0U8v3BBbN8O72aF0FvyelaxPqexMVY2NYRsLlpN7MGJjBLgfP
- tJJzTW6MPg4jPUyPFXxSkip6Z30K29HtaWpBTPcaf8gfi6c+jRz0VrB9Gw2/zhl9HRJLcGFFe
- Gctb+w1ahUakEI5+j4l3DYyrRx6rTr2zX/jb/PRFquJgYOiVTLvPHRaGAUYN+trltlP6fVWSw
- 6pIM6ERJ1DLix/pONiGZmXtvmOtTP5SyuETJs6qbO8ZG8KYWJnLRpdxFZ5UVzyT1Ok90zeE/7
- BhsJJyiASBmUOTsCAV3bzEUEax5+hj95aXFhDJtviNwLUEKv4ZA8GTLHxxlU41401hUyJE/jA
- Nt0+BPclyEiSL72rWbc4RFV/sLtpasM6z1YJETi9uOWNN3cxpNzTZpoJdE39Ny6zBzeUvqXzW
- LHM6OsN6xO1SyV2ZurugUyIfgaTqnbZEsCXz0Oj1Bsbx3UrnqBfYO0ieJdj5H26q+vkD70vCd
- W/qcM0TJBFNAxBskrlB2T5guIoyQL2llcFIT96YYQfVaAnQY0ZDpHjZaWCkAi70998FBZug9l
- gOX3++8kyobrqmLlEUi0rER2zveQ2rP/koAODcpNvrEcY65d3HJNNAoJiAlE9qM1cAXcuNMRV
- OcVRTDV
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jonathan,
+The builtin rebase and the builtin interactive rebase have been developed
+independently, on purpose: Google Summer of Code rules specifically state
+that students have to work on independent projects, they cannot collaborate
+on the same project.
 
-On Tue, 28 Aug 2018, Jonathan Nieder wrote:
+The reason is probably the very fine tradition in academia to prohibit
+teamwork, which makes grading easier (at the expense of not exactly
+preparing the students for the real world, unless they want to stay in
+academia).
 
-> Johannes Schindelin wrote:
-> > On Mon, 27 Aug 2018, Junio C Hamano wrote:
-> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> >>> Jonathan Nieder wrote:
-> 
-> >>>> Please include this information in the commit message.  It's super
-> >>>> helpful to find this kind of information about why a patch does what
-> >>>> it does when encountering a patch later "in the wild" (in git log -S
-> >>>> output).
-> [...]
-> >> I think what Jonathan finds helpful is the other half of the story
-> >
-> > I will await Jonathan's clarification.
-> 
-> Junio's understanding is correct.
-> 
-> More generally, I greatly appreciate the kind of motivation and
-> backstory that you write in cover letters, and I wish that more of
-> that would find its way into the commit messages instead.  Really I
-> wish (and don't take this the wrong way --- I am not asking you to
-> write it unless it's your own itch) that GitGitGadget would put the
-> cover letter in single-patch series after the "---" line in the
-> individual patches, since that would make it easier for reviewers to
-> point out what content from the cover letter would be useful to add to
-> the commit message.
-> 
-> That said, this is minor and not a reason to reroll this patch.  It was
-> more that I wanted to give the hint for later patches.
-> 
-> Thanks much and hope that helps,
+One fallout is that the rebase-in-c and rebase-i-in-c patches cause no merge
+conflicts but a royal number of tests in the test suite to fail.
 
-It does.
+It is easy to explain why: rebase-in-c was developed under the assumption
+that all rebase backends are implemented in Unix shell script and can be
+sourced via . git-rebase--<backend>, which is no longer true with 
+rebase-i-in-c, where git-rebase--interactive is a hard-linked builtin.
 
-I'll "rick-roll" a new iteration, as I just realized that (contrary to my
-recollection; I guess I'll need that vacation) the commit message is
-*seriously* lacking. I thought I had remembered that I copy-edited the
-commit message into the PR description. Clearly that was not the case.
+This patch fixes that.
 
-Thanks for the clarification that triggered my looking,
-Dscho
+Note: while this patch targets pk/rebase-in-c-6-final, it will not work
+correctly without ag/rebase-i-in-c. So my suggestion is to rewrite the 
+pk/rebas-in-c-6-final branch by first merging ag/rebase-i-in-c, then
+applying this here patch, and only then cherry-pick "rebase: default to
+using the builtin rebase".
+
+Changes since v1:
+
+ * replaced the too-terse commit message by a copy-edited version of this
+   cover letter (leaving out only the rant about disallowing teamwork).
+
+Johannes Schindelin (1):
+  builtin rebase: prepare for builtin rebase -i
+
+ builtin/rebase.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
+
+
+base-commit: ae497a044508ebaac1794dcdd7ad04f8685686b2
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-23%2Fdscho%2Frebase-in-c-6-final-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-23/dscho/rebase-in-c-6-final-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/23
+
+Range-diff vs v1:
+
+ 1:  29d49819fa ! 1:  5403014be7 builtin rebase: prepare for builtin rebase -i
+     @@ -2,8 +2,21 @@
+      
+          builtin rebase: prepare for builtin rebase -i
+      
+     -    It is no longer a shell script, so we need to call it in a different way
+     -    than the other backends.
+     +    The builtin rebase and the builtin interactive rebase have been
+     +    developed independently, on purpose: Google Summer of Code rules
+     +    specifically state that students have to work on independent projects,
+     +    they cannot collaborate on the same project.
+     +
+     +    One fallout is that the rebase-in-c and rebase-i-in-c patches cause no
+     +    merge conflicts but a royal number of tests in the test suite to fail.
+     +
+     +    It is easy to explain why: rebase-in-c was developed under the
+     +    assumption that all rebase backends are implemented in Unix shell script
+     +    and can be sourced via `. git-rebase--<backend>`, which is no longer
+     +    true with rebase-i-in-c, where git-rebase--interactive is a hard-linked
+     +    builtin.
+     +
+     +    This patch fixes that.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+
+-- 
+gitgitgadget
