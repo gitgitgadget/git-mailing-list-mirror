@@ -2,101 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91B581F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6108B1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728774AbeH3BXx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:23:53 -0400
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37475 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727449AbeH3BXx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:23:53 -0400
-Received: by mail-pf1-f196.google.com with SMTP id h69-v6so2853745pfd.4
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:25:07 -0700 (PDT)
+        id S1727653AbeH3B0m (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:26:42 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:33266 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727449AbeH3B0m (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:26:42 -0400
+Received: by mail-ed1-f67.google.com with SMTP id h9-v6so5007985edr.0
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Z0FudICNXS28cLm3FQTslwtIKZD9LTWVMeC7RHd0JRs=;
-        b=i4c1+2+g7Po4RlXtHPBqoPHon5tR7JUU9EXSYxajN2Fezi5C5g6GCdPH0gJ6e6hkND
-         HYgNuz71ouDF2Fv33fK24DUX2747OHJES1/YJmk0S35iNL7fLX4WM4BlMby7rvW0t34y
-         jJbXDfK9dtzF6RAJhmMOjDVglltRo+2uOA6e1/EJeBxqwDhUYjFN1ceUAU5q9OxIYMOi
-         FQxwshlwSUsY8DEdIUDz+54PMtTRdt54TL/nRLod7cBdlP80s6kvts5c39L1D6yixF3C
-         wcuHlFT37JTmbGGtcRxZDD/DlWSOcfOLOoO3aAbjh3A6QnDchku/PJWEcri/5eoLfxew
-         dX6Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9eSUxZvx5IRzHCWhpXMRkJqm6TL+mPaiqmqEZC3UDDk=;
+        b=sFlxuqR6kbKqyURwoJuyOGNQznGDY84/X8NZKzxQz1d+WIq9oS1nYtrMCuLqlfzA9p
+         kcBInHSC25TAq01WJOJl5FrA5rxtdT6KyCcP0sdt3kUuw0a1Sb1nAUP9ZkDylQ6aoFNV
+         9Ci0dlsKw6VM/Kl5Trd2nCl20QX2B8gKeSgr+h5Wyk4hhafWGslJWL1mpec0wrLZX8Iq
+         6/QRCQUd9AMNC/PyhwFZc9qgAQTAphL9HCB/YWVfHgFA78DJn3S6CZcp7XejnOTOEARd
+         b2Ob0fJpZKzsu5o3KwrJb8za2rIVbS3Tsz2qCJ1T4btrsF9Ksv0969HudBvA4mTa0pcv
+         FXXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Z0FudICNXS28cLm3FQTslwtIKZD9LTWVMeC7RHd0JRs=;
-        b=ZwcqKBFJnGJCv9CKloc9SXiz9cQMgCJTrxGMpRYs3pGrrlpAqTBYll4F5ni6N9HCT7
-         qaUC5r3NFarNbKAuP6tiNGu1SiGJcSY3z7favBb3w5MRSRpuAnc4LzP0UtindhMg1qJF
-         UB8xJTst8MwddRRR+saUZhMYcyqDW1c6sIi0rp/cOeaibCZia9EPiHELr4mOXQMgzFTS
-         QMh7M8TwvAG9ohI6COFo3f/fy+CqXkXvpVPcpg27Swz7lfRdKACr4NSQx/k1Ac9zzl9v
-         kVBMIboKAuSQiLV6SWSIxvVT4jS3VeyP+yVxqP1TfVHrs9pEqQXS81JtQXTcPV5t75YV
-         m6lw==
-X-Gm-Message-State: APzg51AFbKz2yvRaLcH4fsZPtYUc3WTY+Q1IkMJIEAUCeJ3pYFgZCuj1
-        c1KwdUf0HjWTQk6fZDHycyzFEA==
-X-Google-Smtp-Source: ANB0VdaW2/CAslPGkv0Dx5HiNYPJqcZC6swvDHJErW/D3m83pwqwHs97FW/HOFkHPHwYq1UTzafuBg==
-X-Received: by 2002:a63:804a:: with SMTP id j71-v6mr5332607pgd.171.1535577906842;
-        Wed, 29 Aug 2018 14:25:06 -0700 (PDT)
-Received: from google.com ([2620:0:100e:3010:35ad:1810:bc11:7e7])
-        by smtp.gmail.com with ESMTPSA id x87-v6sm13203067pfa.143.2018.08.29.14.25.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 14:25:05 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 14:25:04 -0700
-From:   Brandon Williams <bmwill@google.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180829212504.GA72254@google.com>
-References: <20180807230637.247200-1-bmwill@google.com>
- <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com>
- <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com>
- <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
- <20180829052519.GA17253@sigill.intra.peff.net>
- <20180829210913.GF7547@aiede.svl.corp.google.com>
- <CAGZ79kafLRXag0DBmw57sJ0WdTUEckCejKFz0j6UJVNdG7_UDA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9eSUxZvx5IRzHCWhpXMRkJqm6TL+mPaiqmqEZC3UDDk=;
+        b=bdUwuxEKpZpxNDelvjIqLHsFcNMxq0A0TleOwiiV7vFxMLJHd2wkZTZoFWKb5PBsYb
+         yqhWo2s9Xk5OSOZ06bOTPYiAAkEqiXFgvHjBsWEFMq8N01aiwnqcW9JU1bMYVCYYScdr
+         QYknoCRWZflbmM4v/gBUpJJ8z9BkVcao8ttwTg9Q7mRnCSI06eGCJX6RVWN8NO4Nb4jG
+         ibYEvpbq0IhBpwIeWannHhzgl67lKFon04PyjGM8ose1GJjJOlvLKDuNvTjlawbQEjZq
+         v131u3gRRrCiqkqSZrfs/sYNhOHfNyL8x5QO1BLS3LPIXzqeTLRxa2POVPHSd/hduPDV
+         zEDg==
+X-Gm-Message-State: APzg51CnL4ydI/ZHxehJBOQb+UiFih8hlC0vnKcU1mR+NXMleWJsKNRM
+        wN785vSgeJFLucilmAmiYA8D2z6//6FmBsG8x3HRwQ==
+X-Google-Smtp-Source: ANB0VdYBAAlSSnYYxVhgwvkbRRSnL+naJlNR1XWHsk0WuX86vdBW2vcPbRfAnztt0LH1b2hHDY7bzt7iyamzXAoI1Do=
+X-Received: by 2002:a50:9943:: with SMTP id l3-v6mr9835724edb.198.1535578075052;
+ Wed, 29 Aug 2018 14:27:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kafLRXag0DBmw57sJ0WdTUEckCejKFz0j6UJVNdG7_UDA@mail.gmail.com>
-User-Agent: Mutt/1.9.2 (2017-12-15)
+References: <20180807230637.247200-1-bmwill@google.com> <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com> <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com> <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
+ <20180829052519.GA17253@sigill.intra.peff.net> <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
+ <20180829210348.GA29880@sigill.intra.peff.net> <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+ <20180829211802.GG7547@aiede.svl.corp.google.com>
+In-Reply-To: <20180829211802.GG7547@aiede.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 29 Aug 2018 14:27:43 -0700
+Message-ID: <CAGZ79kYnbjaPoWdda0SM_-_X77mVyYC7JO61OV8nm2yj3Q1OvQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/29, Stefan Beller wrote:
-> On Wed, Aug 29, 2018 at 2:09 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+On Wed, Aug 29, 2018 at 2:18 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Hi,
+>
+> Stefan Beller wrote:
+>
+> >> Yes, that makes even the capitalized "CON" issues go away. It's not a
+> >> one-to-one mapping, though ("foo-" and "foo_" map to the same entity).
 > >
-> > Jeff King wrote:
-> > > On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
+> > foo_ would map to foo__, and foo- would map to something else.
+> > (foo- as we do not rewrite dashes, yet?)
 > >
-> > >> Yeah, then let's just convert '/' with as little overhead as possible.
-> > >
-> > > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
-> > > colliding)?
-> > >
-> > > I'm OK if the answer is "no", but if you do want to deal with it, the
-> > > time is probably now.
+> >> If we want that, too, I think something like url-encoding is fine, with
+> >> the caveat that we simply urlencode _more_ things (i.e., anything not in
+> >> [a-z_]).
 > >
-> > Have we rejected the config approach?
-> 
-> I did not reject that approach, but am rather waiting for patches. ;-)
+> > Yeah I think we need more than url encoding now.
+>
+> Can you say more?
 
-Note I did send out a patch using this approach, so no need to wait any
-longer! :D
+https://public-inbox.org/git/CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com/
 
+> Can you spell out for me what problem we're solving with something more custom?
+
+case sensitivity for example.
+
+> the ability to tweak things later.
+
+That is unrelated to the choice of encoding, but more related to
 https://public-inbox.org/git/20180816181940.46114-1-bmwill@google.com/
-
--- 
-Brandon Williams
