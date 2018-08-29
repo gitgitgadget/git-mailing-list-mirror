@@ -2,240 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 637FC1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 12:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5511F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 12:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728367AbeH2Qpw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 12:45:52 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:39507 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727254AbeH2Qpw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 12:45:52 -0400
-Received: by mail-pg1-f194.google.com with SMTP id g20-v6so2281847pgv.6
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 05:49:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=giSu3TItuWNpLcrj5dJWjXod5ttMQ5QowmWcAarlMMs=;
-        b=HwyUT1EOuPd7nHgUubYd1MT+l9f9SCtZTlXGH+4J7xYBJZFEAmTW4CPrUKtA2ZCFJc
-         9euuxnJy2Tgndvt79S3RIZZZMkqETzHO5YCbgStMcgwGggT/pXmdOMBoOWvwAjIKnXsn
-         qjVNF/hxe6/X2hbFuKSm4HwfAt7H2bD/kbxzzHeAZAweALLLPZKoQs78jhGamtzf36LS
-         wvsc9Wo/4G4DBxvBqmXTE9wgv6cTHeYqY05x0uyIXWuqlo1JqG2cLsLa/HsT6WCHirjn
-         HvpZ3XRknwvKFeDDowU6K2cXaIzUcW47jNWLgQUGxbvrA/R4CxtQW6kaJOmXhsmP3SNM
-         JCsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=giSu3TItuWNpLcrj5dJWjXod5ttMQ5QowmWcAarlMMs=;
-        b=lmi4gXo3eCwuBK9fih7hIPRTvF9a0BJgS1p3Ax33xAa6tbnpF8KMec55WCBdqtfycn
-         ++fYjkYMtKDzIYtaOk/ypiOmH+CH01crUDt4sicsJ9AUZdvhqc1CIFUzJaFH7NbWMAqJ
-         y51f9XOLBKDETjEoikMOxOekv4fQiE63gMyh5QAnygZvt2n+QVzvh0Uu8IxQT1hdZ6rK
-         7T8/zcbyiyBqRg2xy2BVy8Wt+5+O9oMP66k3iycEo8nLggOF4NsXKuV+iUQBiklbhzP0
-         TijYeZXbXQwSaIjKvame3RvcBbtKhwjYMNBVUcZrEt5PitQksYN8YYVvi9uIpoJ9v+0s
-         VaYQ==
-X-Gm-Message-State: APzg51BKMh2yvOd2DQa3DCDLdZ+SdkJjbE8AHkXhpXJuYTDiErfRFwVx
-        OxZSKBstU6r1p9rEUADw4RqogN5q
-X-Google-Smtp-Source: ANB0VdajKOIipKWBOgNVolbpi7ZqW0/pAzBJY8+nDHANRp3bLAagWmd5Du8MDePs0Lnd91V8ErN7dQ==
-X-Received: by 2002:a62:8acd:: with SMTP id o74-v6mr5864770pfk.12.1535546944866;
-        Wed, 29 Aug 2018 05:49:04 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id d9-v6sm12079543pfb.86.2018.08.29.05.49.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 05:49:04 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 05:49:04 -0700 (PDT)
-X-Google-Original-Date: Wed, 29 Aug 2018 12:49:00 GMT
-Message-Id: <4ff6695c7e9bea7f6033f5e124d940f189e290ac.1535546941.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.26.v2.git.gitgitgadget@gmail.com>
-References: <pull.26.git.gitgitgadget@gmail.com>
-        <pull.26.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1728546AbeH2Qs3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 12:48:29 -0400
+Received: from mout.gmx.net ([212.227.17.21]:60233 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727452AbeH2Qs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 12:48:29 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzbXq-1fpzgo2pkI-014kIM; Wed, 29
+ Aug 2018 14:51:36 +0200
+Date:   Wed, 29 Aug 2018 14:51:35 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com, corrmage@gmail.com,
+        avarab@gmail.com, sbeller@google.com
+Subject: Re: [PATCH 3/3] am: avoid directory rename detection when calling
+ recursive merge machinery
+In-Reply-To: <20180829070613.11793-4-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808291451030.71@tvgsbejvaqbjf.bet>
+References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com> <20180829070613.11793-1-newren@gmail.com> <20180829070613.11793-4-newren@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     pclouds@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:nCO/XDCU17hAFf8glv16MU4PtQXwUsNFbvM6WUddeu0WbGWdllQ
+ DdjAvJHIL/ONKedztFGznF99Wwo1yn5aSRYZVRTMyxVzK3rviaA6Wi5pT7pF6NZS9wXLHjz
+ Sg3ithXxPvCnmpom6vIXoIi8Abcn0Zegb6IgWI0oKtBBB6yEcW5QzXOpuj8fRFWmyOnErIV
+ qjAQBHTRVJE0S6J/Bog0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:2EJN7rWQaME=:/diaRzRpF1UNV8MY/nT7RG
+ RsBid2TQznFlJf32aFLIwZY7xvuBjCzV9Pfv2k4uSkvpuPvaxRjxIPLw7lCkO19eX23x6KLQ5
+ FrE0WL4ux8JpG57p2RVwQqYqJvNk8oMzvfpjBTjY33QMJSEFzdwqtmg6y4ByGJN2SAQG7qTVW
+ p1NkfMB7X51THTw2q9oSZ7YFNFx2+2G7Ve+B7p1UJdLmDsLB48N/fKyhIvAfyVu9vlCx58VVO
+ OZ/ODRUlvGwcpy0atszkS52NkRLrfHgLJxjjItt9gltYdIZgh4qokXCUa1ye7JYuySvVcgyQW
+ kdjx6/DQqY4FFLAm5kKa7kaTRx/avcvifrhQNmrpWiLHDeTrYPhK7Q1FNV0RWkqv9/2Ndxpy6
+ dkH2pJquvLZ8qPsafy7wCtL6ct5V0aNfW0tdwH7YUNxmAqPWXmYl0e4knB+ztDnfTGQGz7Q2x
+ z8nz3RGHaMkwGPREhPwKseMakdh4KCThrGvSNaEYn+fRbckga3yFkYIlG7B6e73n68c5JbUIG
+ nn5p2gE+n38D+heOzgDqDEFZWI1yuc4l3xBFiH0m73NWM2Rj9za18qYpgKm2+vtd3r2sbW8qi
+ JgXviaQcjz8X7YJgB72DA3OPCAQirtqNZucmdB1hv3k4kF1YAJy4nOH1B2dajeOdxXXRBNVXZ
+ rwQgXFbTTRb/aT/wETLVu3MRvH3kR0WCKjDuxQ7uod5WRZSTQcFHPJl8tMHrCBdyGhnhf/VhO
+ U0U4KdMYjQvdeULX6EHUU729FGP+YmR86CO9ykKLen8kwwrwXA2FsHc223tbMDdhE2n2tBlte
+ iPLP+1n
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hi Elijah,
 
-The commit-graph feature is tested in isolation by
-t5318-commit-graph.sh and t6600-test-reach.sh, but there are many
-more interesting scenarios involving commit walks. Many of these
-scenarios are covered by the existing test suite, but we need to
-maintain coverage when the optional commit-graph structure is not
-present.
+On Wed, 29 Aug 2018, Elijah Newren wrote:
 
-To allow running the full test suite with the commit-graph present,
-add a new test environment variable, GIT_TEST_COMMIT_GRAPH. Similar
-to GIT_TEST_SPLIT_INDEX, this variable makes every Git command try
-to load the commit-graph when parsing commits, and writes the
-commit-graph file after every 'git commit' command.
+> Let's say you have the following three trees, where Base is from one commit
+> behind either master or branch:
+> 
+>    Base  : bar_v1, foo/{file1, file2, file3}
+>    branch: bar_v2, foo/{file1, file2},       goo/file3
+>    master: bar_v3, foo/{file1, file2, file3}
+> 
+> Using git-am (or am-based rebase) to apply the changes from branch onto
+> master results in the following tree:
+> 
+>    Result: bar_merged, goo/{file1, file2, file3}
+> 
+> This is not what users want; they did not rename foo/ -> goo/, they only
+> renamed one file within that directory.  The reason this happens is am
+> constructs fake trees (via build_fake_ancestor()) of the following form:
+> 
+>    Base_bfa  : bar_v1, foo/file3
+>    branch_bfa: bar_v2, goo/file3
+> 
+> Combining these two trees with master's tree:
+> 
+>    master: bar_v3, foo/{file1, file2, file3},
+> 
+> You can see that merge_recursive_generic() would see branch_bfa as renaming
+> foo/ -> goo/, and master as just adding both foo/file1 and foo/file2.  As
+> such, it ends up with goo/{file1, file2, file3}
+> 
+> The core problem is that am does not have access to the original trees; it
+> can only construct trees using the blobs involved in the patch.  As such,
+> it is not safe to perform directory rename detection within am -3.
 
-There are a few tests that rely on commits not existing in
-pack-files to trigger important events, so manually set
-GIT_TEST_COMMIT_GRAPH to false for the necessary commands.
+I read through all three patches, and they look fine to me!
 
-There is one test in t6024-recursive-merge.sh that relies on the
-merge-base algorithm picking one of two ambiguous merge-bases, and
-the commit-graph feature changes which merge-base is picked.
+Ciao,
+Dscho
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- builtin/commit.c                    | 4 ++++
- commit-graph.c                      | 5 +++--
- commit-graph.h                      | 2 ++
- t/README                            | 4 ++++
- t/t0410-partial-clone.sh            | 2 +-
- t/t5307-pack-missing-commit.sh      | 4 ++--
- t/t6011-rev-list-with-bad-commit.sh | 7 +++----
- t/t6024-recursive-merge.sh          | 6 +++---
- 8 files changed, 22 insertions(+), 12 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 158e3f843a..a25e652102 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -33,6 +33,7 @@
- #include "sequencer.h"
- #include "mailmap.h"
- #include "help.h"
-+#include "commit-graph.h"
- 
- static const char * const builtin_commit_usage[] = {
- 	N_("git commit [<options>] [--] <pathspec>..."),
-@@ -1651,6 +1652,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		     "new_index file. Check that disk is not full and quota is\n"
- 		     "not exceeded, and then \"git reset HEAD\" to recover."));
- 
-+	if (git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
-+		write_commit_graph_reachable(get_object_directory(), 0);
-+
- 	rerere(0);
- 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
- 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
-diff --git a/commit-graph.c b/commit-graph.c
-index 4bd1a4abbf..5cae83fe03 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -237,8 +237,9 @@ static int prepare_commit_graph(struct repository *r)
- 		return !!r->objects->commit_graph;
- 	r->objects->commit_graph_attempted = 1;
- 
--	if (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
--	    !config_value)
-+	if (!git_env_bool(GIT_TEST_COMMIT_GRAPH, 0) &&
-+	    (repo_config_get_bool(r, "core.commitgraph", &config_value) ||
-+	    !config_value))
- 		/*
- 		 * This repository is not configured to use commit graphs, so
- 		 * do not load one. (But report commit_graph_attempted anyway
-diff --git a/commit-graph.h b/commit-graph.h
-index 13d736cdde..cf9141f356 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -5,6 +5,8 @@
- #include "repository.h"
- #include "string-list.h"
- 
-+#define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
-+
- struct commit;
- 
- char *get_commit_graph_filename(const char *obj_dir);
-diff --git a/t/README b/t/README
-index 8373a27fea..2b90c433f5 100644
---- a/t/README
-+++ b/t/README
-@@ -315,6 +315,10 @@ packs on demand. This normally only happens when the object size is
- over 2GB. This variable forces the code path on any object larger than
- <n> bytes.
- 
-+GIT_TEST_COMMIT_GRAPH=<boolean>, when true, forces the commit-graph to
-+be written after every 'git commit' command, and overrides the
-+'core.commitGraph' setting to true.
-+
- Naming Tests
- ------------
- 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 4984ca583d..73d5284a91 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -181,7 +181,7 @@ test_expect_success 'rev-list stops traversal at missing and promised commit' '
- 
- 	git -C repo config core.repositoryformatversion 1 &&
- 	git -C repo config extensions.partialclone "arbitrary string" &&
--	git -C repo rev-list --exclude-promisor-objects --objects bar >out &&
-+	GIT_TEST_COMMIT_GRAPH=0 git -C repo rev-list --exclude-promisor-objects --objects bar >out &&
- 	grep $(git -C repo rev-parse bar) out &&
- 	! grep $FOO out
- '
-diff --git a/t/t5307-pack-missing-commit.sh b/t/t5307-pack-missing-commit.sh
-index ae52a1882d..dacb440b27 100755
---- a/t/t5307-pack-missing-commit.sh
-+++ b/t/t5307-pack-missing-commit.sh
-@@ -24,11 +24,11 @@ test_expect_success 'check corruption' '
- '
- 
- test_expect_success 'rev-list notices corruption (1)' '
--	test_must_fail git rev-list HEAD
-+	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git rev-list HEAD
- '
- 
- test_expect_success 'rev-list notices corruption (2)' '
--	test_must_fail git rev-list --objects HEAD
-+	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git rev-list --objects HEAD
- '
- 
- test_expect_success 'pack-objects notices corruption' '
-diff --git a/t/t6011-rev-list-with-bad-commit.sh b/t/t6011-rev-list-with-bad-commit.sh
-index e51eb41f4b..545b461e51 100755
---- a/t/t6011-rev-list-with-bad-commit.sh
-+++ b/t/t6011-rev-list-with-bad-commit.sh
-@@ -41,10 +41,9 @@ test_expect_success 'corrupt second commit object' \
-    test_must_fail git fsck --full
-    '
- 
--test_expect_success 'rev-list should fail' \
--   '
--   test_must_fail git rev-list --all > /dev/null
--   '
-+test_expect_success 'rev-list should fail' '
-+	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git rev-list --all > /dev/null
-+'
- 
- test_expect_success 'git repack _MUST_ fail' \
-    '
-diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-index 3f59e58dfb..27c7de90ce 100755
---- a/t/t6024-recursive-merge.sh
-+++ b/t/t6024-recursive-merge.sh
-@@ -60,9 +60,9 @@ git update-index a1 &&
- GIT_AUTHOR_DATE="2006-12-12 23:00:08" git commit -m F
- '
- 
--test_expect_success "combined merge conflicts" "
--	test_must_fail git merge -m final G
--"
-+test_expect_success 'combined merge conflicts' '
-+	test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge -m final G
-+'
- 
- cat > expect << EOF
- <<<<<<< HEAD
--- 
-gitgitgadget
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  builtin/am.c                    | 1 +
+>  t/t3401-rebase-and-am-rename.sh | 4 ++--
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 2fc2d1e82c..1494a9be84 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -1596,6 +1596,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
+>  	o.branch1 = "HEAD";
+>  	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
+>  	o.branch2 = their_tree_name;
+> +	o.detect_directory_renames = 0;
+>  
+>  	if (state->quiet)
+>  		o.verbosity = 0;
+> diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
+> index a87df9e675..94bdfbd69c 100755
+> --- a/t/t3401-rebase-and-am-rename.sh
+> +++ b/t/t3401-rebase-and-am-rename.sh
+> @@ -152,7 +152,7 @@ test_expect_success 'rebase --interactive: NO directory rename' '
+>  	)
+>  '
+>  
+> -test_expect_failure 'rebase (am): NO directory rename' '
+> +test_expect_success 'rebase (am): NO directory rename' '
+>  	test_when_finished "git -C no-dir-rename rebase --abort" &&
+>  	(
+>  		cd no-dir-rename &&
+> @@ -190,7 +190,7 @@ test_expect_success 'rebase --merge: NO directory rename' '
+>  	)
+>  '
+>  
+> -test_expect_failure 'am: NO directory rename' '
+> +test_expect_success 'am: NO directory rename' '
+>  	test_when_finished "git -C no-dir-rename am --abort" &&
+>  	(
+>  		cd no-dir-rename &&
+> -- 
+> 2.18.0.12.g97a29da30a
+> 
+> 
