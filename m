@@ -7,136 +7,196 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73F011F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 14:31:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A7041F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 14:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728750AbeH2S23 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 14:28:29 -0400
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:43613 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeH2S23 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 14:28:29 -0400
-Received: by mail-pl1-f171.google.com with SMTP id x6-v6so2367789plv.10
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 07:31:16 -0700 (PDT)
+        id S1728767AbeH2S2b (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 14:28:31 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:33330 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeH2S2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 14:28:31 -0400
+Received: by mail-pf1-f196.google.com with SMTP id d4-v6so2378597pfn.0
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 07:31:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=8G+7FEDsped4oQdOT6qLPSd5D6FDwJJthMck3XwCHkc=;
-        b=GnKR2sJF0PzGk7PbXQX3GgAp9DuZFkEncCCDgyY+HfIB/Ok1bBnRqvILR6pFD5IB/E
-         MTv034Rwkiwxxxd/Q3iAQ085mdiTQ2oKWakh4SFlLTAoaiqZAVllCa7MF6RD+PBCt/EM
-         HAI3KlIz6Bdiy9njp8v46ez4JCFNN8PsUMtKLG2q0Yp7i/4n5enp3V6q0zepXIZOKOpb
-         wBPwYbvv6F0ORDRRxyTqFVvycrAtvw5H731jScZb8Y/1dbXMU3C0DT2VG9moo8/kr272
-         hzVV4ZNU21aKeDeaZ6cOvZKSYEn4PBLkWe8/pX+63/va80PIoFOCc7SRTjyQ8dOcDd8J
-         Pqsw==
+        bh=yaQd7IYI9C16XldO1MJrWh41iq0qbdxZlG7BDt8pDb8=;
+        b=gtVWsrRl3h/GYZeqfjzS0EXoAShGrjv+MAR53AlVO29MZT9w0z3quHXKtomk2JUFKt
+         tz1sdyMyRaHzv0vRVRWAcmjMQy+CyegBpUWfAcsxJoqomYQxL3msWRXXj+FEYvIcZUjO
+         OUY9XYNc/ZmcZLb4QyVQV85zFGCxhjDZRctieoEGYJap1BJ8K6y9bCqvJiky601jtloY
+         m1XkVd2IkBseVKgmIuLvRIRXlXaSFrwwmOA5buSwMKqMCUEvTCufvVMfDIUv1F0YcepZ
+         IRC8hTPUCjMfJsOH0Cr0ni8Ic7uBhfI6zh6py/ZZGzTrI1HD0xzXjrukMDeVRK5DQ9lP
+         w3iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=8G+7FEDsped4oQdOT6qLPSd5D6FDwJJthMck3XwCHkc=;
-        b=a0KzzZmTGN69menUmCgduvB252VyDRAN0QjhMR8BogUKLQUeUxSjzQaxw0hgd1xaVS
-         m2mIKPei6d/05MaXCCec98E8dnpCSUTZV6OEG5/hr9+9EW68ch/uyAK4OSZgqUeCxssR
-         k6zB4JBLH3VTisF8egP5h1MA0v6d15Wl6rWePhkwJq7bJlu4lULn+9nDpFrf2gXccHd6
-         jbRdkPPukXMrsiM+LFJNDFaMvtQnuYiauh3CuOXVnjQ1+zJn22kFbphMU/lgcsvgtj8k
-         fD5klmuBs9oKGcMusilSA7gexo+C9snLWt4VGdnltBYETstgOOOZ9yuhcaelHDRY2YGH
-         obVw==
-X-Gm-Message-State: APzg51CYncq5KIqivp0gTv1E//277JW6YaCpCWKmLEwmyLoZUpXl5J+J
-        lbHM9SCSZZv1uZG84o33bKlH2bdT
-X-Google-Smtp-Source: ANB0VdbN968X4HZir23/NexvlW3ow0mw5j35LBvjx/UkB7dTvZaJpu8Di+afLQXAn0nqplPmEfXcaQ==
-X-Received: by 2002:a17:902:48c8:: with SMTP id u8-v6mr6379264plh.152.1535553076186;
-        Wed, 29 Aug 2018 07:31:16 -0700 (PDT)
+        bh=yaQd7IYI9C16XldO1MJrWh41iq0qbdxZlG7BDt8pDb8=;
+        b=lPQ2UOXurPIWnFMJ+rcycP/Z4zIlD2E5dYJzoXgaoBxxLd31qtN7qeBLKHtrDNj4KO
+         7ABO6aEmw5os8eX7btIb4LwstvyRjCXGGsL/yozuuhA/0nBDU1HOaMch2kGN7V359scr
+         r4cTqacM76t4eA11WddPT9xvM0qoXC5EhzKawfczFYuu9Dw7DzHKPycy4V3DRZ5rbwXE
+         H1IIzoQViB6zwT66xBP2ZeqbR50wrCP1x00lseejC67WaGCjwsJneGbegG/1EVwOy5vp
+         n/D2cvl4WS+0dsYXiMwvhiU+/cnJCZkJRBIIPtutJSta41iSZvQ8ChyqsQtjONAGFEkH
+         dxvg==
+X-Gm-Message-State: APzg51BzBnN1b9H3+i71jN793YqCNGKtT5bu2TSiSXNsnm6yNZ/eJb2w
+        PNBIi+4KBIxHlxPHn6ixRqYt1XgO
+X-Google-Smtp-Source: ANB0Vdbd9XAhOPH63f6Gjs9aTszQsiSwTxlpjir0GMmpNPVzUdhKE/3cFyIjZcem6NuVW2xGI4x0Ew==
+X-Received: by 2002:a62:3306:: with SMTP id z6-v6mr6203007pfz.85.1535553077895;
+        Wed, 29 Aug 2018 07:31:17 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id 143-v6sm6141540pfy.156.2018.08.29.07.31.14
+        by smtp.gmail.com with ESMTPSA id v22-v6sm9285987pfi.60.2018.08.29.07.31.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 07:31:15 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 07:31:15 -0700 (PDT)
-X-Google-Original-Date: Wed, 29 Aug 2018 14:31:12 GMT
-Message-Id: <pull.23.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.23.git.gitgitgadget@gmail.com>
+        Wed, 29 Aug 2018 07:31:17 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 07:31:17 -0700 (PDT)
+X-Google-Original-Date: Wed, 29 Aug 2018 14:31:13 GMT
+Message-Id: <5403014be738425e942a9bc1ca2029dd8d2137bb.1535553074.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.23.v2.git.gitgitgadget@gmail.com>
 References: <pull.23.git.gitgitgadget@gmail.com>
+        <pull.23.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] Teach the builtin rebase about the builtin interactive rebase
+Subject: [PATCH v2 1/1] builtin rebase: prepare for builtin rebase -i
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The builtin rebase and the builtin interactive rebase have been developed
-independently, on purpose: Google Summer of Code rules specifically state
-that students have to work on independent projects, they cannot collaborate
-on the same project.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The reason is probably the very fine tradition in academia to prohibit
-teamwork, which makes grading easier (at the expense of not exactly
-preparing the students for the real world, unless they want to stay in
-academia).
+The builtin rebase and the builtin interactive rebase have been
+developed independently, on purpose: Google Summer of Code rules
+specifically state that students have to work on independent projects,
+they cannot collaborate on the same project.
 
-One fallout is that the rebase-in-c and rebase-i-in-c patches cause no merge
-conflicts but a royal number of tests in the test suite to fail.
+One fallout is that the rebase-in-c and rebase-i-in-c patches cause no
+merge conflicts but a royal number of tests in the test suite to fail.
 
-It is easy to explain why: rebase-in-c was developed under the assumption
-that all rebase backends are implemented in Unix shell script and can be
-sourced via . git-rebase--<backend>, which is no longer true with 
-rebase-i-in-c, where git-rebase--interactive is a hard-linked builtin.
+It is easy to explain why: rebase-in-c was developed under the
+assumption that all rebase backends are implemented in Unix shell script
+and can be sourced via `. git-rebase--<backend>`, which is no longer
+true with rebase-i-in-c, where git-rebase--interactive is a hard-linked
+builtin.
 
 This patch fixes that.
 
-Note: while this patch targets pk/rebase-in-c-6-final, it will not work
-correctly without ag/rebase-i-in-c. So my suggestion is to rewrite the 
-pk/rebas-in-c-6-final branch by first merging ag/rebase-i-in-c, then
-applying this here patch, and only then cherry-pick "rebase: default to
-using the builtin rebase".
-
-Changes since v1:
-
- * replaced the too-terse commit message by a copy-edited version of this
-   cover letter (leaving out only the rant about disallowing teamwork).
-
-Johannes Schindelin (1):
-  builtin rebase: prepare for builtin rebase -i
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  builtin/rebase.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 81 insertions(+)
 
-
-base-commit: ae497a044508ebaac1794dcdd7ad04f8685686b2
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-23%2Fdscho%2Frebase-in-c-6-final-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-23/dscho/rebase-in-c-6-final-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/23
-
-Range-diff vs v1:
-
- 1:  29d49819fa ! 1:  5403014be7 builtin rebase: prepare for builtin rebase -i
-     @@ -2,8 +2,21 @@
-      
-          builtin rebase: prepare for builtin rebase -i
-      
-     -    It is no longer a shell script, so we need to call it in a different way
-     -    than the other backends.
-     +    The builtin rebase and the builtin interactive rebase have been
-     +    developed independently, on purpose: Google Summer of Code rules
-     +    specifically state that students have to work on independent projects,
-     +    they cannot collaborate on the same project.
-     +
-     +    One fallout is that the rebase-in-c and rebase-i-in-c patches cause no
-     +    merge conflicts but a royal number of tests in the test suite to fail.
-     +
-     +    It is easy to explain why: rebase-in-c was developed under the
-     +    assumption that all rebase backends are implemented in Unix shell script
-     +    and can be sourced via `. git-rebase--<backend>`, which is no longer
-     +    true with rebase-i-in-c, where git-rebase--interactive is a hard-linked
-     +    builtin.
-     +
-     +    This patch fixes that.
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 4e69458161..99fd5d4017 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -326,6 +326,13 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
+ 	}
+ }
+ 
++static const char *resolvemsg =
++N_("Resolve all conflicts manually, mark them as resolved with\n"
++"\"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\n"
++"You can instead skip this commit: run \"git rebase --skip\".\n"
++"To abort and get back to the state before \"git rebase\", run "
++"\"git rebase --abort\".");
++
+ static int run_specific_rebase(struct rebase_options *opts)
+ {
+ 	const char *argv[] = { NULL, NULL };
+@@ -333,6 +340,79 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	int status;
+ 	const char *backend, *backend_func;
+ 
++	if (opts->type == REBASE_INTERACTIVE) {
++		/* Run builtin interactive rebase */
++		struct child_process child = CHILD_PROCESS_INIT;
++
++		argv_array_pushf(&child.env_array, "GIT_CHERRY_PICK_HELP=%s",
++				 resolvemsg);
++		if (!(opts->flags & REBASE_INTERACTIVE_EXPLICIT)) {
++			argv_array_push(&child.env_array, "GIT_EDITOR=:");
++			opts->autosquash = 0;
++		}
++
++		child.git_cmd = 1;
++		argv_array_push(&child.args, "rebase--interactive");
++
++		if (opts->action)
++			argv_array_pushf(&child.args, "--%s", opts->action);
++		if (opts->keep_empty)
++			argv_array_push(&child.args, "--keep-empty");
++		if (opts->rebase_merges)
++			argv_array_push(&child.args, "--rebase-merges");
++		if (opts->rebase_cousins)
++			argv_array_push(&child.args, "--rebase-cousins");
++		if (opts->autosquash)
++			argv_array_push(&child.args, "--autosquash");
++		if (opts->flags & REBASE_VERBOSE)
++			argv_array_push(&child.args, "--verbose");
++		if (opts->flags & REBASE_FORCE)
++			argv_array_push(&child.args, "--no-ff");
++		if (opts->restrict_revision)
++			argv_array_pushf(&child.args,
++					 "--restrict-revision=^%s",
++					 oid_to_hex(&opts->restrict_revision->object.oid));
++		if (opts->upstream)
++			argv_array_pushf(&child.args, "--upstream=%s",
++					 oid_to_hex(&opts->upstream->object.oid));
++		if (opts->onto)
++			argv_array_pushf(&child.args, "--onto=%s",
++					 oid_to_hex(&opts->onto->object.oid));
++		if (opts->squash_onto)
++			argv_array_pushf(&child.args, "--squash-onto=%s",
++					 oid_to_hex(opts->squash_onto));
++		if (opts->onto_name)
++			argv_array_pushf(&child.args, "--onto-name=%s",
++					 opts->onto_name);
++		argv_array_pushf(&child.args, "--head-name=%s",
++				 opts->head_name ?
++				 opts->head_name : "detached HEAD");
++		if (opts->strategy)
++			argv_array_pushf(&child.args, "--strategy=%s",
++					 opts->strategy);
++		if (opts->strategy_opts)
++			argv_array_pushf(&child.args, "--strategy-opts=%s",
++					 opts->strategy_opts);
++		if (opts->switch_to)
++			argv_array_pushf(&child.args, "--switch-to=%s",
++					 opts->switch_to);
++		if (opts->cmd)
++			argv_array_pushf(&child.args, "--cmd=%s", opts->cmd);
++		if (opts->allow_empty_message)
++			argv_array_push(&child.args, "--allow-empty-message");
++		if (opts->allow_rerere_autoupdate > 0)
++			argv_array_push(&child.args, "--rerere-autoupdate");
++		else if (opts->allow_rerere_autoupdate == 0)
++			argv_array_push(&child.args, "--no-rerere-autoupdate");
++		if (opts->gpg_sign_opt)
++			argv_array_push(&child.args, opts->gpg_sign_opt);
++		if (opts->signoff)
++			argv_array_push(&child.args, "--signoff");
++
++		status = run_command(&child);
++		goto finished_rebase;
++	}
++
+ 	add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
+ 	add_var(&script_snippet, "state_dir", opts->state_dir);
+ 
+@@ -418,6 +498,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	argv[0] = script_snippet.buf;
+ 
+ 	status = run_command_v_opt(argv, RUN_USING_SHELL);
++finished_rebase:
+ 	if (opts->dont_finish_rebase)
+ 		; /* do nothing */
+ 	else if (status == 0) {
 -- 
 gitgitgadget
