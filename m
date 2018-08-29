@@ -2,101 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 235441F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 16:55:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 39C801F428
+	for <e@80x24.org>; Wed, 29 Aug 2018 17:12:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727841AbeH2Uxb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 16:53:31 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40969 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727245AbeH2Uxb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 16:53:31 -0400
-Received: by mail-pg1-f194.google.com with SMTP id s15-v6so2578592pgv.8
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 09:55:43 -0700 (PDT)
+        id S1728173AbeH2VKc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 17:10:32 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:43550 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727716AbeH2VKb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 17:10:31 -0400
+Received: by mail-wr1-f46.google.com with SMTP id k5-v6so5525416wre.10
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 10:12:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VkL+eh7RvglPUuzBbcWX7KqL7hP/QvsgIJYJ1w9YKZU=;
-        b=HFO0Vz3Lo4AodYoK32X5FPQIfshfDhT/qhft8L3WuGTBrtGMcnc94oa6Bi1sTJPuSe
-         y+uTP6u78NHuXEgpHkqQ15KvH/QxLL5YZSR8M247usk/Ay6cI82z7P9+76/3GMbbeBj3
-         f3YK+yLe/XjruOPAvekldes69lZmkEyDVtCfWv+8/sDdRygV+82YPz9CCj2Sl5M0ANH1
-         gSnrHXGfwruPVwrImpNp0m5EWRS2CGQF7+TB0t0kXa8tKN/4R+2p+ptv/48q7eoZTna9
-         DPx4rXuVk61uyhgH23LQrlFcu1qRLwsd1RFSnXGbelg6LmVahikf19IhxGP0XFX/Gjhf
-         u8fw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HbeuqUJhFda7JpaWW9CO5a8d95AdXV3jtEBS66Jx/XU=;
+        b=l1tHlAOW3fkGB4S77GDec/MTsKp8QSNwIeG8sRd0RVy+TGjizzFmUE1Ew1g6qAnRg0
+         K9+W34nmJUpfXUpG5TKKldXx6m5PsMsyL22ghYejf9MQHXcxvuqxur0C8iF3QV8G1Q2o
+         8/51VHLJ1H0irI3t0eqvrX8JV8ISCKheYdRirMz3GJE31Iv19cokWVDcj59jp3CPw0h0
+         iUkYWYifDPDppQUoJuwYomPxUjeKh7O5A7E/DzOvVV6vRVPQAv1LOV3AffCDYlTzHCYq
+         EGvqgXqhhUo7+YS9+ab2x09bXG3kkPx8LYozxU/7iCSNfDQssArRibi8GpGf9KVFb9qV
+         eXkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VkL+eh7RvglPUuzBbcWX7KqL7hP/QvsgIJYJ1w9YKZU=;
-        b=hwR5CcMCLPFci9Lvu48jKbZfXQ87r1WXYylVjZruFW5OzHlqHb4uZ7X56LX9a96A80
-         myXNETKy1oZ3uEkQFODR05k7yWcZ5PagOg9gy52dlTjDgqyiKHSdtgaDn9+a4qZtQTmW
-         6RLWy3QUQ50S2HmaHEG/s37ACUumj2S1a6/rmMd7CSQQUDOxEVakW0HEIZ0D+WjJzAoR
-         JzZlOhbibuKwpqYa0lI0fBwlvMlHhMy88HdZcxQxpAWuM/alOg4NHEFjnqNoxXFYUK1S
-         XRYEdaKDrWP4ybQ/DYPN4ut/AQpEgoy5atgKihXlCZc7j22zSNEY9FU2vvzuDU4CoqHM
-         vvfw==
-X-Gm-Message-State: APzg51CDY4W6JT9p6V3Yt3IC7gXNVGDLR1XzSCgKJGOYletQI8G7xkvW
-        /985qHul5wxZtZZRhYRobHo=
-X-Google-Smtp-Source: ANB0VdZnmsFiwni+Ks60FdpbMHIPn2Hz00PjwdGlseixLLlxtfd+kIt8SlN8AY+D8lcb/KhEGrl3Zg==
-X-Received: by 2002:a63:5660:: with SMTP id g32-v6mr6260533pgm.227.1535561742581;
-        Wed, 29 Aug 2018 09:55:42 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id n79-v6sm14262568pfh.2.2018.08.29.09.55.41
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HbeuqUJhFda7JpaWW9CO5a8d95AdXV3jtEBS66Jx/XU=;
+        b=smMsJ00GGdzW93EUGU7zwNQqqwCGBdlUDHpx476c4AKLqRqthZWoPrsT0VBeeOhCC/
+         7VdoRvV+tMbnka/Z9ypRAS/FhLdC4u9eUa06DHwmSo3Aeldwj4TYQM8CvkXp6M4m92nB
+         u9iLnjdNzpfbgxpDRHaZok+eobXq6vq5wV+kyFGp91gbF7X1/kUU3IklAu6YCQsMzhF1
+         IzzFIDGNtiQ4fJxuPY1SimwKl7IxNx+baiwXY0TNaOx41jjUX1/7SWMsYBF1o5rAOxCP
+         H6wVDLt7KkgalaFJqK9jYmJaTPESvSXgDDL7EAfEUgx4s0f+lq/TsbiixJqxLxmIJxwe
+         jXrg==
+X-Gm-Message-State: APzg51DzCHAfz0TVb9dw2p9TeOFkBFdBGTWTEviB9Ug4+oLSjz0hjBsd
+        XKA5uxFlZFvoiJ2D4qimBu4=
+X-Google-Smtp-Source: ANB0VdYshcUBrc8Lf3juNKKrOTxyhv7MpyBidW1i/pFn9NX+ko80fT5OmajeGLdnUF8nJlfW/sdHaA==
+X-Received: by 2002:a5d:438d:: with SMTP id i13-v6mr5176854wrq.156.1535562756910;
+        Wed, 29 Aug 2018 10:12:36 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 144-v6sm7684443wma.19.2018.08.29.10.12.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 09:55:41 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 09:55:40 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Tim Schumacher <timschumi@gmx.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com, sunshine@sunshineco.com
-Subject: Re: [PATCH v3] doc: Don't echo sed command for manpage-base-url.xsl
-Message-ID: <20180829165540.GB170940@aiede.svl.corp.google.com>
-References: <20180829134334.14619-1-timschumi@gmx.de>
- <20180829154720.20297-1-timschumi@gmx.de>
+        Wed, 29 Aug 2018 10:12:36 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <Ben.Peart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/3] read-cache: load cache extensions on worker thread
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+        <20180829152500.46640-1-benpeart@microsoft.com>
+        <20180829152500.46640-3-benpeart@microsoft.com>
+Date:   Wed, 29 Aug 2018 10:12:35 -0700
+In-Reply-To: <20180829152500.46640-3-benpeart@microsoft.com> (Ben Peart's
+        message of "Wed, 29 Aug 2018 15:25:20 +0000")
+Message-ID: <xmqqk1o9cd18.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180829154720.20297-1-timschumi@gmx.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tim Schumacher wrote:
+Ben Peart <Ben.Peart@microsoft.com> writes:
 
-> Subject: doc: Don't echo sed command for manpage-base-url.xsl
-
-Cribbing from my review of v2: a description like
-
-	Documentation/Makefile: make manpage-base-url.xsl generation quieter
-
-would make it more obvious what this does when viewed in "git log
---oneline".
-
-> Previously, the sed command for generating manpage-base-url.xsl
-> was printed to the console when being run.
+> This is possible because the current extensions don't access the cache
+> entries in the index_state structure so are OK that they don't all exist
+> yet.
 >
-> Make the console output for this rule similiar to all the
-> other rules by printing a short status message instead of
-> the whole command.
+> The CACHE_EXT_TREE, CACHE_EXT_RESOLVE_UNDO, and CACHE_EXT_UNTRACKED
+> extensions don't even get a pointer to the index so don't have access to the
+> cache entries.
 >
-> Signed-off-by: Tim Schumacher <timschumi@gmx.de>
-> ---
->  Documentation/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> CACHE_EXT_LINK only uses the index_state to initialize the split index.
+> CACHE_EXT_FSMONITOR only uses the index_state to save the fsmonitor last
+> update and dirty flags.
 
-Oh!  Ignore my reply to v2; looks like you anticipated what I was
-going to suggest already.  For next time, if you include a note about
-what changed between versions after the --- delimiter, that can help
-save some time.
+Good to see such an analysis here.  Once we define an extension
+section, which requires us to have the cache entries before
+populating it, this scheme would falls down, of course, but the
+extension mechanism is all about protecting ourselves from the
+future changes, so we'd at least need a good feel for how we read an
+unknown extension from the future with the current code.  Perhaps
+just like the main cache entries were pre-scanned to apportion them
+to worker threads, we can pre-scan the sections and compare them
+with a white-list built into our binary before deciding that it is
+safe to read them in parallel (and otherwise, we ask the last thread
+for reading extensions to wait until the workers that read the main
+index all return)?
 
-With or without the suggested commit message tweak,
+> -/*
+> -* A thread proc to run the load_cache_entries() computation
+> -* across multiple background threads.
+> -*/
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+This one was mis-indented (lacking SP before '*') but they are gone
+so ... ;-)
 
-Thank you.
+> @@ -1978,6 +1975,36 @@ static void *load_cache_entries_thread(void *_data)
+>  	return NULL;
+>  }
+>  
+> +static void *load_index_extensions_thread(void *_data)
+> +{
+> +	struct load_cache_entries_thread_data *p = _data;
+> +	unsigned long src_offset = p->start_offset;
+> +
+> +	while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
+> +		/* After an array of active_nr index entries,
+> +		 * there can be arbitrary number of extended
+> +		 * sections, each of which is prefixed with
+> +		 * extension name (4-byte) and section length
+> +		 * in 4-byte network byte order.
+> +		 */
+> +		uint32_t extsize;
+> +		memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
+> +		extsize = ntohl(extsize);
+> +		if (read_index_extension(p->istate,
+> +								(const char *)p->mmap + src_offset,
+> +								(char *)p->mmap + src_offset + 8,
+> +								extsize) < 0) {
+
+Overly deep indentation.  Used a wrong tab-width?
+
+> +	/* allocate an extra thread for loading the index extensions */
+>  	ce_per_thread = DIV_ROUND_UP(istate->cache_nr, nr_threads);
+> -	data = xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data));
+> +	data = xcalloc(nr_threads + 1, sizeof(struct load_cache_entries_thread_data));
+>  
+>  	/*
+>  	 * Loop through index entries starting a thread for every ce_per_thread
+> -	 * entries. Exit the loop when we've created the final thread (no need
+> -	 * to parse the remaining entries.
+> +	 * entries.
+>  	 */
+
+I see.  Now the pre-parsing process needs to go through all the
+cache entries to find the beginning of the extensions section.
+
+>  	consumed = thread = 0;
+> -	for (i = 0; ; i++) {
+> +	for (i = 0; i < istate->cache_nr; i++) {
+>  		struct ondisk_cache_entry *ondisk;
+>  		const char *name;
+>  		unsigned int flags;
+> @@ -2055,9 +2082,7 @@ static unsigned long load_cache_entries(struct index_state *istate,
+>  			if (pthread_create(&p->pthread, NULL, load_cache_entries_thread, p))
+>  				die("unable to create load_cache_entries_thread");
+>  
+> -			/* exit the loop when we've created the last thread */
+> -			if (++thread == nr_threads)
+> -				break;
+> +			++thread;
+
+This is not C++, and in (void) context, the codebase always prefers
+post-increment.
+
+> @@ -2086,7 +2111,18 @@ static unsigned long load_cache_entries(struct index_state *istate,
+>  			src_offset += (name - ((char *)ondisk)) + expand_name_field(previous_name, name);
+>  	}
+>  
+> -	for (i = 0; i < nr_threads; i++) {
+> +	/* create a thread to load the index extensions */
+> +	struct load_cache_entries_thread_data *p = &data[thread];
+
+This probably triggers decl-after-statement.
+
+> +	p->istate = istate;
+> +	mem_pool_init(&p->ce_mem_pool, 0);
+> +	p->mmap = mmap;
+> +	p->mmap_size = mmap_size;
+> +	p->start_offset = src_offset;
+> +
+> +	if (pthread_create(&p->pthread, NULL, load_index_extensions_thread, p))
+> +		die("unable to create load_index_extensions_thread");
+> +
+> +	for (i = 0; i < nr_threads + 1; i++) {
+>  		struct load_cache_entries_thread_data *p = data + i;
+>  		if (pthread_join(p->pthread, NULL))
+>  			die("unable to join load_cache_entries_thread");
