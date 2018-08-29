@@ -2,67 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76ED01F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 20:23:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 546741F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 20:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727595AbeH3AVe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 20:21:34 -0400
-Received: from mout.gmx.net ([212.227.17.20]:54253 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727477AbeH3AVe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 20:21:34 -0400
-Received: from bedhanger.strangled.net ([188.194.175.24]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0LvzF3-1froNh0yrt-017i8p; Wed, 29 Aug 2018 22:10:24 +0200
-From:   Ann T Ropea <bedhanger@gmx.de>
-To:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Lars Schneider <larsxschneider@gmail.com>,
-        Ann T Ropea <bedhanger@gmx.de>
-Subject: Re: [PATCH 1/2] tests: fix non-portable "${var:-"str"}" construct
-Date:   Wed, 29 Aug 2018 22:09:08 +0200
-Message-Id: <20180829200908.13461-1-bedhanger@gmx.de>
-X-Mailer: git-send-email 2.16.4
+        id S1728228AbeH3Abl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 20:31:41 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38689 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727392AbeH3Abl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 20:31:41 -0400
+Received: by mail-ed1-f65.google.com with SMTP id h33-v6so4900193edb.5
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 13:33:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gpyqOE7iaXtQaTE6HLfyNB2checfBNlspzO+kxBcUy8=;
+        b=nYtlL/mPnH2jxhGaiwDIc4g1hCx2LHqs27wEuPetpMFZDvkjyb6l5VCIyBeDVo2bB2
+         f85vOVKRGH98pbEWU5DUb76cGo2m6E2Ef14WWvTXZuEjHYNr+e8Z8dCVPgzveI0iTqtb
+         6F1PmRAarP3aWnR4Tcm9GtUxzOzFkE4V0b9RUt9dBejPIzwV/O30zxzFerRtirqjw+zl
+         X5G7KPZaFsXjlN3U1OOx9S8uop0xpcCqdqpobv/x/J3jK93Ws89CqQRnuN79a4L773rG
+         mdEabG1c+JTDMcid9RKZKteIab4EGNV0gSWvgals11aKNtzARu6g2bNKWiIkyvbpUrFY
+         PDBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gpyqOE7iaXtQaTE6HLfyNB2checfBNlspzO+kxBcUy8=;
+        b=rYpE46pIu7NwpTmfZ5tPGprirdMEjm2QH2Db/5ermeuWsKUQopq+RA0YSnO6ib4GXe
+         zTF7nViFba/ouUdUtbrn/XH2rapwNE5BmuqU6sTzQ/Ixh3WGOGGmjbVQizdTJAOUzqxa
+         /6LVNHOnLDT+xlZhQjoU/vWMOOd3uOSvKsjkdzccgU1QEWyMbZKwSuT7qypNd5CwmJV4
+         z7JdTLMGIIcf+5prYWZAHayNeHGUkZEPuHbAn0FwzE1BGrGCGzCCosdSfZ+fKIJBhtyY
+         MV4PEoNMPI0Ofe/NowdwziDI31fIVtKtfyExcXhte5hncEJhir3Ag20vv5fuiVwt/c48
+         u9xg==
+X-Gm-Message-State: APzg51BWhpwVMq75iZ5fwCVWppUD0PpESELkfTtGZHzUE07XMMctyjzN
+        osFSJOOfTHrHuTy1Q7jY8Ait7HdQ+kxTdJrHd29H/w51
+X-Google-Smtp-Source: ANB0VdZbZ2odp/GjRAAwSvVlDgQ3EBaAJ88/rZcls4KeA1yQiKXXwdYeXfQPqgBMJniRtwK+OyTJWOTZSCuA4DQQUXs=
+X-Received: by 2002:a50:9e46:: with SMTP id z64-v6mr5821995ede.204.1535574786897;
+ Wed, 29 Aug 2018 13:33:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180828193827.8648-1-avarab@gmail.com> <20180828193827.8648-2-avarab@gmail.com>
-In-Reply-To: <20180828193827.8648-2-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:sdGbx3/wgcPHpMq67Wwafbdel//bvrBZLH01PvSJKNOrfhdTBUG
- DTeJpquFfIBJUr7tKbMamh7quB1cB9Akda0Sdj+gqKkvzWA9H9jdD1jX18BT5+nwH4DBHlV
- k9uRU5xit4t/vUPwsZtqQlZnrVVgf6Y0/jSIbOQ1nAdMvlbMh6VnrQjpMkIYiYbEQRyzyVm
- iyxxxHT4vejdSwm7zBEPw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:MqNDYzp/RSo=:tnv8DrkX4kWY5Cr3gkW8DY
- j4os23OnFxSrQUqskZT8vp43ELgGa7fPBHnDigrApn/5D8+AC6ARCu4rEuXBj+hICbrS/PPe3
- 67p6DTe5LXcC5aa+qUveeMZMbc1sLuewa4GQgqCCl30bp/GJSCFAMr+kG0wRHDK5279HWUxFj
- 0Y5WdZ59vNgBGjT1QBmVvpRHaQaWwbxw8OrhaXFs1uSN6MQ7ir4yXqzciKm2LiAWZtOiT5jLM
- ykYnRBXNGWhUfiOq5wTc5J3n/1v4pgyNxS6kXj3GmLwcxxbBONEN1E7m1Ver2ktkAOmZP/CSV
- LI5V5VIfYqX3coDeAV5Eo3wp6/0ZLq21QxHaHR+Bav/H2Pck6ewtNcryhCE9dQTHmJRrwvajC
- V7dBauDTAYCZbkIw2s0PBwfCgP1kU4FFk5fMbRN5sfUYZ2u+0o3Mv/1Jl+F1K/DS+ZgML/XNb
- Z6+9NxFZ90sUKXwjTt+zxj9UPWfgs2vkDZq4pW8507RasJ9WpvAstTp8B/dWnxGIxuWZe0v5u
- RfIJYW6yZJ+mh1vOsIz2WBgiWOOt/s/H2iLWTnGTx73CRIIv/4xwo1gmzCdHUziglWztyZFh0
- 9bu6qloP5PukInDLckciUIMg0mCwsq2AO8912e129VvzqwCfua/mVzvNgvJgOEN4fYc1GmYIS
- azN9RFkNh6royJyNq+lyqGIKF4rC3wC0GKujF3qs24aMkLBMcdMioVwpPNzDlgMVGEPnwosDH
- WQiT/mbx4ZFTdG/rCIaxiHCYapdRU/fqUwABzzVzU/9gehqOTZUpkGfUYTVsDz2wDx2/p73Vt
- i70mnSY
+References: <20180827221257.149257-1-sbeller@google.com> <20180827221257.149257-2-sbeller@google.com>
+ <xmqqtvnefhgx.fsf@gitster-ct.c.googlers.com> <CAGZ79kYApAdFzC82LZNjYDzL5uWxtXHbvqUyjZ9OF+b=pGNbUA@mail.gmail.com>
+ <xmqq1sahcctx.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1sahcctx.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 29 Aug 2018 13:32:55 -0700
+Message-ID: <CAGZ79kaq2oBBfFExCTKoNMhTx7iKRto0zddPknWn5qRjw0fKkw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule git directories
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Wed, Aug 29, 2018 at 10:17 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > Not quite, as this is ...
+> >
+> > Looking at the test in the previous patch, I would think a reasonable workflow
+> > in the test is ...
+> >
+> >> The MOVE_HEAD_FORCE codepath that follows this hunk is, eh, already
+> >> forcing to correct the situation, so there is no need to touch that,
+> >> which makes sense, if I understand correctly.
+> >
+> > No, that is not executed for now as it depends on 'old_head'.
+>
+> All explanation worth having in the log message to help future
+> readers, don't you think?
 
-> Fix this by removing the redundant quotes. There's no need for them,
-> and the resulting code works under all the aforementioned shells. This
-> fixes a regression in c2f1d3989 ("t4013: test new output from diff
-> --abbrev --raw", 2017-12-03) first released with Git v2.16.0.
+ok, will do.
 
-Acked-by: Ann T Ropea <bedhanger@gmx.de>
-
-Thanks.
+Thanks,
+Stefan
