@@ -7,67 +7,65 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 152F31F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 12:14:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8674C1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 12:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727562AbeH2QLF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 12:11:05 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:45072 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727182AbeH2QLF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 12:11:05 -0400
-Received: by mail-qk0-f193.google.com with SMTP id z125-v6so3138249qkb.12
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 05:14:27 -0700 (PDT)
+        id S1728401AbeH2Qee (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 12:34:34 -0400
+Received: from mail-qk0-f195.google.com ([209.85.220.195]:33699 "EHLO
+        mail-qk0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727204AbeH2Qee (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 12:34:34 -0400
+Received: by mail-qk0-f195.google.com with SMTP id z78-v6so3209572qka.0
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 05:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=dy+5qSyYWXLu+7/4q7qMCqrk6PsmEeceEZuwZan3tG0=;
-        b=tKfyWrbL9F5OjGnGNZCbZW52YKi4lpYedb2uFH7dNwK9yiisICxrT6uH+xe58/T9KA
-         iKtbp54MD0kyqxkwby9kRdD7qoGRNxgjxdQupAlbFSKbewthANRpKY07cNWoaMl+qALe
-         0Cx3IpaeyPiPEZCJvQpMWfbgB8KPiujys6sEXlrSGcyn3i6IqepWYB5MquCmCMj7qB1I
-         j26Nmghcc4rgmnUPfsXGiT3zup5/k3Cpa3e07tDEuJIlRpiPLpJX6LwHQzGgZlatNX+L
-         hrZpkNa5KNHOkUbcLUYMxEr/lA2Q47q+wNn/n5J5yT/Id/t/d29ZyEmX0i43MJ3UO6aI
-         z3nA==
+        bh=ZcOoo+MOKB7mW9xKKtKUoIz2hPULclaGHAYnVXL284Y=;
+        b=ZgMkwavG1yoadNmDXp7Ilb1aCtkL+SxbIogugSTwyBeBhte4nLa3mHqSt/GSNv4dhu
+         ms3cn9CQgfoBJoVUWaT7kk6ZwkdmTLEeTgeKPLavDXdlOzn+2Vc811ueAmoBqOTgQyl/
+         DbLsm4MK1xzKPy0pzPAy7Jw/SexURnsjqdg9g3oPGSNTuto3eKPg3VIGvfiYs5t1C8jB
+         Emf4bmw0Kfr5m+gXShVko69lCYHU99A3NrvbSunIwe3jHYVrXawdr+Hz0fgLPZ8wwh1Z
+         z73QGq5rt+6JCp23pin99x5RH55EvviwaPkAZT1iW4VUGW/YKer5PIDECycAmW5+tex4
+         rBKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=dy+5qSyYWXLu+7/4q7qMCqrk6PsmEeceEZuwZan3tG0=;
-        b=WKZC5Sb0oyZmwQDB/esKk5puWctOS/8ogryk6+MUQmnafOewEf0N4MAWon5pQ/8hs8
-         TVRurTkjLbKV33AGpmpm5dQROCB9nEH+Hrl7iLCKmJbZaCMeWHKElvc3cc7+3Cay9j6P
-         V01O4nrE0MiSOF8ogjvA2nwSl9K/1n6gKURf9nlfvUTSkDPwQ2xrB0y79A+mucoiupsA
-         /ScQVL5R1fqnn/Lvrlh2UT0jQSsmPC/c9mu8AEIrimezskk57Najxf56/Slb4/wipCMK
-         E5us8zIT2M9E8QTATHwOPwsnhwrSTUQMfPZinDY4ave+wij6QhabLB9rgnblGKkUDm9S
-         vwyg==
-X-Gm-Message-State: APzg51D1J+67MKmnNlRY7tOYPiNZuAkkzIjgF12kuL+xWjPh7AqzI+38
-        Q9O859G+Z9am87qrp2oI3k4=
-X-Google-Smtp-Source: ANB0VdbmozlhaRhQDAGwSsGTePkrOj1kWwwCirW/s+JGASnCkPTad9FcUBOlYpZIiFdn1fY8cZp1fg==
-X-Received: by 2002:a37:7ac5:: with SMTP id v188-v6mr6061887qkc.262.1535544866801;
-        Wed, 29 Aug 2018 05:14:26 -0700 (PDT)
+        bh=ZcOoo+MOKB7mW9xKKtKUoIz2hPULclaGHAYnVXL284Y=;
+        b=tNlbTYBnrPwXq/f7/C0N1s5wNmbO8Akfhv2Pyh98pOu4nJ0CuLj+3PDDp6qsGszmDL
+         wIyeXPujkBx3SPipAB4GLgJIPTjt3mrRKxBCnOAEiEPUwFSeiLGem4ItXSc61OWTfyjf
+         cm+PcWvn4l4sEkIo+RUmwVwW5zy8OaOLMZ2L8NMWhgizqq/jD9PYyz5VsU//BMPVYjDT
+         ov/NpvbmpWZLtJ8Oh8tYvUvLs1RNchrTjYcYCNv4uWxCb+nixOO9gsVHsP/0DxvpB8by
+         NNYM7w8elMM7ttMByhD/r0etHEZfJHXXFhU1JgAXn7C9SUe/WoViVsCBwhxqyqK+BNYG
+         1U1g==
+X-Gm-Message-State: APzg51BVM8WNav3NuzHOobMM7IKQueaI7I+0xWvk335JKfSHuxG+w79U
+        MDiTsshLDIyAcqi81IHF7a4=
+X-Google-Smtp-Source: ANB0VdaYfv667ptyEVk3vyt3nvitIAG8fZkZUUTCLuul9y66X/3miFodQom49LSRY5512vNeGdhBIw==
+X-Received: by 2002:a37:4dcf:: with SMTP id a198-v6mr6065676qkb.139.1535546270311;
+        Wed, 29 Aug 2018 05:37:50 -0700 (PDT)
 Received: from ?IPv6:2001:4898:6808:13e:f86b:1660:ae35:a1de? ([2001:4898:8010:0:e1a1:1660:ae35:a1de])
-        by smtp.gmail.com with ESMTPSA id n24-v6sm2344268qtf.0.2018.08.29.05.14.25
+        by smtp.gmail.com with ESMTPSA id g39-v6sm2627847qtb.90.2018.08.29.05.37.48
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 05:14:25 -0700 (PDT)
-Subject: Re: [PATCH 1/1] commit-graph: define GIT_TEST_COMMIT_GRAPH
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.26.git.gitgitgadget@gmail.com>
- <85d02ac8d8c9a8950ce1a9760a541ff506945de0.1535488400.git.gitgitgadget@gmail.com>
- <CAGZ79kbsJXF=X7tzpdogAY7LdLd87YkPY0euiYaa3uQKQPoZuQ@mail.gmail.com>
- <3bb1d527-87ae-5fdb-be9a-b83f6a68d3a0@gmail.com>
- <CAPig+cSjanDi=jV75PdzYpAjwVgd4Suh3UyvY+Vy7yeHAuY8RA@mail.gmail.com>
+        Wed, 29 Aug 2018 05:37:49 -0700 (PDT)
+Subject: Re: [PATCH v3 01/11] t: add tool to translate hash-related values
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
+ <20180829005642.980617-2-sandals@crustytoothpaste.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <42329f9c-c4b5-f5fd-54cc-6b94b74574dc@gmail.com>
-Date:   Wed, 29 Aug 2018 08:14:24 -0400
+Message-ID: <777ea296-005d-0408-1197-178898399593@gmail.com>
+Date:   Wed, 29 Aug 2018 08:37:48 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cSjanDi=jV75PdzYpAjwVgd4Suh3UyvY+Vy7yeHAuY8RA@mail.gmail.com>
+In-Reply-To: <20180829005642.980617-2-sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -76,31 +74,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 8/28/2018 5:59 PM, Eric Sunshine wrote:
-> On Tue, Aug 28, 2018 at 5:31 PM Derrick Stolee <stolee@gmail.com> wrote:
->> On 8/28/2018 4:41 PM, Stefan Beller wrote:
->>> On Tue, Aug 28, 2018 at 1:33 PM Derrick Stolee via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->>>> +               GIT_TEST_COMMIT_GRAPH=0 &&
->>>> +               test_must_fail git merge -m final G
->>> This could go on the same line without the && in between, setting the
->>> variable as a prefix.
->> It cannot! The Linux build I ran complained that you can't put
->> environment variables through test_must_fail.
-> Is GIT_TEST_COMMIT_GRAPH exported? If not, it won't have an impact on
-> git-merge anyhow.
+On 8/28/2018 8:56 PM, brian m. carlson wrote:
+> +	rawsz="$(test_oid rawsz)" &&
+> +	hexsz="$(test_oid hexsz)" &&
 
-In my testing this changed the behavior from fail to pass when passing 
-GIT_TEST_COMMIT_GRAPH=1 from the command.
+These are neat helpers! The 'git commit-graph verify' tests in 
+t5318-commit-graph.sh should automatically work if we use these for 
+HASH_LEN instead of 20. I'll use a similar pattern when writing 'git 
+multi-pack-index verify'.
 
-
-> As for the special case of one-shot environment variable and
-> test_must_fail(), you'll find "env" used as a workaround in a number
-> of tests:
->
->      test_must_fail env GIT_TEST_COMMIT_GRAPH=0 git merge ... &&
-
-Thanks for this! This is clearly the better solution.
+Thanks,
 
 -Stolee
 
