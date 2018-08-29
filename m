@@ -2,130 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD9571F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 22:03:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FD671F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 22:12:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727187AbeH3CCu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 22:02:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33040 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727168AbeH3CCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 22:02:49 -0400
-Received: (qmail 22490 invoked by uid 109); 29 Aug 2018 22:03:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 22:03:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19556 invoked by uid 111); 29 Aug 2018 22:04:03 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 18:04:03 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 18:03:53 -0400
-Date:   Wed, 29 Aug 2018 18:03:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Jann Horn <jannh@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH 3/3] t5303: add tests for corrupted deltas
-Message-ID: <20180829220353.GF29880@sigill.intra.peff.net>
-References: <20180829205857.77340-1-jannh@google.com>
- <20180829205857.77340-3-jannh@google.com>
+        id S1727173AbeH3CL0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 22:11:26 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:34778 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727104AbeH3CL0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 22:11:26 -0400
+Received: by mail-wm0-f66.google.com with SMTP id m199-v6so340927wma.1
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 15:12:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=wFe6eMxOfQ8dOZ9jHQRNMtV5uwsMhYh0Ecxg91HWxPw=;
+        b=of1BIYec7YoCtGuMys0V8g0suHXQzbBxdoVZjMCHZalrp5F7Q5mbRJEzptX6Yj7Y+l
+         ilu84GZP13lTQij3GzxHG18EVGFcZVCqpIdU2O1iPnRvBdTLjZ96KVUxDnbYaKQuYSkx
+         TZ+w1fGqrA0IXwCu3Go0sOPa6GZCuWLZMq/aeH+uFp7k48YnRCDuaKNh2tCO+IhuukWc
+         CmH6EYwASDmkf4R2FrNIeel9PVz4zQ5TrGEW4GkE3k1VS4QmvRcc5CiQYPmnsObwumc3
+         5u44O74c8V8A4stdLOLna5ZXGlwe58QNbJCCmkS+sfRi7Gf6OKB061b+GeSfkB8pw+Sk
+         K6kQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=wFe6eMxOfQ8dOZ9jHQRNMtV5uwsMhYh0Ecxg91HWxPw=;
+        b=DxjKB9woXdXWzG968KSAtZuIkHRI4JOPyL9Gwm/wuTWkIWh5cgY51s7yJReByvL1Bc
+         /9ZjVvdGuYLyjpgNxEeWecPAkrzrpeRrRfByJ8XQT5dshFSzVWddH6vcvOR6iWzAxhZ/
+         11jWoNxh7gSmqyZ47p+dWGhZlquckhPnWPrNOg7dM22DO1dxl+Yi9wPODk8QdwDB+3Iq
+         KB0PkLYdRuQqi0PaqfP1McP/FqFp29y4yHeJe5v1M8AitgQYEA4GENRGkYHwgnSQ9N11
+         5TYIBwX56vcTNHhxe9L/DT2ov7z3ZVlNkg7uHv+I2B9jKNqSYIVj2r7DAm5zbHd1cZa1
+         IeSA==
+X-Gm-Message-State: APzg51DwAyVkikpu9KzHGkL09EqBagz0zeJmlEywefRCxo3L/839u9Rc
+        T6/gD7JFkNcbbL5Ri0SdxZw=
+X-Google-Smtp-Source: ANB0VdYTbAkpqlI7RvOf9y0/4SOLLquH73mBl08Y5cYi9frEIkIToiK+lPOMcVUKqabK/Q32wFNEYg==
+X-Received: by 2002:a1c:398b:: with SMTP id g133-v6mr5044110wma.5.1535580748697;
+        Wed, 29 Aug 2018 15:12:28 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a37-v6sm11825991wrc.21.2018.08.29.15.12.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 15:12:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, corrmage@gmail.com, avarab@gmail.com,
+        Johannes.Schindelin@gmx.de, sbeller@google.com
+Subject: Re: [PATCH 1/3] t3401: add another directory rename testcase for rebase and am
+References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com>
+        <20180829070613.11793-1-newren@gmail.com>
+        <20180829070613.11793-2-newren@gmail.com>
+Date:   Wed, 29 Aug 2018 15:12:27 -0700
+In-Reply-To: <20180829070613.11793-2-newren@gmail.com> (Elijah Newren's
+        message of "Wed, 29 Aug 2018 00:06:11 -0700")
+Message-ID: <xmqqo9dkakl0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180829205857.77340-3-jannh@google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 10:58:57PM +0200, Jann Horn wrote:
+Elijah Newren <newren@gmail.com> writes:
 
-> This verifies the changes from commit "patch-delta: fix oob read".
+> +test_expect_success 'rebase --interactive: NO directory rename' '
+> +	test_when_finished "git -C no-dir-rename rebase --abort" &&
+> +	(
+> +		cd no-dir-rename &&
+> +
+> +		git checkout B^0 &&
+> +
+> +		set_fake_editor &&
+> +		FAKE_LINES="1" test_must_fail git rebase --interactive A &&
 
-A minor nit, but usually we'd either introduce tests along with the
-fix, or introduce them beforehand as test_expect_failure and then flip
-them to success along with the fix.
+Is this a single-shot environment assignment?  That would have been
+caught with the test linter.
 
-> diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-> index 3634e258f..7152376b6 100755
-> --- a/t/t5303-pack-corruption-resilience.sh
-> +++ b/t/t5303-pack-corruption-resilience.sh
-> @@ -311,4 +311,22 @@ test_expect_success \
->       test_must_fail git cat-file blob $blob_2 > /dev/null &&
->       test_must_fail git cat-file blob $blob_3 > /dev/null'
->  
-> +test_expect_success \
-> +    'apply good minimal delta' \
-> +    'printf "\x00\x01\x01X" > minimal_delta &&
-> +     test-tool delta -p /dev/null minimal_delta /dev/null
-> +     '
+Perhaps squshing this in would be sufficient fix?
 
-Without your second patch applied, this complains about mmap-ing
-/dev/null (or any zero-length file).
+ t/t3401-rebase-and-am-rename.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Also, \x escapes are sadly not portable (dash, for example, does not
-respect them). You have to use octal instead (which is not too onerous
-for these small numbers).
-
-I needed the patch below to get it to behave as expected (I also
-annotated the deltas to make it more comprehensible to somebody who
-hasn't just been digging in the patch code ;) ).
-
-I wonder if we should more fully test the 4 cases I outlined in my
-earlier mail, too.
-
--Peff
-
----
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index 7152376b67..df28cce68b 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -311,22 +311,35 @@ test_expect_success \
-      test_must_fail git cat-file blob $blob_2 > /dev/null &&
-      test_must_fail git cat-file blob $blob_3 > /dev/null'
+diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
+index 94bdfbd69c..13e09afec0 100755
+--- a/t/t3401-rebase-and-am-rename.sh
++++ b/t/t3401-rebase-and-am-rename.sh
+@@ -141,7 +141,7 @@ test_expect_success 'rebase --interactive: NO directory rename' '
+ 		git checkout B^0 &&
  
-+# \5 - five bytes in base (though we do not use it)
-+# \1 - one byte in result
-+# \1 - copy one byte (X)
- test_expect_success \
-     'apply good minimal delta' \
--    'printf "\x00\x01\x01X" > minimal_delta &&
--     test-tool delta -p /dev/null minimal_delta /dev/null
-+    'printf "\5\1\1X" > minimal_delta &&
-+     echo base >base &&
-+     test-tool delta -p base minimal_delta /dev/null
-      '
+ 		set_fake_editor &&
+-		FAKE_LINES="1" test_must_fail git rebase --interactive A &&
++		test_must_fail env FAKE_LINES="1" git rebase --interactive A &&
  
-+# \5 - five bytes in base (though we do not use it)
-+# \2 - two bytes in result
-+# \2 - copy two bytes (we are short one)
- test_expect_success \
-     'apply truncated delta' \
--    'printf "\x00\x02\x02X" > truncated_delta &&
--     test_must_fail test-tool delta -p /dev/null truncated_delta /dev/null
-+    'printf "\5\2\2X" > truncated_delta &&
-+     echo base >base &&
-+     test_must_fail test-tool delta -p base truncated_delta /dev/null
-      '
+ 		git ls-files -s >out &&
+ 		test_line_count = 6 out &&
+@@ -160,7 +160,7 @@ test_expect_success 'rebase (am): NO directory rename' '
+ 		git checkout B^0 &&
  
-+# \5 - five bytes in base (though we do not use it)
-+# \1 - one byte in result
-+# \1 - copy one byte (X)
-+# \1 - trailing garbage command
- test_expect_success \
-     'apply delta with trailing garbage command' \
--    'printf "\x00\x01\x01X\x01" > tail_garbage_delta &&
--     test_must_fail test-tool delta -p /dev/null tail_garbage_delta /dev/null
-+    'printf "\5\1\1X\1" > tail_garbage_delta &&
-+     echo base >base &&
-+     test_must_fail test-tool delta -p base tail_garbage_delta /dev/null
-      '
+ 		set_fake_editor &&
+-		FAKE_LINES="1" test_must_fail git rebase A &&
++		test_must_fail env FAKE_LINES="1" git rebase A &&
  
- test_done
+ 		git ls-files -s >out &&
+ 		test_line_count = 6 out &&
+@@ -179,7 +179,7 @@ test_expect_success 'rebase --merge: NO directory rename' '
+ 		git checkout B^0 &&
+ 
+ 		set_fake_editor &&
+-		FAKE_LINES="1" test_must_fail git rebase --merge A &&
++		test_must_fail env FAKE_LINES="1" git rebase --merge A &&
+ 
+ 		git ls-files -s >out &&
+ 		test_line_count = 6 out &&
