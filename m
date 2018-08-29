@@ -7,123 +7,152 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BC4E1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 18:15:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 654091F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 18:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728081AbeH2WNw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 18:13:52 -0400
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:41956 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727399AbeH2WNv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 18:13:51 -0400
-Received: by mail-ed1-f50.google.com with SMTP id f38-v6so4621085edd.8
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 11:15:45 -0700 (PDT)
+        id S1728593AbeH2WdD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 18:33:03 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:40136 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727657AbeH2WdC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 18:33:02 -0400
+Received: by mail-ed1-f52.google.com with SMTP id j62-v6so78767edd.7
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 11:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JFLqYx2Gmpl6+wtNlmJ2EVxO2apTaMJVVobYr0N+LpA=;
-        b=MMVIajGijWNg/vNOeOt9XctwUj3Nyqk7pX5djp/OGl+D7zkyyc74kGcF1FpuLqKxOY
-         QO/+Mv5/v+iP44gncE11Y/ODggEKGHZ56lZh9uz5R1wdv82ZPCoCo0wjjOcUWyvOHRL5
-         2HfjOLXoRTfy2o95nAs6yvH0oqKnWlxAH+HsIWX01jBBNz8jpqMnFaaqHquz7siybF5T
-         2SYHK5r02DyyZCgIMEmSJtJrooiZXI70ChuFAXijufHO9Z0aipXh7Dftmmp4h9cSoGY0
-         3quVUVMsR75ebO9NYiCR7fODh0G5OKGBUgCSx1uPyFRK/es+qSNUC5MSRKy5E0ld5taT
-         cNfw==
+         :cc;
+        bh=iB0ds2ahzkDjPHx7VYLMSmWpz+8qB7N9qkRUpG6m71Y=;
+        b=HWFnc9Lb/tk2O0yy07r6vV9eEnKaz247sSLfUxyS6Na99UXeXM6y9DygHkFKz+WYoF
+         re+hQdSeBq9zLkH9xpgXdAYJIQWXxoP/4L3GYMZYvXQ5A4JwgaKKAqPxOE7rDN5kVyNE
+         7wQRAdxSWA1ATPD93qxvXzNZNlfndtcBJCH2f62T6wC/HhVmlbbOyVi5ckdsh7DKvdoM
+         GeY3IyKRoyAhrS/4fq4WsKdqMQCBAXRnyoFezspYJISx4qEtYgkZvguoqQCLo5wWK/LH
+         krx8d1F0UhB9Z6zETYNot9O7xHYall5pCnhDd1bod69Xtykatks8mjAEOUXpXhmQPrVK
+         Uq5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JFLqYx2Gmpl6+wtNlmJ2EVxO2apTaMJVVobYr0N+LpA=;
-        b=nZE16fnpwvq4qg/DuJ8mWTEQDE7zlXGBnY3l3a4frWnbSz7W8Kuya86wu3PX+aPKbe
-         9eeEvtmEYkQA9oVmgcP2QT4bfIDNIbXoVdOoCSHCt60v9NAqgl0lUffrgSzWVFaKh4TX
-         a4WDOQ9aCXRWp4PLa0Ayzj0tL4bVNJMtHbEnNrdoXGLAJI18csOUpUrEJi2jikQq4IAb
-         PEMKUIfUPpaePrsYgbhujJmg3jbhaOnv0oi0cSwkZKIZfyJ0w/1mc0k5x/GGdDCjubK/
-         TIh22Z6ZM8s9bzp7C0G/cQQSdxzYkBA9Ect3DNvAnaToYR5kUTlY2c8kpWe1LqotGpdv
-         q+MA==
-X-Gm-Message-State: APzg51CMGA00i0tTcs0x0CueD40TPN046D+WZSvgjv2cZhMFM6B9x3es
-        +PVmaS3Z4P8NmzMmv0Z9+mZiIqScu3S14mbZVDBN3Q==
-X-Google-Smtp-Source: ANB0VdawBFBI5lXaHkUSb9JjM/A1Aqf4Z0S3ELuhj9c6ezHdMd31mPxdEcX2YOPxVvcf2W9WGK3p0t4zJvx2++HD3UE=
-X-Received: by 2002:a50:d083:: with SMTP id v3-v6mr8847211edd.243.1535566544840;
- Wed, 29 Aug 2018 11:15:44 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=iB0ds2ahzkDjPHx7VYLMSmWpz+8qB7N9qkRUpG6m71Y=;
+        b=cVionZ3FDzY1f6noo3CCtt4gAorKuAiUiBdla2A5EyTI7V0Wb4thcDqfLeBimotCYp
+         DGgTIf7qi0he6H3RIE6fdcDOQTjBUZmIaRvohF3WvVD93AeiEqzK1Rz1v4ijEDUCPUQB
+         F37xq0Qg9oGLX2BLabCD2kftW7YiaXOU7XXNC3IROIWKXAJOs7V++5v7HGIGdjLsrdRm
+         r5yPHgKwXeA9zwcrkJ41fsPkegLfIi4QMlOfz3oiGpL9d8Tgr0XvcjAuePAtumVZUSp9
+         NldynP5z+Hfa6I/tx4LI637JDN/nPpFbnfi1wjvuk9sIxZt5uwpUIJkaNvgvfvyxVypm
+         tkVQ==
+X-Gm-Message-State: APzg51Bvklj5kGpNa4yGWd+okXUay95E5eGlCo7FxDZkOA6osv+RMa6j
+        eOcRN1W7MEOpc2QAGMFbLiriCgG0WgD4SD4S6zKGTQ==
+X-Google-Smtp-Source: ANB0Vda00wm8yV+FSw5d2uCOinm+nxJmt1C24WtlUVHa+OKS8xBo/QagmbndfTHn/CdFVZNwOPNE52IuRZiaRcfp33I=
+X-Received: by 2002:a50:cc0a:: with SMTP id m10-v6mr8853998edi.81.1535567691395;
+ Wed, 29 Aug 2018 11:34:51 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAE3VKEp3PJLCy3tL=K51nNzGry-HySb57QHemZzMtg3RkBmzUw@mail.gmail.com>
-In-Reply-To: <CAE3VKEp3PJLCy3tL=K51nNzGry-HySb57QHemZzMtg3RkBmzUw@mail.gmail.com>
+References: <878t4xfaes.fsf@evledraar.gmail.com> <20180824014703.GE99542@aiede.svl.corp.google.com>
+ <877ek9edsa.fsf@evledraar.gmail.com> <CAGZ79kaGb_TL7SiR4CFGFzrfy2Lotioy76o6sUK4=vZK5qwqNA@mail.gmail.com>
+ <20180829175950.GB7547@aiede.svl.corp.google.com>
+In-Reply-To: <20180829175950.GB7547@aiede.svl.corp.google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 29 Aug 2018 11:15:33 -0700
-Message-ID: <CAGZ79kakEYc954nQDThAZ0fSwbNp2-GGwthnevoQ4DxEUu4gZA@mail.gmail.com>
-Subject: Re: Git Unrelated Histories
-To:     me@tomaszubiri.com
-Cc:     git <git@vger.kernel.org>
+Date:   Wed, 29 Aug 2018 11:34:40 -0700
+Message-ID: <CAGZ79kZsAFNE0GgUHociSDejwB+HsPVscZ4jcq__sFew7g85Bw@mail.gmail.com>
+Subject: Re: How is the ^{sha256} peel syntax supposed to work?
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Edward Thomson <ethomson@edwardthomson.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        demerphq <demerphq@gmail.com>,
+        Brandon Williams <bmwill@google.com>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 9:49 AM Tomas Zubiri <me@tomaszubiri.com> wrote:
+On Wed, Aug 29, 2018 at 10:59 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> Hello all,
+> Stefan Beller wrote:
 >
-> I have recently joined a team there seems to be a couple of  issue
-> with the git repositories:
+> >                  And with that model, <hexdigits>^{sha256}^{tree}
+> > could mean to obtain the sha256 value of <hexvalue> and then derive
+> > the tree from that object,
 >
->
-> 1- A branch created from development cannot be merged into the
-> production branch.
->
->
->
-> (production)
->
-> git merge development_feature_branch
->
->
->
-> fatal: refusing to merge unrelated histories
->
+> What does "the sha256 value of <hexvalue>" mean?
 
-See the git merge man page for the
-  --allow-unrelated-histories switch.
+s/hexvalue/hexdigits/
+..
+
+And with that model, <hexdigits>^{sha256}^{tree}
+could mean to obtain the object using sha256 descriptors
+(for trees/blobs/commits/tags) of <hexdigits> (as defined by
+the step of the transition plan, it could mean <hexdigits>
+to be interpreted as SHA1 or SHA256 or DWIM).
 
 >
+> For example, in a repository with two objects:
 >
+>  1. an object with sha1-name abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd
+>     and sha256-name ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01
 >
-> 2- If there is a file that only has a 1 line difference in production,
-> a git diff will return that the whole file is different:
+>  2. an object with sha1-name ef01ef01ef01ef01ef01ef01ef01ef01ef01ef01
+>     and sha256-name abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd...
 >
-> git diff production:folder development:folder
->
->
-> =E2=80=9C
-> diff --git a/folder/file.py b/folder/file.py
->
-> index 9bfd6612..20cce520 100644
->
-> --- a/folder/file py
->
-> +++ b/folder/file.py
->
-> @@ -1,245 +1,245 @@
->
-> =E2=80=9C
->
-> I=E2=80=99m not 100% sure what happened here. But it seems that changes a=
-nd
-> added files are copied and pasted into the production branch and
-> uploaded indepenedently as separate files, contributing to a huge
-> difference between branches.
 
-It sounds to me as if there would be line ending issues or some sort
-of whitespace issues (tab vs spaces).
+It would be super cool to have hash values to match vice versa,
+but for the sake of the example, let's go with that.
 
->
-> How can I confirm this hypothesis, and what steps can I take to solve it?
+> what objects would you expect the following to refer to?
 
-git diff --ignore-all-space
-or --ignore-space-at-eol
+That generally depends on the step of the transition plan
+in that specific Git repository.
 
-Look at gitattributes to set your flavor for files so you don't have
-to pass these flags all the time
+I thought these format specifiers would only describe how to
+output the object names correctly for now, so it could be
+possible to have:
+
+$ git show abcdabcd^{sha1}
+commit abcdabcd...
+....
+
+$ git show abcdabcd^{sha256}
+commit ef01ef01e...
+....
+
+in one step and
+
+$ git show abcdabcd^{sha1}
+commit ef01ef01e...
+....
+
+$ git show abcdabcd^{sha256}
+commit abcdabcd...
+....
+
+in another step, and in yet another step it could mean
+
+$ git show abcdabcd^{sha1}
+commit abcdabcd[...]^{sha1}
+...
+
+But my question was more hinting to the point that we should not
+overload the syntax to mean much more than either output formatting
+or hash selection.
+
+The third meaning could be used for verifying objects as we could
+use this syntax to mean
+
+  "please verify the signature of the object (as given by ^{hash}"
+
+or it could mean
+
+  "please verify the signature of the object as given and ensure that
+    it was signed in this ^{hash} and not in a weaker hash world".
+
+And I would think all the verification should not be folded into this
+notation for now, but we only want to ask for the output to be
+one or the other hash, or we could ask for an object that is
+<hexdigits> in the specified hash, but these two modes depend
+on the step in the transition plan.
 
 Stefan
