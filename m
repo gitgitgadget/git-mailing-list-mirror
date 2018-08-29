@@ -6,68 +6,60 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4886C1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:32:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C426B1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727227AbeH3BbG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:31:06 -0400
-Received: from cloud.peff.net ([104.130.231.41]:32920 "HELO cloud.peff.net"
+        id S1727687AbeH3BdY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:33:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:32940 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727177AbeH3BbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:31:06 -0400
-Received: (qmail 21215 invoked by uid 109); 29 Aug 2018 21:32:19 -0000
+        id S1727250AbeH3BdX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:33:23 -0400
+Received: (qmail 21308 invoked by uid 109); 29 Aug 2018 21:34:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:32:19 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 29 Aug 2018 21:34:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19063 invoked by uid 111); 29 Aug 2018 21:32:27 -0000
+Received: (qmail 19123 invoked by uid 111); 29 Aug 2018 21:34:44 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:32:27 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 17:34:44 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:32:17 -0400
-Date:   Wed, 29 Aug 2018 17:32:17 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 17:34:34 -0400
+Date:   Wed, 29 Aug 2018 17:34:34 -0400
 From:   Jeff King <peff@peff.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-Message-ID: <20180829213217.GB32400@sigill.intra.peff.net>
-References: <20180807230637.247200-1-bmwill@google.com>
- <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com>
- <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com>
- <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
- <20180829052519.GA17253@sigill.intra.peff.net>
- <20180829210913.GF7547@aiede.svl.corp.google.com>
+To:     Jann Horn <jannh@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH 2/3] t/helper/test-delta: segfault on OOB access
+Message-ID: <20180829213433.GC29880@sigill.intra.peff.net>
+References: <20180829205857.77340-1-jannh@google.com>
+ <20180829205857.77340-2-jannh@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180829210913.GF7547@aiede.svl.corp.google.com>
+In-Reply-To: <20180829205857.77340-2-jannh@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 02:09:13PM -0700, Jonathan Nieder wrote:
+On Wed, Aug 29, 2018 at 10:58:56PM +0200, Jann Horn wrote:
 
-> Jeff King wrote:
-> > On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
+> This ensures that any attempts to access memory directly after the input
+> buffer or delta buffer in a delta test will cause a segmentation fault.
 > 
-> >> Yeah, then let's just convert '/' with as little overhead as possible.
-> >
-> > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
-> > colliding)?
-> >
-> > I'm OK if the answer is "no", but if you do want to deal with it, the
-> > time is probably now.
-> 
-> Have we rejected the config approach?  I really liked the attribute of
-> not having to solve everything right away.  I'm getting scared that
-> we've forgotten that goal.
+> Inspired by vsftpd.
 
-I personally have no problem with that approach, but I also haven't
-thought that hard about it (I was mostly ignoring the discussion since
-it seemed like submodule-interested folks, but I happened to see what
-looked like a potentially bad idea cc'd to me ;) ).
+Neat trick, but it seems funny to protect this one buffer in
+non-production code. Obviously you were interested in demonstrating the
+issue for your tests, but do we want to carry this all the time?
+
+If we want to detect this kind of thing in tests, we should probably be
+relying on tools like ASan, which would cover all mmaps.
+
+It would be nice if there was a low-cost way to detect this in
+production use, but it looks like this replaces mmap with
+read_in_full(), which I think is a non-starter for most uses.
 
 -Peff
