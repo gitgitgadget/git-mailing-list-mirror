@@ -7,43 +7,43 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 916781F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 00:57:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9591A1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 00:57:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727460AbeH2Ev1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 00:51:27 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:37282 "EHLO
+        id S1727475AbeH2Ev2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 00:51:28 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:37286 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727304AbeH2Ev1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 00:51:27 -0400
+        by vger.kernel.org with ESMTP id S1727429AbeH2Ev2 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 00:51:28 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0A0596081F;
-        Wed, 29 Aug 2018 00:57:10 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id ECD1660822;
+        Wed, 29 Aug 2018 00:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535504231;
-        bh=l7BbuanO+KI9IQXaN8aalOwRIXDHYxrbPSK7IkN3XMs=;
+        s=default; t=1535504232;
+        bh=O8G2TknhGB20+Eg0MVuhjhEd8j2HtADkxm5OMfazT0M=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=b08HD5sDQtpvKkYgLguUGs3pAl0EwKpIWqyzyEedzzjFfNPIgH6PxgLSfliXyqQC2
-         296ZJXao2ZioGn4dmoYz6M9U/14mjmbMz5+n6OWMculfaCWMk/wBzc/3e6tERe7a52
-         mPmIQQznr4YgpT4Pob6Glt7KiGJD7oiI94TdNc0FbQ9WwjOglR3Csr2SGZ/IuaeYUV
-         wE2rLbJzqH+MGuqn0BOPBJyS+sACLiut49RXiTeCqrCGcv4ryzh0BDIXIDCwQ/rsiA
-         niOE161xru5gi+U96VhMqyoEqrb2gSJIRbQh0ybEYQwxkSCCbN76cNdZtjjn8yntI2
-         Ktf2oxxLJkdTb5SwGAuON+cecoHzXvnl0IJLyhbalpbinAolaVxN4xP9hdfCEJIP6Y
-         AQUrp0opPLS0bx5CI0Jmt5FN8ndLOXNo/Rw7dz5hLg25gC8AERpzgg85PedMQ6dgJc
-         ZXA45z1ZdJAU1FgxPpsmIA4OCK5pl9Gf0v5Aj4YqIGFMnJmnk+x
+        b=0KyQwMO+0nlNMSttzXNwU93k+FgP1pkBUH+ReF9aLHcScAHnGUvdbnfzT9e2TUi5l
+         JVDheEavHVu/rCQK2tRfNcXxhb9eZRP76ryU+U+VqaTiduPcQZ3gwWbaLifwHsLBqm
+         YP9ejO4nlqoZ91+ChNpOko0fO2Hgl2a5qgwAu204e6wYyI8YmpfCWDbB68o/rEhIBU
+         2QO3Slvjgo1bcRt0bl3G1c6EZKMRenOCZz/92GecTobEv65LdxHoyZwjF3ew4iR0iZ
+         5hQ1YKQxtHpJPLbYLOLoJhuUtJD6RhBWz9MfTdOUIbfQ3YNl9HJqwQqyVEy8SYG8Lo
+         bpWAq3mRo0OwOjOxXKRe3p1krv6ZA1Ny3QI72tQ8NIdBJ3uZ0+evhUZsx5rP6CIo30
+         GzrS23e2yu9HAEPsaNJSkSr8rQ+UpvuMNU0aoIz0LiPmOF39qWE+yWzBHcNXbxRLK5
+         2eKm9mGHBTjkkHlMgTx0Rv3r3FeSs+e/FPkxOpmEpI3lqrwVERU
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v3 10/11] t1406: make hash-size independent
-Date:   Wed, 29 Aug 2018 00:56:41 +0000
-Message-Id: <20180829005642.980617-11-sandals@crustytoothpaste.net>
+Subject: [PATCH v3 11/11] t1407: make hash size independent
+Date:   Wed, 29 Aug 2018 00:56:42 +0000
+Message-Id: <20180829005642.980617-12-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.rc0.228.g281dcd1b4d0
 In-Reply-To: <20180829005642.980617-1-sandals@crustytoothpaste.net>
 References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
@@ -60,37 +60,28 @@ for-each-ref and for-each-reflog by field.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1406-submodule-ref-store.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t1407-worktree-ref-store.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index e093782cc3..d199d872fb 100755
---- a/t/t1406-submodule-ref-store.sh
-+++ b/t/t1406-submodule-ref-store.sh
-@@ -39,7 +39,7 @@ test_expect_success 'rename_refs() not allowed' '
- '
+diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
+index 4623ae15c4..9a84858118 100755
+--- a/t/t1407-worktree-ref-store.sh
++++ b/t/t1407-worktree-ref-store.sh
+@@ -58,7 +58,7 @@ test_expect_success 'for_each_reflog()' '
+ 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
+ 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
  
- test_expect_success 'for_each_ref(refs/heads/)' '
--	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
-+	$RUN for-each-ref refs/heads/ | cut -d" " -f 2- >actual &&
- 	cat >expected <<-\EOF &&
- 	master 0x0
- 	new-master 0x0
-@@ -48,7 +48,7 @@ test_expect_success 'for_each_ref(refs/heads/)' '
- '
- 
- test_expect_success 'for_each_ref() is sorted' '
--	$RUN for-each-ref refs/heads/ | cut -c 42- >actual &&
-+	$RUN for-each-ref refs/heads/ | cut -d" " -f 2- >actual &&
- 	sort actual > expected &&
- 	test_cmp expected actual
- '
-@@ -65,7 +65,7 @@ test_expect_success 'verify_ref(new-master)' '
- '
- 
- test_expect_success 'for_each_reflog()' '
--	$RUN for-each-reflog | sort | cut -c 42- >actual &&
-+	$RUN for-each-reflog | sort | cut -d" " -f 2- >actual &&
+-	$RWT for-each-reflog | cut -c 42- | sort >actual &&
++	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
  	cat >expected <<-\EOF &&
  	HEAD 0x1
- 	refs/heads/master 0x0
+ 	PSEUDO-WT 0x0
+@@ -68,7 +68,7 @@ test_expect_success 'for_each_reflog()' '
+ 	EOF
+ 	test_cmp expected actual &&
+ 
+-	$RMAIN for-each-reflog | cut -c 42- | sort >actual &&
++	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	PSEUDO-MAIN 0x0
