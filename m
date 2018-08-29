@@ -6,61 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 909991F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 22:37:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7634E1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 22:40:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727388AbeH3CgQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 22:36:16 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:32828 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727317AbeH3CgQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 22:36:16 -0400
-Received: by mail-wr1-f50.google.com with SMTP id v90-v6so6259089wrc.0
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 15:37:13 -0700 (PDT)
+        id S1728080AbeH3CjT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 22:39:19 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35759 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727675AbeH3CjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 22:39:19 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j26-v6so6254271wre.2
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 15:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:references:message-id:user-agent
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
          :mime-version;
-        bh=OQX8tplTbUVmhxZycSp/PJ8zfYBHLcm+MQSgk2VV190=;
-        b=pUfTbmws23jmlyuoffLFXvJLIX3d5g9fh11xQRiTXoOPVu2GNGkBDY6N7sv/9RG8c4
-         Lukya5ojHCAs5Zc0XOSt4sgQ1oPFB0GDCQ7z6W0sxL27AKclCW/Up00kfDt8dI8NZHPO
-         gpQhYCU9eBYiGrEM683/wBhz/lztPClS+HkBi3wqZee6fhdRSfpunNismm8joo4dunL/
-         3d6bma2lUATE0t6jKd1UDBeTgmwZMHzaM/YuEZX+qsOas3Um0g6MO5KcjG5X4lqhScLV
-         uIGcklgZK19rTBp+wJ5ETzZLy+eic1x9tI524G31KThOnbRWp4P9aC/SU6CUgGrctWhu
-         I0Mg==
+        bh=t05hdvtn9dcoCjLyDWgyGaiIHa+Nb0Ex0B3bXMQzVt0=;
+        b=RQDKIDRNV+fcSNkUbe8OAP12HowjYo1mQy0GAliHmPoXU/Yb/9g2ktaLYyDVdEVSUk
+         MvLKDZePtwCXI87Ab6S9Nhzcxnxt8bxgvPV2ulK2YUK76WGM0Ss0BN1JJeqrZZ5XVTMB
+         tHs5N0H9hcGWV4v3via2jJa+OJT0ED+efKck1LH16Uswxx1iT+zI6ULKtpCN2vU36QKi
+         v+FCe4LjFzkdN8odkrPiDpl2hNIskzXfMSszs0qEbiSzUXwcPhoKoWxfZIi2NXS9Yz8P
+         6zQM+5yrq+/znQd/iYXdqM2KpE/3gx/828UXWAkyks+ZFP0BfoTcAVDgLBlWUWiP8gPy
+         uVbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:references
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :message-id:user-agent:mime-version;
-        bh=OQX8tplTbUVmhxZycSp/PJ8zfYBHLcm+MQSgk2VV190=;
-        b=cd8BbwrYvJlC/RX+yTO9cov0OTGPrp8Dqn7EOLNU5l3t2Afxm8Ilvdvy7CkKHCRInJ
-         aZP7vGX28bAISFhFHItBN5bfnto9R2xlmvcD0JuKbXIgf6s5giOXksJ2GPg4ETD/hdph
-         iN5L3lkK03wPbFAMcFU7d8aRnO4JN3HN5ILEbvpk+ziGdzo2tE7oBiZr1JpP5jK+YPPu
-         2DORpkhGOSVsnu/P7EZBoondPkw4m1Eh2wqZOy8KonARfOarBW/7i+0q6IKlcpH5TONO
-         4jT+DjhQQSkkS4D00o3mQO8JBjYdsp3nqM6NuFdLNK5ErwMWoYBokMFsn1CUDW+sSJum
-         fO+Q==
-X-Gm-Message-State: APzg51BUkAcpd36dxInujlvfloSmbAxP7l4Xyn2BlVRvz/rdShK7OXEI
-        7xIL2bKXqsxLX+grkli+dYY=
-X-Google-Smtp-Source: ANB0Vdaw/pidh1M0Ke19FchC6/B2QleDRbL2qPjpnPGOiSXTFJruV5NJZMdpzzFAlSf4mDHQzFx5DQ==
-X-Received: by 2002:a5d:5450:: with SMTP id w16-v6mr5994494wrv.4.1535582231970;
-        Wed, 29 Aug 2018 15:37:11 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q16-v6sm3917515wrn.41.2018.08.29.15.37.09
+        bh=t05hdvtn9dcoCjLyDWgyGaiIHa+Nb0Ex0B3bXMQzVt0=;
+        b=RuIZa4xilyrYvFzm4bXj8cScjfWU5UL8nzjZjFmNMaSmBKrYvZAniuQ11565jiaYz1
+         ID3Frd+RYgGPnzDvhogNMAuJLIk20G10ZucLJf+Zk7OCKkZ+0tcOzizMfkEUB7hvwNCI
+         iPZ+GMB8kM0rQ3C5MkCpj8CGEqwdnVwQNFwkye1wmiY0D+lbs2/w1BFFR3mZWE3Wz1GP
+         0SpSSDuQCw25q7UuvZqwBmFa7hH99CwVBkVy6mMHklv8xyoMWhUYGazGp2mfX6MHNoYx
+         UQkF2NvSSvoW7jMukUWmkqjRZ4TLSrnG1a3XC9z4UgKE1d89Kkj1gMafgGT/S8t/wuCa
+         wA0w==
+X-Gm-Message-State: APzg51Db6RQg1fw7g28FBXSop//zLDMG1/Ut173fOr212vyqnEwlxtYe
+        D3u2hsjp5aFuETbyCsLbwMU=
+X-Google-Smtp-Source: ANB0VdZxoQXRBC7jUpp5kowPEaeXMvP1Plx1bjOn93ZqUZKYNCYjh6l6QU0p/IEeeQvhbmdTXP2Hxw==
+X-Received: by 2002:a5d:4401:: with SMTP id z1-v6mr5997959wrq.227.1535582413861;
+        Wed, 29 Aug 2018 15:40:13 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z184-v6sm482232wmz.0.2018.08.29.15.40.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 15:37:10 -0700 (PDT)
+        Wed, 29 Aug 2018 15:40:13 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "pclouds\@gmail.com" <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/3] read-cache: load cache extensions on worker thread
-Date:   Wed, 29 Aug 2018 15:19:18 -0700
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20180829152500.46640-1-benpeart@microsoft.com>
-        <20180829152500.46640-3-benpeart@microsoft.com>
-        <xmqqk1o9cd18.fsf@gitster-ct.c.googlers.com>
-        <606bb7e9-0d58-ec86-6a3c-8a123679f9f4@gmail.com>
-Message-ID: <xmqqd0u094ve.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/1] builtin rebase: prepare for builtin rebase -i
+References: <pull.23.git.gitgitgadget@gmail.com>
+        <pull.23.v2.git.gitgitgadget@gmail.com>
+        <5403014be738425e942a9bc1ca2029dd8d2137bb.1535553074.git.gitgitgadget@gmail.com>
+Date:   Wed, 29 Aug 2018 15:40:12 -0700
+Message-ID: <xmqq5zzs94qb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,11 +66,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> There isn't any change in behavior with unknown extensions and this
-> patch.  If an unknown extension exists it will just get ignored and
-> reported as an "unknown extension" or "die" if it is marked as
-> "required."
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The builtin rebase and the builtin interactive rebase have been
+> developed independently, on purpose: Google Summer of Code rules
+> specifically state that students have to work on independent projects,
+> they cannot collaborate on the same project.
 
-OK.
+A much better description, especially without the less relevant "the
+reason probably is..." omitted from here.  The author's personal
+guess, while adding it does not help understanding what is already
+in the above paragraph an iota, is still a fine reading material in
+the cover letter 0/1, though.
+
+> One fallout is that the rebase-in-c and rebase-i-in-c patches cause no
+> merge conflicts but a royal number of tests in the test suite to fail.
+>
+> It is easy to explain why: rebase-in-c was developed under the
+> assumption that all rebase backends are implemented in Unix shell script
+> and can be sourced via `. git-rebase--<backend>`, which is no longer
+> true with rebase-i-in-c, where git-rebase--interactive is a hard-linked
+> builtin.
+>
+> This patch fixes that.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/rebase.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+
+
+Will replace by doing:
+
+    $ git checkout js/rebase-in-c-5.5-work-with-rebase-i-in-c
+    $ git checkout HEAD^
+    $ git am -s mbox
+    $ git range-diff @{-1}...
+    $ git checkout -B @{-1}
+
+    $ git checkout pk/rebase-i-in-c-6-final
+    $ git rebase --onto js/rebase-in-c-5.5-work-with-rebase-i-in-c \
+          js/rebase-in-c-5.5-work-with-rebase-i-in-c@{1} HEAD^0
+    $ git range-diff @{-1}...
+    $ git checkout -B @{-1}
+
+to update the two topics and then rebuilding the integration
+branches the usual way.  I also need to replace the "other" topic
+used in this topic, so the actual procedure would be a bit more
+involved than the above, though.
+
+Thanks.
