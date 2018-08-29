@@ -2,89 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE4151F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 16:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F1C81F428
+	for <e@80x24.org>; Wed, 29 Aug 2018 16:30:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729278AbeH2UMG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 16:12:06 -0400
-Received: from mout.gmx.net ([212.227.15.15]:51009 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727484AbeH2UMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 16:12:06 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfmWy-1gFtLH1h6y-00NALj; Wed, 29
- Aug 2018 18:14:23 +0200
-Date:   Wed, 29 Aug 2018 18:14:22 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Ulrich Gemkow <ulrich.gemkow@ikr.uni-stuttgart.de>
-cc:     git@vger.kernel.org
-Subject: Re: Trivial enhancement: All commands which require an author should
- accept --author
-In-Reply-To: <201808282305.29407.ulrich.gemkow@ikr.uni-stuttgart.de>
-Message-ID: <nycvar.QRO.7.76.6.1808291653190.71@tvgsbejvaqbjf.bet>
-References: <201808282305.29407.ulrich.gemkow@ikr.uni-stuttgart.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727743AbeH2U2g (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 16:28:36 -0400
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:44896 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727293AbeH2U2f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 16:28:35 -0400
+Received: by mail-ed1-f53.google.com with SMTP id s10-v6so4379031edb.11
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 09:30:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=cboHgH+gD+KDYUR90i6b+ZT+EkQ1h1fuX8+XfNYMlgQ=;
+        b=EXOggD3ihCDZFsO/o/JYfkthNnrbJJeoQbAwZcJRP+2w5F8SLbHYoa+5eo3viJAOU5
+         0VMVaCZ8cIiHQWxye0SIlkiYbJh19s8HzZkOKYCLCIgLX8QQKTBj75FBvlHPtSQB4xj9
+         CTH9kwt5c5a+EFbfXP/QzcaSl2i0kdPyTWlbnptUooKFlz7XHQ8xGwzetOuZ6qnJ/Fv3
+         tv3wxKx9kCFEQjAH58izHLFv+zYNG+BG5Kc+bvJrPvPARPjH4BlISBHZ0vHTkIuA/yP2
+         B77D9rYTXZlGwD+JEIqnO9frzzZJpxyqwusoEHl7H8Gw1lv9hlGHMKNI6fYcvN/tZgK2
+         0I8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=cboHgH+gD+KDYUR90i6b+ZT+EkQ1h1fuX8+XfNYMlgQ=;
+        b=g+e9KCvpgUTKghMZ9RyrC9nmZj/jphU+jsgQgN0aOELwS2E/WSaPq2rFmb/5bCPg75
+         ggNW8+FuUopEgg4sPNJQmKtfAa/Z2FduEGdH6t8hofoNy97E9IZP8Tp4Z6Qqiui+ZD7V
+         Yz04dTztPiBLTbTNK2EcsiKFDGutmqC8Y9Mme37At+k8xAo3Uq4PudbRpbwmTk/8+D3o
+         XLrRI5Wr0IMS7EGY240McMNuUGv6z5l6Q+2lRsnFbufxUR8GxVgqhrVw1ZPw5efEOAdM
+         xocwdmqlveXGZTDgKowkHBAIwofDpu5svCuV69XWpnc2vvaUam3UzBFZpJFI9j2fWleq
+         cWYQ==
+X-Gm-Message-State: APzg51DgLUDSUkUqWsggWljYyboO1DjHSfyMar0+KiQvgisST3cYEXau
+        ppfqIrFzC8f17WOZfUXc6eY=
+X-Google-Smtp-Source: ANB0VdZtAuhyV+hiyNE9I5gDR3a3k9eHv8q6TpjgPqIdCwfstC5PACHhUioNZ6x0B3+ztvM7/k1qSg==
+X-Received: by 2002:a50:95a8:: with SMTP id w37-v6mr8242340eda.33.1535560252250;
+        Wed, 29 Aug 2018 09:30:52 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id o22-v6sm2292374edc.90.2018.08.29.09.30.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 09:30:51 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     Eric Wong <e@80x24.org>, Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: Thank you for public-inbox!
+References: <nycvar.QRO.7.76.6.1808271552580.73@tvgsbejvaqbjf.bet> <20180829050745.GD15274@sigill.intra.peff.net> <20180829100243.GA28180@dcvr> <3eb1c5e8-3e89-0d2e-30b1-339f38c4c703@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <3eb1c5e8-3e89-0d2e-30b1-339f38c4c703@gmail.com>
+Date:   Wed, 29 Aug 2018 18:30:50 +0200
+Message-ID: <871sahdtj9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RX1XVMAckdycJ2XkPzZ0ch3PSYR33vNd6YC9qmstRypEmRrZDEX
- 1zIAUb+ke0saSk2wmxSjCPkLJ/eaIdBRfDZq6VmNxYYoSdbRgIlEf0vXV9kUJtTgKfEWsPA
- V4DADjb9uWgh4va5OJ0RJWHLMAuIDypvYU2SFaINcEMGAmxNf5CfydnfirLFLE3KVGNW1Y/
- kfxnauHbbKRKYpeaSqyKg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OMoSCrooFII=:vFi2k+doeA6IhDYLOy/ziv
- S9bMSO6/5JsI39udpRbCb6D1Rz8x1JY4sIkX6wlfJK8wdyKtGHQI6v7MFo8aawIVgR6ZaXTeh
- 7uY6/Z/ahDb7FMce+JREV4GC97vsNq+ffubAsOZPloTDfKx6nGxLS92mihC8GaqWLkBkv0ulz
- bptZgLnodPcb0ceauoPl1bKXE5sIejk++rLHI2Yv1uV+4pcsGnggTNIH8TrQkr1zER6IO2bX/
- wgQQhzuR93+F8UqutNVO0Rixkh2AN6f7GndPtoZ2mXir5vX/mMPEaBTWWdMp7XXkMB4CfTtTg
- RJoGPi7tfGnbGhOTcPTYEd5iLf2RD8xruGwcj/jwpxYZzQ12jgQs/K1lAXiY5mRUFbn9X/cst
- Z6LBEnq2vCoTMSdkdlWTpnfujirtZELs1eB62O+hevP0jK4AxNqdEQV0D9HGpBPwe3ckpC5MK
- kRD4jiJ56R6IOFaYBm48x/x3c95Oedtc5WxxWWs4snsSpkH25HwdMFMOzKls71b4wyy3bftDj
- D704RAl+opCwi6d0zfZT1b3Xo5k1eU0pCATGDyET4JxNH51XuT9Q6V1JWUHaQt1b6JaQuDBT/
- 3qvOdMRqCrmdFh1lpeI5t15zC6OJgX5jiwmU2hQjpEZHrdKAkE9C0BrX4Nggi1zwAzSn26Bf5
- zu/4HG60sun4iOXd18slYvcfQ/rmim52naUb8XXHMFtU01P/sfi4kJ4tLaNwlbbMaGlroHV6q
- 7puGmgS9jzLMmJQH3DwLsF52vUXy37bdxjt4Mc/K7hRaVdQ0ClkCPCKnUwMHP3JgM/1DiW3yE
- 6OvfyNA
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ulrich,
 
-On Tue, 28 Aug 2018, Ulrich Gemkow wrote:
+On Wed, Aug 29 2018, Andrei Rybak wrote:
 
-> A trivial enhancement request:
-> 
-> All commands which require that the author is set (and complain if
-> it is not set) should accept the option --author.
-> 
-> At least the command stash does not accept this option. We are using
-> git version 2.17.1 (Ubuntu 18.04).
+> On 2018-08-29 12:02, Eric Wong wrote:
+>> Anyways I hope to teach public-inbox to auto-linkify Message-ID-looking
+>> strings "<XXXXXXXXXXX@XXXXXXXX>" into URLs for domain-portability,
+>> (but it's ambiguous with email addresses).  But yeah, I don't
+>> like things being tied to domain names.
+>
+> This would be very useful for people who use MUAs without
+> Message-ID lookup capabilities, even without domain-portability.
 
-The `stash` command only incidentally requires that the author is set, as
-it calls `git commit` internally (which records the author). As stashes
-are intended to be local only, that author information was never meant to
-be a vital part of the `stash`.
+FWIW Many MUAs have some hidden way to do this, for example to find the
+E-Mail I'm replying to (your E-Mail) on GMail:
+https://mail.google.com/mail/u/0/#search/rfc822msgid%3A3eb1c5e8-3e89-0d2e-30b1-339f38c4c703%40gmail.com
 
-I could imagine that an even better enhancement request would ask for `git
-stash` to work even if `user.name` is not configured.
+I.e. rfc822msgid:<message-id>
 
-However, to get you unblocked: what you ask for exists already, in some
-form:
-
-	git \
-		-c user.name="Ulrich Gemkow" \
-		-c user.email=ulrich.gemkow@ikr.uni-stuttgart.de \
-		stash
-
-Granted, this is not the nicest way to specify it, but you are probably
-scripting things for environments where you do not really want to
-configure an author, right?
-
-Ciao,
-Johannes
+Confusingly Google Groups accepts the same syntax, but will barf if you
+include the <>'s, but that's from memory, maybe I misrecall or they've
+fixed it.
