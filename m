@@ -2,110 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D5D81F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:14:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4A81F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:18:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728795AbeH3BN0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:13:26 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:34346 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeH3BNZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:13:25 -0400
-Received: by mail-ed1-f65.google.com with SMTP id u1-v6so4805119eds.1
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:14:42 -0700 (PDT)
+        id S1728312AbeH3BQt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:16:49 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:40754 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727363AbeH3BQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:16:49 -0400
+Received: by mail-pf1-f195.google.com with SMTP id s13-v6so2836442pfi.7
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:18:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=APDrtiUFt07ewOD8NX6i3NM7sMZ4mCNVMUN5HuClAkE=;
-        b=HlRZ/Q7csvti5e2YuJfhiPvJbfzzukpMPlIHCisEpAxwDK2oH25n19n1CBQg2Nehja
-         Jdrrh8PCFjk4HrIQzSyphpyQo0bm7Al9hqUMiWD6EmHiGC7L5nRO5IWrtgECxyIVpm5x
-         +vcPShHzjZCZE8vFTqFXCT1QtmfKZgXp2k2Clo9/v7IcplSOfS+RgJzxmn80y7xx+RU2
-         VHmoNrVXNjROfPP97O74Ob9iAcVvXNEy4zG9oC+AfAuBFkJs1HtG/VcJtHTFj0XgtZhp
-         KS3XlR0EMOsYdN0EFFJ9UarzBf/qiFlO2j0dJMiDFLFn3cKYI2FcUAAGeWl6ptrNfX5Y
-         aAHw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=00Vk/bKli9dWEf/fJppsxkgeOgHExsAJTvKqB3jxvp4=;
+        b=fKMgcQlVYkjfJz1gTxMSyEO7+hoZwE4b70oG0bMF52i3Ed1Qwo3KVbSsF77UITCMFD
+         MBlBj2Y/WoWin6y88SvGWp6PYteUJhwfyap/EhaPk1BfsgLZFYepKD0paQGmFcjdgD/3
+         Hdy3HHPjVr968KZj/jvL/GwwZOQxRM0ABi+DCm+S2NXSwaymF+F4q655Hcb4BBzKa2wP
+         BDX4Xf+7jbQt4rBBAO3BWu68Kzi7kUvhO/5sU21Fl0zqHgSiDnVAYOmxDGaP5j7r1XW0
+         OfuDWHZYpsMcRM0pn8dMzHb0MZL99PUHCqk+adfc8/c3C/zJh5+d1I4Zx/Awq/VFxb6x
+         mQNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=APDrtiUFt07ewOD8NX6i3NM7sMZ4mCNVMUN5HuClAkE=;
-        b=YxZkrX3TPFi+ZcfUHYzK4hWeMkC75tcOjL2ddlibNdCXhiC5OaQ+7IHXKgZWgv3RfJ
-         IHJXRdh/WGvhQDuXSGhKNCbGoHt+xIFFMUo/kYQiW8juIPh6bs8tgjut4SxI7S35AfEZ
-         bCiObzLY3MV/RGHCL5/Yc2qthENhMIMJVLGPAbmd1Rvn2O/vNX+gn+4qGf6zp39fmQHH
-         Lx8kM1MqjCVYt3D1OonUBmbzGY/Q9fQQ7onDzYpLsNsPfj6n8uALc3a94E7FNE6H57F9
-         CCVDa8bTT2PCpwvgqnj/EIEcwVJL7id4ZiNz5Lmbid+H0IVW1nPiY8exfdv5kgK0CRaF
-         NrhQ==
-X-Gm-Message-State: APzg51BbGPywCrHMOBtvYQIgNeQWUBA0C72+HD/TTfa3uy+jEATwr8Na
-        WnBRQdFqn+oTjGT0WrQkAu7eF3OY7g6Qnzt6W5BOqdel
-X-Google-Smtp-Source: ANB0VdafMZm+UGyuWnSrdddXz1XMCbZuExDN+bigVaQQ1PMs2WTn+X5xG9nIksjcEojG1wLnz2AF+Bd08OVqOaZwrXU=
-X-Received: by 2002:a50:d083:: with SMTP id v3-v6mr9431457edd.243.1535577281944;
- Wed, 29 Aug 2018 14:14:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180807230637.247200-1-bmwill@google.com> <20180808223323.79989-1-bmwill@google.com>
- <20180808223323.79989-3-bmwill@google.com> <20180809212602.GA11342@sigill.intra.peff.net>
- <20180814180406.GA86804@google.com> <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
- <20180829052519.GA17253@sigill.intra.peff.net> <20180829210913.GF7547@aiede.svl.corp.google.com>
-In-Reply-To: <20180829210913.GF7547@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 29 Aug 2018 14:14:30 -0700
-Message-ID: <CAGZ79kafLRXag0DBmw57sJ0WdTUEckCejKFz0j6UJVNdG7_UDA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=00Vk/bKli9dWEf/fJppsxkgeOgHExsAJTvKqB3jxvp4=;
+        b=cWHviEsQO8rKNIkyzcKw9kfeqr+nLbBK1Wtd6/h99Aj6xxX965Ncqp2yLNAmQywkLD
+         y9v9z0q2Fw9igonYy6CWmu72Y4tYGHljunQ0zKrKyBZhIHkFzbGZZXpTjs8t1xc2DvyC
+         uz3tbd66pQHfzujwpC/ywnEXrwHld4Ke9aJ0lWaCEqJSaLRXDBvSJjXwlqsSybUQXJdE
+         oKn0Wnoy4yuB5TTBxjUdqZVwxlKmn2KBunG5iHHTuZ5nG4lzt+jIGO+bgQWV2ILSR/8S
+         a89wz5yD+0tm8O6GBh5QMaoK7FqOIaNoskV0vhUS8iufXu3xy3PVhELD0ZpJubCFYDH8
+         BZSQ==
+X-Gm-Message-State: APzg51Daoaz8KaTLU7UrdvJum/5lFi84n2b/bNNu/G/9LGShIjWPAoIZ
+        kKDIc1KV95KnvmoTK4C18/A=
+X-Google-Smtp-Source: ANB0VdaUWhPzj2KhHmOvvw47AebHyUxC7pbaGk9PmiiKqxt0ExRhDg4ZL4JkwxRF/2v1MFWTaRGTqQ==
+X-Received: by 2002:a62:f40a:: with SMTP id r10-v6mr7503355pff.47.1535577484878;
+        Wed, 29 Aug 2018 14:18:04 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id s85-v6sm8177537pfa.116.2018.08.29.14.18.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 14:18:04 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 14:18:02 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     Jeff King <peff@peff.net>, Brandon Williams <bmwill@google.com>,
         git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180829211802.GG7547@aiede.svl.corp.google.com>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
+ <20180829052519.GA17253@sigill.intra.peff.net>
+ <CAGZ79kZv4BjRq=kq_1UeT2Kn38OZwYFgnMsTe6X_WP41=hBtSQ@mail.gmail.com>
+ <20180829210348.GA29880@sigill.intra.peff.net>
+ <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kYJTWROYSGjEbdVBsEAkWkNE4QVCiPVfuMf75d13fXN6A@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 2:09 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+Hi,
+
+Stefan Beller wrote:
+
+>> Yes, that makes even the capitalized "CON" issues go away. It's not a
+>> one-to-one mapping, though ("foo-" and "foo_" map to the same entity).
 >
-> Jeff King wrote:
-> > On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
+> foo_ would map to foo__, and foo- would map to something else.
+> (foo- as we do not rewrite dashes, yet?)
 >
-> >> Yeah, then let's just convert '/' with as little overhead as possible.
-> >
-> > Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
-> > colliding)?
-> >
-> > I'm OK if the answer is "no", but if you do want to deal with it, the
-> > time is probably now.
+>> If we want that, too, I think something like url-encoding is fine, with
+>> the caveat that we simply urlencode _more_ things (i.e., anything not in
+>> [a-z_]).
 >
-> Have we rejected the config approach?
+> Yeah I think we need more than url encoding now.
 
-I did not reject that approach, but am rather waiting for patches. ;-)
+Can you say more?  Perhaps my expectations have been poisoned by tools
+like dpkg-buildpackage that use urlencode.  As far as I can tell, it
+works fine.
 
-> I really liked the attribute of
-> not having to solve everything right away.  I'm getting scared that
-> we've forgotten that goal.
+Moreover, urlencode has some attributes that make it a good potential
+fit: it's intuitive, it's unambiguous (yes, it's one-to-many, but at
+least it's not many-to-many), and people know how to deal with it from
+their lives using browsers.  Can you spell out for me what problem
+we're solving with something more custom?
 
-Eh, sorry for side tracking this issue.
+Stepping back, I am very worried about any design that doesn't give us
+the ability to tweak things later.  See [1] and [2] for more on that
+subject.
 
-I am just under the impression that the URL encoding is not particularly
-good for our use case as it solves just one out of many things, whereas
-the one thing (having no slashes) can also be solved in an easier way.
+Thanks,
+Jonathan
 
-> It mixes well with Stefan's idea of setting up a new .git/submodules/
-> directory.  We could require that everything in .git/submodules/ have
-> configuration (or that everything in that directory either have
-> configuration or be the result of a "very simple" transformation) and
-> that way, all ambiguity goes away.
-
-I would not want to have a world where we require that config, but I
-would agree to the latter, hence we would need to discuss "very simple".
-I guess that are 2 or 3 rules at most.
-
-> Part of the definition of "very simple" could be that the submodule
-> name must consist of some whitelisted list of characters (including no
-> uppercase), for example.
-
-Good catch!
-
-Thanks for chiming in,
-Stefan
+[1] https://public-inbox.org/git/20180816023446.GA127655@aiede.svl.corp.google.com/
+[2] https://public-inbox.org/git/20180829210913.GF7547@aiede.svl.corp.google.com/
