@@ -7,119 +7,96 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BA2E1F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:04:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC9641F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728586AbeH3BDX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:03:23 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36763 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeH3BDX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:03:23 -0400
-Received: by mail-wr1-f68.google.com with SMTP id m27-v6so6094626wrf.3
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:04:42 -0700 (PDT)
+        id S1728593AbeH3BH4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:07:56 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:40580 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeH3BH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:07:56 -0400
+Received: by mail-pl1-f193.google.com with SMTP id s17-v6so2827815plp.7
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:09:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=69K0ou4GQCXEJaCc5VmRmQdHUJb4KVZAQmGKBRKvQbM=;
-        b=bY1ugoj69+HmC3hDeVNxlAKxJwFu50TnvjYb1hqHra6TkyeaqDFQl+rQccdvBkp1aU
-         6s/KNhuZo+/zEyKPA23L7Zx0hYNWOMz6uFKmLtkm78JYGfopc8alTTYduxkciOn9MMag
-         yeMVcPYaqQo90Dxx3k0F25CwWKu75nW9mxZVZXtCLr9S8ojkO6VcUEAO/yW8oOhgnJpb
-         tDsJpIxbwTjvaBd644mL9gy2nGg4/lBsoQ7ttBP6MDeWNk//EgFOY+apQO6BxWvChm3F
-         qOGsaxFyWO5eTHD4L2bPDXUg0Oqf3tZMHOnGYtMd4G2ZAZuDoy1pbjCoWCHfewnac6aJ
-         VYxw==
+        bh=l+/r8FEKfZeGj2yAHN4SMduzIE6G0XdDTjqiGMz9sgk=;
+        b=H/7IKKoulmB3mZ2k6RLHGe7EBxrbXIpPzyg5LCmYYvIOJgk6VdX7uy52fgFbjKfWx5
+         isEbk5+SDJ0L1knLLwgXZeHjKwB5kFb1dFXw7mABgTxkE1YjRV1swZCyBLYqDhSe2gT4
+         mmRpeyz3R0hg9quxYnvYaF2Vpf6LjCXjIeqxk+kJ6ZMFmgvCVEPmGw+bL8503qvJSYIk
+         Xv0WSHHrWFGoO7kyxKvsmcB2Bmwpqv51lTdeMtRV9QBDQLAjSV/IPKftahjXsifjBJpV
+         MMRxe8S3ITKqFcG/N2RXuvAneDWq+2A4iWWt+kWvz5+uKtYB9Yw3qyd1dY00zKCs98mn
+         LgvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=69K0ou4GQCXEJaCc5VmRmQdHUJb4KVZAQmGKBRKvQbM=;
-        b=t1M7zHVlNwEKvFO7vzkOSb9lADivrvM2Kp1mq7IKQiwZeZhQCe5yTOcNBTAY2QBIBV
-         Kk7ubpds+4NwpaBpQsWhs0+3741CVGPF20JpD+4Pm33oZonDd2HkFswjRKchM+bhQQIi
-         NPH662ypM/+4fHlhLezJDFjIWFmgHHBZBIia71GMIQOyuXY1Rn/cxqrydmuUEOWt5rsO
-         BAXzpThKmAc7jdCp/LxE+jvdCz8FbwLE3dD7MzZu1DZ4SvIY08cYdOqRFoB6VVTpcUtf
-         e2fWy06Pd4awvhEdVRcgZKDExuaMuTxHVC8tXa7CdS2Eb9v5o0s1Ha/l4B3aJSXvNctd
-         PRVQ==
-X-Gm-Message-State: APzg51Bj35E4Pp5A4b8UO/xGbkV2vog3OdOQI1J6IOxIfs7h0MzybNpR
-        WskfxnvFMLBTcWfzZ3RjPwQSLFc+
-X-Google-Smtp-Source: ANB0VdZbJd/Vw+SY5tb/ufvtQFXT+W4AbSRNXF8oOHyX9p4YzXAMdOPaxSTX2G8MaWz3uTrSi4gzwg==
-X-Received: by 2002:adf:9b11:: with SMTP id b17-v6mr5780399wrc.119.1535576682382;
-        Wed, 29 Aug 2018 14:04:42 -0700 (PDT)
-Received: from localhost (62-165-238-163.pool.digikabel.hu. [62.165.238.163])
-        by smtp.gmail.com with ESMTPSA id k63-v6sm8881783wmd.46.2018.08.29.14.04.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 14:04:41 -0700 (PDT)
-Date:   Wed, 29 Aug 2018 23:04:36 +0200
-From:   SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t2013: add test for missing but active submodule
-Message-ID: <20180829210436.GA31707@localhost>
-References: <20180827221257.149257-1-sbeller@google.com>
+        bh=l+/r8FEKfZeGj2yAHN4SMduzIE6G0XdDTjqiGMz9sgk=;
+        b=OnNrk5wPVeZrzR5FDqFBCCGcBOGW1aWatbTVCGv36a9ZCcqdfuk7v6vs8rc4Azc8Uz
+         97fQHse11FRJ63/kSQznFX77kH3wIRv1pNbvH9los90QoSnqU8BF26vz4Ggh55glNSnE
+         NrAkgAVB9J5Gn4bIf+E/ZcV7Az/V1NeTAwjdUCIMK7kSHZjhin5rZuW4d034Apy0TLOq
+         YQOwpAxxXUF1oN+owue/DjHEwShS+9WI85tnOk2FOhiXN70kRcPIWq9Q/Fywr+EzeBkI
+         Xj2dNirn6G1EpU+iHN1DWUQqsLGE0/IQtzVItSELJkKtrF/+T/s44eQh/M7CZpD0k0xN
+         aNXg==
+X-Gm-Message-State: APzg51DWIL/mw0vbR1mw8255IoDZprhTlfqnmM94lfiVII9BSj8xju9s
+        0OSQ4cW1tBCJb+XGwWHtNGUPXPM1
+X-Google-Smtp-Source: ANB0VdacIRhcrANtxv0jSuDWBySZlJvrHcSu4IC2GnCJooF8pPfuGzyMjYaUNTNWyCUubrjNRJV6Jg==
+X-Received: by 2002:a17:902:68:: with SMTP id 95-v6mr7341605pla.248.1535576955459;
+        Wed, 29 Aug 2018 14:09:15 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id d66-v6sm10544000pfd.121.2018.08.29.14.09.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 14:09:14 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 14:09:13 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Brandon Williams <bmwill@google.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/2] submodule: munge paths to submodule git directories
+Message-ID: <20180829210913.GF7547@aiede.svl.corp.google.com>
+References: <20180807230637.247200-1-bmwill@google.com>
+ <20180808223323.79989-1-bmwill@google.com>
+ <20180808223323.79989-3-bmwill@google.com>
+ <20180809212602.GA11342@sigill.intra.peff.net>
+ <20180814180406.GA86804@google.com>
+ <CAGZ79kaLXcTeeM9AKvXi7X8WMd+vcyCM5n-Nz2igHkGJdXbSfg@mail.gmail.com>
+ <20180829052519.GA17253@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180827221257.149257-1-sbeller@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20180829052519.GA17253@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 03:12:56PM -0700, Stefan Beller wrote:
-> When cloning a superproject with the option
->  --recurse-submodules='.', it is easy to find yourself wanting
-> a submodule active, but not having that submodule present in
-> the modules directory.
-> 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  t/t2013-checkout-submodule.sh | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
-> 
-> diff --git a/t/t2013-checkout-submodule.sh b/t/t2013-checkout-submodule.sh
-> index 6ef15738e44..c69640fc341 100755
-> --- a/t/t2013-checkout-submodule.sh
-> +++ b/t/t2013-checkout-submodule.sh
-> @@ -63,6 +63,30 @@ test_expect_success '"checkout <submodule>" honors submodule.*.ignore from .git/
->  	! test -s actual
->  '
->  
-> +test_expect_success 'setup superproject with historic submodule' '
-> +	test_create_repo super1 &&
-> +	test_create_repo sub1 &&
-> +	test_commit -C sub1 sub_content &&
-> +	git -C super1 submodule add ../sub1 &&
-> +	git -C super1 commit -a -m "sub1 added" &&
-> +	test_commit -C super1 historic_state &&
-> +	git -C super1 rm sub1 &&
-> +	git -C super1 commit -a -m "deleted sub" &&
-> +	test_commit -C super1 new_state &&
+Jeff King wrote:
+> On Tue, Aug 28, 2018 at 02:35:25PM -0700, Stefan Beller wrote:
 
-These six consecutive commands above all specify the '-C super1'
-options ...
+>> Yeah, then let's just convert '/' with as little overhead as possible.
+>
+> Do you care about case-folding issues (e.g., submodules "FOO" and "foo"
+> colliding)?
+>
+> I'm OK if the answer is "no", but if you do want to deal with it, the
+> time is probably now.
 
-> +	test_path_is_missing super1/sub &&
-> +
-> +	# The important part is to ensure sub1 is not in there any more.
-> +	# There is another series in flight, that may remove an
-> +	# empty .gitmodules file entirely.
-> +	test_must_be_empty super1/.gitmodules
+Have we rejected the config approach?  I really liked the attribute of
+not having to solve everything right away.  I'm getting scared that
+we've forgotten that goal.
 
-... and both of these two checks use the 'super1/' path prefix.  I
-think it would be more readable to simply 'cd super1' first.
+It mixes well with Stefan's idea of setting up a new .git/submodules/
+directory.  We could require that everything in .git/submodules/ have
+configuration (or that everything in that directory either have
+configuration or be the result of a "very simple" transformation) and
+that way, all ambiguity goes away.
 
-> +'
-> +
-> +test_expect_failure 'checkout old state with deleted submodule' '
-> +	test_when_finished "rm -rf super1 sub1 super1_clone" &&
-> +	git clone --recurse-submodules super1 super1_clone &&
-> +	git -C super1_clone checkout --recurse-submodules historic_state
-> +'
-> +
->  KNOWN_FAILURE_DIRECTORY_SUBMODULE_CONFLICTS=1
->  test_submodule_switch_recursing_with_args "checkout"
->  
-> -- 
-> 2.18.0
-> 
+Part of the definition of "very simple" could be that the submodule
+name must consist of some whitelisted list of characters (including no
+uppercase), for example.
+
+Thanks,
+Jonathan
