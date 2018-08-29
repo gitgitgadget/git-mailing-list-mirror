@@ -2,140 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 022331F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 07:06:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D13221F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 07:18:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727614AbeH2LBv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 07:01:51 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:39000 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727599AbeH2LBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 07:01:51 -0400
-Received: by mail-yw1-f68.google.com with SMTP id m62-v6so1615024ywd.6
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 00:06:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=CwsebXzJup/jHGGW0rFn9KoDy2zEZJ9wKKzO3GwW69o=;
-        b=BkrCBzYkqXKQ1yRtc48igh6MsnYoUIWS8uTeQAnVXEp2V1YnTb/1YtibIvitmKCMCy
-         9yHY9MYK6+c0H2t7OGylCqcQl4p6u0ktaKjAVhbQpwx1TXuE1axN2rAHQ/aUIsKPoW2Z
-         IfKNFocCcKTXOZwufCj+MbCUitfG0YAuSsGZJtt4J2M3AOOCWDkkersxYOSrbgprths7
-         M5/vrKRbNiDNA8CcDI+oFntrdptOcKqOljCyUu1EhmOBMM/9vhF2dP3fdI9iIjc6GUX2
-         z8hQ3kwqBhds/ySWtmK4twe7YhH7E6VA1yszz0jnH2WE2WH6jXLRdDrWskzLlZuI1OJ7
-         8bUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=CwsebXzJup/jHGGW0rFn9KoDy2zEZJ9wKKzO3GwW69o=;
-        b=OseAXBfOs4ACIEBYJ61Tcf6DuLXiwp3B6Xfk1mtdIKCPu03LQNOlYsdmx6sgBiq5ht
-         A48GU3Cd/mHN8PwgNYA8rES6Jhg1fch6/dNyVSvVfXKJrlY3Qn61iCntXNt4bd1yH/M3
-         Vusrzm9IX5/xFJuvYlNIlVY52mLh+QonBpxcMJZGteJXlHMozdrY/3lZ9MUgkd04wJll
-         uRgQtCcqWvcofDz25FqRsEtcplhXNaH+x+zcNIHs2UpaZZCV+W3IzrBhb6lbA+d1s62q
-         SBngnrOQysLtvb6L/BsFPSzE9Ab6wlLLSGqgVHlhCwhk47Y+AYlyGS3wX+KoD8dOHIEG
-         Di5A==
-X-Gm-Message-State: APzg51CvUtxZbNxJYrrCeCyjGtiypKYbUlW59SGZ7Nglqr+MB+C7hTte
-        S3u2ICMMZbk2xeB2B2fXml/uU2ch
-X-Google-Smtp-Source: ANB0VdbpjH4Q2rPUEsq3vaM4zrRt27qpL6+NYWpb2d/H681kq8DZo5jeXNdaQ+4+QuqpXeg6eVnlFQ==
-X-Received: by 2002:a81:6904:: with SMTP id e4-v6mr2689225ywc.227.1535526384526;
-        Wed, 29 Aug 2018 00:06:24 -0700 (PDT)
-Received: from tiger.attlocal.net ([2602:30a:2c28:20f0:7c1a:85e3:2ea9:5d7e])
-        by smtp.gmail.com with ESMTPSA id n6-v6sm1269794ywe.89.2018.08.29.00.06.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 00:06:24 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, corrmage@gmail.com, avarab@gmail.com,
-        Johannes.Schindelin@gmx.de, sbeller@google.com,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH 3/3] am: avoid directory rename detection when calling recursive merge machinery
-Date:   Wed, 29 Aug 2018 00:06:13 -0700
-Message-Id: <20180829070613.11793-4-newren@gmail.com>
-X-Mailer: git-send-email 2.18.0.12.g97a29da30a
-In-Reply-To: <20180829070613.11793-1-newren@gmail.com>
-References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com>
- <20180829070613.11793-1-newren@gmail.com>
+        id S1727172AbeH2LOV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 07:14:21 -0400
+Received: from lb3-smtp-cloud7.xs4all.net ([194.109.24.31]:54136 "EHLO
+        lb3-smtp-cloud7.xs4all.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727156AbeH2LOU (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 29 Aug 2018 07:14:20 -0400
+Received: from pc09.procura.nl ([188.202.26.81])
+        by smtp-cloud7.xs4all.net with ESMTPSA
+        id uukbfaVqEF5MQuukcf6OWD; Wed, 29 Aug 2018 09:18:50 +0200
+Date:   Wed, 29 Aug 2018 09:18:38 +0200
+From:   "H.Merijn Brand" <h.m.brand@xs4all.nl>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Feature request: be able to pass arguments to difftool command
+Message-ID: <20180829091838.2eee8a6a@pc09.procura.nl>
+In-Reply-To: <xmqqpny2ffjv.fsf@gitster-ct.c.googlers.com>
+References: <20180828175711.3a0aeacc@pc09.procura.nl>
+        <xmqqpny2ffjv.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0git170 (GTK+ 2.24.31; x86_64-suse-linux-gnu)
+Face:   iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ boundary="Sig_/s6Wewg/fhf3mmL1enU7y=nW"; protocol="application/pgp-signature"
+X-CMAE-Envelope: MS4wfK28dav4b+/wUWqEfxFxLJz7UNZd9/gmVvbKT1im6909emKJ6H/OqReyTkWpmenALOuPEx+vVmqwePU8HTDDVfg07ZzKWP3DE5m6MBUAKUK+ThH6CKG7
+ YCmHvTNuq1x3X7hCkfHbyHuqnE605xgeMa8rpPbwC9aD9H4PuLEfWWAEQBslfDZFw5PSVLgL3O1vpr8EH4uKQIqX4c7Ikc6rzf0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's say you have the following three trees, where Base is from one commit
-behind either master or branch:
+--Sig_/s6Wewg/fhf3mmL1enU7y=nW
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-   Base  : bar_v1, foo/{file1, file2, file3}
-   branch: bar_v2, foo/{file1, file2},       goo/file3
-   master: bar_v3, foo/{file1, file2, file3}
+On Tue, 28 Aug 2018 12:37:40 -0700, Junio C Hamano <gitster@pobox.com>
+wrote:
 
-Using git-am (or am-based rebase) to apply the changes from branch onto
-master results in the following tree:
+> "H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+>=20
+> > So, my wish would be to have an option, possibly using -- to pass
+> > additional command line arguments to git difftool, so that
+> >
+> >  $ git difftool $commit~1..$commit -- -m -v2
+> >
+> > would pass the arguments after -- transparantly to ccdiff (in my case) =
+=20
+>=20
+> At the syntax level passing any option after "--" would be a no
+> starter, as I would imagine that "git difftool $revs -- $paths"
+> should still be supported.
+>=20
+> At the concept level, however, I can see why such a feature would be
+> useful.  Perhaps
+>=20
+>     $ git difftool --backend-option=3D-m --backend-option=3D-v2 HEAD
+>     $ git mergetool --backend-option=3D--foo
 
-   Result: bar_merged, goo/{file1, file2, file3}
+This would mean I can just pass remaining arguments, like this?
 
-This is not what users want; they did not rename foo/ -> goo/, they only
-renamed one file within that directory.  The reason this happens is am
-constructs fake trees (via build_fake_ancestor()) of the following form:
+--8<--- ~/bin/git-ccdiff
+#!/usr/bin/env perl
+use 5.18.3;
+use warnings;
 
-   Base_bfa  : bar_v1, foo/file3
-   branch_bfa: bar_v2, goo/file3
+my $commit;
 
-Combining these two trees with master's tree:
+@ARGV && $ARGV[0] !~ m/^-/ and $commit =3D shift;
 
-   master: bar_v3, foo/{file1, file2, file3},
+my @git =3D qw( git difftool );
+defined $commit and push @git, "$commit~1..$commit";
+system @git, @ARGV;
+-->8---
 
-You can see that merge_recursive_generic() would see branch_bfa as renaming
-foo/ -> goo/, and master as just adding both foo/file1 and foo/file2.  As
-such, it ends up with goo/{file1, file2, file3}
+> with appropriate way(s) [*1*] to make it easier to type (and
+> implement) would be an acceptable avenue to pursue, I wonder?
 
-The core problem is that am does not have access to the original trees; it
-can only construct trees using the blobs involved in the patch.  As such,
-it is not safe to perform directory rename detection within am -3.
+I like it, as long as they are all separate options in the backend and
+not available in one single variable that needs to be split
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/am.c                    | 1 +
- t/t3401-rebase-and-am-rename.sh | 4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+I can envision a configure variable like
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 2fc2d1e82c..1494a9be84 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1596,6 +1596,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 	o.branch1 = "HEAD";
- 	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
- 	o.branch2 = their_tree_name;
-+	o.detect_directory_renames = 0;
- 
- 	if (state->quiet)
- 		o.verbosity = 0;
-diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
-index a87df9e675..94bdfbd69c 100755
---- a/t/t3401-rebase-and-am-rename.sh
-+++ b/t/t3401-rebase-and-am-rename.sh
-@@ -152,7 +152,7 @@ test_expect_success 'rebase --interactive: NO directory rename' '
- 	)
- '
- 
--test_expect_failure 'rebase (am): NO directory rename' '
-+test_expect_success 'rebase (am): NO directory rename' '
- 	test_when_finished "git -C no-dir-rename rebase --abort" &&
- 	(
- 		cd no-dir-rename &&
-@@ -190,7 +190,7 @@ test_expect_success 'rebase --merge: NO directory rename' '
- 	)
- '
- 
--test_expect_failure 'am: NO directory rename' '
-+test_expect_success 'am: NO directory rename' '
- 	test_when_finished "git -C no-dir-rename am --abort" &&
- 	(
- 		cd no-dir-rename &&
--- 
-2.18.0.12.g97a29da30a
+  backends.options.separator =3D U+2063
 
+so the backend can safely split on that itself. But I also see this as
+overly complex en over-engineering
+
+> [Footnote]
+>=20
+> *1* There are various possible ways, not all of them are mutually
+>     incompatible.
+>=20
+>     a. Give a short-form synonym, e.g. -X, to "--backend-option";
+
+I like it
+
+>     b. Assume that backend option always begins with a dash and add
+>        one when missing, e.g. -Xm becomes --backend-option=3D-m
+
+I guess not: there might be tools that do not work like that, e.g.
+xfreerdp changed all their rememberable and logic options to the weird
+stupid syntax they use now, including mixing -, -- and +
+
+ rdesktop -u user -p - -g 1280x1024 -a 16 -r clipboard:CLIPBOARD host
+
+->
+
+ xfreerdp -u user --from-stdin -g 1280x1024 -a 16 --plugin clipbrd host
+
+->
+
+ xfreerdp /u:user /from-stdin /size:1280x1024 /bpp:16 +clipboard /v:host
+
+>     c. Allow giving multiple backend options on a single option and
+>        split at whitespace, e.g. --backend-option=3D"-m -v2"
+
+That is the weak part in my workaround, as it will break on options like
+
+  --backend-option=3D'--config=3D"/path/to/My Configuration/My Application"'
+
+>     d. Allow difftool.$toolname.opts configuration variable that is
+>        multi-valued, so you can say
+>=20
+> 	git -c difftool.ccdiff.opts=3D-v2 -c difftool.ccdiff.opts=3D-m difftool
+
+Hmm, maybe harder to explain, but why not
+
+>        (of course, not necessarily from the command line but the
+>        point is you could configure it)
+>=20
+>     Some of these (e.g. b, c) may not be desirable, though.
+
+
+--=20
+H.Merijn Brand  http://tux.nl   Perl Monger  http://amsterdam.pm.org/
+using perl5.00307 .. 5.29   porting perl5 on HP-UX, AIX, and openSUSE
+http://mirrors.develooper.com/hpux/        http://www.test-smoke.org/
+http://qa.perl.org   http://www.goldmark.org/jeff/stupid-disclaimers/
+
+--Sig_/s6Wewg/fhf3mmL1enU7y=nW
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+
+iQEcBAEBAgAGBQJbhkjYAAoJEAOhR6E+XcCY3eQIAKcvYl+2XrOhcAW69BoOpG5R
+MpuVBWGFZUWD0qowprWgBDhvbyRgZVpGUeYrCErYSMVDXTgIltZrdo4OgJzCI4Gy
+gz97Bl6C+4wwjTVrpiS+T3Vg7Talq27YYheySWYthAdmUlBckGS0jCh9APXa3idY
+U0vtleYrvFMy+VeMLdCsOZACkqLZdJD3O+Y9qAkVs70UyAfgg6bl968JdQt2veqi
+QMa/4jAJql7hW7KjfNee1SzzjYd9ksLfLW5wQksqX4bECnLRzm8gBePdWuEB34aK
+WpXme+ny7gXGGLFuRkJxlc7BDpSb+QsVlxHMcUnfAzSY4tVHl/T2e2Wl2w9xGlw=
+=HIh2
+-----END PGP SIGNATURE-----
+
+--Sig_/s6Wewg/fhf3mmL1enU7y=nW--
