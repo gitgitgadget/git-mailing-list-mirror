@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5511F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 12:51:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84CD21F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 12:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728546AbeH2Qs3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 12:48:29 -0400
-Received: from mout.gmx.net ([212.227.17.21]:60233 "EHLO mout.gmx.net"
+        id S1727818AbeH2QvP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 12:51:15 -0400
+Received: from mout.gmx.net ([212.227.15.15]:38623 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727452AbeH2Qs3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 12:48:29 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzbXq-1fpzgo2pkI-014kIM; Wed, 29
- Aug 2018 14:51:36 +0200
-Date:   Wed, 29 Aug 2018 14:51:35 +0200 (DST)
+        id S1727452AbeH2QvP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 12:51:15 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LnxQO-1fSFs538u0-00fwVS; Wed, 29
+ Aug 2018 14:54:21 +0200
+Date:   Wed, 29 Aug 2018 14:54:20 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
 cc:     git@vger.kernel.org, gitster@pobox.com, corrmage@gmail.com,
         avarab@gmail.com, sbeller@google.com
-Subject: Re: [PATCH 3/3] am: avoid directory rename detection when calling
- recursive merge machinery
-In-Reply-To: <20180829070613.11793-4-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1808291451030.71@tvgsbejvaqbjf.bet>
-References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com> <20180829070613.11793-1-newren@gmail.com> <20180829070613.11793-4-newren@gmail.com>
+Subject: Re: [PATCH 2/3] merge-recursive: add ability to turn off directory
+ rename detection
+In-Reply-To: <20180829070613.11793-3-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808291452070.71@tvgsbejvaqbjf.bet>
+References: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com> <20180829070613.11793-1-newren@gmail.com> <20180829070613.11793-3-newren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:nCO/XDCU17hAFf8glv16MU4PtQXwUsNFbvM6WUddeu0WbGWdllQ
- DdjAvJHIL/ONKedztFGznF99Wwo1yn5aSRYZVRTMyxVzK3rviaA6Wi5pT7pF6NZS9wXLHjz
- Sg3ithXxPvCnmpom6vIXoIi8Abcn0Zegb6IgWI0oKtBBB6yEcW5QzXOpuj8fRFWmyOnErIV
- qjAQBHTRVJE0S6J/Bog0A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2EJN7rWQaME=:/diaRzRpF1UNV8MY/nT7RG
- RsBid2TQznFlJf32aFLIwZY7xvuBjCzV9Pfv2k4uSkvpuPvaxRjxIPLw7lCkO19eX23x6KLQ5
- FrE0WL4ux8JpG57p2RVwQqYqJvNk8oMzvfpjBTjY33QMJSEFzdwqtmg6y4ByGJN2SAQG7qTVW
- p1NkfMB7X51THTw2q9oSZ7YFNFx2+2G7Ve+B7p1UJdLmDsLB48N/fKyhIvAfyVu9vlCx58VVO
- OZ/ODRUlvGwcpy0atszkS52NkRLrfHgLJxjjItt9gltYdIZgh4qokXCUa1ye7JYuySvVcgyQW
- kdjx6/DQqY4FFLAm5kKa7kaTRx/avcvifrhQNmrpWiLHDeTrYPhK7Q1FNV0RWkqv9/2Ndxpy6
- dkH2pJquvLZ8qPsafy7wCtL6ct5V0aNfW0tdwH7YUNxmAqPWXmYl0e4knB+ztDnfTGQGz7Q2x
- z8nz3RGHaMkwGPREhPwKseMakdh4KCThrGvSNaEYn+fRbckga3yFkYIlG7B6e73n68c5JbUIG
- nn5p2gE+n38D+heOzgDqDEFZWI1yuc4l3xBFiH0m73NWM2Rj9za18qYpgKm2+vtd3r2sbW8qi
- JgXviaQcjz8X7YJgB72DA3OPCAQirtqNZucmdB1hv3k4kF1YAJy4nOH1B2dajeOdxXXRBNVXZ
- rwQgXFbTTRb/aT/wETLVu3MRvH3kR0WCKjDuxQ7uod5WRZSTQcFHPJl8tMHrCBdyGhnhf/VhO
- U0U4KdMYjQvdeULX6EHUU729FGP+YmR86CO9ykKLen8kwwrwXA2FsHc223tbMDdhE2n2tBlte
- iPLP+1n
+X-Provags-ID: V03:K1:s6QfPPAu9yuOM3SR6lE4RRLWyGAnNrSlsZlxJPjPdta44AXsUjC
+ tSWoQkepXqajgu0328BL4jM7bffO5+4HhUQBlq2Hiyse40QzmcktV5fPMKpll7onGD28qsy
+ NDI2IsuX/6P1CKUK5EKGme9OLDipL/U0G/yRghfoLZ1Q/9iyPI8CRBCu2Z2hjhGVsS7dBli
+ lokU4LCVCARbdVgTdndPQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:4pvKbfAtC0c=:SeKh23Cvr7/XudwJ2yxwo5
+ 5ay61aZBzBhHCJIMbANwM7UkUDnIQZMHSOdpVXBg21hPCxrEZ6Jul7O+1e2V+xs02qrPvVU2q
+ ML6W6fC1vrsLZ3WrkoLt+XhBgkynzRwG6zcX5sr6QkpXU3mhr4/d1Ebj2x06wnISB5Uh52AIC
+ pJWe3sEdYRDrViNtgQ1l/XxCwREmG3vRYmXuujXTRdLPCxnc1YP8HcZ/T4z1ypZgR7o6lNXru
+ CyMFdTJXaXGsE/tbGxjmxNZU1IQmOYnAoETiuDWxJ4PIEL51M9we3i7pBOb9wT8b3DDjYdbxo
+ 7IbAYFrubO3Yc70njftZ1WReGfZuzp/enQ5iUleIs7I4fZYtoj+ynrfSp6s9YpywE5g3fq8qq
+ waIaUP53XuCQy8CwBwE86WefgQ3Eu2rgTHRCxD003U6FTMDp6rW4egMNpT3POY1l0CW33AaSw
+ OVQfaDkFYwQmNmp+eRATRzUkPvlSmu25ZduasNe8DBsWssefWVOb3FC3AUmO/x26LExip7Q7f
+ md6426EHEwwE97x9riYSkXqggNo9m61qxNhdEhpeb3zG1Z8Jm3HNr6de3+XK/sBZ/Nunl8vbk
+ Mnp4BScCmXK4+noRbDyC9mFzFY0koTEuye/vbJVe9SoBUQcSjPL2061WlfIUu3Ufcl5b2fSkt
+ Jp9NIH5imtAb6CoknKiUnRZsmLZd6MzMgjJhSma4VPNpve8aPy/3U5LeTJTNsBdDgJd6FVxSA
+ ES03xCgJA6EeqcsbrOo2lX0qdymWEalc72AX8+kgQKVqkLlk5mbiCu6fA/tp08UzSU+zW3nzE
+ i6P7dXk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,83 +59,71 @@ Hi Elijah,
 
 On Wed, 29 Aug 2018, Elijah Newren wrote:
 
-> Let's say you have the following three trees, where Base is from one commit
-> behind either master or branch:
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  merge-recursive.c | 18 +++++++++++++-----
+>  merge-recursive.h |  1 +
+>  2 files changed, 14 insertions(+), 5 deletions(-)
 > 
->    Base  : bar_v1, foo/{file1, file2, file3}
->    branch: bar_v2, foo/{file1, file2},       goo/file3
->    master: bar_v3, foo/{file1, file2, file3}
-> 
-> Using git-am (or am-based rebase) to apply the changes from branch onto
-> master results in the following tree:
-> 
->    Result: bar_merged, goo/{file1, file2, file3}
-> 
-> This is not what users want; they did not rename foo/ -> goo/, they only
-> renamed one file within that directory.  The reason this happens is am
-> constructs fake trees (via build_fake_ancestor()) of the following form:
-> 
->    Base_bfa  : bar_v1, foo/file3
->    branch_bfa: bar_v2, goo/file3
-> 
-> Combining these two trees with master's tree:
-> 
->    master: bar_v3, foo/{file1, file2, file3},
-> 
-> You can see that merge_recursive_generic() would see branch_bfa as renaming
-> foo/ -> goo/, and master as just adding both foo/file1 and foo/file2.  As
-> such, it ends up with goo/{file1, file2, file3}
-> 
-> The core problem is that am does not have access to the original trees; it
-> can only construct trees using the blobs involved in the patch.  As such,
-> it is not safe to perform directory rename detection within am -3.
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index f110e1c5ec..bf3cb03d3a 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -2843,12 +2843,19 @@ static int handle_renames(struct merge_options *o,
+>  	head_pairs = get_diffpairs(o, common, head);
+>  	merge_pairs = get_diffpairs(o, common, merge);
+>  
+> -	dir_re_head = get_directory_renames(head_pairs, head);
+> -	dir_re_merge = get_directory_renames(merge_pairs, merge);
+> +	if (o->detect_directory_renames) {
+> +		dir_re_head = get_directory_renames(head_pairs, head);
+> +		dir_re_merge = get_directory_renames(merge_pairs, merge);
+>  
+> -	handle_directory_level_conflicts(o,
+> -					 dir_re_head, head,
+> -					 dir_re_merge, merge);
+> +		handle_directory_level_conflicts(o,
+> +						 dir_re_head, head,
+> +						 dir_re_merge, merge);
+> +	} else {
+> +		dir_re_head  = xmalloc(sizeof(*dir_re_head));
+> +		dir_re_merge = xmalloc(sizeof(*dir_re_merge));
 
-I read through all three patches, and they look fine to me!
+This is not a suggestion to change anything, but a genuine question out of
+curiosity: would it make sense to put the `dir_re_head` and `dir_re_merge`
+structures into `struct merge_options` to avoid these extra `malloc()`s?
+Or would that cause issues with the recursive nature of the recursive
+merge?
 
 Ciao,
 Dscho
 
-> 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  builtin/am.c                    | 1 +
->  t/t3401-rebase-and-am-rename.sh | 4 ++--
->  2 files changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/am.c b/builtin/am.c
-> index 2fc2d1e82c..1494a9be84 100644
-> --- a/builtin/am.c
-> +++ b/builtin/am.c
-> @@ -1596,6 +1596,7 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
->  	o.branch1 = "HEAD";
->  	their_tree_name = xstrfmt("%.*s", linelen(state->msg), state->msg);
->  	o.branch2 = their_tree_name;
-> +	o.detect_directory_renames = 0;
+> +		dir_rename_init(dir_re_head);
+> +		dir_rename_init(dir_re_merge);
+> +	}
 >  
->  	if (state->quiet)
->  		o.verbosity = 0;
-> diff --git a/t/t3401-rebase-and-am-rename.sh b/t/t3401-rebase-and-am-rename.sh
-> index a87df9e675..94bdfbd69c 100755
-> --- a/t/t3401-rebase-and-am-rename.sh
-> +++ b/t/t3401-rebase-and-am-rename.sh
-> @@ -152,7 +152,7 @@ test_expect_success 'rebase --interactive: NO directory rename' '
->  	)
->  '
->  
-> -test_expect_failure 'rebase (am): NO directory rename' '
-> +test_expect_success 'rebase (am): NO directory rename' '
->  	test_when_finished "git -C no-dir-rename rebase --abort" &&
->  	(
->  		cd no-dir-rename &&
-> @@ -190,7 +190,7 @@ test_expect_success 'rebase --merge: NO directory rename' '
->  	)
->  '
->  
-> -test_expect_failure 'am: NO directory rename' '
-> +test_expect_success 'am: NO directory rename' '
->  	test_when_finished "git -C no-dir-rename am --abort" &&
->  	(
->  		cd no-dir-rename &&
+>  	ri->head_renames  = get_renames(o, head_pairs,
+>  					dir_re_merge, dir_re_head, head,
+> @@ -3541,6 +3548,7 @@ void init_merge_options(struct merge_options *o)
+>  	o->renormalize = 0;
+>  	o->diff_detect_rename = -1;
+>  	o->merge_detect_rename = -1;
+> +	o->detect_directory_renames = 1;
+>  	merge_recursive_config(o);
+>  	merge_verbosity = getenv("GIT_MERGE_VERBOSITY");
+>  	if (merge_verbosity)
+> diff --git a/merge-recursive.h b/merge-recursive.h
+> index fa7bc6b683..e39ee5d78b 100644
+> --- a/merge-recursive.h
+> +++ b/merge-recursive.h
+> @@ -18,6 +18,7 @@ struct merge_options {
+>  	unsigned renormalize : 1;
+>  	long xdl_opts;
+>  	int verbosity;
+> +	int detect_directory_renames;
+>  	int diff_detect_rename;
+>  	int merge_detect_rename;
+>  	int diff_rename_limit;
 > -- 
 > 2.18.0.12.g97a29da30a
 > 
