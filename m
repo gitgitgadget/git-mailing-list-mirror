@@ -2,101 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 577A91F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 13:43:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4481F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 14:29:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728538AbeH2Rkz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 13:40:55 -0400
-Received: from mout.gmx.net ([212.227.17.20]:53391 "EHLO mout.gmx.net"
+        id S1727547AbeH2S0e (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 14:26:34 -0400
+Received: from mout.gmx.net ([212.227.17.20]:38307 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727595AbeH2Rkz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 13:40:55 -0400
-Received: from localhost.localdomain ([185.190.160.130]) by mail.gmx.com
- (mrgmx102 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M8pKi-1g4tCM2r9w-00CBgn; Wed, 29 Aug 2018 15:43:50 +0200
-From:   Tim Schumacher <timschumi@gmx.de>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, sunshine@sunshineco.com,
-        Tim Schumacher <timschumi@gmx.de>
-Subject: [PATCH v2] doc: Don't echo sed command for manpage-base-url.xsl
-Date:   Wed, 29 Aug 2018 15:43:34 +0200
-Message-Id: <20180829134334.14619-1-timschumi@gmx.de>
-X-Mailer: git-send-email 2.19.0.rc1.1.g093671f86
-In-Reply-To: <20180828212104.2515-1-timschumi@gmx.de>
-References: <20180828212104.2515-1-timschumi@gmx.de>
+        id S1727428AbeH2S0e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 14:26:34 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPlMc-1fytLj1elO-0053Dq; Wed, 29
+ Aug 2018 16:29:17 +0200
+Date:   Wed, 29 Aug 2018 16:29:16 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jonathan Nieder <jrnieder@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive
+ rebase
+In-Reply-To: <20180828171748.GC23314@aiede.svl.corp.google.com>
+Message-ID: <nycvar.QRO.7.76.6.1808291525130.71@tvgsbejvaqbjf.bet>
+References: <pull.23.git.gitgitgadget@gmail.com> <20180823024856.GH92374@aiede.svl.corp.google.com> <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet> <xmqqa7p7lmzp.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808281451191.73@tvgsbejvaqbjf.bet>
+ <20180828171748.GC23314@aiede.svl.corp.google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:fohYvZYkRYZuemBwOemozbdBymiean+LqFtdN97iKl+TtI+mSrY
- Pqj8PHZMge5Y9OhtO5z5MMKN01+4sapWSJtlM2qfppNwvKOFztMVd4QU3CZhoURqHnIo8Vf
- uhDEor7B8ntXs7q1yLd1Q3eK2GjVh0WAcbJM56Dhh6RxhihCtXN5LSIIDpN22uXY9iyDk8U
- SS/qbWi/MVhWseBmkO2ew==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:g/AcJrgzelk=:xO7+/bNVn+MYaLFnW0GI6Q
- 1DXfnRxSGxzWlQZEGmJSO65sKiIs0TiD7OUGruEDoJykxb8NaLA8NM1VBcZIdWuCf8HMI39FD
- ZqiRetSBKSVqVIPsMBFLSki19ULekZ0P6w2E2NEFaglGQyivrOxhyt5omMtIU7D6fen1Vikal
- zHYxWhLYjxcdWKnekIB2lvg8bmITS7TJEMWkxReHgcWUNXIOgKHu4u8iexfLq0lp+Ob84IhkM
- 0B+a4YDF9Im9bArywetoDlBbz7Po9mUQm/LGoaAxjv7NPjmT+hKdV6JF7NtYzRVKIJFLqMx3U
- zhKafty6WQo7GBAXokIdGDOD9/IxeWOPyAPT2Dt6n/avgWWqiufox+Kybf8zGi55a/WSCK3OP
- zvVVM1toYNx292yFDh0wlWe+uHAW6For51LgMHgIFv8XiNIw5VRE/92kS4UR3Q9B78kUJeYXY
- 0M5h1v54Ei2ElvJ9PW7448WQszgvPfS9RmeeSZdHZPbwkR73fX2Fvf3HRkMyUcKtnG+Q4VsJc
- plm1U2YT183EoIx4LisAUDvLbo5CU0UfeTC+hL6Wr0VhSI96TBxuXtVYBA14mTD75KJfFmHpg
- ESvEfxuD0RaUr9+85uezGypFtqlsKi5sXrEGnK3NweSczCMNlkf4NRy8eA2OQnj5Snq9WoRxZ
- x0IEw34p/tJvgPFzhc7dCbVUh0W9u95/FM+/QrO1jIcbDOi+ZyhVF2qDUpA1tAtnI9cWM0P9S
- C4p2hKzFtF3eam7PXQOWOMQmSaJYhpaBAUT/oQ8A6279Wuj29XfbClzfVLo=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:/is1p9fBwduNmvDj1nSrStq2zlKe+MZiMR/qlNvuOtGp1MCKb5d
+ cHLozljVekJoYNq53g9onkmDQfou3IwtvfIOuGzhY2ilow0VIFYBqSMpx1eXmSiwPqrX6Wy
+ UHBUEXLnd+9kPhCiQbtuO+TrIfjmGXkpSa3Yy+OsCQxrRTUvc/F1+inl22iSvcN7F8slcLF
+ Xtc4VHSvjI+wBYjsb+xKw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:zPwL7wPp0JU=:kZxPGJ2ZCMitUm2r7aWZs7
+ 5PalxoGcjR38E7k8bVa/+6ZrLbR258/Y1qeCdUTZ+YnhwdoSKJoHip/SoQCUQdFRYPCVw6w4r
+ h3A0gQVwuyS8Gqs4LZKcDUW/9E7qxenDCLOxExdIOeLQW6d20NpBLZnczbP9tieOCiwnjkzB5
+ 49//9IZy8iTu553fwfk/nraM0U8v3BBbN8O72aF0FvyelaxPqexMVY2NYRsLlpN7MGJjBLgfP
+ tJJzTW6MPg4jPUyPFXxSkip6Z30K29HtaWpBTPcaf8gfi6c+jRz0VrB9Gw2/zhl9HRJLcGFFe
+ Gctb+w1ahUakEI5+j4l3DYyrRx6rTr2zX/jb/PRFquJgYOiVTLvPHRaGAUYN+trltlP6fVWSw
+ 6pIM6ERJ1DLix/pONiGZmXtvmOtTP5SyuETJs6qbO8ZG8KYWJnLRpdxFZ5UVzyT1Ok90zeE/7
+ BhsJJyiASBmUOTsCAV3bzEUEax5+hj95aXFhDJtviNwLUEKv4ZA8GTLHxxlU41401hUyJE/jA
+ Nt0+BPclyEiSL72rWbc4RFV/sLtpasM6z1YJETi9uOWNN3cxpNzTZpoJdE39Ny6zBzeUvqXzW
+ LHM6OsN6xO1SyV2ZurugUyIfgaTqnbZEsCXz0Oj1Bsbx3UrnqBfYO0ieJdj5H26q+vkD70vCd
+ W/qcM0TJBFNAxBskrlB2T5guIoyQL2llcFIT96YYQfVaAnQY0ZDpHjZaWCkAi70998FBZug9l
+ gOX3++8kyobrqmLlEUi0rER2zveQ2rP/koAODcpNvrEcY65d3HJNNAoJiAlE9qM1cAXcuNMRV
+ OcVRTDV
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, the sed command for generating manpage-base-url.xsl
-was printed to the console when being run.
+Hi Jonathan,
 
-Make the console output for this rule similiar to all the
-other rules by printing a short status message instead of
-the whole command.
+On Tue, 28 Aug 2018, Jonathan Nieder wrote:
 
-Signed-off-by: Tim Schumacher <timschumi@gmx.de>
----
+> Johannes Schindelin wrote:
+> > On Mon, 27 Aug 2018, Junio C Hamano wrote:
+> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> >>> Jonathan Nieder wrote:
+> 
+> >>>> Please include this information in the commit message.  It's super
+> >>>> helpful to find this kind of information about why a patch does what
+> >>>> it does when encountering a patch later "in the wild" (in git log -S
+> >>>> output).
+> [...]
+> >> I think what Jonathan finds helpful is the other half of the story
+> >
+> > I will await Jonathan's clarification.
+> 
+> Junio's understanding is correct.
+> 
+> More generally, I greatly appreciate the kind of motivation and
+> backstory that you write in cover letters, and I wish that more of
+> that would find its way into the commit messages instead.  Really I
+> wish (and don't take this the wrong way --- I am not asking you to
+> write it unless it's your own itch) that GitGitGadget would put the
+> cover letter in single-patch series after the "---" line in the
+> individual patches, since that would make it easier for reviewers to
+> point out what content from the cover letter would be useful to add to
+> the commit message.
+> 
+> That said, this is minor and not a reason to reroll this patch.  It was
+> more that I wanted to give the hint for later patches.
+> 
+> Thanks much and hope that helps,
 
-To Junio C Hamano:
-The rule does now print "SED manpage-base-url.xsl"
-to the console, which is similiar to other QUIET_$TOOL
-rules.
+It does.
 
-To Eric Sunshine:
-I reworded the commit message to focus more on _why_
-the patch is relevant.
+I'll "rick-roll" a new iteration, as I just realized that (contrary to my
+recollection; I guess I'll need that vacation) the commit message is
+*seriously* lacking. I thought I had remembered that I copy-edited the
+commit message into the PR description. Clearly that was not the case.
 
----
-
- Documentation/Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index a42dcfc74..cbf33c5a7 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -225,6 +225,7 @@ ifndef V
- 	QUIET_XSLTPROC	= @echo '   ' XSLTPROC $@;
- 	QUIET_GEN	= @echo '   ' GEN $@;
- 	QUIET_LINT	= @echo '   ' LINT $@;
-+	QUIET_SED	= @echo '   ' SED $@;
- 	QUIET_STDERR	= 2> /dev/null
- 	QUIET_SUBDIR0	= +@subdir=
- 	QUIET_SUBDIR1	= ;$(NO_SUBDIR) echo '   ' SUBDIR $$subdir; \
-@@ -344,7 +345,7 @@ $(OBSOLETE_HTML): %.html : %.txto asciidoc.conf
- 	mv $@+ $@
- 
- manpage-base-url.xsl: manpage-base-url.xsl.in
--	sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
-+	$(QUIET_SED)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
- 
- %.1 %.5 %.7 : %.xml manpage-base-url.xsl
- 	$(QUIET_XMLTO)$(RM) $@ && \
--- 
-2.19.0.rc1.1.g093671f86
-
+Thanks for the clarification that triggered my looking,
+Dscho
