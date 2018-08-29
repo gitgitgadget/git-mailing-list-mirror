@@ -2,161 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4A771F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 21:35:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E6021F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 21:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727237AbeH3BeN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 21:34:13 -0400
-Received: from mail-qk0-f194.google.com ([209.85.220.194]:46830 "EHLO
-        mail-qk0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726592AbeH3BeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 21:34:12 -0400
-Received: by mail-qk0-f194.google.com with SMTP id j7-v6so4405636qkd.13
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:35:24 -0700 (PDT)
+        id S1727179AbeH3Bj6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 21:39:58 -0400
+Received: from mail-oi0-f68.google.com ([209.85.218.68]:43543 "EHLO
+        mail-oi0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbeH3Bj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 21:39:58 -0400
+Received: by mail-oi0-f68.google.com with SMTP id b15-v6so11830063oib.10
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 14:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=S4XYIF9DUIKTr7JD7+g0MpM4CzPwdSN/9bDZlaTsOZ0=;
-        b=kDyzDfw/57EVqJ4zwJEF0NaoXcqnVvVtRJZWVxFlqsmlQnZKHN2Hxk+QyJsc2jUrOx
-         FMbpDZYCLb9EhOxNeIsYD2aXyI+07hhf9TQaC5wx6R0+bNHJVyN7CxWd+J37CjNolMFV
-         TFq2eQJOFT0UHAqRcSz8ujNa64HesTyUDwCusaUe3crjZ7XKXfjEwTaxw0onLUsmfI5G
-         VkVTYlc4P5rh16kIdEAV6lBB+e9iWec8QSayB+WCx0agipMRZYBQJbEBevL3ACIoCZEg
-         yyAud4WgzNWzb/6SJa4M5NDvWDzuaHVHeI/WsgzDh0giMoL4ku96CFKw7g2TAN2KCThn
-         mW5g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=q/o3IIHQCG0CHInw8wuaKvyIE9xVj3kfYXcSS1ziwC8=;
+        b=YO0lTw+xem4a2xYsZ45D7QA8FEmc15U2cqSFRcJcUkPLHaju07hE7zcxaZ1gBHaZ4w
+         bd0FDRrw7lvXmWuLhZlk5qvlu37/lqIROujtg0Buq2yE7vhhln2fWuiFkoOO8ZZyGUNJ
+         nu65MrGsWTOOmgLnVOM5rYQLoNjcSq83fOhk801lIVujcwoIzjgNKa6fxzQ7gF5+zJxP
+         /QVkuhAQXJ/Ri9pkQjCbzawkFIoGElKUdIhogFCdnNz4wzqhBt+Hj4+7gedRt88J6JKb
+         4EF9dmvIpLCbj3eGHzXbUQFbVJUe7zkYgD2986zKQyZGsA1nc1/PeF14pw+Mu+/MWCJJ
+         XQ2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=S4XYIF9DUIKTr7JD7+g0MpM4CzPwdSN/9bDZlaTsOZ0=;
-        b=XXqsonJROSKP062AHAslRQk+WX5Zs0/LnyCdd5LehMrALZ2mZzVkDQylGGhDREp3ZX
-         9qkn8MfL0/pafHJKj6djfyZB9fJ8RxCJWexoxB5/txj7vg+COndz6sqE/utSwiIOJwzm
-         AV0zZZNC46U1oTFE9ewCJWjrdM89k4tJchJkUxwKATu43aVUZDBQTHPnL0Fojdaw+ZD6
-         vxzxwIM0jkhjAc7FZaiw8WVkmhsJGcQax6J+3nORTchPEp7MLtec2nqsnkI9xCUsMIZ8
-         ukD2QB6V0+ueewtJ+sqLSJwCj3RcLGXHqPzTplLfWT7iwV7g5HRjPaBAaimEYyV5cD6W
-         uJQA==
-X-Gm-Message-State: APzg51CrhRL1/fEl8e7m+SbzTiIQXDbmQyJZX13whbZzOgxnqKxtdys/
-        m0OHwzSpVuzsv9luDQ1dEsU=
-X-Google-Smtp-Source: ANB0VdZEbnwCOWY1J0fkDu/2+wa5TpnCL+th9sm5kwNXS73dYc7/UBusXwulj1Pe03xvT8tzLvxMTQ==
-X-Received: by 2002:a37:a38b:: with SMTP id m133-v6mr8408453qke.356.1535578523971;
-        Wed, 29 Aug 2018 14:35:23 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id p18-v6sm3553793qtp.3.2018.08.29.14.35.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Aug 2018 14:35:22 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] read-cache: speed up index load through
- parallelization
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "pclouds@gmail.com" <pclouds@gmail.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180829152500.46640-1-benpeart@microsoft.com>
- <20180829152500.46640-2-benpeart@microsoft.com>
- <xmqq5zztccy7.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <f1a703e8-27b9-3f9e-9bde-a7b74659b4b3@gmail.com>
-Date:   Wed, 29 Aug 2018 17:35:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=q/o3IIHQCG0CHInw8wuaKvyIE9xVj3kfYXcSS1ziwC8=;
+        b=A3YBQYhgUV4cEoSS+ArjNMUSGl7PJfEVuQBV+AjoEy5oFY9vZLNzFnAKtj0aCUdnoo
+         Gdb90LzA7vzXup9Wb6a3oxUbiaYi4HVui/soDk0N9Ym5GhZGgfgbPqtVXYxxQgnVeR6N
+         TovBfKF8PFLen9N3grdSBmRsKvDdtanBLhvnR+u0D+eAhjQeuT5val6dsJ9SuqSnkWsD
+         hDGiDoyShQUi5+V9tpMHcRKS22+zpc2SvmuaM27BskzzF2CaSfo/njRPNcc2FXDCVpR1
+         yda09NwnrBq01cvoWE4OORgol6/mAcwp5WrjDbCO1WHbaFYk0vtGir7nj0Mvb1SqVL4K
+         NPbw==
+X-Gm-Message-State: APzg51A9ZwQ39C7H2drdaAE5TMwaLFLTjikTd3kobrnlv8hpEZpJtlQ9
+        KF5LiE9zWIDLWTAiQTY27mT3xFXbSZe5AVuBSFylE8cN
+X-Google-Smtp-Source: ANB0VdYDDVSRmzGXjjxxj2If/KUsGKec4cL9sFHCLfkSLrsy5MZ9h1n3Ec0ws4OBzEoRU0IgrFJbq0OSjDW9LpQGTsA=
+X-Received: by 2002:aca:4784:: with SMTP id u126-v6mr4676215oia.229.1535578867561;
+ Wed, 29 Aug 2018 14:41:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq5zztccy7.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180829205857.77340-1-jannh@google.com> <20180829205857.77340-2-jannh@google.com>
+ <20180829213433.GC29880@sigill.intra.peff.net>
+In-Reply-To: <20180829213433.GC29880@sigill.intra.peff.net>
+From:   Jann Horn <jannh@google.com>
+Date:   Wed, 29 Aug 2018 23:40:41 +0200
+Message-ID: <CAG48ez2BL1fgP_FkUi=6EYAuA+ja3ujZFFqKkPQN50tRCEUJiQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] t/helper/test-delta: segfault on OOB access
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        pclouds@gmail.com, johannes.schindelin@gmx.de, nico@cam.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Aug 29, 2018 at 11:34 PM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Aug 29, 2018 at 10:58:56PM +0200, Jann Horn wrote:
+>
+> > This ensures that any attempts to access memory directly after the input
+> > buffer or delta buffer in a delta test will cause a segmentation fault.
+> >
+> > Inspired by vsftpd.
+>
+> Neat trick, but it seems funny to protect this one buffer in
+> non-production code. Obviously you were interested in demonstrating the
+> issue for your tests, but do we want to carry this all the time?
+>
+> If we want to detect this kind of thing in tests, we should probably be
+> relying on tools like ASan, which would cover all mmaps.
+>
+> It would be nice if there was a low-cost way to detect this in
+> production use, but it looks like this replaces mmap with
+> read_in_full(), which I think is a non-starter for most uses.
 
+I think even with ASAN, you'd still need read_in_full() or an mmap()
+wrapper that fiddles with the ASAN shadow, because mmap() always maps
+whole pages:
 
-On 8/29/2018 1:14 PM, Junio C Hamano wrote:
-> Ben Peart <Ben.Peart@microsoft.com> writes:
-> 
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> index 1c42364988..79f8296d9c 100644
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -2391,6 +2391,12 @@ imap::
->>   	The configuration variables in the 'imap' section are described
->>   	in linkgit:git-imap-send[1].
->>   
+$ cat mmap-read-asan-blah.c
+#include <sys/mman.h>
+#include <stdlib.h>
+int main(void) {
+  volatile char *p = mmap(NULL, 1, PROT_READ|PROT_WRITE,
+MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+  p[200] = 1;
+}
+$ gcc -o mmap-read-asan-blah mmap-read-asan-blah.c -fsanitize=address
+$ ./mmap-read-asan-blah
+$
 
-> Adding something like
-> 
-> 	You can disable multi-threaded code by setting this variable
-> 	to 'false' (or 1).
-> 
-> may reduce the risk of a similar "Huh?" reaction by other readers.
-> 
-
-Will do
-
->> +struct load_cache_entries_thread_data
->> +{
->> +	pthread_t pthread;
->> +	struct index_state *istate;
->> +	struct mem_pool *ce_mem_pool;
->> +	int offset, nr;
->> +	void *mmap;
->> +	unsigned long start_offset;
->> +	struct strbuf previous_name_buf;
->> +	struct strbuf *previous_name;
->> +	unsigned long consumed;	/* return # of bytes in index file processed */
->> +};
-> 
-> We saw that Duy's "let's not use strbuf to remember the previous
-> name but instead use the previous ce" approach gave us a nice
-> performance boost; I wonder if we can build on that idea here?
-> 
-> One possible approach might be to create one ce per "block" in the
-> pre-scanning thread and use that ce as the "previous one" in the
-> per-thread data before spawning a worker.
-> 
-
-Yes, I believe this can be done.  I was planning to wait until both 
-patches settled down a bit before adapting it to threads.  It's a little 
-trickier because the previous ce doesn't yet exist but I believe one can 
-be fabricated enough to make the optimization work.
-
->> +static unsigned long load_cache_entries(struct index_state *istate,
->> +			void *mmap, size_t mmap_size, unsigned long src_offset)
->> +{
->> +	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
->> +	struct load_cache_entries_thread_data *data;
->> +	int nr_threads, cpus, ce_per_thread;
->> +	unsigned long consumed;
->> +	int i, thread;
->> +
->> +	nr_threads = git_config_get_index_threads();
->> +	if (!nr_threads) {
->> +		cpus = online_cpus();
->> +		nr_threads = istate->cache_nr / THREAD_COST;
-> 
-> Here, nr_threads could become 0 with a small index, but any value
-> below 2 makes us call load_all_cache_entries() by the main thread
-> (and the value of nr_thread is not used anyore), it is fine.  Of
-> course, forced test will set it to 2 so there is no problem, either.
-> 
-> OK.
-> 
->> +	/* a little sanity checking */
->> +	if (istate->name_hash_initialized)
->> +		die("the name hash isn't thread safe");
-> 
-> If it is a programming error to call into this codepath without
-> initializing the name_hash, which I think is the case, this is
-> better done with BUG("").
-> 
-
-Will do
-
-> The remainder of the patch looked good.  Thanks.
-> 
+But that aside, you do have a point about having some custom hack for
+a single patch.
