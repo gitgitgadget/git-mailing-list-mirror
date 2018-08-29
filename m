@@ -2,123 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E06E01F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 13:12:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 271BE1F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 13:24:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728524AbeH2RJe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 29 Aug 2018 13:09:34 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:33401 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727204AbeH2RJe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 13:09:34 -0400
-Received: by mail-ed1-f54.google.com with SMTP id h9-v6so3898748edr.0
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 06:12:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=N5oK0pwOBYB/hlaLidr/Dy3due4l+ww5R8Kadw1QJcY=;
-        b=ejiNR5StPCqQyshT6HF5w3KqzdVM5z2WKn4stMst+nBhKMjRmvHmBOdVCppnHxzg5T
-         PkC8Ztzu9IAzITwp5dXpjuPxMAr5u3BH3UYhamm8GY8BpWxCepvCyHCKP+KoyO0X4ukJ
-         a24Z1WYJQVj2G2HKqDsEUpT26kw5zLHQPl1+n6pzJPFA5Zm1mWXVFDYoxW2NZYPN3Hb8
-         S1ojpZzN4MrakQ0SrD5wZljV2NxjFcXHbR1hebehexUFbhmy8VY6A48hGxqqHYfkIqam
-         K0vF8fY22IHBjH6pXXB870x90165svgK6G91vuCwQvZRfQZgBnwepNGhyml5RrPCcgZ3
-         WdKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=N5oK0pwOBYB/hlaLidr/Dy3due4l+ww5R8Kadw1QJcY=;
-        b=if5XOxxqdVENnZokYBi3YCh1TbjSOQ2D9td8tCGdGcW9OmW3qTs2Ih0PQJM0X5QPIx
-         WctBm6+hLd2X4ab0sVhvkNv62gipZFsGyDa5Cmrh2Yh3fav27A9rNRfQ/8Xk4vPVcI0q
-         sNiX6zw9ZN18sVqiwsaNMpUGPU+ecM1ej7K+i+UmN7Ft0A/Q1ndUC73phNDPkD60WhYW
-         KcVhdL9q6fl2+2kaBX6sckiKTLm6BpfUYDEVGClrHEbaHOFk8UgDsMpyshKljArCRdjR
-         gmnDGAlYH+7IjMI843mMXA/3jt2Sx/Aix2btZ0PSCMULtp1BU9zsOnfmQMsBa0BHfZcG
-         3yog==
-X-Gm-Message-State: APzg51Cp4bYnlcQCHclC8fiKUg/dwcUnd3UaewYokFeedXF2EL36Tj3p
-        SNHD5lD2xcCiWredxiR0rrAkeaRRGBo=
-X-Google-Smtp-Source: ANB0VdaGsVtYIb5YHGXfenkGdgQb8ETXq14NmYVJdFzxHDlPuk/+4BqFfw+192vVBkLox1G7h7DHug==
-X-Received: by 2002:a50:acc6:: with SMTP id x64-v6mr7685410edc.152.1535548359465;
-        Wed, 29 Aug 2018 06:12:39 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id k33-v6sm1761799edb.31.2018.08.29.06.12.38
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 06:12:38 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Subject: Re: Git in Outreachy Dec-Mar?
-References: <20180828151419.GA17467@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180828151419.GA17467@sigill.intra.peff.net>
-Date:   Wed, 29 Aug 2018 15:12:37 +0200
-Message-ID: <8736uxe2pm.fsf@evledraar.gmail.com>
+        id S1727668AbeH2RVc (ORCPT <rfc822;e@80x24.org>);
+        Wed, 29 Aug 2018 13:21:32 -0400
+Received: from mout.gmx.net ([212.227.15.15]:50667 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727204AbeH2RVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 13:21:32 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M6RmV-1fjdVl2FVj-00yRAz; Wed, 29
+ Aug 2018 15:24:30 +0200
+Date:   Wed, 29 Aug 2018 15:24:29 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Teach the builtin rebase about the builtin interactive
+ rebase
+In-Reply-To: <xmqq8t4qijym.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808291521250.71@tvgsbejvaqbjf.bet>
+References: <pull.23.git.gitgitgadget@gmail.com> <20180823024856.GH92374@aiede.svl.corp.google.com> <nycvar.QRO.7.76.6.1808260144570.18296@tvgsbejvaqbjf.bet> <xmqqa7p7lmzp.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808281451191.73@tvgsbejvaqbjf.bet>
+ <xmqq8t4qijym.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vsu1fUhGQ9lDjUDqMn3Btg+vwv9UL5A+9rL+0/skANeuWx32cMk
+ p887DH6me3hbA0rTFMQMDyjWsOk/OYPsVtjNGhVECUrnSizfxZd3fQYsRQPyFSPudE15kiz
+ fMyRjw4elMkxBfYAK0/xcuSl1mm7YtEI7BULoFMx/g/42SBnx38T5RULVGssp6yVxYU3BCs
+ kX7rfwqqNVyaO3zPPgp4Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YZJ85jMXUSE=:PyAHcQs6kZjkgHXPTrJeE4
+ EgY9WbZWtgHtP/xSdCt57n+9QmlVY/kxrTH4CBai7bN5AN/ID8z3DgF1yTRcRUfC7lKIcDioz
+ 8WDHJfX1BfGJVFA176nVUy5aZggVzXGBD9EkTLkCk9O/gKDE24wv2EKyXeShSMkqaGJuExCl/
+ TGzKIEfDZ8tsOQEySfnBAaMmxh/H0OnIvL6cHSJgboAf/cMwdYgFhHGaY58E3X971UZIIgphv
+ 5PiD2X2PkEYnwXcTrZsKEFrWkwux/Q01wGrHQBoA5ypofMDsC2PXSeGQ9GMnZUDeaIMPSg105
+ T4Gxyvi+crwmLXMkZja7dcsNk77djgtV7Gx7xhg5XumCJRyqFSPa+kLYqERJzhLHsEBlbXbQB
+ VXXBRkqVn93RyOpA9+L3Ne/RmmH3et9Y+NK7/EE3ZtGjVNVzugDrdcZx8hEP/6MiQ5Zyj158y
+ /wuL8PA8ww5BNBJ0TUovpiJBRLMXjrJ5ls/jRCI4NrQKNYEgX9offCK+PrG0yk4LkPODRHU7f
+ kivF4sIMbsNek8w/9UwkYDtNq5vwLjbBlu4FGeog78STHSVPOLj/WQMeXrnwUhD4x9Nh2P+Kk
+ 5UeIbb/f2DFi6R4ePs0PKEoFCP/FvyJSmGHn31l+l7KxM52inUazSitbeP8Fr/NVE4t+SGvjR
+ GnCyNDV7r/QGJLTppdSiAFfxLrpWsXqHQz1ekfYBQMLsZ4k+tA+ZCHtV0MCqy1CbtbjJA+qQy
+ olSAbjPzkD+7PzfvlGnsNlTHHhtPXveO4AigEzVgX97uG0CqeCXo8kJu/LgAzEvEQ2Y/U3bzt
+ NMiqI/e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
-On Tue, Aug 28 2018, Jeff King wrote:
+On Tue, 28 Aug 2018, Junio C Hamano wrote:
 
-> The Outreachy application period is set to begin on September 10th for
-> interns participating in the December-March program. Do we want to
-> participate?
->
-> Details on the program are here:
->
->   https://www.outreachy.org/communities/cfp/
->
-> If we want to, then we need:
->
->   1. Volunteers to mentor. This is similar in scope to being a GSoC
->      mentor.
->
->   2. To get our landing page and list of projects in order (and also
->      micro-projects for applicants). This can probably build on the
->      previous round at:
->
->        https://git.github.io/Outreachy-15/
->
->      and on the project/microprojects lists for GSoC (which will need
->      some updating and culling).
->
->   3. To figure out funding (unlike GSoC, the intern stipend comes from
->      the projects). I can look into getting outside funds (which is what
->      we did last year). Worst case, we do have enough project money to
->      cover an intern. Last year[1] opinions were that this was a
->      reasonable use of project money, but of course new opinions are
->      welcome.
->
-> If the answer is "yes, we should participate", it will hopefully be
-> accompanied with "yes, I will mentor", and "yes, and I will start
-> getting the land#ing page ready." :)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> I do recall discouraging you from including irrelevant rant/whine in
+> >> the log message a few times in the recent past, and also I do recall
+> >> you never listening to me.  Don't make me an excuse.
+> >
+> > Junio, I would really appreciate less emotional, and more professional
+> > conduct from you.
+> 
+> Which part is unprofessional?  
+> 
+> Being caught and corrected with truth immediately after badmouthing
+> another by lying may hurt, but that is your problem, not mine.
 
-I just have a "yes" to the first one of those. Which tells you how much
-skin I have in the game (and how much you should(n't) listen to me) :)
+You did not catch me doing anything bad.
 
-Just a question: It seems to me that #1 and #2 is not tied up to the
-Outreachy process. I agree that finding a qualified intern to work on
-Git would be a good use of project funds.
+You caught me telling Jonathan about having been criticized by you, for
+including background information *I* found relevant and *you* found
+irrelevant. And that was very important in this context, as he asked me to
+include something that I expected you to find irrelevant, too.
 
-What's not clear to me is if/how tied up this needs to be to a specific
-external program such as Outreachy. I.e. do we as a project need to go
-through that organization, or can that be just one of the ways in which
-we send out a call for interns?
+Of course, confusingly, this time you found it relevant, even if it was as
+unrelated to the patch as in the previous case.
 
-With GSoC we don't have a choice in the matter, since Google's paying
-the bills and runs the show, but it sounds like in this case we at least
-partially do.
+So I am getting the impression that your critique was not actually
+professionally motivated, but very personal. And I do not appreciate that.
 
-Or maybe Outreachy is doing some heavy lifting with screening or has
-partial subsidies which would still make it prohibitive to e.g. send out
-a general call of our own for candidates on the mailing list & in other
-venues.
+I do not need to say anything more about this topic.
+
+Ciao,
+Dscho
