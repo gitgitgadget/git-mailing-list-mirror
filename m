@@ -2,86 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_03_06,DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9FB71F404
-	for <e@80x24.org>; Wed, 29 Aug 2018 22:37:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C61461F404
+	for <e@80x24.org>; Wed, 29 Aug 2018 22:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727346AbeH3CgM (ORCPT <rfc822;e@80x24.org>);
+        id S1727328AbeH3CgM (ORCPT <rfc822;e@80x24.org>);
         Wed, 29 Aug 2018 22:36:12 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:34831 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727317AbeH3CgM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 29 Aug 2018 22:36:12 -0400
-Received: by mail-wm0-f68.google.com with SMTP id o18-v6so44779wmc.0
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 15:37:09 -0700 (PDT)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44902 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727212AbeH3CgL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 29 Aug 2018 22:36:11 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v16-v6so6233835wro.11
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 15:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=zXvzzirEw1miVx+lQFFbGY7GSDHToKL1DLmVj+cRRdM=;
-        b=Mbb0kdgP5VzKhr0XVGJiI2M38ezDHPEtfnhCAQtc0WPBOP3m1QVswAtebKt2X7sgk5
-         L/dKkxdGDNze4VQ08ah9Ygc2noTcuvcuoWlDTqGML2t7Mh/jdvgwH4cQSPZ70KDELUn9
-         ASgwXUo2+MoiTIb9rcTNmPzpY/RfGhsbPeNkLxyPYSOies7hY8HH9a1++FsmWSDhj0pA
-         pbGjxb1XL3DDmMb/+XycxxR0Njxmgg19z+nIxOGgFS6+hKU2GWKca5yJpf1+8j5+sNWP
-         Vl/4fFPAdzCaR3jxSW0tHjprkEDCJd+bXhqpQ/Z3LbHYl9dMiSxqurk0n/jSns4BmglZ
-         0bNQ==
+         :mime-version;
+        bh=unONI1owgCTqieF0oYb3OH/XSV7UH1xrrEpLKw2wd3s=;
+        b=KxrXoAq85RmMOaYOsjcrv80mFwcig3W9bD7yFrhpKP/jaDWcCxCo9wxqJzZfkUIQVa
+         /KvFrWeM5hPhEMi6czhhlU4tXiccfWH8vmcQUs/VFX6rucsDFuCmWSkcqr189gWu4ItP
+         BaoXmgqRw9dj2pAGxWN02r/4N6UZlyHStK6jD3hEAfNMX1Dbo83HdkV3rq4pyOIbBHoH
+         NErxKpb5QI/PL1+YBGW4RmuBdoT3d9eEC5GgJ768mpiD5GK4dPeqT+JV2wz4vjPmr0V/
+         ZApi/RfYn/7QrzJERX2H/B+SXlPv5QhFjNHKxuqM3msJVm2b9eYl56k3g8qzvNxBbB/d
+         Jxbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=zXvzzirEw1miVx+lQFFbGY7GSDHToKL1DLmVj+cRRdM=;
-        b=pBC+Vxhe5FjtgMK2KqiJZ7d1++7DV1B3dDpYzbw24G4iqEFSn4iBssIklk4DtKbldu
-         bvXHnqFapBwNVfHW2R2he8yKlJ4CEyU/nSNxxSqYd1j1hfHGICiwmc1NCBPkGKC76qOy
-         fbhl5IOnrqxkHrGq28FPYiMbwBv8DgQFJwjTS80XVGNEfF1iZ445VqK36T8Fho7ZBvUk
-         Rm1+ahOAxzAkDeUxtd0ICCqiIVOvVbyPOT0fR1tBDMr5flXse2MHMwTBgnnaBmASF6Eb
-         PJ29eevSygbPMg+2zXdKo5UQMboyk19YqB3YkziuHbogNBTCjMl4IxBqIQm41H+ZWXZ5
-         AHZg==
-X-Gm-Message-State: APzg51DN7GZfNUeuqyPwbZiOtGKd6ZTyH0hbaCVmC887ZYJyaJ6smEBE
-        T7L+jwmZpVmFRKdSd1ttaT0XQ8fJ
-X-Google-Smtp-Source: ANB0VdYykordKReMNA3mrqwIVIK8pd38gIFHvRNXEdIHOZRzwh+qEsh/C4JY4PPTWUwMaAQFYPWjOQ==
-X-Received: by 2002:a1c:230f:: with SMTP id j15-v6mr31765wmj.124.1535582228170;
-        Wed, 29 Aug 2018 15:37:08 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id g126-v6sm41324wmg.5.2018.08.29.15.37.07
+         :message-id:user-agent:mime-version;
+        bh=unONI1owgCTqieF0oYb3OH/XSV7UH1xrrEpLKw2wd3s=;
+        b=sZzmvjfmFTu2DnmMDnLdAYR4iWzOyu+Z8qVCBhWHsUQiylSXHJHEndSEdr3n4oB6s5
+         T1ky9edNuE+wpuBmdbQRixRrOTG2eVWATBo8qQ9HTXA4e2HzYGXZYvGIhY+oew9QZK2e
+         Msfs8cWLTxtmTXWBPVbBwHu1zvGz7yjluDS2CHyXMHGd/HdotnIpp+JvcaRzNnAUkObG
+         dTZ1+HVD8EuG8/oB6byU67Pl63hVCTXUThvFHXrz5JVg5Mt5ufuZXxcfGt0e5y+npUwR
+         4ibem9WWzo32yJKHcStQJELdFSfPOpr4OgLBh6rd2NYjJmuJsrA99yPZI+s4Vs2NF6TU
+         SmCg==
+X-Gm-Message-State: APzg51DuD2GaoNEZczlsW9pMcAORNJSeu4ey0i/9lc2/VdYnU62gt1BP
+        BsRVgtdX+0+pXeK5Hiz7KPg=
+X-Google-Smtp-Source: ANB0VdayRmqZrTRNLT6EYjRtqic6ATmJbQ3DMrWyEOf9W/jB68Zhmu1EmIHzZsyVSolxVxQSvDBMhg==
+X-Received: by 2002:adf:9f13:: with SMTP id l19-v6mr5986077wrf.206.1535582226885;
+        Wed, 29 Aug 2018 15:37:06 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 124-v6sm39246wmk.20.2018.08.29.15.37.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 29 Aug 2018 15:37:07 -0700 (PDT)
+        Wed, 29 Aug 2018 15:37:05 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] mailinfo: support format=flowed
-Date:   Wed, 29 Aug 2018 13:19:16 -0700
-References: <e2f2ca18-849c-0ef4-98a5-9a1379bfcec5@web.de>
-Message-ID: <xmqqo9dk94vh.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Tim Schumacher <timschumi@gmx.de>, git@vger.kernel.org,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH v3] doc: Don't echo sed command for manpage-base-url.xsl
+Date:   Wed, 29 Aug 2018 12:19:00 -0700
+References: <20180829134334.14619-1-timschumi@gmx.de>
+        <20180829154720.20297-1-timschumi@gmx.de>
+        <20180829165540.GB170940@aiede.svl.corp.google.com>
+Message-ID: <xmqqtvnc94vi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Add best-effort support for patches sent using format=flowed (RFC 3676).
-> Remove leading spaces ("unstuff"), remove soft line breaks (indicated
-> by space + newline), but leave the signature separator (dash dash space
-> newline) alone.
+> Tim Schumacher wrote:
 >
-> Warn in git am when encountering a format=flowed patch, because any
-> trailing spaces would most probably be lost, as the sending MUA is
-> encouraged to remove them when preparing the email.
+>> Subject: doc: Don't echo sed command for manpage-base-url.xsl
+>
+> Cribbing from my review of v2: a description like
+>
+> 	Documentation/Makefile: make manpage-base-url.xsl generation quieter
+>
+> would make it more obvious what this does when viewed in "git log
+> --oneline".
 
-The warning is a very good idea, but I wonder if it is loud enough
-when mixed with other noise (e.g. "--whitespace=warn" for a short
-series, or patch titles when applying a very long series).
+Sounds good; let's take it.
 
-Lossage of trailing spaces may even be a feature (just joking), when
-the project policy makes it OK to use "am --whitespace=fix".  I
-usually use "am --whitespace=fix" but I used "am --whitespace=warn"
-while applying this patch to preserve lines that begin with "SP SP
-HT" in the sample patch.
+>> Previously, the sed command for generating manpage-base-url.xsl
+>> was printed to the console when being run.
 
+The convention is that we talk about the state before the current
+series in question is applied in the present tense, so "previously"
+is not needed.  Perhaps
+
+    The exact sed command to generate manpage-base-url.xsl appears in
+    the output, unlike the rules for other files that by default only
+    show summary.
+
+is sufficient.  The output is not always going to "the console", and
+it is not like we change behaviour depending on where the output is
+going, so it is misleading to say "the console" (iow, the phrase "to
+the console" has negative information density in the above
+sentence).
+
+>> Make the console output for this rule similiar to all the
+>> other rules by printing a short status message instead of
+>> the whole command.
+
+Likewise, s/console //;
+
+I'll all do the above tweaks while queueing.
+
+Thanks, both.
+
+>>
+>> Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+>> ---
+>>  Documentation/Makefile | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Oh!  Ignore my reply to v2; looks like you anticipated what I was
+> going to suggest already.  For next time, if you include a note about
+> what changed between versions after the --- delimiter, that can help
+> save some time.
+>
+> With or without the suggested commit message tweak,
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Thank you.
