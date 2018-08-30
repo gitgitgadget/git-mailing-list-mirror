@@ -6,86 +6,112 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A52B51F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 02:55:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE7D91F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 03:16:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727232AbeH3Gyx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 02:54:53 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33396 "HELO cloud.peff.net"
+        id S1727433AbeH3HQI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 03:16:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:33408 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727197AbeH3Gyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 02:54:53 -0400
-Received: (qmail 1111 invoked by uid 109); 30 Aug 2018 02:54:59 -0000
+        id S1727417AbeH3HQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 03:16:08 -0400
+Received: (qmail 1971 invoked by uid 109); 30 Aug 2018 03:16:10 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 02:54:59 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 03:16:10 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21992 invoked by uid 111); 30 Aug 2018 02:55:07 -0000
+Received: (qmail 22033 invoked by uid 111); 30 Aug 2018 03:16:18 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 22:55:07 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 23:16:18 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 22:54:57 -0400
-Date:   Wed, 29 Aug 2018 22:54:57 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 23:16:08 -0400
+Date:   Wed, 29 Aug 2018 23:16:08 -0400
 From:   Jeff King <peff@peff.net>
-To:     Gabriel Holodak <gthepiper@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Subject: Re: Possible bug: identical lines added/removed in git diff
-Message-ID: <20180830025457.GA665@sigill.intra.peff.net>
-References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
- <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com>
- <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: Git in Outreachy Dec-Mar?
+Message-ID: <20180830031607.GB665@sigill.intra.peff.net>
+References: <20180828151419.GA17467@sigill.intra.peff.net>
+ <8736uxe2pm.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <8736uxe2pm.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 10:10:25PM -0400, Gabriel Holodak wrote:
+On Wed, Aug 29, 2018 at 03:12:37PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-> > Could you cut down to a real minimal reproduction, i.e. just these 20
-> > lines or so?
+> >   2. To get our landing page and list of projects in order (and also
+> >      micro-projects for applicants). This can probably build on the
+> >      previous round at:
+> >
+> >        https://git.github.io/Outreachy-15/
+> >
+> >      and on the project/microprojects lists for GSoC (which will need
+> >      some updating and culling).
+> [...]
+> I just have a "yes" to the first one of those. Which tells you how much
+> skin I have in the game (and how much you should(n't) listen to me) :)
+
+Yes, if nobody steps up to do 2, then it won't happen. :)
+
+For myself, I don't think I have time to commit to mentoring this round.
+And IMHO the people signing up to mentor should be the ones contributing
+to the project list (since they will ultimately be on the hook for
+working on those projects with the intern).
+
+> Just a question: It seems to me that #1 and #2 is not tied up to the
+> Outreachy process. I agree that finding a qualified intern to work on
+> Git would be a good use of project funds.
 > 
-> I'm working on getting down to a minimal reproduction, a few lines at
-> a time. One thing that seems strange: as I've removed lines, there are
-> a bunch of lines that don't matter. Then I'll find some lines that, if
-> removed, completely fix the issue. But the ordering for these
-> apparently important lines doesn't matter. They just have to be
-> somewhere in the file to cause the duplicated diffs.
-> 
-> I'll upload again when I've figured out all the unimportant lines to remove.
+> What's not clear to me is if/how tied up this needs to be to a specific
+> external program such as Outreachy. I.e. do we as a project need to go
+> through that organization, or can that be just one of the ways in which
+> we send out a call for interns?
 
-Yeah, I reproduced based on your initial post, but noticed that when I
-cut it down the problem went away.
+It doesn't need to be. As far as I know, the main reasons (from the
+perspective of a project) to do it through Outreachy are:
 
-An easy and pretty mechanical reproduction is:
+ - being part of a larger program generates attention and gets the
+   interest of intern candidates (free advertising, if you will)
 
-  git diff --no-index unitera_bold_italic.bdf.{old,new} |
-  sed -ne '/STARTCHAR U+00F0/,/ENDCHAR/p'
+ - Outreachy handles payment, invoicing for external funds, and any
+   legal stuff
 
-which shows a hunk that could easily be reduced by its first line
-("DWIDTH 8 0"), and which has a common line in the middle of -/+ run.
-But if we cut it down to the lines in that hunk, like this:
+ - it's possibly easier to external funding if it's earmarked for a
+   program like Outreachy, since that program provides a framework with
+   particular goals, conditions, oversight, etc.
 
-  for i in unitera_bold_italic.bdf.{old,new}; do
-    sed -ne '/STARTCHAR U+00F0/,/ENDCHAR/p' <$i >$i.cut
-  done
-  git diff --no-index unitera_bold_italic.bdf.{old,new}.cut
+I think there's some general value in having a group, too. Because there
+are many interns all participating at the same time, they can offer each
+other support or advice, show off their work to each other via blog
+posts, etc. And it may be easier for them to communicate about their
+accomplishments and status for future work, since it's part of an
+established program that can easily be explained.
 
-then those two lines become context.
+As for reasons _not_ to do it, I don't think the requirements are particularly
+onerous. Mostly it's:
 
-I note also that GNU "diff -u" gets this case right.
+  - it has to happen at a specific time, which might not be convenient
+    for mentors or interns (last year I found it hard to get focused
+    starting in December, with all of the holidays)
 
-> > Do you have any smudge filters or configuration regarding
-> > line endings?
-> 
-> No filters, I did have core.autocrlf = input. But as I mentioned, I
-> can also reproduce with an empty config.
+  - it naturally limits the candidate pool to under-represented groups
+    (which is the whole point of the program, but if you don't
+    actually care about that, then it's just a complication)
 
-Me too. Amusingly, if you have diff.colorMoved configured, the context
-lines appear as moves, showing that we really do know they're the same
-(but that happens as post-diff processing, so I am not at all surprised
-that it is orthogonal to the original issue).
+So IMHO it's easily worth the trouble.
+
+> With GSoC we don't have a choice in the matter, since Google's paying
+> the bills and runs the show, but it sounds like in this case we at least
+> partially do.
+
+I think that the autonomy and level of responsibility for the
+mentors/project is about the same between GSoC and Outreachy. The main
+difference is just the funding model (but again, I suspect we would not
+have too much trouble securing external funding).
 
 -Peff
