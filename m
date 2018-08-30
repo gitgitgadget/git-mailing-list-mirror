@@ -2,118 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC2C1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 02:41:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8C981F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 02:43:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbeH3GlI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 02:41:08 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38574 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725788AbeH3GlI (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Aug 2018 02:41:08 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EB85F60428;
-        Thu, 30 Aug 2018 02:41:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535596875;
-        bh=AhvyAOdPg9rMo1hcnvPg2WQ5yBqiUNTA9ydyXhLOfg4=;
-        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dCAAeyRwwnOuV0XGYPsj1+vUtogmwMg+FH4aAsV/BtQcb3E24eRH6rj5EBC1zcAix
-         PEAI8K4gFDo5fu1Dm/2kb4cw6P/bAfARbO/q7fj8AmGZz+oFxPjM+yFSqxH2erHGEr
-         Y82ne0/w7hfKpOnwNNSTLauZEa2vYpgJxaNqHCUleFXm76Us7i3bgOfqV32AIH0wV9
-         vHvDtRjj9tIdiempkPOod2Q7C6IXv+LgSqvttH9FyNCb/PUk9WW7ua2gN2u22eyJFt
-         PmY4WuqMu+iwNC4kAy+1Ty824xlRgfzjwR7EpoWL2op5AA/A8EUEYhcJKq9HOYbK0+
-         rsy1av9TITBYbpK08VpWpbVARiStxMxFFxlw0pUCyFMse/6fXcwYyM6rI4POH1Wmj5
-         Cat6dybUqyODGQhq1cXfT6Ot7nEHz189R7o1Ane/zZJOQXvTY3MHRK/D2vY9NMDVfn
-         X+imkpK21Z5PDUUvhEzuYS0XOehA1FbYHPkULRtTeBAniwc1xsi
-Date:   Thu, 30 Aug 2018 02:41:10 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 00/12] Base SHA-256 algorithm implementation
-Message-ID: <20180830024109.GK432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
- <874lfdecoa.fsf@evledraar.gmail.com>
- <20180830022151.GI432229@genre.crustytoothpaste.net>
+        id S1727378AbeH3GnA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 02:43:00 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:38790 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbeH3GnA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 02:43:00 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id vCvKfYPekWLW2vCvLfcbsK; Thu, 30 Aug 2018 03:43:07 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=ybZZDoGAAAAA:8 a=j6OFnsxIUQazhbATvgkA:9 a=QEXdDO2ut3YA:10
+ a=0RhZnL1DYvcuLYC8JZ5M:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: Missing Tagger Entry
+To:     Stephen & Linda Smith <ischis2@cox.net>,
+        Git Mailing List <git@vger.kernel.org>
+References: <2548439.nLQp1kU402@thunderbird>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <827dde10-9a7b-a7f1-76de-8ea079167d5e@ramsayjones.plus.com>
+Date:   Thu, 30 Aug 2018 03:43:05 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="GmiNL4+5WUWrod5m"
-Content-Disposition: inline
-In-Reply-To: <20180830022151.GI432229@genre.crustytoothpaste.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <2548439.nLQp1kU402@thunderbird>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfK0oJmqOl4rm144arI1DhzV2YApZsZf+0v9h530aOzztB0KnpPQRz0k4CZV0BC12r1j4GHwACA8a6l7AwPUGhVoqT0tfXoYdOZOljGcZ02Ov15k9sZUf
+ yFysXNct+1cpyFOsWOibOhZQcKGmJPjXyORIsyUHubCi8jYZ6tgGjTJU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---GmiNL4+5WUWrod5m
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 30, 2018 at 02:21:51AM +0000, brian m. carlson wrote:
-> On Wed, Aug 29, 2018 at 11:37:25AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->=20
-> > It seems to me that aside from t/helper/test-hash-speed.c and
-> > t/t0014-hash.sh everything being added here modifies existing files with
-> > many authors, and would thus also need their permission to re-license as
-> > anything except GPLv2.
-> >=20
-> > Or do you mean whatever fixes/changes you did to libtomcrypt (living in
-> > sha256/block/ in this series) you consider e.g. LPGL instead of GPL?
->=20
-> Yes, that's what I mean, specifically the code in sha256/block.  libgit2
-> is GPLv2 with a linking exception, I believe, but either way I'd be fine
-> with it.
->=20
-> It wasn't my intention to offer code I didn't wholly author, so thanks
-> for clarifying.
+On 30/08/18 02:56, Stephen & Linda Smith wrote:
+> I am getting the following warning when runing a git fsck command against tag 
+> v0.99.
 
-I should clarify further: I obviously didn't wholly author the code.  I
-do, however, have permission to license it under alternative terms,
-since the original was public domain.  I apologize for my
-mischaracterization of the situation.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Yes, that is expected.
 
---GmiNL4+5WUWrod5m
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> $ git --version
+> git version 2.18.0
+> 
+> $ git fsck
+> checking object directories: 100% (256/256), done.
+> warning in tag d6602ec5194c87b0fc87103ca4d67251c76f233a: missingTaggerEntry: 
+> invalid format - expected 'tagger' line
+> Checking objects: 100% (254339/254339), done.
+> Checking connectivity: 254329, done.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.9 (GNU/Linux)
+This tag is so old that it dates to before a change in
+the tag object format - in particular, before the 'tagger'
+line was included. Viz:
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluHWUUACgkQv1NdgR9S
-9oslBA//aZw9QWGnpvbZO/Sz4MkzFij1FgANHYKAfAT17keFBzf3MyYVe8eO1BQJ
-thst4dxxP46xy/r9GAz+R6NoIx+Pc9imOBhl3XS4TtMEs/zUmtIFgG8kzbXZnrGH
-b18J5YVthvhUSV8gKGL2QkmZBJ4hZSOJZeaN+8R3xPGS0imLYhVzKbWfSlvpAQGz
-D0kITX3Jk79Zofg2qfTph4H5wdKYPuF4Ae7JFrayceqSWpM1SnM1GuXP524PaUy3
-10CklMg4596JXqSQkMqGon697XXoySPd1DLzqrcEiZnQy9Js6pVi2v4rFXL5kD+M
-aoLbtxd+krJdy23N/lCrBzVmd0/Tbwn3bs2xZC2FxFgQ2bUQAnhRGKIk3X324fcp
-/Lxy+hL7ro8xPRKVnLNZLvjbpHGk9rr1OYrNs8ucnE6rG992QeuNgBt6q3gHP+N7
-T0e32ZWyLkh7zosmSvamkoThWnc1fGfY0CjWeed9IBcGpMjpmnL5LsZPzTSg+LgY
-F4w4d1h4jSkXqAWCYhKtEmw15D8c1WYpsPCRJBwWyd9qIgG2t2kvzkEv3mOgwDk8
-owmhRNeRlcVGZFkFnMMncNwssfPAqMfy+O3/iSO0G/BJNIbayWk2lJnzXz0nig/2
-obhxtcq7SK0Njpy0y/md0FmCjG1ranIQNR+kvQHwBTYiithzv4I=
-=A16O
------END PGP SIGNATURE-----
+  $ git cat-file tag v0.99
+  object a3eb250f996bf5e12376ec88622c4ccaabf20ea8
+  type commit
+  tag v0.99
+  
+  Test-release for wider distribution.
+  
+  I'll make the first public RPM's etc, thus the tag.
+  -----BEGIN PGP SIGNATURE-----
+  Version: GnuPG v1.4.1 (GNU/Linux)
+  
+  iD8DBQBC0b9oF3YsRnbiHLsRAlUUAKCJEyvw8tewGFKd/A3aCd82Wi/zAgCgl7z4
+  GYPjO+Xio0IvuEYsrhFc2KI=
+  =TVVN
+  -----END PGP SIGNATURE-----
+  $ 
 
---GmiNL4+5WUWrod5m--
+Note the lack of a 'tagger' line, unlike a more up-to-date tag:
+
+  $ git cat-file tag v2.18.0
+  object 53f9a3e157dbbc901a02ac2c73346d375e24978c
+  type commit
+  tag v2.18.0
+  tagger Junio C Hamano <gitster@pobox.com> 1529600438 -0700
+  
+  Git 2.18
+  -----BEGIN PGP SIGNATURE-----
+  
+  iQIzBAABCAAdFiEE4fA2sf7nIh/HeOzvsLXohpav5ssFAlsr2bYACgkQsLXohpav
+  5suqEhAAgDu2A1n9G7ik+HdKoH2VNGwDqaRu/3k8znLPR6NmcOpHqopCgaxPYN4T
+  gH69ff+8Le8NiOYcoWaOE2WdpGGY9Gu12N65MpxYbEhehEGo7ze4T8jDNlHz7q5B
+  XC55FKHAwqy51NtdzvqNgsptc3bASy+ThxNM5XS0GSeqz00ublquHhiGTzhkBKm2
+  KbexWhGWjzq0zP+wOrRIX4zU1lAOHXzjVV7G8vo3pTcg+GgK0BmiAz8zmOlef2au
+  SYlU2LJCcQFm12j7pdDx42qCfZYM3QB0vJkHAcEdKYlcSEKRYUdOEnIQHxHwPPvB
+  A/uogytfeExnpBd/aHA/YBKlr8FNBMZeDKGHiwxWsBK5yExxfelIFnOg27YBIxl2
+  zzbMnHubBqHs5luo2Yv9JmFCbmuqV6ei6qgDKn2BXtJkuXVqYI1FYuKQyO26b3cz
+  C6hF5n3OIixL0wv1S+44QqDEc/ss8kvqosT2Ypjd56dNeZripTe3jC+bqUouHblD
+  NGaUn+V2YGBKc3rPw1UE3WnXgqOcbyvxn8AoZIKhJveaq7z89CbcvQYpqNjGhmrp
+  OvqSVG3NUoOKGXiMAg4/a4wx6JWTyu5SLHY269tC3cPfxQkD3br6hMsBy+AXrCwq
+  5yk6A3kQ2d6S9QfbWr6PGT7FI/AhG9CftFXPjpF0h9W9xbPJfkE=
+  =ResM
+  -----END PGP SIGNATURE-----
+  $ 
+
+You can suppress this warning by using an fsck 'skiplist':
+
+  1) Add the following lines to your .git/config file:
+	[fsck]
+		skiplist = .git/skip
+
+  2) Add the object-id of the v0.99 tag to the skiplist file:
+
+	$ echo d6602ec5194c87b0fc87103ca4d67251c76f233a >.git/skip
+
+Hope this helps.
+
+ATB,
+Ramsay Jones
+
+
+
