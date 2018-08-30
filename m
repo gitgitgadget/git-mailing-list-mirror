@@ -2,127 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C58A11F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 19:28:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E4C41F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 19:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeH3XcT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 19:32:19 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:33873 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725893AbeH3XcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 19:32:19 -0400
-Received: by mail-ed1-f53.google.com with SMTP id u1-v6so7196137eds.1
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 12:28:36 -0700 (PDT)
+        id S1727237AbeH3XdZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 19:33:25 -0400
+Received: from mail-lf1-f44.google.com ([209.85.167.44]:41977 "EHLO
+        mail-lf1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725836AbeH3XdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 19:33:24 -0400
+Received: by mail-lf1-f44.google.com with SMTP id l26-v6so8110273lfc.8
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 12:29:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Jx1D2aV1Ghfu7ymIUdpm9at5XSt1ub25GvZIbWLSX5o=;
-        b=UVa7bhakXSGapFz9zpETuuxBSXheiwJaT1RpEPaJkzq5KqSiWMYy7GHYmiYALSOS3+
-         /PT5fPdu//5pk5J+HcFP2v6UhDAl0kx1hY3f2jS77EJTm9MdtKwPBshSoat+TnEH/pg2
-         BmGjpV4x4X1/Nsv0bjB5zX5MiEjT8IzphhIQ7J5KWBDIkYuTqTKtw1WYuldktydGXX9L
-         KLR0ckeQ7nC7DoDAQacuJH4SoTF9yZlOWejRiSBS7HmPZwsCn/zf5MAsYtJBVvXUSqVU
-         4V40s3WZH24xeOv0xYyDG8ZkbdB+VG8pHPnXSkjsX77+Xv7Do6KZVhdzFzmI6X72fzUk
-         PPLQ==
+        d=rasmusvillemoes.dk; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=dTKRZsxgGjtg00ZUFGUhQrM3U0SFutpxQoWkjZLQ23E=;
+        b=R9sfDKp1hanFAjICiZhh+77a72lmzkVMpH2+kOCXjpScyjP7mf8rMhv4eyeuZx5i9k
+         LbKrR+5dyE7y6foJfuaBgIb4Q7EFxmCnh/k6rmZDKtRQSSu5B6eS6xI6zSXMAo5whp70
+         geQezbYhoyrYCi5tgS7W1sXP8wIMXBxNuCBCE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Jx1D2aV1Ghfu7ymIUdpm9at5XSt1ub25GvZIbWLSX5o=;
-        b=U9vYC8XeFVLgEewk3TTb4XqIWpGJVhXUnMdC4a3aKH5mLqyFuPNcCDorFbghmz6E6W
-         JMb4hH90S9+5Ti0Mk8e8kV1Xlc5XcGBAFjcqgVthOJ64KXAjny1Ycxio8CbWseELNTPk
-         Ft/ZYbLZL4J6hM1O45QJI22ybzvlelhlFHwmkC3U6FI/9u0MhxQ4+7oPupsBLu/P0n50
-         AYMqFo54Uoz1JZd7M8c/65xmyGhMrGJQaMBiEoKrbUhuF/yCKyUAKdadKFRf1IuhyRwm
-         dO7oqKQiH/crvr1cQz3xsV5Tm5kJD+I7Wdd2prjEkh+f2LfEn3bwjqJFK+YEdCmpiqTc
-         9J3g==
-X-Gm-Message-State: APzg51D9JwwKv7gv060CraLeXJrhRzBED3zfQ+yHlKWF7PrnKnrpIm+B
-        +zsoMK2Pq6JdksNLrztL5e0eLA3OFyOzVaOYi8KWNw==
-X-Google-Smtp-Source: ANB0VdaeHyjWBNqcpfeKQ/Xf4q1So4L/qTfK7ejTr2I5rlizVsayhs6W+ERUgpMCPOKkePga391f6UtJR1ZGnmWKCUQ=
-X-Received: by 2002:a50:cc0a:: with SMTP id m10-v6mr14152100edi.81.1535657315234;
- Thu, 30 Aug 2018 12:28:35 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=dTKRZsxgGjtg00ZUFGUhQrM3U0SFutpxQoWkjZLQ23E=;
+        b=MnUXKCYQf9DSvJ4X5dD/1IBchDNCUGRrOpfrDXYWtHFw/Jir7VrjmmcFWLLdzVMBEa
+         kiiuJ6VujDNeZtRn1INE+vtMWQm9jGjaax3aZ95NP49KxlHhUd/QzFM/tpJxsjky0cJI
+         rGTq56EcMFjUAMpMICjHeZrjcCtjdkhbHgopvY9yFa6rwcF6V9e9qKXzzGJy/vA7c1zj
+         x3f+xARP32fgeRSbuyd+mLgge/ZBzG1zeLE9/MTdkz90gUYhJP5jTvgPvD0vbMrfcK4X
+         Nd7840+n9h5qFHu9c3fnBrRdkO1QB5HUNN96FfelPGs2td7WG4STKW5U8L03tW/uzLfC
+         Pumg==
+X-Gm-Message-State: APzg51BnFvEy5AQycjZR1dOEGCtS08cuEOtY0HTi/sORcDZp/M12rmJ2
+        Kwkq43bJzHQkWFs9RG1/83LJOfB6qAv42O68
+X-Google-Smtp-Source: ANB0VdaxZTyg9wImt42HPmKDrmdy4XlpWAd0tzFVXc/NwK+O8KYruxJBqBg5r47OzabXUEI4P2pQ3A==
+X-Received: by 2002:a19:d98f:: with SMTP id s15-v6mr8776398lfi.103.1535657379968;
+        Thu, 30 Aug 2018 12:29:39 -0700 (PDT)
+Received: from [192.168.0.189] (dhcp-5-186-114-212.cgn.ip.fibianet.dk. [5.186.114.212])
+        by smtp.gmail.com with ESMTPSA id t15-v6sm364270lft.41.2018.08.30.12.29.38
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 30 Aug 2018 12:29:39 -0700 (PDT)
+Subject: Re: feature request: allow commit.email config setting
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <0f66ad7a-2289-2cce-6533-a27e19945187@rasmusvillemoes.dk>
+ <CAPig+cTnvDfYaDh7JSXXGGA=+DE4WAiuTZEKpxv67u1_OyT-qA@mail.gmail.com>
+From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
+Message-ID: <cba5b445-2208-7a01-5ea6-7a3590cef50e@rasmusvillemoes.dk>
+Date:   Thu, 30 Aug 2018 21:29:37 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
- <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com>
- <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com>
- <20180830025457.GA665@sigill.intra.peff.net> <CAGZ79kZNVw4-q9KYAi9G3axb7-Ggpc2EAK8ZxAZoPEnZvEL-DQ@mail.gmail.com>
- <20180830192019.GB19685@sigill.intra.peff.net>
-In-Reply-To: <20180830192019.GB19685@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 30 Aug 2018 12:28:24 -0700
-Message-ID: <CAGZ79kYVLNM4fMwXAw9FbKFNJ1tTR7e04nBqKdnYPX3wYveUfg@mail.gmail.com>
-Subject: Re: Possible bug: identical lines added/removed in git diff
-To:     Jeff King <peff@peff.net>
-Cc:     Gabriel Holodak <gthepiper@gmail.com>, git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPig+cTnvDfYaDh7JSXXGGA=+DE4WAiuTZEKpxv67u1_OyT-qA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 12:20 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Aug 30, 2018 at 12:16:22PM -0700, Stefan Beller wrote:
->
-> > On Wed, Aug 29, 2018 at 7:54 PM Jeff King <peff@peff.net> wrote:
-> > >
-> > > On Wed, Aug 29, 2018 at 10:10:25PM -0400, Gabriel Holodak wrote:
-> > >
-> > > > > Could you cut down to a real minimal reproduction, i.e. just these 20
-> > > > > lines or so?
-> > > >
-> > > > I'm working on getting down to a minimal reproduction, a few lines at
-> > > > a time. One thing that seems strange: as I've removed lines, there are
-> > > > a bunch of lines that don't matter. Then I'll find some lines that, if
-> > > > removed, completely fix the issue. But the ordering for these
-> > > > apparently important lines doesn't matter. They just have to be
-> > > > somewhere in the file to cause the duplicated diffs.
-> > > >
-> > > > I'll upload again when I've figured out all the unimportant lines to remove.
-> > >
-> > > Yeah, I reproduced based on your initial post, but noticed that when I
-> > > cut it down the problem went away.
-> >
-> > Oh, I had to look further down than I did initially. Now I can reproduce it
-> > from the initial data as well.
-> >
-> > Note that it goes away with --minimal.
->
-> That's interesting. I did wonder if this was in fact a bug, or simply
-> that Myers does not promise to find the absolute minimal diff. I'm
-> _still_ not sure, especially because the minimization is so obvious in
-> this case (literally the first "-" and the first "+" line of a
-> contiguous hunk are identical).
+On 2018-08-30 20:13, Eric Sunshine wrote:
+> On Thu, Aug 30, 2018 at 7:26 AM Rasmus Villemoes <rv@rasmusvillemoes.dk> wrote:
+>> I can set GIT_COMMITTER_EMAIL in the environment, but that is
+>> rather inconvenient, since that means I have to remember to do that in
+>> the shell I'm using for that particular project, and I can't use that
+>> shell for other projects. So it would be really nice if I could set
+>> commit.email = $private-email in the local .git/config for that
+>> particular project.
+> 
+> Aside from modifying Git itself to support such a use-case, another
+> (perhaps more pragmatic) approach would be to use a tool, such as
+> direnv[1], which automatically sets environment variables for you
+> depending upon your current working directory, or just use some ad-hoc
+> shell programming to achieve the same (for instance, [2]).
 
-The `Myers` (our default) diff algorithm is really the Myers algorithm +
-a heuristic that cuts off the long tail when it is very costly to compute
-the minimal diff.
+Thanks for the hint! I've actually had "git" as a function in my .bashrc
+for a long time, for implementing a ~/.githistory to help remember the
+sometimes rather complex git invocations, and keeping track of the
+context ($cwd, current branch, etc.) they were used in. It should be
+trivial to hook the environment settings based on $cwd into that. The
+only problem is that that gives me much less incentive to work on
+implementing the config support in git, but if I'm the only one with a
+use case, that's probably just as well.
 
-The `minimal` diff is the true Myers algorithm and I'd vouch for its
-correctness and being the minimal number of lines in the diff output.
+Rasmus
 
-The Myers is implemented before
-https://github.com/git/git/blob/master/xdiff/xdiffi.c#L135
-and the heuristics is after that line.
-
-> > I have a patch cooking (which was sent out as
-> > https://public-inbox.org/git/20180810221857.87399-1-sbeller@google.com/)
-> >
-> > and one of the weaknesses in that patch is the lack of explanation on
-> > when the heuristic is applied as I have not fully understood it yet.
->
-> I'm not sure I understand it either. But at least knowing that --minimal
-> changes the output gives a lead for investigation (I don't really have
-> time to dig into it in the next few days, though).
-
-An interesting (to me) approach for digging into that would include
-finding these examples at scale, which I presented in
-https://public-inbox.org/git/20180810001010.58870-1-sbeller@google.com/
-but I guess reading the code would work just as fine.
-
-Thanks,
-Stefan
