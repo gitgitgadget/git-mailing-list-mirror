@@ -2,94 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D315D1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 16:41:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D2E491F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 16:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727249AbeH3Uo2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 16:44:28 -0400
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:46597 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726652AbeH3Uo2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 16:44:28 -0400
-Received: by mail-ua1-f65.google.com with SMTP id u11-v6so6032104uan.13
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 09:41:28 -0700 (PDT)
+        id S1726727AbeH3VCv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 17:02:51 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:41300 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbeH3VCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 17:02:50 -0400
+Received: by mail-qt0-f195.google.com with SMTP id t39-v6so11035919qtc.8
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 09:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NqQBbSLQmX9IO0e+72nM0PbkVAku89FyyCKnmG+OpBk=;
-        b=pKsYo7TKu8Qy7g9gErkGyt0soTxPCeuuYUFAzOX0xdgZJkqO4PsEwBZSqCg4r67v3Y
-         jArw2Qg/6aYK6c6i6ZOxrOXsNeC2dFM8Zw9Jmng4L/JQy3uR4IkdoGQkwZaiJyclIYq9
-         pofmmhO1jZxV0Pnxnl4lXGogV0XjTUKeSg56xgnTYeNEGyoDHTJTzeuBbAwA3o89VvbO
-         w5l7TMyQmBGV0eYdcOxfk9wDNR25ZAHHkPRGJIVw/KX/fSAM99Tc0iU7Thwjq9YO0hhS
-         6B9JCU8RqTY6gjw5c493KZo6hE2vYEr3LTDekN9dwOceNgcLaCb27b3qpd3zCq78Oy3K
-         VVyw==
+         :cc:content-transfer-encoding;
+        bh=cWqxjYcocuJHqrMPgukgyoW1A/19FSvHCA0thfBsWMo=;
+        b=Mc1+nwi+9BU10bxyURgYi8uc+EmQpzzB2EmwHZPnS/Ppn8d8rIoA7pz4up2DpOBh45
+         AVlpYmhjb4rQ6MvpWYafdvisBt8qRb6WCPpr/IrxTDc9Zi0p7mhs8hK94XQVWrKwLbV+
+         +zxpLJZrf+7qOEGNrd3XteIa6puO887X1TFOoyUcAj58ymYdKsTqd0+bQB86sxcS/D4z
+         PFj8Mo6BzB8bcbAyeswgIirG9mHbY6fy6+O6JtTmp2kFP8DzvljAtviFGu78zxEze2Ja
+         l1zYyKEHc/4LwNbHOcl855iOTeH9lpnBvIGoHhcOdplBwqyaN8G79Fmw5rl/GZSgzG6e
+         GtwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NqQBbSLQmX9IO0e+72nM0PbkVAku89FyyCKnmG+OpBk=;
-        b=LqHZW7b6UQ1yOAYWcy1sq7+Q0GKyyCd+304etAWiTRqGWVL97E1Uvx/rzQHsqOgv58
-         68Ap7ZaSd5ZUTMjyRfZVHZvxnthham7MA60bAH7k4OE3xhFoo2PQXeC6emuxGf2WOOY4
-         8vvg3VeG+xcrzFCmjQIX7z7rpO1rVHgzrOHbeeDikFlUSg6prY1ryIItOrqWpN6ezyaJ
-         e4Uo7XVWNsecsn9am3pQJjZ1B1vXFenFSP+pOAuaPMgbkvMs/ZJ8ukhwj+ZheIvdhTiz
-         7tnHrWE2j9J5Uh0wLCYg1+AwhDMY4q22H8Vr32m4rhYAu8ysaqDEDMYXuc6Lt3bzoQGB
-         045A==
-X-Gm-Message-State: APzg51Bzv2q0Tmfol1T7+3S1HKLFQmy3bzu3mHvaW3A2VCNf9RqQ9Czy
-        qMQPgMUUyJF9iA5/EFIoWuqS4LMIPWBC4Q3fh2s=
-X-Google-Smtp-Source: ANB0VdbRwcnoJGva0Et62/9vfGjCEmmpro9wDNvZEAx2YU13J2M9llEiYbqTphsaDOJKHPMa/sFMlBHlxx9VzpWyH0w=
-X-Received: by 2002:a67:cfcc:: with SMTP id h12-v6mr705663vsm.118.1535647287824;
- Thu, 30 Aug 2018 09:41:27 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cWqxjYcocuJHqrMPgukgyoW1A/19FSvHCA0thfBsWMo=;
+        b=GgHbg5JXxtkAv+6BXrxE+ngzn70opq+nDhWr7HmdJklKItP2Az3JLAtw7NbQyiqN+g
+         NFdczalhhmsDkFQmV/pB2WY0vjUkYVmQVO+1kxSUa1Mq2DaT9oIz+Z+MdEZHQY3QbpC6
+         zTTvc1PKPbS696xBPmYCzxA5P4O9gtkpNt0NW5q1u1AZZVP2ANQONjImu11j1Six9KKo
+         kEsXvniBeGfDTmBnBo4GCsCUE8v1ztIAiIM0ESKkDl8GEoRpUY1FTFmZgH7BL1An19/W
+         1WL8OdmAP15bvKTzsG8q1NBETitJNVQsUxwAYlgOU5DZ7AUCTCUjfvx+hueOSut3+RfU
+         GWSw==
+X-Gm-Message-State: APzg51CWnODMl3LtHT3SDW6nezdP9t2fgUX8jVhkJwORjCiNJ9mQa7Sd
+        rCVhmfWqAt6f4V7lOBH3SFRzodyv/Yt36BWWqPE=
+X-Google-Smtp-Source: ANB0VdYElzUVkqarGuixYndf9IOD1c3GN/feb+Vpvput5sXCiuIpBfg4Sj9iC3O1oZxzCJI5E42A/HI0pGNGzhgB5Qw=
+X-Received: by 2002:a37:10d1:: with SMTP id 78-v6mr12261737qkq.72.1535648386230;
+ Thu, 30 Aug 2018 09:59:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <679370A8-E477-450D-96E5-6B1869D27576@gmail.com>
- <87in3ueiks.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1808281532220.16620@tvgsbejvaqbjf.bet>
- <CABPp-BENB=mqfFU4FGb2OS9VDV=9VdT71HhFLZwtyxD8MpdTMQ@mail.gmail.com> <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Thu, 30 Aug 2018 09:41:16 -0700
-Message-ID: <CABPp-BH8-1YQ49aaM-dXkT9ukKO92MF-FZ2kLwd=KHe4TVbjqQ@mail.gmail.com>
-Subject: Re: A rebase regression in Git 2.18.0
+References: <20180429202100.32353-1-avarab@gmail.com> <20180731130718.25222-7-avarab@gmail.com>
+ <xmqq8t5rcnhg.fsf@gitster-ct.c.googlers.com> <87o9djdi0c.fsf@evledraar.gmail.com>
+ <xmqqh8jb7uax.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh8jb7uax.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Thu, 30 Aug 2018 18:59:34 +0200
+Message-ID: <CACBZZX5FmuctKaE6Z3O-Mt6X40=RpCGUaae3AGhrSrTwH9AMhA@mail.gmail.com>
+Subject: Re: [PATCH v2 06/10] push doc: correct lies about how push refspecs work
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-        corrmage@gmail.com, Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 28, 2018 at 9:58 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Aug 30, 2018 at 5:23 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Elijah Newren <newren@gmail.com> writes:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> >   - Add a flag to turn off directory rename detection, and set the
-> > flag for every call from am.c in order to avoid problems like this.
+> > I.e. the non-refs/{tags,heads}/* update logic treats all updates to
+> > tags/commits as branch updates. We just look at the tag v2.18.0, see yo=
+u
+> > want to replace it with the commit v2.19.0-rc0^{} and see "oh, that's a
+> > fast-forward".
 >
-> I'd say this is the only practical solution, before you deprecate
-> the "pipe format-patch output to am -3" style of "git rebase" (and
-> optionally replace with something else).
+> In my old message you are responding to, I asked what you meant by
+> "will be treated as branches", and after seeing "as branch updates"
+> above, I think I know what you want the phrase to mean, namely, that
+> old-to-new transition requires new to be a descendant of old.  But I
+> think that is weaker than what other people (including me) thinks of
+> rules to update refs/heads/* hierarchy (i.e. "branch update").
+>
+> You are allowing to store an object that is not a commit in
+> refs/blah/my-tag in your example, so it clearly does not protect the
+> ref with an extra rule that applies to "branches", namely, "it has
+> to be a commit."
 
-I posted a patch a while back to add an --am flag to "git rebase",
-make "--am" be implied by options which are still am-specific
-(--whitespace, --committer-date-is-author-date, and -C), and change
---merge to be the default.
+Indeed. This was all confusing. I've reworded in something I'll send
+shortly, which should address this confusion.
 
-I'll post it as an RFC again after the various rebase-rewrite series
-have settled and merged down...along with my other rebase cleanups
-that I was waiting on to avoid conflicts with GSoC stuff.
-
-> The whole point of "am -3" is to do _better_ than just "patch" with
-> minimum amount of information available on the pre- and post- image
-> blobs, without knowing the remainder of the tree that the patch did
-> not touch.  It is not surprising that the heuristics that look at
-> the unchanging part of the tree to infer renames that may or may not
-> exist guesses incorrectly, either with false positive or negative.
-> In the context of "rebase", we always have all the trees that are
-> involved.  We should be able to do better than "am -3".
+> > Arguably that should be changed, but I won't do that in this series.
+>
+> OK.
