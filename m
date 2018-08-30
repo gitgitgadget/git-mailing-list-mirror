@@ -2,102 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB8FE1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 00:23:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DED31F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 00:24:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725904AbeH3EWW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 00:22:22 -0400
-Received: from mail-vk0-f43.google.com ([209.85.213.43]:42784 "EHLO
-        mail-vk0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725764AbeH3EWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 00:22:22 -0400
-Received: by mail-vk0-f43.google.com with SMTP id t4-v6so3449631vke.9
-        for <git@vger.kernel.org>; Wed, 29 Aug 2018 17:22:56 -0700 (PDT)
+        id S1725997AbeH3EX7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 00:23:59 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:40984 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbeH3EX6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 00:23:58 -0400
+Received: by mail-wr1-f54.google.com with SMTP id z96-v6so6388719wrb.8
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 17:24:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=2inqzy03Sfu0lgPWB7RobHnrvs3bEwlpQa36ub483BY=;
-        b=FNFp+cdU8qVs0UzqPmQ1iT6S+fqSj7A2Pg/fy+ElZALUogKbZ2g4TZkXPR0R/R61tJ
-         EiCYYUcMABDt+i9GQLQC7z86AeMsdhNM+3otYXnOkdq5wUjJlh+f5z3pei6yPlzE+9eO
-         pqUSZEh5sdtNNzHxuZCYNwYyYrBwC/sc6dDPCurJhZh1D7sxL6i/mqdTun2GNUd07Ug3
-         RwZdmocoeM5s9FTwF47iR6XWs4FBHQqlkxdTLw43/rWrZ2w8okTjdXLlFnTTXUY7xcXH
-         5bk8t/zsZfyhWZKp2m4kh7NnOtUVg/0DoRm9D/ylpUDzGElqezp2RA+FuewvO09sRt9A
-         lWEw==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=E70zGqi0LTZxJHshMv5SDnnHMjlaTvEvVRdiDXfRGnM=;
+        b=fEGrP0lCaDohbojQa7Fu5UsBKZlNIVhKX2Gxz1gSa3HRnv1GJpfx0SYcMrBC0u1oaW
+         /I47ctgHhNv+1wyVtnbL+p74mLbY+mhonAp8OgO3gm53G48mFHbWRBt3aVuTt9O+coTO
+         9RE/I6QPnAsIAq3wy5qfGx+TEpgBgyUoVW25Rc2ykzU/rACjxeSztwGOH9Lbl02G2mXH
+         JeUi9RXPXvYm4ONjt0pkuTUh76OctdWC46DY/qvgzFTdW4QDF2fkvtHzlnV4/DrUYGCt
+         JbzrtxrwG4BFgSlybg0uDjhI2qgPxVJZ0bE4hb2M38uy+zX7of7EgSy6N9aHBQJ7roTx
+         eS1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2inqzy03Sfu0lgPWB7RobHnrvs3bEwlpQa36ub483BY=;
-        b=oZuwxVPj7Y4HV+/qqksSchf5331tw3U9CFwQ/zkXwfmz2glHkVDUIJG/XT5o2kjs5u
-         rG27fT+O43n32BrJg2R/35WEATR//u6JerfZmqyTsoFq0N41Nppc6mWRhWShytBlCmUB
-         a/465erpQwe/4cCAt3Od1wc26z7kDQ7wy9+aLzhu5jVjTyyG9hBUYwyjRGmn7Y7ALC5J
-         rNJIC/483/WegPk1q839YF/LtoluRHA/A5/UXiqBu2qtPfDTkUzk+G0Uu44cv/0YanvY
-         dqD3Vhtafux1xVdDPsx50VmeTeZCffQUzm5kzjmCBI6Q0oqYzD01nxcoKGVMitTzc5cO
-         fvtw==
-X-Gm-Message-State: APzg51CgrRj0Y5/lUt7q5o71Kz8dhvfNfDQ2PNujR26B7d6ajtwYArLR
-        PhbJP4b7kFVQTW0durq9SMYvV8fMiK/hFJ6jhGzJGA==
-X-Google-Smtp-Source: ANB0VdbAKHxAKrerzj3vtesZytCUDV9avvgvS1CpMmPZjRlie3x7BdRMFCcWIp8XpFRpBMKKZuCnRNWjZlg8GD6n314=
-X-Received: by 2002:a1f:a0d6:: with SMTP id j205-v6mr5366079vke.23.1535588575793;
- Wed, 29 Aug 2018 17:22:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=E70zGqi0LTZxJHshMv5SDnnHMjlaTvEvVRdiDXfRGnM=;
+        b=q69QcVsTXZAKis4XotlgDR0meTPVdZ4/vmeyIvboaHP+9NnMtxzQ6YYObxTN2UsK5s
+         fjGl/iCJSFwbz4so2kfWTLTaPuwvSW1LxLzHnpd7BYjyvYd3JLxXw4w7uhqsLm2n5Oyu
+         iDgfbzeAy30AS5hyc6FXku7ZaQKjXXmoPMlppw6T5VGjK4azDHmsBJUqJRfa1SESJzuJ
+         YkxnDP5ksdD9E4iBgpxoPrSLJnEBXub2I/a0eJr2anm0tHZ29HQqQNOeswgiUU7gLwPE
+         G/I2w9WfqBtJcmcxhfMfFpJsMo8LH91fX9l7IYE8EmmP2HuFykI5dE3JNCbVXHYwC18D
+         fvlg==
+X-Gm-Message-State: APzg51D7djLQ9N6Urmq939j150nXzkSLvtobcxVPOGFz4J4yvmDEcHHh
+        MvPwMys+EYPyDM/YbP/kEIY7kEw9QanbKSf/hJfqC88=
+X-Google-Smtp-Source: ANB0VdbOiuNhjNIWwfi+q+J0yh/RDB9IAHtU6vbAu+ADVTKQz92C0o/RmWNjVbI75vH82eSP4PUhd6sP0eRvU+NKE9o=
+X-Received: by 2002:adf:824f:: with SMTP id 73-v6mr5876101wrb.130.1535588672505;
+ Wed, 29 Aug 2018 17:24:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqbm9kajhu.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqbm9kajhu.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 29 Aug 2018 17:22:43 -0700
-Message-ID: <CABPp-BG1VCmCMHe=5qayS0G_Z_=e8aVQ121LWuo-OBuiUxiCYg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2018, #06; Wed, 29)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+From:   Piers Titus van der Torren <pierstitus@gmail.com>
+Date:   Thu, 30 Aug 2018 02:24:20 +0200
+Message-ID: <CAJmvCd1BwPNgZM+g7c6An-EESMHDOSGQe7RjkAAz36eNY3fvGA@mail.gmail.com>
+Subject: improved diff tool
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Dear git people,
+I've created a diff algorithm that focuses on creating readable diffs,
+see https://github.com/pierstitus/klondiff
 
-On Wed, Aug 29, 2018 at 3:38 PM Junio C Hamano <gitster@pobox.com> wrote:
+The git integration as an external diff command works quite well,
+though it would be nice to integrate it deeper in git, and also in
+git-gui and gitk. Any way to use ext-diff from the gui tools?
 
-> * en/directory-renames-nothanks (2018-08-29) 4 commits
->  - SQUASH???
->  - am: avoid directory rename detection when calling recursive merge machinery
->  - merge-recursive: add ability to turn off directory rename detection
->  - t3401: add another directory rename testcase for rebase and am
->
->  Recent addition of "directory rename" heuristics to the
->  merge-recursive backend makes the command susceptible to false
->  positives and false negatives, but the risk is even more grave when
->  used in the context of "git am -3", which does not know about any
->  surrounding unmodified paths while inspecting a patch.  The
->  heuristic is disabled to keep the machinery "more stupid but
->  predicable".
+Is there interest to incorporate this algorithm in the main git
+codebase? And if so, any hints on how to proceed?
 
-I had separate comments about the SQUASH patch in the relevant thread,
-but I've got a few comments on the release note itself, which I hope
-are helpful:
-
-- Perhaps change the last sentence to '...heuristic is disabled for
-"git am -3" to keep...', just to be slightly more clear about where it
-is disabled?
-
-- Small spelling error: s/predicable/predictable/
-
-- Do we really want to say "even more" here?  I'd rather we left those
-two words off or found another rewording.  Obviously, I'm biased, but
-there's more than just my own opinion of and vested interest in the
-directory rename detection feature.  I'm afraid users may interpret
-this sentence as saying the git project feels we've shipped a
-generally bad/unsafe feature, but are only taking corrective action in
-the most egregious of cases.  That seems to me like a scary message to
-send.  Maybe I'm just mis-reading what you meant, but I wanted to at
-least check what you meant here and, if that meaning was not
-intentional, ask whether we could improve the wording.
-
-Thanks,
-Elijah
+Piers
