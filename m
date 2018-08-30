@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7C971F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 14:45:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 605B71F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 14:51:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729751AbeH3SsF (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 14:48:05 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:46494 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729635AbeH3SsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 14:48:05 -0400
-Received: by mail-ed1-f44.google.com with SMTP id k14-v6so6703894edr.13
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:45:34 -0700 (PDT)
+        id S1729402AbeH3Sxw (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 14:53:52 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:54639 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728652AbeH3Sxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 14:53:52 -0400
+Received: by mail-wm0-f67.google.com with SMTP id c14-v6so2292692wmb.4
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=9xwB7UncSHpiWulQOTlqe+YlJY9nPwFUnSabEsk4PR4=;
-        b=EpBIoVje3xVun4J4bq2F/CMNa+aLLKhBJDF7tjH4Ds9A51K37l2LoC8Q1drL3fF2xJ
-         oSJXtbmuGIM2JpfwqPP5PIfqz/17DCiX/nYQr7zdjkJ1SP1ai3zbfcSiL7oqGaXySG/F
-         R3tPt/hlUqgb3DVamsQh6L6/ZdimEg4Bgl9XyyaZCX8V/6gqRQ9jT4RZYKeq5DcBH8XB
-         kGoHIz4IkdPUKUUAOyou7s50EM0EYDLfFv/UH04aq1TG3SWOmYCvUhDiAeV3Dtae7DTu
-         qSyY33ZHQAw+xajfFEqqV20aiTsJeEw4ltnY2WdYkNu6swoQoicGeV7cVH5k48ujiehg
-         f1iw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=D0TplLh4XY/iHgYmN2aX6vV2jPSiXL7+29CAdn6lI/Y=;
+        b=mr1rKe+PDTPzGWsFFroxmMEzdEu1woJEToFMEDHtqH2jZoh2GmqF+HcFMVVfWlan+D
+         fQ1QXoP8gatuvfjnuydiED4yQs7CfHom5vexpL7RL1h11NfJKRihktTRpLX40F7z1pcJ
+         AoQGhZu6qU8AIftGi4XMFMLNGw8XCh1SqLO91Yxw8hjnqRjqEBqRRAgW+k2wSoNU3QQt
+         SBpn/mjZCAeabH/VluRQxFCyvPpnk3DSJr1dwnpfH/MzbdDkCb7KhWzheoAT6w98hUun
+         OTqAzYznul7N04Yy3d/EZzEzs98dpvs2mF68A+bUh4RlfmZgX10bBtPPW/jfY2pCgBp9
+         Eq7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=9xwB7UncSHpiWulQOTlqe+YlJY9nPwFUnSabEsk4PR4=;
-        b=d6uEoyW3ZV8hEhOgCXK93ftv6nTWph7NoC5J4qN0D8RIvG5aENBg3zWPQUAqbiet+n
-         by2LjrHye/9NXFJTD/VfIhzYHjZeOf04oB+9iOwnnNEya26IBCweZwUsciN8qFGD+E6z
-         JMNakG4j1iG59Qz7FEpjZq3Uy/iQ4kEAPXJFchrvZcMiNzCzxUo24hgkj7Xy+G8Jv6g+
-         Uj1LT/qLANt/ki5H3QjyTbQDMt1pgQSGbjVkcyNubSxhbbGl8/n0HEfugGO1MSejnh3Y
-         duNYoGGLQbsh9hbmW9xhrZBcivQKkmo25k61SGAlI7w+d3Ejd13GhK9FX7E2RNdc3oTj
-         E+Tg==
-X-Gm-Message-State: APzg51AgyGW5PG0LM3TTdflhWYQi7UpE/z/64SevFBpoz3fdOQEcbZV5
-        TaO4GyD56SBADFnSnyKpVv4=
-X-Google-Smtp-Source: ANB0VdZOqRZOUYnd/7gujKOm9I8WlgsqDuKu0guBY3Y28ou13j1r/OGzCWkFpz2o2geiA6H4AJHnJw==
-X-Received: by 2002:a50:d083:: with SMTP id v3-v6mr13136937edd.243.1535640334245;
-        Thu, 30 Aug 2018 07:45:34 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id u3-v6sm2587722edo.44.2018.08.30.07.45.33
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=D0TplLh4XY/iHgYmN2aX6vV2jPSiXL7+29CAdn6lI/Y=;
+        b=H06q/S8Ghq1emvJFYOTe1YgNWhmyd5YS/dfe8hycMqXkxaUZc881qEJBs6JyBJnCtM
+         KnS2Jt2d5be7MBDH7XVv/nnRO6pv9njtfJq8YxWqfIl2+S0unKX9XcdWxk1K+YZCu19G
+         z0YCzlkBAZEJKDH82C+Ff1UX0aLHwe7FrU9YjkzIWwaUN6XB2hJpb+g/3KWgcbcC4168
+         5FVUK6nAz/4zoL2R6qccIlJF61XrroQ3la5GvcaqQ+sYeFlEpnq6629Cj9kWPBcRCMXb
+         5CiObF/YTzKnB0IbupiMZDFcyJsKBxVbSl7A7b7FuMAugK85cvkA7HP0ef84uOSePlL4
+         F+bA==
+X-Gm-Message-State: APzg51DIkED4DGoxq1TAOKz2x9X6sczPoxWuigb/w1rMD4HvFS0BfryZ
+        Rzq6mDJ36Is5+nzuFkq7UDg=
+X-Google-Smtp-Source: ANB0VdYHb/RtjbxNiMaEe29sWEh1b5ocz3ee0j72hWFrfGLhXNggloI2Dx4/NQeC1v9QZKzLX0PegQ==
+X-Received: by 2002:a1c:65c4:: with SMTP id z187-v6mr1948908wmb.157.1535640679096;
+        Thu, 30 Aug 2018 07:51:19 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j75-v6sm2184591wmj.8.2018.08.30.07.51.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 07:45:33 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Wesley Schwengle <wesley@mintlab.nl>
-Cc:     Git mailinglist <git@vger.kernel.org>
-Subject: Re: Feature request: hooks directory
-References: <CAEpdsiYHri8FJ8VohnwxmPwDM4-0J4J9Zb9wTZjYYRnYqsb=nA@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAEpdsiYHri8FJ8VohnwxmPwDM4-0J4J9Zb9wTZjYYRnYqsb=nA@mail.gmail.com>
-Date:   Thu, 30 Aug 2018 16:45:32 +0200
-Message-ID: <87pnxzdib7.fsf@evledraar.gmail.com>
+        Thu, 30 Aug 2018 07:51:18 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood@talktalk.net>
+Cc:     Jochen Sprickerhof <git@jochen.sprickerhof.de>, git@vger.kernel.org
+Subject: Re: [PATCH] add -p: coalesce hunks before testing applicability
+References: <20180828085858.3933-1-git@jochen.sprickerhof.de>
+        <xmqq36uygyau.fsf@gitster-ct.c.googlers.com>
+        <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net>
+Date:   Thu, 30 Aug 2018 07:51:17 -0700
+In-Reply-To: <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net> (Phillip
+        Wood's message of "Thu, 30 Aug 2018 14:47:04 +0100")
+Message-ID: <xmqqwos77vru.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,34 +67,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Phillip Wood <phillip.wood@talktalk.net> writes:
 
-On Thu, Aug 30 2018, Wesley Schwengle wrote:
-
-> Hello all,
+> When $newhunk is created it is marked as dirty to prevent
+> coalesce_overlapping_hunks() from coalescing it. This patch does not
+> change that. What is happening is that by calling
+> coalesce_overlapping_hunks() the hunks that are not currently selected
+> are filtered out and any hunks that can be coalesced are (I think that
+> in the test that starts passing with this patch the only change is the
+> filtering as there's only a single hunk selected).
 >
-> I would like to ask if it is worth my time looking into the following
-> solution to a problem we have at work.
+> This is a subtle change to the test for the applicability of an edited
+> hunk. Previously when all the hunks were used to create the test patch
+> we could be certain that if the test patch applied then if the user
+> later selected any unselected hunk or deselected any selected hunk
+> then that operation would succeed. I'm not sure that is true now (but
+> I haven't thought about it for very long). We could restore the old
+> test condition and coalesce the hunks by copying all the hunks and
+> setting $hunk->{USE}=1 when creating the test patch if that turns out
+> to be useful (it would be interesting to see if the test still passes
+> with that change).
 >
-> Problem:
-> We want to have some git-hooks and we want to provide them to the
-> user. In a most recent example we have a post-checkout hook that deals
-> with some Docker things. However, if we update that post-checkout hook
-> my local overrides in that post-checkout hook are going to be
-> overwritten.
+> Best Wishes
 >
-> Solution:
-> We discussed this at work and we thought about making a .d directory
-> for the hooks, eg.  $GIT_DIR/hooks/post-commit.d, where a user can put
-> the post-commit hooks in. This allows us to provide post commit hooks
-> and allows the user to add additional hooks him/herself. We could
-> implement this in our own code base. But we were wondering if this
-> approach could be shared with the git community and if this behavior
-> is wanted in git itself.
+> Phillip
 
-There is interest in this. This E-Mail of mine gives a good summary of
-prior discussions about this:
-https://public-inbox.org/git/877eqqnq22.fsf@evledraar.gmail.com/
+OK, I marked the topic as "will merge to next" but unmark it for
+now, as we are not in a hurry to graduate new topics to 'master'
+anyway.  Hopefully between Jochen and you, perhaps others, can
+explore the issues you raised and come to some conclusion before it
+becomes necessary (i.e. when the next cycle begins).
 
-I.e. it's something I've personally been interested in doing in the
-past, there's various bolt-on solutions to do it (basically local hook
-runners) used by various projects.
+Thanks.
+
