@@ -7,103 +7,194 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DBB81F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 12:58:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC8121F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 12:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728862AbeH3RAL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 13:00:11 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43885 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728789AbeH3RAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 13:00:11 -0400
-Received: by mail-pf1-f193.google.com with SMTP id j26-v6so3838623pfi.10
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 05:58:09 -0700 (PDT)
+        id S1728868AbeH3RAN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 13:00:13 -0400
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:36122 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728789AbeH3RAM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 13:00:12 -0400
+Received: by mail-pf1-f195.google.com with SMTP id b11-v6so3861756pfo.3
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 05:58:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=NJFZaNqWioZOdTGg1YdcVEwnZMjQSKiS1ixKhoccgIk=;
-        b=Mrcr9v2ah4sM+sZYd2ZKMPqMzvm5GB9V5+E2VBcS5jwsJmTpJAkeKEFPbdyrMljCft
-         zCy4Gce2m1oHSYgSoEM+QX6hfEseyN7tXgNEEKDtNE11hifWI9oDFXbwO1ene0mKqghl
-         IAGLR794N8e40MNVfGqG60qOSRctoXSpZkbo69SFdtihBEdiueqSsv6LM/TtuWD8Nh3g
-         +FC0mpAfjgT+4y5YNx23drBG5Vhd1xpFlx4Q+S8cR4QeCWVT29YKhPELE4OzpTsxUpDj
-         jTkX3FwA5J0aUDJ/VIn3U9h/z/e9m7v1DPmh9YYSvLdcxX7RJpXvW3NGHyQkO18lLuZk
-         AhGA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=bknMY1bGkiyqQCypmfqdWUwV5asdAgVHkM852KySpsM=;
+        b=e6w/Cu5UfLBCpn9pEn4A0AsgMheOQw5ayQLRd8Y5MbWKgiA1Moc1nExDpaGBlmsqxl
+         loJIUhLG3HSKTBfAFyIPLYDJ93ZddXWS1KKX73hsdIJt2oSiQA5p2yqIS2z7fmKS0vRh
+         SpxmXLGSVBbYYXxZdlXCslAOukIojWk720Yzh3NLJheWLD8dZfV2/YrtncZLJjgvTDav
+         y2xdbm1wofvZ0vFTkiIssq7/J3/ol1JmghVLKkBd/YYxt2Vss5xY4/ukPTG5wLMPPOqp
+         XhNAPYnNb3Oq6YqsQ1g2eD1/HFQnxTe4OcXCnE4OZ5fDIonc7HER+TwLzD/uDA892rL4
+         OOag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NJFZaNqWioZOdTGg1YdcVEwnZMjQSKiS1ixKhoccgIk=;
-        b=Gbn/6KPoiGfRpyD6M8f7VVz+2fAApkWFv7Syie0xZV4azkDzyGfzO5W1ZDATIgGQft
-         TF3gHMW+hl5ghE/GGnTZjyxYyR9bCceO5EJ9M+YYnOWEreBt1JuaRY5QCiHxAqzwpcWK
-         0UHHnJnbYd/5mZjZk3f58tUBzXk0OSTNqnmhbhIEjaLBawFmsPP2hbLM9vcoTd8+HSTq
-         LI7MEEQaBnmp/Rr/8rZz/Jp6ez24af75Gwn8UKOK8d5X4aPwXdT7/gHG5wOUiEDVWITd
-         vmKW/gslB+/jm2W24RV0vN+QrQlEhE4cAbYdXVZE6Ol4SaX4eagvDARe4C9C2J73633T
-         mcKA==
-X-Gm-Message-State: APzg51AUqOwvBFCNDfaG0g7N35ZoLn034C5tJcLzD+8K6EwjyFfwxj5O
-        Nuf8HCwgY0adUOZSDxQQXAAub6wF
-X-Google-Smtp-Source: ANB0VdbmxdK3Bxaa7QLDROrCUIKJnyOWQ9scimOm6ahUYGB3mDtpFzCNq/bJmdRr+fyWN64ge6Ecmg==
-X-Received: by 2002:a63:e40d:: with SMTP id a13-v6mr9614982pgi.289.1535633888662;
-        Thu, 30 Aug 2018 05:58:08 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=bknMY1bGkiyqQCypmfqdWUwV5asdAgVHkM852KySpsM=;
+        b=Qo/Y0V/MlEaNO3gPn+tQv0hYio5obTnjuZLCcBSCxAqpv6BYgBBXO7oqZzDn9707HL
+         aJfoThm8QWWwxZ4uY7MXtxZndgMvd5uZoMCCxJ92nw+ewiA+F/sjl7fCPiBJD9mE3MHO
+         UgbOrNKc90MuROqQLCHH1YcMY7/8duDMAMumoO8U6NtfZFTXzRy+e3DcBPpDPhcNknHc
+         WzPLhbZZTEpIjpzXWUs0hmCYCefLXfzQfZN/4h5ocok+04MPPowQPOTReXFwEz2Vr1XJ
+         OQoaborRVJcYiyOcQmCP21eSNGfdFjhoRQ2Zvlgurw0ZNUwWu92wHpOqzjZEgqcfG+Hn
+         lrCQ==
+X-Gm-Message-State: APzg51De/ZnavUJzzVBbdXdYtiJSxSp1OMZDS72QIh6ccbWNNRfPxzZA
+        aLvhwTb/SapDeyYoGPKZ3Ks4m6nX
+X-Google-Smtp-Source: ANB0Vdbj8eGpXRogzu+w2YgTA9Y3s/S0Iul/ZkaE+geqSPMB1KERwcQnnwaSYWYwkQpJ7FU149Dm+w==
+X-Received: by 2002:a63:4757:: with SMTP id w23-v6mr9857306pgk.140.1535633890054;
+        Thu, 30 Aug 2018 05:58:10 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id u25-v6sm10678455pfk.177.2018.08.30.05.58.07
+        by smtp.gmail.com with ESMTPSA id u17-v6sm12127142pfa.176.2018.08.30.05.58.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Aug 2018 05:58:07 -0700 (PDT)
-Date:   Thu, 30 Aug 2018 05:58:07 -0700 (PDT)
-X-Google-Original-Date: Thu, 30 Aug 2018 12:58:04 GMT
-Message-Id: <pull.28.git.gitgitgadget@gmail.com>
+        Thu, 30 Aug 2018 05:58:09 -0700 (PDT)
+Date:   Thu, 30 Aug 2018 05:58:09 -0700 (PDT)
+X-Google-Original-Date: Thu, 30 Aug 2018 12:58:05 GMT
+Message-Id: <efa3720fb40638e5d61c6130b55e3348d8e4339e.1535633886.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.28.git.gitgitgadget@gmail.com>
+References: <pull.28.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] v2.19.0-rc1 Performance Regression in 'git merge-base'
+Subject: [PATCH 1/1] commit: don't use generation numbers if not needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     jnareb@gmail.com, Junio C Hamano <gitster@pobox.com>
+Cc:     jnareb@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As I was testing the release candidate, I stumbled across a regression in
-'git merge-base' as a result of the switch to generation numbers. The commit
-message in [PATCH 1/1] describes the topology involved, but you can test it
-yourself by comparing 'git merge-base v4.8 v4.9' in the Linux kernel. The
-regression does not show up when running merge-base for tags at least v4.9,
-which is why I didn't see it when I was testing earlier.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-The solution is simple, but also will conflict with ds/reachable in next. I
-can send a similar patch that applies the same diff into commit-reach.c.
+In 3afc679b "commit: use generations in paint_down_to_common()",
+the queue in paint_down_to_common() was changed to use a priority
+order based on generation number before commit date. This served
+two purposes:
 
-With the integration of generation numbers into most commit walks coming to
-a close [1], it will be time to re-investigate other options for
-reachability indexes [2]. As I was digging into the issue with this
-regression, I discovered a way we can modify our generation numbers and pair
-them with commit dates to give us a simple-to-compute, immutable
-two-dimensional reachability index that would be immune to this regression.
-I will investigate that more and report back, but it is more important to
-fix this regression now.
+ 1. When generation numbers are present, the walk guarantees
+    correct topological relationships, regardless of clock skew in
+    commit dates.
 
-Thanks, -Stolee
+ 2. It enables short-circuiting the walk when the min_generation
+    parameter is added in d7c1ec3e "commit: add short-circuit to
+    paint_down_to_common()". This short-circuit helps commands
+    like 'git branch --contains' from needing to walk to a merge
+    base when we know the result is false.
 
-[1] https://public-inbox.org/git/pull.25.git.gitgitgadget@gmail.com/[PATCH
-0/6] Use generation numbers for --topo-order
+The commit message for 3afc679b includes the following sentence:
 
-[2] https://public-inbox.org/git/86muxcuyod.fsf@gmail.com/[RFC] Other chunks
-for commit-graph, part 2 - reachability indexes
+    This change does not affect the number of commits that are
+    walked during the execution of paint_down_to_common(), only
+    the order that those commits are inspected.
 
-Cc: gitster@pobox.comCc: peff@peff.net
+This statement is incorrect. Because it changes the order in which
+the commits are inspected, it changes the order they are added to
+the queue, and hence can change the number of loops before the
+queue_has_nonstale() method returns true.
 
-Derrick Stolee (1):
-  commit: don't use generation numbers if not needed
+This change makes a concrete difference depending on the topology
+of the commit graph. For instance, computing the merge-base between
+consecutive versions of the Linux kernel has no effect for versions
+after v4.9, but 'git merge-base v4.8 v4.9' presents a performance
+regression:
 
+    v2.18.0: 0.122s
+v2.19.0-rc1: 0.547s
+       HEAD: 0.127s
+
+To determine that this was simply an ordering issue, I inserted
+a counter within the while loop of paint_down_to_common() and
+found that the loop runs 167,468 times in v2.18.0 and 635,579
+times in v2.19.0-rc1.
+
+The topology of this case can be described in a simplified way
+here:
+
+  v4.9
+   |  \
+   |   \
+  v4.8  \
+   | \   \
+   |  \   |
+  ...  A  B
+   |  /  /
+   | /  /
+   |/__/
+   C
+
+Here, the "..." means "a very long line of commits". By generation
+number, A and B have generation one more than C. However, A and B
+have commit date higher than most of the commits reachable from
+v4.8. When the walk reaches v4.8, we realize that it has PARENT1
+and PARENT2 flags, so everything it can reach is marked as STALE,
+including A. B has only the PARENT1 flag, so is not STALE.
+
+When paint_down_to_common() is run using
+compare_commits_by_commit_date, A and B are removed from the queue
+early and C is inserted into the queue. At this point, C and the
+rest of the queue entries are marked as STALE. The loop then
+terminates.
+
+When paint_down_to_common() is run using
+compare_commits_by_gen_then_commit_date, B is removed from the
+queue only after the many commits reachable from v4.8 are explored.
+This causes the loop to run longer. The reason for this regression
+is simple: the queue order is intended to not explore a commit
+until everything that _could_ reach that commit is explored. From
+the information gathered by the original ordering, we have no
+guarantee that there is not a commit D reachable from v4.8 that
+can also reach B. We gained absolute correctness in exchange for
+a performance regression.
+
+The performance regression is probably the worse option, since
+these incorrect results in paint_down_to_common() are rare. The
+topology required for the performance regression are less rare,
+but still require multiple merge commits where the parents differ
+greatly in generation number. In our example above, the commit A
+is as important as the commit B to demonstrate the problem, since
+otherwise the commit C will sit in the queue as non-stale just as
+long in both orders.
+
+The solution provided uses the min_generation parameter to decide
+if we should use generation numbers in our ordering. When
+min_generation is equal to zero, it means that the caller has no
+known cutoff for the walk, so we should rely on our commit-date
+heuristic as before; this is the case with merge_bases_many().
+When min_generation is non-zero, then the caller knows a valuable
+cutoff for the short-circuit mechanism; this is the case with
+remove_redundant() and in_merge_bases_many().
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  commit.c | 5 ++++-
  1 file changed, 4 insertions(+), 1 deletion(-)
 
-
-base-commit: 2f743933341f276111103550fbf383a34dfcfd38
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-28%2Fderrickstolee%2Fmerge-base-regression-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-28/derrickstolee/merge-base-regression-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/28
+diff --git a/commit.c b/commit.c
+index 1a6e632185..449c1f4920 100644
+--- a/commit.c
++++ b/commit.c
+@@ -874,6 +874,9 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n,
+ 	int i;
+ 	uint32_t last_gen = GENERATION_NUMBER_INFINITY;
+ 
++	if (!min_generation)
++		queue.compare = compare_commits_by_commit_date;
++
+ 	one->object.flags |= PARENT1;
+ 	if (!n) {
+ 		commit_list_append(one, &result);
+@@ -891,7 +894,7 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n,
+ 		struct commit_list *parents;
+ 		int flags;
+ 
+-		if (commit->generation > last_gen)
++		if (min_generation && commit->generation > last_gen)
+ 			BUG("bad generation skip %8x > %8x at %s",
+ 			    commit->generation, last_gen,
+ 			    oid_to_hex(&commit->object.oid));
 -- 
 gitgitgadget
