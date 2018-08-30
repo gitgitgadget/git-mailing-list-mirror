@@ -2,102 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37EC41F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 14:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7C971F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 14:45:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729357AbeH3S2a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 14:28:30 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:36204 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729084AbeH3S2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 14:28:30 -0400
-Received: by mail-wm0-f67.google.com with SMTP id j192-v6so2250027wmj.1
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:26:04 -0700 (PDT)
+        id S1729751AbeH3SsF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 14:48:05 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:46494 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729635AbeH3SsF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 14:48:05 -0400
+Received: by mail-ed1-f44.google.com with SMTP id k14-v6so6703894edr.13
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:45:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=NAo3WgB48puM9MKXcKx2cDQ0rHAQg6JYCw3eNcPUXok=;
-        b=PZnBm/1REsy3zeI2zvspGp/2whARlms/Y23d2jsP3W3w5EKOBodJOibP61Tf77B4qK
-         cBswPaSGKSlCOygGJRlOGAn3fQQTXNFdA6R2rwi+he544H6VEpbJ5Lc/PFj6VUh7weqi
-         WRDMRaOdlGuHXN+p5MmQgwXCFI+9hM7iKfDPFCYS2KcMEnkod3jNlH2xs8t588CQCqWd
-         kA6XUhCKkVnRTfnuztvR35aNSiZ4/UQ1fsfjempoJK9AuoEA1bnsSt/D806X2JcYQzeG
-         CgOK2I1pzA4VohYi9AYP0h4OyqX9d5JWoEThHrL2zkwgDy5AVDFXxCdISaRz4iq87ysa
-         HhTg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=9xwB7UncSHpiWulQOTlqe+YlJY9nPwFUnSabEsk4PR4=;
+        b=EpBIoVje3xVun4J4bq2F/CMNa+aLLKhBJDF7tjH4Ds9A51K37l2LoC8Q1drL3fF2xJ
+         oSJXtbmuGIM2JpfwqPP5PIfqz/17DCiX/nYQr7zdjkJ1SP1ai3zbfcSiL7oqGaXySG/F
+         R3tPt/hlUqgb3DVamsQh6L6/ZdimEg4Bgl9XyyaZCX8V/6gqRQ9jT4RZYKeq5DcBH8XB
+         kGoHIz4IkdPUKUUAOyou7s50EM0EYDLfFv/UH04aq1TG3SWOmYCvUhDiAeV3Dtae7DTu
+         qSyY33ZHQAw+xajfFEqqV20aiTsJeEw4ltnY2WdYkNu6swoQoicGeV7cVH5k48ujiehg
+         f1iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=NAo3WgB48puM9MKXcKx2cDQ0rHAQg6JYCw3eNcPUXok=;
-        b=IgEJ1IY7eW7IaZHZkHisuWGQisr+RXK8fL6O5JKSTQbYiDQl2jUEp2AhXaY49EnoQ4
-         dJ4+Akr8wUlWKgyIsLPjthCaxoWvhuZKlzGFP0BnxoYA+Jbfa0vIqANKBc0QWuHcaeuy
-         LSUa3zI+3jN3HUef4+0yNCoeBmuim8gPG5cPOupd8BBettRRPmGUDAOOEZXZwwRjUCLz
-         oejUsXcWSuVm3eJXJ23OMSyj3Tq7jJ7zuP0zadHg1+ih/sYoGWjN8DQZFZFLF/CbypxM
-         vgi6nc4rnqE6yqWxL8C5XlBtiCWUgDEmtUyng8gOZxbgVCbsWDof2JLAiHAdA6XwhJeT
-         xDAA==
-X-Gm-Message-State: APzg51CHILR7RN75e7gjSg8rKv3ROgETskJBqN+kASmEX/IupJzAqpOM
-        m5UwsCfF45j5ECdkEeYGRcE=
-X-Google-Smtp-Source: ANB0VdbxYi7MLv+7vei/hbIN1VpPZd0OqM84kdCprGInlmhrnigdrruNBoKtxvGEUPEramYAB+ncMg==
-X-Received: by 2002:a7b:c086:: with SMTP id r6-v6mr1925434wmh.119.1535639163865;
-        Thu, 30 Aug 2018 07:26:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e141-v6sm2575946wmd.32.2018.08.30.07.26.02
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=9xwB7UncSHpiWulQOTlqe+YlJY9nPwFUnSabEsk4PR4=;
+        b=d6uEoyW3ZV8hEhOgCXK93ftv6nTWph7NoC5J4qN0D8RIvG5aENBg3zWPQUAqbiet+n
+         by2LjrHye/9NXFJTD/VfIhzYHjZeOf04oB+9iOwnnNEya26IBCweZwUsciN8qFGD+E6z
+         JMNakG4j1iG59Qz7FEpjZq3Uy/iQ4kEAPXJFchrvZcMiNzCzxUo24hgkj7Xy+G8Jv6g+
+         Uj1LT/qLANt/ki5H3QjyTbQDMt1pgQSGbjVkcyNubSxhbbGl8/n0HEfugGO1MSejnh3Y
+         duNYoGGLQbsh9hbmW9xhrZBcivQKkmo25k61SGAlI7w+d3Ejd13GhK9FX7E2RNdc3oTj
+         E+Tg==
+X-Gm-Message-State: APzg51AgyGW5PG0LM3TTdflhWYQi7UpE/z/64SevFBpoz3fdOQEcbZV5
+        TaO4GyD56SBADFnSnyKpVv4=
+X-Google-Smtp-Source: ANB0VdZOqRZOUYnd/7gujKOm9I8WlgsqDuKu0guBY3Y28ou13j1r/OGzCWkFpz2o2geiA6H4AJHnJw==
+X-Received: by 2002:a50:d083:: with SMTP id v3-v6mr13136937edd.243.1535640334245;
+        Thu, 30 Aug 2018 07:45:34 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id u3-v6sm2587722edo.44.2018.08.30.07.45.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 07:26:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ulrich Gemkow <ulrich.gemkow@ikr.uni-stuttgart.de>,
-        git@vger.kernel.org
-Subject: Re: Trivial enhancement: All commands which require an author should accept --author
-References: <201808282305.29407.ulrich.gemkow@ikr.uni-stuttgart.de>
-        <nycvar.QRO.7.76.6.1808291653190.71@tvgsbejvaqbjf.bet>
-        <xmqqpny1at28.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1808301350340.71@tvgsbejvaqbjf.bet>
-        <87r2igca0s.fsf@evledraar.gmail.com>
-Date:   Thu, 30 Aug 2018 07:26:02 -0700
-In-Reply-To: <87r2igca0s.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 30 Aug 2018 14:29:55 +0200")
-Message-ID: <xmqq1sag7wxx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 30 Aug 2018 07:45:33 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Wesley Schwengle <wesley@mintlab.nl>
+Cc:     Git mailinglist <git@vger.kernel.org>
+Subject: Re: Feature request: hooks directory
+References: <CAEpdsiYHri8FJ8VohnwxmPwDM4-0J4J9Zb9wTZjYYRnYqsb=nA@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAEpdsiYHri8FJ8VohnwxmPwDM4-0J4J9Zb9wTZjYYRnYqsb=nA@mail.gmail.com>
+Date:   Thu, 30 Aug 2018 16:45:32 +0200
+Message-ID: <87pnxzdib7.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> I believe the "official" way, such as it is, is you just put
-> #leftoverbits in your E-Mail, then search the list archives,
-> e.g. https://public-inbox.org/git/?q=%23leftoverbits
+On Thu, Aug 30 2018, Wesley Schwengle wrote:
 
-I think that technique has been around long enough to be called a
-recognised way, but I do not think it is "the" official way.  It is
-one of the efforts to allow us remember what we might want to work
-on, and focuses on not wasting too much efforts in curating.
-Another effort to allow us remember is http://crbug.com/git that is
-run by Jonathan Nieder.
+> Hello all,
+>
+> I would like to ask if it is worth my time looking into the following
+> solution to a problem we have at work.
+>
+> Problem:
+> We want to have some git-hooks and we want to provide them to the
+> user. In a most recent example we have a post-checkout hook that deals
+> with some Docker things. However, if we update that post-checkout hook
+> my local overrides in that post-checkout hook are going to be
+> overwritten.
+>
+> Solution:
+> We discussed this at work and we thought about making a .d directory
+> for the hooks, eg.  $GIT_DIR/hooks/post-commit.d, where a user can put
+> the post-commit hooks in. This allows us to provide post commit hooks
+> and allows the user to add additional hooks him/herself. We could
+> implement this in our own code base. But we were wondering if this
+> approach could be shared with the git community and if this behavior
+> is wanted in git itself.
 
-Anybody can participate in curating the latter.  The former is
-uncurated and deliberately kept informal, but will stay a usable way
-until clueless people catch up with the practice and mark any random
-garbage they come up with with the marking word.  I myself try to
-refrain from using it when I raise the idea/issue for the first time
-to avoid "ah, it turns out that it is not such a great idea after
-thinking about it for a while"--rather I try to limit my use to my
-responses as a reaction to somebody else's idea/issue.  That way, I
-can make sure that messages with the marking word from me has idea
-supported by at least two people, one of which is known to me to
-have a good taste, so mailing list search "from:me #leftoverbits"
-would stay meaningful.
+There is interest in this. This E-Mail of mine gives a good summary of
+prior discussions about this:
+https://public-inbox.org/git/877eqqnq22.fsf@evledraar.gmail.com/
 
-
+I.e. it's something I've personally been interested in doing in the
+past, there's various bolt-on solutions to do it (basically local hook
+runners) used by various projects.
