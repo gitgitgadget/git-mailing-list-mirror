@@ -6,65 +6,68 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 360B91F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 20:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 700081F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 20:29:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727200AbeHaASU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 20:18:20 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44124 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbeHaASU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 20:18:20 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v16-v6so9182183wro.11
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 13:14:27 -0700 (PDT)
+        id S1727200AbeHaAdx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 20:33:53 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46164 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727117AbeHaAdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 20:33:53 -0400
+Received: by mail-wr1-f66.google.com with SMTP id a108-v6so9187493wrc.13
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 13:29:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3BLG4iNsvopg7TMYSxQ0K+JPUaYwbQ9XGfCHut6UF2o=;
-        b=TFWKKWxAJYnBGwZadZXpRqojTnT+tATNIIpFGf39h1M89KxjVpqjHoiy2pe02wLHiL
-         Fo8ynfEaHOyEkYllKpiCbi/gN9+/4CK6Vziz8Dd1lhfrZxVXdPBx1Bbqt51dMCVImH9a
-         Ztsf9ju30EwFt5Edfv/mgbFoG5a0m29VnZ1Rrep7ipBsiGH5z60BeHNqdqmX5Ec9U059
-         kxezSZcZRvOtJbiYZlmFZWVGfskWNCM6cJcSI7kvULZhDj3IaHB9AG8MYv5jyYgddEg1
-         gsWQ2+C/MZ7VpkGWVaNfTp+kG5VV9ujzWcdPmkHsuXCxpQizkZSCJYIJ1Tp6Gjw+lG8a
-         n+nA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=t1yDdWGH+PWK5ZTw8tbFSrYVjwTh2g8LvXYNMNg2qBk=;
+        b=c6U6HuKb1ckC8QV75Prch3owwEwnrnLn3ngtd2Mb/cPCLGiWl2HQ9yM5Dbv/cl9N7h
+         l1tyTVX52k876H9xcFa4keDkqVLH8GIIAbVlz4uQzoHZqI76W7Cp16AV0Uw/HtXD1zvr
+         x2yo5Hh0XwQ8vNlaaFRFBbEuBSe0+VRcqoaw1usi6xRn/m9NV2ULfwKXImNPzw/QIZaO
+         gPa1qfEB4RyuWIahONAaHVYLTpmvr+CLjo1LHiHoHexFailVi14wHASzzhpKpbHxwL4c
+         uHIhhNjoSRBczYOhHK9a3jKT2HT3BjEHcOMEUyUapYNsIusDOWIpwELz0cKhddqx75Be
+         TB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3BLG4iNsvopg7TMYSxQ0K+JPUaYwbQ9XGfCHut6UF2o=;
-        b=sXPy8/KBf475YbcuK/5cxQYlvPxfH8waBvPl8Vwr2xvon7byIKtq/3NW+aMm0D/Mcr
-         og2QiNTVTJoKDQuyn8JTUETvYulhaVl7ri0epO3wiq3jLMEkG0S/8hyCSBhM1APISM1Z
-         cTrboSSeDhTYUCmHFDe7gI+nSeUKmFtp6yi8LpO3QVOZc9wsI/mKj0OBxVgXPSjxPu6T
-         C4K1g8UkRN8Vaz9txBvMeF8NV5YqN7PQ1cb/kgplzd1qgybnuqUVr9h0MTtsQDvFbHST
-         r3Tn2eIsSW13r9+/7Z8QnLfDny5ZMug/GkfitTto0nE4r5EG1Yx4z0OMl6ZeP2qEUzea
-         DQ0Q==
-X-Gm-Message-State: APzg51BabvjrC9a6KzMDpmjSMeRcJnfl4bQ71S5bY4Ylg6tZumePVzoi
-        Iu7Ed2Dg5eP0Q8DZCov8qEQ=
-X-Google-Smtp-Source: ANB0VdZ6UKevhOYj49lkYeCqMkGWS/bXr2xuTVcagw5CoTLNLQK0nJSweTKwJTaEmp2IAkwxubYd6w==
-X-Received: by 2002:adf:cc91:: with SMTP id p17-v6mr8713283wrj.226.1535660066142;
-        Thu, 30 Aug 2018 13:14:26 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id w17-v6sm3032357wmc.43.2018.08.30.13.14.25
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=t1yDdWGH+PWK5ZTw8tbFSrYVjwTh2g8LvXYNMNg2qBk=;
+        b=Y+zhGSoQh+lj2IKTKWHZ0/NghjdmkGBODxDr/w4Zppwl0nqsZvZSTQ4xnaw8D2Tu9z
+         OiQTJCJffOUqSeEpxknui09lzaD2c+Phfp66ejv/j1KUkKfPdYTuEF77nRv8Z7CxsZLU
+         QEjt6nSn20WQdFJTxTmXfceVZsRbktnBDFWZOnb0Gxz8fiys5TFGxcqMEoH7MP638/JL
+         pSxKQL3SwrFZMsoPFyh0arqceN0cT38Eba4r8esvBv3NugUvI/57EX6blqpsRukiDnNx
+         3D6deCBylpTyFzG93ApwVCxF9TsprZuULdn9UvtoBesRYLztCmWRWRBrCcr635Bp6kj7
+         vQhQ==
+X-Gm-Message-State: APzg51Cxf+hbHH7H12AlMbjt5xDF93mrJEH/60nSCtUTDrhVqUD64OAD
+        VQnav1nD5et7lUM904Yjt6huy3p6
+X-Google-Smtp-Source: ANB0Vdaoxx47fhaiUfwYV103tEyBHSHwrhrLYfueIM1zZxRwlfDApqElbXEqRUYq0eJKJhV/e3lxMg==
+X-Received: by 2002:adf:ad8e:: with SMTP id w14-v6mr9305684wrc.178.1535660995110;
+        Thu, 30 Aug 2018 13:29:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v16-v6sm7343674wrw.12.2018.08.30.13.29.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 13:14:25 -0700 (PDT)
+        Thu, 30 Aug 2018 13:29:54 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/9] worktree: fix bugs and broaden --force applicability
-References: <20180828212026.21989-1-sunshine@sunshineco.com>
-        <20180830075431.GF11944@sigill.intra.peff.net>
-        <CAPig+cS3-oRzQrZGM_-pXUVFE3HvMdtODurPkmYgw1vFV8zb3Q@mail.gmail.com>
-        <20180830194634.GE19685@sigill.intra.peff.net>
-Date:   Thu, 30 Aug 2018 13:14:24 -0700
-In-Reply-To: <20180830194634.GE19685@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 30 Aug 2018 15:46:34 -0400")
-Message-ID: <xmqqva7r4nof.fsf@gitster-ct.c.googlers.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH v2 4/4] branch: make "-l" a synonym for "--list"
+References: <20180622092327.GA8361@sigill.intra.peff.net>
+        <20180622092459.GD13573@sigill.intra.peff.net>
+        <87wos8cjt8.fsf@evledraar.gmail.com>
+        <xmqq4lfb667c.fsf@gitster-ct.c.googlers.com>
+        <87in3rd422.fsf@evledraar.gmail.com>
+        <20180830200452.GB22407@sigill.intra.peff.net>
+Date:   Thu, 30 Aug 2018 13:29:53 -0700
+In-Reply-To: <20180830200452.GB22407@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 30 Aug 2018 16:04:53 -0400")
+Message-ID: <xmqqo9dj4mym.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -72,15 +75,77 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> I suppose so. I don't think I've _ever_ used distclean, and I only
-> rarely use "clean" (a testament to our Makefile's efforts to accurately
-> track dependencies). I'd usually use "git clean" when I want something
-> pristine (because I don't want to trust the Makefile at all).
+> On Thu, Aug 30, 2018 at 09:53:25PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>
+>> > In the SYNOPSIS section we still see "[-l]" listed; that also must
+>> > be replaced with "--create-reflog", or just dropped, as that is the
+>> > default.
+>> 
+>> Oh yes, it seems all of the doc indeed wasn't updated!
+>
+> Sorry, this is my fault. Patch is below (which would go on top of
+> jk/branch-l-1-repurpose).
 
-I do not trust "git clean" all that much, and pre-cleaning with
-"make distclean" and then running "git clean -x" has become my bad
-habit.  I jump around quite a bit during the day, which would end up
-littering the working tree with *.o files that are only known to one
-but not both of {maint,pu}/Makefile's distclean rules.  I even do
-"for i in pu maint master next; do git checkout $i; make distclean; done"
-sometimes before running "git clean -x" ;-)
+Heh, reviewers who did not notice share the same blame.  The patch
+looks good.  Thanks for a quick update.
+
+>> > I do not know if the documentation that is shipped in 2.20 should
+>> > talk about how the old world looked like, though.  `-l` was a short
+>> > for `--create-reflog` is worth saying, but I do not see much value
+>> > in talking about the warning given in 2.19.
+>> 
+>> I'm anticipating that there will be users in the wild with similar -l
+>> invocations, noting this helps them, because they'll be wondering what
+>> some script that does "git branch -l <name>" is trying to do while
+>> reading our docs.
+>
+> I don't have a strong opinion either way. If we do mention it, it should
+> probably be short ("Until Git v2.20, the `-l` option was a synonym for
+> `--create-reflog").
+
+I agree that the short one would of course be good.  I am on the
+fence about mentioning the warning only given in 2.19.
+
+> -- >8 --
+> Subject: [PATCH] doc/git-branch: remove obsolete "-l" references
+>
+> The previous commit switched "-l" to meaning "--list", but a
+> few vestiges of its prior meaning as "--create-reflog"
+> remained:
+>
+>   - the synopsis mentioned "-l" when creating a new branch;
+>     we can drop this entirely, as it has been the default
+>     for years
+>
+>   - the --list command mentions the unfortunate "-l"
+>     confusion, but we've now fixed that
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/git-branch.txt | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 5552dfcec3..bf5316ffa9 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>  	[(--merged | --no-merged) [<commit>]]
+>  	[--contains [<commit]] [--no-contains [<commit>]]
+>  	[--points-at <object>] [--format=<format>] [<pattern>...]
+> -'git branch' [--track | --no-track] [-l] [-f] <branchname> [<start-point>]
+> +'git branch' [--track | --no-track] [-f] <branchname> [<start-point>]
+>  'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+>  'git branch' --unset-upstream [<branchname>]
+>  'git branch' (-m | -M) [<oldbranch>] <newbranch>
+> @@ -159,10 +159,6 @@ This option is only applicable in non-verbose mode.
+>  	List branches.  With optional `<pattern>...`, e.g. `git
+>  	branch --list 'maint-*'`, list only the branches that match
+>  	the pattern(s).
+> -+
+> -This should not be confused with `git branch -l <branchname>`,
+> -which creates a branch named `<branchname>` with a reflog.
+> -See `--create-reflog` above for details.
+>  
+>  -v::
+>  -vv::
