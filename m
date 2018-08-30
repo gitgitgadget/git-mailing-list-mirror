@@ -7,91 +7,91 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 629D01F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 14:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9FCE1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 14:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729233AbeH3Szw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 14:55:52 -0400
-Received: from mail-lj1-f181.google.com ([209.85.208.181]:41756 "EHLO
-        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727359AbeH3Szw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 14:55:52 -0400
-Received: by mail-lj1-f181.google.com with SMTP id y17-v6so7517006ljy.8
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:53:19 -0700 (PDT)
+        id S1728682AbeH3TAj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 15:00:39 -0400
+Received: from mail-lf1-f47.google.com ([209.85.167.47]:42400 "EHLO
+        mail-lf1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728220AbeH3TAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 15:00:38 -0400
+Received: by mail-lf1-f47.google.com with SMTP id z11-v6so7434963lff.9
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 07:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:sender:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=Wh2RBnEIvl/M0Edw9QJUXr3ejrLESDeu5gcUvS4J5hM=;
-        b=XythUfWqb2pWDLqvcxhw0k009CQdHt0Zl1kcpC1VJfsA8oDyIB/rBU4AQ2AIHgdJAt
-         5z4x/dmy9J4DSmyUwmMTTv1lyUEhCsHcJ8qbnpMaZvytv0bSdbzYjaAeOsSSddP9+dSY
-         HLNoI1BWUh2Il5KdaTbN73KzCpnipx1gW8HlTl7i0W82+pRa/GS8OXpivAhGZrX7xkxq
-         vGGVIAKxegbPA4JpeqFwaDRY2sUJ1+OtCxxi94nvLdkUMoMwPosH7Zfh69FfCzSkPfHs
-         afnFS9jMzCZH+ExhZUeWzAmG18dVnseywIiWbGw7xEqCoDryVg8RKgrTQM4djHGSEbZh
-         n6UA==
+         :subject:to:cc;
+        bh=Or5l6zZ+YPrd2xqo/FGuMqsAFEJC5NskV82nXpRrFtM=;
+        b=U3iB+L/Khmtp1s+91lm+3ab2ZjU/KxYOiUezY073nHHf/U6UpDsrSMHqDQ0i1ZzV6W
+         8WVIRXbwKLhSfZ3OVCtSgMi2lDqwIm7PMB4YIc3G5IBZrjwjUNbdTBHTvkiV/8rrLOqd
+         9DiyNWgDpgXTw4gVs23ryHdGzTeYmBRKm95T62LDlM8FucvSJBOYAqdgtjWbrHGMMqeW
+         iMD5KwGgJPDyKljDxuC8uoAEHjnYh7I92k8rjeRbipWVgRBw8KT+QGRsusRFy6oj46aS
+         BbpNVJ0GNSfq/MX7usSkxZuLQ5AT2h9nuYOR9MiPGOKk65hm6Y0Uk98pJIx3Q+PUk0SF
+         tlOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:sender:from
-         :date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=Wh2RBnEIvl/M0Edw9QJUXr3ejrLESDeu5gcUvS4J5hM=;
-        b=Va6SzlGxEgl8KuCeR/iVQ2eYYyhPXmQ9zyMElfCqAOwCBIx/Bjh6Up0cfOerJAD0yU
-         c2No9UcsXyGlsVUNiM7ABnxTZ6cjQMh0Flo/T8ZeKQLo2s/xk4FEGO7PI3UfIdc6BsIj
-         vpW8TYwfQkNUQtTV0rvX0dQA6QSjgVeaqAoGPRkWKgguCKXRIPQt0omLImo/XlydVqB7
-         j5bwQWTpu/agkfaiHI5QIJUxiSxJe+r/o15ajI5cplrd/9AmbKA/SVM3MpcAKkZGo1hD
-         McGNXF37Ey4GOLoWuazCtiAF9anEQKX7YzQcEkLGisCqDvlYeX3TdU6yCFoI0WAt6mJn
-         TfxQ==
-X-Gm-Message-State: APzg51DTSvxhZCKydTGT58U5eHQO1q+F4+/ukR+SB9bLMtsXnF4VrVGF
-        LB+FyrCWAXp9nBR9V9lbfuM1P/XGU/bpa9Zhv2g=
-X-Google-Smtp-Source: ANB0VdaH0MIHCQaJliSY2ykcvsAb2zQyOeHLIEtO8OARJfYP7Ell4vhPSBv1JjAA6Fr0PjSa4WHOi3F6JgqKN6Zjo44=
-X-Received: by 2002:a2e:5b4a:: with SMTP id p71-v6mr7344318ljb.91.1535640798880;
- Thu, 30 Aug 2018 07:53:18 -0700 (PDT)
+         :date:message-id:subject:to:cc;
+        bh=Or5l6zZ+YPrd2xqo/FGuMqsAFEJC5NskV82nXpRrFtM=;
+        b=o6fGqFnRuamDD9+qCspTs7qNzIGCRWaxDaeYVrxFpm2+i0MHTC9l5esFGKclZWNcup
+         a9xcg7Lswxx57SeXSnzWM+aafv4G52oFGxKr5fUQJh81BqDLnQBkdqL5I0uHzmjOozvC
+         PsE3peAgotKF7pS6jjCeymiMDMzAzQ4y6C0DfU0h4Q0oqh0ls3yQ/Fxuc2L6TzunNeVt
+         oUlzw0Gtjp7SZV6+PUy5jjR52qjjVpa3JJ0WQB2kfXluc5CUo10vrZkV+Y2sFJ38noid
+         0BHhlsSCvpQR3802T04VyeOl2I6KVJzcJn9o5UIdvzT10szaKzZoyL+nn4rwjoC4136Y
+         yAbA==
+X-Gm-Message-State: APzg51D1PB52bhuZXmojlGz605tINGeEzoYLyKShu9JIttLs0lqqurrt
+        tFzsBTBiBlqUlntN3gxQe53cfwa/qzyvdlip8TyUOQ==
+X-Google-Smtp-Source: ANB0VdaYsG7BiLT4fAZu9ljGH1xZiFSVC7s5zw/n/bHEBZ1/k06UNOeZZaW4b8g/5TzF7+/o5L32Xn2zWXC8nSCJZB8=
+X-Received: by 2002:a19:2c8e:: with SMTP id s136-v6mr1816412lfs.78.1535641084142;
+ Thu, 30 Aug 2018 07:58:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com>
- <20180827153524.GA18025@tor.lan> <CACsJy8Bik2Hokgv46ifsFhhvGzdcB=FoWnWs6_k2361s15wOPA@mail.gmail.com>
- <94afe154-53e1-761a-4a66-4f77188036f7@gmail.com>
-In-Reply-To: <94afe154-53e1-761a-4a66-4f77188036f7@gmail.com>
+ <20180830045407.GB140348@aiede.svl.corp.google.com>
+In-Reply-To: <20180830045407.GB140348@aiede.svl.corp.google.com>
 X-Google-Sender-Delegation: rcdailey@gmail.com
 From:   Robert Dailey <rcdailey.lists@gmail.com>
-Date:   Thu, 30 Aug 2018 09:53:07 -0500
-X-Google-Sender-Auth: z2LDQQqdsYHuMRl70biFusgrJxA
-Message-ID: <CAHd499AgNygMLiaLj=KSXDZJ8f3fAM60E9Pj=ADnc0POfrtKew@mail.gmail.com>
+Date:   Thu, 30 Aug 2018 09:57:52 -0500
+X-Google-Sender-Auth: Uc2ggJZgpoUyvMSZ6XuoKD-pXyc
+Message-ID: <CAHd499BCk4Q4oPY=CXK=YrUbNUbz4J_KoeQngfz=92Qfc6q=eA@mail.gmail.com>
 Subject: Re: Automatic core.autocrlf?
-To:     rybak.a.v@gmail.com
-Cc:     pclouds@gmail.com, tboegi@web.de, Git <git@vger.kernel.org>
+To:     jrnieder@gmail.com
+Cc:     Git <git@vger.kernel.org>, tboegi@web.de
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Aug 27, 2018 at 12:32 PM Andrei Rybak <rybak.a.v@gmail.com> wrote:
+On Wed, Aug 29, 2018 at 11:54 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >
-> On 2018-08-27 17:52, Duy Nguyen wrote:
-> > On Mon, Aug 27, 2018 at 5:37 PM Torsten B=C3=B6gershausen <tboegi@web.d=
-e> wrote:
-> >>> In those cases, when it falls back to
-> >>> configuration for line ending management, I want it to be
-> >>> automatically configured based on the host platform.
-> >>
-> >
-> > An alternative is supporting conditional config includes based on
-> > platform or host name, but I don't know if there are more use cases
-> > like this to justify it.
-> >
+> Hi,
 >
-> How about just using unconditional includes?
+> Robert Dailey wrote:
 >
-> global.gitconfig (synced across machines):
+> > Is there an 'auto' setting for the 'core.autocrlf' config? Reason I
+> > ask is, I want that setting to be 'input' on linux but 'true' on
+> > Windows.
 >
->   [include]
->       path =3D platform-specific.gitconfig
+> Others are exploring your question about the configuration language,
+> but I want to emphasize some other ramifications.
 >
-> And two version of file named "platform-specific.gitconfig", which
-> are not synced, and include only code.autocrlf setting.
+> Why do we still have 'core.autocrlf'?  Do 'core.eol' and related
+> settings take care of that need, or is autocrlf still needed?  If
+> core.eol etc do not take care of this need, what should we do to get
+> them to?
+>
+> Thanks, after having run into a few too many autocrlf-related messes,
+> Jonathan
 
-I think I tried this some years back, but ended up ditching it because
-when you modify settings via `git config --global`, it doesn't put
-values in the right files. This is probably the best answer so far
-though. It would still be great to have a mechanism that works within
-1 file and is friendly to the git config command.
+From my perspective, the confusion is due to the evolution of the
+feature. There's multiple ways to control EOL handling but most of it
+is legacy/backward compatibility, I think. core.autocrlf is a
+fall-back for repos that do not have a .gitattributes. Because
+.gitattributes is optional by design, I'm not sure if getting rid of
+the config options is a good idea. But your point did make me think
+about how `core.autocrlf = true` should probably be a system config
+default for the Git for Windows project. The default for that value
+should be platform-defined. That would make it automatically work the
+way I want, and might solve a lot of the issues where people are
+committing CRLF into repositories on Windows.
