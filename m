@@ -6,134 +6,194 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DEB71F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 21:43:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 252401F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 22:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727607AbeHaBrX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 21:47:23 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36448 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbeHaBrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 21:47:23 -0400
-Received: by mail-wr1-f68.google.com with SMTP id m27-v6so9375509wrf.3
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 14:43:10 -0700 (PDT)
+        id S1727252AbeHaCMG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 22:12:06 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36974 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727054AbeHaCMG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 22:12:06 -0400
+Received: by mail-wr1-f65.google.com with SMTP id u12-v6so9392518wrr.4
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 15:07:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=eHIHSOG2W1i/I5dOnRf438c2glop7qS2SqBLsh+dFVI=;
-        b=q3c/xfc70w6Yj01zpY1zucgvvOLLw7zbAKoNYIreLIPHZlTekxaYtia1YRgFOWqdxq
-         236g2nr5JCS24ww+t9x5LN32bbQxdaidl2Cf9c/zuR6/1YoVnJfdLjDiBXChM6aeI2CL
-         YdOUF1TOcMHzq2URlcbKv2G4D1036DbaMtN71+p5xZiL6vr1ApUgeDT8s4y5tyQV6m8C
-         rSqebURq2MU1zB1Wy7RIH2cYQLELANQBlXoTNe1aTqMPQxPco4/O9MjmELNRUUzoKN3g
-         V2/VOeJ/dk5rN6qi/bcrnqU5WiV1Vf2ldxvqwdaheKw6rQozm0gmP8XKCRWgIMIOUGRM
-         cgHA==
+         :user-agent:mime-version;
+        bh=jsjxOPJ5xzogzxIMThzBZuUFA+UkVKpOJqfgjd4o568=;
+        b=n8ubRjqp0Noq9WsFyePlTyA51y3Z+mNPRqli33NUn4raS+u44eTQ3jUab4BQPd7GDD
+         2QaIvmC6BWDN91MCgWt5YtkW6M7lU1A78qGnhj9MSIAVpoFDbQLtYzt/Enl7Kdj1alUI
+         RSiaaK5oCWgmBtdzO+gnA8oSi7bXI0PIy2ee9hN4z8uBgi4Kzzkv6P+hrtccIUlDCyL7
+         qYpdBc/BAc5ztk1SsV6ih6xTV9syLZ8LbrdJVhNjDXGWC/c1RR8ii+G+CJlcBsEhUwcD
+         xRf5dq7/wc8pumtlTsja4EAYf1B6gjiGuDTHujsm0Kw57E5v5OzL0zr6d3J2HkXl/ip1
+         9iQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=eHIHSOG2W1i/I5dOnRf438c2glop7qS2SqBLsh+dFVI=;
-        b=f7j2URfxZ4bo5/2lESll11sOga/YZ8iN+H46RX56HOIdiAjnf0BfFzWOCgWEd6MuHu
-         FxTTikJ39ss9iJHEFWwBXEi7lUTMNvBWsxmbcX/F5C7WqQEcPaQ41cg1F7HXtn2dFPR/
-         C4YKD0zDT1JQ121NimMkaKD7i+oSPUbdVOVYkSd4WgTttTo0mh3fMiOmY9rGGqBM9ZDU
-         vbgykkIesOVAjadiE4RvVM9Yd09gUaAMkeO9+HDRB7NF6jAbD9Sdh0/V2Qr3hVs7pirf
-         9QtPrS2YSU0ecRrC+7XAWDcBklLTr8yip/Idos1dj1Z5ut6LZ5rMYgVrJ6TCnnDPue6w
-         /6zw==
-X-Gm-Message-State: APzg51AJuUarYTj3FbICkyptN3ruHTrr7BHlT3VHW+NdjE4LE6QNVIBm
-        HVC6xCt4p94eUNb39RfhvLE=
-X-Google-Smtp-Source: ANB0VdZtjkwyVMhqrl7xI8kgL6BDnKgC6lONSGe5HjEaB9EFoj6PUad2ccUvtiUQd/qV2oC7Rdx05Q==
-X-Received: by 2002:adf:eb47:: with SMTP id u7-v6mr8741666wrn.22.1535665389598;
-        Thu, 30 Aug 2018 14:43:09 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jsjxOPJ5xzogzxIMThzBZuUFA+UkVKpOJqfgjd4o568=;
+        b=eIKREx/GLeo82JxrwwimUVSi0mk+04SVqOCwq8x2clf37u8KeHpWdQaqTMmGzqrBjY
+         r5VAxZGej+QLJ8S7vNAkRBNQ+ItCzDg31IepxeDi64NKEahpra7bxuSPdQUZihXOfiUi
+         CONV98prRqZ5ayRND9DROB68dpcAGSJIHZTf9btDLFlthJvDwu8Pd5YL7CphevxHLCwa
+         hGGghjPtlzXmbAyPO0hfhqpVCkn6ebltbQrVGCjWJWvU4qgM1O3N+rAyDOEofxoUdL1k
+         PleDa4+XP8FxRPzmvPVS8iFVqEquzwsjiOvfrd6r+mv0grBmDocIUwEirw4ecz318VGF
+         azWA==
+X-Gm-Message-State: APzg51AiF0tuM630Sd4mjUw4435y0W9XFXb1Xefv3zmSp2DhSg+vqhmC
+        78tQ1VJAj3cykPXCAJjU3ic=
+X-Google-Smtp-Source: ANB0VdZgeqcraa8ofaDI8kyJS90nllSBFyfq8ffEinsk+RH1Ig0Mfatw8tcMWff5NCbuW4zp2NPJ7A==
+X-Received: by 2002:a5d:4e0a:: with SMTP id p10-v6mr8822508wrt.48.1535666866516;
+        Thu, 30 Aug 2018 15:07:46 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z14-v6sm2682432wma.18.2018.08.30.14.43.08
+        by smtp.gmail.com with ESMTPSA id g2-v6sm18422900wrd.71.2018.08.30.15.07.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 14:43:09 -0700 (PDT)
+        Thu, 30 Aug 2018 15:07:44 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Kristian =?utf-8?Q?H?= =?utf-8?Q?=C3=B8gsberg?= 
-        <krh@redhat.com>
-Subject: Re: [PATCH v4 6/6] fetch: stop clobbering existing tags without --force
-References: <20180813192249.27585-1-avarab@gmail.com>
-        <20180830201244.25759-7-avarab@gmail.com>
-Date:   Thu, 30 Aug 2018 14:43:08 -0700
-In-Reply-To: <20180830201244.25759-7-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 30 Aug 2018 20:12:44 +0000")
-Message-ID: <xmqqwos73503.fsf@gitster-ct.c.googlers.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v8 05/20] stash: add tests for `git stash show` config
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+        <65603caf56cfaeb1dff92546b7efe38dccb2d071.1535665109.git.ungureanupaulsebastian@gmail.com>
+Date:   Thu, 30 Aug 2018 15:07:43 -0700
+In-Reply-To: <65603caf56cfaeb1dff92546b7efe38dccb2d071.1535665109.git.ungureanupaulsebastian@gmail.com>
+        (Paul-Sebastian Ungureanu's message of "Fri, 31 Aug 2018 00:40:35
+        +0300")
+Message-ID: <xmqqpnxz33v4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 
->  +
-> -Unlike when pushing with linkgit:git-push[1], any updates to
-> -`refs/tags/*` will be accepted without `+` in the refspec (or
-> -`--force`). The receiving promiscuously considers all tag updates from
-> -a remote to be forced fetches.
-> +Until Git version 2.20, and unlike when pushing with
-> +linkgit:git-push[1], any updates to `refs/tags/*` would be accepted
-> +without `+` in the refspec (or `--force`). The receiving promiscuously
-> +considered all tag updates from a remote to be forced fetches. Since
-> +Git version 2.20 updates to `refs/tags/*` work the same way as when
-> +pushing. I.e. any updates will be rejected without `+` in the refspec
-> +(or `--force`).
+> This commit introduces tests for `git stash show`
+> config. It tests all the cases where `stash.showStat`
+> and `stash.showPatch` are unset or set to true / false.
+>
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+>  t/t3907-stash-show-config.sh | 81 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100755 t/t3907-stash-show-config.sh
+>
+> diff --git a/t/t3907-stash-show-config.sh b/t/t3907-stash-show-config.sh
+> new file mode 100755
+> index 0000000000..8fe369c1a1
+> --- /dev/null
+> +++ b/t/t3907-stash-show-config.sh
+> @@ -0,0 +1,81 @@
+> +#!/bin/sh
+> +
+> +test_description='Test git stash show configuration.'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup' '
+> +	test_commit file
+> +'
+> +
+> +# takes three parameters:
+> +# 1. the stash.showStat value (or "<unset>")
+> +# 2. the stash.showPatch value (or "<unset>")
+> +# 3. the diff options of the expected output (or nothing for no output)
+> +test_stat_and_patch () {
+> +	if test "<unset>" = "$1"
+> +	then
+> +		test_might_fail git config --unset stash.showStat
+> +	else
+> +		test_config stash.showStat "$1"
+> +	fi &&
+> +
+> +	if test "<unset>" = "$2"
+> +	then
+> +		test_might_fail git config --unset stash.showPatch
 
-Have a comma after 2.20; otherwise it was unreadable, at least to
-me, who took three attempts before realizing that the "updates" is
-not a verb whose subject is "Git version 2.20".  Or
+I think you are trying to protect yourself from an error triggered
+by unsetting what is not set, but for that, test_unconfig is
+probably a better choice, as it still catches errors of other types
+and ignores only that "unset a variable that is not set" error.
 
-	Since Git version 2.20, fetching to update `refs/tags/*`
-	work the same way as pushing into it
+> +	else
+> +		test_config stash.showPatch "$2"
+> +	fi &&
+> +
+> +	shift &&
+> +	shift &&
 
-perhaps.
+You can use "shift 2 &&" here (not worth a reroll).
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index b0706b3803..ed4ed9d8c4 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -667,12 +667,18 @@ static int update_local_ref(struct ref *ref,
->  
->  	if (!is_null_oid(&ref->old_oid) &&
->  	    starts_with(ref->name, "refs/tags/")) {
-> -		int r;
-> -		r = s_update_ref("updating tag", ref, 0);
-> -		format_display(display, r ? '!' : 't', _("[tag update]"),
-> -			       r ? _("unable to update local ref") : NULL,
-> -			       remote, pretty_ref, summary_width);
-> -		return r;
-> +		if (force || ref->force) {
-> +			int r;
-> +			r = s_update_ref("updating tag", ref, 0);
-> +			format_display(display, r ? '!' : 't', _("[tag update]"),
-> +				       r ? _("unable to update local ref") : NULL,
-> +				       remote, pretty_ref, summary_width);
-> +			return r;
-> +		} else {
-> +			format_display(display, '!', _("[rejected]"), _("would clobber existing tag"),
-> +				       remote, pretty_ref, summary_width);
-> +			return 1;
-> +		}
->  	}
+> +	echo 2 >file.t &&
 
-A straight-forward change to turn an unconditional update to either
-an unconditonal rejection (when force is not given) or an
-unconditional acceptance (when forced), which makes sense and has
-near-zero chance of being wrong ;-)
+> +	git diff "$@" >expect &&
 
-It is a huge change in behaviour, but in a very good way.  I'd
-imagine that users will welcome it very much.
+When the caller does not give $3 to this function, it does not look
+at 'expect'.  I think it is clearer if you did
 
+	if test $# != 0
+	then
+		git diff "$@" >expect
+	fi &&
+
+here, and ...
+
+> +	git stash &&
+> +	git stash show >actual &&
+> +
+> +	if test -z "$1"
+
+... wrote this as
+
+	if test $# = 0
+
+The only difference between '-z "$1"' and '$# = 0' is when he caller
+passes an empty string to the function as $3, which you never do, so
+the distinction is theoretical, but using $# makes your intention
+clear that you do not mean to treat an empty string any specially.
+
+> +	then
+> +		test_must_be_empty actual
+> +	else
+> +		test_cmp expect actual
+> +	fi
+> +}
+> +
+> +test_expect_success 'showStat unset showPatch unset' '
+> +	test_stat_and_patch "<unset>" "<unset>" --stat
+> +'
+> +
+> +test_expect_success 'showStat unset showPatch false' '
+> +	test_stat_and_patch "<unset>" false --stat
+> +'
+> +
+> +test_expect_success 'showStat unset showPatch true' '
+> +	test_stat_and_patch "<unset>" true --stat -p
+> +'
+> +
+> +test_expect_success 'showStat false showPatch unset' '
+> +	test_stat_and_patch false "<unset>"
+> +'
+> +
+> +test_expect_success 'showStat false showPatch false' '
+> +	test_stat_and_patch false false
+> +'
+> +
+> +test_expect_success 'showStat false showPatch true' '
+> +	test_stat_and_patch false true -p
+> +'
+> +
+> +test_expect_success 'showStat true showPatch unset' '
+> +	test_stat_and_patch true "<unset>" --stat
+> +'
+> +
+> +test_expect_success 'showStat true showPatch false' '
+> +	test_stat_and_patch true false --stat
+> +'
+> +
+> +test_expect_success 'showStat true showPatch true' '
+> +	test_stat_and_patch true true --stat -p
+> +'
+> +
+> +test_done
