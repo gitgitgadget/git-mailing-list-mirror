@@ -2,65 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB551F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 18:13:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 884821F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 18:42:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728004AbeH3WRH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 18:17:07 -0400
-Received: from mail-qt0-f182.google.com ([209.85.216.182]:38629 "EHLO
-        mail-qt0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727815AbeH3WRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 18:17:07 -0400
-Received: by mail-qt0-f182.google.com with SMTP id x7-v6so11469820qtk.5
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 11:13:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qCrIPxZEu+84o2CzC4rVQBDrZYjc+66QTlTRrtQ5gRk=;
-        b=oZcF9kHHsFE0+enV61aChCFcR8VTpuGcrxzk0BwwwjCZIUNlsfYIQTdgOT0+k3GfKP
-         rY3XjldG+V4tdVw/ihfhQj6+taOzBJ3tu44ZIt3DKApda7cKRWsDELQ9hEb5pfB0KcTv
-         ScWPp1QAmXqdBUzInoTuKL48epOAk8Uxqm1utaERkNRGKHkOK7GZWF7WtyRV3gVb6uz0
-         poObVCsyXaUV4MWJuFbADJc9ZH83i1r9a4ieRvvkm/2PyejPLcOMVJK+doVIbd4b5DB0
-         vYdAUS7BDZxRL63bE90+JwoMs9HKjR73QG171shrF9udg83GSnFgew+slvoIm/3fRkcu
-         mL6A==
-X-Gm-Message-State: APzg51DVVi8+/7p2uU+kDu4ZmGq0VAs/kK0ngw37e9TkVHE63IYfLUDx
-        39aPJ2Hs4k3+u9AU5DvGKZNzS3nPDK1lf0X3voqDRA49
-X-Google-Smtp-Source: ANB0VdaftQM3cwEx3rnmC6OMntnT+Wzf1KxF7NEwD5kQRjghmJ/MHaktbb7QRx+GrbX2VrSjok4yhtbdy5s2rdvaXvM=
-X-Received: by 2002:a0c:b88f:: with SMTP id y15-v6mr12406897qvf.203.1535652824070;
- Thu, 30 Aug 2018 11:13:44 -0700 (PDT)
+        id S1727178AbeH3Wpe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 18:45:34 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34324 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726889AbeH3Wpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 18:45:33 -0400
+Received: (qmail 5723 invoked by uid 109); 30 Aug 2018 18:42:03 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 18:42:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29623 invoked by uid 111); 30 Aug 2018 18:42:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 30 Aug 2018 14:42:12 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2018 14:42:01 -0400
+Date:   Thu, 30 Aug 2018 14:42:01 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jann Horn <jannh@google.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
+Message-ID: <20180830184201.GB14273@sigill.intra.peff.net>
+References: <20180830070548.GA15081@sigill.intra.peff.net>
+ <20180830070932.GB15420@sigill.intra.peff.net>
+ <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <0f66ad7a-2289-2cce-6533-a27e19945187@rasmusvillemoes.dk>
-In-Reply-To: <0f66ad7a-2289-2cce-6533-a27e19945187@rasmusvillemoes.dk>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Aug 2018 14:13:32 -0400
-Message-ID: <CAPig+cTnvDfYaDh7JSXXGGA=+DE4WAiuTZEKpxv67u1_OyT-qA@mail.gmail.com>
-Subject: Re: feature request: allow commit.email config setting
-To:     Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 7:26 AM Rasmus Villemoes <rv@rasmusvillemoes.dk> wrote:
-> I can set GIT_COMMITTER_EMAIL in the environment, but that is
-> rather inconvenient, since that means I have to remember to do that in
-> the shell I'm using for that particular project, and I can't use that
-> shell for other projects. So it would be really nice if I could set
-> commit.email = $private-email in the local .git/config for that
-> particular project.
+On Thu, Aug 30, 2018 at 10:38:21AM -0700, Junio C Hamano wrote:
 
-Aside from modifying Git itself to support such a use-case, another
-(perhaps more pragmatic) approach would be to use a tool, such as
-direnv[1], which automatically sets environment variables for you
-depending upon your current working directory, or just use some ad-hoc
-shell programming to achieve the same (for instance, [2]).
+> Jeff King <peff@peff.net> writes:
+> 
+> > +test_expect_success \
+> > +    'apply delta with too many copied bytes' \
+> > +    'printf "\5\1\221\0\2" > too_big_copy &&
+> > +     echo base >base &&
+> > +     test_must_fail test-tool delta -p base too_big_copy /dev/null'
+> 
+> Would "echo base >base" give us 5-byte long base even on Windows?
+> Or the test does not care if it is either "base\n" or "base\r\n"?
+> 
+> Just double-checking.
 
-[1]: https://direnv.net
-[2]: https://stackoverflow.com/questions/14462591/set-environmental-variables-in-a-particular-directory
+Good question. On the first one, I don't know. On the second one, yes,
+it does matter. We'd feed "6" to patch_delta(), and it would complain
+about the mismatch before actually hitting the code we're trying to
+exercise. The test would still pass (the error result is the same either
+way), but would quietly not test what we wanted.
+
+Maybe something like this to be on the safe side?
+
+(note that we can leave the \5 in the result size of the "truncated copy
+parameters" test; it really just needs to be larger than 1).
+
+---
+diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
+index 912e659acf..e80934a18e 100755
+--- a/t/t5303-pack-corruption-resilience.sh
++++ b/t/t5303-pack-corruption-resilience.sh
+@@ -327,15 +327,15 @@ test_expect_success \
+     'printf "\0\1\2XX" > too_big_literal &&
+      test_must_fail test-tool delta -p /dev/null too_big_literal /dev/null'
+ 
+-# \5 - five bytes in base
++# \4 - four bytes in base
+ # \1 - one byte in result
+ # \221 - copy, one byte offset, one byte size
+ #   \0 - copy from offset 0
+ #   \2 - copy two bytes (one too many)
+ test_expect_success \
+     'apply delta with too many copied bytes' \
+-    'printf "\5\1\221\0\2" > too_big_copy &&
+-     echo base >base &&
++    'printf "\4\1\221\0\2" > too_big_copy &&
++     printf base >base &&
+      test_must_fail test-tool delta -p base too_big_copy /dev/null'
+ 
+ # \0 - empty base
+@@ -356,7 +356,7 @@ test_expect_success \
+     'printf "\0\1\221\0\1" > truncated_base &&
+      test_must_fail test-tool delta -p /dev/null truncated_base /dev/null'
+ 
+-# \5 - five bytes in base
++# \4 - four bytes in base
+ # \5 - five bytes in result
+ # \1 - one literal byte (X)
+ # \221 - copy, one byte offset, one byte size
+@@ -366,8 +366,8 @@ test_expect_success \
+ # delta size check.
+ test_expect_failure \
+     'apply delta with truncated copy parameters' \
+-    'printf "\5\5\1X\221" > truncated_copy_delta &&
+-     echo base >base &&
++    'printf "\4\5\1X\221" > truncated_copy_delta &&
++     printf base >base &&
+      test_must_fail test-tool delta -p base truncated_copy_delta /dev/null'
+ 
+ test_done
