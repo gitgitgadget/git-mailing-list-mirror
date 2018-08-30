@@ -2,92 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64FAC1F428
-	for <e@80x24.org>; Thu, 30 Aug 2018 03:30:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3881F42B
+	for <e@80x24.org>; Thu, 30 Aug 2018 03:56:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727441AbeH3HaD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 03:30:03 -0400
-Received: from cloud.peff.net ([104.130.231.41]:33434 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727195AbeH3HaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 03:30:03 -0400
-Received: (qmail 2480 invoked by uid 109); 30 Aug 2018 03:30:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 03:30:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22089 invoked by uid 111); 30 Aug 2018 03:30:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 29 Aug 2018 23:30:10 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Aug 2018 23:30:00 -0400
-Date:   Wed, 29 Aug 2018 23:30:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1727565AbeH3H4U (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 03:56:20 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41892 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727438AbeH3H4T (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 03:56:19 -0400
+Received: by mail-pg1-f196.google.com with SMTP id s15-v6so3269622pgv.8
+        for <git@vger.kernel.org>; Wed, 29 Aug 2018 20:56:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=E4BMc8skHJ6E5Wjltf1hvH+BKcsX0nCy8ykDwKTmkqg=;
+        b=cEHSF/k1kQZ4+LSsX2U5DTgM8TsJNuA8kcDcElCgKjifsU1hT/HgVw4iYpiAMjQga3
+         h4xPfIzvv95TvshlP5iotHgUvP/2F2TWGjmsECwN9qenGXDutDDZM9xbmiwvEkvfvqGj
+         ACjsTtwf74TzEibDSTyXpS5nEBe6QgvybO/5+NzG0+lGyzLSzce7uVQGE482KK4uIm7P
+         +5YKP7SwQWrAzLEi09pS4GI/nmH8dc0Ja/3MKb6UhZlbIDeCKTFFs7mDa9G4e9uIP4cL
+         A7gbWLqM5q3BHwxmag+vct70hrLhuZZRIHAzzJV5NXX266NMtIkKon00vYqU+kthJg3i
+         gO/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=E4BMc8skHJ6E5Wjltf1hvH+BKcsX0nCy8ykDwKTmkqg=;
+        b=YVe+FjKVWXiZPkuudZgMA3ai3yULQ5vFRQBNqjz/axekpHiTYdnsNfpJp45goaUWh5
+         Q/WfPuo8fC8yUpF7tYm+fzDjX7HQ+uWIQyDuC/M0puSEOzSukqYwIaWvgVHhi30BIZaY
+         fubbLW7jmsm91XlTX/XlcPCRCeVFjVF7FmvUWeVDrooQRiSrPGd35CZQxN9zHp26qYmI
+         gyCdQ+q1JHDZyTS+LPh6qElvkQgPo37q8Rb3n9rQoGmziqGwD2vvkGLjo7U57vnyrk5R
+         N4B8N8DbJFI05u3vUSg7nHSCaJdBGyY7ZUW33DV15y8/ik33DkYqqiVoKnqwqrgGKDhi
+         nrXQ==
+X-Gm-Message-State: APzg51AV9YGEFOlF01mbK3uNSf73qBK51luwP5qE64OI2Lt34P7j/9st
+        iN1QT4O9g3FRlpnNVZYr6XI=
+X-Google-Smtp-Source: ANB0VdYKKSBKBf3ohLfRrvPdtGKufgE2MygS7lM6SO/jE68VoYSRpKHYFBJgG2j3TQ/qBULo36PAjg==
+X-Received: by 2002:a62:4255:: with SMTP id p82-v6mr8653166pfa.238.1535601372463;
+        Wed, 29 Aug 2018 20:56:12 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id g20-v6sm7634329pfo.94.2018.08.29.20.56.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 29 Aug 2018 20:56:11 -0700 (PDT)
+Date:   Wed, 29 Aug 2018 20:56:09 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Eric Wong <e@80x24.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org
 Subject: Re: Thank you for public-inbox!
-Message-ID: <20180830033000.GD665@sigill.intra.peff.net>
+Message-ID: <20180830035609.GA140348@aiede.svl.corp.google.com>
 References: <nycvar.QRO.7.76.6.1808271552580.73@tvgsbejvaqbjf.bet>
  <20180829050745.GD15274@sigill.intra.peff.net>
  <20180829100243.GA28180@dcvr>
+ <20180830033000.GD665@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180829100243.GA28180@dcvr>
+In-Reply-To: <20180830033000.GD665@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 10:02:43AM +0000, Eric Wong wrote:
+Jeff King wrote:
 
-> Jeff King <peff@peff.net> wrote:
-> > I've thought about mirroring it to a public server as well, just for
-> > redundancy. But without the same domain, I'm not sure it would be all
-> > that useful as a community resource.
-> 
-> I wouldn't get too attached to the domain, "public-inbox.org" is
-> too long for my tastes anyways.  "peff.net/git/$MESSAGE_ID"
-> would actually be more user-friendly :>
-> 
-> A generic Message-ID redirection/finding service would be good,
-> (maybe some DHT thing, but... has that taken off for git blobs, yet?)
+> I guess I just wonder if I set up a mirror on another domain, would
+> anybody actually _use_ it? I'd think most people would just go to
+> public-inbox.org as the de facto URL.
 
-Yes, and I agree that the URL portability is one of the things I really
-love about public-inbox (after all, I do have my own archive and now I
-can follow people's public-inbox links into my very-fast local copy).
+If it's faster than public-inbox.org and you don't mind the traffic I
+would send, then I'll use it. :)
 
-I guess I just wonder if I set up a mirror on another domain, would
-anybody actually _use_ it? I'd think most people would just go to
-public-inbox.org as the de facto URL.
+[...]
+> That would be neat, but I think it actually makes references less useful
+> in a lot of cases. URLs are universally understood, which means:
+>
+>  - people who don't know about public-inbox can just follow the link
+>    (and in fact, that's how they learn how useful it is!)
 
-> Anyways I hope to teach public-inbox to auto-linkify Message-ID-looking
-> strings "<XXXXXXXXXXX@XXXXXXXX>" into URLs for domain-portability,
-> (but it's ambiguous with email addresses).  But yeah, I don't
-> like things being tied to domain names.
+I agree: please don't stop using URLs.
 
-That would be neat, but I think it actually makes references less useful
-in a lot of cases. URLs are universally understood, which means:
+Having the message-id in the URL is very useful for being able to
+migrate to another server.
 
- - people who don't know about public-inbox can just follow the link
-   (and in fact, that's how they learn how useful it is!)
+In an ideal world, we'd be habitually using URLs that reference a
+redirector, in the same spirit as https://www.kernel.org/lore.html.
+That way, there is a very restricted syntax to use (e.g. just
+message-ids) that is stable and can be reconfigured to redirect to
+another service as appropriate.  In principle it also allows tricks
+like redirecting based on geography or making the redirector go to the
+user's preferred archive interface based on a cookie.
 
- - even for people who do know about it, they are likely to read mails
-   in their MUA. And most MUAs have some mechanism for easily following
-   a URL, but won't know how to auto-linkify a message-id.
-
-So I too dream of a world where I can say "give me more information on
-this identifier" and my tools search a peer to peer distributed hash
-table for it. But I don't think we live in that world yet.
-
-At the very least, I think if we plan to reference without an http URL
-that we would use something like URI-ish, like <mid:ABC@XYZ>. That gives
-tools a better chance to say "OK, I know how to find message-ids"
-(though I still think that it's much less helpful out of the box
-compared to an http URL).
-
--Peff
+Thanks,
+Jonathan
