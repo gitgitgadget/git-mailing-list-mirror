@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 682651F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 21:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 538CA1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 21:42:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727720AbeHaBqH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 21:46:07 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38702 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727700AbeHaBqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 21:46:07 -0400
-Received: by mail-wm0-f68.google.com with SMTP id t25-v6so3415954wmi.3
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 14:41:54 -0700 (PDT)
+        id S1727730AbeHaBqK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 21:46:10 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:40593 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727700AbeHaBqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 21:46:10 -0400
+Received: by mail-wr1-f67.google.com with SMTP id n2-v6so9358491wrw.7
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 14:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=Fj9GkwtZoqA1N4RAv2mRMweY7JrjZOS44j3ffzhqZkc=;
-        b=IYX34Nobf5RGK2bAFbks8Ew6bgoWbJ7KDVuRMnTNWG9kFbsNh/x9hjvax5Mh4Ru/cE
-         SyaWuuKoHLEbCKJpvt0oS0e7twn+Cw2RaULNtjuRI3IEQ+qWw/aeVDBVZzXv6DLXrAaF
-         /38m06mS91VhrO6KvxH+z6dPFfHFsDOlZ+EEdIhqNZ+sGl0rPUYm0svcGvy9q2kISBE/
-         9iQ9AgzoAMkaaAPmJy9UtUzLEzgwVtRWVdZIXdOh/ltPmrSrZG4sWt3jOwoTwvRU6/WF
-         DgGp4SGmuG20bniFDXIwWmTFhkWSgQKh2PV/ksZaAQu3/t8fDNKvv/5xsLe1cI1jD3Y5
-         k0tw==
+        bh=JJ1fuLivYCFMyuT+mWJjcrDO8R+3Hmg/D3o9eoaUXxk=;
+        b=eFw5OMq2efbEERHbXZfVck1N0zOPQkJstERw9DbkAjpI43PByAzm4eQzyQfRfMjh37
+         1tFHOq6mkYRa18Aere4/xBdT4hUvfqhWIrRPchYTPXU52w46ncQblTBSJpUdNEL6Ruri
+         P5/SAT0e5Pic9ue8poh69FL4NhGmI8FBfBpK4RzZPP8BmHx7L3SyNmKqpCEmq+oQCaRs
+         X9nuJMExCJb5mwHiCIVUG995g5GKF3EehHLUBiS2y2KbnudZ3PbQjiWzsWBF+fpg87H5
+         AZW1FN68qtZKlL595Ya4Tfw7WUtOeZe2Kf6iAV++Ap8GQc5PLPqn5fhxNVgHMSnEzy9q
+         O4bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Fj9GkwtZoqA1N4RAv2mRMweY7JrjZOS44j3ffzhqZkc=;
-        b=aXPgMPizeY7XcMVmutXb3MqkpWaEmTzA7I4lRLNZtktwrjc+jvzul+kGzj3/+YJXmm
-         bOXlkbaHysOSADEOtQFKvIiD93OElYHtsQnyZEKdq+YuK5GbkxsluvY1/R2m/Sk86SGM
-         1diK7ZRsl/M5el6e8HAvelCtbowHmShF0OSAeseKB/7jS+o2HElV+rqqzYK0BUm67B6T
-         APzjfVceHUnOhJhSG5LR02YZQba4BwSfqlp81rJSVXEbd/IE7VqkDOsjxHD0uP4SaiBR
-         ymf/DO8n1ngLht0dBVwWBujAFaya3oaKC87nmfVxHVdMVIxYNujTbA/08wq99yQBD0FN
-         duew==
-X-Gm-Message-State: APzg51C5zCJm7cg6nLL07OW7CGyp9Ii3xO6l6BvrvwOJYk3qhCKRUEdR
-        s4G8Dr/1bs5Qup0JmzgKxZwcijAk
-X-Google-Smtp-Source: ANB0VdaTp2P4f0iMMkTo3JBhh/5GhO7Zzce0FnT1/qTWPQAdvqmbfa5zgTake96PFFFgABYS45WDOQ==
-X-Received: by 2002:a1c:65c5:: with SMTP id z188-v6mr2995198wmb.57.1535665313768;
-        Thu, 30 Aug 2018 14:41:53 -0700 (PDT)
+        bh=JJ1fuLivYCFMyuT+mWJjcrDO8R+3Hmg/D3o9eoaUXxk=;
+        b=Oz9WrMHQwY5btKfUnSepZk6zBE1YhMdOXOegmSbgCyKcnND3Y00sIhMKGsGa/45Bh+
+         3ubUKHISYSkBX9iw+VzRGY5I+hLGqZXvMiW2z/v6hMhFSlUdjLdXCU6GQ5qDJK8qW9ir
+         8sv/m47G8PQC4SuDQWkI5/IdyrbWByllCKCJvYx57lvfPRKiXNP06beretxoHyEObLdC
+         5TpJgaY74Eb5PvI9s4XiE4tClqdfB32zdAaI6Glm+tLrnakSWashhVxgO6fEocA88vT3
+         JDrW7obmyHw/26aCemN4P8WUb7JydazjUBWeJVUJj0RB9yyFGLBua5SULX8/CGAnzAmK
+         C8Vw==
+X-Gm-Message-State: APzg51DM8pYdlOUn6p+tRgmd/f4zmP+eka3CrqA36gkI8g1v8kZ5m1Md
+        eOfve3poAT9ZLChy3ly0r62C/W2U
+X-Google-Smtp-Source: ANB0VdaH6NcJDio9zrVlJZavsWOnSNU/7dyxVqnBYm86bFq6nQdCV0XHsXT7+T+PanpMhSUTuqMYew==
+X-Received: by 2002:a5d:4605:: with SMTP id t5-v6mr8365579wrq.200.1535665316651;
+        Thu, 30 Aug 2018 14:41:56 -0700 (PDT)
 Received: from sebi-laptop.tendawifi.com ([188.24.241.57])
-        by smtp.gmail.com with ESMTPSA id x24-v6sm14445951wrd.13.2018.08.30.14.41.52
+        by smtp.gmail.com with ESMTPSA id x24-v6sm14445951wrd.13.2018.08.30.14.41.55
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Aug 2018 14:41:53 -0700 (PDT)
+        Thu, 30 Aug 2018 14:41:56 -0700 (PDT)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Subject: [GSoC][PATCH v8 17/20] stash: convert save to builtin
-Date:   Fri, 31 Aug 2018 00:40:47 +0300
-Message-Id: <6832c979c8dca2a3584ed3cf828a6de060413cda.1535665109.git.ungureanupaulsebastian@gmail.com>
+Subject: [GSoC][PATCH v8 20/20] stash: replace all `write-tree` child processes with API calls
+Date:   Fri, 31 Aug 2018 00:40:50 +0300
+Message-Id: <c26283d74e3f761a554940e3e0db13cef1b613d5.1535665109.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.22.gc26283d74e
 In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
@@ -65,435 +65,134 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add stash save to the helper and delete functions which are no
-longer needed (`show_help()`, `save_stash()`, `push_stash()`,
-`create_stash()`, `clear_stash()`, `untracked_files()` and
-`no_changes()`).
-
-The `-m` option is no longer supported as it might not make
-sense to have two ways of passing a message. Even if this is
-a change in behaviour, the documentation remains the same
-because the `-m` parameter was omitted before.
+This commit replaces spawning `git write-tree` with API calls.
 
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- builtin/stash--helper.c |  52 +++++++
- git-stash.sh            | 311 +---------------------------------------
- 2 files changed, 54 insertions(+), 309 deletions(-)
+ builtin/stash.c | 41 ++++++++++++-----------------------------
+ 1 file changed, 12 insertions(+), 29 deletions(-)
 
-diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index e5153a63ea..1269f2548c 100644
---- a/builtin/stash--helper.c
-+++ b/builtin/stash--helper.c
-@@ -24,6 +24,8 @@ static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper [push [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
- 	   "          [-u|--include-untracked] [-a|--all] [-m|--message <message>]\n"
- 	   "          [--] [<pathspec>...]]"),
-+	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
- 	NULL
- };
- 
-@@ -79,6 +81,12 @@ static const char * const git_stash_helper_push_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_helper_save_usage[] = {
-+	N_("git stash--helper save [-p|--patch] [-k|--[no-]keep-index] [-q|--quiet]\n"
-+	   "          [-u|--include-untracked] [-a|--all] [<message>]"),
-+	NULL
-+};
-+
- static const char *ref_stash = "refs/stash";
- static int quiet;
- static struct strbuf stash_index_path = STRBUF_INIT;
-@@ -1444,6 +1452,48 @@ static int push_stash(int argc, const char **argv, const char *prefix)
- 			     include_untracked);
- }
- 
-+static int save_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	int keep_index = -1;
-+	int patch_mode = 0;
-+	int include_untracked = 0;
-+	int quiet = 0;
-+	int ret = 0;
-+	const char *stash_msg = NULL;
-+	char *to_free = NULL;
-+	struct strbuf stash_msg_buf = STRBUF_INIT;
-+	struct pathspec ps;
-+	struct option options[] = {
-+		OPT_SET_INT('k', "keep-index", &keep_index,
-+			N_("keep index"), 1),
-+		OPT_BOOL('p', "patch", &patch_mode,
-+			N_("stash in patch mode")),
-+		OPT__QUIET(&quiet, N_("quiet mode")),
-+		OPT_BOOL('u', "include-untracked", &include_untracked,
-+			 N_("include untracked files in stash")),
-+		OPT_SET_INT('a', "all", &include_untracked,
-+			    N_("include ignore files"), 2),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_save_usage,
-+			     0);
-+
-+	for (i = 0; i < argc; ++i)
-+		strbuf_addf(&stash_msg_buf, "%s ", argv[i]);
-+	stash_msg = strbuf_detach(&stash_msg_buf, NULL);
-+	to_free = (char *) stash_msg;
-+
-+	memset(&ps, 0, sizeof(ps));
-+	ret = do_push_stash(ps, stash_msg, quiet, keep_index, patch_mode,
-+			    include_untracked);
-+
-+	free(to_free);
-+	return ret;
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/stash.c b/builtin/stash.c
+index ba5818e24e..dd1084afd4 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -910,9 +910,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
  {
- 	pid_t pid = getpid();
-@@ -1484,6 +1534,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!create_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "push"))
- 		return !!push_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "save"))
-+		return !!save_stash(argc, argv, prefix);
+ 	int ret = 0;
+ 	struct strbuf untracked_msg = STRBUF_INIT;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
++	struct index_state istate = { NULL };
  
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
-diff --git a/git-stash.sh b/git-stash.sh
-index c3146f62ab..695f1feba3 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -36,314 +36,6 @@ else
-        reset_color=
- fi
+ 	cp_upd_index.git_cmd = 1;
+ 	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
+@@ -927,15 +926,11 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+ 		goto done;
+ 	}
  
--no_changes () {
--	git diff-index --quiet --cached HEAD --ignore-submodules -- "$@" &&
--	git diff-files --quiet --ignore-submodules -- "$@" &&
--	(test -z "$untracked" || test -z "$(untracked_files "$@")")
--}
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->u_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+-	get_oid_hex(out.buf, &info->u_tree);
+ 
+ 	if (commit_tree(untracked_msg.buf, untracked_msg.len,
+ 			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
+@@ -944,8 +939,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+ 	}
+ 
+ done:
++	discard_index(&istate);
+ 	strbuf_release(&untracked_msg);
+-	strbuf_release(&out);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+ }
+@@ -956,11 +951,10 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+ {
+ 	int i;
+ 	int ret = 0;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+ 	struct child_process cp_add_i = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+ 	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
++	struct index_state istate = { NULL };
+ 
+ 	remove_path(stash_index_path.buf);
+ 
+@@ -985,17 +979,12 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+ 		goto done;
+ 	}
+ 
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out.buf, &info->w_tree);
 -
--untracked_files () {
--	if test "$1" = "-z"
--	then
--		shift
--		z=-z
--	else
--		z=
--	fi
--	excl_opt=--exclude-standard
--	test "$untracked" = "all" && excl_opt=
--	git ls-files -o $z $excl_opt -- "$@"
--}
+ 	cp_diff_tree.git_cmd = 1;
+ 	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
+ 			 oid_to_hex(&info->w_tree), "--", NULL);
+@@ -1011,7 +1000,7 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+ 	}
+ 
+ done:
+-	strbuf_release(&out);
++	discard_index(&istate);
+ 	remove_path(stash_index_path.buf);
+ 	return ret;
+ }
+@@ -1020,10 +1009,9 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ {
+ 	int ret = 0;
+ 	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+-	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+-	struct strbuf out = STRBUF_INIT;
+ 	struct strbuf diff_output = STRBUF_INIT;
+ 	struct rev_info rev;
++	struct index_state istate = { NULL };
+ 
+ 	set_alternate_index_output(stash_index_path.buf);
+ 	if (reset_tree(&info->i_tree, 0, 0)) {
+@@ -1062,20 +1050,15 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+ 		goto done;
+ 	}
+ 
+-	cp_write_tree.git_cmd = 1;
+-	argv_array_push(&cp_write_tree.args, "write-tree");
+-	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+-			 stash_index_path.buf);
+-	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
++	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
++				NULL)) {
+ 		ret = -1;
+ 		goto done;
+ 	}
+ 
+-	get_oid_hex(out.buf, &info->w_tree);
 -
--clear_stash () {
--	if test $# != 0
--	then
--		die "$(gettext "git stash clear with parameters is unimplemented")"
--	fi
--	if current=$(git rev-parse --verify --quiet $ref_stash)
--	then
--		git update-ref -d $ref_stash $current
--	fi
--}
--
--create_stash () {
--	stash_msg=
--	untracked=
--	while test $# != 0
--	do
--		case "$1" in
--		-m|--message)
--			shift
--			stash_msg=${1?"BUG: create_stash () -m requires an argument"}
--			;;
--		-m*)
--			stash_msg=${1#-m}
--			;;
--		--message=*)
--			stash_msg=${1#--message=}
--			;;
--		-u|--include-untracked)
--			shift
--			untracked=${1?"BUG: create_stash () -u requires an argument"}
--			;;
--		--)
--			shift
--			break
--			;;
--		esac
--		shift
--	done
--
--	git update-index -q --refresh
--	if no_changes "$@"
--	then
--		exit 0
--	fi
--
--	# state of the base commit
--	if b_commit=$(git rev-parse --verify HEAD)
--	then
--		head=$(git rev-list --oneline -n 1 HEAD --)
--	else
--		die "$(gettext "You do not have the initial commit yet")"
--	fi
--
--	if branch=$(git symbolic-ref -q HEAD)
--	then
--		branch=${branch#refs/heads/}
--	else
--		branch='(no branch)'
--	fi
--	msg=$(printf '%s: %s' "$branch" "$head")
--
--	# state of the index
--	i_tree=$(git write-tree) &&
--	i_commit=$(printf 'index on %s\n' "$msg" |
--		git commit-tree $i_tree -p $b_commit) ||
--		die "$(gettext "Cannot save the current index state")"
--
--	if test -n "$untracked"
--	then
--		# Untracked files are stored by themselves in a parentless commit, for
--		# ease of unpacking later.
--		u_commit=$(
--			untracked_files -z "$@" | (
--				GIT_INDEX_FILE="$TMPindex" &&
--				export GIT_INDEX_FILE &&
--				rm -f "$TMPindex" &&
--				git update-index -z --add --remove --stdin &&
--				u_tree=$(git write-tree) &&
--				printf 'untracked files on %s\n' "$msg" | git commit-tree $u_tree  &&
--				rm -f "$TMPindex"
--		) ) || die "$(gettext "Cannot save the untracked files")"
--
--		untracked_commit_option="-p $u_commit";
--	else
--		untracked_commit_option=
--	fi
--
--	if test -z "$patch_mode"
--	then
--
--		# state of the working tree
--		w_tree=$( (
--			git read-tree --index-output="$TMPindex" -m $i_tree &&
--			GIT_INDEX_FILE="$TMPindex" &&
--			export GIT_INDEX_FILE &&
--			git diff-index --name-only -z HEAD -- "$@" >"$TMP-stagenames" &&
--			git update-index -z --add --remove --stdin <"$TMP-stagenames" &&
--			git write-tree &&
--			rm -f "$TMPindex"
--		) ) ||
--			die "$(gettext "Cannot save the current worktree state")"
--
--	else
--
--		rm -f "$TMP-index" &&
--		GIT_INDEX_FILE="$TMP-index" git read-tree HEAD &&
--
--		# find out what the user wants
--		GIT_INDEX_FILE="$TMP-index" \
--			git add--interactive --patch=stash -- "$@" &&
--
--		# state of the working tree
--		w_tree=$(GIT_INDEX_FILE="$TMP-index" git write-tree) ||
--		die "$(gettext "Cannot save the current worktree state")"
--
--		git diff-tree -p HEAD $w_tree -- >"$TMP-patch" &&
--		test -s "$TMP-patch" ||
--		die "$(gettext "No changes selected")"
--
--		rm -f "$TMP-index" ||
--		die "$(gettext "Cannot remove temporary index (can't happen)")"
--
--	fi
--
--	# create the stash
--	if test -z "$stash_msg"
--	then
--		stash_msg=$(printf 'WIP on %s' "$msg")
--	else
--		stash_msg=$(printf 'On %s: %s' "$branch" "$stash_msg")
--	fi
--	w_commit=$(printf '%s\n' "$stash_msg" |
--	git commit-tree $w_tree -p $b_commit -p $i_commit $untracked_commit_option) ||
--	die "$(gettext "Cannot record working tree state")"
--}
--
--push_stash () {
--	keep_index=
--	patch_mode=
--	untracked=
--	stash_msg=
--	while test $# != 0
--	do
--		case "$1" in
--		-k|--keep-index)
--			keep_index=t
--			;;
--		--no-keep-index)
--			keep_index=n
--			;;
--		-p|--patch)
--			patch_mode=t
--			# only default to keep if we don't already have an override
--			test -z "$keep_index" && keep_index=t
--			;;
--		-q|--quiet)
--			GIT_QUIET=t
--			;;
--		-u|--include-untracked)
--			untracked=untracked
--			;;
--		-a|--all)
--			untracked=all
--			;;
--		-m|--message)
--			shift
--			test -z ${1+x} && usage
--			stash_msg=$1
--			;;
--		-m*)
--			stash_msg=${1#-m}
--			;;
--		--message=*)
--			stash_msg=${1#--message=}
--			;;
--		--help)
--			show_help
--			;;
--		--)
--			shift
--			break
--			;;
--		-*)
--			option="$1"
--			eval_gettextln "error: unknown option for 'stash push': \$option"
--			usage
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	eval "set $(git rev-parse --sq --prefix "$prefix" -- "$@")"
--
--	if test -n "$patch_mode" && test -n "$untracked"
--	then
--		die "$(gettext "Can't use --patch and --include-untracked or --all at the same time")"
--	fi
--
--	test -n "$untracked" || git ls-files --error-unmatch -- "$@" >/dev/null || exit 1
--
--	git update-index -q --refresh
--	if no_changes "$@"
--	then
--		say "$(gettext "No local changes to save")"
--		exit 0
--	fi
--
--	git reflog exists $ref_stash ||
--		clear_stash || die "$(gettext "Cannot initialize stash")"
--
--	create_stash -m "$stash_msg" -u "$untracked" -- "$@"
--	git stash--helper store -m "$stash_msg" -q $w_commit ||
--	die "$(gettext "Cannot save the current status")"
--	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
--
--	if test -z "$patch_mode"
--	then
--		test "$untracked" = "all" && CLEAN_X_OPTION=-x || CLEAN_X_OPTION=
--		if test -n "$untracked" && test $# = 0
--		then
--			git clean --force --quiet -d $CLEAN_X_OPTION
--		fi
--
--		if test $# != 0
--		then
--			test -z "$untracked" && UPDATE_OPTION="-u" || UPDATE_OPTION=
--			test "$untracked" = "all" && FORCE_OPTION="--force" || FORCE_OPTION=
--			git add $UPDATE_OPTION $FORCE_OPTION -- "$@"
--			git diff-index -p --cached --binary HEAD -- "$@" |
--			git apply --index -R
--		else
--			git reset --hard -q
--		fi
--
--		if test "$keep_index" = "t" && test -n "$i_tree"
--		then
--			git read-tree --reset $i_tree
--			git ls-files -z --modified -- "$@" |
--			git checkout-index -z --force --stdin
--		fi
--	else
--		git apply -R < "$TMP-patch" ||
--		die "$(gettext "Cannot remove worktree changes")"
--
--		if test "$keep_index" != "t"
--		then
--			git reset -q -- "$@"
--		fi
--	fi
--}
--
--save_stash () {
--	push_options=
--	while test $# != 0
--	do
--		case "$1" in
--		--)
--			shift
--			break
--			;;
--		-*)
--			# pass all options through to push_stash
--			push_options="$push_options $1"
--			;;
--		*)
--			break
--			;;
--		esac
--		shift
--	done
--
--	stash_msg="$*"
--
--	if test -z "$stash_msg"
--	then
--		push_stash $push_options
--	else
--		push_stash $push_options -m "$stash_msg"
--	fi
--}
--
--show_help () {
--	exec git help stash
--	exit 1
--}
--
- #
- # Parses the remaining options looking for flags and
- # at most one revision defaulting to ${ref_stash}@{0}
-@@ -408,7 +100,8 @@ show)
- 	;;
- save)
- 	shift
--	save_stash "$@"
-+	cd "$START_DIR"
-+	git stash--helper save "$@"
- 	;;
- push)
- 	shift
+ done:
++	discard_index(&istate);
+ 	UNLEAK(rev);
+-	strbuf_release(&out);
+ 	object_array_clear(&rev.pending);
+ 	strbuf_release(&diff_output);
+ 	remove_path(stash_index_path.buf);
 -- 
 2.19.0.rc0.22.gc26283d74e
 
