@@ -7,51 +7,52 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95D1C1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 02:30:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC2C1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 02:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726732AbeH3Gaq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 02:30:46 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:38552 "EHLO
+        id S1727286AbeH3GlI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 02:41:08 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:38574 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725788AbeH3Gaq (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 30 Aug 2018 02:30:46 -0400
+        by vger.kernel.org with ESMTP id S1725788AbeH3GlI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 30 Aug 2018 02:41:08 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 082BD60428;
-        Thu, 30 Aug 2018 02:30:54 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id EB85F60428;
+        Thu, 30 Aug 2018 02:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1535596255;
-        bh=9uTlflniNzpWkD433ID1PKj39FCGrC7e2fOGZ0uKnq8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+        s=default; t=1535596875;
+        bh=AhvyAOdPg9rMo1hcnvPg2WQ5yBqiUNTA9ydyXhLOfg4=;
+        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=Ngxvhh6/IrPyCLdoSt7PQtC4umMiCeU07ymiaB+0XsebC9CNqGnsuZ3LyQxr7MhlP
-         l+BkdxrKFXv19TXG3o7d7SZCXhJxDCs4kJJCVcO7k40a21f0Nu2gH6JQBxiihEi65E
-         sMRiwK2cb3by4o/h8RIVHfFixfP3xCUpWgam245H/ZOtoxn+XaIc4T6Mq7cSFwI01k
-         Y4RY6Ep0CHdn5sPLebx9JeMdEbUxLUM1G7BUAZ+POoiWU/YsF5b1Uo8jpZ/gkA9nHG
-         IX43Qz2t/a3s9yXbgU8h7kiHRxx+oOf1VP4FLXlz9c0SCFXeKsfkeqqayAEMVoAH6a
-         Tvv04PfCzmf3PMtmz/y2WoBfvc9EgFHhHs+cX6GZMgrm4Uxnpklu+Q3ryiDChX3zbX
-         YsIpjuWznxznYLdMersIAsrsL3cSABRfZNV0/89HWCN117QhdD65Usa83CvVj5bp07
-         UfskJh/i+6GusrZJ0dbN+r59aEPUyO8JGGWPK/wFMKKwZByvSvn
-Date:   Thu, 30 Aug 2018 02:30:50 +0000
+        b=dCAAeyRwwnOuV0XGYPsj1+vUtogmwMg+FH4aAsV/BtQcb3E24eRH6rj5EBC1zcAix
+         PEAI8K4gFDo5fu1Dm/2kb4cw6P/bAfARbO/q7fj8AmGZz+oFxPjM+yFSqxH2erHGEr
+         Y82ne0/w7hfKpOnwNNSTLauZEa2vYpgJxaNqHCUleFXm76Us7i3bgOfqV32AIH0wV9
+         vHvDtRjj9tIdiempkPOod2Q7C6IXv+LgSqvttH9FyNCb/PUk9WW7ua2gN2u22eyJFt
+         PmY4WuqMu+iwNC4kAy+1Ty824xlRgfzjwR7EpoWL2op5AA/A8EUEYhcJKq9HOYbK0+
+         rsy1av9TITBYbpK08VpWpbVARiStxMxFFxlw0pUCyFMse/6fXcwYyM6rI4POH1Wmj5
+         Cat6dybUqyODGQhq1cXfT6Ot7nEHz189R7o1Ane/zZJOQXvTY3MHRK/D2vY9NMDVfn
+         X+imkpK21Z5PDUUvhEzuYS0XOehA1FbYHPkULRtTeBAniwc1xsi
+Date:   Thu, 30 Aug 2018 02:41:10 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 08/12] commit-graph: convert to using the_hash_algo
-Message-ID: <20180830023050.GJ432229@genre.crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [RFC PATCH 00/12] Base SHA-256 algorithm implementation
+Message-ID: <20180830024109.GK432229@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
 References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
- <20180829005857.980820-9-sandals@crustytoothpaste.net>
- <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
+ <874lfdecoa.fsf@evledraar.gmail.com>
+ <20180830022151.GI432229@genre.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="3MMMIZFJzhAsRj/+"
+        protocol="application/pgp-signature"; boundary="GmiNL4+5WUWrod5m"
 Content-Disposition: inline
-In-Reply-To: <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
+In-Reply-To: <20180830022151.GI432229@genre.crustytoothpaste.net>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.17.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -62,51 +63,57 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---3MMMIZFJzhAsRj/+
+--GmiNL4+5WUWrod5m
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 29, 2018 at 08:41:36AM -0400, Derrick Stolee wrote:
-> On 8/28/2018 8:58 PM, brian m. carlson wrote:
-> > Instead of using hard-coded constants for object sizes, use
-> > the_hash_algo to look them up.  In addition, use a function call to look
-> > up the object ID version and produce the correct value.
+On Thu, Aug 30, 2018 at 02:21:51AM +0000, brian m. carlson wrote:
+> On Wed, Aug 29, 2018 at 11:37:25AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >=20
-> The C code in this patch looks good to me. The only issue is that I predi=
-ct
-> failure in the 'git commit-graph verify' tests in t5318-commit-graph.sh.
-> Squashing in this commit should help (assuming that test_oid works, it
-> doesn't at my current branch):
+> > It seems to me that aside from t/helper/test-hash-speed.c and
+> > t/t0014-hash.sh everything being added here modifies existing files with
+> > many authors, and would thus also need their permission to re-license as
+> > anything except GPLv2.
+> >=20
+> > Or do you mean whatever fixes/changes you did to libtomcrypt (living in
+> > sha256/block/ in this series) you consider e.g. LPGL instead of GPL?
+>=20
+> Yes, that's what I mean, specifically the code in sha256/block.  libgit2
+> is GPLv2 with a linking exception, I believe, but either way I'd be fine
+> with it.
+>=20
+> It wasn't my intention to offer code I didn't wholly author, so thanks
+> for clarifying.
 
-Yeah, this is a separate series not based on the other one.  If I
-finally submit this after the other series lands, I'll squash that
-change in.
-
-Thanks for the patch.
+I should clarify further: I obviously didn't wholly author the code.  I
+do, however, have permission to license it under alternative terms,
+since the original was public domain.  I apologize for my
+mischaracterization of the situation.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---3MMMIZFJzhAsRj/+
+--GmiNL4+5WUWrod5m
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.9 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluHVtoACgkQv1NdgR9S
-9osULQ/7BaaVaP/4Y7lFXAUhsrwGUyC3/CKc7wXBuVbCQeLBVt8yjMWw5P4aUz4X
-tXIUk56WuoFKsFXUXdGSrIDCrGgQyz6o+7N92o1/0BenXM8vTcZFOH+9x1nWyqW/
-aIgz3pM5M8C+0XcikQ3osX/VrAuLurjRbfa/slPWNsPtvT+n+4KIQVTf+Yq0HOnp
-scqbxTPf70a9kgLzIpoRZdnzam4y0ULepKv++OLRwNrspJIhCIYrNuRnBNDJPi1s
-rUcb/f6Z8JLDBjwGovP+fP8STmujPMRNLxzwkQB9kXeEqAHCMIR4Z0ngdyWtUJQ3
-riNRpWKcY6fd5CqALJOGYzMFNHBy+PtGB9C9oZdchFm+5bFjY/DUGO7oyMQ8V+pW
-o6aWzkJsgIWfFYlz2VbAqHHS9Z42cLIKOPWTCWLoAvl/icAosscXF5TI1V8ClFVP
-XQoNm9dGV7QRSv463n2JfJ+KDtwuiL3+/s40yd8xDfL+aWnR29Al525CTg/uSfM1
-DPqjqHO5ltE/qTTBb9DQXykbdqR0uUhfxtERoSpIjgCcszLx1RjSLHvyZroK+QZn
-RtH8ArzbHRZTuj5sJFfHed8bQ9U3XExy4zBwqwZFXmGsWmy+j9KkMlTAt7uGyV1Q
-2ADJsaaLRUdaivws4AJQGmxe0LLtvvjr+biJl1xIrZzH7cEf8nI=
-=91hR
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluHWUUACgkQv1NdgR9S
+9oslBA//aZw9QWGnpvbZO/Sz4MkzFij1FgANHYKAfAT17keFBzf3MyYVe8eO1BQJ
+thst4dxxP46xy/r9GAz+R6NoIx+Pc9imOBhl3XS4TtMEs/zUmtIFgG8kzbXZnrGH
+b18J5YVthvhUSV8gKGL2QkmZBJ4hZSOJZeaN+8R3xPGS0imLYhVzKbWfSlvpAQGz
+D0kITX3Jk79Zofg2qfTph4H5wdKYPuF4Ae7JFrayceqSWpM1SnM1GuXP524PaUy3
+10CklMg4596JXqSQkMqGon697XXoySPd1DLzqrcEiZnQy9Js6pVi2v4rFXL5kD+M
+aoLbtxd+krJdy23N/lCrBzVmd0/Tbwn3bs2xZC2FxFgQ2bUQAnhRGKIk3X324fcp
+/Lxy+hL7ro8xPRKVnLNZLvjbpHGk9rr1OYrNs8ucnE6rG992QeuNgBt6q3gHP+N7
+T0e32ZWyLkh7zosmSvamkoThWnc1fGfY0CjWeed9IBcGpMjpmnL5LsZPzTSg+LgY
+F4w4d1h4jSkXqAWCYhKtEmw15D8c1WYpsPCRJBwWyd9qIgG2t2kvzkEv3mOgwDk8
+owmhRNeRlcVGZFkFnMMncNwssfPAqMfy+O3/iSO0G/BJNIbayWk2lJnzXz0nig/2
+obhxtcq7SK0Njpy0y/md0FmCjG1ranIQNR+kvQHwBTYiithzv4I=
+=A16O
 -----END PGP SIGNATURE-----
 
---3MMMIZFJzhAsRj/+--
+--GmiNL4+5WUWrod5m--
