@@ -7,83 +7,79 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 181AB1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 11:46:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4146B1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 11:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728077AbeH3Pry (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 11:47:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55201 "EHLO mout.gmx.net"
+        id S1728598AbeH3Pxk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 11:53:40 -0400
+Received: from mout.gmx.net ([212.227.17.21]:47943 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727499AbeH3Pry (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 11:47:54 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lfjxq-1farsB0UY6-00pKPu; Thu, 30
- Aug 2018 13:46:01 +0200
-Date:   Thu, 30 Aug 2018 13:46:00 +0200 (DST)
+        id S1728297AbeH3Pxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 11:53:40 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgdBZ-1fXrFR3G6P-00o1cH; Thu, 30
+ Aug 2018 13:51:40 +0200
+Date:   Thu, 30 Aug 2018 13:51:38 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: Git in Outreachy Dec-Mar?
-In-Reply-To: <20180830031607.GB665@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1808301340280.71@tvgsbejvaqbjf.bet>
-References: <20180828151419.GA17467@sigill.intra.peff.net> <8736uxe2pm.fsf@evledraar.gmail.com> <20180830031607.GB665@sigill.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Ulrich Gemkow <ulrich.gemkow@ikr.uni-stuttgart.de>,
+        git@vger.kernel.org
+Subject: Re: Trivial enhancement: All commands which require an author should
+ accept --author
+In-Reply-To: <xmqqpny1at28.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808301350340.71@tvgsbejvaqbjf.bet>
+References: <201808282305.29407.ulrich.gemkow@ikr.uni-stuttgart.de> <nycvar.QRO.7.76.6.1808291653190.71@tvgsbejvaqbjf.bet> <xmqqpny1at28.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Hw6VUiK+yvCRxEo65oC/Mo20IsaZ9+lgIykBy+37ptYCEyflgBJ
- foo4sAr6ZXsBNxPXBx4xYhoTbGeSBWprVyItTd2YZzC6jqRkPk2HAEq+SI6ci0zYw9tr2AI
- Em/YBJZcd0Geu4w/4PGbe9/bIxyXypdpZrXWB1+ahhEbkKD4WQ8yEt1fcNIgq9ZBjna1dk1
- pwWu8xwE/To+uc2AgEzTQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:yQp/e5KLqJU=:lOPyn2puhEJIzGPUty3FVJ
- 4okaoUBkCJLd97NtRamVZmuZUG3x032uLYMrsuTjrpe/Rmc9Qs5usfjzsGqhxtWUNwNuSId2W
- FARTNHERU4bs0Jw0BGg70kiZtT2u4ckVzwL4QqS/JKo7MbBsngHfbagBTTlv8PI3En8CyF6cx
- Inx/2zTE6JTSWJ97bWV31oH5FRxemhvTVKUfjxr8HrzV+Ypr8qEHgRvfWU/kjX1LeJumMy5WU
- Gn72F8cvX7zpNbjUJAgh+4UNfvHBTIWiY+xCRpKmUQ+BYnMTMwApf23eqHvFEBN5jjuKGLB86
- QbSg1jYE8IS907crIe00sbaGZ73K+yKqeKXbNpghjI75GcT0LTw5aO8fYjU9f7h70AbdhWlJU
- O5E2C6XUNfXL7VRPclhng9N0N2qVZ/AwlB8nm2/Vss/eK8ENPwc+VetEGtxJ+EXF56tvKYVM7
- atc+8lnO0Dcage9CVr80XrKvfcKUTSCUeU7qsAR4sx/fvDYtzdg2lIdFgojmcuMsebZNwNoVb
- Qbch9GGCL1Aw0ujfmqd2PE6KIwYO0Lg5PsET+dT9kIOapuCIEl7RBqqTbAtZ0cF3jhuOzEU+N
- GCcj6efw106co8fnXAtEJjzfj05zKE4jZxEBArAgmqQjwS5ITWThDXP8yCVWWJul7CLmmfhSO
- p/JP2Snd82K677ezxcfDDqN0KSDp00TvM5gzpYo4IlQJPWRVL5VWelT/RAJhxQ6ltvr8vhBK8
- 2yg3jzTelK5JUcJjXWv63jKdEZSn0MqZvw5KXnjKMyIAgQq8bYmaJo3SFZAH6/aYX5fk9BJat
- cT+zBC5
+X-Provags-ID: V03:K1:LQVHLZEL/7U75c7M3gHtg2QWkgzYgAT9HGUNhFZLqZv4JflYtHi
+ l/3sUjBJtH3GpxU9hnZ9QbHdpc8UO8+S5XmNPyvIn0uzuIgbSnU53GbG36kwxlTMZFjxQ5n
+ c4XDf9oO3UWTuTbci8m0y6KqYeMWdlA2UN6WmkJwTK7pt5czeYi2+VoaHiqbZu6ryYDtt/s
+ AML9oO1c3ZG5L8FhB6Yqg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LSnYxaPahDM=:qEz5/lKt0r5HvW2yGabBIc
+ Knokwfj0ltxgMFTzezd1b+tYTw9P9IVDHGZRSN4M2l/0PXGp7tVIWmqkMdDr3x8pvprM9MWxY
+ TZMl2ofEhfoamVvQbLQvZvU1HUylbraGVieBp2w3tvQ28/3N7nQBMbqyYc7dyELZxt2VOeR6Z
+ 6KOzCFjbyXaVkhQWIpWRpb7JAWqIpJDlHVEU3Ja5jJLmSNPeLf+9jsYo9IDSD6cbEc/pl2AsU
+ /9sbbtmzT9Sc0ox5yvuQyBxRJ5vcja3s+4R2/+ssXXeMIsl4gGn7U5c4AQneIb5XHEFQQT0DY
+ l+5lYOGuNisApp6u4vV/gzQ6YsoY/tLBkBpLBQIhr7PrEWgjyGprQggdE0UY/rtRexpVBBmj+
+ 2vx1NedOsEx6uJhVjfGO3fKPHWez/V0Rp5fIQ/mZyt2lGnY9he6VsbweT2KKtBlVKZ1oB+Q3Q
+ xqSQ6ttbzMVX7sgRw81qWlrsgGG8Foa5og2CkyT/n05gRcjhvydnzYy4hM7rvoMMeHfONWG+w
+ ou9fbgDzAI7Nc7aMbICfkV4fvnZfto+oBc7IzZHTJi6Z2lAfhY3TSa2CHKMnuUwQXuc80BXx4
+ /FSxl/++VGq8blV+IWR9nkRtM+WgjHGiW7WTjUy0M1iq0vIn4d6ff3JnzvRdXMgqfLsBXilNo
+ gxny0Yt+z1gTceDGh9T0zM56BrKXJy5cTArPqraY/02+ngb5JM/uEHmsoI1RRaYu7PePDurck
+ MUJxGH/GI+6qIhclU5m2KDLXd0dup2tWp9aTx38douSgM75753I4P3dqDWhyhWYKzhVWO6t9c
+ b+wJay/
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+Hi Junio,
 
-On Wed, 29 Aug 2018, Jeff King wrote:
+On Wed, 29 Aug 2018, Junio C Hamano wrote:
 
->   - it naturally limits the candidate pool to under-represented groups
->     (which is the whole point of the program, but if you don't
->     actually care about that, then it's just a complication)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> So IMHO it's easily worth the trouble.
+> > The `stash` command only incidentally requires that the author is set, as
+> > it calls `git commit` internally (which records the author). As stashes
+> > are intended to be local only, that author information was never meant to
+> > be a vital part of the `stash`.
+> >
+> > I could imagine that an even better enhancement request would ask for `git
+> > stash` to work even if `user.name` is not configured.
+> 
+> This would make a good bite-sized microproject, worth marking it as
+> #leftoverbits unless somebody is already working on it ;-)
 
-I am willing to mentor, and the only reason that kept me from already
-stepping forward and trying to brush up the landing page is this concern:
-traditionally, we (as in: the core Git contributors) have been less than
-successful in attracting and retaining contributors from under-represented
-groups. I don't think any regular reader of this mailing list can deny
-that.
+Right.
 
-And while I find it very important to reach out (there are just *so* many
-benefits to having a more diverse team), I have to ask *why* we are so
-unsuccessful. As long as we do not even know the answer to that, is it
-even worth pursuing Outreachy?
+What is our currently-favored approach to this, again? Do we have a
+favorite wiki page to list those, or do we have a bug tracker for such
+mini-projects?
 
-I mean, if we make serious mistakes here, without even realizing, that
-directly lead to being stuck in our old bubble, then we are prone to
-simply repeat those mistakes over and over and over again. And that would
-just be a waste of our time, *and* a big de-motivator for the Outreachy
-students.
-
-What's your take on this?
+Once I know, I will add this, with enough information to get anybody
+interested started.
 
 Ciao,
 Dscho
