@@ -2,91 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B483A1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 11:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C18D31F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 11:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728622AbeH3P2X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 11:28:23 -0400
-Received: from mail-lf1-f48.google.com ([209.85.167.48]:44780 "EHLO
-        mail-lf1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728443AbeH3P2W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 11:28:22 -0400
-Received: by mail-lf1-f48.google.com with SMTP id g6-v6so6861214lfb.11
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 04:26:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rasmusvillemoes.dk; s=google;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-language:content-transfer-encoding;
-        bh=PoredHVfj79wA7OpquVhjzUA/cvGnUDiPLnoDW/Fx/4=;
-        b=Goy1sRmHxV8f6sy/k33GuY1Mu4du/qvXrnO5OjCeP1xwBKODMMrtrolHlE5nG7/atq
-         RmZawNYjV7j/cJBnhSI8gz4YHzrj5ZOVrCxfOZAeBOGrzF8c0fe2XfEkL+d4t5p8pWNd
-         LWU4WWI7WyvfggUnqbr06FxgGXNQeoYmDxYAU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-language:content-transfer-encoding;
-        bh=PoredHVfj79wA7OpquVhjzUA/cvGnUDiPLnoDW/Fx/4=;
-        b=B5HZJ4vDC4SJ4FoKk5NRA+eddewwAsw4xK6yru5d0BgEYfuXifUchwLnHlZ3C8OM0L
-         Dup2P4GomBDUIvRuqfKrKfrrYtoeFJpP3H1EKwSeO70Zie//pqy85fXkK5T7icBqdAut
-         6RSq4zE+dckAmgJyfENVSYBzUOQni3GknrC2tPs7uv3v2PcKjej5+D2oUiAZud8iPk9T
-         1liEAYCXy7eysfuKYc/wwIY49PYwzxzQjZVSGc70vKzOmiAEoZ+R2OS1AnJZIq4wVadw
-         TWPcH0B/E8ht5pYnqHlep5lYooXHb5wBmmjd3MYhCS8LwOQqQWX3wZPOQ1ngi9J0k8Fh
-         Hnzg==
-X-Gm-Message-State: APzg51AiIWaD9Qv6kI07GdYSXlf7hGkQrC96+l0TvHfpBbdAy2kC1mF1
-        7S7APk+0w/n2y0bhtiMtZqww1wX+SNQzTpUs
-X-Google-Smtp-Source: ANB0Vdaip2P1eWGp2KipvCkCpIxt4seJ/FctdPD9+89P+KrxmZDBhLD+0l5YnjSHbESbeIpqBL1sVA==
-X-Received: by 2002:a19:8f10:: with SMTP id r16-v6mr7586865lfd.1.1535628400351;
-        Thu, 30 Aug 2018 04:26:40 -0700 (PDT)
-Received: from [172.16.11.40] ([81.216.59.226])
-        by smtp.gmail.com with ESMTPSA id i86-v6sm1254760lfb.67.2018.08.30.04.26.39
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 30 Aug 2018 04:26:39 -0700 (PDT)
-To:     Git Mailing List <git@vger.kernel.org>
-From:   Rasmus Villemoes <rv@rasmusvillemoes.dk>
-Subject: feature request: allow commit.email config setting
-Message-ID: <0f66ad7a-2289-2cce-6533-a27e19945187@rasmusvillemoes.dk>
-Date:   Thu, 30 Aug 2018 13:26:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1728625AbeH3Peo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 11:34:44 -0400
+Received: from mout.gmx.net ([212.227.15.19]:55801 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728614AbeH3Peo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 11:34:44 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LxxKu-1fpeAr3fMK-015GTX; Thu, 30
+ Aug 2018 13:33:01 +0200
+Date:   Thu, 30 Aug 2018 13:33:01 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Piers Titus van der Torren <pierstitus@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: improved diff tool
+In-Reply-To: <CAJmvCd1BwPNgZM+g7c6An-EESMHDOSGQe7RjkAAz36eNY3fvGA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808301324120.71@tvgsbejvaqbjf.bet>
+References: <CAJmvCd1BwPNgZM+g7c6An-EESMHDOSGQe7RjkAAz36eNY3fvGA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LzEDZsfs0Wi1xm5fM95h1e6HqQfJYUdVtuuPahFcW+HX3UNT5gQ
+ G9jY9tmy+BdCADndifJzYRXzMMkVfDSiN7VRIGHOTfXQiOfXdcCbvPC6aSfsQzK86gBqMOI
+ 49FOZ6PXWIHMXb58LIo7gFXGaqWF9YoPVQ4fz1663I7veRBIFrBBPCIVPeX5DA41Omcueg0
+ YBr0Dh9Ny1JBWSB/5u7Fg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Ufp9634nNRA=:iHzqEl+DxwHLyRNtkZBTgP
+ +JSKNhw7wGIDVf/o52LkLr6ZugZ/zuwsHUCY87Ek3b/CDQI5LnHsiMo6m5biMAUSVCINBFcg4
+ n3FzL+vWQAZQ8W9b0Ajnk1Ry1032HqX5auYtkLk8/UgKvwJXK6lMMHep+oMPc0cyh0g3irVzZ
+ 1BDdWlrMtZbcs1zEDff85IdVDaoW1M3r+tYXm0aohvAu3xFQyMhI2FVULmmJcL9rCohDhF0xu
+ ww1wJWo228StgVtIFsWLEQGQTRvwRJS4LkJckGLmbhlqDzBsR53Dw1oGAjyGXgAFlz9iGvGEr
+ d71K1E3pDYhVOwh3iItbtG+HSZfHClyTDccH+hlbVg0+5hrqSYIVXiJGaMVXlUYBxOvT2mac3
+ HT1yPpEUA8iAG9MKSMXX08jeY8Mh4Rybiw4lMQg1BCjMTct64t/zyUckAQ+ASnd3lHSEF2RiB
+ HP7kfsJPDQ0XCiCF5Y3EU3yjZVD5K9aHHFhIqw/2ulZw1Oxx3N3ztvaaSw0paU70bNuwmnaXJ
+ AYh/IO1MbGj3ugt4uR/7HYfBbFwU/gDthronU6vQc13NsNCdKHPmCN6cjIGcKitKtaWOLo+WJ
+ sXU8oVnmfltDFwYqYFtGLIiteqkR6WTCApHyStKfWkFiY2Mj5kk2RTsM7Ki1E5bxUIfsXitX8
+ oMA4/WtVJRdLKYCAOdOXL1BO9NJMH6DUjLEiij9pnL0SbX7I/CGoB81osFaSQyFLwpF+OacV+
+ lXysr0hHd6L6yZndUcOHF9zMVAuzirqJru9YsuNDut6nWQnTojFkp9OB/Yg0fHw91Rhtph3DX
+ QhoUqvv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As part of my dayjob, I did and still do some work on an upstream
-project. A while ago, I was granted commit access to that project.
-However, upstream asked that I would register with their system using a
-private email, or at least one that wouldn't change if I changed jobs,
-rather than my work email.
+Hi Piers,
 
-Now, I (and my employer) would like that the work I do as part of my
-current job on that project has my work email in the Author field, but
-since the commit access was granted to me privately/personally, it would
-be nice if the Committer email was the one I used to register with their
-system. I can set GIT_COMMITTER_EMAIL in the environment, but that is
-rather inconvenient, since that means I have to remember to do that in
-the shell I'm using for that particular project, and I can't use that
-shell for other projects. So it would be really nice if I could set
-commit.email = $private-email in the local .git/config for that
-particular project. I don't personally have a use for commit.name (when
-missing, that should just use user.name as usual), but it would probably
-be most consistent to allow that too.
+On Thu, 30 Aug 2018, Piers Titus van der Torren wrote:
 
-I tried looking into ident.c, but it doesn't seem like it is
-straight-forward to implement. Probably fmt_ident, ident_default_email
-etc. would need to be passed information about what purpose the ident is
-to be used for. So before trying to implement this, I want to hear if
-this is a reasonable thing to support. Also, I'm sure there are some
-subtle semantics that would need to be decided and gotchas to watch out for.
+> I've created a diff algorithm that focuses on creating readable diffs,
+> see https://github.com/pierstitus/klondiff
 
-Rasmus
+Looks intriguing.
+
+> The git integration as an external diff command works quite well,
+> though it would be nice to integrate it deeper in git, and also in
+> git-gui and gitk. Any way to use ext-diff from the gui tools?
+
+Git GUI and gitk are both Tcl/Tk programs, and will need quite a bit of
+work to accommodate for your diff mode.
+
+To put things into perspective: the `--color-words` mode is not integrated
+into Git GUI nor gitk, and it has been around for a while...
+
+> Is there interest to incorporate this algorithm in the main git
+> codebase? And if so, any hints on how to proceed?
+
+The best advice I have is to look at the `--color-words` mode. It comes
+with its own "consume" function that accumulates lines from the diff, then
+outputs them in a different way than the regular colored diff. Your mode
+would want to do it very similarly.
+
+This is the accumulating part:
+
+	https://github.com/git/git/blob/v2.19.0-rc1/diff.c#L1886
+
+and this is the display part:
+
+	https://github.com/git/git/blob/v2.19.0-rc1/diff.c#L2013
+
+Basically, I would suggest to do a `git grep color.words` to find the
+places where the `--color-words` mode is special-cased, and add new
+special-casing for your mode. Which, BTW, I would suggest to find a
+catchier name for ;-)
+
+I have not looked closely at your implementation, but I could imagine that
+you might want to have at least part of your algorithm step in at a much
+lower level: If you can use the patience diff algorithm itself for
+pre-processing and initial diff generation, that's great, just force
+XDF_PATIENCE_DIFF; Otherwise you will have to implement an alternative,
+similar to https://github.com/git/git/blob/v2.19.0-rc1/xdiff/xpatience.c.
+
+Ciao,
+Johannes
