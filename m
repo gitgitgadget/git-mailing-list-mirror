@@ -2,64 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F6A21F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 20:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5B141F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 20:50:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727200AbeHaAkt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 20:40:49 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:41397 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727067AbeHaAkt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 20:40:49 -0400
-Received: by mail-qt0-f179.google.com with SMTP id t39-v6so12173355qtc.8
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 13:36:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=v6Z0b7Fp5HCgCXJo8V8MnzjrgjY9bHxjiUOndGIKaL8=;
-        b=L37Ciq8ADLoBh/06Cdhn7gpTFcTq1MCndJsl459N5X9ugI9CvsczvXmXTgYjqLd+RE
-         ogBXD7SOiCiKE+ik/CQGPOulfHV1PNLGPIupzKuiKkVJgcWRRo2W1OGg0C1Uz0KVDyQr
-         FE7azj+ZXsx4IveU28W/K012hw+immDK8fPqSf9PYlM7JHE0N5BQdSw6sQ9a3aUWbZmt
-         vVsongsG3K8MhWtR+47cwLF3e07Vg9gCerOjg4lX38fB3IHWg5e52Z5LaL+WZywyXB12
-         +0k4guxalbnnitmzj5otPp1pPgagzjygBzro+KgUV/euvuSjy3k682fILl5qA6lyVINJ
-         dpvA==
-X-Gm-Message-State: APzg51BPGg0MYtw5vUQuE6EG/uqxMeY+hIWFQOV1YxyPuA5M37Nt19uS
-        PUP5R39qeNSR5JhUcpQoPUd22Klhzkw7SHf049g=
-X-Google-Smtp-Source: ANB0VdYSixV2oL22oXOUFpYGE/Xep2NNOu+Ignh4LERZbrUeFdg73uPGEkvioTp28mtrsoGuu5asTd+NxlZWDU999Qk=
-X-Received: by 2002:a0c:c503:: with SMTP id x3-v6mr12833211qvi.82.1535661411287;
- Thu, 30 Aug 2018 13:36:51 -0700 (PDT)
+        id S1727245AbeHaAyg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 20:54:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:34662 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725893AbeHaAyg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 20:54:36 -0400
+Received: (qmail 10727 invoked by uid 109); 30 Aug 2018 20:50:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 20:50:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31677 invoked by uid 111); 30 Aug 2018 20:50:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 30 Aug 2018 16:50:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2018 16:50:34 -0400
+Date:   Thu, 30 Aug 2018 16:50:34 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Subject: Re: [PATCH v2 4/4] branch: make "-l" a synonym for "--list"
+Message-ID: <20180830205033.GA27399@sigill.intra.peff.net>
+References: <20180622092327.GA8361@sigill.intra.peff.net>
+ <20180622092459.GD13573@sigill.intra.peff.net>
+ <87wos8cjt8.fsf@evledraar.gmail.com>
+ <xmqq4lfb667c.fsf@gitster-ct.c.googlers.com>
+ <87in3rd422.fsf@evledraar.gmail.com>
+ <20180830200452.GB22407@sigill.intra.peff.net>
+ <xmqqo9dj4mym.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180830081202.GA10224@sigill.intra.peff.net> <20180830195546.GA22407@sigill.intra.peff.net>
- <CAPig+cRXEegGwm3QiyEZqkVN1NYv5xAAYRuAKHUE8n-g9m6jqw@mail.gmail.com>
-In-Reply-To: <CAPig+cRXEegGwm3QiyEZqkVN1NYv5xAAYRuAKHUE8n-g9m6jqw@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Aug 2018 16:36:40 -0400
-Message-ID: <CAPig+cSq=AikZU9X8hC9QM29vUA4bNKXLvf60dweJWyvFWY0EA@mail.gmail.com>
-Subject: Re: [PATCH] doc/Makefile: remove tmp-doc-diff on "make clean"
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqo9dj4mym.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 4:34 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> Taking into consideration that people might be surprised and alarmed
-> to find "git worktree list" showing a worktree they didn't explicitly
-> create, would it make sense to do something like this?
->
-> clean:
->     ...
->     -git worktree remove -f tmp-doc-diff 2>/dev/null
->     $(RM) -r tmp-doc-diff
+On Thu, Aug 30, 2018 at 01:29:53PM -0700, Junio C Hamano wrote:
 
-More accurately:
+> >> > I do not know if the documentation that is shipped in 2.20 should
+> >> > talk about how the old world looked like, though.  `-l` was a short
+> >> > for `--create-reflog` is worth saying, but I do not see much value
+> >> > in talking about the warning given in 2.19.
+> >> 
+> >> I'm anticipating that there will be users in the wild with similar -l
+> >> invocations, noting this helps them, because they'll be wondering what
+> >> some script that does "git branch -l <name>" is trying to do while
+> >> reading our docs.
+> >
+> > I don't have a strong opinion either way. If we do mention it, it should
+> > probably be short ("Until Git v2.20, the `-l` option was a synonym for
+> > `--create-reflog").
+> 
+> I agree that the short one would of course be good.  I am on the
+> fence about mentioning the warning only given in 2.19.
 
-    -git worktree remove -f Documentation/tmp-doc-diff/worktree 2>/dev/null
-    $(RM) -r tmp-doc-diff
+Yeah, I was confused about that part of the thread. Is there something
+proposed to (additionally) go into v2.19? Ævar, can you elaborate?
+
+-Peff
