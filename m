@@ -2,81 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 705581F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 18:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA8A1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 18:56:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727590AbeH3Wyb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 18:54:31 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35824 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725836AbeH3Wyb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 18:54:31 -0400
-Received: by mail-wm0-f65.google.com with SMTP id o18-v6so3058051wmc.0
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 11:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XVaGzPVA3W7AS65qGK1+jCA1JFtBC+naZY1Z3SvuePA=;
-        b=KpbvdxR4Z9zfSBMWPjKM5Unh07TniFn47fsOWPoCNRB/tMUhmTB1ZKrg2jgHV8VLZA
-         hYfAuvqHtsTiKt1bRxtFyATblvk7o+kweth68bsAV9U8ZFYgJ0Mxs6ua+XHEBd/LCYZj
-         VoNlYNDWCt8qAGMUhWehnZVrhe31ZD7RMfuyw4tU0lsVYxGnQTL3aamL1S3eRqSF7k8M
-         vBxWsw8atngDLX9yTkwyT6vZ3Zv4JpyLkFGlOkkbvG4VEQv2S9o5yh4jlsQIV6TA2bji
-         XDDt1VYNPtIfBSsShVvhP8jgkKC8iHPz4awI4kQp9Q6v7YkstxAVhSNoumaclYp2GZAH
-         5X7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XVaGzPVA3W7AS65qGK1+jCA1JFtBC+naZY1Z3SvuePA=;
-        b=iFUgSCrdz7c65JPqg3nXB8OtgMlDcEZLtyz7p9eMgqTiB/TgBaKkdtVxzXSIIpDdZZ
-         XbpRlrMTslsIZ2FB5aXRs491CYVa2VXOBivl4XCyw0/fURYwVLXV9ZQOynQS//m+eHYt
-         8+BX1Q/fGGQKLT0zXQ3PiiNmuicq+IgRU6WAswJvhHb8YVywGo6t9h5X+45tv7dKJ0qp
-         DTONzjq6B8cB8Wi5KbR7wPdsy0WZeSzaqa8BcrIoaT/7L0gfl8DevAevkiVWI1OUKW+o
-         IV7NFFy3IWGTV1mSqqmd0zkVw7GJwHuTds8E1YYTJUP2f/rZJN4h9ErgPdGuuVYz4wQe
-         ukZw==
-X-Gm-Message-State: APzg51CEmG4QdcuPKnxsYZlzKEDX3zUVXlEd0qdQuWOkmWwb3liA55Cn
-        aBVB4IrLtELtHsktUweZYYm5Wivx
-X-Google-Smtp-Source: ANB0VdbFu3PYjArcW7XzaAYE9ctx9wzCkKBSIAZcudDxZOVdyRWVDhiACMRWlbqAiQsVD7awiQ3Wfg==
-X-Received: by 2002:a1c:ee97:: with SMTP id j23-v6mr2625623wmi.66.1535655057331;
-        Thu, 30 Aug 2018 11:50:57 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h184-v6sm1773492wmf.28.2018.08.30.11.50.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 11:50:56 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jann Horn <jannh@google.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
-References: <20180830070548.GA15081@sigill.intra.peff.net>
-        <20180830070932.GB15420@sigill.intra.peff.net>
-        <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
-        <20180830184201.GB14273@sigill.intra.peff.net>
-        <20180830184459.GC14273@sigill.intra.peff.net>
-Date:   Thu, 30 Aug 2018 11:50:56 -0700
-In-Reply-To: <20180830184459.GC14273@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 30 Aug 2018 14:44:59 -0400")
-Message-ID: <xmqqzhx34rjj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727727AbeH3XAZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 19:00:25 -0400
+Received: from mout.web.de ([212.227.17.12]:39855 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727387AbeH3XAZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 19:00:25 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MWB8f-1gOKhF2miX-00XLDT; Thu, 30
+ Aug 2018 20:56:48 +0200
+Date:   Thu, 30 Aug 2018 20:56:48 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Robert Dailey <rcdailey.lists@gmail.com>
+Cc:     jrnieder@gmail.com, Git <git@vger.kernel.org>
+Subject: Re: Automatic core.autocrlf?
+Message-ID: <20180830185648.GA10427@tor.lan>
+References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com>
+ <20180830045407.GB140348@aiede.svl.corp.google.com>
+ <CAHd499BCk4Q4oPY=CXK=YrUbNUbz4J_KoeQngfz=92Qfc6q=eA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHd499BCk4Q4oPY=CXK=YrUbNUbz4J_KoeQngfz=92Qfc6q=eA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:Genh75rdbpJ88kFyK9o/74tHqxFBzLA2XgG4xEhtcr9ZjSiyFPS
+ vGovgKnrwnz8TDFF1rNwlpUshTWVuLuSbaSXu00ASD8oESERsqvL/HKz+aXOf+1HkbTjBT9
+ SjzHj093hdfKZ6ePAUmIasKpLxdJAxAvpRdQsTn2NGTaE9PQyH2bY17eByYaqRjHK7UIp9K
+ kQZztjuSNNn1s94k0Ak9Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0QM4VImwvz4=:+9q25Y2b3EUOZoCUbfApwP
+ oKyMB6JEPvI40zsUmarRGTgaLV7dsCBi7a4EkZDe/YZHKCINm/n3fqLD9R2ASN/yEPkNwbo6F
+ F7Ykmzhbtajox/xwafMO+BAU2YYj11Qe/tTQJLuHmxXZTTBufE5E55JrM3kVXWAVBLsWGNdEL
+ be11/CIOto/qQr7eqx5Ij3qLFdKjOKztXw8Z/57Adt0clgwcdmCXa+gPyYMAvVVpUYWjtxq91
+ ZXxvhWQQ1pSGj8/eRVB4/aN+ZG0qNkNYwiaaj31DrCFWzWOoC8FLNlprehjZZtbK5Jnh1569/
+ bQhD01Dmn/P4Fsb9M9g4SCVtywMBLVfIpubkjGYmfQRW9wRg2b2Vn8z+E5nOIyvLgJnr8taXc
+ Z2HDX7nWIUlzW+hHoi0hAGEgqbRYVbl+6vXwZzNRWYzpW8jzH7byZj7SkXU6JJ5v+c26EEqI3
+ QnT2a6nbzR5SqvWm+QCkGizH4JzGSxQi2fqr5hzwxCBVLbolk0Tu6lj+c2ZRe9wSncHLzaM2y
+ bx6wDSsrZzf67uCnb3Jorbaqsh/F6BtHOesE2bONndYloIEU6YzSa5WxqeBkp30ZyVc6+FIJW
+ c/kHtTaI7gWCAU58nZ4KxAa4IvMorrImhQ1TL7HllTz2jClUJdlCfdyPVAqnlbLvMahxKsxPR
+ mDSbSN3TZPihP+TIRees6zmQeCOFhd+IQNO/X9/+b1f0N0nkzZesjhYaO1QC40VOO6pJKikNX
+ BkM079wlvjujQHleRLScZwVahdYrSzvjClxWYZ29BwJJ+0lfLnXCPkZtkG8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Aug 30, 2018 at 09:57:52AM -0500, Robert Dailey wrote:
+> On Wed, Aug 29, 2018 at 11:54 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> >
+> > Hi,
+> >
+> > Robert Dailey wrote:
+> >
+> > > Is there an 'auto' setting for the 'core.autocrlf' config? Reason I
+> > > ask is, I want that setting to be 'input' on linux but 'true' on
+> > > Windows.
+> >
+> > Others are exploring your question about the configuration language,
+> > but I want to emphasize some other ramifications.
+> >
+> > Why do we still have 'core.autocrlf'?  Do 'core.eol' and related
+> > settings take care of that need, or is autocrlf still needed?  If
+> > core.eol etc do not take care of this need, what should we do to get
+> > them to?
+> >
+> > Thanks, after having run into a few too many autocrlf-related messes,
+> > Jonathan
+> 
+> From my perspective, the confusion is due to the evolution of the
+> feature. There's multiple ways to control EOL handling but most of it
+> is legacy/backward compatibility, I think. core.autocrlf is a
+> fall-back for repos that do not have a .gitattributes. Because
+> .gitattributes is optional by design, I'm not sure if getting rid of
+> the config options is a good idea.
 
-> I can re-roll, or even prepare a patch on top (it's sufficiently subtle
-> that it may merit calling out explicitly in a commit).
+Good summary. My original plan was to try to "make obsolete"/retire
+and phase out core.autocrlf completely.
+However, since e.g. egit/jgit uses it
+(they don't have support for .gitattributes at all) I am not sure if this
+is a good idea either. Opinions are welcome.
 
-Yeah, I tend to agree with your reasoning to do it on top as a
-separate patch.
+
+> But your point did make me think
+> about how `core.autocrlf = true` should probably be a system config
+> default for the Git for Windows project. The default for that value
+> should be platform-defined. That would make it automatically work the
+> way I want, and might solve a lot of the issues where people are
+> committing CRLF into repositories on Windows.
+
+Unless I am wrong, that had been the default a long time ago:
+Git for Windows (at that time msysgit) had core.autocrlf=true
+by default.
+While this is a good choice for many repos, some people prefer
+core.autocrlf=input.
+Others just commit files for Windows-based repos with CRLF,
+and the advantage is, that "git diff" doesn't show "^M" somewhere.
+
+I allways encourage people to set up a .gitattributes file.
+Does anybody thinks that we can make core.autocrlf obsolete ?
+
+
