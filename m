@@ -2,74 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26B6F1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 09:12:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 650A21F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 11:03:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727874AbeH3NNX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 09:13:23 -0400
-Received: from mail-qt0-f177.google.com ([209.85.216.177]:36788 "EHLO
-        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbeH3NNX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 09:13:23 -0400
-Received: by mail-qt0-f177.google.com with SMTP id t5-v6so8977085qtn.3
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 02:12:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vVo5f/zgHosHnRUrH7jRR+To8nl+K0rOmaDkWTqnJbE=;
-        b=MgwXPJkdywXez3yLhhLSuSbzwgIaRSP8Zy56jIbs3hJ12ziWNbD7CgQpFRWoSZy8ep
-         Fh/9B34plFqA3bChg6vYt1Jxvyxn1HpwvOJgIBIJBbY6kwp7RzxkyS4o/54tBgB8swjq
-         an2xfpS/C8cELyVOoBUbZVDW3TJmHjGK2E4FXjAqop/3deWAZYcnz7Dao/f3qdbGXZAL
-         lu/NNxPjLM3DszlOSJAybKnQ7cNGV1EtsPle3qg9qoNHQ+yEY14EKgFrYy02Hbk94vZ/
-         rhSjFUs5n8G8KiPKVI92EmXtZoOXYpNMlInNZ5ebf8tjEGEiT3EDAIFaxlwgoWRulyMp
-         JAdA==
-X-Gm-Message-State: APzg51BJk53SsZkTlXOU/CQchlW3SR1mSoEt4WdzFzQi/4VV/p3AwKpF
-        YEYK9A0/16l8bEKlcqkW3r9MadZasiz+Ysgg7ym7Og==
-X-Google-Smtp-Source: ANB0VdZFa6u6j+hzQELCXDtnG5vTgHVdGVmid6cyvjubJyKov7ZVbumIlGTaEGolcl2tMCGSSOKAHpefRUlnWESOUkE=
-X-Received: by 2002:a0c:b616:: with SMTP id f22-v6mr10542075qve.184.1535620333223;
- Thu, 30 Aug 2018 02:12:13 -0700 (PDT)
+        id S1728269AbeH3PFV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 11:05:21 -0400
+Received: from mout.gmx.net ([212.227.15.15]:34917 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727451AbeH3PFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 11:05:21 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Llm5o-1fLzzC0Q8e-00ZRvF; Thu, 30
+ Aug 2018 13:03:42 +0200
+Date:   Thu, 30 Aug 2018 13:03:41 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] builtin rebase: prepare for builtin rebase -i
+In-Reply-To: <xmqq5zzs94qb.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808301259420.71@tvgsbejvaqbjf.bet>
+References: <pull.23.git.gitgitgadget@gmail.com> <pull.23.v2.git.gitgitgadget@gmail.com> <5403014be738425e942a9bc1ca2029dd8d2137bb.1535553074.git.gitgitgadget@gmail.com> <xmqq5zzs94qb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180830081202.GA10224@sigill.intra.peff.net>
-In-Reply-To: <20180830081202.GA10224@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Aug 2018 05:12:01 -0400
-Message-ID: <CAPig+cRm80qBUXiykTtrHMxrMbzMLjYb3TvJB1UwoHNPFNxkkg@mail.gmail.com>
-Subject: Re: [PATCH] doc-diff: always use oids inside worktree
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:LTpwyucW240CCkN1yyveqXSspSdoyGviolA3NfutopaUlpGuNna
+ fg4EEymtHS2cDXBvzcxePrknwrgCYgkScHyP1ZgtAzfzCgrJndaPvCQSIW/TS6X9f2fEMQs
+ kPmhWet7Mmgzv8bY0twkk3MBhnUp9qj1yJfikGtSzyd7opZ17CjeSJqISjS4St7YnoKYH0Z
+ YX6DZbGs5snuc+Bab2LfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:l4K1NmfhwDg=:JmP+uy//ObmSQ9Pi/DAZea
+ F8wOiixVUzY2+R8jdAWOMJax1dVeBs97cNPnpL4vrCHHqTDJSiHFXhQw/zLfNpI9ffE2vYqAY
+ oaNpzXNnJuUbIigf9KTgv6ElzFV7OzcDxb6ADcgyYUdz6UyhSwnJl5NtLRyemPatl/6LyUPiN
+ dI4frw9vaLGodJQoMYffjWZRGGFzrCzUdNZl4dwAOs/Urt15cLVi8fg4x32hiuGfJ6rmCHA9A
+ CRiC76ok9HenPcYKbPlfuuMznqthNnURWq8bSB2pQLihvjRH1WoIs/BstPQMCREM/jwMoHv7w
+ by3eaTlgD4rQqbLAb1NQ7/3vSqgPMcUTbESOWYrZ9ucqpQEaIRmu+VkJNwggY1vseyfJUTfwW
+ EebqTBEQtUG9eworkmRq8qvEwimLKg0+qNWvvVHbphFWJ/dvA6STfDCAjKDLdCPJOqOe/NJxX
+ QyP5dxKsKIgMwqOfmcTniZM/OCXdJoMHKMcMwbam3Y9x57ZP4/x2QoGCgPljwqFTetvVrVH/v
+ v1nhG/i2OhV9pZTFaXyOadZiuB5QwgOmhL1YgKJGL7NOi3la1MqWI8aqC8m7ygisOTwN46sk9
+ mFk3bOYynTvlp8XLwfrBhVy0psuTFehtT6/AgXFKlDrTYxgQOTUMHy0nBgLFIK7CcbZcyFUeA
+ 97Gt0+Naun7n2ZkJQGo3Cup6FvOMBZT6WO++TGLoC+2tSj5DGpBj4FqguGGxmBNr8Y66RFSw1
+ 2j4LVBLtXJTJ3iZ6gMFV30uJOcp6w9LlbkBF+9tzbXxpuqUDdQFGNAW99JOe3exzXottM36Sx
+ voDUIXT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 4:12 AM Jeff King <peff@peff.net> wrote:
-> The doc-diff script immediately resolves its two endpoints
-> to actual object ids, so that we can reuse cached results
-> even if they appear under a different name. But we still use
-> the original name the user fed us when running "git
-> checkout" in our temporary worktree. This can lead to
-> confusing results:
-> [...]
->   - we didn't pass --detach, which meant that using a branch
->     name would cause us to actually check out that branch,
->     making it unavailable to other worktrees.
+Hi Junio,
 
-Oof. The initial worktree creation correctly uses --detach, but indeed
-the later git-checkout doesn't. I missed that too when reading over
-this script.
+On Wed, 29 Aug 2018, Junio C Hamano wrote:
 
-> We can solve this by feeding the already-resolved object id
-> to git-checkout. That naturally forces a detached HEAD, but
-> just to make clear our expectation, let's explicitly pass
-> --detach.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > The builtin rebase and the builtin interactive rebase have been
+> > developed independently, on purpose: Google Summer of Code rules
+> > specifically state that students have to work on independent projects,
+> > they cannot collaborate on the same project.
+> 
+> A much better description, especially without the less relevant "the
+> reason probably is..." omitted from here.  The author's personal
+> guess, while adding it does not help understanding what is already
+> in the above paragraph an iota, is still a fine reading material in
+> the cover letter 0/1, though.
 
-Specifying --detach explicitly makes a lot of sense, even if it is
-implied in this case.
+I addressed Jonathan's concern, though.
 
-> Signed-off-by: Jeff King <peff@peff.net>
+> > One fallout is that the rebase-in-c and rebase-i-in-c patches cause no
+> > merge conflicts but a royal number of tests in the test suite to fail.
+> >
+> > It is easy to explain why: rebase-in-c was developed under the
+> > assumption that all rebase backends are implemented in Unix shell script
+> > and can be sourced via `. git-rebase--<backend>`, which is no longer
+> > true with rebase-i-in-c, where git-rebase--interactive is a hard-linked
+> > builtin.
+> >
+> > This patch fixes that.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin/rebase.c | 81 ++++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 81 insertions(+)
+> 
+> 
+> Will replace by doing:
+> 
+>     $ git checkout js/rebase-in-c-5.5-work-with-rebase-i-in-c
+>     $ git checkout HEAD^
+>     $ git am -s mbox
+>     $ git range-diff @{-1}...
+>     $ git checkout -B @{-1}
+> 
+>     $ git checkout pk/rebase-i-in-c-6-final
+>     $ git rebase --onto js/rebase-in-c-5.5-work-with-rebase-i-in-c \
+>           js/rebase-in-c-5.5-work-with-rebase-i-in-c@{1} HEAD^0
+>     $ git range-diff @{-1}...
+>     $ git checkout -B @{-1}
+> 
+> to update the two topics and then rebuilding the integration
+> branches the usual way.  I also need to replace the "other" topic
+> used in this topic, so the actual procedure would be a bit more
+> involved than the above, though.
+
+Is there any reason why you avoid using `git rebase -ir` here? This should
+be so much easier via
+
+	git checkout pk/rebase-i-in-c-6-final
+	git rebase -ir js/rebase-in-c-5.5-work-with-rebase-i-in-c^
+
+and then inserting this at the appropriate position, followed by the `git
+range-diff @{-1}...`:
+
+	git am -s mbox
+	git update-ref js/rebase-in-c-5.5-work-with-rebase-i-in-c HEAD
+
+Ciao,
+Dscho
+
