@@ -6,42 +6,41 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D37EC1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 08:33:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70C071F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 08:45:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727841AbeH3Mew (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 08:34:52 -0400
-Received: from mail-qk0-f196.google.com ([209.85.220.196]:39065 "EHLO
-        mail-qk0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727688AbeH3Mew (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 08:34:52 -0400
-Received: by mail-qk0-f196.google.com with SMTP id b19-v6so5203353qkc.6
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 01:33:51 -0700 (PDT)
+        id S1727666AbeH3Mqq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 08:46:46 -0400
+Received: from mail-qk0-f193.google.com ([209.85.220.193]:38120 "EHLO
+        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727238AbeH3Mqq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 08:46:46 -0400
+Received: by mail-qk0-f193.google.com with SMTP id g197-v6so5220284qke.5
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 01:45:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YgyQmSnJk2BABZXBwD8DaKA1g7pLfp8puFubCPgsaBs=;
-        b=H7JckhOaCtaGP0/fDF1qpaNKSYaXbR9fqjoj2EnY2L/EG8mvZH2oP0RIb19RTUZ2W3
-         YrqamzlqSPP7+D+VyutM+w+uCPPzao7OXsgj1SITo8TICWkbbK6ImPQoGou/EuKihC6J
-         1VAzOsJrHCU4qyxZKM6Zuiy4isr5eKIn71Lfr3NuyOVF8wXqRFC/2w83WeVUIfBHpKh2
-         LJJJo/dxocKnv5uGwZlAWv3W4iBw+6M8nUWpZ3r9OgtSEsDRdM8XzPDMYIgmlFp275Za
-         5VyTxFvGorGJTpyKipibBYIxymA/u26MlUuWexDLQI1iVOdqSbMEOCJhDfkUdUhscO7u
-         750g==
-X-Gm-Message-State: APzg51BXecZoX7EXfr2ZwkMVWyzjjJ51xyt+EMo3xW0TDKCCm6Ay/PEx
-        jPQHtQTcNReD4GG2wC4lP+Bb8FkNflR783eyO5mgjQ==
-X-Google-Smtp-Source: ANB0VdYdqeYou4JDG4Exoqb5YzyctJfbDnF9xtlNIJ7f+adxDDqrV09ZLKFf4YhMiCMkRpUg+m2bgQC/4WNRBI39YVE=
-X-Received: by 2002:a37:9306:: with SMTP id v6-v6mr10020311qkd.36.1535618030604;
- Thu, 30 Aug 2018 01:33:50 -0700 (PDT)
+        bh=H1pTI0MZc4PMpeHwsTqrTxgoPqLr0e0gL30z26pk9gI=;
+        b=bsEyTF3zXeJqvZNtKjlKZtV/+gpBL+uVKnqhZP3qY6Ce6wLaN9r+8wUrhZ+/czIKH1
+         0wBn+SV0FWKVUo1G/JmHi+bJv8l3vhP8U8eGe7OlZSj3L1BdZUtFmkJMRCrEdlgg8/Sn
+         VYZPznrhlEa3K893BK3vmaCGHLsktM2y7AFNCWoFR2geAvd6BS5gStmmxPa48aqYVfb6
+         LqQDKq5x8NTS0kweLWtk/pv51JOpvu6lujVwK9XkswpCBzsKO7AOKAHO1g8xYgtCAYWE
+         b4szuPnFBcxHFTA4oTg2LVR87nX14/XHMIlvkIXjJMwCJ9/55byCsAymxwHcbhPOU93n
+         9sIg==
+X-Gm-Message-State: APzg51BKCKvj45H0iJTbQf5gXLCavpGm18AHoA12FwNEb3LURHStCF7M
+        JTqQe1Izq9mxjGqwY5tgo0JYMBGE8SShLnQ35DY=
+X-Google-Smtp-Source: ANB0VdZbuXvZUv+xHzGvxOXkUZAm2iAADNdpaXdFXeGo28b4yaUh9XvCft/f/QtEZgXWRpDwPVrWcJJyVsJO1yiZYMk=
+X-Received: by 2002:a37:4653:: with SMTP id t80-v6mr9919617qka.314.1535618742438;
+ Thu, 30 Aug 2018 01:45:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20180828212026.21989-1-sunshine@sunshineco.com>
- <20180828212026.21989-9-sunshine@sunshineco.com> <20180830074033.GE11944@sigill.intra.peff.net>
-In-Reply-To: <20180830074033.GE11944@sigill.intra.peff.net>
+ <20180828212026.21989-4-sunshine@sunshineco.com> <20180830065734.GA11944@sigill.intra.peff.net>
+In-Reply-To: <20180830065734.GA11944@sigill.intra.peff.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Aug 2018 04:33:38 -0400
-Message-ID: <CAPig+cSXx39jAJ_hsMtAsxCUVgBO64=RPaa+yF5JjZAK1CXZLQ@mail.gmail.com>
-Subject: Re: [PATCH 8/9] worktree: teach 'remove' to override lock when
- --force given twice
+Date:   Thu, 30 Aug 2018 04:45:30 -0400
+Message-ID: <CAPig+cR90mzorzLfQTuq73R0zx_DrAa0hThHDsghdZo=cxOWSw@mail.gmail.com>
+Subject: Re: [PATCH 3/9] worktree: generalize delete_git_dir() to reduce code duplication
 To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
@@ -52,22 +51,27 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 3:40 AM Jeff King <peff@peff.net> wrote:
-> On Tue, Aug 28, 2018 at 05:20:25PM -0400, Eric Sunshine wrote:
-> > -                      N_("force removing even if the worktree is dirty"),
-> > +                      N_("force removal even if worktree is dirty or locked"),
+On Thu, Aug 30, 2018 at 2:57 AM Jeff King <peff@peff.net> wrote:
+> On Tue, Aug 28, 2018 at 05:20:20PM -0400, Eric Sunshine wrote:
+> > Simplify by extending delete_git_dir() to handle the little bit of
+> > extra functionality needed by prune_worktrees(), and drop the
+> > effectively duplicate code from the latter.
 >
-> I wonder if somebody might assume from this that a single "-f" would
-> override a lock. Perhaps not the end of the world, and the manpage does
-> make it clear. And also I don't really know how to be more specific here
-> without an overly long line.
+> Makes sense. The name "delete_git_dir()" is a little funny (I assume it
+> means "the git dir", not a worktree's git-dir), but that is not new (and
+> it's static in worktree.c, which helps).
 
-Precisely, on all counts. Plus, if they try a single --force and it
-fails, the hint printed when it fails says explicitly to use --force
-twice, so the "solution" is easily discoverable.
+It's not necessarily the best name, but, as you say, it's not a new
+issue, and it is local to that file.
 
-> I'm guessing all those thoughts went through your head before ending up
-> here, too. :)
+Also, it's such a small function, and it's quite clear from the
+implementation that it's deleting stuff from .git/worktrees that it's
+probably okay to leave the name as-is for now.
 
-You guess correctly and you came to the same conclusion as I did.
-These -h summary lines are just to short for any real discussion.
+> Your patch maybe stretches that a little by deleting non-directories.
+> Maybe delete_from_worktrees() would be a better name. Probably not worth
+> a re-roll, though.
+
+That's perhaps a bit better, though still somewhat ambiguous, as I can
+also read it as deleting something from every worktree directory, as
+opposed to from .git/worktrees.
