@@ -2,114 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A91F1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 15:23:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8B5B1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 15:26:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727067AbeH3T03 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 15:26:29 -0400
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62697 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726122AbeH3T02 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 15:26:28 -0400
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2506EFC777;
-        Thu, 30 Aug 2018 11:23:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:in-reply-to:message-id:references:mime-version
-        :content-type; s=sasl; bh=rHgxVZHUgltz5cauKhjAsXlXR88=; b=D3aak7
-        7B3+gT7vNBznXuS0L9Kae4piipH6onWw3LmrvThooIMiFvhraFirlD8CKQc6qeJO
-        3I8THuQaR8FetGVhD58Tv849WWFTQaVI74wc4XA/sdz65rA24QKf7gXDjZCGPrmp
-        WilAA7m39JK1kyvBduDHSTpxSCygqZSBFYghc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BEB2FC776;
-        Thu, 30 Aug 2018 11:23:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=fluxnic.net;
- h=date:from:to:cc:subject:in-reply-to:message-id:references:mime-version:content-type; s=2016-12.pbsmtp; bh=Ozwqp74n8OEIif+j6Jx+gfW9XHC5NJ7kHwhkJE9ZCGg=; b=LSyJXhE0SBCenAOrPiZMzJJIvnVHjxm3vHcxsmGFgsxyyq7TkTVuZZuQ8H0r/kEv4laf5zO3FHmD5sxEFntRXnc7KXYiLvQivk0pBLThQv1ccbVifs2V1goLBG25XDhjWc7JmTU+Vq7mjx141X5gm0cPE6cVRyTxXgltX50k6M8=
-Received: from yoda.home (unknown [70.82.104.228])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 997D9FC775;
-        Thu, 30 Aug 2018 11:23:44 -0400 (EDT)
-Received: from xanadu.home (xanadu.home [192.168.2.2])
-        by yoda.home (Postfix) with ESMTPSA id 5EC642DA018D;
-        Thu, 30 Aug 2018 11:23:43 -0400 (EDT)
-Date:   Thu, 30 Aug 2018 11:23:42 -0400 (EDT)
-From:   Nicolas Pitre <nico@fluxnic.net>
-To:     Jeff King <peff@peff.net>
-cc:     Jann Horn <jannh@google.com>, git@vger.kernel.org,
-        gitster@pobox.com,
-        =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] handle corruption in patch-delta
-In-Reply-To: <20180830070548.GA15081@sigill.intra.peff.net>
-Message-ID: <nycvar.YSQ.7.76.1808301104520.1454@knanqh.ubzr>
-References: <20180829205857.77340-1-jannh@google.com> <20180830070548.GA15081@sigill.intra.peff.net>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1727086AbeH3T2y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 15:28:54 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:37257 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726122AbeH3T2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 15:28:53 -0400
+Received: by mail-wm0-f68.google.com with SMTP id n11-v6so2435304wmc.2
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 08:26:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QmV0SbC1fvynr+FLWviy3je8Q31PTg3U54agwu6KOlk=;
+        b=QtOjxLa43pEwxVqrd3vMK+JSXjLRFekG9N9hiVegq8HK5DwMTuHRSKs+MRyYVT6Kgd
+         PyegYhwLqvZNX+0wrcBELO/eSqGEfqmJ90kShx8+S4BTMKkxDKNQo79JfY+cMRjEdpjc
+         JCJaGLLdmw6L9YjNATLJFYoU/er7kIpD+irsBLGobBetPXG5IYxB4Smiszo4y3D75aLz
+         Oc6bwpW8MOXKLDYab2tzxPnGHg7yDNEm7cZe6WHKm5umsmZiAF5xgPRt4rYj/DHx+XPE
+         Mn2LH3uUPv1OVX7v/MHvvJBeSGOMHqPxrm9E23jYM/wlAGVkOfLVCtGwqSstG66UCEIZ
+         vk9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QmV0SbC1fvynr+FLWviy3je8Q31PTg3U54agwu6KOlk=;
+        b=HIrSyAzacKJerHJAQ3smsqRwr+zqMEhNz0/qA7kqWaLCEHMFevDeRFT8SbrwKNhPCV
+         DUkOc/EZkYtImfnbnJ806NSgzBIc+GGBtu1dbVbjU9cj+t/QQLcSOJPpyQpKc/HHw6O6
+         lhgp/9YXV0PTMk3Qt6kdEprAo54V9Jz+9JRCMvv6L723psjFyDJtM3hTPrF66bYwL9m3
+         kRMLhmRwjFhIOohNusVBF0Wp9ajhe4y2s7lQavEQrUXkd8QYaC99nK6KhYeAK45LWQHs
+         eSLhPzqrWOGhtfauzRjOrEpz1mp2HIlq+ZxBEKjRo8lgFy4Sf1vPp51j1Fy7KXWYc2jy
+         BClw==
+X-Gm-Message-State: APzg51AYVNzJWw8oU3oXtGVpjfRusYxhUVxnzYhXDtMqIsgqsW/CT5K/
+        +qIpzwwpWTCVbGw7TF+uofg19YnD
+X-Google-Smtp-Source: ANB0VdaF/HS2oH+zhiq6Z+ITrh9z/KI+1Bqodhvy9PIFy8pWNMHuG0i6/7qztuRzmr822vWeNPL34Q==
+X-Received: by 2002:a1c:c4ce:: with SMTP id u197-v6mr2088638wmf.10.1535642771403;
+        Thu, 30 Aug 2018 08:26:11 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v133-v6sm2515903wma.36.2018.08.30.08.26.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 30 Aug 2018 08:26:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jnareb@gmail.com
+Subject: Re: [PATCH 0/1] v2.19.0-rc1 Performance Regression in 'git merge-base'
+References: <pull.28.git.gitgitgadget@gmail.com>
+Date:   Thu, 30 Aug 2018 08:26:10 -0700
+In-Reply-To: <pull.28.git.gitgitgadget@gmail.com> (Derrick Stolee via
+        GitGitGadget's message of "Thu, 30 Aug 2018 05:58:07 -0700 (PDT)")
+Message-ID: <xmqqd0tz7u5p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Pobox-Relay-ID: AEF185EE-AC68-11E8-A24A-063AD72159A7-78420484!pb-smtp1.pobox.com
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 30 Aug 2018, Jeff King wrote:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Wed, Aug 29, 2018 at 10:58:55PM +0200, Jann Horn wrote:
-> 
-> > If `cmd` is in the range [0x01,0x7f] and `cmd > top-data`, the
-> > `memcpy(out, data, cmd)` can copy out-of-bounds data from after `delta_buf`
-> > into `dst_buf`.
-> > 
-> > This is not an exploitable bug because triggering the bug increments the
-> > `data` pointer beyond `top`, causing the `data != top` sanity check after
-> > the loop to trigger and discard the destination buffer - which means that
-> > the result of the out-of-bounds read is never used for anything.
-> > 
-> > Also, directly jump into the error handler instead of just breaking out of
-> > the loop - otherwise, data corruption would be silently ignored if the
-> > delta buffer ends with a command and the destination buffer is already
-> > full.
-> 
-> Based on my earlier observations, here's a replacement patch series I
-> came up with. It has:
-> 
->   [1/5]: test-delta: read input into a heap buffer
-> 
->     A simpler replacement for your patch 2 which avoids portability
->     issues.
-> 
->   [2/5]: t5303: test some corrupt deltas
-> 
->     A more complete set of boundary tests based on the 4 cases I laid
->     out, plus the cp_size problem I found.
-> 
->   [3/5]: patch-delta: fix oob read
-> 
->     Your actual fix.
-> 
->   [4/5]: patch-delta: consistently report corruption
-> 
->     Your related trailing-garbage fix. I split this into two in order to
->     better demonstrate the cases this part covers.
-> 
->   [5/5]: patch-delta: handle truncated copy parameters
-> 
->     My fix for the cp_size read.
-> 
-> I hope you don't mind me hacking up your patches a bit. Thanks again for
-> your original report and patch.
+> As I was testing the release candidate, I stumbled across a regression in
+> 'git merge-base' as a result of the switch to generation numbers. The commit
+> message in [PATCH 1/1] describes the topology involved,...
 
-Looks good to me (feels like traveling back in time).
+I do not recall having seen this kind of updates during the
+pre-release freeze of previous development cycles, and you are
+starting a new trend with two findings so far in this cycle.
+Hopefully this can become a good tradition.
 
-Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
-
-
-
-> 
-> -Peff
-> 
+Thanks.
