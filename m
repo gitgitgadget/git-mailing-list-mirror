@@ -2,100 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ED3551F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 15:23:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A91F1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 15:23:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727042AbeH3TZq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 15:25:46 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:50287 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726122AbeH3TZp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 15:25:45 -0400
-Received: by mail-wm0-f67.google.com with SMTP id s12-v6so2408385wmc.0
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 08:23:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=d54r9WOQ/IqrR5ahTcSnjZ+qDpWtCFrBbEsXQe5n6/o=;
-        b=SgsQ88veAkYVyy8HXfVwquxMPwTXtGuxvx8CvOzUz+2H3opXMsXQrrXZC3r1G9cAnr
-         Q49yq3f8QZd1wYkc+SpEFhCfakQPotBAtHOQ7tG6WCvIMRi5hhJjuR93T+1cCOOcP75k
-         ph0CJY0j0fcc2XYczuDoI42J5rUvjsKnPTbZDIY+Y43dcJz6qHtZJa4pLSnl5vnQAydc
-         MEQMQQ6ihGoZF0bQ1/0FP0yMY+Tnvp3mF1Dg1BzSScEiE6y/T3nrX0G4aGTdjxQOzaKJ
-         G6i9tVWqWwlezV9X+SApCxijD/1FBgw96veTbek9oDgUDwPck1gOZfOYN42JtsGi/ceJ
-         mkdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=d54r9WOQ/IqrR5ahTcSnjZ+qDpWtCFrBbEsXQe5n6/o=;
-        b=cV4Hiq3n5U9LJGqByququYkh7KpUv6XE4d/zIPA8uuMC6WPfa6H+u1758ap9fBP+IL
-         6ikWNBcRlI4bbX0TxNolNk7zqwwQLXj/v31jjy500r3msQw7FMSMpfhc9tx/B0alaz3Y
-         2/XtHabCWFXH44TUw8i/7CCH8rYOPU9T0XR9rC4jtdVXTAQgCdHm8uYZcItL6Dy4ibld
-         aA985kI0chSWrtAbgoEW10j0oLhiG+GvHHUndOk2tCURst7JfRVE8GlPzSqyHllyyD4d
-         iA9fAXggIopAzSTAEumkCpoKl1IpaXhF7IBL8mx5mucLy3huuptBAzZL5AFjMmvQVRyR
-         wNcA==
-X-Gm-Message-State: APzg51CMi2kJPq7MRWiAIoGbbqovH1CuZXydOgDMLMGTjZ8fdbu+r02M
-        0E1Rs5X7JOrWgBl0Gfszx6c=
-X-Google-Smtp-Source: ANB0VdYVBz7+hIgClMnOZXVevd/tyzN7zAa7af4CUJ8f3WVkLjyL7SWDAE1KcDCtUQpusZnxsTevrg==
-X-Received: by 2002:a1c:7814:: with SMTP id t20-v6mr2045468wmc.38.1535642583594;
-        Thu, 30 Aug 2018 08:23:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h18-v6sm7369691wru.42.2018.08.30.08.23.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 30 Aug 2018 08:23:02 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH v2 06/10] push doc: correct lies about how push refspecs work
-References: <20180429202100.32353-1-avarab@gmail.com>
-        <20180731130718.25222-7-avarab@gmail.com>
-        <xmqq8t5rcnhg.fsf@gitster-ct.c.googlers.com>
-        <87o9djdi0c.fsf@evledraar.gmail.com>
-Date:   Thu, 30 Aug 2018 08:23:02 -0700
-In-Reply-To: <87o9djdi0c.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Thu, 30 Aug 2018 16:52:03 +0200")
-Message-ID: <xmqqh8jb7uax.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727067AbeH3T03 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 15:26:29 -0400
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62697 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726122AbeH3T02 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 15:26:28 -0400
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 2506EFC777;
+        Thu, 30 Aug 2018 11:23:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+        :cc:subject:in-reply-to:message-id:references:mime-version
+        :content-type; s=sasl; bh=rHgxVZHUgltz5cauKhjAsXlXR88=; b=D3aak7
+        7B3+gT7vNBznXuS0L9Kae4piipH6onWw3LmrvThooIMiFvhraFirlD8CKQc6qeJO
+        3I8THuQaR8FetGVhD58Tv849WWFTQaVI74wc4XA/sdz65rA24QKf7gXDjZCGPrmp
+        WilAA7m39JK1kyvBduDHSTpxSCygqZSBFYghc=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1BEB2FC776;
+        Thu, 30 Aug 2018 11:23:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=fluxnic.net;
+ h=date:from:to:cc:subject:in-reply-to:message-id:references:mime-version:content-type; s=2016-12.pbsmtp; bh=Ozwqp74n8OEIif+j6Jx+gfW9XHC5NJ7kHwhkJE9ZCGg=; b=LSyJXhE0SBCenAOrPiZMzJJIvnVHjxm3vHcxsmGFgsxyyq7TkTVuZZuQ8H0r/kEv4laf5zO3FHmD5sxEFntRXnc7KXYiLvQivk0pBLThQv1ccbVifs2V1goLBG25XDhjWc7JmTU+Vq7mjx141X5gm0cPE6cVRyTxXgltX50k6M8=
+Received: from yoda.home (unknown [70.82.104.228])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 997D9FC775;
+        Thu, 30 Aug 2018 11:23:44 -0400 (EDT)
+Received: from xanadu.home (xanadu.home [192.168.2.2])
+        by yoda.home (Postfix) with ESMTPSA id 5EC642DA018D;
+        Thu, 30 Aug 2018 11:23:43 -0400 (EDT)
+Date:   Thu, 30 Aug 2018 11:23:42 -0400 (EDT)
+From:   Nicolas Pitre <nico@fluxnic.net>
+To:     Jeff King <peff@peff.net>
+cc:     Jann Horn <jannh@google.com>, git@vger.kernel.org,
+        gitster@pobox.com,
+        =?VISCII?Q?Nguy=ADn_Th=E1i_Ng=F7c_Duy?= <pclouds@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] handle corruption in patch-delta
+In-Reply-To: <20180830070548.GA15081@sigill.intra.peff.net>
+Message-ID: <nycvar.YSQ.7.76.1808301104520.1454@knanqh.ubzr>
+References: <20180829205857.77340-1-jannh@google.com> <20180830070548.GA15081@sigill.intra.peff.net>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Pobox-Relay-ID: AEF185EE-AC68-11E8-A24A-063AD72159A7-78420484!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Thu, 30 Aug 2018, Jeff King wrote:
 
-> I.e. the non-refs/{tags,heads}/* update logic treats all updates to
-> tags/commits as branch updates. We just look at the tag v2.18.0, see you
-> want to replace it with the commit v2.19.0-rc0^{} and see "oh, that's a
-> fast-forward".
+> On Wed, Aug 29, 2018 at 10:58:55PM +0200, Jann Horn wrote:
+> 
+> > If `cmd` is in the range [0x01,0x7f] and `cmd > top-data`, the
+> > `memcpy(out, data, cmd)` can copy out-of-bounds data from after `delta_buf`
+> > into `dst_buf`.
+> > 
+> > This is not an exploitable bug because triggering the bug increments the
+> > `data` pointer beyond `top`, causing the `data != top` sanity check after
+> > the loop to trigger and discard the destination buffer - which means that
+> > the result of the out-of-bounds read is never used for anything.
+> > 
+> > Also, directly jump into the error handler instead of just breaking out of
+> > the loop - otherwise, data corruption would be silently ignored if the
+> > delta buffer ends with a command and the destination buffer is already
+> > full.
+> 
+> Based on my earlier observations, here's a replacement patch series I
+> came up with. It has:
+> 
+>   [1/5]: test-delta: read input into a heap buffer
+> 
+>     A simpler replacement for your patch 2 which avoids portability
+>     issues.
+> 
+>   [2/5]: t5303: test some corrupt deltas
+> 
+>     A more complete set of boundary tests based on the 4 cases I laid
+>     out, plus the cp_size problem I found.
+> 
+>   [3/5]: patch-delta: fix oob read
+> 
+>     Your actual fix.
+> 
+>   [4/5]: patch-delta: consistently report corruption
+> 
+>     Your related trailing-garbage fix. I split this into two in order to
+>     better demonstrate the cases this part covers.
+> 
+>   [5/5]: patch-delta: handle truncated copy parameters
+> 
+>     My fix for the cp_size read.
+> 
+> I hope you don't mind me hacking up your patches a bit. Thanks again for
+> your original report and patch.
 
-In my old message you are responding to, I asked what you meant by
-"will be treated as branches", and after seeing "as branch updates"
-above, I think I know what you want the phrase to mean, namely, that
-old-to-new transition requires new to be a descendant of old.  But I
-think that is weaker than what other people (including me) thinks of
-rules to update refs/heads/* hierarchy (i.e. "branch update").
+Looks good to me (feels like traveling back in time).
 
-You are allowing to store an object that is not a commit in
-refs/blah/my-tag in your example, so it clearly does not protect the
-ref with an extra rule that applies to "branches", namely, "it has
-to be a commit."
+Reviewed-by: Nicolas Pitre <nico@fluxnic.net>
 
-> Arguably that should be changed, but I won't do that in this series.
 
-OK.
+
+> 
+> -Peff
+> 
