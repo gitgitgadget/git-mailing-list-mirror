@@ -2,158 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2AFFA1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 19:13:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE66B1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 19:16:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeH3XRU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 19:17:20 -0400
-Received: from cloud.peff.net ([104.130.231.41]:34406 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725836AbeH3XRU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 19:17:20 -0400
-Received: (qmail 6913 invoked by uid 109); 30 Aug 2018 19:13:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 30 Aug 2018 19:13:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30459 invoked by uid 111); 30 Aug 2018 19:13:50 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 30 Aug 2018 15:13:50 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Aug 2018 15:13:39 -0400
-Date:   Thu, 30 Aug 2018 15:13:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jann Horn <jannh@google.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
-Message-ID: <20180830191339.GA19238@sigill.intra.peff.net>
-References: <20180830070548.GA15081@sigill.intra.peff.net>
- <20180830070932.GB15420@sigill.intra.peff.net>
- <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
- <20180830184201.GB14273@sigill.intra.peff.net>
- <20180830184459.GC14273@sigill.intra.peff.net>
- <xmqqzhx34rjj.fsf@gitster-ct.c.googlers.com>
+        id S1727129AbeH3XUO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 19:20:14 -0400
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:38029 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725836AbeH3XUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 19:20:14 -0400
+Received: by mail-ed1-f42.google.com with SMTP id h33-v6so7345215edb.5
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 12:16:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=bejBAXziIJSs6ll4tSxSwlShjuupnO+F+vLP3MG8Pdg=;
+        b=Og11UpJ4edkw2VvdCavOuX4ID0iasMWBpmO8sICuWYyB2an3f/jHtxDalmVjNxLYXG
+         eqD/jsPyyVAWzERWckAiBneN8JrdLxnwp4heJXeOEuTleFZaHMhwJ7JNgeJs9dOMcbJE
+         vGuvtC74h4S7NW+BHSHMjJ5gAKrQyjYVYDgZ6xKapttcTZBJPvP6Dm9R6cO2t0AfMZlP
+         T+OX5e6n8JXcUtzo7942nlQyoKrUljLr11Yx1j1zxjof0dmMt1W8vrn893te8LMYPyrb
+         9bnYriPYsdKH/+Fc0o6zZ7sB7WLsDENw2poneq9qduUAq6vXsYjEa51292q1ztURiVse
+         XATg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bejBAXziIJSs6ll4tSxSwlShjuupnO+F+vLP3MG8Pdg=;
+        b=U18xcWSyAM4jf2evdYNxfNi4NeIyQetT8N0beY4ZpQeFEmxYmC5hID8AT5NNHuv9AC
+         UM2IBIQ6GAmlT2zkS6Bboz4kPfjmuGRDzsI0GEN1VkKFXv4h85VlwxVhURWa1b+aqnbH
+         GLj2NmJTZH3/9OApuSOh9mAbPktFzerp63e1k0EspwwKas/Nc9keXzyrHd3Fm1dfToV3
+         FS409MTdGi0CBuK6gzLCOdufFg5g6HY1VZG6ueyuOrc8xEd5As57GEpuZ2rc/5THtTtG
+         aSVCcXBVCVCLO1fKpIjXynHfz23Yt2wawkwzugCwgqSDpMlldquUHSXRqwprF6uZB5Gw
+         wERA==
+X-Gm-Message-State: APzg51D06AcwL7OEI8enx5N22ARv5vtPmkQIjIX8ssGNy1PiwF44TYPG
+        Xopyn7EHUKuf5dfQYARzD8NcP+eMNi4JXqjfRENa7A==
+X-Google-Smtp-Source: ANB0VdZ3jgcgIblGUI4szIw1d/zQOLPiuPo8s9qty9yD4uKFSKaLdJz1yEx5ZOQJhBs2s+qW2e/0i9xPBTa+OpczqYk=
+X-Received: by 2002:a50:9943:: with SMTP id l3-v6mr14783559edb.198.1535656593504;
+ Thu, 30 Aug 2018 12:16:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqzhx34rjj.fsf@gitster-ct.c.googlers.com>
+References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
+ <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com>
+ <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com> <20180830025457.GA665@sigill.intra.peff.net>
+In-Reply-To: <20180830025457.GA665@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 30 Aug 2018 12:16:22 -0700
+Message-ID: <CAGZ79kZNVw4-q9KYAi9G3axb7-Ggpc2EAK8ZxAZoPEnZvEL-DQ@mail.gmail.com>
+Subject: Re: Possible bug: identical lines added/removed in git diff
+To:     Jeff King <peff@peff.net>
+Cc:     Gabriel Holodak <gthepiper@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 11:50:56AM -0700, Junio C Hamano wrote:
+On Wed, Aug 29, 2018 at 7:54 PM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Aug 29, 2018 at 10:10:25PM -0400, Gabriel Holodak wrote:
+>
+> > > Could you cut down to a real minimal reproduction, i.e. just these 20
+> > > lines or so?
+> >
+> > I'm working on getting down to a minimal reproduction, a few lines at
+> > a time. One thing that seems strange: as I've removed lines, there are
+> > a bunch of lines that don't matter. Then I'll find some lines that, if
+> > removed, completely fix the issue. But the ordering for these
+> > apparently important lines doesn't matter. They just have to be
+> > somewhere in the file to cause the duplicated diffs.
+> >
+> > I'll upload again when I've figured out all the unimportant lines to remove.
+>
+> Yeah, I reproduced based on your initial post, but noticed that when I
+> cut it down the problem went away.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I can re-roll, or even prepare a patch on top (it's sufficiently subtle
-> > that it may merit calling out explicitly in a commit).
-> 
-> Yeah, I tend to agree with your reasoning to do it on top as a
-> separate patch.
+Oh, I had to look further down than I did initially. Now I can reproduce it
+from the initial data as well.
 
-Here it is, then.
+Note that it goes away with --minimal.
 
--- >8 --
-Subject: [PATCH 6/5] t5303: use printf to generate delta bases
+I have a patch cooking (which was sent out as
+https://public-inbox.org/git/20180810221857.87399-1-sbeller@google.com/)
 
-The exact byte count of the delta base file is important.
-The test-delta helper will feed it to patch_delta(), which
-will barf if it doesn't match the size byte given in the
-delta. Using "echo" may end up with unexpected line endings
-on some platforms (e.g,. "\r\n" instead of just "\n").
-
-This actually wouldn't cause the test to fail (since we
-already expect test-delta to complain about these bogus
-deltas), but would mean that we're not exercising the code
-we think we are.
-
-Let's use printf instead (which we already trust to give us
-byte-perfect output when we generate the deltas).
-
-While we're here, let's tighten the 5-byte result size used
-in the "truncated copy parameters" test. This just needs to
-have enough room to attempt to parse the bogus copy command,
-meaning 2 is sufficient. Using 5 was arbitrary and just
-copied from the base size; since those no longer match, it's
-simply confusing. Let's use a more meaningful number.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t5303-pack-corruption-resilience.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/t/t5303-pack-corruption-resilience.sh b/t/t5303-pack-corruption-resilience.sh
-index b68bbeedcc..41e6dc4dcf 100755
---- a/t/t5303-pack-corruption-resilience.sh
-+++ b/t/t5303-pack-corruption-resilience.sh
-@@ -327,15 +327,15 @@ test_expect_success \
-     'printf "\0\1\2XX" > too_big_literal &&
-      test_must_fail test-tool delta -p /dev/null too_big_literal /dev/null'
- 
--# \5 - five bytes in base
-+# \4 - four bytes in base
- # \1 - one byte in result
- # \221 - copy, one byte offset, one byte size
- #   \0 - copy from offset 0
- #   \2 - copy two bytes (one too many)
- test_expect_success \
-     'apply delta with too many copied bytes' \
--    'printf "\5\1\221\0\2" > too_big_copy &&
--     echo base >base &&
-+    'printf "\4\1\221\0\2" > too_big_copy &&
-+     printf base >base &&
-      test_must_fail test-tool delta -p base too_big_copy /dev/null'
- 
- # \0 - empty base
-@@ -356,8 +356,8 @@ test_expect_success \
-     'printf "\0\1\221\0\1" > truncated_base &&
-      test_must_fail test-tool delta -p /dev/null truncated_base /dev/null'
- 
--# \5 - five bytes in base
--# \5 - five bytes in result
-+# \4 - four bytes in base
-+# \2 - two bytes in result
- # \1 - one literal byte (X)
- # \221 - copy, one byte offset, one byte size
- #        (offset/size missing)
-@@ -366,8 +366,8 @@ test_expect_success \
- # delta size check.
- test_expect_success \
-     'apply delta with truncated copy parameters' \
--    'printf "\5\5\1X\221" > truncated_copy_delta &&
--     echo base >base &&
-+    'printf "\4\2\1X\221" > truncated_copy_delta &&
-+     printf base >base &&
-      test_must_fail test-tool delta -p base truncated_copy_delta /dev/null'
- 
- # \0 - empty base
-@@ -379,7 +379,7 @@ test_expect_success \
-     'printf "\0\1\1X\1" > tail_garbage_literal &&
-      test_must_fail test-tool delta -p /dev/null tail_garbage_literal /dev/null'
- 
--# \5 - five bytes in base
-+# \4 - four bytes in base
- # \1 - one byte in result
- # \1 - one literal byte (X)
- # \221 - copy, one byte offset, one byte size
-@@ -387,8 +387,8 @@ test_expect_success \
- #   \1 - copy 1 byte
- test_expect_success \
-     'apply delta with trailing garbage copy' \
--    'printf "\5\1\1X\221\0\1" > tail_garbage_copy &&
--     echo base >base &&
-+    'printf "\4\1\1X\221\0\1" > tail_garbage_copy &&
-+     printf base >base &&
-      test_must_fail test-tool delta -p /dev/null tail_garbage_copy /dev/null'
- 
- # \0 - empty base
--- 
-2.19.0.rc1.546.g3fcb3c0d7c
-
+and one of the weaknesses in that patch is the lack of explanation on
+when the heuristic is applied as I have not fully understood it yet.
