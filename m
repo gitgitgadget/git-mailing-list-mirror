@@ -6,68 +6,70 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F75D1F404
-	for <e@80x24.org>; Thu, 30 Aug 2018 09:04:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26B6F1F404
+	for <e@80x24.org>; Thu, 30 Aug 2018 09:12:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727853AbeH3NFw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 30 Aug 2018 09:05:52 -0400
-Received: from mail-qk0-f193.google.com ([209.85.220.193]:34357 "EHLO
-        mail-qk0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbeH3NFw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 30 Aug 2018 09:05:52 -0400
-Received: by mail-qk0-f193.google.com with SMTP id d15-v6so5267649qkc.1
-        for <git@vger.kernel.org>; Thu, 30 Aug 2018 02:04:44 -0700 (PDT)
+        id S1727874AbeH3NNX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 30 Aug 2018 09:13:23 -0400
+Received: from mail-qt0-f177.google.com ([209.85.216.177]:36788 "EHLO
+        mail-qt0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727089AbeH3NNX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 30 Aug 2018 09:13:23 -0400
+Received: by mail-qt0-f177.google.com with SMTP id t5-v6so8977085qtn.3
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 02:12:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=WfO0grg9Tpvp90YKkLh0D1ZMUMUmFyakMsTqGCDuLRs=;
-        b=NXWMan5V8Bvw+uswHIu80AmWDiROdjYhiFw/Zhcdw/Jm0pVMyXOLKXjvwpMTbHGk4A
-         TaEjaJv0GRaY8O2YHoSgD9zR0wCy3xquqlmhLh0f1W126c1B6Am4uUc4g1MASaKqT+o/
-         sj8ytzDwdsj1dYzmN2Cu4Z554/py40Wta6/4NQvTTMDzzy3BMODd3kTeFrQgL14q1qHA
-         UUA1uQJUBqYur1k/Jr4RAqeO25Jzlp/Q4zbV2OJiK5WddfoMxVDbM7QaiewSn5CGzMio
-         UiBMb+EPKLfteR7eeH4PvtwriK2yUOJv6YwR1TTHahd5T/VyrFR+1Um1s267BvGRYG1s
-         6+hg==
-X-Gm-Message-State: APzg51BpU3xvcJ0wLAKIvKSvXjOyYZmvIGwTAP1+0likFei8bPjMqnB+
-        amoltY9h4ccCaYpZZaS1KvgTgkFvSQgC6HB4FNs=
-X-Google-Smtp-Source: ANB0VdaLnZ30wm8t/kGIQS0HoC160lS2H5sJNevBdSBejF8G8VzARJtPNURgPCRbPuMLvw5MNDuZ3WWAQKPif4DIxAQ=
-X-Received: by 2002:a37:4653:: with SMTP id t80-v6mr9970046qka.314.1535619884267;
- Thu, 30 Aug 2018 02:04:44 -0700 (PDT)
+        bh=vVo5f/zgHosHnRUrH7jRR+To8nl+K0rOmaDkWTqnJbE=;
+        b=MgwXPJkdywXez3yLhhLSuSbzwgIaRSP8Zy56jIbs3hJ12ziWNbD7CgQpFRWoSZy8ep
+         Fh/9B34plFqA3bChg6vYt1Jxvyxn1HpwvOJgIBIJBbY6kwp7RzxkyS4o/54tBgB8swjq
+         an2xfpS/C8cELyVOoBUbZVDW3TJmHjGK2E4FXjAqop/3deWAZYcnz7Dao/f3qdbGXZAL
+         lu/NNxPjLM3DszlOSJAybKnQ7cNGV1EtsPle3qg9qoNHQ+yEY14EKgFrYy02Hbk94vZ/
+         rhSjFUs5n8G8KiPKVI92EmXtZoOXYpNMlInNZ5ebf8tjEGEiT3EDAIFaxlwgoWRulyMp
+         JAdA==
+X-Gm-Message-State: APzg51BJk53SsZkTlXOU/CQchlW3SR1mSoEt4WdzFzQi/4VV/p3AwKpF
+        YEYK9A0/16l8bEKlcqkW3r9MadZasiz+Ysgg7ym7Og==
+X-Google-Smtp-Source: ANB0VdZFa6u6j+hzQELCXDtnG5vTgHVdGVmid6cyvjubJyKov7ZVbumIlGTaEGolcl2tMCGSSOKAHpefRUlnWESOUkE=
+X-Received: by 2002:a0c:b616:: with SMTP id f22-v6mr10542075qve.184.1535620333223;
+ Thu, 30 Aug 2018 02:12:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180828212026.21989-1-sunshine@sunshineco.com> <20180830075431.GF11944@sigill.intra.peff.net>
-In-Reply-To: <20180830075431.GF11944@sigill.intra.peff.net>
+References: <20180830081202.GA10224@sigill.intra.peff.net>
+In-Reply-To: <20180830081202.GA10224@sigill.intra.peff.net>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 30 Aug 2018 05:04:32 -0400
-Message-ID: <CAPig+cS3-oRzQrZGM_-pXUVFE3HvMdtODurPkmYgw1vFV8zb3Q@mail.gmail.com>
-Subject: Re: [PATCH 0/9] worktree: fix bugs and broaden --force applicability
+Date:   Thu, 30 Aug 2018 05:12:01 -0400
+Message-ID: <CAPig+cRm80qBUXiykTtrHMxrMbzMLjYb3TvJB1UwoHNPFNxkkg@mail.gmail.com>
+Subject: Re: [PATCH] doc-diff: always use oids inside worktree
 To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Aug 30, 2018 at 3:54 AM Jeff King <peff@peff.net> wrote:
-> Subject: [PATCH] doc-diff: force worktree add
->
-> We avoid re-creating our temporary worktree if it's already
-> there. But we may run into a situation where the worktree
-> has been deleted, but an entry still exists in
-> $GIT_DIR/worktrees.
+On Thu, Aug 30, 2018 at 4:12 AM Jeff King <peff@peff.net> wrote:
+> The doc-diff script immediately resolves its two endpoints
+> to actual object ids, so that we can reuse cached results
+> even if they appear under a different name. But we still use
+> the original name the user fed us when running "git
+> checkout" in our temporary worktree. This can lead to
+> confusing results:
+> [...]
+>   - we didn't pass --detach, which meant that using a branch
+>     name would cause us to actually check out that branch,
+>     making it unavailable to other worktrees.
 
-Can "clean" or "distclean" also be augmented to remove this worktree
-(and directory)? I guess that "distclean" would make more sense than
-"clean"(?).
+Oof. The initial worktree creation correctly uses --detach, but indeed
+the later git-checkout doesn't. I missed that too when reading over
+this script.
 
-> Older versions of git-worktree would annoyingly create a
-> series of duplicate entries. Recent versions now detect and
-> prevent this, allowing you to override with "-f". Since we
-> know that the worktree in question was just our temporary
-> workspace, it's safe for us to always pass "-f".
+> We can solve this by feeding the already-resolved object id
+> to git-checkout. That naturally forces a detached HEAD, but
+> just to make clear our expectation, let's explicitly pass
+> --detach.
 
-Makes sense, and the patch looks correct.
+Specifying --detach explicitly makes a lot of sense, even if it is
+implied in this case.
 
 > Signed-off-by: Jeff King <peff@peff.net>
