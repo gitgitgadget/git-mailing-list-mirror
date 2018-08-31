@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B7C81F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25B7D1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727601AbeIAATf (ORCPT <rfc822;e@80x24.org>);
+        id S1727612AbeIAATf (ORCPT <rfc822;e@80x24.org>);
         Fri, 31 Aug 2018 20:19:35 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:36387 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727545AbeIAATe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 20:19:34 -0400
-Received: by mail-wm0-f66.google.com with SMTP id j192-v6so6421086wmj.1
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:29 -0700 (PDT)
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36389 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727568AbeIAATf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 20:19:35 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j192-v6so6421117wmj.1
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=omKI1z34P7Yb4w3ORzLURpXlEaoDbxTWmDpyYl/szcw=;
-        b=aBt/Uevf2qGWLlbW6u9P/mU6SPebFwCGKthtvbtmK9T2/t2MtloKqV9f/Zex9VIKac
-         /H4D5b1H0OirXhPrF5f/ij5kQUn1H6lbIVBTpkC31bqYZXMjNqxxNSG2JBOOrq23CS+A
-         FcNW3lL91WhgYsKNcMmwVzdZPQpRYrvsmMDN/CkQeS7nG/9CTrtAp28a5oH9KecJv5x/
-         9V20RCaE98olIcx5jjsq1ShFSjNfiZeVaqgdi9GK87oYxOcA7OaQTK6C5cBI1MsOr1db
-         k5hVPpTym5+Mfi7cykOOYK2LNKUgzn9oLWL5MR78Zao5YUI7LGBJKj+MpUd1pe4MjQye
-         MZYg==
+        bh=4kcWzYEFjTG6cHB14oR06VrX8JTzPxQz1Iu5XCq3qrs=;
+        b=shw+acYdRJaGSe0T+B8KaFg/NTchn/2ZVGJv78rfwU2elXlL9qLHnjlJbO6JffJ7IJ
+         lyocdTEBTFzTksJ39liakywJRemTjoHCpMUzdzqTXmJ+Vy5r6RXTmgYwK4fbYGOTl+No
+         p4sshhfnkwW43K81RtstjIBeoks2yebJEzeHI5l0Hn7CbkmUG7xUVXX1Qxo4kJhmOTnK
+         YTn4AkdqFozwtEjHhPR2pa0MadnYSGTb0ke7iXkDj3ClIYo730vkmrB+g3A+DKYYNB32
+         44tRf6kFLAkn/3/xd1yUpn2UKPBS9OkIl8HKXGKlRIwsKrC0chjS+2NlHmZjwMmEpW6+
+         ygkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=omKI1z34P7Yb4w3ORzLURpXlEaoDbxTWmDpyYl/szcw=;
-        b=cL2aJDx/LX25WjZY8UaDnvjkmzSGrCoPB/bCYOZabFg7oHQXRZIb2MW7k/O6lExuO5
-         mbHaV+1T8Plf2fGSu1JLXHlWIUJXylooXBxEc1aYMaT0OiHjlSugAdbraa3TEV/udxLp
-         Pnr7OHAOE0Vb7+FtusEPlxbV5VCkdaVpAKcSHUzvSiCsLQE2s2CR/Q8WeK7WjLRil0LK
-         DJk9kI6KxaILbaK6FTVOAbsVjjLQt5Urb6huAtqpxrl/wMRzvD5GMiLG+824sVPwKCbW
-         He6B/vXFTdrTuCTYVKba+gMLtQat/XC2vxjASpl8GFPrHFq1hQxkjp5GuADfQS5cXwlO
-         9szQ==
-X-Gm-Message-State: APzg51CGw8UU4k3VZpLIiMUP2wXuhKu7/KBH8NJZlsE+u8RujymStWkV
-        yConXlxLguMuHn+EdYjj+4YUvvwkz6c=
-X-Google-Smtp-Source: ANB0VdYGLHeKpGxA4bvpJS57QFA2f2194kEEHDXFfl2v41+g82H9HSZOFsnqFOHeQF64RZGR9TJE0A==
-X-Received: by 2002:a1c:5e08:: with SMTP id s8-v6mr5994731wmb.88.1535746228300;
-        Fri, 31 Aug 2018 13:10:28 -0700 (PDT)
+        bh=4kcWzYEFjTG6cHB14oR06VrX8JTzPxQz1Iu5XCq3qrs=;
+        b=fxK7M2P0IVNk8owESQ5l/zSKS7F+lEW+yFpnB8qfMHEd1MLwUZTlE0Y7gxhiqC1CSN
+         p4RQiywPNOVNf/+ZjuG20x9xYebdUxeNYQujFfRSvT4MFWHdaB50lVGq7r1V/cIQ8WAo
+         Pafo1J9jolm6Y8401IkMFvvwSsDP6ZV4nf7wwkmaxgTLURSb6EUovDX60lFgTN4Ib8pE
+         vGEke/5DYBssaXQSY3dnKPyR5rTfZkSLEjfKifKhdIwtY05FruRWy76D6cIPSw54lDdK
+         nCbo31CZCuK2zAOQR1APBII8trGR1gmj0WZagMZKcxgfEGB52stNx/cRqYzRRLz60NO7
+         AftQ==
+X-Gm-Message-State: APzg51C1DKY2lbmVogEqskdVX3TrAoUzKm1i/fovwzUkAOQoJPUC4HtQ
+        IjVwJM3vbNBjErwofUdp+l/ia4zEg30=
+X-Google-Smtp-Source: ANB0VdZP0dALS73x5TgweUJQGb+a02Lk9mak5vtpxskNezmYsaiDOKemoBA0E9jSCPFR2leJ+mAWLw==
+X-Received: by 2002:a1c:eb03:: with SMTP id j3-v6mr5226359wmh.150.1535746229388;
+        Fri, 31 Aug 2018 13:10:29 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.26
+        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 13:10:27 -0700 (PDT)
+        Fri, 31 Aug 2018 13:10:28 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Wink Saville <wink@saville.com>,
         Marc Branchaud <marcnarc@xiplink.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 7/9] push doc: correct lies about how push refspecs work
-Date:   Fri, 31 Aug 2018 20:10:02 +0000
-Message-Id: <20180831201004.12087-8-avarab@gmail.com>
+Subject: [PATCH v5 8/9] fetch: document local ref updates with/without --force
+Date:   Fri, 31 Aug 2018 20:10:03 +0000
+Message-Id: <20180831201004.12087-9-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180830201244.25759-1-avarab@gmail.com>
 References: <20180830201244.25759-1-avarab@gmail.com>
@@ -77,116 +77,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There's complex rules governing whether a push is allowed to take
-place depending on whether we're pushing to refs/heads/*, refs/tags/*
-or refs/not-that/*. See is_branch() in refs.c, and the various
-assertions in refs/files-backend.c. (e.g. "trying to write non-commit
-object %s to branch '%s'").
+Refer to the new git-push(1) documentation about when ref updates are
+and aren't allowed with and without --force, noting how "git-fetch"
+differs from the behavior of "git-push".
 
-This documentation has never been quite correct, but went downhill
-after dbfeddb12e ("push: require force for refs under refs/tags/",
-2012-11-29) when we started claiming that <dst> couldn't be a tag
-object, which is incorrect. After some of the logic in that patch was
-changed in 256b9d70a4 ("push: fix "refs/tags/ hierarchy cannot be
-updated without --force"", 2013-01-16) the docs weren't updated, and
-we've had some version of documentation that confused whether <src>
-was a tag or not with whether <dst> would accept either an annotated
-tag object or the commit it points to.
+Perhaps it would be better to split this all out into a new
+gitrefspecs(7) man page, or present this information using tables.
 
-This makes the intro somewhat more verbose & complex, perhaps we
-should have a shorter description here and split the full complexity
-into a dedicated section. Very few users will find themselves needing
-to e.g. push blobs or trees to refs/custom-namespace/* (or blobs or
-trees at all), and that could be covered separately as an advanced
-topic.
+In lieu of that, this is accurate, and fixes a big omission in the
+existing refspec docs.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Documentation/git-push.txt     | 52 ++++++++++++++++++++++++++++------
- Documentation/gitrevisions.txt |  7 +++--
- 2 files changed, 48 insertions(+), 11 deletions(-)
+ Documentation/fetch-options.txt    | 15 +++++++++-----
+ Documentation/pull-fetch-param.txt | 32 +++++++++++++++++++++++++-----
+ 2 files changed, 37 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 71c78ac1a4..f345bd30fc 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -74,14 +74,50 @@ without any `<refspec>` on the command line.  Otherwise, missing
- `:<dst>` means to update the same ref as the `<src>`.
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 8bc36af4b1..fa0a3151b3 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -68,11 +68,16 @@ endif::git-pull[]
+ 
+ -f::
+ --force::
+-	When 'git fetch' is used with `<rbranch>:<lbranch>`
+-	refspec, it refuses to update the local branch
+-	`<lbranch>` unless the remote branch `<rbranch>` it
+-	fetches is a descendant of `<lbranch>`.  This option
+-	overrides that check.
++	When 'git fetch' is used with `<src>:<dst>` refspec it may
++	refuse to update the local branch as discussed
++ifdef::git-pull[]
++	in the `<refspec>` part of the linkgit:git-fetch[1]
++	documentation.
++endif::git-pull[]
++ifndef::git-pull[]
++	in the `<refspec>` part below.
++endif::git-pull[]
++	This option overrides that check.
+ 
+ -k::
+ --keep::
+diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
+index f1fb08dc68..ab9617ad01 100644
+--- a/Documentation/pull-fetch-param.txt
++++ b/Documentation/pull-fetch-param.txt
+@@ -33,11 +33,33 @@ name.
+ it requests fetching everything up to the given tag.
  +
- The object referenced by <src> is used to update the <dst> reference
--on the remote side.  By default this is only allowed if <dst> is not
--a tag (annotated or lightweight), and then only if it can fast-forward
--<dst>.  By having the optional leading `+`, you can tell Git to update
--the <dst> ref even if it is not allowed by default (e.g., it is not a
--fast-forward.).
--+
--Pushing an empty <src> allows you to delete the <dst> ref from
--the remote repository.
-+on the remote side. Whether this is allowed depends on where in
-+`refs/*` the <dst> reference lives as described in detail below, in
-+those sections "update" means any modifications except deletes, which
-+as noted after the next few sections are treated differently.
+ The remote ref that matches <src>
+-is fetched, and if <dst> is not an empty string, the local
+-ref that matches it is fast-forwarded using <src>.
+-If the optional plus `+` is used, the local ref
+-is updated even if it does not result in a fast-forward
+-update.
++is fetched, and if <dst> is not an empty string, an attempt
++is made to update the local ref that matches it.
 ++
-+The `refs/heads/*` namespace will only accept commit objects, and
-+updates only if they can be fast-forwarded.
++Whether that update is allowed without `--force` depends on the ref
++namespace it's being fetched to, the type of object being fetched, and
++whether the update is considered to be a fast-forward. Generally, the
++same rules apply for fetching as when pushing, see the `<refspec>...`
++section of linkgit:git-push[1] for what those are. Exceptions to those
++rules particular to 'git fetch' are noted below.
 ++
-+The `refs/tags/*` namespace will accept any kind of object (as
-+commits, trees and blobs can be tagged), and any updates to them will
-+be rejected.
++Unlike when pushing with linkgit:git-push[1], any updates to
++`refs/tags/*` will be accepted without `+` in the refspec (or
++`--force`). The receiving promiscuously considers all tag updates from
++a remote to be forced fetches.
 ++
-+It's possible to push any type of object to any namespace outside of
-+`refs/{tags,heads}/*`. In the case of tags and commits, these will be
-+treated as if they were the commits inside `refs/heads/*` for the
-+purposes of whether the update is allowed.
++Unlike when pushing with linkgit:git-push[1], any updates outside of
++`refs/{tags,heads}/*` will be accepted without `+` in the refspec (or
++`--force`), whether that's swapping e.g. a tree object for a blob, or
++a commit for another commit that's doesn't have the previous commit as
++an ancestor etc.
 ++
-+I.e. a fast-forward of commits and tags outside `refs/{tags,heads}/*`
-+is allowed, even in cases where what's being fast-forwarded is not a
-+commit, but a tag object which happens to point to a new commit which
-+is a fast-forward of the commit the last tag (or commit) it's
-+replacing. Replacing a tag with an entirely different tag is also
-+allowed, if it points to the same commit, as well as pushing a peeled
-+tag, i.e. pushing the commit that existing tag object points to, or a
-+new tag object which an existing commit points to.
-++
-+Tree and blob objects outside of `refs/{tags,heads}/*` will be treated
-+the same way as if they were inside `refs/tags/*`, any update of them
-+will be rejected.
-++
-+All of the rules described above about what's not allowed as an update
-+can be overridden by adding an the optional leading `+` to a refspec
-+(or using `--force` command line option). The only exception to this
-+is that no amount of forcing will make the `refs/heads/*` namespace
-+accept a non-commit object. Hooks and configuration can also override
-+or amend these rules, see e.g. `receive.denyNonFastForwards` in
-+linkgit:git-config[1] and`pre-receive` and `update` in
-+linkgit:githooks[5].
-++
-+Pushing an empty <src> allows you to delete the <dst> ref from the
-+remote repository. Deletions are always accepted without a leading `+`
-+in the refspec (or `--force`), except when forbidden by configuration
-+or hooks. See `receive.denyDeletes` in linkgit:git-config[1] and
-+`pre-receive` and `update` in linkgit:githooks[5].
++As with pushing with linkgit:git-push[1], all of the rules described
++above about what's not allowed as an update can be overridden by
++adding an the optional leading `+` to a refspec (or using `--force`
++command line option). The only exception to this is that no amount of
++forcing will make the `refs/heads/*` namespace accept a non-commit
++object.
  +
- The special refspec `:` (or `+:` to allow non-fast-forward updates)
- directs Git to push "matching" branches: for every branch that exists on
-diff --git a/Documentation/gitrevisions.txt b/Documentation/gitrevisions.txt
-index 1f6cceaefb..d407b7dee1 100644
---- a/Documentation/gitrevisions.txt
-+++ b/Documentation/gitrevisions.txt
-@@ -19,9 +19,10 @@ walk the revision graph (such as linkgit:git-log[1]), all commits which are
- reachable from that commit. For commands that walk the revision graph one can
- also specify a range of revisions explicitly.
- 
--In addition, some Git commands (such as linkgit:git-show[1]) also take
--revision parameters which denote other objects than commits, e.g. blobs
--("files") or trees ("directories of files").
-+In addition, some Git commands (such as linkgit:git-show[1] and
-+linkgit:git-push[1]) can also take revision parameters which denote
-+other objects than commits, e.g. blobs ("files") or trees
-+("directories of files").
- 
- include::revisions.txt[]
- 
+ [NOTE]
+ When the remote branch you want to fetch is known to
 -- 
 2.19.0.rc1.350.ge57e33dbd1
 
