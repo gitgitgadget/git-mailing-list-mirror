@@ -2,148 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FC201F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 07:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09F821F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 08:16:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727421AbeHaL3z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 07:29:55 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42427 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727295AbeHaL3y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 07:29:54 -0400
-Received: by mail-ed1-f68.google.com with SMTP id l5so5690238edw.9
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 00:23:49 -0700 (PDT)
+        id S1727616AbeHaMXH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 08:23:07 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:54911 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727334AbeHaMXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 08:23:07 -0400
+Received: by mail-it0-f52.google.com with SMTP id f14-v6so6101710ita.4
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 01:16:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=pNBdjVLh2HFTpoSBfa7RVK5KRW1MAsx42VLaFgfbXqE=;
-        b=vJfQdMxMTsnB23nMtuSx6CxpVmxIbM1Qf3ameGwqf47SRzWiQl2lgMuWTW2PMMuDDo
-         L2zqrg7jrdq8tQ/QkOFDKegaLEV8C4DSOYCkxyx5RL2IrZan/L4zfjhqQF73LMfpELA6
-         DRxUV0AYBAKn+CROsAsr3E7LESqksCbifc1M13QUqwnZjWZfgMU3ERLoyWwjxDKlXfwQ
-         w9rUVcMcdTX9mqvHezVsoGwfF28s+6mQTnZrRGi/7ad+sVd/eHSM6wPBXU87ctle4dZg
-         YJ1fMyMVOc5DpgW4QbsJfs3xDbInMT1Ctj3ZPaTyP9liUUJpzaUkEWeBD8jhck176ogc
-         +kKw==
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=2XCeqaODZ9cDD232fRHiHyv5AX9S+DAjhyPdGagJLWo=;
+        b=mOc4AiWaqko2+eGKDOCjD2jbZhVWd1V4PTJUky+O6PxT2x6k4spbTMRGqhEPWPIQgy
+         9brPweeQx7Jk3Ddw8/dGdTiA0baQIXyJwiQU6YwM6iCsB+5Fgc1j+XCZtu4Dd6tpemnt
+         24BpZgFJL7mmTq1aOeVqadYQ05i74jyDwIhrEWRpxZORouoI+DhbYfTS1LzOyRZMWC7Y
+         UT+q6PoRKb8uYoYae/LPqU6oiwJwYo3m4VivFkdhfB01zvzEj5fWHvGw8HWNL/Kua3I3
+         uZ9xJjkfddXOuyldtFdPm83MF+9U7jebD/vtJ9R4IX2vOmMB7PhV+nl4MdcrrP2NV5d9
+         4D9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=pNBdjVLh2HFTpoSBfa7RVK5KRW1MAsx42VLaFgfbXqE=;
-        b=jyPgmn4kP3lAFp87ifRwq/UrUP/9SF1goAYZi3wyVHlMYNQDOdLYn1cTeyscjUI+9G
-         OimXGk++1b1WF92gq/Z7Yqg+QWUL2VAe5fjzk6NGScYD5NmG8jeIlnwmMSxEi4IY1wcT
-         598DbBEYYJ2hBD8ZZsfmmFRuQbKBMB1kD8jWvpSao56s2eQw2/oLLsr6xZC6wqC2epTk
-         TNdiZx2z+KbBYv2sgZSsEwzzgtmdXwiLEvemPc12lbFQiraws1xphoby3aTR4qmLl2UT
-         F60V1dyEuensjq1MzH/NEMHlzaAVsyZQ64kQMV69o7Kdmd7Q/20Av39tgSBPx7eYKOvd
-         K8qQ==
-X-Gm-Message-State: APzg51DMltxHkRtcZxhLOmKO+b+UnP3WmWjXP3BEy4Lg4ET5xi81Pm0V
-        D2A+HWynR2Lo6EqCrFEMo1Q=
-X-Google-Smtp-Source: ANB0VdbEeDl+ctnPJ+yCItNFCwZO4yLp65Bzg+X+uaQOOaze9del2Yq3iD6BSnuQuPSRBriyX1RIhQ==
-X-Received: by 2002:a05:6402:1545:: with SMTP id p5mr14621663edx.104.1535700229037;
-        Fri, 31 Aug 2018 00:23:49 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id r2-v6sm4517399eda.89.2018.08.31.00.23.48
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 00:23:48 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "Stephen P. Smith" <ischis2@cox.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] wt-status.c: Set the commitable flag in the collect phase.
-References: <20180831053921.8083-1-ischis2@cox.net> <20180831053921.8083-4-ischis2@cox.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180831053921.8083-4-ischis2@cox.net>
-Date:   Fri, 31 Aug 2018 09:23:47 +0200
-Message-ID: <87a7p3c83g.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=2XCeqaODZ9cDD232fRHiHyv5AX9S+DAjhyPdGagJLWo=;
+        b=kI5FLqZKhvS4ej2Kfz3FXaAS6CUNvpwvM/qkKl3JuKT4QqZyPofb4pwBgCiuKVWRLk
+         WEEu6sL/6w+7myjFRJjJAm4FebXuqfub51UiS17ckkZyKqIth/RYmG4M/UMtkz6abnIp
+         a6tsh40dE+ioaExo1V3+WAYgqSLK6ydCYbtcNNA81ZqqMeY6Ajluv3hv7ivk1Th1Nar3
+         XMB4xEr3jo8pwhJf8jmI9pP/r7MJXBB3UHETspY2ROV2GqKmZ36WKsoFHhv4Fr0lTXE1
+         Oc98LiesBGfB2ZaTg9387+98tMKD4XrI0h/DLdW2Vrx0Ob2ABjDe9WXLTonwC/VB3YrG
+         yPCw==
+X-Gm-Message-State: APzg51Bd2cO1CBKxtrLfEdIBDpV0rxtZBwAoTz5LuZ7p5QFBjQfBUKvg
+        Iwkk0t/snjIbUh7ghXwI/77vZ1ypAnz8DTbQ/9Y=
+X-Google-Smtp-Source: ANB0Vdavr8mPz/PeuoZfR6ZKQgD4Z+xpeAylbDplb1Ql1s0ln6maoleM8GdtE7AqSsa8KZv8IF09+A7s5ckCKE3pH84=
+X-Received: by 2002:a24:cfd7:: with SMTP id y206-v6mr4460366itf.112.1535703410486;
+ Fri, 31 Aug 2018 01:16:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+Received: by 2002:a4f:22a7:0:0:0:0:0 with HTTP; Fri, 31 Aug 2018 01:16:49
+ -0700 (PDT)
+In-Reply-To: <20180828151419.GA17467@sigill.intra.peff.net>
+References: <20180828151419.GA17467@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 31 Aug 2018 10:16:49 +0200
+Message-ID: <CAP8UFD0SYECLk--7JsZkxBdQeJPuG1Ut5GMLsCJHqM+jG7C0jQ@mail.gmail.com>
+Subject: Re: Git in Outreachy Dec-Mar?
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Fri, Aug 31 2018, Stephen P. Smith wrote:
-
-> In an update to fix a bug with "commit --dry-run" it was found that
-> the commitable flag was broken.  The update was, at the time,
-> accepted as it was better than the previous version.
-
-What update is this? I.e. git.git commit id? See the "or this invocation
-of `git show`" part of SubmittingPatches for how to quote it in the
-commit message.
-
-> Since the set of the flag had been done in wt_longstatus_print_updated,
-> set the flag in wt_status_collect_updated_cb.
+On Tue, Aug 28, 2018 at 5:14 PM, Jeff King <peff@peff.net> wrote:
+> The Outreachy application period is set to begin on September 10th for
+> interns participating in the December-March program. Do we want to
+> participate?
 >
-> Set the commitable flag in wt_status_collect_changes_initial to keep
-> from introducing a rebase regression.
+> Details on the program are here:
 >
-> Leave the setting of the commitable flag in show_merge_in_progress. If
-> a check for merged commits is moved to the collect phase then other
-> --dry-run tests fail.
+>   https://www.outreachy.org/communities/cfp/
 >
-> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
-> ---
->  wt-status.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+> If we want to, then we need:
 >
-> diff --git a/wt-status.c b/wt-status.c
-> index 5ffab6101..d50798425 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -540,10 +540,12 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
->  			/* Leave {mode,oid}_head zero for an add. */
->  			d->mode_index = p->two->mode;
->  			oidcpy(&d->oid_index, &p->two->oid);
-> +			s->commitable = 1;
->  			break;
->  		case DIFF_STATUS_DELETED:
->  			d->mode_head = p->one->mode;
->  			oidcpy(&d->oid_head, &p->one->oid);
-> +			s->commitable = 1;
->  			/* Leave {mode,oid}_index zero for a delete. */
->  			break;
->
-> @@ -561,6 +563,7 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
->  			d->mode_index = p->two->mode;
->  			oidcpy(&d->oid_head, &p->one->oid);
->  			oidcpy(&d->oid_index, &p->two->oid);
-> +			s->commitable = 1;
->  			break;
->  		case DIFF_STATUS_UNMERGED:
->  			d->stagemask = unmerged_mask(p->two->path);
-> @@ -665,11 +668,13 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
->  			 * code will output the stage values directly and not use the
->  			 * values in these fields.
->  			 */
-> +			s->commitable = 1;
->  		} else {
->  			d->index_status = DIFF_STATUS_ADDED;
->  			/* Leave {mode,oid}_head zero for adds. */
->  			d->mode_index = ce->ce_mode;
->  			oidcpy(&d->oid_index, &ce->oid);
-> +			s->commitable = 1;
->  		}
->  	}
->  }
-> @@ -773,7 +778,6 @@ static void wt_longstatus_print_updated(struct wt_status *s)
->  			continue;
->  		if (!shown_header) {
->  			wt_longstatus_print_cached_header(s);
-> -			s->commitable = 1;
->  			shown_header = 1;
->  		}
->  		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
+>   1. Volunteers to mentor. This is similar in scope to being a GSoC
+>      mentor.
 
-This looks sensible, but I'm not familiar with the status code.
+I volunteer to co-mentor.
 
-Structurally, re: my comment on 1/3 and 2/3, it would make sense to make
-this a two-part series. In 1/2 you add the test you're adding in 2/3 as
-a test_expect_failure test, and in 2/2 (this commit) you tweak all the
-"test_expect_failure" that now pass to "test_expect_success".
+>   2. To get our landing page and list of projects in order (and also
+>      micro-projects for applicants). This can probably build on the
+>      previous round at:
+>
+>        https://git.github.io/Outreachy-15/
+>
+>      and on the project/microprojects lists for GSoC (which will need
+>      some updating and culling).
+
+Ok to take a look at that.
+
+>   3. To figure out funding (unlike GSoC, the intern stipend comes from
+>      the projects). I can look into getting outside funds (which is what
+>      we did last year). Worst case, we do have enough project money to
+>      cover an intern. Last year[1] opinions were that this was a
+>      reasonable use of project money, but of course new opinions are
+>      welcome.
+
+I can also look at getting outside funds.
+
+My opinion though is that it is probably better if the Git project can
+use its own fund for this, as it makes it easier for possible mentors
+if they don't need to look at getting outside funds.
+
+Thanks for sending this,
+Christian.
