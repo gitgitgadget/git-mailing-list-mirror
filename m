@@ -2,108 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CABBB1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 21:07:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDDF1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 21:14:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727203AbeIABRL (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 21:17:11 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39458 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726869AbeIABRL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 21:17:11 -0400
-Received: by mail-wr1-f66.google.com with SMTP id o37-v6so12352962wrf.6
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 14:07:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=JqIUSNrcVpHeJFrk8Ut9hNhwkjSTZG74H3BQwzFijs4=;
-        b=jjenHZu/5Ge9+dXzrTQndoS8khYxEY24n9y2+Q4q3yKWR9YFC8/jXiHejyTuEJ9spn
-         HZ0g8bJNAuic0r9ue32gtKJOL6s1d6CX1l7FXQcox4IQmkQ7jL7cgkqgfWPnU/dX7glk
-         d66mHvvH5tH6UkA89vGGF99lAJZXuN5AyLN0T2NxMfc5bSdMDRv0FkWOmChbfHNy/+M6
-         D7avz/KfLcMxkOZEXs3eDpHQ0cHvkmcDPvzUPwkKLouXZZgyd5af0CviLJumysoQEUqM
-         Gc/9oGymwPBxgG7RnzSroXIJv6QswycuueO3ViIb2q0AM8PL5Ec9BJflDAFuz7DlMPag
-         Xh7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=JqIUSNrcVpHeJFrk8Ut9hNhwkjSTZG74H3BQwzFijs4=;
-        b=LEVef4c1i/sBnsWLts5xW3RHQPC+iJnePyYVtgvn6NfrAqQyj1MKc+kV7P1HnNOJlo
-         TVjyxjLe9sHrxY2BNpkscZERRZlgzWd3K9ItnCDF2UCNNVoeE2KM0KQwQbsxOpMoCVoF
-         kp+uc8Kc7Yr9DH+K83YeOO7PkKC+sGo65FJxuTNzFLalXt9MPf99onKqJ6seUnlZZLii
-         uKJT9Q0feDsj8LT7Vrj1NLMFLtUVOZSFazKD3SQ8HhFOMxhCSUtnjittOF59qyeKOkli
-         J9Hz2wzOyCdemuarteuZ9/4T3GUMM5agzH6LSR33lQCAn/3m3itkTunu21RhD+7y9yZ1
-         TEvg==
-X-Gm-Message-State: APzg51BpqK97DhF3STB1D4PhBHZWDmzmo4yn3LaWYk0On5BQ9yxRNP21
-        0jKyBfNXs9mzeW808KmxxYk=
-X-Google-Smtp-Source: ANB0VdbsG9Sh+NIOMu9oqZaDGmYpn64hhHEMaZkZYc7ca1/prvw8YmJ64PPA8ea41vPvIKSzztApUQ==
-X-Received: by 2002:adf:8325:: with SMTP id 34-v6mr2058782wrd.67.1535749674023;
-        Fri, 31 Aug 2018 14:07:54 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m68-v6sm10089939wmb.10.2018.08.31.14.07.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 14:07:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v5 2/9] push tests: make use of unused $1 in test description
-References: <20180830201244.25759-1-avarab@gmail.com>
-        <20180831201004.12087-3-avarab@gmail.com>
-Date:   Fri, 31 Aug 2018 14:07:52 -0700
-Message-ID: <xmqqftyu1byv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727248AbeIABXz (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 21:23:55 -0400
+Received: from mout.gmx.net ([212.227.15.15]:43139 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727203AbeIABXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 21:23:55 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLunc-1fz9bH1id2-007jEO; Fri, 31
+ Aug 2018 23:14:23 +0200
+Date:   Fri, 31 Aug 2018 23:14:20 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Jeff King <peff@peff.net>, Jann Horn <jannh@google.com>,
+        git@vger.kernel.org,
+        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>, Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
+In-Reply-To: <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1808312313210.71@tvgsbejvaqbjf.bet>
+References: <20180830070548.GA15081@sigill.intra.peff.net> <20180830070932.GB15420@sigill.intra.peff.net> <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808311155410.71@tvgsbejvaqbjf.bet> <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7d+1nKZgSf49qbBIekebikORx3dwwO7iU0yMQMmSp9RYnDF8s/9
+ KRwSRBA3+si0/2LvX2oLJHCl8Hg/TyIuuagmPPUeD5bEtJ9gq4hUC8TygfynmsNr1EqvQyO
+ eypPnvlcpGaoeO/Rf+PwFan2gDbFiS+SbmKMbXcaAFkDyvTNXjnDHvrJI2+g6UhN5wCk8n3
+ 5+LQBHw4CzWGoKO/BzjNw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rVrZgdsa/vI=:tz9+958FujHPBgo0ANkZ2F
+ DIXCunJxi6didc5Ve1YDNeuD4XI/Y0c7+/TpXYzR+AQXxcHQxloLd0JB5BuF1C+zjQY5iWy8U
+ 5DbNDzIK+n2qiqQ25N7pbjhNjk8dNnlco4oG5U9VRo71PUv4dbst5NjhSOu9RJw223g3sM8+f
+ nbP+u38zagrRZXNtwQIr7VrLNWScOoSEGL6VjCwU459WAz+vp0GVpbuN5wsZTsV9+pFWzCnpt
+ p0sMsVUf7cuHG+ef0jxZwz9CD+90vXbmvU4USVxzIKgKzOGj+Ihy7YZ+eyfBp4eOdEbNZRDEy
+ /w3VV8YHBjIDU45TwUHWlc9/SdOX2UY9ZflPbF0F0MOQRvXXMxOsEHbFcY9A0TT+kdJz6qyzg
+ 50HjtMhWZcUHusqQpkCjFQUp/AcLv3fQzGF1IvoP/Xml6GoqIRbfrqkTgJ0TCKtdl6JFilTVs
+ PMTnwWsm+s5b6u6WvogNfhfxIR3MG5/sqWNPNb3meguZlHOKNpu8NTKgWlk9JceMuH4VxmT4t
+ l0dnkAITr84X+XuclpFZB0C5P4Hh7dLouZMhL4TZwellNpQS3Q79+aug23/beNeiotEhUF2US
+ Nb9eQ8tnhbOqhK4G6520MbZ7Yu4Jd+ugvpFwG7Dy3leTtBvftA0hVhiAnCpp6+sRxqgj5ZZcH
+ fNkdKIYnOoHj1Ebkb6UjQyfLwWCl1tsLHqT/567AwXWw0IPDqapJQ7/MABWYotrB3JLmoEWMf
+ BcWIn10Ekm15FT1s79DqlxLGDP9EZTAOL9uH7DZT2KaTAohVfyi2yu9kfM0NBDXEon6p4K5cp
+ wM3pGTs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Hi Junio,
 
-> Fix up a logic error in 380efb65df ("push tests: assert re-pushing
-> annotated tags", 2018-07-31), where the $tag_type_description variable
-> was assigned to but never used, unlike in the subsequently added
-> companion test for fetches in 2d216a7ef6 ("fetch tests: add a test for
-> clobbering tag behavior", 2018-04-29).
->
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  t/t5516-fetch-push.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> index 539c25aada..62d5059f92 100755
-> --- a/t/t5516-fetch-push.sh
-> +++ b/t/t5516-fetch-push.sh
-> @@ -969,7 +969,7 @@ test_force_push_tag () {
->  	tag_type_description=$1
->  	tag_args=$2
->  
-> -	test_expect_success 'force pushing required to update lightweight tag' "
-> +	test_expect_success 'force pushing required to update $tag_type_description' "
+On Fri, 31 Aug 2018, Junio C Hamano wrote:
 
-Of course, $1 needs to be inside "dq-pair" for $tag_type_description
-to be substituted ;-)  So I'll tweak it while queuing.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Would "echo base >base" give us 5-byte long base even on Windows?
+> >
+> > Please note that Unix shell scripting is a foreign thing on Windows. As
+> > such, there is not really any "native" shell we can use [*1*], and
+> 
+> Yeah, I know that; otherwise I wouldn't have asked.  Because ...
+> 
+> > therefore we use MSYS2's Bash which outputs Unix line endings.
+> 
+> ... I didn't know what MSYS folks chose, and/or if you have chosen
+> to tweak their choice, and/or if you switched to somebody else's shell
+> (e.g. busybox) and/or you chose to tweak what they do out of the box,
+> it was worth asking and getting yes/no question.  You do not have to
+> tell me why I should be asking.
+> 
+> So instead of typing 3 lines, you can just say "yes we use echo that
+> emulates Unix".
+> 
+> Thanks.
 
-All the other ones in this series looked sensible to me.  Will
-replace.
+You could just express your gratitude that I do more than just answer a
+question, and impart more knowledge that will help you be a better
+maintainer.
 
-Thanks.
-
->  		mk_test testrepo heads/master &&
->  		mk_child testrepo child1 &&
->  		mk_child testrepo child2 &&
+Ciao,
+Dscho
