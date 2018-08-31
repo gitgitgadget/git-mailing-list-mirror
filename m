@@ -7,55 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CDC31F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 16:50:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B43201F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 16:50:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727662AbeHaU6W (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 16:58:22 -0400
-Received: from mail-pg1-f181.google.com ([209.85.215.181]:45699 "EHLO
-        mail-pg1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727572AbeHaU6V (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 16:58:21 -0400
-Received: by mail-pg1-f181.google.com with SMTP id m4-v6so5688458pgv.12
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:49:59 -0700 (PDT)
+        id S1727783AbeHaU60 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 16:58:26 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:34145 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727669AbeHaU60 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 16:58:26 -0400
+Received: by mail-pf1-f196.google.com with SMTP id k19-v6so5791301pfi.1
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:50:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=joH7vqG7kmqPl573SZm3GzbSox+MrkXauGYn6k6MkU4=;
-        b=C7YT/yfgV70R70JTtVJn1t9tnOjaneOBrUgybYm9wTGFUI5p8/dkIjRzhLmAsDEc1S
-         puMiWGUXsHCDqmyh6yMlUvgWqN2RHq6lyhLkKath2BS2Mg+f9e5xCxqlTjDoMh0e+w8n
-         NhA89CQp+ZK9aIxxXYT/oX5A0Gt2El+ehPIgLED3bgYLS4QDwL4DfOGI3wbeXF290aCl
-         hig26kzql5fz2xBCQL7Gdf2lw8r4qFjZJw8JCDjlKYfe31qQQgg+5k/hBHBhm9e02qiO
-         1G1VJvPaaZIduo5ZeputZUlDUC2Y6hr/0W7uaTpp6HOaq4wcm84NgJCo4ORKFx9N07yj
-         CDeQ==
+        bh=Pp7noHcnac+lCImKCiMj43QiP+nXEUxdy95IIVpWqT4=;
+        b=Vf/RdkBv8oSbrTNiY02mTCQJvyDbhHPFLqOyLWcW7CoJXqRBqYRRLHuChZRzRSpqr3
+         YFUsIzl8MGp/bOc2LluBlmJvj2gzRo9ztXdcZKZp6sjxW94V4eb9jlmSgyspK7Mc0+DT
+         zED+Uut3RwQTwu6oq2EGTHabTjwJVmJNWS0hqJ0SDkPXtcgm/9na5L0RCrTDXpmxp0Lc
+         +O4pYjoOve8MxIJ8LJb0wJ7jD8gdgBaGTMMrcUEWLnJPSrwqLostHPCrIEzuEeIdbmPn
+         vJzCBrs/RH1mTuV5svCEh2T2DbXzcQ+BhJ1Jf6Tq+nO8O6+wGCa3X4v99ICkk5E5E8/H
+         x0aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=joH7vqG7kmqPl573SZm3GzbSox+MrkXauGYn6k6MkU4=;
-        b=CZt5lSHBO9NYAjQGHLAizsmlr3ch8SKnCY20Xn11A3rTG0SGBjpLdka7Dh8LBWhRvI
-         EGl3O6Gdd4gPxYPRTeoshdUSzG+JtLKDwQWW8iH4pLUxCroea+Ljh3q4Y5iJcY4BDOZX
-         jOpVKbi+2BRhTwhD4A6z5vD8DvdO6S3JsYMIu1x91HDW6Unta+LukmSdPWSBy69xdrxF
-         1cW6emhaYZ6EXPPjCSCQJqnTytaxJfC0ZjrH0H96Iu970jYBtejWhIdW3FbW0iPbQqtk
-         GbBGddoA6ac4DH6Zhg17FxVxoEd2fxZYFy4d2dKIsQd4o5sH1d3WtbDQ080HSv4Jg2P0
-         FOfg==
-X-Gm-Message-State: APzg51CUyREcvnSE0d67132Jg/531qTS6JPiEB0tmpdKWtfkQApeHtYT
-        Pp1VxFoyqh9svOkO5nVGEW0+AnBA
-X-Google-Smtp-Source: ANB0VdbJEfSsDemfcfzI3XzQYh/+rniBK7o20ZlBw/pz40akAcLIJPTi7McbSdBBhBiGprNeCdPGPw==
-X-Received: by 2002:a63:26c6:: with SMTP id m189-v6mr9769445pgm.70.1535734198868;
-        Fri, 31 Aug 2018 09:49:58 -0700 (PDT)
+        bh=Pp7noHcnac+lCImKCiMj43QiP+nXEUxdy95IIVpWqT4=;
+        b=f668VhXuwpe76kKbCPQl0u85Krc2RVkT13UP29iMAG1DiqZ2DkwLo2h3hkqG5HOPFD
+         izBoPAk7Vj2KaSXDej7tXoe2TcIkbLgvER54apU6tF0M8lZebAkVf18vspc1RxfDdLxX
+         3EiNXQq0cI3emiP3CkbVRKVb7I2nLepTy7QvjtE+MymvuZB29Yi/+VVB37ivip4TRg3A
+         u6XQuMxyvqKPIVkma4HfOMaWjs3cylRaQp1uVCkqRBsVGXPS+FTbje6kmezkHl9R153i
+         /mxSz/4fX8t8TSF0CXQAvd1XsQ0n9mcWxeqO3wfw7DFEuboxc0/k5zJ6b2rGMSRLHRdZ
+         tKsQ==
+X-Gm-Message-State: APzg51Co9+zPFaAKCDNP7b0CfnlaGRrgta3zI6P/t63NOfDlp0oFWBNj
+        ZRmeCDgdGlc8TbCIxcoImw5N+879
+X-Google-Smtp-Source: ANB0Vdb/crDVcoZWsKRF7+3RiclfWVhT1im/O/qdpCndiYW3sMeMabY8r7vEKHsXJjEMLedsbLZXGA==
+X-Received: by 2002:aa7:83cd:: with SMTP id j13-v6mr16713432pfn.236.1535734204306;
+        Fri, 31 Aug 2018 09:50:04 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id p66-v6sm21337594pfd.65.2018.08.31.09.49.57
+        by smtp.gmail.com with ESMTPSA id b64-v6sm14744936pfg.66.2018.08.31.09.50.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 09:49:58 -0700 (PDT)
-Date:   Fri, 31 Aug 2018 09:49:58 -0700 (PDT)
-X-Google-Original-Date: Fri, 31 Aug 2018 16:49:46 GMT
-Message-Id: <2db85146df849c2545e32ad32501c4fe5002bfa0.1535734192.git.gitgitgadget@gmail.com>
+        Fri, 31 Aug 2018 09:50:03 -0700 (PDT)
+Date:   Fri, 31 Aug 2018 09:50:03 -0700 (PDT)
+X-Google-Original-Date: Fri, 31 Aug 2018 16:49:50 GMT
+Message-Id: <e3bde216b86fcb13da006937c8472823df9aa636.1535734192.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.29.git.gitgitgadget@gmail.com>
 References: <pull.29.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/8] trace2: demonstrate trace2 regions in wt-status
+Subject: [PATCH 7/8] trace2: demonstrate setting sub-command parameter in
+ checkout
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,45 +71,37 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Add trace2_region_enter() and trace2_region_leave() calls around the
-various phases of a status scan.  This gives elapsed time for each
-phase in the GIT_TR2_PERFORMANCE trace target.
+Add trace2_param() events in checkout to report whether the command
+is switching branches or just checking out a file.
 
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- wt-status.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ builtin/checkout.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/wt-status.c b/wt-status.c
-index 5ffab61015..9e37a73c73 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -726,13 +726,23 @@ static void wt_status_collect_untracked(struct wt_status *s)
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 29ef50013d..0934587781 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -251,6 +251,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	int errs = 0;
+ 	struct lock_file lock_file = LOCK_INIT;
  
- void wt_status_collect(struct wt_status *s)
- {
-+	trace2_region_enter("status_worktrees");
- 	wt_status_collect_changes_worktree(s);
-+	trace2_region_leave("status_worktrees");
- 
--	if (s->is_initial)
-+	if (s->is_initial) {
-+		trace2_region_enter("status_initial");
- 		wt_status_collect_changes_initial(s);
--	else
-+		trace2_region_leave("status_initial");
-+	} else {
-+		trace2_region_enter("status_index");
- 		wt_status_collect_changes_index(s);
-+		trace2_region_leave("status_index");
-+	}
++	trace2_param("subcommand", (opts->patch_mode ? "patch" : "path"));
 +
-+	trace2_region_enter("status_untracked");
- 	wt_status_collect_untracked(s);
-+	trace2_region_leave("status_untracked");
- }
+ 	if (opts->track != BRANCH_TRACK_UNSPECIFIED)
+ 		die(_("'%s' cannot be used with updating paths"), "--track");
  
- static void wt_longstatus_print_unmerged(struct wt_status *s)
+@@ -828,6 +830,9 @@ static int switch_branches(const struct checkout_opts *opts,
+ 	void *path_to_free;
+ 	struct object_id rev;
+ 	int flag, writeout_error = 0;
++
++	trace2_param("subcommand", "switch");
++
+ 	memset(&old_branch_info, 0, sizeof(old_branch_info));
+ 	old_branch_info.path = path_to_free = resolve_refdup("HEAD", 0, &rev, &flag);
+ 	if (old_branch_info.path)
 -- 
 gitgitgadget
 
