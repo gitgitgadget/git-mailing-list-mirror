@@ -2,89 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDDF1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 21:14:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 118101F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 21:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727248AbeIABXz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 21:23:55 -0400
-Received: from mout.gmx.net ([212.227.15.15]:43139 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727203AbeIABXz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 21:23:55 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MLunc-1fz9bH1id2-007jEO; Fri, 31
- Aug 2018 23:14:23 +0200
-Date:   Fri, 31 Aug 2018 23:14:20 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Jeff King <peff@peff.net>, Jann Horn <jannh@google.com>,
-        git@vger.kernel.org,
-        =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-        <pclouds@gmail.com>, Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
-In-Reply-To: <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1808312313210.71@tvgsbejvaqbjf.bet>
-References: <20180830070548.GA15081@sigill.intra.peff.net> <20180830070932.GB15420@sigill.intra.peff.net> <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1808311155410.71@tvgsbejvaqbjf.bet> <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727385AbeIABdx (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 21:33:53 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:41591 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726987AbeIABdx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 21:33:53 -0400
+Received: by mail-qt0-f194.google.com with SMTP id t39-v6so16099371qtc.8
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 14:24:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MNNcKqhMCSComvz82Mq0W1vnZBNMQmXWLNwKibogvNM=;
+        b=fzrEjmQBgskoW/Ii6ADmdNQrOm07YC2J2ptjibgAZ8squi7fQms6ciN/qhUgVgdGTF
+         8xUZLCNB3VxgFMdd/wMiBSAcc7zaGIQC5MeXgzbV2rNAHYe2qMDmLuBOyt53jIlQC9tr
+         pAsCvSKgJIj6VshaTXyZlpT8joAAorXmKqfl0sept7nQiNJIJ2gwavMr38iTyqVE5d2g
+         AFlTkcjn2QvzOjItVROlI+tUinRI1mhonjBu6iI/R5Rms6oqW1HLG2oJmnizi0AQd/1J
+         XBmg1gnY/X5mgpNEnzFVwa6YhG8eT8mSwAODK/i8BR6n+LBp/jhxSs6B8ohMztm0oOnw
+         FTLA==
+X-Gm-Message-State: APzg51Bj7xLz6YWq1qmuiuv5Yz9pL9XU8OtcCwdF8fLa2/pAqHcmaxsw
+        7yYwyiA6cZ4g6Nh6H3BqGlPGkgr0pOm1Zw6cfj49YQ==
+X-Google-Smtp-Source: ANB0VdaTkyUR4utCii3jePaP54Alguz4H+VdPj/M3cXXTiOPksQKaDw2YbsxaFDvJd++EopwzusIykok5lBmQ/Xz0bI=
+X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr17812994qtc.50.1535750673423;
+ Fri, 31 Aug 2018 14:24:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7d+1nKZgSf49qbBIekebikORx3dwwO7iU0yMQMmSp9RYnDF8s/9
- KRwSRBA3+si0/2LvX2oLJHCl8Hg/TyIuuagmPPUeD5bEtJ9gq4hUC8TygfynmsNr1EqvQyO
- eypPnvlcpGaoeO/Rf+PwFan2gDbFiS+SbmKMbXcaAFkDyvTNXjnDHvrJI2+g6UhN5wCk8n3
- 5+LQBHw4CzWGoKO/BzjNw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:rVrZgdsa/vI=:tz9+958FujHPBgo0ANkZ2F
- DIXCunJxi6didc5Ve1YDNeuD4XI/Y0c7+/TpXYzR+AQXxcHQxloLd0JB5BuF1C+zjQY5iWy8U
- 5DbNDzIK+n2qiqQ25N7pbjhNjk8dNnlco4oG5U9VRo71PUv4dbst5NjhSOu9RJw223g3sM8+f
- nbP+u38zagrRZXNtwQIr7VrLNWScOoSEGL6VjCwU459WAz+vp0GVpbuN5wsZTsV9+pFWzCnpt
- p0sMsVUf7cuHG+ef0jxZwz9CD+90vXbmvU4USVxzIKgKzOGj+Ihy7YZ+eyfBp4eOdEbNZRDEy
- /w3VV8YHBjIDU45TwUHWlc9/SdOX2UY9ZflPbF0F0MOQRvXXMxOsEHbFcY9A0TT+kdJz6qyzg
- 50HjtMhWZcUHusqQpkCjFQUp/AcLv3fQzGF1IvoP/Xml6GoqIRbfrqkTgJ0TCKtdl6JFilTVs
- PMTnwWsm+s5b6u6WvogNfhfxIR3MG5/sqWNPNb3meguZlHOKNpu8NTKgWlk9JceMuH4VxmT4t
- l0dnkAITr84X+XuclpFZB0C5P4Hh7dLouZMhL4TZwellNpQS3Q79+aug23/beNeiotEhUF2US
- Nb9eQ8tnhbOqhK4G6520MbZ7Yu4Jd+ugvpFwG7Dy3leTtBvftA0hVhiAnCpp6+sRxqgj5ZZcH
- fNkdKIYnOoHj1Ebkb6UjQyfLwWCl1tsLHqT/567AwXWw0IPDqapJQ7/MABWYotrB3JLmoEWMf
- BcWIn10Ekm15FT1s79DqlxLGDP9EZTAOL9uH7DZT2KaTAohVfyi2yu9kfM0NBDXEon6p4K5cp
- wM3pGTs
+References: <20180830195546.GA22407@sigill.intra.peff.net> <20180831063318.33373-1-sunshine@sunshineco.com>
+ <20180831063318.33373-3-sunshine@sunshineco.com> <20180831200135.GC5120@sigill.intra.peff.net>
+In-Reply-To: <20180831200135.GC5120@sigill.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 31 Aug 2018 17:24:21 -0400
+Message-ID: <CAPig+cRoOYZaDU-bPeCpabLVY3MiZwyE-Afc2AMZk7ksyj3tTQ@mail.gmail.com>
+Subject: Re: [PATCH 2/3] doc-diff: add --clean mode to remove temporary
+ working gunk
+To:     Jeff King <peff@peff.net>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Fri, Aug 31, 2018 at 4:01 PM Jeff King <peff@peff.net> wrote:
+> On Fri, Aug 31, 2018 at 02:33:17AM -0400, Eric Sunshine wrote:
+> >  OPTIONS_SPEC="\
+> >  doc-diff [options] <from> <to> [-- <diff-options>]
+> > +doc-diff (-c|--clean)
+> >  --
+> >  j=n  parallel argument to pass to make
+> >  f    force rebuild; do not rely on cached results
+> > +c,clean      cleanup temporary working files
+> >  "
+>
+> This will cause parseopt to normalize "--clean" to "-c" (along with
+> "--cle", etc).
 
-On Fri, 31 Aug 2018, Junio C Hamano wrote:
+Good to know. The documentation for git-sh-setup didn't talk about
+that at all, and while git-rev-parse documentation says that it
+"normalizes" options, that word didn't really convey this specific
+meaning to me, so I missed it.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Would "echo base >base" give us 5-byte long base even on Windows?
-> >
-> > Please note that Unix shell scripting is a foreign thing on Windows. As
-> > such, there is not really any "native" shell we can use [*1*], and
-> 
-> Yeah, I know that; otherwise I wouldn't have asked.  Because ...
-> 
-> > therefore we use MSYS2's Bash which outputs Unix line endings.
-> 
-> ... I didn't know what MSYS folks chose, and/or if you have chosen
-> to tweak their choice, and/or if you switched to somebody else's shell
-> (e.g. busybox) and/or you chose to tweak what they do out of the box,
-> it was worth asking and getting yes/no question.  You do not have to
-> tell me why I should be asking.
-> 
-> So instead of typing 3 lines, you can just say "yes we use echo that
-> emulates Unix".
-> 
-> Thanks.
+> >  while test $# -gt 0
+> >  do
+> >       case "$1" in
+> >       -j)
+> >               parallel=$2; shift ;;
+> > +     -c|--clean)
+> > +             clean=t ;;
+>
+> So this part can just test for "-c". AFAICT this is how "rev-parse
+> --parseopt" has always worked, though the documentation is quite
+> unclear. Other scripts seem to also use these redundant long options.
+> I'm not opposed to including it as a defensive measure (or simply an
+> annotation for the reader).
 
-You could just express your gratitude that I do more than just answer a
-question, and impart more knowledge that will help you be a better
-maintainer.
-
-Ciao,
-Dscho
+I'm fine leaving it as-is too since it seems that every other client
+of git-sh-setup does the same (and to save a re-roll).
