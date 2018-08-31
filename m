@@ -2,63 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97B4B1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 15:23:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21F1D1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 15:33:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728991AbeHaTbV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 15:31:21 -0400
-Received: from mail-wm0-f50.google.com ([74.125.82.50]:53749 "EHLO
-        mail-wm0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727303AbeHaTbV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 15:31:21 -0400
-Received: by mail-wm0-f50.google.com with SMTP id b19-v6so5627310wme.3
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 08:23:20 -0700 (PDT)
+        id S1728133AbeHaTlc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 15:41:32 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:36449 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727286AbeHaTlb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 15:41:31 -0400
+Received: by mail-wm0-f65.google.com with SMTP id j192-v6so5769958wmj.1
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 08:33:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=jCQkjv2mBQnMUgwQn6M+PwF8a/uGtPfiTraE0ifSKyg=;
-        b=sEdr6W/9XYTMsnkz+S8wUypKYG1VPCvhJqI6LO1yTOKeYfAgYTyigMfscb1QkOSnGM
-         xkZ1Yx5Z0hnTRLEqgyB96KndP+syFSUuRgl1FyT3VthsSLlPpPH1G6joSMe96xSNihJA
-         NIEdzv57ONcbgH8I3hrVF6cEz/tkMAYyjAHDvTxUcx6LkFIHfa3LVfv78mhogfd6w/pB
-         gkKSpkXTbYlWXJsv/TLzRT9TbylIvex4YQVzpVAgnRaP4Wi1pTLyJgdtAor+AKfg3v/s
-         1Apyqlwm7K5lodGd+BIledkl2orxNN39gAit9RwQMkwiWCXwPD2uQmjsb3gs2FS/3q4L
-         uErA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lY2Ct3vonNYHSu9f98JmUg6sHUl+QuaPZ1h02agpQ6Y=;
+        b=UpX3kMEUlymeLKfbQRBlNGWvR8W7ZGNv+ALtHv0STpFByrEWMXX5OAJt1b9bWM71CP
+         tOvTDGOO286musDugFzGNA4yfzuZ6AZWR2IwvesRw/OO4Fgz1sk0Bs52fJCwx61lPOxQ
+         BPhSHf+Rb4DaRuV9/bckH+r9J7vwoaopfKIS3RkQGIoCFoppyKU+vEUDM5i3l18CocpD
+         xyJJ7uf+QGF0Qe7g31HBYNTlEFoUbcSRVTHy0Q+pvWVp13+zxgmReCrwQBCL6dZSDX2i
+         y0ystjFJJoWxkzev6jnG1CEf5agc1qkj5kNUXwMuK8qhVpCpNxxgkziLbxKlmXxlo1VG
+         DY5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=jCQkjv2mBQnMUgwQn6M+PwF8a/uGtPfiTraE0ifSKyg=;
-        b=JLB8D0onswXP4hseu4pRUPdinqfL9wqrjT07ANfPyzuu9cJZlzzraVJhEx6r8aish5
-         V8tuc6mdn8Gc9iGm5jUMq36s1cO8TFuxMYcfDABj/pxGwKVnqcL5+SNqz6AnKxxFHzeg
-         XqxJbCMsTJEYrMKiM4AJScyCit1PyNhyPjrNCkWHjNc6LnQDpgTJEk+LRY2UuwGlwqAK
-         yEk8FmmLnN2Nw2D+IUjRFI+3BxyDbHMhe3A59dB4t0rEPbjBwf1n2G/WOGkSKjRscApK
-         EeGWh0Q471+vvavP4XJtnP4xu7YMmuYfcVYLBujf4gZMDHErXoNJeFmnG0yiTmXClWSu
-         FSPA==
-X-Gm-Message-State: APzg51BxXg63cIg/ymH90L+1u+KGmD+m5HgpLXjfpCtl57sjPEWUUwFS
-        yrpE4BFkzEg4khQXnzfcKTN78t9wr24=
-X-Google-Smtp-Source: ANB0VdZEGbvl6ql2gtrp1X7Y/5ny01EfYXlfO1QT9zdS7zA4GoUAmkVYSDk0O//bULFUl4ieKltDcA==
-X-Received: by 2002:a1c:9e89:: with SMTP id h131-v6mr4924832wme.13.1535728999620;
-        Fri, 31 Aug 2018 08:23:19 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id e5-v6sm3705458wmh.29.2018.08.31.08.23.17
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lY2Ct3vonNYHSu9f98JmUg6sHUl+QuaPZ1h02agpQ6Y=;
+        b=RMa6njBGCRyLAJk/D9BkQUZXpZ8cnpOfC/v/I8JGIZoMDzhlEvNJEBatcIqWyOzcCU
+         gqVCWaOqt15pd1ECdKpnukxSxXFko4R2KAoezmYauR1blCBVAkLG46FyPxzVmYC2XADI
+         5kReqqB6xz9g5cwq7P7nzptGL7muTyR0OmZ2aMKohsNwcBd3Q8OmzjJbG8lx9e82RAjq
+         S7UXmLAH4XB8lovSc2VyEWDniQEtV2dgwNNkbWdZ4EWfMJDbsTxMzJX3utZhNiLpXdFr
+         zAbUrkqgBvHiG/RrIGN8TAMY3M9d+JTg941HbxaQQ8bGGM5/MTjYDReJZdnsPzIHlnch
+         medg==
+X-Gm-Message-State: APzg51BtC4gv1i05DWJlGc22La2CEPVWTO7AIRIvc3Nkn2C8Nnu4x5bZ
+        AxMtQs3gaQeixMeBCaiO7b4=
+X-Google-Smtp-Source: ANB0VdZ75NNeP/7XO/drSgz5q1j0sggf9RcF50IcxKBe0o4Ac5uylD/FyGsJnrcyB5+wlD36gi52mg==
+X-Received: by 2002:a1c:8893:: with SMTP id k141-v6mr5110644wmd.36.1535729608216;
+        Fri, 31 Aug 2018 08:33:28 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id v2-v6sm4183511wme.36.2018.08.31.08.33.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 08:23:18 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/6] pack-bitmap: save "have" bitmap from walk
-References: <20180821184140.GA24165@sigill.intra.peff.net> <20180821190701.GE30764@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180821190701.GE30764@sigill.intra.peff.net>
-Date:   Fri, 31 Aug 2018 17:23:17 +0200
-Message-ID: <8736uud0gq.fsf@evledraar.gmail.com>
+        Fri, 31 Aug 2018 08:33:27 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Jann Horn <jannh@google.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
+References: <20180830070548.GA15081@sigill.intra.peff.net>
+        <20180830070932.GB15420@sigill.intra.peff.net>
+        <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1808311155410.71@tvgsbejvaqbjf.bet>
+Date:   Fri, 31 Aug 2018 08:33:26 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1808311155410.71@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 31 Aug 2018 11:58:24 +0200 (DST)")
+Message-ID: <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,56 +71,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, Aug 21 2018, Jeff King wrote:
+>> Would "echo base >base" give us 5-byte long base even on Windows?
+>
+> Please note that Unix shell scripting is a foreign thing on Windows. As
+> such, there is not really any "native" shell we can use [*1*], and
 
-> +int bitmap_has_sha1_in_uninteresting(struct bitmap_index *bitmap_git,
-> +				     const unsigned char *sha1)
-> +{
-> +	int pos;
-> +
-> +	if (!bitmap_git)
-> +		return 0; /* no bitmap loaded */
-> +	if (!bitmap_git->result)
-> +		BUG("failed to perform bitmap walk before querying");
+Yeah, I know that; otherwise I wouldn't have asked.  Because ...
 
-Some part of what calls this completely breaks pushing from the "next"
-branch when you have local bitmaps (we *really* should have some tests
-for this...).
+> therefore we use MSYS2's Bash which outputs Unix line endings.
 
-I don't have time to dig now, but just on my local git.git on next @
-b1634b371dc2e46f9b43c45fd1857c2e2688f96e:
+... I didn't know what MSYS folks chose, and/or if you have chosen
+to tweak their choice, and/or if you switched to somebody else's shell
+(e.g. busybox) and/or you chose to tweak what they do out of the box,
+it was worth asking and getting yes/no question.  You do not have to
+tell me why I should be asking.
 
-    u git (next $=) $ git repack -Ad --window=10 --depth=10 --write-bitmap-index --pack-kept-objects
-    Enumerating objects: 616909, done.
-    Counting objects: 100% (616909/616909), done.
-    Delta compression using up to 8 threads
-    Compressing objects: 100% (146475/146475), done.
-    Writing objects: 100% (616909/616909), done.
-    Selecting bitmap commits: 168027, done.                                                                                                                                                                           BBuilding bitmaps: 100% (338/338), done.
-    Total 616909 (delta 497494), reused 582609 (delta 467530)
-    u git (next $=) $ ./git --exec-path=$PWD push avar next:avar/next-push
-    Enumerating objects: 1330, done.
-    BUG: pack-bitmap.c:1132: failed to perform bitmap walk before querying
-    error: pack-objects died of signal 6
-    error: pack-objects died of signal 6
-    error: remote unpack failed: eof before pack header was fully read
-    error: failed to push some refs to 'git@github.com:avar/git.git'
+So instead of typing 3 lines, you can just say "yes we use echo that
+emulates Unix".
 
-Removing the bitmap makes it work again:
-
-    u git (next $=) $ rm .git/objects/pack/pack-496088d9464cd79dfcac50dd0d72dcd6faee8253.bitmap
-    rm: remove write-protected regular file '.git/objects/pack/pack-496088d9464cd79dfcac50dd0d72dcd6faee8253.bitmap'? y
-    u git (next $=) $ ./git --exec-path=$PWD push avar next:avar/next-push
-    Enumerating objects: 2834, done.
-    Counting objects: 100% (1799/1799), done.
-    Delta compression using up to 8 threads
-    Compressing objects: 100% (591/591), done.
-    Writing objects: 100% (1390/1390), 430.11 KiB | 15.36 MiB/s, done.
-    Total 1390 (delta 1100), reused 1072 (delta 798)
-    remote: Resolving deltas: 100% (1100/1100), completed with 214 local objects.
-    To github.com:avar/git.git
-     * [new branch]            next -> avar/next-push
-
-Today I deployed next + my patches @ work. Broke pushes in one place
-where repacks were being done manually with --write-bitmap-index.
+Thanks.
