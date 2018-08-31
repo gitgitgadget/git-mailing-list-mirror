@@ -2,87 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B47D11F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 11:54:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83B611F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 11:57:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727545AbeHaQB0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 12:01:26 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:36467 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727258AbeHaQB0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 12:01:26 -0400
-Received: by mail-qk1-f196.google.com with SMTP id 93-v6so1177451qks.3
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 04:54:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ipxE6FZnbKCg0fJWI5iB6QFFlzdqcX81LI8x5a1aF/U=;
-        b=EDq7WbD4O3HUvStJCnDctdUigxmVw/oasKBwDPYICzECS7nPMXDlOrWJJNeB1Oy33n
-         yhWHM+39Mu0Yz+ZQeaoAIHU+Fv9YWjanDfMfLUMTE94Na8XcA9iTxARoz1slXt4xZIxH
-         taTeRrIO9vxsKzvWFhG6dJ9m6mWZ6jt9hEmUIbRWAdk8/Ii3kHcamiOioYTM45l3Tk8J
-         rGJrd8s2LLiWpNm6+cuvN+cfENVS+TFW63i5+DSOF5oNaPmzrfASdFZ+/eWLYkdj1bRH
-         lQz1v/0nl9vRqz6QbmOxEx2N7CRjdLqXED/8zPsTLrkthR6mZb3nxoAQUF5FqLmhgbYA
-         IFnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ipxE6FZnbKCg0fJWI5iB6QFFlzdqcX81LI8x5a1aF/U=;
-        b=KjjDNeRH+Wq045k9w7i9PAaGrPh9mJsjtX61s1xRkRTavB2aoOU5S23hNkt5Vhnhyb
-         gbZfPzTRGvq7xqDuFihzILMnRbPCUXpTCTVORrlaN8b9CJfydrbwkX8L+q27Xa9B51zd
-         jGHFLUAWQyIjfo82dGrrLmwurOmVMD6ZpU9T/tgr6HQGXy7g1nqnYxO/zo7NiOsjaeKS
-         T+KOobTYIkbGjZQDKe5tSdJ4fWQRZvwlDzzA/AE+kdnGtRwz9nthXrVRddFnlcW89vWM
-         EHADaUNpfHGup2rdk0qNx5Rn4HTMHaE1uHLqWW1EdQMKdKwoKT76NQzOPHHulM2+p0AP
-         Rp/w==
-X-Gm-Message-State: APzg51CLe2ZnSCe8oJV0WbeHWURlV95yW6KjjsghwxLRWn1LR7p69D9D
-        23rD6gjaYalDqEMFeXaBetfr/ilC8L6K0+N1lyo=
-X-Google-Smtp-Source: ANB0VdZbaCKy4wckLwdJxFNCOcxSYVneFyoacfwOWAsfD4Sv+qTS5xYDI41mFSH9Pe6DVWMSm2vz5mq4qO3jWKxIUAo=
-X-Received: by 2002:a37:10d1:: with SMTP id 78-v6mr15099920qkq.72.1535716457830;
- Fri, 31 Aug 2018 04:54:17 -0700 (PDT)
+        id S1727675AbeHaQEX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 31 Aug 2018 12:04:23 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:59654 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727207AbeHaQEW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 12:04:22 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w7VBvChE009863
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 31 Aug 2018 07:57:12 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Jonathan Nieder'" <jrnieder@gmail.com>,
+        "=?utf-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>
+Cc:     "'Robert Dailey'" <rcdailey.lists@gmail.com>,
+        "'Git'" <git@vger.kernel.org>
+References: <CAHd499APYCH2r2=+M_AGKUzN0GDmrwDty4wK=Xy-utCdMrd56w@mail.gmail.com> <20180830045407.GB140348@aiede.svl.corp.google.com> <CAHd499BCk4Q4oPY=CXK=YrUbNUbz4J_KoeQngfz=92Qfc6q=eA@mail.gmail.com> <20180830185648.GA10427@tor.lan> <20180831032917.GC98946@aiede.svl.corp.google.com>
+In-Reply-To: <20180831032917.GC98946@aiede.svl.corp.google.com>
+Subject: RE: Automatic core.autocrlf?
+Date:   Fri, 31 Aug 2018 07:57:04 -0400
+Message-ID: <000c01d44121$bf563090$3e0291b0$@nexbridge.com>
 MIME-Version: 1.0
-References: <20180805075736.GF44140@aiede.svl.corp.google.com> <20180831083342.34836-1-sunshine@sunshineco.com>
-In-Reply-To: <20180831083342.34836-1-sunshine@sunshineco.com>
-From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Date:   Fri, 31 Aug 2018 13:54:05 +0200
-Message-ID: <CACBZZX6uCQkCermt8O6v2XB2MnUkt5ER3_z5GYJtGdSk-9JNLA@mail.gmail.com>
-Subject: Re: [PATCH] config.mak.uname: resolve FreeBSD iconv-related
- compilation warning
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Renato Botelho <garga@freebsd.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGf5k4RNUrSErA8PPJ17nKsTt01gQG5m0ftAtjVNywBoDqgoQGrPFX8pQOGk3A=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 31, 2018 at 11:52 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> OLD_ICONV has long been needed by FreeBSD so config.mak.uname defines
-> it unconditionally. However, recent versions do not need it, and its
-> presence results in compilation warnings. Resolve this issue by defining
-> OLD_ICONV only for older FreeBSD versions.
 
-This seems sane, but just for context is FreeBSD ports itself just
-compiling without iconv entirely?
+On August 30, 2018 11:29 PM, Jonathan Nieder wrote:
+> Torsten Bögershausen wrote:
+> 
+> > My original plan was to try to "make obsolete"/retire and phase out
+> > core.autocrlf completely.
+> > However, since e.g. egit/jgit uses it
+> > (they don't have support for .gitattributes at all) I am not sure if
+> > this is a good idea either.
+> 
+> Interesting.  [1] appears to have intended to add this feature.
+> Do you remember when it is that you tested?
+> 
+> Feel free to file bugs using [2] for any missing features.
+> 
+> [1] https://git.eclipse.org/r/c/60635
+> [2] https://www.eclipse.org/jgit/support/
 
-[CC FreeBSD devel/git maintainer]
+My testing was done on EGit 5.0.1 yesterday, which does not provide a default to core.autocrlf.
 
-$ uname -r; grep -ri iconv /usr/ports/devel/git
-11.2-RELEASE-p2
-/usr/ports/devel/git/Makefile:OPTIONS_DEFINE=   GUI SVN GITWEB CONTRIB
-P4 CVS HTMLDOCS PERL ICONV CURL \
-/usr/ports/devel/git/Makefile:OPTIONS_DEFAULT=  CONTRIB P4 CVS PERL
-GITWEB ICONV CURL SEND_EMAIL PCRE \
-/usr/ports/devel/git/Makefile:ICONV_USES=               iconv
-/usr/ports/devel/git/Makefile:ICONV_MAKE_ARGS_OFF=      NO_ICONV=1
+Cheers,
+Randall
 
-I have little clue about how ports works, but just noticed that
-they're not monkeypatching in OLD_ICONV there.
