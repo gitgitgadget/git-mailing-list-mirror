@@ -2,89 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 84CCD1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 21:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B49501F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 21:57:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727273AbeIACFV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 22:05:21 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:38275 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727326AbeIACFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 22:05:21 -0400
-Received: by mail-wr1-f65.google.com with SMTP id w11-v6so12431717wrc.5
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 14:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HBQzDKOWV9c9k0qoTzGVpUpunZX2UwtkPaVH6dYaiak=;
-        b=UUvHigVVGAi3EdQZX4TvnW0LnYwpw2QpPcjbX5gycg2WIgtxPGvkrOmjuQ2o9V8EB1
-         YE70I0Mo1QC5eKo/284qUtUehHGR6SUB3CNrL8F0f4o8xZl49pTwfeT4cn2zaBAY3CIW
-         ke3jX70xJUQNkKiPvqxWwZOIwCUk/eCloEw9fERo0hVDFy268Is3Ko75PJacP/EPHzqB
-         0P8Cn0QlopIvlKL3ZFcc8gHqfmJmI/bkt/UJLSaE6s4MDR18S9bzZlv1kh8pPozO/5JC
-         1BVPCp/sgOoZBCqIDfSPqMtenWK5sIR8KKkP+e5LdMCJf/NaFFOZKYNxQcXl4e1rfQXV
-         6A8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HBQzDKOWV9c9k0qoTzGVpUpunZX2UwtkPaVH6dYaiak=;
-        b=KETodiR8u8Ka6LhgF+VnW6KHu9a7hCXao8NyZZDcuu+JWJTRkxvBZubtPHP/iE6MUY
-         QY/bGy1wuNmvuZi9So8GpqQI8V3skg3JgSchdLq0o7a5QFL/kL8NnaoFBYGhVQo+2M51
-         uCjPC4tA466GCsQrsW69Eb0u1+9o1DoIdQqvXOUFne2fYmgAQkGDLLViBto6RIkImggp
-         5tAW8XgUnYq35Ab0bXsVHx9G0Kfq19EIwVVLEoeX8jCQ30g+VYwOwWzQqWaoawkNjRUy
-         6m5Wz5oBTiDGiGGC0xszBwEiD5p0cIxIUdjguF9iwqShR6oid1zT9rCkEHZK1a4CfrrO
-         3yjg==
-X-Gm-Message-State: APzg51DRr9jbVW2rLs7tjs8jhSNuwlNYgszcbZwYkZBEtbJD8qVnJljO
-        qQpCBvjlHIpj1xWWIJ16DQpkQcmw
-X-Google-Smtp-Source: ANB0VdZXOM8a504uiwbd0MzYcnunb8w2atLa+wzyLh5PLgdXLez41UErQ82n7FfhOdbRCCrdl0yd/Q==
-X-Received: by 2002:adf:bb41:: with SMTP id x1-v6mr11728231wrg.24.1535752553940;
-        Fri, 31 Aug 2018 14:55:53 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v192-v6sm5992944wmf.40.2018.08.31.14.55.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 14:55:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1727258AbeIACHQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 22:07:16 -0400
+Received: from avasout06.plus.net ([212.159.14.18]:34170 "EHLO
+        avasout06.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727232AbeIACHQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 22:07:16 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id vrQIfcDscWLW2vrQJfdvbi; Fri, 31 Aug 2018 22:57:48 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=fJUXI6Se c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=__XXf8WCzrIwuwvZrZAA:9
+ a=EriaY9-7dgwbay-p:21 a=bTcOBKxtbnkN0Ccb:21 a=QEXdDO2ut3YA:10
+ a=q92HNjYiIAC_jH7JDaYf:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 0/9] worktree: fix bugs and broaden --force applicability
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jann Horn <jannh@google.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-        <pclouds@gmail.com>, Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH 2/5] t5303: test some corrupt deltas
-References: <20180830070548.GA15081@sigill.intra.peff.net>
-        <20180830070932.GB15420@sigill.intra.peff.net>
-        <xmqq8t4n69gy.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1808311155410.71@tvgsbejvaqbjf.bet>
-        <xmqqh8ja360p.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1808312313210.71@tvgsbejvaqbjf.bet>
-        <20180831214116.GA16999@sigill.intra.peff.net>
-Date:   Fri, 31 Aug 2018 14:55:53 -0700
-In-Reply-To: <20180831214116.GA16999@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 31 Aug 2018 17:41:16 -0400")
-Message-ID: <xmqq7ek619qu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <20180828212026.21989-1-sunshine@sunshineco.com>
+ <20180830075431.GF11944@sigill.intra.peff.net>
+ <CAPig+cS3-oRzQrZGM_-pXUVFE3HvMdtODurPkmYgw1vFV8zb3Q@mail.gmail.com>
+ <20180830194634.GE19685@sigill.intra.peff.net>
+ <xmqqva7r4nof.fsf@gitster-ct.c.googlers.com>
+ <c9d51d68-c7ae-64f9-b3e9-a72f33c5afc3@ramsayjones.plus.com>
+ <20180831005426.GA2858@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d2f70c00-5247-7af1-b059-a0f423030977@ramsayjones.plus.com>
+Date:   Fri, 31 Aug 2018 22:57:46 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20180831005426.GA2858@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfGJDM56jLBUcucrFqtjfdRCWFwqH7sPdyeUm1q00S5FzsbedWc4jjfCp9JB8VOVkS8Tat0OtgHRjvYvTRU3ustfxNDTRpmex4EhhWPhV2NO9en8gn21j
+ NzH/6v6O/rIG+zTPqLvur87KIgBhQs2JC528CJmzOEXP7ZvgHfa2UUA/bgv6I87RkE/6nfjTYviumw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
->   - make it clear to other observers that there's at least one person
->     who hopes this is not the norm for this list
 
-Make it at least two by counting me ;-)
+On 31/08/18 01:54, Jeff King wrote:
+> On Fri, Aug 31, 2018 at 12:49:39AM +0100, Ramsay Jones wrote:
+> 
+>> On 30/08/18 21:14, Junio C Hamano wrote:
+>>> Jeff King <peff@peff.net> writes:
+>>>
+>>>> I suppose so. I don't think I've _ever_ used distclean, and I only
+>>>> rarely use "clean" (a testament to our Makefile's efforts to accurately
+>>>> track dependencies). I'd usually use "git clean" when I want something
+>>>> pristine (because I don't want to trust the Makefile at all).
+>>>
+>>> I do not trust "git clean" all that much, and pre-cleaning with
+>>> "make distclean" and then running "git clean -x" has become my bad
+>>> habit.  I jump around quite a bit during the day, which would end up
+>>> littering the working tree with *.o files that are only known to one
+>>> but not both of {maint,pu}/Makefile's distclean rules.  I even do
+>>> "for i in pu maint master next; do git checkout $i; make distclean; done"
+>>> sometimes before running "git clean -x" ;-)
+>>>
+>>
+>> 'git clean -x' always removes _way_ more than I want it
+>> to - in particular, I lost my config.mak more than once.
+> 
+> Heh. I have done that, too, but fortunately mine is a symlink to a copy
+> that is held in a git repository. ;)
 
->   - make a general reminder that collaborating on the Internet is hard,
->     but it's worth spending the extra effort to consider how comments
->     will be taken by the intended receiver, as well as others on the
->     list
+:-D
 
-Well, in this particular case both of us know exactly how the sender
-wants the message to be taken by the other side.  At least I do.
+Now, why didn't I think of that! ;-)
+
+ATB,
+Ramsay Jones
+
