@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0861F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 16:50:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03F8D1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 16:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727678AbeHaU6X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 16:58:23 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:34973 "EHLO
+        id S1727739AbeHaU6Y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 16:58:24 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43835 "EHLO
         mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727642AbeHaU6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 16:58:22 -0400
-Received: by mail-pg1-f194.google.com with SMTP id 7-v6so757065pgf.2
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:50:00 -0700 (PDT)
+        with ESMTP id S1727642AbeHaU6X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 16:58:23 -0400
+Received: by mail-pg1-f194.google.com with SMTP id v66-v6so5687477pgb.10
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:50:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=b5ocTq6EEV/0sd3iyVx71haHyHOBYQF1UpkWETZaA9I=;
-        b=VGG1reFFoAeWGRPX8bUh5pBuP56b63cKoTlA8qeD72vzqLEqgqfHEEdkowzJb24N4/
-         1qp8Q9VmqjCxXMmKFvX4tKrZcAo9Zd7kgiyPliOvb6qGLsrvIgv1fdpCH9diUP/N8ErP
-         M9MH3FMeHkm6dQDuhrgIVJQAJbJwgkdb5I0yWzBHj8j4NRtyUTfYw87XAOa5swZldjYG
-         u37ybiNQFGyivFXoiscRLAEEbsgD1oFNZAhnLZrbh3EMTrT49q1jTSrXMxqTSy1MSrKM
-         tDecG3dITRpHq8UUfzICOVE6CmtCA2RN9FETYERO85EADmr76MuebVMu4FfwVSS5/3Uy
-         awdA==
+        bh=4/e5fBPhngzUCydE/NRf1DKVYBzF3WslCO+t+q/PEUQ=;
+        b=e7W1+0ibQgk0qPYVpHXNo5MJ1WLzqhlDco4j3A2YMiyiNdrpQyb3KCjUOa35s3mO0e
+         7ckNQQDq8lxcFulFEygaN4Fsh1T2ZsY2jMq3fNRvTB8MnKd4S9SSw4/2g7uV7uOZttJw
+         2rTNLtB1MWDGh/QHzjPkfh3Jze6Oco3OFgHn0Qvn5ULOMzKar3ROTxBhiZSS2AGyJp8k
+         PtNShiVm0cVqiHedJg3LPSI6C/Z+Q7jzQvfrP+ma6+j+hN/v4q1vpJSxxRObFAbnUnW7
+         GBQB7gl4cG3Jx+hjnHGvxlMnf3MQmAVuLn1wKZUfzc/ASHEWpaasu5sbsh10cqYnrjip
+         IyGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=b5ocTq6EEV/0sd3iyVx71haHyHOBYQF1UpkWETZaA9I=;
-        b=l3P/NN2YPbWkNL2G6GRbQ5Dkf7IqiurtpM7RLbvyHxWUgU6nB54CLGDb5oYzySyws8
-         U628NXjmnBnBQ0CZ099LdNBXjLoLpSmhDipEmO3bH9tenMFTgLxt0dL59W2Eoh3TmBSy
-         S3yvF/zDAfd+2jgv5Jjt+JfYycLRwcBFPw7KfdBHcDu5803izDGriCUeYcmulo4r4vUJ
-         8MyPqoLVNTAN6obcEKMstrj0H3UV3beEQ4pYBGmTmwGt4evbOeJfJWnxtEItUYYF/hBI
-         ZALer5TyMpmSZMZXbm2Bzsy9Rfbuey8AQp3UDKcTMr+kUCBoe0a54iGFKzMc7zIQRTjm
-         l36A==
-X-Gm-Message-State: APzg51DzgccyE6m0cZeV4QOzmxm/xke3BagXFfmP1t1ygL1xRfic/Mbq
-        cMLZCrOma3utmIfMZ8kkJo+vOLlV
-X-Google-Smtp-Source: ANB0VdYp8PoX4d4ZTEsSuRyhiPuOWVNjmpGogQg+Jc+ISbnFxSBTEZ4RGF5bSJTXvGswPZtk75Gexg==
-X-Received: by 2002:a62:6781:: with SMTP id t1-v6mr16863142pfj.200.1535734200250;
-        Fri, 31 Aug 2018 09:50:00 -0700 (PDT)
+        bh=4/e5fBPhngzUCydE/NRf1DKVYBzF3WslCO+t+q/PEUQ=;
+        b=Vd17F16Q6XGAri9a3jNbLY6WepyvIAAl2gXdFUEJaasM0fgi5UKlR88jiBEHFBNOa5
+         lXS1yttfshrejJ9hOaZuNYkWQ5VBgEoXZndULPBMFrR8Ryo+ufmNMnb0hDIzdiotVbdC
+         KWm1fswfI9ri6GtWoaB7vsKZx2wU13sMzLg2twBWmU3nhpsbEgyXoFxCGe2WA4mj8bzL
+         u/l8JDSwJUcxgtKaUMKbDSrXT1OHc2ZMLMhm/m5j5DR+HZ9GRJWMY3nfq52faoWi8GP/
+         YxZ9NevrpCRHgcTh8J1RqoKPxguV+MEZuTzGyGQeiJnjQe8hcue6N0CZNTOIgnzw1cHY
+         ZmXg==
+X-Gm-Message-State: APzg51AFFq9qlSiYN8F0PZAyySFyy3KpVZtmtx0+BhD103hMuwSkpUK1
+        M25ihT6Uygs6I5+rR6R5Y/9bLnI0
+X-Google-Smtp-Source: ANB0VdY/n1OPALyyuIIrEjERLM6hAYZYhJ8SUB4eJPC1Md/9ScCpf484cQFt9nbC4Ws7+e0c+BUDeA==
+X-Received: by 2002:a62:6547:: with SMTP id z68-v6mr16776770pfb.20.1535734201595;
+        Fri, 31 Aug 2018 09:50:01 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id d184-v6sm30459665pfg.74.2018.08.31.09.49.59
+        by smtp.gmail.com with ESMTPSA id o62-v6sm13917527pfb.0.2018.08.31.09.50.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 09:49:59 -0700 (PDT)
-Date:   Fri, 31 Aug 2018 09:49:59 -0700 (PDT)
-X-Google-Original-Date: Fri, 31 Aug 2018 16:49:47 GMT
-Message-Id: <3ee8dcc8d356bfe18292dede717be509ca406b3d.1535734192.git.gitgitgadget@gmail.com>
+        Fri, 31 Aug 2018 09:50:00 -0700 (PDT)
+Date:   Fri, 31 Aug 2018 09:50:00 -0700 (PDT)
+X-Google-Original-Date: Fri, 31 Aug 2018 16:49:48 GMT
+Message-Id: <45a88264dd20daddbe02af3cb6a785dbb49addfa.1535734192.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.29.git.gitgitgadget@gmail.com>
 References: <pull.29.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 4/8] trace2: demonstrate trace2 child process classification
+Subject: [PATCH 5/8] trace2: demonstrate instrumenting do_read_index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,53 +71,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff Hostetler <jeffhost@microsoft.com>
 
-Classify editory, pager, and sub-process child processes.
-The former two can be used to identify interactive commands,
-for example.
-
 Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- editor.c      | 1 +
- pager.c       | 1 +
- sub-process.c | 1 +
- 3 files changed, 3 insertions(+)
+ read-cache.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/editor.c b/editor.c
-index 9a9b4e12d1..29707de198 100644
---- a/editor.c
-+++ b/editor.c
-@@ -66,6 +66,7 @@ int launch_editor(const char *path, struct strbuf *buffer, const char *const *en
- 		p.argv = args;
- 		p.env = env;
- 		p.use_shell = 1;
-+		p.trace2_child_class = "editor";
- 		if (start_command(&p) < 0)
- 			return error("unable to start editor '%s'", editor);
+diff --git a/read-cache.c b/read-cache.c
+index 7b1354d759..7a31ac4da8 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1867,6 +1867,8 @@ static void tweak_split_index(struct index_state *istate)
  
-diff --git a/pager.c b/pager.c
-index a768797fcf..4168460ae9 100644
---- a/pager.c
-+++ b/pager.c
-@@ -100,6 +100,7 @@ void prepare_pager_args(struct child_process *pager_process, const char *pager)
- 	argv_array_push(&pager_process->args, pager);
- 	pager_process->use_shell = 1;
- 	setup_pager_env(&pager_process->env_array);
-+	pager_process->trace2_child_class = "pager";
- }
+ static void post_read_index_from(struct index_state *istate)
+ {
++	trace2_data_intmax("index", "cache_nr", istate->cache_nr);
++
+ 	check_ce_order(istate);
+ 	tweak_untracked_cache(istate);
+ 	tweak_split_index(istate);
+@@ -2012,7 +2014,9 @@ int read_index_from(struct index_state *istate, const char *path,
+ 	if (istate->initialized)
+ 		return istate->cache_nr;
  
- void setup_pager(void)
-diff --git a/sub-process.c b/sub-process.c
-index 8d2a1707cf..3f4af93555 100644
---- a/sub-process.c
-+++ b/sub-process.c
-@@ -88,6 +88,7 @@ int subprocess_start(struct hashmap *hashmap, struct subprocess_entry *entry, co
- 	process->out = -1;
- 	process->clean_on_exit = 1;
- 	process->clean_on_exit_handler = subprocess_exit_handler;
-+	process->trace2_child_class = "subprocess";
++	trace2_region_enter("do_read_index");
+ 	ret = do_read_index(istate, path, 0);
++	trace2_region_leave("do_read_index");
+ 	trace_performance_since(start, "read cache %s", path);
  
- 	err = start_command(process);
- 	if (err) {
+ 	split_index = istate->split_index;
+@@ -2028,7 +2032,9 @@ int read_index_from(struct index_state *istate, const char *path,
+ 
+ 	base_oid_hex = oid_to_hex(&split_index->base_oid);
+ 	base_path = xstrfmt("%s/sharedindex.%s", gitdir, base_oid_hex);
++	trace2_region_enter("do_read_index");
+ 	ret = do_read_index(split_index->base, base_path, 1);
++	trace2_region_leave("do_read_index");
+ 	if (oidcmp(&split_index->base_oid, &split_index->base->oid))
+ 		die("broken index, expect %s in %s, got %s",
+ 		    base_oid_hex, base_path,
 -- 
 gitgitgadget
 
