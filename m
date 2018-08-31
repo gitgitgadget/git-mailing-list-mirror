@@ -2,92 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27B751F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 18:49:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C05A01F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 18:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727221AbeHaW6e (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 18:58:34 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:54688 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726704AbeHaW6d (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 18:58:33 -0400
-Received: by mail-wm0-f67.google.com with SMTP id c14-v6so6110555wmb.4
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 11:49:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=f0hnQ7qHKRE5SiRXMfZPNfzgcK+WFMTPNAlB1IFftic=;
-        b=mEZvspFg8XTTZHyPNFPOkOyv1kzIpeiOuAWBxfhW0jp/CdyytjThzWAAxIwUVOM7qE
-         B7RW8wdu5ElFy1WzjxLzhnu4ULXbPltWM+tEXOlDZ5+lcUJOHF4vSG9esQiZ0gQy9PgL
-         KLCIjIWXVTgI2qXgKQyi3Lehfixkj6IKts5LhxK76FY5IDXUrWc0Fyu28G4+aeR+iVL/
-         L7DtKnjVmQCPtgLLpU7lC1fnEaTxIPpdIOTDEaJb03uNJNnlePZocNIxKW0WzPpy+oHp
-         FruLo3Gl8Akn2dyg8F/DP9WWrsVP7zhD/bRk/VVjfQDgBeN+ol06ISJ+aRVD9N0bGKkM
-         Y9PA==
+        id S1727463AbeHaWtI convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 31 Aug 2018 18:49:08 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:44624 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726704AbeHaWtI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 18:49:08 -0400
+Received: by mail-qt0-f194.google.com with SMTP id k38-v6so15607939qtk.11
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 11:40:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=f0hnQ7qHKRE5SiRXMfZPNfzgcK+WFMTPNAlB1IFftic=;
-        b=VCCnnlFAq03jdNGY6P6Q85IAggXRycAQhFU+hqbBF0Alq90dfOrgD8OWg00d25cRvO
-         D/Kidja7srORrOVX770Dv6J+CberNndk0JAaq7w225JEXnRduyEd2il25DVSbBXda5WQ
-         nZg5u0N30XVgkbE8SchIPaz4ncBVgWxFpHapXfUxccs9S0Q7NDgk91mz/xMaUvXIRMbN
-         fb7k0fKwFGpOasJJdmuvDvxsz1M9olt3reWKlzuPBjarwbnoiMO/MpEQ0lJ/km1wEwfs
-         YzrKfHXIfw7r3mwCgq01nG2XU+aoyp4kCn4Z/mx81WGUzKgRtN6JDtNubHkWI0+kBHFJ
-         k4oQ==
-X-Gm-Message-State: APzg51Arw95mNPI4Fs603AIhe5hSMsBvBx1fTiMMWDgaz66VB90dVeMB
-        AXDtPIwbfzHX5/pDzEC64/M=
-X-Google-Smtp-Source: ANB0VdYLk1DOJvuihL/G6u4becDbHVSu7CK+Quyre8hbSvAvG6Eyg45EdE9x9tmoxn7jAIKOOrHTWg==
-X-Received: by 2002:a1c:9b95:: with SMTP id d143-v6mr5788714wme.95.1535741385425;
-        Fri, 31 Aug 2018 11:49:45 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j6-v6sm9583560wrq.25.2018.08.31.11.49.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 11:49:44 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] doc-diff: add "clean" mode & fix portability problem
-References: <20180830195546.GA22407@sigill.intra.peff.net>
-        <20180831063318.33373-1-sunshine@sunshineco.com>
-Date:   Fri, 31 Aug 2018 11:49:44 -0700
-In-Reply-To: <20180831063318.33373-1-sunshine@sunshineco.com> (Eric Sunshine's
-        message of "Fri, 31 Aug 2018 02:33:15 -0400")
-Message-ID: <xmqqva7q1id3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=WsttEDukfcBIJE77P1eHR6Kuc+7VHyKdOCLo4DGVBAQ=;
+        b=ksBIbQ47AY1ZzImaK/ixgCsqTw2oBlBfHtpe0J+/kqkpTf9BDfoyKArWb43Ppk0mVD
+         fazqk6vaRtF4unYCv3C1owSfsnJdw0yAliOyNPv4MJuBtT2oGU8RiLH0BEbjTbWyHXhz
+         heVUQO6C6BCYQUSF9GGhK0pXQFgrq+onRWiDELH0pUXwtppVojprv6eJYa6xftBcwDW2
+         3B8PksLndfZn/y2DM2OSBgZsmFAoWV8eXDgMEqWUXSK3JK/WRPQDh5c+xViSnitjLKEJ
+         U89bu3jXamEoOt8atO3mGorXqj1lQZ3Cot7AnJ9EwujJBzRJ7TdnxgKECiBhe3BwUseD
+         eItA==
+X-Gm-Message-State: APzg51BiIq6IXONc5EFQNZK6bd0NZoKCgz+CUUB/asOGfqEM5vUdq3KL
+        i7Zh6vEBVpGwIN7d++LVIySdJcBeb0kJcr7X6BE=
+X-Google-Smtp-Source: ANB0VdZkS0w46lQw0eu2g6Qiyqu1BqHYN0IRxmEuIwlpWxqLxv+LzW521nbwTrINVS4ZTEwvb3PunqiFU/wnFkuNc2c=
+X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr17435236qtd.101.1535740823327;
+ Fri, 31 Aug 2018 11:40:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
+ <20180829005642.980617-6-sandals@crustytoothpaste.net> <20180831182141.GA9399@tor.lan>
+In-Reply-To: <20180831182141.GA9399@tor.lan>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 31 Aug 2018 14:40:12 -0400
+Message-ID: <CAPig+cSSs9a_RSnc6==zb70Swh1L1Ok4y-DGc8YawPyea0Gm9Q@mail.gmail.com>
+Subject: Re: [PATCH v3 05/11] t0027: make hash size independent
+To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> This series replaces Peff's solo patch[1] which updates "make clean" to
-> remove doc-diff's temporary directory. Rather than imbuing the Makefile
-> with knowledge specific to doc-diff's internals, this series adds a
-> "clean" mode to doc-diff which removes its temporary worktree and
-> generated files, and has "make clean" invoke that instead.
-
-That sounds like a better approach.
-
-> It also fixes
-> a portability problem which prevented doc-diff from working on MacOS and
-> FreeBSD.
+On Fri, Aug 31, 2018 at 2:21 PM Torsten Bögershausen <tboegi@web.de> wrote:
+> > diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> > @@ -14,11 +14,13 @@ compare_files () {
+> >  compare_ws_file () {
+> > +     tmp=$2.tmp
+> >       act=$pfx.actual.$3
+> > -     tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
+> > +     tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$tmp" &&
+> >       tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
+> > +     sed -e "s/0000*/$ZERO_OID/" "$tmp" >"$exp" &&
 >
-> [1]: https://public-inbox.org/git/20180830195546.GA22407@sigill.intra.peff.net/
+> Out of interest: why do we use a "tmp" file here?
+> Would it make more sense  to chain the 'tr' with 'sed' and skip the
+> tmp file ?
 >
-> Eric Sunshine (3):
->   doc-diff: fix non-portable 'man' invocation
->   doc-diff: add --clean mode to remove temporary working gunk
->   doc/Makefile: drop doc-diff worktree and temporary files on "make
->     clean"
+>         tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
+>         sed -e "s/0000*/$ZERO_OID/"  >"$exp" &&
 >
->  Documentation/Makefile |  1 +
->  Documentation/doc-diff | 21 +++++++++++++++++----
->  2 files changed, 18 insertions(+), 4 deletions(-)
+> Yes, we will loose the exit status of 'tr', I think.
+> How important is the exit status ?
+
+As far as I understand, it is only Git commands for which we worry
+about losing the exit status upstream in pipes. System utilities, on
+the other hand, are presumed to be bug-free, thus we don't mind having
+them upstream.
+
+A different question is why does this need to run both 'tr' and 'sed'
+when 'sed itself could do the entire job since 'sed' has 'tr'
+functionality built in (see sed's "y" command)?
