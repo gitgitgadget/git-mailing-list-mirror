@@ -2,111 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C73AA1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 16:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CEC81F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 16:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727651AbeHaUeW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 16:34:22 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:55785 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727268AbeHaUeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 16:34:21 -0400
-Received: by mail-wm0-f66.google.com with SMTP id f21-v6so5786912wmc.5
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:26:04 -0700 (PDT)
+        id S1727669AbeHaUnf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 16:43:35 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:44521 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727433AbeHaUnf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 16:43:35 -0400
+Received: by mail-qt0-f194.google.com with SMTP id k38-v6so15179346qtk.11
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=bAHIDuExOMKlW1tttzAJGP+QWlHb6OFxs1w2MVS9uXY=;
-        b=uIru8KxQk44WaTwfdArHE4PkM70gAo5SUeHy4dkkI1kaCd1v1mwdHO3FmYkwzzblC9
-         4+1n78SrhHFGd7vUSb9CydL5dTpUEorMl9wL3/br/SSfYVCQcQWUu4PeMRXn8FJrBhln
-         IwkA+S4QY5tKkzb4WeTCDdRWMPeCMCFSVLU2BhWaTKwoGqdSuTe6iiLtYSW8NBeiWHLH
-         haD5URvsXDgQdYd3ZL9xNaiPo7WmRROTxZ3DO6gqpCTsuZ/wNIkbnaSsoauUVi/uB3Oq
-         qFMaZN5jCsW4yYim9P2Y4RoNyC8f9IlIkVTVSEJWV9lKxbA/AHgUh02b+1q9P0kJUk1H
-         t/DA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=SFkofSvpW6WLJxUEIaSXsxL40U/nr7IivGZsV2Zp7d8=;
+        b=GI5BwYMNO9eO8M2kB1UzevOQE1VFJQ4zDCAjBxzTKwkPHexlllfYUkmW41twu27PrA
+         VqMK4F+LOiAqx8diy7JVS46fUgZBjtvFfadP+hsvZNq1MIV5elHVQ9Wu5FxlXHNfz/78
+         W0ZnehGEMUmoZ+gXRMx1tBpnOf6K2rM+SN7nTHu3CqPtJNRBcrtPqkVwt32w2oEI0LjF
+         dEYooHXH4my8ygXmw/5w15Tt6QQ0ze6H5kr7jf8lHwSdk6c+ar9GWQK5EIHar4GUwN+0
+         fOxFYD7RZdxXUacwheCmjuybBQECOsO3pXOHBiSeRa6cJERxpsfhqvJr94EbVfCIb9WB
+         inFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=bAHIDuExOMKlW1tttzAJGP+QWlHb6OFxs1w2MVS9uXY=;
-        b=Wach+e6zTmpCswCRyc5DNPvdTuAlDyJFP+NYqAUFBkAQCAWdCZ3N+Hzu4XY8Dni+Pg
-         gUno+6gOVxKEHnGd2SqqwULqYcNczOmhXQe2EqkhzniILR5dVcIcftECtmEbXnqu2K9c
-         JHj4BODDvFFnmx9SOwCdicTvZtrDi0L3HqISIVmaD/JJBdnAP4tINAuAQxZ8pkVmvxN+
-         hWANzM0aimbQ6Fff/UOXgIQDIh1SKfwjP36kxeZrUo/gtX+TFXCupTE3++1YfsYOi5E0
-         9FGIRaAwVcBMWbb6dfgAUQK0NfVnnCkzXKLYPsYOuSv6TSQN5+DoOe7RaPYoi+EYD67F
-         +vqg==
-X-Gm-Message-State: APzg51ClBiz19pBWZxoI8R2WdTaA4ZibiGdRFqyublEzASRCvlbtoF66
-        j/t5GqHXNH3FjdVGD93p21lJPjh+
-X-Google-Smtp-Source: ANB0Vdbjl4N2fib7QWVRIsHY65xBE6NRLANSlSSCFEk0Wn1C4tddsGVXkg86m3+izrNJ1BZ4S97K6A==
-X-Received: by 2002:a1c:c95:: with SMTP id 143-v6mr5449080wmm.50.1535732763818;
-        Fri, 31 Aug 2018 09:26:03 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b2-v6sm4775256wmh.3.2018.08.31.09.26.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 09:26:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     "Stephen P. Smith" <ischis2@cox.net>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] Add test for commit --dry-run --short.
-References: <20180831053921.8083-1-ischis2@cox.net>
-        <20180831053921.8083-3-ischis2@cox.net>
-        <87bm9jc8cq.fsf@evledraar.gmail.com>
-Date:   Fri, 31 Aug 2018 09:26:02 -0700
-In-Reply-To: <87bm9jc8cq.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Fri, 31 Aug 2018 09:18:13 +0200")
-Message-ID: <xmqq8t4m33l1.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=SFkofSvpW6WLJxUEIaSXsxL40U/nr7IivGZsV2Zp7d8=;
+        b=Fw0nMvsZc/VuDKgZu3dkOyxq7jEk015onX/9iZBNi7hQVamGBgtGXTJNpy/qCQcIso
+         Tq3DMBbJLSl20N0S3bxQ64U2eIfF8M+lCx8tEubtpUGkxAAvtD+zw7QF1PB3bETTXnH1
+         3O65LejmBAmCiT8hPgCm+BJ1R3UQ2M+Q3QscdvOCcqM2CJFSliUZW2+Lg05vDeDSX9oH
+         52jwXrC+jXa0S9yodOLTNiH29zzj8Oyb/ujYTh7akOZuSKyohtr41kw9qKxkNDrMx65m
+         y2hADfZCHyM53yIBCV/svSqnVrSP5j7khL2t7hDtIOnejcvYFzLBR0HVb4AFW8P+qjTT
+         XVIA==
+X-Gm-Message-State: APzg51ANcjp8Nl/088q83OnOfRk8t80hUUShPm6uff6ukopMdX/Yn5zW
+        NKXKSH8L4Ml2PpBBEA9wBfP2Cdv8NBfYhpogaTU=
+X-Google-Smtp-Source: ANB0VdYadt6oNzmyg3OoIpnVpKNavKPC7zll6J5WicZ4UrdCBTWLjGDug9Iqe2EGXOkyxJvQTnLRMJpUEnHwyqqaBzg=
+X-Received: by 2002:ac8:5191:: with SMTP id c17-v6mr16840261qtn.35.1535733317330;
+ Fri, 31 Aug 2018 09:35:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180813192249.27585-1-avarab@gmail.com> <20180830201244.25759-5-avarab@gmail.com>
+ <87efefcwme.fsf@evledraar.gmail.com> <xmqqd0ty33nz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqd0ty33nz.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Fri, 31 Aug 2018 18:35:04 +0200
+Message-ID: <CACBZZX7A79KRMprLUaYbSrECBsdc2_4EF0WqhcOmU26cWvoYBA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/6] push doc: correct lies about how push refspecs work
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        =?UTF-8?Q?Kristian_H=C3=B8gsberg?= <krh@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
-> On Fri, Aug 31 2018, Stephen P. Smith wrote:
+On Fri, Aug 31, 2018 at 6:24 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Add test for commit with --dry-run --short for a new file of zero
->> length.
->>
->> The test demonstrated that the setting of the commitable flag was
->> broken as was found durning an earlier patch review.
->>
->> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
->> ---
->>  t/t7501-commit.sh | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->>
->> diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
->> index 810d4cea7..fc69da816 100755
->> --- a/t/t7501-commit.sh
->> +++ b/t/t7501-commit.sh
->> @@ -682,4 +682,14 @@ test_expect_success '--dry-run with conflicts fixed from a merge' '
->>  	git commit -m "conflicts fixed from merge."
->>  '
->>
->> +test_expect_success '--dry-run --short with conflicts fixed from a merge' '
->> +	# setup two branches with conflicting information
->> +	# in the same file, resolve the conflict,
->> +	# call commit with --dry-run --short
->> +	rm -f test-file &&
->> +	touch testfile &&
->> +	git add test-file &&
->> +	git commit --dry-run --short
->> +'
->> +
->>  test_done
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Ditto my comment on 1/3 on this. I.e. this changes the failing tests in
-> this series from 2 to 3.
+> > On Thu, Aug 30 2018, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> >
+> > [Notes to self]
+> > ...
+> >
+> > Later below this we say:
+> >
+> >     Pushing an empty <src> allows you to delete the <dst> ref from the
+> >     remote repository.
+> >
+> > Which, perhaps given the discussion of deletions as updates, should be
+> > mentioned earlier in some way, i.e. should we just say above all these
+> > rules that by "update" we mean non-deletions?
+>
+> You raised good points.  The rule that applies to deletion is quite
+> different from the one for update, we want to make sure readers know
+> updates and deletions are different.  As the rule for deletion is a
+> lot simpler (i.e. you can always delete unless a configuration or
+> pre-receive says otherwise), perhaps it would be sufficient to give
+> the rules for deletion upfront in one section, and then start the
+> section(s) for update with a phrase like "rules for accepting
+> updates are follows" after that.
 
-Correct.  Thanks for helping Stephen on this topic.
+Yeah, that was the plan. I'll do that.
