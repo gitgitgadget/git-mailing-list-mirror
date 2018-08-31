@@ -2,66 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 661471F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 20:59:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CABBB1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 21:07:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727579AbeIABIw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 21:08:52 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:41375 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727239AbeIABIw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 21:08:52 -0400
-Received: by mail-qt0-f193.google.com with SMTP id t39-v6so16033153qtc.8
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:59:37 -0700 (PDT)
+        id S1727203AbeIABRL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 21:17:11 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39458 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726869AbeIABRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 21:17:11 -0400
+Received: by mail-wr1-f66.google.com with SMTP id o37-v6so12352962wrf.6
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 14:07:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=JqIUSNrcVpHeJFrk8Ut9hNhwkjSTZG74H3BQwzFijs4=;
+        b=jjenHZu/5Ge9+dXzrTQndoS8khYxEY24n9y2+Q4q3yKWR9YFC8/jXiHejyTuEJ9spn
+         HZ0g8bJNAuic0r9ue32gtKJOL6s1d6CX1l7FXQcox4IQmkQ7jL7cgkqgfWPnU/dX7glk
+         d66mHvvH5tH6UkA89vGGF99lAJZXuN5AyLN0T2NxMfc5bSdMDRv0FkWOmChbfHNy/+M6
+         D7avz/KfLcMxkOZEXs3eDpHQ0cHvkmcDPvzUPwkKLouXZZgyd5af0CviLJumysoQEUqM
+         Gc/9oGymwPBxgG7RnzSroXIJv6QswycuueO3ViIb2q0AM8PL5Ec9BJflDAFuz7DlMPag
+         Xh7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=osURWGufpj/mmhvfOK+Jf8bzDHN/UZ3ZNms1NcN0Nx0=;
-        b=km84NikHO6fb8ltgSYZY5djyD+fvvdVLfThkFG0hru/mslds09NR59NPiaQr4wHcQv
-         H+wgdRhwjlZpvdqHy5p0CkNJ+J4OD0I+0qUGy+PcQftDC8BIJCnk0kNceBedxgUCGVT0
-         f0VwjmrM4rICUc1JbmYcT/09hQ0b9bAJiz2hsQjjUMbKvnmeH2gYzZmQTyQ0QHH4HEho
-         vPKvgMKJ0DNM+bHG2pHD9wcI1Ls5T0U0lAGRWAMekKkpGl+O8/F6MKw/COPsyxPv2k1B
-         CPbhPol9BFQgj7+mSpIdMfB7Ip7qquOvfY5uvTM+8uAaLGdEOkWVKDcgqdjoqTBSc6XD
-         qqHw==
-X-Gm-Message-State: APzg51DA8Ep+J1y7U2zbJpOm21ROOIH+A/UoAcQvmxpMSHgHalV87q5E
-        APjTtBtOoAtcNaR6fT9HIRCmVsvpf0hAEHdFiVU=
-X-Google-Smtp-Source: ANB0VdZxZwixPV00m2DwmvW22Fkw4x+8bU2e+eivztz6n2Po6XAh203UJ9XgzGSzBwMNi6Ek0OmBavajkuyeo8lCFpY=
-X-Received: by 2002:a0c:c503:: with SMTP id x3-v6mr16854334qvi.82.1535749176985;
- Fri, 31 Aug 2018 13:59:36 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=JqIUSNrcVpHeJFrk8Ut9hNhwkjSTZG74H3BQwzFijs4=;
+        b=LEVef4c1i/sBnsWLts5xW3RHQPC+iJnePyYVtgvn6NfrAqQyj1MKc+kV7P1HnNOJlo
+         TVjyxjLe9sHrxY2BNpkscZERRZlgzWd3K9ItnCDF2UCNNVoeE2KM0KQwQbsxOpMoCVoF
+         kp+uc8Kc7Yr9DH+K83YeOO7PkKC+sGo65FJxuTNzFLalXt9MPf99onKqJ6seUnlZZLii
+         uKJT9Q0feDsj8LT7Vrj1NLMFLtUVOZSFazKD3SQ8HhFOMxhCSUtnjittOF59qyeKOkli
+         J9Hz2wzOyCdemuarteuZ9/4T3GUMM5agzH6LSR33lQCAn/3m3itkTunu21RhD+7y9yZ1
+         TEvg==
+X-Gm-Message-State: APzg51BpqK97DhF3STB1D4PhBHZWDmzmo4yn3LaWYk0On5BQ9yxRNP21
+        0jKyBfNXs9mzeW808KmxxYk=
+X-Google-Smtp-Source: ANB0VdbsG9Sh+NIOMu9oqZaDGmYpn64hhHEMaZkZYc7ca1/prvw8YmJ64PPA8ea41vPvIKSzztApUQ==
+X-Received: by 2002:adf:8325:: with SMTP id 34-v6mr2058782wrd.67.1535749674023;
+        Fri, 31 Aug 2018 14:07:54 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id m68-v6sm10089939wmb.10.2018.08.31.14.07.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 31 Aug 2018 14:07:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Jeff King <peff@peff.net>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v5 2/9] push tests: make use of unused $1 in test description
+References: <20180830201244.25759-1-avarab@gmail.com>
+        <20180831201004.12087-3-avarab@gmail.com>
+Date:   Fri, 31 Aug 2018 14:07:52 -0700
+Message-ID: <xmqqftyu1byv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180805075736.GF44140@aiede.svl.corp.google.com>
- <20180831083342.34836-1-sunshine@sunshineco.com> <20180831170013.GA41433@aiede.svl.corp.google.com>
-In-Reply-To: <20180831170013.GA41433@aiede.svl.corp.google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 31 Aug 2018 16:59:25 -0400
-Message-ID: <CAPig+cRfakQqNP3ih4Sp0uzvkSNkqpsxBVFSnB9HYmqvavGuxA@mail.gmail.com>
-Subject: Re: [PATCH] config.mak.uname: resolve FreeBSD iconv-related
- compilation warning
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 31, 2018 at 1:00 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > From: Jonathan Nieder <jrnieder@gmail.com>
-> > OLD_ICONV has long been needed by FreeBSD so config.mak.uname defines
-> > it unconditionally. However, recent versions do not need it, and its
-> > presence results in compilation warnings. Resolve this issue by defining
-> > OLD_ICONV only for older FreeBSD versions.
->
-> I think it makes sense for you to take credit for this one.  You
-> noticed the original problem, tested on FreeBSD, wrote the
-> explanation, and figured out the firstword hackery.  All I did was to
-> say "somebody should fix this" and run "git log -S" a few times. [...]
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-I'm fine going either way with authorship, and I can re-roll with that
-minor change (if Junio isn't interested in tweaking it while
-queueing).
+> Fix up a logic error in 380efb65df ("push tests: assert re-pushing
+> annotated tags", 2018-07-31), where the $tag_type_description variable
+> was assigned to but never used, unlike in the subsequently added
+> companion test for fetches in 2d216a7ef6 ("fetch tests: add a test for
+> clobbering tag behavior", 2018-04-29).
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t5516-fetch-push.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> index 539c25aada..62d5059f92 100755
+> --- a/t/t5516-fetch-push.sh
+> +++ b/t/t5516-fetch-push.sh
+> @@ -969,7 +969,7 @@ test_force_push_tag () {
+>  	tag_type_description=$1
+>  	tag_args=$2
+>  
+> -	test_expect_success 'force pushing required to update lightweight tag' "
+> +	test_expect_success 'force pushing required to update $tag_type_description' "
+
+Of course, $1 needs to be inside "dq-pair" for $tag_type_description
+to be substituted ;-)  So I'll tweak it while queuing.
+
+All the other ones in this series looked sensible to me.  Will
+replace.
+
+Thanks.
+
+>  		mk_test testrepo heads/master &&
+>  		mk_child testrepo child1 &&
+>  		mk_child testrepo child2 &&
