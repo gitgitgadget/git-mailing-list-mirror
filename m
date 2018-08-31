@@ -7,136 +7,248 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 56A551F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 16:49:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BD401F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 16:50:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727433AbeHaU6R (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 16:58:17 -0400
-Received: from mail-pf1-f173.google.com ([209.85.210.173]:37179 "EHLO
-        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727366AbeHaU6R (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 16:58:17 -0400
-Received: by mail-pf1-f173.google.com with SMTP id h69-v6so5783845pfd.4
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:49:55 -0700 (PDT)
+        id S1727631AbeHaU6U (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 16:58:20 -0400
+Received: from mail-pg1-f171.google.com ([209.85.215.171]:40853 "EHLO
+        mail-pg1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727572AbeHaU6T (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 16:58:19 -0400
+Received: by mail-pg1-f171.google.com with SMTP id l63-v6so1210811pga.7
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 09:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=NdQ62Jmhpz7uY9wHmugVkkBRC1fu9vhzv5/PuV0CbnA=;
-        b=kZgQ6RNeqa+/DcPSvdXJHqYxkEYwFowpQVj3H+Ug4FLZsA5KM7SHdJrK7OUGKdMmps
-         /XwHZGsnFNwBXmfGaZ4MPeN8/mciVTwNRtTuhiGDUg2OEnXVLJbYCiWEi3IaXtmm2B+x
-         53XoF/nOi5QkN0eBLvILmOZGa7fpzp/MfXBW6/gLfmltnWLHzuUphGskV7fM4UEhbqQX
-         trReigUmS33MU379BCxSjqI9L0LcCvIyeGj8p8AnWO4K2mo7tqeWPH6twdbHe4xRivZb
-         m8Uc+F9NaTiX0PjEvHu85bJT1+z303QvmI3HA+xh8Jn5+4XLBpUMViESdKOZWSwjdhKw
-         DpTA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=+BTXYNetKE5ZwuAgkX0sDBgSEHyebx37hxf1N5WPBkE=;
+        b=Dmmxnx8GXkBdR+xPBDFtiuDGl/trCJgykIerNCBlj5WM5Yqx7+BpzHXPEm4wJuhYz9
+         3lhkDNOw7JiXiunrhbFnbpxhoECgQtxu8wakczs+ihrNWmk6x+evcDLvx5xZ/bkvncaN
+         Vuei8ro01widbcMJiO9gfIgQHabs139hP7ln0V6ridDVaZyA4pv+R3DdXLOPtPbcAcgt
+         pDorsQlosxwpoVyTHyeLrGSQfn4RRmH4NKifNwAJRRBOLhzgho1PxJCrr1oP3gwF5dqx
+         Q8tXqm9NnbkSpV9RmHh7/BR7qndFitSW0BAF/eaXBWQi2VNHGcrGqGKmoEMusW7rv9bX
+         UaWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=NdQ62Jmhpz7uY9wHmugVkkBRC1fu9vhzv5/PuV0CbnA=;
-        b=CbKMnGPwVZKqiegYYZI9jwAZMFP5KCr23UJZw78CoE9a0/ieFAb5Ol1zxg8sciFGL7
-         /w2VY0tgwc0JWhF5uE0tJlUpJqz1OqQXseSnBu9psw1tPvAJC0iFIbcutovRwxeJCWgy
-         PZ9L91zHGshHvNxu9mCJtOL51JpXmHLlzWJCC7P7BUPdiLsHLz0uy8tHBKUVcahfGEVF
-         onSbawkZp1sK3ozPG+InT/PGRF+5LGOaJxntODFx6U6abEeV2EkmPkhLmAosIM7BdXkj
-         QGPIM+EHFls881apmfgulGd8stAjRI/UewE9001gAIU0iJo5HXCN3qLj2qP6RRZTN9JI
-         oYgw==
-X-Gm-Message-State: APzg51CWrg+kdO109JIxPIJmMxC9DktFJsJ1j+MzpCro9qMYkh9Fyz9v
-        wMgAZFvMhf8+swDkg0IWHoRiFOrk
-X-Google-Smtp-Source: ANB0VdZFIGC3Vv40TLYTK5RTec0//SNRX7sqKVijRftjzcKsvoV/7wbrDVDHt7r2d/8gqQtG7f+1wg==
-X-Received: by 2002:a63:5465:: with SMTP id e37-v6mr15332735pgm.316.1535734194709;
-        Fri, 31 Aug 2018 09:49:54 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=+BTXYNetKE5ZwuAgkX0sDBgSEHyebx37hxf1N5WPBkE=;
+        b=EMNwQPDlWcAAPXKDPAaRyozMVs+dQAGnQ1tOrVs+7n0qmUn7ek9K1Xx5/jsJi2cACi
+         kEp5hbuctHzK0gPjndkPf8y6+ExlssJJcrHzybfXh5vsD081EgYjPg74eTsZMTyBu+9y
+         XowCg0qU1ztpe5aIxo4AjsAdBGdt1T9NHM7ecLHH52ssQ/C43fwvVwJNmhKmzvMxyvOL
+         /7fPsAzvXdx6rWjiNRlrGbF3goQ2u73vJE/tQ+7pWdStqP1nl28Ld5QMBv0l1Yj9N38x
+         CV7RdZn7l2Hrfg9Ww3UsCeuMAwY/Pnq/eMIIWTw+0PlkxA2NAdBIOjeblogrLRWcJ9ze
+         7x1A==
+X-Gm-Message-State: APzg51Dq7ST5ATVtR8JdYyt/rbHwvvHGnbHol6/N3FOFtrwfQ0Xduson
+        vVHnOfvZt1CDzQmOaxUAkQ55pF4U
+X-Google-Smtp-Source: ANB0VdbUumPgyVC6L+o322EDn1KfNVfM9W8Tqc9+OudGRHe2+FE9T8NwpkAMTLuGlD2A5iUfftLp3w==
+X-Received: by 2002:a62:3a08:: with SMTP id h8-v6mr16679670pfa.61.1535734197494;
+        Fri, 31 Aug 2018 09:49:57 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id e14-v6sm14560015pff.128.2018.08.31.09.49.53
+        by smtp.gmail.com with ESMTPSA id j22-v6sm14101411pfh.45.2018.08.31.09.49.56
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 09:49:53 -0700 (PDT)
-Date:   Fri, 31 Aug 2018 09:49:53 -0700 (PDT)
-X-Google-Original-Date: Fri, 31 Aug 2018 16:49:43 GMT
-Message-Id: <pull.29.git.gitgitgadget@gmail.com>
+        Fri, 31 Aug 2018 09:49:56 -0700 (PDT)
+Date:   Fri, 31 Aug 2018 09:49:56 -0700 (PDT)
+X-Google-Original-Date: Fri, 31 Aug 2018 16:49:45 GMT
+Message-Id: <2430ff0d46b4f7972084fb7e8cf74e75202840b5.1535734192.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.29.git.gitgitgadget@gmail.com>
+References: <pull.29.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/8] WIP: trace2: a new trace facility
+Subject: [PATCH 2/8] trace2: add trace2 to main
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
+Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series contains a new trace2 facility that hopefully addresses
-the recent trace- and structured-logging-related discussions. The intent is
-to eventually replace the existing trace_ routines (or to route them to the
-new trace2_ routines) as time permits.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-This draft adds new trace2_ calls and leaves most of the original trace_
-calls in place. Subsequent drafts will address this.
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ compat/mingw.h    | 3 +--
+ git-compat-util.h | 7 +++++++
+ git.c             | 9 ++++++++-
+ repository.c      | 2 ++
+ run-command.c     | 8 +++++++-
+ run-command.h     | 5 +++++
+ usage.c           | 5 +++++
+ 7 files changed, 35 insertions(+), 4 deletions(-)
 
-This version should be considered a replacement for my earlier structured
-logging patch series [1].
-
-It addresses Jonathan Nieder's, Ben Peart's, Peff's, and Junio's comments
-[2,3,4,5] about merging the existing tracing routines, ease of use,
-progressive logging rather than logging at the end of the program, hiding
-all JSON details inside the trace2_ routines, and leaving an opening for
-additional formats (protobuf or whatever).
-
-It also adds a nested performance tracing feature similar to Duy's
-suggestion in [6]. This version adds per-thread nesting and marks each event
-with a thread name.
-
-[1] 
-https://public-inbox.org/git/20180713165621.52017-1-git@jeffhostetler.com/
-[2] 
-https://public-inbox.org/git/20180821044724.GA219616@aiede.svl.corp.google.com/
-[3] 
-https://public-inbox.org/git/13302a8c-a114-c3a7-65df-55f47f902126@gmail.com/
-[4] 
-https://public-inbox.org/git/20180814195456.GE28452@sigill.intra.peff.net/
-[5] https://public-inbox.org/git/xmqqeff0zn53.fsf@gitster-ct.c.googlers.com/
-[6] https://public-inbox.org/git/20180818144128.19361-2-pclouds@gmail.com/
-
-Cc: gitster@pobox.comCc: peff@peff.netCc: peartben@gmail.comCc: 
-jrnieder@gmail.comCc: pclouds@gmail.com
-
-Jeff Hostetler (8):
-  trace2: create new combined trace facility
-  trace2: add trace2 to main
-  trace2: demonstrate trace2 regions in wt-status
-  trace2: demonstrate trace2 child process classification
-  trace2: demonstrate instrumenting do_read_index
-  trace2: demonstrate instrumenting threaded preload_index
-  trace2: demonstrate setting sub-command parameter in checkout
-  trace2: demonstrate use of regions in read_directory_recursive
-
- Makefile           |    1 +
- builtin/checkout.c |    5 +
- cache.h            |    1 +
- compat/mingw.h     |    3 +-
- dir.c              |    3 +
- editor.c           |    1 +
- git-compat-util.h  |    7 +
- git.c              |    9 +-
- pager.c            |    1 +
- preload-index.c    |   10 +
- read-cache.c       |    6 +
- repository.c       |    2 +
- run-command.c      |    8 +-
- run-command.h      |    5 +
- sub-process.c      |    1 +
- trace2.c           | 1592 ++++++++++++++++++++++++++++++++++++++++++++
- trace2.h           |  214 ++++++
- usage.c            |    5 +
- wt-status.c        |   14 +-
- 19 files changed, 1882 insertions(+), 6 deletions(-)
- create mode 100644 trace2.c
- create mode 100644 trace2.h
-
-
-base-commit: 2f743933341f276111103550fbf383a34dfcfd38
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-29%2Fjeffhostetler%2Fml-trace2-v0-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-29/jeffhostetler/ml-trace2-v0-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/29
+diff --git a/compat/mingw.h b/compat/mingw.h
+index 571019d0bd..606402faeb 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -144,8 +144,7 @@ static inline int fcntl(int fd, int cmd, ...)
+ 	errno = EINVAL;
+ 	return -1;
+ }
+-/* bash cannot reliably detect negative return codes as failure */
+-#define exit(code) exit((code) & 0xff)
++
+ #define sigemptyset(x) (void)0
+ static inline int sigaddset(sigset_t *set, int signum)
+ { return 0; }
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5f2e90932f..c0901d9ec6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1219,6 +1219,13 @@ static inline int is_missing_file_error(int errno_)
+ 
+ extern int cmd_main(int, const char **);
+ 
++/*
++ * Intercept all calls to exit() and route them to trace2 to
++ * optionally emit a message before calling the real exit().
++ */
++int trace2_exit_fl(const char *file, int line, int code);
++#define exit(code) exit(trace2_exit_fl(__FILE__, __LINE__, (code)))
++
+ /*
+  * You can mark a stack variable with UNLEAK(var) to avoid it being
+  * reported as a leak by tools like LSAN or valgrind. The argument
+diff --git a/git.c b/git.c
+index c27c38738b..cc56279a8c 100644
+--- a/git.c
++++ b/git.c
+@@ -331,6 +331,8 @@ static int handle_alias(int *argcp, const char ***argv)
+ 			argv_array_push(&child.args, alias_string + 1);
+ 			argv_array_pushv(&child.args, (*argv) + 1);
+ 
++			trace2_alias(alias_command, child.args.argv);
++
+ 			ret = run_command(&child);
+ 			if (ret >= 0)   /* normal exit */
+ 				exit(ret);
+@@ -365,6 +367,8 @@ static int handle_alias(int *argcp, const char ***argv)
+ 		/* insert after command name */
+ 		memcpy(new_argv + count, *argv + 1, sizeof(char *) * *argcp);
+ 
++		trace2_alias(alias_command, new_argv);
++
+ 		*argv = new_argv;
+ 		*argcp += count - 1;
+ 
+@@ -413,6 +417,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 		setup_work_tree();
+ 
+ 	trace_argv_printf(argv, "trace: built-in: git");
++	trace2_command(p->cmd);
+ 
+ 	validate_cache_entries(&the_index);
+ 	status = p->fn(argc, argv, prefix);
+@@ -719,6 +724,8 @@ int cmd_main(int argc, const char **argv)
+ 			cmd = slash + 1;
+ 	}
+ 
++	trace2_start(argv);
++
+ 	trace_command_performance(argv);
+ 
+ 	/*
+@@ -782,5 +789,5 @@ int cmd_main(int argc, const char **argv)
+ 	fprintf(stderr, _("failed to run command '%s': %s\n"),
+ 		cmd, strerror(errno));
+ 
+-	return 1;
++	return trace2_exit(1);
+ }
+diff --git a/repository.c b/repository.c
+index 5dd1486718..c169f61ccd 100644
+--- a/repository.c
++++ b/repository.c
+@@ -113,6 +113,8 @@ out:
+ void repo_set_worktree(struct repository *repo, const char *path)
+ {
+ 	repo->worktree = real_pathdup(path, 1);
++
++	trace2_worktree(repo->worktree);
+ }
+ 
+ static int read_and_verify_repository_format(struct repository_format *format,
+diff --git a/run-command.c b/run-command.c
+index 84b883c213..e833d9a277 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -706,6 +706,7 @@ fail_pipe:
+ 		cmd->err = fderr[0];
+ 	}
+ 
++	trace2_child_start(cmd);
+ 	trace_run_command(cmd);
+ 
+ 	fflush(NULL);
+@@ -911,6 +912,8 @@ fail_pipe:
+ #endif
+ 
+ 	if (cmd->pid < 0) {
++		trace2_child_exit(cmd, -1);
++
+ 		if (need_in)
+ 			close_pair(fdin);
+ 		else if (cmd->in)
+@@ -949,13 +952,16 @@ fail_pipe:
+ int finish_command(struct child_process *cmd)
+ {
+ 	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 0);
++	trace2_child_exit(cmd, ret);
+ 	child_process_clear(cmd);
+ 	return ret;
+ }
+ 
+ int finish_command_in_signal(struct child_process *cmd)
+ {
+-	return wait_or_whine(cmd->pid, cmd->argv[0], 1);
++	int ret = wait_or_whine(cmd->pid, cmd->argv[0], 1);
++	trace2_child_exit(cmd, ret);
++	return ret;
+ }
+ 
+ 
+diff --git a/run-command.h b/run-command.h
+index 3932420ec8..a91206b08c 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -12,6 +12,11 @@ struct child_process {
+ 	struct argv_array args;
+ 	struct argv_array env_array;
+ 	pid_t pid;
++
++	int trace2_child_id;
++	uint64_t trace2_child_us_start;
++	const char *trace2_child_class;
++
+ 	/*
+ 	 * Using .in, .out, .err:
+ 	 * - Specify 0 for no redirections (child inherits stdin, stdout,
+diff --git a/usage.c b/usage.c
+index cc803336bd..1838c46d20 100644
+--- a/usage.c
++++ b/usage.c
+@@ -28,12 +28,17 @@ static NORETURN void usage_builtin(const char *err, va_list params)
+ static NORETURN void die_builtin(const char *err, va_list params)
+ {
+ 	vreportf("fatal: ", err, params);
++
++	trace2_error_va(err, params);
++
+ 	exit(128);
+ }
+ 
+ static void error_builtin(const char *err, va_list params)
+ {
+ 	vreportf("error: ", err, params);
++
++	trace2_error_va(err, params);
+ }
+ 
+ static void warn_builtin(const char *warn, va_list params)
 -- 
 gitgitgadget
+
