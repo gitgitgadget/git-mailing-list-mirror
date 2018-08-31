@@ -2,80 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64DB21F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 21:37:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8F71F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 21:39:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727261AbeIABrI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 21:47:08 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:40668 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727247AbeIABrI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 21:47:08 -0400
-Received: by mail-qt0-f193.google.com with SMTP id h4-v6so16166083qtj.7
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 14:37:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=B+nIvl+u/ODqc73wTlBpaYT0D+WRe3LWzlRQ2uRjrBI=;
-        b=nweDMukN54EofIMnxXEdKX/ugHEDH5XvDMCsf+paksItvxMmpaorzJhQRXAmrVEzGv
-         VGsM69hCT8sVVQpMSkoNChMwDmCVwd1hHdKixvLwXKOhrT1+slD5Tld1lTcetQuNgXtK
-         kjGAlT1R2am886pdg28lzwgRGPsLpi+beq2ptv6ICnkDlhXpJ5/5VK+lUtbEFRyw8Qsl
-         BbGcub3Hho95sK4MRdAFmXI7LXNaZOPodCs/7EFDLC9piJh4Xnj3U89DvCwsGCZ0e5kx
-         tHyNGqF5Fl5vo4xQh0GdNLHjNUillwi6ISSDvQBkdmAe+5KKAu37iUtfbfhfVEqgUpMl
-         YMEg==
-X-Gm-Message-State: APzg51A92i9OLptrGnhh2GLrDrS0TXi8DVkUEfkGC4H8P9b/Dgh4hUSk
-        /eoQZ/iQ5Jf/jL14Vk/qKYKw0oH79jDWFA1up80=
-X-Google-Smtp-Source: ANB0VdYJQhHU3HGTKLeMxBlb+zWbX+u/k5h9fyPyctFOB1g6iYxBsB7usrgZbm185RInn7uYDQHogr5998l56KxyDoU=
-X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr17988989qtd.101.1535751465191;
- Fri, 31 Aug 2018 14:37:45 -0700 (PDT)
+        id S1727501AbeIABsf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 21:48:35 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57443 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727201AbeIABse (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 21:48:34 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M4nYT-1fhCQL2TIT-00z0MD; Fri, 31
+ Aug 2018 23:39:00 +0200
+Date:   Fri, 31 Aug 2018 23:38:59 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Stefan Beller <sbeller@google.com>
+cc:     Jeff King <peff@peff.net>, Gabriel Holodak <gthepiper@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: Possible bug: identical lines added/removed in git diff
+In-Reply-To: <CAGZ79kYVLNM4fMwXAw9FbKFNJ1tTR7e04nBqKdnYPX3wYveUfg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1808312336270.71@tvgsbejvaqbjf.bet>
+References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com> <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com> <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com> <20180830025457.GA665@sigill.intra.peff.net>
+ <CAGZ79kZNVw4-q9KYAi9G3axb7-Ggpc2EAK8ZxAZoPEnZvEL-DQ@mail.gmail.com> <20180830192019.GB19685@sigill.intra.peff.net> <CAGZ79kYVLNM4fMwXAw9FbKFNJ1tTR7e04nBqKdnYPX3wYveUfg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180830195546.GA22407@sigill.intra.peff.net> <20180831063318.33373-1-sunshine@sunshineco.com>
- <20180831063318.33373-4-sunshine@sunshineco.com> <20180831200748.GD5120@sigill.intra.peff.net>
-In-Reply-To: <20180831200748.GD5120@sigill.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 31 Aug 2018 17:37:33 -0400
-Message-ID: <CAPig+cSktNnaWBew02Di5BaCQAqP6kXtMyoC3=g1A9hZcT-BEw@mail.gmail.com>
-Subject: Re: [PATCH 3/3] doc/Makefile: drop doc-diff worktree and temporary
- files on "make clean"
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:I71R5UM8/+lXetJKcqY3YT8TzVWmZn+MN6f4uyXpyl2a8zD1utJ
+ 8+PqQD6puF0OnxZorn1allWXtFDp24R2nZbmmxpXHpaUa8VfZxV3CiL+Qe3FSL5sFaGdULp
+ KW5D6sjTrP2dgziR+nPSdZ1Ljvo46opPAg5pJ7Y2/8lGrunXmTgg5/ZLxa6zkXxXYz8Vmnj
+ gMsussJMLgos5SdFTZsPw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:XkK2h0+ped8=:KrV2mTANWWS4PTKS85lgLm
+ Xp9tmN9p5Pmevp2mG1bTkps6JZ032UuIZ7uMyyEWJFMD+hn2sQV8I5E3xnZbRAuI4pOM26tsN
+ 7yiTrlYDFy/i2Z1QmSZm+xiLfaZ6w/7lSi/aTNmOcUXui5BlQfeKtNhQtSH+hYu6Gb1PmUcV6
+ fMt6bS+Ml3uyLtvZuAhEWvFnSKjcjfbyMYW41l2rVkZRaTWSWRN3eLVac+Wq27N9nEq64JedA
+ XiUB8IQDWPYLbd4DQWQB2FxlNzhRAypDm3ZCPjJ/5KfdLOoJhd8h3WbYZt9TuRnDdbTOzrz+s
+ AjnnlyocIKw+Gh9igR4+X4Nz68SyZvIt3CK8NQRmEFrPoBgfOzgirQUf5oS1qhokJyAAi2DKQ
+ 6Dk2zgkKpT7WjF9cI7NU7SrtDPUrMo2XX9ii2T6MXVidpPARC2V/3HP7NmTdr5EImnRlohe5W
+ dLSbSPaVW5oh/5PZ9gXhDGXCkAn7TFwNU3gL2VyiiAeqIibWkATIsN5EEOARL6oVHrZ10nTyP
+ qFzvut8PwfecT4VykkDjXbVHmMc4ypvDwrTaRJu7LA5rvKiP341/QJOFVBAfx8hSZPNhoPJ8F
+ 1fZ0bCbFtv+FElCgdIDcMyZMFEUXesTCS3oora9jgVaADYrO558l/Suh5ZOvjYv3UiNpINuN/
+ IWrgjR4qNtRlV7+b66GOrdiAOLuw3NLsnfAAXb+dX1co6xiDIpDUPeL8lEK4xtHUjXaG3syq5
+ TTVy7Soc+mUi7XgqdhIBLqnHBUtxpsg4ES0TJck54QmiJSF9du9WOXe1eb3hFaLrpRTkL7UH4
+ ikvECn5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 31, 2018 at 4:07 PM Jeff King <peff@peff.net> wrote:
-> On Fri, Aug 31, 2018 at 02:33:18AM -0400, Eric Sunshine wrote:
-> > diff --git a/Documentation/Makefile b/Documentation/Makefile
-> > @@ -332,6 +332,7 @@ clean:
-> >       $(RM) manpage-base-url.xsl
-> > +     '$(SHELL_PATH_SQ)' ./doc-diff --clean
->
-> This spelling took me by surprise. The doc-diff script itself specifies
-> /bin/sh, and we do not build it, so the #! line is never replaced. [...]
->
-> I don't think the script does anything complicated that would choke a
-> lesser /bin/sh. But it doesn't hurt to be defensive, since this bit of
-> the Makefile will be run for everyone, whether they care about doc-diff
-> or not.
->
-> So that all makes sense. I initially wrote this to suggest that we call
-> out this subtlety in the commit message. But I see this is based on
-> existing instances from ee7ec2f9de (documentation: Makefile accounts for
-> SHELL_PATH setting, 2009-03-22). So maybe I am just showing my
-> ignorance. ;)
+Hi,
 
-Correct. I was concerned that invoking it simply as "./doc-diff
---clean" could be problematic, so, knowing that the Makefile invoked
-other scripts in Documentation/, I mirrored their invocation. If it
-didn't follow existing practice of invoking the command with
-$(SHELL_PATH_SQ), then that would merit mention in the commit message,
-but as it is, the commit message is probably fine.
+On Thu, 30 Aug 2018, Stefan Beller wrote:
 
-Thanks for the review.
+> On Thu, Aug 30, 2018 at 12:20 PM Jeff King <peff@peff.net> wrote:
+> >
+> > [...] Myers does not promise to find the absolute minimal diff. [...]
+> 
+> The `Myers` (our default) diff algorithm is really the Myers algorithm +
+> a heuristic that cuts off the long tail when it is very costly to compute
+> the minimal diff.
+
+IIRC Myers promises minimal diffs only for -U0. As soon as you add
+context, Myers might in fact end up with a suboptimal diff, even without
+that heuristic.
+
+Ciao,
+Dscho
