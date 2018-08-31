@@ -2,111 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EA6A1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 22:02:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CB971F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 22:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727664AbeIACLy (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 22:11:54 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:33031 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727455AbeIACLx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 22:11:53 -0400
-Received: by mail-ed1-f67.google.com with SMTP id d8-v6so2002129edv.0
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 15:02:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=k17ZRHyUjcDHkmuZVvfwRf/htTxS8P7jJGX+SD2eGeI=;
-        b=ApPO9GCavHXDUw38QABfZrNoi5P09FovknoyRMvaz1AafTzx5fqdr2ox24HC6rBV6h
-         INs49U96XiFQKghChM93BEVZE/GF/AjcOeiXjCa1a4/Soct5wSnjkKeM+ib5Dd/BQW3S
-         Mq2oR1euUj93ZE/hZl6TlIfL3UDG9BtBqJui7/LLkBiat/jtm4VI/QwldgyXGNB3OG9/
-         KpJPtHcTviloFX2Oa2tgB/ONODBGz34mBq/SyJmbBd921CcXFF+SGrRGRtG0Y+5y6TjN
-         jQf0A6g34a+Nrlx+sBze3qc8/Fe6Ml4KHwRDHVS49S2lQOEaKcSAUMTE8AP9zmHIEFTl
-         5WUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=k17ZRHyUjcDHkmuZVvfwRf/htTxS8P7jJGX+SD2eGeI=;
-        b=N8XvAhwCwRt12xF4Mi3EWOGBxEYH4YRxjb3P7EnnA1JaTMt5VQzPM4/ZoncFlpqKJM
-         y0o0Yl4gDwMTCg86STjrfGYfn6k2/Z4I8MLbbQpiPtJSOTOKP2B+VkWotuaf7BZSS7rk
-         a892t8syzqQGh156o7jfDP1p7dc+g11bv1uT4+X4OsRHNs1i5qvEt+6mqbyXYaD+SOGW
-         XEvHZ2MdbJDcDpTuWpmZXjK8Q5WN4g/hs8Y5jlkNBPIRfgt2apOJ5Pn1+KiVQyA3IzVd
-         mYiaH3YcLAQ32pnNTmmVjSn9Uqds33S5e/wRAomXriTdl07pffdmauPdqLh7FKBiDObf
-         84eg==
-X-Gm-Message-State: APzg51D50ovBn4ahCxjM878TG51qzbNmS+q4D3UIIdZG8iTCSGKq5YSL
-        ECdKnoYrA6sfy/sfJii5vXQ=
-X-Google-Smtp-Source: ANB0VdalNf96f0QA+VYSKiUci1YPrul+j3Z4v6OvPE39EAbisvBOnKthYSZseXxJQXOxB5qvNYLXCg==
-X-Received: by 2002:a50:9135:: with SMTP id e50-v6mr19831528eda.312.1535752944543;
-        Fri, 31 Aug 2018 15:02:24 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id i3-v6sm5727570eda.84.2018.08.31.15.02.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 15:02:23 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Wink Saville <wink@saville.com>,
-        Jacob Keller <jacob.keller@gmail.com>,
-        Bryan Turner <bturner@atlassian.com>,
-        =?utf-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Jeff King <peff@peff.net>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-        Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v5 2/9] push tests: make use of unused $1 in test description
-References: <20180830201244.25759-1-avarab@gmail.com> <20180831201004.12087-3-avarab@gmail.com> <xmqqftyu1byv.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqftyu1byv.fsf@gitster-ct.c.googlers.com>
-Date:   Sat, 01 Sep 2018 00:02:22 +0200
-Message-ID: <871saechzl.fsf@evledraar.gmail.com>
+        id S1727806AbeIADFj (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 23:05:39 -0400
+Received: from cloud.peff.net ([104.130.231.41]:35978 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727637AbeIADFj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 23:05:39 -0400
+Received: (qmail 4720 invoked by uid 109); 31 Aug 2018 22:56:01 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 31 Aug 2018 22:56:01 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10138 invoked by uid 111); 31 Aug 2018 22:56:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 31 Aug 2018 18:56:10 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 31 Aug 2018 18:55:58 -0400
+Date:   Fri, 31 Aug 2018 18:55:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/6] pack-bitmap: save "have" bitmap from walk
+Message-ID: <20180831225558.GA22917@sigill.intra.peff.net>
+References: <20180821184140.GA24165@sigill.intra.peff.net>
+ <20180821190701.GE30764@sigill.intra.peff.net>
+ <8736uud0gq.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <8736uud0gq.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Aug 31, 2018 at 05:23:17PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Fri, Aug 31 2018, Junio C Hamano wrote:
+> On Tue, Aug 21 2018, Jeff King wrote:
+> 
+> > +int bitmap_has_sha1_in_uninteresting(struct bitmap_index *bitmap_git,
+> > +				     const unsigned char *sha1)
+> > +{
+> > +	int pos;
+> > +
+> > +	if (!bitmap_git)
+> > +		return 0; /* no bitmap loaded */
+> > +	if (!bitmap_git->result)
+> > +		BUG("failed to perform bitmap walk before querying");
+> 
+> Some part of what calls this completely breaks pushing from the "next"
+> branch when you have local bitmaps (we *really* should have some tests
+> for this...).
 
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->
->> Fix up a logic error in 380efb65df ("push tests: assert re-pushing
->> annotated tags", 2018-07-31), where the $tag_type_description variable
->> was assigned to but never used, unlike in the subsequently added
->> companion test for fetches in 2d216a7ef6 ("fetch tests: add a test for
->> clobbering tag behavior", 2018-04-29).
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>  t/t5516-fetch-push.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
->> index 539c25aada..62d5059f92 100755
->> --- a/t/t5516-fetch-push.sh
->> +++ b/t/t5516-fetch-push.sh
->> @@ -969,7 +969,7 @@ test_force_push_tag () {
->>  	tag_type_description=$1
->>  	tag_args=$2
->>
->> -	test_expect_success 'force pushing required to update lightweight tag' "
->> +	test_expect_success 'force pushing required to update $tag_type_description' "
->
-> Of course, $1 needs to be inside "dq-pair" for $tag_type_description
-> to be substituted ;-)  So I'll tweak it while queuing.
+Yikes, thanks for reporting. I agree we need better tests here.
 
-D'oh! I knew I'd miss something. Hopefully this was the only thing.
+This assertion is totally bogus, as traverse_bitmap_commit_list() will
+actually free (and NULL) the result field! This is a holdover from the
+original bitmap code, where bitmap_git was a static, and this is how you
+might prepare a second walk (though AFAIK only ever do one walk per
+process). These days prepare_bitmap_walk() actually returns a fresh
+bitmap_index struct.
 
-> All the other ones in this series looked sensible to me.  Will
-> replace.
+So there's no way to know if traverse_bitmap_commit_list() was called.
+But as it turns out, we don't care. We want to know if
+"bitmap_git->have" was set up, which is done in prepare_bitmap_walk().
+So there's no way[1] to get a bitmap_git that hasn't been properly set
+up. This BUG() check can just go away.
 
-Thanks!
+I'll prepare a patch and some tests later tonight.
+
+-Peff
+
+[1] Actually, there is also prepare_bitmap_git(), but it is not really
+    for general use by callers. It should be made static, or better yet,
+    I suspect it can be folded into its callers.
