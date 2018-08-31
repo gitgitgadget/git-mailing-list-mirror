@@ -2,96 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 531BC1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 18:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69BF11F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 18:27:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727366AbeHaWXT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 18:23:19 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:38530 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727201AbeHaWXT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 18:23:19 -0400
-Received: by mail-wm0-f68.google.com with SMTP id t25-v6so6145709wmi.3
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 11:14:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H0ZtuuDVU0gA5FbRtHmjed8LWpGW2wHz3sdiZgsp254=;
-        b=Qs/IZidkXjYXr/BTvIMbE02fhFoilXmR+ze+htso27yPDFC1hZu/3e+0uExu2lQ8HF
-         YQm1Zhew+eTAcMX/J4xUcBTRPusPMB4I/HnOLDyY+1fhpNbl+HpAv8X2ZcPy/nYgPKNp
-         hB0JwaoPFhVvT4Gk6bvaqNUvUaD99WhYioc2oFCqXaUxvu+bmbaQFltcTKjVxp0RWG9l
-         Oxbe5JrOhG6OoJCzZ89chqdk8waT9+VXEjMC9nuzMH175TbjCuZ1HQsd321IiKCb9AFT
-         AGTPOnC8IbI4zIbiyHX/oPWsYSNaNf6x+PYEGYhvDaLLhpCbCZzbqREAV6sWEUOIq7BW
-         X0xA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H0ZtuuDVU0gA5FbRtHmjed8LWpGW2wHz3sdiZgsp254=;
-        b=egwe57PCWj4scdjijlbEKPnkj0zDR59ZGUvNB3+BpxBL/PqOPnikbyB9FgAlZfHHu5
-         dMWB4vHS2QVDT0egK/p6S3LUi9HmmmBcavuT6BpLMeVhE6tZKfTHEkxA0kBVEUM93JOo
-         //ykeg1ce4okFFDDy5mSeimuik+KHjKVVFKGlKk2PpkfX+LcefyifXUszq+mriG4rzWp
-         9JYimE9cxpmfmI+nNsPjnVoN59VY4+EVCRcPBprnUiCGaKbYKqrceFfEdwhb1WX3W4yL
-         qR4Yo5anBcDW5GNdKtFFHIcVvG322nmd0AMNPZrcfSLBHdSUsqs7bZGX7umuOTdi8iio
-         Kbkg==
-X-Gm-Message-State: APzg51BD4cAKsfs8DRF0B7qdUeLdUNnGmT/I/AkKCNDy1CAnF1g3tDW3
-        +Jg2GaBfML94eOu/kapZiEk=
-X-Google-Smtp-Source: ANB0VdbOtIH4PktBnQ1urVIt7J/AGWj9s0MnaOW3JxZrLTcvnO4VIB85Ah338H2irUbjQc3LCq4SIw==
-X-Received: by 2002:a1c:c3:: with SMTP id 186-v6mr5457302wma.126.1535739277894;
-        Fri, 31 Aug 2018 11:14:37 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o14-v6sm6518886wrp.57.2018.08.31.11.14.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 11:14:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 00/20] Convert "git stash" to C builtin
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com>
-        <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
-Date:   Fri, 31 Aug 2018 11:14:36 -0700
-In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
-        (Paul-Sebastian Ungureanu's message of "Fri, 31 Aug 2018 00:40:30
-        +0300")
-Message-ID: <xmqqzhx21jzn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727234AbeHaWfq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 18:35:46 -0400
+Received: from mout.web.de ([217.72.192.78]:44787 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727221AbeHaWfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 18:35:45 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MLPRu-1fwM0y30TK-000eXP; Fri, 31
+ Aug 2018 20:21:42 +0200
+Date:   Fri, 31 Aug 2018 20:21:41 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3 05/11] t0027: make hash size independent
+Message-ID: <20180831182141.GA9399@tor.lan>
+References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
+ <20180829005642.980617-6-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180829005642.980617-6-sandals@crustytoothpaste.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:ldvfciJQYYmsApgVj0v2rCd0CFe/fH+WJt2pIOeNFQEpY45oS2U
+ Tkwwyo3KnBmVTQ89e5vQQ79lgV6bbA5nwFfsD4oaXW3Nm4vYsVePB1lxuw0diypqcDjrzC6
+ mb3uL6TZBzgedITRZ6d2AM8VXD4b8Ehw+R3Kab3h86bMmb2gHo5ZWkU4/clsWTgla6uxOhf
+ WF/nyMO60ib2YXQh3+RgA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:sykE7OGNATU=:VFNEK6mYJ2jt5YuwWfp7J7
+ iXj5NIlUHk3zNptKU24g3xrvk42jPDKw6RgzNaifTY/AK9pKIA6wq5sZDI9bhJegWtZrwvdRH
+ e6dUIERoFClifG34L6+u4bim4gGqXchEj041k4OONZf06jc00/II8+TJOBCM0TmDDdcCF0Izd
+ 0hkPuMHhWqe3a5Xpb1dc7bmicEUrM4OOW045IzGsWTnCFpqgt1y/gKbVMV+OZfyeSTFhAEG2t
+ SdxiRZ8tHPiTXGRIFvdNmVzHm8ZcIObAO2k2Yq+FOOEe4+JIDyoMTLY3juStQv8wvVMvJQ0L/
+ DNO4EyLznYfJq4rAFkbvEry3w6aJCN9TCzUWtYT2eN0erJm4t2uNB+9AOBy8Jt0kHXvlGWes3
+ OjRpvvFUBM7GkxVBNmpl7e+U1YNtFvzhrmsjdtnGytzxWYSy/YEEqom/PWFD6/VbHqZN+vDNS
+ TzE0kCV7Nlv86lvHAmSIrjFDfMsqkCiW7TXwn1rLDTx+ZfRVxXTSANpXh/ocNHucmKGZBVZRX
+ 0H8eP6AcnzIef91r+PMLRRXr4DzPu8FI9N5/mYe2vjJ5HVCMXBvzxPftG4cjTsnVzL/NQ8L4n
+ 0tdqcZpTzVw9sa07Mg7mxsdRfLmZHxTTDuNBc74lo6XnUci7DYehhnyIHvAHIwcqsof/VGign
+ Ryu0z0Q9DvBpauvmLTscXEj/YKRWC/aCjkqk/lByjk5MUHXfnoVM8pYE2Rhe7+u219pRrgq/E
+ 9t0EYmfbrv4T0GuTZi3RX9IZrFs9kbfK2EsjXzTxNH9PRimgl/oxuEs8vvo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
+On Wed, Aug 29, 2018 at 12:56:36AM +0000, brian m. carlson wrote:
+> We transform various object IDs into all-zero object IDs for comparison.
+> Adjust the length as well so that this works for all hash algorithms.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  t/t0027-auto-crlf.sh | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+> index beb5927f77..0f1235d9d1 100755
+> --- a/t/t0027-auto-crlf.sh
+> +++ b/t/t0027-auto-crlf.sh
+> @@ -14,11 +14,13 @@ compare_files () {
+>  compare_ws_file () {
+>  	pfx=$1
+>  	exp=$2.expect
+> +	tmp=$2.tmp
+>  	act=$pfx.actual.$3
+> -	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
+> +	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$tmp" &&
+>  	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
+> +	sed -e "s/0000*/$ZERO_OID/" "$tmp" >"$exp" &&
+>  	test_cmp "$exp" "$act" &&
+> -	rm "$exp" "$act"
+> +	rm "$exp" "$act" "$tmp"
+>  }
+>  
+>  create_gitattributes () {
 
-> This a new iteration of `stash.c`. What is new?
->
->  * Some commits got squashed. The commit related to replacing
->  `git apply` child process was dropped since it wasn't the best
->  idea.
->
->  * In v7, there was a bug [1] related to config `git stash show`
->  The bug was fixed and a test file was added for this.
->
->  * Fixed `git stash [push]` [2]. In v7, `git stash -q drop` would
->  act like `git stash push -q drop`.
->
->  * Fixed coding-style nits. Verified that messages are marked
->  for translation and are going to the correct output stream.
->
->  * Fixed one memory leak (related to `strbuf_detach`).
->
->  * Simplified the code a little bit.
+I only managed to review the changes in t0027.
+Out of interest: why do we use a "tmp" file here?
+Would it make more sense  to chain the 'tr' with 'sed' and skip the
+tmp file ?
 
-Also worth noting.
+ 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
+	sed -e "s/0000*/$ZERO_OID/"  >"$exp" &&
 
-  * Rebased on a recent 'master', in which the calling convention
-    for functions like dir_path_match() has been updated.  It won't
-    compile when applied to anything older than dc0f6f9e ("Merge
-    branch 'nd/no-the-index'", 2018-08-20).
 
+Yes, we will loose the exit status of 'tr', I think.
+How important is the exit status ?
+
+I don't know, hopefully someone with more experience/knowledge
+about shell scripting can help me out here.
