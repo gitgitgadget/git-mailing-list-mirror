@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81D061F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A6E21F404
 	for <e@80x24.org>; Fri, 31 Aug 2018 23:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbeIADyx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 23:54:53 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:41359 "EHLO
+        id S1727357AbeIADyy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 23:54:54 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:35926 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727175AbeIADyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 23:54:53 -0400
-Received: by mail-pf1-f194.google.com with SMTP id h79-v6so6173950pfk.8
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 16:45:04 -0700 (PDT)
+        with ESMTP id S1727175AbeIADyy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 23:54:54 -0400
+Received: by mail-pf1-f194.google.com with SMTP id b11-v6so6190899pfo.3
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 16:45:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=NaTpj6bMr3uUPYu7GJ9N9O7tcmpf0XenmwfvifIOVqk=;
-        b=P5UnX5vfM3e51wqlblbX1BbRwLWk6LsnHNNsmEr0O+QH7sl9st7RTiYP4JpMaIMC/c
-         ywRX+gQOBAdfWyNDdmarleNtZIw2ScstdH0YnK7kwGeIoj++OpUtrOQqJHVQmRSsSczz
-         4E008iQKhbFiMyZVcpTB//squ+LojIxx7igfOq2eOU1K7m09D8ZNypcpvT2ai8UPAUkf
-         YNhPtXARI+dJ3OtEtYqlXWaTmEScYclff6u59BXFvgDz6XeMTbXFVtG7gshAmRYvW/H/
-         yUddiBnE0UBiK8q2iRn6cqcDfq0+RyID+Rx72//oD45yTbzEZW9eJmMNd2a/L+b1NY0D
-         4+tA==
+        bh=uFstL4qbjdtac7FQG6tbUOQwSBId+sW2SHHcu6ewrls=;
+        b=uS9OHuROJ8LsIeGPLuhq2oe1WSMDsLLkZMHvfNsv9Hz9QywPopAmiUn41fbpH75/C8
+         K8A0GSiFvnet7q2UkY1i2uPgdTMjWh2qKug73xNm5YpjJzpQfUw1UImmWwVtUtR2H2VB
+         iuCirPnbDxTqscI4ZiBVTkfatLVcAM9RSNex1lFio4QZYj/p3lPyvCrVlrKp+29ZSW2C
+         fyphORD1HWTl42HcHUQsiWu7sZvav3YS3M3vvUcFa2ViGTQBekOFKrFD8CexcvSYGV9w
+         EYwRwaXgzXQmVekNfcV4WesaGj1youWp8JQObAJjsaOxRCCjYgVsW3SN5aCpKwDbmRY2
+         eeKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=NaTpj6bMr3uUPYu7GJ9N9O7tcmpf0XenmwfvifIOVqk=;
-        b=La+v0Hpc3Gfoml+AL2XnxxwEBWWs3Gphb6TyWW8gMLLH+iw7MnI07NDVnOlU0Udfqu
-         2R6HGGsXi4PdTv+Dfv0qC8CdDH0oFtp5UeRYyhacljyG/CXGLnk5pBywQ6memN1lnVf9
-         qG1yzTp28FwOZGskeIKwa2tEs1B7Ddhaj58x4N6FojAG4ML7BagO6eOjH8iAzmDk5XFz
-         RFwh/rWxaKa9914KmZv32qAgGdEgyHgILDM/RMjpfPLGr1icJ0pmjumyVYUNFGTrKvME
-         M1sFOV0uNLN7cUKx3nfeAcwzhj4lYU4jhIc5e19Mf6/FDEWq7MJT4q0OKlKF/RmhFY5o
-         rvBw==
-X-Gm-Message-State: APzg51DQn6FG2tqvyaMsa28aNVM8nBxcD1EcYU5zLnyxOqJJcSSgYhZK
-        cA3SuKSEGXHsWJzL/0GRyQX3lxty
-X-Google-Smtp-Source: ANB0VdZf2XsAk6M47dxi2mY8ISXiapSyMqdzmbrE/xTT8NvLQbjb4E1kubIN2i6wOOobupD6hOnZCw==
-X-Received: by 2002:a63:7557:: with SMTP id f23-v6mr1748056pgn.135.1535759103443;
-        Fri, 31 Aug 2018 16:45:03 -0700 (PDT)
+        bh=uFstL4qbjdtac7FQG6tbUOQwSBId+sW2SHHcu6ewrls=;
+        b=cTHjz7qQ7GnADmgoD7rwqgkdzKcNK3SshjCOLaNxNp52YlRhXS+nKztqWbkaFopy7o
+         xUJNbidyzbM4iAHKIidd5Jme+ALKSCbsyrVya21H+9vxt0u+gUg7bxVmsvN9vhg3qCZA
+         HD7c7hGTDnvG7ryeyXk/Lvf2vsy6sJdZX8K8VM6AOEWbS8OQxXJMhG7gHlgMMSZ93HTF
+         6h1xziaZoMFDk2KqpHfzHTIRhVRYldZxpYyJMslwfiytgEZjuVt8ldifHTLoij6GHX4p
+         2y4AgBUgsvSxQ7US6qs88xg15qIAblmMsRFND1syePz1gI9c935BB0m/XpkVSwwuLT+R
+         VPBQ==
+X-Gm-Message-State: APzg51AHQsPet4qOTucx6N7HqgrB/3FKL1ZoUsyetcTRSWiqnPJFQfYt
+        Vs8xcrL6Ua8hkxMVuAn3VBDb/O7T
+X-Google-Smtp-Source: ANB0VdZiZvxqzwpsyv3c02TZDQQm8cy7DtsCr1tBlmQVGrWv6+c/VG6OyDYWVl6mwJ0q64dUvdSUEA==
+X-Received: by 2002:aa7:8591:: with SMTP id w17-v6mr18421351pfn.77.1535759104792;
+        Fri, 31 Aug 2018 16:45:04 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id 8-v6sm12394963pgu.10.2018.08.31.16.45.02
+        by smtp.gmail.com with ESMTPSA id d184-v6sm31635838pfg.74.2018.08.31.16.45.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 16:45:02 -0700 (PDT)
-Date:   Fri, 31 Aug 2018 16:45:02 -0700 (PDT)
-X-Google-Original-Date: Fri, 31 Aug 2018 23:44:58 GMT
-Message-Id: <8753c4e5fba5bb9cc42fdf438f4a69e702261a15.1535759099.git.gitgitgadget@gmail.com>
+        Fri, 31 Aug 2018 16:45:04 -0700 (PDT)
+Date:   Fri, 31 Aug 2018 16:45:04 -0700 (PDT)
+X-Google-Original-Date: Fri, 31 Aug 2018 23:44:59 GMT
+Message-Id: <0c9d0f75fc0dd28d55d4ed41d008182746fc86cd.1535759099.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.30.git.gitgitgadget@gmail.com>
 References: <pull.30.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/2] rebase -i --autosquash: demonstrate a problem skipping
- the last squash
+Subject: [PATCH 2/2] rebase -i: be careful to wrap up fixup/squash chains
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,56 +70,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The `git commit --squash` command can be used not only to amend commit
-messages and changes, but also to record notes for an upcoming rebase.
+When an interactive rebase was stopped at the end of a fixup/squash
+chain, the user might have edited the commit manually before continuing
+(with either `git rebase --skip` or `git rebase --continue`, it does not
+really matter which).
 
-For example, when the author information of a given commit is incorrect,
-a user might call `git commit --allow-empty -m "Fix author" --squash
-<commit>`, to remind them to fix that during the rebase. When the editor
-would pop up, the user would simply delete the commit message to abort
-the rebase at this stage, fix the author information, and continue with
-`git rebase --skip`. (This is a real-world example from the rebase of
-Git for Windows onto v2.19.0-rc1.)
-
-However, there is a bug in `git rebase` that will cause the squash
-message *not* to be forgotten in this case. It will therefore be reused
-in the next fixup/squash chain (if any).
-
-This patch adds a test case to demonstrate this breakage.
+We need to be very careful to wrap up the fixup/squash chain also in
+this scenario: otherwise the next fixup/squash chain would try to pick
+up where the previous one was left.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/t3415-rebase-autosquash.sh | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ sequencer.c                  | 17 ++++++++++++++---
+ t/t3415-rebase-autosquash.sh |  2 +-
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
+diff --git a/sequencer.c b/sequencer.c
+index 84bf598c3e..ac5c805c14 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3578,9 +3578,20 @@ static int commit_staged_changes(struct replay_opts *opts,
+ 		 * the commit message and if there was a squash, let the user
+ 		 * edit it.
+ 		 */
+-		if (is_clean && !oidcmp(&head, &to_amend) &&
+-		    opts->current_fixup_count > 0 &&
+-		    file_exists(rebase_path_stopped_sha())) {
++		if (!is_clean || !opts->current_fixup_count)
++			; /* this is not the final fixup */
++		else if (oidcmp(&head, &to_amend) ||
++			 !file_exists(rebase_path_stopped_sha())) {
++			/* was a final fixup or squash done manually? */
++			if (!is_fixup(peek_command(todo_list, 0))) {
++				unlink(rebase_path_fixup_msg());
++				unlink(rebase_path_squash_msg());
++				unlink(rebase_path_current_fixups());
++				strbuf_reset(&opts->current_fixups);
++				opts->current_fixup_count = 0;
++			}
++		} else {
++			/* we are in a fixup/squash chain */
+ 			const char *p = opts->current_fixups.buf;
+ 			int len = opts->current_fixups.len;
+ 
 diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index e364c12622..7d5ea340b3 100755
+index 7d5ea340b3..13f5688135 100755
 --- a/t/t3415-rebase-autosquash.sh
 +++ b/t/t3415-rebase-autosquash.sh
-@@ -330,4 +330,23 @@ test_expect_success 'wrapped original subject' '
+@@ -330,7 +330,7 @@ test_expect_success 'wrapped original subject' '
  	test $base = $parent
  '
  
-+test_expect_failure 'abort last squash' '
-+	test_when_finished "test_might_fail git rebase --abort" &&
-+	test_when_finished "git checkout master" &&
-+
-+	git checkout -b some-squashes &&
-+	git commit --allow-empty -m first &&
-+	git commit --allow-empty --squash HEAD &&
-+	git commit --allow-empty -m second &&
-+	git commit --allow-empty --squash HEAD &&
-+
-+	test_must_fail git -c core.editor="grep -q ^pick" \
-+		rebase -ki --autosquash HEAD~4 &&
-+	: do not finish the squash, but resolve it manually &&
-+	git commit --allow-empty --amend -m edited-first &&
-+	git rebase --skip &&
-+	git show >actual &&
-+	! grep first actual
-+'
-+
- test_done
+-test_expect_failure 'abort last squash' '
++test_expect_success 'abort last squash' '
+ 	test_when_finished "test_might_fail git rebase --abort" &&
+ 	test_when_finished "git checkout master" &&
+ 
 -- 
 gitgitgadget
-
