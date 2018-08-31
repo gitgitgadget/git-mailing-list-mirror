@@ -2,100 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69BF11F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 18:27:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5B0C1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 18:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbeHaWfq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 18:35:46 -0400
-Received: from mout.web.de ([217.72.192.78]:44787 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727221AbeHaWfp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 18:35:45 -0400
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MLPRu-1fwM0y30TK-000eXP; Fri, 31
- Aug 2018 20:21:42 +0200
-Date:   Fri, 31 Aug 2018 20:21:41 +0200
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 05/11] t0027: make hash size independent
-Message-ID: <20180831182141.GA9399@tor.lan>
-References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
- <20180829005642.980617-6-sandals@crustytoothpaste.net>
+        id S1727278AbeHaWj4 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 31 Aug 2018 18:39:56 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:37733 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727235AbeHaWj4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 18:39:56 -0400
+Received: by mail-qt0-f195.google.com with SMTP id n6-v6so15587034qtl.4
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 11:31:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Tomsf4T6jgXAZ3j5kNq6pufDBRLEsf/XcoEBR3UdVDM=;
+        b=FOjOlIYSo+rCokPQa0iiY11+x/+Wi0HE5v5qpGU/y2yw96MeE1oOJivxV7puDZ3G39
+         ElhPLVpqAH73ysQorjFUd7hSktIeZeo/8p1i09C6WJVfw9PuVAG3CCfLQ5QwVes26Ibb
+         HjmvgYxfKkmfLzkfW4B4VIasN7vEhieM/mvB0AWXBFHqudSqUlJUGNu+ZDn1hCPRuuli
+         hcUwyfavLsdS1ytvR1pxf9+YzANH0aZo39WbUd1Tp4CCU3siYLuTnlv11J/OwdSXxASm
+         02Ud+1DiuBCARR37DHBJnEgPz3Gpz6Coh4EY8IwvaNDbOEQq4sOpPi7jzmdfUcdVol0s
+         /Xrw==
+X-Gm-Message-State: APzg51DlB5z81aa0OtAPtdGvCBC/ir9RmmQiXIGzYEyRDlEDmwTOJ5aC
+        Qd2XkTKa1WgdDlcbB2PWYjSuotMlAnRUMdxtLmbFmGRK
+X-Google-Smtp-Source: ANB0VdaeYutrhecZpt2ZzuTVSAlaMO6K753JR53KX3R9Y855AoO61kRdP/NmPrpjMn3AEB4nhwgWngZw/1OCfJNbvcE=
+X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr17267797qtc.50.1535740272602;
+ Fri, 31 Aug 2018 11:31:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180829005642.980617-6-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:ldvfciJQYYmsApgVj0v2rCd0CFe/fH+WJt2pIOeNFQEpY45oS2U
- Tkwwyo3KnBmVTQ89e5vQQ79lgV6bbA5nwFfsD4oaXW3Nm4vYsVePB1lxuw0diypqcDjrzC6
- mb3uL6TZBzgedITRZ6d2AM8VXD4b8Ehw+R3Kab3h86bMmb2gHo5ZWkU4/clsWTgla6uxOhf
- WF/nyMO60ib2YXQh3+RgA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:sykE7OGNATU=:VFNEK6mYJ2jt5YuwWfp7J7
- iXj5NIlUHk3zNptKU24g3xrvk42jPDKw6RgzNaifTY/AK9pKIA6wq5sZDI9bhJegWtZrwvdRH
- e6dUIERoFClifG34L6+u4bim4gGqXchEj041k4OONZf06jc00/II8+TJOBCM0TmDDdcCF0Izd
- 0hkPuMHhWqe3a5Xpb1dc7bmicEUrM4OOW045IzGsWTnCFpqgt1y/gKbVMV+OZfyeSTFhAEG2t
- SdxiRZ8tHPiTXGRIFvdNmVzHm8ZcIObAO2k2Yq+FOOEe4+JIDyoMTLY3juStQv8wvVMvJQ0L/
- DNO4EyLznYfJq4rAFkbvEry3w6aJCN9TCzUWtYT2eN0erJm4t2uNB+9AOBy8Jt0kHXvlGWes3
- OjRpvvFUBM7GkxVBNmpl7e+U1YNtFvzhrmsjdtnGytzxWYSy/YEEqom/PWFD6/VbHqZN+vDNS
- TzE0kCV7Nlv86lvHAmSIrjFDfMsqkCiW7TXwn1rLDTx+ZfRVxXTSANpXh/ocNHucmKGZBVZRX
- 0H8eP6AcnzIef91r+PMLRRXr4DzPu8FI9N5/mYe2vjJ5HVCMXBvzxPftG4cjTsnVzL/NQ8L4n
- 0tdqcZpTzVw9sa07Mg7mxsdRfLmZHxTTDuNBc74lo6XnUci7DYehhnyIHvAHIwcqsof/VGign
- Ryu0z0Q9DvBpauvmLTscXEj/YKRWC/aCjkqk/lByjk5MUHXfnoVM8pYE2Rhe7+u219pRrgq/E
- 9t0EYmfbrv4T0GuTZi3RX9IZrFs9kbfK2EsjXzTxNH9PRimgl/oxuEs8vvo=
+References: <20180805075736.GF44140@aiede.svl.corp.google.com>
+ <20180831083342.34836-1-sunshine@sunshineco.com> <CACBZZX6uCQkCermt8O6v2XB2MnUkt5ER3_z5GYJtGdSk-9JNLA@mail.gmail.com>
+In-Reply-To: <CACBZZX6uCQkCermt8O6v2XB2MnUkt5ER3_z5GYJtGdSk-9JNLA@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 31 Aug 2018 14:31:00 -0400
+Message-ID: <CAPig+cR5VdUjR3zNrNxfkwLnCEE3_KUD9HRhm+BR6LF8FCQ6QA@mail.gmail.com>
+Subject: Re: [PATCH] config.mak.uname: resolve FreeBSD iconv-related
+ compilation warning
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Renato Botelho <garga@freebsd.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Aug 29, 2018 at 12:56:36AM +0000, brian m. carlson wrote:
-> We transform various object IDs into all-zero object IDs for comparison.
-> Adjust the length as well so that this works for all hash algorithms.
-> 
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  t/t0027-auto-crlf.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index beb5927f77..0f1235d9d1 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -14,11 +14,13 @@ compare_files () {
->  compare_ws_file () {
->  	pfx=$1
->  	exp=$2.expect
-> +	tmp=$2.tmp
->  	act=$pfx.actual.$3
-> -	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
-> +	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$tmp" &&
->  	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
-> +	sed -e "s/0000*/$ZERO_OID/" "$tmp" >"$exp" &&
->  	test_cmp "$exp" "$act" &&
-> -	rm "$exp" "$act"
-> +	rm "$exp" "$act" "$tmp"
->  }
->  
->  create_gitattributes () {
+On Fri, Aug 31, 2018 at 7:54 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Fri, Aug 31, 2018 at 11:52 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > OLD_ICONV has long been needed by FreeBSD so config.mak.uname defines
+> > it unconditionally. However, recent versions do not need it, and its
+> > presence results in compilation warnings. Resolve this issue by defining
+> > OLD_ICONV only for older FreeBSD versions.
+>
+> This seems sane, but just for context is FreeBSD ports itself just
+> compiling without iconv entirely?
+>
+> I have little clue about how ports works, but just noticed that
+> they're not monkeypatching in OLD_ICONV there.
 
-I only managed to review the changes in t0027.
-Out of interest: why do we use a "tmp" file here?
-Would it make more sense  to chain the 'tr' with 'sed' and skip the
-tmp file ?
+My experience with FreeBSD ports is pretty limited too, but, as I
+discovered in [1], they run Git's configure script, so OLD_ICONV is
+determined dynamically, as far as I can tell.
 
- 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
-	sed -e "s/0000*/$ZERO_OID/"  >"$exp" &&
-
-
-Yes, we will loose the exit status of 'tr', I think.
-How important is the exit status ?
-
-I don't know, hopefully someone with more experience/knowledge
-about shell scripting can help me out here.
+[1]: https://public-inbox.org/git/CAPig+cTEGtsmUyoYsKEx+erMsXKm5=c6TJuNAgeky2pcgw18JQ@mail.gmail.com/
