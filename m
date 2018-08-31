@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A6C61F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7DD1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727528AbeIAATY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 20:19:24 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33849 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727502AbeIAATY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 20:19:24 -0400
-Received: by mail-wr1-f65.google.com with SMTP id g33-v6so12274937wrd.1
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:20 -0700 (PDT)
+        id S1727535AbeIAAT0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 20:19:26 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45884 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727203AbeIAATZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 20:19:25 -0400
+Received: by mail-wr1-f68.google.com with SMTP id 20-v6so12234952wrb.12
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=iyGsuOUXB6Kwdc8uF5NUCsu+HB+pqs4AvzsS3xgO/ks=;
-        b=nO2IlWRdm/tWi5jiPomIndw+gIOZoZ9cSdKrYyhRjfHZei4rgWvjkQ6cxIEV40MOa4
-         m3KyLZJ0KO+xWz7+1deqzpVodOYz8RXawl2+r++oQYwa9ogBId1//sipiGF09qbc2czw
-         F4xmA6bqSDmGmBaeacjHMgchJOkVTegD16uZRFTpr8eFdX6RAFgCKrk/714ExwJYetfG
-         SyGyjBeZWSFRu4HjaTR1Fs16yXJ+Wt9owBDC0ukcNA012K1TAcxjidScS2LoS0alXN9s
-         DSw0v36mdM42CiMkNBo/6Rsn0OlLj3cUKqw5LyKE4TX0224NjnYUX4VKSqFdVyvqXSKZ
-         Tq7w==
+        bh=Yj7QjiRJ58NxQ/YSNwQeivo0IQ1l9Wx6mhlxw87sUcM=;
+        b=k2LV3g9Eqn8jGKLJxe3RaAChMwb7ZpnaxPCb48Uj5ERWwfuDOTng+UEZ9+vsv4NNY5
+         vGTJBFP1DnZBe3q3XG8+w8bWjzMtITMsFJqqZ3OKuoNQfCLlM45plTyGBmD/qrfBw929
+         teJo34Qyhcn4gdrAHw84qPcZfuZr5DgZ3Eijh88Y+AlwzRUAHO/0wqxtOB5bbPQHdv6G
+         s5vHD0OuPMekBba06GbaN176YRc9NguTSwfSNj2Ibi/vqlHupv7Sgv+TV9Z30y7cbxnu
+         EV3z+BnrHl3jJrLqS0BUyB5Edn8QJaFZh7nMRm4ah8MS3TkkCahk9Wd4RQEyddLzt0Io
+         isOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=iyGsuOUXB6Kwdc8uF5NUCsu+HB+pqs4AvzsS3xgO/ks=;
-        b=WKsvcWc7Ygz64hcMNI9RIY0TkKVVawM6vv9HSVm5YzD0vrxjC65AULR6+iB+3Y5mkj
-         8P7w5n49Q8sSrnFEP8JSZivVxW/gNyh4Kw6I50nH2LiS7IE5vWu4AM1E5JsoND9K1vdM
-         LC6brAxfHc5j7urEIsPgQKgA4RjRNXmKfBpHkcyf7kmbKLSnldCcIixraLPDaK5FqydM
-         h/Wya3lOP2XVLvO0ZQktsUdUhLkLk/lUAJ/A3sLbEZpg3xN1JNOPYn/86pTPJrT8BGsG
-         +wN8XcUxOr9hUvYqDwFnhae4RG9VJk67ejbr8WXi1m2+ZlmME69g9LrrzRLi8hg43DGv
-         rCTw==
-X-Gm-Message-State: APzg51CUKCZP5G9PEg6ULQZuJcIW8J039UqNAzl1dFt0f0di1nY7xnZK
-        u/5s1Ngd0615LUZWyDjiVdQwJzZQDQo=
-X-Google-Smtp-Source: ANB0Vda8R6xtlmpCuM54kpkOvzptkzdO3T3a97UAKC0Ie5FpsK5kXJlZ4Bz9/jsnZYdwj81YuVd1bg==
-X-Received: by 2002:adf:a708:: with SMTP id c8-v6mr2114606wrd.56.1535746219625;
-        Fri, 31 Aug 2018 13:10:19 -0700 (PDT)
+        bh=Yj7QjiRJ58NxQ/YSNwQeivo0IQ1l9Wx6mhlxw87sUcM=;
+        b=GDdCuJFKmDRHGHtC2vHlsOpl6xvRVX0EQSX2Mfl2wU/BL/AiSn5MDN2aMDhisiN7up
+         oQSsiKgfPM8bST8sHDq36FeLl8tCIQID41DedNrVEDYQFVyGF7IXWruysnFhwpzUhtWt
+         26cVoSPXQO1fVb0mQvk6bg47pojb3Kuy8SHFgpuwaq6TpPY+OO+jiAY4ZRhBy57vtKEe
+         4M9JUvwzJb0npVtNtkeU8NcG9KxbiPtp5SX8H5k4u//hrC86cIGjVJw8THzCfNfe0GjY
+         daSBXbu2tauIDxHnTkV4D7gpuhonl5vGkQ1/L5UfUx5GfD6K34jO2/nxcTOgSN91V1H5
+         ZmIQ==
+X-Gm-Message-State: APzg51AHJkngqEUHfzBqEl7IGrugf4ZtymKns5NLIfCMn2GMrRNV25Oy
+        WqoHcgBGOtn4U+S6hJi0v6Wp2lLY3ZQ=
+X-Google-Smtp-Source: ANB0VdYgWyJ2xPD9ME/0UA+BHgn/LQT3zb33IqytaREYG70QN0T6QEWyKR4DmbRvwISAVzbax5CNLg==
+X-Received: by 2002:adf:ce90:: with SMTP id r16-v6mr11611343wrn.112.1535746220892;
+        Fri, 31 Aug 2018 13:10:20 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.18
+        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 13:10:18 -0700 (PDT)
+        Fri, 31 Aug 2018 13:10:20 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Wink Saville <wink@saville.com>,
         Marc Branchaud <marcnarc@xiplink.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 1/9] fetch: change "branch" to "reference" in --force -h output
-Date:   Fri, 31 Aug 2018 20:09:56 +0000
-Message-Id: <20180831201004.12087-2-avarab@gmail.com>
+Subject: [PATCH v5 2/9] push tests: make use of unused $1 in test description
+Date:   Fri, 31 Aug 2018 20:09:57 +0000
+Message-Id: <20180831201004.12087-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180830201244.25759-1-avarab@gmail.com>
 References: <20180830201244.25759-1-avarab@gmail.com>
@@ -77,32 +77,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The -h output has been referring to the --force command as forcing the
-overwriting of local branches, but since "fetch" more generally
-fetches all sorts of references in all refs/ namespaces, let's talk
-about forcing the update of a a "reference" instead.
-
-This wording was initially introduced in 8320199873 ("Rewrite
-builtin-fetch option parsing to use parse_options().", 2007-12-04).
+Fix up a logic error in 380efb65df ("push tests: assert re-pushing
+annotated tags", 2018-07-31), where the $tag_type_description variable
+was assigned to but never used, unlike in the subsequently added
+companion test for fetches in 2d216a7ef6 ("fetch tests: add a test for
+clobbering tag behavior", 2018-04-29).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/fetch.c | 2 +-
+ t/t5516-fetch-push.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 61bec5d213..b0706b3803 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -114,7 +114,7 @@ static struct option builtin_fetch_options[] = {
- 		 N_("append to .git/FETCH_HEAD instead of overwriting")),
- 	OPT_STRING(0, "upload-pack", &upload_pack, N_("path"),
- 		   N_("path to upload pack on remote end")),
--	OPT__FORCE(&force, N_("force overwrite of local branch"), 0),
-+	OPT__FORCE(&force, N_("force overwrite of local reference"), 0),
- 	OPT_BOOL('m', "multiple", &multiple,
- 		 N_("fetch from multiple remotes")),
- 	OPT_SET_INT('t', "tags", &tags,
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 539c25aada..62d5059f92 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -969,7 +969,7 @@ test_force_push_tag () {
+ 	tag_type_description=$1
+ 	tag_args=$2
+ 
+-	test_expect_success 'force pushing required to update lightweight tag' "
++	test_expect_success 'force pushing required to update $tag_type_description' "
+ 		mk_test testrepo heads/master &&
+ 		mk_child testrepo child1 &&
+ 		mk_child testrepo child2 &&
 -- 
 2.19.0.rc1.350.ge57e33dbd1
 
