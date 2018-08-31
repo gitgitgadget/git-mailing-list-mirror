@@ -2,100 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81D471F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 17:00:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F34A81F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 17:19:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728006AbeHaVIm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 17:08:42 -0400
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:35375 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727433AbeHaVIm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 17:08:42 -0400
-Received: by mail-ua1-f68.google.com with SMTP id m26-v6so8690081uap.2
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 10:00:17 -0700 (PDT)
+        id S1727599AbeHaV15 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 17:27:57 -0400
+Received: from mail-qt0-f172.google.com ([209.85.216.172]:35599 "EHLO
+        mail-qt0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726915AbeHaV15 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 17:27:57 -0400
+Received: by mail-qt0-f172.google.com with SMTP id j7-v6so15372024qtp.2
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 10:19:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=1/yBz/O3u/ypx+k8SKFL1jp8fIF3jUIyfFiSTRmU7W0=;
-        b=TjKB5k+vAw3RpbhsUVBqvqv9CViKFg+J6FDPw4mJN25bSU5aimnlzyrI4p/v6gfmhg
-         JATvIdPTJ2B9QW+bI+UVvI2/vaMhmgxsySKcHPxVPM6641vYI4Epj3mZWVSoaRWiZzap
-         0pkBTpYEzfQ2JI+VXVn4R6Lk1PFoUKF/i2WDBK+bBnYGLhVsxWulU51nclxiQ8OC2eC9
-         2BjkeD4KVBwORzYPc6NBPaheLFLnPLCD1Tx8al5phMgN83WHdlbJJlLDBFA38SElWQdP
-         vimlGjakfJllnaCVqG0PaC+aH1k6IkPbK6HIjdZpR3gTY0wkbC9pwceNia8DI0r94MgC
-         DBDQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=s88k/2GKvHfogM+XtBQ06SV3QZPZcZ9i/EdpuJCE8vM=;
+        b=dPqHJCrNWnLvL/PgDuna4RxNoRRba1Mfmn9Yde8F3zkuhviGo+SQInC1HV8Uyis1lB
+         3oH8wOM1h0KK/TTEq4CoTOhX/0BFWHFBAvXqD8sjQaQ10lvCB78ztMiCHu6XDGA82GJ3
+         37WQdVWnECRQoB+FqnnJJQWOkqmlIvr9IfktdrfTUVTQL5yLUzP2dvYnSky08C7iusdL
+         hVvDYhVERKa1R4AMrPwrWKbxe4wOpk4HwA9c7e614oNcimx4hzSsNSmBshOA4Fb2iCT3
+         5y/6xAGDBjgsLuubWt1FrdlmKrLSJvI8TQTjCicZ6bke+d80DHZ/wVLPy/8nnTE0OeEN
+         J4IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=1/yBz/O3u/ypx+k8SKFL1jp8fIF3jUIyfFiSTRmU7W0=;
-        b=FBhdeOGkLqS9UVh98A7LEIu6fAPLRDUwOI0DvgPWjbq9fbAM5nuWmWqHXc/uuxyHY8
-         cSgVeT7AhlT/micHhQwS/T/MmUj6Jr5g3b+ufYHklWcnLjo3hWJ4SB9E7VuZ+y1TcBPg
-         AcMRCKkVW8UJDcRYtHI3q48kbMNrjzIHqswVNqYKrYPcCisTc3xfWT+gx9KrQD/LrPgs
-         1ahy7/YVlezcF9W5ODIyZz8jhgDaIgkc81EHIx1PZyRGfmy4xh/SKu33CprZa8fsQIdf
-         IzVrCCUjMEz19MxtwReRNRo/AquR7ZIlXcVCMryoOMkZ3WbWHq6t/luntzmUp2ry0yFZ
-         4O3g==
-X-Gm-Message-State: APzg51DVeZOv13Cr0j8oqPAAjroPvfSivR3iwTtswkuUTfYode1b54Wo
-        Wmt/dtKj1H0ZBssY+t27rWY/NjTD
-X-Google-Smtp-Source: ANB0VdZbSFJted+rJn2YpuJqv3ULeUv+AUUY+slUt/NfnBfhXiI8j8+p/HT8uxzvoEQLriP3y2dbFg==
-X-Received: by 2002:ab0:59ae:: with SMTP id g43-v6mr10414911uad.182.1535734816735;
-        Fri, 31 Aug 2018 10:00:16 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id d203-v6sm1958174vke.39.2018.08.31.10.00.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 31 Aug 2018 10:00:16 -0700 (PDT)
-Date:   Fri, 31 Aug 2018 10:00:13 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] config.mak.uname: resolve FreeBSD iconv-related
- compilation warning
-Message-ID: <20180831170013.GA41433@aiede.svl.corp.google.com>
-References: <20180805075736.GF44140@aiede.svl.corp.google.com>
- <20180831083342.34836-1-sunshine@sunshineco.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=s88k/2GKvHfogM+XtBQ06SV3QZPZcZ9i/EdpuJCE8vM=;
+        b=Lwt+G8ahAiKKGywh5yDmUhYLWURFgHwj8VeOLXaypZTO/DGW6UdyXMWys0Q8WT2FWz
+         ihwMBlLZZNfh722lnl34lvUZwRvBOjcycL1Y6e+3GeUS5BPhkucARHjqVbWMXFgLtCRa
+         dpv1IUt+qDjepnGzRzDWj+bGaWgl3rdaw22V7ozUgtC7Oyx0LVnozMmSoyvmyEInGqzT
+         +Le6SNfrDMulcVvswbs2Ztd2z/GXPLW1W+/lBrrh0wBrJgzyHL12JAGO/jq6qXhgsE/C
+         hvvF8QkRzQtZpGGJlu4vHY/JFLWNnIB373yyUtPSuDlH1qc50k0Qbs1xiuPudi5SzMyE
+         S3bg==
+X-Gm-Message-State: APzg51APB5zBzER+RPGBDF2OYnrbfaWdoAT86rfqnvyyDt+hST5mnDYe
+        5qveL8DiJ0q44w5lEkBJd4A=
+X-Google-Smtp-Source: ANB0VdbOU/MDLB0ykz96dtfrbolt6h48cSTgF+C2VF8UEq36TFIHOogrgZQkhxN2Am6pJv/zrhjLXQ==
+X-Received: by 2002:a0c:882d:: with SMTP id 42-v6mr16114369qvl.38.1535735968227;
+        Fri, 31 Aug 2018 10:19:28 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id u72-v6sm6600653qki.89.2018.08.31.10.19.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 31 Aug 2018 10:19:27 -0700 (PDT)
+Subject: Re: [PATCH 0/8] WIP: trace2: a new trace facility
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
+References: <pull.29.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <2ba9d81a-5578-a81c-a7d9-179864cb4277@gmail.com>
+Date:   Fri, 31 Aug 2018 13:19:26 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20180831083342.34836-1-sunshine@sunshineco.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <pull.29.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine wrote:
+On 8/31/2018 12:49 PM, Jeff Hostetler via GitGitGadget wrote:
+> This patch series contains a new trace2 facility that hopefully addresses
+> the recent trace- and structured-logging-related discussions. The intent is
+> to eventually replace the existing trace_ routines (or to route them to the
+> new trace2_ routines) as time permits.
 
-> From: Jonathan Nieder <jrnieder@gmail.com>
->
-> OLD_ICONV has long been needed by FreeBSD so config.mak.uname defines
-> it unconditionally. However, recent versions do not need it, and its
-> presence results in compilation warnings. Resolve this issue by defining
-> OLD_ICONV only for older FreeBSD versions.
->
-> Specifically, revision r281550[1], which is part of FreeBSD 11, removed
-> the need for OLD_ICONV, and r282275[2] back-ported that change to 10.2.
-> Versions prior to 10.2 do need it.
->
-> [1] https://github.com/freebsd/freebsd/commit/b0813ee288f64f677a2cebf7815754b027a8215b
-> [2] https://github.com/freebsd/freebsd/commit/b709ec868adb5170d09bc5a66b18d0e0d5987ab6
->
-> [es: commit message; tweak version check to distinguish 10.x versions]
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  config.mak.uname | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
+I haven't been part of the recent discussions on these logging efforts, 
+but I wanted to mention that I'm excited about the potential here. I 
+want to use this new tracing model to trace how many commits are walked 
+by graph algorithms like paint_down_to_common().
 
-I think it makes sense for you to take credit for this one.  You
-noticed the original problem, tested on FreeBSD, wrote the
-explanation, and figured out the firstword hackery.  All I did was to
-say "somebody should fix this" and run "git log -S" a few times.  In
-any event,
+I'm playing with some efforts here, and found one issue when the API is 
+used incorrectly (I'll respond to the patch with the issue).
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Thanks,
+
+-Stolee
+
