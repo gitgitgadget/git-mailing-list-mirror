@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7DD1F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E61BD1F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 20:10:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727535AbeIAAT0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 20:19:26 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45884 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727203AbeIAATZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 20:19:25 -0400
-Received: by mail-wr1-f68.google.com with SMTP id 20-v6so12234952wrb.12
-        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:21 -0700 (PDT)
+        id S1727551AbeIAAT1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 20:19:27 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41738 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727502AbeIAAT1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 20:19:27 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z96-v6so12249521wrb.8
+        for <git@vger.kernel.org>; Fri, 31 Aug 2018 13:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Yj7QjiRJ58NxQ/YSNwQeivo0IQ1l9Wx6mhlxw87sUcM=;
-        b=k2LV3g9Eqn8jGKLJxe3RaAChMwb7ZpnaxPCb48Uj5ERWwfuDOTng+UEZ9+vsv4NNY5
-         vGTJBFP1DnZBe3q3XG8+w8bWjzMtITMsFJqqZ3OKuoNQfCLlM45plTyGBmD/qrfBw929
-         teJo34Qyhcn4gdrAHw84qPcZfuZr5DgZ3Eijh88Y+AlwzRUAHO/0wqxtOB5bbPQHdv6G
-         s5vHD0OuPMekBba06GbaN176YRc9NguTSwfSNj2Ibi/vqlHupv7Sgv+TV9Z30y7cbxnu
-         EV3z+BnrHl3jJrLqS0BUyB5Edn8QJaFZh7nMRm4ah8MS3TkkCahk9Wd4RQEyddLzt0Io
-         isOA==
+        bh=qX1VWsBl85J2GPk5z/LxnHwdtss2j2nQbDcbyN4MsoI=;
+        b=XsdwnhGIkQmPSt+WRcx+d8hd685DU7F658dHID+G5phHS/9O7aR0+mbqBRB2JtJ4wW
+         VwZHIACXv8e6B1neSmjSTpftiuYlSpdKgKW8CT36dNURtuGdiizNdKZNoBop9DdNhdd0
+         U3C+2k9+zcsFtZLk2okpsIrfp16mRvmcB/JPrwZlMtY5/LwIpRrfwi6apNZNZL3usBxy
+         Ryam8JtDavhxmUfR9N4RZvKD5kD+Rz1DuM4bRKn6GFMl+cQqKsCCqmq/rIc21Q/Bnz3c
+         mwnUtoRtZwe9tkAZ+ZA5q3cKfr4a+tTghni07hO9iqihAqNOOPlJpMKO9Y3ogNEnlL2R
+         A/Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Yj7QjiRJ58NxQ/YSNwQeivo0IQ1l9Wx6mhlxw87sUcM=;
-        b=GDdCuJFKmDRHGHtC2vHlsOpl6xvRVX0EQSX2Mfl2wU/BL/AiSn5MDN2aMDhisiN7up
-         oQSsiKgfPM8bST8sHDq36FeLl8tCIQID41DedNrVEDYQFVyGF7IXWruysnFhwpzUhtWt
-         26cVoSPXQO1fVb0mQvk6bg47pojb3Kuy8SHFgpuwaq6TpPY+OO+jiAY4ZRhBy57vtKEe
-         4M9JUvwzJb0npVtNtkeU8NcG9KxbiPtp5SX8H5k4u//hrC86cIGjVJw8THzCfNfe0GjY
-         daSBXbu2tauIDxHnTkV4D7gpuhonl5vGkQ1/L5UfUx5GfD6K34jO2/nxcTOgSN91V1H5
-         ZmIQ==
-X-Gm-Message-State: APzg51AHJkngqEUHfzBqEl7IGrugf4ZtymKns5NLIfCMn2GMrRNV25Oy
-        WqoHcgBGOtn4U+S6hJi0v6Wp2lLY3ZQ=
-X-Google-Smtp-Source: ANB0VdYgWyJ2xPD9ME/0UA+BHgn/LQT3zb33IqytaREYG70QN0T6QEWyKR4DmbRvwISAVzbax5CNLg==
-X-Received: by 2002:adf:ce90:: with SMTP id r16-v6mr11611343wrn.112.1535746220892;
-        Fri, 31 Aug 2018 13:10:20 -0700 (PDT)
+        bh=qX1VWsBl85J2GPk5z/LxnHwdtss2j2nQbDcbyN4MsoI=;
+        b=OyrpYvfugIr1yWCRLI9MOZ9T4CTE/pDFNfEcV859WbChyVokrYweCVnVML2S+G0pua
+         gn8lcYAKKHFEK/voGd5qJEE0QGHlXkFmrYrbUY2ZuVMIV1FzwIh1Yvf8i2SIkosPsPIP
+         PofEjpt/XOwdqFxrkYd+b9U/zyN6RBMOhQ4oiDOt4aP2sSOe4Ac7AJq3E9q2onPv+8JL
+         tS+RmbQwjLPSkcdRmvAQqPCk+k9Xifnu+AukRAF0d6r72Sls7j0w2cimCXmVyVCFpeAw
+         td4rAfcIIqF/BQSL5qkUIhDBy10tFECbT7uVfF99A/YRk4QtolLWDBwslcrcfKz7JGR8
+         MmKQ==
+X-Gm-Message-State: APzg51Dr3llnN4lSTE+wDuIOnW2m0dcHGFOrWP0uyoXPAIkJ6EbHcb63
+        Ov+VjWUWOH/JGRqKjQzeewPIDKEhndM=
+X-Google-Smtp-Source: ANB0VdaBI5YS9u299p2KA26McXAa49fX/jLvoygj9D2D4BI/PStQ0mBBDz3gMJsC7wEMNdwWCm+vxQ==
+X-Received: by 2002:a5d:4e4c:: with SMTP id r12-v6mr11717353wrt.27.1535746222151;
+        Fri, 31 Aug 2018 13:10:22 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.19
+        by smtp.gmail.com with ESMTPSA id l16-v6sm4486753wmc.38.2018.08.31.13.10.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 31 Aug 2018 13:10:20 -0700 (PDT)
+        Fri, 31 Aug 2018 13:10:21 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -63,9 +63,9 @@ Cc:     Wink Saville <wink@saville.com>,
         Marc Branchaud <marcnarc@xiplink.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 2/9] push tests: make use of unused $1 in test description
-Date:   Fri, 31 Aug 2018 20:09:57 +0000
-Message-Id: <20180831201004.12087-3-avarab@gmail.com>
+Subject: [PATCH v5 3/9] push tests: use spaces in interpolated string
+Date:   Fri, 31 Aug 2018 20:09:58 +0000
+Message-Id: <20180831201004.12087-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180830201244.25759-1-avarab@gmail.com>
 References: <20180830201244.25759-1-avarab@gmail.com>
@@ -77,11 +77,10 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix up a logic error in 380efb65df ("push tests: assert re-pushing
-annotated tags", 2018-07-31), where the $tag_type_description variable
-was assigned to but never used, unlike in the subsequently added
-companion test for fetches in 2d216a7ef6 ("fetch tests: add a test for
-clobbering tag behavior", 2018-04-29).
+The quoted -m'msg' option would mean the same as -mmsg when passed
+through the test_force_push_tag helper. Let's instead use a string
+with spaces in it, to have a working example in case we need to pass
+other whitespace-delimited arguments to git-tag.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
@@ -89,18 +88,18 @@ Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 539c25aada..62d5059f92 100755
+index 62d5059f92..8b67f08265 100755
 --- a/t/t5516-fetch-push.sh
 +++ b/t/t5516-fetch-push.sh
-@@ -969,7 +969,7 @@ test_force_push_tag () {
- 	tag_type_description=$1
- 	tag_args=$2
+@@ -1009,7 +1009,7 @@ test_force_push_tag () {
+ }
  
--	test_expect_success 'force pushing required to update lightweight tag' "
-+	test_expect_success 'force pushing required to update $tag_type_description' "
- 		mk_test testrepo heads/master &&
- 		mk_child testrepo child1 &&
- 		mk_child testrepo child2 &&
+ test_force_push_tag "lightweight tag" "-f"
+-test_force_push_tag "annotated tag" "-f -a -m'msg'"
++test_force_push_tag "annotated tag" "-f -a -m'tag message'"
+ 
+ test_expect_success 'push --porcelain' '
+ 	mk_empty testrepo &&
 -- 
 2.19.0.rc1.350.ge57e33dbd1
 
