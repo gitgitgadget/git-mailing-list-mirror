@@ -2,121 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEAB11F404
-	for <e@80x24.org>; Fri, 31 Aug 2018 05:39:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EF9101F404
+	for <e@80x24.org>; Fri, 31 Aug 2018 06:33:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727234AbeHaJpY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 31 Aug 2018 05:45:24 -0400
-Received: from fed1rmfepo203.cox.net ([68.230.241.148]:45327 "EHLO
-        fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727178AbeHaJpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 31 Aug 2018 05:45:23 -0400
-Received: from fed1rmimpo110.cox.net ([68.230.241.159])
-          by fed1rmfepo203.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20180831053935.PJYM4163.fed1rmfepo203.cox.net@fed1rmimpo110.cox.net>
-          for <git@vger.kernel.org>; Fri, 31 Aug 2018 01:39:35 -0400
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo110.cox.net with cox
-        id Vhfa1y00S59yGBo01hfaf7; Fri, 31 Aug 2018 01:39:35 -0400
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090206.5B88D497.0021,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.2 cv=Zc1tDodA c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=x7bEGLp0ZPQA:10 a=dapMudl6Dx4A:10 a=WDhBSedXqNQA:10 a=kviXuzpPAAAA:8
- a=Wjvu7L9REsY3TxSKvO0A:9 a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.smith.home (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 844F129A0124;
-        Thu, 30 Aug 2018 22:39:34 -0700 (MST)
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        "Stephen P. Smith" <ischis2@cox.net>
-Subject: [PATCH 3/3] wt-status.c: Set the commitable flag in the collect phase.
-Date:   Thu, 30 Aug 2018 22:39:21 -0700
-Message-Id: <20180831053921.8083-4-ischis2@cox.net>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180831053921.8083-1-ischis2@cox.net>
-References: <20180831053921.8083-1-ischis2@cox.net>
+        id S1727316AbeHaKjq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 31 Aug 2018 06:39:46 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:34421 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727177AbeHaKjp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 31 Aug 2018 06:39:45 -0400
+Received: by mail-it0-f66.google.com with SMTP id x79-v6so4142203ita.1
+        for <git@vger.kernel.org>; Thu, 30 Aug 2018 23:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=62cYG3d9HQhvtnjzXhroafZn/f4qFxMgSUt3uWlSsf0=;
+        b=YeFdnuFhFLuXWygHCr0I8Snb1BKalV/W0KB0B1GWNcrk2cbXz3I4H6GE9xOnqZjoOC
+         oKvhPJu/ul1TYJ+k+VYm5xx6f86KU5ZVXSPKCkHXLod/tyJkra74lNUZ8BaRHhda1tCJ
+         C74mCp7cjckkJs5oOC+g6DawOKyYyotTdv4zpRLp1HJQr+fqSmQgevMWIkvhlsqjk+g4
+         IyWCrzd2+O0zC+WFdV60JSDqDEvVaXtj54mSIocLe4Tro7UMQxlJmHAxZxed5oLzWY7+
+         JVYWuw8rLmIQSxJIvD38zz8sEMobrL1EPsElQP7h7LsR8tMKsgxrARMfmJqabMeOSMrs
+         bQOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=62cYG3d9HQhvtnjzXhroafZn/f4qFxMgSUt3uWlSsf0=;
+        b=A5LJzgBGXILdsFjWe4wBCHQS+MBdshauP7TgOi3ndD0BkA3smgcoMIbT7rE4zo9Vpz
+         LtP4J6E6oJv856MUM9Rw1cXXD3WI1JDyhE/yxDHr2hth7WlnCpVVhybdQ6lNk/kxtdro
+         4Bhk1qWChM+xIKvcsVCvBLicb1h0cq+cqVvEnPwx+YLK97RVtcwsnjXUVlWTm3YMBtA/
+         HXbvBofAXDN75aD8sPY2ye1kw4K5twPcZ+MucDJpOxYJSETpWKq0kj8zt0gDxEz61S+j
+         kn6ENX/plHoLCcXR6D+Q9sU6pNuNEXQpatDFHlD4IO/UMZCndSg/uBHG5fhzopLy7mBD
+         Pddg==
+X-Gm-Message-State: APzg51D4PWa0F9DGNrDW1Vp/Ku71nSpfujCjgFD0buCOhmSrLRWqkBno
+        geWgtoU08eCKsZYJUvXtxfkq/T0V
+X-Google-Smtp-Source: ANB0VdaAZhZWxb6+ux9/VY8LxBghOkrGJosFh6LL/aQx8Eab4javfhmsz3RN8yCzoF7ItEY7APbHlA==
+X-Received: by 2002:a02:6f1a:: with SMTP id x26-v6mr11748480jab.131.1535697230348;
+        Thu, 30 Aug 2018 23:33:50 -0700 (PDT)
+Received: from localhost.localdomain (user-12l2dpj.cable.mindspring.com. [69.81.55.51])
+        by smtp.gmail.com with ESMTPSA id k18-v6sm3734531iom.73.2018.08.30.23.33.49
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Thu, 30 Aug 2018 23:33:49 -0700 (PDT)
+From:   Eric Sunshine <sunshine@sunshineco.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH 0/3] doc-diff: add "clean" mode & fix portability problem
+Date:   Fri, 31 Aug 2018 02:33:15 -0400
+Message-Id: <20180831063318.33373-1-sunshine@sunshineco.com>
+X-Mailer: git-send-email 2.19.0.rc1.352.gb1634b371d
+In-Reply-To: <20180830195546.GA22407@sigill.intra.peff.net>
+References: <20180830195546.GA22407@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In an update to fix a bug with "commit --dry-run" it was found that
-the commitable flag was broken.  The update was, at the time,
-accepted as it was better than the previous version.
+This series replaces Peff's solo patch[1] which updates "make clean" to
+remove doc-diff's temporary directory. Rather than imbuing the Makefile
+with knowledge specific to doc-diff's internals, this series adds a
+"clean" mode to doc-diff which removes its temporary worktree and
+generated files, and has "make clean" invoke that instead. It also fixes
+a portability problem which prevented doc-diff from working on MacOS and
+FreeBSD.
 
-Since the set of the flag had been done in wt_longstatus_print_updated,
-set the flag in wt_status_collect_updated_cb.
+[1]: https://public-inbox.org/git/20180830195546.GA22407@sigill.intra.peff.net/
 
-Set the commitable flag in wt_status_collect_changes_initial to keep
-from introducing a rebase regression.
+Eric Sunshine (3):
+  doc-diff: fix non-portable 'man' invocation
+  doc-diff: add --clean mode to remove temporary working gunk
+  doc/Makefile: drop doc-diff worktree and temporary files on "make
+    clean"
 
-Leave the setting of the commitable flag in show_merge_in_progress. If
-a check for merged commits is moved to the collect phase then other
---dry-run tests fail.
+ Documentation/Makefile |  1 +
+ Documentation/doc-diff | 21 +++++++++++++++++----
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
- wt-status.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index 5ffab6101..d50798425 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -540,10 +540,12 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			/* Leave {mode,oid}_head zero for an add. */
- 			d->mode_index = p->two->mode;
- 			oidcpy(&d->oid_index, &p->two->oid);
-+			s->commitable = 1;
- 			break;
- 		case DIFF_STATUS_DELETED:
- 			d->mode_head = p->one->mode;
- 			oidcpy(&d->oid_head, &p->one->oid);
-+			s->commitable = 1;
- 			/* Leave {mode,oid}_index zero for a delete. */
- 			break;
- 
-@@ -561,6 +563,7 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			d->mode_index = p->two->mode;
- 			oidcpy(&d->oid_head, &p->one->oid);
- 			oidcpy(&d->oid_index, &p->two->oid);
-+			s->commitable = 1;
- 			break;
- 		case DIFF_STATUS_UNMERGED:
- 			d->stagemask = unmerged_mask(p->two->path);
-@@ -665,11 +668,13 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			 * code will output the stage values directly and not use the
- 			 * values in these fields.
- 			 */
-+			s->commitable = 1;
- 		} else {
- 			d->index_status = DIFF_STATUS_ADDED;
- 			/* Leave {mode,oid}_head zero for adds. */
- 			d->mode_index = ce->ce_mode;
- 			oidcpy(&d->oid_index, &ce->oid);
-+			s->commitable = 1;
- 		}
- 	}
- }
-@@ -773,7 +778,6 @@ static void wt_longstatus_print_updated(struct wt_status *s)
- 			continue;
- 		if (!shown_header) {
- 			wt_longstatus_print_cached_header(s);
--			s->commitable = 1;
- 			shown_header = 1;
- 		}
- 		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
 -- 
-2.18.0
+2.19.0.rc1.352.gb1634b371d
 
