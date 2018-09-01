@@ -2,118 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5C451F404
-	for <e@80x24.org>; Sat,  1 Sep 2018 15:23:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 359A81F404
+	for <e@80x24.org>; Sat,  1 Sep 2018 15:33:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727057AbeIATgC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Sep 2018 15:36:02 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:43489 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726976AbeIATgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Sep 2018 15:36:02 -0400
-Received: by mail-ed1-f67.google.com with SMTP id z27-v6so11066527edb.10
-        for <git@vger.kernel.org>; Sat, 01 Sep 2018 08:23:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=7SElEcgDwSt90HqV0iAi/1lXFf8g1w9IaqSLGmYHcus=;
-        b=NLb42uONINO6cosECUS6ToYWAyKpjv1OOA0IeI+Z+H4v5/58BVXZwXoENfZXUEMfjO
-         e3RybdeezkMv4awGqdNHmnszkbcgtOVzJqNzXyKsF5w1dlRIAZyzsyW6rTjga9Uchn5B
-         gk3PKJ4qZsXPzRm0ygG77Zmt0gWN4wPb4p4gpExAeRxDMtlYueScef/2S12tX94hWzrU
-         6YvhKgygUck1ClBkSItzizl6Qy/UcJ5oIIb1oXfBIBnfFv+qcCsbo7sCkmfzqTnObsLQ
-         yZnBeZTwoa8heNwx0i6ayVbW8HyenXNd1vyfdQWVvMlKvTdnEdtA1cIEOW2n2EMELf0M
-         8YHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=7SElEcgDwSt90HqV0iAi/1lXFf8g1w9IaqSLGmYHcus=;
-        b=k2cm3LjJpFH0Vh1RSzzGfFBeaaZi1A2czERCjU/HaEljK1/oTfgU5MsKkQy7MZIz3U
-         CAvaARNtqorBdZDLmLevs7rtfk8oeXZNoIOfgKx2Tt6jHtJgkvSYJXG+rfSjkY4wp/hX
-         Os4b7pJCYqYs/W+4FbM2qPZkRGSJcAoqzMbvOqOVoTDu+NPoUPjlBwljvvwQQCx/TKbm
-         VmN0C5/W2di1a9fxDxMQ058y5L/4qpIH1t3m725iQE7vtEzHDr0u0bafMb6F6os+8yhQ
-         GmOMHbUYcvPBu1s6oS+o4W9ZEcvR/zecVZwM4fJjnH/PVHV5FJoIOlnYuZUf+tItFR2m
-         67jA==
-X-Gm-Message-State: APzg51AOT/DrhRALAw35rClPSxZ4ZVfs5/bTjhke7ad71zGcA6Srz6j/
-        p0j7V3zEfi6GXczhvwhvDaRWep8HRCWOqxQObFlb0w==
-X-Google-Smtp-Source: ANB0VdYLIfpQsXhf7WG6fV6S3MVawLdDQrXOi/1y+7VQSVO4atGAPxN38hLp0GDCCLEeBBzFu3be0RqxM6czVCpDO/I=
-X-Received: by 2002:aa7:ca51:: with SMTP id j17-v6mr22539365edt.45.1535815419700;
- Sat, 01 Sep 2018 08:23:39 -0700 (PDT)
+        id S1727360AbeIATpl (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Sep 2018 15:45:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:41332 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726621AbeIATpl (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 1 Sep 2018 15:45:41 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5434E60745;
+        Sat,  1 Sep 2018 15:33:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1535815993;
+        bh=+I0BthhjgUJWEGQDRxYJ0Gd7W6pnTg5xvI2gCLrTCNk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Ycou+rBQrgE3W9hUQsDO7REkLzs4Pbe+xOLpRn4gSbQLHd7LeRDyxWAsmSP6IgP25
+         uwhwSLGAjig6X2AUQYcfkjK+gsZ0tXAFoeYaWo6KKWIe0U8be5WrJ0RcXz5Oh3/Doq
+         niMImcyXYb1ch0C9ihhScNWv1QUx7sXjsjTF9W1B8t31ybYF1ItnLpqHhSK7aAsoFn
+         Y5ts5d4arFtKCzDVzoifiTDtWizhDhhlWaqW8RARsh3nl+VrqHc+L8YMnYznSw+zT8
+         +xGayRu7QYX984eouuPJDbCEbwj40qiB3sL3aRiEhhOuixVxqxvx1nb9uhaKjmfzRX
+         fzw2yt4CFcZkDUrkuaVBIBXqHCITJUHSb5fyD6VUfsP/vbBSfNiiX8b9pYAGyXEIzS
+         vD35VuCoRmBq/Jpc3YB0JqysMLc3DClOHyzJRihqDPKKDhqu8w3p0sWyCBwk2DFj2Q
+         1qvlPfl822L8vd2YLCJ0TUGJpxrzI4PH3KgYpy/qErhMD38FQEG
+Date:   Sat, 1 Sep 2018 15:33:09 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3 05/11] t0027: make hash size independent
+Message-ID: <20180901153304.GM432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+References: <20180829005642.980617-1-sandals@crustytoothpaste.net>
+ <20180829005642.980617-6-sandals@crustytoothpaste.net>
+ <20180831182141.GA9399@tor.lan>
+ <CAPig+cSSs9a_RSnc6==zb70Swh1L1Ok4y-DGc8YawPyea0Gm9Q@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAE6=WB_4_PhjfQpubFcYkNKejfDr22s-y0nPQKw5Yd4GVaN4Yw@mail.gmail.com>
- <CAGZ79kZ1BVTLnNYSs+NjEO1T1-PySSdZzVU-0ZfivjT_pfvviQ@mail.gmail.com>
- <CAE6=WB_t7zG3jtELiMfggqxjvD4jJyJ02pNPmV3fey=3nSejuA@mail.gmail.com>
- <20180830025457.GA665@sigill.intra.peff.net> <CAGZ79kZNVw4-q9KYAi9G3axb7-Ggpc2EAK8ZxAZoPEnZvEL-DQ@mail.gmail.com>
- <20180830192019.GB19685@sigill.intra.peff.net> <CAGZ79kYVLNM4fMwXAw9FbKFNJ1tTR7e04nBqKdnYPX3wYveUfg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1808312336270.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1808312336270.71@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Sat, 1 Sep 2018 08:23:26 -0700
-Message-ID: <CAGZ79kbi0Y+1j836Lc-Kp6xd3ihabhODLLMj9rrZH_Mxs3PB8w@mail.gmail.com>
-Subject: Re: Possible bug: identical lines added/removed in git diff
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, gthepiper@gmail.com,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="iUV/lbBrmPtUT9dM"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cSSs9a_RSnc6==zb70Swh1L1Ok4y-DGc8YawPyea0Gm9Q@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Aug 31, 2018 at 2:39 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
-> On Thu, 30 Aug 2018, Stefan Beller wrote:
->
-> > On Thu, Aug 30, 2018 at 12:20 PM Jeff King <peff@peff.net> wrote:
-> > >
-> > > [...] Myers does not promise to find the absolute minimal diff. [...]
+
+--iUV/lbBrmPtUT9dM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Aug 31, 2018 at 02:40:12PM -0400, Eric Sunshine wrote:
+> On Fri, Aug 31, 2018 at 2:21 PM Torsten B=C3=B6gershausen <tboegi@web.de>=
+ wrote:
+> > Out of interest: why do we use a "tmp" file here?
+> > Would it make more sense  to chain the 'tr' with 'sed' and skip the
+> > tmp file ?
 > >
-> > The `Myers` (our default) diff algorithm is really the Myers algorithm +
-> > a heuristic that cuts off the long tail when it is very costly to compute
-> > the minimal diff.
->
-> IIRC Myers
+> >         tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
+> >         sed -e "s/0000*/$ZERO_OID/"  >"$exp" &&
+> >
+> > Yes, we will loose the exit status of 'tr', I think.
+> > How important is the exit status ?
+>=20
+> As far as I understand, it is only Git commands for which we worry
+> about losing the exit status upstream in pipes. System utilities, on
+> the other hand, are presumed to be bug-free, thus we don't mind having
+> them upstream.
 
-(the original, which we spell `minimal`)
+If that's the case, that's fine, and I can make that change.  I know
+that we do often want to preserve the exit status of a system command,
+but presumably the tr and sed here would exit 0, so I'm happy to assume
+that for the test.
 
-> promises minimal diffs only for -U0. As soon as you add
-> context, Myers might in fact end up with a suboptimal diff, even without
-> that heuristic.
+> A different question is why does this need to run both 'tr' and 'sed'
+> when 'sed itself could do the entire job since 'sed' has 'tr'
+> functionality built in (see sed's "y" command)?
 
-ah, the last 4 words made it clear.
+It doesn't.  I went for a minimal change, but I could switch to using
+both s/// and y/// in sed instead.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-I have debated the cost function for diffs some time ago and
-came to the conclusion that having one line added/removed costing
-a flat price of 1 in the search of the 'lowest cost diff' is pretty good
-as it does an ok job in the broad world, it is not 'overfitting' assumptions
-on a problem.
+--iUV/lbBrmPtUT9dM
+Content-Type: application/pgp-signature; name="signature.asc"
 
-For example in some patches I pay more attention to the lines
-removed than to the lines added, or vice versa, so assigning
-different costs to added/removed lines would make sense.
-(It depend on the type of patch, but that cannot be deduced
-at the low level of diff machinery)
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.9 (GNU/Linux)
 
-Starting a new hunk (i.e. add cost to -U<n> for n >0) could be
-costly. In fact we have an after-Myers optimization in the xdiff
-code that checks if hunks can be coalesced together, but
-if we could have that cost at diff computation time, this might
-make for better diffs already.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluKsTAACgkQv1NdgR9S
+9ovt6xAApvN9l3wP90KlePZq1EsOY8P91WYHoQskq5KdyuIm4ifStDp9qfhDO7d/
+8FlP4tRQU+x5s4dB9glq+BakEI3bA6yVuYRZkCOOefXmfIfxnusC9AWO1pkdpWq1
+pSJdKScC+CZpPs0z0M7RGZkaXI8hrRv9jB8LRKs1weolt3tsFUcykX+RwBZ8AKpB
+WYYfxnYhFG5LWmRy2Hn/K7tH+NihMdn7lBVIFldQU86W0EiR80YFrxOwDltpri7q
+iUY5GPWfu75WbyfwcHhaawvsMH7RaxpEcE2ApJJWFNiqMulonuOnlqYRFI1JMlRo
+Xh+cMLfpleNb/5+oAo1Rk23bz/cb8tH0nQ9XMCitSjye8xkWlZybBQgrgtbNoIVZ
+8dibXbWYIV+WJR7jnqjzrxcb92GRH0fuRAjhEweNn0puLlf93D3tKUWnY8vXaQkA
+GA9Kf4bwNsaN+Ouu5voZxxPUM3WRzHS735aBMULERK5ittIgZEWMZHSa0aF/5wOw
+IBHsBgMTCIyf+Z3uHzRf/bOSsOnTQUStskbJIvR25S+Hr8HBGtirZSKY9aBqjiuD
+8ldTbfYHQ2aeoRkYXmD48TZKsk7Eqmc37auQ269vnZTKEVOuu7oSzQlC6z+N7/SL
+Rob0zy0B8I5htvfETVFwzDnFfnCdqAcsW0LkjIhChfVANXIxjms=
+=fuhD
+-----END PGP SIGNATURE-----
 
-Another example is number of changes between
-added/removed/context parts. If I have to review only
-one large added part and one large removed part, it may
-be more understandable than having interleaved adds/removes.
-(I think --patience goes in that direction, but does optimize for
-a different metric)
-
-Stefan
+--iUV/lbBrmPtUT9dM--
