@@ -2,180 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9DFE1F404
-	for <e@80x24.org>; Sat,  1 Sep 2018 20:29:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A05921F404
+	for <e@80x24.org>; Sat,  1 Sep 2018 21:06:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727059AbeIBAmg (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Sep 2018 20:42:36 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:32877 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726976AbeIBAmg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Sep 2018 20:42:36 -0400
-Received: by mail-ed1-f68.google.com with SMTP id d8-v6so3327603edv.0
-        for <git@vger.kernel.org>; Sat, 01 Sep 2018 13:29:27 -0700 (PDT)
+        id S1727014AbeIBBPP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Sep 2018 21:15:15 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41274 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726976AbeIBBPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Sep 2018 21:15:15 -0400
+Received: by mail-pf1-f194.google.com with SMTP id h79-v6so7009760pfk.8
+        for <git@vger.kernel.org>; Sat, 01 Sep 2018 14:02:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=dDGPnpx7gzslk8t1lxPYc14duexKsQRxOt78nBNllNU=;
-        b=czcuXrudAuTuJTEOJaoOaESPJ+z3wRXrrKuDKo59EmAPAx305uSg6OAa6ibYueHIze
-         FLGssoSMcgB4L59qmcR3sUZFMPN9EL5PrRozjT/qlqhPJ4H0KhZVCZizE4aB1/D1YMBq
-         +u7ctgSIPSL5GGSdb24O0OeUsYVa9AnUKIdLOIVt8S5kCY93CkiU0KZMRknf3diUuplR
-         ic8tZTuyiMTax6LLHwCmMB1q/jK5WzDH3ltSGgwTV39Vpv1f0Xvom5VFUUZdkGFOBi1i
-         7u6g+MdKv26dly+xiwZcxNB0eHve4PHouGh7cy+nIyWYqefd4z2yhHvG8ZdGDGr73hUG
-         O71Q==
+        h=message-id:subject:from:to:cc:in-reply-to:references:date
+         :mime-version:content-transfer-encoding;
+        bh=MZWN2/7fVp4JED77xWN8AlS5fzj5nTvKcVG3nDpRgX4=;
+        b=n1R5T/+B3lfXjxs0BdmlGY26SjjzQSB4a36oyV0RF3px3y91jeOqGf26mexLIcY149
+         /T20Lb0dMfv1OkjyK+a2egYbgx5qs4ZufPIGq+InUE7dN9zPhtoJusZDEvjKF7apgz6r
+         AVyJ7ZTG8p6HznKpHDEryjdIqdzsqSyOKT0GuinQj+uT/8UB1QKJpGEPTfYTcxozXcs0
+         KPsE/6gfVO5/O8Y5v8FD71stPGnuHn9MvTz5J8dWiZXAXlbayRf80rmGtFS4ToUHCpGr
+         Mu0SDAWFvKLQNfxIcfCjIccxTMI/ypK6OLMgP5pvM0XQIyh5Gg1bfk8kPpwo9vclrWY7
+         uPOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=dDGPnpx7gzslk8t1lxPYc14duexKsQRxOt78nBNllNU=;
-        b=jDextTYKuztlp59XE7LSwFggb5BYT5ryl/rW8/NtJJFbEI6+LYUathCmhHqrrlCN3u
-         nRmXCWQDbBJopE/51gbZn3CTT0GTyd+ub6qupLHBDvcPfvNZewvUotXfU0Es4kdwdrVl
-         d+ILENsI+anvX6bQ5SkEjCv2qED2mPjWuqQJf/jUVTXTBTNPf33ARKJq1ipGgemdRD+D
-         92hJxtFlwySfrHIxLJXtFeTda4WYdu95MJ5a9TX+fQtldkqnPaX15JkpYqRt6HhZrYJU
-         GpGnOBAYMD9GmAjCA/KjRpEuNrmbxszVBC2JTS/5A0TRTOHg62y56Z3SJme1EnKryzTQ
-         2BFw==
-X-Gm-Message-State: APzg51Dp/xfnt66cDsMs3E6ctBKKI0WpU1PjEhEGwENdHqtJq7CKCL3p
-        SRtIH2cHpdYW0peS5/hdY/c=
-X-Google-Smtp-Source: ANB0Vdbe2qMK8Xmklqeta0Jdt98nezZUTOqa68FYWImSqPel2Fo6fUuPDmUAwRovUry2bMDSfEEyLA==
-X-Received: by 2002:a50:a267:: with SMTP id 94-v6mr24394488edl.189.1535833767008;
-        Sat, 01 Sep 2018 13:29:27 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id r11-v6sm5342094edh.32.2018.09.01.13.29.25
+        h=x-gm-message-state:message-id:subject:from:to:cc:in-reply-to
+         :references:date:mime-version:content-transfer-encoding;
+        bh=MZWN2/7fVp4JED77xWN8AlS5fzj5nTvKcVG3nDpRgX4=;
+        b=h5evS0l3uxExZTkjGUGVZeUmJhYZb48LrLgsV2IBqIM/16QAU9oOLFSm1zFxY2vxta
+         Fv2Zb+YK5hbtEm4cveFgHk4r0aqbtEnRXSg8/tSj3rqK/HoBOJcU8TOH2aI253iUP5Ma
+         hHKE22pdTW+s8WuavzQLrUk7R4HBnXr8ATYKqy31wjsBKlVdJElFKs6C36GGOPDYc93g
+         NxjccOlgCuRuI8trnMr2owtFB3M55+zJrEhEG+zFqSeaSItZa+JDlQ4rdtCbV1k6MfnS
+         4nDjip/WLwWNkWIdqMAnYAHv8eoqmWs8MHPQnoMmnq9Fa81QnBl6xRsmrvhq0Ob1TpyH
+         D1gg==
+X-Gm-Message-State: APzg51C2b2cbhwJ1u52iUaYQBylsOekfIH6zYgy9HEB9eHSp74yCFtix
+        7x9LRV/4quuKwBgSLBe/ArI=
+X-Google-Smtp-Source: ANB0VdY4AYyvat0kqBzP89Jr6FgiPMMU2wtnxBJG+KsoUZ15oBV5BaQgHTDG2RrrqmnoBhGnxO1oig==
+X-Received: by 2002:a63:1413:: with SMTP id u19-v6mr20148796pgl.247.1535835722139;
+        Sat, 01 Sep 2018 14:02:02 -0700 (PDT)
+Received: from unique-pc ([27.62.77.220])
+        by smtp.googlemail.com with ESMTPSA id p26-v6sm25450889pfi.183.2018.09.01.14.01.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 01 Sep 2018 13:29:26 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH 2/4] t5310: test delta reuse with bitmaps
-References: <20180901074145.GA24023@sigill.intra.peff.net> <20180901074813.GB25461@sigill.intra.peff.net> <20180901080316.GA25852@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180901080316.GA25852@sigill.intra.peff.net>
-Date:   Sat, 01 Sep 2018 22:29:25 +0200
-Message-ID: <87va7parmi.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        Sat, 01 Sep 2018 14:02:01 -0700 (PDT)
+Message-ID: <9f7b6b5b0525b0d360423e3416d7baacd4c5a5cc.camel@gmail.com>
+Subject: Re: [PATCH] Makefile: enable DEVELOPER by default
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>,
+        =?ISO-8859-1?Q?=27=C6var_Arnfj=F6r=F0?= Bjarmason' 
+        <avarab@gmail.com>, 'Junio C Hamano' <gitster@pobox.com>
+Cc:     'Duy Nguyen' <pclouds@gmail.com>,
+        'Jonathan Nieder' <jrnieder@gmail.com>,
+        'Stefan Beller' <sbeller@google.com>,
+        'Git Mailing List' <git@vger.kernel.org>,
+        git-packagers@googlegroups.com,
+        'Han-Wen Nienhuys' <hanwen@google.com>
+In-Reply-To: <001001d42da7$4a9e6570$dfdb3050$@nexbridge.com>
+References: <20180804020009.224582-1-sbeller@google.com>
+                <20180804020255.225573-1-sbeller@google.com>
+                <20180804060928.GB55869@aiede.svl.corp.google.com>
+                <CACsJy8DxSDLD7B8Z+GBFOuU7d7VQ4-M=BP=wptra5rBiZGspSQ@mail.gmail.com>
+                <xmqqo9eirqwp.fsf@gitster-ct.c.googlers.com>
+         <87zhxzsb2p.fsf@evledraar.gmail.com>
+         <001001d42da7$4a9e6570$dfdb3050$@nexbridge.com>
+Content-Type: text/plain; charset="ISO-8859-15"
+Date:   Sun, 02 Sep 2018 02:31:55 +0530
+Mime-Version: 1.0
+X-Mailer: Evolution 3.28.5-1 
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, 2018-08-06 at 13:02 -0400, Randall S. Becker wrote:
+> 
+> Any idea when this is going to be in an official release, and exactly
+> what the settings will be for "Not Developer". I assume DEVELOPER=0
+> and DEVOPTS=error, which is the current behaviour, correct? I am the
+> platform maintainer for HPE NonStop and need to make sure I'm not
+> packaging DEV builds to anyone, since I'm the only one doing this for
+> the platform. It's another hoop, but hopefully not a bad one. The
+> question is the best place to set this, assuming we are using Jenkins
+> for our builds, and I'd rather keep the existing config.mak.uname the
+> same, since at least it seems stable.
 
-On Sat, Sep 01 2018, Jeff King wrote:
+Just a FYI and in case you aren't aware, you could create a
+"config.mak" to store your custom configurations. You can be sure it's
+used due to the following Makefile part:
 
-> On Sat, Sep 01, 2018 at 03:48:13AM -0400, Jeff King wrote:
->
->> Commit 6a1e32d532 (pack-objects: reuse on-disk deltas for
->> thin "have" objects, 2018-08-21) taught pack-objects a new
->> optimization trick. Since this wasn't meant to change
->> user-visible behavior, but only produce smaller packs more
->> quickly, testing focused on t/perf/p5311.
->>
->> However, since people don't run perf tests very often, we
->> should make sure that the feature is exercised in the
->> regular test suite. This patch does so.
->
-> This, by the way, is the crux of how such an obvious and severe bug made
-> it to 'next'.
->
-> The original series was tested quite extensively via t/perf and in
-> production at GitHub. When I re-rolled v2, the only change was the
-> addition of the assertion, so I didn't bother re-doing the perf tests,
-> since they're slow and there wouldn't be a measurable impact.
->
-> I did run the normal test suite (as I'm sure Junio did, too) as a
-> double-check for correctness, but as we noticed, the code wasn't
-> actually exercised there.
->
-> Nor had I yet backported the revised series to the version we run at
-> GitHub, so it hadn't been run there, either.
->
-> And all of that coupled with the fact that it only triggers with
-> bitmaps, so day-to-day use of the buggy Git (like Junio trying to push
-> out the result ;) ) wouldn't show it.
->
-> Anyway. Not that exciting, and kind of obviously dumb in retrospect. But
-> I think it was worth analyzing to see what went wrong. If there's an
-> immediate lesson, it is probably: add tests even for changes that aren't
-> really user-visible to make sure the code is exercised.
+...
 
-Test-wise, isn't the problem rather that that we didn't have something
-like what's described in t/README as "Running tests with special setups"
-for bitmaps? I.e. stuff like GIT_TEST_SPLIT_INDEX=<bool>, or running it
-with GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all to stress the fsmonitor
-code.
+include config.mak.uname
+-include config.mak.autogen
+-include config.mak
+...
 
-That comment b.t.w. is not meant as a "you should have done that!"
-blame, but just musings on how we could make things better.
+It's just not a hard dependency.
 
-Git has things like bitmaps, midx, commit graph, and probably a few
-other things I'm forgetting which all have their own tests, but really
-fall more in the category of something like the split index in that they
-can potentially impact every test in some unexpected way.
+Hope that helps,
+Sivaraam
 
-So we could add some option to the test suite to e.g. run a custom
-command before every "git push" or "git fetch", and then just do a gc
-with a repack/commit graph write/midx write etc. in that codepath, along
-with (in the case of stuff like midx) setting any neede config knobs to
-turn it on.
-
-Of course the utility of that sort of thing is limited unless we have
-some dedicated smoke testers or CI capacity to run the various
-combinations of those options. But FWIW when I build our own in-house
-git I build the package with:
-
-    # Set "false" to test the build procedure itself
-    if true
-    then
-        export BKNG_GIT_HARNESS_OPTIONS="%{?_smp_mflags} --state=failed,slow,save --timer"
-        echo Testing without any custom options:
-        (cd t && /usr/bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
-
-        echo Testing while roundtripping everything through the fsmonitor codepath:
-        (cd t && GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all GIT_SKIP_TESTS="t3404.7 t7411.3 t7411.4" /usr/bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
-
-        echo Testing split index
-        (cd t && GIT_TEST_SPLIT_INDEX=true GIT_SKIP_TESTS="t3903 t4015.77" /usr/bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
-
-        echo Testing uncommon pack modes. See ci/run-tests.sh in git
-        (cd t && GIT_TEST_FULL_IN_PACK_ARRAY=true GIT_TEST_OE_SIZE=10 /usr/bin/prove $BKNG_GIT_HARNESS_OPTIONS t[0-9]*.sh)
-    fi
-
-Those skipped tests are various intermittent bugs related to those
-codpaths which I haven't had time to track down / report yet.
-
-So if there was a "test bitmaps everywhere" mode that would have been
-caught during the build, unless I've misunderstood how this particular
-bug manifests, but then again, it happened on just a plain git.git after
-repack, so wasn't any bitmap + push pretty much all that was needed?, I
-haven't read your patches in any detail.
-
-B.t.w. for Ben or anyone else who knows about the fsmonitor part of
-this: I've long been running the whole test suite with
-`GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all prove ...` (also along with
-GIT_TEST_SPLIT_INDEX=) after all the main tests pass as additional
-stress testing.
-
-It's not documented under the "special setups" section. So I was going
-to add it, but I see that in 5c8cdcfd80 ("fsmonitor: add test cases for
-fsmonitor extension", 2017-09-22) it's documented that you should also
-set GIT_FORCE_PRELOAD_TEST=true, is that needed for GIT_FSMONITOR_TEST?
-Or is it yet another mode, and if so to be combined with fsmonitor in
-particular, or stand-alone?
-
-> There may be a larger lesson about tracking code coverage, but I don't
-> know that most general code coverage tools would have helped (any
-> overall percentage number would be too large to move). A tool that
-> looked at the diff and said "of the N lines you added/touched, this
-> percent is exercised in the test suite" might have been useful.
-
-This would be very useful.
