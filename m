@@ -2,96 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 879CB1F404
-	for <e@80x24.org>; Sun,  2 Sep 2018 07:24:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 203151F404
+	for <e@80x24.org>; Sun,  2 Sep 2018 07:34:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbeIBLi7 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Sep 2018 07:38:59 -0400
-Received: from cloud.peff.net ([104.130.231.41]:36546 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725834AbeIBLi7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Sep 2018 07:38:59 -0400
-Received: (qmail 11981 invoked by uid 109); 2 Sep 2018 07:24:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 02 Sep 2018 07:24:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16645 invoked by uid 111); 2 Sep 2018 07:24:21 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 02 Sep 2018 03:24:21 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Sep 2018 03:24:09 -0400
-Date:   Sun, 2 Sep 2018 03:24:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
-        git@vger.kernel.org, Kevin Willford <kewillf@microsoft.com>
-Subject: Re: [BUG] index corruption with git commit -p
-Message-ID: <20180902072408.GA18787@sigill.intra.peff.net>
-References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local>
- <87tvn8c166.fsf@evledraar.gmail.com>
- <20180902050803.GA21324@sigill.intra.peff.net>
- <20180902071204.GA2868@duynguyen.home>
+        id S1726007AbeIBLtY (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Sep 2018 07:49:24 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:46960 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725834AbeIBLtY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Sep 2018 07:49:24 -0400
+Received: by mail-io0-f195.google.com with SMTP id y12-v6so13613431ioj.13
+        for <git@vger.kernel.org>; Sun, 02 Sep 2018 00:34:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1bbhIRsdtYWNp9jo9pKCUdmwzKc22dHLBIw4blwshFQ=;
+        b=We6PGPs7W7j8GDadOg4FNQdzYS3OR469KeF1+JF/BhIgrfvaJSI5pRpgRK6xzkDQyN
+         BuvJNq1s4JWFRW9XYRMUBGGHsXzSIFg0jUPaIra21g9ASNS2zDzmRph2sgafey8hE6zc
+         xZNXoZrbJqsocDbgWsDnl6dMBRXOC/j73ghuiqL2eFrt0ufaYaOaRmT8P64U87x9bVxT
+         EJ9xS63oWy+609y5A28pd80DYkxUiW9VFhTx8RRBH6jiisMABZPNl/V+6UfaKjSMpXia
+         3g6cOWvJ0hHRQqKBsMmcxopVvg1yAqjPXUukVsJekFyAwZA1lnFXyK29YJuulHantqQf
+         ZhXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1bbhIRsdtYWNp9jo9pKCUdmwzKc22dHLBIw4blwshFQ=;
+        b=c7lQjzFMkrobXA4psKJ/3C9PLOPZx9cHlJwIG9xpbDKxW7NjvOgq5mW5Jv2eobqVgS
+         e0ubiPFavhP53dq72+KS7el70rPQrj8tiR84b9cbtPEqRZwk/EBEpDOF5+vkM5jG98q5
+         i5ig4ct5J4NwNLTfb5rBYuptrtzb0NnisaXDkECEhMi7dPKslko2YVjLcGfgPepyDNuL
+         arG5PIGSWMbaBAqA43S2iybGgfESCdtVIPVOD+KlD7Tda/WYr/U6thGJb86ljbS7vVUp
+         lrhLmFripTDvE1oeLVwHQeBIgVw6eAEzYO+iN9EtyL3BClsfeLzl6ZayTV9mwwieh5TE
+         dnNg==
+X-Gm-Message-State: APzg51BCy39EA/9ZeshGBDX+qayR2eW/94jPH6j5tDqtVCyvM5Vf1Trn
+        cnftgWcgS0iVqHFhJBUW+7+ThdjRo2CFj0ivzZE=
+X-Google-Smtp-Source: ANB0VdZPhxfFXnjsidQkL9Kw3sZ1iTXosoI9iD/nujy3FHbJffFZe8GUZjqiItQZVV6IIxNArqWFTuvzeh70+4Hr778=
+X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr15176952iok.236.1535873674501;
+ Sun, 02 Sep 2018 00:34:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180902071204.GA2868@duynguyen.home>
+References: <20180828123234.44582-1-tiagonbotelho@hotmail.com> <xmqqlg8qh22q.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg8qh22q.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 2 Sep 2018 09:34:08 +0200
+Message-ID: <CACsJy8AFo+mb8R-O-JKRPZk__csq6mbVXbnZhSd-nZ08zWfSeg@mail.gmail.com>
+Subject: Re: [PATCH v6] Implement --first-parent for git rev-list --bisect
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     tiagonbotelho@gmail.com, Git Mailing List <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        haraldnordgren@gmail.com, tiagonbotelho@hotmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 02, 2018 at 09:12:04AM +0200, Duy Nguyen wrote:
+On Tue, Aug 28, 2018 at 6:45 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > @@ -146,10 +147,14 @@ static void show_list(const char *debug, int counted, int nr,
+>
+> An unrelated tangent, but I think I just spotted a bug in the
+> existing code on the line immediately before this hunk, which reads
+>
+>                 if (commit->util)
+>                         fprintf(stderr, "%3d", weight(p));
+>
+> I think this was a bug introduced at bb408ac9 ("bisect.c: use
+> commit-slab for commit weight instead of commit->util", 2018-05-19)
+> where the internal implementation of weight() was changed not to
+> touch commit->util but instead to use a separate commit-slab storage
+>
+> Looking at the code before that conversion, it seems that we were
+> using ->util to store a pointer to an integer, so we had the ability
+> to differenciate non-negative weight (i.e. weight already computed
+> for the commit), negative weight (i.e. not computed yet, but will
+> be), and commits to which the concept of weight is not applicable.
+> When we went to the commit-slab with the change, we lost the ability
+> to represent the third case.  I am offhand not sure what the best
+> remedy would be.  Perhaps stuff a so-far unused value like -3 to the
+> weight() and use weight(p) == -3 instead of the old !commit->util or
+> something like that?
 
-> > diff --git a/builtin/commit.c b/builtin/commit.c
-> > index 0d9828e29e..779c5e2cb5 100644
-> > --- a/builtin/commit.c
-> > +++ b/builtin/commit.c
-> > @@ -359,13 +359,6 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
-> >  
-> >  		discard_cache();
-> >  		read_cache_from(get_lock_file_path(&index_lock));
-> > -		if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
-> > -			if (reopen_lock_file(&index_lock) < 0)
-> > -				die(_("unable to write index file"));
-> > -			if (write_locked_index(&the_index, &index_lock, 0))
-> > -				die(_("unable to update temporary index"));
-> > -		} else
-> > -			warning(_("Failed to update main cache tree"));
-> >
-> 
-> Narrowing down to this does help. This patch seems to fix it to me. I
-> guess we have some leftover from the interactive add that should not
-> be there after we have written the new index.
-> 
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index 2be7bdb331..60f30b3780 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -432,6 +432,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
->  		if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
->  			if (reopen_lock_file(&index_lock) < 0)
->  				die(_("unable to write index file"));
-> +			ftruncate(index_lock.tempfile->fd, 0);
->  			if (write_locked_index(&the_index, &index_lock, 0))
->  				die(_("unable to update temporary index"));
->  		} else
+Hmm.. no? the commit-slab stores the pointer to the weight, not the
+weight itself, so we still have the ability to check the third case, I
+think.
 
-Doh, of course. I even thought about this issue and dug all the way into
-reopen_lock_file(), but for some reason temporarily forgot that O_WRONLY
-does not imply O_TRUNC.
+> (Duy CC'ed to help checking my sanity on this point).
+>
+> In any case, this is an existing bug in a debug helper, and the
+> focus of this patch is not about fixing that bug, so you can and
+> should leave it as-is, until this patch successfully adds the
+> "bisection following only the first parent" feature.
 
-Arguably this should be the default for reopen_lockfile(), as getting a
-write pointer into an existing file is not ever going to be useful for
-the way Git uses lockfiles. Opening with O_APPEND could conceivably be
-useful, but it's pretty unlikely (and certainly not helpful here, and
-this is the only caller). Alternatively, the function should just take
-open(2) flags.
-
-At any rate, I think this perfectly explains the behavior we're seeing.
-
--Peff
+Yes. I'll post a patch soon to fix this "commit->util" leftover.
+-- 
+Duy
