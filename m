@@ -2,143 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B251F404
-	for <e@80x24.org>; Sun,  2 Sep 2018 07:43:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA36C1F404
+	for <e@80x24.org>; Sun,  2 Sep 2018 07:47:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726065AbeIBL54 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Sep 2018 07:57:56 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:46844 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726006AbeIBL54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Sep 2018 07:57:56 -0400
-Received: by mail-lf1-f65.google.com with SMTP id e23-v6so12899431lfc.13
-        for <git@vger.kernel.org>; Sun, 02 Sep 2018 00:43:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=G/4G5fm6B7vrC9rqry0ObpxhiJPQpgZqf0vP6BWJBvU=;
-        b=JEEXtl8fgzaNIpKRq4G3Oi4MYbwWqEbpuVo1n9mcmKDrxORoCn1OBnXuCtRt38RQ9x
-         /sKMWLd36TMNdDCJjBPBPpzrBA2cmygKavO2zfqPMmFd0VR2jT+GvRbbcUOTz29TEVST
-         TqkCL4CdYTKsfVqexM7d+aWHsq2cvY6j2KVibLMa4tQ2d+dxQ17Zx2KFaXgRXuw+PknS
-         k2Q5nBafPGkM+FcBn1BezP4lP8mi0tc1E7yAnP13ZLXJ1mac9QpNzNb31wraHMBqT9sh
-         1dcnPFDeV5UCXjbS/dpFBLKi/wZFhiIdmF1Josj0ShmjygyPU+lJjkN6ILn7laPAq+oH
-         ppcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=G/4G5fm6B7vrC9rqry0ObpxhiJPQpgZqf0vP6BWJBvU=;
-        b=lgrlbaIkZE6vapKJQQ7ew9iV+IRBTJO0NT4iHDgMKAZlp0TFvNSuWbvhQlyayo6NLx
-         x2sn3zw4npIMQ7xNzBHhhXgsNGy1YsAl6lMB1vEBSZK/DnrIJXQrFC5GTkDOxou1lXBP
-         F1WY5EsfU/fTadJiwmUC4MpgYnJbRlT40vibgpCZ6pJ4Mbyi6Lujhq4HqNylxGpPKnoV
-         ReUzaf63qY9skutjVL6v+/3cm4qQaADOM1Qyhs8IoXOFbLwJDnm8P3kUJn/PrUohzuNO
-         1V5XfypxI3dmgGmcVj0H62NlxkEjpbt6VJuM+AP+mCIIkXjmdrBu0o0DfM0c2TmsYSeg
-         Ax9w==
-X-Gm-Message-State: APzg51BPMQuzyrY25qMmDOqviD2iLUXrN0Vn/szVt2V7NcmKd2Es/KOo
-        zpoVrUgRpHTVSWGCluHKWAg=
-X-Google-Smtp-Source: ANB0VdbpBlh7akB/2J7kKbKnIqcGoJHM7rrUtLRLaWL2YUlUCuZ1a5Y7KHMGIlY/7+zRAyf7Xb4cHQ==
-X-Received: by 2002:a19:c4c9:: with SMTP id u192-v6mr13832518lff.87.1535874184102;
-        Sun, 02 Sep 2018 00:43:04 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id p17-v6sm2690244ljg.64.2018.09.02.00.43.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Sep 2018 00:43:03 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     christian.couder@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        haraldnordgren@gmail.com, johannes.schindelin@gmx.de,
-        tiagonbotelho@gmail.com, tiagonbotelho@hotmail.com
-Subject: [PATCH] bisect.c: make show_list() build again
-Date:   Sun,  2 Sep 2018 09:42:50 +0200
-Message-Id: <20180902074250.6802-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <CACsJy8AFo+mb8R-O-JKRPZk__csq6mbVXbnZhSd-nZ08zWfSeg@mail.gmail.com>
-References: <CACsJy8AFo+mb8R-O-JKRPZk__csq6mbVXbnZhSd-nZ08zWfSeg@mail.gmail.com>
+        id S1726020AbeIBMBt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Sep 2018 08:01:49 -0400
+Received: from cloud.peff.net ([104.130.231.41]:36576 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726006AbeIBMBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Sep 2018 08:01:49 -0400
+Received: (qmail 12838 invoked by uid 109); 2 Sep 2018 07:46:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 02 Sep 2018 07:46:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16768 invoked by uid 111); 2 Sep 2018 07:47:08 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 02 Sep 2018 03:47:08 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 02 Sep 2018 03:46:57 -0400
+Date:   Sun, 2 Sep 2018 03:46:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+Subject: Re: non-smooth progress  indication for git fsck and git gc
+Message-ID: <20180902074656.GB18787@sigill.intra.peff.net>
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+ <20180816155714.GA22739@sigill.intra.peff.net>
+ <87bma2qcba.fsf@evledraar.gmail.com>
+ <87y3clbcqf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87y3clbcqf.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function only compiles when DEBUG_BISECT is 1, which is often not
-the case. As a result there are two commits [1] [2] that break it but
-the breakages went unnoticed because the code did not compile by
-default. Update the function and include the new header file to make this
-function build again.
+On Sat, Sep 01, 2018 at 02:53:28PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-In order to stop this from happening again, the function is now
-compiled unconditionally but exits early unless DEBUG_BISECT is
-non-zero. A smart compiler generates no extra code (not even a
-function call). But even if it does not, this function does not seem
-to be in a hot path that the extra cost becomes a big problem.
+> With this we'll get output like:
+> 
+>     $ ~/g/git/git  -C ~/g/2015-04-03-1M-git/  --exec-path=$PWD fsck
+>     Checking object directories: 100% (256/256), done.
+>     Hashing: 100% (452634108/452634108), done.
+>     Hashing: 100% (1073741824/1073741824), done.
+>     Hashing: 100% (1073741824/1073741824), done.
+>     Hashing: 100% (1008001572/1008001572), done.
+>     Checking objects:   2% (262144/13064614)
+>     ^C
+> 
+> All tests pass with this. Isn't it awesome? Except it's of course a
+> massive hack, we wouldn't want to just hook into SHA1DC like this.
 
-[1] bb408ac95d (bisect.c: use commit-slab for commit weight instead of
-    commit->util - 2018-05-19)
+I still consider that output so-so; the byte counts are big and there's
+no indication how many "hashing" lines we're going to see. It's also
+broken up in a weird way (it's not one per file; it's one per giant
+chunk we fed to sha1).
 
-[2] cbd53a2193 (object-store: move object access functions to
-    object-store.h - 2018-05-15)
+> The problem comes down to us needing to call git_hash_sha1_update() with
+> some really huge input, that function is going to take a *long* time,
+> and the only way we're getting incremental progress is:
+> 
+>  1) If we ourselves split the input into N chunks
+>  2) If we hack into the SHA1 library itself
+> 
+> This patch does #2, but for this to be acceptable we'd need to do
+> something like #1.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- bisect.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+I think we could just do the chunking in verify_packfile(), couldn't we?
+(And the .idx hash, if we really want to cover that case, but IMHO
+that's way less interesting).
 
-diff --git a/bisect.c b/bisect.c
-index e1275ba79e..e65f6821b8 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -13,6 +13,7 @@
- #include "sha1-array.h"
- #include "argv-array.h"
- #include "commit-slab.h"
-+#include "object-store.h"
+Something like this, which chunks it there, uses a per-packfile meter
+(though still does not give any clue how many packfiles there are), and
+shows a throughput meter.
+
+diff --git a/pack-check.c b/pack-check.c
+index d3a57df34f..c94223664f 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -62,10 +62,25 @@ static int verify_packfile(struct packed_git *p,
+ 	uint32_t nr_objects, i;
+ 	int err = 0;
+ 	struct idx_entry *entries;
++	struct progress *hashing_progress;
++	char *title;
++	off_t total_hashed = 0;
  
- static struct oid_array good_revs;
- static struct oid_array skipped_revs;
-@@ -120,14 +121,14 @@ static inline int halfway(struct commit_list *p, int nr)
- 	}
- }
+ 	if (!is_pack_valid(p))
+ 		return error("packfile %s cannot be accessed", p->pack_name);
  
--#if !DEBUG_BISECT
--#define show_list(a,b,c,d) do { ; } while (0)
--#else
- static void show_list(const char *debug, int counted, int nr,
- 		      struct commit_list *list)
- {
- 	struct commit_list *p;
- 
-+	if (!DEBUG_BISECT)
-+		return;
++	if (progress) {
++		/* Probably too long... */
++		title = xstrfmt("Hashing %s", p->pack_name);
 +
- 	fprintf(stderr, "%s (%d/%d)\n", debug, counted, nr);
- 
- 	for (p = list; p; p = p->next) {
-@@ -145,7 +146,7 @@ static void show_list(const char *debug, int counted, int nr,
- 			(flags & TREESAME) ? ' ' : 'T',
- 			(flags & UNINTERESTING) ? 'U' : ' ',
- 			(flags & COUNTED) ? 'C' : ' ');
--		if (commit->util)
-+		if (*commit_weight_at(&commit_weight, p->item))
- 			fprintf(stderr, "%3d", weight(p));
- 		else
- 			fprintf(stderr, "---");
-@@ -160,7 +161,6 @@ static void show_list(const char *debug, int counted, int nr,
- 		fprintf(stderr, "\n");
- 	}
- }
--#endif /* DEBUG_BISECT */
- 
- static struct commit_list *best_bisection(struct commit_list *list, int nr)
- {
--- 
-2.19.0.rc0.337.ge906d732e7
-
++		/*
++		 * I don't think it actually works to have two progresses going
++		 * at the same time, because when the first one ends, we'll
++		 * cancel the alarm. But hey, this is a hacky proof of concept.
++		 */
++		hashing_progress = start_progress(title, 0);
++	}
++
+ 	the_hash_algo->init_fn(&ctx);
+ 	do {
+ 		unsigned long remaining;
+@@ -75,9 +90,25 @@ static int verify_packfile(struct packed_git *p,
+ 			pack_sig_ofs = p->pack_size - the_hash_algo->rawsz;
+ 		if (offset > pack_sig_ofs)
+ 			remaining -= (unsigned int)(offset - pack_sig_ofs);
+-		the_hash_algo->update_fn(&ctx, in, remaining);
++		while (remaining) {
++			int chunk = remaining < 4096 ? remaining : 4096;
++			the_hash_algo->update_fn(&ctx, in, chunk);
++			in += chunk;
++			remaining -= chunk;
++			total_hashed += chunk;
++			/*
++			 * The progress code needs tweaking to show throughputs
++			 * better for open-ended meters.
++			 */
++			display_throughput(hashing_progress, total_hashed);
++			display_progress(hashing_progress, 0);
++		}
+ 	} while (offset < pack_sig_ofs);
++
+ 	the_hash_algo->final_fn(hash, &ctx);
++	stop_progress(&hashing_progress);
++	free(title);
++
+ 	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
+ 	if (hashcmp(hash, pack_sig))
+ 		err = error("%s pack checksum mismatch",
