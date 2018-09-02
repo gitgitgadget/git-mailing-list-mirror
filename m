@@ -7,59 +7,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C39A31F404
-	for <e@80x24.org>; Sun,  2 Sep 2018 13:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5024C1F404
+	for <e@80x24.org>; Sun,  2 Sep 2018 13:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729327AbeIBRf1 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Sep 2018 13:35:27 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:38149 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726957AbeIBRf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Sep 2018 13:35:27 -0400
-Received: by mail-lj1-f196.google.com with SMTP id p6-v6so13378865ljc.5
-        for <git@vger.kernel.org>; Sun, 02 Sep 2018 06:19:37 -0700 (PDT)
+        id S1729913AbeIBRf3 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Sep 2018 13:35:29 -0400
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:39589 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728835AbeIBRf2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Sep 2018 13:35:28 -0400
+Received: by mail-lf1-f67.google.com with SMTP id v77-v6so3603876lfa.6
+        for <git@vger.kernel.org>; Sun, 02 Sep 2018 06:19:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wG22gbMCv5yNds2dIokbaRJZl5IdhEZwIRD/HnPfEfs=;
-        b=ahNZPMiD/H/gNP9wW33tUVvhPS97nLPy58RNy4IdTElwiYUcnaEZAolFARQg+d+Cg7
-         5S0hbKq7ijQOI2qmKhadAviaZ+pKaYtdBMOGb5owasN5GVaB5y/mIoVkqr9YLxD7JcgH
-         awQY1nBflPrclQwf7AIgWFz+v/UXMdsQWd8v81FlARg/k2PIEbdd4DXdyD98ZfGOrugF
-         Sm/Ib1EesHR8G9NRx1J0l+9nZGb84HAeFZ/q+IY2THbYirfP/33Kfma35GKl4RrbtbzF
-         1TCo3L6GwCv6oW1elohH0Z8mRgyt+VP4OvCVvEuNil4xHf8vj5eIpTX5T9m5BmOZgmRr
-         NILA==
+        bh=S/CJ19BYS0qMDUfKI8w2AOnRXIDfbjTJR7CW9qxa/fM=;
+        b=twqX0y5DaqRpAQwQz5h1rRlDOrgkIFUf+eI2N5g7jTPT1w7llyCNA5wWP5ax5+DWfv
+         pp2R0N6ziwNY+08D7XqCbyyLJX8oaOR3jkmiUa0qdKcYC/IFDl/Ade7OemXD23DO6kqu
+         IHEbxNGkM7KpsIr8ftkfu1UWOem91U7xN/K4aP1zsxXU/QGhVAfEOnxplj63UCLeGHvU
+         Z8ntR4eJXNdVkoGJE+e1y1YpGQOl0vzSFwng+2aR/zyJdVwau6VPohoc2ZI4GlZLCoeE
+         r7sbpUhjEyaZH/RqoRtyZ8IeKtEFAUkvHIy0+P8xDXxML6rrGAG1luOLmglgMTmzsC6l
+         wZgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wG22gbMCv5yNds2dIokbaRJZl5IdhEZwIRD/HnPfEfs=;
-        b=EOmNPLLQ1CFa/gMN8acvNKNW2agud57Sh6aw2+DVKCsatmIKGFnkLdDBog3qq0+gVd
-         tBF/lydgAk3OFbWgWsijIF+HDvP568C07Vv/LpWtwLPbUI7uGbXrsyRva2xwljspViIo
-         MPi9PzKQgnJiBG+oON4sMctx2cT7Mxw9R2M/mN9kiBoYzSse81Joymbnt9/WeFVdxuqP
-         WhKdsEeiK6hxXSU5BDN0tm2IVnDuDeyRDRZk3oWZpNsTwTb5CIS7zAKC7oV13fcw5zmB
-         xEda+NzGfFPoUUcbFnjxUuUN65ClcAH1c8NvFjfy0Cy+ocQLcmeaO4ChJxnDodvaTIPi
-         FT7Q==
-X-Gm-Message-State: APzg51AB0gFYAuCZ5DmieTK0nouSrXNra76hflvSRjGtuR3vjgt0c2A/
-        sidcO7X4DjG1atM7R2BF4Bc=
-X-Google-Smtp-Source: ANB0VdZbZP72sEVU6ldvClnwEiUaDzmpnwLjifo70PvXtuC/oByk17zqSHm5nYGmJOI0PAae6M/5tg==
-X-Received: by 2002:a2e:9c0f:: with SMTP id s15-v6mr7002378lji.97.1535894376590;
-        Sun, 02 Sep 2018 06:19:36 -0700 (PDT)
+        bh=S/CJ19BYS0qMDUfKI8w2AOnRXIDfbjTJR7CW9qxa/fM=;
+        b=mw27ZLJ7zrNpJ2JFvDEXemDIjrkR+fWCdyQ6uyr82c9SaPq25HxRiTUd69Q7ZM/UrI
+         XEk5jEPJTbKgjm1PVvAibgflJP4I8UZHaMyasP+j0Rs1Sg2qXHvo+TnC0BzmHbsGQsiV
+         XIz8CHm2ZfzMcq3zcsqu48OEMnnFyHvmABzXZIx8u2fQ13lZdYIBpfXDTOI0EIemng6w
+         51/yadqApbMT2nP+CrW8wfm/4iswtVIi23EufNssUsSlKFkCY+stFPjEh9SmU2dqWBMq
+         dOp7PJhweA/kDB/gZJJ2uDV4zMa30Y3jnpi3wXdURXnVZ7LaCB0WjYRWgq3xWQVeqtW+
+         TVIA==
+X-Gm-Message-State: APzg51AVQlUQn2SOIJ2TNUyJvXkAKwLr8DaUzXTg6JAU4oRPMFhEcuCi
+        +GBRASfDunBZSkG9mcuYpfs=
+X-Google-Smtp-Source: ANB0VdaNwp5l9oqZxrkTNYuluBR4Yz/WgUPpSXIwqob0cPZ4xI0LBVie/bPCbSM9upatudTiT8iCPg==
+X-Received: by 2002:a19:1388:: with SMTP id 8-v6mr15999486lft.12.1535894377577;
+        Sun, 02 Sep 2018 06:19:37 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id m12-v6sm2793366ljh.24.2018.09.02.06.19.34
+        by smtp.gmail.com with ESMTPSA id m12-v6sm2793366ljh.24.2018.09.02.06.19.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Sep 2018 06:19:35 -0700 (PDT)
+        Sun, 02 Sep 2018 06:19:36 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     Ben.Peart@microsoft.com, git@vger.kernel.org, gitster@pobox.com,
         peartben@gmail.com
-Subject: [PATCH v2 0/1] optimize reading index format v4
-Date:   Sun,  2 Sep 2018 15:19:32 +0200
-Message-Id: <20180902131933.27484-1-pclouds@gmail.com>
+Subject: [PATCH v2 1/1] read-cache.c: optimize reading index format v4
+Date:   Sun,  2 Sep 2018 15:19:33 +0200
+Message-Id: <20180902131933.27484-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180825064458.28484-1-pclouds@gmail.com>
+In-Reply-To: <20180902131933.27484-1-pclouds@gmail.com>
 References: <20180825064458.28484-1-pclouds@gmail.com>
+ <20180902131933.27484-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,28 +69,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2 removes unrelated changes and the dummy_entry. strip_len is also
-replaced with copy_len to reduce repeated subtraction calculation.
-Diff: 
+Index format v4 requires some more computation to assemble a path
+based on a previous one. The current code is not very efficient
+because
+
+ - it doubles memory copy, we assemble the final path in a temporary
+   first before putting it back to a cache_entry
+
+ - strbuf_remove() in expand_name_field() is not exactly a good fit
+   for stripping a part at the end, _setlen() would do the same job
+   and is much cheaper.
+
+ - the open-coded loop to find the end of the string in
+   expand_name_field() can't beat an optimized strlen()
+
+This patch avoids the temporary buffer and writes directly to the new
+cache_entry, which addresses the first two points. The last point
+could also be avoided if the total string length fits in the first 12
+bits of ce_flags, if not we fall back to strlen().
+
+Running "test-tool read-cache 100" on webkit.git (275k files), reading
+v2 only takes 4.226 seconds, while v4 takes 5.711 seconds, 35% more
+time. The patch reduces read time on v4 to 4.319 seconds.
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ read-cache.c | 128 ++++++++++++++++++++++++---------------------------
+ 1 file changed, 60 insertions(+), 68 deletions(-)
 
 diff --git a/read-cache.c b/read-cache.c
-index 5c04c8f200..8628d0f3a8 100644
+index 7b1354d759..8628d0f3a8 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -1713,7 +1713,7 @@ int read_index(struct index_state *istate)
+@@ -1713,63 +1713,24 @@ int read_index(struct index_state *istate)
  	return read_index_from(istate, get_index_file(), get_git_dir());
  }
  
+-static struct cache_entry *cache_entry_from_ondisk(struct mem_pool *mem_pool,
+-						   struct ondisk_cache_entry *ondisk,
+-						   unsigned int flags,
+-						   const char *name,
+-						   size_t len)
+-{
+-	struct cache_entry *ce = mem_pool__ce_alloc(mem_pool, len);
+-
+-	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
+-	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
+-	ce->ce_stat_data.sd_ctime.nsec = get_be32(&ondisk->ctime.nsec);
+-	ce->ce_stat_data.sd_mtime.nsec = get_be32(&ondisk->mtime.nsec);
+-	ce->ce_stat_data.sd_dev   = get_be32(&ondisk->dev);
+-	ce->ce_stat_data.sd_ino   = get_be32(&ondisk->ino);
+-	ce->ce_mode  = get_be32(&ondisk->mode);
+-	ce->ce_stat_data.sd_uid   = get_be32(&ondisk->uid);
+-	ce->ce_stat_data.sd_gid   = get_be32(&ondisk->gid);
+-	ce->ce_stat_data.sd_size  = get_be32(&ondisk->size);
+-	ce->ce_flags = flags & ~CE_NAMEMASK;
+-	ce->ce_namelen = len;
+-	ce->index = 0;
+-	hashcpy(ce->oid.hash, ondisk->sha1);
+-	memcpy(ce->name, name, len);
+-	ce->name[len] = '\0';
+-	return ce;
+-}
+-
+-/*
+- * Adjacent cache entries tend to share the leading paths, so it makes
+- * sense to only store the differences in later entries.  In the v4
+- * on-disk format of the index, each on-disk cache entry stores the
+- * number of bytes to be stripped from the end of the previous name,
+- * and the bytes to append to the result, to come up with its name.
+- */
+-static unsigned long expand_name_field(struct strbuf *name, const char *cp_)
+-{
+-	const unsigned char *ep, *cp = (const unsigned char *)cp_;
+-	size_t len = decode_varint(&cp);
+-
+-	if (name->len < len)
+-		die("malformed name field in the index");
+-	strbuf_remove(name, name->len - len, len);
+-	for (ep = cp; *ep; ep++)
+-		; /* find the end */
+-	strbuf_add(name, cp, ep - cp);
+-	return (const char *)ep + 1 - cp_;
+-}
+-
 -static struct cache_entry *create_from_disk(struct mem_pool *mem_pool,
 +static struct cache_entry *create_from_disk(struct index_state *istate,
  					    struct ondisk_cache_entry *ondisk,
  					    unsigned long *ent_size,
- 					    const struct cache_entry *previous_ce)
-@@ -1722,7 +1722,15 @@ static struct cache_entry *create_from_disk(struct mem_pool *mem_pool,
+-					    struct strbuf *previous_name)
++					    const struct cache_entry *previous_ce)
+ {
+ 	struct cache_entry *ce;
  	size_t len;
  	const char *name;
  	unsigned int flags;
--	size_t strip_len;
 +	size_t copy_len;
 +	/*
 +	 * Adjacent cache entries tend to share the leading paths, so it makes
@@ -102,35 +176,28 @@ index 5c04c8f200..8628d0f3a8 100644
  
  	/* On-disk flags are just 16 bits */
  	flags = get_be16(&ondisk->flags);
-@@ -1735,37 +1743,37 @@ static struct cache_entry *create_from_disk(struct mem_pool *mem_pool,
- 		extended_flags = get_be16(&ondisk2->flags2) << 16;
- 		/* We do not yet understand any bit out of CE_EXTENDED_FLAGS */
- 		if (extended_flags & ~CE_EXTENDED_FLAGS)
--			die(_("unknown index entry format %08x"), extended_flags);
-+			die("Unknown index entry format %08x", extended_flags);
- 		flags |= extended_flags;
- 		name = ondisk2->name;
- 	}
+@@ -1789,21 +1750,54 @@ static struct cache_entry *create_from_disk(struct mem_pool *mem_pool,
  	else
  		name = ondisk->name;
  
--	/*
--	 * Adjacent cache entries tend to share the leading paths, so it makes
--	 * sense to only store the differences in later entries.  In the v4
--	 * on-disk format of the index, each on-disk cache entry stores the
--	 * number of bytes to be stripped from the end of the previous name,
--	 * and the bytes to append to the result, to come up with its name.
--	 */
--	if (previous_ce) {
+-	if (!previous_name) {
+-		/* v3 and earlier */
+-		if (len == CE_NAMEMASK)
+-			len = strlen(name);
+-		ce = cache_entry_from_ondisk(mem_pool, ondisk, flags, name, len);
 +	if (expand_name_field) {
- 		const unsigned char *cp = (const unsigned char *)name;
++		const unsigned char *cp = (const unsigned char *)name;
 +		size_t strip_len, previous_len;
  
+-		*ent_size = ondisk_ce_size(ce);
+-	} else {
+-		unsigned long consumed;
+-		consumed = expand_name_field(previous_name, name);
+-		ce = cache_entry_from_ondisk(mem_pool, ondisk, flags,
+-					     previous_name->buf,
+-					     previous_name->len);
 +		previous_len = previous_ce ? previous_ce->ce_namelen : 0;
- 		strip_len = decode_varint(&cp);
--		if (previous_ce->ce_namelen < strip_len)
--			die(_("malformed name field in the index, path '%s'"),
--			    previous_ce->name);
++		strip_len = decode_varint(&cp);
 +		if (previous_len < strip_len) {
 +			if (previous_ce)
 +				die(_("malformed name field in the index, near path '%s'"),
@@ -139,76 +206,80 @@ index 5c04c8f200..8628d0f3a8 100644
 +				die(_("malformed name field in the index in the first path"));
 +		}
 +		copy_len = previous_len - strip_len;
- 		name = (const char *)cp;
- 	}
- 
- 	if (len == CE_NAMEMASK) {
- 		len = strlen(name);
--		if (previous_ce)
--			len += previous_ce->ce_namelen - strip_len;
++		name = (const char *)cp;
++	}
++
++	if (len == CE_NAMEMASK) {
++		len = strlen(name);
 +		if (expand_name_field)
 +			len += copy_len;
- 	}
- 
--	ce = mem_pool__ce_alloc(mem_pool, len);
++	}
++
 +	ce = mem_pool__ce_alloc(istate->ce_mem_pool, len);
++
++	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
++	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
++	ce->ce_stat_data.sd_ctime.nsec = get_be32(&ondisk->ctime.nsec);
++	ce->ce_stat_data.sd_mtime.nsec = get_be32(&ondisk->mtime.nsec);
++	ce->ce_stat_data.sd_dev   = get_be32(&ondisk->dev);
++	ce->ce_stat_data.sd_ino   = get_be32(&ondisk->ino);
++	ce->ce_mode  = get_be32(&ondisk->mode);
++	ce->ce_stat_data.sd_uid   = get_be32(&ondisk->uid);
++	ce->ce_stat_data.sd_gid   = get_be32(&ondisk->gid);
++	ce->ce_stat_data.sd_size  = get_be32(&ondisk->size);
++	ce->ce_flags = flags & ~CE_NAMEMASK;
++	ce->ce_namelen = len;
++	ce->index = 0;
++	hashcpy(ce->oid.hash, ondisk->sha1);
  
- 	ce->ce_stat_data.sd_ctime.sec = get_be32(&ondisk->ctime.sec);
- 	ce->ce_stat_data.sd_mtime.sec = get_be32(&ondisk->mtime.sec);
-@@ -1782,9 +1790,9 @@ static struct cache_entry *create_from_disk(struct mem_pool *mem_pool,
- 	ce->index = 0;
- 	hashcpy(ce->oid.hash, ondisk->sha1);
- 
--	if (previous_ce) {
--		size_t copy_len = previous_ce->ce_namelen - strip_len;
--		memcpy(ce->name, previous_ce->name, copy_len);
+-		*ent_size = (name - ((char *)ondisk)) + consumed;
 +	if (expand_name_field) {
 +		if (copy_len)
 +			memcpy(ce->name, previous_ce->name, copy_len);
- 		memcpy(ce->name + copy_len, name, len + 1 - copy_len);
- 		*ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
- 	} else {
-@@ -1885,7 +1893,6 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
++		memcpy(ce->name + copy_len, name, len + 1 - copy_len);
++		*ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
++	} else {
++		memcpy(ce->name, name, len + 1);
++		*ent_size = ondisk_ce_size(ce);
+ 	}
+ 	return ce;
+ }
+@@ -1898,7 +1892,7 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+ 	struct cache_header *hdr;
  	void *mmap;
  	size_t mmap_size;
- 	const struct cache_entry *previous_ce = NULL;
--	struct cache_entry *dummy_entry = NULL;
+-	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
++	const struct cache_entry *previous_ce = NULL;
  
  	if (istate->initialized)
  		return istate->cache_nr;
-@@ -1923,7 +1930,6 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+@@ -1936,11 +1930,9 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
  	istate->initialized = 1;
  
  	if (istate->version == 4) {
--		previous_ce = dummy_entry = make_empty_transient_cache_entry(0);
+-		previous_name = &previous_name_buf;
  		mem_pool_init(&istate->ce_mem_pool,
  			      estimate_cache_size_from_compressed(istate->cache_nr));
  	} else {
-@@ -1938,14 +1944,12 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+-		previous_name = NULL;
+ 		mem_pool_init(&istate->ce_mem_pool,
+ 			      estimate_cache_size(mmap_size, istate->cache_nr));
+ 	}
+@@ -1952,12 +1944,12 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
  		unsigned long consumed;
  
  		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
--		ce = create_from_disk(istate->ce_mem_pool, disk_ce, &consumed, previous_ce);
+-		ce = create_from_disk(istate->ce_mem_pool, disk_ce, &consumed, previous_name);
 +		ce = create_from_disk(istate, disk_ce, &consumed, previous_ce);
  		set_index_entry(istate, i, ce);
  
  		src_offset += consumed;
--		if (previous_ce)
--			previous_ce = ce;
 +		previous_ce = ce;
  	}
--	free(dummy_entry);
+-	strbuf_release(&previous_name_buf);
  	istate->timestamp.sec = st.st_mtime;
  	istate->timestamp.nsec = ST_MTIME_NSEC(st);
  
-
-
-Nguyễn Thái Ngọc Duy (1):
-  read-cache.c: optimize reading index format v4
-
- read-cache.c | 128 ++++++++++++++++++++++++---------------------------
- 1 file changed, 60 insertions(+), 68 deletions(-)
-
 -- 
 2.19.0.rc0.337.ge906d732e7
 
