@@ -2,186 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7F6B1F404
-	for <e@80x24.org>; Sat,  1 Sep 2018 23:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46DC91F428
+	for <e@80x24.org>; Sun,  2 Sep 2018 00:35:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726000AbeIBEGl (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Sep 2018 00:06:41 -0400
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:46428 "EHLO
-        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725755AbeIBEGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Sep 2018 00:06:40 -0400
-Received: from fed1rmimpo305.cox.net ([68.230.241.173])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20180901235257.CHRD4136.fed1rmfepo103.cox.net@fed1rmimpo305.cox.net>
-          for <git@vger.kernel.org>; Sat, 1 Sep 2018 19:52:57 -0400
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo305.cox.net with cox
-        id WPsw1y00b59yGBo01PsxYB; Sat, 01 Sep 2018 19:52:57 -0400
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090202.5B8B2659.0023,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.2 cv=IdH3YSia c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=5rxgeBVgAAAA:8 a=1XWaLZrsAAAA:8
- a=kviXuzpPAAAA:8 a=4Z1IslZjDeIKamBZz-8A:9 a=PwKx63F5tFurRwaNxrlG:22
- a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.smith.home (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id A36C329A012D;
-        Sat,  1 Sep 2018 16:52:56 -0700 (MST)
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     Git Mailing List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 3/3] wt-status.c: Set the commitable flag in the collect phase.
-Date:   Sat,  1 Sep 2018 16:52:56 -0700
-Message-Id: <20180901235256.4260-4-ischis2@cox.net>
-X-Mailer: git-send-email 2.18.0
-In-Reply-To: <20180901235256.4260-1-ischis2@cox.net>
-References: <20180901235256.4260-1-ischis2@cox.net>
+        id S1725867AbeIBEs2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Sep 2018 00:48:28 -0400
+Received: from mail-oi0-f53.google.com ([209.85.218.53]:42962 "EHLO
+        mail-oi0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725790AbeIBEs2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Sep 2018 00:48:28 -0400
+Received: by mail-oi0-f53.google.com with SMTP id k81-v6so21858468oib.9
+        for <git@vger.kernel.org>; Sat, 01 Sep 2018 17:34:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc;
+        bh=WCGxFjoam87/3fjpFfPIbtGUgfqooCZ5TBQPqReQJNU=;
+        b=uR6Obx7ssvDiFuzTjzKtrPb5XX2RLOeu/KbT4alPvWW5tcLy6s8Jd+zxLjU3nQOApG
+         rxff07aIwzAZwTmE/wX6Jl5bNNz93Pp3Q98imLkldatNnWuPQs0j9t7QbiDVplLqwQrz
+         APn9FwYvh/jfPv3+H4rIVnKp+LqiOXagM8j/LVyUMHjp6jIeilkg8GOvq237H0WpOcPO
+         SMjQrQ8ZmdL84q2nRiGtkgGJoTMbk8lv0VpMVjvSbHm8TYlV2ocG4+/S0dVnjrsakY0Y
+         Mi1Kum3DMrn+TjvahtNaBufYMiPhSR4MZbceQ2wr65UyAd6U81IVZov0kHWK+IRklP57
+         Q4pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:sender:in-reply-to:references:from
+         :date:message-id:subject:to:cc;
+        bh=WCGxFjoam87/3fjpFfPIbtGUgfqooCZ5TBQPqReQJNU=;
+        b=WxiduySfpf4wAGuG3KdNQtM7N9dvvn4zfxI67NbGqxg0C+bM+MmoBM0A3ztV82k2e+
+         QE1j5vuNpLV6gqGfx9owNuYufsKlm/7VLqagEDAWlYtIVq9ptPyg28HB0kj50THJlQkW
+         E2uYty9c1IyyMcIXGnFOLTse00raTC3XpUHk9vaPRVy3P9nhGWrKlrkHHBFqYTe4JHiD
+         7XRgrCJxrgeoEWrnigTGX6rrFoM5ijI/HF7wNBpzWwvCOvaiMUKfq3+8D1hBe/PL8wZt
+         JK7XsW1raqKP/dC7xbWNGjT1F5spMyIk1YEuo7+yeZCQZmYVXlqzhbJxtSG9vWA4zex+
+         6VgA==
+X-Gm-Message-State: APzg51BvjcOfZQsDwAUO1Pdl8Ki/Rg336lM0XODd+bc8PyrAuPeiPx0a
+        iLPotGoTDvj8+1iNzjUW2D7rhjkDnfL2O2tPdN0=
+X-Google-Smtp-Source: ANB0VdZUoN0YTY6a2Ur5Fr85dlSOnqPJNMPXWE6C+p0ixwFjdbTLWmUyGyetrO1vk+J7jXP4TXK83FOn7QlepFVxNp8=
+X-Received: by 2002:a54:4784:: with SMTP id o4-v6mr12819464oic.101.1535848483272;
+ Sat, 01 Sep 2018 17:34:43 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a9d:1281:0:0:0:0:0 with HTTP; Sat, 1 Sep 2018 17:34:41 -0700 (PDT)
+In-Reply-To: <20180806212603.GA21026@sigill.intra.peff.net>
+References: <CAM-tV-_Easz+HA0GX0YkY4FZ2LithQy0+omq64D-OoHKkRe55A@mail.gmail.com>
+ <573B6BF5.1090004@kdbg.org> <20160517194533.GA11289@sigill.intra.peff.net>
+ <20160517195136.GB11289@sigill.intra.peff.net> <20160517195541.GC11289@sigill.intra.peff.net>
+ <CAM-tV-9gAGBLsEh3=aa-bHT2DmJb=dfahq+kUW+0GLoc7eFq0w@mail.gmail.com>
+ <CAM-tV--dHGJbxfWGKrRde+Q2-cnmCXNshQtX4PN7jnMWER_+bg@mail.gmail.com>
+ <20180625162308.GA13719@sigill.intra.peff.net> <CAM-tV-8sbbht7NUwf87-gq=+P=LNPyiEcv3zL+1BxfXK+ktmVA@mail.gmail.com>
+ <20180806212603.GA21026@sigill.intra.peff.net>
+From:   Noam Postavsky <npostavs@users.sourceforge.net>
+Date:   Sat, 1 Sep 2018 20:34:41 -0400
+X-Google-Sender-Auth: MHZ_Sj5rHxNxpTvZgmslxROUIM0
+Message-ID: <CAM-tV-_=4WuMGemm6RTB902-m8JfMKGp_OkQFuJMagPE8bOOtg@mail.gmail.com>
+Subject: Re: [BUG] A part of an edge from an octopus merge gets colored, even
+ with --color=never
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Hemmo Nieminen <hemmo.nieminen@iki.fi>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000465a450574d8979c"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In an update to fix a bug with "commit --dry-run" it was found that
-the commitable flag was broken. The update was, at the time, accepted
-as it was better than the previous version. [1]
+--000000000000465a450574d8979c
+Content-Type: text/plain; charset="UTF-8"
 
-Since the setting of the commitable flag had been done in
-wt_longstatus_print_updated, move it to wt_status_collect_updated_cb.
+On 6 August 2018 at 17:26, Jeff King <peff@peff.net> wrote:
 
-Set the commitable flag in wt_status_collect_changes_initial to keep
-from introducing a rebase regression.
+> I suspect it still has a bug, which is that it is handling this
+> first-parent-goes-left case, but probably gets the straight-parent case
+> wrong. But at least in this form, I think it is obvious to see where
+> that bug is (the "three" in the comment is not accurate in that latter
+> case, and it should be two).
 
-Instead of setting the commitable flag in show_merge_in_progress, in
-wt_status_cllect check for a merge that has not been committed. If
-present then set the commitable flag.
+Yes, thanks, it makes a lot more sense this way. I believe the
+attached handles both parent types correctly.
 
-Change the tests to expect success since updates to the wt-status
-broken code section is being fixed.
+--000000000000465a450574d8979c
+Content-Type: text/x-diff; charset="US-ASCII"; 
+	name="v3-0001-log-Fix-coloring-of-certain-octupus-merge-shapes.patch"
+Content-Disposition: attachment; 
+	filename="v3-0001-log-Fix-coloring-of-certain-octupus-merge-shapes.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_jlk4cp340
 
-[1] https://public-inbox.org/git/xmqqr3gcj9i5.fsf@gitster.mtv.corp.google.com/
-
-Signed-off-by: Stephen P. Smith <ischis2@cox.net>
----
- t/t7501-commit.sh |  6 +++---
- wt-status.c       | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 5812dc2f8..4cda088cc 100755
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -99,12 +99,12 @@ test_expect_success '--dry-run with stuff to commit returns ok' '
- 	git commit -m next -a --dry-run
- '
- 
--test_expect_failure '--short with stuff to commit returns ok' '
-+test_expect_success '--short with stuff to commit returns ok' '
- 	echo bongo bongo bongo >>file &&
- 	git commit -m next -a --short
- '
- 
--test_expect_failure '--porcelain with stuff to commit returns ok' '
-+test_expect_success '--porcelain with stuff to commit returns ok' '
- 	echo bongo bongo bongo >>file &&
- 	git commit -m next -a --porcelain
- '
-@@ -682,7 +682,7 @@ test_expect_success '--dry-run with conflicts fixed from a merge' '
- 	git commit -m "conflicts fixed from merge."
- '
- 
--test_expect_failure '--dry-run --short' '
-+test_expect_success '--dry-run --short' '
- 	# setup two branches with conflicting information
- 	# in the same file, resolve the conflict
- 	>test-file &&
-diff --git a/wt-status.c b/wt-status.c
-index 180faf6ba..578328979 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -540,10 +540,12 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			/* Leave {mode,oid}_head zero for an add. */
- 			d->mode_index = p->two->mode;
- 			oidcpy(&d->oid_index, &p->two->oid);
-+			s->commitable = 1;
- 			break;
- 		case DIFF_STATUS_DELETED:
- 			d->mode_head = p->one->mode;
- 			oidcpy(&d->oid_head, &p->one->oid);
-+			s->commitable = 1;
- 			/* Leave {mode,oid}_index zero for a delete. */
- 			break;
- 
-@@ -561,6 +563,7 @@ static void wt_status_collect_updated_cb(struct diff_queue_struct *q,
- 			d->mode_index = p->two->mode;
- 			oidcpy(&d->oid_head, &p->one->oid);
- 			oidcpy(&d->oid_index, &p->two->oid);
-+			s->commitable = 1;
- 			break;
- 		case DIFF_STATUS_UNMERGED:
- 			d->stagemask = unmerged_mask(p->two->path);
-@@ -665,11 +668,13 @@ static void wt_status_collect_changes_initial(struct wt_status *s)
- 			 * code will output the stage values directly and not use the
- 			 * values in these fields.
- 			 */
-+			s->commitable = 1;
- 		} else {
- 			d->index_status = DIFF_STATUS_ADDED;
- 			/* Leave {mode,oid}_head zero for adds. */
- 			d->mode_index = ce->ce_mode;
- 			oidcpy(&d->oid_index, &ce->oid);
-+			s->commitable = 1;
- 		}
- 	}
- }
-@@ -739,6 +744,7 @@ static int has_unmerged(struct wt_status *s)
- 
- void wt_status_collect(struct wt_status *s)
- {
-+	struct wt_status_state state;
- 	wt_status_collect_changes_worktree(s);
- 
- 	if (s->is_initial)
-@@ -746,6 +752,11 @@ void wt_status_collect(struct wt_status *s)
- 	else
- 		wt_status_collect_changes_index(s);
- 	wt_status_collect_untracked(s);
-+
-+	memset(&state, 0, sizeof(state));
-+	wt_status_get_state(&state, s->branch && !strcmp(s->branch, "HEAD"));
-+	if (state.merge_in_progress && !has_unmerged(s))
-+		s->commitable = 1;
- }
- 
- static void wt_longstatus_print_unmerged(struct wt_status *s)
-@@ -786,7 +797,6 @@ static void wt_longstatus_print_updated(struct wt_status *s)
- 			continue;
- 		if (!shown_header) {
- 			wt_longstatus_print_cached_header(s);
--			s->commitable = 1;
- 			shown_header = 1;
- 		}
- 		wt_longstatus_print_change_data(s, WT_STATUS_UPDATED, it);
-@@ -1089,7 +1099,6 @@ static void show_merge_in_progress(struct wt_status *s,
- 					 _("  (use \"git merge --abort\" to abort the merge)"));
- 		}
- 	} else {
--		s-> commitable = 1;
- 		status_printf_ln(s, color,
- 			_("All conflicts fixed but you are still merging."));
- 		if (s->hints)
--- 
-2.18.0
-
+RnJvbSBhODQxYTUwYjAxNmMwY2ZjOTE4MzM4NGU2YzNjYTg1YTIzZDFlMTFmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBOb2FtIFBvc3RhdnNreSA8bnBvc3RhdnNAdXNlcnMuc291cmNl
+Zm9yZ2UubmV0PgpEYXRlOiBTYXQsIDEgU2VwIDIwMTggMjA6MDc6MTYgLTA0MDAKU3ViamVjdDog
+W1BBVENIIHYzXSBsb2c6IEZpeCBjb2xvcmluZyBvZiBjZXJ0YWluIG9jdHVwdXMgbWVyZ2Ugc2hh
+cGVzCgpGb3Igb2N0b3B1cyBtZXJnZXMgd2hlcmUgdGhlIGZpcnN0IHBhcmVudCBlZGdlIGltbWVk
+aWF0ZWx5IG1lcmdlcyBpbnRvCnRoZSBuZXh0IGNvbHVtbiB0byB0aGUgbGVmdDoKCnwgKi0uCnwg
+fFwgXAp8LyAvIC8KCnRoZW4gdGhlIG51bWJlciBvZiBjb2x1bW5zIHNob3VsZCBiZSBvbmUgbGVz
+cyB0aGFuIHRoZSB1c3VhbCBjYXNlOgoKfCAqLS4KfCB8XCBcCnwgfCB8ICoKCkFsc28gcmVmYWN0
+b3IgdGhlIGNvZGUgdG8gaXRlcmF0ZSBvdmVyIGNvbHVtbnMgcmF0aGVyIHRoYW4gZGFzaGVzLApi
+dWlsZGluZyBmcm9tIGFuIGluaXRpYWwgcGF0Y2ggc3VnZ2VzdGlvbiBieSBKZWZmIEtpbmcuCgpT
+aWduZWQtb2ZmLWJ5OiBOb2FtIFBvc3RhdnNreSA8bnBvc3RhdnNAdXNlcnMuc291cmNlZm9yZ2Uu
+bmV0PgotLS0KIGdyYXBoLmMgfCA0OCArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
+KystLS0tLS0tLS0tLS0KIDEgZmlsZSBjaGFuZ2VkLCAzNiBpbnNlcnRpb25zKCspLCAxMiBkZWxl
+dGlvbnMoLSkKCmRpZmYgLS1naXQgYS9ncmFwaC5jIGIvZ3JhcGguYwppbmRleCBlMWY2ZDNiZGQu
+LjQ3OGM4NmRmYiAxMDA2NDQKLS0tIGEvZ3JhcGguYworKysgYi9ncmFwaC5jCkBAIC04NDgsMjEg
+Kzg0OCw0NSBAQCBzdGF0aWMgaW50IGdyYXBoX2RyYXdfb2N0b3B1c19tZXJnZShzdHJ1Y3QgZ2l0
+X2dyYXBoICpncmFwaCwKIAkJCQkgICAgc3RydWN0IHN0cmJ1ZiAqc2IpCiB7CiAJLyoKLQkgKiBI
+ZXJlIGRhc2hsZXNzX2NvbW1pdHMgcmVwcmVzZW50cyB0aGUgbnVtYmVyIG9mIHBhcmVudHMKLQkg
+KiB3aGljaCBkb24ndCBuZWVkIHRvIGhhdmUgZGFzaGVzIChiZWNhdXNlIHRoZWlyIGVkZ2VzIGZp
+dAotCSAqIG5lYXRseSB1bmRlciB0aGUgY29tbWl0KS4KKwkgKiBIZXJlIGRhc2hsZXNzX2NvbW1p
+dHMgcmVwcmVzZW50cyB0aGUgbnVtYmVyIG9mIHBhcmVudHMgd2hpY2ggZG9uJ3QKKwkgKiBuZWVk
+IHRvIGhhdmUgZGFzaGVzIChiZWNhdXNlIHRoZWlyIGVkZ2VzIGZpdCBuZWF0bHkgdW5kZXIgdGhl
+CisJICogY29tbWl0KS4gIEFuZCBkYXNoZnVsX2NvbW1pdHMgYXJlIHRoZSByZW1haW5pbmcgb25l
+cy4KIAkgKi8KIAljb25zdCBpbnQgZGFzaGxlc3NfY29tbWl0cyA9IDI7Ci0JaW50IGNvbF9udW0s
+IGk7Ci0JaW50IG51bV9kYXNoZXMgPQotCQkoKGdyYXBoLT5udW1fcGFyZW50cyAtIGRhc2hsZXNz
+X2NvbW1pdHMpICogMikgLSAxOwotCWZvciAoaSA9IDA7IGkgPCBudW1fZGFzaGVzOyBpKyspIHsK
+LQkJY29sX251bSA9IChpIC8gMikgKyBkYXNobGVzc19jb21taXRzICsgZ3JhcGgtPmNvbW1pdF9p
+bmRleDsKLQkJc3RyYnVmX3dyaXRlX2NvbHVtbihzYiwgJmdyYXBoLT5uZXdfY29sdW1uc1tjb2xf
+bnVtXSwgJy0nKTsKKwlpbnQgZGFzaGZ1bF9jb21taXRzID0gZ3JhcGgtPm51bV9wYXJlbnRzIC0g
+ZGFzaGxlc3NfY29tbWl0czsKKworCS8qCisJICogVXN1YWxseSwgZWFjaCBwYXJlbnQgZ2V0cyBp
+dHMgb3duIGNvbHVtbiwgbGlrZSB0aGlzOgorCSAqCisJICogfCAqLS4KKwkgKiB8IHxcIFwKKwkg
+KiB8IHwgfCAqCisJICoKKwkgKiBTb21ldGltZXMgdGhlIGZpcnN0IHBhcmVudCBnb2VzIGludG8g
+YW4gZXhpc3RpbmcgY29sdW1uLCBsaWtlIHRoaXM6CisJICoKKwkgKiB8ICotLgorCSAqIHwgfFwg
+XAorCSAqIHwvIC8gLworCSAqCisJICovCisJaW50IHBhcmVudF9pbl9leGlzdGluZ19jb2xzID0g
+Z3JhcGgtPm51bV9wYXJlbnRzIC0KKwkJKGdyYXBoLT5udW1fbmV3X2NvbHVtbnMgLSBncmFwaC0+
+bnVtX2NvbHVtbnMpOworCisJLyoKKwkgKiBEcmF3IHRoZSBkYXNoZXMuICBXZSBzdGFydCBpbiB0
+aGUgY29sdW1uIGZvbGxvd2luZyB0aGUKKwkgKiBkYXNobGVzc19jb21taXRzLCBidXQgc3VidHJh
+Y3Qgb3V0IHRoZSBwYXJlbnQgd2hpY2ggZ29lcyB0byBhbgorCSAqIGV4aXN0aW5nIGNvbHVtbjog
+d2UndmUgYWxyZWFkeSBjb3VudGVkIHRoYXQgY29sdW1uIGluIGNvbW1pdF9pbmRleC4KKwkgKi8K
+KwlpbnQgZmlyc3RfY29sID0gZ3JhcGgtPmNvbW1pdF9pbmRleCArIGRhc2hsZXNzX2NvbW1pdHMK
+KwkJLSBwYXJlbnRfaW5fZXhpc3RpbmdfY29sczsKKwlpbnQgaTsKKworCWZvciAoaSA9IDA7IGkg
+PCBkYXNoZnVsX2NvbW1pdHM7IGkrKykgeworCQlzdHJidWZfd3JpdGVfY29sdW1uKHNiLCAmZ3Jh
+cGgtPm5ld19jb2x1bW5zW2krZmlyc3RfY29sXSwgJy0nKTsKKwkJc3RyYnVmX3dyaXRlX2NvbHVt
+bihzYiwgJmdyYXBoLT5uZXdfY29sdW1uc1tpK2ZpcnN0X2NvbF0sCisJCQkJICAgIGkgPT0gZGFz
+aGZ1bF9jb21taXRzLTEgPyAnLicgOiAnLScpOwogCX0KLQljb2xfbnVtID0gKGkgLyAyKSArIGRh
+c2hsZXNzX2NvbW1pdHMgKyBncmFwaC0+Y29tbWl0X2luZGV4OwotCXN0cmJ1Zl93cml0ZV9jb2x1
+bW4oc2IsICZncmFwaC0+bmV3X2NvbHVtbnNbY29sX251bV0sICcuJyk7Ci0JcmV0dXJuIG51bV9k
+YXNoZXMgKyAxOworCXJldHVybiAyICogZGFzaGZ1bF9jb21taXRzOwogfQogCiBzdGF0aWMgdm9p
+ZCBncmFwaF9vdXRwdXRfY29tbWl0X2xpbmUoc3RydWN0IGdpdF9ncmFwaCAqZ3JhcGgsIHN0cnVj
+dCBzdHJidWYgKnNiKQotLSAKMi4xMS4wCgo=
+--000000000000465a450574d8979c--
