@@ -2,147 +2,249 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD3B51F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 13:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4FA0E1F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 13:24:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726023AbeICRii (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 13:38:38 -0400
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:46312 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725971AbeICRii (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 13:38:38 -0400
-Received: by mail-wr1-f49.google.com with SMTP id a108-v6so598937wrc.13
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 06:18:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=kNvVpXeBMm0S9VFpP2JIbJaYb9lQHOuY2rK+N35YQ2E=;
-        b=YLaryGa2V7P6m7R6J9oh/5RcDvUY7ZLS4Uwp4S9SNsQocsD2xCKBPIvMj1X18tSvLM
-         jsTwRsgRDonjVoyNoSQEQJgPAE99o+3UcurF1XgnPtCpcnk1xcROYDd5c7NiadHF/bP3
-         lMLdtg3SGHDPYuY23fV2jXvXL/xJ/X0rv6DHFHoI/O2fTfQ9/coDGZQd+7WJFxe0LxG/
-         CwcwePFWAe/A+ujgqTo538vXkdBdmyWpCF6QAubJ049OHT3fXrfJgbW4YHGB1DDH5qYv
-         SH+aB81KuIp/AqoPwrEy+CYpcC7kq0MC/rnpARJHVKLser0fA43zkwKeuA4M1z+zqOdj
-         c7KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=kNvVpXeBMm0S9VFpP2JIbJaYb9lQHOuY2rK+N35YQ2E=;
-        b=KfJx7RBaunh5uGPxD5Xn+9Gku62XWhGMsQvGPYl8caGxWqnm8BX3IMuVZqg+jTtb7W
-         aq9hDLhTjWy/Mp3Wj72SPBZEODNz9etcC/FNhA872gJR2ja+itE4lku4t4ON7Z/W7fMH
-         pz9iPHc68HSxkCWx1/V+AQ3MlqXIaOh5Uv+UGU75/wYdpqiDrz7Uo79tFyggxA1Pqg5A
-         pmsRHkCMRNogdPKpQDDll9qwIFY0DuFo0VbF9ySXzTHn1i+P1jVbmNjjiK3U6qZnivqs
-         0sA2IXAXR/n25gdAx9bGnX/1S2D9WTfJQPrV3QzvBn/MstwCKtTFenO65pcaAc35vLak
-         RnwQ==
-X-Gm-Message-State: APzg51CIFPrxJDETrahPkIpvZyRC+3Cl/1vK8KF8kvswfY02Clp0GZkx
-        AIchOz3BvxHu0YY5ohwmXH5ziFnr
-X-Google-Smtp-Source: ANB0VdZHWN6g12dRygRXJwfiODrhazycyWjxcNiaA9wTtMFe3PhHpCGfMZlO2Lt9GlAzp+1Agt1iLQ==
-X-Received: by 2002:adf:9503:: with SMTP id 3-v6mr18551250wrs.251.1535980709431;
-        Mon, 03 Sep 2018 06:18:29 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id k34-v6sm32452644wre.18.2018.09.03.06.18.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 03 Sep 2018 06:18:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ulrich Gemkow <ulrich.gemkow@ikr.uni-stuttgart.de>,
-        git@vger.kernel.org
-Subject: Re: Trivial enhancement: All commands which require an author should accept --author
-References: <201808282305.29407.ulrich.gemkow@ikr.uni-stuttgart.de>
-        <nycvar.QRO.7.76.6.1808291653190.71@tvgsbejvaqbjf.bet>
-        <xmqqpny1at28.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1808301350340.71@tvgsbejvaqbjf.bet>
-        <87r2igca0s.fsf@evledraar.gmail.com>
-        <nycvar.QRO.7.76.6.1808301607030.71@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1808301607030.71@tvgsbejvaqbjf.bet>
-Date:   Mon, 03 Sep 2018 15:18:27 +0200
-Message-ID: <87o9debty4.fsf@evledraar.gmail.com>
+        id S1726196AbeICRoR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 13:44:17 -0400
+Received: from mout.gmx.net ([212.227.17.22]:41897 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725968AbeICRoR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 13:44:17 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWCKz-1gPANQ31hZ-00XKB2; Mon, 03
+ Sep 2018 15:24:05 +0200
+Date:   Mon, 3 Sep 2018 15:24:05 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v8 13/20] stash: convert store to builtin
+In-Reply-To: <5466d911db63333c21317714e15b5bff827008a6.1535665109.git.ungureanupaulsebastian@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1809031512470.71@tvgsbejvaqbjf.bet>
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <5466d911db63333c21317714e15b5bff827008a6.1535665109.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WClK0PUSjMAmo2I5lK1sSKso2BFe3E629rFkCUJGlo9zNJsw9st
+ O75KwcLsUWQTpnrw/TyIppQedr0/gkB613E9Vf/1os8/RlAw5aTjgJe8+T8Sya2X6y69K/G
+ GU0Ll4jP4X8zF4ks3q5PFETde3fXxwOLlEDmqIeZ1AfNq7fMNOexNxPpb7wPR/i7Q6Q/9SD
+ +D4p2pdagfaMZGOq8Dmdg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:rVDcboAhE04=:l6wdHzy2Q7ST7cn6rFcLxo
+ 0KfqaC0oHlIHincDGfHONKtyr6FK7CpdG86C4EaQawwfcxKfKQojtVafmOC1X0WoJDu+GgXnp
+ Bct7N8piH4+U5Htwd6EjRTg8/qTAHelRfqt7jwVQbfRMuDSyjVouv1eIThSkWyPs3sDezOeq/
+ 85eak1mSdPjtlGDHkThOE+df3wV/euNujtPYcG1cxnXDxeuhrmePZp7QOP9bV/fgRw9j1yatB
+ pla7jPWbv8FROI1CRcMvcLN3t4EmIbRGDBP7JVGOV/toWHW3lvg6LIgUeqfOLcroDGY7ipkrK
+ T4TbhjpFztYQjgH8sf9XotVUuL3WRfXl6kpEhlP76haUVIFRwjFndL7tMsvPh7Zoia6Xhtvjf
+ biUaNO4GweHR7SpQucEid9+gNH/Rg1mfMPbOYYxWK2FHSt/S25U7GEYwMX8agutxsRkVkBAWp
+ Yp7fLeu/cW05MGEzMR6Y+itt5+9N3W6vxGIVy7qgz5Ia3SjUo7CYN5sFUfvwZFfKdtZK9bGE2
+ iljglcuA22gMpBvxyBl/RTajNZgBXmRhYfKOjAYFaboKRSN3Mca1O0VVbyirsiQjxzm2iJiy9
+ 3aPe+/OtIT895ss/FjtKUtKAao1LkeoPVAV87lqw0KFp0JcS1TUnAdEKfJO/i6C/j+ykzGSHV
+ 5IZgGqB3MTc6yrH0Xu/li0tuNeqP5rpERYDOQGQCpXBKUD213KdQN7g6YUUVQnwpNquXalDVR
+ hA7Ez7acARmT002/VBs80INegl8jJGmz4iiQv5zCjDpecbBnxpsuAdTsqkHYsZcStjlkWBXng
+ QhWYo5B
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Paul,
 
-On Thu, Aug 30 2018, Johannes Schindelin wrote:
+On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
 
-> Hi Ævar,
->
-> On Thu, 30 Aug 2018, Ævar Arnfjörð Bjarmason wrote:
->
->> On Thu, Aug 30 2018, Johannes Schindelin wrote:
->>
->> > On Wed, 29 Aug 2018, Junio C Hamano wrote:
->> >
->> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> >>
->> >> > The `stash` command only incidentally requires that the author is set, as
->> >> > it calls `git commit` internally (which records the author). As stashes
->> >> > are intended to be local only, that author information was never meant to
->> >> > be a vital part of the `stash`.
->> >> >
->> >> > I could imagine that an even better enhancement request would ask for `git
->> >> > stash` to work even if `user.name` is not configured.
->> >>
->> >> This would make a good bite-sized microproject, worth marking it as
->> >> #leftoverbits unless somebody is already working on it ;-)
->> >
->> > Right.
->> >
->> > What is our currently-favored approach to this, again? Do we have a
->> > favorite wiki page to list those, or do we have a bug tracker for such
->> > mini-projects?
->> >
->> > Once I know, I will add this, with enough information to get anybody
->> > interested started.
->>
->> I believe the "official" way, such as it is, is you just put
->> #leftoverbits in your E-Mail, then search the list archives,
->> e.g. https://public-inbox.org/git/?q=%23leftoverbits
->>
->> So e.g. I've taken to putting this in my own E-Mails where I spot
->> something I'd like to note as a TODO that I (or someone else) could work
->> on later:
->> https://public-inbox.org/git/?q=%23leftoverbits+f%3Aavarab%40gmail.com
->
-> That is a poor way to list the current micro-projects, as it is totally
-> non-obvious to the casual interested person which projects are still
-> relevant, and which ones have been addressed already.
+> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
+> index 02b593e0cd..87568b0f34 100644
+> --- a/builtin/stash--helper.c
+> +++ b/builtin/stash--helper.c
+> @@ -723,6 +728,54 @@ static int show_stash(int argc, const char **argv, const char *prefix)
+>  	return diff_result_code(&rev.diffopt, 0);
+>  }
+>  
+> +static int do_store_stash(const char *w_commit, const char *stash_msg,
+> +			  int quiet)
+> +{
+> +	int ret = 0;
+> +	int need_to_free = 0;
 
-I don't think this is ideal. To be clear and in reply to both yours and
-Junio's E-Mail. I meant "official" in scare quotes in the least official
-way possible.
+Not worth sending another iteration, but if you end up doing so, I found
+an alternative paradigm more useful: instead of having a Boolean to
+indicate whether you need to free, have a `char *to_free` that is
+initialized to `NULL`, then unconditionally release that:
 
-I.e. that you need to search the mailing list archive if you want to see
-what these #leftoverbits are, because the full set is stored nowhere
-else.
+	char *to_free = NULL;
 
-> In a bug tracker, you can at least add a comment stating that something
-> has been addressed, or made a lot easier by another topic.
+	if (!stash_msg)
+		stash_msg = to_free = xstrdup("Created via \"git stash store\".");
 
-Yeah, a bunch of things suck about it, although I will say at least for
-notes I'm leaving for myself I'm using it in a way that I wouldn't
-bother to use a bugtracker, so in many cases it's the difference between
-offhandendly saying "oh b.t.w. we should fix xyz in way abc
-#leftoverbits" and not having a bug at all, because filing a bug /
-curating a tracker etc. is a lot more work.
+	[...]
 
-> In a mailing list archive, those mails are immutable, and you cannot
-> update squat.
+	free(to_free);
+	return ret;
 
-In a lot of bugtrackers you can't update existing comments either, you
-make a new one noting some new status. Similarly you can send a new mail
-with the correct In-Reply-To.
+This works because `free(NULL)` is defined as a no-op.
 
-That doesn't solve all the issues, but helps in many cases.
+> +	struct object_id obj;
+> +
+> +	if (!stash_msg) {
+> +		need_to_free = 1;
+> +		stash_msg  = xstrdup("Created via \"git stash store\".");
+> +	}
+> +
+> +	ret = get_oid(w_commit, &obj);
+
+Is `get_oid()` non-quiet? If so, we might need to shut it up when the
+`quiet` variable is non-zero. If it is quiet, we should probably mention
+something here when `quiet` is zero and `ret` indicates an error with
+`get_oid()`.
+
+> +	if (!ret) {
+> +		ret = update_ref(stash_msg, ref_stash, &obj, NULL,
+> +				 REF_FORCE_CREATE_REFLOG,
+> +				 quiet ? UPDATE_REFS_QUIET_ON_ERR :
+> +				 UPDATE_REFS_MSG_ON_ERR);
+> +	}
+> +	if (ret && !quiet)
+> +		fprintf_ln(stderr, _("Cannot update %s with %s"),
+> +			   ref_stash, w_commit);
+> +	if (need_to_free)
+> +		free((char *) stash_msg);
+
+Okay, so all we need `stash_msg` for is the `update_ref()` call? And the
+fall-back message is constant. So how about
+
+	if (!stash_msg)
+		stash_msg = "Created via \"git stash store\".";
+
+? No need to allocate/release memory at all...
+
+> +	return ret;
+> +}
+> +
+> +static int store_stash(int argc, const char **argv, const char *prefix)
+> +{
+> +	const char *stash_msg = NULL;
+> +	struct option options[] = {
+> +		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
+> +		OPT_STRING('m', "message", &stash_msg, "message", N_("stash message")),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_stash_helper_store_usage,
+> +			     PARSE_OPT_KEEP_UNKNOWN);
+> +
+> +	if (argc != 1) {
+> +		fprintf_ln(stderr, _("\"git stash store\" requires one <commit> argument"));
+> +		return -1;
+> +	}
+> +
+> +	return do_store_stash(argv[0], stash_msg, quiet);
+> +}
+
+I guess `store_stash()` and `do_store_stash()` are separate functions to
+discern between the higher-level function that parses the command-line,
+and the lower-level function that is already libified?
+
+If so:
+
+1. I like it. Your code is already so much better prepared to serve as a proper
+   internal API than even some Git old-timers'.
+
+2. It might make sense to move the `get_oid()` call to `store_stash()`, as
+   it is also parsing: it is parsing the plain-text representation of the
+   revision into the internal representation (object ID).
+
+Neither of these suggestions are blockers, though.
+
+Thanks,
+Dscho
+
+>  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  {
+>  	pid_t pid = getpid();
+> @@ -757,6 +810,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>  		return !!list_stash(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "show"))
+>  		return !!show_stash(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "store"))
+> +		return !!store_stash(argc, argv, prefix);
+>  
+>  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
+>  		      git_stash_helper_usage, options);
+> diff --git a/git-stash.sh b/git-stash.sh
+> index 0d05cbc1e5..5739c51527 100755
+> --- a/git-stash.sh
+> +++ b/git-stash.sh
+> @@ -191,45 +191,6 @@ create_stash () {
+>  	die "$(gettext "Cannot record working tree state")"
+>  }
+>  
+> -store_stash () {
+> -	while test $# != 0
+> -	do
+> -		case "$1" in
+> -		-m|--message)
+> -			shift
+> -			stash_msg="$1"
+> -			;;
+> -		-m*)
+> -			stash_msg=${1#-m}
+> -			;;
+> -		--message=*)
+> -			stash_msg=${1#--message=}
+> -			;;
+> -		-q|--quiet)
+> -			quiet=t
+> -			;;
+> -		*)
+> -			break
+> -			;;
+> -		esac
+> -		shift
+> -	done
+> -	test $# = 1 ||
+> -	die "$(eval_gettext "\"$dashless store\" requires one <commit> argument")"
+> -
+> -	w_commit="$1"
+> -	if test -z "$stash_msg"
+> -	then
+> -		stash_msg="Created via \"git stash store\"."
+> -	fi
+> -
+> -	git update-ref --create-reflog -m "$stash_msg" $ref_stash $w_commit
+> -	ret=$?
+> -	test $ret != 0 && test -z "$quiet" &&
+> -	die "$(eval_gettext "Cannot update \$ref_stash with \$w_commit")"
+> -	return $ret
+> -}
+> -
+>  push_stash () {
+>  	keep_index=
+>  	patch_mode=
+> @@ -308,7 +269,7 @@ push_stash () {
+>  		clear_stash || die "$(gettext "Cannot initialize stash")"
+>  
+>  	create_stash -m "$stash_msg" -u "$untracked" -- "$@"
+> -	store_stash -m "$stash_msg" -q $w_commit ||
+> +	git stash--helper store -m "$stash_msg" -q $w_commit ||
+>  	die "$(gettext "Cannot save the current status")"
+>  	say "$(eval_gettext "Saved working directory and index state \$stash_msg")"
+>  
+> @@ -468,7 +429,7 @@ create)
+>  	;;
+>  store)
+>  	shift
+> -	store_stash "$@"
+> +	git stash--helper store "$@"
+>  	;;
+>  drop)
+>  	shift
+> -- 
+> 2.19.0.rc0.22.gc26283d74e
+> 
+> 
