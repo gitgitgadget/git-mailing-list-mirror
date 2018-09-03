@@ -2,197 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE431F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 19:11:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA4181F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 19:11:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728069AbeICXch (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 19:32:37 -0400
-Received: from mout.gmx.net ([212.227.17.21]:40365 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727493AbeICXch (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 19:32:37 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LxxNo-1frNy71jgS-015Idr; Mon, 03
- Sep 2018 21:11:03 +0200
-Date:   Mon, 3 Sep 2018 21:11:02 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 20/20] stash: replace all `write-tree` child
- processes with API calls
-In-Reply-To: <c26283d74e3f761a554940e3e0db13cef1b613d5.1535665109.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809032110520.71@tvgsbejvaqbjf.bet>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <c26283d74e3f761a554940e3e0db13cef1b613d5.1535665109.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728107AbeICXdH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 19:33:07 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43780 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727493AbeICXdG (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Sep 2018 19:33:06 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7876960745;
+        Mon,  3 Sep 2018 19:11:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1536001891;
+        bh=MWTUEaxiyIpJRoE1mIlWUWZFbVKSLWRAqi3v7tEq+90=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=1RPz7xU4/PlBUqFLLzCRRaVxynm3Pqdovsw1rCFQxp+TTmfRzRsZU3jfdH6s23Vnf
+         O+AQyNeRRvDr668ivBOu0prWq4N/oCDmzA4ohMdF4jcmNRyy2526VVJLzhi4sr/ud3
+         XAUzrJu16octRpRzDPDzc+BJvwqQjoMC86r1ltYKVzarTzEnSka7l4fdvg+cMQ+IVE
+         2rLkFK/vvn7XIp+vM1c1Bcuk9oqMfWu9pSgi4AuihHuZZwCQ9DbOAVhd2Ptna48NRr
+         ym3iI6ryWTfhVuAmLHEWtyugYZg5F+Ex8kGxd9X3gOK7LLuXBVQLsl0IKIHEmukH4N
+         6qTRg5BoSAOnBU95P3ywspR9lWrZaAz3Y6+iJIt1mRAUMIzNfIeQx8MXznT6oos4/X
+         qaxx24w4QZqwBnyEe91q1vaat6KgIS734OPMv3BRZUAFggZnS3kykFu3YR4/Hb9fgH
+         Sqbcrz9xXgurwNc+6FOvakTd6bY+oTulbIaFy+ByUipD8cuznwr
+Date:   Mon, 3 Sep 2018 19:11:26 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 08/12] commit-graph: convert to using the_hash_algo
+Message-ID: <20180903191126.GN432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
+ <20180829005857.980820-9-sandals@crustytoothpaste.net>
+ <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:UZedlozznmvro/yQ4T3DQmpnM+G8kpXi+2CxlVi0BOpFiLO9Ik4
- PFggAyy4HzWpkRCatAU3uXwvlVhYLtkpbGInCFClbuxmBfxO89dfzc/oHlF8vEQyZ73Eqwc
- YyuliEQD97Pf8ONXrIRpPciUhn4snMSCXLR2wfE7ZWjabkL+sfUgX7QnYcgtYJ/0Fz2zRdv
- bZg5csBYUmMZWc6Wx2x4A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:UA5JYzixdjY=:8Hcj1sTkUav6c37UgQi1kM
- NhiXGu8orYXlc4M1s4lRgUOX5fidZQAqT2wrmWdJn1yTtFGlIzccvS+mMMbu1vh22PYC0w32O
- TyPsF7j5nLf9Wk8iH373EYz3Veo2ZI2gGfb8XPxGs1cy5z0B3KDWT1CDh3pxTOcrd/O1FtrSt
- +/O7g3XLX8pAnrXEnj9uZY7GHUP3M0YwT0ngL4IYxliBCXsiwdm+omxPOnLYc6lE9LZNrXr55
- xJYFXs5f4TOzAUlb4Kq9fg+2yM+1cRhRY8xPKKDi5GiDnRLdJ7QH/xlyM/0sTssRycTfHQeyJ
- k6uLm1uQbhaHWsL9A42pnKQAtSUC8cqfPykcqRh3W0smeqIlhJMcz2ZcFCuvvn4RC+VTnxZ5E
- iGMgXsOV6oILHego71gxsJR4idzY1oFDshZ2Ps3bLTuU9Jn1mjQXVUsS93Lx/RkbSvOCPVnYs
- SfHuYkRfLRo0bnkzoRouO3WH9mqjW3mhDzoSrsmdhmA+lT7cHeApcM8jQXhsi4GrzJmIpTATf
- /JoXS12qJCor1/JXWDiBruxx+fBycTvsgvP2tKiqT7EiXd2vBXMdK/vdj519rpAyJNp/zYcuo
- 0Iu7wP4pB84LiAZ58aqJtSPiGq5bSJpV0YSXGsojJxlhPJFQ6ac42qnKW2MW25i8QPns2xJ+O
- qhX/93prHReJQ1azWFrLCQXe6eNbJs6SPKFxLITCJgPthNnoHQvfpWTRB2GxbS6zEp05LhMSB
- AIIBqTHvHTRY5spMil1NdLndcA/u0u3vsapeuuZK+YE6S3g71Frc9KVrgxWbwrZmq9RvXTAot
- KdiMBj+
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="aSnC4ZPPfhCvD8sN"
+Content-Disposition: inline
+In-Reply-To: <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
 
-On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
+--aSnC4ZPPfhCvD8sN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This commit replaces spawning `git write-tree` with API calls.
-> 
-> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-> ---
->  builtin/stash.c | 41 ++++++++++++-----------------------------
->  1 file changed, 12 insertions(+), 29 deletions(-)
+On Wed, Aug 29, 2018 at 08:41:36AM -0400, Derrick Stolee wrote:
+> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> index 6aee861f78..676c1a9ae0 100755
+> --- a/t/t5318-commit-graph.sh
+> +++ b/t/t5318-commit-graph.sh
+> @@ -333,7 +333,7 @@ test_expect_success 'git commit-graph verify' '
+>=20
+> =C2=A0NUM_COMMITS=3D9
+> =C2=A0NUM_OCTOPUS_EDGES=3D2
+> -HASH_LEN=3D20
+> +HASH_LEN=3D"$(test_oid rawsz)"
+> =C2=A0GRAPH_BYTE_VERSION=3D4
+> =C2=A0GRAPH_BYTE_HASH=3D5
+> =C2=A0GRAPH_BYTE_CHUNK_COUNT=3D6
 
-Very nice!
+I dropped this at the end of my hash-independent fixes series and I
+slipped in a use of test_oid_init, which is now required.  Thanks for
+the patch.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Thanks,
-Dscho
+--aSnC4ZPPfhCvD8sN
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index ba5818e24e..dd1084afd4 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -910,9 +910,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
->  {
->  	int ret = 0;
->  	struct strbuf untracked_msg = STRBUF_INIT;
-> -	struct strbuf out = STRBUF_INIT;
->  	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-> +	struct index_state istate = { NULL };
->  
->  	cp_upd_index.git_cmd = 1;
->  	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
-> @@ -927,15 +926,11 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
->  		goto done;
->  	}
->  
-> -	cp_write_tree.git_cmd = 1;
-> -	argv_array_push(&cp_write_tree.args, "write-tree");
-> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> -			 stash_index_path.buf);
-> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +	if (write_index_as_tree(&info->u_tree, &istate, stash_index_path.buf, 0,
-> +				NULL)) {
->  		ret = -1;
->  		goto done;
->  	}
-> -	get_oid_hex(out.buf, &info->u_tree);
->  
->  	if (commit_tree(untracked_msg.buf, untracked_msg.len,
->  			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
-> @@ -944,8 +939,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
->  	}
->  
->  done:
-> +	discard_index(&istate);
->  	strbuf_release(&untracked_msg);
-> -	strbuf_release(&out);
->  	remove_path(stash_index_path.buf);
->  	return ret;
->  }
-> @@ -956,11 +951,10 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
->  {
->  	int i;
->  	int ret = 0;
-> -	struct strbuf out = STRBUF_INIT;
->  	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
->  	struct child_process cp_add_i = CHILD_PROCESS_INIT;
-> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
->  	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
-> +	struct index_state istate = { NULL };
->  
->  	remove_path(stash_index_path.buf);
->  
-> @@ -985,17 +979,12 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
->  		goto done;
->  	}
->  
-> -	cp_write_tree.git_cmd = 1;
-> -	argv_array_push(&cp_write_tree.args, "write-tree");
-> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> -			 stash_index_path.buf);
-> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
-> +				NULL)) {
->  		ret = -1;
->  		goto done;
->  	}
->  
-> -	get_oid_hex(out.buf, &info->w_tree);
-> -
->  	cp_diff_tree.git_cmd = 1;
->  	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
->  			 oid_to_hex(&info->w_tree), "--", NULL);
-> @@ -1011,7 +1000,7 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
->  	}
->  
->  done:
-> -	strbuf_release(&out);
-> +	discard_index(&istate);
->  	remove_path(stash_index_path.buf);
->  	return ret;
->  }
-> @@ -1020,10 +1009,9 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
->  {
->  	int ret = 0;
->  	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-> -	struct strbuf out = STRBUF_INIT;
->  	struct strbuf diff_output = STRBUF_INIT;
->  	struct rev_info rev;
-> +	struct index_state istate = { NULL };
->  
->  	set_alternate_index_output(stash_index_path.buf);
->  	if (reset_tree(&info->i_tree, 0, 0)) {
-> @@ -1062,20 +1050,15 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
->  		goto done;
->  	}
->  
-> -	cp_write_tree.git_cmd = 1;
-> -	argv_array_push(&cp_write_tree.args, "write-tree");
-> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> -			 stash_index_path.buf);
-> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
-> +				NULL)) {
->  		ret = -1;
->  		goto done;
->  	}
->  
-> -	get_oid_hex(out.buf, &info->w_tree);
-> -
->  done:
-> +	discard_index(&istate);
->  	UNLEAK(rev);
-> -	strbuf_release(&out);
->  	object_array_clear(&rev.pending);
->  	strbuf_release(&diff_output);
->  	remove_path(stash_index_path.buf);
-> -- 
-> 2.19.0.rc0.22.gc26283d74e
-> 
-> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluNh14ACgkQv1NdgR9S
+9ov+YhAAkIBUk09ak8EjX8xqJdjD8WSovBVXo9oxuSYMQ9GkTkdUVOkwmRmyBX9w
+2KToevYHlOXETH1OX72BMl+8rO2g8Hk1oRiRgfX3Jqrj+dUhM4mJItzk2FcZUCxR
+ifc80kj6rp59MX/TMdq0wvsWmAnQtY7eN+g2LxMvOFJMnYrbLC6amagR7WrjDhbf
++aKi34RdVyVQ7vKjTJlSeuwP02Q+P53xNMqSjftzEPpg++dLpDOtCkL+IfFctbzu
+bENsJrAhHswF78vCsZoW6l/dEvVUjEzvLuN6Zy0ED0b7babHjy/c8xf7xqmOy1ek
+H2orHux87sFPLBdjA3P3Zw6bBB0NtOGFBSf1GtEkrwRTp01ckLbHd/7Pwqy7XKhF
+kTQkIwHtG93ge4qIj29fbmCyULiFaxoSshKN8rN38zNT2Ifq7hISD0m16Z5KpW3+
+Smgubm9YPEWvjf5AhqD7VPzt90j+uZ51X2peYl8+/euUEjA4iVjCcTPw6DHk9OEQ
+aIFzMTZd+EdcxLnHZNWRcrOIPdd5JSLEOFQoyfSc0lsdDEkVbFWrr6RfFtJ7vfm2
+b/eVFMpap1d3IL8bv9Xv4Zy4bIXW5VlXEDYS8mcfkRZVOmmVA4qkGso3XIMWwPxC
+ApfA9iixok/sFCsFDPTaDGtpPjd/s8aH2WpQLoAzd2d5mUsK65E=
+=Q5h8
+-----END PGP SIGNATURE-----
+
+--aSnC4ZPPfhCvD8sN--
