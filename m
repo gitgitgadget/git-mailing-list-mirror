@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 533111F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 21:10:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC65B1F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 21:10:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727310AbeIDBcd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 21:32:33 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:40740 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725947AbeIDBcc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 21:32:32 -0400
-Received: by mail-pl1-f195.google.com with SMTP id s17-v6so610657plp.7
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 14:10:33 -0700 (PDT)
+        id S1727434AbeIDBcf (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 21:32:35 -0400
+Received: from mail-pf1-f178.google.com ([209.85.210.178]:33790 "EHLO
+        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725947AbeIDBcf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 21:32:35 -0400
+Received: by mail-pf1-f178.google.com with SMTP id d4-v6so634109pfn.0
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 14:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ULKfDretZndDNPWmJ82HFR7K4bqORPjpgpnkg57g4xI=;
-        b=E8Askv8m0uwnmyFtdn0ARFuZDlQYopKtDlbeuJf8W3ocUaA3uVPxirL7+TYxBzJtCf
-         K/dRW13V7NulROjwTJNFMvs97Uw3bZnuBUME1eOvERs489Nq45yIracdsjYi2G6eB1G0
-         HRibQ9w4NRUs+YJlOKcYQLmPKF1VhppbeGaNYTuZV2FD8VLvtUSZgqIMv6glNAcnN13K
-         YDAm8wtOg6dDhPlETiZkwcVAbdyWlW7bFI7N1xdbpJ4wrGxZ5VKsxXNvB4NjNpbcRJFX
-         btTqV4UDPAHewcq6r/HH/sIxURdXf0n/luDJM4NdSrAubDO/cjmR6FRGoScC8ezzDax6
-         SYyQ==
+        bh=1DDQ6bQHLeFLD4TmezyGWVpGQjEaG26ldFkIE4QNdB0=;
+        b=RmInlSdmGw+tl45rSicc8KEEqFbb9BdZxjBtXlRdFqxUj1/SZeg7d0+Z9sNqjr08Bg
+         UpHNWAER+wQMU6R9fVTJCCn7uQCtw82PZ/A7LNLdOo5QK6zx9RY+KFkHQlJtdFuZZKcV
+         8tZVCGauREhcIveabtBfFrfwPTlMx7YSgDUGZNSYzxLstaQuYOknT4ZDBb1pBQTAlf/+
+         9kR1N5CfcbzjdO2ACBtVM/GSE2FDCp4LdfZxEeHTmcoWgU4FvPYj9jJpOzYodmR+mUQd
+         pA4YYwBsSkV1jK4w+zJhtxOPtXLqGKmLIZuWEkahXQeH58xC2CUky/Li0g7VxxadZB2r
+         1pkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ULKfDretZndDNPWmJ82HFR7K4bqORPjpgpnkg57g4xI=;
-        b=axcNClFc62rlaRbhWwScd8ttNFoz6HAcoitOkVK/ozMsCRL7TBujh3n/Xby5oTITIh
-         GsKgV9AJfDZr43mP51Hycv2uOY6D465SVdavFxJ8ETph1r7r8pqoult4XoAPWzmgZbQM
-         l/UhxiFRYuwJ7r+i+42mLLAshGAYrz8DZ4ow2Zq3PFhf0cuOVfSU/YuoRMbbNGK/3t7c
-         DqlVGG29F0dK9CF9JIBW/DmbTGtdGSXJ1KWpMqjYmosImCcnfJhFN9a062w5e8msBpJH
-         ttzL2DscHswX4J7CMwOTw7lY0YZgMEBOFFLW4QMiBubujDlPYy8owd6TcG7/Y5xSXiJd
-         J1Eg==
-X-Gm-Message-State: APzg51AnbjdT8ctudn/GrrT4ZaxItYjWBfNj/X1UtObP5T/GXMN+CVc6
-        1e06G7deRM/JPUzCL39F57MGAZUk
-X-Google-Smtp-Source: ANB0VdY7tctgIf+uSwXbAnhKRqr/F7o0DOYhyexWWh5F2TSyZ7rhnQSkDa8f5feiCrpcjn7UjhuHvw==
-X-Received: by 2002:a17:902:8ec7:: with SMTP id x7-v6mr30648663plo.336.1536009032564;
-        Mon, 03 Sep 2018 14:10:32 -0700 (PDT)
+        bh=1DDQ6bQHLeFLD4TmezyGWVpGQjEaG26ldFkIE4QNdB0=;
+        b=bpJBpQXwA/XCty9taAj90+8ytgxrfWBL5Y+JSVfBcaYyqfIGaghCLsrxEkgG43WN82
+         V8wxP6fs1FvemluzMDQnRzOI3mJg8pUGgBnaMxdZk+sWo3Xeq1/HuFwOT7m3IQ/eOUoi
+         fBPCj4xvtScFqju+3FCAPoCdgWxWp+7Ng4oiCQV6hr8CV933b8cjW5Y6IS8WXLkrKxTL
+         NkzebZp70PTPq2yA3sLlGbMBNyKOBBR87gnsWCRPoXCee/m8Z3WaGvrZy3OxcH5cOF/H
+         1rivoadtE0rnpTxQx16ZdZrpEU0I384ncEnzl9O2e0qhN6V2igCOwPZlXR6tnSKp8NgU
+         zgXg==
+X-Gm-Message-State: APzg51DTdm6bgbmM1zub6bvZbsL1HpsRGFG9mMGuyMSl9P/bUci5qcka
+        dpS9VPslGd3mHIc48mpf8Wzso98E
+X-Google-Smtp-Source: ANB0VdagE3wtpHHbIkjvRK65Q9LDI88OY9mC1Ea/kxW2OWEmhAIOAqxs1RG79aq/EYKnrM/R9b8MKA==
+X-Received: by 2002:a63:5ec1:: with SMTP id s184-v6mr28389704pgb.26.1536009035345;
+        Mon, 03 Sep 2018 14:10:35 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id l127-v6sm26815577pfc.55.2018.09.03.14.10.31
+        by smtp.gmail.com with ESMTPSA id m21-v6sm25543969pgd.6.2018.09.03.14.10.34
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Sep 2018 14:10:31 -0700 (PDT)
-Date:   Mon, 03 Sep 2018 14:10:31 -0700 (PDT)
-X-Google-Original-Date: Mon, 03 Sep 2018 21:10:19 GMT
-Message-Id: <18e6beec5f48ad5a17c7c7309e0507b01a53c2ec.1536009027.git.gitgitgadget@gmail.com>
+        Mon, 03 Sep 2018 14:10:34 -0700 (PDT)
+Date:   Mon, 03 Sep 2018 14:10:34 -0700 (PDT)
+X-Google-Original-Date: Mon, 03 Sep 2018 21:10:21 GMT
+Message-Id: <2b5d6785944ed1a66f0272896a45fece8521d10f.1536009027.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.git.gitgitgadget@gmail.com>
 References: <pull.31.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/9] ci/lib.sh: encapsulate Travis-specific things
+Subject: [PATCH 4/9] tests: optionally write results as JUnit-style .xml
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,165 +70,195 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The upcoming patches will allow building git.git via VSTS CI, where
-variable names and URLs look a bit different than in Travis CI.
+This will come in handy when publishing the results of Git's test suite
+during an automated VSTS CI run.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/install-dependencies.sh |  3 ++-
- ci/lib.sh                  | 44 +++++++++++++++++++++++++++-----------
- ci/print-test-failures.sh  |  2 +-
- ci/test-documentation.sh   |  1 +
- 4 files changed, 35 insertions(+), 15 deletions(-)
+ t/.gitignore  |  1 +
+ t/test-lib.sh | 98 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 961064658e..6d92cc1cba 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -28,7 +28,8 @@ osx-clang|osx-gcc)
- 	brew update --quiet
- 	# Uncomment this if you want to run perf tests:
- 	# brew install gnu-time
--	brew install git-lfs gettext
-+	test -z "$BREW_INSTALL_PACKAGES" ||
-+	eval brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
- 	brew install caskroom/cask/perforce
- 	;;
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 06970f7213..657ff88672 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -1,5 +1,26 @@
- # Library of functions shared by all CI scripts
+diff --git a/t/.gitignore b/t/.gitignore
+index 348715f0e4..91cf5772fe 100644
+--- a/t/.gitignore
++++ b/t/.gitignore
+@@ -2,3 +2,4 @@
+ /test-results
+ /.prove
+ /chainlinttmp
++/out/
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 8bb0f4348e..50a65a600e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -288,6 +288,9 @@ do
+ 	--verbose-log)
+ 		verbose_log=t
+ 		shift ;;
++	--write-junit-xml)
++		write_junit_xml=t
++		shift ;;
+ 	*)
+ 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
+ 	esac
+@@ -431,11 +434,24 @@ trap 'exit $?' INT
+ # the test_expect_* functions instead.
  
-+if test -n "$TRAVIS_COMMIT"
-+then
-+	# We are running within Travis CI
-+	CI_BRANCH="$TRAVIS_BRANCH"
-+	CI_COMMIT="$TRAVIS_COMMIT"
-+	CI_JOB_ID="$TRAVIS_JOB_ID"
-+	CI_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
-+	CI_OS_NAME="$TRAVIS_OS_NAME"
-+	CI_REPO_SLUG="$TRAVIS_REPO_SLUG"
-+
-+	cache_dir="$HOME/travis-cache"
-+
-+	url_for_job_id () {
-+		echo "https://travis-ci.org/$CI_REPO_SLUG/jobs/$1"
-+	}
-+
-+	BREW_INSTALL_PACKAGES="git-lfs gettext"
-+	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
-+	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-+fi
-+
- skip_branch_tip_with_tag () {
- 	# Sometimes, a branch is pushed at the same time the tag that points
- 	# at the same commit as the tip of the branch is pushed, and building
-@@ -13,10 +34,10 @@ skip_branch_tip_with_tag () {
- 	# we can skip the build because we won't be skipping a build
- 	# of a tag.
- 
--	if TAG=$(git describe --exact-match "$TRAVIS_BRANCH" 2>/dev/null) &&
--		test "$TAG" != "$TRAVIS_BRANCH"
-+	if TAG=$(git describe --exact-match "$CI_BRANCH" 2>/dev/null) &&
-+		test "$TAG" != "$CI_BRANCH"
- 	then
--		echo "$(tput setaf 2)Tip of $TRAVIS_BRANCH is exactly at $TAG$(tput sgr0)"
-+		echo "$(tput setaf 2)Tip of $CI_BRANCH is exactly at $TAG$(tput sgr0)"
- 		exit 0
- 	fi
+ test_ok_ () {
++	if test -n "$write_junit_xml"
++	then
++		write_junit_xml_testcase "$*"
++	fi
+ 	test_success=$(($test_success + 1))
+ 	say_color "" "ok $test_count - $@"
  }
-@@ -25,7 +46,7 @@ skip_branch_tip_with_tag () {
- # job if we encounter the same tree again and can provide a useful info
- # message.
- save_good_tree () {
--	echo "$(git rev-parse $TRAVIS_COMMIT^{tree}) $TRAVIS_COMMIT $TRAVIS_JOB_NUMBER $TRAVIS_JOB_ID" >>"$good_trees_file"
-+	echo "$(git rev-parse $CI_COMMIT^{tree}) $CI_COMMIT $CI_JOB_NUMBER $CI_JOB_ID" >>"$good_trees_file"
- 	# limit the file size
- 	tail -1000 "$good_trees_file" >"$good_trees_file".tmp
- 	mv "$good_trees_file".tmp "$good_trees_file"
-@@ -35,7 +56,7 @@ save_good_tree () {
- # successfully before (e.g. because the branch got rebased, changing only
- # the commit messages).
- skip_good_tree () {
--	if ! good_tree_info="$(grep "^$(git rev-parse $TRAVIS_COMMIT^{tree}) " "$good_trees_file")"
-+	if ! good_tree_info="$(grep "^$(git rev-parse $CI_COMMIT^{tree}) " "$good_trees_file")"
+ 
+ test_failure_ () {
++	if test -n "$write_junit_xml"
++	then
++		junit_insert="<failure message=\"not ok $test_count -"
++		junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
++		junit_insert="$junit_insert $(xml_attr_encode \
++			"$(printf '%s\n' "$@" | sed 1d)")"
++		junit_insert="$junit_insert</failure>"
++		write_junit_xml_testcase "$1" "      $junit_insert"
++	fi
+ 	test_failure=$(($test_failure + 1))
+ 	say_color error "not ok $test_count - $1"
+ 	shift
+@@ -444,11 +460,19 @@ test_failure_ () {
+ }
+ 
+ test_known_broken_ok_ () {
++	if test -n "$write_junit_xml"
++	then
++		write_junit_xml_testcase "$* (breakage fixed)"
++	fi
+ 	test_fixed=$(($test_fixed+1))
+ 	say_color error "ok $test_count - $@ # TODO known breakage vanished"
+ }
+ 
+ test_known_broken_failure_ () {
++	if test -n "$write_junit_xml"
++	then
++		write_junit_xml_testcase "$* (known breakage)"
++	fi
+ 	test_broken=$(($test_broken+1))
+ 	say_color warn "not ok $test_count - $@ # TODO known breakage"
+ }
+@@ -706,6 +730,10 @@ test_start_ () {
+ 	test_count=$(($test_count+1))
+ 	maybe_setup_verbose
+ 	maybe_setup_valgrind
++	if test -n "$write_junit_xml"
++	then
++		junit_start=$(test-tool date getnanos)
++	fi
+ }
+ 
+ test_finish_ () {
+@@ -743,6 +771,13 @@ test_skip () {
+ 
+ 	case "$to_skip" in
+ 	t)
++		if test -n "$write_junit_xml"
++		then
++			message="$(xml_attr_encode "$skipped_reason")"
++			write_junit_xml_testcase "$1" \
++				"      <skipped message=\"$message\" />"
++		fi
++
+ 		say_color skip >&3 "skipping test: $@"
+ 		say_color skip "ok $test_count # skip $1 ($skipped_reason)"
+ 		: true
+@@ -758,9 +793,58 @@ test_at_end_hook_ () {
+ 	:
+ }
+ 
++write_junit_xml () {
++	case "$1" in
++	--truncate)
++		>"$junit_xml_path"
++		junit_have_testcase=
++		shift
++		;;
++	esac
++	printf '%s\n' "$@" >>"$junit_xml_path"
++}
++
++xml_attr_encode () {
++	# We do not translate CR to &#x0d; because BSD sed does not handle
++	# \r in the regex. In practice, the output should not even have any
++	# carriage returns.
++	printf '%s\n' "$@" |
++	sed -e 's/&/\&amp;/g' -e "s/'/\&apos;/g" -e 's/"/\&quot;/g' \
++		-e 's/</\&lt;/g' -e 's/>/\&gt;/g' \
++		-e 's/	/\&#x09;/g' -e 's/$/\&#x0a;/' -e '$s/&#x0a;$//' |
++	tr -d '\012\015'
++}
++
++write_junit_xml_testcase () {
++	junit_attrs="name=\"$(xml_attr_encode "$this_test.$test_count $1")\""
++	shift
++	junit_attrs="$junit_attrs classname=\"$this_test\""
++	junit_attrs="$junit_attrs time=\"$(test-tool \
++		date getnanos $junit_start)\""
++	write_junit_xml "$(printf '%s\n' \
++		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
++	junit_have_testcase=t
++}
++
+ test_done () {
+ 	GIT_EXIT_OK=t
+ 
++	if test -n "$write_junit_xml" && test -n "$junit_xml_path"
++	then
++		test -n "$junit_have_testcase" || {
++			junit_start=$(test-tool date getnanos)
++			write_junit_xml_testcase "all tests skipped"
++		}
++
++		# adjust the overall time
++		junit_time=$(test-tool date getnanos $junit_suite_start)
++		sed "s/<testsuite [^>]*/& time=\"$junit_time\"/" \
++			<"$junit_xml_path" >"$junit_xml_path.new"
++		mv "$junit_xml_path.new" "$junit_xml_path"
++
++		write_junit_xml "  </testsuite>" "</testsuites>"
++	fi
++
+ 	if test -z "$HARNESS_ACTIVE"
  	then
- 		# Haven't seen this tree yet, or no cached good trees file yet.
- 		# Continue the build job.
-@@ -45,18 +66,18 @@ skip_good_tree () {
- 	echo "$good_tree_info" | {
- 		read tree prev_good_commit prev_good_job_number prev_good_job_id
- 
--		if test "$TRAVIS_JOB_ID" = "$prev_good_job_id"
-+		if test "$CI_JOB_ID" = "$prev_good_job_id"
- 		then
- 			cat <<-EOF
--			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
-+			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
- 			This commit has already been built and tested successfully by this build job.
- 			To force a re-build delete the branch's cache and then hit 'Restart job'.
- 			EOF
- 		else
- 			cat <<-EOF
--			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
-+			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
- 			This commit's tree has already been built and tested successfully in build job $prev_good_job_number for commit $prev_good_commit.
--			The log of that build job is available at https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
-+			The log of that build job is available at $(url_for_job_id $prev_good_job_id)
- 			To force a re-build delete the branch's cache and then hit 'Restart job'.
- 			EOF
- 		fi
-@@ -81,7 +102,6 @@ check_unignored_build_artifacts ()
- # and installing dependencies.
- set -ex
- 
--cache_dir="$HOME/travis-cache"
- good_trees_file="$cache_dir/good-trees"
- 
- mkdir -p "$cache_dir"
-@@ -91,13 +111,11 @@ skip_good_tree
- 
- if test -z "$jobname"
- then
--	jobname="$TRAVIS_OS_NAME-$CC"
-+	jobname="$CI_OS_NAME-$CC"
+ 		test_results_dir="$TEST_OUTPUT_DIRECTORY/test-results"
+@@ -996,6 +1080,7 @@ then
+ else
+ 	mkdir -p "$TRASH_DIRECTORY"
+ fi
++
+ # Use -P to resolve symlinks in our working directory so that the cwd
+ # in subprocesses like git equals our $PWD (for pathname comparisons).
+ cd -P "$TRASH_DIRECTORY" || exit 1
+@@ -1009,6 +1094,19 @@ then
+ 	test_done
  fi
  
- export DEVELOPER=1
- export DEFAULT_TEST_TARGET=prove
--export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
--export GIT_TEST_OPTS="--verbose-log -x --immediate"
- export GIT_TEST_CLONE_2GB=YesPlease
- if [ "$jobname" = linux-gcc ]; then
- 	export CC=gcc-8
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index 7aef39a2fd..d2045b63a6 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -69,7 +69,7 @@ do
- 	fi
- done
- 
--if [ $combined_trash_size -gt 0 ]
-+if [ -n "$TRAVIS_JOB_ID" -a $combined_trash_size -gt 0 ]
- then
- 	echo "------------------------------------------------------------------------"
- 	echo "Trash directories embedded in this log can be extracted by running:"
-diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index d3cdbac73f..7d0beb2832 100755
---- a/ci/test-documentation.sh
-+++ b/ci/test-documentation.sh
-@@ -5,6 +5,7 @@
- 
- . ${0%/*}/lib.sh
- 
-+test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
- gem install asciidoctor
- 
- make check-builtins
++if test -n "$write_junit_xml"
++then
++	junit_xml_dir="$TEST_OUTPUT_DIRECTORY/out"
++	mkdir -p "$junit_xml_dir"
++	junit_xml_base=${0##*/}
++	junit_xml_path="$junit_xml_dir/TEST-${junit_xml_base%.sh}.xml"
++	junit_attrs="name=\"${junit_xml_base%.sh}\""
++	junit_attrs="$junit_attrs timestamp=\"$(TZ=UTC \
++		date +%Y-%m-%dT%H:%M:%S)\""
++	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
++	junit_suite_start=$(test-tool date getnanos)
++fi
++
+ # Provide an implementation of the 'yes' utility
+ yes () {
+ 	if test $# = 0
 -- 
 gitgitgadget
 
