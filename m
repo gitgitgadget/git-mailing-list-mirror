@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A7E11F404
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAC021F404
 	for <e@80x24.org>; Mon,  3 Sep 2018 14:49:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbeICTKP (ORCPT <rfc822;e@80x24.org>);
+        id S1726426AbeICTKQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 15:10:16 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:39943 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725949AbeICTKP (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 3 Sep 2018 15:10:15 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:45953 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726066AbeICTKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 15:10:13 -0400
-Received: by mail-wr1-f65.google.com with SMTP id 20-v6so900923wrb.12
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 07:49:42 -0700 (PDT)
+Received: by mail-wm0-f67.google.com with SMTP id 207-v6so1394478wme.5
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 07:49:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=A5yqrUySfJ/7q0tO/8ynVOX+4OaQtGNYM7wHf4giKkE=;
-        b=HyvI30DSpTP/PqtYt78hbV9qmyVpGuVOTqeWS+T0mMRxRjlVWRN3Cs1H0kGhBYlfp+
-         ZfdcFGHIcnYjwbdZK6U4Ce3tghQQYP606Qq2Xkbj1DX+XqcpVr7z5hvEzZ2GmVietqUZ
-         Ihc+CaWLdtans/Rxq+SgnXU32B+OxjeeUNMa7vNr6axSYul0ydfv/xoY6K4i/EnqVMR8
-         HyobIRn+ZxC02Y+FThSurDxWgvgTwYG7Wmeu9+RiOSagK61fhclGRXvemHqbJkfc6X3+
-         HNUrW9p03lZP9meQ94UZ+WY3qmkdPMQ/Yso+JBgFEpr7ItizTeY8E+NfIf0qEHWqpGNr
-         5LYg==
+        bh=5yqHtrwBiB3dgIBZ1Q5c+D9aa96qQ9Mm4JLdYUmFIK0=;
+        b=EvhzDrEkwRFfui5lCe4jp1BOJVMuqhBYjBWdOM5iOBR76u7Hr7ZbqIyHcHc9DCd9bX
+         V1Vn5VXoPNDLeJRVsGBnsmM84urTiJ/w+36cyn/bYv2QWxHhIHKOqtLPoSAitxBN9Wpn
+         0qEb8mqKi+Q7rBfTNOLt6i78355rjaH5iqdkeGdwCyKbRmrNLydl5nn8ivgKFFZ/m4LO
+         H86FhsvdbP7I6IcE04Qc4OZDAH1w5c4gzZAUPS1xlOaRyJmo1Ep+PCwj1GbKbNojU2RT
+         9JoQVp/gfINUoq7X2yX0ZTG1kf3/wIvYZe+D+QQcTQPRPxWRlYAKAHPIBhkGB4Yj/5vR
+         qkHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=A5yqrUySfJ/7q0tO/8ynVOX+4OaQtGNYM7wHf4giKkE=;
-        b=ZqgxRLYky3hh5LbU6xwZQmA/FSiYPoW83ONHXBT1bWA+14GefbSsxvKLaVtwaUILjF
-         /oBvyzIdGbTgQ/xhkEyVGLiLZLIBN3t1KPIzVgybuEbKgTLl/QMT6brldl9lyN2EOa+z
-         4zAIG8mdH3ohA04Ogwxzqn6+lesYgBN5b1wOxZu6vmPoDQ4A5visnAATIRi26krC7m3z
-         r6F4bhrjBxTkuuzf3dR9tNaVT3VC12ToUY/y2bUWNuIRxplfik+lyVI+IrLQe3lWU02S
-         r0XwQ3HmBeZUzuBQYuKhTEPNajbtYjcPz5BUVh6CKU9Z8WU+gH4s4lN2vOPzvmtKOLUq
-         STkg==
-X-Gm-Message-State: APzg51CSfRITUxoimlBt/ik0qufLoDr9NQM0qoJK27xyXeXnITZYmto5
-        yOiDSTESABCQsgSI44+8KP4byrvQ
-X-Google-Smtp-Source: ANB0VdajCqqm7UvWxYRHv2kYXf0QCitFbAO62aD4AYDvZi26qGj8HzjPxpHhKxRRIpHuXgOF8IBCqg==
-X-Received: by 2002:a5d:4152:: with SMTP id c18-v6mr8308407wrq.61.1535986181970;
-        Mon, 03 Sep 2018 07:49:41 -0700 (PDT)
+        bh=5yqHtrwBiB3dgIBZ1Q5c+D9aa96qQ9Mm4JLdYUmFIK0=;
+        b=pzrhdhXwiU6fDsr6pJsmV9+KMs7TC0lBUzS/D80zhfmIdjV/VistAjp/X5ooDsvE6+
+         zzpYpCYJuIxwNdiy10uBR1h3H2BqOim9Ms+P1k0F4YYpHKfEmInTvlFgAQi1uaVLAk8a
+         Xdl3FrEo4VB9EFOOMpICPV10W9rW5wycZITz/XQWDIE4XxWClWnsHGf/XW3cJTGxnHrm
+         WJHqA9yS3ng867b5QV1022cVjZ2/2kFpzjT+105nCiWZ5i9qrbkyb4/fTdJwtBUvx4nf
+         NTN+mI1G6F9rcF5Q+Gm/XSvUcmqRYTMCw6y/i//i8G/Bx/5v161hvKoqwrH/I1n/5gZY
+         weLg==
+X-Gm-Message-State: APzg51ALNdB6ZzL0acRikptC7zBQL6vGbEO+1mAh0VRguv/kpwKMiU7E
+        P6/xCL86iSyHvyqeF64YD1UiiVHA
+X-Google-Smtp-Source: ANB0Vdb40xdUfsOMZ8EtcGcG+NVGhTnnSl88ikr0ORND9UYF6ygJpQFVPq+XdVAxmiNJijBTQWBBgQ==
+X-Received: by 2002:a1c:7412:: with SMTP id p18-v6mr5099283wmc.49.1535986183357;
+        Mon, 03 Sep 2018 07:49:43 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e133-v6sm23841649wma.33.2018.09.03.07.49.40
+        by smtp.gmail.com with ESMTPSA id e133-v6sm23841649wma.33.2018.09.03.07.49.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Sep 2018 07:49:41 -0700 (PDT)
+        Mon, 03 Sep 2018 07:49:42 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 02/10] fsck tests: add a test for no skipList input
-Date:   Mon,  3 Sep 2018 14:49:20 +0000
-Message-Id: <20180903144928.30691-3-avarab@gmail.com>
+Subject: [PATCH v5 03/10] fsck: document and test sorted skipList input
+Date:   Mon,  3 Sep 2018 14:49:21 +0000
+Message-Id: <20180903144928.30691-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <2b31e12e-20e9-3d08-58bd-977f8b83e0a7@web.de>
 References: <2b31e12e-20e9-3d08-58bd-977f8b83e0a7@web.de>
@@ -73,28 +73,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The recent 65a836fa6b ("fsck: add stress tests for fsck.skipList",
-2018-07-27) added various stress tests for odd invocations of
-fsck.skipList, but didn't tests for some very simple ones, such as
-asserting that providing to skipList with a bad commit causes fsck to
-exit with a non-zero exit code. Add such a test.
+Ever since the skipList support was first added in cd94c6f91 ("fsck:
+git receive-pack: support excluding objects from fsck'ing",
+2015-06-22) the documentation for the format has that the file is a
+sorted list of object names.
+
+Thus, anyone using the feature would have thought the list needed to
+be sorted. E.g. I recently in conjunction with my fetch.fsck.*
+implementation in 1362df0d41 ("fetch: implement fetch.fsck.*",
+2018-07-27) wrote some code to ship a skipList, and went out of my way
+to sort it.
+
+Doing so seems intuitive, since it contains fixed-width records, and
+has no support for comments, so one might expect it to be binary
+searched in-place on-disk.
+
+However, as documented here this was never a requirement, so let's
+change the documentation. Since this is a file format change let's
+also document what was said about this in the past, so e.g. someone
+like myself reading the new docs can see this never needed to be
+sorted ("why do I have all this code to sort this thing...").
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5504-fetch-receive-strict.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ Documentation/config.txt        | 10 +++++++++-
+ t/t5504-fetch-receive-strict.sh | 19 +++++++++++++++++++
+ 2 files changed, 28 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index eb66a11975..fd1b5837d0 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1710,7 +1710,7 @@ doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
+ will only cause git to warn.
+ 
+ fsck.skipList::
+-	The path to a sorted list of object names (i.e. one SHA-1 per
++	The path to a list of object names (i.e. one SHA-1 per
+ 	line) that are known to be broken in a non-fatal way and should
+ 	be ignored. This feature is useful when an established project
+ 	should be accepted despite early commits containing errors that
+@@ -1725,6 +1725,14 @@ Unlike variables like `color.ui` and `core.editor` the
+ fall back on the `fsck.skipList` configuration if they aren't set. To
+ uniformly configure the same fsck settings in different circumstances
+ all three of them they must all set to the same values.
+++
++Older versions of Git (before 2.20) documented that the object names
++list should be sorted. This was never a requirement, the object names
++can appear in any order, but when reading the list we track whether
++the list is sorted for the purposes of an internal binary search
++implementation, which can save itself some work with an already sorted
++list. Unless you have a humongous list there's no reason to go out of
++your way to pre-sort the list.
+ 
+ gc.aggressiveDepth::
+ 	The depth parameter used in the delta compression
 diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index 6d268f3327..cbae31f330 100755
+index cbae31f330..fa56052f0f 100755
 --- a/t/t5504-fetch-receive-strict.sh
 +++ b/t/t5504-fetch-receive-strict.sh
-@@ -137,6 +137,11 @@ test_expect_success 'setup bogus commit' '
- 	commit="$(git hash-object -t commit -w --stdin <bogus-commit)"
+@@ -142,6 +142,25 @@ test_expect_success 'fsck with no skipList input' '
+ 	test_i18ngrep "missingEmail" err
  '
  
-+test_expect_success 'fsck with no skipList input' '
-+	test_must_fail git fsck 2>err &&
-+	test_i18ngrep "missingEmail" err
++test_expect_success 'setup sorted and unsorted skipLists' '
++	cat >SKIP.unsorted <<-EOF &&
++	0000000000000000000000000000000000000004
++	0000000000000000000000000000000000000002
++	$commit
++	0000000000000000000000000000000000000001
++	0000000000000000000000000000000000000003
++	EOF
++	sort SKIP.unsorted >SKIP.sorted
++'
++
++test_expect_success 'fsck with sorted skipList' '
++	git -c fsck.skipList=SKIP.sorted fsck
++'
++
++test_expect_success 'fsck with unsorted skipList' '
++	git -c fsck.skipList=SKIP.unsorted fsck
 +'
 +
  test_expect_success 'fsck with invalid or bogus skipList input' '
