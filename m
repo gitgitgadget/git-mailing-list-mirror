@@ -2,74 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5D8E1F428
-	for <e@80x24.org>; Mon,  3 Sep 2018 19:07:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DE431F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 19:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727948AbeICX2h (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 19:28:37 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:35030 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727493AbeICX2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 19:28:37 -0400
-Received: by mail-qt0-f196.google.com with SMTP id j7-v6so1561418qtp.2
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 12:07:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eUEO7Q/wo9dNzytrdKXY5+eGALIczQeepuCGqBpUxwk=;
-        b=PJPhlEIk0lCvmrIUZHNJFuE7rZ12zn7g0OdtrTQAsRUIU+aztV1k2+gVvxCPeY6Hh/
-         JZocaJ3LItQkqqdj0Fuhc+WEdN3+EVH/lV5Il3NodZY26kNKHAiQdEwzDc5t0szRCw+s
-         xBZun1hCwqn09Lpzp4mt2qKU7Px5MGF7Evd7afUV/d0jUyQIYb2pe8y0NRMHpsEuIsTv
-         M6wCoQJGUOMdt7w2ieMTi27GeAC/xXksm2JroZTQ08iIbyD0sTLNDDvMx2+8gvIcm2hX
-         ActYlZsgomyLtSBcaauBX8uMPToqQzcCTynHNYnqun+hIOi3l94jMP0jGISol9yymy/z
-         liWA==
-X-Gm-Message-State: APzg51CrMncY+rfyBQPi6zfE8mvJ5xrz2Iz/c4Hy5+19yGN2yrE6AhWt
-        lgYlgyqKBo/KONqKWB/uPbnYUx/8H/lIVyK+G0Q=
-X-Google-Smtp-Source: ANB0Vda4G1N9Q0K2ZjsxbSIi14GjIWWacSvIhjHU+tKJIo3A5rsY4oNbqlR+iPgIx8xxIbRVx2Fj3QNPU1S8XP8q7DM=
-X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr27798900qtd.101.1536001625282;
- Mon, 03 Sep 2018 12:07:05 -0700 (PDT)
+        id S1728069AbeICXch (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 19:32:37 -0400
+Received: from mout.gmx.net ([212.227.17.21]:40365 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727493AbeICXch (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 19:32:37 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LxxNo-1frNy71jgS-015Idr; Mon, 03
+ Sep 2018 21:11:03 +0200
+Date:   Mon, 3 Sep 2018 21:11:02 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v8 20/20] stash: replace all `write-tree` child
+ processes with API calls
+In-Reply-To: <c26283d74e3f761a554940e3e0db13cef1b613d5.1535665109.git.ungureanupaulsebastian@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1809032110520.71@tvgsbejvaqbjf.bet>
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <c26283d74e3f761a554940e3e0db13cef1b613d5.1535665109.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
- <6832c979c8dca2a3584ed3cf828a6de060413cda.1535665109.git.ungureanupaulsebastian@gmail.com>
- <nycvar.QRO.7.76.6.1809032031090.71@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1809032031090.71@tvgsbejvaqbjf.bet>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 3 Sep 2018 15:06:54 -0400
-Message-ID: <CAPig+cTGBi1P5V3uGwtKCvoCn=-17y1dY3dBkS13Yx1ikjpXcQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v8 17/20] stash: convert save to builtin
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UZedlozznmvro/yQ4T3DQmpnM+G8kpXi+2CxlVi0BOpFiLO9Ik4
+ PFggAyy4HzWpkRCatAU3uXwvlVhYLtkpbGInCFClbuxmBfxO89dfzc/oHlF8vEQyZ73Eqwc
+ YyuliEQD97Pf8ONXrIRpPciUhn4snMSCXLR2wfE7ZWjabkL+sfUgX7QnYcgtYJ/0Fz2zRdv
+ bZg5csBYUmMZWc6Wx2x4A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:UA5JYzixdjY=:8Hcj1sTkUav6c37UgQi1kM
+ NhiXGu8orYXlc4M1s4lRgUOX5fidZQAqT2wrmWdJn1yTtFGlIzccvS+mMMbu1vh22PYC0w32O
+ TyPsF7j5nLf9Wk8iH373EYz3Veo2ZI2gGfb8XPxGs1cy5z0B3KDWT1CDh3pxTOcrd/O1FtrSt
+ +/O7g3XLX8pAnrXEnj9uZY7GHUP3M0YwT0ngL4IYxliBCXsiwdm+omxPOnLYc6lE9LZNrXr55
+ xJYFXs5f4TOzAUlb4Kq9fg+2yM+1cRhRY8xPKKDi5GiDnRLdJ7QH/xlyM/0sTssRycTfHQeyJ
+ k6uLm1uQbhaHWsL9A42pnKQAtSUC8cqfPykcqRh3W0smeqIlhJMcz2ZcFCuvvn4RC+VTnxZ5E
+ iGMgXsOV6oILHego71gxsJR4idzY1oFDshZ2Ps3bLTuU9Jn1mjQXVUsS93Lx/RkbSvOCPVnYs
+ SfHuYkRfLRo0bnkzoRouO3WH9mqjW3mhDzoSrsmdhmA+lT7cHeApcM8jQXhsi4GrzJmIpTATf
+ /JoXS12qJCor1/JXWDiBruxx+fBycTvsgvP2tKiqT7EiXd2vBXMdK/vdj519rpAyJNp/zYcuo
+ 0Iu7wP4pB84LiAZ58aqJtSPiGq5bSJpV0YSXGsojJxlhPJFQ6ac42qnKW2MW25i8QPns2xJ+O
+ qhX/93prHReJQ1azWFrLCQXe6eNbJs6SPKFxLITCJgPthNnoHQvfpWTRB2GxbS6zEp05LhMSB
+ AIIBqTHvHTRY5spMil1NdLndcA/u0u3vsapeuuZK+YE6S3g71Frc9KVrgxWbwrZmq9RvXTAot
+ KdiMBj+
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 3, 2018 at 2:44 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> where `strbuf_join_argv()` would be implemented like this (and I would put
-> it into strbuf.c and strbuf.h:
->
->         const char *strbuf_join_argv(struct strbuf *buf,
->                                      int argc, const char **argv, char delim)
->         {
->                 if (!argc)
->                         return buf->buf;
->
->                 strbuf_addstr(buf, *argv);
->                 while (--i) {
+Hi Paul,
 
-s/i/argc/
+On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
 
->                         strbuf_addch(buf, delim);
->                         strbuf_addstr(buf, *(++argv);
->                 }
->
->                 return buf->buf;
->         }
+> This commit replaces spawning `git write-tree` with API calls.
+> 
+> Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> ---
+>  builtin/stash.c | 41 ++++++++++++-----------------------------
+>  1 file changed, 12 insertions(+), 29 deletions(-)
+
+Very nice!
+
+Thanks,
+Dscho
+
+> 
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index ba5818e24e..dd1084afd4 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -910,9 +910,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+>  {
+>  	int ret = 0;
+>  	struct strbuf untracked_msg = STRBUF_INIT;
+> -	struct strbuf out = STRBUF_INIT;
+>  	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+> +	struct index_state istate = { NULL };
+>  
+>  	cp_upd_index.git_cmd = 1;
+>  	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
+> @@ -927,15 +926,11 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+>  		goto done;
+>  	}
+>  
+> -	cp_write_tree.git_cmd = 1;
+> -	argv_array_push(&cp_write_tree.args, "write-tree");
+> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+> -			 stash_index_path.buf);
+> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
+> +	if (write_index_as_tree(&info->u_tree, &istate, stash_index_path.buf, 0,
+> +				NULL)) {
+>  		ret = -1;
+>  		goto done;
+>  	}
+> -	get_oid_hex(out.buf, &info->u_tree);
+>  
+>  	if (commit_tree(untracked_msg.buf, untracked_msg.len,
+>  			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
+> @@ -944,8 +939,8 @@ static int save_untracked_files(struct stash_info *info, struct strbuf *msg)
+>  	}
+>  
+>  done:
+> +	discard_index(&istate);
+>  	strbuf_release(&untracked_msg);
+> -	strbuf_release(&out);
+>  	remove_path(stash_index_path.buf);
+>  	return ret;
+>  }
+> @@ -956,11 +951,10 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+>  {
+>  	int i;
+>  	int ret = 0;
+> -	struct strbuf out = STRBUF_INIT;
+>  	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
+>  	struct child_process cp_add_i = CHILD_PROCESS_INIT;
+> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+>  	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
+> +	struct index_state istate = { NULL };
+>  
+>  	remove_path(stash_index_path.buf);
+>  
+> @@ -985,17 +979,12 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+>  		goto done;
+>  	}
+>  
+> -	cp_write_tree.git_cmd = 1;
+> -	argv_array_push(&cp_write_tree.args, "write-tree");
+> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+> -			 stash_index_path.buf);
+> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
+> +	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
+> +				NULL)) {
+>  		ret = -1;
+>  		goto done;
+>  	}
+>  
+> -	get_oid_hex(out.buf, &info->w_tree);
+> -
+>  	cp_diff_tree.git_cmd = 1;
+>  	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
+>  			 oid_to_hex(&info->w_tree), "--", NULL);
+> @@ -1011,7 +1000,7 @@ static int stash_patch(struct stash_info *info, struct pathspec ps, int quiet)
+>  	}
+>  
+>  done:
+> -	strbuf_release(&out);
+> +	discard_index(&istate);
+>  	remove_path(stash_index_path.buf);
+>  	return ret;
+>  }
+> @@ -1020,10 +1009,9 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  {
+>  	int ret = 0;
+>  	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
+> -	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+> -	struct strbuf out = STRBUF_INIT;
+>  	struct strbuf diff_output = STRBUF_INIT;
+>  	struct rev_info rev;
+> +	struct index_state istate = { NULL };
+>  
+>  	set_alternate_index_output(stash_index_path.buf);
+>  	if (reset_tree(&info->i_tree, 0, 0)) {
+> @@ -1062,20 +1050,15 @@ static int stash_working_tree(struct stash_info *info, struct pathspec ps)
+>  		goto done;
+>  	}
+>  
+> -	cp_write_tree.git_cmd = 1;
+> -	argv_array_push(&cp_write_tree.args, "write-tree");
+> -	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
+> -			 stash_index_path.buf);
+> -	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
+> +	if (write_index_as_tree(&info->w_tree, &istate, stash_index_path.buf, 0,
+> +				NULL)) {
+>  		ret = -1;
+>  		goto done;
+>  	}
+>  
+> -	get_oid_hex(out.buf, &info->w_tree);
+> -
+>  done:
+> +	discard_index(&istate);
+>  	UNLEAK(rev);
+> -	strbuf_release(&out);
+>  	object_array_clear(&rev.pending);
+>  	strbuf_release(&diff_output);
+>  	remove_path(stash_index_path.buf);
+> -- 
+> 2.19.0.rc0.22.gc26283d74e
+> 
+> 
