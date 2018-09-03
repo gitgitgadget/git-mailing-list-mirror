@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87C651F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 23:25:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 781931F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 23:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbeIDDr4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 23:47:56 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43974 "EHLO
+        id S1726328AbeIDDrz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 23:47:55 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:43986 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726008AbeIDDrz (ORCPT
+        by vger.kernel.org with ESMTP id S1726004AbeIDDrz (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 3 Sep 2018 23:47:55 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E8D4460752;
-        Mon,  3 Sep 2018 23:25:29 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 606C360756;
+        Mon,  3 Sep 2018 23:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536017130;
-        bh=hFID24jRdtq0noxRRaVJS4mdMXIS7TrnBA5FZHZLOd0=;
+        s=default; t=1536017132;
+        bh=x3KYa/ksG5OV9MpWWBr1lE1vw1WCpcfylSBqtjueFb8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=SYxnHhG3YknpNibxg1I5CMHQZzWERuWxcvUH+QGbBmA71jSwl0vza8f0RVS9UPGf2
-         oawuW8aUMD92S5XH4JwujbjkPf1k0aHDr3ou5tzIZFO3j1/TgtupZlWEcEvKYpSt0S
-         bma0Hd6el86SPTJ16n8yJR8wfd502Ugo36S8LXQslMxmHpTccHsfbJbJCFSOsTmAmO
-         AoSfCruu1/HXSINRllCcGJ4n3tEdeziLbM6SqBeUBBipuIRSPD9H+dkkHK0o7T4NvA
-         Xb9EswPoVfWGNBwNVO2BulW9HRCv0R8dLWWrPHc29eFKP9lrXpIbm5aN1EiZ+71mHx
-         KQpdCwmOZiN6LWR5qIA5dH46JY7Z7oInmsyr53v4Maj0kv/oaD7nzlc5k0VofN1PV2
-         z28rAnKyIPPixvVl7FvvpRR53r/WZoGwpXcYUw2prk38qDnJbf0UOnI3T6YM8jj9L0
-         Om3+RWRhU6u/jZGeNMY+vDQ1qSqa+XyQ5wxqqDSTgyUmAkJFw3x
+        b=vafplDf+i0HOALog7zk7RRxx6b4ioqslnK/NUPn69Em1GZYjznslFNCp+OSPPq/xr
+         tKRNH60zJ96pc//f+KTWyZlUu0fxTBZOwWd3rFVWJ5vW1cntqA/uofjxqeaBsGe0/p
+         +bLsRcuJ476U4h5b5YCgrL5G/WNL0rR6AfeWD6ExwfLqLbPLM8czHa11cBf2Y7Grxg
+         YuO6Ku12KEyPqvAz/HkP54L6Hd5c4tTKBrX/rPhERmVsTFklBzN+KsTYUVvj1rvyOM
+         NsJxKRJGw0ARC8ResG+8ReQL4M9R31oaGblTOEX0zEvAVe/OVxHplUj82sPLLJSBtB
+         KM7u649ojR/JWYHveq4Y/mxrYn3/z9QiOYEMx4E5Uh73oC+qW0+/ZJfZVsxSMPKYsO
+         VkZeuuVi9+ZkRLEbgbpVZnsLc8I8vIm37EhNKwaV9+qoGhcxpCG6IVzTT47CaeAlqB
+         xjc722EC8tqnsWaTX9elYK+yqM8J/U+L3J4OCdis5hQEJHBGp3Y
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
@@ -43,9 +43,9 @@ Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 01/12] t: add test functions to translate hash-related values
-Date:   Mon,  3 Sep 2018 23:25:04 +0000
-Message-Id: <20180903232515.336397-2-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 02/12] t0000: use hash translation table
+Date:   Mon,  3 Sep 2018 23:25:05 +0000
+Message-Id: <20180903232515.336397-3-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180903232515.336397-1-sandals@crustytoothpaste.net>
 References: <20180903232515.336397-1-sandals@crustytoothpaste.net>
@@ -57,294 +57,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add several test functions to make working with various hash-related
-values easier.
+If the hash we're using is 32 bytes in size, attempting to insert a
+20-byte object name won't work.  Since these are synthesized objects
+that are almost all zeros, look them up in a translation table.
 
-Add test_oid_init, which loads common hash-related constants and
-placeholder object IDs from the newly added files in t/oid-info.
-Provide values for these constants for both SHA-1 and SHA-256.
-
-Add test_oid_cache, which accepts data on standard input in the form of
-hash-specific key-value pairs that can be looked up later, using the
-same format as the files in t/oid-info.  Document this format in a
-t/oid-info/README directory so that it's easier to use in the future.
-
-Add test_oid, which is used to specify look up a per-hash value
-(produced on standard output) based on the key specified as its
-argument.  Usually the data to be looked up will be a hash-related
-constant (such as the size of the hash in binary or hexadecimal), a
-well-known or placeholder object ID (such as the all-zeros object ID or
-one consisting of "deadbeef" repeated), or something similar.  For these
-reasons, test_oid will usually be used within a command substitution.
-Consequently, redirect the error output to standard error, since
-otherwise it will not be displayed.
-
-Add test_detect_hash, which currently only detects SHA-1, and
-test_set_hash, which can be used to set a different hash algorithm for
-test purposes.  In the future, test_detect_hash will learn to actually
-detect the hash depending on how the testsuite is to be run.
-
-Use the local keyword within these functions to avoid overwriting other
-shell variables.  We have had a test balloon in place for a couple of
-releases to catch shells that don't have this keyword and have not
-received any reports of failure.  Note that the varying usages of local
-used here are supported by all common open-source shells supporting the
-local keyword.
-
-Test these new functions as part of t0000, which also serves to
-demonstrate basic usage of them.  In addition, add documentation on how
-to format the lookup data and how to use the test functions.
-
-Implement two basic lookup charts, one for common invalid or synthesized
-object IDs, and one for various facts about the hash function in use.
-Provide versions of the data for both SHA-1 and SHA-256.
-
-Since we use shell variables for storage, names used for lookup can
-currently consist only of shell identifier characters.  If this is a
-problem in the future, we can hash the names before use.
-
-Improved-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/README                | 22 ++++++++++++++
- t/oid-info/README       | 19 ++++++++++++
- t/oid-info/hash-info    |  8 +++++
- t/oid-info/oid          | 29 ++++++++++++++++++
- t/t0000-basic.sh        | 37 +++++++++++++++++++++++
- t/test-lib-functions.sh | 67 +++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 182 insertions(+)
- create mode 100644 t/oid-info/README
- create mode 100644 t/oid-info/hash-info
- create mode 100644 t/oid-info/oid
+ t/t0000-basic.sh | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/t/README b/t/README
-index 9028b47d92..eed574dd9b 100644
---- a/t/README
-+++ b/t/README
-@@ -806,6 +806,28 @@ library for your script to use.
-    the symbolic link in the file system and a part that does; then only
-    the latter part need be protected by a SYMLINKS prerequisite (see below).
- 
-+ - test_oid_init
-+
-+   This function loads facts and useful object IDs related to the hash
-+   algorithm(s) in use from the files in t/oid-info.
-+
-+ - test_oid_cache
-+
-+   This function reads per-hash algorithm information from standard
-+   input (usually a heredoc) in the format described in
-+   t/oid-info/README.  This is useful for test-specific values, such as
-+   object IDs, which must vary based on the hash algorithm.
-+
-+   Certain fixed values, such as hash sizes and common placeholder
-+   object IDs, can be loaded with test_oid_init (described above).
-+
-+ - test_oid <key>
-+
-+   This function looks up a value for the hash algorithm in use, based
-+   on the key given.  The value must have been loaded using
-+   test_oid_init or test_oid_cache.  Providing an unknown key is an
-+   error.
-+
- Prerequisites
- -------------
- 
-diff --git a/t/oid-info/README b/t/oid-info/README
-new file mode 100644
-index 0000000000..27f843fc00
---- /dev/null
-+++ b/t/oid-info/README
-@@ -0,0 +1,19 @@
-+This directory contains various per-hash values that are used in the testsuite.
-+
-+Each file contains lines containing a key-value pair; blank lines and lines
-+starting with `#` are ignored.  The key and value are separated by whitespace
-+(specifically, those whitespace in the default `$IFS`).  The key consists only
-+of shell identifier characters, and the value consists of a hash algorithm,
-+colon, and value.  The hash algorithm also consists only of shell identifier
-+characters; it should match the value in sha1-file.c.
-+
-+For example, the following lines map the key "rawsz" to "20" if SHA-1 is in use
-+and to "32" if SHA-256 is in use:
-+
-+----
-+rawsz sha1:20
-+rawsz sha256:32
-+----
-+
-+The keys and values used here are loaded by `test_oid_init` (see the README file
-+in the "t" directory) and are used by calling `test_oid`.
-diff --git a/t/oid-info/hash-info b/t/oid-info/hash-info
-new file mode 100644
-index 0000000000..ccdbfdf974
---- /dev/null
-+++ b/t/oid-info/hash-info
-@@ -0,0 +1,8 @@
-+rawsz sha1:20
-+rawsz sha256:32
-+
-+hexsz sha1:40
-+hexsz sha256:64
-+
-+zero sha1:0000000000000000000000000000000000000000
-+zero sha256:0000000000000000000000000000000000000000000000000000000000000000
-diff --git a/t/oid-info/oid b/t/oid-info/oid
-new file mode 100644
-index 0000000000..a754970523
---- /dev/null
-+++ b/t/oid-info/oid
-@@ -0,0 +1,29 @@
-+# These are some common invalid and partial object IDs used in tests.
-+001	sha1:0000000000000000000000000000000000000001
-+001	sha256:0000000000000000000000000000000000000000000000000000000000000001
-+002	sha1:0000000000000000000000000000000000000002
-+002	sha256:0000000000000000000000000000000000000000000000000000000000000002
-+003	sha1:0000000000000000000000000000000000000003
-+003	sha256:0000000000000000000000000000000000000000000000000000000000000003
-+004	sha1:0000000000000000000000000000000000000004
-+004	sha256:0000000000000000000000000000000000000000000000000000000000000004
-+005	sha1:0000000000000000000000000000000000000005
-+005	sha256:0000000000000000000000000000000000000000000000000000000000000005
-+006	sha1:0000000000000000000000000000000000000006
-+006	sha256:0000000000000000000000000000000000000000000000000000000000000006
-+007	sha1:0000000000000000000000000000000000000007
-+007	sha256:0000000000000000000000000000000000000000000000000000000000000007
-+# All zeros or Fs missing one or two hex segments.
-+zero_1		sha1:000000000000000000000000000000000000000
-+zero_1		sha256:000000000000000000000000000000000000000000000000000000000000000
-+zero_2		sha1:00000000000000000000000000000000000000
-+zero_2		sha256:00000000000000000000000000000000000000000000000000000000000000
-+ff_1		sha1:fffffffffffffffffffffffffffffffffffffff
-+ff_1		sha256:fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-+ff_2		sha1:ffffffffffffffffffffffffffffffffffffff
-+ff_2		sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-+# More various invalid OIDs.
-+numeric		sha1:0123456789012345678901234567890123456789
-+numeric		sha256:0123456789012345678901234567890123456789012345678901234567890123
-+deadbeef	sha1:deadbeefdeadbeefdeadbeefdeadbeefdeadbeef
-+deadbeef	sha256:deadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef
 diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 850f651e4e..b94221b951 100755
+index b94221b951..a9dc534048 100755
 --- a/t/t0000-basic.sh
 +++ b/t/t0000-basic.sh
-@@ -821,6 +821,43 @@ test_expect_success 'tests clean up even on failures' "
+@@ -1015,12 +1015,13 @@ test_expect_success SHA1 'validate object ID for a known tree' '
+ 
+ test_expect_success 'put invalid objects into the index' '
+ 	rm -f .git/index &&
+-	cat >badobjects <<-\EOF &&
+-	100644 blob 1000000000000000000000000000000000000000	dir/file1
+-	100644 blob 2000000000000000000000000000000000000000	dir/file2
+-	100644 blob 3000000000000000000000000000000000000000	dir/file3
+-	100644 blob 4000000000000000000000000000000000000000	dir/file4
+-	100644 blob 5000000000000000000000000000000000000000	dir/file5
++	suffix=$(echo $ZERO_OID | sed -e "s/^.//") &&
++	cat >badobjects <<-EOF &&
++	100644 blob $(test_oid 001)	dir/file1
++	100644 blob $(test_oid 002)	dir/file2
++	100644 blob $(test_oid 003)	dir/file3
++	100644 blob $(test_oid 004)	dir/file4
++	100644 blob $(test_oid 005)	dir/file5
  	EOF
- "
- 
-+test_expect_success 'test_oid setup' '
-+	test_oid_init
-+'
-+
-+test_expect_success 'test_oid provides sane info by default' '
-+	test_oid zero >actual &&
-+	grep "^00*\$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test "$hexsz" -eq $(wc -c <actual) &&
-+	test $(( $rawsz * 2)) -eq "$hexsz"
-+'
-+
-+test_expect_success 'test_oid can look up data for SHA-1' '
-+	test_when_finished "test_detect_hash" &&
-+	test_set_hash sha1 &&
-+	test_oid zero >actual &&
-+	grep "^00*\$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test $(wc -c <actual) -eq 40 &&
-+	test "$rawsz" -eq 20 &&
-+	test "$hexsz" -eq 40
-+'
-+
-+test_expect_success 'test_oid can look up data for SHA-256' '
-+	test_when_finished "test_detect_hash" &&
-+	test_set_hash sha256 &&
-+	test_oid zero >actual &&
-+	grep "^00*\$" actual &&
-+	rawsz="$(test_oid rawsz)" &&
-+	hexsz="$(test_oid hexsz)" &&
-+	test $(wc -c <actual) -eq 64 &&
-+	test "$rawsz" -eq 32 &&
-+	test "$hexsz" -eq 64
-+'
-+
- ################################################################
- # Basics of the basics
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 4207af4077..9eca6c620d 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1155,3 +1155,70 @@ depacketize () {
- 		}
- 	'
- }
-+
-+# Set the hash algorithm in use to $1.  Only useful when testing the testsuite.
-+test_set_hash () {
-+	test_hash_algo="$1"
-+}
-+
-+# Detect the hash algorithm in use.
-+test_detect_hash () {
-+	test_hash_algo='sha1'
-+}
-+
-+# Load common hash metadata and common placeholder object IDs for use with
-+# test_oid.
-+test_oid_init () {
-+	test -n "$test_hash_algo" || test_detect_hash &&
-+	test_oid_cache <"$TEST_DIRECTORY/oid-info/hash-info" &&
-+	test_oid_cache <"$TEST_DIRECTORY/oid-info/oid"
-+}
-+
-+# Load key-value pairs from stdin suitable for use with test_oid.  Blank lines
-+# and lines starting with "#" are ignored.  Keys must be shell identifier
-+# characters.
-+#
-+# Examples:
-+# rawsz sha1:20
-+# rawsz sha256:32
-+test_oid_cache () {
-+	local tag reset k v
-+
-+	test -n "$test_hash_algo" || test_detect_hash &&
-+	while read tag rest
-+	do
-+		case $tag in
-+		\#*)
-+			continue;;
-+		?*)
-+			# non-empty
-+			;;
-+		*)
-+			# blank line
-+			continue;;
-+		esac &&
-+
-+		k="${rest%:*}" &&
-+		v="${rest#*:}" &&
-+
-+		if ! expr "$k" : '[a-z0-9][a-z0-9]*$' >/dev/null
-+		then
-+			error 'bug in the test script: bad hash algorithm'
-+		fi &&
-+		eval "test_oid_${k}_$tag=\"\$v\""
-+	done
-+}
-+
-+# Look up a per-hash value based on a key ($1).  The value must have been loaded
-+# by test_oid_init or test_oid_cache.
-+test_oid () {
-+	local var="test_oid_${test_hash_algo}_$1"
-+
-+	# If the variable is unset, we must be missing an entry for this
-+	# key-hash pair, so exit with an error.
-+	if eval "test -z \"\${$var+set}\""
-+	then
-+		error "bug in the test script: undefined key '$1'" >&2
-+	fi &&
-+	eval "printf '%s' \"\${$var}\""
-+}
+ 	git update-index --index-info <badobjects
+ '
