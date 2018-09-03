@@ -2,124 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5FBB1F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 12:11:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A4C531F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 12:54:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727688AbeICQbq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 12:31:46 -0400
-Received: from mout.gmx.net ([212.227.17.21]:50511 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727613AbeICQbq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 12:31:46 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWxtA-1gQXwn0iW4-00VuCs; Mon, 03
- Sep 2018 14:11:49 +0200
-Date:   Mon, 3 Sep 2018 14:11:47 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 05/20] stash: add tests for `git stash show`
- config
-In-Reply-To: <xmqqpnxz33v4.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1809031409050.71@tvgsbejvaqbjf.bet>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>        <65603caf56cfaeb1dff92546b7efe38dccb2d071.1535665109.git.ungureanupaulsebastian@gmail.com> <xmqqpnxz33v4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726951AbeICROQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 13:14:16 -0400
+Received: from mout.kundenserver.de ([217.72.192.74]:35803 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbeICROQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 13:14:16 -0400
+Received: from null ([172.19.249.47]) by mrelayeu.kundenserver.de (mreue101
+ [212.227.15.183]) with ESMTPSA (Nemesis) id 0MMWCs-1fySnA0Dew-008Hrt for
+ <git@vger.kernel.org>; Mon, 03 Sep 2018 14:54:14 +0200
+Date:   Mon, 3 Sep 2018 14:54:13 +0200 (CEST)
+From:   thomas menzel <dev@tomsit.de>
+Reply-To: thomas menzel <dev@tomsit.de>
+To:     git@vger.kernel.org
+Message-ID: <2056463102.521974.1535979253941@email.1und1.de>
+Subject: git log --author-date-order not always working
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ijkiL5xW1Bx/oLnWQKe6u6EMyU/R5OIKudtvTTTk07/GtSu9jqb
- ba5CfmU3ka14NG9eEwVQ8P6+ZJzjbTNipoxoheQOYeVjKPqgJKnBjvXf0YpLYIu8dd42BX9
- UA1Tw9YbmK8doDJ+YBNw/0g1kjfHYErafjQTdCaRLr0brm7iE5n3rftXYI3hiHUlZUUETIX
- kA1c/TOHkPh/pOxcsaFpg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:FppfmcMJoPY=:aGWnyWSp0z/M5At9eicNbH
- wttrEWOwum/hfsMAsBKK9Py0Sfx63zcYBXYHyVoTxM+V1CkeFHlr3HzFdzaM8af6RgIJMgGUn
- BG+/vvdsB6M64IgxNN2IegwFdoT7t6FuMYFfvMnWzEKsUgAvQhqfTO5RE6IDpxBBfjulzIk/v
- 92tn0sRzaQtx1pWzHWHDsNFIMygQ5XNelBR4tQckN/dp6YhU6RKUyim3kieyHhTxl7A6hEGO4
- KRr9hRqAtxzvYIwRCegBCqJ5hW+ZZKZ2UN0O/YSXNKpfZ719G9zodvNqTb+kYtT2tdmP0C4Nv
- a8D6H07Bk+khV16APMc/KDawCIEuSUc+EW+Z/dGNI2yw09PDuz2SB8POvAD4NgdzttWAb3htA
- LwNrwTpM8MMMTFu0wCoxwDnruqYbLHGftC1kTZm3kLW5THJPshZfRcRp2HselKZ96h4HlLFTZ
- DD65X81eIs6U0lUFcbpHCSNQyYcG72qYffeapvR/Mxg378+wYLPHAGL0NhMwNxx9+UaBMMKKA
- ZQZ5XhaCfQZtB2YbxL5pGOIkUHksLKXrLaczWV9gyWG7ZHS00Ilc9qSXSgAlVRtyRJ4PfYCc+
- WUibZ64RQvni4jP4+fxvu/je0HXRlCoWQopMTx5sVlCTNyRdYK3gjek/P4JdS+kGX+5ArOs54
- Cw2lcpjDEVR6AhIBLeSQnEtp+HubYVyuE2pZtW0+hok3OurkRZMIheg9WiPBltpCjEpYZzaHo
- riu0+G3zu9KEhyg+sPO3pw0rq5JawiBCOdcHAFFNMFrlFfbkA4z4zEOx2Z8KCRF4V5Us7446O
- n+sxq82
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+Importance: Medium
+X-Mailer: Open-Xchange Mailer v7.8.4-Rev36
+X-Originating-Client: open-xchange-appsuite
+X-Provags-ID: V03:K1:gD8IGfHyg6uYnv0vkhYtQPATO/6Mxr43Y+o0ySRlJgQF9i50e77
+ YhZHKv5xkXTWWCzmdUuj63h/xmd1e5EjmUGtzC1LYK5lQPvogRELvNjgN/gq+Setz9ZWGQ3
+ 3bUUVYlKPacFlzeEIAPTlXglmgo+/4EcFo8jI2ylobCJLrBI88+2j5/1gjsyWNxGQLbAyCF
+ K70k/26DKRlovmt8++/wA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:O3/t3cFBvzU=:OgCwn5Bx/4OuleJmzQfrbe
+ 3isbPxhVSI941aydI/Hgzksv95PfQNZcjJ7IAYJSAHlo21P57nRfUxazqac6YBcXjkX1pZzxy
+ 108IXFOuJ2y+/c5Oc2fja+O3SGoyMo75J5X2PCVI1UIPkIFRIeDUJp9lg7PYeXv+s86NX5zC0
+ d5DDPFMc9I6jAmiE7xhYaSEd3uDBKMOe+IXuII8Spd0stY5fzqVb+lupgSOe4h5tkyMpd9Yok
+ OfcSGRPk3P/q3EUhZ2ntnPlNic64TRd/RvhxlAr1V4HHMxm+BHyB3Tgum5pocx6Sph8EkGgOb
+ TppKYl8aPl3Rz60kRrtDnmOCrZwQOVN0lBZay2XAj89V0LTuI8t4xACHy+U08ITopErfu+Pl1
+ pmJY6ZkQ0YZeUNMJXkEhBDwkpXL1QH1gPlil/bhsSVldY74hIt/ZjOKwYUDQtLgQuVIosmSR9
+ wVhDcueedRuUe4Qrgv43FPchsPi6F+Lhw3RNVK2ldCZYIZ9D8pHnIv7DSM5rBZDwxX1CHI/H3
+ v2e5HWA9izp3feDx6MejmYmQEnimDvv4rJPgVFbOZYe9LNPgt0TBJL4JuenHTItKhHuqH4X2j
+ hh37rJ7MPR0ETaP6XFFxmWH8uVe2z0gUklo8S8cOCJmXFO6s/J1Dk3yB8c1h0PBM45iG1E/Gy
+ BrRrLlI/o6aHCtf0qSiU4D5zuscHPwXBGTyAcspliwmkxNu/P5X3Wq3PiMsK/hG2kZ0Uzpw1M
+ FOb6nx+Xe8ZtUGNW
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+hi,
 
-On Thu, 30 Aug 2018, Junio C Hamano wrote:
+i just ran into this little possible bug but cant pin it down any further as it happens against a git repo for work project that i cant share.
 
-> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
-> > +test_stat_and_patch () {
-> > +	if test "<unset>" = "$1"
-> > +	then
-> > +		test_might_fail git config --unset stash.showStat
-> > +	else
-> > +		test_config stash.showStat "$1"
-> > +	fi &&
-> > +
-> > +	if test "<unset>" = "$2"
-> > +	then
-> > +		test_might_fail git config --unset stash.showPatch
-> 
-> I think you are trying to protect yourself from an error triggered
-> by unsetting what is not set, but for that, test_unconfig is
-> probably a better choice, as it still catches errors of other types
-> and ignores only that "unset a variable that is not set" error.
+when i run this git log against my repo i get this wrong sort order (1st col is authored date and 2nd is commit date):
 
-My mistake. I did not realize that tehere is a `test_unconfig` when I
-suggested the current version.
+$ git log --author=menzel --since=2018-08-10 --pretty=format:"%ad %cd %h" --date=short --author-date-order --until=2018-08-20
+2018-08-20 2018-08-20 f2ff8245
+2018-08-17 2018-08-17 d8afbdb7
+2018-08-17 2018-08-17 853fdeca
+2018-08-16 2018-08-20 7dd7b234
+2018-08-16 2018-08-16 41fcb077
+2018-08-16 2018-08-16 f081f38c
+2018-08-15 2018-08-15 95466702
+2018-08-15 2018-08-15 d8e6f91d
+2018-08-15 2018-08-15 c1cd6e14
+2018-08-15 2018-08-15 4bd06ba3
+2018-08-14 2018-08-14 6876182b
+2018-08-14 2018-08-17 6fb982ee
+2018-08-17 2018-08-17 d2323219
+2018-08-17 2018-08-17 b35793b4
+2018-08-17 2018-08-17 ab784faf
+2018-08-10 2018-08-10 9ede6a8d
+2018-08-10 2018-08-10 e4959669
+2018-08-16 2018-08-16 d146a71b
+2018-08-15 2018-08-15 37396218
+2018-08-15 2018-08-15 554042c5
+2018-08-13 2018-08-13 39c80c8f
 
-> > +	shift &&
-> > +	shift &&
-> 
-> You can use "shift 2 &&" here (not worth a reroll).
+whereas this works:
 
-Again, my mistake. I was not sure how portable that construct is. (Is it?)
+$ git log --author=menzel --since=2018-08-10 --pretty=format:"%ad %cd %h" --date=short --author-date-order --until=2018-08-17
+2018-08-17 2018-08-17 b35793b4
+2018-08-17 2018-08-17 ab784faf
+2018-08-16 2018-08-16 d146a71b
+2018-08-16 2018-08-16 41fcb077
+2018-08-16 2018-08-16 f081f38c
+2018-08-15 2018-08-15 37396218
+2018-08-15 2018-08-15 554042c5
+2018-08-15 2018-08-15 95466702
+2018-08-15 2018-08-15 d8e6f91d
+2018-08-15 2018-08-15 c1cd6e14
+2018-08-15 2018-08-15 4bd06ba3
+2018-08-14 2018-08-14 6876182b
+2018-08-13 2018-08-13 39c80c8f
+2018-08-10 2018-08-10 9ede6a8d
+2018-08-10 2018-08-10 e4959669
 
-> 
-> > +	echo 2 >file.t &&
-> 
-> > +	git diff "$@" >expect &&
-> 
-> When the caller does not give $3 to this function, it does not look
-> at 'expect'.  I think it is clearer if you did
-> 
-> 	if test $# != 0
-> 	then
-> 		git diff "$@" >expect
-> 	fi &&
-> 
-> here, and ...
-> 
-> > +	git stash &&
-> > +	git stash show >actual &&
-> > +
-> > +	if test -z "$1"
-> 
-> ... wrote this as
-> 
-> 	if test $# = 0
-> 
-> The only difference between '-z "$1"' and '$# = 0' is when he caller
-> passes an empty string to the function as $3, which you never do, so
-> the distinction is theoretical, but using $# makes your intention
-> clear that you do not mean to treat an empty string any specially.
+Note that the different location for the 2018-08-10 entries!
+The only difference is in the --until parameter. 
 
-Good advice in general (in this case, we know the callers).
+It appears that after a certain commit date the ordering after the authored date gets broken. 
+Any1 with a clue on what could be the cause?
 
-Paul, when it comes to shell scripting, listen to Junio more than myself
-because he is even more of a shell script wiz than I am.
+Context
+- same behavior for a colleague of mine
+- we run on git version 2.16.2.windows.1 in git bash
 
-Ciao,
-Dscho
+cheers
+
+tom
+
+PS: i will try sometime later to check this repo with the latest linux version
