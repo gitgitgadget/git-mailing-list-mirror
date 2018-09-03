@@ -2,112 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA4181F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 19:11:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4B61F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 19:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbeICXdH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 19:33:07 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:43780 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727493AbeICXdG (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Sep 2018 19:33:06 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7876960745;
-        Mon,  3 Sep 2018 19:11:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536001891;
-        bh=MWTUEaxiyIpJRoE1mIlWUWZFbVKSLWRAqi3v7tEq+90=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=1RPz7xU4/PlBUqFLLzCRRaVxynm3Pqdovsw1rCFQxp+TTmfRzRsZU3jfdH6s23Vnf
-         O+AQyNeRRvDr668ivBOu0prWq4N/oCDmzA4ohMdF4jcmNRyy2526VVJLzhi4sr/ud3
-         XAUzrJu16octRpRzDPDzc+BJvwqQjoMC86r1ltYKVzarTzEnSka7l4fdvg+cMQ+IVE
-         2rLkFK/vvn7XIp+vM1c1Bcuk9oqMfWu9pSgi4AuihHuZZwCQ9DbOAVhd2Ptna48NRr
-         ym3iI6ryWTfhVuAmLHEWtyugYZg5F+Ex8kGxd9X3gOK7LLuXBVQLsl0IKIHEmukH4N
-         6qTRg5BoSAOnBU95P3ywspR9lWrZaAz3Y6+iJIt1mRAUMIzNfIeQx8MXznT6oos4/X
-         qaxx24w4QZqwBnyEe91q1vaat6KgIS734OPMv3BRZUAFggZnS3kykFu3YR4/Hb9fgH
-         Sqbcrz9xXgurwNc+6FOvakTd6bY+oTulbIaFy+ByUipD8cuznwr
-Date:   Mon, 3 Sep 2018 19:11:26 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 08/12] commit-graph: convert to using the_hash_algo
-Message-ID: <20180903191126.GN432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-References: <20180829005857.980820-1-sandals@crustytoothpaste.net>
- <20180829005857.980820-9-sandals@crustytoothpaste.net>
- <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
+        id S1728364AbeICXeA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 19:34:00 -0400
+Received: from mout.gmx.net ([212.227.15.18]:43657 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727493AbeICXd7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 19:33:59 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lj1Cw-1fKp673VTa-00dDPn; Mon, 03
+ Sep 2018 21:12:25 +0200
+Date:   Mon, 3 Sep 2018 21:12:25 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [GSoC][PATCH v8 00/20] Convert "git stash" to C builtin
+In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1809032111100.71@tvgsbejvaqbjf.bet>
+References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="aSnC4ZPPfhCvD8sN"
-Content-Disposition: inline
-In-Reply-To: <ef3f5ff2-a774-9e9b-d73a-b21630bede53@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Sk4/1CNJGQg0q5s6jPZ5iH+u/jI1YN6Df01ntIZVJvX0S1rL9yX
+ eL78lAP/hWrpPd3eUr/Ke6zhUWONy+V1ZCnbqcgodzwYJPFNmZSsSZN/flyJ8qxaouu5W4W
+ ReMK4fjFtRamWUH1U4uUiv5+5E7maFgZgW/v11gVdJpu6MQtrtLZOwNRotfNtG/bFSEHH9f
+ S/88a1RkYc9hhJ0svl9Pw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:bPGxO8/CDZE=:LwV9IyGM1HwUyvU5/fXeXv
+ lZkhi1A9+EFhQLqbang4E/FJUoz1kjFFGX/ONFY5yxfaQIu3tViOdeKczf3TqYCOobt6ooYJW
+ ktj+03DCMZGir5BL18et41w9jvhPuI/Ve7nsP7TzLbmjL42yV5CRNvl3nbdhveCuqqZ8Kc3RP
+ fJBh4VsLjWuu0ItbKIskLWmA4hnGwixQr755WWHflwpOei3GXOLfhQ5NgGpmciiQa4Ch2jbiZ
+ cKGbU/ig0C+Yhw/p3Cg7i4LAusqGoZvD/uPHhgUlkeayYvks371B8v9bGO2oMT2hg7rb7w9Ya
+ bWTLTg29AW5D52NjQrrxqi85ucOFS/nvLAHc//7y+80D1Xkfab+ML+BCqtXKBsJoj3ultANGq
+ OgWJMHgkzqTWcI7ekcRJctFAjhVSibEY1ifZI/yHT674rfFJKihgGVLAiH+wwcMbUezj9uvMA
+ FXQhxy/MS1mUwXquXb6bGtPS26LwcVa5fCuIMTWu/pznTco60uiOanrvVtKGW4ApRsLO8LK8A
+ c8QAfiEu+I2jbErMXeBx6/6d2Y8uMnSoA51fH/sq5esXjfsOgGwhq5qMdvBv0qlPdc8gVHTSe
+ 7fNGK8aksIgGVnsfGAqKKansP2OlsxOJHV+yeYCqFREuI/eqlXLlm+Pflin4uP3DiNyJZnUmu
+ KyUANELievLSJxFMjxbN+34LLeNm57FAQQ5YG6hzt3gvNio0tTvAyfkkzVC7viuOBwWiuGA2W
+ 7GXf5iuMQk2FmmF6D0UbEmCeSTl4hkZPBoYvWM1dvtzMK01atmySm+0WsSL+KLhilEigrY3B6
+ JV2uIlY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Paul,
 
---aSnC4ZPPfhCvD8sN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
 
-On Wed, Aug 29, 2018 at 08:41:36AM -0400, Derrick Stolee wrote:
-> diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-> index 6aee861f78..676c1a9ae0 100755
-> --- a/t/t5318-commit-graph.sh
-> +++ b/t/t5318-commit-graph.sh
-> @@ -333,7 +333,7 @@ test_expect_success 'git commit-graph verify' '
->=20
-> =C2=A0NUM_COMMITS=3D9
-> =C2=A0NUM_OCTOPUS_EDGES=3D2
-> -HASH_LEN=3D20
-> +HASH_LEN=3D"$(test_oid rawsz)"
-> =C2=A0GRAPH_BYTE_VERSION=3D4
-> =C2=A0GRAPH_BYTE_HASH=3D5
-> =C2=A0GRAPH_BYTE_CHUNK_COUNT=3D6
+> This a new iteration of `stash.c`.
 
-I dropped this at the end of my hash-independent fixes series and I
-slipped in a use of test_oid_init, which is now required.  Thanks for
-the patch.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+Thank you for the pleasant read!
 
---aSnC4ZPPfhCvD8sN
-Content-Type: application/pgp-signature; name="signature.asc"
+I read through all of the patches, spending particularly some time with
+the `stash create` one.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+Apart from the few comments I had, I only have positive things to say ;-)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluNh14ACgkQv1NdgR9S
-9ov+YhAAkIBUk09ak8EjX8xqJdjD8WSovBVXo9oxuSYMQ9GkTkdUVOkwmRmyBX9w
-2KToevYHlOXETH1OX72BMl+8rO2g8Hk1oRiRgfX3Jqrj+dUhM4mJItzk2FcZUCxR
-ifc80kj6rp59MX/TMdq0wvsWmAnQtY7eN+g2LxMvOFJMnYrbLC6amagR7WrjDhbf
-+aKi34RdVyVQ7vKjTJlSeuwP02Q+P53xNMqSjftzEPpg++dLpDOtCkL+IfFctbzu
-bENsJrAhHswF78vCsZoW6l/dEvVUjEzvLuN6Zy0ED0b7babHjy/c8xf7xqmOy1ek
-H2orHux87sFPLBdjA3P3Zw6bBB0NtOGFBSf1GtEkrwRTp01ckLbHd/7Pwqy7XKhF
-kTQkIwHtG93ge4qIj29fbmCyULiFaxoSshKN8rN38zNT2Ifq7hISD0m16Z5KpW3+
-Smgubm9YPEWvjf5AhqD7VPzt90j+uZ51X2peYl8+/euUEjA4iVjCcTPw6DHk9OEQ
-aIFzMTZd+EdcxLnHZNWRcrOIPdd5JSLEOFQoyfSc0lsdDEkVbFWrr6RfFtJ7vfm2
-b/eVFMpap1d3IL8bv9Xv4Zy4bIXW5VlXEDYS8mcfkRZVOmmVA4qkGso3XIMWwPxC
-ApfA9iixok/sFCsFDPTaDGtpPjd/s8aH2WpQLoAzd2d5mUsK65E=
-=Q5h8
------END PGP SIGNATURE-----
-
---aSnC4ZPPfhCvD8sN--
+Thanks,
+Dscho
