@@ -2,83 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFA731F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 19:28:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06D491F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 20:38:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728443AbeICXuA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 19:50:00 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:34482 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728203AbeICXuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 19:50:00 -0400
-Received: by mail-io0-f195.google.com with SMTP id c22-v6so1137336iob.1
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 12:28:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yV7E8qGmJIdz+rzjeMDDTqkvPJHimLuc0jAyausgRlw=;
-        b=ttTdxRphep072jGdypHbxAcHhfHUvZX8AJd+ZYB8YTZOjUgZTmBij+cfkOyVnkLs5n
-         0gJ922lJNsJC0fj6oKLWKDh+8sORHoHKtpPDW6jeqqexcQ+h8Bl08VPJ/x9CPgiyHDhz
-         02hscYXvv0UIl3CAjzJ0axMYR0YaNkPnQK4zBTrRZUehkb4Jf493We+fl8tYeOPkGMe0
-         LGs9h8DZ/6XRDwLEZmhmOXJATo6lBCIWwf8I3mVGpwv7M0DZRxrrlVgPH9WgLcWJLLyk
-         vQhzZuVh43W+xmCdC9YPIc2vrlOkW/n/PUaSFvh/jz3QmoTk1FahWFoVWFnSHMJMFHCP
-         bF4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yV7E8qGmJIdz+rzjeMDDTqkvPJHimLuc0jAyausgRlw=;
-        b=YcPy3iDeMNVFgATLL3+s+AbnqWSONXfBLKRqD597NrACIWMTrzBn3FJam4miglg/Xj
-         0ub4QsKvValYUm9p7ZOjDrUZ+Bm6LW6zlUNh9LaiC4cBvI4cjpxlrbdQGYBlTNu6RMSR
-         HKwYIrMZizIGDa8KYQvEO4kWjHmPt66lXJsbNOiO73rg/rOissWzx3cLVwde/tEDUs7q
-         NOjCcX5ExVys3sMl7v56uAkgTz9jF6fGBJqI/PxrEdo9rsFNkOZjaJU7XSbSf02OdxkJ
-         wZZdo5ohQXvec5JLFe34lhVP5VEK223zF6jW7XABdApxBEwUJiQ71xq8L6nSGHObFSYT
-         a/CA==
-X-Gm-Message-State: APzg51CvRSb7QtQxisBq58G1yU8BEaYVgHRRW9UZq5GgtmorpKZS77Eq
-        SX1z2J704Q6TIhwGbdF5de82L6ka2929kOpf5iI=
-X-Google-Smtp-Source: ANB0Vda2NuTFDoUVJ/ZL45GyC1j56t0T/y3mt9dDf16VCbbocs53g99KLDpXaFwoBYg23LOHvchkOK6wvE2oHEJPKH4=
-X-Received: by 2002:a6b:8fd0:: with SMTP id r199-v6mr20072734iod.118.1536002903620;
- Mon, 03 Sep 2018 12:28:23 -0700 (PDT)
+        id S1728591AbeIDBAh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 21:00:37 -0400
+Received: from mout.gmx.net ([212.227.15.19]:42607 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727552AbeIDBAh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 21:00:37 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrvBu-1flKzl0ufW-013idx; Mon, 03
+ Sep 2018 22:38:43 +0200
+Date:   Mon, 3 Sep 2018 22:38:42 +0200 (DST)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [GSoC][PATCH v8 17/20] stash: convert save to builtin
+In-Reply-To: <CAPig+cTGBi1P5V3uGwtKCvoCn=-17y1dY3dBkS13Yx1ikjpXcQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1809032238240.71@tvgsbejvaqbjf.bet>
+References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <6832c979c8dca2a3584ed3cf828a6de060413cda.1535665109.git.ungureanupaulsebastian@gmail.com> <nycvar.QRO.7.76.6.1809032031090.71@tvgsbejvaqbjf.bet>
+ <CAPig+cTGBi1P5V3uGwtKCvoCn=-17y1dY3dBkS13Yx1ikjpXcQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180829152500.46640-1-benpeart@microsoft.com> <20180829152500.46640-3-benpeart@microsoft.com>
- <CACsJy8AC8VT=DEcmqAtW26pYKRVT1Kz=pVyj-Wnu3uOsKwWGTw@mail.gmail.com>
-In-Reply-To: <CACsJy8AC8VT=DEcmqAtW26pYKRVT1Kz=pVyj-Wnu3uOsKwWGTw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 3 Sep 2018 21:27:57 +0200
-Message-ID: <CACsJy8Dm-jRYfp1UVu8O+NiHf61RVY5t1vvsbXan0YrhsDabbA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] read-cache: load cache extensions on worker thread
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:o0rNXtWyjEpXB96ZtJE0g2xA+GIf6Rvm9G51Qlz80yqEQhEuKb4
+ abXMgRJACNHhlbyvshZD/PKlYQXf1gXLBj0+0mkEkKkbCpRY/57OW4l95kPWkh1dLl6lWeQ
+ y69GwfI9mfBVF24loHxLvikYaTe6pYdG86fups3ghBThvAB/JxL87xzyqcNJP/toyTVVeos
+ rJrme/JTADCDM/OYZyu0Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:QEGXExRJOws=:kXbqMvlPVDyD52sTGNRaen
+ N0I9sDsWKIM19J0P3n0J/tzhLvAvbEOtU5wbWWZznHO71vIpoBgunmjf2gdunxY0704X+XII9
+ i941IOrMlN7tnlH4V4pEyz0xiQCNSoZLI80Ro2l9MfM7dSF85r8v50lzico5Rk4nURbxvFmmx
+ 1QK9EEurDsjQb1XoN92Bib8hOJMQn441xGUl75VCC+JzYQaOemOay4pAJXHhtIHSjnIcNJ8zA
+ 76XW/+dfgKYW8vkRVLXYlWePGx2qPR3+92YRDXa6UcUXRQJJ1QUft3omXx2wOc3l9woMFtSk8
+ gXh/qG7ucwAV3ddspJ7LlvtYlYSB8oBceGZUiyGiWYybw081TLxKPIWrLg48e41dMNXePhNx8
+ qf6bRN1B3PCy8zz5EYhaarhASMo6eLSXNz4V0xTFTJP+BBrBGQh5zfk8rnEnQYR/x3XgYlZ/o
+ oDZM6jKm2RFgGSZjUVBjjN5yGklZ+ToAfOlMCALldlBQJqXSKdbWRsgdK1M16AfO6ipHMUs+h
+ Jtx1apRAu59KTWzJQfVscV3yx7DjqlYZNQ164/5141pcVMVw7kVpSq3ssZbtXmzETutTAdt5A
+ +PHyuyMTC6TpvROtKzaSnQP2ImiprxbS03iqYakaWV9Lv2icerNkr7BQepHgCpokIVZinIl6G
+ 3CYRS7kZEoVE6Bqt6m1PvkKM6hHcuVQHZhcQlrjJKCJRzpavK/dbIABNYVSBgnhu9o/+cPZnA
+ IALBW8Kpl/J8tbtensj90arEnaxI7R10QphHFEHrXrjxDuWmf03GSAs6ee2CFCpOv2qlodDyo
+ hlr4kJj
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 3, 2018 at 9:21 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> > I used p0002-read-cache.sh to generate some performance data on the
-> > cumulative impact:
-> >
-> > 100,000 entries
-> >
-> > Test                                HEAD~3           HEAD~2
-> > ---------------------------------------------------------------------------
-> > read_cache/discard_cache 1000 times 14.08(0.01+0.10) 9.72(0.03+0.06) -31.0%
->
-> This is misleading (if I read it correctly). 1/3 already drops
-> execution time down to 9.81, so this patch alone only has about 6%
-> saving.
+Hi Eric,
 
-I may have miscalculated that. 1/3 says -30% saving, here it's -31%,
-so I guess it's 1% extra saving (or ~3% on 1m entries)? That's
-definitely not worth doing.
--- 
-Duy
+On Mon, 3 Sep 2018, Eric Sunshine wrote:
+
+> On Mon, Sep 3, 2018 at 2:44 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > where `strbuf_join_argv()` would be implemented like this (and I would put
+> > it into strbuf.c and strbuf.h:
+> >
+> >         const char *strbuf_join_argv(struct strbuf *buf,
+> >                                      int argc, const char **argv, char delim)
+> >         {
+> >                 if (!argc)
+> >                         return buf->buf;
+> >
+> >                 strbuf_addstr(buf, *argv);
+> >                 while (--i) {
+> 
+> s/i/argc/
+
+Right you are!
+
+Thank you,
+Dscho
+
+> 
+> >                         strbuf_addch(buf, delim);
+> >                         strbuf_addstr(buf, *(++argv);
+> >                 }
+> >
+> >                 return buf->buf;
+> >         }
+> 
