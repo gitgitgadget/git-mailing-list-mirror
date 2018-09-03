@@ -2,69 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE4B61F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 19:12:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C29D61F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 19:16:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728364AbeICXeA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 19:34:00 -0400
-Received: from mout.gmx.net ([212.227.15.18]:43657 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727493AbeICXd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 19:33:59 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lj1Cw-1fKp673VTa-00dDPn; Mon, 03
- Sep 2018 21:12:25 +0200
-Date:   Mon, 3 Sep 2018 21:12:25 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 00/20] Convert "git stash" to C builtin
-In-Reply-To: <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809032111100.71@tvgsbejvaqbjf.bet>
-References: <cover.1529943789.git.ungureanupaulsebastian@gmail.com> <cover.1535665109.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728284AbeICXiO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 19:38:14 -0400
+Received: from smtprelay06.ispgateway.de ([80.67.31.104]:64715 "EHLO
+        smtprelay06.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728225AbeICXiO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 19:38:14 -0400
+Received: from [91.248.57.150] (helo=localhost)
+        by smtprelay06.ispgateway.de with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <jochen@sprickerhof.de>)
+        id 1fwu66-0001CY-VQ; Mon, 03 Sep 2018 21:01:15 +0200
+Date:   Mon, 3 Sep 2018 21:01:14 +0200
+From:   Jochen Sprickerhof <jochen@sprickerhof.de>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] add -p: coalesce hunks before testing applicability
+Message-ID: <20180903190114.GC17416@vis>
+References: <20180828085858.3933-1-git@jochen.sprickerhof.de>
+ <xmqq36uygyau.fsf@gitster-ct.c.googlers.com>
+ <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Sk4/1CNJGQg0q5s6jPZ5iH+u/jI1YN6Df01ntIZVJvX0S1rL9yX
- eL78lAP/hWrpPd3eUr/Ke6zhUWONy+V1ZCnbqcgodzwYJPFNmZSsSZN/flyJ8qxaouu5W4W
- ReMK4fjFtRamWUH1U4uUiv5+5E7maFgZgW/v11gVdJpu6MQtrtLZOwNRotfNtG/bFSEHH9f
- S/88a1RkYc9hhJ0svl9Pw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:bPGxO8/CDZE=:LwV9IyGM1HwUyvU5/fXeXv
- lZkhi1A9+EFhQLqbang4E/FJUoz1kjFFGX/ONFY5yxfaQIu3tViOdeKczf3TqYCOobt6ooYJW
- ktj+03DCMZGir5BL18et41w9jvhPuI/Ve7nsP7TzLbmjL42yV5CRNvl3nbdhveCuqqZ8Kc3RP
- fJBh4VsLjWuu0ItbKIskLWmA4hnGwixQr755WWHflwpOei3GXOLfhQ5NgGpmciiQa4Ch2jbiZ
- cKGbU/ig0C+Yhw/p3Cg7i4LAusqGoZvD/uPHhgUlkeayYvks371B8v9bGO2oMT2hg7rb7w9Ya
- bWTLTg29AW5D52NjQrrxqi85ucOFS/nvLAHc//7y+80D1Xkfab+ML+BCqtXKBsJoj3ultANGq
- OgWJMHgkzqTWcI7ekcRJctFAjhVSibEY1ifZI/yHT674rfFJKihgGVLAiH+wwcMbUezj9uvMA
- FXQhxy/MS1mUwXquXb6bGtPS26LwcVa5fCuIMTWu/pznTco60uiOanrvVtKGW4ApRsLO8LK8A
- c8QAfiEu+I2jbErMXeBx6/6d2Y8uMnSoA51fH/sq5esXjfsOgGwhq5qMdvBv0qlPdc8gVHTSe
- 7fNGK8aksIgGVnsfGAqKKansP2OlsxOJHV+yeYCqFREuI/eqlXLlm+Pflin4uP3DiNyJZnUmu
- KyUANELievLSJxFMjxbN+34LLeNm57FAQQ5YG6hzt3gvNio0tTvAyfkkzVC7viuOBwWiuGA2W
- 7GXf5iuMQk2FmmF6D0UbEmCeSTl4hkZPBoYvWM1dvtzMK01atmySm+0WsSL+KLhilEigrY3B6
- JV2uIlY
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="FsscpQKzF/jJk6ya"
+Content-Disposition: inline
+In-Reply-To: <e5b2900a-0558-d3bf-8ea1-d526b078bbc2@talktalk.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Df-Sender: NTc3MDAz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
 
-On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
+--FsscpQKzF/jJk6ya
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> This a new iteration of `stash.c`.
+Hi Phillip,
 
-Thank you for the pleasant read!
+* Phillip Wood <phillip.wood@talktalk.net> [2018-08-30 14:47]:
+>When $newhunk is created it is marked as dirty to prevent=20
+>coalesce_overlapping_hunks() from coalescing it. This patch does not=20
+>change that. What is happening is that by calling=20
+>coalesce_overlapping_hunks() the hunks that are not currently selected=20
+>are filtered out and any hunks that can be coalesced are (I think that=20
+>in the test that starts passing with this patch the only change is the=20
+>filtering as there's only a single hunk selected).
 
-I read through all of the patches, spending particularly some time with
-the `stash create` one.
+Agreed here. It would be enough to include the first hunk in the test to=20
+make it fail again. Still I would see the patch as going in the right=20
+direction as we need something like coalesce_overlapping_hunks() to make=20
+the hunks applicable after the edit.
 
-Apart from the few comments I had, I only have positive things to say ;-)
+>This is a subtle change to the test for the applicability of an edited=20
+>hunk. Previously when all the hunks were used to create the test patch=20
+>we could be certain that if the test patch applied then if the user=20
+>later selected any unselected hunk or deselected any selected hunk=20
+>then that operation would succeed. I'm not sure that is true now (but=20
+>I haven't thought about it for very long).
 
-Thanks,
-Dscho
+I'm not sure here. If we use the same test from t3701, do s(plit),=20
+y(es), e(dit), it would fail later on. Can you come up with an example?
+
+> We could restore the old=20
+>test condition and coalesce the hunks by copying all the hunks and=20
+>setting $hunk->{USE}=3D1 when creating the test patch if that turns out=20
+>to be useful (it would be interesting to see if the test still passes=20
+>with that change).
+
+We set USE=3D1 for $newhunk already, or where would you set it?
+
+Cheers Jochen
+
+--FsscpQKzF/jJk6ya
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEc7KZy9TurdzAF+h6W//cwljmlDMFAluNhPUACgkQW//cwljm
+lDPgtxAAkQQhUV/NRlvFA1mRldx3nifhFfOOQ1Lvq9DH5nRO9KDVbGQNavbsG42s
+LueZqhjNC1hqbsCtluYnd2lHqtk04U60SQxOs8xaiztSx+I/ujlnW7qqTe8I3w5v
+Wf5qky1eDg5M16fX3eqYiUNZXoLXOOsfX/Sutyuvwi4Nlghw2vip6jUPfI6T67m5
+l7uTYtEbCMhBMWuEvuoMO6bI/YwcoC3QGkMAaDHEPs/WZLQWzq+HHNBrdz2XEVRw
+Cyycnb9LFFaMQBWOwD1OeYKtOMf8MFxaGKtdTpdtobaO+TEUiFveDlMwInEkFbw6
+nQ2SiKOl1+mE6V50dKw/FBPcMdkLmYC+bMK16wMxUnP13/97CDkwH9jJUBokd+H8
+SHbr8HIlj4HrSp400CKRU4FSmIFVE8kX1SxqCvmnqXqK6CugR24K9SfWW0Xk8X5e
+6lCC+ysHybB/baTBaw4VqgX+b1idWbm3B+7cRtEYAiWsnUeD0VrDvBeND5SKcuaA
+kJ6Ml+YZmx4P5jPVQy2TXngjLAO3jZmSrIHg1ytQEPqQMxtMOxpI0gGByPNPh+p4
+ea2WU0nrebVA3KyIPgqhflr23mrEbkbN/wkiihQ+c0pzrI9q8x7sgTviDspwlf8l
+ZBG61z/zNhWRx4CK+hBJOiLBdl98ydn+ZvmwVM4XbnjfbwZ57GQ=
+=RFw7
+-----END PGP SIGNATURE-----
+
+--FsscpQKzF/jJk6ya--
