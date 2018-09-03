@@ -2,527 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	SORTED_RECIPS shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38D851F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 16:49:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 289651F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 17:32:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727650AbeICVJy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 17:09:54 -0400
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:37241 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727560AbeICVJy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 17:09:54 -0400
-Received: by mail-ed1-f44.google.com with SMTP id a20-v6so1232074edd.4
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 09:48:58 -0700 (PDT)
+        id S1731188AbeICVxa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 17:53:30 -0400
+Received: from mail-it0-f68.google.com ([209.85.214.68]:38486 "EHLO
+        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728303AbeICVx3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 17:53:29 -0400
+Received: by mail-it0-f68.google.com with SMTP id p129-v6so1815608ite.3
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 10:32:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=jp5UiMLWOlb5RWp42TrQQADvTsk3ID8Dx2QjzKqjkvY=;
-        b=ljEL70FIp4TlsPTgAqx/tApesJf2LtISldEoq6pPu2EJUbqT24EesXajQQ59bSdg4n
-         9L6sdcjkQmgdV5e2Ykiz80ZC898Y+W5gYIRsT4cxIY57/VWFPmA8UKFHdPhKsQd6wx8u
-         Qwrd3mecuRm9dBPA3B9s/B5sic1FlYCLC9m9wshtRfyBAclfpdVhQjDLHI4yWXV2m/Mt
-         nyzVJbkcvvzLqYONzM5UHIs7W7jWLvtlTtSbk1MfRmDba9oWycdSTaPWy46MGwAw6N6Q
-         90fel5j9HXAA+kKU3WQBAxXK0IjBMlZ0U/QQKy9X/iXklZlKkMkRUEjDtFxEQeSH9AYw
-         wtCQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=u5dNRMsHbDjUNoyn9xY5w5ux9j10JTyyGL+ppQYkToA=;
+        b=C/VRzZO6ie6D3CKzEjC0HRl5RfK9njFt57Fj/FdEzhZs0VfTaHODQG8kRtYpMeuKMV
+         rLHQ36DlE+pZh6eTXl5lqKoBKTH9HbzGyWgKEz0mDxPNj92bC9XuShp8MZEwn+kgDD5Y
+         iYKHQCdI2JKkXqR4y5CRM+m8af+ueuMsF1t+S6kU/LR+15o/+uZ+7mBkTM3m3ZG50GSG
+         Z6GK187U2dbwuJK3uSAEAYybq/I/FYc129G9IpyRxRgEgBtxX2Jc7uRLiS41sH2uQsCN
+         gaL3m9gZXL2ifc66x8vpqxNltB1EDspAZURdUtLYYGLrDUwOxQjNFmLlCtELYcDOeQ7U
+         u2vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=jp5UiMLWOlb5RWp42TrQQADvTsk3ID8Dx2QjzKqjkvY=;
-        b=JW1+ptRG80sQSqpLVoDuu7k/KhZX1ZjuUDSG0M6qT1W/0rJzkeaIUJfpSzblGPAo9R
-         DEhqom8mG/kX9FiyK9b/cgiKpj9vaJ7ohUccW3yQoXWbHm6hyUHHj4mOZTsGa4ZMRkTc
-         FhGGRO9tT7fO/olOKXKMXJyQo9vp2IHCK6N+UQ7Bg3/i7Ch48zr9hTz5vBc1WJKv+k41
-         f3aZlLZ1LKaYhQchqo2AL9JPc0Ds4gGQwkDK3TeaEleTDuwErVYKgOKAtDiB3JoeDcuy
-         2mY7FFF1adeZ4dp81VX3WYvCDO7to/n+q1f0DMqr0vmF1/pT4xecNM8XIUSX9+Lp/vYF
-         DuvA==
-X-Gm-Message-State: APzg51C5nUBSFdoi/8+2VCFW6MX3TcjVU6OQW+q+NLGXGVWRO7pVhIiK
-        Ny+Rcj8dmTbXJ+YeJwTVwSk=
-X-Google-Smtp-Source: ANB0VdY2EjWVU1sWDca/e05VoUCCrXyf2Qz4AjhUw+Ja+Vl51KsPkfe+UkecBCkKX+GOfq6QU0jkjA==
-X-Received: by 2002:aa7:d141:: with SMTP id r1-v6mr33716247edo.83.1535993337295;
-        Mon, 03 Sep 2018 09:48:57 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id f19-v6sm8682392eda.49.2018.09.03.09.48.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 03 Sep 2018 09:48:56 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        git@vger.kernel.org
-Subject: Re: non-smooth progress  indication for git fsck and git gc
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
-        <20180816155714.GA22739@sigill.intra.peff.net>
-        <87bma2qcba.fsf@evledraar.gmail.com>
-        <87y3clbcqf.fsf@evledraar.gmail.com>
-        <20180902074656.GB18787@sigill.intra.peff.net>
-        <20180902075528.GC18787@sigill.intra.peff.net>
-        <20180902085503.GA25391@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180902085503.GA25391@sigill.intra.peff.net>
-Date:   Mon, 03 Sep 2018 18:48:54 +0200
-Message-ID: <87musybk7d.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=u5dNRMsHbDjUNoyn9xY5w5ux9j10JTyyGL+ppQYkToA=;
+        b=AyF3gEY03Z48AsKFtkOR24nGdDkqsn9UrqrKbJiBav6bQZStIklBluCLmQr4NkXNQp
+         5YVNeSS9Fu7X3mOk+fELx5c1NYJtsNnITkhWYTMOgXPtq3i4J3b4tfMRi8rgllQiPuj5
+         vpq2EElQ9OJz7OQSEjQGYUipyxOsDSFLTOOYLYD/SHT9X3vcZUcM3aSewWUkJtTtABak
+         Kj569nc7h6o3zrvyAMzGioqiJ6bNB+pnCtDb7yGFkYfNgYeLZhJqpWG7ELv0A72bw/Hk
+         tEpY9Om/U6NWJUlVYf6UEnVFOqb/cCe3dRU1dnFbI5LIbKReTEwsSeyh8q1gpWsPoIyi
+         5JTA==
+X-Gm-Message-State: APzg51CXlbY1dn0wcohhRTogh643T5cw2I6S7g1igF6MOufyI8sJOwbp
+        QsbD4ZSpjWI8I77Nr5qlZCn93dl89eXK1vX4ns306w==
+X-Google-Smtp-Source: ANB0VdYIn9cwiWkIvTxNXNbqnzH9Rz2CvYCfpCe9b74W8M3nSpM9UMWPgM8oQRdfvoy+d3SksXcQ6DbbRsSK0BOAr+E=
+X-Received: by 2002:a24:144:: with SMTP id 65-v6mr5233985itk.62.1535995940856;
+ Mon, 03 Sep 2018 10:32:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CACsJy8AFo+mb8R-O-JKRPZk__csq6mbVXbnZhSd-nZ08zWfSeg@mail.gmail.com>
+ <20180902074250.6802-1-pclouds@gmail.com> <CAP8UFD0MHUN=auZW9Zu+hnx6oAxjNsZUfQGeJ0HfBCh5RPv6jg@mail.gmail.com>
+In-Reply-To: <CAP8UFD0MHUN=auZW9Zu+hnx6oAxjNsZUfQGeJ0HfBCh5RPv6jg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 3 Sep 2018 19:31:54 +0200
+Message-ID: <CACsJy8BOZy5MBsSwvHNsWeAf4tqtRJc0SJuBtfwM9wR8Yn_xfw@mail.gmail.com>
+Subject: Re: [PATCH] bisect.c: make show_list() build again
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, haraldnordgren@gmail.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        tiagonbotelho@gmail.com, tiagonbotelho@hotmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Sep 2, 2018 at 9:57 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Sun, Sep 2, 2018 at 9:42 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+ <pclouds@gmail.com> wrote:
+>
+> > In order to stop this from happening again, the function is now
+> > compiled unconditionally but exits early unless DEBUG_BISECT is
+> > non-zero.
+>
+> Thanks for going the extra mile and doing this!
+>
+> I wonder if we should also try to make the show_list() function part
+> of the trace_*() functions to make it even more regular. This can be a
+> separate patch or topic though.
 
-On Sun, Sep 02 2018, Jeff King wrote:
-
-> On Sun, Sep 02, 2018 at 03:55:28AM -0400, Jeff King wrote:
->
->> I still think the more interesting long-term thing here is to reuse the
->> pack verification from index-pack, which actually hashes as it does the
->> per-object countup.
->>
->> That code isn't lib-ified enough to be run in process, but I think the
->> patch below should give similar behavior to what fsck currently does.
->> We'd need to tell index-pack to use our fsck.* config for its checks, I
->> imagine. The progress here is still per-pack, but I think we could pass
->> in sufficient information to have it do one continuous meter across all
->> of the packs (see the in-code comment).
->>
->> And it makes the result multi-threaded, and lets us drop a bunch of
->> duplicate code.
->
-> Here's a little polish on that to pass enough progress data to
-> index-pack to let it have one nice continuous meter. I'm not sure if
-> it's worth all the hackery or not. The dual-meter that index-pack
-> generally uses is actually more informative (since it meters the initial
-> pass through the pack and the delta reconstruction separately).
-
-Thanks!
-
-> And there are definitely a few nasty bits (like the way the progress is
-> ended). I'm not planning on taking this further for now, but maybe
-> you or somebody can find it interesting or useful.
-
-I think it would be really nice if this were taken further. Using my
-perf test in
-https://public-inbox.org/git/20180903144928.30691-7-avarab@gmail.com/T/#u
-I get these results:
-
-    $ GIT_PERF_LARGE_REPO=/home/aearnfjord/g/linux GIT_PERF_REPEAT_COUNT=5 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run HEAD~ HEAD p1450-fsck.sh
-    [...]
-    Test           HEAD~                 HEAD
-    ----------------------------------------------------------------
-    1450.1: fsck   384.18(381.63+2.53)   301.52(508.28+38.34) -21.5%
-
-
-I.e. this gives a 20% speedup, although of course some of that might be
-because some of this might be skipping too much work, but looks really
-promising.
-
-I don't know if I'll have time for it, and besides, you wrote the code
-so you already understand it *hint* *hint* :)
-
-> ---
->  builtin/fsck.c       |  59 +++++++++------
->  builtin/index-pack.c |  43 ++++++++++-
->  pack-check.c         | 142 -----------------------------------
->  pack.h               |   1 -
->  4 files changed, 75 insertions(+), 170 deletions(-)
->
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 250f5af118..2d774ea2e5 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -386,25 +386,6 @@ static int fsck_obj(struct object *obj, void *buffer, unsigned long size)
->  	return err;
->  }
->
-> -static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
-> -			   unsigned long size, void *buffer, int *eaten)
-> -{
-> -	/*
-> -	 * Note, buffer may be NULL if type is OBJ_BLOB. See
-> -	 * verify_packfile(), data_valid variable for details.
-> -	 */
-> -	struct object *obj;
-> -	obj = parse_object_buffer(the_repository, oid, type, size, buffer,
-> -				  eaten);
-> -	if (!obj) {
-> -		errors_found |= ERROR_OBJECT;
-> -		return error("%s: object corrupt or missing", oid_to_hex(oid));
-> -	}
-> -	obj->flags &= ~(REACHABLE | SEEN);
-> -	obj->flags |= HAS_OBJ;
-> -	return fsck_obj(obj, buffer, size);
-> -}
-> -
->  static int default_refs;
->
->  static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
-> @@ -662,6 +643,32 @@ static int mark_packed_for_connectivity(const struct object_id *oid,
->  	return 0;
->  }
->
-> +static int verify_pack(struct packed_git *p,
-> +		       unsigned long count, unsigned long total)
-> +{
-> +	struct child_process index_pack = CHILD_PROCESS_INIT;
-> +
-> +	if (is_pack_valid(p) < 0)
-> +		return -1;
-> +	for_each_object_in_pack(p, mark_packed_for_connectivity, NULL, 0);
-> +
-> +	index_pack.git_cmd = 1;
-> +	argv_array_pushl(&index_pack.args,
-> +			 "index-pack",
-> +			 "--verify-fsck",
-> +			 NULL);
-> +	if (show_progress)
-> +		argv_array_pushf(&index_pack.args,
-> +				 "--fsck-progress=%lu,%lu,Checking pack %s",
-> +				 count, total, sha1_to_hex(p->sha1));
-> +	argv_array_push(&index_pack.args, p->pack_name);
-> +
-> +	if (run_command(&index_pack))
-> +		return -1;
-> +
-> +	return 0;
-> +}
-> +
->  static char const * const fsck_usage[] = {
->  	N_("git fsck [<options>] [<object>...]"),
->  	NULL
-> @@ -737,7 +744,6 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
->  		if (check_full) {
->  			struct packed_git *p;
->  			uint32_t total = 0, count = 0;
-> -			struct progress *progress = NULL;
->
->  			if (show_progress) {
->  				for (p = get_packed_git(the_repository); p;
-> @@ -746,18 +752,21 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
->  						continue;
->  					total += p->num_objects;
->  				}
-> -
-> -				progress = start_progress(_("Checking objects"), total);
->  			}
->  			for (p = get_packed_git(the_repository); p;
->  			     p = p->next) {
->  				/* verify gives error messages itself */
-> -				if (verify_pack(p, fsck_obj_buffer,
-> -						progress, count))
-> +				if (verify_pack(p, count, total))
->  					errors_found |= ERROR_PACK;
->  				count += p->num_objects;
->  			}
-> -			stop_progress(&progress);
-> +			/*
-> +			 * Our child index-pack never calls stop_progress(),
-> +			 * which lets each child appear on the same line. Now
-> +			 * that we've finished all of them, we have to tie that
-> +			 * off.
-> +			 */
-> +			fprintf(stderr, "\n");
->  		}
->
->  		if (fsck_finish(&fsck_obj_options))
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 9582ead950..d03ec7bb89 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -85,6 +85,13 @@ static int show_resolving_progress;
->  static int show_stat;
->  static int check_self_contained_and_connected;
->
-> +static int verify_fsck_mode;
-> +/* unlike our normal 2-part progress, this counts up only total objects */
-> +struct progress *fsck_progress;
-> +static uint32_t fsck_progress_cur;
-> +static uint32_t fsck_progress_total;
-> +static const char *fsck_progress_title;
-> +
->  static struct progress *progress;
->
->  /* We always read in 4kB chunks. */
-> @@ -1100,6 +1107,8 @@ static void *threaded_second_pass(void *data)
->  		int i;
->  		counter_lock();
->  		display_progress(progress, nr_resolved_deltas);
-> +		display_progress(fsck_progress,
-> +				 fsck_progress_cur + nr_resolved_deltas);
->  		counter_unlock();
->  		work_lock();
->  		while (nr_dispatched < nr_objects &&
-> @@ -1145,18 +1154,23 @@ static void parse_pack_objects(unsigned char *hash)
->  			nr_ofs_deltas++;
->  			ofs_delta->obj_no = i;
->  			ofs_delta++;
-> +			/* no fsck_progress; we only count it when we've resolved the delta */
->  		} else if (obj->type == OBJ_REF_DELTA) {
->  			ALLOC_GROW(ref_deltas, nr_ref_deltas + 1, ref_deltas_alloc);
->  			oidcpy(&ref_deltas[nr_ref_deltas].oid, &ref_delta_oid);
->  			ref_deltas[nr_ref_deltas].obj_no = i;
->  			nr_ref_deltas++;
-> +			/* no fsck_progress; we only count it when we've resolved the delta */
->  		} else if (!data) {
->  			/* large blobs, check later */
->  			obj->real_type = OBJ_BAD;
->  			nr_delays++;
-> -		} else
-> +			display_progress(fsck_progress, ++fsck_progress_cur);
-> +		} else {
->  			sha1_object(data, NULL, obj->size, obj->type,
->  				    &obj->idx.oid);
-> +			display_progress(fsck_progress, ++fsck_progress_cur);
-> +		}
->  		free(data);
->  		display_progress(progress, i+1);
->  	}
-> @@ -1238,6 +1252,8 @@ static void resolve_deltas(void)
->  			continue;
->  		resolve_base(obj);
->  		display_progress(progress, nr_resolved_deltas);
-> +		display_progress(fsck_progress,
-> +				 fsck_progress_cur + nr_resolved_deltas);
->  	}
->  }
->
-> @@ -1391,6 +1407,8 @@ static void fix_unresolved_deltas(struct hashfile *f)
->  					base_obj->data, base_obj->size, type);
->  		find_unresolved_deltas(base_obj);
->  		display_progress(progress, nr_resolved_deltas);
-> +		display_progress(fsck_progress,
-> +				 fsck_progress_cur + nr_resolved_deltas);
->  	}
->  	free(sorted_by_pos);
->  }
-> @@ -1714,6 +1732,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->  				verify = 1;
->  				show_stat = 1;
->  				stat_only = 1;
-> +			} else if (!strcmp(arg, "--verify-fsck")) {
-> +				verify_fsck_mode = 1;
-> +				verify = 1;
-> +				strict = 1;
-> +				do_fsck_object = 1;
->  			} else if (skip_to_optional_arg(arg, "--keep", &keep_msg)) {
->  				; /* nothing to do */
->  			} else if (skip_to_optional_arg(arg, "--promisor", &promisor_msg)) {
-> @@ -1746,6 +1769,15 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->  				verbose = 1;
->  			} else if (!strcmp(arg, "--show-resolving-progress")) {
->  				show_resolving_progress = 1;
-> +			} else if (skip_prefix(arg, "--fsck-progress=", &arg)) {
-> +				char *end;
-> +				fsck_progress_cur = strtoul(arg, &end, 10);
-> +				if (*end++ != ',')
-> +					die("bad fsck-progress arg: %s", arg);
-> +				fsck_progress_total = strtoul(end, &end, 10);
-> +				if (*end++ != ',')
-> +					die("bad fsck-progress arg: %s", arg);
-> +				fsck_progress_title = end;
->  			} else if (!strcmp(arg, "--report-end-of-input")) {
->  				report_end_of_input = 1;
->  			} else if (!strcmp(arg, "-o")) {
-> @@ -1800,6 +1832,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->  	}
->  #endif
->
-> +	if (fsck_progress_total)
-> +		fsck_progress = start_progress(fsck_progress_title,
-> +					       fsck_progress_total);
-> +
->  	curr_pack = open_pack_file(pack_name);
->  	parse_pack_header();
->  	objects = xcalloc(st_add(nr_objects, 1), sizeof(struct object_entry));
-> @@ -1833,8 +1869,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
->  	else
->  		close(input_fd);
->
-> -	if (do_fsck_object && fsck_finish(&fsck_options))
-> +	if (do_fsck_object && fsck_finish(&fsck_options)) {
-> +		if (verify_fsck_mode)
-> +			return 1; /* quietly return error */
->  		die(_("fsck error in pack objects"));
-> +	}
->
->  	free(objects);
->  	strbuf_release(&index_name_buf);
-> diff --git a/pack-check.c b/pack-check.c
-> index d3a57df34f..ea1457ce53 100644
-> --- a/pack-check.c
-> +++ b/pack-check.c
-> @@ -15,17 +15,6 @@ struct idx_entry {
->  	unsigned int nr;
->  };
->
-> -static int compare_entries(const void *e1, const void *e2)
-> -{
-> -	const struct idx_entry *entry1 = e1;
-> -	const struct idx_entry *entry2 = e2;
-> -	if (entry1->offset < entry2->offset)
-> -		return -1;
-> -	if (entry1->offset > entry2->offset)
-> -		return 1;
-> -	return 0;
-> -}
-> -
->  int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
->  		   off_t offset, off_t len, unsigned int nr)
->  {
-> @@ -48,121 +37,6 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
->  	return data_crc != ntohl(*index_crc);
->  }
->
-> -static int verify_packfile(struct packed_git *p,
-> -			   struct pack_window **w_curs,
-> -			   verify_fn fn,
-> -			   struct progress *progress, uint32_t base_count)
-> -
-> -{
-> -	off_t index_size = p->index_size;
-> -	const unsigned char *index_base = p->index_data;
-> -	git_hash_ctx ctx;
-> -	unsigned char hash[GIT_MAX_RAWSZ], *pack_sig;
-> -	off_t offset = 0, pack_sig_ofs = 0;
-> -	uint32_t nr_objects, i;
-> -	int err = 0;
-> -	struct idx_entry *entries;
-> -
-> -	if (!is_pack_valid(p))
-> -		return error("packfile %s cannot be accessed", p->pack_name);
-> -
-> -	the_hash_algo->init_fn(&ctx);
-> -	do {
-> -		unsigned long remaining;
-> -		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
-> -		offset += remaining;
-> -		if (!pack_sig_ofs)
-> -			pack_sig_ofs = p->pack_size - the_hash_algo->rawsz;
-> -		if (offset > pack_sig_ofs)
-> -			remaining -= (unsigned int)(offset - pack_sig_ofs);
-> -		the_hash_algo->update_fn(&ctx, in, remaining);
-> -	} while (offset < pack_sig_ofs);
-> -	the_hash_algo->final_fn(hash, &ctx);
-> -	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
-> -	if (hashcmp(hash, pack_sig))
-> -		err = error("%s pack checksum mismatch",
-> -			    p->pack_name);
-> -	if (hashcmp(index_base + index_size - the_hash_algo->hexsz, pack_sig))
-> -		err = error("%s pack checksum does not match its index",
-> -			    p->pack_name);
-> -	unuse_pack(w_curs);
-> -
-> -	/* Make sure everything reachable from idx is valid.  Since we
-> -	 * have verified that nr_objects matches between idx and pack,
-> -	 * we do not do scan-streaming check on the pack file.
-> -	 */
-> -	nr_objects = p->num_objects;
-> -	ALLOC_ARRAY(entries, nr_objects + 1);
-> -	entries[nr_objects].offset = pack_sig_ofs;
-> -	/* first sort entries by pack offset, since unpacking them is more efficient that way */
-> -	for (i = 0; i < nr_objects; i++) {
-> -		entries[i].oid.hash = nth_packed_object_sha1(p, i);
-> -		if (!entries[i].oid.hash)
-> -			die("internal error pack-check nth-packed-object");
-> -		entries[i].offset = nth_packed_object_offset(p, i);
-> -		entries[i].nr = i;
-> -	}
-> -	QSORT(entries, nr_objects, compare_entries);
-> -
-> -	for (i = 0; i < nr_objects; i++) {
-> -		void *data;
-> -		enum object_type type;
-> -		unsigned long size;
-> -		off_t curpos;
-> -		int data_valid;
-> -
-> -		if (p->index_version > 1) {
-> -			off_t offset = entries[i].offset;
-> -			off_t len = entries[i+1].offset - offset;
-> -			unsigned int nr = entries[i].nr;
-> -			if (check_pack_crc(p, w_curs, offset, len, nr))
-> -				err = error("index CRC mismatch for object %s "
-> -					    "from %s at offset %"PRIuMAX"",
-> -					    oid_to_hex(entries[i].oid.oid),
-> -					    p->pack_name, (uintmax_t)offset);
-> -		}
-> -
-> -		curpos = entries[i].offset;
-> -		type = unpack_object_header(p, w_curs, &curpos, &size);
-> -		unuse_pack(w_curs);
-> -
-> -		if (type == OBJ_BLOB && big_file_threshold <= size) {
-> -			/*
-> -			 * Let check_object_signature() check it with
-> -			 * the streaming interface; no point slurping
-> -			 * the data in-core only to discard.
-> -			 */
-> -			data = NULL;
-> -			data_valid = 0;
-> -		} else {
-> -			data = unpack_entry(the_repository, p, entries[i].offset, &type, &size);
-> -			data_valid = 1;
-> -		}
-> -
-> -		if (data_valid && !data)
-> -			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
-> -				    oid_to_hex(entries[i].oid.oid), p->pack_name,
-> -				    (uintmax_t)entries[i].offset);
-> -		else if (check_object_signature(entries[i].oid.oid, data, size, type_name(type)))
-> -			err = error("packed %s from %s is corrupt",
-> -				    oid_to_hex(entries[i].oid.oid), p->pack_name);
-> -		else if (fn) {
-> -			int eaten = 0;
-> -			err |= fn(entries[i].oid.oid, type, size, data, &eaten);
-> -			if (eaten)
-> -				data = NULL;
-> -		}
-> -		if (((base_count + i) & 1023) == 0)
-> -			display_progress(progress, base_count + i);
-> -		free(data);
-> -
-> -	}
-> -	display_progress(progress, base_count + i);
-> -	free(entries);
-> -
-> -	return err;
-> -}
-> -
->  int verify_pack_index(struct packed_git *p)
->  {
->  	off_t index_size;
-> @@ -185,19 +59,3 @@ int verify_pack_index(struct packed_git *p)
->  			    p->pack_name);
->  	return err;
->  }
-> -
-> -int verify_pack(struct packed_git *p, verify_fn fn,
-> -		struct progress *progress, uint32_t base_count)
-> -{
-> -	int err = 0;
-> -	struct pack_window *w_curs = NULL;
-> -
-> -	err |= verify_pack_index(p);
-> -	if (!p->index_data)
-> -		return -1;
-> -
-> -	err |= verify_packfile(p, &w_curs, fn, progress, base_count);
-> -	unuse_pack(&w_curs);
-> -
-> -	return err;
-> -}
-> diff --git a/pack.h b/pack.h
-> index 34a9d458b4..0d346c5e31 100644
-> --- a/pack.h
-> +++ b/pack.h
-> @@ -80,7 +80,6 @@ typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned lo
->  extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, const struct pack_idx_option *, const unsigned char *sha1);
->  extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
->  extern int verify_pack_index(struct packed_git *);
-> -extern int verify_pack(struct packed_git *, verify_fn fn, struct progress *, uint32_t);
->  extern off_t write_pack_header(struct hashfile *f, uint32_t);
->  extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
->  extern char *index_pack_lockfile(int fd);
+Yeah that's probably a good idea (though I'm not familiar with
+bisect.c enough to take that step).
+--=20
+Duy
