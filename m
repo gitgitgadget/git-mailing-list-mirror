@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAD3E1F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 18:10:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4DCFC1F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 18:10:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727982AbeICWbm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 18:31:42 -0400
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:39962 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727756AbeICWbl (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 18:31:41 -0400
-Received: by mail-lj1-f193.google.com with SMTP id j19-v6so1076678ljc.7
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 11:10:21 -0700 (PDT)
+        id S1728010AbeICWbo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 18:31:44 -0400
+Received: from mail-lf1-f53.google.com ([209.85.167.53]:42377 "EHLO
+        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727493AbeICWbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 18:31:43 -0400
+Received: by mail-lf1-f53.google.com with SMTP id z11-v6so1012310lff.9
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 11:10:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=idv+9ANYxAZgoS/bf9XB1nbfiE2C12ErxySsASWtJk0=;
-        b=IeD/Dl2qCqTEwrprWz9FEF/FPeYp7quboUXfSK3TJsKgWjeKzG5vOz6SLsnyH7jVaY
-         O+Gch4TGVW2IX4WJk3Z052G1dRpwvc8tkOry9F4yAxEcKSSkzsLj4czWgUi7CkW4W10k
-         +HHFmdTWLFLkXZSR+61YGOGo6vE2Gj3p4Dcp4lO+SpGCxkTJzq7rqAN4Y3hAZIZj8kkj
-         JRr7P/xGXQtOjXA1cTOOnzZ/ThVD0Cfqk6owj7VtfzCwRubQGyCc2dfA3t2x2z99cZ3C
-         Eq8L/8L102ZXz3xSRb7dg5lM9fmYEyE+bcw3gEY0mcGGX7hpjB78UaQs5Q678MTSBCqC
-         uEsA==
+        bh=7ODaTwTcPVL34m2NkcLyv4GSbek6ACY9TAkpZJdo4d0=;
+        b=oOlfLayRYqKE0AZ5Iq0+jYiyyag6t3rYt99m+b7VYo1GUIaPaRivohMDulouiQjV9e
+         vTwAIceDOyUqSpMPXvcCaLdTEXMrw/DEz7kBzDAo/J/1Euhx17E12vlkUVJr0WwkMAap
+         OqVvx/ZJL3XGIy478xxh4Ch1+5OcrlKmQfbVoz//WeHgx1kJTRBin3LV8IgRpVXBOiKV
+         YvDPZFDT8uI5bWrgJq+0dtAbrIDWUo7Y8mslyVuRVSX3RCVZKLpHsOeuVImKs1itAq+H
+         HrsMVTdmueXRFkt/Gfyc1QoB3iemXrka5BaiGATH5bSzsTO+EGbMfJSkhjyNnoDYgZgj
+         SxNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=idv+9ANYxAZgoS/bf9XB1nbfiE2C12ErxySsASWtJk0=;
-        b=uWVz2hJ4lhp4GYiqvIfpB9oz2z3oVtKdiJCSYscA0+Ii0Qt2yr2e1FlPFMgIPLOuOI
-         Loe9KteScUW4sMlg85XK3SpD98Vt27q7X2hds5JGc3k9ZKKG1bWvWH7PzGVF9vJ+U5jh
-         783Zn8oWKGHIsIJDcUBjX5NLb/noVhUpss/3eIyuM1Cjzme0UvmCsEVtSARYpQ6uXB9w
-         +bhM/uHYlHFvpwsC0ydH8kk2aavnwuPKGDsXegTpyLY2YYVH9g92Vk5lmdHKQwHsOsoL
-         Nn5pHED/sU4/Gvwumui7xGd32SkIaeykhahhrRntRmGkelv9BXVX5nr/NN0GBwisHJsE
-         xE0w==
-X-Gm-Message-State: APzg51DKt7dkl7mFSXKoMiz0fY43TMnHyI6nlKariKYfAzq9uUy0OY6K
-        xlLzxwCFNIKuncIUp+wJrow=
-X-Google-Smtp-Source: ANB0VdaNbYCTUSd/Zc3XaHTH97XGZ2wK562HE3q9vlg0H0VpNWTlSEeFxOMrxrbuxOXOrICb1zuTPg==
-X-Received: by 2002:a2e:8257:: with SMTP id j23-v6mr17704128ljh.49.1535998221236;
-        Mon, 03 Sep 2018 11:10:21 -0700 (PDT)
+        bh=7ODaTwTcPVL34m2NkcLyv4GSbek6ACY9TAkpZJdo4d0=;
+        b=UemAHHxvE0ZTn0qIwZ8gGTCkqry83WbuxFxhA9j1mJ65u4m0URuqbakiNZS0bhuxYT
+         KaLCv3eeVdMXXAAsUvSfLcRNbk+r6HlWZdyax1XVES5SFiNglg2FQ2pCOieZ9ju8lBmu
+         D0JAWFxNH3iNE/b78UI/8UBjEoe2BBBKhafsU8rorax4/kxL0SITDJCYUxGzNDIsfBOa
+         gWCP8Nt9TchykN4Sk0DRePOtzzWE16qFIr6ndekTCVKQV32toemIEC4sSPH8EJvvhekw
+         URhkKj8OOtpd99W3MckVeae93UwFo3xZSRNd3l1BwdyGtGDzHjMKHq1jv7Nwof+A5Z10
+         gRYQ==
+X-Gm-Message-State: APzg51Bb8ZbYFTVIDWKZJ3j46I9IA0yQZbrHNxW9rYmWe3dZ7THabgdg
+        OZDw/CuQ32x8/m67f/2BaVc=
+X-Google-Smtp-Source: ANB0Vdbd/Zg0hZlcwogntoNSPmRG1m0itqMYdlFdSy8+wKa5wmJbuNbedLfmQ9bVeXiVo0PgW2Ac1g==
+X-Received: by 2002:a19:9e85:: with SMTP id h127-v6mr11921452lfe.89.1535998222295;
+        Mon, 03 Sep 2018 11:10:22 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id x20-v6sm3706062lfi.8.2018.09.03.11.10.20
+        by smtp.gmail.com with ESMTPSA id x20-v6sm3706062lfi.8.2018.09.03.11.10.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Sep 2018 11:10:20 -0700 (PDT)
+        Mon, 03 Sep 2018 11:10:21 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: [PATCH v2 09/24] read-cache.c: remove implicit dependency on the_index
-Date:   Mon,  3 Sep 2018 20:09:17 +0200
-Message-Id: <20180903180932.32260-10-pclouds@gmail.com>
+Subject: [PATCH v2 10/24] diff-lib.c: remove implicit dependency on the_index
+Date:   Mon,  3 Sep 2018 20:09:18 +0200
+Message-Id: <20180903180932.32260-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180903180932.32260-1-pclouds@gmail.com>
 References: <20180826100314.5137-1-pclouds@gmail.com>
@@ -70,31 +70,79 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- read-cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ diff-lib.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 8e92b1e21f..b9df81e94e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -823,7 +823,7 @@ struct cache_entry *make_cache_entry(struct index_state *istate,
- 	ce->ce_namelen = len;
- 	ce->ce_mode = create_ce_mode(mode);
+diff --git a/diff-lib.c b/diff-lib.c
+index 88a98b1c06..c54773fe12 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -70,7 +70,7 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+ 				     struct stat *st, unsigned ce_option,
+ 				     unsigned *dirty_submodule)
+ {
+-	int changed = ce_match_stat(ce, st, ce_option);
++	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
+ 	if (S_ISGITLINK(ce->ce_mode)) {
+ 		struct diff_flags orig_flags = diffopt->flags;
+ 		if (!diffopt->flags.override_submodule_config)
+@@ -93,15 +93,16 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 	unsigned ce_option = ((option & DIFF_RACY_IS_MODIFIED)
+ 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
+ 	uint64_t start = getnanotime();
++	struct index_state *istate = revs->diffopt.repo->index;
  
--	ret = refresh_cache_entry(&the_index, ce, refresh_options);
-+	ret = refresh_cache_entry(istate, ce, refresh_options);
- 	if (ret != ce)
- 		discard_cache_entry(ce);
- 	return ret;
-@@ -1493,7 +1493,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
- 		if (ignore_submodules && S_ISGITLINK(ce->ce_mode))
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+ 
+ 	if (diff_unmerged_stage < 0)
+ 		diff_unmerged_stage = 2;
+-	entries = active_nr;
++	entries = istate->cache_nr;
+ 	for (i = 0; i < entries; i++) {
+ 		unsigned int oldmode, newmode;
+-		struct cache_entry *ce = active_cache[i];
++		struct cache_entry *ce = istate->cache[i];
+ 		int changed;
+ 		unsigned dirty_submodule = 0;
+ 		const struct object_id *old_oid, *new_oid;
+@@ -109,7 +110,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (diff_can_quit_early(&revs->diffopt))
+ 			break;
+ 
+-		if (!ce_path_match(&the_index, ce, &revs->prune_data, NULL))
++		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
  			continue;
  
--		if (pathspec && !ce_path_match(&the_index, ce, pathspec, seen))
-+		if (pathspec && !ce_path_match(istate, ce, pathspec, seen))
- 			filtered = 1;
- 
  		if (ce_stage(ce)) {
+@@ -145,7 +146,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			dpath->mode = wt_mode;
+ 
+ 			while (i < entries) {
+-				struct cache_entry *nce = active_cache[i];
++				struct cache_entry *nce = istate->cache[i];
+ 				int stage;
+ 
+ 				if (strcmp(ce->name, nce->name))
+@@ -474,7 +475,9 @@ static int oneway_diff(const struct cache_entry * const *src,
+ 	if (tree == o->df_conflict_entry)
+ 		tree = NULL;
+ 
+-	if (ce_path_match(&the_index, idx ? idx : tree, &revs->prune_data, NULL)) {
++	if (ce_path_match(revs->diffopt.repo->index,
++			  idx ? idx : tree,
++			  &revs->prune_data, NULL)) {
+ 		do_oneway_diff(o, idx, tree);
+ 		if (diff_can_quit_early(&revs->diffopt)) {
+ 			o->exiting_early = 1;
+@@ -506,7 +509,7 @@ static int diff_cache(struct rev_info *revs,
+ 	opts.merge = 1;
+ 	opts.fn = oneway_diff;
+ 	opts.unpack_data = revs;
+-	opts.src_index = &the_index;
++	opts.src_index = revs->diffopt.repo->index;
+ 	opts.dst_index = NULL;
+ 	opts.pathspec = &revs->diffopt.pathspec;
+ 	opts.pathspec->recursive = 1;
 -- 
 2.19.0.rc0.337.ge906d732e7
 
