@@ -2,630 +2,527 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85E831F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 16:00:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38D851F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 16:49:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727237AbeICUVX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 16:21:23 -0400
-Received: from mout.gmx.net ([212.227.15.19]:36401 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725969AbeICUVW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Sep 2018 16:21:22 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lymoh-1frir81bUd-016AVP; Mon, 03
- Sep 2018 18:00:33 +0200
-Date:   Mon, 3 Sep 2018 18:00:32 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [GSoC][PATCH v8 14/20] stash: convert create to builtin
-In-Reply-To: <a4faed3c8aa5ea8f0d4c578b693f3b5de3e3a709.1535665109.git.ungureanupaulsebastian@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809031718230.71@tvgsbejvaqbjf.bet>
-References: <cover.1535665109.git.ungureanupaulsebastian@gmail.com> <a4faed3c8aa5ea8f0d4c578b693f3b5de3e3a709.1535665109.git.ungureanupaulsebastian@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727650AbeICVJy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 17:09:54 -0400
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:37241 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727560AbeICVJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Sep 2018 17:09:54 -0400
+Received: by mail-ed1-f44.google.com with SMTP id a20-v6so1232074edd.4
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 09:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=jp5UiMLWOlb5RWp42TrQQADvTsk3ID8Dx2QjzKqjkvY=;
+        b=ljEL70FIp4TlsPTgAqx/tApesJf2LtISldEoq6pPu2EJUbqT24EesXajQQ59bSdg4n
+         9L6sdcjkQmgdV5e2Ykiz80ZC898Y+W5gYIRsT4cxIY57/VWFPmA8UKFHdPhKsQd6wx8u
+         Qwrd3mecuRm9dBPA3B9s/B5sic1FlYCLC9m9wshtRfyBAclfpdVhQjDLHI4yWXV2m/Mt
+         nyzVJbkcvvzLqYONzM5UHIs7W7jWLvtlTtSbk1MfRmDba9oWycdSTaPWy46MGwAw6N6Q
+         90fel5j9HXAA+kKU3WQBAxXK0IjBMlZ0U/QQKy9X/iXklZlKkMkRUEjDtFxEQeSH9AYw
+         wtCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=jp5UiMLWOlb5RWp42TrQQADvTsk3ID8Dx2QjzKqjkvY=;
+        b=JW1+ptRG80sQSqpLVoDuu7k/KhZX1ZjuUDSG0M6qT1W/0rJzkeaIUJfpSzblGPAo9R
+         DEhqom8mG/kX9FiyK9b/cgiKpj9vaJ7ohUccW3yQoXWbHm6hyUHHj4mOZTsGa4ZMRkTc
+         FhGGRO9tT7fO/olOKXKMXJyQo9vp2IHCK6N+UQ7Bg3/i7Ch48zr9hTz5vBc1WJKv+k41
+         f3aZlLZ1LKaYhQchqo2AL9JPc0Ds4gGQwkDK3TeaEleTDuwErVYKgOKAtDiB3JoeDcuy
+         2mY7FFF1adeZ4dp81VX3WYvCDO7to/n+q1f0DMqr0vmF1/pT4xecNM8XIUSX9+Lp/vYF
+         DuvA==
+X-Gm-Message-State: APzg51C5nUBSFdoi/8+2VCFW6MX3TcjVU6OQW+q+NLGXGVWRO7pVhIiK
+        Ny+Rcj8dmTbXJ+YeJwTVwSk=
+X-Google-Smtp-Source: ANB0VdY2EjWVU1sWDca/e05VoUCCrXyf2Qz4AjhUw+Ja+Vl51KsPkfe+UkecBCkKX+GOfq6QU0jkjA==
+X-Received: by 2002:aa7:d141:: with SMTP id r1-v6mr33716247edo.83.1535993337295;
+        Mon, 03 Sep 2018 09:48:57 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id f19-v6sm8682392eda.49.2018.09.03.09.48.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 03 Sep 2018 09:48:56 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
+        git@vger.kernel.org
+Subject: Re: non-smooth progress  indication for git fsck and git gc
+References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
+        <20180816155714.GA22739@sigill.intra.peff.net>
+        <87bma2qcba.fsf@evledraar.gmail.com>
+        <87y3clbcqf.fsf@evledraar.gmail.com>
+        <20180902074656.GB18787@sigill.intra.peff.net>
+        <20180902075528.GC18787@sigill.intra.peff.net>
+        <20180902085503.GA25391@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180902085503.GA25391@sigill.intra.peff.net>
+Date:   Mon, 03 Sep 2018 18:48:54 +0200
+Message-ID: <87musybk7d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4Gb4zGRCUBnW6VJy+FRI2/Izf7Oiyc3XUpkf3b3uTvYPbqW3p1J
- rrWIB/UUAUUy+Y9gM15YszNsTfmmgmsq+hdzMgKAfgOd6owcUWWyfxeLv2FP7jxOlAoPxdh
- hLv9DOi3BzuuFAC56bXWSk06jhAbf15sYBRRbGycuCDLJ3M/zOzlrtEtyuSEIwcnXcpkfMR
- ipnPSyoMNKmyf6ILUppkQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:+zPc7SRZUpc=:BAjNugeKZs5wuqhK9uPDSq
- Dvkcq+AGJNj9rt5L5dxEHQvchAZS4BLhKB4lqsT5NUmMFTumYY6uOA9Xoa/R+HeKJ2MocXfT/
- oOnX0kRxNvKtbvldcP0kfG+b/eLGRBAnCDZJbor/hVnUdI98c8opq4yOUitYvvtr+CeTEGLig
- b/GBAxpxhCBKzNpchGcIy/aQUFjpV6FUifToMB/uUOTVwwykM0Z5CJj0fH4U8B44cgWFsZ+QW
- 6i/IUBTOJb99Au4ZbrODZktwRWnwgdAo1B75I1gSVIrsX7IWoha6ECjryHpqv8z6gJcvbFL81
- pqUFXzaRSeA2rnltqgPdEpf0nMC9/SFHNxhodG21qZCIjDOcankMfT++ZqEpDibiOXlaRyHlr
- RPrbLKJYdEPRVsrlvYtRan4EnRrVXfKj7BTPwmeuwBjrNd/EjVxw0TT6WNX6N0sUMqC4I+Y7p
- t1caYuxPpzQw8i3pbf6yewt4ryJDhVz0kf+kE1pMocpmWknt//5SF4LkCWL+uBsDcbL/b8pc9
- GwBnrcwgmzYKXRZACXcHI7onAXEl7oRsKXuTejtZc7q2P+wNYuwxdecnBFSWI5v6Jkz2KI0IB
- TJg4ClasdOFA6HPhJXUIP43YaqfZ+50zD6wlBbhYWcHRUiQA2KUblHL45h/DoxE1coStjPR2G
- TDE7h8vpDswPygPI1DpygrpPGI9pjVnYbYsXaRh8zB5CFwxFk4eLYWR3SmwWHfrZJSrO9LPkK
- 10v0duSi4yfg43/sjZy1zPlhoy6r1eAO2BPbe6E6VRzq/2195mPRwY90h6m3yqfLSaEqngNu7
- XNE37gW
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
 
-On Fri, 31 Aug 2018, Paul-Sebastian Ungureanu wrote:
+On Sun, Sep 02 2018, Jeff King wrote:
 
-> diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-> index 87568b0f34..ce360a569d 100644
-> --- a/builtin/stash--helper.c
-> +++ b/builtin/stash--helper.c
-> @@ -290,6 +296,18 @@ static int reset_head(void)
->  	return run_command(&cp);
+> On Sun, Sep 02, 2018 at 03:55:28AM -0400, Jeff King wrote:
+>
+>> I still think the more interesting long-term thing here is to reuse the
+>> pack verification from index-pack, which actually hashes as it does the
+>> per-object countup.
+>>
+>> That code isn't lib-ified enough to be run in process, but I think the
+>> patch below should give similar behavior to what fsck currently does.
+>> We'd need to tell index-pack to use our fsck.* config for its checks, I
+>> imagine. The progress here is still per-pack, but I think we could pass
+>> in sufficient information to have it do one continuous meter across all
+>> of the packs (see the in-code comment).
+>>
+>> And it makes the result multi-threaded, and lets us drop a bunch of
+>> duplicate code.
+>
+> Here's a little polish on that to pass enough progress data to
+> index-pack to let it have one nice continuous meter. I'm not sure if
+> it's worth all the hackery or not. The dual-meter that index-pack
+> generally uses is actually more informative (since it meters the initial
+> pass through the pack and the delta reconstruction separately).
+
+Thanks!
+
+> And there are definitely a few nasty bits (like the way the progress is
+> ended). I'm not planning on taking this further for now, but maybe
+> you or somebody can find it interesting or useful.
+
+I think it would be really nice if this were taken further. Using my
+perf test in
+https://public-inbox.org/git/20180903144928.30691-7-avarab@gmail.com/T/#u
+I get these results:
+
+    $ GIT_PERF_LARGE_REPO=/home/aearnfjord/g/linux GIT_PERF_REPEAT_COUNT=5 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run HEAD~ HEAD p1450-fsck.sh
+    [...]
+    Test           HEAD~                 HEAD
+    ----------------------------------------------------------------
+    1450.1: fsck   384.18(381.63+2.53)   301.52(508.28+38.34) -21.5%
+
+
+I.e. this gives a 20% speedup, although of course some of that might be
+because some of this might be skipping too much work, but looks really
+promising.
+
+I don't know if I'll have time for it, and besides, you wrote the code
+so you already understand it *hint* *hint* :)
+
+> ---
+>  builtin/fsck.c       |  59 +++++++++------
+>  builtin/index-pack.c |  43 ++++++++++-
+>  pack-check.c         | 142 -----------------------------------
+>  pack.h               |   1 -
+>  4 files changed, 75 insertions(+), 170 deletions(-)
+>
+> diff --git a/builtin/fsck.c b/builtin/fsck.c
+> index 250f5af118..2d774ea2e5 100644
+> --- a/builtin/fsck.c
+> +++ b/builtin/fsck.c
+> @@ -386,25 +386,6 @@ static int fsck_obj(struct object *obj, void *buffer, unsigned long size)
+>  	return err;
 >  }
->  
-> +static void add_diff_to_buf(struct diff_queue_struct *q,
-> +			    struct diff_options *options,
-> +			    void *data)
-> +{
-> +	int i;
-> +	for (i = 0; i < q->nr; i++) {
-> +		struct diff_filepair *p = q->queue[i];
-> +		strbuf_addstr(data, p->one->path);
-
-Maybe `q->queue[i]->one->path` would be okay, too? Dunno.
-
-> +		strbuf_addch(data, 0);
-
-Neat trick. However, I had to study the code to see that the output of
-this function will be fed to `update-index -z` to see why the NUL is
-appended here. Maybe add a code comment here?
-
-> +	}
-> +}
-> +
->  static int get_newly_staged(struct strbuf *out, struct object_id *c_tree)
->  {
->  	struct child_process cp = CHILD_PROCESS_INIT;
-> @@ -776,6 +794,416 @@ static int store_stash(int argc, const char **argv, const char *prefix)
->  	return do_store_stash(argv[0], stash_msg, quiet);
+>
+> -static int fsck_obj_buffer(const struct object_id *oid, enum object_type type,
+> -			   unsigned long size, void *buffer, int *eaten)
+> -{
+> -	/*
+> -	 * Note, buffer may be NULL if type is OBJ_BLOB. See
+> -	 * verify_packfile(), data_valid variable for details.
+> -	 */
+> -	struct object *obj;
+> -	obj = parse_object_buffer(the_repository, oid, type, size, buffer,
+> -				  eaten);
+> -	if (!obj) {
+> -		errors_found |= ERROR_OBJECT;
+> -		return error("%s: object corrupt or missing", oid_to_hex(oid));
+> -	}
+> -	obj->flags &= ~(REACHABLE | SEEN);
+> -	obj->flags |= HAS_OBJ;
+> -	return fsck_obj(obj, buffer, size);
+> -}
+> -
+>  static int default_refs;
+>
+>  static void fsck_handle_reflog_oid(const char *refname, struct object_id *oid,
+> @@ -662,6 +643,32 @@ static int mark_packed_for_connectivity(const struct object_id *oid,
+>  	return 0;
 >  }
->  
-> +/*
-> + * `out` will be filled with the names of untracked files. The return value is:
-> + *
-> + * = 0 if there are not any untracked files
-> + * > 0 if there are untracked files
-> + */
-> +static int get_untracked_files(struct pathspec ps, int include_untracked,
-> +			       struct strbuf *out)
+>
+> +static int verify_pack(struct packed_git *p,
+> +		       unsigned long count, unsigned long total)
 > +{
-> +	int max_len;
-> +	int i;
-> +	char *seen;
-> +	struct dir_struct dir;
+> +	struct child_process index_pack = CHILD_PROCESS_INIT;
 > +
-> +	memset(&dir, 0, sizeof(dir));
-> +	if (include_untracked != 2)
-
-If you follow my suggestion to replace this magic `2` by a symbol that
-describes the meaning "include all", then this line would need to be
-changed, too.
-
-> +		setup_standard_excludes(&dir);
+> +	if (is_pack_valid(p) < 0)
+> +		return -1;
+> +	for_each_object_in_pack(p, mark_packed_for_connectivity, NULL, 0);
 > +
-> +	seen = xcalloc(ps.nr, 1);
+> +	index_pack.git_cmd = 1;
+> +	argv_array_pushl(&index_pack.args,
+> +			 "index-pack",
+> +			 "--verify-fsck",
+> +			 NULL);
+> +	if (show_progress)
+> +		argv_array_pushf(&index_pack.args,
+> +				 "--fsck-progress=%lu,%lu,Checking pack %s",
+> +				 count, total, sha1_to_hex(p->sha1));
+> +	argv_array_push(&index_pack.args, p->pack_name);
 > +
-> +	max_len = fill_directory(&dir, the_repository->index, &ps);
-> +	for (i = 0; i < dir.nr; i++) {
-> +		struct dir_entry *ent = dir.entries[i];
-> +		if (!dir_path_match(&the_index, ent, &ps, max_len, seen)) {
-> +			free(ent);
-> +			continue;
-> +		}
-> +		strbuf_addf(out, "%s%c", ent->name, '\0');
-> +		free(ent);
-
-This is a *very* minor nit pick... I would have written it this way
-instead:
-
-		if (dir_path_match(&the_index, ent, &ps, max_len, seen)) {
-			strbuf_addstr(out, ent->name);
-			/* NUL-terminate: will be fed to update-index -z */
-			strbuf_addch(out, 0);
-		}
-		free(ent);
-
-Just an idea...
-
-> +	}
-> +
-> +	free(dir.entries);
-> +	free(dir.ignored);
-> +	clear_directory(&dir);
-> +	free(seen);
-> +	return out->len;
-> +}
-
-If you introduce a local variable `found` and increase it whenever a match
-was found, then you could also handle `out == NULL` by skipping the
-`strbuf_*()` calls, which would come in handin in the `check_changes()`
-function that does not actually want to use the output.
-
-> +
-> +/*
-> + * The return value of `check_changes()` can be:
-> + *
-> + * < 0 if there was an error
-> + * = 0 if there are no changes.
-> + * > 0 if there are changes.
-> + */
-> +static int check_changes(struct pathspec ps, int include_untracked)
-> +{
-> +	int result;
-> +	int ret = 0;
-> +	struct rev_info rev;
-> +	struct object_id dummy;
-> +	struct strbuf out = STRBUF_INIT;
-> +
-> +	init_revisions(&rev, NULL);
-> +	rev.prune_data = ps;
-> +
-> +	rev.diffopt.flags.quick = 1;
-> +	rev.diffopt.flags.ignore_submodules = 1;
-> +	rev.abbrev = 0;
-> +
-> +	/* No initial commit. */
-> +	if (get_oid("HEAD", &dummy))
+> +	if (run_command(&index_pack))
 > +		return -1;
 > +
-> +	add_head_to_pending(&rev);
-> +	diff_setup_done(&rev.diffopt);
-> +
-> +	if (read_cache() < 0)
-> +		return 1;
-> +	result = run_diff_index(&rev, 1);
-> +	if (diff_result_code(&rev.diffopt, result))
-> +		return 1;
-> +
-> +	object_array_clear(&rev.pending);
-> +	result = run_diff_files(&rev, 0);
-> +	if (diff_result_code(&rev.diffopt, result))
-> +		return 1;
-
-These lines look familiar... Maybe call has_unstaged_changes() and
-has_uncommitted_changes() here? (I have to admit that I have no idea what
-those functions do with unborn branches.)
-
-> +
-> +	if (include_untracked && get_untracked_files(ps, include_untracked,
-> +						     &out)) {
-> +		strbuf_release(&out);
-> +		return 1;
-> +	}
-> +
-> +	strbuf_release(&out);
 > +	return 0;
 > +}
 > +
-> +static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
-> +				struct strbuf *in)
-> +{
-> +	int ret = 0;
-> +	struct strbuf untracked_msg = STRBUF_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-> +	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
+>  static char const * const fsck_usage[] = {
+>  	N_("git fsck [<options>] [<object>...]"),
+>  	NULL
+> @@ -737,7 +744,6 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  		if (check_full) {
+>  			struct packed_git *p;
+>  			uint32_t total = 0, count = 0;
+> -			struct progress *progress = NULL;
+>
+>  			if (show_progress) {
+>  				for (p = get_packed_git(the_repository); p;
+> @@ -746,18 +752,21 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>  						continue;
+>  					total += p->num_objects;
+>  				}
+> -
+> -				progress = start_progress(_("Checking objects"), total);
+>  			}
+>  			for (p = get_packed_git(the_repository); p;
+>  			     p = p->next) {
+>  				/* verify gives error messages itself */
+> -				if (verify_pack(p, fsck_obj_buffer,
+> -						progress, count))
+> +				if (verify_pack(p, count, total))
+>  					errors_found |= ERROR_PACK;
+>  				count += p->num_objects;
+>  			}
+> -			stop_progress(&progress);
+> +			/*
+> +			 * Our child index-pack never calls stop_progress(),
+> +			 * which lets each child appear on the same line. Now
+> +			 * that we've finished all of them, we have to tie that
+> +			 * off.
+> +			 */
+> +			fprintf(stderr, "\n");
+>  		}
+>
+>  		if (fsck_finish(&fsck_obj_options))
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 9582ead950..d03ec7bb89 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -85,6 +85,13 @@ static int show_resolving_progress;
+>  static int show_stat;
+>  static int check_self_contained_and_connected;
+>
+> +static int verify_fsck_mode;
+> +/* unlike our normal 2-part progress, this counts up only total objects */
+> +struct progress *fsck_progress;
+> +static uint32_t fsck_progress_cur;
+> +static uint32_t fsck_progress_total;
+> +static const char *fsck_progress_title;
 > +
-> +	cp_upd_index.git_cmd = 1;
-> +	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
-> +			 "--remove", "--stdin", NULL);
-> +	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +
-> +	strbuf_addf(&untracked_msg, "untracked files on %s\n", msg->buf);
-> +	if (pipe_command(&cp_upd_index, in->buf, in->len, NULL, 0, NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	cp_write_tree.git_cmd = 1;
-> +	argv_array_push(&cp_write_tree.args, "write-tree");
-> +	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +	get_oid_hex(out.buf, &info->u_tree);
-> +
-> +	if (commit_tree(untracked_msg.buf, untracked_msg.len,
-> +			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +done:
-> +	strbuf_release(&untracked_msg);
-> +	strbuf_release(&out);
-> +	remove_path(stash_index_path.buf);
-> +	return ret;
-> +}
-> +
-> +static struct strbuf patch = STRBUF_INIT;
-
-As far as I can see, this variable should be local to `stash_patch` (and
-released at the end).
-
-[Coming back after reading the shell script code and realizing that it
-wrote the $TMP-patch file that is then used in `push_stash`]
-
-Ah! So the output of `stash_patch()` is not just a return value indicating
-success, but it also wants to return the patch. How about passing this in
-via a parameter after `struct pathspec ps`, say, `struct strbuf
-*out_patch`?
-
-> +
-> +static int stash_patch(struct stash_info *info, struct pathspec ps)
-> +{
-> +	int i;
-> +	int ret = 0;
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
-> +	struct child_process cp_add_i = CHILD_PROCESS_INIT;
-> +	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-> +	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
-> +
-> +	remove_path(stash_index_path.buf);
-> +
-> +	cp_read_tree.git_cmd = 1;
-> +	argv_array_pushl(&cp_read_tree.args, "read-tree", "HEAD", NULL);
-> +	argv_array_pushf(&cp_read_tree.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +	if (run_command(&cp_read_tree)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-
-Maybe insert the comment "find out what the user wants" here?
-
-> +	cp_add_i.git_cmd = 1;
-> +	argv_array_pushl(&cp_add_i.args, "add--interactive", "--patch=stash",
-> +			"--", NULL);
-> +	for (i = 0; i < ps.nr; ++i)
-> +		argv_array_push(&cp_add_i.args, ps.items[i].match);
-
-I guess you could use `add_ps_items_to_argv_array(&cp_add_i.args, &ps)` here.
-
-> +	argv_array_pushf(&cp_add_i.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +	if (run_command(&cp_add_i)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-
-Maybe insert the comment "state of the working tree" here?
-
-> +	cp_write_tree.git_cmd = 1;
-> +	argv_array_push(&cp_write_tree.args, "write-tree");
-> +	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	get_oid_hex(out.buf, &info->w_tree);
-> +
-> +	cp_diff_tree.git_cmd = 1;
-> +	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
-> +			 oid_to_hex(&info->w_tree), "--", NULL);
-> +	if (pipe_command(&cp_diff_tree, NULL, 0, &patch, 0, NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	if (!patch.len) {
-> +		fprintf_ln(stderr, _("No changes selected"));
-> +		ret = 1;
-> +	}
-> +
-> +done:
-> +	strbuf_release(&out);
-> +	remove_path(stash_index_path.buf);
-> +	return ret;
-> +}
-> +
-> +static int stash_working_tree(struct stash_info *info, struct pathspec ps)
-> +{
-> +	int ret = 0;
-> +	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-> +	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct strbuf diff_output = STRBUF_INIT;
-> +	struct rev_info rev;
-> +
-> +	set_alternate_index_output(stash_index_path.buf);
-> +	if (reset_tree(&info->i_tree, 0, 0)) {
-
-So this is the `git read-tree --index-output="$TMPindex" -m $i_tree` call.
-
-At first, I thought that one of the zeros meant that the `merge` flag
-would be turned off, but that is always turned on. Okay. (I guess
-positional parameters make this a bit less readable, not your fault, but
-C's.)
-
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +	set_alternate_index_output(NULL);
-
-Side note (i.e. rant): I wish this was more thread-safe. Granted, right
-now it does not make sense to reset_tree() in parallel. But Stefan Beller
-is working on being able to reset_tree() submodules, in which case
-running reset_tree() in parallel will make a ton of sense.
-
-> +
-> +	git_config(git_diff_basic_config, NULL);
-
-Is this not called in as part of `git_config(git_default_config, NULL);`
-in cmd_stash() already?
-
-*clicketyclick*
-
-I guess not. But then, maybe it would make sense to run with
-`git_diff_basic_config` from the get go, to avoid having to run
-`git_config()` twice.
-
-> +	init_revisions(&rev, NULL);
-> +	rev.prune_data = ps;
-> +	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-> +	rev.diffopt.format_callback = add_diff_to_buf;
-> +	rev.diffopt.format_callback_data = &diff_output;
-> +
-> +	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	add_pending_object(&rev, parse_object(the_repository, &info->b_commit), "");
-> +	if (run_diff_index(&rev, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	cp_upd_index.git_cmd = 1;
-> +	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
-> +			 "--remove", "--stdin", NULL);
-> +	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +
-> +	if (pipe_command(&cp_upd_index, diff_output.buf, diff_output.len,
-> +			 NULL, 0, NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	cp_write_tree.git_cmd = 1;
-> +	argv_array_push(&cp_write_tree.args, "write-tree");
-> +	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-> +			 stash_index_path.buf);
-> +	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +	get_oid_hex(out.buf, &info->w_tree);
-> +
-> +done:
-> +	UNLEAK(rev);
-> +	strbuf_release(&out);
-> +	object_array_clear(&rev.pending);
-> +	strbuf_release(&diff_output);
-> +	remove_path(stash_index_path.buf);
-> +	return ret;
-> +}
-> +
-> +static int do_create_stash(struct pathspec ps, const char **stash_msg,
-
-As the `stash_msg` will receive an allocated buffer that will need to be
-released by the caller, this should be a `char **stash_msg` (no `const`).
-
-> +			   int include_untracked, int patch_mode,
-> +			   struct stash_info *info)
-> +{
-> +	int untracked_commit_option = 0;
-> +	int ret = 0;
-> +	int flags;
-> +	const char *head_short_sha1 = NULL;
-> +	const char *branch_ref = NULL;
-> +	const char *branch_name = "(no branch)";
-> +	struct commit *head_commit = NULL;
-> +	struct commit_list *parents = NULL;
-> +	struct strbuf msg = STRBUF_INIT;
-> +	struct strbuf commit_tree_label = STRBUF_INIT;
-> +	struct strbuf out = STRBUF_INIT;
-> +	struct strbuf stash_msg_buf = STRBUF_INIT;
-> +
-> +	read_cache_preload(NULL);
-> +	refresh_cache(REFRESH_QUIET);
-> +
-> +	if (!check_changes(ps, include_untracked)) {
-> +		ret = 1;
-> +		*stash_msg = NULL;
-> +		goto done;
-> +	}
-> +
-> +	if (get_oid("HEAD", &info->b_commit)) {
-> +		fprintf_ln(stderr, _("You do not have the initial commit yet"));
-> +		ret = -1;
-> +		*stash_msg = NULL;
-
-Oh, so we actually do not even have to handle an unborn branch if we move
-the `check_changes()` call after this block?
-
-> +		goto done;
-> +	} else {
-> +		head_commit = lookup_commit(the_repository, &info->b_commit);
-> +	}
-> +
-> +	branch_ref = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
-> +	if (flags & REF_ISSYMREF)
-> +		branch_name = strrchr(branch_ref, '/') + 1;
-> +	head_short_sha1 = find_unique_abbrev(&head_commit->object.oid,
-> +					     DEFAULT_ABBREV);
-> +	strbuf_addf(&msg, "%s: %s ", branch_name, head_short_sha1);
-> +	pp_commit_easy(CMIT_FMT_ONELINE, head_commit, &msg);
-> +
-> +	strbuf_addf(&commit_tree_label, "index on %s\n", msg.buf);
-> +	commit_list_insert(head_commit, &parents);
-> +	if (write_cache_as_tree(&info->i_tree, 0, NULL) ||
-> +	    commit_tree(commit_tree_label.buf, commit_tree_label.len,
-> +			&info->i_tree, parents, &info->i_commit, NULL, NULL)) {
-> +		fprintf_ln(stderr, _("Cannot save the current index state"));
-> +		ret = -1;
-> +		*stash_msg = NULL;
-> +		goto done;
-> +	}
-> +
-> +	if (include_untracked && get_untracked_files(ps, include_untracked,
-> +						     &out)) {
-> +		if (save_untracked_files(info, &msg, &out)) {
-> +			fprintf_ln(stderr, _("Cannot save the untracked files"));
-> +			ret = -1;
-> +			*stash_msg = NULL;
-> +			goto done;
+>  static struct progress *progress;
+>
+>  /* We always read in 4kB chunks. */
+> @@ -1100,6 +1107,8 @@ static void *threaded_second_pass(void *data)
+>  		int i;
+>  		counter_lock();
+>  		display_progress(progress, nr_resolved_deltas);
+> +		display_progress(fsck_progress,
+> +				 fsck_progress_cur + nr_resolved_deltas);
+>  		counter_unlock();
+>  		work_lock();
+>  		while (nr_dispatched < nr_objects &&
+> @@ -1145,18 +1154,23 @@ static void parse_pack_objects(unsigned char *hash)
+>  			nr_ofs_deltas++;
+>  			ofs_delta->obj_no = i;
+>  			ofs_delta++;
+> +			/* no fsck_progress; we only count it when we've resolved the delta */
+>  		} else if (obj->type == OBJ_REF_DELTA) {
+>  			ALLOC_GROW(ref_deltas, nr_ref_deltas + 1, ref_deltas_alloc);
+>  			oidcpy(&ref_deltas[nr_ref_deltas].oid, &ref_delta_oid);
+>  			ref_deltas[nr_ref_deltas].obj_no = i;
+>  			nr_ref_deltas++;
+> +			/* no fsck_progress; we only count it when we've resolved the delta */
+>  		} else if (!data) {
+>  			/* large blobs, check later */
+>  			obj->real_type = OBJ_BAD;
+>  			nr_delays++;
+> -		} else
+> +			display_progress(fsck_progress, ++fsck_progress_cur);
+> +		} else {
+>  			sha1_object(data, NULL, obj->size, obj->type,
+>  				    &obj->idx.oid);
+> +			display_progress(fsck_progress, ++fsck_progress_cur);
 > +		}
-> +		untracked_commit_option = 1;
+>  		free(data);
+>  		display_progress(progress, i+1);
+>  	}
+> @@ -1238,6 +1252,8 @@ static void resolve_deltas(void)
+>  			continue;
+>  		resolve_base(obj);
+>  		display_progress(progress, nr_resolved_deltas);
+> +		display_progress(fsck_progress,
+> +				 fsck_progress_cur + nr_resolved_deltas);
+>  	}
+>  }
+>
+> @@ -1391,6 +1407,8 @@ static void fix_unresolved_deltas(struct hashfile *f)
+>  					base_obj->data, base_obj->size, type);
+>  		find_unresolved_deltas(base_obj);
+>  		display_progress(progress, nr_resolved_deltas);
+> +		display_progress(fsck_progress,
+> +				 fsck_progress_cur + nr_resolved_deltas);
+>  	}
+>  	free(sorted_by_pos);
+>  }
+> @@ -1714,6 +1732,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>  				verify = 1;
+>  				show_stat = 1;
+>  				stat_only = 1;
+> +			} else if (!strcmp(arg, "--verify-fsck")) {
+> +				verify_fsck_mode = 1;
+> +				verify = 1;
+> +				strict = 1;
+> +				do_fsck_object = 1;
+>  			} else if (skip_to_optional_arg(arg, "--keep", &keep_msg)) {
+>  				; /* nothing to do */
+>  			} else if (skip_to_optional_arg(arg, "--promisor", &promisor_msg)) {
+> @@ -1746,6 +1769,15 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>  				verbose = 1;
+>  			} else if (!strcmp(arg, "--show-resolving-progress")) {
+>  				show_resolving_progress = 1;
+> +			} else if (skip_prefix(arg, "--fsck-progress=", &arg)) {
+> +				char *end;
+> +				fsck_progress_cur = strtoul(arg, &end, 10);
+> +				if (*end++ != ',')
+> +					die("bad fsck-progress arg: %s", arg);
+> +				fsck_progress_total = strtoul(end, &end, 10);
+> +				if (*end++ != ',')
+> +					die("bad fsck-progress arg: %s", arg);
+> +				fsck_progress_title = end;
+>  			} else if (!strcmp(arg, "--report-end-of-input")) {
+>  				report_end_of_input = 1;
+>  			} else if (!strcmp(arg, "-o")) {
+> @@ -1800,6 +1832,10 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>  	}
+>  #endif
+>
+> +	if (fsck_progress_total)
+> +		fsck_progress = start_progress(fsck_progress_title,
+> +					       fsck_progress_total);
+> +
+>  	curr_pack = open_pack_file(pack_name);
+>  	parse_pack_header();
+>  	objects = xcalloc(st_add(nr_objects, 1), sizeof(struct object_entry));
+> @@ -1833,8 +1869,11 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>  	else
+>  		close(input_fd);
+>
+> -	if (do_fsck_object && fsck_finish(&fsck_options))
+> +	if (do_fsck_object && fsck_finish(&fsck_options)) {
+> +		if (verify_fsck_mode)
+> +			return 1; /* quietly return error */
+>  		die(_("fsck error in pack objects"));
 > +	}
-> +	if (patch_mode) {
-> +		ret = stash_patch(info, ps);
-> +		*stash_msg = NULL;
-> +		if (ret < 0) {
-> +			fprintf_ln(stderr, _("Cannot save the current worktree state"));
-> +			goto done;
-> +		} else if (ret > 0) {
-> +			goto done;
-> +		}
-> +	} else {
-> +		if (stash_working_tree(info, ps)) {
-> +			fprintf_ln(stderr, _("Cannot save the current worktree state"));
-> +			ret = -1;
-> +			*stash_msg = NULL;
-> +			goto done;
-> +		}
-> +	}
-> +
-> +	if (!*stash_msg || !strlen(*stash_msg))
-> +		strbuf_addf(&stash_msg_buf, "WIP on %s", msg.buf);
-> +	else
-> +		strbuf_addf(&stash_msg_buf, "On %s: %s", branch_name,
-> +			    *stash_msg);
-> +	*stash_msg = strbuf_detach(&stash_msg_buf, NULL);
-> +
-> +	/*
-> +	 * `parents` will be empty after calling `commit_tree()`, so there is
-> +	 * no need to call `free_commit_list()`
-
-If it is empty, why do we need to set it to `NULL` explicitly?
-
-> +	 */
-> +	parents = NULL;
-> +	if (untracked_commit_option)
-> +		commit_list_insert(lookup_commit(the_repository, &info->u_commit), &parents);
-> +	commit_list_insert(lookup_commit(the_repository, &info->i_commit), &parents);
-> +	commit_list_insert(head_commit, &parents);
-> +
-> +	if (commit_tree(*stash_msg, strlen(*stash_msg), &info->w_tree,
-> +			parents, &info->w_commit, NULL, NULL)) {
-> +		fprintf_ln(stderr, _("Cannot record working tree state"));
-> +		ret = -1;
-> +		goto done;
-> +	}
-> +
-> +done:
-> +	strbuf_release(&commit_tree_label);
-> +	strbuf_release(&msg);
-> +	strbuf_release(&out);
-> +	strbuf_release(&stash_msg_buf);
-> +	return ret;
-> +}
-> +
-> +static int create_stash(int argc, const char **argv, const char *prefix)
-> +{
-> +	int include_untracked = 0;
-> +	int ret = 0;
-> +	const char *stash_msg = NULL;
-
-As we are taking custody of the buffer here, `stash_msg` should be of type
-`char *`, i.e. no `const`.
-
-The rest of the patch looks good to me.
-
-Phew! What a patch! This took quite a while to review, so I am taking a
-break with this patch series here, and hope to continue in a few hours
-from now.
-
-Thanks,
-Dscho
-
-> +	struct stash_info info;
-> +	struct pathspec ps;
-> +	struct option options[] = {
-> +		OPT_BOOL('u', "include-untracked", &include_untracked,
-> +			 N_("include untracked files in stash")),
-> +		OPT_STRING('m', "message", &stash_msg, N_("message"),
-> +			 N_("stash message")),
-> +		OPT_END()
-> +	};
-> +
-> +	argc = parse_options(argc, argv, prefix, options,
-> +			     git_stash_helper_create_usage,
-> +			     0);
-> +
-> +	memset(&ps, 0, sizeof(ps));
-> +	ret = do_create_stash(ps, &stash_msg, include_untracked, 0, &info);
-> +
-> +	if (!ret)
-> +		printf_ln("%s", oid_to_hex(&info.w_commit));
-> +
-> +	/*
-> +	 * ret can be 1 if there were no changes. In this case, we should
-> +	 * not error out.
-> +	 */
-> +	free((char *) stash_msg);
-> +	return ret < 0;
-> +}
-> +
->  int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+>
+>  	free(objects);
+>  	strbuf_release(&index_name_buf);
+> diff --git a/pack-check.c b/pack-check.c
+> index d3a57df34f..ea1457ce53 100644
+> --- a/pack-check.c
+> +++ b/pack-check.c
+> @@ -15,17 +15,6 @@ struct idx_entry {
+>  	unsigned int nr;
+>  };
+>
+> -static int compare_entries(const void *e1, const void *e2)
+> -{
+> -	const struct idx_entry *entry1 = e1;
+> -	const struct idx_entry *entry2 = e2;
+> -	if (entry1->offset < entry2->offset)
+> -		return -1;
+> -	if (entry1->offset > entry2->offset)
+> -		return 1;
+> -	return 0;
+> -}
+> -
+>  int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
+>  		   off_t offset, off_t len, unsigned int nr)
 >  {
->  	pid_t pid = getpid();
-> @@ -812,6 +1240,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
->  		return !!show_stash(argc, argv, prefix);
->  	else if (!strcmp(argv[0], "store"))
->  		return !!store_stash(argc, argv, prefix);
-> +	else if (!strcmp(argv[0], "create"))
-> +		return !!create_stash(argc, argv, prefix);
->  
->  	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
->  		      git_stash_helper_usage, options);
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 5739c51527..ab06e4ffb8 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -425,7 +425,7 @@ clear)
->  	;;
->  create)
->  	shift
-> -	create_stash -m "$*" && echo "$w_commit"
-> +	git stash--helper create --message "$*"
->  	;;
->  store)
->  	shift
-> -- 
-> 2.19.0.rc0.22.gc26283d74e
-> 
-> 
+> @@ -48,121 +37,6 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs,
+>  	return data_crc != ntohl(*index_crc);
+>  }
+>
+> -static int verify_packfile(struct packed_git *p,
+> -			   struct pack_window **w_curs,
+> -			   verify_fn fn,
+> -			   struct progress *progress, uint32_t base_count)
+> -
+> -{
+> -	off_t index_size = p->index_size;
+> -	const unsigned char *index_base = p->index_data;
+> -	git_hash_ctx ctx;
+> -	unsigned char hash[GIT_MAX_RAWSZ], *pack_sig;
+> -	off_t offset = 0, pack_sig_ofs = 0;
+> -	uint32_t nr_objects, i;
+> -	int err = 0;
+> -	struct idx_entry *entries;
+> -
+> -	if (!is_pack_valid(p))
+> -		return error("packfile %s cannot be accessed", p->pack_name);
+> -
+> -	the_hash_algo->init_fn(&ctx);
+> -	do {
+> -		unsigned long remaining;
+> -		unsigned char *in = use_pack(p, w_curs, offset, &remaining);
+> -		offset += remaining;
+> -		if (!pack_sig_ofs)
+> -			pack_sig_ofs = p->pack_size - the_hash_algo->rawsz;
+> -		if (offset > pack_sig_ofs)
+> -			remaining -= (unsigned int)(offset - pack_sig_ofs);
+> -		the_hash_algo->update_fn(&ctx, in, remaining);
+> -	} while (offset < pack_sig_ofs);
+> -	the_hash_algo->final_fn(hash, &ctx);
+> -	pack_sig = use_pack(p, w_curs, pack_sig_ofs, NULL);
+> -	if (hashcmp(hash, pack_sig))
+> -		err = error("%s pack checksum mismatch",
+> -			    p->pack_name);
+> -	if (hashcmp(index_base + index_size - the_hash_algo->hexsz, pack_sig))
+> -		err = error("%s pack checksum does not match its index",
+> -			    p->pack_name);
+> -	unuse_pack(w_curs);
+> -
+> -	/* Make sure everything reachable from idx is valid.  Since we
+> -	 * have verified that nr_objects matches between idx and pack,
+> -	 * we do not do scan-streaming check on the pack file.
+> -	 */
+> -	nr_objects = p->num_objects;
+> -	ALLOC_ARRAY(entries, nr_objects + 1);
+> -	entries[nr_objects].offset = pack_sig_ofs;
+> -	/* first sort entries by pack offset, since unpacking them is more efficient that way */
+> -	for (i = 0; i < nr_objects; i++) {
+> -		entries[i].oid.hash = nth_packed_object_sha1(p, i);
+> -		if (!entries[i].oid.hash)
+> -			die("internal error pack-check nth-packed-object");
+> -		entries[i].offset = nth_packed_object_offset(p, i);
+> -		entries[i].nr = i;
+> -	}
+> -	QSORT(entries, nr_objects, compare_entries);
+> -
+> -	for (i = 0; i < nr_objects; i++) {
+> -		void *data;
+> -		enum object_type type;
+> -		unsigned long size;
+> -		off_t curpos;
+> -		int data_valid;
+> -
+> -		if (p->index_version > 1) {
+> -			off_t offset = entries[i].offset;
+> -			off_t len = entries[i+1].offset - offset;
+> -			unsigned int nr = entries[i].nr;
+> -			if (check_pack_crc(p, w_curs, offset, len, nr))
+> -				err = error("index CRC mismatch for object %s "
+> -					    "from %s at offset %"PRIuMAX"",
+> -					    oid_to_hex(entries[i].oid.oid),
+> -					    p->pack_name, (uintmax_t)offset);
+> -		}
+> -
+> -		curpos = entries[i].offset;
+> -		type = unpack_object_header(p, w_curs, &curpos, &size);
+> -		unuse_pack(w_curs);
+> -
+> -		if (type == OBJ_BLOB && big_file_threshold <= size) {
+> -			/*
+> -			 * Let check_object_signature() check it with
+> -			 * the streaming interface; no point slurping
+> -			 * the data in-core only to discard.
+> -			 */
+> -			data = NULL;
+> -			data_valid = 0;
+> -		} else {
+> -			data = unpack_entry(the_repository, p, entries[i].offset, &type, &size);
+> -			data_valid = 1;
+> -		}
+> -
+> -		if (data_valid && !data)
+> -			err = error("cannot unpack %s from %s at offset %"PRIuMAX"",
+> -				    oid_to_hex(entries[i].oid.oid), p->pack_name,
+> -				    (uintmax_t)entries[i].offset);
+> -		else if (check_object_signature(entries[i].oid.oid, data, size, type_name(type)))
+> -			err = error("packed %s from %s is corrupt",
+> -				    oid_to_hex(entries[i].oid.oid), p->pack_name);
+> -		else if (fn) {
+> -			int eaten = 0;
+> -			err |= fn(entries[i].oid.oid, type, size, data, &eaten);
+> -			if (eaten)
+> -				data = NULL;
+> -		}
+> -		if (((base_count + i) & 1023) == 0)
+> -			display_progress(progress, base_count + i);
+> -		free(data);
+> -
+> -	}
+> -	display_progress(progress, base_count + i);
+> -	free(entries);
+> -
+> -	return err;
+> -}
+> -
+>  int verify_pack_index(struct packed_git *p)
+>  {
+>  	off_t index_size;
+> @@ -185,19 +59,3 @@ int verify_pack_index(struct packed_git *p)
+>  			    p->pack_name);
+>  	return err;
+>  }
+> -
+> -int verify_pack(struct packed_git *p, verify_fn fn,
+> -		struct progress *progress, uint32_t base_count)
+> -{
+> -	int err = 0;
+> -	struct pack_window *w_curs = NULL;
+> -
+> -	err |= verify_pack_index(p);
+> -	if (!p->index_data)
+> -		return -1;
+> -
+> -	err |= verify_packfile(p, &w_curs, fn, progress, base_count);
+> -	unuse_pack(&w_curs);
+> -
+> -	return err;
+> -}
+> diff --git a/pack.h b/pack.h
+> index 34a9d458b4..0d346c5e31 100644
+> --- a/pack.h
+> +++ b/pack.h
+> @@ -80,7 +80,6 @@ typedef int (*verify_fn)(const struct object_id *, enum object_type, unsigned lo
+>  extern const char *write_idx_file(const char *index_name, struct pack_idx_entry **objects, int nr_objects, const struct pack_idx_option *, const unsigned char *sha1);
+>  extern int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offset, off_t len, unsigned int nr);
+>  extern int verify_pack_index(struct packed_git *);
+> -extern int verify_pack(struct packed_git *, verify_fn fn, struct progress *, uint32_t);
+>  extern off_t write_pack_header(struct hashfile *f, uint32_t);
+>  extern void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
+>  extern char *index_pack_lockfile(int fd);
