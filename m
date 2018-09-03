@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E81471F404
-	for <e@80x24.org>; Mon,  3 Sep 2018 23:25:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 368191F404
+	for <e@80x24.org>; Mon,  3 Sep 2018 23:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbeIDDr7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Sep 2018 23:47:59 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:44006 "EHLO
+        id S1727175AbeIDDsF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Sep 2018 23:48:05 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:44044 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726711AbeIDDr6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Sep 2018 23:47:58 -0400
+        by vger.kernel.org with ESMTP id S1726008AbeIDDsF (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Sep 2018 23:48:05 -0400
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id C656D6075B;
-        Mon,  3 Sep 2018 23:25:33 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 224FD6081B;
+        Mon,  3 Sep 2018 23:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536017134;
-        bh=+AvPjesH55ladKz/wolGwjozOgjvL4HB6udDh5ZPT/8=;
+        s=default; t=1536017137;
+        bh=/RJTG5P1aATLGhJ+UYNOQgC+lRFidWGNNxnUFfDEblE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=c10B3EOgsyafDlaEakxPEPAj+MmiB46gdT33VCq09rxcyGJhZ/ewCRtEtS3QHheXc
-         qLw3kpa0IUWj5VvsmVZhMB/kUOlO9HKNXWZgZwnFQAh3OAtTgVO469i+gw4W+JpAKZ
-         LTz75kgRTXXK1guPkqFMDJQeDY3J8SWrH8a492c4T6hopyVRaInDOi3p6aCWnKyJjl
-         MGNN5Z0WAUoMM24dXV/TSkH0hL9mMHZh1qRa7GsiDNJT8SjsXaZ0kyFJW0UJyuGbL8
-         zd0ZNDe2GvcNt3V1SGUlYqfp57EILPrP79BsFll5TIu+KhLbQUIMaOa+iFqfDB2Moo
-         XyKpPAHet99LsR7c89FKuIOT70Jq5gQ71LaDjVZkN+QCRKv9fO6lcmf+5b+WTb0Rt2
-         kKYxNFmdWWZmD3f/xf6K5d026oAF9NPhmGJ1H22JwJjtSNCH8NcrplocTifIazXVK+
-         ExvgzkorBwkdk6nXNPLEj1C0xWX9s9M6TAyLB5hEY/61e+A/enY
+        b=sqzj3Ke1cQOM0XH+7a9vIAsUe5HM3g0LeX2Qz9vQUbClVUuLsq7c/znf24tlLU1I3
+         JzyvVSknhtyeFZNmuCEqnh3K7EORW0Z+C6oYptd7b77CMZg5jpd79MxcofMZKQoCjg
+         ePGdBB7sOucAfcb+u77bMkNFzmDvge+3E23OVrWQio8oEMj220wASxW7L8Nh958Ucc
+         M9/iMpN+rl0vWIkNn5NaaVhkyuE5mYiQesdLTX87d7jWs9iFdyBkmbuVsi+5H/zngO
+         e12fAGWLN7tIU6OhgAwAVEeTTefj+AyytIegCG1eJro0z1C9TZZa6GqXxYShecxIL1
+         40Zhcm2rAj3DELkhgB0eVvzyr14Hkq/leQ4NDnkuZ55uSpCAgOgnK9H4Y0MJeZstoc
+         K/3OGSjtZH2dwm5J2zH7fWLUXgqhD77RuTiOxp61e052PxTZi0emSgQtkS+Ye7rudp
+         gyyDoIdMOPc0411nvaA8MEO1Lz57OLrfaeHvTMtu7cyTHCCCZnz
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
@@ -43,9 +43,9 @@ Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 04/12] t0002: abstract away SHA-1 specific constants
-Date:   Mon,  3 Sep 2018 23:25:07 +0000
-Message-Id: <20180903232515.336397-5-sandals@crustytoothpaste.net>
+Subject: [PATCH v4 07/12] t1006: make hash size independent
+Date:   Mon,  3 Sep 2018 23:25:10 +0000
+Message-Id: <20180903232515.336397-8-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1
 In-Reply-To: <20180903232515.336397-1-sandals@crustytoothpaste.net>
 References: <20180903232515.336397-1-sandals@crustytoothpaste.net>
@@ -57,64 +57,36 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adjust the test so that it computes variables for object IDs instead of
-using hard-coded hashes.
+Compute the size of the tree and commit objects we're creating by
+checking for the size of an object ID and computing the resulting sizes
+accordingly.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t0002-gitfile.sh | 27 +++++++++++++++------------
- 1 file changed, 15 insertions(+), 12 deletions(-)
+ t/t1006-cat-file.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
-index 3691023d51..0aa9908ea1 100755
---- a/t/t0002-gitfile.sh
-+++ b/t/t0002-gitfile.sh
-@@ -92,11 +92,12 @@ test_expect_success 'enter_repo non-strict mode' '
- 		mv .git .realgit &&
- 		echo "gitdir: .realgit" >.git
- 	) &&
-+	head=$(git -C enter_repo rev-parse HEAD) &&
- 	git ls-remote enter_repo >actual &&
--	cat >expected <<-\EOF &&
--	946e985ab20de757ca5b872b16d64e92ff3803a9	HEAD
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/heads/master
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/tags/foo
-+	cat >expected <<-EOF &&
-+	$head	HEAD
-+	$head	refs/heads/master
-+	$head	refs/tags/foo
- 	EOF
- 	test_cmp expected actual
- '
-@@ -106,21 +107,23 @@ test_expect_success 'enter_repo linked checkout' '
- 		cd enter_repo &&
- 		git worktree add  ../foo refs/tags/foo
- 	) &&
-+	head=$(git -C enter_repo rev-parse HEAD) &&
- 	git ls-remote foo >actual &&
--	cat >expected <<-\EOF &&
--	946e985ab20de757ca5b872b16d64e92ff3803a9	HEAD
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/heads/master
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/tags/foo
-+	cat >expected <<-EOF &&
-+	$head	HEAD
-+	$head	refs/heads/master
-+	$head	refs/tags/foo
- 	EOF
- 	test_cmp expected actual
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 7f19d591f2..a7c95bb785 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -140,15 +140,17 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'enter_repo strict mode' '
-+	head=$(git -C enter_repo rev-parse HEAD) &&
- 	git ls-remote --upload-pack="git upload-pack --strict" foo/.git >actual &&
--	cat >expected <<-\EOF &&
--	946e985ab20de757ca5b872b16d64e92ff3803a9	HEAD
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/heads/master
--	946e985ab20de757ca5b872b16d64e92ff3803a9	refs/tags/foo
-+	cat >expected <<-EOF &&
-+	$head	HEAD
-+	$head	refs/heads/master
-+	$head	refs/tags/foo
- 	EOF
- 	test_cmp expected actual
- '
++test_oid_init
++
+ tree_sha1=$(git write-tree)
+-tree_size=33
++tree_size=$(($(test_oid rawsz) + 13))
+ tree_pretty_content="100644 blob $hello_sha1	hello"
+ 
+ run_tests 'tree' $tree_sha1 $tree_size "" "$tree_pretty_content"
+ 
+ commit_message="Initial commit"
+ commit_sha1=$(echo_without_newline "$commit_message" | git commit-tree $tree_sha1)
+-commit_size=177
++commit_size=$(($(test_oid hexsz) + 137))
+ commit_content="tree $tree_sha1
+ author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> 0000000000 +0000
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 0000000000 +0000
