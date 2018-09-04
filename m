@@ -2,109 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 890181F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 23:02:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C2B21F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 23:20:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727323AbeIED3k (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 23:29:40 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:54521 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727257AbeIED3k (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 23:29:40 -0400
-Received: by mail-yw1-f74.google.com with SMTP id c67-v6so3919280ywc.21
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 16:02:23 -0700 (PDT)
+        id S1726961AbeIEDrX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 23:47:23 -0400
+Received: from mail-yw1-f65.google.com ([209.85.161.65]:33710 "EHLO
+        mail-yw1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726211AbeIEDrX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 23:47:23 -0400
+Received: by mail-yw1-f65.google.com with SMTP id x67-v6so1947493ywg.0
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 16:20:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=KMxpJaFeDvA+JYWDSIqw1e9nTvx03OpdM6Z5DG0u5dA=;
-        b=c8eakJO16/2d5rdi5m1TfviViP+HeFkRbdhrDF8uu52fIhn3olWLotInzgpsV94WOG
-         coRGIIITH3ym5LhFTFBpExjUKafNuZbvfeYQtL/RzcZ2eV5t3AdaiitAYSIprngSLTxD
-         MYX8MdP4bT0UelTxAD6fR+CaWeyRcFvqPjcuAb+QzdvNOx9LALAG9W4YHV3jW2q5oNY9
-         cDxYnJLpAon1M+XwPjSxQ4VCessbmz9X4nx7ZhMeuknGOrcKFLvnVgoi2Jiwt/oGC8gD
-         5viW+YG2nFZ/dWA3tini4mDKESJ/W0dqlby8br/HKXoU2DjqfL5vXS/CxnoX7x0bIOAE
-         u8Gg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=wb8LKTIeTCg7vFXmEnjK/MYsVmpOOhyMS+GbQ3wEUBE=;
+        b=aSo0tekPaWlDVwT4Rc96aN2CDCr5iIF7Zy1syoZUScj77ll1Ti/ki65Xr2J9at5/16
+         EZ1KqyWHhuyQ/P/Y+AzVbJpHbnwRcPffC2RmQ6p0zidt9ZxulZI4XGw4/TtcFF+jcLl6
+         cYvd7NMaomZoHg781Fh3Bbo/1r6L4kaK5AGjTtqi36YmcvPe3Xd+sRqrkpN2xe4Ht+Dn
+         3cnMONP2vXme1kmmGLHrv1VVRd48uWeDEx+qI0aiND+j7PCi4hbet96K9y8aIv3RLGgV
+         tgju77fC9j6/NRatLBYME/3AhxbUOdY32oRrRK6G7FR8RtcXAtAQTV1hJetLT88Jhke/
+         DolQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=KMxpJaFeDvA+JYWDSIqw1e9nTvx03OpdM6Z5DG0u5dA=;
-        b=GS2jDtzmXlhYeA2glpnfOfAKVs9fhgGoNXmKaPwaJYFh2T55RKtMHEKzTTVPvoYXYG
-         6CGGlV6ErDzOUKZ8R7tcbBoYgsrvYAX8ZryQ4gXbDITHOiHhanV2bY7QzJA0GUWEKSkY
-         5KiVSFImcrsuYDOlgstne9aql0BlDF0yBOkiDFX2ZFCJQsPxQdbN8N2R1CrRLRTVPFfd
-         Oo3ups4knOtL2zNypyrOGCXAX22LyWelC91SJzsxox8GohdCu1yb5z0V3T/dDfembgkM
-         jP2J050R8RfaTn7nGIRmvhTmkRqitLwrpQVp9ylpYWbsiGyPz5QnRVB5kII7oC7n8e10
-         7Y1Q==
-X-Gm-Message-State: APzg51DBEgxBKXW1oVDKdxlay2FeT1+ldIroA68TUbAon9JV6Vbs5eNa
-        BV7Vw+Bc48C03x7nri8lIsrn3G/rn8R+VguQ7e5H6JBRMT/ztQxIlc8o6/VbDliMmSasNuW/IOd
-        Jm6VL5KXhfnlCyVu4r7cReQmCWx1CgJrvVka1qUlp21MdIxYiTNQ/UE5CzgVw
-X-Google-Smtp-Source: ANB0VdYUPNuGXTCOpreDgw6bgcfQrvTfyDsvAl48lT4AMAtI0HeFWAYrw5o4kDK8fkLupIgu5LDNtJEeT8/5
-X-Received: by 2002:a0d:f8c2:: with SMTP id i185-v6mr8861945ywf.211.1536102143366;
- Tue, 04 Sep 2018 16:02:23 -0700 (PDT)
-Date:   Tue,  4 Sep 2018 16:01:49 -0700
-In-Reply-To: <20180904230149.180332-1-sbeller@google.com>
-Message-Id: <20180904230149.180332-12-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180904230149.180332-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1-goog
-Subject: [PATCH 11/11] builtin/fetch: check for submodule updates for non
- branch fetches
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=wb8LKTIeTCg7vFXmEnjK/MYsVmpOOhyMS+GbQ3wEUBE=;
+        b=lOgGmV5nuobEeeWOigSsKL/XTurUleG5AwYtOrmSsC34yNmUwf74pVHAjd19kPweQE
+         a4jb5FNeravkJG8i5kGPCHtQmnVEym2m7dBgflufgg73vDD0hNSk7vTzeyDL+hgqxvjx
+         GxvpRCk6MNUiQuKIt7JD/FjubwIElGC7Mai6Hv+BJQlQXbhUm4VgzCHVF/4iHSlWVhE/
+         SThNRTVbZQ/IDIptRxEKVzwKv1EV5qurDtxCpW3Q9NYEDLOJUQLbc+udjceJPDTFgWE2
+         PWlUn4ZBhsGuD0p01n3CR2sqFzT3kvGVzwcIWpsjqUz7HRpfL9a/VAwXJVIq3oKop0x+
+         re5w==
+X-Gm-Message-State: APzg51B9W+RMqfMGhU7JjTI6YVq9Og4Rj3e2AYzRvs+Knh3P7nJAfqY4
+        +YDgtdIXPrxAkGs0+ksApME=
+X-Google-Smtp-Source: ANB0Vdaqg0QMi3Fo591qWbSItHzbMol35jVTuJg1ORvXvzXkjQ4IXWDt0/wOqSW3alweZ9+5lyHu6A==
+X-Received: by 2002:a81:8602:: with SMTP id w2-v6mr19546640ywf.61.1536103202878;
+        Tue, 04 Sep 2018 16:20:02 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 129-v6sm79809ywq.26.2018.09.04.16.20.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Sep 2018 16:20:02 -0700 (PDT)
+Date:   Tue, 4 Sep 2018 16:19:59 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH] mailinfo: support format=flowed
+Message-ID: <20180904231959.GB34268@aiede.svl.corp.google.com>
+References: <e2f2ca18-849c-0ef4-98a5-9a1379bfcec5@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e2f2ca18-849c-0ef4-98a5-9a1379bfcec5@web.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For Gerrit users that use submodules the invocation of fetch without a
-branch is their main use case.
+Hi,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/fetch.c             | 5 ++++-
- t/t5526-fetch-submodules.sh | 2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+René Scharfe wrote:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 95c44bf6ffa..ea6ecd123e7 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -887,11 +887,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				rc |= update_local_ref(ref, what, rm, &note,
- 						       summary_width);
- 				free(ref);
--			} else
-+			} else {
-+				check_for_new_submodule_commits(&rm->old_oid);
- 				format_display(&note, '*',
- 					       *kind ? kind : "branch", NULL,
- 					       *what ? what : "HEAD",
- 					       "FETCH_HEAD", summary_width);
-+			}
-+
- 			if (note.len) {
- 				if (verbosity >= 0 && !shown_url) {
- 					fprintf(stderr, _("From %.*s\n"),
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index af12c50e7dd..a509eabb044 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -615,7 +615,7 @@ test_expect_success "fetch new commits on-demand when they are not reachable" '
- 	git update-ref refs/changes/2 $D &&
- 	(
- 		cd downstream &&
--		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
-+		git fetch --recurse-submodules origin refs/changes/2 &&
- 		git -C submodule cat-file -t $C &&
- 		git checkout --recurse-submodules FETCH_HEAD
- 	)
--- 
-2.19.0.rc1.350.ge57e33dbd1-goog
+>  builtin/am.c                |    4 +
+>  mailinfo.c                  |   64 +-
+>  mailinfo.h                  |    2 +
+>  t/t4256-am-format-flowed.sh |   19 +
+>  t/t4256/1/mailinfo.c        | 1245 +++++++++++++++++++++++++++++++++++
+>  t/t4256/1/mailinfo.c.orig   | 1185 +++++++++++++++++++++++++++++++++
 
+This mailinfo.c.orig file appears to have been lost when applying the
+patch to git.git, resulting in test failures:
+
+ $ ./t4256-am-format-flowed.sh -v -i
+ Initialized empty Git repository in git/t/trash directory.t4256-am-format-flowed/.git/
+ expecting success: 
+        cp "$TEST_DIRECTORY/t4256/1/mailinfo.c.orig" mailinfo.c &&
+        git add mailinfo.c &&
+        git commit -m initial
+
+ cp: cannot stat 'git/t/t4256/1/mailinfo.c.orig': No such file or directory
+ not ok 1 - setup
+ #
+ #               cp "$TEST_DIRECTORY/t4256/1/mailinfo.c.orig" mailinfo.c &&
+ #               git add mailinfo.c &&
+ #               git commit -m initial
+ #
+
+Known issue?
+
+Thanks,
+Jonathan
