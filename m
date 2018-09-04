@@ -2,99 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 294641F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 00:01:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B4B601F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 00:05:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725789AbeIDEYQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 00:24:16 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:44673 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725766AbeIDEYQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 00:24:16 -0400
-Received: by mail-qt0-f193.google.com with SMTP id k38-v6so2134915qtk.11
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 17:01:47 -0700 (PDT)
+        id S1725814AbeIDE20 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 00:28:26 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:54720 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725766AbeIDE20 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 00:28:26 -0400
+Received: by mail-wm0-f65.google.com with SMTP id c14-v6so2530060wmb.4
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 17:05:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7oAX/E3mVhuLPPl0fHxdZPBYyNHfuT4LSOmR71O8rwc=;
+        b=gjzKAC1huV3Ud16qDR5so82CLsAJKKPI9JFAbkioFwH59PJj2McWZAP3l0z+Bv1IL/
+         9KBgTMqRhc1BYwox6HdBWWnrkc68zcnabXI4l5X8Kqo2LHeeIBDwBQ5uyEAqKx72giZ5
+         GslAI2vkGyJ6jxiPMizmX+gMu07ykraoK8j7HX1KLJL9VDpSUcVcJV1Ilcug4Xv90aeX
+         MRLIKtqcn6phWrg5zX8Nc+LEE8gSUxl5jrFIk1dUoYqEO/Bs1nlUTUT1hPtLpwjLqZE5
+         c0V1mXk6csiK+PceVRjao6aGAk+BbrLU9bT4c19H7AIun9ECPZyxXC+3o1WyXjB4R1UV
+         1VFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+ckkANDxKweLcTU61bS18OZ3kHqIPUgZnP7C+dYzyrA=;
-        b=m+8DchtE5vXCyM/16PkSwtqjLDr3P5pXeRAAtYTZzS5kAH4oq2qyI3wTFQXRQWrz6A
-         LQ8Q+ISFDCja9paBfea8fhN3SLrFB1xKGiyqfG+FQMGDcEXNdXaHQ4T28OFBSNjuFNXV
-         SIL65mxmFkhw28B8W76Dk/J6vnI/smZdc34TI6T8yOSLbzPNFAqvgKQx1fkFl/TVWSmT
-         yDWD6V5MyDuf7NU9idURmTPVbh/DX7S4WsusEs6ncv9OzhT9Yn0XSl3vGFaa3Kx1J3Ka
-         jlUG9UhZmTH5vpc9lmlDDQTo6koJhsTc0kRvZIh7ooqiGFW6lQKb9u5GnJ1PXKED1d6N
-         B49g==
-X-Gm-Message-State: APzg51ABCsWdgYIysXmmaczCuHxall7J8pk4qXdrnquyrpLKUrP9ItMA
-        Kqq29igJSOzdb91tcBSQwAQKlT25IGg6N0tDIm0=
-X-Google-Smtp-Source: ANB0VdbDVrfgjFKWdjvj9TG2enK7wFxkGQDWrb3urrA5Ack632a3WBz79ofEevO+ZmVagNOgYFvrneJwUmpz1YAIqJU=
-X-Received: by 2002:ac8:764c:: with SMTP id i12-v6mr27231837qtr.250.1536019306812;
- Mon, 03 Sep 2018 17:01:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7oAX/E3mVhuLPPl0fHxdZPBYyNHfuT4LSOmR71O8rwc=;
+        b=WvPH8oNZ5X5OQwtl5ThwbCJ9Xpe3XRiB9/WKJO4nGW4QhOlDzlw3xv4RCcTUUjNuqF
+         uQiysl+LjSI3P77uGashG2Exf0uoEaHRdZFKdsoeVnwtrj049pzPrHKUaQGRDZLlms0S
+         vJkEcnBglWRdxU0P4fTZ+mj05fV5/GU1k5SEBD+cQRb2S1xGeaLHM5sBifLSuNgsTJB+
+         G6Zj0AjC8rGdkeRmYYOknVG6jBdCyxW0W5Jy42a3O8sYCvG7oJXaGFt81AY5+XPHMX3r
+         v0xFsQU3MnsCbwnYFXRXtGztyehjJqnaPBcTOpp+TIBdjJFUShsVnKC47DUATDGR74T+
+         EBrg==
+X-Gm-Message-State: APzg51C0y+6zSLTE/DH0xXI6PJ7LrhYpM+j6rVtNhaHgGzMqqNHRVKUa
+        8X9sF9KdO8UBKFTPE2umREY=
+X-Google-Smtp-Source: ANB0Vdag62gWcxBIgQCJzmv5HUrBK5hyvWjFLHK8gBSxRfF/BuqGRJHxyq4OHjGO65CvIzvXbQHYkg==
+X-Received: by 2002:a1c:6208:: with SMTP id w8-v6mr968799wmb.163.1536019555799;
+        Mon, 03 Sep 2018 17:05:55 -0700 (PDT)
+Received: from localhost.localdomain (x590c2a04.dyn.telefonica.de. [89.12.42.4])
+        by smtp.gmail.com with ESMTPSA id z21-v6sm390491wmi.29.2018.09.03.17.05.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 03 Sep 2018 17:05:54 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] Documentation/git.txt: clarify that GIT_TRACE=/path appends
+Date:   Tue,  4 Sep 2018 02:05:44 +0200
+Message-Id: <20180904000544.13907-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.188.g56c5ee2db1
 MIME-Version: 1.0
-References: <20180903232515.336397-1-sandals@crustytoothpaste.net> <20180903232515.336397-2-sandals@crustytoothpaste.net>
-In-Reply-To: <20180903232515.336397-2-sandals@crustytoothpaste.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 3 Sep 2018 20:01:35 -0400
-Message-ID: <CAPig+cQZMEvJZ2b3RjtXvy9ZtTjRKUvye_xT0nibOqcHtpApZQ@mail.gmail.com>
-Subject: Re: [PATCH v4 01/12] t: add test functions to translate hash-related values
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 3, 2018 at 7:25 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> Add several test functions to make working with various hash-related
-> values easier.
-> [...]
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> @@ -1155,3 +1155,70 @@ depacketize () {
-> +# Detect the hash algorithm in use.
-> +test_detect_hash () {
-> +       test_hash_algo='sha1'
-> +}
+The current wording of the description of GIT_TRACE=/path/to/file
+("... will try to write the trace messages into it") might be
+misunderstood as "overwriting"; at least I interpreted it that way on
+a cursory first read.
 
-Not worth a re-roll itself, but if you do re-roll for some reason,
-perhaps include a comment inside the function saying that the actual
-"detect" part will be fleshed out later.
+State it more explicitly that the trace messages are appended.
 
-> +test_oid_cache () {
-> +       local tag reset k v
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ Documentation/git.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-s/reset/rest/
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index dba7f0c18e..74a9d7edb4 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -599,8 +599,8 @@ trace messages into this file descriptor.
+ +
+ Alternatively, if the variable is set to an absolute path
+ (starting with a '/' character), Git will interpret this
+-as a file path and will try to write the trace messages
+-into it.
++as a file path and will try to append the trace messages
++to it.
+ +
+ Unsetting the variable, or setting it to empty, "0" or
+ "false" (case insensitive) disables trace messages.
+-- 
+2.19.0.rc0.188.g56c5ee2db1
 
-It probably wouldn't hurt to &&-chain the above, as well, to
-future-proof it against someone coming along and inserting code before
-the 'local' line.
-
-> +       test -n "$test_hash_algo" || test_detect_hash &&
-> +       while read tag rest
-> +       do
-> +               case $tag in
-> +               [...]
-> +               esac &&
-> +
-> +               k="${rest%:*}" &&
-> +               v="${rest#*:}" &&
-> +
-> +               if ! expr "$k" : '[a-z0-9][a-z0-9]*$' >/dev/null
-> +               then
-> +                       error 'bug in the test script: bad hash algorithm'
-
-Did you want to redirect this to stderr like you do with error() in test_oid()?
-
-> +               fi &&
-> +               eval "test_oid_${k}_$tag=\"\$v\""
-> +       done
-> +}
