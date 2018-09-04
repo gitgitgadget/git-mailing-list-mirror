@@ -2,115 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EC621F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:28:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E42EC1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:30:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726232AbeIECzO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:55:14 -0400
-Received: from mout.gmx.net ([212.227.17.20]:35931 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725825AbeIECzO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:55:14 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LuJDv-1fmpQ02CaF-011gRq; Wed, 05
- Sep 2018 00:27:59 +0200
-Date:   Wed, 5 Sep 2018 00:27:58 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Re*: [PATCH 1/2] rebase -i --autosquash: demonstrate a problem
- skipping the last squash
-In-Reply-To: <xmqqd0tt9j0s.fsf_-_@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1809050025480.71@tvgsbejvaqbjf.bet>
-References: <pull.30.git.gitgitgadget@gmail.com> <8753c4e5fba5bb9cc42fdf438f4a69e702261a15.1535759099.git.gitgitgadget@gmail.com> <xmqqd0tt9j0s.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726706AbeIEC5k (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:57:40 -0400
+Received: from mail-wm0-f54.google.com ([74.125.82.54]:36976 "EHLO
+        mail-wm0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726090AbeIEC5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:57:40 -0400
+Received: by mail-wm0-f54.google.com with SMTP id n11-v6so5741929wmc.2
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:30:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=KsdwkExbANLFeGAltgZvQ6Z7hbWHi6EuIgJ0G+1W15Y=;
+        b=h3tVbiNmiN6Jz5+Qvb+OQpEGEcFJLvWPFVSOp4uBbQBU0TqwknS+gLTFZ/DbAc706a
+         Ky8P6bQZVhYErmhPUVj4d9NnDCLlwl5QAAW8U977jzUbUZtyaKSUB1r2VG7YytvFUDbv
+         tporS0T6Mj60tjBr56uf1mRniXKlPSugW6/lyP+Fbq912wZKdFOAQ6+nL/Mt7408CGcT
+         HjIt56Qg13EWiO2eh/nfcxeBMimBxb9DJqQPA+xGuZsCxUfklqc805Y++fT3cuDcWQv2
+         Y47li2JLGnwbXyG/dXYEU+2ZRIYT8+zTTaeVlvR5xXnQNzDI/iqZQUeBwLcS+px8zNo7
+         nxfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=KsdwkExbANLFeGAltgZvQ6Z7hbWHi6EuIgJ0G+1W15Y=;
+        b=fm50yIIsoPPHwJuo9MxRHcAjYN31/rp2R7dlagZXKNkB72uu/al0bcaLJcEXPMmwPd
+         zAMrZhRWtzDO90tp7PPt8bGjTFt+RSIOJH8xyTTf1zH3iLPLMY8TEEfAetVit+HXPG8f
+         YDC0SPa1Fs6E+FUMh23NklZ1voPEWPnauNmih6pTcDc/Xo9bIuTstYeVye2j1We5T2ZQ
+         eebpZDozJbQXWiVInXYfaGbmK8MWkPMja9Fv3Kf1P7r/+CgHc5fo/Kqgki3fcb/a6m5Y
+         r9PwtZGW24dhnstnvycZg396MSFlu/sPhoBHVdtXhQDavJkBtOYgDz/ZrCeq6Pfdnqys
+         uoig==
+X-Gm-Message-State: APzg51BFkgoYbCNuORT5pNmSn0tN2uUzBqL6wCeXIGhwbuRoI2qTmXhe
+        nQJqbWX5fa5onZwK0uIdeEw=
+X-Google-Smtp-Source: ANB0VdZ2TYk8eZlrc/gZLoU7OhZ8ecJqR8rfSi7FpnfpUqU+Pb4BbnricxVs2AsP9zWzotGygGHBfA==
+X-Received: by 2002:a1c:b49:: with SMTP id 70-v6mr9479344wml.149.1536100228797;
+        Tue, 04 Sep 2018 15:30:28 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b124-v6sm368405wmh.17.2018.09.04.15.30.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Sep 2018 15:30:28 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH 1/8] trace2: create new combined trace facility
+References: <pull.29.git.gitgitgadget@gmail.com>
+        <82885700379efe6d6a83629cac4d943b99b393bf.1535734192.git.gitgitgadget@gmail.com>
+        <CAGZ79kbUYDAKi-K2uHpkffPjMxGYtH=QUMhvfq4HTc5+a7-eBA@mail.gmail.com>
+Date:   Tue, 04 Sep 2018 15:30:27 -0700
+In-Reply-To: <CAGZ79kbUYDAKi-K2uHpkffPjMxGYtH=QUMhvfq4HTc5+a7-eBA@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 4 Sep 2018 15:12:53 -0700")
+Message-ID: <xmqqzhww6gl8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mTDGfElO+JmrSuvYT0VI1uvB5nMi7TkheLkg5PmFW4F/9LTyJzn
- YNpZaZCYAqpILWanObsaLVerlW/UbHpaglbbVBMS8862QgXjXtGePxryxghILuPB4UTzftW
- Ae+4+F8TCMUDWGsm6kvjz1UZj0wIgRXma07OL4/Tu1hSGx6pnlpMSxptekLxZ0V8Xr+TM/O
- 3dhX2Shga6cfmrQcwT8Jw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:jy59HwtdrMk=:6PdPEtmh/RW0ToGbANAtEl
- ZxT+Jmmq7nDi5swLxdNWFtujBHEP4X7g5EFrbeFt7X09NQCugr37gcZre5jAg2pLdy1/AOW2E
- AZmRly+a0fxxOyGzhfnQRE6NHdLOctvC9wW1BWmI4TobqU1l+lKMU1bQtLmW0gvV5F8SAGEgM
- tDQnbC9H9B5iFQJezNJYvXIqnDlqE0JdAn8+pCWr661c1UU6echNzI7iQqDZ4Vgz5G4BBzOXH
- 4c2dL7Q0f1eYBB+IrRPDFc8OmQeGftnA8R2SeKmHgI1djdg1GtLluldU4oWrFk95O/r0zKMtQ
- g3wRCnt0C1jyZTmtBzTxurZetmaVg4q3SuHHxlrUi2rDeMqtT72PIyJ2cb3HEmaA2l4fUwamD
- 8bkTWihFmY5Lq/W8wXZydGCCWh5QVNV2gDXbx8LC+n9HQNCCCEo4nX/1McvARprT9ckn6h887
- w9njUwalD6E9XIYWu1L43RxHk+BAFF7hjFgoOBrb4lhitq53D2tKzPnVfgVyCcO0OsZHdVrCK
- iD6p9DbGyCt4aJv/VT+rwXr2rOBvtaGbeyYphygw3KpBNPbttnPKNlahwH1pLsmp7kis6o1HK
- wJXzodr+Z9YwwTGqeJsqHUXMVG9tI5pDMoAA+60bv60L8tspsWZDnpT06LYdSZe7XfNkMB8A2
- p5qAnWoFk8YO/ksPZb4M1OzeyiaKfYKseAGhGaDfaQAh8sN9r+J5Sgv2gAfYV7tcGWI7VHsDy
- D1KOq7zbuKnqdQ/Sz8Lko5mo1rNiUuxsUR0OM3F/CIiInakcCmT1wEeJiwQhFiZ6hin10upV1
- IyGaVLx
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Stefan Beller <sbeller@google.com> writes:
 
-On Tue, 4 Sep 2018, Junio C Hamano wrote:
+>> The API defines both fixed-field and printf-style functions.
+>>
+>> The trace2 performance tracing includes thread-specific function
+>> nesting and timings.
+>
+> So this only adds the new API, and we need to merge the TRACE
+> into the TRACE2 later?
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
-> > +	test_must_fail git -c core.editor="grep -q ^pick" \
-> > +		rebase -ki --autosquash HEAD~4 &&
-> 
-> When merged to 'pu', this reveals that "git rebase" rewritten in C
-> knows "--keep-empty" but not "-k".
+If this is a rhetorical question implying that it would be best if
+the existing trace() were rewritten to be built on top of trace2()
+while building this series, especially before adding new callsites
+that directly use trace2(), I may share that feeling.  I haven't
+studied this new round deeply enough to see how realistic it would
+be, though.
 
-I had already reported this:
 
-https://public-inbox.org/git/nycvar.QRO.7.76.6.1808241803100.73@tvgsbejvaqbjf.bet/
-
-> 
-> I did a quick eyeballing between master:git-rebase.sh and
-> pu:builtin/rebase.c and I think that it is the only one that is
-> missed, but somebody may want to lend us a second set of eyes.
-> 
-> -- >8 --
-> Subject: rebase: re-add forgotten -k that stands for --keep-empty
-> 
-> 630a70ea ("builtin rebase: support `keep-empty` option", 2018-08-08)
-> forgot that the option comes with a short-and-sweet -k synonym.  Add
-> it back.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Since this is not in `next` yet, let's do it the correct way. I had a
-fixup! sitting in my wip-rebase branch all the time, I just needed to find
-the time and motivation to figure out how to let GitGitGadget send a v2
-when v1 was not sent via GitGitGadget.
-
-Ciao,
-Dscho
-
-> ---
->  builtin/rebase.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 87590047b3..b26f9c10cf 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -847,7 +847,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  			 &options.allow_rerere_autoupdate,
->  			 N_("allow rerere to update index  with resolved "
->  			    "conflict")),
-> -		OPT_BOOL(0, "keep-empty", &options.keep_empty,
-> +		OPT_BOOL('k', "keep-empty", &options.keep_empty,
->  			 N_("preserve empty commits during rebase")),
->  		OPT_BOOL(0, "autosquash", &options.autosquash,
->  			 N_("move commits that begin with "
-> 
-> 
