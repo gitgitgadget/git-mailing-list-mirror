@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A45E21F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 21:59:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4122C1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727519AbeIEC1C (ORCPT <rfc822;e@80x24.org>);
+        id S1727523AbeIEC1C (ORCPT <rfc822;e@80x24.org>);
         Tue, 4 Sep 2018 22:27:02 -0400
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:38033 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbeIEC1B (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:27:01 -0400
-Received: by mail-pl1-f169.google.com with SMTP id u11-v6so2258276plq.5
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:57 -0700 (PDT)
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:43841 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbeIEC1C (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:27:02 -0400
+Received: by mail-pf1-f195.google.com with SMTP id j26-v6so2346079pfi.10
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d1hsLx9O+J232x7Va7evyWOyMeY9nohOuUXZB0Ufhio=;
-        b=q8qxhA3Hv4KENv4G3maiciYQvgI3307QW80QBlf7s/MR1wjMIF9e6URJmFXt3qXIV0
-         HzbSKN34CER9YGUmr1Ss8m0vamwJ1D0UdYK7z6oRJpSwS2Wp6JZxqmvBtTzS4N/zNkp0
-         tdPOioT+EtQy2W1ahacMeVqtdKhudpfjQoOnC5eaCmO7VY87VE3f8p2sC3BLjWL2q3RA
-         0MPtUb/CieTlIBd5l3YZEA3xcz+/bXbZ7XmZx5ya2aeOr6jZ3Yb9De45qFGyyj+FK1fI
-         ETwXVf8qFfy9dSirBd7FIgSn15LH3qQz1NoXN6GIRm9uCHYBsiXdd9zTNGYL5maj3p3K
-         Y/rg==
+        bh=zRwMmA9rj8lZ+ScV4Qj5oVZnBqFQtSbFDl2+Hb1+VXU=;
+        b=M6S1G8MGGihUSJVuUl3+9LvMkN+zSF2kPqcYVWhBJor+T0/p4rsmN11Oz3NpjGzlsT
+         fXdV0z7nIxYjOGrbYh0J9V442PyHHcgvcyngQeV6+7mtNyxYnq5eZS642UXO+u2VKj82
+         SmdircCx0RKsYGqSiDUlmY8VlovilAKYxQcnNMMqMicOm3XTHGEPTAit1mqWMAb3zoxD
+         FP+oGl9inC3OEa6zyHMmtR3DsFnqUXT78+HVwykEq5PSMNRFGps912o5PfcLz9JEhgf4
+         3pzgQ6oSZW2wTPouK6HPdtmPvf4jaQv6/cmePEFLPouZmK9AGM/mS/dQFHMZWNy57FTs
+         kPgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d1hsLx9O+J232x7Va7evyWOyMeY9nohOuUXZB0Ufhio=;
-        b=OnbUJWGqQjUxyzocCl+qqXsGbkcYdbVmvGc9T6RMHkohM5IZaXX82K1qE9qEnzCjhO
-         V/gzg05apRkBUx8uCjW/Aybgjt7JXKk97zJ6uPWB8zYWUaD1JYsEiw15fpBIypostW5v
-         Ex+kWooZw2FfgFr57Dyh7njcBTFMTkcz0TDY6VqbjYBUfoqbkWG8oWvpZEUDzOLh7c7J
-         zWXGktbwi65TpcJnU78xtUW5zCuPFgyEY/5EEXh5ptpVHboy2q0gdpT8x5pEIxQAbvOD
-         I8h7Kmk4z1lxWwcUqusIwVhm+L686gPDjWSMEMiZHilW0SpYdfUHXrH0rMMgLGTGr0+H
-         sPfw==
-X-Gm-Message-State: APzg51Dz4v9nDFFoDsQezEOanzpI2jvriA9fXuM8lsZ/PSA/eKZcy1sv
-        bCaYqgoExrfO1MbYtStIW1JXN61H
-X-Google-Smtp-Source: ANB0VdYpEY/+xAPhC1mNrYq9scyvl10T7UlYeGRW09RsYlvRVj0Nvwtyuv9+Txjqoy1YnV2GvWt2Gw==
-X-Received: by 2002:a17:902:8c84:: with SMTP id t4-v6mr36061663plo.100.1536098396801;
-        Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
+        bh=zRwMmA9rj8lZ+ScV4Qj5oVZnBqFQtSbFDl2+Hb1+VXU=;
+        b=ODppp7ZbjRN3XTRcbKhYXPUjDXGkQxxYOM3gF0Yll+yZ2+TDsXsmEA6HnF1LE0OhTN
+         RAUUHYEzisV486mD7AtyG/Webnu45u/6UyUxoZdDZMzqymUONT1TFiAJUFak02eSVxkx
+         8MwenyRQScEYUwr9T9VcgAkXYLUE3tJ8bNS+vD7CxoUiGnl4824ehy06ckv70oDfOtB9
+         +o45N7LJ5Mv6wiIddqO3pdBh3NMRiqQBuGDncuG6H1xEghNmKfB1WNFu3kkLz8P+7JAQ
+         VjgyaZJ85LMZvu60fiPjWxNQNyxNWvCvhOIAw0tPspAjx39y9GBICPL+zz23bI5ZfKiv
+         5O5g==
+X-Gm-Message-State: APzg51By+Jhpo03VQadaqkLrdKEfRcak3fQaMYwU1OZzxBVP/bXEkSHU
+        vIQMxp9LjN/Wk70SACDbIDThBXX/
+X-Google-Smtp-Source: ANB0VdYv+/G/60ucy/InGVL5wR3OwZKe5YduO3WfTbi+CbXSZzNJBYQ39XAJ1tT9TOnQKA3OyaB9Wg==
+X-Received: by 2002:a62:9042:: with SMTP id a63-v6mr36836804pfe.52.1536098398148;
+        Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id r1-v6sm9731pfi.17.2018.09.04.14.59.55
+        by smtp.gmail.com with ESMTPSA id p19-v6sm30830862pgh.60.2018.09.04.14.59.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:33 GMT
-Message-Id: <83bb27750972a39c90d78ecebd07ac32745ab6c4.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:59:57 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:59:57 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:34 GMT
+Message-Id: <a8f12bf01ffb5411374843083cb18a7fa84a4935.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 06/18] builtin rebase: support `ignore-date` option
+Subject: [PATCH v2 07/18] builtin rebase: support `keep-empty` option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,44 +71,80 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit adds support for `--ignore-date` which is passed to `git am`
-to easily change the dates of the rebased commits.
+The `--keep-empty` option can be used to keep the commits that do not
+change anything from its parents in the result.
+
+While the scripted version uses `interactive_rebase=implied` to indicate
+that the rebase needs to use the `git-rebase--interactive` backend in
+non-interactive mode as fallback when figuring out which backend to use,
+the C version needs to use a different route because the backend will
+already be chosen during the `parse_options()` call.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ builtin/rebase.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 7490d215ef..42ee040da3 100644
+index 42ee040da3..9c00f3568f 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -527,6 +527,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		ACTION_SHOW_CURRENT_PATCH,
- 	} action = NO_ACTION;
- 	int committer_date_is_author_date = 0;
-+	int ignore_date = 0;
- 	int ignore_whitespace = 0;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
-@@ -550,6 +551,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "committer-date-is-author-date",
- 			 &committer_date_is_author_date,
- 			 N_("passed to 'git am'")),
-+		OPT_BOOL(0, "ignore-date", &ignore_date,
-+			 N_("passed to 'git am'")),
- 		OPT_BIT('f', "force-rebase", &options.flags,
- 			N_("cherry-pick all commits, even if unchanged"),
- 			REBASE_FORCE),
-@@ -779,6 +782,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (ignore_whitespace)
- 		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
+@@ -95,6 +95,7 @@ struct rebase_options {
+ 	const char *action;
+ 	int signoff;
+ 	int allow_rerere_autoupdate;
++	int keep_empty;
+ };
  
-+	if (ignore_date) {
-+		strbuf_addstr(&options.git_am_opt, " --ignore-date");
-+		options.flags |= REBASE_FORCE;
+ static int is_interactive(struct rebase_options *opts)
+@@ -103,6 +104,23 @@ static int is_interactive(struct rebase_options *opts)
+ 		opts->type == REBASE_PRESERVE_MERGES;
+ }
+ 
++static void imply_interactive(struct rebase_options *opts, const char *option)
++{
++	switch (opts->type) {
++	case REBASE_AM:
++		die(_("%s requires an interactive rebase"), option);
++		break;
++	case REBASE_INTERACTIVE:
++	case REBASE_PRESERVE_MERGES:
++		break;
++	case REBASE_MERGE:
++		/* we silently *upgrade* --merge to --interactive if needed */
++	default:
++		opts->type = REBASE_INTERACTIVE; /* implied */
++		break;
 +	}
++}
++
+ /* Returns the filename prefixed by the state_dir */
+ static const char *state_dir_path(const char *filename, struct rebase_options *opts)
+ {
+@@ -276,6 +294,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		opts->allow_rerere_autoupdate < 0 ? "" :
+ 		opts->allow_rerere_autoupdate ?
+ 		"--rerere-autoupdate" : "--no-rerere-autoupdate");
++	add_var(&script_snippet, "keep_empty", opts->keep_empty ? "yes" : "");
+ 
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -588,6 +607,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			 &options.allow_rerere_autoupdate,
+ 			 N_("allow rerere to update index  with resolved "
+ 			    "conflict")),
++		OPT_BOOL('k', "keep-empty", &options.keep_empty,
++			 N_("preserve empty commits during rebase")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -787,6 +808,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.flags |= REBASE_FORCE;
+ 	}
+ 
++	if (options.keep_empty)
++		imply_interactive(&options, "--keep-empty");
 +
  	switch (options.type) {
  	case REBASE_MERGE:
