@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B3321F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 21:59:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C12161F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 21:59:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727509AbeIEC06 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:26:58 -0400
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:45746 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbeIEC06 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:26:58 -0400
-Received: by mail-pl1-f180.google.com with SMTP id j8-v6so2248221pll.12
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:54 -0700 (PDT)
+        id S1727516AbeIEC1A (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:27:00 -0400
+Received: from mail-pf1-f177.google.com ([209.85.210.177]:42125 "EHLO
+        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbeIEC1A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:27:00 -0400
+Received: by mail-pf1-f177.google.com with SMTP id l9-v6so2347032pff.9
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=2ixSU6PHucyAWfMN/9FaXxeHmhWoTLc4HVhvEmNW0zM=;
-        b=an+8rqndHdTX1LDzZOStflpnd8tZfxpA2kWxpUjizslI3rWdXzuIOTXCTpKwuZ2ajF
-         NxezzjG34xB5a17bN6iv5AXozlGPBUbhsIcEKXk93dNLaPnNQPYR8Ek5ChoQj01K5W2K
-         oQ848xLZfjZP12F+JGpZ9gNWgzhkMoQyxkF1+qbVKAZolZf32FIKUAYONGvqVRK1+0+h
-         JBN3TZ6iHrV2ruHp7IeiYK8LWlodKMjVCPUN4m+brEMAcWG5F2NrWWlXmsTRdlJgPmnD
-         Oz6iBhMLr+C9uiqqSDFpHWSUcMZRSrgLH9M8lXrcn3bOt2SMjO+Z+XDiLEmsKocutaKa
-         4uPw==
+        bh=dkHnOCuux6Cxwy6TpYAkcK0scF8b8FHD3zlItGzpSG4=;
+        b=SKc4IjQaJnG35L2asaS0ereRjlka0TOE9xP2TDrhN7yVFD0TXOnnWAusNNCRY1A1zW
+         JxPu2ukwE+2bgObNA0QztQBjQ1lHkUEfmkZ83qIvTLukxqsmBlvvun9jUENnGpdXfzl+
+         BHCNANqXAihzCIVATR2vcE3VhYPkjIPdUGnHo44WUGcfMMlOg7GzfjmjwG+920Hx9jVF
+         Kxh1bxRi+6QHU2WSXVIM/L+gClE2PozAN9opjd12Gh48k+CC/5hDGsliJMob2Zlt+H07
+         gk2oNNYPZ04i2jSorAMM0GDZHSeqo1BwrcPRRXtXDpwEMwJGuHLxWQhnKClrHUZDNtvT
+         lT+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=2ixSU6PHucyAWfMN/9FaXxeHmhWoTLc4HVhvEmNW0zM=;
-        b=K1yewwEK+Ko6wzUacxE00zaX06w0JoP73XUZCf1nTLoB6fEuw1JFL63nuDzBTeoO8c
-         X7sqt+135QMrixOaFA0GkUrHkfiIlsgq3vL0q+EaTLVkV/F45gxyaSm7hPpoy7fk+Iuj
-         vTabimY/nYw//Pwk7uWvHNVr1Qjp6ZQHjSk7O5MoOM5ke29hbRxoSLVBV38ENhECGK2X
-         AkbCriiaWaEltuoeJ4XjheR6Cgx0WwCvM2jWesEHPcVHkG+VdjyhOf65Boys2UhMW/W1
-         3/YKRm6Zqawi/mVl2Rssj/XniYTZemCi7UO4jd61FShI016DXkZ+NLjNnyipW0dgcXaI
-         YPhw==
-X-Gm-Message-State: APzg51BcuSRAdFehI2is6hBvBHekpDoQ3PnqQjxwL+N/4jHcyf9DAk8v
-        yEWde7gNNIP0RaDdGdKYPXUo+p8a
-X-Google-Smtp-Source: ANB0VdZqQFaGv9xztJmfizZfPSEOzaK+DPINF4TRUkT/UrYYmulpb5mRZQwR+fshgAZ+1yRu08Md5w==
-X-Received: by 2002:a17:902:4d46:: with SMTP id o6-v6mr35261193plh.59.1536098394110;
-        Tue, 04 Sep 2018 14:59:54 -0700 (PDT)
+        bh=dkHnOCuux6Cxwy6TpYAkcK0scF8b8FHD3zlItGzpSG4=;
+        b=W4Y3wlToC0p4qw7Xau/KIpHUWxHmAp8ktt/bmqpNncw8tPoItsw9Wk4mqEIMpzD2b+
+         dTH/jsNV70IG/tJzLzndaGIqlKl9GjBMso96kGWuM418UaB5tAm+NCGMeJF3EVI7TMxJ
+         uK3pLbyTqn4AOFW3cdUllXVXCVopz5FgnISkyMVl5wRx1Y3W/YC1C2CJ/LjQGOEjGAT/
+         PAjZEcVkzN3q2eQG5vIzeZgLhCFSkSN3es4h/SXnnjuuuVL8Zzqtbu94AoB3ELYP2Qiz
+         XOfnArXLPK5hNJUEQAjjuXAcUrNjEExpBb9C7GNEsAZEWJDfLh1L7ONcWaip4p8jIE0D
+         XGeg==
+X-Gm-Message-State: APzg51B3BGQOPXUZuC8WG8JQkBIcjFh18DbyJyXvylT0+MREJSBZANka
+        eJnSI7HqFxfc/rIQ4pGcOe9QyJwU
+X-Google-Smtp-Source: ANB0VdYD10xAyPoHkZsFDN5ZYB9i226zP910gfwgr3ykgRHFtxsNk86ndH5F4WduhuTe8molnOo+cQ==
+X-Received: by 2002:aa7:86cb:: with SMTP id h11-v6mr36612085pfo.58.1536098395453;
+        Tue, 04 Sep 2018 14:59:55 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id h132-v6sm33994169pfc.100.2018.09.04.14.59.53
+        by smtp.gmail.com with ESMTPSA id k26-v6sm38349865pfb.167.2018.09.04.14.59.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 14:59:53 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 14:59:53 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:31 GMT
-Message-Id: <8f67a3969dc01669b5edd045e2ff92e45a08fb9d.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:59:54 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:59:54 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:32 GMT
+Message-Id: <f04394a5002859d7e95f3bfc518028dcfb6d202d.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 04/18] builtin rebase: support
- --committer-date-is-author-date
+Subject: [PATCH v2 05/18] builtin rebase: support `ignore-whitespace` option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,46 +71,43 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This option is simply handed down to `git am` by way of setting the
-`git_am_opt` variable that is handled by the `git-rebase--am` backend.
+This commit adds support for the `--ignore-whitespace` option
+of the rebase command. This option is simply passed to the
+`--am` backend.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ builtin/rebase.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 1729d2d9e2..eef16206c2 100644
+index eef16206c2..7490d215ef 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -526,6 +526,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		ACTION_EDIT_TODO,
+@@ -527,6 +527,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  		ACTION_SHOW_CURRENT_PATCH,
  	} action = NO_ACTION;
-+	int committer_date_is_author_date = 0;
+ 	int committer_date_is_author_date = 0;
++	int ignore_whitespace = 0;
  	struct option builtin_rebase_options[] = {
  		OPT_STRING(0, "onto", &options.onto_name,
  			   N_("revision"),
-@@ -543,6 +544,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+@@ -542,6 +543,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
+ 			N_("do not show diffstat of what changed upstream"),
  			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
++		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
++			 N_("passed to 'git apply'")),
  		OPT_BOOL(0, "signoff", &options.signoff,
  			 N_("add a Signed-off-by: line to each commit")),
-+		OPT_BOOL(0, "committer-date-is-author-date",
-+			 &committer_date_is_author_date,
-+			 N_("passed to 'git am'")),
- 		OPT_BIT('f', "force-rebase", &options.flags,
- 			N_("cherry-pick all commits, even if unchanged"),
- 			REBASE_FORCE),
-@@ -763,6 +767,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (!(options.flags & REBASE_NO_QUIET))
- 		strbuf_addstr(&options.git_am_opt, " -q");
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+@@ -773,6 +776,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.flags |= REBASE_FORCE;
+ 	}
  
-+	if (committer_date_is_author_date) {
-+		strbuf_addstr(&options.git_am_opt,
-+			      " --committer-date-is-author-date");
-+		options.flags |= REBASE_FORCE;
-+	}
++	if (ignore_whitespace)
++		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
 +
  	switch (options.type) {
  	case REBASE_MERGE:
