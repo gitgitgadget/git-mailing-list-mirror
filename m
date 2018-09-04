@@ -2,90 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D57A1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 18:42:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0401C1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 18:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbeIDXIX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 19:08:23 -0400
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:36304 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726507AbeIDXIX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 19:08:23 -0400
-Received: by mail-ed1-f65.google.com with SMTP id f4-v6so4078294edq.3
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 11:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=iB1SCv36fG097eZxH2VzBMHfE5Nnj7OYAZ+enS2gE2g=;
-        b=K1zy1n3PUQAuBuDz7kdraDRjysVz8exSc/3mEfq6m2wR/h22PkybeGG0cRWMQRSB7p
-         lz0aBgkn70bdnAaZouMupbIxw1AUZJ15ZGoDNNVufTH43SJnBaLGFyIaDxU28d/4BdOG
-         aaJMGg5s5z0xOpKsJp+XoXHE3VKAS/cU2lNQ2QGsVCFd8Jxulvbfn4vGNCPjSfQtREhu
-         fqMk9JwguT6NAjGQdoJzUj86TJByduR/wt7hFHphbF+PO1z8Q/ZudNXJj3Dwn4/7OiW2
-         +eBBJy0MRQ/VtqZTDbEG5Y3wg+mk5YeT5j1fGwQdYN5RZioziGPArrp2SgSOQltzJj+w
-         I6pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=iB1SCv36fG097eZxH2VzBMHfE5Nnj7OYAZ+enS2gE2g=;
-        b=mgSslWRsrhAM7+XT1Err8XuYLOvl3a+ZHy/TvoADAeoe57CFD/0C3eUtf9MDtWd7R5
-         NKgW5uzMKazppQKtNlzeXSzSehvnU7X2hjcagFFmd5mL5YlKwywnyKu609l/HYMHRwvE
-         q6axXfzLEnCPdZAFBLbChWSsr2arKhY4h1sj9niFlnJOIrrresDngRxGNrz/O9WawAix
-         w9dncMy5J+lOvAlTPDdXG35lLo5fjXGH7SNoACO+apN/qOAIRxmJkG0c1TsbsY2aWhrV
-         i9ReKn5lj7af77P0LuOYpTMM24P2e9QHsvAgzg+TxOgs2AS8hQiKb21wgfQWu/tPz0lw
-         EwAw==
-X-Gm-Message-State: APzg51C+jjG2dedcg2XmIQFp6FIVfP7jyMmZlzbd+nB/TntKDb9NmuRu
-        1Zx8pS1tKWZAB7E9LRL/hq6kP2bjPcMUZ1Sx09K3tg==
-X-Google-Smtp-Source: ANB0VdZsBLfJhwkyLWTAFzqb3ZmJ8k6h4YxYXarK25JfV2Z+g++mFMeg1oCTwPNvLzeV3Um42WmRAKv+zFV/kOEGfPU=
-X-Received: by 2002:a50:ae62:: with SMTP id c89-v6mr36995697edd.128.1536086520160;
- Tue, 04 Sep 2018 11:42:00 -0700 (PDT)
+        id S1727868AbeIDXRc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 19:17:32 -0400
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:22422 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727447AbeIDXRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 19:17:32 -0400
+Received: from [192.168.1.11] ([92.2.147.78])
+        by smtp.talktalk.net with SMTP
+        id xGPofqatmbZX5xGPpfFHfO; Tue, 04 Sep 2018 19:51:06 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1536087066;
+        bh=T66KK7gqnZ4njUD6SGPY7tOMnAJTvv4ou6M41lHaEBI=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=lOsGRzQn72NRW9+tHvKm/tTzQp+3VNcfn6SRFSXpemX+QpPH8xuLQIWg9OOWgEuMJ
+         QFVL2tBNOkfxtD7p2reVhkG8BvJMuUUv8weAlXKoYZ2P6KuB+X9wMjbJyjJto+uOtu
+         LIBETbS8sdeWuCnTeAZmYPry2e0pMBemqEE6Tr94=
+X-Originating-IP: [92.2.147.78]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=pQayyGo/WMwZmys47m2ZwQ==:117
+ a=pQayyGo/WMwZmys47m2ZwQ==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=evINK-nbAAAA:8 a=mD58mbuiCx02v7HbZ0gA:9 a=zPeeJGDlMHV3yVt5:21
+ a=aUpTz2OYKNnJjVCA:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] diff: fix --color-moved-ws=allow-indentation-change
+To:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+References: <20180904135258.31300-1-phillip.wood@talktalk.net>
+ <CAGZ79kaBBzG6-QKruCeybN_do735h9tAXHZ7Rjx_YXeh85ax6A@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <b78b467c-6cae-2e2e-533c-48a4552539f5@talktalk.net>
+Date:   Tue, 4 Sep 2018 19:51:01 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1536081438.git.matvore@google.com>
-In-Reply-To: <cover.1536081438.git.matvore@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Tue, 4 Sep 2018 11:41:49 -0700
-Message-ID: <CAGZ79kbhXQPQ87kAw_bOd0L0k8W4q=nPX0ymLPNnaEnpKZyesw@mail.gmail.com>
-Subject: Re: [PATCH v7 0/7] filter: support for excluding all trees and blobs
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kaBBzG6-QKruCeybN_do735h9tAXHZ7Rjx_YXeh85ax6A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-HK
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfEYGc/pwvDR8v6v1z8wmahPdkeTOI5CUcSvBJAkiZrZlO6kXrAmbjMQ8ZO4qvhXhxUyMYK08Y/WWorHV+IJYC7yA/Q2dFdmISqZ8rZ8GVNaCi8IDFdxE
+ ujA0osbAu9Ix4igOcxWeinPWhCz6MbpLY3bYpXgE5/Zy/bv0wPmfEQ0vNz9qEHU3+64kpV46KYfmdJx3Z7moq8mHEq2eGLkrrJSKhuHES8OJ+wPc7wG/twCT
+ +HPadaapHFeouZtQgDIul42VlJlmHD9do4E6xYHog3g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 4, 2018 at 11:06 AM Matthew DeVore <matvore@google.com> wrote:
->
-> I made the following changes since v6 of the patchset:
->  - (suggested by Duy Nguyen) add a new commit which replaces uses of die() with
->    BUG() in list-objects-filter.c wherever it corresponds to a coding error.
->  - Replace die() with BUG() in new code.
->  - Replace test_line_count = 0 with test_must_be_empty in new tests since the
->    trend seems to be, based on other RFCs in progress, that we are standardizing
->    on that phraseology. See:
->    https://public-inbox.org/git/20180819215725.29001-1-szeder.dev@gmail.com/
->
-> As asked in the last "What's cooking in git.git" post, the status of this patch
-> is:
->  - The original reviewer, Jonathan Tan, is on vacation and will be back later
->    this week.
->  - Stefan Beller has been reviewing the patchset in Jonathan's absence, and
->    stated that it's a good read despite not being familiar with the code:
->    https://public-inbox.org/git/CAGZ79kaWcGbyc2S5gOCU7NdvT4fN46jq4xK9MvTLAFBGhyuo2A@mail.gmail.com/
+Hi Stefan
 
-and this still holds.
+On 04/09/2018 19:08, Stefan Beller wrote:
+> On Tue, Sep 4, 2018 at 6:53 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>>
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> If there is more than one potential moved block and the longest block
+>> is not the first element of the array of potential blocks then the
+>> block is cut short. With --color-moved=blocks this can leave moved
+>> lines unpainted if the shortened block does not meet the block length
+>> requirement. With --color-moved=zebra then in addition to the
+>> unpainted lines the moved color can change in the middle of a single
+>> block.
+>>
+>> Fix this by freeing the whitespace delta of the match we're discarding
+>> rather than the one we're keeping.
+>>
+>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> ---
+>>
+>> While I was working on this I spotted a couple of other issues I don't
+>> have time to fix myself at the moment, so I thought I mention them in
+>> case someone else wants to pick them up
+>>
+>> 1) I think there is a potential memory leak at the end of
+>>     mark_color_as_moved(). If pmb_nr > 0 then the whitespace deltas
+>>     need freeing before freeing pmb itself.
+>>
+>> 2) The documentation could be improved to explain that
+>>     allow-indentation-change does not work with indentation that
+>>     contains a mix of tabs and spaces and the motivation for that
+>>     (python?) [I've got some code to add an option that supports that
+>>     which I'll post when I've written some tests after 2.19 is
+>>     released]
+>>
+>>   diff.c | 11 ++++++-----
+>>   1 file changed, 6 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/diff.c b/diff.c
+>> index 145cfbae5..4e8f725bb 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -968,8 +968,13 @@ static void pmb_advance_or_null_multi_match(struct diff_options *o,
+>>                          /* Carry the white space delta forward */
+>>                          pmb[i]->next_line->wsd = pmb[i]->wsd;
+>>                          pmb[i] = pmb[i]->next_line;
+>> -               } else
+>> +               } else {
+>> +                       if (pmb[i]->wsd) {
+>> +                               free(pmb[i]->wsd->string);
+>> +                               FREE_AND_NULL(pmb[i]->wsd);
+>> +                       }
+>>                          pmb[i] = NULL;
+>> +               }
+> 
+> I agree on this hunk, as it will fix the mem leak in the case of
+> allow-indentation-change, wondering if we need the same in
+> pmb_advance_or_null as well (and anywhere where there is a
+> 'pmb[i] = NULL' assignment outside the swapping below.).
 
-Thanks,
-Stefan
+I don't think we don't call pmb_advance_or_null() if we're using 
+pmb[i]->wsd. I'm not sure if there are other sites that set 'pmb[i] = 
+NULL' when pmb[i]->wsd has been allocated.
+
+> 
+> 
+>>          }
+>>   }
+>>
+>> @@ -990,10 +995,6 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
+>>
+>>                  if (lp < pmb_nr && rp > -1 && lp < rp) {
+>>                          pmb[lp] = pmb[rp];
+>> -                       if (pmb[rp]->wsd) {
+>> -                               free(pmb[rp]->wsd->string);
+>> -                               FREE_AND_NULL(pmb[rp]->wsd);
+>> -                       }
+> 
+> Eh, this makes sense, though I had to think about it for a
+> while as I was confused. By the first line in the condition we
+> also keep around the ->wsd pointer as is.
+
+Yes, it took me ages to work out that this is what was breaking the 
+highlighting.
+
+Best Wishes
+
+Phillip
+
+> 
+> Thanks!
+> Stefan
+> 
