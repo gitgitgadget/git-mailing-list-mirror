@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D21BC1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 21:27:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F341D1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 21:27:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726888AbeIEByJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 21:54:09 -0400
-Received: from mail-pg1-f180.google.com ([209.85.215.180]:45281 "EHLO
-        mail-pg1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbeIEByI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 21:54:08 -0400
-Received: by mail-pg1-f180.google.com with SMTP id x26-v6so2272184pge.12
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:27:11 -0700 (PDT)
+        id S1727145AbeIEByK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 21:54:10 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:33285 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbeIEByK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 21:54:10 -0400
+Received: by mail-pg1-f195.google.com with SMTP id s7-v6so2303368pgc.0
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:27:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=4NpIC5ough2yOT82nBvZbBTyOAZlY5Iq0BUFKyT00Z4=;
-        b=iwwQtfIj0Cdh1kXc8Hfh4pCjUWSSlyTqmWo+uhGmRUllfm7Zj45yI4IM54CX0rxPO/
-         xuNZx/kSKUXS89mKkJVej9liAX/L+vfXe0aiXZDVwM5eOV2nWE3hHE4UJRnTS1BGkaEg
-         voR26FM9AKAYCU7krnCKa4NGbe+kYqV87Cmv/S8cYKU69caVuom8DvJByMX15AmoS+CN
-         1XNMHXn5LuSXWIA9BaYoUy6nij/EG90Ypff5swGc7gZkkx0SWz/hG0gUOXhRM0qG3ZOP
-         3AZbgNvLQWConUfUmMoycPbLHck8735iRg+cEVxf0EzSxSOf8cJy2HpHZN8dDsaJtgOI
-         gEmQ==
+        bh=iGQNxb9O2pYI428bY0KO36IBFbGIupo3nzwCUC6n18w=;
+        b=Riv4CD29ekukzErZBJt42rce9WVLjo971k8DOM+zox0kwQuqr//mfCmf7LeJhDOYf5
+         mINRMkwhLdAa7l94ozfkx9/gmQH+WRUGaa0b7QmMuO0aDJ+XqqZlOp9OjeK67NWyUh9D
+         S7rCTygGIX+PVXg6qatIm3iRWrqybbypKQoPzx7CRhFNNDbJzFi3Au6WQ6+E+cV8xgSS
+         Op1SJXI32XhzsDdRBvgiJu6TrTW3N51au14BEDj/4vhw/IVEWe0Grc/yRqcc+tKt31OO
+         aMyolrIz6n0oNHbD+zOTV312fZtexu92AyziZZphN8boc3T52h8JdjAS2f58dBj+LjiY
+         cm9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=4NpIC5ough2yOT82nBvZbBTyOAZlY5Iq0BUFKyT00Z4=;
-        b=ha0OCXbGUTKeHUhjEMHLNqRUdaN6/AO/VLO2orJ27raduaujHukMS0mcbzzKXJWUzB
-         aVU6dHZwsw7qkCbZciPFwP8Na6gzq4wMO/JVnb/XbP4hNnRtTZT5onslZAmfNJIVDmdo
-         DY2OUY7qZLJDnC6/ZsNM9Y4gTxGS4h7e432z03FdsDIgnKpVXJObqVUtn9UEJSIe2/38
-         c2sD6V5d/MWAu1lI6UvMZ634Mdn43g69auLABdM7uOmbovaCvBXyjY1m8W0LYmdwV5Xe
-         ytPFqq9kAZBvUtgrwcOM6QHNLtOjrazeQjCwKJARKyjEfmnKCm7bZ2g0PonI1ygAv2AU
-         WB9g==
-X-Gm-Message-State: APzg51AANIuipBZOIt60vzpCRAr8d3p4Io1X63ZefhTB91IIsgFJJS5B
-        W8MR21n8xsXrPwMncACxUFTilPPA
-X-Google-Smtp-Source: ANB0VdZnRTRPF+swwz/T9VerunBr2+nNGQVhGfpTpbXHhpb17rBNOVe4HkMIcvZT33YyqNxCaQvZEg==
-X-Received: by 2002:a63:8543:: with SMTP id u64-v6mr22574960pgd.248.1536096431465;
-        Tue, 04 Sep 2018 14:27:11 -0700 (PDT)
+        bh=iGQNxb9O2pYI428bY0KO36IBFbGIupo3nzwCUC6n18w=;
+        b=JtGcplWiS2JIMOhW3kDA4DeicmQQjf/FeubxPOPuOSlw8VeZ/i3sb7ANl7bxEBnXvS
+         tHown6lHx1pt8l+iRK0b8z4qsL62GyUgR9LXobeNSjIvtEqaFbpUVXF5fwQEY5OxZxqN
+         rSj0P1ttlsuf45GD4dlNwXExLqwQXl7AAbtLiQw50uvFzzos/MXJf/Q6/pCT5ItgyGZ1
+         ghP9E+Ey5oSdutWvWKq9NiSASlgI7NfntFYoaMV6MNaAZdVM2O9PqH9B3zhVRBFRGz59
+         7Fcbb2aBjMDvQNq1Nw4q1GUlVDzfF1j7jta0stZJ8tVXBd9DEY32K9iNr9tY5bbFmUIm
+         8LjQ==
+X-Gm-Message-State: APzg51BVGe1bOycF66FA/Iqfwmv4hJt3Fttt7eQ6ETZwcMce+9SqUDtK
+        66rCB6o9VfnBKn7FXNVYE+esjVXb
+X-Google-Smtp-Source: ANB0VdZIn0xvt+H3NdLlRAMxci5+Aw6SkqBIO7TODksYH3sEGbyGKPP9FDFCou3n3OiiGHgtpQfhIQ==
+X-Received: by 2002:a63:4663:: with SMTP id v35-v6mr33455746pgk.178.1536096432863;
+        Tue, 04 Sep 2018 14:27:12 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id e26-v6sm27115429pfi.70.2018.09.04.14.27.10
+        by smtp.gmail.com with ESMTPSA id q6-v6sm34910147pgq.19.2018.09.04.14.27.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 14:27:10 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 14:27:10 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:26:56 GMT
-Message-Id: <7100820def2f2805cf4726e0501ca9208bbaffaa.1536096424.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:27:12 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:27:12 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:26:57 GMT
+Message-Id: <5034f5302493ce44fb49ef3d064b5a5a3b67ac7f.1536096424.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.32.v2.git.gitgitgadget@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
         <pull.32.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 03/11] builtin rebase: handle the pre-rebase hook and
- --no-verify
+Subject: [PATCH v2 04/11] builtin rebase: support --quiet
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,66 +71,86 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit converts the equivalent part of the shell script
-`git-legacy-rebase.sh` to run the pre-rebase hook (unless disabled), and
-to interrupt the rebase with error if the hook fails.
+This commit introduces a rebase option `--quiet`. While `--quiet` is
+commonly perceived as opposite to `--verbose`, this is not the case for
+the rebase command: both `--quiet` and `--verbose` default to `false` if
+neither `--quiet` nor `--verbose` is present.
+
+Despite the default being `false` for both verbose and quiet mode,
+passing the `--quiet` option will turn off verbose mode, and `--verbose`
+will turn off quiet mode.
+
+This patch introduces the `flags` bit field, with `REBASE_NO_QUIET`
+as first user (with many more to come).
+
+We do *not* use `REBASE_QUIET` here for an important reason: To keep the
+implementation simple, this commit introduces `--no-quiet` instead of
+`--quiet`, so that a single `OPT_NEGBIT()` can turn on quiet mode and
+turn off verbose and diffstat mode at the same time. Likewise, the
+companion commit which will introduce support for `--verbose` will have
+a single `OPT_BIT()` that turns off quiet mode and turns on verbose and
+diffstat mode at the same time.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ builtin/rebase.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 38c496dd10..b79f9b0a9f 100644
+index b79f9b0a9f..19fa4d3fc4 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -70,6 +70,7 @@ struct rebase_options {
- 	const char *state_dir;
- 	struct commit *upstream;
- 	const char *upstream_name;
-+	const char *upstream_arg;
- 	char *head_name;
- 	struct object_id orig_head;
- 	struct commit *onto;
-@@ -310,6 +311,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+@@ -79,6 +79,10 @@ struct rebase_options {
+ 	int root;
+ 	struct commit *restrict_revision;
+ 	int dont_finish_rebase;
++	enum {
++		REBASE_NO_QUIET = 1<<0,
++	} flags;
++	struct strbuf git_am_opt;
+ };
+ 
+ /* Returns the filename prefixed by the state_dir */
+@@ -159,6 +163,9 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 	add_var(&script_snippet, "revisions", opts->revisions);
+ 	add_var(&script_snippet, "restrict_revision", opts->restrict_revision ?
+ 		oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
++	add_var(&script_snippet, "GIT_QUIET",
++		opts->flags & REBASE_NO_QUIET ? "" : "t");
++	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
+ 
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -308,6 +315,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rebase_options options = {
+ 		.type = REBASE_UNSPECIFIED,
++		.flags = REBASE_NO_QUIET,
++		.git_am_opt = STRBUF_INIT,
  	};
  	const char *branch_name;
  	int ret, flags;
-+	int ok_to_skip_pre_rebase = 0;
- 	struct strbuf msg = STRBUF_INIT;
- 	struct strbuf revisions = STRBUF_INIT;
- 	struct object_id merge_base;
-@@ -317,6 +319,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
+@@ -321,6 +330,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  			   N_("rebase onto given branch instead of upstream")),
-+		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
-+			 N_("allow pre-rebase hook to run")),
+ 		OPT_BOOL(0, "no-verify", &ok_to_skip_pre_rebase,
+ 			 N_("allow pre-rebase hook to run")),
++		OPT_NEGBIT('q', "quiet", &options.flags,
++			   N_("be quiet. implies --no-stat"),
++			   REBASE_NO_QUIET),
  		OPT_END(),
  	};
  
-@@ -382,6 +386,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.upstream = peel_committish(options.upstream_name);
- 		if (!options.upstream)
- 			die(_("invalid upstream '%s'"), options.upstream_name);
-+		options.upstream_arg = options.upstream_name;
- 	} else
- 		die("TODO: upstream for --root");
+@@ -357,6 +369,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_rebase_usage,
+ 				   builtin_rebase_options);
  
-@@ -430,6 +435,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("Could not resolve HEAD to a revision"));
- 	}
- 
-+	/* If a hook exists, give it a chance to interrupt*/
-+	if (!ok_to_skip_pre_rebase &&
-+	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
-+			argc ? argv[0] : NULL, NULL))
-+		die(_("The pre-rebase hook refused to rebase."));
++	if (!(options.flags & REBASE_NO_QUIET))
++		strbuf_addstr(&options.git_am_opt, " -q");
 +
- 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
- 	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1))
- 		die(_("Could not detach HEAD"));
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
 -- 
 gitgitgadget
 
