@@ -2,112 +2,210 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51AE21F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 23:25:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8437B1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 23:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbeIEDxH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 23:53:07 -0400
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:45833 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726487AbeIEDxH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 23:53:07 -0400
-Received: by mail-yw1-f68.google.com with SMTP id p206-v6so1931009ywg.12
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 16:25:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=L+MoJXH5g0SpaZ9XdWLL7wmlW4KXm9dhDZ7BVIPxGzM=;
-        b=tTv/+XhUqlqeKGDbU3fIHgdXaeic15wpWgV7+1d1tTU7OMz0rtXZ0GDIzj3rkag8M5
-         Iubv8Q/gGyLU9zSG+AFrn/H/pNd1nd+NF3I0z2RF9yXzOllXFrRR18ZhBYbfVxJtpybe
-         5mlEPx1r5133XAkmBx34rSET054IPXh2690515JVBsHx7ABoGtxC0HTQ2+VNo2ZvyndM
-         FEvJK+4per87B6rrxa7otuN056ZoQUfoGLVD1XFSl5dOKE9gO8fxsHtxTPSkcIjImnZx
-         oeN1DpDL1ZovJPFP6ys4hGyweT2Wg+V0r+DB0hDfKwoY7DcuMKkGHVHT/RWV3dL9+4J9
-         koXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=L+MoJXH5g0SpaZ9XdWLL7wmlW4KXm9dhDZ7BVIPxGzM=;
-        b=W8gcrO+nTxhx93nTxPknxhPJVoZDl/DRmnmZBuxaukFnvJB1gE+5ddYVXg2Rr7QUbS
-         KMFKnxs3qIZORDpP1+/0dS0AlQZyw8zAVwWXVnA9fO2nih9xaNh9j26EdGcye/9fEy4Y
-         QwXfoFYZgVlL8Ud3dXe8jwTa/ID27zWF8Jnckoeq2P438Hdl56HBA6nViIoQWS7MJXQ9
-         PqQ1EitV+JamIISHHfA2HvenBNyi4O7gEImriXOhHU8NzThrFhmnP0i3+GhPMytRRQeh
-         4j5Jf1FbmzqvIX0JXZAb0FRtNiP780nEDLf6LTD/5u3/6EJBfH+PtLyrwvYOe2O+Nv+G
-         zcQQ==
-X-Gm-Message-State: APzg51DSb/wqS1M27/3jDVloxkz+FIMI2sje/EJuhzcIosdTUc9qvuym
-        vBtc0/suWiUJeVhQrdIJYx0=
-X-Google-Smtp-Source: ANB0VdavIYGXNpa7lOEcSXaCgjJPdxsv6cMmWEi78BDI22jHqFkioYsFBFrMVBHhSpfhd2rOGqxaLA==
-X-Received: by 2002:a81:3b4c:: with SMTP id i73-v6mr6465515ywa.121.1536103545258;
-        Tue, 04 Sep 2018 16:25:45 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id f5-v6sm65626ywd.53.2018.09.04.16.25.44
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Sep 2018 16:25:44 -0700 (PDT)
-Date:   Tue, 4 Sep 2018 16:25:42 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH] mailinfo: support format=flowed
-Message-ID: <20180904232542.GC34268@aiede.svl.corp.google.com>
-References: <e2f2ca18-849c-0ef4-98a5-9a1379bfcec5@web.de>
- <20180904231959.GB34268@aiede.svl.corp.google.com>
+        id S1726214AbeIEEEI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 00:04:08 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39264 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725726AbeIEEEI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 00:04:08 -0400
+Received: (qmail 4108 invoked by uid 109); 4 Sep 2018 23:36:46 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Sep 2018 23:36:46 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11727 invoked by uid 111); 4 Sep 2018 23:36:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 04 Sep 2018 19:36:56 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Sep 2018 19:36:43 -0400
+Date:   Tue, 4 Sep 2018 19:36:43 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Van Oostenryck Luc <luc.vanoostenryck@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: [PATCH] reopen_tempfile(): truncate opened file
+Message-ID: <20180904233643.GA9156@sigill.intra.peff.net>
+References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local>
+ <87tvn8c166.fsf@evledraar.gmail.com>
+ <20180902050803.GA21324@sigill.intra.peff.net>
+ <20180902071204.GA2868@duynguyen.home>
+ <20180902072408.GA18787@sigill.intra.peff.net>
+ <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
+ <20180904163807.GA23572@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180904231959.GB34268@aiede.svl.corp.google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20180904163807.GA23572@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
-> René Scharfe wrote:
+On Tue, Sep 04, 2018 at 12:38:07PM -0400, Jeff King wrote:
 
->>  builtin/am.c                |    4 +
->>  mailinfo.c                  |   64 +-
->>  mailinfo.h                  |    2 +
->>  t/t4256-am-format-flowed.sh |   19 +
->>  t/t4256/1/mailinfo.c        | 1245 +++++++++++++++++++++++++++++++++++
->>  t/t4256/1/mailinfo.c.orig   | 1185 +++++++++++++++++++++++++++++++++
->
-> This mailinfo.c.orig file appears to have been lost when applying the
-> patch to git.git, resulting in test failures:
->
->  $ ./t4256-am-format-flowed.sh -v -i
->  Initialized empty Git repository in git/t/trash directory.t4256-am-format-flowed/.git/
->  expecting success: 
->         cp "$TEST_DIRECTORY/t4256/1/mailinfo.c.orig" mailinfo.c &&
->         git add mailinfo.c &&
->         git commit -m initial
->
->  cp: cannot stat 'git/t/t4256/1/mailinfo.c.orig': No such file or directory
->  not ok 1 - setup
->  #
->  #               cp "$TEST_DIRECTORY/t4256/1/mailinfo.c.orig" mailinfo.c &&
->  #               git add mailinfo.c &&
->  #               git commit -m initial
->  #
->
-> Known issue?
+> > And just to be clear I'm looking forward to a patch from Jeff to fix
+> > this since he clearly put more thoughts on this than me. With commit.c
+> > being the only user of reopen_lock_file() I guess it's even ok to just
+> > stick O_TRUNC in there and worry about O_APPEND when a new caller
+> > needs that.
+> 
+> That's the way I'm leaning to. The fix is obviously a one-liner, but I
+> was hoping to construct a minimal test case. I just haven't gotten
+> around to it yet.
 
-My bad: this was operator error:
+It turned out not to be too bad to write a test. It feels a little like
+black magic, since I empirically determined a way in which the
+cache-tree happens to shrink with the current code. But that assumption
+is tested with a sanity check, so we'll at least know if it becomes a
+noop.
 
- $ git status -s
-  D t/t4256/1/mailinfo.c.orig
+> The bug is ancient, so I don't think it's important for v2.19.
 
-The issue was that I ran dh_clean, which removed the .orig file.  I'll
-fix the issue on my side.  Sorry for the false alarm.
+The patch below should work on master or maint. We could do a fix
+directly on top of the bug, but merging-up is weird (because the buggy
+code became part of a reusable module).
 
-Sincerely,
-Jonathan
+-- >8 --
+Subject: [PATCH] reopen_tempfile(): truncate opened file
+
+We provide a reopen_tempfile() function, which is in turn
+used by reopen_lockfile().  The idea is that a caller may
+want to rewrite the tempfile without letting go of the lock.
+And that's what our one caller does: after running
+add--interactive, "commit -p" will update the cache-tree
+extension of the index and write out the result, all while
+holding the lock.
+
+However, because we open the file with only the O_WRONLY
+flag, the existing index content is left in place, and we
+overwrite it starting at position 0. If the new index after
+updating the cache-tree is smaller than the original, those
+final bytes are not overwritten and remain in the file. This
+results in a corrupt index, since those cruft bytes are
+interpreted as part of the trailing hash (or even as an
+extension, if there are enough bytes).
+
+This bug actually pre-dates reopen_tempfile(); the original
+code from 9c4d6c0297 (cache-tree: Write updated cache-tree
+after commit, 2014-07-13) has the same bug, and those lines
+were eventually refactored into the tempfile module. Nobody
+noticed until now for two reasons:
+
+ - the bug can only be triggered in interactive mode
+   ("commit -p" or "commit -i")
+
+ - the size of the index must shrink after updating the
+   cache-tree, which implies a non-trivial deletion. Notice
+   that the included test actually has to create a 2-deep
+   hierarchy. A single level is not enough to actually cause
+   shrinkage.
+
+The fix is to truncate the file before writing out the
+second index. We can do that at the caller by using
+ftruncate(). But we shouldn't have to do that. There is no
+other place in Git where we want to open a file and
+overwrite bytes, making reopen_tempfile() a confusing and
+error-prone interface. Let's pass O_TRUNC there, which gives
+callers the same state they had after initially opening the
+file or lock.
+
+It's possible that we could later add a caller that wants
+something else (e.g., to open with O_APPEND). But this is
+the only caller we've had in the history of the codebase.
+Let's punt on doing anything more clever until another one
+comes along.
+
+Reported-by: Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ lockfile.h            |  4 ++--
+ t/t0090-cache-tree.sh | 18 ++++++++++++++++++
+ tempfile.c            |  2 +-
+ tempfile.h            |  4 ++--
+ 4 files changed, 23 insertions(+), 5 deletions(-)
+
+diff --git a/lockfile.h b/lockfile.h
+index f401c979f0..35403ccc0d 100644
+--- a/lockfile.h
++++ b/lockfile.h
+@@ -263,8 +263,8 @@ static inline int close_lock_file_gently(struct lock_file *lk)
+  *   nobody else) to inspect the contents you wrote, while still
+  *   holding the lock yourself.
+  *
+- * * `reopen_lock_file()` to reopen the lockfile. Make further updates
+- *   to the contents.
++ * * `reopen_lock_file()` to reopen the lockfile, truncating the existing
++ *   contents. Write out the new contents.
+  *
+  * * `commit_lock_file()` to make the final version permanent.
+  */
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 7de40141ca..94fcb4a78e 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -161,6 +161,24 @@ test_expect_success PERL 'commit --interactive gives cache-tree on partial commi
+ 	test_cache_tree
+ '
+ 
++test_expect_success PERL 'commit -p with shrinking cache-tree' '
++	mkdir -p deep/subdir &&
++	echo content >deep/subdir/file &&
++	git add deep &&
++	git commit -m add &&
++	git rm -r deep &&
++
++	before=$(wc -c <.git/index) &&
++	git commit -m delete -p &&
++	after=$(wc -c <.git/index) &&
++
++	# double check that the index shrank
++	test $before -gt $after &&
++
++	# and that our index was not corrupted
++	git fsck
++'
++
+ test_expect_success 'commit in child dir has cache-tree' '
+ 	mkdir dir &&
+ 	>dir/child.t &&
+diff --git a/tempfile.c b/tempfile.c
+index 139ecd97f8..d43ad8c191 100644
+--- a/tempfile.c
++++ b/tempfile.c
+@@ -279,7 +279,7 @@ int reopen_tempfile(struct tempfile *tempfile)
+ 		BUG("reopen_tempfile called for an inactive object");
+ 	if (0 <= tempfile->fd)
+ 		BUG("reopen_tempfile called for an open object");
+-	tempfile->fd = open(tempfile->filename.buf, O_WRONLY);
++	tempfile->fd = open(tempfile->filename.buf, O_WRONLY|O_TRUNC);
+ 	return tempfile->fd;
+ }
+ 
+diff --git a/tempfile.h b/tempfile.h
+index 36434eb6fa..61d8dc4d1b 100644
+--- a/tempfile.h
++++ b/tempfile.h
+@@ -236,8 +236,8 @@ extern int close_tempfile_gently(struct tempfile *tempfile);
+  *   it (and nobody else) to inspect or even modify the file's
+  *   contents.
+  *
+- * * `reopen_tempfile()` to reopen the temporary file. Make further
+- *   updates to the contents.
++ * * `reopen_tempfile()` to reopen the temporary file, truncating the existing
++ *   contents. Write out the new contents.
+  *
+  * * `rename_tempfile()` to move the file to its permanent location.
+  */
+-- 
+2.19.0.rc1.605.g83416793fa
+
