@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2050B1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D78791F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727531AbeIEC1F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:27:05 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:38379 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727527AbeIEC1F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:27:05 -0400
-Received: by mail-pf1-f195.google.com with SMTP id x17-v6so2357498pfh.5
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:00:01 -0700 (PDT)
+        id S1727526AbeIEC1E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:27:04 -0400
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:33359 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbeIEC1E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:27:04 -0400
+Received: by mail-pl1-f196.google.com with SMTP id b92-v6so2269129plb.0
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=M52MPgAbLsG9rpYDWGcxBccoKjLz69qSalI8QIBwFLo=;
-        b=aLKiPSi9mjyl2jPoMZgxGAzUJks1Ax7h4wCq4eU20IAufBlqADivc2DpM3J1tE6vAf
-         dWu7kySk76fo/Ka6FH6ZuDiggBcouyPYPgEmlFDNpN+6qMmznFmJdVoaHrQuD2jJNCP0
-         bnWZmQkEDJit8hXu+XhkMxe+nxFT7Ep+7Vcse7glrpWzJjQr8PVjY2e81LS9oUZuAAy+
-         Ju2whdAbU7PTcUB76JfdXtORJyZazwNeFmRI9qSAlJC2M/fZgxJk2L/5MRNynQ6TxigF
-         Yz9EjbfUYtZA7rgrgCrHvXx22ddkN8MHCwSnkpDaBDpd4wXH6W0mXxKej12RF+QD9NG0
-         mRdw==
+        bh=jVdj9quxdcCcHq5kT1hlt8+SuJK616W5drl2wkkvDR4=;
+        b=E3kjcRUAP6KbI+WoQYMowz5xi61IMcYrjllZgUkoVhIzbrSgfsxaCJ9UGyrEKShHgV
+         8Jj/loEOPPYLslfoSpbxkse8GOad7HznVp9Ekvz/ptiXZ7I9Ebwpc0IUenIoVrUD+zs7
+         jRZkxn6YmBAtwk762y1xsYSbJANRBf6faxP87y3QDRVLykO5z0iexvXMtf0wqV+uFWfo
+         +Zwy+F7fn7d/Xyy6b7QnJPAZ+NZTC/0pc8LzfddilCVcD9xvZd8CAKLpxZu9iYI9TEEa
+         lCIA/um2nI8eVclZpl4D7eFlp80F6SGdpnkr4ppu/T9XIK+PwbgbrNK33Skqdzmpa/Mt
+         xziQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=M52MPgAbLsG9rpYDWGcxBccoKjLz69qSalI8QIBwFLo=;
-        b=m+PV1mpGrlWSC9wuslwOzbqASfOJo7GuNBczVanoJy/HH8gyD3UuwxAAk1Fg0Gjt/C
-         S0SJtCssdfOr5D62HtpeJ2aC/Eu3nmtHr5aX1R2TdzHIDouPoBH8a0bzyiWvH3Ob8VRv
-         U2OqE5v7xfJ3JN/WJCFlW8ItSO3j9eiF+Udl2/3CCLBbMbdXbXuiZVQBoBRrKs6f9Kjh
-         lRPiCRsU0XSDaAYo0erolPBKlv9d40KhD+AB5dpu64HLqYK4fbrfVwglBeySFuCLMKDk
-         Yh313Kl6WejdJRumWgdjraA/AKpkwRN07vIiPs58qLYJtQMwJWDT+SrWRn7oUE4TPQma
-         otVg==
-X-Gm-Message-State: APzg51BBOj2qKlMotSVENs0QFC3i9tj2VyaxpppMx873LA6WuBfhE5U0
-        ooA41yNzNz55FGyrA9bUXKsxGebO
-X-Google-Smtp-Source: ANB0VdaQJclV3pz04OD1RSJXsxnITWljz9etD91qX3eByjlXegp/n78AvHI5ob+LOFBlXPG+vXTAeg==
-X-Received: by 2002:a63:ed07:: with SMTP id d7-v6mr33484689pgi.429.1536098400929;
-        Tue, 04 Sep 2018 15:00:00 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id l3-v6sm9309pff.8.2018.09.04.14.59.59
+        bh=jVdj9quxdcCcHq5kT1hlt8+SuJK616W5drl2wkkvDR4=;
+        b=q07HmFZ+4ZeRwOJW/QXZ9y1WVzuqjncyFa6VskkOScrKlkSlz/vvIOiXbQ8kSCSEPN
+         pjiJ9sZyFDPpiC3qoDf/4XGlYf0L9C8TsiyNkoErYrsejexnPr42FXIP12fOB/lKGYAd
+         rH4zh06R2rH0G0ht93MX0WUouuPlBT2yuMYCGMfCHD63eU6ahxhPT+GMwMcsYVG4vNg0
+         qSlHa/zwK0Tc1IWgq4T9ZAxeHR9Vcd207+Iz+YermDN20RpjApsTt3zLb0xeXZp5Lr6M
+         bEpYwRcSmEraB1mztVPLtfHlAyOMHFhPGKYPdaCULQMvE8LgjXO0Us2oQ74AEUKJAkKx
+         HDsg==
+X-Gm-Message-State: APzg51Ca9ZEnyPEyYal3YWGMfPwdbfSRdDCDm2XNQ8+BkilIaCntyl1V
+        rjo53PP0RifjjwFOEGpiSfQwUu24
+X-Google-Smtp-Source: ANB0VdbHFEqzNIcTyv+ULn77SH0jYryy2TeRcIujr8gtkc9+8rp/mRvEcdMhWo9Eb5uf+bf/yLgv8g==
+X-Received: by 2002:a17:902:934c:: with SMTP id g12-v6mr35459123plp.67.1536098399501;
+        Tue, 04 Sep 2018 14:59:59 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id s75-v6sm39805702pfd.108.2018.09.04.14.59.58
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 15:00:00 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 15:00:00 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:36 GMT
-Message-Id: <b8055fb258ef07ba55e2e8c1ab3c3a5e91ddd16f.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:35 GMT
+Message-Id: <1b6851e5e1e08eaaaa9e25c4a3cdae7ea1e6f8e9.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 09/18] builtin rebase: support `--gpg-sign` option
+Subject: [PATCH v2 08/18] builtin rebase: support `--autosquash`
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,101 +71,63 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit introduces support for `--gpg-sign` option which is used
-to GPG-sign commits.
+This commit adds support for the `--autosquash` option which is used to
+automatically squash the commits marked as `squash` or `fixup` in their
+messages. This is converted following `git-legacy-rebase.sh` closely.
+
+This option can also be configured via the Git config setting
+rebase.autosquash. To support this, we also add a custom
+rebase_config() function in this commit that will be used instead (and
+falls back to) git_default_config().
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ builtin/rebase.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index c80eebfbd2..0ab86b7c4c 100644
+index 9c00f3568f..c80eebfbd2 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -97,6 +97,7 @@ struct rebase_options {
+@@ -96,6 +96,7 @@ struct rebase_options {
+ 	int signoff;
  	int allow_rerere_autoupdate;
  	int keep_empty;
- 	int autosquash;
-+	char *gpg_sign_opt;
++	int autosquash;
  };
  
  static int is_interactive(struct rebase_options *opts)
-@@ -209,6 +210,15 @@ static int read_basic_state(struct rebase_options *opts)
- 	} else
- 		opts->allow_rerere_autoupdate = -1;
- 
-+	if (file_exists(state_dir_path("gpg_sign_opt", opts))) {
-+		strbuf_reset(&buf);
-+		if (read_one(state_dir_path("gpg_sign_opt", opts),
-+			    &buf))
-+			return -1;
-+		free(opts->gpg_sign_opt);
-+		opts->gpg_sign_opt = xstrdup(buf.buf);
-+	}
-+
- 	strbuf_release(&buf);
- 
- 	return 0;
-@@ -297,6 +307,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+@@ -295,6 +296,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		opts->allow_rerere_autoupdate ?
  		"--rerere-autoupdate" : "--no-rerere-autoupdate");
  	add_var(&script_snippet, "keep_empty", opts->keep_empty ? "yes" : "");
- 	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
-+	add_var(&script_snippet, "gpg_sign_opt", opts->gpg_sign_opt);
++	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
  
  	switch (opts->type) {
  	case REBASE_AM:
-@@ -462,6 +473,13 @@ static int rebase_config(const char *var, const char *value, void *data)
+@@ -455,6 +457,11 @@ static int rebase_config(const char *var, const char *value, void *data)
  		return 0;
  	}
  
-+	if (!strcmp(var, "commit.gpgsign")) {
-+		free(opts->gpg_sign_opt);
-+		opts->gpg_sign_opt = git_config_bool(var, value) ?
-+			xstrdup("-S") : NULL;
++	if (!strcmp(var, "rebase.autosquash")) {
++		opts->autosquash = git_config_bool(var, value);
 +		return 0;
 +	}
 +
  	return git_default_config(var, value, data);
  }
  
-@@ -555,6 +573,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	int committer_date_is_author_date = 0;
- 	int ignore_date = 0;
- 	int ignore_whitespace = 0;
-+	const char *gpg_sign = NULL;
- 	struct option builtin_rebase_options[] = {
- 		OPT_STRING(0, "onto", &options.onto_name,
- 			   N_("revision"),
-@@ -619,6 +638,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL(0, "autosquash", &options.autosquash,
- 			 N_("move commits that begin with "
- 			    "squash!/fixup! under -i")),
-+		OPT_STRING('S', "gpg-sign", &gpg_sign,
-+			   N_("gpg-sign?"), N_("GPG-sign commits")),
+@@ -609,6 +616,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			    "conflict")),
+ 		OPT_BOOL('k', "keep-empty", &options.keep_empty,
+ 			 N_("preserve empty commits during rebase")),
++		OPT_BOOL(0, "autosquash", &options.autosquash,
++			 N_("move commits that begin with "
++			    "squash!/fixup! under -i")),
  		OPT_END(),
  	};
  
-@@ -821,6 +842,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (options.keep_empty)
- 		imply_interactive(&options, "--keep-empty");
- 
-+	if (gpg_sign) {
-+		free(options.gpg_sign_opt);
-+		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
-+	}
-+
- 	switch (options.type) {
- 	case REBASE_MERGE:
- 	case REBASE_INTERACTIVE:
-@@ -1046,5 +1072,6 @@ run_rebase:
- cleanup:
- 	strbuf_release(&revisions);
- 	free(options.head_name);
-+	free(options.gpg_sign_opt);
- 	return ret;
- }
 -- 
 gitgitgadget
 
