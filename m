@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F59F1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1BBF81F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727546AbeIEC1M (ORCPT <rfc822;e@80x24.org>);
+        id S1727553AbeIEC1N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:27:13 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:38667 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727145AbeIEC1M (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 4 Sep 2018 22:27:12 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:46569 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727541AbeIEC1L (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:27:11 -0400
-Received: by mail-pl1-f195.google.com with SMTP id t19-v6so2238664ply.13
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:00:07 -0700 (PDT)
+Received: by mail-pg1-f194.google.com with SMTP id t84-v6so477204pgb.5
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:00:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TVVgKOU7ZkL9cTbnbgPhXedEy3MFWc0orz1G9X7ZM50=;
-        b=HyqloKUBI1v3TLwFrL2K57BhhTTc58hcVCIsjfdcqJzWTTYo+mUfAMeiZLI/kPOZLc
-         t9I8Tyi0DJRfeonaBFVVeOXsmZ2UbYfKlj+J7SVkjzso6C/X21VocMbuTICon72Uczqi
-         VjLEKWcXkKldqifNZfXH9o4qm2nlpPLhhO+GkxnaFOf/UTvMGAWK4ejOmstE49K+pMFA
-         u5smQilbtgpQ9Syp2EDgOEzqMHZCh5rpz5hypiVaXj11dzNnxXItGXh2Vtv5ZrZkvGNi
-         8KJRcE5vupqb3n6uuSxU8aKpes2a3/HwEYSu4MOuC/4A6RO9SWIerOsPwd2GSqKZ4AWE
-         hJUg==
+        bh=Kx24EvdLUy4tgIErdw7oVf8YIkhTvBB0zWRqw5XvDKU=;
+        b=pyPsQ4bp5zyDhRYSsRoV2Nvd0cxwfG1l61IvZXMbPYTGScPKxo7e4b+VL2eLMKMSuT
+         PhY09stvdiMgjhU/oW5w/yYiRNV7ReuqE/SrT+IhMlxDVpomlOQMX4+xUep+XzypLSXr
+         TcuFIV+3lCQkfNEKvXAk161/3spT/lAjQAyIowR1N3VePpKEhH2iJqI5lEKTl2TRpuk/
+         g/96OQUUgWLlqJTQjVi7HNLcIcoPVC4mEN0e4KENUDK0cID6CZ/0PjemB0f2KFMTZJTC
+         2BQG3FHkkJc/TQqTbZvJr4ka6W2bk3qm1sF6c7VG+YSCrJk/fg2FQN67ztUZznIuWUfP
+         HaJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TVVgKOU7ZkL9cTbnbgPhXedEy3MFWc0orz1G9X7ZM50=;
-        b=ktn+Jip2lQqinglvno7qxZm2aow1Q0bwxZ/HUIFwfrqks7Zcu59VZzpQwvkbZ8cnAL
-         7KAXMGseLX3HDAjXx4qvcziSDSbDASY4DUNrhIHJHDm8gELyGE/lfygiyYQEIKHB1YXr
-         lFt7ohLALPPdqpo812cDwhyVaBKqoimC5dG/YxD1j523OUOb1SD+mD5jqQgHEMvoW38v
-         bP51k6tyGL7VxWEAxEtqZLFN+mkndiBwnczbmZIz+8mWWQmCkV9oco5UZoyswp8CRFMv
-         Q6qTXQhhWUAt9JpqNPIQ4plnNKXUkk9CQCTGmzAebExlhoCzQsQWquNxckiUZmpdPYg6
-         lQAQ==
-X-Gm-Message-State: APzg51BFWGUZnvm6eNq7tTygUuUL288A2z9yAHq1KdvV/nXE4RaJ0hsD
-        hFqq1IrRno7Jdr2bgb30SHYuCMFm
-X-Google-Smtp-Source: ANB0VdYT+72ObJ4U+gPtTAHq4H90ejN+JD2sEzc8o7pJuFFXKY7IKEEGQqJzER3WBBD7VtHVsDnneg==
-X-Received: by 2002:a17:902:704c:: with SMTP id h12-v6mr35529662plt.237.1536098406414;
-        Tue, 04 Sep 2018 15:00:06 -0700 (PDT)
+        bh=Kx24EvdLUy4tgIErdw7oVf8YIkhTvBB0zWRqw5XvDKU=;
+        b=TsCKouKCg7CCvk0LVzkIb8CvNM1gXaRCuYyLM6AkORU/TT09Hp6h+akV+HAjm6bc+9
+         uYUMzVaPw940WDhan1IHJE6EzVY2HqJPyPkr3CVoKl7Baxag+1rClc0lwfrkGfY/6a57
+         HfqHJ669qHoqozsdvpu+X2ZD8unT5FduE/zjpXaw2IzrqGx+ffQ/jb0QTjTfWqmJNFXJ
+         YiYYtsBPBeaKPPcvrimdI6dSopjudrS16K99gEO7I0mLSZOnJ31tZn1vahG94jRtdlgq
+         uVOKz9Pw5mAAQNTUE6Tr3a0f8shXY1K+C6aOvXOVSWueA6X+61xJU64t79Avq2me20db
+         0maQ==
+X-Gm-Message-State: APzg51AxDzFhgUDvYY9X8RbdPI6/JWZ/S8jh03F3QoymHQyf8J8CDYKT
+        7Trxjgyjqi2bUsz1H5gw2ju/jUbJ
+X-Google-Smtp-Source: ANB0Vdaar8srOuMxVJGafY5K5x1QXk1wohwq5M7e7bKYogo8Ilost8OF3tUYdwa7HWqN6bajyacNiw==
+X-Received: by 2002:a63:e914:: with SMTP id i20-v6mr33224961pgh.10.1536098407907;
+        Tue, 04 Sep 2018 15:00:07 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id i26-v6sm28452173pfo.107.2018.09.04.15.00.05
+        by smtp.gmail.com with ESMTPSA id v8-v6sm28202206pff.120.2018.09.04.15.00.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 15:00:05 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 15:00:05 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:40 GMT
-Message-Id: <1c723ad5920a6282139c8fc0bb2f9f3b2e2cede9.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 15:00:07 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 15:00:07 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:41 GMT
+Message-Id: <1bebcde41cf42d74278ad520d60255ebd0bbe8c5.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 13/18] builtin rebase: support `--allow-empty-message`
- option
+Subject: [PATCH v2 14/18] builtin rebase: support
+ --rebase-merges[=[no-]rebase-cousins]
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,62 +72,75 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit introduces the `--allow-empty-message` option to
-`builtin/rebase.c`. The motivation behind this option is: if there are
-empty messages (which is not allowed in Git by default, but can be
-imported from different version control systems), the rebase will fail.
-
-Using `--allow-empty-message` overrides that behaviour which will allow
-the commits having empty messages to continue in rebase operation.
-
-Note: a very recent change made this the default in the shell scripted
-`git rebase`, therefore the builtin rebase does the same.
+The mode to rebase non-linear branches is now supported by the builtin
+rebase, too.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ builtin/rebase.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 2547be9efe..3e37603da4 100644
+index 3e37603da4..bcacffda33 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -94,6 +94,7 @@ struct rebase_options {
- 	char *gpg_sign_opt;
+@@ -95,6 +95,7 @@ struct rebase_options {
  	int autostash;
  	char *cmd;
-+	int allow_empty_message;
+ 	int allow_empty_message;
++	int rebase_merges, rebase_cousins;
  };
  
  static int is_interactive(struct rebase_options *opts)
-@@ -348,6 +349,8 @@ static int run_specific_rebase(struct rebase_options *opts)
- 	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
- 	add_var(&script_snippet, "gpg_sign_opt", opts->gpg_sign_opt);
+@@ -351,6 +352,10 @@ static int run_specific_rebase(struct rebase_options *opts)
  	add_var(&script_snippet, "cmd", opts->cmd);
-+	add_var(&script_snippet, "allow_empty_message",
-+		opts->allow_empty_message ?  "--allow-empty-message" : "");
+ 	add_var(&script_snippet, "allow_empty_message",
+ 		opts->allow_empty_message ?  "--allow-empty-message" : "");
++	add_var(&script_snippet, "rebase_merges",
++		opts->rebase_merges ? "t" : "");
++	add_var(&script_snippet, "rebase_cousins",
++		opts->rebase_cousins ? "t" : "");
  
  	switch (opts->type) {
  	case REBASE_AM:
-@@ -598,6 +601,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		.flags = REBASE_NO_QUIET,
- 		.git_am_opt = STRBUF_INIT,
- 		.allow_rerere_autoupdate  = -1,
-+		.allow_empty_message = 1,
- 	};
- 	const char *branch_name;
- 	int ret, flags, total_argc, in_progress = 0;
-@@ -697,6 +701,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
- 				N_("add exec lines after each commit of the "
- 				   "editable list")),
-+		OPT_BOOL(0, "allow-empty-message",
-+			 &options.allow_empty_message,
-+			 N_("allow rebasing commits with empty messages")),
+@@ -626,6 +631,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	int opt_c = -1;
+ 	struct string_list whitespace = STRING_LIST_INIT_NODUP;
+ 	struct string_list exec = STRING_LIST_INIT_NODUP;
++	const char *rebase_merges = NULL;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -704,6 +710,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "allow-empty-message",
+ 			 &options.allow_empty_message,
+ 			 N_("allow rebasing commits with empty messages")),
++		{OPTION_STRING, 'r', "rebase-merges", &rebase_merges,
++			N_("mode"),
++			N_("try to rebase merges instead of skipping them"),
++			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
  		OPT_END(),
  	};
  
+@@ -939,6 +949,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		options.cmd = xstrdup(buf.buf);
+ 	}
+ 
++	if (rebase_merges) {
++		if (!*rebase_merges)
++			; /* default mode; do nothing */
++		else if (!strcmp("rebase-cousins", rebase_merges))
++			options.rebase_cousins = 1;
++		else if (strcmp("no-rebase-cousins", rebase_merges))
++			die(_("Unknown mode: %s"), rebase_merges);
++		options.rebase_merges = 1;
++		imply_interactive(&options, "--rebase-merges");
++	}
++
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
 -- 
 gitgitgadget
 
