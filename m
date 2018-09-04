@@ -6,87 +6,99 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65EDE1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 19:45:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 016F41F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 19:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727782AbeIEAMJ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 20:12:09 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:39184 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726528AbeIEAMI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 20:12:08 -0400
-Received: by mail-wm0-f42.google.com with SMTP id q8-v6so5449945wmq.4
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 12:45:32 -0700 (PDT)
+        id S1727688AbeIEANy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 20:13:54 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:39599 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbeIEANy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 20:13:54 -0400
+Received: by mail-wm0-f68.google.com with SMTP id q8-v6so5454230wmq.4
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 12:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TP5Pny1D9A8ev8LhVbJy190jM1Eh65pz8hWahUIPgSQ=;
-        b=NQ8l/g8PFpdWkBTaLtvmFZfdzTdlN89j8/wQfugWWCBW8nRJUtQk3JAa/kvkW2vcXB
-         QsvsCJ7Zw2jhNYdT3tnWI8v3/fhdh7IGb88EGxao/9Kxl9jsG75baCYFIEJJLXmNMUcC
-         4tO36VSjzOSQkpd7f5NB66BFZ0gm3YzAfSMNPMTqGQ/7fbfbQt6Eeq9NOXHF4xX8ojja
-         sg0SSiwJuScJrq+lg/AbZCaebjBN2eRbPI4iJsLXpj2wczFfE6TrZWDF2xEDRvvDMfvJ
-         UZ1yofyCsa6IN2F+gZRO+o5AOLEO8SPUqwgZc2HWA2K7nezQuMvFJlF2EYyZ50AfBiFu
-         uWbg==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=GdUfVQ6UbStZwmZMtwLwTJiDyCfXZQtqcaEi752xfw0=;
+        b=b6NwcrroKLiGrybuivRgfohznNQKpNdpxKVEiqudL+pzJyJ7awteWhLxxIZmJ20lEJ
+         IVxAUx0DsftDrtCGX3IA9wKBEDiW9+FQLcnjIMcrrZyiFoHJzBlTLc/QwmJsz7/ApAHr
+         AysBY8AdjJsWhPgrZw9jJit45znLyCTbiwbfjXuOcoaH/h9ThdzmTlcI7hOdTsBkLQ7C
+         Ji/BR9Ghli2IWJM+DnND2Q+PY+4hd34PXs2R7rZ1U5Kyvwd28/9GZM4aon14a7RX1uHc
+         lBb+kP5+S0I6rJ0CFoQ/syrGnbWsq2Lj14JH7Zrk75DBsShE8J5mxmafnyKWARpAx90v
+         5ANA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=TP5Pny1D9A8ev8LhVbJy190jM1Eh65pz8hWahUIPgSQ=;
-        b=deb/G8wUU+gP9JIDEwL4cd7OFdyW1sn6jLZdArl425Kvle1CCNOkBHJSNVOPL7tiJf
-         TmOIdWgOTBoKVvX95Km6mlSjwU0qLwrfibMtrsEpWyr5FZSwDzywSoah/DXAEh/P8sEC
-         V5Pg3EkUmBuzumfhsOrDpW+ZR/1Go1BuNIrXnwx2nTgikUlfsVI6gxJi/+hQTql/1j7N
-         9LaPdBTX40kea33yVYgOq3T9ag0xqm6w1HmXo5/ka1HBXE6fhh2jYmw+r/jKUk++bupg
-         oetTsYCY6B6QPXNuI0UEqoJoPTW06WuyJyk8dIlvUuAer8X/qsMqqovhegQLo/FVZ6PL
-         lHmQ==
-X-Gm-Message-State: APzg51B7t6t297awwuNpCJNdF+kKTDw7Bu3LFCjebSEAMiNgqxkvT6n3
-        wvZ9iHsVpZrwuL/cHgFmDAc=
-X-Google-Smtp-Source: ANB0VdaSoak5UKYk24/G7DD/Rf9WWcFUONfjAM2Ybcxca9Uc4e07d+Bz76udFkYNK5pLa4sppp7X+w==
-X-Received: by 2002:a1c:adcc:: with SMTP id w195-v6mr9264251wme.41.1536090331921;
-        Tue, 04 Sep 2018 12:45:31 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=GdUfVQ6UbStZwmZMtwLwTJiDyCfXZQtqcaEi752xfw0=;
+        b=Ap0aZG+teWDx39GCtKyYuU8fpE3hapCajKbfkPI9rTnxIS3InfcDfcqnsKI0eo674O
+         Ynq1OW+4lOM0UrCrO1+ox2sFM4lKVzK+p6QgZyKIjKuR3v1zeQC+nU6SeiV4nkx7J1Fq
+         Vl8MBspyjdgZNOlYuSqPj2688oWacBU+UWoe+2Ov54OqsyERfnBRIAo8x0m89qwfun8+
+         GsZIovxxpfa8qtEnKuMhgRkU3V6mevLwgCLMf06l8jWMRDvDlF0zrt1s0O/sTdhJf+zr
+         02BXLnC7pT9DefUGHJ3mKD8bVoget5r0fRo9qNh86+Qo+hdqAv7uwCc4y/1Lk06MI5cW
+         zURw==
+X-Gm-Message-State: APzg51DvgAICnc2vNFKEpCsb3WgIfknTfqQwR/Y+WLu1cX+J4lTWQksh
+        rNH5FAL8T4yZbJvbHS5r03w=
+X-Google-Smtp-Source: ANB0VdYhpib7SmjrCVC1HOIrmj8WFpaxcKYUHWYP45SsetnGSoAt0NJAvJRPYQ8A+bBgA6SeL517mg==
+X-Received: by 2002:a1c:9011:: with SMTP id s17-v6mr9130697wmd.146.1536090436251;
+        Tue, 04 Sep 2018 12:47:16 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w18-v6sm46282220wrc.38.2018.09.04.12.45.31
+        by smtp.gmail.com with ESMTPSA id g126-v6sm57654wmg.5.2018.09.04.12.47.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Sep 2018 12:45:31 -0700 (PDT)
+        Tue, 04 Sep 2018 12:47:15 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/4] t5310: test delta reuse with bitmaps
-References: <20180901074145.GA24023@sigill.intra.peff.net>
-        <20180901074813.GB25461@sigill.intra.peff.net>
-        <20180901080316.GA25852@sigill.intra.peff.net>
-        <CAGZ79ka8e2-f4fYgy+=HUDdvugefvQ5TnDG0v8YmUn7kGhTdaQ@mail.gmail.com>
-Date:   Tue, 04 Sep 2018 12:45:30 -0700
-In-Reply-To: <CAGZ79ka8e2-f4fYgy+=HUDdvugefvQ5TnDG0v8YmUn7kGhTdaQ@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 4 Sep 2018 12:05:58 -0700")
-Message-ID: <xmqqin3l82sl.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc:     git <git@vger.kernel.org>, Prathamesh Chavan <pc44800@gmail.com>
+Subject: Re: [PATCH] i18n: fix dangling dot in die() messages
+References: <CANYiYbHmU=j+MwLTumJ+BK_0msyPBeux92wF8VqL9J04VOc-FQ@mail.gmail.com>
+        <20180904141816.26398-1-jn.avila@free.fr>
+        <CACBZZX6Bm-xOO-mvDzmRAA9Xu6HrBr5z+39dp4t6fTTCmNHKbQ@mail.gmail.com>
+        <2f6f52c8-4b8a-a954-5ffb-5d66dfb97fe1@free.fr>
+Date:   Tue, 04 Sep 2018 12:47:14 -0700
+In-Reply-To: <2f6f52c8-4b8a-a954-5ffb-5d66dfb97fe1@free.fr> (=?utf-8?Q?=22?=
+ =?utf-8?Q?Jean-No=C3=ABl?=
+        Avila"'s message of "Tue, 4 Sep 2018 17:13:53 +0200")
+Message-ID: <xmqqefe982pp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Jean-Noël Avila <jn.avila@free.fr> writes:
 
-> From some offline discussion, maybe we want to adapt a philosophy of
+> On 04/09/2018, Ævar Arnfjörð Bjarmason wrote:On Tue, Sep 4, 2018 at 4:59
+> PM Jean-Noel Avila <jn.avila@free.fr> wrote:
+>> Your commit message says "dangling dot"...
 >
->   Each patch needs to add a test, that fails when the patch
->   is not applied, but succeeds when it is applied. This shows
->   that _some_ code in the patch is exercised at least.
+> The dot is dangling on its own line. I don't really catch why this would
+> be needed.
 >
-> (and automatically/strongly enforce this going forwards; however
-> enforcing such a strict thing is hard, not sure how we'd do it.)
+>>
+>>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>>> index b56028ba9d..a011abfd7c 100644
+>>> --- a/builtin/submodule--helper.c
+>>> +++ b/builtin/submodule--helper.c
+>>> @@ -521,7 +521,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+>>>                 printf(_("Entering '%s'\n"), displaypath);
+>>>
+>>>         if (info->argv[0] && run_command(&cp))
+>>> -               die(_("run_command returned non-zero status for %s\n."),
+>>> +               die(_("run_command returned non-zero status for %s"),
+>> ...but here and below you're also removing the newline. Is this
+>> intended, and does it work as desired afterwards? I.e. were we just
+>> ignoring the \n?
+>>
+>
+> I checked that usually, the die command does not have the final dot nor
+> a new line. But I'm not sure of what's intended here.
 
-Some patches lack test, but when one comes with a test, I do revert
-the code change and try to run the tests before I create a topic
-branch for it, when I have time.
-
-An enforcement mechanism may be good (e.g. submitGit could learn to
-do that "does it come with a test" check followed by "let's see if
-the new test fail without the change to the code part" before
-allowing the patch to escape to the list), but 
+Your changes look correct.  Die() and friends terminate the message
+on their own, so a trailing newline in the message is usually a
+mistake.
