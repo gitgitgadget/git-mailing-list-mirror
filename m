@@ -2,116 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2E15C1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 13:53:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84B521F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 14:56:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727072AbeIDSSZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 14:18:25 -0400
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:32039 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726355AbeIDSSZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 14:18:25 -0400
-Received: from crinan.lan ([92.2.147.78])
-        by smtp.talktalk.net with SMTP
-        id xBlNfppstbZX5xBlVfFA3j; Tue, 04 Sep 2018 14:53:10 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1536069190;
-        bh=imAfZQyK5bulN/Vl3lINIP0otpSNa7hJ0+PCJeSJv8E=;
-        h=From:To:Cc:Subject:Date:Reply-To;
-        b=B8TCbO3r8cu8Jlr51AsOAQGIJDp0A2G18II/L4BdDLYPIK6bnPZW6dy8qtkAghkd9
-         UQKp435w3KuZG290r7UujnNDh1fFEFki4pLbqsMrcOL9UszXGydm+/GSaMPoLuPLPs
-         07aeXngohkfq+ZQO6bPDh9zQsLfPk1tFpsHYSwmc=
-X-Originating-IP: [92.2.147.78]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=Poq9kTE3 c=1 sm=1 tr=0 a=pQayyGo/WMwZmys47m2ZwQ==:117
- a=pQayyGo/WMwZmys47m2ZwQ==:17 a=evINK-nbAAAA:8 a=X3cBoQ2DcMh1XEGe_koA:9
- a=iI17yWtujfi_hL3d:21 a=HaLx8tAPNoupuu5J:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] diff: fix --color-moved-ws=allow-indentation-change
-Date:   Tue,  4 Sep 2018 14:52:58 +0100
-Message-Id: <20180904135258.31300-1-phillip.wood@talktalk.net>
+        id S1727057AbeIDTVn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 15:21:43 -0400
+Received: from 17.mo6.mail-out.ovh.net ([46.105.36.150]:56631 "EHLO
+        17.mo6.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726328AbeIDTVn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 15:21:43 -0400
+X-Greylist: delayed 1205 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Sep 2018 15:21:42 EDT
+Received: from player687.ha.ovh.net (unknown [10.109.160.46])
+        by mo6.mail-out.ovh.net (Postfix) with ESMTP id 6B7A617A0F3
+        for <git@vger.kernel.org>; Tue,  4 Sep 2018 16:19:25 +0200 (CEST)
+Received: from jnavila-Latitude-E6540.DOMALEPH.local (static-csq-cds-097114.business.bouyguestelecom.com [164.177.97.114])
+        (Authenticated sender: jean-noel.avila@scantech.fr)
+        by player687.ha.ovh.net (Postfix) with ESMTPSA id 669B72C00D2;
+        Tue,  4 Sep 2018 16:19:22 +0200 (CEST)
+From:   Jean-Noel Avila <jn.avila@free.fr>
+To:     git@vger.kernel.org
+Cc:     Jean-Noel Avila <jn.avila@free.fr>
+Subject: [PATCH] i18n: fix dangling dot in die() messages
+Date:   Tue,  4 Sep 2018 16:18:16 +0200
+Message-Id: <20180904141816.26398-1-jn.avila@free.fr>
 X-Mailer: git-send-email 2.18.0
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-X-CMAE-Envelope: MS4wfLbwsQpl/ckftLVbl96aua7SdsFr9xwreXWEf+tPMuDIJDqieatb3fQgDeDAFifXG3TtF9KB42+hrO/4vw9k6RsVd0/tAFkWTmz/gC7woZqU84a9RtdR
- StsJL1FbIHQcT+vCvycSi2oVRuTb8OkWwuDxopVEeGCvXC9TH11KRuBRfdHZv+WAYzX97NHxGLUqCNHBNsbr217YEGV0Ik83mqwKiSF5EdI4RWdAxjVxJ0oe
- T/LSh995KjzCi6KCNlAZYjZD0z0Uyzy+lQ9j9PIO/to=
+In-Reply-To: <CANYiYbHmU=j+MwLTumJ+BK_0msyPBeux92wF8VqL9J04VOc-FQ@mail.gmail.com>
+References: <CANYiYbHmU=j+MwLTumJ+BK_0msyPBeux92wF8VqL9J04VOc-FQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 10695204691495541725
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtjedrheekgdeihecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemuceftddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-
-If there is more than one potential moved block and the longest block
-is not the first element of the array of potential blocks then the
-block is cut short. With --color-moved=blocks this can leave moved
-lines unpainted if the shortened block does not meet the block length
-requirement. With --color-moved=zebra then in addition to the
-unpainted lines the moved color can change in the middle of a single
-block.
-
-Fix this by freeing the whitespace delta of the match we're discarding
-rather than the one we're keeping.
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
 
-While I was working on this I spotted a couple of other issues I don't
-have time to fix myself at the moment, so I thought I mention them in
-case someone else wants to pick them up
+It is not clear what the style guide for messages is.
 
-1) I think there is a potential memory leak at the end of
-   mark_color_as_moved(). If pmb_nr > 0 then the whitespace deltas
-   need freeing before freeing pmb itself.
+ builtin/submodule--helper.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-2) The documentation could be improved to explain that
-   allow-indentation-change does not work with indentation that
-   contains a mix of tabs and spaces and the motivation for that
-   (python?) [I've got some code to add an option that supports that
-   which I'll post when I've written some tests after 2.19 is
-   released]
-
- diff.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 145cfbae5..4e8f725bb 100644
---- a/diff.c
-+++ b/diff.c
-@@ -968,8 +968,13 @@ static void pmb_advance_or_null_multi_match(struct diff_options *o,
- 			/* Carry the white space delta forward */
- 			pmb[i]->next_line->wsd = pmb[i]->wsd;
- 			pmb[i] = pmb[i]->next_line;
--		} else
-+		} else {
-+			if (pmb[i]->wsd) {
-+				free(pmb[i]->wsd->string);
-+				FREE_AND_NULL(pmb[i]->wsd);
-+			}
- 			pmb[i] = NULL;
-+		}
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index b56028ba9d..a011abfd7c 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -521,7 +521,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+ 		printf(_("Entering '%s'\n"), displaypath);
+ 
+ 	if (info->argv[0] && run_command(&cp))
+-		die(_("run_command returned non-zero status for %s\n."),
++		die(_("run_command returned non-zero status for %s"),
+ 			displaypath);
+ 
+ 	if (info->recursive) {
+@@ -543,7 +543,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
+ 
+ 		if (run_command(&cpr))
+ 			die(_("run_command returned non-zero status while "
+-				"recursing in the nested submodules of %s\n."),
++				"recursing in the nested submodules of %s"),
+ 				displaypath);
  	}
- }
  
-@@ -990,10 +995,6 @@ static int shrink_potential_moved_blocks(struct moved_entry **pmb,
- 
- 		if (lp < pmb_nr && rp > -1 && lp < rp) {
- 			pmb[lp] = pmb[rp];
--			if (pmb[rp]->wsd) {
--				free(pmb[rp]->wsd->string);
--				FREE_AND_NULL(pmb[rp]->wsd);
--			}
- 			pmb[rp] = NULL;
- 			rp--;
- 			lp++;
 -- 
 2.18.0
 
