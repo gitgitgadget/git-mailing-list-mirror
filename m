@@ -7,49 +7,48 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87AD41F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 10:59:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 75C7F1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 11:04:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727447AbeIDPYF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 11:24:05 -0400
-Received: from mout.gmx.net ([212.227.17.22]:50945 "EHLO mout.gmx.net"
+        id S1727199AbeIDP3P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 11:29:15 -0400
+Received: from mout.gmx.net ([212.227.15.19]:49769 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726376AbeIDPYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 11:24:04 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LviG8-1fpV8i1QVQ-017R1M; Tue, 04
- Sep 2018 12:59:24 +0200
-Date:   Tue, 4 Sep 2018 12:59:22 +0200 (DST)
+        id S1726376AbeIDP3O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 11:29:14 -0400
+Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LanoO-1fUewy25hw-00kNpu; Tue, 04
+ Sep 2018 13:04:32 +0200
+Date:   Tue, 4 Sep 2018 13:04:31 +0200 (DST)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Eric Sunshine <sunshine@sunshineco.com>
 cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/9] tests: optionally write results as JUnit-style
- .xml
-In-Reply-To: <CAPig+cTJzguROwyGgyeUt5CrpKt2kyps04QD37wa_Bt3JPwWsg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809041256270.71@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <2b5d6785944ed1a66f0272896a45fece8521d10f.1536009027.git.gitgitgadget@gmail.com> <CAPig+cTJzguROwyGgyeUt5CrpKt2kyps04QD37wa_Bt3JPwWsg@mail.gmail.com>
+Subject: Re: [PATCH 2/9] ci/lib.sh: encapsulate Travis-specific things
+In-Reply-To: <CAPig+cTYwnEt3_EoMZq7U265nEDRJc5uCtJbuVeBNTxqvWSPww@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1809041259480.71@tvgsbejvaqbjf.bet>
+References: <pull.31.git.gitgitgadget@gmail.com> <18e6beec5f48ad5a17c7c7309e0507b01a53c2ec.1536009027.git.gitgitgadget@gmail.com> <CAPig+cTYwnEt3_EoMZq7U265nEDRJc5uCtJbuVeBNTxqvWSPww@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:RPZ89dFdApQdryIrNTypwp1Fnm+qCl1hADORUvig8eqrAywIlY3
- Fq8T1tzOJGc8YQ7VvtE5sJZR+wuTKOohuLP1DVDsIfos4eh/lmPCXkabxVR3bfVxER0Lppi
- 2+fmFIS60mginzLHvJi8h0yvpm3b1mp+Jd/XYq+O9NZ4B+MWJWHgwKWLKoFc6SH6TLn6QR4
- WVA45btvSKE4CLE1zGs4g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:kftYB6C1f98=:OK/HKVIgRMiZyXcF9nmfTN
- DzXQgBhbkk0q5bH+yMQQgeSBJShk39ouOieaFn2sLaByFHs5CHYZE6ORhU8+A+HXmo2qBZA30
- 6SVct9ZvkiEUsknKIj9yODXp8fZ0IA/UhU2eFBaUyQt39ouEECq3oVKR8e80ubGVWtnvz4uuR
- HuvWsrdpLb6skFcj9BEA7NGcXd85VXDTP6NU2ojlKBEs5SvJGdCc0PW2eaziRspSxWah0ulFd
- JvNS38vneTLMk15AvUhGZw66itKmN/QaGz+d40L7CEFIZWX7q7omQXm93U/LQITfCr7tx8pde
- kFBRTO9HFiJCfKCPlxiqjW6NZuqifTJ9T0r681r5yCVQjYxk+W/hFetbqtoos8fCFckWVl/67
- DFqHJmttFuEoRGPsq5vJJykcD7FaTKKs5zAcH6DdtnKMYAiPpSMRTBWpifYZu2QkucX8nafRc
- 1qPyP6ray2k1KwMAPyGNYwwfXhK06Nui3jZOpYdAsGu9Algle2m4Yxzipcpctn2G5afWZgJ+/
- nb8J1PjLk/Xj2r32UszSaIv0iH/Tjt3YNqo1ErgWlLazM71iScHlJn3J72FKqCueLUL/ewlSC
- dKpj+amyjhgpJaFmmnNBlYJktzZnvR6Et+5AngEOrX3/HGr0JvCx1vba3+ScJ4rvaUCa/k82l
- NgotE5iRZkJYZKNx7F5ImuUZWfckYyKVyIBJivytQZ8Tin+eQikv6olvoufip6xuFX7ZEd4g2
- A1zBduhtxyUKL7kNw9w7vun2ayWFh0EVz6mvWj/2nOnQqjKmyCS4BvJ4sUwJwctKlv/Mpq16O
- lQ0dLfe
+X-Provags-ID: V03:K1:QsXfw2tLnh1q4EKtwoGUTfTSNFK+i68Gq2CAaqhVKT6pIyuewc8
+ 4rM6MCHD9GJPra7hG3oxbs3ipzA37U+mBlaXtOUiXG74+O5nH+aZtZgvD11Mge+mYdPPRhj
+ yAl1GoLCvW1aQUBFPu7eH5qP7k6InUOo6kqhcPpA2/htq+KgLi+am2zfV+96z/E9vOMCBvq
+ +9YMnFmUaaAez34GuBQUQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:WxdzrBb5/7o=:NcF8Pd4cedEaaHNDt7hI1T
+ xk3Rc9eZEwV7Q2SjP2c0AYWLAgFnPzHHUQOthRLEeXafhQVQB0TzPxKN7scbqzvmr6aSWqMWF
+ K99vkEQNk8AJDqdAWtXgw0z1EWwTv8nkc2V92AJkF3Lc5yV8F08kdd/JaGAhZdVdasdyRuqME
+ qazV/SXQGzWKzcKhCQAaZikex22dPvvA2bru+0VPpTE28wNd0/ADVr+R4HQ2DNpNXnkv56bEq
+ DWEsg/y8HKsKlK7ZKMDSp+YNMDM2Jz9kVHHSO3aZKKGMbnB0w+TauzD3Hn6SzRIGFHJVpFag+
+ VgTov0mf5mxmsvhWzvv51X6tmOT0+fvp2Ey90lKoAwT2cwyw+N8TmHRDzLpm8gitq1JKUYCuJ
+ TeSxk4sZJLJWDTkX3sMnjaifJq1n2qWdhi0ymiMfTyRuZWhBAV4I0wTmWuOEHZP7uOoW6nrz+
+ 7slAz4gttt26WGJJ6TExb3ik0VwdL2ai6DWGgmOckHZp00RFpnaqD7yimaF707KnurNL6/XXF
+ HrEVbauT1m8wKEVcKujJHy6x3e9PpwXWqfFSRFjOaDNjo8vXJ8krKXvJs60xd4pZDZl3oTbX2
+ WsMmyN1L5U6h2repgXJEl/2hToN3crg0hJd4qvGGcFdu7JnvLPL/K4JRv5Jjxc8Vied8E1lX0
+ 7Sb8n0BIYJaZsW5aW/9n29KfKNBA2k4xCHOKbwtjNqKc9oeqaroaMXgBEqqG2bL+KR259frVb
+ pSZ49n4HjaqPRzgmsgTFG+Dt8KDhuAwqGl/dFNGOfqIrnWglE9s/MZ0mKT1VShzWRP6s4c66d
+ 6/+c44Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,77 +60,35 @@ On Mon, 3 Sep 2018, Eric Sunshine wrote:
 
 > On Mon, Sep 3, 2018 at 5:10 PM Johannes Schindelin via GitGitGadget
 > <gitgitgadget@gmail.com> wrote:
-> > This will come in handy when publishing the results of Git's test suite
-> > during an automated VSTS CI run.
+> > The upcoming patches will allow building git.git via VSTS CI, where
+> > variable names and URLs look a bit different than in Travis CI.
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > @@ -431,11 +434,24 @@ trap 'exit $?' INT
-> >  test_failure_ () {
-> > +       if test -n "$write_junit_xml"
-> > +       then
-> > +               junit_insert="<failure message=\"not ok $test_count -"
-> > +               junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
-> > +               junit_insert="$junit_insert $(xml_attr_encode \
-> > +                       "$(printf '%s\n' "$@" | sed 1d)")"
-> > +               junit_insert="$junit_insert</failure>"
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > @@ -28,7 +28,8 @@ osx-clang|osx-gcc)
+> >         # Uncomment this if you want to run perf tests:
+> >         # brew install gnu-time
+> > -       brew install git-lfs gettext
+> > +       test -z "$BREW_INSTALL_PACKAGES" ||
+> > +       eval brew install $BREW_INSTALL_PACKAGES
 > 
-> This is a genuine failure, so you're creating a <failure> node. Okay.
+> This 'eval' is unnecessary, isn't it?
 > 
-> > +               write_junit_xml_testcase "$1" "      $junit_insert"
-> > +       fi
-> > @@ -444,11 +460,19 @@ test_failure_ () {
-> >  test_known_broken_ok_ () {
-> > +       if test -n "$write_junit_xml"
-> > +       then
-> > +               write_junit_xml_testcase "$* (breakage fixed)"
-> > +       fi
-> >         test_fixed=$(($test_fixed+1))
-> >         say_color error "ok $test_count - $@ # TODO known breakage vanished"
-> >  }
+>     brew install $BREW_INSTALL_PACKAGES
 > 
-> This was expected to fail but didn't, which means it probably needs
-> some sort of attention. test_known_broken_ok_() prints this result in
-> the 'error' color, and test_done() re-inforces that by printing a
-> message, also in 'error' color:
-> 
->     42 known breakage(s) vanished; please update test(s)
-> 
-> So, should this emit a <failure> node also, perhaps with 'type'
-> attribute set to "warning" or something? (<failure type="WARNING"
-> message="...">)
+> should give the same result.
 
-My primary aim is to display the test results in the web interface, see
-e.g.
-https://git.visualstudio.com/git/_build/results?buildId=128&view=ms.vss-test-web.test-result-details
+Oh right! Fixed in https://github.com/gitgitgadget/git/pull/31 (and I also
+opened https://github.com/git/git/pull/531 to verify that Travis CI still
+works).
 
-The parser for JUnit XML (and in fact, the JUnit XML schema itself) do not
-allow for such a warning. If you add a `<failure>`, then the build fails.
-
-And we do not want the build to fail. Historically, I saw quite a couple
-of "vanished" breakages depending on the platform where I ran the tests.
-
-> > @@ -758,9 +793,58 @@ test_at_end_hook_ () {
-> > +xml_attr_encode () {
-> > +       # We do not translate CR to &#x0d; because BSD sed does not handle
-> > +       # \r in the regex. In practice, the output should not even have any
-> > +       # carriage returns.
-> > +       printf '%s\n' "$@" |
-> > +       sed -e 's/&/\&amp;/g' -e "s/'/\&apos;/g" -e 's/"/\&quot;/g' \
-> > +               -e 's/</\&lt;/g' -e 's/>/\&gt;/g' \
-> > +               -e 's/  /\&#x09;/g' -e 's/$/\&#x0a;/' -e '$s/&#x0a;$//' |
-> > +       tr -d '\012\015'
-> > +}
-> 
-> It's possible to insert a literal CR in the 'sed' expression, which
-> does match correctly on BSD (and MacOS). For instance:
-> 
->     CR=$(printf "\r")
->     sed -e "s/$CR/\&#x0d;/g"
-
-Okay. But since we are talking about displaying some chunk of text, I
-would rather just delete the CR here anyway.
-
-Ciao,
+Thanks,
 Dscho
+
+> >         brew link --force gettext
+> >         brew install caskroom/cask/perforce
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > @@ -1,5 +1,26 @@
+> > +       BREW_INSTALL_PACKAGES="git-lfs gettext"
+> 
