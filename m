@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F062B1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ACC11F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727560AbeIEC1P (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:27:15 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:46420 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727145AbeIEC1P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:27:15 -0400
-Received: by mail-pf1-f194.google.com with SMTP id u24-v6so2339424pfn.13
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:00:11 -0700 (PDT)
+        id S1727568AbeIEC1R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:27:17 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39571 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727442AbeIEC1Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:27:16 -0400
+Received: by mail-pf1-f193.google.com with SMTP id j8-v6so2357110pff.6
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kl7mcazCIo1v/eXjDRYCgSVXBadwK7lTIxxKLYdsids=;
-        b=iy/5o7TgOsPwgGT2wBKpPIYT/U+LLTj5YgMgq6xMLhVV8fy/9bN+YFJ5KIFVkUAm4Y
-         /PzFng3ojF0H4TTNXGP8DZvy5EKoBn+KmOhbQm/0hkEmgjDq5hv2lQC31VDBc9SgUzGA
-         zOJifvZW/TtrBDISC2Vdtv4/R7cZDPwvVA44b741RguHP8NTF9vEMjmrKvTgNsgzgb/q
-         4PcPjTkS/UFxgsmgMJgNuHa0R6b6FfEVYx3oyFlGrvLzMK0+bG3c5X9aOpqC0PxPy7Y2
-         z4YAnxW1yZ4jABGCBNNttS3Xp5XE5NjeBfj1sTJwgkfvNgb5hocW/jYIhjr3r4UW5Rh5
-         k0sg==
+        bh=s+Ny1KrIwjkuGSLuErfXFRJb3ZGpYIoPqmiQfDzz5wg=;
+        b=jCsVrmqvnMWZ71F2LK05Jg2VToVhka2vPAnUv2E5Qtv/Tp48ybEVuh0NVlnICr3ruD
+         4KcDYns8XtTybmkfaE5t7vjagYgH8kE0g4W/bKNdCVQYmsY/1I0+C0eXJkkFuyisqziH
+         yCw1HP18r6ElbbLLn0Tm8yoE1KU5KN/tsLt74dI6O5p1Z8o6d1ilVWOhEtstE96vyKgg
+         zZhLW9A43AJ7FX9LZTU0XagAlAf2cLGDcNPxMSd7QBnuduUVDTPFp7SOS/4mkbeA3VF2
+         WNAMsBLuREUW/KfZA5AS6Q+z+2YN4FQ9yv1mF96TZGdolXdzwYQqbOUVGK0xTMTa1dUK
+         s0RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kl7mcazCIo1v/eXjDRYCgSVXBadwK7lTIxxKLYdsids=;
-        b=ZSruyxEWCrewB4xYEyO3BbdEo47DzQjFYP9ezmfaDjTuIf3F1Uf/Hicgz0ia0y+rMI
-         MNjxiW7QOJ++4QGs6FSFrVy8LhXTJ1yMxlyW9QcjUVyrGzxPqNKUORq7umQ9GAWcYxRJ
-         6SFHBR4TyS+HBtsypsRG/PFGlnU2yIaTcASBsgXTmoLpsHsarPVCsmoLriO8GZCP6U7j
-         QwlACIngpIT9KnhobOQXRapkcjrzitxOj9Bl/hCltV0qPEwI74WXI27ae+yUYx0w/GYg
-         6VuKrVjdavfrBia32PPC8jr4qq56dAa269Al9wFIYuAGcfKWB6flfNYIkVNYhGK6HHA0
-         9FMg==
-X-Gm-Message-State: APzg51DTFbSVasjmEgDFg2dYG0xrVBWjW//jIwg3bQway5wfnotNcPZZ
-        bEtdbB7FoVjXi1miMZrTTAr17iwo
-X-Google-Smtp-Source: ANB0VdZHKWOTid2W8jZlVmNaJM4Wm6i3pVxo/+v+HJJ/6yXSQ9WWga443gp1Eg1I59Daffl9GgM51g==
-X-Received: by 2002:a63:5d1f:: with SMTP id r31-v6mr6710405pgb.445.1536098410639;
-        Tue, 04 Sep 2018 15:00:10 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id l3-v6sm9560pff.8.2018.09.04.15.00.09
+        bh=s+Ny1KrIwjkuGSLuErfXFRJb3ZGpYIoPqmiQfDzz5wg=;
+        b=o6VVGXg6ulNTnz5Jjsogg9Sg4Rn3U83X7MG33/kDc+Q4XPOVJVqiqMSgVhY32qtgvu
+         g1P0Fp/pMOPAWKZ71JYE0ZZ3m98QY3rrS5VigYV1ciGvlvAjd8TiBTHK8HMBEO1NXpc6
+         SfbWjC7PcBL/MzARAX41f+RW2fkn9q0vBbB108r3BxbggOMcFsybNfHrutIrWEt4LZjs
+         2uq/idjojoqVpo/hI6ix+fCGHyDQJDsj4Olx0iqXkwLmKnNJZLAKP8zfEl0N9VWQsyID
+         cQNRg0gpdkJcTIxAaKnZ8PClNQBhd71WqcQBQ/jaG8qhlomP55cyRz/DaaJ3oMJGwYw5
+         ntIA==
+X-Gm-Message-State: APzg51BQFitgbkPABpS7JYil6/u82cGB1g1qrDaK/qbDTopWoTOLTWO0
+        FXMVPwXDA2Y9939paz5CW0Ao5kjl
+X-Google-Smtp-Source: ANB0VdZJa8G7GPpBUGSao2Vyg2hCNlUa71y6UfUHM62EjQrzrE8sWnvsbIAgISNZ7/G3g8pzweFvFA==
+X-Received: by 2002:a62:c8d2:: with SMTP id i79-v6mr36752914pfk.35.1536098412124;
+        Tue, 04 Sep 2018 15:00:12 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id v7-v6sm34007587pgh.57.2018.09.04.15.00.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 15:00:09 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 15:00:09 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:43 GMT
-Message-Id: <25f6771947fd42de2c1373fef2f5043317161c04.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 15:00:11 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 15:00:11 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:44 GMT
+Message-Id: <10dc87d4ff20a68ccbab904dfbffbd7bf8c7dc35.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 16/18] builtin rebase: support `fork-point` option
+Subject: [PATCH v2 17/18] builtin rebase: add support for custom merge
+ strategies
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,51 +72,121 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit adds support for `--fork-point` and `--no-fork-point`.
-This is converted as-is from `git-legacy-rebase.sh`.
+When running a rebase in non-am mode, it uses the recursive merge to
+cherry-pick the commits, and the rebase command allows to configure
+the merge strategy to be used in this operation.
+
+This commit adds that support to the builtin rebase.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ builtin/rebase.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 57 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index bcacffda33..6c101e1260 100644
+index 6c101e1260..847c7daf1c 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -632,6 +632,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	struct string_list whitespace = STRING_LIST_INIT_NODUP;
+@@ -96,6 +96,7 @@ struct rebase_options {
+ 	char *cmd;
+ 	int allow_empty_message;
+ 	int rebase_merges, rebase_cousins;
++	char *strategy, *strategy_opts;
+ };
+ 
+ static int is_interactive(struct rebase_options *opts)
+@@ -217,6 +218,22 @@ static int read_basic_state(struct rebase_options *opts)
+ 		opts->gpg_sign_opt = xstrdup(buf.buf);
+ 	}
+ 
++	if (file_exists(state_dir_path("strategy", opts))) {
++		strbuf_reset(&buf);
++		if (read_one(state_dir_path("strategy", opts), &buf))
++			return -1;
++		free(opts->strategy);
++		opts->strategy = xstrdup(buf.buf);
++	}
++
++	if (file_exists(state_dir_path("strategy_opts", opts))) {
++		strbuf_reset(&buf);
++		if (read_one(state_dir_path("strategy_opts", opts), &buf))
++			return -1;
++		free(opts->strategy_opts);
++		opts->strategy_opts = xstrdup(buf.buf);
++	}
++
+ 	strbuf_release(&buf);
+ 
+ 	return 0;
+@@ -356,6 +373,8 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		opts->rebase_merges ? "t" : "");
+ 	add_var(&script_snippet, "rebase_cousins",
+ 		opts->rebase_cousins ? "t" : "");
++	add_var(&script_snippet, "strategy", opts->strategy);
++	add_var(&script_snippet, "strategy_opts", opts->strategy_opts);
+ 
+ 	switch (opts->type) {
+ 	case REBASE_AM:
+@@ -633,6 +652,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  	struct string_list exec = STRING_LIST_INIT_NODUP;
  	const char *rebase_merges = NULL;
-+	int fork_point = -1;
+ 	int fork_point = -1;
++	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
  	struct option builtin_rebase_options[] = {
  		OPT_STRING(0, "onto", &options.onto_name,
  			   N_("revision"),
-@@ -714,6 +715,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			N_("mode"),
- 			N_("try to rebase merges instead of skipping them"),
+@@ -717,6 +737,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  			PARSE_OPT_OPTARG, NULL, (intptr_t)""},
-+		OPT_BOOL(0, "fork-point", &fork_point,
-+			 N_("use 'merge-base --fork-point' to refine upstream")),
+ 		OPT_BOOL(0, "fork-point", &fork_point,
+ 			 N_("use 'merge-base --fork-point' to refine upstream")),
++		OPT_STRING('s', "strategy", &options.strategy,
++			   N_("strategy"), N_("use the given merge strategy")),
++		OPT_STRING_LIST('X', "strategy-option", &strategy_options,
++				N_("option"),
++				N_("pass the argument through to the merge "
++				   "strategy")),
  		OPT_END(),
  	};
  
-@@ -1062,6 +1065,14 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	} else
- 		BUG("unexpected number of arguments left to parse");
+@@ -963,6 +989,37 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		imply_interactive(&options, "--rebase-merges");
+ 	}
  
-+	if (fork_point > 0) {
-+		struct commit *head =
-+			lookup_commit_reference(the_repository,
-+						&options.orig_head);
-+		options.restrict_revision =
-+			get_fork_point(options.upstream_name, head);
++	if (strategy_options.nr) {
++		int i;
++
++		if (!options.strategy)
++			options.strategy = "recursive";
++
++		strbuf_reset(&buf);
++		for (i = 0; i < strategy_options.nr; i++)
++			strbuf_addf(&buf, " --%s",
++				    strategy_options.items[i].string);
++		options.strategy_opts = xstrdup(buf.buf);
 +	}
 +
- 	if (read_index(the_repository->index) < 0)
- 		die(_("could not read index"));
- 
++	if (options.strategy) {
++		options.strategy = xstrdup(options.strategy);
++		switch (options.type) {
++		case REBASE_AM:
++			die(_("--strategy requires --merge or --interactive"));
++		case REBASE_MERGE:
++		case REBASE_INTERACTIVE:
++		case REBASE_PRESERVE_MERGES:
++			/* compatible */
++			break;
++		case REBASE_UNSPECIFIED:
++			options.type = REBASE_MERGE;
++			break;
++		default:
++			BUG("unhandled rebase type (%d)", options.type);
++		}
++	}
++
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
 -- 
 gitgitgadget
 
