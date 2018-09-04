@@ -2,88 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA6F91F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 01:52:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA24B1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 04:31:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726815AbeIDGPF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 02:15:05 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:39407 "EHLO
+        id S1726316AbeIDIyO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 04:54:14 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:46389 "EHLO
         mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725990AbeIDGPF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 02:15:05 -0400
-Received: by mail-qt0-f193.google.com with SMTP id o15-v6so2348544qtk.6
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 18:52:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3J5n0jroOFQMhH86WIO8IcCIlINHV1TMI9P4sTXdmfo=;
-        b=Ey2XP3NmP4k8A5SASI+03crO6uN7Oi/p2HQsJShf+IwYf0w3BM8Z9t5CZEjPj3EsK0
-         8YzZ16VLlCUxsyC3Z2TzbOc82+D5MvKedWNqf2iKEfrJqgP4HWCkmnzJEqe+26kyt+rl
-         GUfs80n2+qkbXEyLKcwCsx/LDoeEEOxD9FfpB5qz4EZKIzke5fmJnmpxPlkzFwfBZLPs
-         hU7YWFY8zs0mON70xW0Qp6V7Yx0zFszt9NrnJkNwqdSR6k/65e/FCjmlO5MbE6gwPXYV
-         JeReDhnMtgHhTaX1M/hv1NctExRuacwmMbXaP/Ui5c80IgOvsnOKUA3T7j5ha/rzhkDc
-         Zi9Q==
+        with ESMTP id S1726093AbeIDIyO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 04:54:14 -0400
+Received: by mail-qt0-f193.google.com with SMTP id d4-v6so2564749qtn.13
+        for <git@vger.kernel.org>; Mon, 03 Sep 2018 21:30:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3J5n0jroOFQMhH86WIO8IcCIlINHV1TMI9P4sTXdmfo=;
-        b=sow5/xztu021qAYCRihPicx6eOFo34uF6b6ZvxFvTOpS0Ob+L8gAJ7b60cpAX/k1X7
-         6/RSn96ooZX99yoFU9DpH0NuJ3DeovT812nWyEmsA5jbeD9mrN0z8ZCHtepU02e2YdmT
-         Q1cpCoQ8ouS9DwkVAJHekhgJOG5b8Ew/GQbdsmrV2EHwSSJ5h0S94kgh+OftVSQYv9ra
-         mhzIRuZYbB4KeX+8Kbpq9oyVAMQynUuVWy6FQsDMHObVhT7JMAT+NnPIQ/WcFrYrxu1c
-         gW3pY6pXiyninukcfmE+oom/cu72c0j0TuLwzP9SioEF1YEkfG0ELMXkizuv+m8Z1Q0d
-         rc+w==
-X-Gm-Message-State: APzg51A4Zr9jaUl7N4ChzJwJiQUyavuuNEWpnX5As84WEE0P9sZQtybQ
-        uO9/7XghKy4TGgBc7izMo8yX6H7C/Ce1thzgYBU=
-X-Google-Smtp-Source: ANB0VdaQ7M5ORZf6ARb4ptMgr0xG1nP3pS/tIXSuJzYVtMWWgMFgPAIHkcd/dt6ZbVjvW0GC/49nW8SIu4/oTA2m66s=
-X-Received: by 2002:aed:2704:: with SMTP id n4-v6mr27640785qtd.252.1536025938559;
- Mon, 03 Sep 2018 18:52:18 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=txNtb9z2mxN/YFwilrX/SN3wW4z/8RiyXK5oAXATBhY=;
+        b=FnAocaCGRAl8Sx+KrhkgpmDLrex05lD6+AazKfjBwfOBhAKcdSLQyziR0HRaM0lrL9
+         UhREAhVDznOAi8LxqeSgNHeg4ow/v5XbCyLElZYbukFMoU6NaACI0Qk48JC9BcpGZBK6
+         dHJGEFFs6GbB6dnQkOSCmPmfF+i7lRU+A0gumxp/Syk1drPurBfgi8P0Jjh00tk0a9ER
+         PBDharWKC/xLj/TpsrT+dmdAhJBrpV4hwuqK9aKa2TVeRwaZ7JKJ8quFv1AscdIdNKwY
+         bf2uzijmJCxhcCRn43eLlOOrhBZN8LOcVaXywujOz4WarEZRIDEbhC8LDFEF5mHDvkJo
+         o1IA==
+X-Gm-Message-State: APzg51DwbSmFz5UHmRmV44fD3MqjK1c+utcsHyyCUfSquvSPZ8PilRvw
+        Shvc7NDZhyL7y+liOzVsiKrwpq0J60Iig+qEjqVm+A==
+X-Google-Smtp-Source: ANB0VdZntgTTz9wPQK61rHKw2OWr2BHMygTNB9PaVOiYFEfqy53raXEMozGXm4Wg2zj5rBUNzLebCGl3ml6xJRcXiT0=
+X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr28788962qtc.50.1536035457602;
+ Mon, 03 Sep 2018 21:30:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180823210056.27489-1-jn.avila@free.fr>
-In-Reply-To: <20180823210056.27489-1-jn.avila@free.fr>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 4 Sep 2018 09:52:07 +0800
-Message-ID: <CANYiYbHmU=j+MwLTumJ+BK_0msyPBeux92wF8VqL9J04VOc-FQ@mail.gmail.com>
-Subject: Re: [PATCH] i18n: fix mistakes in translated strings
-To:     Jean-Noel Avila <jn.avila@free.fr>
-Cc:     Git List <git@vger.kernel.org>
+References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
+In-Reply-To: <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 4 Sep 2018 00:30:45 -0400
+Message-ID: <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
+Subject: Re: [PATCH 7/9] tests: include detailed trace logs with
+ --write-junit-xml upon failure
+To:     gitgitgadget@gmail.com
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-No=C3=ABl Avila <jn.avila@free.fr> =E4=BA=8E2018=E5=B9=B48=E6=9C=8824=
-=E6=97=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=885:02=E5=86=99=E9=81=93=EF=BC=
-=9A
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 2bcc70fdfe..b56028ba9d 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -542,7 +542,7 @@ static void runcommand_in_submodule_cb(const struct c=
-ache_entry *list_item,
->                 argv_array_pushv(&cpr.args, info->argv);
+On Mon, Sep 3, 2018 at 5:10 PM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> So let's do something different in VSTS: let's run all the tests with
+> `--quiet` first, and only if a failure is encountered, try to trace the
+> commands as they are executed. [...]
 >
->                 if (run_command(&cpr))
-> -                       die(_("run_command returned non-zero status while=
-"
-> +                       die(_("run_command returned non-zero status while=
- "
->                                 "recursing in the nested submodules of %s=
-\n."),
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> @@ -445,10 +452,37 @@ test_ok_ () {
+>  test_failure_ () {
+>         if test -n "$write_junit_xml"
+>         then
+> +               if test -z "$GIT_TEST_TEE_OUTPUT_FILE"
+> +               then
+> +                       case "$(type kill_p4d 2>/dev/null | head -n 1)" in
+> +                       *function*) kill_p4d;;
+> +                       esac
+> +
+> +                       case "$(type stop_git_daemon 2>/dev/null |
+> +                               head -n 1)" in
+> +                       *function*) stop_git_daemon;;
+> +                       esac
 
-Any specific reason to put a period after newline?
-And there is another mistake just above this one:
+In the long run, it might make more sense, and be more scalable, to
+have those scripts define a "prepare_for_rerun" variable or function
+which this code then runs generically rather than having special
+knowledge of those facilities.
 
-    "run_command returned non-zero status for %s\n."
+I could imagine, for instance, test-lib.sh defining a no-op:
 
---=20
-Jiang Xin
+    test_failure_prepare_rerun () {}
+
+and then each of those scripts overriding the function:
+
+    # in lib-git-p4.sh
+    test_failure_prepare_rerun () {
+        kill_p4d
+    }
+
+    # in lib-git-daemon.sh
+    test_failure_prepare_rerun () {
+        stop_git_daemon
+    }
+
+> +                       # re-run with --verbose-log
+> +                       echo "# Re-running: $junit_rerun_options_sq" >&2
+> +
+> +                       cd "$TEST_DIRECTORY" &&
+> +                       eval "${TEST_SHELL_PATH}" "$junit_rerun_options_sq" \
+> +                               >/dev/null 2>&1
+> +                       status=$?
+> +
+> +                       say_color "" "$(test 0 = $status ||
+> +                               echo "not ")ok $test_count - (re-ran with trace)"
+> +                       say "1..$test_count"
+> +                       GIT_EXIT_OK=t
+> +                       exit $status
+> +               fi
+> +
+>                 junit_insert="<failure message=\"not ok $test_count -"
+>                 junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
+>                 junit_insert="$junit_insert $(xml_attr_encode \
+> -                       "$(printf '%s\n' "$@" | sed 1d)")"
+> +                       "$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")"
+> +               >"$GIT_TEST_TEE_OUTPUT_FILE"
+>                 junit_insert="$junit_insert</failure>"
+>                 write_junit_xml_testcase "$1" "      $junit_insert"
+>         fi
+
+This junit-related stuff is getting pretty lengthy. I wonder if it
+would make sense to pull it out to its own function at some point
+(again, in the long run).
