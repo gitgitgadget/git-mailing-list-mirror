@@ -2,74 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 297191F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 16:23:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 835B21F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 16:38:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727551AbeIDUtO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 16:49:14 -0400
-Received: from mail-io0-f173.google.com ([209.85.223.173]:37640 "EHLO
-        mail-io0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726052AbeIDUtO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 16:49:14 -0400
-Received: by mail-io0-f173.google.com with SMTP id v14-v6so3498612iob.4
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 09:23:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mHyq+v/FmAiTCdntGg+ZrOo5WI95jQZ4O5kmbd03spk=;
-        b=gR9+SaOWgXMPYVGtstL6CINsVyYf/wd6D/eJTyrxyYKhaUVtT/BFSArKN1F9hxLAGf
-         2lB9hNIj6UO8fAs9/Rm7kGWptzulwV9IdKWu8fU4tQeP77GjZu1s4gKUV8LtopwvWAok
-         +pUWUMG3wa78tIZOJqS3h9KTZsX9faH7Wx5rJneH+fUC57E65MznQoiI6X95XPaFa0HW
-         3P8VM0Llrik54o5TTnCVvr0m6tpJqUp21v0e4rb+pvDPoR/98esvD4+wqu4RhlFCfO61
-         GJlIMy235yFymJ5aYEB6pQwk1l02GTNwgjH7S85m0KnCR8dsOI0zoUah+m7V2VeykeHo
-         8yQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mHyq+v/FmAiTCdntGg+ZrOo5WI95jQZ4O5kmbd03spk=;
-        b=FS9YQMHVZ+mkBu0g3smTWW+eO7+Nt6E4EcoZTdPu6rVD/MHPucTvIS0hNwe2LaVc+3
-         1MMCmVHuCklhXJDEMhhYRiCxN1gN7UKUVqlhE5NfYRnhroCskAT/jUEC7B4+OXXAp/kN
-         eteMLAcHVRSK0fAj/xAkWHNtPRjJrT/7rHwk6bs1TXBBn9u1Ajm3hPgje0SPrHVvfzpG
-         cQIEmK1niVcScCDfJ0uG/cWLzyZaKnzPCVHHHTVZtxpA4JOkr+rU/S9KLWGgyajOIhIY
-         19M0kOFCEaycbM0jPgnikvvWjMfdDXuPKoZ/I0/oikvBGxpMW/pcNwNrVoudUb5tGQgF
-         yfjQ==
-X-Gm-Message-State: APzg51CdVDd3VxUiTvADIb0Gfm4I8YDD3liYupcIohceBNUC9U6RN8O5
-        9lp7duAmcVSRcSviHGAEs7aR5UgXl1jZNdxqhIE=
-X-Google-Smtp-Source: ANB0Vdb6smOJHQ0scfhnaC8WvGtKmbJJTaszb/p2mwsYEP01c7BNu8LFK3QywvtL6F3g8YLC9QcqoQGY6sMIOvSHyo8=
-X-Received: by 2002:a6b:294b:: with SMTP id p72-v6mr21766664iop.17.1536078203948;
- Tue, 04 Sep 2018 09:23:23 -0700 (PDT)
+        id S1727037AbeIDVED (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 17:04:03 -0400
+Received: from cloud.peff.net ([104.130.231.41]:38330 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726312AbeIDVED (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 17:04:03 -0400
+Received: (qmail 17634 invoked by uid 109); 4 Sep 2018 16:38:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Sep 2018 16:38:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4388 invoked by uid 111); 4 Sep 2018 16:38:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 04 Sep 2018 12:38:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Sep 2018 12:38:08 -0400
+Date:   Tue, 4 Sep 2018 12:38:08 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Van Oostenryck Luc <luc.vanoostenryck@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [BUG] index corruption with git commit -p
+Message-ID: <20180904163807.GA23572@sigill.intra.peff.net>
+References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local>
+ <87tvn8c166.fsf@evledraar.gmail.com>
+ <20180902050803.GA21324@sigill.intra.peff.net>
+ <20180902071204.GA2868@duynguyen.home>
+ <20180902072408.GA18787@sigill.intra.peff.net>
+ <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180903232515.336397-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20180903232515.336397-1-sandals@crustytoothpaste.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 4 Sep 2018 18:22:58 +0200
-Message-ID: <CACsJy8Ak3Gba-z09Gz8iFrRyXoLbR+jW0tGuPnwCLpxVZWfMtw@mail.gmail.com>
-Subject: Re: [PATCH v4 00/12] Hash-independent tests (part 3)
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 4, 2018 at 1:26 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> This is the next in the series of improvements to make tests
-> hash-independent.
+On Tue, Sep 04, 2018 at 06:13:36PM +0200, Duy Nguyen wrote:
 
-If it helps, I looked over the series and didn't find anything questionable.
--- 
-Duy
+> > > Doh, of course. I even thought about this issue and dug all the way into
+> > > reopen_lock_file(), but for some reason temporarily forgot that O_WRONLY
+> > > does not imply O_TRUNC.
+> > >
+> > > Arguably this should be the default for reopen_lockfile(), as getting a
+> > > write pointer into an existing file is not ever going to be useful for
+> > > the way Git uses lockfiles. Opening with O_APPEND could conceivably be
+> > > useful, but it's pretty unlikely (and certainly not helpful here, and
+> > > this is the only caller). Alternatively, the function should just take
+> > > open(2) flags.
+> > >
+> > > At any rate, I think this perfectly explains the behavior we're seeing.
+> >
+> > Thanks all for digging this down (I am a bit jealous to see that I
+> > seem to have missed all this fun over the weekend X-<).
+> 
+> And just to be clear I'm looking forward to a patch from Jeff to fix
+> this since he clearly put more thoughts on this than me. With commit.c
+> being the only user of reopen_lock_file() I guess it's even ok to just
+> stick O_TRUNC in there and worry about O_APPEND when a new caller
+> needs that.
+
+That's the way I'm leaning to. The fix is obviously a one-liner, but I
+was hoping to construct a minimal test case. I just haven't gotten
+around to it yet.
+
+The bug is ancient, so I don't think it's important for v2.19.
+
+-Peff
