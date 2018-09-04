@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 963F41F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 21:27:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8DB51F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 21:27:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727213AbeIEByO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 21:54:14 -0400
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:45318 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725879AbeIEByO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 21:54:14 -0400
-Received: by mail-pf1-f176.google.com with SMTP id i26-v6so2303579pfo.12
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:27:17 -0700 (PDT)
+        id S1727250AbeIEByR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 21:54:17 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:39774 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725879AbeIEByR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 21:54:17 -0400
+Received: by mail-pg1-f194.google.com with SMTP id i190-v6so2287126pgc.6
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KPjxsGpauR+NnQsqQxBLhz88QlYtsndNgdTxcBNmsTg=;
-        b=meKJgAMDZC5LxIbQPE7/pc+sV8S9JIIFN1VYXSuiZpvK9CkcgH1ujUHezrFOjYCWvq
-         HOlGfcfHTFNR5gCSaYbElh4cLsyiWMK/VhpjKmGUhdCEljzTKDV0YDCNh9fHOGdRgrj+
-         ewC1lGNcOanIBfV+E0ENH52Qp2I5NIJt9Zw8/jOzvoaxDwLVlvpOPACB+tWg3iu5996y
-         gQSlA18V/dR8Uen17dAt2akitlcfR/+dBVlQOCRTYn5nNE7Z6W6FoaB3cbmkn1ODVf1K
-         hf3qZxUtwq41RBIRTt43kV/2dQD04MAvZPF08Ko2hZwsz2PCXAQG7/dhO29DL0WKOL7T
-         b7dA==
+        bh=/zwQGrWC0f3gpyveYnsjDUZRSqmvgIV/CvwaXSpwfxQ=;
+        b=X1Sw10zehVqBC0ozTnrBMP2l/OO4vnabgAL5kjcd8MXNDaZ0Cf7Eb5VFibmRnjndq9
+         NZwc+VwXKTpieJty3ivw8d2vAcB0gGU4iEjhJMjr1fhjthhigxmodXCC9KrtoihNjGuR
+         6b8lbfa3g6/w/ZXDJtMHmM3LfxlHV3+Vp1gCL89HppnZbHEMaI0SRFaYhSz4Vf0lUv7p
+         OoAs8ZtRm20gmoeWqTU8ndzWpsoEy6Mo6M+uIEYYI376GaP9hByEiEWJnEBhG52nWB1M
+         17QGrtzDsySDenq67aI4iO4RBCh+yjRNn3rOHmelejAjPdh15XUOOqeLLD6R1COlPUyB
+         Ghag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KPjxsGpauR+NnQsqQxBLhz88QlYtsndNgdTxcBNmsTg=;
-        b=ucbmeThuA9K9Ba+2AW5MU/884a6ygQ5y0oGqq/iHprhTWkV2kPenbXEgJgTaEIgKtl
-         jkNpVNght0tJ4Nf94Nbq6KoCm9bflTSsMycNXNEd43Dty7nO+K3DZYudsErZaN6TjfhF
-         K9jA3v/6iwUmaip2jeJQk8DF1+9qXzwQPfqgsZbfa5CcaN7cop4FeeaSOegt/286gYZ0
-         /7TP22V2zY/m3kbyJrSsTdsrannNTtAyMhqXjNNtpJBcD4l4BN+aqd0ZE8Dh5aqdbUHn
-         8OB7xKIuigDStQmj2lhnOPnn/JJ+CoaLB/ljGc9CaivMOPBtlZixRlqUSevRpc7YcYqM
-         NCOw==
-X-Gm-Message-State: APzg51C29cX5V4RVmPK1rD2I/DsTI4rBOkI/ZX9iW91p3uQYVsmsxptp
-        nwqVhpsjMWTmrebNDICJdCwbDwvb
-X-Google-Smtp-Source: ANB0VdZgo/NQCfl43EPjKi5S430K0lFDNwfL4WxwNBgA7p5iZNw6soAniQxaCrM97lsRu+7j5arn0Q==
-X-Received: by 2002:a62:9402:: with SMTP id m2-v6mr36627958pfe.3.1536096436951;
-        Tue, 04 Sep 2018 14:27:16 -0700 (PDT)
+        bh=/zwQGrWC0f3gpyveYnsjDUZRSqmvgIV/CvwaXSpwfxQ=;
+        b=HD2xOBwTCA/c8h7fVCd1/8TfqKBCJblpbhkyBpqWcPEvbBvXj35L+1J/cXEDeIcaC2
+         xdAfe2UX/64EgFeFAVhBhJ00HQe4t4oC6llMgBaYQlSE394vmXvshfJDvXbqmH2rLprJ
+         6wO3dTqFadv5wNv+AxGsKf89N30bZMCuT3f8LNZXU77tDbVYA6g6D4m3Itp0rMF64zZg
+         bO7BLrsn9M3xNkIMx5z+EbW5HVlDLHTx0P4yrhlQW3zYE2u59RK2IhBDRg8FxL5HI7jc
+         1rZmEU9IHlgsktXFeVRnnK3DGdw8hf+xWvp5NiFebBjnqhcHdDdrZYDpWJn0Dllgf8Yb
+         T2ag==
+X-Gm-Message-State: APzg51B8Jpy3+v38pBdpaT859tZmsJQMRtCu/Pxu7QWVR/p/7A8gd8il
+        dcAxnQi3cJhCyXTvVqmLwHqumzCX
+X-Google-Smtp-Source: ANB0VdaEQ0wuuvk9AIL5se3qG2yWH9GbIVVfJa82+gX2gKlHt8MZFNBjiBUIDkPkG0/RkJfOgJVyMw==
+X-Received: by 2002:a63:5660:: with SMTP id g32-v6mr32244824pgm.227.1536096439694;
+        Tue, 04 Sep 2018 14:27:19 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id r205-v6sm62195587pgr.11.2018.09.04.14.27.15
+        by smtp.gmail.com with ESMTPSA id x24-v6sm29033181pfh.67.2018.09.04.14.27.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 14:27:16 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 14:27:16 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:27:00 GMT
-Message-Id: <2ec0b744bf13b5991fb4205e7d665f807668de4f.1536096424.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:27:18 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:27:18 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:27:02 GMT
+Message-Id: <b639bfa5a828ed15fc960450dd813136408b5c70.1536096424.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.32.v2.git.gitgitgadget@gmail.com>
 References: <20180808134830.19949-1-predatoramigo@gmail.com>
         <pull.32.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 07/11] builtin rebase: try to fast forward when possible
+Subject: [PATCH v2 09/11] builtin rebase: start a new rebase only if none is
+ in progress
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,124 +72,99 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-In this commit, we add support to fast forward.
-
-Note: we will need the merge base later, therefore the call to
-can_fast_forward() really needs to be the first one when testing whether
-we can skip the rebase entirely (otherwise, it would make more sense to
-skip the possibly expensive operation if, say, running an interactive
-rebase).
+To run a new rebase, there needs to be a check to assure that no other
+rebase is in progress. New rebase operation cannot start until an
+ongoing rebase operation completes or is terminated.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 72 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 72 insertions(+)
+ builtin/rebase.c | 48 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 47 insertions(+), 1 deletion(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index afef0b0046..d67df28efc 100644
+index 8a7bf3d468..d45f8f9008 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -20,6 +20,7 @@
- #include "commit.h"
- #include "diff.h"
- #include "wt-status.h"
-+#include "revision.h"
- 
- static char const * const builtin_rebase_usage[] = {
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-@@ -89,6 +90,12 @@ struct rebase_options {
+@@ -87,6 +87,7 @@ struct rebase_options {
+ 		REBASE_VERBOSE = 1<<1,
+ 		REBASE_DIFFSTAT = 1<<2,
+ 		REBASE_FORCE = 1<<3,
++		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+ 	} flags;
  	struct strbuf git_am_opt;
  };
+@@ -392,10 +393,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		.git_am_opt = STRBUF_INIT,
+ 	};
+ 	const char *branch_name;
+-	int ret, flags;
++	int ret, flags, in_progress = 0;
+ 	int ok_to_skip_pre_rebase = 0;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	struct strbuf revisions = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
+ 	struct object_id merge_base;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+@@ -447,6 +449,30 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
  
-+static int is_interactive(struct rebase_options *opts)
-+{
-+	return opts->type == REBASE_INTERACTIVE ||
-+		opts->type == REBASE_PRESERVE_MERGES;
-+}
-+
- /* Returns the filename prefixed by the state_dir */
- static const char *state_dir_path(const char *filename, struct rebase_options *opts)
- {
-@@ -334,6 +341,46 @@ static int rebase_config(const char *var, const char *value, void *data)
- 	return git_default_config(var, value, data);
- }
+ 	git_config(rebase_config, &options);
  
-+/*
-+ * Determines whether the commits in from..to are linear, i.e. contain
-+ * no merge commits. This function *expects* `from` to be an ancestor of
-+ * `to`.
-+ */
-+static int is_linear_history(struct commit *from, struct commit *to)
-+{
-+	while (to && to != from) {
-+		parse_commit(to);
-+		if (!to->parents)
-+			return 1;
-+		if (to->parents->next)
-+			return 0;
-+		to = to->parents->item;
-+	}
-+	return 1;
-+}
-+
-+static int can_fast_forward(struct commit *onto, struct object_id *head_oid,
-+			    struct object_id *merge_base)
-+{
-+	struct commit *head = lookup_commit(the_repository, head_oid);
-+	struct commit_list *merge_bases;
-+	int res;
-+
-+	if (!head)
-+		return 0;
-+
-+	merge_bases = get_merge_bases(onto, head);
-+	if (merge_bases && !merge_bases->next) {
-+		oidcpy(merge_base, &merge_bases->item->object.oid);
-+		res = !oidcmp(merge_base, &onto->object.oid);
-+	} else {
-+		oidcpy(merge_base, &null_oid);
-+		res = 0;
-+	}
-+	free_commit_list(merge_bases);
-+	return res && is_linear_history(onto, head);
-+}
-+
- int cmd_rebase(int argc, const char **argv, const char *prefix)
- {
- 	struct rebase_options options = {
-@@ -489,6 +536,31 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		goto cleanup;
- 	}
- 
-+	/*
-+	 * Now we are rebasing commits upstream..orig_head (or with --root,
-+	 * everything leading up to orig_head) on top of onto.
-+	 */
-+
-+	/*
-+	 * Check if we are already based on onto with linear history,
-+	 * but this should be done only when upstream and onto are the same
-+	 * and if this is not an interactive rebase.
-+	 */
-+	if (can_fast_forward(options.onto, &options.orig_head, &merge_base) &&
-+	    !is_interactive(&options) && !options.restrict_revision &&
-+	    !oidcmp(&options.upstream->object.oid, &options.onto->object.oid)) {
-+		int flag;
-+
-+		if (!(options.flags & REBASE_NO_QUIET))
-+			; /* be quiet */
-+		else if (!strcmp(branch_name, "HEAD") &&
-+			 resolve_ref_unsafe("HEAD", 0, NULL, &flag))
-+			puts(_("HEAD is up to date, rebase forced."));
-+		else
-+			printf(_("Current branch %s is up to date, rebase "
-+				 "forced.\n"), branch_name);
++	if (is_directory(apply_dir())) {
++		options.type = REBASE_AM;
++		options.state_dir = apply_dir();
++	} else if (is_directory(merge_dir())) {
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "%s/rewritten", merge_dir());
++		if (is_directory(buf.buf)) {
++			options.type = REBASE_PRESERVE_MERGES;
++			options.flags |= REBASE_INTERACTIVE_EXPLICIT;
++		} else {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "%s/interactive", merge_dir());
++			if(file_exists(buf.buf)) {
++				options.type = REBASE_INTERACTIVE;
++				options.flags |= REBASE_INTERACTIVE_EXPLICIT;
++			} else
++				options.type = REBASE_MERGE;
++		}
++		options.state_dir = merge_dir();
 +	}
 +
- 	/* If a hook exists, give it a chance to interrupt*/
- 	if (!ok_to_skip_pre_rebase &&
- 	    run_hook_le(NULL, "pre-rebase", options.upstream_arg,
++	if (options.type != REBASE_UNSPECIFIED)
++		in_progress = 1;
++
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_rebase_options,
+ 			     builtin_rebase_usage, 0);
+@@ -455,6 +481,26 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(builtin_rebase_usage,
+ 				   builtin_rebase_options);
+ 
++	/* Make sure no rebase is in progress */
++	if (in_progress) {
++		const char *last_slash = strrchr(options.state_dir, '/');
++		const char *state_dir_base =
++			last_slash ? last_slash + 1 : options.state_dir;
++		const char *cmd_live_rebase =
++			"git rebase (--continue | --abort | --skip)";
++		strbuf_reset(&buf);
++		strbuf_addf(&buf, "rm -fr \"%s\"", options.state_dir);
++		die(_("It seems that there is already a %s directory, and\n"
++		      "I wonder if you are in the middle of another rebase.  "
++		      "If that is the\n"
++		      "case, please try\n\t%s\n"
++		      "If that is not the case, please\n\t%s\n"
++		      "and run me again.  I am stopping in case you still "
++		      "have something\n"
++		      "valuable there.\n"),
++		    state_dir_base, cmd_live_rebase, buf.buf);
++	}
++
+ 	if (!(options.flags & REBASE_NO_QUIET))
+ 		strbuf_addstr(&options.git_am_opt, " -q");
+ 
 -- 
 gitgitgadget
 
