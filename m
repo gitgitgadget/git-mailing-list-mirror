@@ -2,124 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA24B1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 04:31:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C90F1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 07:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726316AbeIDIyO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 04:54:14 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:46389 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbeIDIyO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 04:54:14 -0400
-Received: by mail-qt0-f193.google.com with SMTP id d4-v6so2564749qtn.13
-        for <git@vger.kernel.org>; Mon, 03 Sep 2018 21:30:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=txNtb9z2mxN/YFwilrX/SN3wW4z/8RiyXK5oAXATBhY=;
-        b=FnAocaCGRAl8Sx+KrhkgpmDLrex05lD6+AazKfjBwfOBhAKcdSLQyziR0HRaM0lrL9
-         UhREAhVDznOAi8LxqeSgNHeg4ow/v5XbCyLElZYbukFMoU6NaACI0Qk48JC9BcpGZBK6
-         dHJGEFFs6GbB6dnQkOSCmPmfF+i7lRU+A0gumxp/Syk1drPurBfgi8P0Jjh00tk0a9ER
-         PBDharWKC/xLj/TpsrT+dmdAhJBrpV4hwuqK9aKa2TVeRwaZ7JKJ8quFv1AscdIdNKwY
-         bf2uzijmJCxhcCRn43eLlOOrhBZN8LOcVaXywujOz4WarEZRIDEbhC8LDFEF5mHDvkJo
-         o1IA==
-X-Gm-Message-State: APzg51DwbSmFz5UHmRmV44fD3MqjK1c+utcsHyyCUfSquvSPZ8PilRvw
-        Shvc7NDZhyL7y+liOzVsiKrwpq0J60Iig+qEjqVm+A==
-X-Google-Smtp-Source: ANB0VdZntgTTz9wPQK61rHKw2OWr2BHMygTNB9PaVOiYFEfqy53raXEMozGXm4Wg2zj5rBUNzLebCGl3ml6xJRcXiT0=
-X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr28788962qtc.50.1536035457602;
- Mon, 03 Sep 2018 21:30:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
-In-Reply-To: <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 4 Sep 2018 00:30:45 -0400
-Message-ID: <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
-Subject: Re: [PATCH 7/9] tests: include detailed trace logs with
- --write-junit-xml upon failure
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726410AbeIDLes (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 07:34:48 -0400
+Received: from ao2.it ([92.243.12.208]:54006 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725990AbeIDLes (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 07:34:48 -0400
+Received: from localhost ([::1] helo=jcn.localdomain)
+        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <ao2@ao2.it>)
+        id 1fx5SP-0000Y8-DT; Tue, 04 Sep 2018 09:09:01 +0200
+Date:   Tue, 4 Sep 2018 09:10:59 +0200
+From:   Antonio Ospite <ao2@ao2.it>
+To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
+        Daniel =?ISO-8859-1?Q?Gra=F1a?= <dangra@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Richard Hartmann <richih.mailinglist@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH v4 1/9] submodule: add a print_config_from_gitmodules()
+ helper
+Message-Id: <20180904091059.3474f58873f82f4e160e06aa@ao2.it>
+In-Reply-To: <20180824185251.be9374239a7a9ec0a796afe7@ao2.it>
+References: <20180824132951.8000-1-ao2@ao2.it>
+        <20180824132951.8000-2-ao2@ao2.it>
+        <87wosfesxl.fsf@evledraar.gmail.com>
+        <20180824185251.be9374239a7a9ec0a796afe7@ao2.it>
+X-Mailer: Sylpheed 3.7.0 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 3, 2018 at 5:10 PM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> So let's do something different in VSTS: let's run all the tests with
-> `--quiet` first, and only if a failure is encountered, try to trace the
-> commands as they are executed. [...]
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> @@ -445,10 +452,37 @@ test_ok_ () {
->  test_failure_ () {
->         if test -n "$write_junit_xml"
->         then
-> +               if test -z "$GIT_TEST_TEE_OUTPUT_FILE"
-> +               then
-> +                       case "$(type kill_p4d 2>/dev/null | head -n 1)" in
-> +                       *function*) kill_p4d;;
-> +                       esac
-> +
-> +                       case "$(type stop_git_daemon 2>/dev/null |
-> +                               head -n 1)" in
-> +                       *function*) stop_git_daemon;;
-> +                       esac
+On Fri, 24 Aug 2018 18:52:51 +0200
+Antonio Ospite <ao2@ao2.it> wrote:
 
-In the long run, it might make more sense, and be more scalable, to
-have those scripts define a "prepare_for_rerun" variable or function
-which this code then runs generically rather than having special
-knowledge of those facilities.
+[...] 
+> I'll wait for other comments to see if a v5 is really needed.
+> 
 
-I could imagine, for instance, test-lib.sh defining a no-op:
+Ping. In case someone missed v4.
 
-    test_failure_prepare_rerun () {}
+Thanks,
+   Antonio
 
-and then each of those scripts overriding the function:
+-- 
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
-    # in lib-git-p4.sh
-    test_failure_prepare_rerun () {
-        kill_p4d
-    }
-
-    # in lib-git-daemon.sh
-    test_failure_prepare_rerun () {
-        stop_git_daemon
-    }
-
-> +                       # re-run with --verbose-log
-> +                       echo "# Re-running: $junit_rerun_options_sq" >&2
-> +
-> +                       cd "$TEST_DIRECTORY" &&
-> +                       eval "${TEST_SHELL_PATH}" "$junit_rerun_options_sq" \
-> +                               >/dev/null 2>&1
-> +                       status=$?
-> +
-> +                       say_color "" "$(test 0 = $status ||
-> +                               echo "not ")ok $test_count - (re-ran with trace)"
-> +                       say "1..$test_count"
-> +                       GIT_EXIT_OK=t
-> +                       exit $status
-> +               fi
-> +
->                 junit_insert="<failure message=\"not ok $test_count -"
->                 junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
->                 junit_insert="$junit_insert $(xml_attr_encode \
-> -                       "$(printf '%s\n' "$@" | sed 1d)")"
-> +                       "$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")"
-> +               >"$GIT_TEST_TEE_OUTPUT_FILE"
->                 junit_insert="$junit_insert</failure>"
->                 write_junit_xml_testcase "$1" "      $junit_insert"
->         fi
-
-This junit-related stuff is getting pretty lengthy. I wonder if it
-would make sense to pull it out to its own function at some point
-(again, in the long run).
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
