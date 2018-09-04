@@ -2,84 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 883391F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 20:11:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 083FB1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 20:15:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727682AbeIEAh6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 20:37:58 -0400
-Received: from cloud.peff.net ([104.130.231.41]:38850 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726749AbeIEAh6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 20:37:58 -0400
-Received: (qmail 27705 invoked by uid 109); 4 Sep 2018 20:11:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Sep 2018 20:11:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9676 invoked by uid 111); 4 Sep 2018 20:11:28 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 04 Sep 2018 16:11:28 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 04 Sep 2018 16:11:16 -0400
-Date:   Tue, 4 Sep 2018 16:11:16 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Tim Schumacher <timschumi@gmx.de>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Allow aliases that include other aliases
-Message-ID: <20180904201115.GD17481@sigill.intra.peff.net>
-References: <20180904173915.2393-1-timschumi@gmx.de>
- <xmqqsh2p9mg8.fsf@gitster-ct.c.googlers.com>
+        id S1727952AbeIEAmW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 20:42:22 -0400
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:36974 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbeIEAmV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 20:42:21 -0400
+Received: by mail-ed1-f52.google.com with SMTP id a20-v6so4283129edd.4
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 13:15:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=TFwqHkQUnfYJqsxeyj1Kv6NAPv3nilrixWVNBwhQQbU=;
+        b=qxUlvSDINcxD/iPYArRdE3Bh87zslAzZmOJkG4Fl8MUY1w3iCN7DcmXBrhCWv+APT7
+         C8+igALMDYAhenfsEOuQYWWJO3li4S/BSPmmHGvqbWH/FtswZqc4iqWpeLEDcq68Irur
+         ol6uyvjZaJaIsfoA74vSpL8+tALOVvBRyp1DN0yFPGizZlPNZvdmPB/2Y9qm3GzKUXdg
+         qpcEyJMussOEDlddaG3gmJD+dxB9W62AQ60SGiUy92p13rYoXfdsHTx7r2AQMdWrC7oR
+         qAJSe+5QRSTSeK9qo95CncLC0c75GtlQepmKwPSoK432VsUmd8Cb95rlNQj5OQ8P8Sye
+         8S8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=TFwqHkQUnfYJqsxeyj1Kv6NAPv3nilrixWVNBwhQQbU=;
+        b=MoFoee+bt1yeXzTQdcCrhzb5e70sPQaqjPuZfHBW51qREMmHd9KttZFRGv7FcjoEB+
+         dV17ALcnrx/lcV6CM/4AVT5ftrUzDHVUU5RWeZ+O+Q7Mms7pdspmsGA21XozCJDpIIWF
+         Rb63G1StTUAYkijUeFPH2U2UGCeg4UJfVtfwbNEOOMDSMzYijaxe68TqxWkR0y18e1js
+         f4zkLhJM9dy49+pPhMfUCb6D+CdAv+PhMf7/kyfFzxgEM1MFOkRxvELDyJrAvyeOJg+U
+         o1h9qHUrCYBFXOfg06gRFkdqB1Hm16rD4Rm4i9k0QiX0P/uEFU4MXjBi/8IiyXcupDqf
+         f5RQ==
+X-Gm-Message-State: APzg51BDYBNnTqu37f5aW481S9srzEY0koEbm7UZw1YnqlS974kBXgMc
+        Orn+7DuCPGSNRntiP4V6UhW78JsfL8J1R1Gh3txXdJM/
+X-Google-Smtp-Source: ANB0VdbyFlkt5u/DOEQUPTzatHDeoy2kae1dx35EV8GJvCmvTyibWRLgp66WfSU99O1I83WHTqPR2wyujC1vhZ1EeMU=
+X-Received: by 2002:a50:f0c2:: with SMTP id a2-v6mr39538567edm.90.1536092138579;
+ Tue, 04 Sep 2018 13:15:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqsh2p9mg8.fsf@gitster-ct.c.googlers.com>
+References: <20180826100314.5137-1-pclouds@gmail.com> <20180903180932.32260-1-pclouds@gmail.com>
+ <20180903180932.32260-25-pclouds@gmail.com>
+In-Reply-To: <20180903180932.32260-25-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 4 Sep 2018 13:15:27 -0700
+Message-ID: <CAGZ79kZ+ZZNm8m7gPVjnbm1W5-HBFzJ7g2LraHJ68Mh_wRkQ-Q@mail.gmail.com>
+Subject: Re: [PATCH v2 24/24] Rename functions to avoid breaking in-flight topics
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 04, 2018 at 10:55:35AM -0700, Junio C Hamano wrote:
+On Mon, Sep 3, 2018 at 11:10 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+>
+> The three functions init_revisions(), diff_setup() and rerere() are
+> prefixed temporarily with repo_ to avoid breaking other topics which
+> add new call sites for these functions. This is a temporary
+> measure. Once everything is merged, it will be reverted and the new
+> call sites fixed.
 
-> Tim Schumacher <timschumi@gmx.de> writes:
-> 
-> > I submitted this as RFC because I'm not sure whether disallowing
-> > nested aliases was an intentional design choice. The done_alias
-> > check implies that disallowing is intended, but the direct
-> > recursion check for aliases that call themselves opposes that.
-> 
-> "direct recursion check for aliases"?  I am not sure what you mean
-> by that, but anyway.
-> 
-> If I recall correctly, it is intended that we disallow run_argv()
-> doing handle_alias() twice (or more).  But the ultimate objective is
-> to forbid infinite loops, "git foo" expanding to "git bar" which in
-> turn expanding back to "git foo", and the current "do not expand
-> alias to another" is a simple but too strict implementation.  As
-> long as a replacement implementation still forbids infinite loops
-> with reasonable cost and complexity, I do not think we would mind
-> such an improvement to allow alias expanding to another alias.
+Thanks for writing the whole series; it was a pleasant read.
 
-I agree that this could be looser, if all we care about is infinite
-loops. But given the issues we've had with aliases and the startup
-sequence, I also would not be surprised if there is some weird hidden
-effect if we call handle_alias() more than once.
-
-That's not a reason not to pursue this, but just one more thing to look
-out for.
-
-As an aside, you can still do this:
-
-  $ git config alias.foo '!git bar'
-  $ git config alias.bar '!git foo'
-  $ git foo
-  [boy, my CPU fan is really spinning]
-
-I don't know how much effort we actually need to put into people not
-shooting themselves in the foot, since we can't cover all of the cases
-anyway (and in a non-infinite configuration, that's another solution for
-Tim's original problem).
-
--Peff
+Stefan
