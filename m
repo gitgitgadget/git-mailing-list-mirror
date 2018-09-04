@@ -6,63 +6,63 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 591CF1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 19:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65EDE1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 19:45:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727466AbeIEAC6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 20:02:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:37141 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726528AbeIEAC5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 20:02:57 -0400
-Received: by mail-wr1-f67.google.com with SMTP id u12-v6so5159050wrr.4
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 12:36:23 -0700 (PDT)
+        id S1727782AbeIEAMJ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 20:12:09 -0400
+Received: from mail-wm0-f42.google.com ([74.125.82.42]:39184 "EHLO
+        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726528AbeIEAMI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 20:12:08 -0400
+Received: by mail-wm0-f42.google.com with SMTP id q8-v6so5449945wmq.4
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 12:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=VHpEvWYImZzMNMjYVbZYF78p5oWUgxS0ntbIK60el5g=;
-        b=bS+nDqimcNqKN3eoUyA9LRrtvsf4fvQ1yZctvnYyH/j30jKvn7sHkEIg6uMLix08Rj
-         jxJPj9TUqQGfPyfkS1/VsY+u45Tr2bwypiPGpdnzIc7Pi1NSmRuOAEU35qdln5AevkIH
-         qCY2Onb7FLBCk+vQ5jAk31Hi5dyah4WCAY4p7U91vGEBxecfabuJypcBPWbA2aSbLCpF
-         7TZzrihZFTOZa4dpCJFayXHtQm+2rrdBQzY0EYwUCY1QrBeYCsOgOoB80zG7IQ749TcM
-         V7W6cEy9znVCxdQPQfnzRc2xFZKgS2A4+qNuOZGfyXoczS1+S3FTw7ZmbR1GgUGmV9Vt
-         n2vw==
+        bh=TP5Pny1D9A8ev8LhVbJy190jM1Eh65pz8hWahUIPgSQ=;
+        b=NQ8l/g8PFpdWkBTaLtvmFZfdzTdlN89j8/wQfugWWCBW8nRJUtQk3JAa/kvkW2vcXB
+         QsvsCJ7Zw2jhNYdT3tnWI8v3/fhdh7IGb88EGxao/9Kxl9jsG75baCYFIEJJLXmNMUcC
+         4tO36VSjzOSQkpd7f5NB66BFZ0gm3YzAfSMNPMTqGQ/7fbfbQt6Eeq9NOXHF4xX8ojja
+         sg0SSiwJuScJrq+lg/AbZCaebjBN2eRbPI4iJsLXpj2wczFfE6TrZWDF2xEDRvvDMfvJ
+         UZ1yofyCsa6IN2F+gZRO+o5AOLEO8SPUqwgZc2HWA2K7nezQuMvFJlF2EYyZ50AfBiFu
+         uWbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=VHpEvWYImZzMNMjYVbZYF78p5oWUgxS0ntbIK60el5g=;
-        b=nflEiXgqqKAffGJMmrS5UxOCdjTab0g2fBf9UZGOfUkhnVwM34iP38qq7hzFVsTytQ
-         eA4Zu8tO06Ae04gx8MtUurcOfkQh87aeGlHZ2JxQRAajpm8eRMDQhAGcpxiE1tWnQPtX
-         8f0ZSxFjEkA8esEhovw2BAuG1Z+yUg3tq4wY22tRZRuPvFpHtlV/GC5v/zjPJs+Ya6Ad
-         DGw5nKqjz3jiNEiM/LmOs919JMPiwU8laEihjlBDIhi/0piknYPiz1N2y4ONxgaoVPes
-         JLQqdXsyqLaXKM9b71y2GV4f+uryJ2FGCNkoDQxGKXFiH98rSItwT2iRMJnqDOXxYVTI
-         /iZg==
-X-Gm-Message-State: APzg51CbHsJ6+HuMLBh7Dmxe/+H/rJtFc8TkIH+uoJvfwsmGMm7gMH5M
-        1LgIVUmU8wFb6vSeWoZ+UUk=
-X-Google-Smtp-Source: ANB0VdaGA1tPf2YS3yshglNh0tE1pG72LAmFCuObEKccPPVERYnqPLisOuTLgQggGF5PhyWEm8y/fw==
-X-Received: by 2002:adf:d20a:: with SMTP id g10-v6mr25380178wri.66.1536089782746;
-        Tue, 04 Sep 2018 12:36:22 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t9-v6sm15445376wmf.1.2018.09.04.12.36.21
+        bh=TP5Pny1D9A8ev8LhVbJy190jM1Eh65pz8hWahUIPgSQ=;
+        b=deb/G8wUU+gP9JIDEwL4cd7OFdyW1sn6jLZdArl425Kvle1CCNOkBHJSNVOPL7tiJf
+         TmOIdWgOTBoKVvX95Km6mlSjwU0qLwrfibMtrsEpWyr5FZSwDzywSoah/DXAEh/P8sEC
+         V5Pg3EkUmBuzumfhsOrDpW+ZR/1Go1BuNIrXnwx2nTgikUlfsVI6gxJi/+hQTql/1j7N
+         9LaPdBTX40kea33yVYgOq3T9ag0xqm6w1HmXo5/ka1HBXE6fhh2jYmw+r/jKUk++bupg
+         oetTsYCY6B6QPXNuI0UEqoJoPTW06WuyJyk8dIlvUuAer8X/qsMqqovhegQLo/FVZ6PL
+         lHmQ==
+X-Gm-Message-State: APzg51B7t6t297awwuNpCJNdF+kKTDw7Bu3LFCjebSEAMiNgqxkvT6n3
+        wvZ9iHsVpZrwuL/cHgFmDAc=
+X-Google-Smtp-Source: ANB0VdaSoak5UKYk24/G7DD/Rf9WWcFUONfjAM2Ybcxca9Uc4e07d+Bz76udFkYNK5pLa4sppp7X+w==
+X-Received: by 2002:a1c:adcc:: with SMTP id w195-v6mr9264251wme.41.1536090331921;
+        Tue, 04 Sep 2018 12:45:31 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w18-v6sm46282220wrc.38.2018.09.04.12.45.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Sep 2018 12:36:21 -0700 (PDT)
+        Tue, 04 Sep 2018 12:45:31 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 00/12] Hash-independent tests (part 3)
-References: <20180903232515.336397-1-sandals@crustytoothpaste.net>
-        <CACsJy8Ak3Gba-z09Gz8iFrRyXoLbR+jW0tGuPnwCLpxVZWfMtw@mail.gmail.com>
-Date:   Tue, 04 Sep 2018 12:36:21 -0700
-In-Reply-To: <CACsJy8Ak3Gba-z09Gz8iFrRyXoLbR+jW0tGuPnwCLpxVZWfMtw@mail.gmail.com>
-        (Duy Nguyen's message of "Tue, 4 Sep 2018 18:22:58 +0200")
-Message-ID: <xmqqmusx837u.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/4] t5310: test delta reuse with bitmaps
+References: <20180901074145.GA24023@sigill.intra.peff.net>
+        <20180901074813.GB25461@sigill.intra.peff.net>
+        <20180901080316.GA25852@sigill.intra.peff.net>
+        <CAGZ79ka8e2-f4fYgy+=HUDdvugefvQ5TnDG0v8YmUn7kGhTdaQ@mail.gmail.com>
+Date:   Tue, 04 Sep 2018 12:45:30 -0700
+In-Reply-To: <CAGZ79ka8e2-f4fYgy+=HUDdvugefvQ5TnDG0v8YmUn7kGhTdaQ@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 4 Sep 2018 12:05:58 -0700")
+Message-ID: <xmqqin3l82sl.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,15 +71,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Tue, Sep 4, 2018 at 1:26 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->>
->> This is the next in the series of improvements to make tests
->> hash-independent.
+> From some offline discussion, maybe we want to adapt a philosophy of
 >
-> If it helps, I looked over the series and didn't find anything questionable.
+>   Each patch needs to add a test, that fails when the patch
+>   is not applied, but succeeds when it is applied. This shows
+>   that _some_ code in the patch is exercised at least.
+>
+> (and automatically/strongly enforce this going forwards; however
+> enforcing such a strict thing is hard, not sure how we'd do it.)
 
-Thanks.  I'll tick the message I am resopnding to in my Inbox so
-that I know I can come back to it later after the final release.
+Some patches lack test, but when one comes with a test, I do revert
+the code change and try to run the tests before I create a topic
+branch for it, when I have time.
+
+An enforcement mechanism may be good (e.g. submitGit could learn to
+do that "does it come with a test" check followed by "let's see if
+the new test fail without the change to the code part" before
+allowing the patch to escape to the list), but 
