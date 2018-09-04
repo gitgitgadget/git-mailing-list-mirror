@@ -2,155 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 410A21F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 19:50:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 409041F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 19:55:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728066AbeIEARe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 20:17:34 -0400
-Received: from mout.gmx.net ([212.227.15.18]:47803 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728059AbeIEARd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 20:17:33 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LtIZH-1fllws1dkp-012sJV; Tue, 04
- Sep 2018 21:50:53 +0200
-Date:   Tue, 4 Sep 2018 21:50:52 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] rebase -i: be careful to wrap up fixup/squash
- chains
-In-Reply-To: <xmqqftypb44v.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1809042145470.71@tvgsbejvaqbjf.bet>
-References: <pull.30.git.gitgitgadget@gmail.com> <0c9d0f75fc0dd28d55d4ed41d008182746fc86cd.1535759099.git.gitgitgadget@gmail.com> <xmqqftypb44v.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728090AbeIEAUx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 20:20:53 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:42531 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728078AbeIEAUw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 20:20:52 -0400
+Received: by mail-ed1-f66.google.com with SMTP id l5so4231360edw.9
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 12:54:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=A0oSMRPxpJNZNWo8NPxdAglV8Ba+cZaEbMgMMN/Eg4Y=;
+        b=CqIXPtrhO4aCfAAKy3LvZhY7xa+opcYLVURkIQhbjhJrcpkdb+qoNapm5FEEHYZuPb
+         aAqkW0tfrVlLptssasJiYcERjxa0+je2Go9zGPF/Ziadq6OVjZ2kT2KilVwBxo76OwmZ
+         nNMEAEFl2Z3L+qsDdKhYTmtnKhK0XyE1jNMMcKANNnWa7RAXy4w0R42shx4ggfYI1B5g
+         V0DMOoXzYXXPrj60+Lj17LU/vtX57ta74sg1uSiVOlQ6ZPO0glwEj/ZbkgYgYVTlR9LY
+         N3I0wEp4w3tXerAygo750nKl8bV3c6RFKeLKauETBn5Pbg8UhrZ5OGIekOnzGWVWBxb0
+         xZmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=A0oSMRPxpJNZNWo8NPxdAglV8Ba+cZaEbMgMMN/Eg4Y=;
+        b=gESosTrYH8jjS7w22opWl+JeabJ83TRlmT0O0/jI2N+HGFkTR+aAmK6pG5YGci8Yyg
+         np2qWi3yII3mnaxHJuhV5+5z6rMYdBcN1wpUle204Iz6ccS8IH1s+TUbmq5SWaWcUfva
+         P0ZXWt4YMyHLmEaFwYx12o21O/WYFsVaxI1tmqh5nFyJBryMzWwM41CG6v8BYK6S//ar
+         ZiBXBnFaEAm0jOUTmdL1/VOvq9ZjCfDXvaiBL9MhTV6Ej+L9kdQD729t8DR2zGlTjNJm
+         yLFkuBTh3+DNF9LKMRl0EYPjCW8DAjQB1VCNkr0w3AvyM3+rLLzKiE+86S1hoGxaX/r/
+         0hDQ==
+X-Gm-Message-State: APzg51CWvLvCF6KQUDzbjSKHZzjT/hdPi96WoTW3/RzypDweQ3Nuu8Fg
+        +EbHm2CQzL5TZ0/Sz8YyZt1XzXRYPQT3BYuzvPZOaw==
+X-Google-Smtp-Source: ANB0VdZeuPbZOFfbKRqr468pB6y1DEmd2JahUvmYXbBOcnuu05q2Zn/BkY1/AliG1deuROJU4ETsq1RaAYfNYfrT4JU=
+X-Received: by 2002:a50:aba3:: with SMTP id u32-v6mr38517888edc.257.1536090853681;
+ Tue, 04 Sep 2018 12:54:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:CnbJkMBW+zizR7Ptewtj2XAgWFLd8DuLB18lfytz/mR72JAbPf5
- gQbGNbZpjEOMKyOo5tQJL/JyBAsoL+9ecVl+4adUv9XpM6O3IxhZ0YyyBESi0z/r8ug/+r9
- 4A/4bnhWtMr8NQvXQolnYzG8zZQhQzNW48DH+pS6rlXVPrwA+sB1PZRhEvA6EDaZfcMv24q
- l9c1PNYx5RKwszLiwraHw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:umXPSj6aSKs=:5hLas6k+jqGQo9Mxs73mgX
- fCRsLxRIUmAcExOoA68ydwahs54QQLQnGQvV0rXRmvoGNxe+04STbCb3vxK0UyJ/B5L5SbViu
- htYO611Ob13ezyPiwoBi20eg073iNkqjlAunnWE/B+Hy6AfeUk16z04U12OkF1P6RQBUCAi6b
- Zr6BzuH5JFZyGSdS48kuFTgVqkRCV5t0JtF8CUrJG3BxZygYtfqv3nyMfRf7iZ3wcc1iAWd20
- cUKqBXivqrviAer/cwuxII7UPOyPWc1KHTwE0Nm41tkgFOEvqiLiiHhTBwMUlR0LJWa9AtuK+
- GhA0GEKGqPYSqj+jn6fy4Gz8Kd6D99GSgVQjuHPS3TOC4xNorVugSjoNKqptAIyMSgfW6MmDR
- OavEBF/cyrC9j5I563H+8BUT29pxdJOV6SqFWud/9dwXk4qMZsgMO2Zp3vLvLzvOLvhMyVQ+t
- ZFjKihJid15Ay9t4k9LR0PIWkKMol+5DMI9cSiwZuJ5JXDRYstTft7UZYEWSVfXc7uNvmzlmH
- SoHOql/Vkt/5o5I5JcptQTCRWruQM6HlZCC4xRQ/O98eVZxVVZ4+X2C1w3EHtr/yrSxTv5ZfA
- TKiM/v2K5MNtc4ZFadZqscJGQQZRHSGAPvh3hWgLKpN7A2+e9X0cTa1wRZ7dYj7IuVfxcPFnx
- P3SB1nmePHgh9+JlPgVdWUjbgVuNq/sWXTevPst3On9omHazcN6U5MDrStTRAC8xjMlcrkmzz
- SnivmO/GobrOO0z7KsWSSXBs8WwAoYZ05NVRx2odomPZ+az/tmiVC+dGNKwUAAVLYH8d6uLW0
- pVakg+a
+References: <20180826100314.5137-1-pclouds@gmail.com> <20180826100314.5137-13-pclouds@gmail.com>
+ <CAGZ79kb=gcmEDGmTS-j-veFj8BgKup0g96i0Gm1P+j8eyX8_mQ@mail.gmail.com> <CACsJy8D9ZMGA8FDmgcNMbWH7VP5O8bfn7tLnXda2TcQKmLM5NA@mail.gmail.com>
+In-Reply-To: <CACsJy8D9ZMGA8FDmgcNMbWH7VP5O8bfn7tLnXda2TcQKmLM5NA@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 4 Sep 2018 12:54:02 -0700
+Message-ID: <CAGZ79kYBg62votOkFmpWjFoR_s2WZq-cSvXa==EP1q22WNEKpQ@mail.gmail.com>
+Subject: Re: [PATCH 12/21] patch-ids.c: remove implicit dependency on the_index
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Mon, Sep 3, 2018 at 11:03 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Mon, Aug 27, 2018 at 9:13 PM Stefan Beller <sbeller@google.com> wrote:
+> >
+> > > -int init_patch_ids(struct patch_ids *ids)
+> > > +int init_patch_ids(struct patch_ids *ids, struct repository *repo)
+> > >  {
+> > >         memset(ids, 0, sizeof(*ids));
+> > > -       diff_setup(&ids->diffopts, the_repository);
+> > > +       diff_setup(&ids->diffopts, repo);
+> >
+> > Just realized when looking at this diff, though it applies to
+> > other patches as well. (and reading Documentation/technical/api-diff.txt
+> > confirms my thinking IMHO)
+> >
+> > What makes the repository argument any special compared
+> > to the rest of the diff options?
+> >
+> > So I would expect the setup to look like
+> >
+> >     memset(ids, 0, sizeof(*ids));
+> >     ids->diffopts->repo = the_repository;
+> >     diff_setup(&ids->diffopts);
+> >
+> > here and in diff_setup, we'd have
+> >
+> >   if (!options->repo)
+> >     options->repo = the_repository;
+> >
+> > or even put the_repository into default_diff_options,
+> > but then I wonder how this deals with no-repo invocations
+> > (git diff --no-index examples for bug reports)
+>
+> That makes "repo" field optional and I'm very much against falling
+> back to the_repository. revisions.c in the end does not have any
+> the_repository reference, and it's actually undefined for most files.
+> This makes accidentally adding the_repository back much more
+> difficult.
 
-On Tue, 4 Sep 2018, Junio C Hamano wrote:
+Thanks for the clear explanation. I agree that this is a good approach
+with these reasons given. So in case a resend is needed, maybe add
+these to the commit message, as it explains why we deviate from
+the pattern here.
 
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 84bf598c3e..ac5c805c14 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -3578,9 +3578,20 @@ static int commit_staged_changes(struct replay_opts *opts,
-> >  		 * the commit message and if there was a squash, let the user
-> >  		 * edit it.
-> >  		 */
-> > -		if (is_clean && !oidcmp(&head, &to_amend) &&
-> > -		    opts->current_fixup_count > 0 &&
-> > -		    file_exists(rebase_path_stopped_sha())) {
-> > +		if (!is_clean || !opts->current_fixup_count)
-> > +			; /* this is not the final fixup */
-> > +		else if (oidcmp(&head, &to_amend) ||
-> > +			 !file_exists(rebase_path_stopped_sha())) {
-> > +			/* was a final fixup or squash done manually? */
-> > +			if (!is_fixup(peek_command(todo_list, 0))) {
-> > +				unlink(rebase_path_fixup_msg());
-> > +				unlink(rebase_path_squash_msg());
-> > +				unlink(rebase_path_current_fixups());
-> > +				strbuf_reset(&opts->current_fixups);
-> > +				opts->current_fixup_count = 0;
-> > +			}
-> 
-> Let me see if the code is easily grokkable by (trying to) follow
-> aloud.
-> 
->     We used to refrain from going into this big else clause that
->     does the fixup-squash handling when is_clean is false,
->     current-count is not yet zero, head and to-amend are different
+> Yes the --no-index stuff will have to be taken care of at some point,
+> but I think for now we could just put "struct repository *" in place
+> first to see what it looks like, then go from there.
 
-s/not yet zero/still zero/
+I would think repo = NULL would do? But we can defer this
+discussion to later.
 
->     commits or stopped-sha file is missing.  The updated code still
->     refrains from going into the big else clause under exactly the
->     same condition, but it learned to clean up the state, when the
->     _next_ one is not a fix-up, i.e. when we are looking at the last
->     fixup/squash in the current chain.  And the lack of clean-up
->     would have resulted in the next step misbehaving.
-
-s/next step/ next fixup or squash chain, if any,/
-
-You got the gist right.
-
-> I see a few calls to is_fixup(peek_command()) and a local boolean
-> variable final_fixup used in this function.  I have to wonder if it
-> makes the resulting code, especially the above part, easier to
-> follow and understand, if the function peeked todo-list to check if
-> we are dealing with the final fix-up in a chain very early just
-> once, and used it to see "are we doing the final fixup/squash in the
-> current chain?" throughout the rest of the function.
-> 
-> 	Side note: I actually think that the existing final_fixup
-> 	boolean means something different (iow, final_fixup is not
-> 	set inside the new "clean-up" code above, even though we
-> 	dealt with the last one in the fix-up chain, and that is not
-> 	a bug---which means that "final_fixup" does not mean "we are
-> 	dealing with the last one in the fix-up chain"), which may
-> 	want to be clarified a bit with in-code comment near where
-> 	the variable is defined for the function to be readable.
-
-Indeed. The `final_fixup` name tries to convey "need to finalize the final
-fixup", as in: show the commit message in an editor if any squash! commits
-were included, and otherwise simply clean the commit message of all those
-commented-out lines.
-
-So that's very different from "is the previously-run todo command a final
-fixup in a fixup/squash chain?"
-
-> In any case, thanks for fixing this, which seems to have appeared in
-> Git 2.18.  Let's fork a topic from maint, cook it in 'next' and aim
-> for eventually merging it down for both 2.19 and 2.18 tracks.
-
-Sounds good,
-Dscho
-
-> 
-> > +		} else {
-> > +			/* we are in a fixup/squash chain */
-> >  			const char *p = opts->current_fixups.buf;
-> >  			int len = opts->current_fixups.len;
-> >  
-> > diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> > index 7d5ea340b3..13f5688135 100755
-> > --- a/t/t3415-rebase-autosquash.sh
-> > +++ b/t/t3415-rebase-autosquash.sh
-> > @@ -330,7 +330,7 @@ test_expect_success 'wrapped original subject' '
-> >  	test $base = $parent
-> >  '
-> >  
-> > -test_expect_failure 'abort last squash' '
-> > +test_expect_success 'abort last squash' '
-> >  	test_when_finished "test_might_fail git rebase --abort" &&
-> >  	test_when_finished "git checkout master" &&
-> 
+Thanks,
+Stefan
