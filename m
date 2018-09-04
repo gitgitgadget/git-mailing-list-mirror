@@ -7,48 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67F7E1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 23:01:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E26191F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 23:02:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726426AbeIED3O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 23:29:14 -0400
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:35248 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbeIED3O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 23:29:14 -0400
-Received: by mail-qk1-f202.google.com with SMTP id t9-v6so3720056qkl.2
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 16:01:57 -0700 (PDT)
+        id S1726520AbeIED3R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 23:29:17 -0400
+Received: from mail-yb1-f202.google.com ([209.85.219.202]:53002 "EHLO
+        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725825AbeIED3Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 23:29:16 -0400
+Received: by mail-yb1-f202.google.com with SMTP id w74-v6so1806492ybe.19
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 16:02:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=xS7aAOlrwJ9ECXZIS8vz2GmOFu/aDpIajDvBV0AVV4g=;
-        b=ZX+RTtXzSa+2DaEFDapym6n4TVwIyR65Qc+TO/2VG+o4Et6tCTo7+pjE06Lp/ZhKsy
-         H1Xz8EU7DZ5pY7nQKTEgzoO4qcbvJA+9y8DzeyadewTj4DxldvrI7uPsYnEH4S5V9IhC
-         rZKTD780ICuaa1uZGYFG7Dtazrr0kPpYyl36Ey2i5KoKqtk6RAMSIqaS8bE/6dsKLGD2
-         HOOS7vQrHVxlBz7cseQ3AMavE1/3PnG3YvSGB98fodOhMxF3H2yaT4Ujc1OK1RpKYONC
-         S+wH3C4E860nm5BDCFy0ap5+f8E3JLpB4241fBMKjUfh3/85icVsHKm1eSksYn20B4ML
-         +7Cg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=uHxEQnJ5DMBFtzI3t1FRU0Dh6V3haKvfbO76y6nyUWg=;
+        b=iqxz9643RUxmATqr/NtwvlGTN/y+3ZAldBT6ODT1Gt9q0lQnNm9btSyhpYtfxGBBb6
+         C/Tn5jz/TsaMLbHreSi2YMmKf5IXccl1uZ8tAxxJstF+xZ+sb/IuWH8gFf0T82undy6R
+         AvZ5M+0uOkGXwYl1lnafmaxOXPeOcnrYVVX0C0v9nuH1W7Gtg2c2tDR+RhLBTJD2UMrc
+         d+8K0hSRB0RzZW4pi3A38QbgWurQqOVVCCkxMceGWfcRlkYn/NToq1UHJs4q83c2Gc9g
+         F10vfH6rRLUWhVDEtoSeh1fGbyE+qq15vj8o2A8fq8eKLDT3FiByt5Hc6hG4lL0tlfDj
+         97GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=xS7aAOlrwJ9ECXZIS8vz2GmOFu/aDpIajDvBV0AVV4g=;
-        b=Hc9y+z4RgL2UGe3YX3n1bD2SOaeAv7ie990i1Kd/UR0DLZiE34rY0cZo2WZo7JwOJX
-         Y3iMqWBVC+GDV5IaCQ8x5zRW5rsjiTVsYI2gExoh4pyFTuUps/2J6MSchRjzBapuarkR
-         DgX49pF0L6rnbiZCob3s/dhiK0DZD4P0YFbpCPboth4YHRU0zaKqxLFp2wyeXaAfT6Cz
-         Dj+6TzL+wgbmYTM+aF6Bg7XgF3G84FX9YFE0iPmOEXw74KqLTn9ScTEolVv5qdxfMWxZ
-         4uwWgVoepiHK0MIH4q1ymdmNNOxgwJNXxH17VSkgjpiB85cVGnZ6u4P0o72NX1XpaB7K
-         svUA==
-X-Gm-Message-State: APzg51AReSwO055NXuAdWa0LFiY4c2jP9fqqN4DdtWT3N6EFHPEOFr6Z
-        ARkEdlo5eN6uW/xaDiU51HeB/OmAtiIK2O23PGIM9qTEB0Rwase5lzWHI9e8IcL2x3gctpXAPjd
-        GZZl2NGRdXdu5bZRsX3enE6fw2OmdZP/A8wS6hJgRCoZBchOQwRg+lsvypwVB
-X-Google-Smtp-Source: ANB0VdbNggMa4kHgjLuYo2lHegofSjV/ZwLmEhnwx9X18MUQzIzUxVTSa67TmNX2M8kh40T0nH8fLXI9AdrC
-X-Received: by 2002:a0c:d4ba:: with SMTP id u55-v6mr18544734qvh.5.1536102117277;
- Tue, 04 Sep 2018 16:01:57 -0700 (PDT)
-Date:   Tue,  4 Sep 2018 16:01:38 -0700
-Message-Id: <20180904230149.180332-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=uHxEQnJ5DMBFtzI3t1FRU0Dh6V3haKvfbO76y6nyUWg=;
+        b=IALU6QTvkvn+awRhLcpbS07WYp+mw7LA03FXUJvVPzVeGFT/YJGywmZoqhUQg0xGQQ
+         bAagP0nO6qMlRZfgP9LlyG/ooho54/AFwltNVFs7H+93BqZcMFxWPaloHjqZSDTzz46d
+         ctX4KnuxLTBxPiYNxmUNvgRUD9TES3sQBJ0Ad7mL/d7b/cZkGF0iQFQaq6YdomQjtWXN
+         OuoemfqFMbzCe7FSL0agf5rZ9hhZf3RObwdfmhp4S/qIyzoDQj5P3q50a+biqcRhgrrR
+         KwIgk491z8evgmeMZZ/srm3A3GwnzCocYwFSEiVPNFFxaZPAOwkeH/QQHLhVVzBBxp+P
+         Z/IA==
+X-Gm-Message-State: APzg51CVYoCITklyC9qHMiH2hXCIAhH12BtxmL7GJ96h9PsPEzGJrMWh
+        lUvbVbz6b9tgGgMvmPV9MAz2+pwp705AsDRdo8GAHKcC8hgVA4Q8uGNZbscJRsOd5Dx0pZFucpd
+        JoPKO9ars9TR5BVqVzJ+PuJZl3gWYDFXGvDge4IXv/ckek0U1sFKRGKTI/LDf
+X-Google-Smtp-Source: ANB0VdYRM766bkifM2HDWjSYxbJ/g+4ziaB3kN8N/cx7oQ3ssFEFNaB46opCSX4RDMW071+Ft4e52EDbsUYz
+X-Received: by 2002:a25:aace:: with SMTP id t72-v6mr7882941ybi.55.1536102119614;
+ Tue, 04 Sep 2018 16:01:59 -0700 (PDT)
+Date:   Tue,  4 Sep 2018 16:01:39 -0700
+In-Reply-To: <20180904230149.180332-1-sbeller@google.com>
+Message-Id: <20180904230149.180332-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20180904230149.180332-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0.rc1.350.ge57e33dbd1-goog
-Subject: [PATCH 00/11] fetch: make sure submodule oids are fetched
+Subject: [PATCH 01/11] string_list: print_string_list to use trace_printf
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -58,40 +62,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a resend of [1] and was rebased to origin/master and all review comments
-have been addressed.
+It is a debugging aid, so it should print to the debugging channel.
 
-Thanks,
-Stefan
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ string-list.c | 6 +++---
+ string-list.h | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-[1] https://public-inbox.org/git/20180808221752.195419-1-sbeller@google.com/
-
-Stefan Beller (11):
-  string_list: print_string_list to use trace_printf
-  string-list.h: add string_list_{pop, last} functions
-  sha1-array: provide oid_array_filter
-  submodule.c: convert submodule_move_head new argument to object id
-  submodule.c: fix indentation
-  submodule.c: sort changed_submodule_names before searching it
-  submodule: move global changed_submodule_names into fetch submodule
-    struct
-  submodule.c: do not copy around submodule list
-  submodule: fetch in submodules git directory instead of in worktree
-  fetch: retry fetching submodules if sha1 were not fetched
-  builtin/fetch: check for submodule updates for non branch fetches
-
- builtin/fetch.c             |  14 +--
- entry.c                     |   6 +-
- sha1-array.c                |  18 ++++
- sha1-array.h                |   5 +
- string-list.c               |  20 +++-
- string-list.h               |  15 ++-
- submodule.c                 | 200 ++++++++++++++++++++++++++++--------
- submodule.h                 |   2 +-
- t/t5526-fetch-submodules.sh |  23 ++++-
- unpack-trees.c              |  13 +--
- 10 files changed, 246 insertions(+), 70 deletions(-)
-
+diff --git a/string-list.c b/string-list.c
+index 771c4550980..1ebbe1f56ea 100644
+--- a/string-list.c
++++ b/string-list.c
+@@ -196,13 +196,13 @@ void string_list_clear_func(struct string_list *list, string_list_clear_func_t c
+ }
+ 
+ 
+-void print_string_list(const struct string_list *p, const char *text)
++void trace_print_string_list(const struct string_list *p, const char *text)
+ {
+ 	int i;
+ 	if ( text )
+-		printf("%s\n", text);
++		trace_printf("%s\n", text);
+ 	for (i = 0; i < p->nr; i++)
+-		printf("%s:%p\n", p->items[i].string, p->items[i].util);
++		trace_printf("%s:%p\n", p->items[i].string, p->items[i].util);
+ }
+ 
+ struct string_list_item *string_list_append_nodup(struct string_list *list,
+diff --git a/string-list.h b/string-list.h
+index ff8f6094a33..5b22560cf19 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -114,12 +114,12 @@ void filter_string_list(struct string_list *list, int free_util,
+ 			string_list_each_func_t want, void *cb_data);
+ 
+ /**
+- * Dump a string_list to stdout, useful mainly for debugging
++ * Dump a string_list using the trace_print, useful mainly for debugging
+  * purposes. It can take an optional header argument and it writes out
+  * the string-pointer pairs of the string_list, each one in its own
+  * line.
+  */
+-void print_string_list(const struct string_list *p, const char *text);
++void trace_print_string_list(const struct string_list *p, const char *text);
+ 
+ /**
+  * Free a string_list. The `string` pointer of the items will be freed
 -- 
 2.19.0.rc1.350.ge57e33dbd1-goog
 
