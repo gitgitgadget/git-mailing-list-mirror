@@ -6,64 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1991F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 15:53:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEFCB1F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 15:57:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726749AbeIDUTc (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 16:19:32 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:54595 "EHLO
+        id S1726528AbeIDUXW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 16:23:22 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:52084 "EHLO
         mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726211AbeIDUTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 16:19:32 -0400
-Received: by mail-wm0-f66.google.com with SMTP id c14-v6so4983446wmb.4
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 08:53:49 -0700 (PDT)
+        with ESMTP id S1726200AbeIDUXW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 16:23:22 -0400
+Received: by mail-wm0-f66.google.com with SMTP id y2-v6so5011514wma.1
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 08:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=uPcMYcT1CaTyMoIuMrEsmq34J629swTFFDWnQ4aJOh8=;
-        b=bK7zIkMYSzhIhw8DvW77sAkdR78SW6g6TDpexlmPte8kjchksry5Tkb3Sc5h0aID2d
-         gFgCkF3w1pSzIw5mJtTok2wQbloUrrBtWAN5szzELRjuxHmgnSgnevWKiHtjh1zv4cfP
-         eQRAe0VI0cADbRLP7aQvZHo/NS6ie41Nrol3s3KrcCERK/tBYgRUdgtJai05GRrFKfF2
-         3QkbVFbYz3raU1nEq2k7t8LNwoJ4Opwc5b/fPRZUxFqy/+pId+75BsJb/X/ZBNyz1FWk
-         KnyaADgQO+TfMizWScHYCMhxSLVPjhUIZwQv+3JRXvV8hG95ViXLXnsjXKSSsfhtBXof
-         sBpg==
+        bh=2lXy1c2AxOV540k9ghQX8dN96SwP8CmmIaQTJAUswDw=;
+        b=DkWTcdn4arS9XJPqSbS0KHVSc0gQRsfsWR96Ob9IE7LorVZA4b7nt2/SUOfMtHgg0P
+         +3xdWG/h/0UZFwId+dvus+18T+sAWATJdY2v3RmiS9kDG58Scl3kzcpsDlTSBpgh7/1l
+         LjuKI0qv6Wi17CUi5Uod0BFAhY8GxYENhY2sIx0ePtldZTZDzI80ACvowcvw5lH9/L0N
+         C4JLVdw3gVd+fW/eEkBz9O3g/5A0k1ajyVgG2sOfjMZvNgwZLyXckycqKRz4p4Y1FGSW
+         hJkJI4PJ/rRAqhuzos2ZTNZRUxh1w3IWQ9loaWtVEd8ALJQV4ASAN/OVRmR02nYl9XIU
+         7emg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=uPcMYcT1CaTyMoIuMrEsmq34J629swTFFDWnQ4aJOh8=;
-        b=MTpi2WeAQ4juudOIhpTbyiNel/M4u6lebcCeiM/e13j8TuTqfVUx+UKPVW/IRQvfTx
-         YKeb32Z+pQCoAfmzYzpsfLrsJdxAtGujgie5CYEHviXajCd0CPFxT9Aokt1+Yxiq4MPr
-         RdT4Bml1MzoU/DbFuLv5WAVrwkuhcpnNkSQud84mpy8jGnZi+1gbyLK8AimR3EsDsb2/
-         wFjtHn/MeTZ03+RA43lOG0h1lie4lJlhYX0izZvFsiK59TaKqS8oMXt6uhPbq+fPwvKr
-         j9uPCSGcxfwbVcx65viGfMfuSt0RdWSVvki74bnjpcaxQ9Y7nYFx1a+uTREy2Qfq+6pw
-         W49g==
-X-Gm-Message-State: APzg51A8WvPbvdyc0TY9FLzoFnoAe3EvBx6QKSJS6VN3mDmGGGj7RStZ
-        Clo6+RQhE1rGI8L6Q1E9Wa2WQXx4
-X-Google-Smtp-Source: ANB0VdZiakyZr/Dei78rwiUjI1AcROGKtCX5phV4rYgXXB2arTAKnkbKv7ZH9jUrGH/kcC9+TO4Z7w==
-X-Received: by 2002:a1c:dc85:: with SMTP id t127-v6mr260489wmg.164.1536076428196;
-        Tue, 04 Sep 2018 08:53:48 -0700 (PDT)
+        bh=2lXy1c2AxOV540k9ghQX8dN96SwP8CmmIaQTJAUswDw=;
+        b=UBPgQBtOhnxcNaf/Uy9KC4++aBJ+uvVlNfovhYtPKLM7mFqQKilFuNp9zYVOYpoQYn
+         v6U+b4cT0mDvsLMt9XxZ5WZiNWM2KPrNBuRQrDUV9nZcKgzkgabOOlW0z91aFrFkYHE6
+         0V5YDrwrihmebEfm7ekwCeE3tqrhLVTMNJsN2FUzLNtAkWHdPliSBunUEs1srBKLT2/a
+         eDiBgM9vsC2H6V30YSg/A0C2BcjGthp17DHGgEHlKGAtK4qu8hHK9g39T9IwgHM8LKCh
+         LG/IbDAgH9fYcLrNbPKSRPg9A+lXbaABi8gd/COr2s2u7Htww4eN/ud/9G30j9gV5CdV
+         jLMA==
+X-Gm-Message-State: APzg51Cgw+eaOgYaTkjaDhroUAFPIrWvInO9pxQmZ/TIXG1BgySfJx3O
+        cTwTFzY8xzZacjPIarzimAk=
+X-Google-Smtp-Source: ANB0VdYHHeFfo5c58/z71iYv6bRJc0uExr5oVHLaMp7hVD0FLCSp+SIqNIrCFyTqg8EpXkOFD2OnBQ==
+X-Received: by 2002:a1c:448b:: with SMTP id r133-v6mr2816711wma.128.1536076657114;
+        Tue, 04 Sep 2018 08:57:37 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 75-v6sm32274711wml.21.2018.09.04.08.53.46
+        by smtp.gmail.com with ESMTPSA id k63-v6sm18059017wmd.46.2018.09.04.08.57.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Sep 2018 08:53:46 -0700 (PDT)
+        Tue, 04 Sep 2018 08:57:36 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>,
-        git@vger.kernel.org
-Subject: Re: non-smooth progress  indication for git fsck and git gc
-References: <5B751FA1020000A10002CD2F@gwsmtp1.uni-regensburg.de>
-        <20180816155714.GA22739@sigill.intra.peff.net>
-        <87bma2qcba.fsf@evledraar.gmail.com>
-        <87y3clbcqf.fsf@evledraar.gmail.com>
-        <20180902074656.GB18787@sigill.intra.peff.net>
-        <20180902075528.GC18787@sigill.intra.peff.net>
-Date:   Tue, 04 Sep 2018 08:53:44 -0700
-In-Reply-To: <20180902075528.GC18787@sigill.intra.peff.net> (Jeff King's
-        message of "Sun, 2 Sep 2018 03:55:29 -0400")
-Message-ID: <xmqq7ek1cl87.fsf@gitster-ct.c.googlers.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Luc Van Oostenryck <luc.vanoostenryck@gmail.com>,
+        git@vger.kernel.org, Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [BUG] index corruption with git commit -p
+References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local>
+        <87tvn8c166.fsf@evledraar.gmail.com>
+        <20180902050803.GA21324@sigill.intra.peff.net>
+        <20180902071204.GA2868@duynguyen.home>
+        <20180902072408.GA18787@sigill.intra.peff.net>
+Date:   Tue, 04 Sep 2018 08:57:35 -0700
+In-Reply-To: <20180902072408.GA18787@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 2 Sep 2018 03:24:09 -0400")
+Message-ID: <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,22 +74,31 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> That code isn't lib-ified enough to be run in process, but I think the
-> patch below should give similar behavior to what fsck currently does.
-> We'd need to tell index-pack to use our fsck.* config for its checks, I
-> imagine. The progress here is still per-pack, but I think we could pass
-> in sufficient information to have it do one continuous meter across all
-> of the packs (see the in-code comment).
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 2be7bdb331..60f30b3780 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -432,6 +432,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+>>  		if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
+>>  			if (reopen_lock_file(&index_lock) < 0)
+>>  				die(_("unable to write index file"));
+>> +			ftruncate(index_lock.tempfile->fd, 0);
+>>  			if (write_locked_index(&the_index, &index_lock, 0))
+>>  				die(_("unable to update temporary index"));
+>>  		} else
 >
-> And it makes the result multi-threaded, and lets us drop a bunch of
-> duplicate code.
+> Doh, of course. I even thought about this issue and dug all the way into
+> reopen_lock_file(), but for some reason temporarily forgot that O_WRONLY
+> does not imply O_TRUNC.
 >
-> ---
->  builtin/fsck.c |  53 +++++++------
->  pack-check.c   | 142 -----------------------------------
->  pack.h         |   1 -
->  3 files changed, 32 insertions(+), 164 deletions(-)
+> Arguably this should be the default for reopen_lockfile(), as getting a
+> write pointer into an existing file is not ever going to be useful for
+> the way Git uses lockfiles. Opening with O_APPEND could conceivably be
+> useful, but it's pretty unlikely (and certainly not helpful here, and
+> this is the only caller). Alternatively, the function should just take
+> open(2) flags.
+>
+> At any rate, I think this perfectly explains the behavior we're seeing.
 
-The numbers here are nice, even to readers who do not necessarily
-care about the progress meter output ;-)
-
+Thanks all for digging this down (I am a bit jealous to see that I
+seem to have missed all this fun over the weekend X-<).
