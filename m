@@ -6,60 +6,60 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBF341F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:07:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 701551F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 22:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeIECeZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:34:25 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37977 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726528AbeIECeY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:34:24 -0400
-Received: by mail-wr1-f68.google.com with SMTP id w11-v6so5506564wrc.5
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:07:18 -0700 (PDT)
+        id S1727255AbeIEChK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:37:10 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42330 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727050AbeIEChK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:37:10 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v17-v6so5481522wrr.9
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 15:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=Fdz+S0BJB9hGQcfk+xKWrR41ffMkj8E8cRdlA5xp4C4=;
-        b=RZvhsMOyDAQkXL2mQmE7BxKhKdYYcns09+s8xE9z2JB4CiTmtHfRsZHPOn16JskJIg
-         JWO91S1CRL6KBvLvvZQ/TL02wQK9/9EuO48ezO5KV5CKtHrLwaV7oiHSGrCXHPNmp/RP
-         OwkFGv/D7lKzg9jSvsuF6Rw8vbZuWNJrqJPiL/BBMekDYgjEFyvPC6QgK6zgbO7lZOhg
-         0MDzljqfNACkZu2h1JnLN/7AjtzrcnM8ZVcRRVMObuu0pdL7YrRteANaDGfR+xLXdtsm
-         kxqVk/lNG/tWCeCmIjd+QWsdaMZdl0CCAypGkk2qmIMhxiLT7XSzPSLgTRlcYSDaPHNm
-         /msQ==
+        bh=E5gw5GrtE2YpxIoQ6gOXMhjxXLtkeD53w8v5Z3wLBfw=;
+        b=AePk7+1HmxVwNBDkCV49yjs2XD2WLyS4wOpXPNsy9v3ZpVc9F5ww9p7BaLDsWkUNeC
+         C7sFJysaZXCvVDqP5xW0BgegvpXn4DSADObqMWVXCVAqdvH/6BkJifzSvuMA06ZjuxLQ
+         E8UgzYANFsZz/67OFPnSNhYYG1YvRFlTLhy8W+odmxd8hdgQoYE5vysSOtRTwzdcLSQY
+         rMf/H4zxET/KltDQ5zziPjGDB19ctQV1VD9DbdN8xlMhoCxMVWrjt7qR0I8xr1XS97sf
+         TGVB9FkxBzC5YOKItAuIZQBNgZzIEq/7ElmuA2MHHvBb3h8NVtPkzCYeXv0MGxtYUg73
+         Uc6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=Fdz+S0BJB9hGQcfk+xKWrR41ffMkj8E8cRdlA5xp4C4=;
-        b=K2PnYeyoLI9f8kVR9+y2/V4H9+UryksBN3QRY9IZfeaBG4Nnjo/UPJWMFNkU0407u7
-         k2o1vUn+Qxp7B9EdyPiRQZBayeKRrnAjCctq5WBdKy69FHeaiak3k0udCirLgNlA/GfH
-         tfadKsUqPJh71gLc/RKIs4nMBTwVDwfXydBO0zjNTdObtsVYcCe5FPH4dNRPBuG0FE2p
-         dpp4cCu3HHUGxn0jzKOoRTiFiVY85KbBMxt/zMcyeIJ/BDwOkcWaFlvYxrrpA+qOEltJ
-         q8RDlTioEIJPQLERV5wvL4hUbPSunqnaMTY/t0KbuFpRhrN4Hgbl6+o4+2ZZqZ33nQZ+
-         lt2Q==
-X-Gm-Message-State: APzg51Df54opIu4kQKT6IepWnR4M9dGNMwbRSD10adTKwhQ63mI8wskW
-        BZVU1KPVbPX0b4rBBhEKUK4=
-X-Google-Smtp-Source: ANB0VdZQVjJeGibtkzXllLzxcWEGWTzSt0QzOVS+cOzSje5vl9VtpmQRE1U4ncIPqD1G5DIcCgh10A==
-X-Received: by 2002:adf:a292:: with SMTP id s18-v6mr25456041wra.100.1536098837380;
-        Tue, 04 Sep 2018 15:07:17 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j133-v6sm314158wmd.12.2018.09.04.15.07.16
+        bh=E5gw5GrtE2YpxIoQ6gOXMhjxXLtkeD53w8v5Z3wLBfw=;
+        b=Snb+Xbyddox+Yhu3MWdqQv+10Kz+pZlMyaEbybfOKSk42NjX+NEGpx3eRhu3P6hDwH
+         0TMedZhmiPahak+H9ZFMCXAGeyVw3YLhNataLg2+38hR7fOjfIUO4lNoBgdh/rdTcZ1K
+         rDvADtSOAQg/bRR5kweuL9P6NHnCbPTNly3ptVkcWk7S6Jx/VSEIZVbsTAw1MZPRhqCJ
+         p4Rhf92YvcECrIqTthr9Xdh8xybk6MW4z6IBtSndilF5yHApIA8RgpsvSVNGk+CVNwvM
+         gpOR7soKvgfx9PqMfBkLrxrwx7AmRfkpL1zabu31NHGvLUXlLH/eNjMsPamCqM4P9AlB
+         fk6g==
+X-Gm-Message-State: APzg51CHYxHVGWmDDAx5zU1+Be/KXeHVOnA5g/WD83sg4MuoOAYydWp7
+        eRKltOEQkxioRvrajxX/G78=
+X-Google-Smtp-Source: ANB0VdbY7vnIOEBFM+/13nAK06hKTDINrN6iuesKw8iE5IWm2UiE7bRdNxDA+wdGAT1UtW8L54yUGQ==
+X-Received: by 2002:adf:9b11:: with SMTP id b17-v6mr4949774wrc.119.1536099002589;
+        Tue, 04 Sep 2018 15:10:02 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f18-v6sm16627wrw.32.2018.09.04.15.10.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Sep 2018 15:07:16 -0700 (PDT)
+        Tue, 04 Sep 2018 15:10:02 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/2] commit-graph write: add progress output
+Subject: Re: [PATCH 2/2] commit-graph verify: add progress output
 References: <20180904202729.13900-1-avarab@gmail.com>
-        <20180904202729.13900-2-avarab@gmail.com>
-Date:   Tue, 04 Sep 2018 15:07:16 -0700
-In-Reply-To: <20180904202729.13900-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+        <20180904202729.13900-3-avarab@gmail.com>
+Date:   Tue, 04 Sep 2018 15:10:01 -0700
+In-Reply-To: <20180904202729.13900-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
  =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 4 Sep 2018 20:27:28 +0000")
-Message-ID: <xmqqin3k7w8b.fsf@gitster-ct.c.googlers.com>
+        Bjarmason"'s message of "Tue, 4 Sep 2018 20:27:29 +0000")
+Message-ID: <xmqqefe87w3q.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -71,63 +71,72 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Before this change the "commit-graph write" command didn't report any
-
-Please describe the pre-patch state in present tense without "Before
-this change".
-
-> progress. On my machine this command takes more than 10 seconds to
-> write the graph for linux.git, and around 1m30s on the
-> 2015-04-03-1M-git.git[1] test repository, which is a test case for
-> larger monorepos.
+> For the reasons explained in the "commit-graph write: add progress
+> output" commit leading up to this one, emit progress on "commit-graph
+> verify". Since e0fd51e1d7 ("fsck: verify commit-graph", 2018-06-27)
+> "git fsck" has called this command if core.commitGraph=true, but
+> there's been no progress output to indicate that anything was
+> different. Now there is (on my tiny dotfiles.git repository):
 >
-> Furthermore, since the gc.writeCommitGraph setting was added in
-> d5d5d7b641 ("gc: automatically write commit-graph files", 2018-06-27),
-> there was no indication at all from a "git gc" run that anything was
-> different. This why one of the progress bars being added here uses
-
-"This is why", I guess.
-
-> start_progress() instead of start_delayed_progress(), so that it's
-> guaranteed to be seen. E.g. on my tiny 867 commit dotfiles.git
+>     $ git -c core.commitGraph=true -C ~/ fsck
+>     Checking object directories: 100% (256/256), done.
+>     Checking objects: 100% (2821/2821), done.
+>     dangling blob 5b8bbdb9b788ed90459f505b0934619c17cc605b
+>     Verifying commits in commit graph: 100% (867/867), done.
+>
+> And on a larger repository, such as the 2015-04-03-1M-git.git test
 > repository:
 >
->     $ git -c gc.writeCommitGraph=true gc
->     Enumerating objects: 2821, done.
+>     $ time git -c core.commitGraph=true -C ~/g/2015-04-03-1M-git/ commit-graph verify
+>     Verifying commits in commit graph: 100% (1000447/1000447), done.
+>     real    0m7.813s
 >     [...]
->     Total 2821 (delta 1670), reused 2821 (delta 1670)
->     Computing commit graph generation numbers: 100% (867/867), done.
 >
-> On larger repositories, such as linux.git the delayed progress bar(s)
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  commit-graph.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 
-"such as linux.git, the delayed ..."
+Yup.  The verification side knows the total number of things, so it
+is much easier to give the percentage progress with a very simple
+addition like this, which is very nice.
 
-> With --stdin-packs we don't show any estimation of how much is left to
-> do. This is because we might be processing more than one pack. We
-> could be less lazy here and show progress, either detect by detecting
-> that we're only processing one pack, or by first looping over the
-> packs to discover how many commits they have. I don't see the point in
 
-I do not know if there is no point, but if we were to do it, I think
-slurping the list of packs and computing the number of objects is
-not all that bad.
 
->  static void compute_generation_numbers(struct packed_commit_list* commits)
->  {
->  	int i;
->  	struct commit_list *list = NULL;
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 74889dc90a..1a02fe019a 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -914,6 +914,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+>  	int generation_zero = 0;
+>  	struct hashfile *f;
+>  	int devnull;
 > +	struct progress *progress = NULL;
 >  
-> +	progress = start_progress(
-> +		_("Computing commit graph generation numbers"), commits->nr);
->  	for (i = 0; i < commits->nr; i++) {
+>  	if (!g) {
+>  		graph_report("no commit-graph file loaded");
+> @@ -981,11 +982,14 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+>  	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
+>  		return verify_commit_graph_error;
+>  
+> +	progress = start_progress("Verifying commits in commit graph",
+> +				  g->num_commits);
+>  	for (i = 0; i < g->num_commits; i++) {
+>  		struct commit *graph_commit, *odb_commit;
+>  		struct commit_list *graph_parents, *odb_parents;
+>  		uint32_t max_generation = 0;
+>  
 > +		display_progress(progress, i);
->  		if (commits->list[i]->generation != GENERATION_NUMBER_INFINITY &&
->  		    commits->list[i]->generation != GENERATION_NUMBER_ZERO)
->  			continue;
-
-I am wondering if the progress call should be moved after this
-conditional continue; would we want to count the entry whose
-generation is already known here?  Of course, as we give commits->nr
-as the 100% ceiling, we cannot avoid doing so, but it somehow smells
-wrong.
+>  		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
+>  
+>  		graph_commit = lookup_commit(r, &cur_oid);
+> @@ -1062,6 +1066,8 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+>  				     graph_commit->date,
+>  				     odb_commit->date);
+>  	}
+> +	display_progress(progress, i);
+> +	stop_progress(&progress);
+>  
+>  	return verify_commit_graph_error;
+>  }
