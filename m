@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D78791F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 22:00:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A45E21F404
+	for <e@80x24.org>; Tue,  4 Sep 2018 21:59:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727526AbeIEC1E (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 22:27:04 -0400
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33359 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727181AbeIEC1E (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 22:27:04 -0400
-Received: by mail-pl1-f196.google.com with SMTP id b92-v6so2269129plb.0
-        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:59 -0700 (PDT)
+        id S1727519AbeIEC1C (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 22:27:02 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:38033 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727181AbeIEC1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 22:27:01 -0400
+Received: by mail-pl1-f169.google.com with SMTP id u11-v6so2258276plq.5
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 14:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=jVdj9quxdcCcHq5kT1hlt8+SuJK616W5drl2wkkvDR4=;
-        b=E3kjcRUAP6KbI+WoQYMowz5xi61IMcYrjllZgUkoVhIzbrSgfsxaCJ9UGyrEKShHgV
-         8Jj/loEOPPYLslfoSpbxkse8GOad7HznVp9Ekvz/ptiXZ7I9Ebwpc0IUenIoVrUD+zs7
-         jRZkxn6YmBAtwk762y1xsYSbJANRBf6faxP87y3QDRVLykO5z0iexvXMtf0wqV+uFWfo
-         +Zwy+F7fn7d/Xyy6b7QnJPAZ+NZTC/0pc8LzfddilCVcD9xvZd8CAKLpxZu9iYI9TEEa
-         lCIA/um2nI8eVclZpl4D7eFlp80F6SGdpnkr4ppu/T9XIK+PwbgbrNK33Skqdzmpa/Mt
-         xziQ==
+        bh=d1hsLx9O+J232x7Va7evyWOyMeY9nohOuUXZB0Ufhio=;
+        b=q8qxhA3Hv4KENv4G3maiciYQvgI3307QW80QBlf7s/MR1wjMIF9e6URJmFXt3qXIV0
+         HzbSKN34CER9YGUmr1Ss8m0vamwJ1D0UdYK7z6oRJpSwS2Wp6JZxqmvBtTzS4N/zNkp0
+         tdPOioT+EtQy2W1ahacMeVqtdKhudpfjQoOnC5eaCmO7VY87VE3f8p2sC3BLjWL2q3RA
+         0MPtUb/CieTlIBd5l3YZEA3xcz+/bXbZ7XmZx5ya2aeOr6jZ3Yb9De45qFGyyj+FK1fI
+         ETwXVf8qFfy9dSirBd7FIgSn15LH3qQz1NoXN6GIRm9uCHYBsiXdd9zTNGYL5maj3p3K
+         Y/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=jVdj9quxdcCcHq5kT1hlt8+SuJK616W5drl2wkkvDR4=;
-        b=q07HmFZ+4ZeRwOJW/QXZ9y1WVzuqjncyFa6VskkOScrKlkSlz/vvIOiXbQ8kSCSEPN
-         pjiJ9sZyFDPpiC3qoDf/4XGlYf0L9C8TsiyNkoErYrsejexnPr42FXIP12fOB/lKGYAd
-         rH4zh06R2rH0G0ht93MX0WUouuPlBT2yuMYCGMfCHD63eU6ahxhPT+GMwMcsYVG4vNg0
-         qSlHa/zwK0Tc1IWgq4T9ZAxeHR9Vcd207+Iz+YermDN20RpjApsTt3zLb0xeXZp5Lr6M
-         bEpYwRcSmEraB1mztVPLtfHlAyOMHFhPGKYPdaCULQMvE8LgjXO0Us2oQ74AEUKJAkKx
-         HDsg==
-X-Gm-Message-State: APzg51Ca9ZEnyPEyYal3YWGMfPwdbfSRdDCDm2XNQ8+BkilIaCntyl1V
-        rjo53PP0RifjjwFOEGpiSfQwUu24
-X-Google-Smtp-Source: ANB0VdbHFEqzNIcTyv+ULn77SH0jYryy2TeRcIujr8gtkc9+8rp/mRvEcdMhWo9Eb5uf+bf/yLgv8g==
-X-Received: by 2002:a17:902:934c:: with SMTP id g12-v6mr35459123plp.67.1536098399501;
-        Tue, 04 Sep 2018 14:59:59 -0700 (PDT)
+        bh=d1hsLx9O+J232x7Va7evyWOyMeY9nohOuUXZB0Ufhio=;
+        b=OnbUJWGqQjUxyzocCl+qqXsGbkcYdbVmvGc9T6RMHkohM5IZaXX82K1qE9qEnzCjhO
+         V/gzg05apRkBUx8uCjW/Aybgjt7JXKk97zJ6uPWB8zYWUaD1JYsEiw15fpBIypostW5v
+         Ex+kWooZw2FfgFr57Dyh7njcBTFMTkcz0TDY6VqbjYBUfoqbkWG8oWvpZEUDzOLh7c7J
+         zWXGktbwi65TpcJnU78xtUW5zCuPFgyEY/5EEXh5ptpVHboy2q0gdpT8x5pEIxQAbvOD
+         I8h7Kmk4z1lxWwcUqusIwVhm+L686gPDjWSMEMiZHilW0SpYdfUHXrH0rMMgLGTGr0+H
+         sPfw==
+X-Gm-Message-State: APzg51Dz4v9nDFFoDsQezEOanzpI2jvriA9fXuM8lsZ/PSA/eKZcy1sv
+        bCaYqgoExrfO1MbYtStIW1JXN61H
+X-Google-Smtp-Source: ANB0VdYpEY/+xAPhC1mNrYq9scyvl10T7UlYeGRW09RsYlvRVj0Nvwtyuv9+Txjqoy1YnV2GvWt2Gw==
+X-Received: by 2002:a17:902:8c84:: with SMTP id t4-v6mr36061663plo.100.1536098396801;
+        Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id s75-v6sm39805702pfd.108.2018.09.04.14.59.58
+        by smtp.gmail.com with ESMTPSA id r1-v6sm9731pfi.17.2018.09.04.14.59.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
-Date:   Tue, 04 Sep 2018 14:59:58 -0700 (PDT)
-X-Google-Original-Date: Tue, 04 Sep 2018 21:59:35 GMT
-Message-Id: <1b6851e5e1e08eaaaa9e25c4a3cdae7ea1e6f8e9.1536098386.git.gitgitgadget@gmail.com>
+        Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
+Date:   Tue, 04 Sep 2018 14:59:56 -0700 (PDT)
+X-Google-Original-Date: Tue, 04 Sep 2018 21:59:33 GMT
+Message-Id: <83bb27750972a39c90d78ecebd07ac32745ab6c4.1536098386.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.33.v2.git.gitgitgadget@gmail.com>
 References: <20180808152140.14585-1-predatoramigo@gmail.com>
         <pull.33.v2.git.gitgitgadget@gmail.com>
 From:   "Pratik Karki via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 08/18] builtin rebase: support `--autosquash`
+Subject: [PATCH v2 06/18] builtin rebase: support `ignore-date` option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,63 +71,48 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Pratik Karki <predatoramigo@gmail.com>
 
-This commit adds support for the `--autosquash` option which is used to
-automatically squash the commits marked as `squash` or `fixup` in their
-messages. This is converted following `git-legacy-rebase.sh` closely.
-
-This option can also be configured via the Git config setting
-rebase.autosquash. To support this, we also add a custom
-rebase_config() function in this commit that will be used instead (and
-falls back to) git_default_config().
+This commit adds support for `--ignore-date` which is passed to `git am`
+to easily change the dates of the rebased commits.
 
 Signed-off-by: Pratik Karki <predatoramigo@gmail.com>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ builtin/rebase.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 9c00f3568f..c80eebfbd2 100644
+index 7490d215ef..42ee040da3 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -96,6 +96,7 @@ struct rebase_options {
- 	int signoff;
- 	int allow_rerere_autoupdate;
- 	int keep_empty;
-+	int autosquash;
- };
+@@ -527,6 +527,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		ACTION_SHOW_CURRENT_PATCH,
+ 	} action = NO_ACTION;
+ 	int committer_date_is_author_date = 0;
++	int ignore_date = 0;
+ 	int ignore_whitespace = 0;
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+@@ -550,6 +551,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "committer-date-is-author-date",
+ 			 &committer_date_is_author_date,
+ 			 N_("passed to 'git am'")),
++		OPT_BOOL(0, "ignore-date", &ignore_date,
++			 N_("passed to 'git am'")),
+ 		OPT_BIT('f', "force-rebase", &options.flags,
+ 			N_("cherry-pick all commits, even if unchanged"),
+ 			REBASE_FORCE),
+@@ -779,6 +782,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (ignore_whitespace)
+ 		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
  
- static int is_interactive(struct rebase_options *opts)
-@@ -295,6 +296,7 @@ static int run_specific_rebase(struct rebase_options *opts)
- 		opts->allow_rerere_autoupdate ?
- 		"--rerere-autoupdate" : "--no-rerere-autoupdate");
- 	add_var(&script_snippet, "keep_empty", opts->keep_empty ? "yes" : "");
-+	add_var(&script_snippet, "autosquash", opts->autosquash ? "t" : "");
- 
- 	switch (opts->type) {
- 	case REBASE_AM:
-@@ -455,6 +457,11 @@ static int rebase_config(const char *var, const char *value, void *data)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "rebase.autosquash")) {
-+		opts->autosquash = git_config_bool(var, value);
-+		return 0;
++	if (ignore_date) {
++		strbuf_addstr(&options.git_am_opt, " --ignore-date");
++		options.flags |= REBASE_FORCE;
 +	}
 +
- 	return git_default_config(var, value, data);
- }
- 
-@@ -609,6 +616,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			    "conflict")),
- 		OPT_BOOL('k', "keep-empty", &options.keep_empty,
- 			 N_("preserve empty commits during rebase")),
-+		OPT_BOOL(0, "autosquash", &options.autosquash,
-+			 N_("move commits that begin with "
-+			    "squash!/fixup! under -i")),
- 		OPT_END(),
- 	};
- 
+ 	switch (options.type) {
+ 	case REBASE_MERGE:
+ 	case REBASE_INTERACTIVE:
 -- 
 gitgitgadget
 
