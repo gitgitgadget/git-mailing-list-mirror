@@ -2,151 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9085C1F404
-	for <e@80x24.org>; Tue,  4 Sep 2018 11:09:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6DF7C1F428
+	for <e@80x24.org>; Tue,  4 Sep 2018 11:13:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbeIDPd7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Sep 2018 11:33:59 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58995 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726294AbeIDPd7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Sep 2018 11:33:59 -0400
-Received: from [192.168.0.129] ([37.201.193.173]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWQSM-1gP7Fm3lBi-00XYEf; Tue, 04
- Sep 2018 13:09:17 +0200
-Date:   Tue, 4 Sep 2018 13:09:15 +0200 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 7/9] tests: include detailed trace logs with --write-junit-xml
- upon failure
-In-Reply-To: <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809041304450.71@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com> <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727024AbeIDPiO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Sep 2018 11:38:14 -0400
+Received: from mail-it0-f65.google.com ([209.85.214.65]:53489 "EHLO
+        mail-it0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726336AbeIDPiO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Sep 2018 11:38:14 -0400
+Received: by mail-it0-f65.google.com with SMTP id p79-v6so4398780itp.3
+        for <git@vger.kernel.org>; Tue, 04 Sep 2018 04:13:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc;
+        bh=Uabh54If8Ffr9QcKOM3wzNGwYQ0mTeYjf+45tfTpGLk=;
+        b=fb0K86DjBMLlwEadc6HF9xOrgnl/cxDUtFxXkhXPDHvB1TZ9gShBvAyyjtUyOXoUGY
+         +jTu8jnOG3pUK7TKpXTJp8Y4nDSoeJXmag6InVsQonZqU90LHKe2FnRlVZ3bXN+hTgvC
+         6RePOK98/VuRsjb+JXGV4k5X88TzxzyEfElY5FS9uMl+JzrbayH1vc9QqRupr+96osus
+         piNDf+y+7CF6V3cECC5W7VclYShkFw/ceykL1k0q3lW5HTCA6qnfHf1iCe3rLr9mbMyQ
+         ALzBnBgS1YZrjgwDtUhabwnnp9c6SXCgmQ6JoalqCJ038JUzX3mvmy8nZyW9J33hxN/u
+         U2ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc;
+        bh=Uabh54If8Ffr9QcKOM3wzNGwYQ0mTeYjf+45tfTpGLk=;
+        b=D9ZIppUvsoh4wkQqn/SH29GzptPV15x5+8cGOIwarDOWTP4iUREVh7KwIrVbcGVtg7
+         P+1st9H8d4jeM/rxxfX+peIQZqFIt+KWRDU4OSPunHjU31ePGKcK2QVpQqtgvgXKGnvF
+         OVGANyiYYPhklNEmGf8VvnPpD4TSIWDkKYSUUk/weS1FTu4hFdr2gmDJNqcQ3zueo+MC
+         mRYVD/g1b0LedMbstffe+GI+sGK8eG137AdKQdG4kqt0Zli7gD2rKgLwkyIv5WabFSU9
+         BEmwW4mXBVGHhW8zJsut1/IwdApBFOINvP3lLjPCMq2jFTTmx4wy+5/LEqtJ6B/sxYeP
+         Td3Q==
+X-Gm-Message-State: APzg51Cb8IrQhF1V9OXLaGahRPhBykDjBAxRXFd+F1RUO4XIiRoQo6YW
+        VSPM1nogKNvuPvS00ZyLAYpfMc1pwekwBbf0K4A=
+X-Google-Smtp-Source: ANB0VdbFbuInJ3D3DzR1hemjL3m/4EY90lh6zF/CKc6XqSNyVXSAjZUXdHXcd/r9/4hhu8IvSooRUrMAQQ4/278MTZY=
+X-Received: by 2002:a24:5753:: with SMTP id u80-v6mr7426284ita.21.1536059614039;
+ Tue, 04 Sep 2018 04:13:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:pBhLwKFJfDulU0/DfIbKzD7tE+rjX3e3cmpfbTZIDE/ok5G5dS5
- P5T8O1fEzKRitzMwCOX5oLT1pqfcYLeEeIWZkT9tH1lhHAH7tIrXYieeLJkjX6zXFmNRX7o
- Lc67YbkRQHs4c5+BarUxoak/J7m1gw1iDmZm7uGuAemiuPZ5ZpICkOjMhbTFMmDzm/MQkpc
- 0Jx2VtGhkPIeDDu3nUonA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EQSmcs9A1kY=:2ZS0eTJiAusdLH34KUIAlp
- X6Bfv3CvZWiTOTJUZEf+2ADt57H/JVQ3js9YvPno1ZEBXDiR1KYk1nehPaEwKSDXjXmAoDX90
- sLZp1w73bCGdcS6y+zkgZ3Pdef2NQwBPpLaV/MCpIrxFGtr+j5/awRsmVy1nZufIo5h9qLVir
- MzzuI+gbeAsMyHt4bW4CyrcViG8ELQRGoCzfybxK+sqZi9hbMPrnV17lvPFq021IQan9lCZk0
- a/0SdATpQ9TmD73fTKnqeK/EquDxeNSN//1/i2ST2Mc6g1OgOvq4p8wCbt/NvV/PaMj9ZWiDr
- 2qxIJjobwD4PQdOcTRbn+j5pBJPr/JKHBiS2+AOiMxLPftMC79QretrM2Fyzta45PPOuUTY2g
- QydcC0fS58L0EZRicfi4yJjE7FMB2h+Vo7elW70ABDRQH+J9yqjxCjYHn7KsbsQoPSRnFNVju
- 4tVLVyoqhjSnDJYZj10Z+TRGvR2bVZ5DA45SPnXxiujKew9eZ8+QGSM1TfG9CQ2a6/xOlUpRF
- XHFjcHXq37ZC0u8g8enbI3lk5TCqLvXzLpEO+sweILh3EmgrCKi/6sPBNwaTZZZMrD1pqe/0I
- 3oOSU4sX9wEbz6Uz2/WXiyxlVV8ptXqI4eBoewtSKs4Lsak1jMhAXm+cvYjwNn65vcWormCb1
- LlLkgACFerv8k5U/uNP9uskoTYfgSJVJ63jU9ovafERpL9jYGrlJhbPeRGxGoez6M7Zn0kpK+
- 1yWPWAsletoJlIT22r9NKxQvFVA9w/TM3mFMlWiGultgyS/Wg50MS4GJ2mOPS9loed1mIEImG
- 1FFOA0/
+Received: by 2002:a4f:22a7:0:0:0:0:0 with HTTP; Tue, 4 Sep 2018 04:13:33 -0700 (PDT)
+In-Reply-To: <CACsJy8BOZy5MBsSwvHNsWeAf4tqtRJc0SJuBtfwM9wR8Yn_xfw@mail.gmail.com>
+References: <CACsJy8AFo+mb8R-O-JKRPZk__csq6mbVXbnZhSd-nZ08zWfSeg@mail.gmail.com>
+ <20180902074250.6802-1-pclouds@gmail.com> <CAP8UFD0MHUN=auZW9Zu+hnx6oAxjNsZUfQGeJ0HfBCh5RPv6jg@mail.gmail.com>
+ <CACsJy8BOZy5MBsSwvHNsWeAf4tqtRJc0SJuBtfwM9wR8Yn_xfw@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 4 Sep 2018 13:13:33 +0200
+Message-ID: <CAP8UFD135763VCPSzYuir8pR+wC=C7o12E4UcwkpzK-c8yck_Q@mail.gmail.com>
+Subject: Re: [PATCH] bisect.c: make show_list() build again
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Tiago Botelho <tiagonbotelho@gmail.com>,
+        Tiago Botelho <tiagonbotelho@hotmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+On Mon, Sep 3, 2018 at 7:31 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Sun, Sep 2, 2018 at 9:57 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>
+>> Thanks for going the extra mile and doing this!
+>>
+>> I wonder if we should also try to make the show_list() function part
+>> of the trace_*() functions to make it even more regular. This can be a
+>> separate patch or topic though.
+>
+> Yeah that's probably a good idea (though I'm not familiar with
+> bisect.c enough to take that step).
 
-On Tue, 4 Sep 2018, Eric Sunshine wrote:
-
-> On Mon, Sep 3, 2018 at 5:10 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > So let's do something different in VSTS: let's run all the tests with
-> > `--quiet` first, and only if a failure is encountered, try to trace the
-> > commands as they are executed. [...]
-> >
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > @@ -445,10 +452,37 @@ test_ok_ () {
-> >  test_failure_ () {
-> >         if test -n "$write_junit_xml"
-> >         then
-> > +               if test -z "$GIT_TEST_TEE_OUTPUT_FILE"
-> > +               then
-> > +                       case "$(type kill_p4d 2>/dev/null | head -n 1)" in
-> > +                       *function*) kill_p4d;;
-> > +                       esac
-> > +
-> > +                       case "$(type stop_git_daemon 2>/dev/null |
-> > +                               head -n 1)" in
-> > +                       *function*) stop_git_daemon;;
-> > +                       esac
-> 
-> In the long run, it might make more sense, and be more scalable, to
-> have those scripts define a "prepare_for_rerun" variable or function
-> which this code then runs generically rather than having special
-> knowledge of those facilities.
-> 
-> I could imagine, for instance, test-lib.sh defining a no-op:
-> 
->     test_failure_prepare_rerun () {}
-> 
-> and then each of those scripts overriding the function:
-> 
->     # in lib-git-p4.sh
->     test_failure_prepare_rerun () {
->         kill_p4d
->     }
-> 
->     # in lib-git-daemon.sh
->     test_failure_prepare_rerun () {
->         stop_git_daemon
->     }
-
-Or we could implement `test_atexit` (similar to `test_when_finished`, but
-to be executed at `test_done` time). I guess that's what the p4 and daemon
-tests really needed to begin with (and probably also the apache2-using
-tests).
-
-> 
-> > +                       # re-run with --verbose-log
-> > +                       echo "# Re-running: $junit_rerun_options_sq" >&2
-> > +
-> > +                       cd "$TEST_DIRECTORY" &&
-> > +                       eval "${TEST_SHELL_PATH}" "$junit_rerun_options_sq" \
-> > +                               >/dev/null 2>&1
-> > +                       status=$?
-> > +
-> > +                       say_color "" "$(test 0 = $status ||
-> > +                               echo "not ")ok $test_count - (re-ran with trace)"
-> > +                       say "1..$test_count"
-> > +                       GIT_EXIT_OK=t
-> > +                       exit $status
-> > +               fi
-> > +
-> >                 junit_insert="<failure message=\"not ok $test_count -"
-> >                 junit_insert="$junit_insert $(xml_attr_encode "$1")\">"
-> >                 junit_insert="$junit_insert $(xml_attr_encode \
-> > -                       "$(printf '%s\n' "$@" | sed 1d)")"
-> > +                       "$(cat "$GIT_TEST_TEE_OUTPUT_FILE")")"
-> > +               >"$GIT_TEST_TEE_OUTPUT_FILE"
-> >                 junit_insert="$junit_insert</failure>"
-> >                 write_junit_xml_testcase "$1" "      $junit_insert"
-> >         fi
-> 
-> This junit-related stuff is getting pretty lengthy. I wonder if it
-> would make sense to pull it out to its own function at some point
-> (again, in the long run).
-
-Now that you mention it... I agree. This is getting long.
-
-In the short run, I have two things to consider, though: I want to make
-this work first, then think about introducing a layer of abstraction, and
-I want to go on vacation tomorrow.
-
-So I agree that this is something to be considered in the long run, i.e.
-not right now ;-)
-
-Thanks,
-Dscho
+Maybe this could be a GSoC micro project or a left over bit.
