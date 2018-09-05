@@ -2,159 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2006A1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 13:03:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BDCB11F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 13:23:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727599AbeIERd0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 13:33:26 -0400
-Received: from mail-oi0-f65.google.com ([209.85.218.65]:40367 "EHLO
-        mail-oi0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbeIERd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 13:33:26 -0400
-Received: by mail-oi0-f65.google.com with SMTP id l202-v6so13385777oig.7
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 06:03:15 -0700 (PDT)
+        id S1727308AbeIERxl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 13:53:41 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:54198 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727257AbeIERxk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 13:53:40 -0400
+Received: by mail-wm0-f65.google.com with SMTP id b19-v6so7995709wme.3
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 06:23:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc;
-        bh=WDfof55dld2j6ZXyXBZUUq/XjEGG0HGcUWBV73ZQur0=;
-        b=UTB7UYtBoCB4xhXQJiG8DjCm3hbJO3xz5OrO5I51QCfAQM7ry0rWfS3rGlgDPD+gM7
-         8b/dQVg1vOJ5abjk35q/bQu0dIvty6z4nkoaDXXGGRzpe0AHWWCOly4CdkEOAls0FiSw
-         J0wLNWH332kVs2PxCXaebYOH+zJiGu6577yIU=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=h1+xjnaIYhWrbZWDn1G4EbJvtYAF5A8SSmHC5XDeLPU=;
+        b=rz/qFtJnznkfE711b9g8I/OBdEP/F9KueHYqMDMT41C5F7CZUk7BnfPbM1jCNnc9qD
+         gfyuMvkyM/FiAMn/ZfLu3IJ3E3JzCyxzTmcqGX4QGGD0YGuXlRx3EDhnyclM+C58OPrq
+         pxKynrSafbwEi1dWKoI5458TD+v/xu8hehYswKMwh41l9Qpk/sJayepHPihZ/lIRtWg2
+         r8Gfd1oZNSkxRgYl8ZSVp6b7X0zb1nw0O95cLrFfACUcwQlKZRKv/F0rnWN9KRRQPy6U
+         qzrbQagP8eKH0qeAY8puZEj5mriCjq2uD14Z2lLEDY4cJ78wTUaPtZy4izdLV9gq5Prf
+         AVvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc;
-        bh=WDfof55dld2j6ZXyXBZUUq/XjEGG0HGcUWBV73ZQur0=;
-        b=YXp1NbSHo7/Cte5ig+UoIVc8ZAiiWrzzIOkQER2JIAZuDBReD7Dl4a5V2TDaF3Z3w0
-         7p+dba8h0vmBGlYpoH4Ae7oxJoX+hr/ySI/6+P5WhhuYHAJY+riBSidr88dqt0DMTomn
-         EKzGU3SQr59CMd12v99x9A4PbYS7Z82GhYVMhcIQCDsCK8MO1Lc0GgwokOuN5DrXhuKn
-         Mpga+CRNGcg7IPHhon9Lb0dUdcem7vaOUqAVWhdETnZZH4KJkdN9EsG+N5J5CE9XuqCJ
-         DYm4d2VFx3hUOFefU1gsP0iP6Zp+flutNWjJck9sgPR6jP4QvpLGRB31euewLphdC1vk
-         3V2A==
-X-Gm-Message-State: APzg51A7bggHw2QtfNLCe1kgk9zcLXJ7z0fOnTV5BRfdWGvrTKsJF+/z
-        UsoQ1gDz0xA6R8W/+tOuSVlmUT4pX8At+jBf6BKhGdhR/fg=
-X-Google-Smtp-Source: ANB0VdbyBXTMkf4/k42JmQGUq16qa8fn0SPR71T9Y7WEZAu9rsUUxSmmNOYIk712A7+RCi/8OTGsVALVHial59R2ubM=
-X-Received: by 2002:aca:df55:: with SMTP id w82-v6mr30768650oig.355.1536152594640;
- Wed, 05 Sep 2018 06:03:14 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=h1+xjnaIYhWrbZWDn1G4EbJvtYAF5A8SSmHC5XDeLPU=;
+        b=R4O+Xw4RWVeORuLxiRx4KQ7KGNlrLEf/4v9ZIcut3EiR9gJr3GcoGjdolSMKTSVXSX
+         vovT+oYkYMiWObhJyU0Q4wriGTEeu3ACRoAWxdZ/V10va4zZI3smWx0OrGd42T5A9+Gd
+         mUML1o6d7PDhIBUbFs+DpA8fceQsBYlohodwv7/0wxPLMsZwsiZLjNnHrVjSc+kGrD9a
+         USYYpKDZmYKM3dqbXqTZJMXar5wv1mo25LVRbNo7YFdbTWcsZ9H9sVhqpxDo1GEFCTh/
+         ZQDHSIHHa+hwvtXCpqTgQsLf+SM3x57e2jm6kZWTYUJW7cFF57rVh6SRjVzxmW9gEYul
+         J2lg==
+X-Gm-Message-State: APzg51Ac8HzWFv3Qq70xp1G4k4WlI7QZkJ+6f+49LKXikIqCodVoKJmQ
+        qodqnJ7SxYATCbUomZkYXzg48IJKz6g=
+X-Google-Smtp-Source: ANB0VdYZGinyk3z2aUoqlmPxoqfSP4IAqve18oQiZzWeoQX+q0rGrWZbkAdwcffVpMAiaOfiV5oOfQ==
+X-Received: by 2002:a1c:938a:: with SMTP id v132-v6mr257396wmd.114.1536153803516;
+        Wed, 05 Sep 2018 06:23:23 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id e141-v6sm2571371wmd.32.2018.09.05.06.23.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 06:23:22 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
+Subject: Re: Git in Outreachy Dec-Mar?
+References: <20180828151419.GA17467@sigill.intra.peff.net>
+        <8736uxe2pm.fsf@evledraar.gmail.com>
+        <20180830031607.GB665@sigill.intra.peff.net>
+        <87sh2wcak4.fsf@evledraar.gmail.com>
+        <20180830194223.GD19685@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180830194223.GD19685@sigill.intra.peff.net>
+Date:   Wed, 05 Sep 2018 15:23:21 +0200
+Message-ID: <874lf4rsc6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Received: by 2002:a9d:1ec:0:0:0:0:0 with HTTP; Wed, 5 Sep 2018 06:03:14 -0700 (PDT)
-In-Reply-To: <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
- <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1809041304450.71@tvgsbejvaqbjf.bet> <CAE5ih7_GgkEaVXONy8ZY9j43PX6GD-mkD9vJ1t93upAfTkM8tw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet>
-From:   Luke Diamand <luke@diamand.org>
-Date:   Wed, 5 Sep 2018 14:03:14 +0100
-Message-ID: <CAE5ih787aEOAGoC9Ze8qgq+veLQYNkpKgjAG7MpkP0=nyQ5MMA@mail.gmail.com>
-Subject: Re: [PATCH 7/9] tests: include detailed trace logs with
- --write-junit-xml upon failure
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 5 September 2018 at 13:39, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> Hi Luke,
->
-> On Wed, 5 Sep 2018, Luke Diamand wrote:
->
->> On 4 September 2018 at 12:09, Johannes Schindelin
->> <Johannes.Schindelin@gmx.de> wrote:
->> >
->> > On Tue, 4 Sep 2018, Eric Sunshine wrote:
->> >
->> >> On Mon, Sep 3, 2018 at 5:10 PM Johannes Schindelin via GitGitGadget
->> >> <gitgitgadget@gmail.com> wrote:
->> >> > So let's do something different in VSTS: let's run all the tests with
->> >> > `--quiet` first, and only if a failure is encountered, try to trace the
->> >> > commands as they are executed. [...]
+
+On Thu, Aug 30 2018, Jeff King wrote:
+
+> On Thu, Aug 30, 2018 at 02:18:19PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>> >   - it naturally limits the candidate pool to under-represented groups
+>> >     (which is the whole point of the program, but if you don't
+>> >     actually care about that, then it's just a complication)
 >>
->> Is this re-running just an individual test on its own or all the tests
->> within a single file?
+>> I'm fine with doing selection discrimination of under-represented groups
+>> through such a program. Particularly if, as you mention, there's
+>> earmarked funding for it which otherwise might not be available, so it's
+>> not zero-sum when it comes to a hypothetical alternative of casting a
+>> wider net of our own (and as you mention, that would be more work).
 >
-> Upon encountering a failed test, it is re-running the entire test script
-> afresh.
+> Yeah, just for reference, my "you" there was a hypothetical "one might
+> or might not care about...", not responding to your particular email.
 >
->> The latter shouldn't need this at all.
+>> I do think it's unfortunate that the selection criteria for the program
+>> privileges U.S. citizens and U.S. residents above other people,
+>> particularly since they're also accepting worldwide candidates (and
+>> we've had at least one non-American participant that I know about), so
+>> it's not e.g. for U.S. administrative or tax reasons as one might expect
+>> if they only accepted Americans.
 >
-> Please do not let me die dumb. In other words, I would love for you to
-> explain what exactly you mean by that sentence.
+> I assume you mean this bit from the eligibility rules:
+>
+>   You must meet one of the following criteria:
+>     - You live any where in the world and you identify as a woman (cis
+>       or trans), trans man, or genderqueer person (including genderfluid
+>       or genderfree).
+>     - You live in the United States or you are a U.S. national or
+>>       permanent resident living abroad, AND you are a person of any
+>       gender who is Black/African American, Hispanic/Latin@, Native
+>       American/American Indian, Alaska Native, Native Hawaiian, or
+>       Pacific Islander
+>
+> So there are more categories for the US, but I think that is largely
+> because under-representation is somewhat regional. Being black in the US
+> is different than being black in Africa. Certainly one could argue that
+> Africa as a whole is under-represented in the tech world, but I think
+> you'd probably need to draw different boundaries in different places if
+> you want to extend opportunities to those who are least likely to
+> already have them.
+>
+> I don't know what those groupings would look like in, say, Europe. If
+> you're suggesting that the program would be better off having
+> region-specific rules for more regions, I'd certainly agree with that. I
+> don't know if it's something the Outreachy folks have considered or
+> discussed; it might be worth bringing it up.
 
-Just re-run the script. You shouldn't need to kill p4d, as each script
-starts up its own instance of p4d, and shuts it down when it exits.
+[I don't mean to drag this up again, I had a draft here that I hadn't
+sent, and thought given that I'm standing for the Git Project Leadership
+Committee which presumably has something to say about this it was better
+if I clarified].
 
-$ cd t
-$ ./t9800-git-p4-basic.sh
-Ctrl^C
-$ ./t9800-git-p4-basic.sh -v
+I don't mean that just doing the equivalent of s/U.S. national//g on the
+criteria would improve things, for the reasons you explained that
+clearly wouldn't be an improvement or in the spirit of the criteria.
 
-There's a cleanup() function in lib-git-p4.sh which kills the p4d
-server, and that's invoked via:
+I was imagining that there was some way to phrase this that would
+include the current group(s) but be country-neutral. E.g. instead of
+talking about some specific minorities in specific countries say that if
+you're in a group below such-and-such a percentage.
 
-  trap cleanup EXIT
+Although reading this again and consulting Wikipedia they seem to be
+using all U.S. census groups below 20% with the exception of one (two if
+you count "Other"), so I don't know how that would translate to other
+countries, or if that's just an unintentional omission. Perhaps some mix
+of group + mean income within that group? I don't know, and I'm not
+familiar enough with the U.S. to speculate as to how they came up with
+that.
 
-That's the only cleanup that each of the scripts require AFAIK.
+Or, just a third criteria of:
 
->
->> And the former, I'm not sure will actually work - most of the tests
->> assume some particular p4 state. But perhaps I'm missing something?
->
-> No, the former would not work at all. Not only for the p4 tests: Git's
-> tests frequently commit the deadly sin of relying on output of one another
-> (wreaking havoc e.g. when test cases are skipped due to missing
-> prerequisites, and latter test cases relying on their output). It is not
-> the only thing that is wrong with the test suite, of course.
->
->> I also think it does look kind of ugly. And if there's one thing I've
->> learned, it's that the ugly hack you write today with the words "we'll
->> tidy this up later" goes on to live with you forever!
->
-> Okay.
->
-> (And having read lib-git-p4.sh, I kind of see where you learned that.)
->
-> But maybe you also have some splendid idea what to do instead? Because
-> doing something about it, that we need. We can't just say "oh, the only
-> solution we found is ugly, so let's not do it at all".
->
-> I am even going so far as to say: unless you have a better idea, it is
-> pretty detrimental to criticize the current approach. It is the opposite
-> of constructive.
->
-> So let's hear some ideas how to improve the situation, m'kay?
->
-> Just as a reminder, this is the problem I want to solve: I want to run the
-> tests in a light-weight manner, with minimal output, and only in case of
-> an error do I want to crank up the verbosity. Instead of wasting most of the
-> effort to log everything and then throwing it away in most of the common
-> cases, I suggest to re-run the entire test.
->
-> What do you suggest to solve this?
->
+    Projects can opt-in to consider non-U.S. nationals or residents who
+    they believe fulfill the spirit of criteria #2 as it would apply to
+    another country.
 
-I don't know about any other tests, but the git-p4 tests don't take
-any longer in verbose mode. So one simple solution is to just run it
-in verbose mode - unless there are other tests which have more
-overhead.
+Then we could (if Outreachy approves) opt-in to that, since considering
+that on a case-by-case basis is surely less gnarly than trying to come
+up with some general rule.
 
-The trap/exit/cleanup method that the git-p4 tests already use would
-seem to be ideally suited to cleaning up everything on exit.
+So again, I don't think this particular thing is a big deal, or
+something worth spending time worrying about at this point. Just
+something to keep an eye out for and potentially gently poke Outreachy
+about.
 
-There might be some specific tests where this doesn't quite work out,
-if you let me know what they are I can have a look at fixing them for
-you.
+I just think we might stand to get better/more candidates and have more
+fair process, and be seen to spend project funds in a less biased way if
+the criteria wasn't an OR'd statement whose second half starts off by
+outright limiting itself to less than 5% of the world population based
+on a specific nationality, before further narrowing things down.
 
-Thanks,
-Luke
