@@ -2,99 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECDAA1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 22:58:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48D2D1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 23:10:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727629AbeIFDa4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 23:30:56 -0400
-Received: from mail-io0-f201.google.com ([209.85.223.201]:41218 "EHLO
-        mail-io0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727611AbeIFDaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 23:30:55 -0400
-Received: by mail-io0-f201.google.com with SMTP id q24-v6so8986826iog.8
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 15:58:33 -0700 (PDT)
+        id S1727592AbeIFDme (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 23:42:34 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:42452 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727518AbeIFDme (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 23:42:34 -0400
+Received: by mail-pg1-f195.google.com with SMTP id y4-v6so4157934pgp.9
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 16:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=mbix/R3baEUQxl3Cfbsk8R3SCgTTWkoNpZCf4Rn+NAo=;
-        b=LFimznjdPZOwodO7vEOUFOSlU+YdRJsh8qtXxo3H+Rw+OOK8B3W9vOxfAWXC8rVxLu
-         VFycE58D8y5O9EPp0FZHZdObkUhWl5DlS3hjJSci/QU7NA4/k6FEUUVdqAnXSOveSlcD
-         CgA8QEPHU2CKUaWHjX2T6aVYpVWg2exJu34T/HpdyyB6OxKnUzNEEJZv4F1+3bJWOqcl
-         tXh+BG1LTWais893lbtvZv6LH2FMYd2fgXIS/0dZ/t3P2xrmWDRCGZABmVKmdoRcAdVp
-         PIz2zjVxOySeJnNvYWVMUFmuHB4pegNz08l8imBRgBRL6PoWIqGYVxdkHdtQBKBk79GA
-         2Afw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=sQEhlpo5jNCe+tkcGc7kWQYLKc+3OskDEThXz5oM8uE=;
+        b=SsfYGeiftqSTlavsYhLw6cGgQHXFCbNzAobaOavgLAzxk0ycJAxnKODzZ3IiIOU4Ut
+         1MpgpC8tjsXULMSCg6qsxrv88OinhMwRuBFSphB6cG8UsZBvSmsWOwJLcJ//XSMcIjlm
+         ChZmBme/qbVTrNX8v376H/mjDc8wnWwjggJFoHDHykbDu4jmUfn9k1g7nW25UhBo9mk2
+         JD1c8ffuWYTYhDNrpLOPjumhZjPIOZK6VHUSLStzewBpj9h44HDHl56RDyCY4aZxw9FS
+         ByuiEnywKVZswtHRBrKWbMPtd7rx/UjkZ/8+zH37BlHGwP/97B5fPWGASD/H4qK48Nxi
+         EcXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=mbix/R3baEUQxl3Cfbsk8R3SCgTTWkoNpZCf4Rn+NAo=;
-        b=h0qPI4QdElzfmYoj4Wb7EC1M7Q7X6HiiiF5NE55+PJwos1vs2t4KToi9lwupWyxKNX
-         /OjChdMOk9TrVSNubtHSNw6SWYalHmR4QUNb9lxBZFr4CKLn+DzziWuWeiOcAm9BGQIR
-         OmzNX+p2wymzPfdSeBDcjVr1o1hCPky7x/fR1ZzbhY61zukuqFmNVcuOLQdhzoR0UqW0
-         n+O+mDfKD4QPCkBJVBa0aYfxvLpJPH2IGpNOFNsfn6AKVkFShlOn29oFJFcGpfR4z9Hv
-         gykdrFTjt89Z2m4nYD2fKRIQAMx9lUkNTkHC/KkJ6p1BOU0nicd0eX3FJ9xigRZjm1KB
-         loVg==
-X-Gm-Message-State: APzg51A49yXThHmEASwTfRQO4iS9M9SU6ftYe+DiGHfWYdYf2rhJpQxK
-        q+RVTD7x1JBjrFgL9pPFpPY/oWtzXuEzCdRn07BATU9b+kH/hZzTVAAOWVotkiHJcX/Ns4MGLBt
-        iIj3prV4g3zOpqhVZvhT1eKUw1OCsk/Tj3OGZdUEVMJx0MLnNHdXwgJ0dRUEB
-X-Google-Smtp-Source: ANB0VdbpQoVhwJCczKfYw6gBeP1O2N+y7CB6GNh92MIEYqD1KNmvlVJdY+YCDegvFQ3yqXj49uxatZQw+mLL
-X-Received: by 2002:a24:5687:: with SMTP id o129-v6mr563660itb.21.1536188312767;
- Wed, 05 Sep 2018 15:58:32 -0700 (PDT)
-Date:   Wed,  5 Sep 2018 15:58:28 -0700
-Message-Id: <20180905225828.17782-1-sbeller@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH] diff: allow --recurse-submodules as an synonym for --submodule
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=sQEhlpo5jNCe+tkcGc7kWQYLKc+3OskDEThXz5oM8uE=;
+        b=DT3ZVC/0QVQNkT9CZmHuUQvJHt1WtJ77WjzUwdcxzxJ6rgEwQX8OlfiowKtZ0SQwds
+         6zUIPmK0WDYx3Yq7/e55Xok9Mf/OqEgb0qDGeqM98bkqhvzZ2XbB03BdNXTSSva000VD
+         dxye0PjoWOTzsEmSt/WLBktfW2IzOwdeU5WkGXu/6bLPq+agWHVH/WJOWM0GN1Eh1enq
+         73Z6+R8GmWVLI2f63Sw3XTwcP3o816DcaVbIC1AFmjAAfPHzZcRRujgJlCGVDXtZvodg
+         AMw+0RuuwgA3xEpGplAUA9oCfRKPszn1oplfmw0fNrHiYGZeXJ6e6bHeHXFFxnBG67ee
+         oz+w==
+X-Gm-Message-State: APzg51BTP62wmryAK6COXTjh9Zd3sWZOao/PR8xMGD+S2S9a0kt2n8ru
+        gHU5Zdu25bcNyhEauu11cNw7gMC/
+X-Google-Smtp-Source: ANB0Vdb753w1l8+ii51gvsIDJ0Hm6fV+tcIgXqqj2jsTF53rK1RD3YERLmgve63QoH+pLetfkWi2iQ==
+X-Received: by 2002:a62:398c:: with SMTP id u12-v6mr43544911pfj.9.1536189008568;
+        Wed, 05 Sep 2018 16:10:08 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id k4-v6sm5605809pfj.30.2018.09.05.16.10.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 16:10:08 -0700 (PDT)
+Date:   Wed, 5 Sep 2018 16:10:06 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] submodule.sh update --remote: default to oid instead of
+ master
+Message-ID: <20180905231006.GC120842@aiede.svl.corp.google.com>
+References: <20180905224825.13564-1-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180905224825.13564-1-sbeller@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Many commands have flags to recurse into submodules, which is named
---recurse-submodules. The diff family also has a submodule recursion flag,
-but that is named differently. Add a synonym --recurse-submodules, which
-means the same as the --submodule flag, such that across all git commands
-supporting submodules we have the --recurse-submodules flag available.
+Stefan Beller wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/diff-options.txt | 1 +
- diff.c                         | 2 ++
- 2 files changed, 3 insertions(+)
+> Subject: submodule.sh update --remote: default to oid instead of master
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 0378cd574eb..694c97338c9 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -227,6 +227,7 @@ linkgit:git-config[1]).
- 	of the `--diff-filter` option on what the status letters mean.
- 
- --submodule[=<format>]::
-+--recurse-submodules[=<format>]::
- 	Specify how differences in submodules are shown.  When specifying
- 	`--submodule=short` the 'short' format is used.  This format just
- 	shows the names of the commits at the beginning and end of the range.
-diff --git a/diff.c b/diff.c
-index 145cfbae592..d3d5a989bd1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5023,6 +5023,8 @@ int diff_opt_parse(struct diff_options *options,
- 		handle_ignore_submodules_arg(options, arg);
- 	} else if (skip_to_optional_arg_default(arg, "--submodule", &arg, "log"))
- 		return parse_submodule_opt(options, arg);
-+	else if (skip_to_optional_arg_default(arg, "--recurse-submodules", &arg, "log"))
-+		return parse_submodule_opt(options, arg);
- 	else if (skip_prefix(arg, "--ws-error-highlight=", &arg))
- 		return parse_ws_error_highlight_opt(options, arg);
- 	else if (!strcmp(arg, "--ita-invisible-in-index"))
--- 
-2.19.0.rc2.392.g5ba43deb5a-goog
+Yay!
 
+Nit: it wasn't clear to me at first what default this subject line was
+referring to.  Perhaps:
+
+	submodule update --remote: skip GITLINK update when no branch is set
+
+[...]
+> --- a/Documentation/gitmodules.txt
+> +++ b/Documentation/gitmodules.txt
+> @@ -50,11 +50,12 @@ submodule.<name>.update::
+>  
+>  submodule.<name>.branch::
+[...]
+> +	If the option is not specified, do not update to any branch but
+> +	the object id of the remote.
+
+Likewise: how about something like
+
+	If not set, the default is for `git submodule update --remote`
+	to update the submodule to the superproject's recorded SHA-1.
+
+[...]
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -568,16 +568,19 @@ cmd_update()
+>  		if test -n "$remote"
+>  		then
+>  			branch=$(git submodule--helper remote-branch "$sm_path")
+> -			if test -z "$nofetch"
+> +			if test -n "$branch"
+>  			then
+> -				# Fetch remote before determining tracking $sha1
+> -				fetch_in_submodule "$sm_path" $depth ||
+> -				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
+> +				if test -z "$nofetch"
+> +				then
+> +					# Fetch remote before determining tracking $sha1
+> +					fetch_in_submodule "$sm_path" $depth ||
+
+Makes sense.  If $sha1 isn't available in the submodule, it will fetch
+again later.
+
+[...]
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -260,6 +260,28 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
+>  	)
+>  '
+>  
+> +test_expect_success 'submodule update --remote should not fetch upstream when no branch is set' '
+> +	(
+> +		cd super &&
+> +		test_might_fail git config --unset -f .gitmodules submodule."submodule".branch &&
+
+Not about this patch: the quoting here is strange.
+
+> +		git add .gitmodules &&
+> +		git commit --allow-empty -m "submodules: pin in superproject branch"
+> +	) &&
+
+I wonder if we can do simpler by using -C + some helpers: something like
+
+	git config --unset -f super/.gitmodules ... &&
+	test_commit -C submodule ... &&
+	git -C super submodule update ... &&
+	test_cmp_rev ...
+
+Unfortunately test_cmp_rev doesn't accept a -C argument.
+
+Broader comment: do you think people will be surprised by this new
+behavior?  Is there anything special we'd need to do to call it out
+(e.g., print a warning or put something in release notes)?
+
+Thanks,
+Jonathan
