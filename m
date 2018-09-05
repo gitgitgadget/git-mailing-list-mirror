@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ECDA1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 16:47:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 935141F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 16:48:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727494AbeIEVS5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 17:18:57 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:43288 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726046AbeIEVS4 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 17:18:56 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w85GghiG025766;
-        Wed, 5 Sep 2018 09:47:55 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2m7qnmqc54-1;
-        Wed, 05 Sep 2018 09:47:55 -0700
-Received: from mxw1.palantir.com (smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 61DC922901E6;
-        Wed,  5 Sep 2018 09:47:55 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 59E3B2CDE77;
-        Wed,  5 Sep 2018 09:47:55 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: [PATCH] merge-recursive: remove superfluous semicolon
-Date:   Wed,  5 Sep 2018 09:47:53 -0700
-Message-Id: <20180905164753.22711-1-newren@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc2.1.g7fc77f67e1
+        id S1727364AbeIEVTe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 17:19:34 -0400
+Received: from mail-io0-f195.google.com ([209.85.223.195]:39903 "EHLO
+        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbeIEVTe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 17:19:34 -0400
+Received: by mail-io0-f195.google.com with SMTP id l7-v6so6511921iok.6
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 09:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WcuUfVav7khbmiE2KaPBCGLT/HHqopK/f20P3JTXjMs=;
+        b=JmIeW2mTgT0iseatiZbTLKAtYtSFoPyWWyh1ah6NVpJlDbScB35FDG+Ko7djJh+iMu
+         TaJKN/pK0fgMmluLrbe/59O5/odH8Vz2ZAXRPKNSZkqEGyagKMSkSITyF3rljtDVm5UC
+         1sCqEX8LeQoxOFOjlOtesnBB3F8LC5W/tManvY23v2Otfcek9iRz5lnMWwJOam6RCpEe
+         Ld1M2zazSNbm8b5wO6hk3hiVCjua9RwCzrDxeI56WN9H987E8SPtM+M41MU8XmCmGUvm
+         ASeUzWpyMXY4ynKKTDFDD48vkB3zo2rAEeombvjQ5OW0WrpU/AsuuhoLxud9UvrdkTAI
+         FJKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WcuUfVav7khbmiE2KaPBCGLT/HHqopK/f20P3JTXjMs=;
+        b=YgPAlK6Ks/LLSlbgVU4Z8czTe5r+Szbb+dDhY6EwOb4eMOVPMoWiIpfWq6TMztVuBg
+         zXrjOA+9AYzEADvZ/DUrA3upzXs/OAJ+btvQWqnfzo2kBGP9TkQmkbQI5536mnxH9YYp
+         3/Eb02E1sZGfHI76ICswBlUdRR8PFO6RHvCht7A3aHrjzlnxYYJywYkMBnvRJB+O1pKx
+         wMOinzH/bt8Djx8L+nHF3BVtscpbpKcs8aYwGfkDJQsmhiX9fuaAbRru623mWExjclM2
+         QlkAexdbxwsPySPoL1C39aFrPMOdvnWg72GulSzBeZlo5MHlJmCViF2cEPBuM9DsikOQ
+         2Mpg==
+X-Gm-Message-State: APzg51D5O90gzrLbmq6nZzrTz0O5QVLUsN2F3kkF0AHSngeqfo1Ui5tz
+        yAimfdtvm7RSg74BGQlzjxIo6F8/Z0oiht3JZjuqAA==
+X-Google-Smtp-Source: ANB0VdYFcVUAceLlnFUjX3IS6V3qMdCphz9wUXT/ZxMq+4UP/RPLY7FmDqkg6u16mkcqaxsovf66ozjiDBzhAKTAJgU=
+X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr24775362iok.236.1536166113392;
+ Wed, 05 Sep 2018 09:48:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-05_10:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1809050170
+References: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com> <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 5 Sep 2018 18:48:06 +0200
+Message-ID: <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Once I saw it, I couldn't unsee it, and it quickly started getting on my
-nerves...  My bad for not noticing it when reviewing the original patch
-that introduced it, I guess -- 9da2d0379ea0 ("merge-recursive: use
-xstrdup() instead of fixed buffer", 2018-06-10)
+On Wed, Sep 5, 2018 at 6:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > Here are the topics that have been cooking.  Commits prefixed with
+> > '-' are only in 'pu' (proposed updates) while commits prefixed with
+> > '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> > the integration branches, but I am still holding onto them.
+> >
+> > Git 2.19-rc2 is out.  Hopefully the tip of 'master' is more or less
+> > identical to the final one without needing much updates.
+>
+> By the way, linux-gcc job of TravisCI seems to have been unhappy
+> lately all the way down to 'master'.  It fails split-index tests,
+> which may or may not be new breakage.
+>
+>     https://travis-ci.org/git/git/jobs/424552273
+>
+> If this is a recent regression, we may want to revert a few commits,
+> but I do not offhand recall us having touched the spilt-index part
+> of the code during this cycle.
 
- merge-recursive.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e5243dbc54..1b5c255918 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2239,7 +2239,7 @@ static struct dir_rename_entry *check_dir_renamed(c=
-onst char *path,
- {
- 	char *temp =3D xstrdup(path);
- 	char *end;
--	struct dir_rename_entry *entry =3D NULL;;
-+	struct dir_rename_entry *entry =3D NULL;
-=20
- 	while ((end =3D strrchr(temp, '/'))) {
- 		*end =3D '\0';
---=20
-2.19.0.rc2.1.g7fc77f67e1
-
+I can't reproduce it here (with either 64 or 32 bit builds on x86).
+Not denying the problem, just a quick update. I'll need more time,
+maybe over weekend to have a closer look.
+-- 
+Duy
