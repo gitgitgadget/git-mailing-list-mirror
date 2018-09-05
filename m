@@ -7,67 +7,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 80DD51F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 19:28:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D694B1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 19:39:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727786AbeIFAAF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 20:00:05 -0400
-Received: from mail-qt0-f179.google.com ([209.85.216.179]:37629 "EHLO
-        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727397AbeIFAAF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 20:00:05 -0400
-Received: by mail-qt0-f179.google.com with SMTP id n6-v6so9499772qtl.4
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 12:28:29 -0700 (PDT)
+        id S1727842AbeIFAK7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 20:10:59 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:44340 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727575AbeIFAK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 20:10:59 -0400
+Received: by mail-qt0-f194.google.com with SMTP id k38-v6so9506446qtk.11
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 12:39:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=CBLRM92ETcd7B+Pp+ubuH5iUZFNwudEN2TdvKAoKTAY=;
-        b=cHaBEJVYsqjzPXIK/2xl/ncQgeHAAUQ1Ze1CCRhELH25kMkqA5kVzsybXlarEQERX2
-         kbVO5CSo5eEAnabCcjxNe20vbiIETT3Qcf/HhnLza5gr9fAW29ZBQs7j2K7PoS9X1INg
-         346tMmP8H0giBh09M4wQO+eoEZ/Av4CJWFfQpFNLIURL242ookJe8UR1wblUCTwYYWMo
-         dBKtm4nmvX5SAs7I1WU6j0bRczpnTTFHvvlnDoKU/S49qEkjRLMABrJ0TpwhGIDflyYa
-         yD93tYXV2K0w669qHG8KxAFGSGUIKR0lO0SBc0AgaiWqYPoG5eYCDFbmf87RNc1ssnbt
-         O4rw==
+        bh=cgXx0n4qovhtK7cREeTTX5/iPEICyqhzmVNcQIn9KDc=;
+        b=OscBNmFDnobogtyoSvbx2mjdUg1xdpFgwTsMZLi7ZxAXyIkPnXEAkd93BwGCN5dhL+
+         /D12EBYetAkV4pEDNoUNtI7YmI5UFJewr3HP/2hj8/icZA7eb/e7mZMq07wi7OGT6SaO
+         TRPcw2RB4kHaFD/nuzSq/njvQ8TW+3snGnukzGQQgIKsgpwe8wtOt0MfBMaqeAu+pMHV
+         tiDSOqKleA1p0cBYXsia/pY+BpKeMY07bUDx5UOAwnBy/8OOCPJhAsCI+4q0Gj9LayXB
+         XI3RwclUWPHIQePCF9pqWplZk1ZGTuhlPc3kYly+KvoNniPL7r9+Hr8AFw0XOhnQfskB
+         BZZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=CBLRM92ETcd7B+Pp+ubuH5iUZFNwudEN2TdvKAoKTAY=;
-        b=t9efjrPVYo21cTovJ8jJgZ9o8m/5JgiHx+2zWp8Qo+evDqv/OTrzLPp8sCVFkph4ds
-         UaRVTCVY1CfOm2RnKqj8sKToWqGogE+wV/HiCFI0qCwmWAX9wtlIARbjM0QpDqxlAj13
-         DgImqdnnsbfHNP3dSlX6BWsVxUqwIC1yZMVSX5UyF7GuagRZXS+yJkzuNjSMQoNT/hA6
-         9tt2cwHnbVsSKxu+SHiSMqM1ZXvG7c7eJ1h2eP02CMwtODrWcPyAZWpt6gQ2F1wACLAU
-         Nk/QV4ySYURW8/baRIJjWJueKcuFsaYjJGdH1ZlT+BD19RuHPd7Umt8L5C0OOJnOGVXZ
-         aVwA==
-X-Gm-Message-State: APzg51BDtjLoDuoam44UqxsDYe6oTo3Fm1FfSUzVDmcVElpsN/jBCM8U
-        SUZJwsjtmE+vdFIBOgibSjk=
-X-Google-Smtp-Source: ANB0Vda1REGKVyvTxnbLGVneLhdAXwo3FB+i91m27uURWCCLTgbPW7BsrbjRukC8eiJAW+gpG1P2jQ==
-X-Received: by 2002:a0c:aed9:: with SMTP id n25-v6mr34395215qvd.10.1536175708712;
-        Wed, 05 Sep 2018 12:28:28 -0700 (PDT)
+        bh=cgXx0n4qovhtK7cREeTTX5/iPEICyqhzmVNcQIn9KDc=;
+        b=HO6NtxJMzh1CzgZVA/Zj7mrlbfHx1Tsta7Ez2ayFkeXAWI99qe+cdBAOEkISzv2kLv
+         gP2U2qsX8H9muvIcO9GtwxF2Yw44KiMzlCrQBEeTAfd9CRqzIK4fRfDJyA1d52e8MCbL
+         Zc3cvhAK1fz1sJ5EBeRL5jrj8wCZsvbyRsELc8rYS/v3/AiF6USq8HAwnBcmksg6pHEw
+         w3bSx7zqgsSH+iZAGv2s2ZpEEZfFzgr6BUA04ESoMfpRqqT1eXx2b2dhvn+WJ6gXJbwS
+         a/FnJZ57O756KZOvABYipQijuiVGylWrlPpQnmhQX08pt3+GFHHPa7eXMBqA7sVqSzZV
+         NqNQ==
+X-Gm-Message-State: APzg51B1ZxlzUucirD4DTvR+RCno9WEveyAyZDVOqu2M1A6ZVWf4GY/j
+        LSl7aI78+sX7EJspdKq6xI8=
+X-Google-Smtp-Source: ANB0Vda0j5wrtCecKSzQJ9jzgQoERICMhsiYeIgVcEwbXODgBYmIZh2f4WJogzHxMRA5zRLaghGQ9Q==
+X-Received: by 2002:ac8:30eb:: with SMTP id w40-v6mr34497869qta.176.1536176360596;
+        Wed, 05 Sep 2018 12:39:20 -0700 (PDT)
 Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id r20-v6sm1663125qtc.81.2018.09.05.12.28.27
+        by smtp.gmail.com with ESMTPSA id d138-v6sm1486757qke.18.2018.09.05.12.37.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Sep 2018 12:28:27 -0700 (PDT)
-Subject: Re: [PATCH 04/11] multi-pack-index: verify packname order
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        Wed, 05 Sep 2018 12:38:31 -0700 (PDT)
+Subject: Re: [PATCH 01/11] multi-pack-index: add 'verify' verb
+To:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <dstolee@microsoft.com>
 References: <pull.34.git.gitgitgadget@gmail.com>
- <37ee24c82bf88611808ec3bb1c36eef439c809db.1536158789.git.gitgitgadget@gmail.com>
- <CAGZ79kY7_RJfJomkpob85A4ubvXJt3BR8njkaozLgi-6ytxB9w@mail.gmail.com>
- <da7eaf92-57f6-8129-149d-4260d84b4eb0@gmail.com>
- <CAGZ79kZHmCyRLur=DgLx2sHhD1hCXn3pU+0CggwFQgWRzTkp5A@mail.gmail.com>
+ <8dc38afe2b4d73e940daf9a0ff7f9c0a38802d95.1536158789.git.gitgitgadget@gmail.com>
+ <CAPig+cR4vEcMBe4REd4Z=WMG-MR4PUnyNNBxoJacUXzB8ho6fg@mail.gmail.com>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <e09aa8e6-26fa-68b5-b4d1-1322b09e7974@gmail.com>
-Date:   Wed, 5 Sep 2018 15:28:26 -0400
+Message-ID: <81279be3-6d9a-ae39-a5e9-399fd4be2a23@gmail.com>
+Date:   Wed, 5 Sep 2018 15:37:44 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
  Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZHmCyRLur=DgLx2sHhD1hCXn3pU+0CggwFQgWRzTkp5A@mail.gmail.com>
+In-Reply-To: <CAPig+cR4vEcMBe4REd4Z=WMG-MR4PUnyNNBxoJacUXzB8ho6fg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -76,33 +74,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/5/2018 3:14 PM, Stefan Beller wrote:
-> On Wed, Sep 5, 2018 at 12:11 PM Derrick Stolee <stolee@gmail.com> wrote:
->> On 9/5/2018 2:15 PM, Stefan Beller wrote:
->>> On Wed, Sep 5, 2018 at 7:46 AM Derrick Stolee via GitGitGadget
->>> <gitgitgadget@gmail.com> wrote:
->>>> From: Derrick Stolee <dstolee@microsoft.com>
->>>>
->>>> The final check we make while loading a multi-pack-index is that
->>>> the packfile names are in lexicographical order. Make this error
->>>> be a die() instead.
->>> What is the advantage of having a die() here?
->>> Would the midx work under normal operation when
->>> not sorted correctly?
->>>
->>> This sounds like a hack for easy testability in this context,
->>> so could you clarify why this helps the regular user?
->> The multi-pack-index will not work as expected, since
->> midx_contains_pack() may provide incorrect results, and thus we will add
->> the "missing" packfiles to the packed_git linked list.
->>
->> This _should_ be a die(), as something unexpected occurred (the file
->> doesn't match the format specification).
-> Thanks for the clarification.
+On 9/5/2018 2:59 PM, Eric Sunshine wrote:
+> On Wed, Sep 5, 2018 at 10:46 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> The multi-pack-index builtin writes multi-pack-index files, and
+>> uses a 'write' verb to do so. Add a 'verify' verb that checks this
+>> file matches the contents of the pack-indexes it replaces.
+>> [...]
+>> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+>> ---
+>> diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+>> @@ -5,7 +5,7 @@
+>>   static char const * const builtin_multi_pack_index_usage[] = {
+>> -       N_("git multi-pack-index [--object-dir=<dir>] write"),
+>> +       N_("git multi-pack-index [--object-dir=<dir>] [write|verify]"),
+> Nit: The square brackets make the verb optional. You probably want
+> parenthesis to indicate that one or the other is required:
 >
-> So this patch actually hits 2 birds with one stone, as it fixes
-> a bug as well as adds the check for such corruption to the
-> verify step?
-This is a common occurrence in this series (replacing error() with 
-die()) as we are now exercising those conditions and clarifying what 
-should happen.
+>      git multi-pack-index [--object-dir=<dir>] (write|verify)
+Thanks for catching this mistake! This would be easy to miss and keep 
+around forever.
