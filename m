@@ -2,90 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 935141F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 16:48:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC321F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 16:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbeIEVTe (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 17:19:34 -0400
-Received: from mail-io0-f195.google.com ([209.85.223.195]:39903 "EHLO
-        mail-io0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbeIEVTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 17:19:34 -0400
-Received: by mail-io0-f195.google.com with SMTP id l7-v6so6511921iok.6
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 09:48:33 -0700 (PDT)
+        id S1727686AbeIEVZs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 17:25:48 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:51240 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726335AbeIEVZs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 17:25:48 -0400
+Received: by mail-wm0-f65.google.com with SMTP id y2-v6so8709625wma.1
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 09:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WcuUfVav7khbmiE2KaPBCGLT/HHqopK/f20P3JTXjMs=;
-        b=JmIeW2mTgT0iseatiZbTLKAtYtSFoPyWWyh1ah6NVpJlDbScB35FDG+Ko7djJh+iMu
-         TaJKN/pK0fgMmluLrbe/59O5/odH8Vz2ZAXRPKNSZkqEGyagKMSkSITyF3rljtDVm5UC
-         1sCqEX8LeQoxOFOjlOtesnBB3F8LC5W/tManvY23v2Otfcek9iRz5lnMWwJOam6RCpEe
-         Ld1M2zazSNbm8b5wO6hk3hiVCjua9RwCzrDxeI56WN9H987E8SPtM+M41MU8XmCmGUvm
-         ASeUzWpyMXY4ynKKTDFDD48vkB3zo2rAEeombvjQ5OW0WrpU/AsuuhoLxud9UvrdkTAI
-         FJKg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=tM25xddE2ONbJYaguAf0VHf2aJXff3jd7nCTmvNJ/Qc=;
+        b=X8s60ZNMcJxYnq/oTcsgXppfrOXYzp6I4G8REB6Cy9+lniw3PSo688q18Ecu9xMS5K
+         m++qqtXhmGAMWS3TKC/tboLf7YhcFeUnNFTmYYCAOGKwG9ffY4/Ek9VMgvI/V/r7hAmX
+         MuNmoAPHui90OC9nSwrFSWArCKQHIseRD7s9SDk70s/rYPseE2xRRsxNzlk5p7e8KOuy
+         gtWxURTDZfn+NN/go7ZRPJDckrmjk9JvAxX/O6rEftRi/H7MPOuN0hCaWntx/n6YbH8g
+         4rNR/R4bbXP4F2HdJjEwZElbkba0VPA5Lekfdxzqtw+J2mGTj3dwmvLWRwcHL5tYEtjU
+         1nOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WcuUfVav7khbmiE2KaPBCGLT/HHqopK/f20P3JTXjMs=;
-        b=YgPAlK6Ks/LLSlbgVU4Z8czTe5r+Szbb+dDhY6EwOb4eMOVPMoWiIpfWq6TMztVuBg
-         zXrjOA+9AYzEADvZ/DUrA3upzXs/OAJ+btvQWqnfzo2kBGP9TkQmkbQI5536mnxH9YYp
-         3/Eb02E1sZGfHI76ICswBlUdRR8PFO6RHvCht7A3aHrjzlnxYYJywYkMBnvRJB+O1pKx
-         wMOinzH/bt8Djx8L+nHF3BVtscpbpKcs8aYwGfkDJQsmhiX9fuaAbRru623mWExjclM2
-         QlkAexdbxwsPySPoL1C39aFrPMOdvnWg72GulSzBeZlo5MHlJmCViF2cEPBuM9DsikOQ
-         2Mpg==
-X-Gm-Message-State: APzg51D5O90gzrLbmq6nZzrTz0O5QVLUsN2F3kkF0AHSngeqfo1Ui5tz
-        yAimfdtvm7RSg74BGQlzjxIo6F8/Z0oiht3JZjuqAA==
-X-Google-Smtp-Source: ANB0VdYFcVUAceLlnFUjX3IS6V3qMdCphz9wUXT/ZxMq+4UP/RPLY7FmDqkg6u16mkcqaxsovf66ozjiDBzhAKTAJgU=
-X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr24775362iok.236.1536166113392;
- Wed, 05 Sep 2018 09:48:33 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=tM25xddE2ONbJYaguAf0VHf2aJXff3jd7nCTmvNJ/Qc=;
+        b=K4+Yn0g8X+aCiAygDmREG+HXLWAMU92A94cGnUbL2eH6iVq6owKRNGqoMuNhAbzydH
+         ibdKDWhvxTa5vkrWsfN08hIW9uPNDJLLLSqsCSh2cR4YnlQKEvN7mN2P4bWdE/0EG8RH
+         0rWJ/Whz6u3/VA8r/PRKRQirAf7k4/0bXgjG3Wpfk4W/VfCOwn7i4QWlKetHSjFE1P5r
+         iqoBqom1U58v4YI8YPv/puh6io+b1hgJIzhK6HE766fIv1TpZj/HX5wW+HchjQ+9aOuA
+         uJEZYezN4t7A9LjNGue17d/DzlkEk6aRSI1I56w+o2oBQuSuI6pOOf+6NwnF0CpUjRia
+         +HfA==
+X-Gm-Message-State: APzg51DzkxpCql1jLCQtw8xx90iuos2BevhgT59O6p1Y4+Ttk+iGdFWc
+        O+iy8IH0lSWdM0afirnXTZw=
+X-Google-Smtp-Source: ANB0Vdbw5jV5ok8ELjfLCkk9+WwymQ6LYGdBrwwrF85sFENt1ETUauX+s08yw6GGgwXPIQOv7UTyRA==
+X-Received: by 2002:a1c:ee15:: with SMTP id m21-v6mr828660wmh.112.1536166484267;
+        Wed, 05 Sep 2018 09:54:44 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z16-v6sm2975130wrq.78.2018.09.05.09.54.43
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 09:54:43 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Van Oostenryck Luc <luc.vanoostenryck@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] reopen_tempfile(): truncate opened file
+References: <20180902050803.GA21324@sigill.intra.peff.net>
+        <20180902071204.GA2868@duynguyen.home>
+        <20180902072408.GA18787@sigill.intra.peff.net>
+        <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
+        <20180904163807.GA23572@sigill.intra.peff.net>
+        <20180904233643.GA9156@sigill.intra.peff.net>
+        <CACsJy8Ax4S9Sms6TY1dMV8M9-=hakEW8TCqn8yxb73Vbrpy_MQ@mail.gmail.com>
+        <20180905153551.GB24660@sigill.intra.peff.net>
+        <CACsJy8BGxqzjXUprnhSU7jQDjzgDnY4x+SMsnOVb4Uho4dJt0g@mail.gmail.com>
+        <20180905154827.GC24660@sigill.intra.peff.net>
+Date:   Wed, 05 Sep 2018 09:54:42 -0700
+In-Reply-To: <20180905154827.GC24660@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 5 Sep 2018 11:48:27 -0400")
+Message-ID: <xmqqva7j51gt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com> <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Sep 2018 18:48:06 +0200
-Message-ID: <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 6:35 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Here are the topics that have been cooking.  Commits prefixed with
-> > '-' are only in 'pu' (proposed updates) while commits prefixed with
-> > '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> > the integration branches, but I am still holding onto them.
-> >
-> > Git 2.19-rc2 is out.  Hopefully the tip of 'master' is more or less
-> > identical to the final one without needing much updates.
->
-> By the way, linux-gcc job of TravisCI seems to have been unhappy
-> lately all the way down to 'master'.  It fails split-index tests,
-> which may or may not be new breakage.
->
->     https://travis-ci.org/git/git/jobs/424552273
->
-> If this is a recent regression, we may want to revert a few commits,
-> but I do not offhand recall us having touched the spilt-index part
-> of the code during this cycle.
+Jeff King <peff@peff.net> writes:
 
-I can't reproduce it here (with either 64 or 32 bit builds on x86).
-Not denying the problem, just a quick update. I'll need more time,
-maybe over weekend to have a closer look.
--- 
-Duy
+>> > So AFAIK this fsck catches everything and yields a non-zero exit in the
+>> > error case. And it should work for even a single byte of rubbish.
+>> 
+>> Yes you're right. I forgot about the trailing hash.
+>
+> Thanks, I was worried that I was missing something. ;)
+>
+> Maybe it is worth making that final comment:
+>
+>   # and that the trailing hash in the index was not corrupted,
+>   # which should catch even a single byte of cruft
+>   git fsck
+
+Perhaps.  I do not mind seeing an additional comment to explain why
+this requires PERL (it wasn't immediately obvious as I never use
+'commit -p' myself), either.
