@@ -2,80 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 319431F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 19:08:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B45131F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 19:11:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727508AbeIEXkN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 19:40:13 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43100 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727267AbeIEXkN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 19:40:13 -0400
-Received: by mail-ed1-f68.google.com with SMTP id z27-v6so6948228edb.10
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 12:08:41 -0700 (PDT)
+        id S1727593AbeIEXn2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 19:43:28 -0400
+Received: from mail-qt0-f181.google.com ([209.85.216.181]:38797 "EHLO
+        mail-qt0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726544AbeIEXn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 19:43:28 -0400
+Received: by mail-qt0-f181.google.com with SMTP id x7-v6so9436436qtk.5
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 12:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=48rZ2nGoD8E9W55Gob/gJk97xlUXtE4FDWNtxjgKv5A=;
-        b=HXGjv5RprWW8Ic/EgViQ2wImAAK+JMK20U2yjey3jZrc8vl25xgmWCBfEop5Rq2LQQ
-         UcO9VkLhOhCC488lPD8E3yvdNJtXfeDVOSrR8sDO/Wfg2SNQqHkROroGlj6FRK1vTxEk
-         kJQnfvHffQH5Z8C8soRmpkA+T+Tz1BxLGJXCVmarsRn/SHkV9NuYl+DcWFyMx1ULqSip
-         hnV1TLdqrMM0r7qiQSkNFONE+8wzy7801lyAQEmBe+3mi9PJP5e4DbmAeUh9mck0RlN+
-         SxxH7KGWnhv4NXBw+hV/u+NOWc8jTCmC+q/QIWI2v/ZkqPimFqEZ7QmKOGRiwPVuyfTy
-         qB0Q==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=pis9p4e3t6OEqTtinX6AJEhVS7SKz3F5NZq5UbwoyrU=;
+        b=mVaHQEEa/yrsq+xHuLt5Rs/yyVxmWEBbnT25CBDgx4ChgIkZs8yklB2Qo9Yw2RN0tD
+         8ElNDvBwQV3ef8moEcT8fEYysAGuO4492gO7D5rC32SBwJDHu0P/TlIL95piam9Bn55c
+         UZv70klUo3hr8nY6d8LRAY684BON37s/1x4ZO6hF1oan5DKIL/oEsU53XA/p2K+Gf7q/
+         rTPGqt3t0y8bXgWYP9xLrRZ0bvyNJdkLvZejvzgaTp0O4LX5JCwbMQNs4gKT1B9wIx9P
+         gxOMSaOlmdyZvW82dRRe8j08+9DLM5Gj4PgqisNjupsweZ1Cgt+ImtA5XEzCXG2XF0jf
+         j+AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=48rZ2nGoD8E9W55Gob/gJk97xlUXtE4FDWNtxjgKv5A=;
-        b=D34FIPCb2hWH+cgV5yBe1R2UazI1V3vN8N9ICsqPmUPALOBm8gGT3cCYJu2EsMSiB+
-         dVSd+CiNRH7dEWtmJjX7ifwQfMkf4EvY/fnlLFXho2bwoxcisJ3CLcxkWhRrMR0iv6wu
-         8Xm6JYR8uP0tcvHqe1JirnLTlxCyJho5jpwrmpf7GVz0LALz9kMnjjzRgDMufEa6CUVA
-         rT/CC0rjUfyBI2JiODkWmOKWzz1VHBIgofErbAC4vwvYfN4QY1qFJby148ey9bwcB2iL
-         khw7IHISIhEHate4LIxHBujaWnxuchn2pzvNL3neaiSa+zIpl2Y23/ExrB3ZVO2sfSeC
-         bGpQ==
-X-Gm-Message-State: APzg51DtHOE5OA5Ku9pnUaJVKGPsKifuuqEhkKDyGxS3DJTarJLNmZiA
-        U7FXgH1moWzY/SHFPVlo1XfcTDazCGrc959JetHd6g==
-X-Google-Smtp-Source: ANB0Vdb55VjWXdANCjRlEzmeOeba9nprCS8V0wMv6iDmCHRaFx7s9Ed0BNS0l4chuDKrZoyLnu2ta/9yLTXgVBmewtY=
-X-Received: by 2002:a50:ad0f:: with SMTP id y15-v6mr43716893edc.78.1536174520953;
- Wed, 05 Sep 2018 12:08:40 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=pis9p4e3t6OEqTtinX6AJEhVS7SKz3F5NZq5UbwoyrU=;
+        b=gvd/6xEeudLAI3rvSFf4CJvSWQlL4LUAQvTzdW/f6b++niwpY+fOUbiIDyDEsqstaE
+         wL79uwc7oNdzvdYpytqOmy/rG8JwcVu7p1F/vbOtQunrtcDZbdhQ5oby6xYINa5mV4Th
+         SZ84dpvemeO/FsJOHIqphn4lDJ/eSGgOwrtuMe7KTVT5EDMM1KUQ+dm3DP36+hCV/0gu
+         BIZeqmEriV+PAl53W794k/0y2Tyqs2TJJ6KhGAzAbCWPccUi8fc9yxa2nlzZOt+Dh7/m
+         I3nhfC4+cgC/mslsWAAFw0rZX/iv7Ttm3zCSHDbFvi8l5Syni0Onj7DnQk78ITCieptl
+         OUBQ==
+X-Gm-Message-State: APzg51AVz3GLrX6m8Z8WovLOOnA0c0RFpDSTy0k18gVknsnliBrDtrXO
+        w55o2/0X4rgiCIEWPrd96Bo=
+X-Google-Smtp-Source: ANB0VdYHYC23dHT3eDg2qf+vf8QiRJyemndGcOiKHDA8sAUO8xMCBLXuOEBXifkAjlAre9b8WsOkFQ==
+X-Received: by 2002:aed:2285:: with SMTP id p5-v6mr35746724qtc.48.1536174716169;
+        Wed, 05 Sep 2018 12:11:56 -0700 (PDT)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id u72-v6sm1773925qki.89.2018.09.05.12.11.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Sep 2018 12:11:54 -0700 (PDT)
+Subject: Re: [PATCH 04/11] multi-pack-index: verify packname order
+To:     Stefan Beller <sbeller@google.com>, gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.34.git.gitgitgadget@gmail.com>
+ <37ee24c82bf88611808ec3bb1c36eef439c809db.1536158789.git.gitgitgadget@gmail.com>
+ <CAGZ79kY7_RJfJomkpob85A4ubvXJt3BR8njkaozLgi-6ytxB9w@mail.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <da7eaf92-57f6-8129-149d-4260d84b4eb0@gmail.com>
+Date:   Wed, 5 Sep 2018 15:11:51 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <pull.31.git.gitgitgadget@gmail.com> <25914342-ff35-90b2-860e-6aff5c109f14@gmail.com>
-In-Reply-To: <25914342-ff35-90b2-860e-6aff5c109f14@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 5 Sep 2018 12:08:30 -0700
-Message-ID: <CAGZ79kZiA+0R6QB5qgVDUSZBZp_Nv+Yi-SQC5yHeWTzJnw1y8w@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Offer to run CI/PR builds in Visual Studio Team Services
-To:     Sebastian Schuberth <sschuberth@gmail.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kY7_RJfJomkpob85A4ubvXJt3BR8njkaozLgi-6ytxB9w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 12:02 PM Sebastian Schuberth
-<sschuberth@gmail.com> wrote:
+On 9/5/2018 2:15 PM, Stefan Beller wrote:
+> On Wed, Sep 5, 2018 at 7:46 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> From: Derrick Stolee <dstolee@microsoft.com>
+>>
+>> The final check we make while loading a multi-pack-index is that
+>> the packfile names are in lexicographical order. Make this error
+>> be a die() instead.
+> What is the advantage of having a die() here?
+> Would the midx work under normal operation when
+> not sorted correctly?
 >
-> On 9/3/2018 11:10 PM, Johannes Schindelin via GitGitGadget wrote:
->
-> > The one sad part about this is the Windows support. Travis lacks it, and we
-> > work around that by using Visual Studio Team Services (VSTS) indirectly: one
-> > phase in Travis would trigger a build, wait for its log, and then paste that
-> > log.
->
-> I'm sorry if this has been discussed before, but as this recap doesn't
-> mention it: Has AppVeyor been considered as an option? It seems to be
-> the defacto standard for Windows CI for projects on GitHub.
+> This sounds like a hack for easy testability in this context,
+> so could you clarify why this helps the regular user?
 
-There was
-https://public-inbox.org/git/BAY169-W30CD27F2F7606F4DF52944A78F0@phx.gbl/
-and
-https://public-inbox.org/git/alpine.DEB.2.20.1703241242210.17768@tvnag.unkk.fr/
+The multi-pack-index will not work as expected, since 
+midx_contains_pack() may provide incorrect results, and thus we will add 
+the "missing" packfiles to the packed_git linked list.
+
+This _should_ be a die(), as something unexpected occurred (the file 
+doesn't match the format specification).
+
