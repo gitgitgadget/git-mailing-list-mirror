@@ -2,106 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44C1C1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 15:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7574D1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 16:28:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726944AbeIEUW2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 16:22:28 -0400
-Received: from siwi.pair.com ([209.68.5.199]:32445 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726046AbeIEUW2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 16:22:28 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 247933F40D8;
-        Wed,  5 Sep 2018 11:51:41 -0400 (EDT)
-Received: from [10.160.98.162] (unknown [167.220.148.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id DAC523F40C7;
-        Wed,  5 Sep 2018 11:51:40 -0400 (EDT)
-Subject: Re: [PATCH 1/8] trace2: create new combined trace facility
-To:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <pull.29.git.gitgitgadget@gmail.com>
- <82885700379efe6d6a83629cac4d943b99b393bf.1535734192.git.gitgitgadget@gmail.com>
- <CAGZ79kbUYDAKi-K2uHpkffPjMxGYtH=QUMhvfq4HTc5+a7-eBA@mail.gmail.com>
- <xmqqzhww6gl8.fsf@gitster-ct.c.googlers.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <eb77f46b-8d04-a1c7-ae31-7ea5e2456cfd@jeffhostetler.com>
-Date:   Wed, 5 Sep 2018 11:51:40 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727672AbeIEU7H (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 16:59:07 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45114 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726463AbeIEU7H (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 16:59:07 -0400
+Received: by mail-wr1-f66.google.com with SMTP id 20-v6so8294666wrb.12
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 09:28:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=MC0GthTO+4paCzofoM8+XczbIpa0Oc7cW5y+rdu+bf8=;
+        b=qnlu+nlR24jQgMm90kTMlpNVH/uEJMRkcpe6cE7ZkbQ76vkD29aoCSJR5LsoNM5ojB
+         iiwzDylzkhh4ytPF0JG0mwEpzr9wMk3UjgKvE3w4Q/qnKb4n/vpBqRNu2iGCrZJ4zgup
+         znI9X3ggSPEtA9wOVJOZO6Zishq3vKRVyDwsPEcgAO9s/dS2FWJakwKGzEg7m54cZkV0
+         3OYUsdvO6Z5gXfMJRVaqLxR44+2lFPFTbV78S9zBQmuGwtB+e9zqdtf8GZ259kNORG+3
+         1JQIgoaE6px0juJOKL3VRbdEm5a+KDzWc32cANVe/HCzwblr8d4e1xPsOsQcc6vtqSVR
+         XSTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=MC0GthTO+4paCzofoM8+XczbIpa0Oc7cW5y+rdu+bf8=;
+        b=M6BbKUzKXoLznmaVhdqAjJ0BkU8lcXUS1U33MMfx5ZYA9zB7FrwjDl0s6owFZrdfkJ
+         WDePMVuYD1qYgaZDvBjFAfO+Z9q0kuD5OTbpLT4lVd5g3d8hGdQyBlJsZqG1GGOUbO1B
+         gngkfqft75e4N4nptmKvUZK5bMbrydg5rWCwdsmf+mOXzOPvyrd3GzthQE6ge0v8ruqk
+         UYqH0LgLpsl1dYzDKblXMniTdyVMjvjo6t4o0nIj2hy4ZKPAbSmTkAU7q6hKWqRubuaW
+         c+IHHmgh6P7Wnn6j2C9VWWDpKUKderZCQ1vlNcgKmObgl1JEWhh9jru5GetiVlRRsthb
+         Efxg==
+X-Gm-Message-State: APzg51CTJhGXhJinbf+m0cinla3BEsIuyEby4YMJXwz971p9G00+eTic
+        87M1ZBZw598FaYfbNxwMVTk=
+X-Google-Smtp-Source: ANB0VdaxJ+Sj8Elc0M7IOlivhIEJW+TLVyDTvONO9uHLI4h/YAhMiK6rI0+XWxHbPbgiPKVStZCr3Q==
+X-Received: by 2002:adf:afd3:: with SMTP id y19-v6mr27196191wrd.176.1536164889827;
+        Wed, 05 Sep 2018 09:28:09 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d1-v6sm5395058wrc.52.2018.09.05.09.28.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 09:28:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: Re*: [PATCH 1/2] rebase -i --autosquash: demonstrate a problem skipping the last squash
+References: <pull.30.git.gitgitgadget@gmail.com>
+        <8753c4e5fba5bb9cc42fdf438f4a69e702261a15.1535759099.git.gitgitgadget@gmail.com>
+        <xmqqd0tt9j0s.fsf_-_@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1809050025480.71@tvgsbejvaqbjf.bet>
+Date:   Wed, 05 Sep 2018 09:28:08 -0700
+In-Reply-To: <nycvar.QRO.7.76.6.1809050025480.71@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 5 Sep 2018 00:27:58 +0200 (DST)")
+Message-ID: <xmqqin3j6h9j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhww6gl8.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
+> On Tue, 4 Sep 2018, Junio C Hamano wrote:
+>
+>> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+>> writes:
+>> 
+>> > +	test_must_fail git -c core.editor="grep -q ^pick" \
+>> > +		rebase -ki --autosquash HEAD~4 &&
+>> 
+>> When merged to 'pu', this reveals that "git rebase" rewritten in C
+>> knows "--keep-empty" but not "-k".
+>
+> I had already reported this:
+>
+> https://public-inbox.org/git/nycvar.QRO.7.76.6.1808241803100.73@tvgsbejvaqbjf.bet/
 
-On 9/4/2018 6:30 PM, Junio C Hamano wrote:
-> Stefan Beller <sbeller@google.com> writes:
-> 
->>> The API defines both fixed-field and printf-style functions.
->>>
->>> The trace2 performance tracing includes thread-specific function
->>> nesting and timings.
->>
->> So this only adds the new API, and we need to merge the TRACE
->> into the TRACE2 later?
-> 
-> If this is a rhetorical question implying that it would be best if
-> the existing trace() were rewritten to be built on top of trace2()
-> while building this series, especially before adding new callsites
-> that directly use trace2(), I may share that feeling.  I haven't
-> studied this new round deeply enough to see how realistic it would
-> be, though.
-> 
-> 
+Good that you said there that you'll have it fixed in future updates.
 
-I wanted to come up with a unified API that we liked and was
-sufficient to handle the default-key, performance-key,
-the new event-key (currently supporting JSON output), and any
-other formats/variants that we want (protobufs, syslog, etc).
+I do not want to leave the project state with failing test at the
+tip of 'pu', and I do not want to get distracted in squashing the
+fix deep in large sequences of topics that we know will be rerolled
+once the prerelease freeze is over anyway, so in the meantime I'll
+queue this near the tip of 'pu' to keep the tree sane.
 
-And hopefully get some agreement on it and see what else we want
-from it.
-
-And then look at converting the trace_printf() and trace_performance()
-calls to trace2.  Clearly, I could just replace the existing printf
-style calls to trace2_printf's, but I thought it would be better to
-look at them and promote them to higher-level functions.  For example,
-the trace_argv_printf() calls are generally used to dump the command
-line arguments for the current process or spawned child processes.
-I have trace2_start() and trace2_child_start() that captures the
-argv and additional information about it.  (The "why" if you will.)
-So the trace_argv_* forms can go away.
-
-Likewise, all of the trace_performance() and trace_performance_since()
-can be converted to trace2_region_enter/_leave calls.  And those forms
-can be removed from trace.[ch].
-
-The net-net is that trace.[ch] shrinks in a short sequence of commits
-on top of my initial trace2 commit in a reroll of this patch series.
-(and replacing some of the demonstration commits in V1)
-
-Then I'll address the trace_printf_key() forms, since they write
-to alternate stream.
-
-Then I can delete trace.[ch].  And we can consider renaming
-trace2_* functions and/or GIT_TR2_* env vars if we want.
-
-I wanted to avoid rewriting trace.[ch] just to delete them later
-in the same patch series.
-
-Jeff
+Thanks for eyeballing.
