@@ -2,126 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96E9D1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 08:54:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87F291F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 08:59:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbeIENXt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 09:23:49 -0400
-Received: from mout.gmx.net ([212.227.15.18]:55277 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727201AbeIENXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 09:23:48 -0400
-Received: from localhost.localdomain ([185.190.160.130]) by mail.gmx.com
- (mrgmx002 [212.227.17.190]) with ESMTPSA (Nemesis) id
- 0Lg0sd-1fYKBZ0uK3-00pchh; Wed, 05 Sep 2018 10:54:30 +0200
-From:   Tim Schumacher <timschumi@gmx.de>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Subject: [RFC PATCH v2] Allow aliases that include other aliases
-Date:   Wed,  5 Sep 2018 10:54:27 +0200
-Message-Id: <20180905085427.4099-1-timschumi@gmx.de>
-X-Mailer: git-send-email 2.19.0.rc1.2.g8f4faccc1
+        id S1727981AbeIEN2x convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 5 Sep 2018 09:28:53 -0400
+Received: from mail-qt0-f180.google.com ([209.85.216.180]:37498 "EHLO
+        mail-qt0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727956AbeIEN2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 09:28:53 -0400
+Received: by mail-qt0-f180.google.com with SMTP id n6-v6so7188152qtl.4
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 01:59:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=sjYzoXef+wnqEaUQ1kaG+GBwjISTPUjYuD+dMblwxgM=;
+        b=IKhHj2y/kZQMhoEDCnPAs+9T0Lh2qYMRiaOxDEQIACkb05f/TqFEJ6tDqoZy9d8qKv
+         njDvyaEmdM5NAaSLwCQ/60LH5SGaPcfMSLuzf+SU2QL65XhTLfVTblYzARElSAh12rvK
+         JipgdHwXdJd7VNeHjDl/2UL0tweflF2CQZP4OL4gaGxHiMDI8pN4mGeShyH5cJzI3tLw
+         na3Uy5ylBq4rD9Gr/rRLsk3MEDsrCWPRd8p/kJbZAUbxgTg06mLFiaBOdPqepuD3WtOG
+         HipxjhdUiB6fb1qqSy2CPmRW+BAtUCwTy+3u3RQ5d3hhZ1S4Idu4cAL9Oy86usrJWRsd
+         W1eA==
+X-Gm-Message-State: APzg51DBkplSFRdHJcV+fPNSO6KraSPMfu/J2qqKOnDP0yMOgurLu2Zr
+        RLfzO0p4NNVL9loMPZM1rS/poS7t9WeUl17Rf3Q=
+X-Google-Smtp-Source: ANB0VdZSWnq1If+CqLQ66s1alPVJkF0YodrK9hzrDZqEJ6AuN3Xi37IGg/fg0zCBK/ySI2xq1JQlXaOM3SPCl3DFKe4=
+X-Received: by 2002:a0c:e292:: with SMTP id r18-v6mr32465522qvl.62.1536137978926;
+ Wed, 05 Sep 2018 01:59:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:TLGGDandZ9wQzKOM55t9QXCdYaA2vtlxWMHfbLaXX3eaZvPFUIm
- LSqJhtTKDwoXWo0KI/eUWAsxcL8vpqzeyTbu6n8hEGQVINi/NOaPnwk5ulUgvZvwCjalpf5
- vgpaC6bXrufwzQfzrQ432Q766IJE/N872dqECbcbsdDjYQeodbpDofU5w8SFKbAgWmEI3QQ
- f6ISFSkfkoasZI3lqOajA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PhfszjIoeMU=:MHCvMc//DDBwfd5jyS6vc7
- uww3nLK+Lk+6eXDaGPJ2NyiPwJCsEGOoIquen4AZAsaCVD9tligM6k+eWNCN71rVpKHAxBcVC
- AebhdodeNjxqcBG3JHfRCDfLN1pPnh7Xw7m6MPA5ewJtm2l6jt6sXy4rwRVx5RQKnrpFNZ76J
- g59itf2jttqY0sbFaxZT/ZuQ9Vu89oruVz0+zI8xOiTNGoEqVGiv+P+Ul8z7HkK9j1xjCbex3
- dLmJ3eBThaJ4bcYcmSyftJlXQsLOUswCfxp255H6QRq2EfRjKJhur95GDcAbFxjPqwMFk+shU
- Qf1ga/VCvfu2kp5fBEwW7/y5tyzGn4+9Y3nRkA8aGCOMitdTA/f03E1JD7t27UJs3XdVlSVqD
- VMhJ6S869gUn2EkA1pcXWGDuRAbfKJgHr2sdJv1QAPFiB1qQWVHFjB1suRUjfh+QvqBoSZDkx
- BEi71x4C0eLSScN03c9RNx8E3Y8oLkeOBkk0IZWbfT0/YqBUy/7nGZ+KV/MFCQKaBJZF8+LJd
- KN1CFUDDj+dWGK8kh0DXL0dRgpWAvAHOSg7hgRT05D9OBq1RWQttsrbD38cMdXBRZ/uqOy3xy
- 6jfGCALYu+9y02CKiqiYsepGiZ1tdMQTIzzUtbXQrIxVkf3IgyvatK6yV26naWeGN/tIGlR2w
- wXbn6PrvzfAkaPb6V+BaesHD8q3JyJMWFwBLeNBoGKfV+s0umh7LQpVso9ChX4BrSgBKLQwFT
- 2eONfBUXR19ISImcXS+CcbM1UnXlUdfWK0eS4UcqlWlJ5CnI/RL9RuXErCI=
+References: <20180824152016.20286-5-avarab@gmail.com> <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
+ <87bm9cs5y6.fsf@evledraar.gmail.com>
+In-Reply-To: <87bm9cs5y6.fsf@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 5 Sep 2018 04:59:27 -0400
+Message-ID: <CAPig+cRrwW662Hzp8V1sH51x8qYxPyqG=VHpOkfd-=RwUSSZbw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Brandon Casey <drafnel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aliases can only contain non-alias git commands and their
-arguments, not other user-defined aliases. Resolving further
-(nested) aliases is prevented by breaking the loop after the
-first alias was processed. Git then fails with a command-not-found
-error.
+On Wed, Sep 5, 2018 at 4:29 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> I recently gained access to a Solaris 10 SPARC (5.10) box and discovered
+> that the chainlint.sed implementation in 2.19.0 has more sed portability
+> issues.
+>
+> First, whoever implemented the /bin/sed on Solaris apparently read the
+> POSIX requirements for a max length label of 8 to mean that 8 characters
+> should include the colon, so a bunch of things fail because of that, but
+> are fixed with a shorter 7 character label.
 
-Allow resolving nested aliases by not breaking the loop in
-run_argv() after the first alias was processed. Instead, continue
-incrementing `done_alias` until `handle_alias()` fails, which means that
-there are no further aliases that can be processed. Prevent looping
-aliases by storing substituted commands in `cmd_list` and checking if
-a command has been substituted previously.
----
+I'm pretty sure that Solaris 'sed' predates POSIX by a good bit, but
+that's neither here nor there.
 
-This is what I've come up with to prevent looping aliases. I'm not too
-happy with the number of indentations needed, but this seemed to be the
-easiest way to search an array for a value.
+> Then GIT_TEST_CHAIN_LINT=1 still fails because 878f988350 ("t/test-lib:
+> teach --chain-lint to detect broken &&-chains in subshells", 2018-07-11)
+> added a "grep -q" invocation. The /bin/grep on that version of Solaris
+> doesn't have -q.
 
----
- git.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+I knew that '-q' was potentially problematic on some platforms, so I
+checked and saw that existing tests were already using it, thus went
+ahead and used it. Dropping '-q' here and redirecting stderr to
+/dev/null is a perfectly fine alternative.
 
-diff --git a/git.c b/git.c
-index c27c38738..fd90a3341 100644
---- a/git.c
-+++ b/git.c
-@@ -674,6 +674,8 @@ static void execv_dashed_external(const char **argv)
- static int run_argv(int *argcp, const char ***argv)
- {
- 	int done_alias = 0;
-+	const char **cmd_list = NULL;
-+	int cmd_list_alloc = 0;
- 
- 	while (1) {
- 		/*
-@@ -691,17 +693,34 @@ static int run_argv(int *argcp, const char ***argv)
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
- 
-+		/* Increase the array size and add the current
-+		 * command to it.
-+		 */
-+		cmd_list_alloc += strlen(*argv[0]) + 1;
-+		REALLOC_ARRAY(cmd_list, cmd_list_alloc);
-+		cmd_list[done_alias] = *argv[0];
-+
-+		/* Search the array for occurrences of that command,
-+		 * abort if something has been found.
-+		 */
-+		for (int i = 0; i < done_alias; i++) {
-+			if (!strcmp(cmd_list[i], *argv[0])) {
-+				die("loop alias: %s is called twice",
-+				    cmd_list[done_alias]);
-+			}
-+		}
-+
- 		/* It could be an alias -- this works around the insanity
- 		 * of overriding "git log" with "git show" by having
- 		 * alias.log = show
- 		 */
--		if (done_alias)
--			break;
- 		if (!handle_alias(argcp, argv))
- 			break;
--		done_alias = 1;
-+		done_alias++;
- 	}
- 
-+	free(cmd_list);
-+
- 	return done_alias;
- }
- 
--- 
-2.19.0.rc1.2.g8f4faccc1
+> We fixed a similar issue way back in 80700fde91
+> ("t/t1304: make a second colon optional in the mask ACL check",
+> 2010-03-15) by redirecting to /dev/null instead.
+>
+> A bunch of other tests in the test suite rely on "grep -q", but nothing
+> as central as chainlint, so it makes everything break. Do we want to
+> away with "grep -q" entirely because of old Solaris /bin/grep?
 
+I count 132 instances in existing tests (though, I may have missed some).
+
+> At this point those familiar with Solaris are screaming ("why are you
+> using anything in /bin!"). Okey fine, but it mostly worked before, so
+> are we OK with breaking it? "Mostly" here is "test suite would fail
+> 20-30 tests for various reasons, but at least no failures in test-lib.sh
+> and the like".
+>
+> However, if as config.mak.uname does we run the tests with
+> PATH=/usr/xpg6/bin:/usr/xpg4/bin:$PATH, at this point sed is fine with 8
+> character labels [...]
+
+So, if you run the tests via 'make test' (or whatever), then you get
+/usr/xpg?/bin in PATH, but if you run an individual test script (and
+haven't set your PATH appropriately), then you encounter the problems
+you report above?
+
+> [...] but starts complaining about this (also in
+> chainlint.sed):
+>
+>     sed: Too many commands, last: s/\n//
+
+Erm. Any additional context to help narrow this down?
+
+>     diff --git a/config.mak.uname b/config.mak.uname
+>     @@ -163,6 +163,10 @@ ifeq ($(uname_S),SunOS)
+>             BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
+>     +       # t/chainlint.sed is hopelessly broken all known (tested
+>     +       # Solaris 10 & 11) versions of Solaris, both /bin/sed and
+>     +       # /usr/xpg4/bin/sed
+>     +       GIT_TEST_CHAIN_LINT = 0
+>      endif
+>
+> It slightly sucks to not have chainlint on
+> Solaris, but it would also suck to revert chainlint.sed back to 2.18.0
+> (there were some big improvements). So I think the patch above is the
+> best way forward, especially since we're on rc2. What do you think?
+
+Keeping in mind that the main goal of 'chainlint' is to prevent _new_
+breakage from entering the test suite, disabling 'chainlint' on
+Solaris is an entirely reasonable way forward. In present day, it
+seems quite unlikely that we'll see someone develop new tests on
+Solaris, so having 'chainlint' disabled there isn't likely to be a big
+deal. Moreover, if someone does write a new test on Solaris which has
+a broken &&-chain in a subshell, that breakage will be caught very
+quickly once the test is run by anyone on Linux or MacOS (or Windows
+or BSD or AIX), so it's not like the broken test will make it into the
+project undetected.
