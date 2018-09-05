@@ -2,85 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_BL_SPAMCOP_NET,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F3AC1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 17:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE4341F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 17:25:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727704AbeIEV41 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 17:56:27 -0400
-Received: from fed1rmfepo101.cox.net ([68.230.241.143]:60739 "EHLO
-        fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727397AbeIEV41 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 17:56:27 -0400
-Received: from fed1rmimpo209.cox.net ([68.230.241.160])
-          by fed1rmfepo101.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20180905172518.XWDR4101.fed1rmfepo101.cox.net@fed1rmimpo209.cox.net>
-          for <git@vger.kernel.org>; Wed, 5 Sep 2018 13:25:18 -0400
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo209.cox.net with cox
-        id XtRH1y00U59yGBo01tRHNR; Wed, 05 Sep 2018 13:25:17 -0400
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A09020D.5B90117E.0015,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.2 cv=FPJr/6gs c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=WDhBSedXqNQA:10
- a=5rxgeBVgAAAA:8 a=kviXuzpPAAAA:8 a=5AwYZ_PvJRdiVvDQAIoA:9 a=CjuIK1q_8ugA:10
- a=PwKx63F5tFurRwaNxrlG:22 a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 506AD29A007E;
-        Wed,  5 Sep 2018 10:25:17 -0700 (MST)
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: How to handle patch series conflicts
-Date:   Wed, 05 Sep 2018 10:25:17 -0700
-Message-ID: <32028230.38oFsPliiV@thunderbird>
-Organization: Personal
-In-Reply-To: <2293750.yp9BkL5mAn@thunderbird>
-References: <CACsJy8B1UDN26tWPvOtixSBiFF6bYP2BtK2n1u4W-tWdVeKK1A@mail.gmail.com> <2293750.yp9BkL5mAn@thunderbird>
+        id S1727732AbeIEV5C (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 17:57:02 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:58450 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727267AbeIEV5C (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 17:57:02 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w85HO5YR021020;
+        Wed, 5 Sep 2018 10:25:52 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2m7rmkf86x-1;
+        Wed, 05 Sep 2018 10:25:52 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 3705722E02A1;
+        Wed,  5 Sep 2018 10:25:52 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 2EA742CDEB1;
+        Wed,  5 Sep 2018 10:25:52 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     brad.king@kitware.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH 1/2] update-ref: fix type of update_flags variable to match its usage
+Date:   Wed,  5 Sep 2018 10:25:49 -0700
+Message-Id: <20180905172550.11621-2-newren@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc2
+In-Reply-To: <20180905172550.11621-1-newren@gmail.com>
+References: <20180905172550.11621-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-05_10:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=951 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1809050174
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio -
+The ref_transaction_*() family of functions expect a flags parameter
+which is of type unsigned int.  Make the update_flags variable, which
+is passed as that parameter, be of the same type.
 
-On Tuesday, September 4, 2018 10:27:26 AM MST Junio C Hamano wrote:
-> > t7500-commit.sh
-> > t7501-commit.sh
-> > t7502-commit.sh
-> > t7509-commit.sh
-> 
-> These seem to have organically grown and it is very likely that ones
-> later introduced were added more from laziness.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/update-ref.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-How does the project prefer to handle patches that conflict.  Renaming t7501-
-commit.sh will conflict with a patch set that I submitted over the weekend 
-[1].  Should I treat them as totally separate? 
-
-On Tuesday, September 4, 2018 3:36:11 PM MST Junio C Hamano wrote:
-> * sl/commit-dry-run-with-short-output-fix (2018-07-30) 4 commits
->  . commit: fix exit code when doing a dry run
->  . wt-status: teach wt_status_collect about merges in progress
->  . wt-status: rename commitable to committable
->  . t7501: add coverage for flags which imply dry runs
-
-I noted that this patch set is similar to the one that I just submitted.  Are 
-you thinking of not using mine (in which case I will drop it)?  If not I will 
-add a patch to fix the committable spelling[2] and re-roll.
-
-[1] https://public-inbox.org/git/20180901235256.4260-1-ischis2@cox.net/
-
-
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 4fa3c0a86f..54fac01f21 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -14,7 +14,7 @@ static const char * const git_update_ref_usage[] =3D {
+ };
+=20
+ static char line_termination =3D '\n';
+-static int update_flags;
++static unsigned int update_flags;
+ static unsigned create_reflog_flag;
+ static const char *msg;
+=20
+--=20
+2.19.0.rc2.2.g1aedc61e22
 
