@@ -2,115 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3362A1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 20:03:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BC6B71F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 20:24:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727851AbeIFAew (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 20:34:52 -0400
-Received: from mout.gmx.net ([212.227.15.19]:50697 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727254AbeIFAew (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 20:34:52 -0400
-Received: from [10.24.110.212] ([185.190.160.130]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0ML6qP-1fxv880Kyf-000OQy; Wed, 05
- Sep 2018 22:03:01 +0200
-Subject: Re: [RFC PATCH v2] Allow aliases that include other aliases
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-References: <20180905085427.4099-1-timschumi@gmx.de>
- <20180905173455.GA2336@sigill.intra.peff.net>
-From:   Tim Schumacher <timschumi@gmx.de>
-Message-ID: <cd9a3a74-fdd6-0fb5-ae22-41d552391478@gmx.de>
-Date:   Wed, 5 Sep 2018 22:02:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727828AbeIFA4h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 20:56:37 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40420 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727527AbeIFA4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 20:56:37 -0400
+Received: (qmail 28417 invoked by uid 109); 5 Sep 2018 20:24:48 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Sep 2018 20:24:48 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23170 invoked by uid 111); 5 Sep 2018 20:24:59 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Sep 2018 16:24:59 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Sep 2018 16:24:46 -0400
+Date:   Wed, 5 Sep 2018 16:24:46 -0400
+From:   Jeff King <peff@peff.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Luke Diamand <luke@diamand.org>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 7/9] tests: include detailed trace logs with
+ --write-junit-xml upon failure
+Message-ID: <20180905202445.GA8953@sigill.intra.peff.net>
+References: <pull.31.git.gitgitgadget@gmail.com>
+ <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
+ <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1809041304450.71@tvgsbejvaqbjf.bet>
+ <CAE5ih7_GgkEaVXONy8ZY9j43PX6GD-mkD9vJ1t93upAfTkM8tw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet>
+ <CAPig+cQkC4-6DyQdJHc8QUfBx+L6o1SK4ODy4MoP44+VHHk96Q@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180905173455.GA2336@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US-large
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:pPhI+UOkQg6skTxd4ghC+fnTvGNB3UoaYPKeYOJC7xJJhyk33I8
- MvJCzgnAw+nMYwk7CquTL+PwMsTPVvzgWRukLuVB2QwKxSi602bZot1T2A8ohhZPw46Visc
- nTaXoU69LocVqkgpRJwQZG2BgRIx3GlCH6IDvIDSOKMulU8BaRngwrsO7evX6wa2QhyJ8dR
- ndGh3t+OMarejC10xPwRw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:I1W5yv1SW+U=:wsz7Xp0u5Kuw6xPVX85IJo
- +nTDl3vpel0ph+ZcwYIggUf/B7qeplRYYoRiddlXimtO0/38fYSHK4RayBxz5G0OrdWhyWZa1
- BXwo/TBmBFtlaTxLYvTq+PmD+8LzzEC99QhZgvDi54L+2JA7whM3OKUt/GDE84RGQru3L98mv
- h9M1gVN6zzatO8kd7kGBqP54d4JYwHvJ/uSjRDn8cpnLDWmzUYr5jN6yZqyGAsb4srKWX/68Q
- ffZgC5ouqIMvcSzWwWsh59vy4VKZ0o4MeDZaWiXd5rxqGwbsdHRH2vFV4bK0Vq2o25jQIU+x4
- wOcUZpZpmpAU6OwHEIBU33YvA+uvqcg92E5uVrRxvnT+PxlmUnKoElY8ZI5NUF/y0kgoazPYX
- BXtRgwjr9eSlP1D+5QTEHmk92awntNvxOO2omASIxP53n8+FeU8XiYeFM8YoEb4H2bLmPOWoj
- lti/tt1XBWYskam2w9nXx1f8NdL36DLrcI4T2AKphHlcuIMkqwHOKx+goIVY7wkgLviYlalp0
- qe6xwbGy9LVHtym6OOk3WJVw7fxxRS/bWJy2yy70Owxcg0O8lB4Xi/9zNpVRFPLPiqGdnvxM4
- YPmjiZVCWdNE6tsLMH5nYZ8LaAKEvPF62BtSJtOA8Ft/kPoKqOzpchsZLFewOpwW58h+gPsa6
- DB3B1qKCeVzwC5dtqzY5PGcRrO3duCV4lw6suqlq+9JhN3Ju5ZLsHYMAjf06KxVvAV5+A7Mjf
- kZggJdeRrxWiJ/jqG8WIm3f6UZkz46+gMj4bOVZS61591tXSY7a2lJ4Rm1LwzGOnpWNaJIHrE
- rN0Rtbg
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQkC4-6DyQdJHc8QUfBx+L6o1SK4ODy4MoP44+VHHk96Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05.09.18 19:34, Jeff King wrote:
-> On Wed, Sep 05, 2018 at 10:54:27AM +0200, Tim Schumacher wrote:
-> 
->> Aliases can only contain non-alias git commands and their
->> arguments, not other user-defined aliases. Resolving further
->> (nested) aliases is prevented by breaking the loop after the
->> first alias was processed. Git then fails with a command-not-found
->> error.
->>
->> Allow resolving nested aliases by not breaking the loop in
->> run_argv() after the first alias was processed. Instead, continue
->> incrementing `done_alias` until `handle_alias()` fails, which means that
->> there are no further aliases that can be processed. Prevent looping
->> aliases by storing substituted commands in `cmd_list` and checking if
->> a command has been substituted previously.
->> ---
->>
->> This is what I've come up with to prevent looping aliases. I'm not too
->> happy with the number of indentations needed, but this seemed to be the
->> easiest way to search an array for a value.
-> 
-> I think this approach is OK, though I wonder if we'd also be fine with
-> just:
-> 
->    if (done_alias++ > 100)
-> 	die("woah, is your alias looping?");
-> 
-> The point is just to prevent a runaway infinite loop, and this does that
-> while keeping the cost very low for the common case (not that one string
-> insertion is probably breaking the bank).
+On Wed, Sep 05, 2018 at 02:38:34PM -0400, Eric Sunshine wrote:
 
-I'd opt to use the list-approach instead of aborting when the
-counter reaches 100 (or any other value), because it aborts
-at the earliest known looping point. I didn't run any tests
-comparing both solutions, but I assume the list would perform
-faster than the hard-limit, even if it requires slightly more
-memory and lines of code.
-
-I hope that I can put the string-list struct to some use,
-so that the solution using lists becomes an equally good
-solution code-wise.
-
+> On Wed, Sep 5, 2018 at 8:39 AM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> > So let's hear some ideas how to improve the situation, m'kay?
+> > Just as a reminder, this is the problem I want to solve: I want to run the
+> > tests in a light-weight manner, with minimal output, and only in case of
+> > an error do I want to crank up the verbosity. Instead of wasting most of the
+> > effort to log everything and then throwing it away in most of the common
+> > cases, I suggest to re-run the entire test.
 > 
-> It could also extend to ! aliases if we wanted (i.e., my '!git foo'
-> example from earlier), but you'd have to carry the counter through the
-> environment between processes.
-
-That is a question about "shooting oneself in the foot" again,
-but I think trying to prevent that would require more changes
-than I can make, and it is definitely out-of-scope for this
-patch.
-
+> What about the very different approach of capturing the full "verbose"
+> output the executed tests in addition to whatever is actually output
+> to the terminal? If a test fails, then (and only then) you can insert
+> the captured verbose output into the JUnit XML file. This way (if we
+> always have the full verbose output at hand), you don't need to re-run
+> the test at all.
 > 
-> -Peff
-> 
-Thanks for reviewing,
+> I've cc:'d Peff and Jonathan since I believe they are more familiar
+> with how all the capturing / output-redirection works in the test
+> suite.
 
-Tim
+I don't think there's much to know beyond what you wrote. The
+"--verbose" case does not really cost any more than the non-verbose one,
+because the only difference is whether output goes to a file versus
+/dev/null. But the commands all call write() regardless.
+
+For --verbose-log, it does of course cost a little extra to run one
+`tee` per script, and to write a few kb of logs. I doubt those are
+measurable versus the rest of a script run, but I'm happy to be
+disproven by numbers. There are some gymnastics done to re-exec the test
+script with the same shell, but AFAIK those are robust and don't cost a
+lot (again, one extra process per script run).
+
+I'm not overly concerned about the cost of re-running a test, since the
+idea is that failed tests should be rare. I would be a little worried
+about flaky tests mysteriously righting themselves on the second run (so
+you know a failure happened, but you have no good output to describe
+it).
+
+I do agree that a test_atexit() cleanup would make a lot more sense than
+what's in the original patch. And that's nicer than the exit trap we're
+using already, because you may note that each caller has to manually
+restore the original 'die' handler that test-lib.sh installs.
+
+That would also help with bitrot. If this funky cleanup case only causes
+problems with junit output, then other people are likely to forget to do
+it, and the mess falls onto the junit folks (i.e., Dscho). But if the
+tests start _relying_ on test_atexit() being called (i.e., don't call
+stop_git_daemon manually, but assume that the atexit handler does so),
+then the responsible authors are a lot more likely to notice and fix it
+early.
+
+-Peff
