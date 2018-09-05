@@ -2,45 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.7 required=3.0 tests=BAYES_20,DKIM_ADSP_CUSTOM_MED,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
-	MAILING_LIST_MULTI,MILLION_USD,RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI,
-	T_MONEY_PERCENT shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CC811F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 21:29:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA6581F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 21:34:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727721AbeIFCBA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 22:01:00 -0400
-Received: from mailserver.jumboohost.com ([217.182.201.218]:56026 "EHLO
-        ns3084362.ip-217-182-201.eu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727618AbeIFCBA (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 22:01:00 -0400
-X-Greylist: delayed 458 seconds by postgrey-1.27 at vger.kernel.org; Wed, 05 Sep 2018 22:00:59 EDT
-Received: by ns3084362.ip-217-182-201.eu (Postfix, from userid 10052)
-        id 9A07318C7FE2; Wed,  5 Sep 2018 23:21:19 +0200 (CEST)
-To:     git@vger.kernel.org
-Subject: more info
-X-PHP-Originating-Script: 10052:m.php
-Date:   Wed, 5 Sep 2018 21:21:19 +0000
-From:   info@gmail.com
-Reply-To: dianacesar2211@gmail.com
-Message-ID: <ca38c96cc58e5c8d12ec94c85448adf1@elitesmiles.in>
-X-Mailer: Leaf PHPMailer 2.7 (leafmailer.pw)
+        id S1727635AbeIFCGG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 22:06:06 -0400
+Received: from fed1rmfepo203.cox.net ([68.230.241.148]:55717 "EHLO
+        fed1rmfepo203.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727518AbeIFCGG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 22:06:06 -0400
+Received: from fed1rmimpo210.cox.net ([68.230.241.161])
+          by fed1rmfepo203.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20180905213402.WJKN4163.fed1rmfepo203.cox.net@fed1rmimpo210.cox.net>
+          for <git@vger.kernel.org>; Wed, 5 Sep 2018 17:34:02 -0400
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo210.cox.net with cox
+        id Xxa11y00W59yGBo01xa1nd; Wed, 05 Sep 2018 17:34:01 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090207.5B904BCA.0017,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.2 cv=eOZjtDh1 c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=WDhBSedXqNQA:10
+ a=5rxgeBVgAAAA:8 a=kviXuzpPAAAA:8 a=nR1l2SmUDYW9zJRNLwwA:9 a=CjuIK1q_8ugA:10
+ a=u09W0hvIdLUA:10 a=PwKx63F5tFurRwaNxrlG:22 a=qrIFiuKZe2vaD64auk6j:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 76FC329A00F6;
+        Wed,  5 Sep 2018 14:34:01 -0700 (MST)
+From:   Stephen & Linda Smith <ischis2@cox.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: How to handle patch series conflicts
+Date:   Wed, 05 Sep 2018 14:34:01 -0700
+Message-ID: <5803595.xkvfBUJ20C@thunderbird>
+Organization: Personal
+References: <CACsJy8B1UDN26tWPvOtixSBiFF6bYP2BtK2n1u4W-tWdVeKK1A@mail.gmail.com> <32028230.38oFsPliiV@thunderbird>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good day,
+On Wednesday, September 5, 2018 2:16:06 PM MST Junio C Hamano wrote:
+> I think that one that is not even in 'pu' hasn't been looked at for
+> a long time; it is probably a good idea to discard and replace, if
+> you have something working.
 
-I have an interesting business offer for you which will be of immense benefit to you. Although this may be hard to believe and thought of as one of the numerous online scam but
-Please grant me the benefit of doubt and write me to know what this entails, am sure you wont regret it. You stand to gain 50% of $27,500,000.00 million USD from this.
-All conformable documents to back up the claims will be made available to you prior to your acceptance. 
+I submitted [1] over the weekend.  I will add a spelling error patch and then 
+submit version 3 hopefully before the end of the day.   I am working on the 
+test rename, but will wait to submit until after the wt-status.c patches cook 
+and then go to mainline.   Rationale:   I haven't yet gone through the commit 
+scripts to decided on the best proposed names.
 
-Thanks,
-Diana Cesar.
+[1] https://public-inbox.org/git/20180901235256.4260-1-ischis2@cox.net/
+
+
+
 
