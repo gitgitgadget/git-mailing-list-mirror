@@ -2,86 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBC151F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 19:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B02221F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 19:02:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727741AbeIEXdi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 19:33:38 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51744 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727618AbeIEXdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 19:33:38 -0400
-Received: by mail-wm0-f65.google.com with SMTP id y2-v6so9052452wma.1
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 12:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:newsgroups:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=MqSDW9dodEyGcJX2FNRJEDUhq9J+saLs2BpsN06Wuog=;
-        b=YFEGoMtnSopK4m7Trh29SvSRtl58YZ5Df26iPhm09wkAqDDzUTlNJpN6nQKF0OB9oD
-         LKXG5H/+KCE/1QfI8EFqb5gSA4FO/N51/heoU7C9I5pS/p0A6ifQ6rY/3IG4dXkF+7RF
-         iARA6nTRSSxuomV2tLcjfs8BAG17/ujb7w42ukjNj3gJ8zKf69nGntFw3D7g/0zJkVo5
-         BH0iT47OcnESbBr9B0n+S2eI9aZ9B3NjfdmFqaFXUFjTBdX0IeI+4zghxQ9+wpMW5c9T
-         7+XRzeUWj6c2vUJAwRKrwBlRfW/29BrT4pSUafHa6tSMJRB1hA+XWTdLD7w55xCqURQM
-         8OrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:newsgroups:references:from
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=MqSDW9dodEyGcJX2FNRJEDUhq9J+saLs2BpsN06Wuog=;
-        b=srSpqaMnapk8iX5drRZkGBbkqTB++tKe8EdeCLKFAAS1jnvSGIZPZL1e6fbD6ARLd9
-         fGkm084tj5bsV8rk5Gld8Y1TZch+rUg3CyDuC3AYX1NZbP4xkF1omueJjE7lFEJMyBRL
-         EuK1WvEjUvGIef+ikrz7P2/f5fQUrEoozuGo1lLLPtxdO3GmvThAF1yYIbxTCh7y2ZdD
-         iDXlgoQhiGkpdfsUSBUO/JlGR93q4zhLrebe6xZMh1M7DYiA1LmLUUgMd6ruFd0x6VE8
-         gOFfqiNcs3Xw7AvRn/wYWOyFmyNcE4jEZusmrQj6QTNBFDcLKRY1kRLPFUNjOnF8junF
-         8z0Q==
-X-Gm-Message-State: APzg51CSZNdgucLPm15JHwyZqfRbv0z3bLBT+I387cNyIq01zNRmbOze
-        AbBZmsd9VXeaq/EVYmHYRYE=
-X-Google-Smtp-Source: ANB0Vda5dXX6+51DbYd8E1Km2o+bAZ1lnVShGYAT3JmKmJ+pCktKhlT5LORqeMWr9Geks9QouIl+Tw==
-X-Received: by 2002:a1c:1252:: with SMTP id 79-v6mr1094589wms.70.1536174127378;
-        Wed, 05 Sep 2018 12:02:07 -0700 (PDT)
-Received: from ?IPv6:2a02:8109:8a00:3914:ddab:fe80:1813:f455? ([2a02:8109:8a00:3914:ddab:fe80:1813:f455])
-        by smtp.gmail.com with ESMTPSA id w4-v6sm4312116wro.24.2018.09.05.12.02.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Sep 2018 12:02:06 -0700 (PDT)
-Subject: Re: [PATCH 0/9] Offer to run CI/PR builds in Visual Studio Team
- Services
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Newsgroups: gmane.comp.version-control.git
-References: <pull.31.git.gitgitgadget@gmail.com>
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Message-ID: <25914342-ff35-90b2-860e-6aff5c109f14@gmail.com>
-Date:   Wed, 5 Sep 2018 21:01:36 +0200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
- Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
+        id S1727687AbeIEXe1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 19:34:27 -0400
+Received: from mout.gmx.net ([212.227.15.15]:49075 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727364AbeIEXe1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 19:34:27 -0400
+Received: from [10.24.110.212] ([185.190.160.130]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0Ppl-1fjoBN05uf-00uZrp; Wed, 05
+ Sep 2018 21:02:52 +0200
+Subject: Re: [RFC PATCH v2] Allow aliases that include other aliases
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+References: <20180905085427.4099-1-timschumi@gmx.de>
+ <CACsJy8BLEtBWyAuRBphv_PVisKao0YaBewKJXECEuCVzvk9qXg@mail.gmail.com>
+From:   Tim Schumacher <timschumi@gmx.de>
+Message-ID: <5c618de8-6676-8fa4-fe19-4db44befd73c@gmx.de>
+Date:   Wed, 5 Sep 2018 21:02:50 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <pull.31.git.gitgitgadget@gmail.com>
+In-Reply-To: <CACsJy8BLEtBWyAuRBphv_PVisKao0YaBewKJXECEuCVzvk9qXg@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Language: en-US-large
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:vw/QlpMj3n98N5Kq/Hn1rNhg5vghvXJY4FO01FZWLD4OTpKt3qi
+ Pe3yOg3SUOqfKeBZuAM9YoHloVwd1cqALzxodbBiBd+iezQHU0ol5tvRu9DO1kUqD/WmuIk
+ OgtpDtOiZA/d6edyLhgAkUt1jY3Ti0ALX2nLjh/gvmzUSlcldJsl152SsMPHk8Kx5zmZq5B
+ 8durrIw99eo5U4LXi8k2w==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:LMv8KsITFCI=:2Ff3a8e6noJsJ+Gw0ynM1E
+ qE/Ws0LfCPAgo6raiWny85Vzz0eEZwa8S4vh6W280N5wkOpev4ZYkelUzjczH7Y7kYir+QN9w
+ k0Vphn6/5oqAYeiB57tLyf1RpQ9Y9ysiD9+tUpYgvQLPEmFglAZhAWI0OX3VpF11//PKrQnoO
+ hxgvP22e6QhaiKzm1mhXAVdwITOrNDOZ2jVKWorr1EA2jFUkCEMWjU81172iy/Tz+8LfxAPfG
+ /MN3bvw1zRJGk7DMXVwnCgQfBxFOTcJc2XJvOEq8LiaOdXQgxxoWSth66+LLLb5cPfsYfBXL/
+ 6WnDABLfdHKwAeSRHLCpowRY0QFx9Hu+7m47GszORd03Db6mJ+ov4iAX8Pu9GnLB07qrwyhOb
+ TZrNhVU05i29yJVNxsgqQSjExzaw9XJXnMkjIdwjW7/STw6aJaJckMp9fMDO+POrpTh75eApg
+ VOW4o5dTTwSeNg8em/eTfkIKSQ8dcxYCFVlZ5clHaSUE0LpFnV0CYJ/0s9jq+9qj9ItDi8pXl
+ mH6tK3DCugem9CQFGfrjPM0DpUdZluzE5hsXj57NI8xXFnHqrQqi0ltqM85a6vrMZTPl3b6Dr
+ XYYQDMe06IwpFwDx1IR3Cwv8kLST+RuyLn8yjD1Yz3DwIDRW6bCenTQgfcMjsz+NbNteQyHjl
+ RcqKaVDAq7FzqyvL07KAXgt/py232ibHBD4MNF+gWKxXEJKF0tWOav5CFa6femdgE8t2n2Yxq
+ Cu8kEicz+Y0pBx6zREUmTy9qgLql6wMidY+eGmvVnuwkvjFnrO9oTPFRlnrl9/JqO2M2rCIU4
+ uMzSvPP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/3/2018 11:10 PM, Johannes Schindelin via GitGitGadget wrote:
+On 05.09.18 17:48, Duy Nguyen wrote:
+> On Wed, Sep 5, 2018 at 10:56 AM Tim Schumacher <timschumi@gmx.de> wrote:
+>>
+>> Aliases can only contain non-alias git commands and their
+>> arguments, not other user-defined aliases. Resolving further
+>> (nested) aliases is prevented by breaking the loop after the
+>> first alias was processed. Git then fails with a command-not-found
+>> error.
+>>
+>> Allow resolving nested aliases by not breaking the loop in
+>> run_argv() after the first alias was processed. Instead, continue
+>> incrementing `done_alias` until `handle_alias()` fails, which means that
+>> there are no further aliases that can be processed. Prevent looping
+>> aliases by storing substituted commands in `cmd_list` and checking if
+>> a command has been substituted previously.
+>> ---
+>>
+>> This is what I've come up with to prevent looping aliases. I'm not too
+>> happy with the number of indentations needed, but this seemed to be the
+>> easiest way to search an array for a value.
+> 
+> You can just make all the new code a separate function, which reduces
+> indentation.
 
-> The one sad part about this is the Windows support. Travis lacks it, and we
-> work around that by using Visual Studio Team Services (VSTS) indirectly: one
-> phase in Travis would trigger a build, wait for its log, and then paste that
-> log.
+That would solve the issue, but I'm not sure if it is worth introducing
+a new function exclusively for that. I didn't find anything about a
+maximum indentation level in the code guidelines and since the new
+parts stay within the width limit (and is imo still readable), would it
+be ok to keep it like that?
 
-I'm sorry if this has been discussed before, but as this recap doesn't 
-mention it: Has AppVeyor been considered as an option? It seems to be 
-the defacto standard for Windows CI for projects on GitHub.
+> 
+> There's another thing I wanted (but probably a wrong thing to want):
+> if I define alias 'foo' in ~/.gitconfig, then I'd like to modify it in
+> some project by redefining it as alias.foo='foo --something' in
+> $GIT_DIR/config. This results in alias loop, but the loop is broken by
+> looking up 'foo' from a higher level config file instead.
+> 
+> This is not easy to do, and as I mentioned, I'm not even sure if it's
+> a sane thing to do.
 
--- 
-Sebastian Schuberth
+The alias system is using the default functions of the config system,
+I assume that adding such a functionality is not possible, at least not
+without breaking compatibility.
+
+> 
+>> +               /* Increase the array size and add the current
+>> +                * command to it.
+>> +                */
+> 
+> I think this is pretty clear from the code, you don't need to add a
+> comment to explain how the next few lines work. Same comment for the
+> next comment block.
+
+I'll remove them in v3.
+
+> 
+>> +               cmd_list_alloc += strlen(*argv[0]) + 1;
+>> +               REALLOC_ARRAY(cmd_list, cmd_list_alloc);
+>> +               cmd_list[done_alias] = *argv[0];
+>> +
+>> +               /* Search the array for occurrences of that command,
+>> +                * abort if something has been found.
+>> +                */
+>> +               for (int i = 0; i < done_alias; i++) {
+>> +                       if (!strcmp(cmd_list[i], *argv[0])) {
+>> +                               die("loop alias: %s is called twice",
+> 
+> Please wrap the string in _() so that it can be translated in
+> different languages.
+
+I'll do that in v3 as well.
+
+> 
+>> +                                   cmd_list[done_alias]);
+>> +                       }
+>> +               }
+>> +
+
+Thanks for reviewing!
+
+Tim
