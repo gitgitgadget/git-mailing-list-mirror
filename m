@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FB661F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 14:46:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 011C11F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 14:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727750AbeIETRS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 15:17:18 -0400
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:40942 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727568AbeIETRR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 15:17:17 -0400
-Received: by mail-pl1-f180.google.com with SMTP id s17-v6so3409401plp.7
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 07:46:46 -0700 (PDT)
+        id S1727765AbeIETRU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 15:17:20 -0400
+Received: from mail-pf1-f180.google.com ([209.85.210.180]:42086 "EHLO
+        mail-pf1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727568AbeIETRT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 15:17:19 -0400
+Received: by mail-pf1-f180.google.com with SMTP id l9-v6so3597513pff.9
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 07:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=RJHvL/ZPY6ahKdLBGEWEK2RjzJf5PeKAiCRi3dgw92A=;
-        b=YAZq+aViDmV4RfppzU83yt94swah7sBfQ6joHcJ8M+9rvoaNWtxS/1NFXZiWmFrJgQ
-         Md3dHIVi1zsXd0moQ8iHBfJSH78edtBA/GjiW1qL/qKwxBWS9jELaPvqTxEAyCwk1TP4
-         dDmQ9mlZhmtD+XB4j0RZwD9F9nPkztm3HMgVySKt8XKCFDDqlfG2YzuF/ThpCg7qZw48
-         l0s1BEf6IDc1OJ3GTBjSsDpcW0JLYEiOnEwBa8Ou5FdLZDp1jSo3ELVx6PwkxWpx+yl8
-         8TDWKs7aVu2F9hZDfT6u01FotAtr69vnVeLrT8O8YiCpiblGYGAAtF4zgOiaYFyxTJNH
-         Hsig==
+        bh=4AkadhpJAD9MExHuTiJao4o6oH0crlCt5hwCfntHNcY=;
+        b=gjvVqk9aw5eCS2nAiyCmII2uqSyc9m4vIPUtIxfmwT9nZuPfnq/v6UpUuum4GAWNct
+         rTAL++gThKtqoc/EhoOuPNdJqZsNR5YE57ztLiYf9PWTAfAwlsA5o2nl14b2rXfEm1Hz
+         1hBEEsdLqqcGX1cn/PlZurT+Gzo9ybXwypzDY+tGO4e1hmvsuCFbWOzoKntxQmvJToc3
+         xMIa0DC8t5B+FsQCgmxmvViTizDQe1XmPum4VAKqshSO0gEvESlENTrFOyxDZoeljuW6
+         mrapdOSgXpaCNEMyah1qpx3biv7/JhAoHoRlLql5ZLhh65w0QlxP23licc7HHf/xeUFU
+         rcDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=RJHvL/ZPY6ahKdLBGEWEK2RjzJf5PeKAiCRi3dgw92A=;
-        b=slP7WqnT3HnL9GDOGDinSCy2oNHJH5PztNUSZuXfAYKY/ILZB3/YkY6HWSuQkifKlc
-         h4WA2LxYSke8OOEEpjj1kMIRFEUzcjE0zO5hWV4EEyr0JdNChiA9SMqFSSY2/EAlZclx
-         6G4V4tzzJI8rrUgIKLwuKcqm+UR3KJn1M/vmq2Z1edsYi/9eE5dyD5peQHiwvjjXpXXa
-         VmOIzVFr321cWQoDHbasOC3vX39E7gzekPzuuBOl4e9xljSe54R8qKMEGi03l6mpxhyZ
-         KTgRdV3KVZd1sNrpDXSNnNCWLOINi3CSJ3u/vMkVOPnlwq6QzRg8FWehyJtXz7ObA2Td
-         eFLQ==
-X-Gm-Message-State: APzg51A22H0KK3Jld8NRl9VezTEGSc0xGlpUiUaSqLs2743SGdd9NClG
-        LXGpVltZ/xpaHolBMQmSUs/vDqIp
-X-Google-Smtp-Source: ANB0VdZDeLadxiqnQOCxbQBTNObWNbGrMOTe3cjUndxvdIgcsssXlLK+7+eWOzDfSuGpO02eOOb3zA==
-X-Received: by 2002:a17:902:a504:: with SMTP id s4-v6mr33124936plq.101.1536158805388;
-        Wed, 05 Sep 2018 07:46:45 -0700 (PDT)
+        bh=4AkadhpJAD9MExHuTiJao4o6oH0crlCt5hwCfntHNcY=;
+        b=EIQx+HI47rpoJoBoH9IVSPZG8v6DQgbr0q76xp+RZxbr3QnPYjlmc9grJA/S6011xB
+         KCPVZmrIWBzT6k8kiGh0opGaIdRV2EyZCElT2+qvprORD4ksthDDmhiM3mt2B5GqGs+S
+         lPqVL9ZbZTm2leYY9OuIzUJ/sjL4cZ1GBKwFSJQ8z+2SMsHY4IT6Tu2igW0AZxEj77vD
+         XBBok0bO/sQX8WVV3Y1OoTMDPSgJ3zLXm8uLQFDJKgdHk9yEzk2ljSxmo1EOmPifYDHi
+         COMnmsUNCz0/NDGM8nU9VXL6KCmFBJ1rdNM3C3wyLiCd1iH/yubKV4FbrlQNiEsnjrPy
+         Gz4Q==
+X-Gm-Message-State: APzg51AiL4C1DJDe4ANVPWJZWikovp12PxyBjFmEVV74x2NIuiUYW6xI
+        hcMH2uHLeD78QLASZj4oB1eWwa3c
+X-Google-Smtp-Source: ANB0VdbvbH60NHDk/+hV0iNH8hdzdy47KuxTE9AGt1bTuqGuqBkuNM7s4hj8RvBGR01+mqlzb5ldVw==
+X-Received: by 2002:a63:5845:: with SMTP id i5-v6mr36623388pgm.272.1536158808402;
+        Wed, 05 Sep 2018 07:46:48 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id o21-v6sm4688990pfa.54.2018.09.05.07.46.44
+        by smtp.gmail.com with ESMTPSA id z11-v6sm3137568pff.162.2018.09.05.07.46.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Sep 2018 07:46:44 -0700 (PDT)
-Date:   Wed, 05 Sep 2018 07:46:44 -0700 (PDT)
-X-Google-Original-Date: Wed, 05 Sep 2018 14:46:27 GMT
-Message-Id: <e1498aea45eb46feb3664413f49b70bdf048d284.1536158789.git.gitgitgadget@gmail.com>
+        Wed, 05 Sep 2018 07:46:47 -0700 (PDT)
+Date:   Wed, 05 Sep 2018 07:46:47 -0700 (PDT)
+X-Google-Original-Date: Wed, 05 Sep 2018 14:46:29 GMT
+Message-Id: <09d16aff20fc16768e688c109519e4e41f9a8e36.1536158789.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.34.git.gitgitgadget@gmail.com>
 References: <pull.34.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 09/11] multi-pack-index: verify object offsets
+Subject: [PATCH 11/11] fsck: verify multi-pack-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,123 +70,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The 'git multi-pack-index verify' command must verify the object
-offsets stored in the multi-pack-index are correct. There are two
-ways the offset chunk can be incorrect: the pack-int-id and the
-object offset.
-
-Replace the BUG() statement with a die() statement, now that we
-may hit a bad pack-int-id during a 'verify' command on a corrupt
-multi-pack-index, and it is covered by a test.
+When core.multiPackIndex is true, we may have a multi-pack-index
+in our object directory. Add calls to 'git multi-pack-index verify'
+at the end of 'git fsck' if so.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c                      | 28 +++++++++++++++++++++++++++-
- t/t5319-multi-pack-index.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 1 deletion(-)
+ builtin/fsck.c              | 18 ++++++++++++++++++
+ t/t5319-multi-pack-index.sh | 13 ++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/midx.c b/midx.c
-index 80094c02a7..87708dc367 100644
---- a/midx.c
-+++ b/midx.c
-@@ -197,7 +197,7 @@ int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id)
- 	struct strbuf pack_name = STRBUF_INIT;
- 
- 	if (pack_int_id >= m->num_packs)
--		BUG("bad pack-int-id");
-+		die(_("bad pack-int-id"));
- 
- 	if (m->packs[pack_int_id])
- 		return 0;
-@@ -970,5 +970,31 @@ int verify_midx_file(const char *object_dir)
- 				    i, oid_to_hex(&oid1), oid_to_hex(&oid2), i + 1);
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 63c8578cc1..06eb421720 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -848,5 +848,23 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 		}
  	}
  
-+	for (i = 0; i < m->num_objects; i++) {
-+		struct object_id oid;
-+		struct pack_entry e;
-+		off_t m_offset, p_offset;
++	if (!git_config_get_bool("core.multipackindex", &i) && i) {
++		struct child_process midx_verify = CHILD_PROCESS_INIT;
++		const char *midx_argv[] = { "multi-pack-index", "verify", NULL, NULL, NULL };
 +
-+		nth_midxed_object_oid(&oid, m, i);
-+		if (!fill_midx_entry(&oid, &e, m)) {
-+			midx_report(_("failed to load pack entry for oid[%d] = %s"),
-+				    i, oid_to_hex(&oid));
-+			continue;
++		midx_verify.argv = midx_argv;
++		midx_verify.git_cmd = 1;
++		if (run_command(&midx_verify))
++			errors_found |= ERROR_COMMIT_GRAPH;
++
++		prepare_alt_odb(the_repository);
++		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
++			midx_argv[2] = "--object-dir";
++			midx_argv[3] = alt->path;
++			if (run_command(&midx_verify))
++				errors_found |= ERROR_COMMIT_GRAPH;
 +		}
-+
-+		if (open_pack_index(e.p)) {
-+			midx_report(_("failed to load pack-index for packfile %s"),
-+				    e.p->pack_name);
-+			break;
-+		}
-+
-+		m_offset = e.offset;
-+		p_offset = find_pack_entry_one(oid.hash, e.p);
-+
-+		if (m_offset != p_offset)
-+			midx_report(_("incorrect object offset for oid[%d] = %s: %"PRIx64" != %"PRIx64),
-+				    i, oid_to_hex(&oid), m_offset, p_offset);
 +	}
 +
- 	return verify_midx_error;
+ 	return errors_found;
  }
 diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 072b1d1a74..b6c34631d3 100755
+index b6c34631d3..63f8718fd7 100755
 --- a/t/t5319-multi-pack-index.sh
 +++ b/t/t5319-multi-pack-index.sh
-@@ -176,6 +176,7 @@ test_expect_success 'verify bad signature' '
+@@ -160,12 +160,17 @@ corrupt_midx_and_verify() {
+ 	DATA="${2:-\0}"
+ 	OBJDIR=$3
+ 	GREPSTR="$4"
++	COMMAND="$5"
++	if test -z "$COMMAND"
++	then
++		COMMAND="git multi-pack-index verify --object-dir=$OBJDIR"
++	fi
+ 	FILE=$OBJDIR/pack/multi-pack-index &&
+ 	chmod a+w $FILE &&
+ 	test_when_finished mv midx-backup $FILE &&
+ 	cp $FILE midx-backup &&
+ 	printf "$DATA" | dd of="$FILE" bs=1 seek="$POS" conv=notrunc &&
+-	test_must_fail git multi-pack-index verify --object-dir=$OBJDIR 2>test_err &&
++	test_must_fail $COMMAND 2>test_err &&
+ 	grep -v "^+" test_err >err &&
+ 	test_i18ngrep "$GREPSTR" err
+ }
+@@ -258,6 +263,12 @@ test_expect_success 'verify incorrect offset' '
+ 		"incorrect object offset"
  '
  
- HASH_LEN=20
-+NUM_OBJECTS=74
- MIDX_BYTE_VERSION=4
- MIDX_BYTE_OID_VERSION=5
- MIDX_BYTE_CHUNK_COUNT=6
-@@ -192,6 +193,10 @@ MIDX_OID_FANOUT_WIDTH=4
- MIDX_BYTE_OID_FANOUT_ORDER=$((MIDX_OFFSET_OID_FANOUT + 250 * $MIDX_OID_FANOUT_WIDTH + 1))
- MIDX_OFFSET_OID_LOOKUP=$(($MIDX_OFFSET_OID_FANOUT + 256 * $MIDX_OID_FANOUT_WIDTH))
- MIDX_BYTE_OID_LOOKUP=$(($MIDX_OFFSET_OID_LOOKUP + 16 * $HASH_LEN))
-+MIDX_OFFSET_OBJECT_OFFSETS=$(($MIDX_OFFSET_OID_LOOKUP + $NUM_OBJECTS * $HASH_LEN))
-+MIDX_OFFSET_WIDTH=8
-+MIDX_BYTE_PACK_INT_ID=$(($MIDX_OFFSET_OBJECT_OFFSETS + 16 * $MIDX_OFFSET_WIDTH + 2))
-+MIDX_BYTE_OFFSET=$(($MIDX_OFFSET_OBJECT_OFFSETS + 16 * $MIDX_OFFSET_WIDTH + 6))
- 
- test_expect_success 'verify bad version' '
- 	corrupt_midx_and_verify $MIDX_BYTE_VERSION "\00" $objdir \
-@@ -243,6 +248,16 @@ test_expect_success 'verify oid lookup out of order' '
- 		"oid lookup out of order"
- '
- 
-+test_expect_success 'verify incorrect pack-int-id' '
-+	corrupt_midx_and_verify $MIDX_BYTE_PACK_INT_ID "\07" $objdir \
-+		"bad pack-int-id"
-+'
-+
-+test_expect_success 'verify incorrect offset' '
++test_expect_success 'git-fsck incorrect offset' '
 +	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\07" $objdir \
-+		"incorrect object offset"
++		"incorrect object offset" \
++		"git -c core.multipackindex=true fsck"
 +'
 +
  test_expect_success 'repack removes multi-pack-index' '
  	test_path_is_file $objdir/pack/multi-pack-index &&
  	git repack -adf &&
-@@ -310,4 +325,16 @@ test_expect_success 'verify multi-pack-index with 64-bit offsets' '
- 	git multi-pack-index verify --object-dir=objects64
- '
- 
-+NUM_OBJECTS=63
-+MIDX_OFFSET_OID_FANOUT=$((MIDX_OFFSET_PACKNAMES + 54))
-+MIDX_OFFSET_OID_LOOKUP=$((MIDX_OFFSET_OID_FANOUT + 256 * $MIDX_OID_FANOUT_WIDTH))
-+MIDX_OFFSET_OBJECT_OFFSETS=$(($MIDX_OFFSET_OID_LOOKUP + $NUM_OBJECTS * $HASH_LEN))
-+MIDX_OFFSET_LARGE_OFFSETS=$(($MIDX_OFFSET_OBJECT_OFFSETS + $NUM_OBJECTS * $MIDX_OFFSET_WIDTH))
-+MIDX_BYTE_LARGE_OFFSET=$(($MIDX_OFFSET_LARGE_OFFSETS + 3))
-+
-+test_expect_success 'verify incorrect 64-bit offset' '
-+	corrupt_midx_and_verify $MIDX_BYTE_LARGE_OFFSET "\07" objects64 \
-+		"incorrect object offset"
-+'
-+
- test_done
 -- 
 gitgitgadget
-
