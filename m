@@ -2,169 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48C641F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 22:48:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E78F1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 22:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727625AbeIFDU4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 23:20:56 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:55889 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727527AbeIFDU4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 23:20:56 -0400
-Received: by mail-yw1-f74.google.com with SMTP id j71-v6so6064488ywb.22
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 15:48:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=eozGZbTOcLszAS8WUto0HzcoOzwL6x06v+hcVZJWQ30=;
-        b=LbCSq8XgFb4V5/T5GbhSBiIXHDZewvoRBUZExOt4S0HrkL9bSIMpuJfLOPB9RcYgYR
-         i0EOmviR20CJhARJDUnXvUi1ZJSe1Tj8OdFYHJg/MNy1cIKZnez9p0CirHEbz8guZbCG
-         IHlgeLsJ8dBHQup+VkoNldcNtqPxpHuOyIpSYjNHxUUJQ2FfUYmPkU6mkSolXWstOo96
-         yVvWP0VNjZTZqE286F6JpsK3r17XHUzq/0thkPFLUGfgPbdRGwnzt34TN5ARcynbtKIb
-         iDqOuZLFfuCAsTunUC/6hVB8gr/BgIDV6vXFcRMoCfHACyTHFxZTGbBuLrrot2XBx9tc
-         yRYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=eozGZbTOcLszAS8WUto0HzcoOzwL6x06v+hcVZJWQ30=;
-        b=TW2xjPf6DnVFtzpUf/iqTsgBg5y4hn2PyXBiegJLZC+u4M6dLUz9PzPlRKaNfQrTis
-         8IFhM41JxvXeO3p54eY+Ssj2t1mQDerUHRuSRODg3yge3t9KsZTvSMBvSMGL6H4k353I
-         iyg6bR3sIgNgJ+Tb9M+eGwMoEsLpR8WD6Y44FCOeCwT+/blMsAKThHGBnLCyalOceGZb
-         mPHJ0G5wJEHtafmHAizXr5AUmROmWOSbAYwmJa5IZ10riknIhWORhLlGMw4bt6HVl2V/
-         DKj88mZVvmGXvFJs5Ke44kbeHm+zDd5thWj9eh/OF90t7zcAEM6JhxB5iKLuLD7e8USW
-         XPmA==
-X-Gm-Message-State: APzg51DX1uIOXnlbyWVfR3RATEw7qjCo+bE/azQEK31QUPbaGT/rlW/A
-        AKeot5ZvQAR8Loh8QpPSuDi8n8tAUtWOK/LU0wzMQJwoBI20lmc9YR3HKNQZHp6jVQMPVExXUxn
-        c4Zj6J3fExfjuw6LgwGdUM3PKuQsZSBlMbw/EePdOax0LR4Lwac64UyAgHfri
-X-Google-Smtp-Source: ANB0VdbMVzHgaF5Ic92FKKzTasZCv1waVwBmliSxSKKVJyhu5rtT6G0ru4SiC1dHszhVfysRGne4aL5OGP34
-X-Received: by 2002:a81:e801:: with SMTP id a1-v6mr10299622ywm.71.1536187714704;
- Wed, 05 Sep 2018 15:48:34 -0700 (PDT)
-Date:   Wed,  5 Sep 2018 15:48:25 -0700
-Message-Id: <20180905224825.13564-1-sbeller@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH] submodule.sh update --remote: default to oid instead of master
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1727713AbeIFDWb (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 23:22:31 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:46276 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727681AbeIFDWb (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 23:22:31 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:1024:89fd:c4a5:84be])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id E161D60745;
+        Wed,  5 Sep 2018 22:50:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1536187809;
+        bh=RK35ddE/Lxqa7R2ddRosrPiNZb9HJEfO6m4dnm45F9g=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=yiukGdL7m6xzNxZbrPonhQpJW1fXVLFtLp9W7EZwtBeh4+IPXnAumv+iBYRcE6hOL
+         vQ1c6oNHjbwgsCjBmmRlH0aKotnDTP/AcQLGB1XpxaRm8sPvwJ8Kw8UA4WYtzWPckc
+         RD9B68LV0K6UfBfRmHbYMM+xzeNFREMalZy14zo/nAnR5TB+tIyhL1D3G3tG9ivwAJ
+         4ZWDBzxnH3uLXRMJmyfZgrhOl9k4JhFnPHDHU7VaSEQA41S5cPJjr2sq451lSnVidr
+         3GNov0iuQSeHfIpuJPSf2v42/kS+XqjYLRGFtf57j9WJZorFsc7tsUiUM0gL9vKe/u
+         mSdl5La7Doz/QNS/rmOpjRnrsTx8trBwhgoO0BX/6lav5sT65CBt1lr4FCjC+qJhh+
+         d/cTuluc9OM1JqF0yk7Nrwbz7sKJTfF799BwAeDdmJT3aO0a7syK6P7ACVTpI4RLl1
+         87rtvQ61FLO6paj352yJy/gm7JnV2VTAzcES6D0LouUeJARqcnr
+Date:   Wed, 5 Sep 2018 22:50:04 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 01/12] t: add test functions to translate hash-related
+ values
+Message-ID: <20180905225004.GO432229@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20180903232515.336397-1-sandals@crustytoothpaste.net>
+ <20180903232515.336397-2-sandals@crustytoothpaste.net>
+ <CAPig+cQZMEvJZ2b3RjtXvy9ZtTjRKUvye_xT0nibOqcHtpApZQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="Ck22u5fw4m2k6hx2"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cQZMEvJZ2b3RjtXvy9ZtTjRKUvye_xT0nibOqcHtpApZQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.17.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-gitmodules(5) sayeth:
 
-   submodule.<name>.branch
-       A remote branch name for tracking updates in the upstream
-       submodule. If the option is not specified, it defaults to master.
+--Ck22u5fw4m2k6hx2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This doesn't allow having a "pinned" submodule that should not be updated
-from upstream. We should change this to have no default --- if branch is
-not specified, don't update that submodule, just like in Gerrit's
-corresponding feature[1].
+On Mon, Sep 03, 2018 at 08:01:35PM -0400, Eric Sunshine wrote:
+> On Mon, Sep 3, 2018 at 7:25 PM brian m. carlson
+> <sandals@crustytoothpaste.net> wrote:
+> > Add several test functions to make working with various hash-related
+> > values easier.
+> > [...]
+> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> > @@ -1155,3 +1155,70 @@ depacketize () {
+> > +# Detect the hash algorithm in use.
+> > +test_detect_hash () {
+> > +       test_hash_algo=3D'sha1'
+> > +}
+>=20
+> Not worth a re-roll itself, but if you do re-roll for some reason,
+> perhaps include a comment inside the function saying that the actual
+> "detect" part will be fleshed out later.
 
-[1] https://gerrit-review.googlesource.com/Documentation/user-submodules.html#_defining_the_submodule_branch
+Sure.
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- Documentation/gitmodules.txt | 11 ++++++-----
- git-submodule.sh             | 19 +++++++++++--------
- t/t7406-submodule-update.sh  | 22 ++++++++++++++++++++++
- 3 files changed, 39 insertions(+), 13 deletions(-)
+> > +test_oid_cache () {
+> > +       local tag reset k v
+>=20
+> s/reset/rest/
+>=20
+> It probably wouldn't hurt to &&-chain the above, as well, to
+> future-proof it against someone coming along and inserting code before
+> the 'local' line.
 
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index 4d63def2069..3b8739f8294 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -50,11 +50,12 @@ submodule.<name>.update::
- 
- submodule.<name>.branch::
- 	A remote branch name for tracking updates in the upstream submodule.
--	If the option is not specified, it defaults to 'master'.  A special
--	value of `.` is used to indicate that the name of the branch in the
--	submodule should be the same name as the current branch in the
--	current repository.  See the `--remote` documentation in
--	linkgit:git-submodule[1] for details.
-+	A special value of `.` is used to indicate that the name of the
-+	branch in the submodule should be the same name as the current
-+	branch in the current repository.  See the `--remote` documentation
-+	in linkgit:git-submodule[1] for details.
-+	If the option is not specified, do not update to any branch but
-+	the object id of the remote.
- 
- submodule.<name>.fetchRecurseSubmodules::
- 	This option can be used to control recursive fetching of this
-diff --git a/git-submodule.sh b/git-submodule.sh
-index f7fd80345cd..342050ae934 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -568,16 +568,19 @@ cmd_update()
- 		if test -n "$remote"
- 		then
- 			branch=$(git submodule--helper remote-branch "$sm_path")
--			if test -z "$nofetch"
-+			if test -n "$branch"
- 			then
--				# Fetch remote before determining tracking $sha1
--				fetch_in_submodule "$sm_path" $depth ||
--				die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
-+				if test -z "$nofetch"
-+				then
-+					# Fetch remote before determining tracking $sha1
-+					fetch_in_submodule "$sm_path" $depth ||
-+					die "$(eval_gettext "Unable to fetch in submodule path '\$sm_path'")"
-+				fi
-+				remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
-+				sha1=$(sanitize_submodule_env; cd "$sm_path" &&
-+					git rev-parse --verify "${remote_name}/${branch}") ||
-+				die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
- 			fi
--			remote_name=$(sanitize_submodule_env; cd "$sm_path" && get_default_remote)
--			sha1=$(sanitize_submodule_env; cd "$sm_path" &&
--				git rev-parse --verify "${remote_name}/${branch}") ||
--			die "$(eval_gettext "Unable to find current \${remote_name}/\${branch} revision in submodule path '\$sm_path'")"
- 		fi
- 
- 		if ! $(git config -f "$(git rev-parse --git-common-dir)/modules/$name/config" core.worktree) 2>/dev/null
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 10dc91620a6..f04884743fd 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -260,6 +260,28 @@ test_expect_success 'submodule update --remote should fetch upstream changes wit
- 	)
- '
- 
-+test_expect_success 'submodule update --remote should not fetch upstream when no branch is set' '
-+	(
-+		cd super &&
-+		test_might_fail git config --unset -f .gitmodules submodule."submodule".branch &&
-+		git add .gitmodules &&
-+		git commit --allow-empty -m "submodules: pin in superproject branch"
-+	) &&
-+	(
-+		cd submodule &&
-+		echo line4b >>file &&
-+		git add file &&
-+		test_tick &&
-+		git commit -m "upstream line4b"
-+	) &&
-+	(
-+		cd super &&
-+		git submodule update --remote --force submodule &&
-+		git -C submodule log -1 --oneline >actual &&
-+		! grep line4b actual
-+	)
-+'
-+
- test_expect_success 'local config should override .gitmodules branch' '
- 	(cd submodule &&
- 	 git checkout test-branch &&
--- 
-2.19.0.rc2.392.g5ba43deb5a-goog
+I'll fix that and reroll.
 
+> > +       test -n "$test_hash_algo" || test_detect_hash &&
+> > +       while read tag rest
+> > +       do
+> > +               case $tag in
+> > +               [...]
+> > +               esac &&
+> > +
+> > +               k=3D"${rest%:*}" &&
+> > +               v=3D"${rest#*:}" &&
+> > +
+> > +               if ! expr "$k" : '[a-z0-9][a-z0-9]*$' >/dev/null
+> > +               then
+> > +                       error 'bug in the test script: bad hash algorit=
+hm'
+>=20
+> Did you want to redirect this to stderr like you do with error() in test_=
+oid()?
+
+No, I don't believe it's necessary.  The commit message hints at this
+slightly, but test_oid_cache is run with stdout unredirected, while
+test_oid is run inside a command substitution (where stdout is
+essentially redirected).
+
+The issue with test_oid is not that it doesn't abort successfully (it
+does) but that you don't see the error message and therefore have no
+clue why your test suddenly exited 1, which is unfriendly to developers
+when they make this mistake.  Since that's not an issue here, I opted
+not to redirect it.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--Ck22u5fw4m2k6hx2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluQXZsACgkQv1NdgR9S
+9osp6A/+Npt+hdZgYF/twoBGAD9Nr73LIuvdbTeJovfMxhBYPD99MVktfyCQ2zZK
+iINRLnA/MheaQxrmU7PGJV6359UvOmAW0Z/dIPQLdw7z8uV50ADJXv+BixdfpM/N
+p3ecI6BJNHqvTTaLHXfbW0K842YFYiDonzuGudzVLR+74UpRp7RDAzQdhXJFhOZy
+FkDEQxIKuL/D0Vj0u/kZGrPVpV4kEb+rNSF79uPctOdW4wpJUk23x6eV153UnGUl
+uJXO+WCIf3/djySHU0xi1SRdBsngfLWrFKhQvpMkJb1f7b36MbLsn/i/o5EbSkql
+68jepUFPx0xcI+mFLLBjpJhEcyXA57SezURVQByfkcX+EIh8Hm0H9DTv2fuIlRa1
+yhlFCQFruTISCyg41Ey6DQvVFic65r2MnQtUOmq4fi+EVqIdM2MbWRKo2EmKufnW
+LEbAYUK8B1k83/wiQC7hzduiAJ/NnFr102TxYYbCxfokZdPgDNer0srBi4ZGCtub
+McKOL2EgkTNCx3X5PFx9RIAA/GREan0snj4TxnluDxFgFkV/mOFpLYoyYf6W1aer
+rRp9edLCUBNIs/r9R1f+QyAhepOI3AkehgezPft0T934L0qAL2cKl1zPVIPb32cw
+BI2JDFUdLmU+gClBVE0JWyeubtYxThei4TFA6KeQB9x0s4Rsr08=
+=XoDh
+-----END PGP SIGNATURE-----
+
+--Ck22u5fw4m2k6hx2--
