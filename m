@@ -2,103 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 560B41F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 18:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 610CD1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 18:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727626AbeIEWuT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 18:50:19 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:39705 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727426AbeIEWuT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 18:50:19 -0400
-Received: by mail-wr1-f67.google.com with SMTP id o37-v6so8654445wrf.6
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 11:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EG1lbV82EQD4EcONbRZkigdIEqKAcFXcCXGhy1XD2iw=;
-        b=BEHdYOm0JKineJcT3JwpQgYuV9vGRo5o/BRb65R0s8Fg7lr36hgjQvGGeqMR5b1Y4Z
-         o0aoN4T1fWtTczoT3g0kRoJ7LNbxeRy3S7Hs/n8H70n1/5dY8suShEn/Z8cs7G2O+iod
-         Pfs95DOuq7YCq85ap0gt8DhR3U4ZyKgjtv5+4aNlxUjhakeHldvhrK+8QS7IpRwasXhG
-         z865x64+ReHmmPNsDYNWDrInSGJpeucyvN97VsD6IvlmxXkE5XzTUKB8Bw/CPrxrKnv/
-         d6Jby+SmwGoHlLXpv0p/vezDoS+CQbqtb4C0NW9j/XD8MZo0eanfN9zUmJ3nbYzXcxKM
-         OoHQ==
+        id S1727686AbeIEXKK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 19:10:10 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:34406 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727395AbeIEXKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 19:10:10 -0400
+Received: by mail-qt0-f196.google.com with SMTP id m13-v6so9346934qth.1
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 11:38:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EG1lbV82EQD4EcONbRZkigdIEqKAcFXcCXGhy1XD2iw=;
-        b=Od/QtzOTYdMxDjU/CVdiAcmCZ/0wE9YrhRHo0IZJkrgXwwEIuOf8+orFzWiIkg8WUD
-         kSw6SrZ4dbKU9Rsvu4TWljSadbmfja2gixFDOCLpFsl246z68Y47qRRTFC5UirjrQ6En
-         rrk4T5JPjB+MrOCN6+18/BsDBT7yDQkQsv1DWxfF+deh5/YBLXi1uudKrp614AKcpab3
-         EntRHT/2kdd6MfNkDeVdAO5EDmo7asmlBcZG5XnyrPpnzVdS9XLjp1lqvX/bppiJ0h1u
-         M6JJ5Ics4pbBdKOOdmZMz/0Px9gVeN6gy5VAJnFn+olbdQ/Jd0UUO619rnlm/n6FZ94l
-         Kp5g==
-X-Gm-Message-State: APzg51BHVrAFfVLT2R5iyoUzBu/oMZgHFkJ5jd+vXbIN2zcbrEvfJMaw
-        4MdF937VtDm5VkeUJSljNt0=
-X-Google-Smtp-Source: ANB0VdYVS6RQwGANYbHfspPk/1KDwx8kRGsPvzEpZiOO3bN8UL3aNXU2FufqP0D2xrql9bAxmuUEVA==
-X-Received: by 2002:adf:8325:: with SMTP id 34-v6mr17575707wrd.67.1536171538173;
-        Wed, 05 Sep 2018 11:18:58 -0700 (PDT)
-Received: from localhost (x590e0517.dyn.telefonica.de. [89.14.5.23])
-        by smtp.gmail.com with ESMTPSA id k63-v6sm3445809wmd.46.2018.09.05.11.18.56
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 05 Sep 2018 11:18:57 -0700 (PDT)
-Date:   Wed, 5 Sep 2018 20:18:52 +0200
-From:   SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
-Message-ID: <20180905181852.GA14181@localhost>
-References: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
- <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
- <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GC2r/gH/jDBHqHlrC1Cx3xNBHePvk9gxD3ZHbIZZXXI=;
+        b=k7KeQFsAJ5sAym8UZGEY/Zkszr/VmkjKzA4efiyPq/AfE2y6+g955qrPXjpLSsx4Pm
+         Bw36ZlU/O7JMGq4Xhlr75Ny5HjmwgOtSYoC5s+RtkZKPIlJ24h7hqT5PsGMP3s5fpHsd
+         tOOlwZiRqgaYwyqzXyQ0VL+j7OTyfSkKZdmIi26PJGij2MwVhvV3zGX88pYa4hRzxnZv
+         ra/V1wT4O4dSkKFKQ2bYrYrAbMlvgPPg8/4TvdOyUr2Qgigiz/7M8VIaRGvZG6PqFx54
+         n+yzVY6POkr1OlD6/GdjrrGmmPMVV0Ab31Jg+bpm4cw3YBOmOAVbA0l/3bOOGlAoH/pG
+         lRCg==
+X-Gm-Message-State: APzg51CVx2+5RwFaR5puOOouaVZ/uB2xIOzda76mxxmUy8TRaLPnmBft
+        X5n26m/gYruitBr4zQz9G++OSZ+7QxSB/9Vj0bc=
+X-Google-Smtp-Source: ANB0Vdahs39b3heeZtCjgTU3arVx/TkFk/8grqG0DCwmeWrYrIHNDQ/+8ttFA4GBROJ/7KbG2xPff4F1UuVToDDm+C8=
+X-Received: by 2002:aed:304b:: with SMTP id 69-v6mr11372594qte.220.1536172725930;
+ Wed, 05 Sep 2018 11:38:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com>
+ <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1809041304450.71@tvgsbejvaqbjf.bet> <CAE5ih7_GgkEaVXONy8ZY9j43PX6GD-mkD9vJ1t93upAfTkM8tw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 5 Sep 2018 14:38:34 -0400
+Message-ID: <CAPig+cQkC4-6DyQdJHc8QUfBx+L6o1SK4ODy4MoP44+VHHk96Q@mail.gmail.com>
+Subject: Re: [PATCH 7/9] tests: include detailed trace logs with
+ --write-junit-xml upon failure
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Luke Diamand <luke@diamand.org>, gitgitgadget@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 05, 2018 at 06:48:06PM +0200, Duy Nguyen wrote:
-> On Wed, Sep 5, 2018 at 6:35 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >
-> > > Here are the topics that have been cooking.  Commits prefixed with
-> > > '-' are only in 'pu' (proposed updates) while commits prefixed with
-> > > '+' are in 'next'.  The ones marked with '.' do not appear in any of
-> > > the integration branches, but I am still holding onto them.
-> > >
-> > > Git 2.19-rc2 is out.  Hopefully the tip of 'master' is more or less
-> > > identical to the final one without needing much updates.
-> >
-> > By the way, linux-gcc job of TravisCI seems to have been unhappy
-> > lately all the way down to 'master'.  It fails split-index tests,
-> > which may or may not be new breakage.
-> >
-> >     https://travis-ci.org/git/git/jobs/424552273
-> >
-> > If this is a recent regression, we may want to revert a few commits,
-> > but I do not offhand recall us having touched the spilt-index part
-> > of the code during this cycle.
+On Wed, Sep 5, 2018 at 8:39 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> So let's hear some ideas how to improve the situation, m'kay?
+> Just as a reminder, this is the problem I want to solve: I want to run the
+> tests in a light-weight manner, with minimal output, and only in case of
+> an error do I want to crank up the verbosity. Instead of wasting most of the
+> effort to log everything and then throwing it away in most of the common
+> cases, I suggest to re-run the entire test.
 
-It's not a regression, it's as old as the split index feature itself.
+What about the very different approach of capturing the full "verbose"
+output the executed tests in addition to whatever is actually output
+to the terminal? If a test fails, then (and only then) you can insert
+the captured verbose output into the JUnit XML file. This way (if we
+always have the full verbose output at hand), you don't need to re-run
+the test at all.
 
-> I can't reproduce it here (with either 64 or 32 bit builds on x86).
-> Not denying the problem, just a quick update. I'll need more time,
-> maybe over weekend to have a closer look.
-
-I have the patches almost ready, only the commit messages need some
-touching up.
-
+I've cc:'d Peff and Jonathan since I believe they are more familiar
+with how all the capturing / output-redirection works in the test
+suite.
