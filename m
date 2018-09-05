@@ -2,96 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8FD1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 18:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 560B41F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 18:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727671AbeIEWtg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 18:49:36 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40584 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727069AbeIEWtf (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 18:49:35 -0400
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w85IDxfv029768;
-        Wed, 5 Sep 2018 11:18:14 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2m7rmkfb8m-1;
-        Wed, 05 Sep 2018 11:18:13 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6E76122FCFA0;
-        Wed,  5 Sep 2018 11:18:13 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 6623A2CDEA5;
-        Wed,  5 Sep 2018 11:18:13 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
-Subject: [PATCH] rerere: avoid buffer overrun
-Date:   Wed,  5 Sep 2018 10:56:05 -0700
-Message-Id: <20180905175605.12341-1-newren@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc2
+        id S1727626AbeIEWuT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 18:50:19 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39705 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727426AbeIEWuT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 18:50:19 -0400
+Received: by mail-wr1-f67.google.com with SMTP id o37-v6so8654445wrf.6
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 11:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EG1lbV82EQD4EcONbRZkigdIEqKAcFXcCXGhy1XD2iw=;
+        b=BEHdYOm0JKineJcT3JwpQgYuV9vGRo5o/BRb65R0s8Fg7lr36hgjQvGGeqMR5b1Y4Z
+         o0aoN4T1fWtTczoT3g0kRoJ7LNbxeRy3S7Hs/n8H70n1/5dY8suShEn/Z8cs7G2O+iod
+         Pfs95DOuq7YCq85ap0gt8DhR3U4ZyKgjtv5+4aNlxUjhakeHldvhrK+8QS7IpRwasXhG
+         z865x64+ReHmmPNsDYNWDrInSGJpeucyvN97VsD6IvlmxXkE5XzTUKB8Bw/CPrxrKnv/
+         d6Jby+SmwGoHlLXpv0p/vezDoS+CQbqtb4C0NW9j/XD8MZo0eanfN9zUmJ3nbYzXcxKM
+         OoHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EG1lbV82EQD4EcONbRZkigdIEqKAcFXcCXGhy1XD2iw=;
+        b=Od/QtzOTYdMxDjU/CVdiAcmCZ/0wE9YrhRHo0IZJkrgXwwEIuOf8+orFzWiIkg8WUD
+         kSw6SrZ4dbKU9Rsvu4TWljSadbmfja2gixFDOCLpFsl246z68Y47qRRTFC5UirjrQ6En
+         rrk4T5JPjB+MrOCN6+18/BsDBT7yDQkQsv1DWxfF+deh5/YBLXi1uudKrp614AKcpab3
+         EntRHT/2kdd6MfNkDeVdAO5EDmo7asmlBcZG5XnyrPpnzVdS9XLjp1lqvX/bppiJ0h1u
+         M6JJ5Ics4pbBdKOOdmZMz/0Px9gVeN6gy5VAJnFn+olbdQ/Jd0UUO619rnlm/n6FZ94l
+         Kp5g==
+X-Gm-Message-State: APzg51BHVrAFfVLT2R5iyoUzBu/oMZgHFkJ5jd+vXbIN2zcbrEvfJMaw
+        4MdF937VtDm5VkeUJSljNt0=
+X-Google-Smtp-Source: ANB0VdYVS6RQwGANYbHfspPk/1KDwx8kRGsPvzEpZiOO3bN8UL3aNXU2FufqP0D2xrql9bAxmuUEVA==
+X-Received: by 2002:adf:8325:: with SMTP id 34-v6mr17575707wrd.67.1536171538173;
+        Wed, 05 Sep 2018 11:18:58 -0700 (PDT)
+Received: from localhost (x590e0517.dyn.telefonica.de. [89.14.5.23])
+        by smtp.gmail.com with ESMTPSA id k63-v6sm3445809wmd.46.2018.09.05.11.18.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 05 Sep 2018 11:18:57 -0700 (PDT)
+Date:   Wed, 5 Sep 2018 20:18:52 +0200
+From:   SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
+Message-ID: <20180905181852.GA14181@localhost>
+References: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
+ <xmqqbm9b6gxs.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-05_10:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=3 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1809050182
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CJfsjmt8Z03dT5enN86Ke7aMBHv+BvpRh8zFBgU4Z=Vw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-check_one_conflict() compares `i` to `active_nr` in two places to avoid
-buffer overruns, but left out an important third location.
+On Wed, Sep 05, 2018 at 06:48:06PM +0200, Duy Nguyen wrote:
+> On Wed, Sep 5, 2018 at 6:35 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > > Here are the topics that have been cooking.  Commits prefixed with
+> > > '-' are only in 'pu' (proposed updates) while commits prefixed with
+> > > '+' are in 'next'.  The ones marked with '.' do not appear in any of
+> > > the integration branches, but I am still holding onto them.
+> > >
+> > > Git 2.19-rc2 is out.  Hopefully the tip of 'master' is more or less
+> > > identical to the final one without needing much updates.
+> >
+> > By the way, linux-gcc job of TravisCI seems to have been unhappy
+> > lately all the way down to 'master'.  It fails split-index tests,
+> > which may or may not be new breakage.
+> >
+> >     https://travis-ci.org/git/git/jobs/424552273
+> >
+> > If this is a recent regression, we may want to revert a few commits,
+> > but I do not offhand recall us having touched the spilt-index part
+> > of the code during this cycle.
 
-Note that this bug probably cannot be triggered in the current codebase.
-Existing merge strategies have tended not to create entries at stage #1
-that do not have a corresponding entry at either stage #2 or stage #3.
-(The bug was found while exploring some ideas for modifying conflict
-resolution.)  However, it is technically possible that an external merge
-strategy could create such entries, so add a check to avoid segfaults.
+It's not a regression, it's as old as the split index feature itself.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Originally submitted here:
-  https://public-inbox.org/git/20180806224745.8681-2-newren@gmail.com/
-While I want to push that RFC series more and will get back to it, this
-patch is independently good so I'm submitting separately.
+> I can't reproduce it here (with either 64 or 32 bit builds on x86).
+> Not denying the problem, just a quick update. I'll need more time,
+> maybe over weekend to have a closer look.
 
-For some history about how the current code got to where it is today, see=
-:
-  fb70a06da2f1 ("rerere: fix an off-by-one non-bug", 2015-06-28)
-  5eda906b2873 ("rerere: handle conflicts with multiple stage #1 entries"=
-, 2015-07-24)
-
- rerere.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/rerere.c b/rerere.c
-index c7787aa07f..783d4dae2a 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -533,7 +533,7 @@ static int check_one_conflict(int i, int *type)
- 	}
-=20
- 	*type =3D PUNTED;
--	while (ce_stage(active_cache[i]) =3D=3D 1)
-+	while (i < active_nr && ce_stage(active_cache[i]) =3D=3D 1)
- 		i++;
-=20
- 	/* Only handle regular files with both stages #2 and #3 */
---=20
-2.19.0.rc2
+I have the patches almost ready, only the commit messages need some
+touching up.
 
