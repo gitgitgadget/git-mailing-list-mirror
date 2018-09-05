@@ -7,49 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E6A431F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 23:20:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A57601F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 23:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727621AbeIFDwZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 23:52:25 -0400
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:52288 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727518AbeIFDwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 23:52:25 -0400
-Received: by mail-qk1-f201.google.com with SMTP id n23-v6so6514833qkn.19
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 16:19:58 -0700 (PDT)
+        id S1727626AbeIFDw1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 23:52:27 -0400
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:44414 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727518AbeIFDw0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 23:52:26 -0400
+Received: by mail-pl1-f201.google.com with SMTP id 2-v6so4477989plc.11
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 16:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=1MAOmSGlKH9G4nMhSJDdsZGbXT/VHr3LFqxMlXWspVY=;
-        b=BWT8qBjOs5E4fZcuO0xouagAEwavtYDgJC7udNqMIbfw0pcm2D4obW3+S5FRnC7Ics
-         WeGvloKB0rWWRp0HCN2368l8mXXA6Nrk5WbnD8QI6a3vDaaxWJ7N9vjqyM6K8FZtMniW
-         rWU9vzWLotY6Kk1CSFX92s31M2C4cISZlHBSWWa9H+fBHZBEpk2X4hDEmYz2hdW40MKa
-         AIY7OH/GWKGg2iqYQ8x0XrhOYPA5bX5DydvgcIc6jIdbPb/UcZXdNvN+eNfZRr/DqGKi
-         XZuKVNb+9Tn9Z3laFPuNwxAPb6rPFGeSwoB6uRTerGof5GVTkGBwBDCg0Kq3DQ9g6R+x
-         2fGg==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=yKxZNwa02jGhfFbmMMW1MO+/O/e0b3XmhgKe8R9hg5o=;
+        b=uOculedezVshN6CvgCjMlU6e8sIi1IhUKtwl4sj2L1ajEoeiyH15fdmfeUFrPSVSaV
+         9JdioI2qXvPyBPPwhGxCi+uXPe3AotSeoYaCwdNQGWm6uaeeFK/0jdmhk3HYbkVC/MQ9
+         KJvJNikd+7AZYkFssb4Hw8SDqLYQUSNp9zNoJU18QKMgW8uBrWK7wzFnhdzLIE3LinTg
+         nhh93c6l+KOgH0tzA5kI3+6q9NXavXupGqOa92BVRanFFvtbvIS48rWuy8QA9+KGXFbj
+         rUi/t5tfvTb+Tv4S2yn+0rjocuhhnxjCBt7VcwLo2o/LozQjMFOBJfka00VpgNt2cWyU
+         UJlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=1MAOmSGlKH9G4nMhSJDdsZGbXT/VHr3LFqxMlXWspVY=;
-        b=HFGp0Bs/TAQ4r4UdicBxHePa11K9MWbjdlXKvJhjjMlWdjxznkiEaQFsCPkIAAMKGu
-         ivRdJOJNE+ImCzN+oZ8qT3toOik2RKdsejHfwejon+ymgtWNdGNZcJ9Jqs2BHdEw9iip
-         OuZNV0fYVObAwQ8S3Se3JW71cSTn9yVvtGhRGk/yeL4znXreVIcZGRMAfOu2EnEpQ8YJ
-         vXTzpXRCx5pvAdZJcsaN0MZCbrXI80Y2NjNCv81oNomJvq0sA6D1rLR5rx17c9a9hQLu
-         PhWmRvzIFIS38I/hsCfgjyqHbDePbG0Uz0UEm9pIt/MUUviBtvIWR8NLnsA32NsnkKGt
-         GkfA==
-X-Gm-Message-State: APzg51BCfbXFeHRQHDXGyxMhh6Ap3KKS9yGVW3l4FMONzfamv1YzIM19
-        rRbDHpPf0c9ynI0sn/2/OQIl6lh08vKo9E/1P85XeJ/DYBgzqv54saTvzNK5n6cxegqI6OcET6T
-        thmp6YUYBqOe958DEqVSTk4PDnTiREuNarhlDWAQ8m5JiCWZIkqfetspM1DFl
-X-Google-Smtp-Source: ANB0VdbUPjGLEexIayzs+K1k/I3thgiOz7sikQRksIjrh5I/wPT5AOYHtZWUbzl7pjnh1TuaysCcOdM7fzkP
-X-Received: by 2002:ae9:e802:: with SMTP id a2-v6mr17518qkg.2.1536189597957;
- Wed, 05 Sep 2018 16:19:57 -0700 (PDT)
-Date:   Wed,  5 Sep 2018 16:19:51 -0700
-Message-Id: <20180905231952.28145-1-sbeller@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=yKxZNwa02jGhfFbmMMW1MO+/O/e0b3XmhgKe8R9hg5o=;
+        b=VPRCzkBS6VDtLtNXWQ6Pu9L/QETlKKcuMBKkvZYpsBPptrgoyMrqeWcOBCt03LuY4M
+         cgq3AIrXQ7oeUYa1PhCb89pevvMd73SzWPCQLmtY78VQiZAEcvREzPWaShqF4294axJa
+         0AhIyM1FL8sV3Mcj2yv7xOT6YAEDMmMOnTf/2KKIjjsemAeVgHOGJqifG6HZXvv7+KIa
+         AGC3KL0+2s+Iz7AwmI5d05Dl7ohytjjwa0DwgoDVwamA4STGGxfZ7VXznRnmNszlVnZV
+         ol2QInlVIjCuvtw3JDmw2Cgq1qUEgPEszFZ9ogcCfpyMozmB/E0YdQq/ya5dvLNplVUp
+         ewLg==
+X-Gm-Message-State: APzg51AxWJEs1mUKZFf0Na6it+zHtvnWaJO/WcDGJ70nMSzQ5B4rTnv+
+        4FMJZQrVsijtP4iDTcOGGIY1Pxx9QswEWeKLmuwlcNFWrXf1/7M0kMknSMCpZ/LTy5TSKbVNFS/
+        yh+eYDpBJPBCuRAW3p9twcBkAtLDb4aAVZq6RztLTyJbLNcAzMGnOMXue1UHc
+X-Google-Smtp-Source: ANB0VdbG9De9ly9hO9evmdCB0U9+fuCi+wCDCE3GlO6zbZFBPmnsAHDnQL5Mlu3tlPUpZRDBp8zqHJrUwioD
+X-Received: by 2002:a63:5d26:: with SMTP id r38-v6mr810pgb.154.1536189600141;
+ Wed, 05 Sep 2018 16:20:00 -0700 (PDT)
+Date:   Wed,  5 Sep 2018 16:19:52 -0700
+In-Reply-To: <20180905231952.28145-1-sbeller@google.com>
+Message-Id: <20180905231952.28145-2-sbeller@google.com>
 Mime-Version: 1.0
+References: <20180905231952.28145-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH 1/2] submodule.c: convert submodule_move_head new argument to
- object id
+Subject: [PATCH 2/2] submodule.c: warn about missing submodule commit in
+ recursive actions
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -59,157 +63,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All callers use oid_to_hex to convert the desired oid to a string before
-calling submodule_move_head. Defer the conversion to the
-submodule_move_head as it will turn out to be useful in a bit.
+By checking if a submodule commit exists before attempting the update
+we can improve the error message from the
+    error(_("Submodule '%s' could not be updated."), path);
+to the new and more specific
+    error(_("Submodule '%s' doesn't have commit '%s'"),
+          path, oid_to_hex(new_oid));
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
+ submodule.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-This is also part of the other series sent out yesterday, 
-https://public-inbox.org/git/20180904230149.180332-5-sbeller@google.com/
-
- entry.c        |  6 +++---
- submodule.c    | 12 ++++++------
- submodule.h    |  2 +-
- unpack-trees.c | 13 +++++--------
- 4 files changed, 15 insertions(+), 18 deletions(-)
-
-diff --git a/entry.c b/entry.c
-index 2a2ab6c8394..0b676f997b2 100644
---- a/entry.c
-+++ b/entry.c
-@@ -358,7 +358,7 @@ static int write_entry(struct cache_entry *ce,
- 		sub = submodule_from_ce(ce);
- 		if (sub)
- 			return submodule_move_head(ce->name,
--				NULL, oid_to_hex(&ce->oid),
-+				NULL, &ce->oid,
- 				state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
- 		break;
- 
-@@ -439,10 +439,10 @@ int checkout_entry(struct cache_entry *ce,
- 					unlink_or_warn(ce->name);
- 
- 				return submodule_move_head(ce->name,
--					NULL, oid_to_hex(&ce->oid), 0);
-+					NULL, &ce->oid, 0);
- 			} else
- 				return submodule_move_head(ce->name,
--					"HEAD", oid_to_hex(&ce->oid),
-+					"HEAD", &ce->oid,
- 					state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
- 		}
- 
 diff --git a/submodule.c b/submodule.c
-index 50cbf5f13ed..da2ed8696f5 100644
+index da2ed8696f5..56104af1c7c 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1597,9 +1597,9 @@ static void submodule_reset_index(const char *path)
-  * pass NULL for old or new respectively.
-  */
- int submodule_move_head(const char *path,
--			 const char *old_head,
--			 const char *new_head,
--			 unsigned flags)
-+			const char *old_head,
-+			const struct object_id *new_oid,
-+			unsigned flags)
- {
- 	int ret = 0;
+@@ -1605,6 +1605,7 @@ int submodule_move_head(const char *path,
  	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -1679,7 +1679,7 @@ int submodule_move_head(const char *path,
- 	if (!(flags & SUBMODULE_MOVE_HEAD_FORCE))
- 		argv_array_push(&cp.args, old_head ? old_head : empty_tree_oid_hex());
+ 	const struct submodule *sub;
+ 	int *error_code_ptr, error_code;
++	struct repository subrepo;
  
--	argv_array_push(&cp.args, new_head ? new_head : empty_tree_oid_hex());
-+	argv_array_push(&cp.args, new_oid ? oid_to_hex(new_oid) : empty_tree_oid_hex());
- 
- 	if (run_command(&cp)) {
- 		ret = error(_("Submodule '%s' could not be updated."), path);
-@@ -1687,7 +1687,7 @@ int submodule_move_head(const char *path,
- 	}
- 
- 	if (!(flags & SUBMODULE_MOVE_HEAD_DRY_RUN)) {
--		if (new_head) {
-+		if (new_oid) {
- 			child_process_init(&cp);
- 			/* also set the HEAD accordingly */
- 			cp.git_cmd = 1;
-@@ -1696,7 +1696,7 @@ int submodule_move_head(const char *path,
- 
- 			prepare_submodule_repo_env(&cp.env_array);
- 			argv_array_pushl(&cp.args, "update-ref", "HEAD",
--					 "--no-deref", new_head, NULL);
-+					 "--no-deref", oid_to_hex(new_oid), NULL);
- 
- 			if (run_command(&cp)) {
- 				ret = -1;
-diff --git a/submodule.h b/submodule.h
-index 7d476cefa7e..ef34d5a7ca8 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -124,7 +124,7 @@ int submodule_to_gitdir(struct strbuf *buf, const char *submodule);
- #define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
- int submodule_move_head(const char *path,
- 			const char *old,
--			const char *new_head,
-+			const struct object_id *new_oid,
- 			unsigned flags);
- 
- void submodule_unset_core_worktree(const struct submodule *sub);
-diff --git a/unpack-trees.c b/unpack-trees.c
-index f25089b878a..75d1b294ade 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -256,7 +256,7 @@ static void display_error_msgs(struct unpack_trees_options *o)
- 
- static int check_submodule_move_head(const struct cache_entry *ce,
- 				     const char *old_id,
--				     const char *new_id,
-+				     const struct object_id *new_id,
- 				     struct unpack_trees_options *o)
- {
- 	unsigned flags = SUBMODULE_MOVE_HEAD_DRY_RUN;
-@@ -1517,7 +1517,7 @@ static int verify_uptodate_1(const struct cache_entry *ce,
- 
- 		if (submodule_from_ce(ce)) {
- 			int r = check_submodule_move_head(ce,
--				"HEAD", oid_to_hex(&ce->oid), o);
-+				"HEAD", &ce->oid, o);
- 			if (r)
- 				return o->gently ? -1 :
- 					add_rejected_path(o, error_type, ce->name);
-@@ -1591,8 +1591,7 @@ static int verify_clean_submodule(const char *old_sha1,
- 	if (!submodule_from_ce(ce))
+ 	if (!is_submodule_active(the_repository, path))
  		return 0;
+@@ -1627,6 +1628,13 @@ int submodule_move_head(const char *path,
+ 	if (!sub)
+ 		BUG("could not get submodule information for '%s'", path);
  
--	return check_submodule_move_head(ce, old_sha1,
--					 oid_to_hex(&ce->oid), o);
-+	return check_submodule_move_head(ce, old_sha1, &ce->oid, o);
- }
- 
- static int verify_clean_subdirectory(const struct cache_entry *ce,
-@@ -1836,8 +1835,7 @@ static int merged_entry(const struct cache_entry *ce,
- 
- 		if (submodule_from_ce(ce)) {
- 			int ret = check_submodule_move_head(ce, NULL,
--							    oid_to_hex(&ce->oid),
--							    o);
-+							    &ce->oid, o);
- 			if (ret)
- 				return ret;
- 		}
-@@ -1865,8 +1863,7 @@ static int merged_entry(const struct cache_entry *ce,
- 
- 		if (submodule_from_ce(ce)) {
- 			int ret = check_submodule_move_head(ce, oid_to_hex(&old->oid),
--							    oid_to_hex(&ce->oid),
--							    o);
-+							    &ce->oid, o);
- 			if (ret)
- 				return ret;
- 		}
++	if (repo_submodule_init(&subrepo, the_repository, path) < 0)
++		warning(_("Could not get submodule repository for submodule 's'"), path);
++	else if (new_oid && !lookup_commit(subrepo, new_oid)) {
++		return error(_("Submodule '%s' doesn't have commit '%s'"),
++			     path, oid_to_hex(new_oid));
++	}
++
+ 	if (old_head && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
+ 		/* Check if the submodule has a dirty index. */
+ 		if (submodule_has_dirty_index(sub))
 -- 
 2.19.0.rc2.392.g5ba43deb5a-goog
 
