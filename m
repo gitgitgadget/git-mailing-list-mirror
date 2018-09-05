@@ -2,82 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12AE71F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 18:16:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F8FD1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 18:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727604AbeIEWr3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 18:47:29 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:34808 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727069AbeIEWr3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 18:47:29 -0400
-Received: by mail-ed1-f67.google.com with SMTP id u1-v6so6852862eds.1
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 11:16:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ydf9jp/o8mwXdtYPhDhrPHO6Tj/Pu8d6giRBo5FeWKI=;
-        b=TK/MYZXj45lcfGvWIa0R0zSNmyBQ7AUxH/3oUCTj/3xtlkVHVdxIvzSw7lK1IW+yCV
-         ZF32UehU4aRE0SdcbMiQXpS4/TJmX16IUjnTODQ5FA7Ng9FT3JjTVUmlWJD6tLUZhCTD
-         s9gXRAKtaBuunJWPUSAALyeHuH4yVaJom+mKUkP7cyyRNDshYE1qkJWPhTSdpwERp/9Q
-         nWWl3MzZWrYrcxpX+u4sFv1BQjI6ZNjkzEEiyqg7iFl3v6x9RlfklNKJhjaEMEhvYfOi
-         HE+ZH4xxoaND/fTxSSUwuWK/7WwCJh+KUYO3+kTx3HVG6JEmLELujcamuHDU2Ka0iq6N
-         84yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ydf9jp/o8mwXdtYPhDhrPHO6Tj/Pu8d6giRBo5FeWKI=;
-        b=JpmPM+7JNpBkyD6vYGB9Q7mBGOdLOWQovfY0buwTziE/CaM8dSby9Wmxa5UtE1ATPt
-         svWYtr0XOCqMUzoPgWjF2b6AapQqHWwizgMr9TWLR75YU4vHRkzAAgkR+0P8m22KooAS
-         b6L9EO42ED9EUDIiMQPbzgNzY9TOsXET/zG2tRRDU/4oYYNLs209lDQ1DqOlEftjJO3f
-         CONx+dh6axCsViEzIRGjWncYNPJjtHXK/jUP+LS1YI7jgXhtWtVNnyPKCFOU0UckC/Io
-         8m06xwKX+oPTzREhGePrmRVlp8hvYmELZ7+yVRmHmtsBE+LYE4+pbX3S0qVu7Nf7N0e8
-         BQVg==
-X-Gm-Message-State: APzg51CmrwmwcWJiu/L3JKMYqZNy/mIj28s4wtLNBjaZqo42/zUlglEu
-        jRIGJv4luTBUjkjybIgSoAa7ko+m3djQYLLHgO3PSw==
-X-Google-Smtp-Source: ANB0VdaWyf6YPgdLrhZ+Vr2VZnTujfvvj7xgWcTRZm9AOtYDbnUEjprpSMhxSSeBvgIr6rdjNgXgKYknLvj5rA8BWRs=
-X-Received: by 2002:a50:b603:: with SMTP id b3-v6mr43917634ede.181.1536171368499;
- Wed, 05 Sep 2018 11:16:08 -0700 (PDT)
+        id S1727671AbeIEWtg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 18:49:36 -0400
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:40584 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727069AbeIEWtf (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 18:49:35 -0400
+Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w85IDxfv029768;
+        Wed, 5 Sep 2018 11:18:14 -0700
+Authentication-Results: palantir.com;
+        spf=softfail smtp.mailfrom=newren@gmail.com
+Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
+        by mx0a-00153501.pphosted.com with ESMTP id 2m7rmkfb8m-1;
+        Wed, 05 Sep 2018 11:18:13 -0700
+Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
+        by smtp-transport.yojoe.local (Postfix) with ESMTP id 6E76122FCFA0;
+        Wed,  5 Sep 2018 11:18:13 -0700 (PDT)
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp.yojoe.local (Postfix) with ESMTP id 6623A2CDEA5;
+        Wed,  5 Sep 2018 11:18:13 -0700 (PDT)
+From:   Elijah Newren <newren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, Elijah Newren <newren@gmail.com>
+Subject: [PATCH] rerere: avoid buffer overrun
+Date:   Wed,  5 Sep 2018 10:56:05 -0700
+Message-Id: <20180905175605.12341-1-newren@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc2
 MIME-Version: 1.0
-References: <pull.34.git.gitgitgadget@gmail.com> <37ee24c82bf88611808ec3bb1c36eef439c809db.1536158789.git.gitgitgadget@gmail.com>
-In-Reply-To: <37ee24c82bf88611808ec3bb1c36eef439c809db.1536158789.git.gitgitgadget@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 5 Sep 2018 11:15:57 -0700
-Message-ID: <CAGZ79kY7_RJfJomkpob85A4ubvXJt3BR8njkaozLgi-6ytxB9w@mail.gmail.com>
-Subject: Re: [PATCH 04/11] multi-pack-index: verify packname order
-To:     gitgitgadget@gmail.com
-Cc:     git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-SPF-Result: softfail
+X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-05_10:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=3 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1807170000 definitions=main-1809050182
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 7:46 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The final check we make while loading a multi-pack-index is that
-> the packfile names are in lexicographical order. Make this error
-> be a die() instead.
+check_one_conflict() compares `i` to `active_nr` in two places to avoid
+buffer overruns, but left out an important third location.
 
-What is the advantage of having a die() here?
-Would the midx work under normal operation when
-not sorted correctly?
+Note that this bug probably cannot be triggered in the current codebase.
+Existing merge strategies have tended not to create entries at stage #1
+that do not have a corresponding entry at either stage #2 or stage #3.
+(The bug was found while exploring some ideas for modifying conflict
+resolution.)  However, it is technically possible that an external merge
+strategy could create such entries, so add a check to avoid segfaults.
 
-This sounds like a hack for easy testability in this context,
-so could you clarify why this helps the regular user?
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Originally submitted here:
+  https://public-inbox.org/git/20180806224745.8681-2-newren@gmail.com/
+While I want to push that RFC series more and will get back to it, this
+patch is independently good so I'm submitting separately.
 
-Thanks,
-Stefan
+For some history about how the current code got to where it is today, see=
+:
+  fb70a06da2f1 ("rerere: fix an off-by-one non-bug", 2015-06-28)
+  5eda906b2873 ("rerere: handle conflicts with multiple stage #1 entries"=
+, 2015-07-24)
+
+ rerere.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rerere.c b/rerere.c
+index c7787aa07f..783d4dae2a 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -533,7 +533,7 @@ static int check_one_conflict(int i, int *type)
+ 	}
+=20
+ 	*type =3D PUNTED;
+-	while (ce_stage(active_cache[i]) =3D=3D 1)
++	while (i < active_nr && ce_stage(active_cache[i]) =3D=3D 1)
+ 		i++;
+=20
+ 	/* Only handle regular files with both stages #2 and #3 */
+--=20
+2.19.0.rc2
+
