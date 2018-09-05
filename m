@@ -2,122 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D2031F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 15:49:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44C1C1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 15:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727477AbeIEUTx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 16:19:53 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:54735 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726335AbeIEUTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 16:19:53 -0400
-Received: by mail-it0-f67.google.com with SMTP id f14-v6so10547918ita.4
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 08:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AwgVzAcukgjx0/Vcv+pQ1xObqWcif4xOm88XSC9Hi7I=;
-        b=AMjxihMmJsLxLApmJYg1yzZkBMm2TVYsRFQMA+g6Z3wh+qhWkzNuNHSyt7WLjA1bNn
-         94eDdB1KQx73BuFXeWpStfgAwS8gaQ1HIk/xaFzrbgCs3VkEf6yEgPepWSxOdWMFoMzh
-         1v5+lzUimus8E4joUr3Cm2gtehyO1GfPOT+8Cg2qrRopTN2+CczZJOzK5DbcfR6l47dg
-         gVGxPyEUuAhGKvX0BOlc4eoPbZD9CNaGcMSLESW4IIqwFcgaf3uYNfibihdbvl+SZcw7
-         fCDl+l9Ky5Q+aEVgh1jUhq5kSekViHVeQ/dljdOEWEyKOH6m2MwRNPgUE43sgUWA6hw/
-         gHvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AwgVzAcukgjx0/Vcv+pQ1xObqWcif4xOm88XSC9Hi7I=;
-        b=aBMFVcoe1/tZC+RifdaFqKW5kJUJE/pAX6yiOLWK+zZWBYabrcwhPULNs+M9jhcuQv
-         VC3uz2LtsFkrvECFQUhmfFiiLIJnyhZaYHcjrPpoEnKwTXl2aJ0fMCrBgG/8OxE3phga
-         AN+apAYsJiLooBL+uWH/j04wMYJRiEwaQB6hM4u1KFQIFxzcHq1Cb4KdXGZeMEn+hPvA
-         DHiu4CFHQOJ+QrqFPdKJcdVVQPBgHylQsy2M/BdbcMmzt+JiTJU1pSATNfl1zROcKvuG
-         Jd0O4w1FQ42mzNks3BgwdPJo2nCvoRF01d9XouRd6F/iWOF/BWFPO8fZYvGs5VlQ5vL3
-         NcLQ==
-X-Gm-Message-State: APzg51B6hxKydjkfl/yfQa/QW4ERSV/MO+El4zDkE+PhPCNSla4jeTj7
-        HPneE8/M80Ps0SN6uxeNYiIk6OPQoyo2veJ+WWw=
-X-Google-Smtp-Source: ANB0VdY1oACs+fejBDliYzrJb/VAiQ8+XvmwP8s8koB9MONNA02cnO7hctLQwf0hE3piMA+cGJsHhSqxwUvNgoZqshg=
-X-Received: by 2002:a02:b006:: with SMTP id p6-v6mr27305168jah.97.1536162546571;
- Wed, 05 Sep 2018 08:49:06 -0700 (PDT)
+        id S1726944AbeIEUW2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 16:22:28 -0400
+Received: from siwi.pair.com ([209.68.5.199]:32445 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726046AbeIEUW2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 16:22:28 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 247933F40D8;
+        Wed,  5 Sep 2018 11:51:41 -0400 (EDT)
+Received: from [10.160.98.162] (unknown [167.220.148.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id DAC523F40C7;
+        Wed,  5 Sep 2018 11:51:40 -0400 (EDT)
+Subject: Re: [PATCH 1/8] trace2: create new combined trace facility
+To:     Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <pull.29.git.gitgitgadget@gmail.com>
+ <82885700379efe6d6a83629cac4d943b99b393bf.1535734192.git.gitgitgadget@gmail.com>
+ <CAGZ79kbUYDAKi-K2uHpkffPjMxGYtH=QUMhvfq4HTc5+a7-eBA@mail.gmail.com>
+ <xmqqzhww6gl8.fsf@gitster-ct.c.googlers.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <eb77f46b-8d04-a1c7-ae31-7ea5e2456cfd@jeffhostetler.com>
+Date:   Wed, 5 Sep 2018 11:51:40 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <20180905085427.4099-1-timschumi@gmx.de>
-In-Reply-To: <20180905085427.4099-1-timschumi@gmx.de>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Sep 2018 17:48:40 +0200
-Message-ID: <CACsJy8BLEtBWyAuRBphv_PVisKao0YaBewKJXECEuCVzvk9qXg@mail.gmail.com>
-Subject: Re: [RFC PATCH v2] Allow aliases that include other aliases
-To:     timschumi@gmx.de
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <xmqqzhww6gl8.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 10:56 AM Tim Schumacher <timschumi@gmx.de> wrote:
->
-> Aliases can only contain non-alias git commands and their
-> arguments, not other user-defined aliases. Resolving further
-> (nested) aliases is prevented by breaking the loop after the
-> first alias was processed. Git then fails with a command-not-found
-> error.
->
-> Allow resolving nested aliases by not breaking the loop in
-> run_argv() after the first alias was processed. Instead, continue
-> incrementing `done_alias` until `handle_alias()` fails, which means that
-> there are no further aliases that can be processed. Prevent looping
-> aliases by storing substituted commands in `cmd_list` and checking if
-> a command has been substituted previously.
-> ---
->
-> This is what I've come up with to prevent looping aliases. I'm not too
-> happy with the number of indentations needed, but this seemed to be the
-> easiest way to search an array for a value.
 
-You can just make all the new code a separate function, which reduces
-indentation.
 
-There's another thing I wanted (but probably a wrong thing to want):
-if I define alias 'foo' in ~/.gitconfig, then I'd like to modify it in
-some project by redefining it as alias.foo='foo --something' in
-$GIT_DIR/config. This results in alias loop, but the loop is broken by
-looking up 'foo' from a higher level config file instead.
+On 9/4/2018 6:30 PM, Junio C Hamano wrote:
+> Stefan Beller <sbeller@google.com> writes:
+> 
+>>> The API defines both fixed-field and printf-style functions.
+>>>
+>>> The trace2 performance tracing includes thread-specific function
+>>> nesting and timings.
+>>
+>> So this only adds the new API, and we need to merge the TRACE
+>> into the TRACE2 later?
+> 
+> If this is a rhetorical question implying that it would be best if
+> the existing trace() were rewritten to be built on top of trace2()
+> while building this series, especially before adding new callsites
+> that directly use trace2(), I may share that feeling.  I haven't
+> studied this new round deeply enough to see how realistic it would
+> be, though.
+> 
+> 
 
-This is not easy to do, and as I mentioned, I'm not even sure if it's
-a sane thing to do.
+I wanted to come up with a unified API that we liked and was
+sufficient to handle the default-key, performance-key,
+the new event-key (currently supporting JSON output), and any
+other formats/variants that we want (protobufs, syslog, etc).
 
-> +               /* Increase the array size and add the current
-> +                * command to it.
-> +                */
+And hopefully get some agreement on it and see what else we want
+from it.
 
-I think this is pretty clear from the code, you don't need to add a
-comment to explain how the next few lines work. Same comment for the
-next comment block.
+And then look at converting the trace_printf() and trace_performance()
+calls to trace2.  Clearly, I could just replace the existing printf
+style calls to trace2_printf's, but I thought it would be better to
+look at them and promote them to higher-level functions.  For example,
+the trace_argv_printf() calls are generally used to dump the command
+line arguments for the current process or spawned child processes.
+I have trace2_start() and trace2_child_start() that captures the
+argv and additional information about it.  (The "why" if you will.)
+So the trace_argv_* forms can go away.
 
-> +               cmd_list_alloc += strlen(*argv[0]) + 1;
-> +               REALLOC_ARRAY(cmd_list, cmd_list_alloc);
-> +               cmd_list[done_alias] = *argv[0];
-> +
-> +               /* Search the array for occurrences of that command,
-> +                * abort if something has been found.
-> +                */
-> +               for (int i = 0; i < done_alias; i++) {
-> +                       if (!strcmp(cmd_list[i], *argv[0])) {
-> +                               die("loop alias: %s is called twice",
+Likewise, all of the trace_performance() and trace_performance_since()
+can be converted to trace2_region_enter/_leave calls.  And those forms
+can be removed from trace.[ch].
 
-Please wrap the string in _() so that it can be translated in
-different languages.
+The net-net is that trace.[ch] shrinks in a short sequence of commits
+on top of my initial trace2 commit in a reroll of this patch series.
+(and replacing some of the demonstration commits in V1)
 
-> +                                   cmd_list[done_alias]);
-> +                       }
-> +               }
-> +
--- 
-Duy
+Then I'll address the trace_printf_key() forms, since they write
+to alternate stream.
+
+Then I can delete trace.[ch].  And we can consider renaming
+trace2_* functions and/or GIT_TR2_* env vars if we want.
+
+I wanted to avoid rewriting trace.[ch] just to delete them later
+in the same patch series.
+
+Jeff
