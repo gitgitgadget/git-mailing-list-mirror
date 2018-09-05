@@ -2,134 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 394CC1F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 17:03:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 248BA1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 17:12:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727364AbeIEVeQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 17:34:16 -0400
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:46084 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726335AbeIEVeQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Sep 2018 17:34:16 -0400
-Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.22/8.16.0.22) with SMTP id w85H2Yh0010694;
-        Wed, 5 Sep 2018 10:03:11 -0700
-Authentication-Results: palantir.com;
-        spf=softfail smtp.mailfrom=newren@gmail.com
-Received: from smtp-transport.yojoe.local (mxw3.palantir.com [66.70.54.23] (may be forged))
-        by mx0a-00153501.pphosted.com with ESMTP id 2m7qnmqd2a-1;
-        Wed, 05 Sep 2018 10:03:10 -0700
-Received: from mxw1.palantir.com (new-smtp.yojoe.local [172.19.0.45])
-        by smtp-transport.yojoe.local (Postfix) with ESMTP id A3F8622E02A0;
-        Wed,  5 Sep 2018 10:03:10 -0700 (PDT)
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp.yojoe.local (Postfix) with ESMTP id 0F8F42CDEA7;
-        Wed,  5 Sep 2018 10:03:10 -0700 (PDT)
-From:   Elijah Newren <newren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] merge-recursive: remove superfluous semicolon
-Date:   Wed,  5 Sep 2018 10:03:07 -0700
-Message-Id: <20180905170308.32017-1-newren@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc2.2.g1aedc61e22
-In-Reply-To: <CACsJy8Cf5+3+6yDwe4Y4wYLze4Y6naW-pj134KTpXM+wyWbFVQ@mail.gmail.com>
-References: <CACsJy8Cf5+3+6yDwe4Y4wYLze4Y6naW-pj134KTpXM+wyWbFVQ@mail.gmail.com>
+        id S1727257AbeIEVnz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 17:43:55 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:55513 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726046AbeIEVny (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 17:43:54 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f21-v6so8742041wmc.5
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 10:12:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zZtqlkkHJ9vbL7IgKRkw+07YN7/OJanNHr/v30IoIn4=;
+        b=pM0l8SZOMsWbl6iwHuIW8LxFxf+IXB4buJSDLzxKXNaDf4cmubWA70WliZKLzf8+dQ
+         dckbBrSowdaJZLBzmmWeJvmxdezc4IozhDaDWvcY9jk1fvMr7aNX5l2A9pTd9b8yxOMB
+         dPqKoaempfioqXdvo2xEjERkSubW4BSQD/w8QQAT4old5ISLDTdlGZmpTSnm+N8ABkgZ
+         BEK986awjk1EZs4ve8Ty3zHoL+/iXFDLiBDe0upCsYp5YmxQ3inOotOQ5gehirzydUAH
+         vJdw7vEu+f3bk5eogs9aPf7pau43Nl7kqeHCBNtM9te6A+tH+uNHTvRRMX95LHkCZ7Hs
+         j5Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zZtqlkkHJ9vbL7IgKRkw+07YN7/OJanNHr/v30IoIn4=;
+        b=sPHFXiK+P9t1acUEFtDFwRCbkZRH3UrfLK1ITh2DhyeBkdT2YNmaYXgAYiOMSg+wDK
+         TcFX1kwoaefiX4462dbCOjV8aB1hReCnYaryqCDw9BLY0Nu2Dwm74WPwbVY1YiSeY4Fi
+         Gvbp5ROKw5Zwbr9hKff1fz8xRklzZjIML30ryb+dPGcu+MW9Hmlzl05PnBKuXAd1XZOO
+         YOKulNcvgV+de25Xqv+YHDBxh7whXdxxQ99zPh6lGn3xH0gDgbJjXySuChEV7USU3Jrq
+         00KgKm7RJIjzclmoEx6zqveKBbEI/ovFXcRxGXszXJ/b42Rq493UKZiXvdx77eGNYfJb
+         EsUQ==
+X-Gm-Message-State: APzg51CcqrqpfVotGNk1eiijpqSpUBd2qZYlFkaf4AtHpyjzflzkvCPl
+        yaOrAaKAfbDgmKTEDAl1Kng=
+X-Google-Smtp-Source: ANB0VdaNbFVC0zXxsgeiDDyonjhH4V2+KeQrFTXWCkYlDbM0dylgzG3Yaz2kmpP6Wg3Y5RqurqFglA==
+X-Received: by 2002:a1c:b707:: with SMTP id h7-v6mr822550wmf.91.1536167567123;
+        Wed, 05 Sep 2018 10:12:47 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w10-v6sm2805249wrp.31.2018.09.05.10.12.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 10:12:46 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tim Schumacher <timschumi@gmx.de>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [RFC PATCH v2] Allow aliases that include other aliases
+References: <20180905085427.4099-1-timschumi@gmx.de>
+Date:   Wed, 05 Sep 2018 10:12:45 -0700
+In-Reply-To: <20180905085427.4099-1-timschumi@gmx.de> (Tim Schumacher's
+        message of "Wed, 5 Sep 2018 10:54:27 +0200")
+Message-ID: <xmqqlg8f50mq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-SPF-Result: softfail
-X-Proofpoint-SPF-Record: v=spf1 redirect=_spf.google.com
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-09-05_10:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1807170000 definitions=main-1809050171
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 9:55 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Sep 5, 2018 at 6:49 PM Elijah Newren <newren@gmail.com> wrote:
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
-> > Once I saw it, I couldn't unsee it, and it quickly started getting on=
- my
-> > nerves...
->
-> Bad Elijah! Should have grepped and fixed all three ;-)
->
-> $ git grep ';;$' -- '*.c'
-> builtin/receive-pack.c: hmac_sha1(sha1, buf.buf, buf.len,
-> cert_nonce_seed, strlen(cert_nonce_seed));;
-> merge-recursive.c:      struct dir_rename_entry *entry =3D NULL;;
-> remote-curl.c:          options.filter =3D xstrdup(value);;
+Tim Schumacher <timschumi@gmx.de> writes:
 
-Whoops, indeed.  I didn't think about the fact that the same problem
-might appear in some other file.  Anyway, here's the extended fix.
+> @@ -691,17 +693,34 @@ static int run_argv(int *argcp, const char ***argv)
+>  		/* .. then try the external ones */
+>  		execv_dashed_external(*argv);
+>  
+> +		/* Increase the array size and add the current
+> +		 * command to it.
+> +		 */
+> +		cmd_list_alloc += strlen(*argv[0]) + 1;
+> +		REALLOC_ARRAY(cmd_list, cmd_list_alloc);
+> +		cmd_list[done_alias] = *argv[0];
+> +
+> +		/* Search the array for occurrences of that command,
+> +		 * abort if something has been found.
+> +		 */
+> +		for (int i = 0; i < done_alias; i++) {
+> +			if (!strcmp(cmd_list[i], *argv[0])) {
+> +				die("loop alias: %s is called twice",
+> +				    cmd_list[done_alias]);
+> +			}
+> +		}
+> +
 
--- 8< --
-Subject: [PATCH] Remove superfluous trailing semicolons
+Wouldn't all of the above become three or four lines that is so
+clear that there is no need for any comment if you used string-list,
+perhaps?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- builtin/receive-pack.c | 2 +-
- merge-recursive.c      | 2 +-
- remote-curl.c          | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+>  		/* It could be an alias -- this works around the insanity
+>  		 * of overriding "git log" with "git show" by having
+>  		 * alias.log = show
+>  		 */
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c17ce94e12..a8423a940f 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -465,7 +465,7 @@ static char *prepare_push_cert_nonce(const char *path=
-, timestamp_t stamp)
- 	unsigned char sha1[GIT_SHA1_RAWSZ];
-=20
- 	strbuf_addf(&buf, "%s:%"PRItime, path, stamp);
--	hmac_sha1(sha1, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_se=
-ed));;
-+	hmac_sha1(sha1, buf.buf, buf.len, cert_nonce_seed, strlen(cert_nonce_se=
-ed));
- 	strbuf_release(&buf);
-=20
- 	/* RFC 2104 5. HMAC-SHA1-80 */
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e5243dbc54..1b5c255918 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2239,7 +2239,7 @@ static struct dir_rename_entry *check_dir_renamed(c=
-onst char *path,
- {
- 	char *temp =3D xstrdup(path);
- 	char *end;
--	struct dir_rename_entry *entry =3D NULL;;
-+	struct dir_rename_entry *entry =3D NULL;
-=20
- 	while ((end =3D strrchr(temp, '/'))) {
- 		*end =3D '\0';
-diff --git a/remote-curl.c b/remote-curl.c
-index fb28309e85..762a55a75f 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -178,7 +178,7 @@ static int set_option(const char *name, const char *v=
-alue)
- 		options.no_dependents =3D 1;
- 		return 0;
- 	} else if (!strcmp(name, "filter")) {
--		options.filter =3D xstrdup(value);;
-+		options.filter =3D xstrdup(value);
- 		return 0;
- 	} else {
- 		return 1 /* unsupported */;
---=20
-2.19.0.rc2.2.g1aedc61e22
+	/*
+	 * Style: our multi-line comment begins with and ends with
+	 * slash-asterisk and asterisk-slash on their own lines.
+	 */
 
+> -		if (done_alias)
+> -			break;
+>  		if (!handle_alias(argcp, argv))
+>  			break;
+> -		done_alias = 1;
+> +		done_alias++;
+>  	}
+>  
+> +	free(cmd_list);
+> +
+>  	return done_alias;
+>  }
