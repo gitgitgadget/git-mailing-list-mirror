@@ -2,105 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A57601F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 23:20:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0446A1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 23:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727626AbeIFDw1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 23:52:27 -0400
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:44414 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727518AbeIFDw0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 23:52:26 -0400
-Received: by mail-pl1-f201.google.com with SMTP id 2-v6so4477989plc.11
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 16:20:00 -0700 (PDT)
+        id S1725935AbeIFEEf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 00:04:35 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39715 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725741AbeIFEEf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 00:04:35 -0400
+Received: by mail-pf1-f196.google.com with SMTP id j8-v6so4260798pff.6
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 16:32:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=yKxZNwa02jGhfFbmMMW1MO+/O/e0b3XmhgKe8R9hg5o=;
-        b=uOculedezVshN6CvgCjMlU6e8sIi1IhUKtwl4sj2L1ajEoeiyH15fdmfeUFrPSVSaV
-         9JdioI2qXvPyBPPwhGxCi+uXPe3AotSeoYaCwdNQGWm6uaeeFK/0jdmhk3HYbkVC/MQ9
-         KJvJNikd+7AZYkFssb4Hw8SDqLYQUSNp9zNoJU18QKMgW8uBrWK7wzFnhdzLIE3LinTg
-         nhh93c6l+KOgH0tzA5kI3+6q9NXavXupGqOa92BVRanFFvtbvIS48rWuy8QA9+KGXFbj
-         rUi/t5tfvTb+Tv4S2yn+0rjocuhhnxjCBt7VcwLo2o/LozQjMFOBJfka00VpgNt2cWyU
-         UJlg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ON4uDRUhN1dzCqJThbv3UPzhgpWGbW0vl6o+s5CAmKw=;
+        b=ItNxTSnkxvrNO99otgnFdzc4tTprJUTvMkYCio+N3NF1lSdhDrPsG+5Wr8Nwh0nztC
+         FMZzVsVb1w0ToOb0wV7pisvBswEs01PCdLnt4RPPrJqZA4V2nIGw7P8o229tufJ0Z+2t
+         NM1niT+g/RI9X1Mi4sRMbQJ6+EVBjXjyr8O/eapHngBUw438lvH55ETLKynBgp43GlZ6
+         57RmHELWRfYSOScWcdRhHtsDqVvEC6p9IUVMUNpzQC9sgqDOrkKrkBPiu+Tq9WUUcq/t
+         kt06P1lBamYt+8MSAcEThIZw0f+SkpYfWASwMy6DiI3ZwOFj/quA9wWQlZhurICmi5uF
+         Wvtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=yKxZNwa02jGhfFbmMMW1MO+/O/e0b3XmhgKe8R9hg5o=;
-        b=VPRCzkBS6VDtLtNXWQ6Pu9L/QETlKKcuMBKkvZYpsBPptrgoyMrqeWcOBCt03LuY4M
-         cgq3AIrXQ7oeUYa1PhCb89pevvMd73SzWPCQLmtY78VQiZAEcvREzPWaShqF4294axJa
-         0AhIyM1FL8sV3Mcj2yv7xOT6YAEDMmMOnTf/2KKIjjsemAeVgHOGJqifG6HZXvv7+KIa
-         AGC3KL0+2s+Iz7AwmI5d05Dl7ohytjjwa0DwgoDVwamA4STGGxfZ7VXznRnmNszlVnZV
-         ol2QInlVIjCuvtw3JDmw2Cgq1qUEgPEszFZ9ogcCfpyMozmB/E0YdQq/ya5dvLNplVUp
-         ewLg==
-X-Gm-Message-State: APzg51AxWJEs1mUKZFf0Na6it+zHtvnWaJO/WcDGJ70nMSzQ5B4rTnv+
-        4FMJZQrVsijtP4iDTcOGGIY1Pxx9QswEWeKLmuwlcNFWrXf1/7M0kMknSMCpZ/LTy5TSKbVNFS/
-        yh+eYDpBJPBCuRAW3p9twcBkAtLDb4aAVZq6RztLTyJbLNcAzMGnOMXue1UHc
-X-Google-Smtp-Source: ANB0VdbG9De9ly9hO9evmdCB0U9+fuCi+wCDCE3GlO6zbZFBPmnsAHDnQL5Mlu3tlPUpZRDBp8zqHJrUwioD
-X-Received: by 2002:a63:5d26:: with SMTP id r38-v6mr810pgb.154.1536189600141;
- Wed, 05 Sep 2018 16:20:00 -0700 (PDT)
-Date:   Wed,  5 Sep 2018 16:19:52 -0700
-In-Reply-To: <20180905231952.28145-1-sbeller@google.com>
-Message-Id: <20180905231952.28145-2-sbeller@google.com>
-Mime-Version: 1.0
-References: <20180905231952.28145-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH 2/2] submodule.c: warn about missing submodule commit in
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ON4uDRUhN1dzCqJThbv3UPzhgpWGbW0vl6o+s5CAmKw=;
+        b=Gx/V3igMXSIk8iC3/xPk103e02nN6f760bo4v0NM4NNYTr7xd2bhsOg4eijvuAtD15
+         gMERHu+aWHgUFu7B+WFsTX/1+RFD2Ig9TXZr3s/rwehf8vEJYjbd/mo7zDRLSQ31aTmx
+         9e7GawpgXQJHqGAVyyjLvZ//MwyKtUhn0glJeWCzC84sPJAMTEtcI9bG3R3VVN/KjPTB
+         Ymt6Xz1eABo/4YZcftvRzMwQB/pch7tPgmoN+wLrPHu4zwNVeo8qbBnT3Ry+9Q2k35lr
+         bj7Q9ZAfr0tNMdqzWACXuUCSHt8FxbE0YbReKn+k4RcjNnElSfLxFDLDcp6jOp9cHnkO
+         KG4A==
+X-Gm-Message-State: APzg51ABAaPuXJ85rIbMSeUB8+gwmh7jZ/kLafZOlp+FgMTnTspkPM96
+        hKfFXmUDyhxFfgYYfDztao5ArHCx
+X-Google-Smtp-Source: ANB0VdZieU2hV8MehiRHia12lms79aAU4OX/mCD7XIPm1S3uVBIF49Hn3gsvdr5g43+efS72WpWrnw==
+X-Received: by 2002:a62:fcd2:: with SMTP id e201-v6mr49360pfh.101.1536190326165;
+        Wed, 05 Sep 2018 16:32:06 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id w72-v6sm6620109pfa.26.2018.09.05.16.32.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Sep 2018 16:32:05 -0700 (PDT)
+Date:   Wed, 5 Sep 2018 16:32:03 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule commit in
  recursive actions
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <20180905233203.GE120842@aiede.svl.corp.google.com>
+References: <20180905231952.28145-1-sbeller@google.com>
+ <20180905231952.28145-2-sbeller@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180905231952.28145-2-sbeller@google.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-By checking if a submodule commit exists before attempting the update
-we can improve the error message from the
-    error(_("Submodule '%s' could not be updated."), path);
-to the new and more specific
-    error(_("Submodule '%s' doesn't have commit '%s'"),
-          path, oid_to_hex(new_oid));
+Hi,
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- submodule.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Stefan Beller wrote:
 
-diff --git a/submodule.c b/submodule.c
-index da2ed8696f5..56104af1c7c 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1605,6 +1605,7 @@ int submodule_move_head(const char *path,
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	const struct submodule *sub;
- 	int *error_code_ptr, error_code;
-+	struct repository subrepo;
- 
- 	if (!is_submodule_active(the_repository, path))
- 		return 0;
-@@ -1627,6 +1628,13 @@ int submodule_move_head(const char *path,
- 	if (!sub)
- 		BUG("could not get submodule information for '%s'", path);
- 
-+	if (repo_submodule_init(&subrepo, the_repository, path) < 0)
-+		warning(_("Could not get submodule repository for submodule 's'"), path);
-+	else if (new_oid && !lookup_commit(subrepo, new_oid)) {
-+		return error(_("Submodule '%s' doesn't have commit '%s'"),
-+			     path, oid_to_hex(new_oid));
-+	}
-+
- 	if (old_head && !(flags & SUBMODULE_MOVE_HEAD_FORCE)) {
- 		/* Check if the submodule has a dirty index. */
- 		if (submodule_has_dirty_index(sub))
--- 
-2.19.0.rc2.392.g5ba43deb5a-goog
+> Subject: submodule.c: warn about missing submodule commit in recursive actions
 
+Nit: the diff already tells me what file the change is in.  What I'd
+be more interested in is the subsystem or what commands this affects.
+Does this affect all --recurse-submodules commands, or just some?
+
+Here, I think it's about common submodule code, so I guess
+'submodule:' would be a fine prefix.
+
+> By checking if a submodule commit exists before attempting the update
+> we can improve the error message from the
+>     error(_("Submodule '%s' could not be updated."), path);
+> to the new and more specific
+>     error(_("Submodule '%s' doesn't have commit '%s'"),
+>           path, oid_to_hex(new_oid));
+
+Maybe it's just me, but I find this formatting where I cannot
+distinguish between a line that was wrapped early and the start of a
+callout hard to read.  Some extra line breaks would help:
+
+  By checking if a submodule commit exists before attempting the update
+  we can improve the error message from the
+
+      error(_("Submodule '%s' could not be updated."), path);
+
+  to the new and more specific
+
+      error(_("Submodule '%s' doesn't have commit '%s'"),
+            path, oid_to_hex(new_oid));
+
+Beyond that, I still don't know what this change does.  Can you give
+an example?  For example, what command would I run before and what bad
+result would I get, and what result does this patch produce instead?
+
+Thanks,
+Jonathan
