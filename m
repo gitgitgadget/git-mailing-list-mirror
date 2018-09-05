@@ -2,123 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFDB61F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 15:27:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70CD41F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 15:35:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbeIET6U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 15:58:20 -0400
-Received: from mail-io0-f193.google.com ([209.85.223.193]:44001 "EHLO
-        mail-io0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726046AbeIET6T (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 15:58:19 -0400
-Received: by mail-io0-f193.google.com with SMTP id y10-v6so6269387ioa.10
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 08:27:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=we0krhThFoxzDMRhzQwrIaFX7CHlB5ypc264biRLrtQ=;
-        b=RouDSJ3Uf4cpWCOo7oBgbKw3wuZv+flsftIilikW5vn9Z0v++qxlOotVopsfQ8sun9
-         4J2mQM+AVSlCYKBEPfyoYn1TrOJZbih7u267smQmmZsw0bOLkpdMTpahIk0/4BMFTPWW
-         56Re0Lnxq2tT5eIsuCLivQ8qnGNgkh5JlSPTwpkrgCwTSg2XZi4sJyu+4v/vT5qNbh+w
-         SIrBZhboDxyd31WKBhKUHwA8kAjVOqI4XrudxVPGPCNEoBl8UwG8PSkkOKjoe7Qh+QgI
-         AcuQiA6d+MMMveoW1R7laW6FjdhvNvwdEq8cOh4sVJWIVpthmCyv7Oeesn4UXBf+tn5O
-         lljg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=we0krhThFoxzDMRhzQwrIaFX7CHlB5ypc264biRLrtQ=;
-        b=Vc26Qx+uXVwCBLLRVg+cp7P8FOPGL4yV2XNGlSNco9UPnoAcz+ApBKNOIvgRbnWNgT
-         V5RIfQeMb/CBcghS9hngTjWkyli01MDcGf0HL+uxQ2iCAOCmaTl3k7XxDIjiXkbFAuYL
-         z4QnIuCUG0+EMKj5WNPHNy8YmqNgTrosGme3HKov8me5YblwhAl1XMJ+Ek3OabqyQxpI
-         oWGpK/y74yyQRjDWgUnX0WmZ2ujZD2Z6fA3FxsMhekmiHjLCJRBLxPn0fKM+NcXS8Wjq
-         gIpc0aQKXBFv+sT4FPvlaHZpWFNQQfVcWndprSceVZkfQcazIWFlUuJIwuHS4CFuSzA1
-         dFiw==
-X-Gm-Message-State: APzg51DxisVmmoqdVYpW8R+GMHb0+r+PxETcI0K1sjhISfXJjVVdtmcP
-        78HS8gyscJruoEbmV4IQS6DrkZ4dmgZW6BmFSg8=
-X-Google-Smtp-Source: ANB0VdaDc77S0TdWhO8wojUNWM54Aq6vDhM/nS7k9J5wsy4MSae5kzaX1c3Vsw1Zgn0TKZEUYSZvPycF/TmIg2/vrPY=
-X-Received: by 2002:a6b:8fd0:: with SMTP id r199-v6mr25961792iod.118.1536161258144;
- Wed, 05 Sep 2018 08:27:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local> <87tvn8c166.fsf@evledraar.gmail.com>
- <20180902050803.GA21324@sigill.intra.peff.net> <20180902071204.GA2868@duynguyen.home>
- <20180902072408.GA18787@sigill.intra.peff.net> <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
- <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
- <20180904163807.GA23572@sigill.intra.peff.net> <20180904233643.GA9156@sigill.intra.peff.net>
-In-Reply-To: <20180904233643.GA9156@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Sep 2018 17:27:11 +0200
-Message-ID: <CACsJy8Ax4S9Sms6TY1dMV8M9-=hakEW8TCqn8yxb73Vbrpy_MQ@mail.gmail.com>
-Subject: Re: [PATCH] reopen_tempfile(): truncate opened file
-To:     Jeff King <peff@peff.net>
+        id S1727100AbeIEUGg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 16:06:36 -0400
+Received: from cloud.peff.net ([104.130.231.41]:39966 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726046AbeIEUGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 16:06:36 -0400
+Received: (qmail 14048 invoked by uid 109); 5 Sep 2018 15:35:54 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Sep 2018 15:35:54 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19503 invoked by uid 111); 5 Sep 2018 15:36:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Sep 2018 11:36:04 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Sep 2018 11:35:52 -0400
+Date:   Wed, 5 Sep 2018 11:35:52 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Van Oostenryck Luc <luc.vanoostenryck@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Kevin Willford <kewillf@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH] reopen_tempfile(): truncate opened file
+Message-ID: <20180905153551.GB24660@sigill.intra.peff.net>
+References: <20180901214157.hxlqmbz3fds7hsdl@ltop.local>
+ <87tvn8c166.fsf@evledraar.gmail.com>
+ <20180902050803.GA21324@sigill.intra.peff.net>
+ <20180902071204.GA2868@duynguyen.home>
+ <20180902072408.GA18787@sigill.intra.peff.net>
+ <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
+ <20180904163807.GA23572@sigill.intra.peff.net>
+ <20180904233643.GA9156@sigill.intra.peff.net>
+ <CACsJy8Ax4S9Sms6TY1dMV8M9-=hakEW8TCqn8yxb73Vbrpy_MQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8Ax4S9Sms6TY1dMV8M9-=hakEW8TCqn8yxb73Vbrpy_MQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 1:36 AM Jeff King <peff@peff.net> wrote:
-> It turned out not to be too bad to write a test. It feels a little like
-> black magic, since I empirically determined a way in which the
-> cache-tree happens to shrink with the current code.
+On Wed, Sep 05, 2018 at 05:27:11PM +0200, Duy Nguyen wrote:
 
-Aha! I attempted to reproduce with a verylongpathname and failed, but
-then I had the main index portion in mind, not cache-tree.
+> > +test_expect_success PERL 'commit -p with shrinking cache-tree' '
+> > +       mkdir -p deep/subdir &&
+> > +       echo content >deep/subdir/file &&
+> > +       git add deep &&
+> > +       git commit -m add &&
+> > +       git rm -r deep &&
+> 
+> OK so I guess at this step, we invalidate some cache-tree blocks, but
+> we write the same blocks down (with "invalid" flag), so pretty much
+> the same size as before.
 
-> diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-> index 7de40141ca..94fcb4a78e 100755
-> --- a/t/t0090-cache-tree.sh
-> +++ b/t/t0090-cache-tree.sh
-> @@ -161,6 +161,24 @@ test_expect_success PERL 'commit --interactive gives cache-tree on partial commi
->         test_cache_tree
->  '
->
-> +test_expect_success PERL 'commit -p with shrinking cache-tree' '
-> +       mkdir -p deep/subdir &&
-> +       echo content >deep/subdir/file &&
-> +       git add deep &&
-> +       git commit -m add &&
-> +       git rm -r deep &&
+I didn't verify exactly what was in the index, but that was my
+understanding, too (well, it's a little smaller because we drop the
+actual index entries, but keep the invalidated cache-tree). I worry a
+little that "rm" might eventually learn to drop those invalidated bits.
+But hopefully finding this commit would lead that person to figure out
+another way to accomplish the same thing, or to decide that carrying the
+test forward isn't worth it.
 
-OK so I guess at this step, we invalidate some cache-tree blocks, but
-we write the same blocks down (with "invalid" flag), so pretty much
-the same size as before.
+> > +       after=$(wc -c <.git/index) &&
+> > +
+> > +       # double check that the index shrank
+> > +       test $before -gt $after &&
+> > +
+> > +       # and that our index was not corrupted
+> > +       git fsck
+> 
+> If the index is not shrunk, we parse remaining rubbish as extensions.
+> If by chance the rubbish extension name is in uppercase, then we
+> ignore (and not flag it as error). But then the chances of the next 4
+> bytes being the "right" extension size is so small that we would end
+> up flagging it as bad extension anyway. So it's good. But if you want
+> to be even stricter (not necessary in my opinion), make sure that
+> stderr is empty.
 
-> +
-> +       before=$(wc -c <.git/index) &&
-> +       git commit -m delete -p &&
+In this case, the size difference is only a few bytes, so the rubbish
+actually ends up in the trailing sha1. The reason I use git-fsck here is
+that it actually verifies the whole sha1 (since normal index reads no
+longer do). In fact, a normal index read won't show any problem for this
+case (since it is _only_ the trailing sha1 which is junk, and we no
+longer verify it on every read).
 
-Then inside this command we recompute cache-tree and throw away the
-invalidated cache-tree blocks for deep and deep/subdir, which shrinks
-the index. Makes sense.
+In the original sparse-dev case, the size of the rubbish is much larger
+(because we deleted a lot more entries), and we do interpret it as a
+bogus extension. But it also triggers here, because the trailing sha1 is
+_also_ wrong.
 
-> +       after=$(wc -c <.git/index) &&
-> +
-> +       # double check that the index shrank
-> +       test $before -gt $after &&
-> +
-> +       # and that our index was not corrupted
-> +       git fsck
+So AFAIK this fsck catches everything and yields a non-zero exit in the
+error case. And it should work for even a single byte of rubbish.
 
-If the index is not shrunk, we parse remaining rubbish as extensions.
-If by chance the rubbish extension name is in uppercase, then we
-ignore (and not flag it as error). But then the chances of the next 4
-bytes being the "right" extension size is so small that we would end
-up flagging it as bad extension anyway. So it's good. But if you want
-to be even stricter (not necessary in my opinion), make sure that
-stderr is empty.
-
-The rest of the patch is obviously correct.
--- 
-Duy
+-Peff
