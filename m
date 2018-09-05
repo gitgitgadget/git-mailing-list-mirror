@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7A411F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 09:14:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CC41A1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 09:50:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728098AbeIENnm (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 09:43:42 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:46559 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726272AbeIENnl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 09:43:41 -0400
-Received: by mail-qk1-f193.google.com with SMTP id j7-v6so4346768qkd.13
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 02:14:25 -0700 (PDT)
+        id S1728221AbeIEOTm (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 10:19:42 -0400
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:33018 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727951AbeIEOTl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 10:19:41 -0400
+Received: by mail-qk1-f194.google.com with SMTP id z78-v6so4430317qka.0
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 02:50:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=VzDehU89nvQmfSrz9z6ohIpU9OXvVpllMRVyCKtglPA=;
-        b=GR0UnMRJEMNGmRiUDVngsI7qzm8OApiI2pyE+e9QqzjlgAIJFoYcz9kOG02KueG7z4
-         f8AdxPnssli4g06U76WO5a4fukCbr0m8aAzh5iSO0e76rHKaDJhfY1VqROYJjn9JXy7z
-         1EcSZy9PHBOZrDoEqlbVUPy5uHsJcC8+h/Z+2QFrQrFodMZAxMjkbJiyK37+Uv7gwWy4
-         iv/lsf/vx6+KgZ06j7hjM93iDkCSX0TxPcoqZHPdcVKq68yARUJsoomiStyoLJcrUsdJ
-         GQeWobbbiKHlaTz+qJK1NkioWYaYPnIK7V/3aSww4e5LpbH0jT1RkAmRsucFxt1pRMXl
-         yYmA==
-X-Gm-Message-State: APzg51DUhuPCczvCsD+nTwMehBeBj2SdLT4z4NqdpdzzoccuIrV4wNSd
-        S9b9dsTQ9EknjahPp2axLGTShbZxgWqHRHv4/Lo=
-X-Google-Smtp-Source: ANB0VdYhZJtgdteuri5tI+ic1QHTgnWEEbCAqVIn1kol4Jl1JCPUeAfh3WZ7jcVQVdie2ZWS6vbPqemI533/Vnvo/cs=
-X-Received: by 2002:a37:1be4:: with SMTP id m97-v6mr31918220qkh.12.1536138864719;
- Wed, 05 Sep 2018 02:14:24 -0700 (PDT)
+        bh=oRJyWjvCd0Htt+2aVSumfl4/aYfP9elvZ731qz1XPPg=;
+        b=P6DwesJTgaMlkxDJcsKC2QUNlF/uqWiXJPVNv/JSWA9aJVHyI+/M0L2a6zEOUSg0f+
+         HhsdUdr98MUNopFm5D8YjimYZqyD6guU+8CpC6OQGeOjinjMTiio4elz3j+rURji9Hss
+         9DnqFVk7Lpp4mfcQ+HyULz/l2q3r8F+dGRzKbqM88YoBULKONNA3iR7NMdKUIYBgW3gK
+         e0EQAtAxjtwh+HUUJt2jHZBCsbpQvSmZdT9z+8DAOC8dh6WlcmjGfAn8kX6xHoP9B5vX
+         R5rYdB2epKwAjHK0SKq5qtR0bPesuStz32gYEUvMwEW7MjdOia5driHh5Ew0zoniFTkm
+         Hmbw==
+X-Gm-Message-State: APzg51ALIpOcJvOahAdHJbl4iX61OgPNkHF6dJ57h3SEuxAxML4nTXGU
+        Wd3cTkfse5VhUaXWDAvnDHHL0EDtUOJ1SqDtqgg=
+X-Google-Smtp-Source: ANB0VdYkw9vSXXk5n6X2nJAv5AVSdMst0c56Nby5Ytm6cTs+7B7ROju8t3DLufytaoZVU7RwWCfnYItxatQIh10WArE=
+X-Received: by 2002:a37:1be4:: with SMTP id m97-v6mr31998258qkh.12.1536141015203;
+ Wed, 05 Sep 2018 02:50:15 -0700 (PDT)
 MIME-Version: 1.0
 References: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
 In-Reply-To: <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 5 Sep 2018 05:14:13 -0400
-Message-ID: <CAPig+cTQLED6P2AWrxU=pvNc6WzO-5YVsPNh3fg28LdZqU15AA@mail.gmail.com>
+Date:   Wed, 5 Sep 2018 05:50:04 -0400
+Message-ID: <CAPig+cSETNc5nRxf_zQq6JE8zNyUvKmdPWNsm6=NMSOXm2DV=A@mail.gmail.com>
 Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git List <git@vger.kernel.org>
@@ -63,20 +63,9 @@ On Tue, Sep 4, 2018 at 6:36 PM Junio C Hamano <gitster@pobox.com> wrote:
 >  Various subcommands of "git worktree" take '--force' but did not
 >  behave sensibly, which has been corrected.
 
-This description mischaracterizes what these changes are about. The
-primary intent of this series is to fix a bug in which the same path
-can be registered under multiple worktree entries.
+This series is missing a patch[1] from Peff which he wanted placed at
+the end of the series. It was probably overlooked since he embedded
+it as a reply in that thread rather than sending it as a standalone
+patch.
 
-As for --force, it worked perfectly fine for the couple git-worktree
-subcommands which accepted it. The patches in this series dealing
-with --force are merely extending it to other subcommands or to other
-use-cases.
-
-So, perhaps rewrite this description like this:
-
-    Fix a bug in which the same path could be registered under
-    multiple worktree entries if the patch was missing (for instance,
-    was removed manually).
-
-    Also, as a convenience, expand the number of cases in which
-    --force is applicable.
+[1]: https://public-inbox.org/git/20180830075431.GF11944@sigill.intra.peff.net/
