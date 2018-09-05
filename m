@@ -2,101 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D56531F404
-	for <e@80x24.org>; Wed,  5 Sep 2018 16:55:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7252E1F404
+	for <e@80x24.org>; Wed,  5 Sep 2018 16:56:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727592AbeIEV0Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Sep 2018 17:26:24 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35666 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727145AbeIEV0Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Sep 2018 17:26:24 -0400
-Received: by mail-it0-f66.google.com with SMTP id 139-v6so10364719itf.0
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 09:55:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ai5vfZYwn0pHoqd8JptR+bEqjMC0eZrmo6aKPOnfAD8=;
-        b=lifpTzD8hsBtWuxc+OaqEvc5izXACcgrI2oqGXL83pZ7/W0gZW3Wfs65yl8OyA4eMZ
-         4HJYfXREWzo97NbS9fojcSMJ/QnjuTHMQqjmqV2Xs2/hszd6kIRM4qfgDRSO8N47NN0S
-         lwTbtMDiP3dSzAZ7+RXfQ6ABoOaawj7DUz842AU8rtKqVmDRcHbZfwfoL6EqfGFinZGn
-         YbnqzIAI2B/SeXMjtoeXZ0clzM0qCuOk5gMvcs6I1krlL1fUQmftPZCT5buYUTLHVbbg
-         6wlFVnFllkzrqnz+IZpBBCyifMuA9YK0FLu3fY6THB3Nz+ZZpdEZVOu6pK+d7kWElSM8
-         bwBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ai5vfZYwn0pHoqd8JptR+bEqjMC0eZrmo6aKPOnfAD8=;
-        b=L0Lfp45celckjgtRQrNK1Rd/aAmwHNpf01xhvLrdff2CRa/KcooJnK8BKi2rZ3++KE
-         x0vWNvlxt6vvDj/H72kkUIbst9alBjVb+DibeWmxoA+ippVI93+nZhQIQQF7uBjOgkjs
-         sQQlxT0sh4EBY2aT65+L+8ah9K8hnARBL5/czXDg+rl648NJ5SwUVNtEzjLWlwwXAje/
-         slosjD9g5o/z4cfkS6x0xGjlBobjjcZJwqZ4xJtcX8wFG/HEcTI6MAhlVqqpFyWNxjNj
-         55o798KFlSFHFjYRaqICvakdg80SIjN6EyaU0LFIb70xLGu0JBqskVyf5viKonZ76gzn
-         pxbw==
-X-Gm-Message-State: APzg51B4stYdgYaNZv/aEdU7lZFffzyv9/NBRuLV18lP79HqjqUHqQrS
-        +XvODURT5BYpE/Xxr4QP/R75xm+5z2Oxkq+uufs=
-X-Google-Smtp-Source: ANB0VdYssyD1ADw+sYKHuJBRMHoheiimD3FLsjOz6NaOF1SEqvkdPssTQEnC+3WmvspxiQkii4IOB1In5CJkdC5ZmCE=
-X-Received: by 2002:a24:328d:: with SMTP id j135-v6mr1138935ita.5.1536166521794;
- Wed, 05 Sep 2018 09:55:21 -0700 (PDT)
+        id S1727364AbeIEV1a (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Sep 2018 17:27:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:40112 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726335AbeIEV1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Sep 2018 17:27:30 -0400
+Received: (qmail 17641 invoked by uid 109); 5 Sep 2018 16:56:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Sep 2018 16:56:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 20529 invoked by uid 111); 5 Sep 2018 16:56:39 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Sep 2018 12:56:39 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Sep 2018 12:56:26 -0400
+Date:   Wed, 5 Sep 2018 12:56:26 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Van Oostenryck Luc <luc.vanoostenryck@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Kevin Willford <kewillf@microsoft.com>
+Subject: Re: [PATCH] reopen_tempfile(): truncate opened file
+Message-ID: <20180905165625.GA31930@sigill.intra.peff.net>
+References: <20180902072408.GA18787@sigill.intra.peff.net>
+ <xmqq36upcl1s.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8AuWKxAdETaqYmcSY2VeLeWFyjnSYrK4GJeyG5ecv3OcA@mail.gmail.com>
+ <20180904163807.GA23572@sigill.intra.peff.net>
+ <20180904233643.GA9156@sigill.intra.peff.net>
+ <CACsJy8Ax4S9Sms6TY1dMV8M9-=hakEW8TCqn8yxb73Vbrpy_MQ@mail.gmail.com>
+ <20180905153551.GB24660@sigill.intra.peff.net>
+ <CACsJy8BGxqzjXUprnhSU7jQDjzgDnY4x+SMsnOVb4Uho4dJt0g@mail.gmail.com>
+ <20180905154827.GC24660@sigill.intra.peff.net>
+ <xmqqva7j51gt.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180905164753.22711-1-newren@gmail.com>
-In-Reply-To: <20180905164753.22711-1-newren@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Sep 2018 18:54:55 +0200
-Message-ID: <CACsJy8Cf5+3+6yDwe4Y4wYLze4Y6naW-pj134KTpXM+wyWbFVQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-recursive: remove superfluous semicolon
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqva7j51gt.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 6:49 PM Elijah Newren <newren@gmail.com> wrote:
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> Once I saw it, I couldn't unsee it, and it quickly started getting on my
-> nerves...
+On Wed, Sep 05, 2018 at 09:54:42AM -0700, Junio C Hamano wrote:
 
-Bad Elijah! Should have grepped and fixed all three ;-)
+> Jeff King <peff@peff.net> writes:
+> 
+> >> > So AFAIK this fsck catches everything and yields a non-zero exit in the
+> >> > error case. And it should work for even a single byte of rubbish.
+> >> 
+> >> Yes you're right. I forgot about the trailing hash.
+> >
+> > Thanks, I was worried that I was missing something. ;)
+> >
+> > Maybe it is worth making that final comment:
+> >
+> >   # and that the trailing hash in the index was not corrupted,
+> >   # which should catch even a single byte of cruft
+> >   git fsck
+> 
+> Perhaps.  I do not mind seeing an additional comment to explain why
+> this requires PERL (it wasn't immediately obvious as I never use
+> 'commit -p' myself), either.
 
-$ git grep ';;$' -- '*.c'
-builtin/receive-pack.c: hmac_sha1(sha1, buf.buf, buf.len,
-cert_nonce_seed, strlen(cert_nonce_seed));;
-merge-recursive.c:      struct dir_rename_entry *entry = NULL;;
-remote-curl.c:          options.filter = xstrdup(value);;
+I thought the PERL prereq in the existing "-p" test of the commit header
+would explain it. ;)
 
+Do you prefer an in-code comment, or one in the commit message?
 
->
->  merge-recursive.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index e5243dbc54..1b5c255918 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -2239,7 +2239,7 @@ static struct dir_rename_entry *check_dir_renamed(const char *path,
->  {
->         char *temp = xstrdup(path);
->         char *end;
-> -       struct dir_rename_entry *entry = NULL;;
-> +       struct dir_rename_entry *entry = NULL;
->
->         while ((end = strrchr(temp, '/'))) {
->                 *end = '\0';
-> --
-> 2.19.0.rc2.1.g7fc77f67e1
->
-
-
--- 
-Duy
+-Peff
