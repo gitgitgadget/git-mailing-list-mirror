@@ -2,99 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1CEA1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 06:10:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2CCF31F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 06:19:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727530AbeIFKoa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 06:44:30 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:33995 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbeIFKoa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 06:44:30 -0400
-Received: by mail-pl1-f194.google.com with SMTP id f6-v6so4467292plo.1
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 23:10:41 -0700 (PDT)
+        id S1726443AbeIFKxL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 06:53:11 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:33687 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725957AbeIFKxL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 06:53:11 -0400
+Received: by mail-pf1-f193.google.com with SMTP id d4-v6so4744791pfn.0
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 23:19:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=NiC39RiNGz1/opldl1pLx6xcyXjxb4Mk/J29n38YYTY=;
-        b=t0An8RCWgFQvXZFYDiqdrqPtAtp10eMMP4fYyODtjZ98e6WUCK1xR4oohCN66+weS/
-         Xsn8YEssTOuX6/9J+jdeE8xOdaEJuyh4LReFgOb06NVZ8VzzG8DRL1qt3bDbNYYJZMCd
-         RU3azQWRQjHjFmnu3dViHnsm7QCQBzxOlT9sTAkUc3le6XXz3VosLfX8Ok2u4RfJoz5D
-         IX1tU1XBWDK4hwCLEv4BRZ1FtvTs4Cv5kZH0VmNDwT15t99wLX7gffYJcfLLMpDnavv6
-         l4z/VQYaotaAAyOS52th1D0g6+R+Whfuz2FLmbp56PWspA71ppb1tAs0kQ6S+beKiAy/
-         nM1Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=tHbFcu0WPcZBVdDm5V5O7Dkk50uMojRwZIz6ESmndQk=;
+        b=gRropHjDbJLjKxll2PVPIYhEVOtusHfTrGbCb4PuwV1Oz2LNZisTSsUQYKsg/xwtqv
+         nqVhEjL958SfKt2jEJamckue/UBld+u01ymxINoaIW0bkm7ss0Kaf4cplqgHtlK2vZNy
+         a6WWuy5T+bs157EAqPVnpZ7czyAK+PEYpYA08r4YeQxnCrDe1MYo/oW7JDd+BA7KHwrK
+         qtmZY0EMivcl4JIVcyheiYNCaP8sgJjljHb/YTtI649tZKuQwGvycrxghMGw402rsJKW
+         pTcexmoDfjSkxOGOIl/6McnRnWvAHBRK4ZOl5ZyYK4LkMlqM9g+cMIJloOyADL53rctK
+         mwFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=NiC39RiNGz1/opldl1pLx6xcyXjxb4Mk/J29n38YYTY=;
-        b=OGvFjEQSSpCZRcsLKM1hYVANSJMvLZOvSSw/N46XhrpZXIq9V0UQYq09V3qO/6yWsU
-         tDqBarCYjElaYIiUtqZdZnl4ffrXLiB52//+dAUrLfaXa4L251pLVLFN26+rr6VFwm3m
-         CwP6JCkYN84FrWz8JEiXXVFJrde0Eoan4Q1JA7eBVTQjRa6Z858VfORPxkJh6xx26vPj
-         prwaoUFCPwb8azFRb4jnJ5OQTDnYQe2/Rs2iJckihARGswi4W8lWR4OhE4LkL0sLYfch
-         QS0jtDpjK9M/Mp8rv1oUaUJztdSKr1H3F83cigceS1BmGQw+oMz7G0UmzdHOwJ3wG/Bh
-         NMJQ==
-X-Gm-Message-State: APzg51DX10KmErjglP4lGTXjX7KXwz9sLFFYe5E2VPNu8upysb17z9+r
-        t/UPxVezIXXud89LPB/IpOrJctC1
-X-Google-Smtp-Source: ANB0VdZz431Z1Z91B/LOVsUu11uTA0iqnSbACBwHqFEHVC/8LKzsYNUphBgQZQ12Q8fXawPOeUvDBg==
-X-Received: by 2002:a17:902:280b:: with SMTP id e11-v6mr1223478plb.298.1536214240730;
-        Wed, 05 Sep 2018 23:10:40 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id m15-v6sm6161681pfk.149.2018.09.05.23.10.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Sep 2018 23:10:40 -0700 (PDT)
-Date:   Wed, 5 Sep 2018 23:10:38 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>
-Cc:     git@vger.kernel.org, Max Kirillov <max@max630.net>
-Subject: Re: CONTENT_LENGTH can no longer be empty
-Message-ID: <20180906061038.GA94045@aiede.svl.corp.google.com>
-References: <f12bc1d7-6acb-6ad9-2917-fbb09105f87a@debian.org>
- <20180905202613.GA20473@blodeuwedd>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=tHbFcu0WPcZBVdDm5V5O7Dkk50uMojRwZIz6ESmndQk=;
+        b=boeZ3XiHljoWzxDCJfF6JoauJtmgOy/VY2ybpmbOrWkWRyOAtN5961lvIM8t4USRoG
+         /i6WBU6GMcEvjyepdxBScT6nzVFA2Z/rmi8TZlnoxBdd38Xb6KF41Hg6oHLpQSFZQeOq
+         1vi21iiUVARJ37K/TVemTisAkSM9JvVXVIr4a7MN/zPSKVNjBFTcEOIym0iPe9DvrhMH
+         zlCnIla5eyS8g9vw/OuEvOpM9LOwvi3TLYqiRNovF6GZFMQ4/JiGZJHSlX4f0N4QbD/+
+         VYGDKCReAu/Z/Sv4djJZRIRLM7z42FTRxTrfkjuM7IUvRJNc/eBVQAHCYxHKvlkHNUIJ
+         EGrg==
+X-Gm-Message-State: APzg51ApAfe9qvicYZYpi1lDdWhnwjdrN5JcODE2ZSBtDjHj9iHzrExD
+        Kb/PXwVnfCtj9U472mi47T2p7rD8421c+7n/HeoGMoPDYHk=
+X-Google-Smtp-Source: ANB0VdbBT/+gizVwLyxnyOCoO9d3Ag0fB+KYr9Gl1fyiy8G7jfnp8QDM79Dw0kWpMENHmwV5t2kX5E7XtIY/o6OgL2s=
+X-Received: by 2002:a63:4204:: with SMTP id p4-v6mr1227237pga.200.1536214759998;
+ Wed, 05 Sep 2018 23:19:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180905202613.GA20473@blodeuwedd>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180905225828.17782-1-sbeller@google.com>
+In-Reply-To: <20180905225828.17782-1-sbeller@google.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 6 Sep 2018 08:19:05 +0200
+Message-ID: <CAN0heSpOG8c5En_YVvtkcwBmOrnS72cTXSw9YRJP4FG-M8dWag@mail.gmail.com>
+Subject: Re: [PATCH] diff: allow --recurse-submodules as an synonym for --submodule
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Jelmer Vernooĳ wrote[1]:
-
-> Git's http-backend has become slightly stricter about the content
-> of the CONTENT_LENGTH variable. Previously, Dulwich would leave this
-> variable empty but git now expects it to be set to 0 for GET requests
-> without a body.
+On Thu, 6 Sep 2018 at 00:59, Stefan Beller <sbeller@google.com> wrote:
 >
-> I'm uploading a fixed version of dulwich.
+>  --submodule[=<format>]::
 
-Thanks for tracking it down!  This is likely due to v2.19.0-rc0~45^2~2
-(http-backend: respect CONTENT_LENGTH as specified by rfc3875,
-2018-06-10).
+Maybe drop `--submodule` here ...
 
-Max, RFC 3875 appears to allow a CONTENT_LENGTH of "" when no data is
-attached to the request.  Should we check for this case (e.g. inserting
-a *str check in
+> +--recurse-submodules[=<format>]::
+>         Specify how differences in submodules are shown.  When specifying
+>         `--submodule=short` the 'short' format is used.  This format just
 
-	if (str && !git_parse_ssize_t(str, &val))
-		die("failed to parse CONTENT_LENGTH: %s", str);
+... and use `--recurse-submodules` here ...
 
-?
+>         shows the names of the commits at the beginning and end of the range.
 
-Thanks,
-Jonathan
+... and mention `--submodule` here as a historical alias? Maybe
+deprecate it? I suppose the implementation of the aliasing is easy
+enough that we can carry `--submodule` around forever, though.
 
-[1] https://bugs.debian.org/907587
+> diff --git a/diff.c b/diff.c
+> index 145cfbae592..d3d5a989bd1 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5023,6 +5023,8 @@ int diff_opt_parse(struct diff_options *options,
+>                 handle_ignore_submodules_arg(options, arg);
+>         } else if (skip_to_optional_arg_default(arg, "--submodule", &arg, "log"))
+>                 return parse_submodule_opt(options, arg);
+> +       else if (skip_to_optional_arg_default(arg, "--recurse-submodules", &arg, "log"))
+> +               return parse_submodule_opt(options, arg);
+
+How about (whitespace-damaged)
+
+} else if (skip_to_optional_arg_default(arg, "--submodule", &arg, "log") ||
+           skip_to_optional_arg_default(arg, "--recurse-submodules",
+&arg, "log"))
+        return parse_submodule_opt(options, arg);
+
+to make this future-proof? Sure, they're close enough that one should
+notice the two instances, and any future work work would supposedly
+happen in `parse_submodule_opt()` or anywhere else but here, but still.
+
+Just a few thoughts.
+
+Martin
