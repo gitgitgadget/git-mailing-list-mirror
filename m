@@ -2,190 +2,234 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 147AF1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 19:06:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 126051F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 19:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729482AbeIFXmu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 19:42:50 -0400
-Received: from mout.gmx.net ([212.227.15.19]:56883 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728826AbeIFXmu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 19:42:50 -0400
-Received: from [10.2.0.3] ([217.235.91.60]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0xbD-1fk21P2WtD-00v9a1; Thu, 06
- Sep 2018 21:05:52 +0200
-Subject: Re: [PATCH v3] Allow aliases that include other aliases
-To:     Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com
-References: <20180905085427.4099-1-timschumi@gmx.de>
- <20180906101658.1865-1-timschumi@gmx.de> <87pnxqrags.fsf@evledraar.gmail.com>
- <20180906145708.GA1209@sigill.intra.peff.net>
-From:   Tim Schumacher <timschumi@gmx.de>
-Message-ID: <dea58ad8-4e2a-955a-8dc6-b93e9592398c@gmx.de>
-Date:   Thu, 6 Sep 2018 21:05:50 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1729562AbeIFXs6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 19:48:58 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41608 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729560AbeIFXs5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 19:48:57 -0400
+Received: (qmail 26188 invoked by uid 109); 6 Sep 2018 19:12:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Sep 2018 19:12:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6885 invoked by uid 111); 6 Sep 2018 19:12:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Sep 2018 15:12:17 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2018 15:12:03 -0400
+Date:   Thu, 6 Sep 2018 15:12:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Tim Schumacher <timschumi@gmx.de>, gitster@pobox.com,
+        pclouds@gmail.com
+Subject: ordered string-list considered harmful, was Re: [PATCH v3] Allow
+ aliases that include other aliases
+Message-ID: <20180906191203.GA26184@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20180906145708.GA1209@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US-large
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:paaQDqdVWgQihxEG+UPqkomjtJ2bzvNh0hOGMJ3rE75TPKqggQ1
- okf9P1+iJ47doSwaqz2Ob8YtQ7uX34Xcr/vjmnw9TGPqEokbfZ4XYMumKf3YGkDqS9Y59Dk
- yeExBcrDWzRQyVbkN8ocGc38Bb0QOmb3dJmPc+5kgppjwoKNuONAOqU/8vwzoKME/66kYYf
- +9gpMt5Mzm0Tsa+dC+fGg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:gk2ccGdWHNg=:fStGzflm13/Ks9+t+jZ5Mi
- GU6krKJoiQqRvcWNOzuV0N1z8ADphPJwHO2INy+HOBEX8ZjCEkTmsxk8TJhHWalCj572+WXi0
- daToM4uEd06IqbIlhEJrMd/tfDzS4Izj0PMlcunID9Q5KmEEIwFBZHD/NOlJCCSimDN+O3i8e
- lXsPLeKwtOtU9uvSwYhY698WJcXJ9CslGQOFbPt6UZfOH7uMqAEPeY1jCbCBDpzlderecez+l
- 9ec+C9/DWQlGajMpBLeECrto8n5R5uY+Y2uW8896aD+RZBXmr/smEysKrfNL9sDrochHIzzM6
- XRAAysjV8IcEaWIYqTmcSlI8/ybjjOxCq1rK5MnMU64J6NhXZRupn96yTQ6Q56JXWPK6tZfXw
- GTff6tcmSwJcrgNVmkCz4FjBMY0ge/RjprEWF6SpLWE3f076FJzpT5fqyq4gdwmsIg9omTmtU
- qeTboT9cfRx9p9m0WuT9+IFdxeIexlEBhRYVWifDRglLOEd9k2Ib4U347mdsxVV5qhoBBSBpe
- 9NOmdOaWxHvI1IDphjYSpKmAXN80C2l1oWNl6Y5NIJM1iH3/A9lNPITDL+w1YL+dIiJuaYWWn
- GAG0w/yLwsgAciG/OFURKOhExKWIOQI5mqQ+l7QqLQMzcjzIVUE/f/5sg4ULRKwAachz03U65
- RzdWxN0ttRAcfhs24++XYkN1o7kv6Ky1AlGn2QLQvVjkB6EhziD1rOLdyKaFahEiC9nfHnLsH
- majRiln5GDaG8tCeTlQRC0V1lT4/D0CEjSq06iK12ctB/9F8udhdIa2vMNwd/XUvJTg8N/eiR
- NGevvM9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06.09.18 16:57, Jeff King wrote:
-> On Thu, Sep 06, 2018 at 04:01:39PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> 
->> If we don't have some test for these sort of aliasing loops that fails
->> now, we really should add that in a 1/2 and fix it in this patch in 2/2.
-> 
-> Yes, I'd agree that this is worth adding a test (especially if the
-> output routines get more complex).
+On Thu, Sep 06, 2018 at 10:59:42AM -0400, Jeff King wrote:
 
-I'll try to come up with a few tests (or one at this point, as we only have
-a solution for internal aliases so far) and put them as 1/2. However, I don't know
-what file I should put those tests into. t0001-init and t1300-config both seem
-to test aliases, but I'm unsure if the new tests should go into one of those
-files or a completely new one that is dedicated to aliases.
+> > +		string_list_append(&cmd_list, *argv[0]);
+> 
+> This will create an unsorted list. You'd have to use
+> string_list_insert() here for a sorted list, or
+> unsorted_string_list_has_string() in the earlier call.
+> 
+> It's unfortunate that string_list makes this so easy to get wrong.
 
-> 
->> That makes sense from an implementaion perspective, i.e. we lookup "bar"
->> twice. But let's do better. If I have aliase like:
->>
->>      a = b
->>      b = c
->>      c = d
->>      d = e
->>      e = c
->>
->> It should be telling me that my "e" expansion looped back to the "c = d"
->> expansion. Here's a patch to implement that, feel free to either squash
->> it in with my Signed-Off-By, or tacked onto a v4 version of this,
->> whichever you think makes sense:
-> 
-> I don't have a strong opinion on whether this is worth it, but I think
-> your implementation could be a little simpler:
-> 
->> diff --git a/git.c b/git.c
->> index 64f5fbd572..38f1033e52 100644
->> --- a/git.c
->> +++ b/git.c
->> @@ -692,8 +692,64 @@ static int run_argv(int *argcp, const char ***argv)
->>   		/* .. then try the external ones */
->>   		execv_dashed_external(*argv);
->>
->> -		if (string_list_has_string(&cmd_list, *argv[0]))
->> -			die(_("loop alias: %s is called twice"), *argv[0]);
->> +		if (string_list_has_string(&cmd_list, *argv[0])) {
->> +			struct strbuf sb = STRBUF_INIT;
->> +			int i, seen_at_idx = -1;
->> +
->> +			/*
->> +			 * Find the re-entry point for the alias
->> +			 * loop. TODO: There really should be a
->> +			 * "return the index of the first matching"
->> +			 * helper in string-list.c.
->> +			 */
->> +			for (i = 0; i < cmd_list.nr; i++) {
->> +				if (!strcmp(*argv[0], cmd_list.items[i].string))
->> +					seen_at_idx = i;
->> +			}
->> +			assert(seen_at_idx != -1);
-> 
-> The string-list code doesn't generally deal in indices. You can use
-> string_list_find_insert_index(), but its return value is a little funky
-> for the existing case. You can also just do:
-> 
->    struct string_list_item *seen;
->    ...
->    seen = string_list_lookup(&cmd_list, *argv[0]);
->    if (seen) {
-> 	/* we have a loop */
-> 	int idx = seen - cmd_list.items;
-> 
-> That's a little intimate with the string-list implementation as an array
-> of string_list, but it's already pretty standard to walk over and
-> dereference that list (including in your patch). But also see below.
-> 
-> Side note: there's actually a bigger problem with the original patch:
-> the string list is unsorted (because it uses string_list_append(), and
-> which is why your linear walk works here). But string_list_has_string()
-> assumes it is sorted.  So I think we'd actually want to use
-> unsorted_string_list_has_string() or unsorted_string_list_lookup().
+This is getting really off-topic (since it sounds like we'd probably
+want to use an ordered list here), but is it crazy to think that
+basically every use of an ordered string list could just be a hashmap?
 
-I'll update v4 to use use unsorted_string_list_has_string().
-> 
->> +			for (i = 1; i < cmd_list.nr; i++) {
->> +				if (i - 1 == seen_at_idx)
->> +					/*
->> +					 * TRANSLATORS: This is a the
->> +					 * re-enttry point in the list
->> +					 * printed out by the "alias
->> +					 * loop" message below.
->> +					 */
->> +					strbuf_addf(&sb, _("    %d. %s = %s <== The re-entry point in the loop\n"),
->> +						    i,
->> +						    cmd_list.items[i - 1].string,
->> +						    cmd_list.items[i].string);
-> 
-> This is always going to show the right-hand of the equals as the
-> left-hand on the next line. Would it be simpler to just show the list?
-> Likewise, the last item in the list is always going to be "where the
-> loop started". Do we need to say that?
-> 
-> E.g., something like:
-> 
->    seen = unsorted_string_list_lookup(&cmd_list, *argv[0]);
->    if (seen) {
->            for (i = 0; i < cmd_list.nr; i++) {
-> 		struct string_list *item = cmd_list.items[i];
-> 
-> 		strbuf_addf(&sb, "  %s", item->string);
-> 		if (item == seen)
-> 			strbuf_add(&sb, " <==");
-> 		strbuf_addch(&sb, '\n');
-> 	  }
-> 	  /* We never added this to the list, but we were about to */
-> 	  strbuf_addch("  %s\n", seen->string);
-> 	  die(...);
->    }
-> 
-> I guess it's not that far off of yours. Not using words to describe the
-> loop entry and exit points avoids translation, which avoids notes to
-> translators, which is most of what makes your patch long. ;)
-> 
-> -Peff
-> 
+And then the sometimes-sorted/sometimes-not duality of string-list could
+go away?
 
-I'll tinker around with both code snippets, we'll see which one is
-more convenient for the user.
+As a bonus, that would fix a bunch of places which possibly quadratic,
+since calling string_list_insert() may have to do O(n) work to shift the
+memory around (though the worst case is reverse-sorted order, so in
+practice many of these callers are actually fine, and those that aren't
+often do a series of appends followed by a sort).
 
-Thanks to all of you for the input!
+One pain point is that hashmaps are a little inconvenient due to their
+memory ownership. But I sketched out an API below (and converted one
+caller) that could make that less awful.
 
-Tim
+Another alternative is for string_list to keep a "sorted" flag, reset it
+after an _append(), and BUG() when it's not set in the right places.
+That's still easy to mis-use, but at least you get a run-time check.
+
+---
+ apply.c  | 35 +++++++++--------------------
+ apply.h  |  3 ++-
+ strmap.h | 42 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 55 insertions(+), 25 deletions(-)
+
+diff --git a/apply.c b/apply.c
+index e485fbc6bc..df3ba94caf 100644
+--- a/apply.c
++++ b/apply.c
+@@ -90,7 +90,7 @@ int init_apply_state(struct apply_state *state,
+ 	state->ws_error_action = warn_on_ws_error;
+ 	state->ws_ignore_action = ignore_ws_none;
+ 	state->linenr = 1;
+-	string_list_init(&state->fn_table, 0);
++	strmap_init(&state->fn_table);
+ 	string_list_init(&state->limit_by_name, 0);
+ 	string_list_init(&state->symlink_changes, 0);
+ 	strbuf_init(&state->root, 0);
+@@ -3265,16 +3265,10 @@ static int read_file_or_gitlink(const struct cache_entry *ce, struct strbuf *buf
+ 
+ static struct patch *in_fn_table(struct apply_state *state, const char *name)
+ {
+-	struct string_list_item *item;
+-
+ 	if (name == NULL)
+ 		return NULL;
+ 
+-	item = string_list_lookup(&state->fn_table, name);
+-	if (item != NULL)
+-		return (struct patch *)item->util;
+-
+-	return NULL;
++	return strmap_get(&state->fn_table, name);
+ }
+ 
+ /*
+@@ -3304,26 +3298,21 @@ static int was_deleted(struct patch *patch)
+ 
+ static void add_to_fn_table(struct apply_state *state, struct patch *patch)
+ {
+-	struct string_list_item *item;
+-
+ 	/*
+ 	 * Always add new_name unless patch is a deletion
+ 	 * This should cover the cases for normal diffs,
+ 	 * file creations and copies
+ 	 */
+-	if (patch->new_name != NULL) {
+-		item = string_list_insert(&state->fn_table, patch->new_name);
+-		item->util = patch;
+-	}
++	if (patch->new_name != NULL)
++		strmap_put(&state->fn_table, patch->new_name, patch);
+ 
+ 	/*
+ 	 * store a failure on rename/deletion cases because
+ 	 * later chunks shouldn't patch old names
+ 	 */
+-	if ((patch->new_name == NULL) || (patch->is_rename)) {
+-		item = string_list_insert(&state->fn_table, patch->old_name);
+-		item->util = PATH_WAS_DELETED;
+-	}
++	if ((patch->new_name == NULL) || (patch->is_rename))
++		strmap_put(&state->fn_table, patch->old_name,
++			   PATH_WAS_DELETED);
+ }
+ 
+ static void prepare_fn_table(struct apply_state *state, struct patch *patch)
+@@ -3332,11 +3321,9 @@ static void prepare_fn_table(struct apply_state *state, struct patch *patch)
+ 	 * store information about incoming file deletion
+ 	 */
+ 	while (patch) {
+-		if ((patch->new_name == NULL) || (patch->is_rename)) {
+-			struct string_list_item *item;
+-			item = string_list_insert(&state->fn_table, patch->old_name);
+-			item->util = PATH_TO_BE_DELETED;
+-		}
++		if ((patch->new_name == NULL) || (patch->is_rename))
++			strmap_put(&state->fn_table, patch->old_name,
++				   PATH_TO_BE_DELETED);
+ 		patch = patch->next;
+ 	}
+ }
+@@ -4757,7 +4744,7 @@ static int apply_patch(struct apply_state *state,
+ end:
+ 	free_patch_list(list);
+ 	strbuf_release(&buf);
+-	string_list_clear(&state->fn_table, 0);
++	strmap_clear(&state->fn_table);
+ 	return res;
+ }
+ 
+diff --git a/apply.h b/apply.h
+index 5948348133..66f681622e 100644
+--- a/apply.h
++++ b/apply.h
+@@ -3,6 +3,7 @@
+ 
+ #include "lockfile.h"
+ #include "string-list.h"
++#include "strmap.h"
+ 
+ struct repository;
+ 
+@@ -98,7 +99,7 @@ struct apply_state {
+ 	 * Records filenames that have been touched, in order to handle
+ 	 * the case where more than one patches touch the same file.
+ 	 */
+-	struct string_list fn_table;
++	struct strmap fn_table;
+ 
+ 	/*
+ 	 * This is to save reporting routines before using
+diff --git a/strmap.h b/strmap.h
+new file mode 100644
+index 0000000000..2748f50e3e
+--- /dev/null
++++ b/strmap.h
+@@ -0,0 +1,42 @@
++#ifndef STRMAP_H
++#define STRMAP_H
++
++struct strmap {
++	struct hashmap map;
++};
++
++#define STRMAP_INIT { { NULL } }
++
++/*
++ * Initialize an empty strmap (this is unnecessary if it was initialized with
++ * STRMAP_INIT).
++ */
++void strmap_init(struct strmap *map);
++
++/*
++ * Remove all entries from the map, releasing any allocated resources.
++ */
++void strmap_clear(struct strmap *map);
++
++/*
++ * Insert "str" into the map, pointing to "data". A copy of "str" is made, so
++ * it does not need to persist after the this function is called.
++ *
++ * If an entry for "str" already exists, its data pointer is overwritten, and
++ * the original data pointer returned. Otherwise, returns NULL.
++ */
++void *strmap_put(struct strmap *map, const char *str, void *data);
++
++/*
++ * Return the data pointer mapped by "str", or NULL if the entry does not
++ * exist.
++ */
++void *strmap_get(struct strmap *map, const char *str);
++
++/*
++ * Return non-zero iff "str" is present in the map. This differs from
++ * strmap_get() in that it can distinguish entries with a NULL data pointer.
++ */
++int strmap_contains(struct strmap *map, const char *str);
++
++#endif /* STRMAP_H */
