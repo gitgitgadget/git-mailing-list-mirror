@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E031F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 02:48:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B95F1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 02:48:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726591AbeIFHVZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 03:21:25 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37255 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbeIFHVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 03:21:25 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u12-v6so9628450wrr.4
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 19:48:18 -0700 (PDT)
+        id S1726598AbeIFHVc (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 03:21:32 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:53657 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbeIFHVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 03:21:32 -0400
+Received: by mail-wm0-f67.google.com with SMTP id b19-v6so9851465wme.3
+        for <git@vger.kernel.org>; Wed, 05 Sep 2018 19:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Eouvu+xWlCp/AJS6UeMl87qI/KKOKceqHJCLdLZ5R4E=;
-        b=nMY+8seqsGticmooSEqJqjXFVXWjUhJEvinEbO/P3obJgyBTvqCjFKX9hmNzX5Z4qZ
-         aMAIQr6o4F8QM7fMkVlcZyycLKi/GHG6aaGR/CGw5AsumpscodVXKPZWOpfOJDxc+RHI
-         GNP5zMuciYWj5EU6+xbBsCv9BKoQTLoI1l4SRgTCCgecAAoYvRDHr1WksCC62pXReC8V
-         STuZZS9mUBtXtGy3zgnBPTxsn5IJtZMCvR6d4QMZcqoy6BT6m7JEPVrq4zkBfVpmCIAQ
-         Qnt0c+ntu3BOiANlfSbYpvR+lNcmYgrQNfqIYJavUypNV5+LGSuURhFQdh5+2jxJ3nBN
-         oAVA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=WSYEpw234Oeq944Nh4wL1ZDLw9LZUCEmzhlX25LwhBM=;
+        b=iKfpIb/8DnYGInFKGtAJXB28S6y17JWrI7A/l6+z4AcU+4ml1I3llm+jE+WNJjaIMf
+         0jGFVD85G1Ce5SromQ2VRxxCQd5d/Z6IdKN5hU0yQk0T5pfjFP1V02iy0JTZSz8k9a/f
+         4S67mFJPE1vgcJHpQP9gTOEzhuBrgXVY2QZtl7+cUWGZZrDJzDDfvLmhe3lvAZnBiwW5
+         1bC5VKuRZ64C65va+cd1Y2eYXJ0C2tC39I6cm16TJ4fBFimJssQkpuOfOnf4/YB87Z63
+         2yvd7++AierExSBJHvLFIKSK7FO7MeaIbp75LWNRkrlYXT6gR6/98ZdExye2Le329ZPT
+         aQ2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Eouvu+xWlCp/AJS6UeMl87qI/KKOKceqHJCLdLZ5R4E=;
-        b=ry/H3De/nNb4ydyyWjUoEC4qh3VB7K2doZ/J3BvJPRgedGXorYYxhrbuxaokDmVaiu
-         s2ce3dMriB7IUR+0mGB++f+QktfG1SzzJbZeAIJ+AAr/uY/BgrsHbgdOfzHAXvdkWP51
-         wG4HPw8Jb41hBhnXg0F52QyTfFbESJCeXW1sYS585wvbimEXybYYUG74CmJ+1/QTUSrU
-         Gyxkc5mCiTJ/LLKcK5I2Dadh4JPJVfZeuIgTdkcAFyxXpOGtQ7M+EbbJchKml7QJBRst
-         VeiZuxMUcnuQnW7VUNW1mqa5O3BsR4iCoCnOMIjoLDMQZdTtXXRS/MM9kZWOrxP7yf5P
-         1/Fg==
-X-Gm-Message-State: APzg51ABn7KAulxOahdQKXI757wusEFZQCFOrDS4ljjOE/TYN7MV0PU6
-        auYutkd+3zgpjDwZMPHEG5hHoZfg+ZU=
-X-Google-Smtp-Source: ANB0Vda6/0j+vFMSlYgamv4DGPmve4q26Ni7BOlEQKvGh33qfTUm3XYONLjA1Yq/kj4A3G31u3oaew==
-X-Received: by 2002:adf:eb0d:: with SMTP id s13-v6mr432201wrn.174.1536202098022;
-        Wed, 05 Sep 2018 19:48:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=WSYEpw234Oeq944Nh4wL1ZDLw9LZUCEmzhlX25LwhBM=;
+        b=BS3R8rkhJByHP2Ko8feNt0bSkNvoFspVmYCt2qWXXjvdT7q3nsNXPvleLZ7VsQrPCH
+         a12wXz+5voH/5cgAZEpEXEkWzY+rTpJUTKC7diPs/kkG4YUXPG5qAIKQ2sSbXxK7tbvI
+         e0CYlfKB1fxXf2WZaQVYIjGCjHj1ZoDTjSQAQ3+HmMTXe6GnXsTNUxujyhmZfCdMZZUe
+         CEVJKW/2dtaa2mnyIMSBEqTrWbFhX9fXQcCcvjvTrLGypJBISYpRHxGmImS0L43Ebad4
+         PDU36EgXPJqih62Th5uXpVoB9f3ymhOz8LRn0hi7M2Hl9feRHffRTz9RmE1kOTLre5WI
+         lOHA==
+X-Gm-Message-State: APzg51CPIL8cUNAGAQKVtA4vXWR3HjW3dnbb62s1JSfYttLmgp75xJGK
+        DRmEBClLXYG2UrLvNBxYAIdD3MSROXc=
+X-Google-Smtp-Source: ANB0VdbcV7ldzDlZo1KA8aEmBcI7UIKGNIgJJvNdp3W32XQT9IaiwMehUMtFma0V5gAm/kDwXrGwiQ==
+X-Received: by 2002:a1c:9f41:: with SMTP id i62-v6mr600031wme.87.1536202105035;
+        Wed, 05 Sep 2018 19:48:25 -0700 (PDT)
 Received: from localhost.localdomain (x4db1b35b.dyn.telefonica.de. [77.177.179.91])
-        by smtp.gmail.com with ESMTPSA id y10-v6sm3979999wrl.87.2018.09.05.19.48.16
+        by smtp.gmail.com with ESMTPSA id y10-v6sm3979999wrl.87.2018.09.05.19.48.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 05 Sep 2018 19:48:17 -0700 (PDT)
+        Wed, 05 Sep 2018 19:48:24 -0700 (PDT)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
@@ -56,10 +56,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [RFC PATCH 0/5] Fix the racy split index problem
-Date:   Thu,  6 Sep 2018 04:48:05 +0200
-Message-Id: <20180906024810.8074-1-szeder.dev@gmail.com>
+Subject: [PATCH 1/5] t1700-split-index: drop unnecessary 'grep'
+Date:   Thu,  6 Sep 2018 04:48:06 +0200
+Message-Id: <20180906024810.8074-2-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.188.g56c5ee2db1
+In-Reply-To: <20180906024810.8074-1-szeder.dev@gmail.com>
+References: <20180906024810.8074-1-szeder.dev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,35 +70,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ever since the split index feature was introduced, refreshing a split
-index is prone to a variant of the classic racy git problem, which
-caused occasional failures in several random test scripts when run
-with 'GIT_TEST_SPLIT_INDEX=yes'.  I won't go into details here, there
-is plenty of text to be read already in the commit messages of patches
-3 and 5.
+The test 'disable split index' in 't1700-split-index.sh' runs the
+following pipeline:
 
-RFC, because I'm not sure that the fix in patch 5 is the best fix for
-this issue.  ... and because I usually don't dive this deep into core
-stuff during my Git hacking adventures, so who knows what subtleties I
-might have missed.
+  cmd | grep <pattern> | sed s///
 
+Drop that 'grep' from the pipeline, and let 'sed' take over its
+duties.
 
-SZEDER Gábor (5):
-  t1700-split-index: drop unnecessary 'grep'
-  t0090: disable GIT_TEST_SPLIT_INDEX for the test checking split index
-  split index: add a test to demonstrate the racy split index problem
-  t1700-split-index: date back files to avoid racy situations
-  split-index: smudge and add racily clean cache entries to split index
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t1700-split-index.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- cache.h                     |   2 +
- read-cache.c                |   2 +-
- split-index.c               |  12 ++-
- t/t0090-cache-tree.sh       |  18 ++--
- t/t1700-split-index.sh      |  51 +++++++-----
- t/t1701-racy-split-index.sh | 162 ++++++++++++++++++++++++++++++++++++
- 6 files changed, 216 insertions(+), 31 deletions(-)
- create mode 100755 t/t1701-racy-split-index.sh
-
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index b3b4d83eaf..be22398a85 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -57,7 +57,7 @@ test_expect_success 'disable split index' '
+ 	EOF
+ 	test_cmp ls-files.expect ls-files.actual &&
+ 
+-	BASE=$(test-tool dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
++	BASE=$(test-tool dump-split-index .git/index | sed -n "s/^own/base/p") &&
+ 	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
+ 	cat >expect <<-EOF &&
+ 	not a split index
 -- 
 2.19.0.rc0.188.g56c5ee2db1
 
