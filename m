@@ -2,104 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 542C01F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 21:24:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD6451F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 21:25:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728330AbeIGCBi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 22:01:38 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:51320 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727640AbeIGCBi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 22:01:38 -0400
-Received: by mail-wm0-f65.google.com with SMTP id y2-v6so12758221wma.1
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 14:24:15 -0700 (PDT)
+        id S1728353AbeIGCCg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 22:02:36 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:42592 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727640AbeIGCCg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 22:02:36 -0400
+Received: by mail-ed1-f68.google.com with SMTP id l5so10029189edw.9
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 14:25:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=nTRP4EUhSR8f+xmITpcZZL/7B6CI/ISK/bL1gBaWosM=;
-        b=H6qqhqgAuH2pzJskdilEHjOMxFOEhuX7Nzrz70GYUowmXnK+9l+6Hizml0mkD9d04x
-         wYUVO9nQhTJE23GREhGheOGKVBW/h4rZ+yNtRR3z/xDoSblEGoeByLoYsiK8j5vRBSBQ
-         sL5KSV7UDgqy7nJndHH784kHF9qPFZbvjqvElkxMqXMp4lLfr8I08rKwkaIkNl6gjaRB
-         9JcTuuK9kGHObi2ZoPICNHEvaA0ed3jyPzluUW/wguifHhWlAWpy05h8zX0TsCRSOBpZ
-         QX2XXQX9MIY7jWjkouB6FT6JKEd41v2c9pM1w02t2B8nQg5lyfo9uq8+NNJ/Vi1RVaem
-         68qQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=6I4uhoCAmQv2XquctP4ZzniNPD3VmBiQ9+o9kf6y07M=;
+        b=b5M1lP5EUSOL60PLyqAaLTMegwIwYANZAuHXAti17AmdiH1r+4+c+w5tEcYDL24zWu
+         hiij5kAUvjb5wogf55sBHOSYU/gB4c2LhnejnlvDnDm2+pnbyaxAOa5ph2crwlMtJJL+
+         eUxiuj+Um0NXI9z8xfernXdQ84iOBCQ/05U67Hay76DLIwB54zjIzbOkrgENO1ev1zLU
+         0JkQJXmGL5jv6wuHKhSTY725sVcRtVkrLwKaOtWYd6LeegCvkqSH1DPOCel4K+r9GzaJ
+         to28NXRHWQd73TpxDZu+P2gp0kFxSWJf1V7fYZfRoSpddp69dmwLlG287et5wTUUhNyY
+         D4Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=nTRP4EUhSR8f+xmITpcZZL/7B6CI/ISK/bL1gBaWosM=;
-        b=umotiIvAPO4sTS9yUv0zhuFg/JtVl3mbwnUEIEQWu9O7uCmAMDUCYhJ49CQ/YMkPkI
-         Zl6Bg1TSNT0sly6OmZmlYCR3KSOeSI7b4q/hyd4aiYLr+MPMVx+awvGmcm/xvNM+JRcc
-         CANHugM9ueSb4eCIkt4PhOkOSn7wr82miPbRVs9K1R4Yy6f/8X0cX43CfkbqIxPQKBaN
-         gF2itWcjnSDQv8l9FUJz9iOgmPjU0qi5jqQXWpk0bLfvK/rG0ISPm7f2fhwUYh0Q0Eb4
-         TMVM6eHoOK7RMFVxrdc7ujfHV15fbwLtqLkJrNWnpXdgLeeUhAmuiDG6y9ehHlI9hmMi
-         0Mlw==
-X-Gm-Message-State: APzg51B7nPzIHQj/dOe8BSOWFkS+QtAZOo8i7hUuAIU/9VQi0uBa4agD
-        MEhKb1sVn/bnw6HziRx++4s=
-X-Google-Smtp-Source: ANB0VdZ4ctWIfyOZ0i6wPpAmV5Dn/yMnohFUBIStbAOSp0iSW19LRWfQcpvf7oIrFHGKgjOrkobAXA==
-X-Received: by 2002:a1c:ae8d:: with SMTP id x135-v6mr3455943wme.20.1536269054405;
-        Thu, 06 Sep 2018 14:24:14 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v21-v6sm3841837wrd.4.2018.09.06.14.24.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Sep 2018 14:24:13 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 1/5] t1700-split-index: drop unnecessary 'grep'
-References: <20180906024810.8074-1-szeder.dev@gmail.com>
-        <20180906024810.8074-2-szeder.dev@gmail.com>
-Date:   Thu, 06 Sep 2018 14:24:13 -0700
-In-Reply-To: <20180906024810.8074-2-szeder.dev@gmail.com> ("SZEDER
- =?utf-8?Q?G=C3=A1bor=22's?=
-        message of "Thu, 6 Sep 2018 04:48:06 +0200")
-Message-ID: <xmqq5zziz5du.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=6I4uhoCAmQv2XquctP4ZzniNPD3VmBiQ9+o9kf6y07M=;
+        b=P+Mit/rKyxAM/LOxX/1udSb52z7Q1pccg+lxaAtUZCiMHLt8zvzHgFRaFOVsXbGdJw
+         rR5gEAGk7ijFa4Y/KhBmkUewdVdYY1ia9cxlg6fRd87e+BG963dCyxfRrzRzwWAjvFVd
+         Gp+W3/27ehdgUAVWDWSqN2vAaz7SVrjFsA6ZA8keVRh1M7HhamXbF+GYxivHThmtZRn1
+         J/gLI8xJfa9Y1bbyjqZylFxUyWd6uF3bNyIAGAcq0HId95KX/4q9v6mtcJS+0Ieqe+CK
+         cO99IcRUssDsZj++lxP+EciXxGKH+D070+J5PfH6yLu9R5JXwB32Klvxy8w0jPsl/qfp
+         Rm6w==
+X-Gm-Message-State: APzg51CWA9NDRHwHtDWWBqXyjKnAch+BoNGAwuXUDGOrT/5nhnVIoPbU
+        52s61xWiAN2yV2hFe6QHOO2W1EqRp3wwXhK7sB4zBnOU
+X-Google-Smtp-Source: ANB0VdbzL956p4zvhezVuom7o+A9n+VzUnKp/bOxqirauA0Pl+FhxWBoL7bQ7CUNhA83bijtKgCCiIefXvAX8X/ebpM=
+X-Received: by 2002:a50:b410:: with SMTP id b16-v6mr5759797edh.190.1536269112422;
+ Thu, 06 Sep 2018 14:25:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180905225828.17782-1-sbeller@google.com> <20180905231258.GD120842@aiede.svl.corp.google.com>
+ <xmqqefe6z5ws.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefe6z5ws.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 6 Sep 2018 14:25:01 -0700
+Message-ID: <CAGZ79kbFGdtGL7jpYRrw_KaxJ5NY4HZNauOy-y3sxqnNDkHfWg@mail.gmail.com>
+Subject: Re: [PATCH] diff: allow --recurse-submodules as an synonym for --submodule
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
-
-> The test 'disable split index' in 't1700-split-index.sh' runs the
-> following pipeline:
+On Thu, Sep 6, 2018 at 2:12 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
->   cmd | grep <pattern> | sed s///
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 >
-> Drop that 'grep' from the pipeline, and let 'sed' take over its
-> duties.
+> > It seems like various commands are gaining --recurse-submodules options
+> > taking different kinds of arguments:
+> >
+> > - clone takes --recurse-submodules=<pathspec>
+> > - fetch takes --recurse-submodules=<mode>
+> > - after this patch, diff takes --recurse-submodules=<mode>
+> >
+> > Is there a unifying principle?  Can Documentation/gitsubmodules.txt
+> > say a word or two about what kind of argument values the user should
+> > expect to be accepted by these options?
 >
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
-
-Obviously good ;-)  Thanks.
-
-
->  t/t1700-split-index.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I am not sure if the above is rhetorical.  The only thing such a
+> document can say about status-quo is that the user cannot make an
+> educated guess, as there is no consistency.  Some take an option to
+> clarify which subset of submodules to act on, others take an option
+> to specify what variant of operation to be made on the submodules.
 >
-> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> index b3b4d83eaf..be22398a85 100755
-> --- a/t/t1700-split-index.sh
-> +++ b/t/t1700-split-index.sh
-> @@ -57,7 +57,7 @@ test_expect_success 'disable split index' '
->  	EOF
->  	test_cmp ls-files.expect ls-files.actual &&
->  
-> -	BASE=$(test-tool dump-split-index .git/index | grep "^own" | sed "s/own/base/") &&
-> +	BASE=$(test-tool dump-split-index .git/index | sed -n "s/^own/base/p") &&
->  	test-tool dump-split-index .git/index | sed "/^own/d" >actual &&
->  	cat >expect <<-EOF &&
->  	not a split index
+> In the ideal world, the users ought to be able to give these two
+> independently, i.e. "fetch" should be able to say "only fetch these
+> submodules" with pathspec while "run the fetch in all of these
+> submodules specified (with the pathspec) as necessary" with
+> "on-demand" mode, for example.
+>
+> It may mean that it is too early to add "diff --recurse-submodules"
+> as a synonym for "diff --submodule", before what we can do to
+> improve the situation for commands that already take that
+> "--recurse-submodules" option.
+
+Good point. So let's retreat that patch for now?
+
+Stefan
