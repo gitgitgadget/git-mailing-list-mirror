@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53B761F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 20:15:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E22D1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 20:34:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729512AbeIGAwN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 20:52:13 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:35303 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728540AbeIGAwN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 20:52:13 -0400
-Received: by mail-ed1-f43.google.com with SMTP id y20-v6so9914290edq.2
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 13:15:07 -0700 (PDT)
+        id S1726575AbeIGBL6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 21:11:58 -0400
+Received: from mail-ua1-f74.google.com ([209.85.222.74]:36604 "EHLO
+        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726086AbeIGBL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 21:11:58 -0400
+Received: by mail-ua1-f74.google.com with SMTP id m19-v6so5282670uap.3
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 13:34:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc:content-transfer-encoding;
-        bh=F47fuPC0M+UZjgnxU4/FrL7m4+TmVaBEGRzAOCASdhc=;
-        b=qFAQJVQqTJM+LToE2dBat2X2nUfSDOB2vz2J8+FCRmbbuL9FsKq4+EL3Du1Ad8Zb90
-         koJdVEdtOepsZSOu7Z5rKMtH9zi+ZO5Jm2RAaaR/umtlAuhGEy3aPyLEx8GErK00jbM7
-         SGrUWpAy7X6pbWfbZY5VJMBnmW6XmdWIvDHfh2rhntTwySAU7yHwypc8bQW/GSsuiFOg
-         VYFUuDkl9SZk8e0AWZdK3DOu2jt9dJ1YxzQ3pR2tejXXCHFTwGF4uEex8tsKbW4mbjLl
-         d4rrLZvVfFWd0bGD4gFE7N0i7+LmppeBFRlc6zKEH8jsUM+ocHwgA2BR1SRt/KMqOaH4
-         INAQ==
+        bh=ZD/R4eo1sB1agSEfqQZB0tXIgr56eU+4kUpHvU9GGH4=;
+        b=N2uaDE/xjJxZH97WWGMCUbSt5TXHsYvBId8ZSsKoXN+xWvppd06Uc309xB1/FXiBpH
+         pmWwrEkC/PDWyIn7ulYFYll7+abYg6V9kJt7b2mijQ1jy17nS7sZTBnpNFSghKjZPc8G
+         911w9XbOi/QFqiM6wWDYcD93221tSrxRmAddpIArcurvdhe/YULk0sorwYgEgyklnz4c
+         B2ckJ0fzj/aP4JNKea0VN9+XvbRS2CKEfh34tBLcg0C073S4ZXeqKNoIBCRdWMH4hv3b
+         g+wAXRl8qDnrA6gGloFM1ZYZhAG2togI/8MSGtG8SwfctgkD+tFZDhAlZQTOgk6XzGNn
+         38Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=F47fuPC0M+UZjgnxU4/FrL7m4+TmVaBEGRzAOCASdhc=;
-        b=ptpNCLw+J+jy6QPz7JQde6N4CSs7oc2CqVdZOz1eo4UpiGxnlB0ZAIL1MiFd8CVzXA
-         wQNfJ/qbz82zodpYuXpEGrh/ahcRTswZIu1kzi3TQLdIcBh0w8bFErVI3Y1D2lkP/o+R
-         oq/zpU66ljpDdRhrJ7n/1rMDqin58nWHIruncHnigK7tjK2kc39w27tts1UHtjnDWj64
-         q0ImPA50sHF4gWZNt7WuiA1d0g+tVlZ7Wr4rNKLQLXZL5mvdepLSWsAFkICvlpp3TlrY
-         mAct4kvn3WO+VL5uuihbYX3T2PBFkmG3nhFzQMWPyoLjxhEy57by9tTv1Bt4CEWC+wUr
-         G1Pg==
-X-Gm-Message-State: APzg51ByrtbPjzd87p86LXMRO97NeoiNVGXxkmmhM9yh0tnDf5jDojat
-        zSCbWV3Q19RL2EWMfj32B4sexnw9w3Wp7gx0x0SlFQ==
-X-Google-Smtp-Source: ANB0VdZeum+otY9NWsZoEIFk1vQO3ElX3nOJuEwtYq8NkJvBPwhotINQinrT3vS7+32VSfxxdE22pXcoe3RKGkDB4jA=
-X-Received: by 2002:a50:90c5:: with SMTP id d5-v6mr5186404eda.76.1536264906381;
- Thu, 06 Sep 2018 13:15:06 -0700 (PDT)
-MIME-Version: 1.0
-References: <xmqqvabm6csb.fsf@gitster-ct.c.googlers.com> <87lgc77wc7.fsf@evledraar.gmail.com>
- <CAGZ79kae4k=uLx-oX5emxas4KrqObzQhzgir0coOSBzzpO8APw@mail.gmail.com>
- <87tvn2remn.fsf@evledraar.gmail.com> <CAGZ79kYKzrRXy+GUCpMN3jpo4MvcpGvBFvEkTjrsy85XJb0K2A@mail.gmail.com>
- <MW2PR2101MB0970C7744A6FA72940DCB252F4010@MW2PR2101MB0970.namprd21.prod.outlook.com>
-In-Reply-To: <MW2PR2101MB0970C7744A6FA72940DCB252F4010@MW2PR2101MB0970.namprd21.prod.outlook.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc:content-transfer-encoding;
+        bh=ZD/R4eo1sB1agSEfqQZB0tXIgr56eU+4kUpHvU9GGH4=;
+        b=INtGFcWznbB7oioRy5yjAD9JC34leJ8H6dXZKm2dm0UbhcUTjBDLgAiwEPTyox6bG4
+         km7EGTD/4vCC8jNw3Mk0CnCZpOKoEH8bhn3xNBE+A0Tu4Ew5VD3KHgvByie9NcYXbXA5
+         H7mwDSsb9AXkwsyV1lLhgkaEFFjjueKEO1ukqsK4sn8lfba4et/Yu+XlRBFh8g/Y8XyA
+         pubaoNMHV75HSHBJTFo3/0TUH4cIer5zI/Glaaa52KoTo6qtG19YT0od6NvXs4Ti8pB1
+         sy+uFaRO+Bns1BTlnwDe1xw0v9xvYi5f94G+uT9n5jNZiVyW2nPtLUnfwaQoTOm15hQq
+         8rjg==
+X-Gm-Message-State: APzg51DSugafrG5nHmHtMstDQMX11BsF4akGmeRBG5+P1YOf/uz8W0zj
+        /E4SK6rD0uAPf35dRu8ZxWC3GrJ04pN/bhtMzN1BQj6N15WfvemSuWP6TJ47/poB0yycjZ4XMZt
+        RXAT1lA9qrnNiZ2B8cSYTSc+IWO2+vc8mTEqzGBB+h4xg2NWeNNj2PcWc2kVQ
+X-Google-Smtp-Source: ANB0VdYhidx74IxfczpoYjG7QcUejAsKcc27GaiUuutrgaCKvka5n6A5unX3ixUe73lsbwvaXeZ2OUXiAV97
+X-Received: by 2002:a1f:2903:: with SMTP id p3-v6mr826340vkp.88.1536266088564;
+ Thu, 06 Sep 2018 13:34:48 -0700 (PDT)
+Date:   Thu,  6 Sep 2018 13:34:44 -0700
+In-Reply-To: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
+Message-Id: <20180906203444.162213-1-sbeller@google.com>
+Mime-Version: 1.0
+References: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
+X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
+Subject: [PATCH] git-mv: allow submodules and fsmonitor to work together
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Sep 2018 13:14:55 -0700
-Message-ID: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
-Subject: Re: sb/submodule-move-nested breaks t7411 under GIT_FSMONITOR_TEST
-To:     Ben Peart <Ben.Peart@microsoft.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To:     git@vger.kernel.org
+Cc:     Ben.Peart@microsoft.com, avarab@gmail.com, gitster@pobox.com,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -65,42 +64,63 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Ben, do you have an idea?
-> >
->
-> I'll take a look as soon as I can (and at the other fsmonitor test issue =
-=C3=86var sent email about) but it may be a few days before I get a chance.
->
-> I haven't had a chance to look into this yet but here are a couple of SWA=
-G's I'd start with:
->
+It was reported that
 
-> is it possible that "git mv" is triggering it early, making a change, and=
- then updating the index with stale fsmonitor data?
+  GIT_FSMONITOR_TEST=3D$PWD/t7519/fsmonitor-all ./t7411-submodule-config.sh
 
-This is exactly what is happening. Thanks for describing the situation
-precisely.
+breaks as the .gitmodules file is modified and staged after the fsmonitor
+considers it clean. Mark the .gitmodules file to be not clean before
+staging.
 
-> I wonder if there is a missing call to mark_fsmonitor_invalid() in the "g=
-it mv" codepath somewhere.
->
-> refresh_fsmonitor() only runs once per git command
+Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Inspired-by: Ben Peart <benpeart@microsoft.com>
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
 
-Just naively adding mark_fsmonitor_invalid doesn't work, as then
-we have a sequence of
+I am not quite sure if this is the correct approach and handling of the
+fsmonitor API, but it unbreaks the test.
 
-fsmonitor process '/u/git/t/t7519/fsmonitor-all' returned success
-mark_fsmonitor_clean '.gitmodules'
-mark_fsmonitor_invalid '.gitmodules'
-write fsmonitor extension successful
+> Just naively adding mark_fsmonitor_invalid doesn't work, as then ...
 
-and the marking invalid doesn't seem to override the first
-mark as valid ?
+Adding it before the staging, works.
 
->
-> Sorry, I'll look as soon as I can.
->
-> Ben
+Please double check!
 
-Thanks!
+Thanks,
 Stefan
+
+ submodule.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/submodule.c b/submodule.c
+index 50cbf5f13ed..56b0d5fe24e 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -22,6 +22,7 @@
+ #include "worktree.h"
+ #include "parse-options.h"
+ #include "object-store.h"
++#include "fsmonitor.h"
+=20
+ static int config_update_recurse_submodules =3D RECURSE_SUBMODULES_OFF;
+ static struct string_list changed_submodule_names =3D STRING_LIST_INIT_DUP=
+;
+@@ -149,6 +150,15 @@ int remove_path_from_gitmodules(const char *path)
+=20
+ void stage_updated_gitmodules(struct index_state *istate)
+ {
++	struct cache_entry *ce;
++	int pos;
++
++	pos =3D index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
++	ce =3D (0 <=3D pos) ? istate->cache[pos] : NULL;
++
++	if (ce)
++		mark_fsmonitor_invalid(istate, ce);
++
+ 	if (add_file_to_index(istate, GITMODULES_FILE, 0))
+ 		die(_("staging updated .gitmodules failed"));
+ }
+--=20
+2.19.0.rc2.392.g5ba43deb5a-goog
+
