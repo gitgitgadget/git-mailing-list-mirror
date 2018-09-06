@@ -2,136 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6331D1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 21:54:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F5A61F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 22:16:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727714AbeIGCbw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 22:31:52 -0400
-Received: from mail-wm0-f67.google.com ([74.125.82.67]:38987 "EHLO
-        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbeIGCbw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 22:31:52 -0400
-Received: by mail-wm0-f67.google.com with SMTP id q8-v6so12739200wmq.4
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 14:54:20 -0700 (PDT)
+        id S1728183AbeIGCyK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 22:54:10 -0400
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33465 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727618AbeIGCyJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 22:54:09 -0400
+Received: by mail-ed1-f68.google.com with SMTP id d8-v6so10138263edv.0
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 15:16:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=pucbok0Ru9uyL37IJi61KNHQkW6wBBYwQ7SXpcRUQK0=;
-        b=kiRzLvfAAWT8bzf6MniuUeudKfZkVnKfwtTOr6K7LNch+Sh9gO67d7XhxPW4J8R0bb
-         PxW6GVP/HIiL8XKoxWQIStCRsISYjbyAhNmajax0BM7mvQciHXUtLx8gZ1011C3lwfqf
-         nCS+f0a81o0yOh28gMHhQm+VAaoNJ54cHhP4s/qAasfR55/9dyrEKEKdha9pe4l/NuiY
-         uA6lZz7LzprlvDwsOATSj5INYKSZcxoxgw3w/DMZBywbkMC4O7nAjGTbvcn/oq9Gqfy/
-         Rrp3g4YRvUYZb7KfW8FgZdna8DAuUVEImoosirdhUW+MN7RdqyVKtxkqW1B7eb6/cb0W
-         cJsw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EmZRkRlKvx4k4TYOv6kmSkMMwZ6X+ccifheIerMoVMM=;
+        b=LLwElMnRrbwLjNiVQlwQSohiTjvixfohz8pADOkx3EzOonr6P0DOO4ZcxOk4hx81Dv
+         xX+KxjSVu/pyaIJKUenzogZzlgDDyMZkrpFF4dBUMwTXWl0NyjQdBD6bcwpTKfeQoohL
+         j5+QXzeU9JEOSRgRrubFKEjIfD6RnnMazAuWjsYqFNBKZgJ0hLDxI4bg85ILIuCanhHP
+         8VuH9f7S9TTs3hkyWEvwy3sARv1NmOpHhSeVIQxSWy47Bu/p/uFqL+i05FydZT3YZXXt
+         PFFFyC5MJZtpc+RqvrEruvVWjcGBov65dUtX7E0WkTYTtFZvsVTIMjYzWyt5TsXcUlrE
+         bJEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=pucbok0Ru9uyL37IJi61KNHQkW6wBBYwQ7SXpcRUQK0=;
-        b=aKpsuWkgw9eFj8gliGpVm0ThDrs6U0t/O8jbx6vAN9UZydg03L3moq4+ZIQGFCpL0w
-         DK6nq5MWAkHB1dpRGYSC/iaeP2oP82XmSaoGPEzf94eXSHY0c4CcHx6dUdjgwLQhn4uy
-         sfxZQ8JeBnVjCRKTQm0kI3iaq02zih3uTUXTULyMGlR2wEvLVAxxAXmW9KiQdgQtyrFi
-         94YtoWkGBA6I5qgZhGe2UnAGXeqEUvDgPB0krcIjvM7A4QJurSgjRgU7v6lTKMxRBdUl
-         h7sJqdJhio7KiLfL4QgjWYVMSTaE7675mTkNibXf49/PCAZHEqb3dMDUpYrDEJj5xpqA
-         TAqQ==
-X-Gm-Message-State: APzg51B5wE36oO1vm3cnubYhfS0JP0x15Em5TpEciskSnYWCaSlykwsB
-        5/1ATUW869SO2bdYBVwV3sU=
-X-Google-Smtp-Source: ANB0VdakBkH0QP0Q8LLsMaTMs1l8PzBCMPWY8yNu0KxLsSB/rb5pjul+YadGVNEFtJmNDsb8hiw7HA==
-X-Received: by 2002:a1c:c5cc:: with SMTP id v195-v6mr3422131wmf.29.1536270859244;
-        Thu, 06 Sep 2018 14:54:19 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y12-v6sm3608250wrq.33.2018.09.06.14.54.18
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Sep 2018 14:54:18 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-backend: allow empty CONTENT_LENGTH
-References: <20180906193516.28909-1-max@max630.net>
-Date:   Thu, 06 Sep 2018 14:54:18 -0700
-In-Reply-To: <20180906193516.28909-1-max@max630.net> (Max Kirillov's message
-        of "Thu, 6 Sep 2018 22:35:16 +0300")
-Message-ID: <xmqq1sa6z3zp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EmZRkRlKvx4k4TYOv6kmSkMMwZ6X+ccifheIerMoVMM=;
+        b=iY9kSr/uZmi69HvaOUFFhbgcETFos4pIlmSF3zF8GBFBFfnFU2RvTyVv/uTzF2e5Lv
+         hlbajc608baJDHOi/zj0K9DsnjxGS5EbNilf67ib40X0UHYBhWZ+Row5yieFpJSTkv4F
+         5t5brqikt+2r+RIPWLozdl0VrD37gtoo2Wz4d7TDyptaOXDE+Ys+XEjRQtxDz+hUOu3m
+         z/pzyOgD2GxVcMxEkT+hJXZRvNWcHZ3E9ipk5/krN8i2aFXW1MZ5UGqx/Ghx/5aTzTMN
+         Jazqn+x4Gm91gMH3FbyJ84tf/KIqA6sC+pEIiCg09cX/fEgQVY0K8ZJ9kcQ4zqr40p6+
+         ecQA==
+X-Gm-Message-State: APzg51DwX8xkF+JURDEyFrGu7RQOJbp8mQeRe+TJuxu7j1hkY+QCBIaJ
+        SzxHcfq9kdhc9u63W8oITL6ZXnGl+XmmGco7rdosfE/3
+X-Google-Smtp-Source: ANB0VdZZPnyG6RLQA3q96wJT+Y0Or/FBg1w/o/UepHLhd3Rb0G2f/eTDOL+Q9y7PIuZp9Z8iuJPAv2claczVFvqk+j0=
+X-Received: by 2002:aa7:c314:: with SMTP id l20-v6mr5526917edq.53.1536272192953;
+ Thu, 06 Sep 2018 15:16:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180904230149.180332-1-sbeller@google.com> <20180904230149.180332-2-sbeller@google.com>
+ <xmqqh8j236wj.fsf@gitster-ct.c.googlers.com> <20180906165602.GA19367@sigill.intra.peff.net>
+In-Reply-To: <20180906165602.GA19367@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 6 Sep 2018 15:16:21 -0700
+Message-ID: <CAGZ79kbRyVZ_1QpX0pPigN+2Pt2dV1eYvLyoWeSWejbLxko4YQ@mail.gmail.com>
+Subject: Re: [PATCH 01/11] string_list: print_string_list to use trace_printf
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Kirillov <max@max630.net> writes:
-
-> According to RFC3875, empty environment variable is equivalent to unset,
-> and for CONTENT_LENGTH it should mean zero body to read.
+On Thu, Sep 6, 2018 at 9:56 AM Jeff King <peff@peff.net> wrote:
 >
-> However, as discussed in [1], unset CONTENT_LENGTH is also used for
-> chunked encoding to indicate reading until EOF, so keep this behavior also
-> for empty CONTENT_LENGTH.
-
-Makes sense.
-
+> On Thu, Sep 06, 2018 at 09:52:28AM -0700, Junio C Hamano wrote:
 >
-> Add a test for the case.
+> > Stefan Beller <sbeller@google.com> writes:
+> >
+> > > It is a debugging aid, so it should print to the debugging channel.
+> >
+> > ... and rename it with trace_ prefix.
+> >
+> > Use of trace_printf() is nice, as we can control its behavior at
+> > runtime ;-)
 >
-> [1] https://public-inbox.org/git/20160329201349.GB9527@sigill.intra.peff.net/
+> Yes, though...
 >
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> Hi.
+> > > -void print_string_list(const struct string_list *p, const char *text)
+> > > +void trace_print_string_list(const struct string_list *p, const char *text)
+> > >  {
+> > >     int i;
+> > >     if ( text )
+> > > -           printf("%s\n", text);
+> > > +           trace_printf("%s\n", text);
+> > >     for (i = 0; i < p->nr; i++)
+> > > -           printf("%s:%p\n", p->items[i].string, p->items[i].util);
+> > > +           trace_printf("%s:%p\n", p->items[i].string, p->items[i].util);
+> > >  }
 >
-> This should fix it. I'm not sure should it treat it as 0 or "-1"
-> At least the tests mentioned by Jeff fails if I try to treat missing CONTENT_LENGTH as "-1"
-> So keep the existing behavior as much as possible
+> It seems funny that we'd iterate through the list checking over and over
+> whether tracing is enabled.
+>
+> Should this do:
+>
+>   if (!trace_want(&trace_default_key))
+>         return;
+>
+> at the top? (Or possibly even take a trace key from the caller, so that
+> it can use whatever context makes sense for this particular list?)
 
-I am not sure what you mean by the above, between 0 and -1.  The
-code signals the caller of get_content_length() that req_len is -1
-which is used as a sign to read through to the EOF, so it appears to
-me that the code treats missing content-length (i.e. str == NULL
-case) as "-1".
+I added this check as well as rewording the commit message
+to recite Junios understanding of the patch as well.
 
+However I would want to not derail this patch any further.
+This function was used as an aid by me some time ago, so I
+am willing to share the modifications needed for efficient
+printf debugging here, but I do not want to be dragged into
+a rabbit hole.
 
->  http-backend.c                         |  2 +-
->  t/t5562-http-backend-content-length.sh | 11 +++++++++++
->  2 files changed, 12 insertions(+), 1 deletion(-)
->
-> diff --git a/http-backend.c b/http-backend.c
-> index e88d29f62b..a1230d7ead 100644
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -353,7 +353,7 @@ static ssize_t get_content_length(void)
->  	ssize_t val = -1;
->  	const char *str = getenv("CONTENT_LENGTH");
->  
-> -	if (str && !git_parse_ssize_t(str, &val))
-> +	if (str && *str && !git_parse_ssize_t(str, &val))
->  		die("failed to parse CONTENT_LENGTH: %s", str);
->  	return val;
->  }
-> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-> index 057dcb85d6..ca34c2f054 100755
-> --- a/t/t5562-http-backend-content-length.sh
-> +++ b/t/t5562-http-backend-content-length.sh
-> @@ -152,4 +152,15 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
->  	grep "fatal:.*CONTENT_LENGTH" err
->  '
->  
-> +test_expect_success 'empty CONTENT_LENGTH' '
-> +	env \
-> +		QUERY_STRING=/repo.git/HEAD \
-> +		PATH_TRANSLATED="$PWD"/.git/HEAD \
-> +		GIT_HTTP_EXPORT_ALL=TRUE \
-> +		REQUEST_METHOD=GET \
-> +		CONTENT_LENGTH="" \
-> +		git http-backend <empty_body >act.out 2>act.err &&
-> +	verify_http_result "200 OK"
-> +'
-> +
->  test_done
+For example taking the trace key is much overkill IMHO
+for a pure debugging aid (and so is the shortcutting return
+that you proposed, but I added that already for the resend),
+so if anyone needs this function outside of printf-debugging,
+I would recommend patches on top.
+
+Thanks,
+Stefan
