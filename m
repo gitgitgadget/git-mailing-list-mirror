@@ -2,122 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59D7B1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 00:08:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1461F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 00:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726490AbeIFEl1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 00:41:27 -0400
-Received: from mail-oi0-f49.google.com ([209.85.218.49]:43198 "EHLO
-        mail-oi0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725781AbeIFEl0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 00:41:26 -0400
-Received: by mail-oi0-f49.google.com with SMTP id b15-v6so17129135oib.10
-        for <git@vger.kernel.org>; Wed, 05 Sep 2018 17:08:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qYF/7hsjTr67eXqPc/NwcimEeszNH+IJSOK+xppd9Rk=;
-        b=Y4dYuE3W0tkQlaakHIu9+kABqy7iT17iAzfVJT6vJE7ZbU1tYmhVcgXX36ypijBaWs
-         4ELbbhYV4km7Xy29dTd1yN//dKZpeUQMvH8NjBwoimYue1IuLKbh03xXAlFkL8MpDrbC
-         GoL598IkO3Xjipsrc0NaEdA4prDF3gDP1zk+jq1rZsTEjUoy9r9Nt0lryoXfofK6dsT6
-         RTwelhgMtjjfQNkJ42CGeYMp7bfpq9ikL6XIaDaNe02fihxB5iRf100+VSPtrtw9KhaF
-         aHcg+QWIjBScDMest36BBeKGxuqgi4/njDj1DHySV062PODTQJ0wIdJccS2woytQGftq
-         a5Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qYF/7hsjTr67eXqPc/NwcimEeszNH+IJSOK+xppd9Rk=;
-        b=Bm0fyvHSwnggxnRXtGttfWbwD6+r3bnOTXJy7WVFHNsAMQ3AITHyS4xD65Qd1Xvssl
-         unhzGpwyRcWGGXXmGmnxhUutw2C0cv5DXPNhVtyRMT0vxB6x3p6dKoaLGAq4zIyT4q+E
-         GIUgPSkronPtHJL7y/tVgoOY0C4pf4g0t+8NkzgMnk1CtifQQGAJLaz5/TB2fVpvroOx
-         /GhC2zuG0bGpS9oyiFOMfWafYNo5a5v0JEXlxGBa4gr4uaRiiNYAFVhmLTOLC9LiRo+2
-         QZuXIWwoy1YC0UkcqYOUwsit5vR+pOoBPkY+an7L5uSKbRhA2Rx0Np33hwy/HcqIn3Tz
-         g3lw==
-X-Gm-Message-State: APzg51DwmZ+N5bhzs00YPV995jL/YZmAY/q7G5sg7ANF8aHWnnKDwdX3
-        sMeO7FfR261O1vlkLT4NAsg1RabCgUuvVH7H6WJosGEo/Q==
-X-Google-Smtp-Source: ANB0Vdaj7TeGOOjg87RTRcZy0XUl601WCi+aG3KLKgf8f1SiO7L4O6Tw2cIwhc0UfHBilcF8jnkpSMdseVq+3SDxuko=
-X-Received: by 2002:aca:cdc2:: with SMTP id d185-v6mr183152oig.350.1536192530297;
- Wed, 05 Sep 2018 17:08:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1533854545.git.matvore@google.com> <cover.1536081438.git.matvore@google.com>
- <956f0c704f5492680928f4dc9ce9411e7f80bba4.1536081438.git.matvore@google.com> <xmqqwos16li9.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwos16li9.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Wed, 5 Sep 2018 17:08:37 -0700
-Message-ID: <CAMfpvh+m88Qb9mAPXuVMAhuUiUdzzEzFDLZ+ee6-OtxFHf4g_g@mail.gmail.com>
-Subject: Re: [PATCH v7 7/7] list-objects-filter: implement filter tree:0
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
-        git@jeffhostetler.com, jeffhost@microsoft.com,
-        Jeff King <peff@peff.net>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1726389AbeIFF0O (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 01:26:14 -0400
+Received: from fed1rmfepo202.cox.net ([68.230.241.147]:43089 "EHLO
+        fed1rmfepo202.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725953AbeIFF0O (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 01:26:14 -0400
+Received: from fed1rmimpo110.cox.net ([68.230.241.159])
+          by fed1rmfepo202.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20180906005330.KFSF21918.fed1rmfepo202.cox.net@fed1rmimpo110.cox.net>
+          for <git@vger.kernel.org>; Wed, 5 Sep 2018 20:53:30 -0400
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo110.cox.net with cox
+        id Y0tV1y00e59yGBo010tViR; Wed, 05 Sep 2018 20:53:29 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020B.5B907A8A.000A,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.2 cv=Zc1tDodA c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=WDhBSedXqNQA:10 a=hRt26KMdQgSuGMseVbMA:9
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.smith.home (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 602A129A00F6;
+        Wed,  5 Sep 2018 17:53:29 -0700 (MST)
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     Git List <git@vger.kernel.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/4] wt-status.c: commitable flag
+Date:   Wed,  5 Sep 2018 17:53:25 -0700
+Message-Id: <20180906005329.11277-1-ischis2@cox.net>
+X-Mailer: git-send-email 2.18.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 4, 2018 at 1:44 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Matthew DeVore <matvore@google.com> writes:
->
-> > @@ -50,6 +50,10 @@ static int gently_parse_list_objects_filter(
-> >                       return 0;
-> >               }
-> >
-> > +     } else if (!strcmp(arg, "tree:0")) {
-> > +             filter_options->choice = LOFC_TREE_NONE;
-> > +             return 0;
-> > +
->
-> This is not wrong per-se, but I would have expected to see something
-> like:
->
->         ... else if (skip_prefix(arg, "tree:", &param)) {
->                 unsigned long depth;
->                 if (!git_parse_ulong(param, &depth) || depth != 0) {
->                         err = "only 'tree:0' is supported";
->                         return -1;
->                 }
->                 filter_options->choice = LOFC_TREE_NONE;
->                 return 0;
->
-> so that "tree:1" is rejected not with "invalid filter-spec" but a
-> bit more descriptive "only tree:0 is".  Accepting "tree:00" or
-> "tree:0k" is merely an added bogus^wbonus.
->
-Good idea. An interdiff for my fix is below. I didn't add a test,
-since adding a shell test for every trivial error doesn't seem to
-scale, but let me know if you disagree. I did of course try provoking
-the error manually.
+A couple of years ago, during a patch review Junio found that the
+commitable bit as implemented in wt-status.c was broken.
 
-diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-index a28382940..14f251de4 100644
---- a/list-objects-filter-options.c
-+++ b/list-objects-filter-options.c
-@@ -50,7 +50,17 @@ static int gently_parse_list_objects_filter(
-  return 0;
-  }
+Stephen P. Smith (4):
+  Move has_unmerged earlier in the file.
+  wt-status: rename commitable to committable
+  t7501: add test of "commit --dry-run --short"
+  wt-status.c: Set the committable flag in the collect phase.
 
-- } else if (!strcmp(arg, "tree:0")) {
-+ } else if (skip_prefix(arg, "tree:", &v0)) {
-+ unsigned long depth;
-+ if (!git_parse_ulong(v0, &depth) || depth != 0) {
-+ if (errbuf) {
-+ strbuf_init(errbuf, 0);
-+ strbuf_addstr(
-+ errbuf,
-+ _("only 'tree:0' is supported"));
-+ }
-+ return 1;
-+ }
-  filter_options->choice = LOFC_TREE_NONE;
-  return 0;
+ builtin/commit.c  | 18 +++++++++---------
+ t/t7501-commit.sh | 10 ++++++++--
+ wt-status.c       | 45 +++++++++++++++++++++++++++------------------
+ wt-status.h       |  2 +-
+ 4 files changed, 45 insertions(+), 30 deletions(-)
+
+-- 
+2.18.0
+
