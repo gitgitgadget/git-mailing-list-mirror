@@ -2,105 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 502F21F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 14:17:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B246F1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 14:57:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbeIFSxU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 14:53:20 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:50562 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728905AbeIFSxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 14:53:20 -0400
-Received: by mail-wm0-f68.google.com with SMTP id s12-v6so11626837wmc.0
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 07:17:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=CR9IJuLSF+I/GgGD5DYCQO3YH/ThKO4ywgjIx7+xpLg=;
-        b=lNa7ZspPhTCSgVkEkX06zyscu3fsxsowqgV8REBUMTGJSaR6VX3L46uzLsnMLNzx0E
-         hVUk5sl179s4ve5h5ar8vVSk0kivMI04KpC2MbyQi9MzWIccha4YpJmDBENfS3jy4Lym
-         3DMzIhsoId+EELFk3TSEGCpbS7sbL943UL8G46B9zEM2xIZsELhleSgQZg9/CQ96F2bB
-         19/A9FJYNx3LJZc+lqVjl0Cw26Vrp90L7ABz/FFUrljXcYTyroe2ELVs/gy5y9QzH7wU
-         a0rnJe1Ba7aQBUgM36beQ5F8HTFP0UU8W/MoUZ2EjBAL5z2sNFrwEuh3BB9GxLnlrXa2
-         gS4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=CR9IJuLSF+I/GgGD5DYCQO3YH/ThKO4ywgjIx7+xpLg=;
-        b=KXi9M3U+7nfz6e+jFGVOE2WGkcTFRfxaw2VvHx9itZ3qE/8q8gtyzepCAvnndlE/CW
-         T+tjdwgk5gWaKovgL3IykZpdcj97LRHJ9qnBxhCQrNjhe8o9deRweH4KaNXRVJR7cmNi
-         aUR/qwzyzwCOEUjEHtSFzKqyHU+9zaDchl3Zpw6wMlWz93h49NLDSxDkZb+RIa7Vw+BY
-         ChIQvvLs4asydY+ICNFNRSm6IxxMy4v0TIh5l1pZ0ujcHkQKx4F8mmpRn0w5zWTr70HK
-         VZUn7onQLBbCyE521nSyqwH6ioPGpEV1MbcwfPWOfgBUSjvqcm1PJ9SUoNwDnzVn/7dy
-         tBKg==
-X-Gm-Message-State: APzg51BkL+IViUzeRaxmF17afi3cl63ij4cdOEWUjo99lzXLqTeyYv6+
-        mYbJ+b+8UJLVHgdCCP7drdg=
-X-Google-Smtp-Source: ANB0VdZlkEYDtnIb7W4ei+hUHFUo+tJE7Nvn7lVOwVddwbocTRaqJTxBRqOb+mZ+CBx3TywQDIv9Xg==
-X-Received: by 2002:a1c:888e:: with SMTP id k136-v6mr2504439wmd.6.1536243453546;
-        Thu, 06 Sep 2018 07:17:33 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id q200-v6sm33417985wmd.2.2018.09.06.07.17.32
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Sep 2018 07:17:32 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Tim Schumacher <timschumi@gmx.de>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [RFC PATCH v2] Allow aliases that include other aliases
-References: <20180905085427.4099-1-timschumi@gmx.de> <20180905173455.GA2336@sigill.intra.peff.net> <cd9a3a74-fdd6-0fb5-ae22-41d552391478@gmx.de>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <cd9a3a74-fdd6-0fb5-ae22-41d552391478@gmx.de>
-Date:   Thu, 06 Sep 2018 16:17:31 +0200
-Message-ID: <87o9dar9qc.fsf@evledraar.gmail.com>
+        id S1730190AbeIFTdF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 15:33:05 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41134 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729355AbeIFTdF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 15:33:05 -0400
+Received: (qmail 10759 invoked by uid 109); 6 Sep 2018 14:57:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Sep 2018 14:57:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30505 invoked by uid 111); 6 Sep 2018 14:57:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Sep 2018 10:57:22 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2018 10:57:09 -0400
+Date:   Thu, 6 Sep 2018 10:57:09 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Tim Schumacher <timschumi@gmx.de>, git@vger.kernel.org,
+        gitster@pobox.com, pclouds@gmail.com
+Subject: Re: [PATCH v3] Allow aliases that include other aliases
+Message-ID: <20180906145708.GA1209@sigill.intra.peff.net>
+References: <20180905085427.4099-1-timschumi@gmx.de>
+ <20180906101658.1865-1-timschumi@gmx.de>
+ <87pnxqrags.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87pnxqrags.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Sep 06, 2018 at 04:01:39PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-On Wed, Sep 05 2018, Tim Schumacher wrote:
+> If we don't have some test for these sort of aliasing loops that fails
+> now, we really should add that in a 1/2 and fix it in this patch in 2/2.
 
-> On 05.09.18 19:34, Jeff King wrote:
->>
->> It could also extend to ! aliases if we wanted (i.e., my '!git foo'
->> example from earlier), but you'd have to carry the counter through the
->> environment between processes.
->
-> That is a question about "shooting oneself in the foot" again,
-> but I think trying to prevent that would require more changes
-> than I can make, and it is definitely out-of-scope for this
-> patch.
+Yes, I'd agree that this is worth adding a test (especially if the
+output routines get more complex).
 
-I agree it could be done later, but it would be great if you could
-follow-up with that. Right now if you do:
+> That makes sense from an implementaion perspective, i.e. we lookup "bar"
+> twice. But let's do better. If I have aliase like:
+> 
+>     a = b
+>     b = c
+>     c = d
+>     d = e
+>     e = c
+> 
+> It should be telling me that my "e" expansion looped back to the "c = d"
+> expansion. Here's a patch to implement that, feel free to either squash
+> it in with my Signed-Off-By, or tacked onto a v4 version of this,
+> whichever you think makes sense:
 
-    a = !git b
-    b = !git a
+I don't have a strong opinion on whether this is worth it, but I think
+your implementation could be a little simpler:
 
-You end up with a fork bomb, and we don't guard against this, and if you
-have mixed execution / internal aliasing, e.g.:
+> diff --git a/git.c b/git.c
+> index 64f5fbd572..38f1033e52 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -692,8 +692,64 @@ static int run_argv(int *argcp, const char ***argv)
+>  		/* .. then try the external ones */
+>  		execv_dashed_external(*argv);
+> 
+> -		if (string_list_has_string(&cmd_list, *argv[0]))
+> -			die(_("loop alias: %s is called twice"), *argv[0]);
+> +		if (string_list_has_string(&cmd_list, *argv[0])) {
+> +			struct strbuf sb = STRBUF_INIT;
+> +			int i, seen_at_idx = -1;
+> +
+> +			/*
+> +			 * Find the re-entry point for the alias
+> +			 * loop. TODO: There really should be a
+> +			 * "return the index of the first matching"
+> +			 * helper in string-list.c.
+> +			 */
+> +			for (i = 0; i < cmd_list.nr; i++) {
+> +				if (!strcmp(*argv[0], cmd_list.items[i].string))
+> +					seen_at_idx = i;
+> +			}
+> +			assert(seen_at_idx != -1);
 
-    a = b
-    b = c
-    c = d
-    d = !git a
+The string-list code doesn't generally deal in indices. You can use
+string_list_find_insert_index(), but its return value is a little funky
+for the existing case. You can also just do:
 
-The loop detection doesn't kick in.
+  struct string_list_item *seen;
+  ...
+  seen = string_list_lookup(&cmd_list, *argv[0]);
+  if (seen) {
+	/* we have a loop */
+	int idx = seen - cmd_list.items;
 
-It should be easy to add detection for this on top. See what we do with
-git_config_push_parameter() in git.c already, i.e. you'd add some
-simliar env variable, set items in the string list delimited by
-e.g. whitespace, and then just pre-populate your string list with that
-if it's set, and re-set it & carry it forward.
+That's a little intimate with the string-list implementation as an array
+of string_list, but it's already pretty standard to walk over and
+dereference that list (including in your patch). But also see below.
 
-Then any combination of internal aliasing and custom commands will
-benefit from loop detection.
+Side note: there's actually a bigger problem with the original patch:
+the string list is unsorted (because it uses string_list_append(), and
+which is why your linear walk works here). But string_list_has_string()
+assumes it is sorted.  So I think we'd actually want to use
+unsorted_string_list_has_string() or unsorted_string_list_lookup().
+
+> +			for (i = 1; i < cmd_list.nr; i++) {
+> +				if (i - 1 == seen_at_idx)
+> +					/*
+> +					 * TRANSLATORS: This is a the
+> +					 * re-enttry point in the list
+> +					 * printed out by the "alias
+> +					 * loop" message below.
+> +					 */
+> +					strbuf_addf(&sb, _("    %d. %s = %s <== The re-entry point in the loop\n"),
+> +						    i,
+> +						    cmd_list.items[i - 1].string,
+> +						    cmd_list.items[i].string);
+
+This is always going to show the right-hand of the equals as the
+left-hand on the next line. Would it be simpler to just show the list?
+Likewise, the last item in the list is always going to be "where the
+loop started". Do we need to say that?
+
+E.g., something like:
+
+  seen = unsorted_string_list_lookup(&cmd_list, *argv[0]);
+  if (seen) {
+          for (i = 0; i < cmd_list.nr; i++) {
+		struct string_list *item = cmd_list.items[i];
+
+		strbuf_addf(&sb, "  %s", item->string);
+		if (item == seen)
+			strbuf_add(&sb, " <==");
+		strbuf_addch(&sb, '\n');
+	  }
+	  /* We never added this to the list, but we were about to */
+	  strbuf_addch("  %s\n", seen->string);
+	  die(...);
+  }
+
+I guess it's not that far off of yours. Not using words to describe the
+loop entry and exit points avoids translation, which avoids notes to
+translators, which is most of what makes your patch long. ;)
+
+-Peff
