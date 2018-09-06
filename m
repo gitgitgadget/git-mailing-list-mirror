@@ -2,138 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CBF51F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 19:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B1AE1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 19:31:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728071AbeIGAIO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 20:08:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41707 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727529AbeIGAIN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 20:08:13 -0400
-Received: from [10.2.0.3] ([217.235.91.60]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Md3li-1gGDdS0ttK-00IFHR; Thu, 06
- Sep 2018 21:31:12 +0200
-Subject: Re: [PATCH v3] Allow aliases that include other aliases
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, pclouds@gmail.com
-References: <20180905085427.4099-1-timschumi@gmx.de>
- <20180906101658.1865-1-timschumi@gmx.de>
- <20180906145942.GB1209@sigill.intra.peff.net>
- <xmqqy3cezcz5.fsf@gitster-ct.c.googlers.com>
-From:   Tim Schumacher <timschumi@gmx.de>
-Message-ID: <4f814d67-c384-6d1e-a988-97cc25e32475@gmx.de>
-Date:   Thu, 6 Sep 2018 21:31:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728146AbeIGAI2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 20:08:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:41676 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727529AbeIGAI2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 20:08:28 -0400
+Received: (qmail 27061 invoked by uid 109); 6 Sep 2018 19:31:32 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Sep 2018 19:31:32 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7157 invoked by uid 111); 6 Sep 2018 19:31:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Sep 2018 15:31:44 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2018 15:31:30 -0400
+Date:   Thu, 6 Sep 2018 15:31:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: Git in Outreachy Dec-Mar?
+Message-ID: <20180906193130.GA28588@sigill.intra.peff.net>
+References: <20180828151419.GA17467@sigill.intra.peff.net>
+ <CAP8UFD0SYECLk--7JsZkxBdQeJPuG1Ut5GMLsCJHqM+jG7C0jQ@mail.gmail.com>
+ <20180901084321.GC25852@sigill.intra.peff.net>
+ <CAP8UFD0qk3SkBhuEiG+-qhTjXry1SH0SmoFjSNmPr6WZrLfijw@mail.gmail.com>
+ <20180906012143.GA7477@sigill.intra.peff.net>
+ <CAP8UFD1nbv6=6JLnOCkmCcZjNOcDfOm4oH7pxHsYcddUYUxBPw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3cezcz5.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US-large
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:NLS6sXAksTcYdDlphe7BD5z/dt7E4xgI2QF7H2j/+hzVcmKhMdv
- EZibJGNAz/15d23W7+a21cqi4ROGj8LMOOQYpVkBGewOn879+HAu5QppE/LC5l/KEzTsi5w
- 9fPSc4KYThj95Yhb070QlqD87olg5+Ql9ILv+hDamdYFeV6SfBUxGRzdJaS/vhu9Mn3hglU
- lcP0kuxn/Wd+3JJcgEJ6A==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:fRaj5HYQoNc=:BOpLXzG9Q/UySq9nLafQsB
- uA4Wyxba0JfnMWa8mHGh4LWJxGfEsYIcLUJcGkV9hZFkoRJVs7kSkr3Vry0D8bv5fLqxsY9hj
- jelYO8v2iVudmVpOoVa+gpG4PdZZ4l+rCHJfivti9U7Xe5JrQhLbmCbIrwMU8M3cDMy1osaRA
- Idb2HS+ky7c1iBLeueZpf7Ah1LnOSQlCGBgh5UL0AGw639axzIjc9xFv0QBawFv1+AD/3fnmZ
- ddiYhCBJvLKk3G9L04oV09FIs3v89R+aGYkm1XVuDlOjJ+xJF8Ug04tiyIaUhbRl3a5XgMipW
- 6Ee9GJH91lF+PGonWGDYs8iY4fi9P3fkKPdZ4HII3MKdnFaDLl1wkvragXt68o4wvS4XYcsKe
- fqc/iAXilNlxiPyHHwCCnp7hYL8Wfsp70UVmtE5iewTuamWOSppq9Cc02zGuVFZvs1VCRMwie
- C/EQbaJF/FCxNXLWpsNx9dhNtpkGjIv8DXiv1Dqo8rnOlsXIiZYOKOBdI36mYvuDagocDBiwQ
- wQcVg72ro5lnfoTd82Zj+sM0ZD4mOb4fVllP8ayU5n0gnIFkDMi2fo+mqZGBi2OVSUmY4TtT5
- mrK6/aJpj0MWMjIjDMkJ7YGJrKBR8bhHlwDLr5DRi3/jx6+g2GxN/Vzwi/fxZaM0INzozbIQa
- zZBSTXDRmWFovvh9gwSyE80Kyj2rWnqZYL4OyT1H/GKOO8SbASMwKRb4AkcIFiHfm0nuBtQcw
- fQVb2oDwk54rlrpotPaRt55405ULCj2Wf/IAYWTsG7d88VrlETxwtrb6ZGVK2cL45REIU358U
- lRidVH6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1nbv6=6JLnOCkmCcZjNOcDfOm4oH7pxHsYcddUYUxBPw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06.09.18 20:40, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> On Thu, Sep 06, 2018 at 12:16:58PM +0200, Tim Schumacher wrote:
->>
->>> @@ -691,17 +692,23 @@ static int run_argv(int *argcp, const char ***argv)
->>>   		/* .. then try the external ones */
->>>   		execv_dashed_external(*argv);
->>>   
->>> -		/* It could be an alias -- this works around the insanity
->>> +		if (string_list_has_string(&cmd_list, *argv[0]))
->>> +			die(_("loop alias: %s is called twice"), *argv[0]);
->>
->> I pointed this out in my response to Ævar, but I want to make sure it
->> gets seen. This call assumes the list is sorted, but...
->>
->>> +		string_list_append(&cmd_list, *argv[0]);
->>
->> This will create an unsorted list. You'd have to use
->> string_list_insert() here for a sorted list, or
->> unsorted_string_list_has_string() in the earlier call.
-> 
-> Correct.
-> 
-> Also, normal users who have never seen this loop that implements
-> alias expansion would not have a clue when they see "called twice".
-> 
-> I actually think the caller should also pass cmd to run_argv() and
-> then we should use it (and not argv[]) in this die() message.
+On Thu, Sep 06, 2018 at 11:51:49AM +0200, Christian Couder wrote:
 
-Could we just save the first element of the original argv for that
-purpose? Or alternatively, use the first stored element in the
-command list?
+> > Thanks. I signed us up as a community (making me the "coordinator" in
+> > their terminology). I think the procedure is a little different this
+> > year, and we actually propose projects to mentor through their system.
+> 
+> Yeah, I think the https://git.github.io/Outreachy-17/ is not actually necessary.
 
-> When
-> the original command was foo that is aliased to bar, which in turn
-> is aliased to baz, which in turn is aliased to bar, especially that
-> "git foo" invocation was in a random script written six weeks ago by
-> the user, it would be a lot more helpful to see
-> 
->      "alias loop detected: expansion of 'git foo' does not terminate"
-> 
-> than
-> 
->      "loop alias: bar is called twice".
-> 
-> given that 'bar' is not something the user called, or written in the
-> script she wrote six weeks ago.
+I think it still may be helpful for explaining in further detail things
+like #leftoverbits (though I see you put some of that in your project
+description).
 
-Indeed, printing the command that the user called is a better message
-than the command that is the entry-point of the loop. I'll change it
-in v4.
+> > So anybody interested in mentoring should go here:
+> >
+> >   https://www.outreachy.org/communities/cfp/git/
+> >
+> > (and you'll need to create a login if you don't have one from last
+> > year). You should be able to click through "Submit a Project Proposal",
+> > after which the fields are pretty self-explanatory.
+> 
+> I did that for the "Improve `git bisect`" project. As the
+> "coordinator", you will need to approve that project.
 
-> 
->> It's unfortunate that string_list makes this so easy to get wrong.
->>
->>> +
->>> +		/*
->>> +		 * It could be an alias -- this works around the insanity
->>>   		 * of overriding "git log" with "git show" by having
->>>   		 * alias.log = show
->>>   		 */
->>> -		if (done_alias)
->>> -			break;
->>>   		if (!handle_alias(argcp, argv))
->>>   			break;
->>> -		done_alias = 1;
->>> +		done_alias++;
->>
->> I don't think anybody cares about done_alias being an accurate count.
->> Should we just leave this as-is?
-> 
-> Good point.  The only caller treats it as a bool (i.e. "should the
-> failure be reported as failure to expand an alias cmd which resulted
-> in (updated) argv[0] that is not a git command?").
-> 
+Thanks. I approved it, though a few of the descriptions are a little
+funny. For instance, the text says "we use an issue tracker", which then
+links to public-inbox. I assume this is because you filled in a field
+for "issue tracker" and then the system generated the text. I don't know
+if there's a way go into more detail there.
 
-As the string-list has its own counter, I guess the done_alias variable
-can be reverted to a simple 0/1 value.
+> I think the person who submits a project becomes some kind of primary
+> mentor for the project. So Dscho, if you want to be such a mentor for
+> one or both of the other projects on the Outreachy-17 page, please
+> submit the project(s) otherwise please tell me and I will submit them.
+> You are free of course to change things in these projects when you
+> submit them or to submit other completely different projects.
+
+Yes, I think the point is make sure the mentors are invested in the
+individual projects. I imagine a kind of "oh, one of us will probably
+mentor it" attitude has led to problems in other projects in the past.
+
+-Peff
