@@ -2,125 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E22D1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 20:34:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4A0F1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 20:38:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726575AbeIGBL6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 21:11:58 -0400
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:36604 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726086AbeIGBL6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 21:11:58 -0400
-Received: by mail-ua1-f74.google.com with SMTP id m19-v6so5282670uap.3
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 13:34:49 -0700 (PDT)
+        id S1726708AbeIGBPZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 21:15:25 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:56068 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726334AbeIGBPZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 21:15:25 -0400
+Received: by mail-wm0-f68.google.com with SMTP id f21-v6so12644091wmc.5
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 13:38:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=ZD/R4eo1sB1agSEfqQZB0tXIgr56eU+4kUpHvU9GGH4=;
-        b=N2uaDE/xjJxZH97WWGMCUbSt5TXHsYvBId8ZSsKoXN+xWvppd06Uc309xB1/FXiBpH
-         pmWwrEkC/PDWyIn7ulYFYll7+abYg6V9kJt7b2mijQ1jy17nS7sZTBnpNFSghKjZPc8G
-         911w9XbOi/QFqiM6wWDYcD93221tSrxRmAddpIArcurvdhe/YULk0sorwYgEgyklnz4c
-         B2ckJ0fzj/aP4JNKea0VN9+XvbRS2CKEfh34tBLcg0C073S4ZXeqKNoIBCRdWMH4hv3b
-         g+wAXRl8qDnrA6gGloFM1ZYZhAG2togI/8MSGtG8SwfctgkD+tFZDhAlZQTOgk6XzGNn
-         38Zg==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vcikC54sHQL6ZkUjv08jm7s8/vGT/uFUEfzaBjqFJfU=;
+        b=b+ajQRvPFMkWlxlZFplcoMEbjjfbwlIh4f4iXvSkGEBEWUeMej3lKs4BpI11LvaYwO
+         NSiYD3PjXv5gzYl0vCPJvLfD3gFggWTSjqWTczACaxytYEKii6xcn0bmfZGrrsCVOhL2
+         71HY7LAu9nOxe75cHQewp2wsFrEop4WVqEZs4eAUcvReoFENw9DEscsk+ZcpWg5m0S1Q
+         LNuYsGo+1T2RA6D9UAc3gjBLQzt28xhOyL7JL/qFBYtKDjFzcQ5LF0XsXvdM1D6LAfQG
+         baAUzfqn4Xu7/Ida8yDbA4SIT5WCIJsnXZO3aiZWMcX2d8UoBRNI7AzqMkXjfA/mLF1s
+         r7iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=ZD/R4eo1sB1agSEfqQZB0tXIgr56eU+4kUpHvU9GGH4=;
-        b=INtGFcWznbB7oioRy5yjAD9JC34leJ8H6dXZKm2dm0UbhcUTjBDLgAiwEPTyox6bG4
-         km7EGTD/4vCC8jNw3Mk0CnCZpOKoEH8bhn3xNBE+A0Tu4Ew5VD3KHgvByie9NcYXbXA5
-         H7mwDSsb9AXkwsyV1lLhgkaEFFjjueKEO1ukqsK4sn8lfba4et/Yu+XlRBFh8g/Y8XyA
-         pubaoNMHV75HSHBJTFo3/0TUH4cIer5zI/Glaaa52KoTo6qtG19YT0od6NvXs4Ti8pB1
-         sy+uFaRO+Bns1BTlnwDe1xw0v9xvYi5f94G+uT9n5jNZiVyW2nPtLUnfwaQoTOm15hQq
-         8rjg==
-X-Gm-Message-State: APzg51DSugafrG5nHmHtMstDQMX11BsF4akGmeRBG5+P1YOf/uz8W0zj
-        /E4SK6rD0uAPf35dRu8ZxWC3GrJ04pN/bhtMzN1BQj6N15WfvemSuWP6TJ47/poB0yycjZ4XMZt
-        RXAT1lA9qrnNiZ2B8cSYTSc+IWO2+vc8mTEqzGBB+h4xg2NWeNNj2PcWc2kVQ
-X-Google-Smtp-Source: ANB0VdYhidx74IxfczpoYjG7QcUejAsKcc27GaiUuutrgaCKvka5n6A5unX3ixUe73lsbwvaXeZ2OUXiAV97
-X-Received: by 2002:a1f:2903:: with SMTP id p3-v6mr826340vkp.88.1536266088564;
- Thu, 06 Sep 2018 13:34:48 -0700 (PDT)
-Date:   Thu,  6 Sep 2018 13:34:44 -0700
-In-Reply-To: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
-Message-Id: <20180906203444.162213-1-sbeller@google.com>
-Mime-Version: 1.0
-References: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH] git-mv: allow submodules and fsmonitor to work together
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Ben.Peart@microsoft.com, avarab@gmail.com, gitster@pobox.com,
-        Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vcikC54sHQL6ZkUjv08jm7s8/vGT/uFUEfzaBjqFJfU=;
+        b=kIr6Eeqwx9bAecL3wMXCSR7UgTNNimyyAisjS5mZiilS1uXp1S5yMCOo542m2tvvBF
+         /Op5yV96RVR+aSxyrOblI93XlT3IGbeEhHJsyLuMksIjwxeID8Y0IBdBT8auv+BzK4F4
+         b2lHB9Tj/QY+FKw33qVDKwuANh1Af2eeoHxTHzd4xFqYJxvMMfeds4eUS5a/1YETGv6G
+         wxXHel0NWPeao0tf/mjXuadkIGAKT9BOWlngpgrJ9ekT43KIR4TgkMaLvXEQZQeK5KIy
+         JsAVMFzGpSAuwfmDP47LDKcmf/kDpdzfy+5kXMbYfvBeLAI/UI93ajF2YYomWd5Qmjrf
+         rM9A==
+X-Gm-Message-State: APzg51DydEJNPFqzkMSpnuhUbbuUV/+gElGgAlXoSZK7qDheJq947glG
+        DDC2kfcSUKvrAtbCIPF+MtM=
+X-Google-Smtp-Source: ANB0VdYazFKNpI9XcxkIX6AdTgickNtjzvfpCyLY6x/GsR7flmCoUWLJg6oZ2jB9NYv/RSLg8+c2wA==
+X-Received: by 2002:a1c:501:: with SMTP id 1-v6mr3470101wmf.140.1536266293449;
+        Thu, 06 Sep 2018 13:38:13 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x16-v6sm7698092wrm.69.2018.09.06.13.38.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Sep 2018 13:38:12 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 00/18] builtin rebase options
+References: <20180808152140.14585-1-predatoramigo@gmail.com>
+        <pull.33.v2.git.gitgitgadget@gmail.com>
+        <xmqqmusuz9ql.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 06 Sep 2018 13:38:11 -0700
+In-Reply-To: <xmqqmusuz9ql.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Thu, 06 Sep 2018 12:50:10 -0700")
+Message-ID: <xmqqin3iz7ik.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was reported that
+Junio C Hamano <gitster@pobox.com> writes:
 
-  GIT_FSMONITOR_TEST=3D$PWD/t7519/fsmonitor-all ./t7411-submodule-config.sh
+> I've rebuilt the collection of topics up to pk/rebase-in-c-6-final
+> with these two updated series twice, once doing it manually, like I
+> did the last time, and another using "rebase -i -r" on top of the
+> updated pk/rebase-in-c-4-opts.  The resulting trees match, of
+> course.
 
-breaks as the .gitmodules file is modified and staged after the fsmonitor
-considers it clean. Mark the .gitmodules file to be not clean before
-staging.
+Just to clarify, "trees match" means "'rebase -i -r' gave us the
+correct result" ;-).
 
-Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Inspired-by: Ben Peart <benpeart@microsoft.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
+> I guess that is the answer to a question you asked earlier, which I
+> haven't answered so far because I didn't have a good grasp of where
+> my preference was coming from when it was asked.  Now I know, so...
 
-I am not quite sure if this is the correct approach and handling of the
-fsmonitor API, but it unbreaks the test.
+In case the question was unclear it was "is there a reason why you
+do not want to use rebase -ir?"
 
-> Just naively adding mark_fsmonitor_invalid doesn't work, as then ...
-
-Adding it before the staging, works.
-
-Please double check!
-
-Thanks,
-Stefan
-
- submodule.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/submodule.c b/submodule.c
-index 50cbf5f13ed..56b0d5fe24e 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -22,6 +22,7 @@
- #include "worktree.h"
- #include "parse-options.h"
- #include "object-store.h"
-+#include "fsmonitor.h"
-=20
- static int config_update_recurse_submodules =3D RECURSE_SUBMODULES_OFF;
- static struct string_list changed_submodule_names =3D STRING_LIST_INIT_DUP=
-;
-@@ -149,6 +150,15 @@ int remove_path_from_gitmodules(const char *path)
-=20
- void stage_updated_gitmodules(struct index_state *istate)
- {
-+	struct cache_entry *ce;
-+	int pos;
-+
-+	pos =3D index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
-+	ce =3D (0 <=3D pos) ? istate->cache[pos] : NULL;
-+
-+	if (ce)
-+		mark_fsmonitor_invalid(istate, ce);
-+
- 	if (add_file_to_index(istate, GITMODULES_FILE, 0))
- 		die(_("staging updated .gitmodules failed"));
- }
---=20
-2.19.0.rc2.392.g5ba43deb5a-goog
-
+If "cherry-pick" did not lose notes, I would have preferred to do
+this kind of rebuilding dependent chains of topics without using
+rebase at all, but that is a different story.
