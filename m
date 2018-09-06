@@ -2,119 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0B0A1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 18:06:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 478361F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 18:20:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730301AbeIFWnG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 18:43:06 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46508 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbeIFWnF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 18:43:05 -0400
-Received: by mail-ed1-f66.google.com with SMTP id k14-v6so9591642edr.13
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:06:27 -0700 (PDT)
+        id S1728177AbeIFW52 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 18:57:28 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34417 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726356AbeIFW52 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 18:57:28 -0400
+Received: by mail-wr1-f65.google.com with SMTP id g33-v6so12430958wrd.1
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:20:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rQ54sFRTWAx6kB4089Pov2O8Y8GP5LK7JHl1q8rQvaU=;
-        b=NipafIhB0n3/8DyRu+uz6ablX/H1rNSz0fa9izTCRc18SyYl8icadBs0Dz9TUyx3wB
-         EaIXNeOpqLZpd07nJBsMKVTarYZhymc39ytzeWiJZQA4ZUr1wqHYVuuu188yktGtxObE
-         bDSgkvdqjSjJCle5m0hD0o3I2Lo8GmO2BDmHKfg7ZyEy7zjvHrq09/LYbaLvWr8L+izJ
-         awSyE4G/kLOAE45HlggoRA5dRicKymDNvbowLOwtv1BLj51YqH4azY/mXOCbJ457Tpi7
-         AlB2RaOgMZ6IIcbit4cevHvvegwbNywHd0M9CZ2fOChNtiFa6qr65/uYp+EgvSaUr+0P
-         5UWQ==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=UHGJ7a+lV3G+n3AGIJEDDA9JHo50UZrwPyZZtEixeSA=;
+        b=MZBBBjSZoMJTnQKzM3hvS2l2S0ZOCLoUp2u5IvNmq2TCO2eBqdRn3+G2oxnfj3Btf8
+         yfnch8JFWRCAxSPnTUZa+86cS2ol6RbLjs6KArJ8wbCPGlx85KgMcywildyj3Dh+TnVA
+         W73LABS6fGoZr4K2jz4cnSubZtPVQWE1lZ//23/INEyq1c7/xPcSOuyMiZ+/yHvmXv+8
+         hnvMxd4pLxuzhgFOL1V+7uLxJhobTx1Wsaa0L0eBQY6O06Mc5QlWBYqfJnszl1OLBCot
+         XSdPfDa/B7OxKVKxrbM4NFm/GeIc1puF1Y1AfHo8DV6l2fpZfLVcbZleBTqAQtUdHc3U
+         Y5Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rQ54sFRTWAx6kB4089Pov2O8Y8GP5LK7JHl1q8rQvaU=;
-        b=R4TfSF8ZVjBD7xfz+6i0S86pPM4ff8FgrdnghDtsnOlQvYIzrCYB0ECf6wHUm71Wn8
-         mI36gnB2MkHR3KbEnCeVucz2DClHizJ0MlmDGp5lGMRfkF3tX5AUpN6MJK7pCgG3yUgG
-         uSWN6A8s+amt7Ye5Igjpgm26pIY2cjc7ovT62ykq1dL4WI1gUg841rMpxga0op6YOSKo
-         mgydD8GXKSnA0aMHGJ1UDbEdZgpb+vfMnDi+gLoAF4K5Kx8lSjbkckL8KSY3tIrmpmhJ
-         Cq/4vGR1AXwwH7ikDLAtQP460v2Nae/7f1uOV4YAQCcNQUYL5cHGZH1MRxCPIUWLZdYD
-         yuRQ==
-X-Gm-Message-State: APzg51DKmh/WhIiqSRzQ9aLeUnHRAAAEX2V21iAMQp/XSVX6tbFPA859
-        esZdn2do4HLKJZPw4jVT9yHKh/RZDS7bIx9jBMMWPw==
-X-Google-Smtp-Source: ANB0VdZ/xZC+SF/NkeV4bfA6W4nkWfKzx6B5czcM29IR4agz4/mkqxP5EPd8yeU0UqisMup6fuQ2ark65sVLWP5QONg=
-X-Received: by 2002:aa7:c314:: with SMTP id l20-v6mr4728422edq.53.1536257186227;
- Thu, 06 Sep 2018 11:06:26 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=UHGJ7a+lV3G+n3AGIJEDDA9JHo50UZrwPyZZtEixeSA=;
+        b=b78ubEtrByDZ5S67IxqHRImJrUA8NXhrAjHU+IXc3JaqkUasu+wwuwB1ZS+7a6KsJr
+         oCDfFWAPWPeSTtcBgXu36bU3juu4XSAECJDaUdqWXPV70OXmPm0+C6udN6H1kUJmhc+C
+         P1EeYXrMXQi53x81037S5xHI9QoWhPcQvM8OP/EFr2ZhydYb4TlnVuCUB4zzcvq5N3ne
+         UDQ3/om9MLNYsnUSJVDHzDt8xfk5bDOvIAZJD2l4CLU8ZbW3vizyRVInu780ciKsQhX6
+         NknPr0oYDoluutwE7CtwmYmaE3jDECREGwrv31cD4SG8+ZlaeN13xUX/untpv7UmeJNo
+         N3zQ==
+X-Gm-Message-State: APzg51AoTNuA8U6kqzuzQmAkANuIXAOdpd4T9zGR/4wXRZJrC1CuLkfU
+        cb57XDqZs3rQFeGqRCsXtO4=
+X-Google-Smtp-Source: ANB0VdZp0FHKZB02LJ07MMuTqokJiOeUfXyqs57C+OvDTMxBtDMQInsCdSQhBN4pIIgUNfkGzFZYTw==
+X-Received: by 2002:adf:f687:: with SMTP id v7-v6mr3357747wrp.201.1536258046162;
+        Thu, 06 Sep 2018 11:20:46 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 139-v6sm9388357wmp.4.2018.09.06.11.20.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Sep 2018 11:20:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 08/11] submodule.c: do not copy around submodule list
+References: <20180904230149.180332-1-sbeller@google.com>
+        <20180904230149.180332-9-sbeller@google.com>
+Date:   Thu, 06 Sep 2018 11:20:44 -0700
+In-Reply-To: <20180904230149.180332-9-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 4 Sep 2018 16:01:46 -0700")
+Message-ID: <xmqq36um1o8z.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180905224825.13564-1-sbeller@google.com> <20180905231006.GC120842@aiede.svl.corp.google.com>
-In-Reply-To: <20180905231006.GC120842@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Sep 2018 11:06:15 -0700
-Message-ID: <CAGZ79kY_O+y0=1qMr2tw2cw3ULhhjTPQ-G5swa+KNXKLKSOSYw@mail.gmail.com>
-Subject: Re: [PATCH] submodule.sh update --remote: default to oid instead of master
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 4:10 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Stefan Beller wrote:
->
-> > Subject: submodule.sh update --remote: default to oid instead of master
->
-> Yay!
->
-> Nit: it wasn't clear to me at first what default this subject line was
-> referring to.  Perhaps:
->
->         submodule update --remote: skip GITLINK update when no branch is set
->
-> [...]
-> > --- a/Documentation/gitmodules.txt
-> > +++ b/Documentation/gitmodules.txt
-> > @@ -50,11 +50,12 @@ submodule.<name>.update::
-> >
-> >  submodule.<name>.branch::
-> [...]
-> > +     If the option is not specified, do not update to any branch but
-> > +     the object id of the remote.
->
-> Likewise: how about something like
->
->         If not set, the default is for `git submodule update --remote`
->         to update the submodule to the superproject's recorded SHA-1.
+Stefan Beller <sbeller@google.com> writes:
 
-... recorded object id.
-
-sounds good.
-
-> > +             git add .gitmodules &&
-> > +             git commit --allow-empty -m "submodules: pin in superproject branch"
-> > +     ) &&
+> 'calculate_changed_submodule_paths' uses a local list to compute the
+> changed submodules, and then produces the result by copying appropriate
+> items into the result list.
 >
-> I wonder if we can do simpler by using -C + some helpers: something like
+> Instead use the result list directly and prune items afterwards
+> using string_list_remove_empty_items.
+
+That may describe what the patch does, but does not explain why we
+would even want to do so in the first place.  
+
+It may be a safe thing to do to munge the list in place as there is
+nobody that looks at the list after we are done in the current code,
+but the above description does not tell that to readers and fails to
+give readers warm and fuzzy feeling that the safety likely will stay
+with us in the future.
+
+> As a side effect, we'll have access to the util pointer for longer that
+> contains the commits that we need to fetch.
+
+If this patch does not move free-submodules-oids call to out: label
+(i.e. instead do so after the call to string-list-remove-empty-items
+is made, perhaps), then the list of oids will have the same lifespan
+as the original code, no?  Then it is not a "side effect" but is
+deliberate change of behaviour this patch makes.  We can access the
+list for longer time than before, which may be a good thing, in
+which case we'd want to explain the potential benefit we could reap
+with future changes, no?
+
 >
->         git config --unset -f super/.gitmodules ... &&
->         test_commit -C submodule ... &&
->         git -C super submodule update ... &&
->         test_cmp_rev ...
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  submodule.c | 19 ++++++++++---------
+>  1 file changed, 10 insertions(+), 9 deletions(-)
 >
-> Unfortunately test_cmp_rev doesn't accept a -C argument.
-
-and the lack of fortune goes further, as test_cmp_rev needs to have
-2 revisions in the same repository, i.e. both need to exist,
-which is not the case.
-
-> Broader comment: do you think people will be surprised by this new
-> behavior?  Is there anything special we'd need to do to call it out
-> (e.g., print a warning or put something in release notes)?
-
-I guess. Not sure how to approach this best. Maybe we can
-extend the output of 'submodule update' to print that branch names
-instead of hashes for the configured case and keep printing hashes
-only for this case. Although that would not help someone who relies
-on the default solely.
+> diff --git a/submodule.c b/submodule.c
+> index 582c0263b91..0efe6711a8c 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1128,8 +1128,7 @@ static void calculate_changed_submodule_paths(
+>  	struct submodule_parallel_fetch *spf)
+>  {
+>  	struct argv_array argv = ARGV_ARRAY_INIT;
+> -	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
+> -	const struct string_list_item *name;
+> +	struct string_list_item *name;
+>  
+>  	/* No need to check if there are no submodules configured */
+>  	if (!submodule_from_path(the_repository, NULL, NULL))
+> @@ -1146,9 +1145,9 @@ static void calculate_changed_submodule_paths(
+>  	 * Collect all submodules (whether checked out or not) for which new
+>  	 * commits have been recorded upstream in "changed_submodule_names".
+>  	 */
+> -	collect_changed_submodules(&changed_submodules, &argv);
+> +	collect_changed_submodules(&spf->changed_submodule_names, &argv);
+>  
+> -	for_each_string_list_item(name, &changed_submodules) {
+> +	for_each_string_list_item(name, &spf->changed_submodule_names) {
+>  		struct oid_array *commits = name->util;
+>  		const struct submodule *submodule;
+>  		const char *path = NULL;
+> @@ -1162,12 +1161,14 @@ static void calculate_changed_submodule_paths(
+>  		if (!path)
+>  			continue;
+>  
+> -		if (!submodule_has_commits(path, commits))
+> -			string_list_append(&spf->changed_submodule_names,
+> -					   name->string);
+> +		if (submodule_has_commits(path, commits)) {
+> +			oid_array_clear(commits);
+> +			*name->string = '\0';
+> +		}
+>  	}
+>  
+> -	free_submodules_oids(&changed_submodules);
+> +	string_list_remove_empty_items(&spf->changed_submodule_names, 1);
+> +
+>  	argv_array_clear(&argv);
+>  	oid_array_clear(&ref_tips_before_fetch);
+>  	oid_array_clear(&ref_tips_after_fetch);
+> @@ -1362,7 +1363,7 @@ int fetch_populated_submodules(struct repository *r,
+>  
+>  	argv_array_clear(&spf.args);
+>  out:
+> -	string_list_clear(&spf.changed_submodule_names, 1);
+> +	free_submodules_oids(&spf.changed_submodule_names);
+>  	return spf.result;
+>  }
