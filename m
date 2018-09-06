@@ -2,124 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CAFB1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 18:27:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C1D61F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 18:40:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728095AbeIFXEb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 19:04:31 -0400
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:44759 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727692AbeIFXEb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 19:04:31 -0400
-Received: by mail-ed1-f67.google.com with SMTP id s10-v6so9634247edb.11
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:27:49 -0700 (PDT)
+        id S1728969AbeIFXRC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 19:17:02 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:37206 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728228AbeIFXRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 19:17:02 -0400
+Received: by mail-wm0-f65.google.com with SMTP id n11-v6so12243797wmc.2
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:40:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=O3e0eo5Dj2fvGNJ5j6buBE5CQtG2PXQWseBgkbGcjXo=;
-        b=Sa7sO5fEL4Bz6ChIBlNxgDJnNLqOwtBFue/KZ46gG5WI2F1Zu3+jEi9zY10hnCjM1T
-         xGmzr6jX6Zf8gsUIX4AJxLAtvqwZGqDcpAGSQdWIvibzqrbFnlc9tnlqIlnw2Ua+kTDS
-         Nh4R3g4ZEGqI2Qw0Z0DMptFX+PCTtSnTHk1KmH2YoBIe9M6jJ87VPtOh/hz9JkDVhx2K
-         BtVDffQGnmFDbAahe65kwkdRKyM7U9Az+0X8ODL7IrtSoasgh4g7ijbL9SxbDtHLSANm
-         mKvRQjy6qHrKQCitZzv7MG6rfSU2iw61zXgDNRSIX04qVLLIVlopx96QnpM3la1QpBNC
-         45fA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=FF2Q782CwzKO1dRLj6Gfrgaz5kd4klcaGBMOKotrwnc=;
+        b=liJX9o4xAW+9qubMvCk/KUYHHfrUz6zFMy6MZdqJeH6xsyjk5KoZFQEBjquF+RIFPH
+         XewAkgqG54TabDg5z1kf7F9k+czqjLETuJLqWlFF+Xefwd6VmWZpYBceAsGA4ehB5RKR
+         VzMBOle0+ZgPiygnIcUAwumHLhrC/HkavqDJpI4Lq7A6mugmpHIj9YU1E5JJblfE2oSz
+         zgyRlQphmIS87ZQCXQo79SVmuW1o4KZnpbpMYa42SGlzwZbX16hd2JjX7p1DU+VMdSnJ
+         0JjSFX8S+rWJYpLj4If+O6SGdt89f2uA+woM7kh4qoKSSzv/7g5UP6/keW2ZoXFxdEJR
+         xtig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=O3e0eo5Dj2fvGNJ5j6buBE5CQtG2PXQWseBgkbGcjXo=;
-        b=pvx10S2vZDYraNT1TZQ2iDj5AFH7XFwGMH7TS5zjDevpCfRwa/TBg1jflRLIPD0qkA
-         XYrCu4q7OeyvqNBt7Wr4aDCvn23UErHDFSWgG9r4mHq0QmUfzXHssKX49DyRnYVMeeHl
-         32s1MtZqKhIbMeQ2kiQgzd9FmaX1XE93gsytmycajYhrac90qTvTSUgqHd7gWsLq5iQ1
-         sInLIhJsNlZd7lmZgHlC+MYnJ2PiRGJp7NLor4Tvl9RKAB1a0JkzF03c9DrZhktg4ENk
-         3bPsIJgnuhUzOa17bsy9o8TbroJfLedw43MnmhLzS3w0OULkTDpY8/S7AWSdUB2EFJx3
-         ikoQ==
-X-Gm-Message-State: APzg51CeDWgT6SVN0OK0HXM/b74sFsdl7MTAaLYX7zfSfASPVXH9I6ni
-        UnOmULM5sl2JqvVxTEIBUlPNgsMDuWTv1nhY1Na/ag==
-X-Google-Smtp-Source: ANB0VdaHsr6XGAIlNCSpD0hCpUVVdrdI2MCYqYcvb7SRfhD2kFsYp2TzdYJrkrofaKIeceF7lXiVaDO5Gjr+RwX6yyU=
-X-Received: by 2002:a50:b410:: with SMTP id b16-v6mr5165886edh.190.1536258468421;
- Thu, 06 Sep 2018 11:27:48 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=FF2Q782CwzKO1dRLj6Gfrgaz5kd4klcaGBMOKotrwnc=;
+        b=GIzDG+tjvrNTj1R7RB2HOj0cIgovneceKvfsMB7zsc1jmfDExX5Wyo1BWA1xIAxH2P
+         ISDcSNEHsVYaplRf3D7NCHyhqqtGGDSWjP0uX4WADWWFvtOpZliTLbpcjBI1X8CcavA3
+         LSc3zj5V6F41tPhgEhAR3VuLZlPGRLZL7kgBGnoHtrm7C7QyccexhyrmhYLcMLU+blRg
+         vNDBsXnSiqnKmxY/8hofcFGmxR87/c1fSDdPQQ1VMlxQZYIhKyTmdnswWfA2MLMVR8jF
+         grj5Rl7F/7KUYFl2gYQtdmGtmXwYunOuE2O0D0m3WtGx79yE0/n2KhYSYw7M3g0y5gkY
+         z9mQ==
+X-Gm-Message-State: APzg51BQRJgCUCu8VzesoV1plFQvlZzkERxPWa+LftpmfTvx5KoOv2iw
+        7L9goPKCuvMraIUB6x1hqTw=
+X-Google-Smtp-Source: ANB0VdZtivQnJmERsTMUFvVZBqyxLKLHpRUOGFZAvZapb5cchtQd6Wi4nRKx1XSg+r54XPjWp31xMQ==
+X-Received: by 2002:a1c:b143:: with SMTP id a64-v6mr3181680wmf.114.1536259215747;
+        Thu, 06 Sep 2018 11:40:15 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v133-v6sm8062087wma.36.2018.09.06.11.40.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Sep 2018 11:40:14 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Tim Schumacher <timschumi@gmx.de>, git@vger.kernel.org,
+        pclouds@gmail.com
+Subject: Re: [PATCH v3] Allow aliases that include other aliases
+References: <20180905085427.4099-1-timschumi@gmx.de>
+        <20180906101658.1865-1-timschumi@gmx.de>
+        <20180906145942.GB1209@sigill.intra.peff.net>
+Date:   Thu, 06 Sep 2018 11:40:14 -0700
+In-Reply-To: <20180906145942.GB1209@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 6 Sep 2018 10:59:42 -0400")
+Message-ID: <xmqqy3cezcz5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180905225828.17782-1-sbeller@google.com> <20180905231258.GD120842@aiede.svl.corp.google.com>
-In-Reply-To: <20180905231258.GD120842@aiede.svl.corp.google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Sep 2018 11:27:37 -0700
-Message-ID: <CAGZ79kbBC9OxiMhOCjB61pQXaMa-_tXJdkPq_6JnzC+gDzRuAw@mail.gmail.com>
-Subject: Re: [PATCH] diff: allow --recurse-submodules as an synonym for --submodule
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 4:13 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->
-> Stefan Beller wrote:
->
-> > Many commands have flags to recurse into submodules, which is named
-> > --recurse-submodules. The diff family also has a submodule recursion flag,
-> > but that is named differently. Add a synonym --recurse-submodules, which
-> > means the same as the --submodule flag, such that across all git commands
-> > supporting submodules we have the --recurse-submodules flag available.
-> >
-> > Signed-off-by: Stefan Beller <sbeller@google.com>
-> > ---
-> >  Documentation/diff-options.txt | 1 +
-> >  diff.c                         | 2 ++
-> >  2 files changed, 3 insertions(+)
->
-> Makes sense.
->
-> [...]
-> > --- a/Documentation/diff-options.txt
-> > +++ b/Documentation/diff-options.txt
-> > @@ -227,6 +227,7 @@ linkgit:git-config[1]).
-> >       of the `--diff-filter` option on what the status letters mean.
-> >
-> >  --submodule[=<format>]::
-> > +--recurse-submodules[=<format>]::
-> >       Specify how differences in submodules are shown.  When specifying
-> >       `--submodule=short` the 'short' format is used.  This format just
-> >       shows the names of the commits at the beginning and end of the range.
-> > diff --git a/diff.c b/diff.c
-> > index 145cfbae592..d3d5a989bd1 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -5023,6 +5023,8 @@ int diff_opt_parse(struct diff_options *options,
-> >               handle_ignore_submodules_arg(options, arg);
-> >       } else if (skip_to_optional_arg_default(arg, "--submodule", &arg, "log"))
-> >               return parse_submodule_opt(options, arg);
-> > +     else if (skip_to_optional_arg_default(arg, "--recurse-submodules", &arg, "log"))
-> > +             return parse_submodule_opt(options, arg);
->
-> It seems like various commands are gaining --recurse-submodules options
-> taking different kinds of arguments:
->
-> - clone takes --recurse-submodules=<pathspec>
-> - fetch takes --recurse-submodules=<mode>
-> - after this patch, diff takes --recurse-submodules=<mode>
->
-> Is there a unifying principle?  Can Documentation/gitsubmodules.txt
-> say a word or two about what kind of argument values the user should
-> expect to be accepted by these options?
+Jeff King <peff@peff.net> writes:
 
-I don't think there is a unifying principle deep down.
-Everything but clone is specifying a mode (you could imagine
-that we extend "git reset --recurse-submodules" as well to take
-some sort of mode, either the hard/soft differentiation or how to treat
-dirty submodules or a mode that could differentiate between superprojects
-sha1 and branch of the same name)
+> On Thu, Sep 06, 2018 at 12:16:58PM +0200, Tim Schumacher wrote:
+>
+>> @@ -691,17 +692,23 @@ static int run_argv(int *argcp, const char ***argv)
+>>  		/* .. then try the external ones */
+>>  		execv_dashed_external(*argv);
+>>  
+>> -		/* It could be an alias -- this works around the insanity
+>> +		if (string_list_has_string(&cmd_list, *argv[0]))
+>> +			die(_("loop alias: %s is called twice"), *argv[0]);
+>
+> I pointed this out in my response to Ævar, but I want to make sure it
+> gets seen. This call assumes the list is sorted, but...
+>
+>> +		string_list_append(&cmd_list, *argv[0]);
+>
+> This will create an unsorted list. You'd have to use
+> string_list_insert() here for a sorted list, or
+> unsorted_string_list_has_string() in the earlier call.
 
-Care to send a patch on top to talk about these issues in
-Documentation/gitsubmodules.txt ?
+Correct.
 
-Thanks,
-Stefan
+Also, normal users who have never seen this loop that implements
+alias expansion would not have a clue when they see "called twice".
+
+I actually think the caller should also pass cmd to run_argv() and
+then we should use it (and not argv[]) in this die() message.  When
+the original command was foo that is aliased to bar, which in turn
+is aliased to baz, which in turn is aliased to bar, especially that
+"git foo" invocation was in a random script written six weeks ago by
+the user, it would be a lot more helpful to see 
+
+    "alias loop detected: expansion of 'git foo' does not terminate"
+
+than
+
+    "loop alias: bar is called twice".
+
+given that 'bar' is not something the user called, or written in the
+script she wrote six weeks ago.
+
+> It's unfortunate that string_list makes this so easy to get wrong.
+>
+>> +
+>> +		/*
+>> +		 * It could be an alias -- this works around the insanity
+>>  		 * of overriding "git log" with "git show" by having
+>>  		 * alias.log = show
+>>  		 */
+>> -		if (done_alias)
+>> -			break;
+>>  		if (!handle_alias(argcp, argv))
+>>  			break;
+>> -		done_alias = 1;
+>> +		done_alias++;
+>
+> I don't think anybody cares about done_alias being an accurate count.
+> Should we just leave this as-is?
+
+Good point.  The only caller treats it as a bool (i.e. "should the
+failure be reported as failure to expand an alias cmd which resulted
+in (updated) argv[0] that is not a git command?").
