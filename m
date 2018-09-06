@@ -7,116 +7,138 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 134D71F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 22:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B1B481F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 22:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727069AbeIGDWv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 23:22:51 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:34632 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726131AbeIGDWv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 23:22:51 -0400
-Received: by mail-pg1-f196.google.com with SMTP id d19-v6so5966223pgv.1
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 15:45:08 -0700 (PDT)
+        id S1728086AbeIGDcL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 23:32:11 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:42546 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726131AbeIGDcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 23:32:11 -0400
+Received: by mail-pf1-f196.google.com with SMTP id l9-v6so5996884pff.9
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 15:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=CXOskUeslD+4vmjTL3SHUNiGRqrBJvbk7elbaWTDk/Y=;
-        b=MkSfdAK9fMb09BcfaU7u+zqO1+Wwpuo8bSzdXBVNerQJIi//34xGdGGuuHUO+u12E1
-         Nw++rvQYUB1FOl8hXu16axIABfuppDJFPvWIO+myDuPLYUO4xYDPxx++zlucxBMF6MH7
-         qrnMbHZXUmiRFP5YFeeAWcttBYu6FWhy+5JwQCof15kbbZ7uxBdEUT2jjW+MqG75IiOX
-         XtuySSNZqMDw0NFn+GoF72HdUOw2p5wH0hGaJc0KygPGTYt6fOQ2P93p7CXv2uz9aUtr
-         DaN9/jpPpDfKZwJJHA9wlsihW1vamdcM/kWi3mhsP8lSabu5ZWsT2For+nwWg4CYytsW
-         tQbA==
+         :content-disposition:in-reply-to:user-agent;
+        bh=mPhBh7ZUrrDDnFMK5DCmNp8gHApbpM2eiaXXoWqUQG8=;
+        b=amFPZCx4nhYq431vIorETdj7SibFtsPfdmH0iN3hSvJ9Otd71rDprB4GccZMhp9KaI
+         Rp0mDb7Zg8q/OQ8dKChGw+/dgzlAT5DC5+Tv8lOPqI/wSNHoMGByw1SyWfJMr+nFESY1
+         NVv4Wab2FEyhhuslSsdUJyB6IkCa1u56PwZo7uHJEyqCWHC86vc883H2IrkRC9Zu2SHW
+         awuOuGKoPWCCg+JJc2Cvgo0nYsbBegmx+DLCt/nsH5OkEPd9TQArkzm8RqE+5jEdAP9m
+         d2KaWgq4zaF601p1k+WtrP7DGnNsIskiZsk0KyiG7wzctApD5TCA/s156hHxrk6IYmnP
+         wMlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CXOskUeslD+4vmjTL3SHUNiGRqrBJvbk7elbaWTDk/Y=;
-        b=cq282x0pgD2fi1jl/4BxEE0eFVZ0vpQDQD3ScCQqNCD7wG+8YjnhuKv0aLrE96BFdE
-         IB4SU703M+kgKZcKpSjAZokOtOo0V8G5xMc3HpWSHiqbosD89CbtJ54b+KburdEfhnYO
-         4hQAPFCl3nXzFbB3bRyg19MVY9D+ja72HjSTIcSpxgjQlvSFb9ghD17sIz5oGyJTavWs
-         9fcKyj4vpyr3twczEGqS12Hu3uorahaIdjonhPDGsWqjruRRLu0kqGO8i90Wl2nU3UYK
-         AispcQVaOM876q8tCgr2KN/Bv2anvG83rwxQmFn1jLuov9kzEPhWRuMkS2xIcaWfL2ej
-         bG1w==
-X-Gm-Message-State: APzg51DGcBsg7nqzKTXzQnrQE9s6qR0nbx7sepavx07z3u87BHn+CUVz
-        hBm5RPSw1pofqb0266lS7qIclQQF
-X-Google-Smtp-Source: ANB0VdYtmMl8kFI7VYHhHvMxkcuBLRlbf03M0V0Z7e2IINPvya2KziGNllk1fNwci+JE5Lw1la5wXw==
-X-Received: by 2002:a63:986:: with SMTP id 128-v6mr5269421pgj.153.1536273908252;
-        Thu, 06 Sep 2018 15:45:08 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=mPhBh7ZUrrDDnFMK5DCmNp8gHApbpM2eiaXXoWqUQG8=;
+        b=DGZUwKoTe1M/S+e/XoCTNA817hdBf1wFkumvSb4L0q7sCJ5/gaDOuv7l+U8EMOljeo
+         jTqYWpa88IbrybOt5ZHk2nZGX40kuz2d1EsIf4/ENNbzHb98nwntTIzMYCfvttauXATd
+         douzZK/ktLqMJs8QLXGYh7uUVozblNHqpLTF/IDIpm9HbZMt/a1B66qE7N0ukgHahWP1
+         EMQPBm4W+OhVS49lNZHofcS+2Cun0xhITE7JOLH5rxj4Ypv9+NGyY5UhneKvwFCQNnDQ
+         4yH+HJNAG7xDQ6TaEzmbpX6o4iE+lAzbPlcPkVRqyF44cSMPHbaVmjcd3i08wsPpkbDw
+         axRw==
+X-Gm-Message-State: APzg51DL6JIuXqqOElN95fLQBwQcrIuiFmLjWGv25Bdvn6gtxKvLTIfV
+        k6kOqLqou7RZqtTIUyU4tKD2IuY6
+X-Google-Smtp-Source: ANB0VdbpPKk4uCoKx5oB0z8yKRr1gbdUGdMTG9EwnQCOIyXCr9EP83eabh4Qj65mT+shynWOGtz7gA==
+X-Received: by 2002:a63:8543:: with SMTP id u64-v6mr5383233pgd.248.1536274466061;
+        Thu, 06 Sep 2018 15:54:26 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id z11-v6sm13731881pfi.4.2018.09.06.15.45.07
+        by smtp.gmail.com with ESMTPSA id f67-v6sm18631618pfe.75.2018.09.06.15.54.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Sep 2018 15:45:07 -0700 (PDT)
-Date:   Thu, 6 Sep 2018 15:45:05 -0700
+        Thu, 06 Sep 2018 15:54:25 -0700 (PDT)
+Date:   Thu, 6 Sep 2018 15:54:23 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] http-backend: allow empty CONTENT_LENGTH
-Message-ID: <20180906224505.GA81412@aiede.svl.corp.google.com>
-References: <20180906061038.GA94045@aiede.svl.corp.google.com>
- <20180906193516.28909-1-max@max630.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: [PATCH] submodule.sh update --remote: default to oid instead of
+ master
+Message-ID: <20180906225423.GB81412@aiede.svl.corp.google.com>
+References: <20180905224825.13564-1-sbeller@google.com>
+ <20180905231006.GC120842@aiede.svl.corp.google.com>
+ <CAGZ79kY_O+y0=1qMr2tw2cw3ULhhjTPQ-G5swa+KNXKLKSOSYw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180906193516.28909-1-max@max630.net>
+In-Reply-To: <CAGZ79kY_O+y0=1qMr2tw2cw3ULhhjTPQ-G5swa+KNXKLKSOSYw@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Stefan Beller wrote:
+> On Wed, Sep 5, 2018 at 4:10 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Max Kirillov wrote:
-
-> According to RFC3875, empty environment variable is equivalent to unset,
-> and for CONTENT_LENGTH it should mean zero body to read.
+>> Broader comment: do you think people will be surprised by this new
+>> behavior?  Is there anything special we'd need to do to call it out
+>> (e.g., print a warning or put something in release notes)?
 >
-> However, as discussed in [1], unset CONTENT_LENGTH is also used for
-> chunked encoding to indicate reading until EOF, so keep this behavior also
-> for empty CONTENT_LENGTH.
->
-> Add a test for the case.
->
-> [1] https://public-inbox.org/git/20160329201349.GB9527@sigill.intra.peff.net/
->
-> Signed-off-by: Max Kirillov <max@max630.net>
+> I guess. Not sure how to approach this best. Maybe we can
+> extend the output of 'submodule update' to print that branch names
+> instead of hashes for the configured case and keep printing hashes
+> only for this case. Although that would not help someone who relies
+> on the default solely.
 
-Reported-by: Jelmer Vernooĳ <jelmer@jelmer.uk>
+Thinking more out loud: often the simplest migration path involves
+multiple steps:
 
-Thanks for fixing it.
+ 1. Warn in the case that is going to change, with no behavior change
+    yet.
 
-Can you include a summary of [1] instead of relying on the mailing
-list archive?  Perhaps just omiting "as discussed in [1]" would do the
-trick.  Alternatively, if there's a point from that discussion that's
-relevant to the change, please include it here.  That way, people
-finding this change later can save some time by avoiding having to dig
-through that mailing list thread.
+ 2. Treat the case that will change as an error.  This should
+    help flush out cases where people were relying on the old behavior.
 
-For example, it's probably worth mentioning that this was discovered
-using dulwich's test suite.
+ 3. Introduce the new behavior.  Warn that old versions of Git don't
+    support it yet.
 
-[...]
-> This should fix it. I'm not sure should it treat it as 0 or "-1"
-> At least the tests mentioned by Jeff fails if I try to treat missing CONTENT_LENGTH as "-1"
-> So keep the existing behavior as much as possible
+ 4. Eliminate the warning.  You're all clear now.
 
-That sounds worth figuring out so we can understand and possibly
-document it better.  What are the ramifications of this choice ---
-what would work / not work with each choice?
+Sometimes some of these steps can be combined.
 
-[...]
-> --- a/t/t5562-http-backend-content-length.sh
-> +++ b/t/t5562-http-backend-content-length.sh
-> @@ -152,4 +152,15 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+Another possible approach is to measure.  For example, is there some
+way to find out how many people are relying in this "git submodule
+update --remote" defaulting behavior?  One example of this approach is
+to make the change (all in one step) in "next" and deploy to some
+relevant subpopulation and see if anyone screams.  By making the
+change in "next" instead of something with more stability guarantees,
+you get the ability to roll back quickly.
 
-Yay, thanks for this as well.
+There are other tools at our disposal --- e.g. command-line flags,
+config, other kinds of research.
 
-Sincerely,
+Here my first instinct would be to say this should be a command-line
+flag.  To start out, we can keep the historical behavior as a default,
+but introduce a command-line option for the new behavior.  This way,
+people can pass the negation of that command-line option if they want
+the older behavior, throughout the transition.
+
+For example (please ignore names):
+
+ Step 0: introduce
+
+	git submodule update --remote --default-to-master; # current behavior
+	git submodule update --remote --no-default-to-master; # new behavior
+
+ and treat plain "git submodule update --remote" as --default-to-master.
+
+ Step 1: when neither --default-to-master nor --no-default-to-master
+ has been passed, warn when encountering a submodule with no branch
+ and treat it as "master".
+
+ Step 2: when neither --default-to-master nor --no-default-to-master
+ has been passed, error out when encountering a submodule with no
+ branch.
+
+ Step 3: when neither --default-to-master nor --no-default-to-master
+ has been passed, warn when encountering a submodule with no branch
+ and treat it as pinned.
+
+ Step 4: eliminate the warning.
+
+What do you think?
+
+Thanks,
 Jonathan
