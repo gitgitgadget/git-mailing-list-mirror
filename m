@@ -2,73 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23BBE1F404
-	for <e@80x24.org>; Thu,  6 Sep 2018 18:04:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0B0A1F404
+	for <e@80x24.org>; Thu,  6 Sep 2018 18:06:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728478AbeIFWlL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Sep 2018 18:41:11 -0400
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:41176 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727064AbeIFWlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Sep 2018 18:41:11 -0400
-Received: by mail-wr1-f51.google.com with SMTP id z96-v6so12342914wrb.8
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:04:33 -0700 (PDT)
+        id S1730301AbeIFWnG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Sep 2018 18:43:06 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46508 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbeIFWnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Sep 2018 18:43:05 -0400
+Received: by mail-ed1-f66.google.com with SMTP id k14-v6so9591642edr.13
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 11:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=/7hrALSPtrO6duOBdscpKKz6CmLHPnL227SInG3IML4=;
-        b=aG4pba2P+XkGojmP6IBVADyky2koi0Rg14Ret+gAdB/GyNEJJKI8MqwXyUkq83nOT0
-         SUoRQvrexNT3GKpcPVa5MQOg2VbmU5MOvIGRiRKQJd2+UMDy7Bfu2jQXmpXBm1KpzaF9
-         ZYFThGVCMxu26QKAXwY8H4Y/bvHmHeGTtXCzqt5XFf5ld93ikrKGe/9jtJP3Fr6ESLa1
-         Z0KNHWp+UhEzxuaVA35mXl1IjfnMbd+JbaMkwWA1t8phWzuMuGI0ZYe/5UBjXQSyRRur
-         86KieSC5wqTslMn3FzKHCgvbWL4jaKCuYELnLrEDqpIsIQv2u/2pVMbY8ID7ycfB0JHj
-         jB5A==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rQ54sFRTWAx6kB4089Pov2O8Y8GP5LK7JHl1q8rQvaU=;
+        b=NipafIhB0n3/8DyRu+uz6ablX/H1rNSz0fa9izTCRc18SyYl8icadBs0Dz9TUyx3wB
+         EaIXNeOpqLZpd07nJBsMKVTarYZhymc39ytzeWiJZQA4ZUr1wqHYVuuu188yktGtxObE
+         bDSgkvdqjSjJCle5m0hD0o3I2Lo8GmO2BDmHKfg7ZyEy7zjvHrq09/LYbaLvWr8L+izJ
+         awSyE4G/kLOAE45HlggoRA5dRicKymDNvbowLOwtv1BLj51YqH4azY/mXOCbJ457Tpi7
+         AlB2RaOgMZ6IIcbit4cevHvvegwbNywHd0M9CZ2fOChNtiFa6qr65/uYp+EgvSaUr+0P
+         5UWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=/7hrALSPtrO6duOBdscpKKz6CmLHPnL227SInG3IML4=;
-        b=Fs2yvN/5WCXL8OGo3i/q7lpp5QmK6Un8FR7bfOkYC7SpMjLBqaM1UMFtceD2QTpE+N
-         UDhnFWOhA4PCz91xZZYhYdutouWZLJFosZuYNeMX7IED0Vu05p58mcGfcL70KQUgXBUX
-         DyKF6HTSLxDU+pm8dHXB9cDa4G23imLze0dpvFoyrDbGK2W0n3Pa7Wv33lt/3sKRoJcN
-         /DgcpVx62+fpjqhu3RQIYPM8RGtO8cd+sQwbdbeahgiwBQmrP/4HNkbbOq+8bjQhKfCT
-         4m5CoH8FFWfDQxn61an4bsi6RAI4N5WqH5MszfD7BlCcKv1IJkNJhMJbotqCpiInC1oS
-         dtnQ==
-X-Gm-Message-State: APzg51BJqEzijNcVklQtQA6k8pIhQzrmEIJYYVMvlG5O4HziFz0lhAD4
-        kKkzPv/VuDQGHXzjIJodQGOkedvF
-X-Google-Smtp-Source: ANB0VdYxdYn3M2zono4HhbVljEtpvJ3DHMGHgFpfQq3B9A6dMtqBjK5R88fCbr6P5LV2EtivnavsFA==
-X-Received: by 2002:adf:a599:: with SMTP id g25-v6mr3377915wrc.88.1536257072736;
-        Thu, 06 Sep 2018 11:04:32 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n14-v6sm3786234wmc.14.2018.09.06.11.04.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Sep 2018 11:04:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 07/11] submodule: move global changed_submodule_names into fetch submodule struct
-References: <20180904230149.180332-1-sbeller@google.com>
-        <20180904230149.180332-8-sbeller@google.com>
-Date:   Thu, 06 Sep 2018 11:04:31 -0700
-In-Reply-To: <20180904230149.180332-8-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 4 Sep 2018 16:01:45 -0700")
-Message-ID: <xmqq7ejy1p00.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rQ54sFRTWAx6kB4089Pov2O8Y8GP5LK7JHl1q8rQvaU=;
+        b=R4TfSF8ZVjBD7xfz+6i0S86pPM4ff8FgrdnghDtsnOlQvYIzrCYB0ECf6wHUm71Wn8
+         mI36gnB2MkHR3KbEnCeVucz2DClHizJ0MlmDGp5lGMRfkF3tX5AUpN6MJK7pCgG3yUgG
+         uSWN6A8s+amt7Ye5Igjpgm26pIY2cjc7ovT62ykq1dL4WI1gUg841rMpxga0op6YOSKo
+         mgydD8GXKSnA0aMHGJ1UDbEdZgpb+vfMnDi+gLoAF4K5Kx8lSjbkckL8KSY3tIrmpmhJ
+         Cq/4vGR1AXwwH7ikDLAtQP460v2Nae/7f1uOV4YAQCcNQUYL5cHGZH1MRxCPIUWLZdYD
+         yuRQ==
+X-Gm-Message-State: APzg51DKmh/WhIiqSRzQ9aLeUnHRAAAEX2V21iAMQp/XSVX6tbFPA859
+        esZdn2do4HLKJZPw4jVT9yHKh/RZDS7bIx9jBMMWPw==
+X-Google-Smtp-Source: ANB0VdZ/xZC+SF/NkeV4bfA6W4nkWfKzx6B5czcM29IR4agz4/mkqxP5EPd8yeU0UqisMup6fuQ2ark65sVLWP5QONg=
+X-Received: by 2002:aa7:c314:: with SMTP id l20-v6mr4728422edq.53.1536257186227;
+ Thu, 06 Sep 2018 11:06:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180905224825.13564-1-sbeller@google.com> <20180905231006.GC120842@aiede.svl.corp.google.com>
+In-Reply-To: <20180905231006.GC120842@aiede.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 6 Sep 2018 11:06:15 -0700
+Message-ID: <CAGZ79kY_O+y0=1qMr2tw2cw3ULhhjTPQ-G5swa+KNXKLKSOSYw@mail.gmail.com>
+Subject: Re: [PATCH] submodule.sh update --remote: default to oid instead of master
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Wed, Sep 5, 2018 at 4:10 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Stefan Beller wrote:
+>
+> > Subject: submodule.sh update --remote: default to oid instead of master
+>
+> Yay!
+>
+> Nit: it wasn't clear to me at first what default this subject line was
+> referring to.  Perhaps:
+>
+>         submodule update --remote: skip GITLINK update when no branch is set
+>
+> [...]
+> > --- a/Documentation/gitmodules.txt
+> > +++ b/Documentation/gitmodules.txt
+> > @@ -50,11 +50,12 @@ submodule.<name>.update::
+> >
+> >  submodule.<name>.branch::
+> [...]
+> > +     If the option is not specified, do not update to any branch but
+> > +     the object id of the remote.
+>
+> Likewise: how about something like
+>
+>         If not set, the default is for `git submodule update --remote`
+>         to update the submodule to the superproject's recorded SHA-1.
 
-> The `changed_submodule_names` are only used for fetching, so let's make it
-> part of the struct that is passed around for fetching submodules.
+... recorded object id.
 
-Yay.
+sounds good.
+
+> > +             git add .gitmodules &&
+> > +             git commit --allow-empty -m "submodules: pin in superproject branch"
+> > +     ) &&
+>
+> I wonder if we can do simpler by using -C + some helpers: something like
+>
+>         git config --unset -f super/.gitmodules ... &&
+>         test_commit -C submodule ... &&
+>         git -C super submodule update ... &&
+>         test_cmp_rev ...
+>
+> Unfortunately test_cmp_rev doesn't accept a -C argument.
+
+and the lack of fortune goes further, as test_cmp_rev needs to have
+2 revisions in the same repository, i.e. both need to exist,
+which is not the case.
+
+> Broader comment: do you think people will be surprised by this new
+> behavior?  Is there anything special we'd need to do to call it out
+> (e.g., print a warning or put something in release notes)?
+
+I guess. Not sure how to approach this best. Maybe we can
+extend the output of 'submodule update' to print that branch names
+instead of hashes for the configured case and keep printing hashes
+only for this case. Although that would not help someone who relies
+on the default solely.
