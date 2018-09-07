@@ -2,99 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EFF611F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 07:23:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2F0C1F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 08:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727251AbeIGMDb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 08:03:31 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:41847 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726114AbeIGMDb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 08:03:31 -0400
-Received: by mail-pl1-f195.google.com with SMTP id b12-v6so6182234plr.8
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 00:23:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=/oWtPLlOmFaDlyfLg+guQgsTFSfz71aN+h5sHGZz2Es=;
-        b=dSUq+PLd0n7R9yfj7scw7A4D2ZDRmE7l6woUvn0X2EqmruF3BiNvDCqWJwKbq7F0nk
-         LrEzJwyi2q/p+Dh0PsZnkosbKextPPPEsdg0RO3LNoH1XCZ7mqdYnYYiQw5rM088oRXQ
-         pe9C1hyBdr596v+/D8sVptPG4LPfiOHHKy6KUS2M9+ovOndjSkIsKLa0kOwO4mLIvg6D
-         xytzLZIutfUFk+BalVw6jWRzP6UTFH4m4475vXquka4UY7I/aoIbR5D76wuRA8QU3ruL
-         xE8WBxOaovevPXrq6EZ2rTXKi+060lnIRqLs3lvXYJAPoiriAejbPodmQvJd94arit9e
-         imrQ==
+        id S1727529AbeIGN0u (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 09:26:50 -0400
+Received: from mail-qt0-f194.google.com ([209.85.216.194]:32917 "EHLO
+        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725843AbeIGN0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 09:26:50 -0400
+Received: by mail-qt0-f194.google.com with SMTP id r37-v6so15470804qtc.0
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 01:46:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=/oWtPLlOmFaDlyfLg+guQgsTFSfz71aN+h5sHGZz2Es=;
-        b=UaOKFQeof5DaCcihqhpTK5QHXTffmXVMIEIUSDaHSsn9yO1NvznelhIyJgKezimwv3
-         dQp385L3F8s2H8089HjwIqTVGVFRz0S5hk+HLKoF02tcbmXasDbjTakXbSErnOvuts/J
-         UfwPqjaC9ouMPmJMAlwvTUSBfvE6qj2HvzPy7pM15m1eSWQKUpfhDmgn4Z15ts541wjf
-         xZFMkmP6Oy6tu+brhBZsB/FcqHy8YEpu40obyPYl/Txo6NNVmwO9gwFTc9u1fy7D/rx1
-         iFb2re3tt4CVImeLsAZM01Sq1rJ1ShebrS17LzHWLTVG3/7WjV9fKaagHYtGzXvuA0mp
-         d7XA==
-X-Gm-Message-State: APzg51CpayBiw4oTAfrt4rj6vMLhyeT6hK3C0RJZzDpxnFJXvuyYIGTW
-        2MY74JAEQl4Zn8ATs6naMuA=
-X-Google-Smtp-Source: ANB0VdY57+DV1WaX/QRadkI2KoYMcEwgWRktG1vTBj6ZqOzz3R/BdmB8rlKTjIf2CDWPIMT/MexthQ==
-X-Received: by 2002:a17:902:b784:: with SMTP id e4-v6mr6639655pls.204.1536305036252;
-        Fri, 07 Sep 2018 00:23:56 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id 5-v6sm9272094pgc.86.2018.09.07.00.23.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 07 Sep 2018 00:23:55 -0700 (PDT)
-Date:   Fri, 7 Sep 2018 00:23:53 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Tim Schumacher <timschumi@gmx.de>, gitster@pobox.com,
-        pclouds@gmail.com
-Subject: Re: ordered string-list considered harmful, was Re: [PATCH v3] Allow
- aliases that include other aliases
-Message-ID: <20180907072353.GC172953@aiede.svl.corp.google.com>
-References: <20180906191203.GA26184@sigill.intra.peff.net>
- <20180906192021.GB26575@sigill.intra.peff.net>
- <20180906235033.GA100309@aiede.svl.corp.google.com>
- <20180907032401.GB31728@sigill.intra.peff.net>
- <20180907063241.GA172953@aiede.svl.corp.google.com>
- <87in3hrcya.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=P9RWsHs+MOj4D/YmTwY8AkPYlZs5NooPk8Mpf4T2K2Q=;
+        b=ud74inzj0ln43RLnKzNoDjVqf8UHp1RcTI8DZh6PdwFnScgJF0gWTCwgEkCH6+2VwP
+         FHLm+2l0pTJ1tJcIfmIRGNWDtLVRZIrIPNfuk5KdX/9ZGawMRsjdyu8HEEzbM3YiwqMy
+         QNrVOcxTGP+bNpoa9e9eLZrHxdK7Fp2qGTkcDwbBiWgFkqpGso5t2S7CBYDy1zGOut/Z
+         ttNxhqqFSX3yo37b4ZwerJGP4lDeZZENMcvIihyipZRYSRcFELER57lHJerVLaihYAy3
+         hyetIaSyysQL55Gvm8x3pjwj7OIs6upwjJ613imjtStIEGO0QokigPeOnnYa6m8BK4/z
+         JCJg==
+X-Gm-Message-State: APzg51BijJ+0f42LxKzjAcPShFBygan8iqT4zm4eFyoh5qY/HL+LDv+1
+        3RQlA50U7yeddCeRO/F7FC5Sk9L0iRPHUcOEvcc=
+X-Google-Smtp-Source: ANB0VdamlLrINngvwUOcU4o+oshdJFY5WqySosNMpRHYpYyMiOJgt/10/DMHho8Gokf285bsq6+wH1aCI52deaA06cI=
+X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr5254216qtd.101.1536310014281;
+ Fri, 07 Sep 2018 01:46:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87in3hrcya.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20180722095717.17912-1-sunshine@sunshineco.com>
+ <20180722095717.17912-15-sunshine@sunshineco.com> <xmqqr2jrt46j.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2jrt46j.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 7 Sep 2018 04:46:43 -0400
+Message-ID: <CAPig+cS5VwmNnrpFwpm9Ko2xg3WVsfffDLpkJLtU9ziSFOoyUw@mail.gmail.com>
+Subject: Re: [PATCH 14/14] format-patch: allow --range-diff to apply to a lone-patch
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Fri, Sep 07 2018, Jonathan Nieder wrote:
->> Jeff King wrote:
-
->>> I don't see any point in generating a sorted list and _then_ making an
->>> auxiliary hashmap. My idea was that if you're using a sorted string-list
->>> for lookup, then you can replace the whole thing with a hash (inserting
->>> as you go, rather than sorting at the end).
->>
->> What if I'm sorting a string list in preparation for emitting a sorted
->> list, and I *also* want to perform lookups in that same list?  In
->> other words:
+On Wed, Jul 25, 2018 at 5:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > +     if (cmit_fmt_is_mail(ctx.fmt) && opt->rdiff1) {
+> > +             struct diff_queue_struct dq;
+> > +
+> > +             memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+> > +             DIFF_QUEUE_CLEAR(&diff_queued_diff);
+> > +
+> > +             next_commentary_block(opt, NULL);
+> > +             fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
+> > +             show_range_diff(opt->rdiff1, opt->rdiff2,
+> > +                             opt->creation_factor, 1, &opt->diffopt);
+> > +
+> > +             memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
+> > +     }
+> >  }
 >
-> If this turns out to be a common use-case perhaps the easiest way to
-> support that would be to make the hashmap (optionally?) ordered, as Ruby
-> 1.9 did with their hash implementation:
-> https://www.igvita.com/2009/02/04/ruby-19-internals-ordered-hash/
+> This essentially repeats what is already done for "interdiff".
 
-That's about recording the order of insertion.  I'm talking about
-something much simpler: sorting an array (as preparation for emitting
-it) and binary searching to find an entry in that array.
+Yes, the two blocks are very similar, although they access different
+members of 'rev_info' and call different functions to perform the
+actual diff. I explored ways of avoiding the repeated boilerplate
+(using macros or passing a function pointer to a driver function
+containing the boilerplate), but the end result was uglier and harder
+to understand due to the added abstraction. Introducing
+next_commentary_block()[1] reduced the repetition a bit.
+
+> Does the global diff_queued_diff gets cleaned up when
+> show_interdiff() and show_range_diff() return, like diff_flush()
+> does?  Otherwise we'd be leaking the filepairs accumulated in the
+> diff_queued_diff.
+
+Both show_interdiff() and show_range_diff() call diff_flush(). So, the
+"temporary" diff_queued_diff set up here does get cleaned up by
+diff_flush(), as far as I understand (though this is my first foray
+into the diff-generation code, so I may be missing something). And,
+the diff_queued_diff which gets "interrupted" by this excursion into
+interdiff/range-diff gets cleaned up normally when the interrupted
+diff operation completes.
+
+[1]: https://public-inbox.org/git/20180722095717.17912-6-sunshine@sunshineco.com/
