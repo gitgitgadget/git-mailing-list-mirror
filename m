@@ -3,119 +3,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BAE541F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 20:29:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4E51F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 21:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbeIHBMY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 21:12:24 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:36636 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726308AbeIHBMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 21:12:24 -0400
-Received: by mail-qk1-f196.google.com with SMTP id 93-v6so10487699qks.3
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 13:29:48 -0700 (PDT)
+        id S1727145AbeIHBwy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 21:52:54 -0400
+Received: from mail-wm0-f68.google.com ([74.125.82.68]:53544 "EHLO
+        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726443AbeIHBwy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 21:52:54 -0400
+Received: by mail-wm0-f68.google.com with SMTP id b19-v6so15945013wme.3
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 14:10:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=06Dl/SzqJl7mdmcQ1ZvSBkiO9s4mBmaVGM6MQ2izChA=;
-        b=kVhvC3i73Hd9djZF25AaySFON8J7Ws89knD9jMEno/44XrjL1Bq6zmTKqqxaSSiAc4
-         lNOav1ofoCHnRAcSmp3sOM85Fcz72fiJHlkCNB6BDf0oVTSC5IpYHD1z0bemMMhaJJuc
-         6aUsbKM+1LPv5B4HV6Nad8IsSkT00WYbPPz5TaHYpXcN+c9xmjGqevUcLJYcoWHLbR/O
-         jzZjHuw0mrCTee5Qog8eyURpOus47TUVY+X2bumtd6HcYhFH6JUlOlejVRMNWful0+Rp
-         JL3NT/Xavvt1hKMRzNIWupTctLT0TBz/B/kvvqr1D4RfQ/e4IPhOo/Yylzjd5ibjeHYI
-         nLUw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=vP5wrVumiQaCGpSribfaAbx7GQiDswhJtUlp77PmHiw=;
+        b=stP9cyaDxyyOUNX22gQC+hinD2So1ZXLOYpDm7ISjoRq+54hdqtuFxlMVItEI7L5fo
+         IeXhtAsDr/FPh8o+cwsg8Rw6Wg6gcqDZVcovTgEM3XoYtbTi0qbBcXZgTX5sFHn/YBKt
+         1yW8Oanx6U9Vp2UQWI7ezXG0Aq2An4DtBFClqAXWN1rE2CmzGUtyyFcQ0RF1qTjVyerF
+         ul0nxnkAwZxD4zkpehSLf/bGKUNdW9I2NQZzlQlFmfrWkXjlaNiylmozM/4HLXy185D0
+         cid4AzBwEQAZbMvyichZ18SL5fDt4nqAEkEdrT5sMdw/EvQTJoJj70h3IrF5/nSq6VS+
+         tcqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=06Dl/SzqJl7mdmcQ1ZvSBkiO9s4mBmaVGM6MQ2izChA=;
-        b=FjFORcj9DzapApYsyvOSAttIshOQluWNMiM9hzv2CYLh73BzZPRuhejSSljx0dfxfP
-         X/dYexbSndVxOpDr4li3xoKXzWFCu01AFXU2qnGwZcEmi+gLc9hz+ERExOjtf1OiKdJW
-         58Iq//NmeoD+8mKvALhb8XNr6M8BB+VJ4oeD2DfqhXsBrmDWP514SaD8NsH7fVDASaT6
-         xG98HZjOgtlUoCYmEAyVohBi13P4IlAn7xWQMrIBH24aF5tHlxHHsS7HjQzq9N2Ao9hN
-         urdO5y3RALOh5VAaSjMPKTl7fC0EiZk91k1y2WU7NsCMSrZZsYwE9bAmb4yYdVEzznEL
-         6kVA==
-X-Gm-Message-State: APzg51DFDN3DtInao8F2A2A+dQMLgB9sscpeZrRf1yFEmVEaYMPpW8lW
-        lya97dH7HKn3YI5LogrPxV8E4ULs
-X-Google-Smtp-Source: ANB0Vdb6R5CGnDGwyK6aefN2NYZMho9ycxwXigytQ8YU8YrayMy73a5tiet4NHlBOSZw3GJRh3R3mg==
-X-Received: by 2002:a37:ad0a:: with SMTP id f10-v6mr7247380qkm.186.1536352187942;
-        Fri, 07 Sep 2018 13:29:47 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:343f:f4ad:2a71:7def? ([2001:4898:8010:0:1d75:f4ad:2a71:7def])
-        by smtp.gmail.com with ESMTPSA id s8-v6sm6011720qtc.71.2018.09.07.13.29.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Sep 2018 13:29:46 -0700 (PDT)
-Subject: Re: [PATCH] status: show progress bar if refreshing the index takes
- too long
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <20180907155133.27737-1-pclouds@gmail.com>
- <CAPig+cQVCUyt5NvcSCAO63b1aO8HSc5AobCRKP5mp9jT_LYuJQ@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <796edb6b-74ec-35dc-4bae-7a817f8fa9b5@gmail.com>
-Date:   Fri, 7 Sep 2018 16:29:45 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=vP5wrVumiQaCGpSribfaAbx7GQiDswhJtUlp77PmHiw=;
+        b=RDg9ysOlVrEcXfnu0IpwS5ggQyD3VhOgSgMM8+uPhpzxNpwav1py/9/OVcTFNoI3M4
+         8q/e1iWGuMIXgM5wTGq07aJPaaRwIySHyMK2jXjWMoLFJf9s6/EMttDA91ima1LwI2/T
+         4SV1j0/yeF4n0BzG1obP/GELeoDfT1xXMoY8uVkP66Xkj0uPbX9+PVp7SvXZccBMFk0x
+         htGxbiVX8XakiDXC2B9WWyb5dmKBB8S796MW9PwE79QU8FPk0eLOGay4cy4d80UxPNsU
+         J7Z/iyvFLvi4LRPWcLRMBvNA+JfK3XYFx3V7RR2fTzFRfcEx90bwU8CE3+hvfLRFWiie
+         7OAg==
+X-Gm-Message-State: APzg51CO1ZosJOamriO0K4fJF6ZEE0dOsEuit4O/zDDYl/+eIq3klVK3
+        HiplUXgQKq90b35yzak5d4k=
+X-Google-Smtp-Source: ANB0VdY2KBu8e3YAmHAaVbMirM7RVM/CnsxlX8vgMxbrRMBcvcBxw+Z614cjNBsClo2au+AdD9aMsQ==
+X-Received: by 2002:a1c:7711:: with SMTP id t17-v6mr6463268wmi.35.1536354607355;
+        Fri, 07 Sep 2018 14:10:07 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z3-v6sm5998656wmf.12.2018.09.07.14.10.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Sep 2018 14:10:06 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds\@gmail.com" <pclouds@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v3 3/4] read-cache: load cache extensions on a worker thread
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+        <20180906210227.54368-1-benpeart@microsoft.com>
+        <20180906210227.54368-4-benpeart@microsoft.com>
+Date:   Fri, 07 Sep 2018 14:10:05 -0700
+In-Reply-To: <20180906210227.54368-4-benpeart@microsoft.com> (Ben Peart's
+        message of "Thu, 6 Sep 2018 21:03:58 +0000")
+Message-ID: <xmqqbm99vwsy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <CAPig+cQVCUyt5NvcSCAO63b1aO8HSc5AobCRKP5mp9jT_LYuJQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ben Peart <benpeart@microsoft.com> writes:
 
-On 9/7/2018 1:38 PM, Eric Sunshine wrote:
-> On Fri, Sep 7, 2018 at 11:51 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
->> Refreshing the index is usually very fast, but it can still take a
->> long time sometimes. Cold cache is one, or something else silly (*).
->> In this case, it's good to show something to let the user know "git
->> status" is not hanging, it's just busy doing something.
->>
->> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
->> ---
->> diff --git a/read-cache.c b/read-cache.c
->> @@ -1516,6 +1522,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->> +               if (progress)
->> +                       display_progress(progress, i);
->> @@ -1547,6 +1555,8 @@ int refresh_index(struct index_state *istate, unsigned int flags,
->> +       if (progress)
->> +               stop_progress(&progress);
-> Nit: Both display_progress() and stop_progress() behave sanely when
-> 'progress' is NULL, so no need for the conditional.
+> +struct load_index_extensions
+> +{
+> +#ifndef NO_PTHREADS
+> +	pthread_t pthread;
+> +#endif
+> +	struct index_state *istate;
+> +	void *mmap;
+> +	size_t mmap_size;
+> +	unsigned long src_offset;
 
-Don't forget this one in preload-index.c:preload_index():
+If the file format only allows uint32_t on any platform, perhaps
+this is better specified as uint32_t?  Or if this is offset into
+a mmap'ed region of memory, size_t may be more appropriate.
 
-+	if (pd.progress)
-+		stop_progress(&pd.progress);
+Same comment applies to "extension_offset" we see below (which in
+turn means the returned type of read_eoie_extension() function may
+want to match).
 
-I found this extra one by creating the following rules in a Coccinelle script:
+> + };
 
-@@
-expression e;
-@@
-- if (e) { stop_progress(&e); }
-+ stop_progress(&e);
+Space before '}'??
 
-@@
-expression e;
-expression i;
-@@
-- if (e) { display_progress(e, i); }
-+ display_progress(e, i);
+> +
+> +static void *load_index_extensions(void *_data)
+> +{
+> +	struct load_index_extensions *p = _data;
 
+Perhaps we are being superstitious, but I think our code try to
+avoid leading underscore when able, i.e.
 
-Not sure if we want to put these in a .cocci script or not.
+	load_index_extensions(void *data_)
+	{
+		struct load_index_extensions *p = data;
 
-Thanks,
--Stolee
+> +	unsigned long src_offset = p->src_offset;
+> +
+> +	while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
+> +		/* After an array of active_nr index entries,
+> +		 * there can be arbitrary number of extended
+> +		 * sections, each of which is prefixed with
+> +		 * extension name (4-byte) and section length
+> +		 * in 4-byte network byte order.
+> +		 */
+> +		uint32_t extsize;
+> +		memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
+> +		extsize = ntohl(extsize);
 
+The same "ntohl(), not get_be32()?" question as the one for the
+previous step applies here, too.  I think the answer is "the
+original was written that way" and that is acceptable, but once this
+series lands, we may want to review the whole file and see if it is
+worth making them consistent with a separate clean-up patch.
+
+I think mmap() and munmap() are the only places that wants p->mmap
+and mmap parameters passed around in various callchains to be of
+type "void *"---I wonder if it is simpler to use "const char *"
+throughout and only cast it to "void *" when necessary (I suspect
+that there is nowhere we need to cast to or from "void *" explicitly
+if we did so---assignment and argument passing would give us an
+appropriate cast for free)?
+
+> +		if (read_index_extension(p->istate,
+> +			(const char *)p->mmap + src_offset,
+> +			(char *)p->mmap + src_offset + 8,
+> +			extsize) < 0) {
+> +			munmap(p->mmap, p->mmap_size);
+> +			die("index file corrupt");
+> +		}
+> +	...
+> @@ -1907,6 +1951,11 @@ ...
+> ...
+> +	p.mmap = mmap;
+> +	p.mmap_size = mmap_size;
+> +
+> +#ifndef NO_PTHREADS
+> +	nr_threads = git_config_get_index_threads();
+> +	if (!nr_threads)
+> +		nr_threads = online_cpus();
+> +
+> +	if (nr_threads >= 2) {
+> +		extension_offset = read_eoie_extension(mmap, mmap_size);
+> +		if (extension_offset) {
+> +			/* create a thread to load the index extensions */
+> +			p.src_offset = extension_offset;
+> +			if (pthread_create(&p.pthread, NULL, load_index_extensions, &p))
+> +				die(_("unable to create load_index_extensions_thread"));
+> +		}
+> +	}
+> +#endif
+
+Makes sense.
