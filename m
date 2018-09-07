@@ -2,129 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,WEIRD_PORT shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9B281F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 23:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEB821F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 23:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725734AbeIHEFZ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 00:05:25 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58384 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725731AbeIHEFZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 00:05:25 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 505EC116517;
-        Fri,  7 Sep 2018 19:22:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; s=sasl; bh=l9J5QFvMDPrPCrsORXz7HgDcU
-        pQ=; b=Us1zG2efd68plr0wnm6hx4zbiAkot2H0TdYycUhrwTN0OHS5MS4hHsYxx
-        Sqw2KqDqRLeTly4zeR9nbwljAYYdlm9COO6icFJ5cddA93iIFo/aipG1DapRBn/T
-        CZvEGUYNUg/11kbYmzKV8AFv7nA5eg9J9sapYZdw1KuwGn5AYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:date:message-id:mime-version:content-type
-        :content-transfer-encoding; q=dns; s=sasl; b=PKeu0jtg9qgVQnI8UKB
-        KJksHEf1t1Wz30oxNhBbb4kTR6XqiwADEAG9EccqcWVXFNOpZ2iaH5Ie+KSCqtd+
-        fvyTGDHVUJvV3Pqq5APR+AoKUqLQGBg42L+0enbn1uU6HBDU4/TNrLTtcbgokaFJ
-        KQdkDt4Zu/OonP23huOYMKkU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 49B0B116516;
-        Fri,  7 Sep 2018 19:22:06 -0400 (EDT)
-Received: from morphine.teonanacatl.net (unknown [96.240.145.194])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id CDA5B116515;
-        Fri,  7 Sep 2018 19:22:05 -0400 (EDT)
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: [PATCH] t5551-http-fetch-smart.sh: sort cookies before comparing
-Date:   Fri,  7 Sep 2018 19:22:05 -0400
-Message-Id: <20180907232205.31328-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.19.0.rc2
+        id S1725848AbeIHEWM (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 00:22:12 -0400
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:44228 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725733AbeIHEWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 00:22:12 -0400
+Received: by mail-qk1-f195.google.com with SMTP id d131-v6so10722178qke.11
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 16:38:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=n3rATBspmfWnx4Oo0wQzRKg5eZvpu2psl5g9umTBZ38=;
+        b=rXSdPVoOL0WyTOlB48ioLTmw3Tp9aWp5bg1AJFcZ1SlJ6zK+0HMRT7q9oPWr+fLxzo
+         EZ3CcXBOphhiRhv/sfMe5OquXi4Dn/4AFf4T9hdfgssQPU2lidxh29JWqA6H6T0Ww/Pv
+         Ex0KxeYGV7u10VmFPZzAe+VyyewS+QVeUh0Pqu/ED2JNNuYpvWYPwb8tHsRRLMaP1hP2
+         1wDuQz/OGsWUStoVzH5p1bIELh8pdRjEAZCUPU3EB13ttK06wY3rbk7t2GVcH3OkOV6G
+         YNMA9yQsBZQcf+NoX1XnYK2IuXKVffvX/b0IYkVNt+/bqYYN5lJhdofhOe9uKkYBYI5K
+         qmXg==
+X-Gm-Message-State: APzg51CWn74gghk8xyXeK8NQV7TI0kJD3sbXVbZOSUhg47qmgnAIkkKj
+        GZTqRY2gNKa64YYPBNpVvXs2p8hBxw4jP91jicA=
+X-Google-Smtp-Source: ANB0VdZMBwBJaG+sXjISXytYMW31cZZ3qpkQ27a5Ou3vXqyQV8hJftN6hRMS8S0hG+90mRe1RfhS+Q7Q09ixTiYf5fo=
+X-Received: by 2002:ae9:ef13:: with SMTP id d19-v6mr7679844qkg.152.1536363531540;
+ Fri, 07 Sep 2018 16:38:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Pobox-Relay-ID: D5862506-B2F4-11E8-84A7-BFB3E64BB12D-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20180905085427.4099-1-timschumi@gmx.de> <20180907224430.23859-1-timschumi@gmx.de>
+ <20180907224430.23859-3-timschumi@gmx.de>
+In-Reply-To: <20180907224430.23859-3-timschumi@gmx.de>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 7 Sep 2018 19:38:39 -0400
+Message-ID: <CAPig+cR1JpZqxBAsR+6_WjLwofnU8siB9VXYdUkXY2P-xQnsuQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v4 3/3] t0014: Introduce alias testing suite
+To:     timschumi@gmx.de
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-With curl-7.61.1 cookies are sorted by creation-time=C2=B9.  Sort the out=
-put
-used in the 'cookies stored in http.cookiefile when http.savecookies
-set' test before comparing it to the expected cookies.
+On Fri, Sep 7, 2018 at 6:44 PM Tim Schumacher <timschumi@gmx.de> wrote:
+> Introduce a testing suite that is dedicated to aliases.
+> For now, check only if nested aliases work and if looping
+> aliases are detected successfully.
+>
+> The looping aliases check for mixed execution is there but
+> expected to fail because there is no check in place yet.
+>
+> Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+> ---
+> Unfortunately I don't have a fix for the last one yet, so I
+> marked it as expect_failure. The problem is that the test suite
+> is waiting a full minute until it aborts the running command
+> (which I guess should not take that long, as it blocks the whole
+> test suite for that span of time).
+>
+> Should I try to decrease the timeout or should I remove that
+> test completely until I manage to get external calls fixed?
 
-=C2=B9 https://github.com/curl/curl/commit/e2ef8d6fa ("cookies: support
-  creation-time attribute for cookies", 2018-08-28)
+Perhaps just comment out that test for now and add a comment above it
+explaining why it's commented out.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
-[Resending with the list in Cc; sorry for spamming you,
-Junio, Jeff, and G=C3=A1bor.]
+> As a last thing, is there any better way to use single quotes
+> than to write '"'"'? It isn't that bad, but it is hard to read,
+> especially for bash newcomers.
 
-The in-development version of Fedora updated to the recently
-released curl-7.61.1 in the past few days.  This isn't
-breakage from the 2.19.0 cycle, but if the fix looks good to
-everyone it would be nice to include it.  That way other
-distributions and users who update git and curl to the most
-recent releases won't run into this test failure.
+You should backslash-escape the quotes ("foo \'bar\' baz"), however,
+in this case, it would make sense to use regex's with 'grep' to check
+that you got the expected error message rather than reproducing the
+message literally here in the script.
 
-I tested this against Fedora 30 (curl-7.61.1) as well as
-previous releases from RHEL/CentOS 6/7 (7.19.7/7.29.0) and
-Fedora 27/28/29 (7.55.1/7.59.0/7.61.0).
+More below.
 
-The verbose output is:
+> diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+> @@ -0,0 +1,38 @@
+> +#!/bin/sh
+> +
+> +test_description='git command aliasing'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup environment' '
+> +       git init
+> +'
 
-expecting success:
-	git config http.cookiefile cookies.txt &&
-	git config http.savecookies true &&
-	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
-	tail -3 cookies.txt >cookies_tail.txt &&
-	test_cmp expect_cookies.txt cookies_tail.txt
-++ git config http.cookiefile cookies.txt
-++ git config http.savecookies true
-++ git ls-remote http://127.0.0.1:5551/smart_cookies/repo.git master
-7ae89caac6c721f16555e981eaeed64abc165c5d	refs/heads/master
-263207bb5fbfbefbdf1c9c3fa4ae5d9663323217	refs/namespaces/ns/refs/heads/ma=
-ster
-++ tail -3 cookies.txt
-++ test_cmp expect_cookies.txt cookies_tail.txt
-++ diff -u expect_cookies.txt cookies_tail.txt
---- expect_cookies.txt	2018-09-07 07:29:05.231532462 +0000
-+++ cookies_tail.txt	2018-09-07 07:29:05.306532366 +0000
-@@ -1,3 +1,3 @@
+"git init" is invoked automatically by the test framework, so no need
+for this test. You can drop it.
 
--127.0.0.1	FALSE	/smart_cookies/	FALSE	0	othername	othervalue
- 127.0.0.1	FALSE	/smart_cookies/repo.git/info/	FALSE	0	name	value
-+127.0.0.1	FALSE	/smart_cookies/	FALSE	0	othername	othervalue
-error: last command exited with $?=3D1
-not ok 22 - cookies stored in http.cookiefile when http.savecookies set
+> +test_expect_success 'nested aliases - internal execution' '
+> +       git config alias.nested-internal-1 nested-internal-2 &&
+> +       git config alias.nested-internal-2 status
+> +'
 
- t/t5551-http-fetch-smart.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This isn't actually testing anything, is it? It's setting up the
+aliases but never actually invoking them. I would have expected the
+next line to actually run a command ("git nested-internal-1") and the
+line after that to check that you got the expected output (whatever
+"git status" would emit). Output from "git status" isn't necessarily
+the easiest to test, though, so perhaps pick a different Git command
+for testing (something for which the result can be very easily checked
+-- maybe "git rm" or such).
 
-diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index 771f36f9ff..538656bfef 100755
---- a/t/t5551-http-fetch-smart.sh
-+++ b/t/t5551-http-fetch-smart.sh
-@@ -215,7 +215,7 @@ test_expect_success 'cookies stored in http.cookiefil=
-e when http.savecookies set
- 	git config http.cookiefile cookies.txt &&
- 	git config http.savecookies true &&
- 	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
--	tail -3 cookies.txt >cookies_tail.txt &&
-+	tail -3 cookies.txt | sort >cookies_tail.txt &&
- 	test_cmp expect_cookies.txt cookies_tail.txt
- '
-=20
---=20
-2.19.0.rc2
+> +test_expect_success 'nested aliases - mixed execution' '
+> +       git config alias.nested-external-1 "!git nested-external-2" &&
+> +       git config alias.nested-external-2 status
+> +'
 
+Same observation.
+
+> +test_expect_success 'looping aliases - internal execution' '
+> +       git config alias.loop-internal-1 loop-internal-2 &&
+> +       git config alias.loop-internal-2 loop-internal-3 &&
+> +       git config alias.loop-internal-3 loop-internal-2 &&
+> +       test_must_fail git loop-internal-1 2>output &&
+> +       grep -q "fatal: alias loop detected: expansion of '"'"'loop-internal-1'"'"' does not terminate" output &&
+
+Don't bother using -q with 'grep'. Output is hidden already by the
+test framework in normal mode, and not hidden when running in verbose
+mode. And, the output of 'grep' might be helpful when debugging the
+test if something goes wrong.
+
+As noted above, you can use regex to match the expected error rather
+than exactly duplicating the text of the message.
+
+Finally, use 'test_i18ngrep' instead of 'grep' in order to play nice
+with localization.
+
+> +       rm output
+
+Tests don't normally bother cleaning up their output files like this
+since such output can be helpful when debugging the test if something
+goes wrong. (You'd want to use test_when_finished to cleanup anyhow,
+but you don't need it in this case.)
+
+> +'
