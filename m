@@ -2,73 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C51561F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 21:10:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 979991F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 21:38:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727181AbeIHBw6 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 7 Sep 2018 21:52:58 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:43723 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726443AbeIHBw6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 21:52:58 -0400
-Received: by mail-qk1-f196.google.com with SMTP id 130-v6so10557149qkd.10
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 14:10:13 -0700 (PDT)
+        id S1729399AbeIHCVR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 22:21:17 -0400
+Received: from mail-wr1-f46.google.com ([209.85.221.46]:41190 "EHLO
+        mail-wr1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728099AbeIHCVQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 22:21:16 -0400
+Received: by mail-wr1-f46.google.com with SMTP id z96-v6so16239967wrb.8
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 14:38:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IVxH3P+9Iy+HrTFa4exYvP8cScveZB2ldr4CEbwZl1U=;
+        b=KDvQ0L+Qr/tRY0ZFBsIeeCF8Clw4EPogUzaALn4u2DPzdD1Axp2VgO9UZzkGoKC+5x
+         jQ3L1jFSURZP0e10yu4jKc+QxmXBFhoJpxrBZyRSWAUTiBxQP+wnn6gFwLFl3APHoCfR
+         NdKlMejZMK1B88YB6AFc9DML7US1sc1SwdLpAoXrLPR13vX4889YRcezgEL3oFQh6D7a
+         xHKMxNDor8IAJf5Xw0lLYSiUlYgbrnku9a8wSCgCww3dlTLlCTEtQt53GoV0gKow/FF6
+         nS9HLs46Xtx4leXWhDadnWRSvrJ7tCWOcXXtxtLwYijVUe+aHOfNUdOXZxFHyYU2TKdu
+         QMww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=5MBZpYVQRdFkCC0PrAkZWagnvUzqhfvNxsS5nsBG96A=;
-        b=uTzA5ub1oaNnAdgcd8pbtOBZUY3YuQwmTM4OmVirKNFyd6ArYiCus2vF+cwm0cvx+m
-         6mYaygX9XHRhWof/p+ZFaB1T3UzpOCBhJas7O8lJGtN9FgnMuF+djkXSmv/F+96CqEps
-         2qS7AIsrZ5CJZ1D3/njVCehzrfve/L7qaNzW5T7hz8ql22i24AmrAWQb4UAETljidVN3
-         B1xG9R8f/At23W4lj7xtwnM6PSmlm8OvV403UT1UT2w0ec9s3v5w13za5a3AjwP83hOE
-         m0RNTvEIaVa6pJbzTRgafOk7SNlbHHr/aMsz3DGYhfKMeZvTxdKC6u65KsRTbKSfBOGB
-         XGGA==
-X-Gm-Message-State: APzg51AqEkJtpveAN0k3kqHbh/Ir1tWB8303x2hCRSr4xnhzN9m9V+cz
-        l2S7tbwxl3gee9quEhmx+zpVeOwL1H50Kbhdu78=
-X-Google-Smtp-Source: ANB0VdbwAemmRS1jqd6GBMrZsCjrLAmM0n+PZga2DFR5yEtJCQB6q+kltGo/+MUnMIegWm+v6rTCOS/sH7Oal+EJHzU=
-X-Received: by 2002:a37:48e:: with SMTP id 136-v6mr7426968qke.26.1536354612743;
- Fri, 07 Sep 2018 14:10:12 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IVxH3P+9Iy+HrTFa4exYvP8cScveZB2ldr4CEbwZl1U=;
+        b=IEKFv/1U1PN4p73igbvA9/cUHvayKAwpxBc8RvdV3NK9x0GO44jZ6gWnxAUnqu/zn9
+         d9cmpfiR7n1rRjQi9pHX5h5xg6oNv5ZVWUxbW+KFB5eiOW4dp/8RUMow181n1/vm0Nm0
+         pZpGYrNSE5r4laYveXWUbwDXdUgVJiNPp7cFpsy0nHvo+weuXqQ5AmRjDaT8eCEwyAVU
+         C8jbnrytgnSUoTcpKPQ4cdqC9pdG/rIBgdGQ5LCSq3nakzJJYFotxKlM8X0ENDtAbGtZ
+         JG67iCzXHZrJYWjI69c09yIkHxf2Al+z/VLTcIcZwO49eoTwV3Sma1VODp9cNj0q8KxF
+         udNw==
+X-Gm-Message-State: APzg51DKW+EyhJemppJPh/HXbU7PjooLiwmB5vJzM2vBXQyySmzSOhbO
+        7qBWC52B/qJUFpjwlsJJMFI=
+X-Google-Smtp-Source: ANB0VdZwdGpkvMEaabPlwhK6BUvjO5t9f8y5OLoc2/eL3QCYVMaLWrJRPvqOopfXKPHljEggaZA2Bg==
+X-Received: by 2002:adf:e3c4:: with SMTP id k4-v6mr7483163wrm.94.1536356301782;
+        Fri, 07 Sep 2018 14:38:21 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r140-v6sm12662649wmd.7.2018.09.07.14.38.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Sep 2018 14:38:20 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     Git List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v3 2/4] wt-status: rename commitable to committable
+References: <20180906005329.11277-1-ischis2@cox.net>
+        <20180906005329.11277-3-ischis2@cox.net>
+Date:   Fri, 07 Sep 2018 14:38:20 -0700
+In-Reply-To: <20180906005329.11277-3-ischis2@cox.net> (Stephen P. Smith's
+        message of "Wed, 5 Sep 2018 17:53:27 -0700")
+Message-ID: <xmqq7ejxvvhv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180907155133.27737-1-pclouds@gmail.com> <CAPig+cQVCUyt5NvcSCAO63b1aO8HSc5AobCRKP5mp9jT_LYuJQ@mail.gmail.com>
- <796edb6b-74ec-35dc-4bae-7a817f8fa9b5@gmail.com>
-In-Reply-To: <796edb6b-74ec-35dc-4bae-7a817f8fa9b5@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 7 Sep 2018 17:10:00 -0400
-Message-ID: <CAPig+cRvbvH4cZZhWTf2xHrJuD8n75bdJNX2BMHgSCveppOC+w@mail.gmail.com>
-Subject: Re: [PATCH] status: show progress bar if refreshing the index takes
- too long
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 7, 2018 at 4:29 PM Derrick Stolee <stolee@gmail.com> wrote:
-> On 9/7/2018 1:38 PM, Eric Sunshine wrote:
-> > On Fri, Sep 7, 2018 at 11:51 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> >> +               if (progress)
-> >> +                       display_progress(progress, i);
-> >> +       if (progress)
-> >> +               stop_progress(&progress);
-> > Nit: Both display_progress() and stop_progress() behave sanely when
-> > 'progress' is NULL, so no need for the conditional.
->
-> Don't forget this one in preload-index.c:preload_index():
-> +       if (pd.progress)
-> +               stop_progress(&pd.progress);
->
-> I found this extra one by creating the following rules in a Coccinelle script:
-> - if (e) { stop_progress(&e); }
-> - if (e) { display_progress(e, i); }
-> Not sure if we want to put these in a .cocci script or not.
+"Stephen P. Smith" <ischis2@cox.net> writes:
 
-If so, we'd want to match display_throughput() and stop_progress_msg(), as well.
+> Fix variable spelling error.
+>
+> Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+> ---
+
+Thanks ;-)
