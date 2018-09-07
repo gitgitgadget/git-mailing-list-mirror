@@ -2,94 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB3B71F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 03:36:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 44C461F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 03:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727571AbeIGIPF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 04:15:05 -0400
-Received: from p3plsmtpa06-09.prod.phx3.secureserver.net ([173.201.192.110]:55437
-        "EHLO p3plsmtpa06-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725940AbeIGIPF (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 7 Sep 2018 04:15:05 -0400
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id y7Z3fzf4BiaxKy7Z9fPfHP; Thu, 06 Sep 2018 20:36:17 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Max Kirillov <max@max630.net>,
-        =?UTF-8?q?Jelmer=20Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: [PATCH v2] http-backend: allow empty CONTENT_LENGTH
-Date:   Fri,  7 Sep 2018 06:36:07 +0300
-Message-Id: <20180907033607.24604-1-max@max630.net>
-X-Mailer: git-send-email 2.17.0.1185.g782057d875
+        id S1725957AbeIGIRX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 04:17:23 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42310 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725743AbeIGIRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 04:17:23 -0400
+Received: (qmail 15872 invoked by uid 109); 7 Sep 2018 03:38:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Sep 2018 03:38:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10940 invoked by uid 111); 7 Sep 2018 03:38:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Sep 2018 23:38:45 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Sep 2018 23:38:31 -0400
+Date:   Thu, 6 Sep 2018 23:38:31 -0400
+From:   Jeff King <peff@peff.net>
+To:     Max Kirillov <max@max630.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] http-backend: allow empty CONTENT_LENGTH
+Message-ID: <20180907033831.GB1383@sigill.intra.peff.net>
+References: <20180906193516.28909-1-max@max630.net>
+ <xmqq1sa6z3zp.fsf@gitster-ct.c.googlers.com>
+ <20180907032740.GA20545@jessie.local>
 MIME-Version: 1.0
-In-reply-to: <20180906193516.28909-1-max@max630.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfB9jULTHvYUMBdE4R2HcarNgQBSD74jpJcnVVIuz5viCcSa/yDfspmmMiRV0YzbxjKrJYl7ipqESbq2rseDAgoRfib4lqXf0fNzWlWNvaydmPFt5iZmg
- 6+PPJZbKoWCFQvHz5vZa8PSIJdEASmFlCyahRHQVD3DN2HP6Mxe2MhrRfCnjYM5gKNSWzXUFiF8jeWtOKel+1UbXPUH1WPxW1iVTJ6NjEl38p7q6yh1T2gRS
- DhLTLMnkefkTO0uhCuIAPEU/4FpXWQn/885QXzOaFFY=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20180907032740.GA20545@jessie.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to RFC3875, empty environment variable is equivalent to unset,
-and for CONTENT_LENGTH it should mean zero body to read.
+On Fri, Sep 07, 2018 at 06:27:40AM +0300, Max Kirillov wrote:
 
-However, unset CONTENT_LENGTH is also used for chunked encoding to indicate
-reading until EOF. At least, the test "large fetch-pack requests can be split
-across POSTs" from t5551 starts faliing, if unset or empty CONTENT_LENGTH is
-treated as zero length body. So keep the existing behavior as much as possible.
+> On Thu, Sep 06, 2018 at 02:54:18PM -0700, Junio C Hamano wrote:
+> > Max Kirillov <max@max630.net> writes:
+> >> This should fix it. I'm not sure should it treat it as 0 or "-1"
+> >> At least the tests mentioned by Jeff fails if I try to treat missing CONTENT_LENGTH as "-1"
+> >> So keep the existing behavior as much as possible
+> > 
+> > I am not sure what you mean by the above, between 0 and -1.  The
+> > code signals the caller of get_content_length() that req_len is -1
+> > which is used as a sign to read through to the EOF, so it appears to
+> > me that the code treats missing content-length (i.e. str == NULL
+> > case) as "-1".
+> 
+> I made a mistake in this, it should be "if I try to treat missing
+> CONTENT_LENGTH as 0". This, as far as I understand, what the
+> RFC specifies.
+> 
+> That is, after the following change, the test "large fetch-pack
+> requests can be split across POSTs" from t5551 starts faliing:
+> 
+> -- >8 --
+> @@ -353,8 +353,12 @@ static ssize_t get_content_length(void)
+>         ssize_t val = -1;
+>         const char *str = getenv("CONTENT_LENGTH");
+>  
+> -       if (str && *str && !git_parse_ssize_t(str, &val))
+> -               die("failed to parse CONTENT_LENGTH: %s", str);
+> +       if (str && *str) {
+> +               if (!git_parse_ssize_t(str, &val))
+> +                       die("failed to parse CONTENT_LENGTH: %s", str);
+> +       } else
+> +               val = 0;
+> +
 
-Add a test for the case.
+Right, I'm pretty sure it is a problem if you treat a missing
+CONTENT_LENGTH as "present, but zero". Because chunked encodings from
+apache really do want us to read until EOF.
 
-Reported-By: Jelmer Vernooĳ <jelmer@jelmer.uk>
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Added the "reported-by" and explained inline the reason to keep existing behavior
- http-backend.c                         |  2 +-
- t/t5562-http-backend-content-length.sh | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+My understanding from Jelmer's report is that a present-but-empty
+variable should be counted as "0" to mean "do not read any body bytes".
+That matches my reading of RFC 3875, which says:
 
-diff --git a/http-backend.c b/http-backend.c
-index e88d29f62b..a1230d7ead 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -353,7 +353,7 @@ static ssize_t get_content_length(void)
- 	ssize_t val = -1;
- 	const char *str = getenv("CONTENT_LENGTH");
- 
--	if (str && !git_parse_ssize_t(str, &val))
-+	if (str && *str && !git_parse_ssize_t(str, &val))
- 		die("failed to parse CONTENT_LENGTH: %s", str);
- 	return val;
- }
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index 057dcb85d6..ca34c2f054 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -152,4 +152,15 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
- 	grep "fatal:.*CONTENT_LENGTH" err
- '
- 
-+test_expect_success 'empty CONTENT_LENGTH' '
-+	env \
-+		QUERY_STRING=/repo.git/HEAD \
-+		PATH_TRANSLATED="$PWD"/.git/HEAD \
-+		GIT_HTTP_EXPORT_ALL=TRUE \
-+		REQUEST_METHOD=GET \
-+		CONTENT_LENGTH="" \
-+		git http-backend <empty_body >act.out 2>act.err &&
-+	verify_http_result "200 OK"
-+'
-+
- test_done
--- 
-2.17.0.1185.g782057d875
+  If no data is attached, then NULL (or unset).
 
+(and earlier they explicitly define NULL as the empty string). That
+said, we do not do what they say for the "unset" case. And cannot
+without breaking chunked encoding from apache. So I don't know how much
+we want to follow that rfc to the letter, but at least it makes sense to
+me to revert this case back to what Git used to do, and what the rfc
+says.
+
+In other words, I think the logic we want is:
+
+  if (!str) {
+	/*
+	 * RFC3875 says this must mean "no body", but in practice we
+	 * receive chunked encodings with no CONTENT_LENGTH. Tell the
+	 * caller to read until EOF.
+	 */
+	val = -1;
+  } else if (!*str) {
+	/*
+	 * An empty length should be treated as "no body" according to
+	 * RFC3875, and this seems to hold in practice.
+	 */
+	val = 0;
+  } else {
+	/*
+	 * We have a CONTENT_LENGTH; trust what's in it as long as it
+	 * can be parsed.
+	 */
+	if (!git_parse_ssize_t(str, &val))
+	        die(...);
+  }
+
+-Peff
