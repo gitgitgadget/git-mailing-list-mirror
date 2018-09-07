@@ -7,119 +7,127 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4381E1F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 22:44:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50B9F1F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 22:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726682AbeIHD1y (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 23:27:54 -0400
-Received: from mout.gmx.net ([212.227.15.18]:59885 "EHLO mout.gmx.net"
+        id S1726717AbeIHD1z (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 23:27:55 -0400
+Received: from mout.gmx.net ([212.227.15.19]:33683 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726434AbeIHD1x (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 23:27:53 -0400
+        id S1726354AbeIHD1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 23:27:54 -0400
 Received: from p2520la.fritz.box ([217.235.87.235]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MH0SI-1g2Cqh2B0M-00Dnvx; Sat, 08
- Sep 2018 00:44:33 +0200
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0gww-1fjL9I0XYE-00urQv; Sat, 08
+ Sep 2018 00:44:34 +0200
 From:   Tim Schumacher <timschumi@gmx.de>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
         pclouds@gmail.com
-Subject: [RFC PATCH v4 1/3] Add support for nested aliases
-Date:   Sat,  8 Sep 2018 00:44:28 +0200
-Message-Id: <20180907224430.23859-1-timschumi@gmx.de>
+Subject: [RFC PATCH v4 3/3] t0014: Introduce alias testing suite
+Date:   Sat,  8 Sep 2018 00:44:30 +0200
+Message-Id: <20180907224430.23859-3-timschumi@gmx.de>
 X-Mailer: git-send-email 2.19.0.rc2.1.g4c98b8d69.dirty
-In-Reply-To: <20180905085427.4099-1-timschumi@gmx.de>
+In-Reply-To: <20180907224430.23859-1-timschumi@gmx.de>
 References: <20180905085427.4099-1-timschumi@gmx.de>
+ <20180907224430.23859-1-timschumi@gmx.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:v1uk70HZUh+Jp7goKIxGl7N5wY5DLnqjoAEFcu/d7g+rlvfRmzp
- PAuWaO5m3PKiHRXuJnaeOB7KOJz65rmmG45mxmri2W8R47RPuc761HeKjafItkFRtaFZ468
- 2EmtikrZdgerE7YTmk/CS1AXX3jisowAAOOs3lAk+P9F/P9KPkTq+NPdCC46KKSyvudaXbu
- tUUc0XS5f5YFqqoj/KGrw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:4FVJaAYqiYo=:uYP5WOh+N/pocqqzVYqWZn
- HUy2JttRqXvlUpfvXo+Rh+ve1Nrp7cTuSYcowyt4bIPRdaf0qHsBegMOomkz3bRL5crjl+udS
- Sx1EvYZjXrlJgljGV5QDWlW/ueUwuBsnXgFZL3yqx9cx0cmrMoMPFLzyI87e0/w01k11jE/2X
- o1hSgWWtQSSviT3l3eI7tToioUXaanvvy/T//57kaRCJEewm8p4ZJLoc/uQ6VfeDTasdKzXPy
- Eq7KggYC2lWHkg3TFGl5m89Jvs9R6hpEq3yFSPvYDO4CsGXNSZqUBoCGrKkwM20DC2yWPN3S6
- 2I+H8dJkUS87gT7CZkf2u4e28VdJ6rKSfS0RAnHP+d8Tq2K5GFnBTAP/dsJzdFlqDfgJjWU2v
- 3GWZt+BsCylRJfFntkXXQBotW8e+yk76iTAemR9tPDZcJV9BM14I4+QMn4rfK+2jXx8Sdievs
- Kza503kWObisJelIGmfY2CaMkqgevAZxYcM+h7DBIzDnZoj0eogX7SdDT5TGj1xuP0CCKhDbm
- X4ixwfj3xYwhP2Az5+rRqSYqK7ie1AYnWLLqz+o6bluwiwzHwRVUmn4CAPnmXAEzfSXmGI0D5
- EGvmB9xGgKn63v6KP8NS7nvnUD6J3DEf6vH1gUn7Yjloqc7xfwbeL1Hi4WV5QEaZ09FlXyTcl
- /6fbvyXl+ZP9c/Z4TLQwIzZRSEdayx/+eFTSk2LD6uF22OzopYp/U+Rs59Xg3oizmns9rN6MU
- ygnyOEraxForVL7TBMmS6rRPYlRqbefLkOwV9J5CPEhmN0J4xGJxQZU1KLU=
+X-Provags-ID: V03:K1:AcQNMiiUB5hiR3V0i98hkgYqeuIr1PbnqlZzL9OfvGHe/1suVO3
+ nPUKWRqBYq9HFQ7KmUO+MroHfOlXcEmEHpcZpQBUz0e6LB+obt55nZkxLUZJwcBRZozcJbO
+ 0W4R98dg6syhoqmlXma+z94VqFbJ92nDWGBZM7tENsrs3U4K2XJBk5pOetJAp68h6rY6Q83
+ dczVrrMCCrp/GoxulfwMw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:9nMwR4X+ajA=:/xIwMpBFr3fRew/+KYanmp
+ qzJKH+wtGSioTaNKHvHbHx5m50CwT7f0kJ2kVFMOY5Nw6ijZKHrh1byg2TOsMbDwkGCXILX3o
+ Aqim9feDlKs7suvnXE4vLCuWoiLuanH4iQYYoVQHe2PjRJ2FdBatiNLsP2hlI/FgDMWeT5eJH
+ tPej+gGhku5FEuFJpdLUaSITXunPN23TQpbWBf0qev1fRcI8qSRyxPWrG+pt38RyEZfxpE6IN
+ BWcyufB7mFQAgIYQVbFFs25T9HeApDP8s5fYMyY301eeqsQ8CRTzXLxtzuGzvv8W+uulfXRWq
+ z5E79CromvcNougx97sMzzWjPHA2MH9evwJCgkdJNMkB0guaJNYgzNZsSrSbTxb67sRZZWVP4
+ og30E/cLiAN+SNKS/9UKHWWEc4QykqYKy5l4ikY32NlMseLqwocg/ID2H0WILK1JSQEROHadh
+ 71Y6BVxZq0JlWXl/4u4HqtGuvHLDh72y5GYSCB537Dsuw3F5H3+OJ0dZholg50crO+JH1CMsM
+ /BFvCKm6NENyZyHb5ipV26H9UWbUFIYnPhJPrXOouFdaAeL0/jjUnvzeFaWUwsZLNT1TWBkLb
+ YCof2al+FDq6Ds+aky2tSq9CLlJaCGbH9wyi8GAjy/K8RDt+U+AklfY5gpCq14V5RSE96rUSN
+ KrieKlGwVrK5XGwXFzcTozDPXxtl3Hp6+YUXH07VJ7STDXWL4IsjpIAyQQYDrLr8hDRp2IgSb
+ 73tFeFQ4jwEVbp4zhMz3j8u1y7rg+BTkl8gYaUCowxph2EUqc9hIYEA/bJE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aliases can only contain non-alias git commands and their
-arguments, not other user-defined aliases. Resolving further
-(nested) aliases is prevented by breaking the loop after the
-first alias was processed. Git then fails with a command-not-found
-error.
+Introduce a testing suite that is dedicated to aliases.
+For now, check only if nested aliases work and if looping
+aliases are detected successfully.
 
-Allow resolving nested aliases by not breaking the loop in
-run_argv() after the first alias was processed. Instead, continue
-the loop until `handle_alias()` fails, which means that there are
-no further aliases that can be processed. Prevent looping aliases
-by storing substituted commands in `cmd_list` and checking if
-a command has been substituted previously.
-
-While we're at it, fix a styling issue just below the added code.
+The looping aliases check for mixed execution is there but
+expected to fail because there is no check in place yet.
 
 Signed-off-by: Tim Schumacher <timschumi@gmx.de>
 ---
-Changes since v3:
- - Print the command that the user entered instead of the command
-   which caused the loop (and a nicer, more explanatory error message)
- - Use unsorted_string_list_has_string() instead of the sorted version
- - Fix a code style issue just below the modified code
- - done_alias is a simple boolean again (instead of a counter)
 
- git.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+Those are the tests that I've come up with. It consists of tests
+for nested aliases and looping aliases, both with internal calls
+and external calls.
 
-diff --git a/git.c b/git.c
-index c27c38738..15727c17f 100644
---- a/git.c
-+++ b/git.c
-@@ -674,6 +674,7 @@ static void execv_dashed_external(const char **argv)
- static int run_argv(int *argcp, const char ***argv)
- {
- 	int done_alias = 0;
-+	struct string_list cmd_list = STRING_LIST_INIT_NODUP;
- 
- 	while (1) {
- 		/*
-@@ -691,17 +692,25 @@ static int run_argv(int *argcp, const char ***argv)
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
- 
--		/* It could be an alias -- this works around the insanity
-+		if (unsorted_string_list_has_string(&cmd_list, *argv[0])) {
-+			die(_("alias loop detected: expansion of '%s' does"
-+			      " not terminate"), cmd_list.items[0].string);
-+		}
+Unfortunately I don't have a fix for the last one yet, so I
+marked it as expect_failure. The problem is that the test suite
+is waiting a full minute until it aborts the running command
+(which I guess should not take that long, as it blocks the whole
+test suite for that span of time).
+
+Should I try to decrease the timeout or should I remove that
+test completely until I manage to get external calls fixed?
+
+As a last thing, is there any better way to use single quotes
+than to write '"'"'? It isn't that bad, but it is hard to read,
+especially for bash newcomers.
+
+ t/t0014-alias.sh | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
+ create mode 100755 t/t0014-alias.sh
+
+diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+new file mode 100755
+index 000000000..6c1e34694
+--- /dev/null
++++ b/t/t0014-alias.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
 +
-+		string_list_append(&cmd_list, *argv[0]);
++test_description='git command aliasing'
 +
-+		/*
-+		 * It could be an alias -- this works around the insanity
- 		 * of overriding "git log" with "git show" by having
- 		 * alias.log = show
- 		 */
--		if (done_alias)
--			break;
- 		if (!handle_alias(argcp, argv))
- 			break;
- 		done_alias = 1;
- 	}
- 
-+	string_list_clear(&cmd_list, 0);
++. ./test-lib.sh
 +
- 	return done_alias;
- }
- 
++test_expect_success 'setup environment' '
++	git init
++'
++
++test_expect_success 'nested aliases - internal execution' '
++	git config alias.nested-internal-1 nested-internal-2 &&
++	git config alias.nested-internal-2 status
++'
++
++test_expect_success 'nested aliases - mixed execution' '
++	git config alias.nested-external-1 "!git nested-external-2" &&
++	git config alias.nested-external-2 status
++'
++
++test_expect_success 'looping aliases - internal execution' '
++	git config alias.loop-internal-1 loop-internal-2 &&
++	git config alias.loop-internal-2 loop-internal-3 &&
++	git config alias.loop-internal-3 loop-internal-2 &&
++	test_must_fail git loop-internal-1 2>output &&
++	grep -q "fatal: alias loop detected: expansion of '"'"'loop-internal-1'"'"' does not terminate" output &&
++	rm output
++'
++
++test_expect_failure 'looping aliases - mixed execution' '
++	git config alias.loop-mixed-1 loop-mixed-2 &&
++	git config alias.loop-mixed-2 "!git loop-mixed-1" &&
++	test_must_fail git loop-mixed-1 2>output &&
++	grep -q "fatal: alias loop detected: expansion of '"'"'loop-mixed-1'"'"' does not terminate" output &&
++	rm output
++'
++
++test_done
 -- 
 2.19.0.rc2.1.g4c98b8d69.dirty
 
