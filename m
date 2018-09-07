@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD97E1F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 00:27:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D2C21F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 00:34:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728125AbeIGFFP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 01:05:15 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:33656 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726738AbeIGFFP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 01:05:15 -0400
-Received: by mail-qk1-f195.google.com with SMTP id z78-v6so8657857qka.0
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 17:27:12 -0700 (PDT)
+        id S1726738AbeIGFMT (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 01:12:19 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:40358 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725831AbeIGFMT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 01:12:19 -0400
+Received: by mail-qk1-f193.google.com with SMTP id c126-v6so8661608qkd.7
+        for <git@vger.kernel.org>; Thu, 06 Sep 2018 17:34:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=3oPRvJ/hp8RfcVUqLICxJ3NoKsgTYAFa/CGVy7BNj7g=;
-        b=jQ2nr+CWLaGX7U9/QTC9d30l94pjuBEtJlv/SfaWXl22vXs/9tVebwR8QiLJh0rjkU
-         LKIZKBXOzcdVAbUDVB30ewNpkxA51EAc/Px523o94+RJq6MeoELSBsQnr4T0u8LDqcKI
-         d9LpjPRRx5/+t58SZtcnEww1rDkyv8zKz/8sXwvfOr2jiPGBPQWQb7sKs0Mf3BJK8Tnk
-         27eYtKbLa3qlK0ACXyhMf5yvFmlCMyL4hmaUKJHA/0BBEyURGNuiJaGZePak6sgeNjem
-         OdcHMOqgz8vFv8fjmlbyHtD5jM5SYVKO+zhr+v8upztJ6ExTcASX/NrzWlfbEbDkw2/N
-         RxTw==
-X-Gm-Message-State: APzg51CIMCb5KIrqQWK2cqc5pgrdkNBNFqF39TfRE1inv4KvTqh9UwMU
-        upSqjuS3JTPEYPeKixaF+qmfu3IwKa584i06HBTYWg==
-X-Google-Smtp-Source: ANB0VdYImArb2MaQ4Aq7+J8ivGsPFU5qr9HgfNvHe/3ZVdx4yJugjHFQvXgLYSadaXlMR1RhC97STTIeLdcElBuvNRE=
-X-Received: by 2002:a37:48e:: with SMTP id 136-v6mr4179359qke.26.1536280032321;
- Thu, 06 Sep 2018 17:27:12 -0700 (PDT)
+        bh=+cVQJ1wr+l+ZbSs4vki1nR6gwFgqTNjlJTYNNRKXKlI=;
+        b=B6tlLdkGlqXi5Z9inB1UsTjR0M1HwEZZl4auF5YcFTEAJ0qk3Q/RhrwDZuvc9CF2Pj
+         69ykGVny+nE0fs8xHzTOjozKKdfj1dx1duxhwg3Gi3I5oeWFFbN7b2loC4rkKHlEg8P2
+         mspC//azvd3Y2yMGkP0OmN4DuN+a8A0AaZ0PJe0Rn0Co01PX2CzlsUzK/JoEpKkNM5QW
+         4UM7PhTd/FqzDGb/Fg6z+uLqA152iQh/liGEUfWk3Fnxa9QFDKUrl39Ny/MAN11eKdcv
+         3Yz5fl9ovIJ7I8k92zRWaur+OilhKADWylu7rE75ItD/IXOsBpxzduVLytrEpz23WI9y
+         yZ+Q==
+X-Gm-Message-State: APzg51CzRMzgW8U3aQYC3ae+LC3FfgjvQrR3kEXPHDIKLdZSv20IbY7B
+        wUrElqc7YIjPoX1SLY+OJYLmBez4YGPcwdgTR5k=
+X-Google-Smtp-Source: ANB0VdZ2CcSNQ1xjtptbVUZShXcpyfbJrD5xPEDyFOj+vaJP4BRVHF9zRy7i4A0gv9FDz9TlD25/YpFMjPcbypfkDhk=
+X-Received: by 2002:a37:48e:: with SMTP id 136-v6mr4194584qke.26.1536280453454;
+ Thu, 06 Sep 2018 17:34:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.34.git.gitgitgadget@gmail.com> <787e1fb61626afe79cfc846c4175d4b4d169ff42.1536158789.git.gitgitgadget@gmail.com>
-In-Reply-To: <787e1fb61626afe79cfc846c4175d4b4d169ff42.1536158789.git.gitgitgadget@gmail.com>
+References: <pull.34.git.gitgitgadget@gmail.com> <e1498aea45eb46feb3664413f49b70bdf048d284.1536158789.git.gitgitgadget@gmail.com>
+In-Reply-To: <e1498aea45eb46feb3664413f49b70bdf048d284.1536158789.git.gitgitgadget@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 6 Sep 2018 20:27:01 -0400
-Message-ID: <CAPig+cSOcfQDYP+LEZxhRst__dXZUc=euoORZk0iGYrh9adm1A@mail.gmail.com>
-Subject: Re: [PATCH 02/11] multi-pack-index: verify bad header
+Date:   Thu, 6 Sep 2018 20:34:02 -0400
+Message-ID: <CAPig+cQKt4sq4bhRUoGJMV=GxHzx-AtD_5J7DNtfMngH-uJRFQ@mail.gmail.com>
+Subject: Re: [PATCH 09/11] multi-pack-index: verify object offsets
 To:     gitgitgadget@gmail.com
 Cc:     Git List <git@vger.kernel.org>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -53,28 +53,17 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Sep 5, 2018 at 10:46 AM Derrick Stolee via GitGitGadget
 <gitgitgadget@gmail.com> wrote:
-> Add tests that check corrupted headers in a few ways:
-> [...]
+> Replace the BUG() statement with a die() statement, now that we
+> may hit a bad pack-int-id during a 'verify' command on a corrupt
+> multi-pack-index, and it is covered by a test.
+>
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
-> diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-> @@ -154,6 +154,51 @@ test_expect_success 'verify multi-pack-index success' '
-> +corrupt_midx_and_verify() {
-> +       POS=$1
-> +       DATA="${2:-\0}"
-> +       OBJDIR=$3
-> +       GREPSTR="$4"
+> diff --git a/midx.c b/midx.c
+> @@ -197,7 +197,7 @@ int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id)
+>         if (pack_int_id >= m->num_packs)
+> -               BUG("bad pack-int-id");
+> +               die(_("bad pack-int-id"));
 
-If you happen to re-roll, perhaps make these assignments part of the
-&&-chain to protect against someone coming along some day an inserting
-code before them without realizing that the &&-chain is broken.
-
-> +       FILE=$OBJDIR/pack/multi-pack-index &&
-> +       chmod a+w $FILE &&
-> +       test_when_finished mv midx-backup $FILE &&
-> +       cp $FILE midx-backup &&
-> +       printf "$DATA" | dd of="$FILE" bs=1 seek="$POS" conv=notrunc &&
-> +       test_must_fail git multi-pack-index verify --object-dir=$OBJDIR 2>test_err &&
-> +       grep -v "^+" test_err >err &&
-> +       test_i18ngrep "$GREPSTR" err
-> +}
+For someone trying to diagnose this issue, would it be helpful to know
+(that is, print out) the values of pack_int_id and num_packs?
