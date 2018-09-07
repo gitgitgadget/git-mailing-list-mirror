@@ -6,102 +6,75 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 770851F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 23:55:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46EF71F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 23:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726260AbeIHEid (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 00:38:33 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43378 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725731AbeIHEid (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 00:38:33 -0400
-Received: (qmail 13594 invoked by uid 109); 7 Sep 2018 23:55:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Sep 2018 23:55:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24699 invoked by uid 111); 7 Sep 2018 23:55:22 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 07 Sep 2018 19:55:22 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Sep 2018 19:55:09 -0400
-Date:   Fri, 7 Sep 2018 19:55:09 -0400
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t5551-http-fetch-smart.sh: sort cookies before comparing
-Message-ID: <20180907235508.GB32065@sigill.intra.peff.net>
-References: <20180907232205.31328-1-tmz@pobox.com>
+        id S1726346AbeIHEjG (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 00:39:06 -0400
+Received: from fed1rmfepo101.cox.net ([68.230.241.143]:33381 "EHLO
+        fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725731AbeIHEjG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 00:39:06 -0400
+Received: from fed1rmimpo109.cox.net ([68.230.241.158])
+          by fed1rmfepo101.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20180907235543.GHOJ4101.fed1rmfepo101.cox.net@fed1rmimpo109.cox.net>
+          for <git@vger.kernel.org>; Fri, 7 Sep 2018 19:55:43 -0400
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo109.cox.net with cox
+        id Ynvh1y00U59yGBo01nviWP; Fri, 07 Sep 2018 19:55:42 -0400
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020E.5B930FFE.0056,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.2 cv=J77a1EvS c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10 a=WDhBSedXqNQA:10
+ a=ybZZDoGAAAAA:8 a=l6RwnnzsU7YB_JzhaMUA:9 a=a5-f_RoHxf0LhE8d:21
+ a=1QICE4kwK7W7j7Q1:21 a=CjuIK1q_8ugA:10 a=0RhZnL1DYvcuLYC8JZ5M:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 9A20629A0115;
+        Fri,  7 Sep 2018 16:55:41 -0700 (MST)
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] wt-status.c: Set the committable flag in the collect phase.
+Date:   Fri, 07 Sep 2018 16:55:41 -0700
+Message-ID: <1827990.xjSgEIESZI@thunderbird>
+Organization: Personal
+References: <20180906005329.11277-1-ischis2@cox.net> <xmqqworxufuv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180907232205.31328-1-tmz@pobox.com>
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 07, 2018 at 07:22:05PM -0400, Todd Zullinger wrote:
+On Friday, September 7, 2018 3:31:55 PM MST you wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-> With curl-7.61.1 cookies are sorted by creation-time¹.  Sort the output
-> used in the 'cookies stored in http.cookiefile when http.savecookies
-> set' test before comparing it to the expected cookies.
+> The patch is mostly for illustration of the idea.
 > 
-> ¹ https://github.com/curl/curl/commit/e2ef8d6fa ("cookies: support
->   creation-time attribute for cookies", 2018-08-28)
+> The result seems to compile and pass the test suite, but I haven't
+> carefully thought about what else I may be breaking with this
+> mechanical change.  For example, I noticed that both of the old
+> callsites of wt_status_get_state() have free() of a few fiedls in
+> the structure, and I kept the code as close to the original, but I
+> suspect they should not be freed there in the functions in the
+> "print" phase, but rather the caller of the "collect" and "print"
+> should be made responsible for deciding when to dispose the entire
+> wt_status (and wt_status_state as part of it).  This illustration
+> patch does not address that kind of details (yet).
 
-According to that commit message, the creation-time sort is only for
-cookies of the same length. But it's not clear to me if that just means
-on-the-wire, and curl always stores by creation-time in the cookie file.
+If we use this as a basis of a follow on patch, how do I handle credit.   You 
+obviously wrote this patch and I did not.
 
-Either way, though, I guess it wouldn't matter for us as long as we
-choose some arbitrary re-ordering for what curl produces (i.e., the
-output of `sort`) and then make sure our "expect" output is in the same
-order. Which is basically what your patch does. One question, though:
+So how is the mechanics of that normally done?   Thanks for the patch I will 
+work with it.
 
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 771f36f9ff..538656bfef 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -215,7 +215,7 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
->  	git config http.cookiefile cookies.txt &&
->  	git config http.savecookies true &&
->  	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
-> -	tail -3 cookies.txt >cookies_tail.txt &&
-> +	tail -3 cookies.txt | sort >cookies_tail.txt &&
->  	test_cmp expect_cookies.txt cookies_tail.txt
->  '
+sps
 
-We pick the bottom 3 before sorting. How do we know those are the three
-we want to see?
 
-...Ah, OK. The lines we are skipping are not actually cookies at all,
-but just header cruft. I wonder if:
-
-  grep "^[^#]" cookies.txt
-
-would be a better way of doing that, but that is certainly not something
-new.
-
-So this fix looks fine. It might be worth a comment above the creation
-of expect_cookies.txt to mention it must be in sorted order (of course
-anybody modifying it would see a test failure).
-
-> The in-development version of Fedora updated to the recently
-> released curl-7.61.1 in the past few days.  This isn't
-> breakage from the 2.19.0 cycle, but if the fix looks good to
-> everyone it would be nice to include it.  That way other
-> distributions and users who update git and curl to the most
-> recent releases won't run into this test failure.
-> 
-> I tested this against Fedora 30 (curl-7.61.1) as well as
-> previous releases from RHEL/CentOS 6/7 (7.19.7/7.29.0) and
-> Fedora 27/28/29 (7.55.1/7.59.0/7.61.0).
-
-You're pretty late in the 2.19 cycle, since the release is tentatively
-scheduled for Sunday. Though since this is just touching the test
-script, and since it looks Obviously Correct, I'm not opposed.
-
--Peff
