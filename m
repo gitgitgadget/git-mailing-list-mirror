@@ -2,201 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D88CA1F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 15:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C337B1F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 15:19:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728486AbeIGTws (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 15:52:48 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36586 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728440AbeIGTws (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 15:52:48 -0400
-Received: by mail-wr1-f67.google.com with SMTP id e1-v6so6265217wrt.3
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 08:11:26 -0700 (PDT)
+        id S1728633AbeIGUAW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 16:00:22 -0400
+Received: from mail-eopbgr80108.outbound.protection.outlook.com ([40.107.8.108]:3960
+        "EHLO EUR04-VI1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727692AbeIGUAV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 16:00:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=iJomchYyA3z4QgAv7ImvqYuu38JnaL8w/h7+j+stQAc=;
-        b=ZMYD2ah/mmB9buicx6ej6xs1qbYc9vVZsu3KgN2hahPQfBxhN7MWtUb8OX4O9V1NW/
-         21sk/Y8Golx0QUT5giY59y4kqNb14oBiErzpUnnVGqWKPs53Fqc8LnCBXFh42VeKoK9t
-         0JcB6PhBvtw/F2YKHk+QGmNTBEje1F7lbA+jadUuV3zdEYXCKORrbaV6ZKhxlO/XWEpg
-         pyK5iMAOjzmObghZPHWSk68w4xjVIbszmQaQGHpm6G80MmiQtQ/qpPEh6lFSlI/fylBU
-         XbpU5Qj770xF2aew6C1cYT1jq2kyJLECgLXIYjWPQNlvJl3rBw5ja6HUj6BscW0Bim2D
-         ESyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=iJomchYyA3z4QgAv7ImvqYuu38JnaL8w/h7+j+stQAc=;
-        b=Cm7P9y9FVg/fvPrOxgEGzrawgha7s1kbJqKOrJZZ08U/yC1vo5Sjz8Att6aIfgFiAW
-         j3Uq/i9FGwke8YDAVQ7clsQJkNaPRufn1uQYzsE0gkgEPAVpxyXS2rb7o5FuBaEcRazI
-         Hm7GPKee0QWgX/K7wUsi+oGIewgXnVEQlNPTvdhIhvlwWBtbUJ2tyROiYSTjpndykVo5
-         VEmCiR/cg40h6ANnoN2SA0ZtnDM3yFFIikmMnoowsXdiokK/75ZSfdNT4+WYqQ3BQvul
-         z4kirbVin+NyIcZ9Vng3v/T3I/S3r7sWrX/00whZ4EED3d4FaoLaJYGVtmCZgK3BPvUf
-         Bm7g==
-X-Gm-Message-State: APzg51A8jby3fl1K/erLaD/xmo6+13OJhxkx+HVa6TXO8cbXwP/NSOd0
-        QMXGMWGmchRbN6IqdoJR8ZI=
-X-Google-Smtp-Source: ANB0VdYJP9zlVdNHIZwjuv4AxqjTDVorK3KDH4gBfILm1qwuTg694tO8IhUQl2ZRY797a+zHx+R+kw==
-X-Received: by 2002:a5d:448d:: with SMTP id j13-v6mr6576855wrq.236.1536333085911;
-        Fri, 07 Sep 2018 08:11:25 -0700 (PDT)
-Received: from evledraar ([5.57.21.50])
-        by smtp.gmail.com with ESMTPSA id r66-v6sm14363569wmb.37.2018.09.07.08.11.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 07 Sep 2018 08:11:25 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/2] commit-graph write: add progress output
-References: <20180904202729.13900-1-avarab@gmail.com> <20180904202729.13900-2-avarab@gmail.com> <xmqqin3k7w8b.fsf@gitster-ct.c.googlers.com> <c6960252-c095-fb2b-e0bc-b1e6bb261614@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <c6960252-c095-fb2b-e0bc-b1e6bb261614@gmail.com>
-Date:   Fri, 07 Sep 2018 17:11:24 +0200
-Message-ID: <87ftylqr4z.fsf@evledraar.gmail.com>
+ d=qtcompany.onmicrosoft.com; s=selector1-qt-io;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6Cih+y5VdWU3VqZm4J/OygtKPX4LOi00tyylTsntHGE=;
+ b=p3qqEWJS7nUt5EM5JYWGh133nVCiPyvysjSlbWD5pP728EiLcAlxV7BE7QZOmTHRgwciylh+ab+kxvcOidwtnwEasCM9gi6GrRVF0aSFhgtDfG0gFs+UJ2Q1YLmJyL7ZE63S25WY+zNSOD4lyiilRTaCB5J/pZm5QAeBd9pJCcM=
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=Allan.Jensen@qt.io; 
+Received: from twilight.localnet (62.220.2.194) by
+ DB3PR0202MB3387.eurprd02.prod.outlook.com (2603:10a6:8:6::26) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1101.18; Fri, 7 Sep 2018 15:18:54 +0000
+From:   Allan Sandfeld Jensen <allan.jensen@qt.io>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: Old submodules broken in 2.19rc1 and 2.19rc2
+Date:   Fri, 07 Sep 2018 17:18:52 +0200
+Message-ID: <1591523.hyI6sBWrkQ@twilight>
+Organization: The Qt Company
+In-Reply-To: <20180907150327.GB26719@sigill.intra.peff.net>
+References: <2659750.rG6xLiZASK@twilight> <20180907150327.GB26719@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Originating-IP: [62.220.2.194]
+X-ClientProxiedBy: AM5P190CA0012.EURP190.PROD.OUTLOOK.COM
+ (2603:10a6:206:14::25) To DB3PR0202MB3387.eurprd02.prod.outlook.com
+ (2603:10a6:8:6::26)
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f451d705-00df-47e1-abcd-08d614d539cb
+X-Microsoft-Antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:DB3PR0202MB3387;
+X-Microsoft-Exchange-Diagnostics: 1;DB3PR0202MB3387;3:IQIIZRlIa0hoA/JkvX6ViaVfdqVtb3lonTyamvVY1Loc2UaQtO0HwZb+DI79lho7erzaKw+/FofxnI1JdpF20Z8Lgojy5wOPnrSXSWsB3CYDpp3a9uqp03roj1GCk/Yj4PxFiU8bBBbnX1Aeqspm5RFZb+0MDaJk67NYKE0ezKift+nAZolGG7iwGPL+sIoBQ231IV8iqzti2bBBnOaGXj+BvEwJ8BNmBwdpYpmDRuvrfzXj94Boqm4852r7tVIA;25:9boYYh7KxDZIqXZm+8IoIS6ZPSOOpOPqHLan2CPVCP5EpJzqrBgXc9vAgpKkbw5aeSzkbkT+0FXAIXtMkOE52kYisdepEqtTZrLUGZfoY+cxPNIBo9l9WS0GOIdkT64GCDmJEb42V/1jqm3AP2QWN5BqFvPHfz6jzvw10GtH/Ankzljdtmzjbd8/DpoOLW9L/MSEGxWuiwtRBlLdU9aAr8xsJ32YIrXs9wk2BrqlBQiN0dZtbwND48Igkl21O2GVWpg/uwtLp1WiUU8y5HXqr65RlfvIe6OEpsJI5Dv5Cmv3Q56BzNo0V9orVOHo3kUop9lG2CxbAzL7bYGYhEtZVA==;31:1izpjSN3VGRq9Oarvgi/ugLN23O4gynudbGeRbuR46nWd6wwO4BFe04pASlZc7wlRi16Ka6uHtXHXc5dxDjtsiAgLsVVldbpR/W874coQ0X2yI/Chd5xcDVKSraA1/CggsIDHriG8ek4O8ocffvT57iWP0W4aMSj1OakGsMJhe7E1251BWb+QRlOQmn9HxMh7G/8hmFtCJw1ZxgFhsbRaTUBwjaLhKnge9qQB7DMOPU=
+X-MS-TrafficTypeDiagnostic: DB3PR0202MB3387:
+X-Microsoft-Exchange-Diagnostics: 1;DB3PR0202MB3387;20:IlRxwKfLqJUnxk2wToSS4enjdLBTsQUk4TyFL5xE6HPNdEeX6uoNDmm3tK2bS3JhkiltnKczzrjFjKlULwAtmnTYEbIr73iBDo3JS4CruIorj0Q5Da+MVc48FggHPU3pVWIKToxBRh8elU1xpEvT37pFH1vrBRQ1ZVlMmhzeHzIPiy8LZ/M5DeM/ohlFsrucC0ctMEesS+rJbV/qzJm21bU7C4vk4EQZKaL5HPLj/DxzN+3lz6BOdnRPtJcIFM/twCkJtZfGxNeSEAYlYqtSV1572p9qw06EYorUJZgRm4NH90t5yUmhqRNsQDHOdfjMPc2c+g5oP+SFVPX9lPF9LHk4rJQsrrlng3w+JhPynwd+LfhKvteAYGf6GXsSqxahtgCt+fHkDwmBryBZBrpZeFS1wuU4seshUs8b5bH2EIUl++Hh8uLzffdhMmwo20RYGsd8mPkz6x7IG5dxhuaCG9ZxOYqBkJ63qOhR2iAhrod/aERPiIiceXigO1kdwhbf;4:ejzvgN9AbRtuyW8Jx3tLSucbPh2uuQEWR2gVQL6i+6E4C1N4+jaFZgXphZ/Z5OWYru35UmYgU5Ma1YYkY2rFjmfAsVJN8hXX2r/JDJPEsr6g9mRfv4CmX4jHeDRbX5RXYcleh6L9p/cU9wUasmbe4A6T1BvBemOhIIP2mYkIz4AWiGJPnm+HwS966mUX7f9A+dfsZYcjNiQluz9ehOycaj2LKxkDo7w23W6BGGqyh65thdRRFuYng/FY10bmJLveG8qqJwkVpe3uTlGrElmjBD/cvBWoVdgUKXPnVlMsdMMHHOWcrsmnBpDcupRD6eec
+X-Microsoft-Antispam-PRVS: <DB3PR0202MB3387E2AAD67D3CB38030AB6B8E000@DB3PR0202MB3387.eurprd02.prod.outlook.com>
+X-Exchange-Antispam-Report-Test: UriScan:(244540007438412);
+X-MS-Exchange-SenderADCheck: 1
+X-Exchange-Antispam-Report-CFA-Test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(8121501046)(5005006)(3002001)(10201501046)(93006095)(93001095)(3231311)(944501410)(52105095)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123560045)(20161123564045)(20161123558120)(201708071742011)(7699050);SRVR:DB3PR0202MB3387;BCL:0;PCL:0;RULEID:;SRVR:DB3PR0202MB3387;
+X-Forefront-PRVS: 07880C4932
+X-Forefront-Antispam-Report: SFV:NSPM;SFS:(10019020)(366004)(346002)(376002)(396003)(136003)(39850400004)(199004)(189003)(316002)(50466002)(33896004)(53936002)(97736004)(2906002)(68736007)(478600001)(14444005)(186003)(16526019)(26005)(76176011)(6246003)(11346002)(52116002)(956004)(36916002)(446003)(74482002)(486006)(6486002)(6512007)(9686003)(229853002)(476003)(230700001)(66066001)(81166006)(47776003)(6916009)(8936002)(6506007)(33716001)(386003)(105586002)(106356001)(81156014)(4326008)(25786009)(86362001)(46406003)(8676002)(97756001)(3846002)(6116002)(7736002)(23726003)(305945005)(5660300001)(72206003)(39026011);DIR:OUT;SFP:1102;SCL:1;SRVR:DB3PR0202MB3387;H:twilight.localnet;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+Received-SPF: None (protection.outlook.com: qt.io does not designate permitted
+ sender hosts)
+X-Microsoft-Exchange-Diagnostics: =?us-ascii?Q?1;DB3PR0202MB3387;23:qg8y0mvp33SJnHaHljubmxllDYLJJhfbPD1uXao?=
+ =?us-ascii?Q?BCso31UnrsO0XQwaYXIqXWRc4b0oP2FAmkUGn/ZEfkMu66nvHoKZpnCa9TY7?=
+ =?us-ascii?Q?8i6yn3uEuMtdSjahGLOlXG5zSNqqJ40Klr6/ZSScfzd9u84aQhOEtuzgLbyT?=
+ =?us-ascii?Q?bPhXRJCEB9qxV44O/oTVsFXOXq4xl8LGg9rMsXG86aevBW71Raoa49D/60gd?=
+ =?us-ascii?Q?ZIErUuXfMEoBnRdmI5pswJ+wgMIdBNW/waNLV9BPfzKJiUk9R9PaRnclSX6i?=
+ =?us-ascii?Q?9yFTwZsxeMBsiVOs94K1sacqBGZEDZlCcii8d/hMpG95TaEOo0k6Tm5lZHjB?=
+ =?us-ascii?Q?E+L7l1E7738EF09rcB7TF7+Ip+QHFnbKGCbchyI4rdTxBULqsSbjFJ9GGNAi?=
+ =?us-ascii?Q?4Z4JCqcKs3IY3ytJynddjn+uPY94jLMCAvgFBZQWD0/SiJT0QGSF5Si8jn89?=
+ =?us-ascii?Q?SrnRM4WVDl75gINB30mFHO3OC53RBGbFDadvmRRdGkJNE/FlnsQZ+oGUILXI?=
+ =?us-ascii?Q?anGV+4wMuciYz1qj5ioowAlJp6g+MrkVzp0vSgiLPuELbiMaVcGOKxxCG+yu?=
+ =?us-ascii?Q?tEmC94YizZrKpeOmxmYPJSaKTxoUnHXqRfI9HRpxXTi8FSAXaV8eQRJxvi2e?=
+ =?us-ascii?Q?EhvYnv+xrNlShIFXlbLxc6wPiBBMeRG5pnndE8xnuRiZtrx4ofGWk+P5Sh1a?=
+ =?us-ascii?Q?yehiwZ3ijw7f0hjnrFcAPKC73nGuWlQiPJ3212zkJOOA4as02WlpgGxj1TkC?=
+ =?us-ascii?Q?XqmNMCncNmaFsBoX5VUoLIYiUfOKcbG1c/3WSl8UIeVzqA+uM5ir3lJ6gMEl?=
+ =?us-ascii?Q?T7SOJ+amlql1lnaX3n5SLJacEugiXyf6bvXuNo3wZAVx2L5c1SC2T1wOmOlq?=
+ =?us-ascii?Q?r5vzgI5qZox7AtPmAwTj8XuphAvOOzGry1BCMa0n7C86CXRqH0OWXWaDidmg?=
+ =?us-ascii?Q?ZyqN3BB0KJ8m0qX73QnxgI14wP/KsxotddwTif6WbZwULJ3NkFIvG1wEuxjW?=
+ =?us-ascii?Q?h8UxBHiSmSZhwzNxp1AJtN8lnsuT4SjtrvwhLKHvMYuPMw1xPku9TbPyhEVj?=
+ =?us-ascii?Q?0saAwXHxxD0Dw1Y5M5yUMNEiGnto4G2Krnp7aAojcrDIyknVR4j1bjy222pP?=
+ =?us-ascii?Q?5YN1Y6loj7/4rMzCMba5MOZvVK8LugJh+RNwcHZt1+mYmdjehcZdsb7z6J5f?=
+ =?us-ascii?Q?JDIEi2jYZ+RhoasYHXcl7u33kFYP5to0QsYfOD4XVDEaDZj7E5LfO+0xL7FU?=
+ =?us-ascii?Q?mD2OmDQ3Y1epjs8sYqB3AGrnwSnNM4Hyn2kr8ZIriabfQ2IPvucC5NQsIesN?=
+ =?us-ascii?Q?BmzRecb3s3fp61kv+oSIJQkU=3D?=
+X-Microsoft-Antispam-Message-Info: C7sePPQh1EyN/nET1w8KAfgP8HD9Py9eJG9JHlD0p8Vy9tvZZoXRwZ9CvNFixUeUAta+C6536o5M3bzfxAv/so05Z+mQvnwdw49dQ1fLVC0wOItJT0znvg3StNXWKgIsAKvN3dJ4rx415X03KtAsfjxcUpwk3kU4JU2wYlwH6BCSvr8SibDO0bGjyR8xeu0WpOl9CSAtxBUY+gyj0U9MIXHeXVEpXan/v1/1ahiMSNMjoh8DTmnerZw+m9CdB6xCs41fPud4uudkSn/AkX9CZSmL6AuAF1BN+AAMNU0GmJ0u1Mu+6pJJbg8RNa62aOy301D+mev2n5JY1As8TgCi3NqBXd15xEFYD3XHPGH89ZI=
+X-Microsoft-Exchange-Diagnostics: 1;DB3PR0202MB3387;6:DsXGMLzHY9HsgX7T0rhIX4+/5OvifezNK4iPn7UhN3jvpD83i44sAKyKPVnWmYyvkkfplAm6JL1h49kCBA/RHtf//fAQFs0KZ4gmHMd3AiydsJ62fFdrubUfLI+1T71aXVU7eXjcvw9E5IAXiiAcDj6WInEyfbB/h5BRZtZc2C+Ey2svAVdBliZ5Nn/Pmj16EFDAVDH+Z554KPe40zwKAhBigSBQc+WDCqgWjnFAUWp1rJjDNrnAGi1tkAIMmRvP7VslM0bpkIWActzHv0hk40xsCvI2QUquL8g45aLG3Q7yE9CrBxIEJLxGNC1zCsuXsAdygaCA3r/Ncm7vfqoxAdtb3jfYKLu7Xiq4K/lhvV7zxQ7hZDEoBDZtDxtyZfklMF+h22wkqSVaIorZZ/sv6jDdLUy/Wf9uMnKVA/QtntX3/EDMu3AZEo4hXfpwSVJ1gxPKvHBQomMSWnIB/c6IgA==;5:aykmXUhsza/iOExq0yDUPu3Wwfw3Z6zOkmJ0nI8c0C2BWq+PaMpgqp9mS5sMPSqSzOzzRwn70nyaqb7FAJglodZxix+f8epelX5hfIbS5aECkW055pv6qJIhLRF97pJGssVbtXFN1eWvL4Yyum+HZmKtu1FKhXfR2asC1RmFMu8=;7:lt3FzOgSdL1KOySywMiiEY9/GiZhQcVMVqw4C0J7/wCMadXw9xnBpVVwWaQdP2KzIcuc8sjctYEgU8+VWtA79zWTeCOvNOnvxNThS26I/tfhMKy4MRvsUccAL436DIngmOFNFJh5T42u8ljyuWZLTks/p89Id/OPyaZNM/mF+nL15Y4yr3ISCViwciqPd+RsrMIZOoxImd2Kaf4vccNNzodW22gKw862Vk8MU+3Uw5XXkLGz4iKQZdurU7+qEmrq
+SpamDiagnosticOutput: 1:99
+SpamDiagnosticMetadata: NSPM
+X-OriginatorOrg: qt.io
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Sep 2018 15:18:54.8023 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f451d705-00df-47e1-abcd-08d614d539cb
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 20d0b167-794d-448a-9d01-aaeccc1124ac
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB3PR0202MB3387
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Freitag, 7. September 2018 17:03:27 CEST Jeff King wrote:
+> On Fri, Sep 07, 2018 at 11:52:58AM +0200, Allan Sandfeld Jensen wrote:
+> > Submodules checked out with older versions of git not longer works in the
+> > latest 2.19 releases. A "git submodule update --recursive" command wil
+> > fail
+> > for each submodule with a line saying "fatal: could not open
+> > '<submodule>/.git' for writing> Is a directory.
+> 
+> I couldn't reproduce after cloning with v1.6.6.3 (which creates ".git"
+> as a directory in the tree). Is it possible for you to bisect (or
+> perhaps share with us the broken example)?
+> 
+I discovered it by using Debian testing, and it is shipping the 2.17rcs for 
+some reason. The example is just an old checkout of qt5.git with submodules, 
+it is rather large.
 
-On Wed, Sep 05 2018, Derrick Stolee wrote:
+I could try bisecting, but I am not sure I have the time anytime soon, I just 
+wanted to report it to you first incase you knew of a change that suddenly 
+assumed the new structure.
 
-> On 9/4/2018 6:07 PM, Junio C Hamano wrote:
->> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
->>
->>> With --stdin-packs we don't show any estimation of how much is left to
->>> do. This is because we might be processing more than one pack. We
->>> could be less lazy here and show progress, either detect by detecting
->>> that we're only processing one pack, or by first looping over the
->>> packs to discover how many commits they have. I don't see the point in
->> I do not know if there is no point, but if we were to do it, I think
->> slurping the list of packs and computing the number of objects is
->> not all that bad.
->
-> If you want to do that, I have nothing against it. However, I don't
-> expect users to use that option directly. That option is used by VFS
-> for Git to compute the commit-graph in the background after receiving
-> a pack of commits and trees, but not by 'git gc' which I expect is how
-> most users will compute commit-graphs.
->
->>>   static void compute_generation_numbers(struct packed_commit_list* commits)
->>>   {
->>>   	int i;
->>>   	struct commit_list *list = NULL;
->>> +	struct progress *progress = NULL;
->>>   +	progress = start_progress(
->>> +		_("Computing commit graph generation numbers"), commits->nr);
->>>   	for (i = 0; i < commits->nr; i++) {
->>> +		display_progress(progress, i);
->>>   		if (commits->list[i]->generation != GENERATION_NUMBER_INFINITY &&
->>>   		    commits->list[i]->generation != GENERATION_NUMBER_ZERO)
->>>   			continue;
->> I am wondering if the progress call should be moved after this
->> conditional continue; would we want to count the entry whose
->> generation is already known here?  Of course, as we give commits->nr
->> as the 100% ceiling, we cannot avoid doing so, but it somehow smells
->> wrong.
->
-> If we wanted to be completely right, we would count the commits in the
-> list that do not have a generation number and report that as the 100%
-> ceiling.
->
-> Something like the diff below would work. I tested it in Linux by
-> first deleting my commit-graph and running the following:
->
-> stolee@stolee-linux:~/linux$ rm .git/objects/info/commit-graph
-> stolee@stolee-linux:~/linux$ git rev-parse v4.6 | ~/git/git
-> commit-graph write --stdin-commits
-> Annotating commits in commit graph: 1180333, done.
-> Computing commit graph generation numbers: 100% (590166/590166), done.
-> stolee@stolee-linux:~/linux$ ~/git/git commit-graph write --reachable
-> Annotating commits in commit graph: 1564087, done.
-> Computing commit graph generation numbers: 100% (191590/191590), done.
->
-> -->8--
->
-> From: Derrick Stolee <dstolee@microsoft.com>
-> Date: Wed, 5 Sep 2018 11:55:42 +0000
-> Subject: [PATCH] fixup! commit-graph write: add progress output
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> ---
-> commit-graph.c | 15 +++++++++++----
-> 1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 1a02fe019a..b933bc9f00 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -634,14 +634,20 @@ static void close_reachable(struct
-> packed_oid_list *oids)
->
-> static void compute_generation_numbers(struct packed_commit_list* commits)
-> {
-> - int i;
-> + int i, count_uncomputed = 0;
->  struct commit_list *list = NULL;
->  struct progress *progress = NULL;
->
-> + for (i = 0; i < commits->nr; i++)
-> + if (commits->list[i]->generation ==
-> GENERATION_NUMBER_INFINITY ||
-> + commits->list[i]->generation == GENERATION_NUMBER_ZERO)
-> + count_uncomputed++;
-> +
->  progress = start_progress(
-> - _("Computing commit graph generation numbers"),
-> commits->nr);
-> + _("Computing commit graph generation numbers"),
-> count_uncomputed);
-> + count_uncomputed = 0;
-> +
->  for (i = 0; i < commits->nr; i++) {
-> - display_progress(progress, i);
->  if (commits->list[i]->generation !=
-> GENERATION_NUMBER_INFINITY &&
->  commits->list[i]->generation != GENERATION_NUMBER_ZERO)
->  continue;
-> @@ -670,10 +676,11 @@ static void compute_generation_numbers(struct
-> packed_commit_list* commits)
->
->  if (current->generation >
-> GENERATION_NUMBER_MAX)
->  current->generation =
-> GENERATION_NUMBER_MAX;
-> +
-> + display_progress(progress,
-> ++count_uncomputed);
->  }
->  }
->  }
-> - display_progress(progress, i);
->  stop_progress(&progress);
-> }
+'Allan
 
-One of the things I was trying to do with this series was to make sure
-that whenever we run "git gc" there's always some indication that if you
-set gc.writeCommitGraph=true that it's actualy doing work.
 
-This modifies that, which I think is actually fine, just something I
-wanted to note. I.e. if you run "git commit-graph write" twice in a row,
-the second time will have no output.
 
-Unless that is, your repo is big enough that some of the delayed timers
-kick in. So e.g. on git.git we get no output the second time around, but
-do get output the first time around, and on linux.git we always get
-output.
-
-But in the common case people aren't running this in a loop, and it's
-useful to see how many new things are being added to the graph, so I
-think this is better. Just wanted to note the behavior difference (and
-will change the commit message).
