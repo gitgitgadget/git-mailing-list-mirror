@@ -6,64 +6,79 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8671F428
-	for <e@80x24.org>; Fri,  7 Sep 2018 17:09:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2347D1F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 17:15:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726443AbeIGVvr (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 17:51:47 -0400
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:54801 "EHLO
-        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbeIGVvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 17:51:47 -0400
-Received: from fed1rmimpo306.cox.net ([68.230.241.174])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20180907170952.BRWZ4136.fed1rmfepo103.cox.net@fed1rmimpo306.cox.net>
-          for <git@vger.kernel.org>; Fri, 7 Sep 2018 13:09:52 -0400
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo306.cox.net with cox
-        id Yh9s1y00259yGBo01h9sr6; Fri, 07 Sep 2018 13:09:52 -0400
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090209.5B92B0E0.0062,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.2 cv=MJoQoIRl c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=x7bEGLp0ZPQA:10 a=JBFolyDoGHsA:10
- a=lPatIPGQtwYJtXryofoA:9 a=CjuIK1q_8ugA:10
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 9A0EC29A011B;
-        Fri,  7 Sep 2018 10:09:51 -0700 (MST)
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Kevin Daudt <me@ikke.info>
-Cc:     git@vger.kernel.org
-Subject: Re: Mailsplit
-Date:   Fri, 07 Sep 2018 10:09:51 -0700
-Message-ID: <1628565.fYxLUN5jIU@thunderbird>
-Organization: Personal
-References: <6663238.U5hdlisbr1@thunderbird>
+        id S1726370AbeIGV5o (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 17:57:44 -0400
+Received: from cloud.peff.net ([104.130.231.41]:42838 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726161AbeIGV5n (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 17:57:43 -0400
+Received: (qmail 16806 invoked by uid 109); 7 Sep 2018 17:15:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Sep 2018 17:15:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15301 invoked by uid 111); 7 Sep 2018 17:16:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 07 Sep 2018 13:16:02 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Sep 2018 13:15:49 -0400
+Date:   Fri, 7 Sep 2018 13:15:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] commit-graph write: add progress output
+Message-ID: <20180907171548.GA11708@sigill.intra.peff.net>
+References: <20180904202729.13900-1-avarab@gmail.com>
+ <20180904202729.13900-2-avarab@gmail.com>
+ <xmqqin3k7w8b.fsf@gitster-ct.c.googlers.com>
+ <c6960252-c095-fb2b-e0bc-b1e6bb261614@gmail.com>
+ <87ftylqr4z.fsf@evledraar.gmail.com>
+ <87efe5qqks.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87efe5qqks.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, September 7, 2018 8:15:43 AM MST Kevin Daudt wrote:
-> On Wed, Sep 05, 2018 at 09:17:29PM -0700, Stephen & Linda Smith wrote:
+On Fri, Sep 07, 2018 at 05:23:31PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> Hrm, no. I spoke too soon because I was conflating "commit-graph write"
+> v.s. "gc". For "gc" we're now with this change just e.g. spending 6
+> seconds on 2015-04-03-1M-git displaying nothing, because we're looping
+> through the commits and finding that we have no new work.
 > 
-> This is the mailsplit command, and should be executed when running `git
-> mailsplit`. What does git --exec-dir return?
+> So I'm on the fence about this, but leaning towards just taking my
+> initial approch. I.e. it sucks if you're e.g. testing different "git gc"
+> options that we're churning in the background doing nothing, just
+> because we're trying to report how many *new* things we added to the
+> graph.
 > 
+> After all, the main point IMNSHO is not to show some diagnostic output
+> of exactly how much work we're doing, that I have 200 new commits with
+> generation numbers or whatever is just useless trivia, but rather to not
+> leave the user thinking the command is hanging.
 
-The other night when I ran "git mailsplit", I recieved an unknown command 
-response.  Since then I have upated to 2.19.0 plush my submitted patches for 
-git commit.  With the new build mailsplit is found.
+I think there's some precedent for your view of things, too. For
+example, "writing objects" counts _all_ of the objects, even though many
+of them are just copying bytes straight from disk, and some are actually
+generating a delta and/or zlib-deflating content.
 
-I don't know what was wrong before.
+So it's not the most precise measurement we could give, but it shows
+there's activity, and the "average" movement over many objects tends to
+be reasonably smooth.
 
+> So I think I'll just do what I was doing to begin with and change the
+> message to "Refreshing commit graph generation numbers" or something to
+> indicate that it's a find/verify/compute operation, not just a compute
+> operation.
 
+So basically yes, I agree with this. :)
 
+-Peff
