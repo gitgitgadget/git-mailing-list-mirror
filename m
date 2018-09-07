@@ -2,93 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CCAEA1F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 18:36:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D724B1F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 18:49:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727223AbeIGXS7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 19:18:59 -0400
-Received: from siwi.pair.com ([209.68.5.199]:63215 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726708AbeIGXS6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 19:18:58 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 2305C3F4896;
-        Fri,  7 Sep 2018 14:36:46 -0400 (EDT)
-Received: from [192.168.1.71] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id DBC5B3F4815;
-        Fri,  7 Sep 2018 14:36:45 -0400 (EDT)
-Subject: Re: [PATCH 0/2] Fixup for js/mingw-o-append
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gm>,
-        Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>
-References: <pull.35.git.gitgitgadget@gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5103f96f-109a-f070-94a4-82e199f222e3@jeffhostetler.com>
-Date:   Fri, 7 Sep 2018 14:36:44 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1727223AbeIGXb2 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 19:31:28 -0400
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:38041 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726614AbeIGXb2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 19:31:28 -0400
+Received: by mail-yb1-f193.google.com with SMTP id e18-v6so5814103ybq.5
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 11:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zlw416jEW4ZBsgGA79rEi3jOvHcs8RGM18rg5Fjjsa8=;
+        b=GyM65W6hlDYP7IuQZgu8m1qq1PKn/BYtxoXfYAJlqCnRhBwLpOwpLKaEAEfi2dvDYg
+         6m3l38nVWh10Gk8Bll0C9yrkOQj44Q+IlE2QSjyUjDlZoGaTWZjLBeYmxXlgArH1UOy+
+         0szd8JwzLYPc6fgs8/1SgyPQfLDTN7Ws4qaaJy3QByWxRRIcodZcPnyySbQ79vt/w4mU
+         GNuernrCC1ftSDBkvv70ueEBdvLZ9jEf2B11KeHMqIY3hdYDp2PKFkHMi5YSiAYy8xy1
+         FGeSBDEJYwtvbcvz0QjSVTsaiQSU9RrwPd3WjhWYFcg4LsQYD4l0AxuwyZbgq79b3V3t
+         xJiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zlw416jEW4ZBsgGA79rEi3jOvHcs8RGM18rg5Fjjsa8=;
+        b=qcccrTOFfRiZfmkyR0COYYchiTSC5BSknoq54bWYJL/g7ncuH+umZbIgo9+gf9HxhW
+         OcS/UUPaEJqGa1NgbU+0xlvXaxiSoHnjQEoGoyM/EGhvg/dQgzOGPl4+GU/Uds6bptXx
+         CB/5eM+B8FmXZcRXvqekcWkMckQ5iFW4iv0M+6tBvvt51itxNCadsvbb0lQEd78lHUVU
+         2gySBTX5u+Q0Yq5wA8C7rnGTkMlnPQtYMEiEUnXQ4+SdHEbpG3z/fHgY8mb1u0CtITtE
+         LV5A2KHslhjcOlHqpXjDWQO9hRs6zQwI26uDNg4G2CfABmd+DpYigQlbDQLDN1A5ZIFV
+         C5Uw==
+X-Gm-Message-State: APzg51BuUn0dltZT9H4Cyt1gJxCJTnEH3Kg0hHpxKNcXfRT7onFf9EXl
+        2XJJfMurRDFPFS0oVW6wDBgnJVlSX1Uuu3h8V7QqpUGs
+X-Google-Smtp-Source: ANB0VdZsXuDdu0nBNoRyiwIJ/uw/f9xFa/Iq6UUyJgEHQl0p19yYIW89YUjCzQmezqiS/3gqSzVB5VZEjVjZPwjU4k4=
+X-Received: by 2002:a25:41c3:: with SMTP id o186-v6mr4623977yba.493.1536346153196;
+ Fri, 07 Sep 2018 11:49:13 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <pull.35.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20180827221257.149257-1-sbeller@google.com> <20180827221257.149257-2-sbeller@google.com>
+ <20180905191849.GB120842@aiede.svl.corp.google.com>
+In-Reply-To: <20180905191849.GB120842@aiede.svl.corp.google.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Fri, 7 Sep 2018 11:49:02 -0700
+Message-ID: <CAGZ79kb0VEDxe0TAMf66nWk3pYMPxrpb_zFmoU4gezzswM5XSQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] submodule.c: warn about missing submodule git directories
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-GitGitGadget botched the CCs when I submitted this.
-Replying here to add them.
+On Wed, Sep 5, 2018 at 12:18 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Hi,
+>
+> Stefan Beller wrote:
+>
+> > This is the continuation of f2d48994dc1 (submodule.c: submodule_move_head
+> > works with broken submodules, 2017-04-18), which tones down the case of
+> > "broken submodule" in case of a missing git directory of the submodule to
+> > be only a warning.
+> >
+> > Signed-off-by: Stefan Beller <sbeller@google.com>
+> > ---
+> >  submodule.c                   | 16 ++++++++++++++++
+> >  t/t2013-checkout-submodule.sh |  2 +-
+> >  2 files changed, 17 insertions(+), 1 deletion(-)
+>
+> I don't understand what workflow this is a part of.
+>
+> If the submodule is missing, shouldn't we make it non-missing instead
+> of producing a partial checkout that doesn't build?
 
-Sorry,
-Jeff
+No. checkout and friends do not want to touch the network
+(unless we are in a partial clone world; that is the user is fully
+aware that commands can use the network at totally unexpected
+times)
 
-https://github.com/gitgitgadget/gitgitgadget/issues/35
+So for that, all we can do is better error messages.
 
-
-On 9/7/2018 2:19 PM, Jeff Hostetler via GitGitGadget wrote:
-> The recent change mingw O_APPEND change breaks writing to named pipes on
-> Windows. The first commit adds a new test to confirm the breakage and the
-> second commit fixes the problem. These could be squashed together or we can
-> just keep the fix and omit the test if that would be better.
-> 
-> d641097589 (js/mingw-o-append) mingw: enable atomic O_APPEND
-> 
-> The new mingw_open_append() routine successfully opens the client side of
-> the named pipe, but the first write() to it fails with EBADF. Adding the
-> FILE_WRITE_DATA corrects the problem.
-> 
->   Signed-off-by: Jeff Hostetler jeffhost@microsoft.com
-> [jeffhost@microsoft.com]
-> 
-> Cc: j6t@kdbg.orgCc: johannes.schindelin@gmx.deCc: gitster@pobox.comCc:
-> peff@peff.net
-> 
-> Jeff Hostetler (2):
->    t0051: test GIT_TRACE to a windows named pipe
->    mingw: fix mingw_open_append to work with named pipes
-> 
->   Makefile                           |  1 +
->   compat/mingw.c                     |  2 +-
->   t/helper/test-tool.c               |  3 ++
->   t/helper/test-tool.h               |  3 ++
->   t/helper/test-windows-named-pipe.c | 72 ++++++++++++++++++++++++++++++
->   t/t0051-windows-named-pipe.sh      | 17 +++++++
->   6 files changed, 97 insertions(+), 1 deletion(-)
->   create mode 100644 t/helper/test-windows-named-pipe.c
->   create mode 100755 t/t0051-windows-named-pipe.sh
-> 
-> 
-> base-commit: d641097589160eb795127d8dbcb14c877c217b60
-> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-35%2Fjeffhostetler%2Ffixup-mingw-o-append-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-35/jeffhostetler/fixup-mingw-o-append-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/35
-> 
+Stefan
