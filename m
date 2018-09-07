@@ -2,170 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB1DF1F404
-	for <e@80x24.org>; Fri,  7 Sep 2018 03:49:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34C411F404
+	for <e@80x24.org>; Fri,  7 Sep 2018 04:17:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725957AbeIGI2q (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Sep 2018 04:28:46 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35578 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725931AbeIGI2p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Sep 2018 04:28:45 -0400
-Received: by mail-wr1-f68.google.com with SMTP id j26-v6so13483215wre.2
-        for <git@vger.kernel.org>; Thu, 06 Sep 2018 20:49:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ID3IAohOjB1sTmhD9Z6OoDO1Ob7WscGXxY36qr2Oz9c=;
-        b=ExRmQghda0GlKz9fH024xyTyLYAQobQkgRp8NPGAM97/vxcWr9lVzjSJWo2+7khy2j
-         zMOxAdfcDiXoVCwc5jIQeqYneALPzQ4QI1Z0w67iwhqeQBBViNCor0Ri0KCjx1MOHiNu
-         CZy1tYb15pqhfsAvjezqk5f0ixjXopKdhbaeHh0wPtvdKj4/ZOQVcCp4u1VKKs/J4dHT
-         WOFFXNwVfleG8ks7sYU98g8rCSe7IhkK6vnLxOiSVdGhU2wy3ACMzvgz+rY7UhOhb8D9
-         WlYO3x3K9rjzSn6sl3AWkHI0UJeOSNn/JlzSxPMB2Q1aV086WGBZcvU1zlTJ17xAabPw
-         bn4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ID3IAohOjB1sTmhD9Z6OoDO1Ob7WscGXxY36qr2Oz9c=;
-        b=pQ/sv8DMJ1+CG2Xxudktn+GrgOlxwNU0tnaaMaDV6yhM8JlrS3U6Jrto6EqV8Wba2x
-         V2tFPsvqJxLvINrPoTCTCUEBEbnfUUAp3HW74r0CGamN4OwpmfJdMFpM2QJ082pxpTJb
-         6nN+93z9+6UjjwzKFi/eBGfVB5yMw5m2n8FS5l0anifRk8bTMO+k9MPm3t/pYUteiYWS
-         9IHm5686gQj9fdX0SP+C6dA2M7lObadoyxMAzI0/qxyQedP8H2oYygI+y9oaDFqV43Fm
-         lGUvHsTPcYa6bXFd3aRnxAvlUXZFeH+vM1Z+poXHkiF346dLHtxvw3NPaFf5kix61Ber
-         aooQ==
-X-Gm-Message-State: APzg51DXq3YZVPV26RqjGWWSOQzO0IfU6LCqMq01sylM0r7un6LEd6Uq
-        vEp/R+8F/WLgRajZReKX1qg=
-X-Google-Smtp-Source: ANB0VdaIYGQiKUEWt95kbhDClBZ7FqS8w2aCGcqC0XAFiJ3FIZ5wApqFE6AgpN99l3rZECr8jQn0Og==
-X-Received: by 2002:adf:9187:: with SMTP id 7-v6mr4626820wri.215.1536292190148;
-        Thu, 06 Sep 2018 20:49:50 -0700 (PDT)
-Received: from localhost (x590e1a0d.dyn.telefonica.de. [89.14.26.13])
-        by smtp.gmail.com with ESMTPSA id d1-v6sm16163717wrc.52.2018.09.06.20.49.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Sep 2018 20:49:49 -0700 (PDT)
-Date:   Fri, 7 Sep 2018 05:49:42 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Joel Teichroeb <joel@teichroeb.net>
-Subject: Re: [RFC PATCH 5/5] split-index: smudge and add racily clean cache
- entries to split index
-Message-ID: <20180907034942.GA10370@localhost>
-References: <20180906024810.8074-1-szeder.dev@gmail.com>
- <20180906024810.8074-6-szeder.dev@gmail.com>
- <87va7ireuu.fsf@evledraar.gmail.com>
- <20180906151439.GA8016@localhost>
- <87lg8er6ir.fsf@evledraar.gmail.com>
- <87k1nyqzq2.fsf@evledraar.gmail.com>
+        id S1726032AbeIGI4F (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Sep 2018 04:56:05 -0400
+Received: from mout.web.de ([212.227.17.12]:56741 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725948AbeIGI4E (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Sep 2018 04:56:04 -0400
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MA5v3-1g8oMq3phB-00BIGh; Fri, 07
+ Sep 2018 06:16:58 +0200
+Date:   Fri, 7 Sep 2018 06:16:57 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v3 4/4] read-cache: speed up index load through
+ parallelization
+Message-ID: <20180907041657.GA12835@tor.lan>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180906210227.54368-1-benpeart@microsoft.com>
+ <20180906210227.54368-5-benpeart@microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1nyqzq2.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <20180906210227.54368-5-benpeart@microsoft.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:EfseqpaVE0wKZfxe2Jdbx9y+oW/321n7rYsfUJKmOFPkAA0VAVj
+ e5JkIy5xwp+I5bFnX3m4qllFzvYQAUvPYiJLLwabyvvBKJNzIFRaHMni+WVT1qTOhXpeIqy
+ RLjisBiy3fuOlNrAldOoupDG6JdjK3x2I0/ME5g4gX9f8qVuvBv+MZptiLyNZoPqx9gZrsn
+ S+ttXqc23JmNHDpNlezFw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:OT82Y8EMxs0=:G/g/1Bj2rYcPRUo3c9d/Fq
+ +/IsTCAAv2R+tsEPbrxogGg5oSL56F4ZEfD4pRWnLajZpZeeF/qodkiF5ZbhkMl83cERqH+L1
+ Hr2RfdxRlqsmVX7idSeea+9YFYrR9QreGtG+DvHlC1RVB1wY5ZuO1UJHPaW33g+I4IsMqdVuR
+ nWSM81cKjGrdPFareZNz3WiYegNUYn3H1i2omPCn8SAlKhKzxdlXLkIUPzVSOFo+W1BmFXhKe
+ LL2cy3B2zgkliQhZjHGuauICOiq3vFSfrErkQHVRQOHlLOCrWFlQ3/on0vyx2KqT/HNS5UThN
+ LbGtUomLvP3I8yDy8dNftm+9cVZy0Z3pQBU6mZMFBNSDxOukSqbew1vuSaPZtXLu+qBxyY1+L
+ ToYzWvaFdAxzYGybjVkXVC8d2bOnvY5sh6lxvAwo2aHkuQdgFvx+6zIhAxWHDp/Ga0z1QeU8P
+ p2XmgaAXeXBP2AbwvWxnsUQehjWDwuG8yxf8k7zDoowt5uXlRktE9nxJrN5ny/vng4v2GhH5N
+ 467by3nJjygpyGSkkW2QAQGz6IJjQ67WChZvjitVN1CekWShzGbaNfS+aSvSonxcBbtTp5Uge
+ Fin3RxyYtNUKIXNSbIZQJtnGKC+ebEsIuImOjeaOR/2hkkD2gQYuXJSVtjjAM1x65okSRZBpX
+ d0OSYdyqvdlJ6rdhq0mkJv5/JwZ/FaOc1erG/I/6CGTef67ONY9MOtmv6FPZ3RBO/FqMwJlME
+ ZLAxywifWjefO0pY9+XKyNtYH8xQJeGZFLdHQe/9umzBXgnGvi42e7fmE7s=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 06, 2018 at 07:53:41PM +0200, Ævar Arnfjörð Bjarmason wrote:
-> I got 436 OK runs with that and 3 failures before I gave up and ctrl+c'd
-> it. And the 3 failures were:
-> 
->     t3903-stash.sh               (Wstat: 256 Tests: 90 Failed: 1)
->       Failed test:  55
->       Non-zero exit status: 1
-> 
-> So it's back to failing on the same test as before your patches.
 
-Ah, what a pity :)
+> diff --git a/read-cache.c b/read-cache.c
+> index fcc776aaf0..8537a55750 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1941,20 +1941,212 @@ static void *load_index_extensions(void *_data)
+>  	return NULL;
+>  }
+>  
+> +/*
+> + * A helper function that will load the specified range of cache entries
+> + * from the memory mapped file and add them to the given index.
+> + */
+> +static unsigned long load_cache_entry_block(struct index_state *istate,
+> +			struct mem_pool *ce_mem_pool, int offset, int nr, void *mmap,
+> +			unsigned long start_offset, struct strbuf *previous_name)
+> +{
+> +	int i;
+> +	unsigned long src_offset = start_offset;
 
-Luckily, the tests in t3903 are mostly self-contained, and copying
-test #55 into a dedicated test script still works.  Then running it
-repeatedly is much faster than running the whole t3903, and failed in
-a reasonable amount of time.  I could then eventually narrow it down
-to the diff below, which fails rather reliably, in fact I've yet to
-see it succeed.  Unfortunately, 'git stash' is rather busy with index
-operations, and I couldn't figure out yet what exactly goes wrong or
-how to turn it into a proper test.
+I read an unsigned long here:
+should that be a size_t instead ?
 
+(And probably even everywhere else in this patch)
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 94793c1a91..04fa2a4f43 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -328,6 +328,7 @@ push_stash () {
- 			git diff-index -p --cached --binary HEAD -- "$@" |
- 			git apply --index -R
- 		else
-+			GIT_TEST_SPLIT_INDEX=yes \
- 			git reset --hard -q
- 		fi
- 
-@@ -671,6 +672,7 @@ apply_to_branch () {
- 	set -- --index "$@"
- 	assert_stash_like "$@"
- 
-+	sleep 1
- 	git checkout -b $branch $REV^ &&
- 	apply_stash "$@" && {
- 		test -z "$IS_STASH_REF" || drop_stash "$@"
-diff --git a/read-cache.c b/read-cache.c
-index 8f644f68b4..9f39f29221 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2761,9 +2761,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 	}
- 
- 	if (git_env_bool("GIT_TEST_SPLIT_INDEX", 0)) {
--		int v = si->base_oid.hash[0];
--		if ((v & 15) < 6)
--			istate->cache_changed |= SPLIT_INDEX_ORDERED;
-+		/* always split, to make it more deterministic */
-+		istate->cache_changed |= SPLIT_INDEX_ORDERED;
- 	}
- 	if (too_many_not_shared_entries(istate))
- 		istate->cache_changed |= SPLIT_INDEX_ORDERED;
-diff --git a/t/t9999-stash-vs-split-index.sh b/t/t9999-stash-vs-split-index.sh
-new file mode 100755
-index 0000000000..bc2b7ccf6b
---- /dev/null
-+++ b/t/t9999-stash-vs-split-index.sh
-@@ -0,0 +1,20 @@
-+test_description='stash vs. split index'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'stash vs. split index' '
-+	sane_unset GIT_TEST_SPLIT_INDEX &&
-+	git config splitIndex.maxPercentChange 100 &&
-+
-+	echo foo >file &&
-+	GIT_TEST_SPLIT_INDEX=yes git add file &&
-+	git commit -m initial &&
-+	echo bar >file &&
-+	git stash &&
-+	echo baz >file &&
-+	test_when_finished "git checkout master" &&
-+	test_must_fail git stash branch new_branch stash@{0} &&
-+	git rev-parse stash@{0} --
-+'
-+
-+test_done
--- 
-2.19.0.rc2.140.g09cf9e37c9
-
+> +
+> +	for (i = offset; i < offset + nr; i++) {
+> +		struct ondisk_cache_entry *disk_ce;
+> +		struct cache_entry *ce;
+> +		unsigned long consumed;
+> +
+> +		disk_ce = (struct ondisk_cache_entry *)((char *)mmap + src_offset);
+> +		ce = create_from_disk(ce_mem_pool, disk_ce, &consumed, previous_name);
+> +		set_index_entry(istate, i, ce);
+> +
+> +		src_offset += consumed;
+> +	}
+> +	return src_offset - start_offset;
+> +}
+> +
+> +static unsigned long load_all_cache_entries(struct index_state *istate,
+> +			void *mmap, size_t mmap_size, unsigned long src_offset)
+> +{
+> +	struct strbuf previous_name_buf = STRBUF_INIT, *previous_name;
+> +	unsigned long consumed;
+> +
+> +	if (istate->version == 4) {
+> +		previous_name = &previous_name_buf;
+> +		mem_pool_init(&istate->ce_mem_pool,
+> +				estimate_cache_size_from_compressed(istate->cache_nr));
+> +	} else {
+> +		previous_name = NULL;
+> +		mem_pool_init(&istate->ce_mem_pool,
+> +				estimate_cache_size(mmap_size, istate->cache_nr));
+> +	}
+> +
+> +	consumed = load_cache_entry_block(istate, istate->ce_mem_pool,
+> +					0, istate->cache_nr, mmap, src_offset, previous_name);
+> +	strbuf_release(&previous_name_buf);
+> +	return consumed;
+> +}
+> +
+> +#ifndef NO_PTHREADS
+> +
