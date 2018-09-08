@@ -2,174 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81FE61F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 03:29:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8B3C1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 05:41:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726404AbeIHIMs (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 04:12:48 -0400
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56266 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbeIHIMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 04:12:48 -0400
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4A21D117E46;
-        Fri,  7 Sep 2018 23:28:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-        :cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=rd/K2FzH8VPzP
-        l2w1p0maR0g8SQ=; b=LLoxl82qBY0IfS3cWvk1ltrx2vWb3cg/cuFnI4vua4ndb
-        +GQl+0fSwcC+Hjr6CKYrutc4SMwJrw943M82g2mQGnloA8iCLNnSgDV9eyuFEjHZ
-        eUeaybDJJQz5KAZ9HQ8vhiiJYantcdO8Wzou35p7AEnjbHyUBri8W/RefbSFvQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-        :subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; q=dns; s=sasl; b=OSx6sLI
-        hGAp2a8weDAwmxkAuIa5JF8/+OeELfJ5OTQx8NIdOxBckRXdbxUpebqJ59+53MbX
-        afILqTd56SPzot2wFQi1uAvJX4rTeKv2L72dCm3TkJ6L+qj25BBrZgaV57tTSoIa
-        mAnlWlTky2hgOiGV/UaMBWempeAB7n3OHjcI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2FAD5117E45;
-        Fri,  7 Sep 2018 23:28:44 -0400 (EDT)
-Received: from zaya.teonanacatl.net (unknown [96.240.145.194])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B215E117E44;
-        Fri,  7 Sep 2018 23:28:43 -0400 (EDT)
-Date:   Fri, 7 Sep 2018 23:28:41 -0400
-From:   Todd Zullinger <tmz@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        id S1726397AbeIHKZh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 06:25:37 -0400
+Received: from p3plsmtpa09-08.prod.phx3.secureserver.net ([173.201.193.237]:51937
+        "EHLO p3plsmtpa09-08.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726370AbeIHKZh (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 06:25:37 -0400
+Received: from jessie.local ([212.149.203.197])
+        by :SMTPAUTH: with ESMTPSA
+        id yVzVfZz081XJgyVzXfDWu6; Fri, 07 Sep 2018 22:41:09 -0700
+Date:   Sat, 8 Sep 2018 08:41:05 +0300
+From:   Max Kirillov <max@max630.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
         git@vger.kernel.org
-Subject: Re: [PATCH] t5551-http-fetch-smart.sh: sort cookies before comparing
-Message-ID: <20180908032841.GK7192@zaya.teonanacatl.net>
-References: <20180907232205.31328-1-tmz@pobox.com>
- <20180907235508.GB32065@sigill.intra.peff.net>
+Subject: Re: [PATCH] http-backend: allow empty CONTENT_LENGTH
+Message-ID: <20180908054105.GC20545@jessie.local>
+References: <20180906193516.28909-1-max@max630.net>
+ <xmqq1sa6z3zp.fsf@gitster-ct.c.googlers.com>
+ <20180907032740.GA20545@jessie.local>
+ <20180907033831.GB1383@sigill.intra.peff.net>
+ <CAF7_NFRg8wOQ0JbjkJ2gpxKs+oh3s8qXVSPfsWSth2tiUK39hw@mail.gmail.com>
+ <xmqqsh2ly6vw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180907235508.GB32065@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Pobox-Relay-ID: 49C0C026-B317-11E8-A72B-BFB3E64BB12D-09356542!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqsh2ly6vw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfKq38z+i2VxGqeNI6KYoyUZoW/Pek3DOyFMbFD0Mq976upJc5Zp7PD8RUvWtJacxh54X/zW5I+ZWCYXBoHPqCZROck44HXoYggukHSx3NZZ7NF8XQGnK
+ AoLGkPE1cxBLMkLiRFoH/Y3HPETsJQYtjT+hjEBTZ+IZ2iOvIp1/nmLot0YtFHDd7ncuKHThVUA/230oUwBU3YgTYjKoiry+O2AI3zKRtTke7R1xbE3DyP1o
+ +o9L8Iwx12QbWV7Wq5FbBrJ24MkC4sFb6akc/Yl9OTzK23SdP3P3nslSm6p1GD0p
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Sep 07, 2018 at 07:22:05PM -0400, Todd Zullinger wrote:
->=20
->> With curl-7.61.1 cookies are sorted by creation-time=B9.  Sort the out=
-put
->> used in the 'cookies stored in http.cookiefile when http.savecookies
->> set' test before comparing it to the expected cookies.
->>=20
->> =B9 https://github.com/curl/curl/commit/e2ef8d6fa ("cookies: support
->>   creation-time attribute for cookies", 2018-08-28)
->=20
-> According to that commit message, the creation-time sort is only for
-> cookies of the same length. But it's not clear to me if that just means
-> on-the-wire, and curl always stores by creation-time in the cookie file=
-.
+On Fri, Sep 07, 2018 at 02:49:23AM -0700, Junio C Hamano wrote:
+> Max Kirillov <max@max630.net> writes:
+> 
+>> Actually, another reason for the latest issue was that CONTENT_LENGTH
+>> is parsed for GET requests at all. It should be parsed only for POST
+>> requests, or, rather, only for upoad-pack and receive-pack requests.
+> 
+> Not really.  The layered design of the HTTP protocol means that any
+> request type can have non-empty body, but request types for which
+> no semantics of the body is defined must ignore what is in the body,
+> which in turn means we need to parse and pay attention to the
+> content length etc. to find the end of the body, if only to ignore
+> it.
 
-Yeah, I didn't dig into the curl code deeply to try and
-understand it.  I did test with the only the curl package
-downgraded to 7.61.0 to confirm the test worked without
-sorting.  And I saw that the curl commit updated existing
-tests to sort the test data.
+I don't think it is git's job to police web server implementations,
+especially considering that there is a gap between letter of RFC and
+actual behavior.  Anyway, it only runs the check for "*/info/refs" GET
+request, which ends up in get_info_refs(). Other GET requests do not
+check CONTENT_LENGTH. Also, the version of service which is started from
+get_info_refs() do not consume input (I think, actually, the
+"--stateless-rpc" argument is not needed there).
 
-> Either way, though, I guess it wouldn't matter for us as long as we
-> choose some arbitrary re-ordering for what curl produces (i.e., the
-> output of `sort`) and then make sure our "expect" output is in the same
-> order. Which is basically what your patch does. One question, though:
->=20
->> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
->> index 771f36f9ff..538656bfef 100755
->> --- a/t/t5551-http-fetch-smart.sh
->> +++ b/t/t5551-http-fetch-smart.sh
->> @@ -215,7 +215,7 @@ test_expect_success 'cookies stored in http.cookie=
-file when http.savecookies set
->>  	git config http.cookiefile cookies.txt &&
->>  	git config http.savecookies true &&
->>  	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
->> -	tail -3 cookies.txt >cookies_tail.txt &&
->> +	tail -3 cookies.txt | sort >cookies_tail.txt &&
->>  	test_cmp expect_cookies.txt cookies_tail.txt
->>  '
->=20
-> We pick the bottom 3 before sorting. How do we know those are the three
-> we want to see?
->=20
-> ...Ah, OK. The lines we are skipping are not actually cookies at all,
-> but just header cruft. I wonder if:
->=20
->   grep "^[^#]" cookies.txt
->=20
-> would be a better way of doing that, but that is certainly not somethin=
-g
-> new.
->=20
-> So this fix looks fine. It might be worth a comment above the creation
-> of expect_cookies.txt to mention it must be in sorted order (of course
-> anybody modifying it would see a test failure).
+> In any case, hopefully we can fix this before the final, as this is
+> a regression introduced during this cycle?
 
-I thought about running the expect_cookies.txt file through
-sort as well.  That would ensure that both files were using
-the same sorting.  Whether that's needed on any platform
-now, I don't know.  Maybe that would be a useful way to
-protect against future edits to the expect_cookies.txt file
-catching the editor?
-
-I thought there might be a test function to sort the output,
-but I was (incorrectly) thinking of check_access_log() which
-G=E1bor added in e8b3b2e275 ("t/lib-httpd: avoid occasional
-failures when checking access.log", 2018-07-12).
-
-Perhaps it would be useful to have a test_cmp_sorted() to do
-the simple dance of sorting the actual & expected.  I
-haven't looked through the tests to see how often such a
-function might be useful.
-
->> The in-development version of Fedora updated to the recently
->> released curl-7.61.1 in the past few days.  This isn't
->> breakage from the 2.19.0 cycle, but if the fix looks good to
->> everyone it would be nice to include it.  That way other
->> distributions and users who update git and curl to the most
->> recent releases won't run into this test failure.
->>=20
->> I tested this against Fedora 30 (curl-7.61.1) as well as
->> previous releases from RHEL/CentOS 6/7 (7.19.7/7.29.0) and
->> Fedora 27/28/29 (7.55.1/7.59.0/7.61.0).
->=20
-> You're pretty late in the 2.19 cycle, since the release is tentatively
-> scheduled for Sunday. Though since this is just touching the test
-> script, and since it looks Obviously Correct, I'm not opposed.
-
-Yep, I knew the final was coming very soon.  I would not
-have been surprised to see it land tonight while I was
-finishing my testing of this patch. :)
-
-I'm certainly covered for the Fedora packages.  It's hard to
-say whether there are many other users/packagers who might
-upgrade both git and curl and run into this.  So it may not
-be worth even a small risk of making the change at this
-point.
-
-On the other hand, the change only affects one test and may
-be safe enough to apply.  I'll leave that choice in the
-capable hands of our maintainer and the good folks here.
-
-Thanks for a thoughtful review, as always.
-
---=20
-Todd
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-That which seems the height of absurdity in one generation often
-becomes the height of wisdom in the next.
-    -- John Stuart Mill (1806-1873)
-
+Yes, I'm working on it.
