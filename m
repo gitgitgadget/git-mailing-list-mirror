@@ -2,127 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 710F31F428
-	for <e@80x24.org>; Sat,  8 Sep 2018 20:13:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67C8B1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 20:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727703AbeIIA76 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 20:59:58 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:36675 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727608AbeIIA76 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 20:59:58 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 91AD121175;
-        Sat,  8 Sep 2018 16:13:02 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 08 Sep 2018 16:13:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=bWhCfFlzMC6Z8U0iWubrR+citDs8Y
-        uwxFZxn50I/g24=; b=ryAsXF6+5NKOW+Zl+C981PrEDMWhUQpMgAg7DSqKrB5yj
-        jUqYLXsyO1KwduFJ2nC491yA2zboJCEkr5k1OarunHQ7dkRb/gNslnsmXhS7rl4g
-        LP9Ah9/9vDIYV/OMS+8ME7V5AdB25QuI8uZOAou/v5TaA9jH6sa6qG/Gc8Uh3UUf
-        bh9WL/MA2I3UGY+8IWxOpljCgBB/mumoTc6kyCErY14m8DbDxJgEDy2gUOJju81o
-        P2CVCiaPikYIEWdHBkKH2oWg6ZiSgL2Gzwq69Uj0ZD8OCSwwWNm5fPaPG07bTWbM
-        Qwt/nOyb5jWGCxHI5A64ndIJSX5YpPwuZQSxG//aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=bWhCfF
-        lzMC6Z8U0iWubrR+citDs8YuwxFZxn50I/g24=; b=IcnZTxi7HyNvR5HbnsPVsW
-        RzHHiFUd+5IL/0Il7ZGiHYLIvfpseWD07y/f6pNvUmN1pGazLXOdnRtJh2Ny1Bop
-        gXSivL/zZAzyg++VhYuJTkIA14phA2PH0+TpdaFiGYuWxYHQ64JSAmVZ38cg9795
-        34xlEK54rpbiqw9BZ3DL7tydENkGrdO9ExRFFVNG2iahtFqwEIBaH7EOkswZCEHv
-        hS8UKa3QbFORas3FypPP4LNc46hwp+4hb4E1MzN6aIdzoCrKMc1QMl5Nis3+BQy0
-        cImrOU1pNuyDTCndQ1lwIX+uUJYs9M4MYXcaZadJWtDkuvcejzXXM3SeiZeTr7kQ
-        ==
-X-ME-Proxy: <xmx:Ti2UW0fxQxtX0UoCBb8YNvXxwwjLZCV3XHQ9IgqxFwvycnd02-Hqng>
-    <xmx:Ti2UWxrTvfRuv4EsVcE_PzIvQnfhAY9lj75PlNUDBYWAO92WySyxkw>
-    <xmx:Ti2UW5BRX3CHdIBQFlITuxPBHQu23Fm5Wm_W84bllb-p5H_QeQbWGA>
-    <xmx:Ti2UW-YAyqfPtF3hynwftILdrLyAWc4fGrld0VrXB3YNNHP717AafQ>
-    <xmx:Ti2UW86Y69i-NTHSYTtYTnm2cvLIWnt0d7Swph0rDkODRLWzlhMZug>
-    <xmx:Ti2UW1DlpEuKOHP7eBpmNIa5khMfEBV-9BDjwGykV3RmBfiKyFewXw>
-X-ME-Sender: <xms:Ti2UW9ad99jFOGr-Hwp_cuArmIcUjgFFhe9tWPmIJP4DIo4pR2qsQw>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 854BE10297;
-        Sat,  8 Sep 2018 16:13:01 -0400 (EDT)
-Subject: Re: git silently ignores include directive with single quotes
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
+        id S1727653AbeIIBD6 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 21:03:58 -0400
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:35211 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727608AbeIIBD5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 21:03:57 -0400
+Received: by mail-ed1-f43.google.com with SMTP id y20-v6so13810793edq.2
+        for <git@vger.kernel.org>; Sat, 08 Sep 2018 13:17:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=khmKQs7DGlz5l2HCCknC31XLr0q7LzLbDV8Qb5X3dH0=;
+        b=U9eoPAbsYTolHXY76TjqqbpzPlq8MBS+CQwuibxFoZH4eRTrLFkpIay0OumE4hlCIt
+         1JdIoWDdZl8f/oa0zZTpEglw8p+EC83wzT+MXOI69033eWdCDcPIJJlAqW4rGLu9LPLO
+         jWibepyjTIr+FbhNAiLihGAuAmRPK5zlzLas59V13F5nhV34CEnhVym9HiGSxIrWgOiT
+         yTnbGFQ6AaEP3i1h3ck85x75qXxrihEtL91KMoO6L7Ee4M7vTNjg4EP1bK0yEsIPvPHP
+         PnRYEDADnJX82W5ZVe5+Ar4hm9owmQBz0vwL+MNXAddNa0J74k1eCz5OoGBDSYnnLRWW
+         oLDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=khmKQs7DGlz5l2HCCknC31XLr0q7LzLbDV8Qb5X3dH0=;
+        b=r/J3pbg/W4n7sXXi2LycXeonVYW/OiKhZHArqCoOVrosEXTD+okzsMlC6ZLQfPlwDl
+         2bDMxOWCDWMRmZSviG9XPYUjQY/nefz3IOuOX6+Mf7o3GtvtXtm2wwGQLTRCwkw2KKgD
+         tlwD+fHA7PPsQwibWrlfuYrY1oSTKss6QMI7A8KpidZU6cuqEdWn15kYp8GSGkAt4GWH
+         7007klwKn12m/5rlze2EzEqwQ2eeeknQx/FeFobORTocWcv834Fknci+kEe7r8gNlEX8
+         KhXSRi2BexZ8hNyNi89RqH92eYtF54j4fP+A0RyXKT+Lp+Ev8TortKahIdbS0qbFJaqB
+         4Jww==
+X-Gm-Message-State: APzg51Ai9ae6CokRI+jX6NG1s1Zc+d0NlwwOBzf/0EILj0GSDpAAymq7
+        JsX3EBYD/9lAGyF9NougQHYkCeBk
+X-Google-Smtp-Source: ANB0VdY17QFjtZ8NzY0McOWU58W58ywhFIbukxK0owQ9sOUEmm9+66/E3d89bAkLVq2gPHLufES6DQ==
+X-Received: by 2002:a50:b824:: with SMTP id j33-v6mr15202783ede.272.1536437819714;
+        Sat, 08 Sep 2018 13:16:59 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id n15-v6sm6766764edn.44.2018.09.08.13.16.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 08 Sep 2018 13:16:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stas Bekman <stas@stason.org>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Jeff King <peff@peff.net>
-References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
- <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
- <a76c94c6-9fd7-4ed0-be2d-6fc1d021f476@stason.org>
- <87a7orrc3w.fsf@evledraar.gmail.com>
-From:   Stas Bekman <stas@stason.org>
-Organization: Hope, Humanized
-Message-ID: <acf93aef-f1f8-1aab-a16d-9655402d445f@stason.org>
-Date:   Sat, 8 Sep 2018 13:13:00 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+Subject: Re: git silently ignores include directive with single quotes
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org> <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com> <87bm97rcih.fsf@evledraar.gmail.com> <c0844b98-0fee-9fbd-fedb-883ed88c3ac6@stason.org>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <c0844b98-0fee-9fbd-fedb-883ed88c3ac6@stason.org>
+Date:   Sat, 08 Sep 2018 22:16:56 +0200
+Message-ID: <878t4brbgn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87a7orrc3w.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-09-08 01:02 PM, Ævar Arnfjörð Bjarmason wrote:
 
-> Aside from other issues here, in the "wold of unix" (not that we only
-> use the git config syntax on those sort of systems) you can't assume
-> that just because some quoting construct works in the shell, that it
-> works the same way in some random config format. If you look in your
-> /etc/ you'll find plenty of config formats where you can't use single,
-> double and no quotes interchangeably, so I don't see what hte confusion
-> is with that particular aspect of this.
-> 
-> Although as I mentioned in <87bm97rcih.fsf@evledraar.gmail.com> the fact
-> that we ignore missing includes definitely needs to be documented, but
-> that our quoting constructs in our config format behave like they do in
-> POSIX shells I see as a non-issue.
+On Sat, Sep 08 2018, Stas Bekman wrote:
 
-I agree that I should make no such assumptions. Thank you. But it is a
-cross-platform problem. I remind that the original problem came from a
-simple command:
+> On 2018-09-08 12:54 PM, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> On Sat, Sep 08 2018, Martin Ågren wrote:
+>>
+>>> Hi Stas
+>>>
+>>> On Sat, 8 Sep 2018 at 21:00, Stas Bekman <stas@stason.org> wrote:
+>>>> [include]
+>>>>         path = '../.gitconfig'
+>>>>
+>>>> Notice the single quotes around the filename. When this is the case git
+>>>> silently (!) ignores the custom configuration, which is clearly a bug.
+>>>
+>>> Thanks for reporting and describing out your expectations and what you
+>>> observed.
+>>>
+>>> Actually, there is a test explicitly testing that 'missing include files
+>>> are ignored'. I couldn't find a motivation for this in 9b25a0b52e
+>>> (config: add include directive, 2012-02-06).
+>>>
+>>>> The original problem cropped up due to using:
+>>>>
+>>>>  git config --local include.path '../.gitconfig'
+>>>>
+>>>> which on linux stripped the single quotes, but on some windows git bash
+>>>> emulation it kept them.
+>>>
+>>> Huh, I wouldn't have expected them to be kept. You learn something
+>>> new every day...
+>>>
+>>>> What am I suggesting is that git:
+>>>>
+>>>> (1) should complain if it encounters an invalid configuration and not
+>>>> silently ignore it. It took quite some effort and time to figure the
+>>>> culprit.
+>>>
+>>> Sounds reasonable to me, but I might be missing something. I'm cc-ing
+>>> the original author. Maybe he can recall why he made sure it silently
+>>> ignores missing files.
+>>>
+>>>> (2) probably allow the quoted location of the file, but it's much less
+>>>> important, as it's easy to rectify once git gives user #1
+>>>
+>>> I don't think this will work. Allowing quoting for just this one item,
+>>> or for all? Any and all quoting or just at the first and last character?
+>>> What about those config items where quotes might legitimately occur,
+>>> i.e., we'd need some escaping? Actually, something like '.gitconfig'
+>>> *with* *those* *quotes* is a valid filename on my machine.
+>>
+>> The reason missing includes are ignored is that the way this is expected
+>> to be used is e.g.:
+>>
+>>     [include]
+>>         path ~/.gitconfig.work
+>>
+>> Where .gitconfig.work is some configuration you're going to drop into
+>> place on your $dayjob servers, but not on your personal machine, even
+>> though you sync the same ~/.gitconfig everywhere.
+>
+> Thank you for clarifying why this is done silently, Ævar. It makes sense
+> then.
+>
+>> If we were to make nonexisting files an error, we'd need something like
+>> an extension of the includeIf syntax added in 3efd0bedc6 ("config: add
+>> conditional include", 2017-03-01) 3efd0bedc6 ("config: add conditional
+>> include", 2017-03-01). I.e.:
+>>
+>>     [includeIfcond "test -e ~/.gitconfig.work"]
+>>         path = ~/.gitconfig.work
+>>
+>> Or something like that, this is getting increasingly harder to shove
+>> into the *.ini config syntax.
+>
+> This suggestion won't solve the real problem. The real problem is that
+> git can't find '.gitconfig' even though it's there, due to single quotes
+> around the filepath. So the suggested check will still ignore the
+> configuration even if it's there.
 
- git config --local include.path '../.gitconfig'
+...because that's not how the *.ini syntax works. That means to look up
+a file called '.gitconfig', as opposed to .gitconfig, ie. one that
+actually starts with a single quote. On POSIX systems filenames can
+include all bytes except \0, so we need some way to include those.
 
-Which on linux removed the quotes and all was fine, and on windows the
-same command kept the quotes and the user was tearing his hair out
-trying to understand why the custom config was ignored.
+I've just created a 'foo' file (i.e. one that has a 5-chararcer name,
+including single quotes), and including it via git's config works, as
+opposed to the filename foo (i.e. the three-character version).
 
-So you can say, don't use the quotes in first place. But what if you have:
+I can see how this is confusing, but we can't have some way to have this
+"ignore missing" feature and warn about stuff like 'foo' v.s. "foo"
+v.s. foo without carrying some list of quoting constructs deemed to be
+confusing, and forbidding includes from files that look like that.
 
- git config --local include.path 'somewhere on the system/.gitconfig'
-
-you have to use single or double quotes inside the shell to keep it as a
-single argument, yet on some windows set ups it'll result in git
-ignoring this configuration directive, as the quotes will end up in git
-config file.
-
-I'd say at the very least 'git config' could have an option
---verify-path or something similar and for it to validate that the path
-is there exactly as it adds it to .git/config at the time of running
-this command to help the user debug the situation. Of course this won't
-help if .git/config is modified manually. But it's a step towards
-supporting users.
-
-I hope this clarifies the situation.
-
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+> This also leads me to think what if the include path has spaces in it?
+>
+>     path = ~/somewhere on my system/.gitconfig.work
+>
+> most people would assume quotes are needed around the filepath.
