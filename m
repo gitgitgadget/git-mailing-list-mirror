@@ -7,72 +7,70 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5341C1F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 14:04:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 579FF1F428
+	for <e@80x24.org>; Sat,  8 Sep 2018 14:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726747AbeIHSt6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 14:49:58 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:42149 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726580AbeIHSt5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 14:49:57 -0400
-Received: by mail-qk1-f196.google.com with SMTP id g13-v6so11474262qki.9
-        for <git@vger.kernel.org>; Sat, 08 Sep 2018 07:04:02 -0700 (PDT)
+        id S1726703AbeIHTma (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 15:42:30 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:42397 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726351AbeIHTma (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 15:42:30 -0400
+Received: by mail-qt0-f195.google.com with SMTP id z8-v6so19328669qto.9
+        for <git@vger.kernel.org>; Sat, 08 Sep 2018 07:56:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gdc5h0V86XY566DWAnZI/ct4ysM5Sj0dC39g69pAC9o=;
-        b=oU2oEeWT5O3Enuzb9e0ipGMfNFurMehsOWrB74cH9JPCKzLw144hzN5eXwaTDP/4iK
-         Jlvz8V3NMCmkoEfx3WhUp2O42Mxd2t3Vov5iLOckyifMUKxQOW8OXWxx2oqwWRKDrxY8
-         nRHwwWz0a5MIqtCjYghgJ26flx3ofg4YeUpZpWBosSrq0t+y4kj8XpsXWjBAsXbLFKHb
-         OxptI7h698bTVwCUSwUrZ2pcVynQA6I5C861F/g6rJBx9q++Ce/tefwnM/TC22Aoh1D/
-         96UGEAaS0deXa9ZzBIA4Dv52LCwbfIUMLxVAV1WjXjG4UWr2bqqUphfg6435Oo9d72z+
-         jiRw==
+        bh=21NnhtXiCCesIk5mi1Wvt6jyAFj/U4v0rtzyrWK7cq8=;
+        b=ms0VhGfX02Y/A37dfRcfZl6fqH79R8TP+DAJRcCuz4CGF2JG5t35jTk9vKjuupzyf6
+         GwUbGMwXj3Y5LfXsijwkq/3Pwe0iu1bl1rCk88Y+eVEKos3xu2nMMb10bIvit3euSTC+
+         LM/DnZwm6Rg61n3iHGhkal+dcN8BJhBa0oQZIxyUcQRsw5tI6kKjp213OogECHRVYfA9
+         taRGHCwLoENbJ0UuF79S+lsYgbFtE6wTDIfQVgUGm/uEwmzcSRHk84Rxd7bxNLg6Hr5/
+         p7Vz46vjlvK7GFvvZ4snVv0sAtMZNY9ZJYZaMzqKb3qoIc8rijjlr+64FOqgz6hFjqZg
+         f/Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=gdc5h0V86XY566DWAnZI/ct4ysM5Sj0dC39g69pAC9o=;
-        b=TTE3WDACcorq8L3HBc5AGRz5cTpgG/CRcNf1rXIOAdOxYivZZfgp7xfmfj9M5k1QEY
-         B4aR5x90uPl2KZvLyNHkY2jYQcOJiDcyhi9dIv937UkwtWYZhyIys+CRHQcRDzaiaZIz
-         f7XHibFWO618DJRwQF8a+ArupeDv+ld+P2Y7G8M/OZ76YwsaAyegOCYICLXvclGATSMB
-         KS4MEd0r8JfUlcc3FwLGdX3afhKITwmeEB/JRpgmNOh+2NiCD1mVTztxj3yc5hxlGRQi
-         QrkIhGYK6U7sub+vU/qKTDBrhc08XEPu4+UEX3Fg4GrUBaBCoFnXGVcIolLn1f0IUKek
-         PlDg==
-X-Gm-Message-State: APzg51CuSWl5ilRd7mowFyTncyZDTQhQ5ItSNXKolFm7WJ/h7cF/WMr/
-        7n2aQYzEYe/1+EksMGFtpRQ=
-X-Google-Smtp-Source: ANB0VdYWskl1L5Lcr/xV5wLQS0jMz11d2T2V5PfYiww0xzvwLnxrkKLbYz4Hth5ObhpFISxJJiE0vg==
-X-Received: by 2002:a37:1584:: with SMTP id 4-v6mr8931250qkv.266.1536415442314;
-        Sat, 08 Sep 2018 07:04:02 -0700 (PDT)
+        bh=21NnhtXiCCesIk5mi1Wvt6jyAFj/U4v0rtzyrWK7cq8=;
+        b=eYqXMvtNw3+IoccjlHjbAY8RPaMEnpEU/um4CivR8ql0QnKqUdaoxneDgChmEcYsDP
+         yhwQyaF1AEQLOVOwXPCP+B4Irm/9m2EF3vA4tnL0qHSe6s47xQ7u9vN3BHZYF0VDs0gH
+         xZ9d6H+xGiv/9/F1XhfmTycvLMbvmMSCzzuA/cS1xrolosyLqQFkJKr0LmwED8Xritmn
+         vn2QP3lppJfAhvNW+5rXoEvIhW/x1B6enmpNssX8quAhcQQykhcZcO+3BieX50q2FXR6
+         bhOvnyrVoT0ECH+oKfeXBJ6SQmSE+wj3+Gm7/OCjNdxScLXZw3u2SW2zklI2PEgOZMQK
+         9oyw==
+X-Gm-Message-State: APzg51CyjSvrCfbeVNwEPtAT1LcvbTcS18vdtTuDjVZZ/aVeVO8yW3wr
+        QX3Bwco9tVtdhG5uz/a8TUQ=
+X-Google-Smtp-Source: ANB0VdajOqdpE09GLscv1SLHnlYEjfZJtEyGTSid1JWaNAKxMOVBIkixfkx1MoNYPuM31UlW1rWUAg==
+X-Received: by 2002:ac8:1749:: with SMTP id u9-v6mr10129776qtk.31.1536418585288;
+        Sat, 08 Sep 2018 07:56:25 -0700 (PDT)
 Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id b18-v6sm6172103qtk.92.2018.09.08.07.04.00
+        by smtp.gmail.com with ESMTPSA id e29-v6sm7618600qte.47.2018.09.08.07.56.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 08 Sep 2018 07:04:01 -0700 (PDT)
-Subject: Re: [PATCH v3 2/4] eoie: add End of Index Entry (EOIE) extension
-To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Ben Peart <Ben.Peart@microsoft.com>
+        Sat, 08 Sep 2018 07:56:24 -0700 (PDT)
+Subject: Re: [PATCH v3 3/4] read-cache: load cache extensions on a worker
+ thread
+To:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "pclouds@gmail.com" <pclouds@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20180906210227.54368-1-benpeart@microsoft.com>
- <20180906210227.54368-3-benpeart@microsoft.com>
- <xmqqpnxpw5sn.fsf@gitster-ct.c.googlers.com>
- <fc531863-c46c-6d27-4749-c6b092a14a6f@gmail.com>
- <CAN0heSreAfMsseZcxR75CFDph-n1b8EUNsRhpFsVqxMLc0hvpA@mail.gmail.com>
+ <20180906210227.54368-4-benpeart@microsoft.com>
+ <xmqqbm99vwsy.fsf@gitster-ct.c.googlers.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <ba1c8611-5480-deae-2b45-75fc9943086c@gmail.com>
-Date:   Sat, 8 Sep 2018 10:03:59 -0400
+Message-ID: <447feebe-c99a-dc53-21ae-d33541baf30d@gmail.com>
+Date:   Sat, 8 Sep 2018 10:56:22 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CAN0heSreAfMsseZcxR75CFDph-n1b8EUNsRhpFsVqxMLc0hvpA@mail.gmail.com>
+In-Reply-To: <xmqqbm99vwsy.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -80,51 +78,119 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 9/8/2018 2:29 AM, Martin Ågren wrote:
-> On Fri, 7 Sep 2018 at 22:24, Ben Peart <peartben@gmail.com> wrote:
->>> Ben Peart <benpeart@microsoft.com> writes:
+On 9/7/2018 5:10 PM, Junio C Hamano wrote:
+> Ben Peart <benpeart@microsoft.com> writes:
 > 
->>>> - 160-bit SHA-1 over the extension types and their sizes (but not
->>>> their contents).  E.g. if we have "TREE" extension that is N-bytes
->>>> long, "REUC" extension that is M-bytes long, followed by "EOIE",
->>>> then the hash would be:
+>> +struct load_index_extensions
+>> +{
+>> +#ifndef NO_PTHREADS
+>> +	pthread_t pthread;
+>> +#endif
+>> +	struct index_state *istate;
+>> +	void *mmap;
+>> +	size_t mmap_size;
+>> +	unsigned long src_offset;
 > 
->> The purpose of the SHA isn't to detect disk corruption (we already have
->> a SHA for the entire index that can serve that purpose) but to help
->> ensure that this was actually a valid EOIE extension and not a lucky
->> random set of bytes. [...]
+> If the file format only allows uint32_t on any platform, perhaps
+> this is better specified as uint32_t?  Or if this is offset into
+> a mmap'ed region of memory, size_t may be more appropriate.
 > 
->>>> +#define EOIE_SIZE 24 /* <4-byte offset> + <20-byte hash> */
+> Same comment applies to "extension_offset" we see below (which in
+> turn means the returned type of read_eoie_extension() function may
+> want to match).
 > 
->>>> +    the_hash_algo->init_fn(&c);
->>>> +    while (src_offset < mmap_size - the_hash_algo->rawsz - EOIE_SIZE_WITH_HEADER) {
-> [...]
->>>> +    the_hash_algo->final_fn(hash, &c);
->>>> +    if (hashcmp(hash, (unsigned char *)index))
->>>> +            return 0;
->>>> +
->>>> +    /* Validate that the extension offsets returned us back to the eoie extension. */
->>>> +    if (src_offset != mmap_size - the_hash_algo->rawsz - EOIE_SIZE_WITH_HEADER)
->>>> +            return 0;
+>> + };
 > 
-> Besides the issue you and Junio discussed with "should we document this
-> as being SHA-1 or NewHash" (or "the hash algo"), it seems to me that
-> this implementation is living somewhere between using SHA-1 and "the
-> hash algo". The hashing uses `the_hash_algo`, but the hash size is
-> hardcoded at 20 bytes.
+> Space before '}'??
 > 
-> Maybe it all works out, e.g., so that when someone (brian) merges a
-> NewHash and runs the testsuite, this will fail consistently and in a
-> safe way. But I wonder if it would be too hard to avoid the hardcoded 24
-> already now.
+>> +
+>> +static void *load_index_extensions(void *_data)
+>> +{
+>> +	struct load_index_extensions *p = _data;
 > 
-> Martin
+> Perhaps we are being superstitious, but I think our code try to
+> avoid leading underscore when able, i.e.
+> 
+> 	load_index_extensions(void *data_)
+> 	{
+> 		struct load_index_extensions *p = data;
+
+That's what I get for copying code from elsewhere in the source. :-)
+
+static void *preload_thread(void *_data)
+{
+	int nr;
+	struct thread_data *p = _data;
+
+since there isn't any need for the underscore at all, I'll just make it:
+
+static void *load_index_extensions(void *data)
+{
+	struct load_index_extensions *p = data;
+
+> 
+>> +	unsigned long src_offset = p->src_offset;
+>> +
+>> +	while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
+>> +		/* After an array of active_nr index entries,
+>> +		 * there can be arbitrary number of extended
+>> +		 * sections, each of which is prefixed with
+>> +		 * extension name (4-byte) and section length
+>> +		 * in 4-byte network byte order.
+>> +		 */
+>> +		uint32_t extsize;
+>> +		memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
+>> +		extsize = ntohl(extsize);
+> 
+> The same "ntohl(), not get_be32()?" question as the one for the
+> previous step applies here, too.  I think the answer is "the
+> original was written that way" and that is acceptable, but once this
+> series lands, we may want to review the whole file and see if it is
+> worth making them consistent with a separate clean-up patch.
 > 
 
-I can certainly change this to be:
+Makes sense, I'll add a cleanup patch to fix the inconsistency and have 
+them use get_be32().
 
-#define EOIE_SIZE (4 + GIT_SHA1_RAWSZ)
+> I think mmap() and munmap() are the only places that wants p->mmap
+> and mmap parameters passed around in various callchains to be of
+> type "void *"---I wonder if it is simpler to use "const char *"
+> throughout and only cast it to "void *" when necessary (I suspect
+> that there is nowhere we need to cast to or from "void *" explicitly
+> if we did so---assignment and argument passing would give us an
+> appropriate cast for free)?
 
-which should (hopefully) make it easier to find this hard coded hash 
-length in the sea of hard coded "20" and "160" (bits) littered through 
-the codebase.
+Sure, I'll add minimizing the casting to the clean up patch.
+
+> 
+>> +		if (read_index_extension(p->istate,
+>> +			(const char *)p->mmap + src_offset,
+>> +			(char *)p->mmap + src_offset + 8,
+>> +			extsize) < 0) {
+>> +			munmap(p->mmap, p->mmap_size);
+>> +			die("index file corrupt");
+>> +		}
+>> +	...
+>> @@ -1907,6 +1951,11 @@ ...
+>> ...
+>> +	p.mmap = mmap;
+>> +	p.mmap_size = mmap_size;
+>> +
+>> +#ifndef NO_PTHREADS
+>> +	nr_threads = git_config_get_index_threads();
+>> +	if (!nr_threads)
+>> +		nr_threads = online_cpus();
+>> +
+>> +	if (nr_threads >= 2) {
+>> +		extension_offset = read_eoie_extension(mmap, mmap_size);
+>> +		if (extension_offset) {
+>> +			/* create a thread to load the index extensions */
+>> +			p.src_offset = extension_offset;
+>> +			if (pthread_create(&p.pthread, NULL, load_index_extensions, &p))
+>> +				die(_("unable to create load_index_extensions_thread"));
+>> +		}
+>> +	}
+>> +#endif
+> 
+> Makes sense.
+> 
