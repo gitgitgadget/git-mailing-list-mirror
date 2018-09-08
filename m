@@ -2,171 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05E1B1F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 20:59:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7CCE1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 21:14:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727653AbeIIBqG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 21:46:06 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:55929 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726623AbeIIBqF (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 21:46:05 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 9874520F02;
-        Sat,  8 Sep 2018 16:59:01 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 08 Sep 2018 16:59:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=Zy5irQnECv3wxxwPx/C6b97r1sWKH
-        cdTmQbhshEMHoM=; b=e0l4M0jTMwlSyXMMaoZcP51JfyPEYdXbsEhYEGw4DmyEK
-        +p4taD6HXWaaeRqaVHorhUGIWMzLWbQ12ikYPmVQPKDwg57tkFVs4A0l1+dLqmwT
-        ENhl8s/74HLUoe9/BF2crJLNqf3/lFBYPYiKgP16ztDhkmsx3m6+fRyrhSh5flg7
-        rqqH6Gg7KHrb1k+THzA5fAY4SlVInGkNAvD5I76OS2f8d0WpQzEBUosHj1V0PaUj
-        A+yxBQr5S8l1a7vZ8aL7Sw+2OTS0w62grWfDCF1yJmvAE7cNA5lq/y5WLvPP999l
-        BD3SELceebXbIrKI0qo9v355Ec7Qw2tJdNjsbefng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Zy5irQ
-        nECv3wxxwPx/C6b97r1sWKHcdTmQbhshEMHoM=; b=iiZNjMrjGOqbqrIsepDGWi
-        zkVCOYJAbJNvXQLxemIHh/WSLWWYju7lvhQe3126K5MzMTXeopO9YbiJU1g/DanR
-        pPB5XyZyHb1gpiosNk2IcP74EDxFoIGZRaAGqFac/bQfKF67X6MfGz98iW/GHZoO
-        3Kl/wP1HtbkvCFKS2ttn2ZLouyDaGXkQ8fCNQRW8YTKXjreAj89a5kTB6PqAAXYc
-        MhJRNX7UIE/tpcWdoT+rvAHl/dKv6bBvJd3H5ohn+C7evbgCZS3ZmH7hlB61pYqg
-        6q+Fu+p4hoRrP1o5BSfUcgyPt1sRWUxdQYIdaaE9huqEPwH1/mAZo44/UHW95rsg
-        ==
-X-ME-Proxy: <xmx:FTiUW2tGAosL0wBbiuw_NOLuqQl4OyBDa3Kfh_SrpyXJVLgkumJTFA>
-    <xmx:FTiUW05TIZ2JUfmopw6rjaifoS3n33xS7wZUk0K7dZgMEyqB8WIxdg>
-    <xmx:FTiUWxXahpY6htgGWGGbnpbfIFyFcfSW9qV4jVzX5IUwZwdf8s68dg>
-    <xmx:FTiUW2_MoAhXmSDjTdvPIg_Ub3PZsi7IJy9OZ7F9qeEfm5AyjYTDvg>
-    <xmx:FTiUW9mro_c8qpikqchvuTpMXjv1rxQbidZSw6UMlb-QVMv7DFwzkw>
-    <xmx:FTiUWw89odoP4fCgz_ZCK40GilievIl1A5S0fHL8L11NhMh6MCrSTg>
-X-ME-Sender: <xms:FTiUW5NPF5MtNLsgbBxKadY6ybuSsLIfPUiGX_pia6QdilXG4BwuGw>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 698C610294;
-        Sat,  8 Sep 2018 16:59:00 -0400 (EDT)
+        id S1727819AbeIICBp (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 22:01:45 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43894 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726638AbeIICBp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 22:01:45 -0400
+Received: (qmail 29455 invoked by uid 109); 8 Sep 2018 21:14:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 08 Sep 2018 21:14:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31212 invoked by uid 111); 8 Sep 2018 21:14:51 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 08 Sep 2018 17:14:51 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Sep 2018 17:14:37 -0400
+Date:   Sat, 8 Sep 2018 17:14:37 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        stas@stason.org, Git Mailing List <git@vger.kernel.org>
 Subject: Re: git silently ignores include directive with single quotes
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Message-ID: <20180908211436.GA31560@sigill.intra.peff.net>
 References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
  <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
- <a76c94c6-9fd7-4ed0-be2d-6fc1d021f476@stason.org>
- <87a7orrc3w.fsf@evledraar.gmail.com>
- <acf93aef-f1f8-1aab-a16d-9655402d445f@stason.org>
- <877ejvraxh.fsf@evledraar.gmail.com>
-From:   Stas Bekman <stas@stason.org>
-Organization: Hope, Humanized
-Message-ID: <b1658700-dbec-f354-4979-5c3ab341af17@stason.org>
-Date:   Sat, 8 Sep 2018 13:58:59 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ <87bm97rcih.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <877ejvraxh.fsf@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <87bm97rcih.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-09-08 01:28 PM, Ævar Arnfjörð Bjarmason wrote:
-[...]
-> Yeah, some version of this is sensible. There's at least a doc patch in
-> here somewhere, if not some "warn if missing" mode.
+On Sat, Sep 08, 2018 at 09:54:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> The reason missing includes are ignored is that the way this is expected
+> to be used is e.g.:
 > 
-> So don't take any of this as minimizing that aspect of your bug report.
+>     [include]
+>         path ~/.gitconfig.work
 > 
-> *But*
+> Where .gitconfig.work is some configuration you're going to drop into
+> place on your $dayjob servers, but not on your personal machine, even
+> though you sync the same ~/.gitconfig everywhere.
 > 
-> There's just no way that "git" the tool can somehow in a sane way rescue
-> you from knowing the quoting rules of the shell on your system, which
-> differ wildly between the likes of Windows and Linux.
+> A lot of people who use includes rely on this, but I see from this
+> thread this should be better documented.
 
-I understand. All your explanations are perfectly reasonable, Ævar.
-Thank you.
+Right, this was an intentional choice at the time the feature was added,
+to support this kind of feature. I'd note also that it mirrors other
+misspelled keys. E.g.:
 
-Yet, there needs to be some way for a user to know that git ignored
-something if their configuration doesn't work as expected.
+  [include]
+  psth = whatever
 
-1) I suggest this is done via:
+will also not generate an error. This is also intentional, for two
+reasons:
 
-  git config --list --show-origin
+  1. Git's config format has always been designed to carry extra keys
+     used by third-party scripts and porcelain. So we don't actually
+     know the complete set of valid keys. (Though you could make an
+     argument that git-core could stake out include.* as its own).
 
-where the new addition would be to also show configuration parts that
-are not active and indicating why it is so.
+  2. It makes using multiple git versions easier in some ways (though
+     also harder in others). A config key that isn't known to the
+     current version will be quietly ignored.
 
-So for example currently I get on a valid configuration setup and having
-git/../.gitconfig in place the following output:
+Of course those things mean that true spelling mistakes are harder to
+catch as such, because Git doesn't know that's what they are. And here
+I'm talking config _keys_, not values. So I'm just explaining the
+philosophical thinking that led to the "missing file is a silent noop".
+It doesn't _have_ to behave the same.
 
-[...]
-file:/home/stas/.gitconfig      mergetool.prompt=false
-[...]
-file:.git/config        include.path=../.gitconfig
-[...]
-file:.git/../.gitconfig
-filter.fastai-nbstripout-code.clean=tools/fastai-nbstripout
-[...]
+That said, it _does_ behave the same and people are likely depending on
+it at this point. So if we introduce a warning, for example, there needs
+to be some way to suppress it.
 
-Now, if include.path=../.gitconfig is there and file:.git/../.gitconfig
-is not found, it will indicate that in some way that stands out for the
-user. Perhaps:
+Probably:
 
-[...]
-file:/home/stas/.gitconfig      mergetool.prompt=false
-[...]
-file:.git/config        include.path=../.gitconfig
-[...]
-file:.git/../.gitconfig FILE NOT FOUND! Ignored configuration
-[...]
+  [include]
+  warnOnMissing = false
+  path = ...
 
-So that would allow things to work as before, but now we have a way to
-debug user-side configuration. And of course hoping that the docs would
-indicate that method for debugging configuration problems.
+would be enough (with the default being "true").
 
-I hope this is a reasonable suggestion that doesn't require any
-modification on the users' part who rely on this silent ignoring
-"feature", yet lending to a configuration debug feature.
+You could even do:
 
-2) And a secondary suggestion I mentioned earlier is to also have a flag
-for git config to validate the path as it is being configured:
+  [include]
+  warnOnMissing = false
+  path = one
+  warnOnMissing = true
+  path = two
 
- git config --local include.path '../.gitconfig' --validate-path
+to treat two includes differently (though I'm not sure why you would
+want to).
 
-so that on shells that deal with quoting differently, than what git
-expects, this git command will fail saying:
+> If we were to make nonexisting files an error, we'd need something like
+> an extension of the includeIf syntax added in 3efd0bedc6 ("config: add
+> conditional include", 2017-03-01) 3efd0bedc6 ("config: add conditional
+> include", 2017-03-01). I.e.:
+> 
+>     [includeIfcond "test -e ~/.gitconfig.work"]
+>         path = ~/.gitconfig.work
+> 
+> Or something like that, this is getting increasingly harder to shove
+> into the *.ini config syntax.
 
-error: can't find file:.git/'../.gitconfig'
+I think it would be simpler to just introduce a new key that's a variant
+of "path". Like:
 
-or at the very least give a warning if we don't want it be fatal. Though
-I see no problem with it being fatal if a user uses a special flag.
+  [include]
+  maybePath = ~/.gitconfig.work
 
-I made this second suggestion since it will help users to detect the
-problem early on. Before they need to search for another debug solution
-such as the first one suggested in this email.
+Though if it really is just a warning, the "warnOnMissing" above would
+make that unnecessary (and it also scales better if we have to end up
+adding more behavior tweaks in the future).
 
-3) Finally, it'd be useful to have GIT_TRACE=1 state that so and so
-include path wasn't found and was ignored during various 'git whatever'
-commands.
-
-I am open to any or all of these solutions, or alternative suggestions
-of course.
-
-Thank you.
-
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+-Peff
