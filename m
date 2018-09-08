@@ -2,80 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_BL_SPAMCOP_NET,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA4911F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 13:35:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26F2D1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 13:38:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726747AbeIHSUt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 14:20:49 -0400
-Received: from mail-it0-f68.google.com ([209.85.214.68]:36676 "EHLO
-        mail-it0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbeIHSUt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 14:20:49 -0400
-Received: by mail-it0-f68.google.com with SMTP id u13-v6so23297823iti.1
-        for <git@vger.kernel.org>; Sat, 08 Sep 2018 06:35:00 -0700 (PDT)
+        id S1726679AbeIHSYf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 14:24:35 -0400
+Received: from mail-io1-f66.google.com ([209.85.166.66]:46617 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726452AbeIHSYf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 14:24:35 -0400
+Received: by mail-io1-f66.google.com with SMTP id y12-v6so3626339ioj.13
+        for <git@vger.kernel.org>; Sat, 08 Sep 2018 06:38:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=M7Z+GF3sXoZGk+n6nQ0jcUZ31e5h7jOyy1pM1dUnUrY=;
-        b=j1KKwBzH4sv4crlLS4dYMLMDAc6bUmdgS+kC9fWh+kKywx8CqqA4vAnyOdM8w0pfVw
-         VrNWEAUBVoNE5nrUCWBww3kLnXIe7ZevOuYMyORNjHTreYMHLYOapRYQrH0EOROXQnaO
-         HjSxxlbdtLJdzEp5KbYoSYSkjjbK1R/hRSRwvEWKEzdVLyvcpt18ykE4yrCLMkMzjlcQ
-         brYQ1UowURRvgK6sWlTOpCGPRiXOossvPrWANs5YI9robi+gRoG+JN4pVtNGtetVzR4w
-         ycdpHS8296Eh154CU/E5gDbH0lO+c2R2QtCVIhAXcxqIx3L5cLIHc9akXGCLwC5WE1wl
-         86jA==
+        bh=pjvO4w6q0EcaJr4Bl2/67/p9MMKByCst/CVFwEkIRMk=;
+        b=VNqyh8WT2b6XJOcrkb46GNxc7hcxVtCDrAbKi+egbj8Qw9mkZ5rzI9dKEwf3rmpKp7
+         JaO85H6Xw8ogGCtFSn0JDeF/JATCMDZab5KNhPeBZVnW1WAXAFawkjLPLRXwYySh5l/K
+         5hKJ2ImNdZFPhuVNOdlSimx2v/m/i1FFxW7U6N3YaOoVlrOtNrhMfmTGjMBwm/dQPsgD
+         +sERk//DMv81rIZaQ1BVL8Dv2ILhgJUwB+pybSxAz7w3CMLhstqmk2uwPmf2BmkyO82M
+         YDEqHooIl3xDltCZGHujLDxBWjD7xSIgxwePFxPNv5O9zk/yjzoJIQq8N2QV87S+EYpn
+         8Q4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=M7Z+GF3sXoZGk+n6nQ0jcUZ31e5h7jOyy1pM1dUnUrY=;
-        b=DKIgQMqMpLbLZ4bF9qkKEWZYDYUNW+ZP8n1kEIBsqVUHjDsH5w/khZSmQaFDspO2Ew
-         560lN7JE3Z3HfXdaktgj62ywDfKlmUJu2k7WFs3LFcSNMDw1wS4VDQgKI0U7rMRskKlA
-         wh2UDzsOHuxAsyc5sQig+nStBj3NjoOOyXTdv9aXcZKoQBtftb6xeb3bjQVg0AMd7XWa
-         nqkJHr1ZTj/tJX5X+PYxD1GJRto8us7qKQzdGZxzH6p9O7dtkkUqF1bAyZatb+zbbHbz
-         qZrTdi1hjPdu1AQdxM8RWZFH0achmDrwC82BeYFApc52ZASZh/XfWkKtDVj11N0amwMO
-         3zxQ==
-X-Gm-Message-State: APzg51ADB90jlEXqlw3dI4ACD1DaXnpnjB3WrabUqZOlNN+5DQ2PySU+
-        jNbRWjBVC3R2v8PZCEfahZ5vHpAPVxI6tEyKDeA=
-X-Google-Smtp-Source: ANB0VdZWnZGiUwowKC4lmAjraHxKkWFRBy/I4aH+JDx97vfmd7xih2u2gvHCJ2SqgiyqWgQhTrMW4/kcrxeuVLoHMBo=
-X-Received: by 2002:a24:144:: with SMTP id 65-v6mr10283030itk.62.1536413700538;
- Sat, 08 Sep 2018 06:35:00 -0700 (PDT)
+        bh=pjvO4w6q0EcaJr4Bl2/67/p9MMKByCst/CVFwEkIRMk=;
+        b=tS6XrO0jqPao6dU9eKtZpsMo44p6bAzjZDoVKHD+nkL+JjjQViGzqZ+cUCebCPv3gw
+         I0Dlbn9uP1lDAm+ize5Tt5pNfzJ23u7f1TaGmH5fOQQEziFpwUYSRPKeH+2Awwda33n8
+         aeXQBSgIxE4d3IEkI/4CCjSLVs2f/mNtRSUcBNcbw+F/tOt7vTqnDUWqNsrgqGd/WD7r
+         cpQkJ/6GoJ4n0d6x8MO7LFA1maZ5DG7UdDUtW3kbCLc0fYMUEvBJ2xDeBkjZYvnb0Jiy
+         RExjFlmlpeFSr2MXFxAZXLg5jaZr2H/buwcnHozbpTYT5CDxAgvw2ubPTyHZfAQtczFq
+         zP6g==
+X-Gm-Message-State: APzg51DedOcXZOgll0AZ6aOjnPLjXH3r746l17Z40E5vvwBmtNStWj7Q
+        KdwG7U0HoJHBXpsHyDErlc0+isszRrIcSphitJo=
+X-Google-Smtp-Source: ANB0VdZ1aW/6EDiE9W4Y5DjxeG6XKLsr23lrePggfVaftEYbGSXxi7GS81GxTsW/MQbP4/jv3MJuOyl6k9vOLwkexic=
+X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr9318680ioe.282.1536413925479;
+ Sat, 08 Sep 2018 06:38:45 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180905085427.4099-1-timschumi@gmx.de> <20180907224430.23859-1-timschumi@gmx.de>
- <20180907224430.23859-2-timschumi@gmx.de>
-In-Reply-To: <20180907224430.23859-2-timschumi@gmx.de>
+References: <20180907181905.GA15897@sigill.intra.peff.net>
+In-Reply-To: <20180907181905.GA15897@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 8 Sep 2018 15:34:34 +0200
-Message-ID: <CACsJy8C+VPGyu1D6yeFU3eqzwusv_Q=tobZgvXOtZ=5gYak5dg@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 2/3] Show the call history when an alias is looping
-To:     timschumi@gmx.de
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date:   Sat, 8 Sep 2018 15:38:19 +0200
+Message-ID: <CACsJy8CshOFNgHq-QQZp3GM3Ua+iuKMDvA+YaKKh1QGF5FrHqg@mail.gmail.com>
+Subject: Re: [PATCH] config.mak.dev: add -Wformat-security
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 8, 2018 at 12:44 AM Tim Schumacher <timschumi@gmx.de> wrote:
+On Fri, Sep 7, 2018 at 8:21 PM Jeff King <peff@peff.net> wrote:
 >
-> Just printing the command that the user entered is not particularly
-> helpful when trying to find the alias that causes the loop.
->
-> Print the history of substituted commands to help the user find the
-> offending alias. Mark the entrypoint of the loop with "<==" and the
-> last command (which looped back to the entrypoint) with "==>".
+> We currently build cleanly with -Wformat-security, and it's
+> a good idea to make sure we continue to do so (since calls
+> that trigger the warning may be security vulnerabilities).
 
-An even simpler way to give this information is simply suggest the
-user tries again with GIT_TRACE=1. All alias expansion is shown there
-and we teach the user about GIT_TRACE. But your approach is probably
-more user friendly.
+Nice. I had this flag in my config.mak too before switching to
+DEVELOPER=1. Didn't realize I lost the flag until now.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  config.mak.dev | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/config.mak.dev b/config.mak.dev
+> index 9a998149d9..f832752454 100644
+> --- a/config.mak.dev
+> +++ b/config.mak.dev
+> @@ -14,6 +14,7 @@ CFLAGS += -Wpointer-arith
+>  CFLAGS += -Wstrict-prototypes
+>  CFLAGS += -Wunused
+>  CFLAGS += -Wvla
+> +CFLAGS += -Wformat-security
+
+Maybe keep it sorted
 -- 
 Duy
