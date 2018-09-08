@@ -2,105 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46BF81F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 06:31:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C54AF1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 06:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726248AbeIHLNy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 07:13:54 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:39304 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726115AbeIHLNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 07:13:54 -0400
-Received: by mail-pl1-f194.google.com with SMTP id w14-v6so7501811plp.6
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 23:29:18 -0700 (PDT)
+        id S1726248AbeIHL2k (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 07:28:40 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:56013 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726115AbeIHL2j (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 07:28:39 -0400
+Received: by mail-wm0-f66.google.com with SMTP id f21-v6so16572990wmc.5
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 23:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tr9a3WZ1/hrN91jzkzsQinrnsyrV/M/AeRKB6qNat0s=;
-        b=cYuZPASTdUFnYKThfVjzszXlZYgSlbQM4bQcb6i/KmZHWjzgdbObGDeq6uWGFe3XTW
-         4Ub6CNUCeyVPQ8OtukKauDXJyE6NTgLDuDqdPjbILxYgoO1o3s6qK+4CaEEU5OBwowvW
-         GOIywHOb3IdFMp/BVJZalzOxZoo1IYQ/ywyto0KLlSMxCFN52U8xQdGPLniJb0Adog3o
-         SylnbtA7gQDw6boqxlkqQ5bX20jbxa+zeDhGOHVv0ntgxcF54CUp8q1mK3hN91hxEpEw
-         4PcU6kwWAn3TSPPCcF8Rhf7o94o9l0ldXVxg7B6d98PVkQV8Z1Wt82m8chY/nctbMo+e
-         fEbw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=GqIw2bOLA9ckjf+FUV2mGDFMoV8YSa2jx3djkXykIAQ=;
+        b=jsreBip0KMnW5Vzc1UjTPUJnWHPjapi6wAvnA4V3AqAA4O/po+qsysMOjJC8kDOe+K
+         Ls8+mlLXYXeHmEO4np7Fb62MzyCsfSNDu+Nv/IezjKqHjqWRHn6YnADoRJ4OlIzPuBMb
+         G4K3nijIBSFj9dIwanXE5I2N+DARNgDLe24tPA88OdIMoxEmyhBap23wt6E7b9XQiQPM
+         JniT1KmYScY03bU+vXCL4TQjecktt7iMaMP1ulmkCnjNHoLvrOb7b/Cqtr/idWynlpJL
+         mFNgrDwtS7fetgh6msWZ+zejMarwHZgLZMTM3Kb4pa7alHN476LRUUZdInZMeqYMt3f5
+         kIvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tr9a3WZ1/hrN91jzkzsQinrnsyrV/M/AeRKB6qNat0s=;
-        b=BllCKHmJQj2zMT3p4Dbf/REYqT9BbFWjYb9sFGomLLLl9lY3QdBbhZmTQGOGvLrPYf
-         b9JoLmvU4Pqn5mwEkoEMjjF3PiUQoGBI2f2nSR3fLOfzXBhSC5MrAozJdoI6y9zgQeS7
-         RUajqVMZZBAhpRPFleQuyFpqbp5ke8svyp6uYLzXndyZzG/j0PCUnw/mFJDG7Xf0Ygyi
-         wCjL/191mgY537Vb/sDnmS8LTIcwWGCmHm/bAedNt6TX6S520QGQyntN2nDCVrGKxHG/
-         6VH30Pe8qEiBBar/97tRpovyY6+9DDwgrODzZJM7BjwUIObkjfc2BGIPDWbzaAZKQvf1
-         9B/w==
-X-Gm-Message-State: APzg51BdCbhmzYAVG/58YGx6ltIweMUhUeFzPLHrUVIOQwFlr4a4KTgR
-        HD7t3SfbB2lho0f1SHk3TYojJoKoPWMrJwri4B8=
-X-Google-Smtp-Source: ANB0Vdan900XmICyjDI3uQah09hIYVjsdAKCUEvU+nxK5w4XRD8oUtLNFQb5GBKY3aH94e60Q7w6/APF9fUB1pNx85k=
-X-Received: by 2002:a17:902:42a3:: with SMTP id h32-v6mr11652153pld.105.1536388157873;
- Fri, 07 Sep 2018 23:29:17 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=GqIw2bOLA9ckjf+FUV2mGDFMoV8YSa2jx3djkXykIAQ=;
+        b=WWdgfIzG416xw2bLjxh60ye6ySMzZBelZnM5Xr+Z8TqaF2H3ZCop45+6F/eaSlrFOw
+         vJ+fGA8i1/Od0fAB7vxIvwf+Y8/tq82NpJezJ+TevM/uF9HGF3O07r/PZZXnOYTXiEve
+         b8NTolLdWQFx+r04ny2jcfjIQ3PgJTnuhealHdmYJH1CHjS2mJzm7GSzErkjl2J6kpoR
+         acxU+Paw63ah0LESR5wdOq6mapZ6mURmjuxAhqZvUFFYsDimKWIzvDw0hyNLscRE6Kqa
+         Oky0HqG3XsomJeHeCTcufvADtNzQ+HYjN81a5Fukg2r4HRvnVolw3d0wQM2iwWGbp/O5
+         lymQ==
+X-Gm-Message-State: APzg51BXhObcLN1+SJp9/xx0o3TfPGUCkDCoEMh4FB6dsyxK0TKa8C91
+        GccN07EHVZZs75EnQfFlFK4=
+X-Google-Smtp-Source: ANB0VdZyQLGYUWu7vVRN9P23HSch9arX3UXH2DXYMu7c8NRrIJB0jiM5/3qGdFSh0YCSgjc4GJ811g==
+X-Received: by 2002:a1c:80d8:: with SMTP id b207-v6mr7334267wmd.146.1536389038843;
+        Fri, 07 Sep 2018 23:43:58 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id x23-v6sm6314830wmh.26.2018.09.07.23.43.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Sep 2018 23:43:58 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/4] un-breaking pack-objects with bitmaps
+References: <20180821184140.GA24165@sigill.intra.peff.net>
+        <20180821190701.GE30764@sigill.intra.peff.net>
+        <8736uud0gq.fsf@evledraar.gmail.com>
+        <20180831225558.GA22917@sigill.intra.peff.net>
+        <20180901074145.GA24023@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180901074145.GA24023@sigill.intra.peff.net>
+Date:   Sat, 08 Sep 2018 08:43:57 +0200
+Message-ID: <87d0toqyj6.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180906210227.54368-1-benpeart@microsoft.com> <20180906210227.54368-3-benpeart@microsoft.com>
- <xmqqpnxpw5sn.fsf@gitster-ct.c.googlers.com> <fc531863-c46c-6d27-4749-c6b092a14a6f@gmail.com>
-In-Reply-To: <fc531863-c46c-6d27-4749-c6b092a14a6f@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 8 Sep 2018 08:29:03 +0200
-Message-ID: <CAN0heSreAfMsseZcxR75CFDph-n1b8EUNsRhpFsVqxMLc0hvpA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] eoie: add End of Index Entry (EOIE) extension
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Ben Peart <Ben.Peart@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 7 Sep 2018 at 22:24, Ben Peart <peartben@gmail.com> wrote:
-> > Ben Peart <benpeart@microsoft.com> writes:
 
-> >> - 160-bit SHA-1 over the extension types and their sizes (but not
-> >> their contents).  E.g. if we have "TREE" extension that is N-bytes
-> >> long, "REUC" extension that is M-bytes long, followed by "EOIE",
-> >> then the hash would be:
+On Sat, Sep 01 2018, Jeff King wrote:
 
-> The purpose of the SHA isn't to detect disk corruption (we already have
-> a SHA for the entire index that can serve that purpose) but to help
-> ensure that this was actually a valid EOIE extension and not a lucky
-> random set of bytes. [...]
+> On Fri, Aug 31, 2018 at 06:55:58PM -0400, Jeff King wrote:
+>
+>> On Fri, Aug 31, 2018 at 05:23:17PM +0200, Ævar Arnfjörð Bjarmason wrote:
+>>
+>> > On Tue, Aug 21 2018, Jeff King wrote:
+>> >
+>> > > +int bitmap_has_sha1_in_uninteresting(struct bitmap_index *bitmap_git,
+>> > > +				     const unsigned char *sha1)
+>> > > +{
+>> > > +	int pos;
+>> > > +
+>> > > +	if (!bitmap_git)
+>> > > +		return 0; /* no bitmap loaded */
+>> > > +	if (!bitmap_git->result)
+>> > > +		BUG("failed to perform bitmap walk before querying");
+>> >
+>> > Some part of what calls this completely breaks pushing from the "next"
+>> > branch when you have local bitmaps (we *really* should have some tests
+>> > for this...).
+>>
+>> Yikes, thanks for reporting. I agree we need better tests here.
+>
+> OK, here is the fix. Since the problem is in 'next', this is done as a
+> patch on top of jk/pack-delta-reuse-with-bitmap. But since we're set to
+> rewind 'next' post-release anyway, we could squash it directly into
+> 30cdc33fba from the original series. That would help later bisections
+> from running into it, which may be worth it as it's a pretty severe
+> breakage.  Or maybe not:
 
-> >> +#define EOIE_SIZE 24 /* <4-byte offset> + <20-byte hash> */
+Junio: Just a reminder that next is still broken with this, and I see
+e.g. the Debian "experimental" has the bug but not the fix at this
+point.
 
-> >> +    the_hash_algo->init_fn(&c);
-> >> +    while (src_offset < mmap_size - the_hash_algo->rawsz - EOIE_SIZE_WITH_HEADER) {
-[...]
-> >> +    the_hash_algo->final_fn(hash, &c);
-> >> +    if (hashcmp(hash, (unsigned char *)index))
-> >> +            return 0;
-> >> +
-> >> +    /* Validate that the extension offsets returned us back to the eoie extension. */
-> >> +    if (src_offset != mmap_size - the_hash_algo->rawsz - EOIE_SIZE_WITH_HEADER)
-> >> +            return 0;
-
-Besides the issue you and Junio discussed with "should we document this
-as being SHA-1 or NewHash" (or "the hash algo"), it seems to me that
-this implementation is living somewhere between using SHA-1 and "the
-hash algo". The hashing uses `the_hash_algo`, but the hash size is
-hardcoded at 20 bytes.
-
-Maybe it all works out, e.g., so that when someone (brian) merges a
-NewHash and runs the testsuite, this will fail consistently and in a
-safe way. But I wonder if it would be too hard to avoid the hardcoded 24
-already now.
-
-Martin
+I'm just reverting jk/pack-delta-reuse-with-bitmap out of next when
+building my own package of git, but I think this really should be fixed
+in that branch, either by merging the fix down or reverting the original
+series out of next, I think just merging the fix down makes sense, but
+have no strong opinion on it.
