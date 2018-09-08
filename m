@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E2FD1F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 19:44:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 054D21F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 19:54:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727769AbeIIAbY (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 20:31:24 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:41721 "EHLO
+        id S1727748AbeIIAku (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 20:40:50 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:54381 "EHLO
         out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727608AbeIIAbY (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 20:31:24 -0400
+        by vger.kernel.org with ESMTP id S1727638AbeIIAku (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 20:40:50 -0400
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id AE79621B36;
-        Sat,  8 Sep 2018 15:44:32 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id 576A621B0E;
+        Sat,  8 Sep 2018 15:53:57 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 08 Sep 2018 15:44:32 -0400
+  by compute6.internal (MEProxy); Sat, 08 Sep 2018 15:53:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
         :content-transfer-encoding:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=8Q0MMf9dJCYtUPIEgHh/n+B8x3HE2
-        VOfxLQ1vE7LOyo=; b=BPavyq2D/r1aaQq0uyhgMohgEC+6qiu1wyad3EnA9mPfO
-        J35q/kW+OoDQvjFET+emmFNCBWSLAMgz6a8PS/b8neyqYwvEcx8Nm1JC+hE6Wo9H
-        RtRyvnuKen5iaO9tfjQjQt1rzus1uu9xZwBVfF92nMi2qtBD1aScFU2Q5LRVoKF1
-        JSKRipy4JYxHRCroTTLWgUxhx13KrrV0n5n9QZqZvvsQBjL0P5+Ekq/fWespCMFg
-        7Lnwy55lF1QmU8hVE1NE7mq8j5ayX2neSw3NyA7rQsnoI5eGBXntqZLC23iuhZc0
-        xMCtPFSKz06pWEkOwJaxbjSPIvGexS8eYwPuimLCg==
+        :x-me-sender:x-sasl-enc; s=fm1; bh=LYQkxJ/OMJNT+VJaYgI5QYfXfu2BP
+        QPWorK/7zvSx9s=; b=rxMHruH31EW898O/s9h8byo90fxX50fkx9NXx1B3ckSY+
+        fc1ugtABkf2xZTi0PHCRp375obxV2J4Ij+6UEaTyE3LscuXI+NV7pE11JuFJMMBw
+        tCVvdfDYKB6lhrA+vUReCKL3bZqxr7HkL7r3cQWfYdeEwzi2P0qM+s5UgkLHvA7p
+        1DR5jEABMe1WRvzK+trgp9ayNqK6yngAsTg02bI/l2qebQtiMMfb3QEQo2AC4maF
+        PaRlECnEgf/v945vxl+P2UWytcSB0n8iWMEv2KY2x4ZmZJdMq+K/l4rzskNkqyBZ
+        Ckc40Nqd6q+hzD35MXbnFJCBiwMteDMGsK8QauYuw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-transfer-encoding:content-type
         :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8Q0MMf
-        9dJCYtUPIEgHh/n+B8x3HE2VOfxLQ1vE7LOyo=; b=t5hRkGo5rgNGbEHXk3sXvT
-        Ubx9rlgkG4uIbjySSB4KKzB0vieJFz7tOrLHOQCtlkDvsngn/BWoJB6k7IcxfSMQ
-        rqDAvkb/36PduasHTnaJlqFvOYoROZnSxBtYP2vxVTYZLvQRZIeM5gN1JU8JdlGs
-        VWWNA13AzBPzk49iObxBhwLx5pSvVAV6Buhfs+oTt4Gkpudz7+v6vlHOgOeqOSoy
-        stNitT+pElUXE4X/aLYJu/wbwnC0HOuN8oaha/5snAw9hJLMlaQ/9lvQkc0s0Y5j
-        JpJECLafFO5K0HlwYjswEmrE5A16uc2w4Qs3tAEzGygBli+rIRvfUHQhtsjiKf8w
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=LYQkxJ
+        /OMJNT+VJaYgI5QYfXfu2BPQPWorK/7zvSx9s=; b=I2i8qm+84tqeXlCkCTmHAG
+        +XP96qHKM3VahbKPR6Iyd4W3OCWimDBCAhDoBjVnAqF614kCc3ya0h7u934kU4I2
+        swqpR72++44IBptVsaJ0/NXVeMeJvZerlRplyKtICCZVY9zbAvxHMa3B3hDs46+t
+        RFtKoB4zDKUCG73CLYCdYE5jzkgOT8D1AjG6zGoowUZ4kp7tjbk7LLp+rFTjS8oS
+        bTkbgrzM18dhDUOpN/7LuIeh8objARDxFhmYeM5z5nmdrJHE1JkC7HWzWUkmVzcr
+        9iHmeu0jJ38AgnT6rI4WpiJvfNyua9eim+mhp7T7ipjj5sLs9x5sH4i1TWEBimFw
         ==
-X-ME-Proxy: <xmx:oCaUW8FczImiuEI1DE5MfIOtclMhd536HkunfMcBi2RjKqGu6C8T0w>
-    <xmx:oCaUWzCdsKKYUoECpTuJ7RXWOu6ZMcmGIUPjevpflyCAogZSRtzjOg>
-    <xmx:oCaUWwmkBzsoi_lpeDs1NviLuS8UbY4_q5CIGO3nhq7qNaE_A5z0nA>
-    <xmx:oCaUW2QPtw-Mmj4VY5e7BGdAuhSxZPwHOyS0mbI1cEKyd5AcixSigA>
-    <xmx:oCaUW8IZBNvf6QANmggCKYzbzMUx_UYyfdK6q0hQLYr7jB--nFQTwA>
-    <xmx:oCaUWwLtqC9RqRU5sM3n5fXapkpj0kQNL0q4__KKUBJYkY7BIU4fLA>
-X-ME-Sender: <xms:oCaUW6KugSq4yrndbjhstktvM3oyJIxQQlH-W2mRspFDX5jvBJXqbg>
+X-ME-Proxy: <xmx:1CiUW10YClE2wPgAtwUB1tQcEUd5HCS3yvMRvkHWs2lQ90WPtZm0BA>
+    <xmx:1CiUW8PN8xxzwgKU6hj93kZXnOUu-qqZ8KLtYlp8fzvDT0GRk8DnYg>
+    <xmx:1CiUWzssRiOhJF8KcgjyxaH_pZ0jPHM4-01rD7IRhnBSYpyngbAP6w>
+    <xmx:1CiUW3EW95ScR6RICq5wUj6R5ENhKwou0Tg1887Ma44LnCDy2X3XXw>
+    <xmx:1CiUW2TCo3PK9WDvI5rufjpsi5hsykD1mdvo-qIPVXoStyWWaHO_1w>
+    <xmx:1SiUWzIQaguWZc91ar227LlbyjRpKb2fLGRfcW4_G8SC81lS0eKshQ>
+X-ME-Sender: <xms:1CiUW92zbinun-7JdUJgZoqxUtAUG4N2wAIdUen__bT7Ha2MYQdwMA>
 Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id D820F10292;
-        Sat,  8 Sep 2018 15:44:31 -0400 (EDT)
+        by mail.messagingengine.com (Postfix) with ESMTPA id 12D611028D;
+        Sat,  8 Sep 2018 15:53:55 -0400 (EDT)
 Subject: Re: git silently ignores include directive with single quotes
 To:     =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>
@@ -59,8 +59,8 @@ References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
  <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
 From:   Stas Bekman <stas@stason.org>
 Organization: Hope, Humanized
-Message-ID: <2824cc17-b4a4-8821-331f-1768246f2e6b@stason.org>
-Date:   Sat, 8 Sep 2018 12:44:30 -0700
+Message-ID: <a76c94c6-9fd7-4ed0-be2d-6fc1d021f476@stason.org>
+Date:   Sat, 8 Sep 2018 12:53:55 -0700
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
@@ -74,36 +74,33 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On 2018-09-08 12:30 PM, Martin Ågren wrote:
+> Hi Stas
+> 
+> On Sat, 8 Sep 2018 at 21:00, Stas Bekman <stas@stason.org> wrote:
+>> [include]
+>>         path = '../.gitconfig'
 
 > Actually, there is a test explicitly testing that 'missing include files
 > are ignored'. I couldn't find a motivation for this in 9b25a0b52e
 > (config: add include directive, 2012-02-06).
 
-Thank you for the follow up, Martin. And discovering that it is by design.
+And also to stress out, that the file is not missing.  At least in the
+world of unix, in particular its many shells, - command line arguments
+"xyz", 'xyz', xyz are often deemed to be the same if there are no spaces
+in the word. So that's why it took us a lot of trial and error to even
+consider the quotes in '../.gitconfig' as a problem. While git deems it
+different, to me:
 
-I suppose this could have been done to optimize run-time performance.
-But there must be a way for a user to validate their custom
-configuration. So perhaps there should be a specific directive to do so?
-One could argue that:
+        path = '../.gitconfig'
+        path = "../.gitconfig"
+        path = ../.gitconfig
 
-  git config --list --show-origin
+appear to be the "same". So git needs to have a way to say otherwise.
 
-does exactly that. Except it should probably also indicate that some
-configuration file or parts of were ignored - and clearly indicate the
-exact nature of the problem. In which case it'd be sufficient.
-
->> (2) probably allow the quoted location of the file, but it's much less
->> important, as it's easy to rectify once git gives user #1
-> 
-> I don't think this will work. Allowing quoting for just this one item,
-> or for all? Any and all quoting or just at the first and last character?
-> What about those config items where quotes might legitimately occur,
-> i.e., we'd need some escaping? Actually, something like '.gitconfig'
-> *with* *those* *quotes* is a valid filename on my machine.
-
-Let's ignore this sub-issue for now. If we can get git to report when
-something is mis-configured, this issue can then be easily resolved.
-
+I realize I am going back to the issue of quoting here, after suggesting
+to ignore it. So to clarify I'm bringing it up only in the context of
+wanting git to tell the user what it wants, and not necessarily asking
+to support all the possible ways one could quote a filepath.
 
 -- 
 ________________________________________________
