@@ -7,87 +7,68 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B66341F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 08:57:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9ABBB1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 08:59:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726351AbeIHNms (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 09:42:48 -0400
-Received: from mail-it0-f48.google.com ([209.85.214.48]:51476 "EHLO
-        mail-it0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726291AbeIHNms (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 09:42:48 -0400
-Received: by mail-it0-f48.google.com with SMTP id e14-v6so23623853itf.1
-        for <git@vger.kernel.org>; Sat, 08 Sep 2018 01:57:48 -0700 (PDT)
+        id S1726411AbeIHNoI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 09:44:08 -0400
+Received: from mail-io1-f48.google.com ([209.85.166.48]:36049 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726346AbeIHNoI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 09:44:08 -0400
+Received: by mail-io1-f48.google.com with SMTP id q5-v6so3339804iop.3
+        for <git@vger.kernel.org>; Sat, 08 Sep 2018 01:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc;
-        bh=WFPu4jhikIDPJxFKHJNPFG7X5wMlWnh2SVB18gYCvLs=;
-        b=pgW7taaTOntjcYBRO274xuxRxIu7MDUHntgniUHDTepxICTi8qnrtWvgfjLSKHpw1B
-         GMIzPFGTEZZEtemis0FMv5QyZ6sTgLARlTSvP0rJ6c1Fo85RedmhYeHrYkmt03L0f0u7
-         fC4gpOD71Ymmx9xFmrxlCf5ugvni6OMc5dMtcQnFdMyQqFqOCOQ9YHWJPJcacdSOZXjd
-         LwV5Sh8Ulw72Z04HNQGjCnEIrbPQviriVRSxn2awpYEOmRg5FwPteVJKkY/qY0O7mRNa
-         crfLlr0E+fFoHsY5fU2yone+GnYr1F1a36nO3XY+F83VoPxdqWERgrLyZxdU6Qnwo4ls
-         SL9w==
+        bh=/lg+nSqAyZjnojIUxeyMrZcnoxtOlEa+6UcxnWT4HRg=;
+        b=LZ0883AJujuE5hDIN/Xxlol86CKa5vJ8qdSIaYT5PL7zIdsLMR6BPuQj5RUy14b2pi
+         dkMNRslT4rQM2ag6TvwDohGegx+5je9kDnKFN5DcME67DV4LCa2jV64aSn2XT1Jh5khG
+         yzKJe9LHq11aG+jHMYdmpzBkhH7OiXV3LCajb32t91Bwlopn/7deecrUdLAd3BnOEyeQ
+         nV1ujMD/9wJJ0QLqFlk6TJTnpJs8OhBA+s9E6RGoV80Qtk9Lq5iRyH2zs2N9qly4BYlk
+         8IHF2SslUTiV2RZgz4MgFRVZQIhBsXxuU7vnboBNeM5Ew2EdGBsJiFzP3tcXPBz0Fw5A
+         Lt1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc;
-        bh=WFPu4jhikIDPJxFKHJNPFG7X5wMlWnh2SVB18gYCvLs=;
-        b=qeVTt4cpsJkZEB34otPFAWVC3gHdc/gKojzuc4kh1+yZL3BXzKazTb1r7dhmnoPgT9
-         n+I8aWUf80hsdaT7QNWKyCXwgAzijR4Y4XdV/CBjv8oMVUWT/OUTbPcNvQmLMoRS+tzR
-         Tn4SguUygaGBExbZ/LgE6lg7wslR5vUbgAhueVodJGWa/oLKJrNaXK5hFfVC/4s9xJuP
-         ZvU7TDP8OhCE+ubl4W206BaSaAg1rTpehInMCxvaUuNS2neoMvASRGvXFyp+D8M+QF8U
-         pbtdGL8bcYrLqsdV7WKOqpZFOydImuPjCYZ/r22q+PZ4KGp17SlOUl0aw9Uex7wR4PFw
-         vwhQ==
-X-Gm-Message-State: APzg51COcS5SyTNjKS0DQv7PLDQ6X7FmIH121dgvBqAYrucngKeobFdZ
-        yYZ/81QkslGLjui1Tj8JQ3hsOT/Un0IyCdmvYHs=
-X-Google-Smtp-Source: ANB0Vda8uSKwPODl32ti4Gzi0awJ90IGx0r+6uN1Kl/WIcZp1uJJ25gHGtOQnaEMkBPMklq2AePw+sxZ6FAsx3I7CJo=
-X-Received: by 2002:a24:70b:: with SMTP id f11-v6mr10276827itf.137.1536397067616;
- Sat, 08 Sep 2018 01:57:47 -0700 (PDT)
+        bh=/lg+nSqAyZjnojIUxeyMrZcnoxtOlEa+6UcxnWT4HRg=;
+        b=HtNyTfzSUKNGJ0VEXdqqJ2KGtuZ89OKKUFe2g6pwIunlTtXZSMZ0iaB9sOOBcPPv+H
+         0++U2zpINdBJGFKUHsWObQkBVtMnAbFzkghLLCCLxhLwl+1Ncy7lRiaB0a7ervnqMNYH
+         GuALgJAiBdyR1Pc7a7Zk2pLoUDLasiYJWzZGjZfimVsfxdxmdk7CKQNBLQAKz6Dr1ssb
+         6GyrAzQOy5HaM71BfRjW2M7qzgQD2+iAkUtDRXUB7VkJ//F7iHi1bk3vlGBTiYq75zzu
+         PapQv3LDO8j2tlzsYFjJ3zhsNLjgZimV9c8CDinJ3c646nKhhMoxMfQJBSHrOkbxHmQf
+         Wb9g==
+X-Gm-Message-State: APzg51BMJPx64Q4D00Az9580KpwIwwIOl4icZeI6kKQk2qBsZXKRTX+I
+        FD5+hv//Ug/pUd+Cazoa0ymZgFN+NwQxpf37i24=
+X-Google-Smtp-Source: ANB0VdZwydAr+lcelA8GTnVoYRsXUlY7dQ21J0z/roS3LJ7oy6HOCxTk+xfpYg45XqEd1bPhQi9Dh1RqL2y+rdX/zwQ=
+X-Received: by 2002:a6b:500e:: with SMTP id e14-v6mr9302329iob.5.1536397147488;
+ Sat, 08 Sep 2018 01:59:07 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:22a7:0:0:0:0:0 with HTTP; Sat, 8 Sep 2018 01:57:46 -0700 (PDT)
-In-Reply-To: <20180906193130.GA28588@sigill.intra.peff.net>
+Received: by 2002:a4f:22a7:0:0:0:0:0 with HTTP; Sat, 8 Sep 2018 01:59:06 -0700 (PDT)
+In-Reply-To: <20180906193431.GB28588@sigill.intra.peff.net>
 References: <20180828151419.GA17467@sigill.intra.peff.net> <CAP8UFD0SYECLk--7JsZkxBdQeJPuG1Ut5GMLsCJHqM+jG7C0jQ@mail.gmail.com>
  <20180901084321.GC25852@sigill.intra.peff.net> <CAP8UFD0qk3SkBhuEiG+-qhTjXry1SH0SmoFjSNmPr6WZrLfijw@mail.gmail.com>
- <20180906012143.GA7477@sigill.intra.peff.net> <CAP8UFD1nbv6=6JLnOCkmCcZjNOcDfOm4oH7pxHsYcddUYUxBPw@mail.gmail.com>
- <20180906193130.GA28588@sigill.intra.peff.net>
+ <CAP8UFD3DrhA9C0=k-ie_fnpKwmbezQ9ufp1RPHrZ7A-VUjhz0g@mail.gmail.com>
+ <20180906011428.GA5024@sigill.intra.peff.net> <CAP8UFD3-djatPqoVGNGWNQkuJ84BboFMYrGSAEOQDygjJVcqeg@mail.gmail.com>
+ <20180906193431.GB28588@sigill.intra.peff.net>
 From:   Christian Couder <christian.couder@gmail.com>
-Date:   Sat, 8 Sep 2018 10:57:46 +0200
-Message-ID: <CAP8UFD3y=p_w5scnB0dggqK7jb5x-2x=d4LUCXLVVGkRcAOcJg@mail.gmail.com>
+Date:   Sat, 8 Sep 2018 10:59:06 +0200
+Message-ID: <CAP8UFD0w=MQkrJDy4VVZt1T7iFi2KUBtDzr3zssWHbiGcg-5Uw@mail.gmail.com>
 Subject: Re: Git in Outreachy Dec-Mar?
 To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
+Cc:     git <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 6, 2018 at 9:31 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 06, 2018 at 11:51:49AM +0200, Christian Couder wrote:
+On Thu, Sep 6, 2018 at 9:34 PM, Jeff King <peff@peff.net> wrote:
 >
->> Yeah, I think the https://git.github.io/Outreachy-17/ is not actually necessary.
->
-> I think it still may be helpful for explaining in further detail things
-> like #leftoverbits (though I see you put some of that in your project
-> description).
+> By the way, I've got funding from GitHub lined up, so we are good on
+> that front.
 
-You mean in https://git.github.io/Outreachy-17/ or somewhere else?
-
-It is already described in https://git.github.io/SoC-2018-Microprojects/.
-
->> I did that for the "Improve `git bisect`" project. As the
->> "coordinator", you will need to approve that project.
->
-> Thanks. I approved it, though a few of the descriptions are a little
-> funny. For instance, the text says "we use an issue tracker", which then
-> links to public-inbox. I assume this is because you filled in a field
-> for "issue tracker" and then the system generated the text.
-
-Yeah, it was generated from fields that I filled in.
-
-> I don't know if there's a way go into more detail there.
-
-I don't think so, though we could perhaps improve our web pages.
+Great, thanks!
