@@ -2,108 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2454C1F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 05:43:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7C18A1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 06:08:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726197AbeIHK10 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 06:27:26 -0400
-Received: from p3plsmtpa12-07.prod.phx3.secureserver.net ([68.178.252.236]:53723
-        "EHLO p3plsmtpa12-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726032AbeIHK10 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 06:27:26 -0400
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Sat, 08 Sep 2018 06:27:26 EDT
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id yVu9fkom2j39lyVuEfoGf4; Fri, 07 Sep 2018 22:35:39 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Max Kirillov <max@max630.net>,
-        =?UTF-8?q?Jelmer=20Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: [PATCH v2] http-backend: allow empty CONTENT_LENGTH
-Date:   Sat,  8 Sep 2018 08:35:21 +0300
-Message-Id: <20180908053521.21218-1-max@max630.net>
-X-Mailer: git-send-email 2.17.0.1185.g782057d875
+        id S1726119AbeIHKxI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 06:53:08 -0400
+Received: from mail-io1-f51.google.com ([209.85.166.51]:46541 "EHLO
+        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725999AbeIHKxI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 06:53:08 -0400
+Received: by mail-io1-f51.google.com with SMTP id y12-v6so3175524ioj.13
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 23:08:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dxRRDwsxa5GUKuETRQuxPSLen499TXl9Yjo3mlNYKAk=;
+        b=N/zEPyBzOOQL306FyUkd5AOv+KIAdjJ2tFLBbShogTBqDIBeg4dolAUdAHWLkKz1vg
+         Lb2Wq2M5XotKPbg67V/8UX49UCpq26fNjen2TxvtzEKt3yYXjSIwk70CMDDjPv3ERvb1
+         UxoGckLvUeCHJZ9My+op0rkEWB9+hpfj3m08SsaR+CCLueb0NUn6ShfcZ1lySoBQVRsC
+         hLq+DFhsNzn+MAsb7ehRCMdZAZ5bO8p81zXVyPAFGgMRRln2s7hrKKShfFnkfe+Q3HcV
+         77P87l9KvhzKvFoUMnldAMOHXV+jK6z9eMdCt3dVnnEQHprs7clOaElM68/Bo12eTpRU
+         FQlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dxRRDwsxa5GUKuETRQuxPSLen499TXl9Yjo3mlNYKAk=;
+        b=U/ZhuZOUSm6+KouqGx7IvrxrmEvxAvLq4y2Ss+SLINgEoqyoeeNhpmKToCGqRPjbmN
+         fIISk0Dhn5igwAWC+4pvjNR938x/odMDhBoWqfibHulxxzA0h7TOGOpT477i0VgkCE6l
+         xtnRj42Ik3RJ7n+YTfBdWEJII9ZpeTVlSGEgMlTUc5rWh4456E5J/YiCVu9pTVDx9LUs
+         a9qhFtPrO4BSas7HbQRg4xZiJmxjEzXG7AJmr3tUhF3Kb1rVmivDLMqsRtx1uuXfNTgu
+         srDLoRkzOEvCCJKCH1nU19BDJzZDPimN0b+s1MdFkiL3vWJYbkw00dC6D4sdPGauqa4h
+         2nNQ==
+X-Gm-Message-State: APzg51DZnPB8tag5HxntjSjN1QeAncTcQCSLzRLx5myIA6KqpL5Xjwt4
+        23rQTDYu8/GsDjkJqpGz4nKabv18QGaNdCOrVGA=
+X-Google-Smtp-Source: ANB0VdYw7j8e7hloDQ1M7EInRzAumIGprbYaPyFTNndyepOdQwyntRcKTBfQM1J9NjwJlmd2VFMpt0VGa5bfK8QM+7o=
+X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr8343792ioe.282.1536386915376;
+ Fri, 07 Sep 2018 23:08:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-In-reply-to: <20180908001940.GB225427@aiede.svl.corp.google.com>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfJe4evNAMkow1ErPdRpNz/Z3QqO/KdSdxrY3ULjb4Gs8Ts+wD9bpbOqLksraNGWO1B8qc14r8/NNoVlEssxmji55dFKSHKEzsP3g8E3azSrUDpBUsWA+
- s6l9jF6bDWBWzcpRv6zyrAh3iN/ULpBEROMeW4odAWyiDZQtCN9VeMJTdXyq6zGWsBxfVQ5BVprG8Li5lt6vFU6d2FZGlka+8Vz3FeloI0MtCXPAO3wuIt5A
- 76756Pv1U4VLQakgZvIArtH4sEy9uQ27CSl6quFitUo=
+References: <CAJmnt9Yfed1W7F=C+dzac3AEe7nRq2cNP335MepTczboKJNoEg@mail.gmail.com>
+ <xmqqbm99xngs.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqbm99xngs.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 8 Sep 2018 08:08:09 +0200
+Message-ID: <CACsJy8DymnKk+Xo6UPQyAsToNpkSX4Ae+jzc04+0qXrZ6bmb3w@mail.gmail.com>
+Subject: Re: Temporary git files for the gitdir created on a separate drive in workdir
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     hultqvist@silentorbit.com, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before 817f7dc223, CONTENT_LENGTH variable was never considered,
-http-backend was just reading request body from standard input until EOF
-when it, or a command started by it, needed it.
+On Fri, Sep 7, 2018 at 6:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Hultqvist <hultqvist@silentorbit.com> writes:
+>
+> > Considering that the gitdir could be located on a different drive than
+> > the workdir wouldn't it make more sense to create the temporary files
+> > in a subdirectory inside the gitdir rather tan in the workdir?
+>
+> I do not think we intend to create temporary files, whose final
+> destination is somewhere under $GIT_DIR/, in any working tree;
+> rather, I think we try to create them inside $GIT_DIR (or possibly
+> if the destination is a file in a subdirectory of $GIT_DIR, then in
+> the same subdirectory).  What you are seeing definitely smells like
+> a bug in the worktree code, perhaps getting confused by the fact
+> that the full path to these places look "unusual" by starting with a
+> single alphabet followed by a colon (IOW, this may manifest only in
+> Windows port).
 
-Then it was discovered that some HTTP do not close standard input, instead
-expecting CGI scripts to obey CONTENT_LENGTH. In 817f7dc223, behavior
-was changed to consider the CONTENT_LENGTH variable when it is set. Case
-of unset CONTENT_LENGTH was kept to mean "read until EOF" which is not
-compliant to the RFC3875 (which treats it as empty body), but
-practically is used when client uses chunked encoding to submit big
-request.
+I agree. Auditing the setup code did not reveal anything though. Our
+code should recognize these unusual Windows paths as absolute and
+while I spotted an incorrect use of '/' (instead of is_dir_sep) it
+does not explain the problem here.
 
-Case of empty CONTENT_LENGTH has slept through this conditions.
-Apparently, it is used for GET requests, and RFC3875 does specify that
-it also means empty body. Current implementation, however, fails to
-parse it and aborts the request.
-
-Fix the case of empty CONTENT_LENGTH to also be treated as "read until EOF".
-It does not actually matter what does it mean because body is never read
-anyway, it just should not cause parse error. Add a test for the case.
-
-Reported-By: Jelmer Vernooĳ <jelmer@jelmer.uk>
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Provided more thorough message, also fix test (it did not test actually the error before)
-
-There will be more versions later, at least the one which suggested by Jeff
- http-backend.c                         |  2 +-
- t/t5562-http-backend-content-length.sh | 11 +++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
-
-diff --git a/http-backend.c b/http-backend.c
-index e88d29f62b..a1230d7ead 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -353,7 +353,7 @@ static ssize_t get_content_length(void)
- 	ssize_t val = -1;
- 	const char *str = getenv("CONTENT_LENGTH");
- 
--	if (str && !git_parse_ssize_t(str, &val))
-+	if (str && *str && !git_parse_ssize_t(str, &val))
- 		die("failed to parse CONTENT_LENGTH: %s", str);
- 	return val;
- }
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index 057dcb85d6..b28c3c4765 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -152,4 +152,15 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
- 	grep "fatal:.*CONTENT_LENGTH" err
- '
- 
-+test_expect_success 'empty CONTENT_LENGTH' '
-+	env \
-+		QUERY_STRING="/repo.git/info/refs?service=git-receive-pack" \
-+		PATH_TRANSLATED="$PWD"/.git/info/refs \
-+		GIT_HTTP_EXPORT_ALL=TRUE \
-+		REQUEST_METHOD=GET \
-+		CONTENT_LENGTH="" \
-+		git http-backend <empty_body >act.out 2>act.err &&
-+	verify_http_result "200 OK"
-+'
-+
- test_done
+Hultqvist, if you set environment variable GIT_TRACE_SETUP to 1 and
+run "git status" in G:\Test1, what does it say?
 -- 
-2.17.0.1185.g782057d875
-
+Duy
