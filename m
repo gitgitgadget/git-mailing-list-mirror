@@ -2,175 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50FC61F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 22:33:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A55E11F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 22:49:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727720AbeIIDUU (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 23:20:20 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:45801 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727675AbeIIDUU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 23:20:20 -0400
-Received: by mail-ed1-f68.google.com with SMTP id p52-v6so13861674eda.12
-        for <git@vger.kernel.org>; Sat, 08 Sep 2018 15:33:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=9rOeIyCezM3fed6Qgz6xOhqd78By+Kc4cIKY/lN1lqs=;
-        b=aPq3ViaHH5wPqfm3mokY/YpgPfdp+x9ZpcFaLS5bIzUqEDiX91hW6ppSz0yN4mlNOh
-         VqRPkjVMnEv7puRob+Bqfo+UipJ2pQEx2oBOyMmMSrOEgo4rx1HoVxquwX8N9xdh6NNG
-         g0Jmado0scSm74Ju28vtrfXmZa0nD8rNGDZlQkBm2ZY4dwwaNp3oOFos7A4y2dWE3vR0
-         +je9QkrPu4Qtc1aKg5WuKmbQVP97PrQB4ZTJKdRct3fmVrf1nIDOsnNg/48tQnD0zuYB
-         DS7J3sO8AG/nWwdwPtY2NTBv4s/MJhP85XT1AEX52xOrlCCauvs89rYibCY5HeMQ2oSZ
-         BrPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=9rOeIyCezM3fed6Qgz6xOhqd78By+Kc4cIKY/lN1lqs=;
-        b=MacGdHy5Q6kdIT9/7AjMFSqQD14vdfE3IIRvu8ShrNrpyv48xmVRmelzLDciRqzmPC
-         1LNrLkfn3iNOMD1llk31nyAQTKdpjN4ZoPv1It1dqm+Pbu3lUtVs70wim2GqoEY2HBRi
-         jQkAYSpToP295aNfwD0HAZdGPYIcGXCQQ6in6FZAsv3uQZlsYkjrjM6mqb9AQvQr0ndI
-         xycSgn3r0r9mQ6tPXg5d599CEas7nkzIVkI4frzqLFT4EtsnrMxxsjHdM0H9oBsq6Rga
-         jNPXkbVXEZGLfVDad+7VuV2+Pp7QBkOTbqekPrtrkCwX4b0QMY3vTo0grp2a17lDc7y+
-         XRVw==
-X-Gm-Message-State: APzg51B7cKj0jliaExpre98DGkqqOTG4HxU/wRA1hYexie6Id7xnbpaM
-        uI+x9Quxg33KoU5CbkNF/jI=
-X-Google-Smtp-Source: ANB0Vdby32zLoAKL+NnDtigA/SVIu3uI9aML0LpnWRXG0CZm6z7pcht7Z5dSOZvk0h2XOwDHhULwOw==
-X-Received: by 2002:aa7:dc49:: with SMTP id g9-v6mr15402989edu.115.1536445979348;
-        Sat, 08 Sep 2018 15:32:59 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id r23-v6sm6699665edi.17.2018.09.08.15.32.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 08 Sep 2018 15:32:58 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        stas@stason.org, Git Mailing List <git@vger.kernel.org>
+        id S1727769AbeIIDg0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 23:36:26 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:44659 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727748AbeIIDg0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 23:36:26 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id AE5D621990;
+        Sat,  8 Sep 2018 18:49:04 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Sat, 08 Sep 2018 18:49:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=4R+pzp0/Gz1yza3rc2snDf/IIT0z0
+        VB6YwUR6LnMEYs=; b=sHNw7oww8LhChId7bTPBu1JuQLfPBSH+ZYPPq6oP0C50G
+        Os7k1WoaKT/Mwc0LskTk+tOVcYLuZSnbk4QXJFNAosyn2DGDu6Kg/lH6SFhRKfRT
+        uc1Sentf7re5daCG/3GwsNanY63O7zvxpk9YyTzCEA9BSSVZz651rUSdVh2eonvz
+        lD+Tm9y2H3vTaDbQAfn2//ztNKHZBkcHq5Abqtzp3MXRH3DqeCk3NS6G+cXGDku3
+        wmLYqt+5/XBMJl113Zunnysjaq7gy7nkaDaUQoLIaj8x2kVVLsHdMs6ecZ1JB7xQ
+        eTBkSaaKuTuAO9ngLG4A8oRS7BRPi20tl5ar7Z7PA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=4R+pzp
+        0/Gz1yza3rc2snDf/IIT0z0VB6YwUR6LnMEYs=; b=B1uNnvi6xvIBndKHX6gS34
+        6KEo0FJDhXp2YUtBm1aRLmRKG9v2qI2+V3l3DSs9h9WFU54Wk1WMYokXsI53XFP2
+        tB+akbaj5m4wp4NKgYGRzMNzEjM4QLZM6q7d+jWZEQAVeUhLB6XEZk+CSnPtoukU
+        rd97XuPlWuvY6/LIS+LGnkQp996Ub/AxiGuCsEpsVxuH0jyXuVZ5aArf1gofg6sX
+        R5EsaY5k7AVM5NUwDWXDn3wVC1KH7naeTZjolmOxVUUCwslTP+cEbhz1V5IEDi7c
+        cEJvH25VhG+lk0qLYHpKnmeaCS1e/TH450Ixn/zduToGKhAH63g83h1qGqWiOYmA
+        ==
+X-ME-Proxy: <xmx:4FGUWwAbEPPKHQAwMwF9MQMaMUvw-CFyj3X_l5ndmBoEgTKdQ-qiSA>
+    <xmx:4FGUW-mHYgVEZV59ujqsurdskzVOecES51Wht3SDwE_ACLNQ9Xf6hg>
+    <xmx:4FGUW5juecAdoLy_Jhg-tsN7yG6_-fmVNplyjFXVa2LxQrrrFJwkZQ>
+    <xmx:4FGUW3s0uTrof9R4h7fGYPTY8PQ-TQDUQHLyGd-DLTagijs64Ou9DQ>
+    <xmx:4FGUWwC63izYDBxTBFTBLi7A_PICXO8pCl8ZgAEuBA90sPEoA1TLrA>
+    <xmx:4FGUW3Q5YkjUwoUNXL_WS5WmWn_RBkH4voFtYQKWbv4OJ-IOgvbNSA>
+X-ME-Sender: <xms:4FGUWxYAMbqSgRVfDgTe2Yn_JICZ7VmzMpOn0wMs5zgTYVOQT1AGXQ>
+Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 824EB10293;
+        Sat,  8 Sep 2018 18:49:03 -0400 (EDT)
 Subject: Re: git silently ignores include directive with single quotes
-References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org> <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com> <87bm97rcih.fsf@evledraar.gmail.com> <20180908211436.GA31560@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180908211436.GA31560@sigill.intra.peff.net>
-Date:   Sun, 09 Sep 2018 00:32:57 +0200
-Message-ID: <87musr7h7q.fsf@evledraar.gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
+ <20180908212256.GB31560@sigill.intra.peff.net>
+From:   Stas Bekman <stas@stason.org>
+Organization: Hope, Humanized
+Message-ID: <7f7e20fd-069d-f227-ce13-811398b52425@stason.org>
+Date:   Sat, 8 Sep 2018 15:49:01 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
+In-Reply-To: <20180908212256.GB31560@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Language: en-CA
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Sat, Sep 08 2018, Jeff King wrote:
-
-> On Sat, Sep 08, 2018 at 09:54:14PM +0200, Ævar Arnfjörð Bjarmason wrote:
->
->> The reason missing includes are ignored is that the way this is expected
->> to be used is e.g.:
+On 2018-09-08 02:22 PM, Jeff King wrote:
+[...]
+>> The original problem cropped up due to using:
 >>
->>     [include]
->>         path ~/.gitconfig.work
+>>  git config --local include.path '../.gitconfig'
 >>
->> Where .gitconfig.work is some configuration you're going to drop into
->> place on your $dayjob servers, but not on your personal machine, even
->> though you sync the same ~/.gitconfig everywhere.
->>
->> A lot of people who use includes rely on this, but I see from this
->> thread this should be better documented.
->
-> Right, this was an intentional choice at the time the feature was added,
-> to support this kind of feature. I'd note also that it mirrors other
-> misspelled keys. E.g.:
->
->   [include]
->   psth = whatever
->
-> will also not generate an error. This is also intentional, for two
-> reasons:
->
->   1. Git's config format has always been designed to carry extra keys
->      used by third-party scripts and porcelain. So we don't actually
->      know the complete set of valid keys. (Though you could make an
->      argument that git-core could stake out include.* as its own).
->
->   2. It makes using multiple git versions easier in some ways (though
->      also harder in others). A config key that isn't known to the
->      current version will be quietly ignored.
->
-> Of course those things mean that true spelling mistakes are harder to
-> catch as such, because Git doesn't know that's what they are. And here
-> I'm talking config _keys_, not values. So I'm just explaining the
-> philosophical thinking that led to the "missing file is a silent noop".
-> It doesn't _have_ to behave the same.
->
-> That said, it _does_ behave the same and people are likely depending on
-> it at this point. So if we introduce a warning, for example, there needs
-> to be some way to suppress it.
->
-> Probably:
->
->   [include]
->   warnOnMissing = false
->   path = ...
->
-> would be enough (with the default being "true").
->
-> You could even do:
->
->   [include]
->   warnOnMissing = false
->   path = one
->   warnOnMissing = true
->   path = two
->
-> to treat two includes differently (though I'm not sure why you would
-> want to).
+>> which on linux stripped the single quotes, but on some windows git bash
+>> emulation it kept them.
+> 
+> That sounds like a bug in git bash, if it is not treating single quotes
+> in the usual shell way. But I'd also expect such a bug to cause loads of
+> problems in all of the shell scripts. Are you sure it wasn't cmd.exe or
+> some other interpreter?
 
-I think this is introducing a brand new caveat into our *.ini syntax,
-i.e. that we're sensitive to the order in which we're parsing
-*different* keys.
+I don't know, Jeff. I think the user said it was first anaconda shell.
+And then the user tried gitforwindows with same results. I don't know
+MSwindows at all.
 
-I.e. we already had the concept that some keys override existing sets
-(e.g. user.name), but not that a x.y=foo controls the behavior of a
-subsequent a.b=bar, or the other way around.
+But it doesn't matter at the end of the day, since we can't cover all
+possible unix shell emulations out there. What matters is that there is
+a way to flag the misconfiguration, either by default, or through a
+special check - some ideas I suggested in my previous email, but surely
+you have a much better insight of how to deal with that.
 
-This also makes programmatic (via "git config") editing of the config
-hard, we'd need to introduce something like:
+Thank you.
 
-    git config -f ~/.gitconfig a.b bar
-    git config -f ~/.gitconfig --before a.b x.y foo
-
-To set a.b=bar before x.y=foo, or --after or whatever.
-
->> If we were to make nonexisting files an error, we'd need something like
->> an extension of the includeIf syntax added in 3efd0bedc6 ("config: add
->> conditional include", 2017-03-01) 3efd0bedc6 ("config: add conditional
->> include", 2017-03-01). I.e.:
->>
->>     [includeIfcond "test -e ~/.gitconfig.work"]
->>         path = ~/.gitconfig.work
->>
->> Or something like that, this is getting increasingly harder to shove
->> into the *.ini config syntax.
->
-> I think it would be simpler to just introduce a new key that's a variant
-> of "path". Like:
->
->   [include]
->   maybePath = ~/.gitconfig.work
->
-> Though if it really is just a warning, the "warnOnMissing" above would
-> make that unnecessary (and it also scales better if we have to end up
-> adding more behavior tweaks in the future).
-
-Yeah, we could do that, and it wouldn't break the model described above,
-We can make that work, but this would be nasty. E.g. are we going to
-treat EACCES and ENOENT the same way in this construct?
+-- 
+________________________________________________
+Stas Bekman       <'))))><       <'))))><
+https://stasosphere.com  https://chestofbooks.com
+https://experientialsexlab.com https://stason.org
+https://stasosphere.com/experience-life/my-books
