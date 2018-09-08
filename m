@@ -2,120 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3F8D1F428
-	for <e@80x24.org>; Sat,  8 Sep 2018 16:49:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9BC91F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 17:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727704AbeIHVfc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 17:35:32 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:49316 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727621AbeIHVfb (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 17:35:31 -0400
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:e898:2700:1917:e610])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AE7FC60737;
-        Sat,  8 Sep 2018 16:49:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536425346;
-        bh=ZupmeCGY0gOqc/1vqpt6thNfHWBzMNlNsCdfMW8iIg0=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=UMsae9HQehdemj+7QJnu+XT0FBwgUaUPP+hwOhZbY447AAM2t+PGSZxyi8NYE8Uex
-         ayBsoiLH8OYhY48AHhXD2+c8z0bBJ+lvl+3VbIFGE/6vvoh5uboU8wiYM9C1nLVxbR
-         evVcUJQnwj0DZglhjs98p7/UMngrLkhxRFuPtdeMrECEf0HtqZFQUvwzyram140IKy
-         RKB8AtGMfxCqJ+uABUu+lfW0ZNGWZtraei8Dl2glywI4kCHNNS76fGvDpatD2d80sg
-         somIvArMzOSjOxzlKrjT4K03ft1dumzf7afzYtJMq2nRmvaBTWiSqRvEbJepSVYfO9
-         CL3e3yv0XILczJiBZLxTdeoiOg9e4xV+ly8xmbrHYzkNOLW7E6NQonSMLzxKSKvE7i
-         N/tFgIv4BXiY3S5kI1PmumexNP9YIa0E9QYJiVkdzBdtBann7ZIi4bNn2cAn/OWT54
-         edtzeAxzdIxbxd0F/gZXenSZs3SUdGz9lDhMLaBa5tvPKf5cJ3K
-Date:   Sat, 8 Sep 2018 16:49:00 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Tim Schumacher <timschumi@gmx.de>, gitster@pobox.com,
-        pclouds@gmail.com
-Subject: Re: ordered string-list considered harmful, was Re: [PATCH v3] Allow
- aliases that include other aliases
-Message-ID: <20180908164900.GP432229@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Tim Schumacher <timschumi@gmx.de>, gitster@pobox.com,
-        pclouds@gmail.com
-References: <20180906191203.GA26184@sigill.intra.peff.net>
- <20180906192021.GB26575@sigill.intra.peff.net>
- <20180906235033.GA100309@aiede.svl.corp.google.com>
- <20180907032401.GB31728@sigill.intra.peff.net>
- <20180907063241.GA172953@aiede.svl.corp.google.com>
- <87in3hrcya.fsf@evledraar.gmail.com>
- <20180907072353.GC172953@aiede.svl.corp.google.com>
+        id S1726907AbeIHVyu (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 17:54:50 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:43479 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726765AbeIHVyu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 17:54:50 -0400
+Received: by mail-pl1-f194.google.com with SMTP id h3-v6so4559124plh.10
+        for <git@vger.kernel.org>; Sat, 08 Sep 2018 10:08:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=x6OEyTlU9mNIXujZ7wKKpyFNZv1b8IQBziMQJSoPf/g=;
+        b=ogb6FcG+X7AnVMrF31kew2DDtjRjeDI8BqoX0UtnbW5QAyTBA1CM9FATr10Ey+crl4
+         NFpPIkvHhYcLHDPzMNZUjiivrVwa+2DrRvcytPgrHFm3ZbXb3r8n+3lAoY50nUl2HVYA
+         92GNsipPxntdtzgctq0J8y80y3kAC7kR0Nj+CwYd8NbOaUYofyNr5ubpibljugOyX70m
+         bHdsCKfgpO2/z5bLqgZUXInT57EjshcvMWYTPEJWxL5bw2Inr/H7+g39TzCBbq9vDTHP
+         SinN6yz5bn0VcL2luIatbEZLtSqyyfkhtXpLccbsdoFMW26JeuucL6R0BAekJCDcGhhH
+         U7Bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=x6OEyTlU9mNIXujZ7wKKpyFNZv1b8IQBziMQJSoPf/g=;
+        b=iIRQmgmcDX1QvAMkGFAFjwEntkYN0DaJ2MVba+kSsRJpyTaItK1Ab9jLzPq3GCMO5P
+         dQ2ytrT+E/S8ln8Qm+Zz2sZuOBYFSlSA8vSL3jRlGy70okCaF2Oiu5BZY/4IlEeleXAB
+         MR/edDWn0JAwyrDzF10USI3TVMhYO42o8RUobRynm5z9jdVzV2bIsx9P1FWruQsGWrpH
+         iheqibpReRG+EftC+llYBIAhZc9h1Ro54pJuki74mY9SvFIoAHTLsbZlA25B8OJCvKUW
+         v9SS6Xxw2sN7f5QSB85j45aI47YSCHellceBKlP5mIVtzzTtWh8MTP/uPI8RNry6n3bu
+         YcRw==
+X-Gm-Message-State: APzg51DA7HY+IfAvx8LGPiPgoK7FdaaUj1MDfjcq+g/bHuqYa3aWvBdu
+        Cke5Fkm86D9/A5k8qgE8IjMVMcCe2op5Q3IaZ28=
+X-Google-Smtp-Source: ANB0VdbO/3C1xszhridg080wsDnMW+El457yjMxJ2g6wITGUZpG0113uci8bZ1jxwFrn2dr0U/SMk0tC/75nSHfWoI8=
+X-Received: by 2002:a17:902:9893:: with SMTP id s19-v6mr13870149plp.130.1536426503823;
+ Sat, 08 Sep 2018 10:08:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="gQt10JDuGyDb0HQ5"
-Content-Disposition: inline
-In-Reply-To: <20180907072353.GC172953@aiede.svl.corp.google.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.17.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180906210227.54368-1-benpeart@microsoft.com> <20180906210227.54368-3-benpeart@microsoft.com>
+ <xmqqpnxpw5sn.fsf@gitster-ct.c.googlers.com> <fc531863-c46c-6d27-4749-c6b092a14a6f@gmail.com>
+ <CAN0heSreAfMsseZcxR75CFDph-n1b8EUNsRhpFsVqxMLc0hvpA@mail.gmail.com> <ba1c8611-5480-deae-2b45-75fc9943086c@gmail.com>
+In-Reply-To: <ba1c8611-5480-deae-2b45-75fc9943086c@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 8 Sep 2018 19:08:11 +0200
+Message-ID: <CAN0heSqiMQ0iW-pvsfDrf+NDjhnY+dznWHHL5H2k+c2MBpJp8g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] eoie: add End of Index Entry (EOIE) extension
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, Ben Peart <Ben.Peart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sat, 8 Sep 2018 at 16:04, Ben Peart <peartben@gmail.com> wrote:
+> On 9/8/2018 2:29 AM, Martin =C3=85gren wrote:
+> > Maybe it all works out, e.g., so that when someone (brian) merges a
+> > NewHash and runs the testsuite, this will fail consistently and in a
+> > safe way. But I wonder if it would be too hard to avoid the hardcoded 2=
+4
+> > already now.
+>
+> I can certainly change this to be:
+>
+> #define EOIE_SIZE (4 + GIT_SHA1_RAWSZ)
+>
+> which should (hopefully) make it easier to find this hard coded hash
+> length in the sea of hard coded "20" and "160" (bits) littered through
+> the codebase.
 
---gQt10JDuGyDb0HQ5
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yeah, that seems more grep-friendly.
 
-On Fri, Sep 07, 2018 at 12:23:53AM -0700, Jonathan Nieder wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > If this turns out to be a common use-case perhaps the easiest way to
-> > support that would be to make the hashmap (optionally?) ordered, as Ruby
-> > 1.9 did with their hash implementation:
-> > https://www.igvita.com/2009/02/04/ruby-19-internals-ordered-hash/
->=20
-> That's about recording the order of insertion.  I'm talking about
-> something much simpler: sorting an array (as preparation for emitting
-> it) and binary searching to find an entry in that array.
-
-If you want both a collection that is always sorted and has efficient
-lookup for an arbitrary entry, then a B-tree is probably a better
-choice.  That's the primitive that Rust provides for that situation.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---gQt10JDuGyDb0HQ5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAluT/XwACgkQv1NdgR9S
-9ostQg//ev4oCfim6gkbjCHEkNTM8Y3hPbl8eRqmQ77nD6ilgbWLHwzkpQSGvbBv
-YO2S6ELxDs4leamVB5qIY3bkw02odgwkfvU/g1cotF2mMDWDa83W6UAL2KgV/2dw
-rwyRie8jYzkyrUdmfU0WeX7SaFqBLTCLyYtrbD1eRw0YwBiDeasnjHcu4VVLmAsE
-XDUAXCGD1Y+cBt0F0dbaitO0EafYObNDrfe8PLwrdQIgHLQSSOdWawdw3rsO+JZn
-BD3tISDyMMqNSNVbbZ/5H6+8ZTx54/xsIHq/2rzEZR4tOSTFrTwYcML3UVKht1Th
-7vtlc7ynS9Q4MQZc8o3v7IEx7+q7t3JGKBqtmSXevmeryiimRphBQUUvPDEbztEz
-xbf0qQcLMdDzZeD0S9dDrLztJWH1vVGqjJFuA37wIeuSacAEEDvnCcpxhaXlWwG2
-5X+Hi3as7viz8iiF/XTgwEoHYFTdoYiyaRdX0UF9QpM4HzCQNq6wCeY4Cpz+S2cM
-D+Lvbit9WAw2YLFx/k8T092iWWuLVpPxafRWHtc3NUt9VSNb9uW1vLNx6J9zuxtb
-Es966sbCxv4KgL9Oc26/zr1ym3LbPq7zyvNnBsrUiAcdO6GZ2mXyQBK7SFcOSFtJ
-MSYOBTvz7IWQA8niEYVF5DxFXNu8nRD8YTwxb6Ny+Z9PrYFVGwE=
-=56d2
------END PGP SIGNATURE-----
-
---gQt10JDuGyDb0HQ5--
+Martin
