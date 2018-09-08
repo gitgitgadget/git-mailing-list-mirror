@@ -7,64 +7,62 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52D9C1F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 00:19:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A7BA1F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 00:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726002AbeIHFDL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 01:03:11 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35584 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725731AbeIHFDL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 01:03:11 -0400
-Received: by mail-pg1-f193.google.com with SMTP id 7-v6so7741492pgf.2
-        for <git@vger.kernel.org>; Fri, 07 Sep 2018 17:19:43 -0700 (PDT)
+        id S1726119AbeIHFSr (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 01:18:47 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:45679 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725773AbeIHFSr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 01:18:47 -0400
+Received: by mail-pf1-f194.google.com with SMTP id i26-v6so7739694pfo.12
+        for <git@vger.kernel.org>; Fri, 07 Sep 2018 17:35:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=YvxCYqKnNj1srJn10bZ/vAnFT7A2yK/HJoRlipbKkTQ=;
-        b=kKYDfHlX2AbpWBJIJsNC/tx8ZzeepsWFbf8fty2TWXv3bfyOFbwXHTQZdzp2ZJ5+Ny
-         CJrtYqbZEGdnVHI38bB63r4VZur2I+aLmfuUrPvnQxC8Y1zXBw9pPk9bqb+lsAAmd9cA
-         XA9f6adp0QiDs6QkuMCzp6wExB6grhtxLMk2uoew7OmZe9qPnsRoCKQ0O6UYAT3n8GgT
-         3iWwINkEawFlfYw3fB/FpguWteoUkKBDUu1xIWC6SWTfzZPf/YCAWaelIA8nkYJIj2+l
-         Pt7mUBXWB3IBZRd5coD3oq5XcUJItvgj89F9QRDhk+lD0mxglW1ubVv18H3aoznbq+HB
-         Thtg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=Yoh1VShvieBGm9PPuJAiJMlf/N0FsQp4TPO+iKkTqJc=;
+        b=GJvq2smNv+Hxg21QBCfBBunUDE3EBAqGt4LdhsaWbFmNLYH/yvGAtK5kOXYWvqyVVn
+         biFoQaQN55jO4/GLmPov6jfIL2j/v7a9poqj+kDENhPB96rrR2cPW1KgyH7tdChemeUK
+         fuRWHXk8VI4s3rVJZxFG16Vd3HAo44bSexl2Yp5Hxm4/bvinDjmLfabileMnIpTnKsP7
+         oQxukbNUfdiSjRbH/wd7FoEWJqo/wsG7waW48gaHsMoLuU39AYcqgg1PhaZCTNAAeYXM
+         K2BV9mQKyk+bVQ8BEXFPYYdrXsJTTGiNTHGmu1kCWueQYWyM02k9rQQ/8vnc9hhtBoBQ
+         ysVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=YvxCYqKnNj1srJn10bZ/vAnFT7A2yK/HJoRlipbKkTQ=;
-        b=bjxbkHE0QHF8zwi2kxCrmZQnc0iROby9CSwqmPCJpBiM1d6gPcHQrGzJ8vIUd3Gd4C
-         C8DFShcSQwG5X65XaZom1apSD0CIxf3zeZhExBs1DrS+PNU/A0yIqKae76VYIMbCQEXx
-         uwo48eAXZpa18crOuZyV8chI2YRjStGnDP/J7UhjBjeXiXQa8Q6tEU9qdjkefnqa6+7k
-         XtI4i4a5PaIo6YNldEf2Wla0t0F9vz/B5H7QVgvPafZFZhOy16pSngbC6wvI/p7sYM7j
-         oDAa4ny/HzAFW3etbh5Shi4MsMI/mVVjy6nUiw7Co4Na0FzWSAp1c86wRAz2I71zARZ3
-         rF0A==
-X-Gm-Message-State: APzg51D+Avr3j1x8CJJ8GMh0/dl/Y8ODGHCCNq82qyOMVqO+bgf1bXGt
-        cEawBig/PWJEDTXgZqrpncC1i2BF
-X-Google-Smtp-Source: ANB0VdaJ7LXfGhJfPJzVdY8sS7/SBTLcE/tAHuk7+gi7IfnAS2wjWxXOhrD3DgjGXR4QjuHiMG0I4w==
-X-Received: by 2002:a63:790b:: with SMTP id u11-v6mr10917401pgc.111.1536365983281;
-        Fri, 07 Sep 2018 17:19:43 -0700 (PDT)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Yoh1VShvieBGm9PPuJAiJMlf/N0FsQp4TPO+iKkTqJc=;
+        b=rjtg0kh6IaEKM4OWXq276GNsXyfPQlf92aFwdE053BaOU343Q43i3lVdbb44AiM/qo
+         GqIfuU8U2R1elzLX9sYrfJJpShzZiWFaQai9Tw2DGspqgtIDNwfZE57Q+abtixXpsHbw
+         3cvSeE5F0fLxJVZMXshG/ZAyOB/pcdW5yqk6d8i0JIwYJemlhJGGe/4rCs8CQxHFAGh3
+         X3wH9w0oQuSXqY5IP4TF04mnESu10wnG66arM6fhIWJJmat1WsnWDEzEGiEroPcvCfgb
+         ykX9AXDIzODLQNeBJh5vVz6YmIGf9geh3ABT1wrlw43JSVIXQ5daGRdhqVRcHaxLohgf
+         Lq1Q==
+X-Gm-Message-State: APzg51Bq/tnT3t1mqTb4cfSM+7eep355LdG3mRmVAuOyI1nTu3pr4R7o
+        uqgWCboFhvHuklwL1rW/Vkxdb1Sr
+X-Google-Smtp-Source: ANB0VdYHGomQmYGUuxzEUjd904XkcNLLj2QHs/2uKplNqLlwC93CG+/SFcLp1wOc0khU7FdDc4KQwQ==
+X-Received: by 2002:a62:9349:: with SMTP id b70-v6mr11368394pfe.193.1536366916761;
+        Fri, 07 Sep 2018 17:35:16 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id g66-v6sm12924317pfk.39.2018.09.07.17.19.42
+        by smtp.gmail.com with ESMTPSA id 8-v6sm10719226pgu.10.2018.09.07.17.35.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 07 Sep 2018 17:19:42 -0700 (PDT)
-Date:   Fri, 7 Sep 2018 17:19:40 -0700
+        Fri, 07 Sep 2018 17:35:16 -0700 (PDT)
+Date:   Fri, 7 Sep 2018 17:35:14 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2] http-backend: allow empty CONTENT_LENGTH
-Message-ID: <20180908001940.GB225427@aiede.svl.corp.google.com>
-References: <20180906193516.28909-1-max@max630.net>
- <20180907033607.24604-1-max@max630.net>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     GIT Mailing-list <git@vger.kernel.org>,
+        Philip Oakley <philipoakley@iee.org>,
+        git-for-windows@googlegroups.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: 2.19.0.rc2.windows.1: stash fails with dirty submodule
+Message-ID: <20180908003514.GC225427@aiede.svl.corp.google.com>
+References: <6e01daf2-5fb7-b6c0-2833-aa696241c609@virtuell-zuhause.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180907033607.24604-1-max@max630.net>
+In-Reply-To: <6e01daf2-5fb7-b6c0-2833-aa696241c609@virtuell-zuhause.de>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -73,30 +71,36 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-Max Kirillov wrote:
+Thomas Braun wrote:
 
-> According to RFC3875, empty environment variable is equivalent to unset,
-> and for CONTENT_LENGTH it should mean zero body to read.
+> I'm using git with stash and rebase builtins.
 >
-> However, unset CONTENT_LENGTH is also used for chunked encoding to indicate
-> reading until EOF. At least, the test "large fetch-pack requests can be split
-> across POSTs" from t5551 starts faliing, if unset or empty CONTENT_LENGTH is
-> treated as zero length body. So keep the existing behavior as much as possible.
+> $ git --version --build-options
 >
-> Add a test for the case.
+> git version 2.19.0.rc2.windows.1
+[...]
+> mkdir test
+> cd test
+> git init
+> echo 1 > file
+> git add file
+> git commit file -m "message"
+> git submodule add ./ mysubmod
+> git commit -m "Add submodule"
+> echo 2 > mysubmod/file
+> git checkout -b mybranch
+> git rebase -i --autosquash master
+[...]
+> fatal: Unexpected stash response: ''
 >
-> Reported-By: Jelmer Vernooĳ <jelmer@jelmer.uk>
-> Signed-off-by: Max Kirillov <max@max630.net>
-> ---
-> Added the "reported-by" and explained inline the reason to keep existing behavior
+> and that used to work with older git versions.
 
-Lovely, thanks.
+Thanks for reporting.  I'm cc-ing Dscho, who has been looking for
+reports of issues with the new experimental stash and rebase code[2].
 
-To me, "keep the existing behavior as much as possible" isn't comforting
-because it doesn't tell me *which* existing behavior.  Fortunately the patch
-itself is comforting: it makes us treat "" the same way as unset, which is
-exactly what the RFC requires.
+Thanks,
+Jonathan
 
-So I'm happy with this version.  Thanks for your patient work.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> [1]:
+> https://github.com/git-for-windows/git/issues/1820#issuecomment-419411808
+[2] https://public-inbox.org/git/nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet/
