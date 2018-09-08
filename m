@@ -6,112 +6,77 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7CB31F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 16:23:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 76D221F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 16:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727669AbeIHVJv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 17:09:51 -0400
-Received: from cloud.peff.net ([104.130.231.41]:43738 "HELO cloud.peff.net"
+        id S1727530AbeIHVPa (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 17:15:30 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43746 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726880AbeIHVJv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 17:09:51 -0400
-Received: (qmail 11578 invoked by uid 109); 8 Sep 2018 16:23:33 -0000
+        id S1726314AbeIHVPa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 17:15:30 -0400
+Received: (qmail 11943 invoked by uid 109); 8 Sep 2018 16:29:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 08 Sep 2018 16:23:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 08 Sep 2018 16:29:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29091 invoked by uid 111); 8 Sep 2018 16:23:45 -0000
+Received: (qmail 29178 invoked by uid 111); 8 Sep 2018 16:29:22 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 08 Sep 2018 12:23:45 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 08 Sep 2018 12:29:22 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Sep 2018 12:23:31 -0400
-Date:   Sat, 8 Sep 2018 12:23:31 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Sep 2018 12:29:09 -0400
+Date:   Sat, 8 Sep 2018 12:29:09 -0400
 From:   Jeff King <peff@peff.net>
 To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: [PATCH v2] config.mak.dev: add -Wformat-security
-Message-ID: <20180908162331.GB9016@sigill.intra.peff.net>
-References: <20180907181905.GA15897@sigill.intra.peff.net>
- <CACsJy8CshOFNgHq-QQZp3GM3Ua+iuKMDvA+YaKKh1QGF5FrHqg@mail.gmail.com>
+Cc:     timschumi@gmx.de, Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH v4 2/3] Show the call history when an alias is looping
+Message-ID: <20180908162908.GC9016@sigill.intra.peff.net>
+References: <20180905085427.4099-1-timschumi@gmx.de>
+ <20180907224430.23859-1-timschumi@gmx.de>
+ <20180907224430.23859-2-timschumi@gmx.de>
+ <CACsJy8C+VPGyu1D6yeFU3eqzwusv_Q=tobZgvXOtZ=5gYak5dg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACsJy8CshOFNgHq-QQZp3GM3Ua+iuKMDvA+YaKKh1QGF5FrHqg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8C+VPGyu1D6yeFU3eqzwusv_Q=tobZgvXOtZ=5gYak5dg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 08, 2018 at 03:38:19PM +0200, Duy Nguyen wrote:
+On Sat, Sep 08, 2018 at 03:34:34PM +0200, Duy Nguyen wrote:
 
-> On Fri, Sep 7, 2018 at 8:21 PM Jeff King <peff@peff.net> wrote:
+> On Sat, Sep 8, 2018 at 12:44 AM Tim Schumacher <timschumi@gmx.de> wrote:
 > >
-> > We currently build cleanly with -Wformat-security, and it's
-> > a good idea to make sure we continue to do so (since calls
-> > that trigger the warning may be security vulnerabilities).
+> > Just printing the command that the user entered is not particularly
+> > helpful when trying to find the alias that causes the loop.
+> >
+> > Print the history of substituted commands to help the user find the
+> > offending alias. Mark the entrypoint of the loop with "<==" and the
+> > last command (which looped back to the entrypoint) with "==>".
 > 
-> Nice. I had this flag in my config.mak too before switching to
-> DEVELOPER=1. Didn't realize I lost the flag until now.
+> An even simpler way to give this information is simply suggest the
+> user tries again with GIT_TRACE=1. All alias expansion is shown there
+> and we teach the user about GIT_TRACE. But your approach is probably
+> more user friendly.
 
-I thought I used to use it, too, but I realized recently that I never
-did (I experimented with format-nonliteral a long time ago but gave up).
+Good point. I'm OK with the amount of code here for the nicer message
+(but would be happy either way).
 
-AFAIK we've never actually had a case that this triggered, because it's
-so narrow (as opposed to format-nonliteral).
+If we were going to track cross-process loops like Ævar suggested, I
+think I'd rather go with a simple counter and just ask the user to run
+with GIT_TRACE when it exceeds some maximum sanity value. For two
+reasons:
 
-> > diff --git a/config.mak.dev b/config.mak.dev
-> > index 9a998149d9..f832752454 100644
-> > --- a/config.mak.dev
-> > +++ b/config.mak.dev
-> > @@ -14,6 +14,7 @@ CFLAGS += -Wpointer-arith
-> >  CFLAGS += -Wstrict-prototypes
-> >  CFLAGS += -Wunused
-> >  CFLAGS += -Wvla
-> > +CFLAGS += -Wformat-security
-> 
-> Maybe keep it sorted
+  1. Passing a counter through the environment is way simpler than
+     an arbitrarily-sized list.
 
-Heh, I didn't even notice the original was sorted. Here it is in the
-right spot:
+  2. When you get into multiple processes, there's potentially more
+     going on than just Git commands. You might have a git command which
+     runs a hook which runs a third party script which runs a git
+     command, which runs a hook, and so on. That full dump is going to
+     be more useful.
 
--- >8 --
-Subject: config.mak.dev: add -Wformat-security
-
-We currently build cleanly with -Wformat-security, and it's
-a good idea to make sure we continue to do so (since calls
-that trigger the warning may be security vulnerabilities).
-
-Note that we cannot use the stronger -Wformat-nonliteral, as
-there are case where we are clever with passing around
-pointers to string literals. E.g., bisect_rev_setup() takes
-bad_format and good_format parameters. These ultimately come
-from literals, but they still trigger the warning.
-
-Some of these might be fixable (e.g., by passing flags from
-which we locally select a format), and might even be worth
-fixing (not because of security, but just because it's an
-easy mistake to pass the wrong format). But there are other
-cases which are likely quite hard to fix (we actually
-generate formats in a local buffer in some cases). So let's
-punt on that for now and start with -Wformat-security, which
-is supposed to catch the most important cases.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- config.mak.dev | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/config.mak.dev b/config.mak.dev
-index 9a998149d9..92d268137f 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -7,6 +7,7 @@ CFLAGS += -pedantic
- CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
- endif
- CFLAGS += -Wdeclaration-after-statement
-+CFLAGS += -Wformat-security
- CFLAGS += -Wno-format-zero-length
- CFLAGS += -Wold-style-definition
- CFLAGS += -Woverflow
--- 
-2.19.0.rc2.594.gc4806cd463
-
+-Peff
