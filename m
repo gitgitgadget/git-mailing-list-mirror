@@ -2,83 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E3611F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 18:31:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BD961F404
+	for <e@80x24.org>; Sat,  8 Sep 2018 18:44:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727672AbeIHXS2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 19:18:28 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:23188 "EHLO bsmtp7.bon.at"
+        id S1727638AbeIHX00 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Sep 2018 19:26:26 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:23543 "EHLO bsmtp7.bon.at"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726817AbeIHXS2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Sep 2018 19:18:28 -0400
+        id S1727608AbeIHX00 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Sep 2018 19:26:26 -0400
 Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 4272vj4cfHz5tld;
-        Sat,  8 Sep 2018 20:31:45 +0200 (CEST)
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 42734w0V4Pz5tlT;
+        Sat,  8 Sep 2018 20:39:44 +0200 (CEST)
 Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 52C6A10B;
-        Sat,  8 Sep 2018 20:31:45 +0200 (CEST)
-Subject: Re: [PATCH 2/2] mingw: fix mingw_open_append to work with named pipes
-To:     jeffhost@microsoft.com
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.35.git.gitgitgadget@gmail.com>
- <f433937d55974b75750cfc7d579a6a56109259a4.1536344387.git.gitgitgadget@gmail.com>
- <1c524f56-2021-a961-168f-e5c6d7914ec2@kdbg.org>
+        by dx.site (Postfix) with ESMTP id BDDE32088;
+        Sat,  8 Sep 2018 20:39:43 +0200 (CEST)
+Subject: Re: [PATCH] Revert "Merge branch 'sb/submodule-core-worktree'" (was
+ Re: Old submodules broken in 2.19rc1 and 2.19rc2)
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, allan.jensen@qt.io,
+        git <git@vger.kernel.org>
+References: <2659750.rG6xLiZASK@twilight>
+ <CAGZ79kaVQ0T=acpviOoD+8XVxYsefNkO7c5d+d0Wc0iCbr2Evw@mail.gmail.com>
+ <20180907223515.GD103699@aiede.svl.corp.google.com>
+ <CAGZ79kZvuGEPOSTUqT+y6nxs6W5qaP-BbHT_WQQE7+n=RVNsrw@mail.gmail.com>
+ <20180908000946.GA225427@aiede.svl.corp.google.com>
+ <xmqqmussvj72.fsf@gitster-ct.c.googlers.com>
 From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <f207bc28-a303-5d63-e9f4-da8e4d466bd5@kdbg.org>
-Date:   Sat, 8 Sep 2018 20:31:45 +0200
+Message-ID: <deeaa4d5-3982-b47a-d2da-501d52fa38e1@kdbg.org>
+Date:   Sat, 8 Sep 2018 20:39:43 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <1c524f56-2021-a961-168f-e5c6d7914ec2@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <xmqqmussvj72.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.09.2018 um 11:26 schrieb Johannes Sixt:
-> Am 07.09.2018 um 20:19 schrieb Jeff Hostetler via GitGitGadget:
->> diff --git a/compat/mingw.c b/compat/mingw.c
->> index 858ca14a57..ef03bbe5d2 100644
->> --- a/compat/mingw.c
->> +++ b/compat/mingw.c
->> @@ -355,7 +355,7 @@ static int mingw_open_append(wchar_t const 
->> *wfilename, int oflags, ...)
->>        * FILE_SHARE_WRITE is required to permit child processes
->>        * to append to the file.
->>        */
->> -    handle = CreateFileW(wfilename, FILE_APPEND_DATA,
->> +    handle = CreateFileW(wfilename, FILE_WRITE_DATA | FILE_APPEND_DATA,
->>               FILE_SHARE_WRITE | FILE_SHARE_READ,
->>               NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
->>       if (handle == INVALID_HANDLE_VALUE)
+Am 08.09.2018 um 04:04 schrieb Junio C Hamano:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+>> It is late in the release cycle, so revert the whole 3-patch series.
+>> We can try again later for 2.20.
 >>
+>> Reported-by: Allan Sandfeld Jensen <allan.jensen@qt.io>
+>> Helped-by: Stefan Beller <sbeller@google.com>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>> ---
+>> Stefan Beller wrote:
+>>> Jonathan Nieder wrote:
+>>
+>>>> I think we
+>>>> should revert e98317508c0 in "master" (for 2.19) and keep making use
+>>>> of that 'second try' in "next" (for 2.20).
+>>>
+>>> Actually I'd rather revert the whole topic leading up to
+>>> 7e25437d35a (Merge branch 'sb/submodule-core-worktree', 2018-07-18)
+>>> as the last patch in there doesn't work well without e98317508c0 IIRC.
+>>>
+>>> And having only the first patch would bring an inconsistent state as
+>>> then different commands behave differently w.r.t. setting core.worktree.
+>>
+>> Like this (generated using "git revert -m1)?
 > 
-> I did not go with this version because the documentation 
-> https://docs.microsoft.com/en-us/windows/desktop/fileio/file-access-rights-constants 
-> says:
-> 
-> FILE_APPEND_DATA: For a file object, the right to append data to the 
-> file. (For local files, write operations will not overwrite existing 
-> data if this flag is specified without FILE_WRITE_DATA.) [...]
-> 
-> which could be interpreted as: Only if FILE_WRITE_DATA is not set, we 
-> have the guarantee that existing data in local files is not overwritten, 
-> i.e., new data is appended atomically.
-> 
-> Is this interpretation too narrow and we do get atomicity even when 
-> FILE_WRITE_DATA is set?
+> OK.  Thanks for taking care of it.
 
-Here is are some comments on stackoverflow which let me think that 
-FILE_APPEND_DATA with FILE_WRITE_DATA is no longer atomic:
+Please don't forget to remove the corresponding release notes entry.
 
-https://stackoverflow.com/questions/20093571/difference-between-file-write-data-and-file-append-data#comment29995346_20108249
-
--- Hannes
+diff --git a/Documentation/RelNotes/2.19.0.txt b/Documentation/RelNotes/2.19.0.txt
+index bcbfbc2041..834454ffb9 100644
+--- a/Documentation/RelNotes/2.19.0.txt
++++ b/Documentation/RelNotes/2.19.0.txt
+@@ -296,12 +296,6 @@ Fixes since v2.18
+    to the submodule was changed in the range of commits in the
+    superproject, sometimes showing "(null)".  This has been corrected.
+ 
+- * "git submodule" did not correctly adjust core.worktree setting that
+-   indicates whether/where a submodule repository has its associated
+-   working tree across various state transitions, which has been
+-   corrected.
+-   (merge 984cd77ddb sb/submodule-core-worktree later to maint).
+-
+  * Bugfix for "rebase -i" corner case regression.
+    (merge a9279c6785 pw/rebase-i-keep-reword-after-conflict later to maint).
+ 
