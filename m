@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 925C41F404
-	for <e@80x24.org>; Sun,  9 Sep 2018 08:54:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71A801F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 08:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726719AbeIINno (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 09:43:44 -0400
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:35119 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726658AbeIINni (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Sep 2018 09:43:38 -0400
-Received: by mail-lj1-f182.google.com with SMTP id p10-v6so15407495ljg.2
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 01:54:40 -0700 (PDT)
+        id S1726723AbeIINnq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 09:43:46 -0400
+Received: from mail-lj1-f181.google.com ([209.85.208.181]:44554 "EHLO
+        mail-lj1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726705AbeIINnp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 09:43:45 -0400
+Received: by mail-lj1-f181.google.com with SMTP id q127-v6so15380868ljq.11
+        for <git@vger.kernel.org>; Sun, 09 Sep 2018 01:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=q9SI6nOgBE4fzArx/WibJAJD6ivT6HwfmDpVxsLOQqg=;
-        b=gBFvqNdwZLdeSGfJP2vIcoukTegdKUDDmuE2ok3GZ4C2vQ3hNziU4+trRP2mOG6Zli
-         /qRmDr81VoPQL8tw1GnbpHZdUHHwrDybDs0olligg3SlMiHKqZLULWNRRzcDg3Lwz2jk
-         dYYSLPcrFqkbLogN7g+ZNFQeXZHkFY5JquzhOLNiTKunmCpG1n/7/F7xn0JkvIXvT78q
-         6Is1XFBEu10+4WAIZFrnSxM/pWe/K7OYaycF1JUxD78kUxxe9+YbYP8Jn1itgJjKeB1s
-         ya/36VPHFXyHRr4a6axdBveyOMiidGYpRZLZOOwWaM7NYPSAGoOYyDBvqfle0y/EPUKo
-         YZNA==
+        bh=bC8ayET/N0NdU4XI2o2oyLXYbhW7piAshB/SkN9xtUU=;
+        b=ANjttE6fhoQYCeC5vTiuFZT9TarhQhNUUrR3uWx9eFRP2y7udVu7R5w8YVT4HmtQUF
+         j9rA7DkskgnW7kUR+ELOxSJOJMWC16CiehomLKiGxhffKObiG6WIBg6ocXD6cksOWSrM
+         G2wLN6yHWe9ZhptVm+sHGWhp/OSy2GaHYE/CsYT7GBSDAQxCtfn5oNF1Sk4yS88QufZS
+         C5EccCNr8mbuQeYRUHiyliohwx08n0i+t818xNUCSI1YmU7/rkDfT73Md3KLQBzBmFwP
+         t1Z7qF1V/MzQ4nYEVh+I1lJ3lKiL6E850+LcXBlnQF39F+AHhkUzMN3oaZlqbHvo4EMU
+         z3tQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=q9SI6nOgBE4fzArx/WibJAJD6ivT6HwfmDpVxsLOQqg=;
-        b=B8/bAZFyCRDOC0ypxaNnAROX9cl8LL2rOzzu1HtPyCwUZal1ioBF5J+rTyMlyNZTFo
-         JLdkyKVWqJC7/0qMNNs5NT9uMfuoAAOK9HaENlPcNsUWA30B7YpvkhhWVQKuNLx6Tirc
-         0kznO98TDVCXZbYXk+R0OvGMUVUo+0jk0nrFVf1e3p09/BQC1c21qJMJKpkUSOstu9R2
-         QeTtOfO6bnr8pCONhiY2dLhFzgNE0ogT18obIZ1Xgf9HSX8ptIfxb0NlWFwHhQ08tKl8
-         ISEo3wSRj8m+/+ilADWqklxIt1XSok53KQEAbanTD2ZjLgJJnxwNmjc05teETWsx/GDR
-         urpA==
-X-Gm-Message-State: APzg51DEQ0qjyRrePiwV8Btq8hlUKSo3za6BDF1VRq/r8g8qCGiDT8C+
-        wYmFW71cL3z1DDl50CQXg0SYPcPx
-X-Google-Smtp-Source: ANB0VdaMg7tnrUnB+p7iMvLRHRTXH6z5qcyq0av13n6WQ+bERXXdkbzzBbwOUE/dyVzff+rawkIDAA==
-X-Received: by 2002:a2e:9095:: with SMTP id l21-v6mr9840075ljg.15.1536483279395;
-        Sun, 09 Sep 2018 01:54:39 -0700 (PDT)
+        bh=bC8ayET/N0NdU4XI2o2oyLXYbhW7piAshB/SkN9xtUU=;
+        b=IBQnT6KfhUgy6goEBwdbhV4scAjdhG7kUcCUhd+q8Q63O4CTKcGuJLSdBjqi9Ycnr0
+         vmsm93bhJBdUNRK6EiGd2yHqw2EYd+5vP5s+RxB/ezBXgxmMuV4xMg+t57+qEZhJwks5
+         CTFWWLXoR5NpxtY+pxbzS+JfJjPd9bCPwUWOKTxaWcqtfCjSPyiijlu+me8GiqqDrpYr
+         cG+UwcLs3oa0q+8BfIlNGrvjgom4mTv8nIw9grkNp7T8NwCJRcCFgu/XBrjtpDk0Abpc
+         oNa9hZL7d/NHMDkEo/mz9V5qNvM4eZCm4BYM14EdNR90GG1lOeUt4wzlEFgGllrKSwmZ
+         RBnA==
+X-Gm-Message-State: APzg51AwgTNVb6umYZv28N4lDh/CBF+aXWPcMdDCs9oeRPMPS8r5Wt1b
+        pjrjh+FE3qsCVG72r19fFgU=
+X-Google-Smtp-Source: ANB0VdZXV2xMsO6MGcw0P5MGG8ccib+OTswY7lVvx9AJ/BqmNHmRFRJjX/wObesDi//tJ17CUsLg1A==
+X-Received: by 2002:a2e:5bd5:: with SMTP id m82-v6mr9851283lje.115.1536483286330;
+        Sun, 09 Sep 2018 01:54:46 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g16-v6sm2102525lfb.5.2018.09.09.01.54.38
+        by smtp.gmail.com with ESMTPSA id g16-v6sm2102525lfb.5.2018.09.09.01.54.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Sep 2018 01:54:38 -0700 (PDT)
+        Sun, 09 Sep 2018 01:54:45 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     pclouds@gmail.com
 Cc:     git@vger.kernel.org, sbeller@google.com,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 07/23] grep.c: remove implicit dependency on the_index
-Date:   Sun,  9 Sep 2018 10:54:02 +0200
-Message-Id: <20180909085418.31531-8-pclouds@gmail.com>
+Subject: [PATCH v3 13/23] merge.c: remove implicit dependency on the_index
+Date:   Sun,  9 Sep 2018 10:54:08 +0200
+Message-Id: <20180909085418.31531-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180909085418.31531-1-pclouds@gmail.com>
 References: <20180903180932.32260-1-pclouds@gmail.com>
@@ -69,154 +69,171 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 ---
- builtin/grep.c |  4 ++--
- builtin/log.c  |  2 +-
- grep.c         | 13 ++++++++-----
- grep.h         |  7 +++++--
- revision.c     |  4 ++--
- 5 files changed, 18 insertions(+), 12 deletions(-)
+ builtin/merge.c |  8 +++++---
+ builtin/pull.c  |  7 +++++--
+ cache.h         |  6 ++++--
+ merge.c         | 20 +++++++++++---------
+ sequencer.c     |  6 +++---
+ 5 files changed, 28 insertions(+), 19 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 601f801158..0667ffde84 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -904,9 +904,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	init_grep_defaults();
-+	init_grep_defaults(the_repository);
- 	git_config(grep_cmd_config, NULL);
--	grep_init(&opt, prefix);
-+	grep_init(&opt, the_repository, prefix);
- 
- 	/*
- 	 * If there is no -- then the paths must exist in the working
-diff --git a/builtin/log.c b/builtin/log.c
-index f32a07f6a9..b62082472c 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -115,7 +115,7 @@ static int log_line_range_callback(const struct option *option, const char *arg,
- 
- static void init_log_defaults(void)
- {
--	init_grep_defaults();
-+	init_grep_defaults(the_repository);
- 	init_diff_ui_defaults();
- 
- 	decoration_style = auto_decoration_style();
-diff --git a/grep.c b/grep.c
-index e146ff20bb..6c0eede3a1 100644
---- a/grep.c
-+++ b/grep.c
-@@ -42,7 +42,7 @@ static void color_set(char *dst, const char *color_bytes)
-  * We could let the compiler do this, but without C99 initializers
-  * the code gets unwieldy and unreadable, so...
-  */
--void init_grep_defaults(void)
-+void init_grep_defaults(struct repository *repo)
- {
- 	struct grep_opt *opt = &grep_defaults;
- 	static int run_once;
-@@ -52,6 +52,7 @@ void init_grep_defaults(void)
- 	run_once++;
- 
- 	memset(opt, 0, sizeof(*opt));
-+	opt->repo = repo;
- 	opt->relative = 1;
- 	opt->pathname = 1;
- 	opt->max_depth = -1;
-@@ -149,12 +150,13 @@ int grep_config(const char *var, const char *value, void *cb)
-  * default values from the template we read the configuration
-  * information in an earlier call to git_config(grep_config).
-  */
--void grep_init(struct grep_opt *opt, const char *prefix)
-+void grep_init(struct grep_opt *opt, struct repository *repo, const char *prefix)
- {
- 	struct grep_opt *def = &grep_defaults;
- 	int i;
- 
- 	memset(opt, 0, sizeof(*opt));
-+	opt->repo = repo;
- 	opt->prefix = prefix;
- 	opt->prefix_length = (prefix && *prefix) ? strlen(prefix) : 0;
- 	opt->pattern_tail = &opt->pattern_list;
-@@ -1708,7 +1710,8 @@ static int look_ahead(struct grep_opt *opt,
- 	return 0;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 592cb19caf..5f79fc5fd7 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -728,8 +728,9 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 			die(_("unable to write %s"), get_index_file());
+ 		return clean ? 0 : 1;
+ 	} else {
+-		return try_merge_command(strategy, xopts_nr, xopts,
+-						common, head_arg, remoteheads);
++		return try_merge_command(the_repository,
++					 strategy, xopts_nr, xopts,
++					 common, head_arg, remoteheads);
+ 	}
  }
  
--static int fill_textconv_grep(struct userdiff_driver *driver,
-+static int fill_textconv_grep(struct repository *r,
-+			      struct userdiff_driver *driver,
- 			      struct grep_source *gs)
- {
- 	struct diff_filespec *df;
-@@ -1741,7 +1744,7 @@ static int fill_textconv_grep(struct userdiff_driver *driver,
- 	 * structure.
+@@ -1470,7 +1471,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
+ 
+-		if (checkout_fast_forward(&head_commit->object.oid,
++		if (checkout_fast_forward(the_repository,
++					  &head_commit->object.oid,
+ 					  &commit->object.oid,
+ 					  overwrite_ignore)) {
+ 			ret = 1;
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 681c127a07..33b7100837 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -562,7 +562,9 @@ static int pull_into_void(const struct object_id *merge_head,
+ 	 * index/worktree changes that the user already made on the unborn
+ 	 * branch.
  	 */
- 	grep_read_lock();
--	size = fill_textconv(the_repository, driver, df, &buf);
-+	size = fill_textconv(r, driver, df, &buf);
- 	grep_read_unlock();
- 	free_filespec(df);
+-	if (checkout_fast_forward(the_hash_algo->empty_tree, merge_head, 0))
++	if (checkout_fast_forward(the_repository,
++				  the_hash_algo->empty_tree,
++				  merge_head, 0))
+ 		return 1;
  
-@@ -1837,7 +1840,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 	if (update_ref("initial pull", "HEAD", merge_head, curr_head, 0, UPDATE_REFS_DIE_ON_ERR))
+@@ -915,7 +917,8 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 			"fast-forwarding your working tree from\n"
+ 			"commit %s."), oid_to_hex(&orig_head));
  
- 	try_lookahead = should_lookahead(opt);
+-		if (checkout_fast_forward(&orig_head, &curr_head, 0))
++		if (checkout_fast_forward(the_repository, &orig_head,
++					  &curr_head, 0))
+ 			die(_("Cannot fast-forward your working tree.\n"
+ 				"After making sure that you saved anything precious from\n"
+ 				"$ git diff %s\n"
+diff --git a/cache.h b/cache.h
+index 260e4ee44a..49fe83331c 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1716,10 +1716,12 @@ extern struct startup_info *startup_info;
  
--	if (fill_textconv_grep(textconv, gs) < 0)
-+	if (fill_textconv_grep(opt->repo, textconv, gs) < 0)
- 		return 0;
+ /* merge.c */
+ struct commit_list;
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *r,
++		const char *strategy, size_t xopts_nr,
+ 		const char **xopts, struct commit_list *common,
+ 		const char *head_arg, struct commit_list *remotes);
+-int checkout_fast_forward(const struct object_id *from,
++int checkout_fast_forward(struct repository *r,
++			  const struct object_id *from,
+ 			  const struct object_id *to,
+ 			  int overwrite_ignore);
  
- 	bol = gs->buf;
-diff --git a/grep.h b/grep.h
-index 0ba62a11c5..3651183971 100644
---- a/grep.h
-+++ b/grep.h
-@@ -36,6 +36,8 @@ typedef int pcre2_jit_stack;
- #include "thread-utils.h"
- #include "userdiff.h"
+diff --git a/merge.c b/merge.c
+index e30e03fb84..91008f7602 100644
+--- a/merge.c
++++ b/merge.c
+@@ -14,7 +14,8 @@ static const char *merge_argument(struct commit *commit)
+ 	return oid_to_hex(commit ? &commit->object.oid : the_hash_algo->empty_tree);
+ }
  
-+struct repository;
-+
- enum grep_pat_token {
- 	GREP_PATTERN,
- 	GREP_PATTERN_HEAD,
-@@ -136,6 +138,7 @@ struct grep_opt {
- 	struct grep_pat *header_list;
- 	struct grep_pat **header_tail;
- 	struct grep_expr *pattern_expression;
-+	struct repository *repo;
- 	const char *prefix;
- 	int prefix_length;
- 	regex_t regexp;
-@@ -183,9 +186,9 @@ struct grep_opt {
- 	void *output_priv;
- };
+-int try_merge_command(const char *strategy, size_t xopts_nr,
++int try_merge_command(struct repository *r,
++		      const char *strategy, size_t xopts_nr,
+ 		      const char **xopts, struct commit_list *common,
+ 		      const char *head_arg, struct commit_list *remotes)
+ {
+@@ -35,15 +36,16 @@ int try_merge_command(const char *strategy, size_t xopts_nr,
+ 	ret = run_command_v_opt(args.argv, RUN_GIT_CMD);
+ 	argv_array_clear(&args);
  
--extern void init_grep_defaults(void);
-+extern void init_grep_defaults(struct repository *);
- extern int grep_config(const char *var, const char *value, void *);
--extern void grep_init(struct grep_opt *, const char *prefix);
-+extern void grep_init(struct grep_opt *, struct repository *repo, const char *prefix);
- void grep_commit_pattern_type(enum grep_pattern_type, struct grep_opt *opt);
+-	discard_cache();
+-	if (read_cache() < 0)
++	discard_index(r->index);
++	if (read_index(r->index) < 0)
+ 		die(_("failed to read the cache"));
+-	resolve_undo_clear();
++	resolve_undo_clear_index(r->index);
  
- extern void append_grep_pat(struct grep_opt *opt, const char *pat, size_t patlen, const char *origin, int no, enum grep_pat_token t);
-diff --git a/revision.c b/revision.c
-index de4dce600d..3457064ff3 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1464,8 +1464,8 @@ void init_revisions(struct rev_info *revs, const char *prefix)
- 	revs->commit_format = CMIT_FMT_DEFAULT;
- 	revs->expand_tabs_in_log_default = 8;
+ 	return ret;
+ }
  
--	init_grep_defaults();
--	grep_init(&revs->grep_filter, prefix);
-+	init_grep_defaults(the_repository);
-+	grep_init(&revs->grep_filter, the_repository, prefix);
- 	revs->grep_filter.status_only = 1;
+-int checkout_fast_forward(const struct object_id *head,
++int checkout_fast_forward(struct repository *r,
++			  const struct object_id *head,
+ 			  const struct object_id *remote,
+ 			  int overwrite_ignore)
+ {
+@@ -54,7 +56,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	struct dir_struct dir;
+ 	struct lock_file lock_file = LOCK_INIT;
  
- 	diff_setup(&revs->diffopt);
+-	refresh_cache(REFRESH_QUIET);
++	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 
+ 	if (hold_locked_index(&lock_file, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+@@ -86,8 +88,8 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 
+ 	opts.head_idx = 1;
+-	opts.src_index = &the_index;
+-	opts.dst_index = &the_index;
++	opts.src_index = r->index;
++	opts.dst_index = r->index;
+ 	opts.update = 1;
+ 	opts.verbose_update = 1;
+ 	opts.merge = 1;
+@@ -101,7 +103,7 @@ int checkout_fast_forward(const struct object_id *head,
+ 	}
+ 	clear_unpack_trees_porcelain(&opts);
+ 
+-	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
++	if (write_locked_index(r->index, &lock_file, COMMIT_LOCK))
+ 		return error(_("unable to write new index file"));
+ 	return 0;
+ }
+diff --git a/sequencer.c b/sequencer.c
+index 84bf598c3e..47d0e7b0bd 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -470,8 +470,8 @@ static int fast_forward_to(const struct object_id *to, const struct object_id *f
+ 	struct strbuf sb = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 
+-	read_cache();
+-	if (checkout_fast_forward(from, to, 1))
++	read_index(&the_index);
++	if (checkout_fast_forward(the_repository, from, to, 1))
+ 		return -1; /* the callee should have complained already */
+ 
+ 	strbuf_addf(&sb, _("%s: fast-forward"), _(action_name(opts)));
+@@ -1798,7 +1798,7 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res |= try_merge_command(opts->strategy,
++		res |= try_merge_command(the_repository, opts->strategy,
+ 					 opts->xopts_nr, (const char **)opts->xopts,
+ 					common, oid_to_hex(&head), remotes);
+ 		free_commit_list(common);
 -- 
 2.19.0.rc0.337.ge906d732e7
 
