@@ -2,86 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 793391F404
-	for <e@80x24.org>; Sun,  9 Sep 2018 18:09:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 93CDA1F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 18:25:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726688AbeIIXAI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 19:00:08 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34434 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726654AbeIIXAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Sep 2018 19:00:08 -0400
-Received: by mail-ed1-f66.google.com with SMTP id u1-v6so14889728eds.1
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 11:09:41 -0700 (PDT)
+        id S1726936AbeIIXPd (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 19:15:33 -0400
+Received: from mail-it0-f66.google.com ([209.85.214.66]:35202 "EHLO
+        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726629AbeIIXPc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 19:15:32 -0400
+Received: by mail-it0-f66.google.com with SMTP id 139-v6so25930162itf.0
+        for <git@vger.kernel.org>; Sun, 09 Sep 2018 11:25:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=WMjkn7jsZBQ8WHtXiL6MaK57fDR97hePCMHEsunIobI=;
-        b=cfoySaFwxbSx5Npg9rbvUUNdRiTlhUzc+kcOdOOh5LMT4/Ky6EZAT4ZFvX+2d1ZJji
-         4IMWNymCoKOzRLAyiIxOUnW2+o40C/6CTw28WNMuK3RxguAB/RcCNtnFK9qExkkuiZi9
-         e7wS6YTmensxuD4uC/6LqbwjfLIx2Lc0lUkbGtGc5b+TH8z3N7U8PRuKH9RG9C4mQ+qZ
-         9lR2/IUNfO0qqh/owwezsYpOOpw+kzNcNL9SgCRfYz2hICHAC62HKlIfNJA2KzVAP0N4
-         fc5UUQiBQA3tpgPiT0dSdfC/f4eQUEJwy6UNDkCdml/9dRBPAYPqNC4VxKBJWC8p/wBM
-         3l3A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=91zDo6jFeT3kqlZN5D58GqgmhTyLRng3AtASQp2/M/c=;
+        b=RtQVi+dTDAuWcgAGSLAEq3/SpTEwEWqj8OvSyT4MkKcG03FQJK8EUHR3ka2ZgMGqhs
+         OkdG2Z29pf+GGiT3pGVnMaaGYbgZ6VxMyN+kGO4/TW1LFxJRIlA9f1Q1mH/Bq5ktlLoW
+         F3v8i086vo3qGjGGrZa3jVYKam28XJ+C3eycCXbuyu71KIb9ApjH+oETsOXhYbEZHBn2
+         5Or28LnKHw03ku6Tdx+Jib6QJirvejxdBLuaLp4HD6CNSzFQDKHJCxSUK12djMUuqRHS
+         jGIbC+I742+L6TdnrAJ86DZ9wc9ACExibqbZq4YKe/lIJ0GcsmkurVeS97lVwK6zvVcR
+         SF4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=WMjkn7jsZBQ8WHtXiL6MaK57fDR97hePCMHEsunIobI=;
-        b=ik4lrLvPFCuarwoHPICBRnfMjkmSN2A+2ASEIEvL46zMfq5dasN59ab9qGWfeQCQ7A
-         0XKzYp+DXPfNDeA+rG9DZig2vHHKPIEglqy2ia0HI2MerMwDXWnAaIJhDzuBvR5wlWec
-         ckVWV8UmmJo6IDB9KT5cZ1k/HMrPvDNPnr4dcyY80Ln/QXOUchXMfGKPMqD+NTbvEHRP
-         Hqqb2nQWL3HqyyCfYW/tw5zMzMmjqEDIv16E77RZvGh4256/RURrlINbcQ6KtSORc1w2
-         aDcotfmCnm+gPVtCy8Z0nguM66NBw0exEDf+7w55Uva4XRXiEWvbNzq9cqcwsqUwzoDR
-         fkHQ==
-X-Gm-Message-State: APzg51C5cPJcSsSXRmXYByYCQayXSEwgnAx4oief+aNAbS8Z53AHxI/S
-        Srj6IruIGyxdiNn5jA9xvyA=
-X-Google-Smtp-Source: ANB0Vdbdlh2//rPAzI8FhqAPt7xJi2YW0bYaBGJEDUCMjz46jWlMWuIP+OO8HtPQ0JaXoivbD//8EQ==
-X-Received: by 2002:a50:a8a6:: with SMTP id k35-v6mr18613009edc.135.1536516580644;
-        Sun, 09 Sep 2018 11:09:40 -0700 (PDT)
-Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
-        by smtp.gmail.com with ESMTPSA id x22-v6sm7389042edb.8.2018.09.09.11.09.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Sep 2018 11:09:39 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/6] Merge remaining t/helper binaries to test-tool
-References: <20180909173631.1446-1-pclouds@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180909173631.1446-1-pclouds@gmail.com>
-Date:   Sun, 09 Sep 2018 20:09:39 +0200
-Message-ID: <87o9d6lezg.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=91zDo6jFeT3kqlZN5D58GqgmhTyLRng3AtASQp2/M/c=;
+        b=uTkpKO2EOPDgUTHPfmFI3VyTZyDE8wU1RxST3P9eJvi2M648UERPsZYp34i7PZPTj+
+         ZiIlraXWbACgpQlh45DezzmSqVU5tMlrf+aL/J+FdTMewdUsbz6xtFMfHUlxBaxOlIPW
+         KbeunhBCOjF6NlBn0oIyrEzWVlmVgCFcSu2fkfPpqeYJAmCC4m0zAEfht7zIP/egt5wV
+         T5kOL+F5wEPFfdfAe26/hih7IJEM2U4VVO2hEpaUzcPh3QPNJoXh8Vd990wltjOwT1yd
+         J3IgdwqSAdTsSnbvGYsQ1oemtIctMeWASJ0wDdHn7XFqucv9jvo47xHHUW3CCsoj5h8q
+         JW0Q==
+X-Gm-Message-State: APzg51AG+QK69ZDWj+HstRRUpVPbAedc1KZKDpbgMtoC+v8uM9A/oDp7
+        1I6sCQ+Z6+W4Op6ubqeG++PUkIxwWmQoA5JeFaY=
+X-Google-Smtp-Source: ANB0VdZXnQIDf8zwNzht8kCh3PePFsVgbfmq1fkqVJoDt4yx4Ykkb+0ZeyTQQFaike4RPlhmls7wxC7ZJV5AlW9NrKw=
+X-Received: by 2002:a24:d583:: with SMTP id a125-v6mr15445652itg.91.1536517502396;
+ Sun, 09 Sep 2018 11:25:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180909173631.1446-1-pclouds@gmail.com> <87o9d6lezg.fsf@evledraar.gmail.com>
+In-Reply-To: <87o9d6lezg.fsf@evledraar.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 9 Sep 2018 20:24:36 +0200
+Message-ID: <CACsJy8BJYKBcPZeTwP4_0bUsDM4uRxafS77T6RnG9U6h_t2y5g@mail.gmail.com>
+Subject: Re: [PATCH 0/6] Merge remaining t/helper binaries to test-tool
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Sep 9, 2018 at 8:09 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>
+>
+> On Sun, Sep 09 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+> > Last time when I added test-tool in 27f25845cf (Merge branch
+> > 'nd/combined-test-helper' - 2018-04-11) I left out a few test programs
+> > because there were a couple in-flight new tests that used them. All
+> > those topics are merged now. So we can merge these to test-tool and
+> > call it done.
+>
+> This is great. Just a small side-note: Am I the only one who misses the
+> 2.8.0 days when you could do "git clean -dxff" in the t/ directory to
+> clean up various test crap without breaking subsequent tests?
 
-On Sun, Sep 09 2018, Nguyễn Thái Ngọc Duy wrote:
+Isn't "make clean" (in t/) enough?
 
-> Last time when I added test-tool in 27f25845cf (Merge branch
-> 'nd/combined-test-helper' - 2018-04-11) I left out a few test programs
-> because there were a couple in-flight new tests that used them. All
-> those topics are merged now. So we can merge these to test-tool and
-> call it done.
+> That went away in e6e7530d10 ("test helpers: move test-* to t/helper/
+> subdirectory", 2016-04-13) when we started building stuff in t/helper/.
+>
+> So now that this is one binary perhaps we can build it in the root
+> directory and get that functionality back?
 
-This is great. Just a small side-note: Am I the only one who misses the
-2.8.0 days when you could do "git clean -dxff" in the t/ directory to
-clean up various test crap without breaking subsequent tests?
-
-That went away in e6e7530d10 ("test helpers: move test-* to t/helper/
-subdirectory", 2016-04-13) when we started building stuff in t/helper/.
-
-So now that this is one binary perhaps we can build it in the root
-directory and get that functionality back?
+It's still a few binaries. Most of them are now merged to test-tool,
+but ones that need separate program name, or have extra deps, stay
+separate. Having said that, producing the binaries at root directory
+is possible. I'm just not sure if it's worth doing.
+--=20
+Duy
