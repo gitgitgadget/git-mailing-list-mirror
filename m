@@ -2,90 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9BB1F428
-	for <e@80x24.org>; Sun,  9 Sep 2018 17:36:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 793391F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 18:09:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726867AbeIIW1I (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 18:27:08 -0400
-Received: from mail-lj1-f171.google.com ([209.85.208.171]:41688 "EHLO
-        mail-lj1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726632AbeIIW1H (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Sep 2018 18:27:07 -0400
-Received: by mail-lj1-f171.google.com with SMTP id y17-v6so15933426ljy.8
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 10:36:44 -0700 (PDT)
+        id S1726688AbeIIXAI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 19:00:08 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:34434 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726654AbeIIXAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 19:00:08 -0400
+Received: by mail-ed1-f66.google.com with SMTP id u1-v6so14889728eds.1
+        for <git@vger.kernel.org>; Sun, 09 Sep 2018 11:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PEV4pbrWgCf2ZtGm2bOMvtucp86Gd1EEZG2F1VO7OQ0=;
-        b=aw4QyQoxfnVVsQmtJCeNooAX+pqjedRcb/uxxCzejXXHs56jn/60js5fPyyE6vjV2D
-         b6ly/tXUZv+G/JbuFEsgUYFQFXWQMvF7i+r47whvnHFMu+QNVMXUQJ04aEhLfWcUr761
-         sJHVZt/aRPYxU+FoEnNC+tyPyprMhnEFhMcHBvorDg/a2T3NOdcelNjiss7B41Ly3QBS
-         HBMK94+6COR3VYS4GTeKBwdTKVfiCZ2f5LGjfPQjsIFgSbq4HLLkPJucjr+xw7vtqazC
-         7D14nNwqay9cQwInaUq4RpXn/JdoxDizAFCsufiW5baK0PrNc6I+V/UzHXiWp6riLl0q
-         EL4Q==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=WMjkn7jsZBQ8WHtXiL6MaK57fDR97hePCMHEsunIobI=;
+        b=cfoySaFwxbSx5Npg9rbvUUNdRiTlhUzc+kcOdOOh5LMT4/Ky6EZAT4ZFvX+2d1ZJji
+         4IMWNymCoKOzRLAyiIxOUnW2+o40C/6CTw28WNMuK3RxguAB/RcCNtnFK9qExkkuiZi9
+         e7wS6YTmensxuD4uC/6LqbwjfLIx2Lc0lUkbGtGc5b+TH8z3N7U8PRuKH9RG9C4mQ+qZ
+         9lR2/IUNfO0qqh/owwezsYpOOpw+kzNcNL9SgCRfYz2hICHAC62HKlIfNJA2KzVAP0N4
+         fc5UUQiBQA3tpgPiT0dSdfC/f4eQUEJwy6UNDkCdml/9dRBPAYPqNC4VxKBJWC8p/wBM
+         3l3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PEV4pbrWgCf2ZtGm2bOMvtucp86Gd1EEZG2F1VO7OQ0=;
-        b=ni/RjI37dULVfrtbKoE9aVKyILrMsPFWXrGeVIut9ETL9zEp0azlRZ0/IWt1LyQJ3i
-         G0RUCp/8SO5t0G2b4c6GqC8Zcv63DorQOWPoxmfOcH47RHxMikpmwfeMKwbF5pys24Xh
-         whFoGh7gGT5+2pF5rJ++cqPBH2Y5wviD4K315TTYfJkcrlGtkikev4+7t/I6vOcKqG2q
-         3fxjY8dvQ4oj+nko4p1cZiYlvXJlojxO2pnHIJzdfuXmfCzJaZfLlMjf3Sh7V7sq2Ybq
-         6i8W+s7IvXe3S5dsfr3FcnbrITij1VrwooqN7Kdoes3M1Rrczdntq/hFtPez+BpnIQMS
-         hFsg==
-X-Gm-Message-State: APzg51Caf5OwFPZUAhKN/FHMiRuJn9OBsBJj65MKlDBgF5tO6sXxE4ZA
-        Mrm0Uz2Bwi5OurXPtY8Zibr8Ik+q
-X-Google-Smtp-Source: ANB0VdZS5IlB5Vp0vGfPdy/IW1ekv4oE1PwpOCbq75fnHtBzyoCNLA4yQFuJpMB9tbxyFHmFb7qwpQ==
-X-Received: by 2002:a2e:2e02:: with SMTP id u2-v6mr10546878lju.77.1536514603509;
-        Sun, 09 Sep 2018 10:36:43 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id u19-v6sm2317793lje.51.2018.09.09.10.36.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Sep 2018 10:36:42 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 6/6] Makefile: add a hint about TEST_BUILTINS_OBJS
-Date:   Sun,  9 Sep 2018 19:36:31 +0200
-Message-Id: <20180909173631.1446-7-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180909173631.1446-1-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=WMjkn7jsZBQ8WHtXiL6MaK57fDR97hePCMHEsunIobI=;
+        b=ik4lrLvPFCuarwoHPICBRnfMjkmSN2A+2ASEIEvL46zMfq5dasN59ab9qGWfeQCQ7A
+         0XKzYp+DXPfNDeA+rG9DZig2vHHKPIEglqy2ia0HI2MerMwDXWnAaIJhDzuBvR5wlWec
+         ckVWV8UmmJo6IDB9KT5cZ1k/HMrPvDNPnr4dcyY80Ln/QXOUchXMfGKPMqD+NTbvEHRP
+         Hqqb2nQWL3HqyyCfYW/tw5zMzMmjqEDIv16E77RZvGh4256/RURrlINbcQ6KtSORc1w2
+         aDcotfmCnm+gPVtCy8Z0nguM66NBw0exEDf+7w55Uva4XRXiEWvbNzq9cqcwsqUwzoDR
+         fkHQ==
+X-Gm-Message-State: APzg51C5cPJcSsSXRmXYByYCQayXSEwgnAx4oief+aNAbS8Z53AHxI/S
+        Srj6IruIGyxdiNn5jA9xvyA=
+X-Google-Smtp-Source: ANB0Vdbdlh2//rPAzI8FhqAPt7xJi2YW0bYaBGJEDUCMjz46jWlMWuIP+OO8HtPQ0JaXoivbD//8EQ==
+X-Received: by 2002:a50:a8a6:: with SMTP id k35-v6mr18613009edc.135.1536516580644;
+        Sun, 09 Sep 2018 11:09:40 -0700 (PDT)
+Received: from evledraar (g74155.upc-g.chello.nl. [80.57.74.155])
+        by smtp.gmail.com with ESMTPSA id x22-v6sm7389042edb.8.2018.09.09.11.09.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 09 Sep 2018 11:09:39 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/6] Merge remaining t/helper binaries to test-tool
 References: <20180909173631.1446-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20180909173631.1446-1-pclouds@gmail.com>
+Date:   Sun, 09 Sep 2018 20:09:39 +0200
+Message-ID: <87o9d6lezg.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Makefile | 2 ++
- 1 file changed, 2 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index ea7454632d..39d39257e0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -744,6 +744,8 @@ TEST_BUILTINS_OBJS += test-urlmatch-normalization.o
- TEST_BUILTINS_OBJS += test-wildmatch.o
- TEST_BUILTINS_OBJS += test-write-cache.o
- 
-+# Do not add more tests here unless they have extra dependencies. Add
-+# them in TEST_BUILTINS_OBJS above.
- TEST_PROGRAMS_NEED_X += test-fake-ssh
- TEST_PROGRAMS_NEED_X += test-line-buffer
- TEST_PROGRAMS_NEED_X += test-svn-fe
--- 
-2.19.0.rc0.337.ge906d732e7
+On Sun, Sep 09 2018, Nguyễn Thái Ngọc Duy wrote:
 
+> Last time when I added test-tool in 27f25845cf (Merge branch
+> 'nd/combined-test-helper' - 2018-04-11) I left out a few test programs
+> because there were a couple in-flight new tests that used them. All
+> those topics are merged now. So we can merge these to test-tool and
+> call it done.
+
+This is great. Just a small side-note: Am I the only one who misses the
+2.8.0 days when you could do "git clean -dxff" in the t/ directory to
+clean up various test crap without breaking subsequent tests?
+
+That went away in e6e7530d10 ("test helpers: move test-* to t/helper/
+subdirectory", 2016-04-13) when we started building stuff in t/helper/.
+
+So now that this is one binary perhaps we can build it in the root
+directory and get that functionality back?
