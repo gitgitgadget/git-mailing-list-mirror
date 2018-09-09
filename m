@@ -2,90 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BEB31F404
-	for <e@80x24.org>; Sun,  9 Sep 2018 08:05:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 664631F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 08:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726594AbeIIMyR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 08:54:17 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:33111 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726041AbeIIMyR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Sep 2018 08:54:17 -0400
-Received: by mail-io1-f65.google.com with SMTP id r196-v6so4637483iod.0
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 01:05:28 -0700 (PDT)
+        id S1726627AbeIINna (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 09:43:30 -0400
+Received: from mail-lj1-f179.google.com ([209.85.208.179]:42458 "EHLO
+        mail-lj1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726599AbeIINna (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 09:43:30 -0400
+Received: by mail-lj1-f179.google.com with SMTP id f1-v6so15372336ljc.9
+        for <git@vger.kernel.org>; Sun, 09 Sep 2018 01:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=u+gMT1UjihGex1pKhUthLRahDuHMqkQTyvii+rIPps0=;
-        b=GpVTR3/j1IDQ96UtOjHtQM3bmsllzwKxrQoqrGzdwOH7x/2tzv2p3Gqc3I753dWYfW
-         wJRDYAyrUSeYraVmHZd8XutX37SQa2wTK8kSp+Hk4mx2oI1XQcEDs60tHbFwykxHk+eI
-         9JJCmrPyZ2BpsYg/km2wNKENUgqE8RqlNF1KDvPJeczxCRgC6OhtruaWujE0C5KWFZO5
-         FsxFXaSx5ssV1K4oPG2tAS7/U80Bk7bvh7+QYSUTuSmVcEH0iyD+Zrkf0raE+dW3ihE/
-         0n/6HmnYbAuqxtI3mgUgoEd3v/aRN9WH1xCPemX504H5P0xnwBWbQ28sc9DkIuIEGTcq
-         AGEw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=R2x+ptiH6yMlquVbxSyB7bNzW2ZWiPs8BVVAg79ejSw=;
+        b=DH6+xo1qBHSyUH/phbFQCGj9rpx0Vs24ArPRu8u2yeg0V+EqBN1dtvzfoPeAkXbo1c
+         IXlTqWE/i8CL2StLSJZUnkTnClI0EAmB7ebVozL0jNpu0gK8a1dsRlrZ2j/t80oM4hnq
+         +nVrT5V+dO8PPhnDUfRsM9K5ZmEAxPtTh381kORZl31XdxQSLqd3getCHrxsDezwozB8
+         ll9ao6RHUMEgtH0a0qmupY604sUZPkESKopU+w+yYS951CGzNGr/5albG3i0yEOzBtYS
+         ph5uU3VFjRmsR3ADXYU7tFsphRXeYYGdaujLym0P4eB63y6nROqSXxdZ0nd/c75Pcsar
+         himw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=u+gMT1UjihGex1pKhUthLRahDuHMqkQTyvii+rIPps0=;
-        b=fhNN+d/VuKLd5DLIJoBPQqgLthPrziCTNHuvQ26pJkOmSYQWfxq2bXQtlqDiuoMNwT
-         LCw8J5dqMLTs8KGMxZPgxzvt1F6Xn4VgUjc3KE54xlsO3xmYGuUjAgJAMoJmfiKyPjdL
-         oLmddN3OwQuuXaA+8Ht3kuVxgn3of0Q1gpDBRxkzxudwczbyb+vDSdacB80DElgE4o3F
-         2x6c4YoNiCNhMYxKkN5fKgUUAlg9wi7QiBsoshqhUuqcWjn0V+Hsq+lqdli3v5ncrROH
-         cOCiJsG4Ca1Q2DcU9voy3sUvTIsjXQb1MJOkavhl2RIki+s8EeKxUnERFceC9rGA2KnJ
-         VHFQ==
-X-Gm-Message-State: APzg51Az+lARLOoywG+uheXMq9RMsqjvk9DLvoR42a8Ul6BDTl6A/cC7
-        V5/ZHnHd0Q2a/3EatumTSvKzJqAvOt9g6V8Ilx0=
-X-Google-Smtp-Source: ANB0VdZXf9n2BTJI5KbLHic0DBA7yrttE7bDiLIIIQUdE7RgaJRg7bpIVEKOuS+niMqQdFWkk5fnj4dTgdx4AwR0xtg=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr11441374ioe.282.1536480328048;
- Sun, 09 Sep 2018 01:05:28 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=R2x+ptiH6yMlquVbxSyB7bNzW2ZWiPs8BVVAg79ejSw=;
+        b=s5meSRHo/iaNsqiB53pR2CguxQ1MV2f/SkPuNPXQmUhxkdJL2ajy3GL1DB2btO9AUW
+         t10CuH3QJczcSmlDusHitcbC8u74qNGcWO6SLnSqaz/JFyJw+KWf9HyEl0Qn21QmjB8n
+         QplC5ZOySi2VYr8ncXD8KLVl0pz0EtApsOV+7QvpCZEBTyA9sNTHnEu43CBjJVrTiz6T
+         kLwBbU0xfcEj6UFAxw3/WWDC5iqt3YEViiHfKtBSvuP7ctfiSWgKfg7v9qDQRVFfF0hJ
+         kfKHAx0XnscnPSi9aMJdN0lIHe+CSjY6Xho5I9wHo5IrorZT2fJcc4t7JQAdgtJ3Z1hG
+         0K0A==
+X-Gm-Message-State: APzg51B+u1P/bLjSCwS6P5Ia3hMlK+KQxC0HH8+0Tlw+J6+WoZUGPE3C
+        XlqmeJOnSqf2nVriqBOfjgs=
+X-Google-Smtp-Source: ANB0VdYFV1qdykKQJ/RAlthOifhX9BYEGau5dHZXAuImlpwaic2m20YZxr2vH42ifmPSmNw8kkLh2A==
+X-Received: by 2002:a2e:6d0a:: with SMTP id i10-v6mr9817225ljc.145.1536483271786;
+        Sun, 09 Sep 2018 01:54:31 -0700 (PDT)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id g16-v6sm2102525lfb.5.2018.09.09.01.54.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Sep 2018 01:54:31 -0700 (PDT)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 01/23] archive.c: remove implicit dependency the_repository
+Date:   Sun,  9 Sep 2018 10:53:56 +0200
+Message-Id: <20180909085418.31531-2-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
+In-Reply-To: <20180909085418.31531-1-pclouds@gmail.com>
+References: <20180903180932.32260-1-pclouds@gmail.com>
+ <20180909085418.31531-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <20180826100314.5137-1-pclouds@gmail.com> <20180903180932.32260-1-pclouds@gmail.com>
- <20180903180932.32260-25-pclouds@gmail.com> <xmqqo9dd6kx1.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kZhQJ7TbTuuDO_k-p80rGnOTjVcHf0aoq2+=pG4bwetNA@mail.gmail.com> <xmqq7ejz4pvq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7ejz4pvq.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 9 Sep 2018 10:05:01 +0200
-Message-ID: <CACsJy8CepuW3DG2AbMiHdoUELHfBmMSZDtPJMzLRHUWwshvivw@mail.gmail.com>
-Subject: Re: [PATCH v2 24/24] Rename functions to avoid breaking in-flight topics
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 5, 2018 at 11:04 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > now and here, but at some later date, we would want to
-> > 'git revert 24/24' after fixing all in-flights of today.
->
-> No.  We do not want to revert the whole thing.
->
-> If the function that takes a_repository is called repo_rerere(), as
-> opposed to just rerere(), it should keep that name after we
-> deprecate the function rerere().
->
-> We will want to get rid of #define that gives a thin wrapper and
-> make everybody use the API that requires a_repository parameter.
->
-> And from that point of view, it is backwards not to introduce
-> repo_rerere() when rerere.c gains a variant that can work in an
-> arbitrary repository, not limited to the_repository, and fix it up
-> saying "oops, we were wrong and this will break topics in flight" at
-> the very end.
+The new "repo" field in archive_args has been added since b612ee202a
+(archive.c: avoid access to the_index - 2018-08-13). Use it instead of
+hard coding the_repository.
+---
+ archive.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In the end, there's no variant, only one function that always takes
-'struct repository *' and I wanted to keep the shorter name 'rerere'.
-But let's go with adding repo_rerere() and deprecating rerere(). If it
-turns out later that repo_rerere is too long (or it's repo_xyz
-everywhere) then we can do another rename.
+diff --git a/archive.c b/archive.c
+index 0a07b140fe..994495af05 100644
+--- a/archive.c
++++ b/archive.c
+@@ -391,7 +391,7 @@ static void parse_treeish_arg(const char **argv,
+ 	if (get_oid(name, &oid))
+ 		die("Not a valid object name");
+ 
+-	commit = lookup_commit_reference_gently(the_repository, &oid, 1);
++	commit = lookup_commit_reference_gently(ar_args->repo, &oid, 1);
+ 	if (commit) {
+ 		commit_sha1 = commit->object.oid.hash;
+ 		archive_time = commit->date;
 -- 
-Duy
+2.19.0.rc0.337.ge906d732e7
+
