@@ -2,106 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A55E11F404
-	for <e@80x24.org>; Sat,  8 Sep 2018 22:49:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE24B1F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 02:29:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727769AbeIIDg0 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Sep 2018 23:36:26 -0400
-Received: from out1-smtp.messagingengine.com ([66.111.4.25]:44659 "EHLO
-        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727748AbeIIDg0 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 8 Sep 2018 23:36:26 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id AE5D621990;
-        Sat,  8 Sep 2018 18:49:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Sat, 08 Sep 2018 18:49:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
-        :content-transfer-encoding:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-sender
-        :x-me-sender:x-sasl-enc; s=fm1; bh=4R+pzp0/Gz1yza3rc2snDf/IIT0z0
-        VB6YwUR6LnMEYs=; b=sHNw7oww8LhChId7bTPBu1JuQLfPBSH+ZYPPq6oP0C50G
-        Os7k1WoaKT/Mwc0LskTk+tOVcYLuZSnbk4QXJFNAosyn2DGDu6Kg/lH6SFhRKfRT
-        uc1Sentf7re5daCG/3GwsNanY63O7zvxpk9YyTzCEA9BSSVZz651rUSdVh2eonvz
-        lD+Tm9y2H3vTaDbQAfn2//ztNKHZBkcHq5Abqtzp3MXRH3DqeCk3NS6G+cXGDku3
-        wmLYqt+5/XBMJl113Zunnysjaq7gy7nkaDaUQoLIaj8x2kVVLsHdMs6ecZ1JB7xQ
-        eTBkSaaKuTuAO9ngLG4A8oRS7BRPi20tl5ar7Z7PA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=4R+pzp
-        0/Gz1yza3rc2snDf/IIT0z0VB6YwUR6LnMEYs=; b=B1uNnvi6xvIBndKHX6gS34
-        6KEo0FJDhXp2YUtBm1aRLmRKG9v2qI2+V3l3DSs9h9WFU54Wk1WMYokXsI53XFP2
-        tB+akbaj5m4wp4NKgYGRzMNzEjM4QLZM6q7d+jWZEQAVeUhLB6XEZk+CSnPtoukU
-        rd97XuPlWuvY6/LIS+LGnkQp996Ub/AxiGuCsEpsVxuH0jyXuVZ5aArf1gofg6sX
-        R5EsaY5k7AVM5NUwDWXDn3wVC1KH7naeTZjolmOxVUUCwslTP+cEbhz1V5IEDi7c
-        cEJvH25VhG+lk0qLYHpKnmeaCS1e/TH450Ixn/zduToGKhAH63g83h1qGqWiOYmA
-        ==
-X-ME-Proxy: <xmx:4FGUWwAbEPPKHQAwMwF9MQMaMUvw-CFyj3X_l5ndmBoEgTKdQ-qiSA>
-    <xmx:4FGUW-mHYgVEZV59ujqsurdskzVOecES51Wht3SDwE_ACLNQ9Xf6hg>
-    <xmx:4FGUW5juecAdoLy_Jhg-tsN7yG6_-fmVNplyjFXVa2LxQrrrFJwkZQ>
-    <xmx:4FGUW3s0uTrof9R4h7fGYPTY8PQ-TQDUQHLyGd-DLTagijs64Ou9DQ>
-    <xmx:4FGUWwC63izYDBxTBFTBLi7A_PICXO8pCl8ZgAEuBA90sPEoA1TLrA>
-    <xmx:4FGUW3Q5YkjUwoUNXL_WS5WmWn_RBkH4voFtYQKWbv4OJ-IOgvbNSA>
-X-ME-Sender: <xms:4FGUWxYAMbqSgRVfDgTe2Yn_JICZ7VmzMpOn0wMs5zgTYVOQT1AGXQ>
-Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
-        by mail.messagingengine.com (Postfix) with ESMTPA id 824EB10293;
-        Sat,  8 Sep 2018 18:49:03 -0400 (EDT)
+        id S1726489AbeIIHR2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 03:17:28 -0400
+Received: from cloud.peff.net ([104.130.231.41]:43966 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726152AbeIIHR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 03:17:28 -0400
+Received: (qmail 16005 invoked by uid 109); 9 Sep 2018 02:29:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sun, 09 Sep 2018 02:29:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31863 invoked by uid 111); 9 Sep 2018 02:29:46 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 08 Sep 2018 22:29:46 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 08 Sep 2018 22:29:32 -0400
+Date:   Sat, 8 Sep 2018 22:29:32 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        stas@stason.org, Git Mailing List <git@vger.kernel.org>
 Subject: Re: git silently ignores include directive with single quotes
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
+Message-ID: <20180909022931.GA13485@sigill.intra.peff.net>
 References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
- <20180908212256.GB31560@sigill.intra.peff.net>
-From:   Stas Bekman <stas@stason.org>
-Organization: Hope, Humanized
-Message-ID: <7f7e20fd-069d-f227-ce13-811398b52425@stason.org>
-Date:   Sat, 8 Sep 2018 15:49:01 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+ <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
+ <87bm97rcih.fsf@evledraar.gmail.com>
+ <20180908211436.GA31560@sigill.intra.peff.net>
+ <87musr7h7q.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20180908212256.GB31560@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-CA
-Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87musr7h7q.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-09-08 02:22 PM, Jeff King wrote:
-[...]
->> The original problem cropped up due to using:
->>
->>  git config --local include.path '../.gitconfig'
->>
->> which on linux stripped the single quotes, but on some windows git bash
->> emulation it kept them.
+On Sun, Sep 09, 2018 at 12:32:57AM +0200, Ævar Arnfjörð Bjarmason wrote:
+
+> > You could even do:
+> >
+> >   [include]
+> >   warnOnMissing = false
+> >   path = one
+> >   warnOnMissing = true
+> >   path = two
+> >
+> > to treat two includes differently (though I'm not sure why you would
+> > want to).
 > 
-> That sounds like a bug in git bash, if it is not treating single quotes
-> in the usual shell way. But I'd also expect such a bug to cause loads of
-> problems in all of the shell scripts. Are you sure it wasn't cmd.exe or
-> some other interpreter?
+> I think this is introducing a brand new caveat into our *.ini syntax,
+> i.e. that we're sensitive to the order in which we're parsing
+> *different* keys.
+> 
+> I.e. we already had the concept that some keys override existing sets
+> (e.g. user.name), but not that a x.y=foo controls the behavior of a
+> subsequent a.b=bar, or the other way around.
 
-I don't know, Jeff. I think the user said it was first anaconda shell.
-And then the user tried gitforwindows with same results. I don't know
-MSwindows at all.
+This already exists. For example:
 
-But it doesn't matter at the end of the day, since we can't cover all
-possible unix shell emulations out there. What matters is that there is
-a way to flag the misconfiguration, either by default, or through a
-special check - some ideas I suggested in my previous email, but surely
-you have a much better insight of how to deal with that.
+  echo '[foo]bar = inc' >config.inc
+  echo '[foo]bar = main' >config.main
+  echo '[include]path = config.inc' >>config.main
+  git config -f config.main --includes foo.bar
 
-Thank you.
+Arriving at that answer requires expanding the include's contents at
+the exact same spot in the file.
 
--- 
-________________________________________________
-Stas Bekman       <'))))><       <'))))><
-https://stasosphere.com  https://chestofbooks.com
-https://experientialsexlab.com https://stason.org
-https://stasosphere.com/experience-life/my-books
+As far as I know this is the only case, though, so include.path really
+is special. And this would be expanding that specialness to other things
+in include.*. But I'm not sure that is really that big a deal. That
+warnOnMissing isn't meant to be just a normal key. It's an
+order-sensitive directive for further parsing, just like include.path
+is. Either the parser understands includes (and has to handle these) or
+it doesn't.
+
+So I'm not worried about any burden on the parsing side, but...
+
+> This also makes programmatic (via "git config") editing of the config
+> hard, we'd need to introduce something like:
+> 
+>     git config -f ~/.gitconfig a.b bar
+>     git config -f ~/.gitconfig --before a.b x.y foo
+> 
+> To set a.b=bar before x.y=foo, or --after or whatever.
+
+Yes, I don't think "git config include.warnOnMissing true" would be very
+useful, because it would generally be added after any includes you have,
+and therefore not affect them.
+
+I think this is generally an issue with include.path, too. My assumption
+has been that anybody at the level of using includes is probably going
+to be hand-editing anyway.
+
+But if include.* is special on the parsing side, I don't know that it is
+that bad to make it special on the writing side, too. I.e., to recognize
+"git config include.warnOnMissing true" and always add it at the head of
+any existing include block.
+
+It certainly _feels_ hacky, but I think it would behave sensibly and
+predictably. And it would just work, as opposed to requiring something
+like "--before", which would be quite a subtle gotcha for somebody to
+forget to use.
+
+> Yeah, we could do that, and it wouldn't break the model described above,
+> We can make that work, but this would be nasty. E.g. are we going to
+> treat EACCES and ENOENT the same way in this construct?
+
+I don't have a strong opinion (after all, I already wrote the behavior I
+thought was reasonable long ago ;) ). So I think it would be up to
+somebody to propose. We do already report and die on EACCES (and
+basically any other error except ENOENT). So if we did treat them both
+as a warning, that would be a weakening for EACCES.
+
+-Peff
