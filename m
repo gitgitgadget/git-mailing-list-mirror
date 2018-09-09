@@ -2,58 +2,58 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93CDA1F404
-	for <e@80x24.org>; Sun,  9 Sep 2018 18:25:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17D2B1F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 19:05:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726936AbeIIXPd (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 19:15:33 -0400
-Received: from mail-it0-f66.google.com ([209.85.214.66]:35202 "EHLO
-        mail-it0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726629AbeIIXPc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Sep 2018 19:15:32 -0400
-Received: by mail-it0-f66.google.com with SMTP id 139-v6so25930162itf.0
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 11:25:02 -0700 (PDT)
+        id S1727640AbeIIXzr (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 19:55:47 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:39705 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726710AbeIIXzr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Sep 2018 19:55:47 -0400
+Received: by mail-io1-f53.google.com with SMTP id l7-v6so5286537iok.6
+        for <git@vger.kernel.org>; Sun, 09 Sep 2018 12:05:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=91zDo6jFeT3kqlZN5D58GqgmhTyLRng3AtASQp2/M/c=;
-        b=RtQVi+dTDAuWcgAGSLAEq3/SpTEwEWqj8OvSyT4MkKcG03FQJK8EUHR3ka2ZgMGqhs
-         OkdG2Z29pf+GGiT3pGVnMaaGYbgZ6VxMyN+kGO4/TW1LFxJRIlA9f1Q1mH/Bq5ktlLoW
-         F3v8i086vo3qGjGGrZa3jVYKam28XJ+C3eycCXbuyu71KIb9ApjH+oETsOXhYbEZHBn2
-         5Or28LnKHw03ku6Tdx+Jib6QJirvejxdBLuaLp4HD6CNSzFQDKHJCxSUK12djMUuqRHS
-         jGIbC+I742+L6TdnrAJ86DZ9wc9ACExibqbZq4YKe/lIJ0GcsmkurVeS97lVwK6zvVcR
-         SF4Q==
+        bh=RTbt7TvCXi3dVoX3LMwtODpY6Bsevn6R5fCt2uVG8Wo=;
+        b=M+s+WVOC5S3d0KM/knCn4IJlHj6lclL+pGJhFzqbhzh7cvrG3wN7t687/nzYE6MDwZ
+         5WpO6flB/6wOR0ks6xzWpYv9dQd+QOmsfmRBYzslIDKQU+RCKtLPt0TB7XQRETKkLM61
+         faGqIWyE0UGeXem5l4HvG4Vvy1wKpiPMRRN6IsRUprBX1OKqwFEhQyshDQo4HnHhXVUC
+         xJlNnmLrgCQswZTcC+hW9wFeGHkfTOwb/wVGHSkhEEJclhXxIFIPXn8QjPy9jIhOfhwR
+         VjSGi/9cdig6Lq1EU1MyvLBDfEzR8bZ5uQ7TtpDS/ASstd3PFHJdI0cZCCidsBiMjeTW
+         jQ+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=91zDo6jFeT3kqlZN5D58GqgmhTyLRng3AtASQp2/M/c=;
-        b=uTkpKO2EOPDgUTHPfmFI3VyTZyDE8wU1RxST3P9eJvi2M648UERPsZYp34i7PZPTj+
-         ZiIlraXWbACgpQlh45DezzmSqVU5tMlrf+aL/J+FdTMewdUsbz6xtFMfHUlxBaxOlIPW
-         KbeunhBCOjF6NlBn0oIyrEzWVlmVgCFcSu2fkfPpqeYJAmCC4m0zAEfht7zIP/egt5wV
-         T5kOL+F5wEPFfdfAe26/hih7IJEM2U4VVO2hEpaUzcPh3QPNJoXh8Vd990wltjOwT1yd
-         J3IgdwqSAdTsSnbvGYsQ1oemtIctMeWASJ0wDdHn7XFqucv9jvo47xHHUW3CCsoj5h8q
-         JW0Q==
-X-Gm-Message-State: APzg51AG+QK69ZDWj+HstRRUpVPbAedc1KZKDpbgMtoC+v8uM9A/oDp7
-        1I6sCQ+Z6+W4Op6ubqeG++PUkIxwWmQoA5JeFaY=
-X-Google-Smtp-Source: ANB0VdZXnQIDf8zwNzht8kCh3PePFsVgbfmq1fkqVJoDt4yx4Ykkb+0ZeyTQQFaike4RPlhmls7wxC7ZJV5AlW9NrKw=
-X-Received: by 2002:a24:d583:: with SMTP id a125-v6mr15445652itg.91.1536517502396;
- Sun, 09 Sep 2018 11:25:02 -0700 (PDT)
+        bh=RTbt7TvCXi3dVoX3LMwtODpY6Bsevn6R5fCt2uVG8Wo=;
+        b=UW/CKMiPUW8ZBnfuXGuX+3onPIGf2fboeyG/NfQ0G3rkPMLtZ4RePvPkApoU5iR4DS
+         Y7kj8Kt9YP52Amlu32NYHTP+eEgSKfduFEVJPSHyJlINkfh2xElZxZsbE/JfFTToIhiQ
+         F0Znb3/WZdIq0U8/nZ81QDNiP7O6Eo/YqlqeYPs8j3trxoJoFpGCTFh7yib2ZX+Qh0rd
+         /lhNDb3IzHaKnsyDDqm9OP8qXPa5hB3q9uHK7Y2vNgJoP8bNzZN6wy/Bwn3AazG+ayF7
+         ZAFHwN4LsEmQx4t6INzxIdV0T4JdvbiKm9aG0Ssn79iv4XmRvCTGZoddKixU+5c5Vu42
+         g4fg==
+X-Gm-Message-State: APzg51AjmbInUg8armlmgps6QP0puJDjfP7AU3TGo6LT/suKYIdM8e4L
+        s4Ok0VFOOB6td66/g+hSIbFWgTcqRskNsH8P9jOFMw==
+X-Google-Smtp-Source: ANB0VdbWOAl4wwymjTf4xitci3pUpSurFlpcrMagW9XGynOr4w+V8DXRxq9BOTGQy/EgOmoNRLp/sSDsX298DWwWarQ=
+X-Received: by 2002:a6b:5911:: with SMTP id n17-v6mr14752622iob.68.1536519909139;
+ Sun, 09 Sep 2018 12:05:09 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180909173631.1446-1-pclouds@gmail.com> <87o9d6lezg.fsf@evledraar.gmail.com>
-In-Reply-To: <87o9d6lezg.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 9 Sep 2018 20:24:36 +0200
-Message-ID: <CACsJy8BJYKBcPZeTwP4_0bUsDM4uRxafS77T6RnG9U6h_t2y5g@mail.gmail.com>
-Subject: Re: [PATCH 0/6] Merge remaining t/helper binaries to test-tool
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAPGJNu5RPXjeib-vayVzmFkU9cZ=h5o5VDoM1vQqv2+HgtNXLw@mail.gmail.com>
+ <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
+In-Reply-To: <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Sun, 9 Sep 2018 12:04:58 -0700
+Message-ID: <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
+Subject: Re: [Possible GIT Bug]
+To:     dylanyoungmeijer@gmail.com
+Cc:     Git Users <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -61,33 +61,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 9, 2018 at 8:09 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+On Sun, Sep 9, 2018 at 6:31 AM Dylan Young <dylanyoungmeijer@gmail.com> wro=
+te:
 >
+> Works:
 >
-> On Sun, Sep 09 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+> git show -C --find-copies-harder  055f6c89fa4506037d1621761f13430f469b802=
+9
 >
-> > Last time when I added test-tool in 27f25845cf (Merge branch
-> > 'nd/combined-test-helper' - 2018-04-11) I left out a few test programs
-> > because there were a couple in-flight new tests that used them. All
-> > those topics are merged now. So we can merge these to test-tool and
-> > call it done.
->
-> This is great. Just a small side-note: Am I the only one who misses the
-> 2.8.0 days when you could do "git clean -dxff" in the t/ directory to
-> clean up various test crap without breaking subsequent tests?
+> git show -C --find-copies-harder
+> 055f6c89fa4506037d1621761f13430f469b8029 --name-status
 
-Isn't "make clean" (in t/) enough?
+Here, because you didn't provide _any_ paths, Git is allowed to
+consider all of the paths modified in the commit and, because you
+specified --find-copies-harder, it's allowed to consider paths that
+_weren't_ modified too. That means it can "see" both the source and
+destination for the copy, and it detects the copy as you're expecting.
 
-> That went away in e6e7530d10 ("test helpers: move test-* to t/helper/
-> subdirectory", 2016-04-13) when we started building stuff in t/helper/.
 >
-> So now that this is one binary perhaps we can build it in the root
-> directory and get that functionality back?
+> Doesn=E2=80=99t Work:
+>
+> git show -C --find-copies-harder
+> 055f6c89fa4506037d1621761f13430f469b8029  --  PATH_TO_MY_COPIED_FILE
 
-It's still a few binaries. Most of them are now merged to test-tool,
-but ones that need separate program name, or have extra deps, stay
-separate. Having said that, producing the binaries at root directory
-is possible. I'm just not sure if it's worth doing.
---=20
-Duy
+Here, though, you've _explicitly limited_ Git to only the copied file.
+It's not allowed to consider any others, which means it can't "see"
+the source path anymore. As a result, the copy is detected as a
+straight add. Note that --find-copies-harder means the diff machinery
+is allowed to consider files that weren't modified in the commit as
+possible sources for copies, but that's still subject to your explicit
+filtering. In other words, if PATH_TO_SOURCE_FILE wasn't modified,
+running this would _not_ see a copy:
+
+git show -C 055f6c89fa4506037d1621761f13430f469b8029  --
+PATH_TO_MY_COPIED_FILE PATH_TO_SOURCE_FILE
+
+But running this would:
+
+git show -C -C 055f6c89fa4506037d1621761f13430f469b8029  --
+PATH_TO_MY_COPIED_FILE PATH_TO_SOURCE_FILE
+
+No bugs here. Everything is working as intended, if not, perhaps, as
+you expected.
+
+Hope this helps,
+Bryan
+
+>
+> i.e.
+>
+> --- /dev/null
+>
+> +++ b/ PATH_TO_MY_COPIED_FILE
+>
+> Hope that=E2=80=99s self-explanatory!!!
+>
+> Best,
+> Casey Meijer
