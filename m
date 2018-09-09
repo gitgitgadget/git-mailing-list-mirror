@@ -6,126 +6,49 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AD891F404
-	for <e@80x24.org>; Sun,  9 Sep 2018 04:12:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6C70A1F404
+	for <e@80x24.org>; Sun,  9 Sep 2018 04:40:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726489AbeIII6e (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Sep 2018 04:58:34 -0400
-Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:49922
-        "EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726152AbeIII6d (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 9 Sep 2018 04:58:33 -0400
+        id S1726651AbeIIJ3K (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Sep 2018 05:29:10 -0400
+Received: from p3plsmtpa12-03.prod.phx3.secureserver.net ([68.178.252.232]:48713
+        "EHLO p3plsmtpa12-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726527AbeIIJ3K (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 9 Sep 2018 05:29:10 -0400
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with ESMTPSA
-        id yr3Bfw5CC0Gwuyr3FfbJ14; Sat, 08 Sep 2018 21:10:23 -0700
+        id yrWkf5AV1HF9yyrWnfMDQA; Sat, 08 Sep 2018 21:40:54 -0700
+Date:   Sun, 9 Sep 2018 07:40:50 +0300
 From:   Max Kirillov <max@max630.net>
-To:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Cc:     Max Kirillov <max@max630.net>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>, Jeff King <peff@peff.net>,
         Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?q?Jelmer=20Vernoo=C4=B3?= <jelmer@jelmer.uk>
-Subject: [PATCH v4] http-backend: allow empty CONTENT_LENGTH
-Date:   Sun,  9 Sep 2018 07:10:16 +0300
-Message-Id: <20180909041016.23980-1-max@max630.net>
-X-Mailer: git-send-email 2.17.0.1185.g782057d875
+        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] http-backend: allow empty CONTENT_LENGTH
+Message-ID: <20180909044050.GD20545@jessie.local>
+References: <20180906193516.28909-1-max@max630.net>
+ <xmqq1sa6z3zp.fsf@gitster-ct.c.googlers.com>
+ <20180907032740.GA20545@jessie.local>
+ <20180907033831.GB1383@sigill.intra.peff.net>
+ <CAF7_NFRg8wOQ0JbjkJ2gpxKs+oh3s8qXVSPfsWSth2tiUK39hw@mail.gmail.com>
+ <xmqqsh2ly6vw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-In-reply-to: <20180907033607.24604-1-max@max630.net>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfOxVxK0Hc4FOgLU6+A1l8XPfj6oLCXQ8hMMlNZu9yf3TkBqePsoPVJXvuXfV4iyKnQESEoKGJInJaZg/J7LnIrj7HeUBqSyVMuZ78vWJ2Txv+z2DuuyL
- ypxzTasOqaW8J9dhWcvwW7S5j+xdORnhDVigH0hgDZR84bzMEHNKHnKHTaKhfpBnkAMYUFwhggrbzstsJKupACZgVYgttwo2AiMQzzYytwW/ssnt1U6txLk9
- HNIKAKq3kxu0SoLBllY554gh5R3o8LTtgGvIxpR3vDk=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsh2ly6vw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfAh7Af2O/GAue2GWW/YJr9tSs6IbmehOq2aeMxRyAt8qxwXuyRw2MWUaGhmg2E9DAIHH81/WJKUPFj1YvXwFTFM3uDnkJQNTYh6MYHpsWqs7th5X3npk
+ hIwrkBwoV9VUVNRm/xiLsTZ3YrUDK5/maZa7JW2a4mtefP6DXlboB+rsFlggstPHV9z/JJI4eh/XD3en9RuLM9+sP6qBxLA7Rv1a3SxqD2HOlR1VU8C5ccCc
+ 2ZExIRPQTy+dqQ21e1lwa2tjUZxdXLlC1JYyMMATtP3gS6lfeqT74OPLdP0+0efO
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Before 817f7dc223, CONTENT_LENGTH variable was never considered,
-http-backend was just reading request body from standard input until EOF
-when it, or a command started by it, needed it.
+On Fri, Sep 07, 2018 at 02:49:23AM -0700, Junio C Hamano wrote:
+> In any case, hopefully we can fix this before the final, as this is
+> a regression introduced during this cycle?
 
-Then it was discovered that some HTTP do not close standard input, instead
-expecting CGI scripts to obey CONTENT_LENGTH. In 817f7dc223, behavior
-was changed to consider the CONTENT_LENGTH variable when it is set. Case
-of unset CONTENT_LENGTH was kept to mean "read until EOF" which is not
-compliant to the RFC3875 (which treats it as empty body), but
-practically is used when client uses chunked encoding to submit big
-request.
-
-Case of empty CONTENT_LENGTH has slept through this conditions.
-Apparently, it is used for GET requests, and RFC3875 does specify that
-it also means empty body. Current implementation, however, fails to
-parse it and aborts the request.
-
-Fix the case of empty CONTENT_LENGTH to be treated as zero-length body
-is expected, as specified by RFC3875. It does not actually matter what
-does it mean because body is never read anyway, it just should not cause
-parse error. Add a test for the case.
-
-Reported-By: Jelmer Vernooĳ <jelmer@jelmer.uk>
-Authored-by: Jeff King <peff@peff.net>
-Signed-off-by: Max Kirillov <max@max630.net>
----
-The fix suggested by Jeff. I supposed there should be "signed-off"
-The tests pass as well
- http-backend.c                         | 24 ++++++++++++++++++++++--
- t/t5562-http-backend-content-length.sh | 11 +++++++++++
- 2 files changed, 33 insertions(+), 2 deletions(-)
-
-diff --git a/http-backend.c b/http-backend.c
-index e88d29f62b..949821b46f 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -353,8 +353,28 @@ static ssize_t get_content_length(void)
- 	ssize_t val = -1;
- 	const char *str = getenv("CONTENT_LENGTH");
- 
--	if (str && !git_parse_ssize_t(str, &val))
--		die("failed to parse CONTENT_LENGTH: %s", str);
-+	if (!str) {
-+		/*
-+		 * RFC3875 says this must mean "no body", but in practice we
-+		 * receive chunked encodings with no CONTENT_LENGTH. Tell the
-+		 * caller to read until EOF.
-+		 */
-+		val = -1;
-+	} else if (!*str) {
-+		/*
-+		 * An empty length should be treated as "no body" according to
-+		 * RFC3875, and this seems to hold in practice.
-+		 */
-+		val = 0;
-+	} else {
-+		/*
-+		 * We have a non-empty CONTENT_LENGTH; trust what's in it as long
-+		 * as it can be parsed.
-+		 */
-+		if (!git_parse_ssize_t(str, &val))
-+			die("failed to parse CONTENT_LENGTH: '%s'", str);
-+	}
-+
- 	return val;
- }
- 
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index 057dcb85d6..b28c3c4765 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -152,4 +152,15 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
- 	grep "fatal:.*CONTENT_LENGTH" err
- '
- 
-+test_expect_success 'empty CONTENT_LENGTH' '
-+	env \
-+		QUERY_STRING="/repo.git/info/refs?service=git-receive-pack" \
-+		PATH_TRANSLATED="$PWD"/.git/info/refs \
-+		GIT_HTTP_EXPORT_ALL=TRUE \
-+		REQUEST_METHOD=GET \
-+		CONTENT_LENGTH="" \
-+		git http-backend <empty_body >act.out 2>act.err &&
-+	verify_http_result "200 OK"
-+'
-+
- test_done
--- 
-2.17.0.1185.g782057d875
-
+I think I am going to stop at the v4. Unless there are some
+corrections requested.
