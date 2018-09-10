@@ -2,101 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0FCD71F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 17:04:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4466B1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 17:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728678AbeIJV7M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 17:59:12 -0400
-Received: from mail-wr1-f47.google.com ([209.85.221.47]:39465 "EHLO
-        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726603AbeIJV7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 17:59:12 -0400
-Received: by mail-wr1-f47.google.com with SMTP id s14-v6so13762727wrw.6
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 10:04:10 -0700 (PDT)
+        id S1728517AbeIJWAX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 18:00:23 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43170 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726603AbeIJWAX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 18:00:23 -0400
+Received: by mail-pf1-f196.google.com with SMTP id j26-v6so10779960pfi.10
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 10:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=E1rVjpl4M/RYEbQk4TLlgz1X595w4v4TDfenRBlWkmg=;
-        b=c+jj4cpCKEH+xXPmfL6wLGwNbQ8ECHpU9jnJR6FU9tB0FopEqJZ6xxCvCdbnOIEeZ4
-         gy0PtHKBaOGT90guNsF9YEsXk3uTJApkwHcdihW79vlcg34dcc30qO49Z6IC3bbuwPwN
-         A5XX3Tpzr/i9U8KgINp+LjKyKlOwMVSUIPAKtrdvLARljkN/ZLQyEvsX1YbTtAczcAaW
-         PfOuGQxCzR1CVQ8191c2cTjYDYe2Ct8mYCP5HZVTRXzeIfq/87Ds+VOP5DaWyANUFYea
-         tMrIddTgkPPB9Q4bzIKb4vrNY+yJYfLJyaC/TFCizh6y5MfRhzMNu02KLb7DKtMZ2Jak
-         7eMw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=mgQrnrX/pIQOUL6QgMeBuYMTEmTcFoABfhpG47S5/sE=;
+        b=f2ZAsVIuQ1PGvk1jNpPOYiRdNnQ+5E3jQ9LE1RJOF9SWUkDGVthNoaVBK3dYB+r76w
+         9xXzwuCoOErzZUW644AW82crTWuFtfY9jYHHkczoGHHwV5rP3DNhlTw9tE3ji/ALMF54
+         dRTw+E6YSrZUtg7wW1/N1/ygdEOf/8MdL+C4PUi4c1RLlkDiscHAn1jF6vq3LxthiH6d
+         hwu9SxEs4bvfl4tw+/1NznVKehjn6qvbDbyZjlWrf7b7vUTy3jfelhgEzYog1teltGRC
+         XZhOAWCfoxq1/SjuEnFmMFSP0A7ZfimLg8G09bFrMtP2CVc3XEp+6NlqYp7o9s1ArY3t
+         vYAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=E1rVjpl4M/RYEbQk4TLlgz1X595w4v4TDfenRBlWkmg=;
-        b=YOLUnKT9JnrbZ/ndFLDs8Y2HDKrgO1yHREghLgR3ErxrbSTrQxOHr5rpR1qNwhHXpf
-         HyA8kkWKieb1++fhq9fmeL3iSIUcwpIJhTuaFdx5+69gcnoFkYQzsBGb/giyRv1Fzmkj
-         Eb+xxEoGR3TMvTQVMrjuKjSr3AzQ9CEqTmlPB43xe5HJbvpvpfMOSlD/af4bldYwk6DA
-         fsCj+Tgegp+vCO2a+oI3eCaL4p7F0q2NNc4bv/NYoN+hqJI31lD+lugbobLU9QmcKJme
-         jP8ozhuHYJpZ5AF9Eut/e3HCaaMdZmgIsqiUnvEmGisq8nW/ywPlhOjHd6Fp4pqj7ABi
-         lAoA==
-X-Gm-Message-State: APzg51BSv2iSoNURSDWPYqnxzGYcsXsXont4ePMzwnC0OOi8BrzeMJmK
-        /J95cp64KXNKImAMFM1TY1+cVBKI
-X-Google-Smtp-Source: ANB0VdbPiJo7HTMA0PfAHAE32/aHMdMUaPNeZdtsxXYpK/fOZQzJ4Zx/+To//PdkHZqrJzRrJQofyQ==
-X-Received: by 2002:adf:f84b:: with SMTP id d11-v6mr15204276wrq.172.1536599048936;
-        Mon, 10 Sep 2018 10:04:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q5-v6sm20033663wmd.29.2018.09.10.10.04.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 10:04:07 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Stas Bekman <stas@stason.org>, git@vger.kernel.org
-Subject: Re: git silently ignores include directive with single quotes
-References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
-        <20180908212256.GB31560@sigill.intra.peff.net>
-Date:   Mon, 10 Sep 2018 10:04:07 -0700
-In-Reply-To: <20180908212256.GB31560@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 8 Sep 2018 17:22:57 -0400")
-Message-ID: <xmqqr2i1thbs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=mgQrnrX/pIQOUL6QgMeBuYMTEmTcFoABfhpG47S5/sE=;
+        b=NO1lWSnTFxG1XcDGDFKI0i5lvi/cHlX9EHYd9nQpje5+tJAWI/oX3n3RozpWJ917J0
+         PeZtYQZ01whqQbl73DZJ6t63gTxlO1Ae+zC9/NDGXkGl+Dp93qmMDxnqO7b5/nMMxokb
+         xQn26ScK5p6JsrHo3gSH1Y3VTHKUBPpWqXqT0yvSsfS3h/l1w32td8fAYfZj4n/wt72w
+         4mT1rOm3D/54/4Hi93h5pKcrN5jlEYotn7iTNabpFno7tSurUWh5SE3jArakNmkIumsN
+         BREWtPk+Hv+Dt112OCvkOqjeAuMev/jH/ZL2V9hGSIxr3zNZ7m/zLy7Qh8X9OAz2Qr9l
+         sQ5A==
+X-Gm-Message-State: APzg51A7WDf0oZPkCFlz2ewNV2deG75v9U7+OzNAULsA+JaivuNCOZ+U
+        +EovfLMqtRsuI9ny/Xzahjt5ND6y
+X-Google-Smtp-Source: ANB0VdYRx77m5pd3OAe/HJxMh7u9oLDh1+VDvEombSPoioEvC5N/0ShgBuqpFItk9BR63t+oRBXIGg==
+X-Received: by 2002:a63:3281:: with SMTP id y123-v6mr23816894pgy.310.1536599120896;
+        Mon, 10 Sep 2018 10:05:20 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id z20-v6sm37134330pfd.99.2018.09.10.10.05.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Sep 2018 10:05:20 -0700 (PDT)
+Date:   Mon, 10 Sep 2018 10:05:20 -0700 (PDT)
+X-Google-Original-Date: Mon, 10 Sep 2018 17:05:15 GMT
+Message-Id: <pull.35.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.35.git.gitgitgadget@gmail.com>
+References: <pull.35.git.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/2] Fixup for js/mingw-o-append
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+The recent change mingw O_APPEND change breaks writing to named pipes on
+Windows. The first commit adds a new test to confirm the breakage and the
+second commit fixes the problem. These could be squashed together or we can
+just keep the fix and omit the test if that would be better.
 
-> On Sat, Sep 08, 2018 at 11:58:47AM -0700, Stas Bekman wrote:
->
->> This doesn’t:
->> 
->> [include]
->>         path = '../.gitconfig'
->
-> So I think it's been covered elsewhere that single quotes aren't a thing
-> in git's config format. I will say that this was actually a minor
-> surprise to me, after a decade of working with the format. ;)
->
-> I don't know if it's worth changing now or not It would be
-> backwards-incompatible, but I wonder if we could do it in a sane way.
-> E.g., with a rule like:
->
->   - if the first non-whitespace character of the value is a
->     single-quote, assume the value is quoted and apply normal shell
->     rules (i.e., no backslash escapes until the ending single-quote)
->
->   - otherwise, single-quotes are not special at all
+d641097589 (js/mingw-o-append) mingw: enable atomic O_APPEND
 
-At least the rule would not force those with ' in the middle of
-their family names to surround the user.name with extra double
-quotes, and it would probably be a good and safe practical solution.
-Being safe "by magic" tend to become hard to explain, but in this
-case the magic part is probably still simple enough.
+The new mingw_open_append() routine successfully opens the client side of
+the named pipe, but the first write() to it fails with EBADF. Adding the
+FILE_WRITE_DATA corrects the problem.
 
+ Signed-off-by: Jeff Hostetler jeffhost@microsoft.com
+[jeffhost@microsoft.com]
+
+Cc: j6t@kdbg.orgCc: johannes.schindelin@gmx.deCc: gitster@pobox.comCc: 
+peff@peff.net
+
+Jeff Hostetler (2):
+  t0051: test GIT_TRACE to a windows named pipe
+  mingw: fix mingw_open_append to work with named pipes
+
+ Makefile                           |  1 +
+ compat/mingw.c                     | 38 ++++++++++++++--
+ t/helper/test-tool.c               |  3 ++
+ t/helper/test-tool.h               |  3 ++
+ t/helper/test-windows-named-pipe.c | 72 ++++++++++++++++++++++++++++++
+ t/t0051-windows-named-pipe.sh      | 17 +++++++
+ 6 files changed, 131 insertions(+), 3 deletions(-)
+ create mode 100644 t/helper/test-windows-named-pipe.c
+ create mode 100755 t/t0051-windows-named-pipe.sh
 
 
+base-commit: d641097589160eb795127d8dbcb14c877c217b60
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-35%2Fjeffhostetler%2Ffixup-mingw-o-append-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-35/jeffhostetler/fixup-mingw-o-append-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/35
 
+Range-diff vs v1:
+
+ 1:  03453cb521 ! 1:  ecb30eb47c t0051: test GIT_TRACE to a windows named pipe
+     @@ -140,7 +140,7 @@
+      +
+      +. ./test-lib.sh
+      +
+     -+test_expect_success MINGW 'o_append write to named pipe' '
+     ++test_expect_failure MINGW 'o_append write to named pipe' '
+      +	GIT_TRACE="$(pwd)/expect" git status >/dev/null 2>&1 &&
+      +	{ test-tool windows-named-pipe t0051 >actual 2>&1 & } &&
+      +	pid=$! &&
+ 2:  f433937d55 < -:  ---------- mingw: fix mingw_open_append to work with named pipes
+ -:  ---------- > 2:  f0361dd306 mingw: fix mingw_open_append to work with named pipes
+
+-- 
+gitgitgadget
