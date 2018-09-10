@@ -2,148 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DA6D1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 19:38:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146481F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 19:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728889AbeIKAe3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 20:34:29 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:40766 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727877AbeIKAe3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 20:34:29 -0400
-Received: by mail-qt0-f195.google.com with SMTP id h4-v6so25623928qtj.7
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 12:38:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=msyV2GDO4hxAW4zG1v8Zwks/j8rE0pF7fPL83KZb70E=;
-        b=lyEKEYf0WFvJhQX1fPElsg2i+V51+mb34qkuoPhqhNuBdbFRPfTTmA/860GvjywoTb
-         kfeSgRwbdJDDzXemZPxtr8v30bqUrQHlgTUTCyo37ZJ7P+D8ZAb6mLEGCzSX5ZAP+tB7
-         OuFF7eU7dkYtgasz2JEWrCh85HGDlK72xwWhL4FyVCbv465grP4Ec92vZeZrUuyefqOd
-         SGW/FIAKs+rKhqIyM5pB4Ent1K/0Y3pgX0mEleBv2H6cm2fTB1NCxpR13GIlddUQQJuf
-         2DBhL8+Q32thHMMZvV5alrxlwSLJJDx2KxRRKrSWu1Kgzb0Vqd1DoP7shNbyLwvQu/rx
-         vrkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=msyV2GDO4hxAW4zG1v8Zwks/j8rE0pF7fPL83KZb70E=;
-        b=FInYr5v6Y8vBk6BxmxY73WeKN71x12wyCqV6W8VNU/Hf46LxQmlF/+vmfRszHoSeXJ
-         sH5wI1rc/AEsPgRWaifebEYRswyRLCxeZo5vwHkPAeN4hT55A/PYzpR96zzlCBzVWo6n
-         6nLvwns9OM/QxujG3lYd4oFbg/fQxeJtBBQZduA77pYouayg//n6W92qWfRwerDJcjwf
-         LRCssPO+sOxs6kW4aEllwSMijjaHWmSPAin4KWw7BJIfxWftHo9Ct69zD4fyYf7HM/XH
-         4gq7XpbqojlCgTL605DQxcZWkWmt1zC/X7/bvfMxnAogl3JjCWYv8SjQHCeIk/0FLS4L
-         oBjg==
-X-Gm-Message-State: APzg51ATnk2S6h+WAwVlFwZoYXqI8C3n7knVdHQOf4Y5RNw4dK7JRbde
-        8zQ8sqeeL08eKo44eGh0qV0=
-X-Google-Smtp-Source: ANB0VdYjeZZkpLiiniO8q0VuPyC34AeFGuzrr9xN3oqi4duHAHDdYZ7yXwO5dECXZVKN7VQ7lSGm2w==
-X-Received: by 2002:a0c:8738:: with SMTP id 53-v6mr16268992qvh.47.1536608330905;
-        Mon, 10 Sep 2018 12:38:50 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id d11-v6sm9674144qkg.14.2018.09.10.12.38.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Sep 2018 12:38:50 -0700 (PDT)
-Subject: Re: [PATCH v1] git-mv: allow submodules and fsmonitor to work
- together
-To:     Stefan Beller <sbeller@google.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     Ben Peart <Ben.Peart@microsoft.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <85d96d65-2e74-7877-80ab-f74fdb81d500@gmail.com>
- <20180910162911.31920-1-benpeart@microsoft.com>
- <CAGZ79kZmmULJHrPJS1=areXAP-nSK0_9UOUOry2Hd6aHSBrAiQ@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <6f8a4921-3b4e-e381-14da-60f0695446cd@gmail.com>
-Date:   Mon, 10 Sep 2018 15:38:48 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1728855AbeIKAks (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 20:40:48 -0400
+Received: from bsmtp7.bon.at ([213.33.87.19]:49665 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728110AbeIKAkr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 20:40:47 -0400
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 428JRP67myz5tlR;
+        Mon, 10 Sep 2018 21:45:05 +0200 (CEST)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 8B66E2E3D;
+        Mon, 10 Sep 2018 21:45:05 +0200 (CEST)
+From:   Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 2/2] mingw: fix mingw_open_append to work with named
+ pipes
+To:     jeffhost@microsoft.com
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.35.git.gitgitgadget@gmail.com>
+ <pull.35.v2.git.gitgitgadget@gmail.com>
+ <f0361dd306d19fa741c813885d240e041dc09a7a.1536599118.git.gitgitgadget@gmail.com>
+X-Mozilla-News-Host: news://nntp.gmane.org
+Message-ID: <a309396f-bb33-477d-5d92-a98699f5a856@kdbg.org>
+Date:   Mon, 10 Sep 2018 21:45:05 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kZmmULJHrPJS1=areXAP-nSK0_9UOUOry2Hd6aHSBrAiQ@mail.gmail.com>
+In-Reply-To: <f0361dd306d19fa741c813885d240e041dc09a7a.1536599118.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Am 10.09.18 um 19:05 schrieb Jeff Hostetler via GitGitGadget:
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 858ca14a57..f87376b26a 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -341,6 +341,19 @@ int mingw_mkdir(const char *path, int mode)
+>   	return ret;
+>   }
+>   
+> +/*
+> + * Calling CreateFile() using FILE_APPEND_DATA and without FILE_WRITE_DATA
+> + * is documented in [1] as opening a writable file handle in append mode.
+> + * (It is believed that) this is atomic since it is maintained by the
+> + * kernel unlike the O_APPEND flag which is racily maintained by the CRT.
+> + *
+> + * [1] https://docs.microsoft.com/en-us/windows/desktop/fileio/file-access-rights-constants
+> + *
+> + * This trick does not appear to work for named pipes.  Instead it creates
+> + * a named pipe client handle that cannot be written to.  Callers should
+> + * just use the regular _wopen() for them.  (And since client handle gets
+> + * bound to a unique server handle, it isn't really an issue.)
+> + */
+>   static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+>   {
+>   	HANDLE handle;
+> @@ -360,10 +373,12 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+>   			NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
+>   	if (handle == INVALID_HANDLE_VALUE)
+>   		return errno = err_win_to_posix(GetLastError()), -1;
+> +
+>   	/*
+>   	 * No O_APPEND here, because the CRT uses it only to reset the
+> -	 * file pointer to EOF on write(); but that is not necessary
+> -	 * for a file created with FILE_APPEND_DATA.
+> +	 * file pointer to EOF before each write(); but that is not
+> +	 * necessary (and may lead to races) for a file created with
+> +	 * FILE_APPEND_DATA.
+>   	 */
+>   	fd = _open_osfhandle((intptr_t)handle, O_BINARY);
+>   	if (fd < 0)
+> @@ -371,6 +386,23 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
+>   	return fd;
+>   }
+>   
+> +#define IS_SBS(ch) (((ch) == '/') || ((ch) == '\\'))
+> +/*
+> + * Does the pathname map to the local named pipe filesystem?
+> + * That is, does it have a "//./pipe/" prefix?
+> + */
+> +static int mingw_is_local_named_pipe_path(const char *filename)
+> +{
+> +	return (IS_SBS(filename[0]) &&
+> +		IS_SBS(filename[1]) &&
+> +		filename[2] == '.'  &&
+> +		IS_SBS(filename[3]) &&
+> +		!strncasecmp(filename+4, "pipe", 4) &&
+> +		IS_SBS(filename[8]) &&
+> +		filename[9]);
+> +}
+> +#undef IS_SBS
+> +
+>   int mingw_open (const char *filename, int oflags, ...)
+>   {
+>   	typedef int (*open_fn_t)(wchar_t const *wfilename, int oflags, ...);
+> @@ -387,7 +419,7 @@ int mingw_open (const char *filename, int oflags, ...)
+>   	if (filename && !strcmp(filename, "/dev/null"))
+>   		filename = "nul";
+>   
+> -	if (oflags & O_APPEND)
+> +	if ((oflags & O_APPEND) && !mingw_is_local_named_pipe_path(filename))
+>   		open_fn = mingw_open_append;
+>   	else
+>   		open_fn = _wopen;
 
+This looks reasonable.
 
-On 9/10/2018 1:07 PM, Stefan Beller wrote:
-> On Mon, Sep 10, 2018 at 9:29 AM Ben Peart <benpeart@microsoft.com> wrote:
->>
->> It was reported that
->>
->>     GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all ./t7411-submodule-config.sh
->>
->> breaks as the fsmonitor data is out of sync with the state of the .gitmodules
->> file. Update is_staging_gitmodules_ok() so that it no longer tells
->> ie_match_stat() to ignore refreshing the fsmonitor data.
-> 
-> Wondering how this came to be,
-> 7da9aba4178 (submodule: used correct index in is_staging_gitmodules_ok,
-> 2017-12-12) last touched this line, but is unrelated as the fsmonitor
-> behavior was
-> there before.
-> 
-> Before that, we have 883e248b8a0 (fsmonitor: teach git to optionally utilize a
-> file system monitor to speed up detecting new or changed files., 2017-09-22)
-> that was written by you, who knows the fsmonitor better than I do (or Brandon
-> who wrote the commit referenced above).
-> 
-> Looking through the archive, it seems that we might have more such hidden
-> gems?
+I wonder which part of the code uses local named pipes. Is it downstream 
+in Git for Windows or one of the topics in flight?
 
-Fortunately, the only one left is the one in preload_index() which is 
-what the flag was created to handle so I think we're ok.
-
-> 
-> https://public-inbox.org/git/f50825a4-fa15-9f28-a079-853e78ee8e2e@gmail.com/
-> 
-> Anyway, I think this is a better fix than what I proposed for sure.
-> 
-> Thanks for looking into this!
-> 
-> Stefan
-> 
->>
->> Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> Helped-by: Stefan Beller <sbeller@google.com>
->> Signed-off-by: Ben Peart <benpeart@microsoft.com>
->> ---
->>
->> Notes:
->>      Base Ref: v2.19.0-rc2
->>      Web-Diff: https://github.com/benpeart/git/commit/ed30e1a885
->>      Checkout: git fetch https://github.com/benpeart/git fsmonitor-t7411-v1 && git checkout ed30e1a885
->>
->>   submodule.c | 3 +--
->>   1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/submodule.c b/submodule.c
->> index 50cbf5f13e..1e7194af28 100644
->> --- a/submodule.c
->> +++ b/submodule.c
->> @@ -65,8 +65,7 @@ int is_staging_gitmodules_ok(struct index_state *istate)
->>          if ((pos >= 0) && (pos < istate->cache_nr)) {
->>                  struct stat st;
->>                  if (lstat(GITMODULES_FILE, &st) == 0 &&
->> -                   ie_match_stat(istate, istate->cache[pos], &st,
->> -                                 CE_MATCH_IGNORE_FSMONITOR) & DATA_CHANGED)
->> +                   ie_match_stat(istate, istate->cache[pos], &st, 0) & DATA_CHANGED)
->>                          return 0;
->>          }
->>
->>
->> base-commit: c05048d43925ab8edcb36663752c2b4541911231
->> --
->> 2.18.0.windows.1
->>
+-- Hannes
