@@ -2,161 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D788B1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 15:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EFE141F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 16:03:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728410AbeIJUx3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 16:53:29 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:46805 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728268AbeIJUx3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 16:53:29 -0400
-Received: by mail-qt0-f195.google.com with SMTP id d4-v6so24683676qtn.13
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 08:58:44 -0700 (PDT)
+        id S1728137AbeIJU57 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 16:57:59 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43531 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728043AbeIJU56 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 16:57:58 -0400
+Received: by mail-wr1-f67.google.com with SMTP id k5-v6so22519035wre.10
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O6ctuyRzvNIO7dCdrTPvArhBO6reOMZDFBqVfMg2EsU=;
-        b=n8onIXNWaQrWY9Y479RA21EoqEZo2UMePQvSe8/8sAn7VkLdNjnMTcoC0Pnbtlv/ra
-         oR0XTHKgDGoDy9Qj8o9qSwC9zO4sUUMrEhZG/EjQI08JRFWtWFJ4Swe2P0XtOOTFVIiD
-         FO8EtjDHiX/lWSsqiGRkRvcAjnFOsIdQMtwr99MknXRD6pWopEW7eN1HiLLocxP5eO3/
-         lXj0OPhRQPFVLOhh3joCQJX05Ent5NYVSgNbapc5pOizv/fo3qDdBw7/fxcnRPOOX9hd
-         tFagUYHYkQs7p4yEe5zKhCV8D22KxMVg3zwZE0h/w+NpFkEM5vqa+xtkGv2ajwA0Dp6s
-         /HTA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EPUeP7lVAujP/J3kvbi/CSPL1lqU6csfj+Z+3kyLqeA=;
+        b=DJ+8O+YBrW1Sl/B19NaAL3BtHsguMeZ/pOkq4IXJqneGyiWKgDTs2ugCh7IdpDTV2A
+         B/h/4xR7zeyZdzkvlPk3NQgx9c27/DikHj8NE5OPKXAVfsmUKG91D6ib6KxjZZ2R1RKP
+         AkmrR0F3rXels+9vFeAdtFI62kX3nXmvkaokj1ryTbVLASVhCdMR32W3yPb5oI/eOwmK
+         D7T5ni7Mj4lAjPDmjxs/Kk4QVMr6tIhlC2IHaArciHk6NBPg/6FL1Pj8VkNCHY05LmHQ
+         Dbwf8o6Riil8iMUKIFCmxILO+ee0zZj10nTMAH+Uflu1zBTvIjVL7eYHzvJd3EAMaJQK
+         A4Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O6ctuyRzvNIO7dCdrTPvArhBO6reOMZDFBqVfMg2EsU=;
-        b=F5sDagn19tmexnmWTL+tjcQVAeKcoL+CwPVsNE0NEXzimn7w3yBjK0fwWUUnp/Bjbl
-         /ER0sJFnlL62THH40Wtwx7AlJfY1Oyam4oAl3kFxX94MhUwGw/haxQPAJ2h5YTI6uNJN
-         d/4Q6T4ev3SszFsV2l9ipXafAAwfAiUQN7BqaSHak06OKt3brnYTtbpbKlt2TKpaTWqW
-         RpxzK3pdl7BfwimEl5AUN7vrxPare94zJ2gF10nZhKnkMHBLBNEjSTYTRDB3lS1m+1a6
-         7oCmPuduo8QcOhqIrNcCxxzqTMg/DqAlHBtb/rfh1cZQHBIRgEeCY4pnF5AHYT5Y5Jr5
-         p+iw==
-X-Gm-Message-State: APzg51AOyWre0zXhtjcjgumcWwoWWJDearfIstmg8aANE9V3+1s6+DlA
-        zAQv8gbvq3+hWuS55sJScJo=
-X-Google-Smtp-Source: ANB0VdZyQBkgR1JZh/c06mMz0Ht6SOSbO5uHl5HyFqvT9F5TELsI+LQDnkVfTBZhVH2RspGAXOGksQ==
-X-Received: by 2002:a0c:fc49:: with SMTP id w9-v6mr15134190qvp.166.1536595124115;
-        Mon, 10 Sep 2018 08:58:44 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id k9-v6sm12966595qtk.2.2018.09.10.08.58.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Sep 2018 08:58:43 -0700 (PDT)
-Subject: Re: [PATCH] git-mv: allow submodules and fsmonitor to work together
-To:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org
-Cc:     Ben.Peart@microsoft.com, avarab@gmail.com, gitster@pobox.com
-References: <CAGZ79kY_+jNAu4jwVOhd+gVMELDSjk_MACKBRf51tksrzZMx-A@mail.gmail.com>
- <20180906203444.162213-1-sbeller@google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <85d96d65-2e74-7877-80ab-f74fdb81d500@gmail.com>
-Date:   Mon, 10 Sep 2018 11:58:41 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EPUeP7lVAujP/J3kvbi/CSPL1lqU6csfj+Z+3kyLqeA=;
+        b=gU2R3Hbl9kSFXTploo/9U51uKeXJjJg2x3qwpDyidqA6w/VwAGu9loKcaQeP62NJzX
+         gz8v/FN+4vC/TjKZvvYiWqYASqaTuTzJdK6sFbwVwg+mbOSYieGN8uULFISyDFPBf9Y1
+         +wK41+DV+MbQB4CLtdFg9wSx2aP3oRsycFgUWij/Ft0uwLuVcyskG7GaaF9f6Qj86Kld
+         LWY9eAqJaJjsl/o/DiLOzvxL4bVQOih+6Fe065R8In12JHS4XeyAOx4BixbeSjQf02IV
+         oQBcZCHxwMDrxnQLPRtcENnPBO2/oWLiv1a0TlGGMYSNOKco++RBXMkCnAUUnh/3cE4o
+         uzww==
+X-Gm-Message-State: APzg51DS/u6QEYS0PMg/wehUZiC8YN+ecA71Bi2ONdBrAeQ2m4tgfvse
+        UVyZ6Cr4R1IyHGZg/FTVpw4=
+X-Google-Smtp-Source: ANB0Vdb6dYNk84Z6k5tDJZQM4fFlBKSGcwG0Neja8Mm/3dEalIf8Bp+dLt0wWdqllcowaP0Kk5yGbA==
+X-Received: by 2002:adf:d20a:: with SMTP id g10-v6mr16646642wri.66.1536595391193;
+        Mon, 10 Sep 2018 09:03:11 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j6-v6sm11977346wru.64.2018.09.10.09.03.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 09:03:10 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Bryan Turner <bturner@atlassian.com>, dylanyoungmeijer@gmail.com,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [Possible GIT Bug]
+References: <CAPGJNu5RPXjeib-vayVzmFkU9cZ=h5o5VDoM1vQqv2+HgtNXLw@mail.gmail.com>
+        <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
+        <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
+        <20180910132452.GB5233@sigill.intra.peff.net>
+Date:   Mon, 10 Sep 2018 09:03:10 -0700
+In-Reply-To: <20180910132452.GB5233@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 10 Sep 2018 09:24:53 -0400")
+Message-ID: <xmqqin3duypt.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20180906203444.162213-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
+> Your explanation is correct. To be fair, though, it seems like
+> --find-copies-harder is made a lot less useful by the not considering
+> the larger set of sources, since that's kind of its point. I'm not sure
+> if this behavior actually is intentional, or simply what happens to
+> occur based on the combination of features.
 
-On 9/6/2018 4:34 PM, Stefan Beller wrote:
-> It was reported that
-> 
->    GIT_FSMONITOR_TEST=$PWD/t7519/fsmonitor-all ./t7411-submodule-config.sh
-> 
-> breaks as the .gitmodules file is modified and staged after the fsmonitor
-> considers it clean. Mark the .gitmodules file to be not clean before
-> staging.
-> 
-> Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> Inspired-by: Ben Peart <benpeart@microsoft.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-> 
-> I am not quite sure if this is the correct approach and handling of the
-> fsmonitor API, but it unbreaks the test.
-> 
->> Just naively adding mark_fsmonitor_invalid doesn't work, as then ...
-> 
-> Adding it before the staging, works.
-> 
-> Please double check!
-
-I took a look at this bug/patch and wondered why add_file_to_index() 
-wasn't properly handling the .gitmodules file.  On investigation, I 
-chased it down to what looks like a faulty test in 
-is_staging_gitmodules_ok().
-
-I believe the following is a better patch for this bug:
-
-diff --git a/submodule.c b/submodule.c
-index 50cbf5f13e..1e7194af28 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -65,8 +65,7 @@ int is_staging_gitmodules_ok(struct index_state *istate)
-         if ((pos >= 0) && (pos < istate->cache_nr)) {
-                 struct stat st;
-                 if (lstat(GITMODULES_FILE, &st) == 0 &&
--                   ie_match_stat(istate, istate->cache[pos], &st,
--                                 CE_MATCH_IGNORE_FSMONITOR) & DATA_CHANGED)
-+                   ie_match_stat(istate, istate->cache[pos], &st, 0) & 
-DATA_CHANGED)
-                         return 0;
-         }
-
-Please double check but I just don't understand why the .gitmodules file 
-should force the fsmonitor data to be ignored.  This flag was added to 
-enable proper behavior in the preload_thread() logic and I don't believe 
-it is appropriate here.
-
-Ben
-
-> 
-> Thanks,
-> Stefan
-> 
->   submodule.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/submodule.c b/submodule.c
-> index 50cbf5f13ed..56b0d5fe24e 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -22,6 +22,7 @@
->   #include "worktree.h"
->   #include "parse-options.h"
->   #include "object-store.h"
-> +#include "fsmonitor.h"
->   
->   static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
->   static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
-> @@ -149,6 +150,15 @@ int remove_path_from_gitmodules(const char *path)
->   
->   void stage_updated_gitmodules(struct index_state *istate)
->   {
-> +	struct cache_entry *ce;
-> +	int pos;
-> +
-> +	pos = index_name_pos(istate, GITMODULES_FILE, strlen(GITMODULES_FILE));
-> +	ce = (0 <= pos) ? istate->cache[pos] : NULL;
-> +
-> +	if (ce)
-> +		mark_fsmonitor_invalid(istate, ce);
-> +
->   	if (add_file_to_index(istate, GITMODULES_FILE, 0))
->   		die(_("staging updated .gitmodules failed"));
->   }
-> 
+It is neither but if I have to pick one between the two, it is much
+closer to the former than the latter.  The primary source of this is
+that we have only *one* pathspec given to the diff machinery, but in
+order to implement your ideal "find harder", you'd need *two*.  That
+is, one set of paths for which you are interested in their origin,
+and the other set that you allow the machinery to consider as possible
+origins.  Since we can only give one pathspec machinery, that one
+pathspec is used to specify both of these sets.
