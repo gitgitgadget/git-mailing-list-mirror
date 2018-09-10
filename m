@@ -2,101 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F327E1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 15:44:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47D811F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 15:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728101AbeIJUjh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 16:39:37 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44862 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727411AbeIJUjg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 16:39:36 -0400
-Received: (qmail 10944 invoked by uid 109); 10 Sep 2018 15:44:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Sep 2018 15:44:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8412 invoked by uid 111); 10 Sep 2018 15:45:09 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 10 Sep 2018 11:45:09 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2018 11:44:54 -0400
-Date:   Mon, 10 Sep 2018 11:44:54 -0400
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S1728177AbeIJUjj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 16:39:39 -0400
+Received: from siwi.pair.com ([209.68.5.199]:56211 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727411AbeIJUjj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 16:39:39 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id A4E703F4008;
+        Mon, 10 Sep 2018 11:44:57 -0400 (EDT)
+Received: from [10.160.98.162] (unknown [167.220.148.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 69AAD3F4000;
+        Mon, 10 Sep 2018 11:44:57 -0400 (EDT)
+Subject: Re: [PATCH 2/2] mingw: fix mingw_open_append to work with named pipes
+To:     Johannes Sixt <j6t@kdbg.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3701-add-interactive: tighten the check of trace output
-Message-ID: <20180910154453.GA15270@sigill.intra.peff.net>
-References: <20180910140714.19617-1-szeder.dev@gmail.com>
+References: <pull.35.git.gitgitgadget@gmail.com>
+ <f433937d55974b75750cfc7d579a6a56109259a4.1536344387.git.gitgitgadget@gmail.com>
+ <1c524f56-2021-a961-168f-e5c6d7914ec2@kdbg.org>
+ <f207bc28-a303-5d63-e9f4-da8e4d466bd5@kdbg.org>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <0d38ec8e-3f4b-c0fb-ba6f-e2cef39e4db4@jeffhostetler.com>
+Date:   Mon, 10 Sep 2018 11:44:56 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+In-Reply-To: <f207bc28-a303-5d63-e9f4-da8e4d466bd5@kdbg.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180910140714.19617-1-szeder.dev@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 04:07:14PM +0200, SZEDER Gábor wrote:
 
-> The test 'add -p does not expand argument lists' in
-> 't3701-add-interactive.sh', added in 7288e12cce (add--interactive: do
-> not expand pathspecs with ls-files, 2017-03-14), checks the GIT_TRACE
-> of 'git add -p' to ensure that the name of a tracked file wasn't
-> passed around as argument to any of the commands executed as a result
-> of undesired pathspec expansion.  This check is done with 'grep' using
-> the filename on its own as the pattern, which is too loose a pattern,
-> and would match any occurrences of the filename in the trace output,
-> not just those as command arguments.  E.g. if a developer were to
-> litter the index handling code with trace_printf()s printing, among
-> other things, the name of the just processed cache entry, then that
-> pattern would mistakenly match these as well, and would fail the test.
 
-Is this a real thing we're running into? I'd have thought that anybody
-adding index-specific tracing would do it as GIT_TRACE_INDEX.  It's
-unfortunate that "trace commands and processes" is just GIT_TRACE, and not
-GIT_TRACE_RUN or similar. But that's mostly historical. I wouldn't
-expect people to add other subsystems to it.
+On 9/8/2018 2:31 PM, Johannes Sixt wrote:
+> Am 08.09.2018 um 11:26 schrieb Johannes Sixt:
+>> Am 07.09.2018 um 20:19 schrieb Jeff Hostetler via GitGitGadget:
+>>> diff --git a/compat/mingw.c b/compat/mingw.c
+>>> index 858ca14a57..ef03bbe5d2 100644
+>>> --- a/compat/mingw.c
+>>> +++ b/compat/mingw.c
+>>> @@ -355,7 +355,7 @@ static int mingw_open_append(wchar_t const 
+>>> *wfilename, int oflags, ...)
+>>>        * FILE_SHARE_WRITE is required to permit child processes
+>>>        * to append to the file.
+>>>        */
+>>> -    handle = CreateFileW(wfilename, FILE_APPEND_DATA,
+>>> +    handle = CreateFileW(wfilename, FILE_WRITE_DATA | FILE_APPEND_DATA,
+>>>               FILE_SHARE_WRITE | FILE_SHARE_READ,
+>>>               NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
+>>>       if (handle == INVALID_HANDLE_VALUE)
+>>>
+>>
+>> I did not go with this version because the documentation 
+>> https://docs.microsoft.com/en-us/windows/desktop/fileio/file-access-rights-constants 
+>> says:
+>>
+>> FILE_APPEND_DATA: For a file object, the right to append data to the 
+>> file. (For local files, write operations will not overwrite existing 
+>> data if this flag is specified without FILE_WRITE_DATA.) [...]
+>>
+>> which could be interpreted as: Only if FILE_WRITE_DATA is not set, we 
+>> have the guarantee that existing data in local files is not 
+>> overwritten, i.e., new data is appended atomically.
+>>
+>> Is this interpretation too narrow and we do get atomicity even when 
+>> FILE_WRITE_DATA is set?
+> 
+> Here is are some comments on stackoverflow which let me think that 
+> FILE_APPEND_DATA with FILE_WRITE_DATA is no longer atomic:
+> 
+> https://stackoverflow.com/questions/20093571/difference-between-file-write-data-and-file-append-data#comment29995346_20108249 
+> 
+> 
+> -- Hannes
 
-Not that I'm totally opposed to your patch, but it's a little sad that
-we have to match the specific text used in GIT_TRACE now (and if they
-ever changed we won't even notice, but rather the test will just become
-a silent noop).
+Yeah, this whole thing is a little under-documented for my tastes.
+Let's leave it as you have it.  I'll re-roll with a fix to route
+named pipes to the existing _wopen() code.
 
-I think it would be nice if we could move towards something like:
-
-  - move current GIT_TRACE messages to use GIT_TRACE_COMMAND or similar
-
-  - abolish trace_printf() without a specific subsystem key
-
-  - do one of:
-
-    - keep GIT_TRACE as a historical synonym for GIT_TRACE_COMMAND; that
-      keeps things working as they are now
-
-    - have GIT_TRACE enable _all_ tracing; that's a change in behavior,
-      but arguably a more useful thing to have going forward (e.g., when
-      you're not sure which traces are even available)
-
-And then a test like this would just use GIT_TRACE_COMMAND.
-
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 609fbfdc31..65dfbc033a 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -540,7 +540,7 @@ test_expect_success 'add -p does not expand argument lists' '
->  	# update it, but we want to be sure that our "." pathspec
->  	# was not expanded into the argument list of any command.
->  	# So look only for "not-changed".
-> -	! grep not-changed trace.out
-> +	! grep -E "^trace: (built-in|exec|run_command): .*not-changed" trace.out
-
-I had a vague recollection that we preferred "egrep" to "grep -E" due to
-portability. But digging in the history, I could only find "fgrep" over
-"grep -F". And we seem to have plenty of "grep -E" invocations already.
-
--Peff
+thanks
+Jeff
