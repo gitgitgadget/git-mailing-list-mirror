@@ -2,126 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 391551F428
-	for <e@80x24.org>; Mon, 10 Sep 2018 18:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0F2D1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 18:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728414AbeIJXbZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 19:31:25 -0400
-Received: from mail-pf1-f176.google.com ([209.85.210.176]:39780 "EHLO
-        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727882AbeIJXbZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 19:31:25 -0400
-Received: by mail-pf1-f176.google.com with SMTP id j8-v6so10900299pff.6
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 11:36:01 -0700 (PDT)
+        id S1727781AbeIJXdM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 19:33:12 -0400
+Received: from mail-wm0-f52.google.com ([74.125.82.52]:53677 "EHLO
+        mail-wm0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726657AbeIJXdM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 19:33:12 -0400
+Received: by mail-wm0-f52.google.com with SMTP id b19-v6so22600998wme.3
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 11:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=RtsyjUfOiyFhTOwU6ZFeBlFVf7b9LM1plwLcphC+JGQ=;
-        b=nyPa3vb7wCkFywKCvI8Cc4SuoXrZlzO+yxlnd5UPazBAAA3VTPNRZm1kvR2iCGH8vK
-         gJ+czqcmOjyqfUc9jzu01DmYRo22SFOppTT5Q7SRiNDdmKB3yTSW4E+OLVgZOALgqbxv
-         8DVSMxVEiE5C7p8VTcLabbY9J7LkaeXxYTYWbF26YwkaIxU2gFQ4feVMkS1G+BMiMaiW
-         Cqmn2Efhjzj1ULOhk56wG44Ia+VagOopk5jiRYBeTGYa6+r9jBH3j4iReDNDSJDxNnXR
-         4/znmtyYckwaDKLh4JFNFDSayI3iziDfSlcGwmFKmJI/+PJQic9/3CE2uF8e14KN25nq
-         98NQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=tBVegnVuIv/mcLCRHq1Yfs8hktbGRU84//Y+USEsPiA=;
+        b=l35OmQ+jsYgP3Vs3Q/EkJYsRU4JJB3Bv8b6sKG8THVomT4kfWJZHRG/kfZLRUdT3NE
+         DlqOEDiX90LHEFYQDzxFltHTeAFWpz4ydnZmND+PSSM+xhF6Q98BV9nZEFKkKTTrU3+d
+         MOZeQy61Lb6AhHSAiXzjObpj3FAUNqHxln052gLK65uFJl59yNe2a5/PygNGd75myB2i
+         Xviz0BuTCTJXIJHACNzlLa2LnVV6sZSw1U+1OgodGSpdfOPVIBK66ssdgtxamOfrhu3W
+         pYo34jyG9Lq2YnICyRvfSD97AOpIke6O5B/jDMRGHwzJma6CJGiFTMpp63bAaSWFhPEq
+         LV5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=RtsyjUfOiyFhTOwU6ZFeBlFVf7b9LM1plwLcphC+JGQ=;
-        b=nfC0yB76X8v9/tcaWiYaTe6wnciu+eLcCHSQGHjSCyYBhUwk3NO7mn/5fOxzRka1uF
-         YxpHVRZSlztUD0Yc73uPssNBfzjoABnZ2vNq7KOzJH55DTua6Eu0jEofe9HQk0Hu1Xit
-         wiF56LdZQMGc4ChoWOEuZVB8dH+G8evhcBPFp+TryTnAN6kN8X0SuC/MKjdC0qnpEVCJ
-         Ol6A0EZXi0XE2wsBdr58kSPTQETYxBM02xzrXeRvkNa7HFw4GmQ2mAlnOLFBotl/j864
-         NuFkmopRjU2RLYzViKsdKx53U9ci69loJ219AsCDoMcKqNFKL3BK9AW/x6fygvdNmtL1
-         vdRg==
-X-Gm-Message-State: APzg51BiQBS0rzzMp8IKtbfwWP1FNxn7At/nrkZfI8JNhSCAgOTWPl9J
-        AmtMlps1MjXvKey6L5egVIJ2Phyh
-X-Google-Smtp-Source: ANB0VdbaAEnROeh3Y2MAIlTL8zt75KF04Hs6zzZcvs/wn5DwAKY/2nIlKyeMei/D2FDXqc3ZS5zpYA==
-X-Received: by 2002:aa7:84c2:: with SMTP id x2-v6mr25290619pfn.220.1536604560597;
-        Mon, 10 Sep 2018 11:36:00 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id c1-v6sm33671567pfg.25.2018.09.10.11.35.59
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=tBVegnVuIv/mcLCRHq1Yfs8hktbGRU84//Y+USEsPiA=;
+        b=OwrlbpfeXY6QSqIENS+oVe82xcd/RUV8cYaFf5rngrURvcrheRGyyg5POCqtjIa1kK
+         JuQo1oGDl+fSCrdmpTdWTshPC0a2lR1NM4ISJ9VyEU7bY5pimEDID2z/Szf9s0Uzcuqx
+         Scki7drWz23IOMkOAxT04ZTI8B6o9oR6313wjACx2otj3XV2ncrT2KhR5Sapa2BUVPpp
+         h/L1okq/Ir2HluJkHOVPPdxFBrGSq0aZG61tHa8N3McHzz+l2/EV7ZXpidphkLHsOQ1/
+         YkRnau0uaM4LxyUboxgkd6/mWK0kgsMcZjxj4F/1VQ7zlypn51uhi7HrTeMAafLHQW5O
+         LlTQ==
+X-Gm-Message-State: APzg51Bqs9/nx8u6Vjqb0GMmdUP1g161Xf5CTZFYJXVQUBxQK2pvuyWe
+        OSPg9RjeN8k4rFGsiCX6reU=
+X-Google-Smtp-Source: ANB0VdZtsIJB/GkTOuuoY2Bs/PMMIEJEFDrbKly80hXilku3JWzamCm3/koSQ4tr7KkcbZPtlkk+LQ==
+X-Received: by 2002:a1c:b441:: with SMTP id d62-v6mr1661461wmf.17.1536604666220;
+        Mon, 10 Sep 2018 11:37:46 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id z69-v6sm16843034wmz.18.2018.09.10.11.37.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 11:35:59 -0700 (PDT)
-Date:   Mon, 10 Sep 2018 11:35:57 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Stas Bekman <stas@stason.org>,
-        git@vger.kernel.org
-Subject: Re: git silently ignores include directive with single quotes
-Message-ID: <20180910183557.GD26356@aiede.svl.corp.google.com>
-References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
- <20180908212256.GB31560@sigill.intra.peff.net>
- <xmqqr2i1thbs.fsf@gitster-ct.c.googlers.com>
- <20180910171422.GA26356@aiede.svl.corp.google.com>
- <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
+        Mon, 10 Sep 2018 11:37:45 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Eckhard_Maa=C3=9F?= <eckhard.s.maass@googlemail.com>
+Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
+        dylanyoungmeijer@gmail.com, Git Users <git@vger.kernel.org>
+Subject: Re: [Possible GIT Bug]
+References: <CAPGJNu5RPXjeib-vayVzmFkU9cZ=h5o5VDoM1vQqv2+HgtNXLw@mail.gmail.com>
+        <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
+        <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
+        <20180910132452.GB5233@sigill.intra.peff.net>
+        <xmqqin3duypt.fsf@gitster-ct.c.googlers.com>
+        <20180910173512.GA22152@esm>
+Date:   Mon, 10 Sep 2018 11:37:45 -0700
+In-Reply-To: <20180910173512.GA22152@esm> ("Eckhard =?utf-8?Q?Maa=C3=9F=22?=
+ =?utf-8?Q?'s?= message of "Mon,
+        10 Sep 2018 19:35:12 +0200")
+Message-ID: <xmqq5zzdtczq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+"Eckhard Maaß" <eckhard.s.maass@googlemail.com> writes:
 
->>  1. Treat single-quote as worth quoting in config.c::write_pair (line
->>     2516).  This would already help with the original issue, since the
->>     config would say
->>
->> 	[foo]
->> 		bar = \'baz\'
->>
->>     allowing a quick diagnosis.
+> On Mon, Sep 10, 2018 at 09:03:10AM -0700, Junio C Hamano wrote:
+>> It is neither but if I have to pick one between the two, it is much
+>> closer to the former than the latter.  The primary source of this is
+>> that we have only *one* pathspec given to the diff machinery, but in
+>> order to implement your ideal "find harder", you'd need *two*.  That
+>> is, one set of paths for which you are interested in their origin,
+>> and the other set that you allow the machinery to consider as possible
+>> origins.  Since we can only give one pathspec machinery, that one
+>> pathspec is used to specify both of these sets.
 >
-> I am mildly against this, as long as you feel that all the remaining
-> steps need to be marked with "(optional)", because this will give
-> readers an impression that somehow single-quote is special.  If we
-> do not intend to make it special at all, we shouldn't.
+> How does tihs compare to `--follow`? With that knob active the machinery
+> indeed uses the whole repository for finding renames and/or copies. Is
+> this the only exception then?
 
-That's fair, especially because it would be inconsistent with shell
-command language, where single-quote inside double quotes is not
-special:
-
-	$ printf '%s\n' "\'"
-	\'
-
-(I realize that backslash means something different in Git config; I'm
-just saying it would be another source of cognitive dissonance.)
-
-Updated proposal:
-
-  1. Treat strings starting or ending with single-quote as worth
-     quoting in config.c::write_pair (line 3269).  This would already
-     help with the original issue, since the config would say
-
-	[foo]
-		bar = "'baz'"
-
-     allowing a quick diagnosis.
-
-
-  2. (optional) Warn if a value is surrounded in single-quotes,
-     encouraging using surrounding double-quotes to disambiguate.
-
-  3. (optional) Error out if a value is surrounded in single-quotes,
-     encouraging replacing with or surrounding with double-quote,
-     depending on the user's intention.
-
-  4. (optional) Start treating wrapping single-quotes specially
-     somehow.
-
-As before, I think step 1 is a good idea, but I'm not convinced about
-any of the later steps.
-
-Thanks,
-Jonathan
+'--follow' is a checkbox hack that is not even properly integrated
+with the diff machinery (it only exists on the "log" side of the
+tool), so I do not think it is productive to find a comparison.
