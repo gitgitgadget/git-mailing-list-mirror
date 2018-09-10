@@ -2,102 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E87711F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 22:32:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9461F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 22:39:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbeIKD3D (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 23:29:03 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:55648 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbeIKD3D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 23:29:03 -0400
-Received: by mail-wm0-f68.google.com with SMTP id f21-v6so23098169wmc.5
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 15:32:49 -0700 (PDT)
+        id S1726668AbeIKDfP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 23:35:15 -0400
+Received: from mail-yb1-f194.google.com ([209.85.219.194]:43662 "EHLO
+        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbeIKDfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 23:35:15 -0400
+Received: by mail-yb1-f194.google.com with SMTP id k5-v6so8603445ybo.10
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 15:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=OWA8+LAv05KDqlQIj6s3iYkzZfqf5VDpTXtbBJEfKIA=;
-        b=E99W/fplbg/twSbOvGwqOA6mdD8ABZuq/kPWRK1w+z/SuaDLMaN7x5Cs3Fe63HwUJI
-         d7CY0edqMZKwRJXEba5ARUK3hn4T9ufW0pCr7v4eAkBlmNGgYKzBAIk7LKIvU5EkEyIR
-         nBK3oiaSzb4AQpXaI37a1EYHoMQayp35prNjgryjBqzD0MBHxrr+IbG8LejhqkTo1ESZ
-         9v+Ojr6X0bn7DmsHmXfKseIgbpADw/Ignp/tvD9sMR6GuUkui4rHdaKJhhsQpgL/Q9n6
-         K+U1CVcsvQZrftyvbBFxc7WMEUzuVqw/UF6D5M9a4CKPGzOeLLp3kcg6H/YwSFxt394z
-         pSAg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FELCXtrglbj7Srn1c1YcEnV/TTOgSnJ7zjdxeGBcFsw=;
+        b=p695txtfmhLsIKvSyP5jPpU/Qsv1Du97pSIvOPWWa9i3W2Efevb6CzUsiTMFg7Cb1z
+         6q8P2VmGMBDq+XNW6xW1nBopTxFm30vaOW9MLi1iAjLkdGSTpcFS0SBB/snEEtSlbshT
+         Qx7kMDjs/N8jCVCChFDu3PJPi2QnS1gnSK2F4Bvo8nDw++c1a+eMbBJb5FJ7JbJuW40e
+         pIG6OzryJA6Hle06AZBEulQqE22BMueHzRb7nfhTfdi3DwbreCXgQUoNZ6rzHaGRQK0W
+         vylmei//8hQ58D03tHXmlW8zte2JbZkC6BuZbkBHh9Blc5yaduGHPiQ0itrIUGzMaX/0
+         GDXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=OWA8+LAv05KDqlQIj6s3iYkzZfqf5VDpTXtbBJEfKIA=;
-        b=RdgxNN7hMp1Jpm9el1F34yRGlnIrCLM4xLW4RzXqVutXosLA9kgSn54bsXjIMgfRHn
-         tiqub7axINqkT79igiPUFr2keTxtY29WqC7kVn1W2Uqxk+a4QIldliCbqSyLLjgX1+lk
-         px1unMqslfO38qPfoRRyiDu5gghifx1flaE+JMjd7s0Zrx3ueD6gUacR9K17dnH6Vxbo
-         OBj05Tcrn54WQ5WduNTse58ZOJlmjVxiNcsT7y/0by0cXLiic2QHGfy+TQjnfCgTqKpd
-         IE55amIJyOfKgGb+6UIb8cBpzt7ehnqIK90OS4cWiUQx3hxwkPRTxOt1XzSU5KXe32S0
-         gnoQ==
-X-Gm-Message-State: APzg51AK32QR4q7KTiNcQEOyP+t4Sf8VHi9A5bFQrkQG9cfp8XN7vyQw
-        wAWtnjKrpzyWnaIK2KYodrk=
-X-Google-Smtp-Source: ANB0VdYDsr1lWZBmYrMFmTdLWpZSJQthK9fiHJJL/ojW+qc8MwiReHtlpD0XuQUAV+0lChsgmjZXew==
-X-Received: by 2002:a1c:8c08:: with SMTP id o8-v6mr2208258wmd.60.1536618768637;
-        Mon, 10 Sep 2018 15:32:48 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y203-v6sm15033774wmd.1.2018.09.10.15.32.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 15:32:47 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH 1/2] trace: add trace_print_string_list_key
-References: <CAGZ79kbObDXyaRLADQpvMMSitOLCDwb030Q6UBiX-7Y-XWnqog@mail.gmail.com>
-        <20180910215831.17608-1-sbeller@google.com>
-Date:   Mon, 10 Sep 2018 15:32:47 -0700
-In-Reply-To: <20180910215831.17608-1-sbeller@google.com> (Stefan Beller's
-        message of "Mon, 10 Sep 2018 14:58:30 -0700")
-Message-ID: <xmqq36uhrnjk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FELCXtrglbj7Srn1c1YcEnV/TTOgSnJ7zjdxeGBcFsw=;
+        b=JNSlclvTIOFNh65WdWnc0lm/xrnsIeeM4bhBwdmkfRV16VMrSl+ciVL975Oq1fgjxv
+         OyczCHoj/txIYbvUUXBR1eM/x7rfih2IoC50Q9S1gbcpsZJOVpD5Lw7WQ3aM1OBH5hg/
+         R4W64vlGTs1BlXoE5qmg1YOh1bVZAN3Zti1vjhZesXFgv1R/AcRDmFAT3g/+JTsMfY4d
+         ZGdpZ9NXZlIkfudjqYSwkzmm5kahKJ634ViuSlWFnMNlctgreQEENtxlGHE7zwyvyeS/
+         wr/DfgVWu2i+yfDpUP3GMIlxdb07UCTQqOOrUaGjFTRf2BpDoeyFY2V38hKiU9p7nblM
+         UKtQ==
+X-Gm-Message-State: APzg51A6EITM6IhIRbBpuY4D5pBgndrDicn35Okvxq8ykvrlrxMB/cub
+        7fstez94rXUAG5aYxYCRDuHybqQnhEUx44OrsUcipw==
+X-Google-Smtp-Source: ANB0VdY9ylxSWfde7YeKEn2A8R9PbVIFadB2vF2sruuepq8Lfp/ib+TNqsGkXQdAXgc2U598QCA10QXXGzhdTBCY068=
+X-Received: by 2002:a25:8892:: with SMTP id d18-v6mr1843518ybl.521.1536619140438;
+ Mon, 10 Sep 2018 15:39:00 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAGZ79kbObDXyaRLADQpvMMSitOLCDwb030Q6UBiX-7Y-XWnqog@mail.gmail.com>
+ <20180910215831.17608-1-sbeller@google.com> <xmqq36uhrnjk.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36uhrnjk.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Sep 2018 15:38:49 -0700
+Message-ID: <CAGZ79kY2XpB4nJOJc0LLueqsutpncgwdN8uC=Wj0Uxu9Yjgd8A@mail.gmail.com>
+Subject: Re: [PATCH 1/2] trace: add trace_print_string_list_key
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Sep 10, 2018 at 3:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > I separated this from the other series, making it into 2 patches:
+> > This first patch adds tracing for string lists and the next patch that
+> > removes the unused function from the string list API.
+> > That way we can decide on these two patches separately if needed.
+>
+> Of course, even though these are 1/2 and 2/2, only one of them and
+> not both would apply.
 
-> I separated this from the other series, making it into 2 patches:
-> This first patch adds tracing for string lists and the next patch that
-> removes the unused function from the string list API.
-> That way we can decide on these two patches separately if needed.
+Or you could squash them once we reach consensus that both are good.
 
-Of course, even though these are 1/2 and 2/2, only one of them and
-not both would apply.
+> Thanks for sticking to the topic.
+>
+> Given how simple that "dump them to standard output" code is, I am
+> inclined to say that anybody who needs to inspect the contents of
+> string list at various points in the code under development can
+> create one from scratch even if we did not have this implementation,
+> so perhaps 2/2 is a better choice between the two.
 
-Thanks for sticking to the topic.  
+This sounds like the consensus is not to take both but only 2/2,
+which I'd be happy with, too.
 
-Given how simple that "dump them to standard output" code is, I am
-inclined to say that anybody who needs to inspect the contents of
-string list at various points in the code under development can
-create one from scratch even if we did not have this implementation,
-so perhaps 2/2 is a better choice between the two.
+> It is not costing us much to leave it in the code.  It's not like
+> the function costed a lot of maintenance burden since it was added
+> in 8fd2cb40 ("Extract helper bits from c-merge-recursive work",
+> 2006-07-25), so the alternative #3 might be to do nothing.
 
-It is not costing us much to leave it in the code.  It's not like
-the function costed a lot of maintenance burden since it was added
-in 8fd2cb40 ("Extract helper bits from c-merge-recursive work",
-2006-07-25), so the alternative #3 might be to do nothing.
+True, but ...
 
-I have no strong preference between #2 and #3.  The benefit of #2
-compared to #3 is that, if we remove it today, there will not be
-somebody else in the future to come and propose removing the
-otherwise unused function, which would cost us time to review and
-discuss, so unless somebody stops me, I am inclined to say we'd take
-2/2 ;-)
+> somebody else in the future to propose removing
 
-Thanks.
+is what is actually happening here already, see
 
+https://public-inbox.org/git/1421343725-3973-1-git-send-email-kuleshovmail@gmail.com/
 
+> I am inclined to say we'd take
+> 2/2 ;-)
+>
+> Thanks.
 
+Feel free to take Alexanders patch from 2015 instead.
 
+Thanks,
+Stefan
