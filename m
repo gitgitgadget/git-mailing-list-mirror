@@ -2,98 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF131F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 13:29:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70BC11F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 13:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728707AbeIJSXv convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 10 Sep 2018 14:23:51 -0400
-Received: from elephants.elehost.com ([216.66.27.132]:51391 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728639AbeIJSXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 14:23:51 -0400
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w8ADTckt087340
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 10 Sep 2018 09:29:38 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Sergei Haller'" <sergei@sergei-haller.de>, <git@vger.kernel.org>
-References: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
-In-Reply-To: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
-Subject: RE: Multiple GIT Accounts & HTTPS Client Certificates - Config
-Date:   Mon, 10 Sep 2018 09:29:32 -0400
-Message-ID: <001901d4490a$528d7590$f7a860b0$@nexbridge.com>
+        id S1728597AbeIJSbQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 14:31:16 -0400
+Received: from cloud.peff.net ([104.130.231.41]:44734 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727970AbeIJSbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 14:31:15 -0400
+Received: (qmail 5828 invoked by uid 109); 10 Sep 2018 13:37:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Sep 2018 13:37:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7215 invoked by uid 111); 10 Sep 2018 13:37:20 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 10 Sep 2018 09:37:20 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2018 09:37:04 -0400
+Date:   Mon, 10 Sep 2018 09:37:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v6 17/21] range-diff: populate the man page
+Message-ID: <20180910133704.GC5233@sigill.intra.peff.net>
+References: <pull.1.v5.git.gitgitgadget@gmail.com>
+ <pull.1.v6.git.gitgitgadget@gmail.com>
+ <8c5543a0667fffe0cb0684427f726fdfb75b28d0.1534159977.git.gitgitgadget@gmail.com>
+ <87lg8a7wj2.fsf@evledraar.gmail.com>
+ <20180909165431.GA17224@localhost>
+ <87k1nu7fm0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIrt3KbW8Z/p3+87XLbzxuKXaNiWKQ6pITg
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87k1nu7fm0.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On September 10, 2018 4:09 AM, Sergei Haller wrote:
-> my problem is basically the following: my git server (https) requires
-> authentication using a clent x509 certificate.
-> 
-> And I have multiple x509 certificates that match the server.
-> 
-> when I access the https server using a browser, the browser asks which
-> certificate to use and everything is fine.
-> 
-> When I try to access the git server from the command line (git pull or similar),
-> the git will pick one of the available certificates (randomly or alphabetically)
-> and try to access the server with that client certificate. Ending in the
-> situation that git picks the wrong certificate.
-> 
-> I can workaround by deleting all client certificates from the windows
-> certificate store except the "correct" one => then git command line will pick
-> the correct certificate (the only one available) and everything works as
-> expected.
-> 
-> Workaround is a workaround, I need to use all of the certificates repeatedly
-> for different repos and different other aplications (non-git), so I've been
-> deliting and reinstalling the certificates all the time in the last weeks...
-> 
-> How can I tell git cmd (per config option??) to use a particular client
-> certificate for authenticating to the https server (I could provide fingerprint
-> or serial number or sth like that)
-> 
-> current environment: windows 10 and git version 2.18.0.windows.1
-> 
-> Would be absolutely acceptable if git would ask interactively which client
-> certificate to use (in case its not configurable)
-> 
-> (I asked this question here before:
-> https://stackoverflow.com/questions/51952568/multiple-git-accounts-
-> https-client-certificates-config
-> )
+On Sun, Sep 09, 2018 at 07:19:51PM +0200, Ævar Arnfjörð Bjarmason wrote:
 
-Would you consider using SSH to authenticate? You can control which private key you use based on your ~/.ssh/config entries, which are case sensitive. You can choose the SSH key to use by playing with the case of the host name, like:
+> >> And then I turn that into:
+> >>
+> >>     # @{u} because I happen to be on 'master' and it's shorter to type
+> >>     # than origin/master...
+> >>     git range-diff @{u} 38b5f0fe72...718fbdedbc
+> >
+> > I don't understand what you want with that @{u} or 'origin/master' in
+> > the first place.  It's unnecessary, the three-dot notation on its own
+> > works just fine.
+> 
+> Maybe I've been using the wrong mode all along, I passed over by habits
+> from tbdiff, which were surely copy/pasted from somewhere.
+> 
+> Looking at the git-range-diff manpage though it recommends <base> <rev1>
+> <rev2> over <rev1>...<rev2> when the topic has been rebased, which is
+> usually the case for e.g. a topic that's submitted to git.git (usually
+> be the time feedback has been gathered & a re-submission has been made
+> Junio has pushed another "master").
+> 
+> So isn't "<base> <rev1> <rev2>" the right thing to use over
+> "<rev1>...<rev2>" for git.git use? I think so, but I'm not sure.
 
-github.com
-Github.com
-gitHub.com
+The problem with <rev1>...<rev2> is that it finds the actual merge base,
+not the beginning of the topic. So if you have a 5-patch topic, but the
+first two patches weren't changed in the rebase, it won't show them at
+all!  I made this mistake in [1], for example.
 
-even if your user is "git" in all cases above. It is a bit hacky but it is part of the SSH spec and is supported by git and EGit (as of 5.x).
+For a force-push, though, you may not care about seeing the topic as a
+whole, and that mid-topic merge-base could be just fine. So pasting just
+the "A...B" works.
 
-Cheers,
-Randall
+I don't think your "@{u} A...B" makes any sense. You're giving _two_
+bases, which is weird. But even if you wanted to ignore the "..." base
+as a convenience to users of fetch, @{u} does not necessarily have
+anything to do with the @{upstream} of the topic at "A". You really want
+branch@{u}, which is on a separate part of the fetch output line (and
+your branch@{u} and the remote's are not necessarily the same, either;
+in this case you probably do not even have that branch checked out).
 
---
-Randall S. Becker
-Managing Director, Nexbridge Inc.
-LinkedIn.com/in/randallbecker
-+1.416.984.9826
+-Peff
 
-
-
+[1] https://public-inbox.org/git/20180821195102.GB859@sigill.intra.peff.net/
