@@ -2,94 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92E051F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 20:54:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB0471F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 21:22:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726862AbeIKBuK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 21:50:10 -0400
-Received: from p3plsmtpa07-06.prod.phx3.secureserver.net ([173.201.192.235]:58425
-        "EHLO p3plsmtpa07-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726150AbeIKBuK (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 10 Sep 2018 21:50:10 -0400
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id zTCEf4aLL0GwuzTCJfcmLH; Mon, 10 Sep 2018 13:54:16 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Jelmer=20Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>,
-        Max Kirillov <max@max630.net>
-Subject: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
-Date:   Mon, 10 Sep 2018 23:53:59 +0300
-Message-Id: <20180910205359.32332-1-max@max630.net>
-X-Mailer: git-send-email 2.17.0.1185.g782057d875
-In-reply-to: <20180910052558.GB55941@aiede.svl.corp.google.com>
-X-CMAE-Envelope: MS4wfDzyHMNe2FFkY8AYWU/kpAFcQBtjpZTFYOYtyAKjFEuncLzn+Dk976OZjkYVr2FOvsVK5hYYBK7u3SxxtRQnnEvu7hIk/+MvX6K3iqSBNnwTlRdoYela
- NjUoXC48+ywv7IjS2RnWVi6WjfGWr5LYyaCtvoVCTx37jXKr2DoTn403ARtEiIfNr7Zf2P4ffydI4zawbkQl05IN6FVsmNHIazE+AdO8D3Jey2lRibtZLxHJ
- k2coNGeiKAnRpHjQvNcZcvYtsjyVkrFg4EqSXEirHgk5iXl+weGQV42C9TGSxDXYxJjSkXa+e1dtEe1jf1bqnA==
+        id S1726396AbeIKCSP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 22:18:15 -0400
+Received: from mail-qt0-f201.google.com ([209.85.216.201]:52539 "EHLO
+        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbeIKCSP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 22:18:15 -0400
+Received: by mail-qt0-f201.google.com with SMTP id s1-v6so22845324qte.19
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 14:22:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Wr0UcdbjFdv+aUbNtwig8rG6V+QRNiOKbyDd15H9k0o=;
+        b=hSFrZFcgpv8WPk7MPbcZD6p1fYIF87bmQ2zgOefd4exdw7+DLgIUx3wkWuTONZGTpb
+         kYiov5AoRNJ5xV0gVpDCvLleUh9+LVbETy02E3BzVUmpge9jTQGbklPBCsEQDIRjfvU3
+         cQByGE3GIXSPku5rBU8I72TxlSVvNmhQkjx541dP/4OzwFq/8L8Ivfj5XApfXk3X9iEl
+         krGF30QpQ/bsycNd5WJ+OU1AVTyMBI7D+YDRbU3uewCSe3ScU0XlF3B3Kv8npJxGkqQw
+         BrrX1AOC/a3oW+3/94YXrEiZdxppWfj9xo7Yc8QuKhfVLtYNsR5M39lldAfnH6fbU3l4
+         JXgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Wr0UcdbjFdv+aUbNtwig8rG6V+QRNiOKbyDd15H9k0o=;
+        b=FVRCQ3WmdYihfKzGftUpQnryyKjPOiP4hP4QQo4QofVzwURUVDpIJZ+eLwYFLodBis
+         gsCh8j2cBD4QHZcZknjt5hBmE/QIia0+1jh6oxV38725aepsZHbl6SZXd9Mkl/DDGdUr
+         y500DI0jzjBp/e7DiMFv90kDVf8td0+LMuIH5uqCzmi2yQEdB9QhhQo3PoffS2NqOeI8
+         fRt6y8UvA8dk4uM5sgiJigHHh8yDzLsGWTcyxu4148Yk6oPacMfY6UUPEVs97R/DRTDK
+         d7RMIpbyOYFZMfbFEQXO2a3nUcDLjEnMbKjHzSKKoVwM/aUpzgI6i26JCKh6VruI+qTv
+         IyCw==
+X-Gm-Message-State: APzg51Co/PNVHG2MoPUuwv8pfCgpQT6n2g4jenzQB5kBDhpPXt2rkrbe
+        1qZ455GAxH4dNa0ve2+Dz/VuiwklkADLrHtq688J6+YDCnapSItDN/x8T/ZZPKNxOoF4pG4biOR
+        DyMnPLBzJZPwnzniGOTo3ktEIh6ZBShAl/4kAWWbyXdHvN5X64OfIntyXXbRI2+U=
+X-Google-Smtp-Source: ANB0VdYvBQ87uUuvWvqcVCHP1tshNxdqDG+ObhjkGTrGuyHjUDVV1mVlAE4gdv6FgLj43Wls1lqymFCcpwjHlg==
+X-Received: by 2002:a37:c8ca:: with SMTP id t71-v6mr7331728qkl.39.1536614536249;
+ Mon, 10 Sep 2018 14:22:16 -0700 (PDT)
+Date:   Mon, 10 Sep 2018 14:21:57 -0700
+In-Reply-To: <20180522223208.GQ10623@aiede.svl.corp.google.com>
+Message-Id: <20180910212157.134291-1-steadmon@google.com>
+Mime-Version: 1.0
+References: <20180522223208.GQ10623@aiede.svl.corp.google.com>
+X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
+Subject: [PATCH v2] config: document value 2 for protocol.version
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     jrn@google.com, Brandon Williams <bmwill@google.com>,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
+From: Brandon Williams <bmwill@google.com>
 
-There is no known case where empty body it used by a server as
-instruction to read until EOF, so there is no need to violate the RFC.
-Make get_content_length() return 0 in this case.
+Update the config documentation to note the value `2` as an acceptable
+value for the protocol.version config.
 
-Currently there is no practical difference, as the GET request
-where it can be empty is handled without actual reading the body
-(in get_info_refs() function), but it is better to stick to the correct
-behavior.
-
-Signed-off-by: Max Kirillov <max@max630.net>
+Signed-off-by: Brandon Williams <bmwill@google.com>
+Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
-The incremental. Hopefully I described the reason right. Needs "signed-off-by"
- http-backend.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ Documentation/config.txt | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/http-backend.c b/http-backend.c
-index 458642ef72..ea36a52118 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -353,8 +353,28 @@ static ssize_t get_content_length(void)
- 	ssize_t val = -1;
- 	const char *str = getenv("CONTENT_LENGTH");
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index eb66a1197..ee3b5dd8e 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2828,6 +2828,8 @@ protocol.version::
+ * `1` - the original wire protocol with the addition of a version string
+   in the initial response from the server.
  
--	if (str && *str && !git_parse_ssize_t(str, &val))
--		die("failed to parse CONTENT_LENGTH: %s", str);
-+	if (!str) {
-+		/*
-+		 * RFC3875 says this must mean "no body", but in practice we
-+		 * receive chunked encodings with no CONTENT_LENGTH. Tell the
-+		 * caller to read until EOF.
-+		 */
-+		val = -1;
-+	} else if (!*str) {
-+		/*
-+		 * An empty length should be treated as "no body" according to
-+		 * RFC3875, and this seems to hold in practice.
-+		 */
-+		val = 0;
-+	} else {
-+		/*
-+		 * We have a non-empty CONTENT_LENGTH; trust what's in it as long
-+		 * as it can be parsed.
-+		 */
-+		if (!git_parse_ssize_t(str, &val))
-+			die("failed to parse CONTENT_LENGTH: '%s'", str);
-+	}
++* `2` - link:technical/protocol-v2.html[wire protocol version 2].
 +
- 	return val;
- }
+ --
  
+ pull.ff::
 -- 
-2.17.0.1185.g782057d875
+2.19.0.rc2.392.g5ba43deb5a-goog
 
