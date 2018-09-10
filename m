@@ -7,118 +7,79 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A50A1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 21:22:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90D7B1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 21:30:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726701AbeIKCSX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 22:18:23 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42366 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbeIKCSW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 22:18:22 -0400
-Received: by mail-pg1-f194.google.com with SMTP id y4-v6so11096686pgp.9
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 14:22:24 -0700 (PDT)
+        id S1726402AbeIKC0J (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 22:26:09 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44567 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726121AbeIKC0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 22:26:09 -0400
+Received: by mail-pg1-f196.google.com with SMTP id r1-v6so11098600pgp.11
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 14:30:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=40BkNhu1HPyd9Pn5K89zldjSocotCuWe2hoR2mBavX4=;
-        b=PTLKtIbgmIPXBQAI1yyUTmYQ3+RLaqAztKilEoxV51lmO3FhTWR3eWG5TsgdW8Pl6w
-         4FIoYFQ1N2qlpFG/aNKeeCu++2AN6IYtth8vIwq0cTi/NZo+s9O7G/ALwaUpyuaJS3/v
-         lAGgXmJ9QBXhbw7dZYY/MuDK4D/BCJgOTOnQc7pJzxsdu4RKU9YDZgZ3g+zZ/NsqS2+o
-         Djdo6DO9PO3+VzA1+1Aze18MonmZX1pphEFnBCUsdQn0fUfnMnp6ivwSzZ0bHS4ODAC3
-         eEk3zYvy4RUH4my4jjAlY/fKWRqoq41+WVTiyfGy0P/PZiSkeYOIH8+nrdMCynNdVYaJ
-         xKcQ==
+        bh=HgyGGfYhbnua+AdEjqFQ0QvsVPeKbHVrXvsYmKwXrEg=;
+        b=A/T9vAwjIOdvqL/zmRu6PbMi2yu79pZaY3rCEGQtuoSCXntZarvbrKPhS5eyY4phzu
+         lKCqyPW+SS73Ov3mWVp3RlFaGknRKIOe4C9oxA7bLVpvuedaLUcHsq6CA795lDdvqUxL
+         vkyIfn2QFuWSL5lT9m5Pzk1hqPDVRzQdvh79MalhHTYXVfGu2SjCLaMUwH6AFxJuPOXG
+         aSCO+Iu1BPZk37AeJ24B8McFocfmXg3dbjseP89rPhRzFakeF+jEZx7pocm8rzSHHWzM
+         regU7RlBtU7nwgy1RrDYFLx3ChDX/2x4dHI5R1XWzSHU18C5gx01aGBH6dXPSXluKDVx
+         fA+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=40BkNhu1HPyd9Pn5K89zldjSocotCuWe2hoR2mBavX4=;
-        b=hw0MylvBE2RCGMo+sUd5ETVs4ZqMNX7IKv+AxpDdLjHe0Jy0RxVGi+aDtlQLW5H3Fn
-         AN5O0VYWWaRGuMPfUZUEPgGUWseUzPs0W9thIixqKRhm4fxzmBWSbswMpe2HE0P+RliL
-         TGCNlMY7cOIna4ymQkDjjsiiwaHDwuMmWPW7uueHjFnUlx7U76qx+ETrFB8+73tg1S3m
-         psr7lXI7nrFzq/8sMOoc91MdaQfoV+x15BaP1N1gUJxMnSLAMUJyBQBKEZFWfRPTvKDt
-         ihtU1Vxq25H5Oe0pyeIR1F1ZB4L2zGgCMKwporvvBVaPNoIL6IOgEqMmY5kISfUtQYtb
-         MOgQ==
-X-Gm-Message-State: APzg51CC+tQkNOPPwIGoulllQKnKmLM1/ThdNq1aLrzu861hqS5CiF81
-        Q4AVv6mrf72t9Fcc+UMgclyiF3B3
-X-Google-Smtp-Source: ANB0VdZUTRxep2oHX8rZJP0ZhWxKlcAHaay+7N4AEo9yfO4bYb8KYQ6s4MYnneeUNWH2enYyyHVc2w==
-X-Received: by 2002:a62:63c2:: with SMTP id x185-v6mr25738797pfb.13.1536614544000;
-        Mon, 10 Sep 2018 14:22:24 -0700 (PDT)
+        bh=HgyGGfYhbnua+AdEjqFQ0QvsVPeKbHVrXvsYmKwXrEg=;
+        b=nWOxqt6kA5fiClqDpCWDiCVqdIdXa71Dies1u+BnNw3YH0asvmdBOD6QBZeKqIqg4m
+         0O2nurlKOy/LOol+/yKejlGTnj+ZsUZ9whas+iykh1sK3aIaqwkYHG97TRlskmp2ccx7
+         1qcuS6HwvAgduIRFBmwHjssc4QSO1inVQIaqmou6oziXQmCzsNheOTrn1yfAB2OryEmv
+         NZ+5Uo6eyTBGLbi2hZH1NbYN+jm4OUedt0ARGWklZT1u4EpgLwJy7N37lKkMKZXUrY2j
+         rikhzaXdKL6J13WdUeTyF9aSoJfrSV9t8l7kotCHHOxzTZdk5dzBQoDll6h35CV63+nq
+         OzdA==
+X-Gm-Message-State: APzg51A4uJWmkgH8cD24/MFJpt6ETglNcQYv90HUUlfbbX3VVipfV55i
+        zT46Ct3hwyDFr7XrqJQylh4=
+X-Google-Smtp-Source: ANB0VdZJXCYrhJXXgeBB2NeucjJ5svAzLLKn7bmdb7SXeXkt4EDEdplMR2WiKiO32lP6fxDclbov1Q==
+X-Received: by 2002:a62:2983:: with SMTP id p125-v6mr25796972pfp.128.1536615009225;
+        Mon, 10 Sep 2018 14:30:09 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm37708843pgk.26.2018.09.10.14.22.23
+        by smtp.gmail.com with ESMTPSA id h10-v6sm32189824pfj.78.2018.09.10.14.30.08
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 14:22:23 -0700 (PDT)
-Date:   Mon, 10 Sep 2018 14:22:21 -0700
+        Mon, 10 Sep 2018 14:30:08 -0700 (PDT)
+Date:   Mon, 10 Sep 2018 14:30:06 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Subject: Re: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
-Message-ID: <20180910212221.GG26356@aiede.svl.corp.google.com>
-References: <20180910052558.GB55941@aiede.svl.corp.google.com>
- <20180910205359.32332-1-max@max630.net>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] config: document value 2 for protocol.version
+Message-ID: <20180910213006.GH26356@aiede.svl.corp.google.com>
+References: <20180522223208.GQ10623@aiede.svl.corp.google.com>
+ <20180910212157.134291-1-steadmon@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180910205359.32332-1-max@max630.net>
+In-Reply-To: <20180910212157.134291-1-steadmon@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Josh Steadmon wrote:
 
-Max Kirillov wrote:
-
-> From: Jeff King <peff@peff.net>
-> Subject: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
-
-micronit: s/Treat/treat/
-
-> There is no known case where empty body it used by a server as
-> instruction to read until EOF, so there is no need to violate the RFC.
-> Make get_content_length() return 0 in this case.
+> From: Brandon Williams <bmwill@google.com>
 >
-> Currently there is no practical difference, as the GET request
-> where it can be empty is handled without actual reading the body
-> (in get_info_refs() function), but it is better to stick to the correct
-> behavior.
+> Update the config documentation to note the value `2` as an acceptable
+> value for the protocol.version config.
 >
-> Signed-off-by: Max Kirillov <max@max630.net>
+> Signed-off-by: Brandon Williams <bmwill@google.com>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
 > ---
-> The incremental. Hopefully I described the reason right. Needs "signed-off-by"
+>  Documentation/config.txt | 2 ++
+>  1 file changed, 2 insertions(+)
 
-Thanks.  I am wondering if we should go all the way and do
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-	ssize_t val;
-	const char *str = getenv("CONTENT_LENGTH");
-
-	if (!str || !*str)
-		return 0;
-	if (!git_parse_ssize_t(str, &val))
-		die(...);
-	return val;
-
-That would match the RFC, but it seems to make t5510-fetch.sh hang,
-right after
-
-  ok 165 - --negotiation-tip understands abbreviated SHA-1
-
-When I run with -v -i -x, it stalls at
-
-  ++ git -C '/usr/local/google/home/jrn/src/git/t/trash directory.t5510-fetch/httpd/www/server' tag -d alpha_1 alpha_2 beta_1 beta_2
-  Deleted tag 'alpha_1' (was a84e4a9)
-  Deleted tag 'alpha_2' (was 7dd5cf4)
-  Deleted tag 'beta_1' (was bcb5c65)
-  Deleted tag 'beta_2' (was d3b6dcd)
-  +++ pwd
-  ++ GIT_TRACE_PACKET='/usr/local/google/home/jrn/src/git/t/trash directory.t5510-fetch/trace'
-  ++ git -C client fetch --negotiation-tip=alpha_1 --negotiation-tip=beta_1 origin alpha_s beta_s
-
-Do you know why?
-
-Thanks,
-Jonathan
+Thanks.
