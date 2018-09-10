@@ -2,91 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F56C1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 13:24:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEF131F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 13:29:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728557AbeIJSTB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 14:19:01 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44712 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727970AbeIJSTB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 14:19:01 -0400
-Received: (qmail 5337 invoked by uid 109); 10 Sep 2018 13:24:56 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Sep 2018 13:24:56 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7087 invoked by uid 111); 10 Sep 2018 13:25:09 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 10 Sep 2018 09:25:09 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2018 09:24:53 -0400
-Date:   Mon, 10 Sep 2018 09:24:53 -0400
-From:   Jeff King <peff@peff.net>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     dylanyoungmeijer@gmail.com, Git Users <git@vger.kernel.org>
-Subject: Re: [Possible GIT Bug]
-Message-ID: <20180910132452.GB5233@sigill.intra.peff.net>
-References: <CAPGJNu5RPXjeib-vayVzmFkU9cZ=h5o5VDoM1vQqv2+HgtNXLw@mail.gmail.com>
- <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
- <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
+        id S1728707AbeIJSXv convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 10 Sep 2018 14:23:51 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:51391 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728639AbeIJSXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 14:23:51 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w8ADTckt087340
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 10 Sep 2018 09:29:38 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Sergei Haller'" <sergei@sergei-haller.de>, <git@vger.kernel.org>
+References: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
+In-Reply-To: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
+Subject: RE: Multiple GIT Accounts & HTTPS Client Certificates - Config
+Date:   Mon, 10 Sep 2018 09:29:32 -0400
+Message-ID: <001901d4490a$528d7590$f7a860b0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIrt3KbW8Z/p3+87XLbzxuKXaNiWKQ6pITg
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 09, 2018 at 12:04:58PM -0700, Bryan Turner wrote:
-
-> Here, though, you've _explicitly limited_ Git to only the copied file.
-> It's not allowed to consider any others, which means it can't "see"
-> the source path anymore. As a result, the copy is detected as a
-> straight add. Note that --find-copies-harder means the diff machinery
-> is allowed to consider files that weren't modified in the commit as
-> possible sources for copies, but that's still subject to your explicit
-> filtering. In other words, if PATH_TO_SOURCE_FILE wasn't modified,
-> running this would _not_ see a copy:
+On September 10, 2018 4:09 AM, Sergei Haller wrote:
+> my problem is basically the following: my git server (https) requires
+> authentication using a clent x509 certificate.
 > 
-> git show -C 055f6c89fa4506037d1621761f13430f469b8029  --
-> PATH_TO_MY_COPIED_FILE PATH_TO_SOURCE_FILE
+> And I have multiple x509 certificates that match the server.
 > 
-> But running this would:
+> when I access the https server using a browser, the browser asks which
+> certificate to use and everything is fine.
 > 
-> git show -C -C 055f6c89fa4506037d1621761f13430f469b8029  --
-> PATH_TO_MY_COPIED_FILE PATH_TO_SOURCE_FILE
+> When I try to access the git server from the command line (git pull or similar),
+> the git will pick one of the available certificates (randomly or alphabetically)
+> and try to access the server with that client certificate. Ending in the
+> situation that git picks the wrong certificate.
 > 
-> No bugs here. Everything is working as intended, if not, perhaps, as
-> you expected.
+> I can workaround by deleting all client certificates from the windows
+> certificate store except the "correct" one => then git command line will pick
+> the correct certificate (the only one available) and everything works as
+> expected.
+> 
+> Workaround is a workaround, I need to use all of the certificates repeatedly
+> for different repos and different other aplications (non-git), so I've been
+> deliting and reinstalling the certificates all the time in the last weeks...
+> 
+> How can I tell git cmd (per config option??) to use a particular client
+> certificate for authenticating to the https server (I could provide fingerprint
+> or serial number or sth like that)
+> 
+> current environment: windows 10 and git version 2.18.0.windows.1
+> 
+> Would be absolutely acceptable if git would ask interactively which client
+> certificate to use (in case its not configurable)
+> 
+> (I asked this question here before:
+> https://stackoverflow.com/questions/51952568/multiple-git-accounts-
+> https-client-certificates-config
+> )
 
-Your explanation is correct. To be fair, though, it seems like
---find-copies-harder is made a lot less useful by the not considering
-the larger set of sources, since that's kind of its point. I'm not sure
-if this behavior actually is intentional, or simply what happens to
-occur based on the combination of features.
+Would you consider using SSH to authenticate? You can control which private key you use based on your ~/.ssh/config entries, which are case sensitive. You can choose the SSH key to use by playing with the case of the host name, like:
 
-You can do:
+github.com
+Github.com
+gitHub.com
 
-  git log -C C --full-diff $commit -- $path
+even if your user is "git" in all cases above. It is a bit hacky but it is part of the SSH spec and is supported by git and EGit (as of 5.x).
 
-to limit a traversal to commits touching $path, but still see the full
-diff (including possible copy sources). But AFAIK there's no option to
-limit the diff, but include extra copy sources.
+Cheers,
+Randall
 
-I'd be tempted to say we should do that automatically when
---find-copies-harder is in effect, but it's possible that some people
-actually do want the current behavior. For a single path it's silly, but
-if you did something like this:
+--
+Randall S. Becker
+Managing Director, Nexbridge Inc.
+LinkedIn.com/in/randallbecker
++1.416.984.9826
 
-  git show -C -C $commit -- foo/
 
-that would find differences in the foo/ directory, and find copies only
-from sources in foo/. That limits the result, but also limits the
-effort, which can be important given the cost of copy detection.
 
--Peff
