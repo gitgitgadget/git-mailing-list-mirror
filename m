@@ -6,65 +6,64 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 53BB91F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 16:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 831D31F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 16:55:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728754AbeIJVs7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 17:48:59 -0400
-Received: from mail-wm0-f65.google.com ([74.125.82.65]:35631 "EHLO
-        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727989AbeIJVs6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 17:48:58 -0400
-Received: by mail-wm0-f65.google.com with SMTP id o18-v6so22278806wmc.0
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:53:58 -0700 (PDT)
+        id S1728795AbeIJVud (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 17:50:33 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]:33625 "EHLO
+        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727989AbeIJVuc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 17:50:32 -0400
+Received: by mail-wr1-f54.google.com with SMTP id v90-v6so22764429wrc.0
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:55:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=u+go1WJ3J6W5ELRmA77uZStRhI4bUMNb94wWfE5sHIo=;
-        b=ozapJmoRTfuXXKcuE9l/zSuanfKv1WcDm0l/mgu2I+QRbQA5MerU4dPeHbteWbsire
-         8s94XNgZb+hGQCehrjiKTVXmfZaIT5Ma+94NhEqZ0fSJSaPWKQJ0Vc31GyGGDfyvoabB
-         60b7m0fmwaE1TbeIdKIOSFLwzAmlfumCevaekVbCLTiSzDViymsUSsfUtB4wT7QM1ueD
-         Q+ZSFqlJdVNJnAMK5xWPqyPRDTnqbmvO+yQllxFx6I4kIsjaLh/71cUSDgOE2yjLwsEi
-         LgJx5fYdJAKIfTZpdMSBrD0iNq6waOHSyytns/GcinT4sVey+ZURalqJ1bJHaT2EmdJq
-         aWZQ==
+        bh=JE5A2l4x8Uthiij43jRcFenuZidll3SySeLb5DxyigE=;
+        b=plhndaRn9/ZQonZJ/mmWyYMVTOKuBnf34YGtHCAld1dvfc7Pl1i7G+f7eGXCtPdSXC
+         uN4PZ25w0zQsoGRv8CC4rb+89OeYyjWArYDtmaV9TGTQmTZ9jRNP8XspxJFYfzOyOEnw
+         CfF4xL7UuV+mEQgVfS7PwjSZYk1Mt0llJkdItRlo0LYWJm/+d8mc1ztr1x5b3BRekK+E
+         ee4EzWDYPW2hcU/10yCQk7qDSWDmu7zbBJuDCQsnovgpLYdRtXgMV0odJXhz2LTW1pXo
+         NV/BX8/+WOPfyWJ+RyvZ04sEAoYply0KmqJR4BdCL3Qv+dZfH2O8JkZnBkEzSniKswpv
+         nBGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=u+go1WJ3J6W5ELRmA77uZStRhI4bUMNb94wWfE5sHIo=;
-        b=ZyVouV+hi+tSJ9vR/6XUVLRwPu4ErEdZYiCNCL8Hkvd7lpSJqKw/s1HjZvwcESrkls
-         UUt04YFhJ8WPAvHl4sI1PQxTZgPozyhS2HeTxitdPkINYGzUfClN4mlXBJJjap6kXB+/
-         lWl+PzkMBrVFK7NdldlgMHyGJNoxEfPYS8klz9AW6JrRhcpNwhsFH0Xk776/UEuKsEoZ
-         Oc6RwIWjgHxGYfpTPE2cpftzXwdxi9nP2+nMUAIiKfRPkbLa2PblEMx4q+l6EFuHHT6V
-         60aq01kiiBxbylAN2rtlqBxMHZjFbAZSnqEFOlzqmd/7DoXbmZqijBi/PW+4jN6MpXhO
-         aRig==
-X-Gm-Message-State: APzg51Ddy/O2YQEHZdaQiwLh67Gm6YjpnCEyHpUmjY8j+JFEO5nJF0JD
-        ppnehT7RjqQ7gOjDAWk4WL0=
-X-Google-Smtp-Source: ANB0VdaYqCUIrIQaE54kW2XcbahOquTbsRkaIVMJIcmvLGmmfQ/wHjLEetKQhPtoCaszUYCNLxmdwA==
-X-Received: by 2002:a1c:e141:: with SMTP id y62-v6mr1420315wmg.138.1536598437467;
-        Mon, 10 Sep 2018 09:53:57 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z4-v6sm13730017wrt.89.2018.09.10.09.53.56
+        bh=JE5A2l4x8Uthiij43jRcFenuZidll3SySeLb5DxyigE=;
+        b=BL7Y5BbCgs0ix88aQPUtXAfXyIsHdjXfRH/JCQCGnkbNSE2apzjTOrdt0y2z7jm0nn
+         vht/wG3QY1nbzXRKVQo+o+XefOo3P3RVkUCQfgpFxw+GlPrTH/DkN62gbAomYIxaInqm
+         ax72s9EPHCwedboA47DtIhJKfyW7mZ2Pt8y87efzPQB5bSXOSQYmWv0Di6YAHfJvbIfF
+         lZjQoMb0U6/aGkNSv2HweBHJ9KVqdoOgNzeNhB0mRVv/WqzQZbSs2EKPHHAEg3dxAJIK
+         yVYxPN6jEfpqaq+ew4b+oyicJ7A91s/z/ceoqxg5kOY8Dnj2YtnAW/X9cpW59+205cbk
+         ql8A==
+X-Gm-Message-State: APzg51CZ7E1o4UQJAXQ9UDRlDKWbAhav+PCbVXQzQPO888tBaILf7z+v
+        LCHEkovHE2vcZYDmsngb/Cc=
+X-Google-Smtp-Source: ANB0VdYVMpR4OL3Sxo3uqqQ/BRyNNaWkYbggfdkgv/I7/sJ7cHNghksEkErGidiK0NTvAqJL4CmYLw==
+X-Received: by 2002:adf:8103:: with SMTP id 3-v6mr15740822wrm.213.1536598531913;
+        Mon, 10 Sep 2018 09:55:31 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id v133-v6sm22903683wma.36.2018.09.10.09.55.30
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 09:53:56 -0700 (PDT)
+        Mon, 10 Sep 2018 09:55:30 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/4] un-breaking pack-objects with bitmaps
-References: <20180821184140.GA24165@sigill.intra.peff.net>
-        <20180821190701.GE30764@sigill.intra.peff.net>
-        <8736uud0gq.fsf@evledraar.gmail.com>
-        <20180831225558.GA22917@sigill.intra.peff.net>
-        <20180901074145.GA24023@sigill.intra.peff.net>
-        <87d0toqyj6.fsf@evledraar.gmail.com>
-Date:   Mon, 10 Sep 2018 09:53:56 -0700
-In-Reply-To: <87d0toqyj6.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 08 Sep 2018 08:43:57 +0200")
-Message-ID: <xmqq1sa1uwd7.fsf@gitster-ct.c.googlers.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Pratik Karki via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Pratik Karki <predatoramigo@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 10/11] builtin rebase: only store fully-qualified refs in `options.head_name`
+References: <20180808134830.19949-1-predatoramigo@gmail.com>
+        <pull.32.v2.git.gitgitgadget@gmail.com>
+        <aab01f0b8e15db37bc17630b4298148aeacf41e2.1536096424.git.gitgitgadget@gmail.com>
+        <20180908085207.GB10370@localhost>
+Date:   Mon, 10 Sep 2018 09:55:30 -0700
+In-Reply-To: <20180908085207.GB10370@localhost> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Sat, 8 Sep 2018 10:52:07 +0200")
+Message-ID: <xmqqva7dthq5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,16 +73,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-> I'm just reverting jk/pack-delta-reuse-with-bitmap out of next when
-> building my own package of git, but I think this really should be fixed
-> in that branch, either by merging the fix down or reverting the original
-> series out of next, I think just merging the fix down makes sense, but
-> have no strong opinion on it.
+>>  		} else {
+>> -			options.head_name = xstrdup("detached HEAD");
+>> +			free(options.head_name);
+>> +			options.head_name = NULL;
+>
+> Please use FREE_AND_NULL(options.head_name) here.
 
-Either is fine.  I am not moving 'next' beyond what is necessary for
-this release cycle during the pre-release freeze period, and because
-I thought that Peff was in favor of squashing in the changes to the
-original when the next cycle starts, I haven't bothered to merge the
-fix there yet.
+Good; did contrib/coccinelle/free.cocci catch this?
+
+>
+>>  			branch_name = "HEAD";
+>>  		}
+>>  		if (get_oid("HEAD", &options.orig_head))
+>> -- 
+>> gitgitgadget
+>> 
