@@ -2,89 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 307511F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 17:35:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CFE61F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 17:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727764AbeIJWaZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 18:30:25 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:43952 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726755AbeIJWaZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 18:30:25 -0400
-Received: by mail-wr1-f41.google.com with SMTP id k5-v6so22816917wre.10
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 10:35:15 -0700 (PDT)
+        id S1727256AbeIJWha (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 18:37:30 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42756 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726657AbeIJWha (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 18:37:30 -0400
+Received: by mail-wr1-f66.google.com with SMTP id v17-v6so22831114wrr.9
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 10:42:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=/A8l1Eh96Ozxt6a71+GTiozI/UlvEp1cKpecUAnCj+c=;
-        b=SGqH+b2tmrWXjsOtESRv/ae2kZ46XcC46JuAyw8Lowm+YglME6IkBaQeKNdTY+wm1d
-         0xjArI4Ib4+5N2Fp0De2UV1M3VU9ZGscE0ZpsdCeMa39ftfbvGRtgBNbWFY7JoZKfsoD
-         8k4a9IU8QP636qSPpmlldh8FMkz88TKs/mcERXDyTHQbzfqqQRP9NKI7QdvLb/3F6z7R
-         EopMn42lruChm2Ig4ZbmPn6D2G1afqFAZeWUdrwLGKtE1xLE/c6UiNX0AdupBl7zbfq+
-         /zBzpPHb7t7g480y2UXz8ya07Jjbko0ERqCS0/yksbVpvfamb7ARd1sxlth6RwAwQ8l7
-         gd1A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=x/lazhARZuto8PM4UTCXRRuw+79gjFME2Jq1Pyy+WmY=;
+        b=U/F7Lbqh3i6dwOAVrVAX1VcLzKLBkGDf3r1UYeE5BgizHfjyEq6xLV96hEAwsJl702
+         WHxlu8H9QyFsKflsuGn70k99GZ4b0n14D9mHgdRsbPFJaF0zQgEpuE68Cz/ewiW1xEl+
+         Bgv1q9qPZO+wUHtQpFEHJyR8e11o9aWgwVebmZDeOIWeNhcW6b5wJPEKvRBhOi6reaNo
+         SPpuprTW9hLHzrEEhhplbRRuUo/gRHupIbCMksDYDC+/GL9hKnpXeIDr3zjJIPitvbX+
+         A+8Q2mQut4QxLPHc0QLLWTSe8MUtroZf32zFVUKPwn4noutrCop/lzg1xHW5UVzjW5uU
+         TpFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/A8l1Eh96Ozxt6a71+GTiozI/UlvEp1cKpecUAnCj+c=;
-        b=IaTDr44K+8Vj9aC0Azvz8JWeWMxw34ZiHO/pScetj/oXaiDrfX3/hNYIJnb3bLyjel
-         ZywmfT28EGZ1f4lKR4eVKZHKlYDK0yBciZ8jbXHOwogPSNOXl/AWw/VCBkuW70emhNaj
-         mpoW8caxU64uY0z1WaU/QHSKqw+x4X4yIUMvxuZZOp5qRfqL6r0A3ZL3G7DjwK+1TS/2
-         meYIwT9yQTYzszkj/LiTbDgnrlut0vkFbH1Q/G6gxFV4TYcQI4tRLwz2x7aooTGg97VB
-         T1q0IPyNnfMmAF+DjpxKA39kwqjvJZrgCofHn9c4YLrx9xTxyzIy0fTN83hyhBOsqgOb
-         MvOw==
-X-Gm-Message-State: APzg51D6ajO1gV6SG7qU25geejVNT23OgGcCz+wXdeeT1ADrhmHKMD/m
-        s4lDNYju7AVUVrxlMgPYF5U=
-X-Google-Smtp-Source: ANB0Vdag+D5BePr/h3i4zG/bKqsrj1htvIx7XGNM36HCmFj6i1omqkCP3C1xSaMK/bJ+Aagt/kobGg==
-X-Received: by 2002:adf:d4c6:: with SMTP id w6-v6mr15551535wrk.185.1536600914903;
-        Mon, 10 Sep 2018 10:35:14 -0700 (PDT)
-Received: from esm (ipbcc18976.dynamic.kabel-deutschland.de. [188.193.137.118])
-        by smtp.gmail.com with ESMTPSA id j44-v6sm24290752wre.40.2018.09.10.10.35.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Sep 2018 10:35:13 -0700 (PDT)
-From:   "Eckhard =?iso-8859-1?Q?Maa=DF?=" <eckhard.s.maass@googlemail.com>
-X-Google-Original-From: Eckhard =?iso-8859-1?Q?Maa=DF?= <eckhard.s.maass@gmail.com>
-Date:   Mon, 10 Sep 2018 19:35:12 +0200
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Bryan Turner <bturner@atlassian.com>,
-        dylanyoungmeijer@gmail.com, Git Users <git@vger.kernel.org>
-Subject: Re: [Possible GIT Bug]
-Message-ID: <20180910173512.GA22152@esm>
-References: <CAPGJNu5RPXjeib-vayVzmFkU9cZ=h5o5VDoM1vQqv2+HgtNXLw@mail.gmail.com>
- <CAPGJNu5=GkiALR1=RYgHLv3NDrycqv13jpU5_=SOW-yWtRXduw@mail.gmail.com>
- <CAGyf7-EFiZ7ouUPDMtv3eb57QEiM2pkavyKQe7iNO7+eBeuZ9w@mail.gmail.com>
- <20180910132452.GB5233@sigill.intra.peff.net>
- <xmqqin3duypt.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=x/lazhARZuto8PM4UTCXRRuw+79gjFME2Jq1Pyy+WmY=;
+        b=JcjiRiixVIY4cHN3cmw3tjJVyye08clm2nBbClfTyGa3aoc8e6kak5AVfvSgEhBPzm
+         P7agz5DBUt3IybU0CPf4St56B33ESG+qzC0unK15dfgiOvilN2JvlrPaXY2Ifge4Tn2n
+         RWLM9Fd5Zt5IJqHqSJN3ogAtZZmlMPvMay/1YDlxiIoSmUD+LEvxttHyFZLDIrksV9Fe
+         GOL32I7taE4lxLsKZPMvscNQyUgnjr5gUZuUE3Wq25dime6CFML0oZiiHLPkb7EYUGBx
+         s8qiQdmuDwII5Irx5tLzRRMYY35/oo/XQ9Tbtl+I5My+/ozXzbO98zz3wvTlDYxI0smz
+         pyYA==
+X-Gm-Message-State: APzg51CAprctNU+WyqlfGA7oOeX8Isv/bhTYxEc8XPtYgtt2VDJTKThK
+        yvATk1jL+0Trfu9bQB7bKjY=
+X-Google-Smtp-Source: ANB0VdYlsibFi4AXmh4PIZQgyHw1vhylmNPF+pzjeEbz5DdhP2JIIZYA/d9T3BgMqlxg8eo8/clScA==
+X-Received: by 2002:adf:b7c9:: with SMTP id t9-v6mr15259006wre.274.1536601337403;
+        Mon, 10 Sep 2018 10:42:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 204-v6sm21309514wmh.25.2018.09.10.10.42.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 10:42:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBR?= =?utf-8?B?dcOibg==?= 
+        <vnwildman@gmail.com>
+Subject: Re: [GIT PULL] l10n updates for 2.19.0 round 2
+References: <CANYiYbGT7R6dLwGpefH=nUxyvdHBuKF1tTtyLy9GRnK5FdH6Kw@mail.gmail.com>
+Date:   Mon, 10 Sep 2018 10:42:16 -0700
+In-Reply-To: <CANYiYbGT7R6dLwGpefH=nUxyvdHBuKF1tTtyLy9GRnK5FdH6Kw@mail.gmail.com>
+        (Jiang Xin's message of "Sun, 9 Sep 2018 22:45:51 +0800")
+Message-ID: <xmqqefe1tfk7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqin3duypt.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 09:03:10AM -0700, Junio C Hamano wrote:
-> It is neither but if I have to pick one between the two, it is much
-> closer to the former than the latter.  The primary source of this is
-> that we have only *one* pathspec given to the diff machinery, but in
-> order to implement your ideal "find harder", you'd need *two*.  That
-> is, one set of paths for which you are interested in their origin,
-> and the other set that you allow the machinery to consider as possible
-> origins.  Since we can only give one pathspec machinery, that one
-> pathspec is used to specify both of these sets.
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-How does tihs compare to `--follow`? With that knob active the machinery
-indeed uses the whole repository for finding renames and/or copies. Is
-this the only exception then?
+> Hi Junio,
+>
+> The following changes since commit 2f743933341f276111103550fbf383a34dfcfd38:
+>
+>   Git 2.19-rc1 (2018-08-28 12:01:01 -0700)
+>
+> are available in the Git repository at:
+>
+>   git://github.com/git-l10n/git-po tags/l10n-2.19.0-rnd2
+>
+> for you to fetch changes up to c1ac5258dccbb62438c8df73d728271f7a316c99:
+>
+>   l10n: zh_CN: for git v2.19.0 l10n round 1 to 2 (2018-09-09 22:38:39 +0800)
+>
+> ----------------------------------------------------------------
+> l10n for Git 2.19.0 round 2
 
-Take care,
-Eckhard
+Thanks.
