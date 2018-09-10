@@ -2,94 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70BC11F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 13:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DCD911F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 14:07:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728597AbeIJSbQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 14:31:16 -0400
-Received: from cloud.peff.net ([104.130.231.41]:44734 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727970AbeIJSbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 14:31:15 -0400
-Received: (qmail 5828 invoked by uid 109); 10 Sep 2018 13:37:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 10 Sep 2018 13:37:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7215 invoked by uid 111); 10 Sep 2018 13:37:20 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 10 Sep 2018 09:37:20 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 10 Sep 2018 09:37:04 -0400
-Date:   Mon, 10 Sep 2018 09:37:04 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v6 17/21] range-diff: populate the man page
-Message-ID: <20180910133704.GC5233@sigill.intra.peff.net>
-References: <pull.1.v5.git.gitgitgadget@gmail.com>
- <pull.1.v6.git.gitgitgadget@gmail.com>
- <8c5543a0667fffe0cb0684427f726fdfb75b28d0.1534159977.git.gitgitgadget@gmail.com>
- <87lg8a7wj2.fsf@evledraar.gmail.com>
- <20180909165431.GA17224@localhost>
- <87k1nu7fm0.fsf@evledraar.gmail.com>
+        id S1728498AbeIJTBs (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 15:01:48 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40401 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727695AbeIJTBs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 15:01:48 -0400
+Received: by mail-wr1-f68.google.com with SMTP id n2-v6so22104555wrw.7
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 07:07:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/N3yBE+pAfU7+dZqRzFMfa1/GUC3HVDHCqcCLOzu0UM=;
+        b=FXgn1IQRWrwonVHbGU6aQ3a0iqWwkDCS2cwK8DCw90XDy5mi6w1JX3ahi2GVNsd5Q9
+         JJllwbw2tyM0Alb5URe5nAeRUQ63oIGGYpgrb06mwNwhBIE6AS83RXEwTNdD++pI4msD
+         /sm71deNvv5Pc73laK05tcAdmg7EddN7EvzK0ovZz65naSDmrmn3gtLGX8bnxSZ2Wiqa
+         lutxZIZ3L+GLuJVsIFJR3IjlZlHGZZp7b375Ca0XkTS0pVBtjfuUnpLnb3cDRfIoaqSQ
+         Oxd4upPR0Zrn2v3yYr7vgN/FX4muBup9LXwS1dxgRXp4NZJ63KfigTKwUcC9S22A4cUp
+         9i1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/N3yBE+pAfU7+dZqRzFMfa1/GUC3HVDHCqcCLOzu0UM=;
+        b=WRixB3gvyrwp3QmS+LCn9d4A0HZXN3e3XyOy7ikJ2BiTrFBF2lEuhdrCc8Bvnf+9MT
+         sC0znzj56P3OdSrjZF03fWoflFhs7L2j4XpaLmoPQus5nNCRHWZDWe7gTOzyQnxyU4eT
+         HCWIG+Sl+yU+yQdDXdw4nu2X5BBVZ0U63UtTuZGiWUA7RjAn+j3QpsVV2wkYk1Pj94lD
+         bVL4I3+QdzaVw4h4SqewZCm9ibK66r4Nc7jS4tvn0jIYI4lZxCtMRn1rtF4KDAJvlUxQ
+         e3qTD1HR3ZgedOyiBdv4SYHUwyVkQfKInb0B1r/i/IHDxGkMYvGKqKmQMgjVxedeYiat
+         ei0A==
+X-Gm-Message-State: APzg51AITPc8AG/nnthw6k8rIOkvpd2Vi6NCAk/KAEgjU/gp5QHCvx+h
+        9P+cD7WSySDYIUq00o5DiutJyEnZ3Fs=
+X-Google-Smtp-Source: ANB0Vdbd/Bby0FG9X0scVH8MZb5eN8LPirYD/yrcYq5BZtieDkNVvMZwVa4DRCZ/tCw0CO0pKEMmZA==
+X-Received: by 2002:adf:ef89:: with SMTP id d9-v6mr15310587wro.195.1536588449237;
+        Mon, 10 Sep 2018 07:07:29 -0700 (PDT)
+Received: from localhost.localdomain (x590d3ee7.dyn.telefonica.de. [89.13.62.231])
+        by smtp.gmail.com with ESMTPSA id e7-v6sm20307809wru.46.2018.09.10.07.07.27
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 10 Sep 2018 07:07:28 -0700 (PDT)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] t3701-add-interactive: tighten the check of trace output
+Date:   Mon, 10 Sep 2018 16:07:14 +0200
+Message-Id: <20180910140714.19617-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.19.0.rc2.140.g09cf9e37c9
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1nu7fm0.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 09, 2018 at 07:19:51PM +0200, Ævar Arnfjörð Bjarmason wrote:
+The test 'add -p does not expand argument lists' in
+'t3701-add-interactive.sh', added in 7288e12cce (add--interactive: do
+not expand pathspecs with ls-files, 2017-03-14), checks the GIT_TRACE
+of 'git add -p' to ensure that the name of a tracked file wasn't
+passed around as argument to any of the commands executed as a result
+of undesired pathspec expansion.  This check is done with 'grep' using
+the filename on its own as the pattern, which is too loose a pattern,
+and would match any occurrences of the filename in the trace output,
+not just those as command arguments.  E.g. if a developer were to
+litter the index handling code with trace_printf()s printing, among
+other things, the name of the just processed cache entry, then that
+pattern would mistakenly match these as well, and would fail the test.
 
-> >> And then I turn that into:
-> >>
-> >>     # @{u} because I happen to be on 'master' and it's shorter to type
-> >>     # than origin/master...
-> >>     git range-diff @{u} 38b5f0fe72...718fbdedbc
-> >
-> > I don't understand what you want with that @{u} or 'origin/master' in
-> > the first place.  It's unnecessary, the three-dot notation on its own
-> > works just fine.
-> 
-> Maybe I've been using the wrong mode all along, I passed over by habits
-> from tbdiff, which were surely copy/pasted from somewhere.
-> 
-> Looking at the git-range-diff manpage though it recommends <base> <rev1>
-> <rev2> over <rev1>...<rev2> when the topic has been rebased, which is
-> usually the case for e.g. a topic that's submitted to git.git (usually
-> be the time feedback has been gathered & a re-submission has been made
-> Junio has pushed another "master").
-> 
-> So isn't "<base> <rev1> <rev2>" the right thing to use over
-> "<rev1>...<rev2>" for git.git use? I think so, but I'm not sure.
+Tighten this 'grep' pattern to only match trace lines that show the
+executed commands.
 
-The problem with <rev1>...<rev2> is that it finds the actual merge base,
-not the beginning of the topic. So if you have a 5-patch topic, but the
-first two patches weren't changed in the rebase, it won't show them at
-all!  I made this mistake in [1], for example.
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
+ t/t3701-add-interactive.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For a force-push, though, you may not care about seeing the topic as a
-whole, and that mid-topic merge-base could be just fine. So pasting just
-the "A...B" works.
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index 609fbfdc31..65dfbc033a 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -540,7 +540,7 @@ test_expect_success 'add -p does not expand argument lists' '
+ 	# update it, but we want to be sure that our "." pathspec
+ 	# was not expanded into the argument list of any command.
+ 	# So look only for "not-changed".
+-	! grep not-changed trace.out
++	! grep -E "^trace: (built-in|exec|run_command): .*not-changed" trace.out
+ '
+ 
+ test_expect_success 'hunk-editing handles custom comment char' '
+-- 
+2.19.0.rc2.140.g09cf9e37c9
 
-I don't think your "@{u} A...B" makes any sense. You're giving _two_
-bases, which is weird. But even if you wanted to ignore the "..." base
-as a convenience to users of fetch, @{u} does not necessarily have
-anything to do with the @{upstream} of the topic at "A". You really want
-branch@{u}, which is on a separate part of the fetch output line (and
-your branch@{u} and the remote's are not necessarily the same, either;
-in this case you probably do not even have that branch checked out).
-
--Peff
-
-[1] https://public-inbox.org/git/20180821195102.GB859@sigill.intra.peff.net/
