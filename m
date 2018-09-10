@@ -2,91 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB0471F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 21:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A50A1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 21:22:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726396AbeIKCSP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 22:18:15 -0400
-Received: from mail-qt0-f201.google.com ([209.85.216.201]:52539 "EHLO
-        mail-qt0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726137AbeIKCSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 22:18:15 -0400
-Received: by mail-qt0-f201.google.com with SMTP id s1-v6so22845324qte.19
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 14:22:16 -0700 (PDT)
+        id S1726701AbeIKCSX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 22:18:23 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:42366 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbeIKCSW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 22:18:22 -0400
+Received: by mail-pg1-f194.google.com with SMTP id y4-v6so11096686pgp.9
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 14:22:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Wr0UcdbjFdv+aUbNtwig8rG6V+QRNiOKbyDd15H9k0o=;
-        b=hSFrZFcgpv8WPk7MPbcZD6p1fYIF87bmQ2zgOefd4exdw7+DLgIUx3wkWuTONZGTpb
-         kYiov5AoRNJ5xV0gVpDCvLleUh9+LVbETy02E3BzVUmpge9jTQGbklPBCsEQDIRjfvU3
-         cQByGE3GIXSPku5rBU8I72TxlSVvNmhQkjx541dP/4OzwFq/8L8Ivfj5XApfXk3X9iEl
-         krGF30QpQ/bsycNd5WJ+OU1AVTyMBI7D+YDRbU3uewCSe3ScU0XlF3B3Kv8npJxGkqQw
-         BrrX1AOC/a3oW+3/94YXrEiZdxppWfj9xo7Yc8QuKhfVLtYNsR5M39lldAfnH6fbU3l4
-         JXgw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=40BkNhu1HPyd9Pn5K89zldjSocotCuWe2hoR2mBavX4=;
+        b=PTLKtIbgmIPXBQAI1yyUTmYQ3+RLaqAztKilEoxV51lmO3FhTWR3eWG5TsgdW8Pl6w
+         4FIoYFQ1N2qlpFG/aNKeeCu++2AN6IYtth8vIwq0cTi/NZo+s9O7G/ALwaUpyuaJS3/v
+         lAGgXmJ9QBXhbw7dZYY/MuDK4D/BCJgOTOnQc7pJzxsdu4RKU9YDZgZ3g+zZ/NsqS2+o
+         Djdo6DO9PO3+VzA1+1Aze18MonmZX1pphEFnBCUsdQn0fUfnMnp6ivwSzZ0bHS4ODAC3
+         eEk3zYvy4RUH4my4jjAlY/fKWRqoq41+WVTiyfGy0P/PZiSkeYOIH8+nrdMCynNdVYaJ
+         xKcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Wr0UcdbjFdv+aUbNtwig8rG6V+QRNiOKbyDd15H9k0o=;
-        b=FVRCQ3WmdYihfKzGftUpQnryyKjPOiP4hP4QQo4QofVzwURUVDpIJZ+eLwYFLodBis
-         gsCh8j2cBD4QHZcZknjt5hBmE/QIia0+1jh6oxV38725aepsZHbl6SZXd9Mkl/DDGdUr
-         y500DI0jzjBp/e7DiMFv90kDVf8td0+LMuIH5uqCzmi2yQEdB9QhhQo3PoffS2NqOeI8
-         fRt6y8UvA8dk4uM5sgiJigHHh8yDzLsGWTcyxu4148Yk6oPacMfY6UUPEVs97R/DRTDK
-         d7RMIpbyOYFZMfbFEQXO2a3nUcDLjEnMbKjHzSKKoVwM/aUpzgI6i26JCKh6VruI+qTv
-         IyCw==
-X-Gm-Message-State: APzg51Co/PNVHG2MoPUuwv8pfCgpQT6n2g4jenzQB5kBDhpPXt2rkrbe
-        1qZ455GAxH4dNa0ve2+Dz/VuiwklkADLrHtq688J6+YDCnapSItDN/x8T/ZZPKNxOoF4pG4biOR
-        DyMnPLBzJZPwnzniGOTo3ktEIh6ZBShAl/4kAWWbyXdHvN5X64OfIntyXXbRI2+U=
-X-Google-Smtp-Source: ANB0VdYvBQ87uUuvWvqcVCHP1tshNxdqDG+ObhjkGTrGuyHjUDVV1mVlAE4gdv6FgLj43Wls1lqymFCcpwjHlg==
-X-Received: by 2002:a37:c8ca:: with SMTP id t71-v6mr7331728qkl.39.1536614536249;
- Mon, 10 Sep 2018 14:22:16 -0700 (PDT)
-Date:   Mon, 10 Sep 2018 14:21:57 -0700
-In-Reply-To: <20180522223208.GQ10623@aiede.svl.corp.google.com>
-Message-Id: <20180910212157.134291-1-steadmon@google.com>
-Mime-Version: 1.0
-References: <20180522223208.GQ10623@aiede.svl.corp.google.com>
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: [PATCH v2] config: document value 2 for protocol.version
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     jrn@google.com, Brandon Williams <bmwill@google.com>,
-        Josh Steadmon <steadmon@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=40BkNhu1HPyd9Pn5K89zldjSocotCuWe2hoR2mBavX4=;
+        b=hw0MylvBE2RCGMo+sUd5ETVs4ZqMNX7IKv+AxpDdLjHe0Jy0RxVGi+aDtlQLW5H3Fn
+         AN5O0VYWWaRGuMPfUZUEPgGUWseUzPs0W9thIixqKRhm4fxzmBWSbswMpe2HE0P+RliL
+         TGCNlMY7cOIna4ymQkDjjsiiwaHDwuMmWPW7uueHjFnUlx7U76qx+ETrFB8+73tg1S3m
+         psr7lXI7nrFzq/8sMOoc91MdaQfoV+x15BaP1N1gUJxMnSLAMUJyBQBKEZFWfRPTvKDt
+         ihtU1Vxq25H5Oe0pyeIR1F1ZB4L2zGgCMKwporvvBVaPNoIL6IOgEqMmY5kISfUtQYtb
+         MOgQ==
+X-Gm-Message-State: APzg51CC+tQkNOPPwIGoulllQKnKmLM1/ThdNq1aLrzu861hqS5CiF81
+        Q4AVv6mrf72t9Fcc+UMgclyiF3B3
+X-Google-Smtp-Source: ANB0VdZUTRxep2oHX8rZJP0ZhWxKlcAHaay+7N4AEo9yfO4bYb8KYQ6s4MYnneeUNWH2enYyyHVc2w==
+X-Received: by 2002:a62:63c2:: with SMTP id x185-v6mr25738797pfb.13.1536614544000;
+        Mon, 10 Sep 2018 14:22:24 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id k126-v6sm37708843pgk.26.2018.09.10.14.22.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 14:22:23 -0700 (PDT)
+Date:   Mon, 10 Sep 2018 14:22:21 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+Subject: Re: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
+Message-ID: <20180910212221.GG26356@aiede.svl.corp.google.com>
+References: <20180910052558.GB55941@aiede.svl.corp.google.com>
+ <20180910205359.32332-1-max@max630.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180910205359.32332-1-max@max630.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Brandon Williams <bmwill@google.com>
+Hi,
 
-Update the config documentation to note the value `2` as an acceptable
-value for the protocol.version config.
+Max Kirillov wrote:
 
-Signed-off-by: Brandon Williams <bmwill@google.com>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Documentation/config.txt | 2 ++
- 1 file changed, 2 insertions(+)
+> From: Jeff King <peff@peff.net>
+> Subject: [PATCH] http-backend: Treat empty CONTENT_LENGTH as zero
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index eb66a1197..ee3b5dd8e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2828,6 +2828,8 @@ protocol.version::
- * `1` - the original wire protocol with the addition of a version string
-   in the initial response from the server.
- 
-+* `2` - link:technical/protocol-v2.html[wire protocol version 2].
-+
- --
- 
- pull.ff::
--- 
-2.19.0.rc2.392.g5ba43deb5a-goog
+micronit: s/Treat/treat/
 
+> There is no known case where empty body it used by a server as
+> instruction to read until EOF, so there is no need to violate the RFC.
+> Make get_content_length() return 0 in this case.
+>
+> Currently there is no practical difference, as the GET request
+> where it can be empty is handled without actual reading the body
+> (in get_info_refs() function), but it is better to stick to the correct
+> behavior.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
+> The incremental. Hopefully I described the reason right. Needs "signed-off-by"
+
+Thanks.  I am wondering if we should go all the way and do
+
+	ssize_t val;
+	const char *str = getenv("CONTENT_LENGTH");
+
+	if (!str || !*str)
+		return 0;
+	if (!git_parse_ssize_t(str, &val))
+		die(...);
+	return val;
+
+That would match the RFC, but it seems to make t5510-fetch.sh hang,
+right after
+
+  ok 165 - --negotiation-tip understands abbreviated SHA-1
+
+When I run with -v -i -x, it stalls at
+
+  ++ git -C '/usr/local/google/home/jrn/src/git/t/trash directory.t5510-fetch/httpd/www/server' tag -d alpha_1 alpha_2 beta_1 beta_2
+  Deleted tag 'alpha_1' (was a84e4a9)
+  Deleted tag 'alpha_2' (was 7dd5cf4)
+  Deleted tag 'beta_1' (was bcb5c65)
+  Deleted tag 'beta_2' (was d3b6dcd)
+  +++ pwd
+  ++ GIT_TRACE_PACKET='/usr/local/google/home/jrn/src/git/t/trash directory.t5510-fetch/trace'
+  ++ git -C client fetch --negotiation-tip=alpha_1 --negotiation-tip=beta_1 origin alpha_s beta_s
+
+Do you know why?
+
+Thanks,
+Jonathan
