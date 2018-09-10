@@ -2,126 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 146481F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 19:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 485DB1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 19:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728855AbeIKAks (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 20:40:48 -0400
-Received: from bsmtp7.bon.at ([213.33.87.19]:49665 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728110AbeIKAkr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 20:40:47 -0400
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 428JRP67myz5tlR;
-        Mon, 10 Sep 2018 21:45:05 +0200 (CEST)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 8B66E2E3D;
-        Mon, 10 Sep 2018 21:45:05 +0200 (CEST)
-From:   Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 2/2] mingw: fix mingw_open_append to work with named
- pipes
-To:     jeffhost@microsoft.com
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.35.git.gitgitgadget@gmail.com>
- <pull.35.v2.git.gitgitgadget@gmail.com>
- <f0361dd306d19fa741c813885d240e041dc09a7a.1536599118.git.gitgitgadget@gmail.com>
-X-Mozilla-News-Host: news://nntp.gmane.org
-Message-ID: <a309396f-bb33-477d-5d92-a98699f5a856@kdbg.org>
-Date:   Mon, 10 Sep 2018 21:45:05 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1728873AbeIKAsM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 20:48:12 -0400
+Received: from out1-smtp.messagingengine.com ([66.111.4.25]:37073 "EHLO
+        out1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728153AbeIKAsM (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Sep 2018 20:48:12 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id 58F9B21B03;
+        Mon, 10 Sep 2018 15:52:31 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 10 Sep 2018 15:52:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stason.org; h=cc
+        :content-transfer-encoding:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-sender
+        :x-me-sender:x-sasl-enc; s=fm1; bh=3U1YuYJqQw2Pk5DOHKPCJ8sOpqSSt
+        yU7B2kqV9FWd+I=; b=l3G8gC07nk9zpKkK+8W3YyPCF6T9leHYx7MhsBzOX/TmU
+        IO+64BN2eQjZI5bLuTrA1cf6va+W9d2RJk2zqS5josn70IyroI+uT5Ddp161mgBI
+        rfp3B8XGkRJ62SFvZjczn4Ijjht4ciVLylqFdQ3op3eZs6m51WFBvxLcCR5mv2fW
+        gEoJ0PmAJGr9Nj5FTLkvlekNfCpUi5nUbIc36QJnSZRqBpUEl8uNUQAorRxSTJjS
+        erLAoOIgP3ulxN1UsHYhQI9P7H3AcKPsL6rrxOaOAE4DuJ961oZh7HTqc7x5lhSl
+        xXI8soFXKca78xkSXx8Sx4GL9mT2rSvXVF1afc06w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:in-reply-to:message-id:mime-version:references
+        :subject:to:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=3U1YuY
+        JqQw2Pk5DOHKPCJ8sOpqSStyU7B2kqV9FWd+I=; b=bJn82DcTOUXDsPigGOjNk8
+        OD/vzTEwRa9DhPMI7itLx5qnwAv4gDtmPtX0OfNxVwz9FpPsper2WV6+jq4Hxrsb
+        t4eZ+cb0XVoOrABiHCO8VGd+LETgKMl3tfggF7J12ZdjHChROq2BLjCj5jyftgNp
+        3ES0sbxedml0eS14kbPg86zwsRTo9ou+1nEapycYowcTR0GKh7q3hJ8gWB72x3kD
+        dndc+m4LRdy1fihbrilLK7EuPlyvau6aeUdSlwYBgKUkgjHBOqbBJu84zcwyIJRy
+        /UFdQ6TPel2ONxZzmCV+3JVkOv9FLXiLFWMAul/e6+euVhfsZKirTtnfoZWgMOBA
+        ==
+X-ME-Proxy: <xmx:fsuWW6ah2fbnHhcGKNfsVZpQX4B-IGn6rm4mDPGhA_wqgaT1v9RQIQ>
+    <xmx:fsuWW9ntNc_UJbgmA1-MG_SaQ1icuOVuL_M_IxKsAD8OWQojIejmng>
+    <xmx:fsuWW2yEjUefwzwWPxKLgr5qWOtOs1muHFp1FQw4E77H9lC48vQixQ>
+    <xmx:fsuWW7PnkEEksShhzCGXrqwSZv2tbZRoZ-Xz-k81gL9QXrpuwtQDGA>
+    <xmx:fsuWW6RkeYuVgfmy2yd6QvR5ZPQZmr5pbar0iG1l27F1nhREIQZvOg>
+    <xmx:f8uWW6UNDIT0i8N568FiY7f-CnHyzRXxO0xuzAYMw-lwmACLSZ0-Vg>
+X-ME-Sender: <xms:fsuWW7EhjiMtB5iddFPT_O7-ABneGFQJsqz3YQ64tUzjFWh96I7DVw>
+Received: from [192.168.0.10] (s0106f0f249e4dad3.gv.shawcable.net [96.54.245.187])
+        by mail.messagingengine.com (Postfix) with ESMTPA id 4641A10294;
+        Mon, 10 Sep 2018 15:52:30 -0400 (EDT)
+Subject: Re: git silently ignores include directive with single quotes
+To:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
+ <20180908212256.GB31560@sigill.intra.peff.net>
+ <xmqqr2i1thbs.fsf@gitster-ct.c.googlers.com>
+ <20180910171422.GA26356@aiede.svl.corp.google.com>
+ <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
+ <20180910183557.GD26356@aiede.svl.corp.google.com>
+ <xmqq1sa1tb4p.fsf@gitster-ct.c.googlers.com>
+From:   Stas Bekman <stas@stason.org>
+Organization: Hope, Humanized
+Message-ID: <b6446834-04e1-ca65-350e-5847e689e2ea@stason.org>
+Date:   Mon, 10 Sep 2018 12:52:29 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <f0361dd306d19fa741c813885d240e041dc09a7a.1536599118.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+In-Reply-To: <xmqq1sa1tb4p.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-CA
 Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 10.09.18 um 19:05 schrieb Jeff Hostetler via GitGitGadget:
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 858ca14a57..f87376b26a 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -341,6 +341,19 @@ int mingw_mkdir(const char *path, int mode)
->   	return ret;
->   }
->   
-> +/*
-> + * Calling CreateFile() using FILE_APPEND_DATA and without FILE_WRITE_DATA
-> + * is documented in [1] as opening a writable file handle in append mode.
-> + * (It is believed that) this is atomic since it is maintained by the
-> + * kernel unlike the O_APPEND flag which is racily maintained by the CRT.
-> + *
-> + * [1] https://docs.microsoft.com/en-us/windows/desktop/fileio/file-access-rights-constants
-> + *
-> + * This trick does not appear to work for named pipes.  Instead it creates
-> + * a named pipe client handle that cannot be written to.  Callers should
-> + * just use the regular _wopen() for them.  (And since client handle gets
-> + * bound to a unique server handle, it isn't really an issue.)
-> + */
->   static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
->   {
->   	HANDLE handle;
-> @@ -360,10 +373,12 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
->   			NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
->   	if (handle == INVALID_HANDLE_VALUE)
->   		return errno = err_win_to_posix(GetLastError()), -1;
-> +
->   	/*
->   	 * No O_APPEND here, because the CRT uses it only to reset the
-> -	 * file pointer to EOF on write(); but that is not necessary
-> -	 * for a file created with FILE_APPEND_DATA.
-> +	 * file pointer to EOF before each write(); but that is not
-> +	 * necessary (and may lead to races) for a file created with
-> +	 * FILE_APPEND_DATA.
->   	 */
->   	fd = _open_osfhandle((intptr_t)handle, O_BINARY);
->   	if (fd < 0)
-> @@ -371,6 +386,23 @@ static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
->   	return fd;
->   }
->   
-> +#define IS_SBS(ch) (((ch) == '/') || ((ch) == '\\'))
-> +/*
-> + * Does the pathname map to the local named pipe filesystem?
-> + * That is, does it have a "//./pipe/" prefix?
-> + */
-> +static int mingw_is_local_named_pipe_path(const char *filename)
-> +{
-> +	return (IS_SBS(filename[0]) &&
-> +		IS_SBS(filename[1]) &&
-> +		filename[2] == '.'  &&
-> +		IS_SBS(filename[3]) &&
-> +		!strncasecmp(filename+4, "pipe", 4) &&
-> +		IS_SBS(filename[8]) &&
-> +		filename[9]);
-> +}
-> +#undef IS_SBS
-> +
->   int mingw_open (const char *filename, int oflags, ...)
->   {
->   	typedef int (*open_fn_t)(wchar_t const *wfilename, int oflags, ...);
-> @@ -387,7 +419,7 @@ int mingw_open (const char *filename, int oflags, ...)
->   	if (filename && !strcmp(filename, "/dev/null"))
->   		filename = "nul";
->   
-> -	if (oflags & O_APPEND)
-> +	if ((oflags & O_APPEND) && !mingw_is_local_named_pipe_path(filename))
->   		open_fn = mingw_open_append;
->   	else
->   		open_fn = _wopen;
+To add another report of a similar problem, of silent skipping and not
+of filepath quoting, I found this one:
 
-This looks reasonable.
+https://stackoverflow.com/questions/31203634/git-clean-filter-python-script-on-windows/52264440#52264440
 
-I wonder which part of the code uses local named pipes. Is it downstream 
-in Git for Windows or one of the topics in flight?
+The user created .gitconfig and added to .git/config:
 
--- Hannes
+[include]
+    path = .gitconfig
+
+Not realizing that the two were not in the same folder. And probably
+assuming that .git/config was referring to the root of repository, and
+not relative to .git/, which is a reasonable assumption.
+
+Of course he had no way of resolving this as git wasn't telling him
+where it wasn't finding the file. i.e.
+
+Can't find: ~/myrepo/.git/.gitconfig
+
+which would have instantly told him where the problem was.
+
+-- 
+________________________________________________
+Stas Bekman       <'))))><       <'))))><
+https://stasosphere.com  https://chestofbooks.com
+https://experientialsexlab.com https://stason.org
+https://stasosphere.com/experience-life/my-books
