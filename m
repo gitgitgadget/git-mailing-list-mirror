@@ -2,111 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 178F11F428
-	for <e@80x24.org>; Mon, 10 Sep 2018 18:35:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 391551F428
+	for <e@80x24.org>; Mon, 10 Sep 2018 18:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728021AbeIJXaz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 19:30:55 -0400
-Received: from mail-yb1-f194.google.com ([209.85.219.194]:45458 "EHLO
-        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727701AbeIJXaz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 19:30:55 -0400
-Received: by mail-yb1-f194.google.com with SMTP id h22-v6so8326836ybg.12
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 11:35:31 -0700 (PDT)
+        id S1728414AbeIJXbZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 19:31:25 -0400
+Received: from mail-pf1-f176.google.com ([209.85.210.176]:39780 "EHLO
+        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727882AbeIJXbZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 19:31:25 -0400
+Received: by mail-pf1-f176.google.com with SMTP id j8-v6so10900299pff.6
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 11:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=JTftMTv7T/3AzzGqH1M15fSLN7sUOelZTlWgK4bUzes=;
-        b=Kpa0E71CAS+9nZX7P4Kyn2jqcH8MfKAl7U+tYTZxbAa0y/Y3n3kOUYq9nqpMTrEl6C
-         CV17lDVKItOM6zWXFisIOAkQKnIojofWr/8H0EgSN2RYwqL6OxTO/8IJ2LAb1wwnO4x3
-         4aQ9oqJ4PUdqUTLg0+b3YmSe8cB9VkEu4t/KV2TvxSAYP/93DU8lTS9SIqxPY9wrsgab
-         O6XaO1T+0kBAXwNHVMB+iI0rrEHOCwe4aQmDhPYQ4lvoZa7VJDbt9BzVdPVh+0wEdgl1
-         JRHOC9J9yFMKyuuFeGKiJmSlhj/Mwf452NFYkt4bVtb70pAUi1FrHIxsGmNDmT4PCyXv
-         5iIw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RtsyjUfOiyFhTOwU6ZFeBlFVf7b9LM1plwLcphC+JGQ=;
+        b=nyPa3vb7wCkFywKCvI8Cc4SuoXrZlzO+yxlnd5UPazBAAA3VTPNRZm1kvR2iCGH8vK
+         gJ+czqcmOjyqfUc9jzu01DmYRo22SFOppTT5Q7SRiNDdmKB3yTSW4E+OLVgZOALgqbxv
+         8DVSMxVEiE5C7p8VTcLabbY9J7LkaeXxYTYWbF26YwkaIxU2gFQ4feVMkS1G+BMiMaiW
+         Cqmn2Efhjzj1ULOhk56wG44Ia+VagOopk5jiRYBeTGYa6+r9jBH3j4iReDNDSJDxNnXR
+         4/znmtyYckwaDKLh4JFNFDSayI3iziDfSlcGwmFKmJI/+PJQic9/3CE2uF8e14KN25nq
+         98NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JTftMTv7T/3AzzGqH1M15fSLN7sUOelZTlWgK4bUzes=;
-        b=tT1P+PSxyX9kYRRWthJM44DfQlVH8FiRnahSRpSNfpRNL0dzZO/OIL2PRIfu1xxgyI
-         vZBVel5GI5ICA/qmu2UoPVjBrK5E+NORe6vgLOaCz0Aw0rQZw040ODfE8lAhcv7YGUJg
-         DuT7eZRIx6gW9+6d+/fkQMjGX+CWLOKTmNaJpFvcd2zjqHaDomzdzoQVgC2NxNp4YdPN
-         lEY91lypyMOeRxwfCO4gGV04H1znhi/etF2oA0SxgAXo9FnO1kmRdlN1j35vi5xcv5RL
-         q2zncyzq2U730IWmor0//thevf3Z+RTlMgkdvd4p2OVfinf+2R7zJWDtwwSkiqMFBwas
-         jFCw==
-X-Gm-Message-State: APzg51D/94DqBNbl2zmcg5csb6woF4GwqcmShfp5IwTA+8pN1v3Q4e5G
-        Pf1K1tgzRzheUf/Jv2zPEoEI6NzsvCPAS7+ppgiDTQ==
-X-Google-Smtp-Source: ANB0VdaW5ZuGJ8NQMloj28q3lQSvDopN0kmeBgTXsMBYZslsICuayGEZGmOYYfSNHbFvc1g6IxwvxLuj1D5zMc91EqY=
-X-Received: by 2002:a25:41c3:: with SMTP id o186-v6mr10460425yba.493.1536604530935;
- Mon, 10 Sep 2018 11:35:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RtsyjUfOiyFhTOwU6ZFeBlFVf7b9LM1plwLcphC+JGQ=;
+        b=nfC0yB76X8v9/tcaWiYaTe6wnciu+eLcCHSQGHjSCyYBhUwk3NO7mn/5fOxzRka1uF
+         YxpHVRZSlztUD0Yc73uPssNBfzjoABnZ2vNq7KOzJH55DTua6Eu0jEofe9HQk0Hu1Xit
+         wiF56LdZQMGc4ChoWOEuZVB8dH+G8evhcBPFp+TryTnAN6kN8X0SuC/MKjdC0qnpEVCJ
+         Ol6A0EZXi0XE2wsBdr58kSPTQETYxBM02xzrXeRvkNa7HFw4GmQ2mAlnOLFBotl/j864
+         NuFkmopRjU2RLYzViKsdKx53U9ci69loJ219AsCDoMcKqNFKL3BK9AW/x6fygvdNmtL1
+         vdRg==
+X-Gm-Message-State: APzg51BiQBS0rzzMp8IKtbfwWP1FNxn7At/nrkZfI8JNhSCAgOTWPl9J
+        AmtMlps1MjXvKey6L5egVIJ2Phyh
+X-Google-Smtp-Source: ANB0VdbaAEnROeh3Y2MAIlTL8zt75KF04Hs6zzZcvs/wn5DwAKY/2nIlKyeMei/D2FDXqc3ZS5zpYA==
+X-Received: by 2002:aa7:84c2:: with SMTP id x2-v6mr25290619pfn.220.1536604560597;
+        Mon, 10 Sep 2018 11:36:00 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id c1-v6sm33671567pfg.25.2018.09.10.11.35.59
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 11:35:59 -0700 (PDT)
+Date:   Mon, 10 Sep 2018 11:35:57 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Stas Bekman <stas@stason.org>,
+        git@vger.kernel.org
+Subject: Re: git silently ignores include directive with single quotes
+Message-ID: <20180910183557.GD26356@aiede.svl.corp.google.com>
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
+ <20180908212256.GB31560@sigill.intra.peff.net>
+ <xmqqr2i1thbs.fsf@gitster-ct.c.googlers.com>
+ <20180910171422.GA26356@aiede.svl.corp.google.com>
+ <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20180903180932.32260-1-pclouds@gmail.com> <20180909085418.31531-1-pclouds@gmail.com>
-In-Reply-To: <20180909085418.31531-1-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 10 Sep 2018 11:35:19 -0700
-Message-ID: <CAGZ79kYiD5kRP5WaqYpxFBnXdP=c4bK3cumH=OBC6_ud0o1OnA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/23] Kill the_index part 4
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 9, 2018 at 1:54 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <p=
-clouds@gmail.com> wrote:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+
+>>  1. Treat single-quote as worth quoting in config.c::write_pair (line
+>>     2516).  This would already help with the original issue, since the
+>>     config would say
+>>
+>> 	[foo]
+>> 		bar = \'baz\'
+>>
+>>     allowing a quick diagnosis.
 >
-> The last patch 24/24 has been merged into individual patches to add
-> repo_ prefix and avoid breaking in-flight topics. "repo" argument is
-> also moved up in rerere(), diff_setup() and init_revisions().
+> I am mildly against this, as long as you feel that all the remaining
+> steps need to be marked with "(optional)", because this will give
+> readers an impression that somehow single-quote is special.  If we
+> do not intend to make it special at all, we shouldn't.
 
-yay!
-So eventually we'd want to rename back to short names or
-we just postpone that decision if we want that in the future?
+That's fair, especially because it would be inconsistent with shell
+command language, where single-quote inside double quotes is not
+special:
 
-> diff --git a/Documentation/technical/api-revision-walking.txt b/Documenta=
-tion/technical/api-revision-walking.txt
-> index 55b878ade8..83e62533a0 100644
-> --- a/Documentation/technical/api-revision-walking.txt
-> +++ b/Documentation/technical/api-revision-walking.txt
-> @@ -15,7 +15,7 @@ revision list.
->  Functions
->  ---------
->
-> -`init_revisions`::
-> +`repo_init_revisions`::
->
->         Initialize a rev_info structure with default values. The second
->         parameter may be NULL or can be prefix path, and then the `.prefi=
-x`
-> diff --git a/bisect.c b/bisect.c
-> index 560493acd2..6ae5e5b49e 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -632,7 +632,7 @@ static void bisect_rev_setup(struct rev_info *revs, c=
-onst char *prefix,
->         struct argv_array rev_argv =3D ARGV_ARRAY_INIT;
->         int i;
->
-> -       repo_init_revisions(revs, the_repository, prefix);
-> +       repo_init_revisions(the_repository, revs, prefix);
+	$ printf '%s\n' "\'"
+	\'
 
-Apparently I did not communicate clearly enough on the last round,
-Please note that the documentation is wrong with these
-patches applied:
+(I realize that backslash means something different in Git config; I'm
+just saying it would be another source of cognitive dissonance.)
 
-    `repo_init_revisions`::
+Updated proposal:
 
-         [...] The second
-         parameter may be NULL or can be prefix path, and then the `.prefix=
-`
+  1. Treat strings starting or ending with single-quote as worth
+     quoting in config.c::write_pair (line 3269).  This would already
+     help with the original issue, since the config would say
 
-but the prefix parameter is the _third_ parameter in either order.
+	[foo]
+		bar = "'baz'"
+
+     allowing a quick diagnosis.
+
+
+  2. (optional) Warn if a value is surrounded in single-quotes,
+     encouraging using surrounding double-quotes to disambiguate.
+
+  3. (optional) Error out if a value is surrounded in single-quotes,
+     encouraging replacing with or surrounding with double-quote,
+     depending on the user's intention.
+
+  4. (optional) Start treating wrapping single-quotes specially
+     somehow.
+
+As before, I think step 1 is a good idea, but I'm not convinced about
+any of the later steps.
+
+Thanks,
+Jonathan
