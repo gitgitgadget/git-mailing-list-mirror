@@ -6,79 +6,84 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20BD41F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 16:42:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53BB91F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 16:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728446AbeIJVhY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 17:37:24 -0400
-Received: from mail-wm0-f68.google.com ([74.125.82.68]:32976 "EHLO
-        mail-wm0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728372AbeIJVhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 17:37:24 -0400
-Received: by mail-wm0-f68.google.com with SMTP id r1-v6so5920029wmh.0
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:42:27 -0700 (PDT)
+        id S1728754AbeIJVs7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 17:48:59 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:35631 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727989AbeIJVs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 17:48:58 -0400
+Received: by mail-wm0-f65.google.com with SMTP id o18-v6so22278806wmc.0
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=H64MPAPRu1op6yBJVSFGPdRjaU5DFs+Mwvk+0GjzRLw=;
-        b=tHwrROMGC0cq8JuKc0CYDLoXCtgRd6x/6IAwHXHbGMR795EWv2dMaFe6tniJRkWBHb
-         w1EaHYWdr2JNruQItyDh006DBLcl6hyUxcxyj57Pbqo4907fEZX2Kxos1l/24xbbbG+A
-         vxxM3fLd+nVy1R2JMDefqHgdYuce490YjivDEwwq1Z2UIpNJOks8QUqAhI7V0tg3nLMC
-         HTjSGpvUPfYVGAln6f4TytTx+7rrp1q5TO7Yq52d7LwfA0A4Ypg2JPN4uhDtXo/oUxys
-         kJAilVnWWOgxnvNyn1O56uU6oJ7waF+5OkfhL4mh+i6zIOkBE1DtXvTl6mIV7FRQoFuY
-         RMfA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=u+go1WJ3J6W5ELRmA77uZStRhI4bUMNb94wWfE5sHIo=;
+        b=ozapJmoRTfuXXKcuE9l/zSuanfKv1WcDm0l/mgu2I+QRbQA5MerU4dPeHbteWbsire
+         8s94XNgZb+hGQCehrjiKTVXmfZaIT5Ma+94NhEqZ0fSJSaPWKQJ0Vc31GyGGDfyvoabB
+         60b7m0fmwaE1TbeIdKIOSFLwzAmlfumCevaekVbCLTiSzDViymsUSsfUtB4wT7QM1ueD
+         Q+ZSFqlJdVNJnAMK5xWPqyPRDTnqbmvO+yQllxFx6I4kIsjaLh/71cUSDgOE2yjLwsEi
+         LgJx5fYdJAKIfTZpdMSBrD0iNq6waOHSyytns/GcinT4sVey+ZURalqJ1bJHaT2EmdJq
+         aWZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=H64MPAPRu1op6yBJVSFGPdRjaU5DFs+Mwvk+0GjzRLw=;
-        b=Ot6tnasxSi2qYgTEF51b8YnsWK19LoAvwCTc80AzEdVXSLYZr5RPHz+vK3iH2n1GNj
-         ItAFj+17yI7IKRhuvq8l8A3MQDs0HpbkLA/CO8hPfuT5jj9OZVhExfZJnxyGKhR7CRln
-         BsgBmpxcx/PEswc0IM0sjG5OgvVwoaZMqmZ8n6gS2nD6eGiOal76hDtp+i0FguEvdW8N
-         lZoDdjSZfDnK+/zWDOn7EsxU4D7YRYNsvwlkb4slJhkNjGeazA60QWFalMoKlXLJvJQX
-         MmEh8IROPkSVD7yqpVsf/z77C8jPNi+oe+Ez8kgmuiOApvY9iarYWh5wzqrf6jZ+co6D
-         p77w==
-X-Gm-Message-State: APzg51BTULumJ3EZXTKmc5H8rjlNDNmMxlov09+LGSySYBGNxRgItdY/
-        UtmfJuFv8AbqLn8b3H9M2DlY8izl
-X-Google-Smtp-Source: ANB0VdZA4j0kDI8uaFc8CY0QqwhEClecuo2u99ChFm6WKhiZ0UookV5rY+wDTto2Gjm6Gd9madvS/A==
-X-Received: by 2002:a1c:f0a:: with SMTP id 10-v6mr1309164wmp.58.1536597746775;
-        Mon, 10 Sep 2018 09:42:26 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=u+go1WJ3J6W5ELRmA77uZStRhI4bUMNb94wWfE5sHIo=;
+        b=ZyVouV+hi+tSJ9vR/6XUVLRwPu4ErEdZYiCNCL8Hkvd7lpSJqKw/s1HjZvwcESrkls
+         UUt04YFhJ8WPAvHl4sI1PQxTZgPozyhS2HeTxitdPkINYGzUfClN4mlXBJJjap6kXB+/
+         lWl+PzkMBrVFK7NdldlgMHyGJNoxEfPYS8klz9AW6JrRhcpNwhsFH0Xk776/UEuKsEoZ
+         Oc6RwIWjgHxGYfpTPE2cpftzXwdxi9nP2+nMUAIiKfRPkbLa2PblEMx4q+l6EFuHHT6V
+         60aq01kiiBxbylAN2rtlqBxMHZjFbAZSnqEFOlzqmd/7DoXbmZqijBi/PW+4jN6MpXhO
+         aRig==
+X-Gm-Message-State: APzg51Ddy/O2YQEHZdaQiwLh67Gm6YjpnCEyHpUmjY8j+JFEO5nJF0JD
+        ppnehT7RjqQ7gOjDAWk4WL0=
+X-Google-Smtp-Source: ANB0VdaYqCUIrIQaE54kW2XcbahOquTbsRkaIVMJIcmvLGmmfQ/wHjLEetKQhPtoCaszUYCNLxmdwA==
+X-Received: by 2002:a1c:e141:: with SMTP id y62-v6mr1420315wmg.138.1536598437467;
+        Mon, 10 Sep 2018 09:53:57 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id p89-v6sm26893280wrc.97.2018.09.10.09.42.25
+        by smtp.gmail.com with ESMTPSA id z4-v6sm13730017wrt.89.2018.09.10.09.53.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 09:42:26 -0700 (PDT)
+        Mon, 10 Sep 2018 09:53:56 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] mingw: fix mingw_open_append to work with named pipes
-References: <pull.35.git.gitgitgadget@gmail.com>
-        <f433937d55974b75750cfc7d579a6a56109259a4.1536344387.git.gitgitgadget@gmail.com>
-        <1c524f56-2021-a961-168f-e5c6d7914ec2@kdbg.org>
-        <f207bc28-a303-5d63-e9f4-da8e4d466bd5@kdbg.org>
-        <0d38ec8e-3f4b-c0fb-ba6f-e2cef39e4db4@jeffhostetler.com>
-Date:   Mon, 10 Sep 2018 09:42:25 -0700
-In-Reply-To: <0d38ec8e-3f4b-c0fb-ba6f-e2cef39e4db4@jeffhostetler.com> (Jeff
-        Hostetler's message of "Mon, 10 Sep 2018 11:44:56 -0400")
-Message-ID: <xmqq5zzduwwe.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/4] un-breaking pack-objects with bitmaps
+References: <20180821184140.GA24165@sigill.intra.peff.net>
+        <20180821190701.GE30764@sigill.intra.peff.net>
+        <8736uud0gq.fsf@evledraar.gmail.com>
+        <20180831225558.GA22917@sigill.intra.peff.net>
+        <20180901074145.GA24023@sigill.intra.peff.net>
+        <87d0toqyj6.fsf@evledraar.gmail.com>
+Date:   Mon, 10 Sep 2018 09:53:56 -0700
+In-Reply-To: <87d0toqyj6.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Sat, 08 Sep 2018 08:43:57 +0200")
+Message-ID: <xmqq1sa1uwd7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> Yeah, this whole thing is a little under-documented for my tastes.
-> Let's leave it as you have it.  I'll re-roll with a fix to route
-> named pipes to the existing _wopen() code.
+> I'm just reverting jk/pack-delta-reuse-with-bitmap out of next when
+> building my own package of git, but I think this really should be fixed
+> in that branch, either by merging the fix down or reverting the original
+> series out of next, I think just merging the fix down makes sense, but
+> have no strong opinion on it.
 
-OK, I have these two patches in 'next', but let's postpone it for
-now.  Windows port will be built with extra topics over what we have
-a the release anyway, so your improved version may become part of
-that and then can come back to benefit us in the next cycle ;-)
-
-Thanks.
+Either is fine.  I am not moving 'next' beyond what is necessary for
+this release cycle during the pre-release freeze period, and because
+I thought that Peff was in favor of squashing in the changes to the
+original when the next cycle starts, I haven't bothered to merge the
+fix there yet.
