@@ -2,148 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4711E1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 20:07:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 613C61F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 20:10:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728013AbeIKBDM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 21:03:12 -0400
-Received: from siwi.pair.com ([209.68.5.199]:32873 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727709AbeIKBDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 21:03:12 -0400
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 1F0393F400C;
-        Mon, 10 Sep 2018 16:07:28 -0400 (EDT)
-Received: from [10.160.98.162] (unknown [167.220.148.162])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id D1F2D3F4008;
-        Mon, 10 Sep 2018 16:07:27 -0400 (EDT)
-Subject: Re: [PATCH v2 2/2] mingw: fix mingw_open_append to work with named
- pipes
-To:     Johannes Sixt <j6t@kdbg.org>, jeffhost@microsoft.com
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.35.git.gitgitgadget@gmail.com>
- <pull.35.v2.git.gitgitgadget@gmail.com>
- <f0361dd306d19fa741c813885d240e041dc09a7a.1536599118.git.gitgitgadget@gmail.com>
- <a309396f-bb33-477d-5d92-a98699f5a856@kdbg.org>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <eedde82a-dedb-88ba-4bb9-fbcfdd7f1b62@jeffhostetler.com>
-Date:   Mon, 10 Sep 2018 16:07:27 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        id S1726251AbeIKBGP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 21:06:15 -0400
+Received: from mail-wm0-f43.google.com ([74.125.82.43]:35770 "EHLO
+        mail-wm0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726091AbeIKBGP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 21:06:15 -0400
+Received: by mail-wm0-f43.google.com with SMTP id o18-v6so22817959wmc.0
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 13:10:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=HE0wmaS42EsAMCqZTdn0rt7L+SfolXUiUpRTrC5lFNQ=;
+        b=XY1tYyBevDYOG01kESSYwS6Cj+Qt8YQ4xdIpQHHHDWhojWv2LJMLDvnl8lz9gtLgeB
+         cdhIEXBna6I0X92mdlanBov7Fhm5tqtfvhLX0REOfsG8Bsdh1hy2g7w9yWQhVoyssBzf
+         8ooqSHtz/X9t+KUiKx8ZhB79TtEI2TLgzUaj1eb4V/hBrKiAiB8qE6dB9xAfFiwkS/k/
+         frUl8eGfdknXSD29MTQUWddVOnvCHtcnQ/QTic4yjvZ3/ZO1nR16kp2oRAAtUmb95fhn
+         RmDP3ppeTvvYQeY6PLtOSCDC7mc4orKrULRFLYmwiGkN/cH864lxzj8Io14Z2gCAQUq9
+         Ymig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=HE0wmaS42EsAMCqZTdn0rt7L+SfolXUiUpRTrC5lFNQ=;
+        b=Ij9P8xDEKUDuwROyuF2SXTu4nDNtPHTM2NfGeWGA5GWr625mZeUgP2O980e8hJVrI+
+         qq+ik/hSh618k3UxxcC7DZvGAG4u9XabFLbbp6rxLU+VYwcLDg82dLTbLD2o4XlAORvu
+         hEvLBtAldy2hf3dzTEt7Ihil0sWZga4cMZkC9K7YDVg4bK3APA3wn0eE9I8ALt457Gp9
+         Sw1L4oPd5p0KvbAz1GCn9KGTCeSWpj0ZhuJVhS1ZEnOI+XujSrGoXH8jZrRZ0UkPc1wJ
+         r/GXoe74WwSbKP6W3C+mBawGF8pDUeNE1gtuT/7DEwpadjbqhLPnNiaAVLdWZTGzxSbZ
+         RZvg==
+X-Gm-Message-State: APzg51D/8rBcjceUp2330nGLxWJ35na8HMCGPKy/2M9BrRbHCRe57aPO
+        uYV4T+aI5MYS19N6abkpwi8=
+X-Google-Smtp-Source: ANB0VdYbhnpvAmhW2quyv5NEzxftl0M1aDUNyS2w9LttJleTVkqlm8W8pDRKUMLgvLS3RPMaTmSDtA==
+X-Received: by 2002:a1c:3314:: with SMTP id z20-v6mr1694580wmz.95.1536610229673;
+        Mon, 10 Sep 2018 13:10:29 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q5-v6sm20650553wmd.29.2018.09.10.13.10.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 13:10:29 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stas Bekman <stas@stason.org>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: git silently ignores include directive with single quotes
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
+        <20180908212256.GB31560@sigill.intra.peff.net>
+        <xmqqr2i1thbs.fsf@gitster-ct.c.googlers.com>
+        <20180910171422.GA26356@aiede.svl.corp.google.com>
+        <xmqqa7optdbs.fsf@gitster-ct.c.googlers.com>
+        <20180910183557.GD26356@aiede.svl.corp.google.com>
+        <xmqq1sa1tb4p.fsf@gitster-ct.c.googlers.com>
+        <b6446834-04e1-ca65-350e-5847e689e2ea@stason.org>
+Date:   Mon, 10 Sep 2018 13:10:28 -0700
+In-Reply-To: <b6446834-04e1-ca65-350e-5847e689e2ea@stason.org> (Stas Bekman's
+        message of "Mon, 10 Sep 2018 12:52:29 -0700")
+Message-ID: <xmqqk1ntru4r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <a309396f-bb33-477d-5d92-a98699f5a856@kdbg.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Stas Bekman <stas@stason.org> writes:
 
+> [include]
+>     path = .gitconfig
+>
+> Not realizing that the two were not in the same folder. And probably
+> assuming that .git/config was referring to the root of repository, and
+> not relative to .git/, which is a reasonable assumption.
+>
+> Of course he had no way of resolving this as git wasn't telling him
+> where it wasn't finding the file. i.e.
+>
+> Can't find: ~/myrepo/.git/.gitconfig
+>
+> which would have instantly told him where the problem was.
 
-On 9/10/2018 3:45 PM, Johannes Sixt wrote:
-> Am 10.09.18 um 19:05 schrieb Jeff Hostetler via GitGitGadget:
->> diff --git a/compat/mingw.c b/compat/mingw.c
->> index 858ca14a57..f87376b26a 100644
->> --- a/compat/mingw.c
->> +++ b/compat/mingw.c
->> @@ -341,6 +341,19 @@ int mingw_mkdir(const char *path, int mode)
->>       return ret;
->>   }
->> +/*
->> + * Calling CreateFile() using FILE_APPEND_DATA and without 
->> FILE_WRITE_DATA
->> + * is documented in [1] as opening a writable file handle in append 
->> mode.
->> + * (It is believed that) this is atomic since it is maintained by the
->> + * kernel unlike the O_APPEND flag which is racily maintained by the 
->> CRT.
->> + *
->> + * [1] 
->> https://docs.microsoft.com/en-us/windows/desktop/fileio/file-access-rights-constants 
->>
->> + *
->> + * This trick does not appear to work for named pipes.  Instead it 
->> creates
->> + * a named pipe client handle that cannot be written to.  Callers should
->> + * just use the regular _wopen() for them.  (And since client handle 
->> gets
->> + * bound to a unique server handle, it isn't really an issue.)
->> + */
->>   static int mingw_open_append(wchar_t const *wfilename, int oflags, ...)
->>   {
->>       HANDLE handle;
->> @@ -360,10 +373,12 @@ static int mingw_open_append(wchar_t const 
->> *wfilename, int oflags, ...)
->>               NULL, create, FILE_ATTRIBUTE_NORMAL, NULL);
->>       if (handle == INVALID_HANDLE_VALUE)
->>           return errno = err_win_to_posix(GetLastError()), -1;
->> +
->>       /*
->>        * No O_APPEND here, because the CRT uses it only to reset the
->> -     * file pointer to EOF on write(); but that is not necessary
->> -     * for a file created with FILE_APPEND_DATA.
->> +     * file pointer to EOF before each write(); but that is not
->> +     * necessary (and may lead to races) for a file created with
->> +     * FILE_APPEND_DATA.
->>        */
->>       fd = _open_osfhandle((intptr_t)handle, O_BINARY);
->>       if (fd < 0)
->> @@ -371,6 +386,23 @@ static int mingw_open_append(wchar_t const 
->> *wfilename, int oflags, ...)
->>       return fd;
->>   }
->> +#define IS_SBS(ch) (((ch) == '/') || ((ch) == '\\'))
->> +/*
->> + * Does the pathname map to the local named pipe filesystem?
->> + * That is, does it have a "//./pipe/" prefix?
->> + */
->> +static int mingw_is_local_named_pipe_path(const char *filename)
->> +{
->> +    return (IS_SBS(filename[0]) &&
->> +        IS_SBS(filename[1]) &&
->> +        filename[2] == '.'  &&
->> +        IS_SBS(filename[3]) &&
->> +        !strncasecmp(filename+4, "pipe", 4) &&
->> +        IS_SBS(filename[8]) &&
->> +        filename[9]);
->> +}
->> +#undef IS_SBS
->> +
->>   int mingw_open (const char *filename, int oflags, ...)
->>   {
->>       typedef int (*open_fn_t)(wchar_t const *wfilename, int oflags, 
->> ...);
->> @@ -387,7 +419,7 @@ int mingw_open (const char *filename, int oflags, 
->> ...)
->>       if (filename && !strcmp(filename, "/dev/null"))
->>           filename = "nul";
->> -    if (oflags & O_APPEND)
->> +    if ((oflags & O_APPEND) && 
->> !mingw_is_local_named_pipe_path(filename))
->>           open_fn = mingw_open_append;
->>       else
->>           open_fn = _wopen;
-> 
-> This looks reasonable.
+Yeah, I think Peff's idea of introducing a variant of include.path
+that reports missing file would make sense for such a use case.
 
-Thanks for the review.
-
-> 
-> I wonder which part of the code uses local named pipes. Is it downstream 
-> in Git for Windows or one of the topics in flight?
-> 
-> -- Hannes
-
-I'm wanting to use them as a tracing target option in my trace2 series
-currently in progress.
-
-Jeff
+The code needs to turn a relative path to an absolute one by taking
+the value as path relative to the including configuration file, so
+we should already have the path to use in the error reporting, if we
+were to go that route.
