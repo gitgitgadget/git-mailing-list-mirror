@@ -2,92 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 831D31F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 16:55:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FD5D1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 16:55:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728795AbeIJVud (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 17:50:33 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:33625 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727989AbeIJVuc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 17:50:32 -0400
-Received: by mail-wr1-f54.google.com with SMTP id v90-v6so22764429wrc.0
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 09:55:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=JE5A2l4x8Uthiij43jRcFenuZidll3SySeLb5DxyigE=;
-        b=plhndaRn9/ZQonZJ/mmWyYMVTOKuBnf34YGtHCAld1dvfc7Pl1i7G+f7eGXCtPdSXC
-         uN4PZ25w0zQsoGRv8CC4rb+89OeYyjWArYDtmaV9TGTQmTZ9jRNP8XspxJFYfzOyOEnw
-         CfF4xL7UuV+mEQgVfS7PwjSZYk1Mt0llJkdItRlo0LYWJm/+d8mc1ztr1x5b3BRekK+E
-         ee4EzWDYPW2hcU/10yCQk7qDSWDmu7zbBJuDCQsnovgpLYdRtXgMV0odJXhz2LTW1pXo
-         NV/BX8/+WOPfyWJ+RyvZ04sEAoYply0KmqJR4BdCL3Qv+dZfH2O8JkZnBkEzSniKswpv
-         nBGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=JE5A2l4x8Uthiij43jRcFenuZidll3SySeLb5DxyigE=;
-        b=BL7Y5BbCgs0ix88aQPUtXAfXyIsHdjXfRH/JCQCGnkbNSE2apzjTOrdt0y2z7jm0nn
-         vht/wG3QY1nbzXRKVQo+o+XefOo3P3RVkUCQfgpFxw+GlPrTH/DkN62gbAomYIxaInqm
-         ax72s9EPHCwedboA47DtIhJKfyW7mZ2Pt8y87efzPQB5bSXOSQYmWv0Di6YAHfJvbIfF
-         lZjQoMb0U6/aGkNSv2HweBHJ9KVqdoOgNzeNhB0mRVv/WqzQZbSs2EKPHHAEg3dxAJIK
-         yVYxPN6jEfpqaq+ew4b+oyicJ7A91s/z/ceoqxg5kOY8Dnj2YtnAW/X9cpW59+205cbk
-         ql8A==
-X-Gm-Message-State: APzg51CZ7E1o4UQJAXQ9UDRlDKWbAhav+PCbVXQzQPO888tBaILf7z+v
-        LCHEkovHE2vcZYDmsngb/Cc=
-X-Google-Smtp-Source: ANB0VdYVMpR4OL3Sxo3uqqQ/BRyNNaWkYbggfdkgv/I7/sJ7cHNghksEkErGidiK0NTvAqJL4CmYLw==
-X-Received: by 2002:adf:8103:: with SMTP id 3-v6mr15740822wrm.213.1536598531913;
-        Mon, 10 Sep 2018 09:55:31 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v133-v6sm22903683wma.36.2018.09.10.09.55.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Sep 2018 09:55:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Pratik Karki via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Pratik Karki <predatoramigo@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 10/11] builtin rebase: only store fully-qualified refs in `options.head_name`
-References: <20180808134830.19949-1-predatoramigo@gmail.com>
-        <pull.32.v2.git.gitgitgadget@gmail.com>
-        <aab01f0b8e15db37bc17630b4298148aeacf41e2.1536096424.git.gitgitgadget@gmail.com>
-        <20180908085207.GB10370@localhost>
-Date:   Mon, 10 Sep 2018 09:55:30 -0700
-In-Reply-To: <20180908085207.GB10370@localhost> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Sat, 8 Sep 2018 10:52:07 +0200")
-Message-ID: <xmqqva7dthq5.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728807AbeIJVum (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 17:50:42 -0400
+Received: from siwi.pair.com ([209.68.5.199]:10327 "EHLO siwi.pair.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728347AbeIJVum (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 17:50:42 -0400
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 109163F4012;
+        Mon, 10 Sep 2018 12:55:43 -0400 (EDT)
+Received: from [10.160.98.162] (unknown [167.220.148.162])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id CFE0E3F4000;
+        Mon, 10 Sep 2018 12:55:42 -0400 (EDT)
+Subject: Re: [PATCH 2/2] mingw: fix mingw_open_append to work with named pipes
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org
+References: <pull.35.git.gitgitgadget@gmail.com>
+ <f433937d55974b75750cfc7d579a6a56109259a4.1536344387.git.gitgitgadget@gmail.com>
+ <1c524f56-2021-a961-168f-e5c6d7914ec2@kdbg.org>
+ <f207bc28-a303-5d63-e9f4-da8e4d466bd5@kdbg.org>
+ <0d38ec8e-3f4b-c0fb-ba6f-e2cef39e4db4@jeffhostetler.com>
+ <xmqq5zzduwwe.fsf@gitster-ct.c.googlers.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <d415b6c9-9ce6-a7bb-a5db-53b11ce2cccb@jeffhostetler.com>
+Date:   Mon, 10 Sep 2018 12:55:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5zzduwwe.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
 
->>  		} else {
->> -			options.head_name = xstrdup("detached HEAD");
->> +			free(options.head_name);
->> +			options.head_name = NULL;
->
-> Please use FREE_AND_NULL(options.head_name) here.
 
-Good; did contrib/coccinelle/free.cocci catch this?
+On 9/10/2018 12:42 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>> Yeah, this whole thing is a little under-documented for my tastes.
+>> Let's leave it as you have it.  I'll re-roll with a fix to route
+>> named pipes to the existing _wopen() code.
+> 
+> OK, I have these two patches in 'next', but let's postpone it for
+> now.  Windows port will be built with extra topics over what we have
+> a the release anyway, so your improved version may become part of
+> that and then can come back to benefit us in the next cycle ;-)
+> 
+> Thanks.
+> 
 
->
->>  			branch_name = "HEAD";
->>  		}
->>  		if (get_oid("HEAD", &options.orig_head))
->> -- 
->> gitgitgadget
->> 
+That's fine.  This can easily wait until after 2.19.0.
+
+Thanks
+Jeff
