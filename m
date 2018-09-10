@@ -2,120 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07D1F1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 05:26:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24B0A1F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 08:09:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726405AbeIJKSP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 06:18:15 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44783 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726106AbeIJKSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 06:18:15 -0400
-Received: by mail-pf1-f194.google.com with SMTP id k21-v6so9836739pff.11
-        for <git@vger.kernel.org>; Sun, 09 Sep 2018 22:26:00 -0700 (PDT)
+        id S1727488AbeIJNBu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 09:01:50 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:38053 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726505AbeIJNBu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 09:01:50 -0400
+Received: by mail-io1-f67.google.com with SMTP id y3-v6so6297486ioc.5
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 01:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=aYp1TLbvABw0axDPAiv/NIGfAGUtwqVKf0BcQ1NTsMo=;
-        b=K0SEZOljz1A2S4EDOLpq+RegunJA/GEI4oY5bI6FI0qRkoRhtlCbVBRD2BPi4ZmEmI
-         DmdtimsWuon8kZ0N6vXqWzYgpowGyR6TuqiIVvwOmLnbLubvoHAxHa7uRnOsscIcSBXA
-         faCy2ClHE1OdDoW2D/ph/c2Uo3z3zcSFE2cNHZDYdNcPMXSW4+zBKKIiGx0gu3Zf0HY7
-         +Eqpzaejr4V5ETGh2LEe+oqwT7QuTUgY8N1ebkXgOeI1OBwtWoN6OmpeiqzySFefNxlm
-         wIaRps661mQWfcfoT4GfTblzLq0U7q/DBPEG1w0aMUxATPXa7s9gdouEEHRZOd1v7p0C
-         yVsA==
+        d=sergei-haller-de.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=Z/OqTrWqjo4+82yYtBsnOyU8sAl494pjR8XFwO4ZWi8=;
+        b=igHiyxWr3lXIA/uh2D1FimNzg1wEJ3H+QN11mVWnEBAi1DqCeUBkM8CQlspvWbZ2r8
+         nKr/Am22R5WxCFo+urQ4kdsRGv48ohNfDWDFPZzA3ii1t3ECBUgKfDxHL8NzAOLmJNQ9
+         Bdhjbak8Of1ZgUa3oG7+3XJcUQapHF9KTIbUEe+EUXdN4p2WlzDuVeix+9sLktdPrHmY
+         mXKbVzmYmf8B/5b1+dEUGK/HftQSNmQSsCbci9uqknJLCt8/PEuQvb+/7zF0pgAy2cTt
+         3Q6NiRCnyWpyXD/EnSfj/03qoot9XKqTVhQDEniK/fQaBJioEW9mYmzuVlkohy3JTzpP
+         gY1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=aYp1TLbvABw0axDPAiv/NIGfAGUtwqVKf0BcQ1NTsMo=;
-        b=r4VeiLwmkfazTEqgXxPPTMinq1iHQF+bq9kLgNQPUQ1uB9bhwiYHqfJ1FKB4rH+Nfc
-         0wqpG4lCuQXnCL7jDU8HfU5ALtsBvK5M8YtomInYzapLJ+1zEuoFczVbbgGjrHD7O++O
-         jTWPZ70M8tfZFOk7pvd1S4gVQg28rpUDcKUibQi7+Tj73oXT2i/qHmCzKWq4YLkuvrDV
-         DrLtIuTsP3lO2nLfnFB7/Y3YyHzv7etrbBu3hC5Y4Q9m1Q17ZcdyHJYBB5eRiGgGV7wk
-         utg+PFK8+fQcL9963DbguW4/N5axE1IsBkJre83lab6fwlKh0SXnMbqcgl5KVqcvo71S
-         2UJQ==
-X-Gm-Message-State: APzg51D660fpIAdVAHdNCEzjse4pwz/5LmccUipSey61DoUBd3N79AWC
-        sGk5mzXvZzosCMwvoyfe0meA02Bb
-X-Google-Smtp-Source: ANB0VdZHW04umVZSax3jDDU10KWiorhVo/VlemBsHertykbslDd7j2jJWZXaeHQoQi7A3S5zWsmrlg==
-X-Received: by 2002:a62:2483:: with SMTP id k3-v6mr21925233pfk.195.1536557160308;
-        Sun, 09 Sep 2018 22:26:00 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id c8-v6sm22127152pfb.147.2018.09.09.22.25.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Sep 2018 22:25:59 -0700 (PDT)
-Date:   Sun, 9 Sep 2018 22:25:58 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Max Kirillov <max@max630.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Subject: Re: [PATCH v4] http-backend: allow empty CONTENT_LENGTH
-Message-ID: <20180910052558.GB55941@aiede.svl.corp.google.com>
-References: <20180907033607.24604-1-max@max630.net>
- <20180909041016.23980-1-max@max630.net>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=Z/OqTrWqjo4+82yYtBsnOyU8sAl494pjR8XFwO4ZWi8=;
+        b=FS5MDYNoYKxBsHGxUBR39bXyOrKBlIje9nDm/zr6kmg40Fr4gZCXOZYmImS6n4/8Nn
+         TRdOpYGphhDJtmLkI+VrkagGzrzwCt1j1mOQFjn+pJunQF17zDzbQ9UI+SU4bXx48SOu
+         D0mfiIvzdgQKo+oPSawVUaHi1HGWyvgeR70xBZyutD3QmsCF0sNagW/YTY7hPFWh9btk
+         ok9ezFv4ZazzTXk24eG7wV/gPuf2IXvXFWQ0E7+s48JT1emsQyeihgSGWALLmIDuVFua
+         OTOb0s+vOBQ7yb9Aty1+D4hjvwqNn1FWJJjmoRT1NDxGY4LQfR1kDAkTSSmxGP4Nhwv5
+         FKgw==
+X-Gm-Message-State: APzg51CBxgT7xX6bsS9xp27Jwid+yThp4kaGdRQPvVBa7Zk9+CyPdQoW
+        tr02nWDBotZzpISPvy3Tt2RhsPQ2BB7sfRHHJMWuzbEAwTQ=
+X-Google-Smtp-Source: ANB0VdaYM+InHgHdAw51qL0AaCClvtYozOfLp9w41Yp9L+iYUMXPmvE5r8JBZ/gkukY2poDCy2olTmwFXSUO69plPqg=
+X-Received: by 2002:a6b:e317:: with SMTP id u23-v6mr6927630ioc.131.1536566942235;
+ Mon, 10 Sep 2018 01:09:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180909041016.23980-1-max@max630.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Received: by 2002:a02:6666:0:0:0:0:0 with HTTP; Mon, 10 Sep 2018 01:09:01
+ -0700 (PDT)
+From:   Sergei Haller <sergei@sergei-haller.de>
+Date:   Mon, 10 Sep 2018 10:09:01 +0200
+Message-ID: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
+Subject: Multiple GIT Accounts & HTTPS Client Certificates - Config
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Max Kirillov wrote:
+Hi folks,
 
-> Reported-By: Jelmer Vernooĳ <jelmer@jelmer.uk>
-> Authored-by: Jeff King <peff@peff.net>
-> Signed-off-by: Max Kirillov <max@max630.net>
+my problem is basically the following: my git server (https) requires
+authentication using a clent x509 certificate.
 
-Nit: for this kind of case of forwarding someone else's patch, we put
-a From field at the beginning of the body of the message.  "git
-format-patch" can produce a message with that format if you commit
-with 'git commit --author="Someone Else <person@example.com>"' and run
-format-patch with --from="My Name <me@example.com>".  More details are
-in the DISCUSSION section of git-format-patch(1).
+And I have multiple x509 certificates that match the server.
 
-As with v3, since v2 is already in "next" this should go incremental.
+when I access the https server using a browser, the browser asks which
+certificate to use and everything is fine.
 
-[...]
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -353,8 +353,28 @@ static ssize_t get_content_length(void)
->  	ssize_t val = -1;
->  	const char *str = getenv("CONTENT_LENGTH");
->  
-> -	if (str && !git_parse_ssize_t(str, &val))
-> -		die("failed to parse CONTENT_LENGTH: %s", str);
-> +	if (!str) {
-> +		/*
-> +		 * RFC3875 says this must mean "no body", but in practice we
-> +		 * receive chunked encodings with no CONTENT_LENGTH. Tell the
-> +		 * caller to read until EOF.
-> +		 */
-> +		val = -1;
-> +	} else if (!*str) {
-> +		/*
-> +		 * An empty length should be treated as "no body" according to
-> +		 * RFC3875, and this seems to hold in practice.
-> +		 */
-> +		val = 0;
+When I try to access the git server from the command line (git pull or
+similar), the git will pick one of the available
+certificates (randomly or alphabetically) and try to access the server with
+that client certificate. Ending in the situation
+that git picks the wrong certificate.
 
-Are there example callers that this version fixes?  Where can I read
-more, or what can I run to experience it?
+I can workaround by deleting all client certificates from the windows
+certificate store except the "correct" one => then git
+command line will pick the correct certificate (the only one available) and
+everything works as expected.
 
-For example, v2.19.0-rc0~45^2~2 (http-backend: respect CONTENT_LENGTH
-as specified by rfc3875, 2018-06-10) mentions IIS/Windows; does IIS
-make use of this distinction?
+Workaround is a workaround, I need to use all of the certificates
+repeatedly for different repos and different other
+aplications (non-git), so I've been deliting and reinstalling the
+certificates all the time in the last weeks...
 
-Thanks,
-Jonathan
+How can I tell git cmd (per config option??) to use a particular client
+certificate for authenticating to the https server
+(I could provide fingerprint or serial number or sth like that)
+
+current environment: windows 10 and git version 2.18.0.windows.1
+
+Would be absolutely acceptable if git would ask interactively which client
+certificate to use (in case its not configurable)
+
+(I asked this question here before:
+https://stackoverflow.com/questions/51952568/multiple-git-accounts-https-client-certificates-config
+)
+
+
+Thanks!
+
+
+
+-- 
+sergei@sergei-haller.de
+.
