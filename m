@@ -2,132 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4E1D1F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 19:19:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE6331F404
+	for <e@80x24.org>; Mon, 10 Sep 2018 19:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728484AbeIKAPM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 20:15:12 -0400
-Received: from mail-wm0-f66.google.com ([74.125.82.66]:35855 "EHLO
-        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727607AbeIKAPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 20:15:12 -0400
-Received: by mail-wm0-f66.google.com with SMTP id j192-v6so22688763wmj.1
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 12:19:37 -0700 (PDT)
+        id S1728142AbeIKATZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Sep 2018 20:19:25 -0400
+Received: from mail-wm0-f65.google.com ([74.125.82.65]:38982 "EHLO
+        mail-wm0-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727607AbeIKATZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Sep 2018 20:19:25 -0400
+Received: by mail-wm0-f65.google.com with SMTP id q8-v6so22671880wmq.4
+        for <git@vger.kernel.org>; Mon, 10 Sep 2018 12:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=AjiKtuaqkOF1C+9zjcC9nQV5TYDsEHF2EL1g12XcJmg=;
-        b=j+uz2AmYooLNqGWqe8MLFbB+k1AMPG2pxtkYvEfiho3u0PmKBTpFER48s0J3kf7NcF
-         0YujbXViOWMplJmTPKYWOJuNyO6qwWrg4joKQ1WI9xJ6zrzyOwtEvOm3ypJe+ehqX/zM
-         p5yTVUMD8LgjYdnh9h+UEnhttFzrVJ6QtHUcZHj1pCEeLUAwkBs1RNEjrjmcoNW/obay
-         eWGBpACYKuSU3MuxrXR3jKiQPrGJMrw0MRE9CxmnftoFcV1FaNKWCyzq2R2BkRbEuujK
-         +EfMqBLoG9VuVXiXEwwm/9P7IH5U/k1TZypyyKNq6vXb/pMt8f9gBpUzk4PiSr0nq4YE
-         AFxA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=sX4HyjECQAnfpDjx3wbyKKGnuSFr3zE1XO45QcejshQ=;
+        b=tct0fikE3c7srbsahf2FZkBjR3b9bWFSlsMo6WWZmaBuveo0bejFo3Zak3cWgNdRYq
+         T6dBSDVL3GUQ9BORhrJYcrC9EndaNaC3hQlBXmUQdCIHIO/oPdZWIeqxoO5KpDIFBz0O
+         goKzdKNRBx3/UVP1AX2yYB9She+jiNKXT6t/FUj3UokjGa4kv5ltaWjUVG7e7Ebu1tYs
+         X+XQvV+ibCSdWVdsJwn3mbQY41VdOG20Smoc06OUkErtbVmI9GkXbxTj+Jip2jF/NAuM
+         2kavNjK+ABxXcC/Ag1t09YCWR8HgxLEX0B2t/kM1MZK4IKU17uT2S9a1isESHZ5r7JJ0
+         Fs1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=AjiKtuaqkOF1C+9zjcC9nQV5TYDsEHF2EL1g12XcJmg=;
-        b=IcFBNruumwZyCjHwPrmM9kdE4KYLwBu8/Bj88+VzxhF97Cb/VKgNPC5Oj4q5YgpG8/
-         UpgnGGrTmbsQ2JNGu+O5aqXTVgx2r8A5il4NTqpqB3YM/tRuu5Ot9mAHqtfaK3kYZsZR
-         7//Lq8guem0OQ5jojkzmroczR9czDfFL2xq3cKK+VagP+jY2gD6JCpwGE38baTULwLdh
-         l9xK42RRvKU35Mf5ZTy2ErI66Lh72WDkF13t3nMbjpxyv9F6gvp+hpramxLNufX0N5GR
-         w1PktH2tuR7UwThF2FfmU5FoK2SbST9h8P/x7Liq0SNfD1ODVWKZDnUya1igwwwP1uxZ
-         aFJw==
-X-Gm-Message-State: APzg51BHOhbDbhe4oDb+rdIlqKi6+O+bRAmZ31lvM9n0g+RT02SWnywZ
-        ULA5irO++QcH+hVCtVI1mLU=
-X-Google-Smtp-Source: ANB0VdaKjNOZ6f6O5WK7isiJmQEPfzffdyjYW36rqudyC058mF+sya9pFlm189OtaYnAkExvYBv2Sg==
-X-Received: by 2002:a1c:5dd4:: with SMTP id r203-v6mr1618375wmb.29.1536607176350;
-        Mon, 10 Sep 2018 12:19:36 -0700 (PDT)
-Received: from localhost (x590d3ee7.dyn.telefonica.de. [89.13.62.231])
-        by smtp.gmail.com with ESMTPSA id f18-v6sm17131260wrw.32.2018.09.10.12.19.34
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Sep 2018 12:19:35 -0700 (PDT)
-Date:   Mon, 10 Sep 2018 21:19:32 +0200
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=sX4HyjECQAnfpDjx3wbyKKGnuSFr3zE1XO45QcejshQ=;
+        b=ItckaSqPYS2AS4fo/P4rSmdJcU7EZ6Fl7Swlr88HrR/erLyFdP7Jn3VJZpTl5ioEfG
+         7FVb4EvPVwHkREBmq7QCritOU0Gxa0dtviD2ujC0hLplyJX0sKXJ8lqmzIeWJBbK0dY7
+         NyWFkIIIbb6OO8E/ok9soTAG6q7aqpZvAcV8vhn5vZow1dsA8tHXcMrNdoSztKwDHjDn
+         9VPEVieuReR9NJeR5bg1BdR13P6gk/jsrIHvIdlf9Xpthvxu4H8uNbvi5sBJ3HEYKMM4
+         +zONA1fHCcmaLUaeRYRV/xTOKFeo7I20vUEJwC0GJmhkLs73avNy2VMYe9Sh01QrOj2p
+         jPjQ==
+X-Gm-Message-State: APzg51Aah/T5x4wwiHrOunRkikXCF/VsxpOJFlrGotJIvTIWjcxW52M6
+        gW8ZhmNjbEY5CyZeqxwcaew=
+X-Google-Smtp-Source: ANB0VdaHseDOTbYxaMskvfxzhpL3lVFOc5qPSGZqUObKx1gH69gvklgXxagbbVbljtoGPM/HBa4adg==
+X-Received: by 2002:a1c:3bd4:: with SMTP id i203-v6mr1605453wma.73.1536607428653;
+        Mon, 10 Sep 2018 12:23:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q5-v6sm20511971wmd.29.2018.09.10.12.23.47
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Sep 2018 12:23:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3701-add-interactive: tighten the check of trace output
-Message-ID: <20180910191932.GB17224@localhost>
-References: <20180910140714.19617-1-szeder.dev@gmail.com>
- <20180910154453.GA15270@sigill.intra.peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Stefan Beller <sbeller@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/4] un-breaking pack-objects with bitmaps
+References: <20180821184140.GA24165@sigill.intra.peff.net>
+        <20180821190701.GE30764@sigill.intra.peff.net>
+        <8736uud0gq.fsf@evledraar.gmail.com>
+        <20180831225558.GA22917@sigill.intra.peff.net>
+        <20180901074145.GA24023@sigill.intra.peff.net>
+        <87d0toqyj6.fsf@evledraar.gmail.com>
+        <xmqq1sa1uwd7.fsf@gitster-ct.c.googlers.com>
+        <20180910184817.GB20678@sigill.intra.peff.net>
+Date:   Mon, 10 Sep 2018 12:23:47 -0700
+In-Reply-To: <20180910184817.GB20678@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 10 Sep 2018 14:48:17 -0400")
+Message-ID: <xmqqwortrwak.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180910154453.GA15270@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 11:44:54AM -0400, Jeff King wrote:
-> On Mon, Sep 10, 2018 at 04:07:14PM +0200, SZEDER Gábor wrote:
-> 
-> > The test 'add -p does not expand argument lists' in
-> > 't3701-add-interactive.sh', added in 7288e12cce (add--interactive: do
-> > not expand pathspecs with ls-files, 2017-03-14), checks the GIT_TRACE
-> > of 'git add -p' to ensure that the name of a tracked file wasn't
-> > passed around as argument to any of the commands executed as a result
-> > of undesired pathspec expansion.  This check is done with 'grep' using
-> > the filename on its own as the pattern, which is too loose a pattern,
-> > and would match any occurrences of the filename in the trace output,
-> > not just those as command arguments.  E.g. if a developer were to
-> > litter the index handling code with trace_printf()s printing, among
-> > other things, the name of the just processed cache entry, then that
-> > pattern would mistakenly match these as well, and would fail the test.
-> 
-> Is this a real thing we're running into?
+Jeff King <peff@peff.net> writes:
 
-Well, we, in general, don't, but that example mentioned in the commit
-message does contain autobiographical elements :)
+>> Either is fine.  I am not moving 'next' beyond what is necessary for
+>> this release cycle during the pre-release freeze period, and because
+>> I thought that Peff was in favor of squashing in the changes to the
+>> original when the next cycle starts, I haven't bothered to merge the
+>> fix there yet.
+>
+> I think Ævar's point is just that the current tip of next is badly
+> broken if you use bitmaps, and it's worth hot-fixing that in the
+> meantime.
 
-> I'd have thought that anybody
-> adding index-specific tracing would do it as GIT_TRACE_INDEX.
+I know that ;-)
 
-Depends on the purpose, I guess.  For tracing that is aimed to become
-part of in git, definitely.  However, for my own ad-hoc tracing used
-to try to make sense of some split-index corner cases, trace_printf()
-is perfect.
+My point is that anybody who *needs* handholding from the upstream
+project (i.e. not Ævar, but those whom he is trying to help with the
+suggestion) should not be looking at 'next' during the prerelease
+freeze.  They should be looking at 'master' instead, and that is why
+I am not spending more than minimum cycles of my own worrying about
+'next' during the prerelease.
 
-> It's
-> unfortunate that "trace commands and processes" is just GIT_TRACE, and not
-> GIT_TRACE_RUN or similar. But that's mostly historical. I wouldn't
-> expect people to add other subsystems to it.
-> 
-> Not that I'm totally opposed to your patch, but it's a little sad that
-> we have to match the specific text used in GIT_TRACE now (and if they
-> ever changed we won't even notice, but rather the test will just become
-> a silent noop).
-> 
-> I think it would be nice if we could move towards something like:
-> 
->   - move current GIT_TRACE messages to use GIT_TRACE_COMMAND or similar
-> 
->   - abolish trace_printf() without a specific subsystem key
-
-Nah, please leave trace_printf() alone.
-
->   - do one of:
-> 
->     - keep GIT_TRACE as a historical synonym for GIT_TRACE_COMMAND; that
->       keeps things working as they are now
-> 
->     - have GIT_TRACE enable _all_ tracing; that's a change in behavior,
->       but arguably a more useful thing to have going forward (e.g., when
->       you're not sure which traces are even available)
-> 
-> And then a test like this would just use GIT_TRACE_COMMAND.
-
-Except for removing keyless trace_printf(), I agree.
+In any case, I think the final is ready to go, almost.  I still need
+to do the preformatted docs, though.
 
