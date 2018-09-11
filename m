@@ -2,146 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BEBF1F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 07:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F2621F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 10:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727716AbeIKMki (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 08:40:38 -0400
-Received: from mail-io0-f182.google.com ([209.85.223.182]:36160 "EHLO
-        mail-io0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbeIKMki (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 08:40:38 -0400
-Received: by mail-io0-f182.google.com with SMTP id q5-v6so2805326iop.3
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 00:42:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sergei-haller-de.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
-        bh=LAOGfJgb3w/07CuISrpQjLT0Jl1Nw/GbH2SmezLjj04=;
-        b=IA1fMXx6+3A01VFZ3YbdloScGJK8HtZdsr/+qWd+7MVMVwZjMEat3WAjfsQRTlaHaE
-         k+ju6pJLiUdBOotUgLcMuBEVK+iJ9Sd0WvP8wf4VEi2q/D/S6IVARY2J4d9527fI5mFI
-         zMyIsNp2X/Vu+Ocin0J4kltslyyqZxMQbXfqKJCq5iHwwPskxYn2+g4QmGZ/ag3lRGmV
-         dAXeh8a8/3Fx5fawp7zUZokknQJv1Inzl2P6+TYHYhsJGSWrn+L3hALh5cbncWzkW5OL
-         o/zZpgxtJ33pWSbKMM0EMm/OkkpYN5o8Rks3P0TLQ94alzlKm5BlYM58CGIcWmh+ZPzo
-         cH8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to;
-        bh=LAOGfJgb3w/07CuISrpQjLT0Jl1Nw/GbH2SmezLjj04=;
-        b=JSiJvnsLMP2uGK77G79BJhtYdnMxQS/uvHB9hL0gqkICkJNidvXG89Ewg96MSkRFoM
-         c2CFZLIWnzl6QP5a6CngyoHPwWLZ4L6n6vQuPNNS5vljp7aZe4UHgJnz+91PJlvg3Z0N
-         3Jm6Dix3wWyPXfi4ZC5c0ZyLHZoDvw0jTlIFfKYdYYV2kpAdkYju0ZC1p5MMfLdXyUBn
-         lgn2f15cOkC4YdMjBs287MgO/0YENrT8jib77KZQoYXoUwV8NtW7RwkAKxgDIWQ9qsVZ
-         FnLEEZjLleC43HbufdlTu8EA7xtCjau3gwIdjB+BcfuG3f9rIsSbZUPkLSu4HAYmLlc/
-         7JGg==
-X-Gm-Message-State: APzg51BK+yf2ucSPPJQTjQIGF84RusKgtgx76+0dUCOiSC6EVM4gRJB3
-        Qsw05CmkbXnLyF6xktoIriXkWurAYugjOdjR1ErFl+cy
-X-Google-Smtp-Source: ANB0VdYBJWwXlyM5J1PCE9kKwDirrO80mnKRThhgFC0Tf/TdO5ThDhwqxGGuUIQWrjYxazMDYGDFMZf/Of6yb7q4E9U=
-X-Received: by 2002:a6b:f919:: with SMTP id j25-v6mr18961331iog.280.1536651755712;
- Tue, 11 Sep 2018 00:42:35 -0700 (PDT)
+        id S1726601AbeIKPEY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 11:04:24 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:48267 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726554AbeIKPEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 11:04:24 -0400
+Received: from [192.168.2.201] ([89.242.190.162])
+        by smtp.talktalk.net with SMTP
+        id zfYHfbAnKdJAezfYHfwZRm; Tue, 11 Sep 2018 11:05:46 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1536660346;
+        bh=m8jroIbK3OsPTPKFqoWVPWkQyM8q+mA6619DA+6BOfU=;
+        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
+        b=g3EFyqr5+A9GRH3YNpsQguVIGRhkfwCzLnl39CtCgaFQRKCOKqFrjFYssNB6UdWPD
+         b3SiPQfN3RjA9/asZSCgT2GUNgASic4nuBcTyNMGNqLd3j3KJX31UGbqvSZ1lTfdtc
+         wG6Dg/vmaj1p6oUeAj0fcYXaN6bzJkvoOR/8NKcs=
+X-Originating-IP: [89.242.190.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=yWw/b5KBQb65dAU66aqL/Q==:117
+ a=yWw/b5KBQb65dAU66aqL/Q==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=evINK-nbAAAA:8 a=vW06Cmzq3B_ytqjzD04A:9 a=kKNw0eDKpB8CYwHh:21
+ a=Eo-m3r8oQz9d49Zw:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] diff: fix --color-moved-ws=allow-indentation-change
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+References: <20180904135258.31300-1-phillip.wood@talktalk.net>
+ <CAGZ79kaBBzG6-QKruCeybN_do735h9tAXHZ7Rjx_YXeh85ax6A@mail.gmail.com>
+ <b78b467c-6cae-2e2e-533c-48a4552539f5@talktalk.net>
+Message-ID: <5cff63d6-d9ec-d28f-d34a-e610ac19dbcb@talktalk.net>
+Date:   Tue, 11 Sep 2018 11:05:44 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Received: by 2002:a02:6666:0:0:0:0:0 with HTTP; Tue, 11 Sep 2018 00:42:35
- -0700 (PDT)
-In-Reply-To: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
-References: <CAPO0KtU=do8nmJggP4-k1BingdseZUuRjWraGjuN01VoEYU=1Q@mail.gmail.com>
-From:   Sergei Haller <sergei@sergei-haller.de>
-Date:   Tue, 11 Sep 2018 09:42:35 +0200
-Message-ID: <CAPO0KtU5YHtuTEzSAZ8sbtuUuZ_0EV4_LyQdWcDJgH6N05TN+g@mail.gmail.com>
-Subject: Re: Multiple GIT Accounts & HTTPS Client Certificates - Config
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <b78b467c-6cae-2e2e-533c-48a4552539f5@talktalk.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfFJkOQa3If0U7EaeGBZuWb58yzFH9h0UvYH0Hx6RrJsq2sk1Z90poZkTlII1C0e1MAxCTePicETq3zl8T91hgKy3TTqvn639k37xGaCg+5EQ/eieojqG
+ OwkBb1XTqHEoOkd879kxn5UMT5tpFBvEaom7wHEnr7WtNKO5lA/ulKXS2KPO1TPQnn1LE4/nXnICATDC4bwiWBQOnBWZet2ErpB0R3cYX9XNEwUKc3/0fg6H
+ Qs5tck+l51joj1cQxCuryej+ALnIUr0RB0fSK5nmevg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PS: while I was trying to send the mail to this mailing list, there is
-some update from the stack overflow side:
+On 04/09/2018 19:51, Phillip Wood wrote:
+> Hi Stefan
+> 
+> On 04/09/2018 19:08, Stefan Beller wrote:
+>> On Tue, Sep 4, 2018 at 6:53 AM Phillip Wood
+>> <phillip.wood@talktalk.net> wrote:
+>>>
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>>
+>>> If there is more than one potential moved block and the longest block
+>>> is not the first element of the array of potential blocks then the
+>>> block is cut short. With --color-moved=blocks this can leave moved
+>>> lines unpainted if the shortened block does not meet the block length
+>>> requirement. With --color-moved=zebra then in addition to the
+>>> unpainted lines the moved color can change in the middle of a single
+>>> block.
+>>>
+>>> Fix this by freeing the whitespace delta of the match we're discarding
+>>> rather than the one we're keeping.
+>>>
+>>> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>> ---
+>>>
+>>> While I was working on this I spotted a couple of other issues I don't
+>>> have time to fix myself at the moment, so I thought I mention them in
+>>> case someone else wants to pick them up
+>>>
+>>> 1) I think there is a potential memory leak at the end of
+>>>     mark_color_as_moved(). If pmb_nr > 0 then the whitespace deltas
+>>>     need freeing before freeing pmb itself.
+>>>
+>>> 2) The documentation could be improved to explain that
+>>>     allow-indentation-change does not work with indentation that
+>>>     contains a mix of tabs and spaces and the motivation for that
+>>>     (python?) [I've got some code to add an option that supports that
+>>>     which I'll post when I've written some tests after 2.19 is
+>>>     released]
+>>>
+>>>   diff.c | 11 ++++++-----
+>>>   1 file changed, 6 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/diff.c b/diff.c
+>>> index 145cfbae5..4e8f725bb 100644
+>>> --- a/diff.c
+>>> +++ b/diff.c
+>>> @@ -968,8 +968,13 @@ static void
+>>> pmb_advance_or_null_multi_match(struct diff_options *o,
+>>>                          /* Carry the white space delta forward */
+>>>                          pmb[i]->next_line->wsd = pmb[i]->wsd;
+>>>                          pmb[i] = pmb[i]->next_line;
+>>> -               } else
+>>> +               } else {
+>>> +                       if (pmb[i]->wsd) {
+>>> +                               free(pmb[i]->wsd->string);
+>>> +                               FREE_AND_NULL(pmb[i]->wsd);
+>>> +                       }
+>>>                          pmb[i] = NULL;
+>>> +               }
+>>
+>> I agree on this hunk, as it will fix the mem leak in the case of
+>> allow-indentation-change, wondering if we need the same in
+>> pmb_advance_or_null as well (and anywhere where there is a
+>> 'pmb[i] = NULL' assignment outside the swapping below.).
+> 
+> I don't think we don't call pmb_advance_or_null() if we're using
+> pmb[i]->wsd. I'm not sure if there are other sites that set 'pmb[i] =
+> NULL' when pmb[i]->wsd has been allocated.
 
-* I am using sslBackend schannel
-* the private key of my client certificate can be provided by using
-the http.sslKey config option
-* the private key is on a smart card, so there is no way I can copy it
-over to a file and use the openssl backend (at least no way that I am
-aware of :)
+Oops there's an extra don't there. Anyway I've had a proper look through
+the code and pmb_advance_or_null() is the only other place where pmb[i]
+is set to NULL and that code path isn't used when pmb[i]->wsd has been
+allocated. So this should be sufficient.
 
-so basically this pins down to the fact that schannel implementation
-is picking the wrong key.
+Best Wishes
 
-Would be great if (one of) the following option was possible:
+Phillip
 
-(a) schannel would ask interactively which certificate to use, if
-there is more than one that matches the servers request
-(b) key info (e.g. serial number or fingerprint) couldl be provided as
-config option
+>>
+>>
+>>>          }
+>>>   }
+>>>
+>>> @@ -990,10 +995,6 @@ static int shrink_potential_moved_blocks(struct
+>>> moved_entry **pmb,
+>>>
+>>>                  if (lp < pmb_nr && rp > -1 && lp < rp) {
+>>>                          pmb[lp] = pmb[rp];
+>>> -                       if (pmb[rp]->wsd) {
+>>> -                               free(pmb[rp]->wsd->string);
+>>> -                               FREE_AND_NULL(pmb[rp]->wsd);
+>>> -                       }
+>>
+>> Eh, this makes sense, though I had to think about it for a
+>> while as I was confused. By the first line in the condition we
+>> also keep around the ->wsd pointer as is.
+> 
+> Yes, it took me ages to work out that this is what was breaking the
+> highlighting.
+> 
+> Best Wishes
+> 
+> Phillip
+> 
+>>
+>> Thanks!
+>> Stefan
+>>
 
-not sure if (a) or (b) is already possible (in some nightly build or
-some hidden option?)
-
-I'd be eager to test if necessyry, but I probably wont be able to
-build git (so would need some sort of nightly build or something)
-
-PS: the recent realization makes me believe this is a window specific
-problem. I think I have read somewhere
-about a separate windows mailing list (but not sure where I saw it)
-
-
-On Mon, Sep 10, 2018 at 10:09 AM, Sergei Haller <sergei@sergei-haller.de> wrote:
-> Hi folks,
->
-> my problem is basically the following: my git server (https) requires
-> authentication using a clent x509 certificate.
->
-> And I have multiple x509 certificates that match the server.
->
-> when I access the https server using a browser, the browser asks which
-> certificate to use and everything is fine.
->
-> When I try to access the git server from the command line (git pull or
-> similar), the git will pick one of the available
-> certificates (randomly or alphabetically) and try to access the server with
-> that client certificate. Ending in the situation
-> that git picks the wrong certificate.
->
-> I can workaround by deleting all client certificates from the windows
-> certificate store except the "correct" one => then git
-> command line will pick the correct certificate (the only one available) and
-> everything works as expected.
->
-> Workaround is a workaround, I need to use all of the certificates
-> repeatedly for different repos and different other
-> aplications (non-git), so I've been deliting and reinstalling the
-> certificates all the time in the last weeks...
->
-> How can I tell git cmd (per config option??) to use a particular client
-> certificate for authenticating to the https server
-> (I could provide fingerprint or serial number or sth like that)
->
-> current environment: windows 10 and git version 2.18.0.windows.1
->
-> Would be absolutely acceptable if git would ask interactively which client
-> certificate to use (in case its not configurable)
->
-> (I asked this question here before:
-> https://stackoverflow.com/questions/51952568/multiple-git-accounts-https-client-certificates-config
-> )
->
->
-> Thanks!
->
->
->
-> --
-> sergei@sergei-haller.de
-> .
-
-
-
--- 
-sergei@sergei-haller.de
-.
