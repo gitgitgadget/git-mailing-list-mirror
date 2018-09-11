@@ -2,109 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9461F404
-	for <e@80x24.org>; Mon, 10 Sep 2018 22:39:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 814FD1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 00:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbeIKDfP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Sep 2018 23:35:15 -0400
-Received: from mail-yb1-f194.google.com ([209.85.219.194]:43662 "EHLO
-        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726238AbeIKDfP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Sep 2018 23:35:15 -0400
-Received: by mail-yb1-f194.google.com with SMTP id k5-v6so8603445ybo.10
-        for <git@vger.kernel.org>; Mon, 10 Sep 2018 15:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FELCXtrglbj7Srn1c1YcEnV/TTOgSnJ7zjdxeGBcFsw=;
-        b=p695txtfmhLsIKvSyP5jPpU/Qsv1Du97pSIvOPWWa9i3W2Efevb6CzUsiTMFg7Cb1z
-         6q8P2VmGMBDq+XNW6xW1nBopTxFm30vaOW9MLi1iAjLkdGSTpcFS0SBB/snEEtSlbshT
-         Qx7kMDjs/N8jCVCChFDu3PJPi2QnS1gnSK2F4Bvo8nDw++c1a+eMbBJb5FJ7JbJuW40e
-         pIG6OzryJA6Hle06AZBEulQqE22BMueHzRb7nfhTfdi3DwbreCXgQUoNZ6rzHaGRQK0W
-         vylmei//8hQ58D03tHXmlW8zte2JbZkC6BuZbkBHh9Blc5yaduGHPiQ0itrIUGzMaX/0
-         GDXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FELCXtrglbj7Srn1c1YcEnV/TTOgSnJ7zjdxeGBcFsw=;
-        b=JNSlclvTIOFNh65WdWnc0lm/xrnsIeeM4bhBwdmkfRV16VMrSl+ciVL975Oq1fgjxv
-         OyczCHoj/txIYbvUUXBR1eM/x7rfih2IoC50Q9S1gbcpsZJOVpD5Lw7WQ3aM1OBH5hg/
-         R4W64vlGTs1BlXoE5qmg1YOh1bVZAN3Zti1vjhZesXFgv1R/AcRDmFAT3g/+JTsMfY4d
-         ZGdpZ9NXZlIkfudjqYSwkzmm5kahKJ634ViuSlWFnMNlctgreQEENtxlGHE7zwyvyeS/
-         wr/DfgVWu2i+yfDpUP3GMIlxdb07UCTQqOOrUaGjFTRf2BpDoeyFY2V38hKiU9p7nblM
-         UKtQ==
-X-Gm-Message-State: APzg51A6EITM6IhIRbBpuY4D5pBgndrDicn35Okvxq8ykvrlrxMB/cub
-        7fstez94rXUAG5aYxYCRDuHybqQnhEUx44OrsUcipw==
-X-Google-Smtp-Source: ANB0VdY9ylxSWfde7YeKEn2A8R9PbVIFadB2vF2sruuepq8Lfp/ib+TNqsGkXQdAXgc2U598QCA10QXXGzhdTBCY068=
-X-Received: by 2002:a25:8892:: with SMTP id d18-v6mr1843518ybl.521.1536619140438;
- Mon, 10 Sep 2018 15:39:00 -0700 (PDT)
+        id S1726217AbeIKFdy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 01:33:54 -0400
+Received: from shared-amd101.rev.nazwa.pl ([85.128.186.101]:49910 "EHLO
+        shared-amd101.rev.nazwa.pl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726143AbeIKFdy (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 11 Sep 2018 01:33:54 -0400
+X-Greylist: delayed 480 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Sep 2018 01:33:53 EDT
+X-Virus-Scanned: by amavisd-new using ClamAV (18)
+Received: from zdxxqqsaad (unknown [130.0.235.184])
+        by gamametal.nazwa.pl (Postfix) with ESMTP id 5F0522D7D0D
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 02:29:18 +0200 (CEST)
+From:   "=?utf-8?B?RG9yb3RhIEJhxYRza2E=?=" <mpietos@gamametal.pl>
+Subject: Rozliczenie po 1109115/09/2018
+To:     "git" <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="MHlyZmdsFUOee=_tq9hLKiflJWPPRDbFhD"
 MIME-Version: 1.0
-References: <CAGZ79kbObDXyaRLADQpvMMSitOLCDwb030Q6UBiX-7Y-XWnqog@mail.gmail.com>
- <20180910215831.17608-1-sbeller@google.com> <xmqq36uhrnjk.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36uhrnjk.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 10 Sep 2018 15:38:49 -0700
-Message-ID: <CAGZ79kY2XpB4nJOJc0LLueqsutpncgwdN8uC=Wj0Uxu9Yjgd8A@mail.gmail.com>
-Subject: Re: [PATCH 1/2] trace: add trace_print_string_list_key
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Reply-To: "=?utf-8?B?RG9yb3RhIEJhxYRza2E=?=" <mpietos1@gamametal.pl>
+Organization: Multicopy
+Date:   Tue, 11 Sep 2018 01:29:27 +0100
+Message-Id: <20180911002918.5F0522D7D0D@gamametal.nazwa.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 3:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> > I separated this from the other series, making it into 2 patches:
-> > This first patch adds tracing for string lists and the next patch that
-> > removes the unused function from the string list API.
-> > That way we can decide on these two patches separately if needed.
->
-> Of course, even though these are 1/2 and 2/2, only one of them and
-> not both would apply.
+This is a multi-part message in MIME format
 
-Or you could squash them once we reach consensus that both are good.
+--MHlyZmdsFUOee=_tq9hLKiflJWPPRDbFhD
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-> Thanks for sticking to the topic.
->
-> Given how simple that "dump them to standard output" code is, I am
-> inclined to say that anybody who needs to inspect the contents of
-> string list at various points in the code under development can
-> create one from scratch even if we did not have this implementation,
-> so perhaps 2/2 is a better choice between the two.
+=2E   .   .   .   .   .
+Dzie=C5=84 dobry,
 
-This sounds like the consensus is not to take both but only 2/2,
-which I'd be happy with, too.
 
-> It is not costing us much to leave it in the code.  It's not like
-> the function costed a lot of maintenance burden since it was added
-> in 8fd2cb40 ("Extract helper bits from c-merge-recursive work",
-> 2006-07-25), so the alternative #3 might be to do nothing.
+W za=C5=82=C4=85czeniu przesy=C5=82am faktur=C4=99.
 
-True, but ...
 
-> somebody else in the future to propose removing
 
-is what is actually happening here already, see
 
-https://public-inbox.org/git/1421343725-3973-1-git-send-email-kuleshovmail@gmail.com/
 
-> I am inclined to say we'd take
-> 2/2 ;-)
->
-> Thanks.
 
-Feel free to take Alexanders patch from 2015 instead.
 
-Thanks,
-Stefan
+ Pozdrawiam,
+
+
+
+
+
+Dorota Ba=C5=84ska
+
+"Multicopy" Firma Handlowo-Us=C5=82ugowa
+
+
+--MHlyZmdsFUOee=_tq9hLKiflJWPPRDbFhD
+Content-Type: application/octet-stream;
+	name="faktura 1891195.rar"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="faktura 1891195.rar"
+
+UmFyIRoHAQDz4YLrCwEFBwAGAQGAgIAANXudpC8CAwubBgT4DiDEEdaJgAMAE2Zha3R1cmEgMTg5
+MTE5NS52YnMKAwJvVATwWknUAcmHFwNHdUMyM/RgVe4fhSx9EwmQwGfGFtzDLhYBJMkCGVvMts61
+Bog7XBONNyBPe6SXmtkokEZ4lpg2lvw4ubq1J+P78lurfhzf3/p52c8Sfg8DKUqobJBkPi1Xo4z6
+hkvndOq9LHCTDnTCe8/nkkiU+WUN9D+oNfQI0vjNdM3b9Tly3cbamFec/dA6/sA3vU70kHKPIjW6
+j4Cxv/1pbEUdolhhaCYZdGWSBOgwKaesmrv8gip8bQzdgVYAXUxm+6FS+Ag8aNMhLgn6TK6AbEFo
+Hu9FNYVENgBQb/hzA/6h48kwYg8I9qlMYZo0FHAT0jNtxEVXJ9CYU4QQvADd8hDwjwgY0+YlPy7u
+sCXfNn4zCOXHNsTwCVfRov6lQpDjgTNS21MKtBbFfStW5bVWvXcq2LY9W7NYOaZZKsWeL65j6YH7
+tq1cDXlcufLiTFJdbNPJK+mLCm8W/jLliYu9p4vUJAIQOLrAXwQPH/h4faxQaFHKtl/XLBBZ2dEo
+KT5E5LynkKkmI8yUjcwF9EgZOilCJOBH994mjWbuOZ2SOmwq5DVxuRRCXSACI8pYhLGE+nJl4G37
+enwta/GeCENhqUqJyfmUu5Y4IpKroXoiN83Ak7HmEfh3eAYe0ArUda2eBEKR+GB+fgTMJ/EZZ7Hx
+cAoFOqjR4z53USa8KPAoQQKnu/aBpFNsSXl9ik5gcvzi6+h57I3sHfd+q9kQMpm+fA83UMuRBkwi
+UlIZenZpNMujNCq9txqkt1LkSp/dNxwBtixUtWR6s2ixDxXqbRYf1RJ0DT7xS6LYBO2+n7BofDe0
+v3qOygOIoMbNspIx1PNtjm2uo5FuuUPXIZm0RvibLyPSi6BWwT1Fe0cR70ge3tf7hOoYvoRDCkuK
+1CDGwaUZZSNbcxLWqVTt8cxkbo759ym9DZ81sstX+EpcVJrNOzX2kxBsWbNzqx1veYSq+F+VE/jZ
+iOHzxrV7FazYH5te1VkAVrIrnSnY9OY1PcayAtyl2k2HHOMz2ctaJBZUx8F5qYIdnZbKg93jZX8W
+IqegeaX6kbu9LU3Mnf6NgB13VlEDBQQA
+
+--MHlyZmdsFUOee=_tq9hLKiflJWPPRDbFhD--
+
