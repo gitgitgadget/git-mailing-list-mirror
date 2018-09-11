@@ -2,85 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB1351F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 20:53:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D2CD1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 20:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726909AbeILByf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 21:54:35 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46268 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726850AbeILByf (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 21:54:35 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a108-v6so27421546wrc.13
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 13:53:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=w/wYs9TeCrfcnzqB341fjpsPH2zWz1ZqveNaFehhEBs=;
-        b=VzSeRJsUJeO5rWEfK8whCDwyDtutCzNIExGiXdg8DkGCYJjBfAMcOVOTW5O/cMTqM6
-         5q7fHgKLxBcWVnXme6iVrSlm/5ZvbN2GOxSDv/Dx+LwIs2ZlG0teklBOXdQpF1tP8/1q
-         UY0z62NBLuZPORxY5/THtW/aMMcgaZ/kyMgOdD2z+8vnwJH2UuZuD3hdMHb9IvtT+4W8
-         8e8DJupTDlN3nSy8LCNlXIazjaM2kQDlTZOFSxjXAfocLlp3eBxZ9GuqfjbXt1RccBTz
-         1lIn4h5xQ1WmKiOYqRbP8RJPQPnc3AWK/OyO0Jp3Vj3+8QQWW/ah0JR0WxCw4t6+vieU
-         gS3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=w/wYs9TeCrfcnzqB341fjpsPH2zWz1ZqveNaFehhEBs=;
-        b=tOsx35IXMyRau4X+XyJ9VFiu1CUPumAtdsUHQdpdvRiick23rus8jEsqyWdkjxlNJd
-         M2dHsHJwu2kU70v4aKWZ94alQBo8GY+mggR7n6R5zoTF40adTbYwB7dGxs9vTc7ZDQhn
-         Xx7z9qdkqeYtmcip8pxoCMaZSh8sFJMChepggbIUH4Zj+EY+Fio7ojuKWXC3aXrPvDZa
-         LuZxtDRxe7MbmzhFhcDIOSyVdm4X217zJjWGroejkS+EzYggdQY2igpi81VhrLljltsd
-         KxOvBIFrN1+Lxvyf3SJs4i8EqGkDdJA0RaOdC/cd8bC8IpeI7zlJf7QfBivhzZzdTq2y
-         U9ig==
-X-Gm-Message-State: APzg51DvHviIodTwRwSS7KE07UlyMvnU0CH3iXIzu4WlXyMpyW1LzOcN
-        xTCzDQovPeEf0RarzEUJaQw=
-X-Google-Smtp-Source: ANB0VdavHnBDIzJtHNhSKUCq0tOD3z/s/DiY0y2RFl/nsJG/h+sD8y2Nl0A6c5+of9EhM2JFAB/WrQ==
-X-Received: by 2002:a05:6000:108:: with SMTP id o8mr1923543wrx.196.1536699209756;
-        Tue, 11 Sep 2018 13:53:29 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 142-v6sm2892445wme.35.2018.09.11.13.53.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Sep 2018 13:53:28 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] string-list: remove unused function print_string_list
-References: <xmqqy3c8rh3d.fsf@gitster-ct.c.googlers.com>
-        <20180911184850.24891-1-sbeller@google.com>
-        <xmqq1s9zq1gm.fsf@gitster-ct.c.googlers.com>
-        <xmqqworromq4.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZZwH1sORNsBZORF_c5V0U2NVLQa9JBY-Z5ksRS3yBT7w@mail.gmail.com>
-Date:   Tue, 11 Sep 2018 13:53:28 -0700
-In-Reply-To: <CAGZ79kZZwH1sORNsBZORF_c5V0U2NVLQa9JBY-Z5ksRS3yBT7w@mail.gmail.com>
-        (Stefan Beller's message of "Tue, 11 Sep 2018 12:47:11 -0700")
-Message-ID: <xmqq8t47oiwn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727277AbeILB6R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 21:58:17 -0400
+Received: from cloud.peff.net ([104.130.231.41]:46396 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726850AbeILB6Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 21:58:16 -0400
+Received: (qmail 18114 invoked by uid 109); 11 Sep 2018 20:57:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Sep 2018 20:57:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21704 invoked by uid 111); 11 Sep 2018 20:57:25 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Sep 2018 16:57:25 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Sep 2018 16:57:10 -0400
+Date:   Tue, 11 Sep 2018 16:57:10 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        stas@stason.org, Git Mailing List <git@vger.kernel.org>
+Subject: Re: git silently ignores include directive with single quotes
+Message-ID: <20180911205709.GA25828@sigill.intra.peff.net>
+References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
+ <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
+ <87bm97rcih.fsf@evledraar.gmail.com>
+ <20180908211436.GA31560@sigill.intra.peff.net>
+ <ad56c575-1211-61d2-daed-5b0da61db738@ramsayjones.plus.com>
+ <20180909023332.GA14762@sigill.intra.peff.net>
+ <xmqqk1nrojpq.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqk1nrojpq.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Tue, Sep 11, 2018 at 01:36:01PM -0700, Junio C Hamano wrote:
 
->> >>
->> >> [1] https://public-inbox.org/git/1421343725-3973-1-git-send-email-kuleshovmail@gmail.com/
->> >> Signed-off-by: Stefan Beller <sbeller@google.com>
->> >
->> > I'll add a blank line before the sign-off.  Is this an example that
->> > our "where is the existing trailer?" code misbehaving?
->>
->> I am still curious about this one.
->
-> No, it's me who is misbehaving. ;-)
+> Jeff King <peff@peff.net> writes:
+> 
+> > I think that's syntactically invalid. At any rate, there are clearly
+> > three options for setting a bit:
+> >
+> >   1. In the section header (+include, or Ævar's includeIf suggestion).
+> >
+> >   2. In another key (which looks pretty clean, but does introduce
+> >      ordering constraints).
+> >
+> >   3. In the key name (maybePath or similar).
+> >
+> > I don't have a huge preference between them.
+> 
+> What's the longer term goal for the endgame?  Is it acceptable that
+> include.path will stay to be "optional include" for compatibility
+> with users' existing configuration files, and include.requiredpath
+> or similar gets introduced to allow people who want to get warned?
+> Or do we want the usual multi-step deprecation dance where the first
+> phase introduces include.maybepath and include.path starts warning
+> against missing one, encouraging it to be rewritten to maybepath?
 
-Whew.  That lets me worried about one fewer things ;-)  Thanks.
+I don't see much point in introducing include.requiredPath. It might be
+useful for people who want to be extra-careful with their includes, but
+it would not really help users who simply made a spelling error and
+didn't know how to debug it.
 
+So switching the default for include.path and providing an escape hatch
+seems like the more useful path (if we indeed want to do one of these;
+adding better debugging like GIT_TRACE_CONFIG is yet another option).
+
+As far as deprecation, it depends on what the new behavior is. If it is
+simply that include.path will generate a warning on a missing file, I
+don't think there is any point in a multi-step dance. The endgame is a
+warning, which is no different than the deprecated-stage behavior. :)
+
+If the endgame is to die(), then I'd agree that there should be a
+warning in the middle.
+
+Between all those things I mentioned (or simply leaving it as-is), I
+really don't have a strong feeling. I hoped people who did would
+generate a patch to give something concrete to review.
+
+> I have mild preference against #2, as I suspect that the ordering
+> constraints makes it harder to understand to end users.  Between #1
+> and #3, there wouldn't be much difference, whether the endgame is
+> "add a stricter variant that is opt in" or "migrate to a stricter
+> default".
+
+The thing that #2 buys you is that multiple such bits could be combined.
+If we imagine that later there is another choice to make in interpreting
+include.path with two options, "foo" and "bar", then we would be stuck
+with:
+
+  include.maybeFooPath
+  include.maybeBarPath
+  include.fooPath
+  include.barPath
+
+and of course it only gets worse with a third one.  Whereas with
+independent options, you can do:
+
+  [include]
+  warnOnMissing = false
+  otherPreference = bar
+  path = ...
+
+I dunno. The combinatorics might not be too bad if we document the
+required order, and actually code the parsing side like:
+
+  if (!skip_prefix(key, "maybe", &key))
+	warn_on_missing = 0;
+  if (!skip_prefix(key, "foo", &key))
+        other_pref = "foo";
+  ...and so on
+
+It's kind of hacky, but it does encode the bits into the name. As long
+as they remain bits, and not, say, arbitrary strings.
+
+-Peff
