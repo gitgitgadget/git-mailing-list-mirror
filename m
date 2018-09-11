@@ -2,95 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF19B1F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 17:47:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 124E01F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 17:48:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728165AbeIKWrX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 18:47:23 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:36728 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727044AbeIKWrX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 18:47:23 -0400
-Received: by mail-wr1-f54.google.com with SMTP id e1-v6so17888755wrt.3
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 10:47:00 -0700 (PDT)
+        id S1728060AbeIKWsk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 18:48:40 -0400
+Received: from mail-yb1-f174.google.com ([209.85.219.174]:46605 "EHLO
+        mail-yb1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726782AbeIKWsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 18:48:40 -0400
+Received: by mail-yb1-f174.google.com with SMTP id y20-v6so9655124ybi.13
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 10:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=XHncXUWtX5BThgJHuBBKIGWZpQCH2j8akcDptuDBHps=;
-        b=dz7xlDP6tmsORaXSkQSj8Nak2CjD8TNurEigd7r9VtsJQQ5fHQ6Q6z3Wtcnr5asO31
-         /BVTlm8S5Zg/LR+rJ/6kwbVqIP614KQtbS4FsRdqJEc0MMyP0UkL6onfU6IZNFzkxifd
-         peIWTtTrC1SFfbm1PXBVxbwcx7wB0xro/XbshFiMjPibX97NKirBF9OV5q9lGJpDr4qY
-         qA00xWinR4Yc4F6JqSArqrJJbo6zZpGl1Bs+Bn4j6tQBvbfI/jZnnWzbQfdr7lUaSS5W
-         XG0+oolMY+4i5JwG1X247Y8UyFl96pCol7xiiQnNMm7iR8s+tJhN4eE4FN4LJcz1Rs72
-         Qx0w==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=VTPR8N07SnrZC0URhUjNoVvs/0rs3MOu5pIvjr8JAdg=;
+        b=pM1Y2YN5UYU3lzIT3QXkiSzx/FKj7A9bdl6wxbf+u8f+jFKOZYLvYhv3Bl6ADkYYOV
+         vuWKJFUPvaTHRA04dWt+1LeRtXHibotVBboWGT8C82Tca5lD69LotrAwumaaTImXzImb
+         5j3nVcVrjrElE1UAY6M99uQmr+VOk+3/RMDG7LdET4550sCCm04Ji9y1zL5x2jUqg8Z0
+         uLtRQ+RP+ypEUMsgKEweM1p4+P9dHtEe6D6jupX7jGz0xs2Krwa6sGBtG1G/l7Y8qTHN
+         04+83dh+QfpY2I1ANLay3va+jegWO+wbBz7N8QorjlVHp9BEHZ+tUte6w6umet3bfxj6
+         eOAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=XHncXUWtX5BThgJHuBBKIGWZpQCH2j8akcDptuDBHps=;
-        b=tV/FHWHcG4WQZQv8A2YqlvmJhYsequYOipZJ/Vn/K04OgFIpWe+3yPMTXiKvjoZBFa
-         FsE6fyO1c7WFUOfvPjs08pX3lDXX3MKVRFcNpUMwVuc/UXpwi7xGpg7O5WQmwGR8IZi4
-         RdK00i8NY2CV9GOOaFADzf2StH/iOr3Vee842H+G8NFmfgonPOS+3lfqZRtkGBvG7WXr
-         7JPnGAEpfk7nshnJkVjljJ7uKJr8ug2ukMVY4IPg7blqhdOJotVbzgemOtDMSxFKKCqw
-         kUeh3Lb5KhNVOGOKeAzDR+/f3do0C2dqKHEbmgybR71BB5z1iTnoMS7vtRJ5wNisjBmM
-         4ggA==
-X-Gm-Message-State: APzg51C0CkipLF3FK4uDcVlY/DBHcwW+8br0deFyMW3BVUYCFfRYKmmm
-        I+I5Rl2jZgRVkpraIxEflXA=
-X-Google-Smtp-Source: ANB0VdbxZ5E1mMW0nwLUmfaoEYQIvvR2lgypjy291S6rghl8NjR8bEK8NDSDlmGV0zMuscGj001mhQ==
-X-Received: by 2002:adf:fd12:: with SMTP id e18-v6mr20430984wrr.280.1536688019145;
-        Tue, 11 Sep 2018 10:46:59 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y17-v6sm22471888wrh.49.2018.09.11.10.46.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Sep 2018 10:46:58 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Ciro Santilli <ciro.santilli@gmail.com>,
-        Matthew DeVore <matvore@google.com>, git <git@vger.kernel.org>
-Subject: Re: Is it possible to git clone --filter= without any objects?
-References: <CAFXrp_fLwL5=K3B5rWjY+imoqtskT8LG-UH8ec3CPwM0iiSzFg@mail.gmail.com>
-        <CAGZ79kYK7ish4_DaZN2bCfZz7LNAjxogQH1k6T=hFcxxkXzJQw@mail.gmail.com>
-        <CAGf8dgKLz14ijnXwV0Y=M48Rij-scA19E_uXk3pBc0T02oE_0Q@mail.gmail.com>
-Date:   Tue, 11 Sep 2018 10:46:57 -0700
-In-Reply-To: <CAGf8dgKLz14ijnXwV0Y=M48Rij-scA19E_uXk3pBc0T02oE_0Q@mail.gmail.com>
-        (Jonathan Tan's message of "Tue, 11 Sep 2018 10:19:03 -0700")
-Message-ID: <xmqqo9d4orji.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=VTPR8N07SnrZC0URhUjNoVvs/0rs3MOu5pIvjr8JAdg=;
+        b=ukuHG2avbGaJqDUBSf99wUdDh05w+yDH0n6z6GQL0NFPQ3epoz22be+XcmCuN4V831
+         gfF8Xt+g3oixvSPLmVy3HYNPXLyICuMQqNO1XdM3Tf38esS4/4qrI7/bRKICU2wGDeY/
+         Xy5PvlDOp9bH1UdfUdaY+hBnB1X+7E8roaHGlSpGMP3zBOIlf6EavD0cJOfrLvsqbu31
+         Tk+xkLRgXseIGhpP9bK7yLVeENFDwe6OVeMVq/+1eZVYRBKCsszN8aLTCVDVZ4Ds1Cif
+         pXz17yy368UbjfZ7ptK0HltuaYVlwxHSmND+tOw1W69qtVnA8bZaikxvjJfBzYcR6Yw2
+         12Og==
+X-Gm-Message-State: APzg51B5PwId3AHhdJ66npUUnsgJt/WOJvvw+CoXm2J9jwPphddkee+h
+        iJpGXVL7beyGRtA8BVA/CsgqcLaf9kzcwN6JKKFEqg==
+X-Google-Smtp-Source: ANB0VdbvX/EZFOqQfDlcpQ6TuI4jH6EHa6Gt9dQBn5qwOMdGWQVHiJ3jaevvcC46BkqMpmhIVQJnxy+FPU76ls/xWQ8=
+X-Received: by 2002:a25:e481:: with SMTP id b123-v6mr3574899ybh.416.1536688096355;
+ Tue, 11 Sep 2018 10:48:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180904135258.31300-1-phillip.wood@talktalk.net>
+ <CAGZ79kaBBzG6-QKruCeybN_do735h9tAXHZ7Rjx_YXeh85ax6A@mail.gmail.com>
+ <b78b467c-6cae-2e2e-533c-48a4552539f5@talktalk.net> <5cff63d6-d9ec-d28f-d34a-e610ac19dbcb@talktalk.net>
+In-Reply-To: <5cff63d6-d9ec-d28f-d34a-e610ac19dbcb@talktalk.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Sep 2018 10:48:05 -0700
+Message-ID: <CAGZ79kb53jNAJagQ+nG0hoJiozKkR6Aw=oRLZj5xvjFY5Hx=Sg@mail.gmail.com>
+Subject: Re: [PATCH] diff: fix --color-moved-ws=allow-indentation-change
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+>  [...] So this should be sufficient.
 
-> By "without any objects" in your email subject, do you mean "without
-> blob and tree objects"? If yes, there is some code in the
-> md/filter-trees branch that can do that with a "--filter=tree:0"
-> option.
+Yup.
+Thanks for keeping track of this patch, as I lost track of it.
 
-I too was wondering what the "without any objects" thing meant
-myself.
-
-What would it take on top of the following sequence to create such
-an ultra-lazy clone?
-
-	$ mkdir very-sparse && cd very-sparse
-	$ git init
-	$ git remote add origin $URL
-
-At this point, the repository does not have any object, but it
-already knows whom to talk to to get the objects in the project.
-The remote must be configured so that it is willing to feed you any
-object you name, but would it be just some "git config" magic after
-the above three steps to make it as if it was prepared with "git
-clone --filter="?  If so, what does that magic look like?
-
-Thanks.
+thanks,
+Stefan
