@@ -7,42 +7,39 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AE851F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 23:26:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA1DC1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 23:26:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726428AbeILE2U (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 00:28:20 -0400
+        id S1726502AbeILE2X (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 00:28:23 -0400
 Received: from mail-eopbgr680120.outbound.protection.outlook.com ([40.107.68.120]:1880
         "EHLO NAM04-BN3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726179AbeILE2U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 00:28:20 -0400
+        id S1726179AbeILE2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 00:28:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uDlqD8AB26clchFncoKDaD5GJe10Q2ptMeV3mXv0HfU=;
- b=cFWtVIWuVVwzQXMgxoVhBDH++sNMjsYr++1ZldPITfO8+x5CUE5T8q/yeHBSEp/0mb9dgwQq7ChM3U+YS3tBN4LsfMJ6DkQZbpaRlePVCWwp85GgZnsQ0tJCLAwQ/L2jMQD+5/oRWPDSQVCPbkPKl19uDy5pZ+5QhskTiDuKO1o=
+ bh=/9RB0AxNRWLF3uL2HSp7WExPLFenkjgS+dMWBHMWuGk=;
+ b=bymfrhE+8kUbk2fVb4N51o3mhAZENzBlnY/XDzOODb74Czel9oyKfa/s6iA7XGHG9Fvkr6EnUY6nwnWpcJikzk9p8660gNx6G2kV+wGlx7JSorVcz+fLYKV8H4S08QH+defjoq78eP4evCGmX28AGqexYpcXxHgc5xKpUev65ME=
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
  MW2PR2101MB1113.namprd21.prod.outlook.com (52.132.149.30) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1164.5; Tue, 11 Sep 2018 23:26:39 +0000
+ 15.20.1164.5; Tue, 11 Sep 2018 23:26:40 +0000
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7]) by MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7%2]) with mapi id 15.20.1164.006; Tue, 11 Sep 2018
- 23:26:38 +0000
+ 23:26:40 +0000
 From:   Ben Peart <benpeart@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v4 3/5] read-cache: speed up index load through
- parallelization
-Thread-Topic: [PATCH v4 3/5] read-cache: speed up index load through
- parallelization
-Thread-Index: AQHUSibj7wYRqAwsWkCACmaYa/1R8Q==
-Date:   Tue, 11 Sep 2018 23:26:38 +0000
-Message-ID: <20180911232615.35904-4-benpeart@microsoft.com>
+Subject: [PATCH v4 4/5] read-cache.c: optimize reading index format v4
+Thread-Topic: [PATCH v4 4/5] read-cache.c: optimize reading index format v4
+Thread-Index: AQHUSibksfTADAV93UWDv7xMuyp/UA==
+Date:   Tue, 11 Sep 2018 23:26:40 +0000
+Message-ID: <20180911232615.35904-5-benpeart@microsoft.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20180911232615.35904-1-benpeart@microsoft.com>
 In-Reply-To: <20180911232615.35904-1-benpeart@microsoft.com>
@@ -57,30 +54,31 @@ x-clientproxiedby: CY4PR1601CA0021.namprd16.prod.outlook.com
  (2603:10b6:302:4::19)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR2101MB1113;6:hU44TBTPTMA7TsSkknEfnz9d9b0nrxZ9VD79srpyjVXrUmqePUQK4vIRf9nVUbKhepAekwsJAGN2CIMhLkaADvzym+XhW4nX0QUz0B35kkXSVBEpCWS2LjEIlDUeLOFfU4CMnC1I5GIYxLLQxpd9/74G+IxGYfrGx4SEwtts/OdavvN1o8/mgxpaxwc6rIyNtxvGG73tT3yN9zn2sb9v2WAqyuHDFULDYQiP8rrpL0y3HxAZ/EMWlJrLel0wLIBEP9XKEN9rTz7fYUklUEEy5H302M9ZSmlj0AMeTxSVG+mA3ModdO2LCOuqg5I6cPeSjHFEQGDTv0r5fi0Q9e/fFqYFkykxgqPC1/eNJTDbTgHwBPxDZSi8MeO9fIZIvWOR4rCJjp/RCapFPh+ozEB3N2FQBQfA762tatmmnFwuzQc1TdPwQdi71TZciQiMaXof5hu/ywd6aoJfq+MNkd2TDQ==;5:aaX0zRtIqLxDX3SWKpXNhpZ4P/j6jGYyKbamfAk6R4mb/Q0SEVDdOaU18llSVr8zKsXp1VmWtTVXubBwxYUQTgA56xsdXGir0dtJpAbsuLKhpnMtpT+rxLK4lyhHhSGTzcMD+G4AkD3pHMh7pGvVHZvDFQJpeBDlyTZd6tbx8eM=;7:L3hlNuBAEvf3YlzJR56s2CngN6xnQGzc2A15mYRgCQjnTYCKIU5o3UhW/RU/K89LT7HBFq2aOLVhN+A1PHoqdDkiMJX2ZAPDlWqndDpQVe89DNGiCFyJ+P7obersZdS8ohQyrqZjwUE19HbB5H/ztBV8/hlDtWCwgFPBaCXz6t8X6QtetVHH7Y6iUX1A4P0JUKK9ZY4sVce7JlW/84uI5gJSubEoJGMV1nIXtzwytApQo0Nmj02l7mxOImUsLmzw
-x-ms-office365-filtering-correlation-id: 9b1a2008-c0ac-4d91-0b9a-08d6183e05bb
+x-microsoft-exchange-diagnostics: 1;MW2PR2101MB1113;6:kxwnhh03VExeqVzz5+xUpvzzOrqvux8TYZqDCYK+9+9D64QTO55HnNOIEy/AY4ot144ujYFvjATnkuVwwjMczG9KI+Xluuvh0tvMeBA2F2cLw1lmmaTXXlmjTTZZmAuL248ERaKrqOFnIMX1565ESs8FUAMdkUvJDCVyV1cww+cM3IChYdG5fWeAKnwayKLFMXwYpkzwocwkfeQp/L8ICgo1RqKyR5XVj1HV+Vzl0i+kPXQuCalHajk4rQHJKZIIIo5wd1d+F4P1feJzhs/xX7GYkxJWtfe0re0m9VQ32H4MhJBeS7LcHzSBgW8vhpD+FyN5n9BTruQyM8K67QqRxjL+rb5kNXgKMO974e9Eb9ZNrnDMtxEiDtDpj2olts70rH2ps2qZ/oNXaAT/dhD1mkYP859YgKNGiXmSI+/fG8AQQRxxrJzrpaMEo8/BC9c6DWmYc17rnRCRCPldAsNy3A==;5:CqdY1sovzxfc8dLau4C6Wg4y9YeKAgpnUygVXDfwsBk6eYjJGNxviqB6McrGYr6YTGpSUoKWTeEQEMbH9lK679N2bEFyTGpmu5J6BHG6IgTjJLxkUF7tpmN198Si/JO65V1A+uQvNExVEbhIeLXobq2FMZtV6H6k9/JDKYgpVfc=;7:DEIg+d9dHVOErutCBbR+ZbdNj9VWmILDVvEn8muILrGpXRbfn2btVdvwNXbXIm2quVEGwV/HMTFyQBy2BbsAp8ywfvcJv0zCvJkx3IkMERN3nTzkfRipoh3I8V+RA18kfVo+zQ/5aGYVVKRES7xRr6EV7Pe5Mil1NbvRaxODmxTOUJx8BmtTauv8NaknxH0EQ6yPjZh55m9zn2RKPbhhI9AIDSFoCgsOsZ8aVgxinh9uYVqNO5MaJ7azCc9k49xN
+x-ms-office365-filtering-correlation-id: 68ca8b26-e9a6-49de-5319-08d6183e0664
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB1113;
 x-ms-traffictypediagnostic: MW2PR2101MB1113:
-x-microsoft-antispam-prvs: <MW2PR2101MB1113CBB5D46B63A246CD01AEF4040@MW2PR2101MB1113.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(209352067349851);
+x-microsoft-antispam-prvs: <MW2PR2101MB111358B5AA7E8799040737B2F4040@MW2PR2101MB1113.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3231344)(944501410)(52105095)(2018427008)(3002001)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123560045)(20161123562045)(20161123564045)(201708071742011)(7699050)(76991037);SRVR:MW2PR2101MB1113;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB1113;
 x-forefront-prvs: 0792DBEAD0
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(346002)(366004)(376002)(396003)(136003)(199004)(189003)(386003)(6116002)(97736004)(6506007)(86612001)(7736002)(5640700003)(81156014)(81166006)(26005)(2900100001)(102836004)(6436002)(1730700003)(6346003)(305945005)(561924002)(11346002)(14444005)(446003)(2616005)(476003)(486006)(3846002)(256004)(36756003)(10090500001)(66066001)(186003)(53936002)(1076002)(106356001)(105586002)(2351001)(6512007)(316002)(4326008)(54906003)(2906002)(52116002)(25786009)(5660300001)(107886003)(68736007)(22452003)(76176011)(39060400002)(6916009)(50226002)(478600001)(2501003)(99286004)(72206003)(14454004)(5250100002)(8936002)(8676002)(10290500003)(6486002);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1113;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(346002)(366004)(376002)(396003)(136003)(199004)(189003)(386003)(6116002)(97736004)(6506007)(86612001)(7736002)(5640700003)(81156014)(81166006)(26005)(2900100001)(102836004)(6436002)(1730700003)(6346003)(305945005)(11346002)(14444005)(446003)(2616005)(476003)(486006)(3846002)(256004)(36756003)(10090500001)(66066001)(186003)(53936002)(1076002)(106356001)(105586002)(2351001)(6512007)(316002)(4326008)(54906003)(2906002)(52116002)(25786009)(5660300001)(107886003)(68736007)(22452003)(76176011)(39060400002)(6916009)(50226002)(478600001)(2501003)(99286004)(72206003)(14454004)(5250100002)(8936002)(8676002)(10290500003)(6486002);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1113;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-message-info: DOX/A4eyYVORxrGaSo9cOIOI046dAMUo7dmwxAJmaAgxfyLosaQjFbF8EuUKoFzC8IhY5difPd9kcEqkMJWbEoh0tQxFIhoE5p1OZvPcbAYjyOn5T8wcme4PWwIQ/AYq32wzGgBOHNsviccTpDBdErvHj5np4wqbGXTxuPWAaAT/LMkmhRQMd1NdBkWE8a3J3z+7P0cFa2MgwZ52d+WanoaZjJU0ZtSMCI9oE7mLpBRWCynIGAuG2O8GXt5lEhCXtGEmKuEMUIRIdRZ+HOh0UEpUjs5rGuog0cs5ylBMKnmPXzx8y4GSQkCYHpdWL/ChJ/926V4XsNx6Qe2BMGO0VgQz4IiWheKcg+01yfTdF1U=
+x-microsoft-antispam-message-info: s2O0lEyBWwwyIqPECY0Uqd9Of2Bi881pWfwFp6EI76hd8pyuo45uAd7hI256C4RQPC14Zd8d4x8GhcX6flhZfQqpV5Iuw9aNX9KYjHi4fKj2oD7WQLDmHejrN577SbR3onuZrGgX0BF3RgUzcOz/Lw9N0qJMp5BkYucGdY5+uJTkhVh1keqZPQZCb9hvqsJQfokBnrvqsbYlsrNsr/+sZm1s7Z/jf6n1/1R7Coz7jJEmvIRMJUD/8m1pO98nmHJvUbPCoSxba1x9NaLTNmwwnYiLPaRHYAuijf1vW1G4whiILqWXZB2Vq36heIool1qvHuH9MmYsWEJzU5Pw/rtZ5cJl5upgoF1ltqQyb4W91k0=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <B0A310CC0113BA41AC1FC9E765A16DF0@namprd21.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9b1a2008-c0ac-4d91-0b9a-08d6183e05bb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2018 23:26:38.7530
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68ca8b26-e9a6-49de-5319-08d6183e0664
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Sep 2018 23:26:40.3312
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -90,328 +88,187 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch helps address the CPU cost of loading the index by creating
-multiple threads to divide the work of loading and converting the cache
-entries across all available CPU cores.
-
-It accomplishes this by having the primary thread loop across the index fil=
-e
-tracking the offset and (for V4 indexes) expanding the name. It creates a
-thread to process each block of entries as it comes to them.
-
-I used p0002-read-cache.sh to generate some performance data:
-
-Test w/100,000 files                Baseline         Parallel entries
----------------------------------------------------------------------------
-read_cache/discard_cache 1000 times 14.08(0.01+0.10) 9.72(0.03+0.06) -31.0%
-
-Test w/1,000,000 files              Baseline         Parallel entries
----------------------------------------------------------------------------=
----
-read_cache/discard_cache 1000 times 202.95(0.01+0.07) 154.14(0.03+0.06) -24=
-.1%
-
-Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
----
- read-cache.c | 240 +++++++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 212 insertions(+), 28 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 9b97c29f5b..c01d34a71d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1942,20 +1942,210 @@ static void *load_index_extensions(void *_data)
- 	return NULL;
- }
-=20
-+/*
-+ * A helper function that will load the specified range of cache entries
-+ * from the memory mapped file and add them to the given index.
-+ */
-+static unsigned long load_cache_entry_block(struct index_state *istate,
-+			struct mem_pool *ce_mem_pool, int offset, int nr, void *mmap,
-+			unsigned long start_offset, struct strbuf *previous_name)
-+{
-+	int i;
-+	unsigned long src_offset =3D start_offset;
-+
-+	for (i =3D offset; i < offset + nr; i++) {
-+		struct ondisk_cache_entry *disk_ce;
-+		struct cache_entry *ce;
-+		unsigned long consumed;
-+
-+		disk_ce =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
-+		ce =3D create_from_disk(ce_mem_pool, disk_ce, &consumed, previous_name);
-+		set_index_entry(istate, i, ce);
-+
-+		src_offset +=3D consumed;
-+	}
-+	return src_offset - start_offset;
-+}
-+
-+static unsigned long load_all_cache_entries(struct index_state *istate,
-+			void *mmap, size_t mmap_size, unsigned long src_offset)
-+{
-+	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
-+	unsigned long consumed;
-+
-+	if (istate->version =3D=3D 4) {
-+		previous_name =3D &previous_name_buf;
-+		mem_pool_init(&istate->ce_mem_pool, istate->cache_nr * (sizeof(struct ca=
-che_entry) + CACHE_ENTRY_PATH_LENGTH));
-+	} else {
-+		previous_name =3D NULL;
-+		mem_pool_init(&istate->ce_mem_pool, estimate_cache_size(mmap_size, istat=
-e->cache_nr));
-+	}
-+
-+	consumed =3D load_cache_entry_block(istate, istate->ce_mem_pool,
-+					0, istate->cache_nr, mmap, src_offset, previous_name);
-+	strbuf_release(&previous_name_buf);
-+	return consumed;
-+}
-+
-+#ifndef NO_PTHREADS
-+
-+/*
-+ * Mostly randomly chosen maximum thread counts: we
-+ * cap the parallelism to online_cpus() threads, and we want
-+ * to have at least 10000 cache entries per thread for it to
-+ * be worth starting a thread.
-+ */
-+#define THREAD_COST		(10000)
-+
-+struct load_cache_entries_thread_data
-+{
-+	pthread_t pthread;
-+	struct index_state *istate;
-+	struct mem_pool *ce_mem_pool;
-+	int offset, nr;
-+	void *mmap;
-+	unsigned long start_offset;
-+	struct strbuf previous_name_buf;
-+	struct strbuf *previous_name;
-+	unsigned long consumed;	/* return # of bytes in index file processed */
-+};
-+
-+/*
-+ * A thread proc to run the load_cache_entries() computation
-+ * across multiple background threads.
-+ */
-+static void *load_cache_entries_thread(void *_data)
-+{
-+	struct load_cache_entries_thread_data *p =3D _data;
-+
-+	p->consumed +=3D load_cache_entry_block(p->istate, p->ce_mem_pool,
-+		p->offset, p->nr, p->mmap, p->start_offset, p->previous_name);
-+	return NULL;
-+}
-+
-+static unsigned long load_cache_entries_threaded(int nr_threads, struct in=
-dex_state *istate,
-+			void *mmap, size_t mmap_size, unsigned long src_offset)
-+{
-+	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
-+	struct load_cache_entries_thread_data *data;
-+	int ce_per_thread;
-+	unsigned long consumed;
-+	int i, thread;
-+
-+	/* a little sanity checking */
-+	if (istate->name_hash_initialized)
-+		BUG("the name hash isn't thread safe");
-+
-+	mem_pool_init(&istate->ce_mem_pool, 0);
-+	if (istate->version =3D=3D 4)
-+		previous_name =3D &previous_name_buf;
-+	else
-+		previous_name =3D NULL;
-+
-+	ce_per_thread =3D DIV_ROUND_UP(istate->cache_nr, nr_threads);
-+	data =3D xcalloc(nr_threads, sizeof(struct load_cache_entries_thread_data=
-));
-+
-+	/*
-+	 * Loop through index entries starting a thread for every ce_per_thread
-+	 * entries. Exit the loop when we've created the final thread (no need
-+	 * to parse the remaining entries.
-+	 */
-+	consumed =3D thread =3D 0;
-+	for (i =3D 0; ; i++) {
-+		struct ondisk_cache_entry *ondisk;
-+		const char *name;
-+		unsigned int flags;
-+
-+		/*
-+		 * we've reached the beginning of a block of cache entries,
-+		 * kick off a thread to process them
-+		 */
-+		if (i % ce_per_thread =3D=3D 0) {
-+			struct load_cache_entries_thread_data *p =3D &data[thread];
-+
-+			p->istate =3D istate;
-+			p->offset =3D i;
-+			p->nr =3D ce_per_thread < istate->cache_nr - i ? ce_per_thread : istate=
-->cache_nr - i;
-+
-+			/* create a mem_pool for each thread */
-+			if (istate->version =3D=3D 4)
-+				mem_pool_init(&p->ce_mem_pool,
-+					estimate_cache_size_from_compressed(p->nr));
-+			else
-+				mem_pool_init(&p->ce_mem_pool,
-+					estimate_cache_size(mmap_size, p->nr));
-+
-+			p->mmap =3D mmap;
-+			p->start_offset =3D src_offset;
-+			if (previous_name) {
-+				strbuf_addbuf(&p->previous_name_buf, previous_name);
-+				p->previous_name =3D &p->previous_name_buf;
-+			}
-+
-+			if (pthread_create(&p->pthread, NULL, load_cache_entries_thread, p))
-+				die("unable to create load_cache_entries_thread");
-+
-+			/* exit the loop when we've created the last thread */
-+			if (++thread =3D=3D nr_threads)
-+				break;
-+		}
-+
-+		ondisk =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
-+
-+		/* On-disk flags are just 16 bits */
-+		flags =3D get_be16(&ondisk->flags);
-+
-+		if (flags & CE_EXTENDED) {
-+			struct ondisk_cache_entry_extended *ondisk2;
-+			ondisk2 =3D (struct ondisk_cache_entry_extended *)ondisk;
-+			name =3D ondisk2->name;
-+		} else
-+			name =3D ondisk->name;
-+
-+		if (!previous_name) {
-+			size_t len;
-+
-+			/* v3 and earlier */
-+			len =3D flags & CE_NAMEMASK;
-+			if (len =3D=3D CE_NAMEMASK)
-+				len =3D strlen(name);
-+			src_offset +=3D (flags & CE_EXTENDED) ?
-+				ondisk_cache_entry_extended_size(len) :
-+				ondisk_cache_entry_size(len);
-+		} else
-+			src_offset +=3D (name - ((char *)ondisk)) + expand_name_field(previous_=
-name, name);
-+	}
-+
-+	for (i =3D 0; i < nr_threads; i++) {
-+		struct load_cache_entries_thread_data *p =3D data + i;
-+		if (pthread_join(p->pthread, NULL))
-+			die("unable to join load_cache_entries_thread");
-+		mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
-+		strbuf_release(&p->previous_name_buf);
-+		consumed +=3D p->consumed;
-+	}
-+
-+	free(data);
-+	strbuf_release(&previous_name_buf);
-+
-+	return consumed;
-+}
-+
-+#endif
-+
- /* remember to discard_cache() before reading a different cache! */
- int do_read_index(struct index_state *istate, const char *path, int must_e=
-xist)
- {
--	int fd, i;
-+	int fd;
- 	struct stat st;
- 	unsigned long src_offset;
- 	struct cache_header *hdr;
- 	void *mmap;
- 	size_t mmap_size;
--	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
- 	struct load_index_extensions p =3D { 0 };
- 	unsigned long extension_offset =3D 0;
- #ifndef NO_PTHREADS
--	int nr_threads;
-+	int cpus, nr_threads;
- #endif
-=20
- 	if (istate->initialized)
-@@ -1997,10 +2187,20 @@ int do_read_index(struct index_state *istate, const=
- char *path, int must_exist)
- 	p.mmap =3D mmap;
- 	p.mmap_size =3D mmap_size;
-=20
-+	src_offset =3D sizeof(*hdr);
-+
- #ifndef NO_PTHREADS
- 	nr_threads =3D git_config_get_index_threads();
--	if (!nr_threads)
--		nr_threads =3D online_cpus();
-+	if (!nr_threads) {
-+		cpus =3D online_cpus();
-+		nr_threads =3D istate->cache_nr / THREAD_COST;
-+		if (nr_threads > cpus)
-+			nr_threads =3D cpus;
-+	}
-+
-+	/* enable testing with fewer than default minimum of entries */
-+	if (istate->cache_nr > 1 && nr_threads < 3 && git_env_bool("GIT_INDEX_THR=
-EADS_TEST", 0))
-+		nr_threads =3D 3;
-=20
- 	if (nr_threads >=3D 2) {
- 		extension_offset =3D read_eoie_extension(mmap, mmap_size);
-@@ -2009,33 +2209,17 @@ int do_read_index(struct index_state *istate, const=
- char *path, int must_exist)
- 			p.src_offset =3D extension_offset;
- 			if (pthread_create(&p.pthread, NULL, load_index_extensions, &p))
- 				die(_("unable to create load_index_extensions_thread"));
-+			nr_threads--;
- 		}
- 	}
-+	if (nr_threads >=3D 2)
-+		src_offset +=3D load_cache_entries_threaded(nr_threads, istate, mmap, mm=
-ap_size, src_offset);
-+	else
-+		src_offset +=3D load_all_cache_entries(istate, mmap, mmap_size, src_offs=
-et);
-+#else
-+	src_offset +=3D load_all_cache_entries(istate, mmap, mmap_size, src_offse=
-t);
- #endif
-=20
--	if (istate->version =3D=3D 4) {
--		previous_name =3D &previous_name_buf;
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size_from_compressed(istate->cache_nr));
--	} else {
--		previous_name =3D NULL;
--		mem_pool_init(&istate->ce_mem_pool,
--			      estimate_cache_size(mmap_size, istate->cache_nr));
--	}
--
--	src_offset =3D sizeof(*hdr);
--	for (i =3D 0; i < istate->cache_nr; i++) {
--		struct ondisk_cache_entry *disk_ce;
--		struct cache_entry *ce;
--		unsigned long consumed;
--
--		disk_ce =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
--		ce =3D create_from_disk(istate->ce_mem_pool, disk_ce, &consumed, previou=
-s_name);
--		set_index_entry(istate, i, ce);
--
--		src_offset +=3D consumed;
--	}
--	strbuf_release(&previous_name_buf);
- 	istate->timestamp.sec =3D st.st_mtime;
- 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
-=20
---=20
-2.18.0.windows.1
-
+RnJvbTogTmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eSA8cGNsb3Vkc0BnbWFpbC5jb20+DQoNCklu
+ZGV4IGZvcm1hdCB2NCByZXF1aXJlcyBzb21lIG1vcmUgY29tcHV0YXRpb24gdG8gYXNzZW1ibGUg
+YSBwYXRoDQpiYXNlZCBvbiBhIHByZXZpb3VzIG9uZS4gVGhlIGN1cnJlbnQgY29kZSBpcyBub3Qg
+dmVyeSBlZmZpY2llbnQNCmJlY2F1c2UNCg0KIC0gaXQgZG91YmxlcyBtZW1vcnkgY29weSwgd2Ug
+YXNzZW1ibGUgdGhlIGZpbmFsIHBhdGggaW4gYSB0ZW1wb3JhcnkNCiAgIGZpcnN0IGJlZm9yZSBw
+dXR0aW5nIGl0IGJhY2sgdG8gYSBjYWNoZV9lbnRyeQ0KDQogLSBzdHJidWZfcmVtb3ZlKCkgaW4g
+ZXhwYW5kX25hbWVfZmllbGQoKSBpcyBub3QgZXhhY3RseSBhIGdvb2QgZml0DQogICBmb3Igc3Ry
+aXBwaW5nIGEgcGFydCBhdCB0aGUgZW5kLCBfc2V0bGVuKCkgd291bGQgZG8gdGhlIHNhbWUgam9i
+DQogICBhbmQgaXMgbXVjaCBjaGVhcGVyLg0KDQogLSB0aGUgb3Blbi1jb2RlZCBsb29wIHRvIGZp
+bmQgdGhlIGVuZCBvZiB0aGUgc3RyaW5nIGluDQogICBleHBhbmRfbmFtZV9maWVsZCgpIGNhbid0
+IGJlYXQgYW4gb3B0aW1pemVkIHN0cmxlbigpDQoNClRoaXMgcGF0Y2ggYXZvaWRzIHRoZSB0ZW1w
+b3JhcnkgYnVmZmVyIGFuZCB3cml0ZXMgZGlyZWN0bHkgdG8gdGhlIG5ldw0KY2FjaGVfZW50cnks
+IHdoaWNoIGFkZHJlc3NlcyB0aGUgZmlyc3QgdHdvIHBvaW50cy4gVGhlIGxhc3QgcG9pbnQNCmNv
+dWxkIGFsc28gYmUgYXZvaWRlZCBpZiB0aGUgdG90YWwgc3RyaW5nIGxlbmd0aCBmaXRzIGluIHRo
+ZSBmaXJzdCAxMg0KYml0cyBvZiBjZV9mbGFncywgaWYgbm90IHdlIGZhbGwgYmFjayB0byBzdHJs
+ZW4oKS4NCg0KUnVubmluZyAidGVzdC10b29sIHJlYWQtY2FjaGUgMTAwIiBvbiB3ZWJraXQuZ2l0
+ICgyNzVrIGZpbGVzKSwgcmVhZGluZw0KdjIgb25seSB0YWtlcyA0LjIyNiBzZWNvbmRzLCB3aGls
+ZSB2NCB0YWtlcyA1LjcxMSBzZWNvbmRzLCAzNSUgbW9yZQ0KdGltZS4gVGhlIHBhdGNoIHJlZHVj
+ZXMgcmVhZCB0aW1lIG9uIHY0IHRvIDQuMzE5IHNlY29uZHMuDQoNClNpZ25lZC1vZmYtYnk6IE5n
+dXnhu4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21haWwuY29tPg0KU2lnbmVkLW9mZi1i
+eTogQmVuIFBlYXJ0IDxiZW5wZWFydEBtaWNyb3NvZnQuY29tPg0KLS0tDQogcmVhZC1jYWNoZS5j
+IHwgMTM2ICsrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LQ0KIDEgZmlsZSBjaGFuZ2VkLCA3MSBpbnNlcnRpb25zKCspLCA2NSBkZWxldGlvbnMoLSkNCg0K
+ZGlmZiAtLWdpdCBhL3JlYWQtY2FjaGUuYyBiL3JlYWQtY2FjaGUuYw0KaW5kZXggYzAxZDM0YTcx
+ZC4uZDIxY2NiNWU2NyAxMDA2NDQNCi0tLSBhL3JlYWQtY2FjaGUuYw0KKysrIGIvcmVhZC1jYWNo
+ZS5jDQpAQCAtMTcyMSwzMyArMTcyMSw2IEBAIGludCByZWFkX2luZGV4KHN0cnVjdCBpbmRleF9z
+dGF0ZSAqaXN0YXRlKQ0KIAlyZXR1cm4gcmVhZF9pbmRleF9mcm9tKGlzdGF0ZSwgZ2V0X2luZGV4
+X2ZpbGUoKSwgZ2V0X2dpdF9kaXIoKSk7DQogfQ0KIA0KLXN0YXRpYyBzdHJ1Y3QgY2FjaGVfZW50
+cnkgKmNhY2hlX2VudHJ5X2Zyb21fb25kaXNrKHN0cnVjdCBtZW1fcG9vbCAqbWVtX3Bvb2wsDQot
+CQkJCQkJICAgc3RydWN0IG9uZGlza19jYWNoZV9lbnRyeSAqb25kaXNrLA0KLQkJCQkJCSAgIHVu
+c2lnbmVkIGludCBmbGFncywNCi0JCQkJCQkgICBjb25zdCBjaGFyICpuYW1lLA0KLQkJCQkJCSAg
+IHNpemVfdCBsZW4pDQotew0KLQlzdHJ1Y3QgY2FjaGVfZW50cnkgKmNlID0gbWVtX3Bvb2xfX2Nl
+X2FsbG9jKG1lbV9wb29sLCBsZW4pOw0KLQ0KLQljZS0+Y2Vfc3RhdF9kYXRhLnNkX2N0aW1lLnNl
+YyA9IGdldF9iZTMyKCZvbmRpc2stPmN0aW1lLnNlYyk7DQotCWNlLT5jZV9zdGF0X2RhdGEuc2Rf
+bXRpbWUuc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+bXRpbWUuc2VjKTsNCi0JY2UtPmNlX3N0YXRf
+ZGF0YS5zZF9jdGltZS5uc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+Y3RpbWUubnNlYyk7DQotCWNl
+LT5jZV9zdGF0X2RhdGEuc2RfbXRpbWUubnNlYyA9IGdldF9iZTMyKCZvbmRpc2stPm10aW1lLm5z
+ZWMpOw0KLQljZS0+Y2Vfc3RhdF9kYXRhLnNkX2RldiAgID0gZ2V0X2JlMzIoJm9uZGlzay0+ZGV2
+KTsNCi0JY2UtPmNlX3N0YXRfZGF0YS5zZF9pbm8gICA9IGdldF9iZTMyKCZvbmRpc2stPmlubyk7
+DQotCWNlLT5jZV9tb2RlICA9IGdldF9iZTMyKCZvbmRpc2stPm1vZGUpOw0KLQljZS0+Y2Vfc3Rh
+dF9kYXRhLnNkX3VpZCAgID0gZ2V0X2JlMzIoJm9uZGlzay0+dWlkKTsNCi0JY2UtPmNlX3N0YXRf
+ZGF0YS5zZF9naWQgICA9IGdldF9iZTMyKCZvbmRpc2stPmdpZCk7DQotCWNlLT5jZV9zdGF0X2Rh
+dGEuc2Rfc2l6ZSAgPSBnZXRfYmUzMigmb25kaXNrLT5zaXplKTsNCi0JY2UtPmNlX2ZsYWdzID0g
+ZmxhZ3MgJiB+Q0VfTkFNRU1BU0s7DQotCWNlLT5jZV9uYW1lbGVuID0gbGVuOw0KLQljZS0+aW5k
+ZXggPSAwOw0KLQloYXNoY3B5KGNlLT5vaWQuaGFzaCwgb25kaXNrLT5zaGExKTsNCi0JbWVtY3B5
+KGNlLT5uYW1lLCBuYW1lLCBsZW4pOw0KLQljZS0+bmFtZVtsZW5dID0gJ1wwJzsNCi0JcmV0dXJu
+IGNlOw0KLX0NCi0NCiAvKg0KICAqIEFkamFjZW50IGNhY2hlIGVudHJpZXMgdGVuZCB0byBzaGFy
+ZSB0aGUgbGVhZGluZyBwYXRocywgc28gaXQgbWFrZXMNCiAgKiBzZW5zZSB0byBvbmx5IHN0b3Jl
+IHRoZSBkaWZmZXJlbmNlcyBpbiBsYXRlciBlbnRyaWVzLiAgSW4gdGhlIHY0DQpAQCAtMTc2Miwy
+MiArMTczNSwyNCBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBleHBhbmRfbmFtZV9maWVsZChzdHJ1
+Y3Qgc3RyYnVmICpuYW1lLCBjb25zdCBjaGFyICpjcF8pDQogDQogCWlmIChuYW1lLT5sZW4gPCBs
+ZW4pDQogCQlkaWUoIm1hbGZvcm1lZCBuYW1lIGZpZWxkIGluIHRoZSBpbmRleCIpOw0KLQlzdHJi
+dWZfcmVtb3ZlKG5hbWUsIG5hbWUtPmxlbiAtIGxlbiwgbGVuKTsNCi0JZm9yIChlcCA9IGNwOyAq
+ZXA7IGVwKyspDQotCQk7IC8qIGZpbmQgdGhlIGVuZCAqLw0KKwlzdHJidWZfc2V0bGVuKG5hbWUs
+IG5hbWUtPmxlbiAtIGxlbik7DQorCWVwID0gY3AgKyBzdHJsZW4oKGNvbnN0IGNoYXIgKiljcCk7
+DQogCXN0cmJ1Zl9hZGQobmFtZSwgY3AsIGVwIC0gY3ApOw0KIAlyZXR1cm4gKGNvbnN0IGNoYXIg
+KillcCArIDEgLSBjcF87DQogfQ0KIA0KLXN0YXRpYyBzdHJ1Y3QgY2FjaGVfZW50cnkgKmNyZWF0
+ZV9mcm9tX2Rpc2soc3RydWN0IG1lbV9wb29sICptZW1fcG9vbCwNCitzdGF0aWMgc3RydWN0IGNh
+Y2hlX2VudHJ5ICpjcmVhdGVfZnJvbV9kaXNrKHN0cnVjdCBtZW1fcG9vbCAqY2VfbWVtX3Bvb2ws
+DQorCQkJCQkgICAgdW5zaWduZWQgaW50IHZlcnNpb24sDQogCQkJCQkgICAgc3RydWN0IG9uZGlz
+a19jYWNoZV9lbnRyeSAqb25kaXNrLA0KIAkJCQkJICAgIHVuc2lnbmVkIGxvbmcgKmVudF9zaXpl
+LA0KLQkJCQkJICAgIHN0cnVjdCBzdHJidWYgKnByZXZpb3VzX25hbWUpDQorCQkJCQkgICAgY29u
+c3Qgc3RydWN0IGNhY2hlX2VudHJ5ICpwcmV2aW91c19jZSkNCiB7DQogCXN0cnVjdCBjYWNoZV9l
+bnRyeSAqY2U7DQogCXNpemVfdCBsZW47DQogCWNvbnN0IGNoYXIgKm5hbWU7DQogCXVuc2lnbmVk
+IGludCBmbGFnczsNCisJc2l6ZV90IGNvcHlfbGVuOw0KKwlpbnQgZXhwYW5kX25hbWVfZmllbGQg
+PSB2ZXJzaW9uID09IDQ7DQogDQogCS8qIE9uLWRpc2sgZmxhZ3MgYXJlIGp1c3QgMTYgYml0cyAq
+Lw0KIAlmbGFncyA9IGdldF9iZTE2KCZvbmRpc2stPmZsYWdzKTsNCkBAIC0xNzk3LDIxICsxNzcy
+LDU0IEBAIHN0YXRpYyBzdHJ1Y3QgY2FjaGVfZW50cnkgKmNyZWF0ZV9mcm9tX2Rpc2soc3RydWN0
+IG1lbV9wb29sICptZW1fcG9vbCwNCiAJZWxzZQ0KIAkJbmFtZSA9IG9uZGlzay0+bmFtZTsNCiAN
+Ci0JaWYgKCFwcmV2aW91c19uYW1lKSB7DQotCQkvKiB2MyBhbmQgZWFybGllciAqLw0KLQkJaWYg
+KGxlbiA9PSBDRV9OQU1FTUFTSykNCi0JCQlsZW4gPSBzdHJsZW4obmFtZSk7DQotCQljZSA9IGNh
+Y2hlX2VudHJ5X2Zyb21fb25kaXNrKG1lbV9wb29sLCBvbmRpc2ssIGZsYWdzLCBuYW1lLCBsZW4p
+Ow0KKwlpZiAoZXhwYW5kX25hbWVfZmllbGQpIHsNCisJCWNvbnN0IHVuc2lnbmVkIGNoYXIgKmNw
+ID0gKGNvbnN0IHVuc2lnbmVkIGNoYXIgKiluYW1lOw0KKwkJc2l6ZV90IHN0cmlwX2xlbiwgcHJl
+dmlvdXNfbGVuOw0KIA0KLQkJKmVudF9zaXplID0gb25kaXNrX2NlX3NpemUoY2UpOw0KLQl9IGVs
+c2Ugew0KLQkJdW5zaWduZWQgbG9uZyBjb25zdW1lZDsNCi0JCWNvbnN1bWVkID0gZXhwYW5kX25h
+bWVfZmllbGQocHJldmlvdXNfbmFtZSwgbmFtZSk7DQotCQljZSA9IGNhY2hlX2VudHJ5X2Zyb21f
+b25kaXNrKG1lbV9wb29sLCBvbmRpc2ssIGZsYWdzLA0KLQkJCQkJICAgICBwcmV2aW91c19uYW1l
+LT5idWYsDQotCQkJCQkgICAgIHByZXZpb3VzX25hbWUtPmxlbik7DQorCQlwcmV2aW91c19sZW4g
+PSBwcmV2aW91c19jZSA/IHByZXZpb3VzX2NlLT5jZV9uYW1lbGVuIDogMDsNCisJCXN0cmlwX2xl
+biA9IGRlY29kZV92YXJpbnQoJmNwKTsNCisJCWlmIChwcmV2aW91c19sZW4gPCBzdHJpcF9sZW4p
+IHsNCisJCQlpZiAocHJldmlvdXNfY2UpDQorCQkJCWRpZShfKCJtYWxmb3JtZWQgbmFtZSBmaWVs
+ZCBpbiB0aGUgaW5kZXgsIG5lYXIgcGF0aCAnJXMnIiksDQorCQkJCSAgICBwcmV2aW91c19jZS0+
+bmFtZSk7DQorCQkJZWxzZQ0KKwkJCQlkaWUoXygibWFsZm9ybWVkIG5hbWUgZmllbGQgaW4gdGhl
+IGluZGV4IGluIHRoZSBmaXJzdCBwYXRoIikpOw0KKwkJfQ0KKwkJY29weV9sZW4gPSBwcmV2aW91
+c19sZW4gLSBzdHJpcF9sZW47DQorCQluYW1lID0gKGNvbnN0IGNoYXIgKiljcDsNCisJfQ0KIA0K
+LQkJKmVudF9zaXplID0gKG5hbWUgLSAoKGNoYXIgKilvbmRpc2spKSArIGNvbnN1bWVkOw0KKwlp
+ZiAobGVuID09IENFX05BTUVNQVNLKSB7DQorCQlsZW4gPSBzdHJsZW4obmFtZSk7DQorCQlpZiAo
+ZXhwYW5kX25hbWVfZmllbGQpDQorCQkJbGVuICs9IGNvcHlfbGVuOw0KKwl9DQorDQorCWNlID0g
+bWVtX3Bvb2xfX2NlX2FsbG9jKGNlX21lbV9wb29sLCBsZW4pOw0KKw0KKwljZS0+Y2Vfc3RhdF9k
+YXRhLnNkX2N0aW1lLnNlYyA9IGdldF9iZTMyKCZvbmRpc2stPmN0aW1lLnNlYyk7DQorCWNlLT5j
+ZV9zdGF0X2RhdGEuc2RfbXRpbWUuc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+bXRpbWUuc2VjKTsN
+CisJY2UtPmNlX3N0YXRfZGF0YS5zZF9jdGltZS5uc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+Y3Rp
+bWUubnNlYyk7DQorCWNlLT5jZV9zdGF0X2RhdGEuc2RfbXRpbWUubnNlYyA9IGdldF9iZTMyKCZv
+bmRpc2stPm10aW1lLm5zZWMpOw0KKwljZS0+Y2Vfc3RhdF9kYXRhLnNkX2RldiAgID0gZ2V0X2Jl
+MzIoJm9uZGlzay0+ZGV2KTsNCisJY2UtPmNlX3N0YXRfZGF0YS5zZF9pbm8gICA9IGdldF9iZTMy
+KCZvbmRpc2stPmlubyk7DQorCWNlLT5jZV9tb2RlICA9IGdldF9iZTMyKCZvbmRpc2stPm1vZGUp
+Ow0KKwljZS0+Y2Vfc3RhdF9kYXRhLnNkX3VpZCAgID0gZ2V0X2JlMzIoJm9uZGlzay0+dWlkKTsN
+CisJY2UtPmNlX3N0YXRfZGF0YS5zZF9naWQgICA9IGdldF9iZTMyKCZvbmRpc2stPmdpZCk7DQor
+CWNlLT5jZV9zdGF0X2RhdGEuc2Rfc2l6ZSAgPSBnZXRfYmUzMigmb25kaXNrLT5zaXplKTsNCisJ
+Y2UtPmNlX2ZsYWdzID0gZmxhZ3MgJiB+Q0VfTkFNRU1BU0s7DQorCWNlLT5jZV9uYW1lbGVuID0g
+bGVuOw0KKwljZS0+aW5kZXggPSAwOw0KKwloYXNoY3B5KGNlLT5vaWQuaGFzaCwgb25kaXNrLT5z
+aGExKTsNCisNCisJaWYgKGV4cGFuZF9uYW1lX2ZpZWxkKSB7DQorCQlpZiAoY29weV9sZW4pDQor
+CQkJbWVtY3B5KGNlLT5uYW1lLCBwcmV2aW91c19jZS0+bmFtZSwgY29weV9sZW4pOw0KKwkJbWVt
+Y3B5KGNlLT5uYW1lICsgY29weV9sZW4sIG5hbWUsIGxlbiArIDEgLSBjb3B5X2xlbik7DQorCQkq
+ZW50X3NpemUgPSAobmFtZSAtICgoY2hhciAqKW9uZGlzaykpICsgbGVuICsgMSAtIGNvcHlfbGVu
+Ow0KKwl9IGVsc2Ugew0KKwkJbWVtY3B5KGNlLT5uYW1lLCBuYW1lLCBsZW4gKyAxKTsNCisJCSpl
+bnRfc2l6ZSA9IG9uZGlza19jZV9zaXplKGNlKTsNCiAJfQ0KIAlyZXR1cm4gY2U7DQogfQ0KQEAg
+LTE5NDgsNyArMTk1Niw3IEBAIHN0YXRpYyB2b2lkICpsb2FkX2luZGV4X2V4dGVuc2lvbnModm9p
+ZCAqX2RhdGEpDQogICovDQogc3RhdGljIHVuc2lnbmVkIGxvbmcgbG9hZF9jYWNoZV9lbnRyeV9i
+bG9jayhzdHJ1Y3QgaW5kZXhfc3RhdGUgKmlzdGF0ZSwNCiAJCQlzdHJ1Y3QgbWVtX3Bvb2wgKmNl
+X21lbV9wb29sLCBpbnQgb2Zmc2V0LCBpbnQgbnIsIHZvaWQgKm1tYXAsDQotCQkJdW5zaWduZWQg
+bG9uZyBzdGFydF9vZmZzZXQsIHN0cnVjdCBzdHJidWYgKnByZXZpb3VzX25hbWUpDQorCQkJdW5z
+aWduZWQgbG9uZyBzdGFydF9vZmZzZXQsIGNvbnN0IHN0cnVjdCBjYWNoZV9lbnRyeSAqcHJldmlv
+dXNfY2UpDQogew0KIAlpbnQgaTsNCiAJdW5zaWduZWQgbG9uZyBzcmNfb2Zmc2V0ID0gc3RhcnRf
+b2Zmc2V0Ow0KQEAgLTE5NTksMTAgKzE5NjcsMTEgQEAgc3RhdGljIHVuc2lnbmVkIGxvbmcgbG9h
+ZF9jYWNoZV9lbnRyeV9ibG9jayhzdHJ1Y3QgaW5kZXhfc3RhdGUgKmlzdGF0ZSwNCiAJCXVuc2ln
+bmVkIGxvbmcgY29uc3VtZWQ7DQogDQogCQlkaXNrX2NlID0gKHN0cnVjdCBvbmRpc2tfY2FjaGVf
+ZW50cnkgKikoKGNoYXIgKiltbWFwICsgc3JjX29mZnNldCk7DQotCQljZSA9IGNyZWF0ZV9mcm9t
+X2Rpc2soY2VfbWVtX3Bvb2wsIGRpc2tfY2UsICZjb25zdW1lZCwgcHJldmlvdXNfbmFtZSk7DQor
+CQljZSA9IGNyZWF0ZV9mcm9tX2Rpc2soY2VfbWVtX3Bvb2wsIGlzdGF0ZS0+dmVyc2lvbiwgZGlz
+a19jZSwgJmNvbnN1bWVkLCBwcmV2aW91c19jZSk7DQogCQlzZXRfaW5kZXhfZW50cnkoaXN0YXRl
+LCBpLCBjZSk7DQogDQogCQlzcmNfb2Zmc2V0ICs9IGNvbnN1bWVkOw0KKwkJcHJldmlvdXNfY2Ug
+PSBjZTsNCiAJfQ0KIAlyZXR1cm4gc3JjX29mZnNldCAtIHN0YXJ0X29mZnNldDsNCiB9DQpAQCAt
+MTk3MCwyMCArMTk3OSwxNiBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBsb2FkX2NhY2hlX2VudHJ5
+X2Jsb2NrKHN0cnVjdCBpbmRleF9zdGF0ZSAqaXN0YXRlLA0KIHN0YXRpYyB1bnNpZ25lZCBsb25n
+IGxvYWRfYWxsX2NhY2hlX2VudHJpZXMoc3RydWN0IGluZGV4X3N0YXRlICppc3RhdGUsDQogCQkJ
+dm9pZCAqbW1hcCwgc2l6ZV90IG1tYXBfc2l6ZSwgdW5zaWduZWQgbG9uZyBzcmNfb2Zmc2V0KQ0K
+IHsNCi0Jc3RydWN0IHN0cmJ1ZiBwcmV2aW91c19uYW1lX2J1ZiA9IFNUUkJVRl9JTklULCAqcHJl
+dmlvdXNfbmFtZTsNCiAJdW5zaWduZWQgbG9uZyBjb25zdW1lZDsNCiANCiAJaWYgKGlzdGF0ZS0+
+dmVyc2lvbiA9PSA0KSB7DQotCQlwcmV2aW91c19uYW1lID0gJnByZXZpb3VzX25hbWVfYnVmOw0K
+IAkJbWVtX3Bvb2xfaW5pdCgmaXN0YXRlLT5jZV9tZW1fcG9vbCwgaXN0YXRlLT5jYWNoZV9uciAq
+IChzaXplb2Yoc3RydWN0IGNhY2hlX2VudHJ5KSArIENBQ0hFX0VOVFJZX1BBVEhfTEVOR1RIKSk7
+DQogCX0gZWxzZSB7DQotCQlwcmV2aW91c19uYW1lID0gTlVMTDsNCiAJCW1lbV9wb29sX2luaXQo
+JmlzdGF0ZS0+Y2VfbWVtX3Bvb2wsIGVzdGltYXRlX2NhY2hlX3NpemUobW1hcF9zaXplLCBpc3Rh
+dGUtPmNhY2hlX25yKSk7DQogCX0NCiANCiAJY29uc3VtZWQgPSBsb2FkX2NhY2hlX2VudHJ5X2Js
+b2NrKGlzdGF0ZSwgaXN0YXRlLT5jZV9tZW1fcG9vbCwNCi0JCQkJCTAsIGlzdGF0ZS0+Y2FjaGVf
+bnIsIG1tYXAsIHNyY19vZmZzZXQsIHByZXZpb3VzX25hbWUpOw0KLQlzdHJidWZfcmVsZWFzZSgm
+cHJldmlvdXNfbmFtZV9idWYpOw0KKwkJCQkJMCwgaXN0YXRlLT5jYWNoZV9uciwgbW1hcCwgc3Jj
+X29mZnNldCwgTlVMTCk7DQogCXJldHVybiBjb25zdW1lZDsNCiB9DQogDQpAQCAtMjAwNSw4ICsy
+MDEwLDcgQEAgc3RydWN0IGxvYWRfY2FjaGVfZW50cmllc190aHJlYWRfZGF0YQ0KIAlpbnQgb2Zm
+c2V0LCBucjsNCiAJdm9pZCAqbW1hcDsNCiAJdW5zaWduZWQgbG9uZyBzdGFydF9vZmZzZXQ7DQot
+CXN0cnVjdCBzdHJidWYgcHJldmlvdXNfbmFtZV9idWY7DQotCXN0cnVjdCBzdHJidWYgKnByZXZp
+b3VzX25hbWU7DQorCXN0cnVjdCBjYWNoZV9lbnRyeSAqcHJldmlvdXNfY2U7DQogCXVuc2lnbmVk
+IGxvbmcgY29uc3VtZWQ7CS8qIHJldHVybiAjIG9mIGJ5dGVzIGluIGluZGV4IGZpbGUgcHJvY2Vz
+c2VkICovDQogfTsNCiANCkBAIC0yMDE5LDcgKzIwMjMsNyBAQCBzdGF0aWMgdm9pZCAqbG9hZF9j
+YWNoZV9lbnRyaWVzX3RocmVhZCh2b2lkICpfZGF0YSkNCiAJc3RydWN0IGxvYWRfY2FjaGVfZW50
+cmllc190aHJlYWRfZGF0YSAqcCA9IF9kYXRhOw0KIA0KIAlwLT5jb25zdW1lZCArPSBsb2FkX2Nh
+Y2hlX2VudHJ5X2Jsb2NrKHAtPmlzdGF0ZSwgcC0+Y2VfbWVtX3Bvb2wsDQotCQlwLT5vZmZzZXQs
+IHAtPm5yLCBwLT5tbWFwLCBwLT5zdGFydF9vZmZzZXQsIHAtPnByZXZpb3VzX25hbWUpOw0KKwkJ
+cC0+b2Zmc2V0LCBwLT5uciwgcC0+bW1hcCwgcC0+c3RhcnRfb2Zmc2V0LCBwLT5wcmV2aW91c19j
+ZSk7DQogCXJldHVybiBOVUxMOw0KIH0NCiANCkBAIC0yMDY2LDIwICsyMDcwLDIzIEBAIHN0YXRp
+YyB1bnNpZ25lZCBsb25nIGxvYWRfY2FjaGVfZW50cmllc190aHJlYWRlZChpbnQgbnJfdGhyZWFk
+cywgc3RydWN0IGluZGV4X3N0DQogCQkJcC0+aXN0YXRlID0gaXN0YXRlOw0KIAkJCXAtPm9mZnNl
+dCA9IGk7DQogCQkJcC0+bnIgPSBjZV9wZXJfdGhyZWFkIDwgaXN0YXRlLT5jYWNoZV9uciAtIGkg
+PyBjZV9wZXJfdGhyZWFkIDogaXN0YXRlLT5jYWNoZV9uciAtIGk7DQorCQkJcC0+bW1hcCA9IG1t
+YXA7DQorCQkJcC0+c3RhcnRfb2Zmc2V0ID0gc3JjX29mZnNldDsNCiANCiAJCQkvKiBjcmVhdGUg
+YSBtZW1fcG9vbCBmb3IgZWFjaCB0aHJlYWQgKi8NCi0JCQlpZiAoaXN0YXRlLT52ZXJzaW9uID09
+IDQpDQorCQkJaWYgKGlzdGF0ZS0+dmVyc2lvbiA9PSA0KSB7DQogCQkJCW1lbV9wb29sX2luaXQo
+JnAtPmNlX21lbV9wb29sLA0KIAkJCQkJZXN0aW1hdGVfY2FjaGVfc2l6ZV9mcm9tX2NvbXByZXNz
+ZWQocC0+bnIpKTsNCi0JCQllbHNlDQorDQorCQkJCS8qIGNyZWF0ZSBhIHByZXZpb3VzIGNlIGVu
+dHJ5IGZvciB0aGlzIGJsb2NrIG9mIGNhY2hlIGVudHJpZXMgKi8NCisJCQkJaWYgKHByZXZpb3Vz
+X25hbWUtPmxlbikgew0KKwkJCQkJcC0+cHJldmlvdXNfY2UgPSBtZW1fcG9vbF9fY2VfYWxsb2Mo
+cC0+Y2VfbWVtX3Bvb2wsIHByZXZpb3VzX25hbWUtPmxlbik7DQorCQkJCQlwLT5wcmV2aW91c19j
+ZS0+Y2VfbmFtZWxlbiA9IHByZXZpb3VzX25hbWUtPmxlbjsNCisJCQkJCW1lbWNweShwLT5wcmV2
+aW91c19jZS0+bmFtZSwgcHJldmlvdXNfbmFtZS0+YnVmLCBwcmV2aW91c19uYW1lLT5sZW4pOw0K
+KwkJCQl9DQorCQkJfSBlbHNlIHsNCiAJCQkJbWVtX3Bvb2xfaW5pdCgmcC0+Y2VfbWVtX3Bvb2ws
+DQogCQkJCQllc3RpbWF0ZV9jYWNoZV9zaXplKG1tYXBfc2l6ZSwgcC0+bnIpKTsNCi0NCi0JCQlw
+LT5tbWFwID0gbW1hcDsNCi0JCQlwLT5zdGFydF9vZmZzZXQgPSBzcmNfb2Zmc2V0Ow0KLQkJCWlm
+IChwcmV2aW91c19uYW1lKSB7DQotCQkJCXN0cmJ1Zl9hZGRidWYoJnAtPnByZXZpb3VzX25hbWVf
+YnVmLCBwcmV2aW91c19uYW1lKTsNCi0JCQkJcC0+cHJldmlvdXNfbmFtZSA9ICZwLT5wcmV2aW91
+c19uYW1lX2J1ZjsNCiAJCQl9DQogDQogCQkJaWYgKHB0aHJlYWRfY3JlYXRlKCZwLT5wdGhyZWFk
+LCBOVUxMLCBsb2FkX2NhY2hlX2VudHJpZXNfdGhyZWFkLCBwKSkNCkBAIC0yMTAyLDcgKzIxMDks
+NyBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBsb2FkX2NhY2hlX2VudHJpZXNfdGhyZWFkZWQoaW50
+IG5yX3RocmVhZHMsIHN0cnVjdCBpbmRleF9zdA0KIAkJfSBlbHNlDQogCQkJbmFtZSA9IG9uZGlz
+ay0+bmFtZTsNCiANCi0JCWlmICghcHJldmlvdXNfbmFtZSkgew0KKwkJaWYgKGlzdGF0ZS0+dmVy
+c2lvbiAhPSA0KSB7DQogCQkJc2l6ZV90IGxlbjsNCiANCiAJCQkvKiB2MyBhbmQgZWFybGllciAq
+Lw0KQEAgLTIxMjEsNyArMjEyOCw2IEBAIHN0YXRpYyB1bnNpZ25lZCBsb25nIGxvYWRfY2FjaGVf
+ZW50cmllc190aHJlYWRlZChpbnQgbnJfdGhyZWFkcywgc3RydWN0IGluZGV4X3N0DQogCQlpZiAo
+cHRocmVhZF9qb2luKHAtPnB0aHJlYWQsIE5VTEwpKQ0KIAkJCWRpZSgidW5hYmxlIHRvIGpvaW4g
+bG9hZF9jYWNoZV9lbnRyaWVzX3RocmVhZCIpOw0KIAkJbWVtX3Bvb2xfY29tYmluZShpc3RhdGUt
+PmNlX21lbV9wb29sLCBwLT5jZV9tZW1fcG9vbCk7DQotCQlzdHJidWZfcmVsZWFzZSgmcC0+cHJl
+dmlvdXNfbmFtZV9idWYpOw0KIAkJY29uc3VtZWQgKz0gcC0+Y29uc3VtZWQ7DQogCX0NCiANCi0t
+IA0KMi4xOC4wLndpbmRvd3MuMQ0KDQo=
