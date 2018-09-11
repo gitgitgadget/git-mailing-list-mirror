@@ -2,83 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 44BEF1F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 16:01:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 473EB1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 16:03:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726863AbeIKVBl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 17:01:41 -0400
-Received: from mail-it0-f53.google.com ([209.85.214.53]:38136 "EHLO
-        mail-it0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbeIKVBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 17:01:41 -0400
-Received: by mail-it0-f53.google.com with SMTP id p129-v6so2182845ite.3
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:01:44 -0700 (PDT)
+        id S1726928AbeIKVDp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 17:03:45 -0400
+Received: from mail-ua1-f66.google.com ([209.85.222.66]:37606 "EHLO
+        mail-ua1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726876AbeIKVDo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 17:03:44 -0400
+Received: by mail-ua1-f66.google.com with SMTP id y10-v6so21108015uao.4
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:03:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=X0hf6FhXIL5L59OsJVvsbeb9JcWrrJXSmWiFnxTWAwo=;
-        b=hsgQLLZv0F57pBvqxcCtFJPnB5owqchbOUyqJOfgBRgteIS1m4niXHrmi6QRpb/Gbi
-         VFnfa0G8aiudveoKuDBvmj198HiFL3LrhHSjaTt8NMsLc+cEn/xewe8YaB1pwGn0APKA
-         zYyjfmMdXetoXGqn3LvMtbKtDQr/ket90XBNtMlvhBfK35sXreVXj+/11LSkXNg63pKw
-         WVuC6soWTSiVAOSy8L7qY0wIReaPGAClITrZF8ZBR6+ZUqUAp9sbNNS2Y+aEZcq2E3LF
-         /fw7ASPh7QB/uRpSIkJ+aPpxzBws7FgIXn3rVWgjgQKD06txQCJdToB19lKwkije668+
-         CJ3g==
+         :cc;
+        bh=KuJxw53wfBXNxwz2Bz2YkeMYEiTjXi9rSneyOf0y53c=;
+        b=YGpouI/cCG7H4jZAhn+Nx6zsLgFVZy5A4yDPB6nOkc/uvEfLLBUNncJoFiFpZXMSFZ
+         s4ced95P1jUF+aYiCIv489aio3TsQ2YYHo8/FTVjbGTAafSkvxi5g9Ko6gxkSdHpjlOj
+         XK8zZlPGEkYqkKvMHXJFAAgIWPlKAnAn/2OjBuIu75pdPKVFdOabMno3V+aB8cK8p90A
+         X67sNbY7a4C7Mqd7qNf4aXYUqdDlEAx5b0+u/68GV4r0R+N/v+URObIQ2jE+jxrjLajw
+         aZkb67ScpcmgeXKcrMdDyvoQSl6PVe1u7g2k8hSNFp+l/XvczdUiHW95bo/UOEDmcB2S
+         pHIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=X0hf6FhXIL5L59OsJVvsbeb9JcWrrJXSmWiFnxTWAwo=;
-        b=qT3PSG3jJ5vdPA9Z7M6LNnLenOYmpQO0zDgbsqPNEGUaEeb0FreeRIK1L0FvTOYu0L
-         ru1Ts0zc18cxbNlo7tm1BpF4Ut6qcQiC9IGuqNJlPWbBQS34tgz5t+xiOkPQbbcZu4c0
-         h5eLhux/EpIyCqo04OZAUzeo22aoYNANmNaZFR+RobmrWQ4MG4ANdpBWlELu65/Dggkr
-         UGxM10JCQ6WCH9SGkEHTJtyhs0HBmrHwL3HIXlvbN2LV0FzV9p7QV6EFPkGDr8xpQL8x
-         /Kuf/UcJpJjC0uUH7GRFquIl73GwIorIazPTM3fTejugy8MRV5WSpc7mOPGs774TLJJi
-         F9Pw==
-X-Gm-Message-State: APzg51BVrfE30rYEDEtOTDTzOA7eet4YDhvIOFuJoBict81yodLpnvFm
-        aNulVSh7mj3jHN/CqilmbH0dse5b6Y6yaysx2gPkLxtQ
-X-Google-Smtp-Source: ANB0VdaeOwpD8yXF6PWaCZ1sCPf9cbTi8UZvhMgIo3e3YNVjDcOeC5nLTRn3rXqLyMnmFz13n33nzrD2wUgwSXmNTDo=
-X-Received: by 2002:a24:144:: with SMTP id 65-v6mr2047459itk.62.1536681704444;
- Tue, 11 Sep 2018 09:01:44 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=KuJxw53wfBXNxwz2Bz2YkeMYEiTjXi9rSneyOf0y53c=;
+        b=K4GgncQFVXwYLzdY/D+G4h9cjpY9lZrP+d6u9hBfTQTLMtr5zTWto4cXEbQDnlUj0r
+         Xs0PigvtgUWt8uoz+R0qMZnDmoYQni2FfNG8rYmiQXH4OAkw4jQA0pcHpYbd3wjEqG53
+         BDtIcjUqlBrmldDk8U5XJGxUStHfBnmNXdGwwDQgCc08wfsvCSJXepZdEih1Jgw7ZiW0
+         VltR6PiRNRE4JTHxOJ+mV/ZWz8w5JnSirmHaGZSJv2DGrsKbMQSM2xkGJqH/u59d2ojH
+         cyAHEuIe9ouOpo8YGrYF10FBb1W6P736z26kOMvfcTk0sNeb92WMkdvgudn0xsB/V1wI
+         h/rA==
+X-Gm-Message-State: APzg51AmTDy8NCyPbSp7j/Km3hXRhI/UwrpQQBJdkfP0TjteaLek9JZW
+        VGszFUadwJQAlIkCfCbQSN/rZCZ5XGM2j96j5V3c72Dp7QY=
+X-Google-Smtp-Source: ANB0VdZJGb7XvH++HG34hnfYxPVZ1e67INBkzYg1CXgFCPO2tIwhrW+fexkBEtlKtVopljvQ5mshYGkf2efzKRNdLns=
+X-Received: by 2002:a67:460b:: with SMTP id t11-v6mr9492909vsa.68.1536681826731;
+ Tue, 11 Sep 2018 09:03:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <3d9c42ea-70ba-a27c-1ece-797829caa1b0@free.fr>
-In-Reply-To: <3d9c42ea-70ba-a27c-1ece-797829caa1b0@free.fr>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 11 Sep 2018 18:01:17 +0200
-Message-ID: <CACsJy8DBoZyOSivk-ZZZze0nViPqw-GvseDJADvNyy7c1jHV-Q@mail.gmail.com>
-Subject: Re: Help on autocompletion not localized?
-To:     jn.avila@free.fr
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
+ <20180911154906.GA4865@hank.intra.tgummerer.com>
+In-Reply-To: <20180911154906.GA4865@hank.intra.tgummerer.com>
+From:   ryenus <ryenus@gmail.com>
+Date:   Wed, 12 Sep 2018 00:03:35 +0800
+Message-ID: <CAKkAvaw4QTMzKXpkpAaMhZaz68=OdS_AmrMXyu6C9td2P+XmTg@mail.gmail.com>
+Subject: Re: Git 2.19 Segmentation fault 11 on macOS
+To:     t.gummerer@gmail.com
+Cc:     Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 11, 2018 at 2:55 PM Jean-No=C3=ABl Avila <jn.avila@free.fr> wro=
-te:
+On Tue, 11 Sep 2018 at 23:49, Thomas Gummerer <t.gummerer@gmail.com> wrote:
 >
 > Hi,
 >
+> thanks for your bug report!
 >
-> When invoking the autocompletion help with <TAB><TAB> after a double
-> hyphen under zsh, the help list is not localized. I guess the help list
-> comes from some usage output of the on-going git command, but I wasn't
-> able to find where and how this happens (completion scripts are quite
-> hairy).
+> On 09/11, ryenus wrote:
+> > I just updated to 2.19 via Homebrew, git range-diff seems cool, but I
+> > only got a Segmentation fault: 11
+> >
+> >     $ git version; git range-diff origin/master  HEAD@{2} HEAD
+>
+> Unfortunately the HEAD@{2} syntax needs your reflog, which is not
+> available when just cloning the repository (the reflog is only local
+> and not pushed to the remote repository).  Would it be possible to
+> create a short script to create the repository where you're
+> experiencing the behaviour, or replacing 'origin/master', 'HEAD@{2}'
+> and 'HEAD' with the actual commit ids?
 
-I don't use zsh, but I guess that's because the help strings are hard
-coded in there (in English of course). You can start at
-__git_zsh_cmd_common() function.
+so `HEAD~2` should be used instead of `HEAD@{2}`, right?
+I just tried the following and got same error:
 
-These strings are available (or at least possible to make them
-available) from 'git' binary, which should be translated. It's just a
-a matter of hooking up to zsh script.
---=20
-Duy
+    $ git range-diff master patch~2 patch
+    Segmentation fault: 11
+
+>
+> I tried with various values, but unfortunately failed to reproduce
+> this so far (although admittedly I tried it on linux, not Mac OS).
+>
+> >     git version 2.19.0
+> >     Segmentation fault: 11
+> >
+> > Both origin/master and my local branch each got two new commits of their own,
+> > please correct me if this is not the expected way to use git range-diff.
+> >
+> > FYI, I've created a sample repo here:
+> > https://github.com/ryenus/range-diff-segfault/
