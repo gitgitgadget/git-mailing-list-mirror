@@ -2,133 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3D2CD1F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 20:57:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 829191F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 20:58:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727277AbeILB6R (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 21:58:17 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46396 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726850AbeILB6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 21:58:16 -0400
-Received: (qmail 18114 invoked by uid 109); 11 Sep 2018 20:57:13 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Sep 2018 20:57:13 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21704 invoked by uid 111); 11 Sep 2018 20:57:25 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Sep 2018 16:57:25 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Sep 2018 16:57:10 -0400
-Date:   Tue, 11 Sep 2018 16:57:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        stas@stason.org, Git Mailing List <git@vger.kernel.org>
-Subject: Re: git silently ignores include directive with single quotes
-Message-ID: <20180911205709.GA25828@sigill.intra.peff.net>
-References: <ca2b192e-1722-092e-2c54-d79d21a66ba2@stason.org>
- <CAN0heSroxfcwiJaVgGFTweq=XKAgGsR-E6SeOgsG4m0rzK4dHQ@mail.gmail.com>
- <87bm97rcih.fsf@evledraar.gmail.com>
- <20180908211436.GA31560@sigill.intra.peff.net>
- <ad56c575-1211-61d2-daed-5b0da61db738@ramsayjones.plus.com>
- <20180909023332.GA14762@sigill.intra.peff.net>
- <xmqqk1nrojpq.fsf@gitster-ct.c.googlers.com>
+        id S1728051AbeILCAC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 22:00:02 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35578 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726850AbeILCAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 22:00:02 -0400
+Received: by mail-wr1-f68.google.com with SMTP id j26-v6so27481838wre.2
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 13:58:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=DGx8lX3bVrLpb821svJmIl7Lw3ipNMJSVd41+knQhPU=;
+        b=N0C2fR/0/6G9woPQVxzwNAn2DBDaURrZHIZrXDvVepYE7YKiMRz0MsAWMoFxONP5o3
+         O88ZX0cM1jNZS6DiifDxl24gXSpZbtZels7m2sEbo7/uHF39JMfLtIQmTCG5LuRmdGE0
+         VTi5LbyAHA0eB7DUQgAG1dvF7i013330+dPEgoJL3T/W7Oi5NRhko4q4M8FHzsFc2b3i
+         vod9ac9LTT0nY9D75Z867tLUOsCHtCrayQ9rXe3C6Vk/b8TLTRVzNg54H7elhocKuI58
+         2PsCRufFeAx1yNnYj60qUlKtPWQkfYwjvYe8haSrSxmWzRjB06BgS7EUQNacNcCa4ivI
+         /tfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DGx8lX3bVrLpb821svJmIl7Lw3ipNMJSVd41+knQhPU=;
+        b=S5x1E+N0wQ5ouUp4z++dzRQeWI2KzqArgSA0jR899j++mzRHPTu+ubMNUHhVq5nfmH
+         nHMgOCYlkZi2lhUlx4Tmj80ehH/eZbATHYuiSh5RcNwyqyAnA3Km8r+LLc3u90H8iKj9
+         VwEKT4DSv9py4ULf4Z4dSf7tAj/z4cApRvoBolyAAcmOnVb60fTrN4WNeIFTwLAjyq64
+         n635OIspEcAXw1JB94rk5Qt3jAupsm3bMehENQTsxLh/nru9n2xw+f8/fvGYJVmy/4QC
+         19hXNdM+3Edu4v0MP0SuhX5JAhH6YgX09trk1TaJVZrKzQu4UAgZd3ga5g8ue1K01o2l
+         pcZw==
+X-Gm-Message-State: APzg51AWRuoA6Y51TUR/oL92Z/JZSEIHoGq2pWDhM6eDR3hQDjuh/pWd
+        3TwB77p/tNXTF32SlzeUUJ8=
+X-Google-Smtp-Source: ANB0VdZwPnNAWc+aUsHOhDx0BqI60XGOElaORO5POwUU6UtN/vDBJXj2XcEHSAyEqvyS+heWNevSMQ==
+X-Received: by 2002:adf:e792:: with SMTP id n18-v6mr8892176wrm.136.1536699535856;
+        Tue, 11 Sep 2018 13:58:55 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 144-v6sm2499897wma.45.2018.09.11.13.58.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 11 Sep 2018 13:58:55 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] t3206-range-diff.sh: cover single-patch case
+References: <pull.37.git.gitgitgadget@gmail.com>
+        <58347a962438852be0d37c3957686ea5000b2dbd.1536697263.git.gitgitgadget@gmail.com>
+Date:   Tue, 11 Sep 2018 13:58:54 -0700
+In-Reply-To: <58347a962438852be0d37c3957686ea5000b2dbd.1536697263.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Tue, 11 Sep 2018
+        13:21:06 -0700 (PDT)")
+Message-ID: <xmqq4levoinl.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqk1nrojpq.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 11, 2018 at 01:36:01PM -0700, Junio C Hamano wrote:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > I think that's syntactically invalid. At any rate, there are clearly
-> > three options for setting a bit:
-> >
-> >   1. In the section header (+include, or Ævar's includeIf suggestion).
-> >
-> >   2. In another key (which looks pretty clean, but does introduce
-> >      ordering constraints).
-> >
-> >   3. In the key name (maybePath or similar).
-> >
-> > I don't have a huge preference between them.
-> 
-> What's the longer term goal for the endgame?  Is it acceptable that
-> include.path will stay to be "optional include" for compatibility
-> with users' existing configuration files, and include.requiredpath
-> or similar gets introduced to allow people who want to get warned?
-> Or do we want the usual multi-step deprecation dance where the first
-> phase introduces include.maybepath and include.path starts warning
-> against missing one, encouraging it to be rewritten to maybepath?
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The commit 40ce4160 "format-patch: allow --range-diff to apply to
+> a lone-patch" added the ability to see a range-diff as commentary
+> after the commit message of a single patch series (i.e. [PATCH]
+> instead of [PATCH X/N]). However, this functionality was not
+> covered by a test case.
+>
+> Add a simple test case that checks that a range-diff is written as
+> commentary to the patch.
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t3206-range-diff.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 3d7a2d8a4d..05ef3263d2 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -154,4 +154,9 @@ do
+>  	'
+>  done
+>  
+> +test_expect_success 'format-patch --range-diff as commentary' '
+> +	git format-patch --stdout --range-diff=HEAD~1 HEAD~1 >actual &&
+> +	grep -A 1 -e "\-\-\-" actual | grep "Range-diff:"
 
-I don't see much point in introducing include.requiredPath. It might be
-useful for people who want to be extra-careful with their includes, but
-it would not really help users who simply made a spelling error and
-didn't know how to debug it.
-
-So switching the default for include.path and providing an escape hatch
-seems like the more useful path (if we indeed want to do one of these;
-adding better debugging like GIT_TRACE_CONFIG is yet another option).
-
-As far as deprecation, it depends on what the new behavior is. If it is
-simply that include.path will generate a warning on a missing file, I
-don't think there is any point in a multi-step dance. The endgame is a
-warning, which is no different than the deprecated-stage behavior. :)
-
-If the endgame is to die(), then I'd agree that there should be a
-warning in the middle.
-
-Between all those things I mentioned (or simply leaving it as-is), I
-really don't have a strong feeling. I hoped people who did would
-generate a patch to give something concrete to review.
-
-> I have mild preference against #2, as I suspect that the ordering
-> constraints makes it harder to understand to end users.  Between #1
-> and #3, there wouldn't be much difference, whether the endgame is
-> "add a stricter variant that is opt in" or "migrate to a stricter
-> default".
-
-The thing that #2 buys you is that multiple such bits could be combined.
-If we imagine that later there is another choice to make in interpreting
-include.path with two options, "foo" and "bar", then we would be stuck
-with:
-
-  include.maybeFooPath
-  include.maybeBarPath
-  include.fooPath
-  include.barPath
-
-and of course it only gets worse with a third one.  Whereas with
-independent options, you can do:
-
-  [include]
-  warnOnMissing = false
-  otherPreference = bar
-  path = ...
-
-I dunno. The combinatorics might not be too bad if we document the
-required order, and actually code the parsing side like:
-
-  if (!skip_prefix(key, "maybe", &key))
-	warn_on_missing = 0;
-  if (!skip_prefix(key, "foo", &key))
-        other_pref = "foo";
-  ...and so on
-
-It's kind of hacky, but it does encode the bits into the name. As long
-as they remain bits, and not, say, arbitrary strings.
-
--Peff
+Isn't "grep -A" GNUism?
