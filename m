@@ -2,79 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B92351F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 15:38:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4746B1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 15:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726876AbeIKUis (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 16:38:48 -0400
-Received: from mail-qk1-f171.google.com ([209.85.222.171]:33422 "EHLO
-        mail-qk1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726622AbeIKUis (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 16:38:48 -0400
-Received: by mail-qk1-f171.google.com with SMTP id z78-v6so17035595qka.0
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 08:38:56 -0700 (PDT)
+        id S1727644AbeIKUrs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 16:47:48 -0400
+Received: from mail-ua1-f50.google.com ([209.85.222.50]:40066 "EHLO
+        mail-ua1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726980AbeIKUrr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 16:47:47 -0400
+Received: by mail-ua1-f50.google.com with SMTP id 101-v6so21043581uav.7
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 08:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=e1P+jU5SA3vQS7VZ4ttIguxZdtXodIchM94Kjzq9T1Y=;
-        b=mzGnzVVtuZ/WHvdmjrI9llrtb7ZmINSZNmCyhW658Z4SGYyNMs5aWVWyOdPUUeY44w
-         4RsdzBjoAWDFQJmVDkue2F2515Za0M7Ht+JgHQgh2tsA5Uz+lOZBwk+QkJweOKYm82kB
-         mmRCqVSdD8pedezzIJCryICHkOvoWvZou5htyOORShKHeHDVKavuTfKtkKNn8zj8UY/G
-         NbBxDmoVJ8H5+5kApj7OPghv5E1sNKnJl65j3gxJQB+GcxYONNi6qKV36NASDZu3d87X
-         qv3qBJru1kEUmGL3lpElENCGi8Z9GTVX5h/B4p1WYH1iBVawqeNpRCdVKvtfHqaFo7nM
-         nxig==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DOsHFlnmyME120bogI1CUS06asFfgnPsaAke5IN+/VA=;
+        b=LrZsakpvIAcjoOlTIYuKQSYoH3d1uJ6WrNHdSIFUlW9Yo2mOLcAl0EJvm3mSDOLS9G
+         Foja0hWC+7uOqwsjoAHQwK+xr8viqCN46G944w0y1KKFhvTAx/NCbmSU5BO+Uxclw1od
+         v9sCU/6RcVpBhH3LQj0XCvLfE3AVNr+T2W1KThFNzTSyC8+xEKy0rh29B2V0DQQNt0hI
+         mDT0DehgLWApfXQpIPZ+wbTlIc2h62n1VFk+T3r/PxYzHHAFb+VWa9+oWm28u0A70+L+
+         CC4FzH403ueIDaJ0dE1isoHtYn/jXgMiOZWUc92ury1ud9ET5fQUS3y/oXffWphjSNax
+         IoWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=e1P+jU5SA3vQS7VZ4ttIguxZdtXodIchM94Kjzq9T1Y=;
-        b=e6cgtOaCyL0V4700oM4YV9BYJV+rcKjpi94CB7mnWiL5hMEXlLKUiSwNRntpS1iceZ
-         Fppb2nINEmGP7gj2xPrTL3LAmkg9Te9bS7iVZb0EoJSP92S0zoEolvwSKooP66i9wqZY
-         FaZZR5fyG4CVW5vfuEb83T4+I7w0oWy3ftgkijaLgLSmvxz+usCkkO3qY775m7uWcDg+
-         pAeWHb/+Gg86WlFCeusdhpsl7l2YxPVnXDn8NIjsZcbkz3aWDIKRjz7miC/bg7YBbmGZ
-         /zxkRsRmYda2L+/TK01u1XFS6AqVQTCml3TEgGAQM2eXs5S5cYx6tX1F+2tyB8DRoV7s
-         Umkg==
-X-Gm-Message-State: APzg51Bj5vIQM2v3ubM1VklbJ2m1sBHmB8OjZJk8VdZkA6loZ+72+yJF
-        YwxZBS7bhyo2NqINI7Mj1eGzJVIo
-X-Google-Smtp-Source: ANB0VdZ3zKubKqhZNt1slRdnyHEI4Fl9EXT91IC6JgVz+VD7AxxP5LcV5EPbP3J7OIX5Vujurptryw==
-X-Received: by 2002:a37:c987:: with SMTP id m7-v6mr19942281qkl.324.1536680335780;
-        Tue, 11 Sep 2018 08:38:55 -0700 (PDT)
-Received: from ?IPv6:2001:4898:4070:37:ddb1:de2c:d0ab:264d? ([2001:4898:8010:1:9e47:de2c:d0ab:264d])
-        by smtp.gmail.com with ESMTPSA id m9-v6sm12484265qta.55.2018.09.11.08.38.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Sep 2018 08:38:54 -0700 (PDT)
-Subject: Re: Git 2.19 Segmentation fault 11 on macOS
-To:     ryenus <ryenus@gmail.com>, Git mailing list <git@vger.kernel.org>
-References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <1b8a35be-4234-7f71-c0be-41736bbe60cf@gmail.com>
-Date:   Tue, 11 Sep 2018 11:38:53 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DOsHFlnmyME120bogI1CUS06asFfgnPsaAke5IN+/VA=;
+        b=arU68m7cUqq4MzbEowq2MVdWYYS/kCfFLs+2BuKcCyVWSfQp4tfQwy78hk7ONt1Gvt
+         c7+0iWTXrq0qsLSDXx2qKBpbka2OK1WfGNI3xoeudYHa4m8hnEGft+1vRvW/JMBum97g
+         fJ17qmf3fIQ7ZgwFzY2A2ZhVvUBfLnQk8oNxR20KVGMjGrYXjsUI34maQC4lJu7414KA
+         Q/M10zGfya4fB+yc3xg/kz359zvh65rqExwgOMal2IsTg8ZyKyEdfiSfvuJF1I20JRjF
+         zDvsyIFzI1nKNgQ4+3lQsHrK0yqSZNHSQVLV9VmNpjltzgl2o8i0RREv7O4/1cLQ3ahs
+         aSfw==
+X-Gm-Message-State: APzg51BHhfuEvqG6+1UZ0tjhVHHD6fP9QWG2Zda0Imd4NJkHPTChdOIM
+        66BU+YN+JxbfcU/BAsddClInnhMrAPYV/utCHfc=
+X-Google-Smtp-Source: ANB0VdbNduRBgELdTVaAoMEccJwYaMstpoHVHEOVsHKEbbf8ihgjibXlxcRwI1jpI2BFwEOcAoh+ifq5rJVx0UqOFEA=
+X-Received: by 2002:a67:3d5c:: with SMTP id k89-v6mr9408166vsa.34.1536680872840;
+ Tue, 11 Sep 2018 08:47:52 -0700 (PDT)
 MIME-Version: 1.0
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
 In-Reply-To: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 11 Sep 2018 08:47:40 -0700
+Message-ID: <CABPp-BFUoTYSuTrtJt7girB50CGaEwg=Hgbuii45juBbTx0w0A@mail.gmail.com>
+Subject: Re: Git 2.19 Segmentation fault 11 on macOS
+To:     ryenus@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/2018 11:25 AM, ryenus wrote:
+On Tue, Sep 11, 2018 at 8:27 AM ryenus <ryenus@gmail.com> wrote:
+>
 > I just updated to 2.19 via Homebrew, git range-diff seems cool, but I
 > only got a Segmentation fault: 11
 >
->      $ git version; git range-diff origin/master  HEAD@{2} HEAD
->      git version 2.19.0
->      Segmentation fault: 11
+>     $ git version; git range-diff origin/master  HEAD@{2} HEAD
+>     git version 2.19.0
+>     Segmentation fault: 11
 >
 > Both origin/master and my local branch each got two new commits of their own,
 > please correct me if this is not the expected way to use git range-diff.
@@ -82,23 +75,9 @@ On 9/11/2018 11:25 AM, ryenus wrote:
 > FYI, I've created a sample repo here:
 > https://github.com/ryenus/range-diff-segfault/
 
-Hi Ryenus,
-
-Thanks for the report!
-
-I ran something similar using Git for Windows 2.19.0-rc2. I had to run 
-`git commit --amend --no-edit` on the tip commit to make my local master 
-disagree with origin/master. I then ran the following:
-
-$ git range-diff origin/master HEAD~1 HEAD
--:  ------- > 1:  5009c62 aaa
-
-With this, the command succeeded for me. There is another way to get a 
-similar result, could you try it?
-
-$ git range-diff origin/master~1..origin/master HEAD~1..HEAD
-1:  f14d571 = 1:  5009c62 aaa
-
-Otherwise, we can now get started trying to repro this on a Mac. Thanks!
-
--Stolee
+Thanks for the report and coming up with a sample repo.  However,
+reflogs don't transfer with clones, and your origin/master may well
+point somewhere different than ours.  Could you run
+   git rev-parse origin/master HEAD@{2} HEAD
+in the range-diff-segfault repo where you can reproduce so we know
+what commits to pass to trigger the bug?
