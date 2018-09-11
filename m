@@ -7,55 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C48E71F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 16:05:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11A371F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 16:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727650AbeIKVFm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 17:05:42 -0400
-Received: from mail-io0-f196.google.com ([209.85.223.196]:35105 "EHLO
-        mail-io0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbeIKVFm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 17:05:42 -0400
-Received: by mail-io0-f196.google.com with SMTP id w11-v6so4015605iob.2
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:05:44 -0700 (PDT)
+        id S1727770AbeIKVKO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 17:10:14 -0400
+Received: from mail-it0-f45.google.com ([209.85.214.45]:36565 "EHLO
+        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726622AbeIKVKN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 17:10:13 -0400
+Received: by mail-it0-f45.google.com with SMTP id u13-v6so2236294iti.1
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:10:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=hs824dLAjANBVIY1p9zS9zTVHzyQwhc/4rQkPDCCgiw=;
-        b=BHnAieVnFycqDVxNs/nIPJD2ctznUed3KMeSsu33Db9kWrc3nIS1Cbh4Q2pVXvleFJ
-         rH+KLJMuBfO3u03r/JwuFCc8/H7UwDkLE7R86nmSFcWmWqFCkgQlTCTMKeCwef1oNdCN
-         n8pnTnOasOj29Qt1/AYGI3eLHGVc8OKygRPV4WFAxqXHwoDjkvjmpPpPyK3hz3IhNtPY
-         qHAsBRmW23YvBLByHzj9tZpPeDvQ1aZCs2dmbDwIEUxJs/+4VY4WCXcYIjHeuSOmgoCZ
-         OezACRfDTSpQMpDLSgYMW+JbFwLOBsY9VV82Bur4qVAQH5A3v604z2IMFeYehHH8vHLx
-         iN4g==
+        bh=skgW9zFji0ZFAtaVmXepfDS4c33E88Lw98ltr8xu2Vc=;
+        b=ak8WZQ+uEvj7fN6n0ZhVuwVmvDwPz15TREpeS3SpxLUoZn8RqfZC/cfEH+cUNK+bmY
+         vJTi8jRkhcoIitUw4/FYgcfED3f1tc1hf09Uca5pw1kHxKYPLpLDLWiEGYnMRWUjoTZW
+         L9NsiWDaJ+00u2mnQo7XjCAFJpaqVwCvAxEoYg6WO7wRjjTu9BsoGqtQD9tdtDB77fbN
+         VwKdTBxVRw18QQMSHOhNA59VSGrQ0nRJa9Kq8ahr13TkgnlbnjyNRQQ/vWepyhxAtWuZ
+         GjGNuJsIem0/FgLe58OgPvbVqlOEV0mAnczD3Y05PqgYYTwCGZ8faEH4to7OAlh56SWe
+         buVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hs824dLAjANBVIY1p9zS9zTVHzyQwhc/4rQkPDCCgiw=;
-        b=Wdkfx4vgVLS1fjLYFVlFnWAjSyOSn0OdzgFwi2nRh3R27nIU62HrBKpKP+blX+I9gp
-         GQZl0mpnoAC/lXNDZFL+khwpl+j2G/4BPksYxjnh8R+GHNKvU3WoRTS2sw0LYkni/lZO
-         HLWOwAsF7yMK4V6ef0xHkZJnZDLr3ziKlgP9F3XR1czIO1M5T5cOEBpz+KlEvkyfhl/r
-         bM6Go28GElPk5xXg4U/mCnA4AcrF6LLzefLKwrYc+KTKjA5ei/JZzCX2SIvxq8l2UnxD
-         Mfh0lcWSYnaTOBKnLSo7FRFNBFXct+ZVFtkgDUjrivssHjHn8O4C3p8z+wdrZyrxmqrV
-         gzGA==
-X-Gm-Message-State: APzg51DyFtSHynLzMafyVXScLyXBH6dzjHtjlTrVUisenZxr+yRJ1XJ+
-        LvYtFyJcKyKaUhxhE0VY/TBqcfJRDEpBpG9OuSU=
-X-Google-Smtp-Source: ANB0Vdb0Cj3AGK748IyZ5WBRlpx0RspgFb6zCRw4Bx+W79QRudOjyjQmDaATiBYcxM7dqWUPIvBedanyeV7rVCM2epw=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr20092753ioe.282.1536681943384;
- Tue, 11 Sep 2018 09:05:43 -0700 (PDT)
+        bh=skgW9zFji0ZFAtaVmXepfDS4c33E88Lw98ltr8xu2Vc=;
+        b=alaPmNbZkc0M2FfNaN5BdpMvqh2ndTeYoGmktWjoqXoQT5uOWNHZ7Ugxz1bTHmpHLu
+         W5p/1cbK0xBAWSS/usuzY5u67Gz1c0WjIBs40546MegJIDlDjwCtpT51VUJfw8lXdaaS
+         xalJ54IBhqjj7mzg3dSDMKMbOLdIjA9RHdgKkC6XWfzEKxkny+YV33KnaGIPrRBSe1vq
+         hkTIwyRqpG6VYn5IC/rzPn+989hIBBGSQVmpzy0z2jFwexc+JlzGPRMVJcLKeaZqe/7w
+         nebCcbL8XDvJ1wU4Oa5zlCiiF27bJ6aR34ixiVIaOZbzh8khSBhECVGWaVJIg1oGTaOm
+         L2pQ==
+X-Gm-Message-State: APzg51BZwTeA7TBAUeaXZZgFJEz1gUUN8h3Pu3W8+6IoKc7HcUhnR4rB
+        vcw8niV2+dNhiD2BbrJh4Jszv03qEd/+m4MF+Ko=
+X-Google-Smtp-Source: ANB0VdYQdb/24FRZieSle2fiRRMpHyJkomM9Kr/B2KWbkLB0Ri5xebC6s8SJcYKHZZBksyAYxzGlzga7fEv2xE97vdY=
+X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr22545835jaa.94.1536682213728;
+ Tue, 11 Sep 2018 09:10:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180903180932.32260-1-pclouds@gmail.com> <20180909085418.31531-1-pclouds@gmail.com>
- <20180909085418.31531-15-pclouds@gmail.com> <CAGZ79kYS2bTFowEYwH6t9sBAAZ=ikMn7eAut8O0-6NdG=eq3dw@mail.gmail.com>
-In-Reply-To: <CAGZ79kYS2bTFowEYwH6t9sBAAZ=ikMn7eAut8O0-6NdG=eq3dw@mail.gmail.com>
+References: <CAJmnt9Yfed1W7F=C+dzac3AEe7nRq2cNP335MepTczboKJNoEg@mail.gmail.com>
+ <xmqqbm99xngs.fsf@gitster-ct.c.googlers.com> <CACsJy8DymnKk+Xo6UPQyAsToNpkSX4Ae+jzc04+0qXrZ6bmb3w@mail.gmail.com>
+ <CAJmnt9ZOCJfGFJ98xD17BYU1P=nRZ=eG16Oj5DjTMaF7H6WTvg@mail.gmail.com>
+ <CACsJy8AMaUmWO2zi9+Dpr9_ZHE7A0rSs63h646w4uokyKRAdUg@mail.gmail.com>
+ <CACsJy8DdxmVd_jBG7Tp1e7k-BUc6R1=oWzPZ3z6xUZs2XU9rMA@mail.gmail.com>
+ <CAJmnt9YxGoQO40GNQY=nTjGGaGB5X079koZ0QvCOZ4wd7ubkaA@mail.gmail.com>
+ <CAJmnt9YgFNjzZfOW38WbyC-9AK4rtS3P6_dKN6hS1X+y932uiA@mail.gmail.com> <CAJmnt9aCfMGejO3B5ctZuCjJnE4K-dA1dwyz1uxoZwRBOJJqpg@mail.gmail.com>
+In-Reply-To: <CAJmnt9aCfMGejO3B5ctZuCjJnE4K-dA1dwyz1uxoZwRBOJJqpg@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 11 Sep 2018 18:05:16 +0200
-Message-ID: <CACsJy8CHXvYgh5WACPbB=6jwqDTTtcVTJ5eAQ3pMYxQBySzaWw@mail.gmail.com>
-Subject: Re: [PATCH v3 14/23] patch-ids.c: remove implicit dependency on the_index
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Tue, 11 Sep 2018 18:09:47 +0200
+Message-ID: <CACsJy8DHTbpOmK=cthus3BZ4BtS0YbJS8=K72BCb7=fFx6TPBw@mail.gmail.com>
+Subject: Re: Temporary git files for the gitdir created on a separate drive in workdir
+To:     hultqvist@silentorbit.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -63,17 +68,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 8:50 PM Stefan Beller <sbeller@google.com> wrote:
+On Mon, Sep 10, 2018 at 12:27 PM Hultqvist <hultqvist@silentorbit.com> wrot=
+e:
 >
-> On Sun, Sep 9, 2018 at 1:54 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
+> Sending again without HTML
+>
+> Den m=C3=A5n 10 sep. 2018 kl 12:28 skrev Hultqvist <hultqvist@silentorbit=
+.com>:
 > >
-> > ---
->
-> Junio would have to forge your Sign off here?
+> > First I need to correct my previous observations.
 
-I _knew_ I missed something in that "git format-patch" command but
-couldn't figure out what! Will resend (I have to fix your other
-comment about init_revisions anyway; my mistake)
+Please don't top-post.
+
+> > Today there appeared new set of config files in the root.
+> > I looked into a few of them and found that their content doesn't match =
+that of the repo at "G:/Min enhet".
+> > Instead separate files had content from separate git repos within the G=
+ drive.
+> > These repos are not like the one we're discussed previously, they are c=
+ompletely within G: using a classical .git directory.
+> >
+> > I guess git is creating the temporary files as close as possible to the=
+ root, since "G:\" can't be written to, only "G:\Min enhet". and then copy =
+them to the final destination which in this case is the same drive.
+
+No. Those files should always be created inside the ".git" directory,
+wherever it is. Failing to creating a file in there is usually a
+serious error and the command will abort. Unless there is a bug
+lurking around of course, but I can't nail it down with just code
+audit.
+
+Since the content of those files does not look like from "G:\Min
+enhet" repo, do you know which repo they belong to (and where those
+repo and worktree are)? I ask because if these are submodules of
+"G:\Min enhet" for example, then we need to head another direction. Or
+if they are completely unrelated to "G:\Min enhet", oh boy...
 --=20
 Duy
