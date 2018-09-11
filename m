@@ -6,59 +6,61 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D5921F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 20:45:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB1351F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 20:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727801AbeILBqF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 21:46:05 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35326 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726870AbeILBqF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 21:46:05 -0400
-Received: by mail-wr1-f66.google.com with SMTP id j26-v6so27449204wre.2
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 13:45:02 -0700 (PDT)
+        id S1726909AbeILByf (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 21:54:35 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46268 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726850AbeILByf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 21:54:35 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a108-v6so27421546wrc.13
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 13:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=XHnGVCJca2P2IvkXVKpbAZ8RmByDlRDeBRGrw/WOHQU=;
-        b=no0v1Xfb/UymS65xHDdqYI8sfxwkYzl4C2/OuVEiLm9YF/XgAqE1X3BTyru8syTxp3
-         f5bqIBmmGFx6xAy7B2U6lqIdmmkkoUayC87V799ZR1pkcsyKka6GjA2Ck8s5aPEQt45J
-         hC93rxebFjhsvLFo8ixEtp9mSqpZQ/5iYergHOMRi16ueRWVHkux/+SxvuUbuYYyS3zP
-         VU+Le6hamv2b4pJU3o+UQn132h/ogUtsKRlKciQiWiZ6fT9QT2X0sHdzm/O+rxMDtpg4
-         1OSc23wm3cqINGOre6jFnZrYdv5C5mglSrWUvoSfR0y78klQP1MQCSIu3adwZsrgUXiY
-         wqPA==
+        bh=w/wYs9TeCrfcnzqB341fjpsPH2zWz1ZqveNaFehhEBs=;
+        b=VzSeRJsUJeO5rWEfK8whCDwyDtutCzNIExGiXdg8DkGCYJjBfAMcOVOTW5O/cMTqM6
+         5q7fHgKLxBcWVnXme6iVrSlm/5ZvbN2GOxSDv/Dx+LwIs2ZlG0teklBOXdQpF1tP8/1q
+         UY0z62NBLuZPORxY5/THtW/aMMcgaZ/kyMgOdD2z+8vnwJH2UuZuD3hdMHb9IvtT+4W8
+         8e8DJupTDlN3nSy8LCNlXIazjaM2kQDlTZOFSxjXAfocLlp3eBxZ9GuqfjbXt1RccBTz
+         1lIn4h5xQ1WmKiOYqRbP8RJPQPnc3AWK/OyO0Jp3Vj3+8QQWW/ah0JR0WxCw4t6+vieU
+         gS3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=XHnGVCJca2P2IvkXVKpbAZ8RmByDlRDeBRGrw/WOHQU=;
-        b=CCB4WIYsBebkXEVDW1AUVGlcIGNVq6s4YDvWrg1TbzvmVP7o+8xZQA6a/zLAFdi6f1
-         2Lh6cETygQbLiJgdL9tsndysH0XQgUhO+2TKM/znYekZ9IxI/LfI2irxtj0PxWG5IpK5
-         fzrRMweTSWAW9RrcCCtEUiraipEjlmEtf1M2A1dz5Qy8rmM3PH4Z2GaWApWOm/WXdfAb
-         czKPRIrh3qnLvMZGQ+0Lwv4w46C7Ii7SfYtthGdibaAt08iipsttC93vNFyqlkfnxDAm
-         YKo+36qx9Ju9/7X/rg52UjvLpsb0MxmRWaAVupQeZJffVXpjg9aW7f03YYfswwGf7qPY
-         21+A==
-X-Gm-Message-State: APzg51CsGIaAHh2ssBWYP9cd50ybk3rkQcimfHcbMf0OG1H+UIlNVxv0
-        Z4s71OUn2arVdm2rBOeoznN7sCWM
-X-Google-Smtp-Source: ANB0VdZhC73tqN48/BzJ/53kHRhY8yuGqVC8t3YKGehtdfKpY3fNvV+K8ZGjDEptyBjhEZ26W/Tvwg==
-X-Received: by 2002:a5d:6243:: with SMTP id m3-v6mr20874612wrv.179.1536698701413;
-        Tue, 11 Sep 2018 13:45:01 -0700 (PDT)
+        bh=w/wYs9TeCrfcnzqB341fjpsPH2zWz1ZqveNaFehhEBs=;
+        b=tOsx35IXMyRau4X+XyJ9VFiu1CUPumAtdsUHQdpdvRiick23rus8jEsqyWdkjxlNJd
+         M2dHsHJwu2kU70v4aKWZ94alQBo8GY+mggR7n6R5zoTF40adTbYwB7dGxs9vTc7ZDQhn
+         Xx7z9qdkqeYtmcip8pxoCMaZSh8sFJMChepggbIUH4Zj+EY+Fio7ojuKWXC3aXrPvDZa
+         LuZxtDRxe7MbmzhFhcDIOSyVdm4X217zJjWGroejkS+EzYggdQY2igpi81VhrLljltsd
+         KxOvBIFrN1+Lxvyf3SJs4i8EqGkDdJA0RaOdC/cd8bC8IpeI7zlJf7QfBivhzZzdTq2y
+         U9ig==
+X-Gm-Message-State: APzg51DvHviIodTwRwSS7KE07UlyMvnU0CH3iXIzu4WlXyMpyW1LzOcN
+        xTCzDQovPeEf0RarzEUJaQw=
+X-Google-Smtp-Source: ANB0VdavHnBDIzJtHNhSKUCq0tOD3z/s/DiY0y2RFl/nsJG/h+sD8y2Nl0A6c5+of9EhM2JFAB/WrQ==
+X-Received: by 2002:a05:6000:108:: with SMTP id o8mr1923543wrx.196.1536699209756;
+        Tue, 11 Sep 2018 13:53:29 -0700 (PDT)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z11-v6sm26209061wrm.94.2018.09.11.13.45.00
+        by smtp.gmail.com with ESMTPSA id 142-v6sm2892445wme.35.2018.09.11.13.53.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Sep 2018 13:45:00 -0700 (PDT)
+        Tue, 11 Sep 2018 13:53:28 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCHv2 2/2] rerere: avoid buffer overrun
-References: <20180905175605.12341-1-newren@gmail.com>
-        <20180911185546.10449-1-newren@gmail.com>
-        <20180911185546.10449-3-newren@gmail.com>
-Date:   Tue, 11 Sep 2018 13:45:00 -0700
-In-Reply-To: <20180911185546.10449-3-newren@gmail.com> (Elijah Newren's
-        message of "Tue, 11 Sep 2018 11:55:46 -0700")
-Message-ID: <xmqqd0tjojar.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] string-list: remove unused function print_string_list
+References: <xmqqy3c8rh3d.fsf@gitster-ct.c.googlers.com>
+        <20180911184850.24891-1-sbeller@google.com>
+        <xmqq1s9zq1gm.fsf@gitster-ct.c.googlers.com>
+        <xmqqworromq4.fsf@gitster-ct.c.googlers.com>
+        <CAGZ79kZZwH1sORNsBZORF_c5V0U2NVLQa9JBY-Z5ksRS3yBT7w@mail.gmail.com>
+Date:   Tue, 11 Sep 2018 13:53:28 -0700
+In-Reply-To: <CAGZ79kZZwH1sORNsBZORF_c5V0U2NVLQa9JBY-Z5ksRS3yBT7w@mail.gmail.com>
+        (Stefan Beller's message of "Tue, 11 Sep 2018 12:47:11 -0700")
+Message-ID: <xmqq8t47oiwn.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,52 +69,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> check_one_conflict() compares `i` to `active_nr` in two places to avoid
-> buffer overruns, but left out an important third location.
+>> >>
+>> >> [1] https://public-inbox.org/git/1421343725-3973-1-git-send-email-kuleshovmail@gmail.com/
+>> >> Signed-off-by: Stefan Beller <sbeller@google.com>
+>> >
+>> > I'll add a blank line before the sign-off.  Is this an example that
+>> > our "where is the existing trailer?" code misbehaving?
+>>
+>> I am still curious about this one.
 >
-> The code did used to have a check here comparing i to active_nr, back
-> before commit fb70a06da2f1 ("rerere: fix an off-by-one non-bug",
-> 2015-06-28), however the code at the time used an 'if' rather than a
-> 'while' meaning back then that this loop could not have read past the
-> end of the array, making the check unnecessary and it was removed.
-> Unfortunately, in commit 5eda906b2873 ("rerere: handle conflicts with
-> multiple stage #1 entries", 2015-07-24), the 'if' was changed to a
-> 'while' and the check comparing i and active_nr was not re-instated,
-> leading to this problem.
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
+> No, it's me who is misbehaving. ;-)
 
-Thanks.  Looks good to me.
+Whew.  That lets me worried about one fewer things ;-)  Thanks.
 
->  rerere.c          | 2 +-
->  t/t4200-rerere.sh | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/rerere.c b/rerere.c
-> index c7787aa07f..783d4dae2a 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -533,7 +533,7 @@ static int check_one_conflict(int i, int *type)
->  	}
->  
->  	*type = PUNTED;
-> -	while (ce_stage(active_cache[i]) == 1)
-> +	while (i < active_nr && ce_stage(active_cache[i]) == 1)
->  		i++;
->  
->  	/* Only handle regular files with both stages #2 and #3 */
-> diff --git a/t/t4200-rerere.sh b/t/t4200-rerere.sh
-> index f9294b7677..313222d0d6 100755
-> --- a/t/t4200-rerere.sh
-> +++ b/t/t4200-rerere.sh
-> @@ -596,7 +596,7 @@ test_expect_success 'setup simple stage 1 handling' '
->  	)
->  '
->  
-> -test_expect_failure 'test simple stage 1 handling' '
-> +test_expect_success 'test simple stage 1 handling' '
->  	(
->  		cd stage_1_handling &&
