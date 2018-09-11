@@ -7,52 +7,53 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCE381F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A4631F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728116AbeILEvx (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 00:51:53 -0400
-Received: from mail-io0-f202.google.com ([209.85.223.202]:53916 "EHLO
-        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726901AbeILEvw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 00:51:52 -0400
-Received: by mail-io0-f202.google.com with SMTP id h20-v6so68251iob.20
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:13 -0700 (PDT)
+        id S1728142AbeILEv4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 00:51:56 -0400
+Received: from mail-vk0-f73.google.com ([209.85.213.73]:48761 "EHLO
+        mail-vk0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726442AbeILEvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 00:51:55 -0400
+Received: by mail-vk0-f73.google.com with SMTP id g71-v6so7310vke.15
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=kUdA9oKdgU249YiNpRsaZOph17WEjyfJNVIA3Yy8Wmg=;
-        b=kZNa1DZ7Rro1Wm/GzVL+I1NTBRRkcs8WIIWc56JAc1R8ZFmABJHBMH4g5N6R0jShRC
-         3b0kKwV1fc04IJ60zpxHWDpZ24q7WpnWRCy691DCpHROtVY+IPO3pmLJaPfonAKBgTSp
-         5JTcUAINGn7HI77kV4EwyCWQLAkUDSTc48z1yxH6Ns1ZQRQU77ZEe5FRGObqXeNr1jyd
-         oKJ/SPOGVC2vUO0684dfVF+sxznSZGsgXxnxYHTaG07ANAKEgUj6SiAkd58sgydw9TJq
-         8g5QuK+m6YimfViJMIydcnbw9ask4km2IqNXbHv+x2WFl9+qZD064EA8dfJ9v/gCePaI
-         ZvnA==
+        bh=KItobHqCCVzmLBPJnMnC50u9fHZIScwfPEg4MpAgDDw=;
+        b=HF/0mrY246tz8b1AMZ8UHnHFNQywArDNVnq9YH04pVd4R7Z9RPsRE5OL6o4bOnfVAo
+         R9yt9ht/tol0tQNUp1lSPDDYQK1vpvfTzw/RUj/Tq1uGlNGWH/mRCamT4cCWdMkSMnWt
+         VK2QEpAv39cDMxHYZ/v/TcqZVy4C4Dl8ohhQJxTjlYXrlUqtRlspkaoTBTnhxqyiQThg
+         Fihmcay3p/KjQMu3Gim+hnTENiO6qm1/6cu/jug1rG9SRBoUgQhQHybaCoDjnATEMwkP
+         Q1+dFkif7V5xDBoPUYAqqAX3B2jNbZ6xlT2SiuUckaaskSqOkBkJgHAY3aI7QDsbkyif
+         oUfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=kUdA9oKdgU249YiNpRsaZOph17WEjyfJNVIA3Yy8Wmg=;
-        b=R++cC5XMyq8kQKDbqXIkY0eyJqumvT4I73FNva4+QVrWlWp6nWyKK81ebwPpCrm9Gh
-         5RggmGE2NYbo3Y8nqxw1ydqcfgP/NARZtKyQoxUBulXLnHvU6j235QHYpnMTeyMsXhT/
-         Caxp3QwQ75vdCZYBqRq9rVPSHrpcNSME4d394kVjDSlBrpkG7IAr0hmTJygy1WgUa/ct
-         Fdgds3p3Dhk/tyU4IoADtIi6XvyVt4t4uXqSUsLIamM5C8Lv7epX3zllBEm9yzGkove3
-         S4Y26bCI0P/AuLXw38J5YsQobVaNue2U2NFdysZ6RnbNZB5cdcQxelOIDCrBywuBAeEd
-         Njcg==
-X-Gm-Message-State: APzg51Cxok9W/bSZ8njNWkoc2TTq69Lzb6u6mRkl+NzkjvgMBrtNY93B
-        UyrS+0YUedh53jiflDP8hqOdVW15IvKfFyl1FgBHCX3mjVmZ4dkIheIw2DOKt5WUgaNxXQbPXeG
-        Xcyv2MGJnqw8ROtUvkYDLo7ZbBpB95ehtjIUvENY4oGaNOSYvVChPy/zDeKgO
-X-Google-Smtp-Source: ANB0VdbOu3j1CH2Kct+V4nIfJMLKKpFrZq7am1soqAPEBGW88V+6LTrcV6sCxZAJtFFqPzgHChjGV3+Q0gT7
-X-Received: by 2002:a24:47ca:: with SMTP id t193-v6mr3629264itb.24.1536709813340;
- Tue, 11 Sep 2018 16:50:13 -0700 (PDT)
-Date:   Tue, 11 Sep 2018 16:49:48 -0700
+        bh=KItobHqCCVzmLBPJnMnC50u9fHZIScwfPEg4MpAgDDw=;
+        b=aa7rB1/0eUFOub6nL3d7rCLUPhhj9R3+rxFBT6kvnIc55ArW9873eqDBfdAZwBWgKK
+         p5I6W+ev+4FqYX0RxFX0F8xrRuXBm8AlzWqj6CMDb4Ib9OCz98BnrW+pm2+Gmj02phbu
+         OUxcZ1qhXkHaUJPJPGDaO6cYZN/jmrDLlFhJM1AWk4FmqpkwaRM0d+AFEAmEqO2FgJm5
+         DLOn7MMMjEPo6o9jtuxMPRsfebreo2ETijpazZS2RqyD1MLwkIL95XKrdYUz/gK4wH8i
+         886mXN1AA4m92d9n49ogT0nZQx/gdDrF9yOFVbjh3AROmvZvT8aNW0waqRPA1/u39Z82
+         oXdg==
+X-Gm-Message-State: APzg51Cm32KeW5dBykuen+Of7AAEFT06/7YzZvRbVpgT79zk1HWYkDXs
+        OcSHOxYqqgkgqmX8cyRgz0TYZmoF16uwiUm7VX81bPZsqdf4PFdoVWIGCFJKz7rCk/RxvbSKzW8
+        GHKfv2Sj5CyJ1YTDGFdxxCwvQBgixFJFOMwWcOkS3Au1dL/txO7CYRFDYRgsw
+X-Google-Smtp-Source: ANB0VdZBnhBK7wsR6uxuLehlRhH2R1Hdk9ysUszV1KNligQyiqdNELKRoTzuQgYun0rVjYQWCovnmkYKq9vw
+X-Received: by 2002:a1f:b781:: with SMTP id h123-v6mr4540618vkf.31.1536709815950;
+ Tue, 11 Sep 2018 16:50:15 -0700 (PDT)
+Date:   Tue, 11 Sep 2018 16:49:49 -0700
 In-Reply-To: <20180911234951.14129-1-sbeller@google.com>
-Message-Id: <20180911234951.14129-7-sbeller@google.com>
+Message-Id: <20180911234951.14129-8-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180911234951.14129-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: [PATCH 6/9] submodule.c: do not copy around submodule list
+Subject: [PATCH 7/9] submodule: fetch in submodules git directory instead of
+ in worktree
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,76 +63,121 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'calculate_changed_submodule_paths' uses a local list to compute the
-changed submodules, and then produces the result by copying appropriate
-items into the result list.
+This patch started as a refactoring to make 'get_next_submodule' more
+readable, but upon doing so, I realized that git-fetch actually doesn't
+need to be run in the worktree. So let's run it in the git dir instead.
 
-Instead use the result list directly and prune items afterwards
-using string_list_remove_empty_items.
-
-By doin so we'll have access to the util pointer for longer that
-contains the commits that we need to fetch, which will be
-useful in a later patch.
+That should pave the way towards fetching submodules that are currently
+not checked out.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ submodule.c                 | 43 ++++++++++++++++++++++++++-----------
+ t/t5526-fetch-submodules.sh |  7 +++++-
+ 2 files changed, 37 insertions(+), 13 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index 3520dd76bdf..00a9a3c6b12 100644
+index 00a9a3c6b12..1e6781504f0 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -1128,8 +1128,7 @@ static void calculate_changed_submodule_paths(
- 	struct submodule_parallel_fetch *spf)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
--	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
--	const struct string_list_item *name;
-+	struct string_list_item *name;
- 
- 	/* No need to check if there are no submodules configured */
- 	if (!submodule_from_path(the_repository, NULL, NULL))
-@@ -1146,9 +1145,9 @@ static void calculate_changed_submodule_paths(
- 	 * Collect all submodules (whether checked out or not) for which new
- 	 * commits have been recorded upstream in "changed_submodule_names".
- 	 */
--	collect_changed_submodules(&changed_submodules, &argv);
-+	collect_changed_submodules(&spf->changed_submodule_names, &argv);
- 
--	for_each_string_list_item(name, &changed_submodules) {
-+	for_each_string_list_item(name, &spf->changed_submodule_names) {
- 		struct oid_array *commits = name->util;
- 		const struct submodule *submodule;
- 		const char *path = NULL;
-@@ -1162,12 +1161,14 @@ static void calculate_changed_submodule_paths(
- 		if (!path)
- 			continue;
- 
--		if (!submodule_has_commits(path, commits))
--			string_list_append(&spf->changed_submodule_names,
--					   name->string);
-+		if (submodule_has_commits(path, commits)) {
-+			oid_array_clear(commits);
-+			*name->string = '\0';
-+		}
- 	}
- 
--	free_submodules_oids(&changed_submodules);
-+	string_list_remove_empty_items(&spf->changed_submodule_names, 1);
-+
- 	argv_array_clear(&argv);
- 	oid_array_clear(&ref_tips_before_fetch);
- 	oid_array_clear(&ref_tips_after_fetch);
-@@ -1363,7 +1364,7 @@ int fetch_populated_submodules(struct repository *r,
- 
- 	argv_array_clear(&spf.args);
- out:
--	string_list_clear(&spf.changed_submodule_names, 1);
-+	free_submodules_oids(&spf.changed_submodule_names);
- 	return spf.result;
+@@ -481,6 +481,12 @@ void prepare_submodule_repo_env(struct argv_array *out)
+ 			 DEFAULT_GIT_DIR_ENVIRONMENT);
  }
  
++static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
++{
++	prepare_submodule_repo_env_no_git_dir(out);
++	argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
++}
++
+ /* Helper function to display the submodule header line prior to the full
+  * summary output. If it can locate the submodule objects directory it will
+  * attempt to lookup both the left and right commits and put them into the
+@@ -1227,6 +1233,27 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
+ 	return spf->default_option;
+ }
+ 
++static const char *get_submodule_git_dir(struct repository *r, const char *path)
++{
++	struct repository subrepo;
++	const char *ret;
++
++	if (repo_submodule_init(&subrepo, r, path)) {
++		/* no entry in .gitmodules? */
++		struct strbuf gitdir = STRBUF_INIT;
++		strbuf_repo_worktree_path(&gitdir, r, "%s/.git", path);
++		if (repo_init(&subrepo, gitdir.buf, NULL)) {
++			strbuf_release(&gitdir);
++			return NULL;
++		}
++	}
++
++	ret = xstrdup(subrepo.gitdir);
++	repo_clear(&subrepo);
++
++	return ret;
++}
++
+ static int get_next_submodule(struct child_process *cp,
+ 			      struct strbuf *err, void *data, void **task_cb)
+ {
+@@ -1234,8 +1261,6 @@ static int get_next_submodule(struct child_process *cp,
+ 	struct submodule_parallel_fetch *spf = data;
+ 
+ 	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
+-		struct strbuf submodule_path = STRBUF_INIT;
+-		struct strbuf submodule_git_dir = STRBUF_INIT;
+ 		struct strbuf submodule_prefix = STRBUF_INIT;
+ 		const struct cache_entry *ce = spf->r->index->cache[spf->count];
+ 		const char *git_dir, *default_argv;
+@@ -1274,16 +1299,12 @@ static int get_next_submodule(struct child_process *cp,
+ 			continue;
+ 		}
+ 
+-		strbuf_repo_worktree_path(&submodule_path, spf->r, "%s", ce->name);
+-		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
+ 		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
+-		git_dir = read_gitfile(submodule_git_dir.buf);
+-		if (!git_dir)
+-			git_dir = submodule_git_dir.buf;
+-		if (is_directory(git_dir)) {
++		git_dir = get_submodule_git_dir(spf->r, ce->name);
++		if (git_dir) {
+ 			child_process_init(cp);
+-			cp->dir = strbuf_detach(&submodule_path, NULL);
+-			prepare_submodule_repo_env(&cp->env_array);
++			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
++			cp->dir = git_dir;
+ 			cp->git_cmd = 1;
+ 			if (!spf->quiet)
+ 				strbuf_addf(err, "Fetching submodule %s%s\n",
+@@ -1295,8 +1316,6 @@ static int get_next_submodule(struct child_process *cp,
+ 			argv_array_push(&cp->args, submodule_prefix.buf);
+ 			ret = 1;
+ 		}
+-		strbuf_release(&submodule_path);
+-		strbuf_release(&submodule_git_dir);
+ 		strbuf_release(&submodule_prefix);
+ 		if (ret) {
+ 			spf->count++;
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 6c2f9b2ba26..42692219a1a 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -566,7 +566,12 @@ test_expect_success 'fetching submodule into a broken repository' '
+ 
+ 	test_must_fail git -C dst status &&
+ 	test_must_fail git -C dst diff &&
+-	test_must_fail git -C dst fetch --recurse-submodules
++
++	# git-fetch cannot find the git directory of the submodule,
++	# so it will do nothing, successfully, as it cannot distinguish between
++	# this broken submodule and a submodule that was just set active but
++	# not cloned yet
++	git -C dst fetch --recurse-submodules
+ '
+ 
+ test_expect_success "fetch new commits when submodule got renamed" '
 -- 
 2.19.0.397.gdd90340f6a-goog
 
