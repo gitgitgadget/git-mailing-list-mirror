@@ -2,106 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11A371F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 16:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A7811F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 16:13:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727770AbeIKVKO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 17:10:14 -0400
-Received: from mail-it0-f45.google.com ([209.85.214.45]:36565 "EHLO
-        mail-it0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726622AbeIKVKN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 17:10:13 -0400
-Received: by mail-it0-f45.google.com with SMTP id u13-v6so2236294iti.1
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:10:14 -0700 (PDT)
+        id S1726912AbeIKVNo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 17:13:44 -0400
+Received: from mail-qt0-f169.google.com ([209.85.216.169]:34874 "EHLO
+        mail-qt0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726782AbeIKVNn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 17:13:43 -0400
+Received: by mail-qt0-f169.google.com with SMTP id j7-v6so28855592qtp.2
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:13:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=skgW9zFji0ZFAtaVmXepfDS4c33E88Lw98ltr8xu2Vc=;
-        b=ak8WZQ+uEvj7fN6n0ZhVuwVmvDwPz15TREpeS3SpxLUoZn8RqfZC/cfEH+cUNK+bmY
-         vJTi8jRkhcoIitUw4/FYgcfED3f1tc1hf09Uca5pw1kHxKYPLpLDLWiEGYnMRWUjoTZW
-         L9NsiWDaJ+00u2mnQo7XjCAFJpaqVwCvAxEoYg6WO7wRjjTu9BsoGqtQD9tdtDB77fbN
-         VwKdTBxVRw18QQMSHOhNA59VSGrQ0nRJa9Kq8ahr13TkgnlbnjyNRQQ/vWepyhxAtWuZ
-         GjGNuJsIem0/FgLe58OgPvbVqlOEV0mAnczD3Y05PqgYYTwCGZ8faEH4to7OAlh56SWe
-         buVg==
+        h=subject:from:to:references:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=/0zHiRYnLCOZ2y/+dc5vJPh3qjMPogqYQg/r/Kf+c60=;
+        b=ef/0eOUwPcxSVFB8R6vXPGXO3Lif9WbnVeiwGjWiSkSfpIgZjsWkWH5kejt83EGPHD
+         QQmNcjfNn4IXBpC03AmBNJw5lCNF9YauQSuoDK0JetbbV3tYjKi4pUri1pQBDhAtksug
+         nRoyk8UN4NMYMqchUSp0pByufRUiB26jgboB+/WwzoqVuiq/TpHPbtEAxjLlyOkpIWM4
+         LpZuqnfhlkBurmJH/CFCH+WDxSmYL0DkyXK1rkgPBmz/BrfUj9pUgkRGHTOUD6KTXyfQ
+         FhyxSeJDbFiUuZPJb7mTDAi7jcKd0h7fEosw+YxivOr5HsvNMxMSh+cjfZOQguPQLQq5
+         5ooA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=skgW9zFji0ZFAtaVmXepfDS4c33E88Lw98ltr8xu2Vc=;
-        b=alaPmNbZkc0M2FfNaN5BdpMvqh2ndTeYoGmktWjoqXoQT5uOWNHZ7Ugxz1bTHmpHLu
-         W5p/1cbK0xBAWSS/usuzY5u67Gz1c0WjIBs40546MegJIDlDjwCtpT51VUJfw8lXdaaS
-         xalJ54IBhqjj7mzg3dSDMKMbOLdIjA9RHdgKkC6XWfzEKxkny+YV33KnaGIPrRBSe1vq
-         hkTIwyRqpG6VYn5IC/rzPn+989hIBBGSQVmpzy0z2jFwexc+JlzGPRMVJcLKeaZqe/7w
-         nebCcbL8XDvJ1wU4Oa5zlCiiF27bJ6aR34ixiVIaOZbzh8khSBhECVGWaVJIg1oGTaOm
-         L2pQ==
-X-Gm-Message-State: APzg51BZwTeA7TBAUeaXZZgFJEz1gUUN8h3Pu3W8+6IoKc7HcUhnR4rB
-        vcw8niV2+dNhiD2BbrJh4Jszv03qEd/+m4MF+Ko=
-X-Google-Smtp-Source: ANB0VdYQdb/24FRZieSle2fiRRMpHyJkomM9Kr/B2KWbkLB0Ri5xebC6s8SJcYKHZZBksyAYxzGlzga7fEv2xE97vdY=
-X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr22545835jaa.94.1536682213728;
- Tue, 11 Sep 2018 09:10:13 -0700 (PDT)
+        h=x-gm-message-state:subject:from:to:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=/0zHiRYnLCOZ2y/+dc5vJPh3qjMPogqYQg/r/Kf+c60=;
+        b=ZmCCunyPkArtRJ7K8bLV/RVBlBomGsEmxYjOYETjewQyOj2pL0rk2g5m/2TESK/Nmp
+         9er9BBc3RyiLvBeOM8FI5xJTMFq++o7oEqrVjE6zvmdwdOWuTPfe/Z47DYfT9F4qRQ9J
+         rVIhCtaA5PWT20ZRgnTjE8GztGLtI7Eutvz4JWTqlQhS+uz6VA26c3xLqC1yfBLoM7Cm
+         MQF+ocKhImyFrpHMwncrt3EK2RaZAhPCPwF2EobQ0NZ/B39aEcMoQ5DdX9Z2ew5Lr2jJ
+         vKRV8Y6BYaUkUQV8l9T3kquQ0YeTncrsrW0rNhh8Wt2i18m/n/CknNO0YXl/setyTXoU
+         Ye5w==
+X-Gm-Message-State: APzg51Ads3yC/k8hkrswWpUjK2Aik3EweGg5BCVBNQalV1MMmwbpOoIa
+        kPhLih2p0pk93RQQ+zeW0l7j3PMS
+X-Google-Smtp-Source: ANB0VdZ6BPdGoUP810Fh6Eh9u9TXwWS632rtByj6jVBT91lXqbTQYNV1SwrvSSRWcuzIlDQy57C0qQ==
+X-Received: by 2002:aed:2841:: with SMTP id r59-v6mr3549543qtd.6.1536682422343;
+        Tue, 11 Sep 2018 09:13:42 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:80cf:4a5a:6920:a965? ([2001:4898:8010:0:6a05:4a5a:6920:a965])
+        by smtp.gmail.com with ESMTPSA id c2-v6sm10838102qkc.20.2018.09.11.09.13.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Sep 2018 09:13:41 -0700 (PDT)
+Subject: Re: Git 2.19 Segmentation fault 11 on macOS
+From:   Derrick Stolee <stolee@gmail.com>
+To:     ryenus <ryenus@gmail.com>, Git mailing list <git@vger.kernel.org>
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
+ <1b8a35be-4234-7f71-c0be-41736bbe60cf@gmail.com>
+ <844da493-b1c1-b295-0094-beafd48f3b50@gmail.com>
+Message-ID: <fd241679-2283-4e01-315b-db27be8a794c@gmail.com>
+Date:   Tue, 11 Sep 2018 12:13:42 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-References: <CAJmnt9Yfed1W7F=C+dzac3AEe7nRq2cNP335MepTczboKJNoEg@mail.gmail.com>
- <xmqqbm99xngs.fsf@gitster-ct.c.googlers.com> <CACsJy8DymnKk+Xo6UPQyAsToNpkSX4Ae+jzc04+0qXrZ6bmb3w@mail.gmail.com>
- <CAJmnt9ZOCJfGFJ98xD17BYU1P=nRZ=eG16Oj5DjTMaF7H6WTvg@mail.gmail.com>
- <CACsJy8AMaUmWO2zi9+Dpr9_ZHE7A0rSs63h646w4uokyKRAdUg@mail.gmail.com>
- <CACsJy8DdxmVd_jBG7Tp1e7k-BUc6R1=oWzPZ3z6xUZs2XU9rMA@mail.gmail.com>
- <CAJmnt9YxGoQO40GNQY=nTjGGaGB5X079koZ0QvCOZ4wd7ubkaA@mail.gmail.com>
- <CAJmnt9YgFNjzZfOW38WbyC-9AK4rtS3P6_dKN6hS1X+y932uiA@mail.gmail.com> <CAJmnt9aCfMGejO3B5ctZuCjJnE4K-dA1dwyz1uxoZwRBOJJqpg@mail.gmail.com>
-In-Reply-To: <CAJmnt9aCfMGejO3B5ctZuCjJnE4K-dA1dwyz1uxoZwRBOJJqpg@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 11 Sep 2018 18:09:47 +0200
-Message-ID: <CACsJy8DHTbpOmK=cthus3BZ4BtS0YbJS8=K72BCb7=fFx6TPBw@mail.gmail.com>
-Subject: Re: Temporary git files for the gitdir created on a separate drive in workdir
-To:     hultqvist@silentorbit.com
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <844da493-b1c1-b295-0094-beafd48f3b50@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 10, 2018 at 12:27 PM Hultqvist <hultqvist@silentorbit.com> wrot=
-e:
+On 9/11/2018 12:04 PM, Derrick Stolee wrote:
+> On 9/11/2018 11:38 AM, Derrick Stolee wrote:
+>> On 9/11/2018 11:25 AM, ryenus wrote:
+>>> I just updated to 2.19 via Homebrew, git range-diff seems cool, but I
+>>> only got a Segmentation fault: 11
+>>>
+>>>      $ git version; git range-diff origin/master  HEAD@{2} HEAD
+>>>      git version 2.19.0
+>>>      Segmentation fault: 11
+>>>
+>>> Both origin/master and my local branch each got two new commits of 
+>>> their own,
+>>> please correct me if this is not the expected way to use git 
+>>> range-diff.
+>>>
+>>> FYI, I've created a sample repo here:
+>>> https://github.com/ryenus/range-diff-segfault/
+>>
+>> Hi Ryenus,
+>>
+>> Thanks for the report!
+>>
+>> I ran something similar using Git for Windows 2.19.0-rc2. I had to 
+>> run `git commit --amend --no-edit` on the tip commit to make my local 
+>> master disagree with origin/master. I then ran the following:
+>>
+>> $ git range-diff origin/master HEAD~1 HEAD
+>> -:  ------- > 1:  5009c62 aaa
+>>
+>> With this, the command succeeded for me. There is another way to get 
+>> a similar result, could you try it?
+>>
+>> $ git range-diff origin/master~1..origin/master HEAD~1..HEAD
+>> 1:  f14d571 = 1:  5009c62 aaa
+>>
+>> Otherwise, we can now get started trying to repro this on a Mac. Thanks!
 >
-> Sending again without HTML
+> The patch below includes a test that fails on Mac OSX with a segfault.
 >
-> Den m=C3=A5n 10 sep. 2018 kl 12:28 skrev Hultqvist <hultqvist@silentorbit=
-.com>:
-> >
-> > First I need to correct my previous observations.
+> GitGitGadget PR: https://github.com/gitgitgadget/git/pull/36
+> Failed Build: 
+> https://git-for-windows.visualstudio.com/git/_build/results?buildId=18616&view=logs
+>
+> -->8--
+>
+> From 3ee470d09d54b9ad7ab950f17051d625db0c8654 Mon Sep 17 00:00:00 2001
+> From: Derrick Stolee <dstolee@microsoft.com>
+> Date: Tue, 11 Sep 2018 11:42:03 -0400
+> Subject: [PATCH] range-diff: attempt to create test that fails on OSX
+>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  t/t3206-range-diff.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 2237c7f4af..02744b07a8 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -142,4 +142,9 @@ test_expect_success 'changed message' '
+>         test_cmp expected actual
+>  '
+>
+> +test_expect_success 'amend and check' '
+> +       git commit --amend -m "new message" &&
+> +       git range-diff changed-message HEAD@{2} HEAD
+> +'
+> +
+>  test_done
+> -- 
+> 2.19.0.rc2.windows.1
 
-Please don't top-post.
 
-> > Today there appeared new set of config files in the root.
-> > I looked into a few of them and found that their content doesn't match =
-that of the repo at "G:/Min enhet".
-> > Instead separate files had content from separate git repos within the G=
- drive.
-> > These repos are not like the one we're discussed previously, they are c=
-ompletely within G: using a classical .git directory.
-> >
-> > I guess git is creating the temporary files as close as possible to the=
- root, since "G:\" can't be written to, only "G:\Min enhet". and then copy =
-them to the final destination which in this case is the same drive.
+Sorry, nevermind. The test failed for a different reason:
 
-No. Those files should always be created inside the ".git" directory,
-wherever it is. Failing to creating a file in there is usually a
-serious error and the command will abort. Unless there is a bug
-lurking around of course, but I can't nail it down with just code
-audit.
+2018-09-11T16:02:20.2680990Z ++ git range-diff changed-message 
+'HEAD@{2}' HEAD
+2018-09-11T16:02:20.2779250Z fatal: Log for 'HEAD' only has 2 entries.
+2018-09-11T16:02:20.2802520Z error: could not parse log for 
+'changed-message..HEAD@{2}'
+2018-09-11T16:02:20.2817470Z error: last command exited with $?=255
+2018-09-11T16:02:20.2832300Z not ok 12 - amend and check
 
-Since the content of those files does not look like from "G:\Min
-enhet" repo, do you know which repo they belong to (and where those
-repo and worktree are)? I ask because if these are submodules of
-"G:\Min enhet" for example, then we need to head another direction. Or
-if they are completely unrelated to "G:\Min enhet", oh boy...
---=20
-Duy
+Ryenus, it would help if you could create and push the following 
+branches based on your local repro:
+
+     git branch base HEAD@{2}
+
+     git branch topic HEAD
+
+     git push origin base topic
+
+Also, does the following command fail, after creating the branches?
+
+     git range-diff origin/master base topic
+
+
+Thanks,
+
+-Stolee
+
