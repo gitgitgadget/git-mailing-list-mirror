@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D5F41F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 723BF1F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727762AbeILEvj (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 00:51:39 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:48843 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbeILEvj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 00:51:39 -0400
-Received: by mail-ua1-f73.google.com with SMTP id i4-v6so41136ual.15
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:00 -0700 (PDT)
+        id S1727782AbeILEvl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 00:51:41 -0400
+Received: from mail-yb1-f202.google.com ([209.85.219.202]:44607 "EHLO
+        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726901AbeILEvl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 00:51:41 -0400
+Received: by mail-yb1-f202.google.com with SMTP id 189-v6so120460ybz.11
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=lMk6V2S9Ij9c1Tflda+kLjZxJTK7ji21TJ3lMoyYnE8=;
-        b=QyDQgmt7c0kKoFJgeB/YqjEpB1sDrdO5DIWlbx1mEztY7U4E3W+QPP7as/ekouWOaT
-         HQ/JUoMBFvjSVwKIII9Ao03Rloo8pG1G/TixhQ5xk8fpJ2u5acYLM2SZPL+kGfbhocSV
-         136gPbN5XrO4+OFqnEz8lO6i+eWXCzKIg9Jjbrmavw4H/b04MGNSAukln5hiF2MioGol
-         xe9K0iGl44y5Ce9a93qZhwwWTKB8w9LSHKUBMe595bg2cAdPAN+P8Vjc9AacwqLAtv0F
-         t/zx0aXSoi66mV3CjMGiJbDv7DwVrJhL3YibqqYrBsCIMewzm7JtGzCaQ8I80yec0E4A
-         /sZQ==
+        bh=YfBDaNAD0rN0MtBEkxpcso45kYioPIIIjy45WTOmugM=;
+        b=ua619HBwvnkhyub2Q7VoihDBy2wjlSCuhDwZiWjw3c3gZ+ceGg2cX9dBNfPZIQQwlb
+         /3GnIRCRN0iIhIzXT2gSyKuGj8SFR2qvgC2sDY5oTW5jpPjIknOHjOM3XB8dnS7/ujR7
+         6i3x5ZZAhg/wfrWyJVDXxFF2QHlohehfI1VG9kWjdVTYaFncEi8mHoLjOXV1hAgw9Ge+
+         PU2vdFsZV2DovKOoR2+mJPNYDHYJPXKdUx29rHT/+ulMfGugwmc0Nrhau3ns7Jd8sW8U
+         4Jk+YY1LQmA6eMayS8/8qTEpp34t1mC8Hf5p2KpbudxzB+hrjvvUGFlC4QnstKy8RzRU
+         syUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=lMk6V2S9Ij9c1Tflda+kLjZxJTK7ji21TJ3lMoyYnE8=;
-        b=es9+anwYpRkKr6aMe7FZBNy0QAPD+Hj50/ngIifAtmELscW9lwweG3y5Iz1Xi/4W3d
-         mj/FesJsLfWnE8BMoE3CMtQ+S22yDVzsOWzZ/5t11DfqPLmtUmJGicfs0FnznDxNzo4R
-         nBkJQ8OKysrV8nw76+nOTFhIDgC1HF8r4phwaXTgvBxAUBV23KyoPtYYKLSIZVYU6uEq
-         W6eGHYe7tGT7NSwWVjmw5I4HzZUcvaqUMkoLSFfX5JYHBZcqcmicZgo1V0pk9N24TeYT
-         DhmAWTQKnjRACb7l819fM7zt7TN71MZ+UfNwSMraKqNYAlXmW1WFGm4GFKhpTbruI45o
-         nrvQ==
-X-Gm-Message-State: APzg51A3bocRHENqz+J0IGhaFERKWUhfLr7cCfxKrhxF2OhnFIaDWgsN
-        lwRBN54n8cIOjpCFXiL7Ip7JMLgkfApbZhnwYXz04gOYRmQpE/Anh5k0jJx8QTYZk9J+N872U79
-        AzLOWIbgrBZON2YM9mMsFSf4Yd7OznQcnTX/lkP6YRjUQ4RMe8G3a2UCco43M
-X-Google-Smtp-Source: ANB0VdbufBtFm1RkBC744eg/vjE6CjNjP7Dg1Yau0frs0BVyIfzZAEdsD4HHr19CUlpI4Dn5mAmqZ/p2rPZG
-X-Received: by 2002:ab0:59c1:: with SMTP id k1-v6mr5295869uad.70.1536709799906;
- Tue, 11 Sep 2018 16:49:59 -0700 (PDT)
-Date:   Tue, 11 Sep 2018 16:49:43 -0700
+        bh=YfBDaNAD0rN0MtBEkxpcso45kYioPIIIjy45WTOmugM=;
+        b=WGDQ07exlpr4z5OIOWg7IF0ABqpCu8pwvGL+svtmlvHoALnHwIObbVylE3fFRJENIq
+         Oik7ujW5DRmaU+7Iosgw4ahLNJjf2vxUroumRfhE95lOO2fjNS0Vp5nt2HzOfJr3fCIn
+         rIMW4ag2IWlucH+DuxL4aKY2iNHwD0AEbiUEca58A7uPWfmian+jZF36/MSktMel/KLa
+         fvEb5hKOtZYZREka/dUC3WkBS/S7JHdDLiobB0g/xSMpfQ5X9Ig1EmwTgBAljFAEcO/h
+         HuI5ecjLPKhvjpAxk1HmN/xAt9JRluM8jFsvZ56zd0Uhdn83mdekrcSJ+unFSxizvtv5
+         Pc3A==
+X-Gm-Message-State: APzg51CFj+ZyPeJ5/cWeOMSidqY0SPOOAE8M1uHy35+fHs9/sLxPxDYR
+        2ID757nDIf7Q5IuLFyXuel9gIA+zYXozyzUlWy1uynW5x5dFoF77baFnnzyH4jJ28TgJcUSPqew
+        W3HVfeOwHWblcZB18zG5gdX0NRc/v5er5bV8Kb74cXKBLGEqCA8ftdL5egs41
+X-Google-Smtp-Source: ANB0VdYyf8i9xez1vcEMCQ9dQ1n0UASEumIkPJSboGqvv0HRm208N3uMApIS9CWm9pXorwxDWsIek0GWunqe
+X-Received: by 2002:a81:a092:: with SMTP id x140-v6mr7961607ywg.52.1536709802586;
+ Tue, 11 Sep 2018 16:50:02 -0700 (PDT)
+Date:   Tue, 11 Sep 2018 16:49:44 -0700
 In-Reply-To: <20180911234951.14129-1-sbeller@google.com>
-Message-Id: <20180911234951.14129-2-sbeller@google.com>
+Message-Id: <20180911234951.14129-3-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180911234951.14129-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: [PATCH 1/9] string-list: add string_list_{pop, last} functions
+Subject: [PATCH 2/9] sha1-array: provide oid_array_filter
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -62,84 +62,53 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a few functions to allow a string-list to be used as a stack:
-
- - string_list_last() lets a caller peek the string_list_item at the
-   end of the string list.  The caller needs to be aware that it is
-   borrowing a pointer, which can become invalid if/when the
-   string_list is resized.
-
- - string_list_pop() removes the string_list_item at the end of
-   the string list.
-
- - _pop usually has a friend _push. This role is taken by
-    string_list_append already, as they are not symmetrical
-    in our code base: _append returns the pointer, such that
-    adding a util is easy, but _pop doesn't return such a pointer.
-
-You can use them in this pattern:
-
-    while (list.nr) {
-        struct string_list_item *item = string_list_last(&list);
-
-        work_on(item);
-        string_list_pop(&list);
-    }
-
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- string-list.c | 14 ++++++++++++++
- string-list.h | 11 +++++++++++
- 2 files changed, 25 insertions(+)
+ sha1-array.c | 18 ++++++++++++++++++
+ sha1-array.h |  5 +++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/string-list.c b/string-list.c
-index 771c4550980..04db2b537c0 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -80,6 +80,20 @@ void string_list_remove(struct string_list *list, const char *string,
+diff --git a/sha1-array.c b/sha1-array.c
+index 265941fbf40..76323935dd7 100644
+--- a/sha1-array.c
++++ b/sha1-array.c
+@@ -77,3 +77,21 @@ int oid_array_for_each_unique(struct oid_array *array,
  	}
+ 	return 0;
  }
- 
-+void string_list_pop(struct string_list *list, int free_util)
++
++int oid_array_filter(struct oid_array *array,
++		     for_each_oid_fn fn,
++		     void *cbdata)
 +{
-+	if (list->nr == 0)
-+		BUG("tried to remove an item from empty string list");
++	int src, dst;
 +
-+	if (list->strdup_strings)
-+		free(list->items[list->nr - 1].string);
++	for (src = dst = 0; src < array->nr; src++) {
++		if (fn(&array->oid[src], cbdata)) {
++			if (dst < src)
++				oidcpy(&array->oid[dst], &array->oid[src]);
++			dst++;
++		}
++	}
++	array->nr = dst;
 +
-+	if (free_util)
-+		free(list->items[list->nr - 1].util);
-+
-+	list->nr--;
++	return 0;
 +}
-+
- int string_list_has_string(const struct string_list *list, const char *string)
- {
- 	int exact_match;
-diff --git a/string-list.h b/string-list.h
-index ff8f6094a33..ce2528bbe15 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -191,6 +191,17 @@ extern void string_list_remove(struct string_list *list, const char *string,
-  */
- struct string_list_item *string_list_lookup(struct string_list *list, const char *string);
+diff --git a/sha1-array.h b/sha1-array.h
+index 232bf950172..a2d7c210835 100644
+--- a/sha1-array.h
++++ b/sha1-array.h
+@@ -23,4 +23,9 @@ int oid_array_for_each_unique(struct oid_array *array,
+ 			      for_each_oid_fn fn,
+ 			      void *data);
  
-+/**
-+ * Removes the last item from the list.
-+ * The caller must ensure that the list is not empty.
-+ */
-+void string_list_pop(struct string_list *list, int free_util);
++/* Call fn for each oid, and remove it if fn returns 0, retain it otherwise */
++int oid_array_filter(struct oid_array *array,
++		     for_each_oid_fn fn,
++		     void *cbdata);
 +
-+static inline struct string_list_item *string_list_last(struct string_list *list)
-+{
-+	return &list->items[list->nr - 1];
-+}
-+
- /*
-  * Remove all but the first of consecutive entries with the same
-  * string value.  If free_util is true, call free() on the util
+ #endif /* SHA1_ARRAY_H */
 -- 
 2.19.0.397.gdd90340f6a-goog
 
