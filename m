@@ -2,85 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C02021F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 16:58:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24F451F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 17:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbeIKV60 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 17:58:26 -0400
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:41771 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727007AbeIKV60 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 17:58:26 -0400
-Received: by mail-wr1-f54.google.com with SMTP id z96-v6so26812885wrb.8
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 09:58:14 -0700 (PDT)
+        id S1727792AbeIKWP6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 18:15:58 -0400
+Received: from mail-yw1-f54.google.com ([209.85.161.54]:35717 "EHLO
+        mail-yw1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726943AbeIKWP6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 18:15:58 -0400
+Received: by mail-yw1-f54.google.com with SMTP id 14-v6so9517364ywe.2
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 10:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=o5Zs+C2L/FFgrFZGeMfPHD81KO3k53EBSpZmaj4TTCQ=;
-        b=AaT1e5cVS2Apbf/oEJlGIhbhJXkStR9QiV+d8YknekbsOxkyQ+87f99Focv6LWbVi4
-         QjpmVfHe/IeI3ALwboUAmrr9fS7LAOaXI3jBU0DK9hhqRzPoBzmHt6Ssl7nBiu2Oo/AL
-         g8amGLQOJygvBqS5aGZ8jFTto3QwSeVn0ERRFtCAgatfBqyHY6Vs3MlQ6BJqagSB1EBH
-         8+tJn5aP38oBHmq/jzrQmHt4lKDS7zhe2iA85ejOnqijkB4NWh5AbT1zQxCHK4YTsXLb
-         zR6PFAT/DZFuKfIfov2Te27tDk0jvaQiVimXzgjQEN8K1UXdX13swI7amgyM2BS3EP/c
-         1DEQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dM4n96TrOzU/mcUw7W3qg+zYLZrha7j9mPHix6tJEII=;
+        b=Wrmn/b+As/U6Tr2jMAGZWEi6t9Sb+Qn0pQR3qhGCpMsxHkkEC563kcUXdv2T8bUKD8
+         yOTBEC9SxNSDaEyJkCX4kQcyKnTKPkLbbeTOhUlQTRNy58FimSmxu2kkWJRdZa/bmi00
+         DAck0wvzwAL+olk8WaHhi1d77UFUSfpzusjIAxaUxKBLYLJtwHHFWYYAYe1nXCp3ypNg
+         yWSClQZiYF4ZRiI++34SDMD8tf75iN0bKAGTQz6RXmH9s/Q01TNDSxCq3i4HqK1uN3Ci
+         +EC51TNsAOzyZprtdPkQf9hEZVxQJQZzIs5UJ7QZyadF3XcvDBIUdO3/PKAbtkN1V2NP
+         Giuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=o5Zs+C2L/FFgrFZGeMfPHD81KO3k53EBSpZmaj4TTCQ=;
-        b=AFz0MOXUd63zDyzVR3eaPmDIHrL295SyIQdDAPh+JKY9jPZK3o79wB8iz3amhZhAaK
-         n1Rx128aqew8ycxF+9Fi9rgEs1SUJ6gUuJ5LOlEo13RqcILHRVPQtTyCRGCAWE4hG/xw
-         1w+xA5HGvDagzrLVYmu3Z7ckOj7DbLlH3kNNhu4px7DZ4D6dzcuetICKtPFyBipe1Zyl
-         g+m0ZBT5J5NJVA1HmXTVem0qWGzSZyoZFAa3rsJ7PJJSkd/eXlFRjGw/OwvxsuqoZpXh
-         jeTqb1Md73+TmaYIJLsqVTM28FOI7jShvLvV+262JE5zr6cuz6qPV3v667MbojKxwo42
-         WkrA==
-X-Gm-Message-State: APzg51DaAfd7341JD9RQ/7P7QAkiTJtYbUInRz7MJEWeuqG5X3IX22Pc
-        h3DY3PFHq5zKV5Rc4HL5QUM=
-X-Google-Smtp-Source: ANB0VdavuUA4n434OHJnyYSud1zfE41bdNFg9jO+Q9kESMGAeVqiik/idwPNaEPKi8yZoi0niFvmLg==
-X-Received: by 2002:adf:eb87:: with SMTP id t7-v6mr20146974wrn.123.1536685093427;
-        Tue, 11 Sep 2018 09:58:13 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v21-v6sm16394240wrd.4.2018.09.11.09.58.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Sep 2018 09:58:12 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 24/24] Rename functions to avoid breaking in-flight topics
-References: <20180826100314.5137-1-pclouds@gmail.com>
-        <20180903180932.32260-1-pclouds@gmail.com>
-        <20180903180932.32260-25-pclouds@gmail.com>
-        <xmqqo9dd6kx1.fsf@gitster-ct.c.googlers.com>
-        <CAGZ79kZhQJ7TbTuuDO_k-p80rGnOTjVcHf0aoq2+=pG4bwetNA@mail.gmail.com>
-        <xmqq7ejz4pvq.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8CepuW3DG2AbMiHdoUELHfBmMSZDtPJMzLRHUWwshvivw@mail.gmail.com>
-Date:   Tue, 11 Sep 2018 09:58:11 -0700
-In-Reply-To: <CACsJy8CepuW3DG2AbMiHdoUELHfBmMSZDtPJMzLRHUWwshvivw@mail.gmail.com>
-        (Duy Nguyen's message of "Sun, 9 Sep 2018 10:05:01 +0200")
-Message-ID: <xmqq1sa0q8d8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dM4n96TrOzU/mcUw7W3qg+zYLZrha7j9mPHix6tJEII=;
+        b=a/nBDVEOeb2RcjFYxXu9qG0IGTR8/IfzMX1UeE9Uex5tCpCAhUASUSqZlOAGn0lgcS
+         sUrvg+SPpo5rqkRbiFN+CVPsyxUSXEVXgJ10Do9op5tCfneeaKO8FBEQC8agQoXv6Uf9
+         gnRVY9SuRLI+hfpFR2/vrTYNCd+oxK4XFnzSSp1EPU4o8lumTN6w/KUSyoUmMFSYUG9u
+         AW5cNTMJSMRMiiHJHS7vl4Gip1qN4s1jAOy6yaznG2ubpJaYyk2faEm33t4MtnTHdvfg
+         34UGdDbVGSkJYBwIRnGT/icFApwt2ybple++8HVSTThcb7sHAadiovImX/+IyP8Ik7Lr
+         mTRg==
+X-Gm-Message-State: APzg51CeWYQspF11xbEqNxcMBoix2ibrqCWRmonQ5F3/ltzBqScC6Phq
+        +it0BBPDsVaPrE4GLdcZPprlTDLyANYcyaLmdKETuA==
+X-Google-Smtp-Source: ANB0VdYj10YKswsPQBdNbpxOlNlNOsjc1XvQFwOdABDGTDM7O4BW15TP0jC4wHPxAuPXsIKmt7iIqq5Nj1pwkRY2hrI=
+X-Received: by 2002:a81:5bc6:: with SMTP id p189-v6mr12814340ywb.370.1536686141341;
+ Tue, 11 Sep 2018 10:15:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAFXrp_fLwL5=K3B5rWjY+imoqtskT8LG-UH8ec3CPwM0iiSzFg@mail.gmail.com>
+In-Reply-To: <CAFXrp_fLwL5=K3B5rWjY+imoqtskT8LG-UH8ec3CPwM0iiSzFg@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 11 Sep 2018 10:15:29 -0700
+Message-ID: <CAGZ79kYK7ish4_DaZN2bCfZz7LNAjxogQH1k6T=hFcxxkXzJQw@mail.gmail.com>
+Subject: Re: Is it possible to git clone --filter= without any objects?
+To:     Ciro Santilli <ciro.santilli@gmail.com>,
+        Matthew DeVore <matvore@google.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Tue, Sep 11, 2018 at 12:29 AM Ciro Santilli <ciro.santilli@gmail.com> wrote:
+>
+> At v2.19.0 I was trying to clone a fetch just a single directory:
+> https://stackoverflow.com/questions/600079/how-do-i-clone-a-subdirectory-only-of-a-git-repository/52269934#52269934
+>
+> I got really close with:
+>
+> git clone --depth 1 --no-checkout --filter=blob:none \
+>   "file://$(pwd)/server_repo" local_repo
+> cd local_repo
+> git checkout master -- mydir/
+>
+> The only missing thing is that uneeded tree objects are still being fetched.
+>
+> If I had a:
+>
+> git clone --filter=none
+>
+> for example then that would be done.
+>
+> Nothing major since those are small, but just looking for the perfect
+> command :-)
 
-> In the end, there's no variant, only one function that always takes
-> 'struct repository *' and I wanted to keep the shorter name 'rerere'.
-> But let's go with adding repo_rerere() and deprecating rerere(). If it
-> turns out later that repo_rerere is too long (or it's repo_xyz
-> everywhere) then we can do another rename.
+You might be pleased to hear about a series floating on the mailing list,
+that started at
+https://public-inbox.org/git/cover.1533854545.git.matvore@google.com/
+and promised to filter trees away, and its latest version can be found at
+https://public-inbox.org/git/cover.1536081438.git.matvore@google.com/
 
-Yup, I am not opposed to another rename after the dust settles, but
-do nto want to see it as part of the series.
-
-Thanks.
+Thanks,
+Stefan
