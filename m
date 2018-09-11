@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40F491F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCE381F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 23:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727876AbeILEvu (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 00:51:50 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:42809 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726278AbeILEvt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 00:51:49 -0400
-Received: by mail-ua1-f73.google.com with SMTP id g10-v6so47384uap.9
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:11 -0700 (PDT)
+        id S1728116AbeILEvx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 00:51:53 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:53916 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726901AbeILEvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 00:51:52 -0400
+Received: by mail-io0-f202.google.com with SMTP id h20-v6so68251iob.20
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 16:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=N+C9LG44r+za892wkBrqwOOomAK6Va9G9n8tpBcil7o=;
-        b=If8fl565zplg58gC3i7WgmWCgg1BSxZslYn06vBgS6Dtr/oBxUHkz/HGQdA6aOo+9/
-         ZXV+xRZbCemfhrWiz4ouAB1O3OeptQpUmiaSXsnQCzlAF6HtON+udt/8yNEHbgEhaO8K
-         rNxLB864bNwF5NIlNn624/fzyQID0DNF5m/mDcVDwSvuU+ObV1PW5LhNAjWAxVV6eWom
-         A0azdsbJLwGVmbCqxIVDedqYbY5BWJJBWonvbC0mEWuZfSKTuOQi7nY5JAs3k0dUfXpL
-         k2yfHq03CL0A7fjmhO8WG115dBQ21W6p7wFkiMKPKnkldWcckstSlCinYnkXcikFQ2W6
-         K1GA==
+        bh=kUdA9oKdgU249YiNpRsaZOph17WEjyfJNVIA3Yy8Wmg=;
+        b=kZNa1DZ7Rro1Wm/GzVL+I1NTBRRkcs8WIIWc56JAc1R8ZFmABJHBMH4g5N6R0jShRC
+         3b0kKwV1fc04IJ60zpxHWDpZ24q7WpnWRCy691DCpHROtVY+IPO3pmLJaPfonAKBgTSp
+         5JTcUAINGn7HI77kV4EwyCWQLAkUDSTc48z1yxH6Ns1ZQRQU77ZEe5FRGObqXeNr1jyd
+         oKJ/SPOGVC2vUO0684dfVF+sxznSZGsgXxnxYHTaG07ANAKEgUj6SiAkd58sgydw9TJq
+         8g5QuK+m6YimfViJMIydcnbw9ask4km2IqNXbHv+x2WFl9+qZD064EA8dfJ9v/gCePaI
+         ZvnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=N+C9LG44r+za892wkBrqwOOomAK6Va9G9n8tpBcil7o=;
-        b=ORifrV2+OCego3hrcvt+tMN0MNyNOj7VVw9hYDvvyRq7uc8LQsZEBuVBntqI5J0ZiB
-         LTqJqlWBOCVE07vECv35lPOoVgHX39xPps4yOLarANVLht6QGgXHDLQ0w8Fc3vpKrAbz
-         3PcD9btFZUP/2mp7+bK/nctPaMNgsd+j6iEjnDPg8rt2o8XsoxVb9qVS4S1zkQElNU6G
-         PzroK90suNjDs5RQqZI/K2rRUJ7iQDm0AV/6w3nterRYCs01cTOu8gHdcJQmu8itTblp
-         YaQr0/KiNAYxW9De89PPuqa5Mx6fMEwgqpncAffXos8f0IOSMv7Rw95M3lv6H6xdV9fK
-         qHzA==
-X-Gm-Message-State: APzg51BzVHQKLIzzSqMbefWccU1rYeegIt9thVbJq5RRwBxpB/yckL3E
-        jTCOUugnuStJb2AI2JJycwgYxAZXsQQ4bsXDRGeJwczadd6jwboxvoHK3am8Ypv84nfj3Qc0swS
-        twYde2oe0JOK2mdxGpnB0zLx9dk13ikGc9BlSRZxCkHg1M7qyNkhCRHCrn1Gb
-X-Google-Smtp-Source: ANB0VdauSAQCzduNR+Hl79XJmH8lf6vuQL2w/Tf61z7YnEQbd8O3z/g7erjb4rq5t74T9KY4ehp2OIvxqH7t
-X-Received: by 2002:a9f:3190:: with SMTP id v16-v6mr5801004uad.1.1536709810597;
- Tue, 11 Sep 2018 16:50:10 -0700 (PDT)
-Date:   Tue, 11 Sep 2018 16:49:47 -0700
+        bh=kUdA9oKdgU249YiNpRsaZOph17WEjyfJNVIA3Yy8Wmg=;
+        b=R++cC5XMyq8kQKDbqXIkY0eyJqumvT4I73FNva4+QVrWlWp6nWyKK81ebwPpCrm9Gh
+         5RggmGE2NYbo3Y8nqxw1ydqcfgP/NARZtKyQoxUBulXLnHvU6j235QHYpnMTeyMsXhT/
+         Caxp3QwQ75vdCZYBqRq9rVPSHrpcNSME4d394kVjDSlBrpkG7IAr0hmTJygy1WgUa/ct
+         Fdgds3p3Dhk/tyU4IoADtIi6XvyVt4t4uXqSUsLIamM5C8Lv7epX3zllBEm9yzGkove3
+         S4Y26bCI0P/AuLXw38J5YsQobVaNue2U2NFdysZ6RnbNZB5cdcQxelOIDCrBywuBAeEd
+         Njcg==
+X-Gm-Message-State: APzg51Cxok9W/bSZ8njNWkoc2TTq69Lzb6u6mRkl+NzkjvgMBrtNY93B
+        UyrS+0YUedh53jiflDP8hqOdVW15IvKfFyl1FgBHCX3mjVmZ4dkIheIw2DOKt5WUgaNxXQbPXeG
+        Xcyv2MGJnqw8ROtUvkYDLo7ZbBpB95ehtjIUvENY4oGaNOSYvVChPy/zDeKgO
+X-Google-Smtp-Source: ANB0VdbOu3j1CH2Kct+V4nIfJMLKKpFrZq7am1soqAPEBGW88V+6LTrcV6sCxZAJtFFqPzgHChjGV3+Q0gT7
+X-Received: by 2002:a24:47ca:: with SMTP id t193-v6mr3629264itb.24.1536709813340;
+ Tue, 11 Sep 2018 16:50:13 -0700 (PDT)
+Date:   Tue, 11 Sep 2018 16:49:48 -0700
 In-Reply-To: <20180911234951.14129-1-sbeller@google.com>
-Message-Id: <20180911234951.14129-6-sbeller@google.com>
+Message-Id: <20180911234951.14129-7-sbeller@google.com>
 Mime-Version: 1.0
 References: <20180911234951.14129-1-sbeller@google.com>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: [PATCH 5/9] submodule: move global changed_submodule_names into fetch
- submodule struct
+Subject: [PATCH 6/9] submodule.c: do not copy around submodule list
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>
@@ -63,106 +62,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The `changed_submodule_names` are only used for fetching, so let's make it
-part of the struct that is passed around for fetching submodules.
+'calculate_changed_submodule_paths' uses a local list to compute the
+changed submodules, and then produces the result by copying appropriate
+items into the result list.
+
+Instead use the result list directly and prune items afterwards
+using string_list_remove_empty_items.
+
+By doin so we'll have access to the util pointer for longer that
+contains the commits that we need to fetch, which will be
+useful in a later patch.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
- submodule.c | 42 +++++++++++++++++++++++-------------------
- 1 file changed, 23 insertions(+), 19 deletions(-)
+ submodule.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/submodule.c b/submodule.c
-index c6eff7699f3..3520dd76bdf 100644
+index 3520dd76bdf..00a9a3c6b12 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -24,7 +24,7 @@
- #include "object-store.h"
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
--static struct string_list changed_submodule_names = STRING_LIST_INIT_DUP;
-+
- static int initialized_fetch_ref_tips;
- static struct oid_array ref_tips_before_fetch;
- static struct oid_array ref_tips_after_fetch;
-@@ -1110,7 +1110,22 @@ void check_for_new_submodule_commits(struct object_id *oid)
- 	oid_array_append(&ref_tips_after_fetch, oid);
- }
- 
--static void calculate_changed_submodule_paths(void)
-+struct submodule_parallel_fetch {
-+	int count;
-+	struct argv_array args;
-+	struct repository *r;
-+	const char *prefix;
-+	int command_line_option;
-+	int default_option;
-+	int quiet;
-+	int result;
-+
-+	struct string_list changed_submodule_names;
-+};
-+#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, STRING_LIST_INIT_DUP }
-+
-+static void calculate_changed_submodule_paths(
-+	struct submodule_parallel_fetch *spf)
+@@ -1128,8 +1128,7 @@ static void calculate_changed_submodule_paths(
+ 	struct submodule_parallel_fetch *spf)
  {
  	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
-@@ -1148,7 +1163,8 @@ static void calculate_changed_submodule_paths(void)
+-	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
+-	const struct string_list_item *name;
++	struct string_list_item *name;
+ 
+ 	/* No need to check if there are no submodules configured */
+ 	if (!submodule_from_path(the_repository, NULL, NULL))
+@@ -1146,9 +1145,9 @@ static void calculate_changed_submodule_paths(
+ 	 * Collect all submodules (whether checked out or not) for which new
+ 	 * commits have been recorded upstream in "changed_submodule_names".
+ 	 */
+-	collect_changed_submodules(&changed_submodules, &argv);
++	collect_changed_submodules(&spf->changed_submodule_names, &argv);
+ 
+-	for_each_string_list_item(name, &changed_submodules) {
++	for_each_string_list_item(name, &spf->changed_submodule_names) {
+ 		struct oid_array *commits = name->util;
+ 		const struct submodule *submodule;
+ 		const char *path = NULL;
+@@ -1162,12 +1161,14 @@ static void calculate_changed_submodule_paths(
+ 		if (!path)
  			continue;
  
- 		if (!submodule_has_commits(path, commits))
--			string_list_append(&changed_submodule_names, name->string);
-+			string_list_append(&spf->changed_submodule_names,
-+					   name->string);
+-		if (!submodule_has_commits(path, commits))
+-			string_list_append(&spf->changed_submodule_names,
+-					   name->string);
++		if (submodule_has_commits(path, commits)) {
++			oid_array_clear(commits);
++			*name->string = '\0';
++		}
  	}
  
- 	free_submodules_oids(&changed_submodules);
-@@ -1185,18 +1201,6 @@ int submodule_touches_in_range(struct object_id *excl_oid,
- 	return ret;
- }
- 
--struct submodule_parallel_fetch {
--	int count;
--	struct argv_array args;
--	struct repository *r;
--	const char *prefix;
--	int command_line_option;
--	int default_option;
--	int quiet;
--	int result;
--};
--#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0}
--
- static int get_fetch_recurse_config(const struct submodule *submodule,
- 				    struct submodule_parallel_fetch *spf)
- {
-@@ -1257,7 +1261,7 @@ static int get_next_submodule(struct child_process *cp,
- 		case RECURSE_SUBMODULES_ON_DEMAND:
- 			if (!submodule ||
- 			    !string_list_lookup(
--					&changed_submodule_names,
-+					&spf->changed_submodule_names,
- 					submodule->name))
- 				continue;
- 			default_argv = "on-demand";
-@@ -1349,8 +1353,8 @@ int fetch_populated_submodules(struct repository *r,
- 	argv_array_push(&spf.args, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
- 
--	calculate_changed_submodule_paths();
--	string_list_sort(&changed_submodule_names);
-+	calculate_changed_submodule_paths(&spf);
-+	string_list_sort(&spf.changed_submodule_names);
- 	run_processes_parallel(max_parallel_jobs,
- 			       get_next_submodule,
- 			       fetch_start_failure,
-@@ -1359,7 +1363,7 @@ int fetch_populated_submodules(struct repository *r,
+-	free_submodules_oids(&changed_submodules);
++	string_list_remove_empty_items(&spf->changed_submodule_names, 1);
++
+ 	argv_array_clear(&argv);
+ 	oid_array_clear(&ref_tips_before_fetch);
+ 	oid_array_clear(&ref_tips_after_fetch);
+@@ -1363,7 +1364,7 @@ int fetch_populated_submodules(struct repository *r,
  
  	argv_array_clear(&spf.args);
  out:
--	string_list_clear(&changed_submodule_names, 1);
-+	string_list_clear(&spf.changed_submodule_names, 1);
+-	string_list_clear(&spf.changed_submodule_names, 1);
++	free_submodules_oids(&spf.changed_submodule_names);
  	return spf.result;
  }
  
