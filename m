@@ -3,121 +3,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B63D1F404
-	for <e@80x24.org>; Tue, 11 Sep 2018 18:27:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74A941F404
+	for <e@80x24.org>; Tue, 11 Sep 2018 18:30:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727246AbeIKX1n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Sep 2018 19:27:43 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42546 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbeIKX1m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Sep 2018 19:27:42 -0400
-Received: by mail-wr1-f65.google.com with SMTP id v17-v6so27042802wrr.9
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 11:27:09 -0700 (PDT)
+        id S1727651AbeIKXac (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Sep 2018 19:30:32 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:34478 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727009AbeIKXab (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Sep 2018 19:30:31 -0400
+Received: by mail-it0-f47.google.com with SMTP id x79-v6so9625733ita.1
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 11:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=TFzB5oJ0bMXO9LZNuIFeHrxpd3Un1J/Dwqp9nLVIarQ=;
-        b=uqXpt9hiWrLoGvPqiFlnJdkq3O7w9a2fUkY2sfoHM2hziF7k9OqH8e61c/WNozisRZ
-         oTpOYL+dvb1j3iEaOQunvuMIPyb70EfSoQ8TbLpcU0RtDK9EKMONnrrsruKYMfQzCJYO
-         MAzDidWO5xFfqVvQnNJpAQLOaAR85tcSOUdHifHUkmeBt+b272iqxkB4zqttsN/E3aGQ
-         iILssKJMvjYD2xFzTIgDjR9KQYLuhpBjw/yFTdUmRdRFS+qKmX/twvyWFyECBRNTj7X3
-         ufam8VPWi0wFEBXIpV9JWJU+VUP1QQH3bNi4N2A076gviz9IVwxKb5JoInv8HnJV+wuE
-         tn8w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=wFlzNVZyT5EW9gitXuVo/RMJMqX7Fpi/VcoagddeEFE=;
+        b=TZrHZxUQB7gXwDwgT9pyoT+fQdmK9avkeyebTsrB9YEQHuLitoUj+GKGOU6Lm+Ue6/
+         OZNTdt2a7viEVOJYYj//zRdSMdqLtAFV1S+WQ1pAjZrv6sk3w521XWp9dnP4DzbUd/Xp
+         Yupzr8zYqOtVSOpFiE7bvtvYj2/03MR2zrLo3+Q/CEDLCTtipCXtyrdnKy1oHNjzYfg4
+         yLeK8YdrWknNAo3Z9qfOfeMCQm8dzVIsZ3bp58IMblPaxxUPOcPcJYrman2qeizfwVdt
+         pIt3o1uxOr72uixdGHgkb/lK+CCNiq0HC6oEKgEEJe1pfWTg2Dyxbcjaj4TIlHMsYNaF
+         prRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=TFzB5oJ0bMXO9LZNuIFeHrxpd3Un1J/Dwqp9nLVIarQ=;
-        b=k/Lw1ThjXo77EhF0unQW6bldh1Edgh4xdGZqWOaUNJ35QvDvYhnGeZhyKpKdr7Y7bV
-         gOVJNn+EvCuBR5yWFpJ43/h4fTuo73taSRxlgk7EN0SVLx+jWTtIuM9HXrQ5H7FSWgyH
-         xL6miGLG7PYVyomJeOhIdEdcykIvlm4FLx4eRpN4EFneehhmxjinLSfrWRpLxqBBXTOz
-         G1vIeN01LTtNtdSk2ZbzmxVNStkwPcuJjWAU0mm3hDgKVr57bVJbbAX8TU0Tb6laImlO
-         uftU1Vb190HhEU/dbE5q/ZW3mBvfFXbcVZSCSm2w45bfRFcHBK0fZkLxTWtZAqzOJm3f
-         dDaA==
-X-Gm-Message-State: APzg51DEFbv1JAOczq8xxjor9Bhs7hCXR5df7pSAHntRrBrtKDo5r8B3
-        LI/95UeexgaVWuuXPPqjHSr/ajOa
-X-Google-Smtp-Source: ANB0VdbiDRN1TRoEgKPoXmz7dd2rWW6lJ7Hze24LmDzDsUV1ESL/7BEkkNiRMGS0tX7O0JBZE+K+gA==
-X-Received: by 2002:adf:ba12:: with SMTP id o18-v6mr19324506wrg.249.1536690428659;
-        Tue, 11 Sep 2018 11:27:08 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id b124-v6sm928002wmh.17.2018.09.11.11.27.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Sep 2018 11:27:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Max Kirillov <max@max630.net>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
-        Florian Manschwetus <manschwetus@cs-software-gmbh.de>
-Subject: Re: [PATCH] http-backend: treat empty CONTENT_LENGTH as zero
-References: <20180910052558.GB55941@aiede.svl.corp.google.com>
-        <20180910205359.32332-1-max@max630.net>
-        <20180911034227.GB20518@aiede.svl.corp.google.com>
-        <20180911040343.GC20518@aiede.svl.corp.google.com>
-        <xmqqk1nrq4su.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 11 Sep 2018 11:27:07 -0700
-In-Reply-To: <xmqqk1nrq4su.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 11 Sep 2018 11:15:13 -0700")
-Message-ID: <xmqqa7onq490.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=wFlzNVZyT5EW9gitXuVo/RMJMqX7Fpi/VcoagddeEFE=;
+        b=XveEERhKwvos35n+dQhvw9SpKGY9v6Hl3qgQcRPA3qGqo6aq45IFhb0cUPKbjaNB+8
+         TDEvxciVzTIkksVbUgU7YeYqEPCU7hq2pOY4uTrKbtYja0fpdbQwL431NC0VcJItz243
+         QpHUmQk78zbgJ1yf4U6tLpHKHLMRdST7QitZIFLUmcJl6jB1lpqnaHUIPggDQNVTTZ8p
+         5A9MgF5MHCIvQGjXThkErskIyxZ9sF5Pp7d0/69149AlLs77Q+tn8JmxE6fLYnx0Xru/
+         iiKxtB6yYHxwSG1YZmWZP1TGladCGtQ2co2ZAFTeayVW0YrRvu9PRPPI4rHHF06IDA3A
+         OzEw==
+X-Gm-Message-State: APzg51B2rZ+X1bFsq5/tFwTKGyGAF/hh0915hpUC0ib4wuyV4DeuBwzD
+        eUXC77zqNiYyV8b3v739MruFgfugf8xFfIrjnHhWSVWf
+X-Google-Smtp-Source: ANB0VdbqynnoKS8HvVWF4qV0EEBB3auB35jSfhGLBa4GgBJToD47dgW/nvgx+YNFCK4iJ9QPZR1f1kpnd2uo0YRz6OI=
+X-Received: by 2002:a24:7c4a:: with SMTP id a71-v6mr2743582itd.69.1536690569475;
+ Tue, 11 Sep 2018 11:29:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAFXrp_fLwL5=K3B5rWjY+imoqtskT8LG-UH8ec3CPwM0iiSzFg@mail.gmail.com>
+ <CAGZ79kYK7ish4_DaZN2bCfZz7LNAjxogQH1k6T=hFcxxkXzJQw@mail.gmail.com>
+ <CAGf8dgKLz14ijnXwV0Y=M48Rij-scA19E_uXk3pBc0T02oE_0Q@mail.gmail.com> <xmqqo9d4orji.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9d4orji.fsf@gitster-ct.c.googlers.com>
+From:   Ciro Santilli <ciro.santilli@gmail.com>
+Date:   Tue, 11 Sep 2018 19:29:18 +0100
+Message-ID: <CAFXrp_emK=k7by5pM5=GpsixJVeeJhT89-Cgq3JYbn5yg14CpQ@mail.gmail.com>
+Subject: Re: Is it possible to git clone --filter= without any objects?
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, sbeller@google.com, matvore@google.com,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->>> +		/*
->>> +		 * According to RFC 3875, an empty or missing
->>> +		 * CONTENT_LENGTH means "no body", but RFC 3875
->>> +		 * precedes HTTP/1.1 and chunked encoding. Apache and
->>> +		 * its imitators leave CONTENT_LENGTH unset for
->>
->> Which imitators?  Maybe this should just say "Apache leaves [...]".
+On Tue, Sep 11, 2018 at 6:47 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I tend to agree; I do not mind amending the text while queuing.
-> ...
-> I do not think we would mind terribly if we do not support
-> combinations like gzipped-and-then-chunked from day one.  An in-code
-> NEEDSWORK comment that refers to the production in RFC 2616 Page 143
-> may not hurt, though.
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+> > By "without any objects" in your email subject, do you mean "without
+> > blob and tree objects"? If yes, there is some code in the
+> > md/filter-trees branch that can do that with a "--filter=tree:0"
+> > option.
+>
+> I too was wondering what the "without any objects" thing meant
+> myself.
+>
 
-I refrained from reflowing the first paragraph of the comment in
-this message, but will probably reflow it before committing, if the
-updated text is acceptable.
+Thanks for all replies, as you correctly deduced, I meant "without
+fetching any objects".
 
+The mentioned --filter=tree:0 would basically do what I want it seems,
+good to hear!. I wonder why not call it tree:none though to match
+blob:none.
 
- http-backend.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+> What would it take on top of the following sequence to create such
+> an ultra-lazy clone?
+>
+>         $ mkdir very-sparse && cd very-sparse
+>         $ git init
+>         $ git remote add origin $URL
+>
 
-diff --git a/http-backend.c b/http-backend.c
-index 8f515a6def..b997eafb00 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -357,10 +357,17 @@ static ssize_t get_content_length(void)
- 		/*
- 		 * According to RFC 3875, an empty or missing
- 		 * CONTENT_LENGTH means "no body", but RFC 3875
--		 * precedes HTTP/1.1 and chunked encoding. Apache and
--		 * its imitators leave CONTENT_LENGTH unset for
-+		 * precedes HTTP/1.1 and chunked encoding. Apache
-+		 * leaves CONTENT_LENGTH unset for
- 		 * chunked requests, for which we should use EOF to
- 		 * detect the end of the request.
-+		 *
-+		 * NEEDSWORK: Transfer-Encoding header is defined to
-+		 * be a list of elements where "chunked", if exists,
-+		 * must be at the end.  The current code only deals
-+		 * with the case where "chunked" is the only element.
-+		 * See RFC 2616 (14.41 Transfer-Encoding) when
-+		 * extending this code.
- 		 */
- 		str = getenv("HTTP_TRANSFER_ENCODING");
- 		if (str && !strcmp(str, "chunked"))
+Yes, this would be a good CLI API since the since the clone
+--no-checkout --filter --filter gets a bit long.
+
+Or maybe:
+
+git clone --lazy URL repo_local
+cd repo_local
+git checkout commit -- path/within/repo
+
+Or maybe even:
+
+git clene --lazy URL repo_local COMMITISH path/within/repo
+
+to do both in one go.
+
+People are also interested in commit-less directory / file "clones"
+BTW: https://stackoverflow.com/questions/2466735/how-to-checkout-only-one-file-from-git-repository-sparse-checkout
+
+> At this point, the repository does not have any object, but it
+> already knows whom to talk to to get the objects in the project.
+> The remote must be configured so that it is willing to feed you any
+> object you name, but would it be just some "git config" magic after
+> the above three steps to make it as if it was prepared with "git
+> clone --filter="?  If so, what does that magic look like?
+>
+> Thanks.
