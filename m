@@ -2,142 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCF5C1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 04:29:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46A6B1F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 05:35:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725966AbeILJcT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 05:32:19 -0400
-Received: from cloud.peff.net ([104.130.231.41]:46670 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725740AbeILJcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 05:32:19 -0400
-Received: (qmail 6159 invoked by uid 109); 12 Sep 2018 04:29:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 12 Sep 2018 04:29:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24015 invoked by uid 111); 12 Sep 2018 04:29:54 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (10.0.1.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 12 Sep 2018 00:29:54 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Sep 2018 00:29:39 -0400
-Date:   Wed, 12 Sep 2018 00:29:39 -0400
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <dstolee@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "sbeller@google.com" <sbeller@google.com>,
-        "stolee@gmail.com" <stolee@gmail.com>,
-        "jonathantanmy@google.com" <jonathantanmy@google.com>,
-        "gitster@pobox.com" <gitster@pobox.com>
-Subject: Re: [PATCH v2 17/18] commit-reach: make can_all_from_reach... linear
-Message-ID: <20180912042938.GA15876@sigill.intra.peff.net>
-References: <pull.10.git.gitgitgadget@gmail.com>
- <20180720163227.105950-1-dstolee@microsoft.com>
- <20180720163227.105950-18-dstolee@microsoft.com>
- <20180912041425.GA10472@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20180912041425.GA10472@sigill.intra.peff.net>
+        id S1726537AbeILKiU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 06:38:20 -0400
+Received: from mail-ua1-f73.google.com ([209.85.222.73]:44632 "EHLO
+        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725740AbeILKiT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 06:38:19 -0400
+Received: by mail-ua1-f73.google.com with SMTP id d22-v6so348447uaq.11
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 22:35:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=HZGkvazUVObA206mn+gPlGTQ4+S2IM8AeR0qA1Bdl/U=;
+        b=XqgONGps8zKMpKZG6f4dg7icxXGO9Bzdpv1LNz8O32z1kMNlYal+OO8BNDnRCr8N+/
+         opnDsyjoWckhGeyfx8nnS0mbt7e4hYuFZq4QUvsFxXXQHtVXfJLLFPtwPH21T4vjt2gS
+         //QwWuAZfb2R1vQVDXCjMmYSaV2F18TMf4Pp+dRSfHIRSwM4aBH9FtkvRL+GGVl/MbeY
+         NKImEcAX1/1IZtU4Wg04Y02BBQh1D2ZFL1/JEd+drb3ldMl08nXopBnpmAjHE8hy+6mw
+         6u1J0yYS47yupOt8ZnsO41BNFq1kQqNlBHMGz82hf9+Um/xnf8Xtzg9fWtCXj3yz0Qzc
+         mO6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=HZGkvazUVObA206mn+gPlGTQ4+S2IM8AeR0qA1Bdl/U=;
+        b=WVLhxhShGG9SHPxINwejXzqO+HzMaAIE81xGivFxt9GMsGkLWtcalqo7Izqxr6waeE
+         jButfkZZippEWSips29Zxk8fBIz/hxzU7iA8rhWWMVviT44/By+ZU3BINHz0wD8+6Q3h
+         zDBajZijiVZkOBhpWeCDJqhAMBVNMTP9gBlQjEao3JmdUW8oUbh6C0hQ6u2xTAbISkCh
+         O5NMZ2BXcm697I7Cko0yOXHRHHoWV9iLqduoIlDCi1Mf41z9OozmbDOu20h6wPS3QIL6
+         80jYFgmM7xhmSMdx+rIh/5CvvX3tBecEVNyfR0Fn9rYhSGlnYZBrLp1TtoiaH0yL7Kj5
+         Xbhg==
+X-Gm-Message-State: APzg51APCCGhBzHWfXZA+4G3waYjYZEIMY6qwKFI4LLpEVEeAH1b0u6d
+        egYRSX2suh71XnLNzsm2N9x5+6fD/zldSCeMhKD+w5adymQrFO8rOKS/+Y1nH0WKic+MJ6koFda
+        KjhikXY43j0+EyPpwwzb0Wvmq3pECI74GN2HF6/B0hsX9NxrZbVRkUn6S1efJYZc=
+X-Google-Smtp-Source: ANB0VdaU4eI7XKDsFi4k7QcHOSPfae45OXDjYjmwzPwWWomaCuDbnWdXV7d31AnVlTzn6pE9r+qmpdp3CM7lpg==
+X-Received: by 2002:a67:78cb:: with SMTP id t194-v6mr38464vsc.60.1536730529789;
+ Tue, 11 Sep 2018 22:35:29 -0700 (PDT)
+Date:   Tue, 11 Sep 2018 22:35:16 -0700
+Message-Id: <20180912053519.31085-1-steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
+Subject: Add proto v2 archive command with HTTP support
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     jrnieder@gmail.com, gitster@pobox.com, l.s.r@web.de,
+        sandals@crustytoothpaste.net
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 12, 2018 at 12:14:25AM -0400, Jeff King wrote:
+This series adds a new protocol v2 command for archiving, and allows
+this command to work over HTTP(S). This was previously discussed in [1].
+I've CCed everyone who participated in that discussion.
 
-> > +	ALLOC_ARRAY(list, from->nr);
-> >  	for (i = 0; i < from->nr; i++) {
-> > -		struct object *from_one = from->objects[i].item;
-> > +		list[i] = (struct commit *)from->objects[i].item;
-> 
-> Some of the objects in my array are not commits, but rather tags, so
-> this is a bogus cast.
-> 
-> You can see that the original code peeled them and threw away
-> non-commits:
-> 
-> >  
-> > -		if (from_one->flags & assign_flag)
-> > -			continue;
-> > -		from_one = deref_tag(the_repository, from_one, "a from object", 0);
-> > -		if (!from_one || from_one->type != OBJ_COMMIT) {
-> > -			/* no way to tell if this is reachable by
-> > -			 * looking at the ancestry chain alone, so
-> > -			 * leave a note to ourselves not to worry about
-> > -			 * this object anymore.
-> > -			 */
-> > -			from->objects[i].item->flags |= assign_flag;
-> > -			continue;
-> > -		}
-> 
-> So presumably we'd need to do something similar.
+[1]: https://public-inbox.org/git/CANq=j3tK7QeBJOC7VNWkh4+WBNibMJJp5YUkd9te5NaYwukAow@mail.gmail.com/
 
-This patch seems to fix it for me. It's more or less a reversion of the
-hunk above, though I didn't dig into whether I'm violating some other
-assumption in your new code.
-
-I think this function leaks "list" both from the location I noted here,
-as well as from normal exit
-
----
- commit-reach.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
-
-diff --git a/commit-reach.c b/commit-reach.c
-index 622eeb313d..abe90a2f55 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -547,20 +547,31 @@ int can_all_from_reach_with_flag(struct object_array *from,
- {
- 	struct commit **list = NULL;
- 	int i;
-+	int nr_commits;
- 	int result = 1;
- 
- 	ALLOC_ARRAY(list, from->nr);
-+	nr_commits = 0;
- 	for (i = 0; i < from->nr; i++) {
--		list[i] = (struct commit *)from->objects[i].item;
-+		struct object *from_one = from->objects[i].item;
- 
--		if (parse_commit(list[i]) ||
--		    list[i]->generation < min_generation)
--			return 0;
-+		from_one = deref_tag(the_repository, from_one,
-+				     "a from object", 0);
-+		if (!from_one || from_one->type != OBJ_COMMIT) {
-+			from->objects[i].item->flags |= assign_flag;
-+			continue;
-+		}
-+
-+		list[nr_commits] = (struct commit *)from_one;
-+		if (parse_commit(list[nr_commits]) ||
-+		    list[nr_commits]->generation < min_generation)
-+			return 0; /* is this a leak? */
-+		nr_commits++;
- 	}
- 
--	QSORT(list, from->nr, compare_commits_by_gen);
-+	QSORT(list, nr_commits, compare_commits_by_gen);
- 
--	for (i = 0; i < from->nr; i++) {
-+	for (i = 0; i < nr_commits; i++) {
- 		/* DFS from list[i] */
- 		struct commit_list *stack = NULL;
- 
-@@ -603,7 +614,7 @@ int can_all_from_reach_with_flag(struct object_array *from,
- 	}
- 
- cleanup:
--	for (i = 0; i < from->nr; i++) {
-+	for (i = 0; i < nr_commits; i++) {
- 		clear_commit_marks(list[i], RESULT);
- 		clear_commit_marks(list[i], assign_flag);
- 	}
--- 
-2.19.0.600.ga229f7d059
 
