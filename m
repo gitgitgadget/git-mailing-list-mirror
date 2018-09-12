@@ -7,77 +7,82 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 971171F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 16:45:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0298D1F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 16:45:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728109AbeILVvM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 17:51:12 -0400
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:33293 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727859AbeILVvL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 17:51:11 -0400
-Received: by mail-pf1-f195.google.com with SMTP id d4-v6so1303797pfn.0
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
+        id S1728111AbeILVvO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 17:51:14 -0400
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:46096 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727859AbeILVvN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 17:51:13 -0400
+Received: by mail-pg1-f195.google.com with SMTP id b129-v6so1333695pga.13
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 09:45:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=slnS7p8Wpf08YZYYdbd7g95gW/Eraz9E997NWDTQzVE=;
-        b=S00P6C+47hlAGeUCMptGaGx9iKqTlKKk5v0V0XLE258H/a3PP15SvSFRfXZ8CRsAnq
-         L+ERbXEWFGznZZEWyZToSFvAha8DjAuP3I4m6f4VHjSUGEDiJI591ixr0TzoJKx+/4nw
-         Ox9xJy2g6+7abvbpYLEWxNH3UcTDjnn5SF5nXgICpLANGEEDRbOBpWMa7uZReVyYwS63
-         aaXpbAMGNASIn2EGRVHXOTKacRpxCFGPZm3Z5sCKgBbPxT2vVvcbYtkjTkop+8Qmk6rg
-         aK9pqUkln5VV096YOOZCfNzCYjpafYDrcxM0PP4MjA5btlDTbKGjBlXBDzuSucozQTo7
-         sOBw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=hpzmVaxo7TYiPoNwG8o0j60CGIWDIbdC7tY5/Faia/I=;
+        b=nwfme5UvuBz9jVR9JRCrws9ZazcSNka23hEWJ6vRKJ9uAM1wlrxct5bSpKStyCFMqj
+         wkWJB1Moy9qchiYiCnfUe6/crc7h4/SKkqA+lsmLI2927MD1DBT1vMlcmQ7mVokJDAXY
+         d+GYlQo/LEKIOJnPzOOBUr42DpuXY9tCyNZ62x7eam/hJploHUdexIW8UEtQhiWskT9w
+         9WLl2XauOGmsgnrUGSb5WSEEIkDgCCPB/5aVYUV+68cjKXf2pEB0YNYs/4KD0ExFbrZU
+         30QT+zM/LWpqMuMjeZQwgQbZ4Ta4CuhQFUq3ChnVAssqojwd04essix9UvrRQN5kx6dp
+         xtrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=slnS7p8Wpf08YZYYdbd7g95gW/Eraz9E997NWDTQzVE=;
-        b=D7nM9UeuqMlBHaAynsL2BwDDJ2M68u62wNmCMsf8IYo0N5eITMcEqpkJ2NaIg+Mlft
-         nUCl8ehRDXOjOXmzXqTcpsSNpR9pINBdhbUz3EEOWa4rhFqvJyPYb8iTbncRL1VWcdoT
-         eB2AFC8MRfyg6zaXcvTdcI9QdN9zhtmmsLWx+bPk4cHm1P/EQ9oevH8z35lSDB7enZwj
-         s+414UmX1IkoCUCy5HWjYFH2NuFzG1zlR/v2UM2vVM7fJQO1yrl7AHhtFzDawkgqyj8n
-         WHZ1iD+4wTwyPEwCh/qkRNJgFyNlg5LC9kUch1aF1AehkAUwhHc8dCXfQPU/Fyn9jOiw
-         1Iig==
-X-Gm-Message-State: APzg51AVQn+77E+MTfJvWyG6ZuxpRlheHzHDooH5NP4jb6kTxPTR2B8j
-        i/2TodMCTD3G0i2mqVs6iO5Imd5G
-X-Google-Smtp-Source: ANB0VdYcZIVMX5LQFPdwU4jH0HCn1q1oaAe7FqcOuhv+tDzeqE3R8qDpbxdTgrpE6jkuNKXmsXHkYA==
-X-Received: by 2002:a63:4c02:: with SMTP id z2-v6mr3361531pga.312.1536770749038;
-        Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=hpzmVaxo7TYiPoNwG8o0j60CGIWDIbdC7tY5/Faia/I=;
+        b=r1q5qQ9C4p9uxhQOXYt+ipbaGPLBGZyySQwluIMUlzp/JPOahXzeB18JjA2adNvlBn
+         wxxYVSm3qmBlugVRWr7d4L+Dfpw1byBcFeun9mjTkf8TCUsot/F+9Toc2vZ7tvtMofY2
+         zazTiqZzPo4RPCydrDHcrGixw8KZFVTghg5A9EorISI6Dpv6ySgCmT6nFDpBIXfSJEGb
+         tI5iiFUgDBw31tRuXfgZnQ0YnuzYXTnjKnvxW85YyF4CIF5eHzl2Rh0y1spTfetIHIha
+         /zeZiSVGJErwCdS2Ewj0MwWHya0EIyTPGXfXLy1mpX2+SBhvE6vf3KECPvfuuoawHT42
+         ZZMw==
+X-Gm-Message-State: APzg51CyfTmbttOay/2dtvefVREsONEPz8PqywqSUydrAO4BOAkFYHiq
+        ta/4StqtnX/rdTNj1VTH/UjWLHNZ
+X-Google-Smtp-Source: ANB0VdYzVnlLIyPFUy5TXkoZUa3j9AqC5OcDJM4Dn8EMEwsISiazkNurA8lMApgUejrc5CXqV9NcVQ==
+X-Received: by 2002:a62:3909:: with SMTP id g9-v6mr3365527pfa.176.1536770750571;
+        Wed, 12 Sep 2018 09:45:50 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id f4-v6sm2635786pfj.46.2018.09.12.09.45.47
+        by smtp.gmail.com with ESMTPSA id k126-v6sm2751101pgk.26.2018.09.12.09.45.49
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Sep 2018 09:45:48 -0700 (PDT)
-Date:   Wed, 12 Sep 2018 09:45:48 -0700 (PDT)
-X-Google-Original-Date: Wed, 12 Sep 2018 16:45:44 GMT
-Message-Id: <pull.40.git.gitgitgadget@gmail.com>
+        Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
+Date:   Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
+X-Google-Original-Date: Wed, 12 Sep 2018 16:45:45 GMT
+Message-Id: <e4124471e5494b737d99eceed25fb03e787d0b96.1536770746.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.40.git.gitgitgadget@gmail.com>
+References: <pull.40.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] contrib: Add script to show uncovered "new" lines
+Subject: [PATCH 1/1] contrib: add coverage-diff script
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>
+Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Derrick Stolee <dstolee@microsoft.com>
+
 We have coverage targets in our Makefile for using gcov to display line
 coverage based on our test suite. The way I like to do it is to run:
 
-make coverage-test
-make coverage-report
+    make coverage-test
+    make coverage-report
 
-This leaves the repo in a state where every X.c file that was covered has an
-X.c.gcov file containing the coverage counts for every line, and "#####" at
-every uncovered line.
+This leaves the repo in a state where every X.c file that was covered has
+an X.c.gcov file containing the coverage counts for every line, and "#####"
+at every uncovered line.
 
-There have been a few bugs in recent patches what would have been caught if
-the test suite covered those blocks (including a few of mine). I want to
-work towards a "sensible" amount of coverage on new topics. In my opinion,
+There have been a few bugs in recent patches what would have been caught
+if the test suite covered those blocks (including a few of mine). I want
+to work towards a "sensible" amount of coverage on new topics. In my opinion,
 this means that any logic should be covered, but the 'die()' blocks in error
 cases do not need to be covered.
 
@@ -86,89 +91,93 @@ is not covered. To help, I created the 'contrib/coverage-diff.sh' script.
 After creating the coverage statistics at a version (say, 'topic') you can
 then run
 
-contrib/coverage-diff.sh base topic
+    contrib/coverage-diff.sh base topic
 
-to see the lines added between 'base' and 'topic' that are not covered by
-the test suite. For example, I ran this against the 'jch' branch (d3c0046)
-versus 'next' (dd90340) and got the following output:
+to see the lines added between 'base' and 'topic' that are not covered by the
+test suite. The output uses 'git blame -c' format so you can find the commits
+responsible and view the line numbers for quick access to the context.
 
-builtin/commit.c
-859fdc0c3cf     (Derrick Stolee 2018-08-29 05:49:04 -0700       1657)           write_commit_graph_reachable(get_object_directory(), 0);
-builtin/rev-list.c
-250edfa8c87     (Harald Nordgren        2018-04-18 23:05:35 +0200       431)                    bisect_flags |= BISECT_FIND_ALL;
-builtin/worktree.c
-e5353bef550     (Eric Sunshine  2018-08-28 17:20:19 -0400       60)             error_errno(_("failed to delete '%s'"), sb.buf);
-e19831c94f9     (Eric Sunshine  2018-08-28 17:20:23 -0400       251)                die(_("unable to re-add worktree '%s'"), path);
-68a6b3a1bd4     (Eric Sunshine  2018-08-28 17:20:24 -0400       793)                    die(_("cannot move a locked working tree, lock reason: %s\nuse 'move -f -f' to override or unlock first"),
-f4143101cbb     (Eric Sunshine  2018-08-28 17:20:25 -0400       906)                    die(_("cannot remove a locked working tree, lock reason: %s\nuse 'remove -f -f' to override or unlock first"),
-read-cache.c
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1754)           const unsigned char *cp = (const unsigned char *)name;
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1757)           previous_len = previous_ce ? previous_ce->ce_namelen : 0;
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1758)           strip_len = decode_varint(&cp);
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1759)           if (previous_len < strip_len) {
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1760)                   if (previous_ce)
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1761)                           die(_("malformed name field in the index, near path '%s'"),
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1762)                               previous_ce->name);
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1764)                           die(_("malformed name field in the index in the first path"));
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1766)           copy_len = previous_len - strip_len;
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1767)           name = (const char *)cp;
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1773)                   len += copy_len;
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1794)           if (copy_len)
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1795)                   memcpy(ce->name, previous_ce->name, copy_len);
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1796)           memcpy(ce->name + copy_len, name, len + 1 - copy_len);
-67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1797)           *ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
-remote-curl.c
-c3b9bc94b9b     (Elijah Newren  2018-09-05 10:03:07 -0700       181)            options.filter = xstrdup(value);
-
-Using this 'git blame' output, we can quickly inspect whether the uncovered
-lines are appropriate. For instance:
-
- 1. The line in builtin/commit.c is due to writing the commit-graph file
-    when GIT_TEST_COMMIT_GRAPH is enabled, which is not on by default in the
-    test suite. Being uncovered is expected here.
-    
-    
- 2. The lines in builtin/worktree.c are all related to error conditions.
-    This is acceptable.
-    
-    
- 3. The line in builtin/rev-list.c is a flag replacement in a block that is
-    otherwise unchanged. It must not be covered by the test suite normally.
-    This could be worth adding a test to ensure the new logic maintains old
-    behavior.
-    
-    
- 4. The lines in read-cache.c are part of a new block for the condition "if
-    (expand_name_field)" as part of an optimization. These lines should
-    probably be covered before that series is merged to 'next'. I understand
-    that Ben and Duy are continuing work in this direction [1].
-    
-    
-
-I used this approach for 'next' over 'master' and got a larger list, some of
-which I have already submitted tests to increase coverage [2] or will be
-covered by topics not in 'next' [3].
-
-Thanks, -Stolee
-
-[1] 
-https://public-inbox.org/git/20180912161832.55324-1-benpeart@microsoft.com/T/#u
-
-[2] https://public-inbox.org/git/pull.37.git.gitgitgadget@gmail.com/
-
-[3] https://public-inbox.org/git/pull.34.git.gitgitgadget@gmail.com/
-
-Derrick Stolee (1):
-  contrib: add coverage-diff script
-
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  contrib/coverage-diff.sh | 70 ++++++++++++++++++++++++++++++++++++++++
  1 file changed, 70 insertions(+)
  create mode 100755 contrib/coverage-diff.sh
 
-
-base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-40%2Fderrickstolee%2Fcoverage-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-40/derrickstolee/coverage-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/40
+diff --git a/contrib/coverage-diff.sh b/contrib/coverage-diff.sh
+new file mode 100755
+index 0000000000..22acb13d38
+--- /dev/null
++++ b/contrib/coverage-diff.sh
+@@ -0,0 +1,70 @@
++#!/bin/bash
++
++# Usage: 'contrib/coverage-diff.sh <version1> <version2>
++# Outputs a list of new lines in version2 compared to version1 that are
++# not covered by the test suite. Assumes you ran
++# 'make coverage-test coverage-report' from root first, so .gcov files exist.
++
++V1=$1
++V2=$2
++
++diff-lines() {
++    local path=
++    local line=
++    while read; do
++	esc=$'\033'
++	if [[ $REPLY =~ ---\ (a/)?.* ]]; then
++	    continue
++	elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
++	    path=${BASH_REMATCH[2]}
++	elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
++	    line=${BASH_REMATCH[2]}
++	elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
++	    echo "$path:$line:$REPLY"
++	    if [[ ${BASH_REMATCH[2]} != - ]]; then
++		((line++))
++	    fi
++	fi
++    done
++}
++
++git diff --raw $V1 $V2 | grep \.c$ | awk 'NF>1{print $NF}' >files.txt
++
++for file in $(cat files.txt)
++do
++	hash_file=${file//\//\#}
++
++	git diff $V1 $V2 -- $file \
++		| diff-lines \
++		| grep ":+" \
++		>"diff_file.txt"
++
++	cat diff_file.txt \
++		| sed -E 's/:/ /g' \
++		| awk '{print $2}' \
++		| sort \
++		>new_lines.txt
++
++	cat "$hash_file.gcov" \
++		| grep \#\#\#\#\# \
++		| sed 's/    #####: //g' \
++		| sed 's/\:/ /g' \
++		| awk '{print $1}' \
++		| sort \
++		>uncovered_lines.txt
++
++	comm -12 uncovered_lines.txt new_lines.txt \
++		| sed -e 's/$/\)/' \
++		| sed -e 's/^/\t/' \
++		>uncovered_new_lines.txt
++
++	grep -q '[^[:space:]]' < uncovered_new_lines.txt && \
++		echo $file && \
++		git blame -c $file \
++			| grep -f uncovered_new_lines.txt
++
++	rm -f diff_file.txt new_lines.txt \
++		uncovered_lines.txt uncovered_new_lines.txt
++done
++
++rm -rf files.txt
 -- 
 gitgitgadget
