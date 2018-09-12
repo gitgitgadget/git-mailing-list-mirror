@@ -7,62 +7,126 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46A6B1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 05:35:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5301F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 05:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbeILKiU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 06:38:20 -0400
-Received: from mail-ua1-f73.google.com ([209.85.222.73]:44632 "EHLO
-        mail-ua1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725740AbeILKiT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 06:38:19 -0400
-Received: by mail-ua1-f73.google.com with SMTP id d22-v6so348447uaq.11
-        for <git@vger.kernel.org>; Tue, 11 Sep 2018 22:35:30 -0700 (PDT)
+        id S1726642AbeILKik (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 06:38:40 -0400
+Received: from mail-io0-f202.google.com ([209.85.223.202]:52673 "EHLO
+        mail-io0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726412AbeILKik (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 06:38:40 -0400
+Received: by mail-io0-f202.google.com with SMTP id q20-v6so731852iod.19
+        for <git@vger.kernel.org>; Tue, 11 Sep 2018 22:35:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=HZGkvazUVObA206mn+gPlGTQ4+S2IM8AeR0qA1Bdl/U=;
-        b=XqgONGps8zKMpKZG6f4dg7icxXGO9Bzdpv1LNz8O32z1kMNlYal+OO8BNDnRCr8N+/
-         opnDsyjoWckhGeyfx8nnS0mbt7e4hYuFZq4QUvsFxXXQHtVXfJLLFPtwPH21T4vjt2gS
-         //QwWuAZfb2R1vQVDXCjMmYSaV2F18TMf4Pp+dRSfHIRSwM4aBH9FtkvRL+GGVl/MbeY
-         NKImEcAX1/1IZtU4Wg04Y02BBQh1D2ZFL1/JEd+drb3ldMl08nXopBnpmAjHE8hy+6mw
-         6u1J0yYS47yupOt8ZnsO41BNFq1kQqNlBHMGz82hf9+Um/xnf8Xtzg9fWtCXj3yz0Qzc
-         mO6w==
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=IHLxS4eMXxQw61VL6+yOdkd1SBJvUnvugKBMTIcGv8w=;
+        b=eH+DRMldXEBkPSGYsQz/6tEEYFf+Cj4smYMFqIW+0/mu3Wz05BCk64cdA4qdAvMGBg
+         NLthF+iyUahCp2DeqUGgXl731fSKGh4lMO+wTND1eQeHcelCgs5+C5JJVI52lnVHjwpb
+         HZJ9SfoQj0WAdyQL5RhF1BrP888DYY6E8tuycWe8SrgIdFyt3xbYodr9l0nTTxJVUw19
+         Gz4Xnlq+OEeEv+KDj1bhelXx6zaTHgnMRPI+glqkyRDElgp+/BRRUiowHTJT1jmwVqsw
+         k1k3nRugWbxfEz6yfFXDsGw7RG84O7cPYL5HpTLP5nj0vqNz26yLMkR9BDH58hUQsyPf
+         iu7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=HZGkvazUVObA206mn+gPlGTQ4+S2IM8AeR0qA1Bdl/U=;
-        b=WVLhxhShGG9SHPxINwejXzqO+HzMaAIE81xGivFxt9GMsGkLWtcalqo7Izqxr6waeE
-         jButfkZZippEWSips29Zxk8fBIz/hxzU7iA8rhWWMVviT44/By+ZU3BINHz0wD8+6Q3h
-         zDBajZijiVZkOBhpWeCDJqhAMBVNMTP9gBlQjEao3JmdUW8oUbh6C0hQ6u2xTAbISkCh
-         O5NMZ2BXcm697I7Cko0yOXHRHHoWV9iLqduoIlDCi1Mf41z9OozmbDOu20h6wPS3QIL6
-         80jYFgmM7xhmSMdx+rIh/5CvvX3tBecEVNyfR0Fn9rYhSGlnYZBrLp1TtoiaH0yL7Kj5
-         Xbhg==
-X-Gm-Message-State: APzg51APCCGhBzHWfXZA+4G3waYjYZEIMY6qwKFI4LLpEVEeAH1b0u6d
-        egYRSX2suh71XnLNzsm2N9x5+6fD/zldSCeMhKD+w5adymQrFO8rOKS/+Y1nH0WKic+MJ6koFda
-        KjhikXY43j0+EyPpwwzb0Wvmq3pECI74GN2HF6/B0hsX9NxrZbVRkUn6S1efJYZc=
-X-Google-Smtp-Source: ANB0VdaU4eI7XKDsFi4k7QcHOSPfae45OXDjYjmwzPwWWomaCuDbnWdXV7d31AnVlTzn6pE9r+qmpdp3CM7lpg==
-X-Received: by 2002:a67:78cb:: with SMTP id t194-v6mr38464vsc.60.1536730529789;
- Tue, 11 Sep 2018 22:35:29 -0700 (PDT)
-Date:   Tue, 11 Sep 2018 22:35:16 -0700
-Message-Id: <20180912053519.31085-1-steadmon@google.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=IHLxS4eMXxQw61VL6+yOdkd1SBJvUnvugKBMTIcGv8w=;
+        b=GzC1j3Sn5UhMma2hfy+6QjKuyCASs64LFTX3lXCuWwjCrwV7GddCJRpYZPe0PaayH6
+         RvQz4ZPXUUX523/7JtGJUCBinrWRNlYTwlFRJ5nVSFhri6u70rmqaOgzQ4WlNMwkI2vK
+         Upvd6PnSKFzUC5IHIKUb1AWUaZepcf9zJmmi/O5FHjZGA2lSmY/H2XZqhZ87ku0ybuTG
+         kmEpW905OFKlkv2MVtCq4xcAfpWmO0G8Ft78/JPWpV0qXuJNmhdANbl2Q17Nq+kRpLpb
+         E0U/fzKJuK4j+QrMDeQOl3dyZjMBbbEMx2qDXyzoKTx8ToFe4aFW8X6WNFBSAciv2QEr
+         6HcA==
+X-Gm-Message-State: APzg51Dqs/+RM0trx81YpTPx7Fk7RGaZh6M6lCLUR+9T7g69W3jEFUSH
+        ie4hEuxnL8Ld4XDI9v/sJD0yswFtUBOMITdSIeR5n904TypuRJ3424rAmcrqzK/luZr7AGlP5oj
+        OeIYy9bUdrwVGmq8H7K3jQ4389brVzlE2pC+pbAxkvX3wrkjqt+mMKItvqFnu51U=
+X-Google-Smtp-Source: ANB0VdYwtu6tYUjkZykPD3xCPCMwwQwxxncUq6i8rY2VC4QXiWpyQQnMaBOmqjfvXxAcmqJlNpH4Nxyz5vjCuA==
+X-Received: by 2002:a6b:de0e:: with SMTP id v14-v6mr127329iog.34.1536730549994;
+ Tue, 11 Sep 2018 22:35:49 -0700 (PDT)
+Date:   Tue, 11 Sep 2018 22:35:17 -0700
+In-Reply-To: <20180912053519.31085-1-steadmon@google.com>
+Message-Id: <20180912053519.31085-2-steadmon@google.com>
 Mime-Version: 1.0
+References: <20180912053519.31085-1-steadmon@google.com>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: Add proto v2 archive command with HTTP support
+Subject: [PATCH 1/3] archive: use packet_reader for communications
 From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
 Cc:     jrnieder@gmail.com, gitster@pobox.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net
+        sandals@crustytoothpaste.net, Josh Steadmon <steadmon@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series adds a new protocol v2 command for archiving, and allows
-this command to work over HTTP(S). This was previously discussed in [1].
-I've CCed everyone who participated in that discussion.
+Using packet_reader will simplify version detection and capability
+handling, which will make implementation of protocol v2 support in
+git-archive easier.
 
-[1]: https://public-inbox.org/git/CANq=j3tK7QeBJOC7VNWkh4+WBNibMJJp5YUkd9te5NaYwukAow@mail.gmail.com/
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ builtin/archive.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/builtin/archive.c b/builtin/archive.c
+index e74f67539..e54fc39ad 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -27,10 +27,11 @@ static int run_remote_archiver(int argc, const char **argv,
+ 			       const char *remote, const char *exec,
+ 			       const char *name_hint)
+ {
+-	char *buf;
+ 	int fd[2], i, rv;
+ 	struct transport *transport;
+ 	struct remote *_remote;
++	struct packet_reader reader;
++	enum packet_read_status status;
+ 
+ 	_remote = remote_get(remote);
+ 	if (!_remote->url[0])
+@@ -38,6 +39,8 @@ static int run_remote_archiver(int argc, const char **argv,
+ 	transport = transport_get(_remote, _remote->url[0]);
+ 	transport_connect(transport, "git-upload-archive", exec, fd);
+ 
++	packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
+ 	/*
+ 	 * Inject a fake --format field at the beginning of the
+ 	 * arguments, with the format inferred from our output
+@@ -53,18 +56,20 @@ static int run_remote_archiver(int argc, const char **argv,
+ 		packet_write_fmt(fd[1], "argument %s\n", argv[i]);
+ 	packet_flush(fd[1]);
+ 
+-	buf = packet_read_line(fd[0], NULL);
+-	if (!buf)
++	status = packet_reader_read(&reader);
++
++	if (status == PACKET_READ_FLUSH)
+ 		die(_("git archive: expected ACK/NAK, got a flush packet"));
+-	if (strcmp(buf, "ACK")) {
+-		if (starts_with(buf, "NACK "))
+-			die(_("git archive: NACK %s"), buf + 5);
+-		if (starts_with(buf, "ERR "))
+-			die(_("remote error: %s"), buf + 4);
++	if (strcmp(reader.buffer, "ACK")) {
++		if (starts_with(reader.buffer, "NACK "))
++			die(_("git archive: NACK %s"), reader.buffer + 5);
++		if (starts_with(reader.buffer, "ERR "))
++			die(_("remote error: %s"), reader.buffer + 4);
+ 		die(_("git archive: protocol error"));
+ 	}
+ 
+-	if (packet_read_line(fd[0], NULL))
++	status = packet_reader_read(&reader);
++	if (status != PACKET_READ_FLUSH)
+ 		die(_("git archive: expected a flush"));
+ 
+ 	/* Now, start reading from fd[0] and spit it out to stdout */
+-- 
+2.19.0.397.gdd90340f6a-goog
 
