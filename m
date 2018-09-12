@@ -2,198 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A45F1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 22:13:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 09CBA1F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 22:20:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727805AbeIMDUG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 23:20:06 -0400
-Received: from mail-wm0-f42.google.com ([74.125.82.42]:38103 "EHLO
-        mail-wm0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727679AbeIMDUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 23:20:06 -0400
-Received: by mail-wm0-f42.google.com with SMTP id t25-v6so4013722wmi.3
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 15:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mcYwanmSyyYwwqJzsWC4LPLAKOn80HiJMuVggtIy8jM=;
-        b=Rd0ETt5O0kJf3whNSiAUBfTgmmjweCF4XxR+rrz1Q5fQI5AZ5uRaJof9HIeqTOoGiS
-         H2PNDj6t1RCcrZTwm0ZAOuNac7jtodv+Cns5j+i6SfPL9tlodr6skeaaEjHIf9m7S4ky
-         m2HMNM1HEIuafGDMqGzJ3855eXaOYTxEVrKIgBa78qC+pQWwPJQYt7CfZzsHtU96kGJo
-         97DdlCx4rFrszlfB5iVwenXf1d/LCW08DHHFhmSOia2lm5PtBYm5Du6Sce3Bid/c0IfA
-         P7s51Oy0A+n0S9hXqcUA3VYciw7IuNytdwydu/Ow82ZY2HQ9+ELjw6abWdoJgUPItc2S
-         yYhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mcYwanmSyyYwwqJzsWC4LPLAKOn80HiJMuVggtIy8jM=;
-        b=MMfRogSdfRXielUuWpEFuk7xek14hiczkaNyhziqWmHKK9vXrzeKaKT5URx/OzGgH7
-         5ejrwH893sdED4DflI4hURLzsGVIHHqR643tIW7zgpd0cGTJaPcQREuPVlpbBLTImYKx
-         iXRQpgiXwEHgjLqWFkd+zdDV/cVFsZ7qvNRh4cI1TkyaDQg0ROrqy01MXjyXqSG1sKUB
-         Es8TbqCHaXIW30/RngSyxdXC0uusUJxpQYjIKYmkJW9LJ/U2lhqjNMuwCVCqYKhu83Lj
-         D6KYI2qiEvzpaLjx5p4tA8GAR/1lMN5R67skCxlgZUUksLVsK24rI83Pt7r7seNaRtxO
-         L6Lg==
-X-Gm-Message-State: APzg51A3xsFOYiVT9RHU2YcX2Gv4CezFhslHWhW1kKOOu3mQ03sYhPLO
-        9XPKbT5lrYSw6pmwXOa2vZw=
-X-Google-Smtp-Source: ANB0Vdaz8W/9+o81kW4SRsrCj8dNiTmkVshi4AZvlT9k14UhOzQ7qZIvvpi9K0/tEjNaBNMNLQxqoA==
-X-Received: by 2002:a1c:7305:: with SMTP id d5-v6mr3125496wmb.53.1536790412095;
-        Wed, 12 Sep 2018 15:13:32 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k34-v6sm3679123wre.18.2018.09.12.15.13.30
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Sep 2018 15:13:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] contrib: add coverage-diff script
-References: <pull.40.git.gitgitgadget@gmail.com>
-        <e4124471e5494b737d99eceed25fb03e787d0b96.1536770746.git.gitgitgadget@gmail.com>
-Date:   Wed, 12 Sep 2018 15:13:30 -0700
-In-Reply-To: <e4124471e5494b737d99eceed25fb03e787d0b96.1536770746.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 12 Sep 2018
-        09:45:49 -0700 (PDT)")
-Message-ID: <xmqqa7omjred.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727854AbeIMD0o convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 12 Sep 2018 23:26:44 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:46887 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727780AbeIMD0o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 23:26:44 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w8CMK87n015984
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 12 Sep 2018 18:20:08 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Johannes Sixt'" <j6t@kdbg.org>
+Cc:     <git@vger.kernel.org>
+References: <003901d44acd$12c2bb90$384832b0$@nexbridge.com> <4102803b-d5de-5812-4cef-569c9869fed1@kdbg.org> <004e01d44ada$b4a11ad0$1de35070$@nexbridge.com>
+In-Reply-To: <004e01d44ada$b4a11ad0$1de35070$@nexbridge.com>
+Subject: RE: [Question] Signature calculation ignoring parts of binary files
+Date:   Wed, 12 Sep 2018 18:20:00 -0400
+Message-ID: <000001d44ae6$c2a20ac0$47e62040$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQL1dHr/8n7yCB9UeIXEGLjm31C4owFRfwXbAhcuk1Gij501AA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On September 12, 2018 4:54 PM, I wrote:
+> On September 12, 2018 4:48 PM, Johannes Sixt wrote:
+> > Am 12.09.18 um 21:16 schrieb Randall S. Becker:
+> > > I feel really bad asking this, and I should know the answer, and yet.
+> > >
+> > > I have a binary file that needs to go into a repo intact (unchanged).
+> > > I also have a program that interprets the contents, like a textconv,
+> > > that can output the relevant portions of the file in whatever format
+> > > I like - used for diff typically, dumps in 1K chunks by file section.
+> > > What I'm looking for is to have the SHA1 signature calculated with
+> > > just the relevant portions of the file so that two actually
+> > > different files will be considered the same by git during a commit
+> > > or status. In real terms, I'm trying to ignore the Creator metadata
+> > > of a JPG because it is mutable and irrelevant to my repo contents.
+> > >
+> > > I'm sorry to ask, but I thought this was in .gitattributes but I
+> > > can't confirm the SHA1 behaviour.
+> >
+> > You are looking for a clean filter. See the 'filter' attribute in gitattributes(5).
+> > Your clean filter program or script should strip the unwanted metadata
+> > or set it to a constant known-good value.
+> >
+> > (You shouldn't need a smudge filter.)
+> >
+> > -- Hannes
+> 
+> Thanks Hannes. I thought about the clean filter, but I don't actually want to
+> modify the file when going into git, just for SHA calculation. I need to be able
+> to keep some origin metadata that might change with subsequent copies, so
+> just cleaning the origin is not going to work - actually knowing the original
+> author is important to our process. My objective is to keep the original file
+> 100% exact as supplied and then ignore any changes to the metadata that I
+> don't care about (like Creator) if the remainder of the file is the same.
 
->  contrib/coverage-diff.sh | 70 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 70 insertions(+)
->  create mode 100755 contrib/coverage-diff.sh
+I had a thought that might be workable, opinions are welcome on this.
 
-I fully appreciate the motivation.  But it is a bit sad that this
-begins with "#!/bin/bash" but it seems that the script is full of
-bash-isms.  I haven't gone through the script to see if these are
-inevitable or gratuitous yet, but I'd assume it made it easier for
-you to write it to step outside the pure POSIX shell?
+The commit of my rather weird project is done by a script so I have flexibility in my approach. What I could do is set up a diff textconv configuration so that the text diff of the two JPG files will show no differences if the immutable fields and the image are the same. I can then trigger a git add and git commit for only those files where git diff reports no differences. That way the actual original file is stored in git with 100% fidelity (no cleaning). It's not as elegant as I'd like, but it does solve what I'm trying to do. Does this sound reasonable and/or is there a better way?
 
-> +V1=$1
-> +V2=$2
-> +
-> +diff-lines() {
+Cheers,
+Randall
 
-Being able to use '-' in identifier is probably a bash-ism that you
-did not have to use.
+-- Brief whoami:
+ NonStop developer since approximately 211288444200000000
+ UNIX developer since approximately 421664400
+-- In my real life, I talk too much.
 
-> +    local path=
-> +    local line=
-> +    while read; do
 
-Being able to omit variable to be read into and can use the implicit
-variable $REPLY also is.
 
-> +	esc=$'\033'
-> +	if [[ $REPLY =~ ---\ (a/)?.* ]]; then
-> +	    continue
-> +	elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
-> +	    path=${BASH_REMATCH[2]}
-
-OK, it probably is easier to write in bash than using expr if you
-want to do regexp.  Where do these escape code come from in "git
-diff" output, by the way?
-
-> +	elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
-> +	    line=${BASH_REMATCH[2]}
-> +	elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
-> +	    echo "$path:$line:$REPLY"
-> +	    if [[ ${BASH_REMATCH[2]} != - ]]; then
-> +		((line++))
-> +	    fi
-> +	fi
-> +    done
-> +}
-> +
-> +git diff --raw $V1 $V2 | grep \.c$ | awk 'NF>1{print $NF}' >files.txt
-
-Hmph, not 
-
-	git diff --name-only "$V1" "$V2" -- "*.c"
-
-Do we (or do we not) want "--no-renames"?
-
-> +for file in $(cat files.txt)
-> +do
-> +	hash_file=${file//\//\#}
-> +
-> +	git diff $V1 $V2 -- $file \
-> +		| diff-lines \
-> +		| grep ":+" \
-> +		>"diff_file.txt"
-
-Style:
-
-	cmd1 |
-	cmd2 |
-	cmd3 >output
-
-is easier to read without backslashes.
-
-> +	cat diff_file.txt \
-> +		| sed -E 's/:/ /g' \
-> +		| awk '{print $2}' \
-> +		| sort \
-> +		>new_lines.txt
-> +
-> +	cat "$hash_file.gcov" \
-> +		| grep \#\#\#\#\# \
-> +		| sed 's/    #####: //g' \
-> +		| sed 's/\:/ /g' \
-> +		| awk '{print $1}' \
-> +		| sort \
-> +		>uncovered_lines.txt
-
-OK, so we assume that we have run coverage in $V2 checkout so that
-we can pick up the postimage line numbers in "diff $V1 $V2" and find
-corresponding record in .gcov file in the filesystem.  I did not
-realize the significance of 'topic' being the later argument to the
-script in this part
-
-    After creating the coverage statistics at a version (say,
-    'topic') you can then run
-
-        contrib/coverage-diff.sh base topic
-
-of your description before I see this implementation.  Also the
-comment at the beginning
-
-    # Usage: 'contrib/coverage-diff.sh <version1> <version2>
-    # Outputs a list of new lines in version2 compared to version1 that are
-    # not covered by the test suite. Assumes you ran
-    # 'make coverage-test coverage-report' from root first, so .gcov files exist.
-
-would want to make it clear that we want coverage run from root
-for version2 before using this script.
-
-> +	comm -12 uncovered_lines.txt new_lines.txt \
-> +		| sed -e 's/$/\)/' \
-> +		| sed -e 's/^/\t/' \
-> +		>uncovered_new_lines.txt
-> +
-> +	grep -q '[^[:space:]]' < uncovered_new_lines.txt && \
-
-Style: when you end a line with && (or || or | for that matter), the
-shell knows that you have not finished speaking, and will wait to
-listen to you to finish the sentence.  No need for backslash there.
-
-> +		echo $file && \
-> +		git blame -c $file \
-> +			| grep -f uncovered_new_lines.txt
-> +
-> +	rm -f diff_file.txt new_lines.txt \
-> +		uncovered_lines.txt uncovered_new_lines.txt
-> +done
-> +
-> +rm -rf files.txt
