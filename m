@@ -2,116 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68FB51F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 15:47:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 079451F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 16:10:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727648AbeILUwz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 16:52:55 -0400
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:33092 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726800AbeILUwz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 16:52:55 -0400
-Received: by mail-ua1-f74.google.com with SMTP id z12-v6so955280uao.0
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 08:47:49 -0700 (PDT)
+        id S1727721AbeILVQJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 17:16:09 -0400
+Received: from mail-wm0-f66.google.com ([74.125.82.66]:50868 "EHLO
+        mail-wm0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726819AbeILVQJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 17:16:09 -0400
+Received: by mail-wm0-f66.google.com with SMTP id s12-v6so3046895wmc.0
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 09:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=xcTIXo7gtWLZrN+H3N58BQs6TPjxzld49znyDDEfQ8M=;
-        b=iL/YRXdJI+eUXdKlcV4uVoklBVFXTzUTpev0jZgfX7PN4e/L+QCgJXnShONBztrwp6
-         Ict07vFUHs+P8K6BUijij2a0ik4C6OuRhXQFD6kwq9MFjr9ZDnhXxJsxAhB000VjxE+F
-         hL9zNeTGO0ZUCF29lrQpZnADjMrfjJ752YnDcVU5tbHtXi1ZjafU2UyxDVm3Km10s86v
-         mNKMCyXAdiU/1vNTi628lyPL4K3RfJwMVbXusR6uakEykjJNE+u4qCpJJ6qyCUGjVWVq
-         Agy1fJlQ5bmGJ4iCxW4v8FM8n3CsFximXGO0+SNh2rHZhCb5Vx5hVdpfq8PQlF/1ydX0
-         L/GA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=BvNZfGuEXIeA2DmNr51UvPuP9UjBXTHhBM0IoPraTu4=;
+        b=eu2u5+Lt/AqKesFudZ4Cl0lnTgmv+TUz0+61QB8KTy0rYPCmYQsfR8fwAzWtV/8AIO
+         G1DJpxO2bPfpEqyNkbvFDA8+7SgqZ6lxGouqzlVuOlf6mrVfYo1FyDnSsemBS5kYzjeO
+         6s6b8VPANp9s+QAg4OonQACY4lfraQ73mJi6U/w8FtLnH9kIhqk5WLZ1+k5NtgyP3LM6
+         i+YKYx044M8naPHdvMV4pDOboGxtfzwhrVGBe61Vo9eI94mzpCdl96Yn1SgyynTslR24
+         0wDDKIR9dYos408IcK+XyafCtQTEAm4FiXdo+LoMhiMrx1t37ADAE3Cznr5yzkXFyPXG
+         58kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=xcTIXo7gtWLZrN+H3N58BQs6TPjxzld49znyDDEfQ8M=;
-        b=DMAm1bJ5MX/fZIPcjOzEsqztWnmuTu2eRUZOni695zo5nsb2k57U5xEXGrrDhmoPo1
-         TsfCvNLAg+jOb02pxqCYOn7Xa2BdaxXX40FkK7Gab5vc8v9hQGs4PxJMdAPuVNO+xyoa
-         +curhRYpdj8/4pHyANBluWOx7I/JgubL0pJ32wxlcd5WsRv7LCMuIYm3Xoz4C3w8x0kb
-         RhNKipoJ7xBefiQjjHkw4uy6L/UpWrb/MxYdUth8bpoCqNRH1RtTBMNkAaokiUyfxlrd
-         6qgGPX0ocu/TsCgzyIpvL4EYidOh+d8UGE/bh8h8sQi6Gks/SAOtkeNgcc/NTe7mJw06
-         /J2A==
-X-Gm-Message-State: APzg51Am87uUh8JSZA1Bt1L8taFH4zJPo5wAET3Hhlm1qzEPZt63INoT
-        aqhWcfif+AqrjbfkxKdywSTd+Q8HzBvuVwptMiUaGAaGFmi3/J4fBa47Op0aDDogtO//njUAKoI
-        ppRXhxTwOfzsEqbZSxNSw2yCLx2iuz1GYM+YY3UEv7TU0Fb+tNjUFMbkh1lrctcEUJOgQKy4xlO
-        Vm
-X-Google-Smtp-Source: ANB0VdbW5agxZ2ndGhHMaE+mktmZOAFFURcrdelK3VFR73stKf206vISGdWiOPiCvEkaZjtCTM91CXGuF5tHK131mK3j
-X-Received: by 2002:ab0:264e:: with SMTP id q14-v6mr563047uao.49.1536767268988;
- Wed, 12 Sep 2018 08:47:48 -0700 (PDT)
-Date:   Wed, 12 Sep 2018 08:47:38 -0700
-In-Reply-To: <cover.1536767071.git.jonathantanmy@google.com>
-Message-Id: <ac5abaa46d41afe46a944264277e75ce4365d6fd.1536767071.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1536767071.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: [PATCH 2/2] fetch-object: set exact_oid when fetching
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=BvNZfGuEXIeA2DmNr51UvPuP9UjBXTHhBM0IoPraTu4=;
+        b=pbiIEkntfPhe7zXQqIcP1EXCT3r+VErKtaDXBbTBel7+5fAz9Oqk6ELetvKm3piRyj
+         IaTaXwtTsCd7cAKkRLnMnXK8RRRzop2/sxfCdJF/fUNiiEdKpb1RKfl9DoSbe1tYKDzr
+         n1htHcoVymjB20mduWI62zG4bmsV1PUiaCYOpiFpNvnLSqrNpZAbuVzRStN41PbtgyTl
+         JfRNYmDTf8t6ItaRjN8m3ttq6IcPvqI01nioIvFgY6v0+ZsF11dbQ04XbEKwRunE7Xw6
+         434l2KUTR8B4BXa1go2N3O6Q58gb2bFvqjEnT22hZXQNoczNyiJ8iCbAbh3CEf2Rj0b4
+         yAfQ==
+X-Gm-Message-State: APzg51DANY1yBDyWTqp0nlsZPeMs2fUpH2EXu9A/t9Rn0VuW8wnGtnF9
+        krBbJfgkppbcAS98231K/5c=
+X-Google-Smtp-Source: ANB0VdZGCH/E9TG+TKdT7jGnqI7VZ97NA/Fq/OpjzCvld/1u1ug4pRg5cOXNwxt4OFXzaxxBNaXXvA==
+X-Received: by 2002:a1c:4d09:: with SMTP id o9-v6mr2289377wmh.134.1536768655258;
+        Wed, 12 Sep 2018 09:10:55 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id b12sm1814714wrx.11.2018.09.12.09.10.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Sep 2018 09:10:53 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Max Kirillov <max@max630.net>, git@vger.kernel.org,
+        Jelmer =?utf-8?Q?Vernoo=C4=B3?= <jelmer@jelmer.uk>,
+        Florian Manschwetus <manschwetus@cs-software-gmbh.de>
+Subject: Re: [PATCH] http-backend: treat empty CONTENT_LENGTH as zero
+References: <20180910052558.GB55941@aiede.svl.corp.google.com>
+        <20180910205359.32332-1-max@max630.net>
+        <20180911034227.GB20518@aiede.svl.corp.google.com>
+        <20180911040343.GC20518@aiede.svl.corp.google.com>
+        <xmqqk1nrq4su.fsf@gitster-ct.c.googlers.com>
+        <20180912055626.GA13642@sigill.intra.peff.net>
+Date:   Wed, 12 Sep 2018 09:10:53 -0700
+In-Reply-To: <20180912055626.GA13642@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 12 Sep 2018 01:56:26 -0400")
+Message-ID: <xmqqk1nqn1bm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fetch_objects() currently does not set exact_oid in struct ref when
-invoking transport_fetch_refs(). If the server supports ref-in-want,
-fetch_pack() uses this field to determine whether a wanted ref should be
-requested as a "want-ref" line or a "want" line; without the setting of
-exact_oid, the wrong line will be sent.
+Jeff King <peff@peff.net> writes:
 
-Set exact_oid, so that the correct line is sent.
+> I really wonder if this topic is worth pursuing further without finding
+> a real-world case that actually fails with the v2.19 code. I.e., is
+> there actually a server that doesn't set CONTENT_LENGTH and really can't
+> handle read-to-eof? It's plausible to me, but it's also equally
+> plausible that we'd be breaking some other case.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- fetch-object.c           |  1 +
- t/t0410-partial-clone.sh | 12 ++++++++++++
- 2 files changed, 13 insertions(+)
-
-diff --git a/fetch-object.c b/fetch-object.c
-index 1af1bf857..426654880 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -32,6 +32,7 @@ void fetch_objects(const char *remote_name, const struct object_id *oids,
- 	for (i = 0; i < oid_nr; i++) {
- 		struct ref *new_ref = alloc_ref(oid_to_hex(&oids[i]));
- 		oidcpy(&new_ref->old_oid, &oids[i]);
-+		new_ref->exact_oid = 1;
- 		new_ref->next = ref;
- 		ref = new_ref;
- 	}
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 128130066..0ab02c337 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -170,6 +170,18 @@ test_expect_success 'fetching of missing objects' '
- 	git verify-pack --verbose "$IDX" | grep "$HASH"
- '
- 
-+test_expect_success 'fetching of missing objects works with ref-in-want enabled' '
-+	# ref-in-want requires protocol version 2
-+	git -C server config protocol.version 2 &&
-+	git -C server config uploadpack.allowrefinwant 1 &&
-+	git -C repo config protocol.version 2 &&
-+
-+	rm -rf repo/.git/objects/* &&
-+	rm -f trace &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" git -C repo cat-file -p "$HASH" &&
-+	grep "git< fetch=.*ref-in-want" trace
-+'
-+
- test_expect_success 'rev-list stops traversal at missing and promised commit' '
- 	rm -rf repo &&
- 	test_create_repo repo &&
--- 
-2.19.0.397.gdd90340f6a-goog
-
+OK.
