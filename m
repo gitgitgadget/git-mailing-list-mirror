@@ -6,58 +6,58 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD62C1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 18:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E3611F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 18:02:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727690AbeILXH6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 19:07:58 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41530 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727183AbeILXH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 19:07:57 -0400
-Received: by mail-wr1-f67.google.com with SMTP id z96-v6so2988315wrb.8
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 11:02:18 -0700 (PDT)
+        id S1727757AbeILXIV (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 19:08:21 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39095 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727183AbeILXIV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 19:08:21 -0400
+Received: by mail-wr1-f66.google.com with SMTP id s14-v6so2994498wrw.6
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 11:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=HQobuk8Zqlrl4wJ/rRlfSj3r7GrCVy83LT8e1RUO0QI=;
-        b=tfB+2wD+FYf8FTbrDkjyk0wINCbUHj5Si4tQ5D3ZPMKWRyjqxKfza906LFMhPIItMT
-         DwTiDmzwEY6gACj6+5uD9JRqAYUC2TX2cS/ZRuvcfjcy8xGAMdWCO5e/FHKJlHklq9s/
-         QBWLOUeykv6ym0TlEEu6eKRLM12pZDlPEvhXzmxzR54SFPfngk0bO6SOH/0/NoiAXlnH
-         8ULjOKsT/5+RlAIsBZ9ciU4XOl7cjjFspnRS8khaJDxF3LP1yZPWpHL1ky2iMSzA4OhN
-         EL1e7SaC71nl6Z3fLBQ6ayUS1NpYgoQtwooXottXtSXkV/k8JTwnhgKOrwplnRtnkKNm
-         hQXA==
+        bh=kKqnkOt78dktERluI+s5+5v5KTgcMnr9c0mZsxYmlOQ=;
+        b=J+dWfdgJtVTnO87Sw348JUbsOhFovppYa9Zf4m9zFwmuVNLeb/4RoOgDgNLF7SxTs3
+         FtQXdZDSl5fvcemJorbtJoHperUmDZfEgLkz/D2kp5NmppZkibFBrOS2f6nveqODD5zP
+         vSjC7A5aQlTDjBW3uUj3/lgeFQLgMl4LHNEuY8WcFYn3Z7CEQ/nOSNNTJHgwYD0dtS7a
+         SDiKfjIcBDzidrOsI4Go6txFRgcqtYtGIeZhVrn2arrUKoHU0HkVBDZjwtdQS5CYCx1C
+         Hr90JzVnUzC+rkvGR1WXpeN4l/S0TpooWynuxtohNwr9FteNnH1MGXnhtC4Nr0uuH0GK
+         JOIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=HQobuk8Zqlrl4wJ/rRlfSj3r7GrCVy83LT8e1RUO0QI=;
-        b=KGY0nByMMu3VGvw4sc4prvPiXaS1N1fCuqaOXX6yvhKuoF5mfYEiWcs2s0wATqrqQX
-         rDSK00Qs8yUhInSGniJiwpnHHBVRarMJIsXwmc3OxDTzoCtsCozbhOHrHek6nTf7OlfZ
-         3Xt4J0XX/kdPyLcL5d3yZkMYH3+05CKWyTsBmJefxB0xNVzmKm9KTv+WVdzoikZ8xTVK
-         Sk7YvAKRVgGsjLf66mom9zZYvKC/R6hndDqRpWPCMDzv8cTVtk8DDgdx7JBj69uuRlEd
-         kEokzFcVa3f1ZPjy1p1ZiS3P885I5pa0qWQe/KTutIqL/8kuQZbvLLWcCWG87P9P+srS
-         50zA==
-X-Gm-Message-State: APzg51C9/shkMeZ1Ihji5ZJIFiOhg7Rz2CsRYC9tE2QE0YgBfdQYz2r8
-        mEEN6d/SG4LOvuiNngBz2eeVEXeZzVM=
-X-Google-Smtp-Source: ANB0VdZUNdQPTiydkJh2s8gsMVGhiXftL+vL05chK5L9cx2IN3NftvsLh9NNQYD5/Z5wkkUlcJ4Y3A==
-X-Received: by 2002:adf:bacf:: with SMTP id w15-v6mr2570900wrg.203.1536775337444;
-        Wed, 12 Sep 2018 11:02:17 -0700 (PDT)
+        bh=kKqnkOt78dktERluI+s5+5v5KTgcMnr9c0mZsxYmlOQ=;
+        b=XbJR5oHUzm9fW7xQnUvrM0sr4I7v7g3MEFps9foUjkEdDWlBzwH+tVSNxYMPNIwth/
+         daLgjvj3TmlyyPD9y50oBXng/d8nou1o6NgJKZ5nz130VXsUUwO5fTtzbgDJzAY99LrK
+         f63CuWTveCh0SfbWvG3aUMlCAEqgJAeyYjj/qs8kJUpuidnGTIphQc6nYnQjkVx9x5D9
+         l13/2dnLOJETr61fRN1ny/uZAPjt1YZ5PED3TZJXep0c42fJvO9VfyLFWPklAOT6ogcq
+         XwEPH6tJ2sskLYPlcoE4IUFswpZkH8joOKq1KnJvbPkq/2fJItEVKDgj8lqkuxcSKQAM
+         lBsw==
+X-Gm-Message-State: APzg51DNZnFhGTPtN0LCBv5GRUDeQ44H8dvA+jsDHtt8t2wQeL2ProH8
+        CMzk6dYdUV5tUY8b3rw5E5PcL2jr/zc=
+X-Google-Smtp-Source: ANB0VdaF+zqWU6YqRMBHyoRzXtTIW+aIH4HL7RBqCxcQ0gaFhQBC/rcABmSXWF08szBZUugsSbaoHQ==
+X-Received: by 2002:adf:e792:: with SMTP id n18-v6mr2435909wrm.136.1536775360741;
+        Wed, 12 Sep 2018 11:02:40 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a184-v6sm2257914wmh.41.2018.09.12.11.02.16
+        by smtp.gmail.com with ESMTPSA id w3-v6sm2322728wru.93.2018.09.12.11.02.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Sep 2018 11:02:16 -0700 (PDT)
+        Wed, 12 Sep 2018 11:02:40 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/9] sha1-array: provide oid_array_filter
+Subject: Re: [PATCH 3/9] submodule.c: fix indentation
 References: <20180911234951.14129-1-sbeller@google.com>
-        <20180911234951.14129-3-sbeller@google.com>
-Date:   Wed, 12 Sep 2018 11:02:16 -0700
-In-Reply-To: <20180911234951.14129-3-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 11 Sep 2018 16:49:44 -0700")
-Message-ID: <xmqqzhwmlhlj.fsf@gitster-ct.c.googlers.com>
+        <20180911234951.14129-4-sbeller@google.com>
+Date:   Wed, 12 Sep 2018 11:02:39 -0700
+In-Reply-To: <20180911234951.14129-4-sbeller@google.com> (Stefan Beller's
+        message of "Tue, 11 Sep 2018 16:49:45 -0700")
+Message-ID: <xmqqva7alhkw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,73 +68,41 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
+> The submodule subsystem is really bad at staying within 80 characters.
+> Fix it while we are here.
+
+Makes sense.  Thanks.
+
+>
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  sha1-array.c | 18 ++++++++++++++++++
->  sha1-array.h |  5 +++++
->  2 files changed, 23 insertions(+)
+>  submodule.c | 9 ++++++---
+>  1 file changed, 6 insertions(+), 3 deletions(-)
 >
-> diff --git a/sha1-array.c b/sha1-array.c
-> index 265941fbf40..76323935dd7 100644
-> --- a/sha1-array.c
-> +++ b/sha1-array.c
-> @@ -77,3 +77,21 @@ int oid_array_for_each_unique(struct oid_array *array,
->  	}
->  	return 0;
->  }
-> +
-> +int oid_array_filter(struct oid_array *array,
-> +		     for_each_oid_fn fn,
-
-It probably makes sense to call it "want" instead of "fn" to match
-object_array_filter().
-
-> +		     void *cbdata)
-> +{
-> +	int src, dst;
-> +
-> +	for (src = dst = 0; src < array->nr; src++) {
-> +		if (fn(&array->oid[src], cbdata)) {
-> +			if (dst < src)
-> +				oidcpy(&array->oid[dst], &array->oid[src]);
-> +			dst++;
-> +		}
-
-In fact, matching the implementation of object_array_fiter() may
-also make sense, as I do not see a strong reason why the resulting
-code would become better by rewriting "dst != src" over there to
-"dst < src" here.
-
-> +	}
-> +	array->nr = dst;
-> +
-> +	return 0;
-> +}
-> diff --git a/sha1-array.h b/sha1-array.h
-> index 232bf950172..a2d7c210835 100644
-> --- a/sha1-array.h
-> +++ b/sha1-array.h
-> @@ -23,4 +23,9 @@ int oid_array_for_each_unique(struct oid_array *array,
->  			      for_each_oid_fn fn,
->  			      void *data);
->  
-> +/* Call fn for each oid, and remove it if fn returns 0, retain it otherwise */
-
-Also perhaps mimic the wording of object_array_filter()'s comment?
-I find it easier that the latter says "retaining only if X" instead
-of saying "remove if !X, retain otherwise"; it's both shorter and
-more to the point.  It also is nicer that it notes that the order is
-preserved.
-
-> +int oid_array_filter(struct oid_array *array,
-> +		     for_each_oid_fn fn,
-> +		     void *cbdata);
-> +
-
-Other than that, the function makes sense very much, and the
-callsite we see in patch 8/9 does, too.
-
-Thanks.
-
->  #endif /* SHA1_ARRAY_H */
+> diff --git a/submodule.c b/submodule.c
+> index a2b266fbfae..d29dfa3d1f5 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -1244,7 +1244,8 @@ static int get_next_submodule(struct child_process *cp,
+>  		if (!submodule) {
+>  			const char *name = default_name_or_path(ce->name);
+>  			if (name) {
+> -				default_submodule.path = default_submodule.name = name;
+> +				default_submodule.path = name;
+> +				default_submodule.name = name;
+>  				submodule = &default_submodule;
+>  			}
+>  		}
+> @@ -1254,8 +1255,10 @@ static int get_next_submodule(struct child_process *cp,
+>  		default:
+>  		case RECURSE_SUBMODULES_DEFAULT:
+>  		case RECURSE_SUBMODULES_ON_DEMAND:
+> -			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
+> -							 submodule->name))
+> +			if (!submodule ||
+> +			    !unsorted_string_list_lookup(
+> +					&changed_submodule_names,
+> +					submodule->name))
+>  				continue;
+>  			default_argv = "on-demand";
+>  			break;
