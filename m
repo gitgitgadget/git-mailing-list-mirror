@@ -2,162 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 970B71F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 18:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5401F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 19:01:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727873AbeILXns (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 19:43:48 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:40633 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727651AbeILXns (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 19:43:48 -0400
-Received: by mail-pg1-f196.google.com with SMTP id l63-v6so1489331pga.7
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 11:38:01 -0700 (PDT)
+        id S1728001AbeIMAHF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 20:07:05 -0400
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33356 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727047AbeIMAHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 20:07:04 -0400
+Received: by mail-wr1-f67.google.com with SMTP id v90-v6so3173743wrc.0
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 12:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PgiUStnVmKb4M8dSzY7UGEOPkr8sDxV3Yr3Kmm4D6Po=;
-        b=hVNxUm1pQD0kIh1GmgiyYEL61G3BrYR2ZSfteA+c5SC90+QBTyqCQix/CNPJ1/Lw8X
-         +t5WY1+MzvcHZpZtsnm9JtykqICdBr7/EuaSM9dusN+Iwk6gRTozJZW38koOD6OIavNM
-         gMsiEGJgVhPhuplEITiodfXU1wSyOKw1/drAmSlOsv26VRXcYCxtjghOQUVpm5Hz0tbd
-         33UkKMJ3i7zJLNUx8aWVM8LI4icXg8IFdYZqeHvV9AKUpUA4PNVnlyqlbdPz3+OuMc0r
-         ydf/ZBxoMHUclS2tRrWcqSyqAtSI6sECdHrPxLkx8KP5+f8azuPY25iWut4ac1jEW10l
-         6i4g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=BuOC3J8DyUc+zkxiuOzN0k4Xo/YmQL+69CRBN8YLyes=;
+        b=jTKsOcdNK67CxOBu/HPPUaM3eNwrKhJFeHzkE8VVNG0Qp3SBirExKQtG8/8X5eEYBE
+         U3ODXkxOSds7sMgZAndACpGJwDDHTM1vgvjH9zDYtIv8Es/LPdi0lpcaur+xxn8NEoNB
+         TlA1T1jCcVTVkh48pUaa42lLbyaGeQj/bw/2OwX8biBiaRr65FpjQdM1rOG4R6Oy0ThZ
+         5dohBH2QlnEyZnDd7HBEwCQHyac7v8uFwi8AQo84zk//bK3IUdNX74JjOif06jSow0aF
+         3AvaofV7hULzjj8pfuT8u3bMrR97VvzolddSgBuI4yHdgdTPlDt1I/rOsCXnSVpr6aMq
+         xDyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PgiUStnVmKb4M8dSzY7UGEOPkr8sDxV3Yr3Kmm4D6Po=;
-        b=mtOlYI3EkFjRXzJTjA2qVn8NfB1cKoGqQyVGrL6xvP3CfmboDzEXpK3AmvRscLn6Hg
-         oaxKvppFRnm+Jn3IEJy72KKKbA/ckAMcGyxyMA6Ti+bbRk88Y01oXxc8duD10+SpHm7M
-         3okJL1x1uHt6o5R+inHSujobteJawI0A3fNb6jlGmFU2yr6nxY8Xfbbwnz1nkDoGWUhe
-         OgyYR14pucyxnSYuxLh7GBGtg8l/yZskCeFGpffzqZLHI/jIzRocOE7qDZpBum734yOJ
-         gcC/bKw27nsL5bnZ+CRcTRR08h/dixBFxVdcLAzhf4Pp41pI3cXv+/Elz9PHUuR+Kmoh
-         Fa5g==
-X-Gm-Message-State: APzg51CuLIEUqzP4Y1EqdPkS6ZlEIGU38BGh5RRWxxRE3mmiu4tCtPxz
-        7yJmR+JnhQrPlve/7SsR4vVefdYk
-X-Google-Smtp-Source: ANB0VdaVaB6uCvi4DfDYcSZnRa5fKtI7mzwkLq2LnE39YgkdJYrzcRW+/PWKKChOuontRL+wxrm7Yg==
-X-Received: by 2002:a63:1750:: with SMTP id 16-v6mr177808pgx.31.1536777481008;
-        Wed, 12 Sep 2018 11:38:01 -0700 (PDT)
-Received: from localhost.localdomain (c-76-102-118-240.hsd1.ca.comcast.net. [76.102.118.240])
-        by smtp.gmail.com with ESMTPSA id x4-v6sm2292172pfm.119.2018.09.12.11.38.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 12 Sep 2018 11:38:00 -0700 (PDT)
-From:   William Chargin <wchargin@gmail.com>
-To:     git@vger.kernel.org, sunshine@sunshineco.com
-Cc:     William Chargin <wchargin@gmail.com>, jrnieder@gmail.com,
-        peff@peff.net
-Subject: [PATCH v4] test_dir_is_empty: fix edge cases with newlines and hyphens
-Date:   Wed, 12 Sep 2018 11:37:55 -0700
-Message-Id: <20180912183755.7875-1-wchargin@gmail.com>
-X-Mailer: git-send-email 2.18.0.549.gd66323a05
-In-Reply-To: <CAPig+cQSg-t6KGj3s0LJi+FU7LSQMNTmSHhMJJH=PgMUU9GWOA@mail.gmail.com>
-References: <CAPig+cQSg-t6KGj3s0LJi+FU7LSQMNTmSHhMJJH=PgMUU9GWOA@mail.gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=BuOC3J8DyUc+zkxiuOzN0k4Xo/YmQL+69CRBN8YLyes=;
+        b=XkLnKUmPKyMY1PBUqxmUZze+wOBfOedrVH0PvuMF7c+sMTFCCBzE4qJz6DBb6icjMK
+         ++VIlwMJs8MVxmmWJ4PCmFB0rCk2gT3qowQpjLO1j1InNGVjH/psEVrKiPpv1hCtnqSR
+         zO5zuVJA9m7KpqjzXKImwYFtgvK8mKKJ2T2IfhAm4UUEnWHKMho4QVUTihPWjRvL8dc8
+         XuNoPw7LHafrm/YDBOYkuZo/nj1IRUk+uAiptfemyxirjA8Hv3+pflA9a5sOK/PzFiiO
+         8S4MPHO1PDntVqsMu5tVxIBRGDsSTbbrpoFeWVCji9cZbO5cv8TDtSq2qI2BbxqfBsez
+         uMyg==
+X-Gm-Message-State: APzg51BonAez0uoZeWn6UMkxlwf8p9JBGY0d1IcIG2lW4UDQmWqq+6PN
+        5yH8YuA1JO2J+3in87erzwC5Acwr
+X-Google-Smtp-Source: ANB0VdYueEiZllwgEP6yvebwJS2w/GoOdmBXA/dHfCatIJ6GeX1dweQ9FHS27Uhqmk1pvGxkO1EFvg==
+X-Received: by 2002:adf:b357:: with SMTP id k23-v6mr2650781wrd.207.1536778870479;
+        Wed, 12 Sep 2018 12:01:10 -0700 (PDT)
+Received: from localhost ([2.29.27.208])
+        by smtp.gmail.com with ESMTPSA id k63-v6sm3061468wmd.46.2018.09.12.12.01.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Sep 2018 12:01:09 -0700 (PDT)
+Date:   Wed, 12 Sep 2018 20:01:08 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     ryenus <ryenus@gmail.com>, Git mailing list <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH] linear-assignment: fix potential out of bounds memory access
+ (was: Re: Git 2.19 Segmentation fault 11 on macOS)
+Message-ID: <20180912190108.GE4865@hank.intra.tgummerer.com>
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
+ <1b8a35be-4234-7f71-c0be-41736bbe60cf@gmail.com>
+ <844da493-b1c1-b295-0094-beafd48f3b50@gmail.com>
+ <fd241679-2283-4e01-315b-db27be8a794c@gmail.com>
+ <20180911163419.GB4865@hank.intra.tgummerer.com>
+ <20180911172903.GC4865@hank.intra.tgummerer.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20180911172903.GC4865@hank.intra.tgummerer.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While the `test_dir_is_empty` function appears correct in most normal
-use cases, it can improperly pass if a directory contains a filename
-with a newline, and can improperly fail if an empty directory looks like
-an argument to `ls`. This patch changes the implementation to check that
-the output of `ls -a` has at most two lines (for `.` and `..`), which
-should be better behaved, and adds the `--` delimiter before the
-directory name when invoking `ls`.
+On 09/11, Thomas Gummerer wrote:
+> On 09/11, Thomas Gummerer wrote:
+> > I think you're on the right track here.  I can not test this on Mac
+> > OS, but on Linux, the following fails when running the test under
+> > valgrind:
+> > 
+> >     diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> >     index 2237c7f4af..a8b0ef8c1d 100755
+> >     --- a/t/t3206-range-diff.sh
+> >     +++ b/t/t3206-range-diff.sh
+> >     @@ -142,4 +142,9 @@ test_expect_success 'changed message' '
+> >             test_cmp expected actual
+> >      '
+> >      
+> >     +test_expect_success 'amend and check' '
+> >     +       git commit --amend -m "new message" &&
+> >     +       git range-diff master HEAD@{1} HEAD
+> >     +'
+> >     +
+> >      test_done
+> > 
+> > valgrind gives me the following:
+> > 
+> > ==18232== Invalid read of size 4
+> > ==18232==    at 0x34D7B5: compute_assignment (linear-assignment.c:54)
+> > ==18232==    by 0x2A4253: get_correspondences (range-diff.c:245)
+> > ==18232==    by 0x2A4BFB: show_range_diff (range-diff.c:427)
+> > ==18232==    by 0x19D453: cmd_range_diff (range-diff.c:108)
+> > ==18232==    by 0x122698: run_builtin (git.c:418)
+> > ==18232==    by 0x1229D8: handle_builtin (git.c:637)
+> > ==18232==    by 0x122BCC: run_argv (git.c:689)
+> > ==18232==    by 0x122D90: cmd_main (git.c:766)
+> > ==18232==    by 0x1D55A3: main (common-main.c:45)
+> > ==18232==  Address 0x4f4d844 is 0 bytes after a block of size 4 alloc'd
+> > ==18232==    at 0x483777F: malloc (vg_replace_malloc.c:299)
+> > ==18232==    by 0x3381B0: do_xmalloc (wrapper.c:60)
+> > ==18232==    by 0x338283: xmalloc (wrapper.c:87)
+> > ==18232==    by 0x2A3F8C: get_correspondences (range-diff.c:207)
+> > ==18232==    by 0x2A4BFB: show_range_diff (range-diff.c:427)
+> > ==18232==    by 0x19D453: cmd_range_diff (range-diff.c:108)
+> > ==18232==    by 0x122698: run_builtin (git.c:418)
+> > ==18232==    by 0x1229D8: handle_builtin (git.c:637)
+> > ==18232==    by 0x122BCC: run_argv (git.c:689)
+> > ==18232==    by 0x122D90: cmd_main (git.c:766)
+> > ==18232==    by 0x1D55A3: main (common-main.c:45)
+> > ==18232== 
+> > 
+> > I'm looking into why that fails.  Also adding Dscho to Cc here as the
+> > author of this code.
+> 
+> The diff below seems to fix it.  Not submitting this as a proper
+> patch [...]
 
-The newly added unit test fails before this change and passes after it.
+I found the time to actually have a look at the paper, so here's a
+proper patch:
 
-Signed-off-by: William Chargin <wchargin@gmail.com>
+I'm still not entirely sure what the initial code tried to do here,
+but I think staying as close as possible to the original is probably
+our best option here, also for future readers of this code.
+
+--- >8 ---
+
+Subject: [PATCH] linear-assignment: fix potential out of bounds memory access
+
+Currently the 'compute_assignment()' function can may read memory out
+of bounds, even if used correctly.  Namely this happens when we only
+have one column.  In that case we try to calculate the initial
+minimum cost using '!j1' as column in the reduction transfer code.
+That in turn causes us to try and get the cost from column 1 in the
+cost matrix, which does not exist, and thus results in an out of
+bounds memory read.
+
+Instead of trying to intialize the minimum cost from another column,
+just set it to INT_MAX.  This also matches what the example code in the
+original paper for the algorithm [1] does (it initializes the value to
+inf, for which INT_MAX is the closest match in C).
+
+Note that the test only fails under valgrind on Linux, but the same
+command has been reported to segfault on Mac OS.
+
+Also start from 0 in the loop, which matches what the example code in
+the original paper does as well.  Starting from 1 means we'd ignore
+the first column during the reduction transfer phase.  Note that in
+the original paper the loop does start from 1, but the implementation
+is in Pascal, where arrays are 1 indexed.
+
+[1]: Jonker, R., & Volgenant, A. (1987). A shortest augmenting path
+     algorithm for dense and sparse linear assignment
+     problems. Computing, 38(4), 325–340.
+
+Reported-by: ryenus <ryenus@gmail.com>
+Helped-by: Derrick Stolee <stolee@gmail.com>
+Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
-This patch depends on "t: factor out FUNNYNAMES as shared lazy prereq"
-(2018-08-06), which is now in master.
+ linear-assignment.c   | 4 ++--
+ t/t3206-range-diff.sh | 5 +++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-I originally wrote this patch for the standalone Sharness library, but
-that library advises that such patches be sent to the Git mailing list
-first.
-
-Tested on GNU/Linux (Mint 18.2) and macOS (10.13).
-
- t/t0000-basic.sh        | 43 +++++++++++++++++++++++++++++++++++++++++
- t/test-lib-functions.sh |  2 +-
- 2 files changed, 44 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 850f651e4e..a5c57c6aa5 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -821,6 +821,49 @@ test_expect_success 'tests clean up even on failures' "
- 	EOF
- "
+diff --git a/linear-assignment.c b/linear-assignment.c
+index 9b3e56e283..7700b80eeb 100644
+--- a/linear-assignment.c
++++ b/linear-assignment.c
+@@ -51,8 +51,8 @@ void compute_assignment(int column_count, int row_count, int *cost,
+ 		else if (j1 < -1)
+ 			row2column[i] = -2 - j1;
+ 		else {
+-			int min = COST(!j1, i) - v[!j1];
+-			for (j = 1; j < column_count; j++)
++			int min = INT_MAX;
++			for (j = 0; j < column_count; j++)
+ 				if (j != j1 && min > COST(j, i) - v[j])
+ 					min = COST(j, i) - v[j];
+ 			v[j1] -= min;
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 2237c7f4af..fb4c13a84a 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -142,4 +142,9 @@ test_expect_success 'changed message' '
+ 	test_cmp expected actual
+ '
  
-+test_expect_success FUNNYNAMES \
-+	'test_dir_is_empty behaves even in pathological cases' "
-+	run_sub_test_lib_test \
-+		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
-+	test_expect_success 'should pass with actually empty directory' '
-+		mkdir empty_dir &&
-+		test_dir_is_empty empty_dir
-+	'
-+	test_expect_success 'should fail with a normal filename' '
-+		mkdir nonempty_dir &&
-+		>nonempty_dir/some_file &&
-+		! test_dir_is_empty nonempty_dir
-+	'
-+	test_expect_success 'should fail with dot-newline-dot filename' '
-+		mkdir pathological_dir &&
-+		>\"pathological_dir/.
-+	.\" &&
-+		! test_dir_is_empty pathological_dir
-+	'
-+	test_expect_success 'should pass with an empty directory \"-l\"' '
-+		mkdir -- -l &&
-+		test_dir_is_empty -l &&
-+		rmdir -- -l
-+	'
-+	test_expect_success 'should pass with an empty directory \"--wat\"' '
-+		mkdir -- --wat &&
-+		test_dir_is_empty --wat &&
-+		rmdir -- --wat
-+	'
-+	test_done
-+	EOF
-+	check_sub_test_lib_test dir-empty <<-\\EOF
-+	> ok 1 - should pass with actually empty directory
-+	> ok 2 - should fail with a normal filename
-+	> ok 3 - should fail with dot-newline-dot filename
-+	> ok 4 - should pass with an empty directory \"-l\"
-+	> ok 5 - should pass with an empty directory \"--wat\"
-+	> # passed all 5 test(s)
-+	> 1..5
-+	EOF
-+"
++test_expect_success 'no commits on one side' '
++	git commit --amend -m "new message" &&
++	git range-diff master HEAD@{1} HEAD
++'
 +
-+
- ################################################################
- # Basics of the basics
- 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 4207af4077..3df6b8027f 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -576,7 +576,7 @@ test_path_exists () {
- # Check if the directory exists and is empty as expected, barf otherwise.
- test_dir_is_empty () {
- 	test_path_is_dir "$1" &&
--	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
-+	if test "$(ls -a1 -- "$1" | wc -l)" -gt 2
- 	then
- 		echo "Directory '$1' is not empty, it contains:"
- 		ls -la "$1"
+ test_done
 -- 
-2.18.0.549.gd66323a05
+2.19.0.397.gdd90340f6a
 
