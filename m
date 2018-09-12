@@ -3,93 +3,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 76BD91F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 07:13:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E05A21F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 10:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727004AbeILMQi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 08:16:38 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33270 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725966AbeILMQh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 08:16:37 -0400
-Received: by mail-wr1-f66.google.com with SMTP id v90-v6so820719wrc.0
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 00:13:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=60/vnX47m19IxIoSs1McgctdKvBxeXInjGHHWSPnXms=;
-        b=QdCo6zsq8m/53VOO7mBtBcC3d/tNcV6/6BX8Ybhic1niI9CjD5JaGF6Lh0Wbe1u7Ll
-         sG5NPdMEiKlE+ltY8UOp6XhfKjSrvopkWLlAnZfoc1OoosTFYkN2mWTajHqZkWvsGHNP
-         pJlOat39IiZZ1egKlpRtes+hjzzQLvfBhJmJwRnEaleEkM55BEWBm8sCleuPbbvhd3ef
-         GVzXA+lRTf2daLCUJf8l/wKDKFYtv4auIJkAVu//U7k2yHdm2UOo88BsZ4d+gLENnDGn
-         q9lr45M8djwxzRM4m84+mFYgKeeURKJFh29jc6KoTcjDYoUrS/WvyLg4kBbrENjmmZa5
-         U0vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=60/vnX47m19IxIoSs1McgctdKvBxeXInjGHHWSPnXms=;
-        b=OZf09VjaZnsjrNXwZo0OlQ7mr7eH5pLUnp0mGBaExoKru84OjXVxVmdniJyXIQVMWx
-         CeRR2XoCiIkW2BOM5/xetgY9egAhx6M7mV1j85xLSVsWq62N5yVHoWwnACRsx2GlimLP
-         En6Mp/VtqlLC7i2QzTzJmU4/NszfY3/79dgTuZKSZGs3OKsZVOeNOC1Wv0EwqWFpD0ao
-         sKhKbrn0rdPKbq/Ja9FM3FVTDGP6E59Bggsd4IbIN4dnboXOFfP5Dz5/YAIIcazETCbH
-         oiRf7To409Vy0JywJRTTypegsKZQZbOVztEtQ5sHjXUjD582rL6uOuNEucAACuQ9LmpZ
-         mu/w==
-X-Gm-Message-State: APzg51AeL7E7Aax+b+UGZwirBmV7EBsTh+nvX+Y9hwbO5cG17VLxE4Xs
-        Hbq0W5g3NurX/k4urOL7uae7t5pn
-X-Google-Smtp-Source: ANB0VdZhQH6JKU0lQtCQeEv3q4I46DjfQ/yL+MNxDElEW/2cfc1CzAv3jcOEDQF6FTHYK4YSXNyAXg==
-X-Received: by 2002:a05:6000:108:: with SMTP id o8mr418818wrx.196.1536736405630;
-        Wed, 12 Sep 2018 00:13:25 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z4-v6sm105636wrt.89.2018.09.12.00.13.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Sep 2018 00:13:24 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stephen & Linda Smith <ischis2@cox.net>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2018, #02; Tue, 11)
-References: <8951536.UanLVthjk7@thunderbird>
-Date:   Wed, 12 Sep 2018 00:13:23 -0700
-In-Reply-To: <8951536.UanLVthjk7@thunderbird> (Stephen & Linda Smith's message
-        of "Tue, 11 Sep 2018 19:36:35 -0700")
-Message-ID: <xmqqo9d3mbn0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1726866AbeILPOi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 11:14:38 -0400
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:46650 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726552AbeILPOi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 11:14:38 -0400
+Received: from lindisfarne.localdomain ([89.242.190.162])
+        by smtp.talktalk.net with SMTP
+        id 026Ygd54KdJAe026fgxHAu; Wed, 12 Sep 2018 11:10:46 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1536747046;
+        bh=ISOj8r1lNNWBbFge7Vbc//zNerGrPIlBo0r9VffEVGk=;
+        h=From:To:Cc:Subject:Date:Reply-To;
+        b=EUnML01IExUAnaAXKxJ4L5yRMWtPqkWeHVinkZguXFh5KZ+j02OyOYG2Cie3gF5lT
+         6TxD4zSfAitlu9Qkg2GPfTHzZeWA/TbM0fXc91tm6YDPxcb5iI1MTQbob/fD20Y2E0
+         frRc0pa7uBaa5fv8399A0dR0fl18wSgAwNYCozVk=
+X-Originating-IP: [89.242.190.162]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=yWw/b5KBQb65dAU66aqL/Q==:117
+ a=yWw/b5KBQb65dAU66aqL/Q==:17 a=evINK-nbAAAA:8 a=iuGNbSBixgLDAZXCjX4A:9
+ a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 0/3] am/rebase: share read_author_script()
+Date:   Wed, 12 Sep 2018 11:10:26 +0100
+Message-Id: <20180912101029.28052-1-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.18.0
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+X-CMAE-Envelope: MS4wfKTlQrVK9RgUgUVgy0iDHaN0t/MGdm2iQIWyKdBU6LI1hh8sQZirrq/yGYx5/WXZNDYNZYHSQoC6OK8FvpSJ2BsmkE7MBOBGZcZrxGKTLkE45m9b9lgV
+ 7ImYHez8Lvhm8ZUHWDvt+mxzmcHjBRM0KmrQstvjoGwveA1Ca31yUgj3F3rVJSdaGLjXaMRySgPDJRjkHg7SR4jPncX2VIhmN2eN6PcL/3JsYo2ulcwhrEtW
+ TIrDeRyNbniR/GrYIc4q1vvNkJcu40lx1TOu9hya2n0w4BnN5F/Tr3pUNCYENdRnPX/xqpP5wg25+/z9s9rZGWSNwttvAvldRMlTK45UXZQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stephen & Linda Smith <ischis2@cox.net> writes:
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-> On Tuesday, September 11, 2018 3:20:19 PM MST Junio C Hamano wrote:
->> 
->> * jc/wt-status-state-cleanup (2018-09-07) 1 commit
->>  - WIP: roll wt_status_state into wt_status and populate in the collect
->> phase (this branch uses ss/wt-status-committable.)
->> 
->> * ss/wt-status-committable (2018-09-07) 4 commits
->>  - wt-status.c: set the committable flag in the collect phase
->>  - t7501: add test of "commit --dry-run --short"
->>  - wt-status: rename commitable to committable
->>  - wt-status.c: move has_unmerged earlier in the file
->>  (this branch is used by jc/wt-status-state-cleanup.)
->> 
->
-> I note that the jc/wt-status-state-cleanup branch is a patch "for illustration 
-> purposes only" [1].
->
-> I was about to update that patch to start dealing with the free() function 
-> calls, but noted you added the patch.  Do you want me to take that patch and 
-> continue on?  Or does someone else have something in progress?
+This is a follow up to pw/rebase-i-author-script-fix, it reduces code
+duplication and improves rebase's parsing of the author script. After
+this I'll do another series to share the code to write the author
+script.
 
-I do not plan to.  In general, anything that is only in 'pu' is a
-fair game---when a better alternative appears, or a discussion leads
-to a conclusion that a change is unneeded, they are replaced and/or
-discarded.  Just think of them as being kept slightly better record
-of existence than merely being in the list archive, nothing more.
+Phillip Wood (3):
+  am: rename read_author_script()
+  add read_author_script() to libgit
+  sequencer: use read_author_script()
+
+ builtin/am.c |  61 ++------------------
+ sequencer.c  | 160 ++++++++++++++++++++++++++++-----------------------
+ sequencer.h  |   3 +
+ 3 files changed, 96 insertions(+), 128 deletions(-)
+
+-- 
+2.18.0
+
