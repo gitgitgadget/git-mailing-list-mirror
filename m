@@ -2,306 +2,188 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F4331F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 22:28:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 971D91F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 22:31:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728150AbeIMDfJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 23:35:09 -0400
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:34341 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727772AbeIMDfJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 23:35:09 -0400
-Received: by mail-yb1-f196.google.com with SMTP id t10-v6so2484874ybb.1
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 15:28:34 -0700 (PDT)
+        id S1727828AbeIMDhl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 23:37:41 -0400
+Received: from mail-wm0-f67.google.com ([74.125.82.67]:36251 "EHLO
+        mail-wm0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727739AbeIMDhk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 23:37:40 -0400
+Received: by mail-wm0-f67.google.com with SMTP id j192-v6so4094025wmj.1
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 15:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ArX6l7ko5Y0AimehCofFjmsY9MKKAMWkelTDq5mkahw=;
-        b=WYimr4eoWtNMx1kdwdctUeOwHOGz4EYE7Qekqp/t/oM/fiPnY/pkw7cDVYwwmsYkjH
-         WK7dRYe3jSBqclK5YCiSk5H7Q4fti7q9nhHozqfhkNz6p2z6sSnQe9YxTkTk5XRwhgNB
-         NVqHVPgCy5xfEq5N6ls3FzZZWMgO82wedHE9sf0ptGk3cCI3VBAyDYyNkcGRR/mFqBMG
-         EoHDoZKdRZLt8UCJaioJXtoAkH9pQ027vR5TRtR0ylbTWyO8kUiBSXrICTXvMgmmgIiQ
-         yK04wbxcc7zDjw4SNdRjf4c1JE7jcWNFWl7foCNq6oa0sdOtzOALTZEThlHwfDg6dFpL
-         OXUg==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cQgb9kDNEVR94w2O9FGBvnONgfOQanNU5Bbx9ZW/W5A=;
+        b=NqzgJdWjTd2G6+KkF1dMof1Hke9Re54G8ZENGS50RfXStio2IQJQwe3isEHygRt96e
+         x6ZdJrJisr89sL/ZvQUipOOPD1NMTJwBFaMsSEW3PLQ0nbgh7i0oyNzm/TgYfvsIdn47
+         le35K2r78X0DqhEJz4Mu2m1AdKwueJfTBgLwbDfAsPSIhoidqRHPghcHLqjlMit0uQ9b
+         nOPemPUKXqABvyNrGMyqKKKqm+eTOjKjQJsuqcAJVKUNlemdiZ/4C3DK/5noS7ZuxtLg
+         6VxJqNmkdX6bDm3OviNjnwMN/ztoli2ZhRGXoy8zX8E1gSYPpJ2n9MuQJYAEcFAy7QCE
+         lRYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ArX6l7ko5Y0AimehCofFjmsY9MKKAMWkelTDq5mkahw=;
-        b=sUpPgfDBeh2mDxjC4/ND6m/Frm4jTsPm89pHdrURdPRSQ3qxaq6HC+8OmbVLoC6eqU
-         xqclnlvu7LvkJFSu0lsCdhoqWBZUoklFL6f7Q6VYTBaqDiVomMsEe1vM57tKBYL4OaFC
-         GQMvrxh/9lSIxeOcM9Y1YeHOIebeTVLqYqeN2wG4xpc4/oDMywlav+9MybDfrvDWfN+T
-         AQ+FVmQGsPJOIoYo9m/1arMHSMRN7r6fo0Ysdi50J5Lhiw79LeR1Md3kgxTm3Q2At8NW
-         GL20iUuF1YQd9vllE1KkGQFibIl3y7xuEkwB1MKaiJTXca5PzwrAzyEJ9Nnrm1/RbIJh
-         7BCg==
-X-Gm-Message-State: APzg51D3Lx10sKLqjC5KDhc8eSQgs92bYz2qtY06XnLbvKzXhNIKBecv
-        +hDZ2HD8vREDNnUUr1liJEne96sgU+5erk9YCG/hdA==
-X-Google-Smtp-Source: ANB0VdbRvMblRqoUeLr4HmbH6sKkmGsgCyA5LYt7nzu+X1MpgtUFnHdu2VK0enukTSVkzLuj4FBblt445yz/PdSQryo=
-X-Received: by 2002:a25:41c3:: with SMTP id o186-v6mr2017184yba.493.1536791313542;
- Wed, 12 Sep 2018 15:28:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cQgb9kDNEVR94w2O9FGBvnONgfOQanNU5Bbx9ZW/W5A=;
+        b=ff8jr/4/9Lr7wh0kZiJKGadKOgJ57Pfy3HEOBXl/dh+0Yg+Q2Bqusru1mFT6E8V83u
+         xIz/VX8SOl9ZHzkhpLabGx6k1OiJigz/CvmarNVoBNLtyrgPor0WdrZkK1y5aenVxQEN
+         wGGiMZWv/0wf7AcYsidWzbZSrdyvC1kaGQp1zTvLE1JtVenQ2/XlLzjTSpbnibH2RMzm
+         8UzXqHpG5RyHlDNDSMZp0tUpR04kJ9oFi2gk442KCJ0gfrnArB7LF6D/Cg4xy5pW1mrw
+         gQSMOAoMxL+aUJxst08XlBQnHSY7grlXLu6ksMb933rzML0fHP1dscOpCESb/BB4+yVJ
+         TBVQ==
+X-Gm-Message-State: APzg51AOQ3WE04TKWS8F8RtcYjPofuRjKAJ+Udigtx4j3Y0gSWn2B87p
+        9W14L2o8mj8SAwt7WlAdWCE=
+X-Google-Smtp-Source: ANB0Vdb0jZtKvH4uPd6KUUO08AVtLOWT9grAPkasCcpsmnSBAn260s9kWRI7D1qYTKN3oVbePFXUig==
+X-Received: by 2002:a1c:4007:: with SMTP id n7-v6mr3227411wma.108.1536791463135;
+        Wed, 12 Sep 2018 15:31:03 -0700 (PDT)
+Received: from localhost ([2.29.27.208])
+        by smtp.gmail.com with ESMTPSA id j6-v6sm1438937wrq.25.2018.09.12.15.31.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Sep 2018 15:31:02 -0700 (PDT)
+Date:   Wed, 12 Sep 2018 23:31:01 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
+Message-ID: <20180912223101.GA1719@hank.intra.tgummerer.com>
+References: <20180912212544.33624-1-benpeart@microsoft.com>
 MIME-Version: 1.0
-References: <20180912053519.31085-1-steadmon@google.com> <20180912053519.31085-3-steadmon@google.com>
-In-Reply-To: <20180912053519.31085-3-steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 12 Sep 2018 15:28:22 -0700
-Message-ID: <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180912212544.33624-1-benpeart@microsoft.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 11, 2018 at 10:36 PM Josh Steadmon <steadmon@google.com> wrote:
->
-> This adds a new archive command for protocol v2. The command expects
-> arguments in the form "argument X" which are passed unmodified to
-> git-upload-archive--writer.
->
-> This command works over the file://, Git, and SSH transports. HTTP
-> support will be added in a separate patch.
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
+On 09/12, Ben Peart wrote:
+> Teach get_index_format_default() to support running the test suite
+> with specific index versions.  In particular, this enables the test suite
+> to be run using index version 4 which is not the default so gets less testing.
+
+I found this commit message slightly misleading.  Running the test
+suite with specific index versions is already supported, by defining
+TEST_GIT_INDEX_VERSION in 'config.mak'.  What we're doing here is
+introduce an additional environment variable that can also be used to
+set the index format in tests.
+
+Even setting TEST_GIT_INDEX_VERSION=4 in the environment does run the
+test suite with index-v4.  Admittedly the name is a bit strange
+compared to our usual GIT_TEST_* environment variable names, and it
+should probably be documented better (it's only documented in the
+Makefile currently), but I'm not sure we should introduce another
+environment variable for this purpose?
+
+> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
 > ---
->  builtin/archive.c        | 45 +++++++++++++++++++++++++++-------------
->  builtin/upload-archive.c | 44 ++++++++++++++++++++++++++++++++++++---
->  t/t5000-tar-tree.sh      |  5 +++++
->  3 files changed, 77 insertions(+), 17 deletions(-)
->
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index e54fc39ad..73831887d 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -5,9 +5,11 @@
->  #include "cache.h"
->  #include "builtin.h"
->  #include "archive.h"
-> +#include "connect.h"
->  #include "transport.h"
->  #include "parse-options.h"
->  #include "pkt-line.h"
-> +#include "protocol.h"
->  #include "sideband.h"
->
->  static void create_output_file(const char *output_file)
-> @@ -23,6 +25,13 @@ static void create_output_file(const char *output_file)
->         }
+> 
+> Notes:
+>     Base Ref: v2.19.0
+>     Web-Diff: https://github.com/benpeart/git/commit/52e733e2ce
+>     Checkout: git fetch https://github.com/benpeart/git git-test-index-version-v1 && git checkout 52e733e2ce
+> 
+>  read-cache.c | 47 +++++++++++++++++++++++++++++++++--------------
+>  t/README     |  6 +++++-
+>  2 files changed, 38 insertions(+), 15 deletions(-)
+> 
+> diff --git a/read-cache.c b/read-cache.c
+> index 7b1354d759..d140ce9989 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1570,26 +1570,45 @@ static unsigned int get_index_format_default(void)
+>  	char *envversion = getenv("GIT_INDEX_VERSION");
+>  	char *endp;
+>  	int value;
+> -	unsigned int version = INDEX_FORMAT_DEFAULT;
+> +	unsigned int version = -1;
+> +
+> +	if (envversion) {
+> +		version = strtoul(envversion, &endp, 10);
+> +		if (*endp ||
+> +			version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+> +			warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
+> +				"Using version %i"), INDEX_FORMAT_DEFAULT);
+> +			version = INDEX_FORMAT_DEFAULT;
+> +		}
+> +	}
+>  
+> -	if (!envversion) {
+> -		if (!git_config_get_int("index.version", &value))
+> +	if (version == -1) {
+> +		if (!git_config_get_int("index.version", &value)) {
+>  			version = value;
+> -		if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+> -			warning(_("index.version set, but the value is invalid.\n"
+> -				  "Using version %i"), INDEX_FORMAT_DEFAULT);
+> -			return INDEX_FORMAT_DEFAULT;
+> +			if (version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+> +				warning(_("index.version set, but the value is invalid.\n"
+> +					"Using version %i"), INDEX_FORMAT_DEFAULT);
+> +				version = INDEX_FORMAT_DEFAULT;
+> +			}
+>  		}
+> -		return version;
+>  	}
+>  
+> -	version = strtoul(envversion, &endp, 10);
+> -	if (*endp ||
+> -	    version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+> -		warning(_("GIT_INDEX_VERSION set, but the value is invalid.\n"
+> -			  "Using version %i"), INDEX_FORMAT_DEFAULT);
+> -		version = INDEX_FORMAT_DEFAULT;
+> +	if (version == -1) {
+> +		envversion = getenv("GIT_TEST_INDEX_VERSION");
+> +		if (envversion) {
+> +			version = strtoul(envversion, &endp, 10);
+> +			if (*endp ||
+> +				version < INDEX_FORMAT_LB || INDEX_FORMAT_UB < version) {
+> +				warning(_("GIT_TEST_INDEX_VERSION set, but the value is invalid.\n"
+> +					"Using version %i"), INDEX_FORMAT_DEFAULT);
+> +				version = INDEX_FORMAT_DEFAULT;
+> +			}
+> +		}
+>  	}
+> +
+> +	if (version == -1)
+> +		version = INDEX_FORMAT_DEFAULT;
+> +
+>  	return version;
 >  }
->
-> +static int do_v2_command_and_cap(int out)
-> +{
-> +       packet_write_fmt(out, "command=archive\n");
-> +       /* Capability list would go here, if we had any. */
-> +       packet_delim(out);
-> +}
+>  
+> diff --git a/t/README b/t/README
+> index 9028b47d92..f872638a78 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -315,10 +315,14 @@ packs on demand. This normally only happens when the object size is
+>  over 2GB. This variable forces the code path on any object larger than
+>  <n> bytes.
+>  
+> -GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
+> +GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncommon pack-objects code
+>  path where deltas larger than this limit require extra memory
+>  allocation for bookkeeping.
+>  
+> +GIT_TEST_INDEX_VERSION=<n> exercises the index read/write code path
+> +for the index version specified.  Can be set to any valid version
+> +but the non-default version 4 is probably the most beneficial.
 > +
->  static int run_remote_archiver(int argc, const char **argv,
->                                const char *remote, const char *exec,
->                                const char *name_hint)
-> @@ -32,6 +41,7 @@ static int run_remote_archiver(int argc, const char **argv,
->         struct remote *_remote;
->         struct packet_reader reader;
->         enum packet_read_status status;
-> +       enum protocol_version version;
->
->         _remote = remote_get(remote);
->         if (!_remote->url[0])
-> @@ -41,6 +51,11 @@ static int run_remote_archiver(int argc, const char **argv,
->
->         packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
->
-> +       version = discover_version(&reader);
-> +
-> +       if (version == protocol_v2)
-> +               do_v2_command_and_cap(fd[1]);
-> +
->         /*
->          * Inject a fake --format field at the beginning of the
->          * arguments, with the format inferred from our output
-> @@ -56,22 +71,24 @@ static int run_remote_archiver(int argc, const char **argv,
->                 packet_write_fmt(fd[1], "argument %s\n", argv[i]);
->         packet_flush(fd[1]);
->
-> -       status = packet_reader_read(&reader);
-> -
-> -       if (status == PACKET_READ_FLUSH)
-> -               die(_("git archive: expected ACK/NAK, got a flush packet"));
-> -       if (strcmp(reader.buffer, "ACK")) {
-> -               if (starts_with(reader.buffer, "NACK "))
-> -                       die(_("git archive: NACK %s"), reader.buffer + 5);
-> -               if (starts_with(reader.buffer, "ERR "))
-> -                       die(_("remote error: %s"), reader.buffer + 4);
-> -               die(_("git archive: protocol error"));
-
-Maybe we also want to support v1
-(which is v0 prefixed with one pkt_line saying it is v1).
-
-    If (version == protocol_v1)
-        /* drop version v1 line, and then follow v0 logic. */
-        packet_reader_read(&reader);
-
-Do we care about v1, or do we just ignore it here? why?
-(Don't answer me here, but rather put it in the commit message)
-
-> +       if (version == protocol_v0) {
-> +               status = packet_reader_read(&reader);
-> +
-> +               if (status == PACKET_READ_FLUSH)
-> +                       die(_("git archive: expected ACK/NAK, got a flush packet"));
-> +               if (strcmp(reader.buffer, "ACK")) {
-> +                       if (starts_with(reader.buffer, "NACK "))
-> +                               die(_("git archive: NACK %s"), reader.buffer + 5);
-> +                       if (starts_with(reader.buffer, "ERR "))
-> +                               die(_("remote error: %s"), reader.buffer + 4);
-> +                       die(_("git archive: protocol error"));
-> +               }
-> +
-> +               status = packet_reader_read(&reader);
-> +               if (status != PACKET_READ_FLUSH)
-> +                       die(_("git archive: expected a flush"));
->         }
->
-> -       status = packet_reader_read(&reader);
-> -       if (status != PACKET_READ_FLUSH)
-> -               die(_("git archive: expected a flush"));
-> -
->         /* Now, start reading from fd[0] and spit it out to stdout */
->         rv = recv_sideband("archive", fd[0], 1);
->         rv |= transport_disconnect(transport);
-> diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-> index 25d911635..534e8fd56 100644
-> --- a/builtin/upload-archive.c
-> +++ b/builtin/upload-archive.c
-> @@ -5,6 +5,7 @@
->  #include "builtin.h"
->  #include "archive.h"
->  #include "pkt-line.h"
-> +#include "protocol.h"
->  #include "sideband.h"
->  #include "run-command.h"
->  #include "argv-array.h"
-> @@ -73,13 +74,53 @@ static ssize_t process_input(int child_fd, int band)
->         return sz;
->  }
->
-> +static int handle_v2_command_and_cap(void)
-> +{
-> +       struct packet_reader reader;
-> +       enum packet_read_status status;
-> +
-> +       packet_reader_init(&reader, 0, NULL, 0, PACKET_READ_CHOMP_NEWLINE);
-> +
-> +       packet_write_fmt(1, "version 2\n");
-> +       /*
-> +        * We don't currently send any capabilities, but maybe we could list
-> +        * supported archival formats?
-> +        */
-> +       packet_flush(1);
-> +
-> +       status = packet_reader_read(&reader);
-> +       if (status != PACKET_READ_NORMAL ||
-> +           strcmp(reader.buffer, "command=archive"))
-> +               die(_("upload-archive: expected command=archive"));
-> +       while (status == PACKET_READ_NORMAL) {
-> +               /* We don't currently expect any client capabilities, but we
-> +                * should still read (and ignore) any that happen to get sent.
-
-/*
- * Makes sense to ignore the client capabilities here,
- * but the multi line comments take their opening
- * and closing line on a separate line. just like above.
- */
-
-> +                */
-> +               status = packet_reader_read(&reader);
-> +       }
-> +       if (status != PACKET_READ_DELIM)
-> +               die(_("upload-archive: expected delim packet"));
-
-This is upload-archive, which is a low level plumbing command
-(see the main man page of git for an explanation of that category),
-so we do not translate the error/die() calls. Besides, this is executed
-on the server, which might have a different locale than the requesting
-client?
-
-Would asking for a setlocale() on the server side be an unreasonable
-feature request for the capabilities (in a follow up patch, and then not
-just for archive but also fetch/push, etc.)?
-
->  int cmd_upload_archive(int argc, const char **argv, const char *prefix)
->  {
->         struct child_process writer = { argv };
-> +       enum protocol_version version = determine_protocol_version_server();
->
->         if (argc == 2 && !strcmp(argv[1], "-h"))
->                 usage(upload_archive_usage);
->
-> +       if (version == protocol_v2)
-> +               handle_v2_command_and_cap();
-> +       else {
-
-So if the client asked for v1, we still fall back to v0 here,
-which answers my question above.
-
-> +               packet_write_fmt(1, "ACK\n");
-> +               packet_flush(1);
-> +       }
-> +
->         /*
->          * Set up sideband subprocess.
->          *
-> @@ -96,9 +137,6 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
->                 die("upload-archive: %s", strerror(err));
->         }
->
-> -       packet_write_fmt(1, "ACK\n");
-> -       packet_flush(1);
-> -
->         while (1) {
->                 struct pollfd pfd[2];
->
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index 2a97b27b0..4be74d6e9 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -145,6 +145,11 @@ test_expect_success \
->
->  check_tar b
->
-> +test_expect_success 'protocol v2 for remote' '
-> +       GIT_PROTOCOL="version=2" git archive --remote=. HEAD >v2_remote.tar
-> +'
-> +check_tar v2_remote
-
-Our current standard is to keep all executions inside
-a test_expect_* block, but here it is hard to comply with
-that as the check_tar function contains test_expect_*
-and calling test_expect_* from within itself doesn't work
-with our test suite.
-
-So bonus points for a refactoring to bring t5000 up to
-our current standard (c.f. t0020 for a reasonable new
-code, and t2002 for older code, though that only covers
-syntax, not functions)
-
-The check itself is just testing that giving GIT_PROTOCOL=2
-in the environment also let's you obtain an archive. It doesn't
-test if the actual communication *is* v2.
-See 5e3548ef161 (fetch: send server options when using
-protocol v2, 2018-04-23) for an example how to sniff on the
-network traffic in tests, i.e. use GIT_TRACE_PACKET=...
-and grep on that?
-
-Thanks,
-Stefan
+>  Naming Tests
+>  ------------
+>  
+> 
+> base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
+> -- 
+> 2.18.0.windows.1
+> 
