@@ -7,39 +7,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C69FF1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 16:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 188201F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 16:19:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbeILVYz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 17:24:55 -0400
+        id S1727768AbeILVY5 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 17:24:57 -0400
 Received: from mail-dm3nam03on0134.outbound.protection.outlook.com ([104.47.41.134]:65110
         "EHLO NAM03-DM3-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726792AbeILVYz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 17:24:55 -0400
+        id S1727749AbeILVY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 17:24:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WCRt3OOIH+NigQ5Y5Ui1TjFLaHk2HcGXe8n6kTsGlJE=;
- b=PmbJ3OGq/B5i/xBEjKGfiR5RsniBaTC8O7TFIwpZ9/nKid4zp38zv9a77VDlvJrJBf6nU+ajMGV3Yik+hxNzJNFEXgaWIQtgHjuKxnQ5AiPZYgyS7YEqtQp00LP5yUvm0AeXEjghyzlRKcYVUYyu5V8RT25hoWpcCehYk93lgGE=
+ bh=ilnHYqNk9N5ET0vw2T9ptQtkRKe+M6GSW5YXnyEjLr8=;
+ b=Rn6Xj666Be8OLKpl+0A/GJmSERqVKPU1XJzIrw5okcRVtF/yMZxsSj3e7QeB0NDIwLRXfE0cHYroaOLL2WO2HFvsj/V5Y0JRtIb/c2UCFxD1TJtnk8RK5/K5OaZ6U68kjncfDalJTuW4ScLJw/gAi+UQUXNQNkUW6BJXAR8PSXQ=
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
  MW2PR2101MB1100.namprd21.prod.outlook.com (52.132.149.29) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1143.7; Wed, 12 Sep 2018 16:18:58 +0000
+ 15.20.1143.7; Wed, 12 Sep 2018 16:18:59 +0000
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7]) by MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7%2]) with mapi id 15.20.1164.006; Wed, 12 Sep 2018
- 16:18:57 +0000
+ 16:18:59 +0000
 From:   Ben Peart <benpeart@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "pclouds@gmail.com" <pclouds@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v5 4/5] read-cache.c: optimize reading index format v4
-Thread-Topic: [PATCH v5 4/5] read-cache.c: optimize reading index format v4
-Thread-Index: AQHUSrROIGALnenPT0WhAVvTUQA9zw==
-Date:   Wed, 12 Sep 2018 16:18:57 +0000
-Message-ID: <20180912161832.55324-5-benpeart@microsoft.com>
+Subject: [PATCH v5 5/5] read-cache: clean up casting and byte decoding
+Thread-Topic: [PATCH v5 5/5] read-cache: clean up casting and byte decoding
+Thread-Index: AQHUSrRPJ9oC9Tyf90yZYIIEtKD2Fw==
+Date:   Wed, 12 Sep 2018 16:18:59 +0000
+Message-ID: <20180912161832.55324-6-benpeart@microsoft.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20180912161832.55324-1-benpeart@microsoft.com>
 In-Reply-To: <20180912161832.55324-1-benpeart@microsoft.com>
@@ -54,31 +55,30 @@ x-clientproxiedby: DM5PR1401CA0011.namprd14.prod.outlook.com
  (2603:10b6:302:4::19)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR2101MB1100;6:/yvEIXC1nndmO0lUWVTbIjVO4I6wJSVGULRZDRKXJSzz+wvitU0Xz8A2iS/qrqhvrF/oEaLz7vO+PsvHLy9wB0IKKxCNXOtEhgrVX6NRVqoGG/RbUZaXUa7lk7P9eY9kgdChbhoI8WnOcDS/hiyHgruTFDzV5kRz+KeTsdjo7eCOhpH7tu7wohqFMOR7H/+BQ+8Q6T6ToV9x/hyhSjGbPCeVutLwEjh3qognbj+uInEhWlLCtSIHQknlwT94/+IJr610px+SrnV+UKYPeH5xrwq4HqwYVOij0RT8K6wkwHTcb9THgd0Q0lE/Qqpw3RQt4n5k00Ffz25uNTI0ddZgWBWo0dQDJriULjWxEGe6JXgrdJKkDKDQBuDyE3+maaRNjbnwYYhlvbMWCvLWJqClNE2bTjYROftx4gLIhznPKWCId1TnmUwxQhW1X5kpc/ZoRRd+/WvuSziVMS/e2wAmgQ==;5:KLn5ue6PlvGIrODGIBQeBN/NXWpGd8QCZ0ME5nLNXyVkcUzixG+t9+JBUNYeB/cMFPdwdqrsseSE29YmfTkahrpOb5wmT65M7bRS/zbvhNjyl5CsvwQkiusKiFD5O4h74zIRDS2vj618mZ0wn0JJ1HJSU0XNwOhrZp+1cah1VD0=;7:LFY1pkWK75edxKMtwCBFKNUyyXcQZsDhwYpc2Lp9FPDemKJ2wyS1ptEilKy9/jVEtcw5raSzeAG15fpVvscJBSLiaWSHE7bqkVtpYoWMFc44lRmJfHbTYEZxQM8Lx2SFBcyI65NLoWzeJh6lKyKH6R/xsepU4QJleXDGS3BXTCbxj5EXbHUMVAOZIeZ3E+zNx7P551uBiN+mTAGAB5Tulk+J1o5HTx+8byQYjhCHFm6gE7dhRdd6NBFexuQWivHY
-x-ms-office365-filtering-correlation-id: ac67a0ed-b957-45c7-2a7f-08d618cb7102
+x-microsoft-exchange-diagnostics: 1;MW2PR2101MB1100;6:cBgrGKBrDFY84SS5TndCi/5w2r268EjysvcBSAlCLLxWK5xxmwoh3EN4q8VVcdjEDHnqwzai9vfrwR5CDhpJlo6y7p3XXaFmarqt/2sm50/KoJFpELc3hAYrPyZNzkD04mDlH9ZT78KA3oP7Lt/bJyGRPBHA7hwyVNdHk8LpQLK3YGjxZB+v4IbJFD+K4/fex1X8l1jK4ZmaYJbKkSgHRPsVQyKEZicCnfaBvxLfFA+z1bi030i3jIjiI2HoacJ+O2j3RQZDai25XW/zhRgdENB33h/tDqCiMvM4+pf2cXNKLYgiE4vLtVbSH4sRuNg+E0Zm5lHAqGP3BgpBm00xIkoeK8oaasjvNaFuJs4R4O1y8yAAm9y4ZN2LZXgYX5J8t2O0cfCnSKZAXYHw5pZtNBUyXytlHKYwS6t17KPiXN3wO1LlEd0Xt/i+06v6FQvQIWyWvwiAPRXfQNpWmmCZGw==;5:3ALVMutQ8TLldQJ6Z+FrqDSUbP5Bq8TqNCzB4qk/qnEsYQna9Isc4z1aUIae2g5u0tQ+R++JKw+oVT6/0ilJ8ZOeZwA7AYEHMWrtBQbKiVIZAgqoH9Pr3HFnyzXbKusFfKlZJd2Q1brthuQFEl947ZY0Ej2AM9yRlNRTtGuYX6I=;7:YbG0V13e4rGGbU5clZ2scwto2ECtvKbfmvBTAw5ISHQCShJNJ3eTGdMr3jueMD0Ul229KLSM1uOyOL/sfK+kZPEMBzMSTjSG2eh9O86wVCYQNppUTFUTd9w29/r+J+snH+tSD4nZpTORTEbMhNOUSx4CLRWbm77Z8HgpOS3p2JR+FnlnkEITdqmvCAqHpYPDHDiOEKg4Li763uGZeBrnzfkM72qDHfkRkDrCoRV72EwNSBvQUAiHO4efZF8ChoFM
+x-ms-office365-filtering-correlation-id: 061883d8-79c8-4c9d-0df8-08d618cb71c8
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB1100;
 x-ms-traffictypediagnostic: MW2PR2101MB1100:
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-prvs: <MW2PR2101MB11007E18639BDFAEAE3AFB28F41B0@MW2PR2101MB1100.namprd21.prod.outlook.com>
-x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171)(85827821059158);
+x-microsoft-antispam-prvs: <MW2PR2101MB1100FBF97218D0D6C7BCDD03F41B0@MW2PR2101MB1100.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(10201501046)(3002001)(3231344)(944501410)(52105095)(2018427008)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123560045)(20161123562045)(20161123564045)(201708071742011)(7699050)(76991041);SRVR:MW2PR2101MB1100;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB1100;
 x-forefront-prvs: 07935ACF08
 x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(136003)(376002)(396003)(346002)(39860400002)(189003)(199004)(14444005)(14454004)(5250100002)(4326008)(107886003)(1730700003)(6916009)(102836004)(53936002)(8936002)(446003)(10090500001)(76176011)(99286004)(186003)(256004)(8676002)(1076002)(2501003)(2616005)(97736004)(39060400002)(36756003)(7736002)(305945005)(52116002)(5660300001)(26005)(81166006)(81156014)(50226002)(476003)(316002)(25786009)(6506007)(478600001)(3846002)(54906003)(86612001)(6116002)(6486002)(6436002)(386003)(11346002)(2906002)(72206003)(10290500003)(66066001)(5640700003)(106356001)(486006)(22452003)(105586002)(6512007)(2351001)(68736007)(2900100001);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB1100;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
 received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
-x-microsoft-antispam-message-info: h47l4tLKmxlCnHeRr8W/ofWAvreK216SU+u/hf9Ebr2QobGMvyAcxNjb/L+8v164YzoYOaFWO8tTGNxpkYHpuiPHU4dhaGHrGy5OPvcn3jK7Zk1JrCc0TmLmIZhZQBh0aL38jlNhke6X2lMTCsHJYdlNm49Fhroq2SWhP+aJUiZSIcZr1Iyl0CTGFDQ7d5UZCZ2NOCYKkHWG4VAXCWjO/QWUln4oPcoDavf8VwHscM05QaFpkJwUSq7XZPuGowf6aEFopwOkjWOWopKxQrHk5N1ixuqx2SNUabxL8Bjm0jB4DdKZHWkvBTVZYnWffgBBj4RxKuWISKQQoEkLcW9by1Leo2ViF1EKPdJVLJrabmU=
+x-microsoft-antispam-message-info: RLXbBVoC55NliiCfKiCMRez2eGhw9nr3Q8fLESRbdmcUMfN7HPRzbqGULK3X/rhurojNjUgV+wgVwt+/EAPLDCsH28o6esSZYk7GOcuno2RbKeKy/U7GrouG6nPT+l/QBaKr2qLlyKsugTCR86+43kl7daMzu1RkwSKqdvSi3SJU3z1bV18PMyK3eIB3yAEig/xgIA/1e5Hbj7dsIKuZ5c84Ku1YX7r+875yuVpXF0CzOIjY99jW87BFKXos3cfu0Lk5qcV1anUjIG6qR6j/tc37v6ya87jsBs7yf62Okj6eUICesu1Hsax3Zf/R4c3xk/TudxwGtaCbZQUC23g76SPCHTmCtyt9rKB/M3pgvX8=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <CDE8C104C6595B4FBE36A02C2777068E@namprd21.prod.outlook.com>
-Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ac67a0ed-b957-45c7-2a7f-08d618cb7102
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2018 16:18:57.7430
+X-MS-Exchange-CrossTenant-Network-Message-Id: 061883d8-79c8-4c9d-0df8-08d618cb71c8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2018 16:18:59.1805
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -88,186 +88,215 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-RnJvbTogTmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eSA8cGNsb3Vkc0BnbWFpbC5jb20+DQoNCklu
-ZGV4IGZvcm1hdCB2NCByZXF1aXJlcyBzb21lIG1vcmUgY29tcHV0YXRpb24gdG8gYXNzZW1ibGUg
-YSBwYXRoDQpiYXNlZCBvbiBhIHByZXZpb3VzIG9uZS4gVGhlIGN1cnJlbnQgY29kZSBpcyBub3Qg
-dmVyeSBlZmZpY2llbnQNCmJlY2F1c2UNCg0KIC0gaXQgZG91YmxlcyBtZW1vcnkgY29weSwgd2Ug
-YXNzZW1ibGUgdGhlIGZpbmFsIHBhdGggaW4gYSB0ZW1wb3JhcnkNCiAgIGZpcnN0IGJlZm9yZSBw
-dXR0aW5nIGl0IGJhY2sgdG8gYSBjYWNoZV9lbnRyeQ0KDQogLSBzdHJidWZfcmVtb3ZlKCkgaW4g
-ZXhwYW5kX25hbWVfZmllbGQoKSBpcyBub3QgZXhhY3RseSBhIGdvb2QgZml0DQogICBmb3Igc3Ry
-aXBwaW5nIGEgcGFydCBhdCB0aGUgZW5kLCBfc2V0bGVuKCkgd291bGQgZG8gdGhlIHNhbWUgam9i
-DQogICBhbmQgaXMgbXVjaCBjaGVhcGVyLg0KDQogLSB0aGUgb3Blbi1jb2RlZCBsb29wIHRvIGZp
-bmQgdGhlIGVuZCBvZiB0aGUgc3RyaW5nIGluDQogICBleHBhbmRfbmFtZV9maWVsZCgpIGNhbid0
-IGJlYXQgYW4gb3B0aW1pemVkIHN0cmxlbigpDQoNClRoaXMgcGF0Y2ggYXZvaWRzIHRoZSB0ZW1w
-b3JhcnkgYnVmZmVyIGFuZCB3cml0ZXMgZGlyZWN0bHkgdG8gdGhlIG5ldw0KY2FjaGVfZW50cnks
-IHdoaWNoIGFkZHJlc3NlcyB0aGUgZmlyc3QgdHdvIHBvaW50cy4gVGhlIGxhc3QgcG9pbnQNCmNv
-dWxkIGFsc28gYmUgYXZvaWRlZCBpZiB0aGUgdG90YWwgc3RyaW5nIGxlbmd0aCBmaXRzIGluIHRo
-ZSBmaXJzdCAxMg0KYml0cyBvZiBjZV9mbGFncywgaWYgbm90IHdlIGZhbGwgYmFjayB0byBzdHJs
-ZW4oKS4NCg0KUnVubmluZyAidGVzdC10b29sIHJlYWQtY2FjaGUgMTAwIiBvbiB3ZWJraXQuZ2l0
-ICgyNzVrIGZpbGVzKSwgcmVhZGluZw0KdjIgb25seSB0YWtlcyA0LjIyNiBzZWNvbmRzLCB3aGls
-ZSB2NCB0YWtlcyA1LjcxMSBzZWNvbmRzLCAzNSUgbW9yZQ0KdGltZS4gVGhlIHBhdGNoIHJlZHVj
-ZXMgcmVhZCB0aW1lIG9uIHY0IHRvIDQuMzE5IHNlY29uZHMuDQoNClNpZ25lZC1vZmYtYnk6IE5n
-dXnhu4VuIFRow6FpIE5n4buNYyBEdXkgPHBjbG91ZHNAZ21haWwuY29tPg0KU2lnbmVkLW9mZi1i
-eTogQmVuIFBlYXJ0IDxiZW5wZWFydEBtaWNyb3NvZnQuY29tPg0KLS0tDQogcmVhZC1jYWNoZS5j
-IHwgMTMyICsrKysrKysrKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LQ0KIDEgZmlsZSBjaGFuZ2VkLCA2NyBpbnNlcnRpb25zKCspLCA2NSBkZWxldGlvbnMoLSkNCg0K
-ZGlmZiAtLWdpdCBhL3JlYWQtY2FjaGUuYyBiL3JlYWQtY2FjaGUuYw0KaW5kZXggODgwZjYyN2I0
-Yy4uNDBkYzQ3MjNiMiAxMDA2NDQNCi0tLSBhL3JlYWQtY2FjaGUuYw0KKysrIGIvcmVhZC1jYWNo
-ZS5jDQpAQCAtMTcyMSwzMyArMTcyMSw2IEBAIGludCByZWFkX2luZGV4KHN0cnVjdCBpbmRleF9z
-dGF0ZSAqaXN0YXRlKQ0KIAlyZXR1cm4gcmVhZF9pbmRleF9mcm9tKGlzdGF0ZSwgZ2V0X2luZGV4
-X2ZpbGUoKSwgZ2V0X2dpdF9kaXIoKSk7DQogfQ0KIA0KLXN0YXRpYyBzdHJ1Y3QgY2FjaGVfZW50
-cnkgKmNhY2hlX2VudHJ5X2Zyb21fb25kaXNrKHN0cnVjdCBtZW1fcG9vbCAqbWVtX3Bvb2wsDQot
-CQkJCQkJICAgc3RydWN0IG9uZGlza19jYWNoZV9lbnRyeSAqb25kaXNrLA0KLQkJCQkJCSAgIHVu
-c2lnbmVkIGludCBmbGFncywNCi0JCQkJCQkgICBjb25zdCBjaGFyICpuYW1lLA0KLQkJCQkJCSAg
-IHNpemVfdCBsZW4pDQotew0KLQlzdHJ1Y3QgY2FjaGVfZW50cnkgKmNlID0gbWVtX3Bvb2xfX2Nl
-X2FsbG9jKG1lbV9wb29sLCBsZW4pOw0KLQ0KLQljZS0+Y2Vfc3RhdF9kYXRhLnNkX2N0aW1lLnNl
-YyA9IGdldF9iZTMyKCZvbmRpc2stPmN0aW1lLnNlYyk7DQotCWNlLT5jZV9zdGF0X2RhdGEuc2Rf
-bXRpbWUuc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+bXRpbWUuc2VjKTsNCi0JY2UtPmNlX3N0YXRf
-ZGF0YS5zZF9jdGltZS5uc2VjID0gZ2V0X2JlMzIoJm9uZGlzay0+Y3RpbWUubnNlYyk7DQotCWNl
-LT5jZV9zdGF0X2RhdGEuc2RfbXRpbWUubnNlYyA9IGdldF9iZTMyKCZvbmRpc2stPm10aW1lLm5z
-ZWMpOw0KLQljZS0+Y2Vfc3RhdF9kYXRhLnNkX2RldiAgID0gZ2V0X2JlMzIoJm9uZGlzay0+ZGV2
-KTsNCi0JY2UtPmNlX3N0YXRfZGF0YS5zZF9pbm8gICA9IGdldF9iZTMyKCZvbmRpc2stPmlubyk7
-DQotCWNlLT5jZV9tb2RlICA9IGdldF9iZTMyKCZvbmRpc2stPm1vZGUpOw0KLQljZS0+Y2Vfc3Rh
-dF9kYXRhLnNkX3VpZCAgID0gZ2V0X2JlMzIoJm9uZGlzay0+dWlkKTsNCi0JY2UtPmNlX3N0YXRf
-ZGF0YS5zZF9naWQgICA9IGdldF9iZTMyKCZvbmRpc2stPmdpZCk7DQotCWNlLT5jZV9zdGF0X2Rh
-dGEuc2Rfc2l6ZSAgPSBnZXRfYmUzMigmb25kaXNrLT5zaXplKTsNCi0JY2UtPmNlX2ZsYWdzID0g
-ZmxhZ3MgJiB+Q0VfTkFNRU1BU0s7DQotCWNlLT5jZV9uYW1lbGVuID0gbGVuOw0KLQljZS0+aW5k
-ZXggPSAwOw0KLQloYXNoY3B5KGNlLT5vaWQuaGFzaCwgb25kaXNrLT5zaGExKTsNCi0JbWVtY3B5
-KGNlLT5uYW1lLCBuYW1lLCBsZW4pOw0KLQljZS0+bmFtZVtsZW5dID0gJ1wwJzsNCi0JcmV0dXJu
-IGNlOw0KLX0NCi0NCiAvKg0KICAqIEFkamFjZW50IGNhY2hlIGVudHJpZXMgdGVuZCB0byBzaGFy
-ZSB0aGUgbGVhZGluZyBwYXRocywgc28gaXQgbWFrZXMNCiAgKiBzZW5zZSB0byBvbmx5IHN0b3Jl
-IHRoZSBkaWZmZXJlbmNlcyBpbiBsYXRlciBlbnRyaWVzLiAgSW4gdGhlIHY0DQpAQCAtMTc2Miwy
-MiArMTczNSwyNCBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBleHBhbmRfbmFtZV9maWVsZChzdHJ1
-Y3Qgc3RyYnVmICpuYW1lLCBjb25zdCBjaGFyICpjcF8pDQogDQogCWlmIChuYW1lLT5sZW4gPCBs
-ZW4pDQogCQlkaWUoIm1hbGZvcm1lZCBuYW1lIGZpZWxkIGluIHRoZSBpbmRleCIpOw0KLQlzdHJi
-dWZfcmVtb3ZlKG5hbWUsIG5hbWUtPmxlbiAtIGxlbiwgbGVuKTsNCi0JZm9yIChlcCA9IGNwOyAq
-ZXA7IGVwKyspDQotCQk7IC8qIGZpbmQgdGhlIGVuZCAqLw0KKwlzdHJidWZfc2V0bGVuKG5hbWUs
-IG5hbWUtPmxlbiAtIGxlbik7DQorCWVwID0gY3AgKyBzdHJsZW4oKGNvbnN0IGNoYXIgKiljcCk7
-DQogCXN0cmJ1Zl9hZGQobmFtZSwgY3AsIGVwIC0gY3ApOw0KIAlyZXR1cm4gKGNvbnN0IGNoYXIg
-KillcCArIDEgLSBjcF87DQogfQ0KIA0KLXN0YXRpYyBzdHJ1Y3QgY2FjaGVfZW50cnkgKmNyZWF0
-ZV9mcm9tX2Rpc2soc3RydWN0IG1lbV9wb29sICptZW1fcG9vbCwNCitzdGF0aWMgc3RydWN0IGNh
-Y2hlX2VudHJ5ICpjcmVhdGVfZnJvbV9kaXNrKHN0cnVjdCBtZW1fcG9vbCAqY2VfbWVtX3Bvb2ws
-DQorCQkJCQkgICAgdW5zaWduZWQgaW50IHZlcnNpb24sDQogCQkJCQkgICAgc3RydWN0IG9uZGlz
-a19jYWNoZV9lbnRyeSAqb25kaXNrLA0KIAkJCQkJICAgIHVuc2lnbmVkIGxvbmcgKmVudF9zaXpl
-LA0KLQkJCQkJICAgIHN0cnVjdCBzdHJidWYgKnByZXZpb3VzX25hbWUpDQorCQkJCQkgICAgY29u
-c3Qgc3RydWN0IGNhY2hlX2VudHJ5ICpwcmV2aW91c19jZSkNCiB7DQogCXN0cnVjdCBjYWNoZV9l
-bnRyeSAqY2U7DQogCXNpemVfdCBsZW47DQogCWNvbnN0IGNoYXIgKm5hbWU7DQogCXVuc2lnbmVk
-IGludCBmbGFnczsNCisJc2l6ZV90IGNvcHlfbGVuID0gMDsNCisJaW50IGV4cGFuZF9uYW1lX2Zp
-ZWxkID0gdmVyc2lvbiA9PSA0Ow0KIA0KIAkvKiBPbi1kaXNrIGZsYWdzIGFyZSBqdXN0IDE2IGJp
-dHMgKi8NCiAJZmxhZ3MgPSBnZXRfYmUxNigmb25kaXNrLT5mbGFncyk7DQpAQCAtMTc5NywyMSAr
-MTc3Miw1MCBAQCBzdGF0aWMgc3RydWN0IGNhY2hlX2VudHJ5ICpjcmVhdGVfZnJvbV9kaXNrKHN0
-cnVjdCBtZW1fcG9vbCAqbWVtX3Bvb2wsDQogCWVsc2UNCiAJCW5hbWUgPSBvbmRpc2stPm5hbWU7
-DQogDQotCWlmICghcHJldmlvdXNfbmFtZSkgew0KLQkJLyogdjMgYW5kIGVhcmxpZXIgKi8NCi0J
-CWlmIChsZW4gPT0gQ0VfTkFNRU1BU0spDQotCQkJbGVuID0gc3RybGVuKG5hbWUpOw0KLQkJY2Ug
-PSBjYWNoZV9lbnRyeV9mcm9tX29uZGlzayhtZW1fcG9vbCwgb25kaXNrLCBmbGFncywgbmFtZSwg
-bGVuKTsNCisJaWYgKGV4cGFuZF9uYW1lX2ZpZWxkKSB7DQorCQljb25zdCB1bnNpZ25lZCBjaGFy
-ICpjcCA9IChjb25zdCB1bnNpZ25lZCBjaGFyICopbmFtZTsNCisJCXNpemVfdCBzdHJpcF9sZW4s
-IHByZXZpb3VzX2xlbjsNCiANCi0JCSplbnRfc2l6ZSA9IG9uZGlza19jZV9zaXplKGNlKTsNCi0J
-fSBlbHNlIHsNCi0JCXVuc2lnbmVkIGxvbmcgY29uc3VtZWQ7DQotCQljb25zdW1lZCA9IGV4cGFu
-ZF9uYW1lX2ZpZWxkKHByZXZpb3VzX25hbWUsIG5hbWUpOw0KLQkJY2UgPSBjYWNoZV9lbnRyeV9m
-cm9tX29uZGlzayhtZW1fcG9vbCwgb25kaXNrLCBmbGFncywNCi0JCQkJCSAgICAgcHJldmlvdXNf
-bmFtZS0+YnVmLA0KLQkJCQkJICAgICBwcmV2aW91c19uYW1lLT5sZW4pOw0KKwkJcHJldmlvdXNf
-bGVuID0gcHJldmlvdXNfY2UgPyBwcmV2aW91c19jZS0+Y2VfbmFtZWxlbiA6IDA7DQorCQlzdHJp
-cF9sZW4gPSBkZWNvZGVfdmFyaW50KCZjcCk7DQorCQlpZiAocHJldmlvdXNfbGVuIDwgc3RyaXBf
-bGVuKSB7DQorCQkJaWYgKHByZXZpb3VzX2NlKQ0KKwkJCQlkaWUoXygibWFsZm9ybWVkIG5hbWUg
-ZmllbGQgaW4gdGhlIGluZGV4LCBuZWFyIHBhdGggJyVzJyIpLA0KKwkJCQkgICAgcHJldmlvdXNf
-Y2UtPm5hbWUpOw0KKwkJCWVsc2UNCisJCQkJZGllKF8oIm1hbGZvcm1lZCBuYW1lIGZpZWxkIGlu
-IHRoZSBpbmRleCBpbiB0aGUgZmlyc3QgcGF0aCIpKTsNCisJCX0NCisJCWNvcHlfbGVuID0gcHJl
-dmlvdXNfbGVuIC0gc3RyaXBfbGVuOw0KKwkJbmFtZSA9IChjb25zdCBjaGFyICopY3A7DQorCX0N
-CisNCisJaWYgKGxlbiA9PSBDRV9OQU1FTUFTSykNCisJCWxlbiA9IHN0cmxlbihuYW1lKSArIGNv
-cHlfbGVuOw0KKw0KKwljZSA9IG1lbV9wb29sX19jZV9hbGxvYyhjZV9tZW1fcG9vbCwgbGVuKTsN
-CisNCisJY2UtPmNlX3N0YXRfZGF0YS5zZF9jdGltZS5zZWMgPSBnZXRfYmUzMigmb25kaXNrLT5j
-dGltZS5zZWMpOw0KKwljZS0+Y2Vfc3RhdF9kYXRhLnNkX210aW1lLnNlYyA9IGdldF9iZTMyKCZv
-bmRpc2stPm10aW1lLnNlYyk7DQorCWNlLT5jZV9zdGF0X2RhdGEuc2RfY3RpbWUubnNlYyA9IGdl
-dF9iZTMyKCZvbmRpc2stPmN0aW1lLm5zZWMpOw0KKwljZS0+Y2Vfc3RhdF9kYXRhLnNkX210aW1l
-Lm5zZWMgPSBnZXRfYmUzMigmb25kaXNrLT5tdGltZS5uc2VjKTsNCisJY2UtPmNlX3N0YXRfZGF0
-YS5zZF9kZXYgICA9IGdldF9iZTMyKCZvbmRpc2stPmRldik7DQorCWNlLT5jZV9zdGF0X2RhdGEu
-c2RfaW5vICAgPSBnZXRfYmUzMigmb25kaXNrLT5pbm8pOw0KKwljZS0+Y2VfbW9kZSAgPSBnZXRf
-YmUzMigmb25kaXNrLT5tb2RlKTsNCisJY2UtPmNlX3N0YXRfZGF0YS5zZF91aWQgICA9IGdldF9i
-ZTMyKCZvbmRpc2stPnVpZCk7DQorCWNlLT5jZV9zdGF0X2RhdGEuc2RfZ2lkICAgPSBnZXRfYmUz
-Migmb25kaXNrLT5naWQpOw0KKwljZS0+Y2Vfc3RhdF9kYXRhLnNkX3NpemUgID0gZ2V0X2JlMzIo
-Jm9uZGlzay0+c2l6ZSk7DQorCWNlLT5jZV9mbGFncyA9IGZsYWdzICYgfkNFX05BTUVNQVNLOw0K
-KwljZS0+Y2VfbmFtZWxlbiA9IGxlbjsNCisJY2UtPmluZGV4ID0gMDsNCisJaGFzaGNweShjZS0+
-b2lkLmhhc2gsIG9uZGlzay0+c2hhMSk7DQogDQotCQkqZW50X3NpemUgPSAobmFtZSAtICgoY2hh
-ciAqKW9uZGlzaykpICsgY29uc3VtZWQ7DQorCWlmIChleHBhbmRfbmFtZV9maWVsZCkgew0KKwkJ
-bWVtY3B5KGNlLT5uYW1lLCBwcmV2aW91c19jZS0+bmFtZSwgY29weV9sZW4pOw0KKwkJbWVtY3B5
-KGNlLT5uYW1lICsgY29weV9sZW4sIG5hbWUsIGxlbiArIDEgLSBjb3B5X2xlbik7DQorCQkqZW50
-X3NpemUgPSAobmFtZSAtICgoY2hhciAqKW9uZGlzaykpICsgbGVuICsgMSAtIGNvcHlfbGVuOw0K
-Kwl9IGVsc2Ugew0KKwkJbWVtY3B5KGNlLT5uYW1lLCBuYW1lLCBsZW4gKyAxKTsNCisJCSplbnRf
-c2l6ZSA9IG9uZGlza19jZV9zaXplKGNlKTsNCiAJfQ0KIAlyZXR1cm4gY2U7DQogfQ0KQEAgLTE5
-NDgsNyArMTk1Miw3IEBAIHN0YXRpYyB2b2lkICpsb2FkX2luZGV4X2V4dGVuc2lvbnModm9pZCAq
-X2RhdGEpDQogICovDQogc3RhdGljIHVuc2lnbmVkIGxvbmcgbG9hZF9jYWNoZV9lbnRyeV9ibG9j
-ayhzdHJ1Y3QgaW5kZXhfc3RhdGUgKmlzdGF0ZSwNCiAJCQlzdHJ1Y3QgbWVtX3Bvb2wgKmNlX21l
-bV9wb29sLCBpbnQgb2Zmc2V0LCBpbnQgbnIsIHZvaWQgKm1tYXAsDQotCQkJdW5zaWduZWQgbG9u
-ZyBzdGFydF9vZmZzZXQsIHN0cnVjdCBzdHJidWYgKnByZXZpb3VzX25hbWUpDQorCQkJdW5zaWdu
-ZWQgbG9uZyBzdGFydF9vZmZzZXQsIGNvbnN0IHN0cnVjdCBjYWNoZV9lbnRyeSAqcHJldmlvdXNf
-Y2UpDQogew0KIAlpbnQgaTsNCiAJdW5zaWduZWQgbG9uZyBzcmNfb2Zmc2V0ID0gc3RhcnRfb2Zm
-c2V0Ow0KQEAgLTE5NTksMTAgKzE5NjMsMTEgQEAgc3RhdGljIHVuc2lnbmVkIGxvbmcgbG9hZF9j
-YWNoZV9lbnRyeV9ibG9jayhzdHJ1Y3QgaW5kZXhfc3RhdGUgKmlzdGF0ZSwNCiAJCXVuc2lnbmVk
-IGxvbmcgY29uc3VtZWQ7DQogDQogCQlkaXNrX2NlID0gKHN0cnVjdCBvbmRpc2tfY2FjaGVfZW50
-cnkgKikoKGNoYXIgKiltbWFwICsgc3JjX29mZnNldCk7DQotCQljZSA9IGNyZWF0ZV9mcm9tX2Rp
-c2soY2VfbWVtX3Bvb2wsIGRpc2tfY2UsICZjb25zdW1lZCwgcHJldmlvdXNfbmFtZSk7DQorCQlj
-ZSA9IGNyZWF0ZV9mcm9tX2Rpc2soY2VfbWVtX3Bvb2wsIGlzdGF0ZS0+dmVyc2lvbiwgZGlza19j
-ZSwgJmNvbnN1bWVkLCBwcmV2aW91c19jZSk7DQogCQlzZXRfaW5kZXhfZW50cnkoaXN0YXRlLCBp
-LCBjZSk7DQogDQogCQlzcmNfb2Zmc2V0ICs9IGNvbnN1bWVkOw0KKwkJcHJldmlvdXNfY2UgPSBj
-ZTsNCiAJfQ0KIAlyZXR1cm4gc3JjX29mZnNldCAtIHN0YXJ0X29mZnNldDsNCiB9DQpAQCAtMTk3
-MCwyMiArMTk3NSwxOCBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBsb2FkX2NhY2hlX2VudHJ5X2Js
-b2NrKHN0cnVjdCBpbmRleF9zdGF0ZSAqaXN0YXRlLA0KIHN0YXRpYyB1bnNpZ25lZCBsb25nIGxv
-YWRfYWxsX2NhY2hlX2VudHJpZXMoc3RydWN0IGluZGV4X3N0YXRlICppc3RhdGUsDQogCQkJdm9p
-ZCAqbW1hcCwgc2l6ZV90IG1tYXBfc2l6ZSwgdW5zaWduZWQgbG9uZyBzcmNfb2Zmc2V0KQ0KIHsN
-Ci0Jc3RydWN0IHN0cmJ1ZiBwcmV2aW91c19uYW1lX2J1ZiA9IFNUUkJVRl9JTklULCAqcHJldmlv
-dXNfbmFtZTsNCiAJdW5zaWduZWQgbG9uZyBjb25zdW1lZDsNCiANCiAJaWYgKGlzdGF0ZS0+dmVy
-c2lvbiA9PSA0KSB7DQotCQlwcmV2aW91c19uYW1lID0gJnByZXZpb3VzX25hbWVfYnVmOw0KIAkJ
-bWVtX3Bvb2xfaW5pdCgmaXN0YXRlLT5jZV9tZW1fcG9vbCwNCiAJCQkJZXN0aW1hdGVfY2FjaGVf
-c2l6ZV9mcm9tX2NvbXByZXNzZWQoaXN0YXRlLT5jYWNoZV9ucikpOw0KIAl9IGVsc2Ugew0KLQkJ
-cHJldmlvdXNfbmFtZSA9IE5VTEw7DQogCQltZW1fcG9vbF9pbml0KCZpc3RhdGUtPmNlX21lbV9w
-b29sLA0KIAkJCQllc3RpbWF0ZV9jYWNoZV9zaXplKG1tYXBfc2l6ZSwgaXN0YXRlLT5jYWNoZV9u
-cikpOw0KIAl9DQogDQogCWNvbnN1bWVkID0gbG9hZF9jYWNoZV9lbnRyeV9ibG9jayhpc3RhdGUs
-IGlzdGF0ZS0+Y2VfbWVtX3Bvb2wsDQotCQkJCQkwLCBpc3RhdGUtPmNhY2hlX25yLCBtbWFwLCBz
-cmNfb2Zmc2V0LCBwcmV2aW91c19uYW1lKTsNCi0Jc3RyYnVmX3JlbGVhc2UoJnByZXZpb3VzX25h
-bWVfYnVmKTsNCisJCQkJCTAsIGlzdGF0ZS0+Y2FjaGVfbnIsIG1tYXAsIHNyY19vZmZzZXQsIE5V
-TEwpOw0KIAlyZXR1cm4gY29uc3VtZWQ7DQogfQ0KIA0KQEAgLTIwMDcsOCArMjAwOCw3IEBAIHN0
-cnVjdCBsb2FkX2NhY2hlX2VudHJpZXNfdGhyZWFkX2RhdGENCiAJaW50IG9mZnNldCwgbnI7DQog
-CXZvaWQgKm1tYXA7DQogCXVuc2lnbmVkIGxvbmcgc3RhcnRfb2Zmc2V0Ow0KLQlzdHJ1Y3Qgc3Ry
-YnVmIHByZXZpb3VzX25hbWVfYnVmOw0KLQlzdHJ1Y3Qgc3RyYnVmICpwcmV2aW91c19uYW1lOw0K
-KwlzdHJ1Y3QgY2FjaGVfZW50cnkgKnByZXZpb3VzX2NlOw0KIAl1bnNpZ25lZCBsb25nIGNvbnN1
-bWVkOwkvKiByZXR1cm4gIyBvZiBieXRlcyBpbiBpbmRleCBmaWxlIHByb2Nlc3NlZCAqLw0KIH07
-DQogDQpAQCAtMjAyMSw3ICsyMDIxLDcgQEAgc3RhdGljIHZvaWQgKmxvYWRfY2FjaGVfZW50cmll
-c190aHJlYWQodm9pZCAqX2RhdGEpDQogCXN0cnVjdCBsb2FkX2NhY2hlX2VudHJpZXNfdGhyZWFk
-X2RhdGEgKnAgPSBfZGF0YTsNCiANCiAJcC0+Y29uc3VtZWQgKz0gbG9hZF9jYWNoZV9lbnRyeV9i
-bG9jayhwLT5pc3RhdGUsIHAtPmNlX21lbV9wb29sLA0KLQkJcC0+b2Zmc2V0LCBwLT5uciwgcC0+
-bW1hcCwgcC0+c3RhcnRfb2Zmc2V0LCBwLT5wcmV2aW91c19uYW1lKTsNCisJCXAtPm9mZnNldCwg
-cC0+bnIsIHAtPm1tYXAsIHAtPnN0YXJ0X29mZnNldCwgcC0+cHJldmlvdXNfY2UpOw0KIAlyZXR1
-cm4gTlVMTDsNCiB9DQogDQpAQCAtMjA2OCwyMCArMjA2OCwyMyBAQCBzdGF0aWMgdW5zaWduZWQg
-bG9uZyBsb2FkX2NhY2hlX2VudHJpZXNfdGhyZWFkZWQoaW50IG5yX3RocmVhZHMsIHN0cnVjdCBp
-bmRleF9zdA0KIAkJCXAtPmlzdGF0ZSA9IGlzdGF0ZTsNCiAJCQlwLT5vZmZzZXQgPSBpOw0KIAkJ
-CXAtPm5yID0gY2VfcGVyX3RocmVhZCA8IGlzdGF0ZS0+Y2FjaGVfbnIgLSBpID8gY2VfcGVyX3Ro
-cmVhZCA6IGlzdGF0ZS0+Y2FjaGVfbnIgLSBpOw0KKwkJCXAtPm1tYXAgPSBtbWFwOw0KKwkJCXAt
-PnN0YXJ0X29mZnNldCA9IHNyY19vZmZzZXQ7DQogDQogCQkJLyogY3JlYXRlIGEgbWVtX3Bvb2wg
-Zm9yIGVhY2ggdGhyZWFkICovDQotCQkJaWYgKGlzdGF0ZS0+dmVyc2lvbiA9PSA0KQ0KKwkJCWlm
-IChpc3RhdGUtPnZlcnNpb24gPT0gNCkgew0KIAkJCQltZW1fcG9vbF9pbml0KCZwLT5jZV9tZW1f
-cG9vbCwNCiAJCQkJCWVzdGltYXRlX2NhY2hlX3NpemVfZnJvbV9jb21wcmVzc2VkKHAtPm5yKSk7
-DQotCQkJZWxzZQ0KKw0KKwkJCQkvKiBjcmVhdGUgYSBwcmV2aW91cyBjZSBlbnRyeSBmb3IgdGhp
-cyBibG9jayBvZiBjYWNoZSBlbnRyaWVzICovDQorCQkJCWlmIChwcmV2aW91c19uYW1lLT5sZW4p
-IHsNCisJCQkJCXAtPnByZXZpb3VzX2NlID0gbWVtX3Bvb2xfX2NlX2FsbG9jKHAtPmNlX21lbV9w
-b29sLCBwcmV2aW91c19uYW1lLT5sZW4pOw0KKwkJCQkJcC0+cHJldmlvdXNfY2UtPmNlX25hbWVs
-ZW4gPSBwcmV2aW91c19uYW1lLT5sZW47DQorCQkJCQltZW1jcHkocC0+cHJldmlvdXNfY2UtPm5h
-bWUsIHByZXZpb3VzX25hbWUtPmJ1ZiwgcHJldmlvdXNfbmFtZS0+bGVuKTsNCisJCQkJfQ0KKwkJ
-CX0gZWxzZSB7DQogCQkJCW1lbV9wb29sX2luaXQoJnAtPmNlX21lbV9wb29sLA0KIAkJCQkJZXN0
-aW1hdGVfY2FjaGVfc2l6ZShtbWFwX3NpemUsIHAtPm5yKSk7DQotDQotCQkJcC0+bW1hcCA9IG1t
-YXA7DQotCQkJcC0+c3RhcnRfb2Zmc2V0ID0gc3JjX29mZnNldDsNCi0JCQlpZiAocHJldmlvdXNf
-bmFtZSkgew0KLQkJCQlzdHJidWZfYWRkYnVmKCZwLT5wcmV2aW91c19uYW1lX2J1ZiwgcHJldmlv
-dXNfbmFtZSk7DQotCQkJCXAtPnByZXZpb3VzX25hbWUgPSAmcC0+cHJldmlvdXNfbmFtZV9idWY7
-DQogCQkJfQ0KIA0KIAkJCWlmIChwdGhyZWFkX2NyZWF0ZSgmcC0+cHRocmVhZCwgTlVMTCwgbG9h
-ZF9jYWNoZV9lbnRyaWVzX3RocmVhZCwgcCkpDQpAQCAtMjEwNCw3ICsyMTA3LDcgQEAgc3RhdGlj
-IHVuc2lnbmVkIGxvbmcgbG9hZF9jYWNoZV9lbnRyaWVzX3RocmVhZGVkKGludCBucl90aHJlYWRz
-LCBzdHJ1Y3QgaW5kZXhfc3QNCiAJCX0gZWxzZQ0KIAkJCW5hbWUgPSBvbmRpc2stPm5hbWU7DQog
-DQotCQlpZiAoIXByZXZpb3VzX25hbWUpIHsNCisJCWlmIChpc3RhdGUtPnZlcnNpb24gIT0gNCkg
-ew0KIAkJCXNpemVfdCBsZW47DQogDQogCQkJLyogdjMgYW5kIGVhcmxpZXIgKi8NCkBAIC0yMTIz
-LDcgKzIxMjYsNiBAQCBzdGF0aWMgdW5zaWduZWQgbG9uZyBsb2FkX2NhY2hlX2VudHJpZXNfdGhy
-ZWFkZWQoaW50IG5yX3RocmVhZHMsIHN0cnVjdCBpbmRleF9zdA0KIAkJaWYgKHB0aHJlYWRfam9p
-bihwLT5wdGhyZWFkLCBOVUxMKSkNCiAJCQlkaWUoInVuYWJsZSB0byBqb2luIGxvYWRfY2FjaGVf
-ZW50cmllc190aHJlYWQiKTsNCiAJCW1lbV9wb29sX2NvbWJpbmUoaXN0YXRlLT5jZV9tZW1fcG9v
-bCwgcC0+Y2VfbWVtX3Bvb2wpOw0KLQkJc3RyYnVmX3JlbGVhc2UoJnAtPnByZXZpb3VzX25hbWVf
-YnVmKTsNCiAJCWNvbnN1bWVkICs9IHAtPmNvbnN1bWVkOw0KIAl9DQogDQotLSANCjIuMTguMC53
-aW5kb3dzLjENCg0K
+This patch does a clean up pass to minimize the casting required to work
+with the memory mapped index (mmap).
+
+It also makes the decoding of network byte order more consistent by using
+get_be32() where possible.
+
+Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
+---
+ read-cache.c | 49 +++++++++++++++++++++++--------------------------
+ 1 file changed, 23 insertions(+), 26 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 40dc4723b2..c05e887fc9 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1655,7 +1655,7 @@ int verify_index_checksum;
+ /* Allow fsck to force verification of the cache entry order. */
+ int verify_ce_order;
+=20
+-static int verify_hdr(struct cache_header *hdr, unsigned long size)
++static int verify_hdr(const struct cache_header *hdr, unsigned long size)
+ {
+ 	git_hash_ctx c;
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+@@ -1679,7 +1679,7 @@ static int verify_hdr(struct cache_header *hdr, unsig=
+ned long size)
+ }
+=20
+ static int read_index_extension(struct index_state *istate,
+-				const char *ext, void *data, unsigned long sz)
++				const char *ext, const char *data, unsigned long sz)
+ {
+ 	switch (CACHE_EXT(ext)) {
+ 	case CACHE_EXT_TREE:
+@@ -1902,7 +1902,7 @@ static size_t estimate_cache_size(size_t ondisk_size,=
+ unsigned int entries)
+ }
+=20
+ #ifndef NO_PTHREADS
+-static unsigned long read_eoie_extension(void *mmap_, size_t mmap_size);
++static unsigned long read_eoie_extension(const char *mmap, size_t mmap_siz=
+e);
+ #endif
+ static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_con=
+text, unsigned long offset);
+=20
+@@ -1912,14 +1912,14 @@ struct load_index_extensions
+ 	pthread_t pthread;
+ #endif
+ 	struct index_state *istate;
+-	void *mmap;
++	const char *mmap;
+ 	size_t mmap_size;
+ 	unsigned long src_offset;
+ };
+=20
+-static void *load_index_extensions(void *_data)
++static void *load_index_extensions(void *data)
+ {
+-	struct load_index_extensions *p =3D _data;
++	struct load_index_extensions *p =3D data;
+ 	unsigned long src_offset =3D p->src_offset;
+=20
+ 	while (src_offset <=3D p->mmap_size - the_hash_algo->rawsz - 8) {
+@@ -1930,13 +1930,12 @@ static void *load_index_extensions(void *_data)
+ 		 * in 4-byte network byte order.
+ 		 */
+ 		uint32_t extsize;
+-		memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
+-		extsize =3D ntohl(extsize);
++		extsize =3D get_be32(p->mmap + src_offset + 4);
+ 		if (read_index_extension(p->istate,
+-			(const char *)p->mmap + src_offset,
+-			(char *)p->mmap + src_offset + 8,
++			p->mmap + src_offset,
++			p->mmap + src_offset + 8,
+ 			extsize) < 0) {
+-			munmap(p->mmap, p->mmap_size);
++			munmap((void *)p->mmap, p->mmap_size);
+ 			die("index file corrupt");
+ 		}
+ 		src_offset +=3D 8;
+@@ -1951,7 +1950,7 @@ static void *load_index_extensions(void *_data)
+  * from the memory mapped file and add them to the given index.
+  */
+ static unsigned long load_cache_entry_block(struct index_state *istate,
+-			struct mem_pool *ce_mem_pool, int offset, int nr, void *mmap,
++			struct mem_pool *ce_mem_pool, int offset, int nr, const char *mmap,
+ 			unsigned long start_offset, const struct cache_entry *previous_ce)
+ {
+ 	int i;
+@@ -1962,7 +1961,7 @@ static unsigned long load_cache_entry_block(struct in=
+dex_state *istate,
+ 		struct cache_entry *ce;
+ 		unsigned long consumed;
+=20
+-		disk_ce =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
++		disk_ce =3D (struct ondisk_cache_entry *)(mmap + src_offset);
+ 		ce =3D create_from_disk(ce_mem_pool, istate->version, disk_ce, &consumed=
+, previous_ce);
+ 		set_index_entry(istate, i, ce);
+=20
+@@ -1973,7 +1972,7 @@ static unsigned long load_cache_entry_block(struct in=
+dex_state *istate,
+ }
+=20
+ static unsigned long load_all_cache_entries(struct index_state *istate,
+-			void *mmap, size_t mmap_size, unsigned long src_offset)
++			const char *mmap, size_t mmap_size, unsigned long src_offset)
+ {
+ 	unsigned long consumed;
+=20
+@@ -2006,7 +2005,7 @@ struct load_cache_entries_thread_data
+ 	struct index_state *istate;
+ 	struct mem_pool *ce_mem_pool;
+ 	int offset, nr;
+-	void *mmap;
++	const char *mmap;
+ 	unsigned long start_offset;
+ 	struct cache_entry *previous_ce;
+ 	unsigned long consumed;	/* return # of bytes in index file processed */
+@@ -2026,7 +2025,7 @@ static void *load_cache_entries_thread(void *_data)
+ }
+=20
+ static unsigned long load_cache_entries_threaded(int nr_threads, struct in=
+dex_state *istate,
+-			void *mmap, size_t mmap_size, unsigned long src_offset)
++			const char *mmap, size_t mmap_size, unsigned long src_offset)
+ {
+ 	struct strbuf previous_name_buf =3D STRBUF_INIT, *previous_name;
+ 	struct load_cache_entries_thread_data *data;
+@@ -2095,7 +2094,7 @@ static unsigned long load_cache_entries_threaded(int =
+nr_threads, struct index_st
+ 				break;
+ 		}
+=20
+-		ondisk =3D (struct ondisk_cache_entry *)((char *)mmap + src_offset);
++		ondisk =3D (struct ondisk_cache_entry *)(mmap + src_offset);
+=20
+ 		/* On-disk flags are just 16 bits */
+ 		flags =3D get_be16(&ondisk->flags);
+@@ -2143,8 +2142,8 @@ int do_read_index(struct index_state *istate, const c=
+har *path, int must_exist)
+ 	int fd;
+ 	struct stat st;
+ 	unsigned long src_offset;
+-	struct cache_header *hdr;
+-	void *mmap;
++	const struct cache_header *hdr;
++	const char *mmap;
+ 	size_t mmap_size;
+ 	struct load_index_extensions p =3D { 0 };
+ 	unsigned long extension_offset =3D 0;
+@@ -2176,7 +2175,7 @@ int do_read_index(struct index_state *istate, const c=
+har *path, int must_exist)
+ 		die_errno("unable to map index file");
+ 	close(fd);
+=20
+-	hdr =3D mmap;
++	hdr =3D (const struct cache_header *)mmap;
+ 	if (verify_hdr(hdr, mmap_size) < 0)
+ 		goto unmap;
+=20
+@@ -2236,11 +2235,11 @@ int do_read_index(struct index_state *istate, const=
+ char *path, int must_exist)
+ 		p.src_offset =3D src_offset;
+ 		load_index_extensions(&p);
+ 	}
+-	munmap(mmap, mmap_size);
++	munmap((void *)mmap, mmap_size);
+ 	return istate->cache_nr;
+=20
+ unmap:
+-	munmap(mmap, mmap_size);
++	munmap((void *)mmap, mmap_size);
+ 	die("index file corrupt");
+ }
+=20
+@@ -3263,7 +3262,7 @@ int should_validate_cache_entries(void)
+ #define EOIE_SIZE_WITH_HEADER (4 + 4 + EOIE_SIZE) /* <4-byte signature> + =
+<4-byte length> + EOIE_SIZE */
+=20
+ #ifndef NO_PTHREADS
+-static unsigned long read_eoie_extension(void *mmap_, size_t mmap_size)
++static unsigned long read_eoie_extension(const char *mmap, size_t mmap_siz=
+e)
+ {
+ 	/*
+ 	 * The end of index entries (EOIE) extension is guaranteed to be last
+@@ -3274,7 +3273,6 @@ static unsigned long read_eoie_extension(void *mmap_,=
+ size_t mmap_size)
+ 	 * <4-byte offset>
+ 	 * <20-byte hash>
+ 	 */
+-	const char *mmap =3D mmap_;
+ 	const char *index, *eoie;
+ 	uint32_t extsize;
+ 	unsigned long offset, src_offset;
+@@ -3327,8 +3325,7 @@ static unsigned long read_eoie_extension(void *mmap_,=
+ size_t mmap_size)
+ 		 * in 4-byte network byte order.
+ 		 */
+ 		uint32_t extsize;
+-		memcpy(&extsize, (char *)mmap + src_offset + 4, 4);
+-		extsize =3D ntohl(extsize);
++		extsize =3D get_be32(mmap + src_offset + 4);
+=20
+ 		/* verify the extension size isn't so large it will wrap around */
+ 		if (src_offset + 8 + extsize < src_offset)
+--=20
+2.18.0.windows.1
+
