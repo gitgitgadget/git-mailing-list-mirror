@@ -2,147 +2,326 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 285D91F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 19:20:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A8F11F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 19:32:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728199AbeIMA0w (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 20:26:52 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46432 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728193AbeIMA0w (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 20:26:52 -0400
-Received: by mail-wr1-f66.google.com with SMTP id a108-v6so3188422wrc.13
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 12:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mfA/04izd/ZyEgHMNOCP+HvbzhR6t4VgZvVtIrvz5qs=;
-        b=IAeRsdDppC3CdLhoMy6bZzLK/62Mv4vazsUfabU6HgWE+aqgG8RGDm21Z+/vslSjUh
-         /Gekt9h558XpHVOmubkXu3kinW0Ok3d9qJrCBozViVAIMNbYbor5rGK3iR38J9GMPEV9
-         ZjP43DRolKWUOJpBvlgRDNxMY6zCz7JQAGj44JXMMloQjaurRigcX/U7ZBR281zdTN5g
-         hdAToo8iXTdSbjPdLw6GfNez3CHwQCx/5K77ZtrTkn9PUkoM5EHlJj0tGMSqo839OS1Y
-         60TaXxzPOxWD0/H7WmlFrpPkfLSmbrUgx/bP1NoV3sHSAqMiVnpcxywkImOaiGRVpL0Q
-         Oz4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mfA/04izd/ZyEgHMNOCP+HvbzhR6t4VgZvVtIrvz5qs=;
-        b=aHO7472EBPJARATrEFf4pYTn5xCcH8+N69ZVWPsN2+JcKpEvb4st3trIcwbDw/SDuz
-         JtPNqI0xQogctg6LLhWagCQJcSYQco37FVf2ZJgUCehQfIObLvPBnSkss2rYFnRG4Ydi
-         DVb3Hpx21sNXv9tLyM2daqkBxI/BQVzx+BFGSZW4puoniTVFj7+TzsYKnEByJKhsoQHH
-         OTApqPVnWITRIZ+z2sD0lSFsAS5P9bMlqLCW0NAc+KO03yxCSANRVDJFqDV9sul9Zi5F
-         S3KgzBuAXkAUmFccUR1u95XT5hcrfr2v3GfxW+x2NBJyKpSUWLzx7TqZEAGCg93aWwQ2
-         2D2g==
-X-Gm-Message-State: APzg51Ax62HX5ThxDM+1VgeA0qYSr1iAZj/26dMzebec9WN4N8fQW9Hz
-        ao5hmJRcC0U/HZEIUFZsh/4=
-X-Google-Smtp-Source: ANB0VdbfZSQiw33LAKqC2bLSIpXUdpizQMTC/0x+TQVJKym0TiQYWjVLVhZ0ZeXmrDU9AmJePhVlRw==
-X-Received: by 2002:adf:c109:: with SMTP id r9-v6mr2707341wre.233.1536780054345;
-        Wed, 12 Sep 2018 12:20:54 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s205-v6sm2420962wmf.42.2018.09.12.12.20.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Sep 2018 12:20:53 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 9/9] builtin/fetch: check for submodule updates for non branch fetches
-References: <20180911234951.14129-1-sbeller@google.com>
-        <20180911234951.14129-10-sbeller@google.com>
-Date:   Wed, 12 Sep 2018 12:20:53 -0700
-In-Reply-To: <20180911234951.14129-10-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 11 Sep 2018 16:49:51 -0700")
-Message-ID: <xmqqbm92ldyi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728219AbeIMAiG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 20:38:06 -0400
+Received: from mout.web.de ([212.227.15.14]:50863 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728140AbeIMAiG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 20:38:06 -0400
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MX0VQ-1gNBuy3uqK-00W1JC; Wed, 12
+ Sep 2018 21:32:05 +0200
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1 1/1] Make git_check_attr() a void function
+Date:   Wed, 12 Sep 2018 21:32:02 +0200
+Message-Id: <20180912193202.12896-1-tboegi@web.de>
+X-Mailer: git-send-email 2.18.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:ALz6a6YBZ9v/H/dn64M+7dLwq2vE+5VQc1MleyuF7G+0Pg1/wdL
+ 7Azbs4BepSDUu+EUKomKV2eSMdlHodZsAOcuk2bu39SjXRu9hsYWcCguylhntjt5x3HdVXE
+ zQDr1uvwFkNQTAkAc18Ta0x81RA3KGhS9yShpBd/A3Hr/LjS+W43wFO4vQtFKSsc5rBm+cV
+ CWupL/sUe1aTleWO3dWWg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cMWzEXYxen4=:5PTq0kWWd8dzW1qC84wQ1K
+ I/IwVBvWGUMVTT8edbNrFaIFEAOT/+m5gshgUxb1gkdoa9Da6scNSQeVw6Qor939n7HDTr+iF
+ f/wxwD5eq1azOENlppZp9ZvrEOMd0pvnWHnp6wVYZdh0DKWiuM6y/S4lsnZcxaseAXETNFPQq
+ WMkVyivZ1sm5Yk9GhJFS6IRphl3hqdPnWCMFmN2xTciGf35CUmILESP0cAXpibUYfp8/GJsNl
+ Nt3F3rGK6dP83aY4vJlfBeOMWfV+VZHHEo74AEdEZQfHCpbfGuTfRdMqw+gh7Q9GeA8gMxuPl
+ 4EZpq/+QQyFkzZQUeqI2slnZEOCqq4B1KEzXSqQL5cwuOp2a+TG9Ym3tvsYV2g/QHga0Y0vNd
+ eZuBVL+Lv53ePCDXfqJRtnBaKo+HxBR7d/27QTryks64TDedWaWQJPRyhP+L8xIiu2kz9AZ4n
+ Wp1QJgECh2MhV3fkLmRflMrtFtxHmt1kz6VUU+MV/el5eKkAYJ4eYZhWhQuzeyinKnGR+ntxC
+ QR1f6pAh5wZov3FADNlG0k3oF4Aaoek5psRoC/z8DaKnL82Saa8AdNRNyoAx4YbdiGyBhQZ9s
+ d2TCXC6N2/+7axo2S+D9Qm/wqigHl3CIfslnbetZxgJNkEuJ8cVKa0COqh4acX8XoFF3HuI7l
+ 2RH+hTOb9YB07Wg4mKJxzE3qcTIvhBBln8AL6r35hThPLx7SwOVsEGHw90pUMfzQAskWVmFNI
+ 5S3w/yjyntvxLipsiNl33bYfURJbJ7HAmz5jKDi7N7LHBoOzMnGDimO8MqYkqUvsld7PMsHI3
+ l0koKAla5XRcxE1d10pGS9PoeWlOHGCw8WhExpuL3ycJoK9/vA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+From: Torsten Bögershausen <tboegi@web.de>
 
-> For Gerrit users that use submodules the invocation of fetch without a
-> branch is their main use case.
+git_check_attr() returns always 0.
+Remove all the error handling code of the callers, which is never executed.
+Change git_check_attr() to be a void function.
 
-That's way under explains this commit.  It is totally unclear how
-that statement of fact relates to the problem this patch is trying
-to address; it does not even make it clear what problem is being
-addressed by the patch.
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ archive.c              |  3 ++-
+ attr.c                 |  8 +++-----
+ attr.h                 |  4 ++--
+ builtin/check-attr.c   |  3 +--
+ builtin/pack-objects.c |  3 +--
+ convert.c              | 42 ++++++++++++++++++----------------------
+ ll-merge.c             | 16 +++++++--------
+ userdiff.c             |  3 +--
+ ws.c                   | 44 +++++++++++++++++++-----------------------
+ 9 files changed, 57 insertions(+), 69 deletions(-)
 
->
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  builtin/fetch.c             | 5 ++++-
->  t/t5526-fetch-submodules.sh | 2 +-
->  2 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 95c44bf6ffa..ea6ecd123e7 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -887,11 +887,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
->  				rc |= update_local_ref(ref, what, rm, &note,
->  						       summary_width);
->  				free(ref);
-> -			} else
-> +			} else {
-> +				check_for_new_submodule_commits(&rm->old_oid);
+diff --git a/archive.c b/archive.c
+index 0a07b140fe..c1870105eb 100644
+--- a/archive.c
++++ b/archive.c
+@@ -110,7 +110,8 @@ static const struct attr_check *get_archive_attrs(struct index_state *istate,
+ 	static struct attr_check *check;
+ 	if (!check)
+ 		check = attr_check_initl("export-ignore", "export-subst", NULL);
+-	return git_check_attr(istate, path, check) ? NULL : check;
++	git_check_attr(istate, path, check);
++	return check;
+ }
+ 
+ static int check_attr_export_ignore(const struct attr_check *check)
+diff --git a/attr.c b/attr.c
+index 98e4953f6e..60d284796d 100644
+--- a/attr.c
++++ b/attr.c
+@@ -1143,9 +1143,9 @@ static void collect_some_attrs(const struct index_state *istate,
+ 	fill(path, pathlen, basename_offset, check->stack, check->all_attrs, rem);
+ }
+ 
+-int git_check_attr(const struct index_state *istate,
+-		   const char *path,
+-		   struct attr_check *check)
++void git_check_attr(const struct index_state *istate,
++		    const char *path,
++		    struct attr_check *check)
+ {
+ 	int i;
+ 
+@@ -1158,8 +1158,6 @@ int git_check_attr(const struct index_state *istate,
+ 			value = ATTR__UNSET;
+ 		check->items[i].value = value;
+ 	}
+-
+-	return 0;
+ }
+ 
+ void git_all_attrs(const struct index_state *istate,
+diff --git a/attr.h b/attr.h
+index 2be86db36e..b0378bfe5f 100644
+--- a/attr.h
++++ b/attr.h
+@@ -63,8 +63,8 @@ void attr_check_free(struct attr_check *check);
+  */
+ const char *git_attr_name(const struct git_attr *);
+ 
+-int git_check_attr(const struct index_state *istate,
+-		   const char *path, struct attr_check *check);
++void git_check_attr(const struct index_state *istate,
++		    const char *path, struct attr_check *check);
+ 
+ /*
+  * Retrieve all attributes that apply to the specified path.
+diff --git a/builtin/check-attr.c b/builtin/check-attr.c
+index c05573ff9c..30a2f84274 100644
+--- a/builtin/check-attr.c
++++ b/builtin/check-attr.c
+@@ -65,8 +65,7 @@ static void check_attr(const char *prefix,
+ 	if (collect_all) {
+ 		git_all_attrs(&the_index, full_path, check);
+ 	} else {
+-		if (git_check_attr(&the_index, full_path, check))
+-			die("git_check_attr died");
++		git_check_attr(&the_index, full_path, check);
+ 	}
+ 	output_attr(check, file);
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d1144a8f7e..eb71dab5be 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -951,8 +951,7 @@ static int no_try_delta(const char *path)
+ 
+ 	if (!check)
+ 		check = attr_check_initl("delta", NULL);
+-	if (git_check_attr(&the_index, path, check))
+-		return 0;
++	git_check_attr(&the_index, path, check);
+ 	if (ATTR_FALSE(check->items[0].value))
+ 		return 1;
+ 	return 0;
+diff --git a/convert.c b/convert.c
+index 6057f1f580..e0848226d2 100644
+--- a/convert.c
++++ b/convert.c
+@@ -1297,6 +1297,7 @@ static void convert_attrs(const struct index_state *istate,
+ 			  struct conv_attrs *ca, const char *path)
+ {
+ 	static struct attr_check *check;
++	struct attr_check_item *ccheck = NULL;
+ 
+ 	if (!check) {
+ 		check = attr_check_initl("crlf", "ident", "filter",
+@@ -1306,30 +1307,25 @@ static void convert_attrs(const struct index_state *istate,
+ 		git_config(read_convert_config, NULL);
+ 	}
+ 
+-	if (!git_check_attr(istate, path, check)) {
+-		struct attr_check_item *ccheck = check->items;
+-		ca->crlf_action = git_path_check_crlf(ccheck + 4);
+-		if (ca->crlf_action == CRLF_UNDEFINED)
+-			ca->crlf_action = git_path_check_crlf(ccheck + 0);
+-		ca->ident = git_path_check_ident(ccheck + 1);
+-		ca->drv = git_path_check_convert(ccheck + 2);
+-		if (ca->crlf_action != CRLF_BINARY) {
+-			enum eol eol_attr = git_path_check_eol(ccheck + 3);
+-			if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_LF)
+-				ca->crlf_action = CRLF_AUTO_INPUT;
+-			else if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_CRLF)
+-				ca->crlf_action = CRLF_AUTO_CRLF;
+-			else if (eol_attr == EOL_LF)
+-				ca->crlf_action = CRLF_TEXT_INPUT;
+-			else if (eol_attr == EOL_CRLF)
+-				ca->crlf_action = CRLF_TEXT_CRLF;
+-		}
+-		ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
+-	} else {
+-		ca->drv = NULL;
+-		ca->crlf_action = CRLF_UNDEFINED;
+-		ca->ident = 0;
++	git_check_attr(istate, path, check);
++	ccheck = check->items;
++	ca->crlf_action = git_path_check_crlf(ccheck + 4);
++	if (ca->crlf_action == CRLF_UNDEFINED)
++		ca->crlf_action = git_path_check_crlf(ccheck + 0);
++	ca->ident = git_path_check_ident(ccheck + 1);
++	ca->drv = git_path_check_convert(ccheck + 2);
++	if (ca->crlf_action != CRLF_BINARY) {
++		enum eol eol_attr = git_path_check_eol(ccheck + 3);
++		if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_LF)
++			ca->crlf_action = CRLF_AUTO_INPUT;
++		else if (ca->crlf_action == CRLF_AUTO && eol_attr == EOL_CRLF)
++			ca->crlf_action = CRLF_AUTO_CRLF;
++		else if (eol_attr == EOL_LF)
++			ca->crlf_action = CRLF_TEXT_INPUT;
++		else if (eol_attr == EOL_CRLF)
++			ca->crlf_action = CRLF_TEXT_CRLF;
+ 	}
++	ca->working_tree_encoding = git_path_check_encoding(ccheck + 5);
+ 
+ 	/* Save attr and make a decision for action */
+ 	ca->attr_action = ca->crlf_action;
+diff --git a/ll-merge.c b/ll-merge.c
+index 0e2800f7bb..1936fee9e1 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -371,13 +371,12 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	if (!check)
+ 		check = attr_check_initl("merge", "conflict-marker-size", NULL);
+ 
+-	if (!git_check_attr(&the_index, path, check)) {
+-		ll_driver_name = check->items[0].value;
+-		if (check->items[1].value) {
+-			marker_size = atoi(check->items[1].value);
+-			if (marker_size <= 0)
+-				marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+-		}
++	git_check_attr(&the_index, path, check);
++	ll_driver_name = check->items[0].value;
++	if (check->items[1].value) {
++		marker_size = atoi(check->items[1].value);
++		if (marker_size <= 0)
++			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	}
+ 	driver = find_ll_merge_driver(ll_driver_name);
+ 
+@@ -398,7 +397,8 @@ int ll_merge_marker_size(const char *path)
+ 
+ 	if (!check)
+ 		check = attr_check_initl("conflict-marker-size", NULL);
+-	if (!git_check_attr(&the_index, path, check) && check->items[0].value) {
++	git_check_attr(&the_index, path, check);
++	if (check->items[0].value) {
+ 		marker_size = atoi(check->items[0].value);
+ 		if (marker_size <= 0)
+ 			marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+diff --git a/userdiff.c b/userdiff.c
+index f3f4be579c..f565f6731d 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -278,8 +278,7 @@ struct userdiff_driver *userdiff_find_by_path(const char *path)
+ 		check = attr_check_initl("diff", NULL);
+ 	if (!path)
+ 		return NULL;
+-	if (git_check_attr(&the_index, path, check))
+-		return NULL;
++	git_check_attr(&the_index, path, check);
+ 
+ 	if (ATTR_TRUE(check->items[0].value))
+ 		return &driver_true;
+diff --git a/ws.c b/ws.c
+index 5b67b426e7..a64ab51e09 100644
+--- a/ws.c
++++ b/ws.c
+@@ -74,35 +74,31 @@ unsigned parse_whitespace_rule(const char *string)
+ unsigned whitespace_rule(const char *pathname)
+ {
+ 	static struct attr_check *attr_whitespace_rule;
++	const char *value;
+ 
+ 	if (!attr_whitespace_rule)
+ 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
+ 
+-	if (!git_check_attr(&the_index, pathname, attr_whitespace_rule)) {
+-		const char *value;
+-
+-		value = attr_whitespace_rule->items[0].value;
+-		if (ATTR_TRUE(value)) {
+-			/* true (whitespace) */
+-			unsigned all_rule = ws_tab_width(whitespace_rule_cfg);
+-			int i;
+-			for (i = 0; i < ARRAY_SIZE(whitespace_rule_names); i++)
+-				if (!whitespace_rule_names[i].loosens_error &&
+-				    !whitespace_rule_names[i].exclude_default)
+-					all_rule |= whitespace_rule_names[i].rule_bits;
+-			return all_rule;
+-		} else if (ATTR_FALSE(value)) {
+-			/* false (-whitespace) */
+-			return ws_tab_width(whitespace_rule_cfg);
+-		} else if (ATTR_UNSET(value)) {
+-			/* reset to default (!whitespace) */
+-			return whitespace_rule_cfg;
+-		} else {
+-			/* string */
+-			return parse_whitespace_rule(value);
+-		}
+-	} else {
++	git_check_attr(&the_index, pathname, attr_whitespace_rule);
++	value = attr_whitespace_rule->items[0].value;
++	if (ATTR_TRUE(value)) {
++		/* true (whitespace) */
++		unsigned all_rule = ws_tab_width(whitespace_rule_cfg);
++		int i;
++		for (i = 0; i < ARRAY_SIZE(whitespace_rule_names); i++)
++			if (!whitespace_rule_names[i].loosens_error &&
++			    !whitespace_rule_names[i].exclude_default)
++				all_rule |= whitespace_rule_names[i].rule_bits;
++		return all_rule;
++	} else if (ATTR_FALSE(value)) {
++		/* false (-whitespace) */
++		return ws_tab_width(whitespace_rule_cfg);
++	} else if (ATTR_UNSET(value)) {
++		/* reset to default (!whitespace) */
+ 		return whitespace_rule_cfg;
++	} else {
++		/* string */
++		return parse_whitespace_rule(value);
+ 	}
+ }
+ 
+-- 
+2.18.0
 
-This happens when there is no "ref", which is set only when
-rm->peer_ref exists, which is set only when we are using remote
-tracking branch (or more generally storing the fetched rev somewhere
-in our refs/ hierarchy), e.g. the rev is recorded only in FETCH_HEAD.
-
-What does rm->old_oid have in such a case?  Is this the tip of the
-superproject history we just fetched?
-
-When we keep record of what we saw in the previous attempt to fetch,
-we can tell "we have seen their history up to this old commit
-before, and now we fetched their history up to this new commit" and
-the question "during that time, which submodules have been modified
-in the history of the superproject" becomes answerable.  When we are
-not keeping the record of previous fetch, how would we answer that
-question without going through the whole history?
-
-	The answer is that check-for-new does not even do the "old
-	branch tip was X and new branch tip is Y, so we can look
-	only at X..Y"; it only cares about the new branch tip of the
-	superproject, and excludes the existing tips of all branches
-	in the superproject (i.e. computing something akin to "Y
-	--not --all" instead of "X..Y").
-
-So, I guess this is probably reasonable.  But does the call to
-"check-for-new submodule" need to be unconditional?  In this
-codepath, do we know when we are not doing a recursive fetch in a
-superproject?  If so, perhaps we can omit the cost of going through
-all the refs to populate ref_tips_before_fetch array in such a case.
-
->  				format_display(&note, '*',
->  					       *kind ? kind : "branch", NULL,
->  					       *what ? what : "HEAD",
->  					       "FETCH_HEAD", summary_width);
-> +			}
-> +
->  			if (note.len) {
->  				if (verbosity >= 0 && !shown_url) {
->  					fprintf(stderr, _("From %.*s\n"),
-> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-> index af12c50e7dd..a509eabb044 100755
-> --- a/t/t5526-fetch-submodules.sh
-> +++ b/t/t5526-fetch-submodules.sh
-> @@ -615,7 +615,7 @@ test_expect_success "fetch new commits on-demand when they are not reachable" '
->  	git update-ref refs/changes/2 $D &&
->  	(
->  		cd downstream &&
-> -		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
-> +		git fetch --recurse-submodules origin refs/changes/2 &&
->  		git -C submodule cat-file -t $C &&
->  		git checkout --recurse-submodules FETCH_HEAD
->  	)
