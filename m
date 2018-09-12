@@ -2,123 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE1791F428
-	for <e@80x24.org>; Wed, 12 Sep 2018 14:20:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B541F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 14:22:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727685AbeILTZH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 15:25:07 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:45256 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726677AbeILTZH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 15:25:07 -0400
-Received: by mail-qk1-f193.google.com with SMTP id z125-v6so1185122qkb.12
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 07:20:24 -0700 (PDT)
+        id S1727696AbeILT1j (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 15:27:39 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:41916 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726537AbeILT1j (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 15:27:39 -0400
+Received: by mail-pl1-f193.google.com with SMTP id b12-v6so1053516plr.8
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 07:22:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=vJiKQt+BRrSY8lc3hl0LrgeNML23r3G+cc0XnelAEd4=;
-        b=uFfIqc6UQZbhOmWiQTA3SA0vKfuiJ/O0loAsoa7Zn29iMk3HkUzZYFnMQIIUxKbIhN
-         yFpGCth1Kbplso5VvGqqpWlysk6aZXgZL19jyJ88DEujlEMj37+7dbSMcAbzPsh9n9G/
-         HAZAEB9amRuT2KXgIXo+biDO7FQVM0ITObusPHS7Ad1KZONol0s575f48A/RRt8ziFIg
-         /gYnHqpEyol5V+ikrEcHZFdoKR/12RqL9pjnmwnI8JWSMKmawK6LrxHR8OmA1oqWT6Qb
-         ++O1NVV/SEXxivRocrT44FDMyhp4KPGQeMOzNFDWUNLo68amKS20XkS0cAbNC6cCwxXt
-         0i2A==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=J7ZPUxA0QWoGllzK3gQtGWNn4FP4fqVY9jLCzydS9Yo=;
+        b=SC2HPCZfLWj28jbzybiLfypfl7Hsgg5rVQ8OWriYhm2sOe1OddDzKbael84/6fXIzW
+         kqJNLCNbPNYYwoThZiaX/Tyksfw0r017Vjdk1tna94LyBtvfNwvX1hb7QJgohomr/sIh
+         /egGtRL6z/0iaxKJDWX6Qux7Z59C+fXiWgdrz+opfGZ25J5A0u58NhAnDRNscSOkgtlr
+         aBPxC0ksoeoTIJ5lCIaVVF7wdOID5UeIhlEJguhzRncWjVwM0CDB1nP5qMf7MkKpMBIJ
+         w3WCAOodPhysPYAxK7uYLCFtkgs1nPLhkZx0zTNjLcsPYVqnRFbQBFiuqQhe3nK7n8ql
+         Q2vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=vJiKQt+BRrSY8lc3hl0LrgeNML23r3G+cc0XnelAEd4=;
-        b=Qp4mhCl66X6NOl5+pjEhasrDPgByyUN+Gk/A28NgQXcqU+ouSS5x8jTHFl1T8uHDRK
-         gM3Nt7lzZM86M1Tlmao/sTzA4OM90KTffdO5vTsqMmseGLA2TredrhQfs7eroEd5D3Jq
-         HIOCytuwBSfzsfvZ4I5ba/WttSWg3GCiOjMVfdwmTnH+We1rhDvhAMNpZsduJxV3iz12
-         469+c07Ux7ndB6SrgUaT1PvmajTiaIN8hX/0Z2gNXe3oVE5vnlHDNY6K2/XLD/iozMKJ
-         ylCHrRmGcI60P5IzB7kh19411vwC84L9h/2IV6DLH0qu42jCftvzpkLhmisZvfLhamYn
-         aPmA==
-X-Gm-Message-State: APzg51DdPA+LE7uGNzW1FvEdI7wV0vbOupfU6QoU3bFyx93MrhGsh3r6
-        hS5JiMKE/3WwumTB9Hxp8WM=
-X-Google-Smtp-Source: ANB0VdYJNGlLN/J4WieH6huHtgRGMiQ/ZyH+RjN37DNx6NTGiFUq8/PlYQpH8nFcr4jSI1lXxcXePg==
-X-Received: by 2002:a37:9f90:: with SMTP id i138-v6mr1583846qke.113.1536762023809;
-        Wed, 12 Sep 2018 07:20:23 -0700 (PDT)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id s8-v6sm642235qtc.71.2018.09.12.07.20.22
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=J7ZPUxA0QWoGllzK3gQtGWNn4FP4fqVY9jLCzydS9Yo=;
+        b=EqwyeD3I3fz3+WYL2JAOyw4G0+jnc8YGgR04o3c78D18yM8dY79ZCKJEUTSs2VdUDN
+         jHfdkf7GHzE1XN2G2dicsqp/ng4cmsZkeamI9hQOXK6Bha73XQGJp1Vpp1rzosPVKnTE
+         hETlhDY8iB5Q5WwVMF6N0KWYAZiGqjpBM2EE+kpfbpa/mqnmIOWhoVNHsHtxjLMSgI4F
+         0JivMV9+N66kSCC1sXtwTIzO9JdDAwaauZnYYQ+Gng4SOXUI7girijNbnX3C3CK/smot
+         3wHaeRTfmP6A5pP6GpoifZJGMOKcbOiMfjcaWKsXcJFsx8D97rKLmeYNmpKSi079uWSa
+         yALA==
+X-Gm-Message-State: APzg51AFIRexblzMMbO0Ot3AJbPsJY656TU92ZkrhwpOs1IPCTPFGExJ
+        SFJdSmZjSHD9DlM+2RBOL1D118Mf
+X-Google-Smtp-Source: ANB0VdZpH4fM/uxh3JnfqtUrrEmXFANTJKi3lYUKaRCmVN24jPP3dmnfkhInkJOJMKVA0roYWmD2ZQ==
+X-Received: by 2002:a17:902:7488:: with SMTP id h8-v6mr2595695pll.16.1536762175693;
+        Wed, 12 Sep 2018 07:22:55 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id y69-v6sm2265553pfd.36.2018.09.12.07.22.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Sep 2018 07:20:22 -0700 (PDT)
-Subject: Re: [PATCH 1/1] t3206-range-diff.sh: cover single-patch case
-To:     Eric Sunshine <sunshine@sunshineco.com>, gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.37.git.gitgitgadget@gmail.com>
- <58347a962438852be0d37c3957686ea5000b2dbd.1536697263.git.gitgitgadget@gmail.com>
- <CAPig+cQviMsbhdQty8DnBUWQx4hxNvH-FzXkNeHNBKy6mHGz5A@mail.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <14fdfb44-8024-113b-8c34-2a60feedffff@gmail.com>
-Date:   Wed, 12 Sep 2018 10:20:21 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
-MIME-Version: 1.0
-In-Reply-To: <CAPig+cQviMsbhdQty8DnBUWQx4hxNvH-FzXkNeHNBKy6mHGz5A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+        Wed, 12 Sep 2018 07:22:54 -0700 (PDT)
+Date:   Wed, 12 Sep 2018 07:22:54 -0700 (PDT)
+X-Google-Original-Date: Wed, 12 Sep 2018 14:22:51 GMT
+Message-Id: <pull.39.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Properly peel tags in can_all_from_reach_with_flags()
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/11/2018 5:34 PM, Eric Sunshine wrote:
-> On Tue, Sep 11, 2018 at 4:26 PM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> The commit 40ce4160 "format-patch: allow --range-diff to apply to
->> a lone-patch" added the ability to see a range-diff as commentary
->> after the commit message of a single patch series (i.e. [PATCH]
->> instead of [PATCH X/N]). However, this functionality was not
->> covered by a test case.
->>
->> Add a simple test case that checks that a range-diff is written as
->> commentary to the patch.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
->> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
->> @@ -154,4 +154,9 @@ do
->> +test_expect_success 'format-patch --range-diff as commentary' '
->> +       git format-patch --stdout --range-diff=HEAD~1 HEAD~1 >actual &&
->> +       grep -A 1 -e "\-\-\-" actual | grep "Range-diff:"
->> +'
-> Aside from Junio's and Stefan's comments...
->
-> Patch 6/14 [1], in addition to checking that a solo patch contains an
-> interdiff, takes the extra step of checking that individual patches
-> _don't_ contain an interdiff when --cover-letter is used. I wonder if
-> the same should be done here, though I don't feel too strongly about
-> it. If you do go that route, it might make sense to move this test to
-> t4014 as neighbor to the --interdiff tests. The reason 10/14 [2] added
-> the "git format-patch --range-diff" test to t3206 instead of t4014 was
-> so it could do a thorough check of the embedded range-diff by re-using
-> the specially crafted test repo set up by t3206. Your new test is much
-> looser, thus could be moved alongside the --interdiff tests. Not a big
-> deal, though. Either way is fine. Thanks for working on this.
->
-> [1]: https://public-inbox.org/git/20180722095717.17912-7-sunshine@sunshineco.com/
-> [2]: https://public-inbox.org/git/20180722095717.17912-11-sunshine@sunshineco.com/
-Thanks for these links! In particular, [2] uses this line to test the 
-inter-diff appears:
+As Peff reported [1], the refactored can_all_from_reach_with_flags() method
+does not properly peel tags. Since the helper method can_all_from_reach()
+and code in t/helper/test-reach.c all peel tags before getting to this
+method, it is not super-simple to create a test that demonstrates this.
 
-+    test_i18ngrep "^Interdiff:$" 0001-fleep.patch &&
+I modified t/helper/test-reach.c to allow calling
+can_all_from_reach_with_flags() directly, and added a test in
+t6600-test-reach.sh that demonstrates the segfault without the fix. The fix
+in commit-reach.c is Peff's fix verbatim.
 
-That's a better way to test, especially with the translation. It would 
-be enough for my needs.
+[1] 
+https://public-inbox.org/git/0bf9103c-9377-506b-7ad7-e5273d8e94fc@gmail.com/T/#u
 
-Thanks,
+Derrick Stolee (1):
+  commit-reach: properly peel tags
 
--Stolee
+ commit-reach.c        | 25 ++++++++++++++++++-------
+ t/helper/test-reach.c | 22 +++++++++++++++++-----
+ t/t6600-test-reach.sh | 30 ++++++++++++++++++++++++++++--
+ 3 files changed, 63 insertions(+), 14 deletions(-)
 
-P.S. Resending because apparently I had HTML in the last response
 
+base-commit: 6621c838743812aaba96e55cfec8524ea1144c2d
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-39%2Fderrickstolee%2Ftag-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-39/derrickstolee/tag-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/39
+-- 
+gitgitgadget
