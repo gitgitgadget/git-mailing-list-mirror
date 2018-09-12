@@ -2,182 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0298D1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 16:45:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8038E1F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 17:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728111AbeILVvO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 17:51:14 -0400
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:46096 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727859AbeILVvN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 17:51:13 -0400
-Received: by mail-pg1-f195.google.com with SMTP id b129-v6so1333695pga.13
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 09:45:51 -0700 (PDT)
+        id S1727441AbeILWk0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 18:40:26 -0400
+Received: from mail-qt0-f175.google.com ([209.85.216.175]:36949 "EHLO
+        mail-qt0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727010AbeILWkZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 18:40:25 -0400
+Received: by mail-qt0-f175.google.com with SMTP id n6-v6so2692310qtl.4
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 10:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=hpzmVaxo7TYiPoNwG8o0j60CGIWDIbdC7tY5/Faia/I=;
-        b=nwfme5UvuBz9jVR9JRCrws9ZazcSNka23hEWJ6vRKJ9uAM1wlrxct5bSpKStyCFMqj
-         wkWJB1Moy9qchiYiCnfUe6/crc7h4/SKkqA+lsmLI2927MD1DBT1vMlcmQ7mVokJDAXY
-         d+GYlQo/LEKIOJnPzOOBUr42DpuXY9tCyNZ62x7eam/hJploHUdexIW8UEtQhiWskT9w
-         9WLl2XauOGmsgnrUGSb5WSEEIkDgCCPB/5aVYUV+68cjKXf2pEB0YNYs/4KD0ExFbrZU
-         30QT+zM/LWpqMuMjeZQwgQbZ4Ta4CuhQFUq3ChnVAssqojwd04essix9UvrRQN5kx6dp
-         xtrA==
+        h=mime-version:from:date:message-id:subject:to;
+        bh=XpQZwB1tu4sXZ8cWIw3zizkMwM8l3YcEnULNxQpolZM=;
+        b=fANUrgAqz6JraJPEYVU3mj8ClG+ze+Vit1KIx8Kb4ma7THiCeMVQ4BS8OnkXPdXsSK
+         FGIqvd0DOUjqpxC+CaRqQaADVE46RYOYqEYDT+CCYHxfr0/NYahj6Re0E6VY4DwU/O4D
+         B+0LasTXKXRB/Vo9cJdepmmIJveBmbV/0WlFXf6J/rX5HwLw8ItopQOZh4wqCPSpFNEv
+         bj8GMQ0enoaT6K+BAGL6SO6vw/KIoGXCvIyQXzP4PuKmlke6edvnx1ZJLPAEt38rB39Y
+         NH5JTGL9pxDYWqu1aUj+M7/E0g5ni6B3TPwYxRHiMZ42MmJTs1QyuNqZzaMicxzL9sVF
+         qWIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=hpzmVaxo7TYiPoNwG8o0j60CGIWDIbdC7tY5/Faia/I=;
-        b=r1q5qQ9C4p9uxhQOXYt+ipbaGPLBGZyySQwluIMUlzp/JPOahXzeB18JjA2adNvlBn
-         wxxYVSm3qmBlugVRWr7d4L+Dfpw1byBcFeun9mjTkf8TCUsot/F+9Toc2vZ7tvtMofY2
-         zazTiqZzPo4RPCydrDHcrGixw8KZFVTghg5A9EorISI6Dpv6ySgCmT6nFDpBIXfSJEGb
-         tI5iiFUgDBw31tRuXfgZnQ0YnuzYXTnjKnvxW85YyF4CIF5eHzl2Rh0y1spTfetIHIha
-         /zeZiSVGJErwCdS2Ewj0MwWHya0EIyTPGXfXLy1mpX2+SBhvE6vf3KECPvfuuoawHT42
-         ZZMw==
-X-Gm-Message-State: APzg51CyfTmbttOay/2dtvefVREsONEPz8PqywqSUydrAO4BOAkFYHiq
-        ta/4StqtnX/rdTNj1VTH/UjWLHNZ
-X-Google-Smtp-Source: ANB0VdYzVnlLIyPFUy5TXkoZUa3j9AqC5OcDJM4Dn8EMEwsISiazkNurA8lMApgUejrc5CXqV9NcVQ==
-X-Received: by 2002:a62:3909:: with SMTP id g9-v6mr3365527pfa.176.1536770750571;
-        Wed, 12 Sep 2018 09:45:50 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id k126-v6sm2751101pgk.26.2018.09.12.09.45.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
-Date:   Wed, 12 Sep 2018 09:45:49 -0700 (PDT)
-X-Google-Original-Date: Wed, 12 Sep 2018 16:45:45 GMT
-Message-Id: <e4124471e5494b737d99eceed25fb03e787d0b96.1536770746.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.40.git.gitgitgadget@gmail.com>
-References: <pull.40.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] contrib: add coverage-diff script
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=XpQZwB1tu4sXZ8cWIw3zizkMwM8l3YcEnULNxQpolZM=;
+        b=aK3soE6P0u9A9JTNAZvtDHgQW+n70hs/BkYeE5nnc3Cq+Zez6q3TD8Ryix9CemRr8U
+         nRpSQtu+eN2llxigsgIckEXsguSxVvFgG9pKvbKu5lMz2Cf4W68CJN1wcjrb9AHN30p1
+         E2WnR63hs2Ho/XzyE4P5EjtBq3QKCOEdjPD182MqdTGPRSDiAx/ql9K87UJBTD6swmJC
+         hA5rsKsovKFaUpY3FAZpSyMjd9oxya68j3wHGQJ5BbeMYt31KkVWTS6hecxbpjT7y/1l
+         6Sl/7deHiT63qi2hHI8zOcwrNamfCc1rkHMQe1A0RR4nn2uAa1X00Cl7CRgAdNC8bAs0
+         igGg==
+X-Gm-Message-State: APzg51D3x/mvjCAWskRQVos0IYINfjBARDjNmvAT8xOb2uQe1XLqjJ/r
+        9NkuyyBOK/jVDFQHI094zSNrLRGTNo8+6wmGg8B/gbn5
+X-Google-Smtp-Source: ANB0VdZVNa1N2ZFMwrks4p+ED15KN2dnGPBfofu6abX6LU6BrTArcSwOXRxCoCf/2VPbqxkQeg0pF4Mzd+jMhu5zQXk=
+X-Received: by 2002:ac8:1a04:: with SMTP id v4-v6mr2450588qtj.183.1536773692585;
+ Wed, 12 Sep 2018 10:34:52 -0700 (PDT)
 MIME-Version: 1.0
+Received: by 2002:ac8:280d:0:0:0:0:0 with HTTP; Wed, 12 Sep 2018 10:34:52
+ -0700 (PDT)
+From:   Dave Marotti <landshark666@gmail.com>
+Date:   Wed, 12 Sep 2018 12:34:52 -0500
+Message-ID: <CA+5phNzsn8wS39aSLZJDNahxYoBuK3QZX81KWpaSKavssVLREw@mail.gmail.com>
+Subject: Starting subshells via tags
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Hello -
 
-We have coverage targets in our Makefile for using gcov to display line
-coverage based on our test suite. The way I like to do it is to run:
+This is not a git bug or issue. It's just something I stumbled across
+and didn't see any google results for. I thought others would benefit
+from being aware of it.
 
-    make coverage-test
-    make coverage-report
+I saw a makefile which included of "git describe --tags --dirty" to
+define version information for a binary's --version command line
+parameter. The commit/tag information was passed to g++ in a Makefile
+via:
 
-This leaves the repo in a state where every X.c file that was covered has
-an X.c.gcov file containing the coverage counts for every line, and "#####"
-at every uncovered line.
+CXXFLAGS += -DBUILD_COMMIT="\"$(shell git describe --tags --dirty)\""
 
-There have been a few bugs in recent patches what would have been caught
-if the test suite covered those blocks (including a few of mine). I want
-to work towards a "sensible" amount of coverage on new topics. In my opinion,
-this means that any logic should be covered, but the 'die()' blocks in error
-cases do not need to be covered.
+For fun (on Linux) I made simple c++ program and Makefile with the
+above CXXFLAGS, and a tag (backticks work too): git tag
+'$(echo>/tmp/test.txt)'
 
-It is important to not measure the coverage of the codebase by what old code
-is not covered. To help, I created the 'contrib/coverage-diff.sh' script.
-After creating the coverage statistics at a version (say, 'topic') you can
-then run
+Then built. Make executes the git command via a shell and the shell
+executes the subshell. /tmp/test.txt was created.
 
-    contrib/coverage-diff.sh base topic
+The tags themselves don't allow spaces so the complexity of the
+command is limited, though I didn't explore what I could do with
+chaining shells or escape characters. It's easy enough to add a script
+to the repository where the tag is located and execute that script
+from the tag's subshell with a tag, such as $(./test.sh).
 
-to see the lines added between 'base' and 'topic' that are not covered by the
-test suite. The output uses 'git blame -c' format so you can find the commits
-responsible and view the line numbers for quick access to the context.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- contrib/coverage-diff.sh | 70 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
- create mode 100755 contrib/coverage-diff.sh
-
-diff --git a/contrib/coverage-diff.sh b/contrib/coverage-diff.sh
-new file mode 100755
-index 0000000000..22acb13d38
---- /dev/null
-+++ b/contrib/coverage-diff.sh
-@@ -0,0 +1,70 @@
-+#!/bin/bash
-+
-+# Usage: 'contrib/coverage-diff.sh <version1> <version2>
-+# Outputs a list of new lines in version2 compared to version1 that are
-+# not covered by the test suite. Assumes you ran
-+# 'make coverage-test coverage-report' from root first, so .gcov files exist.
-+
-+V1=$1
-+V2=$2
-+
-+diff-lines() {
-+    local path=
-+    local line=
-+    while read; do
-+	esc=$'\033'
-+	if [[ $REPLY =~ ---\ (a/)?.* ]]; then
-+	    continue
-+	elif [[ $REPLY =~ \+\+\+\ (b/)?([^[:blank:]$esc]+).* ]]; then
-+	    path=${BASH_REMATCH[2]}
-+	elif [[ $REPLY =~ @@\ -[0-9]+(,[0-9]+)?\ \+([0-9]+)(,[0-9]+)?\ @@.* ]]; then
-+	    line=${BASH_REMATCH[2]}
-+	elif [[ $REPLY =~ ^($esc\[[0-9;]+m)*([\ +-]) ]]; then
-+	    echo "$path:$line:$REPLY"
-+	    if [[ ${BASH_REMATCH[2]} != - ]]; then
-+		((line++))
-+	    fi
-+	fi
-+    done
-+}
-+
-+git diff --raw $V1 $V2 | grep \.c$ | awk 'NF>1{print $NF}' >files.txt
-+
-+for file in $(cat files.txt)
-+do
-+	hash_file=${file//\//\#}
-+
-+	git diff $V1 $V2 -- $file \
-+		| diff-lines \
-+		| grep ":+" \
-+		>"diff_file.txt"
-+
-+	cat diff_file.txt \
-+		| sed -E 's/:/ /g' \
-+		| awk '{print $2}' \
-+		| sort \
-+		>new_lines.txt
-+
-+	cat "$hash_file.gcov" \
-+		| grep \#\#\#\#\# \
-+		| sed 's/    #####: //g' \
-+		| sed 's/\:/ /g' \
-+		| awk '{print $1}' \
-+		| sort \
-+		>uncovered_lines.txt
-+
-+	comm -12 uncovered_lines.txt new_lines.txt \
-+		| sed -e 's/$/\)/' \
-+		| sed -e 's/^/\t/' \
-+		>uncovered_new_lines.txt
-+
-+	grep -q '[^[:space:]]' < uncovered_new_lines.txt && \
-+		echo $file && \
-+		git blame -c $file \
-+			| grep -f uncovered_new_lines.txt
-+
-+	rm -f diff_file.txt new_lines.txt \
-+		uncovered_lines.txt uncovered_new_lines.txt
-+done
-+
-+rm -rf files.txt
--- 
-gitgitgadget
+Again, this is not at all a git issue, git is just used as the
+transport. As with every other shell attack, it comes down to "always
+sanitize what you pass through to a shell". Or don't pass it to the
+shell at all, use another mechanism.
