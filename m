@@ -2,137 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D92E1F404
-	for <e@80x24.org>; Wed, 12 Sep 2018 18:18:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E912B1F404
+	for <e@80x24.org>; Wed, 12 Sep 2018 18:36:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727666AbeILXXs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Sep 2018 19:23:48 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35287 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726675AbeILXXs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Sep 2018 19:23:48 -0400
-Received: by mail-wr1-f68.google.com with SMTP id j26-v6so3055370wre.2
-        for <git@vger.kernel.org>; Wed, 12 Sep 2018 11:18:04 -0700 (PDT)
+        id S1728041AbeILXmG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Sep 2018 19:42:06 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38531 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727651AbeILXmG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Sep 2018 19:42:06 -0400
+Received: by mail-pl1-f193.google.com with SMTP id u11-v6so1390522plq.5
+        for <git@vger.kernel.org>; Wed, 12 Sep 2018 11:36:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UJvwfxN1DCxrSv37KcI/P3dD1atwFo0FpZCDkMSJ0/Y=;
-        b=bOMJafPWHeP9Sps0FeRTqKIGZqfY1v878aIxQZW6VRUTdbHU4dtkOArHeOuC462D/2
-         xWkDzFR+isXWOVUB6b0lvdiSws1Cw4ANqPKRx5qGFpoQudp7dx9xGZWWZJU/yMUP3GN1
-         8WAmok0+hacdM23U4X6cNCJt9lqd9TAgYoc08y4TjrZ7RQ/Sa6N6QTN9tGMac7JD3Xqt
-         RhBChx4dIOK770FtIRtQlpe2qncxAaIMOyXlaukmpn8FNFf8E2o0UlaqncBYg/Vz1a8w
-         oKIJXVO9iPDF38EK6YxtnXB1gYPRUz8MF+nbC3JOaiCqqNwTnxCzQa4cziKS3CGG0voF
-         bxfw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=PgiUStnVmKb4M8dSzY7UGEOPkr8sDxV3Yr3Kmm4D6Po=;
+        b=CsdhEMxGVrhjsSRqMUTw91fS0WXPk9nD9PFZr8dBAZPyWoRTcNr2mv1c+YBIZwM/sq
+         aQoZ+1MchHTGMdZW2qvOclev/0UULzAOeUfuE9999QHM5nTW7VdS/ja748K9G8lqAwTP
+         0LMprfFPTVWJsiUIbSBN7Xe/W/BibhvioN1sJbciuKptxXYobPbsorqJqh40B4GvB2E1
+         UaMXd9fsXgLAtASA6x8TEgF/E/xhQELeoDK+CWRqRah981c407OnVzByfP8Y7ZnXm2V4
+         3K0cE1G27xzo/tYgRbuIxY5gbicCn6oQDKed3tkPPe8ZtCmDizNCVTfqdkyjalwyMdhX
+         uonw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UJvwfxN1DCxrSv37KcI/P3dD1atwFo0FpZCDkMSJ0/Y=;
-        b=J1CBwYuP6Zj/ykosSFiDCkTsjDAZuCtq2SNoE/BiQOVEtLZBZR0OWGN8VtR0HgAW6T
-         VCM4FrArC00TUUzKUr5k4MvANc7XPsbojZZ1hBRVfFHXuIV6LmCm89U9O+RXS9S/DDBS
-         1tnlCWIjxSk8VY01lAoleK7EoOK0rTgZ4+OZkTWU6xHR25uDnJRWNB+YGx5E/KERh1JA
-         XdsyDmhUXGYvKJZFqToXrpD5GVH3ZU9Z+O5Crk7OnRsXjDQQw80GyisGyIZGBc4xF91f
-         QHkIPCXZ3p5mQkKLTqcarOPhDpgyuWhLk8nGCzU7IqIriff843kmrQw9QjJIvHhS7Efd
-         6Neg==
-X-Gm-Message-State: APzg51Dz+mJ2XynkEr+41gByYZHrMCqqju/Rbkq1ABhMlblEL2DbEPpx
-        Ak60dPefXmEHVIyKS5mhVUk=
-X-Google-Smtp-Source: ANB0VdYfQ9z5iAAFfmFxlR8JCTNm1I30sgnA6DcM3CYVf06Rqwp+1WKiHzgkk37JtouJzvaPWMiuDw==
-X-Received: by 2002:adf:c5c5:: with SMTP id v5-v6mr2451170wrg.30.1536776283752;
-        Wed, 12 Sep 2018 11:18:03 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id z101-v6sm2719482wrb.55.2018.09.12.11.18.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Sep 2018 11:18:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 4/9] submodule.c: sort changed_submodule_names before searching it
-References: <20180911234951.14129-1-sbeller@google.com>
-        <20180911234951.14129-5-sbeller@google.com>
-Date:   Wed, 12 Sep 2018 11:18:02 -0700
-In-Reply-To: <20180911234951.14129-5-sbeller@google.com> (Stefan Beller's
-        message of "Tue, 11 Sep 2018 16:49:46 -0700")
-Message-ID: <xmqqr2hylgv9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=PgiUStnVmKb4M8dSzY7UGEOPkr8sDxV3Yr3Kmm4D6Po=;
+        b=iBLys0WPLFxtdmI7NxLluzhPU32BHpSLhL6K88NHZsKPTvWuKkMQdZP6MuQcaAEp0C
+         oU4LVlI8vZlUoL6GIvL32xkkPFeWH2askLCjYYITb0OgB5yndA/g5eh22M4g/AWQZHZX
+         K3egEkB+cEQWT5+etzz6oJPp/GDjnwWStVP4AIitZiryfwNdSE/3ALGrUbyfPOTWCeDF
+         sgJ5qcDwvKxeX+VEEn5ypIg/mHZgqwUfW9GoUk7vWrVNolKEb4EJN1YUTqt/HcMqDKcP
+         uTn/lHPDyXODIpCoKe6jGA51CWsG3R1tInIzadjKw6IXonLPdipWDBAk9kllsL48b4pO
+         AXqQ==
+X-Gm-Message-State: APzg51A+nZhDbcqd75xH+5YgGgZBmVSB0boyz8eT94+ewXQQZjVJNag4
+        vieMt/5yU+5Xg+pKG8fwzPMDDtPD
+X-Google-Smtp-Source: ANB0VdblelxsQd3C6/3CTosjbcGewo1U8mIX5mhX+nTpr+jgcMoN0Y8VKILeK4Y8O8XwW+Q5r7bnVw==
+X-Received: by 2002:a17:902:4503:: with SMTP id m3-v6mr3705678pld.168.1536777379427;
+        Wed, 12 Sep 2018 11:36:19 -0700 (PDT)
+Received: from localhost.localdomain (c-76-102-118-240.hsd1.ca.comcast.net. [76.102.118.240])
+        by smtp.gmail.com with ESMTPSA id x23-v6sm2817983pff.9.2018.09.12.11.36.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 12 Sep 2018 11:36:18 -0700 (PDT)
+From:   William Chargin <wchargin@gmail.com>
+To:     sunshine@sunshineco.com
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net,
+        wchargin@gmail.com
+Subject: [PATCH v4] test_dir_is_empty: fix edge cases with newlines and hyphens
+Date:   Wed, 12 Sep 2018 11:35:34 -0700
+Message-Id: <20180912183534.7486-1-wchargin@gmail.com>
+X-Mailer: git-send-email 2.18.0.549.gd66323a05
+In-Reply-To: <CAPig+cQSg-t6KGj3s0LJi+FU7LSQMNTmSHhMJJH=PgMUU9GWOA@mail.gmail.com>
+References: <CAPig+cQSg-t6KGj3s0LJi+FU7LSQMNTmSHhMJJH=PgMUU9GWOA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+While the `test_dir_is_empty` function appears correct in most normal
+use cases, it can improperly pass if a directory contains a filename
+with a newline, and can improperly fail if an empty directory looks like
+an argument to `ls`. This patch changes the implementation to check that
+the output of `ls -a` has at most two lines (for `.` and `..`), which
+should be better behaved, and adds the `--` delimiter before the
+directory name when invoking `ls`.
 
-> We can string_list_insert() to maintain sorted-ness of the
-> list as we find new items, or we can string_list_append() to
-> build an unsorted list and sort it at the end just once.
->
-> To pick which one is more appropriate, we notice the fact
-> that we discover new items more or less in the already
-> sorted order.  That makes "append then sort" more
-> appropriate.
+The newly added unit test fails before this change and passes after it.
 
-Sorry, but I still do not get the math you are implying in the
-second paragraph.  Are you saying that append-then-sort is efficient
-when items being appended is already sorted?  That depends on the
-sorting algorithm used, so the logic is incomplete unless you say
-"given that we use X for sorting,...", I think.
+Signed-off-by: William Chargin <wchargin@gmail.com>
+---
+This patch depends on "t: factor out FUNNYNAMES as shared lazy prereq"
+(2018-08-06), which is now in master.
 
-Do we really discover new items in sorted order, by the way?  In a
-single diff invocation made inside collect_changed_submodules() for
-one commit in the superproject's history, we will grab changed paths
-in the pathname order (i.e. sorted); if the superproject's tip commit
-touches the submodules at paths A and Z, we will discover these two
-paths in sorted order.
+I originally wrote this patch for the standalone Sharness library, but
+that library advises that such patches be sent to the Git mailing list
+first.
 
-But because we are walking the superproject's history to collect all
-paths that have been affected in that function, and repeatedly
-calling diff as we discover commit in the superproject's history, I
-am not sure how well the resulting set of paths would be sorted.
+Tested on GNU/Linux (Mint 18.2) and macOS (10.13).
 
-The tip commit in superproject's history may have modified the
-submodule at path X, the parent of that commit may have touched the
-submodule at path M, and its parent may have touched the submodule
-at path A.  Don't we end up grabbing these paths in that discoverd
-order, i.e. X, M and A?
+ t/t0000-basic.sh        | 43 +++++++++++++++++++++++++++++++++++++++++
+ t/test-lib-functions.sh |  2 +-
+ 2 files changed, 44 insertions(+), 1 deletion(-)
 
-I still think changing it from "insert as we find an item, keeping
-the list sorted" to "append all and then sort before we start
-looking things up from the result" makes sense, but I do not think
-the "we find things in sorted order" is either true, or it would
-affect the choice between the two.  A justification to choose the
-latter I can think of that makes sense is that we don't have to pay
-cost to keep the list sorted while building it because we do not do
-any look-up while building the list.
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index 850f651e4e..a5c57c6aa5 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -821,6 +821,49 @@ test_expect_success 'tests clean up even on failures' "
+ 	EOF
+ "
+ 
++test_expect_success FUNNYNAMES \
++	'test_dir_is_empty behaves even in pathological cases' "
++	run_sub_test_lib_test \
++		dir-empty 'behavior of test_dir_is_empty' <<-\\EOF &&
++	test_expect_success 'should pass with actually empty directory' '
++		mkdir empty_dir &&
++		test_dir_is_empty empty_dir
++	'
++	test_expect_success 'should fail with a normal filename' '
++		mkdir nonempty_dir &&
++		>nonempty_dir/some_file &&
++		! test_dir_is_empty nonempty_dir
++	'
++	test_expect_success 'should fail with dot-newline-dot filename' '
++		mkdir pathological_dir &&
++		>\"pathological_dir/.
++	.\" &&
++		! test_dir_is_empty pathological_dir
++	'
++	test_expect_success 'should pass with an empty directory \"-l\"' '
++		mkdir -- -l &&
++		test_dir_is_empty -l &&
++		rmdir -- -l
++	'
++	test_expect_success 'should pass with an empty directory \"--wat\"' '
++		mkdir -- --wat &&
++		test_dir_is_empty --wat &&
++		rmdir -- --wat
++	'
++	test_done
++	EOF
++	check_sub_test_lib_test dir-empty <<-\\EOF
++	> ok 1 - should pass with actually empty directory
++	> ok 2 - should fail with a normal filename
++	> ok 3 - should fail with dot-newline-dot filename
++	> ok 4 - should pass with an empty directory \"-l\"
++	> ok 5 - should pass with an empty directory \"--wat\"
++	> # passed all 5 test(s)
++	> 1..5
++	EOF
++"
++
++
+ ################################################################
+ # Basics of the basics
+ 
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 4207af4077..3df6b8027f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -576,7 +576,7 @@ test_path_exists () {
+ # Check if the directory exists and is empty as expected, barf otherwise.
+ test_dir_is_empty () {
+ 	test_path_is_dir "$1" &&
+-	if test -n "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
++	if test "$(ls -a1 -- "$1" | wc -l)" -gt 2
+ 	then
+ 		echo "Directory '$1' is not empty, it contains:"
+ 		ls -la "$1"
+-- 
+2.18.0.549.gd66323a05
 
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
->  submodule.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/submodule.c b/submodule.c
-> index d29dfa3d1f5..c6eff7699f3 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1256,7 +1256,7 @@ static int get_next_submodule(struct child_process *cp,
->  		case RECURSE_SUBMODULES_DEFAULT:
->  		case RECURSE_SUBMODULES_ON_DEMAND:
->  			if (!submodule ||
-> -			    !unsorted_string_list_lookup(
-> +			    !string_list_lookup(
->  					&changed_submodule_names,
->  					submodule->name))
->  				continue;
-> @@ -1350,6 +1350,7 @@ int fetch_populated_submodules(struct repository *r,
->  	/* default value, "--submodule-prefix" and its value are added later */
->  
->  	calculate_changed_submodule_paths();
-> +	string_list_sort(&changed_submodule_names);
->  	run_processes_parallel(max_parallel_jobs,
->  			       get_next_submodule,
->  			       fetch_start_failure,
