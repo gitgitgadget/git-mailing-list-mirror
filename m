@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3311F42B
-	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A02751F42B
+	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728210AbeIMXNA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:13:00 -0400
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:38977 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728193AbeIMXM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:12:59 -0400
-Received: by mail-pg1-f196.google.com with SMTP id i190-v6so3105671pgc.6
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:25 -0700 (PDT)
+        id S1728215AbeIMXNB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:13:01 -0400
+Received: from mail-pf1-f174.google.com ([209.85.210.174]:42127 "EHLO
+        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728193AbeIMXNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:13:01 -0400
+Received: by mail-pf1-f174.google.com with SMTP id l9-v6so3012497pff.9
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lgN9+HaKNLJe4NXAvjUb52XkOhnN7utX07voe/Kf4ug=;
-        b=pdS4COBH4WyZzgSc8xWgExvVl/w5AGWJv1wRVGTtPZ5/fspOJ6LS+EeIQGS9Z+ipbV
-         vmBXUY0MkxzdyEP4Kjp6uq2+lU41LjsfXRGx3b64eqF0ovrosold7Fu72wm8r9EyMZys
-         RVdx2t404/StUiREt8JPUKq8QbwP9TrZxRnT8EqOU0fBOsDLOZ9ZatwCDT2qDXQrt5Z1
-         ZOYC7L93HWqOwQEdcD3r+sbi0OqE46cCzBNApcSTQu8yIlXmK2iwPnLJnNnLtb20OKFo
-         zeSkwAbICSFrmJ9woa/VtJ6tXukVd5qKBvMOgfALmBIZ0UuvJjI1Jz3IUjEhGzrUWi+H
-         gDaA==
+        bh=1tm27vDdr+OSR1KPv2/mxLVXxHkgJHvoYoKzG0Da0dk=;
+        b=pPUve9i5Nd2SxcKym7pnKv58k0d9ng6+MB3+JArXHnjwh9acfKrqUNsZW5ihLlpz7M
+         m5IUXKCSkJ40euoOfFMHBAJ5Uf9ad68u6zcrz9B8sG6+wF0wYS2w0HtjRBdz3ctCMGhp
+         DtEsbWrQ3gdROvOMndDYixtRyDBwabzl9ZPVX8369oOnPOZMBVxrgaEmoFg0O6MhAhkF
+         9EpWFSO79AW9qErF289LUUoUTuXrai3eWf5ztXDl+oALqD8qxUN27GJkfp3OU47bf1Q4
+         e/1PFjO9jlaP2uWNwbWrZuZWo/n1PQoHNHEl3SYySz4H+UFwiKIDt/Z3Zwupt4h8+HHQ
+         jqsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lgN9+HaKNLJe4NXAvjUb52XkOhnN7utX07voe/Kf4ug=;
-        b=ZDRrQF4veuU5OU/BeDPrCO6PRC5+yRdWagua/9RA1rbnysPMtxyz+vmw0/pBfCfnoc
-         RPx5Zv1K8wWxkxVbVm/nYWIWiYA32Ws/sOfU6eq1dUZLF79xQeLCP1dzOc3+OoTdJAiO
-         m2zdBjqXEPG6ZALQz3nmEIzPqYxwp637y8L+0cgoadeBgilv3vZLuZVRf+h/IiicxfAI
-         znxZJXSIFNBZTg1v4KNznA2ljnlGZOy3qzGSWF88MnI+rCgx55FOCBoVRAg6BtlwJSHI
-         BSUMlSjA8vPqBnSSz32jnq9tjq/2VNXNLvS/gnjs/YjhDYeqfffsuVxWHLI0NWh0cdSa
-         wtoA==
-X-Gm-Message-State: APzg51DRYbzbmtbOwCS3I5dwGo6zec+BhZzogtfJxev0luFWqHHqPjTj
-        /U+4ym7W2//BCz1J5S4KrGRBRjCb
-X-Google-Smtp-Source: ANB0Vda3kzybL0pQ1eN4c0EWabQLugFEUZpfO9TBctAzJT+TX0SmMaInSPDHmYThIU3RoCQmu6iCcg==
-X-Received: by 2002:a63:e756:: with SMTP id j22-v6mr8206974pgk.185.1536861744547;
-        Thu, 13 Sep 2018 11:02:24 -0700 (PDT)
+        bh=1tm27vDdr+OSR1KPv2/mxLVXxHkgJHvoYoKzG0Da0dk=;
+        b=EMXUertTDluCcgdYDKPXvwdX4S8ugfDEOCUIbH7e946KDPBb3OdnuES0rR++70SCK7
+         RK9bthZeyAY8S6aMzkYGpA+mZ28MddZnCorNT2aV5YzSGvB9QJsveIUa3DCutSz2ywDz
+         aLKdhpcDIf3BVVjiNpfNbSjiCZyVVtpBlk8gKEHQzQdkys0JjEMOpEGi9wLbAPFJnkNW
+         BfAj5EL6+ImJqkR71uvWRMPXsfCzNMr9TGb0Fn9TzJ9c5q82daFNL+5ifwlxQzasTOfp
+         mOyKZ40jsrTXMrDj2UGm3DY+wo8ddReksSvxb/B5lGOaNhgzzpO7OvoPYKsS0XxGy6qr
+         7xRg==
+X-Gm-Message-State: APzg51CnXdqsN6NUPBSQCFBLErfAYvf4ze3JLfuwa8NSOAdv/6g7tiLR
+        F+J9hiUHp2pWGV13wKxLe0KqVg1h
+X-Google-Smtp-Source: ANB0VdbU6r7k9hR3OWV9JvpkoNmENo6A5Fsx4Ezvfrj22wcpDE9MSeuk3W9OsfWjqcfS2XvlLY3AvQ==
+X-Received: by 2002:a62:23c2:: with SMTP id q63-v6mr8526257pfj.116.1536861745945;
+        Thu, 13 Sep 2018 11:02:25 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id v140-v6sm6357927pgb.45.2018.09.13.11.02.23
+        by smtp.gmail.com with ESMTPSA id b64-v6sm5964267pfg.66.2018.09.13.11.02.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Sep 2018 18:02:07 GMT
-Message-Id: <210649bf838bf0dc338671c691cbd015bef41240.1536861730.git.gitgitgadget@gmail.com>
+        Thu, 13 Sep 2018 11:02:25 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 11:02:25 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Sep 2018 18:02:08 GMT
+Message-Id: <ef20193d59bd33a4c56e8c059ea7ddefbb6a8e72.1536861730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.34.v2.git.gitgitgadget@gmail.com>
 References: <pull.34.git.gitgitgadget@gmail.com>
         <pull.34.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 08/11] multi-pack-index: fix 32-bit vs 64-bit size check
+Subject: [PATCH v2 09/11] multi-pack-index: verify object offsets
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,30 +71,124 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When loading a 64-bit offset, we intend to check that off_t can store
-the resulting offset. However, the condition accidentally checks the
-32-bit offset to see if it is smaller than a 64-bit value. Fix it,
-and this will be covered by a test in the 'git multi-pack-index verify'
-command in a later commit.
+The 'git multi-pack-index verify' command must verify the object
+offsets stored in the multi-pack-index are correct. There are two
+ways the offset chunk can be incorrect: the pack-int-id and the
+object offset.
+
+Replace the BUG() statement with a die() statement, now that we
+may hit a bad pack-int-id during a 'verify' command on a corrupt
+multi-pack-index, and it is covered by a test.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ midx.c                      | 29 ++++++++++++++++++++++++++++-
+ t/t5319-multi-pack-index.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index 06d5cfc826..80094c02a7 100644
+index 80094c02a7..47e7e6113a 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -236,7 +236,7 @@ static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
- 	offset32 = get_be32(offset_data + sizeof(uint32_t));
+@@ -197,7 +197,8 @@ int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id)
+ 	struct strbuf pack_name = STRBUF_INIT;
  
- 	if (m->chunk_large_offsets && offset32 & MIDX_LARGE_OFFSET_NEEDED) {
--		if (sizeof(offset32) < sizeof(uint64_t))
-+		if (sizeof(off_t) < sizeof(uint64_t))
- 			die(_("multi-pack-index stores a 64-bit offset, but off_t is too small"));
+ 	if (pack_int_id >= m->num_packs)
+-		BUG("bad pack-int-id");
++		die(_("bad pack-int-id: %u (%u total packs"),
++		    pack_int_id, m->num_packs);
  
- 		offset32 ^= MIDX_LARGE_OFFSET_NEEDED;
+ 	if (m->packs[pack_int_id])
+ 		return 0;
+@@ -970,5 +971,31 @@ int verify_midx_file(const char *object_dir)
+ 				    i, oid_to_hex(&oid1), oid_to_hex(&oid2), i + 1);
+ 	}
+ 
++	for (i = 0; i < m->num_objects; i++) {
++		struct object_id oid;
++		struct pack_entry e;
++		off_t m_offset, p_offset;
++
++		nth_midxed_object_oid(&oid, m, i);
++		if (!fill_midx_entry(&oid, &e, m)) {
++			midx_report(_("failed to load pack entry for oid[%d] = %s"),
++				    i, oid_to_hex(&oid));
++			continue;
++		}
++
++		if (open_pack_index(e.p)) {
++			midx_report(_("failed to load pack-index for packfile %s"),
++				    e.p->pack_name);
++			break;
++		}
++
++		m_offset = e.offset;
++		p_offset = find_pack_entry_one(oid.hash, e.p);
++
++		if (m_offset != p_offset)
++			midx_report(_("incorrect object offset for oid[%d] = %s: %"PRIx64" != %"PRIx64),
++				    i, oid_to_hex(&oid), m_offset, p_offset);
++	}
++
+ 	return verify_midx_error;
+ }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index a968b9a959..828c240389 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -176,6 +176,7 @@ test_expect_success 'verify bad signature' '
+ '
+ 
+ HASH_LEN=20
++NUM_OBJECTS=74
+ MIDX_BYTE_VERSION=4
+ MIDX_BYTE_OID_VERSION=5
+ MIDX_BYTE_CHUNK_COUNT=6
+@@ -192,6 +193,10 @@ MIDX_OID_FANOUT_WIDTH=4
+ MIDX_BYTE_OID_FANOUT_ORDER=$((MIDX_OFFSET_OID_FANOUT + 250 * $MIDX_OID_FANOUT_WIDTH + 1))
+ MIDX_OFFSET_OID_LOOKUP=$(($MIDX_OFFSET_OID_FANOUT + 256 * $MIDX_OID_FANOUT_WIDTH))
+ MIDX_BYTE_OID_LOOKUP=$(($MIDX_OFFSET_OID_LOOKUP + 16 * $HASH_LEN))
++MIDX_OFFSET_OBJECT_OFFSETS=$(($MIDX_OFFSET_OID_LOOKUP + $NUM_OBJECTS * $HASH_LEN))
++MIDX_OFFSET_WIDTH=8
++MIDX_BYTE_PACK_INT_ID=$(($MIDX_OFFSET_OBJECT_OFFSETS + 16 * $MIDX_OFFSET_WIDTH + 2))
++MIDX_BYTE_OFFSET=$(($MIDX_OFFSET_OBJECT_OFFSETS + 16 * $MIDX_OFFSET_WIDTH + 6))
+ 
+ test_expect_success 'verify bad version' '
+ 	corrupt_midx_and_verify $MIDX_BYTE_VERSION "\00" $objdir \
+@@ -243,6 +248,16 @@ test_expect_success 'verify oid lookup out of order' '
+ 		"oid lookup out of order"
+ '
+ 
++test_expect_success 'verify incorrect pack-int-id' '
++	corrupt_midx_and_verify $MIDX_BYTE_PACK_INT_ID "\07" $objdir \
++		"bad pack-int-id"
++'
++
++test_expect_success 'verify incorrect offset' '
++	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\07" $objdir \
++		"incorrect object offset"
++'
++
+ test_expect_success 'repack removes multi-pack-index' '
+ 	test_path_is_file $objdir/pack/multi-pack-index &&
+ 	git repack -adf &&
+@@ -310,4 +325,16 @@ test_expect_success 'verify multi-pack-index with 64-bit offsets' '
+ 	git multi-pack-index verify --object-dir=objects64
+ '
+ 
++NUM_OBJECTS=63
++MIDX_OFFSET_OID_FANOUT=$((MIDX_OFFSET_PACKNAMES + 54))
++MIDX_OFFSET_OID_LOOKUP=$((MIDX_OFFSET_OID_FANOUT + 256 * $MIDX_OID_FANOUT_WIDTH))
++MIDX_OFFSET_OBJECT_OFFSETS=$(($MIDX_OFFSET_OID_LOOKUP + $NUM_OBJECTS * $HASH_LEN))
++MIDX_OFFSET_LARGE_OFFSETS=$(($MIDX_OFFSET_OBJECT_OFFSETS + $NUM_OBJECTS * $MIDX_OFFSET_WIDTH))
++MIDX_BYTE_LARGE_OFFSET=$(($MIDX_OFFSET_LARGE_OFFSETS + 3))
++
++test_expect_success 'verify incorrect 64-bit offset' '
++	corrupt_midx_and_verify $MIDX_BYTE_LARGE_OFFSET "\07" objects64 \
++		"incorrect object offset"
++'
++
+ test_done
 -- 
 gitgitgadget
 
