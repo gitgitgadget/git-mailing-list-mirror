@@ -2,174 +2,187 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 039B51F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 14:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F84A1F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 14:56:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729692AbeIMTRU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 15:17:20 -0400
-Received: from mail-qt0-f195.google.com ([209.85.216.195]:35108 "EHLO
-        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728291AbeIMTRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 15:17:19 -0400
-Received: by mail-qt0-f195.google.com with SMTP id j7-v6so5474523qtp.2
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 07:07:39 -0700 (PDT)
+        id S1727872AbeIMUGg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 16:06:36 -0400
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:46787 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727082AbeIMUGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 16:06:36 -0400
+Received: by mail-pf1-f196.google.com with SMTP id u24-v6so2775995pfn.13
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 07:56:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9UZdPowune+/2u3Ko9CEmlVEF90cVJhdxOLq2D/cpBA=;
-        b=cuhHsyFlGrEWkrQAVkvLY9prMoCu90cx1z536wFX/phH4nkRuk3aBIzQ72HT3OEHAk
-         S5VYFya7aM+SgYFZrEpvxP4FHTORClgWO3vpwV7wn8ieTv4OvV2ndZGGQYGtDARb75md
-         O3UQN7QToRzC3jRIDsVAOCGhWTMJhLarVIxcPATG69+N0RqcJbIIyfSE4h6Xi6wT0YS7
-         7Z5z4xjgVhFF8M10HCm5jFKGMpcWyrMNYwFyZKU6+kYuWLpFNo617ImYKwDXUqFjL/oi
-         hxhUwho+WRmZ5xePu9Q72ZfWfP/A/M3lPvzWAjhCSEJ9YfOHhnpub/PpWX25DGlkeCCe
-         edZw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=gyVi7DpT8o1qHRnMKLSLr/HHfRv7z5l8PZb7Snf0ZGc=;
+        b=LpYa+9zTjgdDIapTPbkpbwGbxm1kipavExt4ZhHvrw8w4bcTsfCX2biVLyg5OGGC+p
+         6nCxMx+BFmBgx1U2Hq77Jeg4dJzZMyirsqyRvai++5AMzEoCSPgKlmp2ja2KljMHwAyO
+         YOaLWbVRxf61hO2YSfT3AIjkYkrKrTTKgtI3cGQmOfhoNo89bXWCSkhWx6aDbN5TNdp4
+         Qn+Xk5OgBdHGX4lAV4ghDLEvVs6NIOPVjyTRc1NnnbzJdaDHn/UrBBzdk9h0kXlxlFYn
+         SLm0zy7FJZ1TLAEZS1THns4D6SegMCGDhPKobIDWAPvVRfqm4bxwphtnTMb+pQ43as0g
+         0O6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9UZdPowune+/2u3Ko9CEmlVEF90cVJhdxOLq2D/cpBA=;
-        b=oJfl1T8ro9uiVSwKNRq8n5GmyWrOPVrfZsi5qDaFxXALXYuB0b84soloDVfwXumhxG
-         rwasJz2HTssrxBLn7CLWjbeDjZrlLcPcUMJUdJ4pZgWiAA3JHpjDpINCKEm5tl1lWwJi
-         KOOXIZGVfI+Wn9jYbOw/ITLq2alFyjKxXrQjuSDu3P8n+GiImQFe52nkq9HOGinYIoif
-         urir95cfD19mLxcDomL7pB82/+u1tuYsR0D5ycIebRv4JCewkTl66UF2dJ94Y/I+bLFW
-         uedY81bxfPu0XKDb/QqjsOUC4Fmud0P7BJ6j9j15tvMV2hVM0XktZcNEjGLHjRyaxrcy
-         VLFQ==
-X-Gm-Message-State: APzg51CkmHgo4/4PAD2Y0tZDwnAlccPsFEreu14fuPsOV9Sir2QibKnT
-        Y68XbHya2/B4fGJ+XIecXUTx1pn+
-X-Google-Smtp-Source: ANB0Vdba5mX2JLtgItxgYjDVpzjqSUXiuE5lTeEJvqVOSzuGjrqBz14T8znaN8kV2aVc/VPeZeIgqg==
-X-Received: by 2002:ac8:1a04:: with SMTP id v4-v6mr5453084qtj.183.1536847658796;
-        Thu, 13 Sep 2018 07:07:38 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id h132-v6sm2357505qke.51.2018.09.13.07.07.37
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=gyVi7DpT8o1qHRnMKLSLr/HHfRv7z5l8PZb7Snf0ZGc=;
+        b=PnjIW0p4VW/Ut8a8xT9vCBG0KcXlr7Je484CHhySN9q1jtR1n24GHzaCp6vWZU27j3
+         OPSi8Oc9CztvRkoYxYo2Z3rTFnMlqnebQ2DexjW4KP5laYCDLyYZA0BJ++LgLNG8rHLg
+         v3zYatiqkL5Tt9oJQF2pn6MGaxEek1aY75qJfnNjEQNmZ+Bgxd3WfxbPYBfGxdBpzO9i
+         pe44rWTEW1OqYKusq464iB2L9bE9u3MLazzZo4nZ7QdqcCqYMkjf48AUgwon7FEgD5r1
+         zmF/Dp+F2AWVs7o4ie2b5HpwfA0q6nZ54bQ1FI2IvP6WC/r6fU1rupyYk5wx6djyrNY5
+         k2Gw==
+X-Gm-Message-State: APzg51Dr1Zv+Gh2E4uhXZOQDa2j/RHbRFl4rljZ7KQyiuUT51ZsS0BnP
+        sjd2IRkiYHVGnW139p3PRmb2BQFn
+X-Google-Smtp-Source: ANB0VdZEVccaPUv95/8dTE7LpGNabw+HS9hsPiAMKNRTM+KKj9eWT7mh18cGGEoIVNQuBlH9AkCZug==
+X-Received: by 2002:a62:6948:: with SMTP id e69-v6mr7877468pfc.166.1536850603583;
+        Thu, 13 Sep 2018 07:56:43 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.142.204])
+        by smtp.gmail.com with ESMTPSA id h190-v6sm7380543pge.18.2018.09.13.07.56.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 07:07:37 -0700 (PDT)
-Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
-To:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-References: <20180912212544.33624-1-benpeart@microsoft.com>
- <20180912223101.GA1719@hank.intra.tgummerer.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <4f8b4664-6108-db7f-cb40-2bc55d9edece@gmail.com>
-Date:   Thu, 13 Sep 2018 10:07:34 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Thu, 13 Sep 2018 07:56:42 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 07:56:42 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Sep 2018 14:56:39 GMT
+Message-Id: <pull.40.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.40.git.gitgitgadget@gmail.com>
+References: <pull.40.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] contrib: Add script to show uncovered "new" lines
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <20180912223101.GA1719@hank.intra.tgummerer.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+We have coverage targets in our Makefile for using gcov to display line
+coverage based on our test suite. The way I like to do it is to run:
+
+make coverage-test
+make coverage-report
+
+This leaves the repo in a state where every X.c file that was covered has an
+X.c.gcov file containing the coverage counts for every line, and "#####" at
+every uncovered line.
+
+There have been a few bugs in recent patches what would have been caught if
+the test suite covered those blocks (including a few of mine). I want to
+work towards a "sensible" amount of coverage on new topics. In my opinion,
+this means that any logic should be covered, but the 'die()' blocks in error
+cases do not need to be covered.
+
+It is important to not measure the coverage of the codebase by what old code
+is not covered. To help, I created the 'contrib/coverage-diff.sh' script.
+After creating the coverage statistics at a version (say, 'topic') you can
+then run
+
+contrib/coverage-diff.sh base topic
+
+to see the lines added between 'base' and 'topic' that are not covered by
+the test suite. For example, I ran this against the 'jch' branch (d3c0046)
+versus 'next' (dd90340) and got the following output:
+
+builtin/commit.c
+859fdc0c3cf     (Derrick Stolee 2018-08-29 05:49:04 -0700       1657)           write_commit_graph_reachable(get_object_directory(), 0);
+builtin/rev-list.c
+250edfa8c87     (Harald Nordgren        2018-04-18 23:05:35 +0200       431)                    bisect_flags |= BISECT_FIND_ALL;
+builtin/worktree.c
+e5353bef550     (Eric Sunshine  2018-08-28 17:20:19 -0400       60)             error_errno(_("failed to delete '%s'"), sb.buf);
+e19831c94f9     (Eric Sunshine  2018-08-28 17:20:23 -0400       251)                die(_("unable to re-add worktree '%s'"), path);
+68a6b3a1bd4     (Eric Sunshine  2018-08-28 17:20:24 -0400       793)                    die(_("cannot move a locked working tree, lock reason: %s\nuse 'move -f -f' to override or unlock first"),
+f4143101cbb     (Eric Sunshine  2018-08-28 17:20:25 -0400       906)                    die(_("cannot remove a locked working tree, lock reason: %s\nuse 'remove -f -f' to override or unlock first"),
+read-cache.c
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1754)           const unsigned char *cp = (const unsigned char *)name;
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1757)           previous_len = previous_ce ? previous_ce->ce_namelen : 0;
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1758)           strip_len = decode_varint(&cp);
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1759)           if (previous_len < strip_len) {
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1760)                   if (previous_ce)
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1761)                           die(_("malformed name field in the index, near path '%s'"),
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1762)                               previous_ce->name);
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1764)                           die(_("malformed name field in the index in the first path"));
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1766)           copy_len = previous_len - strip_len;
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1767)           name = (const char *)cp;
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1773)                   len += copy_len;
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1794)           if (copy_len)
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1795)                   memcpy(ce->name, previous_ce->name, copy_len);
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1796)           memcpy(ce->name + copy_len, name, len + 1 - copy_len);
+67922abbbb3     (Nguyễn Thái Ngọc Duy   2018-09-02 15:19:33 +0200       1797)           *ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
+remote-curl.c
+c3b9bc94b9b     (Elijah Newren  2018-09-05 10:03:07 -0700       181)            options.filter = xstrdup(value);
+
+Using this 'git blame' output, we can quickly inspect whether the uncovered
+lines are appropriate. For instance:
+
+ 1. The line in builtin/commit.c is due to writing the commit-graph file
+    when GIT_TEST_COMMIT_GRAPH is enabled, which is not on by default in the
+    test suite. Being uncovered is expected here.
+    
+    
+ 2. The lines in builtin/worktree.c are all related to error conditions.
+    This is acceptable.
+    
+    
+ 3. The line in builtin/rev-list.c is a flag replacement in a block that is
+    otherwise unchanged. It must not be covered by the test suite normally.
+    This could be worth adding a test to ensure the new logic maintains old
+    behavior.
+    
+    
+ 4. The lines in read-cache.c are part of a new block for the condition "if
+    (expand_name_field)" as part of an optimization. These lines should
+    probably be covered before that series is merged to 'next'. I understand
+    that Ben and Duy are continuing work in this direction [1].
+    
+    
+
+I used this approach for 'next' over 'master' and got a larger list, some of
+which I have already submitted tests to increase coverage [2] or will be
+covered by topics not in 'next' [3].
+
+Thanks, -Stolee
+
+CHANGES IN V2: I converted the script from bash to sh (there may still be
+POSIX-compliance issues with the new script, I don't know a lot when it
+comes to that area). I also streamlined the machinery to add line numbers to
+the diff. One downside is that the script runs a little slower with all of
+the grep process invocations.
+
+[1] 
+https://public-inbox.org/git/20180912161832.55324-1-benpeart@microsoft.com/T/#u
+
+[2] https://public-inbox.org/git/pull.37.git.gitgitgadget@gmail.com/
+
+[3] https://public-inbox.org/git/pull.34.git.gitgitgadget@gmail.com/
+
+Derrick Stolee (1):
+  contrib: add coverage-diff script
+
+ contrib/coverage-diff.sh | 63 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 63 insertions(+)
+ create mode 100755 contrib/coverage-diff.sh
 
 
-On 9/12/2018 6:31 PM, Thomas Gummerer wrote:
-> On 09/12, Ben Peart wrote:
->> Teach get_index_format_default() to support running the test suite
->> with specific index versions.  In particular, this enables the test suite
->> to be run using index version 4 which is not the default so gets less testing.
-> 
-> I found this commit message slightly misleading.  Running the test
-> suite with specific index versions is already supported, by defining
-> TEST_GIT_INDEX_VERSION in 'config.mak'.  What we're doing here is
-> introduce an additional environment variable that can also be used to
-> set the index format in tests.
-> 
-> Even setting TEST_GIT_INDEX_VERSION=4 in the environment does run the
-> test suite with index-v4.  Admittedly the name is a bit strange
-> compared to our usual GIT_TEST_* environment variable names, and it
-> should probably be documented better (it's only documented in the
-> Makefile currently), but I'm not sure we should introduce another
-> environment variable for this purpose?
+base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-40%2Fderrickstolee%2Fcoverage-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-40/derrickstolee/coverage-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/40
 
-TEST_GIT_INDEX_VERSION enables the testing I was looking for but you're 
-right, it isn't well documented and the atypical naming and 
-implementation don't help either.
+Range-diff vs v1:
 
-I checked the documentation and code but didn't see any way to test the 
-V4 index code path so wrote this patch.  I wonder if we can improve the 
-discoverability of TEST_GIT_INDEX_VERSION through better naming and 
-documentation.
+ 1:  e4124471e5 < -:  ---------- contrib: add coverage-diff script
+ -:  ---------- > 1:  7714b0659e contrib: add coverage-diff script
 
-How about this as an alternative?
-
-
-
-
-diff --git a/Makefile b/Makefile
-index 5a969f5830..9e84ef02f7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -400,7 +400,7 @@ all::
-  # (defaults to "man") if you want to have a different default when
-  # "git help" is called without a parameter specifying the format.
-  #
--# Define TEST_GIT_INDEX_VERSION to 2, 3 or 4 to run the test suite
-+# Define GIT_TEST_INDEX_VERSION to 2, 3 or 4 to run the test suite
-  # with a different indexfile format version.  If it isn't set the index
-  # file format used is index-v[23].
-  #
-@@ -2599,8 +2599,8 @@ endif
-  ifdef GIT_INTEROP_MAKE_OPTS
-         @echo GIT_INTEROP_MAKE_OPTS=\''$(subst ','\'',$(subst 
-','\'',$(GIT_INTEROP_MAKE_OPTS)))'\' >>$@+
-  endif
--ifdef TEST_GIT_INDEX_VERSION
--       @echo TEST_GIT_INDEX_VERSION=\''$(subst ','\'',$(subst 
-','\'',$(TEST_GIT_INDEX_VERSION)))'\' >>$@+
-+ifdef GIT_TEST_INDEX_VERSION
-+       @echo GIT_TEST_INDEX_VERSION=\''$(subst ','\'',$(subst 
-','\'',$(GIT_TEST_INDEX_VERSION)))'\' >>$@+
-
-  endif
-         @if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 44288cbb59..31698c01c4 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -134,9 +134,9 @@ export EDITOR
-  GIT_TRACE_BARE=1
-  export GIT_TRACE_BARE
-
--if test -n "${TEST_GIT_INDEX_VERSION:+isset}"
-+if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
-  then
--       GIT_INDEX_VERSION="$TEST_GIT_INDEX_VERSION"
-+       GIT_INDEX_VERSION="$GIT_TEST_INDEX_VERSION"
-         export GIT_INDEX_VERSION
-  fi
-
-diff --git a/t/README b/t/README
-index 9028b47d92..f872638a78 100644
---- a/t/README
-+++ b/t/README
-@@ -315,10 +315,14 @@ packs on demand. This normally only happens when 
-the object size is
-   over 2GB. This variable forces the code path on any object larger than
-   <n> bytes.
-
--GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
-+GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncommon pack-objects code
-   path where deltas larger than this limit require extra memory
-   allocation for bookkeeping.
-
-+GIT_TEST_INDEX_VERSION=<n> exercises the index read/write code path
-+for the index version specified.  Can be set to any valid version
-+but the non-default version 4 is probably the most beneficial.
-+
-   Naming Tests
-   ------------
-
+-- 
+gitgitgadget
