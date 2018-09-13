@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB2E81F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 15:34:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 309191F42B
+	for <e@80x24.org>; Thu, 13 Sep 2018 15:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728198AbeIMUol (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 16:44:41 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39676 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727803AbeIMUol (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 16:44:41 -0400
-Received: by mail-wr1-f65.google.com with SMTP id s14-v6so6406397wrw.6
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 08:34:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=W/kBbL5kPwYxTuKfR345+JJZ+Ke24y6+MSBxZfIqyNM=;
-        b=MwzE7/QKarmlR74m8/vmTq3QaJWPGGCvMO67p6Xu40HZ68clxYedtIc2NWEKQ8kT+B
-         Mso9bUJP1LvdnSe2gsLO25t2kwrQtGI69dUWjDtxzVNmMv4ijw0rbqm033yY6x4VcD1U
-         oZcANuLc+kxYrLEzp+I7EVq3gD1695XQLDq+pfOnVRWQk2h4995GXgDuT8Wo6DqhGdbm
-         oPMOEKipnMs5pFun6pt/egZQb6osTOI5kGG0HCuY7VI15oIpFDSXLwzY0HhMcMBUyBZp
-         abmWbbEi9hMmgL2gxEOcE+SidBOBKvmO00GPlvONKTUfOIVGacrPWrq6ecDcY6+8kEDt
-         A1hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=W/kBbL5kPwYxTuKfR345+JJZ+Ke24y6+MSBxZfIqyNM=;
-        b=RkAg4HiMSY6eXhplVpTAxZa9rjL5jskjupizx2xSPsW6P+pJO37XzwMIwTYs/u5207
-         M/Gw5twPbHV+GfYeUA9TcrSvAD2F0v5LUACDXB6A8h7Ha2y3s3aVBf5r6jOajKy+8/CJ
-         x5Pn2IFZjpUb6yelOdlUzhmWX07a5dFyQZpljO3wKDOHCMsEAD1U8gEtt6pdSA3K1Mi7
-         MNiENGdM/E8/LGqrCkeb5zkZGqz0DsmsJWSuDHvVrBNatjRKElMFsSX5O09DT0I3lu9D
-         1rd7WnUfdjzPfZSqHlEoC8uJ7N3D0r5ew2ExKittnp51bJxWAvct7iWDNwVidSrsMV96
-         CFlw==
-X-Gm-Message-State: APzg51CPBihwT8OCOf0Sh2dAycBYRoP16MYQD0EqoWxTX6kvqz68FnYG
-        +pGUfnU0y1On7M4BQiaq1QI=
-X-Google-Smtp-Source: ANB0VdYsdV7NiBDb6eMSVP6sD+St7Ori13BybC5jAgg20rUzdRvNGO9/aqUvEwdlFs3K+jbNziPJTg==
-X-Received: by 2002:a1c:b54b:: with SMTP id e72-v6mr5960003wmf.117.1536852878562;
-        Thu, 13 Sep 2018 08:34:38 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id v133-v6sm6220765wma.36.2018.09.13.08.34.37
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 08:34:37 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 1/3] archive: use packet_reader for communications
-References: <20180912053519.31085-1-steadmon@google.com>
-        <20180912053519.31085-2-steadmon@google.com>
-        <xmqqr2hxigw2.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 13 Sep 2018 08:34:37 -0700
-In-Reply-To: <xmqqr2hxigw2.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 13 Sep 2018 07:58:05 -0700")
-Message-ID: <xmqqa7olif76.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727994AbeIMUsi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 16:48:38 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:63065 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727795AbeIMUsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 16:48:38 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w8DFcSpn048234
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 13 Sep 2018 11:38:29 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>
+References: <003901d44acd$12c2bb90$384832b0$@nexbridge.com>        <4102803b-d5de-5812-4cef-569c9869fed1@kdbg.org>        <004e01d44ada$b4a11ad0$1de35070$@nexbridge.com>        <000001d44ae6$c2a20ac0$47e62040$@nexbridge.com>        <xmqq1s9yjp9j.fsf@gitster-ct.c.googlers.com>        <001101d44b5b$fa337350$ee9a59f0$@nexbridge.com> <xmqqefdxign2.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefdxign2.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [Question] Signature calculation ignoring parts of binary files
+Date:   Thu, 13 Sep 2018 11:38:21 -0400
+Message-ID: <003a01d44b77$d0b289a0$72179ce0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQL1dHr/8n7yCB9UeIXEGLjm31C4owFRfwXbAhcuk1ECJbKk4AITag6rAj4bbawDCIckP6JEwDRA
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On September 13, 2018 11:03 AM, Junio C Hamano wrote:
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> 
+> > The scenario is slightly different.
+> > 1. Person A gives me a new binary file-1 with fingerprint A1. This
+> > goes into git unchanged.
+> > 2. Person B gives me binary file-2 with fingerprint B2. This does not
+> > go into git yet.
+> > 3. We attempt a git diff between the committed file-1 and uncommitted
+> > file-2 using a textconv implementation that strips what we don't need to
+> compare.
+> > 4. If file-1 and file-2 have no difference when textconv is used,
+> > file-2 is not added and not committed. It is discarded with impunity,
+> > never to be seen again, although we might whine a lot at the user for
+> > attempting to put
+> > file-2 in - but that's not git's issue.
+> 
+> You are forgetting that Git is a distributed version control system,
+aren't you?
+> Person A and B can introduce their "moral equivalent but bytewise
+different"
+> copies to their repository under the same object name, and you can pull
+from
+> them--what happens?
+> 
+> It is fundamental that one object name given to Git identifies one
+specific
+> byte sequence contained in an object uniquely.  Once you broke that, you
+no
+> longer have Git.
 
->> -	if (packet_read_line(fd[0], NULL))
->> +	status = packet_reader_read(&reader);
->> +	if (status != PACKET_READ_FLUSH)
->>  		die(_("git archive: expected a flush"));
->
-> This makes me wonder what happens if we got an EOF instead.  We fail
-> to notice protocol error here, but do the code after this part
-> correctly handle the situation?
+At that point I have a morally questionable situation, agreed. However, both
+are permitted to exist in the underlying tree without conflict in git -
+which I do consider a legitimately possible situation that will not break
+the application at all - although there is a semantic conflict in the
+application (not in git) that requires human decision to resolve. The fact
+that both objects can exist in git with different fingerprints is a good
+thing because it provides immutable evidence and ownership of someone
+bypassing the intent of the application.
 
-Sorry, this part of my comment is completely backwards.
+So, rather than using textconv, I shall implement this rule in the
+application rather than trying to configure git to do it. If two conflicting
+objects enter the commit history, the application will have the
+responsibility to resolve the semantic/legal conflict.
 
-We require they send a flush, not a 0-length data packet of length
-4, and otherwise we die, even though we used to treate 0-length data
-packet of length 4 just like a flush.
+Thanks,
+Randall
 
-So this is making the code more strict than the original.  As long
-as all the existing implementations correctly use flush here, there
-would be no unintended regression, but it bothers me that we have to
-even worry if these behaviour changes affect the already deployed
-software negatively.
 
->
->>  	/* Now, start reading from fd[0] and spit it out to stdout */
