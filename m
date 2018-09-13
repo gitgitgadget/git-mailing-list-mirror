@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE2C31F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 05:18:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 960F81F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 05:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726985AbeIMK0J (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 06:26:09 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54422 "EHLO
+        id S1727007AbeIMK0M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 06:26:12 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54436 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726317AbeIMK0J (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Sep 2018 06:26:09 -0400
+        by vger.kernel.org with ESMTP id S1726317AbeIMK0L (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Sep 2018 06:26:11 -0400
 Received: from genre.crustytoothpaste.net (108-60-118-130.static.wiline.com [108.60.118.130])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 02E5D60748;
-        Thu, 13 Sep 2018 05:18:15 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B8B8360745;
+        Thu, 13 Sep 2018 05:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536815897;
-        bh=r8E+oKIgjP7htHY8IvAtKJhOR+w4aDcUyxphfIhFFjk=;
+        s=default; t=1536815899;
+        bh=MaLbypCB0V+jISHrkAv0NRCDwcLqyasejGJeuolSCvw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=vfZ0MyptjD+IBMondSzW1WuY0KFNqOywoJUD5XffAhnCJkOl1+X5EuTOZB7doNKnp
-         iY2txURByu3NomLcULk4/ylw4wpbfVwhxJykRfkJG+CxWqOClq5VQv1EaAe1QP/21V
-         IOOmbebFshESIgzkC0QzkIoCrfhnv6uDp0gsbRXnLX96PjRA+IpMKO9lR9UrsL7M7Z
-         bB+Nmtj1Z8XGrbntcGag9/uFhkBfO6FDTs5tk+vA0zLier5I9+BndbmnHqRadFaBBo
-         xqXtB2J2veWKw45tgu92nPGnvmBxhJe2BScnnM3VowruqwWdfTo5chIK1Q2O7MX13f
-         RFaLPTre74g76eU9vIYWSUdQwBPeJAKZnV0RvI2VFVtgnpwkGtab/QGnj6xrdQ9XTT
-         NLl9d7x+zApgXTM/7YosqMX3hhbUpRhkWNpg/JZnMB7ixK9kTuSNuxjNZWq1OtArQL
-         5vby6qE1u/zfQcs30wNXWQ9rkDSIZHWicjpg5HTMI3rMvxOoxE3
+        b=ozQGQOqKq6mnLC9DF9soAl97t2ktYXIscfH3fc/zJ0yDzqj5GR7n/SCivkXNdZFJF
+         aIYHzGAHzkGLnAjRjMV466VZdcAmHAVZfujDXkLLznaCWVluEZeOUt20prc5/gmeGp
+         P2RoWajmMkm0oTW3t2djTATDNugbncII5sr4c9Ee5gBKYjf51pKyue/7EAF4wQ8Rdy
+         xMgdjSqHhNIn0SANNmbsOhXzdNsX8OJQpaylZ7LhgxmX8z52un6oZAHKssDK2PuWRG
+         LzBAweL39iX0xmEDYMjc++5Q7w0DVhK3tK0Y3ER/2H/OTggmehCPCwR/wSTPYhburE
+         JfRKlhjICs4ipRNA+Ta80sKouRw+5LsVrQcQ5W9e1IIjd7fx4VuqJ2nJLB3StI8FZu
+         Jo65vuH8U+9VQbRMx+fSEw4ri5D5NlZMTunnRv2w5izaS5+c3DcUHxOOtFIADuFyv7
+         z/YDkb50YtWqYW/I206VyPkCQfcpUTPyqbodlndMDtDsA4RCnql
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
@@ -43,9 +43,9 @@ Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 05/12] t0027: make hash size independent
-Date:   Thu, 13 Sep 2018 05:17:35 +0000
-Message-Id: <20180913051742.252276-6-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 06/12] t0064: make hash size independent
+Date:   Thu, 13 Sep 2018 05:17:36 +0000
+Message-Id: <20180913051742.252276-7-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a
 In-Reply-To: <20180913051742.252276-1-sandals@crustytoothpaste.net>
 References: <20180913051742.252276-1-sandals@crustytoothpaste.net>
@@ -57,29 +57,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We transform various object IDs into all-zero object IDs for comparison.
-Adjust the length as well so that this works for all hash algorithms.
-
-While it would be slightly more efficient to use a sed y/// expression
-instead of both the tr and sed, retain the tr in both cases for
-parallelism and compactness.
+Compute test values of the appropriate size instead of hard-coding
+40-character values.  Rename the echo20 function to echoid, since the
+values may be of varying sizes.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t0027-auto-crlf.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ t/t0064-sha1-array.sh | 49 ++++++++++++++++++++++++-------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-index beb5927f77..dfb46bbe86 100755
---- a/t/t0027-auto-crlf.sh
-+++ b/t/t0027-auto-crlf.sh
-@@ -15,7 +15,8 @@ compare_ws_file () {
- 	pfx=$1
- 	exp=$2.expect
- 	act=$pfx.actual.$3
--	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" >"$exp" &&
-+	tr '\015\000abcdef0123456789' QN00000000000000000 <"$2" |
-+		sed -e "s/0000*/$ZERO_OID/" >"$exp" &&
- 	tr '\015\000abcdef0123456789' QN00000000000000000 <"$3" >"$act" &&
- 	test_cmp "$exp" "$act" &&
- 	rm "$exp" "$act"
+diff --git a/t/t0064-sha1-array.sh b/t/t0064-sha1-array.sh
+index 67484502a0..5dda570b9a 100755
+--- a/t/t0064-sha1-array.sh
++++ b/t/t0064-sha1-array.sh
+@@ -3,30 +3,30 @@
+ test_description='basic tests for the SHA1 array implementation'
+ . ./test-lib.sh
+ 
+-echo20 () {
++echoid () {
+ 	prefix="${1:+$1 }"
+ 	shift
+ 	while test $# -gt 0
+ 	do
+-		echo "$prefix$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1$1"
++		echo "$prefix$ZERO_OID" | sed -e "s/00/$1/g"
+ 		shift
+ 	done
+ }
+ 
+ test_expect_success 'ordered enumeration' '
+-	echo20 "" 44 55 88 aa >expect &&
++	echoid "" 44 55 88 aa >expect &&
+ 	{
+-		echo20 append 88 44 aa 55 &&
++		echoid append 88 44 aa 55 &&
+ 		echo for_each_unique
+ 	} | test-tool sha1-array >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'ordered enumeration with duplicate suppression' '
+-	echo20 "" 44 55 88 aa >expect &&
++	echoid "" 44 55 88 aa >expect &&
+ 	{
+-		echo20 append 88 44 aa 55 &&
+-		echo20 append 88 44 aa 55 &&
++		echoid append 88 44 aa 55 &&
++		echoid append 88 44 aa 55 &&
+ 		echo for_each_unique
+ 	} | test-tool sha1-array >actual &&
+ 	test_cmp expect actual
+@@ -34,8 +34,8 @@ test_expect_success 'ordered enumeration with duplicate suppression' '
+ 
+ test_expect_success 'lookup' '
+ 	{
+-		echo20 append 88 44 aa 55 &&
+-		echo20 lookup 55
++		echoid append 88 44 aa 55 &&
++		echoid lookup 55
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -eq 1
+@@ -43,8 +43,8 @@ test_expect_success 'lookup' '
+ 
+ test_expect_success 'lookup non-existing entry' '
+ 	{
+-		echo20 append 88 44 aa 55 &&
+-		echo20 lookup 33
++		echoid append 88 44 aa 55 &&
++		echoid lookup 33
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -lt 0
+@@ -52,9 +52,9 @@ test_expect_success 'lookup non-existing entry' '
+ 
+ test_expect_success 'lookup with duplicates' '
+ 	{
+-		echo20 append 88 44 aa 55 &&
+-		echo20 append 88 44 aa 55 &&
+-		echo20 lookup 55
++		echoid append 88 44 aa 55 &&
++		echoid append 88 44 aa 55 &&
++		echoid lookup 55
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -ge 2 &&
+@@ -63,19 +63,24 @@ test_expect_success 'lookup with duplicates' '
+ 
+ test_expect_success 'lookup non-existing entry with duplicates' '
+ 	{
+-		echo20 append 88 44 aa 55 &&
+-		echo20 append 88 44 aa 55 &&
+-		echo20 lookup 66
++		echoid append 88 44 aa 55 &&
++		echoid append 88 44 aa 55 &&
++		echoid lookup 66
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -lt 0
+ '
+ 
+ test_expect_success 'lookup with almost duplicate values' '
++	# n-1 5s
++	root=$(echoid "" 55) &&
++	root=${root%5} &&
+ 	{
+-		echo "append 5555555555555555555555555555555555555555" &&
+-		echo "append 555555555555555555555555555555555555555f" &&
+-		echo20 lookup 55
++		id1="${root}5" &&
++		id2="${root}f" &&
++		echo "append $id1" &&
++		echo "append $id2" &&
++		echoid lookup 55
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -eq 0
+@@ -83,8 +88,8 @@ test_expect_success 'lookup with almost duplicate values' '
+ 
+ test_expect_success 'lookup with single duplicate value' '
+ 	{
+-		echo20 append 55 55 &&
+-		echo20 lookup 55
++		echoid append 55 55 &&
++		echoid lookup 55
+ 	} | test-tool sha1-array >actual &&
+ 	n=$(cat actual) &&
+ 	test "$n" -ge 0 &&
