@@ -2,289 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37DB91F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 16:31:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3C811F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 16:38:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727082AbeIMVlc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 17:41:32 -0400
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:44963 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726452AbeIMVlb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 17:41:31 -0400
-Received: by mail-wr1-f43.google.com with SMTP id v16-v6so6769789wro.11
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 09:31:16 -0700 (PDT)
+        id S1727413AbeIMVsf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 17:48:35 -0400
+Received: from mail-qt0-f196.google.com ([209.85.216.196]:39831 "EHLO
+        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726796AbeIMVsf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 17:48:35 -0400
+Received: by mail-qt0-f196.google.com with SMTP id o15-v6so5963761qtk.6
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 09:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7Gq6cssixfmVhaEdhdN5eUosmMGngFccZZqCnM6EeFg=;
-        b=hO4ALHPKGNum6T8YRxaOek6FhGmrlb49Vb8TtkXj00cAcX8xcH4afcKAdrwTQbYrH7
-         VlSpstlfk9H7L1fzqB5m55cZTsS15q/BNLiaqPe1JyZ9EtTzQPiIcrL6IrU7x4Nv4DEQ
-         omnEfmsaZJTrY10uAgJq1mKjwRFBXMIUEf+x2GZP+MREzN9CHb4rpI5lEezxc7USWGCT
-         OndGewwugoCQvo2uudWBKUvyImAhRaRfxnm4Wafj7l6aT+Yz/98BfjEmFTZVahu3XHaZ
-         Jyd6jufQTgJWiLE1mO1MxWKVS7YV5vRl3FHRIRXtCJA4XKvF9AP9fi5T6iWiU6tiG2C6
-         O3uw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=FeS20pKBK4A2vN4Ia+oPee0d/ABTiuY5B1Bg3+gYoGI=;
+        b=iHwRKcJ0cmX7Bvo5dgFNrcPt8NU5pdEsUyNddLbG+AqacNPEIThtOVjD/nbQMObhWB
+         4iQdF1q2xXfuzGgnye7cgq2qUoge2STEbk0l9rla5pD+By8fvYgyilU8FaEkL5CsrQP1
+         QQgWp7t+HUmDxS2BBLF7+nl5XaCJGsVo041Fpv1QAcg5pOSjYV67zKVOormuq8EF82PI
+         +NCJtsMrElEnQd4zUR4rinf/sajvcBnPYsO0hTommonShYxPmtKxrDiMQuTXf7Jc47lW
+         a3qSwbuqpjCXrUC3UphYu+vnSDaL9wiAPCMvb5dN5Ss9Tw8NvIwVqiAX1SJ+mjD8zgVR
+         NNng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7Gq6cssixfmVhaEdhdN5eUosmMGngFccZZqCnM6EeFg=;
-        b=BfIudkLK/BtQfOnmw7HMYTCJsqt5ZrC4/fonuhDGfsPK54tTGMhwy8V1XSMi1ax66o
-         qy6fBfUDo6A3IXoNt60xzBe6wRFjHFUobhVzCmEdqsIdY0YGGVBQLAlfI7UExRDDIG5g
-         Nn6iif+o2PWDvsfNsA1ZQ2xLCcXB1QeNoyGz4IbauV4alU+qvmanltbkxXO1q7yjHBIs
-         hLzWfggm+/nq4Z7SImrj5xA8bqyM61K34uXpEBIZ6wmw548UBPbMCHKZdPVwdHjm/YqV
-         pzW3RM2D41labW74D+l4E557LrfiQf4VlHFEKFIRQEF1pFYVdIzIQMVhJ2hNrRmvACBQ
-         vtAQ==
-X-Gm-Message-State: APzg51AJ7VSIkzKsdimiTD4oU7Xf1dXOTiqry8qpB0omAKVUaFxEGaZO
-        l6w6tJmcX8aKP0BJ4vEiNkw=
-X-Google-Smtp-Source: ANB0VdZ+b6yVfxX/mzNYEWn92lOlmk6viQjJzAatM+DtQNBXlI32etJxLugOoHQozszMLBlBncQ5rA==
-X-Received: by 2002:a5d:6150:: with SMTP id y16-v6mr6567331wrt.141.1536856274808;
-        Thu, 13 Sep 2018 09:31:14 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id y128-v6sm5744844wmy.26.2018.09.13.09.31.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 09:31:14 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, jrnieder@gmail.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
-References: <20180912053519.31085-1-steadmon@google.com>
-        <20180912053519.31085-3-steadmon@google.com>
-Date:   Thu, 13 Sep 2018 09:31:13 -0700
-In-Reply-To: <20180912053519.31085-3-steadmon@google.com> (Josh Steadmon's
-        message of "Tue, 11 Sep 2018 22:35:18 -0700")
-Message-ID: <xmqq1s9xicku.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=FeS20pKBK4A2vN4Ia+oPee0d/ABTiuY5B1Bg3+gYoGI=;
+        b=Nb+kjgK6RaL0dMkkpmahtTVllQy3HsR6s9S4ADZJzkcQROU+w3ZKrMB+DWr1XrD29x
+         ar01NJv6q+NslBFRAocgELtFQ1VwPA/VBz4wsYxfJS/edPy4AsDVuBo5MQV8fn+/CBOp
+         hc6Nl+SLh3MosTkSVwD+C9whsUCOjQlYiQ9HPOgKJY++8jb70sl0Vnyo2NmC/IWnD8/T
+         OaNWpFzGv6EVt2m8CxEn6/dPAPm7mUBK3Df3LIqKvPVKrIpCt/4NTmWJwvhPn21V1ITL
+         QElKDve4OpXWYB9wTDLhNkXtvfzgYpGzelbzsP2O+fYdevLXlGa7LCJsExIqMJOOkMzo
+         fDSQ==
+X-Gm-Message-State: APzg51DN9UyOAcvIrIhm30AykBfV2hBo84cMOm05TwF0wvP0/nxc+BIV
+        Jcz3WoL06Y8Lbnhv243TqNA=
+X-Google-Smtp-Source: ANB0Vdbk9/rzBdYMYwzp99BWaIJKQFWfHYVr74TlJKlI48LS0SAED0W4leZKoZ+ACw4gIk6knMs4gw==
+X-Received: by 2002:aed:20f1:: with SMTP id 104-v6mr6069749qtb.81.1536856697946;
+        Thu, 13 Sep 2018 09:38:17 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d087:f807:1318:50bb? ([2001:4898:8010:0:b9bd:f807:1318:50bb])
+        by smtp.gmail.com with ESMTPSA id k15-v6sm3026780qtf.95.2018.09.13.09.38.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Sep 2018 09:38:17 -0700 (PDT)
+Subject: Re: [PATCH v2 1/1] commit-reach: properly peel tags
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.39.git.gitgitgadget@gmail.com>
+ <pull.39.v2.git.gitgitgadget@gmail.com>
+ <4bf21204ddf8b9daa823db9954ddde98ab264a1b.1536855032.git.gitgitgadget@gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com>
+Date:   Thu, 13 Sep 2018 12:38:16 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <4bf21204ddf8b9daa823db9954ddde98ab264a1b.1536855032.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
-
-> +static int do_v2_command_and_cap(int out)
-> +{
-> +	packet_write_fmt(out, "command=archive\n");
-> +	/* Capability list would go here, if we had any. */
-> +	packet_delim(out);
-> +}
+On 9/13/2018 12:10 PM, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> The can_all_from_reach_with_flag() algorithm was refactored in 4fbcca4e
+> "commit-reach: make can_all_from_reach... linear" but incorrectly
+> assumed that all objects provided were commits. During a fetch
+> negotiation, ok_to_give_up() in upload-pack.c may provide unpeeled tags
+> to the 'from' array. The current code creates a segfault.
+>
+> Add a direct call to can_all_from_reach_with_flag() in 'test-tool reach'
+> and add a test in t6600-test-reach.sh that demonstrates this segfault.
+>
+> Correct the issue by peeling tags when investigating the initial list
+> of objects in the 'from' array.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>   commit-reach.c        | 33 ++++++++++++++++++++++++++-------
+>   t/helper/test-reach.c | 22 +++++++++++++++++-----
+>   t/t6600-test-reach.sh | 30 ++++++++++++++++++++++++++++--
+>   3 files changed, 71 insertions(+), 14 deletions(-)
+>
+> diff --git a/commit-reach.c b/commit-reach.c
+> index 86715c103c..4048a2132a 100644
+> --- a/commit-reach.c
+> +++ b/commit-reach.c
+> @@ -544,20 +544,39 @@ int can_all_from_reach_with_flag(struct object_array *from,
+>   {
+>   	struct commit **list = NULL;
+>   	int i;
+> +	int nr_commits;
+>   	int result = 1;
+>   
+>   	ALLOC_ARRAY(list, from->nr);
+> +	nr_commits = 0;
+>   	for (i = 0; i < from->nr; i++) {
+> -		list[i] = (struct commit *)from->objects[i].item;
+> +		struct object *from_one = from->objects[i].item;
+>   
+> -		if (parse_commit(list[i]) ||
+> -		    list[i]->generation < min_generation)
+> -			return 0;
+> +		if (!from_one || from_one->flags & assign_flag)
+> +			continue;
 > +
->  static int run_remote_archiver(int argc, const char **argv,
->  			       const char *remote, const char *exec,
->  			       const char *name_hint)
-> @@ -32,6 +41,7 @@ static int run_remote_archiver(int argc, const char **argv,
->  	struct remote *_remote;
->  	struct packet_reader reader;
->  	enum packet_read_status status;
-> +	enum protocol_version version;
->  
->  	_remote = remote_get(remote);
->  	if (!_remote->url[0])
-> @@ -41,6 +51,11 @@ static int run_remote_archiver(int argc, const char **argv,
->  
->  	packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
->  
-> +	version = discover_version(&reader);
-
-The original version of upload-archive that is correctly running on
-the other end sends either NACK (unable to spawn) or ACK (ready to
-serve) to us without waiting for us to speak first, so peeking that
-with this discover_version() is a safe thing to do.
-
-> +	if (version == protocol_v2)
-> +		do_v2_command_and_cap(fd[1]);
-> +
-
-With proto v2, "server capabilities" have already been collected in
-server_capabilities_v2 array in discover_version().  We are to pick
-and ask the capabilities in that function and respond.  Right now we
-do not need to do much, as we saw that very thin implementation of
-that function above.
-
->  	/*
->  	 * Inject a fake --format field at the beginning of the
->  	 * arguments, with the format inferred from our output
-
-And then after that, both the original and updated protocol lets us
-send the archive format and arguments (like revs and pathspecs),
-followed by a flush packet...
-
-> @@ -56,22 +71,24 @@ static int run_remote_archiver(int argc, const char **argv,
->  		packet_write_fmt(fd[1], "argument %s\n", argv[i]);
->  	packet_flush(fd[1]);
-
-... which is a piece of code shared between the protocol versions
-that ends here.
-
-> -	status = packet_reader_read(&reader);
-> -
-> -	if (status == PACKET_READ_FLUSH)
-> -		die(_("git archive: expected ACK/NAK, got a flush packet"));
-> -	if (strcmp(reader.buffer, "ACK")) {
-> -		if (starts_with(reader.buffer, "NACK "))
-> -			die(_("git archive: NACK %s"), reader.buffer + 5);
-> -		if (starts_with(reader.buffer, "ERR "))
-> -			die(_("remote error: %s"), reader.buffer + 4);
-> -		die(_("git archive: protocol error"));
-> +	if (version == protocol_v0) {
-> +		status = packet_reader_read(&reader);
-> +
-> +		if (status == PACKET_READ_FLUSH)
-> +			die(_("git archive: expected ACK/NAK, got a flush packet"));
-> +		if (strcmp(reader.buffer, "ACK")) {
-> +			if (starts_with(reader.buffer, "NACK "))
-> +				die(_("git archive: NACK %s"), reader.buffer + 5);
-> +			if (starts_with(reader.buffer, "ERR "))
-> +				die(_("remote error: %s"), reader.buffer + 4);
-> +			die(_("git archive: protocol error"));
+> +		from_one = deref_tag(the_repository, from_one,
+> +				     "a from object", 0);
+> +		if (!from_one || from_one->type != OBJ_COMMIT) {
+> +			/* no way to tell if this is reachable by
+> +			 * looking at the ancestry chain alone, so
+> +			 * leave a note to ourselves not to worry about
+> +			 * this object anymore.
+> +			 */
+> +			from->objects[i].item->flags |= assign_flag;
+> +			continue;
 > +		}
 > +
-> +		status = packet_reader_read(&reader);
-> +		if (status != PACKET_READ_FLUSH)
-> +			die(_("git archive: expected a flush"));
->  	}
+> +		list[nr_commits] = (struct commit *)from_one;
+> +		if (parse_commit(list[nr_commits]) ||
+> +		    list[nr_commits]->generation < min_generation)
+> +			return 0; /* is this a leak? */
 
-The original protocol lets upload-archive to report failure to spawn
-the writer backend process and lets us act on it.  We do not need a
-similar support in the updated protocol and instead can jump right
-into receiving the archive stream because...?
+Of course, after sending v2, I see this comment. This is a leak of 
+'list' and should be fixed.
 
-> -	status = packet_reader_read(&reader);
-> -	if (status != PACKET_READ_FLUSH)
-> -		die(_("git archive: expected a flush"));
-> -
-
->  	/* Now, start reading from fd[0] and spit it out to stdout */
->  	rv = recv_sideband("archive", fd[0], 1);
->  	rv |= transport_disconnect(transport);
+Not only is it a leak here, it is also a leak in the 'cleanup' section. 
+I'll squash the following into v3, but I'll let v2 simmer for review 
+before rerolling.
 
 
+diff --git a/commit-reach.c b/commit-reach.c
+index 4048a2132a..c457d8d85f 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -569,8 +569,11 @@ int can_all_from_reach_with_flag(struct 
+object_array *from,
 
-> diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-> index 25d911635..534e8fd56 100644
-> --- a/builtin/upload-archive.c
-> +++ b/builtin/upload-archive.c
-> @@ -5,6 +5,7 @@
->  #include "builtin.h"
->  #include "archive.h"
->  #include "pkt-line.h"
-> +#include "protocol.h"
->  #include "sideband.h"
->  #include "run-command.h"
->  #include "argv-array.h"
-> @@ -73,13 +74,53 @@ static ssize_t process_input(int child_fd, int band)
->  	return sz;
->  }
->  
-> +static int handle_v2_command_and_cap(void)
-> +{
-> +	struct packet_reader reader;
-> +	enum packet_read_status status;
-> +
-> +	packet_reader_init(&reader, 0, NULL, 0, PACKET_READ_CHOMP_NEWLINE);
-> +
-> +	packet_write_fmt(1, "version 2\n");
+                 list[nr_commits] = (struct commit *)from_one;
+                 if (parse_commit(list[nr_commits]) ||
+-                   list[nr_commits]->generation < min_generation)
+-                       return 0; /* is this a leak? */
++                   list[nr_commits]->generation < min_generation) {
++                       result = 0;
++                       goto cleanup;
++               }
++
+                 nr_commits++;
+         }
 
-This lets the discover_version() on the other side notice that we
-are speaking version 2.
+@@ -623,6 +626,7 @@ int can_all_from_reach_with_flag(struct object_array 
+*from,
+                 clear_commit_marks(list[i], RESULT);
+                 clear_commit_marks(list[i], assign_flag);
+         }
++       free(list);
+         return result;
+  }
 
-> +	/*
-> +	 * We don't currently send any capabilities, but maybe we could list
-> +	 * supported archival formats?
-> +	 */
-> +	packet_flush(1);
-
-process_capabilities_v2() expects the list of caps ends with a
-flush, which is given here.
-
-> +	status = packet_reader_read(&reader);
-> +	if (status != PACKET_READ_NORMAL ||
-> +	    strcmp(reader.buffer, "command=archive"))
-> +		die(_("upload-archive: expected command=archive"));
-
-The other side in do_v2_command_and_cap() would ask command=archive
-and that is verified.  _() is unwanted, I suppose, by the way, as
-you do not know what language the other side wants anyway.
-
-> +	while (status == PACKET_READ_NORMAL) {
-> +		/* We don't currently expect any client capabilities, but we
-> +		 * should still read (and ignore) any that happen to get sent.
-> +		 */
-> +		status = packet_reader_read(&reader);
-
-It is wrong to say we should "ignore".  If you are asked to behave
-in a certain way by a capability that is not understood, the other
-side expects you to honor that request and you have no idea how to
-comply.  At least you should make sure that what is asked is among
-the capabilities you offered (or you understand), and you should
-error out when you see an unknown one, no?
-
-> +	}
-> +	if (status != PACKET_READ_DELIM)
-> +		die(_("upload-archive: expected delim packet"));
-> +
-> +	/* Let git-upload-archive--writer handle the arguments. */
-
-The choice of DELIM here over FLUSH is a bit curious, but it is
-consistent between upload-archive and run-remote-archiver.
-
-> +	return 0;
-> +}
-> +
->  int cmd_upload_archive(int argc, const char **argv, const char *prefix)
->  {
->  	struct child_process writer = { argv };
-> +	enum protocol_version version = determine_protocol_version_server();
->  
->  	if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage(upload_archive_usage);
->  
-> +	if (version == protocol_v2)
-> +		handle_v2_command_and_cap();
-> +	else {
-> +		packet_write_fmt(1, "ACK\n");
-> +		packet_flush(1);
-> +	}
-> +
-
-This breaks the original protocol, no?  At this point we haven't
-even tried to start the writer process, and letting the other side
-go by giving ACK + flush prematurely.  After start_command() fails,
-we may say NACK, but the other side is no longer listening to it.
-
->  	/*
->  	 * Set up sideband subprocess.
->  	 *
-> @@ -96,9 +137,6 @@ int cmd_upload_archive(int argc, const char **argv, const char *prefix)
->  		die("upload-archive: %s", strerror(err));
->  	}
->  
-> -	packet_write_fmt(1, "ACK\n");
-> -	packet_flush(1);
-> -
->  	while (1) {
->  		struct pollfd pfd[2];
->  
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index 2a97b27b0..4be74d6e9 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -145,6 +145,11 @@ test_expect_success \
->  
->  check_tar b
->  
-> +test_expect_success 'protocol v2 for remote' '
-> +	GIT_PROTOCOL="version=2" git archive --remote=. HEAD >v2_remote.tar
-> +'
-> +check_tar v2_remote
-> +
->  test_expect_success 'git archive --prefix=prefix/' '
->  	git archive --prefix=prefix/ HEAD >with_prefix.tar
->  '
