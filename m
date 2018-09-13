@@ -2,173 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_IMPORTANCE_HIGH,
+	RCVD_IN_DNSWL_HI,T_DKIM_INVALID shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3C811F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 16:38:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02B381F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 16:47:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727413AbeIMVsf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 17:48:35 -0400
-Received: from mail-qt0-f196.google.com ([209.85.216.196]:39831 "EHLO
-        mail-qt0-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726796AbeIMVsf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 17:48:35 -0400
-Received: by mail-qt0-f196.google.com with SMTP id o15-v6so5963761qtk.6
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 09:38:18 -0700 (PDT)
+        id S1728183AbeIMV5w (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 17:57:52 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:45248 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726970AbeIMV5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 17:57:52 -0400
+Received: by mail-wr1-f68.google.com with SMTP id 20-v6so6846130wrb.12
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 09:47:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=FeS20pKBK4A2vN4Ia+oPee0d/ABTiuY5B1Bg3+gYoGI=;
-        b=iHwRKcJ0cmX7Bvo5dgFNrcPt8NU5pdEsUyNddLbG+AqacNPEIThtOVjD/nbQMObhWB
-         4iQdF1q2xXfuzGgnye7cgq2qUoge2STEbk0l9rla5pD+By8fvYgyilU8FaEkL5CsrQP1
-         QQgWp7t+HUmDxS2BBLF7+nl5XaCJGsVo041Fpv1QAcg5pOSjYV67zKVOormuq8EF82PI
-         +NCJtsMrElEnQd4zUR4rinf/sajvcBnPYsO0hTommonShYxPmtKxrDiMQuTXf7Jc47lW
-         a3qSwbuqpjCXrUC3UphYu+vnSDaL9wiAPCMvb5dN5Ss9Tw8NvIwVqiAX1SJ+mjD8zgVR
-         NNng==
+        h=sender:from:to:cc:subject:references:importance:date:in-reply-to
+         :message-id:user-agent:mime-version;
+        bh=jQWV3lBzQSv6vai5j6CVrUzZ0WwGECnVROuTO23rCE4=;
+        b=ZJVIkI7uwreWaWH7890xUKJZgiwBCRnfPVJropKA/jzUdvVWGyaoq0MvieJAq1+XSr
+         PE5aWOgyrN4JdwP4hrBCA6p9dHsQrSZup+hR5tqt2VWAcD8KifWvRAwIlUt1SNX1uMgg
+         BsOuPVnDC8Gph5o68/LzPvXUbRvQX1LKtJWjH7PAgMAAO9H0aYKIyBGYy6N/e1vOdlE4
+         st7O3BBjubqy+yPOSqHJV74oUtvZCM92kZJpsYtbUdW9mAIehdGu3yfCaFvhgNpYfy2T
+         kOSzPh0njr/tf38eh4M/6z5uJNqVSPcIGsasqMOXXa2AP8vl2TfNel3FEhEQUA3OPMW9
+         56YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=FeS20pKBK4A2vN4Ia+oPee0d/ABTiuY5B1Bg3+gYoGI=;
-        b=Nb+kjgK6RaL0dMkkpmahtTVllQy3HsR6s9S4ADZJzkcQROU+w3ZKrMB+DWr1XrD29x
-         ar01NJv6q+NslBFRAocgELtFQ1VwPA/VBz4wsYxfJS/edPy4AsDVuBo5MQV8fn+/CBOp
-         hc6Nl+SLh3MosTkSVwD+C9whsUCOjQlYiQ9HPOgKJY++8jb70sl0Vnyo2NmC/IWnD8/T
-         OaNWpFzGv6EVt2m8CxEn6/dPAPm7mUBK3Df3LIqKvPVKrIpCt/4NTmWJwvhPn21V1ITL
-         QElKDve4OpXWYB9wTDLhNkXtvfzgYpGzelbzsP2O+fYdevLXlGa7LCJsExIqMJOOkMzo
-         fDSQ==
-X-Gm-Message-State: APzg51DN9UyOAcvIrIhm30AykBfV2hBo84cMOm05TwF0wvP0/nxc+BIV
-        Jcz3WoL06Y8Lbnhv243TqNA=
-X-Google-Smtp-Source: ANB0Vdbk9/rzBdYMYwzp99BWaIJKQFWfHYVr74TlJKlI48LS0SAED0W4leZKoZ+ACw4gIk6knMs4gw==
-X-Received: by 2002:aed:20f1:: with SMTP id 104-v6mr6069749qtb.81.1536856697946;
-        Thu, 13 Sep 2018 09:38:17 -0700 (PDT)
-Received: from ?IPv6:2001:4898:6808:13e:d087:f807:1318:50bb? ([2001:4898:8010:0:b9bd:f807:1318:50bb])
-        by smtp.gmail.com with ESMTPSA id k15-v6sm3026780qtf.95.2018.09.13.09.38.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 09:38:17 -0700 (PDT)
-Subject: Re: [PATCH v2 1/1] commit-reach: properly peel tags
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     peff@peff.net, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.39.git.gitgitgadget@gmail.com>
- <pull.39.v2.git.gitgitgadget@gmail.com>
- <4bf21204ddf8b9daa823db9954ddde98ab264a1b.1536855032.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com>
-Date:   Thu, 13 Sep 2018 12:38:16 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:importance
+         :date:in-reply-to:message-id:user-agent:mime-version;
+        bh=jQWV3lBzQSv6vai5j6CVrUzZ0WwGECnVROuTO23rCE4=;
+        b=G3sC6m70lg5V/mnLOGG9uWKTyy+vRefOCRdwkYf1EoWTUgJpkmhp7rdKtJ+eTRka83
+         XZlD+txtBO9O54QcHBA9wLRHtCXacQCfptYwiGH1nkVqcZzWTTti4Gn3TczFbvQNAsBv
+         N3krk/+4z+Au+fi6w0H+jvRTNwG8JpMMZFkorM/8E/0o9RBJbk+SnXYJa6sLbOO27n7W
+         gI+S6GnldQCNTWLAoGTiOeteWUx24xMzkF5ZtoYHnl1MQXbrICgDYePKbAz3XyHCdslz
+         6hBfUBDliZDNIso0cBOg7a5hAMlqVaxVt8gXlyHQsIRaxPtZdTvG/VxAPL3TxIc1WIxz
+         gilA==
+X-Gm-Message-State: APzg51CSjtCZdiUpZ6zP04hZsCoAuLGxRbPtvZ8RsTO6pMY5T4ENeJRb
+        TCXfG6MeLg9JOS2dwe5OO8A=
+X-Google-Smtp-Source: ANB0VdYpCrXu7Bmqcgafc+J+998TNrI9GBt0/ldSLLNCwX0mongwtHFSqqETR+LgA4/90KLQzdpxjg==
+X-Received: by 2002:a1c:e581:: with SMTP id c123-v6mr6317989wmh.85.1536857251545;
+        Thu, 13 Sep 2018 09:47:31 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j6-v6sm3112006wrq.25.2018.09.13.09.47.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 13 Sep 2018 09:47:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com, l.s.r@web.de,
+        sandals@crustytoothpaste.net
+Subject: Re: [PATCH 3/3] archive: allow archive over HTTP(S) with proto v2
+References: <20180912053519.31085-1-steadmon@google.com>
+        <20180912053519.31085-4-steadmon@google.com>
+Importance: high
+Date:   Thu, 13 Sep 2018 09:47:30 -0700
+In-Reply-To: <20180912053519.31085-4-steadmon@google.com> (Josh Steadmon's
+        message of "Tue, 11 Sep 2018 22:35:19 -0700")
+Message-ID: <xmqqworpgx99.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <4bf21204ddf8b9daa823db9954ddde98ab264a1b.1536855032.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/13/2018 12:10 PM, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> The can_all_from_reach_with_flag() algorithm was refactored in 4fbcca4e
-> "commit-reach: make can_all_from_reach... linear" but incorrectly
-> assumed that all objects provided were commits. During a fetch
-> negotiation, ok_to_give_up() in upload-pack.c may provide unpeeled tags
-> to the 'from' array. The current code creates a segfault.
->
-> Add a direct call to can_all_from_reach_with_flag() in 'test-tool reach'
-> and add a test in t6600-test-reach.sh that demonstrates this segfault.
->
-> Correct the issue by peeling tags when investigating the initial list
-> of objects in the 'from' array.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Josh Steadmon <steadmon@google.com> writes:
+
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
 > ---
->   commit-reach.c        | 33 ++++++++++++++++++++++++++-------
->   t/helper/test-reach.c | 22 +++++++++++++++++-----
->   t/t6600-test-reach.sh | 30 ++++++++++++++++++++++++++++--
->   3 files changed, 71 insertions(+), 14 deletions(-)
+>  builtin/archive.c  |  8 +++++++-
+>  http-backend.c     | 10 +++++++++-
+>  transport-helper.c |  5 +++--
+>  3 files changed, 19 insertions(+), 4 deletions(-)
 >
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 86715c103c..4048a2132a 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -544,20 +544,39 @@ int can_all_from_reach_with_flag(struct object_array *from,
->   {
->   	struct commit **list = NULL;
->   	int i;
-> +	int nr_commits;
->   	int result = 1;
->   
->   	ALLOC_ARRAY(list, from->nr);
-> +	nr_commits = 0;
->   	for (i = 0; i < from->nr; i++) {
-> -		list[i] = (struct commit *)from->objects[i].item;
-> +		struct object *from_one = from->objects[i].item;
->   
-> -		if (parse_commit(list[i]) ||
-> -		    list[i]->generation < min_generation)
-> -			return 0;
-> +		if (!from_one || from_one->flags & assign_flag)
-> +			continue;
+> diff --git a/builtin/archive.c b/builtin/archive.c
+> index 73831887d..5fa75b3f7 100644
+> --- a/builtin/archive.c
+> +++ b/builtin/archive.c
+> @@ -87,7 +87,13 @@ static int run_remote_archiver(int argc, const char **argv,
+>  		status = packet_reader_read(&reader);
+>  		if (status != PACKET_READ_FLUSH)
+>  			die(_("git archive: expected a flush"));
+> -	}
+> +	} else if (version == protocol_v2 &&
+> +		   starts_with(transport->url, "http"))
+> +		/*
+> +		 * Commands over HTTP require two requests, so there's an
+> +		 * additional server response to parse.
+> +		 */
+> +		discover_version(&reader);
+
+What should happen if the version discovered here is different from
+v2 or the capabilities offered are different from what we saw
+before?  Perhaps we need some sanity checks, as we on this side of
+the connection know we are making two requests, and may even end up
+talking with an instance of "upload-archive" that is different from
+the one we talked with earlier.
+
+> diff --git a/http-backend.c b/http-backend.c
+> index 458642ef7..d62d583c7 100644
+> --- a/http-backend.c
+> +++ b/http-backend.c
+> @@ -32,6 +32,7 @@ struct rpc_service {
+>  static struct rpc_service rpc_service[] = {
+>  	{ "upload-pack", "uploadpack", 1, 1 },
+>  	{ "receive-pack", "receivepack", 0, -1 },
+> +	{ "upload-archive", "uploadarchive", 1, 1 },
+>  };
+>  
+>  static struct string_list *get_parameters(void)
+> @@ -637,6 +638,12 @@ static void service_rpc(struct strbuf *hdr, char *service_name)
+>  	struct rpc_service *svc = select_service(hdr, service_name);
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> +	if (!strcmp(service_name, "git-upload-archive")) {
+> +		/* git-upload-archive doesn't need --stateless-rpc */
+> +		argv[1] = ".";
+> +		argv[2] = NULL;
+> +	}
 > +
-> +		from_one = deref_tag(the_repository, from_one,
-> +				     "a from object", 0);
-> +		if (!from_one || from_one->type != OBJ_COMMIT) {
-> +			/* no way to tell if this is reachable by
-> +			 * looking at the ancestry chain alone, so
-> +			 * leave a note to ourselves not to worry about
-> +			 * this object anymore.
-> +			 */
-> +			from->objects[i].item->flags |= assign_flag;
-> +			continue;
-> +		}
-> +
-> +		list[nr_commits] = (struct commit *)from_one;
-> +		if (parse_commit(list[nr_commits]) ||
-> +		    list[nr_commits]->generation < min_generation)
-> +			return 0; /* is this a leak? */
+>  	strbuf_reset(&buf);
+>  	strbuf_addf(&buf, "application/x-git-%s-request", svc->name);
+>  	check_content_type(hdr, buf.buf);
+> @@ -713,7 +720,8 @@ static struct service_cmd {
+>  	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file},
+>  
+>  	{"POST", "/git-upload-pack$", service_rpc},
+> -	{"POST", "/git-receive-pack$", service_rpc}
+> +	{"POST", "/git-receive-pack$", service_rpc},
+> +	{"POST", "/git-upload-archive$", service_rpc},
+>  };
+>  
+>  static int bad_request(struct strbuf *hdr, const struct service_cmd *c)
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 143ca008c..b4b96fc89 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -605,7 +605,8 @@ static int process_connect_service(struct transport *transport,
+>  		ret = run_connect(transport, &cmdbuf);
+>  	} else if (data->stateless_connect &&
+>  		   (get_protocol_version_config() == protocol_v2) &&
+> -		   !strcmp("git-upload-pack", name)) {
+> +		   (!strcmp("git-upload-pack", name) ||
+> +		    !strcmp("git-upload-archive", name))) {
+>  		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
+>  		ret = run_connect(transport, &cmdbuf);
+>  		if (ret)
+> @@ -639,7 +640,7 @@ static int connect_helper(struct transport *transport, const char *name,
+>  
+>  	/* Get_helper so connect is inited. */
+>  	get_helper(transport);
+> -	if (!data->connect)
+> +	if (!data->connect && !data->stateless_connect)
+>  		die(_("operation not supported by protocol"));
 
-Of course, after sending v2, I see this comment. This is a leak of 
-'list' and should be fixed.
+This is somewhat curious.  The upload-pack going over HTTP also is
+triggered by the same "stateless-connect" remote helper command, as
+we just saw in the previous hunk, and that support is not new.  Why
+do we need this change then?  What's different between the "data"
+that is obtained by get_helper(transport) for driving upload-pack
+and upload-archive?  Presumably upload-pack was working without this
+change because it also sets the connect bit on, and upload-archive
+does not work without this change because it does not?  Why do these
+two behave differently?
 
-Not only is it a leak here, it is also a leak in the 'cleanup' section. 
-I'll squash the following into v3, but I'll let v2 simmer for review 
-before rerolling.
-
-
-diff --git a/commit-reach.c b/commit-reach.c
-index 4048a2132a..c457d8d85f 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -569,8 +569,11 @@ int can_all_from_reach_with_flag(struct 
-object_array *from,
-
-                 list[nr_commits] = (struct commit *)from_one;
-                 if (parse_commit(list[nr_commits]) ||
--                   list[nr_commits]->generation < min_generation)
--                       return 0; /* is this a leak? */
-+                   list[nr_commits]->generation < min_generation) {
-+                       result = 0;
-+                       goto cleanup;
-+               }
-+
-                 nr_commits++;
-         }
-
-@@ -623,6 +626,7 @@ int can_all_from_reach_with_flag(struct object_array 
-*from,
-                 clear_commit_marks(list[i], RESULT);
-                 clear_commit_marks(list[i], assign_flag);
-         }
-+       free(list);
-         return result;
-  }
-
+>  	if (!process_connect_service(transport, name, exec))
