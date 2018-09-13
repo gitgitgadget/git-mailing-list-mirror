@@ -2,135 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB691F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 21:06:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE3F41F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 21:40:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727988AbeINCSD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 22:18:03 -0400
-Received: from mail-wr1-f41.google.com ([209.85.221.41]:38717 "EHLO
-        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727278AbeINCSD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 22:18:03 -0400
-Received: by mail-wr1-f41.google.com with SMTP id w11-v6so8121072wrc.5
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 14:06:50 -0700 (PDT)
+        id S1727728AbeINCvT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 22:51:19 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42530 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726914AbeINCvT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 22:51:19 -0400
+Received: by mail-wr1-f65.google.com with SMTP id v17-v6so8226742wrr.9
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 14:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ZZTC17+hhXMVbdnmgbhaZQnwMilUDAjS2ZvrponRnYo=;
-        b=hcsmUbMeEPQWBnkMKDcQeZTHSe7St4w97dSKjnNYVsroSvidNLagIDcs3ReEQxH3Qx
-         /qFJF486hyMh1uOes7dequl+p6LphDMgYMETPdynnK35CUNlVw/IZV0qc3xCKrBeFJnZ
-         3bcxw9PVDWGSDtlIvYfvc5Qww8FDNkGHpFmlgk+RmtuLbOrbOR+fVDCXuh5GSzLb5Ia4
-         CHRgoTn7a5PkDobLUxZZZ1WsmwyW5KNlp4qA080X0SH4fChc8orrP1ZhuJmHAFlb2If6
-         XKkTgG70//iK5qoMGEkFr+6+uFOU8lnmDYVr9KitaFxEg+sIfY3yxQGrO2pnFMjF2dkd
-         ZG+A==
+         :user-agent:mime-version;
+        bh=H+tmjpr10TSCfKysqk/AuYfmr3cRKZBGUpAE9e9bX/M=;
+        b=ISxN6aWV4MwvchYkPbk6er99YhIbBUOQDQ2lu8KEU1YVoLYAkU+C6Jyp9saOfWj4j0
+         Dejtz2mCRpS2ULFSmCSgldyos9yBrl14QFFY/zhl2xbEgLbV9BRh423p1x2lElWD8wY7
+         rX0q+6Eccoviuwi/U6uFgnsV3dygWYJCYR/PrPQtWJdzYBp0S1bLG1zDFZJYIgDGOSpE
+         qj9YlqiSgB1g9mj1zy2ezfx0zHMDKcIYFs3VFzd/cy386p8E0Oaxcdnxh7WsBT/eiJ9E
+         +SeJbYZHfGXmYVkIyUoyIt2ObDdtOVyiEFJY3CmsI6CKUBzeNvv6BLYrJu2aQi+YJrf8
+         zEmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ZZTC17+hhXMVbdnmgbhaZQnwMilUDAjS2ZvrponRnYo=;
-        b=mAvcaZeAhINyUxZ0el7KmFQ+UjFopSWJv9jdmeDLIgYhopqFtWdcFVffYqupIv5Nnj
-         WcVv3DrNiVwoVZrE/k1M0B8Z2GmmXoQ/cDGaAT8KrC/GbMqX9Bp7pe1vLIlPXpLGkwHD
-         p+m/eSTm7diX+Uuvn00nuA0s/UETV9tjKCmUKRThXyrzIFUF3QxjK4mdiZ546G8yfa/f
-         CDFfKCBKirxav5Dq+q9ssi2pxIBLwRcqJFMIY31WW+aj2V2uFrasV+0AihqSJZp2UUUi
-         Qgk+vH9La0pu8Zb9GICuSel8+TZ6ByKpWzS5icZmvKpScbwnRNUM/WLUQnjdLoYs15ZJ
-         kxIQ==
-X-Gm-Message-State: APzg51DRU99o4xWhU3duy69LR+ij2CE7p5d5ZnwE1QUwCW8eYm8n7J4K
-        DC0q+7izBceB/SFEX7wyK2M=
-X-Google-Smtp-Source: ANB0VdZnXpb0o55siT5fMIUgOmzwkXLIDNLChd6iY1QIWUI0iNI2rMyKVM8N6R30NQEUcp/YP4m19w==
-X-Received: by 2002:a1c:1a48:: with SMTP id a69-v6mr6942909wma.43.1536872809123;
-        Thu, 13 Sep 2018 14:06:49 -0700 (PDT)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=H+tmjpr10TSCfKysqk/AuYfmr3cRKZBGUpAE9e9bX/M=;
+        b=flLp7RJvUW7fr1V6RaxhVKcVjWfI3sn8GpRsZUdVXaD60zddCvgVfaB5b4/EeVsLEu
+         F03YcYuvvG0Ao2rF/p2rtwWm40bex7W9idzwIBgAHKNRd1gmMuU3+vipznTT1CBbdrXz
+         A3z2U85mxE2S9EqLjFjXg1rInQexXx1MBIBpDJ/LUw/HeWp7hDKGzMlvBJqUFtADLIsC
+         gDq/qyzW0mZ5a6sU920Naet/KhFR/5sfXeKkV4/zFVVwbCjxM8XsYeQGWVGgTlzLugzE
+         b1VbYjLTlI1kwX47HluIeg5kI5kD8TN8vqFCwwutCqNTH9ZQyzGtd73pNywU3Bjfl2CS
+         lSBw==
+X-Gm-Message-State: APzg51B3UYh0OuzbAW0T+MI8ujou1X+GdLQbNKVjpvsyv4A2ikCCwCtW
+        BIXGss+zszYxe3JdgoaiSwxp2ct1
+X-Google-Smtp-Source: ANB0VdZGNnOjri/tI0INFN5I5MzTDM3D+ekSmpn+4fbow7ZurWPhKbm1P9TPPRvQKcYjJ8qP2+NeIQ==
+X-Received: by 2002:a5d:6103:: with SMTP id v3-v6mr7483565wrt.265.1536874799074;
+        Thu, 13 Sep 2018 14:39:59 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k35-v6sm11532088wrc.14.2018.09.13.14.06.48
+        by smtp.gmail.com with ESMTPSA id u40-v6sm8771049wrc.43.2018.09.13.14.39.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 14:06:48 -0700 (PDT)
+        Thu, 13 Sep 2018 14:39:58 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/1] commit-reach: properly peel tags
-References: <pull.39.git.gitgitgadget@gmail.com>
-        <pull.39.v2.git.gitgitgadget@gmail.com>
-        <4bf21204ddf8b9daa823db9954ddde98ab264a1b.1536855032.git.gitgitgadget@gmail.com>
-        <8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com>
-Date:   Thu, 13 Sep 2018 14:06:47 -0700
-In-Reply-To: <8d6061de-1654-577c-40c6-211dbd03aa36@gmail.com> (Derrick
-        Stolee's message of "Thu, 13 Sep 2018 12:38:16 -0400")
-Message-ID: <xmqqy3c5ds48.fsf@gitster-ct.c.googlers.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v1] preload-index: update GIT_FORCE_PRELOAD_TEST support
+References: <20180913180054.29720-1-benpeart@microsoft.com>
+Date:   Thu, 13 Sep 2018 14:39:58 -0700
+In-Reply-To: <20180913180054.29720-1-benpeart@microsoft.com> (Ben Peart's
+        message of "Thu, 13 Sep 2018 18:01:12 +0000")
+Message-ID: <xmqqtvmtdqkx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Ben Peart <benpeart@microsoft.com> writes:
 
->> +		if (!from_one || from_one->type != OBJ_COMMIT) {
->> +			/* no way to tell if this is reachable by
->> +			 * looking at the ancestry chain alone, so
->> +			 * leave a note to ourselves not to worry about
->> +			 * this object anymore.
->> +			 */
->> +			from->objects[i].item->flags |= assign_flag;
->> +			continue;
->> +		}
->> +
->> +		list[nr_commits] = (struct commit *)from_one;
->> +		if (parse_commit(list[nr_commits]) ||
->> +		    list[nr_commits]->generation < min_generation)
->> +			return 0; /* is this a leak? */
+> Rename GIT_FORCE_PRELOAD_TEST to GIT_TEST_PRELOAD for consistency with the
+> other GIT_TEST_ special setups and properly document its use.
 >
-> Of course, after sending v2, I see this comment. This is a leak of
-> 'list' and should be fixed.
+> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
+> ---
 >
-> Not only is it a leak here, it is also a leak in the 'cleanup'
-> section. I'll squash the following into v3, but I'll let v2 simmer for
-> review before rerolling.
+
+Among the two unrelated changes that are not mentioned in the
+proposed log message, the change to the test to use sane_unset is
+probably OK, but replacing a call to getenv() with git_env_bool()
+without making sure necessary header file(s) are included would
+break the build.
+
+I _think_ config.h is the header to include; I didn't try it,
+though.
+
+Thanks.
+
+
+> Notes:
+>     Base Ref: v2.19.0
+>     Web-Diff: https://github.com/benpeart/git/commit/dcd201b920
+>     Checkout: git fetch https://github.com/benpeart/git git-test-preload-v1 && git checkout dcd201b920
 >
-> diff --git a/commit-reach.c b/commit-reach.c
-> index 4048a2132a..c457d8d85f 100644
-> --- a/commit-reach.c
-> +++ b/commit-reach.c
-> @@ -569,8 +569,11 @@ int can_all_from_reach_with_flag(struct
-> object_array *from,
+>  preload-index.c             | 2 +-
+>  t/README                    | 3 +++
+>  t/t7519-status-fsmonitor.sh | 4 ++--
+>  3 files changed, 6 insertions(+), 3 deletions(-)
 >
->                 list[nr_commits] = (struct commit *)from_one;
->                 if (parse_commit(list[nr_commits]) ||
-> -                   list[nr_commits]->generation < min_generation)
-> -                       return 0; /* is this a leak? */
-> +                   list[nr_commits]->generation < min_generation) {
-> +                       result = 0;
-> +                       goto cleanup;
-> +               }
+> diff --git a/preload-index.c b/preload-index.c
+> index 71cd2437a3..cc8a7333c2 100644
+> --- a/preload-index.c
+> +++ b/preload-index.c
+> @@ -84,7 +84,7 @@ static void preload_index(struct index_state *index,
+>  		return;
+>  
+>  	threads = index->cache_nr / THREAD_COST;
+> -	if ((index->cache_nr > 1) && (threads < 2) && getenv("GIT_FORCE_PRELOAD_TEST"))
+> +	if ((index->cache_nr > 1) && (threads < 2) && git_env_bool("GIT_TEST_PRELOAD", 0))
+>  		threads = 2;
+>  	if (threads < 2)
+>  		return;
+> diff --git a/t/README b/t/README
+> index 9028b47d92..73fb09560f 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -319,6 +319,9 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
+>  path where deltas larger than this limit require extra memory
+>  allocation for bookkeeping.
+>  
+> +GIT_TEST_PRELOAD=<boolean> exercises the preload-index code path by
+> +overriding the minimum number of cache entries required per thread.
 > +
->                 nr_commits++;
->         }
+>  Naming Tests
+>  ------------
+>  
+> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+> index 756beb0d8e..9b703d49b5 100755
+> --- a/t/t7519-status-fsmonitor.sh
+> +++ b/t/t7519-status-fsmonitor.sh
+> @@ -245,9 +245,9 @@ do
+>  		git config core.preloadIndex $preload_val &&
+>  		if test $preload_val = true
+>  		then
+> -			GIT_FORCE_PRELOAD_TEST=$preload_val; export GIT_FORCE_PRELOAD_TEST
+> +			GIT_TEST_PRELOAD=$preload_val; export GIT_TEST_PRELOAD
+>  		else
+> -			unset GIT_FORCE_PRELOAD_TEST
+> +			sane_unset GIT_TEST_PRELOAD
+>  		fi
+>  	'
+>  
 >
-> @@ -623,6 +626,7 @@ int can_all_from_reach_with_flag(struct
-> object_array *from,
->                 clear_commit_marks(list[i], RESULT);
->                 clear_commit_marks(list[i], assign_flag);
->         }
-> +       free(list);
->         return result;
->  }
-
-With this, commit marks are cleared even when we do the "early
-return", but only for the objects that appear in the resulting
-list[].  Because the for() loop in the last hunk interates over
-list[], those non-commit objects that are smudged with assign_flag
-but never made to list[] will be left smudged when this function
-returns (this is true when there is no early return).  
-
-Is that intended?
-
-
+> base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
