@@ -2,83 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27D5F1F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 18:09:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AAC61F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 18:15:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727598AbeIMXUN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:20:13 -0400
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:50444 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726914AbeIMXUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:20:13 -0400
-Received: by mail-yw1-f74.google.com with SMTP id u12-v6so2315311ywu.17
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:09:37 -0700 (PDT)
+        id S1727841AbeIMXZu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:25:50 -0400
+Received: from mail-qt0-f179.google.com ([209.85.216.179]:33153 "EHLO
+        mail-qt0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727413AbeIMXZu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:25:50 -0400
+Received: by mail-qt0-f179.google.com with SMTP id r37-v6so6322632qtc.0
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=NskFo35drB692uzzyEUAouMmaL+LF8x0xRvhR+StDCc=;
-        b=GjGjr1j0us5PXxKALMLe+nJsOBRDk1JQSmXgbf9sglLJwtuLsNh/gw10ixSBnYFn3u
-         ATOoeYhnJikfZ/wasw+HQF2KZ7X8itDauFBR0LK9N2xdYEMfWttLRvRc0EX4Jp0W+vii
-         XZACKDbJLmlnwYYWnfb1HrJEKLnho5jDXLCMiaRR1O6ng5lN7ia3a3MhAJFcMSG3hn3P
-         cWXjAp0dQmz9VmkEVJVR9PS2YzngGyufnz6rzaVCp+fpRUN8RAYjZzSMbOi4QGxbb5KB
-         +xyatnNv72NCt0LJ+jMa0zKi37O7w31v/6dFT2GhF35lAOvhUNNw1Tfaa0V3blId4+pW
-         riWQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=66duO3adPttt3NBrEpeEvmhSc7E98/yFveYPg0/5I2c=;
+        b=KxSkZiaX7Ndduc15A8Ep/1zo3k5fk8Pl8l1wLEmK2/B4DN0BZJeE7dnUTRnYi4ME1L
+         VbGN6XR9TID+Ig4Rltzqo3wHrnmxx0ITxQPBw4uiiGsqVsXakP7zxCcj1dWeeRY/89bU
+         zPU09OvioH3WBsHI7UQTZsEZrlF6LKR+Q0smr4AgHX54NkjbTQHdN0VD+KEpGjenqQUI
+         yxfG8+7/AhClmwut2PLQ84/SpqP02HSl651eTvjzLInk8uKrfMptgHyItbWhFiTsQgYF
+         bPkhMEGVl6ltJxsUNtTCkWfUE4mXdwIaNOfkDY6q6U3Dd5MX3HRHpieT4DSpSAmPsGdK
+         ztsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=NskFo35drB692uzzyEUAouMmaL+LF8x0xRvhR+StDCc=;
-        b=haSJjy1AQR00q9Of+jjo6D6IyEcciKEzykoeryLMY11Ud/djiaBW38bgdXgfWU6QON
-         KxpeHGrwdrd73B+g102Q2EBBboqi4AZw6Q0H3V7at+7XTRG4uP3JDadjwPv+0c7mt7Hv
-         dYii5DyhqsoGyHNATRibaCy4e24v9mVCPtA27gDE6R21h5sricERLJwOP46QUdJ4beg5
-         fiPCJN6lJWl4XY5jpEwtHBt9zR6P4ksfmK7E+bDMqj30N88RkILYnVWXY/qskeTPMKsK
-         sJah7K6NkmSE42GdHzE2bMYwEKeZ75k3fK0/L0aPPtuPviAF/tseXyDxHE6rGvhdDNsz
-         vVtw==
-X-Gm-Message-State: APzg51C0zgvqvLb9G/XgLDyvhe+yMcLC9pnsQZ90c/4ce1idiSFKk4B7
-        O4KqIcqVz52Y+yekX9ZMMBdIlJeuF4lhSjcuoueH
-X-Google-Smtp-Source: ANB0VdZy43UcD8zWWzkUde6J4XCcTLa5w7gfwbV0XQtIm9Mub04ZxWqJP8iP0zXlnCaK8r8rTy8By8YPN63dxYCXrwwj
-X-Received: by 2002:a25:844e:: with SMTP id r14-v6mr1422486ybm.16.1536862176772;
- Thu, 13 Sep 2018 11:09:36 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 11:09:32 -0700
-In-Reply-To: <xmqqefdyjsgh.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20180913180932.93341-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqefdyjsgh.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
-Subject: Re: [PATCH 1/2] fetch-object: provide only one fetching function
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=66duO3adPttt3NBrEpeEvmhSc7E98/yFveYPg0/5I2c=;
+        b=ekffewP2jn/66KS9R5CudmENHwUt46V2mDkcSzLVJxrcb+swJ43pcx1JwNRO5RyD1a
+         hzfuQGc4drMTe7cRP4L5f2Q7eN3NJ6nYRtXc/oa1VumpoKfC6YyupfVIAtDsSkdWZRfj
+         EyiDfx+Kfwn+G1FuVv8OfOs/4MXneCCPJiQZFtqNUXQNrBqT1eiJBQITNHMQBBQcnJxf
+         x3mMnzThfL0qUV9eotp02WypbvOeJi0Nhlj76s0NW1WTmD3yZqxpV17S3HkPDfjtqI3Y
+         kRfkL0pfuGOy/XGncbOYX31bQaRsyf6LjIQElnOdLT6G1BOouBBCCJejnTB+Tp25TXs9
+         kycg==
+X-Gm-Message-State: APzg51AUj/hgNjxxejP/ZC9uLUqfeVkBwDwtYbC9bSkAdP75/cv2Q/zU
+        ojxGmppOtlqgDtfrKvqlBrc=
+X-Google-Smtp-Source: ANB0VdaK962+8Ybrztei3jfB1rfUIN68LD+04pxARF1NN0FX4PAAUtC78oeo+PdFnlwa+yDf8sLStA==
+X-Received: by 2002:a0c:83c4:: with SMTP id k62-v6mr6166336qva.88.1536862511931;
+        Thu, 13 Sep 2018 11:15:11 -0700 (PDT)
+Received: from ?IPv6:2001:4898:6808:13e:d087:f807:1318:50bb? ([2001:4898:8010:0:b9bd:f807:1318:50bb])
+        by smtp.gmail.com with ESMTPSA id s35-v6sm3269062qtj.79.2018.09.13.11.15.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Sep 2018 11:15:11 -0700 (PDT)
+Subject: Re: [PATCH v2 1/1] contrib: add coverage-diff script
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.40.git.gitgitgadget@gmail.com>
+ <pull.40.v2.git.gitgitgadget@gmail.com>
+ <7714b0659e3210e34d0904b3347473427546d15c.1536850601.git.gitgitgadget@gmail.com>
+ <xmqqzhwlfg7o.fsf@gitster-ct.c.googlers.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <3ba684df-f6eb-1ebb-2421-160b89b2f246@gmail.com>
+Date:   Thu, 13 Sep 2018 14:15:10 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <xmqqzhwlfg7o.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Instead of explaining why the new convention is better to justify
-> (2), the above three lines handwave by saying "more flexible"
-> twice.  We should do better.
-> 
-> 	fetch-object: unify fetch_object[s] functions
-> 
-> 	There are fetch_object() and fetch_objects() helpers in
-> 	fetch-object.h; as the latter takes "struct oid_array",
-> 	the former cannot be made into a thin wrapper around the
-> 	latter without an extra allocation and set-up cost.
-> 
-> 	Update fetch_objects() to take an array of "struct
-> 	object_id" and number of elements in it as separate
-> 	parameters, remove fetch_object(), and adjust all existing
-> 	callers of these functions to use the new fetch_objects().
-> 
-> perhaps?
+On 9/13/2018 1:40 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> +			then
+>> +				line_num=$(($line_num + 1))
+>> +			fi
+>> +		fi
+>> +	done
+> I have a feeling that a single Perl script instead of a shell loop
+> that runs many grep and awk as subprocesses performs better even on
+> Windows, and it would be more readable and maintainable.
+>
+> perl -e '
+> 	my $line_num;
+> 	while (<>) {
+> 		# Hunk header?  Grab the beginning in postimage.
+> 		if (/^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@/) {
+> 			$line_num = $1;
+> 			next;
+> 		}
+>
+> 		# Have we seen a hunk?  Ignore "diff --git" etc.
+> 		next unless defined $line_num;
+>
+> 		# Deleted line? Ignore.
+> 		if (/^-/) {
+> 			next;
+> 		}
+>
+> 		# Show only the line number of added lines.
+> 		if (/^\+/) {
+> 			print "$line_num\n";
+> 		}
+> 		# Either common context or added line appear in
+> 		# the postimage.  Count it.
+> 		$line_num++;
+> 	}
+> '
+>
+> or something like that, given that you seem to only need line
+> numbers in new_lines.txt anyway?
 
-Thanks - your explanation is much clearer than mine. Let me know if you
-want a reroll (or if you can update the commit message yourself, that's
-fine too).
+Thanks for the deep dive here, especially with the perl assistance. I've 
+never written any perl, but it seems like the right tool here. I'll have 
+time to revisit this next week.
+
+Thanks,
+
+-Stolee
+
