@@ -2,106 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB3AA1F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 22:08:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71DDC1F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 22:13:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727966AbeINDTs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 23:19:48 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33363 "EHLO
+        id S1727773AbeINDYq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 23:24:46 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46627 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727332AbeINDTs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 23:19:48 -0400
-Received: by mail-wr1-f68.google.com with SMTP id v90-v6so8332870wrc.0
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 15:08:23 -0700 (PDT)
+        with ESMTP id S1727726AbeINDYp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 23:24:45 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a108-v6so8312458wrc.13
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 15:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=P3nRnMZuE9m4r29/V0Gq1avKeh79uHc18rUuyAsqFpA=;
-        b=CqZyDjH85aV9N6g7VrSAIHtMMhozGtyVnJmyydmUCsVGuH0loVLh0xC88FeBED6CR2
-         OCIYrrVHd7cyyQbiNCJaFIaBOaRvQr21ZGYfDzHOxk3fUpiACLfTBoFBl26fhrillVj+
-         jgE7KdsEoazyxPBe3qdb+OzF+ty/QyUMetVZARBbdLuAylMJcIcHRgZ6MsT99T+baoa+
-         LJCEpI1lVe3LMdZVK8DIRy3nwpD/Y/mLWcyyltWHRHs3KfWq1FlqRynq4wvPu5VA2mNC
-         VF8h7fbjHYs7XVJnBBORx9BH1TzkfiqUW2Oz281BOmS415rMWrFd7r8Tq9qPK+VEUyyE
-         tQCA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cs2Ma+Tr8mLuYjPz1Hs+4W3oC18hhyiYltnderLmyVA=;
+        b=TpERB9B7DG35r4wV3Nsce2zGL0mKV1C16NPVTAWyJ1M38ys42u1wOFdqzTUS6dw5Wb
+         gNUZBwDqtV7qJUi1gthSc8Ys5hyoEFZS8rUyHDfjRlyBk7O6fmrSP06/lfwZy/a0E3Mp
+         NZyJqxh+dO1ORPWNz0CdRVdW8cioHnPbWALhm49g79m1w4l/wteEx4zPbl/XYLxRpItD
+         POL/+McQSuKbiix1hGLWeAQrgnVNZCl5sqUM8kqy508rl+NtQfaE0z5gqFwS6djxXOAx
+         ZHarpa574sWbouaG8BoKRGGYCVli4/FK5cmV0K0p6fgiyYjU5+jYmYv5FZmb8G9/RvS3
+         KGwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=P3nRnMZuE9m4r29/V0Gq1avKeh79uHc18rUuyAsqFpA=;
-        b=oGI1yEKyBbKJ4FGfv1isvX6e06WzhMk3qvyEW8PUEOt2MqD7wBDvEoeDxbIVfhzSc+
-         TKAxzwCDwqVeVAvmcFRV1Ge+AV94pb6gXQ4R8v/U6wPruG3tdrw6lLrtOYFXlI2D2cI5
-         vd5r0qvrCUxfC6iraAaXSqjguxsbNf9A0QCr6ddqrwnPS96zDbinbqbJBERbfAcFO5mm
-         PuStthZ2E3lLvlKU8R7PEn/hf650yx2L9RaFOP1Cv/XPBVvCZGLKLmjduIFlIZ40PTlJ
-         tpyi0BCrmW14d4Om+NFrTiuMgiqwEyd4FPoWTQW3fC7HMN8jKuz1TDDtBHnfXXFBW6cU
-         mhcQ==
-X-Gm-Message-State: APzg51BHToBf9gCPiO3nUAv8WOOHMonhSOZSeQ3qv99p1cW0ejkAxXh0
-        Qg77D4/2s3Tyv7KvXYPnnrqTOKD+
-X-Google-Smtp-Source: ANB0VdZe0fZJaJq+Zd5CteeFm3h7DGp1VWSiL3trbMJfswGqxHg85RmxNNTYvnrXeRVIhXy5zO2e5A==
-X-Received: by 2002:adf:8504:: with SMTP id 4-v6mr6985577wrh.72.1536876502145;
-        Thu, 13 Sep 2018 15:08:22 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g2-v6sm37365wme.20.2018.09.13.15.08.20
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cs2Ma+Tr8mLuYjPz1Hs+4W3oC18hhyiYltnderLmyVA=;
+        b=h9AmdIsrp7itrRxJlwmqi/GcBiquRxwvxzbD7Yr/xw+YP41ZTTosJY5B563pkJuptA
+         JOmjh+koCwGCsiabv/UWkbVKRW1MAJff7URkZg0+3Cp8KfqVNARoBKlzTjV2/aurtzCa
+         wobb5NLBUPoHYo/ackDXv8MlJ1ayk47U0L3Rh4MUMKM8aLnCv75nOOCDbPJXacMgXd6i
+         ZZDMLo3ENPv1UVMWBemUs+8uocuJsGuMmaaPfT/5qyXUVbRwBESlZi1hi4icGB36Y2R+
+         3bxzkJHzOuiMCtbtDpxUKTIbehKOJX/uDdfb/vCTX98WhA8yD4m10StxjOWnOSFCgrQe
+         OiQg==
+X-Gm-Message-State: APzg51D2PaTpAbtH6hqADR4l0ln8BmRu/1x6cWBQHVAxqZNDnFc/RgYj
+        l/TUkzqTaEFXMitXhuzi0Ho=
+X-Google-Smtp-Source: ANB0VdYCjG3GzEUInT2ZW4yRR/54jGe+3QN1JcCD/nxoHma/C/6ZtwNsHIeKmUdqtL3eH3kQ/Xc5Pg==
+X-Received: by 2002:adf:e711:: with SMTP id c17-v6mr7260157wrm.143.1536876799246;
+        Thu, 13 Sep 2018 15:13:19 -0700 (PDT)
+Received: from localhost ([2.28.194.193])
+        by smtp.gmail.com with ESMTPSA id j75-v6sm47025wmj.8.2018.09.13.15.13.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 15:08:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>, Ben Peart <benpeart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
-References: <20180912212544.33624-1-benpeart@microsoft.com>
-        <20180912223101.GA1719@hank.intra.tgummerer.com>
-        <4f8b4664-6108-db7f-cb40-2bc55d9edece@gmail.com>
-        <20180913215616.GD1719@hank.intra.tgummerer.com>
-Date:   Thu, 13 Sep 2018 15:08:20 -0700
-In-Reply-To: <20180913215616.GD1719@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Thu, 13 Sep 2018 22:56:16 +0100")
-Message-ID: <xmqqh8itdp9n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 13 Sep 2018 15:13:18 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 23:13:18 +0100
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Derrick Stolee <stolee@gmail.com>, ryenus <ryenus@gmail.com>,
+        Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] linear-assignment: fix potential out of bounds memory
+ access (was: Re: Git 2.19 Segmentation fault 11 on macOS)
+Message-ID: <20180913221318.GE1719@hank.intra.tgummerer.com>
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
+ <1b8a35be-4234-7f71-c0be-41736bbe60cf@gmail.com>
+ <844da493-b1c1-b295-0094-beafd48f3b50@gmail.com>
+ <fd241679-2283-4e01-315b-db27be8a794c@gmail.com>
+ <20180911163419.GB4865@hank.intra.tgummerer.com>
+ <20180911172903.GC4865@hank.intra.tgummerer.com>
+ <20180912190108.GE4865@hank.intra.tgummerer.com>
+ <nycvar.QRO.7.76.6.1809122136020.73@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1809122136020.73@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On 09/12, Johannes Schindelin wrote:
+> Hi Thomas,
+> 
+> [quickly, as I will go back to a proper vacation after this]
 
-> Thanks, I do think this is a good idea.  I do however share Ævar's
-> concern in https://public-inbox.org/git/87h8itkz2h.fsf@evledraar.gmail.com/.
-> I have TEST_GIT_INDEX_VERSION=4 set in my config.mak since quite a
-> long time, and had I missed this thread, I would all of a sudden not
-> run the test suite with index format 4 anymore without any notice.
->
-> I think the suggestion of erroring out if TEST_GIT_INDEX_VERSION is
-> set would be useful in this case (and probably others in which you're
-> renaming these variables).
+Sorry about interrupting your vacation, enjoy wherever you are! :)
 
-I am not enthused by "you are using an old variable---we fail your
-build/test".  The assumption is that people let config.mak laying
-around regardless of how new/old the vintage of Git they are
-building and testing.  I do not think you'd want to adjust your
-config.mak as you switch between 'maint' and 'next.
+> On Wed, 12 Sep 2018, Thomas Gummerer wrote:
+> 
+> > diff --git a/linear-assignment.c b/linear-assignment.c
+> > index 9b3e56e283..7700b80eeb 100644
+> > --- a/linear-assignment.c
+> > +++ b/linear-assignment.c
+> > @@ -51,8 +51,8 @@ void compute_assignment(int column_count, int row_count, int *cost,
+> >  		else if (j1 < -1)
+> >  			row2column[i] = -2 - j1;
+> >  		else {
+> > -			int min = COST(!j1, i) - v[!j1];
+> > -			for (j = 1; j < column_count; j++)
+> > +			int min = INT_MAX;
+> 
+> I am worried about this, as I tried very hard to avoid integer overruns.
 
-I think it is OK to make it error only if the old one is set without
-the new one.  Then people can have _both_ set to the same value
-during the period in which the topic sails through pu down to next
-down to master, after seeing an failure once while building and
-testing 'pu'.
+Ah fair enough, now I think I understand where the calculation of the
+initial value of min comes from, thanks!
 
-> Btw, I think it would be nice to have all these renaming/documenting
-> variables for the test suite patches in one series, so they are easier
-> to look at with more context.
+> Wouldn't it be possible to replace the `else {` by an appropriate `else if
+> (...) { ... } else {`? E.g. `else if (column_count < 2)` or some such?
 
-Yeah, even though these three were posted as independent changes,
-their additions to t/README inevitably conflicted with each other.
+Yes, I think that would be possible.  However if we're already special
+casing "column_count < 2", I think we might as well just exit early
+before running through the whole algorithm in that case.  If there's
+only one column, there are no commits that can be assigned to
+eachother, as there is only the one.
 
+We could also just not run call 'compute_assignment' in the first
+place if column_count == 1, however I'd rather make the function safer
+to call, just in case we find it useful for something else in the
+future.
 
+Will send an updated patch in a bit.
 
+> Ciao,
+> Dscho
+> 
+> > +			for (j = 0; j < column_count; j++)
+> >  				if (j != j1 && min > COST(j, i) - v[j])
+> >  					min = COST(j, i) - v[j];
+> >  			v[j1] -= min;
+> > diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> > index 2237c7f4af..fb4c13a84a 100755
+> > --- a/t/t3206-range-diff.sh
+> > +++ b/t/t3206-range-diff.sh
+> > @@ -142,4 +142,9 @@ test_expect_success 'changed message' '
+> >  	test_cmp expected actual
+> >  '
+> >  
+> > +test_expect_success 'no commits on one side' '
+> > +	git commit --amend -m "new message" &&
+> > +	git range-diff master HEAD@{1} HEAD
+> > +'
+> > +
+> >  test_done
+> > -- 
+> > 2.19.0.397.gdd90340f6a
+> > 
+> > 
