@@ -2,80 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67AD11F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 19:07:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2A91F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 19:30:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727680AbeINARr (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 20:17:47 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:43264 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727413AbeINARq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 20:17:46 -0400
-Received: by mail-ed1-f66.google.com with SMTP id z27-v6so5486099edb.10
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 12:06:58 -0700 (PDT)
+        id S1728451AbeINAkv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 20:40:51 -0400
+Received: from mail-yb1-f195.google.com ([209.85.219.195]:33550 "EHLO
+        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728137AbeINAkv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 20:40:51 -0400
+Received: by mail-yb1-f195.google.com with SMTP id m123-v6so3792161ybm.0
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 12:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=UA+yRIB5x1ujuPW1FKs5eyc6pKd85nlfXFMWXtg4GKA=;
-        b=M1skK2VV6i1acTIOb35P3YMYeKpiNVOQj9J4fXBIKhJ7EciHELbjzHI1lYugh3o5g+
-         5DB0WX5TlL97eFiGQpfG8bk3JRmm2FjyxJ8+ARm/9GXU0dpH2Tu/tAKOEQwsPPeJLVGx
-         MlRQO3XZS2qTJ4D6hx93I9Y3NH2s6gdz7ME8oVt1GXJAtUcCQsk1k5V5viGFyA2cy8QE
-         J1WRGvFXPYUyUGL/+8kT9N8laVWEz3hcxSxSQRPW4RKNd9GZ+8OVUwVjX0dc0Cnak1Zz
-         5cBz6FBKBGHEUSwHMA5skYsY9f64CTPQyXv5h9htfd7P52zITw8au0WXk1Wa7UZufyu3
-         DYYg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=pJhLh1sTJyEc8WR4MNDF6hkUp/J1Yhjah7PdKu6d/QY=;
+        b=DJOa9KMjaNx8rOlwb687NPpSaIIYLqIsUku+KcJQa3iRjhV17J357vNmxZJOVLH4U6
+         2L+NrhbWYdKt8f9wpndzgUZw/SaOo/cj6rzfKADZo9p0jrwfOM5Fgz7En+6h4rcCc6Xa
+         TY1Gj7L9jir9tYGMSAetOOBZ5P8DuTrKI/Ja3OaC8MnXVYgCD9WdcnaKmDK/+0M+BjY5
+         ijRnsgn5S/UDimRW4v7Gq6pTo3UeqlSmrzG6GW/V9lFreHXQ2OT2ImeCc6p7mzBQlw17
+         Ywd3mpz/A+/8Gy9hLRTwNe+BpNcTTA5qQ3PueMukFGs9NmqyKwXWaZwh/jXvigyD7fg+
+         Xj7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=UA+yRIB5x1ujuPW1FKs5eyc6pKd85nlfXFMWXtg4GKA=;
-        b=F+sdNeMTlw9G2TqnWsPOnW7o5YAWdsJsyZgdFtd9IURXm1xOsMF+f4UsOEz6wJ2d+l
-         KwA8A8HWXZd/6jYqzd+sk8kuXK7U4tW/N9+doAh1/6ayGDbCRVg0jA8eD60eA0Xlwyj0
-         K74coiCm5NG2eSEYTl30hVtPZmHUNX0mzs+dj1ukmjl0OVo9CDG+uh15TVUD5H6HQECI
-         EfJT2I++9DasNVxDePmlXpFsTD9VkPpJWfgEMbEoYRIsrEdCAMACEJcSY4CJr2yuUPIb
-         WfJ/gAT52eYovkQIhis6hDc/znxLL46uidS2yUrjZT5l7maaMDhx3pjvwOEKnN/yZfYp
-         IGhg==
-X-Gm-Message-State: APzg51AKZlyySFwUqEY054IvAUrg25LcMZEZ4vP1hyes7LH/ThNs+lqq
-        af0wUgh89/CdCtDNm2/pqd4=
-X-Google-Smtp-Source: ANB0VdY847gEV6DwE48aowY1l99SZmVD3kHOAUa6IsDyouPIdMH3nxJ+fExj4Mklo7C8Qpn/4r4xyg==
-X-Received: by 2002:a50:8612:: with SMTP id o18-v6mr13703386edo.111.1536865617464;
-        Thu, 13 Sep 2018 12:06:57 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id y7-v6sm2072634edd.13.2018.09.13.12.06.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 12:06:56 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-        Derrick Stolee <stolee@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 11/12] t1407: make hash size independent
-References: <20180913051742.252276-1-sandals@crustytoothpaste.net> <20180913051742.252276-12-sandals@crustytoothpaste.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180913051742.252276-12-sandals@crustytoothpaste.net>
-Date:   Thu, 13 Sep 2018 21:06:55 +0200
-Message-ID: <87efdxkyi8.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=pJhLh1sTJyEc8WR4MNDF6hkUp/J1Yhjah7PdKu6d/QY=;
+        b=JrM7WgjVwEn5JUbaNiPfP1CeOoadHoAHgIiv2Gs/CaxIdRVLXfNEfmn/VVAC2uDJzo
+         23vEFtNmXq9R+FVq6Hz00I8a2SY95dWUuKPNNNkZETs3uVB12CncsuVcfag6koBx1Wjn
+         sHtH0+tuYs/W/SlgSbryT20mFOknQ9tNgnDaYYSh8YhZYptiY6LnmnpDe3Nz2dPkRRYu
+         ldOQB5mz2o4oqnxlsk//xni4BLKQvq2uMBEaSzU1vVRv38sTzWq37eKmiDzk/WIgvXoW
+         VAn52pFgDUNoXESw+f9aeBR/f9qwAJQPL/3YhWR61RZIJdnBNSY6vlKgro3BWs2uU+zK
+         kmJw==
+X-Gm-Message-State: APzg51AePkODYJpWtBloRpbbhDSLLzaZP80CGjxSZBvHB9HVK7Ny+Rmy
+        VItV4NfnLFxNfLQPefJxbTOGU9qsYHR+svIH3mBQkTDwj04=
+X-Google-Smtp-Source: ANB0VdYCYtxaS/QTtlsO3NFjTJI2mPQ0dL79xXrg8NgMn34mGU6mzMDaT1leF8ckbV9kvGTzZld6G4t8XrHO922njnU=
+X-Received: by 2002:a25:842:: with SMTP id 63-v6mr4120134ybi.425.1536866997119;
+ Thu, 13 Sep 2018 12:29:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180911234951.14129-1-sbeller@google.com> <20180911234951.14129-8-sbeller@google.com>
+ <xmqqlg86lg06.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg86lg06.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Sep 2018 12:29:45 -0700
+Message-ID: <CAGZ79kZKKf9N8yx9EuCRZhrZS_mA2218PouEG7aHDhK2bJGEdA@mail.gmail.com>
+Subject: Re: [PATCH 7/9] submodule: fetch in submodules git directory instead
+ of in worktree
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 12, 2018 at 11:36 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > This patch started as a refactoring to make 'get_next_submodule' more
+> > readable, but upon doing so, I realized that git-fetch actually doesn't
+> > need to be run in the worktree. So let's run it in the git dir instead.
+>
+> It may be clear to the author but not clear to the reader of the
+> above paragraph that "worktree", "fetch" and "git dir" all refer to
+> the recursively invoked operation that updates the submodules
+> repository.  s/git-fetch/"git fetch" for the submodule/ should be
+> sufficient to help the readers.
+>
+> > That should pave the way towards fetching submodules that are currently
+> > not checked out.
+>
+> Very good.
+>
+> > +static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
+> > +{
+> > +     prepare_submodule_repo_env_no_git_dir(out);
+> > +     argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
+> > +}
+> > +
+> >  /* Helper function to display the submodule header line prior to the full
+> >   * summary output. If it can locate the submodule objects directory it will
+> >   * attempt to lookup both the left and right commits and put them into the
+> > @@ -1227,6 +1233,27 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
+> >       return spf->default_option;
+> >  }
+> >
+> > +static const char *get_submodule_git_dir(struct repository *r, const char *path)
+> > +{
+> > +     struct repository subrepo;
+> > +     const char *ret;
+> > +
+> > +     if (repo_submodule_init(&subrepo, r, path)) {
+> > +             /* no entry in .gitmodules? */
+> > +             struct strbuf gitdir = STRBUF_INIT;
+> > +             strbuf_repo_worktree_path(&gitdir, r, "%s/.git", path);
+> > +             if (repo_init(&subrepo, gitdir.buf, NULL)) {
+> > +                     strbuf_release(&gitdir);
+> > +                     return NULL;
+> > +             }
+>
+> This is for the modern "absorbed" layout?  Do we get a notice and
+> encouragement to migrate from the historical layout, or there is no
+> need to (e.g. the migration happens automatically in some other
+> codepaths)?
 
-On Thu, Sep 13 2018, brian m. carlson wrote:
+No, the absorbed would also be handled by repo_submodule_init.
+I wrote a patch once to migrate repo_submodule_init to take a
+"struct *submodule" instead of a path as the third argument, which
+would fall in line with this patch as well, I'll dig it up.
 
-> -	$RWT for-each-reflog | cut -c 42- | sort >actual &&
-> +	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
+Historically git-fetch supported repositories that are not submodules
+(but have a gitlink and a working tree in place) as well. That is covered
+here. (see comment /* no entry in .gitmodules? */)
 
-Aside from hash size issues, this just makes the tests easier to
-read. Thanks!
+> > -             strbuf_release(&submodule_path);
+> > -             strbuf_release(&submodule_git_dir);
+>
+> But if it is a leak, it is easily plugged by freeing git_dir here, I
+> think.
+
+Thanks.
