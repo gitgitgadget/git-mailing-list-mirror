@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DCB71F42B
+	by dcvr.yhbt.net (Postfix) with ESMTP id D02291F42B
 	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728221AbeIMXNC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:13:02 -0400
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:42848 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728193AbeIMXNC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:13:02 -0400
-Received: by mail-pl1-f193.google.com with SMTP id g23-v6so2937573plq.9
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:28 -0700 (PDT)
+        id S1728226AbeIMXND (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:13:03 -0400
+Received: from mail-pl1-f169.google.com ([209.85.214.169]:36387 "EHLO
+        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728193AbeIMXND (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:13:03 -0400
+Received: by mail-pl1-f169.google.com with SMTP id p5-v6so2949121plk.3
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=kDbI8PetvqkYBZ+33UKq7bQUaD3Bl3dwcBq+W7V66oo=;
-        b=CTFvjng6KbH6V18EpLOvUiZFNzNUIz+e9Ksvx2TXNmpvKAx9wx9Lk5IL4kQZoy7wkF
-         iTidefp2toOrx9awLCxMsbcbpOjMZlrhzpHOJ2yj207yxPZ7Ji1oRn0BOsyH9fOnY0c7
-         hiMQ/vJB+aL9OMrGNd66WAY/rquqrKitHNDIr4+3aX84zUAmbi0J/0xHfXiI08BtkCgr
-         oYztnQlPtuU2ty83IIbFusk5N8yGHKgNKyxu8f1k/kjVLBJrATeaZUqBzj20tzCxzy/d
-         7lzR0l+1n+c3ho6/tv2mqgLddvcRKYFZdo793juoo78E3dOJXdhItn6McvjhTS3Ahd/j
-         Er0g==
+        bh=7pOMN3l/b4ziuxVezIX6mLt4cpjx8qscyj3hQtH8GgY=;
+        b=egY0RfxXm2H94Oog+KMDSILoJFRGFR1qaLjFbVScdUcQCexOIc35nzmQyTYiLM3diz
+         +dvHXETHA7Uf0DzFNtqkR3kkTnlqoZHwtieMLVkxyLIksR9iXHfMOWpRurihE6EVjynt
+         RnjNT719mMW2AzMaD397G55DV0MIL8U2dsStfOUCq2bm+EPiTpIcBScP+Rxwl7eRyk1S
+         Z/u0OmIYcyrTs/CQ74wbNKv8zc0Sko1M1YPjdYBwzZug1IVBYxFFBew6g1serWLGWHJq
+         +La6OgC138K1n3LYBKWQ7hOd/Klr48JFgnP1JhT+Kktq2nRVv1R7ZR0uHKx+fPYeLXdB
+         YFAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=kDbI8PetvqkYBZ+33UKq7bQUaD3Bl3dwcBq+W7V66oo=;
-        b=OBHKLHu7egmeoJy293yqbnOIoDRgCI8bETtBdxAkgxBoQPzpaW6DA/uHfiwQIWAXWU
-         Xaw3YrAHEG9BVnG1RYtoSFzGxb1NV81bS7v7z+MHKN8EL/L695X8mc8CbxzwS3q1HGMG
-         AZy57uy2UtkRauTUgI9E0Dtn2sW/dEjn19LQr0SYZFUkW05bOGnDS6WFboeH3R9dTf31
-         tMM/2DAjK5676PN98v5E71qBL81ZlCKXwF+opr2NNFUUdrgD//AhtcdkWS+Fa0N/Rm9N
-         1t2gigwFWz8YELEmROny2BFZqGbX1dawnlDYamue8Moe9jbjNLi/TvL2Td5fNzestr6T
-         rRCA==
-X-Gm-Message-State: APzg51D9cWgTXOVLRE0ay2yf1rHnLhH/laxEnX27t8CUhoveR3yOKsJT
-        3yAcFW6Oz99747O0BdKI5/GrXAdg
-X-Google-Smtp-Source: ANB0VdaCNsj4vvxyQ8Nk6ed/0064xX1gwnHXbhsdMrqiFFnT5tAT9MQrIq0rgzw0XvpNFfNynT5rqA==
-X-Received: by 2002:a17:902:82c5:: with SMTP id u5-v6mr8275594plz.83.1536861747340;
-        Thu, 13 Sep 2018 11:02:27 -0700 (PDT)
+        bh=7pOMN3l/b4ziuxVezIX6mLt4cpjx8qscyj3hQtH8GgY=;
+        b=pgr0/H/qoGCJJdzT3rNXSbHce44ODcCGHMwwPf6m6uZ59PLJbfSNySgV14GE0ei9mR
+         QI3w+4+F58cQOLBDuNTDoaXoVNkNfO6s06ydklLZB3aSiEHbGQKbGpnwwI1k7Fxr2ROA
+         lIojWK5OvUafXgFvoHFynw3TetJsGlZkrwZ20Suzh6RTL7XWj5jCWIpzYMNLAI9WfCRV
+         j7hNIaa3evED8h+TRG4zhAdehbz1IPxgbgvprQO8BQXLm13rdUcYY66SQ06mAzEbY2BZ
+         Ld++i033lragPcLPjtCvUqjgTHmqCEuaqOye9maYzuZXz17hNkkpGThUvyqlMgHsmvoX
+         xEXA==
+X-Gm-Message-State: APzg51Bvj7pbTqYr10bmiEEXWmKtHIW4P2B82hEPSUfPZ3oEBuZfpg7B
+        wAjypOD5BjkW9M8KioAg0xWY6OcX
+X-Google-Smtp-Source: ANB0VdYJ4OO+Jclms+S9MRhXX2QbjTfIlkyd9fK1/5tvxsClFHD/biyyUb5VbX6Gvc6Br3UTihxHow==
+X-Received: by 2002:a17:902:3a2:: with SMTP id d31-v6mr8281986pld.287.1536861748717;
+        Thu, 13 Sep 2018 11:02:28 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id n29-v6sm5923861pgl.30.2018.09.13.11.02.26
+        by smtp.gmail.com with ESMTPSA id a2-v6sm4755627pgc.68.2018.09.13.11.02.27
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 11:02:26 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 11:02:26 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Sep 2018 18:02:09 GMT
-Message-Id: <29ebc1716123a953663c43064d73b98cf2fe0cbd.1536861730.git.gitgitgadget@gmail.com>
+        Thu, 13 Sep 2018 11:02:27 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 11:02:27 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Sep 2018 18:02:10 GMT
+Message-Id: <406c88b456c06bc42a9bb23bda48b6b3be461435.1536861730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.34.v2.git.gitgitgadget@gmail.com>
 References: <pull.34.git.gitgitgadget@gmail.com>
         <pull.34.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 10/11] multi-pack-index: report progress during 'verify'
+Subject: [PATCH v2 11/11] fsck: verify multi-pack-index
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,59 +71,79 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When verifying a multi-pack-index, the only action that takes
-significant time is checking the object offsets. For example,
-to verify a multi-pack-index containing 6.2 million objects in
-the Linux kernel repository takes 1.3 seconds on my machine.
-99% of that time is spent looking up object offsets in each of
-the packfiles and comparing them to the multi-pack-index offset.
-
-Add a progress indicator for that section of the 'verify' verb.
+When core.multiPackIndex is true, we may have a multi-pack-index
+in our object directory. Add calls to 'git multi-pack-index verify'
+at the end of 'git fsck' if so.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ builtin/fsck.c              | 18 ++++++++++++++++++
+ t/t5319-multi-pack-index.sh | 13 ++++++++++++-
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/midx.c b/midx.c
-index 47e7e6113a..4d4c930522 100644
---- a/midx.c
-+++ b/midx.c
-@@ -7,6 +7,7 @@
- #include "object-store.h"
- #include "sha1-lookup.h"
- #include "midx.h"
-+#include "progress.h"
- 
- #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
- #define MIDX_VERSION 1
-@@ -940,6 +941,7 @@ static void midx_report(const char *fmt, ...)
- int verify_midx_file(const char *object_dir)
- {
- 	uint32_t i;
-+	struct progress *progress = NULL;
- 	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
- 	verify_midx_error = 0;
- 
-@@ -971,6 +973,7 @@ int verify_midx_file(const char *object_dir)
- 				    i, oid_to_hex(&oid1), oid_to_hex(&oid2), i + 1);
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 63c8578cc1..06eb421720 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -848,5 +848,23 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+ 		}
  	}
  
-+	progress = start_progress(_("Verifying object offsets"), m->num_objects);
- 	for (i = 0; i < m->num_objects; i++) {
- 		struct object_id oid;
- 		struct pack_entry e;
-@@ -995,7 +998,10 @@ int verify_midx_file(const char *object_dir)
- 		if (m_offset != p_offset)
- 			midx_report(_("incorrect object offset for oid[%d] = %s: %"PRIx64" != %"PRIx64),
- 				    i, oid_to_hex(&oid), m_offset, p_offset);
++	if (!git_config_get_bool("core.multipackindex", &i) && i) {
++		struct child_process midx_verify = CHILD_PROCESS_INIT;
++		const char *midx_argv[] = { "multi-pack-index", "verify", NULL, NULL, NULL };
 +
-+		display_progress(progress, i + 1);
- 	}
-+	stop_progress(&progress);
- 
- 	return verify_midx_error;
++		midx_verify.argv = midx_argv;
++		midx_verify.git_cmd = 1;
++		if (run_command(&midx_verify))
++			errors_found |= ERROR_COMMIT_GRAPH;
++
++		prepare_alt_odb(the_repository);
++		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
++			midx_argv[2] = "--object-dir";
++			midx_argv[3] = alt->path;
++			if (run_command(&midx_verify))
++				errors_found |= ERROR_COMMIT_GRAPH;
++		}
++	}
++
+ 	return errors_found;
  }
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index 828c240389..bd8e841b81 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -160,12 +160,17 @@ corrupt_midx_and_verify() {
+ 	DATA="${2:-\0}" &&
+ 	OBJDIR=$3 &&
+ 	GREPSTR="$4" &&
++	COMMAND="$5" &&
++	if test -z "$COMMAND"
++	then
++		COMMAND="git multi-pack-index verify --object-dir=$OBJDIR"
++	fi &&
+ 	FILE=$OBJDIR/pack/multi-pack-index &&
+ 	chmod a+w $FILE &&
+ 	test_when_finished mv midx-backup $FILE &&
+ 	cp $FILE midx-backup &&
+ 	printf "$DATA" | dd of="$FILE" bs=1 seek="$POS" conv=notrunc &&
+-	test_must_fail git multi-pack-index verify --object-dir=$OBJDIR 2>test_err &&
++	test_must_fail $COMMAND 2>test_err &&
+ 	grep -v "^+" test_err >err &&
+ 	test_i18ngrep "$GREPSTR" err
+ }
+@@ -258,6 +263,12 @@ test_expect_success 'verify incorrect offset' '
+ 		"incorrect object offset"
+ '
+ 
++test_expect_success 'git-fsck incorrect offset' '
++	corrupt_midx_and_verify $MIDX_BYTE_OFFSET "\07" $objdir \
++		"incorrect object offset" \
++		"git -c core.multipackindex=true fsck"
++'
++
+ test_expect_success 'repack removes multi-pack-index' '
+ 	test_path_is_file $objdir/pack/multi-pack-index &&
+ 	git repack -adf &&
 -- 
 gitgitgadget
-
