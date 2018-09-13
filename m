@@ -2,77 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C24331F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 09:27:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40A081F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 10:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726855AbeIMOfg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 10:35:36 -0400
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:38278 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726741AbeIMOfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 10:35:36 -0400
-Received: by mail-wr1-f45.google.com with SMTP id w11-v6so4850010wrc.5
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 02:26:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=myitcv.io; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=trmzI1DQqBjht1vx5G800xBmAjGSJx6IsDR38Y38wMY=;
-        b=ew64GA6SXHvVo3H0rOSS3wvw3gkDshCU2SeUYdq9BSAxzi++qDDPyCyyJJMBcSSaSn
-         ySfvzH6D2JvUXYLtvj1e9zkT2MFRRSPXqW+zbRAQkzyA95CsBIbBhNeGnBkCgwbESB1Q
-         644NT9zGb0lraKlZoggLDOsaGzem59sTMpi05Up1CVxtbiwAb+z76jI+3FEVc9FJ/N+l
-         yFvuk0snf/1JurqIf8P8q1f5cLZ56laA6J4VJRw9zz7+GfZmZRVESphw/XiSG9ufdzGT
-         O92KuFpjM2oq9Z9L3S7g5l/ExvQgAfoQ6ZdKBcu3WEfLYQwROA9llgiPgbobH8qOElBR
-         rXoQ==
+        id S1726819AbeIMPXL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 11:23:11 -0400
+Received: from mail-qt0-f193.google.com ([209.85.216.193]:37435 "EHLO
+        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbeIMPXL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 11:23:11 -0400
+Received: by mail-qt0-f193.google.com with SMTP id n6-v6so4793176qtl.4
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 03:14:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=trmzI1DQqBjht1vx5G800xBmAjGSJx6IsDR38Y38wMY=;
-        b=pSSHwxRYT600gWynPyrqj+9usX0KXWqVUAfQbuDDxf7wxJsPZcjdx3uC+41Si/XZSz
-         WDb5reEA9xEpevmi7E+QPQGVfMjzdGpUy2lgjlokujwHs2nFm/3JiFv7Ka93GO6NML1F
-         wLb18tf4mgGsyOdPvQX2t1B9/v932ATpR5CJQEX6MuxJPhgKYb5Pk78dmTQWIkCXaB2d
-         k7V2D1OX4j7OeAkTLv/ghMAwjZCWKiJSR4NR+hNrHC43VRTk4GFZIjUz6ugcf0bKyby+
-         ahqSFfaYtDWpAi9YK1tvvp4dBVuxq5EGv0qchSvTRBafn1vn2oBVPv+8NfF2uMI42XjG
-         A8Hg==
-X-Gm-Message-State: APzg51DqwHCvAOgwZURB4jJq1fn/i/DQvVJF2QnVmLVbgAJCpO8u7q8y
-        rQkQDu76irvG9mIrdrB+Dpq4NvefE80=
-X-Google-Smtp-Source: ANB0VdbGMSK/KRKKafcOjmXvac/CHcSxCaaIpdkEMhB+8b3c4EGoIFKOEmKmTklA8K04lgwXG9Jt8w==
-X-Received: by 2002:adf:a789:: with SMTP id j9-v6mr4766793wrc.277.1536830816482;
-        Thu, 13 Sep 2018 02:26:56 -0700 (PDT)
-Received: from myitcv.localdomain (cpc130678-camd16-2-0-cust931.know.cable.virginm.net. [82.37.251.164])
-        by smtp.gmail.com with ESMTPSA id v5-v6sm2159669wru.60.2018.09.13.02.26.55
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 02:26:55 -0700 (PDT)
-Received: by myitcv.localdomain (Postfix, from userid 1000)
-        id 8F5AB4E2F8A; Thu, 13 Sep 2018 10:26:54 +0100 (BST)
-From:   Paul Jolly <paul@myitcv.io>
-To:     paul@myitcv.io
-Cc:     git@vger.kernel.org
-Subject: git-credential-libsecret not prompting to unlock keyring
-Date:   Thu, 13 Sep 2018 10:26:54 +0100
-Message-Id: <20180913092654.8317-1-paul@myitcv.io>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <CACoUkn5ZVo=3-XMPRihx-R7Rn281p9K_Q-ybuDCPJsqoS8CsJw@mail.gmail.com>
-References: <CACoUkn5ZVo=3-XMPRihx-R7Rn281p9K_Q-ybuDCPJsqoS8CsJw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kbY01+xWGnRmAVk4SHXPI9SRkssNDJLd926KsNU/GkM=;
+        b=PWjDgXFQfVvB9xp0u13mW+UzlZKKF3ODDXTYNjXH1qmFoBDFJm2WUNWDCHedgYPa+F
+         dx4YOuuEl7jrfum5siDPzXRoQMo3+MVHID5k2WmuN7uWA0IupGbruffv+sGqF0MJyU8W
+         8fg7zae9v830+GCam2TmOSeKSjVSZ2rY3f6x7gCCQNGWS65B/slBrMgBuHZ0BpenRsaQ
+         J5j9rnZnS2TXUYXM07SYCdgUhULw0ybm3XiEVFDMMxRNm+2J26Q5E3IBttbt3X1vYDt8
+         2M3JlZXwNBhnWIyaCzYOAHn6u2x27g38OHhsZu2Uepac/Sk87ZvWBsAa3oMkjFqJFl1M
+         yf4g==
+X-Gm-Message-State: APzg51Dq5XvQfujEcXE8cZlvB8a+q69QVssa909tDSuMv6w/iKssvW2w
+        /SgXtUhxCAAufcytF06z1012908B1GNs9tDF5F0=
+X-Google-Smtp-Source: ANB0VdakpGA/FwpTtIqB/cVKPSnQ8cjE4ZtK199+TW1XzLhn9/tBCOxvz+QqWtgCrx7AO+wLg5yv+Bn5cRO/Gnv7IrU=
+X-Received: by 2002:aed:2aa1:: with SMTP id t30-v6mr4651561qtd.101.1536833663457;
+ Thu, 13 Sep 2018 03:14:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAKkAvay6crMOJ0Vm2C9Z0ktBj9n4+RkOAiP+zuG=Sm+PVBgQ+Q@mail.gmail.com>
+ <1b8a35be-4234-7f71-c0be-41736bbe60cf@gmail.com> <844da493-b1c1-b295-0094-beafd48f3b50@gmail.com>
+ <fd241679-2283-4e01-315b-db27be8a794c@gmail.com> <20180911163419.GB4865@hank.intra.tgummerer.com>
+ <20180911172903.GC4865@hank.intra.tgummerer.com> <20180912190108.GE4865@hank.intra.tgummerer.com>
+In-Reply-To: <20180912190108.GE4865@hank.intra.tgummerer.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 13 Sep 2018 06:14:12 -0400
+Message-ID: <CAPig+cRZm6iznBzBF1pwj1v12XX=Q_jzLxSLjWpEMja73r_juw@mail.gmail.com>
+Subject: Re: [PATCH] linear-assignment: fix potential out of bounds memory
+ access (was: Re: Git 2.19 Segmentation fault 11 on macOS)
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Derrick Stolee <stolee@gmail.com>, ryenus@gmail.com,
+        Git List <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Apologies, forgot the crucial details post that log:
+On Wed, Sep 12, 2018 at 3:01 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> Subject: [PATCH] linear-assignment: fix potential out of bounds memory access
+>
+> Currently the 'compute_assignment()' function can may read memory out
 
-This turned out to be an error unrelated to git or git-credential-libsecret.
+"can may"?
 
-Apologies for the noise (and the badly threaded reply earlier).
-
-
-Paul
+> of bounds, even if used correctly.  Namely this happens when we only
+> have one column.  In that case we try to calculate the initial
+> minimum cost using '!j1' as column in the reduction transfer code.
+> That in turn causes us to try and get the cost from column 1 in the
+> cost matrix, which does not exist, and thus results in an out of
+> bounds memory read.
