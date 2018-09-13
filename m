@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B6DB1F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A3311F42B
+	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728188AbeIMXM6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:12:58 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:42844 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726914AbeIMXM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:12:58 -0400
-Received: by mail-pl1-f195.google.com with SMTP id g23-v6so2937475plq.9
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
+        id S1728210AbeIMXNA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:13:00 -0400
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:38977 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728193AbeIMXM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:12:59 -0400
+Received: by mail-pg1-f196.google.com with SMTP id i190-v6so3105671pgc.6
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=vHUkBRtBqXGfNO9a1LGkAuldc5o3Moxr27e8xRcaDms=;
-        b=mmRT8jTpvypkhq7ptwq2K7n0gq6tyg5T0he1hhCOqIIhcrMhPWXJ11raM8qgr9U+fX
-         e1Li0fyNAN3l5bw1Tv9Opzh+6G7LZCEaHHSrPuIJdmm5zbrDVPL24PXAk9cwLJBijOXY
-         3KRmj88Ax9v0Kf9yn+Br0U8MlhoP+XxHo5obyZmrYBq0F53z5F4OovmoeWprHoEdJpve
-         qFGiPrpkqpdS4HCYu31g8PJ7XVJ1n8wzbBQKgl9J5mcEl3VSRQmnTTW3nXnuH9zvoGlx
-         bFhPtMfq4bplE3ygB6qhAzDJnPQ+DAm0BivJtw55T/F6yZk0DTy9gysiX3AYPMkiPXKX
-         XfSw==
+        bh=lgN9+HaKNLJe4NXAvjUb52XkOhnN7utX07voe/Kf4ug=;
+        b=pdS4COBH4WyZzgSc8xWgExvVl/w5AGWJv1wRVGTtPZ5/fspOJ6LS+EeIQGS9Z+ipbV
+         vmBXUY0MkxzdyEP4Kjp6uq2+lU41LjsfXRGx3b64eqF0ovrosold7Fu72wm8r9EyMZys
+         RVdx2t404/StUiREt8JPUKq8QbwP9TrZxRnT8EqOU0fBOsDLOZ9ZatwCDT2qDXQrt5Z1
+         ZOYC7L93HWqOwQEdcD3r+sbi0OqE46cCzBNApcSTQu8yIlXmK2iwPnLJnNnLtb20OKFo
+         zeSkwAbICSFrmJ9woa/VtJ6tXukVd5qKBvMOgfALmBIZ0UuvJjI1Jz3IUjEhGzrUWi+H
+         gDaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=vHUkBRtBqXGfNO9a1LGkAuldc5o3Moxr27e8xRcaDms=;
-        b=DMaXoXmHmyGe9Qq6ecb/nQ/2Z6iptpeToL+BI1iomsPX98plUMjpcEd1HNO2gS3p3b
-         /K2SJrejvHEu/CtzUSr20J9mJtu4It9JjxJ4AV/q8WRDz6uMQPFELiJJmCx5wEEHeGE6
-         ghiG5KjOHM2LBAY1rGTReRStsmvcWpnej+91xIOi+3WDYwhc8XUQZ4XuDRSm6/5qj3TC
-         SjgGDKJvUcgoxN/kheyPZqXmFgPCvDiPtvKFe8KiTCWOoLzm8ENYNfX4YspCwdrSyKW4
-         mGCiolz1F42OeHWYfgPALqrNp+iP0JhBe1NlFv/PSB8JekCVAR+df1GGGY6IYapr9cS6
-         laIQ==
-X-Gm-Message-State: APzg51AxpxfvkcCdOAaicxxOcvfg28/F3dWnxcSgHmFZPACjw5MFdq7n
-        2QhYSZ3fjLneCvWpOzdp+CKnu9B9
-X-Google-Smtp-Source: ANB0Vdbi3eJqYniD4X8DGR6s9zoDAZMdFmo2MOqW0j2lkYuOO3n8T76U+57zSiH7jKUBlufVc6SZxw==
-X-Received: by 2002:a17:902:8ec8:: with SMTP id x8-v6mr8379579plo.308.1536861743103;
-        Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id d132-v6sm9206879pgc.93.2018.09.13.11.02.22
+        bh=lgN9+HaKNLJe4NXAvjUb52XkOhnN7utX07voe/Kf4ug=;
+        b=ZDRrQF4veuU5OU/BeDPrCO6PRC5+yRdWagua/9RA1rbnysPMtxyz+vmw0/pBfCfnoc
+         RPx5Zv1K8wWxkxVbVm/nYWIWiYA32Ws/sOfU6eq1dUZLF79xQeLCP1dzOc3+OoTdJAiO
+         m2zdBjqXEPG6ZALQz3nmEIzPqYxwp637y8L+0cgoadeBgilv3vZLuZVRf+h/IiicxfAI
+         znxZJXSIFNBZTg1v4KNznA2ljnlGZOy3qzGSWF88MnI+rCgx55FOCBoVRAg6BtlwJSHI
+         BSUMlSjA8vPqBnSSz32jnq9tjq/2VNXNLvS/gnjs/YjhDYeqfffsuVxWHLI0NWh0cdSa
+         wtoA==
+X-Gm-Message-State: APzg51DRYbzbmtbOwCS3I5dwGo6zec+BhZzogtfJxev0luFWqHHqPjTj
+        /U+4ym7W2//BCz1J5S4KrGRBRjCb
+X-Google-Smtp-Source: ANB0Vda3kzybL0pQ1eN4c0EWabQLugFEUZpfO9TBctAzJT+TX0SmMaInSPDHmYThIU3RoCQmu6iCcg==
+X-Received: by 2002:a63:e756:: with SMTP id j22-v6mr8206974pgk.185.1536861744547;
+        Thu, 13 Sep 2018 11:02:24 -0700 (PDT)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id v140-v6sm6357927pgb.45.2018.09.13.11.02.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 11:02:22 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 11:02:22 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Sep 2018 18:02:06 GMT
-Message-Id: <511791de91115e0d51c1635f8ec3d337ca009971.1536861730.git.gitgitgadget@gmail.com>
+        Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 11:02:23 -0700 (PDT)
+X-Google-Original-Date: Thu, 13 Sep 2018 18:02:07 GMT
+Message-Id: <210649bf838bf0dc338671c691cbd015bef41240.1536861730.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.34.v2.git.gitgitgadget@gmail.com>
 References: <pull.34.git.gitgitgadget@gmail.com>
         <pull.34.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 07/11] multi-pack-index: verify oid lookup order
+Subject: [PATCH v2 08/11] multi-pack-index: fix 32-bit vs 64-bit size check
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,66 +71,30 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
+When loading a 64-bit offset, we intend to check that off_t can store
+the resulting offset. However, the condition accidentally checks the
+32-bit offset to see if it is smaller than a 64-bit value. Fix it,
+and this will be covered by a test in the 'git multi-pack-index verify'
+command in a later commit.
+
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c                      | 11 +++++++++++
- t/t5319-multi-pack-index.sh |  8 ++++++++
- 2 files changed, 19 insertions(+)
+ midx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index dfd26b4d74..06d5cfc826 100644
+index 06d5cfc826..80094c02a7 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -959,5 +959,16 @@ int verify_midx_file(const char *object_dir)
- 				    i, oid_fanout1, oid_fanout2, i + 1);
- 	}
+@@ -236,7 +236,7 @@ static off_t nth_midxed_offset(struct multi_pack_index *m, uint32_t pos)
+ 	offset32 = get_be32(offset_data + sizeof(uint32_t));
  
-+	for (i = 0; i < m->num_objects - 1; i++) {
-+		struct object_id oid1, oid2;
-+
-+		nth_midxed_object_oid(&oid1, m, i);
-+		nth_midxed_object_oid(&oid2, m, i + 1);
-+
-+		if (oidcmp(&oid1, &oid2) >= 0)
-+			midx_report(_("oid lookup out of order: oid[%d] = %s >= %s = oid[%d]"),
-+				    i, oid_to_hex(&oid1), oid_to_hex(&oid2), i + 1);
-+	}
-+
- 	return verify_midx_error;
- }
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 47a54e138d..a968b9a959 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -175,6 +175,7 @@ test_expect_success 'verify bad signature' '
- 		"multi-pack-index signature"
- '
+ 	if (m->chunk_large_offsets && offset32 & MIDX_LARGE_OFFSET_NEEDED) {
+-		if (sizeof(offset32) < sizeof(uint64_t))
++		if (sizeof(off_t) < sizeof(uint64_t))
+ 			die(_("multi-pack-index stores a 64-bit offset, but off_t is too small"));
  
-+HASH_LEN=20
- MIDX_BYTE_VERSION=4
- MIDX_BYTE_OID_VERSION=5
- MIDX_BYTE_CHUNK_COUNT=6
-@@ -189,6 +190,8 @@ MIDX_BYTE_PACKNAME_ORDER=$(($MIDX_OFFSET_PACKNAMES + 2))
- MIDX_OFFSET_OID_FANOUT=$(($MIDX_OFFSET_PACKNAMES + 652))
- MIDX_OID_FANOUT_WIDTH=4
- MIDX_BYTE_OID_FANOUT_ORDER=$((MIDX_OFFSET_OID_FANOUT + 250 * $MIDX_OID_FANOUT_WIDTH + 1))
-+MIDX_OFFSET_OID_LOOKUP=$(($MIDX_OFFSET_OID_FANOUT + 256 * $MIDX_OID_FANOUT_WIDTH))
-+MIDX_BYTE_OID_LOOKUP=$(($MIDX_OFFSET_OID_LOOKUP + 16 * $HASH_LEN))
- 
- test_expect_success 'verify bad version' '
- 	corrupt_midx_and_verify $MIDX_BYTE_VERSION "\00" $objdir \
-@@ -235,6 +238,11 @@ test_expect_success 'verify oid fanout out of order' '
- 		"oid fanout out of order"
- '
- 
-+test_expect_success 'verify oid lookup out of order' '
-+	corrupt_midx_and_verify $MIDX_BYTE_OID_LOOKUP "\00" $objdir \
-+		"oid lookup out of order"
-+'
-+
- test_expect_success 'repack removes multi-pack-index' '
- 	test_path_is_file $objdir/pack/multi-pack-index &&
- 	git repack -adf &&
+ 		offset32 ^= MIDX_LARGE_OFFSET_NEEDED;
 -- 
 gitgitgadget
 
