@@ -6,97 +6,102 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 733A91F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 22:01:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB3AA1F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 22:08:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728109AbeINDNQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 23:13:16 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:43274 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727417AbeINDNP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 23:13:15 -0400
-Received: by mail-wr1-f67.google.com with SMTP id k5-v6so8283658wre.10
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 15:01:52 -0700 (PDT)
+        id S1727966AbeINDTs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 23:19:48 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33363 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727332AbeINDTs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 23:19:48 -0400
+Received: by mail-wr1-f68.google.com with SMTP id v90-v6so8332870wrc.0
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 15:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=ykzYjUBAdUaum5SnR//VHC9E6V1oBVfIGBx9OjK18uc=;
-        b=geJ1ipYXyzO48VkIfLVMUxDhauppA5dPTxtMcWj3+3Wu96tAamhmyUtajAzGWZY314
-         +SmKpgMKxst9hqGvZnkVf2ZmZcmANjVovP/e4QImjKmHnPyrXGzZIJA8+DOjNcYHs4Zs
-         JNL8mZFBaI1OT8xZRvBf5FGbxS/31ExZU7g1w12rAj92c66beAHHrhGf7ZrCPVT3PPAk
-         GQWvGBgFUGAA4bEY9VEgfnX5yIoDFH88KGAKwJBOP7cLaAZeU1BFM7H/kXsETsePZGM3
-         5FJBdO2k0SUoh+9TDqHf0dN6i5k/qr/rYVuy/jIzUJfWnxnCTUCwMWwEr7McCgGgGNu/
-         /CdQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=P3nRnMZuE9m4r29/V0Gq1avKeh79uHc18rUuyAsqFpA=;
+        b=CqZyDjH85aV9N6g7VrSAIHtMMhozGtyVnJmyydmUCsVGuH0loVLh0xC88FeBED6CR2
+         OCIYrrVHd7cyyQbiNCJaFIaBOaRvQr21ZGYfDzHOxk3fUpiACLfTBoFBl26fhrillVj+
+         jgE7KdsEoazyxPBe3qdb+OzF+ty/QyUMetVZARBbdLuAylMJcIcHRgZ6MsT99T+baoa+
+         LJCEpI1lVe3LMdZVK8DIRy3nwpD/Y/mLWcyyltWHRHs3KfWq1FlqRynq4wvPu5VA2mNC
+         VF8h7fbjHYs7XVJnBBORx9BH1TzkfiqUW2Oz281BOmS415rMWrFd7r8Tq9qPK+VEUyyE
+         tQCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=ykzYjUBAdUaum5SnR//VHC9E6V1oBVfIGBx9OjK18uc=;
-        b=qB8dkjmjIGkjMjc5gna/rdqpaizgrYFN25XsSwot6oL4ORktDnk0MsF3U36cRPO5p5
-         7QMl0ZPoezXpr/p7+coBcMObG7iTuLpYP6SmsvgBxt7b+t56LaMwcw7szoDiv7BJpkhL
-         7Y7EsamLNx6uXp8OJOMfBcp8PqIge3GGR6K6Auim/ruePWSPvGRF4g6/Hghp7HJ4DavY
-         dq3IOSG49BeLy1xaGe0fbraLNR1e8O+hl/hLPvyMpmmnEhow36o4FIdaEd38UtZDz27/
-         j3D6+sV01SsF7l6MnPsSDcOxnuCsNG+fdiUVpH+qZ+cbEKJF4Qr32KwQGXae6q1IkZpr
-         Q+yg==
-X-Gm-Message-State: APzg51Du4MyFAYsdAT7EK1NxFstCkVXEeOQl6a/PlB5W2q8smAlJO2PE
-        wHnXq4vfN82M4LWmkkGGHJl1L5zA
-X-Google-Smtp-Source: ANB0VdYUlgqEqSafOsQJkz9Qx31S2ajUFebZuHylFpvolagi3fDTLf1WW9jNqZgdNVVjynCbNrAYKQ==
-X-Received: by 2002:a1c:cb4d:: with SMTP id b74-v6mr13756wmg.123.1536876111050;
-        Thu, 13 Sep 2018 15:01:51 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t25-v6sm44116wmh.15.2018.09.13.15.01.50
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=P3nRnMZuE9m4r29/V0Gq1avKeh79uHc18rUuyAsqFpA=;
+        b=oGI1yEKyBbKJ4FGfv1isvX6e06WzhMk3qvyEW8PUEOt2MqD7wBDvEoeDxbIVfhzSc+
+         TKAxzwCDwqVeVAvmcFRV1Ge+AV94pb6gXQ4R8v/U6wPruG3tdrw6lLrtOYFXlI2D2cI5
+         vd5r0qvrCUxfC6iraAaXSqjguxsbNf9A0QCr6ddqrwnPS96zDbinbqbJBERbfAcFO5mm
+         PuStthZ2E3lLvlKU8R7PEn/hf650yx2L9RaFOP1Cv/XPBVvCZGLKLmjduIFlIZ40PTlJ
+         tpyi0BCrmW14d4Om+NFrTiuMgiqwEyd4FPoWTQW3fC7HMN8jKuz1TDDtBHnfXXFBW6cU
+         mhcQ==
+X-Gm-Message-State: APzg51BHToBf9gCPiO3nUAv8WOOHMonhSOZSeQ3qv99p1cW0ejkAxXh0
+        Qg77D4/2s3Tyv7KvXYPnnrqTOKD+
+X-Google-Smtp-Source: ANB0VdZe0fZJaJq+Zd5CteeFm3h7DGp1VWSiL3trbMJfswGqxHg85RmxNNTYvnrXeRVIhXy5zO2e5A==
+X-Received: by 2002:adf:8504:: with SMTP id 4-v6mr6985577wrh.72.1536876502145;
+        Thu, 13 Sep 2018 15:08:22 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id g2-v6sm37365wme.20.2018.09.13.15.08.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 15:01:50 -0700 (PDT)
+        Thu, 13 Sep 2018 15:08:20 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Shulhan <m.shulhan@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] builtin/remote: quote remote name on error to display empty name
-References: <20180913131833.32722-1-m.shulhan@gmail.com>
-        <xmqqpnxhdq0z.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 13 Sep 2018 15:01:50 -0700
-In-Reply-To: <xmqqpnxhdq0z.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 13 Sep 2018 14:51:56 -0700")
-Message-ID: <xmqqlg85dpkh.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>, Ben Peart <benpeart@microsoft.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
+References: <20180912212544.33624-1-benpeart@microsoft.com>
+        <20180912223101.GA1719@hank.intra.tgummerer.com>
+        <4f8b4664-6108-db7f-cb40-2bc55d9edece@gmail.com>
+        <20180913215616.GD1719@hank.intra.tgummerer.com>
+Date:   Thu, 13 Sep 2018 15:08:20 -0700
+In-Reply-To: <20180913215616.GD1719@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Thu, 13 Sep 2018 22:56:16 +0100")
+Message-ID: <xmqqh8itdp9n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Have you run "make test" with this change?  
+> Thanks, I do think this is a good idea.  I do however share Ævar's
+> concern in https://public-inbox.org/git/87h8itkz2h.fsf@evledraar.gmail.com/.
+> I have TEST_GIT_INDEX_VERSION=4 set in my config.mak since quite a
+> long time, and had I missed this thread, I would all of a sudden not
+> run the test suite with index format 4 anymore without any notice.
 >
-> I expect at least 5505.10 to fail without adjustment.
+> I think the suggestion of erroring out if TEST_GIT_INDEX_VERSION is
+> set would be useful in this case (and probably others in which you're
+> renaming these variables).
 
-For now, I'll queue this on top, and if this turns out to be
-sufficient, I will squash it in.
+I am not enthused by "you are using an old variable---we fail your
+build/test".  The assumption is that people let config.mak laying
+around regardless of how new/old the vintage of Git they are
+building and testing.  I do not think you'd want to adjust your
+config.mak as you switch between 'maint' and 'next.
 
- t/t5505-remote.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I think it is OK to make it error only if the old one is set without
+the new one.  Then people can have _both_ set to the same value
+during the period in which the topic sails through pu down to next
+down to master, after seeing an failure once while building and
+testing 'pu'.
 
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 241e6a319d..d2a2cdd453 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -145,7 +145,7 @@ test_expect_success 'remove remote protects local branches' '
- test_expect_success 'remove errors out early when deleting non-existent branch' '
- 	(
- 		cd test &&
--		echo "fatal: No such remote: foo" >expect &&
-+		echo "fatal: No such remote: '\''foo'\''" >expect &&
- 		test_must_fail git remote rm foo 2>actual &&
- 		test_i18ncmp expect actual
- 	)
-@@ -173,7 +173,7 @@ test_expect_success 'remove remote with a branch without configured merge' '
- test_expect_success 'rename errors out early when deleting non-existent branch' '
- 	(
- 		cd test &&
--		echo "fatal: No such remote: foo" >expect &&
-+		echo "fatal: No such remote: '\''foo'\''" >expect &&
- 		test_must_fail git remote rename foo bar 2>actual &&
- 		test_i18ncmp expect actual
- 	)
+> Btw, I think it would be nice to have all these renaming/documenting
+> variables for the test suite patches in one series, so they are easier
+> to look at with more context.
+
+Yeah, even though these three were posted as independent changes,
+their additions to t/README inevitably conflicted with each other.
+
+
+
