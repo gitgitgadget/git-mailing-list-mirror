@@ -2,197 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAF2C1F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 18:02:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7981F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 18:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727847AbeIMXMu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:12:50 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:40769 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727413AbeIMXMt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:12:49 -0400
-Received: by mail-pl1-f195.google.com with SMTP id s17-v6so2938897plp.7
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:02:15 -0700 (PDT)
+        id S1728024AbeIMXOH (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:14:07 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37687 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726862AbeIMXOH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:14:07 -0400
+Received: by mail-wr1-f68.google.com with SMTP id u12-v6so7295752wrr.4
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:03:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=Lc4TLkm1hGb1dmiFnB5R9pnfNtsNlsha0zbwJfhV358=;
-        b=SrnGJCZizY0icWFhdot0D6t9POLNafWrXgmdTqmUTb3LryJ/aHOJ12QOEQHraa32cX
-         uJ3FQow2/e2yuvY0NAvmJvAOOk8H755kg6BXI1s1RTYqiWm0QkfVOfdIZi8TPudLzD8M
-         O0MOuh45/wDioKrYsYnf0DbmZmuphdKu9DDaeL1wrYYp3nDGWp4IjAGXeC6rvxGrnTv4
-         3naYISxxnhf9UnEtWzA1NeNprTPRstgcG4IhXrj42IEYsEeSU8p/cLyeYZ1MEP0QnLYs
-         HZaA3yjlvMCt6uhOKa56bE5IAn+/JT4sXeRvVWuq3wePKPPbvrhikp7ak+N3U5QdfzJ8
-         ZY/Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=7TlgsFyhA6OoWkYdpekyTrVz6aZgtpxYC05vsStFpwg=;
+        b=OMG2FWYTY6orhiun/k8xW76YuHmHbhSFaG7fsgiT4GsPR1qvK4bzInkC3DkybA8viw
+         horUNT0ims+1HG9tWXQE5a4k/QnRmdQvB8EW6FcdHE42fnPKZfe7mxeaE/5aLiwOQ1m4
+         Hmr/xVtU1xTD8pbfGbbOpbEVJAAXN0Ss7y0yUFhv5XkhRujegbLfVx+mANLMqu+RR1fL
+         NpEYsuUYIXnh24tT0xF2wLh1St3yF2jg8rLPPQuo9kn4nrOY0U6pCXYfJM+5Op8qmRGP
+         lJmiAmSxMIsR5o/ev1Qh23oDgs6llE9fY1tfDhtEiDuYDofIh/W83NDiknlhth97g737
+         VfDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Lc4TLkm1hGb1dmiFnB5R9pnfNtsNlsha0zbwJfhV358=;
-        b=WP4Wjruz6EKiWRxCTYF2jdsULtN4FjI21qjoltr3j16QvrPeB7k7Gyty9FRxIqHgUA
-         vHwxnT5XW5xy+yhvhZIGYHyqQK3qcV0R0GlAkb8NiftQTi/vh71hCPAibEbJeazQNniC
-         6r13Zn/wISMObWd2YamYsP8yrLWw3ahJor7C182CKFcli/VgFjMCfHoU8Hp/GiHdLrOT
-         sDO4DlseHL7COOtE0enWv8xRt99BblEhOSHRbqe3fF1Uxaf4kemMjZNJC7RuH4nst5uP
-         CejZZm5N8w5i3UZTecawFJRF8FbFhewXJTbcu0NEcHUcZLLN+wMMCUl/2SgUU080wjxV
-         WFng==
-X-Gm-Message-State: APzg51Aglt4xeTP1U6iRqoAJceF721VrZuLbmHJ5u/KpZixarMKWiHQ3
-        MCVF2arNFIdPRjAyRQUf1N6HQGK9
-X-Google-Smtp-Source: ANB0VdarPbhvFruhyy57RwQaqFBCNy8hNKYFzSh/TxBTvXVCU669Q9vkdZI0KZDVb0pqNX51R83ynQ==
-X-Received: by 2002:a17:902:274a:: with SMTP id j10-v6mr8492156plg.152.1536861734698;
-        Thu, 13 Sep 2018 11:02:14 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id w81-v6sm9276466pfk.92.2018.09.13.11.02.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Sep 2018 11:02:13 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 11:02:13 -0700 (PDT)
-X-Google-Original-Date: Thu, 13 Sep 2018 18:02:00 GMT
-Message-Id: <d8ffd84d67471e6fbb658beedf4491e12ca50311.1536861730.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.34.v2.git.gitgitgadget@gmail.com>
-References: <pull.34.git.gitgitgadget@gmail.com>
-        <pull.34.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 01/11] multi-pack-index: add 'verify' verb
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=7TlgsFyhA6OoWkYdpekyTrVz6aZgtpxYC05vsStFpwg=;
+        b=mIxutqk+LgeS3DK8+hjdIDr7ihinnNMPxk4bZ57T+5zYrwNkx5w3dsAGdPFsHnTE0T
+         O2jOjxLUeWLTzHmeZ56jGp+fa4T+yiED/t9WitaJwyykdIPvgU7dnV+UoNtyGxWBCciu
+         8afOrydtnLn0na7ksTYOjWSW7ZhpSc8LwutQORv9qtCi29t05VblhXb8LKqMveEEox/g
+         dNNPtjUTeqIKVWNBrXkT1Qd1Ge3UZ6udPhWdDW1mF3+IA/yauObsCyDgHNWL/KLKAUWu
+         dDkF2VVUvIkNFK/9+9OiaA24cQiO1IkN0g4Xjb3lIMkUjnJTebl2g1IBYGhgea4ZHkPT
+         6mCQ==
+X-Gm-Message-State: APzg51CYHM4we9MeMLlUMjwsOQq9eU3tLL+5eXGiaVq95YTCje2KRqwx
+        krCY62iT8fvWn4O4JkpJf/M=
+X-Google-Smtp-Source: ANB0VdYBFr1Rs4Yj8Fhi88+j+3pI99oFAV0bLlzor5lEM3qT3qj+kUzhu+iqBQoqvyWe0Ibz6UgE2Q==
+X-Received: by 2002:adf:9e93:: with SMTP id a19-v6mr6796719wrf.70.1536861810806;
+        Thu, 13 Sep 2018 11:03:30 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 200-v6sm7763903wmv.6.2018.09.13.11.03.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 13 Sep 2018 11:03:30 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: Re: [PATCH v1] fsmonitor: update GIT_TEST_FSMONITOR support
+References: <20180913174522.53872-1-benpeart@microsoft.com>
+Date:   Thu, 13 Sep 2018 11:03:29 -0700
+In-Reply-To: <20180913174522.53872-1-benpeart@microsoft.com> (Ben Peart's
+        message of "Thu, 13 Sep 2018 17:45:42 +0000")
+Message-ID: <xmqqo9d1ff66.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Ben Peart <benpeart@microsoft.com> writes:
 
-The multi-pack-index builtin writes multi-pack-index files, and
-uses a 'write' verb to do so. Add a 'verify' verb that checks this
-file matches the contents of the pack-indexes it replaces.
+> Rename GIT_FSMONITOR_TEST to GIT_TEST_FSMONITOR for consistency with the
+> other GIT_TEST_ special setups and properly document its use.
 
-The current implementation is a no-op, but will be extended in
-small increments in later commits.
+Makes sense.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-multi-pack-index.txt | 10 ++++++++++
- builtin/multi-pack-index.c             |  4 +++-
- midx.c                                 | 13 +++++++++++++
- midx.h                                 |  1 +
- t/t5319-multi-pack-index.sh            |  8 ++++++++
- 5 files changed, 35 insertions(+), 1 deletion(-)
+Thanks for such an attention to detail.
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 1f97e79912..f7778a2c85 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -27,6 +27,10 @@ write::
- 	When given as the verb, write a new MIDX file to
- 	`<dir>/packs/multi-pack-index`.
- 
-+verify::
-+	When given as the verb, verify the contents of the MIDX file
-+	at `<dir>/packs/multi-pack-index`.
-+
- 
- EXAMPLES
- --------
-@@ -43,6 +47,12 @@ $ git multi-pack-index write
- $ git multi-pack-index --object-dir <alt> write
- -----------------------------------------------
- 
-+* Verify the MIDX file for the packfiles in the current .git folder.
-++
-+-----------------------------------------------
-+$ git multi-pack-index verify
-+-----------------------------------------------
-+
- 
- SEE ALSO
- --------
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 2633efd95d..fca70f8e4f 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -5,7 +5,7 @@
- #include "midx.h"
- 
- static char const * const builtin_multi_pack_index_usage[] = {
--	N_("git multi-pack-index [--object-dir=<dir>] write"),
-+	N_("git multi-pack-index [--object-dir=<dir>] (write|verify)"),
- 	NULL
- };
- 
-@@ -42,6 +42,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 
- 	if (!strcmp(argv[0], "write"))
- 		return write_midx_file(opts.object_dir);
-+	if (!strcmp(argv[0], "verify"))
-+		return verify_midx_file(opts.object_dir);
- 
- 	die(_("unrecognized verb: %s"), argv[0]);
- }
-diff --git a/midx.c b/midx.c
-index f3e8dbc108..b253bed517 100644
---- a/midx.c
-+++ b/midx.c
-@@ -928,3 +928,16 @@ void clear_midx_file(const char *object_dir)
- 
- 	free(midx);
- }
-+
-+int verify_midx_error;
-+
-+int verify_midx_file(const char *object_dir)
-+{
-+	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
-+	verify_midx_error = 0;
-+
-+	if (!m)
-+		return 0;
-+
-+	return verify_midx_error;
-+}
-diff --git a/midx.h b/midx.h
-index a210f1af2a..ce80b91c68 100644
---- a/midx.h
-+++ b/midx.h
-@@ -43,5 +43,6 @@ int prepare_multi_pack_index_one(struct repository *r, const char *object_dir, i
- 
- int write_midx_file(const char *object_dir);
- void clear_midx_file(const char *object_dir);
-+int verify_midx_file(const char *object_dir);
- 
- #endif
-diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 6f56b38674..1c4e0e6d31 100755
---- a/t/t5319-multi-pack-index.sh
-+++ b/t/t5319-multi-pack-index.sh
-@@ -150,6 +150,10 @@ test_expect_success 'write midx with twelve packs' '
- 
- compare_results_with_midx "twelve packs"
- 
-+test_expect_success 'verify multi-pack-index success' '
-+	git multi-pack-index verify --object-dir=$objdir
-+'
-+
- test_expect_success 'repack removes multi-pack-index' '
- 	test_path_is_file $objdir/pack/multi-pack-index &&
- 	git repack -adf &&
-@@ -214,4 +218,8 @@ test_expect_success 'force some 64-bit offsets with pack-objects' '
- 	midx_read_expect 1 63 5 objects64 " large-offsets"
- '
- 
-+test_expect_success 'verify multi-pack-index with 64-bit offsets' '
-+	git multi-pack-index verify --object-dir=objects64
-+'
-+
- test_done
--- 
-gitgitgadget
-
+>
+> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
+> ---
+>
+> Notes:
+>     Base Ref: v2.19.0
+>     Web-Diff: https://github.com/benpeart/git/commit/311484a684
+>     Checkout: git fetch https://github.com/benpeart/git git-test-fsmonitor-v1 && git checkout 311484a684
+>
+>  config.c                    | 2 +-
+>  t/README                    | 4 ++++
+>  t/t1700-split-index.sh      | 2 +-
+>  t/t7519-status-fsmonitor.sh | 2 +-
+>  4 files changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index 3461993f0a..3555c63f28 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -2278,7 +2278,7 @@ int git_config_get_max_percent_split_change(void)
+>  int git_config_get_fsmonitor(void)
+>  {
+>  	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
+> -		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
+> +		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
+>  
+>  	if (core_fsmonitor && !*core_fsmonitor)
+>  		core_fsmonitor = NULL;
+> diff --git a/t/README b/t/README
+> index 9028b47d92..545438c820 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
+>  path where deltas larger than this limit require extra memory
+>  allocation for bookkeeping.
+>  
+> +GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
+> +code path for utilizing a file system monitor to speed up detecting
+> +new or changed files.
+> +
+>  Naming Tests
+>  ------------
+>  
+> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+> index b3b4d83eaf..f6a856f24c 100755
+> --- a/t/t1700-split-index.sh
+> +++ b/t/t1700-split-index.sh
+> @@ -6,7 +6,7 @@ test_description='split index mode tests'
+>  
+>  # We need total control of index splitting here
+>  sane_unset GIT_TEST_SPLIT_INDEX
+> -sane_unset GIT_FSMONITOR_TEST
+> +sane_unset GIT_TEST_FSMONITOR
+>  
+>  test_expect_success 'enable split index' '
+>  	git config splitIndex.maxPercentChange 100 &&
+> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
+> index 756beb0d8e..d77012ea6d 100755
+> --- a/t/t7519-status-fsmonitor.sh
+> +++ b/t/t7519-status-fsmonitor.sh
+> @@ -8,7 +8,7 @@ test_description='git status with file system watcher'
+>  # To run the entire git test suite using fsmonitor:
+>  #
+>  # copy t/t7519/fsmonitor-all to a location in your path and then set
+> -# GIT_FSMONITOR_TEST=fsmonitor-all and run your tests.
+> +# GIT_TEST_FSMONITOR=fsmonitor-all and run your tests.
+>  #
+>  
+>  # Note, after "git reset --hard HEAD" no extensions exist other than 'TREE'
+>
+> base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
