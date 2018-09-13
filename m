@@ -2,76 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE15C1F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 17:54:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CFF51F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 17:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728004AbeIMXFW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:05:22 -0400
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:37151 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727992AbeIMXFV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:05:21 -0400
-Received: by mail-qk1-f196.google.com with SMTP id f17-v6so3689623qkh.4
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 10:54:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=2II2iGyRyDevobmU2pTIeqv0p3G9OmJL8/EMDGwarCQ=;
-        b=deZyR1wiJV26Ckav29HCDmFf81uWRCQFshmXFQGyOudHZC8z0U0khhOlfVjFj+d85E
-         dPXoJTRbLVFwdcRf3PF9A8XKmPWpIslinwYiUcEHyLrm2mmN6iFdgnpAvIps73BxWYLf
-         Q6yOgburITqK8UfPR70fOod58E7G19n8vlEmiR9+m1AztyQlk+tK9yeKl4FyOytVKQ20
-         0UximhvZPXgCWT8jkWKfkOdpSPmj3dEZQjtvN+lil6V4oZHyB2jO5hrB3ZVgueBZWDho
-         wyzNsQ29OWvikTo8/qe2lRdg67XI7HHOJb5MkZQ71sU2hWsu/1sUqpd7TnBt004S5KTD
-         qjlw==
-X-Gm-Message-State: APzg51CtdBNsTh3VB2mcEpjYmF78tXUA1sgenpyZOnFIzwwV03RkQMEp
-        Bn0DqwvlhPuOxipoJF7dZHRS41Vh7+ahgwp1hTU=
-X-Google-Smtp-Source: ANB0VdZjLZwUZsCQbgmtEpSMb1PM37JiQx69mfeB+c8xA8WXw5twOli5Y1JDwiG+pAs2+6dWoVLNydc/bggsebj2yoo=
-X-Received: by 2002:a37:4653:: with SMTP id t80-v6mr5757996qka.314.1536861288686;
- Thu, 13 Sep 2018 10:54:48 -0700 (PDT)
+        id S1728064AbeIMXF7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:05:59 -0400
+Received: from elephants.elehost.com ([216.66.27.132]:29607 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727152AbeIMXF7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:05:59 -0400
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id w8DHtKFR052546
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Thu, 13 Sep 2018 13:55:21 -0400 (EDT)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "'Johannes Sixt'" <j6t@kdbg.org>, <git@vger.kernel.org>
+References: <003901d44acd$12c2bb90$384832b0$@nexbridge.com>     <4102803b-d5de-5812-4cef-569c9869fed1@kdbg.org> <004e01d44ada$b4a11ad0$1de35070$@nexbridge.com> <000001d44ae6$c2a20ac0$47e62040$@nexbridge.com> <xmqq1s9yjp9j.fsf@gitster-ct.c.googlers.com>    <001101d44b5b$fa337350$ee9a59f0$@nexbridge.com> <xmqqefdxign2.fsf@gitster-ct.c.googlers.com> <xmqqva79ffpv.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva79ffpv.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [Question] Signature calculation ignoring parts of binary files
+Date:   Thu, 13 Sep 2018 13:55:13 -0400
+Message-ID: <005e01d44b8a$ef1221e0$cd3665a0$@nexbridge.com>
 MIME-Version: 1.0
-References: <pull.40.git.gitgitgadget@gmail.com> <pull.40.v2.git.gitgitgadget@gmail.com>
- <7714b0659e3210e34d0904b3347473427546d15c.1536850601.git.gitgitgadget@gmail.com>
-In-Reply-To: <7714b0659e3210e34d0904b3347473427546d15c.1536850601.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 13 Sep 2018 13:54:37 -0400
-Message-ID: <CAPig+cQeA9UhVEAz-4TgMD4K6FsFk5tL0AH_uSjXApt888q25g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] contrib: add coverage-diff script
-To:     gitgitgadget@gmail.com
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQL1dHr/8n7yCB9UeIXEGLjm31C4owFRfwXbAhcuk1ECJbKk4AITag6rAj4bbawDCIckPwIIxTSmojSi8uA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 13, 2018 at 10:56 AM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> There have been a few bugs in recent patches what would have been caught
-> if the test suite covered those blocks (including a few of mine). I want
-> to work towards a "sensible" amount of coverage on new topics. In my opinion,
-> this means that any logic should be covered, but the 'die()' blocks in error
-> cases do not need to be covered.
+On September 13, 2018 1:52 PM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> >
+> >> The scenario is slightly different.
+> >> 1. Person A gives me a new binary file-1 with fingerprint A1. This
+> >> goes into git unchanged.
+> >> 2. Person B gives me binary file-2 with fingerprint B2. This does not
+> >> go into git yet.
+> >> 3. We attempt a git diff between the committed file-1 and uncommitted
+> >> file-2 using a textconv implementation that strips what we don't need
+to
+> compare.
+> >> 4. If file-1 and file-2 have no difference when textconv is used,
+> >> file-2 is not added and not committed. It is discarded with impunity,
+> >> never to be seen again, although we might whine a lot at the user for
+> >> attempting to put
+> >> file-2 in - but that's not git's issue.
+> >
+> > You are forgetting that Git is a distributed version control system,
+> > aren't you?  Person A and B can introduce their "moral equivalent but
+> > bytewise different" copies to their repository under the same object
+> > name, and you can pull from them--what happens?
+> >
+> > It is fundamental that one object name given to Git identifies one
+> > specific byte sequence contained in an object uniquely.  Once you
+> > broke that, you no longer have Git.
+> 
+> Having said all that, if you want to keep the original with frills but
+somehow
+> give these bytewise different things that reduce to the same essence (e.g.
+> when passed thru a filter like textconv), I suspect a better approach
+might be
+> to store both the "original" and the result of passing the "original"
+through
+> the filter in the object database.  In the above example, you'll get two
+> "original"
+> objects from person A and person B, plus one "canonical" object that are
+> bytewise different from either of these two originals, but what they
+reduce
+> to when you use the filter on them.  Then you record the fact that to
+derive
+> the "essence" object, you can reduce either person A's or person B's
+> "original" through the filter, perhaps by using "git notes" attached to
+the
+> "essence" object, recording the object names of these originals (the
+reason
+> why using notes in this direction is because you can mechanically
+determine
+> which "essence"
+> object any given "original" object reduces to---it is just the matter of
+passing
+> it through the filter.  But there can be more than one "original" that
+reduces
+> to the same "essence").
 
-The bit about die() blocks is perhaps a bit too general. While it's
-true that some die()'s signal very unlikely (or near-impossible)
-conditions, others are merely reporting invalid user or other input to
-the program. The latter category is often very much worth testing, as
-the number of test_must_fail() invocations in the test suite shows.
-68a6b3a1bd (worktree: teach 'move' to override lock when --force given
-twice, 2018-08-28), which was highlighted in your cover letter,
-provides a good example of legitimately testing that a die() is
-covered. So, perhaps the above can be toned-down a bit by saying
-something like:
+I like that idea. It turns the reduced object into a contract. Thanks.
 
-    ...but die() blocks covering very unlikely (or near-impossible)
-    situations may not warrant coverage.
-
-> It is important to not measure the coverage of the codebase by what old code
-> is not covered.
