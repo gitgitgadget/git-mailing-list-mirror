@@ -2,147 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F7981F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 18:03:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27D5F1F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 18:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728024AbeIMXOH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 19:14:07 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37687 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726862AbeIMXOH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 19:14:07 -0400
-Received: by mail-wr1-f68.google.com with SMTP id u12-v6so7295752wrr.4
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:03:31 -0700 (PDT)
+        id S1727598AbeIMXUN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 19:20:13 -0400
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:50444 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726914AbeIMXUN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 19:20:13 -0400
+Received: by mail-yw1-f74.google.com with SMTP id u12-v6so2315311ywu.17
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 11:09:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=7TlgsFyhA6OoWkYdpekyTrVz6aZgtpxYC05vsStFpwg=;
-        b=OMG2FWYTY6orhiun/k8xW76YuHmHbhSFaG7fsgiT4GsPR1qvK4bzInkC3DkybA8viw
-         horUNT0ims+1HG9tWXQE5a4k/QnRmdQvB8EW6FcdHE42fnPKZfe7mxeaE/5aLiwOQ1m4
-         Hmr/xVtU1xTD8pbfGbbOpbEVJAAXN0Ss7y0yUFhv5XkhRujegbLfVx+mANLMqu+RR1fL
-         NpEYsuUYIXnh24tT0xF2wLh1St3yF2jg8rLPPQuo9kn4nrOY0U6pCXYfJM+5Op8qmRGP
-         lJmiAmSxMIsR5o/ev1Qh23oDgs6llE9fY1tfDhtEiDuYDofIh/W83NDiknlhth97g737
-         VfDw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=NskFo35drB692uzzyEUAouMmaL+LF8x0xRvhR+StDCc=;
+        b=GjGjr1j0us5PXxKALMLe+nJsOBRDk1JQSmXgbf9sglLJwtuLsNh/gw10ixSBnYFn3u
+         ATOoeYhnJikfZ/wasw+HQF2KZ7X8itDauFBR0LK9N2xdYEMfWttLRvRc0EX4Jp0W+vii
+         XZACKDbJLmlnwYYWnfb1HrJEKLnho5jDXLCMiaRR1O6ng5lN7ia3a3MhAJFcMSG3hn3P
+         cWXjAp0dQmz9VmkEVJVR9PS2YzngGyufnz6rzaVCp+fpRUN8RAYjZzSMbOi4QGxbb5KB
+         +xyatnNv72NCt0LJ+jMa0zKi37O7w31v/6dFT2GhF35lAOvhUNNw1Tfaa0V3blId4+pW
+         riWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=7TlgsFyhA6OoWkYdpekyTrVz6aZgtpxYC05vsStFpwg=;
-        b=mIxutqk+LgeS3DK8+hjdIDr7ihinnNMPxk4bZ57T+5zYrwNkx5w3dsAGdPFsHnTE0T
-         O2jOjxLUeWLTzHmeZ56jGp+fa4T+yiED/t9WitaJwyykdIPvgU7dnV+UoNtyGxWBCciu
-         8afOrydtnLn0na7ksTYOjWSW7ZhpSc8LwutQORv9qtCi29t05VblhXb8LKqMveEEox/g
-         dNNPtjUTeqIKVWNBrXkT1Qd1Ge3UZ6udPhWdDW1mF3+IA/yauObsCyDgHNWL/KLKAUWu
-         dDkF2VVUvIkNFK/9+9OiaA24cQiO1IkN0g4Xjb3lIMkUjnJTebl2g1IBYGhgea4ZHkPT
-         6mCQ==
-X-Gm-Message-State: APzg51CYHM4we9MeMLlUMjwsOQq9eU3tLL+5eXGiaVq95YTCje2KRqwx
-        krCY62iT8fvWn4O4JkpJf/M=
-X-Google-Smtp-Source: ANB0VdYBFr1Rs4Yj8Fhi88+j+3pI99oFAV0bLlzor5lEM3qT3qj+kUzhu+iqBQoqvyWe0Ibz6UgE2Q==
-X-Received: by 2002:adf:9e93:: with SMTP id a19-v6mr6796719wrf.70.1536861810806;
-        Thu, 13 Sep 2018 11:03:30 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 200-v6sm7763903wmv.6.2018.09.13.11.03.29
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 11:03:30 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <benpeart@microsoft.com>
-Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v1] fsmonitor: update GIT_TEST_FSMONITOR support
-References: <20180913174522.53872-1-benpeart@microsoft.com>
-Date:   Thu, 13 Sep 2018 11:03:29 -0700
-In-Reply-To: <20180913174522.53872-1-benpeart@microsoft.com> (Ben Peart's
-        message of "Thu, 13 Sep 2018 17:45:42 +0000")
-Message-ID: <xmqqo9d1ff66.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=NskFo35drB692uzzyEUAouMmaL+LF8x0xRvhR+StDCc=;
+        b=haSJjy1AQR00q9Of+jjo6D6IyEcciKEzykoeryLMY11Ud/djiaBW38bgdXgfWU6QON
+         KxpeHGrwdrd73B+g102Q2EBBboqi4AZw6Q0H3V7at+7XTRG4uP3JDadjwPv+0c7mt7Hv
+         dYii5DyhqsoGyHNATRibaCy4e24v9mVCPtA27gDE6R21h5sricERLJwOP46QUdJ4beg5
+         fiPCJN6lJWl4XY5jpEwtHBt9zR6P4ksfmK7E+bDMqj30N88RkILYnVWXY/qskeTPMKsK
+         sJah7K6NkmSE42GdHzE2bMYwEKeZ75k3fK0/L0aPPtuPviAF/tseXyDxHE6rGvhdDNsz
+         vVtw==
+X-Gm-Message-State: APzg51C0zgvqvLb9G/XgLDyvhe+yMcLC9pnsQZ90c/4ce1idiSFKk4B7
+        O4KqIcqVz52Y+yekX9ZMMBdIlJeuF4lhSjcuoueH
+X-Google-Smtp-Source: ANB0VdZy43UcD8zWWzkUde6J4XCcTLa5w7gfwbV0XQtIm9Mub04ZxWqJP8iP0zXlnCaK8r8rTy8By8YPN63dxYCXrwwj
+X-Received: by 2002:a25:844e:: with SMTP id r14-v6mr1422486ybm.16.1536862176772;
+ Thu, 13 Sep 2018 11:09:36 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 11:09:32 -0700
+In-Reply-To: <xmqqefdyjsgh.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20180913180932.93341-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqefdyjsgh.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a-goog
+Subject: Re: [PATCH 1/2] fetch-object: provide only one fetching function
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <benpeart@microsoft.com> writes:
+> Instead of explaining why the new convention is better to justify
+> (2), the above three lines handwave by saying "more flexible"
+> twice.  We should do better.
+> 
+> 	fetch-object: unify fetch_object[s] functions
+> 
+> 	There are fetch_object() and fetch_objects() helpers in
+> 	fetch-object.h; as the latter takes "struct oid_array",
+> 	the former cannot be made into a thin wrapper around the
+> 	latter without an extra allocation and set-up cost.
+> 
+> 	Update fetch_objects() to take an array of "struct
+> 	object_id" and number of elements in it as separate
+> 	parameters, remove fetch_object(), and adjust all existing
+> 	callers of these functions to use the new fetch_objects().
+> 
+> perhaps?
 
-> Rename GIT_FSMONITOR_TEST to GIT_TEST_FSMONITOR for consistency with the
-> other GIT_TEST_ special setups and properly document its use.
-
-Makes sense.
-
-Thanks for such an attention to detail.
-
->
-> Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
-> ---
->
-> Notes:
->     Base Ref: v2.19.0
->     Web-Diff: https://github.com/benpeart/git/commit/311484a684
->     Checkout: git fetch https://github.com/benpeart/git git-test-fsmonitor-v1 && git checkout 311484a684
->
->  config.c                    | 2 +-
->  t/README                    | 4 ++++
->  t/t1700-split-index.sh      | 2 +-
->  t/t7519-status-fsmonitor.sh | 2 +-
->  4 files changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/config.c b/config.c
-> index 3461993f0a..3555c63f28 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -2278,7 +2278,7 @@ int git_config_get_max_percent_split_change(void)
->  int git_config_get_fsmonitor(void)
->  {
->  	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
-> -		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
-> +		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
->  
->  	if (core_fsmonitor && !*core_fsmonitor)
->  		core_fsmonitor = NULL;
-> diff --git a/t/README b/t/README
-> index 9028b47d92..545438c820 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
->  path where deltas larger than this limit require extra memory
->  allocation for bookkeeping.
->  
-> +GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
-> +code path for utilizing a file system monitor to speed up detecting
-> +new or changed files.
-> +
->  Naming Tests
->  ------------
->  
-> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-> index b3b4d83eaf..f6a856f24c 100755
-> --- a/t/t1700-split-index.sh
-> +++ b/t/t1700-split-index.sh
-> @@ -6,7 +6,7 @@ test_description='split index mode tests'
->  
->  # We need total control of index splitting here
->  sane_unset GIT_TEST_SPLIT_INDEX
-> -sane_unset GIT_FSMONITOR_TEST
-> +sane_unset GIT_TEST_FSMONITOR
->  
->  test_expect_success 'enable split index' '
->  	git config splitIndex.maxPercentChange 100 &&
-> diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-> index 756beb0d8e..d77012ea6d 100755
-> --- a/t/t7519-status-fsmonitor.sh
-> +++ b/t/t7519-status-fsmonitor.sh
-> @@ -8,7 +8,7 @@ test_description='git status with file system watcher'
->  # To run the entire git test suite using fsmonitor:
->  #
->  # copy t/t7519/fsmonitor-all to a location in your path and then set
-> -# GIT_FSMONITOR_TEST=fsmonitor-all and run your tests.
-> +# GIT_TEST_FSMONITOR=fsmonitor-all and run your tests.
->  #
->  
->  # Note, after "git reset --hard HEAD" no extensions exist other than 'TREE'
->
-> base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
+Thanks - your explanation is much clearer than mine. Let me know if you
+want a reroll (or if you can update the commit message yourself, that's
+fine too).
