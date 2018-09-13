@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB8271F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 05:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF7251F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 05:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727473AbeIMK0W (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 06:26:22 -0400
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54498 "EHLO
+        id S1727560AbeIMK0X (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 06:26:23 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54510 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727383AbeIMK0V (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 13 Sep 2018 06:26:21 -0400
+        by vger.kernel.org with ESMTP id S1726317AbeIMK0W (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Sep 2018 06:26:22 -0400
 Received: from genre.crustytoothpaste.net (108-60-118-130.static.wiline.com [108.60.118.130])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 767D86075F;
-        Thu, 13 Sep 2018 05:18:28 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 6A45B6075B;
+        Thu, 13 Sep 2018 05:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1536815909;
-        bh=O8G2TknhGB20+Eg0MVuhjhEd8j2HtADkxm5OMfazT0M=;
+        s=default; t=1536815910;
+        bh=4dNved9Giv5HuzINQy2XTv7c4dl/8S67uvpPNcu/AbA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=qeW8UWl47D4NbLM5nfSa3J+04tfiT8DYkKi8/GZSthBfC15RGLXfkXg25oIHLkyWE
-         Jf5RF2KdT3QZHlbjzGLrjm6IsgyL3Pjas1+smOvqSG5n1na4GeHuQulFlQxNMTAB0A
-         QU4qrEfhl/BfAgwRXln8kf+ADYT+5ybJH8IwXC46qnwb+10w+zw2XU0FkaQo0HjnKR
-         6fjJ7IZTBUXSe81PhTTex+TQ+Gn1+TMtsmZGuRJ9xr04CPvaRSNL35hIMNs17TbZ7c
-         p+CsXVdsmrUwO4rme6eVP9dYp1NxEMsFyYh1DEB6crgIt6uFNXqx2k2uW4uykEkdoP
-         3J3oC1X9TygumBqsQMdtkjnAHaVO9v/XIFZaCM3OUY3u3gDZCvlpjamQIYmrl9XIhE
-         4DgbNmvDrC4AzedLE4AxwMBdiAyNAyjUkxpNJ3BE6uQ7SS9X3jbtPvI0Fux2YaZXMw
-         nn48aPbFvYOKEGPB2XIzGuGAMbDtUKCQ+rTx8pgn+yxbFm19IiH
+        b=L/LB8hEHqLAE06U09CuuMEIbQ3Sdpf7wI4qjS4Taw9XGIu91/caoV2yRV/X9jRdcI
+         IFk03K88sHKwaTC++/dwz+IkNYZslGixnoYc4KHS2f3pzAGU0F7TK/xvwRvmuYw9gQ
+         IdM/IrrnvalzJTS/JRHnQ+T0HYEeebtLYbE5+blwsOrjHYNnjUpfMSSNmCejvzMlOq
+         WTFh36MhzPvORYVj84/aZOQ2VL+VYwsWrjGA75f7WngdZPZxW7zVyMaNoPt+Bfszki
+         Ny4soEwJAwz8YrY+TP0Tu0YAgRsGLb5HeRurKseHKHbuPSZpUh9REyt0vi23PDHJG9
+         pQwMzzYeZNLTPNhEQCXemtPcbnsjk4Df24xwaFZoxIm8awQp94s2zHhzIj45BUJjNC
+         rZ3EM4/zrPtNvK+Q7L0r8xKpP7MaUTD+s2QQ7WhEPAck6/vDjo8YG+vzTaoIL1gzTb
+         mzo7kUV9aTae75bvchE5xRI3dG5wH4ufg1i7nOjJChKcsFkyhxZ
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
@@ -43,9 +43,9 @@ Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         Derrick Stolee <stolee@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 11/12] t1407: make hash size independent
-Date:   Thu, 13 Sep 2018 05:17:41 +0000
-Message-Id: <20180913051742.252276-12-sandals@crustytoothpaste.net>
+Subject: [PATCH v5 12/12] t5318: use test_oid for HASH_LEN
+Date:   Thu, 13 Sep 2018 05:17:42 +0000
+Message-Id: <20180913051742.252276-13-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a
 In-Reply-To: <20180913051742.252276-1-sandals@crustytoothpaste.net>
 References: <20180913051742.252276-1-sandals@crustytoothpaste.net>
@@ -57,33 +57,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of hard-coding a 40-based constant, split the output of
-for-each-ref and for-each-reflog by field.
+From: Derrick Stolee <stolee@gmail.com>
 
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/t1407-worktree-ref-store.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5318-commit-graph.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
-index 4623ae15c4..9a84858118 100755
---- a/t/t1407-worktree-ref-store.sh
-+++ b/t/t1407-worktree-ref-store.sh
-@@ -58,7 +58,7 @@ test_expect_success 'for_each_reflog()' '
- 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
- 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
+diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+index 0c500f7ca2..75fe09521f 100755
+--- a/t/t5318-commit-graph.sh
++++ b/t/t5318-commit-graph.sh
+@@ -8,7 +8,8 @@ test_expect_success 'setup full repo' '
+ 	cd "$TRASH_DIRECTORY/full" &&
+ 	git init &&
+ 	git config core.commitGraph true &&
+-	objdir=".git/objects"
++	objdir=".git/objects" &&
++	test_oid_init
+ '
  
--	$RWT for-each-reflog | cut -c 42- | sort >actual &&
-+	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
- 	cat >expected <<-\EOF &&
- 	HEAD 0x1
- 	PSEUDO-WT 0x0
-@@ -68,7 +68,7 @@ test_expect_success 'for_each_reflog()' '
- 	EOF
- 	test_cmp expected actual &&
+ test_expect_success 'verify graph with no graph file' '
+@@ -273,7 +274,7 @@ test_expect_success 'git commit-graph verify' '
  
--	$RMAIN for-each-reflog | cut -c 42- | sort >actual &&
-+	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
- 	cat >expected <<-\EOF &&
- 	HEAD 0x1
- 	PSEUDO-MAIN 0x0
+ NUM_COMMITS=9
+ NUM_OCTOPUS_EDGES=2
+-HASH_LEN=20
++HASH_LEN="$(test_oid rawsz)"
+ GRAPH_BYTE_VERSION=4
+ GRAPH_BYTE_HASH=5
+ GRAPH_BYTE_CHUNK_COUNT=6
