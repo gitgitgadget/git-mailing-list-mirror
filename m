@@ -2,130 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F2A91F404
-	for <e@80x24.org>; Thu, 13 Sep 2018 19:30:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1F35F1F404
+	for <e@80x24.org>; Thu, 13 Sep 2018 20:24:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728451AbeINAkv (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Sep 2018 20:40:51 -0400
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:33550 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728137AbeINAkv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Sep 2018 20:40:51 -0400
-Received: by mail-yb1-f195.google.com with SMTP id m123-v6so3792161ybm.0
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 12:29:58 -0700 (PDT)
+        id S1728038AbeINBfY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Sep 2018 21:35:24 -0400
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46669 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726445AbeINBfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Sep 2018 21:35:23 -0400
+Received: by mail-wr1-f65.google.com with SMTP id a108-v6so7941429wrc.13
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 13:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pJhLh1sTJyEc8WR4MNDF6hkUp/J1Yhjah7PdKu6d/QY=;
-        b=DJOa9KMjaNx8rOlwb687NPpSaIIYLqIsUku+KcJQa3iRjhV17J357vNmxZJOVLH4U6
-         2L+NrhbWYdKt8f9wpndzgUZw/SaOo/cj6rzfKADZo9p0jrwfOM5Fgz7En+6h4rcCc6Xa
-         TY1Gj7L9jir9tYGMSAetOOBZ5P8DuTrKI/Ja3OaC8MnXVYgCD9WdcnaKmDK/+0M+BjY5
-         ijRnsgn5S/UDimRW4v7Gq6pTo3UeqlSmrzG6GW/V9lFreHXQ2OT2ImeCc6p7mzBQlw17
-         Ywd3mpz/A+/8Gy9hLRTwNe+BpNcTTA5qQ3PueMukFGs9NmqyKwXWaZwh/jXvigyD7fg+
-         Xj7A==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=K3bozmECPwI40bb4mW9SLyWNuS3FT1VH+29EFGuUn2c=;
+        b=H0YNyUyDXwzEbnSuVaKU5doE2hR/v1unVBbk7zF4RE5JbYs680cDrPWlH6RweP8X8o
+         TYtJTOuwTgavMrG583d+8K/0dcZ97w8AQkB1mmK7lgzZwCa9YbwqwoVCJTYSq3606HhV
+         CVd+cEKtEq1gdyyU2mWGk4VNgo91vgX6YVnOhmHQFGofWQ1T7eTUVA3FuVL5W5ew9EdO
+         GvOtlVoaTM/eAtjP2oW8csX5EXGqokGPaK4P+itCZAtF67NGLYIajl4nItVqcaYBZTr9
+         6LBDEpyZTVdYC93b11wDPKFeAxckmY9vksrJOQByP9pGBDZJu8FSD8a/L4irkREpqL84
+         r6aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pJhLh1sTJyEc8WR4MNDF6hkUp/J1Yhjah7PdKu6d/QY=;
-        b=JrM7WgjVwEn5JUbaNiPfP1CeOoadHoAHgIiv2Gs/CaxIdRVLXfNEfmn/VVAC2uDJzo
-         23vEFtNmXq9R+FVq6Hz00I8a2SY95dWUuKPNNNkZETs3uVB12CncsuVcfag6koBx1Wjn
-         sHtH0+tuYs/W/SlgSbryT20mFOknQ9tNgnDaYYSh8YhZYptiY6LnmnpDe3Nz2dPkRRYu
-         ldOQB5mz2o4oqnxlsk//xni4BLKQvq2uMBEaSzU1vVRv38sTzWq37eKmiDzk/WIgvXoW
-         VAn52pFgDUNoXESw+f9aeBR/f9qwAJQPL/3YhWR61RZIJdnBNSY6vlKgro3BWs2uU+zK
-         kmJw==
-X-Gm-Message-State: APzg51AePkODYJpWtBloRpbbhDSLLzaZP80CGjxSZBvHB9HVK7Ny+Rmy
-        VItV4NfnLFxNfLQPefJxbTOGU9qsYHR+svIH3mBQkTDwj04=
-X-Google-Smtp-Source: ANB0VdYCYtxaS/QTtlsO3NFjTJI2mPQ0dL79xXrg8NgMn34mGU6mzMDaT1leF8ckbV9kvGTzZld6G4t8XrHO922njnU=
-X-Received: by 2002:a25:842:: with SMTP id 63-v6mr4120134ybi.425.1536866997119;
- Thu, 13 Sep 2018 12:29:57 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=K3bozmECPwI40bb4mW9SLyWNuS3FT1VH+29EFGuUn2c=;
+        b=XOpRM5asNjRvDdYXjFz13FcjNnh4kMV7NBE2bPYsFPVPKqP03Ix4DP4oyKxa2up58K
+         1T0BRMrHAaqPkeXtGT/zDNbKvVSN+ieMCmhV3hljTO1sjXX6P4jQD2Mu7CVMOn05SqJU
+         U6hqoA4l37B/BuQ7Sba8sPSR0fm3nkAsJW0NP8j+o2NNY26Qg1leSU8nDhlNNiMuorAd
+         lui4ItCVq8qDp8e3TCXDkcHIoUVOcDzO5Foh5k3tQLKSRsu23lAfuq6441GAIGhCNMyv
+         j4/BvziQg9n+yooq+DvwoswkhwBWzHBVf37/xhdILFrFFeeNd1H2iPQzbNE3xnG/w6pp
+         vbIA==
+X-Gm-Message-State: APzg51DpQoG9zxNDLzKFZ2Zp1xS8SpZmcqakKajTOziQBLgqJNGoi+BV
+        9ZsAajeU6cnEEAFU6wWZYAA=
+X-Google-Smtp-Source: ANB0VdZKnqPR5O+Tl5f6IF7u40zCMCouPKXgyBE46KHMrO4g5yOcLGsq+0DzTWAx19bbCTQx4e0miQ==
+X-Received: by 2002:a1c:700a:: with SMTP id l10-v6mr6829340wmc.90.1536870257939;
+        Thu, 13 Sep 2018 13:24:17 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id r30-v6sm6641934wrc.90.2018.09.13.13.24.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 13 Sep 2018 13:24:16 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
+        phillip.wood@dunelm.org.uk, johannes.schindelin@gmx.de,
+        sunshine@sunshineco.com
+Subject: Re: [PATCH] sequencer: fix --allow-empty-message behavior, make it smarter
+References: <20180912024241.GA27036@localhost>
+        <20180912211848.26949-1-newren@gmail.com>
+Date:   Thu, 13 Sep 2018 13:24:15 -0700
+In-Reply-To: <20180912211848.26949-1-newren@gmail.com> (Elijah Newren's
+        message of "Wed, 12 Sep 2018 14:18:48 -0700")
+Message-ID: <xmqqefdxf8nk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20180911234951.14129-1-sbeller@google.com> <20180911234951.14129-8-sbeller@google.com>
- <xmqqlg86lg06.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg86lg06.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Sep 2018 12:29:45 -0700
-Message-ID: <CAGZ79kZKKf9N8yx9EuCRZhrZS_mA2218PouEG7aHDhK2bJGEdA@mail.gmail.com>
-Subject: Re: [PATCH 7/9] submodule: fetch in submodules git directory instead
- of in worktree
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 12, 2018 at 11:36 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> > This patch started as a refactoring to make 'get_next_submodule' more
-> > readable, but upon doing so, I realized that git-fetch actually doesn't
-> > need to be run in the worktree. So let's run it in the git dir instead.
->
-> It may be clear to the author but not clear to the reader of the
-> above paragraph that "worktree", "fetch" and "git dir" all refer to
-> the recursively invoked operation that updates the submodules
-> repository.  s/git-fetch/"git fetch" for the submodule/ should be
-> sufficient to help the readers.
->
-> > That should pave the way towards fetching submodules that are currently
-> > not checked out.
->
-> Very good.
->
-> > +static void prepare_submodule_repo_env_in_gitdir(struct argv_array *out)
-> > +{
-> > +     prepare_submodule_repo_env_no_git_dir(out);
-> > +     argv_array_pushf(out, "%s=.", GIT_DIR_ENVIRONMENT);
-> > +}
-> > +
-> >  /* Helper function to display the submodule header line prior to the full
-> >   * summary output. If it can locate the submodule objects directory it will
-> >   * attempt to lookup both the left and right commits and put them into the
-> > @@ -1227,6 +1233,27 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
-> >       return spf->default_option;
-> >  }
-> >
-> > +static const char *get_submodule_git_dir(struct repository *r, const char *path)
-> > +{
-> > +     struct repository subrepo;
-> > +     const char *ret;
-> > +
-> > +     if (repo_submodule_init(&subrepo, r, path)) {
-> > +             /* no entry in .gitmodules? */
-> > +             struct strbuf gitdir = STRBUF_INIT;
-> > +             strbuf_repo_worktree_path(&gitdir, r, "%s/.git", path);
-> > +             if (repo_init(&subrepo, gitdir.buf, NULL)) {
-> > +                     strbuf_release(&gitdir);
-> > +                     return NULL;
-> > +             }
->
-> This is for the modern "absorbed" layout?  Do we get a notice and
-> encouragement to migrate from the historical layout, or there is no
-> need to (e.g. the migration happens automatically in some other
-> codepaths)?
+Elijah Newren <newren@gmail.com> writes:
 
-No, the absorbed would also be handled by repo_submodule_init.
-I wrote a patch once to migrate repo_submodule_init to take a
-"struct *submodule" instead of a path as the third argument, which
-would fall in line with this patch as well, I'll dig it up.
+> This patch cleanly applies to both 2.19.0 and pu.  There are some related
+> code cleanups that I'd like to make, but doing that cleanup conflicts with
+> the various rewrite-rebase-in-C topics sitting in pu; since those are
+> fairly lengthy, I really don't want to cause problems there, but I think
+> SZEDER really wants this 2.19.0 regression fix before 2.20.0 and thus
+> before those other topics.
 
-Historically git-fetch supported repositories that are not submodules
-(but have a gitlink and a working tree in place) as well. That is covered
-here. (see comment /* no entry in .gitmodules? */)
+Oh absolutely.  Materials for 2.19.x maintenance track can and
+should jump over other topics for 2.20 and later.  Thanks for being
+considerate.
 
-> > -             strbuf_release(&submodule_path);
-> > -             strbuf_release(&submodule_git_dir);
->
-> But if it is a leak, it is easily plugged by freeing git_dir here, I
-> think.
+> @@ -899,7 +899,7 @@ static int run_git_commit(const char *defmsg, struct replay_opts *opts,
+>  	if ((flags & ALLOW_EMPTY))
+>  		argv_array_push(&cmd.args, "--allow-empty");
+>  
+> -	if (opts->allow_empty_message)
+> +	if (!(flags & EDIT_MSG))
+>  		argv_array_push(&cmd.args, "--allow-empty-message");
 
-Thanks.
+Hmph.  I briefly wondered if an alternative logic would be better:
+
+	If and only the original commit being rewritten is empty,
+	then we allow the result to be empty.
+
+But looking at EDIT_MSG would be more explicit and probably is a
+better idea.  That would allow you to abort a reword of a commit
+whose message is empty.
+
+The reason why I thought about the alt logic is because I am worried
+about a use case where
+
+	$ GIT_EDITOR=: git rebase|cherry-pick ...
+
+is used to say "I do not want you to go interactive, when the only
+interaction needed from me is to edit the message---I am perfectly
+happy with the messages of commits being replayed or ones you come
+up with as the default".  Because "--allow-empty-message" tends to
+make things _less_ interactive, the worry is unfounded.
+
