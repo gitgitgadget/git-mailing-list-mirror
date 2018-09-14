@@ -6,64 +6,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05EFA1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 14:43:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2051D1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 14:45:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728178AbeINT6p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 15:58:45 -0400
-Received: from mail-qk1-f180.google.com ([209.85.222.180]:34768 "EHLO
-        mail-qk1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727749AbeINT6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 15:58:45 -0400
-Received: by mail-qk1-f180.google.com with SMTP id d15-v6so5303661qkc.1
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 07:43:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RRPetPtohznB2FWiSME+snWfucYPu/Smay5d9bYMWcg=;
-        b=cC95aoDQ+DvunZ2RRZ4tUt3tdVo2ff7sHdVUAYD+Mn3Gq4EZM6t6IVOzpSLM5S9bYk
-         zekjUbTpGbBTiaZorAn/WjwPSAJt+Al8TZMOjK1cVuwCuDV5iiq847fPTVYiPsRjDU4l
-         G05SXx50OJyKwRI4uxyBaqEbSCPD8AEEJBF8m+46DcoAbBt3P8NZ8Vqz9y1kHvWgVeIn
-         gafk/FIjNNuNFilIER4c8vcU3XWniBe4e8botCp+4jnIVZ7NIXFO45eTjCdDg4jlwhg8
-         QsCAu0maFQktSwoLHJnSgKCKIOP4efj2819ezxOXuyflllnwjMOFfDySLZ1oL7p9o4MZ
-         xN6w==
-X-Gm-Message-State: APzg51CE26yMfm3gyuX4wO3MEdC8EIjv8iiaI70E90BlfyToWv/aUN37
-        GOekXCaXupJtox3pZNxEACieDXE4BLY=
-X-Google-Smtp-Source: ANB0VdYs9ChafvCmAd+uza8HHCG/SU7O8m/ERSKS2eFNNyE5/UW8OakK7cibm8XS1pjalyK7+LcLyg==
-X-Received: by 2002:a37:7607:: with SMTP id r7-v6mr9048325qkc.133.1536936235227;
-        Fri, 14 Sep 2018 07:43:55 -0700 (PDT)
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com. [209.85.222.176])
-        by smtp.gmail.com with ESMTPSA id v50-v6sm4846664qtc.28.2018.09.14.07.43.54
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Sep 2018 07:43:54 -0700 (PDT)
-Received: by mail-qk1-f176.google.com with SMTP id f62-v6so5292784qke.2
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 07:43:54 -0700 (PDT)
-X-Received: by 2002:a37:1968:: with SMTP id k101-v6mr8747415qkh.270.1536936234862;
- Fri, 14 Sep 2018 07:43:54 -0700 (PDT)
-MIME-Version: 1.0
-From:   Zachary Bryant <Zachary@admiralfeb.net>
-Date:   Fri, 14 Sep 2018 09:43:43 -0500
-X-Gmail-Original-Message-ID: <CANrLuF4aTda+WDEZSc1MmTM0u9M04ZsWruXD-GDW6wXVVX2EJA@mail.gmail.com>
-Message-ID: <CANrLuF4aTda+WDEZSc1MmTM0u9M04ZsWruXD-GDW6wXVVX2EJA@mail.gmail.com>
-Subject: v2.19.0 Git install doesn't allow VS Code as an editor
+        id S1728172AbeINUAQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 16:00:16 -0400
+Received: from smtpbg299.qq.com ([184.105.67.99]:52424 "EHLO smtpbg299.qq.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727872AbeINUAQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 16:00:16 -0400
+X-QQ-mid: Xesmtp6t1536936321t50xm1hfy
+Received: from localhost.localdomain (unknown [101.224.239.201])
+        by esmtp4.qq.com (ESMTP) with 
+        id ; Fri, 14 Sep 2018 22:45:21 +0800 (CST)
+X-QQ-SSF: B1000000000000F0F5100000000000Z
+X-QQ-FEAT: 7lMulsC2UXJoHsVIDzbjzPORYUlD9fsJ6hpUSiaO+V+jlsqnKqzPXK+ayRO38
+        bEYksGdN/y/z8TaXn+ft09tBwXtRldGkyJ+SQohpJtDRqEIpxiqz6sHeJmWLwVKOa4XyYi9
+        ColCtJGhyv42gCcIjn/2IA9hXu1YTYu1EYn7b7S0xzAKIChTDKZ2LrEzjWPRDgvSqeNFoKN
+        dXFujSiukf+pszzW2Zwu7P4c8g84GBGgvhnjK2OzbRoEIbbj7JsjnkZ3DgnqFko4fVZkREH
+        6Slg+U3q54TPgj
+X-QQ-GoodBg: 0
+From:   Tao Qingyun <taoqy@ls-a.me>
 To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Tao Qingyun <taoqy@ls-a.me>
+Subject: [PATCH] refs: docstirng typo
+Date:   Fri, 14 Sep 2018 22:45:12 +0800
+Message-Id: <20180914144512.1267-1-taoqy@ls-a.me>
+X-Mailer: git-send-email 2.18.0
+X-QQ-SENDSIZE: 520
+X-QQ-FName: 535A858F356B4B9E94DBF624D92E0435
+X-QQ-LocalIP: 10.198.131.167
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+---
+ refs/refs-internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I received the notification to update to the latest 2.19.0.
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 04425d6d1e..1fe5a7a22f 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -282,7 +282,7 @@ int refs_rename_ref_available(struct ref_store *refs,
+  *
+  *             // Access information about the current reference:
+  *             if (!(iter->flags & REF_ISSYMREF))
+- *                     printf("%s is %s\n", iter->refname, oid_to_hex(&iter->oid));
++ *                     printf("%s is %s\n", iter->refname, oid_to_hex(iter->oid));
+  *
+  *             // If you need to peel the reference:
+  *             ref_iterator_peel(iter, &oid);
+-- 
+2.18.0
 
-When the installer asks for a default editor, it defaults to vim and
-when I select either VS Code option, it won't allow me to proceed.
-
-I've reproduced this on two machines.
-VS Code is up to date on both machines.
-
-Both machines:
-Windows 10
-Latest VS Code (production)
