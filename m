@@ -2,159 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3243E1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 14:31:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 767021F42B
+	for <e@80x24.org>; Fri, 14 Sep 2018 14:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727844AbeINTql (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 15:46:41 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:33841 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726902AbeINTql (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 15:46:41 -0400
-Received: by mail-ed1-f66.google.com with SMTP id u1-v6so7630216eds.1
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 07:31:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=CsrHwcv1lX59CfYH9JksyfMhd5zEQAHUc4Z9KVcn/hU=;
-        b=shRZIjLZGgfdZV6DLEVPXGMuFcxTG1nuChQGyNtGVWkCxpHRQjPSeXm0eCWoIrSGnr
-         2qZ3KLT3rmYOcqAkoB5pwDbd4XBVGdlaD98uCAQjepPm01na1HIWT3FRS+4OH3BUndDP
-         bpQOD1C0taGrZDDPDqtgjM5uesYMbROld0ksMQg5krwogi1qiTEPkiALO9jPc1MSjFaX
-         RbtD1xgrNv92UPxzI7DPdwSxtYJX1VpMVGcz2H3TFAZveUzaLOERci1FuyQKJsJju7CK
-         Zo8ZDjfuq6NVcY++7Nc4/rOCkT6KqPKsglRuSNGHGjXv8X7o5/aO/uYwjGTfR/OnV+FW
-         opZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=CsrHwcv1lX59CfYH9JksyfMhd5zEQAHUc4Z9KVcn/hU=;
-        b=acRXbTWKKzHo21U99N4GrVV/d+2ElsXF2Z+kCMo2jVYm22+QDeUd/FsQO/EfriUygP
-         YEtYoc81BBTs8vw2F3r7KaiPLLUZRDkg3Z+g2jUJczfAuSHXwcZVwh5HFj1u5L/VelOK
-         dHuxFO/lxwAsYpSCkgQ4cBQhJBbIbMdTP6ub/pmW4CSg7y2R12NL+pvo6j/+wHySRybj
-         1Jp45Zp5XtxMVK3pZoQGiUtbMjRIJs+TPDbjx22fP/QiHaBzFwWxZeVNNo8kiIDi6AGu
-         KKQZGSWV3vMtZtT8IkFMFhAjlVc4GeKpORlDBwp1kE1DbjbU+FsZu3oSm2ylLSnHoOUW
-         LjUw==
-X-Gm-Message-State: APzg51AY7rP/EODmuObC5ExlwYGH4e1QKlBhPS8e5Pa5r/dOHvBp1weI
-        yegheiUExOGwkr/09a3CuDo=
-X-Google-Smtp-Source: ANB0VdbT+ih6SHBfLT5hXN+y+E5c9rONIthFpJDObkC4KSHcTbQKcIc5S4l6QmoIHUSpwI4tET/WPA==
-X-Received: by 2002:a50:aed8:: with SMTP id f24-v6mr20409746edd.271.1536935512777;
-        Fri, 14 Sep 2018 07:31:52 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id e25-v6sm3248224edd.35.2018.09.14.07.31.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 07:31:52 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Josh Steadmon <steadmon@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Brandon Williams <bmwill@google.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
-References: <20180912053519.31085-1-steadmon@google.com>
-        <20180912053519.31085-3-steadmon@google.com>
-        <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
-        <87k1npkzh5.fsf@evledraar.gmail.com>
-        <20180914060552.GD219147@aiede.svl.corp.google.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180914060552.GD219147@aiede.svl.corp.google.com>
-Date:   Fri, 14 Sep 2018 16:31:50 +0200
-Message-ID: <87d0tgkv55.fsf@evledraar.gmail.com>
+        id S1727773AbeINTwP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 15:52:15 -0400
+Received: from mail-by2nam03on0100.outbound.protection.outlook.com ([104.47.42.100]:51842
+        "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1727676AbeINTwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 15:52:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=O7hBSNURokrKNQ9/Q3rv6ecPICA3DK7VcGkshOJmLOY=;
+ b=Kpp/2ue2R0ehFTX5AK3LmhigdCVN+7MpR+Z+6+OqpZ7sGG9CfEgcbHHX7mdXpB0p2LPfzRvDrrLUu/60BCq+P20bX3c0TBHn7ztqdmZ9OnaPK6psSpBcAJ8y4tUQzL9QtnxPQcFjdzdeNCB5oTI6PG5CpY1GSG0qKxYzVwQQCTs=
+Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
+ MW2PR2101MB0972.namprd21.prod.outlook.com (52.132.146.21) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1164.5; Fri, 14 Sep 2018 14:37:24 +0000
+Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
+ ([fe80::3c7b:f2aa:d871:8ae7]) by MW2PR2101MB0970.namprd21.prod.outlook.com
+ ([fe80::3c7b:f2aa:d871:8ae7%2]) with mapi id 15.20.1164.008; Fri, 14 Sep 2018
+ 14:37:24 +0000
+From:   Ben Peart <benpeart@microsoft.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "gitster@pobox.com" <gitster@pobox.com>,
+        "t.gummerer@gmail.com" <t.gummerer@gmail.com>,
+        "avarab@gmail.com" <avarab@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Subject: [PATCH v1 0/4] Cleanup pass on special test setups
+Thread-Topic: [PATCH v1 0/4] Cleanup pass on special test setups
+Thread-Index: AQHUTDhzBSgd38rRQ02L8+0LgVRgEQ==
+Date:   Fri, 14 Sep 2018 14:37:24 +0000
+Message-ID: <20180914143708.63024-1-benpeart@microsoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [70.33.148.227]
+x-mailer: git-send-email 2.18.0.windows.1
+x-clientproxiedby: CY4PR12CA0037.namprd12.prod.outlook.com
+ (2603:10b6:903:129::23) To MW2PR2101MB0970.namprd21.prod.outlook.com
+ (2603:10b6:302:4::19)
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;MW2PR2101MB0972;6:Y+oNsF2zikfiopVLyd06mRCQUqp3nfpbM8AQi7VkEr+2wGawIa+5WR42dvuyjiHvG5gomcjMWTJV5/lLWFLqutMCXgLhUEp3svsz0U7N6X5iMXoYtTq2jp8j9/I2R3bOtSPDp4i7G2rL20oMH45wCQR3WNAF+yTxibA3MRCsKMSh9xW/GLQEvJH4ymHTgP6J6AgiQ+n1q3z4nwg7PVdQgpMGz9RcqjZa7nmulMKq/Ol18NmBhdRql4tHh1gMs6gIFJqwszKpSOrZhNebrDA9knTuzf14rio5NApWt7dY2I9SLtPKSrKGi5YvxM0oKZKoNCEAQncWFkAencnQaf9rPECIwXBDzp5MaPaeyD9ZRN9dbyNDeWReNptEQHKNdxWBT/g9Rf3Ht8OyUPJZv4rdYUTJPwk7GCuRKOY5kP4++bUZ+fWHuyd9pq/crCOxmtI4OKsUzjABOzWdSMjqSZ0a5g==;5:ANQ3rr/d4AMMaJSeORcOWZSlZ2yDPwB48aMTGl6/mRqMt78bbL4YuBkMcVgIO3H6fuA8AR+LVlfJXofYPM1/cznK0X6ttsOefDEkP5nxdqftX7DLgxbrCqJH6pK4qeTVueyx+U3VFRuW/DexS1STjwNUl4YoOAIkK2sZmZ8WqII=;7:6JdlScGBR5YZB985F7eFYuNcAKfwBjWJFs0Po/k1X3mYcOhITEDhOCiFU5SI4lov79YrZZajm8G+/0sMnmOxeWoGW0amge3nnGL7BfaPQluZ8jg5Sx8Ps4QGg0EvTuX8sFyACRciip75rLnBm897wCBmUc7a5wupi0h6FH6/ty9mPKcZvxLHCIA3I1DehG/azC+dUGPo23oWBagr1Tm40okJ2IDtm64WCg25RnpQAIzIZGASgka8u2izz7BeIF95
+x-ms-office365-filtering-correlation-id: a1a71553-7c30-4767-6d7f-08d61a4f9631
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB0972;
+x-ms-traffictypediagnostic: MW2PR2101MB0972:
+x-microsoft-antispam-prvs: <MW2PR2101MB0972F6FC8E54AD6FC5064527F4190@MW2PR2101MB0972.namprd21.prod.outlook.com>
+x-exchange-antispam-report-test: UriScan:(166708455590820);
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(3231344)(944501410)(52105095)(2018427008)(10201501046)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(201708071742011)(7699050)(76991041);SRVR:MW2PR2101MB0972;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB0972;
+x-forefront-prvs: 07954CC105
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39860400002)(366004)(136003)(396003)(346002)(376002)(199004)(189003)(486006)(6346003)(3846002)(386003)(22452003)(6506007)(6436002)(26005)(186003)(53936002)(2900100001)(2616005)(5640700003)(5250100002)(6116002)(476003)(14454004)(316002)(25786009)(54906003)(6486002)(10090500001)(36756003)(2501003)(99286004)(1076002)(6512007)(6306002)(102836004)(97736004)(14444005)(52116002)(68736007)(66066001)(2351001)(106356001)(39060400002)(256004)(50226002)(8936002)(10290500003)(81166006)(81156014)(1730700003)(8676002)(107886003)(966005)(5660300001)(72206003)(478600001)(305945005)(6916009)(7736002)(2906002)(86612001)(575784001)(4326008)(105586002);DIR:OUT;SFP:1102;SCL:1;SRVR:MW2PR2101MB0972;H:MW2PR2101MB0970.namprd21.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;A:1;MX:1;
+received-spf: None (protection.outlook.com: microsoft.com does not designate
+ permitted sender hosts)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=Ben.Peart@microsoft.com; 
+x-microsoft-antispam-message-info: 3im2Nump35FJBCOWPVK+claSj341KTgfgwhVjDnw972Qa37HXMuMW6wHVpVQ8UoQsNA7/TuAWdyDtbXH+ZeISvKYh7u9YK7Zdu1v4Yp06gV0aV7dl0NwdeyTxEBNohzFHcHUdqx0vOk13ilsLG9jXbRTgm07OnMBVmnHjOcnx7v9yfbI4LBVUkj/1ouBv6y2nzSL7VSKsLgl9kbez35MEexVOBPDsxkJ/YzWoLh36miIeJBtLqcfJTsgpNA7iaREFg87PJgZcFywRqWS/NHvppp6MfRF0MX6GdNCyt3df7quBxQGAkQYhYxF6mo5m54yC/tBsa/TRbbJ9VGffl7f6kUV4kb6PfHSGYyCrOe7fQo=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a1a71553-7c30-4767-6d7f-08d61a4f9631
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Sep 2018 14:37:24.8439
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR2101MB0972
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As documented in t/README, the whole test suite can be run to test some
+special features that cannot be easily covered by a few specific test cases=
+.
 
-On Fri, Sep 14 2018, Jonathan Nieder wrote:
+Not all of these that exist in the code have been named consistantly and
+documented in r/README which leads to a discoverability problem.  Update
+several of these variables to follow the same naming pattern and document
+them properly.
 
-> Ævar Arnfjörð Bjarmason wrote:
->> On Wed, Sep 12 2018, Stefan Beller wrote:
->
->>> Would asking for a setlocale() on the server side be an unreasonable
->>> feature request for the capabilities (in a follow up patch, and then not
->>> just for archive but also fetch/push, etc.)?
->>
->> This would be very nice to have, but as you suggest in some follow-up
->> change.
->
-> Indeed, I think we've gone pretty far afield from the goal of this
-> patch series.
->
->> I think though that instead of doing setlocale() it would be better to
->> pass some flag saying we're operating in a machine-readable mode, and
->> then we'd (as part of the protocol defintion) say we're going to emit
->> GIT_ERR_UPLOAD_ARCHIVE_EXPECTED_DELIM_PACKET or whatever.
->
-> I think you're suggesting client-side message generation, and that is
-> one way to handle internationalization of server output.
->
-> The main downside is when the server really does want to provide a
-> custom error message.  For that, we'd need
+To facilitate transitioning from the old names to the new names, add logic
+in t/test-lib.sh to give an error when the old variable is set to let peopl=
+e
+know they need to update their environment to use the new variable. If the
+new variable is also set, just give a warning so they can eventually remove
+the old variable.
 
-Yeah you can't do it for everything. E.g. hooks will want to spew out
-custom messages, and this hypothetical protocol extension won't have
-codes for those. So you'll still need to pass $LANG along.
+Base Ref: v2.19.0
+Web-Diff: https://github.com/benpeart/git/commit/eff73d737e
+Checkout: git fetch https://github.com/benpeart/git git-test-cleanup-v1 && =
+git checkout eff73d737e
 
->  1. To propagate LANG to the server, so it knows what human language
->     to generate messages in.
->
->  2. On the server side, to produce messages in that language if
->     available, with an appropriate fallback if not.
->
-> We've been thinking of doing at least (1) using the same trick as
-> server-options use (cramming it into client capabilities).
->
-> It is difficult to use setlocale for this because it affects the whole
-> program (problematic for a threaded server) and affects features like
-> collation order instead of just message generation (problematic for
-> many things).  Does gettext have a variant that takes a locale_t
-> argument?
+Ben Peart (4):
+  correct typo/spelling error in t/README
+  fsmonitor: update GIT_TEST_FSMONITOR support
+  read-cache: update TEST_GIT_INDEX_VERSION support
+  preload-index: update GIT_FORCE_PRELOAD_TEST support
 
-No, its API is fairly crappy and depends on setlocale().
+ Makefile                    |  6 +++---
+ config.c                    |  2 +-
+ preload-index.c             |  3 ++-
+ t/README                    | 13 ++++++++++++-
+ t/t1700-split-index.sh      |  2 +-
+ t/t7519-status-fsmonitor.sh |  6 +++---
+ t/test-lib.sh               | 37 +++++++++++++++++++++++++++++++++++--
+ 7 files changed, 57 insertions(+), 12 deletions(-)
 
-Keep in mind though that we're not tied to that API. E.g. one way to
-work around this problem is to simply loop through all the languages we
-have translations for at server startup, for each one call setlocale()
-and gettext(), and save the result in a hash table for runtime lookup,
-then you'd just call sprintf(hash[language][message_id], ...) at
-runtime.
 
-That's all libintl is really doing under the hood, in a roundabout way
-where calls to setlocale() determine what table we're looking things up
-in.
+base-commit: 1d4361b0f344188ab5eec6dcea01f61a3a3a1670
+--=20
+2.18.0.windows.1
 
-The reason I opted to go for gettext to begin with was mainly a) it was
-there b) the ubiquitous availability of tooling for translators when it
-comes to the *.po files.
 
-But the API for looking things up at runtime is fairly small, and easy
-to replace. We could e.g. replace all of our own gettext.[ch] wrapper
-with something that works somewhat like what I described above, with
-some extra build step to extract the relevant data from the *.mo files
-(or parse the *.po directly).
-
-> [...]
->>  4) Aside from translation purposes, getting a machine-readable
->>     "push/pull" etc. mode would be very handy. E.g. now you need to
->>     parse stderr to see why exactly your push failed (hook denied, or
->>     non-fast-forward, or non-fast-forward where there was a lock race
->>     condition? ...).
->
-> Indeed, this is a good reason to provide error codes instead of (in
-> the case where the message doesn't add anything to it) or alongside
-> (in case the error message is more specialized) human-oriented error
-> messages.
