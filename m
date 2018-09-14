@@ -6,81 +6,76 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E66A1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 18:33:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5ACFF1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 18:35:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727095AbeINXsp (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 19:48:45 -0400
-Received: from mail-io1-f41.google.com ([209.85.166.41]:35139 "EHLO
-        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726849AbeINXsp (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 19:48:45 -0400
-Received: by mail-io1-f41.google.com with SMTP id w11-v6so6835455iob.2
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 11:33:03 -0700 (PDT)
+        id S1727128AbeINXvJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 19:51:09 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:32870 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbeINXvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 19:51:09 -0400
+Received: by mail-io1-f53.google.com with SMTP id r196-v6so6842802iod.0
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 11:35:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=2HFk7eJM70I+KsgZjniVHeLLaSVet7Llh+1SbEupXJc=;
-        b=FEg/h8cDGD1IIr4boge6Z1Dfaz4qdQtd3wDDQSv90ZnRTsERTVF3J7oIrZmhioXNMI
-         UduK5Z1/OoDKebr1Apbq+gNyGDy2Epc+qNw9rUMSFIusBvH0UVBIt6+ccYCHnk+DtSuv
-         FPm3IPxufjzWvv687xVk5lSq9W8AkD3f3K60Ul38xE22bqqk1bhKSKLlCVNUa0ALjP+o
-         wpfWv6viqhYseKeQjSu0MPw4lgC/E0cszDTumA4ew2ra3UngVKLfqrM0FWZBpVzBX9Md
-         as6OMzBB7+NIB03AicsdxsDToHp/7Mejjluk6R+IUkmvudMvQhALjr2o7ixVeRinLD2v
-         4dYQ==
+        bh=5gdkkXxVd7Vgq4qoSahlS17flH3xWf/9cGFBH/X3D7E=;
+        b=1U//CdZwxSmA0QMGvcV6PMJt2DcOY8jWiEvsQld/RFqfhNho6l0euJsuYR+qBG7ATr
+         Ri+6UBsqjfS919g5wm9uH2JvODrq/A7sOWAf165A/1Fwxj9IxU0/CKjeLYW9vwjwVXOO
+         W5V3DQbyzzinr6mpptqTofbEHiRui2cHg92FoOP+/J081VBnhXlG9EhxGkghqgNoneO5
+         eqP/+PCIHSKX/6ZHuBNEh76MqQWfVFxtstJD0SJGULxrohfwxfvAJTrEx9rGglQeH271
+         jMPDNXoXtMB8bSuaNWDRPg/ti83N5eMqeEKnWzRZLfFoPUDDwxCVjjCDj7yW2/GGvkav
+         qjrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2HFk7eJM70I+KsgZjniVHeLLaSVet7Llh+1SbEupXJc=;
-        b=OhdIIeBaYsVcunfo1fEAqptjE7vRp18Nbb9XAfjM3O4l9XySeECrtothDNDLbQn4bO
-         ZF3mKkxchXxbpdb9+IdXDpP+XPyMZNEaEl/OVZm+KvXp32n0q/T3QV0Gn7J68mTGz5fc
-         zTaaVPlO9nS0ACfOhDHtMAeGDaVicrxsMZTHPYUsXKakUbe5Hr/RCietqpxSfWxFm1Gs
-         RwqXfDKLpYPVyw98/N5ty1v0FLiO2rAmdkrGiux2PoPc7IqVFaPbgUmETu5IQvm6kkZq
-         7alo5RkE+z3abX7ljaNjkievgFezjp3aawdNuCXD5ceoEw7JzsgaByUFjsmb84vS3HQP
-         qZGQ==
-X-Gm-Message-State: APzg51D8ws0rqsJCJjxw04ik40qoiXLT9PTL32JYjlD03XnV6STg4iB+
-        Xl3M/gTcEE7cnpU7VMt5GffJ6g==
-X-Google-Smtp-Source: ANB0VdYXj12T7yASPNDTZPZlNbw9L/BhovJwOhWdFi4e3m7/qmVabG5XMThiTreUpXgg/5oRsTzd2w==
-X-Received: by 2002:a6b:9e91:: with SMTP id h139-v6mr11556985ioe.185.1536949982769;
-        Fri, 14 Sep 2018 11:33:02 -0700 (PDT)
+        bh=5gdkkXxVd7Vgq4qoSahlS17flH3xWf/9cGFBH/X3D7E=;
+        b=TWjcBnJLSGEGc5DMmD44myHc9uZjvFZ9CEdwyipG/N42Iaz+Y9Ca82zJvL8FR9HyiP
+         r+U7a81Irb9Z94CIW/dnRqbPykCtt8iFXJN/e58ZvBtkKkhMrnl+n+j/6aSwWInu2Ekp
+         NDkI+uXIWjxfdSqcE73evjJsyhLOSEX5f0ZRu3CoqsvUyjKUMxF3SYJdBOvCvBrWKQMc
+         6GR9dQ30TVsCIhhHglesdto7lo8UQOGUUJVEUm6MXEYGTNJRNrbZVxPOCl4R4/6BBxEa
+         YLXy/XQYyJWtaNh7vspyRjdtszo9Ivpy2kcFl1H6+YX/2Bb+4Xf0OFzDt3CLItkyPbkD
+         8yuA==
+X-Gm-Message-State: APzg51BkAi1bQe0NYN5OMTGkNXC6J5tLt1rWct83heUROHAduyAyiHj0
+        qKLgpapIR6cv9dHWZoohGsQl9g==
+X-Google-Smtp-Source: ANB0VdYgYjfAueIviwEqYGn/GrCAtDolllPZip6K582kMx087vHh81hFPtG6/XRv0bux2Nycb5C8mQ==
+X-Received: by 2002:a6b:d819:: with SMTP id y25-v6mr12062914iob.247.1536950125916;
+        Fri, 14 Sep 2018 11:35:25 -0700 (PDT)
 Received: from localhost ([173.225.52.218])
-        by smtp.gmail.com with ESMTPSA id p190-v6sm1055235ite.0.2018.09.14.11.33.01
+        by smtp.gmail.com with ESMTPSA id m47-v6sm1070790iti.1.2018.09.14.11.35.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Sep 2018 11:33:01 -0700 (PDT)
+        Fri, 14 Sep 2018 11:35:24 -0700 (PDT)
+Date:   Fri, 14 Sep 2018 14:35:23 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Fri, 14 Sep 2018 14:33:00 -0400
-To:     Mikkel Hofstedt Juul <mikkel.hofstedt@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Fwd: spelling mistake 'rerere' on docs/git-gc
-Message-ID: <20180914183300.GF55140@syl>
-References: <CAG-YsNbX-23+LMR_Zd5Z0Ln64vz-HQRU_YkFSnODBWuAvcRW2g@mail.gmail.com>
- <CAG-YsNbh1AQvf3FCQscNDviQqyC4FFqx-VruXrpeCgjL953agQ@mail.gmail.com>
+To:     Zachary Bryant <Zachary@admiralfeb.net>
+Cc:     git@vger.kernel.org, johannes.schindelin@gmx.de
+Subject: Re: v2.19.0 Git install doesn't allow VS Code as an editor
+Message-ID: <20180914183523.GG55140@syl>
+References: <CANrLuF4aTda+WDEZSc1MmTM0u9M04ZsWruXD-GDW6wXVVX2EJA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAG-YsNbh1AQvf3FCQscNDviQqyC4FFqx-VruXrpeCgjL953agQ@mail.gmail.com>
+In-Reply-To: <CANrLuF4aTda+WDEZSc1MmTM0u9M04ZsWruXD-GDW6wXVVX2EJA@mail.gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Mikkel,
+Hi Zachary,
 
-On Fri, Sep 14, 2018 at 02:31:04PM +0200, Mikkel Hofstedt Juul wrote:
-> See title
-> in sentence:
-> ...invocations of git add, packing refs, pruning reflog, rerere
-> metadata or stale working trees.
+On Fri, Sep 14, 2018 at 09:43:43AM -0500, Zachary Bryant wrote:
+> When the installer asks for a default editor, it defaults to vim and
+> when I select either VS Code option, it won't allow me to proceed.
 
-I think that 'rerere' in this case, is correct, since it refers
-bookkeeping from the 'git rerere' command [1], which "reuse[s] recorded
-resolution[s] of conflict meregs".
+It sounds like this is an issue pertaining to Git for Windows, which
+uses an issue tracker that is separate from the mailing list here. Their
+tracker is at [1], but I'm cc-ing the maintainer here to let him know.
 
 Thanks,
 Taylor
 
-
-[1]: https://git-scm.com/docs/git-rerere
+[1]: https://github.com/git-for-windows/git/issues
