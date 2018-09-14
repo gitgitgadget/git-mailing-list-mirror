@@ -6,65 +6,59 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D4691F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 16:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 541881F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 16:23:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728050AbeINVfk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 17:35:40 -0400
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37911 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbeINVfk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 17:35:40 -0400
-Received: by mail-wm1-f67.google.com with SMTP id t25-v6so2531809wmi.3
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 09:20:28 -0700 (PDT)
+        id S1728391AbeINViO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 17:38:14 -0400
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:33616 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728349AbeINViN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 17:38:13 -0400
+Received: by mail-wr1-f53.google.com with SMTP id v90-v6so11230421wrc.0
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 09:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=EGUguclgpj4vUCDDi2+r0OIGyyH3VU8UhA5O7E+zm8E=;
-        b=MM7RU0x6o1VRItlrTkWZyUZ3822k3AG/dCb/0EXXYEJeskf5Qc4/8yAlyRpffcG68v
-         0mogUlieGaO13YE4BLid77hG+5tcgWc7dxOxhNzqam1Sag841icHQtrHc22P1fXSHyxd
-         hNyMDXPB4AA/Ibxvwe7LXbmxRQJz+1lEHfD0DIVFka7ghAV1mokmBFGoX5Srn65SCfUv
-         fCPEnTiwn+80eoSG5cbowAR0xCog3i9hr5rVk9oBT5ZsABtXDZIyoOajZSWoaLK8SywP
-         l0AQsmmJAwiVIoaXK8F/CDb+bmtvOkfoCHkX3YknJ9BckjYUiRi+DiY9x//VRW/YPRyM
-         GwOQ==
+        bh=aYWYvnWfiXPU2qC+GLnjrhbYJBc2hIxdDeHz4488hqA=;
+        b=oDZ+ULk2oKzd4HQhaOGJzz5WJ6p2o9C2fHRyZfraqV4TBrIWLOFb1Fal6J1DYL8fL0
+         Ejy+AAGGUHILDk9dhZW75YKy+gBCxuEkIYau2fbbXWDlQr1zyIW0u2bGm10u+NQ7BiKS
+         dwtMAOKXB326IeU0KshZLr6fOv/fthFL+nDB7Z0ahk2saN37HM3kH00Z2IHUADjWA/uR
+         QcHsVvus4fW2ohCEmSUZ6TsgBTP5GxnyAd9YxTHxdHyJruMX/jXJilkDXjutp5huDCGj
+         dgP7eJzd59IMt+M5FKu1zMqOpiDbzbeEA5NVxjFzKdNpWOct5HDCE/bAP7twroSOfrz1
+         d60g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=EGUguclgpj4vUCDDi2+r0OIGyyH3VU8UhA5O7E+zm8E=;
-        b=L0qzkBGiL8S2I2dmAHzpxzLY+QteYo9f9FhgZxcCooqFXsVpecjjXyTdBc/HN1ODyc
-         z4dT6mnSf5ngD+BVfwxik9ISM4lJkkt2tQg1OVpVDIT1mn0MVL7JK/EbJpH/0WEbzpO0
-         rVYRI/3YuzWWKjSp8SVBLKIvHyGCm8PBeyLRXDSIKXSBbX7cj8MpFU4xD/w6zV5k9X2m
-         d5TjYSizIqqKVp99m8mqhCqeF9CTVXAx258Fd+hat4TtEIJu2e+cooCCqEo3Lg+rdBnu
-         NmKKQ4UT3f2LhbCrjeFbgWlTjZgb3OmhobD4QTYMQiIE8d0y41wGd0H4RHVpaA9nEcPd
-         OrWA==
-X-Gm-Message-State: APzg51DR/jzOqvcHm8fwfg+N4zT/EjluPD85fMCcIOzuOnMdNSj9Z1aJ
-        IXWsGajVWDn4wvVgTkR2lwU=
-X-Google-Smtp-Source: ANB0VdYW/3oAuoeICDTGkQLtVtBmmyYss9gyhflOavlSb3GoWDPA8DoIHiNKtEEv55sIV+PqLU75Ag==
-X-Received: by 2002:a1c:2108:: with SMTP id h8-v6mr3016705wmh.108.1536942027438;
-        Fri, 14 Sep 2018 09:20:27 -0700 (PDT)
+        bh=aYWYvnWfiXPU2qC+GLnjrhbYJBc2hIxdDeHz4488hqA=;
+        b=F7RSLyiyPj8znnW8XHUKTJgntld9we+GCQp+8Dzl8yqe2N8cttyUq0szZL/oKSDibd
+         aDg4Al/8qbv42VH1XkgdNxpw+lpJ7IQDvE8VMGDgeFex/G+RXJG2IXCb1DjEbhex2Yxw
+         W0vYcAnBQHZ7UYbYscLPI2fL6rePlhDwuaICRYJpXFv+yJUq2Sn3HgEXJJbP1Hsq+FVv
+         I1GQl0m1Apnv3dDhgwUchn9p4Ud8pWCFP5vVbpkkUVgLn4+C7Xo4+MxvY99Y+aiuWgBv
+         owj5u+VTJUPCrducgeICUHx/S01BhJIxS0KSixTs6+5Aw2zTbwuZO77/G6tXZDd7UjT4
+         IwqA==
+X-Gm-Message-State: APzg51AVfdwdFKR0d50jnsssWOQthpPyXj3ozVk1yplvjbiW+buF+fZz
+        CMom5hqi0INxp6ZT4Z1dAGBN6fkt
+X-Google-Smtp-Source: ANB0VdaFltKWsha0eceuiH+KRslrtNb/qGPwljisv7uLsUtnFQ69ZYszPHF3yjrcP9YHE6DiyoRGDA==
+X-Received: by 2002:adf:a11c:: with SMTP id o28-v6mr10753937wro.169.1536942179779;
+        Fri, 14 Sep 2018 09:22:59 -0700 (PDT)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g129-v6sm2352332wmf.42.2018.09.14.09.20.26
+        by smtp.gmail.com with ESMTPSA id f18-v6sm7708540wru.51.2018.09.14.09.22.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 09:20:26 -0700 (PDT)
+        Fri, 14 Sep 2018 09:22:59 -0700 (PDT)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
-References: <20180912212544.33624-1-benpeart@microsoft.com>
-        <20180912223101.GA1719@hank.intra.tgummerer.com>
-        <4f8b4664-6108-db7f-cb40-2bc55d9edece@gmail.com>
-        <20180913215616.GD1719@hank.intra.tgummerer.com>
-        <xmqqh8itdp9n.fsf@gitster-ct.c.googlers.com>
-        <0a3baaf6-f71b-e8f9-7445-8bf2b5d3513e@gmail.com>
-Date:   Fri, 14 Sep 2018 09:20:26 -0700
-In-Reply-To: <0a3baaf6-f71b-e8f9-7445-8bf2b5d3513e@gmail.com> (Ben Peart's
-        message of "Fri, 14 Sep 2018 09:50:05 -0400")
-Message-ID: <xmqqzhwkcaph.fsf@gitster-ct.c.googlers.com>
+To:     Shulhan <m.shulhan@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] builtin/remote: quote remote name on error to display empty name
+References: <20180913131833.32722-1-m.shulhan@gmail.com>
+        <xmqqpnxhdq0z.fsf@gitster-ct.c.googlers.com>
+        <20180914151710.3261463b@xenom-bubu>
+Date:   Fri, 14 Sep 2018 09:22:58 -0700
+In-Reply-To: <20180914151710.3261463b@xenom-bubu> (Shulhan's message of "Fri,
+        14 Sep 2018 15:17:10 +0700")
+Message-ID: <xmqqva78cal9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,31 +67,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Shulhan <m.shulhan@gmail.com> writes:
 
->> I think it is OK to make it error only if the old one is set without
->> the new one.  Then people can have _both_ set to the same value
->> during the period in which the topic sails through pu down to next
->> down to master, after seeing an failure once while building and
->> testing 'pu'.
->>
+> if source is run successfully before I know the patch was correct, as
+> the "t/README" said,
 >
-> I'll make it a warning if they are both set so that people are
-> reminded to remove the old variable and an error if only the old one
-> is set so people know to update their environment.
+>   Running Tests
+>   -------------
+>
+>   The easiest way to run tests is to say "make".  This runs all
+>   the tests.
 
-After the topic graduates to a stable release (or two), it would be
-a good addition to encourage people to clean things up, of course,
-but doing so too early by warning when they are both set is not a
-good idea, I would think.  It would bring us back to "the user has
-to futz with config.mak every time switching between 'maint' and
-'next'".
+t/README says that it is sufficient to run "make" to perform tests,
+but that implicitly assumes that the people who are reading it are
+now in the t/ directory.
 
-> I'll combine all these into a single patch series.  It grew as I
-> discovered more that needed to be updated.
+We probably want to clarify the language there, perhaps like so?
 
-Thanks. 
+Thanks.
 
- I didn't mind it too much to have them as independent patches.  It
-at least helped me forcing myself to give closer look at them ;-)
+ t/README | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/t/README b/t/README
+index 8373a27fea..f95624959f 100644
+--- a/t/README
++++ b/t/README
+@@ -14,8 +14,8 @@ describes how your test scripts should be organized.
+ Running Tests
+ -------------
+ 
+-The easiest way to run tests is to say "make".  This runs all
+-the tests.
++The easiest way to run tests is to say "make" in this directory (or
++"make test" from the top-level).  This runs all the tests.
+ 
+     *** t0000-basic.sh ***
+     ok 1 - .git/objects should be empty after git init in an empty repo.
