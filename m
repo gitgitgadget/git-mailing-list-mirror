@@ -7,64 +7,67 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8159D1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 13:09:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD7D1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 13:50:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727944AbeINSYE (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 14:24:04 -0400
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:41034 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbeINSYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 14:24:04 -0400
-Received: by mail-qk1-f195.google.com with SMTP id h138-v6so5096844qke.8
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 06:09:38 -0700 (PDT)
+        id S1727866AbeINTEq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 15:04:46 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:34982 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727013AbeINTEq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 15:04:46 -0400
+Received: by mail-qt0-f173.google.com with SMTP id j7-v6so8781539qtp.2
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 06:50:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=L4kbnth7aRaWYVMGlbydj9xQc/vLfaGo3MMbKs6ofTw=;
-        b=sXyB9ikVAgAncOLwVEXH+s9EwAVECaE5vMWQ+N03vmuGUkkkXfwT1xODpmNWM+ZgX4
-         q5svmmmxWaFhBNGsT7gefOJC8MH53EqOfFgZJkm/9ChQ3WChth6KE/JzrShFgMXtr1en
-         Nx+w2G8nijXpc/xLfo8PoVquj9ldCbGPmIpR4TJXV+JAOMUl/FvdXO55xJdWjatrjAry
-         NnyTEYMks04b6CcWHnpRzZgltrIyZkULBW1ZT7+NFzWCq1NTjs/3t7pze6h1k35JECrJ
-         kB53k3qP86ROZ5jKhmU70M1XlYECizRJvdZW64qs10lu5oNZMrWsMdkKGlOgMii1KEL1
-         /RNA==
+        bh=tEnWK/OVc8YIS0h5DWUINPtFGt3LP0ANMpvNm5PkUKE=;
+        b=UgO0FmaaVRKNLvlDYchKyw3j8w2s/JLGX0HSvxshaI36tZ6Hw9iSTY5TpfE8tOmYKF
+         MiMuEtmAgQfGJ0MW66/9trQSG5rFlrZ9vsWs0eTXW4p72jSBd7hewmOPaEJnhGzSpiZd
+         bCRdj9MjsVpzfj9QzynPYmPC3WblgHhG50VP2vCqcbLP/25ERma8CToDJbD08Fc5PqjE
+         mHOzvFTjXD/wrtkHws4m0ixlZyMjc6zrSvfYpRH0rDxMTE1nJ57VWXu58xLUhQpwpYJJ
+         +oSPJwPdc4Od3AENzKbIyANR6NY67Lr6xvY6jZ5uqvjuumqypGBmFN++/uY5vdQEK/oi
+         lJNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=L4kbnth7aRaWYVMGlbydj9xQc/vLfaGo3MMbKs6ofTw=;
-        b=LnHN6T1hSY8RE6ls+5zNdh9g1zFm2aqSYX3DG082I6gWhNU0WPwGRn7vYdb96S39FP
-         eYvipv1eAySAzv+ersY9cbyPOK2iclM0gTjJs7/CggKh92CLY7NksXc5dPFDCv5Rhe9Q
-         CaQeb7MAv0PigwLNgzGU33qQixH1QOBk3kyR2Oq1favcMElY58lmeaBf+uk9GZegbHDc
-         mQq1SYr8rDMp4vCnPG4Sou5xgJa9CBOQp4s4lrrmxax9ScdQttcZMQiw1Lp854u2aMZi
-         NSiyGscrh1TkjwudsWKCi5nbzGUq70jHuXdhc7603VwcfkqtsnfzMcbPN5cb/S1qoWRp
-         AMLw==
-X-Gm-Message-State: APzg51DXUXs+8F1GUbGE/crjFYtkc4+V3AdY6VA21LeShPlt7EenvOIW
-        vfY+vwTGOmXTD5mfKqrF6zg=
-X-Google-Smtp-Source: ANB0VdalLooBj4PtrknX1FkNAri95YzAHVvgVR6dktv5/gz5RxpfRLbCkLz54iWF2y9hkrJpOLDSng==
-X-Received: by 2002:a37:c987:: with SMTP id m7-v6mr8794036qkl.324.1536930577265;
-        Fri, 14 Sep 2018 06:09:37 -0700 (PDT)
+        bh=tEnWK/OVc8YIS0h5DWUINPtFGt3LP0ANMpvNm5PkUKE=;
+        b=f5Pc6CBDu/cIxDpwCXnAnxRhy3OC3gmtLV17GciLT01tJDgivhwuARQgLl0qTM1i7C
+         IncztM21WNZWY15cdz9ZQeL1/5T1j7vED/U+HWMR8lEqoK8d2J+uGRkA/wFcmxI6ids1
+         7ayOVbxb8pq3f+Tt+tpLZEsqIwaYcRqBwZ7iXye0FYyxYHIxYWOJtLcEYJRCEyQw0q9G
+         6YkrF3cHu768zosRAaVGU4v1tHIj1bplPnGkVN06c2ExdDCsrGXJBtpc2jcYbBG360h8
+         5DYMEoHvV9lKYpGx1gHvg4ANY5/8J/A+ciZjA5slZrFD1j0iFJz/MOIl8UXmPFv2TQwQ
+         JS4w==
+X-Gm-Message-State: APzg51D/IIiQCmYhAO+VY8dPlN6chOFIc/AK8yf7bw1cX93wpVISd3GT
+        4TyDyf2YbvY1BelcxA/tbZQ=
+X-Google-Smtp-Source: ANB0VdZktFyY/d1KJLQT4RV34tBSnTeB3+rN/WklIn/0CP9hsa1e6F8BrONtpSh0Xo+X0Y1qbq+m7A==
+X-Received: by 2002:a0c:9664:: with SMTP id 33-v6mr8983379qvy.137.1536933009321;
+        Fri, 14 Sep 2018 06:50:09 -0700 (PDT)
 Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id m9-v6sm4580926qta.55.2018.09.14.06.09.35
+        by smtp.gmail.com with ESMTPSA id w30-v6sm4305740qtc.51.2018.09.14.06.50.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Sep 2018 06:09:36 -0700 (PDT)
-Subject: Re: [PATCH v1] fsmonitor: update GIT_TEST_FSMONITOR support
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
+        Fri, 14 Sep 2018 06:50:08 -0700 (PDT)
+Subject: Re: [PATCH v1] read-cache: add GIT_TEST_INDEX_VERSION support
+To:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
         Ben Peart <Ben.Peart@microsoft.com>
-References: <20180913174522.53872-1-benpeart@microsoft.com>
- <87h8itkz2h.fsf@evledraar.gmail.com>
+References: <20180912212544.33624-1-benpeart@microsoft.com>
+ <20180912223101.GA1719@hank.intra.tgummerer.com>
+ <4f8b4664-6108-db7f-cb40-2bc55d9edece@gmail.com>
+ <20180913215616.GD1719@hank.intra.tgummerer.com>
+ <xmqqh8itdp9n.fsf@gitster-ct.c.googlers.com>
 From:   Ben Peart <peartben@gmail.com>
-Message-ID: <90c3d391-a10c-0fd5-4c76-96e547b8bd64@gmail.com>
-Date:   Fri, 14 Sep 2018 09:09:33 -0400
+Message-ID: <0a3baaf6-f71b-e8f9-7445-8bf2b5d3513e@gmail.com>
+Date:   Fri, 14 Sep 2018 09:50:05 -0400
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <87h8itkz2h.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqqh8itdp9n.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -75,65 +78,44 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 9/13/2018 2:54 PM, Ævar Arnfjörð Bjarmason wrote:
+On 9/13/2018 6:08 PM, Junio C Hamano wrote:
+> Thomas Gummerer <t.gummerer@gmail.com> writes:
 > 
-> On Thu, Sep 13 2018, Ben Peart wrote:
-> 
->> diff --git a/config.c b/config.c
->> index 3461993f0a..3555c63f28 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -2278,7 +2278,7 @@ int git_config_get_max_percent_split_change(void)
->>   int git_config_get_fsmonitor(void)
->>   {
->>   	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
->> -		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
->> +		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
+>> Thanks, I do think this is a good idea.  I do however share Ævar's
+>> concern in https://public-inbox.org/git/87h8itkz2h.fsf@evledraar.gmail.com/.
+>> I have TEST_GIT_INDEX_VERSION=4 set in my config.mak since quite a
+>> long time, and had I missed this thread, I would all of a sudden not
+>> run the test suite with index format 4 anymore without any notice.
 >>
->>   	if (core_fsmonitor && !*core_fsmonitor)
->>   		core_fsmonitor = NULL;
->> diff --git a/t/README b/t/README
->> index 9028b47d92..545438c820 100644
->> --- a/t/README
->> +++ b/t/README
->> @@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=<n> exercises the uncomon pack-objects code
->>   path where deltas larger than this limit require extra memory
->>   allocation for bookkeeping.
->>
->> +GIT_TEST_FSMONITOR=$PWD/t7519/fsmonitor-all exercises the fsmonitor
->> +code path for utilizing a file system monitor to speed up detecting
->> +new or changed files.
->> +
->>   Naming Tests
->>   ------------
+>> I think the suggestion of erroring out if TEST_GIT_INDEX_VERSION is
+>> set would be useful in this case (and probably others in which you're
+>> renaming these variables).
 > 
-> I've seen this & will watch out for it, but still, when I'm updating to
-> "next" in a couple of months I may not be tracking the exact state of
-> the integration of this patch, and then running with
-> GIT_FSMONITOR_TEST=... will suddenly be a noop.
+> I am not enthused by "you are using an old variable---we fail your
+> build/test".  The assumption is that people let config.mak laying
+> around regardless of how new/old the vintage of Git they are
+> building and testing.  I do not think you'd want to adjust your
+> config.mak as you switch between 'maint' and 'next.
 > 
-> So maybe something like this to test-lib.sh as well (or directly in
-> config.c):
-> 
->      if test -n "$GIT_FSMONITOR_TEST"
->      then
->          echo "The GIT_FSMONITOR_TEST variable has been renamed to GIT_TEST_FSMONITOR"
->          exit 1
->      fi
-> 
-> Maybe I'm being too nitpicky and there's only two of us who run the test
-> with this anyway, and we can deal with it.
+> I think it is OK to make it error only if the old one is set without
+> the new one.  Then people can have _both_ set to the same value
+> during the period in which the topic sails through pu down to next
+> down to master, after seeing an failure once while building and
+> testing 'pu'.
 > 
 
-I agree that there are probably only 2 people in the world who ever used 
-this but I'm happy to add the additional test to make it obvious it has 
-been renamed.
+I'll make it a warning if they are both set so that people are reminded 
+to remove the old variable and an error if only the old one is set so 
+people know to update their environment.
 
-> It just rubs me the wrong way that we have a test mode that silently
-> stops being picked up because a command-line option or env variable got
-> renamed, especially since we've had it for 4 stable releases, especially
-> since it's so easy for us to avoid that confusion (just die),
-> v.s. potential time wasted downstream (wondering why fsmonitor stuff
-> broke on $SOME_OS even though we're testing for it during package
-> build...).
+>> Btw, I think it would be nice to have all these renaming/documenting
+>> variables for the test suite patches in one series, so they are easier
+>> to look at with more context.
 > 
+> Yeah, even though these three were posted as independent changes,
+> their additions to t/README inevitably conflicted with each other.
+> 
+> 
+
+I'll combine all these into a single patch series.  It grew as I
+discovered more that needed to be updated.
