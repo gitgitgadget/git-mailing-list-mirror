@@ -2,149 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 876DD1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 22:26:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D91051F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 23:12:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbeIODnV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 23:43:21 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36778 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727065AbeIODnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 23:43:20 -0400
-Received: by mail-wr1-f66.google.com with SMTP id e1-v6so11984375wrt.3
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 15:26:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=D5Li1SwlQPyheODxd+RA4NKsVJJ3srAOW/F5Cx8dZlg=;
-        b=VFbf0ElqYWB0/QpTCQtqkrYx9usWtpZnMS6scN3PHNGtAyJOefdW/ic4v3cH2PPzvi
-         swScRmcSLFi1O1gpahc2SPpx4lNJk4TtKZfFECR64whLKbykpD9qjodSnt+wrGilCgEu
-         Qo18e2YGTM+DXSSClfVgSTJheb/SY//7GPBKiyPJHS4oxKnzyHv6Wr1WnnADIZePbx6N
-         wlbXFeZFsWuwMRS8nwgHlU091jaZxjrukDQandKNaVjO36AJFcIyKrQNjWniSk3MSRFt
-         vK8GpYpLkkuqDaGl1OgJ4n/mkzJU0JNlhuGuc9UYmpwcR4gLq7OvQRO/SnxubUnydC0d
-         bVSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=D5Li1SwlQPyheODxd+RA4NKsVJJ3srAOW/F5Cx8dZlg=;
-        b=BxrHsxzR0ERpPnhqF40PnP/gv6ynFLSa6rWQo36btMqnYPEDf1EipGWWvZqP+WNkV4
-         VuL5+tFz9WtuNKWxfsIdKG75LntiSAy1AdIm92wy+pvYG0kpWX3E3KWegsE3+6dayQJZ
-         UFb1SFlRdYD2XlgzW0KFCUwkm8OndxqJhXLDNtvVB4LpSQ9qF86Q059jnUtqbYiKKU29
-         7NvsLt0BYVYIMwH6BkLDWoJh7uMeKEkkFMDv/bAKtmsLOznr0RDflprxf+LpwLZNa/fh
-         NcwgwEJ2QYxz5ZiLmqVp6ahrqeWeCMtub6rprTR/HugVpY5x20Dh5Y8pJAUDuoBWVzJZ
-         FiQA==
-X-Gm-Message-State: APzg51DHvTdqAaKXAuu6dj07mu9ZfskZysj7bEDPN2OpLrXO/7KHu4l/
-        1NHsxp/+A31wTGXr32sFeNQ=
-X-Google-Smtp-Source: ANB0VdZFQKJqzZxANP2ZhckjKJ7iAg3mvZrlC63JWjB1U/Yv2rxwWeCR3wYZvXQnBu2eabV+9fteoQ==
-X-Received: by 2002:adf:f7c4:: with SMTP id a4-v6mr11715781wrq.86.1536964012666;
-        Fri, 14 Sep 2018 15:26:52 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s131-v6sm195764wmf.2.2018.09.14.15.26.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 15:26:52 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <benpeart@microsoft.com>
-Cc:     "peartben\@gmail.com" <peartben@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        "avarab\@gmail.com" <avarab@gmail.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        "t.gummerer\@gmail.com" <t.gummerer@gmail.com>
-Subject: Re: [PATCH v2 4/5] read-cache: update TEST_GIT_INDEX_VERSION support
-References: <80988727-085f-cdd9-e5bb-a90a55e97024@gmail.com>
-        <20180914201340.37400-1-benpeart@microsoft.com>
-        <20180914201340.37400-5-benpeart@microsoft.com>
-        <xmqqtvmrafs5.fsf@gitster-ct.c.googlers.com>
-Date:   Fri, 14 Sep 2018 15:26:51 -0700
-In-Reply-To: <xmqqtvmrafs5.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 14 Sep 2018 15:13:46 -0700")
-Message-ID: <xmqqpnxfaf6c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725907AbeIOE3C (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 00:29:02 -0400
+Received: from mout.gmx.net ([212.227.15.15]:39633 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725198AbeIOE3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 00:29:02 -0400
+Received: from [10.2.0.3] ([217.235.87.139]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MaIsi-1gGIFm2eRk-00Jrv3; Sat, 15
+ Sep 2018 01:12:18 +0200
+Subject: Re: [RFC PATCH v4 3/3] t0014: Introduce alias testing suite
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+References: <20180905085427.4099-1-timschumi@gmx.de>
+ <20180907224430.23859-1-timschumi@gmx.de>
+ <20180907224430.23859-3-timschumi@gmx.de>
+ <CAPig+cR1JpZqxBAsR+6_WjLwofnU8siB9VXYdUkXY2P-xQnsuQ@mail.gmail.com>
+From:   Tim Schumacher <timschumi@gmx.de>
+Message-ID: <bd63006e-18a7-1c41-252c-cf47a65ba7cb@gmx.de>
+Date:   Sat, 15 Sep 2018 01:12:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <CAPig+cR1JpZqxBAsR+6_WjLwofnU8siB9VXYdUkXY2P-xQnsuQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US-large
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:zs4vA2lOLCOAgpk41MK8himOZ9+yGB+hBjyrhNY6mQWqHM+3vOu
+ kel1rFMPRDjTzelw/94C+HI5YJkw+jcsVE3GHO5gpnoRIAX+ihu/TGezdZHyX2z2g6PPljJ
+ 9J+qjJmwsuNvvLWv7Ile+SOfmerjkpzFmAItyhlMccd8Vjny9waqkk+5ePkx8SGiuVAuyph
+ YgH/XAFLgdK8Aik/6vhfA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:PtjT6OguuAw=:4YIkpnxulWjt0W+mw4S2Ku
+ RH7H9VDuWfdMCEGx33bXGQFTJkswjU8amuxcyw9UayRtTtfm6AiVVPrKgM0f5c83epmciZ8fq
+ d7nT9mphFfUV3CrmfYcyciGWpZTpqyT3D6tqZ85QnzzCjGQFaanRUEiAVfK826H6eUvxtxFAi
+ +So9Xbb4sEW+Bw7jHtzhQgHtTmQlm7qj7TukpUbc5iE+cxf1cHUi+LPa+qkbOPF+oHahSautQ
+ lGgf/3YvlII1iKT/0SYfEyX6Vz/BFhdJ0lygIlg/TmykoxZ/OJPpQziEm1rk4qOC9cQWDR08c
+ 4FrM+Vkqi3RG4ESrMw7tFKFTsFuQ//JYR5uub4jC4muWbnqXpfeEm01S/b6nYKuhOpMZSzBYs
+ f2qThEB/AsF9UhxBLkV76n5aHtShOqqAp5z6GJDsbka1XZhKJT3NpOmfZ3W8jhzeyIcvCXw+P
+ AOKZnN89C0PJ7lv2YGkURrftUDbafY9X6DkllTicVAitZUCJSYqxvTyNBrrZrIgEJkYX1Mvle
+ end1wxiRJD/cw8Rj6yc8YQFvAN1gbhKWpCRXKxtSq8GMWwi3hi6WudHl+zWKmnq+NlYpquBJx
+ fwKHr9XVcBPWC38MLthW6nKTSPPhy1uPxGlUhSaanGNCgx3Ikn0VA0Ggl79NgJ91ZiWsglJ/v
+ L9Ehth6adMEi4gjaYXP3jX6ApW8V95T2ABaR3ZZUX1tafKVAdmcF8E172phtgNl8f0gjgNEMW
+ qnlXrndsfRetkC1LoNuaYZXUlVue7DbF16pMkbCCOO1euzb75pJFJdYeWrK+QZNmL3/feuyUv
+ adbg9H2h/j8p57Aee0c/SuJf1f2q2QNBNqf7SoI+utDzosJajo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 08.09.18 01:38, Eric Sunshine wrote:
+> On Fri, Sep 7, 2018 at 6:44 PM Tim Schumacher <timschumi@gmx.de> wrote:
+>> Introduce a testing suite that is dedicated to aliases.
+>> For now, check only if nested aliases work and if looping
+>> aliases are detected successfully.
+>>
+>> The looping aliases check for mixed execution is there but
+>> expected to fail because there is no check in place yet.
+>>
+>> Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+>> ---
+>> Unfortunately I don't have a fix for the last one yet, so I
+>> marked it as expect_failure. The problem is that the test suite
+>> is waiting a full minute until it aborts the running command
+>> (which I guess should not take that long, as it blocks the whole
+>> test suite for that span of time).
+>>
+>> Should I try to decrease the timeout or should I remove that
+>> test completely until I manage to get external calls fixed?
+> 
+> Perhaps just comment out that test for now and add a comment above it
+> explaining why it's commented out.
 
-> Ben Peart <benpeart@microsoft.com> writes:
->
->> diff --git a/t/test-lib.sh b/t/test-lib.sh
->> index 653688c067..397eb71578 100644
->> --- a/t/test-lib.sh
->> +++ b/t/test-lib.sh
->> @@ -134,9 +134,9 @@ export EDITOR
->>  GIT_TRACE_BARE=1
->>  export GIT_TRACE_BARE
->>  
->> -if test -n "${TEST_GIT_INDEX_VERSION:+isset}"
->> +if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
->>  then
->> -	GIT_INDEX_VERSION="$TEST_GIT_INDEX_VERSION"
->> +	GIT_INDEX_VERSION="$GIT_TEST_INDEX_VERSION"
->>  	export GIT_INDEX_VERSION
->>  fi
->
-> Is this done a bit before ...
->
->> @@ -159,6 +159,7 @@ check_var_migration () {
->>  }
->>  
->>  check_var_migration GIT_FSMONITOR_TEST GIT_TEST_FSMONITOR
->> +check_var_migration TEST_GIT_INDEX_VERSION GIT_TEST_INDEX_VERSION
->
-> ... this has a chance to kick in to say things like "Whoa you have
-> TEST_GIT_INDEX_VERSION that is an old spelling of
-> GIT_TEST_INDEX_VERSION", isn't it?
+That will probably be the easiest thing to do. I commented it out for
+now, added a short information about that to the code itself and a longer
+explanation to the commit message.
 
-So, the obvious fix would look like the patch below.
+> 
+>> As a last thing, is there any better way to use single quotes
+>> than to write '"'"'? It isn't that bad, but it is hard to read,
+>> especially for bash newcomers.
+> 
+> You should backslash-escape the quotes ("foo \'bar\' baz"), however,
+> in this case, it would make sense to use regex's with 'grep' to check
+> that you got the expected error message rather than reproducing the
+> message literally here in the script.
 
-One problem with warning is that
+Backslash-escaping didn't work, that resulted in some parsing error.
+I'm using i18ngrep now to search for the part of a message, which
+eliminates the need for quotes completely.
 
-	$ TEST_GIT_INDEX_VERSION=4 sh ./t0000-basic.sh
+> 
+> More below.
+> 
+>> diff --git a/t/t0014-alias.sh b/t/t0014-alias.sh
+>> @@ -0,0 +1,38 @@
+>> +#!/bin/sh
+>> +
+>> +test_description='git command aliasing'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'setup environment' '
+>> +       git init
+>> +'
+> 
+> "git init" is invoked automatically by the test framework, so no need
+> for this test. You can drop it.
+> 
+>> +test_expect_success 'nested aliases - internal execution' '
+>> +       git config alias.nested-internal-1 nested-internal-2 &&
+>> +       git config alias.nested-internal-2 status
+>> +'
+> 
+> This isn't actually testing anything, is it? It's setting up the
+> aliases but never actually invoking them. I would have expected the
+> next line to actually run a command ("git nested-internal-1") and the
+> line after that to check that you got the expected output (whatever
+> "git status" would emit). Output from "git status" isn't necessarily
+> the easiest to test, though, so perhaps pick a different Git command
+> for testing (something for which the result can be very easily checked
+> -- maybe "git rm" or such).
 
-(or any other depreated variable set without its modern counterpart
-set) would fail due to extra output produced to the standard error
-stream.
+Whoops, I didn't know when that went missing. I added it into a new version
+of this patch.
 
- t/test-lib.sh | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+Also, I decided to keep `git status`, because it seemed to be the only
+command which doesn't need any files to produce some checkable output.
+Checking the "On branch" message should be enough to confirm that the
+command works as intended.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 17a56f44ad..8ef86e05a3 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -134,12 +134,6 @@ export EDITOR
- GIT_TRACE_BARE=1
- export GIT_TRACE_BARE
- 
--if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
--then
--	GIT_INDEX_VERSION="$GIT_TEST_INDEX_VERSION"
--	export GIT_INDEX_VERSION
--fi
--
- check_var_migration () {
- 	old_name=$1 new_name=$2
- 	eval "old_isset=\${${old_name}:+isset}"
-@@ -162,6 +156,13 @@ check_var_migration GIT_FSMONITOR_TEST GIT_TEST_FSMONITOR
- check_var_migration TEST_GIT_INDEX_VERSION GIT_TEST_INDEX_VERSION
- check_var_migration GIT_FORCE_PRELOAD_TEST GIT_TEST_PRELOAD_INDEX
- 
-+# Use specific version of the index file format
-+if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
-+then
-+	GIT_INDEX_VERSION="$GIT_TEST_INDEX_VERSION"
-+	export GIT_INDEX_VERSION
-+fi
-+
- # Add libc MALLOC and MALLOC_PERTURB test
- # only if we are not executing the test with valgrind
- if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
+> 
+>> +test_expect_success 'nested aliases - mixed execution' '
+>> +       git config alias.nested-external-1 "!git nested-external-2" &&
+>> +       git config alias.nested-external-2 status
+>> +'
+> 
+> Same observation.
+> 
+>> +test_expect_success 'looping aliases - internal execution' '
+>> +       git config alias.loop-internal-1 loop-internal-2 &&
+>> +       git config alias.loop-internal-2 loop-internal-3 &&
+>> +       git config alias.loop-internal-3 loop-internal-2 &&
+>> +       test_must_fail git loop-internal-1 2>output &&
+>> +       grep -q "fatal: alias loop detected: expansion of '"'"'loop-internal-1'"'"' does not terminate" output &&
+> 
+> Don't bother using -q with 'grep'. Output is hidden already by the
+> test framework in normal mode, and not hidden when running in verbose
+> mode. And, the output of 'grep' might be helpful when debugging the
+> test if something goes wrong.
+> 
+> As noted above, you can use regex to match the expected error rather
+> than exactly duplicating the text of the message.
+> 
+> Finally, use 'test_i18ngrep' instead of 'grep' in order to play nice
+> with localization.
+> 
+>> +       rm output
+> 
+> Tests don't normally bother cleaning up their output files like this
+> since such output can be helpful when debugging the test if something
+> goes wrong. (You'd want to use test_when_finished to cleanup anyhow,
+> but you don't need it in this case.)
+
+I incorporated both of these suggestions.
+
+> 
+>> +'
+> 
+
+This is the first multi-patch series that I submitted, so I'm unsure if I
+should send the updated patch only or if I should send the complete series
+again as v5. Any pointers to what the correct procedure for this case is would
+be appreciated.
+
+Thanks for looking at this.
+
+Tim
