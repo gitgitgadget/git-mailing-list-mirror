@@ -2,70 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 415471F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 19:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C91A1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 20:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727416AbeIOAYH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 20:24:07 -0400
-Received: from mail-it0-f44.google.com ([209.85.214.44]:53460 "EHLO
-        mail-it0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726787AbeIOAYH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 20:24:07 -0400
-Received: by mail-it0-f44.google.com with SMTP id p79-v6so3993303itp.3
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 12:08:18 -0700 (PDT)
+        id S1727760AbeIOBYs (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 21:24:48 -0400
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:38863 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727716AbeIOBYs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 21:24:48 -0400
+Received: by mail-ot1-f68.google.com with SMTP id n5-v6so5757299otl.5
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 13:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=xRXORvT72eW1MPc4MbKjT56ME3DqgEfvlAtnMYO4mcs=;
-        b=IHhUSLWzo+8f2dxgAxlbzJQF7866Uy3juhda4YtBI27y+d3TgeGQkXjPwUuhy3SAcu
-         GwqTxrt2s+OY0ydVLHhDmpYqUpsan4WskiX7+htT31KeAmYxibALH8P6vwlNmb9crgaA
-         WnwNkdhbJVeexZbU/a9f2efPtCUhEwKvlQy/Y+nBUopC+7TyOCsZLUns07JdhvYaqjCx
-         KWbWN+QEzKGLL0uEIcfozt6wKQTwizA6MtSWWR/XHsCRL02pqw0yDB/+spbpD4ldgjIk
-         z7tIPKpNsGtjMT+jXWrjqxtkYThxPPeUCHKuDyqlS/wlTWpsmOFmfVty80LWfymasCEu
-         no/A==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XjCgIBwdaWFMSGwwJ0gJUo0lkIPGV9Fs0DhIlDa8PYM=;
+        b=IvFeDeq502ASmmi89L8yhbp8gwTOC1K/lPOsQwG//B8JI5/YD6KgEMTRFfVBI02MOg
+         Prs9jROcnc4d1vvdNzfpJtiszNK+eyOMHgDbffQ5oPiBrwMv9CalfwNtRPwucNvpSaxW
+         6ULsZy31Q40xcEaRHHdOHndKLG3oSrAnfnSgPFV9fgvGVZHk6hfla9x5FgX9rjCZVB6K
+         uEOe4UMo7Mwx0JoNvnjN4mSNgwlEd0ZnVN1kyNchCMYXo1tuCii2YwFvYsEsJrHkqg7n
+         w1YSOLFmr6M+kYdnPf3sXau7gt55lSvp1KiTfukHZpUYEW/dsuh7fON0zFeJsxkb5NVo
+         dI6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=xRXORvT72eW1MPc4MbKjT56ME3DqgEfvlAtnMYO4mcs=;
-        b=RdU/EsauV8BH6O6y0WLmk/jUdHvnJiA8edcTi99pu0uKPmqAAnLJReRbizx7FKR3lu
-         OGEFHMhrIRDLlgmpT8Lmc247t8Q8DBlFDFvzNn9SaH94la6SLyKh9QnnSiZ+uSO2k9vs
-         7naD5cZpxtimkONjJzdH00jmDGHUXEOvbg/P1PgIVt3AUSN5Je245aZS5u4ayHEH5Adg
-         KPioSeWhiwRIZhzpjz4gfadkmzD5jGtwWT/jAsm35faqzmNmwUAnF6NODQc64+iNbZC2
-         gAJSmQhQ3xEYw4rraiWHsZYfVsumouhv8xMR9XdjCL/Nk3kZkkcOdx4s5x2u9n8P/06+
-         krow==
-X-Gm-Message-State: APzg51AITtaxSX/1jIo/nqozlw4Rw6W6DgmOBFUC14nDjumNu7o90Yzz
-        C5g+U/b8bZSZHWo+M58nAIJ6k37OrdwnQLjl0+xXuZFzlR8=
-X-Google-Smtp-Source: ANB0VdaeWJ0rMVJ5dP8YK8X/nHZZoATY716mduChTXz4t/un+nLNbIh6Zb2lXzKmL2iTDTsMHpkl8QOuZSHfyPEtGiE=
-X-Received: by 2002:a02:3d8f:: with SMTP id n137-v6mr12208801jan.99.1536952098107;
- Fri, 14 Sep 2018 12:08:18 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XjCgIBwdaWFMSGwwJ0gJUo0lkIPGV9Fs0DhIlDa8PYM=;
+        b=BjOc6Hy7caYyzFYVoLmS8idf93sdSSnsnIOXqbtNZy71U/pEapXSsXa/9BVtVWMy2h
+         b+vS8Sk9j6/yyinDXD5XDg5bPAgGkqyyxhH9tqfAGIbvtmVQgjR/NaTdEZlIdRhH+NCr
+         sTpEQGRosda9Yev8GQBSN0Lpp2N3XUfVNrnJikocrB1v4otUBbXeCBkm1epd9BMrZueu
+         +OjAmWqZ5UubMK8CNYD2IcAkoz3QLL0edupFesznE7HvWTFVXvegnJVPEWZTilaAJ6xk
+         n6fVe5C6zalc8FqfIrbMw1lq4ENtVXAxw7c+S9LYTAqC9KPX29qCmZD72ZQ1yW37/IBe
+         7Y3A==
+X-Gm-Message-State: APzg51C+94OByAsIFJtbKXZo+4BXCUNh/HAyg3ZC3DgywodUylAH3D+O
+        XEOI9ImyOBTr7l2eZOrExv3w/OfUbVCwYwWqSNqY
+X-Google-Smtp-Source: ANB0VdbHvpAhhft2VPiaIFlgXoFOgkCcaYt/Vo4dgHvK9p9UZ1P1KOPD7ZG0gwHl6Wo88tkQ3nj/8cOQ101cAV2jkg0=
+X-Received: by 2002:a9d:522d:: with SMTP id e45-v6mr5166390oth.250.1536955728500;
+ Fri, 14 Sep 2018 13:08:48 -0700 (PDT)
 MIME-Version: 1.0
-From:   Niko Dzhus <primenico@gmail.com>
-Date:   Fri, 14 Sep 2018 22:08:07 +0300
-Message-ID: <CAKd-JgStGb4Ka9Rs6G2e4ADQKZVrsJMsNGz1sRP_4Ej4=FtxtA@mail.gmail.com>
-Subject: [Bug report] Git incorrectly selects language in macos
-To:     git@vger.kernel.org
+References: <cover.1533854545.git.matvore@google.com> <cover.1536885967.git.matvore@google.com>
+ <ca25f5914a98455cb6908a34146c10101d3529b0.1536885967.git.matvore@google.com> <xmqqzhwkat8i.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhwkat8i.fsf@gitster-ct.c.googlers.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Fri, 14 Sep 2018 13:08:36 -0700
+Message-ID: <CAMfpvhLkn1wbDwzQycW4SX92qmyof6n3gMXe-f-5JdQKk4P28g@mail.gmail.com>
+Subject: Re: [PATCH v8 5/7] revision: mark non-user-given objects instead
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        git@jeffhostetler.com, jeffhost@microsoft.com,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It doesn't use English when other language is available as a secondary language.
+On Fri, Sep 14, 2018 at 10:23 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Matthew DeVore <matvore@google.com> writes:
+>
+> > Signed-off-by: Matthew DeVore <matvore@google.com>
+> >
+> > fixup of 6defd70de
+>
+> That's probably meant to go below "---".
+>
 
-Reproducing:
+That line shouldn't be there at all, sorry!
 
-1. Open "Language & Region" in macos settings
-2. In "Preferred languages" box, set English as a primary language.
-3. Add another language, that git is translated to, as a secondary
-language, for example, French or German.
-4. Run any git command - git will use the secondary language, instead
-of English.
+It came from me putting that text in a commit which was meant to be a
+fixup of another commit when I ran rebase -i. I asked rebase to make
+it a "squash" so I could edit the commit message of the earlier commit
+(6defd70de). Then rebase merged the two descriptions and let me edit
+them, but I didn't remember to delete the latter commit's message.
 
-When the secondary language is removed, then git starts using English again.
-
-I have git 2.19.0, installed from brew, and my OS is macOS 10.13.6 .
+I probably should have made the earlier commit (6defd70de) a "reword",
+and the later commit a "fixup", rather than "pick" followed by
+"squash"
