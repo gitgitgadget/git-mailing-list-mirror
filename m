@@ -2,70 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B9B71F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 10:48:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 154561F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 12:31:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728131AbeINQCC convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 14 Sep 2018 12:02:02 -0400
-Received: from mail-yw1-f50.google.com ([209.85.161.50]:36774 "EHLO
-        mail-yw1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727649AbeINQCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 12:02:02 -0400
-Received: by mail-yw1-f50.google.com with SMTP id i144-v6so2434186ywc.3
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 03:48:06 -0700 (PDT)
+        id S1728149AbeINRpe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 13:45:34 -0400
+Received: from mail-it0-f41.google.com ([209.85.214.41]:55087 "EHLO
+        mail-it0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726966AbeINRpe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 13:45:34 -0400
+Received: by mail-it0-f41.google.com with SMTP id f14-v6so2277904ita.4
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 05:31:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=iuCMbil8fKtg53QFCf1XdwKFk6PidpyT1wbEkwZ7n8E=;
+        b=tsz8Et0w1ga8cf3PTwZ9O0i6vBRIkWiTDoVbKnaE2CAH9Ac7XV0NrJZIJrGOMeThoL
+         dS7iFDV53A6OigUSK+ctE9B5jExUda1q8HLfICg/ZU9nAudxzVo+48NrBPrRj/ybNkZc
+         sFet5fHTIM05uh+7MfanW+WcgOpYrswqUfUbTmZIPA4POD/R3brRZftfwhpPbaxxzzch
+         YfXoN6aJsXOGrEp3opfjcMHC0QwKXZXi+c4jGCtTE7d4VKLxPlgxHJeKu8nv47nFFmjH
+         fglQmA3ztqBjCopuPZnVRGaf+zrTD8JuJ7+rddEKk07bcGwMtqpspPG62GTsvTJE0eht
+         JOGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hcjtXqNu9rvR0j1rZ7b/eiRIxPZRsxGrllAaSU4VRvc=;
-        b=f4dDlC8pLqLVo4tpM+SydMPsBTXnnG6s/rUccANgYzaGkdP5jVUGuNqjjFcROOWwP2
-         wCZG5Kq2V7k6nNVK7KXzpfHOej95nMPMKkpecW25DFtNrdRjx3rmLURXunDLzL4Jlcug
-         +ccAkMdU8u7Q/PF/uo1Tg0wfSYUHW856HSVe7v17Ilf3zhF4nn3yrPjOzqDPxsRoUGLS
-         aSF6c+1hvot0kYmQt3DueDjm6ms32bIWJ1cN6Q6fUSPhWZOCnHEnVB7OiEksxrcoJl4w
-         Yh/EGFLYwYIymK7kPe7SDRMvIV47qNXXeUwTW7J6vnz4S7rThxtI4F7WCghelqWuEqC0
-         azrA==
-X-Gm-Message-State: APzg51CX0yV14Xq33BHl6grOJbn8XArYgHO4yjQE5zw7SAcvsMMwZG3M
-        cMQvPFbf9lrAbdBH5tRim+PmRpTaRAgDGlYrIo4sEQ==
-X-Google-Smtp-Source: ANB0VdZ8MsSuLqfGZ2qJZQ03qR2Th9hDAsG8KFUZ8Mw7V8gO/MvMunxg7UC2FcsGhDBwskstjcp+xgbIFFjILR2qN4w=
-X-Received: by 2002:a81:2644:: with SMTP id m65-v6mr5245433ywm.327.1536922086181;
- Fri, 14 Sep 2018 03:48:06 -0700 (PDT)
+         :message-id:subject:to;
+        bh=iuCMbil8fKtg53QFCf1XdwKFk6PidpyT1wbEkwZ7n8E=;
+        b=R6hDN2/+OLPiWsGqIJalGWtJ9TN4Ml70ktxbKeYMnlhEnjXGubCkXrCVpst2vzUXPj
+         d+OmESHDrHv3ZB5AMw6q0qFuw2iUn9Nab/47YRaFLF1qDN6BJxHVrv+BcBxRqEsIfveL
+         e/a+oeDQ8mxu+fQ1GjaF8C17bamweoiS9sfiInLxvziujeJkAjn1GgGQWl5QuTLxtZla
+         DoFbFNJq+LH+mavvwTfKaLHzo6rOzxGOkRNxg3Cxz8awvne5/+4OrKbKME/mYDlTeX5J
+         JkTipmB5bj3++7pmz/C8S8AQC0lJb6qNzAgBj6pRhYO6eixHV6R0LFr6WN0SevHiUbmy
+         Waiw==
+X-Gm-Message-State: APzg51AHFMHDu6EbB7Y7xYcEESk9JJFIe3CSy4JyurcThDYyeuxZC0rE
+        Iyu6m39StDnISw3l88h3JQkdEjbviUcd4fJGBZfwJw==
+X-Google-Smtp-Source: ANB0VdZLUbcb3evDuhf69Oqf2+TJM0inqTZCMikSAE4mANvwZVWEyyetBWbB+qsme+LPWUOU+Tqgpm4/2+RaF6wNhV4=
+X-Received: by 2002:a24:5d4a:: with SMTP id w71-v6mr1980556ita.118.1536928277026;
+ Fri, 14 Sep 2018 05:31:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <CANT8FXRbep_32-eeMSa0C1e6q6MUvFddgTUiUgqv54J-2c+iXg@mail.gmail.com>
- <87lg85ljsc.fsf@evledraar.gmail.com>
-In-Reply-To: <87lg85ljsc.fsf@evledraar.gmail.com>
-From:   Michal Novotny <clime@redhat.com>
-Date:   Fri, 14 Sep 2018 12:47:53 +0200
-Message-ID: <CANT8FXQrrgj=iVV0tX=MO9LH+=joQUfJmtDeACwyQjNT93e0aw@mail.gmail.com>
-Subject: Re: with git 1.8.3.1 get only merged tags
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+References: <CAG-YsNbX-23+LMR_Zd5Z0Ln64vz-HQRU_YkFSnODBWuAvcRW2g@mail.gmail.com>
+In-Reply-To: <CAG-YsNbX-23+LMR_Zd5Z0Ln64vz-HQRU_YkFSnODBWuAvcRW2g@mail.gmail.com>
+From:   Mikkel Hofstedt Juul <mikkel.hofstedt@gmail.com>
+Date:   Fri, 14 Sep 2018 14:31:04 +0200
+Message-ID: <CAG-YsNbh1AQvf3FCQscNDviQqyC4FFqx-VruXrpeCgjL953agQ@mail.gmail.com>
+Subject: Fwd: spelling mistake 'rerere' on docs/git-gc
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Sep 13, 2018 at 1:27 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Sep 11 2018, Michal Novotny wrote:
->
-> > I need to emulate git tag --merged with very old git 1.8.3.1. Is that
-> > somehow possible?
-> > I am looking for a bash function that would take what git 1.8.3.1
-> > offers and return only the tags accessible from the current branch
->
-> Jeff answer the question you had, but I just have one of my own: Is
-> RedHat stuck on 1.8-era git in some release it's still maintaining, does
-> this mean that e.g. you're still backporting security fixes to this
-> 2012-era release?
+retry -- plain text mode
 
-Yes, that's exactly the case with RHEL-7.
+---------- Forwarded message ---------
+From: Mikkel Hofstedt Juul <mikkel.hofstedt@gmail.com>
+Date: Fri, 14 Sep 2018 at 14:28
+Subject: spelling mistake 'rerere' on docs/git-gc
+To: <git@vger.kernel.org>
 
-clime
+
+Hi
+
+See title
+in sentence:
+...invocations of git add, packing refs, pruning reflog, rerere
+metadata or stale working trees.
+
+Thanks, keep up the good work!
+
+regards
+Mikkel
