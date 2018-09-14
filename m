@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA22A1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 00:55:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2613A1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 00:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728186AbeINGHu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 02:07:50 -0400
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:38060 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726558AbeINGHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 02:07:50 -0400
-Received: by mail-yw1-f73.google.com with SMTP id q141-v6so2933384ywg.5
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 17:55:54 -0700 (PDT)
+        id S1727383AbeINGH6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 02:07:58 -0400
+Received: from mail-io1-f74.google.com ([209.85.166.74]:37202 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726558AbeINGH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 02:07:58 -0400
+Received: by mail-io1-f74.google.com with SMTP id l6-v6so6656452iog.4
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 17:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Yfcas47zeDu4DD5jwqOAeKK4EXmcqgYS+tbPtnA61Mg=;
-        b=XACFX4JTh82WgUJO5w25mA4TSBxIp+IIfRzsLLM3JOqUpZFC01ymtWBivj5McyVQai
-         hyInecZ8tPQNnD8n+6XWaugQtFS3Lo0WRtfJ/N5Hqr/YuOWrhhKNVHOwvGHx9dLde/t2
-         VvYW+m3Hm1g6GK3ondMD+dDDLFr3F33JhshQeJufIq6Y5K9dUeHyq5PXA0FxjutGX33F
-         +f4gP4Fv0uqiDAizgq0/SvRpl3BPo45dDiry5rUm2dpsFZBgdThe0hISd1FkuRZFPBME
-         ZW7mpBApfwAV50oWvsOhEGmasyu2B9kqNINexb+rII7g1FddrIoFsJZpiIhkDHkmI475
-         CF+w==
+        bh=IWMtfmkF75GsybnM11356Qak2u2LcOOZFz9T3sTmvEw=;
+        b=GighBETpxnQq1oo0A4XCHSOvXRt9TF6NpnGIe4WcvpnTWBc6EbLfVBB4ZMfEak6KQQ
+         BVg1DP9WXZqX8mjT/DE+K/gRRLuFp0Q/jZ9ll3hSOLFdoFJZlRMlSBfZO2ff4a0jrvKq
+         MLyQND/YbTcjvAk2nDGpZxREEPcCJSiC7HBkulfZumSErwDHnh5EZOk60jHwrKR5i6Xn
+         13qWv8cdNzAxTwikmt2jVz8udcnwTesGLfW0OFQMgjt/oWe1KncibSAljq4lpdBqIbj+
+         GBVLxyz7D3FpQndjibsZS8sq7PWFfv4AGiy/ZHTYwCe2Uo+fk9Emj8tS1/0ux19kr/XS
+         1A3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Yfcas47zeDu4DD5jwqOAeKK4EXmcqgYS+tbPtnA61Mg=;
-        b=Y4d5o/Ig+n4p1pJuWi7THO4+0ioKm3C12lpou3dVDru1WTjCurR7TqqwGFV4EC6oEd
-         H3NRjMB3aLTW0eel25duvNX7Nswjz6+CBMsqmxZzdhqeMbYlkhcrLc85NMPoz2RQ03Vq
-         pZY7U+fdtzHZBS/BIEDyMSpR4Y9qM2PhFxx2KvNbk4Tp1R9zW2uVHLrKDJ9+Wvrwpm98
-         zfaQWaGw/tXLH0WFRvA8XlG0qLSHPQUZdokIM52XfTraTqeO482w+QRumo5GvQI6MSyp
-         TGF1etYiZAyizX5oCMKhpvGG9o8rkSUtS3FV0AeOkb6K2ggU9BU1KSOBuLdfStvLpLXl
-         FC3A==
-X-Gm-Message-State: APzg51DGd6d5I00TgOVMf6abSKTNW9VLPsJ/+KEYx+h0iaclOTimuiTF
-        xuHa3L3f8c2rP7ZsJRddvGsQX6xd96Q=
-X-Google-Smtp-Source: ANB0VdYQR5XIWob3ntXS+k14MN/lXEzs+tNKeJYih6eYoeWrzmXvgBNaXr3du4jlTbKb977UoLpj1rJzrxdT
-X-Received: by 2002:a5b:444:: with SMTP id s4-v6mr1674675ybp.58.1536886554157;
- Thu, 13 Sep 2018 17:55:54 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 17:55:21 -0700
+        bh=IWMtfmkF75GsybnM11356Qak2u2LcOOZFz9T3sTmvEw=;
+        b=ZSyr0TGNMNT5CzGQl7zOYkeE1zdC0TYD83GHJyfhMqAxPHJfbXoV+ESM32OlAESlu/
+         CHU+cPKAGRJxt5ZaJB94WYppZB1qJnLntkPmGD8SKL3CVSg7UiyaQKei+mNng3I6JqS5
+         Icb/AR9cGmqHGDsPPwMfADGa6O3gJw6+9yKm4z0htAa/EGUbkcGwgcAWuAVvZFEVcDfL
+         4vWDwlqECyQIfQEoWv6LGKomVKDiboNR2ObmmLnS5K6zY0lDsdpB2Gi3hWpnJb6e1Kfu
+         kdhE8eBcmyzspiZJpglWP61+SdMS9Oe1h+aqYSX3GhE9blMSeyLTJNGWNx5vkGivLF6w
+         iz3Q==
+X-Gm-Message-State: APzg51DAdubx/nVTJqfTDWzMCpOzWhUwG0x/4V03bBradCH4ew/ItXM1
+        P7C0KB7q94wS/W8hVfc96YLYEW8bDAs=
+X-Google-Smtp-Source: ANB0VdYWle6z0JiPed/xVxGBjOsTzN79QvbmqbE+h7NEfCdvra6eflKpscBl/rTCXAMM6U3x9jz3wXQBqTNt
+X-Received: by 2002:a6b:ac45:: with SMTP id v66-v6mr7307127ioe.101.1536886562565;
+ Thu, 13 Sep 2018 17:56:02 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 17:55:22 -0700
 In-Reply-To: <cover.1536885967.git.matvore@google.com>
-Message-Id: <3de57eb7f9e662d93fd166b92c35719af9ea6c31.1536885967.git.matvore@google.com>
+Message-Id: <ecdcb996c9f26e612259ea028076df07e25b6c10.1536885967.git.matvore@google.com>
 Mime-Version: 1.0
 References: <cover.1533854545.git.matvore@google.com> <cover.1536885967.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
-Subject: [PATCH v8 1/7] list-objects: store common func args in struct
+Subject: [PATCH v8 2/7] list-objects: refactor to process_tree_contents
 From:   Matthew DeVore <matvore@google.com>
 To:     sbeller@google.com, git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, git@jeffhostetler.com,
@@ -63,313 +63,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This will make utility functions easier to create, as done by the next
-patch.
+This will be used in a follow-up patch to reduce indentation needed when
+invoking the logic conditionally. i.e. rather than:
+
+if (foo) {
+	while (...) {
+		/* this is very indented */
+	}
+}
+
+we will have:
+
+if (foo)
+	process_tree_contents(...);
 
 Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
- list-objects.c | 158 +++++++++++++++++++++++--------------------------
- 1 file changed, 74 insertions(+), 84 deletions(-)
+ list-objects.c | 68 ++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 41 insertions(+), 27 deletions(-)
 
 diff --git a/list-objects.c b/list-objects.c
-index c99c47ac1..584518a3f 100644
+index 584518a3f..ccc529e5e 100644
 --- a/list-objects.c
 +++ b/list-objects.c
-@@ -12,20 +12,25 @@
- #include "packfile.h"
- #include "object-store.h"
- 
--static void process_blob(struct rev_info *revs,
-+struct traversal_context {
-+	struct rev_info *revs;
-+	show_object_fn show_object;
-+	show_commit_fn show_commit;
-+	void *show_data;
-+	filter_object_fn filter_fn;
-+	void *filter_data;
-+};
-+
-+static void process_blob(struct traversal_context *ctx,
- 			 struct blob *blob,
--			 show_object_fn show,
- 			 struct strbuf *path,
--			 const char *name,
--			 void *cb_data,
--			 filter_object_fn filter_fn,
--			 void *filter_data)
-+			 const char *name)
- {
- 	struct object *obj = &blob->object;
- 	size_t pathlen;
- 	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
- 
--	if (!revs->blob_objects)
-+	if (!ctx->revs->blob_objects)
- 		return;
- 	if (!obj)
- 		die("bad blob object");
-@@ -41,21 +46,21 @@ static void process_blob(struct rev_info *revs,
- 	 * may cause the actual filter to report an incomplete list
- 	 * of missing objects.
- 	 */
--	if (revs->exclude_promisor_objects &&
-+	if (ctx->revs->exclude_promisor_objects &&
- 	    !has_object_file(&obj->oid) &&
- 	    is_promisor_object(&obj->oid))
- 		return;
- 
- 	pathlen = path->len;
- 	strbuf_addstr(path, name);
--	if (!(obj->flags & USER_GIVEN) && filter_fn)
--		r = filter_fn(LOFS_BLOB, obj,
--			      path->buf, &path->buf[pathlen],
--			      filter_data);
-+	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn)
-+		r = ctx->filter_fn(LOFS_BLOB, obj,
-+				   path->buf, &path->buf[pathlen],
-+				   ctx->filter_data);
- 	if (r & LOFR_MARK_SEEN)
- 		obj->flags |= SEEN;
- 	if (r & LOFR_DO_SHOW)
--		show(obj, path->buf, cb_data);
-+		ctx->show_object(obj, path->buf, ctx->show_data);
- 	strbuf_setlen(path, pathlen);
- }
- 
-@@ -81,26 +86,21 @@ static void process_blob(struct rev_info *revs,
-  * the link, and how to do it. Whether it necessarily makes
-  * any sense what-so-ever to ever do that is another issue.
-  */
--static void process_gitlink(struct rev_info *revs,
-+static void process_gitlink(struct traversal_context *ctx,
- 			    const unsigned char *sha1,
--			    show_object_fn show,
- 			    struct strbuf *path,
--			    const char *name,
--			    void *cb_data)
-+			    const char *name)
- {
+@@ -94,6 +94,46 @@ static void process_gitlink(struct traversal_context *ctx,
  	/* Nothing to do */
  }
  
--static void process_tree(struct rev_info *revs,
 +static void process_tree(struct traversal_context *ctx,
++			 struct tree *tree,
++			 struct strbuf *base,
++			 const char *name);
++
++static void process_tree_contents(struct traversal_context *ctx,
++				  struct tree *tree,
++				  struct strbuf *base)
++{
++	struct tree_desc desc;
++	struct name_entry entry;
++	enum interesting match = ctx->revs->diffopt.pathspec.nr == 0 ?
++		all_entries_interesting : entry_not_interesting;
++
++	init_tree_desc(&desc, tree->buffer, tree->size);
++
++	while (tree_entry(&desc, &entry)) {
++		if (match != all_entries_interesting) {
++			match = tree_entry_interesting(&entry, base, 0,
++						       &ctx->revs->diffopt.pathspec);
++			if (match == all_entries_not_interesting)
++				break;
++			if (match == entry_not_interesting)
++				continue;
++		}
++
++		if (S_ISDIR(entry.mode))
++			process_tree(ctx,
++				     lookup_tree(the_repository, entry.oid),
++				     base, entry.path);
++		else if (S_ISGITLINK(entry.mode))
++			process_gitlink(ctx, entry.oid->hash,
++					base, entry.path);
++		else
++			process_blob(ctx,
++				     lookup_blob(the_repository, entry.oid),
++				     base, entry.path);
++	}
++}
++
+ static void process_tree(struct traversal_context *ctx,
  			 struct tree *tree,
--			 show_object_fn show,
  			 struct strbuf *base,
--			 const char *name,
--			 void *cb_data,
--			 filter_object_fn filter_fn,
--			 void *filter_data)
-+			 const char *name)
+@@ -101,10 +141,6 @@ static void process_tree(struct traversal_context *ctx,
  {
  	struct object *obj = &tree->object;
-+	struct rev_info *revs = ctx->revs;
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	enum interesting match = revs->diffopt.pathspec.nr == 0 ?
-@@ -133,14 +133,14 @@ static void process_tree(struct rev_info *revs,
- 	}
- 
- 	strbuf_addstr(base, name);
--	if (!(obj->flags & USER_GIVEN) && filter_fn)
--		r = filter_fn(LOFS_BEGIN_TREE, obj,
--			      base->buf, &base->buf[baselen],
--			      filter_data);
-+	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn)
-+		r = ctx->filter_fn(LOFS_BEGIN_TREE, obj,
-+				   base->buf, &base->buf[baselen],
-+				   ctx->filter_data);
- 	if (r & LOFR_MARK_SEEN)
- 		obj->flags |= SEEN;
- 	if (r & LOFR_DO_SHOW)
--		show(obj, base->buf, cb_data);
-+		ctx->show_object(obj, base->buf, ctx->show_data);
+ 	struct rev_info *revs = ctx->revs;
+-	struct tree_desc desc;
+-	struct name_entry entry;
+-	enum interesting match = revs->diffopt.pathspec.nr == 0 ?
+-		all_entries_interesting: entry_not_interesting;
+ 	int baselen = base->len;
+ 	enum list_objects_filter_result r = LOFR_MARK_SEEN | LOFR_DO_SHOW;
+ 	int gently = revs->ignore_missing_links ||
+@@ -144,29 +180,7 @@ static void process_tree(struct traversal_context *ctx,
  	if (base->len)
  		strbuf_addch(base, '/');
  
-@@ -157,29 +157,25 @@ static void process_tree(struct rev_info *revs,
- 		}
- 
- 		if (S_ISDIR(entry.mode))
--			process_tree(revs,
-+			process_tree(ctx,
- 				     lookup_tree(the_repository, entry.oid),
--				     show, base, entry.path,
--				     cb_data, filter_fn, filter_data);
-+				     base, entry.path);
- 		else if (S_ISGITLINK(entry.mode))
--			process_gitlink(revs, entry.oid->hash,
--					show, base, entry.path,
--					cb_data);
-+			process_gitlink(ctx, entry.oid->hash, base, entry.path);
- 		else
--			process_blob(revs,
-+			process_blob(ctx,
- 				     lookup_blob(the_repository, entry.oid),
--				     show, base, entry.path,
--				     cb_data, filter_fn, filter_data);
-+				     base, entry.path);
- 	}
- 
--	if (!(obj->flags & USER_GIVEN) && filter_fn) {
--		r = filter_fn(LOFS_END_TREE, obj,
--			      base->buf, &base->buf[baselen],
--			      filter_data);
-+	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn) {
-+		r = ctx->filter_fn(LOFS_END_TREE, obj,
-+				   base->buf, &base->buf[baselen],
-+				   ctx->filter_data);
- 		if (r & LOFR_MARK_SEEN)
- 			obj->flags |= SEEN;
- 		if (r & LOFR_DO_SHOW)
--			show(obj, base->buf, cb_data);
-+			ctx->show_object(obj, base->buf, ctx->show_data);
- 	}
- 
- 	strbuf_setlen(base, baselen);
-@@ -242,19 +238,15 @@ static void add_pending_tree(struct rev_info *revs, struct tree *tree)
- 	add_pending_object(revs, &tree->object, "");
- }
- 
--static void traverse_trees_and_blobs(struct rev_info *revs,
--				     struct strbuf *base,
--				     show_object_fn show_object,
--				     void *show_data,
--				     filter_object_fn filter_fn,
--				     void *filter_data)
-+static void traverse_trees_and_blobs(struct traversal_context *ctx,
-+				     struct strbuf *base)
- {
- 	int i;
- 
- 	assert(base->len == 0);
- 
--	for (i = 0; i < revs->pending.nr; i++) {
--		struct object_array_entry *pending = revs->pending.objects + i;
-+	for (i = 0; i < ctx->revs->pending.nr; i++) {
-+		struct object_array_entry *pending = ctx->revs->pending.objects + i;
- 		struct object *obj = pending->item;
- 		const char *name = pending->name;
- 		const char *path = pending->path;
-@@ -262,62 +254,49 @@ static void traverse_trees_and_blobs(struct rev_info *revs,
- 			continue;
- 		if (obj->type == OBJ_TAG) {
- 			obj->flags |= SEEN;
--			show_object(obj, name, show_data);
-+			ctx->show_object(obj, name, ctx->show_data);
- 			continue;
- 		}
- 		if (!path)
- 			path = "";
- 		if (obj->type == OBJ_TREE) {
--			process_tree(revs, (struct tree *)obj, show_object,
--				     base, path, show_data,
--				     filter_fn, filter_data);
-+			process_tree(ctx, (struct tree *)obj, base, path);
- 			continue;
- 		}
- 		if (obj->type == OBJ_BLOB) {
--			process_blob(revs, (struct blob *)obj, show_object,
--				     base, path, show_data,
--				     filter_fn, filter_data);
-+			process_blob(ctx, (struct blob *)obj, base, path);
- 			continue;
- 		}
- 		die("unknown pending object %s (%s)",
- 		    oid_to_hex(&obj->oid), name);
- 	}
--	object_array_clear(&revs->pending);
-+	object_array_clear(&ctx->revs->pending);
- }
- 
--static void do_traverse(struct rev_info *revs,
--			show_commit_fn show_commit,
--			show_object_fn show_object,
--			void *show_data,
--			filter_object_fn filter_fn,
--			void *filter_data)
-+static void do_traverse(struct traversal_context *ctx)
- {
- 	struct commit *commit;
- 	struct strbuf csp; /* callee's scratch pad */
- 	strbuf_init(&csp, PATH_MAX);
- 
--	while ((commit = get_revision(revs)) != NULL) {
-+	while ((commit = get_revision(ctx->revs)) != NULL) {
- 		/*
- 		 * an uninteresting boundary commit may not have its tree
- 		 * parsed yet, but we are not going to show them anyway
- 		 */
- 		if (get_commit_tree(commit))
--			add_pending_tree(revs, get_commit_tree(commit));
--		show_commit(commit, show_data);
-+			add_pending_tree(ctx->revs, get_commit_tree(commit));
-+		ctx->show_commit(commit, ctx->show_data);
- 
--		if (revs->tree_blobs_in_commit_order)
-+		if (ctx->revs->tree_blobs_in_commit_order)
- 			/*
- 			 * NEEDSWORK: Adding the tree and then flushing it here
- 			 * needs a reallocation for each commit. Can we pass the
- 			 * tree directory without allocation churn?
- 			 */
--			traverse_trees_and_blobs(revs, &csp,
--						 show_object, show_data,
--						 filter_fn, filter_data);
-+			traverse_trees_and_blobs(ctx, &csp);
- 	}
--	traverse_trees_and_blobs(revs, &csp,
--				 show_object, show_data,
--				 filter_fn, filter_data);
-+	traverse_trees_and_blobs(ctx, &csp);
- 	strbuf_release(&csp);
- }
- 
-@@ -326,7 +305,14 @@ void traverse_commit_list(struct rev_info *revs,
- 			  show_object_fn show_object,
- 			  void *show_data)
- {
--	do_traverse(revs, show_commit, show_object, show_data, NULL, NULL);
-+	struct traversal_context ctx;
-+	ctx.revs = revs;
-+	ctx.show_commit = show_commit;
-+	ctx.show_object = show_object;
-+	ctx.show_data = show_data;
-+	ctx.filter_fn = NULL;
-+	ctx.filter_data = NULL;
-+	do_traverse(&ctx);
- }
- 
- void traverse_commit_list_filtered(
-@@ -337,14 +323,18 @@ void traverse_commit_list_filtered(
- 	void *show_data,
- 	struct oidset *omitted)
- {
--	filter_object_fn filter_fn = NULL;
-+	struct traversal_context ctx;
- 	filter_free_fn filter_free_fn = NULL;
--	void *filter_data = NULL;
+-	init_tree_desc(&desc, tree->buffer, tree->size);
 -
--	filter_data = list_objects_filter__init(omitted, filter_options,
--						&filter_fn, &filter_free_fn);
--	do_traverse(revs, show_commit, show_object, show_data,
--		    filter_fn, filter_data);
--	if (filter_data && filter_free_fn)
--		filter_free_fn(filter_data);
-+
-+	ctx.revs = revs;
-+	ctx.show_object = show_object;
-+	ctx.show_commit = show_commit;
-+	ctx.show_data = show_data;
-+	ctx.filter_fn = NULL;
-+
-+	ctx.filter_data = list_objects_filter__init(omitted, filter_options,
-+						    &ctx.filter_fn, &filter_free_fn);
-+	do_traverse(&ctx);
-+	if (ctx.filter_data && filter_free_fn)
-+		filter_free_fn(ctx.filter_data);
- }
+-	while (tree_entry(&desc, &entry)) {
+-		if (match != all_entries_interesting) {
+-			match = tree_entry_interesting(&entry, base, 0,
+-						       &revs->diffopt.pathspec);
+-			if (match == all_entries_not_interesting)
+-				break;
+-			if (match == entry_not_interesting)
+-				continue;
+-		}
+-
+-		if (S_ISDIR(entry.mode))
+-			process_tree(ctx,
+-				     lookup_tree(the_repository, entry.oid),
+-				     base, entry.path);
+-		else if (S_ISGITLINK(entry.mode))
+-			process_gitlink(ctx, entry.oid->hash, base, entry.path);
+-		else
+-			process_blob(ctx,
+-				     lookup_blob(the_repository, entry.oid),
+-				     base, entry.path);
+-	}
++	process_tree_contents(ctx, tree, base);
+ 
+ 	if (!(obj->flags & USER_GIVEN) && ctx->filter_fn) {
+ 		r = ctx->filter_fn(LOFS_END_TREE, obj,
 -- 
 2.19.0.397.gdd90340f6a-goog
 
