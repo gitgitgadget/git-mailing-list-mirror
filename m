@@ -2,111 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.0 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIMWL_WL_MED shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2CFB1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 18:51:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D80C1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 19:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727864AbeIOAHf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 20:07:35 -0400
-Received: from mout.gmx.net ([212.227.17.21]:37437 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726748AbeIOAHf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 20:07:35 -0400
-Received: from MININT-6BKU6QN.attlocal.net ([108.198.118.51]) by mail.gmx.com
- (mrgmx101 [212.227.17.168]) with ESMTPSA (Nemesis) id
- 0M1BMy-1fhJ2K3JEm-00tCbZ; Fri, 14 Sep 2018 20:51:41 +0200
-Date:   Fri, 14 Sep 2018 13:51:36 -0500 (DST)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     Luke Diamand <luke@diamand.org>, gitgitgadget@gmail.com,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/9] tests: include detailed trace logs with --write-junit-xml
- upon failure
-In-Reply-To: <CAPig+cQkC4-6DyQdJHc8QUfBx+L6o1SK4ODy4MoP44+VHHk96Q@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1809141346340.73@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com> <942bf423a461a3b44e2ff254c90907a539d7abbe.1536009027.git.gitgitgadget@gmail.com> <CAPig+cRGHPfNqdgRr6H_D_siKCFZBDsUrcp0F+CWNCx884AJVg@mail.gmail.com> <nycvar.QRO.7.76.6.1809041304450.71@tvgsbejvaqbjf.bet>
- <CAE5ih7_GgkEaVXONy8ZY9j43PX6GD-mkD9vJ1t93upAfTkM8tw@mail.gmail.com> <nycvar.QRO.7.76.6.1809051430390.71@tvgsbejvaqbjf.bet> <CAPig+cQkC4-6DyQdJHc8QUfBx+L6o1SK4ODy4MoP44+VHHk96Q@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727791AbeIOAQP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 20:16:15 -0400
+Received: from mail-it0-f50.google.com ([209.85.214.50]:54493 "EHLO
+        mail-it0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbeIOAQP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 20:16:15 -0400
+Received: by mail-it0-f50.google.com with SMTP id f14-v6so3972064ita.4
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 12:00:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=8C2AlTIOBu3De5uhfKBkMN0xHVzslEjJxMRHWBQsvGY=;
+        b=TJrDYB4cqZLMvdARL/CgG94ckinmH8KCx+zEP63Rhw3JjlYlR3SMqA1jPChKbbHSSZ
+         DZTO278co00cKo5dtQvK05a1YgDeTR1pOWn01n1WI/SCjzZdAI21fxpa+KGGhPovEm74
+         2iOqwEtSjOm1M2V3xxHGzQaXohIbtmxwi8xyz+me9w90I4z37xDUu9jo5650rvBuFRgA
+         Qk5AFnYt+5oyIzd34HiKr8Vp06BC2G2hJfPbebuACVqUUQVnSP4uVN42sEIycH3L1Mvv
+         TA2tma32U1tTyAcenizKRToWNQWQAHtkMV2hO6m3EgHGkorsQ9V4QmLrsHoImDtfPRj6
+         lUoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=8C2AlTIOBu3De5uhfKBkMN0xHVzslEjJxMRHWBQsvGY=;
+        b=sqehuiawHOh9IyMT/yMesoY4MCozSRIhYl9lYSXj7PWXuT3savXOyh9rqc/HgUbhfW
+         7TmeJE8uINeALiBVMyU4nc+70gtEPSX02Tn5DBm3cqFl/hM9NCEG2AgsAWeDBes+0oDJ
+         OCONA1JDPFwhWOD/jRYbKmKTMAPILbMPkne+Y88e7WPICbzAQzV2/6RYEhySH2DKxrZs
+         H0pgM37xvEZpAAtbzJxB57JY2m3FONs6v/QsuhrwbeIUmsfFvqmVAuhGqNLs/V2tWWfV
+         Puad0wINDnPHOP/R+R3e4rxOxTbud1L6mKwQEtlZLYsWSCrTshPrkc7MRrGwRqDI1j74
+         0SFA==
+X-Gm-Message-State: APzg51Cj2OFUqSeKrqjw3ou+ph2JPxvzI+qkxiqSrI7P2l2t6ils8JfR
+        /krNHUaKRJS1jl4MDRJPnAmwEA==
+X-Google-Smtp-Source: ANB0Vdb727J2sjPaYzTiIV6ZPmw0rBcPtKolG3giptiecchauJjO3iHczdqSA56eBUouictJq04jqw==
+X-Received: by 2002:a24:fa49:: with SMTP id v70-v6mr3654419ith.76.1536951627567;
+        Fri, 14 Sep 2018 12:00:27 -0700 (PDT)
+Received: from localhost ([173.225.52.218])
+        by smtp.gmail.com with ESMTPSA id d65-v6sm4360758iof.46.2018.09.14.12.00.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 14 Sep 2018 12:00:26 -0700 (PDT)
+Date:   Fri, 14 Sep 2018 15:00:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Austin <john@astrangergravity.com>
+Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
+        larsxschneider@gmail.com, pastelmobilesuit@github.com
+Subject: Re: Git for games working group
+Message-ID: <20180914190025.GJ55140@syl>
+References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:JegwNRR2NiBuNCPxBBAL9Wx79hbFnma6ghT/lYCtAs+XS8IsF5U
- yGyx/g2TQETZ3PzCFl12oV2Uo/OaEz9q2W0JsgdkU7vjJLisLGF24Z5TEzJAPXdD+ApcCv/
- 6PWffhuEhZJUsJePUN/A5bPrgQFd85RmijZiXKy4ocoV0tZ6MKNit3hZeTfClk76DbKy5iY
- 2Wik4VKxLtSgdQZyPsnlQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:2+ogaHuz2uI=:7g85QBsOpZhvxbTBdG78kw
- XR6FBeaVm7eTUkKDQSmm9mLRYFWV0/xIJCoGceUEHa9+NWAcIjcAoqAfywE5EAtVOKRNuiC4w
- 1J93bbVuwHQVkHfn326KvTwkk+nkxWC9Z//uDDphwWhrIfeEvKoYBLHKi9LrwcIJVLCvkmSEm
- wRYCMpqk2bYv0SddstFwtyMSvsIS+m9zefbBwUjgn6GKesofUT4dTudH9K6Uwq64HvgtvA0qg
- UZZzcZEH8gJdHkXBWXY6twyg3yOZPwO8igfQ+RLd34gABCSdaJPRUTC941iLqLUaizkeDWed8
- c0YVFDu0dXnYE73qMDbCVnbVOtI2jOuIKkGvJXC13yJdatabBw8C8SNFMUe0ubqY93mDzd7a1
- Uc5DAZTJ9AbnUcdOqBWGtChT9ncdooifN2uAVGw9VvDV21GP9HBWZKe+uxTzSBU5dh4cdGa6F
- 6SqApGupyfwf624HOnTWbOtrtpgUkmHVUbUctcHBopspIfJKCo9dbZvo+3nOR5zrIMspU6Le6
- 6F9/LXhTXr7vTDbZVbZwRXdlthPvDM2N2zqQ4hvEAU9BPyPqFVDJ7HS2kdV5jp0GOMgLxWfC5
- FjXU9SqrE2m9inR4yqSvURF14If/g7P8v//vfvxxpE43kLIG437VQmXtZEFKD/uSrMbi+jAf4
- afdzL2Td7yskoG4Fk1JHjuOVsZ0lY385Jnju/xlpJOHaHFsRl1IENFmIqSgtmmq4Y+icKg/Eh
- CxKkImjVG7/Whj0MJO5SDPzI2DHoY4Kba+x21Sxiz1UjNo+4ApNUIQ7K5XKzjyyV1gxGdeyyC
- dEqrR5kVtr3X+ulMGwkDWesmm7uLqKu5pvIlnBOSy8Sho+Q5fU=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+Hi John,
 
-On Wed, 5 Sep 2018, Eric Sunshine wrote:
+On Fri, Sep 14, 2018 at 10:55:39AM -0700, John Austin wrote:
+> Is anyone interested in contributing/offering insights? I suspect most
+> folks here are git users as is, but if you know someone stuck on
+> Perforce, I'd love to chat with them!
 
-> On Wed, Sep 5, 2018 at 8:39 AM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > So let's hear some ideas how to improve the situation, m'kay?  Just as
-> > a reminder, this is the problem I want to solve: I want to run the
-> > tests in a light-weight manner, with minimal output, and only in case
-> > of an error do I want to crank up the verbosity. Instead of wasting
-> > most of the effort to log everything and then throwing it away in most
-> > of the common cases, I suggest to re-run the entire test.
-> 
-> What about the very different approach of capturing the full "verbose"
-> output the executed tests in addition to whatever is actually output
-> to the terminal?
+I'm thrilled that other folks are interested in this, too. I'm not a
+video game developer myself, but I am the maintainer of Git LFS. If
+there's a capacity in which I could be useful to this group, I'd be more
+than happy to offer myself in that capacity.
 
-I fear it is not really possible to do a "verbose but not really" mode. I
-want the console output to be quiet, there is no use in chatting up the
-build log with these messages, as we have to run the tests in parallel, so
-the output would be utterly hard to interpret anyway. At the same time, I
-want verbose output for use in the test results. It is not really possible
-to `tee` all output, then "quiet down" the part that makes it into the
-log.
+I'm cc-ing in brian carlson, Lars Schneider, and Preben Ingvaldsen on
+this email, too, since they all server on the core team of the project.
 
-> If a test fails, then (and only then) you can insert the captured
-> verbose output into the JUnit XML file.
-
-Yep. That's what my patch series does.
-
-If a test fails, then (and only then) I re-run the script with verbose
-output that is immediately moved into that JUnit XML file.
-
-> This way (if we always have the full verbose output at hand), you don't
-> need to re-run the test at all.
-
-But that way, if we always have the full verbose output, the build log
-will be unnecessarily verbose and confusing.
-
-> I've cc:'d Peff and Jonathan since I believe they are more familiar
-> with how all the capturing / output-redirection works in the test
-> suite.
-
-Okay.
-
-Ciao,
-Dscho
-
-P.S.: An unintended side effect of re-running the tests is to identify
-flakey tests. I do not yet have a way to represent this outcome in the
-test result, but I deem this an additional benefit in favor of keeping my
-current strategy.
+Thanks,
+Taylor
