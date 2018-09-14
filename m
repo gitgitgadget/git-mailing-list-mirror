@@ -2,133 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_WEB shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819981F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 06:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 324971F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 08:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727128AbeINLSu (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 07:18:50 -0400
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:46643 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbeINLSt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 07:18:49 -0400
-Received: by mail-pf1-f193.google.com with SMTP id u24-v6so3766600pfn.13
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 23:05:55 -0700 (PDT)
+        id S1727995AbeINNao (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 09:30:44 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:34035 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727860AbeINNan (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 09:30:43 -0400
+Received: by mail-pl1-f193.google.com with SMTP id f6-v6so3865074plo.1
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 01:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=ovQP8O1DgVOVQWi07OFxz4enORuFnGskYKkGHabC0Y0=;
-        b=Apr3MWX5M2kUOqIDfdOz6xhe2O/BzbmQJgfSwLMg8PgSEnv0AqWx+UvCBnVnh08u7z
-         lqKUod4brsg6NZ7iRZpnLNKMT9CC0qkbkzg61Q9mjay5DsX3aXI4p18RTmKxpO5+uyDW
-         agjspz8JQDfoqLuiIfdpw8Jjix4TgrzvYI5FsUPwA/mIePFADfkQHb0jcVYO39jo0X9D
-         qCvmU6zHz0HIcBFDrBbQyARW8XpTGuuvfV1MIhLFZQitPyg5e2MROTONb9K4HjWre4mX
-         dooID3i8k5Huquk4/9M470/KfGKRkEPNqXCc4/pI3mPU1q9CS02otmuP1733qWfNQQkK
-         roEA==
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=vUnPCpeBAi9eW//cCvg+wHng6ApQ+DZm5mrYIE9yMd8=;
+        b=nbFR7k9/9/suvNtITxsfKh23Og8x3sSUbenSXJf8kdm0lqagPjJDOPfYlAhP4mL4B1
+         moHylazxE5mIkcccvMX/RdGANDgCQ7Fy4j8x2ervMOb1aFLZkXrETFZY8aNwi+BmxdXs
+         u6wf+GSbPHuJZEgVOzmqf9XrFGV3ixVAhJiMl8Ue6fuPyrwVMO49JNjB41NghZMvB2v9
+         DZ1FeQzA0EuCKCCaz5ps3s9vf67Zam7nCmjHCrXbYaf3OcZbGDZ0oqwAdB+LrjA45B69
+         1Q2xMnxWqR1ujlB821h4PZblrX4aghpQqFbZCJn8U5cf5eyAq3e8zP5ITaTqe5+w2hj3
+         JUxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=ovQP8O1DgVOVQWi07OFxz4enORuFnGskYKkGHabC0Y0=;
-        b=dli5CHO7MuAMkxqYO/QUbvwDSWrEGPCK1ZAQTUmqHHgnRsRojHBOQkXRL005qOtARN
-         uJw1u7AJn4vNU1hQkNKRf46YSWDek0q/q0v2lv5n5sSBJ5DK5B6jUoe/h5lM73/SPdBj
-         6rw79ap3GZgab4k24sNPr1JJTTT6FUusmI+DfPrEJclsAwZnx0qkupvXMmvzPr8nHCxu
-         eidWMcZyjm6SNEc1862YOEFkvC8DG8vp/2uuTlfvohRxlOryNnQkorJV79I8JMU7j4ww
-         m0x1/66fmX7mcGXpZbV1rfuLjpAqp6QhWwaG6rqOEpCHZ+PhQj11nxK56SCP2Z332yF8
-         /+wQ==
-X-Gm-Message-State: APzg51BhtITnH7RXlmo8jiox1JGwc4t1pZQR2vkUTp6CrfdCvK+Ytrm4
-        3bGCJTxMp0G5TM2qk+SAb6Y=
-X-Google-Smtp-Source: ANB0VdbRH1Sgwkqwq1T6LZUDFB2sdQol5od/ReRGby/6IQIoy/NwmD4tDo0oNJH0w+Gr/3t4A9idMg==
-X-Received: by 2002:a62:c406:: with SMTP id y6-v6mr10716486pff.161.1536905155422;
-        Thu, 13 Sep 2018 23:05:55 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id a90-v6sm14013342pfg.106.2018.09.13.23.05.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=vUnPCpeBAi9eW//cCvg+wHng6ApQ+DZm5mrYIE9yMd8=;
+        b=DjZK1T6h9kAieH9J3yhaS8/ZgYAEWyhCHLWjkOAhs1DtZXfeMbpypIPZD3wh9PMY4w
+         T0Xk+qVf5NajBKUP7ScXe5uszfGe//zKPyZmUJWsEwFf94EfQOQkOpmDjgy2Gfxud3ov
+         +DzX66fUVm9cYxDcs9HyqThTDluBcinWP1l2qDorFtIVIJURg1NTaNV6A9y3eOIVD3rT
+         Yp7dLfcARA8m0ZAdE9G7hsWt9eIvmLRMzlFFbT9yzojKTUUbwce6aRaGdymVh8wR4Poc
+         NSgh4h8tM2gDHIkfz9T8zC10LpMNX43+NkezUgoaMCho7GnTUexGRKHiRekZQcGuk8qK
+         5iKA==
+X-Gm-Message-State: APzg51Cb27WD05iQ9T47hlnEh1bko6YPlgqNzfwP1t2NUupQGoc4TNss
+        PrvwlscKzE0Y1Qb+WazH/hb89D2Q
+X-Google-Smtp-Source: ANB0Vdane4SpvZ4LxSwUOSRwiRK0SrwRJJQSTUkNtLsjWhDkOKhhfZDx/04f5qL7H9ujHytKRr7Yag==
+X-Received: by 2002:a17:902:aa83:: with SMTP id d3-v6mr10858420plr.242.1536913042822;
+        Fri, 14 Sep 2018 01:17:22 -0700 (PDT)
+Received: from xenom-bubu ([180.246.25.37])
+        by smtp.gmail.com with ESMTPSA id p73-v6sm9949635pfk.186.2018.09.14.01.17.21
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 23:05:54 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 23:05:52 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Josh Steadmon <steadmon@google.com>, git <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Brandon Williams <bmwill@google.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Jeff Hostetler <git@jeffhostetler.com>
-Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
-Message-ID: <20180914060552.GD219147@aiede.svl.corp.google.com>
-References: <20180912053519.31085-1-steadmon@google.com>
- <20180912053519.31085-3-steadmon@google.com>
- <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
- <87k1npkzh5.fsf@evledraar.gmail.com>
+        Fri, 14 Sep 2018 01:17:22 -0700 (PDT)
+Date:   Fri, 14 Sep 2018 15:17:10 +0700
+From:   Shulhan <m.shulhan@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2] builtin/remote: quote remote name on error to
+ display empty name
+Message-ID: <20180914151710.3261463b@xenom-bubu>
+In-Reply-To: <xmqqpnxhdq0z.fsf@gitster-ct.c.googlers.com>
+References: <20180913131833.32722-1-m.shulhan@gmail.com>
+        <xmqqpnxhdq0z.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.17.0git50 (GTK+ 2.24.32; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87k1npkzh5.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Wed, Sep 12 2018, Stefan Beller wrote:
+On Thu, 13 Sep 2018 14:51:56 -0700
+Junio C Hamano <gitster@pobox.com> wrote:
 
->> Would asking for a setlocale() on the server side be an unreasonable
->> feature request for the capabilities (in a follow up patch, and then not
->> just for archive but also fetch/push, etc.)?
->
-> This would be very nice to have, but as you suggest in some follow-up
-> change.
+> Shulhan <m.shulhan@gmail.com> writes:
+> 
+> > When adding new remote name with empty string, git will print the
+> > following error message,
+> >
+> >   fatal: '' is not a valid remote name\n
+> >
+> > But when removing remote name with empty string as input, git shows
+> > the empty string without quote,
+> >
+> >   fatal: No such remote: \n
+> >
+> > To make these error messages consistent, quote the name of the
+> > remote that we tried and failed to find.
+> >
+> > Signed-off-by: Shulhan <m.shulhan@gmail.com>
+> > Reviewed-by: Junio C Hamano <gitster@pobox.com>
+> > ---
+> >  builtin/remote.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)  
+> 
+> Have you run "make test" with this change?  
+> 
+> I expect at least 5505.10 to fail without adjustment.
 
-Indeed, I think we've gone pretty far afield from the goal of this
-patch series.
+I am really sorry about that.  I am pretty sure, I run "make" to check
+if source is run successfully before I know the patch was correct, as
+the "t/README" said,
 
-> I think though that instead of doing setlocale() it would be better to
-> pass some flag saying we're operating in a machine-readable mode, and
-> then we'd (as part of the protocol defintion) say we're going to emit
-> GIT_ERR_UPLOAD_ARCHIVE_EXPECTED_DELIM_PACKET or whatever.
+  Running Tests
+  -------------
 
-I think you're suggesting client-side message generation, and that is
-one way to handle internationalization of server output.
+  The easiest way to run tests is to say "make".  This runs all
+  the tests.
 
-The main downside is when the server really does want to provide a
-custom error message.  For that, we'd need
+I will look into it later, if there is an error on test, I will send
+another version of patch.
 
- 1. To propagate LANG to the server, so it knows what human language
-    to generate messages in.
-
- 2. On the server side, to produce messages in that language if
-    available, with an appropriate fallback if not.
-
-We've been thinking of doing at least (1) using the same trick as
-server-options use (cramming it into client capabilities).
-
-It is difficult to use setlocale for this because it affects the whole
-program (problematic for a threaded server) and affects features like
-collation order instead of just message generation (problematic for
-many things).  Does gettext have a variant that takes a locale_t
-argument?
-
-[...]
->  4) Aside from translation purposes, getting a machine-readable
->     "push/pull" etc. mode would be very handy. E.g. now you need to
->     parse stderr to see why exactly your push failed (hook denied, or
->     non-fast-forward, or non-fast-forward where there was a lock race
->     condition? ...).
-
-Indeed, this is a good reason to provide error codes instead of (in
-the case where the message doesn't add anything to it) or alongside
-(in case the error message is more specialized) human-oriented error
-messages.
-
-Thanks,
-Jonathan
+-- 
+{ "github":"github.com/shuLhan", "site":"kilabit.info" }
