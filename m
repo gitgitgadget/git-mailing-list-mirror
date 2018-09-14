@@ -7,29 +7,29 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_HIGH shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C24341F42B
-	for <e@80x24.org>; Fri, 14 Sep 2018 14:37:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E393F1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 14:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728102AbeINTwb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 15:52:31 -0400
+        id S1728122AbeINTwd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 15:52:33 -0400
 Received: from mail-by2nam03on0100.outbound.protection.outlook.com ([104.47.42.100]:51842
         "EHLO NAM03-BY2-obe.outbound.protection.outlook.com"
         rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727676AbeINTwa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 15:52:30 -0400
+        id S1726902AbeINTwb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 15:52:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UqSv4pnwVCMnfhJ0sWXwfNavlHt+Z2pmblIZhQSMUk0=;
- b=i/lME44LNrTy7c40fwc8Gm2CIxJVh0NlaaIrU+DO9PBSWK7nhNURAR5pJIZNpdnSn7fv0CnT+qbVydkydudRRTsvsR5+mf3Ss+9tNBZJwY79WHfOBqN/MIMNjSsxAP1jILqBXMMpreM+fN8ucWSvP00yHtuqr28pr4oLLlKUpHo=
+ bh=p2qG+Z+WRrzHW1nV2YCTjt+j2zQNaAlZQAg38F1YAso=;
+ b=lfs2GFQK7hW9ooS785WaHjwRgehARomeJaoWMPamKgKEm4FCcyNj3Yb4trFcx/fjZ+dJIfsjtNBCx/b76DwP6slOw3n1nAZ8Z4nUXXGq2bw0jGUCYHawaGKFB72abvd9U/E9CjgLV1OGQI1kOI3MTxd0yg/93AmSIm5Nb6/+YQU=
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com (52.132.146.19) by
  MW2PR2101MB0972.namprd21.prod.outlook.com (52.132.146.21) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1164.5; Fri, 14 Sep 2018 14:37:27 +0000
+ 15.20.1164.5; Fri, 14 Sep 2018 14:37:28 +0000
 Received: from MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7]) by MW2PR2101MB0970.namprd21.prod.outlook.com
  ([fe80::3c7b:f2aa:d871:8ae7%2]) with mapi id 15.20.1164.008; Fri, 14 Sep 2018
- 14:37:27 +0000
+ 14:37:28 +0000
 From:   Ben Peart <benpeart@microsoft.com>
 To:     "git@vger.kernel.org" <git@vger.kernel.org>
 CC:     "gitster@pobox.com" <gitster@pobox.com>,
@@ -37,11 +37,11 @@ CC:     "gitster@pobox.com" <gitster@pobox.com>,
         "avarab@gmail.com" <avarab@gmail.com>,
         Ben Peart <Ben.Peart@microsoft.com>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: [PATCH v1 2/4] fsmonitor: update GIT_TEST_FSMONITOR support
-Thread-Topic: [PATCH v1 2/4] fsmonitor: update GIT_TEST_FSMONITOR support
-Thread-Index: AQHUTDh1CxdAAq1L6E+Cf0697YGGGA==
-Date:   Fri, 14 Sep 2018 14:37:27 +0000
-Message-ID: <20180914143708.63024-3-benpeart@microsoft.com>
+Subject: [PATCH v1 3/4] read-cache: update TEST_GIT_INDEX_VERSION support
+Thread-Topic: [PATCH v1 3/4] read-cache: update TEST_GIT_INDEX_VERSION support
+Thread-Index: AQHUTDh2CHVnD0bUhE+q1qB6eUTylQ==
+Date:   Fri, 14 Sep 2018 14:37:28 +0000
+Message-ID: <20180914143708.63024-4-benpeart@microsoft.com>
 References: <20180914143708.63024-1-benpeart@microsoft.com>
 In-Reply-To: <20180914143708.63024-1-benpeart@microsoft.com>
 Accept-Language: en-US
@@ -55,12 +55,12 @@ x-clientproxiedby: CY4PR12CA0037.namprd12.prod.outlook.com
  (2603:10b6:302:4::19)
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;MW2PR2101MB0972;6:Fsiq4PCsU5tPcPGPJJxpHWzC1STZOJMZwZPByoAGgKhLSjozmO1B/3dH36B3JbvQWaDA7neteOTcThfofhEcBkADCSrG1nsmWNw4pAQLiICydj/iCMlfAkZM3IspnLBIG92Tg+fdv72z2pJjfRM6V/6LffowoRFLtVdjxlAiwWWqe9MOgUzOIUKvdDmg6oCvlNSUoEWmaUjKTWZHGPWaaNwDttp8SsZruR2OA9mxR34RjRl4+qqXRWw5samVAGCmArntvcyLCyDuzI5jHkXO8feA00HUdAxC3Enufrr0qHFyytHTpOHETUwxKIWhnR77hsz28tl0ebYJk+61rJ3/h2XReR+l/Kj3tY96KzlgplZbpP8xt0/IeA+/subw7FFm3i/oHkYZqQhB7yHQJgJVLEPKEEvD2PxzRigVXweFkxMPMN8+n3gQSaGjKJU2Z4ad3coBh3NhSk03oS4fagVkHg==;5:zgv8a/fvXhD0GNdfVxBP2ZMIYNlL2IpY34nfCPNgMgeg9BLrt9gFl1uTs6PHRSNvVDKHjAYsFsFjDjbiLrO7mc799Ws/X+t0uxbgfyQpFQRkgroXHMFI4PqcL9rsF30+CuTpDKi+/CbttDR56BYKJo2pZhfX+KQ2zQfgy2uMwSs=;7:ibGcOaDXTPMxmtItDNT+L/cCf7hkUenRhQrxPqhg/LgaAQdymdMZqZmqvNLYjEtIHZ9vUUioTSIfp6IXG3JFncln3laeArBrPu0B8KNVzrg/NgZHSe+EuWRTacn5UVqAHB0Hea9blSjl+YzyqZsIsbkCAnkgPchzl0+mSSOXDGH9rAyH5031xHObuK5QGK31a6ttZGy5LDgkWgqkqgg42N+KhiWM2iGger8J2mWm+86ENoJOMKkIhHcy4v+5PA2M
-x-ms-office365-filtering-correlation-id: 29da5ebf-f7fd-4567-493b-08d61a4f97b1
+x-microsoft-exchange-diagnostics: 1;MW2PR2101MB0972;6:8xGEnRJWGAAr5ulpjmTXqxSAZGBKF5Xjpl/BljUt8SwzmQsI870nk2KVwHdP+uAg889Z25Y9BunuOFumGCx/nSmI5meRgPdNktbBQusK8SjP3Nf1MxSPjBFwk60eT2K4Ec3ky2BRUSGS5hEQlTuenIKrjWYM4Ej9G58Zyo+BhqKpXhxajySCJSZjp3bHuB8jbOQxtv7M3J/K+YlbbFeOpB7Pl03WN0GZXKe7UcN9T30rDmXYj14fLIGCGB0YAXwEMpj44/r3LFCCXQw3Zbne9OhC8xoxOSx+RSgTv3cHk0d/fCs4yHYfSu+Y/V4O/8gUtu0KkjVWZkaCySPAO/lKiaKleGsKnHDYInwvpq6Efo36zpIgx0SdviNVf0ooHtsDRuaQEa6OGgDrzPMaq4FYg7WDDLc4I3UnotZ2Ke1D4h4IVOQkzeFstfZSJP5DDm1QlZzP/1zYfU0kes5ssaBcLg==;5:P/+a8qAo53LRHTRm4h5mhvctaDWJzbpxqTh7WWg3Vsbaewal0gHa8Xk2PuEFyu9ghg0/+tNjcBByj5WeERBv4OOaLF8PLMOcbchJuxdiU/AbuDKjFm8xYgg03/yog3FVUaRv5tA2yPEeuQ2VSz1Y/QDSDPh+4EC7kaJp5T33aCk=;7:GNnS0gso+3oHamoPGea6nHqF1Lql7dMCM+gQ6k+D6N4OsJ3ORIVwVFi0akYvPGDv5JnQFhvkl5p+XIt/Ni+AjmEHjuJW9T7lUyh2rxUek1D3OpAFIzBDLUZyIAes8sJSDj32ZhzaTF0MoSsi5cFmlpljazeqUcU2Krn5JCTJkLcPBOS0wOgPYKuKtfVhwFKkbJiInqEOissKZ6c7CRNSX3bbqynLV23vEZgk/PRYtYTt4k7rNiJH96T+7hRMP6mv
+x-ms-office365-filtering-correlation-id: 57ccd06e-d638-468a-1a4a-08d61a4f9864
 x-ms-office365-filtering-ht: Tenant
 x-microsoft-antispam: BCL:0;PCL:0;RULEID:(7020095)(4652040)(8989137)(4534165)(4627221)(201703031133081)(201702281549075)(8990107)(5600074)(711020)(4618075)(2017052603328)(7193020);SRVR:MW2PR2101MB0972;
 x-ms-traffictypediagnostic: MW2PR2101MB0972:
-x-microsoft-antispam-prvs: <MW2PR2101MB0972E048CB5C44A30FF839E9F4190@MW2PR2101MB0972.namprd21.prod.outlook.com>
+x-microsoft-antispam-prvs: <MW2PR2101MB09722B5561D722F11AA11584F4190@MW2PR2101MB0972.namprd21.prod.outlook.com>
 x-exchange-antispam-report-test: UriScan:(28532068793085)(89211679590171);
 x-ms-exchange-senderadcheck: 1
 x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(6040522)(2401047)(8121501046)(5005006)(93006095)(93001095)(3002001)(3231344)(944501410)(52105095)(2018427008)(10201501046)(6055026)(149027)(150027)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123560045)(20161123564045)(20161123562045)(20161123558120)(201708071742011)(7699050)(76991041);SRVR:MW2PR2101MB0972;BCL:0;PCL:0;RULEID:;SRVR:MW2PR2101MB0972;
@@ -70,15 +70,15 @@ received-spf: None (protection.outlook.com: microsoft.com does not designate
  permitted sender hosts)
 authentication-results: spf=none (sender IP is )
  smtp.mailfrom=Ben.Peart@microsoft.com; 
-x-microsoft-antispam-message-info: x/HMchpMuzG8hthtbZOA2QxgTqOC+6KrE9bveDRBvPCmvaKUtC04gS1XK+xNoKXZYk7B+x8o9LhDWme+QzXbfHXpmz5PKP11VDlzXXZBxWNk+T4iiOFCDpxc6vn4Tgys43Z9bKGpWZEi/jjY6t5flt/F1x4341dmrogcgloYk3+6vokqvZCxjcLPQlALQg/6Fyz4N+7Hmvl9mAg87etQBwi6gv4nByUxDJ/DbXIMdrCwBOs5ykMSoD3/hbdwfTVLfob3AZ9iTA0MyTycf3dWfTph9g40ICVGsTEAsp3nnTKvN6O6a/hHRrekYgW+3ihzMbmGsU6/doQSSxQj0rgYO4bECJOZ80QLp//IxHg6w3c=
+x-microsoft-antispam-message-info: PafqA84q29BAusfbm3RFFX3ps+Fq+xkWR1+o3ghTaaKqDU6HXjv7z1oeyCep5k/oQd6/r8S9vnXnvVnAD8AX4br4S2SVAdlTuiJ/YE6YJLo2fZV/n7QLWDGDkhwei9mQFKNKAcs9V80iDCKJyePiVE1TA7/Cd5NTuk7+wjO8YyACVm6pCj3dZvGjl6oClcFw5t+dkOExbetN7pql0wGSVBwxnJ5jX74vBfT3nQUM2TCrjr6qMeweBwKHD2+4Y+vbaD28vfz7OopBe9flZmyv63gfgaKY20+1CEhrAOuuOxklQkPiv9wV6TJGxYTI+bedoGYclLJ/bWrYpNgrpQp5LT92pbgv+ngYa5CVi7r5FdQ=
 spamdiagnosticoutput: 1:99
 spamdiagnosticmetadata: NSPM
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 29da5ebf-f7fd-4567-493b-08d61a4f97b1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Sep 2018 14:37:27.2501
+X-MS-Exchange-CrossTenant-Network-Message-Id: 57ccd06e-d638-468a-1a4a-08d61a4f9864
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Sep 2018 14:37:28.4064
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
@@ -88,8 +88,9 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rename GIT_FSMONITOR_TEST to GIT_TEST_FSMONITOR for consistency with the
-other GIT_TEST_ special setups and properly document its use.
+Rename TEST_GIT_INDEX_VERSION to GIT_TEST_INDEX_VERSION for consistency wit=
+h
+the other GIT_TEST_ special setups and properly document its use.
 
 Add logic in t/test-lib.sh to give an error when the old variable is set to
 let people know they need to update their environment to use the new
@@ -98,93 +99,86 @@ eventually remove the old variable.
 
 Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
 ---
- config.c                    |  2 +-
- t/README                    |  4 ++++
- t/t1700-split-index.sh      |  2 +-
- t/t7519-status-fsmonitor.sh |  2 +-
- t/test-lib.sh               | 11 +++++++++++
- 5 files changed, 18 insertions(+), 3 deletions(-)
+ Makefile      |  6 +++---
+ t/README      |  4 ++++
+ t/test-lib.sh | 15 +++++++++++++--
+ 3 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/config.c b/config.c
-index 3461993f0a..3555c63f28 100644
---- a/config.c
-+++ b/config.c
-@@ -2278,7 +2278,7 @@ int git_config_get_max_percent_split_change(void)
- int git_config_get_fsmonitor(void)
- {
- 	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
--		core_fsmonitor =3D getenv("GIT_FSMONITOR_TEST");
-+		core_fsmonitor =3D getenv("GIT_TEST_FSMONITOR");
+diff --git a/Makefile b/Makefile
+index 5a969f5830..9e84ef02f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -400,7 +400,7 @@ all::
+ # (defaults to "man") if you want to have a different default when
+ # "git help" is called without a parameter specifying the format.
+ #
+-# Define TEST_GIT_INDEX_VERSION to 2, 3 or 4 to run the test suite
++# Define GIT_TEST_INDEX_VERSION to 2, 3 or 4 to run the test suite
+ # with a different indexfile format version.  If it isn't set the index
+ # file format used is index-v[23].
+ #
+@@ -2599,8 +2599,8 @@ endif
+ ifdef GIT_INTEROP_MAKE_OPTS
+ 	@echo GIT_INTEROP_MAKE_OPTS=3D\''$(subst ','\'',$(subst ','\'',$(GIT_INTE=
+ROP_MAKE_OPTS)))'\' >>$@+
+ endif
+-ifdef TEST_GIT_INDEX_VERSION
+-	@echo TEST_GIT_INDEX_VERSION=3D\''$(subst ','\'',$(subst ','\'',$(TEST_GI=
+T_INDEX_VERSION)))'\' >>$@+
++ifdef GIT_TEST_INDEX_VERSION
++	@echo GIT_TEST_INDEX_VERSION=3D\''$(subst ','\'',$(subst ','\'',$(GIT_TES=
+T_INDEX_VERSION)))'\' >>$@+
+ endif
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
 =20
- 	if (core_fsmonitor && !*core_fsmonitor)
- 		core_fsmonitor =3D NULL;
 diff --git a/t/README b/t/README
-index 56a417439c..47165f7eab 100644
+index 47165f7eab..9b13f6d12e 100644
 --- a/t/README
 +++ b/t/README
-@@ -319,6 +319,10 @@ GIT_TEST_OE_DELTA_SIZE=3D<n> exercises the uncommon pa=
-ck-objects code
- path where deltas larger than this limit require extra memory
- allocation for bookkeeping.
+@@ -323,6 +323,10 @@ GIT_TEST_FSMONITOR=3D$PWD/t7519/fsmonitor-all exercise=
+s the fsmonitor
+ code path for utilizing a file system monitor to speed up detecting
+ new or changed files.
 =20
-+GIT_TEST_FSMONITOR=3D$PWD/t7519/fsmonitor-all exercises the fsmonitor
-+code path for utilizing a file system monitor to speed up detecting
-+new or changed files.
++GIT_TEST_INDEX_VERSION=3D<n> exercises the index read/write code path
++for the index version specified.  Can be set to any valid version
++(currently 2, 3, or 4).
 +
  Naming Tests
  ------------
 =20
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index b3b4d83eaf..f6a856f24c 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -6,7 +6,7 @@ test_description=3D'split index mode tests'
-=20
- # We need total control of index splitting here
- sane_unset GIT_TEST_SPLIT_INDEX
--sane_unset GIT_FSMONITOR_TEST
-+sane_unset GIT_TEST_FSMONITOR
-=20
- test_expect_success 'enable split index' '
- 	git config splitIndex.maxPercentChange 100 &&
-diff --git a/t/t7519-status-fsmonitor.sh b/t/t7519-status-fsmonitor.sh
-index 756beb0d8e..d77012ea6d 100755
---- a/t/t7519-status-fsmonitor.sh
-+++ b/t/t7519-status-fsmonitor.sh
-@@ -8,7 +8,7 @@ test_description=3D'git status with file system watcher'
- # To run the entire git test suite using fsmonitor:
- #
- # copy t/t7519/fsmonitor-all to a location in your path and then set
--# GIT_FSMONITOR_TEST=3Dfsmonitor-all and run your tests.
-+# GIT_TEST_FSMONITOR=3Dfsmonitor-all and run your tests.
- #
-=20
- # Note, after "git reset --hard HEAD" no extensions exist other than 'TREE=
-'
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 44288cbb59..0ef111d808 100644
+index 0ef111d808..5f5f0f4b55 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -140,6 +140,17 @@ then
+@@ -134,12 +134,23 @@ export EDITOR
+ GIT_TRACE_BARE=3D1
+ export GIT_TRACE_BARE
+=20
+-if test -n "${TEST_GIT_INDEX_VERSION:+isset}"
++if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
+ then
+-	GIT_INDEX_VERSION=3D"$TEST_GIT_INDEX_VERSION"
++	GIT_INDEX_VERSION=3D"$GIT_TEST_INDEX_VERSION"
  	export GIT_INDEX_VERSION
  fi
 =20
-+if test -n "$GIT_FSMONITOR_TEST"
++if test -n "$TEST_GIT_INDEX_VERSION"
 +then
-+	if test -n "$GIT_TEST_FSMONITOR"
++	if test -n "$GIT_TEST_INDEX_VERSION"
 +	then
-+		echo "warning: the GIT_FSMONITOR_TEST variable has been renamed to GIT_T=
-EST_FSMONITOR"
++		echo "warning: the TEST_GIT_INDEX_VERSION variable has been renamed to G=
+IT_TEST_INDEX_VERSION"
 +	else
-+		echo "error: the GIT_FSMONITOR_TEST variable has been renamed to GIT_TES=
-T_FSMONITOR"
++		echo "error: the TEST_GIT_INDEX_VERSION variable has been renamed to GIT=
+_TEST_INDEX_VERSION"
 +		exit 1
 +	fi
 +fi
 +
- # Add libc MALLOC and MALLOC_PERTURB test
- # only if we are not executing the test with valgrind
- if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
+ if test -n "$GIT_FSMONITOR_TEST"
+ then
+ 	if test -n "$GIT_TEST_FSMONITOR"
 --=20
 2.18.0.windows.1
 
