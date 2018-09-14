@@ -2,63 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFE0F1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 21:57:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E40641F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 22:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728100AbeIODNw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 23:13:52 -0400
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:46948 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726942AbeIODNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 23:13:52 -0400
-Received: by mail-ed1-f54.google.com with SMTP id k14-v6so8506763edr.13
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 14:57:30 -0700 (PDT)
+        id S1727838AbeIODaO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 23:30:14 -0400
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:41372 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727716AbeIODaN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 23:30:13 -0400
+Received: by mail-wr1-f66.google.com with SMTP id z96-v6so11947270wrb.8
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 15:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=MlN9ug4UWZfuU3BlKvBflo42Gy61F5PJ3Xwi7EbGFAI=;
-        b=NMvR8OxVPcjqRwnMJZnLt2nsrk7njK4BeE11Z4MhvDfwSjjbObWK12B6rgwG3pOb4l
-         KHVQH4uSnbnYcaw8m6zHUkUnQ+M1fzDS6ssEyIZyyHQ7JVatJhqnL1weo/Fld6laa2oO
-         DJpw3oa33/uUQjPXQl2Y6QdIii+Yvhj5QbsBBYry9UqpgvzrZ82CKW8aqXEQlFh87ZtF
-         KSwim4visOVVoDA3AGVn6kb9QQ/WmN0Q1Gjfu4fWLT/YjsDQrhgoIIN9mz0/GzQ+KiiH
-         5dtWmJV3YJxGHdpV4CTYTxjJEAGjq19Q9UP4bKopd9Fw7mlAS9qwoc0brzs7sKDjpwtM
-         v96g==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dCak68f/+nyYc4LrG1nfaygi7hLZrGNrevk/JCrmJJM=;
+        b=grNS6amQpAw8noL0uqJ0xsB3Le5fjp1BNk0M+F83vJwm32RuH3l3Fm1Fx/Su9Rpf9q
+         pygCuDKRDQNPs0RykitvYS2eXMpd1gtthEIhrgC1vk3fQ9HE0902Qh0D2N9uoueSHYel
+         ek+olgFUKCK7AXMyNcN68vsm83Q69cSEqrbQjxTGwcMeTh6BzarBMNVn7mA0TFvl9Nwv
+         n550KTCU2COFzwYoY1dqtIClcfjqKj772EorwH8KyaOuOVAzpK1G/rAjxz8gRuoXR/qC
+         s80mDcXxYeokR8+r58DTuBIrHE9KRf+iScDMdiaU5KoOAHnRtnQ28u6/rINlW2P4TVoT
+         NV8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=MlN9ug4UWZfuU3BlKvBflo42Gy61F5PJ3Xwi7EbGFAI=;
-        b=tPur+cLsiqWW25iOLeDCy1EewepLE5aRHqL2YcHRowXotjxhCp0rdD3Z7ZVMfbVsUJ
-         qAGHAe0T2f9DhuJcWlqWEbu5nnDv54MSDrcBhzRqli137kX6zFek38Di2T4IdMUnmyXd
-         X3jI2nGx5kqHhPc5pIuqMuvGbb0vvAZ21IXXRtNb8K86dtcgOk9632Muq5c4IkqrsdiF
-         i3/1yGfHQJthxFNlqw364UnU+EcfufkA8Qn92JrZK8eE4JjvuqYHk74nXptDLAYhmQAG
-         OTyTOsUhettoybfY1QWC2kf5gN6Tjd8woiZL70fD29lBJ60iolb1LIrXKz1O2rW7LQjB
-         LnKA==
-X-Gm-Message-State: APzg51DxdMH+aML7xQ1ApD6n4v4l31QlKf69klASyzrnYFI/ei9BEe8E
-        xNZdF8d+T99xoZVfyJzU9Lj4C9NpAGk=
-X-Google-Smtp-Source: ANB0VdaJX7sYap9vd7yQOGC0TPrMDBc81zDPUSDufndl7Q71IVmOgLBM+iwSFV+f59yWt7EHzuMgVw==
-X-Received: by 2002:a50:8386:: with SMTP id 6-v6mr23601823edi.170.1536962249649;
-        Fri, 14 Sep 2018 14:57:29 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id x32-v6sm4832755eda.81.2018.09.14.14.57.28
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dCak68f/+nyYc4LrG1nfaygi7hLZrGNrevk/JCrmJJM=;
+        b=nrcfHuZHq8qw7IL/KL4LZAwBrihqPvAEoQ7Fcpjqav75BvND425jJ02sUJU8BTJBJE
+         qLQVOvfvdujCAmlxzcQaYactiZzgWM7a1yJ2m2KL2dwXgBdlD35D308L4j/o0ljCcKsE
+         Px7m1EvRLsbVkCyiDcq0iPgYjV5vnDzaaGtCcXBHkmj9hVYtgb5U2iBqZxGCHQGLSnut
+         OOVn2hQ3qS3fTQzSyEaUHOsCjA7+/pz3zyEhgPcM9DTjm1cI94li3Weht00S2nIBKZqI
+         EPAQI3PsW1asGEKny1VeL4GgNoSZdwlnumUH3of1cuQWLDix65F4nkuvKClHN/Es/NsE
+         kiHA==
+X-Gm-Message-State: APzg51DWUYyzC1dUui9Bcr/QOKpJb2P0hyC+4C8ftb//Hfa6YFQRyy9O
+        9PIQAzhuT98+KdVlPzZYs48hdaRQ
+X-Google-Smtp-Source: ANB0VdZOCrzxppxzdFDAmYg4m7Sd6fkQWOfS6TVghl1nCkyILDauOnZYHNrMAcUMJgpz6rC9Wnv7zw==
+X-Received: by 2002:adf:9051:: with SMTP id h75-v6mr11927716wrh.65.1536963228165;
+        Fri, 14 Sep 2018 15:13:48 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d12-v6sm8802447wru.36.2018.09.14.15.13.47
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 14:57:28 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Niko Dzhus <primenico@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Bug report] Git incorrectly selects language in macos
-References: <CAKd-JgStGb4Ka9Rs6G2e4ADQKZVrsJMsNGz1sRP_4Ej4=FtxtA@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAKd-JgStGb4Ka9Rs6G2e4ADQKZVrsJMsNGz1sRP_4Ej4=FtxtA@mail.gmail.com>
-Date:   Fri, 14 Sep 2018 23:57:22 +0200
-Message-ID: <87a7ojlp31.fsf@evledraar.gmail.com>
+        Fri, 14 Sep 2018 15:13:47 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     "peartben\@gmail.com" <peartben@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "t.gummerer\@gmail.com" <t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 4/5] read-cache: update TEST_GIT_INDEX_VERSION support
+References: <80988727-085f-cdd9-e5bb-a90a55e97024@gmail.com>
+        <20180914201340.37400-1-benpeart@microsoft.com>
+        <20180914201340.37400-5-benpeart@microsoft.com>
+Date:   Fri, 14 Sep 2018 15:13:46 -0700
+In-Reply-To: <20180914201340.37400-5-benpeart@microsoft.com> (Ben Peart's
+        message of "Fri, 14 Sep 2018 20:14:03 +0000")
+Message-ID: <xmqqtvmrafs5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,36 +71,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ben Peart <benpeart@microsoft.com> writes:
 
-On Fri, Sep 14 2018, Niko Dzhus wrote:
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 653688c067..397eb71578 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -134,9 +134,9 @@ export EDITOR
+>  GIT_TRACE_BARE=1
+>  export GIT_TRACE_BARE
+>  
+> -if test -n "${TEST_GIT_INDEX_VERSION:+isset}"
+> +if test -n "${GIT_TEST_INDEX_VERSION:+isset}"
+>  then
+> -	GIT_INDEX_VERSION="$TEST_GIT_INDEX_VERSION"
+> +	GIT_INDEX_VERSION="$GIT_TEST_INDEX_VERSION"
+>  	export GIT_INDEX_VERSION
+>  fi
 
-> It doesn't use English when other language is available as a secondary language.
->
-> Reproducing:
->
-> 1. Open "Language & Region" in macos settings
-> 2. In "Preferred languages" box, set English as a primary language.
-> 3. Add another language, that git is translated to, as a secondary
-> language, for example, French or German.
-> 4. Run any git command - git will use the secondary language, instead
-> of English.
->
-> When the secondary language is removed, then git starts using English again.
->
-> I have git 2.19.0, installed from brew, and my OS is macOS 10.13.6 .
+Is this done a bit before ...
 
-What's the output of these two commands for you:
+> @@ -159,6 +159,7 @@ check_var_migration () {
+>  }
+>  
+>  check_var_migration GIT_FSMONITOR_TEST GIT_TEST_FSMONITOR
+> +check_var_migration TEST_GIT_INDEX_VERSION GIT_TEST_INDEX_VERSION
 
- 1. locale
- 2. env | grep -e LC -e LANG
+... this has a chance to kick in to say things like "Whoa you have
+TEST_GIT_INDEX_VERSION that is an old spelling of
+GIT_TEST_INDEX_VERSION", isn't it?
 
-We don't do any such magic ourselves, so whatever this is is down to how
-i18n in general works on your system, do you have any other translated
-command-line program that works differently?
-
-I suspect there's some DWYM logic here that always treats English as a
-secondary language.
-
-Do you also e.g. get the same results if you select say Swedish as a
-primary language and German as a secondary? I.e. a Git in German, as
-opposed to Swedish?
+>  # Add libc MALLOC and MALLOC_PERTURB test
+>  # only if we are not executing the test with valgrind
