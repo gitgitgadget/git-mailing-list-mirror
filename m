@@ -2,63 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0EA1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 21:21:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E9F1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 21:54:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728201AbeIOChZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 22:37:25 -0400
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:34515 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728118AbeIOChY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 22:37:24 -0400
-Received: by mail-ed1-f46.google.com with SMTP id u1-v6so8492103eds.1
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 14:21:10 -0700 (PDT)
+        id S1727680AbeIODK6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 23:10:58 -0400
+Received: from mail-wr1-f49.google.com ([209.85.221.49]:34703 "EHLO
+        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726942AbeIODK6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 23:10:58 -0400
+Received: by mail-wr1-f49.google.com with SMTP id g33-v6so11947324wrd.1
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 14:54:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=wk7h7ouuY4ovpsXcJrldPwazlQ1ytXOJJCae6wVrE+U=;
-        b=HagdUzkB+1P/BIeHcZJVRrlAPHY1wBIp413AGeb1Vtt0GtY9r1Nhp+1Z59zQPs3IS8
-         kbXu8bpVqrijSYQZ1FVpO0eMypnVZnybAldLXlPiaasSxb71KigVXDHgIFJVen8sowCr
-         Goe/PwpRFuY/pVnyolau1xWm6dwrRpxlVzy2zgkYIJXUofuOQZOWM+1yhr05ejwpfW98
-         dV/bsFNMyIGl2bHdWMdIZ0nM3zLEwNLv+1FA3nCsR9EZHObiy/USK5hMAlOkQqhbUuaW
-         TMjVxvnvLsDENlhyoOGvnhpQupVykh28TS7ox4/6jwneAM7FvfaVjwANQsitZxPWJhmE
-         4r+Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=rbRHO0q7imCApHsPNLGE5bfc+bzIF5CzrBC9SmBXNmw=;
+        b=ITSa0pNQObwb2LDbW9CL47ezK2F+X1fHyogz+8EvmXqs1eY54M8oBeTjUbPoLd+QsZ
+         kbVqkfFeqGwPM3I2pNtec8K8ej0YENk7tz77otbEFpotOTYOFTnWfaEnBkNi34f7elf9
+         yradkowZ8bzJCVjC1LXZI+V3UAZxYeu87coIDyiHWw14Xmz/OVr+8h1O+vIci3+gxyeN
+         vHC4VSn5WwrE8qNoSnLiiEqA0NqqdPAH5wmZfkP2l4Ev+HsVfZC4m1RykggifG7h1md9
+         bmick/zQjCH32wygnEh8VP25wb13DMdkg26hiBVt886NashYZjVj4FDXmxBxDiQACYeT
+         Q+wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=wk7h7ouuY4ovpsXcJrldPwazlQ1ytXOJJCae6wVrE+U=;
-        b=lscLigSx9gfvx9VmhFdl07aP3jAqrTdEDR8zdy9f+YBEFl6Lq7p28QWCvw7B70/bxC
-         onOvjY29JF4R0+6/bv7Mwk5uCytBr3X/O9t90VuGag4DGZQ+9ASE1XKlVF+HzQ2SJSg0
-         esLRPw1SFSuCli4C48tcMAgf24cE78PKkI//K23VRW7g7e+vc5MEZWfSWiWUmYV60P4q
-         IMSSlmFVeV2RMRo6OVI8eaO49W3ER+mfQSiFk+UkP+WrlzgmSJ5jAw7ICD5rqrC0cfKL
-         s0Yx5zjPr/lyiA5HH5JhT32AAgx2p7k/HxByKoVlea+xxSpfaYO8TSK0A/TmJE+aWoKQ
-         Y+YA==
-X-Gm-Message-State: APzg51Dw/vrqfzqlaRIAwU8QkLXij4D4j/SAOfQT2UOqs9HxgUgaExtl
-        y5XAalnbt1DJM4gUKFDLbkk=
-X-Google-Smtp-Source: ANB0Vdad6ofgrt9ML0U2aooUJfgffuk7SjTWB5CXeT9+LMN+Ng63exKWOWiCAcV79BR/lIwm7L+m7A==
-X-Received: by 2002:a50:c101:: with SMTP id l1-v6mr22306033edf.126.1536960069395;
-        Fri, 14 Sep 2018 14:21:09 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id z30-v6sm3866874edb.4.2018.09.14.14.21.08
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=rbRHO0q7imCApHsPNLGE5bfc+bzIF5CzrBC9SmBXNmw=;
+        b=LWoAoStY3PsKVekCniJ2T5Gt5R8Tj+hzrnlprA2VTHopbMkW+63DYiVry54AnisR2k
+         1jYlXlR6mzbvZMp4brJSEOFJyGWU9411XwL4Ot/lNs+pWG8Nzvlga8L0v+1W8pPeNChW
+         xE4G+qc/50GXbAyj3KwmHKEbPLVk1cxQYVXs24dcf9RsLKO9lM525zITaT1X9HS8zSTi
+         Ckt/x8bTyiJK1m668QULxEP07mHv4HVIB7aF6TRyIZLq9pU5cliFT552N08Y5ZTEulzv
+         lQDQcjuMiHWS5QDghhGxZxLusPIMjqLG3FUKhqZS39+CFJcXaZmBPOdyNRdSficASQd9
+         gv9Q==
+X-Gm-Message-State: APzg51CRuk8ZtAb5tG6THKNwrCgWQF36pitJfPsbTTmM6HEkHM9k376S
+        8phjlY2Nghiilo3/gqmQLlQ=
+X-Google-Smtp-Source: ANB0VdbPIlnlBUPP5sV3wmeDiz9uokyYJ5ov9GnZs8MEyQCoPOkNnx5Nsp26oHGhPHkaNYNKkfXZ4w==
+X-Received: by 2002:adf:fd12:: with SMTP id e18-v6mr11834089wrr.280.1536962075613;
+        Fri, 14 Sep 2018 14:54:35 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id g7-v6sm7120660wrw.30.2018.09.14.14.54.34
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 14:21:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     John Austin <john@astrangergravity.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Git for games working group
-References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
-Date:   Fri, 14 Sep 2018 23:21:06 +0200
-Message-ID: <87bm8zlqrh.fsf@evledraar.gmail.com>
+        Fri, 14 Sep 2018 14:54:34 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        "peartben\@gmail.com" <peartben@gmail.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        "avarab\@gmail.com" <avarab@gmail.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        "t.gummerer\@gmail.com" <t.gummerer@gmail.com>
+Subject: Re: [PATCH v2 2/5] preload-index: teach GIT_FORCE_PRELOAD_TEST to take a boolean
+References: <80988727-085f-cdd9-e5bb-a90a55e97024@gmail.com>
+        <20180914201340.37400-1-benpeart@microsoft.com>
+        <20180914201340.37400-3-benpeart@microsoft.com>
+        <20180914205158.GC133420@aiede.svl.corp.google.com>
+Date:   Fri, 14 Sep 2018 14:54:33 -0700
+In-Reply-To: <20180914205158.GC133420@aiede.svl.corp.google.com> (Jonathan
+        Nieder's message of "Fri, 14 Sep 2018 13:51:58 -0700")
+Message-ID: <xmqq36ubbv8m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -66,17 +73,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-On Fri, Sep 14 2018, John Austin wrote:
+> Maybe something like:
+>
+> 	preload-index: use git_env_bool() not getenv() for customization
+>
+> 	GIT_FORCE_PRELOAD_TEST is only checked for presence by using getenv().
+> 	Use git_env_bool() instead so that GIT_FORCE_PRELOAD_TEST=false can
+> 	work as expected.
 
->  - improvements to large file management (mostly solved by LFS, GVFS)
+That is much better description.  Also
 
-There's also the nascent "don't fetch all the blobs" work-in-progress
-clone mode which might be of interest to you:
-https://blog.github.com/2018-09-10-highlights-from-git-2-19/#partial-clones
+	$ cd t && GIT_FORCE_PRELOAD_TEST=t ./t0000-basic.sh
 
->  - avoiding excessive binary file conflicts (this is one of the big
-> reasons most studio are on Perforce)
+would have allowed us to enable the feature in the older world, but
+I suspect it would instead fail the test, saying 't is not a bool
+nor int'.
 
-Is this just a reference to the advisory locking mode perforce/cvs
-etc. have or is there something else at play here?
+So strictly speaking, it is a backward incompatible change.  I am
+not sure if I like it.
+
+>> Teach GIT_FORCE_PRELOAD_TEST to take a boolean to turn on or off this test
+>> feature instead of simply testing for existance.
+
+s/existance/existence/?
