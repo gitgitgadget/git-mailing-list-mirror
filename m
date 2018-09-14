@@ -7,60 +7,61 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A9B9C1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 05:36:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6332D1F42B
+	for <e@80x24.org>; Fri, 14 Sep 2018 05:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726845AbeINKtn (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 06:49:43 -0400
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:35317 "EHLO
+        id S1727065AbeINKwh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 06:52:37 -0400
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:46793 "EHLO
         mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726406AbeINKtn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 06:49:43 -0400
-Received: by mail-pg1-f194.google.com with SMTP id 7-v6so3840313pgf.2
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 22:36:55 -0700 (PDT)
+        with ESMTP id S1726406AbeINKwh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 06:52:37 -0400
+Received: by mail-pg1-f194.google.com with SMTP id b129-v6so3822782pga.13
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 22:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=33HfMDdsQP1OqL/Tj8eRTlCwTX0Yz6/+GgYZouO6hfg=;
-        b=SrVaudCNrN4A3IQRX3LTo4EdGFHSVhyhq+jl2Q0O6vCLuEtN63vSin8+pGD+EFn6yA
-         N9/NvuxJurIRpCf2rM3Ae532Wl+8dRfCDYPtec1j7wugun/480hfD3QZczK+fAbQih7r
-         HEuJ7hISFi48g5UafIHERfJO9hOOWkRR25QVsAMwD+Mw8qAtldDKPF4mmPfMhpINOB6l
-         73JAQ0DGgK4xnNVjBAQvztAo4WwyzrO/VUm9WwqPpCc/MHgEyLK2473QD/MJMHbi2QfR
-         1sfm3jI+GSKIZH2ozQDOs8DcNN4zdKPBTvicixdxG47OCo5CjzCTEpJWT7Z+vIYBthxn
-         2sRg==
+        bh=Rf4v5dYrGK/AqpRN+I0pB80QrevYCSrug8EiXLqzGSY=;
+        b=rrikwy6YiYnDHmJ1aDKyubhzAErOrqhMQFVzqRTx2kEHM2VNVz4eUW7ZLEd7wUhwYs
+         s2SqxAmXpH0U45xIUmYudCmme4wqsA7+FC9Uega56QihAGSURT/15WeSdMT3pOmuDTK6
+         CZeIXFMQzVefCl9IVKFgw3ECzWodtSV0lO+TpWDBEQuRbu6sOoXawdk2lmI3TLF9mA8J
+         gxQWMo4JLSbWBsFhGks0V0xLhmX3564LeWCXiKYUL4JOmk7cEKLUpl308aY1657lNpPQ
+         B5p7NEtRtRriH0VzDAnoTLuInLRDkWpykD1owsGljIWq4JQJ8X/xk9GG4opNm7N0V3MC
+         Q3Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=33HfMDdsQP1OqL/Tj8eRTlCwTX0Yz6/+GgYZouO6hfg=;
-        b=abPb9SCAflycpP1W1wqIITuW6S4BtkXJstKWbPt+sk40KdjO+c0Feb/xI9wKEoFGKh
-         NB51TOqGoYEo6MaQxQNY6Ekhb+kCr31DJWPYvtjEFP4bCluJu4fJIWrZIT7I9g4uhD4N
-         fD1lInDNOAECteibKQ6J/F69nyDGggriH+JwqTzCmB51+WcVSZM0MXzuFPBto6oxMKpj
-         bNusNszkFcu8UkAj8wZ4gG1Jj+DYh2AHi8kY1p7f6who2hB/KIlITJGyYSIRJ43afT8Y
-         5lY8z9EaCEFmjgpnyQscyElXzeVNozEtD/YSmrGNEocbmZxfHOHUnPrbNNjzUusPKYEC
-         1h9w==
-X-Gm-Message-State: APzg51DlzQZwRSHlX8eQIIHDQtNyLLzetV0ris4xU9w6I+jD/7ojstWb
-        H1OduG/oShF19O++7o2yUzA=
-X-Google-Smtp-Source: ANB0VdZ/qHTmsvY3FR/EL5pwwMIOe8x3ddD88bEwM27QsoSt6h2GSXTJDew840SK1pUKRVrxTZeGww==
-X-Received: by 2002:a63:4386:: with SMTP id q128-v6mr9860566pga.353.1536903414414;
-        Thu, 13 Sep 2018 22:36:54 -0700 (PDT)
+        bh=Rf4v5dYrGK/AqpRN+I0pB80QrevYCSrug8EiXLqzGSY=;
+        b=alKbzq3XBXKCh3kh7ngW3BQO2oR9/AjtCWMjpZi2OYhzfKlzE+59R29rlVj3hgeKgl
+         cNdDoBlG6KWkc//QWh2wnSlxrLIQBwWRDbF9jC3V+vKGoh7SVtJrqCUjhpmgSbTiqqk1
+         GZJHclmXlsXA+rQ+EJhsG8KtS7onHJK7ST2w4M1QDWo1vZZXDfT/oWB7COc6rEjWsO3a
+         HvPFbKESX7aSxoHZM6oAMFShySe8JfXustGufdJHj1gxr0VUUnx6Tytpp6UKCb6BiTxb
+         5lX9lWexur5NDjrO4yZRngSdlTygAtfH0G+F56u4UocTS9TROtnjelbebhtOiTWniH6C
+         B7aw==
+X-Gm-Message-State: APzg51BF3Dy92PRi+A502NcwpzOga/+ZTEG92/PoyPbzXDs9MCJ67bQI
+        6dqMd4WbpiLXm6/ZVSzjnM9f6Nb8
+X-Google-Smtp-Source: ANB0Vdbp2IZl39kXtSs5gBqFhyeDDtMgdxejqyaW7S22vBipzYM4IfXLr/yzo+rW+K0K6dUXLQMuAA==
+X-Received: by 2002:a63:10c:: with SMTP id 12-v6mr9919595pgb.62.1536903588146;
+        Thu, 13 Sep 2018 22:39:48 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id w16-v6sm13907814pfi.101.2018.09.13.22.36.53
+        by smtp.gmail.com with ESMTPSA id f13-v6sm6426527pgs.92.2018.09.13.22.39.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 22:36:53 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 22:36:51 -0700
+        Thu, 13 Sep 2018 22:39:47 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 22:39:44 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Josh Steadmon <steadmon@google.com>
 Cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
         sandals@crustytoothpaste.net
-Subject: Re: Add proto v2 archive command with HTTP support
-Message-ID: <20180914053650.GA219147@aiede.svl.corp.google.com>
+Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
+Message-ID: <20180914053944.GB219147@aiede.svl.corp.google.com>
 References: <20180912053519.31085-1-steadmon@google.com>
+ <20180912053519.31085-3-steadmon@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180912053519.31085-1-steadmon@google.com>
+In-Reply-To: <20180912053519.31085-3-steadmon@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -71,19 +72,25 @@ Hi,
 
 Josh Steadmon wrote:
 
-> This series adds a new protocol v2 command for archiving, and allows
-> this command to work over HTTP(S). This was previously discussed in [1].
-> I've CCed everyone who participated in that discussion.
+> This adds a new archive command for protocol v2. The command expects
+> arguments in the form "argument X" which are passed unmodified to
+> git-upload-archive--writer.
+>
+> This command works over the file://, Git, and SSH transports. HTTP
+> support will be added in a separate patch.
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  builtin/archive.c        | 45 +++++++++++++++++++++++++++-------------
+>  builtin/upload-archive.c | 44 ++++++++++++++++++++++++++++++++++++---
+>  t/t5000-tar-tree.sh      |  5 +++++
+>  3 files changed, 77 insertions(+), 17 deletions(-)
 
-Yay!  Getting ready to read it now.
+I like the diffstat. :)
 
-For the future, "git format-patch --cover-letter" does a few things
-that can be nice for this kind of opening message:
-
-- it lists the patches in the series, and a diffstat
-- it puts [PATCH 0/3] in the subject line so people know what to expect
+Can this include some docs in Documentation/technical/ as well, to
+help other implementors to understand the protocol so they can
+interoperate?
 
 Thanks,
 Jonathan
-
-> [1]: https://public-inbox.org/git/CANq=j3tK7QeBJOC7VNWkh4+WBNibMJJp5YUkd9te5NaYwukAow@mail.gmail.com/
