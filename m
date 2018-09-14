@@ -2,87 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD131F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 21:13:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0EA1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 21:21:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728244AbeIOCaJ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 22:30:09 -0400
-Received: from sender-of-o53.zoho.com ([135.84.80.218]:21804 "EHLO
-        sender-of-o53.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728178AbeIOCaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 22:30:09 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1536959635; cv=none; 
-        d=zoho.com; s=zohoarc; 
-        b=oIwFj+WFhSaXWlps1FYZni6Hn1wYmBOVb+r2+xSOjZM2MjcZpEXH6yYLdbsySMQkGlV5kcHrOV3WHQ64HpxTglFovWu23B6z+sqy7ZeYa84NGALJANMxvbUvvGqcMQsddzxiYpmIsatVZYMoWBZOLGNXGGBDecVa+TOcePbX+S0=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
-        t=1536959635; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To:ARC-Authentication-Results; 
-        bh=Tnlh3Ol+l+9er6XIUzHhoDwaa/ZPSM9LfKyB3Iqf5S0=; 
-        b=Kkui1Ni/cJWtSyQiiLs+99ksvvOZus6WxW2ZsOh1EiXCyW9LnJ8GhvVno1pz8h0RIbWnkE2TIvZBuky/nAUXsEZzOaJubv6P411Lr7n1Rnzp+UNjwcDZRSpeGk7Uo520LMVY8x+qUREuyGCaS9kqYFz9ehQMJUpWW5bItYqyXnk=
-ARC-Authentication-Results: i=1; mx.zoho.com;
-        dkim=pass  header.i=astrangergravity.com;
-        spf=pass  smtp.mailfrom=john@astrangergravity.com;
-        dmarc=pass header.from=<john@astrangergravity.com> header.from=<john@astrangergravity.com>
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177]) by mx.zohomail.com
-        with SMTPS id 1536959633875295.5640525245507; Fri, 14 Sep 2018 14:13:53 -0700 (PDT)
-Received: by mail-lj1-f177.google.com with SMTP id s12-v6so8618604ljj.0
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 14:13:53 -0700 (PDT)
-X-Gm-Message-State: APzg51C5DWexw3KfblLYy1LjNmB5yEC2S2+qElo3aioQshfvFLlig+iy
-        dco/1/fFWics4KpQbBr6m2o4ABrYKICqD6Bgz1E=
-X-Google-Smtp-Source: ANB0VdZMAWQZZ+8riC1SqNq4mo0GJVjaWcu9SuJqdeCGTChpZ+gMrROt9VmMW//uag2+DD5cAdsF09TeZm8BgEz1pvM=
-X-Received: by 2002:a2e:54b:: with SMTP id 72-v6mr9385000ljf.152.1536959632067;
- Fri, 14 Sep 2018 14:13:52 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
- <20180914190025.GJ55140@syl>
-In-Reply-To: <20180914190025.GJ55140@syl>
-From:   John Austin <john@astrangergravity.com>
-Date:   Fri, 14 Sep 2018 14:13:28 -0700
-X-Gmail-Original-Message-ID: <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
-Message-ID: <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
+        id S1728201AbeIOChZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 22:37:25 -0400
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:34515 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728118AbeIOChY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 22:37:24 -0400
+Received: by mail-ed1-f46.google.com with SMTP id u1-v6so8492103eds.1
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 14:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=wk7h7ouuY4ovpsXcJrldPwazlQ1ytXOJJCae6wVrE+U=;
+        b=HagdUzkB+1P/BIeHcZJVRrlAPHY1wBIp413AGeb1Vtt0GtY9r1Nhp+1Z59zQPs3IS8
+         kbXu8bpVqrijSYQZ1FVpO0eMypnVZnybAldLXlPiaasSxb71KigVXDHgIFJVen8sowCr
+         Goe/PwpRFuY/pVnyolau1xWm6dwrRpxlVzy2zgkYIJXUofuOQZOWM+1yhr05ejwpfW98
+         dV/bsFNMyIGl2bHdWMdIZ0nM3zLEwNLv+1FA3nCsR9EZHObiy/USK5hMAlOkQqhbUuaW
+         TMjVxvnvLsDENlhyoOGvnhpQupVykh28TS7ox4/6jwneAM7FvfaVjwANQsitZxPWJhmE
+         4r+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=wk7h7ouuY4ovpsXcJrldPwazlQ1ytXOJJCae6wVrE+U=;
+        b=lscLigSx9gfvx9VmhFdl07aP3jAqrTdEDR8zdy9f+YBEFl6Lq7p28QWCvw7B70/bxC
+         onOvjY29JF4R0+6/bv7Mwk5uCytBr3X/O9t90VuGag4DGZQ+9ASE1XKlVF+HzQ2SJSg0
+         esLRPw1SFSuCli4C48tcMAgf24cE78PKkI//K23VRW7g7e+vc5MEZWfSWiWUmYV60P4q
+         IMSSlmFVeV2RMRo6OVI8eaO49W3ER+mfQSiFk+UkP+WrlzgmSJ5jAw7ICD5rqrC0cfKL
+         s0Yx5zjPr/lyiA5HH5JhT32AAgx2p7k/HxByKoVlea+xxSpfaYO8TSK0A/TmJE+aWoKQ
+         Y+YA==
+X-Gm-Message-State: APzg51Dw/vrqfzqlaRIAwU8QkLXij4D4j/SAOfQT2UOqs9HxgUgaExtl
+        y5XAalnbt1DJM4gUKFDLbkk=
+X-Google-Smtp-Source: ANB0Vdad6ofgrt9ML0U2aooUJfgffuk7SjTWB5CXeT9+LMN+Ng63exKWOWiCAcV79BR/lIwm7L+m7A==
+X-Received: by 2002:a50:c101:: with SMTP id l1-v6mr22306033edf.126.1536960069395;
+        Fri, 14 Sep 2018 14:21:09 -0700 (PDT)
+Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
+        by smtp.gmail.com with ESMTPSA id z30-v6sm3866874edb.4.2018.09.14.14.21.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 14 Sep 2018 14:21:08 -0700 (PDT)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Austin <john@astrangergravity.com>
+Cc:     git@vger.kernel.org
 Subject: Re: Git for games working group
-To:     me@ttaylorr.com
-Cc:     git@vger.kernel.org, sandals@crustytoothpaste.net,
-        larsxschneider@gmail.com, pastelmobilesuit@github.com
-Content-Type: text/plain; charset="UTF-8"
-X-ZohoMailClient: External
+References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+Date:   Fri, 14 Sep 2018 23:21:06 +0200
+Message-ID: <87bm8zlqrh.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Taylor,
 
-Great to have your support! I think LFS has done a great job so far
-solving the large file issue. I've been working myself on strategies
-for handling binary conflicts, and particularly how to do it in a
-git-friendly way (ie. avoiding as much centralization as possible and
-playing into the commit/branching model of git). I've got to a loose
-design that I like, but it'd be good to get some feedback, as well as
-hearing what other game devs would want in a binary conflict system.
+On Fri, Sep 14 2018, John Austin wrote:
 
-- John
-On Fri, Sep 14, 2018 at 12:00 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> Hi John,
->
-> On Fri, Sep 14, 2018 at 10:55:39AM -0700, John Austin wrote:
-> > Is anyone interested in contributing/offering insights? I suspect most
-> > folks here are git users as is, but if you know someone stuck on
-> > Perforce, I'd love to chat with them!
->
-> I'm thrilled that other folks are interested in this, too. I'm not a
-> video game developer myself, but I am the maintainer of Git LFS. If
-> there's a capacity in which I could be useful to this group, I'd be more
-> than happy to offer myself in that capacity.
->
-> I'm cc-ing in brian carlson, Lars Schneider, and Preben Ingvaldsen on
-> this email, too, since they all server on the core team of the project.
->
-> Thanks,
-> Taylor
->
+>  - improvements to large file management (mostly solved by LFS, GVFS)
 
+There's also the nascent "don't fetch all the blobs" work-in-progress
+clone mode which might be of interest to you:
+https://blog.github.com/2018-09-10-highlights-from-git-2-19/#partial-clones
+
+>  - avoiding excessive binary file conflicts (this is one of the big
+> reasons most studio are on Perforce)
+
+Is this just a reference to the advisory locking mode perforce/cvs
+etc. have or is there something else at play here?
