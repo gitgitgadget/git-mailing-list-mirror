@@ -2,102 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFDC01F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 16:14:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A941C1F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 16:20:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727749AbeINV3d (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 17:29:33 -0400
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40451 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726900AbeINV3c (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 17:29:32 -0400
-Received: by mail-wm1-f66.google.com with SMTP id 207-v6so2512139wme.5
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 09:14:22 -0700 (PDT)
+        id S1728167AbeINVfL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 17:35:11 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:39105 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726900AbeINVfL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 17:35:11 -0400
+Received: by mail-pf1-f194.google.com with SMTP id j8-v6so4534872pff.6
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 09:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+QEgQEAbe3QH8OOyPycKJgplUejaxLWc3KNiOmadaH8=;
-        b=QbwLcPw7q6ZM/l8OMb2gCzgPgxDSVEqlhQSq/cq0J4TWfHZgYhHFg8iLxROQ2XMeYj
-         BP6VWKhaaQEZCLUvTwSfAcAFId7YjMhxo3MeQA7YW+OEmLO2AUHADiK28YCrwtP+JyfQ
-         7Dxh1K7XVc3AQ4+pgD7v3fmWtWNaurId9Fe6rKoLBQAulppCnPX2zzhhhQwxMpn7L4DO
-         8dsTLrQ5kaFCyIosKnf2XBJpeveQFldCsnvL0CJHvgY3wO7aF+qyvTgqagIfoJ/rwfSS
-         jZqhkxGwRpsS8n0eZLoctzUrkqYNsMDw9IR1fhHRlekgm1cNiznW0+4gAzXhMsNtrGqX
-         O3Jw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=+IZoSK8S+ADzhBJMMsyIsKNzfotS3PkMDZEBNyZxYqg=;
+        b=LldnoX4sboKQdXhvFBNFLAzY3wNfg25OwvyNeQfgldpLA8CO0ZkfYetlz7SwQd2Y3I
+         U/f8hOr6HGTmnMcIQZA76AGp7q0jp8P73Uzk4FxvPqI4eXa8CYm3NDjn/ug993fTsMwg
+         vAVsVQ95fJARKvVjaeXnXwngCsfT9zCq28k4WfCkeIvKNl0qwo0V/M1CiHVUK/GQj3R1
+         o3YWWZS2o3c4bPqLDacxrh6DXpP9H2I98KQAdxX5tQo+UDEI7FqXWxW3a5EOV1TgTJuB
+         xI2kfC2emusrrlUb38uvXP/UrSBgQDW77Rcr+/DFEAeZAsa3cZTsAVgQxlJrT+VYvMiY
+         4v+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+QEgQEAbe3QH8OOyPycKJgplUejaxLWc3KNiOmadaH8=;
-        b=JZuyE+VRvYY7NXNLNiGgqymKiybmeKaKatEROSlCL8bkVAfPw/0IEuqHtKwOznFo+T
-         SInsDbYlA7ckX6L5TzgEym1x83ruXgwWUhdVILUT3SRBA19ezyYqlQMYvuf41WJyNzlY
-         DZc+Z2RoB7gMYek8wka2QGcQtmuUUtFjFVhCnMBizCIIHzuVm8wMp04mzxzIuluresQ5
-         8SXC5rvF1LJpKXArnAlYfqAu1tq7UgnaCC5Se0JHuS11nfqOzSgdDYqsf0W6rAMK5NzA
-         WekfqsWhU0plJNMbfEtCEypa0tKoFGyc8+LfDt3lE5Yamwq2t2bpLGGgdW82dlt13icc
-         /wkw==
-X-Gm-Message-State: APzg51C9Jn/0ZISvFW4u7rB4O/TZmzmF6hUGAexTEB1JnQQpxRHSLsyT
-        EGxSrBjVEbKq2h5UAbyApmI=
-X-Google-Smtp-Source: ANB0VdagkBswP8HPXU0mDbbCBHBSiI74AgUvrnbXw5w3TaNdKV04mXKnn/BZ7iYxGEDK9zFh8nd59A==
-X-Received: by 2002:a1c:c345:: with SMTP id t66-v6mr3067502wmf.100.1536941661072;
-        Fri, 14 Sep 2018 09:14:21 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id q16-v6sm4560781wrn.41.2018.09.14.09.14.20
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=+IZoSK8S+ADzhBJMMsyIsKNzfotS3PkMDZEBNyZxYqg=;
+        b=MFGXeGoKjI1YD+FUnL/WBuX6EmvUusYK3TjtkF0z55jX4aJfnEckyr9sMwkzOndRxl
+         vYWgG664/ldocWXmZZpynmMUF+Snw5apByATnSJIQOoKcz4Cdft6GO9rEeSth7M7aRdu
+         /Pszc2R62wq/kEEVfOW5OnqO2FltufJDu9gdLv7s4DTeVZtE3Bs+V5OJYTHAiwbx3BzY
+         ZBmvjkz9eB00Wg0rP54jTjGJ1ydMk1CTT1OkABdjRnkgNVBHrPVUcp+ECq7XDondtkn2
+         T97m0lt52u2OddGmQA5Q0Gh2VXh4IajefNJN+qi68qUWHYkj6ZDDj/DP+Ukh/4gzbwfO
+         Ek1w==
+X-Gm-Message-State: APzg51CClcvb6+/QlPHYMA5pEIhPLz4WU08Ojys4svYfN73yP+n68WzC
+        oXLIFcCiVGQh4phDMCuuIj8=
+X-Google-Smtp-Source: ANB0VdYtHqV5U0VgPpX95T1w9bKFcCShX6fsShOZGTu1g8J88OVVrY9N8yRCw7iENvNij4mC/KIYuw==
+X-Received: by 2002:a63:1823:: with SMTP id y35-v6mr12608553pgl.438.1536941999719;
+        Fri, 14 Sep 2018 09:19:59 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id 9-v6sm14029915pfc.20.2018.09.14.09.19.58
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Sep 2018 09:14:20 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
+        Fri, 14 Sep 2018 09:19:58 -0700 (PDT)
+Date:   Fri, 14 Sep 2018 09:19:56 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Stefan Beller <sbeller@google.com>,
         Josh Steadmon <steadmon@google.com>, git <git@vger.kernel.org>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Brandon Williams <bmwill@google.com>,
         Ben Peart <Ben.Peart@microsoft.com>,
         Jeff Hostetler <git@jeffhostetler.com>
 Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
+Message-ID: <20180914161956.GA133420@aiede.svl.corp.google.com>
 References: <20180912053519.31085-1-steadmon@google.com>
-        <20180912053519.31085-3-steadmon@google.com>
-        <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
-        <87k1npkzh5.fsf@evledraar.gmail.com>
-        <20180914060552.GD219147@aiede.svl.corp.google.com>
-Date:   Fri, 14 Sep 2018 09:14:19 -0700
-In-Reply-To: <20180914060552.GD219147@aiede.svl.corp.google.com> (Jonathan
-        Nieder's message of "Thu, 13 Sep 2018 23:05:52 -0700")
-Message-ID: <xmqq4lesdpk4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <20180912053519.31085-3-steadmon@google.com>
+ <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
+ <87k1npkzh5.fsf@evledraar.gmail.com>
+ <20180914060552.GD219147@aiede.svl.corp.google.com>
+ <xmqq4lesdpk4.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4lesdpk4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> I think though that instead of doing setlocale() it would be better to
->> pass some flag saying we're operating in a machine-readable mode, and
->> then we'd (as part of the protocol defintion) say we're going to emit
->> GIT_ERR_UPLOAD_ARCHIVE_EXPECTED_DELIM_PACKET or whatever.
+>>> I think though that instead of doing setlocale() it would be better to
+>>> pass some flag saying we're operating in a machine-readable mode, and
+>>> then we'd (as part of the protocol defintion) say we're going to emit
+>>> GIT_ERR_UPLOAD_ARCHIVE_EXPECTED_DELIM_PACKET or whatever.
+>>
+>> I think you're suggesting client-side message generation, and that is
+>> one way to handle internationalization of server output.
+>>
+>> The main downside is when the server really does want to provide a
+>> custom error message.  For that, we'd need
+>>
+>>  1. To propagate LANG to the server, so it knows what human language
+>>     to generate messages in.
+>>
+>>  2. On the server side, to produce messages in that language if
+>>     available, with an appropriate fallback if not.
 >
-> I think you're suggesting client-side message generation, and that is
-> one way to handle internationalization of server output.
->
-> The main downside is when the server really does want to provide a
-> custom error message.  For that, we'd need
->
->  1. To propagate LANG to the server, so it knows what human language
->     to generate messages in.
->
->  2. On the server side, to produce messages in that language if
->     available, with an appropriate fallback if not.
+> That is one way to do so, but it does not have to be the only way, I
+> would think.  You can send a machine parsable message in pieces, and
+> assemble the parts of speech into a message at the receiving end.
+> Like sending a msgid to identify an entry in the .pot file, and
+> values to be filled in.
 
-That is one way to do so, but it does not have to be the only way, I
-would think.  You can send a machine parsable message in pieces, and
-assemble the parts of speech into a message at the receiving end.
-Like sending a msgid to identify an entry in the .pot file, and
-values to be filled in.
+That works if the same party controls the client and server and the
+client is up to date enough to know about every message the server
+would want to send.
 
+It doesn't work for
+- hooks
+- alternate server implementations
+- messages involved in an emergency fix
+- ... etc ...
+
+Don't get me wrong: for messages with a machine as an audience, error
+codes or similar structured errors are a great way to go, and getting
+client-side generation of messages for humans (not to mention styling,
+etc) are a nice bonus there.  I stand by what's in the message you're
+replying to, though: if we actually want to be able to consistently
+provide useful messages to people who do not like to read English,
+then client-side generation won't get us all the way there.
+
+Jonathan
