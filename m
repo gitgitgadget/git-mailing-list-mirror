@@ -2,108 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 27F661F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 18:05:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E66391F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 18:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727002AbeINXV0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 19:21:26 -0400
-Received: from mail-qt0-f194.google.com ([209.85.216.194]:37629 "EHLO
-        mail-qt0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbeINXV0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 19:21:26 -0400
-Received: by mail-qt0-f194.google.com with SMTP id n6-v6so9556400qtl.4
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 11:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=1kfGh6jG43uAezJLOPphhb3+ldxZuETeuFy4mRiOcqM=;
-        b=ekBalvQGuoeD3gvIl1R/efAqN7AaUr5oIKNpgEr4PMogtRBHCpjTo1SBGdhywNqRGo
-         iPqgaWf9orFzye2S4/FKJ3YpYR7luVqTfoF0pqq7krFrT4uxYu9bfzb3M0QKw/ytEOZj
-         zyYvFYdBHpt21sL75Zmbk/yM5Fd0Y9cF8uQyALnSsfKl3c7cKGX/5fuQCh2r81qrkNvJ
-         r/bSvCszV0CDTfMziEgi827lT0o8PohGKMgfkemJKZ4DLs6GKHP8S0ewVJcCgfk0J7Z9
-         qsWS26mwwY6jueLaY89RpNi+4xIg7GDGRUQSc5MibzWgkirMpXcVEHJbIyzPHsgzrDI4
-         2Ezg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=1kfGh6jG43uAezJLOPphhb3+ldxZuETeuFy4mRiOcqM=;
-        b=AMYUMjXtZUqTcn3K/n+EFPgGrzLi+5nDbNmp+vUXR5HcEbPanIlSlVnS5o3QdMZgK/
-         3xFTUqkjHB5pBGLF7pq1M6go6d3Bb6ONyspM2mDT7jwOxaTuzkHBa6IMIXeNj/veThO6
-         q0/vgyztF2yD/47BzkDFJk/nARmjnR9rtDYDbbfeyiVVAb+wq/v3BMO35bFwrujpjmcJ
-         QJgBDjkBEDVuFKg5ffttg6lGQcZqx7RhC2/Xe2S4n7/L9Zbbr5WOdnGoqjG8+jvXDZyP
-         +wzgIQPmEP55DOPReCVepq9uXG5E86pNeK1juLfvaERW6fF7GDwbQQao2HVLEUJ3z4Ck
-         +t/w==
-X-Gm-Message-State: APzg51AaxyoWzClxb10i/Lxox6b+wfT3WWWg8syj8wvP6NDFElirL4ua
-        mFAwzIS3z6G/osben5mVmAE=
-X-Google-Smtp-Source: ANB0VdaEgTqaScTXAqKQ6iM1HPVL5F3UqLuhCIbHfBeYIRjYQj/vIhMH+v6pjjiQ1p0xrMnlHmqqgA==
-X-Received: by 2002:a0c:d2d5:: with SMTP id x21-v6mr10072984qvh.214.1536948348260;
-        Fri, 14 Sep 2018 11:05:48 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id v47-v6sm5407221qtj.59.2018.09.14.11.05.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 14 Sep 2018 11:05:47 -0700 (PDT)
-Subject: Re: [PATCH v1 2/4] fsmonitor: update GIT_TEST_FSMONITOR support
-To:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <benpeart@microsoft.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "t.gummerer@gmail.com" <t.gummerer@gmail.com>,
-        "avarab@gmail.com" <avarab@gmail.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-References: <20180914143708.63024-1-benpeart@microsoft.com>
- <20180914143708.63024-3-benpeart@microsoft.com>
- <xmqq5zz8c84y.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <80988727-085f-cdd9-e5bb-a90a55e97024@gmail.com>
-Date:   Fri, 14 Sep 2018 14:05:46 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727002AbeINX0v (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 19:26:51 -0400
+Received: from sender-of-o53.zoho.com ([135.84.80.218]:21710 "EHLO
+        sender-of-o53.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726748AbeINX0v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 19:26:51 -0400
+X-Greylist: delayed 906 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Sep 2018 19:26:51 EDT
+ARC-Seal: i=1; a=rsa-sha256; t=1536947769; cv=none; 
+        d=zoho.com; s=zohoarc; 
+        b=LraOry5T7qFAuIbjVG9ob8JD6L+WzlAg1qGq6414hYRUU13gkjF4Y8ZPhK42cc4gvgPekqyiG1QhvaCypss+Md/jTs9GufM3t3nCV+i2Xk8+L6BMp7/R4X9wbHsfNd9ZwRjX6DR4z5ZQHHzLSVsKM13febKdEVYj01sseiHtVUM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
+        t=1536947769; h=Content-Type:Date:From:MIME-Version:Message-ID:Subject:To:ARC-Authentication-Results; 
+        bh=DTitcrD4oWUfxHXQNAH1I8yPfXiQDA85HCuCGxFojaI=; 
+        b=EkgGDyjcwnGHVsjbW9v8fH/d5KE/KIexbVsXMkoXEYiomerOPBko7+tBqW5fk81nVtSGqpCAjxpAoYNJ4VciWG7KSicpgXCFi7pBuwfT9Bi8pQBg1ueOCexbj4K2MmjUcqwSE/vs1HiOiMUj01c/tkXLNzOd7J0oMZjCPTQgyNM=
+ARC-Authentication-Results: i=1; mx.zoho.com;
+        dkim=pass  header.i=astrangergravity.com;
+        spf=pass  smtp.mailfrom=john@astrangergravity.com;
+        dmarc=pass header.from=<john@astrangergravity.com> header.from=<john@astrangergravity.com>
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174]) by mx.zohomail.com
+        with SMTPS id 1536947767630201.86695299050905; Fri, 14 Sep 2018 10:56:07 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 203-v6so8195827ljj.13
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 10:56:06 -0700 (PDT)
+X-Gm-Message-State: APzg51ChyfJxocRH7SDSa2MbtGsKTM5jZtZsmV5ESdt4idL/7W9x5K/Z
+        hvhYjJXHFMqUxD9nnACs47UC9JWySVkd05Pxwts=
+X-Google-Smtp-Source: ANB0VdajWH2WSMMXGEg5QtkQMHeYb/kGIJFkqN9be7OTTz34q6NRLCm3AT0MMnQWX5qex3hF4xFrdTehAvwrMMkDrwA=
+X-Received: by 2002:a2e:9941:: with SMTP id r1-v6mr8322124ljj.53.1536947765693;
+ Fri, 14 Sep 2018 10:56:05 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <xmqq5zz8c84y.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+From:   John Austin <john@astrangergravity.com>
+Date:   Fri, 14 Sep 2018 10:55:39 -0700
+X-Gmail-Original-Message-ID: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+Message-ID: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+Subject: Git for games working group
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-ZohoMailClient: External
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hey all,
 
+I've been putting together a working group for game studios wanting to
+use Git. There are a couple of blockers that keep most game and media
+companies on Perforce or others, but most would love to use git if it
+were feasible.
 
-On 9/14/2018 1:15 PM, Junio C Hamano wrote:
-> Ben Peart <benpeart@microsoft.com> writes:
-> 
->> diff --git a/config.c b/config.c
->> index 3461993f0a..3555c63f28 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -2278,7 +2278,7 @@ int git_config_get_max_percent_split_change(void)
->>   int git_config_get_fsmonitor(void)
->>   {
->>   	if (git_config_get_pathname("core.fsmonitor", &core_fsmonitor))
->> -		core_fsmonitor = getenv("GIT_FSMONITOR_TEST");
->> +		core_fsmonitor = getenv("GIT_TEST_FSMONITOR");
-> 
-> Sorry for not noticing earlier, but unlike 4/4 that changed
-> getenv(VAR) to git_env_bool(VAR, 0) "while at it", this leaves it to
-> getenv(VAR), meaning "if it is set to any non-empty string, it is
-> true".  Is there a reason for this discrepancy?
-> 
+The biggest tasks I'd like to tackle are:
+ - improvements to large file management (mostly solved by LFS, GVFS)
+ - avoiding excessive binary file conflicts (this is one of the big
+reasons most studio are on Perforce)
 
-The difference here is that core.fsmonitor isn't a boolean value.  It is 
-a string to a command that is executed so it can't be moved over to 
-get_env_bool().
+Is anyone interested in contributing/offering insights? I suspect most
+folks here are git users as is, but if you know someone stuck on
+Perforce, I'd love to chat with them!
 
-> I _think_ the renaming should be done without getting mixed with
-> other changes like the git_env_bool() done in 4/4.  The idea to use
-> git_env_bool() in stead of getenv() may be a good one, but then we
-> should consistently do so when appropriate, and that would make a
-> fine theme for another topic.
-> 
+Happy to field thoughts in this thread or answer other questions about
+why git doesn't work for games at the moment.
+
+Cheers,
+JA
+
