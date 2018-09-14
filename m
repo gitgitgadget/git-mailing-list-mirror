@@ -7,189 +7,128 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4847D1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 05:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 819981F404
+	for <e@80x24.org>; Fri, 14 Sep 2018 06:05:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726898AbeINLJ6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Sep 2018 07:09:58 -0400
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:38348 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbeINLJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Sep 2018 07:09:58 -0400
-Received: by mail-pf1-f194.google.com with SMTP id x17-v6so3778447pfh.5
-        for <git@vger.kernel.org>; Thu, 13 Sep 2018 22:57:06 -0700 (PDT)
+        id S1727128AbeINLSu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Sep 2018 07:18:50 -0400
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:46643 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726891AbeINLSt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Sep 2018 07:18:49 -0400
+Received: by mail-pf1-f193.google.com with SMTP id u24-v6so3766600pfn.13
+        for <git@vger.kernel.org>; Thu, 13 Sep 2018 23:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Iuz80nAIpLkQRdy4Sh5hfLkoRWdtROSfITtEMvTMtvw=;
-        b=jWKECxN8K92A6qTdlGs0nrhxpFi3DKG/EEVOsIFpRKbsmcHinSyU7FflUGItFBHINk
-         9dxgNLn/hXIjCwj65kz/uvE5LCLhNQ7Z5WD1aMihGgTpi+R8Yfws35w8tm7pCVwIC0yb
-         iZu/F7Y7DdJqZbVLwPQuM1UOHp+Jb0INL/PUXJcFjZ6jdpsP5GCPwx5fVNWzbDAAMs6T
-         UwPNoHYURxJzhX6DtpzFC9NuKo3pAFtpA68yFk5/QFYHlmtNuyh54YDc+13rVsiuzTUG
-         veWOVU07ade7qh70hl8och/QGas1Nt9xMyT8kSE/ARklB6tl+FkJXAHRhwTmvmxdxMyX
-         uAYg==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=ovQP8O1DgVOVQWi07OFxz4enORuFnGskYKkGHabC0Y0=;
+        b=Apr3MWX5M2kUOqIDfdOz6xhe2O/BzbmQJgfSwLMg8PgSEnv0AqWx+UvCBnVnh08u7z
+         lqKUod4brsg6NZ7iRZpnLNKMT9CC0qkbkzg61Q9mjay5DsX3aXI4p18RTmKxpO5+uyDW
+         agjspz8JQDfoqLuiIfdpw8Jjix4TgrzvYI5FsUPwA/mIePFADfkQHb0jcVYO39jo0X9D
+         qCvmU6zHz0HIcBFDrBbQyARW8XpTGuuvfV1MIhLFZQitPyg5e2MROTONb9K4HjWre4mX
+         dooID3i8k5Huquk4/9M470/KfGKRkEPNqXCc4/pI3mPU1q9CS02otmuP1733qWfNQQkK
+         roEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Iuz80nAIpLkQRdy4Sh5hfLkoRWdtROSfITtEMvTMtvw=;
-        b=IW/8JJcbPiOp9stBAj47/U1GKxERSOuUM2UO4vgW9gwT39/uj4SLkzjxh6DAJlRH7n
-         1rdiQj1LIhMq2XrihUbii9uWaLvldeVPt12y1Batb4HwHOsLA0+oYeslqFK5SgRWTADK
-         zwUNeOrJGKHJ41XdmOdZx+0cbKGmAi2Uqx98sZ1OcXKsCH7H+SkNrJb+boWBZyxkeMGz
-         16dpoUHRaR0bAMsMwaxmSTl0sKzv5yCC05vleWAmSsanOkmqYP/2J1dyW+z4ih63AjCU
-         8csEpWWCuDRVVRtr01iXBWNNue/yc+PmSOJ2R9C2MjRxsw2MKjHc6aYoL4CSR40kXBYc
-         I1ew==
-X-Gm-Message-State: APzg51B9GkqQVxbbxh90TXDD6rv+qcUrdm/w4WByzy/lZDtEyihfRTyr
-        wOrknMOgY8eqO46UiLt2Ld8=
-X-Google-Smtp-Source: ANB0VdaCaPEenRT8WlrurlIOOhrbRrdxW4JmBVCwBfItw4+z4Ld2056UxQEK2lkCVm47rHS2r/4F8Q==
-X-Received: by 2002:a63:170b:: with SMTP id x11-v6mr9816793pgl.364.1536904625581;
-        Thu, 13 Sep 2018 22:57:05 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=ovQP8O1DgVOVQWi07OFxz4enORuFnGskYKkGHabC0Y0=;
+        b=dli5CHO7MuAMkxqYO/QUbvwDSWrEGPCK1ZAQTUmqHHgnRsRojHBOQkXRL005qOtARN
+         uJw1u7AJn4vNU1hQkNKRf46YSWDek0q/q0v2lv5n5sSBJ5DK5B6jUoe/h5lM73/SPdBj
+         6rw79ap3GZgab4k24sNPr1JJTTT6FUusmI+DfPrEJclsAwZnx0qkupvXMmvzPr8nHCxu
+         eidWMcZyjm6SNEc1862YOEFkvC8DG8vp/2uuTlfvohRxlOryNnQkorJV79I8JMU7j4ww
+         m0x1/66fmX7mcGXpZbV1rfuLjpAqp6QhWwaG6rqOEpCHZ+PhQj11nxK56SCP2Z332yF8
+         /+wQ==
+X-Gm-Message-State: APzg51BhtITnH7RXlmo8jiox1JGwc4t1pZQR2vkUTp6CrfdCvK+Ytrm4
+        3bGCJTxMp0G5TM2qk+SAb6Y=
+X-Google-Smtp-Source: ANB0VdbRH1Sgwkqwq1T6LZUDFB2sdQol5od/ReRGby/6IQIoy/NwmD4tDo0oNJH0w+Gr/3t4A9idMg==
+X-Received: by 2002:a62:c406:: with SMTP id y6-v6mr10716486pff.161.1536905155422;
+        Thu, 13 Sep 2018 23:05:55 -0700 (PDT)
 Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id u195-v6sm16928434pgb.21.2018.09.13.22.57.04
+        by smtp.gmail.com with ESMTPSA id a90-v6sm14013342pfg.106.2018.09.13.23.05.54
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Sep 2018 22:57:05 -0700 (PDT)
-Date:   Thu, 13 Sep 2018 22:57:03 -0700
+        Thu, 13 Sep 2018 23:05:54 -0700 (PDT)
+Date:   Thu, 13 Sep 2018 23:05:52 -0700
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, l.s.r@web.de,
-        sandals@crustytoothpaste.net
-Subject: Re: [PATCH 3/3] archive: allow archive over HTTP(S) with proto v2
-Message-ID: <20180914055703.GC219147@aiede.svl.corp.google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Josh Steadmon <steadmon@google.com>, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Brandon Williams <bmwill@google.com>,
+        Ben Peart <Ben.Peart@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH 2/3] archive: implement protocol v2 archive command
+Message-ID: <20180914060552.GD219147@aiede.svl.corp.google.com>
 References: <20180912053519.31085-1-steadmon@google.com>
- <20180912053519.31085-4-steadmon@google.com>
+ <20180912053519.31085-3-steadmon@google.com>
+ <CAGZ79kZOTsUH=zQX3rLXvuSOx1vp8C98maSn47ssfca8c-BrBQ@mail.gmail.com>
+ <87k1npkzh5.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180912053519.31085-4-steadmon@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87k1npkzh5.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Ævar Arnfjörð Bjarmason wrote:
+> On Wed, Sep 12 2018, Stefan Beller wrote:
 
-Josh Steadmon wrote:
+>> Would asking for a setlocale() on the server side be an unreasonable
+>> feature request for the capabilities (in a follow up patch, and then not
+>> just for archive but also fetch/push, etc.)?
+>
+> This would be very nice to have, but as you suggest in some follow-up
+> change.
 
-> Subject: archive: allow archive over HTTP(S) with proto v2
+Indeed, I think we've gone pretty far afield from the goal of this
+patch series.
 
-It's interesting how little this has to touch the client.
+> I think though that instead of doing setlocale() it would be better to
+> pass some flag saying we're operating in a machine-readable mode, and
+> then we'd (as part of the protocol defintion) say we're going to emit
+> GIT_ERR_UPLOAD_ARCHIVE_EXPECTED_DELIM_PACKET or whatever.
 
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  builtin/archive.c  |  8 +++++++-
->  http-backend.c     | 10 +++++++++-
->  transport-helper.c |  5 +++--
->  3 files changed, 19 insertions(+), 4 deletions(-)
-[....]
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -87,7 +87,13 @@ static int run_remote_archiver(int argc, const char **argv,
->  		status = packet_reader_read(&reader);
->  		if (status != PACKET_READ_FLUSH)
->  			die(_("git archive: expected a flush"));
-> -	}
-> +	} else if (version == protocol_v2 &&
-> +		   starts_with(transport->url, "http"))
+I think you're suggesting client-side message generation, and that is
+one way to handle internationalization of server output.
 
-As Stefan noticed, this starts_with test seems a bit too loose.  For
-example, what happens if I try an scp-style SSH URL like
-http.example.com:path/to/repo, a local path like http/foo/bar, or a
-custom protocol like httplikebutbetter://path/to/repo (honest
-question: I haven't tried)?
+The main downside is when the server really does want to provide a
+custom error message.  For that, we'd need
 
-> +		/*
-> +		 * Commands over HTTP require two requests, so there's an
-> +		 * additional server response to parse.
-> +		 */
-> +		discover_version(&reader);
+ 1. To propagate LANG to the server, so it knows what human language
+    to generate messages in.
 
-Can this be made consistent with the non-http case?  The original
-capabilities (/info/refs) response told us what protocol version the
-server wants to use, which means that a hypothetical protocol v3 could
-use a completely different request format for the followup commands:
-so could the server omit the protocol version in the v2
-/git-upload-archive response?  Alternatively, if we want to include
-the protocol version again, could we do that in stateful protocols as
-well?
+ 2. On the server side, to produce messages in that language if
+    available, with an appropriate fallback if not.
 
-Related question: what should happen if the two responses declare
-different protocol versions?  Should we diagnose that as a protocol
-error?
+We've been thinking of doing at least (1) using the same trick as
+server-options use (cramming it into client capabilities).
+
+It is difficult to use setlocale for this because it affects the whole
+program (problematic for a threaded server) and affects features like
+collation order instead of just message generation (problematic for
+many things).  Does gettext have a variant that takes a locale_t
+argument?
 
 [...]
-> --- a/http-backend.c
-> +++ b/http-backend.c
-> @@ -32,6 +32,7 @@ struct rpc_service {
->  static struct rpc_service rpc_service[] = {
->  	{ "upload-pack", "uploadpack", 1, 1 },
->  	{ "receive-pack", "receivepack", 0, -1 },
-> +	{ "upload-archive", "uploadarchive", 1, 1 },
+>  4) Aside from translation purposes, getting a machine-readable
+>     "push/pull" etc. mode would be very handy. E.g. now you need to
+>     parse stderr to see why exactly your push failed (hook denied, or
+>     non-fast-forward, or non-fast-forward where there was a lock race
+>     condition? ...).
 
-shell.c orders these in almost-alphabetical order (receive-pack,
-upload-pack, upload-archive).  I guess they should both use actual
-alphabetical order?  (If you agree, then please feel free to do that
-in a separate patch.)
+Indeed, this is a good reason to provide error codes instead of (in
+the case where the message doesn't add anything to it) or alongside
+(in case the error message is more specialized) human-oriented error
+messages.
 
-[...]
-> @@ -637,6 +638,12 @@ static void service_rpc(struct strbuf *hdr, char *service_name)
->  	struct rpc_service *svc = select_service(hdr, service_name);
->  	struct strbuf buf = STRBUF_INIT;
->  
-> +	if (!strcmp(service_name, "git-upload-archive")) {
-> +		/* git-upload-archive doesn't need --stateless-rpc */
-
-This comment doesn't seem actionable.  Can it say why?  E.g. "[...]
-because an upload-archive command always involves a single
-round-trip".  Or alternatively, I think it's fine to omit the comment.
-
-> +		argv[1] = ".";
-> +		argv[2] = NULL;
-> +	}
-[...]
-> @@ -713,7 +720,8 @@ static struct service_cmd {
->  	{"GET", "/objects/pack/pack-[0-9a-f]{40}\\.idx$", get_idx_file},
->  
->  	{"POST", "/git-upload-pack$", service_rpc},
-> -	{"POST", "/git-receive-pack$", service_rpc}
-> +	{"POST", "/git-receive-pack$", service_rpc},
-> +	{"POST", "/git-upload-archive$", service_rpc},
-
-Same comment about services seeming to be in a randomish order.
-
-[...]
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -605,7 +605,8 @@ static int process_connect_service(struct transport *transport,
->  		ret = run_connect(transport, &cmdbuf);
->  	} else if (data->stateless_connect &&
->  		   (get_protocol_version_config() == protocol_v2) &&
-
-(not about this patch) These parens don't help --- they make it harder
-for me to read, especially with the new parens to try to match them up
-with.
-
-> -		   !strcmp("git-upload-pack", name)) {
-> +		   (!strcmp("git-upload-pack", name) ||
-> +		    !strcmp("git-upload-archive", name))) {
-
-A part of me wonders about the wasted cycles comparing to
-"git-upload-" twice, but (1) it is tiny relative to actually serving
-the request and (2) if we're lucky, the compiler (or a compiler of the
-future) inlines the strcmp call and could optimize it out.
-
-[...]
-> @@ -639,7 +640,7 @@ static int connect_helper(struct transport *transport, const char *name,
->  
->  	/* Get_helper so connect is inited. */
->  	get_helper(transport);
-> -	if (!data->connect)
-> +	if (!data->connect && !data->stateless_connect)
->  		die(_("operation not supported by protocol"));
-
-I don't understand this part.  Can you explain it further (possibly by
-putting it in its own patch)?
-
-Thanks for a pleasant read,
+Thanks,
 Jonathan
