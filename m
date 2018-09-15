@@ -2,249 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 471B31F404
-	for <e@80x24.org>; Sat, 15 Sep 2018 16:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C43651F404
+	for <e@80x24.org>; Sat, 15 Sep 2018 16:24:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728200AbeIOVif (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Sep 2018 17:38:35 -0400
-Received: from mail-lf1-f50.google.com ([209.85.167.50]:45667 "EHLO
-        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728175AbeIOVib (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 17:38:31 -0400
-Received: by mail-lf1-f50.google.com with SMTP id r4-v6so10259381lff.12
-        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:18:59 -0700 (PDT)
+        id S1727215AbeIOVn4 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 17:43:56 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:34329 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726997AbeIOVn4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 17:43:56 -0400
+Received: by mail-io1-f65.google.com with SMTP id c22-v6so8401510iob.1
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:24:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TZos09seLerEkDcAipA2xI788Qg1S7bLBhtsEHrbgFA=;
-        b=Mnyn2TpZjx5c3A5OJXHcuu+kIVCfAlL3VAJ1fLt3Yxvbmx7BPwEqIlhUU4cZd2eZne
-         ZSosucRzMjZib0uBYJrqELcZnS50pWd+PumAOcHFKVcS7RD5fh5qnro404K7QhQrBinK
-         mm9ZGbAf4BRn9E+WbJpE/eNz4smbHflOu765EA+nlZvo+jP5LGr7G//ogA685Sv15jP6
-         fPmM32a7Fsk0RQkc48s9FVh/GIyBgCUvxF3+2fjLFQ6KsJ+/KKQ6LX8vLGafGA4MiKd6
-         pBmW1ramd1G9OzZ6MBk76DSEVKoidJ2ddBAFIszq8if0fYT/w7iWYJogpd3kI8n3KcJj
-         BTpQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Z44exRlwTyu0wdhWWsmNDjGYCZcgBFVTYn6bvlOPqcw=;
+        b=IWKRKySX4ALcZ9EuVvXykvbO9uPTtV7HQRyLECCiU1ZBsIi/GWkAJ6qER3qAVlz5y1
+         0WZFyatArggotAAt7S/EG/ltwA3bsmUeJbVx2wbQ0h5r7WV3SMIpB81MJhVVjDx4Gq+4
+         0d2wmOp3RG+OEzTqFhzjbTx9CkwgxIa6iqBM8oAdEBNvVGyFWEVeCBhAWHdlwKx5SiPW
+         A3kwEleyZ36wBSJHXqfQ4RyJL2DMry8DM7knasyFWu9yJp0erULoRf71dkHzPqwL/yRu
+         v1Co1pVMnIYtDfWBFBE5f7I37HiPEPXxgv5yNNPrNSDQJiZ6HuLmfhVFt/2TSZde21Yw
+         3aIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TZos09seLerEkDcAipA2xI788Qg1S7bLBhtsEHrbgFA=;
-        b=I9cQ2sjwe3sOWH6yyUXpif0FAvebiZgb8nQa18Zsv1DIY/hJWoxvZ9edBzhk9cia7V
-         Evth3DTeIk0rtDZkXBHmJd5/8pByk7MZtI3UvhkWJ5d13IdeN/zzFvkbyzgBJB6efvy2
-         aQ1UJaJ+rEznhGiyMn6OhE+TiaWgOEF9F/N6Z61oFgsRhamHsomaWQS4N5SZTb0eXokt
-         Cj+ZNeGZEQYaE03OL9vf38McX3taaqBNZdeo2OJjy2w5TBDuRiJ2sm4qILcdmy+pIXDL
-         Ol4i3bnYpIeyoGynbwSRxgGssVTHvakjSjQCCuBFIJSQux/5VJDrQeB2duVQfvJRhfDa
-         QcMQ==
-X-Gm-Message-State: APzg51DVIYu8t0Q0wdrwTYWCQoCFXRbQkIHdhtBo+hkLaiyHvgN9x5ge
-        VO/4s8Rgz4Ve/ZHquQnQySBjjYBA
-X-Google-Smtp-Source: ANB0VdagfqQIEGDfe2EjChWu8p1GfBOA+5rVIDa2oFpyPWyTcWFJ9h6wcbvdmkcl6CmcZtNxATsq0w==
-X-Received: by 2002:a19:dd49:: with SMTP id u70-v6mr12126170lfg.135.1537028338732;
-        Sat, 15 Sep 2018 09:18:58 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i2-v6sm1934852lfa.78.2018.09.15.09.18.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Sep 2018 09:18:58 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH v4 19/23] submodule.c: remove implicit dependency on the_index
-Date:   Sat, 15 Sep 2018 18:17:55 +0200
-Message-Id: <20180915161759.8272-20-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180915161759.8272-1-pclouds@gmail.com>
-References: <20180909085418.31531-1-pclouds@gmail.com>
- <20180915161759.8272-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Z44exRlwTyu0wdhWWsmNDjGYCZcgBFVTYn6bvlOPqcw=;
+        b=n7kbE2yjZiW82msCe7BIt58xOsjA/p3b7mZDxCFmbY8eYFcEet6dVJwTUkxIMY5F0P
+         VUQBLyRolpHG4sUBdV2RWt6SjGN3ln4r4bdJrFdJM24iKSqK2tYHaQ1naknvxn90QleA
+         AbZFk/XbDz/Sdt4dYn9j+9hlH1YhnfLLwmz3i3Cj5SmcyzHwUc6wThB8P5LtIwdvjet1
+         AtSvecz6ALjA0VKzqJOqdRH7Utst80yg/8LH2nEwpq3TpGFqcaV1lQr46wMSOuVX7lcR
+         5QhGSpjqQ+1IfT02S62vuEMUQMMY050kwWvM5JGh/7Vor7YgEzLErn8nWx3W59F748bU
+         cq7w==
+X-Gm-Message-State: APzg51BLUvMDHJjII+EXK/6gAUfdF0K9A6yXpjQuD30jCtQ3UoR1rHob
+        ul2wdljeQbmmP1W5GJudfWq7cmmjBglMs6dPs18=
+X-Google-Smtp-Source: ANB0VdbRtpccha5g4QzSHLH/5nuHyYNW2coToyFJA0bScsk3idXFckgJGLE0g7Uvvp2cI6qE1edCcrKw2ezCwfepj/g=
+X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr13667881ioe.282.1537028665631;
+ Sat, 15 Sep 2018 09:24:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180912161832.55324-1-benpeart@microsoft.com> <20180912161832.55324-3-benpeart@microsoft.com>
+ <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com>
+In-Reply-To: <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 15 Sep 2018 18:23:59 +0200
+Message-ID: <CACsJy8DtYrB99_7GyZaHsLTG8Ff7Mt_hENwhLE6_x6b5zzQ9Hg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/5] read-cache: load cache extensions on a worker thread
+To:     Ben Peart <benpeart@microsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/pull.c |  2 +-
- submodule.c    | 28 +++++++++++++++++-----------
- submodule.h    |  9 ++++++---
- transport.c    |  9 ++++++---
- 4 files changed, 30 insertions(+), 18 deletions(-)
+On Sat, Sep 15, 2018 at 12:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+> Wait there's no way to disable this parallel reading? Does not sound
+> right. And  if ordinary numbers mean the number of threads then 0
+> should mean no threading. Auto detection could have a new keyword,
+> like 'auto'.
 
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 33b7100837..9c455984d1 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -944,7 +944,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
- 		int ret = 0;
- 		if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
- 		     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
--		    submodule_touches_in_range(&rebase_fork_point, &curr_head))
-+		    submodule_touches_in_range(&the_index, &rebase_fork_point, &curr_head))
- 			die(_("cannot rebase with locally recorded submodule modifications"));
- 		if (!autostash) {
- 			struct commit_list *list = NULL;
-diff --git a/submodule.c b/submodule.c
-index 50cbf5f13e..c0c1224760 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -766,7 +766,8 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
-  * have a corresponding 'struct oid_array' (in the 'util' field) which lists
-  * what the submodule pointers were updated to during the change.
-  */
--static void collect_changed_submodules(struct string_list *changed,
-+static void collect_changed_submodules(struct index_state *istate,
-+				       struct string_list *changed,
- 				       struct argv_array *argv)
- {
- 	struct rev_info rev;
-@@ -930,8 +931,10 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
- 	return 0;
- }
- 
--int find_unpushed_submodules(struct oid_array *commits,
--		const char *remotes_name, struct string_list *needs_pushing)
-+int find_unpushed_submodules(struct index_state *istate,
-+			     struct oid_array *commits,
-+			     const char *remotes_name,
-+			     struct string_list *needs_pushing)
- {
- 	struct string_list submodules = STRING_LIST_INIT_DUP;
- 	struct string_list_item *name;
-@@ -943,7 +946,7 @@ int find_unpushed_submodules(struct oid_array *commits,
- 	argv_array_push(&argv, "--not");
- 	argv_array_pushf(&argv, "--remotes=%s", remotes_name);
- 
--	collect_changed_submodules(&submodules, &argv);
-+	collect_changed_submodules(istate, &submodules, &argv);
- 
- 	for_each_string_list_item(name, &submodules) {
- 		struct oid_array *commits = name->util;
-@@ -1044,7 +1047,8 @@ static void submodule_push_check(const char *path, const char *head,
- 		die("process for submodule '%s' failed", path);
- }
- 
--int push_unpushed_submodules(struct oid_array *commits,
-+int push_unpushed_submodules(struct index_state *istate,
-+			     struct oid_array *commits,
- 			     const struct remote *remote,
- 			     const struct refspec *rs,
- 			     const struct string_list *push_options,
-@@ -1053,7 +1057,8 @@ int push_unpushed_submodules(struct oid_array *commits,
- 	int i, ret = 1;
- 	struct string_list needs_pushing = STRING_LIST_INIT_DUP;
- 
--	if (!find_unpushed_submodules(commits, remote->name, &needs_pushing))
-+	if (!find_unpushed_submodules(istate, commits,
-+				      remote->name, &needs_pushing))
- 		return 1;
- 
- 	/*
-@@ -1110,7 +1115,7 @@ void check_for_new_submodule_commits(struct object_id *oid)
- 	oid_array_append(&ref_tips_after_fetch, oid);
- }
- 
--static void calculate_changed_submodule_paths(void)
-+static void calculate_changed_submodule_paths(struct index_state *istate)
- {
- 	struct argv_array argv = ARGV_ARRAY_INIT;
- 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
-@@ -1131,7 +1136,7 @@ static void calculate_changed_submodule_paths(void)
- 	 * Collect all submodules (whether checked out or not) for which new
- 	 * commits have been recorded upstream in "changed_submodule_names".
- 	 */
--	collect_changed_submodules(&changed_submodules, &argv);
-+	collect_changed_submodules(istate, &changed_submodules, &argv);
- 
- 	for_each_string_list_item(name, &changed_submodules) {
- 		struct oid_array *commits = name->util;
-@@ -1158,7 +1163,8 @@ static void calculate_changed_submodule_paths(void)
- 	initialized_fetch_ref_tips = 0;
- }
- 
--int submodule_touches_in_range(struct object_id *excl_oid,
-+int submodule_touches_in_range(struct index_state *istate,
-+			       struct object_id *excl_oid,
- 			       struct object_id *incl_oid)
- {
- 	struct string_list subs = STRING_LIST_INIT_DUP;
-@@ -1176,7 +1182,7 @@ int submodule_touches_in_range(struct object_id *excl_oid,
- 		argv_array_push(&args, oid_to_hex(excl_oid));
- 	}
- 
--	collect_changed_submodules(&subs, &args);
-+	collect_changed_submodules(istate, &subs, &args);
- 	ret = subs.nr;
- 
- 	argv_array_clear(&args);
-@@ -1346,7 +1352,7 @@ int fetch_populated_submodules(struct repository *r,
- 	argv_array_push(&spf.args, "--recurse-submodules-default");
- 	/* default value, "--submodule-prefix" and its value are added later */
- 
--	calculate_changed_submodule_paths();
-+	calculate_changed_submodule_paths(r->index);
- 	run_processes_parallel(max_parallel_jobs,
- 			       get_next_submodule,
- 			       fetch_start_failure,
-diff --git a/submodule.h b/submodule.h
-index 7d476cefa7..600d41d765 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -102,13 +102,16 @@ int add_submodule_odb(const char *path);
-  * Checks if there are submodule changes in a..b. If a is the null OID,
-  * checks b and all its ancestors instead.
-  */
--int submodule_touches_in_range(struct object_id *a,
-+int submodule_touches_in_range(struct index_state *istate,
-+			       struct object_id *a,
- 			       struct object_id *b);
--int find_unpushed_submodules(struct oid_array *commits,
-+int find_unpushed_submodules(struct index_state *istate,
-+			     struct oid_array *commits,
- 			     const char *remotes_name,
- 			     struct string_list *needs_pushing);
- struct refspec;
--int push_unpushed_submodules(struct oid_array *commits,
-+int push_unpushed_submodules(struct index_state *istate,
-+			     struct oid_array *commits,
- 			     const struct remote *remote,
- 			     const struct refspec *rs,
- 			     const struct string_list *push_options,
-diff --git a/transport.c b/transport.c
-index 06ffea2774..cb40a23d45 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1139,7 +1139,8 @@ int transport_push(struct transport *transport,
- 					oid_array_append(&commits,
- 							  &ref->new_oid);
- 
--			if (!push_unpushed_submodules(&commits,
-+			if (!push_unpushed_submodules(&the_index,
-+						      &commits,
- 						      transport->remote,
- 						      rs,
- 						      transport->push_options,
-@@ -1163,8 +1164,10 @@ int transport_push(struct transport *transport,
- 					oid_array_append(&commits,
- 							  &ref->new_oid);
- 
--			if (find_unpushed_submodules(&commits, transport->remote->name,
--						&needs_pushing)) {
-+			if (find_unpushed_submodules(&the_index,
-+						     &commits,
-+						     transport->remote->name,
-+						     &needs_pushing)) {
- 				oid_array_clear(&commits);
- 				die_with_unpushed_submodules(&needs_pushing);
- 			}
+My bad. Disabling threading means _1_ thread. What was I thinking...
 -- 
-2.19.0.rc0.337.ge906d732e7
-
+Duy
