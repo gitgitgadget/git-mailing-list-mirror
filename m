@@ -2,81 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
 	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B0541F404
-	for <e@80x24.org>; Sat, 15 Sep 2018 14:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B1361F404
+	for <e@80x24.org>; Sat, 15 Sep 2018 15:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728183AbeIOTuQ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Sep 2018 15:50:16 -0400
-Received: from cpanel4.indieserve.net ([199.212.143.9]:57618 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727215AbeIOTuQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 15:50:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=ip5DK2JzX0tRQyoP2ZoJ4H8sEW8wWRvDEVgW7GlSkTU=; b=BCZGigiXM5e/EEkqUaWAIErq8E
-        s4YOGi7e13a1Zipa62w8XleySZw6oTcFZzC87rY7bI5K+zp0PuXiG3ioT8gEbLs80oA6EPGNpIy8d
-        8YayNtQampoaJcLmcTnCpCJeCmtnLXXlyQvfFUYbywCToLdrXAIEk+WRw944E0lL3365vIwpzf8Dh
-        eOWxiMVtxkv+ZP7T+dhT6wf8sGha/sPW/J4GM/PkeVTXkXzBv58oRj6S0N1WpdnoN6Abd6UtlZ8xQ
-        tG3A2X65CNbOtFRvOgUkvyVUvqhAUxFtYoTE9cMdkD4KqUKAGcXdzeS6xwwuBixD+0tYQeHY+b5qz
-        AEbgWptQ==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:55418 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1g1BbE-007iIr-An
-        for git@vger.kernel.org; Sat, 15 Sep 2018 10:31:05 -0400
-Date:   Sat, 15 Sep 2018 10:31:02 -0400 (EDT)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: garbage collection following a "git remote rm"?
-Message-ID: <alpine.LFD.2.21.1809151027350.17253@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1727769AbeIOVOs (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 17:14:48 -0400
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:33602 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727313AbeIOVOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 17:14:48 -0400
+Received: by mail-wm1-f67.google.com with SMTP id r1-v6so1980255wmh.0
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 08:55:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=lr/OqjjicbPIeEb8a3pWrILED4GfbEJ0JwUlpwuRogY=;
+        b=s2wresawAQ2EstC2mjWTdKTv495bsfnTlh9M2rucWeMee+GnCuv98XNdpvgTxP4eRI
+         X6kMju8UYag/rKH5ib3YFEh5pOBvomGFYW02R9wRWGtBhTnVjtj+NiO/IzA8mI9Ueox+
+         sXCSWanEUUf0cF45gYiv3YRoh710MsQmZTvsWx5636ZL080w1P5iChLvGrTM3kVh2bHl
+         9cJYJBO+5ntybkTN8FUjEwbEi5+GhJfmCphk3ZKr79A5/nJhlsgoLZ1Kj3UArX4nW6Ld
+         0OWi1CcPtBhPvWBujB/g8022UfveTfGRHA9NEkSMRxzgGdHKYOXuW8vDEQ7MIPBH9Zc6
+         Q70Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=lr/OqjjicbPIeEb8a3pWrILED4GfbEJ0JwUlpwuRogY=;
+        b=oB2K3XA2A29DtRRP4FnvC0+KkuE7PK5T3BWdNESSf7MYgRZkk2qlAA1b8ge9R2WbN7
+         ++aZcDYQmZg17xb+zd014dnUl4GeAgZ6xEr1/4J9iSWZFTnza1V/qGjvIBOwQcW1Fdt1
+         z3qbZMrspbq/n2sw7PdRmX7s0tmp1fdFKhJBXCCUC3PocCSn5npjlM4pWrBgnpL7Eb2V
+         LZCO7tXYUMo+EZEbDU/GcQdkwQeCC6RPjX5rkBHIhIhlikBAndr04P2FjeghBLdwfzJe
+         GS9Fm671+4I2Mdpo3WqjwrFgaKRINClwSH9ceHK5Gzr6c0b3cvKaksm/qFvPy0HR5rSp
+         2opg==
+X-Gm-Message-State: APzg51DnGpqlDCsWYBoIkuIlIoCzO0bkOGKCw590rL0lqpjTVBB+dr0B
+        vJizl48/DTPpeQWiUUXbGlA=
+X-Google-Smtp-Source: ANB0Vdb2g59k+yBlPxvyn16iTQTkzF8qRE6s2u85f7oTI6CAGoO2NFfe36SQ2VbRsP/SYibJ09oJBA==
+X-Received: by 2002:a1c:ac07:: with SMTP id v7-v6mr5954450wme.110.1537026922519;
+        Sat, 15 Sep 2018 08:55:22 -0700 (PDT)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z184-v6sm3416837wmz.0.2018.09.15.08.55.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 15 Sep 2018 08:55:21 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jonathantanmy@google.com
+Subject: Re: [PATCH v1 0/2] Cleanup tests for test_cmp argument ordering and "|" placement
+References: <cover.1536969438.git.matvore@google.com>
+Date:   Sat, 15 Sep 2018 08:55:21 -0700
+In-Reply-To: <cover.1536969438.git.matvore@google.com> (Matthew DeVore's
+        message of "Fri, 14 Sep 2018 17:02:34 -0700")
+Message-ID: <xmqqlg82ah7a.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Matthew DeVore <matvore@google.com> writes:
 
-  i've never checked before, but i assume that if i add a remote, then
-fetch from it and subsequently remove that remote, all of the
-now-unreferenced remote tracking branches in the object store will
-eventually be discarded by garbage collection, yes?
+> As requested in:
+>  https://public-inbox.org/git/xmqqmuskas3a.fsf@gitster-ct.c.googlers.com/
+> this patchset corrects ordering of test_cmp arguments and | placement.
+>
+> The request didn't explicitly state whether all the tests should be cleaned up,
+> but I did clean up as much as I reasonably could.
 
-  is there a command (git fsck?) that would display exclusively
-objects in the object store corresponding to objects that are suddenly
-unreferenced due to the removal of a remote? i was just curious as it
-would be neat to demo that in a class.
+I was only suggesting a clean-up of the test scripts you are going
+to touch anyway in your series, and not the ones outside that
+original scope.  Your going above and beyond what is necessary to
+make sure your primary changes will be protected against future
+breakage is surely appreciated but it would of course require more
+review resources ;-).
 
-rday
-
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
