@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D0BED1F404
-	for <e@80x24.org>; Sat, 15 Sep 2018 16:19:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 471B31F404
+	for <e@80x24.org>; Sat, 15 Sep 2018 16:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728215AbeIOVih (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Sep 2018 17:38:37 -0400
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:34320 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728082AbeIOVig (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 17:38:36 -0400
-Received: by mail-lf1-f66.google.com with SMTP id c29-v6so10284663lfj.1
-        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:19:04 -0700 (PDT)
+        id S1728200AbeIOVif (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 17:38:35 -0400
+Received: from mail-lf1-f50.google.com ([209.85.167.50]:45667 "EHLO
+        mail-lf1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728175AbeIOVib (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 17:38:31 -0400
+Received: by mail-lf1-f50.google.com with SMTP id r4-v6so10259381lff.12
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Gcbdnny+WnPsiMNB9jZq4tqjHE7OfGIzPvFq1iIkP18=;
-        b=aLQB8pm0XNyXV5jc6SWdeXxvP4xZJRR/JPZFEK2j9KetHVC6OMJvBmAT1fsudC1ByC
-         MStKIXw6YPg22QBm0rkG7EUUqjvkMO7Ug+e7S6zDVJFvlV65wD94ZANE4NNy3e9CsJrX
-         BgMpttMpXCJ601qjJNhM0DOz0MQfurCmMHI1ohvv5hb9JL+1CoT3vI3oODw7zWjBsRmO
-         x0SHyQG3XWptRMCYmJI/r/zyUCx7MtYxUaq1iKdqW/OrpWL5M7CDWoptGejzLrVPAVon
-         Pe6/M2527pjhhbkN+QgVFlx/W3Ng+qANjx0/LV288pdcTWJ/bkF9oDfgJmrmFWhKJMTp
-         N0Sg==
+        bh=TZos09seLerEkDcAipA2xI788Qg1S7bLBhtsEHrbgFA=;
+        b=Mnyn2TpZjx5c3A5OJXHcuu+kIVCfAlL3VAJ1fLt3Yxvbmx7BPwEqIlhUU4cZd2eZne
+         ZSosucRzMjZib0uBYJrqELcZnS50pWd+PumAOcHFKVcS7RD5fh5qnro404K7QhQrBinK
+         mm9ZGbAf4BRn9E+WbJpE/eNz4smbHflOu765EA+nlZvo+jP5LGr7G//ogA685Sv15jP6
+         fPmM32a7Fsk0RQkc48s9FVh/GIyBgCUvxF3+2fjLFQ6KsJ+/KKQ6LX8vLGafGA4MiKd6
+         pBmW1ramd1G9OzZ6MBk76DSEVKoidJ2ddBAFIszq8if0fYT/w7iWYJogpd3kI8n3KcJj
+         BTpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Gcbdnny+WnPsiMNB9jZq4tqjHE7OfGIzPvFq1iIkP18=;
-        b=lecZ4/dnoPvvmvkMfoM/phHUVQ6Jb3z/j+VoVg46okaL7nz0ptOetGyuFp5vLxEAAv
-         9A1drneUUBFmAKubOM4mGl5+zRGokXMxlZAoaPn4VZR1EuJH9BT6R2/+4IUXxxBsl3jE
-         W1DY72g6kExDhuld0hpBD+GGQhGDW4XX7I7pjpz0mGXg23x+eM27P5sfmT+Gd5a+gA2w
-         1+RmC80bhZXz9T/PXODKq6m/i6pRboWjbG2B0IAf38C30tf0QeBTZ/WOKo/qwA1R5wpM
-         AoejPnyJIINJn6tnmP83TgusuwfP0EPYqrwRxO40b5gQTrmyLC87+IdhreK79QAxi4z4
-         xxNg==
-X-Gm-Message-State: APzg51A5mdcPxwrVxiXNUeZzbCxyu0fNbaZlfoVkoVoMlPSWJhuw+5vc
-        LDDkXFt72pGc3mfxX8+arCqZTsqF
-X-Google-Smtp-Source: ANB0VdYRh9ArEQx8taaIkfZtkww66z4pPyB7+LP2JPaozUMbbepedL1fQaM4+9RxOscbZQVF6wVl5w==
-X-Received: by 2002:a19:8f8c:: with SMTP id s12-v6mr11772993lfk.83.1537028343149;
-        Sat, 15 Sep 2018 09:19:03 -0700 (PDT)
+        bh=TZos09seLerEkDcAipA2xI788Qg1S7bLBhtsEHrbgFA=;
+        b=I9cQ2sjwe3sOWH6yyUXpif0FAvebiZgb8nQa18Zsv1DIY/hJWoxvZ9edBzhk9cia7V
+         Evth3DTeIk0rtDZkXBHmJd5/8pByk7MZtI3UvhkWJ5d13IdeN/zzFvkbyzgBJB6efvy2
+         aQ1UJaJ+rEznhGiyMn6OhE+TiaWgOEF9F/N6Z61oFgsRhamHsomaWQS4N5SZTb0eXokt
+         Cj+ZNeGZEQYaE03OL9vf38McX3taaqBNZdeo2OJjy2w5TBDuRiJ2sm4qILcdmy+pIXDL
+         Ol4i3bnYpIeyoGynbwSRxgGssVTHvakjSjQCCuBFIJSQux/5VJDrQeB2duVQfvJRhfDa
+         QcMQ==
+X-Gm-Message-State: APzg51DVIYu8t0Q0wdrwTYWCQoCFXRbQkIHdhtBo+hkLaiyHvgN9x5ge
+        VO/4s8Rgz4Ve/ZHquQnQySBjjYBA
+X-Google-Smtp-Source: ANB0VdagfqQIEGDfe2EjChWu8p1GfBOA+5rVIDa2oFpyPWyTcWFJ9h6wcbvdmkcl6CmcZtNxATsq0w==
+X-Received: by 2002:a19:dd49:: with SMTP id u70-v6mr12126170lfg.135.1537028338732;
+        Sat, 15 Sep 2018 09:18:58 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i2-v6sm1934852lfa.78.2018.09.15.09.19.02
+        by smtp.gmail.com with ESMTPSA id i2-v6sm1934852lfa.78.2018.09.15.09.18.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Sep 2018 09:19:02 -0700 (PDT)
+        Sat, 15 Sep 2018 09:18:58 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 23/23] revision.c: reduce implicit dependency the_repository
-Date:   Sat, 15 Sep 2018 18:17:59 +0200
-Message-Id: <20180915161759.8272-24-pclouds@gmail.com>
+Subject: [PATCH v4 19/23] submodule.c: remove implicit dependency on the_index
+Date:   Sat, 15 Sep 2018 18:17:55 +0200
+Message-Id: <20180915161759.8272-20-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180915161759.8272-1-pclouds@gmail.com>
 References: <20180909085418.31531-1-pclouds@gmail.com>
@@ -73,227 +73,178 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- list-objects.c |  8 +++++---
- revision.c     | 44 +++++++++++++++++++++++---------------------
- revision.h     |  2 +-
- 3 files changed, 29 insertions(+), 25 deletions(-)
+ builtin/pull.c |  2 +-
+ submodule.c    | 28 +++++++++++++++++-----------
+ submodule.h    |  9 ++++++---
+ transport.c    |  9 ++++++---
+ 4 files changed, 30 insertions(+), 18 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index c99c47ac18..0c2989d5ca 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -196,7 +196,7 @@ static void mark_edge_parents_uninteresting(struct commit *commit,
- 		struct commit *parent = parents->item;
- 		if (!(parent->object.flags & UNINTERESTING))
- 			continue;
--		mark_tree_uninteresting(get_commit_tree(parent));
-+		mark_tree_uninteresting(revs->repo, get_commit_tree(parent));
- 		if (revs->edge_hint && !(parent->object.flags & SHOWN)) {
- 			parent->object.flags |= SHOWN;
- 			show_edge(parent);
-@@ -213,7 +213,8 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
- 		struct commit *commit = list->item;
- 
- 		if (commit->object.flags & UNINTERESTING) {
--			mark_tree_uninteresting(get_commit_tree(commit));
-+			mark_tree_uninteresting(revs->repo,
-+						get_commit_tree(commit));
- 			if (revs->edge_hint_aggressive && !(commit->object.flags & SHOWN)) {
- 				commit->object.flags |= SHOWN;
- 				show_edge(commit);
-@@ -228,7 +229,8 @@ void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
- 			struct commit *commit = (struct commit *)obj;
- 			if (obj->type != OBJ_COMMIT || !(obj->flags & UNINTERESTING))
- 				continue;
--			mark_tree_uninteresting(get_commit_tree(commit));
-+			mark_tree_uninteresting(revs->repo,
-+						get_commit_tree(commit));
- 			if (!(obj->flags & SHOWN)) {
- 				obj->flags |= SHOWN;
- 				show_edge(commit);
-diff --git a/revision.c b/revision.c
-index f8a801d5f6..28366eaccf 100644
---- a/revision.c
-+++ b/revision.c
-@@ -51,7 +51,8 @@ static void mark_blob_uninteresting(struct blob *blob)
- 	blob->object.flags |= UNINTERESTING;
- }
- 
--static void mark_tree_contents_uninteresting(struct tree *tree)
-+static void mark_tree_contents_uninteresting(struct repository *r,
-+					     struct tree *tree)
+diff --git a/builtin/pull.c b/builtin/pull.c
+index 33b7100837..9c455984d1 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -944,7 +944,7 @@ int cmd_pull(int argc, const char **argv, const char *prefix)
+ 		int ret = 0;
+ 		if ((recurse_submodules == RECURSE_SUBMODULES_ON ||
+ 		     recurse_submodules == RECURSE_SUBMODULES_ON_DEMAND) &&
+-		    submodule_touches_in_range(&rebase_fork_point, &curr_head))
++		    submodule_touches_in_range(&the_index, &rebase_fork_point, &curr_head))
+ 			die(_("cannot rebase with locally recorded submodule modifications"));
+ 		if (!autostash) {
+ 			struct commit_list *list = NULL;
+diff --git a/submodule.c b/submodule.c
+index 50cbf5f13e..c0c1224760 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -766,7 +766,8 @@ static void collect_changed_submodules_cb(struct diff_queue_struct *q,
+  * have a corresponding 'struct oid_array' (in the 'util' field) which lists
+  * what the submodule pointers were updated to during the change.
+  */
+-static void collect_changed_submodules(struct string_list *changed,
++static void collect_changed_submodules(struct index_state *istate,
++				       struct string_list *changed,
+ 				       struct argv_array *argv)
  {
- 	struct tree_desc desc;
- 	struct name_entry entry;
-@@ -63,10 +64,10 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
- 	while (tree_entry(&desc, &entry)) {
- 		switch (object_type(entry.mode)) {
- 		case OBJ_TREE:
--			mark_tree_uninteresting(lookup_tree(the_repository, entry.oid));
-+			mark_tree_uninteresting(r, lookup_tree(r, entry.oid));
- 			break;
- 		case OBJ_BLOB:
--			mark_blob_uninteresting(lookup_blob(the_repository, entry.oid));
-+			mark_blob_uninteresting(lookup_blob(r, entry.oid));
- 			break;
- 		default:
- 			/* Subproject commit - not in this repository */
-@@ -81,7 +82,7 @@ static void mark_tree_contents_uninteresting(struct tree *tree)
- 	free_tree_buffer(tree);
- }
- 
--void mark_tree_uninteresting(struct tree *tree)
-+void mark_tree_uninteresting(struct repository *r, struct tree *tree)
- {
- 	struct object *obj;
- 
-@@ -92,7 +93,7 @@ void mark_tree_uninteresting(struct tree *tree)
- 	if (obj->flags & UNINTERESTING)
- 		return;
- 	obj->flags |= UNINTERESTING;
--	mark_tree_contents_uninteresting(tree);
-+	mark_tree_contents_uninteresting(r, tree);
- }
- 
- struct commit_stack {
-@@ -198,7 +199,7 @@ void add_head_to_pending(struct rev_info *revs)
- 	struct object *obj;
- 	if (get_oid("HEAD", &oid))
- 		return;
--	obj = parse_object(the_repository, &oid);
-+	obj = parse_object(revs->repo, &oid);
- 	if (!obj)
- 		return;
- 	add_pending_object(revs, obj, "HEAD");
-@@ -210,7 +211,7 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- {
- 	struct object *object;
- 
--	object = parse_object(the_repository, oid);
-+	object = parse_object(revs->repo, oid);
- 	if (!object) {
- 		if (revs->ignore_missing)
- 			return object;
-@@ -247,7 +248,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 			add_pending_object(revs, object, tag->tag);
- 		if (!tag->tagged)
- 			die("bad tag");
--		object = parse_object(the_repository, &tag->tagged->oid);
-+		object = parse_object(revs->repo, &tag->tagged->oid);
- 		if (!object) {
- 			if (revs->ignore_missing_links || (flags & UNINTERESTING))
- 				return NULL;
-@@ -297,7 +298,7 @@ static struct commit *handle_commit(struct rev_info *revs,
- 		if (!revs->tree_objects)
- 			return NULL;
- 		if (flags & UNINTERESTING) {
--			mark_tree_contents_uninteresting(tree);
-+			mark_tree_contents_uninteresting(revs->repo, tree);
- 			return NULL;
- 		}
- 		add_pending_object_with_path(revs, object, name, mode, path);
-@@ -1253,7 +1254,7 @@ static void handle_one_reflog_commit(struct object_id *oid, void *cb_data)
- {
- 	struct all_refs_cb *cb = cb_data;
- 	if (!is_null_oid(oid)) {
--		struct object *o = parse_object(the_repository, oid);
-+		struct object *o = parse_object(cb->all_revs->repo, oid);
- 		if (o) {
- 			o->flags |= cb->all_flags;
- 			/* ??? CMDLINEFLAGS ??? */
-@@ -1312,7 +1313,7 @@ void add_reflogs_to_pending(struct rev_info *revs, unsigned flags)
- 
- 	cb.all_revs = revs;
- 	cb.all_flags = flags;
--	cb.refs = get_main_ref_store(the_repository);
-+	cb.refs = get_main_ref_store(revs->repo);
- 	for_each_reflog(handle_one_reflog, &cb);
- 
- 	if (!revs->single_worktree)
-@@ -1326,7 +1327,7 @@ static void add_cache_tree(struct cache_tree *it, struct rev_info *revs,
- 	int i;
- 
- 	if (it->entry_count >= 0) {
--		struct tree *tree = lookup_tree(the_repository, &it->oid);
-+		struct tree *tree = lookup_tree(revs->repo, &it->oid);
- 		add_pending_object_with_path(revs, &tree->object, "",
- 					     040000, path->buf);
- 	}
-@@ -1352,7 +1353,7 @@ static void do_add_index_objects_to_pending(struct rev_info *revs,
- 		if (S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
--		blob = lookup_blob(the_repository, &ce->oid);
-+		blob = lookup_blob(revs->repo, &ce->oid);
- 		if (!blob)
- 			die("unable to add index blob to traversal");
- 		add_pending_object_with_path(revs, &blob->object, "",
-@@ -1585,8 +1586,8 @@ static int handle_dotdot_1(const char *arg, char *dotdot,
- 		*dotdot = '\0';
- 	}
- 
--	a_obj = parse_object(the_repository, &a_oid);
--	b_obj = parse_object(the_repository, &b_oid);
-+	a_obj = parse_object(revs->repo, &a_oid);
-+	b_obj = parse_object(revs->repo, &b_oid);
- 	if (!a_obj || !b_obj)
- 		return dotdot_missing(arg, dotdot, revs, symmetric);
- 
-@@ -1599,8 +1600,8 @@ static int handle_dotdot_1(const char *arg, char *dotdot,
- 		struct commit *a, *b;
- 		struct commit_list *exclude;
- 
--		a = lookup_commit_reference(the_repository, &a_obj->oid);
--		b = lookup_commit_reference(the_repository, &b_obj->oid);
-+		a = lookup_commit_reference(revs->repo, &a_obj->oid);
-+		b = lookup_commit_reference(revs->repo, &b_obj->oid);
- 		if (!a || !b)
- 			return dotdot_missing(arg, dotdot, revs, symmetric);
- 
-@@ -2208,7 +2209,7 @@ static int handle_revision_pseudo_opt(const char *submodule,
- 			BUG("--single-worktree cannot be used together with submodule");
- 		refs = get_submodule_ref_store(submodule);
- 	} else
--		refs = get_main_ref_store(the_repository);
-+		refs = get_main_ref_store(revs->repo);
- 
- 	/*
- 	 * NOTE!
-@@ -2889,9 +2890,10 @@ void reset_revision_walk(void)
- static int mark_uninteresting(const struct object_id *oid,
- 			      struct packed_git *pack,
- 			      uint32_t pos,
--			      void *unused)
-+			      void *cb)
- {
--	struct object *o = parse_object(the_repository, oid);
-+	struct rev_info *revs = cb;
-+	struct object *o = parse_object(revs->repo, oid);
- 	o->flags |= UNINTERESTING | SEEN;
+ 	struct rev_info rev;
+@@ -930,8 +931,10 @@ static int submodule_needs_pushing(const char *path, struct oid_array *commits)
  	return 0;
  }
-@@ -2924,7 +2926,7 @@ int prepare_revision_walk(struct rev_info *revs)
- 		revs->treesame.name = "treesame";
  
- 	if (revs->exclude_promisor_objects) {
--		for_each_packed_object(mark_uninteresting, NULL,
-+		for_each_packed_object(mark_uninteresting, revs,
- 				       FOR_EACH_OBJECT_PROMISOR_ONLY);
+-int find_unpushed_submodules(struct oid_array *commits,
+-		const char *remotes_name, struct string_list *needs_pushing)
++int find_unpushed_submodules(struct index_state *istate,
++			     struct oid_array *commits,
++			     const char *remotes_name,
++			     struct string_list *needs_pushing)
+ {
+ 	struct string_list submodules = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *name;
+@@ -943,7 +946,7 @@ int find_unpushed_submodules(struct oid_array *commits,
+ 	argv_array_push(&argv, "--not");
+ 	argv_array_pushf(&argv, "--remotes=%s", remotes_name);
+ 
+-	collect_changed_submodules(&submodules, &argv);
++	collect_changed_submodules(istate, &submodules, &argv);
+ 
+ 	for_each_string_list_item(name, &submodules) {
+ 		struct oid_array *commits = name->util;
+@@ -1044,7 +1047,8 @@ static void submodule_push_check(const char *path, const char *head,
+ 		die("process for submodule '%s' failed", path);
+ }
+ 
+-int push_unpushed_submodules(struct oid_array *commits,
++int push_unpushed_submodules(struct index_state *istate,
++			     struct oid_array *commits,
+ 			     const struct remote *remote,
+ 			     const struct refspec *rs,
+ 			     const struct string_list *push_options,
+@@ -1053,7 +1057,8 @@ int push_unpushed_submodules(struct oid_array *commits,
+ 	int i, ret = 1;
+ 	struct string_list needs_pushing = STRING_LIST_INIT_DUP;
+ 
+-	if (!find_unpushed_submodules(commits, remote->name, &needs_pushing))
++	if (!find_unpushed_submodules(istate, commits,
++				      remote->name, &needs_pushing))
+ 		return 1;
+ 
+ 	/*
+@@ -1110,7 +1115,7 @@ void check_for_new_submodule_commits(struct object_id *oid)
+ 	oid_array_append(&ref_tips_after_fetch, oid);
+ }
+ 
+-static void calculate_changed_submodule_paths(void)
++static void calculate_changed_submodule_paths(struct index_state *istate)
+ {
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 	struct string_list changed_submodules = STRING_LIST_INIT_DUP;
+@@ -1131,7 +1136,7 @@ static void calculate_changed_submodule_paths(void)
+ 	 * Collect all submodules (whether checked out or not) for which new
+ 	 * commits have been recorded upstream in "changed_submodule_names".
+ 	 */
+-	collect_changed_submodules(&changed_submodules, &argv);
++	collect_changed_submodules(istate, &changed_submodules, &argv);
+ 
+ 	for_each_string_list_item(name, &changed_submodules) {
+ 		struct oid_array *commits = name->util;
+@@ -1158,7 +1163,8 @@ static void calculate_changed_submodule_paths(void)
+ 	initialized_fetch_ref_tips = 0;
+ }
+ 
+-int submodule_touches_in_range(struct object_id *excl_oid,
++int submodule_touches_in_range(struct index_state *istate,
++			       struct object_id *excl_oid,
+ 			       struct object_id *incl_oid)
+ {
+ 	struct string_list subs = STRING_LIST_INIT_DUP;
+@@ -1176,7 +1182,7 @@ int submodule_touches_in_range(struct object_id *excl_oid,
+ 		argv_array_push(&args, oid_to_hex(excl_oid));
  	}
  
-diff --git a/revision.h b/revision.h
-index 01427c9eb4..7e62a65bad 100644
---- a/revision.h
-+++ b/revision.h
-@@ -280,7 +280,7 @@ void put_revision_mark(const struct rev_info *revs,
- 		       const struct commit *commit);
+-	collect_changed_submodules(&subs, &args);
++	collect_changed_submodules(istate, &subs, &args);
+ 	ret = subs.nr;
  
- void mark_parents_uninteresting(struct commit *commit);
--void mark_tree_uninteresting(struct tree *tree);
-+void mark_tree_uninteresting(struct repository *r, struct tree *tree);
+ 	argv_array_clear(&args);
+@@ -1346,7 +1352,7 @@ int fetch_populated_submodules(struct repository *r,
+ 	argv_array_push(&spf.args, "--recurse-submodules-default");
+ 	/* default value, "--submodule-prefix" and its value are added later */
  
- void show_object_with_name(FILE *, struct object *, const char *);
+-	calculate_changed_submodule_paths();
++	calculate_changed_submodule_paths(r->index);
+ 	run_processes_parallel(max_parallel_jobs,
+ 			       get_next_submodule,
+ 			       fetch_start_failure,
+diff --git a/submodule.h b/submodule.h
+index 7d476cefa7..600d41d765 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -102,13 +102,16 @@ int add_submodule_odb(const char *path);
+  * Checks if there are submodule changes in a..b. If a is the null OID,
+  * checks b and all its ancestors instead.
+  */
+-int submodule_touches_in_range(struct object_id *a,
++int submodule_touches_in_range(struct index_state *istate,
++			       struct object_id *a,
+ 			       struct object_id *b);
+-int find_unpushed_submodules(struct oid_array *commits,
++int find_unpushed_submodules(struct index_state *istate,
++			     struct oid_array *commits,
+ 			     const char *remotes_name,
+ 			     struct string_list *needs_pushing);
+ struct refspec;
+-int push_unpushed_submodules(struct oid_array *commits,
++int push_unpushed_submodules(struct index_state *istate,
++			     struct oid_array *commits,
+ 			     const struct remote *remote,
+ 			     const struct refspec *rs,
+ 			     const struct string_list *push_options,
+diff --git a/transport.c b/transport.c
+index 06ffea2774..cb40a23d45 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1139,7 +1139,8 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
  
+-			if (!push_unpushed_submodules(&commits,
++			if (!push_unpushed_submodules(&the_index,
++						      &commits,
+ 						      transport->remote,
+ 						      rs,
+ 						      transport->push_options,
+@@ -1163,8 +1164,10 @@ int transport_push(struct transport *transport,
+ 					oid_array_append(&commits,
+ 							  &ref->new_oid);
+ 
+-			if (find_unpushed_submodules(&commits, transport->remote->name,
+-						&needs_pushing)) {
++			if (find_unpushed_submodules(&the_index,
++						     &commits,
++						     transport->remote->name,
++						     &needs_pushing)) {
+ 				oid_array_clear(&commits);
+ 				die_with_unpushed_submodules(&needs_pushing);
+ 			}
 -- 
 2.19.0.rc0.337.ge906d732e7
 
