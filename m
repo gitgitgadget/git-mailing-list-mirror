@@ -2,85 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E8341F404
-	for <e@80x24.org>; Sat, 15 Sep 2018 11:09:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D6351F404
+	for <e@80x24.org>; Sat, 15 Sep 2018 11:35:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727029AbeIOQ2e (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Sep 2018 12:28:34 -0400
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:41849 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726446AbeIOQ2e (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 12:28:34 -0400
-Received: by mail-lf1-f67.google.com with SMTP id l26-v6so9898864lfc.8
-        for <git@vger.kernel.org>; Sat, 15 Sep 2018 04:09:56 -0700 (PDT)
+        id S1727226AbeIOQss (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 12:48:48 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:50266 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726969AbeIOQss (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 12:48:48 -0400
+Received: by mail-it0-f67.google.com with SMTP id j81-v6so5850478ite.0
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 04:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ch6IEpmkQi6+ynd0FAF7s2O/K8Pk6/UMBcMvUtGrgew=;
-        b=DiKVR3BB4u0bHWb1h5ZWuKRBFz7xMv9ljuTaX+20bIPfgg2Kp4mlT3lCy9D20vy2Uk
-         U4NaknTnO4Z+8U5VJBYy6aiJCLkBadBJN2MwPHyUuUfTol3toBgQYpFULJK/i1Pl87Rk
-         cC0C2KB4BMADOQQqZnMjagwxJ0WvNN+EBJ8Y2TQMqYMt/+DbpV2HHJ5iJzeHAGttejUb
-         +0iiFaCUoFA0YjaA7j6LJkQXap2G1AiJLjm8emt1M3B564MhbpvWr+AgyGNBBzpjCcDg
-         8w9e9xhv1Ga/NVmEImeX0cf8KgBBnQ3s7l5zgm/AknxyXKF80XnXFGPjnpuYFOWKdVlU
-         PI5g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Apbwr6x7eQ6dwssHO830OpEZAua/rWzYjj3wH4WWfjk=;
+        b=HX8x1ijSTHcFoplbasPFQ+7fGXFX3cDtADbJ38WxlgV1MZFrWL4Jg9sobIHT9nng2i
+         yAv+yJODJ92JCa+BEkrvmjUFHTq9z0vFla+dKYcOyT2dGyyweD/GTDnToPTvr6mh88H8
+         NTBUMtwtYupAetasVSBi1RUN63MoaSR57dShM2nimuyW4MY1y3uIK8PfyJWPVYiDRtvD
+         OSahXNJ+YHzg65wkij1OQ35rEfURo6A2sl9B7MxkiF/hCLVpUtN9D3RPteosagSTTWEo
+         gzOEPRFrWQ5g9vur6UqCQc7pyGF6T7fj6WLr6WhQKKmUoPQLuZd7lec6VGiMIY/rF2Vw
+         UWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ch6IEpmkQi6+ynd0FAF7s2O/K8Pk6/UMBcMvUtGrgew=;
-        b=a44aovaVThi+U5qimySCAw6qIYMfXvK2+77ZxOG82pHXNlqDILX3vZs+q5a8VWZIlZ
-         cOQUP5joZVoVrSvhqb6orh5WGH/wxjiyZgKjwCpQcJwulwH92A2usOVJWEYKYOhXht/l
-         72MevLrAIyuiiL14lwmAE3XMeiIVGIXnrUbPW3N/8lAgZcBbJ1hVBahD1HQl4KqHZlf2
-         HpahlJ6wVpx9D5xmQZBX7vZZ0C8KklRNcEAu0IHmfARZoyZIXS56QD8aaiXCBe4Tb4i6
-         V2TfH1iU2S30aC2vYZovJb3672OeEeBdJaDvovRGOjXHOAgRZavX5LdziQd05Q8C8x1s
-         uUWQ==
-X-Gm-Message-State: APzg51Bs8jIIXHJ2DJhRYI+lwGFZ1YmS0MdwfuFdR44+8vio6XyMIDXZ
-        lruQLZ+ZU2NFy6sa30YvTi8=
-X-Google-Smtp-Source: ANB0VdZO9hvivfEpKb2l8PvUlK7a+iwpAALpEIhRPzSCplAB8v3/wao4VaKp5LTTKj9yJe7ebQfiQg==
-X-Received: by 2002:a19:1517:: with SMTP id l23-v6mr11627950lfi.69.1537009795357;
-        Sat, 15 Sep 2018 04:09:55 -0700 (PDT)
-Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id q15-v6sm1655510ljh.34.2018.09.15.04.09.53
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Sep 2018 04:09:54 -0700 (PDT)
-Date:   Sat, 15 Sep 2018 13:09:52 +0200
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Apbwr6x7eQ6dwssHO830OpEZAua/rWzYjj3wH4WWfjk=;
+        b=sfL/KWqG5/yS9YGTzleQOeKKb9EHysrZwA5ARbr47Q+xnWw5cRdI/zi50317Lwbb4d
+         SmP+wMpbNbYr2E9GwhGBhx/r1K0m8UQHjG3+mol3Ung+RqDq64urS990GprkuAf68rbv
+         pMzWKEdgj9B1Mm6r7+0kvU6tqtIE00pt7PV4hbjj4Wl9y02nPqGqIiJEhsfNSkR7VqB/
+         ABV3xHUYVZhjiNhkFsrrO6N7W/KuPDBJVSHD2caEIUU+LqMNgme31WBfb/hlf7rafVgI
+         yRXCVvHRjwmNQPkl7mf1gZ6LTel4f+JnqzNmQr/mr9iqAizYEyTLvgaIwUjBCTeKmD0m
+         SwKw==
+X-Gm-Message-State: APzg51CtJwRuhAUzT3griC9ko7GZzMTntAunnhqWslnof75ClDoUKq3D
+        PD6k9M3894J4+NsVFD3+USsegNxBy9pZFSsvqZM=
+X-Google-Smtp-Source: ANB0VdY6eDLAzupAVwDSNP66Xi3Ub+5UeRhinhpTMP6YuyZlnQHRFliCWBRBdBj+C6VxLm61+KjxvwlVOF7SdhdYgXU=
+X-Received: by 2002:a24:d583:: with SMTP id a125-v6mr5937492itg.91.1537011008046;
+ Sat, 15 Sep 2018 04:30:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180912161832.55324-1-benpeart@microsoft.com> <20180912161832.55324-4-benpeart@microsoft.com>
+In-Reply-To: <20180912161832.55324-4-benpeart@microsoft.com>
 From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 15 Sep 2018 13:29:41 +0200
+Message-ID: <CACsJy8AhNQhFa1ONsmnLOjznbZss2=L=xCPD5fa2vdHw79x0ag@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] read-cache: load cache entries on worker threads
 To:     Ben Peart <benpeart@microsoft.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v5 3/5] read-cache: load cache entries on worker threads
-Message-ID: <20180915110951.GA17817@duynguyen.home>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180912161832.55324-1-benpeart@microsoft.com>
- <20180912161832.55324-4-benpeart@microsoft.com>
- <CACsJy8CUsOLy_OWdJbx5TqyzPJ5eZ0QcrJniQ82nAiwwtk9iyA@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CACsJy8CUsOLy_OWdJbx5TqyzPJ5eZ0QcrJniQ82nAiwwtk9iyA@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Sep 15, 2018 at 01:07:46PM +0200, Duy Nguyen wrote:
-> 12:50:00.084237 read-cache.c:1721       start loading index
-> 12:50:00.119941 read-cache.c:1943       performance: 0.034778758 s: loaded all extensions (1667075 bytes)
-> 12:50:00.185352 read-cache.c:2029       performance: 0.100152079 s: loaded 367110 entries
-> 12:50:00.189683 read-cache.c:2126       performance: 0.104566615 s: finished scanning all entries
-> 12:50:00.217900 read-cache.c:2029       performance: 0.082309193 s: loaded 367110 entries
-> 12:50:00.259969 read-cache.c:2029       performance: 0.070257130 s: loaded 367108 entries
-> 12:50:00.263662 read-cache.c:2278       performance: 0.179344458 s: read cache .git/index
+On Wed, Sep 12, 2018 at 6:18 PM Ben Peart <benpeart@microsoft.com> wrote:
+>  #ifndef NO_PTHREADS
+>         nr_threads = git_config_get_index_threads();
+> -       if (!nr_threads)
+> -               nr_threads = online_cpus();
+> +       if (!nr_threads) {
+> +               cpus = online_cpus();
+> +               nr_threads = istate->cache_nr / THREAD_COST;
+> +               if (nr_threads > cpus)
+> +                       nr_threads = cpus;
 
-The previous mail wraps these lines and make it a bit hard to read. Corrected now.
+It seems like overcommitting cpu does reduce time. With this patch
+(and a 4 core system), I got
 
+$ test-tool read-cache 100
+real    0m36.270s
+user    0m54.193s
+sys     0m17.346s
+
+if I force nr_threads to 9 (even though cpus is 4)
+
+$ test-tool read-cache 100
+real    0m33.592s
+user    1m4.230s
+sys     0m18.380s
+
+Even though we use more cpus, real time is shorter. I guess these
+threads still sleep a bit due to I/O and having more threads than
+cores will utilize those idle cycles.
 --
 Duy
