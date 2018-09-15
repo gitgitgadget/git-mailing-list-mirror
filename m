@@ -2,89 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B61D1F404
-	for <e@80x24.org>; Fri, 14 Sep 2018 23:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27BDD1F42B
+	for <e@80x24.org>; Sat, 15 Sep 2018 00:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725925AbeIOEx2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Sep 2018 00:53:28 -0400
-Received: from sender-of-o53.zoho.com ([135.84.80.218]:21821 "EHLO
-        sender-of-o53.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725724AbeIOEx2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 00:53:28 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1536968207; cv=none; 
-        d=zoho.com; s=zohoarc; 
-        b=WK2V9BYrJEkZ2C+vOf2IzyFMTZAqEJ60WG830mrJbSAEUXL8tESWAT2oy3JR4D7chfemD2BOQmEFHdi3IJTYaowdOVnHUgMkl7zFjIs2ti1VenFAzlZVaZfkzXQQQm4aNm7ZRe7wJsi/7cxqkHkbgTa3FfCZ/FXZr/klOisXwbQ=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
-        t=1536968207; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To:ARC-Authentication-Results; 
-        bh=Vj2KNjjUSCDHl/qN0J9giJOYxdPDTpV3x/M6K+mhjlk=; 
-        b=RHnzXPm3BHvxs1SGvTnqx52wyQmOIU4K0aLgIK3YWNgmyD5zFjjXFEwqydfUBSb2R+u37aBU0Lr3UBnzIHQdzftH15r3SfmhGSAYRmrjDQS7Jiate+kYsjDXho+vC6JCqNj2cl3AK3Zb/Y8Tbk9WgPlQS0KiolSb0LY/7fQpnTU=
-ARC-Authentication-Results: i=1; mx.zoho.com;
-        dkim=pass  header.i=astrangergravity.com;
-        spf=pass  smtp.mailfrom=john@astrangergravity.com;
-        dmarc=pass header.from=<john@astrangergravity.com> header.from=<john@astrangergravity.com>
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182]) by mx.zohomail.com
-        with SMTPS id 1536968205446457.03560389934705; Fri, 14 Sep 2018 16:36:45 -0700 (PDT)
-Received: by mail-lj1-f182.google.com with SMTP id u83-v6so8770809lje.12
-        for <git@vger.kernel.org>; Fri, 14 Sep 2018 16:36:44 -0700 (PDT)
-X-Gm-Message-State: APzg51CIEZhQVx3XVlRnLUPVwtxunYAAqyQxj4mhgtbWv1dMZkM+9zJ+
-        EIQUI/ycoUBu/+CCZ9F0o9eg4mX9MXMYYdySSlQ=
-X-Google-Smtp-Source: ANB0VdaSyWAU5kqaurFwKVJA8px+lKBBgjlSrU7+sJVzRf9F1q40BBVGQa+M+txft+nvK9vXd0m/f4/+uKZPwKuk0JQ=
-X-Received: by 2002:a2e:650e:: with SMTP id z14-v6mr8754244ljb.62.1536968203663;
- Fri, 14 Sep 2018 16:36:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
- <87bm8zlqrh.fsf@evledraar.gmail.com>
-In-Reply-To: <87bm8zlqrh.fsf@evledraar.gmail.com>
-From:   John Austin <john@astrangergravity.com>
-Date:   Fri, 14 Sep 2018 16:36:19 -0700
-X-Gmail-Original-Message-ID: <CA+AhR6d4p2N06t-w62A2=wTH0x1ipt3x3hN2mQKK-Cwj0rMX1g@mail.gmail.com>
-Message-ID: <CA+AhR6d4p2N06t-w62A2=wTH0x1ipt3x3hN2mQKK-Cwj0rMX1g@mail.gmail.com>
-Subject: Re: Git for games working group
-To:     avarab@gmail.com
-Cc:     git@vger.kernel.org
+        id S1725767AbeIOFTf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 01:19:35 -0400
+Received: from mail-it0-f73.google.com ([209.85.214.73]:35621 "EHLO
+        mail-it0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725724AbeIOFTf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Sep 2018 01:19:35 -0400
+Received: by mail-it0-f73.google.com with SMTP id w68-v6so5006446ith.0
+        for <git@vger.kernel.org>; Fri, 14 Sep 2018 17:02:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=ADo+vNG03XLcJwlmiyFYnTCop3MRU4e+hWJnfv6SiOA=;
+        b=PDuW5WiVWZzxvf3R07t+6UbALaqzydeQ6I283URnV/iSX0G67xYpH/nobQ9+F/ASoe
+         SryD40KeTYzQWnb8r6bVyFgWcF0/kVladUriheblYO+1ohq6uyJDpLBr4VSP8d6a4E98
+         p71aNV2MK4d6AUz3fIHciR4ouMyLPTp1rofl91QELavsqnNFass40hxqPGEOGQczYOKU
+         vKxpYwLKHX9oD8NQ/uvGFmR+hYg7qftWdaSy5hKCF5LWn3RGgpJh0tV07vzpc5hZ+Pcq
+         6ihQejsY1LhgqxzDvmzWfQ9jKgNg3xF2tvPZI9GcXUNEz+Tg4HXbKzMWzOEYQpPZgWF1
+         PoBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=ADo+vNG03XLcJwlmiyFYnTCop3MRU4e+hWJnfv6SiOA=;
+        b=MS5epgtS3Q6fbTtfI/aDuSv55ih1smthPTCim1bA84S8XxXb+hsnH89jdMNK+oxnGz
+         hIIQETrB7IHUiMugY2+uLhjLY4n3LiQZC9Mv+Biusjw+j+bnRqbssABOeXYhX4LPE1IQ
+         W+ZiBQKIt2MUp7wAaEOAMaIgv8cy6R0YIc01jgBJq2DanIJUJZQecNEyDK6o2DXaY4Pa
+         ++DxZpY+keVG0B4W9vuMLUtcIjgO3J6lqfx5Aqia1EnVb1pCwvRbTAQ3vTeES5vdt5W7
+         sezibuAtB2LyTTVBL1tFEGnJeQiMTufqq59XUzu0aEy+t30TdW/tJus8be0nqL4lZzWn
+         tUcA==
+X-Gm-Message-State: APzg51DC2XGCxiIHg04yhhNldshwa5nkr36WrD+6IXQihBrpJMTNobF1
+        Vv6dqmjY8Jx/2v4FJVHvM9JeRMD6cxMy4ImMjiPG0CS7P5g82rKoopQmNSjpVDAdXrV2Xo+0Mqg
+        ZVhoUwqcmLDOUCKNjP+vizoBZNEXnj08DjrgUX+1amWtX9AQw/VGLmSpnfWE=
+X-Google-Smtp-Source: ANB0VdYyZvf/oc3eDEYB7+7cL2JoEbuHFk2uVAaRWUg52Ap2XN8Ylo2qW4Gv7CBMNmBkiVt08fBf4JdYvL+K
+X-Received: by 2002:a6b:20ca:: with SMTP id g193-v6mr10345364iog.116.1536969771742;
+ Fri, 14 Sep 2018 17:02:51 -0700 (PDT)
+Date:   Fri, 14 Sep 2018 17:02:34 -0700
+Message-Id: <cover.1536969438.git.matvore@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.397.gdd90340f6a-goog
+Subject: [PATCH v1 0/2] Cleanup tests for test_cmp argument ordering and "|" placement
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, peff@peff.net,
+        jonathantanmy@google.com, gitster@pobox.com, bmwill@google.com
 Content-Type: text/plain; charset="UTF-8"
-X-ZohoMailClient: External
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> There's also the nascent "don't fetch all the blobs" work-in-progress
-> clone mode which might be of interest to you:
-> https://blog.github.com/2018-09-10-highlights-from-git-2-19/#partial-clones
+As requested in:
+ https://public-inbox.org/git/xmqqmuskas3a.fsf@gitster-ct.c.googlers.com/
+this patchset corrects ordering of test_cmp arguments and | placement.
 
-Yes! I've been pretty excited about this functionality. It drives a
-lot of GVFS/VFS for Git under the hood. I think it's a great solution
-to the repo-size issue.
+The request didn't explicitly state whether all the tests should be cleaned up,
+but I did clean up as much as I reasonably could.
 
-> Is this just a reference to the advisory locking mode perforce/cvs
-> etc. have or is there something else at play here?
+The linked mail above also requested cleaning up flag/positional arg ordering so
+that flags appear first. The amount of wrong ordering I could find was small, so
+I put that cleanup in the other patchset.
 
-Good catch. I actually phrased this precisely to avoid calling it
-"File Locking".
+Matthew DeVore (2):
+  t/*: fix pipe placement and remove \'s
+  t/*: fix ordering of expected/observed arguments
 
-An essential example would be a team of 5 audio designers working
-together on the SFX for a game. If one designer wants to add a layer
-of ambience to 40% of the .wav files, they have to coordinate with
-everyone else on the project manually. Without coordination this
-developer will clobber any changes made to these files while he worked
-on them. File Locking is the way that Perforce manages this, where a
-developer can exclusively block modifications on a set of files across
-the entire team.
+ t/lib-gpg.sh                           |   4 +-
+ t/t0000-basic.sh                       |   2 +-
+ t/t0021-conversion.sh                  |   4 +-
+ t/t1006-cat-file.sh                    |   8 +-
+ t/t1300-config.sh                      |   9 +-
+ t/t1303-wacky-config.sh                |   4 +-
+ t/t2101-update-index-reupdate.sh       |   2 +-
+ t/t3200-branch.sh                      |   2 +-
+ t/t3320-notes-merge-worktrees.sh       |   4 +-
+ t/t3400-rebase.sh                      |   8 +-
+ t/t3417-rebase-whitespace-fix.sh       |   6 +-
+ t/t3702-add-edit.sh                    |   4 +-
+ t/t3903-stash.sh                       |   8 +-
+ t/t3905-stash-include-untracked.sh     |   2 +-
+ t/t4025-hunk-header.sh                 |   2 +-
+ t/t4117-apply-reject.sh                |   6 +-
+ t/t4124-apply-ws-rule.sh               |  30 +-
+ t/t4138-apply-ws-expansion.sh          |   2 +-
+ t/t5317-pack-objects-filter-objects.sh | 364 ++++++++++++++-----------
+ t/t5318-commit-graph.sh                |   2 +-
+ t/t5500-fetch-pack.sh                  |   5 +-
+ t/t5616-partial-clone.sh               |  30 +-
+ t/t5701-git-serve.sh                   |  14 +-
+ t/t5702-protocol-v2.sh                 |  10 +-
+ t/t6023-merge-file.sh                  |  12 +-
+ t/t6027-merge-binary.sh                |   4 +-
+ t/t6031-merge-filemode.sh              |   2 +-
+ t/t6112-rev-list-filters-objects.sh    | 227 ++++++++-------
+ t/t7201-co.sh                          |   4 +-
+ t/t7406-submodule-update.sh            |   8 +-
+ t/t7508-status.sh                      |   2 +-
+ t/t7800-difftool.sh                    |   2 +-
+ t/t9100-git-svn-basic.sh               |   2 +-
+ t/t9101-git-svn-props.sh               |   4 +-
+ t/t9133-git-svn-nested-git-repo.sh     |   6 +-
+ t/t9600-cvsimport.sh                   |   2 +-
+ t/t9603-cvsimport-patchsets.sh         |   4 +-
+ t/t9604-cvsimport-timestamps.sh        |   4 +-
+ 38 files changed, 452 insertions(+), 363 deletions(-)
 
-File locking is just one solution to the problem. It's also one that
-doesn't play well with git's decentralized structure and branching
-model. I would state the problem more generally:
-Developers need some way to know, as early as possible, if modifying a
-file will cause conflicts upstream.
-
-Optionally this knowledge can block modifying the file directly (if
-we're certain there's already a conflicting version of the file on a
-different branch).
-
-JA
+-- 
+2.19.0.397.gdd90340f6a-goog
 
