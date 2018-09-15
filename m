@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 948681F404
-	for <e@80x24.org>; Sat, 15 Sep 2018 16:19:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EB501F404
+	for <e@80x24.org>; Sat, 15 Sep 2018 16:19:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728189AbeIOVic (ORCPT <rfc822;e@80x24.org>);
+        id S1728196AbeIOVid (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Sep 2018 17:38:33 -0400
+Received: from mail-lf1-f51.google.com ([209.85.167.51]:38952 "EHLO
+        mail-lf1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728082AbeIOVic (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 15 Sep 2018 17:38:32 -0400
-Received: from mail-lj1-f169.google.com ([209.85.208.169]:43267 "EHLO
-        mail-lj1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728169AbeIOVia (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Sep 2018 17:38:30 -0400
-Received: by mail-lj1-f169.google.com with SMTP id m84-v6so9848436lje.10
-        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:18:57 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id v77-v6so10269052lfa.6
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 09:19:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=YenJellLr3g9PkZl78DjFJJSb/Ydiw2JndVcRm2+vtI=;
-        b=GxGH0n16fuS1C5WPsGHql0C947ZRJ1tlnOdsCE9DDGYVldY0h7rT7zBv/ktwQN9MsS
-         GmG2aF56lT7HcMPDfcCefs3c1/DIFXLiA4QlO+LqTeR3WOhQpEj77syha2cV/brHywSi
-         SHETYRQMZjxSwsR+orA22WmGXXowuZQVW0Rdvwm8xg4v0NSle10WYaHzlgyzJejW2O0o
-         j3J3hr/hUiBLO2WeWtCgze74mNJT6KEN/5uHoAP6TdvUfAknnC7bASV9gr3gmn7qp5mp
-         3RLVZCbyKxix+99QfcLhZMNcArCVsd/7PNzFGtajbsDm79bLl7jMrP/sd412p8gmf1j1
-         rkng==
+        bh=l64uVB93U0BqhpUgV4rKbYJlyahQGal+ge7SYWX9VGo=;
+        b=kPJOigLRHUiWMmedgDohyQSJmSpf8peouaaYX3BuTLOY8LydZKWb50RmgziQIIyaJu
+         vCdqeJzdVxYfjT5sMipoaGlBLHVPjKFlyF97h9sUiuyz0lQ+EW36IbN0e4/VpTuu4mOp
+         Qp0q1zWkoH1svf2HM/LPkccCSIKr2LMlT4WeW1PQdMLY5CXFEjPDQhu6LNKQ++tkhvZN
+         b2M/xVb9vsQB44RqWozfT2+a5oZf4cwB8GhrMa8mxHNmd4CxJxtfpCeGlDkzaumtW5xj
+         9C3pVveLkY20SRyxAw4hyFb9aw1LPar2hVSbTypsH2yjRjZzkKApVuas3wF+HTc5w6ds
+         XaqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=YenJellLr3g9PkZl78DjFJJSb/Ydiw2JndVcRm2+vtI=;
-        b=LmQIb2fiAc0D+KlodFsY4KMiEBtHv3Bs7l81j9pnwds386KWj0SFWBKXopWn4CVPKS
-         ynwwQ48PE/eTYIlv0LCd9mjj5EPcwBHpN0EFvQ++Rpj4+la9k6JLJXl9KlAQn1r4Ur8k
-         XJbkqLHr5ToPWoLtox9mJlNo0OG39JbxKkUGPeb35+nsshDaoRreH5v/phXvEJb0/25Q
-         h9kmjEEIiCQMQ/cKU0VgxGjoUMEo8jke2qKlAb+rjFHBzwV6H4fbZ22R4+7jE0Z2WuY6
-         KyqBinJYbvk0AXNpSGRz4GjlBPLq/vpPGQyfVssjg1gGwXjmmEyFKYgXQdJRnA5y+UqH
-         ky0w==
-X-Gm-Message-State: APzg51BJ/LoarCkDmBcM0+K63BUlC8lx0TMXfF4muTT6i+nFDyLRbXJr
-        kiFVE9R7dJWLcVx+f20c1SJBPUwf
-X-Google-Smtp-Source: ANB0VdaYC9oaknul6sG9+wNJFogSE/s0yYijRHg6dxDN+NA8mPvZBdM13FTTocWuFgKkxmCXImzFqA==
-X-Received: by 2002:a2e:9b59:: with SMTP id o25-v6mr10383015ljj.132.1537028336617;
-        Sat, 15 Sep 2018 09:18:56 -0700 (PDT)
+        bh=l64uVB93U0BqhpUgV4rKbYJlyahQGal+ge7SYWX9VGo=;
+        b=hNwE0Xy+7Sf6ZmwsnFxhxKmo36G/K9HDOB2u0EO7gBQwGHpEk4aNRccyPibAaoi946
+         aFVUNzlwF19eOwZ/faDVbFR1flAKyaqRNpIprF4MQbDzHXBsCbmycwIK9Y+FVYiXOkIK
+         CV0tVpoewRGC4NW6DEwl0nPL8iuQrtTq2cyYiTXM4QTOtjB+kNV6U3q87AXsRbAbyKxg
+         3MjG1a5iPfMnHa+xa+LQ8646H30qznbrpOQQMIxuaahhoXgDCIeKQo9Mm+sOdAghThMu
+         C6W41tRSXeay75RGfBTCX4nRQCrZH/KokzqAZPoC5YL9DlvsrUd21J0EuI58byT1MAWz
+         nTpQ==
+X-Gm-Message-State: APzg51AHEyTDa9nZEKFrxqU8UvTXQih1+KAv5dRKWursda6pLvXzvdix
+        18323+XAh5jHj9EpiYwsSgClLXWX
+X-Google-Smtp-Source: ANB0VdZBOpFci3Ic0vduFg+eXOHPWbqec/rm6LgdhZRsLGnYW+vi5i5/ZvgnkyLk9YpQJIlN34kFdA==
+X-Received: by 2002:a19:9601:: with SMTP id y1-v6mr11718916lfd.91.1537028341011;
+        Sat, 15 Sep 2018 09:19:01 -0700 (PDT)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id i2-v6sm1934852lfa.78.2018.09.15.09.18.55
+        by smtp.gmail.com with ESMTPSA id i2-v6sm1934852lfa.78.2018.09.15.09.18.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Sep 2018 09:18:55 -0700 (PDT)
+        Sat, 15 Sep 2018 09:19:00 -0700 (PDT)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v4 17/23] userdiff.c: remove implicit dependency on the_index
-Date:   Sat, 15 Sep 2018 18:17:53 +0200
-Message-Id: <20180915161759.8272-18-pclouds@gmail.com>
+Subject: [PATCH v4 21/23] ws.c: remove implicit dependency on the_index
+Date:   Sat, 15 Sep 2018 18:17:57 +0200
+Message-Id: <20180915161759.8272-22-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
 In-Reply-To: <20180915161759.8272-1-pclouds@gmail.com>
 References: <20180909085418.31531-1-pclouds@gmail.com>
@@ -73,388 +73,105 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive-zip.c      | 14 +++++++++-----
- builtin/grep.c     |  3 ++-
- combine-diff.c     |  2 +-
- diff.c             | 40 +++++++++++++++++++++++-----------------
- diff.h             |  3 ++-
- diffcore-pickaxe.c |  4 ++--
- grep.c             | 21 ++++++++++++---------
- grep.h             |  3 ++-
- line-range.c       |  2 +-
- userdiff.c         |  5 +++--
- userdiff.h         |  3 ++-
- 11 files changed, 59 insertions(+), 41 deletions(-)
+ apply.c | 8 +++++---
+ cache.h | 2 +-
+ diff.c  | 6 +++---
+ ws.c    | 5 ++---
+ 4 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/archive-zip.c b/archive-zip.c
-index 5a62351ab1..155ee4a779 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -264,9 +264,10 @@ static int has_only_ascii(const char *s)
- 	}
- }
+diff --git a/apply.c b/apply.c
+index 571b89c2e0..fdae1d423b 100644
+--- a/apply.c
++++ b/apply.c
+@@ -2131,10 +2131,12 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
  
--static int entry_is_binary(const char *path, const void *buffer, size_t size)
-+static int entry_is_binary(struct index_state *istate, const char *path,
-+			   const void *buffer, size_t size)
- {
--	struct userdiff_driver *driver = userdiff_find_by_path(path);
-+	struct userdiff_driver *driver = userdiff_find_by_path(istate, path);
- 	if (!driver)
- 		driver = userdiff_find_by_name("default");
- 	if (driver->binary != -1)
-@@ -352,7 +353,8 @@ static int write_zip_entry(struct archiver_args *args,
- 				return error(_("cannot read %s"),
- 					     oid_to_hex(oid));
- 			crc = crc32(crc, buffer, size);
--			is_binary = entry_is_binary(path_without_prefix,
-+			is_binary = entry_is_binary(args->repo->index,
-+						    path_without_prefix,
- 						    buffer, size);
- 			out = buffer;
- 		}
-@@ -428,7 +430,8 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(path_without_prefix,
-+				is_binary = entry_is_binary(args->repo->index,
-+							    path_without_prefix,
- 							    buf, readlen);
- 			write_or_die(1, buf, readlen);
- 		}
-@@ -460,7 +463,8 @@ static int write_zip_entry(struct archiver_args *args,
- 				break;
- 			crc = crc32(crc, buf, readlen);
- 			if (is_binary == -1)
--				is_binary = entry_is_binary(path_without_prefix,
-+				is_binary = entry_is_binary(args->repo->index,
-+							    path_without_prefix,
- 							    buf, readlen);
+ 	if (!use_patch(state, patch))
+ 		patch->ws_rule = 0;
++	else if (patch->new_name)
++		patch->ws_rule = whitespace_rule(state->repo->index,
++						 patch->new_name);
+ 	else
+-		patch->ws_rule = whitespace_rule(patch->new_name
+-						 ? patch->new_name
+-						 : patch->old_name);
++		patch->ws_rule = whitespace_rule(state->repo->index,
++						 patch->old_name);
  
- 			zstream.next_in = buf;
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 0667ffde84..0c3527242e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -103,7 +103,8 @@ static void add_work(struct grep_opt *opt, const struct grep_source *gs)
- 
- 	todo[todo_end].source = *gs;
- 	if (opt->binary != GREP_BINARY_TEXT)
--		grep_source_load_driver(&todo[todo_end].source);
-+		grep_source_load_driver(&todo[todo_end].source,
-+					opt->repo->index);
- 	todo[todo_end].done = 0;
- 	strbuf_reset(&todo[todo_end].out);
- 	todo_end = (todo_end + 1) % ARRAY_SIZE(todo);
-diff --git a/combine-diff.c b/combine-diff.c
-index 9b43e557a1..41ab5b01de 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -987,7 +987,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
- 	const char *line_prefix = diff_line_prefix(opt);
- 
- 	context = opt->context;
--	userdiff = userdiff_find_by_path(elem->path);
-+	userdiff = userdiff_find_by_path(opt->repo->index, elem->path);
- 	if (!userdiff)
- 		userdiff = userdiff_find_by_name("default");
- 	if (opt->flags.allow_textconv)
+ 	patchsize = parse_single_patch(state,
+ 				       buffer + offset + hdrsize,
+diff --git a/cache.h b/cache.h
+index 094652a503..eb0f7d5470 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1694,7 +1694,7 @@ void shift_tree_by(const struct object_id *, const struct object_id *, struct ob
+ /* All WS_* -- when extended, adapt diff.c emit_symbol */
+ #define WS_RULE_MASK           07777
+ extern unsigned whitespace_rule_cfg;
+-extern unsigned whitespace_rule(const char *);
++extern unsigned whitespace_rule(struct index_state *, const char *);
+ extern unsigned parse_whitespace_rule(const char *);
+ extern unsigned ws_check(const char *line, int len, unsigned ws_rule);
+ extern void ws_check_emit(const char *line, int len, unsigned ws_rule, FILE *stream, const char *set, const char *reset, const char *ws);
 diff --git a/diff.c b/diff.c
-index 140d0e86df..5256b9eabc 100644
+index 5256b9eabc..c5b5e7ac41 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -2093,23 +2093,25 @@ static void diff_words_flush(struct emit_callback *ecbdata)
- 	}
- }
+@@ -1705,7 +1705,7 @@ static void emit_rewrite_diff(const char *name_a,
  
--static void diff_filespec_load_driver(struct diff_filespec *one)
-+static void diff_filespec_load_driver(struct diff_filespec *one,
-+				      struct index_state *istate)
- {
- 	/* Use already-loaded driver */
- 	if (one->driver)
- 		return;
+ 	memset(&ecbdata, 0, sizeof(ecbdata));
+ 	ecbdata.color_diff = want_color(o->use_color);
+-	ecbdata.ws_rule = whitespace_rule(name_b);
++	ecbdata.ws_rule = whitespace_rule(o->repo->index, name_b);
+ 	ecbdata.opt = o;
+ 	if (ecbdata.ws_rule & WS_BLANK_AT_EOF) {
+ 		mmfile_t mf1, mf2;
+@@ -3480,7 +3480,7 @@ static void builtin_diff(const char *name_a,
+ 			lbl[0] = NULL;
+ 		ecbdata.label_path = lbl;
+ 		ecbdata.color_diff = want_color(o->use_color);
+-		ecbdata.ws_rule = whitespace_rule(name_b);
++		ecbdata.ws_rule = whitespace_rule(o->repo->index, name_b);
+ 		if (ecbdata.ws_rule & WS_BLANK_AT_EOF)
+ 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
+ 		ecbdata.opt = o;
+@@ -3640,7 +3640,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
+ 	data.filename = name_b ? name_b : name_a;
+ 	data.lineno = 0;
+ 	data.o = o;
+-	data.ws_rule = whitespace_rule(attr_path);
++	data.ws_rule = whitespace_rule(o->repo->index, attr_path);
+ 	data.conflict_marker_size = ll_merge_marker_size(o->repo->index, attr_path);
  
- 	if (S_ISREG(one->mode))
--		one->driver = userdiff_find_by_path(one->path);
-+		one->driver = userdiff_find_by_path(istate, one->path);
- 
- 	/* Fallback to default settings */
- 	if (!one->driver)
- 		one->driver = userdiff_find_by_name("default");
- }
- 
--static const char *userdiff_word_regex(struct diff_filespec *one)
-+static const char *userdiff_word_regex(struct diff_filespec *one,
-+				       struct index_state *istate)
- {
--	diff_filespec_load_driver(one);
-+	diff_filespec_load_driver(one, istate);
- 	return one->driver->word_regex;
- }
- 
-@@ -2132,9 +2134,9 @@ static void init_diff_words_data(struct emit_callback *ecbdata,
- 			xcalloc(1, sizeof(struct emitted_diff_symbols));
- 
- 	if (!o->word_regex)
--		o->word_regex = userdiff_word_regex(one);
-+		o->word_regex = userdiff_word_regex(one, o->repo->index);
- 	if (!o->word_regex)
--		o->word_regex = userdiff_word_regex(two);
-+		o->word_regex = userdiff_word_regex(two, o->repo->index);
- 	if (!o->word_regex)
- 		o->word_regex = diff_word_regex_cfg;
- 	if (o->word_regex) {
-@@ -3257,7 +3259,7 @@ int diff_filespec_is_binary(struct repository *r,
- 			    struct diff_filespec *one)
- {
- 	if (one->is_binary == -1) {
--		diff_filespec_load_driver(one);
-+		diff_filespec_load_driver(one, r->index);
- 		if (one->driver->binary != -1)
- 			one->is_binary = one->driver->binary;
- 		else {
-@@ -3273,9 +3275,10 @@ int diff_filespec_is_binary(struct repository *r,
- 	return one->is_binary;
- }
- 
--static const struct userdiff_funcname *diff_funcname_pattern(struct diff_filespec *one)
-+static const struct userdiff_funcname *
-+diff_funcname_pattern(struct diff_options *o, struct diff_filespec *one)
- {
--	diff_filespec_load_driver(one);
-+	diff_filespec_load_driver(one, o->repo->index);
- 	return one->driver->funcname.pattern ? &one->driver->funcname : NULL;
- }
- 
-@@ -3287,12 +3290,13 @@ void diff_set_mnemonic_prefix(struct diff_options *options, const char *a, const
- 		options->b_prefix = b;
- }
- 
--struct userdiff_driver *get_textconv(struct diff_filespec *one)
-+struct userdiff_driver *get_textconv(struct index_state *istate,
-+				     struct diff_filespec *one)
- {
- 	if (!DIFF_FILE_VALID(one))
- 		return NULL;
- 
--	diff_filespec_load_driver(one);
-+	diff_filespec_load_driver(one, istate);
- 	return userdiff_get_textconv(one->driver);
- }
- 
-@@ -3342,8 +3346,8 @@ static void builtin_diff(const char *name_a,
- 	}
- 
- 	if (o->flags.allow_textconv) {
--		textconv_one = get_textconv(one);
--		textconv_two = get_textconv(two);
-+		textconv_one = get_textconv(o->repo->index, one);
-+		textconv_two = get_textconv(o->repo->index, two);
- 	}
- 
- 	/* Never use a non-valid filename anywhere if at all possible */
-@@ -3465,9 +3469,9 @@ static void builtin_diff(const char *name_a,
- 		mf1.size = fill_textconv(o->repo, textconv_one, one, &mf1.ptr);
- 		mf2.size = fill_textconv(o->repo, textconv_two, two, &mf2.ptr);
- 
--		pe = diff_funcname_pattern(one);
-+		pe = diff_funcname_pattern(o, one);
- 		if (!pe)
--			pe = diff_funcname_pattern(two);
-+			pe = diff_funcname_pattern(o, two);
- 
- 		memset(&xpp, 0, sizeof(xpp));
- 		memset(&xecfg, 0, sizeof(xecfg));
-@@ -4223,7 +4227,9 @@ static void run_diff_cmd(const char *pgm,
- 
- 
- 	if (o->flags.allow_external) {
--		struct userdiff_driver *drv = userdiff_find_by_path(attr_path);
-+		struct userdiff_driver *drv;
-+
-+		drv = userdiff_find_by_path(o->repo->index, attr_path);
- 		if (drv && drv->external)
- 			pgm = drv->external;
- 	}
-@@ -6399,7 +6405,7 @@ int textconv_object(struct repository *r,
- 
- 	df = alloc_filespec(path);
- 	fill_filespec(df, oid, oid_valid, mode);
--	textconv = get_textconv(df);
-+	textconv = get_textconv(r->index, df);
- 	if (!textconv) {
- 		free_filespec(df);
- 		return 0;
-diff --git a/diff.h b/diff.h
-index b88fccd2fb..af26196224 100644
---- a/diff.h
-+++ b/diff.h
-@@ -455,7 +455,8 @@ size_t fill_textconv(struct repository *r,
-  * and only if it has textconv enabled (otherwise return NULL). The result
-  * can be passed to fill_textconv().
+ 	if (fill_mmfile(o->repo, &mf1, one) < 0 ||
+diff --git a/ws.c b/ws.c
+index 5b67b426e7..55349b4c5d 100644
+--- a/ws.c
++++ b/ws.c
+@@ -3,7 +3,6 @@
+  *
+  * Copyright (c) 2007 Junio C Hamano
   */
--struct userdiff_driver *get_textconv(struct diff_filespec *one);
-+struct userdiff_driver *get_textconv(struct index_state *istate,
-+				     struct diff_filespec *one);
+-
+ #include "cache.h"
+ #include "attr.h"
  
- /*
-  * Prepare diff_filespec and convert it using diff textconv API
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 7a5cf446ff..d2361e06a1 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -139,8 +139,8 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 		return 0;
- 
- 	if (o->flags.allow_textconv) {
--		textconv_one = get_textconv(p->one);
--		textconv_two = get_textconv(p->two);
-+		textconv_one = get_textconv(o->repo->index, p->one);
-+		textconv_two = get_textconv(o->repo->index, p->two);
- 	}
- 
- 	/*
-diff --git a/grep.c b/grep.c
-index 6c0eede3a1..f6bd89e40b 100644
---- a/grep.c
-+++ b/grep.c
-@@ -11,7 +11,8 @@
- #include "help.h"
- 
- static int grep_source_load(struct grep_source *gs);
--static int grep_source_is_binary(struct grep_source *gs);
-+static int grep_source_is_binary(struct grep_source *gs,
-+				 struct index_state *istate);
- 
- static struct grep_opt grep_defaults;
- 
-@@ -1547,7 +1548,7 @@ static int match_funcname(struct grep_opt *opt, struct grep_source *gs, char *bo
- {
- 	xdemitconf_t *xecfg = opt->priv;
- 	if (xecfg && !xecfg->find_func) {
--		grep_source_load_driver(gs);
-+		grep_source_load_driver(gs, opt->repo->index);
- 		if (gs->driver->funcname.pattern) {
- 			const struct userdiff_funcname *pe = &gs->driver->funcname;
- 			xdiff_set_find_func(xecfg, pe->pattern, pe->cflags);
-@@ -1804,7 +1805,7 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	opt->last_shown = 0;
- 
- 	if (opt->allow_textconv) {
--		grep_source_load_driver(gs);
-+		grep_source_load_driver(gs, opt->repo->index);
- 		/*
- 		 * We might set up the shared textconv cache data here, which
- 		 * is not thread-safe.
-@@ -1821,11 +1822,11 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
- 	if (!textconv) {
- 		switch (opt->binary) {
- 		case GREP_BINARY_DEFAULT:
--			if (grep_source_is_binary(gs))
-+			if (grep_source_is_binary(gs, opt->repo->index))
- 				binary_match_only = 1;
- 			break;
- 		case GREP_BINARY_NOMATCH:
--			if (grep_source_is_binary(gs))
-+			if (grep_source_is_binary(gs, opt->repo->index))
- 				return 0; /* Assume unmatch */
- 			break;
- 		case GREP_BINARY_TEXT:
-@@ -2171,22 +2172,24 @@ static int grep_source_load(struct grep_source *gs)
- 	BUG("invalid grep_source type to load");
+@@ -71,14 +70,14 @@ unsigned parse_whitespace_rule(const char *string)
+ 	return rule;
  }
  
--void grep_source_load_driver(struct grep_source *gs)
-+void grep_source_load_driver(struct grep_source *gs,
-+			     struct index_state *istate)
+-unsigned whitespace_rule(const char *pathname)
++unsigned whitespace_rule(struct index_state *istate, const char *pathname)
  {
- 	if (gs->driver)
- 		return;
+ 	static struct attr_check *attr_whitespace_rule;
  
- 	grep_attr_lock();
- 	if (gs->path)
--		gs->driver = userdiff_find_by_path(gs->path);
-+		gs->driver = userdiff_find_by_path(istate, gs->path);
- 	if (!gs->driver)
- 		gs->driver = userdiff_find_by_name("default");
- 	grep_attr_unlock();
- }
+ 	if (!attr_whitespace_rule)
+ 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
  
--static int grep_source_is_binary(struct grep_source *gs)
-+static int grep_source_is_binary(struct grep_source *gs,
-+				 struct index_state *istate)
- {
--	grep_source_load_driver(gs);
-+	grep_source_load_driver(gs, istate);
- 	if (gs->driver->binary != -1)
- 		return gs->driver->binary;
+-	if (!git_check_attr(&the_index, pathname, attr_whitespace_rule)) {
++	if (!git_check_attr(istate, pathname, attr_whitespace_rule)) {
+ 		const char *value;
  
-diff --git a/grep.h b/grep.h
-index 3651183971..1a57d12b90 100644
---- a/grep.h
-+++ b/grep.h
-@@ -220,7 +220,8 @@ void grep_source_init(struct grep_source *gs, enum grep_source_type type,
- 		      const void *identifier);
- void grep_source_clear_data(struct grep_source *gs);
- void grep_source_clear(struct grep_source *gs);
--void grep_source_load_driver(struct grep_source *gs);
-+void grep_source_load_driver(struct grep_source *gs,
-+			     struct index_state *istate);
- 
- 
- int grep_source(struct grep_opt *opt, struct grep_source *gs);
-diff --git a/line-range.c b/line-range.c
-index 232c3909ec..7fa0d8bba5 100644
---- a/line-range.c
-+++ b/line-range.c
-@@ -198,7 +198,7 @@ static const char *parse_range_funcname(const char *arg, nth_line_fn_t nth_line_
- 	anchor--; /* input is in human terms */
- 	start = nth_line_cb(cb_data, anchor);
- 
--	drv = userdiff_find_by_path(path);
-+	drv = userdiff_find_by_path(&the_index, path);
- 	if (drv && drv->funcname.pattern) {
- 		const struct userdiff_funcname *pe = &drv->funcname;
- 		xecfg = xcalloc(1, sizeof(*xecfg));
-diff --git a/userdiff.c b/userdiff.c
-index f3f4be579c..c913232396 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -270,7 +270,8 @@ struct userdiff_driver *userdiff_find_by_name(const char *name) {
- 	return userdiff_find_by_namelen(name, len);
- }
- 
--struct userdiff_driver *userdiff_find_by_path(const char *path)
-+struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
-+					      const char *path)
- {
- 	static struct attr_check *check;
- 
-@@ -278,7 +279,7 @@ struct userdiff_driver *userdiff_find_by_path(const char *path)
- 		check = attr_check_initl("diff", NULL);
- 	if (!path)
- 		return NULL;
--	if (git_check_attr(&the_index, path, check))
-+	if (git_check_attr(istate, path, check))
- 		return NULL;
- 
- 	if (ATTR_TRUE(check->items[0].value))
-diff --git a/userdiff.h b/userdiff.h
-index 2ef0ce5452..dad3fc03c1 100644
---- a/userdiff.h
-+++ b/userdiff.h
-@@ -21,7 +21,8 @@ struct userdiff_driver {
- 
- int userdiff_config(const char *k, const char *v);
- struct userdiff_driver *userdiff_find_by_name(const char *name);
--struct userdiff_driver *userdiff_find_by_path(const char *path);
-+struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
-+					      const char *path);
- 
- /*
-  * Initialize any textconv-related fields in the driver and return it, or NULL
+ 		value = attr_whitespace_rule->items[0].value;
 -- 
 2.19.0.rc0.337.ge906d732e7
 
