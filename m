@@ -7,78 +7,103 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6F01F404
-	for <e@80x24.org>; Sun, 16 Sep 2018 07:47:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF901F404
+	for <e@80x24.org>; Sun, 16 Sep 2018 07:50:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727031AbeIPNJU (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Sep 2018 09:09:20 -0400
-Received: from mout.gmx.net ([212.227.17.22]:39683 "EHLO mout.gmx.net"
+        id S1727115AbeIPNMN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Sep 2018 09:12:13 -0400
+Received: from mout.gmx.net ([212.227.15.18]:46535 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726770AbeIPNJU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Sep 2018 09:09:20 -0400
-Received: from [10.2.0.3] ([79.218.121.221]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lbi2Z-1fYjiT1hX9-00lC1x; Sun, 16
- Sep 2018 09:46:58 +0200
-Subject: Re: [RFC PATCH v4 1/3] Add support for nested aliases
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20180905085427.4099-1-timschumi@gmx.de>
- <20180907224430.23859-1-timschumi@gmx.de>
- <CACsJy8BnHgaphwy3beCCquFjU=SZebR2GvDCkFgh1_snxDBTRQ@mail.gmail.com>
+        id S1727041AbeIPNMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Sep 2018 09:12:13 -0400
+Received: from p2520la.lan ([79.218.121.221]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQiVh-1gOv2c1G4z-00U579; Sun, 16
+ Sep 2018 09:50:03 +0200
 From:   Tim Schumacher <timschumi@gmx.de>
-Message-ID: <aede75a5-d2ba-5a95-434d-aa70f7270fd7@gmx.de>
-Date:   Sun, 16 Sep 2018 09:46:58 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
+        pclouds@gmail.com
+Subject: [PATCH v5 2/3] Show the call history when an alias is looping
+Date:   Sun, 16 Sep 2018 09:50:01 +0200
+Message-Id: <20180916075002.3303-2-timschumi@gmx.de>
+X-Mailer: git-send-email 2.19.0.rc2.1.g4c98b8d69.dirty
+In-Reply-To: <20180916075002.3303-1-timschumi@gmx.de>
+References: <20180907224430.23859-1-timschumi@gmx.de>
+ <20180916075002.3303-1-timschumi@gmx.de>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8BnHgaphwy3beCCquFjU=SZebR2GvDCkFgh1_snxDBTRQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US-large
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:49x41rTLSPxiAaMN6fnPQVgczpc8lPMHoRkraPQn2qs9A23zT2T
- oVPEsMgdkNEes0vEIR7h8wU/ATLTbZldmSgDzxHoNXVc/2F4DPsAdI32NU/vxSIBfgsUrTr
- 5Blnrj7aw6NuqA1q+22KOldyRviW7mMvB83LHUFvx6V9Kltr2UhB4/9YVlBwT1N3Z/OmVDn
- vAbFu0+3+bz54Kqhdr2xQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ejhFQKRxQno=:odrNAe0OfVPlP77dserdja
- 4krqTCCi0Uja9cFjfxvDA4NBbK2fu35TZLw85vDQjRzcEa65fEjl7O/Sa6MZ4YaaGUw5f5HLp
- uOb+KTokvXUdxe//+KF0KLFAK2gW67oSp5DIWBhijTU+vimmqUygvunJdPmTvJ+fdHEHNQiVt
- JhtCXznQFuX/BkqAFQn8DyBjnBHeEz2si3ut47wxbu6qzvxg2BzoChgBytGFVlJCl+nijc+Ja
- kQjoY+NfzgtHRGh2Gcex8dNlZw0qWV/V164z2E/bQz2gxSvexWhwKqtj3QRm2nwq3lDCDtJjh
- t/6aSNr0b8w1/+O67mdIJJpnk6re713SdvsGZWQMPgtCkn/hQbfYvRkr9HyLJ6wYMFgQN8jiI
- CFt5sCJ0xFlOZ6Q0sX2mkjyLIXHXQqGreGFcH0ZHoD8OK28KK1m86wYq89/jI0L+hfndJ9iX8
- OFDgXfjgYmJOz2MD7dizxXocXRLhARJuX4W0zTXQmJunsHazZ/3c7RUkJm9XgtS9OHbqQVc1e
- 5s2GBT/RaldyRAEA9+8NIxd6HkUcfBDzxhmz1ZiGqingfFkL0E0KBxgl5fUxnX300ioMeJ9js
- 3zy6AGLXaeAPtdJxBgT8zBTkmOnNvnWdeklsXglCEB8jInf53dqt3l12vnrgPaiFI7R8r/n2l
- +bcb1gh5wHt0Zl63CWpck33SiaR6amzlC2wuO1XlG9u5YZW6CxE5Kwk+XmPVA1nSRzQIoLz2m
- 9iNrt39e1Gdbh9YD3E8vToi6+p1HqqOeYLTA6qWDMOmIU/7JPfM4DSQCoulg+yDP53hq2vBmy
- gV3hQIy6Euv8gmmIeljpOY+jI78rTJYxWvTcuGNIO/Sj2YUO1w=
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:PKAturQgPOTMKcv1qC3hMF2mrjOa0tdaT+9Xn1j4y+VgU640EtG
+ Kf//45CMgVFyvtBmLemu9hvffsQCYdwMagH02xPolKIDSDw+dqMQcIDOWXZe6kqCF4mBRp0
+ qlQj1hEd4JqbvqQUkhTTQm7SMOCHrRemkIUkEK3MyULgFwjgNLX+MbSNCqp4iIvzwyA7NGj
+ IbC3UIQr67IpP9dtyc4GQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:gFYw5JgGfLg=:e+PHXh8pSBc1pQfvpszLXg
+ 3GwcaQeSVTtoNPGkS6VjoFOsVt5MvGAYmTLVBte/Q5ltstXia+EobHoSz8aTCR04IzkM9C5Jj
+ cR5H3OfFSLBUxYDMQRyUSORa1SLAmxAtwlo168lkteXB1QuRRgeg/gU1UsgFE+7D8NT+aPATd
+ zLAfiP7cLk50b9Xy4LbbJ5pRJUi1GDKRNK8gsrXueZEUXdylYjmSyJyB5O0UdD8ttXjSr4Zvc
+ c5tm31yhxtGy1J/I5ycjsDY6K+7IUlusOA/qDX6pwbH5hbFGQ8x1t+vVxlkEKIszrgv5Z1vb6
+ prlvGIWDK8/pKEUW5HCihwpvHwvvfGQx0f+PUFKrODTUahWRHHuCWEXYx/LyKXfXpePCzKrQv
+ g1MU838i9KQpsHP4uvD2BlwKBuK6rCpvhBR0F2IKo66Fv+dtIevGzpG5JcHXYV/MgTMSI9WRQ
+ VeH7yBd78lWfS2X2oIbj7+k3HsUT9louQIeLoYRM1+leUax8fLxvTbUGaqOF3NXviOfjC9Vd2
+ 3Y7y2umTXBwoovA5kiUsE8ui55tk7+Cpj3FkV7FmUadbvAWJMPltYVSvm7CJSFgeRvr/B5Nud
+ NcvT2VBkXtJJGOC6RtFZTUxscoIYMJSkQj/0aIBqiyq1al0l1RGuL/zoJa29G8N09+uKlFfqR
+ aIWDcZFheZPXxVZNseG4goyLe1zMHDS95ArGOjFXknUYjJoGWygVqFRZViGMFvNjZ+fVRQ2d/
+ rCuaNWLE4AeB9Ki++bkYi1R4C+OJXrDfMQPr+vsjtWGWvMZBQOOdW1X6PPk0MjK9TpSrCLWhH
+ IHLH9cIBkd+GbtyfvNGCef7+L0NSg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08.09.18 15:28, Duy Nguyen wrote:
-> On Sat, Sep 8, 2018 at 12:44 AM Tim Schumacher <timschumi@gmx.de> wrote:
->> +               /*
->> +                * It could be an alias -- this works around the insanity
->>                   * of overriding "git log" with "git show" by having
->>                   * alias.log = show
->>                   */
-> 
-> I think this comment block is about the next two lines you just
-> deleted. So delete it to instead of fixing style.
+Just printing the command that the user entered is not particularly
+helpful when trying to find the alias that causes the loop.
 
-I think that comment is talking about the code that is handing the alias,
-so it still would be valid.
-The check might have peen placed in between to keep it logically grouped.
+Print the history of substituted commands to help the user find the
+offending alias. Mark the entrypoint of the loop with "<==" and the
+last command (which looped back to the entrypoint) with "==>".
 
-> 
->> -               if (done_alias)
->> -                       break;
->>                  if (!handle_alias(argcp, argv))
->>                          break;
->>                  done_alias = 1;
->>          }
+Signed-off-by: Tim Schumacher <timschumi@gmx.de>
+---
+No changes since v4.
+
+ git.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/git.c b/git.c
+index 15727c17f..a20eb4fa1 100644
+--- a/git.c
++++ b/git.c
+@@ -675,6 +675,7 @@ static int run_argv(int *argcp, const char ***argv)
+ {
+ 	int done_alias = 0;
+ 	struct string_list cmd_list = STRING_LIST_INIT_NODUP;
++	struct string_list_item *seen;
+ 
+ 	while (1) {
+ 		/*
+@@ -692,9 +693,21 @@ static int run_argv(int *argcp, const char ***argv)
+ 		/* .. then try the external ones */
+ 		execv_dashed_external(*argv);
+ 
+-		if (unsorted_string_list_has_string(&cmd_list, *argv[0])) {
++		seen = unsorted_string_list_lookup(&cmd_list, *argv[0]);
++		if (seen) {
++			int i;
++			struct strbuf sb = STRBUF_INIT;
++			for (i = 0; i < cmd_list.nr; i++) {
++				struct string_list_item *item = &cmd_list.items[i];
++
++				strbuf_addf(&sb, "\n  %s", item->string);
++				if (item == seen)
++					strbuf_addstr(&sb, " <==");
++				else if (i == cmd_list.nr - 1)
++					strbuf_addstr(&sb, " ==>");
++			}
+ 			die(_("alias loop detected: expansion of '%s' does"
+-			      " not terminate"), cmd_list.items[0].string);
++			      " not terminate:%s"), cmd_list.items[0].string, sb.buf);
+ 		}
+ 
+ 		string_list_append(&cmd_list, *argv[0]);
+-- 
+2.19.0.rc2.1.g4c98b8d69.dirty
+
