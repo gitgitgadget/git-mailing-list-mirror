@@ -2,127 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D70071F404
-	for <e@80x24.org>; Sun, 16 Sep 2018 07:50:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9F01F404
+	for <e@80x24.org>; Sun, 16 Sep 2018 07:56:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727172AbeIPNMO (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Sep 2018 09:12:14 -0400
-Received: from mout.gmx.net ([212.227.15.18]:41335 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727041AbeIPNMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Sep 2018 09:12:13 -0400
-Received: from p2520la.lan ([79.218.121.221]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MI5Ve-1fxajM448k-003r8G; Sun, 16
- Sep 2018 09:50:03 +0200
-From:   Tim Schumacher <timschumi@gmx.de>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, avarab@gmail.com,
-        pclouds@gmail.com
-Subject: [PATCH v5 1/3] Add support for nested aliases
-Date:   Sun, 16 Sep 2018 09:50:00 +0200
-Message-Id: <20180916075002.3303-1-timschumi@gmx.de>
-X-Mailer: git-send-email 2.19.0.rc2.1.g4c98b8d69.dirty
-In-Reply-To: <20180907224430.23859-1-timschumi@gmx.de>
-References: <20180907224430.23859-1-timschumi@gmx.de>
+        id S1727293AbeIPNSN (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Sep 2018 09:18:13 -0400
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:33341 "EHLO
+        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726857AbeIPNSN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Sep 2018 09:18:13 -0400
+Received: by mail-pl1-f174.google.com with SMTP id b97-v6so801495plb.0
+        for <git@vger.kernel.org>; Sun, 16 Sep 2018 00:56:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Nhy6ZIrGIHwaOsgy222llPasbFaskAyoJk+KltZf6oc=;
+        b=k0m6QDR1VPVvm8JlsHfLLX2X69VYpyXjTxdF/n0/l7bTRCdaHaSp6SLTAoiMPyMDxf
+         riXNviJj9uktOJAs8zfv8tZpcCpoQp37S/pSrp/ECdWnJR38Nw0CDeT0P3f4VnVBJQ89
+         8kYWw5Q4R2YTUv+GWDTCc+2KvwY+grfnF+Y6G56k122WlGmMYjanNfYsurzIDndtrJXG
+         7HuPAa7a97LTDNrQk/FIS0rI8psNX2VdSEreHWVpfpB412CdEGm9bu254g1S4F7/QlfL
+         IKJIg+yz78RyJ2pVKww/hB/usn1+k7Kp+bphgFmuHnsmOvXrP41cQNm6mwAk1DfMoyhL
+         nbqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Nhy6ZIrGIHwaOsgy222llPasbFaskAyoJk+KltZf6oc=;
+        b=U4m1O0OS2ElxKts+tp4lrVUwOqTyjKcVdBXi2LV4cYrssPNCU00JVed685UJKLTO5v
+         mNSLtuvyUeOhgouXr3FVKo9L7F5RcspTHhHMktj7sKqgdgIUwaAmOW63T2AeyfbGjDQa
+         JXb3vR3LTdP+c7b2K5FN1OhaHt0+XzvdNAsnVaCmX/E+Q4qLstVGJAUrUg2YAY6iwuWS
+         4hOg65teohj6TOj7sxSrztX8Jd6CijyE3Yy/QpGbbIdiJWqd7Zyy32/iioyoOWt2IOg+
+         9Oq610R/IHZjGEmvP36DK9XksJjnXTuLYP7997+NJpopzEL+og3e7qYDA3SLeeFIUg5Y
+         t+VA==
+X-Gm-Message-State: APzg51BDv5sdaUR8UBWHdhU84Belo8U93Rbacg7dRsltR/IkaE4oFnyI
+        zdPGeAXD1yoFO6x827SdDt8OArb6HQo=
+X-Google-Smtp-Source: ANB0VdbFhGAXg3ej+c56JCbr5bDJOx2G0G3uhvNZ6Saxp5SP82zUC5xDLeMpLrQoFDmOHtV95CjCVw==
+X-Received: by 2002:a17:902:4503:: with SMTP id m3-v6mr19553804pld.168.1537084568582;
+        Sun, 16 Sep 2018 00:56:08 -0700 (PDT)
+Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
+        by smtp.gmail.com with ESMTPSA id x23-v6sm15726141pff.9.2018.09.16.00.56.06
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 16 Sep 2018 00:56:07 -0700 (PDT)
+Date:   Sun, 16 Sep 2018 00:56:04 -0700
+From:   David Aguilar <davvid@gmail.com>
+To:     John Austin <john@astrangergravity.com>
+Cc:     me@ttaylorr.com, git@vger.kernel.org, sandals@crustytoothpaste.net,
+        larsxschneider@gmail.com, pastelmobilesuit@github.com
+Subject: Re: Git for games working group
+Message-ID: <20180916075604.GB18517@gmail.com>
+References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
+ <20180914190025.GJ55140@syl>
+ <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:eSOKoJYbjwAlfoiI/2U8wmLeIYWA505mtVm6z4pQYxvIOV7AO3Q
- s8wcZUxumjIsN2V+xtxJWEqOPMdbo36LxFIxHkgiX2U/lBFVEE/BQ0ip5NhhAEBT0xS7UHN
- IhKCS6GEAlvXZsoefD42LwxAudYdkcK9gJVkzngzl1PQ5pc+U+ckjrrQhJeb17dYbtTQguh
- oWIOnUP3DMVS6FSwn4RYQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ErNADtEPXcs=:EbZN0Cq2FNCHsTng6wS2t2
- 34IABLEyP5LGcABiywPznqwulByx13add3wjreGZsynhexQ+Ea9FGHlzxrm6RrsioxY2ZyQoT
- yX5cTTWhTZwg7tP1f3WeOa8QtB+k6MdtvQ6GBjT/e5TfE5YkDldXZzM3KlpN31+EgWdyFjAyq
- HR3NIOCsDTC1bUrx5KrcrhO/tgDo64rVRr7xlVGyXNzQ1La+gNh51eR23dE2WxE/VqY1YCWWD
- 3MCn3qPP5045sgQbHzcb1jWKDXF3W5BxPXCuZ0UWI2Lak9sxIpFX0rTv4UT4sx/ibujG1XXB7
- fSKqpZw04vaT9k0jwd/jf0IE2zWd1IVqe44G4IbVuDXN7dbgKKs0TESTownEiLfBaDiLzjoNF
- zErE3KbS87M5K1HqGDSgiJyB2stzYvy6aH01A9GNSqMvttGxxeflWJuFhJp88wsJjz7TZu8pD
- sx9+i3/I8xR5Gi5T1QVkX3/zQvf18q9EACeY/d8/eGXJ+S5nlybI3yDWebRiUhVPb+lHFHGR8
- irAjpekVBZSnjxWDD0SsZubi6HKmMtQ5K57SMJn1HjlkCyrtKBMHDgy39eJjJ6ZzXCDLEEMY7
- xKjnQBYCNA4y1B7GdmDRQ5wYyR2Flu+IMEZGkYGryB/vkran2UV0YAJb8OMCrF8Cx08fB1P/a
- v3NRySbSqOujlZQjz5qakxBI9mP0jvYjSiG5yGScuzQweRo+eVdHUIPw/JRA5Yk4hlmTnx59W
- GSa3NP+CnkFKPsxktLDKtj4sA87l0AWvOfdI4/Y4+xmg6Nb7nOu7uHLQt2pcp5gf9eRsiad5Q
- seSYc2gJelVW8IpLDrbcwSjw0Xv/A==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Aliases can only contain non-alias git commands and their
-arguments, not other user-defined aliases. Resolving further
-(nested) aliases is prevented by breaking the loop after the
-first alias was processed. Git then fails with a command-not-found
-error.
+On Fri, Sep 14, 2018 at 02:13:28PM -0700, John Austin wrote:
+> Hey Taylor,
+> 
+> Great to have your support! I think LFS has done a great job so far
+> solving the large file issue. I've been working myself on strategies
+> for handling binary conflicts, and particularly how to do it in a
+> git-friendly way (ie. avoiding as much centralization as possible and
+> playing into the commit/branching model of git). I've got to a loose
+> design that I like, but it'd be good to get some feedback, as well as
+> hearing what other game devs would want in a binary conflict system.
+> 
+> - John
 
-Allow resolving nested aliases by not breaking the loop in
-run_argv() after the first alias was processed. Instead, continue
-the loop until `handle_alias()` fails, which means that there are
-no further aliases that can be processed. Prevent looping aliases
-by storing substituted commands in `cmd_list` and checking if
-a command has been substituted previously.
+Hey John, thanks for LFS, and thanks to Taylor for bringing up this topic.
 
-While we're at it, fix a styling issue just below the added code.
+Regarding file locking, the gitolite docs are insightful:
+http://gitolite.com/gitolite/locking/index.html
 
-Signed-off-by: Tim Schumacher <timschumi@gmx.de>
----
-Changes since v3:
- - Print the command that the user entered instead of the command
-   which caused the loop (and a nicer, more explanatory error message)
- - Use unsorted_string_list_has_string() instead of the sorted version
- - Fix a code style issue just below the modified code
- - done_alias is a simple boolean again (instead of a counter)
+File locking is how P4 handles binary conflicts.  It's actually
+conflict prevention -- the locks prevent users from stepping
+on each other without needing to actually talk to each other.
 
-Changes since v4: None.
+(I've always believed that this is actually a social problem
+ (not a technical one) that is best served by better communication,
+ but there's no doubt that having a technical guard in place is useful
+ in many scenarios.)
 
- git.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+From the POV of using Git as a P4 replacement, the locking support in
+git-lfs seems like a fine solution to prevent binary conflicts.
 
-diff --git a/git.c b/git.c
-index c27c38738..15727c17f 100644
---- a/git.c
-+++ b/git.c
-@@ -674,6 +674,7 @@ static void execv_dashed_external(const char **argv)
- static int run_argv(int *argcp, const char ***argv)
- {
- 	int done_alias = 0;
-+	struct string_list cmd_list = STRING_LIST_INIT_NODUP;
- 
- 	while (1) {
- 		/*
-@@ -691,17 +692,25 @@ static int run_argv(int *argcp, const char ***argv)
- 		/* .. then try the external ones */
- 		execv_dashed_external(*argv);
- 
--		/* It could be an alias -- this works around the insanity
-+		if (unsorted_string_list_has_string(&cmd_list, *argv[0])) {
-+			die(_("alias loop detected: expansion of '%s' does"
-+			      " not terminate"), cmd_list.items[0].string);
-+		}
-+
-+		string_list_append(&cmd_list, *argv[0]);
-+
-+		/*
-+		 * It could be an alias -- this works around the insanity
- 		 * of overriding "git log" with "git show" by having
- 		 * alias.log = show
- 		 */
--		if (done_alias)
--			break;
- 		if (!handle_alias(argcp, argv))
- 			break;
- 		done_alias = 1;
- 	}
- 
-+	string_list_clear(&cmd_list, 0);
-+
- 	return done_alias;
- }
- 
+https://github.com/git-lfs/git-lfs/wiki/File-Locking
+
+Are there any missing features that would help improve LFS solution?
+
+
+Locking is just one aspect of binary conflicts.
+
+In a lock-free world, another aspect is tooling around dealing
+with actual conflicts.  It seems like the main challenges there are
+related to introspection of changes and mechanisms for combining
+changes.
+
+Combining changes is inherently file-format specific, and I suspect
+that native authoring tools are best used in those scenarios.
+Maybe LFS can help deal with binary conflicts by having short and sweet
+ways to grab the "base", "their" and "our" versions of the conflict
+files.
+
+Example:
+
+	git lfs checkout --theirs --to theirs.wav conflict.wav
+	git lfs checkout --ours --to ours.wav conflict.wav
+	git lfs checkout --base --to base.wav conflict.wav
+
+Then the user can use {ours,theirs,base}.wav to produce the
+resolved result using their usual authoring tools.
+
+From the plumbing perspective, we already have the tools to
+do this today, but they're not really user-friendly because
+they require the user to use "git cat-file --filters --path=..."
+and redirect the output to get at their changes.
+
+Not sure if git-lfs is the right place for that kind of helper
+wrapper command, but it's not a bad place for it either.
+That said, none of these are user-friendly for non-Gits that
+might be intimidated by a command-line.
+
+Is there anything we could add to git-cola to help?
+
+Being able to save the different conflicted index stages to
+separately named files seems like an obvious feature that
+would help users when confronted with a binary conflict.
+
+With LFS and the ongoing work related to MVFS, shallow clone,
+and partial checkout, the reasons to use P4 over Git are becoming
+less and less compelling.  It'd be great to polish the game asset
+workflows further so that we can have a cohesive approach to
+doing game asset development using Git that is easy enough for
+non-technical users to use and understand.
+
+I mention git-cola because it's a Git porcelain that already has
+git-lfs support and I'm very much in favor of improving workflows
+related to interacting with LFS, large files, repos, and binary content.
+
+Are there other rough edges around (large) binary files that can be improved?
+
+One thought that comes to mind is diffing -- I imagine that we
+might want to use different diff tools depending on the file format.
+Currently git-difftool uses a single tool for all files, but it seems
+like being able to use different tools, based on the file type, could
+be helpful.  Not sure if difftool is the right place for that, but
+being able to specify different tools per-file seems be useful in
+that scenario.
+
+Another avenue that could use help is documentation about suggested
+workflows.  Git's core documentation talks about various
+large-file-centric features in isolation, but it'd be good to have a
+single user-centric document (not unlike gitworkflows) to document best
+practices for dealing with large files, repos, game assets, etc.
+
+That alone would help dispel the myth that Git is unsuitable for
+large repos, large files, and binary content.
 -- 
-2.19.0.rc2.1.g4c98b8d69.dirty
-
+David
