@@ -2,66 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2A441F404
-	for <e@80x24.org>; Sun, 16 Sep 2018 07:22:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D6F01F404
+	for <e@80x24.org>; Sun, 16 Sep 2018 07:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726857AbeIPMoB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Sep 2018 08:44:01 -0400
-Received: from mail-qt0-f193.google.com ([209.85.216.193]:34694 "EHLO
-        mail-qt0-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726661AbeIPMoB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Sep 2018 08:44:01 -0400
-Received: by mail-qt0-f193.google.com with SMTP id m13-v6so12629718qth.1
-        for <git@vger.kernel.org>; Sun, 16 Sep 2018 00:22:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NgKVuYFU7qyvm0Sf7Y3thL6ddZ4kShxq+T984HCl26s=;
-        b=lXZTxOkCtW0D1h+YWFrXnGTrPEJeX1k92AHTcLL30uZzd38VLB0RzFMh0gUHfQX+qi
-         +KH5lalkWB7iJybHef7nuXjMib1Q2q4sNlKSe7T/+FWxxGv5WgCu8jZhnA4WId6MpvLh
-         TPiUu77RMpd8f6TXATpLehq7+5AAbvdlFRiw6oqbjR4Mj33GHNuvW1OHhsurjMj1hKZ3
-         nSd7QujJBjV9WaxsTXi44YNL5vo0uI+zP49UxiGiNZaynnGEeUhB269dRN6E0UlruTHz
-         dJuy7iLvGvqb0uai0vSjOCVpLW+oZDZMMftvBkvT1dTE7J0iuj7sBc7VPxc9zVUBP9i1
-         xmlg==
-X-Gm-Message-State: APzg51DBeD795uh1LfZQUAm8jDpt+o1wv9g8KQgP59unhnbVdzSAKUsQ
-        ggZjseaX3bNQaX+fFMcJO+sXhrFIapabu3rSJbywMg==
-X-Google-Smtp-Source: ANB0VdYdH6+3PeE98cNOlioRs7gbJt8Xq2nO3HiTjBzCmAekA98UTEC+/AwxfFBisvK13VNW3RuVWmnnces97+T8gqU=
-X-Received: by 2002:aed:304b:: with SMTP id 69-v6mr13489148qte.220.1537082521972;
- Sun, 16 Sep 2018 00:22:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20180905085427.4099-1-timschumi@gmx.de> <20180907224430.23859-1-timschumi@gmx.de>
- <20180907224430.23859-3-timschumi@gmx.de> <CAPig+cR1JpZqxBAsR+6_WjLwofnU8siB9VXYdUkXY2P-xQnsuQ@mail.gmail.com>
- <bd63006e-18a7-1c41-252c-cf47a65ba7cb@gmx.de>
-In-Reply-To: <bd63006e-18a7-1c41-252c-cf47a65ba7cb@gmx.de>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 16 Sep 2018 03:21:50 -0400
-Message-ID: <CAPig+cT7+Rcv-xVxUCYy7LV6+bNEWJgN4qONLaYsikfZN40YMA@mail.gmail.com>
-Subject: Re: [RFC PATCH v4 3/3] t0014: Introduce alias testing suite
-To:     timschumi@gmx.de
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        id S1727031AbeIPNJU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Sep 2018 09:09:20 -0400
+Received: from mout.gmx.net ([212.227.17.22]:39683 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726770AbeIPNJU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Sep 2018 09:09:20 -0400
+Received: from [10.2.0.3] ([79.218.121.221]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lbi2Z-1fYjiT1hX9-00lC1x; Sun, 16
+ Sep 2018 09:46:58 +0200
+Subject: Re: [RFC PATCH v4 1/3] Add support for nested aliases
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20180905085427.4099-1-timschumi@gmx.de>
+ <20180907224430.23859-1-timschumi@gmx.de>
+ <CACsJy8BnHgaphwy3beCCquFjU=SZebR2GvDCkFgh1_snxDBTRQ@mail.gmail.com>
+From:   Tim Schumacher <timschumi@gmx.de>
+Message-ID: <aede75a5-d2ba-5a95-434d-aa70f7270fd7@gmx.de>
+Date:   Sun, 16 Sep 2018 09:46:58 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+In-Reply-To: <CACsJy8BnHgaphwy3beCCquFjU=SZebR2GvDCkFgh1_snxDBTRQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US-large
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:49x41rTLSPxiAaMN6fnPQVgczpc8lPMHoRkraPQn2qs9A23zT2T
+ oVPEsMgdkNEes0vEIR7h8wU/ATLTbZldmSgDzxHoNXVc/2F4DPsAdI32NU/vxSIBfgsUrTr
+ 5Blnrj7aw6NuqA1q+22KOldyRviW7mMvB83LHUFvx6V9Kltr2UhB4/9YVlBwT1N3Z/OmVDn
+ vAbFu0+3+bz54Kqhdr2xQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:ejhFQKRxQno=:odrNAe0OfVPlP77dserdja
+ 4krqTCCi0Uja9cFjfxvDA4NBbK2fu35TZLw85vDQjRzcEa65fEjl7O/Sa6MZ4YaaGUw5f5HLp
+ uOb+KTokvXUdxe//+KF0KLFAK2gW67oSp5DIWBhijTU+vimmqUygvunJdPmTvJ+fdHEHNQiVt
+ JhtCXznQFuX/BkqAFQn8DyBjnBHeEz2si3ut47wxbu6qzvxg2BzoChgBytGFVlJCl+nijc+Ja
+ kQjoY+NfzgtHRGh2Gcex8dNlZw0qWV/V164z2E/bQz2gxSvexWhwKqtj3QRm2nwq3lDCDtJjh
+ t/6aSNr0b8w1/+O67mdIJJpnk6re713SdvsGZWQMPgtCkn/hQbfYvRkr9HyLJ6wYMFgQN8jiI
+ CFt5sCJ0xFlOZ6Q0sX2mkjyLIXHXQqGreGFcH0ZHoD8OK28KK1m86wYq89/jI0L+hfndJ9iX8
+ OFDgXfjgYmJOz2MD7dizxXocXRLhARJuX4W0zTXQmJunsHazZ/3c7RUkJm9XgtS9OHbqQVc1e
+ 5s2GBT/RaldyRAEA9+8NIxd6HkUcfBDzxhmz1ZiGqingfFkL0E0KBxgl5fUxnX300ioMeJ9js
+ 3zy6AGLXaeAPtdJxBgT8zBTkmOnNvnWdeklsXglCEB8jInf53dqt3l12vnrgPaiFI7R8r/n2l
+ +bcb1gh5wHt0Zl63CWpck33SiaR6amzlC2wuO1XlG9u5YZW6CxE5Kwk+XmPVA1nSRzQIoLz2m
+ 9iNrt39e1Gdbh9YD3E8vToi6+p1HqqOeYLTA6qWDMOmIU/7JPfM4DSQCoulg+yDP53hq2vBmy
+ gV3hQIy6Euv8gmmIeljpOY+jI78rTJYxWvTcuGNIO/Sj2YUO1w=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 14, 2018 at 7:12 PM Tim Schumacher <timschumi@gmx.de> wrote:
-> This is the first multi-patch series that I submitted, so I'm unsure if I
-> should send the updated patch only or if I should send the complete series
-> again as v5. Any pointers to what the correct procedure for this case is would
-> be appreciated.
+On 08.09.18 15:28, Duy Nguyen wrote:
+> On Sat, Sep 8, 2018 at 12:44 AM Tim Schumacher <timschumi@gmx.de> wrote:
+>> +               /*
+>> +                * It could be an alias -- this works around the insanity
+>>                   * of overriding "git log" with "git show" by having
+>>                   * alias.log = show
+>>                   */
+> 
+> I think this comment block is about the next two lines you just
+> deleted. So delete it to instead of fixing style.
 
-Re-send the entire series as v5. That makes it easier on reviewers
-(who don't need to go searching through the mailing list archive to
-get a full picture) and reduces Junio's workload since it's usually
-easier for him to re-queue a series wholesale than having to
-slice-and-dice some replacement patches into what was already queued.
+I think that comment is talking about the code that is handing the alias,
+so it still would be valid.
+The check might have peen placed in between to keep it logically grouped.
+
+> 
+>> -               if (done_alias)
+>> -                       break;
+>>                  if (!handle_alias(argcp, argv))
+>>                          break;
+>>                  done_alias = 1;
+>>          }
