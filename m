@@ -2,174 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E9F01F404
-	for <e@80x24.org>; Sun, 16 Sep 2018 07:56:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B82BC1F404
+	for <e@80x24.org>; Sun, 16 Sep 2018 10:15:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727293AbeIPNSN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Sep 2018 09:18:13 -0400
-Received: from mail-pl1-f174.google.com ([209.85.214.174]:33341 "EHLO
+        id S1727972AbeIPPhu (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Sep 2018 11:37:50 -0400
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:41682 "EHLO
         mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726857AbeIPNSN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Sep 2018 09:18:13 -0400
-Received: by mail-pl1-f174.google.com with SMTP id b97-v6so801495plb.0
-        for <git@vger.kernel.org>; Sun, 16 Sep 2018 00:56:09 -0700 (PDT)
+        with ESMTP id S1726722AbeIPPhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Sep 2018 11:37:50 -0400
+Received: by mail-pl1-f174.google.com with SMTP id b12-v6so6081699plr.8
+        for <git@vger.kernel.org>; Sun, 16 Sep 2018 03:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Nhy6ZIrGIHwaOsgy222llPasbFaskAyoJk+KltZf6oc=;
-        b=k0m6QDR1VPVvm8JlsHfLLX2X69VYpyXjTxdF/n0/l7bTRCdaHaSp6SLTAoiMPyMDxf
-         riXNviJj9uktOJAs8zfv8tZpcCpoQp37S/pSrp/ECdWnJR38Nw0CDeT0P3f4VnVBJQ89
-         8kYWw5Q4R2YTUv+GWDTCc+2KvwY+grfnF+Y6G56k122WlGmMYjanNfYsurzIDndtrJXG
-         7HuPAa7a97LTDNrQk/FIS0rI8psNX2VdSEreHWVpfpB412CdEGm9bu254g1S4F7/QlfL
-         IKJIg+yz78RyJ2pVKww/hB/usn1+k7Kp+bphgFmuHnsmOvXrP41cQNm6mwAk1DfMoyhL
-         nbqA==
+        bh=zVGbRgJvlvbMB1Vd5YOdId32Szu2HcX5aK0dR9WzDBU=;
+        b=r7pkfNEvTF4nSOQFrXVpGek+bV6w+fc7VysGtACU+rR57nadFWRM8XfG5bxlXvZ/x2
+         Wxn/YUVj8b0FpF68b5I32QBopFc2TeALijAjNjGquSKzpzGIGYRQPo+eu1UzZqivTPzd
+         JXc7iyi6h41bJ3FmboQ1LTyQgCWCLiOMHCWc6YiDvsKYTaVCFmPHeWXhZqapkLRgeDj2
+         DC39FucuBtNUBwWNy5UchqUetsJ7JLi4LNQSiWtk8oKgZ5KduCakjD+43JxQhz4hgQ5x
+         7FbL5lKNZvpufKcR1rVn5oEBismsMKPR/W2EbSOmO+97/3M8gel6nPBdcouN/QMrwxX/
+         2yIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Nhy6ZIrGIHwaOsgy222llPasbFaskAyoJk+KltZf6oc=;
-        b=U4m1O0OS2ElxKts+tp4lrVUwOqTyjKcVdBXi2LV4cYrssPNCU00JVed685UJKLTO5v
-         mNSLtuvyUeOhgouXr3FVKo9L7F5RcspTHhHMktj7sKqgdgIUwaAmOW63T2AeyfbGjDQa
-         JXb3vR3LTdP+c7b2K5FN1OhaHt0+XzvdNAsnVaCmX/E+Q4qLstVGJAUrUg2YAY6iwuWS
-         4hOg65teohj6TOj7sxSrztX8Jd6CijyE3Yy/QpGbbIdiJWqd7Zyy32/iioyoOWt2IOg+
-         9Oq610R/IHZjGEmvP36DK9XksJjnXTuLYP7997+NJpopzEL+og3e7qYDA3SLeeFIUg5Y
-         t+VA==
-X-Gm-Message-State: APzg51BDv5sdaUR8UBWHdhU84Belo8U93Rbacg7dRsltR/IkaE4oFnyI
-        zdPGeAXD1yoFO6x827SdDt8OArb6HQo=
-X-Google-Smtp-Source: ANB0VdbFhGAXg3ej+c56JCbr5bDJOx2G0G3uhvNZ6Saxp5SP82zUC5xDLeMpLrQoFDmOHtV95CjCVw==
-X-Received: by 2002:a17:902:4503:: with SMTP id m3-v6mr19553804pld.168.1537084568582;
-        Sun, 16 Sep 2018 00:56:08 -0700 (PDT)
+        bh=zVGbRgJvlvbMB1Vd5YOdId32Szu2HcX5aK0dR9WzDBU=;
+        b=mFee8Manikv91oha7FQ0G+nSsjAtnY6PFhdS6yDYT1cL984FRjvUFtVR8tkyNWDtyn
+         RIchxzC4XEkgZy0f6qHs0y+MxTrEda7ewZbHtnTl0dyqK1fAoYhIHLFrpQW/32bbzK2I
+         SmlaUCCkKx/OBlNO+PSDdxyduMgH8x2hFrIMWObP8xuU1yGtUW8KVv9AArJ2+Mt7nJXq
+         KQ8fcjOUzkehLr7slUY+WKMzrMJurL+kviSVQef1MZqbJwBlba2KK6AYcagOx+JE/9Np
+         k4A4pgW2Z7/XN+lHJvSDB2rK0N+1lOhrLqYWxZNhhAsG+XFr0Nt9YSe3K3tzjMQqY42P
+         EZZQ==
+X-Gm-Message-State: APzg51B0rf+7XY7vE4lrpm50wU7BAzOlNqBGdexfpo75FRV5G41gtcIC
+        9f546BmMN0XTGS2vMD/WG2C4ePar3oo=
+X-Google-Smtp-Source: ANB0VdY6QWnMsJapQyQ4uVnsTZVTuA/+/cUzN1v1oplgEpZ8wt7cP4QHKKjG9VzzZYa7TXNuSTTzDw==
+X-Received: by 2002:a17:902:9a48:: with SMTP id x8-v6mr20192898plv.72.1537092924411;
+        Sun, 16 Sep 2018 03:15:24 -0700 (PDT)
 Received: from gmail.com (50-1-201-252.dsl.static.fusionbroadband.com. [50.1.201.252])
-        by smtp.gmail.com with ESMTPSA id x23-v6sm15726141pff.9.2018.09.16.00.56.06
+        by smtp.gmail.com with ESMTPSA id r64-v6sm17645281pfk.157.2018.09.16.03.15.22
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 Sep 2018 00:56:07 -0700 (PDT)
-Date:   Sun, 16 Sep 2018 00:56:04 -0700
+        Sun, 16 Sep 2018 03:15:23 -0700 (PDT)
+Date:   Sun, 16 Sep 2018 03:15:20 -0700
 From:   David Aguilar <davvid@gmail.com>
-To:     John Austin <john@astrangergravity.com>
-Cc:     me@ttaylorr.com, git@vger.kernel.org, sandals@crustytoothpaste.net,
-        larsxschneider@gmail.com, pastelmobilesuit@github.com
-Subject: Re: Git for games working group
-Message-ID: <20180916075604.GB18517@gmail.com>
-References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
- <20180914190025.GJ55140@syl>
- <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, git@sfconservancy.org
+Subject: Re: Git trademark status and policy
+Message-ID: <20180916101520.GC18517@gmail.com>
+References: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
+In-Reply-To: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 14, 2018 at 02:13:28PM -0700, John Austin wrote:
-> Hey Taylor,
+Hi Peff,
+
+On Thu, Feb 02, 2017 at 03:26:56AM +0100, Jeff King wrote:
 > 
-> Great to have your support! I think LFS has done a great job so far
-> solving the large file issue. I've been working myself on strategies
-> for handling binary conflicts, and particularly how to do it in a
-> git-friendly way (ie. avoiding as much centralization as possible and
-> playing into the commit/branching model of git). I've got to a loose
-> design that I like, but it'd be good to get some feedback, as well as
-> hearing what other game devs would want in a binary conflict system.
+>   - Commands like "git-foo" (so you run "git foo") are generally OK.
+>     This is Git's well-known extension mechanism, so it doesn't really
+>     imply endorsement (on the other hand, you do not get to complain if
+>     you choose too generic a name and conflict with somebody else's use
+>     of the same git-foo name).
 > 
-> - John
+>   - When "git-foo" exists, we've approved "Git Foo" as a matching
+>     project name, but we haven't decided on a general rule to cover this
+>     case.  The only example here is "Git LFS".
 
-Hey John, thanks for LFS, and thanks to Taylor for bringing up this topic.
+The "Git Cola" project[1][2] provides two fully-featured Git porcelains,
+"git-cola" and "git-dag".  The DAG tool is never referred to as a
+separate project, so shouldn't be a concern trademark wise.
 
-Regarding file locking, the gitolite docs are insightful:
-http://gitolite.com/gitolite/locking/index.html
+The project dates back to 2007, while the "Git Cola" name dates back to 2008.
+FTR, the name "Cola" is also a shout-out to Linux (comp.os.linux.announce).
 
-File locking is how P4 handles binary conflicts.  It's actually
-conflict prevention -- the locks prevent users from stepping
-on each other without needing to actually talk to each other.
-
-(I've always believed that this is actually a social problem
- (not a technical one) that is best served by better communication,
- but there's no doubt that having a technical guard in place is useful
- in many scenarios.)
-
-From the POV of using Git as a P4 replacement, the locking support in
-git-lfs seems like a fine solution to prevent binary conflicts.
-
-https://github.com/git-lfs/git-lfs/wiki/File-Locking
-
-Are there any missing features that would help improve LFS solution?
+Can we continue to use the name "Git Cola" going forward?
 
 
-Locking is just one aspect of binary conflicts.
+> So that's more or less where we're at now.  In my opinion, a few open
+> questions are:
+> 
+>   3. Was granting "Git LFS" the right call? I think the project is a good
+>      one and has worked well with the greater Git community. But I think
+>      the name has implied some level of "officialness". We obviously
+>      need to allow "git-lfs" as a name. But should the policy have said
+>      "you can call this LFS, and the command is git-lfs, but don't say
+>      'Git LFS'". I'm not sure.
+> 
+>      One option would have been to ask "git-foo" to prefer "Foo for Git"
+>      instead of "Git Foo" in their branding (it's too late now for "Git
+>      LFS", so this is a hypothetical question for future requests now).
+> 
+> -Peff
 
-In a lock-free world, another aspect is tooling around dealing
-with actual conflicts.  It seems like the main challenges there are
-related to introspection of changes and mechanisms for combining
-changes.
+In my (biased) opinion, granting "Git LFS" was the right call.
 
-Combining changes is inherently file-format specific, and I suspect
-that native authoring tools are best used in those scenarios.
-Maybe LFS can help deal with binary conflicts by having short and sweet
-ways to grab the "base", "their" and "our" versions of the conflict
-files.
+As long as the project is clearly a separate, but primarily Git-centric,
+project then it seems like the right approach to allow "Git Foo" for
+open source projects that contribute positively to the Git ecosystem.
 
-Example:
+Lastly, due to time constraints, the Git Cola logo is a tweaked version
+of the Git logo, which may convey a level of "officialness" that might
+be unwanted.  We can work on a replacement if desired.
 
-	git lfs checkout --theirs --to theirs.wav conflict.wav
-	git lfs checkout --ours --to ours.wav conflict.wav
-	git lfs checkout --base --to base.wav conflict.wav
+Part of keeping the logo/visual identity close to core Git is because
+the tool was always meant to be strongly tied to Git's unique features.
+It's probably the same reason why the git-lfs branding uses similar
+orange/red palettes -- to convey cohesiveness.  I would prefer to keep
+the visual identity as-is (including the logo).
 
-Then the user can use {ours,theirs,base}.wav to produce the
-resolved result using their usual authoring tools.
+Can we continue to use the derivative logo for the time being until a
+replacement is produced?  Alternatively, can we keep the logo as-is?
 
-From the plumbing perspective, we already have the tools to
-do this today, but they're not really user-friendly because
-they require the user to use "git cat-file --filters --path=..."
-and redirect the output to get at their changes.
 
-Not sure if git-lfs is the right place for that kind of helper
-wrapper command, but it's not a bad place for it either.
-That said, none of these are user-friendly for non-Gits that
-might be intimidated by a command-line.
+cheers,
 
-Is there anything we could add to git-cola to help?
-
-Being able to save the different conflicted index stages to
-separately named files seems like an obvious feature that
-would help users when confronted with a binary conflict.
-
-With LFS and the ongoing work related to MVFS, shallow clone,
-and partial checkout, the reasons to use P4 over Git are becoming
-less and less compelling.  It'd be great to polish the game asset
-workflows further so that we can have a cohesive approach to
-doing game asset development using Git that is easy enough for
-non-technical users to use and understand.
-
-I mention git-cola because it's a Git porcelain that already has
-git-lfs support and I'm very much in favor of improving workflows
-related to interacting with LFS, large files, repos, and binary content.
-
-Are there other rough edges around (large) binary files that can be improved?
-
-One thought that comes to mind is diffing -- I imagine that we
-might want to use different diff tools depending on the file format.
-Currently git-difftool uses a single tool for all files, but it seems
-like being able to use different tools, based on the file type, could
-be helpful.  Not sure if difftool is the right place for that, but
-being able to specify different tools per-file seems be useful in
-that scenario.
-
-Another avenue that could use help is documentation about suggested
-workflows.  Git's core documentation talks about various
-large-file-centric features in isolation, but it'd be good to have a
-single user-centric document (not unlike gitworkflows) to document best
-practices for dealing with large files, repos, game assets, etc.
-
-That alone would help dispel the myth that Git is unsuitable for
-large repos, large files, and binary content.
+[1] https://git-cola.github.io/
+[2] https://github.com/git-cola/git-cola
 -- 
 David
