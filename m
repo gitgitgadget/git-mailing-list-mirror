@@ -7,77 +7,74 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A78DE1F404
-	for <e@80x24.org>; Sun, 16 Sep 2018 06:40:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6EBD1F404
+	for <e@80x24.org>; Sun, 16 Sep 2018 06:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726582AbeIPMBW (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Sep 2018 08:01:22 -0400
-Received: from mail-io1-f52.google.com ([209.85.166.52]:38203 "EHLO
-        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726270AbeIPMBW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Sep 2018 08:01:22 -0400
-Received: by mail-io1-f52.google.com with SMTP id y3-v6so9081494ioc.5
-        for <git@vger.kernel.org>; Sat, 15 Sep 2018 23:39:30 -0700 (PDT)
+        id S1726535AbeIPMR6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Sep 2018 08:17:58 -0400
+Received: from mail-it0-f47.google.com ([209.85.214.47]:34492 "EHLO
+        mail-it0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726279AbeIPMR5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Sep 2018 08:17:57 -0400
+Received: by mail-it0-f47.google.com with SMTP id x79-v6so8307847ita.1
+        for <git@vger.kernel.org>; Sat, 15 Sep 2018 23:56:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d8hVD00dkP5mkKB+vy4SgzYP6zAPE2QzBesoTj1GyC8=;
-        b=gUZby6q+QKNzfEo4kTC6EiWEwlA8hyYqvLnYyIxyaeWyXiDexPe49zT0XFz7E301Vq
-         tfuQQR/gIRyO0+nUhjphLE9cCKjtBl+hojufkIgmJuPAqYJkI/PILPjW8BkP2KMCJMUY
-         TRydZN89qZBZQrsfFwCzxqkIbgkY1kpGs8sT6zAYPHLmorAWw/vyjmyJus3WS2VXCuJN
-         ZM84ymspfGsYWOgGNcFLRyWm1/ESkzLg554JLEt/2F7mtKc+1KDzDnUD1hCsPrIy6J6M
-         /m3zq4W1e/1cXnQROGka1MsEclo8Jn+0gd/GiR2VqdIW/q1mj5VlTvWJIJ18vsIMK711
-         EXQw==
+         :cc:content-transfer-encoding;
+        bh=U9p9vfg5UjVVZ2CkYM+JTyo4CZNQPfn3pRSsPs37K/w=;
+        b=Kr7akv+Z6YVwgaCb5k6gB66g110zyUfcympRz6xNk2EAg6XbrO9JjMhXuHsKO61s5X
+         dESktxWzXj33j06hxG2BtSpm9AmRRUMcCB2fUjIMnL5tZuG8eqFrPjXqKq92SmaOXToX
+         Tn2ksRrFWvFS8ZpOKqiZtIzeKPjoYoUDZhig/xZq8GY9LMdEhKCrSjDplte50kxGR+G1
+         tPuvsQn73n6cXSGmm2fmZKQLuB5Q63eFd3k0Kl/yVcJjaDuHasCjYTknrAXyVonBByx0
+         nT1vPV7FDOdEUoHoa3x+WMUVDzhZCoAFoiy9DGOPWPsHNTS/4rdCnkTbu0JzQF2Gx3Oc
+         7ZxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d8hVD00dkP5mkKB+vy4SgzYP6zAPE2QzBesoTj1GyC8=;
-        b=FzE3ocYABYua4UhyW6Gi15Krv07XT80e1MH1gfIhsAc2vEV4IwdfqmEyoTSEc476E5
-         bSLcmOX9xkSpQtRnEeFxUi+/sgSeR6z2m6XYD63yJ0LuZopz14p/c/dm0+210fMa3rdz
-         FGTGIjUemOHz/ihMICFmlLOWGOQFfu3Z23/G/bW4xunMm1rKKw3kvHdRBK2lpMBa+2pb
-         TwviwvaTpNwsfA+SHLHCneeE7BfAzA+Hv7+RZ2tAuzw2w9A78cdL2VdJu4epUzkCCzOZ
-         xIoei/VU/WfNOnm50tnPNDGmxLL6gAVJ1IpyT5M+SFBbnCxuwFen1inshApO6YQxVvBO
-         KviQ==
-X-Gm-Message-State: APzg51Ao32e1jQ9Rz/mfoHmZwLrt14uMBjGei3eAKVoGFa0t1ZMXr7Zl
-        aAeQNCdq25SqYU2KbkGP90c1D6aZ45Pv/uCvDa8=
-X-Google-Smtp-Source: ANB0VdZfhI/apkUg89foc6RKF/3Li77/5SjVE+HAXR70O2GQTVrQ5GGbSTy92J2Tzpgiz+xz6mjn3i58vlwiD/09tC8=
-X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr15199740ioe.282.1537079969714;
- Sat, 15 Sep 2018 23:39:29 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=U9p9vfg5UjVVZ2CkYM+JTyo4CZNQPfn3pRSsPs37K/w=;
+        b=SV5Ce2iyO0HnaYYrq9/sb92jJz4P/fSXsL5Sl9CBbUzB7hA86VzwQjeKC997To3EeD
+         48901ugMZj/j/HDmHwE3+zxc/7ik4FGtZZLe2SyKQfiPpKFIGoWgtrHp2mOJB8bT5KlY
+         OjbX+K+GQVRDcilhsRqzf+6uqB42N1OA0wp+WuP2zWDy7xsEsn+ivoJRA/XGYvQgH0Lp
+         krd4kLHsqXsIuRAwnqMdFrGcxtLR/YtKQfbz03m7mat8uuMhPqN6z5AYL+UZqaplwkuO
+         lLjrLS4Ff769qLeF0XqM6PEY4ja+ZDstXvffDRn7uJxLqU/Ymv0g2S/HLz+30YmBlwKX
+         571g==
+X-Gm-Message-State: APzg51C4YlT6cubcmGmN/hRSFQ1n5JyKTyR1ZKGXcSC3EdkK0jQluS3v
+        5RaZ/lRXfTkoSBubh+B5Cya6MxZFWBZ71BPHQdhCZg==
+X-Google-Smtp-Source: ANB0VdZ/FYezTfyEo+yzTLqzUAM+aBgkDPOUXuO53Q+wHYsY3+g3WiQZVVUVYTTzg3P0Pw4aeLvh1JCYNNX8unDy5HQ=
+X-Received: by 2002:a24:d583:: with SMTP id a125-v6mr8428508itg.91.1537080962504;
+ Sat, 15 Sep 2018 23:56:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
+References: <20180904202729.13900-1-avarab@gmail.com> <20180907182954.2413-3-avarab@gmail.com>
+In-Reply-To: <20180907182954.2413-3-avarab@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sun, 16 Sep 2018 08:39:03 +0200
-Message-ID: <CACsJy8DXT8rF_WYE3C0ak7E8_8j=kRS+Yhi1pZjKd5Rr4OsM_A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
-To:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+Date:   Sun, 16 Sep 2018 08:55:36 +0200
+Message-ID: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] commit-graph verify: add progress output
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Sep 14, 2018 at 11:56 PM Junio C Hamano <gitster@pobox.com> wrote:
-> * jn/gc-auto (2018-07-17) 3 commits
->  - gc: do not return error for prior errors in daemonized mode
->  - gc: exit with status 128 on failure
->  - gc: improve handling of errors reading gc.log
+On Fri, Sep 7, 2018 at 8:30 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+> @@ -989,11 +990,14 @@ int verify_commit_graph(struct repository *r, struc=
+t commit_graph *g)
+>         if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
+>                 return verify_commit_graph_error;
 >
->  "gc --auto" ended up calling exit(-1) upon error, which has been
->  corrected to use exit(1).  Also the error reporting behaviour when
->  daemonized has been updated to exit with zero status when stopping
->  due to a previously discovered error (which implies there is no
->  point running gc to improve the situation); we used to exit with
->  failure in such a case.
->
->  What's the donness of this one?
->  cf. <20180717201348.GD26218@sigill.intra.peff.net>
+> +       progress =3D start_progress("Verifying commits in commit graph",
 
-This topic has stayed in 'pu' for a long time. I thought it was
-concluded that this was a good change? Jeff, Jonathan?
--- 
+_()
+
+> +                                 g->num_commits);
+--=20
 Duy
