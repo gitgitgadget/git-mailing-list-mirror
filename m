@@ -7,171 +7,88 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 244E61F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 16:46:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69D0F1F42B
+	for <e@80x24.org>; Mon, 17 Sep 2018 16:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728455AbeIQWOJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 18:14:09 -0400
-Received: from mail-it0-f67.google.com ([209.85.214.67]:56173 "EHLO
-        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727124AbeIQWOJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 18:14:09 -0400
-Received: by mail-it0-f67.google.com with SMTP id d10-v6so12030724itj.5
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:45:59 -0700 (PDT)
+        id S1728518AbeIQWWN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 18:22:13 -0400
+Received: from mail-io1-f65.google.com ([209.85.166.65]:43284 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726795AbeIQWWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 18:22:12 -0400
+Received: by mail-io1-f65.google.com with SMTP id y10-v6so12041027ioa.10
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=0OwDLm8aAYnRE2f2rc0mgCWEZORyScd6CHzAQtAAbhE=;
-        b=cnzlLu+O3GaiJHVTRVudfDS/DQMd7FrNrv5XlKaJuafZbKjZB6yPlS2zUrV6trEhAA
-         u/TN8dBRhRWAcyu1LHVzEHTHw2HNk6Vqa1W40U8ptLYSGPdX1CNIXKCmXd2l7mFcZQQV
-         AD6R+lprGlGyEwffJn7nUY14ZFUCeiU9ICNaE3esyMvnSx6WEUobym19cgNB1hSjmkbW
-         QIQDxeqlYAxqRD4cqTN5cfoiDFujSRIqT1VOb/V2rnkP47C8ghjg1N+KJ2k3eDUM3Sh6
-         ugDXsrbLyTV7hHQsOtX57p1ASHdGi+GGGK6kOCGMl9h0n8b72BRwVcw2kjyaXfwCziqo
-         /hMA==
+         :cc:content-transfer-encoding;
+        bh=QiX+/3bFiMvbpipNL72pwtLuemA80vt5ciTq35GJXt4=;
+        b=uaQ584sY+oxGxkMr+9yooX42wke6WBhRzUlLAy0/V/FtQ9i2bBq13zsxWRLS4eCHBs
+         sQeoaIXbmcSYrsyV92p1EBQO2fUnXVvIYkMjY7NX9+N/qkMM/4wgMgMmZ902zKKkvnHc
+         XQZU5LVipflh0/uCusLlHelyA6tt4GwKgrWFCYoZnxg+sLDR6nVOWgY66sC0hfvxwAlP
+         ouz0zXChAWuac2GlRYsDfOh21XxsD/dvVy5vkt+TzTAhu7gj39aBmpN84UWa3WgRDkWk
+         wN1mhFwUJCD25sHUlP+tc86pCsLbEWfwicTaifu6qb0JLhTje3jb5WpQ08i59EoQOFW+
+         6oDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=0OwDLm8aAYnRE2f2rc0mgCWEZORyScd6CHzAQtAAbhE=;
-        b=R9e9LllD3ci1ioHXW+EIydqxHsjvGQxjLIFHwjGloI6onaPmelhhUyHzygTmgyZzSw
-         ziyrOZhuCGKE0vlvQE9QopjVY7jI2toc5xeXKD0XguK20f1uc+oSdLDBj52wxig02uMW
-         VD+fOf4YKnh41f96w3T+86jznB9io2FgtIcRnIiAsTeTpqrRtCLu5L0BI8uyYEQLdecO
-         GUM4d74I4ky4IQAohM5Bx3dsxAUJcsWPocx2O1oVz3XhI6iqrFZeu9eNF6AZtxprCiIW
-         LnA8RQzlpmmHMO/d01Vlc55wX5kaJNqW5pGVia9aA7TYl0ApUHwDLvny7K59p+1wJkUz
-         1S2A==
-X-Gm-Message-State: APzg51D49lPjGrSeI2LI7yQNbWeF8fLmn3am9844svFA1iWUZAVKc+yx
-        TNfB+6MLNGnEkQXFCjWlwKNVTruCndhE7RkscrY=
-X-Google-Smtp-Source: ANB0VdaqipKUlcdieYFH3vEumaf8evZ+JxZL30MXZj+HEQl3f6On4MGE3dlYFvVhknaNni7155Zp9NaAuV7zZGRudKM=
-X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr22252187jaa.94.1537202758656;
- Mon, 17 Sep 2018 09:45:58 -0700 (PDT)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QiX+/3bFiMvbpipNL72pwtLuemA80vt5ciTq35GJXt4=;
+        b=LUVNXWg2VaWoDPHXqAsyAe6KnxSZ4VfEn4f53AtmqSLgnTEoGBe5RGrUXHLyxBXAYC
+         ql3EC9KYMdVMEIzYKqrWPUw6NrAtSUEGwWDqYJ27/SBPdQgSgJBF3Are7UdrUDv/dLWn
+         TcAPuEiGqDzrUBalVFAsVnlRUwwAOw1enf07xYX17Tght9EvGFS204U+L/nd4yxPPWfP
+         +zLqZUi57V7i48jUaGlzkn7ZxcuZUZ1NBnL2kP23zrFvMxfocynzTUf0p9ya2F7CBn7z
+         IIdfCK3T1JR24UJQS2SbNnKNCIoA7NrthFCNdQLZhXN/CgIqhVFuz5CKGtAyO9nK5B4W
+         HxAw==
+X-Gm-Message-State: APzg51CJ8zco02H9zc+kFB5icU16i2X4o/c6wOlN6H5rINvjBXAooVXD
+        KDyLwhp/b+XhhPYGx2dCwiae9sq1G2CENgaknjU=
+X-Google-Smtp-Source: ANB0VdZ8FnPuO5iSWV+4G2j1vPh3Tih2oxXZXmzCL6KIDyttspkWyedcMIZbpSfKO2MN4OqrCPm2RlOJ+X9rLdrQYik=
+X-Received: by 2002:a5e:d803:: with SMTP id l3-v6mr20094174iok.236.1537203240919;
+ Mon, 17 Sep 2018 09:54:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180912161832.55324-1-benpeart@microsoft.com> <20180912161832.55324-3-benpeart@microsoft.com>
- <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com> <78f62979-18a7-2fc1-6f26-c4f84e19424f@gmail.com>
-In-Reply-To: <78f62979-18a7-2fc1-6f26-c4f84e19424f@gmail.com>
+References: <20180909085418.31531-1-pclouds@gmail.com> <20180915161759.8272-1-pclouds@gmail.com>
+ <20180915161759.8272-3-pclouds@gmail.com> <xmqqo9cw851q.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9cw851q.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 17 Sep 2018 18:45:32 +0200
-Message-ID: <CACsJy8AYq=FivKZ869tvjwuSc70tuaPV0HJ0aRp=VFbJBSpm=A@mail.gmail.com>
-Subject: Re: [PATCH v5 2/5] read-cache: load cache extensions on a worker thread
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Ben Peart <benpeart@microsoft.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
+Date:   Mon, 17 Sep 2018 18:53:34 +0200
+Message-ID: <CACsJy8A6ox7gRp6pNJWy-Yb_+gQDPZJYfAmKd+of8MAdajic4A@mail.gmail.com>
+Subject: Re: [PATCH v4 02/23] read-cache.c: remove 'const' from index_has_changes()
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 6:26 PM Ben Peart <peartben@gmail.com> wrote:
+On Mon, Sep 17, 2018 at 6:25 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 >
+> > This function calls do_diff_cache() which eventually needs to set this
+> > "istate" to unpack_options->src_index (*). This is an unfortunate fact
+> > that unpack_trees() _will_ destroy src_index so we can't really pass a
 >
-> On 9/15/2018 6:22 AM, Duy Nguyen wrote:
-> >> +index.threads::
-> >> +       Specifies the number of threads to spawn when loading the index.
-> >> +       This is meant to reduce index load time on multiprocessor machines.
-> >> +       Specifying 0 or 'true' will cause Git to auto-detect the number of
-> >> +       CPU's and set the number of threads accordingly. Defaults to 'true'.
-> >
-> > I'd rather this variable defaults to 0. Spawning threads have
-> > associated cost and most projects out there are small enough that this
-> > multi threading could just add more cost than gain. It only makes
-> > sense to enable this on huge repos.
-> >
-> > Wait there's no way to disable this parallel reading? Does not sound
-> > right. And  if ordinary numbers mean the number of threads then 0
-> > should mean no threading. Auto detection could have a new keyword,
-> > like 'auto'.
-> >
+> Wasn't the whole point of introducing src_index and dst_index to
+> unpack-trees API so that we can keep the src_index read-only by
+> writing the result of merge to a separate in-core dst_index?
 >
-> The index.threads setting is patterned after the pack.threads setting
-> for consistency.  Specifying 1 (or 'false') will disable multithreading
-> but I will call that out explicitly in the documentation to make it more
-> obvious.
->
-> The THREAD_COST logic is designed to ensure small repos don't incur more
-> cost than gain.  If you have data on that logic that shows it isn't
-> working properly, I'm happy to change the logic as necessary.
+> What does the above exactly mean by "will destroy src_index"?  Is it
+> now fundamental that src_index needs to lack constness, or is it
+> something easy to fix?
 
-THREAD_COST does not apply to this extension thread if I remember correctly.
+"destroy" is probably a strong word, but we do modify the src_index, e.g.
 
-> >> +static void *load_index_extensions(void *_data)
-> >> +{
-> >> +       struct load_index_extensions *p = _data;
-> >> +       unsigned long src_offset = p->src_offset;
-> >> +
-> >> +       while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
-> >> +               /* After an array of active_nr index entries,
-> >> +                * there can be arbitrary number of extended
-> >> +                * sections, each of which is prefixed with
-> >> +                * extension name (4-byte) and section length
-> >> +                * in 4-byte network byte order.
-> >> +                */
-> >> +               uint32_t extsize;
-> >> +               memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
-> >> +               extsize = ntohl(extsize);
-> >> +               if (read_index_extension(p->istate,
-> >> +                       (const char *)p->mmap + src_offset,
-> >> +                       (char *)p->mmap + src_offset + 8,
-> >> +                       extsize) < 0) {
-> >> +                       munmap(p->mmap, p->mmap_size);
-> >> +                       die("index file corrupt");
-> >
-> > _()
-> >
->
-> You're feedback style can be a bit abrupt and terse.  I _think_ what you
-> are trying to say here is that the "die" call should use the _() macro
-> around the string.
+ mark_all_ce_unused(o->src_index);
+ mark_new_skip_worktree(.., o->src_index...
+ move_index_extensions(&o->result, o->src_index);
+ invalidate_ce_path();
 
-Yes. Sorry I should have explained a bit better.
-
-> This is an edit of the previous code that loaded index extensions and
-> doesn't change the use of _(). I don't know the rules for when _()
-> should be used and didn't have any luck finding where it was documented
-> so left it unchanged.
->
-> FWIW, in this file alone there are 20 existing instances of die() or
-> die_errorno() and only two that use the _() macro.  A quick grep through
-> the source code shows thousands of die() calls the vast majority of
-> which do not use the _() macro.  This appears to be an area that is
-> unclear and inconsistent and could use some attention in a separate patch.
-
-This is one of the gray areas where we have to determine if the
-message should be translated or not. And it should be translated
-unless it's part of the plumbing output, to be consumed by scripts.
-
-I know there's lots of messages still untranslated. I'm trying to do
-something about that. But I cannot just go fix up all strings when you
-all keep adding more strings for me to go fix. When you add a new
-string, please consider if it should be translated or not. In this
-case since it already receives reviewer attention we should be able to
-determine it now, instead of delaying it for later.
-
-> >> +       /* if we created a thread, join it otherwise load the extensions on the primary thread */
-> >> +#ifndef NO_PTHREADS
-> >> +       if (extension_offset && pthread_join(p.pthread, NULL))
-> >> +               die(_("unable to join load_index_extensions_thread"));
-> >
-> > I guess the last _ is a typo and you wanted "unable to join
-> > load_index_extensions thread". Please use die_errno() instead.
-> >
->
-> Why should this be die_errorno() here?  All other instances of
-> pthread_join() failing in a fatal way use die(), not die_errorno().
-
-That argument does not fly well in my opinion. I read the man page and
-it listed the error codes, which made me think that we need to use
-die_errno() to show the error. My mistake though is the error is
-returned as the return value, not in errno, so die_errno() would not
-catch it. But we could still do something like
-
-    int ret = pthread_join();
-    die(_("blah blah: %s"), strerror(ret));
-
-Other code can also be improved, but that's a separate issue.
--- 
+all these update the source index. It is possible to fix, but I don't
+think it's exactly easy and may even incur some performance cost (e.g.
+if we stop modify ce_flags in the src_index, then we need to do one
+extra lookup to wherever we store these flags).
+--=20
 Duy
