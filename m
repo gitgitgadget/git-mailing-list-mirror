@@ -2,110 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 636B41F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 14:10:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 673B51F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 14:15:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728735AbeIQThS (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 15:37:18 -0400
-Received: from ao2.it ([92.243.12.208]:50078 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728730AbeIQThR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 15:37:17 -0400
-Received: from localhost ([::1] helo=jcn)
-        by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <ao2@ao2.it>)
-        id 1g1uBX-0001bV-BT; Mon, 17 Sep 2018 16:07:31 +0200
-Received: from ao2 by jcn with local (Exim 4.91)
-        (envelope-from <ao2@ao2.it>)
-        id 1g1uDg-00010p-92; Mon, 17 Sep 2018 16:09:44 +0200
-From:   Antonio Ospite <ao2@ao2.it>
-To:     gitster@pobox.com
-Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
-        =?UTF-8?q?Daniel=20Gra=C3=B1a?= <dangra@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Richard Hartmann <richih.mailinglist@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v5 1/9] submodule: add a print_config_from_gitmodules() helper
-Date:   Mon, 17 Sep 2018 16:09:32 +0200
-Message-Id: <20180917140940.3839-2-ao2@ao2.it>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20180917140940.3839-1-ao2@ao2.it>
-References: <20180917140940.3839-1-ao2@ao2.it>
+        id S1728775AbeIQTnO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 15:43:14 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:43207 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727021AbeIQTnO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 15:43:14 -0400
+Received: by mail-qt0-f195.google.com with SMTP id g53-v6so15344939qtg.10
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 07:15:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oJuK3/Bhrp7YN5LBikvWVsDXcFfgXAV6/nRSGjF7FQs=;
+        b=l7ivpUaQMa1Cw8y40WyXqDtBtboGKLo/mwpdJsIPZlNbgINn0KzyDhxIUp8XuD0WL8
+         I0Cae0rFQ/9mx3E5bIFDN8FN7vPZtl7BDdCsdJki59+5MZMZqxl4GPe1q1HN6sjQcEBq
+         sYuhGpolPaoP2pjJjQhQdYs0dXcGUht0VOiEZ4bO9qEdEkYqWLXAHNsKEg0J7WOFzH4S
+         LNhC3P2kGUTPepgbFaAZe8kO8wJSPGiIqCbXDmELtEtTUJKhMqwWdJwr95bFYpPvPWR8
+         9xRBi0Xh/lDs/+sOq9Yx7Y7EwqtMFH0Qjade5WChhdjBV+W+7NYnQXzLu7TTlLZDhdt9
+         jesQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oJuK3/Bhrp7YN5LBikvWVsDXcFfgXAV6/nRSGjF7FQs=;
+        b=kMVdB8sg+8WJ1+4ZqKkvXu0te1/CxVLv7bKxQ0VAhUAca4OO5lZhuuu2XGXoJIlWIM
+         QX7omHag1jDtMm9hAXwh+LhxrBJ6zlIUiq7UDWcJ0Lbcv0y0LOEyfcj51be519pq6xpu
+         t2N1hA7N6NrKB6Foz3alL0Wv508WN8LYNaciYHd0jJpFxl8Bh8izfF/N199FIB1UR80h
+         1sH7KSanNXJbngQSP9EMlSpTPJuQwxDZlCKBqA79nkQGuM7ZERELGeWs1H0oIXZRUaLR
+         MumT+fJjRSCBV7eJPodF9n0xtxid2Qn8loyNv/lH+zh+5F903LX8K1CaPH3bbDvxhk6L
+         OVww==
+X-Gm-Message-State: APzg51CjVg9OT0ez2CecnyYgiuG9oiCtc8Y1FUcbLIlOSteZ4qtlBshV
+        1A/MbGFTYc49gjFd2lmx+ad1hhVk
+X-Google-Smtp-Source: ANB0VdaZu1xXc2lLsU4J5XUm4rXQRT11IqWT6jn+273Bj6Lq6U+PcwQkdwKN84/vAL7Oy/U0Y2u9gg==
+X-Received: by 2002:a0c:eb48:: with SMTP id c8-v6mr11873570qvq.16.1537193740971;
+        Mon, 17 Sep 2018 07:15:40 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id p4-v6sm10762081qkl.41.2018.09.17.07.15.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Sep 2018 07:15:40 -0700 (PDT)
+Subject: Re: [PATCH] read-cache.c: fix a sparse warning
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>
+References: <c92b2f25-315d-141b-8974-dd05d7fd2b9e@ramsayjones.plus.com>
+ <CAPig+cSm52i=ypGoPGGumhP+_waq=OU2QZ=p3oVzTTzLsNpfNA@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <2efc8b66-3d26-f794-b5fe-6a4b013feeaf@gmail.com>
+Date:   Mon, 17 Sep 2018 10:15:39 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cSm52i=ypGoPGGumhP+_waq=OU2QZ=p3oVzTTzLsNpfNA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new print_config_from_gitmodules() helper function to print values
-from .gitmodules just like "git config -f .gitmodules" would.
 
-This will be used by a new submodule--helper subcommand to be able to
-access the .gitmodules file in a more controlled way.
 
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- submodule-config.c | 25 +++++++++++++++++++++++++
- submodule-config.h |  1 +
- 2 files changed, 26 insertions(+)
+On 9/16/2018 3:17 AM, Eric Sunshine wrote:
+> On Fri, Sep 14, 2018 at 7:29 PM Ramsay Jones
+> <ramsay@ramsayjones.plus.com> wrote:
+>> At one time, the POSIX standard required the type used to represent
+>> a thread handle (pthread_t) be an arithmetic type. This is no longer
+>> the case, probably because different platforms used to regularly
+>> ignore that requirement.  For example, on cygwin a pthread_t is a
+>> pointer to a structure (a quite common choice), whereas on Linux it
+>> is defined as an 'unsigned long int'.
+>>
+>> On cygwin, but not on Linux, 'sparse' currently complains about an
+>> initialiser used on a 'struct load_index_extensions' variable, whose
+>> first field may be a pthread handle (if not compiled with NO_PTHREADS
+>> set).
+>>
+>> In order to fix the warning, move the (conditional) pthread field to
+>> the end of the struct and change the initialiser to use a NULL, since
+>> the new (unconditional) first field is a pointer type.
+>>
+>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>> ---
+>> If you need to re-roll your 'bp/read-cache-parallel' branch, could you
+>> please squash this into the relevant patch (commit a090af334,
+>> "read-cache: load cache extensions on a worker thread", 2018-09-12).
+> 
+> The information contained in this commit message is so useful that it
+> might make sense to plop this patch at the end of the series rather
+> than merely squashing it in. (Or, if it is squashed, include the above
+> explanation in the commit message of the appropriate patch.)
+> 
 
-diff --git a/submodule-config.c b/submodule-config.c
-index fc2c41b947..f70b7f1baf 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -682,6 +682,31 @@ void submodule_free(struct repository *r)
- 		submodule_cache_clear(r->submodule_cache);
- }
- 
-+static int config_print_callback(const char *var, const char *value, void *cb_data)
-+{
-+	char *wanted_key = cb_data;
-+
-+	if (!strcmp(wanted_key, var))
-+		printf("%s\n", value);
-+
-+	return 0;
-+}
-+
-+int print_config_from_gitmodules(const char *key)
-+{
-+	int ret;
-+	char *store_key;
-+
-+	ret = git_config_parse_key(key, &store_key, NULL);
-+	if (ret < 0)
-+		return CONFIG_INVALID_KEY;
-+
-+	config_from_gitmodules(config_print_callback, the_repository, store_key);
-+
-+	free(store_key);
-+	return 0;
-+}
-+
- struct fetch_config {
- 	int *max_children;
- 	int *recurse_submodules;
-diff --git a/submodule-config.h b/submodule-config.h
-index dc7278eea4..dd7f1b9a46 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -48,6 +48,7 @@ const struct submodule *submodule_from_path(struct repository *r,
- 					    const struct object_id *commit_or_tree,
- 					    const char *path);
- void submodule_free(struct repository *r);
-+int print_config_from_gitmodules(const char *key);
- 
- /*
-  * Returns 0 if the name is syntactically acceptable as a submodule "name"
--- 
-2.19.0
-
+I'm happy to squash it in if I end up re-rolling the patch series.  I'll 
+include the information in the commit message above as a comment so that 
+it is in close proximity to the code impacted.
