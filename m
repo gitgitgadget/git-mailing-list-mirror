@@ -2,74 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2B861F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 16:26:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13DB51F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 16:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728429AbeIQVy3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 17:54:29 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:40529 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728016AbeIQVy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 17:54:29 -0400
-Received: by mail-qk1-f193.google.com with SMTP id c126-v6so9307950qkd.7
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:26:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=ykZUuqjeJbvDh4+FNWrpe4IYRtE9j0Ug4AL/6WYQBDw=;
-        b=RarYaNlSHP4qU5U12Vm4Tg+FG4tL6aKPKgm8dt7KOrqxOpI8f6fYiDPiu1ZzTjRAHS
-         xKnTUR2mU0ZwfLlm2iYOjCc9CIwwFKX3/isPe0T/olOiQopI5o0HP8A6t99GZBDc+4em
-         Xx01cYxkA45xJ35tbfj3n+6iRM9UrEh6rHARAHu8/mU0qkhBAxhavaWnotM5QTtY6pZy
-         jDgzTgFnV1pyQUyYqqVcsld+Dn33JR1RCnymIdvJ9xVdbh2SiFJblmpHYFSvy9icg0bg
-         DffyZbWORBxjxonGMEaxYrZxn65phVig+qTZYutTZtzAwx8TGVB8c8pFBA2DhXQ+AqFi
-         Oxtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=ykZUuqjeJbvDh4+FNWrpe4IYRtE9j0Ug4AL/6WYQBDw=;
-        b=RDxS1+GTu9VVqLthHHWodiZScf/312oYHrnk0wy9t91Sjq1TV67UfFcrik6oy77Oul
-         HbWWZwU6G1Gk4RGM0VNhK8cD5/MfhHnONakGtwBlB4kt9FDGW6dPbmtV2QzERYAeNZCm
-         GO0qKEmE3eeRTwHXBHKQTZeTqQR/PjvRj+AcT8sLgQG90DiHrtJhtcEmfwrX5ZjrAfd7
-         cRGzS+qojL/OqFIcbZiGWoveVyAUcXVJwXkvkhgC0doV+gaBn48OVVG2pDC5x1xkEJ7f
-         Z694P3S7RPudL5AXIqS84pj6tnLlZ94Tmzyhb1AMmugwuyc9eYTLxOFZKMzlXz2DDrhK
-         knDw==
-X-Gm-Message-State: APzg51BSas/0dGsFSSNW6TyYAzwedZyb7y5BkNBQC1qoTxBTmmE14yHE
-        SgBWz5MDj4+B09socfQZ0Zw=
-X-Google-Smtp-Source: ANB0Vda3weXWsxLTrPYX86Sn5pQuHf3rp40JPKolRdG0yuj3wFVFWI1tDd8LIWh9OURkBRnDP8yl0Q==
-X-Received: by 2002:a37:9cd4:: with SMTP id f203-v6mr17342639qke.357.1537201582987;
-        Mon, 17 Sep 2018 09:26:22 -0700 (PDT)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id r187-v6sm8689687qke.24.2018.09.17.09.26.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 09:26:22 -0700 (PDT)
-Subject: Re: [PATCH v5 2/5] read-cache: load cache extensions on a worker
- thread
-To:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <benpeart@microsoft.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+        id S1728455AbeIQVzc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 17:55:32 -0400
+Received: from avasout07.plus.net ([84.93.230.235]:37650 "EHLO
+        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728016AbeIQVzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 17:55:32 -0400
+Received: from [10.0.2.15] ([80.189.70.183])
+        by smtp with ESMTPA
+        id 1wMugFJeFjlDz1wMwg1zP3; Mon, 17 Sep 2018 17:27:26 +0100
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
+ a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=zjR36oVeXIAJ1s83-LAA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH] read-cache.c: fix a sparse warning
+To:     Ben Peart <peartben@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20180912161832.55324-1-benpeart@microsoft.com>
- <20180912161832.55324-3-benpeart@microsoft.com>
- <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <78f62979-18a7-2fc1-6f26-c4f84e19424f@gmail.com>
-Date:   Mon, 17 Sep 2018 12:26:20 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+        Git List <git@vger.kernel.org>
+References: <c92b2f25-315d-141b-8974-dd05d7fd2b9e@ramsayjones.plus.com>
+ <CAPig+cSm52i=ypGoPGGumhP+_waq=OU2QZ=p3oVzTTzLsNpfNA@mail.gmail.com>
+ <2efc8b66-3d26-f794-b5fe-6a4b013feeaf@gmail.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <d7c66568-0e6d-9d92-4559-d4963c0412ec@ramsayjones.plus.com>
+Date:   Mon, 17 Sep 2018 17:27:24 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.9.1
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <2efc8b66-3d26-f794-b5fe-6a4b013feeaf@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfBbQIncu5VUmesXcSH5ErfskPKJiR/XdtwgEcjrVrlOcD7S1bbp+NkPv0JDrRMiJef8jHU9axjGtvY9uHru91vOqTqLA+23l7t5dl50zbu+90dVKV5A8
+ hqnJeePFYP3R0bexv7+syAAmEOKv5thZOzZ8Ruir4tYu8V85oE0mgqv+nuAGLX6DuFH0+jp79TxG2g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -77,133 +52,63 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-On 9/15/2018 6:22 AM, Duy Nguyen wrote:
->> +index.threads::
->> +       Specifies the number of threads to spawn when loading the index.
->> +       This is meant to reduce index load time on multiprocessor machines.
->> +       Specifying 0 or 'true' will cause Git to auto-detect the number of
->> +       CPU's and set the number of threads accordingly. Defaults to 'true'.
+On 17/09/18 15:15, Ben Peart wrote:
 > 
-> I'd rather this variable defaults to 0. Spawning threads have
-> associated cost and most projects out there are small enough that this
-> multi threading could just add more cost than gain. It only makes
-> sense to enable this on huge repos.
 > 
-> Wait there's no way to disable this parallel reading? Does not sound
-> right. And  if ordinary numbers mean the number of threads then 0
-> should mean no threading. Auto detection could have a new keyword,
-> like 'auto'.
-> 
-
-The index.threads setting is patterned after the pack.threads setting 
-for consistency.  Specifying 1 (or 'false') will disable multithreading 
-but I will call that out explicitly in the documentation to make it more 
-obvious.
-
-The THREAD_COST logic is designed to ensure small repos don't incur more 
-cost than gain.  If you have data on that logic that shows it isn't 
-working properly, I'm happy to change the logic as necessary.
-
->> --- a/read-cache.c
->> +++ b/read-cache.c
->> @@ -23,6 +23,10 @@
->>   #include "split-index.h"
->>   #include "utf8.h"
->>   #include "fsmonitor.h"
->> +#ifndef NO_PTHREADS
->> +#include <pthread.h>
->> +#include <thread-utils.h>
->> +#endif
-> 
-> I don't think you're supposed to include system header files after
-> "cache.h". Including thread-utils.h should be enough (and it keeps the
-> exception of inclduing pthread.h in just one place). Please use
-> "pthread-utils.h" instead of <pthread-utils.h> which is usually for
-> system header files. And include ptherad-utils.h unconditionally.
-> 
-
-Thanks, I'll fix that.
-
+> On 9/16/2018 3:17 AM, Eric Sunshine wrote:
+>> On Fri, Sep 14, 2018 at 7:29 PM Ramsay Jones
+>> <ramsay@ramsayjones.plus.com> wrote:
+>>> At one time, the POSIX standard required the type used to represent
+>>> a thread handle (pthread_t) be an arithmetic type. This is no longer
+>>> the case, probably because different platforms used to regularly
+>>> ignore that requirement.  For example, on cygwin a pthread_t is a
+>>> pointer to a structure (a quite common choice), whereas on Linux it
+>>> is defined as an 'unsigned long int'.
+>>>
+>>> On cygwin, but not on Linux, 'sparse' currently complains about an
+>>> initialiser used on a 'struct load_index_extensions' variable, whose
+>>> first field may be a pthread handle (if not compiled with NO_PTHREADS
+>>> set).
+>>>
+>>> In order to fix the warning, move the (conditional) pthread field to
+>>> the end of the struct and change the initialiser to use a NULL, since
+>>> the new (unconditional) first field is a pointer type.
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+>>> ---
+>>> If you need to re-roll your 'bp/read-cache-parallel' branch, could you
+>>> please squash this into the relevant patch (commit a090af334,
+>>> "read-cache: load cache extensions on a worker thread", 2018-09-12).
 >>
->>   /* Mask for the name length in ce_flags in the on-disk index */
->>
->> @@ -1898,6 +1902,46 @@ static unsigned long read_eoie_extension(void *mmap_, size_t mmap_size);
->>   #endif
->>   static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context, unsigned long offset);
->>
->> +struct load_index_extensions
->> +{
->> +#ifndef NO_PTHREADS
->> +       pthread_t pthread;
->> +#endif
->> +       struct index_state *istate;
->> +       void *mmap;
->> +       size_t mmap_size;
->> +       unsigned long src_offset;
->> +};
->> +
->> +static void *load_index_extensions(void *_data)
->> +{
->> +       struct load_index_extensions *p = _data;
->> +       unsigned long src_offset = p->src_offset;
->> +
->> +       while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
->> +               /* After an array of active_nr index entries,
->> +                * there can be arbitrary number of extended
->> +                * sections, each of which is prefixed with
->> +                * extension name (4-byte) and section length
->> +                * in 4-byte network byte order.
->> +                */
->> +               uint32_t extsize;
->> +               memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
->> +               extsize = ntohl(extsize);
->> +               if (read_index_extension(p->istate,
->> +                       (const char *)p->mmap + src_offset,
->> +                       (char *)p->mmap + src_offset + 8,
->> +                       extsize) < 0) {
->> +                       munmap(p->mmap, p->mmap_size);
->> +                       die("index file corrupt");
-> 
-> _()
-> 
-
-You're feedback style can be a bit abrupt and terse.  I _think_ what you 
-are trying to say here is that the "die" call should use the _() macro 
-around the string.
-
-This is an edit of the previous code that loaded index extensions and 
-doesn't change the use of _(). I don't know the rules for when _() 
-should be used and didn't have any luck finding where it was documented 
-so left it unchanged.
-
-FWIW, in this file alone there are 20 existing instances of die() or 
-die_errorno() and only two that use the _() macro.  A quick grep through 
-the source code shows thousands of die() calls the vast majority of 
-which do not use the _() macro.  This appears to be an area that is 
-unclear and inconsistent and could use some attention in a separate patch.
-
-
->> +       /* if we created a thread, join it otherwise load the extensions on the primary thread */
->> +#ifndef NO_PTHREADS
->> +       if (extension_offset && pthread_join(p.pthread, NULL))
->> +               die(_("unable to join load_index_extensions_thread"));
-> 
-> I guess the last _ is a typo and you wanted "unable to join
-> load_index_extensions thread". Please use die_errno() instead.
-> 
-
-Why should this be die_errorno() here?  All other instances of 
-pthread_join() failing in a fatal way use die(), not die_errorno().
-
->> +#endif
->> +       if (!extension_offset) {
->> +               p.src_offset = src_offset;
->> +               load_index_extensions(&p);
->>          }
->>          munmap(mmap, mmap_size);
->>          return istate->cache_nr;
->> --
->> 2.18.0.windows.1
+>> The information contained in this commit message is so useful that it
+>> might make sense to plop this patch at the end of the series rather
+>> than merely squashing it in. (Or, if it is squashed, include the above
+>> explanation in the commit message of the appropriate patch.)
 >>
 > 
+> I'm happy to squash it in if I end up re-rolling the patch series.  I'll include the information in the commit message above as a comment so that it is in close proximity to the code impacted.
 > 
+
+I will be happy with whatever decision you take regarding whether
+to squash this in or add it on top of your series. However, if you
+do squash it in, please don't add the commit message info as a
+comment to the code. No matter how you word it, I can't imagine
+that it would be anything but superfluous - the kind of comment
+that would be removed after review! ;-)
+
+The information in the commit message about pthread_t, which I
+thought was common knowledge, was not really the main point of
+the argument supporting the patch. (Search for "How do I print
+a pthread_t", for variations on this theme).
+
+The main point for me: don't conditionally include a field at the
+beginning of a structure and then use an initialiser in a variable
+declaration. (Unless, I suppose, the first unconditional field had
+the same type - but probably not not even then!)
+
+The fact that the conditionally included field itself had an 'opaque'
+type was just an additional complication.
+
+ATB,
+Ramsay Jones
+
