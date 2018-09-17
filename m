@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD07B1F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 22:25:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 571F91F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 22:25:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728668AbeIRDy1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 23:54:27 -0400
-Received: from mail-io1-f73.google.com ([209.85.166.73]:44578 "EHLO
-        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728655AbeIRDy1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 23:54:27 -0400
-Received: by mail-io1-f73.google.com with SMTP id s15-v6so20010761iob.11
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 15:25:08 -0700 (PDT)
+        id S1728674AbeIRDy3 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 23:54:29 -0400
+Received: from mail-pl1-f202.google.com ([209.85.214.202]:49865 "EHLO
+        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728655AbeIRDy3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 23:54:29 -0400
+Received: by mail-pl1-f202.google.com with SMTP id b6-v6so8310618pls.16
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 15:25:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
         bh=Tq+5eDyXTpqj2Y1KIL3XxtjpYr2WUJuF+yR07+VeAho=;
-        b=OQxei+FN1NGFXS+cRddCTpca6kwCKgHxItkWJHQJHrSHRAkrSDnxvNzO3RHvxrVTbp
-         MvJ3KGhYIUdEUPJ1xOIxoIfXto65sPMugpVrRwBSk7I/7SO+/DQMUB3taM3DJkpm3fVQ
-         J5BaZMj+3D1SElrw9ocg64N4FnTMlsXfOCV7S/wzRGV7lGe0nD/tM0dbX3MY69QWsLZc
-         +Ip5V5PsiCkTIOo1cB4kf8o5hnMGBqGtmpqXiHSA3Uh6BBEpqTEn+7CRDsBXZoGJvDKP
-         rydBg1lJLACkAU77xO7loI0w/qYvJv7jeNEnqJa5JqHjKM7RXychSfYRI32IvaeOWWJu
-         BmiA==
+        b=BFQdiQENgBU+iNIq99q1IOWSYm94kZQf02FpGQ3OoW1RrkDMZFJP4t8jq9aTzkhR01
+         2A7dfk5OCGFY0amQpC8tLi+T+L7QpnwJLS7q9wTeFKCYMe5qzjxR09AWTWAzrg1AFex3
+         8Kaaora26rHOEQlVd2fJOj9gkMfMIUIecRLuNFMxAxLdxSCTBUeSTa7+an9JOeE3G5k6
+         9KCz27EybrMUkebQywubkSFvqECJv6mMxrJM4dcWXddArY2j9oLPFa/J5oLv5iZyICnc
+         OyUASxLtbHTJCSMyDNZcbwPGZ1zKOFXskLwKDCKlxfv5d2p2+OqUihT2CmIryYkeSxQ+
+         dh6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
         bh=Tq+5eDyXTpqj2Y1KIL3XxtjpYr2WUJuF+yR07+VeAho=;
-        b=U3b4Ey+wGfyDbLkeEQ3fJJkDU+BKQTeXdY9TVMujvTYg9/ieBENP+ia2fnynZoKbic
-         kc5Btf4XKD9/+4qS22DJhhqR892T3PPDHQBUa6E9Jo9ha6tfKG0toTxlU1z52JCcIDa9
-         cP1PnoMlZbeACgyujI2Z7Nbq0K9ecMLUBqKNsC1I5qV2TguBkNby187hpxYxYE8HSUy3
-         4T8T3iel2gxp1CAKt8AbNpzhAEzv+Yl21jFoin9kHCV/EyR9PhXbn3qOD7DyFoXByAIM
-         bvsZMVuP9b7xwD7xnFf0C35+DNnrJNzAeSHpeTk9WrcxqNb5LtpEAwshJzkHuM3BUUsd
-         L9tQ==
-X-Gm-Message-State: APzg51DVVQNmVJb+F6PQ7TeqS4hNICkBhLeQJf/625uNoM7Fyqtu0n0Y
-        /HKmEv1sl86CVfoSdkc/Hoq0TIqFvl+RSnGVX8Ud29fAokrMGckyCbiI57tQWf89tPMRXxEIzaG
-        q3P5MpmeN3JP9Oy1om8O3Q7ulj7/Tadwpvl4U7bzsO2K11J433Bwxeh/wBMg=
-X-Google-Smtp-Source: ANB0VdYcMUgyV846qlH3YgXjpEwDOp0VYEIRxC2zuDwhuwxlITSgz/0CGqjyoeAQMkIkX1fJ1I41SXN4gIb3
-X-Received: by 2002:a24:d917:: with SMTP id p23-v6mr5014982itg.35.1537223108394;
- Mon, 17 Sep 2018 15:25:08 -0700 (PDT)
-Date:   Mon, 17 Sep 2018 15:24:20 -0700
-In-Reply-To: <cover.1537222670.git.matvore@google.com>
-Message-Id: <44ee2bd27b510d4216525e24aa1734a1f5edbd95.1537222670.git.matvore@google.com>
+        b=sbBZWoOEa2tRUDEd1SUz7z9yHbBHR8ls+MqJt3hsD44n/PcvIZDV+t7aqjDtt0NNLd
+         HLI8Jc5HpyE/h45D7yPPklLN1MXt894lg4qLJoH9U6KyMRBf4Xqb/x91HdFfHJADfNSs
+         bWPgHFXanlvN8R9wW1ewbFlaC8CBD976eacwZiJ/NZ4NmkNMWsVuLUVGwwwaB0DyQnbd
+         b9VaRKtbnORQnNqlwIWUCypvgeS94x5/ZEa+I0daOF/4mBHGNl2EFsUZBhL5Le/H36OM
+         us7dRYL0MHc9AlKLVY77YdqWTDHx7UhUgTFPPVbB534doA/0Sw/wtFan4KI+xEb0Sd6+
+         FU6Q==
+X-Gm-Message-State: APzg51AgFvEp5b36Ovb+2krpuffAoHBWIFMEpkfIS9AUEbBRTqKGRV+6
+        doZI6PcCjmecVGpDpaUZB+W5TQOsBIgg/0E5AP3li/H0BzYtDQkuyVWHCyejeTkVGJmcTCOqxaC
+        R03LIb+RlQWINvfjPmIq3Sa/lCFJkKI+F3Yr3x1KJhFO7dSXOg/pd2i8Jjfo=
+X-Google-Smtp-Source: ANB0VdbL06Lt29besoR8bVEHpQj6+jSaHKd07VfPxVfkZfRpiPAkP4hw066+M31YDaTUL0Xt5Tr+B8Ppt9Hh
+X-Received: by 2002:a63:7b44:: with SMTP id k4-v6mr1225526pgn.77.1537223110403;
+ Mon, 17 Sep 2018 15:25:10 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 15:24:21 -0700
+In-Reply-To: <cover.1537223021.git.matvore@google.com>
+Message-Id: <e4b548c65e93e5de70e043114a9a54bdc25160d4.1537223021.git.matvore@google.com>
 Mime-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1537222670.git.matvore@google.com>
+References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH v2 4/6] tests: Add linter check for pipe placement style
+Subject: [PATCH v2 4/6] tests: add linter check for pipe placement style
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, peff@peff.net,
