@@ -7,111 +7,108 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D42571F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 13:48:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1F8E1F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 13:55:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727746AbeIQTP3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 15:15:29 -0400
-Received: from mail-it0-f43.google.com ([209.85.214.43]:55424 "EHLO
-        mail-it0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727052AbeIQTP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 15:15:29 -0400
-Received: by mail-it0-f43.google.com with SMTP id d10-v6so11131937itj.5
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 06:48:03 -0700 (PDT)
+        id S1728065AbeIQTWx (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 15:22:53 -0400
+Received: from mail-io1-f53.google.com ([209.85.166.53]:35889 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726865AbeIQTWx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 15:22:53 -0400
+Received: by mail-io1-f53.google.com with SMTP id q5-v6so11501558iop.3
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 06:55:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wHpWmWXqRmr/Zmi4V62kq1G0xxnfzZrUwE374hKCeY0=;
-        b=Mlb1bTdGJol6+/ORvVHbFXozytxzaQ02Ri22Lm59r6QeIXkD5VTXIeQvDcTC7FJLld
-         MzlHjbtwSuYuZvZixgjc8ccuxgVjqV2SRSHBrjRTlloolBguqhuF2EiAQ+uK4scajuv3
-         eEE/Xtjfgy361ufx5c3n4R7MDiD9L7GVjA7nOrm9WXuEYXRYy/EZGcaUCOMZ+4Yosjyg
-         jjJpTG4JQcmmlyuY7AvS8/SOb5pVNZ2/rCt9zIkqp02yjHavStuIZLDhoGP/6EnsTbBc
-         SvYvrWDRr9tQNHzOKBY9s+DHHTEVu3dxXR00btXmGU3fUdEq252o9iILj29kyBoXBKua
-         woZQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=uUfKS/rX0+r1psvL+1pDzQwTco4R+FPUyfCD+nkJDHU=;
+        b=DTOuBT8LBMY5rXKzmWSV6t7HRyK10XxCgkTya5U1EX5afjNLHNH+ScArSucNKl3Kkz
+         /Z2dQ9O5aZ79d8oUb4Wgjc7fpFk0/ELwY8cRRqpeQ0vs+3ONTNJCbFcyDAyB0jknU+zm
+         oCaG6e7K2J0Hlyoe5j2yLMkyR5cF35zSokAwjIhfX8SPUJc7fI7Hcew2FafIjrCFAOXp
+         fhLhRdB0Upn600LjirvcfqDGM4eayLaWeOjpwfixE+vQh6Mk5YiYQSsj0/3VvkIRiqsF
+         dzdN30q8EfFViQ+m9NVtgWE53/tuc5diL78fxeCugBzeq7t08QIQFq5mzUZrJJvoXsBm
+         WhKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wHpWmWXqRmr/Zmi4V62kq1G0xxnfzZrUwE374hKCeY0=;
-        b=BXKgv2wfFHK6UQIeiAfycwGORTv6CKAcXOzqkhzaImlRVoeCEynVhXFTkq2V7Y4a1I
-         Nlm7XKcyFRGyEwSCotua+A1zUQqMqEf/QbYA1slxKcOVVVITq8JhqBNEvD9CMyrXVjsq
-         L+SX6ddjvnc9v8+zxJj7bK1ZNdv4an3Gw1gp/gn8FaYwkafvEk2AyOAwTF+mMVaQzsfd
-         20AiHIZ+E3+T18pEAY0YeFCUDBkXO3SgMn4siKw4k29dRp6RrMkjCA+VqKPSbhYcbfFy
-         YL9NhpkhhWPvDWAVeyXaKoikhQx6XZfczjJgx5jMQCNhcl68oy9tLCoMEhnDCm97Vy9p
-         WStg==
-X-Gm-Message-State: APzg51CrIGvXkroC8PFSNt/KQ0JcZIaS8Jc6fq6JGuZPIvu7zfSqx9AL
-        9Kpt7e2C8833vHSB5LRdab+lqAGyk6k=
-X-Google-Smtp-Source: ANB0Vdb1IFXuJUo3F0kHgVFAstqnCo85Vqj8MbrWCxbl4yrSH+DtvEWckGF7ICjPVYyo977CgEH9iA==
-X-Received: by 2002:a24:5f92:: with SMTP id r140-v6mr12066069itb.95.1537192082963;
-        Mon, 17 Sep 2018 06:48:02 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=uUfKS/rX0+r1psvL+1pDzQwTco4R+FPUyfCD+nkJDHU=;
+        b=GLTyF7M7NyjEmjOHN0STGVtTaFlPpn2n0eT6bbQzHPb1WcyOc/I2Ach8D1rDz0mESx
+         jaS9IuM6TbCUqH2VBEdcQwuqNax6FFLPLpaFL4lXZ+n81HAMhUvpTC8s1JQrJOkPjr88
+         TXHpkkNXfMU/KkBH14WaKk8ddd8lIQhPwPqKe7ECw83Fr7R9pXvjyY/46vHNTj871s3L
+         2giwuwO2ijOwyruHB+QUCsPeutmVkh2OQ5632bdIQTgyaqyprJEe8b+xsILPYFqbKWtz
+         E3PHnKP/6vuM5nnDjslJoh1oy178hL1Rgb77b04s3haPmnd9kdv5YenQ2aedcJamQYH0
+         lq2w==
+X-Gm-Message-State: APzg51Aet8c5p5ROOtUO+Fk4Tj5ndNdgjY0okUrkV0ktyeFAxRQEjQjQ
+        dOskE9/lHDRQJ6ig2OzpRn1YwA==
+X-Google-Smtp-Source: ANB0VdZYbdSdOIsG9P/UFAD/3503k2QsIS5YnIXNYI+obyzEclyCTi+UcpDmOvvtyQC8gyfzH/0NDw==
+X-Received: by 2002:a6b:2387:: with SMTP id j129-v6mr20314790ioj.86.1537192525881;
+        Mon, 17 Sep 2018 06:55:25 -0700 (PDT)
 Received: from localhost ([173.225.52.218])
-        by smtp.gmail.com with ESMTPSA id n187-v6sm7854267iod.66.2018.09.17.06.48.01
+        by smtp.gmail.com with ESMTPSA id m5-v6sm3653558itb.6.2018.09.17.06.55.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 06:48:01 -0700 (PDT)
+        Mon, 17 Sep 2018 06:55:24 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 09:55:25 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Mon, 17 Sep 2018 09:48:02 -0400
-To:     David Aguilar <davvid@gmail.com>
-Cc:     John Austin <john@astrangergravity.com>, me@ttaylorr.com,
-        git@vger.kernel.org, sandals@crustytoothpaste.net,
-        larsxschneider@gmail.com, pastelmobilesuit@github.com
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        John Austin <john@astrangergravity.com>, git@vger.kernel.org,
+        sandals@crustytoothpaste.net, larsxschneider@gmail.com,
+        pastelmobilesuit@github.com, Joey Hess <id@joeyh.name>
 Subject: Re: Git for games working group
-Message-ID: <20180917134802.GE71477@syl>
+Message-ID: <20180917135525.GF71477@syl>
 References: <CA+AhR6fWpzL1ozt2H=y8TaQrgT-6dvkkK_K_P-pXniXT+xcMuQ@mail.gmail.com>
  <20180914190025.GJ55140@syl>
- <CA+AhR6crT2AoJcoGAGA0_c_XdL-0ozHUXTuDrS67tzrTvRLQZw@mail.gmail.com>
- <20180916075604.GB18517@gmail.com>
+ <CA+AhR6fH4=VbuMPasbaH9u52Y=tgJJzhgxosPOb3819ivCVJOg@mail.gmail.com>
+ <20180915164052.GA88932@syl>
+ <878t41lcfi.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20180916075604.GB18517@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <878t41lcfi.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Sep 16, 2018 at 12:56:04AM -0700, David Aguilar wrote:
-> Combining changes is inherently file-format specific, and I suspect
-> that native authoring tools are best used in those scenarios.
-> Maybe LFS can help deal with binary conflicts by having short and sweet
-> ways to grab the "base", "their" and "our" versions of the conflict
-> files.
+On Sun, Sep 16, 2018 at 04:55:13PM +0200, Ævar Arnfjörð Bjarmason wrote:
+> In the hypothetical git-annex-like case (simplifying a bit for the
+> purposes this explanation), for every FILE in your tree you have a
+> corresponding FILE.lock file, but it's not a boolean, but a log of who's
+> asked for locks, i.e. lines of:
 >
-> Example:
+>     <repository UUID> <ts> <state> <who (email?)> <explanation?>
 >
-> 	git lfs checkout --theirs --to theirs.wav conflict.wav
-> 	git lfs checkout --ours --to ours.wav conflict.wav
-> 	git lfs checkout --base --to base.wav conflict.wav
+> E.g.:
 >
-> Then the user can use {ours,theirs,base}.wav to produce the
-> resolved result using their usual authoring tools.
+>     $ cat Makefile.lock
+>     my-random-per-repo-id 2018-09-15 1 avarab@gmail.com "refactoring all Makefiles"
+>     my-random-per-repo-id 2018-09-16 0 avarab@gmail.com "done!"
+>
+> This log is append-only, when clients encounter conflicts there's a
+> merge driver to ensure that all updates are kept.
 
-That's a good idea, and I think that it's sensible that we teach Git LFS
-how to do it. I've opened an issue to that effect in our tracker:
+Certainly. I think that there are two things that aren't well expressed
+under this mechanism:
 
-  https://github.com/git-lfs/git-lfs/issues/3258
+  1. Having a log of locks held against that (a) file doesn't prevent us
+     from introducing merge conflicts at the <file>.lock level, so we're
+     reliant upon the caller first running 'git pull' and hoping that no
+     one beats them out to locking and pushing their lock.
 
-> One thought that comes to mind is diffing -- I imagine that we
-> might want to use different diff tools depending on the file format.
-> Currently git-difftool uses a single tool for all files, but it seems
-> like being able to use different tools, based on the file type, could
-> be helpful.
+  2. Multi-file locks, e.g., "I need to lock file(s) X, Y, and Z
+     together." This isn't possible in Git LFS today with the existing "git
+     lfs lock" command (I had to check, but it takes only _one_ filename as
+     its argument).
 
-We have had some internal discussion about this. I think that we had
-landed on something similar to:
-
-  1. Teach .gitattributes a new mergetool= attribute, which would
-     specify a reference to a mergetool driver, and
-
-  2. Teach .gitconfig about a way to store meregtool drivers, similar to
-     how we name filters today.
-
-Upon my re-reading of this proposal, it was suggested that we implement
-this in terms of 'git lfs mergetool', but I don't see why this wouldn't
-be a good fit for Git in general.
-
+     Perhaps it would be nice to support something like this someday in
+     Git LFS, but I think we would have to reimagine how this would look
+     in your file.lock scheme.
 
 Thanks,
 Taylor
