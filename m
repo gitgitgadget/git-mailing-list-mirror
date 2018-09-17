@@ -2,104 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 143111F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 17:51:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 480D41F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 18:04:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728204AbeIQXUD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 19:20:03 -0400
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:37028 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727052AbeIQXUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 19:20:02 -0400
-Received: by mail-wm1-f49.google.com with SMTP id n11-v6so10628061wmc.2
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 10:51:37 -0700 (PDT)
+        id S1727179AbeIQXdX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 19:33:23 -0400
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:33979 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727052AbeIQXdW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 19:33:22 -0400
+Received: by mail-yw1-f68.google.com with SMTP id y134-v6so5824800ywg.1
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 11:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=NcHVzUyjJT1VnUOOyn9qA1hWsT6eBqcsGfe1nIsftoQ=;
-        b=cW1QJMpiA3BPIENYj0IkITTQtsoEy+DX0yy/23b+rhSPWAUjttBTrqKWnGFtOanJ0x
-         kfk2nhF2xzzfbmevEHxfwaZWT94612BMEgoZj8wLOEhII31FkkiGH5APNJXB8XGGw40k
-         IYvt/jlxm4ZLpPvybpd50OER5wxwyJ8Nv/Ayg9GV2ncQeHfdmrpLUE/I0QwGOzJJBal5
-         APi+c1p+r68xO7VLLBQu8QvCMCrnd6exCyFx8Kb7DlpZ623V2vnBoxfuAmbiAlQXt/5K
-         HrGvF7hHvVdf/eTHHUv+/P2fynwXpba8o2sQaj+249sxvg0NRNxL4z6R+38yFK1Xz2FE
-         4EmQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=3CUJfq2yWeZS+ryOas5Rt5uJV+Oa/rvqHHAMPdSvz04=;
+        b=POD4yX81oGog8ttcs69J+ugkTfYlzp9bi8koxPN8Qwxxr362S4+QG0RDavipgKLKHL
+         t/bjO8b3L02Z5t6TWOryi+yPs3fuCQFSNnFsiKFfNAphtwAaKBd1O0X4gZ7oVTFAuTMZ
+         JWeo9qk6j+Qdwp9ToeVF8ehfeuBgHie+JN/lenQe0btsbDMoO0UKlKxsACe860ZsrI1G
+         GazaVcwKtZ1AkihEFC/TwIz8HSJFO/Hlw64t2PKKXlODcs4fc5LLAZae3fn6oeH5+fG0
+         ibK11nE5NRk/6m58nD5vl9I7HDdJyT4HLBn2m8yBOndmPpT7F9jFvyn8ZwPxx1NXrt9A
+         rjOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=NcHVzUyjJT1VnUOOyn9qA1hWsT6eBqcsGfe1nIsftoQ=;
-        b=R7b2GCGrOCcEqQ0VGNlcp9bZINIlw51pGVRIciH0RmfbLT73okDTwStuzhfeFYjNLV
-         fRyRTm9CPiu/T9bc1vUXmA7S0kZ1hvFhOtRWAMh0ubs6/5N1Mv5WBYQWt7XtANSfwrZ7
-         qmSkn5EFz8wvVcyEaWXF2BSvZnD8qDEDA4EavIWaWQEHVBTIISh29EH3Tm2hr5GWMQDO
-         cAVrQZLfbNI6kPgJh98wA5hrWW/PxSRz0Kmh2188u0Q6RArV0nhIhvyegI+cFZdpuvbE
-         8RxSmk9lseQTE1R6v7FXpe7KYAt1PeeKQmwPT6QcvZGMSMTVha6AADed+cQZIDwK6cCT
-         pCCw==
-X-Gm-Message-State: APzg51BnwhpVr8AgmyRxdDM7YzxDhd/nRaWPWOR1cDUtMLnRDJxHLS3j
-        vKXV5m6+p6UTbuFgaouWLR4=
-X-Google-Smtp-Source: ANB0VdYNlwukmCgMtvE4imOtrS3WaaIhuy78SynhpwmEe8s3v0U3Ed2qi9icJ2IuAcv+kJIoFCgHaQ==
-X-Received: by 2002:a1c:e0d7:: with SMTP id x206-v6mr12713843wmg.74.1537206696195;
-        Mon, 17 Sep 2018 10:51:36 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l12-v6sm13793275wrv.29.2018.09.17.10.51.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 10:51:35 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8DXT8rF_WYE3C0ak7E8_8j=kRS+Yhi1pZjKd5Rr4OsM_A@mail.gmail.com>
-        <20180917023912.GC22024@sigill.intra.peff.net>
-Date:   Mon, 17 Sep 2018 10:51:35 -0700
-In-Reply-To: <20180917023912.GC22024@sigill.intra.peff.net> (Jeff King's
-        message of "Sun, 16 Sep 2018 22:39:13 -0400")
-Message-ID: <xmqqo9cw6mhk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=3CUJfq2yWeZS+ryOas5Rt5uJV+Oa/rvqHHAMPdSvz04=;
+        b=mmC7nqj6HR3oW1mECgDPsegSBFJhERD6PQzc4vZR5/tUTj5s3/lgbfPd4LNryEWOtc
+         u7rePQmUGETqtK1AM7fAAPwcC+e1caKyzZgdh3nRjL8ZhqiBovhj5A5ek0SO7DlO25LZ
+         +C5K4TReEX3pqmqyANLCT826/NZzVD2yA1duo0mFNYPuiix6FY3O5Gmm/r4bByXF9+Mv
+         eqOrjkioDQZqiKAiaplJicGvLcSl7scuoM+2Gnfn+JQkL5L4FukxZpssCHJ3am4KAF+M
+         BqWuxZ7JwMs/00TOeAs5cvcfLmz+XJv+ABWT3iW4Gawt62ASkpHu0LVTU5VKCfuKkt2q
+         KOTQ==
+X-Gm-Message-State: APzg51DELpKvS8iPM7HAiyOg3poLyY60dhu4IaQmtb9blGi1dtoIa7Cd
+        rCkiEZsemlMyNdrG3WmnWwi+mY+bAnrZcc7vwE2sQA==
+X-Google-Smtp-Source: ANB0VdbeTO74WlnLxji9U9BLgu7q4hYMrqAP+9itaGWkpvzIulaSTHeZlOBzy0feGM+N0JEMgYDXeZxoup0DAdf8u7Q=
+X-Received: by 2002:a81:5855:: with SMTP id m82-v6mr10317377ywb.300.1537207494614;
+ Mon, 17 Sep 2018 11:04:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20180917015259.GA26339@sebastianaudet.com> <CACsJy8CAyXAaax8dSPUUzTFvpKVG19FDives3JthL4hBxgf=6A@mail.gmail.com>
+ <87zhwgj9mc.fsf@evledraar.gmail.com>
+In-Reply-To: <87zhwgj9mc.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 17 Sep 2018 11:04:43 -0700
+Message-ID: <CAGZ79ka4hQYHRc-=LkGFbFmzhJfj8+nOTUB41PnajySXeLuCFw@mail.gmail.com>
+Subject: Re: Brandon Williams's E-Mail bouncing
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Brandon Williams <bmwill@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
->> >  What's the donness of this one?
->> >  cf. <20180717201348.GD26218@sigill.intra.peff.net>
->> 
->> This topic has stayed in 'pu' for a long time. I thought it was
->> concluded that this was a good change? Jeff, Jonathan?
+On Mon, Sep 17, 2018 at 10:51 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> I read over the thread again. I don't think I actually have any
-> complaints about the patches as-is. There was some discussion from Junio
-> and Ævar about the third one. I don't have a strong opinion. My
-> experience has been that "gc --auto" is garbage anyway on the server
-> side, but I think Ævar's experience is that it's reasonable for small to
-> medium sites (which seems plausible to me).
->
-> The message-id quoted there is my "this looks good". I mentioned a few
-> possible nits, but I think it would be OK with or without them
-> addressed.
+> Aside from that particular address bouncing [...] it would be nice if git
+> {format-patch,send-email,check-contacts} & the .mailmap format would
+> support and understand some way to map addresses to
+> e.g. noreply@example.com, and prune them out appropriately. We have a
+> lot of addresses from past authors which bounce, and where no current
+> contact address is known.
 
-That matches my reading of your position.  I tend to agree with
-Ævar's recommendation to postpone 3/3 and use 1 & 2 for now.
+Tombstones, eh?
 
-By the way, people shouldn't read too much into the messages
-referred to in "What's cooking"; they are not "these messages point
-out all the issues that block the topic".  It's just "I am aware of
-this thread, which readers would hopefully find a good starting
-point to form their opinions".
+For send-email I would very much prefer the proactive warning instead
+of silently dropping that email address as I would want to know, so I can
+try to follow up somehow and deal with it as-is.
 
-Thanks.
+I think the main purpose of the mail map file until now was to consolidate
+multiple identities into one (e.g. misspellings or capitalisation issues in
+names, different email addresses for all the same person), now you want to
+extend it to also contain more information about an author-ident, such as
+emails being active? Or recording if someone is not interested in the proje=
+ct
+anymore? I think recording that an email bouncesl is just duplicating
+information
+that can be easily checked. Recording that a particular contributor doesn't
+have time/interest any more is slightly different, but IMHO the mail map fi=
+le
+is also not very well suited for that endeavor.
 
+Oh, the above paragraph is written with git - the tool - in mind, not
+the git.git
+repository where we can (ab)use our own tooling. ;-)
+
+So mapping all bouncing emails to no-reply@example.com would map them
+to the same author ident, which we would not want. (e.g. we'd still want to
+know how many different people contributed so far, hence keep them separate=
+).
+We'd need to have unique email addresses that still explain their intent,
+i.e. <user>+no-reply@example.org would work?
+
+Thanks,
+Stefan
