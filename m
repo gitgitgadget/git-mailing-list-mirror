@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA1781F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 14:09:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 215D81F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 14:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728754AbeIQThU (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 15:37:20 -0400
-Received: from ao2.it ([92.243.12.208]:50103 "EHLO ao2.it"
+        id S1728743AbeIQThT (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 15:37:19 -0400
+Received: from ao2.it ([92.243.12.208]:50080 "EHLO ao2.it"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728740AbeIQThU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 15:37:20 -0400
+        id S1728728AbeIQThR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 15:37:17 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1g1uBX-0001bX-EN; Mon, 17 Sep 2018 16:07:31 +0200
+        id 1g1uBX-0001bW-Df; Mon, 17 Sep 2018 16:07:31 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1g1uDg-00010y-KR; Mon, 17 Sep 2018 16:09:44 +0200
+        id 1g1uDg-00010v-HA; Mon, 17 Sep 2018 16:09:44 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
@@ -32,9 +32,9 @@ Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v5 5/9] submodule--helper: add a new 'config' subcommand
-Date:   Mon, 17 Sep 2018 16:09:36 +0200
-Message-Id: <20180917140940.3839-6-ao2@ao2.it>
+Subject: [PATCH v5 4/9] t7411: be nicer to future tests and really clean things up
+Date:   Mon, 17 Sep 2018 16:09:35 +0200
+Message-Id: <20180917140940.3839-5-ao2@ao2.it>
 X-Mailer: git-send-email 2.19.0
 In-Reply-To: <20180917140940.3839-1-ao2@ao2.it>
 References: <20180917140940.3839-1-ao2@ao2.it>
@@ -46,84 +46,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a new 'config' subcommand to 'submodule--helper', this extra level
-of indirection makes it possible to add some flexibility to how the
-submodules configuration is handled.
+Tests 5 and 7 in t/t7411-submodule-config.sh add two commits with
+invalid lines in .gitmodules but then only the second commit is removed.
+
+This may affect future subsequent tests if they assume that the
+.gitmodules file has no errors.
+
+Remove both the commits as soon as they are not needed anymore.
 
 Signed-off-by: Antonio Ospite <ao2@ao2.it>
 ---
- builtin/submodule--helper.c | 14 ++++++++++++++
- t/t7411-submodule-config.sh | 27 +++++++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ t/t7411-submodule-config.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index f6fb8991f3..80f939cd9e 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2003,6 +2003,19 @@ static int check_name(int argc, const char **argv, const char *prefix)
- 	return 0;
- }
- 
-+static int module_config(int argc, const char **argv, const char *prefix)
-+{
-+	/* Equivalent to ACTION_GET in builtin/config.c */
-+	if (argc == 2)
-+		return print_config_from_gitmodules(argv[1]);
-+
-+	/* Equivalent to ACTION_SET in builtin/config.c */
-+	if (argc == 3)
-+		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
-+
-+	die("submodule--helper config takes 1 or 2 arguments: name [value]");
-+}
-+
- #define SUPPORT_SUPER_PREFIX (1<<0)
- 
- struct cmd_struct {
-@@ -2030,6 +2043,7 @@ static struct cmd_struct commands[] = {
- 	{"absorb-git-dirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
- 	{"is-active", is_active, 0},
- 	{"check-name", check_name, 0},
-+	{"config", module_config, 0},
- };
- 
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
 diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index b1f3c6489b..791245f18d 100755
+index f2cd1f4a2c..b1f3c6489b 100755
 --- a/t/t7411-submodule-config.sh
 +++ b/t/t7411-submodule-config.sh
-@@ -134,4 +134,31 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+@@ -83,6 +83,8 @@ Submodule name: 'submodule' for path 'submodule'
+ EOF
+ 
+ test_expect_success 'error in history of one submodule config lets continue, stderr message contains blob ref' '
++	ORIG=$(git -C super rev-parse HEAD) &&
++	test_when_finished "git -C super reset --hard $ORIG" &&
+ 	(cd super &&
+ 		cp .gitmodules .gitmodules.bak &&
+ 		echo "	value = \"" >>.gitmodules &&
+@@ -115,6 +117,8 @@ test_expect_success 'using different treeishs works' '
+ '
+ 
+ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
++	ORIG=$(git -C super rev-parse HEAD) &&
++	test_when_finished "git -C super reset --hard $ORIG" &&
+ 	(cd super &&
+ 		git config -f .gitmodules \
+ 			submodule.submodule.fetchrecursesubmodules blabla &&
+@@ -126,8 +130,7 @@ test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+ 			HEAD b \
+ 			HEAD submodule \
+ 				>actual &&
+-		test_cmp expect_error actual  &&
+-		git reset --hard HEAD^
++		test_cmp expect_error actual
  	)
  '
  
-+test_expect_success 'reading submodules config with "submodule--helper config"' '
-+	(cd super &&
-+		echo "../submodule" >expect &&
-+		git submodule--helper config submodule.submodule.url >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'writing submodules config with "submodule--helper config"' '
-+	(cd super &&
-+		echo "new_url" >expect &&
-+		git submodule--helper config submodule.submodule.url "new_url" &&
-+		git submodule--helper config submodule.submodule.url >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
-+	test_when_finished "git -C super checkout .gitmodules" &&
-+	(cd super &&
-+		echo "newer_url" >expect &&
-+		git submodule--helper config submodule.submodule.url "newer_url" &&
-+		git submodule--helper config submodule.submodule.url >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- test_done
 -- 
 2.19.0
 
