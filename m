@@ -7,121 +7,91 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FF9B1F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 21:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83A901F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 21:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728681AbeIRDFd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 23:05:33 -0400
-Received: from mail-it0-f74.google.com ([209.85.214.74]:52160 "EHLO
-        mail-it0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728564AbeIRDFd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 23:05:33 -0400
-Received: by mail-it0-f74.google.com with SMTP id q5-v6so368319ith.1
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 14:36:23 -0700 (PDT)
+        id S1728612AbeIRDMR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 23:12:17 -0400
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:33116 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727329AbeIRDMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 23:12:17 -0400
+Received: by mail-yb1-f193.google.com with SMTP id y9-v6so4441796ybh.0
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 14:43:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=WuOjcVomLEraU5DuyDhDDDKiuQEUBzcIXg3M6UrkuCU=;
-        b=OWHnkdDv8LmE7ZYXLHsACl+2jUCXgsY/gSHlK9xqwSyeaRAdXZ4FS+nyS2Ag57yucN
-         Nik56xgpqcMl5K8bAXfDr+7937rauUJoWg+lo8T4Ln4vmmPiolXTZb8Ug6Lv+JwtcDGu
-         UWMQ9IBeDNaYTy+CQGQXu4jFIHov22HAJ1c5xP79hv43tsgDdRsYMXPpEY2QzM6eqNxF
-         JFfzHJleo8s4VN23fq9xIBacXommutjx3MKwdl7ff59EgFOUC1DM3ITbWBLUVUR8Icno
-         8lLHfLIDLZ+bTh0U0uMbnjZ+4ZjPosAkar9QjJNR5q6wYr9dYAG+7NbMZD3tJrL462kP
-         sSZQ==
+        bh=1/bHdO2fyy4y0iRKL0nqM0CtmPxLuduyf52WULhSpjc=;
+        b=YacdrFgvGTk0RjOjy5GlUqsZEsnjdiY9Y1IyODD0BxSZ5sKXkAUvJBcjcr9nr47txW
+         NyaQ8sX+wIydpg9SVecRXiYZsRyykh5Sslper40Lpb71RNn2uXzrsLc7UI8NiGeny+gM
+         9KVucghFk1faTiB8XlJkPBCR2n45EPMPaV8lVWm98dYTczyhtjbQLMCarEz8+2s9LrMM
+         u9dMxrUttvz+L7XQreIPnIOBd1Ybnkv0+D02uYRT2qWJI2ZFMvLr8Ud6wzsLFJQkpsBl
+         SikD5U5SiH+WHEi0ISdyOI2t4NdGGDP/ytKCTKE8UT6fva96UaourXoYUvoBiBSDHhP7
+         j9Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=WuOjcVomLEraU5DuyDhDDDKiuQEUBzcIXg3M6UrkuCU=;
-        b=k/m+37bINO1B8YWKjDMBvQkaZFriND9RJIagGfO9zV62YsndrNpRoEDs1ZdBrNFVwG
-         gOssH2h33LWhCVqUlnQedxgI6Gbv850VURNagJWSBCKabtDXlvmv2JCHSdHwFwhV341F
-         vZ0c38pCyYz2jEwoqCxHjVByo22dF1a9OqXmk+GFhdL9tKeumh9Le7+9lhJG0DlwHcU3
-         pZf8yk8XMUyFi+rm+sOoSezCQqVzqePTiovclDd8aEOuRk2KcLn8vTHY6SYAdDLlgvEB
-         kJxDHC2z1B5X3UqyCgUZqGaEL0H6R84ifsZP5ovUlVyoIbvgBZ/3lgMCfdkanj5Tvmeh
-         8xJA==
-X-Gm-Message-State: APzg51DHryaXtn5xeNkSXK4MMQ4gshPAqXNzKd8jKOphjnd4Md3dlN/M
-        5RCNIEQt22SUwFiuxk88xkUcG88+xNHp
-X-Google-Smtp-Source: ANB0VdZScbn/xBW1dMBkgDxrEi7IyCduuvn4Zxp1KzeXD4gLoqiXX8SuyhPrBKrKvetoVKZc3Wzmtlk/XaRJ
-X-Received: by 2002:a24:5953:: with SMTP id p80-v6mr13211081itb.1.1537220183494;
- Mon, 17 Sep 2018 14:36:23 -0700 (PDT)
-Date:   Mon, 17 Sep 2018 14:35:59 -0700
-In-Reply-To: <20180917213559.126404-1-sbeller@google.com>
-Message-Id: <20180917213559.126404-10-sbeller@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1/bHdO2fyy4y0iRKL0nqM0CtmPxLuduyf52WULhSpjc=;
+        b=mSyWhfG6N9HNl7iOAEesv2Y6AkVSgsh7FyrXU8zkJr1V8IPGzBNIo1sJ0cxEm+Ffqs
+         ajYfjLX3OKqUWhR93qChH7h43KTQuJLAN+bg2et6cdoyL0DecpzMGWXZPufszer1XOBy
+         IbFCijvooau+V58HnDwhOjKlHrGdtU8FUMU6liDX7MfgglwRSwZml16g7elEz83x6emQ
+         Fv8GG4n9hJ34dBhw6SbWzzRgGonJWo8qBPbMS052Tn2RzCHzixBsE8foh1hR/x60XVfM
+         ays35qUOxxdkb1oS5uE9xs9lMjkKfohZ7sqxQ/UymL9tb+UCpaoxHrgt+XBre88yRkvV
+         VAkg==
+X-Gm-Message-State: APzg51BNK2a4S8kqfe3th2RWkW03Djt8yhq468OX9lFq2NDk6FDpKdoR
+        kYmdBolHGm1S8AZIBwSGnHkA2aTwNB7zvG9gEnm4dw==
+X-Google-Smtp-Source: ANB0VdbVcDUjqFsv7CixHjzTFFhYf+mGVPpxyQ3IpUbn7xQxfs3sMNWCmseeUhd87Gv8uBFf7gddB+/xKzQqZL2MWi4=
+X-Received: by 2002:a5b:1cd:: with SMTP id f13-v6mr11264637ybp.363.1537220585819;
+ Mon, 17 Sep 2018 14:43:05 -0700 (PDT)
+MIME-Version: 1.0
 References: <20180911234951.14129-1-sbeller@google.com> <20180917213559.126404-1-sbeller@google.com>
-X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH 9/9] builtin/fetch: check for submodule updates for non branch fetches
+ <20180917213559.126404-3-sbeller@google.com>
+In-Reply-To: <20180917213559.126404-3-sbeller@google.com>
 From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org
+Date:   Mon, 17 Sep 2018 14:42:54 -0700
+Message-ID: <CAGZ79kYtR4BgzFDfHookB-ax1wN0TVH1Qam3vC99ypjwr=PHgQ@mail.gmail.com>
+Subject: Re: [PATCH 2/9] sha1-array: provide oid_array_filter
+To:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Gerrit, the code review tool, has a different workflow than our mailing
-list based approach. Usually users upload changes to a Gerrit server and
-continuous integration and testing happens by bots. Sometimes however a
-user wants to checkout a change locally and look at it locally. For this
-use case, Gerrit offers a command line snippet to copy and paste to your
-terminal, which looks like
+On Mon, Sep 17, 2018 at 2:36 PM Stefan Beller <sbeller@google.com> wrote:
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
+>  sha1-array.c | 17 +++++++++++++++++
+>  sha1-array.h |  9 +++++++++
+>  2 files changed, 26 insertions(+)
+>
+> diff --git a/sha1-array.c b/sha1-array.c
+> index 265941fbf40..67db5eeec9a 100644
+> --- a/sha1-array.c
+> +++ b/sha1-array.c
+> @@ -77,3 +77,20 @@ int oid_array_for_each_unique(struct oid_array *array,
+>         }
+>         return 0;
+>  }
+> +
+> +void oid_array_filter(struct oid_array *array,
+> +                     for_each_oid_fn want,
+> +                     void *cb_data)
+> +{
+> +       unsigned nr = array->nr, src, dst;
+> +       struct object_id *oids = array->oids;
 
-  git fetch https://<host>/gerrit refs/changes/<id> &&
-  git checkout FETCH_HEAD
+Blargh :-(
 
-For Gerrit changes that contain changing submodule gitlinks, it would be
-easy to extend both the fetch and checkout with the '--recurse-submodules'
-flag, such that this command line snippet would produce the state of a
-change locally.
+I made this last minute "pull oids out to be more like
+the object_array_filter" and typo'd without compile checking.
 
-However the functionality added in the previous patch, which would
-ensure that we fetch the objects in the submodule that the gitlink pointed
-at, only works for remote tracking branches so far, not for FETCH_HEAD.
+Please discard this series.
 
-Make sure that fetching a superproject to its FETCH_HEAD, also respects
-the existence checks for objects in the submodule recursion.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/fetch.c             | 5 ++++-
- t/t5526-fetch-submodules.sh | 2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 95c44bf6ffa..ea6ecd123e7 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -887,11 +887,14 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				rc |= update_local_ref(ref, what, rm, &note,
- 						       summary_width);
- 				free(ref);
--			} else
-+			} else {
-+				check_for_new_submodule_commits(&rm->old_oid);
- 				format_display(&note, '*',
- 					       *kind ? kind : "branch", NULL,
- 					       *what ? what : "HEAD",
- 					       "FETCH_HEAD", summary_width);
-+			}
-+
- 			if (note.len) {
- 				if (verbosity >= 0 && !shown_url) {
- 					fprintf(stderr, _("From %.*s\n"),
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index af12c50e7dd..a509eabb044 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -615,7 +615,7 @@ test_expect_success "fetch new commits on-demand when they are not reachable" '
- 	git update-ref refs/changes/2 $D &&
- 	(
- 		cd downstream &&
--		git fetch --recurse-submodules --recurse-submodules-default on-demand origin refs/changes/2:refs/heads/my_branch &&
-+		git fetch --recurse-submodules origin refs/changes/2 &&
- 		git -C submodule cat-file -t $C &&
- 		git checkout --recurse-submodules FETCH_HEAD
- 	)
--- 
-2.19.0.397.gdd90340f6a-goog
-
+Stefan
