@@ -2,113 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13DB51F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 16:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C832D1F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 16:29:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728455AbeIQVzc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 17:55:32 -0400
-Received: from avasout07.plus.net ([84.93.230.235]:37650 "EHLO
-        avasout07.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728016AbeIQVzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 17:55:32 -0400
-Received: from [10.0.2.15] ([80.189.70.183])
-        by smtp with ESMTPA
-        id 1wMugFJeFjlDz1wMwg1zP3; Mon, 17 Sep 2018 17:27:26 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=GrdsBH9C c=1 sm=1 tr=0
- a=6SF67mWK+VR8hB1Kjo6y2g==:117 a=6SF67mWK+VR8hB1Kjo6y2g==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=zjR36oVeXIAJ1s83-LAA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] read-cache.c: fix a sparse warning
-To:     Ben Peart <peartben@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Ben Peart <benpeart@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>
-References: <c92b2f25-315d-141b-8974-dd05d7fd2b9e@ramsayjones.plus.com>
- <CAPig+cSm52i=ypGoPGGumhP+_waq=OU2QZ=p3oVzTTzLsNpfNA@mail.gmail.com>
- <2efc8b66-3d26-f794-b5fe-6a4b013feeaf@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d7c66568-0e6d-9d92-4559-d4963c0412ec@ramsayjones.plus.com>
-Date:   Mon, 17 Sep 2018 17:27:24 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1728200AbeIQV5M (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 17:57:12 -0400
+Received: from mail-io1-f51.google.com ([209.85.166.51]:46912 "EHLO
+        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbeIQV5M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 17:57:12 -0400
+Received: by mail-io1-f51.google.com with SMTP id y12-v6so11946760ioj.13
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:29:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=z8rovyCqUGG0VmdLA3xtaqEYiFR0Z47jYycjCSVSONc=;
+        b=ku1EhslhYDrWNMyVHMT/v1rnGFQ35aEew6PNeUQ2x92+e4sgHiQN0qVTx8wo/3gY1W
+         q3r1yXRs4QxUn/b5OtnqcQv0a+6hFxg+JRaENMl6UtYzagTlP/1XXynecIaTbcc2BGK+
+         3hDfxl2fxQPPSYtd4LR531/PJRHk6WGcSuwqOvXVkF7rcTjV8lCvB2lR4gUzeCs8lper
+         +XKU2icXp7dmhqIIKIR31dJoAunInX14WO62W5QH/6aDrcpyIcsSAKzt7WaX/QKbo/Rq
+         yYHQOlz2J4byOJZYFsGAkGwLeaS1Z13WkMJWiKcUT7NjevChmzh3GqxScBglX842cQZ4
+         1sUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=z8rovyCqUGG0VmdLA3xtaqEYiFR0Z47jYycjCSVSONc=;
+        b=VscJOPxSXILV/Ya7/okjLzTVMqgfjRnY1RUoJ67c61dPHU8/++BwihDbZu21QcB5Ft
+         RIAck2DgTk+Lf1vTP3UcJj/qyWjycdT9cFzpHNQUpO/Yy1V9ktCNqhH1L1xKGOOmqiS3
+         9e9I7XpyN2Pn43QESQvuvQaafEntGqjMNlYE82Hm1evpENgRlkVNzAoyIotlVmJlA2E7
+         4VH1xmJHXzvRTlZmuNR7BZXopOoIIoRWZbsTfNuiO2pSG+BXjMKW/UnR+z7AF/RSk5jW
+         8sOzwUJqB57xJFiJKVPKTVZBS2ylxDtZfHVqfnXgb2rCWLUveOlGovR8p9MDOdF9ry22
+         RT+Q==
+X-Gm-Message-State: APzg51AUNPt16SvHiQcJLk01qVRx6bp/UMag6xlylojcjFzImRSjUTBj
+        2fHEE/b35I+wxmmBphOs+ZdWaBO4P6cGE6cZZRo=
+X-Google-Smtp-Source: ANB0Vdb5c61qCifJZbQzWxqTfdBA7aW8ISqLZK8V90IhgWGqlxGUmj3sdV5G9t4taoQFvCJIf9wR1wvJBYSjiE86n4s=
+X-Received: by 2002:a6b:9885:: with SMTP id a127-v6mr19897063ioe.282.1537201746392;
+ Mon, 17 Sep 2018 09:29:06 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2efc8b66-3d26-f794-b5fe-6a4b013feeaf@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfBbQIncu5VUmesXcSH5ErfskPKJiR/XdtwgEcjrVrlOcD7S1bbp+NkPv0JDrRMiJef8jHU9axjGtvY9uHru91vOqTqLA+23l7t5dl50zbu+90dVKV5A8
- hqnJeePFYP3R0bexv7+syAAmEOKv5thZOzZ8Ruir4tYu8V85oE0mgqv+nuAGLX6DuFH0+jp79TxG2g==
+References: <20180917015259.GA26339@sebastianaudet.com>
+In-Reply-To: <20180917015259.GA26339@sebastianaudet.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 17 Sep 2018 18:28:40 +0200
+Message-ID: <CACsJy8CAyXAaax8dSPUUzTFvpKVG19FDives3JthL4hBxgf=6A@mail.gmail.com>
+Subject: Re: [Bug] Pathspec matching breaks the add command
+To:     smaudet@sebastianaudet.com, Brandon Williams <bmwill@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Sep 17, 2018 at 3:55 AM <smaudet@sebastianaudet.com> wrote:
+>
+> The following:
+>
+> git add -u :\(glob,attr:-someAttr\):src/**
+>
+> Produces an error that, according to the source code, should never be visible to the user. This attribute/pathspec *should* be supported according to the documentation provided by git:
+>
+> fatal: BUG:builtin/add.c:498: unsupported magic 40
 
+Brandon, b0db704652 (pathspec: allow querying for attributes -
+2017-03-13) added attr support to match_pathspec(), but this add.c
+manipulates pathspec directly and (I think) does not support 'attr'
+attribute, which is correctly caught here.
 
-On 17/09/18 15:15, Ben Peart wrote:
-> 
-> 
-> On 9/16/2018 3:17 AM, Eric Sunshine wrote:
->> On Fri, Sep 14, 2018 at 7:29 PM Ramsay Jones
->> <ramsay@ramsayjones.plus.com> wrote:
->>> At one time, the POSIX standard required the type used to represent
->>> a thread handle (pthread_t) be an arithmetic type. This is no longer
->>> the case, probably because different platforms used to regularly
->>> ignore that requirement.  For example, on cygwin a pthread_t is a
->>> pointer to a structure (a quite common choice), whereas on Linux it
->>> is defined as an 'unsigned long int'.
->>>
->>> On cygwin, but not on Linux, 'sparse' currently complains about an
->>> initialiser used on a 'struct load_index_extensions' variable, whose
->>> first field may be a pthread handle (if not compiled with NO_PTHREADS
->>> set).
->>>
->>> In order to fix the warning, move the (conditional) pthread field to
->>> the end of the struct and change the initialiser to use a NULL, since
->>> the new (unconditional) first field is a pointer type.
->>>
->>> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->>> ---
->>> If you need to re-roll your 'bp/read-cache-parallel' branch, could you
->>> please squash this into the relevant patch (commit a090af334,
->>> "read-cache: load cache extensions on a worker thread", 2018-09-12).
->>
->> The information contained in this commit message is so useful that it
->> might make sense to plop this patch at the end of the series rather
->> than merely squashing it in. (Or, if it is squashed, include the above
->> explanation in the commit message of the appropriate patch.)
->>
-> 
-> I'm happy to squash it in if I end up re-rolling the patch series.  I'll include the information in the commit message above as a comment so that it is in close proximity to the code impacted.
-> 
-
-I will be happy with whatever decision you take regarding whether
-to squash this in or add it on top of your series. However, if you
-do squash it in, please don't add the commit message info as a
-comment to the code. No matter how you word it, I can't imagine
-that it would be anything but superfluous - the kind of comment
-that would be removed after review! ;-)
-
-The information in the commit message about pthread_t, which I
-thought was common knowledge, was not really the main point of
-the argument supporting the patch. (Search for "How do I print
-a pthread_t", for variations on this theme).
-
-The main point for me: don't conditionally include a field at the
-beginning of a structure and then use an initialiser in a variable
-declaration. (Unless, I suppose, the first unconditional field had
-the same type - but probably not not even then!)
-
-The fact that the conditionally included field itself had an 'opaque'
-type was just an additional complication.
-
-ATB,
-Ramsay Jones
-
+I think we need to update the parse_pathspec() call in this file to
+declare 'attr' not supported. Then we get a friendlier error (or you
+make this code work too, that's even better). You may want to go
+through all parse_pathspec() call and make sure that if the pathspec
+is not consumed only by match_pathspec() then it should reject 'attr',
+otherwise we'll get this "BUG" again.
+-- 
+Duy
