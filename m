@@ -2,81 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F3E361F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 16:44:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 244E61F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 16:46:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728437AbeIQWMq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 18:12:46 -0400
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:50536 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727124AbeIQWMp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 18:12:45 -0400
-Received: by mail-wm1-f42.google.com with SMTP id s12-v6so10430960wmc.0
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:44:35 -0700 (PDT)
+        id S1728455AbeIQWOJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 18:14:09 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:56173 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727124AbeIQWOJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 18:14:09 -0400
+Received: by mail-it0-f67.google.com with SMTP id d10-v6so12030724itj.5
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=L8a2G0VxHiMiXCJKlEBu79xM09/qhJ/uaafGJVzyins=;
-        b=gVtwY25g2svH/CDGxg2s+sZmn+pbMkoHmRAU0rnfTUy6/qpUgsM7z34PcVnjwIw+r6
-         lttuCykJuqqeJS4lEeVnbriw3eMOD3mshSztbe3k7ZaE5Z5VIHPkNC6ZiOq403tQp8sB
-         XnCcFjnoCGabG0TYsOJIb3z1Zi2qQDZzhOi9WX+FWnf47ycYIeayRk6DIZ9f8HR9fClQ
-         vwAGIwTMh8hSaCPmZdHPjkJmY+K+le9//1jC/ccw0QmRqNCdLTVm2STHWbyshZTJiRVv
-         C3p56HW0oeeCyOFtSNPmXgEXEkoo7O6rnGtMHBcycDpE/FL/ySibo3WsCZU4UBFJT6IH
-         oqsQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=0OwDLm8aAYnRE2f2rc0mgCWEZORyScd6CHzAQtAAbhE=;
+        b=cnzlLu+O3GaiJHVTRVudfDS/DQMd7FrNrv5XlKaJuafZbKjZB6yPlS2zUrV6trEhAA
+         u/TN8dBRhRWAcyu1LHVzEHTHw2HNk6Vqa1W40U8ptLYSGPdX1CNIXKCmXd2l7mFcZQQV
+         AD6R+lprGlGyEwffJn7nUY14ZFUCeiU9ICNaE3esyMvnSx6WEUobym19cgNB1hSjmkbW
+         QIQDxeqlYAxqRD4cqTN5cfoiDFujSRIqT1VOb/V2rnkP47C8ghjg1N+KJ2k3eDUM3Sh6
+         ugDXsrbLyTV7hHQsOtX57p1ASHdGi+GGGK6kOCGMl9h0n8b72BRwVcw2kjyaXfwCziqo
+         /hMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=L8a2G0VxHiMiXCJKlEBu79xM09/qhJ/uaafGJVzyins=;
-        b=hTfERE1uhu8P/4VpXrYX399MIOiURgiKwzv/71yYLZh+gIwkGi/xD8GKhJcEHqyd6M
-         sOGqr0lN/HcTzaHloAy9KKvsE7HOhKxQFQHZNn6xuNCh/NHKbSk0vezT5EQS+8bAolMg
-         hfOcZnzk4OzbC+L51BCFASBcqJjmXWyHyiKHp6O4GCPfEVeQDyZMETpMuSBa+fM/egMG
-         s+9L295SEEtmfol0Z2bCj5Vsn1/RbeXnjAqykslGrPyIsBeOXpXyLtNsER6gwCO7pEmI
-         rQEsS6WSHs4fw3Ie29vC8jGa0G+GfEIB/aTI7ahwFG9go14AzOkil/ZG/kBsgvczwTYu
-         OLSA==
-X-Gm-Message-State: APzg51BFLvZmucn8SVf0R+vhK4LP5kpPm2oQxL+3ThW7LUJWSoIqAUQE
-        Gzl9UCmkvJ5RXgCwrlCPmTI=
-X-Google-Smtp-Source: ANB0VdYgIkD6iCgBh6BtIYl2w6Wy9bEeHAt5QyeMMqiPCup2g7BncfgyRbUMaFSmLfaZf0Iuo63qmw==
-X-Received: by 2002:a1c:cf8a:: with SMTP id f132-v6mr12036633wmg.0.1537202674631;
-        Mon, 17 Sep 2018 09:44:34 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s2-v6sm19508320wrn.83.2018.09.17.09.44.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 09:44:33 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     David Aguilar <davvid@gmail.com>
-Cc:     "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
-Subject: Re: Feature request: be able to pass arguments to difftool command
-References: <20180828175711.3a0aeacc@pc09.procura.nl>
-        <xmqqpny2ffjv.fsf@gitster-ct.c.googlers.com>
-        <20180829091838.2eee8a6a@pc09.procura.nl>
-        <20180916062800.GA18517@gmail.com>
-Date:   Mon, 17 Sep 2018 09:44:33 -0700
-In-Reply-To: <20180916062800.GA18517@gmail.com> (David Aguilar's message of
-        "Sat, 15 Sep 2018 23:28:00 -0700")
-Message-ID: <xmqqfty8845q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=0OwDLm8aAYnRE2f2rc0mgCWEZORyScd6CHzAQtAAbhE=;
+        b=R9e9LllD3ci1ioHXW+EIydqxHsjvGQxjLIFHwjGloI6onaPmelhhUyHzygTmgyZzSw
+         ziyrOZhuCGKE0vlvQE9QopjVY7jI2toc5xeXKD0XguK20f1uc+oSdLDBj52wxig02uMW
+         VD+fOf4YKnh41f96w3T+86jznB9io2FgtIcRnIiAsTeTpqrRtCLu5L0BI8uyYEQLdecO
+         GUM4d74I4ky4IQAohM5Bx3dsxAUJcsWPocx2O1oVz3XhI6iqrFZeu9eNF6AZtxprCiIW
+         LnA8RQzlpmmHMO/d01Vlc55wX5kaJNqW5pGVia9aA7TYl0ApUHwDLvny7K59p+1wJkUz
+         1S2A==
+X-Gm-Message-State: APzg51D49lPjGrSeI2LI7yQNbWeF8fLmn3am9844svFA1iWUZAVKc+yx
+        TNfB+6MLNGnEkQXFCjWlwKNVTruCndhE7RkscrY=
+X-Google-Smtp-Source: ANB0VdaqipKUlcdieYFH3vEumaf8evZ+JxZL30MXZj+HEQl3f6On4MGE3dlYFvVhknaNni7155Zp9NaAuV7zZGRudKM=
+X-Received: by 2002:a02:270f:: with SMTP id g15-v6mr22252187jaa.94.1537202758656;
+ Mon, 17 Sep 2018 09:45:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180912161832.55324-1-benpeart@microsoft.com> <20180912161832.55324-3-benpeart@microsoft.com>
+ <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com> <78f62979-18a7-2fc1-6f26-c4f84e19424f@gmail.com>
+In-Reply-To: <78f62979-18a7-2fc1-6f26-c4f84e19424f@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 17 Sep 2018 18:45:32 +0200
+Message-ID: <CACsJy8AYq=FivKZ869tvjwuSc70tuaPV0HJ0aRp=VFbJBSpm=A@mail.gmail.com>
+Subject: Re: [PATCH v5 2/5] read-cache: load cache extensions on a worker thread
+To:     Ben Peart <peartben@gmail.com>
+Cc:     Ben Peart <benpeart@microsoft.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-David Aguilar <davvid@gmail.com> writes:
-
-> While I do see the utility, it would be just as easy to configure a 2nd
-> and 3rd variant of the same difftool and use those as needed instead.
+On Mon, Sep 17, 2018 at 6:26 PM Ben Peart <peartben@gmail.com> wrote:
 >
-> "git difftool -t ccdiff2" or "-t ccdiff3" is the simplest, and there's
-> nothing stopping the user from creating aliases to shorten it further.
-> ...
-> We already have two mechanisms for controlling the inner command that's
-> launched by difftool.  IMO we don't need more.
+>
+>
+> On 9/15/2018 6:22 AM, Duy Nguyen wrote:
+> >> +index.threads::
+> >> +       Specifies the number of threads to spawn when loading the index.
+> >> +       This is meant to reduce index load time on multiprocessor machines.
+> >> +       Specifying 0 or 'true' will cause Git to auto-detect the number of
+> >> +       CPU's and set the number of threads accordingly. Defaults to 'true'.
+> >
+> > I'd rather this variable defaults to 0. Spawning threads have
+> > associated cost and most projects out there are small enough that this
+> > multi threading could just add more cost than gain. It only makes
+> > sense to enable this on huge repos.
+> >
+> > Wait there's no way to disable this parallel reading? Does not sound
+> > right. And  if ordinary numbers mean the number of threads then 0
+> > should mean no threading. Auto detection could have a new keyword,
+> > like 'auto'.
+> >
+>
+> The index.threads setting is patterned after the pack.threads setting
+> for consistency.  Specifying 1 (or 'false') will disable multithreading
+> but I will call that out explicitly in the documentation to make it more
+> obvious.
+>
+> The THREAD_COST logic is designed to ensure small repos don't incur more
+> cost than gain.  If you have data on that logic that shows it isn't
+> working properly, I'm happy to change the logic as necessary.
 
-OK, fair enough.
+THREAD_COST does not apply to this extension thread if I remember correctly.
+
+> >> +static void *load_index_extensions(void *_data)
+> >> +{
+> >> +       struct load_index_extensions *p = _data;
+> >> +       unsigned long src_offset = p->src_offset;
+> >> +
+> >> +       while (src_offset <= p->mmap_size - the_hash_algo->rawsz - 8) {
+> >> +               /* After an array of active_nr index entries,
+> >> +                * there can be arbitrary number of extended
+> >> +                * sections, each of which is prefixed with
+> >> +                * extension name (4-byte) and section length
+> >> +                * in 4-byte network byte order.
+> >> +                */
+> >> +               uint32_t extsize;
+> >> +               memcpy(&extsize, (char *)p->mmap + src_offset + 4, 4);
+> >> +               extsize = ntohl(extsize);
+> >> +               if (read_index_extension(p->istate,
+> >> +                       (const char *)p->mmap + src_offset,
+> >> +                       (char *)p->mmap + src_offset + 8,
+> >> +                       extsize) < 0) {
+> >> +                       munmap(p->mmap, p->mmap_size);
+> >> +                       die("index file corrupt");
+> >
+> > _()
+> >
+>
+> You're feedback style can be a bit abrupt and terse.  I _think_ what you
+> are trying to say here is that the "die" call should use the _() macro
+> around the string.
+
+Yes. Sorry I should have explained a bit better.
+
+> This is an edit of the previous code that loaded index extensions and
+> doesn't change the use of _(). I don't know the rules for when _()
+> should be used and didn't have any luck finding where it was documented
+> so left it unchanged.
+>
+> FWIW, in this file alone there are 20 existing instances of die() or
+> die_errorno() and only two that use the _() macro.  A quick grep through
+> the source code shows thousands of die() calls the vast majority of
+> which do not use the _() macro.  This appears to be an area that is
+> unclear and inconsistent and could use some attention in a separate patch.
+
+This is one of the gray areas where we have to determine if the
+message should be translated or not. And it should be translated
+unless it's part of the plumbing output, to be consumed by scripts.
+
+I know there's lots of messages still untranslated. I'm trying to do
+something about that. But I cannot just go fix up all strings when you
+all keep adding more strings for me to go fix. When you add a new
+string, please consider if it should be translated or not. In this
+case since it already receives reviewer attention we should be able to
+determine it now, instead of delaying it for later.
+
+> >> +       /* if we created a thread, join it otherwise load the extensions on the primary thread */
+> >> +#ifndef NO_PTHREADS
+> >> +       if (extension_offset && pthread_join(p.pthread, NULL))
+> >> +               die(_("unable to join load_index_extensions_thread"));
+> >
+> > I guess the last _ is a typo and you wanted "unable to join
+> > load_index_extensions thread". Please use die_errno() instead.
+> >
+>
+> Why should this be die_errorno() here?  All other instances of
+> pthread_join() failing in a fatal way use die(), not die_errorno().
+
+That argument does not fly well in my opinion. I read the man page and
+it listed the error codes, which made me think that we need to use
+die_errno() to show the error. My mistake though is the error is
+returned as the return value, not in errno, so die_errno() would not
+catch it. But we could still do something like
+
+    int ret = pthread_join();
+    die(_("blah blah: %s"), strerror(ret));
+
+Other code can also be improved, but that's a separate issue.
+-- 
+Duy
