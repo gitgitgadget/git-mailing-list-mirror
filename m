@@ -2,123 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9E2771F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 19:55:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 648FF1F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 19:55:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727673AbeIRBYM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 21:24:12 -0400
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45755 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727176AbeIRBYL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 21:24:11 -0400
-Received: by mail-wr1-f67.google.com with SMTP id 20-v6so18504268wrb.12
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 12:55:23 -0700 (PDT)
+        id S1728000AbeIRBYS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 21:24:18 -0400
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:44655 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727176AbeIRBYR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 21:24:17 -0400
+Received: by mail-pf1-f194.google.com with SMTP id k21-v6so8043794pff.11
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 12:55:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=5EKIuV4fIUXOhtbcj5HNULlPhD2V5QYAyGGEXRP+7fc=;
-        b=mVwws3cDqoKIjQKD49nZvpOds2ZYyaqv99pGezStezEF6PuwHb6RtHH4RIsDfYuc8g
-         2BgV3OW/wB1LRDQdWFnPp/S3Ack+RzdgI7AL9l/EfIRO+hDLBUkQTkdcuRARBq+Fs+LS
-         8zWC+u42XShw6PMd/iVli96b/RUXlQKmvs808VoIgElBZiDJa2CTQDIT9Qo9PPzkPLV3
-         farAuVD3zufx1daSVXWJI4mw/M06GMV1Z92AQgreoWeZlaUceIEkxm1MaLez0shyZH7O
-         iARKFsEDPzeQP1g0igJGrTq9ITQjuE4diytgihVDkEcnmc59sNKNnCfKef5DVABOi93p
-         1EYw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=vc2/Y/psoxntTD8G0RiENqcRFIgsSMDo0Mq5j494LLU=;
+        b=OYyh9aDQHmcKTnqbxG2oW6iEzSvKr3qoLlKhlLlAZEpJD4M30K2WiTm6j4KokwOVPn
+         a/A+dUc2IXk2co4kj7TYYpUDu0uPwi4m+lAihyDQwQwZvFeoz1zFtmSWpL6G33wnmQh/
+         ksTyAusvjHdG77oy/RnD73AYRm6uxFSWuRkjyAb9V6Pz7cEF08xzl8QzlS6eza93L41O
+         CqrcocvvX6+l44O3gkITDjmwWmGFlFF/FfwnMYL0dso/jyI2WDUbeeCdI5AO04kK7SH9
+         fj8OkXuDxWOyBpTjvrsdZeDvykTo40jqhdUEJ/XAXWBR+5sh9A92LRgFJ0gKio347zci
+         0G7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=5EKIuV4fIUXOhtbcj5HNULlPhD2V5QYAyGGEXRP+7fc=;
-        b=Iqcul4tgBoyZ78X0UDPc2cOcf6g/B31+vqQA/58Wh0u9uZzsId2fSDgb4fBDo3pWyt
-         Yy+jvLsv8yzJy22TVZlgNawAs8JaIQhPQ7+UkEQD+3TnJGz1Ce6O5BW7YJkvlzWlAzUu
-         OFmJqVtRhc+4GXdUplKxGfhfiPEenKY6SSb+PKCVwM6/MRYERrpgU6GyMw5iG4W2BuJ1
-         c/lrZtRZM9u+vzxcTpBA1JYeG0UDU5p7e2DM38fNHpwDnWtJdcUOB6qEaULthUUiGsLu
-         lfmWsiLRzF1CBD9XjUwyT35zf+ICEXNcvtWJGLe+PJ/RLj3ZBzoEgpJJuQS/4BrYudev
-         jwCQ==
-X-Gm-Message-State: APzg51BqboSwN9RJvjLFT+wLvnSjT/W2UaKp3xj73Euw7cnfZTlt5tVs
-        1UwiUUvL855er1ro+Vm5dlzz9tnD
-X-Google-Smtp-Source: ANB0VdbessyKGdLOW9zr34FwtekuQ3jYND3FJ3YBxXUC/0Ml0h96WG87pP6GfIFIiO4j9SF1WTqSGA==
-X-Received: by 2002:adf:c751:: with SMTP id b17-v6mr20887241wrh.134.1537214122162;
-        Mon, 17 Sep 2018 12:55:22 -0700 (PDT)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id d12-v6sm16142805wru.36.2018.09.17.12.55.21
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=vc2/Y/psoxntTD8G0RiENqcRFIgsSMDo0Mq5j494LLU=;
+        b=lYvO9eZ40eBNh/zkh7QI/SlMwJ1BrQXP0UAC9K4KABhCrvD+ID7yNuatozVUpQUu/q
+         TICTS+6IK/IddNCy3efvCP30W2GKF/tJ/yC9HoPqV+s0crp4vOo4TDZFRxvX8G/vUulh
+         BJB5CuoG3DTnH8XSJ9zTMOjG4WYZoq6uzpj/6lGg4pKW/f+7yWnaPHYAf08lhgPmLPqD
+         AvYpRWjCFqhlygmLaddosNm6+b0OP0NDpRTlrNDF8Ing72OGkTe9tU4Tkr+q6yrr5syb
+         Cabkun7UTBhOWO2WPbieFqEhoCvPQQy4IGaZmiJWnyMAiqSSheMC/813GmZDswRFdu6e
+         umPA==
+X-Gm-Message-State: APzg51DapZlwXtK25iS/2uzrnVFnYEZU+DfxgEy6hLom0S3mr21CdKFu
+        W/WgQ6E/OSuGOS8xQSvm/7U=
+X-Google-Smtp-Source: ANB0VdYGhY0ANQaRpVyLqoEiB5lWf91eN3Sov9LDBYSDSOjbL1o8rWjxuYjzwBB00WFo9xYVCBrtlg==
+X-Received: by 2002:a63:cd4c:: with SMTP id a12-v6mr24841192pgj.15.1537214129084;
+        Mon, 17 Sep 2018 12:55:29 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id r23-v6sm31587990pfj.5.2018.09.17.12.55.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 12:55:21 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Todd Zullinger <tmz@pobox.com>
-Subject: Re: [PATCH] t5551: compare sorted cookies files
-References: <20180917191806.19958-1-t.gummerer@gmail.com>
-Date:   Mon, 17 Sep 2018 12:55:21 -0700
-In-Reply-To: <20180917191806.19958-1-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Mon, 17 Sep 2018 20:18:06 +0100")
-Message-ID: <xmqqtvmn6gra.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 17 Sep 2018 12:55:28 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 12:55:26 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] doc/Makefile: drop doc-diff worktree and temporary
+ files on "make clean"
+Message-ID: <20180917195526.GH140909@aiede.svl.corp.google.com>
+References: <20180830195546.GA22407@sigill.intra.peff.net>
+ <20180831063318.33373-1-sunshine@sunshineco.com>
+ <20180831063318.33373-4-sunshine@sunshineco.com>
+ <20180917183258.GC140909@aiede.svl.corp.google.com>
+ <xmqq36u77w7y.fsf@gitster-ct.c.googlers.com>
+ <20180917194214.GG140909@aiede.svl.corp.google.com>
+ <xmqqy3bz6h24.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqy3bz6h24.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> In t5551 we check that we save cookies correctly to a file when
-> http.cookiefile and http.savecookies are set.  To do so we create an
-> expect file that expects the cookies in a certain order.
+>> I'd rather that we revert this change altogether.  I have nothing
+>> against a convenient command to do this kind of non build related
+>> cleanup, but it shouldn't be spelled as "make clean".
 >
-> However after e2ef8d6fa ("cookies: support creation-time attribute for
-> cookies", 2018-08-28) in curl.git (released in curl 7.61.1) that order
-> changed.
+> OK, let's do this for now as I wanted to merge the remainder to
+> 'master' today.
 >
-> We document the file format as "Netscape/Mozilla cookie file
-> format (see curl(1))", so any format produced by libcurl should be
-> fine here.  Sort the files, to be agnostic to the order of the
-> cookies, and make the test pass with both curl versions > 7.61.1 and
-> earlier curl versions.
+> -- >8 --
+> Subject: Revert "doc/Makefile: drop doc-diff worktree and temporary files on "make clean""
 >
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> This reverts commit 6f924265a0bf6efa677e9a684cebdde958e5ba06, which
+> started to require that we have an executable git available in order
+> to say "make clean", which gives us a chicken-and-egg problem.
+>
+> Having to have Git installed, or be in a repository, in order to be
+> able to run an optional "doc-diff" tool is fine.  Requiring either
+> in order to run "make clean" is a different story.
+>
+> Reported by Jonathan Nieder <jrnieder@gmail.com>.
 > ---
+>  Documentation/Makefile | 1 -
+>  1 file changed, 1 deletion(-)
 
-Thanks.  f5b2c9c9 ("t5551-http-fetch-smart.sh: sort cookies before
-comparing", 2018-09-07) that came from
+Does this want a sign-off?
 
-    https://public-inbox.org/git/20180907232205.31328-1-tmz@pobox.com
+In any event, this matches what I had applied in Debian[1] and is
 
-has almost the identical patch text, and this (presumably an
-independent effort) confirms that the patch is needed.  The other
-effort implicitly depends on the expected output is kept sorted, but
-this one is more explicit---I tend to prefer this approach as tools
-and automation is easier to maintain than having to remember that
-the source must be sorted.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Thanks.
+Thanks,
+Jonathan
 
->  t/t5551-http-fetch-smart.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-> index 771f36f9ff..d13b993201 100755
-> --- a/t/t5551-http-fetch-smart.sh
-> +++ b/t/t5551-http-fetch-smart.sh
-> @@ -206,7 +206,7 @@ test_expect_success 'dumb clone via http-backend respects namespace' '
->  cat >cookies.txt <<EOF
->  127.0.0.1	FALSE	/smart_cookies/	FALSE	0	othername	othervalue
->  EOF
-> -cat >expect_cookies.txt <<EOF
-> +cat <<EOF | sort >expect_cookies.txt
->  
->  127.0.0.1	FALSE	/smart_cookies/	FALSE	0	othername	othervalue
->  127.0.0.1	FALSE	/smart_cookies/repo.git/info/	FALSE	0	name	value
-> @@ -215,7 +215,7 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
->  	git config http.cookiefile cookies.txt &&
->  	git config http.savecookies true &&
->  	git ls-remote $HTTPD_URL/smart_cookies/repo.git master &&
-> -	tail -3 cookies.txt >cookies_tail.txt &&
-> +	tail -3 cookies.txt | sort >cookies_tail.txt &&
->  	test_cmp expect_cookies.txt cookies_tail.txt
->  '
+[1] http://repo.or.cz/git/debian.git/blob/refs/heads/debian-experimental:/debian/patches/0002-Revert-doc-Makefile-drop-doc-diff-worktree-and-tempor.diff
+aka http://repo.or.cz/git/debian.git/blob/9872ab1d87634a9288266de290571928e5b9346f:/debian/patches/0002-Revert-doc-Makefile-drop-doc-diff-worktree-and-tempor.diff
