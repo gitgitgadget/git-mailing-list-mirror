@@ -2,100 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63E171F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 20:35:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF7271F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 20:43:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728023AbeIRCEY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 22:04:24 -0400
-Received: from mail-wm1-f47.google.com ([209.85.128.47]:38158 "EHLO
-        mail-wm1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbeIRCEY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 22:04:24 -0400
-Received: by mail-wm1-f47.google.com with SMTP id t25-v6so90062wmi.3
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 13:35:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mnwDmQQPCHYs8uTamYn5QRLHgXIlXvooUvoR81eofKs=;
-        b=FnL8dGwgPlo8413owVYyZRW6MuaUduQYRriFUfHYXtWQpW7WpUxBrWm6QKJUYHgGN9
-         PMr8XrC3beuNVwqMOoVxCnKvpPUHUwjfxZ6juyQaLsMz+96rkJX09Oz1asz1zyJ1dI5e
-         x86T2DSFQ3N5Au/fuVkMaJLBl91T/qtX00+C0tr9h9FuY/r15ZHCHJujYSkuTcepkk6O
-         JQt4RMc4bJt3PBD1KGUVHZ9Qdfxs7k7SbYbNsDpN8/csG3nh5ug53JF/Y7JguEB9sxUS
-         5P/k1VCGIWz55+SgH6l34xJNPoayBcL+FuxR9dL5TPwS9vIAxcTSQuFuCT4v8N80ZhZ3
-         wQBQ==
+        id S1727672AbeIRCMZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 22:12:25 -0400
+Received: from mail-qt0-f195.google.com ([209.85.216.195]:36677 "EHLO
+        mail-qt0-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726844AbeIRCMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 22:12:25 -0400
+Received: by mail-qt0-f195.google.com with SMTP id t5-v6so16661608qtn.3
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 13:43:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mnwDmQQPCHYs8uTamYn5QRLHgXIlXvooUvoR81eofKs=;
-        b=WW9vId4AQp2iMrepu94iUbLaypD0+Zltgv4wAkzzkMAfPXePe0vMjduTOh7DRCDgrK
-         7evYX8odx+fShKiTRC41069CoKOQZnqcrlUuZPoQ524DL4LPvxyCDKJbA/aYDqaYSNF1
-         hKE04dR5LXKiRdPCvoTVJaWEEg5OiK/OW89fwwa3/FDcMtYTdI92uG8wI8Hv9f1uNGgS
-         mgU2KX0743sW6nRNPYhj69JbG3Iq4Po52B51AaoQ5EtFXzOE2E3DmEqqbpHgUR4Ec0/M
-         cdhxuZC6iNgXKuT3r9kvBEtwvZgUy16MTQoDhVm49oYiK9aZHTN4DsQ47JYbpfFvVjCH
-         Txzw==
-X-Gm-Message-State: APzg51BrFIlHo+YpM3DHNjc67xQ+f5EEV+oYrMnqWlNMb8/3DvAEaSZu
-        uQ8cfeDbIumenQgf7ZCyJYdHzkmXfBTzflk7hQmq37f4
-X-Google-Smtp-Source: ANB0Vdb9vBDnA3OtHD8VQ0/t9rwD+XtIA+w113u4Vly+0AefKtef9StVzS9QyooZfXXWz3zHjS4EUpggtLdT23OPPbE=
-X-Received: by 2002:a1c:a745:: with SMTP id q66-v6mr13027575wme.49.1537216526804;
- Mon, 17 Sep 2018 13:35:26 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MF8Sd8oZxDZzkw+IHMaY/w//jpFP9l20V9Vc+glAfC4=;
+        b=muk8YFE4E0onyP7kK0K9odOb3mxNHMdXmPKp7RDyK13Y9Ox6KfdvH11hJudsRSfoRO
+         GeKACewfgz3ImOO7qH5yRFn23wOhUy7rquhtmPzW65N1EqMp4mW7gmgN+htNBdX+tRQ1
+         BmCTv4qQgMXqsxqH6VNqN1oH5UcorBfsaXjRIu+3H7hA9RgisWXi4gOhVP4LaM6C/mg9
+         S8tTDU676UKmCi4JQO2F4UMKpTixedMNHaMemfXekasZO/xykNSh91Y/YOWjFVMhofqT
+         XkItEHlMMY0UOLaSaxr7hr0IdzQYgIcSanw5o6E9sduAqCB0PFc7+J/WFfLhsFfOYaYL
+         Vnyw==
+X-Gm-Message-State: APzg51AaJGaLGN2JSg7W5c9GPU9R2FkIsUpaB3WfvFjYKQXYEHlfUtZY
+        hhNhPAGFjBhRfimqIDarJLa+Jluev73IuWNMG9I=
+X-Google-Smtp-Source: ANB0VdbQNeIzYeBrjYNgKHb+bMtNlxyf3y59l08TU2LXwZk6knHY4mR7u6nAf0/4kPVGCWEWM/dRmaVdejuIa9l9YPk=
+X-Received: by 2002:aed:24c3:: with SMTP id u3-v6mr19055100qtc.50.1537217006287;
+ Mon, 17 Sep 2018 13:43:26 -0700 (PDT)
 MIME-Version: 1.0
-From:   Mikhail Matrosov <mikhail.matrosov@gmail.com>
-Date:   Mon, 17 Sep 2018 23:35:19 +0300
-Message-ID: <CADhDkKwHp0dR7PPLV6UZDmSO9ERW7Opym3FSD64XXTg-QK65bw@mail.gmail.com>
-Subject: git pull --rebase=preserve is always rebasing something, even on
- up-to-date branch
-To:     git@vger.kernel.org
+References: <20180830195546.GA22407@sigill.intra.peff.net> <20180831063318.33373-1-sunshine@sunshineco.com>
+ <20180831063318.33373-4-sunshine@sunshineco.com> <20180917183258.GC140909@aiede.svl.corp.google.com>
+ <xmqq36u77w7y.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq36u77w7y.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 17 Sep 2018 16:43:13 -0400
+Message-ID: <CAPig+cSrvvWn1rd6TcG8H6tGvGDvfNJZE3KnxYazwDTfxAkVeg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] doc/Makefile: drop doc-diff worktree and temporary
+ files on "make clean"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please try the following:
+On Mon, Sep 17, 2018 at 3:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> >> +    '$(SHELL_PATH_SQ)' ./doc-diff --clean
+> >
+> > This means I need a copy of git in order to run "make clean".  That
+> > was never required before.  It makes bootstrapping difficult --- do we
+> > really need it?
+>
+> Gahh, you are absolutely right.  Also "doc-diff --clean", if I am
+> reading the code correctly, requires us to be in a Git repository,
+> not a tarball extract.
+>
+> Having to have Git installed, or be in a repository, in order to be
+> able to run an optional "doc-diff" tool is fine.  Requiring either
+> in order to run "make clean" is a different story.
+>
+> Thanks for spotting.  We can just prefix the line with '-'?  Or does
+> the script badly misbehave (due to lack of CEILING_DIRECTORY) when
+> run in a tarball extract inside somebody else's repository?
 
-mmatrosov@Mikhail-PC:~/test$ git init --bare server
-Initialized empty Git repository in /home/mmatrosov/test/server/
-mmatrosov@Mikhail-PC:~/test$ git clone server local
-Cloning into 'local'...
-warning: You appear to have cloned an empty repository.
-done.
-mmatrosov@Mikhail-PC:~/test$ cd local
-mmatrosov@Mikhail-PC:~/test/local$ echo a > a && git add . && git commit -m A
-[master (root-commit) a34c21f] A
- 1 file changed, 1 insertion(+)
- create mode 100644 a
-mmatrosov@Mikhail-PC:~/test/local$ git push
-Counting objects: 3, done.
-Writing objects: 100% (3/3), 205 bytes | 0 bytes/s, done.
-Total 3 (delta 0), reused 0 (delta 0)
-To /home/mmatrosov/test/server
- * [new branch]      master -> master
-mmatrosov@Mikhail-PC:~/test/local$ git pull
-Already up-to-date.
-mmatrosov@Mikhail-PC:~/test/local$ git pull --rebase=preserve
-Rebasing (1/1)
-Successfully rebased and updated refs/heads/master.
-
-As you can see, running bare "git pull" just tells me everything is up
-to date. However, running "git pull --rebase=preserve" triggers
-rebasing of something. It wont be a problem if it didn't take
-significant time (especially on Windows). Why this rebase happens? It
-is completely redundant and slows down the pull operation. Looks like
-a bug to me.
-
-Note that it is important to me, because I want to set "git config
---global pull.rebase preserve". But because of this issue, pulling on
-an up-to-date repository takes a lot of time. Which is very
-frustrating.
-
-Tested with:
-* git version 2.19.0.windows.1 in Windows 10 Version 1803
-* git version 2.7.4 in Ubuntu 16.04.3 LTS (inside WSL)
-
------
-Best regards, Mikhail Matrosov
+I did consider this case and felt that it would be reasonable for it
+to error out and ignore the error if git was missing or if the
+directory was not a repository. And, I _thought_ I had prefixed the
+line with "-" to handle just such a case, but apparently I botched it.
+Oh well.
