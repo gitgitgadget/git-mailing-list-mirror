@@ -2,88 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 579421F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 17:51:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 143111F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 17:51:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727668AbeIQXTf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 19:19:35 -0400
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:38804 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727052AbeIQXTf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 19:19:35 -0400
-Received: by mail-ed1-f53.google.com with SMTP id h33-v6so13637496edb.5
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 10:51:10 -0700 (PDT)
+        id S1728204AbeIQXUD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 19:20:03 -0400
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:37028 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727052AbeIQXUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 19:20:02 -0400
+Received: by mail-wm1-f49.google.com with SMTP id n11-v6so10628061wmc.2
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 10:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=l4MvlDjeGOyxm0XCJZBkHewSRQ35e/zT+OUSq0joktI=;
-        b=PUR9/olaOrZsahV5AsmZ+oY2WDFYkillOnGoz+nC5hm7+hrQVG7x8M2B2+whMU5vbm
-         GyhkbwriPpg8iu3ICFPh/Td7KvXB5trFfkjobCallAPSaOoUSjgmmfNZ+rGkyiSOGlsr
-         Rf5lz5LPH1dtb4UyCl3lB5xrKoQEFa3jFoqD9Q9DGI5PiKjWUOX25vwwzjcRPDFvudd3
-         21d+1cy4IQpB4T/zvWTeK1YZ0l+aWEyz+IPjhHLWm5spEQYPY2i8pSb42w/PLMVaxmE+
-         U2CnGI2pfxbR4JI8E9BWVY5e5eDjcb3BTPjhHhjfeBk7tPwzm4EszRbSkR8ZCjFLzf3x
-         rTxw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=NcHVzUyjJT1VnUOOyn9qA1hWsT6eBqcsGfe1nIsftoQ=;
+        b=cW1QJMpiA3BPIENYj0IkITTQtsoEy+DX0yy/23b+rhSPWAUjttBTrqKWnGFtOanJ0x
+         kfk2nhF2xzzfbmevEHxfwaZWT94612BMEgoZj8wLOEhII31FkkiGH5APNJXB8XGGw40k
+         IYvt/jlxm4ZLpPvybpd50OER5wxwyJ8Nv/Ayg9GV2ncQeHfdmrpLUE/I0QwGOzJJBal5
+         APi+c1p+r68xO7VLLBQu8QvCMCrnd6exCyFx8Kb7DlpZ623V2vnBoxfuAmbiAlQXt/5K
+         HrGvF7hHvVdf/eTHHUv+/P2fynwXpba8o2sQaj+249sxvg0NRNxL4z6R+38yFK1Xz2FE
+         4EmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=l4MvlDjeGOyxm0XCJZBkHewSRQ35e/zT+OUSq0joktI=;
-        b=XIlnt/+NUk8HyR0iS7fMlgNPSb8LvoNAFflBEkmPV2giwnQqly4g4L4iH3Guxo3BzD
-         44Q4GxTy2QvoXPtjvVjbd/E/a8MFHP/bfBsIj1DmHjKJYrAHndkMsOzxj58fZOaQYq9B
-         Xs4Mgej9xGRTP2U9rmVTdB2fxSdSt/QpFehPDEwu+eTMT1HqSJwZQ0DJHnR5QQ84sSX5
-         mTsGcM+j3fb21Z4auOFF4q4U+P+BKWYlPaFcW4XtPQQUf3uqu4IS0d28L9ENu+x1biKa
-         Y/yxT8AHzABn4r1Tzl9UrZ8Yle3PndEz8Q/LM6MNZ48veirlwgvysGVvmMrimzgiEU3I
-         bn6w==
-X-Gm-Message-State: APzg51Bbzql2I0lvfyRYUFh0vfP1s+ye4W+6knyLXbtO8jsbw9Qwfv1y
-        2GwpSIdoi0zdX5K52Eg76ecsYFLYJeo=
-X-Google-Smtp-Source: ANB0VdbkyeeQkQcQ42Vx/J58KJhLvpHBmenHj8CA/R1xlCNbYAESj3RiBVPWRqjuzI8LYV4xngMgdA==
-X-Received: by 2002:a50:984b:: with SMTP id h11-v6mr23341787edb.26.1537206670040;
-        Mon, 17 Sep 2018 10:51:10 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id i19-v6sm7212756edg.64.2018.09.17.10.51.08
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=NcHVzUyjJT1VnUOOyn9qA1hWsT6eBqcsGfe1nIsftoQ=;
+        b=R7b2GCGrOCcEqQ0VGNlcp9bZINIlw51pGVRIciH0RmfbLT73okDTwStuzhfeFYjNLV
+         fRyRTm9CPiu/T9bc1vUXmA7S0kZ1hvFhOtRWAMh0ubs6/5N1Mv5WBYQWt7XtANSfwrZ7
+         qmSkn5EFz8wvVcyEaWXF2BSvZnD8qDEDA4EavIWaWQEHVBTIISh29EH3Tm2hr5GWMQDO
+         cAVrQZLfbNI6kPgJh98wA5hrWW/PxSRz0Kmh2188u0Q6RArV0nhIhvyegI+cFZdpuvbE
+         8RxSmk9lseQTE1R6v7FXpe7KYAt1PeeKQmwPT6QcvZGMSMTVha6AADed+cQZIDwK6cCT
+         pCCw==
+X-Gm-Message-State: APzg51BnwhpVr8AgmyRxdDM7YzxDhd/nRaWPWOR1cDUtMLnRDJxHLS3j
+        vKXV5m6+p6UTbuFgaouWLR4=
+X-Google-Smtp-Source: ANB0VdYNlwukmCgMtvE4imOtrS3WaaIhuy78SynhpwmEe8s3v0U3Ed2qi9icJ2IuAcv+kJIoFCgHaQ==
+X-Received: by 2002:a1c:e0d7:: with SMTP id x206-v6mr12713843wmg.74.1537206696195;
+        Mon, 17 Sep 2018 10:51:36 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l12-v6sm13793275wrv.29.2018.09.17.10.51.35
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 10:51:08 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Brandon Williams <bmwill@google.com>
-Cc:     Stefan Beller <sbeller@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Brandon Williams's E-Mail bouncing
-References: <20180917015259.GA26339@sebastianaudet.com> <CACsJy8CAyXAaax8dSPUUzTFvpKVG19FDives3JthL4hBxgf=6A@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CACsJy8CAyXAaax8dSPUUzTFvpKVG19FDives3JthL4hBxgf=6A@mail.gmail.com>
-Date:   Mon, 17 Sep 2018 19:51:07 +0200
-Message-ID: <87zhwgj9mc.fsf@evledraar.gmail.com>
+        Mon, 17 Sep 2018 10:51:35 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
+References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8DXT8rF_WYE3C0ak7E8_8j=kRS+Yhi1pZjKd5Rr4OsM_A@mail.gmail.com>
+        <20180917023912.GC22024@sigill.intra.peff.net>
+Date:   Mon, 17 Sep 2018 10:51:35 -0700
+In-Reply-To: <20180917023912.GC22024@sigill.intra.peff.net> (Jeff King's
+        message of "Sun, 16 Sep 2018 22:39:13 -0400")
+Message-ID: <xmqqo9cw6mhk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-[Sorry about the double send in private, forgot to CC the list]
+>> >  What's the donness of this one?
+>> >  cf. <20180717201348.GD26218@sigill.intra.peff.net>
+>> 
+>> This topic has stayed in 'pu' for a long time. I thought it was
+>> concluded that this was a good change? Jeff, Jonathan?
+>
+> I read over the thread again. I don't think I actually have any
+> complaints about the patches as-is. There was some discussion from Junio
+> and Ævar about the third one. I don't have a strong opinion. My
+> experience has been that "gc --auto" is garbage anyway on the server
+> side, but I think Ævar's experience is that it's reasonable for small to
+> medium sites (which seems plausible to me).
+>
+> The message-id quoted there is my "this looks good". I mentioned a few
+> possible nits, but I think it would be OK with or without them
+> addressed.
 
-On Mon, Sep 17 2018, Duy Nguyen wrote:
+That matches my reading of your position.  I tend to agree with
+Ævar's recommendation to postpone 3/3 and use 1 & 2 for now.
 
-> Brandon, b0db704652[...]
+By the way, people shouldn't read too much into the messages
+referred to in "What's cooking"; they are not "these messages point
+out all the issues that block the topic".  It's just "I am aware of
+this thread, which readers would hopefully find a good starting
+point to form their opinions".
 
-I noticed a few days ago that CC's to bmwill@google.com bounce. Has he
-left Google, and if so is he still interested in being CC'd on Git stuff
-(maybe he'll chime in), or not interested?
+Thanks.
 
-Aside from that particular address bouncing (or not, maybe Google's MX
-just dislikes me), it would be nice if git
-{format-patch,send-email,check-contacts} & the .mailmap format would
-support and understand some way to map addresses to
-e.g. noreply@example.com, and prune them out appropriately. We have a
-lot of addresses from past authors which bounce, and where no current
-contact address is known.
