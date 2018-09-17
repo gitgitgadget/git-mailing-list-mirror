@@ -6,23 +6,23 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 288061F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 14:09:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F8321F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 14:09:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728741AbeIQThT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 15:37:19 -0400
-Received: from ao2.it ([92.243.12.208]:50083 "EHLO ao2.it"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727881AbeIQThS (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1728737AbeIQThS (ORCPT <rfc822;e@80x24.org>);
         Mon, 17 Sep 2018 15:37:18 -0400
+Received: from ao2.it ([92.243.12.208]:50073 "EHLO ao2.it"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728729AbeIQThR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 15:37:17 -0400
 Received: from localhost ([::1] helo=jcn)
         by ao2.it with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <ao2@ao2.it>)
-        id 1g1uBX-0001bb-PD; Mon, 17 Sep 2018 16:07:31 +0200
+        id 1g1uBX-0001bS-4V; Mon, 17 Sep 2018 16:07:31 +0200
 Received: from ao2 by jcn with local (Exim 4.91)
         (envelope-from <ao2@ao2.it>)
-        id 1g1uDg-000116-Sx; Mon, 17 Sep 2018 16:09:44 +0200
+        id 1g1uDg-00010n-6P; Mon, 17 Sep 2018 16:09:44 +0200
 From:   Antonio Ospite <ao2@ao2.it>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
@@ -32,188 +32,127 @@ Cc:     git@vger.kernel.org, Brandon Williams <bmwill@google.com>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>, Antonio Ospite <ao2@ao2.it>
-Subject: [PATCH v5 8/9] submodule: add a helper to check if it is safe to write to .gitmodules
-Date:   Mon, 17 Sep 2018 16:09:39 +0200
-Message-Id: <20180917140940.3839-9-ao2@ao2.it>
+Subject: [PATCH v5 0/9] Make submodules work if .gitmodules is not checked out
+Date:   Mon, 17 Sep 2018 16:09:31 +0200
+Message-Id: <20180917140940.3839-1-ao2@ao2.it>
 X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20180917140940.3839-1-ao2@ao2.it>
-References: <20180917140940.3839-1-ao2@ao2.it>
 MIME-Version: 1.0
 X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Introduce a helper function named is_writing_gitmodules_ok() to verify
-that the .gitmodules file is safe to write.
+Hi,
 
-The function name follows the scheme of is_staging_gitmodules_ok().
+this series teaches git to try and read the .gitmodules file from the
+index (:.gitmodules) or from the current branch (HEAD:.gitmodules) when
+the file is not readily available in the working tree.
 
-The two symbolic constants GITMODULES_INDEX and GITMODULES_HEAD are used
-to get help from the C preprocessor in preventing typos, especially for
-future users.
+This can be used, together with sparse checkouts, to enable submodule
+usage with programs like vcsh[1] which manage multiple repositories with
+their working trees sharing the same path.
 
-This is in preparation for a future change which teaches git how to read
-.gitmodules from the index or from the current branch if the file is not
-available in the working tree.
+[1] https://github.com/RichiH/vcsh
 
-The rationale behind the check is that writing to .gitmodules requires
-the file to be present in the working tree, unless a brand new
-.gitmodules is being created (in which case the .gitmodules file would
-not exist at all: neither in the working tree nor in the index or in the
-current branch).
 
-Expose the functionality also via a "submodule-helper config
---check-writeable" command, as git scripts may want to perform the check
-before modifying submodules configuration.
+v4 of the series is here:
+https://public-inbox.org/git/20180824132951.8000-1-ao2@ao2.it/
 
-Signed-off-by: Antonio Ospite <ao2@ao2.it>
----
- builtin/submodule--helper.c | 24 +++++++++++++++++++++++-
- cache.h                     |  2 ++
- submodule.c                 | 18 ++++++++++++++++++
- submodule.h                 |  1 +
- t/t7411-submodule-config.sh | 31 +++++++++++++++++++++++++++++++
- 5 files changed, 75 insertions(+), 1 deletion(-)
+v3 of the series is here:
+https://public-inbox.org/git/20180814110525.17801-1-ao2@ao2.it/
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 80f939cd9e..bd14f57d00 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -2005,6 +2005,28 @@ static int check_name(int argc, const char **argv, const char *prefix)
- 
- static int module_config(int argc, const char **argv, const char *prefix)
- {
-+	enum {
-+		CHECK_WRITEABLE = 1
-+	} command = 0;
-+
-+	struct option module_config_options[] = {
-+		OPT_CMDMODE(0, "check-writeable", &command,
-+			    N_("check if it is safe to write to the .gitmodules file"),
-+			    CHECK_WRITEABLE),
-+		OPT_END()
-+	};
-+	const char *const git_submodule_helper_usage[] = {
-+		N_("git submodule--helper config name [value]"),
-+		N_("git submodule--helper config --check-writeable"),
-+		NULL
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, module_config_options,
-+			     git_submodule_helper_usage, PARSE_OPT_KEEP_ARGV0);
-+
-+	if (argc == 1 && command == CHECK_WRITEABLE)
-+		return is_writing_gitmodules_ok() ? 0 : -1;
-+
- 	/* Equivalent to ACTION_GET in builtin/config.c */
- 	if (argc == 2)
- 		return print_config_from_gitmodules(argv[1]);
-@@ -2013,7 +2035,7 @@ static int module_config(int argc, const char **argv, const char *prefix)
- 	if (argc == 3)
- 		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
- 
--	die("submodule--helper config takes 1 or 2 arguments: name [value]");
-+	usage_with_options(git_submodule_helper_usage, module_config_options);
- }
- 
- #define SUPPORT_SUPER_PREFIX (1<<0)
-diff --git a/cache.h b/cache.h
-index 4d014541ab..33723d2a32 100644
---- a/cache.h
-+++ b/cache.h
-@@ -486,6 +486,8 @@ static inline enum object_type object_type(unsigned int mode)
- #define INFOATTRIBUTES_FILE "info/attributes"
- #define ATTRIBUTE_MACRO_PREFIX "[attr]"
- #define GITMODULES_FILE ".gitmodules"
-+#define GITMODULES_INDEX ":.gitmodules"
-+#define GITMODULES_HEAD "HEAD:.gitmodules"
- #define GIT_NOTES_REF_ENVIRONMENT "GIT_NOTES_REF"
- #define GIT_NOTES_DEFAULT_REF "refs/notes/commits"
- #define GIT_NOTES_DISPLAY_REF_ENVIRONMENT "GIT_NOTES_DISPLAY_REF"
-diff --git a/submodule.c b/submodule.c
-index 2e97032f86..2b7082b2db 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -50,6 +50,24 @@ int is_gitmodules_unmerged(const struct index_state *istate)
- 	return 0;
- }
- 
-+/*
-+ * Check if the .gitmodules file is safe to write.
-+ *
-+ * Writing to the .gitmodules file requires that the file exists in the
-+ * working tree or, if it doesn't, that a brand new .gitmodules file is going
-+ * to be created (i.e. it's neither in the index nor in the current branch).
-+ *
-+ * It is not safe to write to .gitmodules if it's not in the working tree but
-+ * it is in the index or in the current branch, because writing new values
-+ * (and staging them) would blindly overwrite ALL the old content.
-+ */
-+int is_writing_gitmodules_ok(void)
-+{
-+	struct object_id oid;
-+	return file_exists(GITMODULES_FILE) ||
-+		(get_oid(GITMODULES_INDEX, &oid) < 0 && get_oid(GITMODULES_HEAD, &oid) < 0);
-+}
-+
- /*
-  * Check if the .gitmodules file has unstaged modifications.  This must be
-  * checked before allowing modifications to the .gitmodules file with the
-diff --git a/submodule.h b/submodule.h
-index e452919aa4..7a22f71cb9 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -40,6 +40,7 @@ struct submodule_update_strategy {
- #define SUBMODULE_UPDATE_STRATEGY_INIT {SM_UPDATE_UNSPECIFIED, NULL}
- 
- int is_gitmodules_unmerged(const struct index_state *istate);
-+int is_writing_gitmodules_ok(void);
- int is_staging_gitmodules_ok(struct index_state *istate);
- int update_path_in_gitmodules(const char *oldpath, const char *newpath);
- int remove_path_from_gitmodules(const char *path);
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index 791245f18d..45953f9300 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -161,4 +161,35 @@ test_expect_success 'overwriting unstaged submodules config with "submodule--hel
- 	)
- '
- 
-+test_expect_success 'writeable .gitmodules when it is in the working tree' '
-+	git -C super submodule--helper config --check-writeable
-+'
-+
-+test_expect_success 'writeable .gitmodules when it is nowhere in the repository' '
-+	ORIG=$(git -C super rev-parse HEAD) &&
-+	test_when_finished "git -C super reset --hard $ORIG" &&
-+	(cd super &&
-+		git rm .gitmodules &&
-+		git commit -m "remove .gitmodules from the current branch" &&
-+		git submodule--helper config --check-writeable
-+	)
-+'
-+
-+test_expect_success 'non-writeable .gitmodules when it is in the index but not in the working tree' '
-+	test_when_finished "git -C super checkout .gitmodules" &&
-+	(cd super &&
-+		rm -f .gitmodules &&
-+		test_must_fail git submodule--helper config --check-writeable
-+	)
-+'
-+
-+test_expect_success 'non-writeable .gitmodules when it is in the current branch but not in the index' '
-+	ORIG=$(git -C super rev-parse HEAD) &&
-+	test_when_finished "git -C super reset --hard $ORIG" &&
-+	(cd super &&
-+		git rm .gitmodules &&
-+		test_must_fail git submodule--helper config --check-writeable
-+	)
-+'
-+
- test_done
+v2 of the series is here:
+https://public-inbox.org/git/20180802134634.10300-1-ao2@ao2.it/
+
+v1 of the series, with some background info, is here:
+https://public-inbox.org/git/20180514105823.8378-1-ao2@ao2.it/
+
+v5 only contains some small cosmetic fixes suggested by Ævar Arnfjörð
+Bjarmason, I ignored the comment about the memory leak in patch
+1 because I think there is no leak in how git_config_parse_key is used:
+https://public-inbox.org/git/87wosfesxl.fsf@evledraar.gmail.com/
+
+Changes since v4:
+
+  * Improve names of local variables in patch 1.
+
+  * Move new functions definitions in patches 1 and 2 before
+    a pre-existing comment instead of after it, as the comment does not
+    apply to the new functions.
+
+I am repeating the previous changelog below for your convenience, as v3
+is what is currently in pu/ao/submodule-wo-gitmodules-checked-out.
+
+Changes between v3 and v4:
+
+  * Improve robustness of current tests in t7411-submodule-config.sh:
+      - merge two tests that check for effects of the same commit.
+      - reset to a well defined point in history when exiting the tests.
+
+  * Fix style issues in new tests added to t7411-submodule-config.sh:
+      - use test_when_finished in new tests.
+      - name the output file 'expect' instead of 'expected'.
+
+  * Add a new "submodule--helper config --check-writeable" command.
+
+  * Use "s--h config --check-wrteable" in git-submodule.sh to share the
+    code with the C implementation instead of duplicating the safety
+    check in shell script.
+
+  * Add the ability to read .gitmodules from the index and then
+    fall-back to the current branch if the file is not in the index.
+    Add also more tests to validate all the possible scenarios.
+
+  * Fix style issues in t7416-submodule-sparse-gitmodules.sh:
+      - name the output file 'expect' instead of 'expected'.
+      - remove white space after the redirection operator.
+      - indent the HEREDOC block.
+      - use "git -C super" instead of a subshell when there is only one
+        command in the test.
+
+  * Remove a stale file named 'new' which erroneously slipped in
+    a commit.
+
+  * Update some comments and commit messages.
+
+
+Thank you,
+   Antonio
+
+
+Antonio Ospite (9):
+  submodule: add a print_config_from_gitmodules() helper
+  submodule: factor out a config_set_in_gitmodules_file_gently function
+  t7411: merge tests 5 and 6
+  t7411: be nicer to future tests and really clean things up
+  submodule--helper: add a new 'config' subcommand
+  submodule: use the 'submodule--helper config' command
+  t7506: clean up .gitmodules properly before setting up new scenario
+  submodule: add a helper to check if it is safe to write to .gitmodules
+  submodule: support reading .gitmodules when it's not in the working
+    tree
+
+ builtin/submodule--helper.c            |  40 +++++++++
+ cache.h                                |   2 +
+ git-submodule.sh                       |  13 ++-
+ submodule-config.c                     |  55 ++++++++++++-
+ submodule-config.h                     |   2 +
+ submodule.c                            |  28 +++++--
+ submodule.h                            |   1 +
+ t/t7411-submodule-config.sh            | 107 +++++++++++++++++++++----
+ t/t7416-submodule-sparse-gitmodules.sh |  78 ++++++++++++++++++
+ t/t7506-status-submodule.sh            |   3 +-
+ 10 files changed, 300 insertions(+), 29 deletions(-)
+ create mode 100755 t/t7416-submodule-sparse-gitmodules.sh
+
 -- 
-2.19.0
+Antonio Ospite
+https://ao2.it
+https://twitter.com/ao2it
 
+A: Because it messes up the order in which people normally read text.
+   See http://en.wikipedia.org/wiki/Posting_style
+Q: Why is top-posting such a bad thing?
