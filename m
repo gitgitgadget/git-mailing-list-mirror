@@ -2,108 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 634D31F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 01:53:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F09BC1F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 02:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727036AbeIQHSa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 03:18:30 -0400
-Received: from mail-pl1-f169.google.com ([209.85.214.169]:34533 "EHLO
-        mail-pl1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbeIQHSa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 03:18:30 -0400
-Received: by mail-pl1-f169.google.com with SMTP id f6-v6so6641462plo.1
-        for <git@vger.kernel.org>; Sun, 16 Sep 2018 18:53:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=YG1aFL8bAt5xyiu39zfKLIoa7YxI1G7TefxtN2o8c7Q=;
-        b=WBPBz4RK28Y7K4ReNO1/yIqtU8xXF6BuVKgXpjkaQKPzHrYllM7SiPrUIVmK8oWsrf
-         BABCMiUMYbJ4TX+vMnKZlAPVIO+F7G/HfHJcAsbf/pvd6wWdUJaH0quuKsnFAloz7v+t
-         mHfIazYHICzJT4C+2pRG/mCEkV6GbjCz0UJxOIyJpOAHUr7e1LNO7raCP/YX/CuCqHGj
-         i62N9muiheBhrfvpzfXa2srV59VZ5qNG7tiRN6FuO86fYMZ/dcU8s1RQ3g0szU+qzgZL
-         ab2t2FvhppOXOBjrxD6AXIy3lKXUkCp6py1GI5jnP7J79qv6j4IDdRKXV5h5VYlJ/htp
-         pY8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=YG1aFL8bAt5xyiu39zfKLIoa7YxI1G7TefxtN2o8c7Q=;
-        b=Sk7bnD3eVS59L2vdPSmaUX6rBIDXKaGCecjJwZC5maaG/U2RJ8d/M9NmRiHEfuHndf
-         6KB+1+zU0oPPHGFJptBrJQ5pisC+yw9A3xKEGzozrOt5iz5Ke1DPYNzJ3xU+9y2OG+so
-         HcKqrydl7nzljj11fiVbDO2OIZl3mEfTFOfSvL+XhsS1zCYjlrsdwNiruoZBSBF0PCA7
-         j5oXnK0hADJHrgjjym4BoTNBvEFUv7XdyVIMAUVa7xMxXT5C8W+sKyJDPv8jV89cKXcA
-         wUVGVlx3AOvs6w4QNipLRiSTzOELIPloN2sRLglXIXVp/kvaqOvyUUaxofvPWfpgM0Tb
-         QT3Q==
-X-Gm-Message-State: APzg51CoqwOYvG0aNicOvU/bdPJOVQIRrGC5Qsppk+PTR3LkSAu879cN
-        JbiKfV7h2Mw4ezAy6kFRe2k=
-X-Google-Smtp-Source: ANB0VdYSxFd53yId0J+ilgNSOyxt2EfMzz6NU3cH/XTMywfP1q0hKbrgfWmJCRgSPnZqmrK9eBqP8A==
-X-Received: by 2002:a17:902:ac97:: with SMTP id h23-v6mr18392845plr.174.1537149207026;
-        Sun, 16 Sep 2018 18:53:27 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id o10-v6sm13912289pgp.70.2018.09.16.18.53.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 Sep 2018 18:53:26 -0700 (PDT)
-Date:   Sun, 16 Sep 2018 18:53:24 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Chris Coutinho <chrisbcoutinho@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Question - no space in smtp-server-option
-Message-ID: <20180917015324.GE154643@aiede.svl.corp.google.com>
-References: <20180917010244.btmlczam5m75rmto@tumbleweed>
- <20180917011657.GD154643@aiede.svl.corp.google.com>
- <20180917012721.akyclbcmeqw5dv3x@tumbleweed>
+        id S1727147AbeIQIEY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 04:04:24 -0400
+Received: from cloud.peff.net ([104.130.231.41]:50496 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727089AbeIQIEY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 04:04:24 -0400
+Received: (qmail 13985 invoked by uid 109); 17 Sep 2018 02:39:15 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 17 Sep 2018 02:39:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 700 invoked by uid 111); 17 Sep 2018 02:39:29 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sun, 16 Sep 2018 22:39:29 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 16 Sep 2018 22:39:13 -0400
+Date:   Sun, 16 Sep 2018 22:39:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
+Message-ID: <20180917023912.GC22024@sigill.intra.peff.net>
+References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8DXT8rF_WYE3C0ak7E8_8j=kRS+Yhi1pZjKd5Rr4OsM_A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20180917012721.akyclbcmeqw5dv3x@tumbleweed>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8DXT8rF_WYE3C0ak7E8_8j=kRS+Yhi1pZjKd5Rr4OsM_A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 03:27:21AM +0200, Chris Coutinho wrote:
-> On Sep-16-18, Jonathan Nieder wrote:
->> Chris Coutinho wrote:
+On Sun, Sep 16, 2018 at 08:39:03AM +0200, Duy Nguyen wrote:
 
->>> Currently my gitconfig contains the following line:
->>>
->>> 	sendemail.smtpserveroption=-a<myaccount>
->>>
->>> Whereas, the following results in an 'account' not found error:
->>>
->>> 	sendemail.smtpserveroption=-a <myaccount>
->>
->> Do you mean that your ~/.gitconfig literally contains that exact line?
-[...]
-> Yes that's the exact line in my gitconfig file, which correctly mails using
-> the non-default account I'm after - I'm assuming you're noticing the lack of
-> camelCase? To be honest, that came from zsh autosuggestions, which are all
-> lower-case for some reason.
+> On Fri, Sep 14, 2018 at 11:56 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > * jn/gc-auto (2018-07-17) 3 commits
+> >  - gc: do not return error for prior errors in daemonized mode
+> >  - gc: exit with status 128 on failure
+> >  - gc: improve handling of errors reading gc.log
+> >
+> >  "gc --auto" ended up calling exit(-1) upon error, which has been
+> >  corrected to use exit(1).  Also the error reporting behaviour when
+> >  daemonized has been updated to exit with zero status when stopping
+> >  due to a previously discovered error (which implies there is no
+> >  point running gc to improve the situation); we used to exit with
+> >  failure in such a case.
+> >
+> >  What's the donness of this one?
+> >  cf. <20180717201348.GD26218@sigill.intra.peff.net>
+> 
+> This topic has stayed in 'pu' for a long time. I thought it was
+> concluded that this was a good change? Jeff, Jonathan?
 
-No, case shouldn't matter.  I'm noticing the it looks like
+I read over the thread again. I don't think I actually have any
+complaints about the patches as-is. There was some discussion from Junio
+and Ævar about the third one. I don't have a strong opinion. My
+experience has been that "gc --auto" is garbage anyway on the server
+side, but I think Ævar's experience is that it's reasonable for small to
+medium sites (which seems plausible to me).
 
-	foo.bar=baz
+The message-id quoted there is my "this looks good". I mentioned a few
+possible nits, but I think it would be OK with or without them
+addressed.
 
-instead of
-
-	[foo]
-		bar = baz
-
-(i.e. it seems to be some syntax other than ini syntax).  E.g. I tried
-
-	echo a.b=c >test.config
-	git config -f test.config -l
-
-and get
-
-	fatal: bad config line 1 in file test.config
-
-Thanks,
-Jonathan
+-Peff
