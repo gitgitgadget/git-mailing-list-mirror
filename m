@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA211F42B
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD1AA1F42B
 	for <e@80x24.org>; Mon, 17 Sep 2018 22:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728677AbeIRDyd (ORCPT <rfc822;e@80x24.org>);
+        id S1728682AbeIRDyd (ORCPT <rfc822;e@80x24.org>);
         Mon, 17 Sep 2018 23:54:33 -0400
-Received: from mail-ua1-f74.google.com ([209.85.222.74]:47986 "EHLO
-        mail-ua1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728438AbeIRDyc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 23:54:32 -0400
-Received: by mail-ua1-f74.google.com with SMTP id g19-v6so5904674uan.14
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 15:25:13 -0700 (PDT)
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:47375 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728438AbeIRDyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 23:54:33 -0400
+Received: by mail-pl1-f201.google.com with SMTP id d40-v6so8324199pla.14
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 15:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=qC8z1L993w1MevIk8Bgp+xXJHZ9u57pnwL0wgmtZq3A=;
-        b=UicX1Yv/2x9ihBuPRXDPUqT5Pv3WeyyXnXIOqKcO54T8hvJcyOY5uDkWfGW1QphNR/
-         0FJSeBz7vYQosC1+Qa5w3UoECb5gZaEpcctcRDBKZ8qfHiHWW5lg9PfYX8iANg4CUC1K
-         dzhIZUY3p0JoIDS2czT8D6TQfdQxoQRPFe3NRTIaDvNtrsepn0hrFeA58foh/SnTWQys
-         kl5r2guFvRjDRsUDyG17nONPOGXAfCjjH9hkXvm1DSMQ0p9pYuAp4yFX3BpAMUjsKdms
-         YxbXvSWNbSWeJ2rfwk+2vgGK776L+XG9AmzBB1E5UZxnd3oil1Ts1Wc0rUi+RUionznx
-         lJrw==
+        bh=WgK5LSuJhzNilwH/VUSjurYLUVWcGSsPrI2+29Jmvz4=;
+        b=U9Y3rVBTwvkkjEBm+1ibF2vjFBtq/3lQpVQq6j2HlynmcbDd9/tRJ+iGqe8Xgvns5n
+         DTvRQsxdorZLP8bY350c4K2v/f1G13TWebBcJKlmTUJw7C8s3dCx+CSI3NsQaYo0jxHd
+         YK9if3B+6ZP3N4Atq1ykjS5JSChevVIFStWDSNj6+fKTSDGglNvIEWXDR+pqFpQBFuqj
+         eKAsC5vzjzU+0Sd6MrTuCQ8S2wXwDGm0Qlz1yfJfCVu1arNBf/7raY0ONIIZIqrqLaV4
+         PAEwST33s9wGEDvpmUeUMut2Bf+sW+deIZ5Q8KvbSRUFsMFpj/uxHSFjCX7dMJa0TksR
+         y0ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=qC8z1L993w1MevIk8Bgp+xXJHZ9u57pnwL0wgmtZq3A=;
-        b=YxpQp1cvAJTs1ekOHyPvXksenZ6shD6pROMy1XVJ1szeL4k9qB0AsO1tlGNEoFXz4F
-         1v2+CItfboc6zeQmaDiwE/HUddlh0XfmNZvbIakkjbIi2ujUxtsw1W0KClkF7Mi0VwCN
-         g6tLOD2e4BbLQaa+nuMYrSJvc/C0sOlxU1K6bReGCa8ETQ6TATWCwmntN+SE9ttEu7gY
-         OTUo429CfjbX4vbaiVXejYxAF0YHwCSqTg0NjVDeuq2Fl/tePREzBMfH+wK1ORoMTrRE
-         4QiHvM/KlLUejC5ofx4q4jgaBpihk/GyNAGZHVlobOFWrZ+Kzlkazr9niMxDX0Y2uO7g
-         J6hg==
-X-Gm-Message-State: APzg51Ahyd5S5leI6ccph+UfZzI0cubr24jag/PDn+97mgK/IW2ik2ZY
-        8IwiKdFMInzDkd5iPTuqgj4EtDlGzMVIwewffY3n6ElbCGxFfToJBjasyP7j2SqQRC1dq/XIIKt
-        VXDe2tpoY2pbWnN+9ZpWcCSLwasLpUDvhYMObpux2Cw3iCxbDUTQsQcWp/S8=
-X-Google-Smtp-Source: ANB0VdY7Jh9wBWyYOfQpadD/QkMNX/ZrqFDi5zf+k0/RDCRyeIrvb9k7ZvCo5xzlYlUlOJ2qhnc0pVeLkbG4
-X-Received: by 2002:a67:4d92:: with SMTP id i18-v6mr5634896vsg.49.1537223112808;
- Mon, 17 Sep 2018 15:25:12 -0700 (PDT)
-Date:   Mon, 17 Sep 2018 15:24:22 -0700
+        bh=WgK5LSuJhzNilwH/VUSjurYLUVWcGSsPrI2+29Jmvz4=;
+        b=fnepvQlprqFgqVsNP7IdyZVPB11BsaBBEB1mwtltDm2ITIDRlTxYeb/uOZVkzGFmKh
+         lnCvgqVuQnO//bn6QW7QPQyBa9VK5KJhEOUjxScjJdPW0lw5vUM3VdKmY1GCl4KZZRn/
+         Q+7Rg3x+hJHs5tDAodH9r3HNf/Vi5oHvrnjlVa1J1v383YErfwcJzgXWrzDePOtPfLrG
+         P6l5oUlTA3R/kOK09gH68oA5TR5Tq+MWWb492bMKjUyVeWgtYR4L20y/UmnDkV76kUNN
+         uy7TrMCsJC1N1kAWylG0kuizWqE+5xBa4WnkgplcJeFqQ6nJoKSuU365DWVcm/RK4oAl
+         MpkA==
+X-Gm-Message-State: APzg51AbUsysMpPmjhBTQL4RzNxmhgpPPNMXMhMzbmM43VPqW1eyZbqf
+        J+RwDmgksoB9i3FFcETCAV2rATKKAoF0sb3YAViUxrnR2ho6ywKEmQD78meDD/mPVCYApThamtz
+        opST2PVQS11LhieshpSxKXyyck6Kug6c+511PEKV8vVhVrpqLyAP6h+jUfv8=
+X-Google-Smtp-Source: ANB0VdZFSBZ05saEKc1Ow90vGb3dh5IYgqG6QB3iV0gjJ5bHPs+UIsouDDD0S+W7ujTI/dIdg4Smz+jh+yKj
+X-Received: by 2002:a63:2a56:: with SMTP id q83-v6mr1081312pgq.12.1537223115016;
+ Mon, 17 Sep 2018 15:25:15 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 15:24:23 -0700
 In-Reply-To: <cover.1537223021.git.matvore@google.com>
-Message-Id: <12cc68aabf76e08f6214b21df786e61301c8f55e.1537223021.git.matvore@google.com>
+Message-Id: <e01b719de662f0b150f78b5a6ab6ccfce9c675fa.1537223021.git.matvore@google.com>
 Mime-Version: 1.0
 References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
 X-Mailer: git-send-email 2.19.0.444.g18242da7ef-goog
-Subject: [PATCH v2 5/6] tests: split up pipes
+Subject: [PATCH v2 6/6] t9109-git-svn-props.sh: split up several pipes
 From:   Matthew DeVore <matvore@google.com>
 To:     git@vger.kernel.org
 Cc:     Matthew DeVore <matvore@google.com>, peff@peff.net,
@@ -63,722 +63,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some pipes in tests lose the exit code of git processes, which can mask
-unexpected behavior. Split these pipes up so that git commands are at
-the end of pipes rather than the beginning or middle.
----
- t/t5317-pack-objects-filter-objects.sh | 156 +++++++++++++------------
- t/t5500-fetch-pack.sh                  |   6 +-
- t/t5616-partial-clone.sh               |  14 ++-
- t/t6112-rev-list-filters-objects.sh    | 103 ++++++++--------
- t/t9101-git-svn-props.sh               |   3 +-
- 5 files changed, 147 insertions(+), 135 deletions(-)
+A test uses several separate pipe sequences in a row which are awkward
+to split up. Wrap the split-up pipe in a function so the awkwardness is
+not repeated.
 
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects-filter-objects.sh
-index c093eb891..2e718f0bd 100755
---- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -20,8 +20,9 @@ test_expect_success 'setup r1' '
- '
- 
- test_expect_success 'verify blob count in normal packfile' '
--	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
--	awk -f print_2.awk |
-+	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r1 pack-objects --rev --stdout >all.pack <<-EOF &&
-@@ -29,8 +30,8 @@ test_expect_success 'verify blob count in normal packfile' '
- 	EOF
- 	git -C r1 index-pack ../all.pack &&
- 
--	git -C r1 verify-pack -v ../all.pack |
--	grep blob |
-+	git -C r1 verify-pack -v ../all.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -43,8 +44,8 @@ test_expect_success 'verify blob:none packfile has no blobs' '
- 	EOF
- 	git -C r1 index-pack ../filter.pack &&
- 
--	git -C r1 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r1 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -53,13 +54,13 @@ test_expect_success 'verify blob:none packfile has no blobs' '
- '
- 
- test_expect_success 'verify normal and blob:none packfiles have same commits/trees' '
--	git -C r1 verify-pack -v ../all.pack |
--	grep -E "commit|tree" |
-+	git -C r1 verify-pack -v ../all.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >expected &&
- 
--	git -C r1 verify-pack -v ../filter.pack |
--	grep -E "commit|tree" |
-+	git -C r1 verify-pack -v ../filter.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -82,8 +83,8 @@ test_expect_success 'setup r2' '
- '
- 
- test_expect_success 'verify blob count in normal packfile' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout >all.pack <<-EOF &&
-@@ -91,8 +92,8 @@ test_expect_success 'verify blob count in normal packfile' '
- 	EOF
- 	git -C r2 index-pack ../all.pack &&
- 
--	git -C r2 verify-pack -v ../all.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../all.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -105,8 +106,8 @@ test_expect_success 'verify blob:limit=500 omits all blobs' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -120,8 +121,8 @@ test_expect_success 'verify blob:limit=1000' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -130,8 +131,8 @@ test_expect_success 'verify blob:limit=1000' '
- '
- 
- test_expect_success 'verify blob:limit=1001' '
--	git -C r2 ls-files -s large.1000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout --filter=blob:limit=1001 >filter.pack <<-EOF &&
-@@ -139,8 +140,8 @@ test_expect_success 'verify blob:limit=1001' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -148,8 +149,8 @@ test_expect_success 'verify blob:limit=1001' '
- '
- 
- test_expect_success 'verify blob:limit=10001' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout --filter=blob:limit=10001 >filter.pack <<-EOF &&
-@@ -157,8 +158,8 @@ test_expect_success 'verify blob:limit=10001' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -166,8 +167,8 @@ test_expect_success 'verify blob:limit=10001' '
- '
- 
- test_expect_success 'verify blob:limit=1k' '
--	git -C r2 ls-files -s large.1000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout --filter=blob:limit=1k >filter.pack <<-EOF &&
-@@ -175,8 +176,8 @@ test_expect_success 'verify blob:limit=1k' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -184,8 +185,8 @@ test_expect_success 'verify blob:limit=1k' '
- '
- 
- test_expect_success 'verify explicitly specifying oversized blob in input' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout --filter=blob:limit=1k >filter.pack <<-EOF &&
-@@ -194,8 +195,8 @@ test_expect_success 'verify explicitly specifying oversized blob in input' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -203,8 +204,8 @@ test_expect_success 'verify explicitly specifying oversized blob in input' '
- '
- 
- test_expect_success 'verify blob:limit=1m' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r2 pack-objects --rev --stdout --filter=blob:limit=1m >filter.pack <<-EOF &&
-@@ -212,8 +213,8 @@ test_expect_success 'verify blob:limit=1m' '
- 	EOF
- 	git -C r2 index-pack ../filter.pack &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -221,13 +222,13 @@ test_expect_success 'verify blob:limit=1m' '
- '
- 
- test_expect_success 'verify normal and blob:limit packfiles have same commits/trees' '
--	git -C r2 verify-pack -v ../all.pack |
--	grep -E "commit|tree" |
-+	git -C r2 verify-pack -v ../all.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >expected &&
- 
--	git -C r2 verify-pack -v ../filter.pack |
--	grep -E "commit|tree" |
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -255,8 +256,9 @@ test_expect_success 'setup r3' '
- '
- 
- test_expect_success 'verify blob count in normal packfile' '
--	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r3 pack-objects --rev --stdout >all.pack <<-EOF &&
-@@ -264,8 +266,8 @@ test_expect_success 'verify blob count in normal packfile' '
- 	EOF
- 	git -C r3 index-pack ../all.pack &&
- 
--	git -C r3 verify-pack -v ../all.pack |
--	grep blob |
-+	git -C r3 verify-pack -v ../all.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -273,8 +275,8 @@ test_expect_success 'verify blob count in normal packfile' '
- '
- 
- test_expect_success 'verify sparse:path=pattern1' '
--	git -C r3 ls-files -s dir1/sparse1 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r3 pack-objects --rev --stdout --filter=sparse:path=../pattern1 >filter.pack <<-EOF &&
-@@ -282,8 +284,8 @@ test_expect_success 'verify sparse:path=pattern1' '
- 	EOF
- 	git -C r3 index-pack ../filter.pack &&
- 
--	git -C r3 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r3 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -291,13 +293,13 @@ test_expect_success 'verify sparse:path=pattern1' '
- '
- 
- test_expect_success 'verify normal and sparse:path=pattern1 packfiles have same commits/trees' '
--	git -C r3 verify-pack -v ../all.pack |
--	grep -E "commit|tree" |
-+	git -C r3 verify-pack -v ../all.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >expected &&
- 
--	git -C r3 verify-pack -v ../filter.pack |
--	grep -E "commit|tree" |
-+	git -C r3 verify-pack -v ../filter.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -305,8 +307,8 @@ test_expect_success 'verify normal and sparse:path=pattern1 packfiles have same
- '
- 
- test_expect_success 'verify sparse:path=pattern2' '
--	git -C r3 ls-files -s sparse1 dir1/sparse1 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s sparse1 dir1/sparse1 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r3 pack-objects --rev --stdout --filter=sparse:path=../pattern2 >filter.pack <<-EOF &&
-@@ -314,8 +316,8 @@ test_expect_success 'verify sparse:path=pattern2' '
- 	EOF
- 	git -C r3 index-pack ../filter.pack &&
- 
--	git -C r3 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r3 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -323,13 +325,13 @@ test_expect_success 'verify sparse:path=pattern2' '
- '
- 
- test_expect_success 'verify normal and sparse:path=pattern2 packfiles have same commits/trees' '
--	git -C r3 verify-pack -v ../all.pack |
--	grep -E "commit|tree" |
-+	git -C r3 verify-pack -v ../all.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >expected &&
- 
--	git -C r3 verify-pack -v ../filter.pack |
--	grep -E "commit|tree" |
-+	git -C r3 verify-pack -v ../filter.pack >verify_result &&
-+	grep -E "commit|tree" verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -356,8 +358,9 @@ test_expect_success 'setup r4' '
- '
- 
- test_expect_success 'verify blob count in normal packfile' '
--	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r4 pack-objects --rev --stdout >all.pack <<-EOF &&
-@@ -365,8 +368,8 @@ test_expect_success 'verify blob count in normal packfile' '
- 	EOF
- 	git -C r4 index-pack ../all.pack &&
- 
--	git -C r4 verify-pack -v ../all.pack |
--	grep blob |
-+	git -C r4 verify-pack -v ../all.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -374,8 +377,8 @@ test_expect_success 'verify blob count in normal packfile' '
- '
- 
- test_expect_success 'verify sparse:oid=OID' '
--	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	oid=$(git -C r4 ls-files -s pattern | awk -f print_2.awk) &&
-@@ -384,8 +387,8 @@ test_expect_success 'verify sparse:oid=OID' '
- 	EOF
- 	git -C r4 index-pack ../filter.pack &&
- 
--	git -C r4 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r4 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -393,8 +396,8 @@ test_expect_success 'verify sparse:oid=OID' '
- '
- 
- test_expect_success 'verify sparse:oid=oid-ish' '
--	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	git -C r4 pack-objects --rev --stdout --filter=sparse:oid=master:pattern >filter.pack <<-EOF &&
-@@ -402,8 +405,8 @@ test_expect_success 'verify sparse:oid=oid-ish' '
- 	EOF
- 	git -C r4 index-pack ../filter.pack &&
- 
--	git -C r4 verify-pack -v ../filter.pack |
--	grep blob |
-+	git -C r4 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
- 	awk -f print_1.awk |
- 	sort >observed &&
- 
-@@ -414,8 +417,9 @@ test_expect_success 'verify sparse:oid=oid-ish' '
- # This models previously omitted objects that we did not receive.
- 
- test_expect_success 'setup r1 - delete loose blobs' '
--	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
--	awk -f print_2.awk |
-+	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	for id in `cat expected | sed "s|..|&/|"`
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 5ac6f286d..086f2c40f 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -51,8 +51,10 @@ pull_to_client () {
- 			    git update-ref refs/heads/B "$BTIP";;
- 			esac &&
- 
--			git symbolic-ref HEAD refs/heads/$(echo $heads |
--			sed -e "s/^\(.\).*$/\1/") &&
-+			git symbolic-ref HEAD refs/heads/$(
-+				echo $heads |
-+				sed -e "s/^\(.\).*$/\1/"
-+			) &&
- 
- 			git fsck --full &&
- 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index e4d032c9d..fc7aeb1ab 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -35,8 +35,8 @@ test_expect_success 'setup bare clone for server' '
- test_expect_success 'do partial clone 1' '
- 	git clone --no-checkout --filter=blob:none "file://$(pwd)/srv.bare" pc1 &&
- 
--	git -C pc1 rev-list HEAD --quiet --objects --missing=print |
--	awk -f print_1.awk |
-+	git -C pc1 rev-list HEAD --quiet --objects --missing=print >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/?//" |
- 	sort >observed.oids &&
- 
-@@ -133,16 +133,18 @@ test_expect_success 'push new commits to server for file.3.txt' '
- test_expect_success 'manual prefetch of missing objects' '
- 	git -C pc1 fetch --filter=blob:none origin &&
- 
--	git -C pc1 rev-list master..origin/master --quiet --objects --missing=print |
--	awk -f print_1.awk |
-+	git -C pc1 rev-list master..origin/master --quiet --objects --missing=print \
-+		>revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/?//" |
- 	sort >observed.oids &&
- 
- 	test_line_count = 6 observed.oids &&
- 	git -C pc1 fetch-pack --stdin "file://$(pwd)/srv.bare" <observed.oids &&
- 
--	git -C pc1 rev-list master..origin/master --quiet --objects --missing=print |
--	awk -f print_1.awk |
-+	git -C pc1 rev-list master..origin/master --quiet --objects --missing=print \
-+		>revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/?//" |
- 	sort >observed.oids &&
- 
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index ae4402226..b00cf6fa8 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -20,12 +20,13 @@ test_expect_success 'setup r1' '
- '
- 
- test_expect_success 'verify blob:none omits all 5 blobs' '
--	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
--	awk -f print_2.awk |
-+	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r1 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:none |
--	awk -f print_1.awk |
-+	git -C r1 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:none >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -33,12 +34,13 @@ test_expect_success 'verify blob:none omits all 5 blobs' '
- '
- 
- test_expect_success 'verify emitted+omitted == all' '
--	git -C r1 rev-list HEAD --objects |
--	awk -f print_1.awk |
-+	git -C r1 rev-list HEAD --objects >revs &&
-+	awk -f print_1.awk revs |
- 	sort >expected &&
- 
--	git -C r1 rev-list HEAD --objects --filter-print-omitted --filter=blob:none |
--	awk -f print_1.awk |
-+	git -C r1 rev-list HEAD --objects --filter-print-omitted --filter=blob:none \
-+		>revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -62,12 +64,12 @@ test_expect_success 'setup r2' '
- '
- 
- test_expect_success 'verify blob:limit=500 omits all blobs' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=500 |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=500 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -75,12 +77,12 @@ test_expect_success 'verify blob:limit=500 omits all blobs' '
- '
- 
- test_expect_success 'verify emitted+omitted == all' '
--	git -C r2 rev-list HEAD --objects |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --objects >revs &&
-+	awk -f print_1.awk revs |
- 	sort >expected &&
- 
--	git -C r2 rev-list HEAD --objects --filter-print-omitted --filter=blob:limit=500 |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --objects --filter-print-omitted --filter=blob:limit=500 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -88,12 +90,12 @@ test_expect_success 'verify emitted+omitted == all' '
- '
- 
- test_expect_success 'verify blob:limit=1000' '
--	git -C r2 ls-files -s large.1000 large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1000 |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1000 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -101,12 +103,12 @@ test_expect_success 'verify blob:limit=1000' '
- '
- 
- test_expect_success 'verify blob:limit=1001' '
--	git -C r2 ls-files -s large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1001 |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1001 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -114,12 +116,12 @@ test_expect_success 'verify blob:limit=1001' '
- '
- 
- test_expect_success 'verify blob:limit=1k' '
--	git -C r2 ls-files -s large.10000 |
--	awk -f print_2.awk |
-+	git -C r2 ls-files -s large.10000 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1k |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1k >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -127,8 +129,8 @@ test_expect_success 'verify blob:limit=1k' '
- '
- 
- test_expect_success 'verify blob:limit=1m' '
--	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1m |
--	awk -f print_1.awk |
-+	git -C r2 rev-list HEAD --quiet --objects --filter-print-omitted --filter=blob:limit=1m >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -156,12 +158,12 @@ test_expect_success 'setup r3' '
- '
- 
- test_expect_success 'verify sparse:path=pattern1 omits top-level files' '
--	git -C r3 ls-files -s sparse1 sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s sparse1 sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:path=../pattern1 |
--	awk -f print_1.awk |
-+	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:path=../pattern1 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -169,12 +171,12 @@ test_expect_success 'verify sparse:path=pattern1 omits top-level files' '
- '
- 
- test_expect_success 'verify sparse:path=pattern2 omits both sparse2 files' '
--	git -C r3 ls-files -s sparse2 dir1/sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s sparse2 dir1/sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:path=../pattern2 |
--	awk -f print_1.awk |
-+	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:path=../pattern2 >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -192,14 +194,14 @@ test_expect_success 'setup r3 part 2' '
- '
- 
- test_expect_success 'verify sparse:oid=OID omits top-level files' '
--	git -C r3 ls-files -s pattern sparse1 sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s pattern sparse1 sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	oid=$(git -C r3 ls-files -s pattern | awk -f print_2.awk) &&
- 
--	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:oid=$oid |
--	awk -f print_1.awk |
-+	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:oid=$oid >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -207,12 +209,12 @@ test_expect_success 'verify sparse:oid=OID omits top-level files' '
- '
- 
- test_expect_success 'verify sparse:oid=oid-ish omits top-level files' '
--	git -C r3 ls-files -s pattern sparse1 sparse2 |
--	awk -f print_2.awk |
-+	git -C r3 ls-files -s pattern sparse1 sparse2 >ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
--	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:oid=master:pattern |
--	awk -f print_1.awk |
-+	git -C r3 rev-list HEAD --quiet --objects --filter-print-omitted --filter=sparse:oid=master:pattern >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/~//" |
- 	sort >observed &&
- 
-@@ -223,8 +225,9 @@ test_expect_success 'verify sparse:oid=oid-ish omits top-level files' '
- # This models previously omitted objects that we did not receive.
- 
- test_expect_success 'rev-list W/ --missing=print' '
--	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
--	awk -f print_2.awk |
-+	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
-+		>ls_files_result &&
-+	awk -f print_2.awk ls_files_result |
- 	sort >expected &&
- 
- 	for id in `cat expected | sed "s|..|&/|"`
-@@ -232,8 +235,8 @@ test_expect_success 'rev-list W/ --missing=print' '
- 		rm r1/.git/objects/$id
- 	done &&
- 
--	git -C r1 rev-list --quiet HEAD --missing=print --objects |
--	awk -f print_1.awk |
-+	git -C r1 rev-list --quiet HEAD --missing=print --objects >revs &&
-+	awk -f print_1.awk revs |
- 	sed "s/?//" |
- 	sort >observed &&
- 
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
+ t/t9101-git-svn-props.sh | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
+
 diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index 8a5c8dc1a..8cba331fc 100755
+index 8cba331fc..952bd4814 100755
 --- a/t/t9101-git-svn-props.sh
 +++ b/t/t9101-git-svn-props.sh
-@@ -174,7 +174,8 @@ test_expect_success 'test create-ignore' "
- 	cmp ./deeply/.gitignore create-ignore.expect &&
- 	cmp ./deeply/nested/.gitignore create-ignore.expect &&
- 	cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
--	git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
-+	git ls-files -s >ls_files_result &&
-+	grep gitignore ls_files_result | cmp - create-ignore-index.expect
+@@ -190,16 +190,21 @@ EOF
+ # This test can be improved: since all the svn:ignore contain the same
+ # pattern, it can pass even though the propget did not execute on the
+ # right directory.
++# Note we avoid using pipes in order to ensure that git exits with 0.
+ test_expect_success 'test propget' "
+-	git svn propget svn:ignore . | cmp - prop.expect &&
++	test_propget () {
++		git svn propget $1 $2 >observed
++		cmp - $3
++	} &&
++	test_propget svn:ignore . prop.expect &&
+ 	cd deeply &&
+-	git svn propget svn:ignore . | cmp - ../prop.expect &&
+-	git svn propget svn:entry:committed-rev nested/directory/.keep \
+-	  | cmp - ../prop2.expect &&
+-	git svn propget svn:ignore .. | cmp - ../prop.expect &&
+-	git svn propget svn:ignore nested/ | cmp - ../prop.expect &&
+-	git svn propget svn:ignore ./nested | cmp - ../prop.expect &&
+-	git svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
++	test_propget svn:ignore . ../prop.expect &&
++	test_propget svn:entry:committed-rev nested/directory/.keep \
++		../prop2.expect &&
++	test_propget svn:ignore .. ../prop.expect &&
++	test_propget svn:ignore nested/ ../prop.expect &&
++	test_propget svn:ignore ./nested ../prop.expect &&
++	test_propget svn:ignore .././deeply/nested ../prop.expect
  	"
  
  cat >prop.expect <<\EOF
