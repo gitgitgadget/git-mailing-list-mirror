@@ -2,80 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544FD1F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 22:54:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34DD31F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 23:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729018AbeIREXg (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 00:23:36 -0400
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:36732 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728720AbeIREXg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 00:23:36 -0400
-Received: by mail-wm1-f48.google.com with SMTP id j192-v6so421574wmj.1
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 15:54:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=JuIWHN76CtsfMqmpUKuv+3yPWs/CyvyTg8fjxQqXrO8=;
-        b=MsvMXWtnO8EaaSeehfgIWTcsGW14BedB+R3gTfjnmWxb84ar7m2chEXcJNae02Osl0
-         i+4EVoguOf3VLRe/pr22wdyAXUksPv2NeiwREOMX8Y/6u0+eNTXNqW4iECYimOPyIt+u
-         DO3i3vbKrnLD/A3kDnUXm41ru8qp1PY2W2o6ozcigMevDSwapi3bQ+wbf5o+Gjf0dvYl
-         6iutAkRbZ9zug5RZI8Sx6BjurJBxQRnEsKnNZyt5z/dStEnluTwUgtDQguWEmljVNqse
-         aThWL5qqcmkfrmXMfEVGEN4vhGReocarNH8vCRoVrBx0q1bcrFayjTkxx6ySYF8qaQ1O
-         27Vw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=JuIWHN76CtsfMqmpUKuv+3yPWs/CyvyTg8fjxQqXrO8=;
-        b=JHWjpoPPiT62mAnM80t8ZMUffbFgZRuk8IfNs/QhVGlSSWLocIiuXupwHgwSzJAwQb
-         g3hwWU3lLjL6Yr8MtWo2RRJ1xA1Jh1SYyPKWk64djY+rpKAeDbvK4imbqk2VlZKA2fqk
-         GBZoH5UnALvfZMMkx6/VHCjZScrjV+ED82HLdAEoLXlqMuJnxZrpC3bSbLgkH5dd51gX
-         RkddC43FlKuDP/bJ4OlI5aC+1uVwzvpLPLF/cRsN2GQw5vHrEKg1YRX3qDAQOFYxFZqJ
-         WnJZ9XoFQtZCRr/+uwmebeg9d6Wle9PVpFBuPvFv0OtkY5epTk6MzTAqGpBdilgUVI03
-         Dm1g==
-X-Gm-Message-State: APzg51B8hE8fEeVRRzVpAiKcpi2WCJlsMrnGdsk0M49H5UGXCszQtQ8Z
-        W4e2QCLgOJZSkRkeD2r6STgPWqWo
-X-Google-Smtp-Source: ANB0VdYoTp7MLhmmi8nCACyqKp7H4ZHH9uxTVC9UTOrxlC/Ezg/ttR3YMNqvlklYP92su5l4lckgQQ==
-X-Received: by 2002:a1c:c7c3:: with SMTP id x186-v6mr13135021wmf.109.1537224849603;
-        Mon, 17 Sep 2018 15:54:09 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h82-v6sm264129wme.11.2018.09.17.15.54.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 15:54:08 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
+        id S1730268AbeIREcl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 00:32:41 -0400
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59992 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730031AbeIREcl (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 18 Sep 2018 00:32:41 -0400
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:68ab:e3d3:c0a3:4717])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3E4AD60482;
+        Mon, 17 Sep 2018 23:03:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1537225392;
+        bh=YyvJ4rsSbDVInDZ6kUlVpXoRQecMS/veMYhHZO1bWgs=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=1anCXysjlRzqsk5lCr7JZm9eccKpw79GHSRr9M5smM9qCIgYljIwMT8c3a9E07bDB
+         jOMsMVQoC/GBDzS/lDThBBYph0DC0G+repvHJzHeSQdTm/QX2HrKUwFWIFRSYYZErX
+         zmPW6KuQap9TPDwhUOvXUf11NjOTitxJeMAcUBP3JTBA+cEogWTbfw972l1hQfl2nT
+         Q5C/2mRdkYD+UK9OprYRlx+v0/M5OfWv6t+mmrqTkGSL1UtrgDHF4EsRPcHjwrNWl8
+         Kv6NnuCZe8A8EF2pATMhiX+DUMEpPamXABVMPVaqQwmq7TTQ5Jkk5wpMVXO2POHIBu
+         TCknVsXHtHDqhnW9vtVRS9DGb7E1lQIdRXlGjKZtEjh9uCwgh9BjuldG1sTZOtCuRS
+         R7UjEzPG8nBBPZwvacRYV3U3UiGmaZ8ccRpMP1BzEcOSsPk6bKHGABNYreTTKy/vkD
+         7IAWEyxfk/iDgSjqCJc4xuV5SkCzy4ix7vUtWAkn1aHHpZAsOZi
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
-Date:   Mon, 17 Sep 2018 15:54:08 -0700
-In-Reply-To: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Fri, 14 Sep 2018 14:56:36 -0700")
-Message-ID: <xmqq36u768hb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc:     Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] Add an EditorConfig file
+Date:   Mon, 17 Sep 2018 23:03:07 +0000
+Message-Id: <20180917230307.588334-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.19.0.397.gdd90340f6a
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Contributors to Git use a variety of editors, each with their own
+configuration files.  Because C lacks the defined norms on how to indent
+and style code that other languages, such as Ruby and Rust, have, it's
+possible for various contributors, especially new ones, to have
+configured their editor to use a style other than the style the Git
+community prefers.
 
-> The tip of 'next' hasn't been rewound yet, but the states of many
-> topics that were marked to "Cook in 'next'" read "Will merge to
-> 'master'" now.  I'll probably start merging a handful of topics that
-> have been in 'next' down to 'master' tonight (they appear at the
-> bottom of "log --first-parent master..pu" output).
+To make automatically configuring one's editor easier, provide an
+EditorConfig file.  This is an INI-style configuration file that can be
+used to specify editor settings and can be understood by a wide variety
+of editors.  Some editors include this support natively; others require
+a plugin.  Regardless, providing such a file allows users to
+automatically configure their editor of choice with the correct settings
+by default.
 
-A bunch of topics have been merged to 'master' and also to 'next'
-with today's update.  The tip of 'next' hasn't been rewound.  I am
-hoping that we can thin down the difference between 'master' and
-'next' by merging a bit more topic from 'next' to 'master' without
-adding more topics to 'next' for a week or so, and then rebuild
-'next' at the end of that period, and then start to accept more
-topics to 'next'.
+Provide global settings to set the character set to UTF-8 and insert a
+final newline into files.  Provide language-specific settings for C,
+Shell, Perl, and Python files according to what CodingGuidelines already
+specifies.  Since the indentation of other files varies, especially
+certain AsciiDoc files, don't provide any settings for them until a
+clear consensus forward emerges.
+
+Don't specify an end of line type.  While the Git community uses
+Unix-style line endings in the repository, some Windows users may use
+Git's auto-conversion support and forcing Unix-style line endings might
+cause problems for those users.
+
+Finally, leave out a root directive, which would prevent reading other
+EditorConfig files higher up in the tree, in case someone wants to set
+the end of line type for their system in such a file.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+I was incentivized to write this when I started using worktrees for
+development and found that I had inserted spaces into all the work I was
+doing because I was outside of my normal git.git clone.
+
+This is the easiest way to set per-repo configuration across editors,
+especially since people may work on various C codebases with different
+indentation standards.
+
+ .editorconfig | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+ create mode 100644 .editorconfig
+
+diff --git a/.editorconfig b/.editorconfig
+new file mode 100644
+index 0000000000..8963d83fdb
+--- /dev/null
++++ b/.editorconfig
+@@ -0,0 +1,11 @@
++[*]
++charset = utf-8
++insert_final_newline = true
++
++[*.{c,h,sh,perl}]
++indent_style = tab
++tab_width = 8
++
++[*.py]
++indent_style = space
++indent_size = 4
