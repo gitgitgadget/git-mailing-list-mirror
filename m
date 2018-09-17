@@ -2,113 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE6031F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 18:35:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B36C61F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 18:40:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727833AbeIRAE3 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 20:04:29 -0400
-Received: from mail-pl1-f170.google.com ([209.85.214.170]:34624 "EHLO
-        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727089AbeIRAE3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 20:04:29 -0400
-Received: by mail-pl1-f170.google.com with SMTP id f6-v6so7836768plo.1
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 11:35:56 -0700 (PDT)
+        id S1728131AbeIRAIt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 20:08:49 -0400
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:42315 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727176AbeIRAIt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 20:08:49 -0400
+Received: by mail-pl1-f194.google.com with SMTP id g23-v6so7820871plq.9
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 11:40:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=sKlk4NcF8NS0y6xaR3HktIpEv9CLPLPSYXd8VK2NLG8=;
-        b=iJ5cilHajJsQTNtJUGSPbCh83lOkSHx4KcR+mD/mygMCtOr0yw1Aumi0sRODu5IuPG
-         u5/aai9G5ErGws4n5UzTD4Mx8DKfyCozltwpyfzfTCUX7duIyi9RSh7LDKIQcFF4DGcm
-         udVJOSZenQW60rIwG5i0jYsU7WLPueuMXepmqD4GPN5ud8kcRX8RqEMk6xQ12D91Y5pg
-         O6njA2dXKZUeGwDL5le9zit3Y1SCmdxQ3CRIZJ6pVXguE1DFIcCPh5iYh8Yqjw/NddhC
-         DVnsigarkWgwpb2gYjFH48H/ySbrkAlMf7CenV/2Qpll5G3WzqBnMncdo2HoWwEU7DIh
-         69Sw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=K7s2wsBKDBbb+vcwxUrFcDrlBBXp8dZkOM3Iv/qkNbY=;
+        b=G7xfgxmwDR9O3DbzuiTvPI9ia2a3x7pw2j81Gv+mtCqUrL3M4V5nRW2bqn0gUp/XYO
+         DCNyTRddL4Z6TS6see2eYWfsqvV44X+an/qA8w4K+xS2DKm4jWkS0PPC44cwsIGsUbRv
+         xU18uFhhpxGm35+4DM3P3GNG/YQjmnPZjnQmX0aE0E3yP4wde7YWjBL81VK6hTv5AzYp
+         ZlBjUApV21jpIf6hA0V+OsxRNEiM/uFJEz6SMFI/YkR024UIlAJZXrHbAhDDHKYwB2Nh
+         hQF07RuntNvpfVG3VKP7YivB4E663d105/NDe4ofIXllJGQzVCNkb+tjSe72gFt4PFnP
+         aUMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=sKlk4NcF8NS0y6xaR3HktIpEv9CLPLPSYXd8VK2NLG8=;
-        b=pCT6RByAJU5cjfrbuXmdF2VFBYTAKwBN3K7Qw6xogMUbh9VQoH8p6nIF55ZW+Rayp9
-         xRvkvFla2T6zJjLTu/EdvWXXtwhzSujAWtGGqI3Et8vGb09VYW+Ok5Bwi+oBfkbTFhAJ
-         ckJv5ySf7M12TEBM8Mu0ProCuPtZq0Vmx1WFxiEKXK9CAZVCS1qtdnKTPB9oNDj+Rbap
-         24KErwa3WwJ8VeR4gr80LvKHs+EdZKZVhPZQI+J5pFDRdVrocoEZ+Cd4TqvoOr1Irzij
-         LbWNVU4xG1AnX+S8gFpSAP35PVT29J59Kt2BbgfqwF2bcOzG8/jk0ode+ZM0KUhi9OlE
-         EhYg==
-X-Gm-Message-State: APzg51D4QPDuqOnyQpp51Pglg7L9Kulzo6+Rexm/lre2mKPWLsWeXzBQ
-        sMb4Op3gy2Y1lqlpootE4Rs8DXcU
-X-Google-Smtp-Source: ANB0VdZVHq5q28FRco+NNay9P4NEcRZ7cpeViZNuOSIDTAlNW9f97Qza3uvj+btj7pFBSFbTdso/hQ==
-X-Received: by 2002:a17:902:b7c5:: with SMTP id v5-v6mr26411145plz.49.1537209355351;
-        Mon, 17 Sep 2018 11:35:55 -0700 (PDT)
-Received: from [10.11.1.235] (173-11-86-161-SFBA.hfc.comcastbusiness.net. [173.11.86.161])
-        by smtp.gmail.com with ESMTPSA id l79-v6sm22166422pfb.111.2018.09.17.11.35.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 11:35:54 -0700 (PDT)
-Subject: Re: What's cooking in git.git (Sep 2018, #03; Fri, 14)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <43e8d5aa-5418-2e2d-2097-9e21e7a74825@gmail.com>
-Date:   Mon, 17 Sep 2018 14:35:49 -0400
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=K7s2wsBKDBbb+vcwxUrFcDrlBBXp8dZkOM3Iv/qkNbY=;
+        b=PZYLtMSEVlpKgiVCMGGz5bXxVSjGNoabzIRHnczIUSYEQtAG2gITQw3vUOakoBlIeO
+         dpzE3Vh130r4zuKSXuTRl5Sw6/XF8Z2vujMmve//t5LJ8HtvJvcxg+d1q9/NaUTLzYHE
+         ydwUL+/DubC4RGXJ9JEi6Uoo4j5fltws1oZS988QR14Mdw+Wtv/WrVMweN97HQHRYPgn
+         d9bY8eeK7zrLer2Naozy2TUHemaGblWLcOtR+cmQ9T5XUJlqLKnYZyFqGQRvPL7nI3Of
+         sif6o96eIhc7YY9/qPac72MoF2EPrM33n7iUf3O66WaxUK5DBmdxBLvQ2MQLt+38l1jS
+         XQIQ==
+X-Gm-Message-State: APzg51CZAceAOXcdd5bi5EyPZhuCyV0PpzEkP+hYJG8aL4PURhMvjj8S
+        m3IisnBIsnlaZTJcrLN4QwE=
+X-Google-Smtp-Source: ANB0VdZE/pyFvQwgp8G1tS7+rMXxZYHcFFEkofpWxU8hI7v257+D5N5XU5RuoKrXTXnxp7nlgdsBvQ==
+X-Received: by 2002:a17:902:7c96:: with SMTP id y22-v6mr26286912pll.332.1537209614376;
+        Mon, 17 Sep 2018 11:40:14 -0700 (PDT)
+Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
+        by smtp.gmail.com with ESMTPSA id d10-v6sm17406292pgo.2.2018.09.17.11.40.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Sep 2018 11:40:13 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 11:40:12 -0700
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 2/3] gc: exit with status 128 on failure
+Message-ID: <20180917184012.GD140909@aiede.svl.corp.google.com>
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+ <20180717065151.GA177907@aiede.svl.corp.google.com>
+ <20180717065416.GC177907@aiede.svl.corp.google.com>
+ <20180717195946.GC26218@sigill.intra.peff.net>
+ <20180917183336.GA4630@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20180917183336.GA4630@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 9/14/2018 5:56 PM, Junio C Hamano wrote:
-> * ds/format-commit-graph-docs (2018-08-21) 2 commits
->   - commit-graph.txt: improve formatting for asciidoc
->   - Docs: Add commit-graph tech docs to Makefile
->
->   Design docs for the commit-graph machinery is now made into HTML as
->   well as text.
->
->   Will discard.
->   I am inclined to drop these, as I do not see much clarity in HTML
->   output over the text source.  Opinions?
+Hi,
 
-Discarding is fine. I originally created it because I thought we were 
-supposed to mark all documents for HTML generation. You're right, the 
-HTML doesn't add anything.
+Jeff King wrote:
+> On Tue, Jul 17, 2018 at 03:59:47PM -0400, Jeff King wrote:
+>> On Mon, Jul 16, 2018 at 11:54:16PM -0700, Jonathan Nieder wrote:
 
-> * ds/commit-graph-with-grafts (2018-08-21) 8 commits
->   - commit-graph: close_commit_graph before shallow walk
->   - commit-graph: not compatible with uninitialized repo
->   - commit-graph: not compatible with grafts
->   - commit-graph: not compatible with replace objects
->   - test-repository: properly init repo
->   - commit-graph: update design document
->   - refs.c: upgrade for_each_replace_ref to be a each_repo_ref_fn callback
->   - refs.c: migrate internal ref iteration to pass thru repository argument
+>>> A value of -1 returned from cmd_gc gets propagated to exit(),
+>>> resulting in an exit status of 255.  Use die instead for a clearer
+>>> error message and a controlled exit.
+>>
+>> This feels a little funny because we know we're going to turn some of
+>> these back in the next patch. That said, I'm OK with it, since this
+>> version is already written.
 >
->   The recently introduced commit-graph auxiliary data is incompatible
->   with mechanisms such as replace & grafts that "breaks" immutable
->   nature of the object reference relationship.  Disable optimizations
->   based on its use (and updating existing commit-graph) when these
->   incompatible features are in use in the repository.
+> There's discussion elsewhere[1] of applying just up to patch 2.
 >
->   Replaced with a newer version.
+> Do we still want to convert these cases to die() as their end-state?
 
-I think this has been the same note for a few weeks now. What does it 
-mean? Did I send a new version out that you haven't picked up?
+IMHO yes, we do.  die() is the function that you can use to exit with
+a fatal error.
 
-Also, my "git log --topo-order" series was never picked up, but I see it 
-has conflicts with 'next' now, so I'll rebase to resolve conflicts and 
-send a v2.
+If we want to get rid of die(), that would be a tree-wide effort, not
+something that should hold up this patch.
+
+[...]
+> It also makes the code more flexible and lib-ifiable (since the caller
+> can decide how to handle the errors). That probably doesn't matter much
+> since this is all static-local to builtin/gc.c,
+
+Exactly.  I'm a strong believer in http://wiki.c2.com/?YouArentGonnaNeedIt.
 
 Thanks,
--Stolee
-
+Jonathan
