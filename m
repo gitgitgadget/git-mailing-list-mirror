@@ -2,90 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02E621F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 17:31:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 905401F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 17:39:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728330AbeIQW70 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 18:59:26 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36648 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726865AbeIQW70 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 18:59:26 -0400
-Received: by mail-wr1-f66.google.com with SMTP id e1-v6so18192141wrt.3
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 10:31:05 -0700 (PDT)
+        id S1727832AbeIQXHd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 19:07:33 -0400
+Received: from mail-it0-f67.google.com ([209.85.214.67]:39451 "EHLO
+        mail-it0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727089AbeIQXHc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 19:07:32 -0400
+Received: by mail-it0-f67.google.com with SMTP id h1-v6so12032619itj.4
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 10:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=VVvRBpGuHGrne7ZQJj4h/w/gMpqKnlEj24qTrIZKDeE=;
-        b=m3GCdxg2P62pcPitxLzJKkfb0a9OeAlbqbn484XCYBAAORByQZ5qBGfs+JOtTttc6s
-         2MEiKcE04saw4SDbHmUaVTo5QTM1YeYW37W5EtzrU4D+5mfsIs6/9CaVq4SHEIqLuOEd
-         PF93+zTmcBopPuiWR//8+hVoAwAW4Kpu5rtNO2YOOByuYjaczwFkUdX+cmD3KO99kAMx
-         yzkh4f+tUbAuyqM1fFDQg4laT0OTwZ6g9QlFhST7q0PUYaqKyijb6tYQOB1Yh9yjKAGH
-         Gg2btmOxp8CGsNjQw2Pm8aMqHrLOElOf4LfjCxSMkTbGgAKMWzI/WX7yYcvNZD4W4VXA
-         vmbw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=9S5L8TQXWpn4oTgct+wr/4lwaN9uAhfu5gh4uCsGI+s=;
+        b=dyyL8Yog7xX8ZgG+4y8Cn0rCnAY54KkyaNbqTDkZFZOLereOpk9qSGiil9Z9qRHH0O
+         0dwNOhYDydvkNlSTuCyo2PuyE7MLW3hNbeubKIt6lsKZNV7SkEwF1LAmt6RP0Y8luSD9
+         uEik2asImlATD75HAL+zCqacPNsupZrel/i0FRcYvfjppGk51SSrQM4dS4gbxr3EbmJN
+         4dK9G4Bec6MqwaQBSQAZ4UYRoxNLahCSugEYDnzC4FNPtGQ4TnjH00WMtbOwxMhyW4yo
+         tb8hj4QFyq1bEL4/5Jql21WMKNPyQACVRKroTxbDBIl0+R/0UXevLTrAjviFFsOSJqcF
+         nQSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=VVvRBpGuHGrne7ZQJj4h/w/gMpqKnlEj24qTrIZKDeE=;
-        b=gzywoW8gAUTWwBiG207Z5fUwwT5Ca2wL4fkqJd8blNGMUrgIIPgtNtjgKAovE+gR/3
-         Yba93Hi16XgOpC0yxRbc5JXrW7jeAIa4vBGHlpGrYMJbBR9JpXoSPih3N6oRa5uLbhbA
-         DUEgfgpOXik4CwwnFpgEylwhJdr6HM8ptB1kxEP5Ge8ZOK9lCCjOa74JZpS+AM5cbugw
-         oE3tYUcfpmyAGnat91NTx+bwas3T2JKjMuqZ09G6uxZkn2DSLj+tbKtM1KXKKuMwUjq+
-         OwIlA3TZEFDfHdkKEvwM0O9QmFQHolZnK1cwutYsGWfIUKaW0iRkSKaOtFfRuFAvOV/u
-         5nHg==
-X-Gm-Message-State: APzg51Cp4x0hd1Be/u03x3qqklsn414e8ZvQb/dzXOzLvmuE35kWApql
-        D+RAqYkEGzS4wg4GYAPB0HA=
-X-Google-Smtp-Source: ANB0VdZCf+3D7hXgRVE2Nx9Bi1/qAUgp3X9mgAu0f7B8JILz5GkeNj6H8YQasSlgOkt/OJd/mlLXIQ==
-X-Received: by 2002:a5d:61c1:: with SMTP id q1-v6mr20747379wrv.33.1537205464324;
-        Mon, 17 Sep 2018 10:31:04 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l16-v6sm5570504wmc.38.2018.09.17.10.31.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 10:31:03 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=9S5L8TQXWpn4oTgct+wr/4lwaN9uAhfu5gh4uCsGI+s=;
+        b=n/KfyL86L0++QLUdM6jaopZzm45hKYsnqph6M+iUZWRCjbNfSOTRDYKEB/J6fXjuUS
+         jYgV127doxCoykaCVdlnN3hE2FQR7z1GtRgDkIADzGHjcneEfPgIGkIyOQUIvPC/jVY7
+         0nR3z8gk6Y3DvkjLJoTQXiZ7SqSR2nt/7lhSOY/QIC+MF9oCRGu3el/Y8V+bAjfZidnl
+         bN9PaDDifOqubgQPhvFaS6OqM8HxOjF3uYvgVndCgfAHWhDNhsOHNde/f9+S5NvItyxl
+         5D7tsQsMMVITqwwarFsSMZhYs1j9/bmwsh0xQ86+WDMOEmkcypnEdEBagxxtDj7fImIa
+         M4fw==
+X-Gm-Message-State: APzg51ADGrzoYm4bjvVSpmQ3iP6zc4ehMa/t2fnu5WAG9tQQ5HEAMflK
+        q703bEEOi3OHPLG7R/JzfkTWTEToPLY93to/x3o=
+X-Google-Smtp-Source: ANB0Vda21lGzRPLNxJ9yteieX489RPAoYAg8HXyZhwWIiG0ZN8wURECmpcr/DGWXMVdrp9ZVPHNjgoqT8nfI6O2w55A=
+X-Received: by 2002:a24:7605:: with SMTP id z5-v6mr2364034itb.62.1537205950392;
+ Mon, 17 Sep 2018 10:39:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180912161832.55324-1-benpeart@microsoft.com> <20180912161832.55324-2-benpeart@microsoft.com>
+ <CACsJy8B51s2j0aR69UdwtpSbRN6qdLy--am_tyP5Xqo=5Zm_7g@mail.gmail.com>
+ <f7250999-71a3-0113-2858-e66bad283db3@gmail.com> <CACsJy8DEvLJYBm0P1VtvKFD-CAo6_4Z13dBHWkuuAavghbGBag@mail.gmail.com>
+ <xmqqsh286nfs.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqsh286nfs.fsf@gitster-ct.c.googlers.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 17 Sep 2018 19:38:43 +0200
+Message-ID: <CACsJy8CqaEGDaEAgp1EspR+BwyHB6YSPoppZ2t5M+qxg77hULg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/5] eoie: add End of Index Entry (EOIE) extension
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Ben Peart <peartben@gmail.com>, Ben Peart <benpeart@microsoft.com>,
         Git Mailing List <git@vger.kernel.org>,
         Ben Peart <Ben.Peart@microsoft.com>
-Subject: Re: [PATCH v5 1/5] eoie: add End of Index Entry (EOIE) extension
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20180912161832.55324-1-benpeart@microsoft.com>
-        <20180912161832.55324-2-benpeart@microsoft.com>
-        <CACsJy8B51s2j0aR69UdwtpSbRN6qdLy--am_tyP5Xqo=5Zm_7g@mail.gmail.com>
-        <f7250999-71a3-0113-2858-e66bad283db3@gmail.com>
-        <CACsJy8DEvLJYBm0P1VtvKFD-CAo6_4Z13dBHWkuuAavghbGBag@mail.gmail.com>
-Date:   Mon, 17 Sep 2018 10:31:03 -0700
-In-Reply-To: <CACsJy8DEvLJYBm0P1VtvKFD-CAo6_4Z13dBHWkuuAavghbGBag@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 17 Sep 2018 18:05:10 +0200")
-Message-ID: <xmqqsh286nfs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Mon, Sep 17, 2018 at 7:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Duy Nguyen <pclouds@gmail.com> writes:
+>
+> > But it _is_ available now. If you need it, you write the extension
+> > out.
+>
+> Are you arguing for making it omitted when it is not needed (e.g.
+> small enough index file)?  IOW, did you mean "If you do not need it,
+> you do not write it out" by the above?
 
-> But it _is_ available now. If you need it, you write the extension
-> out.
+Yes I did.
 
-Are you arguing for making it omitted when it is not needed (e.g.
-small enough index file)?  IOW, did you mean "If you do not need it,
-you do not write it out" by the above?
+> I do not think overhead of writing (or preparing to write) the
+> extension for a small index file is by definition small enough ;-).
 
-I do not think overhead of writing (or preparing to write) the
-extension for a small index file is by definition small enough ;-).
+Good point.
 
-I do not think the configuration that decides if the reader side
-uses parallel reading should have any say in the decision to write
-(or omit) the extension, by the way.
-
-
+I get annoyed by the "ignoring unknown extension xxx" messages while
+testing though (not just this extension) and I think it will be the
+same for other git implementations. But perhaps other implementations
+just silently drop the extension. Most of the extensions we have added
+so far (except the ancient 'TREE') are optional and are probably not
+present 99% of time when a different git impl reads an index created
+by C Git. This 'EIOE' may be a good test then to see if they follow
+the "ignore optional extensions" rule since it will always appear in
+new C Git releases.
+-- 
+Duy
