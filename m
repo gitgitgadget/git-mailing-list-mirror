@@ -2,142 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B196A1F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 15:33:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 437161F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 15:37:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729249AbeIQVBo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 17:01:44 -0400
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:39201 "EHLO
+        id S1729350AbeIQVFE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 17:05:04 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55327 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728799AbeIQVBo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 17:01:44 -0400
-Received: by mail-wm1-f65.google.com with SMTP id q8-v6so10185935wmq.4
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 08:33:51 -0700 (PDT)
+        with ESMTP id S1728723AbeIQVFE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 17:05:04 -0400
+Received: by mail-wm1-f65.google.com with SMTP id f21-v6so10181528wmc.5
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 08:37:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=PHQog8wWglL1VjDBTuoTM2qe92yu1F2IKTDoc9aZoBM=;
-        b=vcRtgZbQ/Se1YJY7J0HpYyk2GnZK/gtTP4fhPB9rBHiCYzMACHlEjAENNNgVDoDJPu
-         yMYDk8DS4rzXWnuf+fAwfaz78NeSp5kYmiuozf+6Wc1oXXi0pTOyizQy8dbrTBJwWKi1
-         z0Be6QxB+60U3LeMr+G632Y7tzQQ+FyCw/VzX+BmTJHPCGP/aemwgX9YWKzKoYHTyF9i
-         iQVQxhgHnauTROJjJvf7pLxBOnOI2pI65V4WeBZsjUS3taOOXy7IzrrIVOukM+kYcbKa
-         dMEjGdzO69/sFGpRGE4nVajpQ86ESvEpIvOKa2T8txLqaigcHJJzU3k68BHtFwADQYH3
-         TNRQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=71AwKBA2jU9cMn9XoCyJzyVpDKzcqUmcGFnAh9WpX4w=;
+        b=nhiJH9PDtdPfOvmSDHLx7OGM+/KsRTlNqjqZnFzYHn13DJobgli4PVfFhj+Xgqmy3w
+         ENh0ECpmFSzVqjLNnxBEcvq+NIGeSvrN7QrpDvAvN+pbvzDUZvuLrVIgGhPIG5ZkXrjl
+         hgbdY18wHjk8oInIMIEISzJa2d8E8xL3V7PS0LhTLk8o2fuGKDoinIr1u2KTgbB0d+bo
+         AV5mXJwRy0UjwOEcfas7I6dOobWOwcPDfQJ/LM36HgTZWnuCdQFouzNR8st8fSyJX68t
+         D+HoLHJIP/SbMLtzF2Y+At9O4ysLfQ3g2E3Bm9b1w6zNdysbYdwkkErcWTeCcHKz8oGD
+         Xu9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=PHQog8wWglL1VjDBTuoTM2qe92yu1F2IKTDoc9aZoBM=;
-        b=gzj4P/RxwHw6jzS7w4LLzFVy2w9UK9uZT1XbcP6TWvZp7e/q1Cc5Ojmqs1jKV8iJXS
-         56UVFU9xGUxg873no/D75cqV6tDlimXBlMzHHi79jdXSosSFq7MU7zWm3WaFQnXH+KVg
-         yqVMhTFqK0T69uoAlEi+A0ggoR0OMuUJl1MrXlmBhW7aCo0DZ+mz+9QunS1XZQaP2ljp
-         9N2aFbXZdcjaVDRpmBESINk4eWOsR+/5pCriEkCb9IvwCTDtriQM0LNpImXYIW16Xzic
-         F/57hHtLPpmYYeTSNQnguZyWT+7QehUkwAwtoyunNQxGwMAMmgc3DBuKjK3qCOTmIWyG
-         C1AQ==
-X-Gm-Message-State: APzg51Bh79VfRa/pTNR0qdK6p+YV1mCOrxeFYsZz7IjqDv2eNLraRwrk
-        2H63tJ80Y60YIAO2b2aPwECl1L+VunQ=
-X-Google-Smtp-Source: ANB0VdbUn6IHQIzwlAh+rJzghSWFu/Sq4hgj/j1v4WO+/3/m7mnSYkxjunlX2Ye6GSyrddLfH0nT6w==
-X-Received: by 2002:a1c:1d87:: with SMTP id d129-v6mr11648448wmd.34.1537198430587;
-        Mon, 17 Sep 2018 08:33:50 -0700 (PDT)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 144-v6sm10680560wma.19.2018.09.17.08.33.49
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 08:33:49 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 2/2] commit-graph verify: add progress output
-Date:   Mon, 17 Sep 2018 15:33:36 +0000
-Message-Id: <20180917153336.2280-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a
-In-Reply-To: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
-References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=71AwKBA2jU9cMn9XoCyJzyVpDKzcqUmcGFnAh9WpX4w=;
+        b=BY+h36DAYTQTV1BfAxxTk5417JduiJVzyvhgbRpOqlioczyjZ8q71tOfAuoL4DhYdZ
+         17W/vORZGtmhdqDSX2zLir2crOh75slNpF8+aQgUDQFI5UF56Y+b0U8+gUs2LSQkIZ+6
+         KI0sSw+grxxCGt5ZNoEv4yXVJdLr5YlDX0U/ok3pjmtjGmXO2asByi7lEKBgSdgUxZ7D
+         /1KbJDBkMMfpC+dTwYyskol7erCnmkRvcmLbxNkxb+NCMom0CUhbmpwLUuZxZlRfAXqO
+         P9NhZKf6JUlxOGol3KAXARZYks1wwEHVewkk4zr3oxLvG9dQtF9Iixeru/UZMK+WTUu6
+         pBpw==
+X-Gm-Message-State: APzg51CN6so1Weu1zMfsgJHxQRDkmw+bbirFw62/+TPNmGPKrzlRbj0k
+        04timplcjVLOUBw3xcDIeUw=
+X-Google-Smtp-Source: ANB0VdaWt1vuWw59zd8Bn/4OCd75DXo47w04aAEXGMFLtUiudpcNn1n150uUoeY6QTNkvK8mpccN8Q==
+X-Received: by 2002:a1c:c3:: with SMTP id 186-v6mr12196716wma.126.1537198630394;
+        Mon, 17 Sep 2018 08:37:10 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q16-v6sm10531592wrw.2.2018.09.17.08.37.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Sep 2018 08:37:09 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Tim Schumacher <timschumi@gmx.de>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH v4 1/3] Add support for nested aliases
+References: <20180905085427.4099-1-timschumi@gmx.de>
+        <20180907224430.23859-1-timschumi@gmx.de>
+        <CACsJy8BnHgaphwy3beCCquFjU=SZebR2GvDCkFgh1_snxDBTRQ@mail.gmail.com>
+        <aede75a5-d2ba-5a95-434d-aa70f7270fd7@gmx.de>
+Date:   Mon, 17 Sep 2018 08:37:09 -0700
+In-Reply-To: <aede75a5-d2ba-5a95-434d-aa70f7270fd7@gmx.de> (Tim Schumacher's
+        message of "Sun, 16 Sep 2018 09:46:58 +0200")
+Message-ID: <xmqqva7487a2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For the reasons explained in the "commit-graph write: add progress
-output" commit leading up to this one, emit progress on "commit-graph
-verify". Since e0fd51e1d7 ("fsck: verify commit-graph", 2018-06-27)
-"git fsck" has called this command if core.commitGraph=true, but
-there's been no progress output to indicate that anything was
-different. Now there is (on my tiny dotfiles.git repository):
+Tim Schumacher <timschumi@gmx.de> writes:
 
-    $ git -c core.commitGraph=true -C ~/ fsck
-    Checking object directories: 100% (256/256), done.
-    Checking objects: 100% (2821/2821), done.
-    dangling blob 5b8bbdb9b788ed90459f505b0934619c17cc605b
-    Verifying commits in commit graph: 100% (867/867), done.
+> On 08.09.18 15:28, Duy Nguyen wrote:
+>> On Sat, Sep 8, 2018 at 12:44 AM Tim Schumacher <timschumi@gmx.de> wrote:
+>>> +               /*
+>>> +                * It could be an alias -- this works around the insanity
+>>>                   * of overriding "git log" with "git show" by having
+>>>                   * alias.log = show
+>>>                   */
+>>
+>> I think this comment block is about the next two lines you just
+>> deleted. So delete it to instead of fixing style.
+>
+> I think that comment is talking about the code that is handing the alias,
+> so it still would be valid.
 
-And on a larger repository, such as the 2015-04-03-1M-git.git test
-repository:
+"this" in "this works around" refers to the fact that we first check
+the builtins and on-GIT_EXEC_PATH commands before trying an alias,
+which is an effective way to forbid an alias from taking over
+existing command names.  So it is not about a particular code but is
+about how the two sections of code are laid out.
 
-    $ time git -c core.commitGraph=true -C ~/g/2015-04-03-1M-git/ commit-graph verify
-    Verifying commits in commit graph: 100% (1000447/1000447), done.
-    real    0m7.813s
-    [...]
+It probably will make it clear if we reworded and made it a comment
+about the whole while() loop may make sense, i.e.
 
-Since the "commit-graph verify" subcommand is never called from "git
-gc", we don't have to worry about passing some some "report_progress"
-progress variable around for this codepath.
+	/*
+	 * Check if av[0] is a command before seeing if it is an
+	 * alias to avoid the insanity of overriding ...
+	 */
+	while (1) {
+		...
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- commit-graph.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 2c5d996194..e6e4c03986 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -922,6 +922,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
- 	int generation_zero = 0;
- 	struct hashfile *f;
- 	int devnull;
-+	struct progress *progress = NULL;
- 
- 	if (!g) {
- 		graph_report("no commit-graph file loaded");
-@@ -989,11 +990,14 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
- 	if (verify_commit_graph_error & ~VERIFY_COMMIT_GRAPH_ERROR_HASH)
- 		return verify_commit_graph_error;
- 
-+	progress = start_progress(_("Verifying commits in commit graph"),
-+				  g->num_commits);
- 	for (i = 0; i < g->num_commits; i++) {
- 		struct commit *graph_commit, *odb_commit;
- 		struct commit_list *graph_parents, *odb_parents;
- 		uint32_t max_generation = 0;
- 
-+		display_progress(progress, i + 1);
- 		hashcpy(cur_oid.hash, g->chunk_oid_lookup + g->hash_len * i);
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
-@@ -1070,6 +1074,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
- 				     graph_commit->date,
- 				     odb_commit->date);
- 	}
-+	stop_progress(&progress);
- 
- 	return verify_commit_graph_error;
- }
--- 
-2.19.0.rc2.392.g5ba43deb5a
-
+but that can be done after the dust settles as a clean-up, I would
+think.
