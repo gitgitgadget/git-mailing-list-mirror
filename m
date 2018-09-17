@@ -2,85 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC50F1F404
-	for <e@80x24.org>; Mon, 17 Sep 2018 16:32:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9C6FF1F404
+	for <e@80x24.org>; Mon, 17 Sep 2018 16:38:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728542AbeIQWBB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Sep 2018 18:01:01 -0400
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:33962 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728200AbeIQWBB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Sep 2018 18:01:01 -0400
-Received: by mail-wm1-f41.google.com with SMTP id j25-v6so5082736wmc.1
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:32:54 -0700 (PDT)
+        id S1728437AbeIQWGe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Sep 2018 18:06:34 -0400
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:35179 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726979AbeIQWGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Sep 2018 18:06:34 -0400
+Received: by mail-qk1-f193.google.com with SMTP id f62-v6so9348781qke.2
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 09:38:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=z5VDVzSR+p/HbFRr4Knc2Xp0Rzl3rEBde+jexmz2oDo=;
-        b=bcgQWDErStqrMsno+8mBQa3YOvQ+y0JtLkvlIcIYN8EmB+WBOZFc3lRmvbsJzugxE0
-         +ubmZJ2W2riToveYTI4NyB+RVEoViSrWuAUiBlYaSm6qOAyRcaUn2CZhH6XxPIHHFh2F
-         Z48k0mEsyJF8g6kJLlcE8IamBLcZjnWH3aYWxINehuay8xf4aYFoRBMVGsdaBGS9V6qb
-         mmMzKb6dPG3u/Pwvf/rMaAwiJo5nt4/mUH40bkjpp5RgWkrc3hP2Yy1arpS9i6IxzKvC
-         eFaXBH/WsPS1Ec3Ej3M1WFxIJ5zFQUFekXheq4onkhzpkmQ+u6FuhP9su19WreVRKo6h
-         LSmg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=V74cORWyas8LGJbgxkCyPJnaOwaSosxzmlYM3Uh0Je4=;
+        b=hGgUxEgEXR+Be7YPYBPvgI3hEwB9mstPeeZw6KWRJ8Nk9RDScN0bzhfaAZcpmGURhp
+         SpIx/H5ZEXr/NVyCy0AMRtpN4q826tV8PB9cxmRHXzfIF9dPr4SYxny0bmSSsu/qakeU
+         XAlulSYpTNyxmO2xNa3X7d0RNFOwimSLuuRp7H4+BczOHVRGzQ+Gk5HTaXr+J/2TiGvn
+         IOT+3CB1vJq3FYtyvvLQiDO74rxoKwHpM7DVbdDvAn+J16b0ywk6AyCv4Vwdc0dVwzpe
+         SveqCjc9ezUNK3EKNOAxGm9FHd2LCRnjSdK153tBCyB6vgz02k+MHAN2pP8+s2k7pce5
+         28yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=z5VDVzSR+p/HbFRr4Knc2Xp0Rzl3rEBde+jexmz2oDo=;
-        b=D/IZYWxUiyV6sW8UjsYs4sJCLr9zGOyRMD7FcxIpsopE1jA13+wsVcoL2pPbJUoo7L
-         qE62KvMwjWN/GStC5EydxbXjr4FHxgG5XpVyNk6PwMyKDro9ysDMhMymlHa2GqJP84im
-         t6vt45rtr400h6lnX96tiCOWpi/b0bKjbEtTIYiD5iti1rX4dKbqFrTyP8STKeXyMQva
-         +O4keO9MUZLBKi1kIx0FYC/o0Nk2VEnAXCiQWuy+KZEmhDO7YJTHHo2ZGme1M00SL0Es
-         Twgdp+QOw5w1X12vsxyu5SWZkuE8HQaw+umvJrmsrg1mrepPdlLLSIV4vmLNkshhpfYb
-         0PIA==
-X-Gm-Message-State: APzg51DVgoOxZm/D5yrRQve1x1PqxIxf005zqZy4zAosyb4uZSJ8A0va
-        ewNthodcCyAV4MiOxGItZaI=
-X-Google-Smtp-Source: ANB0Vdbrba7fVUgldImQV3ZuLx/r7mfol69fRTaogXOd2jkaO+tvkgws+Bytk3sL4NmzjGS934MO1g==
-X-Received: by 2002:a1c:98cc:: with SMTP id a195-v6mr12767728wme.64.1537201972399;
-        Mon, 17 Sep 2018 09:32:52 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g7-v6sm13776633wrw.30.2018.09.17.09.32.51
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 09:32:51 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH v4 05/23] blame.c: rename "repo" argument to "r"
-References: <20180909085418.31531-1-pclouds@gmail.com>
-        <20180915161759.8272-1-pclouds@gmail.com>
-        <20180915161759.8272-6-pclouds@gmail.com>
-Date:   Mon, 17 Sep 2018 09:32:51 -0700
-In-Reply-To: <20180915161759.8272-6-pclouds@gmail.com> (=?utf-8?B?Ik5ndXk=?=
- =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?=
-        Duy"'s message of "Sat, 15 Sep 2018 18:17:41 +0200")
-Message-ID: <xmqqk1nk84p8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        bh=V74cORWyas8LGJbgxkCyPJnaOwaSosxzmlYM3Uh0Je4=;
+        b=uFmWmrsQ3F2DL6VGsDJZHYu/OrODZsl4QZ0fxKl+wWRDrTv5WBBIS7QhcPaREr5XWC
+         DiLwulqQRrCR0M6MGpqrO4FcTr8QMGzIAR/lmeZyOyVpWwVNuHaC03kOo9xRDUr9jyaT
+         OhUDYn1PImiZ0RQxgxdzaxH2OBlqvlT3V5zx30CgKNyEnlE8pWkOpY+ccVTIhCwmoDlW
+         reV7WiOEDffGi7mijT7wFUEYPXl56rQbgjNRMdgTPnl2YffHy//4oSeVzzNxL8ceUjrT
+         SZkN1zB2tmc6FSa1Do5QLqLegk9Ndv87MlfDVaqeRLsroyX2zAOzC+ePshitl/6zqwEJ
+         nTMA==
+X-Gm-Message-State: APzg51A8Jj0VMVRenD/5KKjmtopRYgDClLgpiH8n33ORAA7XmgROl1hd
+        SxQdw1igny9R1ahiOR3hmiM2D4pa
+X-Google-Smtp-Source: ANB0VdaHjQnnYDTBti5gyFatdHT0Iahg0aeEOq+L3oYvfBkNRE+AUsyqGzwRebF77N13dHzCpSY28Q==
+X-Received: by 2002:a37:7b01:: with SMTP id w1-v6mr16844641qkc.354.1537202305512;
+        Mon, 17 Sep 2018 09:38:25 -0700 (PDT)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id y47-v6sm11142403qtk.27.2018.09.17.09.38.24
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Sep 2018 09:38:24 -0700 (PDT)
+Subject: Re: [PATCH v5 2/5] read-cache: load cache extensions on a worker
+ thread
+To:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <benpeart@microsoft.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Ben Peart <Ben.Peart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20180912161832.55324-1-benpeart@microsoft.com>
+ <20180912161832.55324-3-benpeart@microsoft.com>
+ <CACsJy8ATsS6S5zib2FqJf1stPcGwSTO1qYBSz514Xu2GfJ4Apw@mail.gmail.com>
+ <CACsJy8D-sM2SSfTMmsR0uKnP0FM9fGrN0Z-pH5irMsH1=-jrmQ@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <bfb8d836-86a4-a4f0-cdaf-aba25424d4cf@gmail.com>
+Date:   Mon, 17 Sep 2018 12:38:23 -0400
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACsJy8D-sM2SSfTMmsR0uKnP0FM9fGrN0Z-pH5irMsH1=-jrmQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> The current naming convention for 'struct repository *' is 'r' for
-> temporary variables or arguments. I did not notice this. Since we're
-> updating blame.c again in the next patch, let's fix this.
 
-It is likely that we end up having to refer to an in-core repository
-object in many places, so giving a short-and-sweet 'r' to it makes
-quite a lot of sense.  One thing we may want to do as preparation
-related to this effort is to sweep the codebase to make sure we do
-not use 'r' as a variable that refers to anything other than an
-in-core repository object.
+On 9/15/2018 6:24 AM, Duy Nguyen wrote:
+> On Sat, Sep 15, 2018 at 12:22 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>>> @@ -1944,6 +1993,26 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
+>>>          istate->cache = xcalloc(istate->cache_alloc, sizeof(*istate->cache));
+>>>          istate->initialized = 1;
+>>>
+>>> +       p.istate = istate;
+>>> +       p.mmap = mmap;
+>>> +       p.mmap_size = mmap_size;
+>>> +
+>>> +#ifndef NO_PTHREADS
+>>> +       nr_threads = git_config_get_index_threads();
+>>> +       if (!nr_threads)
+>>> +               nr_threads = online_cpus();
+>>> +
+>>> +       if (nr_threads >= 2) {
+>>> +               extension_offset = read_eoie_extension(mmap, mmap_size);
+>>> +               if (extension_offset) {
+> 
+> One more thing I forgot. If the extension area is small enough, then
+> we should not need to create a thread to parse extensions in parallel.
+> We should know roughly how much work we need because we know the total
+> size of all extensions.
+> 
 
-Thanks.
+The only extensions I found to be significant enough to be helped by a 
+separate thread was the cache tree.  Since the size of the cache tree is 
+driven by the number of files in the repo, I think the existing 
+THREAD_COST logic (that comes in the next patch of the series) is a 
+sufficient proxy.  Basically, if you have enough cache entries to be 
+benefited by threading, your extensions (driven by the cache tree) are 
+probably also big enough to warrant a thread.
+
+>>> +                       /* create a thread to load the index extensions */
+>>
+>> Pointless comment. It's pretty clear from the pthread_create() below
+>> thanks to good function naming. Please remove.
+>>
+>>> +                       p.src_offset = extension_offset;
+>>> +                       if (pthread_create(&p.pthread, NULL, load_index_extensions, &p))
+>>> +                               die(_("unable to create load_index_extensions_thread"));
+>>> +               }
+>>> +       }
+>>> +#endif
+>>> +
+>>>          if (istate->version == 4) {
+>>>                  previous_name = &previous_name_buf;
+>>>                  mem_pool_init(&istate->ce_mem_pool,
