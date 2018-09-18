@@ -2,87 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87CEA1F404
-	for <e@80x24.org>; Tue, 18 Sep 2018 01:55:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DB401F404
+	for <e@80x24.org>; Tue, 18 Sep 2018 01:57:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727344AbeIRHZm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 03:25:42 -0400
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46784 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726434AbeIRHZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 03:25:42 -0400
-Received: by mail-wr1-f68.google.com with SMTP id a108-v6so236301wrc.13
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 18:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=dmhlkzFG3Vo0+l//1J0J4Igty0gNn0nMUoBI8PadIxo=;
-        b=PIJ9RLxH0/jxUs9omDSt11A/G44vVLvIbpib6iJrN/da0NIw3UOO2uJCwRUdSGdeQS
-         +fH0McucVAAGsVeM/z31E/nJjQk6IJfHI5mNBd2YjsrcpGrTLcUE3bG6MZz0qe9m6lzi
-         K056hJJkmacc7P5eylZN1e39k9tudX/GjxdQDINPc6fia0/cvlRT+8Ob8cGP7/RmVNQB
-         f2towyX1Ure/EQZQCuzhynuUU5m2WGFMujljastyqVshIy6+6WsYtQ3zXooxx+yFATnZ
-         pUJ7PNKyUhLW1oRFV9hTTQDz0jbi8HA5lgKq3jsWxRc2aGQpQB5qne2+NPDA/oh1Sjjm
-         Gohw==
+        id S1727306AbeIRH1Q (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 03:27:16 -0400
+Received: from mail-qt0-f173.google.com ([209.85.216.173]:35696 "EHLO
+        mail-qt0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726660AbeIRH1Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 03:27:16 -0400
+Received: by mail-qt0-f173.google.com with SMTP id j7-v6so330898qtp.2
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 18:57:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=dmhlkzFG3Vo0+l//1J0J4Igty0gNn0nMUoBI8PadIxo=;
-        b=LiInW+8+n9P0DeJXrOKljNqjfuwyqe695xznk+z4tKPPmX453t0CC983XnNzDFhyda
-         lWQdjx6ibOBKjv59Ax1uXp5AxmcsebfKQiU9wadWOs59tuyXIHfHVvqkQmQGx25FG8vy
-         0os5EQQFJAjDXLe37eZY2zJyJm7PCuOvtYkSXbmMsM5AwNV9PTiR7hghDmL/cddNQzMq
-         LRg6kwPFkIu4x7iyM7/9LuYbSPfvT0vweXaXMdS5m/nkPMick+MJ6Y6pBK89qi3POoEI
-         z4AJc2wen7BEgEDwHCRfYtzyYL03SoIi7yoruGx7tltYCvA32gW8CDFwVsKot4P/17p3
-         +1Zg==
-X-Gm-Message-State: APzg51A0LGOJbtbduuzO5ilgqAEVsEAVhPHKe+1URwDyPKNmedaL7dHZ
-        +ySnzg0DEbc/GRAXSprcG6Y=
-X-Google-Smtp-Source: ANB0Vdaz4oi+LEYhXbHsqak0CcmwmgAe6gRX3MS3N1nfo9u198Crl+jCmctRHTGmi4R7nqU93V7evQ==
-X-Received: by 2002:a05:6000:104a:: with SMTP id c10mr19653296wrx.271.1537235732793;
-        Mon, 17 Sep 2018 18:55:32 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l18-v6sm15248028wru.75.2018.09.17.18.55.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Sep 2018 18:55:31 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Todd Zullinger <tmz@pobox.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t5551-http-fetch-smart.sh: sort cookies before comparing
-References: <20180907232205.31328-1-tmz@pobox.com>
-        <20180907235508.GB32065@sigill.intra.peff.net>
-        <20180908032841.GK7192@zaya.teonanacatl.net>
-        <20180908161712.GA9016@sigill.intra.peff.net>
-        <xmqqd0tb6bn0.fsf@gitster-ct.c.googlers.com>
-        <20180917221603.GA3621@sigill.intra.peff.net>
-Date:   Mon, 17 Sep 2018 18:55:31 -0700
-In-Reply-To: <20180917221603.GA3621@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 17 Sep 2018 18:25:39 -0400")
-Message-ID: <xmqqy3bz4lik.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=jBmAse9exVpwuIXBO14ylUb4dLLPefAxtM0XyjH3ais=;
+        b=PmT2ejVoEbGrV2APsXhuOajFIBZ55ZBgRZt/DseH2uXiC0d5wA85uWbC895ecNWCzB
+         lN2FUkPCPNAs/M3SqBqA3mM7RjvFLX5CjUd0xOhvaMJwV1h3cngI/DHTxKRbussjAJ5T
+         HFcXgY+ugIsHzLyRR0iFNaOBINkzgWTRj/0/N9m8HFvWiHWrNMhfl/+XrdqAjyyc1oIm
+         QTRdhPVflo66TAJ2CSHzAXkglrzVBOHjr+YPd46T/ZfOcjPshOViCm8QT3bLdlxB2QGU
+         bMh7urApQv1GEwzHeSK2PGxP3TAa6d6OH2GNwFJkEPa2XJkhpTUBt6DoKQQH9D7o2g60
+         h8og==
+X-Gm-Message-State: APzg51CheqEsRUQTCQ8tHiKzNd5bB+I5UvDLSkQW4VhX0wXa67jvDEdG
+        fGxFyvTeP4gWUy+S+1xBn3m65l+VoZfQXXNIam4=
+X-Google-Smtp-Source: ANB0VdYpdQ2tmg8EPPOl2iE9s0Wc9fWuKkoqP2KTlhZQgtMXS3lCe+Zel0xsq8LuwJdiGHQc9QKhHbngMD3nPRUIgTk=
+X-Received: by 2002:a0c:c503:: with SMTP id x3-v6mr19574218qvi.82.1537235827470;
+ Mon, 17 Sep 2018 18:57:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
+ <e01b719de662f0b150f78b5a6ab6ccfce9c675fa.1537223021.git.matvore@google.com>
+In-Reply-To: <e01b719de662f0b150f78b5a6ab6ccfce9c675fa.1537223021.git.matvore@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 17 Sep 2018 21:56:55 -0400
+Message-ID: <CAPig+cT5BLu2onbuTBbZ_mMzNMkEuPk5-g2d5YKw4V6Z42Y3aQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/6] t9109-git-svn-props.sh: split up several pipes
+To:     matvore@google.com
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrn@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Sep 17, 2018 at 6:25 PM Matthew DeVore <matvore@google.com> wrote:
+> t9109-git-svn-props.sh: split up several pipes
 
->> -cat >expect_cookies.txt <<EOF
->> +cat <<EOF | sort >expect_cookies.txt
->
-> This can be spelled:
->
->   sort >expect_cookies.txt <<EOF
->
-> can't it? Then we do not even incur the extra process. :)
+Similar to my comment about 5/6, this title talks about the mechanical
+changes made by the patch but not the intent. Perhaps reword it like
+this:
 
-Yeah, true.  Running cat only to feed a pipe with contents of a
-single file or the here-doc is an anti-pattern.
+    t9109: avoid swallowing Git exit code upstream of a pipe
+
+> A test uses several separate pipe sequences in a row which are awkward
+> to split up. Wrap the split-up pipe in a function so the awkwardness is
+> not repeated.
+>
+> Signed-off-by: Matthew DeVore <matvore@google.com>
+> ---
+> diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+> @@ -190,16 +190,21 @@ EOF
+> +# Note we avoid using pipes in order to ensure that git exits with 0.
+
+This new comment doesn't really add value for someone reading the
+patch without knowing the history leading up to the point the comment
+was added. It should probably be dropped. (The actual text of the
+comment is rather confusing anyhow since avoiding pipes has nothing to
+do with ensuring that git exits with 0, thus another reason why this
+comment ought to be dropped.)
+
+>  test_expect_success 'test propget' "
+> -       git svn propget svn:ignore . | cmp - prop.expect &&
+> +       test_propget () {
+> +               git svn propget $1 $2 >observed
+
+The &&-chain is broken here, which means you're losing the exit status
+from the Git command anyhow (despite the point of the patch being to
+avoid losing it).
+
+Also, for consistency, how about calling this "actual" rather than "observed"?
+
+> +               cmp - $3
+
+This is just wrong. The "-" argument to 'cmp' says to read from
+standard input, but there is nothing being passed to 'cmp' on standard
+input anymore now that you're removed the pipe. I'm guessing that you
+really meant to use "observed" here (and reverse the order of
+arguments to be consistent with the expect-then-actual idiom).
+Finally, since these (apparently) might be binary, you can use
+test_cmp_bin() instead.
+
+> +       } &&
+> +       test_propget svn:ignore . prop.expect &&
+>         cd deeply &&
+> -       git svn propget svn:ignore . | cmp - ../prop.expect &&
+> -       git svn propget svn:entry:committed-rev nested/directory/.keep \
+> -         | cmp - ../prop2.expect &&
+> -       git svn propget svn:ignore .. | cmp - ../prop.expect &&
+> -       git svn propget svn:ignore nested/ | cmp - ../prop.expect &&
+> -       git svn propget svn:ignore ./nested | cmp - ../prop.expect &&
+> -       git svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
+> +       test_propget svn:ignore . ../prop.expect &&
+> +       test_propget svn:entry:committed-rev nested/directory/.keep \
+> +               ../prop2.expect &&
+> +       test_propget svn:ignore .. ../prop.expect &&
+> +       test_propget svn:ignore nested/ ../prop.expect &&
+> +       test_propget svn:ignore ./nested ../prop.expect &&
+> +       test_propget svn:ignore .././deeply/nested ../prop.expect
+>         "
+
+After this patch, the test is even more broken than appears at first
+glance since the test body is inside double-quotes. This means that
+the $1, $2, $3 inside the test_propget() function are getting expanded
+_before_ the function itself is ever defined, to whatever bogus values
+$1, $2, $3 hold at that point. I can't see how this could ever have
+worked (except only appearing to work by pure accident).
