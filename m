@@ -7,64 +7,58 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D4AB1F404
-	for <e@80x24.org>; Tue, 18 Sep 2018 05:35:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23EDE1F404
+	for <e@80x24.org>; Tue, 18 Sep 2018 05:48:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726779AbeIRLF6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 07:05:58 -0400
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42904 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726428AbeIRLF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 07:05:58 -0400
-Received: by mail-wr1-f66.google.com with SMTP id v17-v6so577091wrr.9
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 22:35:01 -0700 (PDT)
+        id S1726428AbeIRLSv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 07:18:51 -0400
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:39565 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726254AbeIRLSv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 07:18:51 -0400
+Received: by mail-wm1-f65.google.com with SMTP id q8-v6so1106112wmq.4
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 22:47:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BNo0YnOOeHnruiTqITTO5389OudUu66qwtnEAxkCPEc=;
-        b=urPlLGSbqEpd2PtrntQ07xjp5xqx//wv+I99VcLg0ol5KVPjR4aqen2NTJmvJtdfQy
-         YYr/l+sBfLZMD/h79k0JYZLKMMXAViVv2RNQWWf/+WXi7ogn+CO+/e5bTIkWgNNhlAaY
-         00+j0QfmsXdKlTY8YLviCNgmSwwLygs5k1vIiozfz2muc8BufCNOJ3az/colW2GZ3K0u
-         4u0yF0RH8nHCuJlCgl/gkHB67mzLQsLj1rQGYoL6MWGPn1DNJYK9AOnnYmEDeLkjaFpn
-         TxBbbdumY4Z26Di5Mbne7huCDdGbrFsn3lhKOmx0Xb8lOjaHTuIDcYYO3C6UWhOksmmW
-         bNJw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n3iU0yC6gdthH83kJA7NQArnHGIMpF118iD8tIa2sB0=;
+        b=AyCMlH0BaDZW/4VKMRS9DniH11/BdWQQyNh78CAWjBrz5wlEJSnT54is6/5SnAIL8D
+         3JdsEghedYVur5OZMGLxJxga07+8R5nIUSzHnMXlx7rTnIZgpp3u5+kwEEbcsbXIFUMR
+         Nb9REu+BgHtMIExx6ucZbSFN6WgDwSxN88dMrSPIMhmbBK4MNu5AYbzOzRNT/tdGvjYS
+         tJPMOWSVaEOVl9pa6cPDWAPnsYOCHg/UZdhWlRj+tQGBVBMxs4HHc1r6AExHwfbMEXDf
+         shK0oXBGgNLJxCRhWWG1ofS0LsD1Q+Vs2e9vL1q20hXtEKbmbtKFd6D8qkRAIcW87MNL
+         KaAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BNo0YnOOeHnruiTqITTO5389OudUu66qwtnEAxkCPEc=;
-        b=HpYm2Il/HhWL6U81xM2akoQGHTbHpypMM4Fc3xhzMXwJUjDOf/c81Il3ep5Vsp37VD
-         ES4JhCr1bbZL47JIW//03sXBb4TCmIn90X1hGILD40Lc75thkq5VwrH09JfveePBt1y9
-         qcbBsQmYvSECLacaS2oZr8yPiupPM2RnqmruTJ+lPNWysx1N3dIrnl+N4bS1wxQJeSyz
-         vZ2e0l/PV0D51S/V06XLv8hJCR4pKRp0JpvaOdZWDb/ZrRx7tcbdH5wCTH2DwJEg9NoD
-         aoMiU73BVKTPEor52eCJQ+PlduJCJTT59xCY+ChxChdcYMs/No3OO8x3cGnK+JEQxvt2
-         4g8w==
-X-Gm-Message-State: APzg51CY5a+xw0ruu2gUGptOQQPysTESoPChiTsG372uGlQGcTrzTRZZ
-        EDXT+s4bBNnznjDNwaLoCozcB+fgx/0=
-X-Google-Smtp-Source: ANB0Vda4PnJ9i06E0mNlNHc9I6/jzT5maU6hJSz7i/QFVM/PMlY2/P0KJnp8Q6xpWnsD1c7hd070kw==
-X-Received: by 2002:adf:ae5a:: with SMTP id u26-v6mr22598341wrd.246.1537248900432;
-        Mon, 17 Sep 2018 22:35:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n3iU0yC6gdthH83kJA7NQArnHGIMpF118iD8tIa2sB0=;
+        b=ceeK7OU1JacemzzuttR3p9UIuBZOPlK2JHZEfAm/mdJn6ySiG9B905pahkmviu3L1v
+         JsSNnYZfpH1JfL1jznlnfFKblzzR4ShN0AEcRqo01LSP0LWQyqPG+OyJcUsIKI4LObQW
+         S/9BHLL6r1CLi2B+R3EkP4RkwfyIdkvG+AHF97MbDEgpbpRBl7gCRHB23OzfUxKMq/OZ
+         wGheFgFARdhqyX8CrqPXRF1mUK8LIHN/1MBqmkRKC5NrY9JOeaZTPecSKXzWzIOqXhHg
+         qz/dnqvab2E9nzinKdPFATrmxPsqfGAWkioCQ7XJLYflZmiM9SZx6xXv3tcH1CwvX31p
+         Ay2Q==
+X-Gm-Message-State: APzg51CUztS/R689cyvXeLCFqzh7zd1yER0XfelyBnP7uhIWERTkEPVJ
+        bxPnwsITHNjNL5plxqmQtQHcXG10e88=
+X-Google-Smtp-Source: ANB0VdYxDSFV3BVflH7eisM5RiinMAu6ODFnvFaPht7yISOZZG1TkoG3voPFnEquQ1zI7LwPkJqDuA==
+X-Received: by 2002:a1c:e54:: with SMTP id 81-v6mr14424830wmo.84.1537249671591;
+        Mon, 17 Sep 2018 22:47:51 -0700 (PDT)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id u127-v6sm1021943wmf.48.2018.09.17.22.34.59
+        by smtp.gmail.com with ESMTPSA id 132-v6sm881398wmd.13.2018.09.17.22.47.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 22:34:59 -0700 (PDT)
+        Mon, 17 Sep 2018 22:47:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] config doc: add missing list separator for checkout.optimizeNewBranch
-Date:   Tue, 18 Sep 2018 05:34:49 +0000
-Message-Id: <20180918053449.14047-1-avarab@gmail.com>
+Subject: [PATCH 0/3] doc: fixups for ab/fetch-tags-noclobber
+Date:   Tue, 18 Sep 2018 05:47:37 +0000
+Message-Id: <20180918054740.24180-1-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.0.rc2.392.g5ba43deb5a
-In-Reply-To: <20180816182653.15580-1-benpeart@microsoft.com>
-References: <20180816182653.15580-1-benpeart@microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,35 +67,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The documentation added in fa655d8411 ("checkout: optimize "git
-checkout -b <new_branch>"", 2018-08-16) didn't add the double-colon
-needed for the labeled list separator, as a result the added
-documentation all got squashed into one paragraph. Fix that by adding
-the list separator.
+Of course I only noticed these after the series had landed in
+master...
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+Ævar Arnfjörð Bjarmason (3):
+  push doc: add spacing between two words
+  fetch doc: correct grammar in --force docs
+  fetch doc: correct grammar in --force docs
 
-Junio: Feel free to squash this in, but per your recent E-Mail it
-doesn't seem you're planning to rewind "next", so this can go on top
-of gitster/bp/checkout-new-branch-optim.
+ Documentation/git-push.txt         | 2 +-
+ Documentation/pull-fetch-param.txt | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
- Documentation/config.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ac71ade256..1546833213 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1153,7 +1153,7 @@ and by linkgit:git-worktree[1] when 'git worktree add' refers to a
- remote branch. This setting might be used for other checkout-like
- commands or functionality in the future.
- 
--checkout.optimizeNewBranch
-+checkout.optimizeNewBranch::
- 	Optimizes the performance of "git checkout -b <new_branch>" when
- 	using sparse-checkout.  When set to true, git will not update the
- 	repo based on the current sparse-checkout settings.  This means it
 -- 
 2.19.0.rc2.392.g5ba43deb5a
 
