@@ -2,147 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7AA451F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 15:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E59DB1F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 16:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729932AbeIRVFT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 17:05:19 -0400
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:43259 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728065AbeIRVFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 17:05:18 -0400
-Received: by mail-pl1-f194.google.com with SMTP id 38-v6so1174143plc.10
-        for <git@vger.kernel.org>; Tue, 18 Sep 2018 08:32:13 -0700 (PDT)
+        id S1729859AbeIRWXz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 18:23:55 -0400
+Received: from mail-it0-f51.google.com ([209.85.214.51]:50356 "EHLO
+        mail-it0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728065AbeIRWXz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 18:23:55 -0400
+Received: by mail-it0-f51.google.com with SMTP id j81-v6so4251775ite.0
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 09:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=GjKITQ5Jb5v4nmTUNv6ucoYP200wEXui1OW3qFyoV+w=;
-        b=YKmKsORVEw0FNFwS5MrZSHtu3Kd51InJ0ISeseETMo8TlqUhtZ7PDD1tQvjgPLwcAD
-         vNW28Rpt9bRwwUrqI7cYB/SD0czofvbIIZ1Z1vtO1cC+ENP7MVyhG60FSgLZdsd935HH
-         OsFAGEolNazxRaFaZcDIWK8CzUWJitSKhvOb9V3C7Pifc/DYxpp2YvWxkXArPYQ5uVa+
-         qvQszV+ZwumOLLtXwitPOFWFQfwADm479hiR8yNZ8OnZ/ZZQkJMUg4ykXmBPkaas/8Vx
-         BtoIZcOeedOueD/MMzqBQqRwVlRWH9vt6D+rQwfVLgP//Ivn8fNc2qZUeJC3a5TR3A1N
-         SAug==
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=B6ww+BFiWBUTZvUOFrQSLwKMVeMz1r37mb3aUnQoe3U=;
+        b=P0GE/epJ4ZjWKl8ODgQGqrHXw/5QigP4TcTrv8oSrt/uEdAPA1ScRZWP3DdwmfSNQV
+         zjQlQBasar6K53usEscfwAXjcwtq2b87ZqMua2c64kE5T/1oFH5Od96eFGcM2gMXEldm
+         G4mv/5f/fsY10FqVUNrJ7gk2XqxVfp/Kemers=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=GjKITQ5Jb5v4nmTUNv6ucoYP200wEXui1OW3qFyoV+w=;
-        b=b5Nzur4FDg/tpcW7pn955DUO6wsPuKiAkKg6hCrbVs/8rCewDapbs0gYVZUz/xiKqG
-         pPL1fpWwjnQQYMjpIZftq3sjvkvrJvTpmKdwI28n3njMTptHtwdDZZ9XxKdYzyHhWlOG
-         qtL5fl0/2JgpPLBAtk7YKgQWh7HOPJ4g9ifoR9Hkdsleu9aD2Xtw1sewVl1sQOYGGHqr
-         dmxWemR2H7ZykW58UTUQViloEh6wxGGs/gGWK1e07lWpo5y2iTr7MjxtAmRVcXJcl3lP
-         2Rtid0IP7JWG7SCJenLpHQqlAiesVaTKrUDW/0bB8K32q9L+Kg6hIJq2Dlwz9Eow1gth
-         0PQQ==
-X-Gm-Message-State: APzg51Aoeg4+PUF6mK3+xqbovwbS7q4D8ODoXE4sohvlg9wUM39iSmrE
-        UklFx6SGloTmqIUM3mqSM4M=
-X-Google-Smtp-Source: ANB0VdapJGygnilYh6Xosjq44Kr2llWfqdYQj9zoMYQJeVYHN88677oV/rREwmh/p/KQ2ulpKOmZYg==
-X-Received: by 2002:a17:902:1121:: with SMTP id d30-v6mr29288102pla.250.1537284733041;
-        Tue, 18 Sep 2018 08:32:13 -0700 (PDT)
-Received: from aiede.svl.corp.google.com ([2620:0:100e:422:4187:1d6c:d3d6:9ce6])
-        by smtp.gmail.com with ESMTPSA id b73-v6sm32033064pfj.93.2018.09.18.08.32.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 18 Sep 2018 08:32:12 -0700 (PDT)
-Date:   Tue, 18 Sep 2018 08:32:10 -0700
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Joan Daemen <jda@noekeon.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=B6ww+BFiWBUTZvUOFrQSLwKMVeMz1r37mb3aUnQoe3U=;
+        b=hH5UGFx74qToe+GOCglHB4bs09mBWmZno1uKORVtbW6dljnaJaHaJDQabHuDBhpeZy
+         UOBdY7mpK+12iLt/ldvLJq7vOr4Ia2EN45D+Xib4QUrx10dz91T89gQpvQ5G6q94uwJL
+         tB6X0b+uhFvNLwy4LB9w0xPkbqpDO7+y7d120ydK+4N4MvM+zlnA3lazXE35Gj/z9AsI
+         Y4ntllNSGBSJImMLbLeqL9Upe8bu24kiCzM6shL7Bm2TQFseI03RC4ZVYI+mkrbftbYq
+         oYuZsHPcpwi8LXMcQKWIwqw0lyVrBWpL+65VmrgCSuzWajRqNJg3kaHEKzu51GBv4o27
+         yEBw==
+X-Gm-Message-State: APzg51BjFuJ8P4WBdmhPxX42tnESIqK2XA9PhifFJJLvQeKatTqBK9MB
+        51zo2rGqNMoKdz9XlrHWBhvAdgRI6uOJjLjI6L0=
+X-Google-Smtp-Source: ANB0VdZS1RsIjRy3mkadzpmSio2yMSVlrdHgzyzRpQiifUzFrM5urc0FQ7fwrxGeIbum+CaBbD5lYMD41UN0LO6KcHs=
+X-Received: by 2002:a02:702:: with SMTP id f2-v6mr28502502jaf.70.1537289428870;
+ Tue, 18 Sep 2018 09:50:28 -0700 (PDT)
+MIME-Version: 1.0
+References: <20180609205628.GB38834@genre.crustytoothpaste.net>
+ <20180609224913.GC38834@genre.crustytoothpaste.net> <20180611192942.GC20665@aiede.svl.corp.google.com>
+ <20180720215220.GB18502@genre.crustytoothpaste.net> <20180724190136.GA5@0f3cdde9c159>
+ <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
+ <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com> <20180724221008.GI18502@genre.crustytoothpaste.net>
+ <nycvar.QRO.7.76.6.1807301058560.10478@tvgsbejvaqbjf.bet> <MWHPR21MB01738A46E37527E45E950937C42F0@MWHPR21MB0173.namprd21.prod.outlook.com>
+ <64c1fc82-8830-bd62-7cc6-ef76ad06f6d5@noekeon.org>
+In-Reply-To: <64c1fc82-8830-bd62-7cc6-ef76ad06f6d5@noekeon.org>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Tue, 18 Sep 2018 09:50:17 -0700
+Message-ID: <CA+55aFyYyh0EYSotDYMv+mk+QbRghQnn3MK7oRn=131VDm=HfQ@mail.gmail.com>
+Subject: Re: Hash algorithm analysis
+To:     jda@noekeon.org
 Cc:     Dan Shumow <danshu@microsoft.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         "brian m. carlson" <sandals@crustytoothpaste.net>,
         Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
         Edward Thomson <ethomson@edwardthomson.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         demerphq <demerphq@gmail.com>, Adam Langley <agl@google.com>
-Subject: Re: Hash algorithm analysis
-Message-ID: <20180918153210.GA133875@aiede.svl.corp.google.com>
-References: <20180609224913.GC38834@genre.crustytoothpaste.net>
- <20180611192942.GC20665@aiede.svl.corp.google.com>
- <20180720215220.GB18502@genre.crustytoothpaste.net>
- <20180724190136.GA5@0f3cdde9c159>
- <CA+55aFwSe9BF8e0hLk9pp3FVD5LaVY5GRdsV3fbNtgzekJadyA@mail.gmail.com>
- <xmqqzhygwd5o.fsf@gitster-ct.c.googlers.com>
- <20180724221008.GI18502@genre.crustytoothpaste.net>
- <nycvar.QRO.7.76.6.1807301058560.10478@tvgsbejvaqbjf.bet>
- <MWHPR21MB01738A46E37527E45E950937C42F0@MWHPR21MB0173.namprd21.prod.outlook.com>
- <64c1fc82-8830-bd62-7cc6-ef76ad06f6d5@noekeon.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <64c1fc82-8830-bd62-7cc6-ef76ad06f6d5@noekeon.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-A quick note.
-
-Joan Daemen wrote:
-
-> when going over my todo list I was confronted with the mail of Dan
-> Shumow on the successor of SHA-1 for git. I know the decision was
-> made and it is not my intention to change it, but please see below
-> some comments on Dan's arguments.
-
-When the time comes for the next hash change in Git, it will be useful
-to be able to look back over this discussion.  Thanks for adding
-details.
-
-[...]
-> On 30/07/2018 22:01, Dan Shumow wrote:
-
->> So, I also want to state my biases in favor of SHA2 as an employee
->> of Microsoft. [...] As such, and reflecting this bias, in the
->> internal discussions that Johannes alluded to, SHA2 and SHA3 were
->> the primary suggestions.  There was a slight preference for SHA2
->> because SHA3 is not exposed through the windows cryptographic APIs
->> (though Git does not use those, so this is a nonissue for this
->> discussion.)
+On Tue, Sep 18, 2018 at 8:18 AM Joan Daemen <jda@noekeon.org> wrote:
 >
-> We find it cynical to bring up a Microsoft-internal argument that is
-> actually not relevant to Git.
+> 3) The relatively large state in the sponge construction increases the ge=
+neric strength against attacks when the input contains redundancy or
+> has a certain form. For instance, if the input is restricted to be text i=
+n ASCII (such as source code), then the collision-resistance grows
+> higher than the nominal 2^{c/2}. Such an effect does not exist with narro=
+w-pipe Merkle-Damg=C3=A5rd. (This may be what Linus had intuitively in mind=
+.)
 
-On the contrary, I am quite grateful that Dan was up front about where
-his preference comes from, *especially* when the reasons are not
-relevant to Git.  It is useful background for better understanding his
-rationale and understanding the ramifications for some subset of
-users.
+Answering to just this part:
 
-In other words, consider someone active in the Git project that
-disagrees with the decision to use SHA2.  This explanation by Dan can
-help such a person understand where the disagreement is coming from
-and whether we are making the decision for the wrong reasons (because
-Git on Windows does not even use those APIs).
+No, what I had in mind was literally just exactly the kind of attack
+that SHA1 broke for - attacking the internal state vector directly,
+and not paying any penalty for it, because the stat size is the same
+as the final hash size.
 
-[...]
-> 3) The relatively large state in the sponge construction increases
-> the generic strength against attacks when the input contains
-> redundancy or has a certain form. For instance, if the input is
-> restricted to be text in ASCII (such as source code), then the
-> collision-resistance grows higher than the nominal 2^{c/2}. Such an
-> effect does not exist with narrow-pipe Merkle-Damgård. (This may be
-> what Linus had intuitively in mind.)
+The length extension attack is just the simplest and most trivial
+version of that kind of attack - because the internal state vector
+*is* the result, and you just continue using it.
 
-Interesting.
+But that trivial length extension thing not the real problem, it's
+just the absolutely simplest symptom of the real problem.
 
-[...]
-> [2] Daniel J. Bernstein, Cost analysis of hash collisions: Will
-> quantum computers make SHARCS obsolete? Workshop Record of
-> SHARCS'09.
+I think that the model where the internal state of the hash is the
+same width as the final result is simply broken. It was what broke
+SHA1, and that problem is shared with SHA2.
 
-I remember that paper!  Thanks for the pointer.
+"Length extension" is just the simplest way to say "broken by design", imho=
+.
 
-Sincerely,
-Jonathan
+Because the length extension attack is just the most trivial attack,
+but it isn't the fundamental problem. It was just the first and the
+cheapest attack found, but it was also the most special-cased and
+least interesting. You need to have a very special case (with that
+secret at the beginning etc) to make the pure length extension attack
+interesting. And git has no secrets, so in that sense "length
+extension" by itself is totally immaterial. But the basic problem of
+internal hash size obviously wasn't.
+
+So I would say that length extension is a direct result of the _real_
+problem, which is that the hash exposes _all_ of the internal data.
+
+That is what makes length extension possible - because you can just
+continue from a known state, and there is absolutely nothing hidden -
+and yes, that's a really easy special case where you don't even need
+to actually break the hash at all.
+
+But I argue that it's _also_ one big part of what made SHAttered
+practical, and I think the underlying problem is exactly the same.
+When the internal state is the same size as the hash, you can attack
+the internal state itself for basically the same cost as attacking the
+whole hash.
+
+So you can pick-and-choose the weakest point.
+
+Which is basically exactly what SHAttered did. No, it wasn't the
+trivial "just add to the end", but it used the exact same underlying
+weakness as one part of the attack.
+
+*This* is why I dislike SHA2. It has basically the exact same basic
+weakness that we already know SHA1 fell for. The hashing details are
+different, and hopefully that means that there aren't the same kind of
+patterns that can be generated to do the "attack the internal hash
+state" part, but I don't understand why people seem to ignore that
+other fundamental issue.
+
+Something like SHA-512/256 would have been better, but I think almost
+nobody does that in hardware, which was one of the big advantages of
+plain SHA2.
+
+The main reason I think SHA2 is acceptable is simply that 256 bits is
+a lot. So even if somebody comes up with a shortcut that weakens it by
+tens of bits, nobody really cares. Plus I'm obviously not a
+cryptographer, so I didn't feel like I was going to fight it a lot.
+
+But yes, I'd have probably gone with any of the other alternatives,
+because I think it's a bit silly that we're switching hashes to
+another hash that has (at least in part) the *exact* same issue as the
+one people call broken.
+
+(And yes, the hashing details are different, so it's "exactly the
+same" only wrt that internal state part - not the bitpattern finding
+part that made the attack on the internal state much cheaper. Real
+cryptographers obviously found that "figure out the weakness of the
+hashing" to be the more interesting and novel part over the trivial
+internal hash size part).
+
+That said..
+
+The real reason I think SHA2 is the right choice was simply that there
+needs to be a decision, and none of the choices were *wrong*.
+Sometimes just the _act_ of making a decision is more important than
+_what_ the decision is.
+
+And hey, it is also likely that the reason _I_ get hung up on just the
+size of the internal state is that exactly because I am _not_ a
+cryptographer, that kind of high-level stuff is the part I understand.
+When you start talking about why the exact rules of Merkle=E2=80=93Damg=C3=
+=A5rd
+constructions work, my eyes just glaze over.
+
+So I'm probably - no, certainly - myopic and looking at only one part
+of the issue to begin with.
+
+The end result is that I argued for more bits in the internal state
+(and apparently wide vs narrow is the technical term), and I would
+have seen parallel algorithms as a bonus for the large-file case. None
+of which argued for SHA2.
+
+But see above on why I think SHA2 is if not *the* right choice, at
+least *a* right choice.
+
+                    Linus
