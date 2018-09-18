@@ -2,176 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 11F081F404
-	for <e@80x24.org>; Tue, 18 Sep 2018 04:08:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 516041F404
+	for <e@80x24.org>; Tue, 18 Sep 2018 04:11:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729089AbeIRJja (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 05:39:30 -0400
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:40816 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726414AbeIRJja (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 05:39:30 -0400
-Received: by mail-pg1-f193.google.com with SMTP id l63-v6so330214pga.7
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 21:08:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=L2kxBlA6o09grlg+pOFzgAWNVQtJaXzO8PzA/6R4CRI=;
-        b=DksIvY9twLcidMw6iBw5vtKbDE6LG+2LpHpfBbJm2uPlOiwNHDh0WvvWdgB8n2YAuI
-         yNjThWUc9T+DR8p/AGAUSOH4ldyAPiJYFuZ2GmLMDPpoAi0KPtaT3fCjUEIN+20hi4+f
-         DJ1AY7uvtL5bhUVx2h56bQCKb7Jp0mb1uJtKSK5oBVSZkEkfuY3BC6advicC+UXCV38c
-         Uu8prROaiaANV8baVtbc52gQSJNOX9yOxhF3TfRYHE9fpvgVgTqto7qz+74LYOaa/NBq
-         UlP9uu47OCZarrjAAvjp4PhGQYNZgJNNVWu9DOssOJNKh+1dSNS23Hkm/ObUY8tYrZ0p
-         Fi6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=L2kxBlA6o09grlg+pOFzgAWNVQtJaXzO8PzA/6R4CRI=;
-        b=BYdHCTeY7JRYl1kui+ivq2rMhJjSk32fMl5/N8GTrpXjX65dsmmDa4rUMuPPJ7c56t
-         tgJPeKHaKbx9W8B8UcBkK/Q+dEARXVJIOztK/fHN4VaemJZc+Xf+AgqaK+jJ4Gs6KP+J
-         iljocgrlW3XpauE53C4vvoAzI2IVyHswQ7gvyQQvaYaxubI0fdS/1xTpohv2z0LbhLHS
-         X2mSVqTfjgExpJ/3GjWcQBBeK1NHJRtaUMv89LP3zrKViteSoOxoIMTU2k5MNU8nylyY
-         Xl35OoQ8Cn5FU0UHuJmBi/yOSH80c9uPNOF/ijiIym+mYzpBJNkUuTkfv8iWlXfv9ROq
-         4j/A==
-X-Gm-Message-State: APzg51D/FSnO4eisUz3BjVghKVHsb600+vT7ztdsW8c0ftS8RXkPToQ1
-        a3dt+TY9XcEyoMSye+XupV2LBJ1a
-X-Google-Smtp-Source: ANB0VdZS85XJCBkrlup9vR7P3KPRP77pghvdJdgmFRlcUjytHIBS0BaJwyPzoUdVP00V9rgGHVPOJA==
-X-Received: by 2002:a63:2043:: with SMTP id r3-v6mr25841227pgm.105.1537243729656;
-        Mon, 17 Sep 2018 21:08:49 -0700 (PDT)
-Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id b73-v6sm25984691pfj.93.2018.09.17.21.08.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 21:08:48 -0700 (PDT)
-Date:   Mon, 17 Sep 2018 21:08:48 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Sep 2018 04:08:38 GMT
-Message-Id: <0e64fc144cf4eb8b15c9e8453cf8af83330930e2.1537243720.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.25.v2.git.gitgitgadget@gmail.com>
-References: <pull.25.git.gitgitgadget@gmail.com>
-        <pull.25.v2.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 5/6] commit/revisions: bookkeeping before refactoring
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        id S1726759AbeIRJmc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 05:42:32 -0400
+Received: from cat-porwal-prod-mail1.catalyst.net.nz ([202.78.240.226]:49960
+        "EHLO cat-porwal-prod-mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726434AbeIRJmb (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 18 Sep 2018 05:42:31 -0400
+X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Sep 2018 05:42:31 EDT
+Received: from [IPv6:2404:130:0:1000:cc36:790:3beb:d33f] (unknown [IPv6:2404:130:0:1000:cc36:790:3beb:d33f])
+        (Authenticated sender: victorengmark@catalyst.net.nz)
+        by cat-porwal-prod-mail1.catalyst.net.nz (Postfix) with ESMTPSA id 45A89807CD
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 16:03:33 +1200 (NZST)
+From:   Victor Engmark <victorengmark@catalyst.net.nz>
+Openpgp: preference=signencrypt
+Autocrypt: addr=victorengmark@catalyst.net.nz; prefer-encrypt=mutual; keydata=
+ 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
+ JPUM38S4RlHBoBjN/Rl7d11q
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Subject: Cannot negate `*` ignore pattern for directory with space in the name
+Message-ID: <955f404f-83ed-758e-017b-d6b4a1f69ef7@catalyst.net.nz>
+Date:   Tue, 18 Sep 2018 16:03:33 +1200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+To reproduce (from <https://unix.stackexchange.com/q/469708/3645>):
 
-There are a few things that need to move around a little before
-making a big refactoring in the topo-order logic:
+$ cd "$(mktemp --directory)"
+$ mkdir foo\ bar
+$ touch foo\ bar/test
+$ git init
+Initialized empty Git repository in /tmp/tmp.iGmBR6y2xR/.git/
+$ git status --short
+?? foo bar/
+$ cat > .gitignore << EOF
+> *
+> !foo bar
+> !foo\ bar
+> !"foo bar"
+> "!foo bar"
+> !foo*
+> !foo bar/
+> !foo\ bar/
+> !"foo bar/"
+> "!foo bar/"
+> !foo*/
+> EOF
+$ git status --short
+[no output]
 
-1. We need access to record_author_date() and
-   compare_commits_by_author_date() in revision.c. These are used
-   currently by sort_in_topological_order() in commit.c.
+The pattern *can* be negated if it only matches directories:
 
-2. Moving these methods to commit.h requires adding the author_slab
-   definition to commit.h.
+$ cat > .gitignore << EOF
+> */
+> !foo\ bar/
+> EOF
+$ git status --short
+?? .gitignore
+?? foo bar/
 
-3. The add_parents_to_list() method in revision.c performs logic
-   around the UNINTERESTING flag and other special cases depending
-   on the struct rev_info. Allow this method to ignore a NULL 'list'
-   parameter, as we will not be populating the list for our walk.
+I encountered this problem because Visual Studio Code creates a
+configuration directory called "Code - OSS", and I exclude everything in
+~/.config by default to avoid noise in `git status`.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit.c   | 11 ++++-------
- commit.h   |  8 ++++++++
- revision.c |  6 ++++--
- 3 files changed, 16 insertions(+), 9 deletions(-)
+$ git --version
+git version 2.19.0
 
-diff --git a/commit.c b/commit.c
-index d0f199e122..f68e04b2f1 100644
---- a/commit.c
-+++ b/commit.c
-@@ -655,11 +655,8 @@ struct commit *pop_commit(struct commit_list **stack)
- /* count number of children that have not been emitted */
- define_commit_slab(indegree_slab, int);
- 
--/* record author-date for each commit object */
--define_commit_slab(author_date_slab, timestamp_t);
--
--static void record_author_date(struct author_date_slab *author_date,
--			       struct commit *commit)
-+void record_author_date(struct author_date_slab *author_date,
-+			struct commit *commit)
- {
- 	const char *buffer = get_commit_buffer(commit, NULL);
- 	struct ident_split ident;
-@@ -684,8 +681,8 @@ fail_exit:
- 	unuse_commit_buffer(commit, buffer);
- }
- 
--static int compare_commits_by_author_date(const void *a_, const void *b_,
--					  void *cb_data)
-+int compare_commits_by_author_date(const void *a_, const void *b_,
-+				   void *cb_data)
- {
- 	const struct commit *a = a_, *b = b_;
- 	struct author_date_slab *author_date = cb_data;
-diff --git a/commit.h b/commit.h
-index 2b1a734388..ff0eb5f8ef 100644
---- a/commit.h
-+++ b/commit.h
-@@ -8,6 +8,7 @@
- #include "gpg-interface.h"
- #include "string-list.h"
- #include "pretty.h"
-+#include "commit-slab.h"
- 
- #define COMMIT_NOT_FROM_GRAPH 0xFFFFFFFF
- #define GENERATION_NUMBER_INFINITY 0xFFFFFFFF
-@@ -328,6 +329,13 @@ extern int remove_signature(struct strbuf *buf);
-  */
- extern int check_commit_signature(const struct commit *commit, struct signature_check *sigc);
- 
-+/* record author-date for each commit object */
-+define_commit_slab(author_date_slab, timestamp_t);
-+
-+void record_author_date(struct author_date_slab *author_date,
-+			struct commit *commit);
-+
-+int compare_commits_by_author_date(const void *a_, const void *b_, void *unused);
- int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused);
- int compare_commits_by_gen_then_commit_date(const void *a_, const void *b_, void *unused);
- 
-diff --git a/revision.c b/revision.c
-index 2dcde8a8ac..92012d5f45 100644
---- a/revision.c
-+++ b/revision.c
-@@ -808,7 +808,8 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
- 			if (p->object.flags & SEEN)
- 				continue;
- 			p->object.flags |= SEEN;
--			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
-+			if (list)
-+				commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
- 		}
- 		return 0;
- 	}
-@@ -847,7 +848,8 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
- 		p->object.flags |= left_flag;
- 		if (!(p->object.flags & SEEN)) {
- 			p->object.flags |= SEEN;
--			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
-+			if (list)
-+				commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
- 		}
- 		if (revs->first_parent_only)
- 			break;
 -- 
-gitgitgadget
-
+Kind regards
+Victor Engmark
