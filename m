@@ -2,85 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 05A9B1F404
-	for <e@80x24.org>; Tue, 18 Sep 2018 01:30:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 87CEA1F404
+	for <e@80x24.org>; Tue, 18 Sep 2018 01:55:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726759AbeIRHA2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 03:00:28 -0400
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:38613 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726409AbeIRHA2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 03:00:28 -0400
-Received: by mail-qk1-f193.google.com with SMTP id g197-v6so159747qke.5
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 18:30:26 -0700 (PDT)
+        id S1727344AbeIRHZm (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 03:25:42 -0400
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46784 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726434AbeIRHZm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 03:25:42 -0400
+Received: by mail-wr1-f68.google.com with SMTP id a108-v6so236301wrc.13
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 18:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=dmhlkzFG3Vo0+l//1J0J4Igty0gNn0nMUoBI8PadIxo=;
+        b=PIJ9RLxH0/jxUs9omDSt11A/G44vVLvIbpib6iJrN/da0NIw3UOO2uJCwRUdSGdeQS
+         +fH0McucVAAGsVeM/z31E/nJjQk6IJfHI5mNBd2YjsrcpGrTLcUE3bG6MZz0qe9m6lzi
+         K056hJJkmacc7P5eylZN1e39k9tudX/GjxdQDINPc6fia0/cvlRT+8Ob8cGP7/RmVNQB
+         f2towyX1Ure/EQZQCuzhynuUU5m2WGFMujljastyqVshIy6+6WsYtQ3zXooxx+yFATnZ
+         pUJ7PNKyUhLW1oRFV9hTTQDz0jbi8HA5lgKq3jsWxRc2aGQpQB5qne2+NPDA/oh1Sjjm
+         Gohw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TFOHyezBxY9V2qe7oKvdZcQGjnfoMVaANzAZm6w9mLQ=;
-        b=SIGkd8pl/vtiV23g7nPMDh6sxM70lgz7iPlsdtzkcRfsOd5lykQY/oLiTC7WIJcZp4
-         ZtnMkdlGsdsErWxfm0pS8JAdKzkJIMbbnLpRydv6fxnbgKL3dX4HP2wMIDxYPD5IZmYx
-         ZfXitkwuibS2IxuUybF81jme1ueCIJXHF0iWR4iXXH9ACTVbLiMdxEJV3B3F1fzw6Ky1
-         57H6rzqmz914glPolQwyzC9WSxT57Y/Ox4oSBwdFGKEr/0zZcKZ5W9WtO1yVBWck8o6v
-         Q7mtQPpUEscONLGv9S1va9F15cM8fxnDiTJKnGK4RYgrxa1L7NSa6jpv9SmuKPxKxIg+
-         +w+g==
-X-Gm-Message-State: APzg51DGrTxnaiAkleNiVVFYxzjQPZxX2uo49KbSe8a8BvHmeK1Cvmhk
-        4ajJ1a0Wd8JwRsn/Ot/JB6KGc/0iF2ecZXSfbNk=
-X-Google-Smtp-Source: ANB0VdbBuS4SQSOJPsZLJaLM8AZ12Ah37slcmyLFHUX9Ztz/SJwd9i4uyEKnfMXkCJ+pNkydySLVUBkSIXtvhbn+yrc=
-X-Received: by 2002:a37:1298:: with SMTP id 24-v6mr18986403qks.174.1537234225692;
- Mon, 17 Sep 2018 18:30:25 -0700 (PDT)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=dmhlkzFG3Vo0+l//1J0J4Igty0gNn0nMUoBI8PadIxo=;
+        b=LiInW+8+n9P0DeJXrOKljNqjfuwyqe695xznk+z4tKPPmX453t0CC983XnNzDFhyda
+         lWQdjx6ibOBKjv59Ax1uXp5AxmcsebfKQiU9wadWOs59tuyXIHfHVvqkQmQGx25FG8vy
+         0os5EQQFJAjDXLe37eZY2zJyJm7PCuOvtYkSXbmMsM5AwNV9PTiR7hghDmL/cddNQzMq
+         LRg6kwPFkIu4x7iyM7/9LuYbSPfvT0vweXaXMdS5m/nkPMick+MJ6Y6pBK89qi3POoEI
+         z4AJc2wen7BEgEDwHCRfYtzyYL03SoIi7yoruGx7tltYCvA32gW8CDFwVsKot4P/17p3
+         +1Zg==
+X-Gm-Message-State: APzg51A0LGOJbtbduuzO5ilgqAEVsEAVhPHKe+1URwDyPKNmedaL7dHZ
+        +ySnzg0DEbc/GRAXSprcG6Y=
+X-Google-Smtp-Source: ANB0Vdaz4oi+LEYhXbHsqak0CcmwmgAe6gRX3MS3N1nfo9u198Crl+jCmctRHTGmi4R7nqU93V7evQ==
+X-Received: by 2002:a05:6000:104a:: with SMTP id c10mr19653296wrx.271.1537235732793;
+        Mon, 17 Sep 2018 18:55:32 -0700 (PDT)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l18-v6sm15248028wru.75.2018.09.17.18.55.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Sep 2018 18:55:31 -0700 (PDT)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Todd Zullinger <tmz@pobox.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Thomas Gummerer <t.gummerer@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t5551-http-fetch-smart.sh: sort cookies before comparing
+References: <20180907232205.31328-1-tmz@pobox.com>
+        <20180907235508.GB32065@sigill.intra.peff.net>
+        <20180908032841.GK7192@zaya.teonanacatl.net>
+        <20180908161712.GA9016@sigill.intra.peff.net>
+        <xmqqd0tb6bn0.fsf@gitster-ct.c.googlers.com>
+        <20180917221603.GA3621@sigill.intra.peff.net>
+Date:   Mon, 17 Sep 2018 18:55:31 -0700
+In-Reply-To: <20180917221603.GA3621@sigill.intra.peff.net> (Jeff King's
+        message of "Mon, 17 Sep 2018 18:25:39 -0400")
+Message-ID: <xmqqy3bz4lik.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
- <12cc68aabf76e08f6214b21df786e61301c8f55e.1537223021.git.matvore@google.com>
-In-Reply-To: <12cc68aabf76e08f6214b21df786e61301c8f55e.1537223021.git.matvore@google.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 17 Sep 2018 21:30:13 -0400
-Message-ID: <CAPig+cQchHoWffobw3iGrsmRRPx2LKNu+EvR=t4c5RcV9Cmi9g@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] tests: split up pipes
-To:     matvore@google.com
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrn@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 6:25 PM Matthew DeVore <matvore@google.com> wrote:
-> tests: split up pipes
+Jeff King <peff@peff.net> writes:
 
-This title explains the mechanical changes the patch is making but not
-the intent. Perhaps reword it to say something like:
+>> -cat >expect_cookies.txt <<EOF
+>> +cat <<EOF | sort >expect_cookies.txt
+>
+> This can be spelled:
+>
+>   sort >expect_cookies.txt <<EOF
+>
+> can't it? Then we do not even incur the extra process. :)
 
-    tests: avoid swallowing Git exit code upstream of a pipe
-
-> Some pipes in tests lose the exit code of git processes, which can mask
-> unexpected behavior. Split these pipes up so that git commands are at
-> the end of pipes rather than the beginning or middle.
-
-Can you say something about how you chose which tests to fix in this
-patch? Is this fixing all such cases or only a subset? It looks like
-it's only fixing "ls-files" and "verify-pack" invocations. If that's
-the case, the commit message should explain that.
-
-Also, missing sign-off.
-
-> ---
-> diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-> @@ -51,8 +51,10 @@ pull_to_client () {
-> -                       git symbolic-ref HEAD refs/heads/$(echo $heads |
-> -                       sed -e "s/^\(.\).*$/\1/") &&
-> +                       git symbolic-ref HEAD refs/heads/$(
-> +                               echo $heads |
-> +                               sed -e "s/^\(.\).*$/\1/"
-> +                       ) &&
-
-Why is this change included in the patch? There is no Git invocation
-upstream of a pipe here. While the cleanup itself may be desirable, it
-doesn't belong in this patch.
+Yeah, true.  Running cat only to feed a pipe with contents of a
+single file or the here-doc is an anti-pattern.
