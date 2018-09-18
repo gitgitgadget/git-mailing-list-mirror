@@ -6,75 +6,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BD54E1F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 18:22:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0A01F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 18:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729907AbeIRX4O (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 19:56:14 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52378 "HELO cloud.peff.net"
+        id S1729955AbeIRX6n (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 19:58:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52392 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729782AbeIRX4O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 19:56:14 -0400
-Received: (qmail 10947 invoked by uid 109); 18 Sep 2018 18:22:25 -0000
+        id S1729689AbeIRX6m (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 19:58:42 -0400
+Received: (qmail 11142 invoked by uid 109); 18 Sep 2018 18:24:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 18:22:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 18:24:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9884 invoked by uid 111); 18 Sep 2018 18:22:23 -0000
+Received: (qmail 9913 invoked by uid 111); 18 Sep 2018 18:24:52 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 14:22:23 -0400
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 14:24:52 -0400
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 14:22:22 -0400
-Date:   Tue, 18 Sep 2018 14:22:22 -0400
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 14:24:51 -0400
+Date:   Tue, 18 Sep 2018 14:24:51 -0400
 From:   Jeff King <peff@peff.net>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     David Aguilar <davvid@gmail.com>, git <git@vger.kernel.org>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
         git@sfconservancy.org
 Subject: Re: Git trademark status and policy
-Message-ID: <20180918182222.GA24448@sigill.intra.peff.net>
+Message-ID: <20180918182450.GB24448@sigill.intra.peff.net>
 References: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net>
  <20180916101520.GC18517@gmail.com>
  <20180917032101.GD22024@sigill.intra.peff.net>
- <CAP8UFD2cC7VMu7Zp9NaXj4x0BMBPZ5CJ6prwEv+s24SuNG=7JA@mail.gmail.com>
+ <xmqqd0tc9qek.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD2cC7VMu7Zp9NaXj4x0BMBPZ5CJ6prwEv+s24SuNG=7JA@mail.gmail.com>
+In-Reply-To: <xmqqd0tc9qek.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 11:25:31AM +0200, Christian Couder wrote:
+On Mon, Sep 17, 2018 at 06:58:43AM -0700, Junio C Hamano wrote:
 
-> > (Also, to be clear, this is all _only_ about "Git Cola". The "git-cola"
-> > command is explicitly OK in the policy because that's how commands
-> > work).
-> 
-> I agree about "git-cola" though I wonder about "git-dag" as this is
-> another command used by the project that is more generic. For example
-> I could imagine that, if we wanted to provide a shortcut for `git log
-> --graph --decorate --oneline`, we might want to use `git dag`.
-> 
-> I guess we can still recommend to change it if possible, though we can
-> also acknowledge that, as our recommendation comes very late (too
-> late?), it is just a "weak" recommendation.
+> I can undertand the sentiment that we may not want to appear drawing
+> lines among friends, but ultimately the policy is about protecting
+> our friends from non-friends, so whether we like it or not, we may
+> have to be more explicit about who's grandfathered and who's not
+> than before.
 
-Yeah, I agree with you, though I think it is a separate issue. "git-dag"
-is explicitly OK in the trademark policy, and they are not using "Git
-Dag" in any recognizable way.
-
-So I think there is no trademark issue, but "git-dag" is probably just
-not a great idea in general, because the namespace is open and it is
-likely to get stomped by some other project. Or git itself. Or it may
-even be annoying for users who have a "git dag" alias (on-disk commands
-always override aliases).
-
-So I think we should generally recommend against such generic names
-during the naming phase. At this point, I'm not sure the pain of
-changing now is any less than the pain of changing later if and when
-there's a conflict.
-
-I think I'm actually violently agreeing with you, but I wanted to make
-it clear. :) (And everything else in your email seemed sensible, too).
+Yeah, I think it may simply come down to that. I think we may need to
+get some guidance from Conservancy on the best route forward. I.e., if
+we want to bless "Git Cola" as a name, are we best to have some kind of
+written agreement, so it is "we explicitly allow this", and is not
+interpreted as "we did not bother to enforce, which weakens our
+trademark".
 
 -Peff
