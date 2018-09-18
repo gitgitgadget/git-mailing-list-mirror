@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3989F1F404
-	for <e@80x24.org>; Tue, 18 Sep 2018 04:08:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AD49E1F404
+	for <e@80x24.org>; Tue, 18 Sep 2018 04:08:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728895AbeIRJj1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 05:39:27 -0400
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:44565 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726414AbeIRJj1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 05:39:27 -0400
-Received: by mail-pl1-f195.google.com with SMTP id ba4-v6so303474plb.11
-        for <git@vger.kernel.org>; Mon, 17 Sep 2018 21:08:47 -0700 (PDT)
+        id S1728944AbeIRJj3 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 05:39:29 -0400
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39044 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726414AbeIRJj2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 05:39:28 -0400
+Received: by mail-pl1-f193.google.com with SMTP id w14-v6so313764plp.6
+        for <git@vger.kernel.org>; Mon, 17 Sep 2018 21:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=K65VwEnoM18mn4v7KlCl+CxtPYHXpgqjKxIDTT0LP/A=;
-        b=CspUjKrWDON21EUJBkUY583v1nntis+JCqQTouo8M1o59c6rkE1c/RWCPhuTiO+Nz0
-         B/j/S9GnTDlD58Fl9pdvStwYIrVc3F/p95CFeqJFC4bDRt6XSMaAv7JfyrzMzZEJUYE5
-         nxrGYEImqa+cs1WrDFOjJHWlne1cstcJ4wgiAgWOiC/QME9dOC3POJf81innsD7It6Ov
-         KHm7VeSKC8YXs2aiNdn/FXQAmvyZKUc7FReRo1ZdgqK3A4Js5+G9BJjM4cvEH949joFF
-         qRjUdMegHQJh3isReLQPbr8R7e6s4MeC1Lr9i36DteQFDcpKN9nxGtIN4ORJ2JZQvSgR
-         ilHw==
+        bh=kxsxfuatUGnB3bzwSX68mZcKrbJkiLhKQcgRuUNHX/w=;
+        b=kgzSRxofw1pvLhxLIqUh/mBIQiSTi0zL1S9jpzxsmPJYlQSvQeZRafubNZ1jmspSYM
+         fDEUGlY3TGUe6saf/1AwcesKENFvv6DLRZQy2klhyzBRTeKZcazbcSH9WbWH45fMTKky
+         uM31TAiGi0o9uV9ISoYy8wYiQc28Pwghtlo5Uwtlbi7voaJA0eVvBzg2EM5wLr0PDJXH
+         5Zq5bVPNZrXYkjPqn6Azu2Bzpzsi5Pt+/0RxfGmykzQv3PnyUJTJRfz1C9BFOBtqvExm
+         FiGA94ayUcvfkf3EoXBqZsg9yTDd2bAyjxbTDKoi8QeL9sveOcUZhAYuUerbBd8Ig0Kx
+         VaIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=K65VwEnoM18mn4v7KlCl+CxtPYHXpgqjKxIDTT0LP/A=;
-        b=HN00idR5hLnI4xbTw7BzXiQ38ttprVQ4FpprMBFWy7R2SzQBwXA1RC8UOE8AfF7lrI
-         CJ4HAM4/ALVd+K/FMwXdoKzbNEHqNOIcaP+I9/1q1k3Kov160H0y/H/SFA6lQFtMH+FR
-         XzGDrCOwc5mj/D4i7buSQBcAwxocxulYvhPSVS3QZCWQUyJoUDzwu0wbTB5CQBwjnE7/
-         mFK7L9BliElDXB1dzEPJpBDF6qqqnA7vcFPwQqLl1bCyCKdKKhgHoR4rWMeYEyMTBEhK
-         Yxfji6tr3To0VPFbOSr2hj3wD6EDVFdWSZRHgVo88zM0mHQ0DKviGzciCxO97ePtFwxG
-         jupw==
-X-Gm-Message-State: APzg51AOqx4f7Q6qLcvajP9vhGynIa3+yBD00oGijrGf8CS3lXLloQo8
-        4cK9EBT6b/BCidtVFpwYYW307++d
-X-Google-Smtp-Source: ANB0VdYpJliLvRDomtt/z9aLG0kuDlO1Sjm7IdTojF/pY6GNBDsTp35+MT9MQjzN0RXNIZQ+/rpkCQ==
-X-Received: by 2002:a17:902:7246:: with SMTP id c6-v6mr27596610pll.28.1537243726931;
-        Mon, 17 Sep 2018 21:08:46 -0700 (PDT)
+        bh=kxsxfuatUGnB3bzwSX68mZcKrbJkiLhKQcgRuUNHX/w=;
+        b=I//FGiJYyJoBKJ/w/UqVgYzrb5bsuhLBkeypGVrqG+bbe/S3sA1LeOQi0a9XS9A+zU
+         eTr8HL6PrGjOsilAhohohi4epHdWxeLGx66wNtm1XMffqTo5/XByHVYChpQW8Yhy9BiT
+         L/Cb5jW+hLImZlSiiZ2kvX9U6/k5CtJNvz51pruKnxE9M32vdFftwtPcmGmKVCT2akkQ
+         fD6uK6kOWfa4dBnwKMQrdDytkAeYO3C6dgLWd497F7aD79U1fv7DugQXrn3xduVbT4bq
+         M1Rcah0+LE5ZiQbd6wui0is/VIROQqvQ+c2fdYRITFQiY1E9m891X9VlHo8kqQnoe0m4
+         CIUw==
+X-Gm-Message-State: APzg51DMFsQeCVDh4pDM4oO1ogBClljhc2SY6mz2e5KyrfaeaDqcokQI
+        bU2JpYG9TY3Z64qD+GG/Nq2wC2r6
+X-Google-Smtp-Source: ANB0VdaPC8Ee69QgCClZDknLojhfw0Eslc6A/Ftbc0WE6XpjKgB+QyiGw/hEBKP8qZUCT4ynibM/Aw==
+X-Received: by 2002:a17:902:9696:: with SMTP id n22-v6mr27867930plp.212.1537243728314;
+        Mon, 17 Sep 2018 21:08:48 -0700 (PDT)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id y128-v6sm22779629pfb.56.2018.09.17.21.08.45
+        by smtp.gmail.com with ESMTPSA id q6-v6sm19928166pgq.19.2018.09.17.21.08.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Sep 2018 21:08:46 -0700 (PDT)
-Date:   Mon, 17 Sep 2018 21:08:46 -0700 (PDT)
-X-Google-Original-Date: Tue, 18 Sep 2018 04:08:36 GMT
-Message-Id: <30dee58c615701c8810d055008a687fca278888a.1537243720.git.gitgitgadget@gmail.com>
+        Mon, 17 Sep 2018 21:08:47 -0700 (PDT)
+Date:   Mon, 17 Sep 2018 21:08:47 -0700 (PDT)
+X-Google-Original-Date: Tue, 18 Sep 2018 04:08:37 GMT
+Message-Id: <a74ae13d4e207acec20b53bf48f24a2de192ad97.1537243720.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.25.v2.git.gitgitgadget@gmail.com>
 References: <pull.25.git.gitgitgadget@gmail.com>
         <pull.25.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/6] test-reach: add rev-list tests
+Subject: [PATCH v2 4/6] revision.c: begin refactoring --topo-order logic
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,114 +71,178 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The rev-list command is critical to Git's functionality. Ensure it
-works in the three commit-graph environments constructed in
-t6600-test-reach.sh. Here are a few important types of rev-list
-operations:
+When running 'git rev-list --topo-order' and its kin, the topo_order
+setting in struct rev_info implies the limited setting. This means
+that the following things happen during prepare_revision_walk():
 
-* Basic: git rev-list --topo-order HEAD
-* Range: git rev-list --topo-order compare..HEAD
-* Ancestry: git rev-list --topo-order --ancestry-path compare..HEAD
-* Symmetric Difference: git rev-list --topo-order compare...HEAD
+* revs->limited implies we run limit_list() to walk the entire
+  reachable set. There are some short-cuts here, such as if we
+  perform a range query like 'git rev-list COMPARE..HEAD' and we
+  can stop limit_list() when all queued commits are uninteresting.
+
+* revs->topo_order implies we run sort_in_topological_order(). See
+  the implementation of that method in commit.c. It implies that
+  the full set of commits to order is in the given commit_list.
+
+These two methods imply that a 'git rev-list --topo-order HEAD'
+command must walk the entire reachable set of commits _twice_ before
+returning a single result.
+
+If we have a commit-graph file with generation numbers computed, then
+there is a better way. This patch introduces some necessary logic
+redirection when we are in this situation.
+
+In v2.18.0, the commit-graph file contains zero-valued bytes in the
+positions where the generation number is stored in v2.19.0 and later.
+Thus, we use generation_numbers_enabled() to check if the commit-graph
+is available and has non-zero generation numbers.
+
+When setting revs->limited only because revs->topo_order is true,
+only do so if generation numbers are not available. There is no
+reason to use the new logic as it will behave similarly when all
+generation numbers are INFINITY or ZERO.
+
+In prepare_revision_walk(), if we have revs->topo_order but not
+revs->limited, then we trigger the new logic. It breaks the logic
+into three pieces, to fit with the existing framework:
+
+1. init_topo_walk() fills a new struct topo_walk_info in the rev_info
+   struct. We use the presence of this struct as a signal to use the
+   new methods during our walk. In this patch, this method simply
+   calls limit_list() and sort_in_topological_order(). In the future,
+   this method will set up a new data structure to perform that logic
+   in-line.
+
+2. next_topo_commit() provides get_revision_1() with the next topo-
+   ordered commit in the list. Currently, this simply pops the commit
+   from revs->commits.
+
+3. expand_topo_walk() provides get_revision_1() with a way to signal
+   walking beyond the latest commit. Currently, this calls
+   add_parents_to_list() exactly like the old logic.
+
+While this commit presents method redirection for performing the
+exact same logic as before, it allows the next commit to focus only
+on the new logic.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t6600-test-reach.sh | 84 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ revision.c | 42 ++++++++++++++++++++++++++++++++++++++----
+ revision.h |  4 ++++
+ 2 files changed, 42 insertions(+), 4 deletions(-)
 
-diff --git a/t/t6600-test-reach.sh b/t/t6600-test-reach.sh
-index 1b18e12a4e..2fcaa39077 100755
---- a/t/t6600-test-reach.sh
-+++ b/t/t6600-test-reach.sh
-@@ -243,4 +243,88 @@ test_expect_success 'commit_contains:miss' '
- 	test_three_modes commit_contains --tag
- '
+diff --git a/revision.c b/revision.c
+index e18bd530e4..2dcde8a8ac 100644
+--- a/revision.c
++++ b/revision.c
+@@ -25,6 +25,7 @@
+ #include "worktree.h"
+ #include "argv-array.h"
+ #include "commit-reach.h"
++#include "commit-graph.h"
  
-+test_expect_success 'rev-list: basic topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 commit-2-6 commit-1-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 commit-2-5 commit-1-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 commit-2-4 commit-1-4 \
-+		commit-6-3 commit-5-3 commit-4-3 commit-3-3 commit-2-3 commit-1-3 \
-+		commit-6-2 commit-5-2 commit-4-2 commit-3-2 commit-2-2 commit-1-2 \
-+		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
-+	>expect &&
-+	run_three_modes "git rev-list --topo-order commit-6-6"
-+'
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -2454,7 +2455,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	if (revs->diffopt.objfind)
+ 		revs->simplify_history = 0;
+ 
+-	if (revs->topo_order)
++	if (revs->topo_order && !generation_numbers_enabled(the_repository))
+ 		revs->limited = 1;
+ 
+ 	if (revs->prune_data.nr) {
+@@ -2892,6 +2893,33 @@ static int mark_uninteresting(const struct object_id *oid,
+ 	return 0;
+ }
+ 
++struct topo_walk_info {};
 +
-+test_expect_success 'rev-list: first-parent topo-order' '
-+	git rev-parse \
-+		commit-6-6 \
-+		commit-6-5 \
-+		commit-6-4 \
-+		commit-6-3 \
-+		commit-6-2 \
-+		commit-6-1 commit-5-1 commit-4-1 commit-3-1 commit-2-1 commit-1-1 \
-+	>expect &&
-+	run_three_modes "git rev-list --first-parent --topo-order commit-6-6"
-+'
++static void init_topo_walk(struct rev_info *revs)
++{
++	struct topo_walk_info *info;
++	revs->topo_walk_info = xmalloc(sizeof(struct topo_walk_info));
++	info = revs->topo_walk_info;
++	memset(info, 0, sizeof(struct topo_walk_info));
 +
-+test_expect_success 'rev-list: range topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 commit-2-6 commit-1-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 commit-2-5 commit-1-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 commit-2-4 commit-1-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes "git rev-list --topo-order commit-3-3..commit-6-6"
-+'
++	limit_list(revs);
++	sort_in_topological_order(&revs->commits, revs->sort_order);
++}
 +
-+test_expect_success 'rev-list: range topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 \
-+		commit-6-5 commit-5-5 commit-4-5 \
-+		commit-6-4 commit-5-4 commit-4-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes "git rev-list --topo-order commit-3-8..commit-6-6"
-+'
++static struct commit *next_topo_commit(struct rev_info *revs)
++{
++	return pop_commit(&revs->commits);
++}
 +
-+test_expect_success 'rev-list: first-parent range topo-order' '
-+	git rev-parse \
-+		commit-6-6 \
-+		commit-6-5 \
-+		commit-6-4 \
-+		commit-6-3 \
-+		commit-6-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+	>expect &&
-+	run_three_modes "git rev-list --first-parent --topo-order commit-3-8..commit-6-6"
-+'
++static void expand_topo_walk(struct rev_info *revs, struct commit *commit)
++{
++	if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
++		if (!revs->ignore_missing_links)
++			die("Failed to traverse parents of commit %s",
++			    oid_to_hex(&commit->object.oid));
++	}
++}
 +
-+test_expect_success 'rev-list: ancestry-path topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 commit-3-6 \
-+		commit-6-5 commit-5-5 commit-4-5 commit-3-5 \
-+		commit-6-4 commit-5-4 commit-4-4 commit-3-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+	>expect &&
-+	run_three_modes "git rev-list --topo-order --ancestry-path commit-3-3..commit-6-6"
-+'
+ int prepare_revision_walk(struct rev_info *revs)
+ {
+ 	int i;
+@@ -2928,11 +2956,13 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		commit_list_sort_by_date(&revs->commits);
+ 	if (revs->no_walk)
+ 		return 0;
+-	if (revs->limited)
++	if (revs->limited) {
+ 		if (limit_list(revs) < 0)
+ 			return -1;
+-	if (revs->topo_order)
+-		sort_in_topological_order(&revs->commits, revs->sort_order);
++		if (revs->topo_order)
++			sort_in_topological_order(&revs->commits, revs->sort_order);
++	} else if (revs->topo_order)
++		init_topo_walk(revs);
+ 	if (revs->line_level_traverse)
+ 		line_log_filter(revs);
+ 	if (revs->simplify_merges)
+@@ -3257,6 +3287,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 
+ 		if (revs->reflog_info)
+ 			commit = next_reflog_entry(revs->reflog_info);
++		else if (revs->topo_walk_info)
++			commit = next_topo_commit(revs);
+ 		else
+ 			commit = pop_commit(&revs->commits);
+ 
+@@ -3278,6 +3310,8 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 
+ 			if (revs->reflog_info)
+ 				try_to_simplify_commit(revs, commit);
++			else if (revs->topo_walk_info)
++				expand_topo_walk(revs, commit);
+ 			else if (add_parents_to_list(revs, commit, &revs->commits, NULL) < 0) {
+ 				if (!revs->ignore_missing_links)
+ 					die("Failed to traverse parents of commit %s",
+diff --git a/revision.h b/revision.h
+index 2b30ac270d..fd4154ff75 100644
+--- a/revision.h
++++ b/revision.h
+@@ -56,6 +56,8 @@ struct rev_cmdline_info {
+ #define REVISION_WALK_NO_WALK_SORTED 1
+ #define REVISION_WALK_NO_WALK_UNSORTED 2
+ 
++struct topo_walk_info;
 +
-+test_expect_success 'rev-list: symmetric difference topo-order' '
-+	git rev-parse \
-+		commit-6-6 commit-5-6 commit-4-6 \
-+		commit-6-5 commit-5-5 commit-4-5 \
-+		commit-6-4 commit-5-4 commit-4-4 \
-+		commit-6-3 commit-5-3 commit-4-3 \
-+		commit-6-2 commit-5-2 commit-4-2 \
-+		commit-6-1 commit-5-1 commit-4-1 \
-+		commit-3-8 commit-2-8 commit-1-8 \
-+		commit-3-7 commit-2-7 commit-1-7 \
-+	>expect &&
-+	run_three_modes "git rev-list --topo-order commit-3-8...commit-6-6"
-+'
+ struct rev_info {
+ 	/* Starting list */
+ 	struct commit_list *commits;
+@@ -245,6 +247,8 @@ struct rev_info {
+ 	const char *break_bar;
+ 
+ 	struct revision_sources *sources;
 +
- test_done
++	struct topo_walk_info *topo_walk_info;
+ };
+ 
+ int ref_excluded(struct string_list *, const char *path);
 -- 
 gitgitgadget
 
