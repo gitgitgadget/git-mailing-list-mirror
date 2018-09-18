@@ -2,61 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E0A01F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 18:24:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8948A1F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 19:33:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729955AbeIRX6n (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 19:58:43 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52392 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729689AbeIRX6m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 19:58:42 -0400
-Received: (qmail 11142 invoked by uid 109); 18 Sep 2018 18:24:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 18:24:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9913 invoked by uid 111); 18 Sep 2018 18:24:52 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 14:24:52 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 14:24:51 -0400
-Date:   Tue, 18 Sep 2018 14:24:51 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-        git@sfconservancy.org
-Subject: Re: Git trademark status and policy
-Message-ID: <20180918182450.GB24448@sigill.intra.peff.net>
-References: <20170202022655.2jwvudhvo4hmueaw@sigill.intra.peff.net>
- <20180916101520.GC18517@gmail.com>
- <20180917032101.GD22024@sigill.intra.peff.net>
- <xmqqd0tc9qek.fsf@gitster-ct.c.googlers.com>
+        id S1729004AbeISBHk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 21:07:40 -0400
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:34773 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728657AbeISBHk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 21:07:40 -0400
+Received: by mail-ed1-f65.google.com with SMTP id u1-v6so2927527eds.1
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 12:33:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=szc4gzF/xw592jS7mFd/VOnOGvRJbK9PvVgXfpWIrBI=;
+        b=PJpNJe0XY7gj0P99PfpS63MCIvGBl/HUgWbzLfzZV/QBYcTaRu4fJC5O77p5G0P0IT
+         HvNxNR8szOllF9Y4SOKcpljfFy11XiwlJrh7+l3MlcGGfUFznTnS6y9KZ1emuhJkEilQ
+         8fh2s4NcUwnoPr3GGSAn0s3EdowtbAIc9Wdg63NWJqS1pdl7f+w7oOfvbiXnynPjMlOX
+         oBRAi5T1nZLKwH3LLQ26kbFTpjUgp/z282uivnTAl4SMfmARK4EraDz3sfa+feEKq555
+         5dNpnzmjoRndzYPN5XXVw2/w2EZkklklriYIlCP048JQQXYXiNxaKn3LjSZDWSUJ3vmr
+         AoZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=szc4gzF/xw592jS7mFd/VOnOGvRJbK9PvVgXfpWIrBI=;
+        b=lz7mCQ/ToPcMRmYHE4rvxMjTAF1Hd9Jca2vgtAN3rjrkACVyKgsbJRX0GV322xybmS
+         C3fPrjRpu7ByA0YmoELhsBuQOxsWfLjCSJ2nLn9UZel1XEUExXumM1ryWHMAg6TLL5uM
+         qbvFFjfm8KHdZrUV2MfjyKtOCpAs8z798jS2fF6DE7etBKou3+F2wDTi/LfNH4dEn7gQ
+         mI8v7QiDm2kH9w0ERv98HmO5FIlK/Qb44rTj5nllXA0Nwih/rDuvN9K/qbDLlTa1trJx
+         ngbu0zdACG4HbJhacZne0u1bZEAgGK2Y0CZPFGYjgAGbSOtWI61bZYc5eM9YMXmO4vrq
+         1Wfw==
+X-Gm-Message-State: APzg51Dai5JttpyDs6sIHW4BVwoaqSrAqZ16hVC6tGmlf9+Wbrhl9zTR
+        I+kRrHn6yJoGs4pMXwRm7qTvsRzKhoUNxYFHlUk=
+X-Google-Smtp-Source: ANB0VdaN8mo1JHeQWCdS8ByGXLI5ypSuJGQ5q9c0nvUZfC9Eewo1TjqBU2YkcgAlUxExoAlwD3Te102Ip8z43ProeAo=
+X-Received: by 2002:a50:a7a2:: with SMTP id i31-v6mr53525519edc.296.1537299215932;
+ Tue, 18 Sep 2018 12:33:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqd0tc9qek.fsf@gitster-ct.c.googlers.com>
+References: <20180820154120.19297-1-pclouds@gmail.com> <20180916063146.9850-1-pclouds@gmail.com>
+ <xmqq1s9s82zx.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1s9s82zx.fsf@gitster-ct.c.googlers.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 18 Sep 2018 12:33:24 -0700
+Message-ID: <CA+P7+xoJ9URXxD=+uqfeqWmscec6=LnUTse_CcVi2z=91Rw=Tw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/1] Make 'git commit' not accidentally lose staged content
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git mailing list <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 06:58:43AM -0700, Junio C Hamano wrote:
+On Mon, Sep 17, 2018 at 10:09 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> It usually is safer (simply because you do not have to think about
+> it) to start a behaviour change like this as a strict opt-in to gain
+> confidence.
 
-> I can undertand the sentiment that we may not want to appear drawing
-> lines among friends, but ultimately the policy is about protecting
-> our friends from non-friends, so whether we like it or not, we may
-> have to be more explicit about who's grandfathered and who's not
-> than before.
+I tend to agree, however.. in this case it could be considered safer
+to err on the side of not throwing away the index which could have
+crafted changes in it.
 
-Yeah, I think it may simply come down to that. I think we may need to
-get some guidance from Conservancy on the best route forward. I.e., if
-we want to bless "Git Cola" as a name, are we best to have some kind of
-written agreement, so it is "we explicitly allow this", and is not
-interpreted as "we did not bother to enforce, which weakens our
-trademark".
+> The approach to check if the contents in the index matches that in
+> the HEAD per-path (i.e. "The contents we are adding to the index is
+> whole working tree contents for that path.  But the index already
+> has contents different from HEAD for the path---are we losing
+> information by doing this?"), is a very good one.  But for the
+> protection to be effective, I think "git commit" and "git add"
+> should be covered the same way, ideally with the same code and
+> possibly the same configuration knob and/or command line option to
+> control the behaviour.
 
--Peff
+Checking both commit and add makes sense to me.
+
+>
+> If the information loss caused by the "add/commit X" or "add
+> -u/commit -a" is so serious that this new feature deserves to become
+> the default (which I do not yet think it is the case, by the way),
+> then we could even forbid "commit X" or "commit -a" when the paths
+> involved has difference between the index and the HEAD, without any
+> configuration knob or command line override for "commit", and then
+> tell the users to use "git add/rm" _with_ the override before coming
+> back to "git commit".
+
+I was going to suggest we have some sort of reflog equivalent for the
+index, but Duy seems to discuss that in a follow-on mail.
+
+>
+> How should this new check intract with paths added with "add -N", by
+> the way?
