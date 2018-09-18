@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D0331F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 19:36:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 488781F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 19:41:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728721AbeISBKX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 21:10:23 -0400
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:35316 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726839AbeISBKX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 21:10:23 -0400
-Received: by mail-ed1-f68.google.com with SMTP id y20-v6so2928426edq.2
-        for <git@vger.kernel.org>; Tue, 18 Sep 2018 12:36:18 -0700 (PDT)
+        id S1729859AbeISBPs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 21:15:48 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44977 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727660AbeISBPs (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 21:15:48 -0400
+Received: by mail-ed1-f66.google.com with SMTP id s10-v6so2903216edb.11
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 12:41:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=/0hY5xpIfIKKM4Cw31RrxIINIENgZi1qM3AhZ++3d/s=;
-        b=IxKitKQsvG1ZM+nE4A3qt+fmW24I3Hmd3LuQg3WRyZFu5iXIqRruWgi5d+tZEu/Ix0
-         2WUfmIEO53XRxQxf8hDFgcZ9EZrYe6bjWPZXYBK71mfyPnudzVu4+LtmFMRGM3heKOrI
-         dZ7KPAAEW7xGj6yNj8A6Sagasuam3CY0QCz6fhQd+JtH2u8xVOKZ2IGiaOekWzJkJXIi
-         XfZR4SscVlS6tEnQMyiJDnnVJ+FVaxrayVjycXlLq6/T//WJqCcHtiibUQRxZXq+WI4F
-         yU+ZNcs3q7F8SrD6e5+1gBpO9XiznIXnfFPp4PlpIB3IH3F8Lp6/ekLrsjrTf9CX2Lbo
-         rnrA==
+        bh=EdAD8zZu2lmdf7Lp2uaR6VRLkYnNK+GxA0WqludZWao=;
+        b=h4AomQAxP3q04mg48+gkVZwe3wspZW45oLA+hm0eFqpMl0MHzaR3FqRH1wkfP1Aapc
+         en9Jxvn7hdARr9Wzxvp28t7Y8zxuyPZQFSAYtlzOnGG2tAIJ9tWGscNYqKJwaXcaXohu
+         D/lGU9NwiaQIXRg/jRq6crzMEKRpXzA+S+LkMMjHQq/UEZNcJUsFDtXVRCv0drYtADh3
+         w3E3wHY4bdTO7OSOP18hjmfLKZPD/I52KjCnp1MLE9eX+mg4l1EsVT+k/R14sYCHhbyR
+         r7y++e8NibS5Hck60uhdotAQrkrp38fDUP1Wt8mHSIyyH803N34XCxHxTVNUqjaT9/nu
+         MQpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=/0hY5xpIfIKKM4Cw31RrxIINIENgZi1qM3AhZ++3d/s=;
-        b=YX3ghrynqCh3dgXggwTAEaKxipe/XSONYgdGaXSfninaPGcgZ3cONspvEFiuLVx0RZ
-         uwl1yrENqEnp/5XcnOn55ueWS6oCF/BJ94rE5H2ci1i/qvhKQSWShF6CtNr1cEXzfd7B
-         q6WJqBaDXVcrsR8wTM2BdPv4dHjT7S1HIA0iX7hz5Q2ASzhZO2lLwqk9Sdt4GuSXJtMb
-         MsG/BHl1j5jyG25xLabpM1etkym6yU7HJ8ACX3TmgAy/kHS86dqdZ7q49sSg7VLmWfRX
-         AZ7IK3B5x97JVFGrkx21lnRe7CjQ6Rw9f1J3f3IBZ7jHP94rhIE+n0UxXh3KRQFY0QmA
-         B1CQ==
-X-Gm-Message-State: APzg51AyV0abziuqqSL8J/khtW6/WPc/0Hp9juG+P0jWFVhNRONT3Tbz
-        sC6xsO2BnmT9d95Ir60YpKpDl0DM+dTjntghx4I=
-X-Google-Smtp-Source: ANB0VdYN0QhETX2CcPCb5X5B14bArXTYxVp8c1EG9ix4gpXs6OCAvtZsueUlr9BQ3kAkfTKt6Cxi/rykbUwlBSNHkWA=
-X-Received: by 2002:a50:8843:: with SMTP id c3-v6mr51408002edc.146.1537299378089;
- Tue, 18 Sep 2018 12:36:18 -0700 (PDT)
+        bh=EdAD8zZu2lmdf7Lp2uaR6VRLkYnNK+GxA0WqludZWao=;
+        b=UDgt2vb6XRN/ZfvLzyzDRxFP7+7i4DPQDSJ1CriFRCcFpfCHo6HEt/72nrvLVNpTFs
+         YUN8SBETnm2lR82/KGFfPzAvKcxFz00UjNeooIaKcruHsb0JkWHmIlSCrKaio0WwIh9Z
+         yvg/kOd9JRUhBqjiG2IZNOSTTZPmrJEP0Oi8diZRIWGbdHz9aYWjEaFXJNBLvYHDPoQD
+         tK6Hy83aCI6RYLTDgJjSHbcrc4CrO8QxT9USWRc3X8zlEj9GE4ZIYbJZqqJb6aL4PT8r
+         jUozerY8+x2Ik8qUSlktKgwF1Ste2jnCW6l3QQvMsHayUMmGkG03s0DzCkpsTc/wOqdW
+         JsYQ==
+X-Gm-Message-State: APzg51CAFZND8JqQ5qc8Lr6q7HFVQVw06knGeGYpdPwt0zRgqBuPOyIE
+        tGELTjWCPlhluJqjO8NrMTdWIye4e/LnkFTywDg=
+X-Google-Smtp-Source: ANB0VdbA9lj0muy6d/Gk0X2FJCBZqZm5lrc2ry59gQY/dUWoVuTYBKjBHCBs2fiqMdYbQDdWhIQFV5G1krxPOtmILkE=
+X-Received: by 2002:aa7:c708:: with SMTP id i8-v6mr52373952edq.231.1537299702248;
+ Tue, 18 Sep 2018 12:41:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20180820154120.19297-1-pclouds@gmail.com> <20180916063146.9850-1-pclouds@gmail.com>
  <xmqq1s9s82zx.fsf@gitster-ct.c.googlers.com> <CACsJy8C5QOLvg4pzy_pThQoyGh9ohdeVHXsuYwQHQypn3oBxkw@mail.gmail.com>
- <20180917181511.GA3894@sigill.intra.peff.net>
-In-Reply-To: <20180917181511.GA3894@sigill.intra.peff.net>
+ <xmqq7ejk6i46.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7ejk6i46.fsf@gitster-ct.c.googlers.com>
 From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 18 Sep 2018 12:36:06 -0700
-Message-ID: <CA+P7+xqzN5M6VgQqCNAAsmwYRmnoSVsAvdES7aK2fKf9P-f4fg@mail.gmail.com>
+Date:   Tue, 18 Sep 2018 12:41:30 -0700
+Message-ID: <CA+P7+xq1zMM=S+HBTAfTJcPVo35PtUCq+staQ8SnSXxP0RShXA@mail.gmail.com>
 Subject: Re: [PATCH v2 0/1] Make 'git commit' not accidentally lose staged content
-To:     Jeff King <peff@peff.net>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
         Git mailing list <git@vger.kernel.org>,
         Jonathan Nieder <jrnieder@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>
@@ -65,70 +65,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 11:15 AM Jeff King <peff@peff.net> wrote:
+On Mon, Sep 17, 2018 at 12:26 PM Junio C Hamano <gitster@pobox.com> wrote:
+> FWIW, I didn't mean to say that we should give users a way to
+> recover.  Your "commit -a" or "commit $path" protection just
+> prevents the situation from happening, and I think it is sufficient.
 >
-> On Mon, Sep 17, 2018 at 07:29:26PM +0200, Duy Nguyen wrote:
+> The sole point I wanted to raise by bringing up the above was that
+> we should have the same degree of protection against "add $path" or
+> "add -u".
 >
-> > > On the other hand, if I am keeping some change that should never be
-> > > in a commit in the working tree file, and building the contents in
-> > > the index using "add -p" to incrementally, it would be the same
-> > > disaster as you are trying to prevent if I by mistake did a whole
-> > > path 'add', even if I catch myself doing so before running 'commit'
-> > > i.e.
-> > >
-> > >         edit X
-> > >         git add -p X
-> > >         git diff --cached X
-> > >         git diff X
-> > >         ... repeat the above number of times ...
-> > >         git add X ;# OOPS!
-> > >         git add . ;# OOPS! even worse!
-> > >
-> > > Even though this does not involve "git commit -a" or "git commit X",
-> > > an unrecoverable damage that requires redoing the manual work is
-> > > already done.
-> >
-> > I don't see a good way to get to recover this situation. I could go
-> > back to the "index log" idea, where we keep a log of index changes (or
-> > just "interesting" changes). That way there's no behavior change at
-> > all. The user who accidentally updates/deletes something can always
-> > retrieve the old content back (assuming that they realize quickly
-> > since we can't keep very long log).
->
-> FWIW, I like that approach much better, since:
->
->   1. It does not bother or restrict anybody in their workflow; instead,
->      they pay the complexity price only when they know they have made a
->      mistake.
->
->   2. It covers many more cases (e.g., just doing the wrong thing via
->      "add -p").
->
+> Of course, "index log" is interesting and it may even turn out to be
+> useful (I was skeptical about "reference log" the same way, but it
+> turned out to be useful without burdening the system too heavily),
+> and it may even remove the need for the "do not accidentally lose
+> information by adding more to the index" protection.  But until that
+> happens, if we are to have such a protection, we would wnat to give
+> the same degree of protection to "commit" and "add".
 
-I also think this is a better approach for the same reasons.
+I think having both is good. There are a lot of ways to accidentally
+throw away work, and it's pretty frustrating to have it happen. But
+the reflog is also somewhat complicated, and I've definitely seen a
+lot of developers who've never heard of it, and struggle with the
+concept.
 
-> A naive index log would be pretty cheap in CPU, at least for POSIX-ish
-> systems. You could just hard link "index" to "index.N" before renaming
-> "index.lock" over "index". But I guess if you have a gigantic index,
-> that's less appealing. So maybe storing the equivalent of a "--raw" diff
-> between the two index states would make more sense (and after all, you
-> don't really need the stat-cache or cache-tree). It would cost more to
-> reconstruct the index on the fly, but then the point is that you would
-> create these logs a lot more than you access them.
->
-> > I've been thinking about allowing to undo worktree changes too (e.g.
-> > accidental "git reset --hard") and this log can cover it as well.
->
-> I like that, too. It's a little more costly just because it may involve
-> object-db writes, but I think in most cases it would be fine. I almost
-> always "git stash" away discarded changes these days instead of "git
-> reset --hard", because it effectively provides this kind of log.
->
+I personally think having the nice "it looks like you're about to
+throw away all your changes, are you sure" style of protection using
+something like --clobber-index is useful as a mode, even if we have an
+index log of sorts. Having it be default helps new people, even if it
+does get in the way of someone who knows what they're doing. Having it
+be configurable, to me, sort of defeats the point, since it means
+having to tell people to turn this on.
 
-Obviously we do eventually turn the index into a tree, which is used
-by the commit. Would it be possible to simply somehow store these
-trees, and have commands which blow the tree away simply instead, save
-it? I'm not sure how costly that is.
+I personally don't mind having to type an extended option to clobber
+when I know it's what I want, but I can see that being painful.
+
+However, if we had a reflog for the index, this becomes less of a
+problem since recovery is much easier.
 
 Thanks,
 Jake
