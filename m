@@ -2,112 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 864C51F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 17:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0ECFD1F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 17:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730164AbeIRXFq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 19:05:46 -0400
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35466 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730089AbeIRXFq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 19:05:46 -0400
-Received: by mail-lf1-f65.google.com with SMTP id x20-v6so2612159lfg.2
-        for <git@vger.kernel.org>; Tue, 18 Sep 2018 10:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vyehlpNBtR52vD8OafKh898C9gkn/0FBKOaTO9wRNNk=;
-        b=DQgrU+LUFIxoXAzkek55y9KnOnbwG9F3VP41EFRhZaXnrEQPXtjPJYGtNntRmXXGXU
-         VVfgJ+o1Cev5JTewDH2HcpeGrJl4a7vACkF1izHCjZo5Bgjq/Q2z7+/RmWWZ3W9BUVnD
-         3e9n11C3TCDKswWa6iOz65zzVko0h8pZNcqQF5/mCJkyekYapOnBYAgdelSuyTTUsXaj
-         1rnXqvXvPG8FlTYDTZ+KbTlF6PkM5tD1alE6rbq3ikqI9lP1SC0Ocddnl4LUq3bpYFRD
-         iiT4YZuiL9/TKAnNVBVlccA51WL+PHP14zTCeWKrLN9BS6KTQlqxRwz0tlQHv9Ag6Qxw
-         mJIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vyehlpNBtR52vD8OafKh898C9gkn/0FBKOaTO9wRNNk=;
-        b=NKiaj77QHBuCp3ypTXN2v3YXCjc0/uUcf7nL67IPY9Des+wHVraIdfG5ix6ph+CACq
-         FfzAIEESnm8f3Qu1whbZ5Cw0hvRwV8Dxcut3c9R+gqIkqNXRURyzbBIGLENEmDM8IJ5u
-         NBFv5X9vwO0qfnq66v9XoQuTogKS52It4/oZC1RLPHs45VMlOOiPVZvwMCq/dtowwouv
-         wzd1x+J7qlUrUdrQW+KGFdAkWLkRbRPNK6k6ztuG/wIdFMB1y2YfDfzCp1v0zcfYWlML
-         pHaGcg89EVVRwDOMOaOpQMjTAe+IV5QR+hH1eChnRL41Mu4a8ZCPaqj9KWEq0WbjK/f+
-         1Kpw==
-X-Gm-Message-State: APzg51BYlRTutHNCgUiZOx0f2/rfegVDZZbpNxyDEnKZDRxllmP6v3B0
-        xWs5UK9lQ6OcTGClgNaDMPniFSnX
-X-Google-Smtp-Source: ANB0VdYu2+0L8pKB32FGVwJEfP6+7wnBLCWFcavKzFyNx/KVr7YjkxYRl9elEVwZONiTj276w1mcyQ==
-X-Received: by 2002:a19:2583:: with SMTP id l125-v6mr6389347lfl.135.1537291927815;
-        Tue, 18 Sep 2018 10:32:07 -0700 (PDT)
-Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id g16-v6sm575382lfj.15.2018.09.18.10.32.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Sep 2018 10:32:06 -0700 (PDT)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, smaudet@sebastianaudet.com,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] add: do not accept pathspec magic 'attr'
-Date:   Tue, 18 Sep 2018 19:31:59 +0200
-Message-Id: <20180918173159.30300-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.19.0.rc0.337.ge906d732e7
-In-Reply-To: <20180917015259.GA26339@sebastianaudet.com>
-References: <20180917015259.GA26339@sebastianaudet.com>
+        id S1729928AbeIRXIn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 19:08:43 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52294 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729037AbeIRXIn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 19:08:43 -0400
+Received: (qmail 7875 invoked by uid 109); 18 Sep 2018 17:35:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 17:35:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9302 invoked by uid 111); 18 Sep 2018 17:35:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 13:35:04 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 13:35:03 -0400
+Date:   Tue, 18 Sep 2018 13:35:03 -0400
+From:   Jeff King <peff@peff.net>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2 0/1] Make 'git commit' not accidentally lose staged
+ content
+Message-ID: <20180918173503.GE15470@sigill.intra.peff.net>
+References: <20180820154120.19297-1-pclouds@gmail.com>
+ <20180916063146.9850-1-pclouds@gmail.com>
+ <xmqq1s9s82zx.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8C5QOLvg4pzy_pThQoyGh9ohdeVHXsuYwQHQypn3oBxkw@mail.gmail.com>
+ <20180917181511.GA3894@sigill.intra.peff.net>
+ <CACsJy8CFf7mVMbxWO9ASfVKE_PLdiLmxSN3CuMC=_sEsL_5pmQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACsJy8CFf7mVMbxWO9ASfVKE_PLdiLmxSN3CuMC=_sEsL_5pmQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit b0db704652 (pathspec: allow querying for attributes -
-2017-03-13) adds new pathspec magic 'attr' but only with
-match_pathspec(). "git add" has some pathspec related code that still
-does not know about 'attr' and will bail out:
+On Mon, Sep 17, 2018 at 08:41:36PM +0200, Duy Nguyen wrote:
 
-    $ git add ':(attr:foo)'
-    fatal: BUG:dir.c:1584: unsupported magic 40
+> > I think the reflog approach has been successful: give these intermediate
+> > states a name. So in theory I could do something like:
+> >
+> >   git checkout -p :@{2.minutes.ago}
+> >
+> > though it would probably be useful to be able to walk the states, too,
+> > just like we have "log --reflog-walk".
+> >
+> > The syntax above is off-the-cuff (and based on the ":<stage>" index
+> > syntax). I guess if we had a separate log for "stuff in the worktree
+> > that got thrown away by reset" we might need a separate syntax.
+> 
+> I'm leaning towards reflog too. Not because of the syntax but because
+> of reusing the current code base. I don't have to worry about pruning,
+> walking, gc-ing... because it's pretty much already there. And the UI
+> is not so urgent since reflog file is very readable, early adopters
+> can just open the file and get the hash.
 
-A better solution would be making this code support 'attr'. But I
-don't know how much work is needed (I'm not familiar with this new
-magic). For now, let's simply reject this magic with a friendlier
-message:
+Ah, good point on pruning/gc. I had imagined a new "index log" format.
+But really if you just turn the result into a tree, then it becomes just
+another ref(log). That might be slightly less efficient, but the
+flexibility and simplicity are probably worth it. Or maybe with
+cache-tree it is not even less efficient.
 
-    $ git add ':(attr:foo)'
-    fatal: :(attr:foo): pathspec magic not supported by this command: 'attr'
+So that definitely seems like the right direction.
 
-Reported-by: smaudet@sebastianaudet.com
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Since Brandon is currently unreachable, let's do this for now. I
- might eventually find time to go over pathspec code and see if I can
- add 'attr' support to the rest of the commands, but no promise.
+> I'm trying to quickly make something that writes to
+> "$GIT_DIR/logs/index" and see how it goes. But yeah I'll probably drop
+> this patch. The ":@{2.minutes.ago}" just makes me like this direction
+> more, even though I don't know if I could even make that work.
 
- builtin/add.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think "index@{2.minutes.ago}" would almost work, but it would probably
+complain about a reflog without a matching ref. That seems like it would
+be pretty easy to work around in the reflog code. Or maybe even by
+having a stash-like "index log" ref.
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 9916498a29..0b64bcdebe 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -454,7 +454,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	 * Check the "pathspec '%s' did not match any files" block
- 	 * below before enabling new magic.
- 	 */
--	parse_pathspec(&pathspec, 0,
-+	parse_pathspec(&pathspec, PATHSPEC_ATTR,
- 		       PATHSPEC_PREFER_FULL |
- 		       PATHSPEC_SYMLINK_LEADING_PATH,
- 		       prefix, argv);
--- 
-2.19.0.rc0.337.ge906d732e7
-
+-Peff
