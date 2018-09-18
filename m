@@ -2,82 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51C8B1F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 17:38:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59D161F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 17:43:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730262AbeIRXLu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 19:11:50 -0400
-Received: from cloud.peff.net ([104.130.231.41]:52306 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729037AbeIRXLu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 19:11:50 -0400
-Received: (qmail 8078 invoked by uid 109); 18 Sep 2018 17:38:12 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 17:38:12 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9324 invoked by uid 111); 18 Sep 2018 17:38:11 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 13:38:11 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 13:38:10 -0400
-Date:   Tue, 18 Sep 2018 13:38:10 -0400
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/3] doc/Makefile: drop doc-diff worktree and temporary
- files on "make clean"
-Message-ID: <20180918173810.GF15470@sigill.intra.peff.net>
-References: <20180830195546.GA22407@sigill.intra.peff.net>
- <20180831063318.33373-1-sunshine@sunshineco.com>
- <20180831063318.33373-4-sunshine@sunshineco.com>
- <20180917183258.GC140909@aiede.svl.corp.google.com>
- <xmqq36u77w7y.fsf@gitster-ct.c.googlers.com>
- <20180917194214.GG140909@aiede.svl.corp.google.com>
- <xmqqy3bz6h24.fsf@gitster-ct.c.googlers.com>
+        id S1730491AbeIRXQw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 19:16:52 -0400
+Received: from mail-io1-f67.google.com ([209.85.166.67]:33960 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729037AbeIRXQv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 19:16:51 -0400
+Received: by mail-io1-f67.google.com with SMTP id c22-v6so2290461iob.1
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 10:43:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=iAj7220gtyL/AjjGxpAHIE1d9JrXtaX4HM1PcCtbH80=;
+        b=zBjjvDFCgyru8KJ414GsVWn71MTrCsyByxeXTAoaPr2pVQiFRz0xyaPUawP98WuA8h
+         usDjkUS24sQhjg9CrcywxRFONoULY82p8lmLhzK4qYBiieNCZWSo/aImDgElB68+fNm7
+         4AspRtyuh58vTZdx83wQKLWToZNzw4JiYNMvX3MG6JdU1d8HlbP00P+w+KkaoHuSWl1Z
+         DQWV4os0gzYJ1I6n9+0/omyRXG6UOf3OFXxqkN47K+2yegi+F4d0J7ejDA/1CHDSQbo9
+         9PDosRDxbpx3ml42UWAeC//89GqQwE0bDJMgNL/ZS/sIpuAMn0NEcXhvkEwyM3hZJgR1
+         zdCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=iAj7220gtyL/AjjGxpAHIE1d9JrXtaX4HM1PcCtbH80=;
+        b=kLG4m38sNNPpi7wqfRJXlRgj8DvyFGIyH+Bjej0TbDpC93oHcnIkJfL8ozgKEvfmux
+         +nygiSIW4SmIHGXqvioNXjD73Wmhx45KLh8iuOT2KiRBVOSaVZ4q79+kh64aX2ExRVCr
+         dBWbzP3zjanAzK+ftAwvW1PU8146EhnHycdPUkqHKIy+neDLx7oqeDlbWNGzvrdlvvh5
+         3TikrCH4xKYh2aGH4qVgbeiOTcIhTYf8mIZBwDNQE3noxNVlFd3OQjLYMph6nbwu/CzK
+         jD8WRXycTR/4KEG8vn5B/oB/OztnYtqsPT8qG4jEYw6Cg5t+OnT5Jtfebd8rcWRQQaqa
+         OyQw==
+X-Gm-Message-State: APzg51DSDo24N7J36nIEg9WJHZs0rkgy6ZEJaq9KILV4VdmHqNsBLaEt
+        GvLc444Ec+EWoeiOL4DbrwXDlQ==
+X-Google-Smtp-Source: ANB0VdajmmeCMyPbkZ6SBs+SOfya+bofhOYPYzEXkk1NBamxEnr9lKnsg70QPQcPn//FekDgVPaWWA==
+X-Received: by 2002:a6b:950f:: with SMTP id x15-v6mr26772251iod.240.1537292591617;
+        Tue, 18 Sep 2018 10:43:11 -0700 (PDT)
+Received: from localhost ([173.225.52.220])
+        by smtp.gmail.com with ESMTPSA id t134-v6sm5135092itb.41.2018.09.18.10.43.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Sep 2018 10:43:09 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Tue, 18 Sep 2018 13:43:07 -0400
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t3701-add-interactive: tighten the check of trace output
+Message-ID: <20180918174307.GA87396@syl>
+References: <20180910140714.19617-1-szeder.dev@gmail.com>
+ <20180910141834.GJ86006@syl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqy3bz6h24.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <20180910141834.GJ86006@syl>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 12:48:51PM -0700, Junio C Hamano wrote:
+On Mon, Sep 10, 2018 at 10:18:34AM -0400, Taylor Blau wrote:
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
 
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> > I'd rather that we revert this change altogether.  I have nothing
-> > against a convenient command to do this kind of non build related
-> > cleanup, but it shouldn't be spelled as "make clean".
-> 
-> OK, let's do this for now as I wanted to merge the remainder to
-> 'master' today.
-> 
-> -- >8 --
-> Subject: Revert "doc/Makefile: drop doc-diff worktree and temporary files on "make clean""
-> 
-> This reverts commit 6f924265a0bf6efa677e9a684cebdde958e5ba06, which
-> started to require that we have an executable git available in order
-> to say "make clean", which gives us a chicken-and-egg problem.
-> 
-> Having to have Git installed, or be in a repository, in order to be
-> able to run an optional "doc-diff" tool is fine.  Requiring either
-> in order to run "make clean" is a different story.
+Oops, this should be:
 
-Yeah, this seems like the best solution. We started with "can we just rm
--rf the temporary directory as part of 'make clean'", which is totally
-sensible and matches the other bits there. But then it got more
-complicated. :)
+  Reviewed-by: Taylor Blau <me@ttaylorr>
 
-People who use doc-diff can still use "doc-diff --clean", so I don't
-think much is lost.
-
-Thanks.
-
--Peff
+Thanks,
+Taylor
