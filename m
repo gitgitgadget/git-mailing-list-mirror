@@ -2,114 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5E791F453
-	for <e@80x24.org>; Tue, 18 Sep 2018 17:20:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 980241F453
+	for <e@80x24.org>; Tue, 18 Sep 2018 17:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730202AbeIRWxs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Sep 2018 18:53:48 -0400
-Received: from mail-io1-f65.google.com ([209.85.166.65]:43515 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729905AbeIRWxs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Sep 2018 18:53:48 -0400
-Received: by mail-io1-f65.google.com with SMTP id y10-v6so2191948ioa.10
-        for <git@vger.kernel.org>; Tue, 18 Sep 2018 10:20:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
-        h=from:date:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9Su6/o7viLMhFxH1ezDUml23dzXe+TSgmrVr43PF6OA=;
-        b=y0NP3DyiOFQF1CbaLF9SYEOOGFNhvDc5RD4Klq9vrDz3JNKC8NF8QxbH7V8qXKn5XZ
-         0FC9ulqJumoO1PqLqLwCUaWmQGoj6IRD7cjN8X6+iJNPbZMk9YTW+pjioSdGHh7Burfa
-         LEtqOucQmdpYf3JKnMW8fQfm02HJ2UFKrZIIXnob/pN8X2uK9kgTRurwt4pQ2iTCgqvC
-         1XV2SzLSWCVhppGO3PYY9JaFY+rnew4coWAkuiTWL93A9oaaEdkrNpbHJX+T57Xb+xI7
-         E263JTPKm0KCLjXPCpatgNUrrSrpZP2RBqQmIBuIFC7ZEctxtsXzoDQktOUPMO1FzTwZ
-         IP0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9Su6/o7viLMhFxH1ezDUml23dzXe+TSgmrVr43PF6OA=;
-        b=uOLJrxw2gZwWPOwyx+4bD/Ua1Rebh84iQ/HkMdyYzN5QC5Nn5i0/SoOUd/M20+aTkY
-         coHOdwU1lYj45r/YdjPTuXlVHI07X6/6vGXKF1+2paUZKphC3X/Vaw4NpLaFFl8xh3hB
-         9moO+ZD92F60QrrQAM1siLDaItP3uRmot1RkDe29eAwex/F4Q8vWDQPrL/woU85BO2Ve
-         gnx9/AZS89LdVQrodOYVArlSHdrPUCGtPfbA2AJt6i26edTX+YrnmBJ9OpM3YAyaPGpv
-         38X8JXesYWCC5TxIeGWxLrmBwxdf+0TdYxQn78emhnzMEsGqStO45/7KHD+CqJVCrTqy
-         B8ZQ==
-X-Gm-Message-State: APzg51CI5mFu2S+4DgyHMC/q69pzDuuv+7jy4YA2y79zmnnoXF9RiNZu
-        lYlTew5HgD0HkVxUDy6srV6RYQ==
-X-Google-Smtp-Source: ANB0VdbdBK4CXqRwxD9EBRJRB351Ikwrd0kh6g1qIOeV+Y11YWsZZpaSQOUh7hsUVvaBLY6U+So8pQ==
-X-Received: by 2002:a6b:bd82:: with SMTP id n124-v6mr26138434iof.244.1537291213224;
-        Tue, 18 Sep 2018 10:20:13 -0700 (PDT)
-Received: from localhost ([173.225.52.220])
-        by smtp.gmail.com with ESMTPSA id l186-v6sm4524996ith.42.2018.09.18.10.20.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 18 Sep 2018 10:20:11 -0700 (PDT)
-From:   Taylor Blau <me@ttaylorr.com>
-X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
-Date:   Tue, 18 Sep 2018 13:20:09 -0400
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Ben Peart <Ben.Peart@microsoft.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+        id S1730087AbeIRXD4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Sep 2018 19:03:56 -0400
+Received: from cloud.peff.net ([104.130.231.41]:52268 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729037AbeIRXD4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Sep 2018 19:03:56 -0400
+Received: (qmail 7536 invoked by uid 109); 18 Sep 2018 17:30:20 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Sep 2018 17:30:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9258 invoked by uid 111); 18 Sep 2018 17:30:18 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Sep 2018 13:30:18 -0400
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2018 13:30:18 -0400
+Date:   Tue, 18 Sep 2018 13:30:18 -0400
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Elijah Newren <newren@gmail.com>,
         =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] config doc: add missing list separator for
- checkout.optimizeNewBranch
-Message-ID: <20180918172009.GA83552@syl>
-References: <20180816182653.15580-1-benpeart@microsoft.com>
- <20180918053449.14047-1-avarab@gmail.com>
- <20180918165707.GC72102@syl>
- <20180918171643.GC15470@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/3] gc: exit with status 128 on failure
+Message-ID: <20180918173017.GD15470@sigill.intra.peff.net>
+References: <20180716172717.237373-1-jonathantanmy@google.com>
+ <20180717065151.GA177907@aiede.svl.corp.google.com>
+ <20180717065416.GC177907@aiede.svl.corp.google.com>
+ <20180717195946.GC26218@sigill.intra.peff.net>
+ <20180917183336.GA4630@sigill.intra.peff.net>
+ <20180917184012.GD140909@aiede.svl.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20180918171643.GC15470@sigill.intra.peff.net>
-User-Agent: Mutt/1.9.5 (2018-04-13)
+In-Reply-To: <20180917184012.GD140909@aiede.svl.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Sep 18, 2018 at 01:16:43PM -0400, Jeff King wrote:
-> On Tue, Sep 18, 2018 at 12:57:07PM -0400, Taylor Blau wrote:
->
-> > Hi Ævar,
+On Mon, Sep 17, 2018 at 11:40:12AM -0700, Jonathan Nieder wrote:
+
+> > There's discussion elsewhere[1] of applying just up to patch 2.
 > >
-> > On Tue, Sep 18, 2018 at 05:34:49AM +0000, Ævar Arnfjörð Bjarmason wrote:
-> > > The documentation added in fa655d8411 ("checkout: optimize "git
-> > > checkout -b <new_branch>"", 2018-08-16) didn't add the double-colon
-> > > needed for the labeled list separator, as a result the added
-> > > documentation all got squashed into one paragraph. Fix that by adding
-> > > the list separator.
-> >
-> > Looks good. Here's my:
-> >
-> >   Signed-off-by: Taylor Blau <me@ttaylorr.com>
->
-> I'm confused here. The signoff is really about agreeing publicly to the
-> DCO, and providing a chain of custody for the changes. So sometimes a
-> signoff from somebody besides the patch author is good if they
-> contributed content to the patch, but I don't see that here (or in any
-> nearby thread).
->
-> Did you mean "Reviewed-by:" ?
+> > Do we still want to convert these cases to die() as their end-state?
+> 
+> IMHO yes, we do.  die() is the function that you can use to exit with
+> a fatal error.
+> 
+> If we want to get rid of die(), that would be a tree-wide effort, not
+> something that should hold up this patch.
 
-Indeed, I meant "Reviewed-by" instead of "Signed-off-by". I grok the
-difference between the two, but without thinking about it I typed one
-instead of the other.
+But that was sort of my question. I think there are people who _do_ want
+to get rid of most die() calls (like Dscho), and there is a tree-wide
+effort that is happening slowly to lib-ify. Your patch goes in the
+opposite direction.
 
-Instead, here's my Reviewed-by:
+That said, I think there are actually two cases in your patch.
 
-  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+The calls to "return error()" or even just "return -1" in cmd_gc() seem
+like obvious candidates for die(). We're at the top of the stack, and
+anybody lib-ifying at that level is going to need to extract bits into
+reusable functions anyway.
 
-Thanks,
-Taylor
+I more wondered about helpers like report_last_gc_error() and
+gc_before_repack().
+
+> > It also makes the code more flexible and lib-ifiable (since the caller
+> > can decide how to handle the errors). That probably doesn't matter much
+> > since this is all static-local to builtin/gc.c,
+> 
+> Exactly.  I'm a strong believer in http://wiki.c2.com/?YouArentGonnaNeedIt.
+
+I only half-agree that this is YAGNI. If it were "let's punt on making
+this code friendlier to lib-ification", I'd agree more completely. But
+it's actually taking an active step in the opposite direction.
+
+I dunno. It's probably not worth spending too much more time discussing,
+and I'm OK either way.  I mostly just wanted to raise the issue since
+dropping patch 3 changes the balance to me.
+
+-Peff
