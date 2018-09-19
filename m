@@ -2,101 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.1
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A5F41F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 20:05:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DD41F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 20:06:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731858AbeITBo3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 21:44:29 -0400
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:44815 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbeITBo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 21:44:29 -0400
-Received: by mail-ed1-f43.google.com with SMTP id s10-v6so5910646edb.11
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 13:04:59 -0700 (PDT)
+        id S1732220AbeITBqK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 21:46:10 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:46627 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726718AbeITBqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 21:46:10 -0400
+Received: by mail-ot1-f67.google.com with SMTP id v44-v6so7027098ote.13
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 13:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=s5maaV/8oVmeQkmhRVJyLWPwNrLKtI29EjnvQp9Ubrg=;
-        b=U1Vn+JQzw/ydZvcDK0vTPDi9j0pu7vMioXhHqh99Da/zGc0z0q0c6OVo83ZYpqwNJx
-         voV43SyKK8B829wNsd2OtkgdGajd63pOiz5c6UkfkYG4dwPjX2hIgDpIv6PKMmcn7SX9
-         oy3ZZKnbkyEnFhwYxoV/RF27WFgWoycG/u4Y8PIaimQ14Z4YPU53LxvOfF4gh8FDCoGX
-         4Rt9vlW1T3TqQdeZxkYN9aSPOMBJUB1m8dMU5o3UShFuAJHdWOQt0xIIjEHtAImSobrQ
-         5IwisQ0bgwiRK1Bz4ysC/qPyzNai1ZzZXt00OrGF4Ea6lda4E/uMEK+kA3DXw32ify64
-         hFhg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=56kHPyEX+yGGkEMSq/iFe/bnulIPWiVPuE2jNIhH+NE=;
+        b=Use4pKC1Z1ZWCV7fVJq4NOWrm5DB8UXQe8y8/phMBRU8kPj3dSKPnIZSWCEsjyPBJ5
+         PKrMF7tkOybqyPDi589Xu8J1BRVt45zuDeiImzD2ZE7fHF0bQev5gBm6FJ9UUWRmcrXL
+         YwAVKAQgvdkqJevXnKk6Pi/RS5/5OcmjOfDhcGHeoY8xhVafI81oXbm7BW+2bL+2Ea8K
+         uFCxv22R413h5Q5DeLYynj8xU8tjnXRCCNkfuQrXA1SpEX/YoZBXMZWqBdG1M7uTU2FI
+         FhKuqqm/GIbow5zWL/lgZ+anGyc0X/Dx+5ZjazOGEKjFlW/6IYXC/XVcFYMP66HBnsTs
+         BtCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=s5maaV/8oVmeQkmhRVJyLWPwNrLKtI29EjnvQp9Ubrg=;
-        b=CiJgBSVea19+e98X0SoC/SnWJLvK8X+tqVqOu4mkcQdt7T/T/4M/fyYgo0mu/1utpU
-         0RNVGofmDlL+I+AyjC7Rq76RJRanaSqlXEnz3pwj4U1o87Yskc89Wakqi3oTiRW4ZRzK
-         Ed6YAGdF/ua0SJ0TyFZcLoLCWa/Ea6dcBA+QqlC8ZSBlbuoc966Tf4LjX0xfgS03/jZM
-         yyKJqqnhy0/SFvrn2T5q6bsxkqA/OcEXoL3T99kxTHw/cClfJh+Oa80b0QFGYs4jdokZ
-         L7JgCVksm7FOrt9fPG1o1vTzR1kQaCq/dyVSS5Z94Z9znwzVtaEXaEbVspj66s4ey7Lc
-         7ZcA==
-X-Gm-Message-State: APzg51CT1xy2bIAR1YM/qGSCrPwnRHjHRKNs7zc2xSir/ul5PRlk+2EH
-        ehhhq9gujzTzdHhI5mW0/LY=
-X-Google-Smtp-Source: ANB0VdZ9NPzAQJ3qPObHYGTm2Wt+zNA/t3nSgiXzfNgG5BFJXp1HUdK+kIMoJUmNeIGKA16cX0pKWA==
-X-Received: by 2002:a50:d619:: with SMTP id x25-v6mr60252144edi.178.1537387498355;
-        Wed, 19 Sep 2018 13:04:58 -0700 (PDT)
-Received: from evledraar (157-157-127-103.dsl.dynamic.simnet.is. [157.157.127.103])
-        by smtp.gmail.com with ESMTPSA id r44-v6sm2971008edd.87.2018.09.19.13.04.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Sep 2018 13:04:57 -0700 (PDT)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Leonardo Bozzi <leonardobozzi@gmail.com>, git@vger.kernel.org
-Subject: Re: Access Git ssh on port 8822 ?
-References: <CACrY0PAM=Ek5T_3oYkT0zMoAsULDfu9JAYm3xJdEqaxvxpQiwQ@mail.gmail.com> <20180919175045.GA10005@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20180919175045.GA10005@sigill.intra.peff.net>
-Date:   Wed, 19 Sep 2018 22:04:56 +0200
-Message-ID: <87sh25jlsn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=56kHPyEX+yGGkEMSq/iFe/bnulIPWiVPuE2jNIhH+NE=;
+        b=fDi5OIG2rNqcPSpuJ/3dd4nDF1uw1gXfeCf8onJXL+8mJxiOTjpAtvX8uRfow1ay67
+         G6X4z22Nj8LkGRuLQFmWWDxo2tCQtRRjstR5mmmMEeDsDPRLhNq6dq6+rB/CkpuJEdbC
+         0NOD2a98BhkU6U6diwJbbnKGdMUoarmtma+zkcpKbY+rrUR8XHxsFTNnEVwQ0d4izizf
+         mwIysMP8slT+wq4/nITaIxvkIMPDfGXxQEX2vORJrug8vNuETVeutu9aITp5JKX/l+JZ
+         E7/CTzEWtUwU0mAuHyL4hZkqZ+vPmk/ZnSsyHfsf/K0Nptc5Qo8vsgUchX9gwStWjzWI
+         5sGw==
+X-Gm-Message-State: APzg51AmBTxVKjEsSgdNibz8SGlODr5P/yAEINI6+KexyDDIWPQApkPH
+        TomjpzmLe2tlIsg9maNhlLw/ZdIk8017Rl458Ti6OCsWpuXV
+X-Google-Smtp-Source: ANB0VdYpmwUERVIAjEG/sfsZs3szT63Y7l6sI/LDe1rx3E8WT0wiQpvrk5KUm2+RKQbQAjHNNasJJfyYhxfuDpq+Gxo=
+X-Received: by 2002:a9d:1e9:: with SMTP id e96-v6mr21312764ote.68.1537387599262;
+ Wed, 19 Sep 2018 13:06:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
+ <c625bfe2205d51b3158ef71e4bf472708642c146.1537223021.git.matvore@google.com>
+ <CAPig+cSzddcS+8mx=GMbJ5BP+=fPtza+7UdA5ugN+83NuOHyiw@mail.gmail.com>
+ <CAMfpvhKejvbgzwtTv93iqLG8fMxqZW_MRTAU0q9bDArqJU2zUg@mail.gmail.com> <xmqqo9ct4lap.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqo9ct4lap.fsf@gitster-ct.c.googlers.com>
+From:   Matthew DeVore <matvore@google.com>
+Date:   Wed, 19 Sep 2018 13:06:27 -0700
+Message-ID: <CAMfpvhLYjmb4kF8tObAiROtcDHfpah0J=Y1KhUHZnvFoyK6sgA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] CodingGuidelines: add shell piping guidelines
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrn@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Sep 19, 2018 at 5:36 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Tue, Sep 18, 2018 at 10:11 PM Matthew DeVore <matvore@google.com> wrote:
+> > Yes, it's probably better to add a point about that. Here is the new
+> > documentation after applying your suggestions:
+> >
+> >  - If a piped sequence which spans multiple lines, put each statement
+>
+> s/which//
+Done.
 
-On Wed, Sep 19 2018, Jeff King wrote:
+On Wed, Sep 19, 2018 at 7:24 AM Junio C Hamano <gitster@pobox.com> wrote:
+> The formatting advice to place '|' at the end applies equally to
+> '&&' and '||' because these three syntactic elements share exactly
+> the same trait: the shell knows you haven't finished speaking when
+> it sees them at the end of the line and keeps listening, and humans
+> would know that too, so there is no need for explicitly continuing
+> the line with backslash.
+>
+I've reworded the text to indicate the advice applies to && and || as well.
 
-> On Wed, Sep 19, 2018 at 02:47:09PM -0300, Leonardo Bozzi wrote:
+> Organizationally speaking, I wonder if the above about formatting
+> would better appear separate from the latter two points that are
+> about semantics.
 >
->> Good afternoon, I'm trying to set up a git server, but I want to use
->> ssh access to connect clients on my server, but because of a
->> limitation in my internet provider it blocks access from outside on
->> port 22, so I changed the same from ssh to 8822. But when I give the
->> command:
->> 
->> $git remote add origin bozzi@bozzi.net:/opt/gitcurso
->> 
->> The server blocks me because I would have to access via port 8822. How
->> do I make the connection correctly?
->
-> You have two options:
->
->   1. You can use the more verbose ssh URL syntax, which allows a port
->      number:
->
->        git clone ssh://bozzi@bozzi.net:8822/opt/gitcurso
->
->   2. You can use a host block in your ~/.ssh/config to set the default
->      port for that host.
->
->        {
->          echo "Host bozzi.net"
-> 	 echo "Port 8822"
->        } >>$HOME/.ssh/config
->
-> -Peff
+I moved the formatting point to right under the point about formatting
+if statements, which does seem like a more natural progression.
 
-3. GIT_SSH_COMMAND="ssh -p 8822"  git clone bozzi@bozzi.net:/opt/gitcurso
+Here is the new patch to summarize the changes (warning: tabs are mangled):
+
+--------------------------------------------------------------------------------
+
+    CodingGuidelines: add shell piping guidelines
+
+    Add two guidelines:
+
+     - pipe characters should appear at the end of lines, and not cause
+       indentation
+     - pipes should be avoided when they swallow exit codes that can
+       potentially fail
+
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 48aa4edfb..6d265327c 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -118,6 +118,24 @@ For shell scripts specifically (not exhaustive):
+                 do this
+         fi
+
++ - If a command sequence joined with && or || or | spans multiple
++   lines, put each command on a separate line and put && and || and |
++   operators at the end of each line, rather than the start. This
++   means you don't need to use \ to join lines, since the above
++   operators imply the sequence isn't finished.
++
++        (incorrect)
++        grep blob verify_pack_result \
++        | awk -f print_1.awk \
++        | sort >actual &&
++        ...
++
++        (correct)
++        grep blob verify_pack_result |
++        awk -f print_1.awk |
++        sort >actual &&
++        ...
++
+  - We prefer "test" over "[ ... ]".
+
+  - We do not write the noiseword "function" in front of shell
+@@ -163,6 +181,15 @@ For shell scripts specifically (not exhaustive):
+
+    does not have such a problem.
+
++ - In a piped chain such as "grep blob objects | sort", the exit codes
++   returned by processes besides the last are ignored. This means that
++   if git crashes at the beginning or middle of a chain, it may go
++   undetected. Prefer writing the output of that command to a
++   temporary file with '>' rather than pipe it.
++
++ - The $(git ...) construct also discards git's exit code, so if the
++   goal is to test that particular command, redirect its output to a
++   temporary file rather than wrap it with $( ).
+
+ For C programs:
