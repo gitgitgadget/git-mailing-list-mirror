@@ -3,113 +3,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BE311F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 14:24:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 862B61F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 15:39:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731704AbeISUC6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 16:02:58 -0400
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:37459 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727825AbeISUC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 16:02:58 -0400
-Received: by mail-wr1-f65.google.com with SMTP id u12-v6so6020577wrr.4
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 07:24:48 -0700 (PDT)
+        id S1732485AbeISVRz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 17:17:55 -0400
+Received: from mail-vs1-f51.google.com ([209.85.217.51]:35070 "EHLO
+        mail-vs1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732164AbeISVRz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 17:17:55 -0400
+Received: by mail-vs1-f51.google.com with SMTP id m26-v6so1937016vso.2
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 08:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YLTTsZoUmup7Zt6Ep2ziqx98RxRoSGXrLFguAApAQ6U=;
-        b=gDSdl+drv64I6ZRyTVTNdgXirgat1A4a3FmNmB2IrcNY+TL38t3/eEB2lib0kbK9S0
-         EaQYTjkNIhCswirdvuLCgpNl3WQVc7b/HBtV77AUPwUK5000MzskMEMcGyxS1V5gUENL
-         /RnzapsO3xqfCqFA1rx3JRFmSjVKHU38D/jYPQamajnNHJiuCmEIbbmAeYwIUdIHT1P4
-         B4sNXl8PWuv+vT+m4fiG3KRSMoRyo9La+uxNRW9N1shi9tc6M1rHPTQ5T/9ZuVgPxLHX
-         ljxvxtY69DzBLgBQ5/typSZ/TMte1FRGRZS7XI6F5F4UJ93FYM5CRmijiKLMolUkvrOA
-         Bzhw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Mb8R/DY+UYGEPnvWtWRqhhfSdKfjlvJzb1nzKDgGhlc=;
+        b=RbttF/M+HJo/muD44D8B0S5Re1OxGZRXJf0LVWLWbAR4SALC1Uo+zKfAlOGbokkCIf
+         XFJ5farUHRJHWtmf4jWgob91qE9JKrXZxNKuH2owYEDrCjkZq61mz2MOf5LjBpQaAXz4
+         qeVJ361DoAolVDzf/9CEcForKeHnOrZF4OYGwu3uDeyGx9DBx5IxztUZTwFxJcv0V+aC
+         Rt/44AFfyCQ+kmPhXkuyOdnUme/10LtblBiOusneZZhXnDaxfuPfRKDW2KpWRUwuJY/5
+         DyjTHHNhrRTCqx+tyYQmAtF6ovpmYuy5MVyaPKIi3+iK5GEIhTGunt0mighVbMA+H6BF
+         88gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YLTTsZoUmup7Zt6Ep2ziqx98RxRoSGXrLFguAApAQ6U=;
-        b=sckig+0BMLQc/l0eI2S5F1aTYYFpfMIe9dAlRW22oDxl6r5GckRHFpMno5pGKLfFGw
-         gHWYpkt27rfrj6w6LYVznoAcUef5PlH+F5b94VYQHLQk9X+GDGp6m2auhzcTVSjQOR2w
-         9DdEuSs+CutiDv5ATtjVCf8uj9RpymjZouKsXazGgn8XYkzDqzX+qHm2d86wh/VI/RJ/
-         O0PsVjjcV7df+aLNqjvGe656zrq20HBa6OoDT7lwN+HIoj5R2l0W8+UTohWYmtpI9yyk
-         FPZEIM1PM9NkfHSXurwuZcGMkVa0hVclkLHg6fRLyJyM4JyW8BOTYTvQsdDWAHSvzVej
-         bBZw==
-X-Gm-Message-State: APzg51DrY+DLXViZX0zSSPhbhwrnmimB2qApDFxfTprJ80ePzyolOjG5
-        xOuATS38/exfeZ/nLnViNT4=
-X-Google-Smtp-Source: ANB0VdbwiCPN+8zEzkUafOAjfAZ6quWacNLMTwZqyZd9XdfOpdVUMs1xtTyzKQx74XzDwgn+453riw==
-X-Received: by 2002:a5d:5383:: with SMTP id d3-v6mr29687687wrv.191.1537367087619;
-        Wed, 19 Sep 2018 07:24:47 -0700 (PDT)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 144-v6sm6401141wma.45.2018.09.19.07.24.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Sep 2018 07:24:46 -0700 (PDT)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     sunshine@sunshineco.com, git@vger.kernel.org,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrn@google.com>
-Subject: Re: [PATCH v2 1/6] CodingGuidelines: add shell piping guidelines
-References: <cover.1536969438.git.matvore@google.com>
-        <cover.1537223021.git.matvore@google.com>
-        <c625bfe2205d51b3158ef71e4bf472708642c146.1537223021.git.matvore@google.com>
-        <CAPig+cSzddcS+8mx=GMbJ5BP+=fPtza+7UdA5ugN+83NuOHyiw@mail.gmail.com>
-        <CAMfpvhKejvbgzwtTv93iqLG8fMxqZW_MRTAU0q9bDArqJU2zUg@mail.gmail.com>
-Date:   Wed, 19 Sep 2018 07:24:46 -0700
-In-Reply-To: <CAMfpvhKejvbgzwtTv93iqLG8fMxqZW_MRTAU0q9bDArqJU2zUg@mail.gmail.com>
-        (Matthew DeVore's message of "Tue, 18 Sep 2018 19:11:34 -0700")
-Message-ID: <xmqqo9ct4lap.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Mb8R/DY+UYGEPnvWtWRqhhfSdKfjlvJzb1nzKDgGhlc=;
+        b=kTADrBKZ2UY8w+CPdYCuPgjBta5M53T29sfma87ZmrtMXiaoFyKqJWcxXBdcl0T55O
+         5ekWmqf4QUIiPcEQcqCzLV7egx+n/jfj6j+2twdBDUaK7h6FfAhlHc85heao7btXL/1N
+         ZE6hdK787PYdQtzptozRenyZktpsemrjxljwvvcnI8ah0W6SfiUEUHdQwkN3m044E9/9
+         ECzYOWwm1IvZtRa9ovCAMML9FhWlFwp90mVH3uUvZ9cvOKx5CNOErp0JMOQKxyXj05QB
+         /QZvog9vOOsGujsd4tVCC3fT/N8t7zb36K1rQwGeHTtg3Eeh0oUjEaOwTw1IyXAt8VDe
+         omRw==
+X-Gm-Message-State: APzg51C9Qqxz15jKrIMOYUZJvwEJ0tHIIwmjSwiofT9UPVIqyaFiU0/r
+        qORFIaJ+EWdZCfx6YC7U0RFG4MJZ6DJUwXKbmE4=
+X-Google-Smtp-Source: ANB0VdboAtezhxFo1oyfY6cRapiCv2LhZnVTJPY5n9lKMt9orX79kQdIgtB9yP1OLy0o++45eRHGpMweJJA0qrsbkCE=
+X-Received: by 2002:a67:cfcc:: with SMTP id h12-v6mr10079580vsm.118.1537371565199;
+ Wed, 19 Sep 2018 08:39:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <1B4739BD-812E-43E7-B7E6-D6B9CD0D0B3A@icloud.com>
+In-Reply-To: <1B4739BD-812E-43E7-B7E6-D6B9CD0D0B3A@icloud.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 19 Sep 2018 08:39:14 -0700
+Message-ID: <CABPp-BHQ8Xa24rpxW8CTqkvkh-hFFtb-WLuGZjvZoHP6Cr2WDg@mail.gmail.com>
+Subject: Re: Git 2.19 ignores default system language in Mac (2.18 or earlier
+ did not)
+To:     vasily.korytov@icloud.com
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@google.com> writes:
-
-> Yes, it's probably better to add a point about that. Here is the new
-> documentation after applying your suggestions:
+On Wed, Sep 19, 2018 at 7:24 AM Vasily Korytov
+<vasily.korytov@icloud.com> wrote:
 >
->  - If a piped sequence which spans multiple lines, put each statement
->    on a separate line and put pipes on the end of each line, rather
->    than the start. This means you don't need to use \ to join lines,
->    since | implies a join already.
+> Hi,
 >
->         (incorrect)
->         grep blob verify_pack_result \
->         | awk -f print_1.awk \
->         | sort >actual &&
->         ...
+> $ locale
+> LANG=3D
+> LC_COLLATE=3D"C"
+> LC_CTYPE=3D"UTF-8"
+> LC_MESSAGES=3D"C"
+> LC_MONETARY=3D"C"
+> LC_NUMERIC=3D"C"
+> LC_TIME=3D"C"
+> LC_ALL=3D
+> $ uname -mrs
+> Darwin 16.7.0 x86_64
+> $ git --version
+> git version 2.19.0
 >
->         (correct)
->         grep blob verify_pack_result |
->         awk -f print_1.awk |
->         sort >actual &&
->         ...
-
-The formatting advice to place '|' at the end applies equally to
-'&&' and '||' because these three syntactic elements share exactly
-the same trait: the shell knows you haven't finished speaking when
-it sees them at the end of the line and keeps listening, and humans
-would know that too, so there is no need for explicitly continuing
-the line with backslash.
-
-Organizationally speaking, I wonder if the above about formatting
-would better appear separate from the latter two points that are
-about semantics.
-
->  - In a pipe, any exit codes returned by processes besides the last
->    are ignored. This means that if git crashes at the beginning or
->    middle of a pipe, it may go undetected. Prefer writing the output
->    of that command to a temporary file with '>' rather than pipe it.
+> In Mac=E2=80=99s system preferences I have three languages: English (defa=
+ult), Russian, Ukrainian.
 >
->  - The $(git ...) construct also discards git's exit code, so if the
->    goal is to test that particular command, redirect its output to a
->    temporary file rather than wrap it with $( ).
+> After update to Git 2.19 Git=E2=80=99s output suddenly appeared in Russia=
+n.
+> I can use `export LANG=3Den_US.UTF-8` to switch it to English back, but i=
+t=E2=80=99s very weird.
+>
+> Did not find any related things in changelog, so assuming this is a bug.
+
+According to the thread at
+https://public-inbox.org/git/CAPig+cQWW9kibWYKu5oRDgo_Pt4wVmzkqzbTG=3DYGvwq=
+RCXcNXw@mail.gmail.com/,
+this appears to be a bug in how brew changed its builds of git, and
+also affects packages besides git.
