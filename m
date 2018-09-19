@@ -7,57 +7,55 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67DDF1F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 16:30:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 818441F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 16:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732681AbeISWJh (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 18:09:37 -0400
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:46616 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732659AbeISWJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 18:09:37 -0400
-Received: by mail-lj1-f196.google.com with SMTP id 203-v6so5625699ljj.13
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 09:30:56 -0700 (PDT)
+        id S1728096AbeISWRS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 18:17:18 -0400
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:36506 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726911AbeISWRS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 18:17:18 -0400
+Received: by mail-lf1-f68.google.com with SMTP id v17-v6so1835916lfe.3
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 09:38:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=V4K3K0g48BsJ4ew7Olxosx+FwmQQJqKLdtcHiw20Heo=;
-        b=lehz7dUkfQioIDdSK0/BFZpgCXGYv9ffmsqaQ6jMrSqvIF5wpyVFAgYJYHXcExDecY
-         R4yBv3sIGkmyhYnanBJ4iKOC2Af4UdFi1PKkDXyqSc5rSL2b7zqtwTroz0VMz8iOp8IA
-         QrI8clwg4T0B37E/MMSdJ7R8J+SadeGMfMERxBe38tmBgzyPUUqZD5hWGoDb3DEyyRLb
-         CKA+PTEW6hnRxxBv0up2Uw8WFoM7VM1ZfY8FyWy2RdJ+QxWKhk5SSGppKtvgP3oD2Sgl
-         k+mcGmLABjbzayJvTcAnGsT1YceTQMTQFj5nvGZbgJCxclnz0QKmBiFXR0AkRbWI5K7e
-         ACyg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Zez/TIRK/Luf9/6QxWYF04NYNe+LsiN577D5m0A0mE=;
+        b=nHkHoATWi147wA0B/rLm4w1bBVejk8bqTBgg/R4M2N7nz277+qUVRY3uqzsfsk0RoH
+         7BMUbABqfK3XizI1KGBmb5dtume2Em/bgu5+nMmsYTUZbTNh6hyCAxL9rakdfqN4CPa3
+         a14oHKy5F8vBzHuADaSxHjJodm2BeiLvQRTMmLzP4M5HIZez55fFdEbm59jzLdSMJ+L3
+         HlL9zjR9NI0MKe+wSpyg0w+WYt6R/1OCIftwjDOL+PwHFUR+kVKwS4JWEc8soUCNFWBO
+         m/C7eeKQbQiWM7i1w6J1Fm9NBYvKeYrx2mI7ge/wtx4zZZPLMQG0mojzogftj1zTN0Ch
+         qmug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=V4K3K0g48BsJ4ew7Olxosx+FwmQQJqKLdtcHiw20Heo=;
-        b=f8+fDehwvFzzxQOiEBQmQXPC04DP2kK2FMxJigkFJPtnoj7IeqEER0i4lEEee40p5n
-         MHde2at5y6TXZdHeTaVjkaHxI/ug89cWJlGfc6x3eZ+QXEUZK/uYmxa7EPp5V7eXFqn8
-         uDELOWmGnr+cyygVyBJOakTbD5O01GXB5pa6Q/UWZ1WOVielZpo98mJfmUetp7zZaKE1
-         COUEOIz7bZcjn3pjRym/B0O0kUzkcS4Ggn86pOUsJJqTB5ZwXaX7bA0zFd/msriyHIbD
-         rbTD6YTBShpNd/gdBPf7e8R+8gDt6ZzGQgZprzjZqYzh/E1rwfxlQD7qV0brUlDxZcVM
-         iNpQ==
-X-Gm-Message-State: APzg51A/68WiNDKSBfHF7fpd/+BEOpYD8huRc2jID34wJmyXUVB9DtRV
-        sq6UXaivUYhXR6Az04MGZOVccsV2
-X-Google-Smtp-Source: ANB0VdZsuJz17slUdQh0YCG8V4jiylII4cl65tMYCEXc4ZIIwUhN29+x29QuBhvP6uugS8WnkL9zeQ==
-X-Received: by 2002:a2e:9854:: with SMTP id e20-v6mr1866838ljj.143.1537374654887;
-        Wed, 19 Sep 2018 09:30:54 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3Zez/TIRK/Luf9/6QxWYF04NYNe+LsiN577D5m0A0mE=;
+        b=CWn/nHqz0RqAlOMfAHEP0gzS/3RWo0+sxLar2NG7Wj49YbN+eja6DO4TVduAsf7A9n
+         BoVvaz01qgkTZNSqZKFepTsFw/aObYuZlr88O4W1MuKZX8v5EGI0TzNG6Jf1pl3Fjmh0
+         D1DvBG9+eZXsNRmNMn3q74oYNAaZ6U9Wy9ApRiUTloGaD6qurzfIi3f8vOtcph04ljvO
+         bT0QjLrpfBjDbuCs+/cT6mXhckR8dQUs9kJPm83rlEF0XFJ2FV/DjrnI3jgkP6jD2NqH
+         pUJvJnEQPWrZ4ta0Do53FJ/BaefdXqZS58NtVwZDmF681W6b8ub8BhMd0xQwx2XTX7p/
+         TlHQ==
+X-Gm-Message-State: APzg51ApndYijrAbPzaJv4+GuZbO7dm0NYpq9+e/FoMTSl3NwLNdf52V
+        aNtEnLhLB54Wgh6HsgXFYTbnwoUd
+X-Google-Smtp-Source: ANB0VdaI1A/LReSeSeBsVdcCwGjq1o7u+n2Ngj7TIh/8/9EoFsTGrCdBlXoK2BjlVLZwnXHw2MH/0Q==
+X-Received: by 2002:a19:518a:: with SMTP id g10-v6mr6674288lfl.63.1537375114290;
+        Wed, 19 Sep 2018 09:38:34 -0700 (PDT)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id x8-v6sm3903594lji.53.2018.09.19.09.30.53
+        by smtp.gmail.com with ESMTPSA id d13-v6sm1144261lfi.74.2018.09.19.09.38.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Sep 2018 09:30:53 -0700 (PDT)
+        Wed, 19 Sep 2018 09:38:33 -0700 (PDT)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH 4/4] git-commit-graph.txt: refer to the "commit graph file" without dash
-Date:   Wed, 19 Sep 2018 18:30:35 +0200
-Message-Id: <fc81147ea42e382a3197c850830fe2142eda148e.1537374062.git.martin.agren@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH 1/2] Doc: use `--type=bool` instead of `--bool`
+Date:   Wed, 19 Sep 2018 18:38:18 +0200
+Message-Id: <e81bbd0e714221aac47b387e7d1e1572af32aa8f.1537375024.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.19.0.216.g2d3b1c576c
-In-Reply-To: <cover.1537374062.git.martin.agren@gmail.com>
-References: <cover.1537374062.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,46 +64,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The command is `git commit-graph`, but the file it processes is the
-"commit graph file" without a dash. We have a few references to the
-"commit-graph file", though. Fix them.
+After fb0dc3bac1 (builtin/config.c: support `--type=<type>` as preferred
+alias for `--<type>`, 2018-04-18) we have a more modern way of spelling
+`--bool`.
+
+Update all instances except those that explicitly document the
+"historical options" in git-config.txt. The other old-style
+type-specifiers already seem to be gone except for in that list of
+historical options.
+
+Tweak the grammar a little in config.txt while we are there.
 
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-commit-graph.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ Documentation/config.txt     | 2 +-
+ Documentation/git-config.txt | 4 ++--
+ Documentation/git.txt        | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-commit-graph.txt b/Documentation/git-commit-graph.txt
-index 55f63d47d9..dd0a53736f 100644
---- a/Documentation/git-commit-graph.txt
-+++ b/Documentation/git-commit-graph.txt
-@@ -50,7 +50,7 @@ commits starting at all refs. (Cannot be combined with `--stdin-commits`
- or `--stdin-packs`.)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 112041f407..088cbefecc 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -225,7 +225,7 @@ boolean::
+ 	false;; Boolean false literals are `no`, `off`, `false`,
+ 		`0` and the empty string.
  +
- With the `--append` option, include all commits that are present in the
--existing commit-graph file.
-+existing commit graph file.
+-When converting value to the canonical form using `--bool` type
++When converting a value to its canonical form using the `--type=bool` type
+ specifier, 'git config' will ensure that the output is "true" or
+ "false" (spelled in lowercase).
  
- 'read'::
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 8e240435be..9d8cea72dd 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -442,9 +442,9 @@ For URLs in `https://weak.example.com`, `http.sslVerify` is set to
+ false, while it is set to `true` for all others:
  
-@@ -59,7 +59,7 @@ Used for debugging purposes.
+ ------------
+-% git config --bool --get-urlmatch http.sslverify https://good.example.com
++% git config --type=bool --get-urlmatch http.sslverify https://good.example.com
+ true
+-% git config --bool --get-urlmatch http.sslverify https://weak.example.com
++% git config --type=bool --get-urlmatch http.sslverify https://weak.example.com
+ false
+ % git config --get-urlmatch http https://weak.example.com
+ http.cookieFile /tmp/cookie.txt
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index 74a9d7edb4..08e533d62b 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -76,7 +76,7 @@ Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
+ `foo.bar` to the boolean true value (just like `[foo]bar` would in a
+ config file). Including the equals but with an empty value (like `git -c
+ foo.bar= ...`) sets `foo.bar` to the empty string which `git config
+---bool` will convert to `false`.
++--type=bool` will convert to `false`.
  
- 'verify'::
- 
--Read the commit-graph file and verify its contents against the object
-+Read the commit graph file and verify its contents against the object
- database. Used to check for corrupted data.
- 
- 
-@@ -93,7 +93,7 @@ $ git show-ref -s | git commit-graph write --stdin-commits
- $ git rev-parse HEAD | git commit-graph write --stdin-commits --append
- ------------------------------------------------
- 
--* Read basic information from the commit-graph file.
-+* Read basic information from the commit graph file.
- +
- ------------------------------------------------
- $ git commit-graph read
+ --exec-path[=<path>]::
+ 	Path to wherever your core Git programs are installed.
 -- 
 2.19.0.216.g2d3b1c576c
 
