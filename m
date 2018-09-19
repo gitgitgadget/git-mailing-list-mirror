@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 279A01F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 02:11:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A756E1F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 02:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731079AbeISHrO (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 03:47:14 -0400
-Received: from mail-oi0-f67.google.com ([209.85.218.67]:42991 "EHLO
-        mail-oi0-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730999AbeISHrO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 03:47:14 -0400
-Received: by mail-oi0-f67.google.com with SMTP id v198-v6so3658715oif.9
-        for <git@vger.kernel.org>; Tue, 18 Sep 2018 19:11:47 -0700 (PDT)
+        id S1725973AbeISIJD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 04:09:03 -0400
+Received: from mail-ot1-f67.google.com ([209.85.210.67]:39788 "EHLO
+        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725829AbeISIJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 04:09:02 -0400
+Received: by mail-ot1-f67.google.com with SMTP id c12-v6so4176240otl.6
+        for <git@vger.kernel.org>; Tue, 18 Sep 2018 19:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LyE3HyGMclPKQ4iethDwfbM2EnKDoG+IQPm89FtYtIc=;
-        b=q2G6gNcinwWhEnoW6ImNeznbNjtKXVw0KepvVmjOj96btz9WQBGS23KS1UBw59ppo2
-         /DVwH564e3KI8w1vJa2ATvh4fzyVkmxkLf+qKW/sWmRvMIrizuIdVqprp6/NRWoGutnU
-         rF1gIWaw6dHoUK0Rh9HEGjL0nQfQ2WZm3v9ETb7C/4AFBxuE/VQM45MoZVGWDtT//4eh
-         qxrKNUiFRd0zd9thgi6orEg84NnDy+SIaxfonL3Sz1wko1jyTQpOIYMIIrq0QlGCSE6Q
-         XFRdyAtYxewba2vTG/sYOS4b0IVbTpkl/4WN9s+z5Z81bZpiLNkxpsipUiEJRTAe9zss
-         FOzA==
+        bh=JpjTGrRzzwyNfU+IBC0GGjSmK1e86a0fGGrn3vUf/zs=;
+        b=WYZyvKaMop/0l+QigVEw8EIpQW2bz9NGYWbwesxeFw8VRUNv5QRh08HYHIZxg20ha+
+         PG7HxmmYPMhrwILlFMn4M7K+c4iUuCSZXDTKTWqiaIyfYUkbDlmCAOLxx3UejDqynkxk
+         RQK6ZVbYMISp92ZK0zowh5QJJtLZoy7IAktGxkMFefZc0RMBbedLcvGHVCTvqEpPxdth
+         rSE+zsGc2cdePJbc7E5YZDQ7UFzOU3nivunoEtMqWe+Hg8HmELLDabMgWU14PXKwBBtn
+         aMobTZcwbV+X5Nlg6nN6ZHAr0GTobAmXLpUiMFI1X51ofrwQSM55cxGtveyEZoAk4peH
+         pRgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LyE3HyGMclPKQ4iethDwfbM2EnKDoG+IQPm89FtYtIc=;
-        b=VcwKx526THSoqFC9k5qqlUfvz9jcygsnFA/6os8Eho38wPd8m1qMHzihe6RCvE5vw5
-         z2HUCXbdVAOu9aaSS72OMUo+BFTgPIn6ZE+0qFsGnIeK8tOgIKq/EOOyhxzedtFXqbId
-         +ReHTxZUwCs2j6AwTjwhvbXlaPVBaR4tabe0oez6+lamFcvX0wGaGNgowkomFF6VDqRU
-         qoSe8WFNJ8QgphubHHw+P801SZS4QrPtwmGAEfO8zO8J4YL0A3A3F4nZVX2nR8ZOvUIx
-         06biZ6tT638rbg/yu8UzhtJU1Xzt9tms+W9Y9XWfQv4SdT3cuBQQCdXNoV2PFhBox0Sx
-         A7Vg==
-X-Gm-Message-State: APzg51CnxDsA4y/8cBVqAJ3mjWb+GaYGsgZiTxRYa9dWkViXHZXLG2R8
-        VN6fdb7saG6KhWu6ojkYjgYrHqgu1pNPrtyvGs6K
-X-Google-Smtp-Source: ANB0VdZurAcr0mXJdheGY8YaC9xzdKJP+XG/k7r3tvTY085unJswiKZ/nZH8okRlhgI+03ZUfvM9lG+lpO/DwHjZzlY=
-X-Received: by 2002:aca:c74d:: with SMTP id x74-v6mr301920oif.97.1537323106436;
- Tue, 18 Sep 2018 19:11:46 -0700 (PDT)
+        bh=JpjTGrRzzwyNfU+IBC0GGjSmK1e86a0fGGrn3vUf/zs=;
+        b=MPyo3P+rnKIbL2eCY06G3151ENnUqjUwOjqDz0W7jDfuLx76Zk0TnRiqQDoIfYfTQf
+         ZvXbT2bKrJDGJzOUjf4L4AdZFxpkISz0yQCu7ztGErY7aXKhcZW565AFdiAYsRaT4pzr
+         FLMTZjVcOF+vRQAL3eKo1GGbZgJaU/PrnySqobZE/CJQPwsVlCbPAjt+e+fCFdnQEzVy
+         A+FOb1uVzw95/7f0s9Dc85u4Vzw9NLWmIuuqgXUkerxfd9eYsv2+NZYClz6HfNZ1UMOB
+         RHlLPHrLC60tsK+EDq1smxYPYLuTrT3EQ91OMRP5OhNNY+6bBQrYeV1Iu0W0YK1/qHZ2
+         KTCA==
+X-Gm-Message-State: APzg51DwMa1BkUn+POhNmjm98V8h1xzROamW8WwCtNtRfHvAyathPZhS
+        QdIBWVI/fDqYInL4AOLGws+UGA7s3sxNYGKBpsW2
+X-Google-Smtp-Source: ANB0Vdb6t4g4Tvhiy3lmXucOEt0Zwf/NBA9zzh1qJg/Q+Kcrf0qe8Urfxe4M4yDKN2FX3DYtU1Gm2gMM6Y/i6wqDQM0=
+X-Received: by 2002:a9d:522d:: with SMTP id e45-v6mr16525064oth.250.1537324408064;
+ Tue, 18 Sep 2018 19:33:28 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1536969438.git.matvore@google.com> <cover.1537223021.git.matvore@google.com>
- <c625bfe2205d51b3158ef71e4bf472708642c146.1537223021.git.matvore@google.com> <CAPig+cSzddcS+8mx=GMbJ5BP+=fPtza+7UdA5ugN+83NuOHyiw@mail.gmail.com>
-In-Reply-To: <CAPig+cSzddcS+8mx=GMbJ5BP+=fPtza+7UdA5ugN+83NuOHyiw@mail.gmail.com>
+ <12cc68aabf76e08f6214b21df786e61301c8f55e.1537223021.git.matvore@google.com> <CAPig+cQchHoWffobw3iGrsmRRPx2LKNu+EvR=t4c5RcV9Cmi9g@mail.gmail.com>
+In-Reply-To: <CAPig+cQchHoWffobw3iGrsmRRPx2LKNu+EvR=t4c5RcV9Cmi9g@mail.gmail.com>
 From:   Matthew DeVore <matvore@google.com>
-Date:   Tue, 18 Sep 2018 19:11:34 -0700
-Message-ID: <CAMfpvhKejvbgzwtTv93iqLG8fMxqZW_MRTAU0q9bDArqJU2zUg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] CodingGuidelines: add shell piping guidelines
+Date:   Tue, 18 Sep 2018 19:33:15 -0700
+Message-ID: <CAMfpvh+0_x4UbPHK9jJoeN6rgZOS7F6iq7u_LRMP0YssMOZynw@mail.gmail.com>
+Subject: Re: [PATCH v2 5/6] tests: split up pipes
 To:     sunshine@sunshineco.com
 Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
@@ -64,98 +64,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Sep 17, 2018 at 5:16 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+On Mon, Sep 17, 2018 at 6:30 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> On Mon, Sep 17, 2018 at 6:24 PM Matthew DeVore <matvore@google.com> wrote:
-> > diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> > @@ -163,6 +163,35 @@ For shell scripts specifically (not exhaustive):
-> > + - In a piped sequence which spans multiple lines, put each statement
-> > +   on a separate line and put pipes on the end of each line, rather
-> > +   than the start. This means you don't need to use \ to join lines,
-> > +   since | implies a join already. Also, do not indent subsequent
-> > +   lines; if you need a sequence to visually stand apart from the
-> > +   surrounding code, use a blank line before and/or after the piped
-> > +   sequence.
-> > +
-> > +       (incorrect)
-> > +       [...]
-> > +       (correct)
-> > +       echo '...' > expected
+> On Mon, Sep 17, 2018 at 6:25 PM Matthew DeVore <matvore@google.com> wrote:
+> > tests: split up pipes
 >
-> Existing tests seem to favor the name "expect" over "expected", so
-> perhaps use that instead.
+> This title explains the mechanical changes the patch is making but not
+> the intent. Perhaps reword it to say something like:
 >
->     $ git grep '>expect\b' -- t | wc -l
->     2674
->     $ git grep '>expected\b' -- t | wc -l
->     1406
-Thank you for clarifying that out for me, but I'm not longer using
-that example, so it's moot.
+>     tests: avoid swallowing Git exit code upstream of a pipe
+>
+> > Some pipes in tests lose the exit code of git processes, which can mask
+> > unexpected behavior. Split these pipes up so that git commands are at
+> > the end of pipes rather than the beginning or middle.
+>
+> Can you say something about how you chose which tests to fix in this
+> patch? Is this fixing all such cases or only a subset? It looks like
+> it's only fixing "ls-files" and "verify-pack" invocations. If that's
+> the case, the commit message should explain that.
+>
+> Also, missing sign-off.
+Fixed - here is the new commit message (I changed the wording of your
+header to fit within 50 chars):
+
+    tests: don't swallow Git errors upstream of pipes
+
+    Some pipes in tests lose the exit code of git processes, which can mask
+    unexpected behavior like crashes. Split these pipes up so that git
+    commands are only at the end of pipes rather than the beginning or
+    middle.
+
+    The violations fixed in this patch were found in the process of fixing
+    pipe placement in a prior patch.
+
+    Signed-off-by: Matthew DeVore <matvore@google.com>
 
 >
-> > +       git ls-files -s file.1 file.2 file.3 file.4 file.5 |
-> > +       awk '{print $1}' |
-> > +       sort >observed
+> > ---
+> > diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+> > @@ -51,8 +51,10 @@ pull_to_client () {
+> > -                       git symbolic-ref HEAD refs/heads/$(echo $heads |
+> > -                       sed -e "s/^\(.\).*$/\1/") &&
+> > +                       git symbolic-ref HEAD refs/heads/$(
+> > +                               echo $heads |
+> > +                               sed -e "s/^\(.\).*$/\1/"
+> > +                       ) &&
 >
-> This is not a great example since it flatly contradicts the very next
-> bit of advice added by this patch about not placing a Git command
-> upstream in a pipe. Perhaps come up with an example which doesn't
-> suffer this shortcoming.
-Done.
-
->
-> I've seen the advice earlier in the thread of not indenting the
-> sub-commands in a pipe, but I find that the result makes it far more
-> difficult to see which commands are part of the pipe sequence than
-> with them indented, so I'm not convinced that this advice should be in
-> the guidelines. (But that just my opinion.)
-I'm not totally sure either way, nor do I have a strong opinion. I
-agree it's probably better to not codify this in the documentation
-until there's a great reason to.
-
->
-> > + - In a pipe, any non-zero exit codes returned by processes besides
-> > +   the last will be ignored. If there is any possibility some
-> > +   non-final command in the pipe will raise an error, prefer writing
-> > +   the output of that command to a temporary file with '>' rather than
-> > +   pipe it.
->
-> It's not so much that we care about losing a non-zero exit code (which
-> might be perfectly acceptable depending upon the context) but that we
-> care about missing a Git command which outright crashes. So, it might
-> make sense to make this text more specific by saying that ("exit code
-> indicating a crash" and "Git command") rather than being generic in
-> saying only "exit code" and "command".
-Fixed.
-
->
-> Also, what about expression like $(git foo) by which a crash of a Git
-> command can also be lost? Do we want to talk about that, as well?
-Yes, it's probably better to add a point about that. Here is the new
-documentation after applying your suggestions:
-
- - If a piped sequence which spans multiple lines, put each statement
-   on a separate line and put pipes on the end of each line, rather
-   than the start. This means you don't need to use \ to join lines,
-   since | implies a join already.
-
-        (incorrect)
-        grep blob verify_pack_result \
-        | awk -f print_1.awk \
-        | sort >actual &&
-        ...
-
-        (correct)
-        grep blob verify_pack_result |
-        awk -f print_1.awk |
-        sort >actual &&
-        ...
-
- - In a pipe, any exit codes returned by processes besides the last
-   are ignored. This means that if git crashes at the beginning or
-   middle of a pipe, it may go undetected. Prefer writing the output
-   of that command to a temporary file with '>' rather than pipe it.
-
- - The $(git ...) construct also discards git's exit code, so if the
-   goal is to test that particular command, redirect its output to a
-   temporary file rather than wrap it with $( ).
+> Why is this change included in the patch? There is no Git invocation
+> upstream of a pipe here. While the cleanup itself may be desirable, it
+> doesn't belong in this patch.
+This actually should have been part of the "tests: standardize pipe
+placement" patch, but I did "git commit --fixup=SHA" with the wrong
+SHA. Fixed.
