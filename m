@@ -2,108 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C25AF1F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 18:43:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EDA11F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 18:49:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733230AbeITAW5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 20:22:57 -0400
-Received: from cloud.peff.net ([104.130.231.41]:53420 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1732190AbeITAW5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 20:22:57 -0400
-Received: (qmail 8006 invoked by uid 109); 19 Sep 2018 18:43:46 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Sep 2018 18:43:46 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20287 invoked by uid 111); 19 Sep 2018 18:43:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 19 Sep 2018 14:43:42 -0400
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2018 14:43:43 -0400
-Date:   Wed, 19 Sep 2018 14:43:43 -0400
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] pack-objects: handle island check for "external" delta
- base
-Message-ID: <20180919184343.GA13014@sigill.intra.peff.net>
-References: <xmqqy3c3agkr.fsf@gitster-ct.c.googlers.com>
- <20180919034907.GA7626@sigill.intra.peff.net>
- <CAN0heSpMRfDd7=E_kYL6ucL9bL2VWMGLTAkT72BUrVwR6YTezQ@mail.gmail.com>
+        id S1732794AbeITA20 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 20:28:26 -0400
+Received: from mail-lj1-f176.google.com ([209.85.208.176]:42718 "EHLO
+        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732072AbeITA2Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 20:28:25 -0400
+Received: by mail-lj1-f176.google.com with SMTP id f1-v6so6000332ljc.9
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 11:49:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=c1WrwGpslhHaYX9706UhokytqQnE307sdtQBMacRHrc=;
+        b=JU5GAOHWxnPUhv22EcDSLlW7HPjEOjA/zSX9k1dM61QDPQpVNHQo6cbTQwWdJoYxaV
+         /EC8vv5K9HZ74I6lDMTyO2RVEW9L0y2P+CGrwuYxbH9Yt2P+9VGFM3eSSsZ1jZnqsrA0
+         xbWCGIAgUTT7VHoxJhMXgHhXnqDERjIFqERbIq/vyWxEoNEzownhlI+8jGKXV94PYO1Y
+         UYPcJ0uRxiaEgWACzbCS306Nx0+sm1oDLjYD4rWsdP5yjql6h/8GbaPopbJDsNbwuHRW
+         rbFlK0OVlsAZSkXz0eev4kgH/zqyM6nNvKJqAtwl1+gOcytz3M2telVqeCgCQAOugJlk
+         N01A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=c1WrwGpslhHaYX9706UhokytqQnE307sdtQBMacRHrc=;
+        b=Pa0HOW6mN2lLwl6sZ4y4b5bLYvmDXbVSJvUzOl/x89o7ljHfuMJUKCE9MBJH3EHHRT
+         b2NYNLqUUreiypHgZKZggYQ7BPC3Orh/yFqEHiv1O8405OP+KMkA5mbKQlgD+FtHdtYp
+         4ujvxV81I5BVpGvzIW6FutMKU6HzVgc/Y3H78htGz/3kmIPceFA1VVd5Uq5z7nBYq4XQ
+         L/0fqxPiKIrv3lAfycT4Rsh65BNKTncWBFTdmQOpOu7S6uPaI3H33ENWYJxJdvZ9srIE
+         q3yMWE7meKuRSsjSggeLTIc8kNjdTt5E0qc1bmlrsotwMYs9yC4LkQYfBDVdPUGWIW6d
+         QdlQ==
+X-Gm-Message-State: APzg51CTdg+bLGUfjWWgP7VmAw8i2e9gqu/FEfSNgNAHllblROgLnxBH
+        +x5jKEo1ralBeXaqnnmZXtot6h8oXnG2Ovegc6E/qjLc
+X-Google-Smtp-Source: ANB0VdY6YZQqaoROBpXjwJyYostLel0lahxIkkQtjP/+4a1vm33CL8EV5KZU2IMBNYaS2pgkSLsxEhu8oU52++roxq0=
+X-Received: by 2002:a2e:88d0:: with SMTP id a16-v6mr22111942ljk.63.1537382950262;
+ Wed, 19 Sep 2018 11:49:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAN0heSpMRfDd7=E_kYL6ucL9bL2VWMGLTAkT72BUrVwR6YTezQ@mail.gmail.com>
+References: <CACrY0PAM=Ek5T_3oYkT0zMoAsULDfu9JAYm3xJdEqaxvxpQiwQ@mail.gmail.com>
+ <20180919175045.GA10005@sigill.intra.peff.net>
+In-Reply-To: <20180919175045.GA10005@sigill.intra.peff.net>
+From:   Leonardo Bozzi <leonardobozzi@gmail.com>
+Date:   Wed, 19 Sep 2018 15:48:58 -0300
+Message-ID: <CACrY0PDzo8EayzV6Zg1jWALu-9m+txkp87un0SbMr3hVUynrOA@mail.gmail.com>
+Subject: Re: Access Git ssh on port 8822 ?
+To:     peff@peff.net
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Sep 19, 2018 at 08:34:05PM +0200, Martin Ågren wrote:
+Ok
+       git clone ssh://bozzi@bozzi.net:8822/opt/gitcurso
 
-> > +       /*
-> > +        * First see if we're already sending the base (or it's explicitly in
-> > +        * our "excluded" list.
-> > +        */
-> 
-> Missing ')'.
+access sucess.
 
-Oops, yes.
 
-> > +               if (use_delta_islands) {
-> > +                       struct object_id base_oid;
-> > +                       hashcpy(base_oid.hash, base_sha1);
-> > +                       if (!in_same_island(&delta->idx.oid, &base_oid))
-> > +                               return 0;
-> 
-> This does some extra juggling to avoid using `base->idx.oid`, which
-> would have been the moral equivalent of the original code, but which
-> won't fly since `base` is NULL.
 
-Yeah, this is the actual bug-fix.
+Adm. Leonardo Bozzi
+Administrador / Analista de Sistemas
+Tel.:  (27) 99988-4576
+CRA-ES: 13256
 
-I wasn't happy about having to write in_same_island() twice, but writing
-it the other way ended up pretty nasty, too. Something like:
 
-  struct object_id ext_oid;
-  struct object_id *base_oid;
-
-  base = packlist_find(&to_pack, base_sha1, NULL);
-  if (base) {
-	base_oid = &base->idx.oid;
-	*base_out = base;
-  }
-  else if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, base_sha1)) {
-	hashcpy(ext_oid.hash, base_sha1);
-	base_oid = &ext_oid;
-	*base_out = NULL;
-  } else {
-	return 0;
-  }
-
-  if (use_island_marks && !in_same_island(&delta->idx.oid, base_oid))
-	return 0;
-
-  return 1;
-
-That's less repetitive, but I feel like it's harder to follow which
-variables are valid when.
-
-> > +               if (can_reuse_delta(base_ref, entry, &base_entry)) {
-> >                         oe_set_type(entry, entry->in_pack_type);
-> >                         SET_SIZE(entry, in_pack_size); /* delta size */
-> >                         SET_DELTA_SIZE(entry, in_pack_size);
-> 
-> Without being at all familiar with this code, this looks sane to me.
-> Just had a small nit about the missing closing ')'.
-
-Thanks for the review!
-
--Peff
+Em qua, 19 de set de 2018 =C3=A0s 14:50, Jeff King <peff@peff.net> escreveu=
+:
+>
+> On Wed, Sep 19, 2018 at 02:47:09PM -0300, Leonardo Bozzi wrote:
+>
+> > Good afternoon, I'm trying to set up a git server, but I want to use
+> > ssh access to connect clients on my server, but because of a
+> > limitation in my internet provider it blocks access from outside on
+> > port 22, so I changed the same from ssh to 8822. But when I give the
+> > command:
+> >
+> > $git remote add origin bozzi@bozzi.net:/opt/gitcurso
+> >
+> > The server blocks me because I would have to access via port 8822. How
+> > do I make the connection correctly?
+>
+> You have two options:
+>
+>   1. You can use the more verbose ssh URL syntax, which allows a port
+>      number:
+>
+>        git clone ssh://bozzi@bozzi.net:8822/opt/gitcurso
+>
+>   2. You can use a host block in your ~/.ssh/config to set the default
+>      port for that host.
+>
+>        {
+>          echo "Host bozzi.net"
+>          echo "Port 8822"
+>        } >>$HOME/.ssh/config
+>
+> -Peff
