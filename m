@@ -2,94 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.1
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.1
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6E091F453
-	for <e@80x24.org>; Wed, 19 Sep 2018 16:44:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ED821F453
+	for <e@80x24.org>; Wed, 19 Sep 2018 17:21:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731973AbeISWXH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Sep 2018 18:23:07 -0400
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:40542 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726911AbeISWXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Sep 2018 18:23:07 -0400
-Received: by mail-lj1-f194.google.com with SMTP id j19-v6so5680610ljc.7
-        for <git@vger.kernel.org>; Wed, 19 Sep 2018 09:44:23 -0700 (PDT)
+        id S1732874AbeISXAl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Sep 2018 19:00:41 -0400
+Received: from mail-it0-f52.google.com ([209.85.214.52]:52112 "EHLO
+        mail-it0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727996AbeISXAl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Sep 2018 19:00:41 -0400
+Received: by mail-it0-f52.google.com with SMTP id e14-v6so9390750itf.1
+        for <git@vger.kernel.org>; Wed, 19 Sep 2018 10:21:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G+OP+4C8Tk7ula56VLJ2V0MVlfpwPsicVqH4Mer/GAA=;
-        b=ouptf7aZwXZ37JiZLSU1quk6oe8/ceL8anso+QhevjY3Jo9qDlR4J2fja5IfPur5xN
-         mYAqiCxRj1Z3dnyRJFBqOpAkNcO1GgYltdw8UM6QtF8X5Bm9imSPffUayNFbQ/L5ExhC
-         28U9eObxUgnLZeq93DdcuHVgXcVLQ8gv1atSQAvO+fsl+PCOgTN5Yd/hA6EmqljbEz+z
-         RdwZckdOilClpRu1ZDyYX7sSJiEoaKPWhd2Cpm1Z8gQltBWdPZmsY1DarQ1R+SCZAhSa
-         93dpII+TPMiI8/GYNrHpfFMSMVOFOSgLXflixsXuZMPNsl2cbpZTTLfuzwcCkSKSpjTy
-         7HDg==
+        d=ttaylorr-com.20150623.gappssmtp.com; s=20150623;
+        h=from:date:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=cH3EOGsHl0PXoPRImINKJvPy0Z4yzrgFfpBZOA/vioc=;
+        b=EdLacutFl/l7fB0FGteQuzmwv6GHTniZsSksxtN7WK5b4VVpBVtd/Wqyrh9KB1Nx/p
+         iGEWemdAgNxF8BuQ4J4Uiek8RQ80+DLcQ5PG/T2QjWkb6R650uvrv5cCrtsZt76hcd1+
+         f+g7GPU+EoNXPRt5Msjom+GOIm8BTj7i28k/1p5unVuy3YYip4XzTE6QlfaXuJy2AGwK
+         AFQnSKPeLGsNKt5gaU+EzT2K1vcIlVHijgGf/1jZtaR+iU8eQ8eHnImwKUJsElReBq/Q
+         gVBzCgKJEL8w4WWDPHcCBst/5D3Jb9SnIspBzBBguC0tjruH1fHbJcumNv+WpDgKVKy5
+         1TSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=G+OP+4C8Tk7ula56VLJ2V0MVlfpwPsicVqH4Mer/GAA=;
-        b=s+awU3JN0typS5kWRYmXFzRPuJBjNEG7TvGSWDofCzGAryJHKN5VyiwLXwDGnA97BS
-         8+hd3CtSSqZKXZw7m8ffxmYVkf1UZKMw996dHDIsLA7CQop/oNE98VO1+efdvoXFrLKt
-         RndmHKXESs9tnvab8Sxbt2cqexV3guLvNJSAn7EZfd04cVe19qte1M9JevSO4B8MDvBd
-         jFCgQ4+ansrbFdoaJHII7mOdG+R6qhfJB3VM23qVV3KlspDcAlN/bG4CaApeiPaGCC1z
-         OOTJAQCOFrreHpcSLQ4Ype/ZZCKw4MbLKwTgFiFTSUjig7L+mEt9hoEO7xS3i3vyRoBb
-         GqVQ==
-X-Gm-Message-State: APzg51C2Otpa17Z7Z9P0CHUB18+QQfsMcBkhgYJj3eIsB5t/L4J3SIWQ
-        dOyfNT9Gr+An/R9nYKf9qUeRQv+U
-X-Google-Smtp-Source: ANB0VdacJcF1T15JscSQxW0k4kYPFEIn5vU9Dh4x2gYgYx994vTVVz24fruW5WqdFhVJAJlUaFCwjg==
-X-Received: by 2002:a2e:870b:: with SMTP id m11-v6mr24327280lji.2.1537375462174;
-        Wed, 19 Sep 2018 09:44:22 -0700 (PDT)
-Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id m15-v6sm3901358ljb.87.2018.09.19.09.44.21
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 19 Sep 2018 09:44:21 -0700 (PDT)
-From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To:     git@vger.kernel.org
-Subject: [PATCH] git.txt: mention mailing list archive
-Date:   Wed, 19 Sep 2018 18:43:00 +0200
-Message-Id: <6319b34fc808ff6d8948e59f381cc5342b9ef17d.1537375332.git.martin.agren@gmail.com>
-X-Mailer: git-send-email 2.19.0.216.g2d3b1c576c
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=cH3EOGsHl0PXoPRImINKJvPy0Z4yzrgFfpBZOA/vioc=;
+        b=HUpdcBPMJS7W7sxNdu2EzirxDotv7VS7R6taxH7Lxlc0tBZsqiL36jWfzh4IGbpYAp
+         JP6NjF2z5tyK1zxKQkE/G8Fb1iFclxwOJ0ckzhzkHKvI0IzJiFtZcIwdvoY4cydgSyMu
+         1ZFLPcU29T8pIKfI4/a+Z59CZ+yROfG1C+aGwL1ODtLG8brDiNnAUzEuA1+zvAhiKH0J
+         SwSqkDRvwuHjNgO9N/zWGhwyx+QA1EnAdDXFcOI8VlKionMe1tHcIZrt4klm/MRRtO6t
+         b/sCwyTH6/m2O0Yc47UGjrPf6VOYdg+D8WCmZ8XmJTdoUqt37RCGRk3gng/4+Cb9oEGl
+         O6sw==
+X-Gm-Message-State: APzg51CDcFYH5HcIcDxX4KdmbxbSExCjOPfP63w9OjyL5f+FixU74Hnu
+        42g2jMYpE1V8vzLjyMyahVsnOQ==
+X-Google-Smtp-Source: ANB0VdYmDn3DRDY3fAwd1RcLcXHBZ/7Exh06m348vBLjEQ+ur1IcrPGFOUHaEDEqSGPDbkRjlEryYw==
+X-Received: by 2002:a02:1857:: with SMTP id k84-v6mr33152838jad.104.1537377705699;
+        Wed, 19 Sep 2018 10:21:45 -0700 (PDT)
+Received: from localhost ([173.225.52.218])
+        by smtp.gmail.com with ESMTPSA id b85-v6sm6323700itd.37.2018.09.19.10.21.43
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Sep 2018 10:21:44 -0700 (PDT)
+From:   Taylor Blau <me@ttaylorr.com>
+X-Google-Original-From: Taylor Blau <ttaylorr@github.com>
+Date:   Wed, 19 Sep 2018 13:21:43 -0400
+To:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 2/2] git-config.txt: fix 'see: above' note
+Message-ID: <20180919172143.GA60492@syl>
+References: <e81bbd0e714221aac47b387e7d1e1572af32aa8f.1537375024.git.martin.agren@gmail.com>
+ <377b7cfa36c3b23150005f7faec02bbc4a325bd7.1537375024.git.martin.agren@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <377b7cfa36c3b23150005f7faec02bbc4a325bd7.1537375024.git.martin.agren@gmail.com>
+User-Agent: Mutt/1.9.5 (2018-04-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the "Reporting Bugs" section of git(1), we refer to the mailing list,
-but we do not give any hint about where the archives might be found.
-Copy the text from README.md on this to give potential reporters an
-honest chance of finding out whether their bug has already been
-reported.
+Hi Martin,
 
-Signed-off-by: Martin Ã…gren <martin.agren@gmail.com>
----
- Documentation/git.txt | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On Wed, Sep 19, 2018 at 06:38:19PM +0200, Martin Ågren wrote:
+> Rather than saying "(see: above)", drop the colon. Also drop the comma
+> before this note.
+>
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 74a9d7edb4..40eaccafb2 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -858,7 +858,9 @@ Reporting Bugs
- 
- Report bugs to the Git mailing list <git@vger.kernel.org> where the
- development and maintenance is primarily done.  You do not have to be
--subscribed to the list to send a message there.
-+subscribed to the list to send a message there. The mailing list archives
-+are available at <https://public-inbox.org/git/>,
-+<http://marc.info/?l=git> and other archival sites.
- 
- Issues which are security relevant should be disclosed privately to
- the Git Security mailing list <git-security@googlegroups.com>.
--- 
-2.19.0.216.g2d3b1c576c
+Thanks for both of these. I should have at least taken care of 1/2
+myself, but I am appreciative of you doing it, too :-).
 
+I could take or leave 2/2, since I usually write ", (see: above)", but
+I'm not sure if that's grammatically correct or not.
+
+But, either approach is fine with me, so both of these have my:
+
+  Reviewed-by: Taylor Blau <me@ttaylorr.com>
+
+Thanks,
+Taylor
